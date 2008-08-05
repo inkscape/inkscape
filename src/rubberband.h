@@ -17,7 +17,7 @@
 #include "forward.h"
 #include "libnr/nr-forward.h"
 #include "libnr/nr-point.h"
-#include "libnr/nr-maybe.h"
+#include <boost/optional.hpp>
 #include <vector>
 
 /* fixme: do multidocument safe */
@@ -40,7 +40,7 @@ public:
 
     void start(SPDesktop *desktop, NR::Point const &p);
     void move(NR::Point const &p);
-    NR::Maybe<NR::Rect> getRectangle() const;
+    boost::optional<NR::Rect> getRectangle() const;
     void stop();
     bool is_started();
 

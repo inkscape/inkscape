@@ -409,7 +409,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
     // Get the bounding box of the selection
-    //NR::Maybe<NR::Rect> _bbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
+    //boost::optional<NR::Rect> _bbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
     // NRRect bbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
     NRRect bbox(item->getBounds(from_2geom(sp_item_i2d_affine(item))));
 

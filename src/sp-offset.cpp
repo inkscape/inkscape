@@ -510,7 +510,7 @@ sp_offset_set_shape(SPShape *shape)
         theRes->ConvertToForme (orig, 1, originaux);
 
         SPItem *item = shape;
-        NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop (item);
+        boost::optional<NR::Rect> bbox = sp_item_bbox_desktop (item);
         if ( bbox && !bbox->isEmpty() ) {
             gdouble size = L2(bbox->dimensions());
             gdouble const exp = NR::expansion(item->transform);

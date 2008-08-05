@@ -382,11 +382,11 @@ NRRect *Selection::bounds(NRRect *bbox, SPItem::BBoxType type) const
     return bbox;
 }
 
-NR::Maybe<NR::Rect> Selection::bounds(SPItem::BBoxType type) const
+boost::optional<NR::Rect> Selection::bounds(SPItem::BBoxType type) const
 {
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
-    NR::Maybe<NR::Rect> bbox = NR::Nothing();
+    boost::optional<NR::Rect> bbox;
     for ( GSList const *i = items ; i != NULL ; i = i->next ) {
         bbox = NR::union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data), type));
     }
@@ -414,13 +414,13 @@ NRRect *Selection::boundsInDocument(NRRect *bbox, SPItem::BBoxType type) const {
     return bbox;
 }
 
-NR::Maybe<NR::Rect> Selection::boundsInDocument(SPItem::BBoxType type) const {
+boost::optional<NR::Rect> Selection::boundsInDocument(SPItem::BBoxType type) const {
     NRRect r;
     return boundsInDocument(&r, type)->upgrade();
 }
 
 /** Extract the position of the center from the first selected object */
-NR::Maybe<NR::Point> Selection::center() const {
+boost::optional<NR::Point> Selection::center() const {
     GSList *items = (GSList *) const_cast<Selection *>(this)->itemList();
     NR::Point center;
     if (items) {
@@ -429,11 +429,11 @@ NR::Maybe<NR::Point> Selection::center() const {
             return first->getCenter();
         }
     }
-    NR::Maybe<NR::Rect> bbox = bounds();
+    boost::optional<NR::Rect> bbox = bounds();
     if (bbox) {
         return bounds()->midpoint();
     } else {
-        return NR::Nothing();
+        return boost::optional<NR::Point>();
     }
 }
 
@@ -473,7 +473,7 @@ std::vector<NR::Point> Selection::getSnapPointsConvexHull() const {
             cvh.add(*i);
         }
 
-        NR::Maybe<NR::Rect> rHull = cvh.bounds();
+        boost::optional<NR::Rect> rHull = cvh.bounds();
         if (rHull) {
             for ( unsigned i = 0 ; i < 4 ; ++i ) {
                 pHull.push_back(rHull->corner(i));

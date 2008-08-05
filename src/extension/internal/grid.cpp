@@ -86,7 +86,7 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
                                  NR::Point(sp_document_width(doc),
                                            sp_document_height(doc)));
     } else {
-        NR::Maybe<NR::Rect> bounds = selection->bounds();
+        boost::optional<NR::Rect> bounds = selection->bounds();
         if (bounds) {
             bounding_area = *bounds;
         }

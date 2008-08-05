@@ -49,8 +49,8 @@ sp_compare_x_position(SPItem *first, SPItem *second)
     using NR::X;
     using NR::Y;
 
-    NR::Maybe<NR::Rect> a = first->getBounds(from_2geom(sp_item_i2doc_affine(first)));
-    NR::Maybe<NR::Rect> b = second->getBounds(from_2geom(sp_item_i2doc_affine(second)));
+    boost::optional<NR::Rect> a = first->getBounds(from_2geom(sp_item_i2doc_affine(first)));
+    boost::optional<NR::Rect> b = second->getBounds(from_2geom(sp_item_i2doc_affine(second)));
 
     if ( !a || !b ) {
         // FIXME?
@@ -89,8 +89,8 @@ sp_compare_x_position(SPItem *first, SPItem *second)
 int
 sp_compare_y_position(SPItem *first, SPItem *second)
 {
-    NR::Maybe<NR::Rect> a = first->getBounds(from_2geom(sp_item_i2doc_affine(first)));
-    NR::Maybe<NR::Rect> b = second->getBounds(from_2geom(sp_item_i2doc_affine(second)));
+    boost::optional<NR::Rect> a = first->getBounds(from_2geom(sp_item_i2doc_affine(first)));
+    boost::optional<NR::Rect> b = second->getBounds(from_2geom(sp_item_i2doc_affine(second)));
 
     if ( !a || !b ) {
         // FIXME?
@@ -169,7 +169,7 @@ void TileDialog::Grid_Arrange ()
     cnt=0;
     for (; items != NULL; items = items->next) {
         SPItem *item = SP_ITEM(items->data);
-        NR::Maybe<NR::Rect> b = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
+        boost::optional<NR::Rect> b = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
         if (!b) {
             continue;
         }
@@ -211,7 +211,7 @@ void TileDialog::Grid_Arrange ()
         const GSList *sizes = sorted;
         for (; sizes != NULL; sizes = sizes->next) {
             SPItem *item = SP_ITEM(sizes->data);
-            NR::Maybe<NR::Rect> b = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
+            boost::optional<NR::Rect> b = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
             if (b) {
                 width = b->dimensions()[NR::X];
                 height = b->dimensions()[NR::Y];
@@ -268,7 +268,7 @@ void TileDialog::Grid_Arrange ()
     }
 
 
-    NR::Maybe<NR::Rect> sel_bbox = selection->bounds();
+    boost::optional<NR::Rect> sel_bbox = selection->bounds();
     // Fit to bbox, calculate padding between rows accordingly.
     if ( sel_bbox && !SpaceManualRadioButton.get_active() ){
 #ifdef DEBUG_GRID_ARRANGE
@@ -318,7 +318,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
              for (; current_row != NULL; current_row = current_row->next) {
                  SPItem *item=SP_ITEM(current_row->data);
                  Inkscape::XML::Node *repr = SP_OBJECT_REPR(item);
-                 NR::Maybe<NR::Rect> b = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
+                 boost::optional<NR::Rect> b = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
                  NR::Point min;
                  if (b) {
                      width = b->dimensions()[NR::X];

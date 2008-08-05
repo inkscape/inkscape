@@ -352,7 +352,7 @@ sp_flowtext_print(SPItem *item, SPPrintContext *ctx)
     NRRect pbox;
     sp_item_invoke_bbox(item, &pbox, NR::identity(), TRUE);
     NRRect bbox;
-    NR::Maybe<NR::Rect> bbox_maybe = sp_item_bbox_desktop(item);
+    boost::optional<NR::Rect> bbox_maybe = sp_item_bbox_desktop(item);
     if (!bbox_maybe) {
         return;
     }

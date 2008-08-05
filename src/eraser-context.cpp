@@ -557,7 +557,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
         if (dc->dragging && event->button.button == 1 && !event_context->space_panning) {
             dc->dragging = FALSE;
 
-            NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
+            boost::optional<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
 
             sp_eraser_apply(dc, motion_dt);
 
@@ -743,7 +743,7 @@ set_to_accumulated(SPEraserContext *dc)
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
 
             SPItem* acid = SP_ITEM(desktop->doc()->getObjectByRepr(dc->repr));
-            NR::Maybe<NR::Rect> eraserBbox = acid->getBounds(NR::identity());
+            boost::optional<NR::Rect> eraserBbox = acid->getBounds(NR::identity());
             NR::Rect bounds = (*eraserBbox) * desktop->doc2dt();
             std::vector<SPItem*> remainingItems;
             GSList* toWorkOn = 0;
@@ -765,7 +765,7 @@ set_to_accumulated(SPEraserContext *dc)
                     for (GSList *i = toWorkOn ; i ; i = i->next ) {
                         SPItem *item = SP_ITEM(i->data);
                         if ( eraserMode ) {
-                            NR::Maybe<NR::Rect> bbox = item->getBounds(NR::identity());
+                            boost::optional<NR::Rect> bbox = item->getBounds(NR::identity());
                             if (bbox && bbox->intersects(*eraserBbox)) {
                                 Inkscape::XML::Node* dup = dc->repr->duplicate(xml_doc);
                                 dc->repr->parent()->appendChild(dup);

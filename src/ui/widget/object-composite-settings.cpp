@@ -114,7 +114,7 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
     sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
 
-    NR::Maybe<NR::Rect> bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
+    boost::optional<NR::Rect> bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
     double radius;
     if (bbox) {
         double perimeter = bbox->extent(Geom::X) + bbox->extent(Geom::Y);
@@ -260,7 +260,7 @@ ObjectCompositeSettings::_subjectChanged() {
             case QUERY_STYLE_SINGLE:
             case QUERY_STYLE_MULTIPLE_AVERAGED:
             case QUERY_STYLE_MULTIPLE_SAME:
-                NR::Maybe<NR::Rect> bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
+                boost::optional<NR::Rect> bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
                 if (bbox) {
                     double perimeter = bbox->extent(Geom::X) + bbox->extent(Geom::Y);
                     _fe_cb.set_blur_sensitive(true);

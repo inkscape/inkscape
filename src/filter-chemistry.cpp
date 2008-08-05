@@ -319,7 +319,7 @@ new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdo
 SPFilter *
 new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mode, gdouble radius)
 {
-    NR::Maybe<NR::Rect> const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
+    boost::optional<NR::Rect> const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
 
     double width;
     double height;
@@ -374,7 +374,7 @@ modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
         stdDeviation /= expansion;
 
     // Get the object size
-    NR::Maybe<NR::Rect> const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
+    boost::optional<NR::Rect> const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
     double width;
     double height;
     if (r) {

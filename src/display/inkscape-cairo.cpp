@@ -170,7 +170,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path)
 
 /** Feeds path-creating calls to the cairo context translating them from the Path, with the given transform and shift */
 static void
-feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, NR::Maybe<NR::Rect> area, bool optimize_stroke, double stroke_width)
+feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, boost::optional<NR::Rect> area, bool optimize_stroke, double stroke_width)
 {
     if (!area || area->isEmpty())
         return;
@@ -206,7 +206,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, NR:
 /** Feeds path-creating calls to the cairo context translating them from the PathVector, with the given transform and shift
  *  One must have done cairo_new_path(ct); before calling this function. */
 void
-feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Matrix trans, NR::Maybe<NR::Rect> area, bool optimize_stroke, double stroke_width)
+feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Matrix trans, boost::optional<NR::Rect> area, bool optimize_stroke, double stroke_width)
 {
     if (!area || area->isEmpty())
         return;

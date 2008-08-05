@@ -174,7 +174,7 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
             NR::Point const button_w(event->button.x, event->button.y);
             NR::Point const button_dt(desktop->w2d(button_w));
             if ( event->button.button == 1  && !event_context->space_panning) {
-                NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
+                boost::optional<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
                 if (b && !within_tolerance) {
                     desktop->set_display_area(*b, 10);
                 } else if (!escaped) {

@@ -696,7 +696,7 @@ void CGroup::onModified(guint flags) {
 
 void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned const flags) {
 
-    NR::Maybe<NR::Rect> dummy_bbox = NR::Nothing();
+    boost::optional<NR::Rect> dummy_bbox;
 
     GSList *l = _group->childList(false, SPObject::ActionBBox);
     while (l) {

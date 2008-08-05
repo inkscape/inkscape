@@ -836,7 +836,7 @@ nr_arena_item_set_order (NRArenaItem *item, int order)
 }
 
 void
-nr_arena_item_set_item_bbox (NRArenaItem *item, NR::Maybe<NR::Rect> &bbox)
+nr_arena_item_set_item_bbox (NRArenaItem *item, boost::optional<NR::Rect> &bbox)
 {
     nr_return_if_fail(item != NULL);
     nr_return_if_fail(NR_IS_ARENA_ITEM(item));

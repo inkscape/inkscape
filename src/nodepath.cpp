@@ -1616,9 +1616,9 @@ void sp_node_selected_move_absolute(Inkscape::NodePath::Path *nodepath, Geom::Co
 /**
  * If the coordinates of all selected nodes coincide, return the common coordinate; otherwise return NR::Nothing
  */
-NR::Maybe<Geom::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis)
+boost::optional<Geom::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis)
 {
-    NR::Maybe<Geom::Coord> no_coord = NR::Nothing();
+    boost::optional<Geom::Coord> no_coord;
     g_return_val_if_fail(nodepath->selected, no_coord);
 
     // determine coordinate of first selected node
@@ -4271,7 +4271,7 @@ void sp_nodepath_selected_nodes_scale_screen(Inkscape::NodePath::Path *nodepath,
 /**
  * Flip selected nodes horizontally/vertically.
  */
-void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, NR::Maybe<NR::Point> center)
+void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, boost::optional<NR::Point> center)
 {
     if (!nodepath || !nodepath->selected) return;
 

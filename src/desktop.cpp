@@ -529,7 +529,7 @@ bool SPDesktop::isLayer(SPObject *object) const {
 bool SPDesktop::isWithinViewport (SPItem *item) const
 {
     NR::Rect const viewport = get_display_area();
-    NR::Maybe<NR::Rect> const bbox = sp_item_bbox_desktop(item);
+    boost::optional<NR::Rect> const bbox = sp_item_bbox_desktop(item);
     if (bbox) {
         return viewport.contains(*bbox);
     } else {
@@ -968,7 +968,7 @@ SPDesktop::zoom_page_width()
 void
 SPDesktop::zoom_selection()
 {
-    NR::Maybe<NR::Rect> const d = selection->bounds();
+    boost::optional<NR::Rect> const d = selection->bounds();
 
     if ( !d || d->isEmpty(0.1) ) {
         return;
@@ -996,7 +996,7 @@ SPDesktop::zoom_drawing()
     SPItem *docitem = SP_ITEM (sp_document_root (doc()));
     g_return_if_fail (docitem != NULL);
 
-    NR::Maybe<NR::Rect> d = sp_item_bbox_desktop(docitem);
+    boost::optional<NR::Rect> d = sp_item_bbox_desktop(docitem);
 
     /* Note that the second condition here indicates that
     ** there are no items in the drawing.

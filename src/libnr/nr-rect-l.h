@@ -2,12 +2,12 @@
 #define SEEN_NR_RECT_L_H
 
 #include <libnr/nr-i-coord.h>
-#include <libnr/nr-maybe.h>
+#include <boost/optional.hpp>
 #include <libnr/nr-rect.h>
 #include <libnr/nr-point-l.h>
 
 struct NRRectL {
-    NR::Maybe<NR::Rect> upgrade() const;
+    boost::optional<NR::Rect> upgrade() const;
     NR::ICoord x0, y0, x1, y1;
 };
 
@@ -79,7 +79,7 @@ public:
     void expandTo(const IRect &r);
 	
     /** Returns the set of points shared by both rectangles. */
-    static Maybe<IRect> intersection(const IRect &a, const IRect &b);
+    static boost::optional<IRect> intersection(const IRect &a, const IRect &b);
 
     /** Returns the smallest rectangle that encloses both rectangles. */
     static IRect union_bounds(const IRect &a, const IRect &b);

@@ -866,7 +866,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     NRRectL bbox = {0, 0, scaledSvgWidth, scaledSvgHeight};
 
     // write object bbox to area
-    NR::Maybe<NR::Rect> maybeArea(from_2geom(area));
+    boost::optional<NR::Rect> maybeArea(from_2geom(area));
     sp_document_ensure_up_to_date (svgDoc);
     sp_item_invoke_bbox((SPItem *) svgDoc->root, &maybeArea,
         from_2geom(sp_item_i2r_affine((SPItem *)(svgDoc->root))), TRUE);

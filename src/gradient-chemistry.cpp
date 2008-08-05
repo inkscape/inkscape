@@ -281,7 +281,7 @@ sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item)
 
     // calculate the bbox of the item
     sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
-    NR::Maybe<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
+    boost::optional<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
 
     if ( !bbox || bbox->isEmpty() )
         return gr;
@@ -342,7 +342,7 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
         // calculate the bbox of the item
         sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
         NR::Matrix bbox2user;
-        NR::Maybe<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
+        boost::optional<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
         if ( bbox && !bbox->isEmpty() ) {
             bbox2user = NR::Matrix(bbox->dimensions()[NR::X], 0,
                                    0, bbox->dimensions()[NR::Y],
@@ -1094,7 +1094,7 @@ sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool
 
     if (SP_GRADIENT(gradient)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
-        NR::Maybe<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
+        boost::optional<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
         if (bbox) {
             p *= NR::Matrix(bbox->dimensions()[NR::X], 0,
                             0, bbox->dimensions()[NR::Y],

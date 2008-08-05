@@ -52,9 +52,9 @@ Line &Line::operator=(Line const &line) {
     return *this;
 }
 
-NR::Maybe<NR::Point> Line::intersect(Line const &line) {
+boost::optional<NR::Point> Line::intersect(Line const &line) {
     NR::Coord denom = NR::dot(v_dir, line.normal);
-    NR::Maybe<NR::Point> no_point = NR::Nothing();
+    boost::optional<NR::Point> no_point;
     if (fabs(denom) < 1e-6)
         return no_point;
 
@@ -72,7 +72,7 @@ void Line::set_direction(NR::Point const &dir)
 NR::Point Line::closest_to(NR::Point const &pt)
 {
 	/* return the intersection of this line with a perpendicular line passing through pt */ 
-    NR::Maybe<NR::Point> result = this->intersect(Line(pt, (this->v_dir).ccw(), false));
+    boost::optional<NR::Point> result = this->intersect(Line(pt, (this->v_dir).ccw(), false));
     g_return_val_if_fail (result, NR::Point (0.0, 0.0));
     return *result;
 }
@@ -178,7 +178,7 @@ side_of_intersection (NR::Point const &A, NR::Point const &B, NR::Point const &C
     }
 }
 
-NR::Maybe<NR::Point> Line::intersection_with_viewbox (SPDesktop *desktop)
+boost::optional<NR::Point> Line::intersection_with_viewbox (SPDesktop *desktop)
 {
     NR::Rect vb = desktop->get_display_area();
     /* remaining viewbox corners */
@@ -188,7 +188,7 @@ NR::Maybe<NR::Point> Line::intersection_with_viewbox (SPDesktop *desktop)
     std::pair <NR::Point, NR::Point> e = side_of_intersection (vb.min(), lr, vb.max(), ul, this->pt, this->v_dir);
     if (e.first == e.second) {
         // perspective line lies outside the canvas
-        return NR::Nothing();
+        return boost::optional<NR::Point>();
     }
 
     Line line (e.first, e.second);

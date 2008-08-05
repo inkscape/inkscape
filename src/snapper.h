@@ -16,7 +16,7 @@
 #include <list>
 #include "libnr/nr-coord.h"
 #include "libnr/nr-point.h"
-#include "libnr/nr-maybe.h"
+#include <boost/optional.hpp>
 
 #include "snapped-point.h"
 #include "snapped-line.h"
@@ -67,7 +67,7 @@ public:
                           PointType const &/*t*/,
                           NR::Point const &/*p*/,
                           bool const &/*first_point*/,
-                          NR::Maybe<NR::Rect> const &/*bbox_to_snap*/,
+                          boost::optional<NR::Rect> const &/*bbox_to_snap*/,
                           std::vector<SPItem const *> const */*it*/,
                           std::vector<NR::Point> */*unselected_nodes*/) const {};
 
@@ -105,7 +105,7 @@ public:
                                  PointType const &/*t*/,
                                  NR::Point const &/*p*/,
                                  bool const &/*first_point*/,
-                                 NR::Maybe<NR::Rect> const &/*bbox_to_snap*/,
+                                 boost::optional<NR::Rect> const &/*bbox_to_snap*/,
                                  ConstraintLine const &/*c*/,
                                  std::vector<SPItem const *> const */*it*/) const {};
 

@@ -126,10 +126,10 @@ void Inkscape::Rubberband::setMode(int mode)
     _mode = mode;
 }
 
-NR::Maybe<NR::Rect> Inkscape::Rubberband::getRectangle() const
+boost::optional<NR::Rect> Inkscape::Rubberband::getRectangle() const
 {
     if (!_started) {
-        return NR::Nothing();
+        return boost::optional<NR::Rect>();
     }
 
     return NR::Rect(_start, _end);

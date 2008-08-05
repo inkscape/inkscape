@@ -10,7 +10,7 @@
 #define SEEN_INKSCAPE_UI_WIDGET_STYLE_SUBJECT_H
 
 #include "util/glib-list-iterators.h"
-#include "libnr/nr-maybe.h"
+#include <boost/optional.hpp>
 #include "libnr/nr-rect.h"
 #include "sp-item.h"
 #include <sigc++/sigc++.h>
@@ -43,7 +43,7 @@ public:
 
     virtual iterator begin() = 0;
     virtual iterator end() { return iterator(NULL); }
-    virtual NR::Maybe<NR::Rect> getBounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) = 0;
+    virtual boost::optional<NR::Rect> getBounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) = 0;
     virtual int queryStyle(SPStyle *query, int property) = 0;
     virtual void setCSS(SPCSSAttr *css) = 0;
 
@@ -66,7 +66,7 @@ public:
     ~Selection();
 
     virtual iterator begin();
-    virtual NR::Maybe<NR::Rect> getBounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
+    virtual boost::optional<NR::Rect> getBounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
     virtual int queryStyle(SPStyle *query, int property);
     virtual void setCSS(SPCSSAttr *css);
 
@@ -87,7 +87,7 @@ public:
     ~CurrentLayer();
 
     virtual iterator begin();
-    virtual NR::Maybe<NR::Rect> getBounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
+    virtual boost::optional<NR::Rect> getBounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
     virtual int queryStyle(SPStyle *query, int property);
     virtual void setCSS(SPCSSAttr *css);
 

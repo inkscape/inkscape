@@ -1107,8 +1107,8 @@ sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tbl)
                     gtk_adjustment_set_value(yadj, sp_pixels_get_units(sel_node[Geom::Y], *unit));
                 }
             } else {
-                NR::Maybe<Geom::Coord> x = sp_node_selected_common_coord(nodepath, Geom::X);
-                NR::Maybe<Geom::Coord> y = sp_node_selected_common_coord(nodepath, Geom::Y);
+                boost::optional<Geom::Coord> x = sp_node_selected_common_coord(nodepath, Geom::X);
+                boost::optional<Geom::Coord> y = sp_node_selected_common_coord(nodepath, Geom::Y);
                 if ((x && ((*x) != oldx)) || (y && ((*y) != oldy))) {
                     /* Note: Currently x and y will always have a value, even if the coordinates of the
                        selected nodes don't coincide (in this case we use the coordinates of the center

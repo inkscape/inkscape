@@ -607,7 +607,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     pointer = motion_dt * motion_to_curve;
 
                     // calculate the nearest point on the guide path
-                    NR::Maybe<Path::cut_position> position = get_nearest_position_on_Path(dc->hatch_livarot_path, pointer);
+                    boost::optional<Path::cut_position> position = get_nearest_position_on_Path(dc->hatch_livarot_path, pointer);
                     nearest = get_point_on_Path(dc->hatch_livarot_path, position->piece, position->t);
 
 

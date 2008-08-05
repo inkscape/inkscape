@@ -193,7 +193,7 @@ static Avoid::Polygn avoid_item_poly(SPItem const *item)
     //       by the sp_*_update functions, e.g., text.
     sp_document_ensure_up_to_date(item->document);
     
-    NR::Maybe<NR::Rect> rHull = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
+    boost::optional<NR::Rect> rHull = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
     if (!rHull) {
         return Avoid::newPoly(0);
     }

@@ -50,7 +50,7 @@ void sp_selected_path_simplify ();
 Path *Path_for_item(SPItem *item, bool doTransformation, bool transformFull = true);
 Geom::PathVector* pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull, Geom::Matrix extraPreAffine, Geom::Matrix extraPostAffine);
 SPCurve *curve_for_item(SPItem *item);
-NR::Maybe<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p, unsigned seg = 0);
+boost::optional<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p, unsigned seg = 0);
 NR::Point get_point_on_Path(Path *path, int piece, double t);
 Path *bpath_to_Path(NArtBpath const *bpath);
 

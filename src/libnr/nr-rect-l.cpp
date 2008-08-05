@@ -1,8 +1,8 @@
 #include <libnr/nr-rect-l.h>
 
-NR::Maybe<NR::Rect> NRRectL::upgrade() const {
+boost::optional<NR::Rect> NRRectL::upgrade() const {
     if (nr_rect_l_test_empty_ptr(this)) {
-        return NR::Nothing();
+        return boost::optional<NR::Rect>();
     } else {
         return NR::Rect(NR::Point(x0, y0), NR::Point(x1, y1));
     }

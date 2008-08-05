@@ -96,7 +96,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
         _candidates->clear();
     }
     
-    NR::Maybe<NR::Rect> bbox_of_item = NR::Rect(); // a default NR::Rect is infinitely large
+    boost::optional<NR::Rect> bbox_of_item = NR::Rect(); // a default NR::Rect is infinitely large
     NR::Rect bbox_to_snap_incl = bbox_to_snap; // _incl means: will include the snapper tolerance
     bbox_to_snap_incl.growBy(getSnapperTolerance()); // see?
     
@@ -217,7 +217,7 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::Snapper::PointType const &
                     // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                     // of the item AND the bbox of the clipping path at the same time
                     if (!(*i).clip_or_mask) {  
-                        NR::Maybe<NR::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
+                        boost::optional<NR::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
                         if (b) {
                             for ( unsigned k = 0 ; k < 4 ; k++ ) {
                                 _points_to_snap_to->push_back(b->corner(k));
@@ -588,7 +588,7 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
                                             Inkscape::Snapper::PointType const &t,
                                             NR::Point const &p,
                                             bool const &first_point,
-                                            NR::Maybe<NR::Rect> const &bbox_to_snap,
+                                            boost::optional<NR::Rect> const &bbox_to_snap,
                                             std::vector<SPItem const *> const *it,
                                             std::vector<NR::Point> *unselected_nodes) const
 {
@@ -631,7 +631,7 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
                                                   Inkscape::Snapper::PointType const &t,
                                                   NR::Point const &p,
                                                   bool const &first_point,
-                                                  NR::Maybe<NR::Rect> const &bbox_to_snap,
+                                                  boost::optional<NR::Rect> const &bbox_to_snap,
                                                   ConstraintLine const &c,
                                                   std::vector<SPItem const *> const *it) const
 {

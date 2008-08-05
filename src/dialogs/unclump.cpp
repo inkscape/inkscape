@@ -35,7 +35,7 @@ unclump_center (SPItem *item)
         return i->second;
     }
 
-    NR::Maybe<NR::Rect> r = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
+    boost::optional<NR::Rect> r = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
     if (r) {
     	NR::Point const c = r->midpoint();
     	c_cache[SP_OBJECT_ID(item)] = c;
@@ -54,7 +54,7 @@ unclump_wh (SPItem *item)
     if ( i != wh_cache.end() ) {
         wh = i->second;
     } else {
-        NR::Maybe<NR::Rect> r = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
+        boost::optional<NR::Rect> r = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
 	if (r) {
             wh = r->dimensions();
             wh_cache[SP_OBJECT_ID(item)] = wh;

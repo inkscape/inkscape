@@ -1180,7 +1180,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                         Path *livarot_path = Path_for_item(item, true, true);
                         livarot_path->ConvertWithBackData(0.04);
 
-                        NR::Maybe<Path::cut_position> position = get_nearest_position_on_Path(livarot_path, button_doc);
+                        boost::optional<Path::cut_position> position = get_nearest_position_on_Path(livarot_path, button_doc);
                         if (position) {
                             NR::Point nearest = get_point_on_Path(livarot_path, position->piece, position->t);
                             NR::Point delta = nearest - button_doc;
@@ -1252,7 +1252,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 int const saved_pref = prefs_get_int_attribute("options.transform", "pattern", 1);
                 prefs_set_int_attribute("options.transform", "pattern", 1);
                 sp_document_ensure_up_to_date(sp_desktop_document(desktop));
-                NR::Maybe<NR::Rect> sel_bbox = selection->bounds();
+                boost::optional<NR::Rect> sel_bbox = selection->bounds();
                 if (sel_bbox) {
                     NR::Point m( desktop->point() - sel_bbox->midpoint() );
                     sp_selection_move_relative(selection, m);

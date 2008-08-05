@@ -613,7 +613,7 @@ bool font_instance::FontSlope(double &run, double &rise)
 	return true;
 }
 
-NR::Maybe<NR::Rect> font_instance::BBox(int glyph_id)
+boost::optional<NR::Rect> font_instance::BBox(int glyph_id)
 {
 	int no=-1;
 	if ( id_to_no.find(glyph_id) == id_to_no.end() ) {
@@ -627,7 +627,7 @@ NR::Maybe<NR::Rect> font_instance::BBox(int glyph_id)
 		no=id_to_no[glyph_id];
 	}
 	if ( no < 0 ) {
-            return NR::Nothing();
+            return boost::optional<NR::Rect>();
         } else {
 	    NR::Point rmin(glyphs[no].bbox[0],glyphs[no].bbox[1]);
 	    NR::Point rmax(glyphs[no].bbox[2],glyphs[no].bbox[3]);

@@ -17,7 +17,7 @@ NRRect::NRRect(NR::Rect const &rect)
   x1(rect.max()[NR::X]), y1(rect.max()[NR::Y])
 {}
 
-NRRect::NRRect(NR::Maybe<NR::Rect> const &rect) {
+NRRect::NRRect(boost::optional<NR::Rect> const &rect) {
     if (rect) {
         x0 = rect->min()[NR::X];
         y0 = rect->min()[NR::Y];
@@ -28,9 +28,9 @@ NRRect::NRRect(NR::Maybe<NR::Rect> const &rect) {
     }
 }
 
-NR::Maybe<NR::Rect> NRRect::upgrade() const {
+boost::optional<NR::Rect> NRRect::upgrade() const {
     if (nr_rect_d_test_empty_ptr(this)) {
-        return NR::Nothing();
+        return boost::optional<NR::Rect>();
     } else {
         return NR::Rect(NR::Point(x0, y0), NR::Point(x1, y1));
     }
@@ -308,17 +308,17 @@ void Rect::growBy(double size) {
 } 
 
 /** Returns the set of points shared by both rectangles. */
-Maybe<Rect> intersection(Maybe<Rect> const & a, Maybe<Rect> const & b) {
+boost::optional<Rect> intersection(boost::optional<Rect> const & a, boost::optional<Rect> const & b) {
     if ( !a || !b ) {
-        return Nothing();
+        return boost::optional<Rect>();
     } else {
         Rect r;
         for ( int i=0 ; i < 2 ; i++ ) {
             r._min[i] = std::max(a->_min[i], b->_min[i]);
             r._max[i] = std::min(a->_max[i], b->_max[i]);
             if ( r._min[i] > r._max[i] ) {
-	        return Nothing();
-            }
+            return boost::optional<Rect>();
+        }
 	}
 	return r;
     }

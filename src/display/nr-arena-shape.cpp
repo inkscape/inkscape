@@ -716,7 +716,7 @@ nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::Rect &bbox)
 
 // cairo outline rendering:
 static unsigned int
-cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, NR::Maybe<NR::Rect> area)
+cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, boost::optional<NR::Rect> area)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
 

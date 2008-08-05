@@ -72,7 +72,7 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
             path->curve->penultimate_point()
         };
         for (unsigned h = 0; h < 2; ++h) {
-            NR::Maybe<NR::Rect> bbox = h2attItem[h]->getBounds(NR::identity());
+            boost::optional<NR::Rect> bbox = h2attItem[h]->getBounds(NR::identity());
             if (!bbox) {
                 if (updatePathRepr) {
                     path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -115,7 +115,7 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
 
         NR::Rect otherpt_rect = NR::Rect(other_endpt, other_endpt);
         NR::Rect h2bbox_icoordsys[2] = { otherpt_rect, otherpt_rect };
-        NR::Maybe<NR::Rect> bbox = h2attItem[ind]->getBounds(NR::identity());
+        boost::optional<NR::Rect> bbox = h2attItem[ind]->getBounds(NR::identity());
         if (!bbox) {
             if (updatePathRepr) {
                 path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);

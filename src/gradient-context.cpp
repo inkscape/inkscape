@@ -641,7 +641,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     if (r->is_started() && !event_context->within_tolerance) {
                         // this was a rubberband drag
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
-                            NR::Maybe<NR::Rect> const b = r->getRectangle();
+                            boost::optional<NR::Rect> const b = r->getRectangle();
                             drag->selectRect(*b);
                         }
                     }

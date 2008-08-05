@@ -40,7 +40,7 @@
 #include "pixmaps/cursor-push.xpm"
 #include "pixmaps/cursor-roughen.xpm"
 #include "pixmaps/cursor-color.xpm"
-#include "libnr/nr-maybe.h"
+#include <boost/optional.hpp>
 #include "libnr/nr-matrix-ops.h"
 #include "libnr/nr-scale-translate-ops.h"
 #include "xml/repr.h"
@@ -366,7 +366,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
 
         // skip those paths whose bboxes are entirely out of reach with our radius
-        NR::Maybe<NR::Rect> bbox = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
+        boost::optional<NR::Rect> bbox = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
         if (bbox) {
             bbox->growBy(radius);
             if (!bbox->contains(p)) {
@@ -736,7 +736,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         if (!style) {
             return false;
         }
-        NR::Maybe<NR::Rect> bbox = item->getBounds(from_2geom(sp_item_i2doc_affine(item)),
+        boost::optional<NR::Rect> bbox = item->getBounds(from_2geom(sp_item_i2doc_affine(item)),
                                                         SPItem::GEOMETRIC_BBOX);
         if (!bbox) {
             return false;

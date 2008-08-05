@@ -677,7 +677,7 @@ VPDrag::drawLinesForFace (const SPBox3D *box, Proj::Axis axis) //, guint corner1
         }
     } else {
         // draw perspective lines for infinite VPs
-        NR::Maybe<NR::Point> pt1, pt2, pt3, pt4;
+        boost::optional<NR::Point> pt1, pt2, pt3, pt4;
         Persp3D *persp = box3d_get_perspective(box);
         SPDesktop *desktop = inkscape_active_desktop (); // FIXME: Store the desktop in VPDrag
         Box3D::PerspectiveLine pl (corner1, axis, persp);

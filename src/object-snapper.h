@@ -80,7 +80,7 @@ public:
                       Inkscape::Snapper::PointType const &t,
                       NR::Point const &p,
                       bool const &first_point,
-                      NR::Maybe<NR::Rect> const &bbox_to_snap,
+                      boost::optional<NR::Rect> const &bbox_to_snap,
                       std::vector<SPItem const *> const *it,
                       std::vector<NR::Point> *unselected_nodes) const;
 
@@ -88,7 +88,7 @@ public:
                       Inkscape::Snapper::PointType const &t,
                       NR::Point const &p,
                       bool const &first_point,                                                                   
-                      NR::Maybe<NR::Rect> const &bbox_to_snap,
+                      boost::optional<NR::Rect> const &bbox_to_snap,
                       ConstraintLine const &c,
                       std::vector<SPItem const *> const *it) const;
   

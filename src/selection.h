@@ -243,7 +243,7 @@ public:
     /** @brief Returns the bounding rectangle of the selection */
     NRRect *bounds(NRRect *dest, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
     /** @brief Returns the bounding rectangle of the selection */
-    NR::Maybe<NR::Rect> bounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
+    boost::optional<NR::Rect> bounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
      * @brief Returns the bounding rectangle of the selection
@@ -257,12 +257,12 @@ public:
      *
      * \todo how is this different from bounds()?
      */
-    NR::Maybe<NR::Rect> boundsInDocument(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
+    boost::optional<NR::Rect> boundsInDocument(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
      * @brief Returns the rotation/skew center of the selection
      */
-    NR::Maybe<NR::Point> center() const;
+    boost::optional<NR::Point> center() const;
 
     /**
      * @brief Gets the selection's snap points.

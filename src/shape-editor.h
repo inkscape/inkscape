@@ -19,7 +19,7 @@ namespace Inkscape { namespace NodePath { class Path; } }
 
 #include "libnr/nr-path-code.h"
 #include "libnr/nr-point.h"
-#include "libnr/nr-maybe.h"
+#include <boost/optional.hpp>
 #include <vector>
 
 class KnotHolder;
@@ -114,7 +114,7 @@ public:
     void show_handles (bool show);
     void show_helperpath (bool show);
 
-    void flip (NR::Dim2 axis, NR::Maybe<NR::Point> center = NR::Nothing());
+    void flip (NR::Dim2 axis, boost::optional<NR::Point> center = boost::optional<NR::Point>());
 
     void distribute (NR::Dim2 axis);
     void align (NR::Dim2 axis);

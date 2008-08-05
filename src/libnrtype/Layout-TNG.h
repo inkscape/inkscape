@@ -11,6 +11,9 @@
 #ifndef __LAYOUT_TNG_H__
 #define __LAYOUT_TNG_H__
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 #include "libnr/nr-rect.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-matrix-ops.h"
@@ -19,6 +22,7 @@
 #include <pango/pango-break.h>
 #include <algorithm>
 #include <vector>
+#include <boost/optional.hpp>
 
 #ifdef HAVE_CAIRO_PDF
 namespace Inkscape {
@@ -444,7 +448,7 @@ public:
     /** Returns the bounding box of the given glyph, and its rotation.
     The centre of rotation is the horizontal centre of the box at the
     text baseline. */
-    NR::Maybe<NR::Rect> glyphBoundingBox(iterator const &it, double *rotation) const;
+    boost::optional<NR::Rect> glyphBoundingBox(iterator const &it, double *rotation) const;
 
     /** Returns the zero-based line number of the character pointed to by
     \a it. */

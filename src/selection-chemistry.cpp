@@ -567,12 +567,12 @@ sp_item_list_common_parent_group(GSList const *items)
 }
 
 /** Finds out the minimum common bbox of the selected items. */
-static NR::Maybe<NR::Rect>
+static boost::optional<NR::Rect>
 enclose_items(GSList const *items)
 {
     g_assert(items != NULL);
 
-    NR::Maybe<NR::Rect> r = NR::Nothing();
+    boost::optional<NR::Rect> r;
     for (GSList const *i = items; i; i = i->next) {
         r = NR::union_bounds(r, sp_item_bbox_desktop((SPItem *) i->data));
     }
@@ -621,7 +621,7 @@ sp_selection_raise()
     rev = g_slist_sort(rev, (GCompareFunc) sp_item_repr_compare_position);
 
     // Determine the common bbox of the selected items.
-    NR::Maybe<NR::Rect> selected = enclose_items(items);
+    boost::optional<NR::Rect> selected = enclose_items(items);
 
     // Iterate over all objects in the selection (starting from top).
     if (selected) {
@@ -631,7 +631,7 @@ sp_selection_raise()
             for (SPObject *newref = child->next; newref; newref = newref->next) {
                 // if the sibling is an item AND overlaps our selection,
                 if (SP_IS_ITEM(newref)) {
-                    NR::Maybe<NR::Rect> newref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
+                    boost::optional<NR::Rect> newref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
                     if ( newref_bbox && selected->intersects(*newref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if (!g_slist_find((GSList *) items, newref)) {
@@ -713,7 +713,7 @@ sp_selection_lower()
     Inkscape::XML::Node *grepr = SP_OBJECT_REPR(group);
 
     // Determine the common bbox of the selected items.
-    NR::Maybe<NR::Rect> selected = enclose_items(items);
+    boost::optional<NR::Rect> selected = enclose_items(items);
 
     /* Construct direct-ordered list of selected children. */
     GSList *rev = g_slist_copy((GSList *) items);
@@ -728,7 +728,7 @@ sp_selection_lower()
             for (SPObject *newref = prev_sibling(child); newref; newref = prev_sibling(newref)) {
                 // if the sibling is an item AND overlaps our selection,
                 if (SP_IS_ITEM(newref)) {
-                    NR::Maybe<NR::Rect> ref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
+                    boost::optional<NR::Rect> ref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
                     if ( ref_bbox && selected->intersects(*ref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if (!g_slist_find((GSList *) items, newref)) {
@@ -1248,7 +1248,7 @@ sp_selection_scale_absolute(Inkscape::Selection *selection,
     if (selection->isEmpty())
         return;
 
-    NR::Maybe<NR::Rect> const bbox(selection->bounds());
+    boost::optional<NR::Rect> const bbox(selection->bounds());
     if ( !bbox || bbox->isEmpty() ) {
         return;
     }
@@ -1270,7 +1270,7 @@ void sp_selection_scale_relative(Inkscape::Selection *selection, NR::Point const
     if (selection->isEmpty())
         return;
 
-    NR::Maybe<NR::Rect> const bbox(selection->bounds());
+    boost::optional<NR::Rect> const bbox(selection->bounds());
 
     if ( !bbox || bbox->isEmpty() ) {
         return;
@@ -1379,7 +1379,7 @@ sp_selection_rotate(Inkscape::Selection *selection, gdouble const angle_degrees)
     if (selection->isEmpty())
         return;
 
-    NR::Maybe<NR::Point> center = selection->center();
+    boost::optional<NR::Point> center = selection->center();
     if (!center) {
         return;
     }
@@ -1403,8 +1403,8 @@ sp_selection_rotate_screen(Inkscape::Selection *selection, gdouble angle)
     if (selection->isEmpty())
         return;
 
-    NR::Maybe<NR::Rect> const bbox(selection->bounds());
-    NR::Maybe<NR::Point> center = selection->center();
+    boost::optional<NR::Rect> const bbox(selection->bounds());
+    boost::optional<NR::Point> center = selection->center();
 
     if ( !bbox || !center ) {
         return;
@@ -1432,7 +1432,7 @@ sp_selection_scale(Inkscape::Selection *selection, gdouble grow)
     if (selection->isEmpty())
         return;
 
-    NR::Maybe<NR::Rect> const bbox(selection->bounds());
+    boost::optional<NR::Rect> const bbox(selection->bounds());
     if (!bbox) {
         return;
     }
@@ -1469,7 +1469,7 @@ sp_selection_scale_times(Inkscape::Selection *selection, gdouble times)
     if (selection->isEmpty())
         return;
 
-    NR::Maybe<NR::Rect> sel_bbox = selection->bounds();
+    boost::optional<NR::Rect> sel_bbox = selection->bounds();
 
     if (!sel_bbox) {
         return;
@@ -1795,7 +1795,7 @@ SPItem *next_item(SPDesktop *desktop, GSList *path, SPObject *root,
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item)
 {
     NR::Rect dbox = desktop->get_display_area();
-    NR::Maybe<NR::Rect> sbox = sp_item_bbox_desktop(item);
+    boost::optional<NR::Rect> sbox = sp_item_bbox_desktop(item);
 
     if ( sbox && dbox.contains(*sbox) == false ) {
         NR::Point const s_dt = sbox->midpoint();
@@ -2054,8 +2054,8 @@ void sp_selection_to_marker(bool apply)
     }
 
     sp_document_ensure_up_to_date(doc);
-    NR::Maybe<NR::Rect> r = selection->bounds();
-    NR::Maybe<NR::Point> c = selection->center();
+    boost::optional<NR::Rect> r = selection->bounds();
+    boost::optional<NR::Point> c = selection->center();
     if ( !r || !c || r->isEmpty() ) {
         return;
     }
@@ -2177,7 +2177,7 @@ sp_selection_tile(bool apply)
     }
 
     sp_document_ensure_up_to_date(doc);
-    NR::Maybe<NR::Rect> r = selection->bounds();
+    boost::optional<NR::Rect> r = selection->bounds();
     if ( !r || r->isEmpty() ) {
         return;
     }
@@ -2836,7 +2836,7 @@ fit_canvas_to_selection(SPDesktop *desktop)
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to fit canvas to."));
         return false;
     }
-    NR::Maybe<NR::Rect> const bbox(desktop->selection->bounds());
+    boost::optional<NR::Rect> const bbox(desktop->selection->bounds());
     if (bbox && !bbox->isEmpty()) {
         doc->fitToRect(*bbox);
         return true;
@@ -2864,7 +2864,7 @@ fit_canvas_to_drawing(SPDocument *doc)
 
     sp_document_ensure_up_to_date(doc);
     SPItem const *const root = SP_ITEM(doc->root);
-    NR::Maybe<NR::Rect> const bbox(root->getBounds(from_2geom(sp_item_i2r_affine(root))));
+    boost::optional<NR::Rect> const bbox(root->getBounds(from_2geom(sp_item_i2r_affine(root))));
     if (bbox && !bbox->isEmpty()) {
         doc->fitToRect(*bbox);
         return true;

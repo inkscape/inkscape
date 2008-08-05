@@ -1610,7 +1610,7 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
 
   bool didSomething = false;
 
-  NR::Maybe<NR::Rect> selectionBbox = selection->bounds();
+  boost::optional<NR::Rect> selectionBbox = selection->bounds();
   if (!selectionBbox) {
     return false;
   }
@@ -1631,7 +1631,7 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
           continue;
 
       if (simplifyIndividualPaths) {
-          NR::Maybe<NR::Rect> itemBbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
+          boost::optional<NR::Rect> itemBbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
           if (itemBbox) {
               simplifySize      = L2(itemBbox->dimensions());
           } else {
@@ -1871,7 +1871,7 @@ Path *bpath_to_Path(NArtBpath const *bpath)
     return dest;
 }
 
-NR::Maybe<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p, unsigned seg)
+boost::optional<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p, unsigned seg)
 {
     //get nearest position on path
     Path::cut_position pos = path->PointToCurvilignPosition(p, seg);

@@ -22,7 +22,7 @@
 #include <libnr/nr-i-coord.h>
 #include <libnr/nr-dim2.h>
 #include <libnr/nr-point.h>
-#include <libnr/nr-maybe.h>
+#include <boost/optional.hpp>
 #include <libnr/nr-point-matrix-ops.h>
 #include <libnr/nr-forward.h>
 
@@ -147,7 +147,7 @@ public:
     friend inline std::ostream &operator<<(std::ostream &out_file, NR::Rect const &in_rect);
 
 private:
-    Rect(Nothing) : _min(1, 1), _max(-1, -1) {}
+//    Rect(Nothing) : _min(1, 1), _max(-1, -1) {}
 
     static double _inf() {
         return std::numeric_limits<double>::infinity();
@@ -180,47 +180,30 @@ private:
 
     Point _min, _max;
 
-    friend class MaybeStorage<Rect>;
-    friend Maybe<Rect> intersection(Maybe<Rect> const &, Maybe<Rect> const &);
+    friend boost::optional<Rect> intersection(boost::optional<Rect> const &, boost::optional<Rect> const &);
     friend Rect union_bounds(Rect const &, Rect const &);
 };
 
-template <>
-class MaybeStorage<Rect> {
-public:
-    MaybeStorage() : _rect(Nothing()) {}
-    MaybeStorage(Rect const &rect) : _rect(rect) {}
-
-    bool is_nothing() const {
-        return _rect._min[X] > _rect._max[X];
-    }
-    Rect const &value() const { return _rect; }
-    Rect &value() { return _rect; }
-
-private:
-    Rect _rect;
-};
-
 /** Returns the set of points shared by both rectangles. */
-Maybe<Rect> intersection(Maybe<Rect> const & a, Maybe<Rect> const & b);
+boost::optional<Rect> intersection(boost::optional<Rect> const & a, boost::optional<Rect> const & b);
 
 /** Returns the smallest rectangle that encloses both rectangles. */
 Rect union_bounds(Rect const &a, Rect const &b);
-inline Rect union_bounds(Maybe<Rect> const & a, Rect const &b) {
+inline Rect union_bounds(boost::optional<Rect> const & a, Rect const &b) {
     if (a) {
         return union_bounds(*a, b);
     } else {
         return b;
     }
 }
-inline Rect union_bounds(Rect const &a, Maybe<Rect> const & b) {
+inline Rect union_bounds(Rect const &a, boost::optional<Rect> const & b) {
     if (b) {
         return union_bounds(a, *b);
     } else {
         return a;
     }
 }
-inline Maybe<Rect> union_bounds(Maybe<Rect> const & a, Maybe<Rect> const & b)
+inline boost::optional<Rect> union_bounds(boost::optional<Rect> const & a, boost::optional<Rect> const & b)
 {
     if (!a) {
         return b;
@@ -257,9 +240,9 @@ struct NRRect {
     : x0(xmin), y0(ymin), x1(xmax), y1(ymax)
     {}
     explicit NRRect(NR::Rect const &rect);
-    explicit NRRect(NR::Maybe<NR::Rect> const &rect);
-    operator NR::Maybe<NR::Rect>() const { return upgrade(); }
-    NR::Maybe<NR::Rect> upgrade() const;
+    explicit NRRect(boost::optional<NR::Rect> const &rect);
+    operator boost::optional<NR::Rect>() const { return upgrade(); }
+    boost::optional<NR::Rect> upgrade() const;
 
     NR::Coord x0, y0, x1, y1;
 };

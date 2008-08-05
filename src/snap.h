@@ -55,12 +55,12 @@ public:
     void freeSnapReturnByRef(Inkscape::Snapper::PointType point_type,
                       NR::Point &p,
                       bool first_point = true,
-                      NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
+                      boost::optional<NR::Rect> const &bbox_to_snap = boost::optional<NR::Rect>()) const;
     
     Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType point_type,
                                     NR::Point const &p,
                                     bool first_point = true,
-                                    NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
+                                    boost::optional<NR::Rect> const &bbox_to_snap = boost::optional<NR::Rect>() ) const;
     
     // constrainedSnapReturnByRef() is preferred over constrainedSnap(), because it only returns a 
     // point, by overwriting p, if snapping has occured; otherwise p is untouched
@@ -68,13 +68,13 @@ public:
                              NR::Point &p,
                              Inkscape::Snapper::ConstraintLine const &constraint,
                              bool first_point = true,
-                             NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
+                             boost::optional<NR::Rect> const &bbox_to_snap = boost::optional<NR::Rect>()) const;
     
     Inkscape::SnappedPoint constrainedSnap(Inkscape::Snapper::PointType point_type,
                                            NR::Point const &p,
                                            Inkscape::Snapper::ConstraintLine const &constraint,
                                            bool first_point = true,
-                                           NR::Maybe<NR::Rect> const &bbox_to_snap = NR::Nothing()) const;
+                                           boost::optional<NR::Rect> const &bbox_to_snap = boost::optional<NR::Rect>()) const;
                                            
     void guideSnap(NR::Point &p, NR::Point const &guide_normal) const;
 

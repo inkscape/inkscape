@@ -671,7 +671,7 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                         hpos[len] = base_pt[0];
                         len++;
                         if ( curF ) {
-                            NR::Maybe<NR::Rect> nbbox = curF->BBox(str_text->glyph_text[i].gl);
+                            boost::optional<NR::Rect> nbbox = curF->BBox(str_text->glyph_text[i].gl);
                             if (nbbox) {
                                 bbox.x0 = MIN(bbox.x0, base_pt[Geom::X] + theSize * (nbbox->min())[0]);
                                 bbox.y0 = MIN(bbox.y0, base_pt[Geom::Y] - theSize * (nbbox->max())[1]);

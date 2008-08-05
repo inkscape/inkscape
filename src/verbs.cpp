@@ -1309,7 +1309,7 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
     if (sel->isEmpty())
         return;
 
-    NR::Maybe<NR::Rect> bbox = sel->bounds();
+    boost::optional<NR::Rect> bbox = sel->bounds();
     if (!bbox) {
         return;
     }

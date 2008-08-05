@@ -14,7 +14,7 @@
 
 #include "libnr/nr-point.h"
 #include "libnr/nr-point-fns.h"
-#include "libnr/nr-maybe.h"
+#include <boost/optional.hpp>
 #include "glib.h"
 #include "display/sp-ctrlline.h"
 #include "axis-manip.h" // FIXME: This is only for Box3D::epsilon; move that to a better location
@@ -30,13 +30,13 @@ public:
     Line(Line const &line);
     virtual ~Line() {}
     Line &operator=(Line const &line);
-    virtual NR::Maybe<NR::Point> intersect(Line const &line);
+    virtual boost::optional<NR::Point> intersect(Line const &line);
     inline NR::Point direction () { return v_dir; }
     
     NR::Point closest_to(NR::Point const &pt); // returns the point on the line closest to pt 
 
     friend inline std::ostream &operator<< (std::ostream &out_file, const Line &in_line);
-    NR::Maybe<NR::Point> intersection_with_viewbox (SPDesktop *desktop);
+    boost::optional<NR::Point> intersection_with_viewbox (SPDesktop *desktop);
     inline bool lie_on_same_side (NR::Point const &A, NR::Point const &B) {
         /* If A is a point in the plane and n is the normal vector of the line then
            the sign of dot(A, n) specifies the half-plane in which A lies.

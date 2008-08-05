@@ -201,7 +201,7 @@ Layout::iterator Layout::sourceToIterator(void *source_cookie) const
     return sourceToIterator(source_cookie, Glib::ustring::const_iterator(std::string::const_iterator(NULL)));
 }
 
-NR::Maybe<NR::Rect> Layout::glyphBoundingBox(iterator const &it, double *rotation) const
+boost::optional<NR::Rect> Layout::glyphBoundingBox(iterator const &it, double *rotation) const
 {
    if (rotation) *rotation = _glyphs[it._glyph_index].rotation;
    return _glyphs[it._glyph_index].span(this).font->BBox(_glyphs[it._glyph_index].glyph);

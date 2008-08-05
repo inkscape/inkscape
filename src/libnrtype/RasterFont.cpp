@@ -107,7 +107,7 @@ void           raster_font::BBox(int glyph_id,NRRect *area)
 {
 	area->x0=area->y0=area->x1=area->y1=0;
 	if ( daddy == NULL ) return;
-	NR::Maybe<NR::Rect> res=daddy->BBox(glyph_id);
+	boost::optional<NR::Rect> res=daddy->BBox(glyph_id);
 	if (res) {
 		NR::Point bmi=res->min(),bma=res->max();
 		NR::Point tlp(bmi[0],bmi[1]),trp(bma[0],bmi[1]),blp(bmi[0],bma[1]),brp(bma[0],bma[1]);

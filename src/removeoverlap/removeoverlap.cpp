@@ -48,7 +48,7 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 		++it)
 	{
 		using NR::X; using NR::Y;
-		NR::Maybe<NR::Rect> item_box(sp_item_bbox_desktop(*it));
+		boost::optional<NR::Rect> item_box(sp_item_bbox_desktop(*it));
 		if (item_box) {
 			NR::Point min(item_box->min() - .5*gap);
 			NR::Point max(item_box->max() + .5*gap);

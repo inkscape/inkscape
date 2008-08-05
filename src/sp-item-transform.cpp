@@ -46,7 +46,7 @@ sp_item_rotate_rel(SPItem *item, NR::rotate const &rotation)
 void
 sp_item_scale_rel (SPItem *item, NR::scale const &scale)
 {
-    NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(item);
+    boost::optional<NR::Rect> bbox = sp_item_bbox_desktop(item);
     if (bbox) {
         NR::translate const s(bbox->midpoint()); // use getCenter?
         sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * to_2geom(NR::Matrix(inverse(s)) * scale * s));
@@ -166,7 +166,7 @@ get_scale_transform_with_stroke (NR::Rect &bbox_param, gdouble strokewidth, bool
 }
 
 NR::Rect
-get_visual_bbox (NR::Maybe<NR::Rect> const &initial_geom_bbox, NR::Matrix const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke)
+get_visual_bbox (boost::optional<NR::Rect> const &initial_geom_bbox, NR::Matrix const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke)
 {
     
     g_assert(initial_geom_bbox);

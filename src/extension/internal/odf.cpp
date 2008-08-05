@@ -962,9 +962,9 @@ static NR::Matrix getODFTransform(const SPItem *item)
  * Get the bounding box of an item, as mapped onto
  * an ODF document, in cm.
  */
-static NR::Maybe<NR::Rect> getODFBoundingBox(const SPItem *item)
+static boost::optional<NR::Rect> getODFBoundingBox(const SPItem *item)
 {
-    NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop((SPItem *)item);
+    boost::optional<NR::Rect> bbox = sp_item_bbox_desktop((SPItem *)item);
     if (bbox) {
         double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
         NR::Matrix doc2dt_tf = NR::Matrix(NR::scale(1.0, -1.0));
@@ -1864,7 +1864,7 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
     NR::Matrix tf        = getODFTransform(item);
 
     //### Get ODF bounding box params for item
-    NR::Maybe<NR::Rect> bbox = getODFBoundingBox(item);
+    boost::optional<NR::Rect> bbox = getODFBoundingBox(item);
     if (!bbox) {
         return true;
     }

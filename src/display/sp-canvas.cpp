@@ -792,7 +792,7 @@ sp_canvas_group_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
         }
     }
 
-    NR::Maybe<NR::Rect> const bounds = corners.bounds();
+    boost::optional<NR::Rect> const bounds = corners.bounds();
     if (bounds) {
         item->x1 = bounds->min()[NR::X];
         item->y1 = bounds->min()[NR::Y];

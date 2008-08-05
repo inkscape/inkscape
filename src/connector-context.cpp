@@ -1148,7 +1148,7 @@ static void cc_set_active_shape(SPConnectorContext *cc, SPItem *item)
     }
 
 
-    NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(cc->active_shape);
+    boost::optional<NR::Rect> bbox = sp_item_bbox_desktop(cc->active_shape);
     if (bbox) {
         NR::Point center = bbox->midpoint();
         sp_knot_set_position(cc->connpthandle, center, 0);

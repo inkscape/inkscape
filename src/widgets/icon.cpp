@@ -623,7 +623,7 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
         if (object && SP_IS_ITEM(object)) {
             /* Find bbox in document */
             Geom::Matrix const i2doc(sp_item_i2doc_affine(SP_ITEM(object)));
-            NR::Maybe<Geom::Rect> dbox = SP_ITEM(object)->getBounds(i2doc);
+            boost::optional<Geom::Rect> dbox = SP_ITEM(object)->getBounds(i2doc);
 
             if ( SP_OBJECT_PARENT(object) == NULL )
             {

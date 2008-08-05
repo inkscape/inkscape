@@ -313,7 +313,7 @@ void sp_node_selected_move (Inkscape::NodePath::Path *nodepath, gdouble dx, gdou
 void sp_node_selected_move_screen (Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy);
 void sp_node_selected_move_absolute (Inkscape::NodePath::Path *nodepath, Geom::Coord val, Geom::Dim2 axis);
 Geom::Rect sp_node_selected_bbox (Inkscape::NodePath::Path *nodepath);
-NR::Maybe<Geom::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis);
+boost::optional<Geom::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis);
 
 void sp_nodepath_show_handles(Inkscape::NodePath::Path *nodepath, bool show);
 //SPCanvasItem *sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem *item, guint32 color);
@@ -328,6 +328,6 @@ void sp_nodepath_selected_nodes_rotate (Inkscape::NodePath::Path * nodepath, gdo
 void sp_nodepath_selected_nodes_scale (Inkscape::NodePath::Path * nodepath, gdouble grow, int which);
 void sp_nodepath_selected_nodes_scale_screen (Inkscape::NodePath::Path * nodepath, gdouble grow, int which);
 
-void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, NR::Maybe<NR::Point> center);
+void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, boost::optional<NR::Point> center);
 
 #endif

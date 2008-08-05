@@ -920,7 +920,7 @@ do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gch
         SPItem *item = ((SPItem *) o);
 
         // "true" SVG bbox for scripting
-        NR::Maybe<NR::Rect> area = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
+        boost::optional<NR::Rect> area = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
         if (area) {
             Inkscape::SVGOStringStream os;
             if (extent) {
@@ -953,7 +953,7 @@ do_query_all_recurse (SPObject *o)
 {
     SPItem *item = ((SPItem *) o);
     if (o->id && SP_IS_ITEM(item)) {
-        NR::Maybe<NR::Rect> area = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
+        boost::optional<NR::Rect> area = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
         if (area) {
             Inkscape::SVGOStringStream os;
             os << o->id;

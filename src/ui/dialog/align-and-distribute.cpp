@@ -153,7 +153,7 @@ private :
             SPItem * thing = *master;
             selected.erase(master);
             //Compute the anchor point
-            NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (thing);
+            boost::optional<NR::Rect> b = sp_item_bbox_desktop (thing);
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -170,7 +170,7 @@ private :
 
         case AlignAndDistribute::DRAWING:
         {
-            NR::Maybe<NR::Rect> b = sp_item_bbox_desktop
+            boost::optional<NR::Rect> b = sp_item_bbox_desktop
                 ( (SPItem *) sp_document_root (sp_desktop_document (desktop)) );
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
@@ -183,7 +183,7 @@ private :
 
         case AlignAndDistribute::SELECTION:
         {
-            NR::Maybe<NR::Rect> b =  selection->bounds();
+            boost::optional<NR::Rect> b =  selection->bounds();
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -214,7 +214,7 @@ private :
              it++)
         {
             sp_document_ensure_up_to_date(sp_desktop_document (desktop));
-            NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (*it);
+            boost::optional<NR::Rect> b = sp_item_bbox_desktop (*it);
             if (b) {
                 Geom::Point const sp(a.sx0 * b->min()[Geom::X] + a.sx1 * b->max()[Geom::X],
                                    a.sy0 * b->min()[Geom::Y] + a.sy1 * b->max()[Geom::Y]);
@@ -318,7 +318,7 @@ private :
             it != selected.end();
             ++it)
         {
-            NR::Maybe<NR::Rect> bbox = sp_item_bbox_desktop(*it);
+            boost::optional<NR::Rect> bbox = sp_item_bbox_desktop(*it);
             if (bbox) {
                 sorted.push_back(BBoxSort(*it, to_2geom(*bbox), _orientation, _kBegin, _kEnd));
             }
@@ -590,7 +590,7 @@ private :
         //Check 2 or more selected objects
         if (selected.size() < 2) return;
 
-        NR::Maybe<NR::Rect> sel_bbox = selection->bounds();
+        boost::optional<NR::Rect> sel_bbox = selection->bounds();
         if (!sel_bbox) {
             return;
         }
@@ -611,7 +611,7 @@ private :
             ++it)
         {
             sp_document_ensure_up_to_date(sp_desktop_document (desktop));
-            NR::Maybe<NR::Rect> item_box = sp_item_bbox_desktop (*it);
+            boost::optional<NR::Rect> item_box = sp_item_bbox_desktop (*it);
             if (item_box) {
                 // find new center, staying within bbox
                 double x = _dialog.randomize_bbox->min()[Geom::X] + (*item_box).extent(Geom::X)/2 +
@@ -762,7 +762,7 @@ void on_tool_changed(Inkscape::Application */*inkscape*/, SPEventContext */*cont
 
 void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selection */*selection*/, AlignAndDistribute *daad)
 {
-    daad->randomize_bbox = NR::Nothing();
+    daad->randomize_bbox = boost::optional<Geom::Rect>();
 }
 
 /////////////////////////////////////////////////////////
@@ -772,7 +772,7 @@ void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selecti
 
 AlignAndDistribute::AlignAndDistribute()
     : UI::Widget::Panel ("", "dialogs.align", SP_VERB_DIALOG_ALIGN_DISTRIBUTE),
-      randomize_bbox(NR::Nothing()),
+      randomize_bbox(),
       _alignFrame(_("Align")),
       _distributeFrame(_("Distribute")),
       _removeOverlapFrame(_("Remove overlaps")),
@@ -935,7 +935,7 @@ AlignAndDistribute::AlignAndDistribute()
 
     // Connect to the global selection change, to invalidate cached randomize_bbox
     g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (on_selection_changed), this);
-    randomize_bbox = NR::Nothing();
+    randomize_bbox = boost::optional<Geom::Rect>();
 
     show_all_children();
 
@@ -1073,7 +1073,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = -1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (*it);
+            boost::optional<NR::Rect> b = sp_item_bbox_desktop (*it);
             if (b) {
                 gdouble dim = (*b).extent(horizontal ? Geom::X : Geom::Y);
                 if (dim > max) {
@@ -1090,7 +1090,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = 1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            NR::Maybe<NR::Rect> b = sp_item_bbox_desktop (*it);
+            boost::optional<NR::Rect> b = sp_item_bbox_desktop (*it);
             if (b) {
                 gdouble dim = (*b).extent(horizontal ? Geom::X : Geom::Y);
                 if (dim < max) {

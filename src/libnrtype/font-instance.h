@@ -77,7 +77,7 @@ public:
     bool                 FontMetrics(double &ascent, double &descent, double &leading);
     bool                 FontSlope(double &run, double &rise);
                                 // for generating slanted cursors for oblique fonts
-    NR::Maybe<NR::Rect>             BBox(int glyph_id);
+    boost::optional<NR::Rect>             BBox(int glyph_id);
 
 		// creates a rasterfont for the given style
     raster_font*         RasterFont(NR::Matrix const &trs, double stroke_width,

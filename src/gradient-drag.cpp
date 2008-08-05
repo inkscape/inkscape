@@ -1723,7 +1723,7 @@ GrDrag::updateLevels ()
 
     for (GSList const* i = this->selection->itemList(); i != NULL; i = i->next) {
         SPItem *item = SP_ITEM(i->data);
-        NR::Maybe<NR::Rect> rect = sp_item_bbox_desktop (item);
+        boost::optional<NR::Rect> rect = sp_item_bbox_desktop (item);
         if (rect) {
             // Remember the edges of the bbox and the center axis
             hor_levels.push_back(rect->min()[NR::Y]);

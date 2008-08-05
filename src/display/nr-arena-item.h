@@ -91,7 +91,7 @@ struct NRArenaItem : public NRObject {
     NRRectL bbox;
     /* BBox in item coordinates - this should be a bounding box as
      * specified in SVG standard. Required by filters. */
-    NR::Maybe<NR::Rect> item_bbox;
+    boost::optional<NR::Rect> item_bbox;
     /* Our affine */
     NR::Matrix *transform;
     /* Clip item */
@@ -177,7 +177,7 @@ void nr_arena_item_set_visible (NRArenaItem *item, unsigned int visible);
 void nr_arena_item_set_clip (NRArenaItem *item, NRArenaItem *clip);
 void nr_arena_item_set_mask (NRArenaItem *item, NRArenaItem *mask);
 void nr_arena_item_set_order (NRArenaItem *item, int order);
-void nr_arena_item_set_item_bbox (NRArenaItem *item, NR::Maybe<NR::Rect> &bbox);
+void nr_arena_item_set_item_bbox (NRArenaItem *item, boost::optional<NR::Rect> &bbox);
 
 NRPixBlock *nr_arena_item_get_background (NRArenaItem const *item, int depth = 0);
 

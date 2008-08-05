@@ -571,7 +571,7 @@ void ShapeEditor::show_helperpath (bool show) {
         sp_nodepath_show_helperpath (this->nodepath, show);
 }
 
-void ShapeEditor::flip (NR::Dim2 axis, NR::Maybe<NR::Point> center) {
+void ShapeEditor::flip (NR::Dim2 axis, boost::optional<NR::Point> center) {
     if (this->nodepath)
         sp_nodepath_flip (this->nodepath, axis, center);
 }

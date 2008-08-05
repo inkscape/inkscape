@@ -978,7 +978,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
                 int const saved_pref = prefs_get_int_attribute("options.transform", "pattern", 1);
                 prefs_set_int_attribute("options.transform", "pattern", 1);
                 sp_document_ensure_up_to_date(sp_desktop_document(desktop));
-                NR::Maybe<NR::Rect> sel_bbox = selection->bounds();
+                boost::optional<NR::Rect> sel_bbox = selection->bounds();
                 if (sel_bbox) {
                     NR::Point m( desktop->point() - sel_bbox->midpoint() );
                     sp_selection_move_relative(selection, m);

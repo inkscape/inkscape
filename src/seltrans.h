@@ -131,9 +131,9 @@ private:
 
     SPItem::BBoxType _snap_bbox_type;
     
-    NR::Maybe<NR::Rect> _bbox;
-    NR::Maybe<NR::Rect> _approximate_bbox;
-    NR::Maybe<NR::Rect> _geometric_bbox;
+    boost::optional<NR::Rect> _bbox;
+    boost::optional<NR::Rect> _approximate_bbox;
+    boost::optional<NR::Rect> _geometric_bbox;
     gdouble _strokewidth;
     
     NR::Matrix _current_relative_affine;
@@ -154,7 +154,7 @@ private:
     gdouble _handle_x;
     gdouble _handle_y;
 
-    NR::Maybe<NR::Point> _center;
+    boost::optional<NR::Point> _center;
     bool _center_is_set; ///< we've already set _center, no need to reread it from items
 
     SPKnot *_shandle[8];

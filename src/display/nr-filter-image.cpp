@@ -62,7 +62,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         Matrix identity(1.0, 0.0,
                    0.0, 1.0,
                    0.0, 0.0);
-        NR::Maybe<NR::Rect> area = SVGElem->getBounds(identity);
+        boost::optional<NR::Rect> area = SVGElem->getBounds(identity);
         
         NRRectL rect;
         rect.x0=area->min()[NR::X];

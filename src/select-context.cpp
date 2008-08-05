@@ -594,7 +594,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         // this was a rubberband drag
                         GSList *items = NULL;
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
-                            NR::Maybe<NR::Rect> const b = r->getRectangle();
+                            boost::optional<NR::Rect> const b = r->getRectangle();
                             items = sp_document_items_in_box(sp_desktop_document(desktop), desktop->dkey, *b);
                         } else if (r->getMode() == RUBBERBAND_MODE_TOUCHPATH) {
                             items = sp_document_items_at_points(sp_desktop_document(desktop), desktop->dkey, r->getPoints());

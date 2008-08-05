@@ -182,7 +182,7 @@ bool SnapManager::getSnapModeGuide() const
 void SnapManager::freeSnapReturnByRef(Inkscape::Snapper::PointType point_type,
                                              NR::Point &p,
                                              bool first_point,
-                                             NR::Maybe<NR::Rect> const &bbox_to_snap) const
+                                             boost::optional<NR::Rect> const &bbox_to_snap) const
 {
     Inkscape::SnappedPoint const s = freeSnap(point_type, p, first_point, bbox_to_snap);                                                            
     s.getPoint(p);
@@ -202,7 +202,7 @@ void SnapManager::freeSnapReturnByRef(Inkscape::Snapper::PointType point_type,
 Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType point_type,
                                              NR::Point const &p,
                                              bool first_point,
-                                             NR::Maybe<NR::Rect> const &bbox_to_snap) const
+                                             boost::optional<NR::Rect> const &bbox_to_snap) const
 {
     if (!SomeSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false);
@@ -248,7 +248,7 @@ void SnapManager::constrainedSnapReturnByRef(Inkscape::Snapper::PointType point_
                                                     NR::Point &p,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
                                                     bool first_point,
-                                                    NR::Maybe<NR::Rect> const &bbox_to_snap) const
+                                                    boost::optional<NR::Rect> const &bbox_to_snap) const
 {
     Inkscape::SnappedPoint const s = constrainedSnap(point_type, p, constraint, first_point, bbox_to_snap);                                                            
     s.getPoint(p);
@@ -270,7 +270,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
                                                     NR::Point const &p,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
                                                     bool first_point,
-                                                    NR::Maybe<NR::Rect> const &bbox_to_snap) const
+                                                    boost::optional<NR::Rect> const &bbox_to_snap) const
 {
     if (!SomeSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false);

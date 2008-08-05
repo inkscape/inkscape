@@ -116,7 +116,7 @@ void Layout::getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform, i
         _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
         NR::Matrix total_transform = glyph_matrix;
         total_transform *= transform;
-        NR::Maybe<NR::Rect> glyph_rect = _glyphs[glyph_index].span(this).font->BBox(_glyphs[glyph_index].glyph);
+        boost::optional<NR::Rect> glyph_rect = _glyphs[glyph_index].span(this).font->BBox(_glyphs[glyph_index].glyph);
         if (glyph_rect) {
             NR::Point bmi = glyph_rect->min(), bma = glyph_rect->max();
             NR::Point tlp(bmi[0],bmi[1]), trp(bma[0],bmi[1]), blp(bmi[0],bma[1]), brp(bma[0],bma[1]);

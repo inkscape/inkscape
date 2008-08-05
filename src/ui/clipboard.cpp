@@ -405,14 +405,14 @@ bool ClipboardManagerImpl::pasteSize(bool separately, bool apply_x, bool apply_y
         if (separately) {
             for (GSList *i = const_cast<GSList*>(selection->itemList()) ; i ; i = i->next) {
                 SPItem *item = SP_ITEM(i->data);
-                NR::Maybe<NR::Rect> obj_size = sp_item_bbox_desktop(item);
+                boost::optional<NR::Rect> obj_size = sp_item_bbox_desktop(item);
                 if ( !obj_size || obj_size->isEmpty() ) continue;
                 sp_item_scale_rel(item, _getScale(min, max, to_2geom(*obj_size), apply_x, apply_y));
             }
         }
         // resize the selection as a whole
         else {
-            NR::Maybe<NR::Rect> sel_size = selection->bounds();
+            boost::optional<NR::Rect> sel_size = selection->bounds();
             if ( sel_size && !sel_size->isEmpty() ) {
                 sp_selection_scale_relative(selection, sel_size->midpoint(),
                     _getScale(min, max, to_2geom(*sel_size), apply_x, apply_y));
@@ -569,7 +569,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
         }
     }
 
-    NR::Maybe<NR::Rect> size = selection->bounds();
+    boost::optional<NR::Rect> size = selection->bounds();
     if (size) {
         sp_repr_set_point(_clipnode, "min", size->min());
         sp_repr_set_point(_clipnode, "max", size->max());
@@ -774,7 +774,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
     // copied from former sp_selection_paste in selection-chemistry.cpp
     else {
         sp_document_ensure_up_to_date(target_document);
-        NR::Maybe<NR::Rect> sel_size = selection->bounds();
+        boost::optional<NR::Rect> sel_size = selection->bounds();
 
         Geom::Point m( desktop->point() );
         if (sel_size) {

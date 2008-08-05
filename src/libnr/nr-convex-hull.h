@@ -20,11 +20,11 @@ public:
     ConvexHull() : _bounds() {}
 	explicit ConvexHull(Point const &p) : _bounds(Rect(p, p)) {}
 
-    Maybe<Point> midpoint() const {
+    boost::optional<Point> midpoint() const {
         if (_bounds) {
             return _bounds->midpoint();
         } else {
-            return Nothing();
+            return boost::optional<Point>();
         }
     }
 
@@ -46,12 +46,12 @@ public:
         }
 	}
 
-	Maybe<Rect> const &bounds() const {
+	boost::optional<Rect> const &bounds() const {
 		return _bounds;
 	}
 	
 private:
-    Maybe<Rect> _bounds;
+    boost::optional<Rect> _bounds;
 };
 
 } /* namespace NR */
