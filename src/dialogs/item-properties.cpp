@@ -341,12 +341,14 @@ sp_item_widget_setup ( SPWidget *spw, Inkscape::Selection *selection )
         gtk_widget_set_sensitive(w, TRUE);
 
         /* Description */
+        w = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "desc"));
+        GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(w));
         gchar *desc = obj->desc();
         if (desc) {
-            w = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "desc"));
-            GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(w));
             gtk_text_buffer_set_text(buf, desc, -1);
             g_free(desc);
+        } else {
+            gtk_text_buffer_set_text(buf, "", 0);
         }
         w = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "desc_frame"));
         gtk_widget_set_sensitive(w, TRUE);
