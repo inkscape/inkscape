@@ -32,6 +32,7 @@
 #include "prefs-utils.h"
 #include "inkscape-cairo.h"
 #include "helper/geom.h"
+#include "helper/geom-curves.h"
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
 #include "display/nr-filter.h"
@@ -428,10 +429,7 @@ static bool has_inner_area(Geom::PathVector const & pv) {
 
     if ( (pv.size() == 1) && (pv.front().size() <= 1) ) {
         // vector has only one path with only one segment, see if that's a non-curve segment: that would mean no internal region
-        Geom::Curve const * c = & pv.front().front();
-        if ( dynamic_cast<Geom::LineSegment const*>(c) ||
-             dynamic_cast<Geom::HLineSegment const*>(c) ||
-             dynamic_cast<Geom::VLineSegment const*>(c) )
+        if ( is_straight_curve(pv.front().front()) )
         {
             return false;
         }

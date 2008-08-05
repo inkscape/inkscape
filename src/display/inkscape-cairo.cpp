@@ -27,6 +27,7 @@
 #include <2geom/path.h>
 #include <2geom/transforms.h>
 #include <2geom/sbasis-to-bezier.h>
+#include "helper/geom-curves.h"
 
 /** Creates a cairo context to render to the given pixblock on the given area */
 cairo_t *
@@ -74,9 +75,7 @@ nr_create_cairo_context (NRRectL *area, NRPixBlock *pb)
 static void
 feed_curve_to_cairo(cairo_t *cr, Geom::Curve const &c, Geom::Matrix const & trans, Geom::Rect view, bool optimize_stroke)
 {
-    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
-        dynamic_cast<Geom::HLineSegment const*>(&c) ||
-        dynamic_cast<Geom::VLineSegment const*>(&c) )
+    if( is_straight_curve(c) )
     {
         Geom::Point end_tr = c.finalPoint() * trans;
         if (!optimize_stroke) {

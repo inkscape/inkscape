@@ -28,6 +28,7 @@
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/curves.h>
 #include "../display/canvas-bpath.h"
+#include "helper/geom-curves.h"
 
 void  Path::DashPolyline(float head,float tail,float body,int nbD,float *dashs,bool stPlain,float stOffset)
 {
@@ -379,9 +380,7 @@ Path::MakePathVector()
 
 void  Path::AddCurve(Geom::Curve const &c)
 {
-    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
-        dynamic_cast<Geom::HLineSegment const*>(&c) ||
-        dynamic_cast<Geom::VLineSegment const*>(&c) )
+    if( is_straight_curve(c) )
     {
         LineTo( from_2geom(c.finalPoint()) );
     }

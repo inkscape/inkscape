@@ -56,6 +56,7 @@
 #include <2geom/hvlinesegment.h>
 #include <2geom/transforms.h>
 #include <helper/geom.h>
+#include "helper/geom-curves.h"
 #include "extension/system.h"
 
 #include "xml/repr.h"
@@ -1504,9 +1505,7 @@ writePath(Writer &outs, Geom::PathVector const &pathv,
 
             for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit) {
 
-                if( dynamic_cast<Geom::LineSegment const *> (&*cit) ||
-                    dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
-                    dynamic_cast<Geom::VLineSegment const *>(&*cit) )
+                if( is_straight_curve(*cit) )
                 {
                     double destx = cit->finalPoint()[X];
                     double desty = cit->finalPoint()[Y];

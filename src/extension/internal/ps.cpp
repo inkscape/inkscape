@@ -78,6 +78,7 @@
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
+#include "helper/geom-curves.h"
 
 /*
 using std::atof;
@@ -1465,9 +1466,7 @@ PrintPS::print_2geomcurve(SVGOStringStream &os, Geom::Curve const & c )
     using Geom::X;
     using Geom::Y;
 
-    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
-        dynamic_cast<Geom::HLineSegment const*>(&c) ||
-        dynamic_cast<Geom::VLineSegment const*>(&c) )
+    if( is_straight_curve(c) )
     {
         os << c.finalPoint()[X] << " " << c.finalPoint()[Y] << " lineto\n";
     }

@@ -30,6 +30,7 @@
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
 #include "helper/geom.h"
+#include "helper/geom-curves.h"
 #include <io/sys.h>
 
 
@@ -473,9 +474,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
             {
             //### LINE
-            if( dynamic_cast<Geom::LineSegment const *> (&*cit) ||
-                dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
-                dynamic_cast<Geom::VLineSegment const *>(&*cit) )
+            if( is_straight_curve(*cit) )
                 {
                 Geom::Point p = cit->finalPoint();
                 out("            LineTo {\n");

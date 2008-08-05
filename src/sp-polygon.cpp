@@ -21,6 +21,7 @@
 #include <2geom/pathvector.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
+#include "helper/geom-curves.h"
 #include "svg/stringstream.h"
 #include "xml/repr.h"
 #include "document.h"
@@ -98,9 +99,7 @@ static gchar *sp_svg_write_polygon(Geom::PathVector const & pathv)
 
     for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_default(); ++cit) {
-            if ( dynamic_cast<Geom::LineSegment const *>(&*cit) ||
-                 dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
-                 dynamic_cast<Geom::VLineSegment const *>(&*cit) )
+            if ( is_straight_curve(*cit) )
             {
                 os << cit->finalPoint()[0] << "," << cit->finalPoint()[1] << " ";
             } else {

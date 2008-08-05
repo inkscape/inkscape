@@ -12,6 +12,7 @@
  */
 
 #include "helper/geom.h"
+#include "helper/geom-curves.h"
 #include <typeinfo>
 #include <2geom/pathvector.h>
 #include <2geom/path.h>
@@ -173,9 +174,7 @@ bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t)
         for (Geom::Path::const_iterator cit = it->begin(); cit != it->end_open(); ++cit) {
             Geom::Curve const &c = *cit;
 
-            if( dynamic_cast<Geom::LineSegment const*>(&c) ||
-                dynamic_cast<Geom::HLineSegment const*>(&c) ||
-                dynamic_cast<Geom::VLineSegment const*>(&c)    )
+            if( is_straight_curve(c) )
             {
                 bbox.expandTo( c.finalPoint() * t );
             }
@@ -363,9 +362,7 @@ geom_curve_bbox_wind_distance(Geom::Curve const & c, Geom::Matrix const &m,
                  Geom::Coord tolerance, Geom::Rect const *viewbox,
                  Geom::Point &p0) // pass p0 through as it represents the last endpoint added (the finalPoint of last curve)
 {
-    if( dynamic_cast<Geom::LineSegment const*>(&c) ||
-        dynamic_cast<Geom::HLineSegment const*>(&c) ||
-        dynamic_cast<Geom::VLineSegment const*>(&c) )
+    if( is_straight_curve(c) )
     {
         Geom::Point pe = c.finalPoint() * m;
         if (bbox) {
@@ -509,10 +506,8 @@ pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv )
         output.back().close( pit->closed() );
 
         for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); ++cit) {
-            if( dynamic_cast<Geom::CubicBezier const*>(&*cit) ||
-                dynamic_cast<Geom::LineSegment const*>(&*cit) ||
-                dynamic_cast<Geom::HLineSegment const*>(&*cit) ||
-                dynamic_cast<Geom::VLineSegment const*>(&*cit) )
+            if( dynamic_cast<Geom::CubicBezier const*>(&*cit) || 
+                is_straight_curve(*cit) )
             {
                 output.back().append(*cit);
             }

@@ -25,6 +25,7 @@
 #include <2geom/pathvector.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
+#include "helper/geom-curves.h"
 
 #include "svg/svg.h"
 #include "xml/repr.h"
@@ -157,9 +158,7 @@ sp_path_convert_to_guides(SPItem *item)
     for(Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit) {
         for(Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_default(); ++cit) {
             // only add curves for straight line segments
-            if( dynamic_cast<Geom::LineSegment const *>(&*cit) ||
-                dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
-                dynamic_cast<Geom::VLineSegment const *>(&*cit) )
+            if( is_straight_curve(*cit) )
             {
                 pts.push_back(std::make_pair(cit->initialPoint() * i2d, cit->finalPoint() * i2d));
             }
