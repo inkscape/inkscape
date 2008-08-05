@@ -67,6 +67,23 @@ Gtk::HBox* SvgFontsDialog::AttrEntry(gchar* lbl){
     return hbox;
 }
 
+Gtk::HBox* SvgFontsDialog::AttrCombo(gchar* lbl){
+    Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
+    hbox->add(* Gtk::manage(new Gtk::Label(lbl)) );
+    hbox->add(* Gtk::manage(new Gtk::ComboBox()) );
+    hbox->show_all();
+    return hbox;
+}
+
+/*
+Gtk::HBox* SvgFontsDialog::AttrSpin(gchar* lbl){
+    Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
+    hbox->add(* Gtk::manage(new Gtk::Label(lbl)) );
+    hbox->add(* Gtk::manage(new Gtk::SpinBox()) );
+    hbox->show_all();
+    return hbox;
+}*/
+
 /*** SvgFontsDialog ***/
 
 GlyphComboBox::GlyphComboBox(){
@@ -185,6 +202,11 @@ SPFont* SvgFontsDialog::get_selected_spfont()
 Gtk::VBox* SvgFontsDialog::global_settings_tab(){
     Gtk::VBox* global_vbox = Gtk::manage(new Gtk::VBox());
 
+    global_vbox->add(*AttrEntry((gchar*) "Family Name"));
+    global_vbox->add(*AttrCombo((gchar*) "Style"));
+    global_vbox->add(*AttrCombo((gchar*) "Variant"));
+    global_vbox->add(*AttrCombo((gchar*) "Weight"));
+
 //Set Width (horiz_adv_x):
     Gtk::HBox* setwidth_hbox = Gtk::manage(new Gtk::HBox());
     setwidth_hbox->add(*Gtk::manage(new Gtk::Label(_("Set width:"))));
@@ -200,8 +222,10 @@ Gtk::VBox* SvgFontsDialog::global_settings_tab(){
 
 Gtk::VBox* SvgFontsDialog::glyphs_tab(){
     Gtk::VBox* glyphs_vbox = Gtk::manage(new Gtk::VBox());
-    glyphs_vbox->add(*AttrEntry((gchar*) "Name"));
+    glyphs_vbox->add(*AttrEntry((gchar*) "Glyph Name"));
     glyphs_vbox->add(*AttrEntry((gchar*) "Unicode"));
+    //glyphs_vbox->add(*AttrSpin((gchar*) "Horizontal Advance"));
+    //glyphs_vbox->add(*AttrCombo((gchar*) "Missing Glyph"));
     return glyphs_vbox;
 }
 

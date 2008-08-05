@@ -72,6 +72,8 @@ public:
 
 private:
     Gtk::HBox* AttrEntry(gchar* lbl);
+    Gtk::HBox* AttrCombo(gchar* lbl);
+//    Gtk::HBox* AttrSpin(gchar* lbl);
     Gtk::VBox* global_settings_tab();
     Gtk::VBox* kerning_tab();
     Gtk::VBox* glyphs_tab();
