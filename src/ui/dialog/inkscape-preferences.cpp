@@ -571,6 +571,12 @@ void InkscapePreferences::initPageClones()
     _page_clones.add_line( true, "", _clone_option_delete, "",
                            _("Orphaned clones are deleted along with their original."));
 
+    _page_clones.add_group_header( _("When duplicating original+clones:"));
+
+    _clone_relink_on_duplicate.init ( _("Relink duplicated clones"), "options.relinkclonesonduplicate", "value", false);
+    _page_clones.add_line(true, "", _clone_relink_on_duplicate, "",
+                        _("When duplicating a selection containing both a clone and its original (possibly in groups), relink the duplicated clone to the duplicated original instead of the old original"));
+
     //TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
     this->AddPage(_page_clones, _("Clones"), PREFS_PAGE_CLONES);
 }

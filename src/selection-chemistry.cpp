@@ -220,14 +220,28 @@ void sp_selection_delete()
                      _("Delete"));
 }
 
-/* fixme: sequencing */
+void add_ids_recursive (std::vector<const gchar *> &ids, SPObject *obj)
+{
+    if (!obj)
+        return;
+
+    ids.push_back(SP_OBJECT_ID(obj));
+
+    if (SP_IS_GROUP(obj)) {
+        for (SPObject *child = sp_object_first_child(obj) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            add_ids_recursive (ids, child);
+        }
+    }
+}
+
 void sp_selection_duplicate(bool suppressDone)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
-    Inkscape::XML::Document* xml_doc = sp_document_repr_doc(desktop->doc());
+    SPDocument *doc = desktop->doc();
+    Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     // check if something is selected
@@ -240,21 +254,59 @@ void sp_selection_duplicate(bool suppressDone)
 
     selection->clear();
 
-    // sorting items from different parents sorts each parent's subset without possibly mixing them, just what we need
+    // sorting items from different parents sorts each parent's subset without possibly mixing
+    // them, just what we need
     reprs = g_slist_sort(reprs, (GCompareFunc) sp_repr_compare_position);
 
     GSList *newsel = NULL;
 
+    std::vector<const gchar *> old_ids;
+    std::vector<const gchar *> new_ids;
+    bool relink_clones = prefs_get_int_attribute ("options.relinkclonesonduplicate", "value", 0);
+
     while (reprs) {
-        Inkscape::XML::Node *parent = ((Inkscape::XML::Node *) reprs->data)->parent();
-        Inkscape::XML::Node *copy = ((Inkscape::XML::Node *) reprs->data)->duplicate(xml_doc);
+        Inkscape::XML::Node *old_repr = (Inkscape::XML::Node *) reprs->data;
+        Inkscape::XML::Node *parent = old_repr->parent();
+        Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
 
         parent->appendChild(copy);
+
+        if (relink_clones) {
+            SPObject *old_obj = doc->getObjectByRepr(old_repr);
+            SPObject *new_obj = doc->getObjectByRepr(copy);
+            add_ids_recursive (old_ids, old_obj);
+            add_ids_recursive (new_ids, new_obj);
+        }
 
         newsel = g_slist_prepend(newsel, copy);
         reprs = g_slist_remove(reprs, reprs->data);
         Inkscape::GC::release(copy);
     }
+
+    if (relink_clones) {
+
+        g_assert (old_ids.size() == new_ids.size());
+
+        for(int i = 0; i < old_ids.size(); i++) {
+            const gchar *id = old_ids[i];
+            SPObject *old_clone = doc->getObjectById(id);
+            if (SP_IS_USE(old_clone)) {
+                SPItem *orig = sp_use_get_original(SP_USE(old_clone));
+                for(int j = 0; j < old_ids.size(); j++) {
+                    if (!strcmp(SP_OBJECT_ID(orig), old_ids[j])) {
+                        // we have both orig and clone in selection, relink
+                        // std::cout << id  << " old, its ori: " << SP_OBJECT_ID(orig) << "; will relink:" << new_ids[i] << " to " << new_ids[j] << "\n";
+                        gchar *newref = g_strdup_printf ("#%s", new_ids[j]);
+                        SPObject *new_clone = doc->getObjectById(new_ids[i]);
+                        SP_OBJECT_REPR(new_clone)->setAttribute("xlink:href", newref);
+                        new_clone->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+                        g_free (newref);
+                    }
+                }
+            }
+        }
+    }
+
 
     if ( !suppressDone ) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_DUPLICATE,

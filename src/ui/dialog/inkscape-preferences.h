@@ -147,6 +147,7 @@ protected:
 
     PrefRadioButton _clone_option_parallel, _clone_option_stay, _clone_option_transform,
                     _clone_option_unlink, _clone_option_delete;
+    PrefCheckButton _clone_relink_on_duplicate;
 
     PrefCheckButton _mask_mask_on_top;
     PrefCheckButton _mask_mask_remove;
