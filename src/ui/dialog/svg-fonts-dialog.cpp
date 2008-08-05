@@ -59,6 +59,14 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+Gtk::HBox* SvgFontsDialog::AttrEntry(gchar* lbl){
+    Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
+    hbox->add(* Gtk::manage(new Gtk::Label(lbl)) );
+    hbox->add(* Gtk::manage(new Gtk::Entry()) );
+    hbox->show_all();
+    return hbox;
+}
+
 /*** SvgFontsDialog ***/
 
 GlyphComboBox::GlyphComboBox(){
@@ -192,6 +200,8 @@ Gtk::VBox* SvgFontsDialog::global_settings_tab(){
 
 Gtk::VBox* SvgFontsDialog::glyphs_tab(){
     Gtk::VBox* glyphs_vbox = Gtk::manage(new Gtk::VBox());
+    glyphs_vbox->add(*AttrEntry((gchar*) "Name"));
+    glyphs_vbox->add(*AttrEntry((gchar*) "Unicode"));
     return glyphs_vbox;
 }
 

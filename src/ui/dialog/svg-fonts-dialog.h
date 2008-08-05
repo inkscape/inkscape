@@ -71,6 +71,7 @@ public:
     void on_setwidth_changed();
 
 private:
+    Gtk::HBox* AttrEntry(gchar* lbl);
     Gtk::VBox* global_settings_tab();
     Gtk::VBox* kerning_tab();
     Gtk::VBox* glyphs_tab();
