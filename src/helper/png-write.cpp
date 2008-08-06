@@ -342,8 +342,8 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
      * (2) a[5] = -a[3] * y1
      */
 
-    NR::Matrix const affine(NR::translate(-x0, -y0)
-                            * NR::scale(width / (x1 - x0),
+    Geom::Matrix const affine(Geom::Translate(-x0, -y0)
+                            * Geom::Scale(width / (x1 - x0),
                                         height / (y1 - y0)));
 
     //SP_PRINT_MATRIX("SVG2PNG", &affine);
@@ -362,7 +362,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
 
     /* Create ArenaItems and set transform */
     ebp.root = sp_item_invoke_show(SP_ITEM(sp_document_root(doc)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
-    nr_arena_item_set_transform(NR_ARENA_ITEM(ebp.root), affine);
+    nr_arena_item_set_transform(NR_ARENA_ITEM(ebp.root), from_2geom(affine));
 
     // We show all and then hide all items we don't want, instead of showing only requested items,
     // because that would not work if the shown item references something in defs

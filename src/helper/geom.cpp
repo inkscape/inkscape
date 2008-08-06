@@ -461,34 +461,6 @@ pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, Geom::Mat
     }
 }
 
-// temporary wrapper
-void
-pathv_matrix_point_bbox_wind_distance (Geom::PathVector const & pathv, NR::Matrix const &m, NR::Point const &pt,
-                         NR::Rect *bbox, int *wind, NR::Coord *dist,
-                         NR::Coord tolerance, NR::Rect const *viewbox)
-{
-    Geom::Rect _bbox;
-    if (bbox)
-        _bbox = to_2geom(*bbox);
-    Geom::Coord _dist;
-    if (dist)
-        _dist = *dist;
-    Geom::Rect _viewbox;
-    if (viewbox)
-        _viewbox = to_2geom(*viewbox);
-
-    pathv_matrix_point_bbox_wind_distance( pathv, to_2geom(m), to_2geom(pt),
-                                           bbox ? &_bbox : NULL,
-                                           wind,
-                                           dist ? &_dist : NULL,
-                                           tolerance,
-                                           viewbox ? &_viewbox : NULL );
-
-    if (bbox)
-        *bbox = from_2geom(_bbox);
-    if (dist)
-        *dist = _dist;
-}
 //#################################################################################
 
 /*

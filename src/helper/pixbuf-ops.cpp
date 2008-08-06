@@ -103,26 +103,26 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
 
      sp_document_ensure_up_to_date (doc);
 
-     NR::Rect screen=NR::Rect(NR::Point(x0,y0), NR::Point(x1, y1));
+     Geom::Rect screen=Geom::Rect(Geom::Point(x0,y0), Geom::Point(x1, y1));
 
      double zoom_scale = 1.0;
      double padding = 1.0;
 
-     width = (int)ceil(screen.extent(NR::X) * zoom_scale * padding);
-     height = (int)ceil(screen.extent(NR::Y) * zoom_scale * padding);
+     width = (int)ceil(screen[Geom::X].extent() * zoom_scale * padding);
+     height = (int)ceil(screen[Geom::Y].extent() * zoom_scale * padding);
 
-     NR::Point origin(screen.min()[NR::X],
-                      sp_document_height(doc) - screen.extent(NR::Y) - screen.min()[NR::Y]);
+     Geom::Point origin(screen.min()[Geom::X],
+                      sp_document_height(doc) - screen[Geom::Y].extent() - screen.min()[Geom::Y]);
 
-     origin[NR::X] = origin[NR::X] + (screen.extent(NR::X) * ((1 - padding) / 2));
-     origin[NR::Y] = origin[NR::Y] + (screen.extent(NR::Y) * ((1 - padding) / 2));
+     origin[Geom::X] = origin[Geom::X] + (screen[Geom::X].extent() * ((1 - padding) / 2));
+     origin[Geom::Y] = origin[Geom::Y] + (screen[Geom::Y].extent() * ((1 - padding) / 2));
 
-     NR::scale scale(zoom_scale, zoom_scale);
-     NR::Matrix affine = scale * NR::translate(-origin * scale);
+     Geom::Scale scale(zoom_scale, zoom_scale);
+     Geom::Matrix affine = scale * Geom::Translate(-origin * scale);
 
      /* Create ArenaItems and set transform */
      NRArenaItem *root = sp_item_invoke_show(SP_ITEM(sp_document_root(doc)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
-     nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
+     nr_arena_item_set_transform(NR_ARENA_ITEM(root), from_2geom(affine));
 
      NRGC gc(NULL);
      gc.transform.set_identity();
