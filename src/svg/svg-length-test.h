@@ -131,7 +131,7 @@ public:
                 validStrings.erase(iter);
             }
         }
-        TSM_ASSERT_EQUALS(validStrings, validStrings.size(), 0);
+        TSM_ASSERT_EQUALS(validStrings, validStrings.size(), 0u);
     }
 
     // TODO: More tests

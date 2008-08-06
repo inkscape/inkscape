@@ -8,7 +8,7 @@
 #include <vector>
 #include <glib/gmem.h>
 
-class SvgPathTest : public CxxTest::TestSuite
+class SvgPathNRTest : public CxxTest::TestSuite
 {
 private:
     std::vector<std::string> rectanglesAbsoluteClosed;
@@ -17,7 +17,7 @@ private:
     std::vector<std::string> rectanglesRelativeOpen;
     NArtBpath rectangleBpath[5+1];
 public:
-    SvgPathTest() {
+    SvgPathNRTest() {
         // Lots of ways to define the same rectangle
         rectanglesAbsoluteClosed.push_back("M 1,2 L 4,2 L 4,8 L 1,8 L 1,2 Z");
         rectanglesAbsoluteClosed.push_back("M 1,2 L 4,2 L 4,8 L 1,8 z");
@@ -53,8 +53,8 @@ public:
 
 // createSuite and destroySuite get us per-suite setup and teardown
 // without us having to worry about static initialization order, etc.
-    static SvgPathTest *createSuite() { return new SvgPathTest(); }
-    static void destroySuite( SvgPathTest *suite ) { delete suite; }
+    static SvgPathNRTest *createSuite() { return new SvgPathNRTest(); }
+    static void destroySuite( SvgPathNRTest *suite ) { delete suite; }
 
     void testReadRectanglesAbsoluteClosed()
     {

@@ -52,7 +52,7 @@
   <!-- -->
   <property name="arch"          value="mingw32-"/>
   <property name="archutil"      value=""/>
-  <property name="devlibs"       location="c:/devlibs"/>
+  <property name="devlibs"       location="${env.DEVLIBS_PATH}"/>
   <property name="cxxtest"       location="cxxtest"/>
   <!-- -->
 
@@ -250,7 +250,8 @@
             <include name="svg-affine-test.h"/>
             <include name="svg-color-test.h"/>
             <include name="svg-length-test.h"/>
-            <include name="svg-path-test.h"/>
+            <include name="svg-path-geom-test.h"/>
+            <include name="svg-path-nr-test.h"/>
         </fileset>
     </cxxtestpart>
     <cxxtestpart command="python ${cxxtest}/cxxtestgen.py --have-eh"

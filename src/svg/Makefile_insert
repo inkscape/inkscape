@@ -50,7 +50,8 @@ svg_test_svg_includes = \
 	$(srcdir)/svg/svg-affine-test.h \
 	$(srcdir)/svg/svg-color-test.h \
 	$(srcdir)/svg/svg-length-test.h \
-	$(srcdir)/svg/svg-path-test.h
+	$(srcdir)/svg/svg-path-geom-test.h \
+	$(srcdir)/svg/svg-path-nr-test.h
 
 svg_libtest_svg_a_SOURCES = \
 	svg/test-svg.cpp	\
