@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-08-01 17:53+0700\n"
+"PO-Revision-Date: 2008-08-05 17:19+0700\n"
 "Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
-msgstr "បង្កើត និង​កែសម្រួល​​​រូបភាព​ក្រាហ្វិក​វ៉ិចទ័រ​ដែល​អាច​ធ្វើ​មាត្រដ្ឋាន​បាន​"
+msgstr "បង្កើត និង​កែសម្រួល​​​រូបភាព​ក្រាហ្វិក​វ៉ិចទ័រ​ដែល​អាច​ធ្វើ​មាត្រដ្ឋាន​បាន​​"
 
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape Vector Graphics Editor"
@@ -2841,7 +2841,7 @@ msgstr "អនុវត្ត​បែបផែន​អង្កាញ់"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
-msgstr "ផែនទីពណ៌​ខួប"
+msgstr "ផែនទី​ពណ៌​ខួប"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:38
 #: ../src/extension/internal/bitmap/spread.cpp:38
@@ -2863,7 +2863,7 @@ msgstr "កាត់​បន្ថយ​ការ​រំខាន​ចំណ
 
 #: ../src/extension/internal/bitmap/edge.cpp:36
 msgid "Edge"
-msgstr "គែម\t"
+msgstr "គែម"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
 msgid "Hilight edges of selected bitmap(s)."
@@ -2885,7 +2885,7 @@ msgstr "ធ្វើ​ឲ្យ​ប្រសើរ"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:41
 msgid "Enhance selected bitmap(s) -- minimize noise."
-msgstr "ធ្វើ​ឲ្យរូបភាព​ដែល​បាន​ជ្រើស​ប្រសើរ -- ការ​រំខាន​អប្បបរមា ។"
+msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដែល​បាន​ជ្រើស​ប្រសើរ -- ការ​រំខាន​អប្បបរមា ។"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:34
 msgid "Equalize"
@@ -2893,7 +2893,7 @@ msgstr "ធ្វើ​ឲ្យ​ស្មើ​គ្នា"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:41
 msgid "Equalize selected bitmap(s) -- histogram equalization."
-msgstr "ធ្វើ​ឲ្យរូបភាព​ដែល​បានជ្រើស​ស្មើ​គ្នា--​ ការ​ធ្វើ​ឲ្យ​អ៊ីស្តូក្រាម​ស្មើគ្នា ។"
+msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដែល​បានជ្រើស​ស្មើ​គ្នា--​ ការ​ធ្វើ​ឲ្យ​អ៊ីស្តូក្រាម​ស្មើគ្នា ។"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:37
 #: ../src/filter-enums.cpp:28
@@ -2908,7 +2908,7 @@ msgstr "កត្តា"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:46
 msgid "Gaussian blur selected bitmap(s)."
-msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដែល​បានជ្រើស​ព្រិលៗ ។"
+msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដែល​បាន​ជ្រើស​ព្រិលៗ ។"
 
 #: ../src/extension/internal/bitmap/implode.cpp:36
 msgid "Implode"
@@ -2916,11 +2916,11 @@ msgstr "បញ្ចូល​គ្នា"
 
 #: ../src/extension/internal/bitmap/implode.cpp:44
 msgid "Implode selected bitmap(s)."
-msgstr "បញ្ចូល​រូបភាព​ដែល​បាន​ជ្រើស ។"
+msgstr "បញ្ចូល​រូបភាព​ដែល​បាន​ជ្រើស ។"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:51
 msgid "Level (with Channel)"
-msgstr "កម្រិង (ជា​មួយ​​ឆានែល)"
+msgstr "កម្រិត (ជា​មួយ​​ឆានែល)"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:64
 #: ../src/extension/internal/bitmap/level.cpp:42
@@ -2935,15 +2935,13 @@ msgstr "ចំណុច​ពណ៌​ស"
 #: ../src/extension/internal/bitmap/levelChannel.cpp:66
 #: ../src/extension/internal/bitmap/level.cpp:44
 msgid "Gamma Correction"
-msgstr "ការកែហ្គាម៉ា"
+msgstr "ការ​កែ​ហ្គាម៉ា"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:72
 msgid ""
 "Level the specified channel of selected bitmap(s) by scaling values falling "
 "between the given ranges to the full color range."
-msgstr ""
-"ដាក់​កម្រិត​ឆានែល​ដែល​បានបញ្ជាក់​របស់​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ធ្វើ​មាត្រដ្ឋាន​តម្លៃ​ធ្លាក់ចុះ​រវាង​ជួរ​ដែល​"
-"បានផ្ដល់​ទៅ​ជួរ​ពណ៌​ពេញលេញ ។"
+msgstr "ដាក់​កម្រិត​ឆានែល​ដែល​បានបញ្ជាក់​របស់​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ធ្វើ​មាត្រដ្ឋាន​តម្លៃ​ធ្លាក់ចុះ​រវាង​ជួរ​ដែល​បានផ្ដល់​ទៅ​ជួរ​ពណ៌​ពេញលេញ ។"
 
 #: ../src/extension/internal/bitmap/level.cpp:40
 msgid "Level"
@@ -2990,7 +2988,7 @@ msgstr "តិត្ថិភាព"
 #: ../src/widgets/sp-color-scales.cpp:425 ../src/widgets/toolbox.cpp:3360
 #: ../share/extensions/color_randomize.inx.h:2
 msgid "Hue"
-msgstr "ពណ៌លាំៗ"
+msgstr "ពណ៌​លាំៗ"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
 msgid "Modulate percent hue, saturation, and brightness of selected bitmap(s)."
@@ -3012,7 +3010,7 @@ msgstr "ធ្វើ​ឲ្យ​ធម្មតា"
 msgid ""
 "Normalize selected bitmap(s), expanding color range to the full possible "
 "range of color."
-msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដែលបានជ្រើស​ធម្មតា ពង្រីក​ជួរពណ៌ទៅ​ជួរ​ពណ៌​ដែលអាច​ប្រើ​បាន​ពេញ​លេញ ។"
+msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដែល​បាន​ជ្រើស​ធម្មតា ពង្រីក​ជួរពណ៌ទៅ​ជួរ​ពណ៌​ដែលអាច​ប្រើ​បាន​ពេញ​លេញ ។"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:36
 msgid "Oil Paint"
@@ -3032,13 +3030,13 @@ msgstr "លើកឡើង"
 
 #: ../src/extension/internal/bitmap/raise.cpp:43
 msgid "Raised"
-msgstr "បាន​លើកឡើង"
+msgstr "បាន​លើក​ឡើង"
 
 #: ../src/extension/internal/bitmap/raise.cpp:49
 msgid ""
 "Alter lightness the edges of selected bitmap(s) to create a raised "
 "appearance."
-msgstr "ត្រង​ពន្លឺ​គែម​របស់​រូបភាព​ដែល​បាន​ជ្រើស ដើម្បី​បង្កើត​រូបរាង​ដែល​បាន​លើកឡើង ។"
+msgstr "ត្រង​ពន្លឺ​គែម​របស់​រូបភាព​ដែល​បាន​ជ្រើស ដើម្បី​បង្កើត​រូបរាង​ដែល​បាន​លើក​ឡើង ។"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:39
 msgid "Reduce Noise"
@@ -3046,7 +3044,7 @@ msgstr "កាត់​បន្ថយ​ការ​រំខាន"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:47
 msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter."
-msgstr "កាត់​បន្ថយ​ភាព​រំខាន​នៅក្នុង​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ប្រើតម្រង​​លុប​ការ​រំខាន ។"
+msgstr "កាត់​បន្ថយ​ភាព​រំខាន​នៅ​ក្នុង​រូបភាព​ដែល​បាន​ជ្រើស ដោយ​ប្រើតម្រង​​លុប​ការ​រំខាន ។"
 
 #: ../src/extension/internal/bitmap/sample.cpp:38
 msgid "Sample"
@@ -3392,7 +3390,7 @@ msgstr "បែបផែន​ក្រឡោត"
 #. ID -- should be unique
 #: ../src/extension/internal/filter/etched-glass.h:24
 msgid "Etched Glass"
-msgstr ""
+msgstr "កែវ​មាន​គែម"
 
 #: ../src/extension/internal/filter/filter-file.cpp:32
 msgid "Bundled"
@@ -5467,9 +5465,8 @@ msgstr "មិន​អើពើ​ពុម្ពអក្សរ​ដោយ​
 
 #. {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
 #: ../src/live_effects/effect.cpp:68
-#, fuzzy
 msgid "Bend"
-msgstr "ល្បាយ"
+msgstr "កោង"
 
 #: ../src/live_effects/effect.cpp:69
 msgid "Pattern Along Path"
@@ -5619,7 +5616,7 @@ msgstr "ទំហំ​របស់​ក្រឡា​ចត្រង្គ​
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
-msgstr ""
+msgstr "បង្កើន​ល្បឿន​ផ្លូវ"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
@@ -5695,7 +5692,7 @@ msgstr "ផ្លូវ​កោង​កំពូល​"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
 msgid "Top path along which to bend the original path"
-msgstr ""
+msgstr "ផ្លូវ​កំពូល​ដែល​ត្រូវ​ធ្វើ​ឲ្យ​ផ្លូវ​ដើម​កោង"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Right bend path"
@@ -5941,7 +5938,7 @@ msgstr "លំនាំ​បញ្ឈរ​​"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 msgid "Rotate pattern 90 deg before applying"
-msgstr "ត្រឡប់​លំនាំ 90 ដឺក្រេ មុន​ពេល​អនុវត្ត"
+msgstr "ត្រឡប់​លំនាំ ៩០ ដឺក្រេ មុន​ពេល​អនុវត្ត"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:156
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:65
@@ -7042,21 +7039,21 @@ msgstr "<b>ចុច</b> ឬ <b>ចុច និង​អូស</b> ដើម្
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
-msgstr ""
+msgstr "<b>ចម្រៀក​ខ្សែ​កោង</b> ៖ មុំ %3.2f&#176; ចម្ងាយ %s ដោយ​ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ <b>បញ្ចូល (Enter)</b> ដើម្បី​បញ្ចប់​ផ្លូវ"
 
 #: ../src/pen-context.cpp:1178
 #, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
-msgstr ""
+msgstr "<b>ចម្រៀក​បន្ទាត់</b> ៖ មុំ %3.2f&#176; ចម្ងាយ %s ដោយ​ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ <b>បញ្ចូល (Enter)</b> ដើម្បី​បញ្ចប់​ផ្លូវ"
 
 #: ../src/pen-context.cpp:1196
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
-msgstr "<b>គ្រប់គ្រង​ខ្សែ​កោង​</b> ៖ មុំ %3.2f&#176;, ប្រវែង​%s; ប្រើ​<b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់មុំ​"
+msgstr "<b>គ្រប់គ្រង​ខ្សែ​កោង​</b> ៖ មុំ %3.2f&#176; ប្រវែង %s ប្រើ​<b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់មុំ​"
 
 #: ../src/pen-context.cpp:1218
 #, c-format
@@ -7078,11 +7075,11 @@ msgstr "បាន​បញ្ចប់​ការ​គូរ​"
 
 #: ../src/persp3d.cpp:335
 msgid "Toggle vanishing point"
-msgstr "បិទ/​បើក​កា​របំបាត់​​ចំណុច"
+msgstr "បិទ/​បើក​ការ​បំបាត់​​ចំណុច"
 
 #: ../src/persp3d.cpp:346
 msgid "Toggle multiple vanishing points"
-msgstr "បិទ/បើក​កា​របំបាត់​ចំណុច​ច្រើន"
+msgstr "បិទ/បើក​ការ​បំបាត់​ចំណុច​ច្រើន"
 
 #: ../src/preferences.cpp:59
 #, c-format
@@ -7098,8 +7095,8 @@ msgid ""
 "Inkscape will run with default settings.\n"
 "New settings will not be saved."
 msgstr ""
-"Inkscape នឹង​រត់​ដោយ​ប្រើការ​កំណត់​លំនាំដើម ។\n"
-"ការ​កំណត់​ថ្មី​នឹង​មិន​ត្រូវ​បាន​រក្សាទុកទេ ។"
+"Inkscape នឹង​រត់​ដោយ​ប្រើការ​កំណត់​លំនាំ​ដើម ។\n"
+"ការ​កំណត់​ថ្មី​នឹង​មិន​ត្រូវ​បាន​រក្សា​ទុក​ទេ ។"
 
 #: ../src/rect-context.cpp:382
 msgid ""
@@ -7113,8 +7110,8 @@ msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</"
 "b> to draw around the starting point"
 msgstr ""
-"<b>ចំតុកោណកែង</b> ៖ %s &#215; %s (បាន​បង្ខំ​ទៅ​កាំ %d:%d) ដោយ​ប្រើ<b>ប្ដូរ(Shift)</b> "
-"ដើម្បីគូរ​ជុំវិញ​ចំណុច​ចាប់ផ្ដើម"
+"<b>ចតុកោណ​កែង</b> ៖ %s &#215; %s (បាន​បង្ខំ​ទៅ​កាំ %d:%d) ដោយ​ប្រើ<b>ប្ដូរ (Shift)</b> "
+"ដើម្បី​គូរ​ជុំវិញ​ចំណុច​ចាប់ផ្ដើម"
 
 #: ../src/rect-context.cpp:539
 #, c-format
@@ -7236,7 +7233,7 @@ msgstr "អ្នក​មិន​អាច​លើក​វត្ថុ​ឡ
 #. TRANSLATORS: Only put the word "Raise" in the translation. Means "to raise an object" in the undo history
 #: ../src/selection-chemistry.cpp:651
 msgid "undo_action|Raise"
-msgstr ""
+msgstr "មិន​ធ្វើ​អំពើ​វិញ|លើក​ឡើង"
 
 #: ../src/selection-chemistry.cpp:664
 msgid "Select <b>object(s)</b> to raise to top."
@@ -8488,9 +8485,8 @@ msgstr ""
 "បច្ចុប្បន្ន ។"
 
 #: ../src/tools-switch.cpp:247
-#, fuzzy
 msgid "<b>Drag</b> to erase."
-msgstr "<b>តំណ</b> ទៅ %s"
+msgstr "<b>អូស</b> ដើម្បី​លុប ។"
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:524
 #: ../src/trace/potrace/inkscape-potrace.cpp:598
@@ -8607,11 +8603,11 @@ msgstr "ពង្រីក​ការ​លៃតម្រូវ"
 
 #: ../src/tweak-context.cpp:1052
 msgid "Attract tweak"
-msgstr ""
+msgstr "ទាញ​ការ​លៃ​តម្រូវ"
 
 #: ../src/tweak-context.cpp:1056
 msgid "Repel tweak"
-msgstr ""
+msgstr "ច្រាន​ចេញ​ការ​លៃ​តម្រូវ"
 
 #: ../src/tweak-context.cpp:1060
 msgid "Roughen tweak"
@@ -8633,7 +8629,7 @@ msgstr "គ្មាន​អ្វី​មួយ​​​ត្រូវ​ប
 #: ../src/ui/clipboard.cpp:266 ../src/ui/clipboard.cpp:428
 #: ../src/ui/clipboard.cpp:452
 msgid "Nothing on the clipboard."
-msgstr "គ្មាន​អ្វី​នៅ​លើ​ក្ដារ​តម្បៀតខ្ទាស់"
+msgstr "គ្មាន​អ្វី​នៅ​លើ​ក្ដារ​តម្បៀត​ខ្ទាស់"
 
 #: ../src/ui/clipboard.cpp:288
 msgid "Select <b>object(s)</b> to paste style to."
@@ -8710,7 +8706,7 @@ msgstr "លក្ខណៈសម្បត្តិ​​​រូបភាព"
 
 #: ../src/ui/context-menu.cpp:300
 msgid "Edit Externally..."
-msgstr ""
+msgstr "កែ​សម្រួល​ខាង​ក្រៅ..."
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:392
@@ -8782,7 +8778,7 @@ msgstr "ចន្លោះ​ផ្តេក​អប្បរមា​ (ឯក�
 #. TRANSLATORS: Horizontal gap. Only put "H:" equivalent in the translation
 #: ../src/ui/dialog/align-and-distribute.cpp:463
 msgid "gap|H:"
-msgstr ""
+msgstr "ចន្លោះ|H ៖"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:471
 msgid "Minimum vertical gap (in px units) between bounding boxes"
@@ -9104,7 +9100,7 @@ msgstr "បិទ/បើក​ការ​​ខ្ទាស់​បើក ឬ�
 
 #: ../src/ui/dialog/document-properties.cpp:104
 msgid "_Enable snap indicator"
-msgstr ""
+msgstr "អនុញ្ញាត​ទ្រនិច​បង្ហាញ​ខ្ទាស់"
 
 #: ../src/ui/dialog/document-properties.cpp:104
 msgid "After snapping, a symbol is drawn at the point that has snapped"
@@ -11427,7 +11423,7 @@ msgstr "ទំហំ​រូប​តំណាង​របារ​ពាក្
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:973
 msgid "Set the size for the commands toolbar to use (requires restart)"
-msgstr ""
+msgstr "កំណត់​ទំហំ​សម្រាប់​របារ​ឧបករណ៍​ពាក្យ​បញ្ជា​ដើម្បី​ប្រើ (ទាមទារ​ឲ្យ​ចាប់ផ្ដើម​ឡើង​វិញ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:976
 msgid "Tool controls bar icon size"
@@ -12519,7 +12515,7 @@ msgstr ""
 
 #: ../src/ui/widget/panel.cpp:148
 msgid "tiny"
-msgstr "លម្អិត​"
+msgstr "ល្អិត"
 
 #: ../src/ui/widget/panel.cpp:149
 msgid "small"
@@ -15903,7 +15899,7 @@ msgstr "របៀប Bézier ធម្មតា"
 
 #: ../src/widgets/toolbox.cpp:3128
 msgid "Spiro"
-msgstr ""
+msgstr "Spiro"
 
 #: ../src/widgets/toolbox.cpp:3129
 msgid "Spiro splines mode"
@@ -15912,17 +15908,17 @@ msgstr ""
 #. Width
 #: ../src/widgets/toolbox.cpp:3238
 msgid "(pinch tweak)"
-msgstr "(កៀប)"
+msgstr "(លៃ​តម្រូវ​កៀប)"
 
 #: ../src/widgets/toolbox.cpp:3238 ../src/widgets/toolbox.cpp:3254
 #: ../src/widgets/toolbox.cpp:3420 ../src/widgets/toolbox.cpp:3642
 #: ../src/widgets/toolbox.cpp:3674 ../src/widgets/toolbox.cpp:4315
 msgid "(default)"
-msgstr "(លំនាំដើម)"
+msgstr "(លំនាំ​ដើម)"
 
 #: ../src/widgets/toolbox.cpp:3238
 msgid "(broad tweak)"
-msgstr "(កៀបធំ)"
+msgstr "(លៃ​តម្រូវ​ធំ)"
 
 #: ../src/widgets/toolbox.cpp:3241
 msgid "The width of the tweak area (relative to the visible canvas area)"
@@ -16340,7 +16336,7 @@ msgstr "គ្មាន​ការ​កំណត់​ជា​មុន"
 
 #: ../src/widgets/toolbox.cpp:3836
 msgid "Change calligraphic profile"
-msgstr ""
+msgstr "ផ្លាស់ប្ដូរ​ទម្រង់​សិល្បៈ​ការ​សរសេរ"
 
 #: ../src/widgets/toolbox.cpp:3848
 msgid "Save current settings as new profile"
@@ -17784,7 +17780,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
-msgstr ""
+msgstr "គែម​ជាក់លាក់"
 
 #: ../share/extensions/polyhedron_3d.inx.h:8
 msgid "Edges"
@@ -17897,7 +17893,7 @@ msgstr "កត្តា​ធ្វើ​មាត្រដ្ឋាន"
 
 #: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Shading"
-msgstr "Shading"
+msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Small Triambic Icosahedron"
@@ -17946,7 +17942,7 @@ msgstr "កាត់​ចតុត័ល​ឲ្យ​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
-msgstr ""
+msgstr "ចុង"
 
 #: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "View"
@@ -18028,11 +18024,11 @@ msgstr "កូដ​ផលិតផល"
 
 #: ../share/extensions/render_barcode.inx.h:3
 msgid "Barcode Data:"
-msgstr "ទិន្នន័យ​កូដ​ផលិតផល ៖"
+msgstr "ទិន្នន័យ​កូដ​ផលិត​ផល ៖"
 
 #: ../share/extensions/render_barcode.inx.h:4
 msgid "Barcode Type:"
-msgstr "ប្រភេទ​កូដ​ផលិតផល ៖"
+msgstr "ប្រភេទ​កូដ​ផលិត​ផល ៖"
 
 #: ../share/extensions/restack.inx.h:2
 msgid "Arbitrary Angle:"
@@ -18064,11 +18060,11 @@ msgstr "កណ្ដាល"
 
 #: ../share/extensions/restack.inx.h:10
 msgid "Radial Inward"
-msgstr ""
+msgstr "កាំ​ខាង​ក្នុង"
 
 #: ../share/extensions/restack.inx.h:11
 msgid "Radial Outward"
-msgstr ""
+msgstr "កាំ​ខាង​ក្រៅ"
 
 #: ../share/extensions/restack.inx.h:12
 msgid "Restack"
@@ -18150,19 +18146,19 @@ msgstr "ការ​ដាក់​ស្ពឺ"
 
 #: ../share/extensions/spirograph.inx.h:2
 msgid "Inside (Hypotrochoid)"
-msgstr "ខាង​ក្នុង (ខ្សែកោង)"
+msgstr "ខាង​ក្នុង (ខ្សែ​កោង)"
 
 #: ../share/extensions/spirograph.inx.h:3
 msgid "Outside (Epitrochoid)"
-msgstr "ខាងក្រៅ (ខ្សែកោង)"
+msgstr "ខាង​ក្រៅ (ខ្សែ​កោង)"
 
 #: ../share/extensions/spirograph.inx.h:4
 msgid "Quality (Default = 16)"
-msgstr "គុណភាព (លំនាំដើម = ១៦)"
+msgstr "គុណភាព (លំនាំ​ដើម = ១៦)"
 
 #: ../share/extensions/spirograph.inx.h:5
 msgid "R - Ring Radius (px)"
-msgstr "R - កាំរង្វង់ (ភីកសែល)"
+msgstr "R - កាំ​រង្វង់ (ភីកសែល)"
 
 #: ../share/extensions/spirograph.inx.h:7
 msgid "Rotation (deg)"
@@ -18224,7 +18220,7 @@ msgstr "បម្លែង​ទៅ Braille"
 
 #: ../share/extensions/text_flipcase.inx.h:2
 msgid "fLIP cASE"
-msgstr "fLIP cASE"
+msgstr "លក្ខណៈ​តួ​អក្សរ​ត្រឡប់"
 
 #: ../share/extensions/text_lowercase.inx.h:2
 msgid "lowercase"
@@ -18232,7 +18228,7 @@ msgstr "អក្សរ​តូច​"
 
 #: ../share/extensions/text_randomcase.inx.h:2
 msgid "rANdOm CasE"
-msgstr "rANdOm CasE"
+msgstr "លក្ខណៈ​តួ​អក្សរ​ចៃដន្យ"
 
 #: ../share/extensions/text_replace.inx.h:1
 msgid "By:"
