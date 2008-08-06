@@ -292,26 +292,6 @@ sp_pen_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
 static void
 spdc_endpoint_snap(SPPenContext const *const pc, NR::Point &p, guint const state)
 {
-    /*** old code: ***/
-    /***
-    if (pc->polylines_paraxial) {
-        pen_set_to_nearest_horiz_vert(pc, p, state);
-        // TODO: another (constrained) snap required?
-    } else {
-        if ((state & GDK_CONTROL_MASK)) { //CTRL enables angular snapping
-            if (pc->npoints > 0) {
-                spdc_endpoint_snap_rotation(pc, p, pc->p[0], state);
-            }
-        } else {
-            if (!(state & GDK_SHIFT_MASK)) { //SHIFT disables all snapping, except the angular snapping above
-                                             //After all, the user explicitely asked for angular snapping by
-                                             //pressing CTRL
-                spdc_endpoint_snap_free(pc, p, state);
-            }
-        }
-    }
-    **/
-
     if ((state & GDK_CONTROL_MASK)) { //CTRL enables angular snapping
         if (pc->npoints > 0) {
             spdc_endpoint_snap_rotation(pc, p, pc->p[0], state);
