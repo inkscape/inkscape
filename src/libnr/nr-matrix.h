@@ -25,6 +25,7 @@
 #include <libnr/nr-rotate.h>
 #include <libnr/nr-scale.h>
 #include <libnr/nr-translate.h>
+#include <2geom/matrix.h>
 
 namespace NR {
 
@@ -77,6 +78,16 @@ class Matrix {
     }
 
 
+    Matrix(Geom::Matrix const &m) {
+        NR::Coord *dest = _c;
+
+        *dest++ = m[0];
+        *dest++ = m[1];
+        *dest++ = m[2];
+        *dest++ = m[3];
+        *dest++ = m[4];
+        *dest   = m[5];
+    }
 
     /**
      *
@@ -220,6 +231,9 @@ class Matrix {
         return _c[i];
     }
 
+    inline operator Geom::Matrix() const {
+        return Geom::Matrix(_c[0], _c[1], _c[2], _c[3], _c[4], _c[5]);
+    }
 
     /**
      *
