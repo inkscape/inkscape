@@ -197,6 +197,9 @@ sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf)
         // RGB / BGR
         cairo_set_source_rgba(buf->ct, SP_RGBA32_B_F(cbp->stroke_rgba), SP_RGBA32_G_F(cbp->stroke_rgba), SP_RGBA32_R_F(cbp->stroke_rgba), SP_RGBA32_A_F(cbp->stroke_rgba));
         cairo_set_line_width(buf->ct, 1);
+        if (cbp->dashes[0] != 0 && cbp->dashes[1] != 0) {
+            cairo_set_dash (buf->ct, cbp->dashes, 2, 0);
+        }
         cairo_stroke(buf->ct);
     }
 }
@@ -267,7 +270,7 @@ sp_canvas_bpath_set_fill (SPCanvasBPath *cbp, guint32 rgba, SPWindRule rule)
 }
 
 void
-sp_canvas_bpath_set_stroke (SPCanvasBPath *cbp, guint32 rgba, gdouble width, SPStrokeJoinType join, SPStrokeCapType cap)
+sp_canvas_bpath_set_stroke (SPCanvasBPath *cbp, guint32 rgba, gdouble width, SPStrokeJoinType join, SPStrokeCapType cap, double dash, double gap)
 {
     g_return_if_fail (cbp != NULL);
     g_return_if_fail (SP_IS_CANVAS_BPATH (cbp));
@@ -276,6 +279,8 @@ sp_canvas_bpath_set_stroke (SPCanvasBPath *cbp, guint32 rgba, gdouble width, SPS
     cbp->stroke_width = MAX (width, 0.1);
     cbp->stroke_linejoin = join;
     cbp->stroke_linecap = cap;
+    cbp->dashes[0] = dash;
+    cbp->dashes[1] = gap;
 
     sp_canvas_item_request_update (SP_CANVAS_ITEM (cbp));
 }

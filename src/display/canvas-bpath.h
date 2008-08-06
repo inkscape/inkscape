@@ -73,6 +73,7 @@ struct SPCanvasBPath {
     /* Line attributes */
     guint32 stroke_rgba;
     gdouble stroke_width;
+    gdouble dashes[2];
     SPStrokeJoinType stroke_linejoin;
     SPStrokeCapType stroke_linecap;
     gdouble stroke_miterlimit;
@@ -92,7 +93,7 @@ SPCanvasItem *sp_canvas_bpath_new (SPCanvasGroup *parent, SPCurve *curve);
 
 void sp_canvas_bpath_set_bpath (SPCanvasBPath *cbp, SPCurve *curve);
 void sp_canvas_bpath_set_fill (SPCanvasBPath *cbp, guint32 rgba, SPWindRule rule);
-void sp_canvas_bpath_set_stroke (SPCanvasBPath *cbp, guint32 rgba, gdouble width, SPStrokeJoinType join, SPStrokeCapType cap);
+void sp_canvas_bpath_set_stroke (SPCanvasBPath *cbp, guint32 rgba, gdouble width, SPStrokeJoinType join, SPStrokeCapType cap, double dash=0, double gap=0);
 
 
 /*
