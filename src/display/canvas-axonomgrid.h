@@ -41,18 +41,13 @@ public:
     void readRepr();
     void onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive);
 
-    SPUnit const* gridunit;
-
-    NR::Point origin;     /**< Origin of the grid */
     double lengthy;       /**< The lengths of the primary y-axis */
     double angle_deg[3];  /**< Angle of each axis (note that angle[2] == 0) */
     double angle_rad[3];  /**< Angle of each axis (note that angle[2] == 0) */
     double tan_angle[3];  /**< tan(angle[.]) */
-    guint32 color;        /**< Color for normal lines */
-    guint32 empcolor;     /**< Color for emphasis lines */
-    gint empspacing;      /**< Spacing between emphasis lines */
+    
     bool scaled;          /**< Whether the grid is in scaled mode */
-
+    
     NR::Point ow;         /**< Transformed origin by the affine for the zoom */
     double lyw;           /**< Transformed length y by the affine for the zoom */
     double lxw_x;

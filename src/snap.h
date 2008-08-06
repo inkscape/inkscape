@@ -62,6 +62,8 @@ public:
                                     bool first_point = true,
                                     boost::optional<NR::Rect> const &bbox_to_snap = boost::optional<NR::Rect>() ) const;
     
+    Geom::Point multipleOfGridPitch(Geom::Point const &t) const;
+    
     // constrainedSnapReturnByRef() is preferred over constrainedSnap(), because it only returns a 
     // point, by overwriting p, if snapping has occured; otherwise p is untouched
     void constrainedSnapReturnByRef(Inkscape::Snapper::PointType point_type,

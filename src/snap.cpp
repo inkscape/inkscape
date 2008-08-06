@@ -232,6 +232,60 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType point_
     return findBestSnap(p, sc, false);
 }
 
+// When pasting, we would like to snap to the grid. Problem is that we don't know which nodes were
+// aligned to the grid at the time of copying, so we don't know which nodes to snap. If we'd snap an
+// unaligned node to the grid, previously aligned nodes would become unaligned. That's undesirable.
+// Instead we will make sure that the offset between the source and the copy is a multiple of the grid
+// pitch. If the source was aligned, then the copy will therefore also be aligned
+// PS: Wether we really find a multiple also depends on the snapping range!
+Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
+{
+    if (!_snap_enabled_globally) 
+        return t;
+    
+    //FIXME: this code should actually do this: add new grid snappers that are active for this desktop. now it just adds all gridsnappers
+    SPDesktop* desktop = SP_ACTIVE_DESKTOP;
+    
+    if (desktop && desktop->gridsEnabled()) {
+        bool success = false;
+        NR::Point nearest_multiple; 
+        NR::Coord nearest_distance = NR_HUGE;
+        
+        // It will snap to the grid for which we find the closest snap. This might be a different
+        // grid than to which the objects were initially aligned. I don't see an easy way to fix 
+        // this, so when using multiple grids one can get unexpected results 
+        
+        // Cannot use getGridSnappers() because we need both the grids AND their snappers
+        // Therefor we iterate through all grids manually        
+        for (GSList const *l = _named_view->grids; l != NULL; l = l->next) {
+            Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
+            const Inkscape::Snapper* snapper = grid->snapper; 
+            if (snapper && snapper->ThisSnapperMightSnap()) {
+                // To find the nearest multiple of the grid pitch for a given translation t, we 
+                // will use the grid snapper. Simply snapping the value t to the grid will do, but
+                // only if the origin of the grid is at (0,0). If it's not then compensate for this
+                // in the translation t
+                NR::Point const t_offset = from_2geom(t) + grid->origin;
+                SnappedConstraints sc;    
+                // Only the first three parameters are being used for grid snappers
+                snapper->freeSnap(sc, Inkscape::Snapper::SNAPPOINT_NODE, t_offset, TRUE, boost::optional<NR::Rect>(), NULL, NULL);
+                // Find the best snap for this grid, including intersections of the grid-lines
+                Inkscape::SnappedPoint s = findBestSnap(t_offset, sc, false);
+                if (s.getSnapped() && (s.getDistance() < nearest_distance)) {
+                    success = true;
+                    nearest_multiple = s.getPoint() - grid->origin;
+                    nearest_distance = s.getDistance();
+                }
+            }
+        }
+        
+        if (success) 
+            return to_2geom(nearest_multiple);
+    }
+    
+    return t;
+}
+
 /**
  *  Try to snap a point to any interested snappers.  A snap will only occur along
  *  a line described by a Inkscape::Snapper::ConstraintLine.

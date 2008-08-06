@@ -89,6 +89,13 @@ public:
 
     Gtk::Widget * newWidget();
 
+    NR::Point origin;     /**< Origin of the grid */
+    guint32 color;        /**< Color for normal lines */
+    guint32 empcolor;     /**< Color for emphasis lines */
+    gint empspacing;      /**< Spacing between emphasis lines */
+    
+    SPUnit const* gridunit;
+    
     Inkscape::XML::Node * repr;
     SPDocument *doc;
 
@@ -129,12 +136,6 @@ public:
 
     void readRepr();
     void onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive);
-
-    NR::Point origin;
-    guint32 color;
-    guint32 empcolor;
-    gint  empspacing;
-    SPUnit const* gridunit;
 
     NR::Point spacing; /**< Spacing between elements of the grid */
     bool scaled[2];    /**< Whether the grid is in scaled mode, which can
