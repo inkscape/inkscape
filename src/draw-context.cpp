@@ -367,7 +367,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
             dc->waiting_LPE_type = INVALID_LPE;
         }
         if (SP_IS_PEN_CONTEXT(dc)) {
-            SP_PEN_CONTEXT(dc)->polylines_only = (prefs_get_int_attribute("tools.freehand.pen", "freehand-mode", 0) == 2);
+            sp_pen_context_set_polyline_mode(SP_PEN_CONTEXT(dc));
         }
     }
 }
@@ -442,7 +442,7 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
  *  \param state  keyboard state to check if ctrl was pressed
 */
 
-void spdc_endpoint_snap_rotation(SPEventContext const *const ec, NR::Point &p, NR::Point const o,
+void spdc_endpoint_snap_rotation(SPEventContext const *const ec, NR::Point &p, NR::Point const &o,
                                  guint state)
 {
     unsigned const snaps = abs(prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12));

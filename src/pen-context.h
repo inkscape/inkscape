@@ -33,12 +33,15 @@ struct SPPenContext : public SPDrawContext {
     NR::Point p[5];
 
     /** \invar npoints in {0, 2, 5}. */
+    // npoints somehow determines the type of the node (what does it mean, exactly? the number of Bezier handles?)
     gint npoints;
 
     unsigned int mode : 1;
     unsigned int state : 2;
 
     bool polylines_only;
+    bool polylines_paraxial;
+    int num_clicks;
 
     unsigned int expecting_clicks_for_LPE; // if positive, finish the path after this many clicks
     Inkscape::LivePathEffect::Effect *waiting_LPE; // if NULL, waiting_LPE_type in SPDrawContext is taken into account
@@ -60,6 +63,7 @@ inline bool sp_pen_context_has_waiting_LPE(SPPenContext *pc) {
             pc->waiting_LPE_type != Inkscape::LivePathEffect::INVALID_LPE);
 }
 
+void sp_pen_context_set_polyline_mode(SPPenContext *const pc);
 void sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEffect::EffectType effect_type,
                                               unsigned int num_clicks, bool use_polylines = true);
 

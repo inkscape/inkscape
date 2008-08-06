@@ -3290,7 +3290,7 @@ static void freehand_mode_changed(EgeSelectOneAction* act, GObject* tbl)
     // preparatory work here
     if (SP_IS_PEN_CONTEXT(desktop->event_context)) {
         SPPenContext *pc = SP_PEN_CONTEXT(desktop->event_context);
-        pc->polylines_only = (mode == 2);
+        sp_pen_context_set_polyline_mode(pc);
     }
 }
 
@@ -3325,6 +3325,13 @@ static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* ho
                                     0, _("Zigzag"),
                                     1, _("Create a sequence of straight line segments"),
                                     2, "polylines_mode",
+                                    -1 );
+
+                gtk_list_store_append( model, &iter );
+                gtk_list_store_set( model, &iter,
+                                    0, _("Paraxial"),
+                                    1, _("Create a sequence of paraxial line segments"),
+                                    2, "paraxial_lines_mode",
                                     -1 );
             }
 

@@ -53,7 +53,7 @@ static gint sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event);
 static gint sp_pen_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
 
 static void spdc_pen_set_initial_point(SPPenContext *pc, NR::Point const p);
-static void spdc_pen_set_subsequent_point(SPPenContext *pc, NR::Point const p, bool statusbar);
+static void spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool statusbar, guint status = 0);
 static void spdc_pen_set_ctrl(SPPenContext *pc, NR::Point const p, guint state);
 static void spdc_pen_finish_segment(SPPenContext *pc, NR::Point p, guint state);
 
@@ -73,6 +73,12 @@ static NR::Point pen_drag_origin_w(0, 0);
 static bool pen_within_tolerance = false;
 
 static SPDrawContextClass *pen_parent_class;
+
+static int pen_next_paraxial_direction(const SPPenContext *const pc, NR::Point const &pt, NR::Point const &origin, guint state);
+static void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, NR::Point &pt, guint const state);
+static NR::Point pen_get_intermediate_horiz_vert(const SPPenContext *const pc, NR::Point const &pt, guint const state);
+
+static int pen_last_paraxial_dir = 0; // last used direction in horizontal/vertical mode; 0 = horizontal, 1 = vertical
 
 /**
  * Register SPPenContext with Gdk and return its type.
@@ -144,7 +150,7 @@ sp_pen_context_init(SPPenContext *pc)
     
     pc->events_disabled = 0;
 
-    pc->polylines_only = prefs_get_int_attribute("tools.freehand.pen", "freehand-mode", 0);
+    pc->num_clicks = 0;
     pc->waiting_LPE = NULL;
 }
 
@@ -183,6 +189,13 @@ sp_pen_context_dispose(GObject *object)
     }
 }
 
+void
+sp_pen_context_set_polyline_mode(SPPenContext *const pc) {
+    guint mode = prefs_get_int_attribute("tools.freehand.pen", "freehand-mode", 0);
+    pc->polylines_only = (mode == 2 || mode == 3);
+    pc->polylines_paraxial = (mode == 3);
+}
+
 /**
  * Callback to initialize SPPenContext object.
  */
@@ -216,6 +229,8 @@ sp_pen_context_setup(SPEventContext *ec)
 
     pc->anchor_statusbar = false;
 
+    sp_pen_context_set_polyline_mode(pc);
+
     if (prefs_get_int_attribute("tools.freehand.pen", "selcue", 0) != 0) {
         ec->enableSelectionCue();
     }
@@ -224,6 +239,7 @@ sp_pen_context_setup(SPEventContext *ec)
 static void
 pen_cancel (SPPenContext *const pc) 
 {
+    pc->num_clicks = 0;
     pc->state = SP_PEN_CONTEXT_STOP;
     spdc_reset_colors(pc);
     sp_canvas_item_hide(pc->c0);
@@ -276,7 +292,26 @@ sp_pen_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
 static void
 spdc_endpoint_snap(SPPenContext const *const pc, NR::Point &p, guint const state)
 {
-    
+    /*** old code: ***/
+    /***
+    if (pc->polylines_paraxial) {
+        pen_set_to_nearest_horiz_vert(pc, p, state);
+        // TODO: another (constrained) snap required?
+    } else {
+        if ((state & GDK_CONTROL_MASK)) { //CTRL enables angular snapping
+            if (pc->npoints > 0) {
+                spdc_endpoint_snap_rotation(pc, p, pc->p[0], state);
+            }
+        } else {
+            if (!(state & GDK_SHIFT_MASK)) { //SHIFT disables all snapping, except the angular snapping above
+                                             //After all, the user explicitely asked for angular snapping by
+                                             //pressing CTRL
+                spdc_endpoint_snap_free(pc, p, state);
+            }
+        }
+    }
+    **/
+
     if ((state & GDK_CONTROL_MASK)) { //CTRL enables angular snapping
         if (pc->npoints > 0) {
             spdc_endpoint_snap_rotation(pc, p, pc->p[0], state);
@@ -287,6 +322,10 @@ spdc_endpoint_snap(SPPenContext const *const pc, NR::Point &p, guint const state
                                          //pressing CTRL
             spdc_endpoint_snap_free(pc, p, state);
         }
+    }
+    if (pc->polylines_paraxial) {
+        // TODO: must we avoid one of the snaps in the previous case distinction in some situations?
+        pen_set_to_nearest_horiz_vert(pc, p, state);
     }
 }
 
@@ -476,7 +515,11 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
 
                                 /* Create green anchor */
                                 p = event_dt;
-                                spdc_endpoint_snap(pc, p, bevent.state);
+                                if (!pc->polylines_paraxial) {
+                                    // only snap the starting point if we're not in horizontal/vertical mode
+                                    // because otherwise it gets shifted; TODO: why do we snap here at all??
+                                    spdc_endpoint_snap(pc, p, bevent.state);
+                                }
                                 pc->green_anchor = sp_draw_anchor_new(pc, pc->green_curve, TRUE, p);
                             }
                             spdc_pen_set_initial_point(pc, p);
@@ -624,7 +667,7 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
                             spdc_endpoint_snap(pc, p, mevent.state);
                         }
 
-                        spdc_pen_set_subsequent_point(pc, p, !anchor);
+                        spdc_pen_set_subsequent_point(pc, p, !anchor, mevent.state);
 
                         if (anchor && !pc->anchor_statusbar) {
                             pc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> or <b>click and drag</b> to close and finish the path."));
@@ -792,7 +835,7 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
     // TODO: can we be sure that the path was created correctly?
     // TODO: should we offer an option to collect the clicks in a list?
     if (pc->expecting_clicks_for_LPE == 0 && sp_pen_context_has_waiting_LPE(pc)) {
-        pc->polylines_only = prefs_get_int_attribute("tools.freehand.pen", "freehand-mode", 0);
+        sp_pen_context_set_polyline_mode(pc);
 
         SPEventContext *ec = SP_EVENT_CONTEXT(pc);
         Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
@@ -802,7 +845,6 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
             pc->waiting_LPE->acceptParamPath(SP_PATH(selection->singleItem()));
             selection->add(SP_OBJECT(pc->waiting_item));
             pc->waiting_LPE = NULL;
-            pc->polylines_only = prefs_get_int_attribute("tools.freehand.pen", "freehand-mode", 0);
         } else {
             // the case that we need to create a new LPE and apply it to the just-drawn path is
             // handled in spdc_check_for_and_apply_waiting_LPE() in draw-context.cpp
@@ -1194,7 +1236,7 @@ spdc_pen_set_angle_distance_status_message(SPPenContext *const pc, NR::Point con
 }
 
 static void
-spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool statusbar)
+spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool statusbar, guint status)
 {
     g_assert( pc->npoints != 0 );
     /* todo: Check callers to see whether 2 <= npoints is guaranteed. */
@@ -1204,15 +1246,25 @@ spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool st
     pc->p[4] = p;
     pc->npoints = 5;
     pc->red_curve->reset();
-    pc->red_curve->moveto(pc->p[0]);
     bool is_curve;
-    if (pc->p[1] != pc->p[0])
-    {
-        pc->red_curve->curveto(pc->p[1], p, p);
-        is_curve = true;
-    } else {
+    pc->red_curve->moveto(pc->p[0]);
+    if (pc->polylines_paraxial && !statusbar) {
+        // we are drawing horizontal/vertical lines and hit an anchor; draw an L-shaped path
+        NR::Point intermed = p;
+        pen_set_to_nearest_horiz_vert(pc, intermed, status);
+        pc->red_curve->lineto(intermed);
         pc->red_curve->lineto(p);
         is_curve = false;
+    } else {
+        // one of the 'regular' modes
+        if (pc->p[1] != pc->p[0])
+        {
+            pc->red_curve->curveto(pc->p[1], p, p);
+            is_curve = true;
+        } else {
+            pc->red_curve->lineto(p);
+            is_curve = false;
+        }
     }
 
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
@@ -1269,8 +1321,13 @@ spdc_pen_set_ctrl(SPPenContext *const pc, NR::Point const p, guint const state)
 }
 
 static void
-spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const /*p*/, guint const /*state*/)
+spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const p, guint const state)
 {
+    if (pc->polylines_paraxial) {
+        pen_last_paraxial_dir = pen_next_paraxial_direction(pc, p, pc->p[0], state);
+    }
+    ++pc->num_clicks;
+
     if (!pc->red_curve->is_empty()) {
         pc->green_curve->append_continuous(pc->red_curve, 0.0625);
         SPCurve *curve = pc->red_curve->copy();
@@ -1296,6 +1353,8 @@ spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
         // don't let the path be finished before we have collected the required number of mouse clicks
         return;
     }
+
+    pc->num_clicks = 0;
 
     pen_disable_events(pc);
     
@@ -1346,7 +1405,54 @@ sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEff
              Inkscape::LivePathEffect::LPETypeConverter.get_label(effect_type).c_str());
     pc->expecting_clicks_for_LPE = num_clicks;
     pc->polylines_only = use_polylines;
+    pc->polylines_paraxial = false; // TODO: think if this is correct for all cases
     pc->waiting_LPE_type = effect_type;
+}
+
+static int pen_next_paraxial_direction(const SPPenContext *const pc,
+                                       NR::Point const &pt, NR::Point const &origin, guint state) {
+    /*
+     * after the first mouse click we determine whether the mouse pointer is closest to a
+     * horizontal or vertical segment; for all subsequent mouse clicks, we use the direction
+     * orthogonal to the last one; pressing Shift toggles the direction
+     */
+    if (pc->num_clicks == 0) {
+        // first mouse click
+        double dist_h = fabs(pt[NR::X] - origin[NR::X]);
+        double dist_v = fabs(pt[NR::Y] - origin[NR::Y]);
+        int ret = (dist_h < dist_v) ? 1 : 0; // 0 = horizontal, 1 = vertical
+        pen_last_paraxial_dir = (state & GDK_SHIFT_MASK) ? 1 - ret : ret;
+        return pen_last_paraxial_dir;
+    } else {
+        // subsequent mouse click
+        return (state & GDK_SHIFT_MASK) ? pen_last_paraxial_dir : 1 - pen_last_paraxial_dir;
+    }
+}
+
+void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, NR::Point &pt, guint const state)
+{
+    NR::Point const &origin = pc->p[0];
+
+    int next_dir = pen_next_paraxial_direction(pc, pt, origin, state);
+
+    if (next_dir == 0) {
+        // line is forced to be horizontal
+        pt[NR::Y] = origin[NR::Y];
+    } else {
+        // line is forced to be vertical
+        pt[NR::X] = origin[NR::X];
+    }
+}
+
+NR::Point pen_get_intermediate_horiz_vert(const SPPenContext *const pc, NR::Point const &pt)
+{
+    NR::Point const &origin = pc->p[0];
+
+    if (pen_last_paraxial_dir == 0) {
+        return NR::Point (origin[NR::X], pt[NR::Y]);
+    } else {
+        return NR::Point (pt[NR::X], origin[NR::Y]);
+    }
 }
 
 /*
