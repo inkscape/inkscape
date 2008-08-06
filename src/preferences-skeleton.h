@@ -190,6 +190,7 @@ static char const preferences_skeleton[] =
 "  </group>\n"
 "\n"
 "  <group id=\"options\">\n"
+"    <group id=\"highlightoriginal\" value=\"1\" />"
 "    <group id=\"relinkclonesonduplicate\" value=\"0\" />"
 "    <group id=\"mapalt\" value=\"1\" />"
 "    <group id=\"switchonextinput\" value=\"0\" />"

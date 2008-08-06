@@ -83,6 +83,8 @@
 #include "gradient-drag.h"
 #include "uri-references.h"
 #include "libnr/nr-convert2geom.h"
+#include "display/curve.h"
+#include "display/canvas-bpath.h"
 
 // For clippath editing
 #include "tools-switch.h"
@@ -287,12 +289,12 @@ void sp_selection_duplicate(bool suppressDone)
 
         g_assert (old_ids.size() == new_ids.size());
 
-        for(int i = 0; i < old_ids.size(); i++) {
+        for(unsigned int i = 0; i < old_ids.size(); i++) {
             const gchar *id = old_ids[i];
             SPObject *old_clone = doc->getObjectById(id);
             if (SP_IS_USE(old_clone)) {
                 SPItem *orig = sp_use_get_original(SP_USE(old_clone));
-                for(int j = 0; j < old_ids.size(); j++) {
+                for(unsigned int j = 0; j < old_ids.size(); j++) {
                     if (!strcmp(SP_OBJECT_ID(orig), old_ids[j])) {
                         // we have both orig and clone in selection, relink
                         // std::cout << id  << " old, its ori: " << SP_OBJECT_ID(orig) << "; will relink:" << new_ids[i] << " to " << new_ids[j] << "\n";
@@ -2079,6 +2081,25 @@ sp_select_clone_original()
     }
 
     if (original) {
+
+        bool highlight = prefs_get_int_attribute ("options.highlightoriginal", "value", 0);
+        if (highlight) {
+            boost::optional<NR::Rect> a = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
+            boost::optional<NR::Rect> b = original->getBounds(from_2geom(sp_item_i2d_affine(original)));
+            if ( a && b ) {
+                // draw a flashing line between the objects
+                SPCurve *curve = new SPCurve();
+                curve->moveto(a->midpoint());
+                curve->lineto(b->midpoint());
+
+                SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), curve);
+                sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), 0x0000ddff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT, 5, 3);
+                sp_canvas_item_show(canvasitem);
+                curve->unref();
+                desktop->add_temporary_canvasitem (canvasitem, 1000);
+            }
+        }
+
         selection->clear();
         selection->set(original);
         if (SP_CYCLING == SP_CYCLE_FOCUS) {
