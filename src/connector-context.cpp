@@ -1165,15 +1165,15 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
     g_assert( SP_IS_PATH(item) );
 
     SPCurve *curve = SP_SHAPE(SP_PATH(item))->curve;
-    NR::Matrix i2d = from_2geom(sp_item_i2d_affine(item));
+    Geom::Matrix i2d = sp_item_i2d_affine(item);
 
     if (cc->active_conn == item)
     {
         // Just adjust handle positions.
-        NR::Point startpt = curve->first_point() * i2d;
+        Geom::Point startpt = curve->first_point() * i2d;
         sp_knot_set_position(cc->endpt_handle[0], startpt, 0);
 
-        NR::Point endpt = curve->last_point() * i2d;
+        Geom::Point endpt = curve->last_point() * i2d;
         sp_knot_set_position(cc->endpt_handle[1], endpt, 0);
 
         return;
@@ -1237,10 +1237,10 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
                 G_CALLBACK(endpt_handler), cc);
     }
 
-    NR::Point startpt = curve->first_point() * i2d;
+    Geom::Point startpt = curve->first_point() * i2d;
     sp_knot_set_position(cc->endpt_handle[0], startpt, 0);
 
-    NR::Point endpt = curve->last_point() * i2d;
+    Geom::Point endpt = curve->last_point() * i2d;
     sp_knot_set_position(cc->endpt_handle[1], endpt, 0);
 
     sp_knot_show(cc->endpt_handle[0]);

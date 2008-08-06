@@ -77,7 +77,7 @@ KnotHolderEntity::~KnotHolderEntity()
 void
 KnotHolderEntity::update_knot()
 {
-    NR::Matrix const i2d(from_2geom(sp_item_i2d_affine(item)));
+    Geom::Matrix const i2d(sp_item_i2d_affine(item));
 
     Geom::Point dp(knot_get() * i2d);
 
@@ -89,12 +89,12 @@ KnotHolderEntity::update_knot()
 Geom::Point
 KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 {
-    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine(item)));
+    Geom::Matrix const i2d (sp_item_i2d_affine(item));
     NR::Point s = p * i2d;
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, item);
     m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, s);
-    return s * i2d.inverse();
+    return Geom::Point(s) * i2d.inverse();
 }
 
 
@@ -160,7 +160,7 @@ PatternKnotHolderEntityAngle::knot_get()
     Geom::Point delta = Geom::Point(x,y);
     Geom::Point scale = sp_pattern_extract_scale(pat);
     gdouble theta = sp_pattern_extract_theta(pat);
-    delta = delta * NR::Matrix(NR::scale(scale))*NR::Matrix(NR::rotate(theta));
+    delta = delta * Geom::Matrix(Geom::Scale(scale))*Geom::Matrix(Geom::Rotate(theta));
     delta = delta + sp_pattern_extract_trans(pat);
     return delta;
 }
@@ -233,7 +233,7 @@ PatternKnotHolderEntityScale::knot_get()
     gdouble x = pattern_width(pat);
     gdouble y = pattern_height(pat);
     Geom::Point delta = Geom::Point(x,y);
-    NR::Matrix a = pat->patternTransform;
+    Geom::Matrix a = pat->patternTransform;
     a[4] = 0;
     a[5] = 0;
     delta = delta * a;
