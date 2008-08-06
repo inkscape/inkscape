@@ -503,21 +503,16 @@ pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint con
             break;
         case GDK_Escape:
             if (pc->npoints != 0) {
-                // if drawing, cancel, otherwise pass it up for deselecting
-                if (pc->is_drawing) {
-                    pencil_cancel (pc);
-                    ret = TRUE;
-                }
+                pencil_cancel (pc);
+                ret = TRUE;
             }
             break;
         case GDK_z:
         case GDK_Z:
             if (mod_ctrl_only(state) && pc->npoints != 0) {
                 // if drawing, cancel, otherwise pass it up for undo
-                if (pc->is_drawing) {
-                    pencil_cancel (pc);
-                    ret = TRUE;
-                }
+                pencil_cancel (pc);
+                ret = TRUE;
             }
             break;
         case GDK_g:
