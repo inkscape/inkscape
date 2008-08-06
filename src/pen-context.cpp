@@ -417,7 +417,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
 
     gint ret = FALSE;
     if (bevent.button == 1 && !event_context->space_panning
-        // when the last click for a waiting LPE occurs we want to finish the path
+        // make sure this is not the last click for a waiting LPE (otherwise we want to finish the path)
         && pc->expecting_clicks_for_LPE != 1) {
 
         if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
