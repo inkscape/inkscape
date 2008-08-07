@@ -787,10 +787,10 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
     sp_document_ensure_up_to_date(target_document); // What does this do?
     
     boost::optional<NR::Rect> sel_bbox = selection->bounds(); //In desktop coordinates
-    // PS: We could also have used the min/max corners calculated above, because we know that
-    // after pasting the upper left corner of the selection will be aligend to the corresponding page corner
-    // Using the boundingbox of the selection is more foolproof though
-        if (sel_bbox) {
+    // PS: We could also have used the min/max corners calculated above, instead of selection->bounds() because 
+    // we know that after pasting the upper left corner of the selection will be aligend to the corresponding 
+    // page corner. Using the boundingbox of the selection is more foolproof though
+    if (sel_bbox) {
         Geom::Point pos_mouse = to_2geom(desktop->point()); //Location of mouse pointer in desktop coordinates
         // Now calculate how far we would have to move the pasted objects to get their
         // midpoint at the location of the mouse pointer
@@ -803,7 +803,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
         offset = rel_pos_original;        
     } else { // Stick to the grid if snapping is enabled, otherwise paste at mouse position;
         SnapManager &m = desktop->namedview->snap_manager;
-        m.setup(NULL, NULL); //Don't display snapindicator
+        m.setup(NULL, NULL); //Don't display the snapindicator
         offset = rel_pos_original + m.multipleOfGridPitch(rel_pos_mouse - rel_pos_original); 
     }
     

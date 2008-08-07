@@ -369,7 +369,7 @@
         </excludeinc>
         <flags>
             -Wall -Wformat -Werror=format-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch
-            -O2
+			-O2
             -mms-bitfields
         </flags>
         <defines>
@@ -467,11 +467,11 @@
         </flags>
     </rc>
     <link command="${arch}g++" out="${build}/inkscape.exe"
-              strip="true" symfile="${build}/inkscape.dbg"
+              strip="false" symfile="${build}/inkscape.dbg"
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
-           -mwindows
+           -mconsole
        </flags>
        <fileset dir="${build}">
            <include name="inkres.o"/>

@@ -450,12 +450,24 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
         // std::cout << "Dumping the pathvector: " << svgd << std::endl;        
         
         for(Geom::PathVector::iterator it_pv = (*it_p)->begin(); it_pv != (*it_p)->end(); ++it_pv) {
-            std::vector<double> anp = (*it_pv).allNearestPoints(p_doc);
+            std::vector<double> anp;
+            
+            // Find a nearest point for each curve within this path
+            // (path->allNearestPoints() will not do this for us! It was originally 
+            // intended to find for example multiple equidistant solutions)
+            unsigned int num_curves = (*it_pv).size();
+            if ( (*it_pv).closed() ) ++num_curves;
+            for (double t = 0; (t+1) <= double(num_curves); t++) {
+                // Find a nearest point with time value in the range [t, t+1]
+                anp.push_back((*it_pv).nearestPoint(p_doc, t, t+1)); 
+            }
+            
             for (std::vector<double>::const_iterator np = anp.begin(); np != anp.end(); np++) {
                 bool c1 = true;
                 bool c2 = true;
                 Geom::Point start_pt = desktop->doc2dt((*it_pv).pointAt(floor(*np))); 
                 Geom::Point end_pt = desktop->doc2dt((*it_pv).pointAt(ceil(*np)));
+                
                 if (being_edited) {
                     /* If the path is being edited, then we should only snap though to stationary pieces of the path
                      * and not to the pieces that are being dragged around. This way we avoid 
@@ -464,15 +476,14 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                      */                    
                     g_assert(unselected_nodes != NULL);
                     c1 = isUnselectedNode(from_2geom(start_pt), unselected_nodes);
-                    c2 = isUnselectedNode(from_2geom(end_pt), unselected_nodes);     
+                    c2 = isUnselectedNode(from_2geom(end_pt), unselected_nodes);
                 }
                 
                 Geom::Point const sp_doc = (*it_pv).pointAt(*np);
                 Geom::Point const sp_dt = desktop->doc2dt(sp_doc);
                 
-                if (!being_edited || (c2 && c2)) {
+                if (!being_edited || (c1 && c2)) {
                     NR::Coord const dist = Geom::distance(sp_doc, p_doc);
-    
                     if (dist < getSnapperTolerance()) {
                         double t = MIN(*np, (*it_pv).size()); // make sure that t is within bounds;
                         //Geom::Curve const & curve = (*it_pv).at_index(int(t));                         
