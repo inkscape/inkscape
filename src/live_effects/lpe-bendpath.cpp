@@ -83,14 +83,19 @@ LPEBendPath::doBeforeEffect (SPLPEItem *lpeitem)
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 {
+g_message("doEffect_pwd2");
     using namespace Geom;
 
 /* Much credit should go to jfb and mgsloan of lib2geom development for the code below! */
 
-    Piecewise<D2<SBasis> > uskeleton = arc_length_parametrization(Piecewise<D2<SBasis> >(bend_path.get_pwd2()),2,.1);
-    uskeleton = remove_short_cuts(uskeleton,.01);
-    Piecewise<D2<SBasis> > n = rot90(derivative(uskeleton));
-    n = force_continuity(remove_short_cuts(n,.1));
+    if (bend_path.changed) {
+        uskeleton = arc_length_parametrization(Piecewise<D2<SBasis> >(bend_path.get_pwd2()),2,.1);
+        uskeleton = remove_short_cuts(uskeleton,.01);
+        n = rot90(derivative(uskeleton));
+        n = force_continuity(remove_short_cuts(n,.1));
+
+        bend_path.changed = false;
+    }
 
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(pwd2_in);
     Piecewise<SBasis> x = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);

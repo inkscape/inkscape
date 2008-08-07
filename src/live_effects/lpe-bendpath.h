@@ -47,6 +47,9 @@ private:
     BoolParam scale_y_rel;
     BoolParam    vertical_pattern;
 
+    Geom::Piecewise<Geom::D2<Geom::SBasis> > uskeleton;
+    Geom::Piecewise<Geom::D2<Geom::SBasis> > n;
+
     void on_pattern_pasted();
 
     LPEBendPath(const LPEBendPath&);

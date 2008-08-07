@@ -53,6 +53,8 @@ public:
 
     sigc::signal <void> signal_path_pasted;
     sigc::signal <void> signal_path_changed;
+    bool changed; /* this gets set whenever the path is changed (this is set to true, and then the signal_path_changed signal is emitted).
+                   * the user must set it back to false if she wants to use it sensibly */
 
     void paste_param_path(const char *svgd);
     void on_paste_button_click();
@@ -79,6 +81,8 @@ protected:
     void on_edit_button_click();
     void on_copy_button_click();
     void on_link_button_click();
+
+    void emit_changed();
 
     gchar * defvalue;
 

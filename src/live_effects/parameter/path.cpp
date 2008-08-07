@@ -49,6 +49,7 @@ PathParam::PathParam( const Glib::ustring& label, const Glib::ustring& tip,
                       const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
                       Effect* effect, const gchar * default_value)
     : Parameter(label, tip, key, wr, effect),
+      changed(true),
       _pathvector(),
       _pwd2(),
       must_recalculate_pwd2(false),
@@ -119,7 +120,7 @@ PathParam::param_readSVGValue(const gchar * strvalue)
             _pathvector = sp_svg_read_pathv(strvalue);
         }
 
-        signal_path_changed.emit();
+        emit_changed();
         return true;
     }
 
@@ -254,7 +255,7 @@ PathParam::set_new_value (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & newpa
     } else {
         _pwd2 = newpath;
         must_recalculate_pwd2 = false;
-        signal_path_changed.emit();
+        emit_changed();
     }
 }
 
@@ -282,7 +283,7 @@ PathParam::set_new_value (std::vector<Geom::Path> const &newpath, bool write_to_
         param_write_to_repr(svgd);
         g_free(svgd);
     } else {
-        signal_path_changed.emit();
+        emit_changed();
     }
 }
 
@@ -297,6 +298,13 @@ PathParam::ensure_pwd2()
 
         must_recalculate_pwd2 = false;
     }
+}
+
+void
+PathParam::emit_changed()
+{
+    changed = true;
+    signal_path_changed.emit();
 }
 
 void
@@ -364,7 +372,7 @@ PathParam::linked_modified(SPObject *linked_obj, guint /*flags*/)
     }
 
     must_recalculate_pwd2 = true;
-    signal_path_changed.emit();
+    emit_changed();
     SP_OBJECT(param_effect->getLPEObj())->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
