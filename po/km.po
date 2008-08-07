@@ -1,4 +1,4 @@
-# translation of km.po to khmer
+# translation of km.po to Khmer
 # Auk Piseth <piseth_dv@khmeros.info>, 2006.
 # Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007, 2008.
 # Khoem Sokhem<khoemsokhem@khmeros.info>,2008-02-22 08:56+0700.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-08-05 17:19+0700\n"
-"Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
-"Language-Team: khmer <support@khmeros.info>\n"
+"PO-Revision-Date: 2008-08-07 15:21+0700\n"
+"Last-Translator: អេង វណ្ណៈ <evannak@khmeros.info>\n"
+"Language-Team: Khmer <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -65,7 +65,7 @@ msgstr "ផ្លាស់ប្ដូរ​យថាទស្សន៍ (មុ�
 #. status text
 #: ../src/box3d-context.cpp:638
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
-msgstr "<b>ប្រអប់​ត្រីមាត្រ</b>ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បីហូត​តាម​អ័ក្ស Z"
+msgstr "<b>ប្រអប់​ត្រីមាត្រ</b>ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​ហូត​តាម​អ័ក្ស Z"
 
 #: ../src/box3d-context.cpp:662
 msgid "Create 3D box"
@@ -2205,7 +2205,7 @@ msgstr "ឯកត្តា​ក្រឡាចត្រង ៖"
 
 #: ../src/display/canvas-axonomgrid.cpp:392 ../src/display/canvas-grid.cpp:658
 msgid "_Origin X:"
-msgstr " X ដើម ៖"
+msgstr "X ដើម ៖"
 
 #: ../src/display/canvas-axonomgrid.cpp:392 ../src/display/canvas-grid.cpp:658
 #: ../src/ui/dialog/inkscape-preferences.cpp:869
@@ -2823,7 +2823,7 @@ msgstr "បង្កើត​ភាពខុស​គ្នា​របស់​
 #. TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-convolve.html
 #: ../src/extension/internal/bitmap/convolve.cpp:50
 msgid "Convolve"
-msgstr ""
+msgstr "រមូរ"
 
 #: ../src/extension/internal/bitmap/convolve.cpp:52
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:41
@@ -2859,7 +2859,7 @@ msgstr "គ្មាន​ចំណុច​តូចៗ"
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:42
 msgid "Reduce speckle noise of selected bitmap(s)."
-msgstr "កាត់​បន្ថយ​ការ​រំខាន​ចំណុច​តូចៗ​របស់​រូបភាព​ដែល​បានជ្រើស ។"
+msgstr "កាត់​បន្ថយ​ការ​រំខាន​ចំណុច​តូចៗ​របស់​រូបភាព​ដែល​បាន​ជ្រើស ។"
 
 #: ../src/extension/internal/bitmap/edge.cpp:36
 msgid "Edge"
@@ -3308,7 +3308,7 @@ msgstr ""
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/apparition.h:25
 msgid "I'm not sure what this word means"
-msgstr "ខ្ញុំ​មិន​ប្រាកដ​ថា ពាក្យ​នេះ​មាន​ន័យ​ដូចម្ដេច"
+msgstr "ខ្ញុំ​មិន​ប្រាកដ​ថា ពាក្យ​នេះ​មាន​ន័យ​ដូច​ម្ដេច"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/bloom.h:24
@@ -3394,7 +3394,7 @@ msgstr "កែវ​មាន​គែម"
 
 #: ../src/extension/internal/filter/filter-file.cpp:32
 msgid "Bundled"
-msgstr ""
+msgstr "បាច់"
 
 #: ../src/extension/internal/filter/filter-file.cpp:33
 msgid "Personal"
@@ -3477,7 +3477,7 @@ msgstr "ក្រហម​ស្វាយ​"
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/metal.h:25
 msgid "Iron Man vector objects"
-msgstr ""
+msgstr "វត្ថុ​វ៉ិចទ័រ​មនុស្ស​ដែក"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/motion-blur.h:24
@@ -3512,7 +3512,7 @@ msgstr "មិន​ធ្វើការ​ទេ កំហុស"
 #. ID -- should be unique
 #: ../src/extension/internal/filter/ridged-border.h:24
 msgid "Ridged Border"
-msgstr ""
+msgstr "ស៊ុម​ដែល​មាន​ចង្អូរ"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/ripple.h:24
@@ -3532,7 +3532,7 @@ msgstr "ធ្វើ​ឲ្យ​គ្រើម"
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/roughen.h:25
 msgid "Like Brad Pitt's stubble"
-msgstr ""
+msgstr "ដូច​ជា​ជញ្ជ្រាំអ​របស់ Brad Pitt"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/rubber-stamp.h:24
@@ -5527,7 +5527,7 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:85
 msgid "Tangent to curve"
-msgstr ""
+msgstr "ប៉ះ​ខ្សែ​កោង"
 
 #: ../src/live_effects/effect.cpp:86
 msgid "Mirror reflection"
@@ -5676,7 +5676,7 @@ msgstr "ទទឹង​មាត្រដ្ឋាន"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
 msgid "Scale the width of the stitch path"
-msgstr ""
+msgstr "ធ្វើ​មាត្រដ្ឋាន​នៃ​ផ្លូវ​ថ្នេរ"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale width relative to length"
@@ -5764,7 +5764,7 @@ msgstr "ទទឹង​នៃ​គម្លាត​ក្នុង​ផ្ល
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-lattice.cpp:45
 msgid "Control handle 0"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា 0"
 
 #: ../src/live_effects/lpe-lattice.cpp:45
 #: ../src/live_effects/lpe-lattice.cpp:46
@@ -5783,67 +5783,67 @@ msgstr ""
 #: ../src/live_effects/lpe-lattice.cpp:59
 #: ../src/live_effects/lpe-lattice.cpp:60
 msgid "Tadah"
-msgstr ""
+msgstr "Tadah"
 
 #: ../src/live_effects/lpe-lattice.cpp:46
 msgid "Control handle 1"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ១"
 
 #: ../src/live_effects/lpe-lattice.cpp:47
 msgid "Control handle 2"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ២"
 
 #: ../src/live_effects/lpe-lattice.cpp:48
 msgid "Control handle 3"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ៣"
 
 #: ../src/live_effects/lpe-lattice.cpp:49
 msgid "Control handle 4"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ៤"
 
 #: ../src/live_effects/lpe-lattice.cpp:50
 msgid "Control handle 5"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ៥"
 
 #: ../src/live_effects/lpe-lattice.cpp:51
 msgid "Control handle 6"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ៦"
 
 #: ../src/live_effects/lpe-lattice.cpp:52
 msgid "Control handle 7"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ៧"
 
 #: ../src/live_effects/lpe-lattice.cpp:53
 msgid "Control handle 8"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ៨"
 
 #: ../src/live_effects/lpe-lattice.cpp:54
 msgid "Control handle 9"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ៩"
 
 #: ../src/live_effects/lpe-lattice.cpp:55
 msgid "Control handle 10"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ១០"
 
 #: ../src/live_effects/lpe-lattice.cpp:56
 msgid "Control handle 11"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ១១"
 
 #: ../src/live_effects/lpe-lattice.cpp:57
 msgid "Control handle 12"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ១២"
 
 #: ../src/live_effects/lpe-lattice.cpp:58
 msgid "Control handle 13"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ១៣"
 
 #: ../src/live_effects/lpe-lattice.cpp:59
 msgid "Control handle 14"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ១៤"
 
 #: ../src/live_effects/lpe-lattice.cpp:60
 msgid "Control handle 15"
-msgstr ""
+msgstr "ចំណុច​ទាញ​វត្ថុ​បញ្ជា ១៥"
 
 #: ../src/live_effects/lpe-mirror_reflect.cpp:30
 msgid "Reflection line"
@@ -5918,7 +5918,7 @@ msgstr "អុហ្វសិត​​ធម្មតា​"
 #: ../share/extensions/pathalongpath.inx.h:15
 #: ../share/extensions/pathscatter.inx.h:13
 msgid "Tangential offset"
-msgstr "អុហ្វសិត​តង់សង់​"
+msgstr "អុហ្វសិតចំណុច​ប៉ះ​"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:69
 msgid "Offsets in unit of pattern size"
@@ -5928,7 +5928,7 @@ msgstr "អុហ្វសិត​ក្នុង​ឯកសារ​នៃ​
 msgid ""
 "Spacing, tangential and normal offset are expressed as a ratio of width/"
 "height"
-msgstr ""
+msgstr "ទំហំ អុហ្វសិត​ធម្មតា និង​ចំណុច​ប៉ះ​ត្រូវ​បាន​បង្ហាញ​ជា​សមាមាត្រ​នៃ ទទឹង/កំពស់"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 #: ../share/extensions/pathalongpath.inx.h:7
@@ -6100,7 +6100,7 @@ msgstr "បន្ទាត់​សំណង់"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "How many construction lines (tangents) to draw"
-msgstr "ចំនួន​បន្ទាត់​សំណង់​ដែល​ត្រូវ​គូស (តង់ហ្សង់)"
+msgstr "ចំនួន​បន្ទាត់​សំណង់​ដែល​ត្រូវ​គូស (ប៉ះ)"
 
 #: ../src/live_effects/lpe-sketch.cpp:54 ../src/selection-chemistry.cpp:1450
 #: ../src/seltrans.cpp:454 ../src/ui/dialog/filter-effects-dialog.cpp:2235
@@ -6137,7 +6137,7 @@ msgstr "មុំ"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:63
 msgid "Additional angle between tangent and curve"
-msgstr "មុំ​បន្ថែម​ចន្លោះ​តង់ហ្សង់ និង​ខ្សែ​កោង"
+msgstr "មុំ​បន្ថែម​ចន្លោះ​ចំណុច​ប៉ះ និង​ខ្សែ​កោង"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:64
 msgid "Location along curve"
@@ -6151,23 +6151,23 @@ msgstr "ទីតាំង​ចំណុច​នៃ​ការ​ភ្ជា
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:65
 msgid "Specifies the left end of the tangent"
-msgstr "បញ្ជាក់​ចុង​ខាង​ឆ្វេង​នៃ​តង់ហ្សង់"
+msgstr "បញ្ជាក់​ចុង​ខាង​ឆ្វេង​នៃចំណុច​ប៉ះ"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:66
 msgid "Specifies the right end of the tangent"
-msgstr "បញ្ជាក់​ចុង​ខាង​ស្ដាំ​នៃ​តង់ហ្សង់"
+msgstr "បញ្ជាក់​ចុង​ខាង​ស្ដាំ​នៃ​ចំណុច​ប៉ះ"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:73
 msgid "Adjust the \"left\" end of the tangent"
-msgstr "លៃ​តម្រូវ​ចុង \"ខាង​ឆ្វេង\" នៃ​តង់ហ្សង់"
+msgstr "លៃ​តម្រូវ​ចុង \"ខាង​ឆ្វេង\" នៃ​ចំណុច​ប៉ះ"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:74
 msgid "Adjust the \"right\" end of the tangent"
-msgstr "លៃ​តម្រូវ​ចំណុច​បញ្ចប់ \"ខាង​ស្ដាំ\" របស់​តង់ហ្សង់"
+msgstr "លៃ​តម្រូវ​ចំណុច​បញ្ចប់ \"ខាង​ស្ដាំ\" របស់​ចំណុច​ប៉ះ"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:75
 msgid "Adjust the point of attachment of the tangent"
-msgstr "លៃ​តម្រូវ​ចំណុច​ភ្ជាប់​របស់​តង់ហ្សង់"
+msgstr "លៃ​តម្រូវ​ចំណុច​ភ្ជាប់​របស់​ចំណុច​ប៉ះ"
 
 #: ../src/live_effects/lpe-test-doEffect-stack.cpp:23
 msgid "Stack step"
@@ -7053,21 +7053,21 @@ msgstr "<b>ចម្រៀក​បន្ទាត់</b> ៖ មុំ %3.2f&#
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
-msgstr "<b>គ្រប់គ្រង​ខ្សែ​កោង​</b> ៖ មុំ %3.2f&#176; ប្រវែង %s ប្រើ​<b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់មុំ​"
+msgstr "<b>គ្រប់គ្រង​ខ្សែ​កោង​</b> ៖ មុំ %3.2f&#176; ប្រវែង %s ដោយ​ប្រើ​<b>បញ្ជា​(Ctrl)</b> ដើម្បី​ខ្ទាស់មុំ​"
 
 #: ../src/pen-context.cpp:1218
 #, c-format
 msgid ""
 "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</"
 "b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr ""
+msgstr "<b>ចំណុច​ទាញ​ខ្សែ​កោង symmetric</b> ៖ មុំ %3.2f&#176; ប្រវែង %s; ដោយ​ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ប្រើ <b>ប្ដូរ (Shift)</b> ដើម្បី​ផ្លាស់ទី​តែ​ចំណុច​ទាញ​នេះ"
 
 #: ../src/pen-context.cpp:1219
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle, with <b>Shift</b> to move this handle only"
-msgstr ""
+msgstr "<b>ចំណុច​ទាញ​ខ្សែ​កោង</b> ៖ មុំ %3.2f&#176; ប្រវែង %s ដោយ​ប្រើ <b>បញ្ជា (Ctrl)</b> ដើម្បី​ខ្ទាស់​មុំ ដោយ​ប្រើ <b>ប្ដូរ</b> ដើម្បី​ផ្លាស់ទី​តែ​ចំណុច​ទាញ​ប៉ុណ្ណោះ"
 
 #: ../src/pen-context.cpp:1259
 msgid "Drawing finished"
@@ -17264,67 +17264,67 @@ msgstr "ក្រឡាចត្រង្គ"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "ការ​ចែក​រង X Halve ប្រេកង់​បន្ទាប់​ពី 'n' ការ​ចែក​រង (តែ លោការីត)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
+msgstr "ការ​ចែក​រង Y Halve ប្រេកង់​បន្ទាប់​ពី 'n' ការ​ចែក​រង (តែ លោការីត)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "ការ​ចែក​រង X លោការីត (គោល​ត្រូវ​បាន​ផ្ដល់​ដោយ​ធាតុ​ខាង​លើ)"
 
 #: ../share/extensions/grid_cartesian.inx.h:6
 msgid "Logarithmic Y Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "ការ​ចែក​រង Y លោការីត (គោល​ត្រូវ​បាន​ផ្ដល់​ដោយ​ធាតុ​ខាង​លើ)"
 
 #: ../share/extensions/grid_cartesian.inx.h:7
 msgid "Major X Division Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​ការ​ចែក X ធំ / ភីកសែក"
 
 #: ../share/extensions/grid_cartesian.inx.h:8
 msgid "Major X Divisions"
-msgstr ""
+msgstr "ការ​ចែក X ធំ"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
 msgid "Major X Divsion Spacing / px"
-msgstr ""
+msgstr "ទំហំ​ការ​ចែក X ធំ / ភីកសែល"
 
 #: ../share/extensions/grid_cartesian.inx.h:10
 msgid "Major Y Division Spacing"
-msgstr ""
+msgstr "ទំហំ​ការ​ចែក Y ធំ"
 
 #: ../share/extensions/grid_cartesian.inx.h:11
 msgid "Major Y Division Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​ការ​ចែក Y ធំ / ភីកសែល"
 
 #: ../share/extensions/grid_cartesian.inx.h:12
 msgid "Major Y Divisions"
-msgstr ""
+msgstr "ការ​ចែក Y ធំ"
 
 #: ../share/extensions/grid_cartesian.inx.h:13
 msgid "Minor X Division Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​ការ​ចែក X តូច / ភីកសែល"
 
 #: ../share/extensions/grid_cartesian.inx.h:14
 msgid "Minor Y Division Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​ការ​ចែក Y តូច / ភីកសែល"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
 msgid "Subdivisions per Major X Division"
-msgstr ""
+msgstr "ការ​ចែក​រង​ក្នុង​ការ​ចែក X ធំ"
 
 #: ../share/extensions/grid_cartesian.inx.h:17
 msgid "Subdivisions per Major Y Division"
-msgstr ""
+msgstr "ការ​ចែក​រង​ក្នុង​ការ​ចែក Y ធំ"
 
 #: ../share/extensions/grid_cartesian.inx.h:18
 msgid "Subminor X Division Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​ការ​ចែក X តូច​រង / ភីកសែល"
 
 #: ../share/extensions/grid_cartesian.inx.h:19
 msgid "Subminor Y Division Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​ការ​ចែក Y តូច​រង / ភីកសែល"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
 msgid "Subsubdivs. per X Subdiv."
@@ -17344,7 +17344,7 @@ msgstr "ការ​ចែក​មុំ​នៅ​កណ្ដាល"
 
 #: ../share/extensions/grid_polar.inx.h:3
 msgid "Centre Dot Diameter / px"
-msgstr ""
+msgstr "ដ្យាម៉ែត្រ​ចំណុច​កណ្ដាល / ភីកសែល"
 
 #: ../share/extensions/grid_polar.inx.h:4
 msgid "Circumferential Label Outset / px"
@@ -17364,31 +17364,31 @@ msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:9
 msgid "Major Angular Division Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​ការ​ចែក​មុំ​ធំ / ភីកសែល"
 
 #: ../share/extensions/grid_polar.inx.h:10
 msgid "Major Circular Division Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​ការ​ចែក​រង្វង់​ធំ / ភីកសែល"
 
 #: ../share/extensions/grid_polar.inx.h:11
 msgid "Major Circular Divisions"
-msgstr ""
+msgstr "ការ​ចែក​រង្វង់​ធំ"
 
 #: ../share/extensions/grid_polar.inx.h:12
 msgid "Major Circular Divsion Spacing / px"
-msgstr ""
+msgstr "ទំហំ​ការ​ចែក​រង្វង់​ធំ / ភីកសែល"
 
 #: ../share/extensions/grid_polar.inx.h:13
 msgid "Minor Angle Division End 'n' Divs. Before Centre"
-msgstr ""
+msgstr "ចុង​ការ​ចែក​មុំ​តូច 'n' ចំណុច​កណ្ដាល​មុន​ការ​ចែក"
 
 #: ../share/extensions/grid_polar.inx.h:14
 msgid "Minor Angular Division Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​ការ​ចែក​មុំ​តូច / ភីកសែល"
 
 #: ../share/extensions/grid_polar.inx.h:15
 msgid "Minor Circular Division Thickness / px"
-msgstr ""
+msgstr "កម្រាស់​ការ​ចែក​រង្វង់​តូច / ភីកសែល"
 
 #: ../share/extensions/grid_polar.inx.h:17
 msgid "Polar Grid"
@@ -18068,11 +18068,11 @@ msgstr "កាំ​ខាង​ក្រៅ"
 
 #: ../share/extensions/restack.inx.h:12
 msgid "Restack"
-msgstr ""
+msgstr "ដាក់​ជង់​ឡើង​វិញ"
 
 #: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
-msgstr ""
+msgstr "ទិស​ដាក់​ជង់​ឡើង​វិញ ៖"
 
 #: ../share/extensions/restack.inx.h:14
 msgid "Right"
