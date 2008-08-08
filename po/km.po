@@ -1,4 +1,4 @@
-# translation of km.po to Khmer
+# translation of km.po to khmer
 # Auk Piseth <piseth_dv@khmeros.info>, 2006.
 # Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007, 2008.
 # Khoem Sokhem<khoemsokhem@khmeros.info>,2008-02-22 08:56+0700.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-08-07 15:21+0700\n"
-"Last-Translator: អេង វណ្ណៈ <evannak@khmeros.info>\n"
-"Language-Team: Khmer <en@li.org>\n"
+"PO-Revision-Date: 2008-08-08 16:09+0700\n"
+"Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
+"Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15903,7 +15903,7 @@ msgstr "Spiro"
 
 #: ../src/widgets/toolbox.cpp:3129
 msgid "Spiro splines mode"
-msgstr ""
+msgstr "របៀប​តំណ Spiro"
 
 #. Width
 #: ../src/widgets/toolbox.cpp:3238
@@ -17328,11 +17328,11 @@ msgstr "កម្រាស់​ការ​ចែក Y តូច​រង / ភ
 
 #: ../share/extensions/grid_cartesian.inx.h:20
 msgid "Subsubdivs. per X Subdiv."
-msgstr ""
+msgstr "ការ​ចែក​រង​ក្នុង​ការ​ចែក​រង X"
 
 #: ../share/extensions/grid_cartesian.inx.h:21
 msgid "Subsubdivs. per Y Subdivision"
-msgstr ""
+msgstr "ការ​ចែក​រង​ក្នុង​ការ​ចែក​រង Y"
 
 #: ../share/extensions/grid_polar.inx.h:1
 msgid "Angle Divisions"
@@ -17360,7 +17360,7 @@ msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:8
 msgid "Logarithmic Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "ការ​ចែក​រង​លោការីត (គោល​ដែល​បាន​ផ្ដល់​ដោយ​ធាតុ​ខាង​លើ)"
 
 #: ../share/extensions/grid_polar.inx.h:9
 msgid "Major Angular Division Thickness / px"
@@ -17396,11 +17396,11 @@ msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:19
 msgid "Subdivisions per Major Angular Division"
-msgstr ""
+msgstr "ការ​ចែក​រង​ក្នុង​ការ​ចែក​មុំ​ធំ"
 
 #: ../share/extensions/grid_polar.inx.h:20
 msgid "Subdivisions per Major Circular Division"
-msgstr ""
+msgstr "ការ​ចែក​រង​ក្នុង​ការ​ចែក​រង្វង់​ធំ"
 
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
@@ -17776,7 +17776,7 @@ msgstr "ទ្វាទសត័ល"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
 msgid "Draw Back-Facing Polygons"
-msgstr ""
+msgstr "គូស​ពហុកោណ​មុខ​ក្រោយ"
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
@@ -17829,15 +17829,15 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
 msgid "Light x-Position"
-msgstr ""
+msgstr "ទីតាំង x ស្រាល"
 
 #: ../share/extensions/polyhedron_3d.inx.h:21
 msgid "Light y-Position"
-msgstr ""
+msgstr "ទីតាំង y ស្រាល"
 
 #: ../share/extensions/polyhedron_3d.inx.h:22
 msgid "Light z-Position"
-msgstr ""
+msgstr "ទីតាំង z ស្រាល"
 
 #: ../share/extensions/polyhedron_3d.inx.h:23
 msgid "Line Thickness / px"
@@ -17905,7 +17905,7 @@ msgstr "គូប​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:41
 msgid "Snub Dodecahedron"
-msgstr "ទ្វាទសត័ល​ខ្លី"
+msgstr "ទ្វា​ទសត័ល​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:43
 #, no-c-format
@@ -17986,7 +17986,7 @@ msgstr "ការ​ផ្លាស់​កន្លែង​អតិបរម
 
 #: ../share/extensions/radiusrand.inx.h:3
 msgid "Maximum displacement in Y, px"
-msgstr "ការ​ផ្លាស់កន្លែង​អតិបរមា​ក្នុង Y, px"
+msgstr "ការ​ផ្លាស់កន្លែង​អតិបរមា​ក្នុង Y px"
 
 #: ../share/extensions/radiusrand.inx.h:5
 msgid "Shift node handles"
