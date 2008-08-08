@@ -280,7 +280,7 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
         }
         
         if (success) 
-            return to_2geom(nearest_multiple);
+            return nearest_multiple;
     }
     
     return t;

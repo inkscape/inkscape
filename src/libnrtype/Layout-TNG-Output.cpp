@@ -158,7 +158,7 @@ void Layout::print(SPPrintContext *ctx,
             Geom::PathVector const * pv = span.font->PathVector(_glyphs[glyph_index].glyph);
             if (pv) {
                 _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
-                Geom::PathVector temp_pv = (*pv) * to_2geom(glyph_matrix);
+                Geom::PathVector temp_pv = (*pv) * glyph_matrix;
                 if (!text_source->style->fill.isNone())
                     sp_print_fill(ctx, temp_pv, &ctm, text_source->style, pbox, dbox, bbox);
                 if (!text_source->style->stroke.isNone())
@@ -232,7 +232,7 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
         if (clip_mode) {
             Geom::PathVector const *pathv = span.font->PathVector(_glyphs[glyph_index].glyph);
             if (pathv) {
-                Geom::PathVector pathv_trans = (*pathv) * to_2geom(glyph_matrix);
+                Geom::PathVector pathv_trans = (*pathv) * glyph_matrix;
                 SPStyle const *style = text_source->style;
                 ctx->renderPathVector(pathv_trans, style, NULL);
             }
@@ -547,7 +547,7 @@ SPCurve *Layout::convertToCurves(iterator const &from_glyph, iterator const &to_
 
         Geom::PathVector const * pathv = span.font->PathVector(_glyphs[glyph_index].glyph);
         if (pathv) {
-            Geom::PathVector pathv_trans = (*pathv) * to_2geom(glyph_matrix);
+            Geom::PathVector pathv_trans = (*pathv) * glyph_matrix;
             SPCurve *c = new SPCurve(pathv_trans);
             if (c) cc = g_slist_prepend(cc, c);
         }

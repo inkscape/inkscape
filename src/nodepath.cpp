@@ -160,7 +160,7 @@ Inkscape::NodePath::Node * Inkscape::NodePath::Path::active_node = NULL;
 static SPCanvasItem *
 sp_nodepath_make_helper_item(Inkscape::NodePath::Path *np, /*SPDesktop *desktop, */const SPCurve *curve, bool show = false) {
     SPCurve *helper_curve = curve->copy();
-    helper_curve->transform(to_2geom(np->i2d));
+    helper_curve->transform(np->i2d);
     SPCanvasItem *helper_path = sp_canvas_bpath_new(sp_desktop_controls(np->desktop), helper_curve);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(helper_path), 0, SP_WIND_RULE_NONZERO);
@@ -218,7 +218,7 @@ sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np) {
         std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
         for (unsigned int j = 0; j < hpaths.size(); ++j) {
             SPCurve *curve = new SPCurve(hpaths[j]);
-            curve->transform(to_2geom(np->i2d));
+            curve->transform(np->i2d);
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(((*np->helper_path_vec)[lpe])[j]), curve);
             curve = curve->unref();
         }
@@ -310,7 +310,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     // to a change in repr by regenerating nodepath     --bb
     sp_object_read_attr(SP_OBJECT(np->item), "transform");
 
-    np->i2d  = from_2geom(sp_item_i2d_affine(np->item));
+    np->i2d  = sp_item_i2d_affine(np->item);
     np->d2i  = np->i2d.inverse();
 
     np->repr = repr;
@@ -523,7 +523,7 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
 
         Inkscape::NodePath::SubPath *sp = sp_nodepath_subpath_new(np);
 
-        NR::Point ppos = from_2geom(pit->initialPoint()) * np->i2d;
+        NR::Point ppos = pit->initialPoint() * (Geom::Matrix)np->i2d;
         NRPathcode pcode = NR_MOVETO;
 
         /* Johan: Note that this is pretty arcane code. I am pretty sure it is working correctly, be very certain to change it! (better to just rewrite this whole method)*/
@@ -532,19 +532,19 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
                 dynamic_cast<Geom::HLineSegment const*>(&*cit) ||
                 dynamic_cast<Geom::VLineSegment const*>(&*cit) )
             {
-                NR::Point pos = from_2geom(cit->initialPoint()) * np->i2d;
+                NR::Point pos = cit->initialPoint() * (Geom::Matrix)np->i2d;
                 sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &pos);
 
-                ppos = from_2geom(cit->finalPoint()) * np->i2d;
+                ppos = cit->finalPoint() * (Geom::Matrix)np->i2d;
                 pcode = NR_LINETO;
             }
             else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
                 std::vector<Geom::Point> points = cubic_bezier->points();
-                NR::Point pos = from_2geom(points[0]) * np->i2d;
-                NR::Point npos = from_2geom(points[1]) * np->i2d;
+                NR::Point pos = points[0] * (Geom::Matrix)np->i2d;
+                NR::Point npos = points[1] * (Geom::Matrix)np->i2d;
                 sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &npos);
 
-                ppos = from_2geom(points[2]) * np->i2d;
+                ppos = points[2] * (Geom::Matrix)np->i2d;
                 pcode = NR_CURVETO;
             }
         }
@@ -555,7 +555,7 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
              * If the length is zero, don't add it to the nodepath. */
             Geom::Curve const &closing_seg = pit->back_closed();
             if ( ! closing_seg.isDegenerate() ) {
-                NR::Point pos = from_2geom(closing_seg.finalPoint()) * np->i2d;
+                NR::Point pos = closing_seg.finalPoint() * (Geom::Matrix)np->i2d;
                 sp_nodepath_node_new(sp, NULL, t[i++], NR_LINETO, &pos, &pos, &pos);
             }
 
@@ -616,7 +616,7 @@ static void update_object(Inkscape::NodePath::Path *np)
 
     if (np->show_helperpath) {
         SPCurve * helper_curve = np->curve->copy();
-        helper_curve->transform(to_2geom(np->i2d));
+        helper_curve->transform(np->i2d);
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(np->helper_path), helper_curve);
         helper_curve->unref();
     }
@@ -660,7 +660,7 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
 
     if (np->show_helperpath) {
         SPCurve * helper_curve = np->curve->copy();
-        helper_curve->transform(to_2geom(np->i2d));
+        helper_curve->transform(np->i2d);
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(np->helper_path), helper_curve);
         helper_curve->unref();
     }
@@ -4287,7 +4287,7 @@ void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, boost:
 
         Geom::Rect box = sp_node_selected_bbox (nodepath);
         if (!center) {
-            center = from_2geom(box.midpoint());
+            center = box.midpoint();
         }
         NR::Matrix t =
             NR::Matrix (NR::translate(- *center)) *
@@ -4892,7 +4892,7 @@ void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
 
     if (show) {
         SPCurve *helper_curve = np->curve->copy();
-        helper_curve->transform(to_2geom(np->i2d));
+        helper_curve->transform(np->i2d);
         if (!np->helper_path) {
             //np->helper_path = sp_nodepath_make_helper_item(np, desktop, helper_curve, true); // Caution: this applies the transform np->i2d twice!!
 

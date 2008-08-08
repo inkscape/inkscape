@@ -255,7 +255,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         shape->ctm = gc->transform;
         if (state & NR_ARENA_ITEM_STATE_BBOX) {
             if (shape->curve) {
-                boundingbox = bounds_exact_transformed(shape->curve->get_pathvector(), to_2geom(gc->transform));
+                boundingbox = bounds_exact_transformed(shape->curve->get_pathvector(), gc->transform);
                 item->bbox.x0 = (gint32)(boundingbox[0][0] - 1.0F);
                 item->bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
                 item->bbox.x1 = (gint32)(boundingbox[0][1] + 1.9999F);
@@ -278,7 +278,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     if (shape->curve) {
-        boundingbox = bounds_exact_transformed(shape->curve->get_pathvector(), to_2geom(gc->transform));
+        boundingbox = bounds_exact_transformed(shape->curve->get_pathvector(), gc->transform);
 
         if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
             float width, scale;
@@ -465,7 +465,7 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool fo
                 Path*  thePath=new Path;
                 Shape* theShape=new Shape;
                 {
-                    Geom::Matrix tempMat(to_2geom(gc->transform));
+                    Geom::Matrix tempMat(gc->transform);
                     thePath->LoadPathVector(shape->curve->get_pathvector(), tempMat, true);
                 }
 
@@ -580,7 +580,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
             Path*  thePath = new Path;
             Shape* theShape = new Shape;
             {
-                Geom::Matrix   tempMat( to_2geom(gc->transform) );
+                Geom::Matrix   tempMat( gc->transform );
                 thePath->LoadPathVector(shape->curve->get_pathvector(), tempMat, true);
             }
 
@@ -732,7 +732,7 @@ cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, boost::optional
     cairo_set_tolerance(ct, 1.25); // low quality, but good enough for outline mode
     cairo_new_path(ct);
 
-    feed_pathvector_to_cairo (ct, shape->curve->get_pathvector(), to_2geom(shape->ctm), area, true, 0);
+    feed_pathvector_to_cairo (ct, shape->curve->get_pathvector(), shape->ctm, area, true, 0);
 
     cairo_stroke(ct);
 
@@ -813,7 +813,7 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
     cairo_set_tolerance(ct, 0.1);
     cairo_new_path(ct);
 
-    feed_pathvector_to_cairo (ct, shape->curve->get_pathvector(), to_2geom(shape->ctm), area->upgrade(), true, style_width);
+    feed_pathvector_to_cairo (ct, shape->curve->get_pathvector(), shape->ctm, area->upgrade(), true, style_width);
 
     cairo_stroke(ct);
 
@@ -988,7 +988,7 @@ cairo_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 
         cairo_new_path(ct);
 
-        feed_pathvector_to_cairo (ct, shape->curve->get_pathvector(), to_2geom(shape->ctm), (area)->upgrade(), false, 0);
+        feed_pathvector_to_cairo (ct, shape->curve->get_pathvector(), shape->ctm, (area)->upgrade(), false, 0);
 
         cairo_fill(ct);
 
@@ -1096,9 +1096,9 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
     if (item->arena->canvasarena) {
         Geom::Rect viewbox = to_2geom(item->arena->canvasarena->item.canvas->getViewbox());
         viewbox.expandBy (width);
-        pathv_matrix_point_bbox_wind_distance(shape->curve->get_pathvector(), to_2geom(shape->ctm), to_2geom(p), NULL, needfill? &wind : NULL, &dist, 0.5, &viewbox);
+        pathv_matrix_point_bbox_wind_distance(shape->curve->get_pathvector(), shape->ctm, p, NULL, needfill? &wind : NULL, &dist, 0.5, &viewbox);
     } else {
-        pathv_matrix_point_bbox_wind_distance(shape->curve->get_pathvector(), to_2geom(shape->ctm), to_2geom(p), NULL, needfill? &wind : NULL, &dist, 0.5, NULL);
+        pathv_matrix_point_bbox_wind_distance(shape->curve->get_pathvector(), shape->ctm, p, NULL, needfill? &wind : NULL, &dist, 0.5, NULL);
     }
 
     g_get_current_time (&tfinish);

@@ -334,7 +334,7 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
         d.y1 = _height;
     } else {
         // if not page, use our base, which is either root or the item we want to export
-        sp_item_invoke_bbox(doc_item, &d, from_2geom(sp_item_i2doc_affine (doc_item)), TRUE);
+        sp_item_invoke_bbox(doc_item, &d, sp_item_i2doc_affine (doc_item), TRUE);
         // convert from px to pt
         d.x0 *= PT_PER_PX;
         d.x1 *= PT_PER_PX;
@@ -348,7 +348,7 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     // object itself, ignoring its ancestors
 
     // complete transform, including doc_item's own transform
-    t = from_2geom(sp_item_i2doc_affine (doc_item));
+    t = sp_item_i2doc_affine (doc_item);
     // subreact doc_item's transform (comes first) from it
     t = NR::Matrix(doc_item->transform).inverse() * t;
 

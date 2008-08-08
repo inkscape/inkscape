@@ -461,7 +461,7 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
     // adjust style properties that depend on a possible transform in the source object in order
     // to get a correct style attribute for the new path
     SPItem* item_source = SP_ITEM(source);
-    NR::Matrix i2root = from_2geom(sp_item_i2root_affine(item_source));
+    NR::Matrix i2root(sp_item_i2root_affine(item_source));
     sp_item_adjust_stroke(item_source, NR::expansion(i2root));
     sp_item_adjust_pattern(item_source, i2root);
     sp_item_adjust_gradient(item_source, i2root);
@@ -493,7 +493,7 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
 
     // premultiply by the inverse of parent's repr
     SPItem *parent_item = SP_ITEM(sp_desktop_document(desktop)->getObjectByRepr(parent));
-    NR::Matrix local = from_2geom(sp_item_i2doc_affine(parent_item));
+    NR::Matrix local (sp_item_i2doc_affine(parent_item));
     gchar *transform = sp_svg_transform_write(local.inverse());
 
     // now that we have the result, add it on the canvas
@@ -607,7 +607,7 @@ void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Matrix 
     SPMarker* marker = SP_MARKER (marker_object);
     SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker_object));
 
-    NR::Matrix tr(from_2geom(marker_transform));
+    NR::Matrix tr(marker_transform);
 
     if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
         tr = stroke_scale * tr;
@@ -1631,7 +1631,7 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
           continue;
 
       if (simplifyIndividualPaths) {
-          boost::optional<NR::Rect> itemBbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
+          boost::optional<NR::Rect> itemBbox = item->getBounds(sp_item_i2d_affine(item));
           if (itemBbox) {
               simplifySize      = L2(itemBbox->dimensions());
           } else {
@@ -1779,7 +1779,7 @@ pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool t
         if (transformFull) {
             *dest *= extraPreAffine * sp_item_i2doc_affine(item) * extraPostAffine;
         } else {
-            *dest *= extraPreAffine * to_2geom(item->transform) * extraPostAffine;
+            *dest *= extraPreAffine * (Geom::Matrix)item->transform * extraPostAffine;
         }
     } else {
         *dest *= extraPreAffine * extraPostAffine;

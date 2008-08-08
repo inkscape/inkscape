@@ -132,7 +132,7 @@ void sp_selection_copy_impl (GSList const *items, GSList **clip, Inkscape::XML::
 
     // Copy item reprs:
     for (GSList *i = (GSList *) sorted_items; i != NULL; i = i->next) {
-        sp_selection_copy_one (SP_OBJECT_REPR (i->data), from_2geom(sp_item_i2doc_affine(SP_ITEM (i->data))), clip, xml_doc);
+        sp_selection_copy_one (SP_OBJECT_REPR (i->data), sp_item_i2doc_affine(SP_ITEM (i->data)), clip, xml_doc);
     }
 
     *clip = g_slist_reverse(*clip);
@@ -150,7 +150,7 @@ GSList *sp_selection_paste_impl (SPDocument *doc, SPObject *parent, GSList **cli
         Inkscape::XML::Node *copy = repr->duplicate(xml_doc);
 
         // premultiply the item transform by the accumulated parent transform in the paste layer
-        NR::Matrix local = from_2geom(sp_item_i2doc_affine(SP_ITEM(parent)));
+        NR::Matrix local (sp_item_i2doc_affine(SP_ITEM(parent)));
         if (!local.test_identity()) {
             gchar const *t_str = copy->attribute("transform");
             NR::Matrix item_t (NR::identity());
@@ -498,7 +498,7 @@ void sp_selection_group()
                 NR::Matrix item_t (NR::identity());
                 if (t_str)
                     sp_svg_transform_read(t_str, &item_t);
-                item_t *= from_2geom(sp_item_i2doc_affine(SP_ITEM(doc->getObjectByRepr(current->parent()))));
+                item_t *= sp_item_i2doc_affine(SP_ITEM(doc->getObjectByRepr(current->parent())));
                 //FIXME: when moving both clone and original from a transformed group (either by
                 //grouping into another parent, or by cut/paste) the transform from the original's
                 //parent becomes embedded into original itself, and this affects its clones. Fix
@@ -907,7 +907,7 @@ take_style_from_item (SPItem *item)
     }
 
     // FIXME: also transform gradient/pattern fills, by forking? NO, this must be nondestructive
-    double ex = NR::expansion(from_2geom(sp_item_i2doc_affine(item)));
+    double ex = NR::expansion(sp_item_i2doc_affine(item));
     if (ex != 1.0) {
         css = sp_css_attr_scale (css, ex);
     }
@@ -1232,9 +1232,9 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
             sp_object_read_attr (SP_OBJECT (item), "transform");
 
             // calculate the matrix we need to apply to the clone to cancel its induced transform from its original
-            NR::Matrix parent_transform = from_2geom(sp_item_i2root_affine(SP_ITEM(SP_OBJECT_PARENT (item))));
-            NR::Matrix t = parent_transform * from_2geom(matrix_to_desktop (matrix_from_desktop (to_2geom(affine), item), item)) * parent_transform.inverse();
-            NR::Matrix t_inv =parent_transform * from_2geom(matrix_to_desktop (matrix_from_desktop (to_2geom(affine.inverse()), item), item)) * parent_transform.inverse();
+            NR::Matrix parent_transform = sp_item_i2root_affine(SP_ITEM(SP_OBJECT_PARENT (item)));
+            NR::Matrix t = parent_transform * from_2geom(matrix_to_desktop (matrix_from_desktop (affine, item), item)) * parent_transform.inverse();
+            NR::Matrix t_inv =parent_transform * from_2geom(matrix_to_desktop (matrix_from_desktop (affine.inverse(), item), item)) * parent_transform.inverse();
             NR::Matrix result = t_inv * item->transform * t;
 
             if ((prefs_parallel || prefs_unmoved) && affine.is_translation()) {
@@ -1262,7 +1262,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
 
         } else {
             if (set_i2d) {
-                sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * to_2geom(affine));
+                sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * (Geom::Matrix)affine);
             }
             sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform, NULL);
         }
@@ -2084,8 +2084,8 @@ sp_select_clone_original()
 
         bool highlight = prefs_get_int_attribute ("options.highlightoriginal", "value", 0);
         if (highlight) {
-            boost::optional<NR::Rect> a = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
-            boost::optional<NR::Rect> b = original->getBounds(from_2geom(sp_item_i2d_affine(original)));
+            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2d_affine(item));
+            boost::optional<NR::Rect> b = original->getBounds(sp_item_i2d_affine(original));
             if ( a && b ) {
                 // draw a flashing line between the objects
                 SPCurve *curve = new SPCurve();
@@ -2145,7 +2145,7 @@ void sp_selection_to_marker(bool apply)
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT_PARENT (items->data);
 
-    NR::Matrix parent_transform = from_2geom(sp_item_i2root_affine(SP_ITEM(parent)));
+    NR::Matrix parent_transform (sp_item_i2root_affine(SP_ITEM(parent)));
 
     // remember the position of the first item
     gint pos = SP_OBJECT_REPR (items->data)->position();
@@ -2267,7 +2267,7 @@ sp_selection_tile(bool apply)
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT_PARENT (items->data);
 
-    NR::Matrix parent_transform = from_2geom(sp_item_i2root_affine(SP_ITEM(parent)));
+    NR::Matrix parent_transform (sp_item_i2root_affine(SP_ITEM(parent)));
 
     // remember the position of the first item
     gint pos = SP_OBJECT_REPR (items->data)->position();
@@ -2593,7 +2593,7 @@ sp_selection_create_bitmap_copy ()
     }
 
     // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
-    NR::Matrix eek = from_2geom(sp_item_i2d_affine (SP_ITEM(parent_object)));
+    NR::Matrix eek (sp_item_i2d_affine (SP_ITEM(parent_object)));
     NR::Matrix t;
 
     double shift_x = bbox.x0;
@@ -2937,7 +2937,7 @@ fit_canvas_to_drawing(SPDocument *doc)
 
     sp_document_ensure_up_to_date(doc);
     SPItem const *const root = SP_ITEM(doc->root);
-    boost::optional<NR::Rect> const bbox(root->getBounds(from_2geom(sp_item_i2r_affine(root))));
+    boost::optional<NR::Rect> const bbox(root->getBounds(sp_item_i2r_affine(root)));
     if (bbox && !bbox->isEmpty()) {
         doc->fitToRect(*bbox);
         return true;

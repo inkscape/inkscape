@@ -287,7 +287,7 @@ SPItem::setExplicitlyHidden(bool const val) {
  */
 void
 SPItem::setCenter(NR::Point object_centre) {
-    boost::optional<NR::Rect> bbox = getBounds(from_2geom(sp_item_i2d_affine(this)));
+    boost::optional<NR::Rect> bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
         transform_center_x = object_centre[NR::X] - bbox->midpoint()[NR::X];
         if (fabs(transform_center_x) < 1e-5) // rounding error
@@ -309,7 +309,7 @@ bool SPItem::isCenterSet() {
 }
 
 NR::Point SPItem::getCenter() const {
-    boost::optional<NR::Rect> bbox = getBounds(from_2geom(sp_item_i2d_affine(this)));
+    boost::optional<NR::Rect> bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
         return bbox->midpoint() + NR::Point (this->transform_center_x, this->transform_center_y);
     } else {
@@ -702,22 +702,6 @@ boost::optional<NR::Rect> SPItem::getBounds(NR::Matrix const &transform,
     return r;
 }
 
-/*
- * If the item is empty, or has an empty boundingbox for another reason, this method will
- * return an empty rectangle. I.e. "getBounds(...).isEmpty() == true".
- */
-Geom::Rect
-SPItem::getBounds(Geom::Matrix const &transform, SPItem::BBoxType type, unsigned int /*dkey*/)
-const
-{
-    boost::optional<NR::Rect> r;
-    sp_item_invoke_bbox_full(this, &r, from_2geom(transform), type, TRUE);
-    if (r)
-        return to_2geom(*r);
-    else
-        return Geom::Rect(); // return empty rectangle
-}
-
 void
 sp_item_invoke_bbox(SPItem const *item, boost::optional<NR::Rect> *bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
 {
@@ -800,7 +784,7 @@ sp_item_invoke_bbox_full(SPItem const *item, boost::optional<NR::Rect> *bbox, NR
                 }
 
                 // transform the expansions by the item's transform:
-                NR::Matrix i2d = from_2geom(sp_item_i2d_affine (item));
+                NR::Matrix i2d(sp_item_i2d_affine (item));
                 dx0 *= NR::expansionX(i2d);
                 dx1 *= NR::expansionX(i2d);
                 dy0 *= NR::expansionY(i2d);
@@ -910,19 +894,19 @@ sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type)
     g_assert(SP_IS_ITEM(item));
     g_assert(bbox != NULL);
 
-    sp_item_invoke_bbox(item, bbox, from_2geom(sp_item_i2d_affine(item)), TRUE, type);
+    sp_item_invoke_bbox(item, bbox, sp_item_i2d_affine(item), TRUE, type);
 }
 
 boost::optional<NR::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
 {
     boost::optional<NR::Rect> rect = boost::optional<NR::Rect>();
-    sp_item_invoke_bbox(item, &rect, from_2geom(sp_item_i2d_affine(item)), TRUE, type);
+    sp_item_invoke_bbox(item, &rect, sp_item_i2d_affine(item), TRUE, type);
     return rect;
 }
 
 static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
 {
-    boost::optional<NR::Rect> bbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
+    boost::optional<NR::Rect> bbox = item->getBounds(sp_item_i2d_affine(item));
     /* Just the corners of the bounding box suffices given that we don't yet
        support angled guide lines. */
 
@@ -971,7 +955,7 @@ void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIt
 	            	for (std::vector<NR::Point>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
             	    	// All snappoints are in desktop coordinates, but the item's transformation is
 	            		// in document coordinates. Hence the awkward construction below
-	            		*p = (*p_orig) * from_2geom(matrix_to_desktop (matrix_from_desktop (to_2geom(item->transform), item), item));
+	            		*p = (*p_orig) * from_2geom(matrix_to_desktop (matrix_from_desktop (item->transform, item), item));
             	    }
 	            }
 	    	}
@@ -1351,7 +1335,7 @@ sp_item_adjust_livepatheffect (SPItem *item, NR::Matrix const &postmul, bool set
         
                 if (lpeobj->lpe) {
                     Inkscape::LivePathEffect::Effect * effect = lpeobj->lpe;
-                    effect->transform_multiply(to_2geom(postmul), set);
+                    effect->transform_multiply(postmul, set);
                 }
             }
         }
@@ -1508,9 +1492,9 @@ i2anc_affine(SPObject const *object, SPObject const *const ancestor) {
     /* stop at first non-renderable ancestor */
     while ( object != ancestor && SP_IS_ITEM(object) ) {
         if (SP_IS_ROOT(object)) {
-            ret *= to_2geom(SP_ROOT(object)->c2p);
+            ret *= SP_ROOT(object)->c2p;
         }
-        ret *= to_2geom(SP_ITEM(object)->transform);
+        ret *= SP_ITEM(object)->transform;
         object = SP_OBJECT_PARENT(object);
     }
     return ret;
@@ -1524,7 +1508,7 @@ i2i_affine(SPObject const *src, SPObject const *dest) {
 }
 
 NR::Matrix SPItem::getRelativeTransform(SPObject const *dest) const {
-    return from_2geom(i2i_affine(this, dest));
+    return i2i_affine(this, dest);
 }
 
 /**
@@ -1549,12 +1533,12 @@ Geom::Matrix sp_item_i2root_affine(SPItem const *item)
     Geom::Matrix ret(Geom::identity());
     g_assert(ret.isIdentity());
     while ( NULL != SP_OBJECT_PARENT(item) ) {
-        ret *= to_2geom(item->transform);
+        ret *= item->transform;
         item = SP_ITEM(SP_OBJECT_PARENT(item));
     }
     g_assert(SP_IS_ROOT(item));
 
-    ret *= to_2geom(item->transform);
+    ret *= item->transform;
 
     return ret;
 }
@@ -1622,7 +1606,7 @@ void sp_item_set_i2d_affine(SPItem *item, Geom::Matrix const &i2dt)
     }
 
     Geom::Matrix const i2p( i2dt * dt2p );
-    sp_item_set_item_transform(item, from_2geom(i2p));
+    sp_item_set_item_transform(item, i2p);
 }
 
 

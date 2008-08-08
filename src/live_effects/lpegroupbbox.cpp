@@ -27,7 +27,7 @@ GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
         transform = Geom::identity();
     }
 
-    Geom::Rect itemBBox = item->getBounds(transform, SPItem::GEOMETRIC_BBOX);
+    Geom::Rect itemBBox = to_2geom(*item->getBounds(transform, SPItem::GEOMETRIC_BBOX)); // fixme: fix for when getBounds returns invalid Rect
     boundingbox_X = itemBBox[Geom::X];
     boundingbox_Y = itemBBox[Geom::Y];
 }

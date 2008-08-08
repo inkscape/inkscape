@@ -349,7 +349,7 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
 
     //Translate click point into proper coord system
     this->curvepoint_doc = desktop->w2d(event_p);
-    this->curvepoint_doc *= from_2geom(sp_item_dt2i_affine(item));
+    this->curvepoint_doc *= sp_item_dt2i_affine(item);
 
     SPCurve *curve = this->nodepath->curve;   // not sure if np->curve is always up to date...
     Geom::PathVector const &pathv = curve->get_pathvector();
@@ -364,9 +364,9 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
         (( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
            desktop->current_zoom() *
            SP_OBJECT_STYLE (item)->stroke_width.computed * 0.5 *
-           NR::expansion(from_2geom(sp_item_i2d_affine(item)))
+           NR::expansion(sp_item_i2d_affine(item))
          : 0.0)
-         + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100)) /NR::expansion(from_2geom(sp_item_i2d_affine(item))); 
+         + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100)) /NR::expansion(sp_item_i2d_affine(item)); 
     bool close = (NR::L2 (delta) < stroke_tolerance);
 
     if (remember && close) {

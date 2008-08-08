@@ -303,7 +303,7 @@ Path::MakePathVector()
             {
                 /* TODO: add testcase for this descr_arcto case */
                 PathDescrArcTo *nData = dynamic_cast<PathDescrArcTo *>(descr_cmd[i]);
-                currentpath->appendNew<Geom::SVGEllipticalArc>( nData->rx, nData->ry, nData->angle, nData->large, !nData->clockwise, to_2geom(nData->p) );
+                currentpath->appendNew<Geom::SVGEllipticalArc>( nData->rx, nData->ry, nData->angle, nData->large, !nData->clockwise, nData->p );
                 lastP = nData->p;
             }
             break;
@@ -382,7 +382,7 @@ void  Path::AddCurve(Geom::Curve const &c)
 {
     if( is_straight_curve(c) )
     {
-        LineTo( from_2geom(c.finalPoint()) );
+        LineTo( c.finalPoint() );
     }
     /*
     else if(Geom::QuadraticBezier const *quadratic_bezier = dynamic_cast<Geom::QuadraticBezier const  *>(c)) {
@@ -393,10 +393,10 @@ void  Path::AddCurve(Geom::Curve const &c)
         Geom::Point tmp = (*cubic_bezier)[3];
         Geom::Point tms = 3 * ((*cubic_bezier)[1] - (*cubic_bezier)[0]);
         Geom::Point tme = 3 * ((*cubic_bezier)[3] - (*cubic_bezier)[2]);
-        CubicTo (from_2geom(tmp), from_2geom(tms), from_2geom(tme));
+        CubicTo (tmp, tms, tme);
     }
     else if(Geom::SVGEllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::SVGEllipticalArc const *>(&c)) {
-        ArcTo( from_2geom(svg_elliptical_arc->finalPoint()),
+        ArcTo( svg_elliptical_arc->finalPoint(),
                svg_elliptical_arc->ray(0), svg_elliptical_arc->ray(1),
                svg_elliptical_arc->rotation_angle(),
                svg_elliptical_arc->large_arc_flag(), !svg_elliptical_arc->sweep_flag() );
@@ -426,7 +426,7 @@ void  Path::LoadPath(Geom::Path const &path, Geom::Matrix const &tr, bool doTran
     //       directly on the curve parameters
     Geom::Path const pathtr = doTransformation ? path * tr : path;
 
-    MoveTo( from_2geom(pathtr.initialPoint()) );
+    MoveTo( pathtr.initialPoint() );
 
     for(Geom::Path::const_iterator cit = pathtr.begin(); cit != pathtr.end_open(); ++cit) {
         AddCurve(*cit);

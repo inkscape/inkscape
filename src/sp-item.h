@@ -155,7 +155,6 @@ struct SPItem : public SPObject {
     void lowerToBottom();
 
     boost::optional<NR::Rect> getBounds(NR::Matrix const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
-    Geom::Rect getBounds(Geom::Matrix const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
 
     sigc::connection _clip_ref_connection;
     sigc::connection _mask_ref_connection;

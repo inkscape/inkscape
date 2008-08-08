@@ -655,11 +655,11 @@ sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
 			if (v->items[pos]) {
 				NR::Matrix m;
 				if (marker->orient_auto) {
-					m = from_2geom(base);
+					m = base;
 				} else {
 					/* fixme: Orient units (Lauris) */
 					m = NR::Matrix(rotate_degrees(marker->orient));
-					m *= get_translation(from_2geom(base));
+					m *= NR::get_translation(base);
 				}
 				if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
 					m = NR::scale(linewidth) * m;

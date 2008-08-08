@@ -178,10 +178,10 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, boo
         return;
 
     // Transform all coordinates to coords within "area"
-    Geom::Point shift = to_2geom(area->min());
+    Geom::Point shift = area->min();
     NR::Rect view = *area;
     view.growBy (stroke_width);
-    view = view * from_2geom(Geom::Translate(-shift));
+    view = view * (NR::Matrix)Geom::Translate(-shift);
     //  Pass transformation to feed_curve, so that we don't need to create a whole new path.
     Geom::Matrix transshift(trans * Geom::Translate(-shift));
 

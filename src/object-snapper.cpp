@@ -146,11 +146,11 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                         // insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
                         sp_item_invoke_bbox(item, 
                             &bbox_of_item, 
-                            from_2geom(sp_item_i2doc_affine(item) * matrix_to_desktop(to_2geom(additional_affine), item)),
+                            sp_item_i2doc_affine(item) * matrix_to_desktop(additional_affine, item),
                             true);
                         
                     } else {
-                        sp_item_invoke_bbox(item, &bbox_of_item, from_2geom(sp_item_i2d_affine(item)), true);
+                        sp_item_invoke_bbox(item, &bbox_of_item, sp_item_i2d_affine(item), true);
                     }                    
                     // See if the item is within range                                    
                     if (bbox_of_item) {
@@ -345,7 +345,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
                 root_item = sp_use_root(SP_USE((*i).item));
                 g_return_if_fail(root_item);
             } else {
-                i2doc = from_2geom(sp_item_i2doc_affine((*i).item));
+                i2doc = sp_item_i2doc_affine((*i).item);
                 root_item = (*i).item;
             }
             
@@ -377,7 +377,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &
                         SPCurve *curve = curve_for_item(root_item); 
                         if (curve) {
                             // We will get our own copy of the path, which must be freed at some point
-                            Geom::PathVector *borderpathv = pathvector_for_curve(root_item, curve, true, true, Geom::identity(), to_2geom((*i).additional_affine)); 
+                            Geom::PathVector *borderpathv = pathvector_for_curve(root_item, curve, true, true, Geom::identity(), (*i).additional_affine); 
                             _paths_to_snap_to->push_back(borderpathv); // Perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it.
                             curve->unref();
                         }
@@ -417,7 +417,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
     ** in SPDesktop rather than SPNamedView?
     */
     SPDesktop const *desktop = SP_ACTIVE_DESKTOP;    
-    Geom::Point const p_doc = to_2geom(desktop->dt2doc(p));    
+    Geom::Point const p_doc = desktop->dt2doc(p);
     
     bool const node_tool_active = _snap_to_itempath && selected_path != NULL;
     
@@ -475,8 +475,8 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                      * piece are unselected; if they are then this piece must be stationary 
                      */                    
                     g_assert(unselected_nodes != NULL);
-                    c1 = isUnselectedNode(from_2geom(start_pt), unselected_nodes);
-                    c2 = isUnselectedNode(from_2geom(end_pt), unselected_nodes);
+                    c1 = isUnselectedNode(start_pt, unselected_nodes);
+                    c2 = isUnselectedNode(end_pt, unselected_nodes);
                 }
                 
                 Geom::Point const sp_doc = (*it_pv).pointAt(*np);
@@ -489,14 +489,14 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                         //Geom::Curve const & curve = (*it_pv).at_index(int(t));                         
                         if(is_straight_curve((*it_pv).at_index(int(t)))) {
                             // if we snap to a line segment, then return this line segment (leaves 1 DOF for snapping)
-                            sc.lines.push_back(Inkscape::SnappedLineSegment(from_2geom(sp_dt), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), from_2geom(start_pt), from_2geom(end_pt)));    
+                            sc.lines.push_back(Inkscape::SnappedLineSegment(sp_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), start_pt, end_pt));    
                         } else {                
                             // for curves other than line segments, we'll return just the closest snapped point
                             // (this is a fully constrained snap, no degrees of freedom left)
                             if (dist < s.getDistance()) {
                                 // If this curve has multiple segments, then we will return only 
                                 // a single snapped point
-                                s = SnappedPoint(from_2geom(sp_dt), SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
+                                s = SnappedPoint(sp_dt, SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
                                 success = true;
                             }
                         }
@@ -752,10 +752,10 @@ void Inkscape::ObjectSnapper::_getBorderNodes(std::vector<NR::Point> *points) co
 {
     Geom::Coord w = sp_document_width(_named_view->document);
     Geom::Coord h = sp_document_height(_named_view->document);
-    points->push_back(from_2geom(Geom::Point(0,0)));
-    points->push_back(from_2geom(Geom::Point(0,h)));
-    points->push_back(from_2geom(Geom::Point(w,h)));
-    points->push_back(from_2geom(Geom::Point(w,0)));
+    points->push_back(Geom::Point(0,0));
+    points->push_back(Geom::Point(0,h));
+    points->push_back(Geom::Point(w,h));
+    points->push_back(Geom::Point(w,0));
 }
 
 /*

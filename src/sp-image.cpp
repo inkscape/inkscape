@@ -1314,7 +1314,7 @@ static void sp_image_snappoints(SPItem const *item, SnapPointsIter p)
 		double const y0 = image.y.computed;
 		double const x1 = x0 + image.width.computed;
 		double const y1 = y0 + image.height.computed;
-		NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (item)));
+		NR::Matrix const i2d (sp_item_i2d_affine (item));
 		*p = NR::Point(x0, y0) * i2d;
         *p = NR::Point(x0, y1) * i2d;
         *p = NR::Point(x1, y1) * i2d;

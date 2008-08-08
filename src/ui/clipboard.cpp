@@ -549,7 +549,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
         // write the complete accumulated transform passed to us
         // (we're dealing with unattached representations, so we write to their attributes
         // instead of using sp_item_set_transform)
-        gchar *transform_str = sp_svg_transform_write(from_2geom(sp_item_i2doc_affine(SP_ITEM(i->data))));
+        gchar *transform_str = sp_svg_transform_write(sp_item_i2doc_affine(SP_ITEM(i->data)));
         obj_copy->setAttribute("transform", transform_str);
         g_free(transform_str);
     }
@@ -791,7 +791,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
     // we know that after pasting the upper left corner of the selection will be aligend to the corresponding 
     // page corner. Using the boundingbox of the selection is more foolproof though
     if (sel_bbox) {
-        Geom::Point pos_mouse = to_2geom(desktop->point()); //Location of mouse pointer in desktop coordinates
+        Geom::Point pos_mouse = desktop->point(); //Location of mouse pointer in desktop coordinates
         // Now calculate how far we would have to move the pasted objects to get their
         // midpoint at the location of the mouse pointer
         rel_pos_mouse = pos_mouse - to_2geom(sel_bbox->midpoint());

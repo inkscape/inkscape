@@ -122,7 +122,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
 
      /* Create ArenaItems and set transform */
      NRArenaItem *root = sp_item_invoke_show(SP_ITEM(sp_document_root(doc)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
-     nr_arena_item_set_transform(NR_ARENA_ITEM(root), from_2geom(affine));
+     nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
 
      NRGC gc(NULL);
      gc.transform.set_identity();

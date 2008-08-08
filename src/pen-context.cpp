@@ -888,7 +888,7 @@ pen_redraw_all (SPPenContext *const pc)
         if ( cubic &&
              (*cubic)[2] != to_2geom(pc->p[0]) )
         {
-            NR::Point p2 = from_2geom((*cubic)[2]);
+            NR::Point p2 = (*cubic)[2];
             SP_CTRL(pc->c0)->moveto(p2);
             sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl0), p2, pc->p[0]);
             sp_canvas_item_show (pc->c0);
@@ -936,7 +936,7 @@ pen_lastpoint_tocurve (SPPenContext *const pc)
 
     Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const *>( pc->green_curve->last_segment() );
     if ( cubic ) {
-        pc->p[1] = pc->p[0] + from_2geom( (*cubic)[3] - (*cubic)[2] );
+        pc->p[1] = pc->p[0] + (NR::Point)( (*cubic)[3] - (*cubic)[2] );
     } else {
         pc->p[1] = pc->p[0] + (1./3)*(pc->p[3] - pc->p[0]);
     }
@@ -1130,12 +1130,12 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                 Geom::Curve const * crv = &path.back_default();
                 pc->p[0] = crv->initialPoint();
                 if ( Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const *>(crv)) {
-                    pc->p[1] = from_2geom( (*cubic)[1] );
+                    pc->p[1] = (*cubic)[1];
                 } else {
                     pc->p[1] = pc->p[0];
                 }
                 NR::Point const pt(( pc->npoints < 4
-                                     ? from_2geom(crv->finalPoint())
+                                     ? (NR::Point)(crv->finalPoint())
                                      : pc->p[3] ));
                 pc->npoints = 2;
                 pc->green_curve->backspace();

@@ -730,7 +730,7 @@ set_to_accumulated(SPEraserContext *dc)
             item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
             item->updateRepr();
         }
-        Geom::PathVector pathv = dc->accumulated->get_pathvector() * to_2geom(sp_desktop_dt2root_affine(desktop));
+        Geom::PathVector pathv = dc->accumulated->get_pathvector() * sp_desktop_dt2root_affine(desktop);
         gchar *str = sp_svg_write_path(pathv);
         g_assert( str != NULL );
         dc->repr->setAttribute("d", str);

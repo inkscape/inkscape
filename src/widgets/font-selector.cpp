@@ -806,7 +806,7 @@ void sp_font_preview_set_font(SPFontPreview *fprev, font_instance *font, SPFontS
         if (fprev->font)
         {
             Geom::Matrix flip(Geom::Scale(fsel->fontsize, -fsel->fontsize));
-            fprev->rfont = fprev->font->RasterFont(from_2geom(flip), 0);
+            fprev->rfont = fprev->font->RasterFont(flip, 0);
         }
 
         if (GTK_WIDGET_DRAWABLE (fprev)) gtk_widget_queue_draw (GTK_WIDGET (fprev));

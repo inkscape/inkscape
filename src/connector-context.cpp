@@ -613,7 +613,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
     SPDesktop *const dt = cc->desktop;
 
     /* Find desktop coordinates */
-    Geom::Point p = to_2geom(dt->w2d(event_w));
+    Geom::Point p = dt->w2d(event_w);
 
     switch (cc->state) {
         case SP_CONNECTOR_CONTEXT_DRAGGING:
@@ -622,7 +622,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
 
             if ( cc->npoints > 0 ) {
                 cc->selection->clear();
-                spcc_connector_set_subsequent_point(cc, from_2geom(p));
+                spcc_connector_set_subsequent_point(cc, p);
                 ret = TRUE;
             }
             break;
@@ -637,11 +637,11 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
             SPPath *path = SP_PATH(cc->clickeditem);
             SPCurve *curve = (SP_SHAPE(path))->curve;
             if (cc->clickedhandle == cc->endpt_handle[0]) {
-                Geom::Point o = to_2geom(cc->endpt_handle[1]->pos);
+                Geom::Point o = cc->endpt_handle[1]->pos;
                 curve->stretch_endpoints(p * d2i, o * d2i);
             }
             else {
-                Geom::Point o = to_2geom(cc->endpt_handle[0]->pos);
+                Geom::Point o = cc->endpt_handle[0]->pos;
                 curve->stretch_endpoints(o * d2i, p * d2i);
             }
             sp_conn_adjust_path(path);
@@ -857,7 +857,7 @@ spcc_connector_set_subsequent_point(SPConnectorContext *const cc, NR::Point cons
         NR::Point p(route.ps[i].x, route.ps[i].y);
         cc->red_curve->lineto(p);
     }
-    cc->red_curve->transform(to_2geom(dt->doc2dt()));
+    cc->red_curve->transform(dt->doc2dt());
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
 }
 
@@ -908,7 +908,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
     }
 
     /* Now we have to go back to item coordinates at last */
-    c->transform(to_2geom(sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(cc))));
+    c->transform(sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(cc)));
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
     SPDocument *doc = sp_desktop_document(desktop);
@@ -930,7 +930,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
         cc->newconn = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
         cc->selection->set(repr);
         Inkscape::GC::release(repr);
-        cc->newconn->transform = from_2geom(i2i_affine(desktop->currentRoot(), desktop->currentLayer()));
+        cc->newconn->transform = i2i_affine(desktop->currentRoot(), desktop->currentLayer());
         cc->newconn->updateRepr();
 
         bool connection = false;

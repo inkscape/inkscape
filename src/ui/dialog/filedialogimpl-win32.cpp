@@ -869,7 +869,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     boost::optional<NR::Rect> maybeArea(from_2geom(area));
     sp_document_ensure_up_to_date (svgDoc);
     sp_item_invoke_bbox((SPItem *) svgDoc->root, &maybeArea,
-        from_2geom(sp_item_i2r_affine((SPItem *)(svgDoc->root))), TRUE);
+        sp_item_i2r_affine((SPItem *)(svgDoc->root)), TRUE);
 
     NRArena *const arena = NRArena::create();
 
@@ -879,7 +879,7 @@ bool FileOpenDialogImplWin32::set_svg_preview()
         arena, key, SP_ITEM_SHOW_DISPLAY);
 
     NRGC gc(NULL);
-    gc.transform = from_2geom(Geom::Matrix(Geom::Scale(scaleFactor, scaleFactor)));
+    gc.transform = Geom::Matrix(Geom::Scale(scaleFactor, scaleFactor));
 
     nr_arena_item_invoke_update (root, NULL, &gc,
         NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);

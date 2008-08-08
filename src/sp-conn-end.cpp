@@ -60,7 +60,7 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
 
     SPItem const *const path_item = SP_ITEM(path);
     SPObject const *const ancestor = get_nearest_common_ancestor(path_item, h2attItem);
-    NR::Matrix const path2anc(from_2geom(i2anc_affine(path_item, ancestor)));
+    NR::Matrix const path2anc(i2anc_affine(path_item, ancestor));
 
     if (h2attItem[0] != NULL && h2attItem[1] != NULL) {
         /* Initial end-points: centre of attached object. */
@@ -81,7 +81,7 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
                 return;
             }
             h2bbox_icoordsys[h] = *bbox;
-            h2i2anc[h] = from_2geom(i2anc_affine(h2attItem[h], ancestor));
+            h2i2anc[h] = i2anc_affine(h2attItem[h], ancestor);
             h2endPt_icoordsys[h] = h2bbox_icoordsys[h].midpoint();
         }
 
@@ -125,7 +125,7 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
         }
 
         h2bbox_icoordsys[ind] = *bbox;
-        h2i2anc = from_2geom(i2anc_affine(h2attItem[ind], ancestor));
+        h2i2anc = i2anc_affine(h2attItem[ind], ancestor);
         h2endPt_icoordsys[ind] = h2bbox_icoordsys[ind].midpoint();
 
         h2endPt_icoordsys[!ind] = other_endpt;

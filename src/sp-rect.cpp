@@ -560,7 +560,7 @@ static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p)
 
     SPRect *rect = SP_RECT(item);
 
-    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (item)));
+    NR::Matrix const i2d (sp_item_i2d_affine (item));
 
     *p = NR::Point(rect->x.computed, rect->y.computed) * i2d;
     *p = NR::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d;
@@ -579,7 +579,7 @@ sp_rect_convert_to_guides(SPItem *item) {
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
-    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine(SP_ITEM(rect))));
+    NR::Matrix const i2d (sp_item_i2d_affine(SP_ITEM(rect)));
 
     NR::Point A1(NR::Point(rect->x.computed, rect->y.computed) * i2d);
     NR::Point A2(NR::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d);

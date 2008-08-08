@@ -231,7 +231,7 @@ void SPUsePath::refresh_source()
         }
     }
     originalPath = new Path;
-    originalPath->LoadPathVector(curve->get_pathvector(), to_2geom(item->transform), true);
+    originalPath->LoadPathVector(curve->get_pathvector(), item->transform, true);
     curve->unref();
 }
 

@@ -144,7 +144,7 @@ sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 
     cbp->affine = affine;
 
-    Geom::Rect bbox = bounds_exact_transformed(cbp->curve->get_pathvector(), to_2geom(affine));
+    Geom::Rect bbox = bounds_exact_transformed(cbp->curve->get_pathvector(), affine);
 
     item->x1 = (int)bbox.min()[Geom::X] - 1;
     item->y1 = (int)bbox.min()[Geom::Y] - 1;
@@ -178,9 +178,9 @@ sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf)
     cairo_new_path(buf->ct);
 
     if (!dofill)
-        feed_pathvector_to_cairo (buf->ct, cbp->curve->get_pathvector(), to_2geom(cbp->affine), area, true, 1);
+        feed_pathvector_to_cairo (buf->ct, cbp->curve->get_pathvector(), cbp->affine, area, true, 1);
     else
-        feed_pathvector_to_cairo (buf->ct, cbp->curve->get_pathvector(), to_2geom(cbp->affine), area, false, 1);
+        feed_pathvector_to_cairo (buf->ct, cbp->curve->get_pathvector(), cbp->affine, area, false, 1);
 
     if (dofill) {
         // RGB / BGR
@@ -218,7 +218,7 @@ sp_canvas_bpath_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_it
     Geom::Rect viewbox = to_2geom(item->canvas->getViewbox());
     viewbox.expandBy (width);
     double dist = NR_HUGE;
-    pathv_matrix_point_bbox_wind_distance(cbp->curve->get_pathvector(), to_2geom(cbp->affine), to_2geom(p), NULL, NULL, &dist, 0.5, &viewbox);
+    pathv_matrix_point_bbox_wind_distance(cbp->curve->get_pathvector(), cbp->affine, p, NULL, NULL, &dist, 0.5, &viewbox);
 
     if (dist <= 1.0) {
         *actual_item = item;

@@ -360,10 +360,9 @@ sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
 
     // Transform the original-d path or the (ordinary) path
     if (path->original_curve) {
-        path->original_curve->transform(to_2geom(xform));
-        sp_lpe_item_update_patheffect(path, true, true);
+        path->original_curve->transform(xform);
     } else {
-        shape->curve->transform(to_2geom(xform));
+        shape->curve->transform(xform);
     }
 
     // Adjust stroke
@@ -511,7 +510,7 @@ void freehand_create_single_dot(SPEventContext *ec, NR::Point const &pt, char co
 
     /* put the circle where the mouse click occurred and set the diameter to the
        current stroke width, multiplied by the amount specified in the preferences */
-    NR::Matrix const i2d (from_2geom(sp_item_i2d_affine (item)));
+    NR::Matrix const i2d (sp_item_i2d_affine (item));
     NR::Point pp = pt * i2d;
     double rad = 0.5 * prefs_get_double_attribute(tool, "dot-size", 3.0);
     if (event_state & GDK_MOD1_MASK) {

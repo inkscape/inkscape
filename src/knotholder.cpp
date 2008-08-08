@@ -78,7 +78,7 @@ KnotHolder::~KnotHolder() {
 void
 KnotHolder::update_knots()
 {
-    NR::Matrix const i2d(from_2geom(sp_item_i2d_affine(item)));
+    NR::Matrix const i2d(sp_item_i2d_affine(item));
 
     for(std::list<KnotHolderEntity *>::iterator i = entity.begin(); i != entity.end(); ++i) {
         KnotHolderEntity *e = *i;

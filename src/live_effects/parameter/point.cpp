@@ -89,7 +89,7 @@ PointParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
                                                               param_effect->getSPDoc() ) );
     // TODO: fix to get correct desktop (don't use SP_ACTIVE_DESKTOP)
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Geom::Matrix transf = to_2geom(desktop->doc2dt());
+    Geom::Matrix transf = desktop->doc2dt();
     pointwdg->setTransform(transf);
     pointwdg->setValue( *this );
     pointwdg->clearProgrammatically();

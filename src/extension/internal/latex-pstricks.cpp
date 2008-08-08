@@ -281,7 +281,7 @@ PrintLatex::print_pathvector(SVGOStringStream &os, Geom::PathVector const &pathv
 
 //    NR::Matrix tf=*transform;   // why was this here?
     NR::Matrix tf_stack=m_tr_stack.top(); // and why is transform argument not used?
-    Geom::PathVector pathv = pathv_in * to_2geom(tf_stack); // generates new path, which is a bit slow, but this doesn't have to be performance optimized
+    Geom::PathVector pathv = pathv_in * tf_stack; // generates new path, which is a bit slow, but this doesn't have to be performance optimized
 
     os << "\\newpath\n";
 

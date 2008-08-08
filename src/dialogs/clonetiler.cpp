@@ -1242,7 +1242,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
         int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
         SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
             SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
-        boost::optional<NR::Rect> r = SP_ITEM(obj)->getBounds(from_2geom(sp_item_i2doc_affine(SP_ITEM(obj))),
+        boost::optional<NR::Rect> r = SP_ITEM(obj)->getBounds(sp_item_i2doc_affine(SP_ITEM(obj)),
                                                         bbox_type);
         if (r) {
             w = r->dimensions()[NR::X];

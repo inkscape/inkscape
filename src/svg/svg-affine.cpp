@@ -43,7 +43,7 @@ sp_svg_transform_read(gchar const *str, Geom::Matrix *transform)
 {
     NR::Matrix mat;
     if (sp_svg_transform_read(str, &mat)) {
-        *transform = to_2geom(mat);
+        *transform = mat;
         return true;
     } else {
         return false;
@@ -184,7 +184,7 @@ sp_svg_transform_write(Geom::Matrix const &transform)
 gchar *
 sp_svg_transform_write(Geom::Matrix const *transform)
 {
-    NR::Matrix const t(from_2geom(*transform));
+    NR::Matrix const t(*transform);
     return sp_svg_transform_write(&t);
 }
 

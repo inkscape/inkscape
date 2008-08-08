@@ -603,7 +603,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     }
 
                     // calculate pointer point in the guide item's coords
-                    motion_to_curve = from_2geom(sp_item_dt2i_affine(selected) * sp_item_i2doc_affine(selected));
+                    motion_to_curve = sp_item_dt2i_affine(selected) * sp_item_i2doc_affine(selected);
                     pointer = motion_dt * motion_to_curve;
 
                     // calculate the nearest point on the guide path
@@ -982,7 +982,7 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
             item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
             item->updateRepr();
         }
-        Geom::PathVector pathv = dc->accumulated->get_pathvector() * to_2geom(sp_desktop_dt2root_affine(desktop));
+        Geom::PathVector pathv = dc->accumulated->get_pathvector() * sp_desktop_dt2root_affine(desktop);
         gchar *str = sp_svg_write_path(pathv);
         g_assert( str != NULL );
         dc->repr->setAttribute("d", str);
@@ -1019,7 +1019,7 @@ add_cap(SPCurve *curve,
         double mag = NR::L2(vel);
 
         NR::Point v = mag * NR::rot90( to - from ) / NR::L2( to - from );
-        curve->curveto(to_2geom(from + v), to_2geom(to + v), to_2geom(to));
+        curve->curveto(from + v, to + v, to);
     }
 }
 
@@ -1119,8 +1119,8 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
             dc->cal1->reset();
             dc->cal2->reset();
 
-            dc->cal1->moveto(to_2geom(dc->point1[0]));
-            dc->cal2->moveto(to_2geom(dc->point2[0]));
+            dc->cal1->moveto(dc->point1[0]);
+            dc->cal2->moveto(dc->point2[0]);
         }
 
         NR::Point b1[BEZIER_MAX_LENGTH];
@@ -1141,13 +1141,13 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
             /* CanvasShape */
             if (! release) {
                 dc->currentcurve->reset();
-                dc->currentcurve->moveto(to_2geom(b1[0]));
+                dc->currentcurve->moveto(b1[0]);
                 for (NR::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
-                    dc->currentcurve->curveto(to_2geom(bp1[1]), to_2geom(bp1[2]), to_2geom(bp1[3]));
+                    dc->currentcurve->curveto(bp1[1], bp1[2], bp1[3]);
                 }
                 dc->currentcurve->lineto(b2[BEZIER_SIZE*(nb2-1) + 3]);
                 for (NR::Point *bp2 = b2 + BEZIER_SIZE * ( nb2 - 1 ); bp2 >= b2; bp2 -= BEZIER_SIZE) {
-                    dc->currentcurve->curveto(to_2geom(bp2[2]), to_2geom(bp2[1]), to_2geom(bp2[0]));
+                    dc->currentcurve->curveto(bp2[2], bp2[1], bp2[0]);
                 }
                 // FIXME: dc->segments is always NULL at this point??
                 if (!dc->segments) { // first segment

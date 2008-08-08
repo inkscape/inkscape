@@ -104,13 +104,13 @@ KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 
 static gdouble sp_pattern_extract_theta(SPPattern *pat)
 {
-    Geom::Matrix transf = to_2geom(pat->patternTransform);
+    Geom::Matrix transf = pat->patternTransform;
     return Geom::atan2(transf.xAxis());
 }
 
 static Geom::Point sp_pattern_extract_scale(SPPattern *pat)
 {
-    Geom::Matrix transf = to_2geom(pat->patternTransform);
+    Geom::Matrix transf = pat->patternTransform;
     return Geom::Point( transf.expansionX(), transf.expansionY() );
 }
 
@@ -215,7 +215,7 @@ PatternKnotHolderEntityScale::knot_set(Geom::Point const &p, Geom::Point const &
         scl = Geom::Scale(d[NR::X] / pat_x, d[NR::Y] / pat_y);
     }
 
-    NR::Matrix rot = from_2geom(scl) * NR::Matrix(NR::rotate(theta));
+    Geom::Matrix rot = (Geom::Matrix)scl * Geom::Rotate(theta);
 
     Geom::Point const t = sp_pattern_extract_trans(pat);
     rot[4] = t[NR::X];

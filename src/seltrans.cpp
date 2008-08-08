@@ -268,7 +268,7 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
         SPItem *it = (SPItem *)sp_object_ref(SP_OBJECT(l->data), NULL);
         _items.push_back(it);
         _items_const.push_back(it);
-        _items_affines.push_back(from_2geom(sp_item_i2d_affine(it)));
+        _items_affines.push_back(sp_item_i2d_affine(it));
         _items_centers.push_back(it->getCenter()); // for content-dragging, we need to remember original centers
     }
 
@@ -372,7 +372,7 @@ void Inkscape::SelTrans::transform(NR::Matrix const &rel_affine, NR::Point const
         for (unsigned i = 0; i < _items.size(); i++) {
             SPItem &item = *_items[i];
             NR::Matrix const &prev_transform = _items_affines[i];
-            sp_item_set_i2d_affine(&item, to_2geom(prev_transform * affine));
+            sp_item_set_i2d_affine(&item, prev_transform * affine);
         }
     } else {
         if (_bbox) {
@@ -525,9 +525,9 @@ void Inkscape::SelTrans::stamp()
 
             NR::Matrix const *new_affine;
             if (_show == SHOW_OUTLINE) {
-                NR::Matrix const i2d(from_2geom(sp_item_i2d_affine(original_item)));
+                NR::Matrix const i2d(sp_item_i2d_affine(original_item));
                 NR::Matrix const i2dnew( i2d * _current_relative_affine );
-                sp_item_set_i2d_affine(copy_item, to_2geom(i2dnew));
+                sp_item_set_i2d_affine(copy_item, i2dnew);
                 new_affine = &copy_item->transform;
             } else {
                 new_affine = &original_item->transform;

@@ -330,7 +330,7 @@ new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mod
         width = height = 0;
     }
 
-    NR::Matrix i2d = from_2geom(sp_item_i2d_affine (item) );
+    NR::Matrix i2d (sp_item_i2d_affine (item) );
 
     return (new_filter_blend_gaussian_blur (document, mode, radius, NR::expansion(i2d), NR::expansionX(i2d), NR::expansionY(i2d), width, height));
 }
@@ -367,7 +367,7 @@ modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
     }
 
     // Determine the required standard deviation value
-    NR::Matrix i2d = from_2geom(sp_item_i2d_affine (item));
+    NR::Matrix i2d (sp_item_i2d_affine (item));
     double expansion = NR::expansion(i2d);
     double stdDeviation = radius;
     if (expansion != 0)

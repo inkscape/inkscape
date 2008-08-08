@@ -528,7 +528,7 @@ Transformation::updatePageTransform(Inkscape::Selection *selection)
 {
     if (selection && !selection->isEmpty()) {
         if (_check_replace_matrix.get_active()) {
-            Geom::Matrix current (to_2geom(SP_ITEM(selection->itemList()->data)->transform)); // take from the first item in selection
+            Geom::Matrix current (SP_ITEM(selection->itemList()->data)->transform); // take from the first item in selection
 
             Geom::Matrix new_displayed = current;
 
@@ -973,7 +973,7 @@ Transformation::onReplaceMatrixToggled()
     double f = _scalar_transform_f.getValue();
 
     Geom::Matrix displayed (a, b, c, d, e, f);
-    Geom::Matrix current = to_2geom(SP_ITEM(selection->itemList()->data)->transform); // take from the first item in selection
+    Geom::Matrix current = SP_ITEM(selection->itemList()->data)->transform; // take from the first item in selection
 
     Geom::Matrix new_displayed;
     if (_check_replace_matrix.get_active()) {

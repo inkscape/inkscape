@@ -465,7 +465,7 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
             Geom::PathVector const * pathv = g->font->PathVector(g->glyph);
 
             cairo_new_path(ct);
-            Geom::Matrix transform = to_2geom(g->g_transform * group->ctm);
+            Geom::Matrix transform = g->g_transform * group->ctm;
             feed_pathvector_to_cairo (ct, *pathv, transform, (pb->area).upgrade(), false, 0);
             cairo_fill(ct);
             pb->empty = FALSE;

@@ -190,7 +190,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_START]);
             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_START]));
 
-            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform_at_start(path_it->front())));
+            NR::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                 tr = NR::scale(style->stroke_width.computed) * tr;
@@ -216,7 +216,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                 SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_MID]);
                 SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_MID]));
 
-                NR::Matrix tr(from_2geom(sp_shape_marker_get_transform(*curve_it1, *curve_it2)));
+                NR::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
 
                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                     tr = NR::scale(style->stroke_width.computed) * tr;
@@ -238,7 +238,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_END]);
             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_END]));
 
-            NR::Matrix tr(from_2geom(sp_shape_marker_get_transform_at_end(path_it->back_default())));
+            NR::Matrix tr(sp_shape_marker_get_transform_at_end(path_it->back_default()));
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                 tr = NR::scale(style->stroke_width.computed) * tr;
@@ -409,9 +409,9 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
     // Get the bounding box of the selection
-    //boost::optional<NR::Rect> _bbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
-    // NRRect bbox = item->getBounds(from_2geom(sp_item_i2d_affine(item)));
-    NRRect bbox(item->getBounds(from_2geom(sp_item_i2d_affine(item))));
+    //boost::optional<NR::Rect> _bbox = item->getBounds(sp_item_i2d_affine(item));
+    // NRRect bbox = item->getBounds(sp_item_i2d_affine(item));
+    NRRect bbox(item->getBounds(sp_item_i2d_affine(item)));
 
 
     // List of the items to show; all others will be hidden
@@ -464,7 +464,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     }
     */
     // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
-    NR::Matrix eek = from_2geom(sp_item_i2d_affine (SP_ITEM(parent_object)));
+    NR::Matrix eek = sp_item_i2d_affine (SP_ITEM(parent_object));
     NR::Matrix t;
 
     double shift_x = bbox.x0;
@@ -632,7 +632,7 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc)
         d.y1 = ceil(ctx->_height);
     } else {
         SPItem* doc_item = SP_ITEM(sp_document_root(doc));
-        sp_item_invoke_bbox(doc_item, &d, from_2geom(sp_item_i2r_affine(doc_item)), TRUE);
+        sp_item_invoke_bbox(doc_item, &d, sp_item_i2r_affine(doc_item), TRUE);
         if (ctx->_vector_based_target) {
             // convert from px to pt
             d.x0 *= PT_PER_PX;

@@ -362,7 +362,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
 
     /* Create ArenaItems and set transform */
     ebp.root = sp_item_invoke_show(SP_ITEM(sp_document_root(doc)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
-    nr_arena_item_set_transform(NR_ARENA_ITEM(ebp.root), from_2geom(affine));
+    nr_arena_item_set_transform(NR_ARENA_ITEM(ebp.root), affine);
 
     // We show all and then hide all items we don't want, instead of showing only requested items,
     // because that would not work if the shown item references something in defs

@@ -366,7 +366,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
 
         // skip those paths whose bboxes are entirely out of reach with our radius
-        boost::optional<NR::Rect> bbox = item->getBounds(from_2geom(sp_item_i2doc_affine(item)));
+        boost::optional<NR::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item));
         if (bbox) {
             bbox->growBy(radius);
             if (!bbox->contains(p)) {
@@ -384,7 +384,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
         Shape *theShape = new Shape;
         Shape *theRes = new Shape;
-        NR::Matrix i2doc(from_2geom(sp_item_i2doc_affine(item)));
+        NR::Matrix i2doc(sp_item_i2doc_affine(item));
 
         orig->ConvertWithBackData((0.08 - (0.07 * fidelity)) / NR::expansion(i2doc)); // default 0.059
         orig->Fill(theShape, 0);
@@ -603,7 +603,7 @@ tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return;
 
-    NR::Matrix i2d = from_2geom(sp_item_i2doc_affine (item));
+    NR::Matrix i2d (sp_item_i2doc_affine (item));
     NR::Point p = p_w * i2d.inverse();
     p *= (gradient->gradientTransform).inverse();
     // now p is in gradient's original coordinates
@@ -736,7 +736,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         if (!style) {
             return false;
         }
-        boost::optional<NR::Rect> bbox = item->getBounds(from_2geom(sp_item_i2doc_affine(item)),
+        boost::optional<NR::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item),
                                                         SPItem::GEOMETRIC_BBOX);
         if (!bbox) {
             return false;

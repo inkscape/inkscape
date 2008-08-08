@@ -115,7 +115,7 @@ sp_selected_path_combine(void)
             //c->transform(item->transform);
             curve = c;
         } else {
-            c->transform(to_2geom(item->getRelativeTransform(SP_OBJECT(first))));
+            c->transform(item->getRelativeTransform(SP_OBJECT(first)));
             curve->append(c, false);
             c->unref();
         }
@@ -221,7 +221,7 @@ sp_selected_path_break_apart(void)
         gchar *style = g_strdup(SP_OBJECT(item)->repr->attribute("style"));
         gchar *path_effect = g_strdup(SP_OBJECT(item)->repr->attribute("inkscape:path-effect"));
 
-        Geom::PathVector apv = curve->get_pathvector() * to_2geom(SP_ITEM(path)->transform);
+        Geom::PathVector apv = curve->get_pathvector() * SP_ITEM(path)->transform;
 
         curve->unref();
 
