@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-08-08 16:09+0700\n"
+"PO-Revision-Date: 2008-08-08 16:25+0700\n"
 "Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -16637,6 +16637,8 @@ msgid ""
 "cheeseshop.python.org/pypi/lxml/, or install it through your package manager "
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
+"កម្មវិធី​រុំ lxml ដែល​ប្លែក​អស្ចារ្យ​សម្រាប់ libxml2 ត្រូវ​បាន​ទាមទារ​ដោយ inkex.py និង​ដោយ​ផ្នែក​បន្ថែម​នេះ ។ សូម​ទាញយក និង​ដំឡើង​កំណែ​ចុង​ក្រោយ​បំផុត​ពី http://"
+"cheeseshop.python.org/pypi/lxml/ ឬ​ដំឡើង​វា​តាម​រយៈ​កម្មវិធី​គ្រប់គ្រង​កញ្ចប់​ដោយ​ពាក្យ​បញ្ជា ៖ sudo apt-get install python-lxml"
 
 #: ../share/extensions/inkex.py:187
 #, python-format
@@ -17348,15 +17350,15 @@ msgstr "ដ្យាម៉ែត្រ​ចំណុច​កណ្ដាល / 
 
 #: ../share/extensions/grid_polar.inx.h:4
 msgid "Circumferential Label Outset / px"
-msgstr ""
+msgstr "ខាង​ក្រៅ​ស្លាក​នៃ​វណ្ឌ​មណ្ឌល / ភីកសែល"
 
 #: ../share/extensions/grid_polar.inx.h:5
 msgid "Circumferential Label Size / px"
-msgstr ""
+msgstr "ទំហំ​ស្លាក​នៃ​វណ្ឌ​មណ្ឌល / ភីកសែល"
 
 #: ../share/extensions/grid_polar.inx.h:6
 msgid "Circumferential Labels"
-msgstr ""
+msgstr "ស្លាក​នៃ​វណ្ឌ​មណ្ឌល"
 
 #: ../share/extensions/grid_polar.inx.h:8
 msgid "Logarithmic Subdiv. (Base given by entry above)"
@@ -17768,7 +17770,7 @@ msgstr "គូប"
 
 #: ../share/extensions/polyhedron_3d.inx.h:4
 msgid "Cuboctohedron"
-msgstr ""
+msgstr "Cuboctohedron"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
 msgid "Dodecahedron"
@@ -17825,7 +17827,7 @@ msgstr "ទ្វាទសត័ល​មាន​រាង​ដូច​ផ្
 
 #: ../share/extensions/polyhedron_3d.inx.h:19
 msgid "Icosahedron"
-msgstr ""
+msgstr "Icosahedron"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
 msgid "Light x-Position"
@@ -17942,7 +17944,7 @@ msgstr "កាត់​ចតុត័ល​ឲ្យ​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:52
 msgid "Vertices"
-msgstr "ចុង"
+msgstr "កំពូល"
 
 #: ../share/extensions/polyhedron_3d.inx.h:53
 msgid "View"
