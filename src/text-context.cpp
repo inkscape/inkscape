@@ -1322,10 +1322,36 @@ sp_text_paste_inline(SPEventContext *ec)
         // there is an active text object in this context, or a new object was just created
 
         Glib::RefPtr<Gtk::Clipboard> refClipboard = Gtk::Clipboard::get();
-        Glib::ustring const text = refClipboard->wait_for_text();
+        Glib::ustring const clip_text = refClipboard->wait_for_text();
+        
+        if (!clip_text.empty()) {
+        	// Fix for 244940
+        	// The XML standard defines the following as valid characters
+        	// (Extensible Markup Language (XML) 1.0 (Fourth Edition) paragraph 2.2)
+        	// char ::=   	#x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+        	// Since what comes in off the paste buffer will go right into XML, clean
+        	// the text here.
+        	Glib::ustring text(clip_text);
+        	Glib::ustring::iterator itr = text.begin();
+        	gunichar paste_string_uchar;
 
-        if (!text.empty()) {
+        	while(itr != text.end())
+        	{
+        	    paste_string_uchar = *itr;
 
+        	    // Make sure we don't have a control character. We should really check
+        	    // for the whole range above... Add the rest of the invalid cases from
+        	    // above if we find additional issues
+        	    if(paste_string_uchar >= 0x00000020 ||
+        	       paste_string_uchar == 0x00000009 ||
+        	       paste_string_uchar == 0x0000000A ||
+        	       paste_string_uchar == 0x0000000D) {
+        	    	itr++;
+        	    } else {
+        	        itr = text.erase(itr);
+        	    }
+        	}
+        	
             if (!tc->text) { // create text if none (i.e. if nascent_object)
                 sp_text_context_setup_text(tc);
                 tc->nascent_object = 0; // we don't need it anymore, having created a real <text>
