@@ -3488,7 +3488,7 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 
     /* Tolerance */
     {
-        gchar const* labels[] = {_("(many nodes, rough)"), ("(default)"), 0, 0, 0, 0, ("(few nodes, smooth)")};
+        gchar const* labels[] = {_("(many nodes, rough)"), _("(default)"), 0, 0, 0, 0, _("(few nodes, smooth)")};
         gdouble values[] = {1, 10, 20, 30, 50, 75, 100};
         eact = create_adjustment_action( "PencilToleranceAction",
                                          _("Smoothing:"), _("Smoothing: "),
