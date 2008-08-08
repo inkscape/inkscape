@@ -416,6 +416,11 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
     /* FIXME: this seems like a hack.  Perhaps Snappers should be
     ** in SPDesktop rather than SPNamedView?
     */
+    // TODO Diederik: shouldn't we just make all snapping code use document
+    // coordinates instead? Then we won't need a pointer to the desktop any longer
+    // At least we should define a clear boundary between those different coordinates,
+    // now this is not well defined
+    
     SPDesktop const *desktop = SP_ACTIVE_DESKTOP;    
     Geom::Point const p_doc = desktop->dt2doc(p);
     
@@ -441,10 +446,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
     
     for (std::vector<Geom::PathVector*>::const_iterator it_p = _paths_to_snap_to->begin(); it_p != _paths_to_snap_to->end(); it_p++) {
         bool const being_edited = (node_tool_active && (*it_p) == _paths_to_snap_to->back());            
-        
         //if true then this pathvector it_pv is currently being edited in the node tool
-        SnappedPoint s;
-        bool success = false;
         
         // char * svgd = sp_svg_write_path(**it_p);
         // std::cout << "Dumping the pathvector: " << svgd << std::endl;        
@@ -486,31 +488,12 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                     NR::Coord const dist = Geom::distance(sp_doc, p_doc);
                     if (dist < getSnapperTolerance()) {
                         double t = MIN(*np, (*it_pv).size()); // make sure that t is within bounds;
-                        //Geom::Curve const & curve = (*it_pv).at_index(int(t));                         
-                        if(is_straight_curve((*it_pv).at_index(int(t)))) {
-                            // if we snap to a line segment, then return this line segment (leaves 1 DOF for snapping)
-                            sc.lines.push_back(Inkscape::SnappedLineSegment(sp_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), start_pt, end_pt));    
-                        } else {                
-                            // for curves other than line segments, we'll return just the closest snapped point
-                            // (this is a fully constrained snap, no degrees of freedom left)
-                            if (dist < s.getDistance()) {
-                                // If this curve has multiple segments, then we will return only 
-                                // a single snapped point
-                                s = SnappedPoint(sp_dt, SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
-                                success = true;
-                            }
-                        }
+                        Geom::Curve const *curve = &((*it_pv).at_index(int(t)));                         
+                        sc.curves.push_back(Inkscape::SnappedCurve(from_2geom(sp_dt), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), curve));   
                     }
                 }
             }        
-        } // End of: for (Geom::PathVector::iterator ....)
-        
-        // Return a snap point for each path in our collection.
-        // (unless we've already snapped to a line segment, see above)
-        if (success) {
-            sc.points.push_back(s); 
-        }
-        
+        } // End of: for (Geom::PathVector::iterator ....)        
     }    
 }
 

@@ -20,12 +20,14 @@
 
 #include "snapped-point.h"
 #include "snapped-line.h"
+#include "snapped-curve.h"
 
 struct SnappedConstraints {
     std::list<Inkscape::SnappedPoint> points;
     std::list<Inkscape::SnappedLineSegment> lines;
     std::list<Inkscape::SnappedLine> grid_lines;
     std::list<Inkscape::SnappedLine> guide_lines;
+    std::list<Inkscape::SnappedCurve> curves;
 };
 
 struct SPNamedView;

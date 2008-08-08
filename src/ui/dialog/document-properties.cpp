@@ -116,8 +116,8 @@ DocumentProperties::DocumentProperties()
        //Applies to both nodes and guides, but not to bboxes, that's why its located here
       _rcbic( _("Rotation _center"), _("Consider the rotation center of an object when snapping"), "inkscape:snap-center", _wr),
       _rcbsigg(_("_Grid with guides"), _("Snap to grid-guide intersections"), "inkscape:snap-intersection-grid-guide", _wr),
-      _rcbsils(_("_Line segments"), _("Snap to intersections of line segments ('snap to paths' must be enabled, see the previous tab)"),
-                "inkscape:snap-intersection-line-segments", _wr),
+      _rcbsils(_("_Paths"), _("Snap to intersections of paths ('snap to paths' must be enabled, see the previous tab)"),
+                "inkscape:snap-intersection-paths", _wr),
     //---------------------------------------------------------------
       _grids_label_crea("", Gtk::ALIGN_LEFT),
       //TRANSLATORS: In Grid|_New translate only the word _New. It ref to grid
@@ -495,7 +495,7 @@ DocumentProperties::update()
     _rcbsng.setActive (nv->snap_manager.getSnapModeGuide());
     _rcbic.setActive (nv->snap_manager.getIncludeItemCenter());
     _rcbsigg.setActive (nv->snap_manager.getSnapIntersectionGG());
-    _rcbsils.setActive (nv->snap_manager.getSnapIntersectionLS());
+    _rcbsils.setActive (nv->snap_manager.getSnapIntersectionCS());
     _rcbsnop.setActive(nv->snap_manager.object.getSnapToItemPath());
     _rcbsnon.setActive(nv->snap_manager.object.getSnapToItemNode());
     _rcbsnbbp.setActive(nv->snap_manager.object.getSnapToBBoxPath());

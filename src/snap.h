@@ -127,9 +127,9 @@ public:
     bool getSnapModeGuide() const;
     
     void setSnapIntersectionGG(bool enabled) {_intersectionGG = enabled;}
-    void setSnapIntersectionLS(bool enabled) {_intersectionLS = enabled;}
+    void setSnapIntersectionCS(bool enabled) {_intersectionCS = enabled;}
     bool getSnapIntersectionGG() {return _intersectionGG;}
-    bool getSnapIntersectionLS() {return _intersectionLS;}    
+    bool getSnapIntersectionCS() {return _intersectionCS;}    
 
     void setIncludeItemCenter(bool enabled)    {
         _include_item_center = enabled;
@@ -167,7 +167,7 @@ private:
     
     bool _include_item_center; //If true, snapping nodes will also snap the item's center
     bool _intersectionGG;
-    bool _intersectionLS;
+    bool _intersectionCS;
     bool _snap_enabled_globally; //Toggles ALL snapping
     
     std::vector<SPItem const *> *_items_to_ignore;

@@ -93,7 +93,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_SNAP_GUIDE, "inkscape:snap-guide"},
     {SP_ATTR_INKSCAPE_SNAP_CENTER, "inkscape:snap-center"},
     {SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE, "inkscape:snap-intersection-grid-guide"},
-    {SP_ATTR_INKSCAPE_SNAP_INTERS_LINESEGM, "inkscape:snap-intersection-line-segments"},
+    {SP_ATTR_INKSCAPE_SNAP_INTERS_PATHS, "inkscape:snap-intersection-paths"},
     {SP_ATTR_INKSCAPE_OBJECT_PATHS, "inkscape:object-paths"},
     {SP_ATTR_INKSCAPE_OBJECT_NODES, "inkscape:object-nodes"},
     {SP_ATTR_INKSCAPE_BBOX_PATHS, "inkscape:bbox-paths"},

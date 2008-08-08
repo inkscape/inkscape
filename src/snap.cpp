@@ -23,6 +23,7 @@
 #include "sp-namedview.h"
 #include "snap.h"
 #include "snapped-line.h"
+#include "snapped-curve.h"
 
 #include <libnr/nr-point-fns.h>
 #include <libnr/nr-scale-ops.h>
@@ -785,17 +786,17 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(NR::Point const &p, SnappedCons
         sp_list.push_back(closestPoint);
     } 
     
-    // search for the closest snapped line segment
-    Inkscape::SnappedLineSegment closestLineSegment;
-    if (getClosestSLS(sc.lines, closestLineSegment)) {    
-        sp_list.push_back(Inkscape::SnappedPoint(closestLineSegment));
+    // search for the closest snapped curve
+    Inkscape::SnappedCurve closestCurve;
+    if (getClosestCurve(sc.curves, closestCurve)) {    
+        sp_list.push_back(Inkscape::SnappedPoint(closestCurve));
     }
     
-    if (_intersectionLS) {
-	    // search for the closest snapped intersection of line segments
-	    Inkscape::SnappedPoint closestLineSegmentIntersection;
-	    if (getClosestIntersectionSLS(sc.lines, closestLineSegmentIntersection)) {
-	        sp_list.push_back(closestLineSegmentIntersection);
+    if (_intersectionCS) {
+	    // search for the closest snapped intersection of curves
+	    Inkscape::SnappedPoint closestCurvesIntersection;
+	    if (getClosestIntersectionCS(sc.curves, p, closestCurvesIntersection)) {
+	        sp_list.push_back(closestCurvesIntersection);
 	    }
     }    
 
