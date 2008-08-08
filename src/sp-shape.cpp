@@ -362,23 +362,37 @@ Geom::Matrix
 sp_shape_marker_get_transform_at_start(Geom::Curve const & c)
 {
     Geom::Point p = c.pointAt(0);
-    Geom::Point tang = c.unitTangentAt(0);
+    Geom::Matrix ret = Geom::Translate(p);
 
-    double const angle = Geom::atan2(tang);
+    if ( !c.isDegenerate() ) {
+        Geom::Point tang = c.unitTangentAt(0);
+        double const angle = Geom::atan2(tang);
+        ret = Geom::Rotate(angle) * Geom::Translate(p);
+    } else {
+        /* FIXME: the svg spec says to search for a better alternative than zero angle directionality:
+         * http://www.w3.org/TR/SVG11/implnote.html#PathElementImplementationNotes */
+    }
 
-    return Geom::Rotate(angle) * Geom::Translate(p);
+    return ret;
 }
 Geom::Matrix
 sp_shape_marker_get_transform_at_end(Geom::Curve const & c)
 {
     Geom::Point p = c.pointAt(1);
-    Geom::Curve * c_reverse = c.reverse();
-    Geom::Point tang = - c_reverse->unitTangentAt(0);
-    delete c_reverse;
+    Geom::Matrix ret = Geom::Translate(p);
 
-    double const angle = Geom::atan2(tang);
+    if ( !c.isDegenerate() ) {
+        Geom::Curve * c_reverse = c.reverse();
+        Geom::Point tang = - c_reverse->unitTangentAt(0);
+        delete c_reverse;
+        double const angle = Geom::atan2(tang);
+        ret = Geom::Rotate(angle) * Geom::Translate(p);
+    } else {
+        /* FIXME: the svg spec says to search for a better alternative than zero angle directionality:
+         * http://www.w3.org/TR/SVG11/implnote.html#PathElementImplementationNotes */
+    }
 
-    return Geom::Rotate(angle) * Geom::Translate(p);
+    return ret;
 }
 
 /**
@@ -410,7 +424,7 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
              start_pos++;
         }
 
-        if ( shape->marker[SP_MARKER_LOC_MID] ) {
+        if ( shape->marker[SP_MARKER_LOC_MID] && (path_it->size_default() > 1) ) {
             Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
             Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
             while (curve_it2 != path_it->end_default())
@@ -431,7 +445,15 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
         }
 
         if ( shape->marker[SP_MARKER_LOC_END] ) {
-            Geom::Matrix const m (sp_shape_marker_get_transform_at_end(path_it->back_default()));
+            /* Get reference to last curve in the path.
+             * For moveto-only path, this returns the "closing line segment". */
+            unsigned int index = path_it->size_default();
+            if (index > 0) {
+                index--;
+            }
+            Geom::Curve const &lastcurve = (*path_it)[index];
+
+            Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
             sp_marker_show_instance ((SPMarker* ) shape->marker[SP_MARKER_LOC_END], ai,
                                      NR_ARENA_ITEM_GET_KEY(ai) + SP_MARKER_LOC_END, end_pos, m,
                                      style->stroke_width.computed);
@@ -518,7 +540,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
                         nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                     }
 
-                    if ( shape->marker[SP_MARKER_LOC_MID] ) {
+                    if ( shape->marker[SP_MARKER_LOC_MID] && (path_it->size_default() > 1) ) {
                         Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
                         Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
                         while (curve_it2 != path_it->end_default())
@@ -554,7 +576,15 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
                         SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_END]);
                         SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_END]));
 
-                        NR::Matrix tr(sp_shape_marker_get_transform_at_end(path_it->back_default()));
+                        /* Get reference to last curve in the path.
+                         * For moveto-only path, this returns the "closing line segment". */
+                        unsigned int index = path_it->size_default();
+                        if (index > 0) {
+                            index--;
+                        }
+                        Geom::Curve const &lastcurve = (*path_it)[index];
+
+                        NR::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                             tr = NR::scale(style->stroke_width.computed) * tr;
@@ -641,7 +671,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
             marker_item->transform = old_tr;
         }
 
-        if ( shape->marker[SP_MARKER_LOC_MID] ) {
+        if ( shape->marker[SP_MARKER_LOC_MID] && (path_it->size_default() > 1) ) {
             Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
             Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
             while (curve_it2 != path_it->end_default())
@@ -675,7 +705,15 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_END]);
             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_END]));
 
-            NR::Matrix tr(sp_shape_marker_get_transform_at_end(path_it->back_default()));
+            /* Get reference to last curve in the path.
+             * For moveto-only path, this returns the "closing line segment". */
+            unsigned int index = path_it->size_default();
+            if (index > 0) {
+                index--;
+            }
+            Geom::Curve const &lastcurve = (*path_it)[index];
+
+            NR::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                 tr = NR::scale(style->stroke_width.computed) * tr;

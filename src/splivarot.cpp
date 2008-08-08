@@ -855,7 +855,8 @@ sp_selected_path_outline()
                                                              g_repr, xml_doc, doc );
                     }
 
-                    if ( SPObject *marker_obj = shape->marker[SP_MARKER_LOC_MID] ) {
+                    SPObject *midmarker_obj = shape->marker[SP_MARKER_LOC_MID];
+                    if ( midmarker_obj && (path_it->size_default() > 1) ) {
                         Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
                         Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
                         while (curve_it2 != path_it->end_default())
@@ -865,7 +866,7 @@ sp_selected_path_outline()
                              * there should be a midpoint marker between last segment and closing straight line segment
                              */
                             Geom::Matrix const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
-                            sp_selected_path_outline_add_marker( marker_obj, m,
+                            sp_selected_path_outline_add_marker( midmarker_obj, m,
                                                                  NR::scale(i_style->stroke_width.computed), transform,
                                                                  g_repr, xml_doc, doc );
 
@@ -875,7 +876,15 @@ sp_selected_path_outline()
                     }
 
                     if ( SPObject *marker_obj = shape->marker[SP_MARKER_LOC_END] ) {
-                        Geom::Matrix const m (sp_shape_marker_get_transform_at_end(path_it->back_default()));
+                        /* Get reference to last curve in the path.
+                         * For moveto-only path, this returns the "closing line segment". */
+                        unsigned int index = path_it->size_default();
+                        if (index > 0) {
+                            index--;
+                        }
+                        Geom::Curve const &lastcurve = (*path_it)[index];
+
+                        Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
                         sp_selected_path_outline_add_marker( marker_obj, m,
                                                              NR::scale(i_style->stroke_width.computed), transform,
                                                              g_repr, xml_doc, doc );

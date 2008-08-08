@@ -204,7 +204,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             marker_item->transform = old_tr;
         }
 
-        if ( shape->marker[SP_MARKER_LOC_MID] ) {
+        if ( shape->marker[SP_MARKER_LOC_MID] && (path_it->size_default() > 1) ) {
             Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
             Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
             while (curve_it2 != path_it->end_default())
@@ -238,7 +238,15 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_END]);
             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_END]));
 
-            NR::Matrix tr(sp_shape_marker_get_transform_at_end(path_it->back_default()));
+            /* Get reference to last curve in the path.
+             * For moveto-only path, this returns the "closing line segment". */
+            unsigned int index = path_it->size_default();
+            if (index > 0) {
+                index--;
+            }
+            Geom::Curve const &lastcurve = (*path_it)[index];
+
+            NR::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                 tr = NR::scale(style->stroke_width.computed) * tr;
