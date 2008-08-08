@@ -245,7 +245,13 @@ public:
     return ( closed_ ? end_closed() : end_open() );
   }
 
-  size_type size() const { return get_curves().size()-1; }
+  size_type size_open() const { return get_curves().size()-1; }
+  size_type size_closed() const { return get_curves().size(); }
+  size_type size_default() const  {
+    return ( closed_ ? size_closed() : size_open() );
+  }
+  size_type size() const { return size_open(); }
+
   size_type max_size() const { return get_curves().max_size()-1; }
 
   bool empty() const { return get_curves().size() == 1; }
