@@ -369,7 +369,7 @@
         </excludeinc>
         <flags>
             -Wall -Wformat -Werror=format-security -W -Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch
-			-O2
+            -O2
             -mms-bitfields
         </flags>
         <defines>
@@ -467,11 +467,11 @@
         </flags>
     </rc>
     <link command="${arch}g++" out="${build}/inkscape.exe"
-              strip="false" symfile="${build}/inkscape.dbg"
+              strip="true" symfile="${build}/inkscape.dbg"
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
-           -mconsole
+           -mwindows
        </flags>
        <fileset dir="${build}">
            <include name="inkres.o"/>
@@ -787,15 +787,12 @@
 
   <!--
   ########################################################################
-  ## T A R G E T    :    D I S T - C X X T E S T S
+  ## T A R G E T    :    C H E C K
   ########################################################################
   -->
-  <target name="dist-cxxtests" depends="linkcxxtests,distbase"
-      description="copy cxxtests to the distribution directory">
-
-    <!-- Create the distribution directory -->
-    <copy todir="${dist}" file="${build}/cxxtests.exe"/>
-    <copy todir="${dist}" file="${build}/cxxtests.dbg"/>
+  <target name="check" depends="linkcxxtests,distbase"
+      description="perform unit tests">
+    <cxxtestrun command="${build}/cxxtests" workingdir="${dist}" />
   </target>
 
 
@@ -860,11 +857,11 @@
 
   <!--
   ########################################################################
-  ## T A R G E T    :    D I S T - A L L - E X T R A
+  ## T A R G E T    :    D I S T - A L L - C H E C K
   ########################################################################
   -->
-  <target name="dist-all-extra" depends="dist-all,dist-cxxtests"
-        description="generate the distribution, along with inkview and cxxtests" >
+  <target name="dist-all-check" depends="dist-all,check"
+        description="generate the distribution, along with inkview and run cxxtests" >
   </target>
 
 
