@@ -15,11 +15,11 @@ private:
 public:
     CurveTest() : path4(Geom::Point(3,5)) // Just a moveto
     {
-        // Closed path which needs a closing segment
+        // Closed path
         path1.append(Geom::HLineSegment(Geom::Point(0,0),1));
         path1.append(Geom::VLineSegment(Geom::Point(1,0),1));
         path1.close();
-        // Closed path that doesn't need a closing segment
+        // Closed path (ClosingSegment is zero length)
         path2.append(Geom::LineSegment(Geom::Point(2,0),Geom::Point(3,0)));
         path2.append(Geom::BezierCurve<3>(Geom::Point(3,0),Geom::Point(2,1),Geom::Point(1,1),Geom::Point(2,0)));
         path2.close();
@@ -53,11 +53,13 @@ public:
             pv[0] = path1;
             TS_ASSERT_EQUALS(SPCurve(pv).get_segment_count() , 3u);
             pv[0] = path2;
-            TS_ASSERT_EQUALS(SPCurve(pv).get_segment_count() , 2u);
+            TS_ASSERT_EQUALS(SPCurve(pv).get_segment_count() , 3u);
             pv[0] = path3;
             TS_ASSERT_EQUALS(SPCurve(pv).get_segment_count() , 4u);
             pv[0] = path4;
             TS_ASSERT_EQUALS(SPCurve(pv).get_segment_count() , 0u);
+            pv[0].close();
+            TS_ASSERT_EQUALS(SPCurve(pv).get_segment_count() , 1u);
         }
         { // Combination
             Geom::PathVector pv;
@@ -66,7 +68,7 @@ public:
             pv.push_back(path3);
             pv.push_back(path4);
             SPCurve curve(pv);
-            TS_ASSERT_EQUALS(curve.get_segment_count() , 9u);
+            TS_ASSERT_EQUALS(curve.get_segment_count() , 10u);
         }
     }
 
@@ -88,10 +90,12 @@ public:
             pv[0] = path1;
             TS_ASSERT_EQUALS(SPCurve(pv).nodes_in_path() , 3u);
             pv[0] = path2;
-            TS_ASSERT_EQUALS(SPCurve(pv).nodes_in_path() , 2u);
+            TS_ASSERT_EQUALS(SPCurve(pv).nodes_in_path() , 3u);
             pv[0] = path3;
             TS_ASSERT_EQUALS(SPCurve(pv).nodes_in_path() , 5u);
             pv[0] = path4;
+            TS_ASSERT_EQUALS(SPCurve(pv).nodes_in_path() , 1u);
+            pv[0].close();
             TS_ASSERT_EQUALS(SPCurve(pv).nodes_in_path() , 1u);
         }
         { // Combination
@@ -101,7 +105,7 @@ public:
             pv.push_back(path3);
             pv.push_back(path4);
             SPCurve curve(pv);
-            TS_ASSERT_EQUALS(curve.nodes_in_path() , 11u);
+            TS_ASSERT_EQUALS(curve.nodes_in_path() , 12u);
         }
     }
 

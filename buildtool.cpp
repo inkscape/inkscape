@@ -2766,6 +2766,75 @@ static void removeFromStatCache(const String f) {
 }
 
 //########################################################################
+//# Dir cache to speed up dir requests
+//########################################################################
+/*struct DirListing {
+    bool available;
+    std::vector<String> files;
+    std::vector<String> dirs;
+};
+typedef std::map<String, DirListing > dirCacheType;
+static dirCacheType dirCache;
+static const DirListing &cachedDir(String fullDir)
+{
+    String dirNative = getNativePath(fullDir);
+    std::pair<dirCacheType::iterator,bool> result = dirCache.insert(dirCacheType::value_type(dirNative, DirListing()));
+    if (result.second) {
+        DIR *dir = opendir(dirNative.c_str());
+        if (!dir)
+            {
+            error("Could not open directory %s : %s",
+                dirNative.c_str(), strerror(errno));
+            result.first->second.available = false;
+            }
+        else
+            {
+            result.first->second.available = true;
+            while (true)
+                {
+                struct dirent *de = readdir(dir);
+                if (!de)
+                    break;
+
+                //Get the directory member name
+                String s = de->d_name;
+                if (s.size() == 0 || s[0] == '.')
+                    continue;
+                String childName;
+                if (dirName.size()>0)
+                    {
+                    childName.append(dirName);
+                    childName.append("/");
+                    }
+                childName.append(s);
+                String fullChild = baseDir;
+                fullChild.append("/");
+                fullChild.append(childName);
+                
+                if (isDirectory(fullChild))
+                    {
+                    //trace("directory: %s", childName.c_str());
+                    if (!listFiles(baseDir, childName, res))
+                        return false;
+                    continue;
+                    }
+                else if (!isRegularFile(fullChild))
+                    {
+                    error("unknown file:%s", childName.c_str());
+                    return false;
+                    }
+
+            //all done!
+                res.push_back(childName);
+
+                }
+            closedir(dir);
+            }
+    }
+    return result.first->second;
+}*/
+
+//########################################################################
 //# F I L E S E T
 //########################################################################
 /**
@@ -3962,13 +4031,18 @@ bool MakeBase::executeCommand(const String &command,
         return false;
         } 
     SetHandleInformation(stdoutRead, HANDLE_FLAG_INHERIT, 0);
-    if (!CreatePipe(&stderrRead, &stderrWrite, &saAttr, 0))
-        {
-        error("executeProgram: could not create pipe");
-        delete[] paramBuf;
-        return false;
-        } 
-    SetHandleInformation(stderrRead, HANDLE_FLAG_INHERIT, 0);
+    if (&outbuf != &errbuf) {
+        if (!CreatePipe(&stderrRead, &stderrWrite, &saAttr, 0))
+            {
+            error("executeProgram: could not create pipe");
+            delete[] paramBuf;
+            return false;
+            } 
+        SetHandleInformation(stderrRead, HANDLE_FLAG_INHERIT, 0);
+    } else {
+        stderrRead = stdoutRead;
+        stderrWrite = stdoutWrite;
+    }
 
     // Create the process
     STARTUPINFO siStartupInfo;
@@ -4010,7 +4084,7 @@ bool MakeBase::executeCommand(const String &command,
         error("executeCommand: could not close read pipe");
         return false;
         }
-    if (!CloseHandle(stderrWrite))
+    if (stdoutWrite != stderrWrite && !CloseHandle(stderrWrite))
         {
         error("executeCommand: could not close read pipe");
         return false;
@@ -4068,7 +4142,7 @@ bool MakeBase::executeCommand(const String &command,
         error("executeCommand: could not close read pipe");
         return false;
         }
-    if (!CloseHandle(stderrRead))
+    if (stdoutRead != stderrRead && !CloseHandle(stderrRead))
         {
         error("executeCommand: could not close read pipe");
         return false;
@@ -6490,6 +6564,7 @@ public:
         TASK_COPY,
         TASK_CXXTEST_PART,
         TASK_CXXTEST_ROOT,
+        TASK_CXXTEST_RUN,
         TASK_DELETE,
         TASK_ECHO,
         TASK_JAR,
@@ -7397,6 +7472,97 @@ private:
     String  templateFileOpt;
     String  destPathOpt;
     FileSet fileSet;
+
+};
+
+
+/**
+ * Execute the CxxTest test executable
+ */
+class TaskCxxTestRun: public Task
+{
+public:
+
+    TaskCxxTestRun(MakeBase &par) : Task(par)
+         {
+         type    = TASK_CXXTEST_RUN;
+         name    = "cxxtestrun";
+         }
+
+    virtual ~TaskCxxTestRun()
+        {}
+
+    virtual bool execute()
+        {
+        unsigned int newFiles = 0;
+                
+        String workingDir = parent.resolve(parent.eval(workingDirOpt, "inkscape"));
+        String rawCmd = parent.eval(commandOpt, "build/cxxtests");
+
+        String cmdExe;
+        if (fileExists(rawCmd)) {
+            cmdExe = rawCmd;
+        } else if (fileExists(rawCmd + ".exe")) {
+            cmdExe = rawCmd + ".exe";
+        } else {
+            error("<cxxtestrun> problem: cxxtests executable not found! (command=\"%s\")", rawCmd.c_str());
+        }
+        // Note that the log file names are based on the exact name used to call cxxtests (it uses argv[0] + ".log"/".xml")
+        if (isNewerThan(cmdExe, rawCmd + ".log") || isNewerThan(cmdExe, rawCmd + ".xml")) newFiles++;
+
+        // Prepend the necessary ../'s
+        String cmd = rawCmd;
+        unsigned int workingDirDepth = 0;
+        bool wasSlash = true;
+        for(size_t i=0; i<workingDir.size(); i++) {
+            // This assumes no . and .. parts
+            if (wasSlash && workingDir[i]!='/') workingDirDepth++;
+            wasSlash = workingDir[i] == '/';
+        }
+        for(size_t i=0; i<workingDirDepth; i++) {
+            cmd = "../" + cmd;
+        }
+        
+        if (newFiles>0) {
+            char olddir[1024];
+            if (workingDir.size()>0) {
+                // TODO: Double-check usage of getcwd and handle chdir errors
+                getcwd(olddir, 1024);
+                chdir(workingDir.c_str());
+            }
+
+            String outString;
+            if (!executeCommand(cmd.c_str(), "", outString, outString))
+                {
+                error("<cxxtestrun> problem: %s", outString.c_str());
+                return false;
+                }
+
+            if (workingDir.size()>0) {
+                // TODO: Handle errors?
+                chdir(olddir);
+            }
+
+            removeFromStatCache(getNativePath(cmd + ".log"));
+            removeFromStatCache(getNativePath(cmd + ".xml"));
+        }
+
+        return true;
+        }
+
+    virtual bool parse(Element *elem)
+        {
+        if (!parent.getAttribute(elem, "command", commandOpt))
+            return false;
+        if (!parent.getAttribute(elem, "workingdir", workingDirOpt))
+            return false;
+        return true;
+        }
+
+private:
+
+    String  commandOpt;
+    String  workingDirOpt;
 
 };
 
@@ -8801,6 +8967,8 @@ Task *Task::createTask(Element *elem, int lineNr)
         task = new TaskCxxTestPart(parent);
     else if (tagName == "cxxtestroot")
         task = new TaskCxxTestRoot(parent);
+    else if (tagName == "cxxtestrun")
+        task = new TaskCxxTestRun(parent);
     else if (tagName == "delete")
         task = new TaskDelete(parent);
     else if (tagName == "echo")

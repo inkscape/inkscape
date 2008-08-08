@@ -1,3 +1,10 @@
+/* WARNING: These tests are not completely correct!
+ * Specifically, 'M 0,0 L 1,1 z' and 'M 0,0 L 1,1 L 0,0 z' are treated as equal, but aren't.
+ * This difference is (probably?) only relevant in the context of markers.
+ * However, since NArtBpath has no (valid) way to distinguish these two and is being retired,
+ * these tests have not been updated to reflect this.
+ */
+
 #include <cxxtest/TestSuite.h>
 #include "libnr/n-art-bpath.h"
 #include "svg/svg.h"
