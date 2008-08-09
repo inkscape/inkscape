@@ -150,6 +150,7 @@ libinkpre_a_SOURCES =	\
 	shape-editor.cpp shape-editor.h \
 	shortcuts.cpp shortcuts.h	\
 	snap.cpp snap.h	\
+	snapped-curve.cpp snapped-curve.h \
 	snapped-line.cpp snapped-line.h \
 	snapped-point.cpp snapped-point.h \
 	snapper.cpp snapper.h \
