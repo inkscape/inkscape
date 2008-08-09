@@ -2,6 +2,7 @@
 #include <cassert>
 #include <cstdlib>
 
+#include "prefs-utils.h"
 #include "svg/svg-color.h"
 #include "svg/svg-icc-color.h"
 
@@ -18,6 +19,11 @@ public:
     void check_rgb24(unsigned const rgb24)
     {
         char css[8];
+        prefs_set_int_attribute("options.svgoutput", "usenamedcolors", 0);
+        sp_svg_write_color(css, sizeof(css), rgb24 << 8);
+        TS_ASSERT_EQUALS(sp_svg_read_color(css, 0xff),
+                         rgb24 << 8);
+        prefs_set_int_attribute("options.svgoutput", "usenamedcolors", 1);
         sp_svg_write_color(css, sizeof(css), rgb24 << 8);
         TS_ASSERT_EQUALS(sp_svg_read_color(css, 0xff),
                          rgb24 << 8);
@@ -54,11 +60,14 @@ public:
 
     void testReadColor()
     {
-        gchar const* val="#f0f";
-        gchar const* end = 0;
-        guint32 result = sp_svg_read_color( val, &end, 0x3 );
-        TS_ASSERT_EQUALS( result, 0xff00ff00 );
-        TS_ASSERT_LESS_THAN( val, end );
+        gchar const* val[] = {"#f0f", "#ff00ff", "rgb(255,0,255)", "fuchsia"};
+        size_t const n = sizeof(val)/sizeof(*val);
+        for(size_t i=0; i<n; i++) {
+            gchar const* end = 0;
+            guint32 result = sp_svg_read_color( val[i], &end, 0x3 );
+            TS_ASSERT_EQUALS( result, 0xff00ff00 );
+            TS_ASSERT_LESS_THAN( val[i], end );
+        }
     }
 
     void testIccColor()
