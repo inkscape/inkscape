@@ -1,9 +1,11 @@
 /*
  * A simple utility for exporting an Inkscape svg image as a JavaFX
  * scene tree.
-\ *
+ *
  * Authors:
  *   Bob Jamison <ishmal@inkscape.org>
+ *   Silveira Neto <silveiraneto@gmail.com>
+ *   Jim Clarke <Jim.Clarke@sun.com>
  *
  * Copyright (C) 2008 Authors
  *
@@ -104,11 +106,13 @@ private:
     bool doStyle(SPStyle *style);
 
     /**
-     * Output the SVG document's curve data as POV curves
+     * Output the SVG document's curve data as JavaFX geometry types
      */
     bool doCurve(SPItem *item, const String &id);
     bool doTreeRecursive(SPDocument *doc, SPObject *obj);
     bool doTree(SPDocument *doc);
+
+    bool doBody(SPDocument *doc, SPObject *obj);
 
     /**
      * Output the file footer

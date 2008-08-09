@@ -6,6 +6,8 @@
  *
  * Authors:
  *   Bob Jamison <ishmal@inkscape.org>
+ *   Silveira Neto <silveiraneto@gmail.com>
+ *   Jim Clarke <Jim.Clarke@sun.com>
  *
  * Copyright (C) 2008 Authors
  *
@@ -24,6 +26,7 @@
 #include <sp-radial-gradient.h>
 #include <style.h>
 #include <display/curve.h>
+#include <display/canvas-bpath.h>
 #include <svg/svg.h>
 #include <extension/system.h>
 #include <2geom/pathvector.h>
@@ -104,20 +107,31 @@ static JavaFXOutput::String dstr(double d)
     return s;
 }
 
+#define DSTR(d) (dstr(d).c_str())
 
+static JavaFXOutput::String istr(double d)
+{
+    char dbuf[G_ASCII_DTOSTR_BUF_SIZE+1];
+    g_ascii_formatd(dbuf, G_ASCII_DTOSTR_BUF_SIZE,
+                  "%.0f", (gdouble)d);
+    JavaFXOutput::String s = dbuf;
+    return s;
+}
+
+#define ISTR(d) (istr(d).c_str())
 
 /**
  * Format an rgba() string
  */
 static JavaFXOutput::String rgba(guint32 rgba)
 {
-    double r = SP_RGBA32_R_F(rgba);
-    double g = SP_RGBA32_G_F(rgba);
-    double b = SP_RGBA32_B_F(rgba);
-    double a = SP_RGBA32_A_F(rgba);
-    char buf[128];
-    snprintf(buf, 79, "Color.color(%s, %s, %s, %s)", 
-	   dstr(r).c_str(), dstr(g).c_str(), dstr(b).c_str(), dstr(a).c_str());
+    unsigned int r = SP_RGBA32_R_U(rgba);
+    unsigned int g = SP_RGBA32_G_U(rgba);
+    unsigned int b = SP_RGBA32_B_U(rgba);
+    unsigned int a = SP_RGBA32_A_U(rgba);
+    char buf[80];
+    snprintf(buf, 79, "Color.rgb(0x%02x, 0x%02x, 0x%02x, %s)",
+                           r, g, b, DSTR((double)a/256.0));
     JavaFXOutput::String s = buf;
     return s;
 }
@@ -131,6 +145,38 @@ static JavaFXOutput::String rgba(SPColor color, gdouble alpha)
     return rgba(color.toRGBA32(alpha));
 }
 
+/**
+ * Map Inkscape linecap styles to JavaFX
+ */
+static JavaFXOutput::String getStrokeLineCap(unsigned value) {
+    switch(value) {
+        case SP_STROKE_LINECAP_BUTT:
+            return "StrokeLineCap.BUTT";
+        case SP_STROKE_LINECAP_ROUND:
+            return "StrokeLineCap.ROUND";
+        case SP_STROKE_LINECAP_SQUARE:
+            return "StrokeLineCap.SQUARE";
+        default:
+            return "INVALID LINE CAP";
+    }
+}
+
+
+/**
+ * Map Inkscape linejoin styles to JavaFX
+ */
+static JavaFXOutput::String getStrokeLineJoin(unsigned value) {
+    switch(value) {
+        case SP_STROKE_LINEJOIN_MITER:
+            return "StrokeLineJoin.MITER";
+        case SP_STROKE_LINEJOIN_ROUND:
+            return "StrokeLineJoin.ROUND";
+        case SP_STROKE_LINEJOIN_BEVEL:
+            return "StrokeLineJoin.BEVEL";
+        default:
+            return "INVALID LINE JOIN";
+    }
+}
 
 
 
@@ -147,18 +193,6 @@ void JavaFXOutput::out(const char *fmt, ...)
     g_free(output);
 }
 
-/**
- *  Output header data to the buffer, printf()-style
- */
-void JavaFXOutput::fout(const char *fmt, ...)
-{
-    va_list args;
-    va_start(args, fmt);
-    gchar *output = g_strdup_vprintf(fmt, args);
-    va_end(args);
-    foutbuf.append(output);
-    g_free(output);
-}
 
 
 /**
@@ -191,24 +225,20 @@ bool JavaFXOutput::doHeader()
     out("##    Nodes    : %d\n", nrNodes);
     out("###################################################################*/\n");
     out("\n\n");
+
+    // import javafx libraries we can need
     out("import javafx.application.*;\n");
     out("import javafx.scene.*;\n");
     out("import javafx.scene.geometry.*;\n");
-    out("import javafx.scene.paint.*;\n");
     out("import javafx.scene.transform.*;\n");
+    out("import javafx.scene.paint.*;\n");
     out("\n");
-    out("import java.lang.System;\n");
+
     out("\n\n");
+
+    // Creates a class extended from CustomNode
     out("public class %s extends CustomNode {\n", name.c_str());
-    out("\n\n");
-    outbuf.append(foutbuf);
-    out("\n\n");
-    out("public function create() : Node\n");
-    out("{\n");
-    out("return Group\n");
-    out("    {\n");
-    out("    content:\n");
-    out("        [\n");
+
     return true;
 }
 
@@ -219,33 +249,33 @@ bool JavaFXOutput::doHeader()
  */
 bool JavaFXOutput::doTail()
 {
-    int border = 25.0;
-    out("        ] // content\n");
-    out("    transform: [ Translate.translate(%s, %s), ]\n",
-	          dstr((-minx) + border).c_str(), dstr((-miny) + border).c_str());
-    out("    } // Group\n");
-    out("}  // end function create()\n");
-    out("\n\n");
-    out("}\n");
-    out("/*###################################################################\n");
-    out("### E N D   C L A S S    %s\n", name.c_str());
-    out("###################################################################*/\n");
-    out("\n\n\n\n");
+    float border = 25.0;
+
+    // Write the tail of CustomNode
+    out("           ] // content\n");
+    out("           transform: Translate { x : %s, y : %s }\n",
+	          DSTR((-minx) + border), DSTR((-miny) + border) );
+    out("       } // Group\n");
+    out("   } // function create()\n");
+    out("} // class %s\n", name.c_str());
     out("\n");
+
+    // Frame
     out("Frame {\n");
-    out("    title: \"TestFrame\"\n");
-    out("    width: (%s).intValue()\n", dstr(maxx-minx + border * 2.0).c_str());
-    out("    height: (%s).intValue()\n", dstr(maxy-miny + border * 2.0).c_str());
-    out("    closeAction: function()\n");
-    out("        {\n");
-    out("        System.exit( 0 );\n");
-    out("        }\n");
+    out("    title: \"%s\"\n", name.c_str());
+    out("    width: %s\n", ISTR(maxx-minx + border * 2.0));
+    out("    height: %s\n", ISTR(maxy-miny + border * 2.0));
     out("    visible: true\n");
+
+    // Stage
     out("    stage: Stage {\n");
     out("        content: %s{}\n", name.c_str());
-    out("    }\n");
-    out("}\n");
-    out("\n\n");
+    out("    } // Stage\n");
+
+    out("} // Frame\n");
+
+    out("\n");
+
     out("/*###################################################################\n");
     out("### E N D   C L A S S    %s\n", name.c_str());
     out("###################################################################*/\n");
@@ -263,61 +293,57 @@ bool JavaFXOutput::doGradient(SPGradient *grad, const String &id)
     if (SP_IS_LINEARGRADIENT(grad))
         {
         SPLinearGradient *g = SP_LINEARGRADIENT(grad);
-        fout("function %s() : LinearGradient\n", id.c_str());
-        fout("{\n");
-        fout("    return LinearGradient\n");
-        fout("        {\n");
+        out("    /* create LinearGradient for %s */\n", id.c_str());
+        out("    private function %s(): LinearGradient {\n",  id.c_str());
+        out("        LinearGradient {\n");
         std::vector<SPGradientStop> stops = g->vector.stops;
         if (stops.size() > 0)
             {
-            fout("        stops:\n");
-            fout("            [\n");
+            out("            stops:\n");
+            out("                [\n");
             for (unsigned int i = 0 ; i<stops.size() ; i++)
                 {
                 SPGradientStop stop = stops[i];
-                fout("            Stop\n");
-                fout("                {\n");
-                fout("                offset: %s\n", dstr(stop.offset).c_str());
-                fout("                color: %s\n", rgba(stop.color, stop.opacity).c_str());
-                fout("                },\n");
+                out("                Stop {\n");
+                out("                    offset: %s\n", DSTR(stop.offset));
+                out("                    color: %s\n", rgba(stop.color, stop.opacity).c_str());
+                out("                },\n");
                 }
-            fout("            ]\n");
+            out("            ]\n");
             }
-        fout("        }\n");
-        fout("}\n");
-        fout("\n\n");
+        out("        };\n");
+        out("    } // end LinearGradient: %s\n", id.c_str());
+        out("\n\n");
         }
     else if (SP_IS_RADIALGRADIENT(grad))
         {
         SPRadialGradient *g = SP_RADIALGRADIENT(grad);
-        fout("function %s() : RadialGradient\n", id.c_str());
-        fout("{\n");
-        fout("    return RadialGradient\n");
-        fout("        {\n");
-        fout("        centerX: %s\n", dstr(g->cx.value).c_str());
-        fout("        centerY: %s\n", dstr(g->cy.value).c_str());
-        fout("        focusX: %s\n", dstr(g->fx.value).c_str());
-        fout("        focusY: %s\n", dstr(g->fy.value).c_str());
-        fout("        radius: %s\n", dstr(g->r.value).c_str());
+        out("    /* create RadialGradient for %s */\n", id.c_str());
+        out("    private function %s() {\n", id.c_str());
+        out("        RadialGradient {\n");
+        out("            centerX: %s\n", DSTR(g->cx.value));
+        out("            centerY: %s\n", DSTR(g->cy.value));
+        out("            focusX: %s\n", DSTR(g->fx.value));
+        out("            focusY: %s\n", DSTR(g->fy.value));
+        out("            radius: %s\n", DSTR(g->r.value));
         std::vector<SPGradientStop> stops = g->vector.stops;
         if (stops.size() > 0)
             {
-            fout("        stops:\n");
-            fout("            [\n");
+            out("            stops:\n");
+            out("            [\n");
             for (unsigned int i = 0 ; i<stops.size() ; i++)
                 {
                 SPGradientStop stop = stops[i];
-                fout("            Stop\n");
-                fout("                {\n");
-                fout("                offset: %s\n", dstr(stop.offset).c_str());
-                fout("                color: %s\n", rgba(stop.color, stop.opacity).c_str());
-                fout("                },\n");
+                out("                Stop {\n");
+                out("                    offset: %s\n", DSTR(stop.offset));
+                out("                    color: %s\n", rgba(stop.color, stop.opacity).c_str());
+                out("                },\n");
                 }
-            fout("            ]\n");
+            out("            ]\n");
             }
-        fout("        }\n");
-        fout("}\n");
-        fout("\n\n");
+        out("        };\n");
+        out("    } // end RadialGradient: %s\n", id.c_str());
+        out("\n\n");
         }
     else
         {
@@ -340,7 +366,7 @@ bool JavaFXOutput::doStyle(SPStyle *style)
     if (!style)
         return true;
 
-    out("        opacity: %s\n", dstr(effective_opacity(style)).c_str());
+    out("            opacity: %s\n", DSTR(effective_opacity(style)));
 
     /**
      * Fill
@@ -349,19 +375,18 @@ bool JavaFXOutput::doStyle(SPStyle *style)
     if (fill.isColor())
         {
         // see color.h for how to parse SPColor
-        out("        fill: %s\n",
+        out("            fill: %s\n",
             rgba(fill.value.color, SP_SCALE24_TO_FLOAT(style->fill_opacity.value)).c_str());
         }
-    else if (fill.isPaintserver())
-        {
-        if (fill.value.href && fill.value.href->getURI() )
-            {
+    else if (fill.isPaintserver()){
+        if (fill.value.href && fill.value.href->getURI() ){
             String uri = fill.value.href->getURI()->toString();
-            if (uri.size()>0 && uri[0]=='#')
+            /* trim the anchor '#' from the front */
+            if (uri.size() > 0 && uri[0]=='#')
                 uri = uri.substr(1);
-            out("        fill: %s()\n", uri.c_str());
-            }
+            out("            fill: %s()\n", uri.c_str());
         }
+    }
 
 
     /**
@@ -383,17 +408,172 @@ bool JavaFXOutput::doStyle(SPStyle *style)
     if (style->stroke_opacity.value > 0)
         {
         SPIPaint stroke = style->stroke;
-        out("        stroke: %s\n",
+        out("            stroke: %s\n",
             rgba(stroke.value.color, SP_SCALE24_TO_FLOAT(style->stroke_opacity.value)).c_str());
         double strokewidth = style->stroke_width.value;
-        out("        strokeWidth: %s\n", dstr(strokewidth).c_str());
+        unsigned linecap = style->stroke_linecap.value;
+        unsigned linejoin = style->stroke_linejoin.value;
+        out("            strokeWidth: %s\n", DSTR(strokewidth));
+        out("            strokeLineCap: %s\n", getStrokeLineCap(linecap).c_str());
+        out("            strokeLineJoin: %s\n", getStrokeLineJoin(linejoin).c_str());
+        out("            strokeMiterLimit: %s\n", DSTR(style->stroke_miterlimit.value));
+        if(style->stroke_dasharray_set) {
+           if(style->stroke_dashoffset_set) {
+               out("            strokeDashOffset: %s\n", DSTR(style->stroke_dash.offset));
+           }
+           out("            strokeDashArray: [ ");
+           for(int i = 0; i < style->stroke_dash.n_dash; i++ ) {
+               if(i > 0) {
+                   out(", %.2lf", style->stroke_dash.dash[i]);
+               }else {
+                   out(" %.2lf", style->stroke_dash.dash[i]);
+               }
+           }
+           out(" ]\n");
+        }
+
         }
 
     return true;
 }
 
 
+#if 1
 
+/**
+ *  Output the curve data to buffer
+ */
+bool JavaFXOutput::doCurve(SPItem *item, const String &id)
+{
+    using Geom::X;
+    using Geom::Y;
+
+    //### Get the Shape
+    if (!SP_IS_SHAPE(item))//Bulia's suggestion.  Allow all shapes
+        return true;
+
+    SPShape *shape = SP_SHAPE(item);
+    SPCurve *curve = shape->curve;
+    if (curve->is_empty())
+        return true;
+
+    nrShapes++;
+
+    out("    /** path %s */\n", id.c_str());
+    out("    private function %s() : Path {\n",id.c_str());
+    out("        Path {\n");
+    out("            id: \"%s\"\n", id.c_str());
+
+    /**
+     * Output the style information
+     */
+    if (!doStyle(SP_OBJECT_STYLE(shape)))
+        return false;
+
+    // convert the path to only lineto's and cubic curveto's:
+    Geom::Scale yflip(1.0, -1.0);
+    Geom::Matrix tf = sp_item_i2d_affine(item) * yflip;
+    Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
+
+    //Count the NR_CURVETOs/LINETOs (including closing line segment)
+    guint segmentCount = 0;
+    for(Geom::PathVector::const_iterator it = pathv.begin(); it != pathv.end(); ++it) {
+        segmentCount += (*it).size();
+        if (it->closed())
+            segmentCount += 1;
+    }
+
+    out("            elements: [\n");
+
+    unsigned int segmentNr = 0;
+
+    nrNodes += segmentCount;
+
+    Geom::Rect cminmax( pathv.front().initialPoint(), pathv.front().initialPoint() );
+
+    /**
+     * For all Subpaths in the <path>
+     */
+    for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit)
+        {
+        Geom::Point p = pit->front().initialPoint();
+        cminmax.expandTo(p);
+        out("                MoveTo {\n");
+        out("                    x: %s\n", DSTR(p[X]));
+        out("                    y: %s\n", DSTR(p[Y]));
+        out("                },\n");
+
+        /**
+         * For all segments in the subpath
+         */
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_closed(); ++cit)
+            {
+            //### LINE
+            if( dynamic_cast<Geom::LineSegment const *> (&*cit) ||
+                dynamic_cast<Geom::HLineSegment const *>(&*cit) ||
+                dynamic_cast<Geom::VLineSegment const *>(&*cit) )
+                {
+                Geom::Point p = cit->finalPoint();
+                out("                LineTo {\n");
+                out("                    x: %s\n", DSTR(p[X]));
+                out("                    y: %s\n", DSTR(p[Y]));
+                out("                },\n");
+                nrNodes++;
+                }
+            //### BEZIER
+            else if(Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
+                {
+                std::vector<Geom::Point> points = cubic->points();
+                Geom::Point p1 = points[1];
+                Geom::Point p2 = points[2];
+                Geom::Point p3 = points[3];
+                out("                CurveTo {\n");
+                out("                    controlX1: %s\n", DSTR(p1[X]));
+                out("                    controlY1: %s\n", DSTR(p1[Y]));
+                out("                    controlX2: %s\n", DSTR(p2[X]));
+                out("                    controlY2: %s\n", DSTR(p2[Y]));
+                out("                    x: %s\n", DSTR(p3[X]));
+                out("                    y: %s\n", DSTR(p3[Y]));
+                out("                },\n");
+                nrNodes++;
+                }
+            else
+                {
+                g_error ("logical error, because pathv_to_linear_and_cubic_beziers was used");
+                }
+            segmentNr++;
+            cminmax.expandTo(cit->finalPoint());
+            }
+        if (pit->closed())
+            {
+            out("                ClosePath {},\n");
+            }
+        }
+
+    out("            ] // elements\n");
+    out("        }; // Path\n");
+    out("    } // end path %s\n\n", id.c_str());
+
+    double cminx = cminmax.min()[X];
+    double cmaxx = cminmax.max()[X];
+    double cminy = cminmax.min()[Y];
+    double cmaxy = cminmax.max()[Y];
+
+    if (cminx < minx)
+        minx = cminx;
+    if (cmaxx > maxx)
+        maxx = cmaxx;
+    if (cminy < miny)
+        miny = cminy;
+    if (cmaxy > maxy)
+        maxy = cmaxy;
+
+    return true;
+}
+
+
+
+#else
 
 /**
  *  Output the curve data to buffer
@@ -479,6 +659,11 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
 }
 
 
+
+#endif  /* #if o */
+
+
+
 /**
  *  Output the tree data to buffer
  */
@@ -544,6 +729,51 @@ bool JavaFXOutput::doTree(SPDocument *doc)
 }
 
 
+bool JavaFXOutput::doBody(SPDocument *doc, SPObject *obj) {
+    /**
+     * Check the type of node and process
+     */
+    String id;
+    if (!obj->id)
+        {
+        char buf[16];
+        sprintf(buf, "id%d", idindex++);
+        id = buf;
+        }
+    else
+        {
+        id = obj->id;
+        }
+
+    if (SP_IS_ITEM(obj)) {
+        SPItem *item = SP_ITEM(obj);
+        //### Get the Shape
+        if (SP_IS_SHAPE(item)) {//Bulia's suggestion.  Allow all shapes
+            SPShape *shape = SP_SHAPE(item);
+            SPCurve *curve = shape->curve;
+            if (!curve->is_empty())
+                out("               %s(),\n", id.c_str());
+        }
+    }
+    else if (SP_IS_GRADIENT(obj)) {
+        //TODO: what to do with Gradient within body?????
+        //SPGradient *grad = SP_GRADIENT(reprobj);
+        //if (!doGradient(grad, id))
+        //    return false;
+    }
+
+    /**
+     * Descend into children
+     */
+    for (SPObject *child = obj->firstChild() ; child ; child = child->next)
+        {
+		if (!doBody(doc, child))
+		    return false;
+		}
+
+    return true;
+}
+
 
 
 //########################################################################
@@ -581,9 +811,9 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *uri)
         name = name.substr(0, pos);
 
 
-    //###### SAVE IN POV FORMAT TO BUFFER
+    //###### SAVE IN JAVAFX FORMAT TO BUFFER
     //# Lets do the curves first, to get the stats
-    
+
     if (!doTree(doc))
         return false;
     String curveBuf = outbuf;
@@ -591,12 +821,22 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *uri)
 
     if (!doHeader())
         return false;
-    
+
     outbuf.append(curveBuf);
+
+#ifdef JAVAFX_SDK_1_0
+    out("   override function create(): Node {\n");
+#else
+    out("   public function create(): Node {\n");
+#endif
+    out("       Group {\n");
+    out("           content: [\n");
+    idindex    = 0;
+
+    doBody(doc, doc->root);
 
     if (!doTail())
         return false;
-
 
 
 
