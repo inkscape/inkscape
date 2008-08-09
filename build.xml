@@ -89,13 +89,13 @@
     <mkdir dir="${build}/java"/>
     <mkdir dir="${build}/java/classes"/>
     <mkdir dir="${build}/java/lib"/>
-
-    <mkdir dir="${build}"/>
     <mkdir dir="${dist}"/>
+    
     <copy file="${src}/helper/sp-marshal.h.mingw"
           tofile="${src}/helper/sp-marshal.h"/>
     <copy file="${src}/helper/sp-marshal.cpp.mingw"
           tofile="${src}/helper/sp-marshal.cpp"/>
+          
     <makefile file="inkscape_version.h">
         #define INKSCAPE_VERSION "${version}"
     </makefile>
