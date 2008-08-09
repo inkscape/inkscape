@@ -87,7 +87,9 @@ FillAndStroke::_layoutPageStrokePaint()
 void
 FillAndStroke::_layoutPageStrokeStyle()
 {
-    Gtk::Widget *ssl = manage(Glib::wrap(sp_stroke_style_line_widget_new()));
+    //Gtk::Widget *ssl = manage(Glib::wrap(sp_stroke_style_line_widget_new()));
+    //Gtk::Widget *ssl = static_cast<Gtk::Widget *>(sp_stroke_style_line_widget_new());
+    Gtk::Widget *ssl = sp_stroke_style_line_widget_new();
     _page_stroke_style.table().attach(*ssl, 0, 1, 0, 1);
 }
 

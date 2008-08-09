@@ -19,7 +19,7 @@
 #include "display/canvas-bpath.h"
 
 GtkWidget *sp_stroke_style_paint_widget_new (void);
-GtkWidget *sp_stroke_style_line_widget_new (void);
+Gtk::Container *sp_stroke_style_line_widget_new (void);
 
 #endif
 

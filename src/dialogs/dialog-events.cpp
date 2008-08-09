@@ -27,6 +27,8 @@
 #include "dialog-events.h"
 
 
+#include <gtkmm/entry.h>
+
 
 /**
 * \brief  This function is called to zero the transientize semaphore by a
@@ -46,6 +48,19 @@ sp_allow_again (gpointer *wd)
  *
  */
 void
+sp_dialog_defocus_cpp (Gtk::Window *win)
+{
+    Gtk::Window *w;
+    //find out the document window we're transient for
+    w = win->get_transient_for();
+
+    //switch to it
+    if (w) {
+        w->present();
+    }
+}
+
+void
 sp_dialog_defocus (GtkWindow *win)
 {
     GtkWindow *w;
@@ -59,11 +74,16 @@ sp_dialog_defocus (GtkWindow *win)
 }
 
 
-
 /**
  * \brief Callback to defocus a widget's parent dialog.
  *
  */
+void
+sp_dialog_defocus_callback_cpp (Gtk::Entry *e)
+{
+    sp_dialog_defocus_cpp(dynamic_cast<Gtk::Window *>(e->get_toplevel()));
+}
+
 void
 sp_dialog_defocus_callback (GtkWindow */*win*/, gpointer data)
 {
@@ -72,6 +92,12 @@ sp_dialog_defocus_callback (GtkWindow */*win*/, gpointer data)
 }
 
 
+
+void
+sp_dialog_defocus_on_enter_cpp (Gtk::Entry *e)
+{
+    e->signal_activate().connect(sigc::bind(sigc::ptr_fun(&sp_dialog_defocus_callback_cpp), e));
+}
 
 void
 sp_dialog_defocus_on_enter (GtkWidget *w)

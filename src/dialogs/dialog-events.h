@@ -24,6 +24,11 @@
  *   stop is the transientize semaphore: when 0, retransientizing this dialog 
  *   is allowed
  */
+
+namespace Gtk {
+class Window;
+class Entry;
+}
  
 typedef struct { 
   GtkWidget *win;
@@ -34,6 +39,10 @@ typedef struct {
 gboolean sp_dialog_event_handler ( GtkWindow *win, 
                                    GdkEvent *event, 
                                    gpointer data );
+
+void sp_dialog_defocus_cpp         (Gtk::Window *win);
+void sp_dialog_defocus_callback_cpp(Gtk::Entry *e);
+void sp_dialog_defocus_on_enter_cpp(Gtk::Entry *e);
 
 void sp_dialog_defocus           ( GtkWindow *win );
 void sp_dialog_defocus_callback  ( GtkWindow *win, gpointer data );

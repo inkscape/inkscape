@@ -17,6 +17,8 @@ widgets_libspwidgets_a_SOURCES =	\
 	widgets/calligraphic-profile-rename.h	\
 	widgets/dash-selector.cpp	\
 	widgets/dash-selector.h	\
+	widgets/dash-selector.cpp	\
+	widgets/dash-selector.h	\
 	widgets/desktop-widget.cpp	\
 	widgets/desktop-widget.h	\
 	widgets/font-selector.cpp	\

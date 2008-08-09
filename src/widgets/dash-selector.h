@@ -1,38 +1,50 @@
-#ifndef __SP_DASH_SELECTOR_H__
-#define __SP_DASH_SELECTOR_H__
+#ifndef __SP_DASH_SELECTOR_NEW_H__
+#define __SP_DASH_SELECTOR_NEW_H__
 
 /*
  * Optionmenu for selecting dash patterns
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Maximilian Albert <maximilian.albert> (gtkmm-ification)
  *
  * Copyright (C) 2002 Lauris Kaplinski
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-struct SPDashSelector;
+#include "xml/repr.h"
 
-#include <gtk/gtkwidget.h>
-#include "../xml/repr.h"
+#include <gtkmm/box.h>
+#include <sigc++/signal.h>
 
-#include <glib.h>
+namespace Gtk {
+class Container;
+class OptionMenu;
+class MenuItem;
+class Adjustment;
+}
 
+// TODO: should we rather derive this from OptionMenu and add the spinbutton somehow else?
+class SPDashSelector : public Gtk::HBox {
+public:
+    SPDashSelector(Inkscape::XML::Node *drepr);
+    ~SPDashSelector();
 
+    void set_dash(int ndash, double *dash, double offset);
+    void get_dash(int *ndash, double **dash, double *offset);
 
-#define SP_TYPE_DASH_SELECTOR (sp_dash_selector_get_type ())
-#define SP_DASH_SELECTOR(o) (GTK_CHECK_CAST ((o), SP_TYPE_DASH_SELECTOR, SPDashSelector))
-#define SP_IS_DASH_SELECTOR(o) (GTK_CHECK_TYPE ((o), SP_TYPE_DASH_SELECTOR))
+    sigc::signal<void> changed_signal;
 
-GtkType sp_dash_selector_get_type (void);
+private:
+    static void init_dashes(Inkscape::XML::Node *drepr);
+    void dash_activate(Gtk::MenuItem *mi);
+    void offset_value_changed();
+    Gtk::MenuItem *menu_item_new(double *pattern);
 
-GtkWidget *sp_dash_selector_new (Inkscape::XML::Node *repr);
-
-void sp_dash_selector_set_dash (SPDashSelector *dsel, int ndash, double *dash, double offset);
-void sp_dash_selector_get_dash (SPDashSelector *dsel, int *ndash, double **dash, double *offset);
-
-
+    Gtk::OptionMenu *dash;
+    Gtk::Adjustment *offset;
+};
 
 #endif
 

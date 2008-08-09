@@ -7,10 +7,12 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Bryce Harrington <brycehar@bryceharrington.org>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Maximilian Albert <maximilian.albert@gmail.com>
  *
  * Copyright (C) 2001-2005 authors
  * Copyright (C) 2001 Ximian, Inc.
  * Copyright (C) 2004 John Cliff
+ * Copyright (C) 2008 Maximilian Albert (gtkmm-ification)
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -63,7 +65,6 @@
 
 /* Paint */
 
-static void sp_stroke_style_paint_construct(SPWidget *spw, SPPaintSelector *psel);
 static void sp_stroke_style_paint_selection_modified (SPWidget *spw, Inkscape::Selection *selection, guint flags, SPPaintSelector *psel);
 static void sp_stroke_style_paint_selection_changed (SPWidget *spw, Inkscape::Selection *selection, SPPaintSelector *psel);
 static void sp_stroke_style_paint_update(SPWidget *spw);
@@ -78,12 +79,16 @@ static void sp_stroke_style_widget_transientize_callback(Inkscape::Application *
                                                          SPWidget *spw );
 
 /** Marker selection option menus */
-static GtkWidget * marker_start_menu = NULL;
-static GtkWidget * marker_mid_menu = NULL;
-static GtkWidget * marker_end_menu = NULL;
+static Gtk::OptionMenu * marker_start_menu = NULL;
+static Gtk::OptionMenu * marker_mid_menu = NULL;
+static Gtk::OptionMenu * marker_end_menu = NULL;
 
-static SPObject *ink_extract_marker_name(gchar const *n);
-static void      ink_markers_menu_update(SPWidget* spw);
+sigc::connection marker_start_menu_connection;
+sigc::connection marker_mid_menu_connection;
+sigc::connection marker_end_menu_connection;
+
+static SPObject *ink_extract_marker_name(gchar const *n, SPDocument *doc);
+static void      ink_markers_menu_update(Gtk::Container* spw, SPMarkerLoc const which);
 
 static Inkscape::UI::Cache::SvgPreview svg_preview_cache;
 
@@ -102,9 +107,6 @@ sp_stroke_style_paint_widget_new(void)
     gtk_container_add(GTK_CONTAINER(spw), psel);
     gtk_object_set_data(GTK_OBJECT(spw), "paint-selector", psel);
 
-    gtk_signal_connect(GTK_OBJECT(spw), "construct",
-                       GTK_SIGNAL_FUNC(sp_stroke_style_paint_construct),
-                       psel);
     gtk_signal_connect(GTK_OBJECT(spw), "modify_selection",
                        GTK_SIGNAL_FUNC(sp_stroke_style_paint_selection_modified),
                        psel);
@@ -128,21 +130,6 @@ sp_stroke_style_paint_widget_new(void)
 
     sp_stroke_style_paint_update (SP_WIDGET(spw));
     return spw;
-}
-
-/**
- * On construction, simply does an update of the stroke style paint object.
- */
-static void
-sp_stroke_style_paint_construct(SPWidget *spw, SPPaintSelector */*psel*/)
-{
-#ifdef SP_SS_VERBOSE
-    g_print( "Stroke style widget constructed: inkscape %p repr %p\n",
-             spw->inkscape, spw->repr );
-#endif
-    if (spw->inkscape) {
-        sp_stroke_style_paint_update (spw);
-    }
 }
 
 /**
@@ -499,40 +486,30 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
 
 /* Line */
 
-static void sp_stroke_style_line_construct(SPWidget *spw, gpointer data);
-static void sp_stroke_style_line_selection_modified (SPWidget *spw,
-                                                  Inkscape::Selection *selection,
-                                                  guint flags,
-                                                  gpointer data);
+static void sp_stroke_style_line_selection_modified(SPWidget *spw, Inkscape::Selection *selection, guint flags, gpointer data);
+static void sp_stroke_style_line_selection_changed(SPWidget *spw, Inkscape::Selection *selection, gpointer data);
 
-static void sp_stroke_style_line_selection_changed (SPWidget *spw,
-                                                   Inkscape::Selection *selection,
-                                                   gpointer data );
+static void sp_stroke_style_line_update(Gtk::Container *spw, Inkscape::Selection *sel);
 
-static void sp_stroke_style_line_update(SPWidget *spw, Inkscape::Selection *sel);
+static void sp_stroke_style_set_join_buttons(Gtk::Container *spw, Gtk::ToggleButton *active);
 
-static void sp_stroke_style_set_join_buttons(SPWidget *spw,
-                                             GtkWidget *active);
+static void sp_stroke_style_set_cap_buttons(Gtk::Container *spw, Gtk::ToggleButton *active);
 
-static void sp_stroke_style_set_cap_buttons(SPWidget *spw,
-                                            GtkWidget *active);
+static void sp_stroke_style_width_changed(Gtk::Container *spw);
+static void sp_stroke_style_miterlimit_changed(Gtk::Container *spw);
+static void sp_stroke_style_any_toggled(Gtk::ToggleButton *tb, Gtk::Container *spw);
+static void sp_stroke_style_line_dash_changed(Gtk::Container *spw);
 
-static void sp_stroke_style_width_changed(GtkAdjustment *adj, SPWidget *spw);
-static void sp_stroke_style_miterlimit_changed(GtkAdjustment *adj, SPWidget *spw);
-static void sp_stroke_style_any_toggled(GtkToggleButton *tb, SPWidget *spw);
-static void sp_stroke_style_line_dash_changed(SPDashSelector *dsel,
-                                              SPWidget *spw);
-
-static void sp_stroke_style_update_marker_menus(SPWidget *spw, GSList const *objects);
+static void sp_stroke_style_update_marker_menus(Gtk::Container *spw, GSList const *objects);
 
 
 /**
  * Helper function for creating radio buttons.  This should probably be re-thought out
  * when reimplementing this with Gtkmm.
  */
-static GtkWidget *
-sp_stroke_radio_button(GtkWidget *tb, char const *icon,
-                       GtkWidget *hb, GtkWidget *spw,
+static Gtk::RadioButton *
+sp_stroke_radio_button(Gtk::RadioButton *tb, char const *icon,
+                       Gtk::HBox *hb, Gtk::Container *spw,
                        gchar const *key, gchar const *data)
 {
     g_assert(icon != NULL);
@@ -540,23 +517,23 @@ sp_stroke_radio_button(GtkWidget *tb, char const *icon,
     g_assert(spw != NULL);
 
     if (tb == NULL) {
-        tb = gtk_radio_button_new(NULL);
+        tb = new Gtk::RadioButton();
     } else {
-        tb = gtk_radio_button_new(gtk_radio_button_group(GTK_RADIO_BUTTON(tb)) );
+        Gtk::RadioButtonGroup grp = tb->get_group();
+        tb = new Gtk::RadioButton(grp);
     }
 
-    gtk_widget_show(tb);
-    gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(tb), FALSE);
-    gtk_box_pack_start(GTK_BOX(hb), tb, FALSE, FALSE, 0);
-    gtk_object_set_data(GTK_OBJECT(spw), icon, tb);
-    gtk_object_set_data(GTK_OBJECT(tb), key, (gpointer*)data);
-    gtk_signal_connect(GTK_OBJECT(tb), "toggled",
-                       GTK_SIGNAL_FUNC(sp_stroke_style_any_toggled),
-                       spw);
-    GtkWidget *px = sp_icon_new(Inkscape::ICON_SIZE_LARGE_TOOLBAR, icon);
+    tb->show();
+    tb->set_mode(false);
+    hb->pack_start(*tb, false, false, 0);
+    spw->set_data(icon, tb);
+    tb->set_data(key, (gpointer*)data);
+    tb->signal_toggled().connect(sigc::bind<Gtk::RadioButton *, Gtk::Container *>(
+                                     sigc::ptr_fun(&sp_stroke_style_any_toggled), tb, spw));
+    Gtk::Widget *px = manage(Glib::wrap(sp_icon_new(Inkscape::ICON_SIZE_LARGE_TOOLBAR, icon)));
     g_assert(px != NULL);
-    gtk_widget_show(px);
-    gtk_container_add(GTK_CONTAINER(tb), px);
+    px->show();
+    tb->add(*px);
 
     return tb;
 
@@ -577,7 +554,7 @@ sp_stroke_style_widget_transientize_callback(Inkscape::Application */*inkscape*/
  * area in menu_id's bounding box, and then renders it.  This allows us to fill in
  * preview images of each marker in the marker menu.
  */
-static GtkWidget *
+static Gtk::Image *
 sp_marker_prev_new(unsigned psize, gchar const *mname,
                    SPDocument *source, SPDocument *sandbox,
                    gchar const *menu_id, NRArena const */*arena*/, unsigned /*visionkey*/, NRArenaItem *root)
@@ -623,24 +600,23 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
 
     /* Update to renderable state */
     double sf = 0.8;
-    GdkPixbuf* pixbuf = NULL;
 
     gchar *cache_name = g_strconcat(menu_id, mname, NULL);
     Glib::ustring key = svg_preview_cache.cache_key(source->uri, cache_name, psize);
     g_free (cache_name);
-    pixbuf = svg_preview_cache.get_preview_from_cache(key);
+    // TODO: is this correct?
+    Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(svg_preview_cache.get_preview_from_cache(key));
 
-    if (pixbuf == NULL) {
-        pixbuf = render_pixbuf(root, sf, to_2geom(*dbox), psize);
-        svg_preview_cache.set_preview_in_cache(key, pixbuf);
+    if (!pixbuf) {
+        pixbuf = Glib::wrap(render_pixbuf(root, sf, to_2geom(*dbox), psize));
+        svg_preview_cache.set_preview_in_cache(key, pixbuf->gobj());
     }
 
     // Create widget
-    GtkWidget *pb = gtk_image_new_from_pixbuf(pixbuf);
+    Gtk::Image *pb = new Gtk::Image(pixbuf);
 
     return pb;
 }
-
 
 /**
  *  Returns a list of markers in the defs of the given source document as a GSList object
@@ -671,46 +647,46 @@ ink_marker_list_get (SPDocument *source)
  * Adds previews of markers in marker_list to the given menu widget
  */
 static void
-sp_marker_menu_build (GtkWidget *m, GSList *marker_list, SPDocument *source, SPDocument *sandbox, gchar const *menu_id)
+sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPDocument *sandbox, gchar const *menu_id)
 {
     // Do this here, outside of loop, to speed up preview generation:
     NRArena const *arena = NRArena::create();
     unsigned const visionkey = sp_item_display_key_new(1);
-    NRArenaItem *root =  sp_item_invoke_show( SP_ITEM(SP_DOCUMENT_ROOT (sandbox)), (NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY );
+    NRArenaItem *root =  sp_item_invoke_show(SP_ITEM(SP_DOCUMENT_ROOT (sandbox)), (NRArena *) arena, visionkey, SP_ITEM_SHOW_DISPLAY);
 
     for (; marker_list != NULL; marker_list = marker_list->next) {
         Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) marker_list->data);
-        GtkWidget *i = gtk_menu_item_new();
-        gtk_widget_show(i);
+        Gtk::MenuItem *i = new Gtk::MenuItem();
+        i->show();
 
         if (repr->attribute("inkscape:stockid"))
-            g_object_set_data (G_OBJECT(i), "stockid", (void *) "true");
+            i->set_data("stockid", (void *) "true");
         else
-            g_object_set_data (G_OBJECT(i), "stockid", (void *) "false");
+            i->set_data("stockid", (void *) "false");
 
         gchar const *markid = repr->attribute("id");
-        g_object_set_data (G_OBJECT(i), "marker", (void *) markid);
+        i->set_data("marker", (void *) markid);
 
-        GtkWidget *hb = gtk_hbox_new(FALSE, MARKER_ITEM_MARGIN);
-        gtk_widget_show(hb);
+        Gtk::HBox *hb = new Gtk::HBox(false, MARKER_ITEM_MARGIN);
+        hb->show();
 
         // generate preview
 
-        GtkWidget *prv = sp_marker_prev_new (22, markid, source, sandbox, menu_id, arena, visionkey, root);
-        gtk_widget_show(prv);
-        gtk_box_pack_start(GTK_BOX(hb), prv, FALSE, FALSE, 6);
+        Gtk::Image *prv = sp_marker_prev_new (22, markid, source, sandbox, menu_id, arena, visionkey, root);
+        prv->show();
+        hb->pack_start(*prv, false, false, 6);
 
         // create label
-        GtkWidget *l = gtk_label_new(repr->attribute("id"));
-        gtk_widget_show(l);
-        gtk_misc_set_alignment(GTK_MISC(l), 0.0, 0.5);
+        Gtk::Label *l = new Gtk::Label(repr->attribute("id"));
+        l->show();
+        l->set_alignment(0.0, 0.5);
 
-        gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, 0);
+        hb->pack_start(*l, true, true, 0);
 
-        gtk_widget_show(hb);
-        gtk_container_add(GTK_CONTAINER(i), hb);
+        hb->show();
+        i->add(*hb);
 
-        gtk_menu_append(GTK_MENU(m), i);
+        m->append(*i);
     }
 }
 
@@ -722,7 +698,7 @@ sp_marker_menu_build (GtkWidget *m, GSList *marker_list, SPDocument *source, SPD
  *
  */
 static void
-sp_marker_list_from_doc (GtkWidget *m, SPDocument */*current_doc*/, SPDocument *source, SPDocument */*markers_doc*/, SPDocument *sandbox, gchar const *menu_id)
+sp_marker_list_from_doc (Gtk::Menu *m, SPDocument */*current_doc*/, SPDocument *source, SPDocument */*markers_doc*/, SPDocument *sandbox, gchar const *menu_id)
 {
     GSList *ml = ink_marker_list_get(source);
     GSList *clean_ml = NULL;
@@ -734,12 +710,11 @@ sp_marker_list_from_doc (GtkWidget *m, SPDocument */*current_doc*/, SPDocument *
         // Add to the list of markers we really do wish to show
         clean_ml = g_slist_prepend (clean_ml, ml->data);
     }
-    sp_marker_menu_build (m, clean_ml, source, sandbox, menu_id);
+    sp_marker_menu_build(m, clean_ml, source, sandbox, menu_id);
 
     g_slist_free (ml);
     g_slist_free (clean_ml);
 }
-
 
 /**
  * Returns a new document containing default start, mid, and end markers.
@@ -777,30 +752,30 @@ gchar const *buffer = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:sodipodi=
 }
 
 static void
-ink_marker_menu_create_menu(GtkWidget *m, gchar const *menu_id, SPDocument *doc, SPDocument *sandbox)
+ink_marker_menu_create_menu(Gtk::Menu *m, gchar const *menu_id, SPDocument *doc, SPDocument *sandbox)
 {
     static SPDocument *markers_doc = NULL;
 
     // add "None"
-    GtkWidget *i = gtk_menu_item_new();
-    gtk_widget_show(i);
+    Gtk::MenuItem *i = new Gtk::MenuItem();
+    i->show();
 
-    g_object_set_data(G_OBJECT(i), "marker", (void *) "none");
+    i->set_data("marker", (void *) "none");
 
-    GtkWidget *hb = gtk_hbox_new(FALSE,  MARKER_ITEM_MARGIN);
-    gtk_widget_show(hb);
+    Gtk::HBox *hb = new Gtk::HBox(false,  MARKER_ITEM_MARGIN);
+    hb->show();
 
-    GtkWidget *l = gtk_label_new( _("None") );
-    gtk_widget_show(l);
-    gtk_misc_set_alignment(GTK_MISC(l), 0.0, 0.5);
+    Gtk::Label *l = new Gtk::Label( _("None") );
+    l->show();
+    l->set_alignment(0.0, 0.5);
 
-    gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, 0);
+    hb->pack_start(*l, true, true, 0);
 
-    gtk_widget_show(hb);
-    gtk_container_add(GTK_CONTAINER(i), hb);
-    gtk_menu_append(GTK_MENU(m), i);
+    hb->show();
+    i->add(*hb);
+    m->append(*i);
 
-    // find and load  markers.svg
+    // find and load markers.svg
     if (markers_doc == NULL) {
         char *markers_source = g_build_filename(INKSCAPE_MARKERSDIR, "markers.svg", NULL);
         if (Inkscape::IO::file_test(markers_source, G_FILE_TEST_IS_REGULAR)) {
@@ -810,61 +785,60 @@ ink_marker_menu_create_menu(GtkWidget *m, gchar const *menu_id, SPDocument *doc,
     }
 
     // suck in from current doc
-    sp_marker_list_from_doc ( m, NULL, doc, markers_doc, sandbox, menu_id );
+    sp_marker_list_from_doc(m, NULL, doc, markers_doc, sandbox, menu_id);
 
     // add separator
     {
-        GtkWidget *i = gtk_separator_menu_item_new();
-        gtk_widget_show(i);
-        gtk_menu_append(GTK_MENU(m), i);
+        //Gtk::Separator *i = gtk_separator_menu_item_new();
+        Gtk::SeparatorMenuItem *i = new Gtk::SeparatorMenuItem();
+        i->show();
+        m->append(*i);
     }
 
     // suck in from markers.svg
     if (markers_doc) {
         sp_document_ensure_up_to_date(doc);
-        sp_marker_list_from_doc ( m, doc, markers_doc, NULL, sandbox, menu_id );
+        sp_marker_list_from_doc(m, doc, markers_doc, NULL, sandbox, menu_id);
     }
 
 }
-
 
 /**
  * Creates a menu widget to display markers from markers.svg
  */
-static GtkWidget *
-ink_marker_menu( GtkWidget */*tbl*/, gchar const *menu_id, SPDocument *sandbox)
+static Gtk::OptionMenu *
+ink_marker_menu(Gtk::Widget */*tbl*/, gchar const *menu_id, SPDocument *sandbox)
 {
     SPDesktop *desktop = inkscape_active_desktop();
     SPDocument *doc = sp_desktop_document(desktop);
-    GtkWidget *mnu = gtk_option_menu_new();
+    Gtk::OptionMenu *mnu = new Gtk::OptionMenu();
 
     /* Create new menu widget */
-    GtkWidget *m = gtk_menu_new();
-    gtk_widget_show(m);
+    Gtk::Menu *m = new Gtk::Menu();
+    m->show();
 
-    g_object_set_data(G_OBJECT(mnu), "updating", (gpointer) FALSE);
+    mnu->set_data("updating", (gpointer) FALSE);
 
     if (!doc) {
-        GtkWidget *i = gtk_menu_item_new_with_label(_("No document selected"));
-        gtk_widget_show(i);
-        gtk_menu_append(GTK_MENU(m), i);
-        gtk_widget_set_sensitive(mnu, FALSE);
+        Gtk::MenuItem *i = new Gtk::MenuItem(_("No document selected"));
+        i->show();
+        m->append(*i);
+        mnu->set_sensitive(false);
 
     } else {
         ink_marker_menu_create_menu(m, menu_id, doc, sandbox);
 
-        gtk_widget_set_sensitive(mnu, TRUE);
+        mnu->set_sensitive(true);
     }
 
-    gtk_object_set_data(GTK_OBJECT(mnu), "menu_id", const_cast<gchar *>(menu_id));
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(mnu), m);
+    mnu->set_data("menu_id", const_cast<gchar *>(menu_id));
+    mnu->set_menu(*m);
 
     /* Set history */
-    gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), 0);
+    mnu->set_history(0);
 
     return mnu;
 }
-
 
 /**
  * Handles when user selects one of the markers from the marker menu.
@@ -872,9 +846,9 @@ ink_marker_menu( GtkWidget */*tbl*/, gchar const *menu_id, SPDocument *sandbox)
  * items in the current desktop.
  */
 static void
-sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
+sp_marker_select(Gtk::OptionMenu *mnu, Gtk::Container *spw, SPMarkerLoc const which)
 {
-    if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
+    if (spw->get_data("update")) {
         return;
     }
 
@@ -885,17 +859,14 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
     }
 
     /* Get Marker */
-    if (!g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))),
-                           "marker"))
+    if (!mnu->get_menu()->get_active()->get_data("marker"))
     {
         return;
     }
-    gchar *markid = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))),
-                                                "marker");
+    gchar *markid = static_cast<gchar *>(mnu->get_menu()->get_active()->get_data("marker"));
     gchar const *marker = "";
-    if (strcmp(markid, "none")){
-       gchar *stockid = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))),
-                                                "stockid");
+    if (strcmp(markid, "none")) {
+       gchar *stockid = static_cast<gchar *>(mnu->get_menu()->get_active()->get_data("stockid"));
 
        gchar *markurn = markid;
        if (!strcmp(stockid,"true")) markurn = g_strconcat("urn:inkscape:marker:",markid,NULL);
@@ -907,15 +878,14 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
     } else {
         marker = markid;
     }
-
     SPCSSAttr *css = sp_repr_css_attr_new();
-    gchar const *menu_id = (gchar const *) g_object_get_data(G_OBJECT(mnu), "menu_id");
+    gchar const *menu_id = static_cast<gchar const *>(mnu->get_data("menu_id"));
     sp_repr_css_set_property(css, menu_id, marker);
 
     // Also update the marker dropdown menus, so the document's markers
     // show up at the top of the menu
 //    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? sp_desktop_selection(desktop) : NULL);
-    ink_markers_menu_update(SP_WIDGET(spw));
+    ink_markers_menu_update(spw, which);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
@@ -938,64 +908,76 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
 
 };
 
-static int
-ink_marker_menu_get_pos(GtkMenu *mnu, gchar const *markname)
+static unsigned int
+ink_marker_menu_get_pos(Gtk::Menu *mnu, gchar const *markname)
 {
     if (markname == NULL)
-        markname = (gchar const *) g_object_get_data(G_OBJECT(gtk_menu_get_active(mnu)), "marker");
+        markname = static_cast<gchar const *>(mnu->get_active()->get_data("marker"));
 
     if (markname == NULL)
         return 0;
 
-    GList const *kids = GTK_MENU_SHELL(mnu)->children;
-    int i = 0;
-    for (; kids != NULL; kids = kids->next) {
-        gchar const *mark = (gchar const *) g_object_get_data(G_OBJECT(kids->data), "marker");
-        if ( mark && strcmp(mark, markname) == 0 ) {
+    std::vector<Gtk::Widget *> kids = mnu->get_children();
+    unsigned int i = 0;
+    for (; i < kids.size();) {
+        gchar const *mark = static_cast<gchar const *>(kids[i]->get_data("marker"));
+        if (mark && strcmp(mark, markname) == 0) {
             break;
         }
-        i++;
+        ++i;
     }
+
     return i;
 }
 
 static void
-ink_markers_menu_update(SPWidget* spw) {
+ink_markers_menu_update(Gtk::Container* /*spw*/, SPMarkerLoc const which) {
     SPDesktop  *desktop = inkscape_active_desktop();
     SPDocument *document = sp_desktop_document(desktop);
     SPDocument *sandbox = ink_markers_preview_doc ();
-    GtkWidget  *m;
+    Gtk::Menu  *m;
     int        pos;
 
-    gtk_signal_handler_block_by_func( GTK_OBJECT(marker_start_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
-    pos = ink_marker_menu_get_pos(GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(marker_start_menu))), NULL);
-    m = gtk_menu_new();
-    gtk_widget_show(m);
-    ink_marker_menu_create_menu(m, "marker-start", document, sandbox);
-    gtk_option_menu_remove_menu(GTK_OPTION_MENU(marker_start_menu));
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(marker_start_menu), m);
-    gtk_option_menu_set_history(GTK_OPTION_MENU(marker_start_menu), pos);
-    gtk_signal_handler_unblock_by_func( GTK_OBJECT(marker_start_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
+    // TODO: this code can be shortened by abstracting out marker_(start|mid|end)_...
+    switch (which) {
+        case SP_MARKER_LOC_START:
+            marker_start_menu_connection.block();
+            pos = ink_marker_menu_get_pos(marker_start_menu->get_menu(), NULL);
+            m = new Gtk::Menu();
+            m->show();
+            ink_marker_menu_create_menu(m, "marker-start", document, sandbox);
+            marker_start_menu->remove_menu();
+            marker_start_menu->set_menu(*m);
+            marker_start_menu->set_history(pos);
+            marker_start_menu_connection.unblock();
+            break;
 
-    gtk_signal_handler_block_by_func( GTK_OBJECT(marker_mid_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
-    pos = ink_marker_menu_get_pos(GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(marker_mid_menu))), NULL);
-    m = gtk_menu_new();
-    gtk_widget_show(m);
-    ink_marker_menu_create_menu(m, "marker-mid", document, sandbox);
-    gtk_option_menu_remove_menu(GTK_OPTION_MENU(marker_mid_menu));
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(marker_mid_menu), m);
-    gtk_option_menu_set_history(GTK_OPTION_MENU(marker_mid_menu), pos);
-    gtk_signal_handler_unblock_by_func( GTK_OBJECT(marker_mid_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
+        case SP_MARKER_LOC_MID:
+            marker_mid_menu_connection.block();
+            pos = ink_marker_menu_get_pos(marker_mid_menu->get_menu(), NULL);
+            m = new Gtk::Menu();
+            m->show();
+            ink_marker_menu_create_menu(m, "marker-mid", document, sandbox);
+            marker_mid_menu->remove_menu();
+            marker_mid_menu->set_menu(*m);
+            marker_mid_menu->set_history(pos);
+            marker_mid_menu_connection.unblock();
+            break;
 
-    gtk_signal_handler_block_by_func( GTK_OBJECT(marker_end_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
-    pos = ink_marker_menu_get_pos(GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(marker_end_menu))), NULL);
-    m = gtk_menu_new();
-    gtk_widget_show(m);
-    ink_marker_menu_create_menu(m, "marker-end", document, sandbox);
-    gtk_option_menu_remove_menu(GTK_OPTION_MENU(marker_end_menu));
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(marker_end_menu), m);
-    gtk_option_menu_set_history(GTK_OPTION_MENU(marker_end_menu), pos);
-    gtk_signal_handler_unblock_by_func( GTK_OBJECT(marker_end_menu), GTK_SIGNAL_FUNC(sp_marker_select), spw);
+        case SP_MARKER_LOC_END:
+            marker_end_menu_connection.block();
+            pos = ink_marker_menu_get_pos(marker_end_menu->get_menu(), NULL);
+            m = new Gtk::Menu();
+            m->show();
+            ink_marker_menu_create_menu(m, "marker-end", document, sandbox);
+            marker_end_menu->remove_menu();
+            marker_end_menu->set_menu(*m);
+            marker_end_menu->set_history(pos);
+            marker_end_menu_connection.unblock();
+            break;
+        default:
+            g_assert_not_reached();
+    }
 }
 
 /**
@@ -1003,9 +985,9 @@ ink_markers_menu_update(SPWidget* spw) {
  * Also handles absolute and dimensionless units.
  */
 static gboolean stroke_width_set_unit(SPUnitSelector *,
-                                                 SPUnit const *old,
-                                                 SPUnit const *new_units,
-                                                 GObject *spw)
+                                      SPUnit const *old,
+                                      SPUnit const *new_units,
+                                      Gtk::Container *spw)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
@@ -1024,34 +1006,34 @@ static gboolean stroke_width_set_unit(SPUnitSelector *,
        (new_units->base == SP_UNIT_DIMENSIONLESS)) {
 
         /* Absolute to percentage */
-        g_object_set_data (spw, "update", GUINT_TO_POINTER (TRUE));
+        spw->set_data ("update", GUINT_TO_POINTER (TRUE));
 
-        GtkAdjustment *a = GTK_ADJUSTMENT(g_object_get_data (spw, "width"));
-        float w = sp_units_get_pixels (a->value, *old);
+        Gtk::Adjustment *a = static_cast<Gtk::Adjustment *>(spw->get_data("width"));
+        float w = sp_units_get_pixels (a->get_value(), *old);
 
         gdouble average = stroke_average_width (objects);
 
         if (average == NR_HUGE || average == 0)
             return FALSE;
 
-        gtk_adjustment_set_value (a, 100.0 * w / average);
+        a->set_value (100.0 * w / average);
 
-        g_object_set_data (spw, "update", GUINT_TO_POINTER (FALSE));
+        spw->set_data ("update", GUINT_TO_POINTER (FALSE));
         return TRUE;
 
     } else if ((old->base == SP_UNIT_DIMENSIONLESS) &&
               (new_units->base == SP_UNIT_ABSOLUTE || new_units->base == SP_UNIT_DEVICE)) {
 
         /* Percentage to absolute */
-        g_object_set_data (spw, "update", GUINT_TO_POINTER (TRUE));
+        spw->set_data ("update", GUINT_TO_POINTER (TRUE));
 
-        GtkAdjustment *a = GTK_ADJUSTMENT(g_object_get_data (spw, "width"));
+        Gtk::Adjustment *a = static_cast<Gtk::Adjustment *>(spw->get_data ("width"));
 
         gdouble average = stroke_average_width (objects);
 
-        gtk_adjustment_set_value (a, sp_pixels_get_units (0.01 * a->value * average, *new_units));
+        a->set_value (sp_pixels_get_units (0.01 * a->get_value() * average, *new_units));
 
-        g_object_set_data (spw, "update", GUINT_TO_POINTER (FALSE));
+        spw->set_data ("update", GUINT_TO_POINTER (FALSE));
         return TRUE;
     }
 
@@ -1063,26 +1045,34 @@ static gboolean stroke_width_set_unit(SPUnitSelector *,
  * \brief  Creates a new widget for the line stroke style.
  *
  */
-GtkWidget *
+Gtk::Container *
 sp_stroke_style_line_widget_new(void)
 {
-    GtkWidget *spw, *f, *t, *hb, *sb, *us, *tb, *ds;
-    GtkObject *a;
+    Gtk::Widget *us;
+    SPDashSelector *ds;
+    GtkWidget *us_old, *spw_old;
+    Gtk::Container *spw;
+    Gtk::Table *t;
+    Gtk::Adjustment *a;
+    Gtk::SpinButton *sb;
+    Gtk::RadioButton *tb;
+    Gtk::HBox *f, *hb;
 
-    GtkTooltips *tt = gtk_tooltips_new();
+    Gtk::Tooltips *tt = new Gtk::Tooltips();
 
-    spw = sp_widget_new_global(INKSCAPE);
+    spw_old = sp_widget_new_global(INKSCAPE);
+    spw = dynamic_cast<Gtk::Container *>(manage(Glib::wrap(spw_old)));
 
-    f = gtk_hbox_new (FALSE, 0);
-    gtk_widget_show(f);
-    gtk_container_add(GTK_CONTAINER(spw), f);
+    f = new Gtk::HBox(false, 0);
+    f->show();
+    spw->add(*f);
 
-    t = gtk_table_new(3, 6, FALSE);
-    gtk_widget_show(t);
-    gtk_container_set_border_width(GTK_CONTAINER(t), 4);
-    gtk_table_set_row_spacings(GTK_TABLE(t), 4);
-    gtk_container_add(GTK_CONTAINER(f), t);
-    gtk_object_set_data(GTK_OBJECT(spw), "stroke", t);
+    t = new Gtk::Table(3, 6, false);
+    t->show();
+    t->set_border_width(4);
+    t->set_row_spacings(4);
+    f->add(*t);
+    spw->set_data("stroke", t);
 
     gint i = 0;
 
@@ -1098,27 +1088,28 @@ sp_stroke_style_line_widget_new(void)
 // with it, the two remaining calls of stroke_average_width, allowing us to get rid of that
 // function in desktop-style.
 
-    a = gtk_adjustment_new(1.0, 0.0, 1000.0, 0.1, 10.0, 10.0);
-    gtk_object_set_data(GTK_OBJECT(spw), "width", a);
-    sb = gtk_spin_button_new(GTK_ADJUSTMENT(a), 0.1, 3);
-    gtk_tooltips_set_tip(tt, sb, _("Stroke width"), NULL);
-    gtk_widget_show(sb);
+    a = new Gtk::Adjustment(1.0, 0.0, 1000.0, 0.1, 10.0, 10.0);
+    spw->set_data("width", a);
+    sb = new Gtk::SpinButton(*a, 0.1, 3);
+    tt->set_tip(*sb, _("Stroke width"));
+    sb->show();
 
-    sp_dialog_defocus_on_enter(sb);
+    sp_dialog_defocus_on_enter_cpp(sb);
 
-    gtk_box_pack_start(GTK_BOX(hb), sb, FALSE, FALSE, 0);
-    us = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
+    hb->pack_start(*sb, false, false, 0);
+    us_old = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
+    us = manage(Glib::wrap(us_old));
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop)
-        sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us), sp_desktop_namedview(desktop)->doc_units);
-    sp_unit_selector_add_unit(SP_UNIT_SELECTOR(us), &sp_unit_get_by_id(SP_UNIT_PERCENT), 0);
-    g_signal_connect ( G_OBJECT (us), "set_unit", G_CALLBACK (stroke_width_set_unit), spw );
-    gtk_widget_show(us);
-    sp_unit_selector_add_adjustment( SP_UNIT_SELECTOR(us), GTK_ADJUSTMENT(a) );
-    gtk_box_pack_start(GTK_BOX(hb), us, FALSE, FALSE, 0);
-    gtk_object_set_data(GTK_OBJECT(spw), "units", us);
+        sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us_old), sp_desktop_namedview(desktop)->doc_units);
+    sp_unit_selector_add_unit(SP_UNIT_SELECTOR(us_old), &sp_unit_get_by_id(SP_UNIT_PERCENT), 0);
+    g_signal_connect ( G_OBJECT (us_old), "set_unit", G_CALLBACK (stroke_width_set_unit), spw );
+    us->show();
+    sp_unit_selector_add_adjustment( SP_UNIT_SELECTOR(us_old), GTK_ADJUSTMENT(a->gobj()) );
+    hb->pack_start(*us, FALSE, FALSE, 0);
+    spw->set_data("units", us_old);
 
-    gtk_signal_connect( GTK_OBJECT(a), "value_changed", GTK_SIGNAL_FUNC(sp_stroke_style_width_changed), spw );
+    a->signal_value_changed().connect(sigc::bind(sigc::ptr_fun(&sp_stroke_style_width_changed), spw));
     i++;
 
     /* Join type */
@@ -1136,7 +1127,7 @@ sp_stroke_style_line_widget_new(void)
     // TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
-    gtk_tooltips_set_tip(tt, tb, _("Miter join"), NULL);
+    tt->set_tip(*tb, _("Miter join"));
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_STOCK_JOIN_ROUND,
                                 hb, spw, "join", "round");
@@ -1144,7 +1135,7 @@ sp_stroke_style_line_widget_new(void)
     // TRANSLATORS: Round join: joining lines with a rounded corner.
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
-    gtk_tooltips_set_tip(tt, tb, _("Round join"), NULL);
+    tt->set_tip(*tb, _("Round join"));
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_STOCK_JOIN_BEVEL,
                                 hb, spw, "join", "bevel");
@@ -1152,7 +1143,7 @@ sp_stroke_style_line_widget_new(void)
     // TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
-    gtk_tooltips_set_tip(tt, tb, _("Bevel join"), NULL);
+    tt->set_tip(*tb, _("Bevel join"));
 
     i++;
 
@@ -1167,19 +1158,18 @@ sp_stroke_style_line_widget_new(void)
 
     hb = spw_hbox(t, 3, 1, i);
 
-    a = gtk_adjustment_new(4.0, 0.0, 100.0, 0.1, 10.0, 10.0);
-    gtk_object_set_data(GTK_OBJECT(spw), "miterlimit", a);
+    a = new Gtk::Adjustment(4.0, 0.0, 100.0, 0.1, 10.0, 10.0);
+    spw->set_data("miterlimit", a);
 
-    sb = gtk_spin_button_new(GTK_ADJUSTMENT(a), 0.1, 2);
-    gtk_tooltips_set_tip(tt, sb, _("Maximum length of the miter (in units of stroke width)"), NULL);
-    gtk_widget_show(sb);
-    gtk_object_set_data(GTK_OBJECT(spw), "miterlimit_sb", sb);
-    sp_dialog_defocus_on_enter(sb);
+    sb = new Gtk::SpinButton(*a, 0.1, 2);
+    tt->set_tip(*sb, _("Maximum length of the miter (in units of stroke width)"));
+    sb->show();
+    spw->set_data("miterlimit_sb", sb);
+    sp_dialog_defocus_on_enter_cpp(sb);
 
-    gtk_box_pack_start(GTK_BOX(hb), sb, FALSE, FALSE, 0);
+    hb->pack_start(*sb, false, false, 0);
 
-    gtk_signal_connect( GTK_OBJECT(a), "value_changed",
-                        GTK_SIGNAL_FUNC(sp_stroke_style_miterlimit_changed), spw );
+    a->signal_value_changed().connect(sigc::bind(sigc::ptr_fun(&sp_stroke_style_miterlimit_changed), spw));
     i++;
 
     /* Cap type */
@@ -1195,41 +1185,37 @@ sp_stroke_style_line_widget_new(void)
 
     // TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
     //  of the line; the ends of the line are square
-    gtk_tooltips_set_tip(tt, tb, _("Butt cap"), NULL);
+    tt->set_tip(*tb, _("Butt cap"));
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_STOCK_CAP_ROUND,
                                 hb, spw, "cap", "round");
 
     // TRANSLATORS: Round cap: the line shape extends beyond the end point of the
     //  line; the ends of the line are rounded
-    gtk_tooltips_set_tip(tt, tb, _("Round cap"), NULL);
+    tt->set_tip(*tb, _("Round cap"));
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_STOCK_CAP_SQUARE,
                                 hb, spw, "cap", "square");
 
     // TRANSLATORS: Square cap: the line shape extends beyond the end point of the
     //  line; the ends of the line are square
-    gtk_tooltips_set_tip(tt, tb, _("Square cap"), NULL);
+    tt->set_tip(*tb, _("Square cap"));
 
     i++;
 
 
     /* Dash */
     spw_label(t, _("Dashes:"), 0, i);
-    ds = sp_dash_selector_new( inkscape_get_repr( INKSCAPE,
-                                                  "palette.dashes") );
+    ds = manage(new SPDashSelector(inkscape_get_repr(INKSCAPE, "palette.dashes")));
 
-    gtk_widget_show(ds);
-    gtk_table_attach( GTK_TABLE(t), ds, 1, 4, i, i+1,
-                      (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
-                      (GtkAttachOptions)0, 0, 0 );
-    gtk_object_set_data(GTK_OBJECT(spw), "dash", ds);
-    gtk_signal_connect( GTK_OBJECT(ds), "changed",
-                        GTK_SIGNAL_FUNC(sp_stroke_style_line_dash_changed),
-                        spw );
+    ds->show();
+    t->attach(*ds, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
+    spw->set_data("dash", ds);
+    ds->changed_signal.connect(sigc::bind(sigc::ptr_fun(&sp_stroke_style_line_dash_changed), spw));
     i++;
 
     /* Drop down marker selectors*/
+    // TODO: this code can be shortened by iterating over the possible menus!
 
     // doing this here once, instead of for each preview, to speed things up
     SPDocument *sandbox = ink_markers_preview_doc ();
@@ -1237,69 +1223,48 @@ sp_stroke_style_line_widget_new(void)
     // TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
     // (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
     spw_label(t, _("Start Markers:"), 0, i);
-    marker_start_menu  = ink_marker_menu( spw ,"marker-start", sandbox);
-    gtk_signal_connect( GTK_OBJECT(marker_start_menu), "changed", GTK_SIGNAL_FUNC(sp_marker_select), spw );
-    gtk_widget_show(marker_start_menu);
-    gtk_table_attach( GTK_TABLE(t), marker_start_menu, 1, 4, i, i+1,
-                      (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
-                      (GtkAttachOptions)0, 0, 0 );
-    gtk_object_set_data(GTK_OBJECT(spw), "start_mark_menu", marker_start_menu);
+    marker_start_menu = ink_marker_menu(spw ,"marker-start", sandbox);
+    marker_start_menu_connection = marker_start_menu->signal_changed().connect(
+        sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
+            sigc::ptr_fun(&sp_marker_select), marker_start_menu, spw, SP_MARKER_LOC_START));
+    marker_start_menu->show();
+    t->attach(*marker_start_menu, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
+    spw->set_data("start_mark_menu", marker_start_menu);
 
     i++;
     spw_label(t, _("Mid Markers:"), 0, i);
-    marker_mid_menu = ink_marker_menu( spw ,"marker-mid", sandbox);
-    gtk_signal_connect( GTK_OBJECT(marker_mid_menu), "changed", GTK_SIGNAL_FUNC(sp_marker_select), spw );
-    gtk_widget_show(marker_mid_menu);
-    gtk_table_attach( GTK_TABLE(t), marker_mid_menu, 1, 4, i, i+1,
-                      (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
-                      (GtkAttachOptions)0, 0, 0 );
-    gtk_object_set_data(GTK_OBJECT(spw), "mid_mark_menu", marker_mid_menu);
+    marker_mid_menu = ink_marker_menu(spw ,"marker-mid", sandbox);
+    marker_mid_menu_connection = marker_mid_menu->signal_changed().connect(
+        sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
+            sigc::ptr_fun(&sp_marker_select), marker_mid_menu,spw, SP_MARKER_LOC_MID));
+    marker_mid_menu->show();
+    t->attach(*marker_mid_menu, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
+    spw->set_data("mid_mark_menu", marker_mid_menu);
 
     i++;
     spw_label(t, _("End Markers:"), 0, i);
-    marker_end_menu = ink_marker_menu( spw ,"marker-end", sandbox);
-    gtk_signal_connect( GTK_OBJECT(marker_end_menu), "changed", GTK_SIGNAL_FUNC(sp_marker_select), spw );
-    gtk_widget_show(marker_end_menu);
-    gtk_table_attach( GTK_TABLE(t), marker_end_menu, 1, 4, i, i+1,
-                      (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
-                      (GtkAttachOptions)0, 0, 0 );
-    gtk_object_set_data(GTK_OBJECT(spw), "end_mark_menu", marker_end_menu);
+    marker_end_menu = ink_marker_menu(spw ,"marker-end", sandbox);
+    marker_end_menu_connection = marker_end_menu->signal_changed().connect(
+        sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
+            sigc::ptr_fun(&sp_marker_select), marker_end_menu, spw, SP_MARKER_LOC_END));
+    marker_end_menu->show();
+    t->attach(*marker_end_menu, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
+    spw->set_data("end_mark_menu", marker_end_menu);
 
     i++;
 
-    gtk_signal_connect( GTK_OBJECT(spw), "construct",
-                        GTK_SIGNAL_FUNC(sp_stroke_style_line_construct),
-                        NULL );
-    gtk_signal_connect( GTK_OBJECT(spw), "modify_selection",
-                        GTK_SIGNAL_FUNC(sp_stroke_style_line_selection_modified),
-                        NULL );
-    gtk_signal_connect( GTK_OBJECT(spw), "change_selection",
-                        GTK_SIGNAL_FUNC(sp_stroke_style_line_selection_changed),
-                        NULL );
+    // FIXME: we cheat and still use gtk+ signals
 
-    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? sp_desktop_selection(desktop) : NULL);
+    gtk_signal_connect(GTK_OBJECT(spw_old), "modify_selection",
+                       GTK_SIGNAL_FUNC(sp_stroke_style_line_selection_modified),
+                       spw);
+    gtk_signal_connect(GTK_OBJECT(spw_old), "change_selection",
+                       GTK_SIGNAL_FUNC(sp_stroke_style_line_selection_changed),
+                       spw);
+
+    sp_stroke_style_line_update(spw, desktop ? sp_desktop_selection(desktop) : NULL);
 
     return spw;
-}
-
-
-/**
- * Callback for when the stroke style widget is called.  It causes
- * the stroke line style to be updated.
- */
-static void
-sp_stroke_style_line_construct(SPWidget *spw, gpointer /*data*/)
-{
-#ifdef SP_SS_VERBOSE
-    g_print( "Stroke style widget constructed: inkscape %p repr %p\n",
-             spw->inkscape, spw->repr );
-#endif
-    if (spw->inkscape) {
-        sp_stroke_style_line_update(spw,
-                                    ( SP_ACTIVE_DESKTOP
-                                      ? sp_desktop_selection(SP_ACTIVE_DESKTOP)
-                                      : NULL ));
-    }
 }
 
 /**
@@ -1307,13 +1272,14 @@ sp_stroke_style_line_construct(SPWidget *spw, gpointer /*data*/)
  * Triggers update action.
  */
 static void
-sp_stroke_style_line_selection_modified( SPWidget *spw,
-                                         Inkscape::Selection *selection,
-                                         guint flags,
-                                         gpointer /*data*/ )
+sp_stroke_style_line_selection_modified(SPWidget *,
+                                        Inkscape::Selection *selection,
+                                        guint flags,
+                                        gpointer data)
 {
+    Gtk::Container *spw = static_cast<Gtk::Container *>(data);
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG)) {
-        sp_stroke_style_line_update (spw, selection);
+        sp_stroke_style_line_update(spw, selection);
     }
 
 }
@@ -1323,19 +1289,19 @@ sp_stroke_style_line_selection_modified( SPWidget *spw,
  * Triggers update action.
  */
 static void
-sp_stroke_style_line_selection_changed( SPWidget *spw,
-                                        Inkscape::Selection *selection,
-                                        gpointer /*data*/ )
+sp_stroke_style_line_selection_changed(SPWidget *,
+                                       Inkscape::Selection *selection,
+                                       gpointer data)
 {
-    sp_stroke_style_line_update (spw, selection);
+    Gtk::Container *spw = static_cast<Gtk::Container *>(data);
+    sp_stroke_style_line_update(spw, selection);
 }
-
 
 /**
  * Sets selector widgets' dash style from an SPStyle object.
  */
 static void
-sp_dash_selector_set_from_style (GtkWidget *dsel, SPStyle *style)
+sp_dash_selector_set_from_style(SPDashSelector *dsel, SPStyle *style)
 {
     if (style->stroke_dash.n_dash > 0) {
         double d[64];
@@ -1346,12 +1312,11 @@ sp_dash_selector_set_from_style (GtkWidget *dsel, SPStyle *style)
             else
                 d[i] = style->stroke_dash.dash[i]; // is there a better thing to do for stroke_width==0?
         }
-        sp_dash_selector_set_dash(SP_DASH_SELECTOR(dsel), len, d,
-               style->stroke_width.computed != 0?
-                    style->stroke_dash.offset / style->stroke_width.computed  :
-                    style->stroke_dash.offset);
+        dsel->set_dash(len, d, style->stroke_width.computed != 0 ?
+                       style->stroke_dash.offset / style->stroke_width.computed  :
+                       style->stroke_dash.offset);
     } else {
-        sp_dash_selector_set_dash(SP_DASH_SELECTOR(dsel), 0, NULL, 0.0);
+        dsel->set_dash(0, NULL, 0.0);
     }
 }
 
@@ -1359,46 +1324,46 @@ sp_dash_selector_set_from_style (GtkWidget *dsel, SPStyle *style)
  * Sets the join type for a line, and updates the stroke style widget's buttons
  */
 static void
-sp_jointype_set (SPWidget *spw, unsigned const jointype)
+sp_jointype_set (Gtk::Container *spw, unsigned const jointype)
 {
-    GtkWidget *tb = NULL;
+    Gtk::RadioButton *tb = NULL;
     switch (jointype) {
         case SP_STROKE_LINEJOIN_MITER:
-            tb = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), INKSCAPE_STOCK_JOIN_MITER));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_JOIN_MITER));
             break;
         case SP_STROKE_LINEJOIN_ROUND:
-            tb = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), INKSCAPE_STOCK_JOIN_ROUND));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_JOIN_ROUND));
             break;
         case SP_STROKE_LINEJOIN_BEVEL:
-            tb = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), INKSCAPE_STOCK_JOIN_BEVEL));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_JOIN_BEVEL));
             break;
         default:
             break;
     }
-    sp_stroke_style_set_join_buttons (spw, tb);
+    sp_stroke_style_set_join_buttons(spw, tb);
 }
 
 /**
  * Sets the cap type for a line, and updates the stroke style widget's buttons
  */
 static void
-sp_captype_set (SPWidget *spw, unsigned const captype)
+sp_captype_set (Gtk::Container *spw, unsigned const captype)
 {
-    GtkWidget *tb = NULL;
+    Gtk::RadioButton *tb = NULL;
     switch (captype) {
         case SP_STROKE_LINECAP_BUTT:
-            tb = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), INKSCAPE_STOCK_CAP_BUTT));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_CAP_BUTT));
             break;
         case SP_STROKE_LINECAP_ROUND:
-            tb = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), INKSCAPE_STOCK_CAP_ROUND));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_CAP_ROUND));
             break;
         case SP_STROKE_LINECAP_SQUARE:
-            tb = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), INKSCAPE_STOCK_CAP_SQUARE));
+            tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_CAP_SQUARE));
             break;
         default:
             break;
     }
-    sp_stroke_style_set_cap_buttons (spw, tb);
+    sp_stroke_style_set_cap_buttons(spw, tb);
 }
 
 /**
@@ -1406,19 +1371,19 @@ sp_captype_set (SPWidget *spw, unsigned const captype)
  * join type, etc.
  */
 static void
-sp_stroke_style_line_update(SPWidget *spw, Inkscape::Selection *sel)
+sp_stroke_style_line_update(Gtk::Container *spw, Inkscape::Selection *sel)
 {
-    if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
+    if (spw->get_data("update")) {
         return;
     }
 
-    gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
+    spw->set_data("update", GINT_TO_POINTER(TRUE));
 
-    GtkWidget *sset = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "stroke"));
-    GtkObject *width = GTK_OBJECT(gtk_object_get_data(GTK_OBJECT(spw), "width"));
-    GtkObject *ml = GTK_OBJECT(gtk_object_get_data(GTK_OBJECT(spw), "miterlimit"));
-    GtkWidget *us = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "units"));
-    GtkWidget *dsel = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "dash"));
+    Gtk::Table *sset = static_cast<Gtk::Table *>(spw->get_data("stroke"));
+    Gtk::Adjustment *width = static_cast<Gtk::Adjustment *>(spw->get_data("width"));
+    Gtk::Adjustment *ml = static_cast<Gtk::Adjustment *>(spw->get_data("miterlimit"));
+    SPUnitSelector *us = SP_UNIT_SELECTOR(spw->get_data("units"));
+    SPDashSelector *dsel = static_cast<SPDashSelector *>(spw->get_data("dash"));
 
     // create temporary style
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
@@ -1430,39 +1395,39 @@ sp_stroke_style_line_update(SPWidget *spw, Inkscape::Selection *sel)
 
     if (result_sw == QUERY_STYLE_NOTHING) {
         /* No objects stroked, set insensitive */
-        gtk_widget_set_sensitive(sset, FALSE);
+        sset->set_sensitive(false);
 
-        gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
+        spw->set_data("update", GINT_TO_POINTER(FALSE));
         return;
     } else {
-        gtk_widget_set_sensitive(sset, TRUE);
+        sset->set_sensitive(true);
 
-        SPUnit const *unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
+        SPUnit const *unit = sp_unit_selector_get_unit(us);
 
         if (result_sw == QUERY_STYLE_MULTIPLE_AVERAGED) {
-            sp_unit_selector_set_unit(SP_UNIT_SELECTOR(us), &sp_unit_get_by_id(SP_UNIT_PERCENT));
+            sp_unit_selector_set_unit(us, &sp_unit_get_by_id(SP_UNIT_PERCENT));
         } else {
             // same width, or only one object; no sense to keep percent, switch to absolute
             if (unit->base != SP_UNIT_ABSOLUTE && unit->base != SP_UNIT_DEVICE) {
-                sp_unit_selector_set_unit(SP_UNIT_SELECTOR(us), sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units);
+                sp_unit_selector_set_unit(us, sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units);
             }
         }
 
-        unit = sp_unit_selector_get_unit (SP_UNIT_SELECTOR (us));
+        unit = sp_unit_selector_get_unit(us);
 
         if (unit->base == SP_UNIT_ABSOLUTE || unit->base == SP_UNIT_DEVICE) {
             double avgwidth = sp_pixels_get_units (query->stroke_width.computed, *unit);
-            gtk_adjustment_set_value(GTK_ADJUSTMENT(width), avgwidth);
+            width->set_value(avgwidth);
         } else {
-            gtk_adjustment_set_value(GTK_ADJUSTMENT(width), 100);
+            width->set_value(100);
         }
     }
 
     if (result_ml != QUERY_STYLE_NOTHING)
-        gtk_adjustment_set_value(GTK_ADJUSTMENT(ml), query->stroke_miterlimit.value); // TODO: reflect averagedness?
+        ml->set_value(query->stroke_miterlimit.value); // TODO: reflect averagedness?
 
     if (result_join != QUERY_STYLE_MULTIPLE_DIFFERENT) {
-        sp_jointype_set (spw, query->stroke_linejoin.value);
+        sp_jointype_set(spw, query->stroke_linejoin.value);
     } else {
         sp_stroke_style_set_join_buttons(spw, NULL);
     }
@@ -1486,12 +1451,11 @@ sp_stroke_style_line_update(SPWidget *spw, Inkscape::Selection *sel)
     sp_stroke_style_update_marker_menus(spw, objects); // FIXME: make this desktop query too
 
     /* Dash */
-    sp_dash_selector_set_from_style (dsel, style); // FIXME: make this desktop query too
+    sp_dash_selector_set_from_style(dsel, style); // FIXME: make this desktop query too
 
-    gtk_widget_set_sensitive(sset, TRUE);
+    sset->set_sensitive(true);
 
-    gtk_object_set_data(GTK_OBJECT(spw), "update",
-                        GINT_TO_POINTER(FALSE));
+    spw->set_data("update", GINT_TO_POINTER(FALSE));
 }
 
 /**
@@ -1525,18 +1489,18 @@ sp_stroke_style_set_scaled_dash(SPCSSAttr *css,
  * Sets line properties like width, dashes, markers, etc. on all currently selected items.
  */
 static void
-sp_stroke_style_scale_line(SPWidget *spw)
+sp_stroke_style_scale_line(Gtk::Container *spw)
 {
-    if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
+    if (spw->get_data("update")) {
         return;
     }
 
-    gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
+    spw->set_data("update", GINT_TO_POINTER(TRUE));
 
-    GtkAdjustment *wadj = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(spw), "width"));
-    SPUnitSelector *us = SP_UNIT_SELECTOR(gtk_object_get_data(GTK_OBJECT(spw), "units"));
-    SPDashSelector *dsel = SP_DASH_SELECTOR(gtk_object_get_data(GTK_OBJECT(spw), "dash"));
-    GtkAdjustment *ml = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(spw), "miterlimit"));
+    Gtk::Adjustment *wadj = static_cast<Gtk::Adjustment *>(spw->get_data("width"));
+    SPUnitSelector *us = SP_UNIT_SELECTOR(spw->get_data("units"));
+    SPDashSelector *dsel = static_cast<SPDashSelector *>(spw->get_data("dash"));
+    Gtk::Adjustment *ml = static_cast<Gtk::Adjustment *>(spw->get_data("miterlimit"));
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     SPDocument *document = sp_desktop_document (desktop);
@@ -1549,14 +1513,14 @@ sp_stroke_style_scale_line(SPWidget *spw)
 
     if (items) {
 
-        double width_typed = wadj->value;
-        double const miterlimit = ml->value;
+        double width_typed = wadj->get_value();
+        double const miterlimit = ml->get_value();
 
         SPUnit const *const unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
 
         double *dash, offset;
         int ndash;
-        sp_dash_selector_get_dash(dsel, &ndash, &dash, &offset);
+        dsel->get_dash(&ndash, &dash, &offset);
 
         for (GSList const *i = items; i != NULL; i = i->next) {
             /* Set stroke width */
@@ -1590,7 +1554,7 @@ sp_stroke_style_scale_line(SPWidget *spw)
 
         if (unit->base != SP_UNIT_ABSOLUTE && unit->base != SP_UNIT_DEVICE) {
             // reset to 100 percent
-            gtk_adjustment_set_value (wadj, 100.0);
+            wadj->set_value(100.0);
         }
 
     }
@@ -1604,18 +1568,17 @@ sp_stroke_style_scale_line(SPWidget *spw)
     sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE,
                      _("Set stroke style"));
 
-    gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
+    spw->set_data("update", GINT_TO_POINTER(FALSE));
 }
-
 
 /**
  * Callback for when the stroke style's width changes.
  * Causes all line styles to be applied to all selected items.
  */
 static void
-sp_stroke_style_width_changed(GtkAdjustment */*adj*/, SPWidget *spw)
+sp_stroke_style_width_changed(Gtk::Container *spw)
 {
-    if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
+    if (spw->get_data("update")) {
         return;
     }
 
@@ -1627,9 +1590,9 @@ sp_stroke_style_width_changed(GtkAdjustment */*adj*/, SPWidget *spw)
  * Causes all line styles to be applied to all selected items.
  */
 static void
-sp_stroke_style_miterlimit_changed(GtkAdjustment */*adj*/, SPWidget *spw)
+sp_stroke_style_miterlimit_changed(Gtk::Container *spw)
 {
-    if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
+    if (spw->get_data("update")) {
         return;
     }
 
@@ -1640,17 +1603,16 @@ sp_stroke_style_miterlimit_changed(GtkAdjustment */*adj*/, SPWidget *spw)
  * Callback for when the stroke style's dash changes.
  * Causes all line styles to be applied to all selected items.
  */
+
 static void
-sp_stroke_style_line_dash_changed(SPDashSelector */*dsel*/, SPWidget *spw)
+sp_stroke_style_line_dash_changed(Gtk::Container *spw)
 {
-    if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
+    if (spw->get_data("update")) {
         return;
     }
 
     sp_stroke_style_scale_line(spw);
 }
-
-
 
 /**
  * \brief  This routine handles toggle events for buttons in the stroke style
@@ -1660,22 +1622,22 @@ sp_stroke_style_line_dash_changed(SPDashSelector */*dsel*/, SPWidget *spw)
  *
  */
 static void
-sp_stroke_style_any_toggled(GtkToggleButton *tb, SPWidget *spw)
+sp_stroke_style_any_toggled(Gtk::ToggleButton *tb, Gtk::Container *spw)
 {
-    if (gtk_object_get_data(GTK_OBJECT(spw), "update")) {
+    if (spw->get_data("update")) {
         return;
     }
 
-    if (gtk_toggle_button_get_active(tb)) {
+    if (tb->get_active()) {
 
         gchar const *join
-            = static_cast<gchar const *>(gtk_object_get_data(GTK_OBJECT(tb), "join"));
+            = static_cast<gchar const *>(tb->get_data("join"));
         gchar const *cap
-            = static_cast<gchar const *>(gtk_object_get_data(GTK_OBJECT(tb), "cap"));
+            = static_cast<gchar const *>(tb->get_data("cap"));
 
         if (join) {
-            GtkWidget *ml = GTK_WIDGET(g_object_get_data(G_OBJECT(spw), "miterlimit_sb"));
-            gtk_widget_set_sensitive (ml, !strcmp(join, "miter"));
+            Gtk::SpinButton *ml = static_cast<Gtk::SpinButton *>(spw->get_data("miterlimit_sb"));
+            ml->set_sensitive(!strcmp(join, "miter"));
         }
 
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -1688,13 +1650,13 @@ sp_stroke_style_any_toggled(GtkToggleButton *tb, SPWidget *spw)
 
             sp_desktop_set_style (desktop, css);
 
-            sp_stroke_style_set_join_buttons(spw, GTK_WIDGET(tb));
+            sp_stroke_style_set_join_buttons(spw, tb);
         } else if (cap) {
             sp_repr_css_set_property(css, "stroke-linecap", cap);
 
             sp_desktop_set_style (desktop, css);
 
-            sp_stroke_style_set_cap_buttons(spw, GTK_WIDGET(tb));
+            sp_stroke_style_set_cap_buttons(spw, tb);
         }
 
         sp_repr_css_attr_unref(css);
@@ -1704,60 +1666,52 @@ sp_stroke_style_any_toggled(GtkToggleButton *tb, SPWidget *spw)
     }
 }
 
-
 /**
  * Updates the join style toggle buttons
  */
 static void
-sp_stroke_style_set_join_buttons(SPWidget *spw, GtkWidget *active)
+sp_stroke_style_set_join_buttons(Gtk::Container *spw, Gtk::ToggleButton *active)
 {
-    GtkWidget *tb;
+    Gtk::RadioButton *tb;
 
-    tb = GTK_WIDGET(gtk_object_get_data( GTK_OBJECT(spw),
-                                         INKSCAPE_STOCK_JOIN_MITER) );
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tb), (active == tb));
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_JOIN_MITER));
+    tb->set_active(active == tb);
 
-    GtkWidget *ml = GTK_WIDGET(g_object_get_data(G_OBJECT(spw), "miterlimit_sb"));
-    gtk_widget_set_sensitive(ml, (active == tb));
+    Gtk::SpinButton *ml = static_cast<Gtk::SpinButton *>(spw->get_data("miterlimit_sb"));
+    ml->set_sensitive(active == tb);
 
-    tb = GTK_WIDGET(gtk_object_get_data( GTK_OBJECT(spw),
-                                         INKSCAPE_STOCK_JOIN_ROUND) );
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tb), (active == tb));
-    tb = GTK_WIDGET(gtk_object_get_data( GTK_OBJECT(spw),
-                                         INKSCAPE_STOCK_JOIN_BEVEL) );
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tb), (active == tb));
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_JOIN_ROUND));
+    tb->set_active(active == tb);
+
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_JOIN_BEVEL));
+    tb->set_active(active == tb);
 }
-
-
 
 /**
  * Updates the cap style toggle buttons
  */
 static void
-sp_stroke_style_set_cap_buttons(SPWidget *spw, GtkWidget *active)
+sp_stroke_style_set_cap_buttons(Gtk::Container *spw, Gtk::ToggleButton *active)
 {
-    GtkWidget *tb;
+    Gtk::RadioButton *tb;
 
-    tb = GTK_WIDGET(gtk_object_get_data( GTK_OBJECT(spw),
-                                         INKSCAPE_STOCK_CAP_BUTT));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tb), (active == tb));
-    tb = GTK_WIDGET(gtk_object_get_data( GTK_OBJECT(spw),
-                                         INKSCAPE_STOCK_CAP_ROUND) );
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tb), (active == tb));
-    tb = GTK_WIDGET(gtk_object_get_data( GTK_OBJECT(spw),
-                                         INKSCAPE_STOCK_CAP_SQUARE) );
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tb), (active == tb));
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_CAP_BUTT));
+    tb->set_active(active == tb);
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_CAP_ROUND));
+    tb->set_active(active == tb);
+    tb = static_cast<Gtk::RadioButton *>(spw->get_data(INKSCAPE_STOCK_CAP_SQUARE));
+    tb->set_active(active == tb);
 }
 
 /**
  * Sets the current marker in the marker menu.
  */
 static void
-ink_marker_menu_set_current(SPObject *marker, GtkOptionMenu *mnu)
+ink_marker_menu_set_current(SPObject *marker, Gtk::OptionMenu *mnu)
 {
-    gtk_object_set_data(GTK_OBJECT(mnu), "update", GINT_TO_POINTER(TRUE));
+    mnu->set_data("update", GINT_TO_POINTER(TRUE));
 
-    GtkMenu *m = GTK_MENU(gtk_option_menu_get_menu(mnu));
+    Gtk::Menu *m = mnu->get_menu();
     if (marker != NULL) {
         bool mark_is_stock = false;
         if (SP_OBJECT_REPR(marker)->attribute("inkscape:stockid"))
@@ -1770,14 +1724,14 @@ ink_marker_menu_set_current(SPObject *marker, GtkOptionMenu *mnu)
             markname = g_strdup(SP_OBJECT_REPR(marker)->attribute("id"));
 
         int markpos = ink_marker_menu_get_pos(m, markname);
-        gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), markpos);
+        mnu->set_history(markpos);
 
         g_free (markname);
     }
     else {
-        gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), 0);
+        mnu->set_history(0);
     }
-    gtk_object_set_data(GTK_OBJECT(mnu), "update", GINT_TO_POINTER(FALSE));
+    mnu->set_data("update", GINT_TO_POINTER(FALSE));
 }
 
 /**
@@ -1785,8 +1739,7 @@ ink_marker_menu_set_current(SPObject *marker, GtkOptionMenu *mnu)
  * that marker.
  */
 static void
-sp_stroke_style_update_marker_menus( SPWidget *spw,
-                                     GSList const *objects)
+sp_stroke_style_update_marker_menus(Gtk::Container *spw, GSList const *objects)
 {
     struct { char const *key; int loc; } const keyloc[] = {
         { "start_mark_menu", SP_MARKER_LOC_START },
@@ -1802,13 +1755,9 @@ sp_stroke_style_update_marker_menus( SPWidget *spw,
     }
 
     for (unsigned i = 0; i < G_N_ELEMENTS(keyloc); ++i) {
-        GtkOptionMenu *mnu = (GtkOptionMenu *) g_object_get_data(G_OBJECT(spw), keyloc[i].key);
-        if (all_texts) {
-            // Per SVG spec, text objects cannot have markers; disable menus if only texts are selected
-            gtk_widget_set_sensitive (GTK_WIDGET(mnu), FALSE);
-        } else {
-            gtk_widget_set_sensitive (GTK_WIDGET(mnu), TRUE);
-        }
+        Gtk::OptionMenu *mnu = static_cast<Gtk::OptionMenu *>(spw->get_data(keyloc[i].key));
+        // Per SVG spec, text objects cannot have markers; disable menus if only texts are selected
+        mnu->set_sensitive(!all_texts);
     }
 
     // We show markers of the first object in the list only
@@ -1819,10 +1768,10 @@ sp_stroke_style_update_marker_menus( SPWidget *spw,
         // For all three marker types,
 
         // find the corresponding menu
-        GtkOptionMenu *mnu = (GtkOptionMenu *) g_object_get_data(G_OBJECT(spw), keyloc[i].key);
+        Gtk::OptionMenu *mnu = static_cast<Gtk::OptionMenu *>(spw->get_data(keyloc[i].key));
 
         // Quit if we're in update state
-        if (gtk_object_get_data(GTK_OBJECT(mnu), "update")) {
+        if (mnu->get_data("update")) {
             return;
         }
 
@@ -1830,12 +1779,12 @@ sp_stroke_style_update_marker_menus( SPWidget *spw,
             // If the object has this type of markers,
 
             // Extract the name of the marker that the object uses
-            SPObject *marker = ink_extract_marker_name(object->style->marker[keyloc[i].loc].value);
+            SPObject *marker = ink_extract_marker_name(object->style->marker[keyloc[i].loc].value, SP_OBJECT_DOCUMENT(object));
             // Scroll the menu to that marker
-            ink_marker_menu_set_current (marker, mnu);
+            ink_marker_menu_set_current(marker, mnu);
 
         } else {
-            gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), 0);
+            mnu->set_history(0);
         }
     }
 }
@@ -1848,7 +1797,7 @@ sp_stroke_style_update_marker_menus( SPWidget *spw,
  * the caller should free the buffer when they no longer need it.
  */
 static SPObject*
-ink_extract_marker_name(gchar const *n)
+ink_extract_marker_name(gchar const *n, SPDocument *doc)
 {
     gchar const *p = n;
     while (*p != '\0' && *p != '#') {
@@ -1872,8 +1821,7 @@ ink_extract_marker_name(gchar const *n)
     gchar* b = g_strdup(p);
     b[c] = '\0';
 
-    SPDesktop *desktop = inkscape_active_desktop();
-    SPDocument *doc = sp_desktop_document(desktop);
+    // FIXME: get the document from the object and let the caller pass it in
     SPObject *marker = doc->getObjectById(b);
     return marker;
 }

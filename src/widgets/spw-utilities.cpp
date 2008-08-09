@@ -24,12 +24,29 @@
 
 #include "helper/unit-menu.h"
 
+
+#include <gtkmm/label.h>
+#include <gtkmm/box.h>
+#include <gtkmm/table.h>
+
 /**
  * Creates a label widget with the given text, at the given col, row
  * position in the table.
  */
+Gtk::Label *
+spw_label(Gtk::Table *table, const gchar *label_text, int col, int row)
+{
+  Gtk::Label *label_widget = new Gtk::Label(label_text);
+  g_assert(label_widget != NULL);
+
+  label_widget->set_alignment(1.0, 0.5);
+  label_widget->show();
+  table->attach(*label_widget, col, col+1, row, row+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 4, 0);
+  return label_widget;
+}
+
 GtkWidget *
-spw_label(GtkWidget * table, const gchar *label_text, int col, int row)
+spw_label_old(GtkWidget *table, const gchar *label_text, int col, int row)
 {
   GtkWidget *label_widget;
 
@@ -46,16 +63,14 @@ spw_label(GtkWidget * table, const gchar *label_text, int col, int row)
  * Creates a horizontal layout manager with 4-pixel spacing between children
  * and space for 'width' columns.
  */
-GtkWidget *
-spw_hbox(GtkWidget * table, int width, int col, int row)
+Gtk::HBox *
+spw_hbox(Gtk::Table * table, int width, int col, int row)
 {
-  GtkWidget *hb;
   /* Create a new hbox with a 4-pixel spacing between children */
-  hb = gtk_hbox_new (FALSE, 4);
+  Gtk::HBox *hb = new Gtk::HBox(false, 4);
   g_assert(hb != NULL);
-  gtk_widget_show (hb);
-  gtk_table_attach (GTK_TABLE (table), hb, col, col+width, row, row+1,
-		    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)0, 0, 0);
+  hb->show();
+  table->attach(*hb, col, col+width, row, row+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
   return hb;
 }
 
@@ -130,7 +145,7 @@ spw_dropdown(GtkWidget * dialog, GtkWidget * table,
   g_assert(table    != NULL);
   g_assert(selector != NULL);
 
-  spw_label(table, label_text, 0, row);
+  spw_label_old(table, label_text, 0, row);
 
   gtk_widget_show (selector);
   gtk_table_attach (GTK_TABLE (table), selector, 1, 2, row, row+1,
@@ -156,7 +171,7 @@ spw_unit_selector(GtkWidget * dialog, GtkWidget * table,
   g_assert(table  != NULL);
   g_assert(us     != NULL);
 
-  spw_label(table, label_text, 0, row);
+  spw_label_old(table, label_text, 0, row);
 
   a = gtk_adjustment_new (0.0, can_be_negative?-1e6:0, 1e6, 1.0, 10.0, 10.0);
   g_assert(a != NULL);
@@ -254,3 +269,13 @@ sp_search_by_value_recursive (GtkWidget *w, gchar *key, gchar *value)
 	return NULL;
 }
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

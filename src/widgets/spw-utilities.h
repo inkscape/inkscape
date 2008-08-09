@@ -21,11 +21,19 @@
 #include <glib/gtypes.h>
 #include <gtk/gtkstyle.h>      /* GtkWidget */
 
-GtkWidget *
-spw_label(GtkWidget *table, gchar const *label_text, int col, int row);
+namespace Gtk {
+  class Label;
+  class Table;
+  class HBox;
+}
 
+Gtk::Label *
+spw_label(Gtk::Table *table, gchar const *label_text, int col, int row);
 GtkWidget *
-spw_hbox(GtkWidget *table, int width, int col, int row);
+spw_label_old(GtkWidget *table, gchar const *label_text, int col, int row);
+
+Gtk::HBox *
+spw_hbox(Gtk::Table *table, int width, int col, int row);
 
 GtkWidget *
 spw_vbox_checkbutton(GtkWidget *dialog, GtkWidget *table,
@@ -54,3 +62,14 @@ gpointer sp_search_by_data_recursive(GtkWidget *w, gpointer data);
 GtkWidget *sp_search_by_value_recursive(GtkWidget *w, gchar *key, gchar *value);
 
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
