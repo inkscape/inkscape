@@ -120,8 +120,8 @@ private:
      * Output the SVG document's curve data as POV curves
      */
     bool doCurve(SPItem *item, const String &id);
-    bool doCurvesRecursive(SPDocument *doc, Inkscape::XML::Node *node);
-    bool doCurves(SPDocument *doc);
+    bool doTreeRecursive(SPDocument *doc, SPObject *obj);
+    bool doTree(SPDocument *doc);
 
     /**
      * Actual method to save document
@@ -164,6 +164,7 @@ private:
     int nrNodes;
     int nrSegments;
     int nrShapes;
+    int idIndex;
     
     double minx;
     double miny;
