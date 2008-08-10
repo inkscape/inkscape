@@ -85,7 +85,9 @@ const char* clipboard_properties[] = {
 static void
 find_references(SPObject *elem, refmap_type *refmap)
 {
+    if (SP_OBJECT_IS_CLONED(elem)) return;
     Inkscape::XML::Node *repr_elem = SP_OBJECT_REPR(elem);
+    if (!repr_elem) return;
     if (repr_elem->type() != Inkscape::XML::ELEMENT_NODE) return;
 
     /* check for references in inkscape:clipboard elements */
