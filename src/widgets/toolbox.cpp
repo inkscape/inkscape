@@ -5175,12 +5175,15 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
 }
 
+/* This is where execution comes when the contents of the font family box have been completed
+   by the press of the return key */
 void
 sp_text_toolbox_family_entry_activate (GtkEntry     *entry,
                                        GObject      *tbl)
 {
-    const char *family = gtk_entry_get_text (entry);
+    const char *family = gtk_entry_get_text (entry);   // Fetch the requested font family
 
+// Try to match that to a known font. If not, then leave current font alone and remain focused on text box
     try {
         Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (family);
         GtkTreeSelection *selection = GTK_TREE_SELECTION (g_object_get_data (G_OBJECT(tbl), "family-tree-selection"));

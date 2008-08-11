@@ -59,8 +59,22 @@ namespace Inkscape
                                 }
                         };
 
+                        /* Case-insensitive < compare for standard strings */
+                        class StringLessThan
+                        {
+                        public:
+                            bool operator () (std::string str1, std::string str2) const
+                            {
+                                std::string s1=str1; // Can't transform the originals!
+                                std::string s2=str2;
+                                std::transform(s1.begin(), s1.end(), s1.begin(), (int(*)(int)) toupper);
+                                std::transform(s2.begin(), s2.end(), s2.begin(), (int(*)(int)) toupper);
+                                return s1<s2;
+                            }
+                        };
+
                         FontListClass FontList;
-                        typedef std::map<Glib::ustring, Gtk::TreePath> IterMapType; 
+                        typedef std::map<Glib::ustring, Gtk::TreePath, StringLessThan> IterMapType; 
 
                         /** Returns the ListStore with the font names
                          *
