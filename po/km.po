@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-08-08 16:25+0700\n"
+"PO-Revision-Date: 2008-08-11 14:38+0700\n"
 "Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
 "Language-Team: khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -3303,7 +3303,7 @@ msgstr "ឯកសារ​ Postscript ត្រូវបានស្រោប"
 #. ID -- should be unique
 #: ../src/extension/internal/filter/apparition.h:24
 msgid "Apparition"
-msgstr ""
+msgstr "ការ​លេចឡើង"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/apparition.h:25
@@ -3537,7 +3537,7 @@ msgstr "ដូច​ជា​ជញ្ជ្រាំអ​របស់ Brad Pit
 #. ID -- should be unique
 #: ../src/extension/internal/filter/rubber-stamp.h:24
 msgid "RubberStamp"
-msgstr ""
+msgstr "ត្រា​ជ័រ​លុប"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/rubber-stamp.h:25
@@ -5523,7 +5523,7 @@ msgstr "សង់​ក្រឡាចត្រង្គ"
 
 #: ../src/live_effects/effect.cpp:84
 msgid "Perpendicular bisector"
-msgstr ""
+msgstr "ចម្រៀក​ដែល​ចែក​ជា​ពីរ​ស្មើរ​គ្នា"
 
 #: ../src/live_effects/effect.cpp:85
 msgid "Tangent to curve"
@@ -6026,7 +6026,7 @@ msgstr "ខ្វាច់"
 
 #: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
-msgstr ""
+msgstr "គូស​ខ្វាច់​ប៉ានស្មាន​ច្រើន"
 
 #: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max stroke length"
@@ -6034,7 +6034,7 @@ msgstr "ប្រវែង​ខ្វាច់​អតិបរមា"
 
 #: ../src/live_effects/lpe-sketch.cpp:37
 msgid "Maximum length of approximating strokes"
-msgstr "ប្រវែង​​អតិបរមា​​​របស់​ជ្រុង​កែង​ (ក្នុង​ក្រុម​ទទឹង​ខ្វាច់)"
+msgstr "ប្រវែង​អតិបរមា​នៃ​ខ្វាច់​ប៉ានស្មាន"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
@@ -6062,13 +6062,13 @@ msgstr "បម្រែបម្រួល​នៃ​តម្រួត​លើ
 
 #: ../src/live_effects/lpe-sketch.cpp:44
 msgid "Max. end tolerance"
-msgstr ""
+msgstr "ចុង​បញ្ចប់​ភាព​ស្រដៀង​ពណ៌​អតិបរមា"
 
 #: ../src/live_effects/lpe-sketch.cpp:45
 msgid ""
 "Maximum distance between ends of original and approximating paths (relative "
 "to maximum length)"
-msgstr ""
+msgstr "ចម្ងាយ​អតិបរមា​រវាង​ចុង​នៃ​ផ្លូវ​ដើម និង​ផ្លូវ​ប៉ានស្មាន (ទំនាក់ទំនង​ទៅ​ប្រវែង​អតិបរមា)"
 
 #: ../src/live_effects/lpe-sketch.cpp:46
 msgid "Parallel offset"
@@ -6092,7 +6092,7 @@ msgstr "ប្រេកង់​ញ័រ"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
 msgid "Avreage number of tremble periods in an approximating stroke"
-msgstr ""
+msgstr "ចំនួន​មធ្យម​នៃ​កំឡុង​ពេល​ញ័រ​ក្នុង​ខ្វាច់​ប៉ានស្មាន"
 
 #: ../src/live_effects/lpe-sketch.cpp:52
 msgid "Construction lines"
@@ -6217,7 +6217,7 @@ msgstr "សេចក្ដី​យោង"
 msgid ""
 "Generating path segments define transforms in reference to bbox or last "
 "segment"
-msgstr ""
+msgstr "ការ​បង្កើត​ចម្រៀក​ផ្លូវ​កំណត់​ការ​ប្លែង​ក្នុង​សេចក្ដី​យោង​ទៅ bbox ឬ​ចម្រៀក​ចុង​ក្រោយ"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:53
 msgid "Max complexity"
@@ -12511,7 +12511,7 @@ msgstr "បញ្ជី"
 
 #: ../src/ui/widget/panel.cpp:144
 msgid "swatches|Size"
-msgstr ""
+msgstr "គំរូ|ទំហំ"
 
 #: ../src/ui/widget/panel.cpp:148
 msgid "tiny"
@@ -12524,7 +12524,7 @@ msgstr "តូច​"
 #. TRANSLATORS: Translate only the word "medium". Indicates size of colour swatches
 #: ../src/ui/widget/panel.cpp:151
 msgid "swatchesHeight|medium"
-msgstr ""
+msgstr "កម្ពស់​គំរូ|មធ្យម"
 
 #: ../src/ui/widget/panel.cpp:152
 msgid "large"
@@ -12536,7 +12536,7 @@ msgstr "ធំ​សម្បើម​"
 
 #: ../src/ui/widget/panel.cpp:175
 msgid "swatches|Width"
-msgstr ""
+msgstr "គំរូ|ទទឹង"
 
 #: ../src/ui/widget/panel.cpp:179
 msgid "narrower"
@@ -12549,7 +12549,7 @@ msgstr "ចង្អៀត"
 #. TRANSLATORS: Translate only the word "medium". Indicates width of colour swatches
 #: ../src/ui/widget/panel.cpp:182
 msgid "swatchesWidth|medium"
-msgstr ""
+msgstr "ទទឹង​គំរូ|មធ្យម"
 
 #: ../src/ui/widget/panel.cpp:183
 msgid "wide"
@@ -12562,7 +12562,7 @@ msgstr "ទូលាយ​ជាង"
 #. TRANSLATORS: Translate only the word "Wrap". Indicates how colour swatches are displayed
 #: ../src/ui/widget/panel.cpp:215
 msgid "swatches|Wrap"
-msgstr ""
+msgstr "គំរូ|រុំ"
 
 #: ../src/ui/widget/preferences-widget.cpp:278
 msgid "Reset"
@@ -17185,11 +17185,7 @@ msgid ""
 "range in radians. X scale is set so that left and right edges of rectangle "
 "are at +/-1. Isotropic scaling is disabled. First derivative is always "
 "determined numerically."
-msgstr ""
-"ជ្រើស​ចតុកោណ​កែង​មុន​ពេល​ហៅ​ផ្នែក​បន្ថែម វា​នឹង​កំណត់​មាត្រដ្ឋាន X និង Y ។ ជាមួយ​កូអរដោនេ​នៃ​ប៉ូល ៖ Start and end X values define the angle "
-"range in radians. X scale is set so that left and right edges of rectangle "
-"are at +/-1. Isotropic scaling is disabled. First derivative is always "
-"determined numerically."
+msgstr "ជ្រើស​ចតុកោណ​កែង​មុន​ពេល​ហៅ​ផ្នែក​បន្ថែម វា​នឹង​កំណត់​មាត្រដ្ឋាន X និង Y ។ ជាមួយ​កូអរដោនេ​នៃ​ប៉ូល ៖ តម្លៃ​ចាប់ផ្ដើម និង​បញ្ចប់ X កំណត់​ជួរ​មុំ​គិត​ជា​រ៉ាដ្យង់ ។ មាត្រដ្ឋាន X ត្រូវ​បាន​កំណត់ ហេតុ​ដូចនេះ​គែម​នៃ​ចតុកោណ​ខាង​ឆ្វេង និង​ខាង​ស្ដាំ​គឺ +/-1 ។ មាត្រដ្ឋាន​សមទិស​ត្រូវ​បាន​បិទ ។ ដេរីវ៉េ​ដំបូង​ត្រូវ​តែ​បាន​កំណត់​ជា​លេខ ។"
 
 #: ../share/extensions/funcplot.inx.h:15
 msgid ""
@@ -17394,7 +17390,7 @@ msgstr "កម្រាស់​ការ​ចែក​រង្វង់​ត
 
 #: ../share/extensions/grid_polar.inx.h:17
 msgid "Polar Grid"
-msgstr ""
+msgstr "ក្រឡា​ចត្រង្គ​ប៉ូល"
 
 #: ../share/extensions/grid_polar.inx.h:19
 msgid "Subdivisions per Major Angular Division"
@@ -17895,7 +17891,7 @@ msgstr "កត្តា​ធ្វើ​មាត្រដ្ឋាន"
 
 #: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Shading"
-msgstr ""
+msgstr "ស្រមោល"
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Small Triambic Icosahedron"
