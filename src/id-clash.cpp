@@ -38,6 +38,8 @@ typedef std::pair<SPObject*, std::string> id_changeitem_type;
 typedef std::list<id_changeitem_type> id_changelist_type;
 
 const char *href_like_attributes[] = {
+    "inkscape:connection-end",
+    "inkscape:connection-start",
     "inkscape:href",
     "inkscape:path-effect",
     "inkscape:perspectiveID",
