@@ -23,7 +23,7 @@ Inkscape::Snapper::PointType const Inkscape::Snapper::SNAPPOINT_GUIDE = 0x4;
  *  \param nv Named view.
  *  \param d Snap tolerance.
  */
-Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const t) : _named_view(nv), _snap_enabled(true), _snapper_tolerance(t)
+Inkscape::Snapper::Snapper(SPNamedView const *nv, Geom::Coord const t) : _named_view(nv), _snap_enabled(true), _snapper_tolerance(t)
 {
     g_assert(_named_view != NULL);
     g_assert(SP_IS_NAMEDVIEW(_named_view));
@@ -35,7 +35,7 @@ Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const t) : _named_vi
  *  Set snap tolerance.
  *  \param d New snap tolerance (desktop coordinates)
  */
-void Inkscape::Snapper::setSnapperTolerance(NR::Coord const d)
+void Inkscape::Snapper::setSnapperTolerance(Geom::Coord const d)
 {
     _snapper_tolerance = d;
 }
@@ -43,7 +43,7 @@ void Inkscape::Snapper::setSnapperTolerance(NR::Coord const d)
 /**
  *  \return Snap tolerance (desktop coordinates); depends on current zoom so that it's always the same in screen pixels
  */
-NR::Coord Inkscape::Snapper::getSnapperTolerance() const
+Geom::Coord Inkscape::Snapper::getSnapperTolerance() const
 {
     return _snapper_tolerance / SP_ACTIVE_DESKTOP->current_zoom();
 }

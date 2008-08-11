@@ -46,6 +46,19 @@ inline NR::Rect from_2geom(Geom::Rect const & rect2geom) {
     return rect;
 }
 
+inline NR::scale from_2geom(Geom::Scale const & in) {
+    return NR::scale(in[Geom::X], in[Geom::Y]);
+}
+inline Geom::Scale to_2geom(NR::scale const & in) {
+    return Geom::Scale(in[NR::X], in[NR::Y]);
+}
+
+inline void to_2geom(std::vector<NR::Point> const &in_NR, std::vector<Geom::Point> &out_2geom) {
+    for (std::vector<NR::Point>::const_iterator it = in_NR.begin(); it != in_NR.end(); it++) {
+        out_2geom.push_back(to_2geom(*it));
+    }    
+}
+
 #endif
 
 /*

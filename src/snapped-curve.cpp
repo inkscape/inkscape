@@ -18,7 +18,7 @@
 #include "desktop.h"
 #include "inkscape.h"
 
-Inkscape::SnappedCurve::SnappedCurve(NR::Point const &snapped_point, NR::Coord const &snapped_distance, NR::Coord const &snapped_tolerance, bool const &always_snap, Geom::Curve const *curve)
+Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, Geom::Curve const *curve)
 {
 	_distance = snapped_distance;
     _tolerance = snapped_tolerance;
@@ -40,7 +40,7 @@ Inkscape::SnappedCurve::SnappedCurve()
 	_second_distance = NR_HUGE;
     _second_tolerance = 0;
     _second_always_snap = false;
-	_point = NR::Point(0,0);
+	_point = Geom::Point(0,0);
 	_at_intersection = false;
 }
 
@@ -48,7 +48,7 @@ Inkscape::SnappedCurve::~SnappedCurve()
 {
 }
 
-Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &curve, NR::Point const &p) const 
+Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &curve, Geom::Point const &p) const 
 {
     // Calculate the intersections of two curves, which are both within snapping range, and
     // return only the closest intersection
@@ -87,7 +87,7 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
     }
     
     // No intersection
-    return SnappedPoint(NR::Point(NR_HUGE, NR_HUGE), SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, NR_HUGE, 0, false);
 }
 
 // search for the closest snapped line
@@ -106,7 +106,7 @@ bool getClosestCurve(std::list<Inkscape::SnappedCurve> const &list, Inkscape::Sn
 }
 
 // search for the closest intersection of two snapped curves, which are both member of the same collection
-bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, NR::Point const &p, Inkscape::SnappedPoint &result)
+bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geom::Point const &p, Inkscape::SnappedPoint &result)
 {
     bool success = false;
     

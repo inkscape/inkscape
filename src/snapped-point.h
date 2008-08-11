@@ -42,23 +42,23 @@ class SnappedPoint
 
 public:
     SnappedPoint();
-    SnappedPoint(NR::Point const &p, SnapTargetType const &target, NR::Coord const &d, NR::Coord const &t, bool const &a, bool const &at_intersection, NR::Coord const &d2, NR::Coord const &t2, bool const &a2);
-    SnappedPoint(NR::Point const &p, SnapTargetType const &target, NR::Coord const &d, NR::Coord const &t, bool const &a);
+    SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2);
+    SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a);
     ~SnappedPoint();
 
-    NR::Coord getDistance() const;
-    void setDistance(NR::Coord const d) {_distance = d;}
-    NR::Coord getTolerance() const;
+    Geom::Coord getDistance() const;
+    void setDistance(Geom::Coord const d) {_distance = d;}
+    Geom::Coord getTolerance() const;
     bool getAlwaysSnap() const;
-    NR::Coord getSecondDistance() const;
-    NR::Coord getSecondTolerance() const;
+    Geom::Coord getSecondDistance() const;
+    Geom::Coord getSecondTolerance() const;
     bool getSecondAlwaysSnap() const;
     
     /* This is the preferred method to find out which point we have snapped,
      * to because it only returns a point if snapping has actually occured
      * (by overwriting p)
      */ 
-    void getPoint(NR::Point &p) const;
+    void getPoint(Geom::Point &p) const;
     
     /* This method however always returns a point, even if no snapping
      * has occured; A check should be implemented in the calling code
@@ -66,38 +66,38 @@ public:
      * when the calling code is trying to snap multiple points and must
      * determine itself which point is most appropriate
      */  
-    NR::Point getPoint() const {return _point;}
+    Geom::Point getPoint() const {return _point;}
      
     bool getAtIntersection() const {return _at_intersection;}
     bool getSnapped() const {return _distance < NR_HUGE;}
-    NR::Point getTransformation() const {return _transformation;}
-    void setTransformation(NR::Point const t) {_transformation = t;}
+    Geom::Point getTransformation() const {return _transformation;}
+    void setTransformation(Geom::Point const t) {_transformation = t;}
     void setTarget(SnapTargetType const target) {_target = target;}
     SnapTargetType getTarget() {return _target;}
     
 protected:
-    NR::Point _point; // Location of the snapped point
+    Geom::Point _point; // Location of the snapped point
     SnapTargetType _target; // Describes to what we've snapped to
     bool _at_intersection; // If true, the snapped point is at an intersection 
     
     /* Distance from original point to snapped point. If the snapped point is at
        an intersection of e.g. two lines, then this is the distance to the closest
        line */    
-    NR::Coord _distance; 
+    Geom::Coord _distance; 
     /* The snapping tolerance in screen pixels (depends on zoom)*/  
-    NR::Coord _tolerance;
+    Geom::Coord _tolerance;
     /* If true then "Always snap" is on */
     bool _always_snap;
     
     /* If the snapped point is at an intersection of e.g. two lines, then this is
        the distance to the fartest line */    
-    NR::Coord _second_distance;
+    Geom::Coord _second_distance;
     /* The snapping tolerance in screen pixels (depends on zoom)*/
-    NR::Coord _second_tolerance;
+    Geom::Coord _second_tolerance;
     /* If true then "Always snap" is on */
     bool _second_always_snap;
     /* The transformation (translation, scale, skew, or stretch) from the original point to the snapped point */
-    NR::Point _transformation;
+    Geom::Point _transformation;
 };    
 
 }

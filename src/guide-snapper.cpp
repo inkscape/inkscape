@@ -17,12 +17,12 @@
 #include "sp-namedview.h"
 #include "sp-guide.h"
 
-Inkscape::GuideSnapper::GuideSnapper(SPNamedView const *nv, NR::Coord const d) : LineSnapper(nv, d)
+Inkscape::GuideSnapper::GuideSnapper(SPNamedView const *nv, Geom::Coord const d) : LineSnapper(nv, d)
 {
 
 }
 
-Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(NR::Point const &/*p*/) const
+Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(Geom::Point const &/*p*/) const
 {
     LineList s;
 
@@ -46,7 +46,7 @@ bool Inkscape::GuideSnapper::ThisSnapperMightSnap() const
     return _named_view == NULL ? false : (_snap_enabled && _snap_from != 0 && _named_view->showguides);
 }
 
-void Inkscape::GuideSnapper::_addSnappedLine(SnappedConstraints &sc, NR::Point const snapped_point, NR::Coord const snapped_distance, NR::Point const normal_to_line, NR::Point const point_on_line) const
+void Inkscape::GuideSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, Geom::Point const point_on_line) const
 {
     SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
     sc.guide_lines.push_back(dummy);

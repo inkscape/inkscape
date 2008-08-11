@@ -26,13 +26,13 @@ class SnappedLineSegment : public SnappedPoint
 {
 public:
     SnappedLineSegment();
-    SnappedLineSegment(NR::Point const &snapped_point, NR::Coord const &snapped_distance, NR::Coord const &snapped_tolerance, bool const &always_snap, NR::Point const &start_point_of_line, NR::Point const &end_point_of_line);
+    SnappedLineSegment(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, Geom::Point const &start_point_of_line, Geom::Point const &end_point_of_line);
     ~SnappedLineSegment();
     Inkscape::SnappedPoint intersect(SnappedLineSegment const &line) const; //intersect with another SnappedLineSegment
     
 private:
-    NR::Point _start_point_of_line;
-    NR::Point _end_point_of_line;    
+    Geom::Point _start_point_of_line;
+    Geom::Point _end_point_of_line;    
 };
 
 
@@ -41,18 +41,18 @@ class SnappedLine : public SnappedPoint
 {
 public:
     SnappedLine();
-    SnappedLine(NR::Point const &snapped_point, NR::Coord const &snapped_distance, NR::Coord const &snapped_tolerance, bool const &always_snap, NR::Point const &normal_to_line, NR::Point const &point_on_line);
+    SnappedLine(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, Geom::Point const &normal_to_line, Geom::Point const &point_on_line);
     ~SnappedLine();
     Inkscape::SnappedPoint intersect(SnappedLine const &line) const; //intersect with another SnappedLine
     // This line is described by this equation:
     //        a*x + b*y = c  <->  nx*px + ny+py = c  <->  n.p = c
-    NR::Point getNormal() const {return _normal_to_line;}                             // n = (nx, ny)
-    NR::Point getPointOnLine() const {return _point_on_line;}                         // p = (px, py)
-    NR::Coord getConstTerm() const {return dot(_normal_to_line, _point_on_line);}     // c = n.p = nx*px + ny*py;
+    Geom::Point getNormal() const {return _normal_to_line;}                             // n = (nx, ny)
+    Geom::Point getPointOnLine() const {return _point_on_line;}                         // p = (px, py)
+    Geom::Coord getConstTerm() const {return dot(_normal_to_line, _point_on_line);}     // c = n.p = nx*px + ny*py;
     
 private:
-    NR::Point _normal_to_line;
-    NR::Point _point_on_line;    
+    Geom::Point _normal_to_line;
+    Geom::Point _point_on_line;    
 };
 
 }

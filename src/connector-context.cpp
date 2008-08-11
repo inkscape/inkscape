@@ -514,27 +514,27 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
             case SP_CONNECTOR_CONTEXT_IDLE:
             {
                 if ( cc->npoints == 0 ) {
-                    /* Set start anchor */
-                    NR::Point p;
-
                     cc_clear_active_conn(cc);
 
                     SP_EVENT_CONTEXT_DESKTOP(cc)->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating new connector"));
 
+                    /* Set start anchor */
                     /* Create green anchor */
-                    p = event_dt;
+                    NR::Point p = event_dt;
 
                     // Test whether we clicked on a connection point
                     cc->sid = conn_pt_handle_test(cc, p);
+                    
+                    Geom::Point pt2g = to_2geom(p);
 
                     if (!cc->sid) {
                         // This is the first point, so just snap it to the grid
                         // as there's no other points to go off.
                         SnapManager &m = cc->desktop->namedview->snap_manager;
                         m.setup(cc->desktop);
-                        m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p);
+                        m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
                     }
-                    spcc_connector_set_initial_point(cc, p);
+                    spcc_connector_set_initial_point(cc, from_2geom(pt2g));
 
                 }
                 cc->state = SP_CONNECTOR_CONTEXT_DRAGGING;

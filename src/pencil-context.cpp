@@ -225,7 +225,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
         NR::Point const button_w(bevent.x, bevent.y);
 
         /* Find desktop coordinates */
-        NR::Point p = pc->desktop->w2d(button_w);
+        Geom::Point p = pc->desktop->w2d(button_w);
 
         /* Test whether we hit any anchor. */
         SPDrawAnchor *anchor = spdc_test_inside(pc, button_w);
@@ -241,12 +241,12 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
             default:
                 /* Set first point of sequence */
                 if (bevent.state & GDK_CONTROL_MASK) {
-                    freehand_create_single_dot(event_context, p, "tools.freehand.pencil", bevent.state);
+                    freehand_create_single_dot(event_context, from_2geom(p), "tools.freehand.pencil", bevent.state);
                     ret = true;
                     break;
                 }
                 if (anchor) {
-                    p = anchor->dp;
+                    p = to_2geom(anchor->dp);
                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Continuing selected path"));
                 } else {
 
@@ -265,7 +265,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                     }
                 }
                 pc->sa = anchor;
-                spdc_set_startpoint(pc, p);
+                spdc_set_startpoint(pc, from_2geom(p));
                 ret = TRUE;
                 break;
         }
@@ -303,7 +303,7 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
     }
 
     /* Find desktop coordinates */
-    NR::Point p = dt->w2d(NR::Point(mevent.x, mevent.y));
+    Geom::Point p = to_2geom(dt->w2d(NR::Point(mevent.x, mevent.y)));
 
     /* Test whether we hit any anchor. */
     SPDrawAnchor *anchor = spdc_test_inside(pc, NR::Point(mevent.x, mevent.y));
@@ -325,11 +325,13 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
         case SP_PENCIL_CONTEXT_ADDLINE:
             /* Set red endpoint */
             if (anchor) {
-                p = anchor->dp;
+                p = to_2geom(anchor->dp);
             } else {
-                spdc_endpoint_snap(pc, p, mevent.state);
+                NR::Point ptnr = from_2geom(p);
+                spdc_endpoint_snap(pc, ptnr, mevent.state);
+                p = to_2geom(ptnr);
             }
-            spdc_set_endpoint(pc, p);
+            spdc_set_endpoint(pc, from_2geom(p));
             ret = TRUE;
             break;
         default:
@@ -345,14 +347,14 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                  * in middle of freehand (Lauris)
                  */
                 if (anchor) {
-                    p = anchor->dp;
+                    p = to_2geom(anchor->dp);
                 } else if ((mevent.state & GDK_SHIFT_MASK) == 0) {
                     SnapManager &m = dt->namedview->snap_manager;
                     m.setup(dt, NULL);
                     m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p);
                 }
                 if ( pc->npoints != 0 ) { // buttonpress may have happened before we entered draw context!
-                    spdc_add_freehand_point(pc, p, mevent.state);
+                    spdc_add_freehand_point(pc, from_2geom(p), mevent.state);
                     ret = TRUE;
                 }
 

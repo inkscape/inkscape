@@ -140,22 +140,22 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     case GDK_MOTION_NOTIFY:
             if (dragging) {
                 NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
-                NR::Point event_dt(desktop->w2d(event_w));
+                Geom::Point event_dt(desktop->w2d(event_w));
                 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
                 m.guideSnap(event_dt, normal);
                 
-                sp_guideline_set_position(SP_GUIDELINE(guide), event_dt);
-                desktop->set_coordinate_status(event_dt);
-                desktop->setPosition (event_dt);                
+                sp_guideline_set_position(SP_GUIDELINE(guide), from_2geom(event_dt));
+                desktop->set_coordinate_status(to_2geom(event_dt));
+                desktop->setPosition(to_2geom(event_dt));                
             }
             break;
     case GDK_BUTTON_RELEASE:
             if (dragging && event->button.button == 1) {
                 gdk_pointer_ungrab(event->button.time);
                 NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
-                NR::Point event_dt(desktop->w2d(event_w));
+                Geom::Point event_dt(desktop->w2d(event_w));
                 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
@@ -168,13 +168,13 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
                     Inkscape::XML::Node *repr = xml_doc->createElement("sodipodi:guide");
                     sp_repr_set_point(repr, "orientation", normal);
-                    sp_repr_set_point(repr, "position", event_dt);
+                    sp_repr_set_point(repr, "position", from_2geom(event_dt));
                     SP_OBJECT_REPR(desktop->namedview)->appendChild(repr);
                     Inkscape::GC::release(repr);
                     sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
                                      _("Create guide"));
                 }
-                desktop->set_coordinate_status(event_dt);
+                desktop->set_coordinate_status(from_2geom(event_dt));
             }
 	default:
             break;
@@ -234,20 +234,20 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             break;
     case GDK_MOTION_NOTIFY:
             if (dragging) {
-                NR::Point const motion_w(event->motion.x,
+                Geom::Point const motion_w(event->motion.x,
                                          event->motion.y);
-                NR::Point motion_dt(desktop->w2d(motion_w));
+                Geom::Point motion_dt(to_2geom(desktop->w2d(from_2geom(motion_w))));
                 
                 // This is for snapping while dragging existing guidelines. New guidelines, 
                 // which are dragged off the ruler, are being snapped in sp_dt_ruler_event
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-                m.guideSnap(motion_dt, guide->normal_to_line);
+                m.guideSnap(motion_dt, to_2geom(guide->normal_to_line));
                 
-                sp_guide_moveto(*guide, motion_dt, false);
+                sp_guide_moveto(*guide, from_2geom(motion_dt), false);
                 moved = true;
-                desktop->set_coordinate_status(motion_dt);
-                desktop->setPosition (motion_dt);
+                desktop->set_coordinate_status(from_2geom(motion_dt));
+                desktop->setPosition(from_2geom(motion_dt));
 
                 ret = TRUE;
             }
@@ -257,14 +257,14 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 if (moved) {
                     NR::Point const event_w(event->button.x,
                                             event->button.y);
-                    NR::Point event_dt(desktop->w2d(event_w));
+                    Geom::Point event_dt(desktop->w2d(event_w));
 
                     SnapManager &m = desktop->namedview->snap_manager;
                     m.setup(desktop);
                     m.guideSnap(event_dt, guide->normal_to_line);
 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
-                        sp_guide_moveto(*guide, event_dt, true);
+                        sp_guide_moveto(*guide, from_2geom(event_dt), true);
                         sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,
                                      _("Move guide"));
                     } else {
@@ -275,8 +275,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                      _("Delete guide"));
                     }
                     moved = false;
-                    desktop->set_coordinate_status(event_dt);
-                    desktop->setPosition (event_dt);
+                    desktop->set_coordinate_status(from_2geom(event_dt));
+                    desktop->setPosition (from_2geom(event_dt));
                 }
                 dragging = false;
                 sp_canvas_item_ungrab(item, event->button.time);

@@ -29,7 +29,7 @@ class SnapCandidate
     
 {
 public:
-    SnapCandidate(SPItem* item, bool clip_or_mask, NR::Matrix _additional_affine);
+    SnapCandidate(SPItem* item, bool clip_or_mask, Geom::Matrix _additional_affine);
     ~SnapCandidate();
     
     SPItem* item;        // An item that is to be considered for snapping to
@@ -39,14 +39,14 @@ public:
      * the transformation of the clipping path or mask itself, but also the transformation of 
      * the object to which the clip or mask is being applied; that transformation is stored here
      */
-    NR::Matrix additional_affine;  
+    Geom::Matrix additional_affine;  
 };
 
 class ObjectSnapper : public Snapper
 {
 
 public:
-    ObjectSnapper(SPNamedView const *nv, NR::Coord const d);
+    ObjectSnapper(SPNamedView const *nv, Geom::Coord const d);
     ~ObjectSnapper();
 
       enum DimensionToSnap {
@@ -70,70 +70,70 @@ public:
       bool getIncludeItemCenter() const {return _include_item_center;}
       void setStrictSnapping(bool enabled) {_strict_snapping = enabled;}
       void guideSnap(SnappedConstraints &sc,
-                   NR::Point const &p,
-                 NR::Point const &guide_normal) const;
+                   Geom::Point const &p,
+                 Geom::Point const &guide_normal) const;
   
       bool ThisSnapperMightSnap() const;
       bool GuidesMightSnap() const;
   
       void freeSnap(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t,
-                      NR::Point const &p,
+                      Geom::Point const &p,
                       bool const &first_point,
-                      boost::optional<NR::Rect> const &bbox_to_snap,
+                      boost::optional<Geom::Rect> const &bbox_to_snap,
                       std::vector<SPItem const *> const *it,
-                      std::vector<NR::Point> *unselected_nodes) const;
+                      std::vector<Geom::Point> *unselected_nodes) const;
 
       void constrainedSnap(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t,
-                      NR::Point const &p,
+                      Geom::Point const &p,
                       bool const &first_point,                                                                   
-                      boost::optional<NR::Rect> const &bbox_to_snap,
+                      boost::optional<Geom::Rect> const &bbox_to_snap,
                       ConstraintLine const &c,
                       std::vector<SPItem const *> const *it) const;
   
 private:
     //store some lists of candidates, points and paths, so we don't have to rebuild them for each point we want to snap
     std::vector<SnapCandidate> *_candidates; 
-    std::vector<NR::Point> *_points_to_snap_to;
+    std::vector<Geom::Point> *_points_to_snap_to;
     std::vector<Geom::PathVector*> *_paths_to_snap_to;
     
     void _findCandidates(SPObject* parent,
                        std::vector<SPItem const *> const *it,
                        bool const &first_point,
-                       NR::Rect const &bbox_to_snap,
+                       Geom::Rect const &bbox_to_snap,
                        DimensionToSnap snap_dim,
                        bool const _clip_or_mask,
-                       NR::Matrix const additional_affine) const;
+                       Geom::Matrix const additional_affine) const;
   
     void _snapNodes(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t,
-                      NR::Point const &p, 
+                      Geom::Point const &p, 
                       bool const &first_point,
-                      std::vector<NR::Point> *unselected_nodes) const;
+                      std::vector<Geom::Point> *unselected_nodes) const;
                       
     void _snapTranslatingGuideToNodes(SnappedConstraints &sc,
                      Inkscape::Snapper::PointType const &t,
-                     NR::Point const &p,
-                     NR::Point const &guide_normal) const;
+                     Geom::Point const &p,
+                     Geom::Point const &guide_normal) const;
                      
     void _collectNodes(Inkscape::Snapper::PointType const &t,
                   bool const &first_point) const;
   
     void _snapPaths(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t, 
-                      NR::Point const &p,
+                      Geom::Point const &p,
                       bool const &first_point,
-                      std::vector<NR::Point> *unselected_nodes,
+                      std::vector<Geom::Point> *unselected_nodes,
                       SPPath const *selected_path) const;
                       
     void _snapPathsConstrained(SnappedConstraints &sc,
                  Inkscape::Snapper::PointType const &t,
-                 NR::Point const &p,
+                 Geom::Point const &p,
                  bool const &first_point,
                  ConstraintLine const &c) const;
   
-    bool isUnselectedNode(NR::Point const &point, std::vector<NR::Point> const *unselected_nodes) const;
+    bool isUnselectedNode(Geom::Point const &point, std::vector<Geom::Point> const *unselected_nodes) const;
   
     void _collectPaths(Inkscape::Snapper::PointType const &t, 
                   bool const &first_point) const;
@@ -141,7 +141,7 @@ private:
     void _clear_paths() const;
     Geom::PathVector* _getBorderPathv() const;
     Geom::PathVector* _getPathvFromRect(Geom::Rect const rect) const;
-    void _getBorderNodes(std::vector<NR::Point> *points) const;
+    void _getBorderNodes(std::vector<Geom::Point> *points) const;
   
     bool _snap_to_itemnode;
     bool _snap_to_itempath;

@@ -41,7 +41,7 @@ class Snapper
 {
 public:
     Snapper() {}
-    Snapper(SPNamedView const *nv, ::NR::Coord const d);
+    Snapper(SPNamedView const *nv, ::Geom::Coord const d);
     virtual ~Snapper() {}
 
     /// Point types to snap.
@@ -53,8 +53,8 @@ public:
     void setSnapFrom(PointType t, bool s);
     bool getSnapFrom(PointType t) const;
 
-    void setSnapperTolerance(NR::Coord t);
-    NR::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
+    void setSnapperTolerance(Geom::Coord t);
+    Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
     bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
 
     /**
@@ -67,31 +67,31 @@ public:
 
     virtual void freeSnap(SnappedConstraints &/*sc*/,
                           PointType const &/*t*/,
-                          NR::Point const &/*p*/,
+                          Geom::Point const &/*p*/,
                           bool const &/*first_point*/,
-                          boost::optional<NR::Rect> const &/*bbox_to_snap*/,
+                          boost::optional<Geom::Rect> const &/*bbox_to_snap*/,
                           std::vector<SPItem const *> const */*it*/,
-                          std::vector<NR::Point> */*unselected_nodes*/) const {};
+                          std::vector<Geom::Point> */*unselected_nodes*/) const {};
 
     class ConstraintLine
     {
     public:
-        ConstraintLine(NR::Point const &d) : _has_point(false), _direction(d) {}
-        ConstraintLine(NR::Point const &p, NR::Point const &d) : _has_point(true), _point(p), _direction(d) {}
+        ConstraintLine(Geom::Point const &d) : _has_point(false), _direction(d) {}
+        ConstraintLine(Geom::Point const &p, Geom::Point const &d) : _has_point(true), _point(p), _direction(d) {}
 
         bool hasPoint() const {
             return _has_point;
         }
 
-        NR::Point getPoint() const {
+        Geom::Point getPoint() const {
             return _point;
         }
 
-        NR::Point getDirection() const {
+        Geom::Point getDirection() const {
             return _direction;
         }
         
-        void setPoint(NR::Point const &p) {
+        void setPoint(Geom::Point const &p) {
             _point = p;
             _has_point = true;        
         }
@@ -99,15 +99,15 @@ public:
     private:
 
         bool _has_point;
-        NR::Point _point;
-        NR::Point _direction;
+        Geom::Point _point;
+        Geom::Point _direction;
     };
 
     virtual void constrainedSnap(SnappedConstraints &/*sc*/,
                                  PointType const &/*t*/,
-                                 NR::Point const &/*p*/,
+                                 Geom::Point const &/*p*/,
                                  bool const &/*first_point*/,
-                                 boost::optional<NR::Rect> const &/*bbox_to_snap*/,
+                                 boost::optional<Geom::Rect> const &/*bbox_to_snap*/,
                                  ConstraintLine const &/*c*/,
                                  std::vector<SPItem const *> const */*it*/) const {};
 
@@ -117,7 +117,7 @@ protected:
     bool _snap_enabled; ///< true if this snapper is enabled, otherwise false
 
 private:
-    NR::Coord _snapper_tolerance;   ///< snap tolerance in desktop coordinates
+    Geom::Coord _snapper_tolerance;   ///< snap tolerance in desktop coordinates
                                     // must be private to enforce the usage of getTolerance(), which retrieves
                                     // the tolerance in screen pixels (making it zoom independent)
 

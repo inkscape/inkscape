@@ -267,7 +267,9 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop, NULL); //null, because we don't have an item yet
-                m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, sc->center);
+                Geom::Point pt2g = to_2geom(sc->center);
+                m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
+                sc->center = from_2geom(pt2g);
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     ( GDK_KEY_PRESS_MASK |
@@ -293,12 +295,12 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 event_context->within_tolerance = false;
 
                 NR::Point const motion_w(event->motion.x, event->motion.y);
-                NR::Point motion_dt(event_context->desktop->w2d(motion_w));
+                Geom::Point motion_dt(to_2geom(event_context->desktop->w2d(motion_w)));
                 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop, sc->item);
                 m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
-                sp_spiral_drag(sc, motion_dt, event->motion.state);
+                sp_spiral_drag(sc, from_2geom(motion_dt), event->motion.state);
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
 
@@ -437,16 +439,16 @@ sp_spiral_drag(SPSpiralContext *sc, NR::Point p, guint state)
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
     }
 
-    NR::Point const p0 = sp_desktop_dt2root_xy_point(desktop, sc->center);
-    NR::Point p1 = sp_desktop_dt2root_xy_point(desktop, p);
+    Geom::Point const p0 = to_2geom(sp_desktop_dt2root_xy_point(desktop, sc->center));
+    Geom::Point p1 = to_2geom(sp_desktop_dt2root_xy_point(desktop, p));
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, sc->item);
     m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p1);
 
     SPSpiral *spiral = SP_SPIRAL(sc->item);
 
-    NR::Point const delta = p1 - p0;
-    gdouble const rad = NR::L2(delta);
+    Geom::Point const delta = p1 - p0;
+    gdouble const rad = Geom::L2(delta);
 
     gdouble arg = NR::atan2(delta) - 2.0*M_PI*spiral->revo;
 
@@ -455,7 +457,7 @@ sp_spiral_drag(SPSpiralContext *sc, NR::Point p, guint state)
     }
 
     /* Fixme: these parameters should be got from dialog box */
-    sp_spiral_position_set(spiral, p0[NR::X], p0[NR::Y],
+    sp_spiral_position_set(spiral, p0[Geom::X], p0[Geom::Y],
                            /*expansion*/ sc->exp,
                            /*revolution*/ sc->revo,
                            rad, arg,

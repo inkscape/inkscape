@@ -953,7 +953,7 @@ CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SPNamedView const *
 }
 
 LineSnapper::LineList
-CanvasXYGridSnapper::_getSnapLines(NR::Point const &p) const
+CanvasXYGridSnapper::_getSnapLines(Geom::Point const &p) const
 {
     LineList s;
 
@@ -972,22 +972,22 @@ CanvasXYGridSnapper::_getSnapLines(NR::Point const &p) const
             scaled_spacing /= SP_ACTIVE_DESKTOP->current_zoom();
         }
 
-        NR::Coord rounded;        
-        NR::Point point_on_line;
+        Geom::Coord rounded;        
+        Geom::Point point_on_line;
         
         rounded = Inkscape::Util::round_to_upper_multiple_plus(p[i], scaled_spacing, grid->origin[i]);
-        point_on_line = i ? NR::Point(0, rounded) : NR::Point(rounded, 0);
+        point_on_line = i ? Geom::Point(0, rounded) : Geom::Point(rounded, 0);
         s.push_back(std::make_pair(component_vectors[i], point_on_line));
         
         rounded = Inkscape::Util::round_to_lower_multiple_plus(p[i], scaled_spacing, grid->origin[i]);
-        point_on_line = i ? NR::Point(0, rounded) : NR::Point(rounded, 0);
+        point_on_line = i ? Geom::Point(0, rounded) : Geom::Point(rounded, 0);
         s.push_back(std::make_pair(component_vectors[i], point_on_line));
     }
 
     return s;
 }
 
-void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, NR::Point const snapped_point, NR::Coord const snapped_distance, NR::Point const normal_to_line, NR::Point const point_on_line) const 
+void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, Geom::Point const point_on_line) const 
 {
     SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
     sc.grid_lines.push_back(dummy);

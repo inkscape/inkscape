@@ -1285,7 +1285,7 @@ void sp_node_moveto(Inkscape::NodePath::Node *node, NR::Point p)
  */
 static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, NR::Coord dx, NR::Coord dy,
                                             bool const snap, bool constrained = false, 
-                                            Inkscape::Snapper::ConstraintLine const &constraint = NR::Point())
+                                            Inkscape::Snapper::ConstraintLine const &constraint = Geom::Point())
 {
     NR::Coord best = NR_HUGE;
     NR::Point delta(dx, dy);
@@ -1298,13 +1298,13 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
          * must provide that information. */
           
         // Build a list of the unselected nodes to which the snapper should snap 
-        std::vector<NR::Point> unselected_nodes;
+        std::vector<Geom::Point> unselected_nodes;
         for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
             Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
             for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
                 Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
                 if (!node->selected) {
-                    unselected_nodes.push_back(node->pos);
+                    unselected_nodes.push_back(to_2geom(node->pos));
                 }    
             }
         }        
@@ -1318,14 +1318,14 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
             if (constrained) {
                 Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
                 dedicated_constraint.setPoint(n->pos);
-                s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta, dedicated_constraint);
+                s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(n->pos + delta), dedicated_constraint);
             } else {
-                s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, n->pos + delta);
+                s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(n->pos + delta));
             }            
             if (s.getSnapped() && (s.getDistance() < best)) {
                 best = s.getDistance();
                 best_abs = s;
-                best_pt = s.getPoint() - n->pos;
+                best_pt = from_2geom(s.getPoint()) - n->pos;
             }
         }
                         
@@ -3804,20 +3804,22 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpo
                 (*p) = n->pos + (scal / linelen) * ndelta;
             }
             if ((state & GDK_SHIFT_MASK) == 0) {
-            	s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p, Inkscape::Snapper::ConstraintLine(*p, ndelta));
+            	s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(*p), Inkscape::Snapper::ConstraintLine(*p, ndelta));
             }
         } else {
         	if ((state & GDK_SHIFT_MASK) == 0) {
-        		s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p);
+        		s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(*p));
         	}
         }
     } else {
     	if ((state & GDK_SHIFT_MASK) == 0) {
-    		s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, *p);
+    		s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(*p));
     	}
     }
     
-    s.getPoint(*p);
+    Geom::Point pt2g = *p;
+    s.getPoint(pt2g);
+    *p = pt2g;
     
     sp_node_adjust_handle(n, -which);
 

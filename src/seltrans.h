@@ -115,8 +115,8 @@ private:
     std::vector<NR::Matrix> _items_affines;
     std::vector<NR::Point> _items_centers;
     
-    std::vector<NR::Point> _snap_points;
-    std::vector<NR::Point> _bbox_points;
+    std::vector<Geom::Point> _snap_points;
+    std::vector<Geom::Point> _bbox_points;
     
     Inkscape::SelCue _selcue;
 

@@ -12,26 +12,26 @@
 #include "snapped-point.h"
 
 // overloaded constructor
-Inkscape::SnappedPoint::SnappedPoint(NR::Point const &p, SnapTargetType const &target, NR::Coord const &d, NR::Coord const &t, bool const &a)
+Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a)
     : _point(p), _target(target), _distance(d), _tolerance(t), _always_snap(a)
 {
     _at_intersection = false;
     _second_distance = NR_HUGE;
     _second_tolerance = 0;
     _second_always_snap = false;
-    _transformation = NR::Point(1,1);
+    _transformation = Geom::Point(1,1);
 }
 
-Inkscape::SnappedPoint::SnappedPoint(NR::Point const &p, SnapTargetType const &target, NR::Coord const &d, NR::Coord const &t, bool const &a, bool const &at_intersection, NR::Coord const &d2, NR::Coord const &t2, bool const &a2)
+Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2)
     : _point(p), _target(target), _at_intersection(at_intersection), _distance(d), _tolerance(t), _always_snap(a),
     _second_distance(d2), _second_tolerance(t2), _second_always_snap(a2)
 {
-    _transformation = NR::Point(1,1);
+    _transformation = Geom::Point(1,1);
 }
 
 Inkscape::SnappedPoint::SnappedPoint()
 {
-    _point = NR::Point(0,0);
+    _point = Geom::Point(0,0);
     _target = SNAPTARGET_UNDEFINED, 
     _distance = NR_HUGE;
     _tolerance = 0;
@@ -40,7 +40,7 @@ Inkscape::SnappedPoint::SnappedPoint()
     _second_distance = NR_HUGE;
     _second_tolerance = 0;
     _second_always_snap = false;
-    _transformation = NR::Point(1,1);
+    _transformation = Geom::Point(1,1);
 }
 
 
@@ -49,12 +49,12 @@ Inkscape::SnappedPoint::~SnappedPoint()
 {
 }
 
-NR::Coord Inkscape::SnappedPoint::getDistance() const
+Geom::Coord Inkscape::SnappedPoint::getDistance() const
 {
     return _distance;
 }
 
-NR::Coord Inkscape::SnappedPoint::getTolerance() const
+Geom::Coord Inkscape::SnappedPoint::getTolerance() const
 {
     return _tolerance;
 }
@@ -64,12 +64,12 @@ bool Inkscape::SnappedPoint::getAlwaysSnap() const
     return _always_snap;
 }
 
-NR::Coord Inkscape::SnappedPoint::getSecondDistance() const
+Geom::Coord Inkscape::SnappedPoint::getSecondDistance() const
 {
     return _second_distance;
 }
 
-NR::Coord Inkscape::SnappedPoint::getSecondTolerance() const
+Geom::Coord Inkscape::SnappedPoint::getSecondTolerance() const
 {
     return _second_tolerance;
 }
@@ -80,7 +80,7 @@ bool Inkscape::SnappedPoint::getSecondAlwaysSnap() const
 }
 
 
-void Inkscape::SnappedPoint::getPoint(NR::Point &p) const
+void Inkscape::SnappedPoint::getPoint(Geom::Point &p) const
 {
     // When we have snapped
     if (getSnapped()) { 

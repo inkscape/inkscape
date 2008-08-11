@@ -161,12 +161,12 @@ private:
 class CanvasXYGridSnapper : public LineSnapper
 {
 public:
-    CanvasXYGridSnapper(CanvasXYGrid *grid, SPNamedView const *nv, NR::Coord const d);
+    CanvasXYGridSnapper(CanvasXYGrid *grid, SPNamedView const *nv, Geom::Coord const d);
     bool ThisSnapperMightSnap() const;
 
 private:
-    LineList _getSnapLines(NR::Point const &p) const;
-    void _addSnappedLine(SnappedConstraints &sc, NR::Point const snapped_point, NR::Coord const snapped_distance, NR::Point const normal_to_line, const NR::Point point_on_line) const;
+    LineList _getSnapLines(Geom::Point const &p) const;
+    void _addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, const Geom::Point point_on_line) const;
     CanvasXYGrid *grid;
 };
 

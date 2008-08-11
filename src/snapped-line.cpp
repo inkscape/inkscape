@@ -12,7 +12,7 @@
 #include <2geom/geom.h>
 #include "libnr/nr-values.h"
 
-Inkscape::SnappedLineSegment::SnappedLineSegment(NR::Point const &snapped_point, NR::Coord const &snapped_distance, NR::Coord const &snapped_tolerance, bool const &always_snap, NR::Point const &start_point_of_line, NR::Point const &end_point_of_line)
+Inkscape::SnappedLineSegment::SnappedLineSegment(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, Geom::Point const &start_point_of_line, Geom::Point const &end_point_of_line)
     : _start_point_of_line(start_point_of_line), _end_point_of_line(end_point_of_line) 
 {
 	_point = snapped_point;
@@ -27,9 +27,9 @@ Inkscape::SnappedLineSegment::SnappedLineSegment(NR::Point const &snapped_point,
 
 Inkscape::SnappedLineSegment::SnappedLineSegment() 
 {
-	_start_point_of_line = NR::Point(0,0);
-	_end_point_of_line = NR::Point(0,0);
-	_point = NR::Point(0,0);
+	_start_point_of_line = Geom::Point(0,0);
+	_end_point_of_line = Geom::Point(0,0);
+	_point = Geom::Point(0,0);
     _distance = NR_HUGE;
 	_tolerance = 0;
     _always_snap = false;
@@ -50,7 +50,7 @@ Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegmen
 	Geom::IntersectorKind result = segment_intersect(_start_point_of_line, _end_point_of_line,
                               						 line._start_point_of_line, line._end_point_of_line,
                               						 intersection_2geom);
-  	NR::Point intersection(intersection_2geom);
+  	Geom::Point intersection(intersection_2geom);
 	
 	if (result == Geom::intersects) {
 		/* If a snapper has been told to "always snap", then this one should be preferred
@@ -77,7 +77,7 @@ Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegmen
 
 
 
-Inkscape::SnappedLine::SnappedLine(NR::Point const &snapped_point, NR::Coord const &snapped_distance, NR::Coord const &snapped_tolerance, bool const &always_snap, NR::Point const &normal_to_line, NR::Point const &point_on_line)
+Inkscape::SnappedLine::SnappedLine(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, Geom::Point const &normal_to_line, Geom::Point const &point_on_line)
     : _normal_to_line(normal_to_line), _point_on_line(point_on_line)
 {
 	_distance = snapped_distance;
@@ -92,15 +92,15 @@ Inkscape::SnappedLine::SnappedLine(NR::Point const &snapped_point, NR::Coord con
 
 Inkscape::SnappedLine::SnappedLine() 
 {
-	_normal_to_line = NR::Point(0,0);
-	_point_on_line = NR::Point(0,0);
+	_normal_to_line = Geom::Point(0,0);
+	_point_on_line = Geom::Point(0,0);
 	_distance = NR_HUGE;
     _tolerance = 0;
     _always_snap = false;
 	_second_distance = NR_HUGE;
     _second_tolerance = 0;
     _second_always_snap = false;
-	_point = NR::Point(0,0);
+	_point = Geom::Point(0,0);
 	_at_intersection = false;
 }
 
@@ -117,7 +117,7 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
 	Geom::Point intersection_2geom(NR_HUGE, NR_HUGE);
 	Geom::IntersectorKind result = Geom::line_intersection(getNormal(), getConstTerm(), 
                                    line.getNormal(), line.getConstTerm(), intersection_2geom);
-	NR::Point intersection(intersection_2geom);
+	Geom::Point intersection(intersection_2geom);
 	 
 	if (result == Geom::intersects) {
         /* If a snapper has been told to "always snap", then this one should be preferred

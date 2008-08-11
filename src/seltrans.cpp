@@ -291,8 +291,9 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
 
     // Next, get all points to consider for snapping
     SnapManager const &m = _desktop->namedview->snap_manager;
-    _snap_points = selection->getSnapPoints(m.getIncludeItemCenter());
-    std::vector<NR::Point> snap_points_hull = selection->getSnapPointsConvexHull();
+    to_2geom(selection->getSnapPoints(m.getIncludeItemCenter()), _snap_points);
+    std::vector<Geom::Point> snap_points_hull;
+    to_2geom(selection->getSnapPointsConvexHull(), snap_points_hull);
     if (_snap_points.size() > 100) {
         /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
         An average user would rarely ever try to snap such a large number of nodes anyway, because
@@ -306,7 +307,7 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     // any other special points
     NR::Rect snap_points_bbox;
     if ( snap_points_hull.empty() == false ) {
-        std::vector<NR::Point>::iterator i = snap_points_hull.begin();
+        std::vector<Geom::Point>::iterator i = snap_points_hull.begin();
         snap_points_bbox = NR::Rect(*i, *i);
         i++;
         while (i != snap_points_hull.end()) {
@@ -319,7 +320,7 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     if (_bbox) {
         // ... and add the bbox corners to _bbox_points
         for ( unsigned i = 0 ; i < 4 ; i++ ) {
-            _bbox_points.push_back(_bbox->corner(i));
+            _bbox_points.push_back(to_2geom(_bbox->corner(i)));
         }
         // There are two separate "opposites" (i.e. opposite w.r.t. the handle being dragged):
         //  - one for snapping the boundingbox, which can be either visual or geometric
@@ -936,8 +937,10 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
             }
 
             // Snap along a suitable constraint vector from the origin.
-            bb = m.constrainedSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, default_scale, _origin_for_bboxpoints);
-            sn = m.constrainedSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, geom_scale, _origin_for_specpoints);
+            Geom::Scale default_scale_2geom = to_2geom(default_scale);
+            Geom::Scale geom_scale_2geom = to_2geom(geom_scale);
+            bb = m.constrainedSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, default_scale_2geom, to_2geom(_origin_for_bboxpoints));
+            sn = m.constrainedSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, geom_scale_2geom, to_2geom(_origin_for_specpoints));
 
             /* Choose the smaller difference in scale.  Since s[X] == s[Y] we can
             ** just compare difference in s[X].
@@ -946,8 +949,10 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
             sd = sn.getSnapped() ? fabs(sn.getTransformation()[NR::X] - geom_scale[NR::X]) : NR_HUGE;
         } else {
             /* Scale aspect ratio is unlocked */
-            bb = m.freeSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, default_scale, _origin_for_bboxpoints);
-            sn = m.freeSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, geom_scale, _origin_for_specpoints);
+            Geom::Scale default_scale_2geom = to_2geom(default_scale);
+            Geom::Scale geom_scale_2geom = to_2geom(geom_scale);
+            bb = m.freeSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, default_scale_2geom, to_2geom(_origin_for_bboxpoints));
+            sn = m.freeSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, geom_scale_2geom, to_2geom(_origin_for_specpoints));
 
             /* Pick the snap that puts us closest to the original scale */
             bd = bb.getSnapped() ? fabs(NR::L2(bb.getTransformation()) - NR::L2(default_scale.point())) : NR_HUGE;
@@ -1035,8 +1040,10 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
 
         bool symmetrical = state & GDK_CONTROL_MASK;
 
-        bb = m.constrainedSnapStretch(Snapper::SNAPPOINT_BBOX, _bbox_points, default_scale[axis], _origin_for_bboxpoints, axis, symmetrical);
-        sn = m.constrainedSnapStretch(Snapper::SNAPPOINT_NODE, _snap_points, geom_scale[axis], _origin_for_specpoints, axis, symmetrical);
+        Geom::Scale default_scale_2geom = to_2geom(default_scale);
+        Geom::Scale geom_scale_2geom = to_2geom(geom_scale);
+        bb = m.constrainedSnapStretch(Snapper::SNAPPOINT_BBOX, _bbox_points, Geom::Coord(default_scale_2geom[axis]), to_2geom(_origin_for_bboxpoints), Geom::Dim2(axis), symmetrical);
+        sn = m.constrainedSnapStretch(Snapper::SNAPPOINT_NODE, _snap_points, Geom::Coord(geom_scale_2geom[axis]), to_2geom(_origin_for_specpoints), Geom::Dim2(axis), symmetrical);
 
         if (bb.getSnapped()) {
             // We snapped the bbox (which is either visual or geometric)
@@ -1151,8 +1158,8 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
 
         Inkscape::Snapper::ConstraintLine const constraint(component_vectors[dim_b]);
         NR::Point const s(skew[dim_a], scale[dim_a]);
-        Inkscape::SnappedPoint bb = m.constrainedSnapSkew(Inkscape::Snapper::SNAPPOINT_BBOX, _bbox_points, constraint, s, _origin, dim_b);
-        Inkscape::SnappedPoint sn = m.constrainedSnapSkew(Inkscape::Snapper::SNAPPOINT_NODE, _snap_points, constraint, s, _origin, dim_b);
+        Inkscape::SnappedPoint bb = m.constrainedSnapSkew(Inkscape::Snapper::SNAPPOINT_BBOX, _bbox_points, constraint, to_2geom(s), to_2geom(_origin), Geom::Dim2(dim_b));
+        Inkscape::SnappedPoint sn = m.constrainedSnapSkew(Inkscape::Snapper::SNAPPOINT_NODE, _snap_points, constraint, to_2geom(s), to_2geom(_origin), Geom::Dim2(dim_b));
 
         if (bb.getSnapped() || sn.getSnapped()) {
             // We snapped something, so change the skew to reflect it
@@ -1260,7 +1267,9 @@ gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
 {
     SnapManager &m = _desktop->namedview->snap_manager;
     m.setup(_desktop);
-    m.freeSnapReturnByRef(Snapper::SNAPPOINT_NODE, pt);
+    Geom::Point pt2g = to_2geom(pt);
+    m.freeSnapReturnByRef(Snapper::SNAPPOINT_NODE, pt2g);
+    pt = from_2geom(pt2g);
 
     if (state & GDK_CONTROL_MASK) {
         if ( fabs(_point[NR::X] - pt[NR::X]) > fabs(_point[NR::Y] - pt[NR::Y]) ) {
@@ -1356,7 +1365,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
     m.setup(_desktop, _items_const);
 
     /* The amount that we've moved by during this drag */
-    NR::Point dxy = xy - _point;
+    Geom::Point dxy = to_2geom(xy - _point);
 
     bool const alt = (state & GDK_MOD1_MASK);
     bool const control = (state & GDK_CONTROL_MASK);
@@ -1437,22 +1446,22 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
                 // If we didn't snap, then we should still constrain horizontally or vertically
                 // (When we did snap, then this constraint has already been enforced by
                 // calling constrainedSnapTranslation() above)
-                if (fabs(dxy[NR::X]) > fabs(dxy[NR::Y])) {
-                    dxy[NR::Y] = 0;
+                if (fabs(dxy[Geom::X]) > fabs(dxy[Geom::Y])) {
+                    dxy[Geom::Y] = 0;
                 } else {
-                    dxy[NR::X] = 0;
+                    dxy[Geom::X] = 0;
                 }
             }
         }
     }
     
-    NR::Matrix const move((NR::translate(dxy)));
-    NR::Point const norm(0, 0);
-    transform(move, norm);
+    Geom::Matrix const move((Geom::Translate(dxy)));
+    Geom::Point const norm(0, 0);
+    transform(from_2geom(move), from_2geom(norm));
 
     // status text
-    GString *xs = SP_PX_TO_METRIC_STRING(dxy[NR::X], _desktop->namedview->getDefaultMetric());
-    GString *ys = SP_PX_TO_METRIC_STRING(dxy[NR::Y], _desktop->namedview->getDefaultMetric());
+    GString *xs = SP_PX_TO_METRIC_STRING(dxy[Geom::X], _desktop->namedview->getDefaultMetric());
+    GString *ys = SP_PX_TO_METRIC_STRING(dxy[Geom::Y], _desktop->namedview->getDefaultMetric());
     _message_context.setF(Inkscape::NORMAL_MESSAGE, _("<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"), xs->str, ys->str);
     g_string_free(xs, TRUE);
     g_string_free(ys, TRUE);

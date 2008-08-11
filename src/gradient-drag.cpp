@@ -581,7 +581,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
         SPDesktop *desktop = dragger->parent->desktop;
         SnapManager &m = desktop->namedview->snap_manager;
         m.setup(desktop);
-        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, p);
+        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(p));
         if (s.getSnapped()) {
             p = s.getPoint();
             sp_knot_moveto (knot, p);
