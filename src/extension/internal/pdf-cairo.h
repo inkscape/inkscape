@@ -55,7 +55,7 @@ class PrintCairoPDF : public Inkscape::Extension::Implementation::Implementation
     void print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect const *pbox);
 
 #ifndef RENDER_WITH_PANGO_CAIRO
-    NR::Point draw_glyphs(cairo_t *cr, NR::Point p, PangoFont *font, PangoGlyphString *glyph_string,
+    Geom::Point draw_glyphs(cairo_t *cr, Geom::Point p, PangoFont *font, PangoGlyphString *glyph_string,
                           bool vertical, bool stroke);
 #endif
 
@@ -73,17 +73,17 @@ public:
     virtual unsigned int finish(Inkscape::Extension::Print *module);
 
     /* Rendering methods */
-    virtual unsigned int bind(Inkscape::Extension::Print *module, NR::Matrix const *transform, float opacity);
+    virtual unsigned int bind(Inkscape::Extension::Print *module, Geom::Matrix const *transform, float opacity);
     virtual unsigned int release(Inkscape::Extension::Print *module);
     virtual unsigned int comment(Inkscape::Extension::Print *module, char const *comment);
-    virtual unsigned int fill(Inkscape::Extension::Print *module, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *style,
+    virtual unsigned int fill(Inkscape::Extension::Print *module, Geom::PathVector const &pathv, Geom::Matrix const *ctm, SPStyle const *style,
                               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox);
-    virtual unsigned int stroke(Inkscape::Extension::Print *module, Geom::PathVector const &pathv, NR::Matrix const *transform, SPStyle const *style,
+    virtual unsigned int stroke(Inkscape::Extension::Print *module, Geom::PathVector const &pathv, Geom::Matrix const *transform, SPStyle const *style,
                                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox);
     virtual unsigned int image(Inkscape::Extension::Print *module, unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
-                               NR::Matrix const *transform, SPStyle const *style);
+                               Geom::Matrix const *transform, SPStyle const *style);
     virtual unsigned int text(Inkscape::Extension::Print *module, char const *text,
-                              NR::Point p, SPStyle const *style);
+                              Geom::Point p, SPStyle const *style);
 
     bool textToPath(Inkscape::Extension::Print *ext);
     static void init(void);

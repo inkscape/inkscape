@@ -59,7 +59,7 @@ struct CairoRenderState {
     SPClipPath *clip_path;
     SPMask* mask;
 
-    NR::Matrix transform;     // the CTM
+    Geom::Matrix transform;     // the CTM
 };
 
 class CairoRenderContext {
@@ -127,10 +127,10 @@ public:
     CairoRenderState *getParentState(void) const;
     void setStateForStyle(SPStyle const *style);
 
-    void transform(NR::Matrix const *transform);
-    void setTransform(NR::Matrix const *transform);
-    void getTransform(NR::Matrix *copy) const;
-    void getParentTransform(NR::Matrix *copy) const;
+    void transform(Geom::Matrix const *transform);
+    void setTransform(Geom::Matrix const *transform);
+    void getTransform(Geom::Matrix *copy) const;
+    void getParentTransform(Geom::Matrix *copy) const;
 
     /* Clipping methods */
     void addClipPath(NArtBpath const *bp, SPIEnum const *fill_rule);
@@ -140,8 +140,8 @@ public:
     bool renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, NRRect const *pbox);
     bool renderPath(const_NRBPath const *bpath, SPStyle const *style, NRRect const *pbox);
     bool renderImage(unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
-                     NR::Matrix const *image_transform, SPStyle const *style);
-    bool renderGlyphtext(PangoFont *font, NR::Matrix const *font_matrix,
+                     Geom::Matrix const *image_transform, SPStyle const *style);
+    bool renderGlyphtext(PangoFont *font, Geom::Matrix const *font_matrix,
                          std::vector<CairoGlyphInfo> const &glyphtext, SPStyle const *style);
 
     /* More general rendering methods will have to be added (like fill, stroke) */
@@ -191,9 +191,9 @@ protected:
     void _setFillStyle(SPStyle const *style, NRRect const *pbox);
     void _setStrokeStyle(SPStyle const *style, NRRect const *pbox);
 
-    void _initCairoMatrix(cairo_matrix_t *matrix, NR::Matrix const *transform);
+    void _initCairoMatrix(cairo_matrix_t *matrix, Geom::Matrix const *transform);
     void _concatTransform(cairo_t *cr, double xx, double yx, double xy, double yy, double x0, double y0);
-    void _concatTransform(cairo_t *cr, NR::Matrix const *transform);
+    void _concatTransform(cairo_t *cr, Geom::Matrix const *transform);
 
     CairoRenderState *_createState(void);
 };

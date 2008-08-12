@@ -631,14 +631,14 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
             g_free(comment);
         }
 
-	/* fixme: Think (Lauris) */
-	sp_item_invoke_bbox(item, &pbox, NR::identity(), TRUE);
-	dbox.x0 = 0.0;
-	dbox.y0 = 0.0;
-	dbox.x1 = sp_document_width (SP_OBJECT_DOCUMENT (item));
-	dbox.y1 = sp_document_height (SP_OBJECT_DOCUMENT (item));
-	sp_item_bbox_desktop (item, &bbox);
-	NR::Matrix const i2d(sp_item_i2d_affine(item));
+    /* fixme: Think (Lauris) */
+    sp_item_invoke_bbox(item, &pbox, NR::identity(), TRUE);
+    dbox.x0 = 0.0;
+    dbox.y0 = 0.0;
+    dbox.x1 = sp_document_width (SP_OBJECT_DOCUMENT (item));
+    dbox.y1 = sp_document_height (SP_OBJECT_DOCUMENT (item));
+    sp_item_bbox_desktop (item, &bbox);
+    Geom::Matrix const i2d(sp_item_i2d_affine(item));
 
         SPStyle* style = SP_OBJECT_STYLE (item);
 

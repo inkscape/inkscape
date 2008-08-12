@@ -1068,18 +1068,18 @@ sp_image_print (SPItem *item, SPPrintContext *ctx)
 	rs = gdk_pixbuf_get_rowstride (image->pixbuf);
 	pixskip = gdk_pixbuf_get_n_channels (image->pixbuf) * gdk_pixbuf_get_bits_per_sample (image->pixbuf) / 8;
 
-    NR::Matrix t;
+    Geom::Matrix t;
 	if (image->aspect_align == SP_ASPECT_NONE) {
 		/* fixme: (Lauris) */
-        NR::translate tp = NR::translate(image->x.computed, image->y.computed);
-        NR::scale s = NR::scale(image->width.computed, -image->height.computed);
-        NR::translate ti = NR::translate(0.0, -1.0);
+        Geom::Translate tp (image->x.computed, image->y.computed);
+        Geom::Scale s (image->width.computed, -image->height.computed);
+        Geom::Translate ti (0.0, -1.0);
 	    t = s * tp;
 	    t = ti * t;
 	} else { // preserveAspectRatio
-        NR::translate tp = NR::translate(image->viewx, image->viewy);
-        NR::scale s = NR::scale(image->viewwidth, -image->viewheight);
-        NR::translate ti = NR::translate(0.0, -1.0);
+        Geom::Translate tp (image->viewx, image->viewy);
+        Geom::Scale s (image->viewwidth, -image->viewheight);
+        Geom::Translate ti (0.0, -1.0);
 	    t = s * tp;
 	    t = ti * t;
 	}

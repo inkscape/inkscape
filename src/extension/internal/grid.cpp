@@ -46,17 +46,17 @@ Grid::load (Inkscape::Extension::Extension */*module*/)
 
 namespace {
 
-Glib::ustring build_lines(int axis, NR::Rect bounding_area,
+Glib::ustring build_lines(int axis, Geom::Rect bounding_area,
                           float offset, float spacing)
 {
-    NR::Point point_offset(0.0, 0.0);
+    Geom::Point point_offset(0.0, 0.0);
     point_offset[axis] = offset;
 
     SVG::PathString path_data;
-    for (NR::Point start_point = bounding_area.min();
+    for (Geom::Point start_point = bounding_area.min();
             start_point[axis] + offset <= (bounding_area.max())[axis];
             start_point[axis] += spacing) {
-        NR::Point end_point = start_point;
+        Geom::Point end_point = start_point;
         end_point[1-axis] = (bounding_area.max())[1-axis];
 
         path_data.moveTo(start_point + point_offset)
@@ -78,22 +78,21 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
 {
     Inkscape::Selection * selection     = ((SPDesktop *)document)->selection;
 
-    NR::Rect bounding_area = NR::Rect(NR::Point(0,0), NR::Point(100,100));
+    Geom::Rect bounding_area = Geom::Rect(Geom::Point(0,0), Geom::Point(100,100));
     if (selection->isEmpty()) {
         /* get page size */
         SPDocument * doc = document->doc();
-        bounding_area = NR::Rect(NR::Point(0,0),
-                                 NR::Point(sp_document_width(doc),
-                                           sp_document_height(doc)));
+        bounding_area = Geom::Rect(  Geom::Point(0,0),
+                                     Geom::Point(sp_document_width(doc), sp_document_height(doc))  );
     } else {
         boost::optional<NR::Rect> bounds = selection->bounds();
         if (bounds) {
-            bounding_area = *bounds;
+            bounding_area = to_2geom(*bounds);
         }
 
         gdouble doc_height  =  sp_document_height(document->doc());
-        NR::Rect temprec = NR::Rect(NR::Point(bounding_area.min()[NR::X], doc_height - bounding_area.min()[NR::Y]),
-                                    NR::Point(bounding_area.max()[NR::X], doc_height - bounding_area.max()[NR::Y]));
+        Geom::Rect temprec = Geom::Rect(Geom::Point(bounding_area.min()[Geom::X], doc_height - bounding_area.min()[Geom::Y]),
+                                    Geom::Point(bounding_area.max()[Geom::X], doc_height - bounding_area.max()[Geom::Y]));
 
         bounding_area = temprec;
     }

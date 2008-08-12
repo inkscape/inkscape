@@ -135,7 +135,7 @@ CairoRenderer::createContext(void)
 
     // create initial render state
     CairoRenderState *state = new_context->_createState();
-    state->transform.set_identity();
+    state->transform = Geom::identity();
     new_context->_state_stack = g_slist_prepend(new_context->_state_stack, state);
     new_context->_state = state;
 
@@ -175,7 +175,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     if (!shape->curve) return;
 
     /* fixme: Think (Lauris) */
-    sp_item_invoke_bbox(item, &pbox, NR::identity(), TRUE);
+    sp_item_invoke_bbox(item, &pbox, Geom::identity(), TRUE);
 
     SPStyle* style = SP_OBJECT_STYLE (item);
     CairoRenderer *renderer = ctx->getRenderer();
@@ -190,15 +190,15 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_START]);
             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_START]));
 
-            NR::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
+            Geom::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                tr = NR::scale(style->stroke_width.computed) * tr;
+                tr = Geom::Scale(style->stroke_width.computed) * tr;
             }
 
-            tr = marker_item->transform * marker->c2p * tr;
+            tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
 
-            NR::Matrix old_tr = marker_item->transform;
+            Geom::Matrix old_tr = marker_item->transform;
             marker_item->transform = tr;
             renderer->renderItem (ctx, marker_item);
             marker_item->transform = old_tr;
@@ -216,15 +216,15 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                 SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_MID]);
                 SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_MID]));
 
-                NR::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                Geom::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
 
                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                    tr = NR::scale(style->stroke_width.computed) * tr;
+                    tr = Geom::Scale(style->stroke_width.computed) * tr;
                 }
 
-                tr = marker_item->transform * marker->c2p * tr;
+                tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
 
-                NR::Matrix old_tr = marker_item->transform;
+                Geom::Matrix old_tr = marker_item->transform;
                 marker_item->transform = tr;
                 renderer->renderItem (ctx, marker_item);
                 marker_item->transform = old_tr;
@@ -246,15 +246,15 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             }
             Geom::Curve const &lastcurve = (*path_it)[index];
 
-            NR::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
+            Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                tr = NR::scale(style->stroke_width.computed) * tr;
+                tr = Geom::Scale(style->stroke_width.computed) * tr;
             }
 
-            tr = marker_item->transform * marker->c2p * tr;
+            tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
 
-            NR::Matrix old_tr = marker_item->transform;
+            Geom::Matrix old_tr = marker_item->transform;
             marker_item->transform = tr;
             renderer->renderItem (ctx, marker_item);
             marker_item->transform = old_tr;
@@ -285,7 +285,7 @@ static void sp_use_render(SPItem *item, CairoRenderContext *ctx)
     CairoRenderer *renderer = ctx->getRenderer();
 
     if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
-        NR::Matrix tp(NR::translate(use->x.computed, use->y.computed));
+        Geom::Matrix tp(Geom::Translate(use->x.computed, use->y.computed));
         ctx->pushState();
         ctx->transform(&tp);
         translated = true;
@@ -342,9 +342,9 @@ static void sp_image_render(SPItem *item, CairoRenderContext *ctx)
         ctx->addClippingRect(image->x.computed, image->y.computed, image->width.computed, image->height.computed);
     }
 
-    NR::translate tp(x, y);
-    NR::scale s(width / (double)w, height / (double)h);
-    NR::Matrix t(s * tp);
+    Geom::Translate tp(x, y);
+    Geom::Scale s(width / (double)w, height / (double)h);
+    Geom::Matrix t(s * tp);
 
     ctx->renderImage (px, w, h, rs, &t, SP_OBJECT_STYLE (item));
 }
@@ -361,7 +361,7 @@ static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx)
 
     // apply viewbox if set
     if (0 /*symbol->viewBox_set*/) {
-        NR::Matrix vb2user;
+        Geom::Matrix vb2user;
         double x, y, width, height;
         double view_width, view_height;
         x = 0.0;
@@ -376,7 +376,7 @@ static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx)
                                      &x, &y,&width, &height);
 
         // [itemTransform *] translate(x, y) * scale(w/vw, h/vh) * translate(-vx, -vy);
-        vb2user.set_identity();
+        vb2user = Geom::identity();
         vb2user[0] = width / view_width;
         vb2user[3] = height / view_height;
         vb2user[4] = x - symbol->viewBox.x0 * vb2user[0];
@@ -399,7 +399,8 @@ static void sp_root_render(SPItem *item, CairoRenderContext *ctx)
 
     ctx->pushState();
     renderer->setStateForItem(ctx, item);
-    ctx->transform(&root->c2p);
+    Geom::Matrix tempmat (root->c2p);
+    ctx->transform(&tempmat);
     sp_group_render(item, ctx);
     ctx->popState();
 }
@@ -417,7 +418,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 
     // Get the bounding box of the selection
-    //boost::optional<NR::Rect> _bbox = item->getBounds(sp_item_i2d_affine(item));
+    //boost::optional<Geom::Rect> _bbox = item->getBounds(sp_item_i2d_affine(item));
     // NRRect bbox = item->getBounds(sp_item_i2d_affine(item));
     NRRect bbox(item->getBounds(sp_item_i2d_affine(item)));
 
@@ -472,8 +473,8 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     }
     */
     // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
-    NR::Matrix eek = sp_item_i2d_affine (SP_ITEM(parent_object));
-    NR::Matrix t;
+    Geom::Matrix eek = sp_item_i2d_affine (SP_ITEM(parent_object));
+    Geom::Matrix t;
 
     double shift_x = bbox.x0;
     double shift_y = bbox.y1;
@@ -481,9 +482,9 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
         shift_x = round (shift_x);
         shift_y = -round (-shift_y); // this gets correct rounding despite coordinate inversion, remove the negations when the inversion is gone
     }
-    t = (NR::Matrix)(NR::scale(1, -1) * (NR::Matrix)(NR::translate (shift_x, shift_y)* eek.inverse()));
+    t = (Geom::Matrix)(Geom::Scale(1, -1) * (Geom::Matrix)(Geom::Translate (shift_x, shift_y)* eek.inverse()));
 
-    //t = t * ((NR::Matrix)ctx->getCurrentState()->transform).inverse();
+    //t = t * ((Geom::Matrix)ctx->getCurrentState()->transform).inverse();
 
     // Do the export
     GdkPixbuf *pb = sp_generate_internal_bitmap(document, NULL,
@@ -501,9 +502,9 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
         unsigned int w = gdk_pixbuf_get_width(pb);
         unsigned int h = gdk_pixbuf_get_height(pb);
         unsigned int rs = gdk_pixbuf_get_rowstride(pb);
-        NR::Matrix matrix;
+        Geom::Matrix matrix;
         matrix = t;
-        //matrix = ((NR::Matrix)ctx->getCurrentState()->transform).inverse();
+        //matrix = ((Geom::Matrix)ctx->getCurrentState()->transform).inverse();
         //matrix.set_identity();
 
         ctx->renderImage (px, w, h, rs, &matrix, SP_OBJECT_STYLE (item));
@@ -609,7 +610,8 @@ CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
         state->merge_opacity = FALSE;
         ctx->pushLayer();
     }
-    ctx->transform(&item->transform);
+    Geom::Matrix tempmat (item->transform);
+    ctx->transform(&tempmat);
     sp_item_invoke_render(item, ctx);
 
     if (state->need_layer)
@@ -667,11 +669,11 @@ CairoRenderer::applyClipPath(CairoRenderContext *ctx, SPClipPath const *cp)
     CairoRenderContext::CairoRenderMode saved_mode = ctx->getRenderMode();
     ctx->setRenderMode(CairoRenderContext::RENDER_MODE_CLIP);
 
-    NR::Matrix saved_ctm;
+    Geom::Matrix saved_ctm;
     if (cp->clipPathUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
         //SP_PRINT_DRECT("clipd", cp->display->bbox);
         NRRect clip_bbox(cp->display->bbox);
-        NR::Matrix t(NR::scale(clip_bbox.x1 - clip_bbox.x0, clip_bbox.y1 - clip_bbox.y0));
+        Geom::Matrix t(Geom::Scale(clip_bbox.x1 - clip_bbox.x0, clip_bbox.y1 - clip_bbox.y0));
         t[4] = clip_bbox.x0;
         t[5] = clip_bbox.y0;
         t *= ctx->getCurrentState()->transform;
@@ -712,7 +714,7 @@ CairoRenderer::applyMask(CairoRenderContext *ctx, SPMask const *mask)
     NRRect mask_bbox(mask->display->bbox);
     // TODO: should the bbox be transformed if maskUnits != userSpaceOnUse ?
     if (mask->maskContentUnits == SP_CONTENT_UNITS_OBJECTBOUNDINGBOX) {
-        NR::Matrix t(NR::scale(mask_bbox.x1 - mask_bbox.x0, mask_bbox.y1 - mask_bbox.y0));
+        Geom::Matrix t(Geom::Scale(mask_bbox.x1 - mask_bbox.x0, mask_bbox.y1 - mask_bbox.y0));
         t[4] = mask_bbox.x0;
         t[5] = mask_bbox.y0;
         t *= ctx->getCurrentState()->transform;

@@ -316,7 +316,7 @@ private:
     bool processStyle(Writer &outs, SPItem *item, const Glib::ustring &id);
 
     bool processGradient(Writer &outs, SPItem *item,
-                    const Glib::ustring &id, NR::Matrix &tf);
+                    const Glib::ustring &id, Geom::Matrix &tf);
 
     bool writeStyleHeader(Writer &outs);
 

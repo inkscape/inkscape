@@ -150,7 +150,7 @@ PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
         os << "\\begin{pspicture}(" << sp_document_width(doc) << "," << sp_document_height(doc) << ")\n";
     }
 
-    m_tr_stack.push( NR::scale(1, -1) * NR::translate(0, sp_document_height(doc)));
+    m_tr_stack.push( Geom::Scale(1, -1) * Geom::Translate(0, sp_document_height(doc)));
 
     return fprintf(_stream, "%s", os.str().c_str());
 }
@@ -173,12 +173,12 @@ PrintLatex::finish (Inkscape::Extension::Print *mod)
 }
 
 unsigned int
-PrintLatex::bind(Inkscape::Extension::Print *mod, NR::Matrix const *transform, float opacity)
+PrintLatex::bind(Inkscape::Extension::Print *mod, Geom::Matrix const *transform, float opacity)
 {
-    NR::Matrix tr = *transform;
+    Geom::Matrix tr = *transform;
     
     if(m_tr_stack.size()){
-        NR::Matrix tr_top = m_tr_stack.top();
+        Geom::Matrix tr_top = m_tr_stack.top();
         m_tr_stack.push(tr * tr_top);
     }else
         m_tr_stack.push(tr);
@@ -203,7 +203,7 @@ unsigned int PrintLatex::comment (Inkscape::Extension::Print * module,
 
 unsigned int
 PrintLatex::fill(Inkscape::Extension::Print *mod,
-        Geom::PathVector const &pathv, NR::Matrix const *transform, SPStyle const *style,
+        Geom::PathVector const &pathv, Geom::Matrix const *transform, SPStyle const *style,
         NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -230,7 +230,7 @@ PrintLatex::fill(Inkscape::Extension::Print *mod,
 }
 
 unsigned int
-PrintLatex::stroke (Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, const NR::Matrix *transform, const SPStyle *style,
+PrintLatex::stroke (Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, const Geom::Matrix *transform, const SPStyle *style,
 			      const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -238,8 +238,8 @@ PrintLatex::stroke (Inkscape::Extension::Print *mod, Geom::PathVector const &pat
     if (style->stroke.isColor()) {
         Inkscape::SVGOStringStream os;
         float rgb[3];
-        NR::Matrix tr_stack = m_tr_stack.top();
-        double const scale = expansion(tr_stack);
+        Geom::Matrix tr_stack = m_tr_stack.top();
+        double const scale = tr_stack.descrim();
         os.setf(std::ios::fixed);
 
         sp_color_get_rgb_floatv(&style->stroke.value.color, rgb);
@@ -274,13 +274,13 @@ PrintLatex::stroke (Inkscape::Extension::Print *mod, Geom::PathVector const &pat
 
 // FIXME: why is 'transform' argument not used?
 void
-PrintLatex::print_pathvector(SVGOStringStream &os, Geom::PathVector const &pathv_in, const NR::Matrix * /*transform*/)
+PrintLatex::print_pathvector(SVGOStringStream &os, Geom::PathVector const &pathv_in, const Geom::Matrix * /*transform*/)
 {
     if (pathv_in.empty())
         return;
 
-//    NR::Matrix tf=*transform;   // why was this here?
-    NR::Matrix tf_stack=m_tr_stack.top(); // and why is transform argument not used?
+//    Geom::Matrix tf=*transform;   // why was this here?
+    Geom::Matrix tf_stack=m_tr_stack.top(); // and why is transform argument not used?
     Geom::PathVector pathv = pathv_in * tf_stack; // generates new path, which is a bit slow, but this doesn't have to be performance optimized
 
     os << "\\newpath\n";

@@ -816,7 +816,7 @@ CairoRenderContext::finish(void)
 }
 
 void
-CairoRenderContext::transform(NR::Matrix const *transform)
+CairoRenderContext::transform(Geom::Matrix const *transform)
 {
     g_assert( _is_valid );
 
@@ -829,7 +829,7 @@ CairoRenderContext::transform(NR::Matrix const *transform)
 }
 
 void
-CairoRenderContext::setTransform(NR::Matrix const *transform)
+CairoRenderContext::setTransform(Geom::Matrix const *transform)
 {
     g_assert( _is_valid );
 
@@ -840,7 +840,7 @@ CairoRenderContext::setTransform(NR::Matrix const *transform)
 }
 
 void
-CairoRenderContext::getTransform(NR::Matrix *copy) const
+CairoRenderContext::getTransform(Geom::Matrix *copy) const
 {
     g_assert( _is_valid );
 
@@ -855,12 +855,12 @@ CairoRenderContext::getTransform(NR::Matrix *copy) const
 }
 
 void
-CairoRenderContext::getParentTransform(NR::Matrix *copy) const
+CairoRenderContext::getParentTransform(Geom::Matrix *copy) const
 {
     g_assert( _is_valid );
 
     CairoRenderState *parent_state = getParentState();
-    memcpy(copy, &parent_state->transform, sizeof(NR::Matrix));
+    memcpy(copy, &parent_state->transform, sizeof(Geom::Matrix));
 }
 
 void
@@ -908,9 +908,9 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     SPPattern *pat = SP_PATTERN (paintserver);
 
-    NR::Matrix ps2user, pcs2dev;
-    ps2user.set_identity();
-    pcs2dev.set_identity();
+    Geom::Matrix ps2user, pcs2dev;
+    ps2user = Geom::identity();
+    pcs2dev = Geom::identity();
 
     double x = pattern_x(pat);
     double y = pattern_y(pat);
@@ -922,7 +922,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     TRACE(("%f x %f pattern\n", width, height));
 
     if (pbox && pattern_patternUnits(pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
-        //NR::Matrix bbox2user (pbox->x1 - pbox->x0, 0.0, 0.0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
+        //Geom::Matrix bbox2user (pbox->x1 - pbox->x0, 0.0, 0.0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
         bbox_width_scaler = pbox->x1 - pbox->x0;
         bbox_height_scaler = pbox->y1 - pbox->y0;
         ps2user[4] = x * bbox_width_scaler + pbox->x0;
@@ -935,7 +935,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     }
 
     // apply pattern transformation
-    NR::Matrix pattern_transform(pattern_patternTransform(pat));
+    Geom::Matrix pattern_transform(pattern_patternTransform(pat));
     ps2user *= pattern_transform;
 
     // create pattern contents coordinate system
@@ -964,7 +964,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     // calculate the size of the surface which has to be created
     // the scaling needs to be taken into account in the ctm after the pattern transformation
-    NR::Matrix temp;
+    Geom::Matrix temp;
     temp = pattern_transform * _state->transform;
     double width_scaler = sqrt(temp[0] * temp[0] + temp[2] * temp[2]);
     double height_scaler = sqrt(temp[1] * temp[1] + temp[3] * temp[3]);
@@ -986,8 +986,8 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     double scale_height = surface_height / (bbox_height_scaler * height);
     if (scale_width != 1.0 || scale_height != 1.0 || _vector_based_target) {
         TRACE(("needed to scale with %f %f\n", scale_width, scale_height));
-        pcs2dev *= NR::scale(1.0 / scale_width, 1.0 / scale_height);
-        ps2user *= NR::scale(scale_width, scale_height);
+        pcs2dev *= Geom::Scale(1.0 / scale_width, 1.0 / scale_height);
+        ps2user *= Geom::Scale(scale_width, scale_height);
     }
 
     pattern_ctx->setTransform(&pcs2dev);
@@ -1054,17 +1054,17 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
 
             sp_gradient_ensure_vector(SP_GRADIENT(lg)); // when exporting from commandline, vector is not built
 
-            NR::Point p1 (lg->x1.computed, lg->y1.computed);
-            NR::Point p2 (lg->x2.computed, lg->y2.computed);
+            Geom::Point p1 (lg->x1.computed, lg->y1.computed);
+            Geom::Point p2 (lg->x2.computed, lg->y2.computed);
             if (pbox && SP_GRADIENT(lg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
                 // convert to userspace
-                NR::Matrix bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
+                Geom::Matrix bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
                 p1 *= bbox2user;
                 p2 *= bbox2user;
             }
 
             // create linear gradient pattern
-            pattern = cairo_pattern_create_linear(p1[NR::X], p1[NR::Y], p2[NR::X], p2[NR::Y]);
+            pattern = cairo_pattern_create_linear(p1[Geom::X], p1[Geom::Y], p2[Geom::X], p2[Geom::Y]);
 
             // add stops
             for (gint i = 0; unsigned(i) < lg->vector.stops.size(); i++) {
@@ -1078,14 +1078,14 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
 
         sp_gradient_ensure_vector(SP_GRADIENT(rg)); // when exporting from commandline, vector is not built
 
-        NR::Point c (rg->cx.computed, rg->cy.computed);
-        NR::Point f (rg->fx.computed, rg->fy.computed);
+        Geom::Point c (rg->cx.computed, rg->cy.computed);
+        Geom::Point f (rg->fx.computed, rg->fy.computed);
         double r = rg->r.computed;
         if (pbox && SP_GRADIENT(rg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX)
             apply_bbox2user = true;
 
         // create radial gradient pattern
-        pattern = cairo_pattern_create_radial(f[NR::X], f[NR::Y], 0, c[NR::X], c[NR::Y], r);
+        pattern = cairo_pattern_create_radial(f[Geom::X], f[Geom::Y], 0, c[Geom::X], c[Geom::Y], r);
 
         // add stops
         for (gint i = 0; unsigned(i) < rg->vector.stops.size(); i++) {
@@ -1323,7 +1323,7 @@ CairoRenderContext::renderPath(const_NRBPath const *bpath, SPStyle const *style,
 
 bool
 CairoRenderContext::renderImage(guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-                                NR::Matrix const *image_transform, SPStyle const *style)
+                                Geom::Matrix const *image_transform, SPStyle const *style)
 {
     g_assert( _is_valid );
 
@@ -1438,7 +1438,7 @@ CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoG
 }
 
 bool
-CairoRenderContext::renderGlyphtext(PangoFont *font, NR::Matrix const *font_matrix,
+CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Matrix const *font_matrix,
                                     std::vector<CairoGlyphInfo> const &glyphtext, SPStyle const *style)
 {
     // create a cairo_font_face from PangoFont
@@ -1572,7 +1572,7 @@ CairoRenderContext::_concatTransform(cairo_t *cr, double xx, double yx, double x
 }
 
 void
-CairoRenderContext::_initCairoMatrix(cairo_matrix_t *matrix, NR::Matrix const *transform)
+CairoRenderContext::_initCairoMatrix(cairo_matrix_t *matrix, Geom::Matrix const *transform)
 {
     matrix->xx = (*transform)[0];
     matrix->yx = (*transform)[1];
@@ -1583,7 +1583,7 @@ CairoRenderContext::_initCairoMatrix(cairo_matrix_t *matrix, NR::Matrix const *t
 }
 
 void
-CairoRenderContext::_concatTransform(cairo_t *cr, NR::Matrix const *transform)
+CairoRenderContext::_concatTransform(cairo_t *cr, Geom::Matrix const *transform)
 {
     _concatTransform(cr, (*transform)[0], (*transform)[1],
                      (*transform)[2], (*transform)[3],

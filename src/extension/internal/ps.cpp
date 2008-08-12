@@ -586,7 +586,7 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
             memset(px, 0xff, 4 * width * 64);
             nr_arena_item_invoke_render(NULL, mod->root, &bbox, &pb, 0);
             /* Blitter goes here */
-            NR::Matrix imgt;
+            Geom::Matrix imgt;
             imgt[0] = (bbox.x1 - bbox.x0) / dots_per_pt;
             imgt[1] = 0.0;
             imgt[2] = 0.0;
@@ -633,7 +633,7 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
 }
 
 unsigned int
-PrintPS::bind(Inkscape::Extension::Print */*mod*/, NR::Matrix const *transform, float /*opacity*/)
+PrintPS::bind(Inkscape::Extension::Print */*mod*/, Geom::Matrix const *transform, float /*opacity*/)
 {
     if (!_stream) return 0;  // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
@@ -687,17 +687,17 @@ PrintPS::print_fill_style(SVGOStringStream &os, SPStyle const *const style, NRRe
         if (SP_IS_LINEARGRADIENT(SP_STYLE_FILL_SERVER(style))) {
 
             SPLinearGradient *lg = SP_LINEARGRADIENT(SP_STYLE_FILL_SERVER(style));
-            NR::Point p1 (lg->x1.computed, lg->y1.computed);
-            NR::Point p2 (lg->x2.computed, lg->y2.computed);
+            Geom::Point p1 (lg->x1.computed, lg->y1.computed);
+            Geom::Point p2 (lg->x2.computed, lg->y2.computed);
             if (pbox && SP_GRADIENT(lg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
                 // convert to userspace
-                NR::Matrix bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
+                Geom::Matrix bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
                 p1 *= bbox2user;
                 p2 *= bbox2user;
             }
 
             os << "<<\n/ShadingType 2\n/ColorSpace /DeviceRGB\n";
-            os << "/Coords [" << p1[NR::X] << " " << p1[NR::Y] << " " << p2[NR::X] << " " << p2[NR::Y] <<"]\n";
+            os << "/Coords [" << p1[Geom::X] << " " << p1[Geom::Y] << " " << p2[Geom::X] << " " << p2[Geom::Y] <<"]\n";
             os << "/Extend [true true]\n";
             os << "/Domain [0 1]\n";
             os << "/Function <<\n/FunctionType 3\n/Functions\n[\n";
@@ -728,21 +728,21 @@ PrintPS::print_fill_style(SVGOStringStream &os, SPStyle const *const style, NRRe
         } else if (SP_IS_RADIALGRADIENT(SP_STYLE_FILL_SERVER(style))) {
 
             SPRadialGradient *rg = SP_RADIALGRADIENT(SP_STYLE_FILL_SERVER(style));
-            NR::Point c(rg->cx.computed, rg->cy.computed);
-            NR::Point f(rg->fx.computed, rg->fy.computed);
+            Geom::Point c(rg->cx.computed, rg->cy.computed);
+            Geom::Point f(rg->fx.computed, rg->fy.computed);
             double r = rg->r.computed;
             if (pbox && SP_GRADIENT(rg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
                 // convert to userspace
-                NR::Matrix const bbox2user(pbox->x1 - pbox->x0, 0,
+                Geom::Matrix const bbox2user(pbox->x1 - pbox->x0, 0,
                                            0, pbox->y1 - pbox->y0,
                                            pbox->x0, pbox->y0);
                 c *= bbox2user;
                 f *= bbox2user;
-                r *= NR::expansion(bbox2user);
+                r *= bbox2user.descrim();
             }
 
             os << "<<\n/ShadingType 3\n/ColorSpace /DeviceRGB\n";
-            os << "/Coords ["<< f[NR::X] <<" "<< f[NR::Y] <<" 0 "<< c[NR::X] <<" "<< c[NR::Y] <<" "<< r <<"]\n";
+            os << "/Coords ["<< f[Geom::X] <<" "<< f[Geom::Y] <<" 0 "<< c[Geom::X] <<" "<< c[Geom::Y] <<" "<< r <<"]\n";
             os << "/Extend [true true]\n";
             os << "/Domain [0 1]\n";
             os << "/Function <<\n/FunctionType 3\n/Functions\n[\n";
@@ -817,7 +817,7 @@ PrintPS::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
 
 
 unsigned int
-PrintPS::fill(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *const style,
+PrintPS::fill(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, Geom::Matrix const *ctm, SPStyle const *const style,
               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -883,7 +883,7 @@ PrintPS::fill(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, NR
 
 
 unsigned int
-PrintPS::stroke(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *style,
+PrintPS::stroke(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, Geom::Matrix const *ctm, SPStyle const *style,
                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -906,7 +906,7 @@ PrintPS::stroke(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, 
 
 unsigned int
 PrintPS::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-               NR::Matrix const *transform, SPStyle const *style)
+               Geom::Matrix const *transform, SPStyle const *style)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
@@ -1261,7 +1261,7 @@ void PrintPS::print_glyphlist(SVGOStringStream &os, font_instance* font, Glib::u
 }
 
 unsigned int
-PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
+PrintPS::text(Inkscape::Extension::Print *mod, char const *text, Geom::Point p,
               SPStyle const *const style)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -1403,7 +1403,7 @@ PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
         // (text is black) for some reason.
 
         os << "newpath\n";
-        os << p[NR::X] << " " << p[NR::Y] << " moveto\n";
+        os << p[Geom::X] << " " << p[Geom::Y] << " moveto\n";
         os << "(";
         if(font_embedded) print_glyphlist(os, tf, s);
         else os << escaped_text.str();
@@ -1417,7 +1417,7 @@ PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
 
         // paint stroke
         os << "newpath\n";
-        os << p[NR::X] << " " << p[NR::Y] << " moveto\n";
+        os << p[Geom::X] << " " << p[Geom::Y] << " moveto\n";
         os << "(";
         if(font_embedded) print_glyphlist(os, tf, s);
         else os << escaped_text.str();
@@ -1650,7 +1650,7 @@ PrintPS::ascii85_done(SVGOStringStream &os)
 
 unsigned int
 PrintPS::print_image(FILE *ofp, guchar *px, unsigned int width, unsigned int height, unsigned int rs,
-                     NR::Matrix const *transform)
+                     Geom::Matrix const *transform)
 {
     Inkscape::SVGOStringStream os;
 

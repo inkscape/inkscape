@@ -27,14 +27,14 @@
 
 /* Identity typedef */
 
-unsigned int sp_print_bind(SPPrintContext *ctx, NR::Matrix const &transform, float opacity)
+unsigned int sp_print_bind(SPPrintContext *ctx, Geom::Matrix const &transform, float opacity)
 {
-    NR::Matrix const ntransform(transform);
+    Geom::Matrix const ntransform(transform);
     return sp_print_bind(ctx, &ntransform, opacity);
 }
 
 unsigned int
-sp_print_bind(SPPrintContext *ctx, NR::Matrix const *transform, float opacity)
+sp_print_bind(SPPrintContext *ctx, Geom::Matrix const *transform, float opacity)
 {
     return ctx->module->bind(transform, opacity);
 }
@@ -52,14 +52,14 @@ sp_print_comment(SPPrintContext *ctx, char const *comment)
 }
 
 unsigned int
-sp_print_fill(SPPrintContext *ctx, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *style,
+sp_print_fill(SPPrintContext *ctx, Geom::PathVector const &pathv, Geom::Matrix const *ctm, SPStyle const *style,
               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     return ctx->module->fill(pathv, ctm, style, pbox, dbox, bbox);
 }
 
 unsigned int
-sp_print_stroke(SPPrintContext *ctx, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *style,
+sp_print_stroke(SPPrintContext *ctx, Geom::PathVector const &pathv, Geom::Matrix const *ctm, SPStyle const *style,
                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     return ctx->module->stroke(pathv, ctm, style, pbox, dbox, bbox);
@@ -68,12 +68,12 @@ sp_print_stroke(SPPrintContext *ctx, Geom::PathVector const &pathv, NR::Matrix c
 unsigned int
 sp_print_image_R8G8B8A8_N(SPPrintContext *ctx,
                           guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-                          NR::Matrix const *transform, SPStyle const *style)
+                          Geom::Matrix const *transform, SPStyle const *style)
 {
     return ctx->module->image(px, w, h, rs, transform, style);
 }
 
-unsigned int sp_print_text(SPPrintContext *ctx, char const *text, NR::Point p,
+unsigned int sp_print_text(SPPrintContext *ctx, char const *text, Geom::Point p,
                            SPStyle const *style)
 {
     return ctx->module->text(text, p, style);

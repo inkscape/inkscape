@@ -233,7 +233,7 @@ static gchar *svgConvertGfxRGB(GfxRGB *color) {
 
 static void svgSetTransform(Inkscape::XML::Node *node, double c0, double c1,
                             double c2, double c3, double c4, double c5) {
-    NR::Matrix matrix(c0, c1, c2, c3, c4, c5);
+    Geom::Matrix matrix(c0, c1, c2, c3, c4, c5);
     gchar *transform_text = sp_svg_transform_write(matrix);
     node->setAttribute("transform", transform_text);
     g_free(transform_text);
@@ -530,7 +530,7 @@ void SvgBuilder::setClipPath(GfxState *state, bool even_odd) {
  * \return true on success; false on invalid transformation
  */
 bool SvgBuilder::getTransform(double *transform) {
-    NR::Matrix svd;
+    Geom::Matrix svd;
     gchar const *tr = _container->attribute("transform");
     bool valid = sp_svg_transform_read(tr, &svd);
     if (valid) {
@@ -619,7 +619,7 @@ gchar *SvgBuilder::_createTilingPattern(GfxTilingPattern *tiling_pattern,
     Inkscape::XML::Node *pattern_node = _xml_doc->createElement("svg:pattern");
     // Set pattern transform matrix
     double *p2u = tiling_pattern->getMatrix();
-    NR::Matrix pat_matrix(p2u[0], p2u[1], p2u[2], p2u[3], p2u[4], p2u[5]);
+    Geom::Matrix pat_matrix(p2u[0], p2u[1], p2u[2], p2u[3], p2u[4], p2u[5]);
     gchar *transform_text = sp_svg_transform_write(pat_matrix);
     pattern_node->setAttribute("patternTransform", transform_text);
     g_free(transform_text);
@@ -717,10 +717,10 @@ gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix, bool for
     gradient->setAttribute("gradientUnits", "userSpaceOnUse");
     // If needed, flip the gradient transform around the y axis
     if (matrix) {
-        NR::Matrix pat_matrix(matrix[0], matrix[1], matrix[2], matrix[3],
+        Geom::Matrix pat_matrix(matrix[0], matrix[1], matrix[2], matrix[3],
                               matrix[4], matrix[5]);
         if ( !for_shading && _is_top_level ) {
-            NR::Matrix flip(1.0, 0.0, 0.0, -1.0, 0.0, _height * PT_PER_PX);
+            Geom::Matrix flip(1.0, 0.0, 0.0, -1.0, 0.0, _height * PT_PER_PX);
             pat_matrix *= flip;
         }
         gchar *transform_text = sp_svg_transform_write(pat_matrix);
@@ -1046,7 +1046,7 @@ void SvgBuilder::updateTextShift(GfxState *state, double shift) {
  * \brief Updates current text position
  */
 void SvgBuilder::updateTextPosition(double tx, double ty) {
-    NR::Point new_position(tx, ty);
+    Geom::Point new_position(tx, ty);
     _text_position = new_position;
 }
 
@@ -1066,7 +1066,7 @@ void SvgBuilder::updateTextMatrix(GfxState *state) {
         max_scale = h_scale;
     }
     // Calculate new text matrix
-    NR::Matrix new_text_matrix(text_matrix[0] * state->getHorizScaling(),
+    Geom::Matrix new_text_matrix(text_matrix[0] * state->getHorizScaling(),
                                text_matrix[1] * state->getHorizScaling(),
                                -text_matrix[2], -text_matrix[3],
                                0.0, 0.0);
@@ -1101,7 +1101,7 @@ void SvgBuilder::_flushText() {
 
     Inkscape::XML::Node *text_node = _xml_doc->createElement("svg:text");
     // Set text matrix
-    NR::Matrix text_transform(_text_matrix);
+    Geom::Matrix text_transform(_text_matrix);
     text_transform[4] = first_glyph.position[0];
     text_transform[5] = first_glyph.position[1];
     gchar *transform = sp_svg_transform_write(text_transform);
@@ -1110,7 +1110,7 @@ void SvgBuilder::_flushText() {
 
     bool new_tspan = true;
     bool same_coords[2] = {true, true};
-    NR::Point last_delta_pos;
+    Geom::Point last_delta_pos;
     unsigned int glyphs_in_a_row = 0;
     Inkscape::XML::Node *tspan_node = NULL;
     Glib::ustring x_coords;
@@ -1197,7 +1197,7 @@ void SvgBuilder::_flushText() {
             }
         }
         // Append the coordinates to their respective strings
-        NR::Point delta_pos( glyph.text_position - first_glyph.text_position );
+        Geom::Point delta_pos( glyph.text_position - first_glyph.text_position );
         delta_pos[1] += glyph.rise;
         delta_pos[1] *= -1.0;   // flip it
         delta_pos *= _font_scaling;
@@ -1245,25 +1245,25 @@ void SvgBuilder::addChar(GfxState *state, double x, double y,
     bool is_space = ( uLen == 1 && u[0] == 32 );
     // Skip beginning space
     if ( is_space && _glyphs.size() < 1 ) {
-        NR::Point delta(dx, dy);
+        Geom::Point delta(dx, dy);
          _text_position += delta;
          return;
     }
     // Allow only one space in a row
     if ( is_space && _glyphs[_glyphs.size() - 1].code_size == 1 &&
          _glyphs[_glyphs.size() - 1].code[0] == 32 ) {
-        NR::Point delta(dx, dy);
+        Geom::Point delta(dx, dy);
         _text_position += delta;
         return;
     }
 
     SvgGlyph new_glyph;
     new_glyph.is_space = is_space;
-    new_glyph.position = NR::Point( x - originX, y - originY );
+    new_glyph.position = Geom::Point( x - originX, y - originY );
     new_glyph.text_position = _text_position;
     new_glyph.dx = dx;
     new_glyph.dy = dy;
-    NR::Point delta(dx, dy);
+    Geom::Point delta(dx, dy);
     _text_position += delta;
 
     // Convert the character to UTF-8 since that's our SVG document's encoding
@@ -1631,7 +1631,7 @@ void SvgBuilder::addMaskedImage(GfxState *state, Stream *str, int width, int hei
         mask_image_node->setAttribute("transform", NULL);
         mask_node->appendChild(mask_image_node);
         // Scale the mask to the size of the image
-        NR::Matrix mask_transform((double)width, 0.0, 0.0, (double)height, 0.0, 0.0);
+        Geom::Matrix mask_transform((double)width, 0.0, 0.0, (double)height, 0.0, 0.0);
         gchar *transform_text = sp_svg_transform_write(mask_transform);
         mask_node->setAttribute("maskTransform", transform_text);
         g_free(transform_text);

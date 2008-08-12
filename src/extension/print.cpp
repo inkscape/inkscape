@@ -61,7 +61,7 @@ Print::finish (void)
 }
 
 unsigned int
-Print::bind (const NR::Matrix *transform, float opacity)
+Print::bind (const Geom::Matrix *transform, float opacity)
 {
     return imp->bind (this, transform, opacity);
 }
@@ -79,14 +79,14 @@ Print::comment (const char * comment)
 }
 
 unsigned int
-Print::fill (Geom::PathVector const &pathv, const NR::Matrix *ctm, const SPStyle *style,
+Print::fill (Geom::PathVector const &pathv, const Geom::Matrix *ctm, const SPStyle *style,
                    const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
     return imp->fill (this, pathv, ctm, style, pbox, dbox, bbox);
 }
 
 unsigned int
-Print::stroke (Geom::PathVector const &pathv, const NR::Matrix *transform, const SPStyle *style,
+Print::stroke (Geom::PathVector const &pathv, const Geom::Matrix *transform, const SPStyle *style,
                  const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
     return imp->stroke (this, pathv, transform, style, pbox, dbox, bbox);
@@ -94,13 +94,13 @@ Print::stroke (Geom::PathVector const &pathv, const NR::Matrix *transform, const
 
 unsigned int
 Print::image (unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
-                const NR::Matrix *transform, const SPStyle *style)
+                const Geom::Matrix *transform, const SPStyle *style)
 {
     return imp->image (this, px, w, h, rs, transform, style);
 }
 
 unsigned int
-Print::text (const char* text, NR::Point p, const SPStyle* style)
+Print::text (const char* text, Geom::Point p, const SPStyle* style)
 {
     return imp->text (this, text, p, style);
 }

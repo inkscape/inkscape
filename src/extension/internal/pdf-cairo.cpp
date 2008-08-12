@@ -327,7 +327,7 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     bool   pageBoundingBox = mod->get_param_bool("pageBoundingBox");
     SPItem* doc_item = SP_ITEM(mod->base);
     // printf("Page Bounding Box: %s\n", pageBoundingBox ? "TRUE" : "FALSE");
-    NR::Matrix t (NR::identity());
+    Geom::Matrix t (Geom::identity());
     if (pageBoundingBox) {
         d.x0 = d.y0 = 0;
         d.x1 = _width;
@@ -350,7 +350,7 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     // complete transform, including doc_item's own transform
     t = sp_item_i2doc_affine (doc_item);
     // subreact doc_item's transform (comes first) from it
-    t = NR::Matrix(doc_item->transform).inverse() * t;
+    t = Geom::Matrix(doc_item->transform).inverse() * t;
 
     // create cairo context
     pdf_surface = cairo_pdf_surface_create_for_stream(Inkscape::Extension::Internal::_write_callback, _stream, d.x1-d.x0, d.y1-d.y0);
@@ -402,7 +402,7 @@ PrintCairoPDF::finish(Inkscape::Extension::Print *mod)
 }
 
 unsigned int
-PrintCairoPDF::bind(Inkscape::Extension::Print *mod, NR::Matrix const *transform, float opacity)
+PrintCairoPDF::bind(Inkscape::Extension::Print *mod, Geom::Matrix const *transform, float opacity)
 {
     if (!_stream) return 0;  // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
@@ -465,17 +465,17 @@ PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, 
 
             sp_gradient_ensure_vector(SP_GRADIENT(lg)); // when exporting from commandline, vector is not built
 
-            NR::Point p1 (lg->x1.computed, lg->y1.computed);
-            NR::Point p2 (lg->x2.computed, lg->y2.computed);
+            Geom::Point p1 (lg->x1.computed, lg->y1.computed);
+            Geom::Point p2 (lg->x2.computed, lg->y2.computed);
             if (pbox && SP_GRADIENT(lg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
                 // convert to userspace
-                NR::Matrix bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
+                Geom::Matrix bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
                 p1 *= bbox2user;
                 p2 *= bbox2user;
             }
 
             // create linear gradient pattern
-            pattern = cairo_pattern_create_linear(p1[NR::X], p1[NR::Y], p2[NR::X], p2[NR::Y]);
+            pattern = cairo_pattern_create_linear(p1[Geom::X], p1[Geom::Y], p2[Geom::X], p2[Geom::Y]);
 
             // add stops
             for (gint i = 0; unsigned(i) < lg->vector.stops.size(); i++) {
@@ -489,21 +489,21 @@ PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, 
 
         sp_gradient_ensure_vector(SP_GRADIENT(rg)); // when exporting from commandline, vector is not built
 
-        NR::Point c (rg->cx.computed, rg->cy.computed);
-        NR::Point f (rg->fx.computed, rg->fy.computed);
+        Geom::Point c (rg->cx.computed, rg->cy.computed);
+        Geom::Point f (rg->fx.computed, rg->fy.computed);
         double r = rg->r.computed;
 
-        NR::Coord const df = hypot(f[NR::X] - c[NR::X], f[NR::Y] - c[NR::Y]);
+        Geom::Coord const df = hypot(f[Geom::X] - c[Geom::X], f[Geom::Y] - c[Geom::Y]);
         if (df >= r) {
-            f[NR::X] = c[NR::X] + (f[NR::X] - c[NR::X] ) * r / (float) df;
-            f[NR::Y] = c[NR::Y] + (f[NR::Y] - c[NR::Y] ) * r / (float) df;
+            f[Geom::X] = c[Geom::X] + (f[Geom::X] - c[Geom::X] ) * r / (float) df;
+            f[Geom::Y] = c[Geom::Y] + (f[Geom::Y] - c[Geom::Y] ) * r / (float) df;
         }
 
         if (pbox && SP_GRADIENT(rg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX)
             apply_bbox2user = true;
 
         // create radial gradient pattern
-        pattern = cairo_pattern_create_radial(f[NR::X], f[NR::Y], 0, c[NR::X], c[NR::Y], r);
+        pattern = cairo_pattern_create_radial(f[Geom::X], f[Geom::Y], 0, c[Geom::X], c[Geom::Y], r);
 
         // add stops
         for (gint i = 0; unsigned(i) < rg->vector.stops.size(); i++) {
@@ -583,7 +583,7 @@ PrintCairoPDF::print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect 
 }
 
 unsigned int
-PrintCairoPDF::fill(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *const style,
+PrintCairoPDF::fill(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, Geom::Matrix const *ctm, SPStyle const *const style,
               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -686,7 +686,7 @@ PrintCairoPDF::print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect cons
 }
 
 unsigned int
-PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, NR::Matrix const *ctm, SPStyle const *style,
+PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, Geom::PathVector const &pathv, Geom::Matrix const *ctm, SPStyle const *style,
                 NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
@@ -712,7 +712,7 @@ PrintCairoPDF::stroke(Inkscape::Extension::Print *mod, Geom::PathVector const &p
 
 unsigned int
 PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w, unsigned int h, unsigned int rs,
-               NR::Matrix const *transform, SPStyle const *style)
+               Geom::Matrix const *transform, SPStyle const *style)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
@@ -786,8 +786,8 @@ PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w
 
 #ifndef RENDER_WITH_PANGO_CAIRO
 
-NR::Point
-PrintCairoPDF::draw_glyphs(cairo_t *cr, NR::Point p, PangoFont *font, PangoGlyphString *glyph_string,
+Geom::Point
+PrintCairoPDF::draw_glyphs(cairo_t *cr, Geom::Point p, PangoFont *font, PangoGlyphString *glyph_string,
                bool vertical, bool stroke)
 {
     cairo_glyph_t glyph_array[GLYPH_ARRAY_SIZE];
@@ -808,8 +808,8 @@ PrintCairoPDF::draw_glyphs(cairo_t *cr, NR::Point p, PangoFont *font, PangoGlyph
         }
 
         glyphs[i - num_invalid_glyphs].index = info->glyph;
-        glyphs[i - num_invalid_glyphs].x = p[NR::X] + (x_offset + info->geometry.x_offset)/PANGO_SCALE;
-        glyphs[i - num_invalid_glyphs].y = p[NR::Y] + (y_offset + info->geometry.y_offset)/PANGO_SCALE;
+        glyphs[i - num_invalid_glyphs].x = p[Geom::X] + (x_offset + info->geometry.x_offset)/PANGO_SCALE;
+        glyphs[i - num_invalid_glyphs].y = p[Geom::Y] + (y_offset + info->geometry.y_offset)/PANGO_SCALE;
 
         if (vertical) {
             cairo_text_extents_t extents;
@@ -828,14 +828,14 @@ PrintCairoPDF::draw_glyphs(cairo_t *cr, NR::Point p, PangoFont *font, PangoGlyph
     if (glyph_string->num_glyphs > GLYPH_ARRAY_SIZE)
         g_free(glyphs);
 
-    return NR::Point(x_offset, y_offset);
+    return Geom::Point(x_offset, y_offset);
 }
 #endif
 
 
 
 unsigned int
-PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
+PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, Geom::Point p,
               SPStyle const *const style)
 {
     bool dirty_pattern = false;
@@ -923,7 +923,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
         print_fill_style(cr, style, NULL);
 
 #ifndef RENDER_WITH_PANGO_CAIRO
-        NR::Point cursor(_last_tx, _last_ty);
+        Geom::Point cursor(_last_tx, _last_ty);
         for (GSList *tmpList = line->runs; tmpList && tmpList->data; tmpList = tmpList->next) {
             PangoLayoutRun *run = (PangoLayoutRun *)tmpList->data;
             cursor += draw_glyphs(cr, cursor, run->item->analysis.font, run->glyphs, dirty_pattern, false) / PANGO_SCALE;
@@ -951,7 +951,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
 
         // paint stroke
 #ifndef RENDER_WITH_PANGO_CAIRO
-        NR::Point cursor(_last_tx, _last_ty);
+        Geom::Point cursor(_last_tx, _last_ty);
         for (GSList *tmpList = line->runs; tmpList && tmpList->data; tmpList = tmpList->next) {
             PangoLayoutRun *run = (PangoLayoutRun *)tmpList->data;
             cursor += draw_glyphs(cr, cursor, run->item->analysis.font, run->glyphs, dirty_pattern, true) / PANGO_SCALE;

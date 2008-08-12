@@ -100,20 +100,20 @@ public:
 
     /* ----- Rendering methods ----- */
     virtual unsigned bind(Inkscape::Extension::Print *module,
-                          NR::Matrix const *transform,
+                          Geom::Matrix const *transform,
                           float opacity);
     virtual unsigned release(Inkscape::Extension::Print *module);
     virtual unsigned comment(Inkscape::Extension::Print *module, const char * comment);
     virtual unsigned fill(Inkscape::Extension::Print *module,
                           Geom::PathVector const &pathv,
-                          NR::Matrix const *ctm,
+                          Geom::Matrix const *ctm,
                           SPStyle const *style,
                           NRRect const *pbox,
                           NRRect const *dbox,
                           NRRect const *bbox);
     virtual unsigned stroke(Inkscape::Extension::Print *module,
                             Geom::PathVector const &pathv,
-                            NR::Matrix const *transform,
+                            Geom::Matrix const *transform,
                             SPStyle const *style,
                             NRRect const *pbox,
                             NRRect const *dbox,
@@ -123,11 +123,11 @@ public:
                            unsigned int w,
                            unsigned int h,
                            unsigned int rs,
-                           NR::Matrix const *transform,
+                           Geom::Matrix const *transform,
                            SPStyle const *style);
     virtual unsigned text(Inkscape::Extension::Print *module,
                           char const *text,
-                          NR::Point p,
+                          Geom::Point p,
                           SPStyle const *style);
     virtual void     processPath(Inkscape::XML::Node * node);
 };

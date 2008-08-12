@@ -73,8 +73,8 @@ struct SvgGraphicsState {
  * to the document yet.
  */
 struct SvgGlyph {
-    NR::Point position;    // Absolute glyph coords
-    NR::Point text_position; // Absolute glyph coords in text space
+    Geom::Point position;    // Absolute glyph coords
+    Geom::Point text_position; // Absolute glyph coords in text space
     double dx, dy;  // Advance values
     double rise;    // Text rise parameter
     char code[8];   // UTF-8 coded character
@@ -209,8 +209,8 @@ private:
     char *_font_specification;
     double _font_scaling;
     bool _need_font_update;
-    NR::Matrix _text_matrix;
-    NR::Point _text_position;
+    Geom::Matrix _text_matrix;
+    Geom::Point _text_position;
     std::vector<SvgGlyph> _glyphs;   // Added characters
     bool _in_text_object;   // Whether we are inside a text object
     bool _invalidated_style;

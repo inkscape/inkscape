@@ -148,7 +148,7 @@ Implementation::finish(Inkscape::Extension::Print */*module*/)
 
 /* Rendering methods */
 unsigned int
-Implementation::bind(Inkscape::Extension::Print */*module*/, NR::Matrix const */*transform*/, float /*opacity*/)
+Implementation::bind(Inkscape::Extension::Print */*module*/, Geom::Matrix const */*transform*/, float /*opacity*/)
 {
     return 0;
 }
@@ -166,14 +166,14 @@ Implementation::comment(Inkscape::Extension::Print */*module*/, char const */*co
 }
 
 unsigned int
-Implementation::fill(Inkscape::Extension::Print */*module*/, Geom::PathVector const &/*pathv*/, NR::Matrix const */*ctm*/, SPStyle const */*style*/,
+Implementation::fill(Inkscape::Extension::Print */*module*/, Geom::PathVector const &/*pathv*/, Geom::Matrix const */*ctm*/, SPStyle const */*style*/,
                      NRRect const */*pbox*/, NRRect const */*dbox*/, NRRect const */*bbox*/)
 {
     return 0;
 }
 
 unsigned int
-Implementation::stroke(Inkscape::Extension::Print */*module*/, Geom::PathVector const &/*pathv*/, NR::Matrix const */*transform*/, SPStyle const */*style*/,
+Implementation::stroke(Inkscape::Extension::Print */*module*/, Geom::PathVector const &/*pathv*/, Geom::Matrix const */*transform*/, SPStyle const */*style*/,
                        NRRect const */*pbox*/, NRRect const */*dbox*/, NRRect const */*bbox*/)
 {
     return 0;
@@ -181,14 +181,14 @@ Implementation::stroke(Inkscape::Extension::Print */*module*/, Geom::PathVector 
 
 unsigned int
 Implementation::image(Inkscape::Extension::Print */*module*/, unsigned char */*px*/, unsigned int /*w*/, unsigned int /*h*/, unsigned int /*rs*/,
-                      NR::Matrix const */*transform*/, SPStyle const */*style*/)
+                      Geom::Matrix const */*transform*/, SPStyle const */*style*/)
 {
     return 0;
 }
 
 unsigned int
 Implementation::text(Inkscape::Extension::Print */*module*/, char const */*text*/,
-                     NR::Point /*p*/, SPStyle const */*style*/)
+                     Geom::Point /*p*/, SPStyle const */*style*/)
 {
     return 0;
 }

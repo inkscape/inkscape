@@ -258,7 +258,7 @@ private:
  * NOTE:
  * This class is ported almost verbatim from the public domain
  * JAMA Matrix package.  It is modified to handle only 3x3 matrices
- * and our NR::Matrix affine transform class.  We give full
+ * and our Geom::Matrix affine transform class.  We give full
  * attribution to them, along with many thanks.  JAMA can be found at:
  *     http://math.nist.gov/javanumerics/jama
  *
@@ -920,10 +920,10 @@ static Glib::ustring getExtension(const Glib::ustring &fname)
 }
 
 
-static Glib::ustring formatTransform(NR::Matrix &tf)
+static Glib::ustring formatTransform(Geom::Matrix &tf)
 {
     Glib::ustring str;
-    if (!tf.test_identity())
+    if (!tf.isIdentity())
         {
         StringOutputStream outs;
         OutputStreamWriter out(outs);
@@ -942,16 +942,16 @@ static Glib::ustring formatTransform(NR::Matrix &tf)
  * Get the general transform from SVG pixels to
  * ODF cm
  */
-static NR::Matrix getODFTransform(const SPItem *item)
+static Geom::Matrix getODFTransform(const SPItem *item)
 {
     //### Get SVG-to-ODF transform
-    NR::Matrix tf (sp_item_i2d_affine(item));
+    Geom::Matrix tf (sp_item_i2d_affine(item));
     //Flip Y into document coordinates
     double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
-    NR::Matrix doc2dt_tf = NR::Matrix(NR::scale(1.0, -1.0));
-    doc2dt_tf            = doc2dt_tf * NR::Matrix(NR::translate(0, doc_height));
+    Geom::Matrix doc2dt_tf = Geom::Matrix(Geom::Scale(1.0, -1.0));
+    doc2dt_tf            = doc2dt_tf * Geom::Matrix(Geom::Translate(0, doc_height));
     tf                   = tf * doc2dt_tf;
-    tf                   = tf * NR::Matrix(NR::scale(pxToCm));
+    tf                   = tf * Geom::Matrix(Geom::Scale(pxToCm));
     return tf;
 }
 
@@ -962,15 +962,17 @@ static NR::Matrix getODFTransform(const SPItem *item)
  * Get the bounding box of an item, as mapped onto
  * an ODF document, in cm.
  */
-static boost::optional<NR::Rect> getODFBoundingBox(const SPItem *item)
+static boost::optional<Geom::Rect> getODFBoundingBox(const SPItem *item)
 {
-    boost::optional<NR::Rect> bbox = sp_item_bbox_desktop((SPItem *)item);
-    if (bbox) {
+    boost::optional<NR::Rect> bbox_temp = sp_item_bbox_desktop((SPItem *)item);
+    boost::optional<Geom::Rect> bbox;
+    if (bbox_temp) {
+        bbox = to_2geom(*bbox_temp);
         double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
-        NR::Matrix doc2dt_tf = NR::Matrix(NR::scale(1.0, -1.0));
-        doc2dt_tf            = doc2dt_tf * NR::Matrix(NR::translate(0, doc_height));
+        Geom::Matrix doc2dt_tf = Geom::Matrix(Geom::Scale(1.0, -1.0));
+        doc2dt_tf            = doc2dt_tf * Geom::Matrix(Geom::Translate(0, doc_height));
         bbox                 = *bbox * doc2dt_tf;
-        bbox                 = *bbox * NR::Matrix(NR::scale(pxToCm));
+        bbox                 = *bbox * Geom::Matrix(Geom::Scale(pxToCm));
     }
     return bbox;
 }
@@ -981,11 +983,11 @@ static boost::optional<NR::Rect> getODFBoundingBox(const SPItem *item)
  * Get the transform for an item, correcting for
  * handedness reversal
  */
-static NR::Matrix getODFItemTransform(const SPItem *item)
+static Geom::Matrix getODFItemTransform(const SPItem *item)
 {
-    NR::Matrix itemTransform = NR::Matrix(NR::scale(1, -1));
-    itemTransform = itemTransform * item->transform;
-    itemTransform = itemTransform * NR::Matrix(NR::scale(1, -1));
+    Geom::Matrix itemTransform (Geom::Scale(1, -1));
+    itemTransform = itemTransform * (Geom::Matrix)item->transform;
+    itemTransform = itemTransform * Geom::Scale(1, -1);
     return itemTransform;
 }
 
@@ -994,7 +996,7 @@ static NR::Matrix getODFItemTransform(const SPItem *item)
 /**
  * Get some fun facts from the transform
  */
-static void analyzeTransform(NR::Matrix &tf,
+static void analyzeTransform(Geom::Matrix &tf,
                              double &rotate, double &/*xskew*/, double &/*yskew*/,
                              double &xscale, double &yscale)
 {
@@ -1084,7 +1086,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
         }
     SPItem *item  = SP_ITEM(reprobj);
     //### Get SVG-to-ODF transform
-    NR::Matrix tf = getODFTransform(item);
+    Geom::Matrix tf = getODFTransform(item);
 
     if (nodeName == "image" || nodeName == "svg:image")
         {
@@ -1635,7 +1637,7 @@ bool OdfOutput::processStyle(Writer &outs, SPItem *item,
 
 
 bool OdfOutput::processGradient(Writer &outs, SPItem *item,
-                                const Glib::ustring &id, NR::Matrix &/*tf*/)
+                                const Glib::ustring &id, Geom::Matrix &/*tf*/)
 {
     if (!item)
         return false;
@@ -1673,14 +1675,14 @@ bool OdfOutput::processGradient(Writer &outs, SPItem *item,
         gi.style = "linear";
         SPLinearGradient *linGrad = SP_LINEARGRADIENT(gradient);
         /*
-        NR::Point p1(linGrad->x1.value, linGrad->y1.value);
+        Geom::Point p1(linGrad->x1.value, linGrad->y1.value);
         p1 = p1 * tf;
-        gi.x1 = p1[NR::X];
-        gi.y1 = p1[NR::Y];
-        NR::Point p2(linGrad->x2.value, linGrad->y2.value);
+        gi.x1 = p1[Geom::X];
+        gi.y1 = p1[Geom::Y];
+        Geom::Point p2(linGrad->x2.value, linGrad->y2.value);
         p2 = p2 * tf;
-        gi.x2 = p2[NR::X];
-        gi.y2 = p2[NR::Y];
+        gi.x2 = p2[Geom::X];
+        gi.y2 = p2[Geom::Y];
         */
         gi.x1 = linGrad->x1.value;
         gi.y1 = linGrad->y1.value;
@@ -1861,18 +1863,18 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
     Glib::ustring id       = getAttribute(node, "id");
 
     //### Get SVG-to-ODF transform
-    NR::Matrix tf        = getODFTransform(item);
+    Geom::Matrix tf        = getODFTransform(item);
 
     //### Get ODF bounding box params for item
-    boost::optional<NR::Rect> bbox = getODFBoundingBox(item);
+    boost::optional<Geom::Rect> bbox = getODFBoundingBox(item);
     if (!bbox) {
         return true;
     }
 
-    double bbox_x        = bbox->min()[NR::X];
-    double bbox_y        = bbox->min()[NR::Y];
-    double bbox_width    = bbox->extent(NR::X);
-    double bbox_height   = bbox->extent(NR::Y);
+    double bbox_x        = bbox->min()[Geom::X];
+    double bbox_y        = bbox->min()[Geom::Y];
+    double bbox_width    = (*bbox)[Geom::X].extent();
+    double bbox_height   = (*bbox)[Geom::Y].extent();
 
     double rotate;
     double xskew;
@@ -1948,16 +1950,16 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
         double iwidth  = img->width.value;
         double iheight = img->height.value;
 
-        NR::Rect ibbox(NR::Point(ix, iy), NR::Point(ix+iwidth, iy+iheight));
+        Geom::Rect ibbox(Geom::Point(ix, iy), Geom::Point(ix+iwidth, iy+iheight));
         ibbox = ibbox * tf;
-        ix      = ibbox.min()[NR::X];
-        iy      = ibbox.min()[NR::Y];
-        //iwidth  = ibbox.max()[NR::X] - ibbox.min()[NR::X];
-        //iheight = ibbox.max()[NR::Y] - ibbox.min()[NR::Y];
+        ix      = ibbox.min()[Geom::X];
+        iy      = ibbox.min()[Geom::Y];
+        //iwidth  = ibbox.max()[Geom::X] - ibbox.min()[Geom::X];
+        //iheight = ibbox.max()[Geom::Y] - ibbox.min()[Geom::Y];
         iwidth  = xscale * iwidth;
         iheight = yscale * iheight;
 
-        NR::Matrix itemTransform = getODFItemTransform(item);
+        Geom::Matrix itemTransform = getODFItemTransform(item);
 
         Glib::ustring itemTransformString = formatTransform(itemTransform);
 

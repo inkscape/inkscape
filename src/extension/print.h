@@ -41,18 +41,18 @@ public:
     unsigned int  finish      (void);
 
     /* Rendering methods */
-    unsigned int  bind        (NR::Matrix const *transform,
+    unsigned int  bind        (Geom::Matrix const *transform,
                                float opacity);
     unsigned int  release     (void);
     unsigned int  comment     (const char * comment);
     unsigned int  fill        (Geom::PathVector const &pathv,
-                               NR::Matrix const *ctm,
+                               Geom::Matrix const *ctm,
                                SPStyle const *style,
                                NRRect const *pbox,
                                NRRect const *dbox,
                                NRRect const *bbox);
     unsigned int  stroke      (Geom::PathVector const &pathv,
-                               NR::Matrix const *transform,
+                               Geom::Matrix const *transform,
                                SPStyle const *style,
                                NRRect const *pbox,
                                NRRect const *dbox,
@@ -61,10 +61,10 @@ public:
                                unsigned int w,
                                unsigned int h,
                                unsigned int rs,
-                               NR::Matrix const *transform,
+                               Geom::Matrix const *transform,
                                SPStyle const *style);
     unsigned int  text        (char const *text,
-                               NR::Point p,
+                               Geom::Point p,
                                SPStyle const *style);
     bool          textToPath  (void);
     bool          fontEmbedded  (void);

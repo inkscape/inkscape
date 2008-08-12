@@ -241,7 +241,7 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     g_free(local_fn);
     g_free(unicode_fn);
 
-    m_tr_stack.push( NR::scale(1, -1) * NR::translate(0, sp_document_height(doc)));
+    m_tr_stack.push( Geom::Scale(1, -1) * Geom::Translate(0, sp_document_height(doc)));
 
     return 0;
 }
@@ -317,7 +317,7 @@ PrintEmfWin32::destroy_brush()
 
 
 void
-PrintEmfWin32::create_pen(SPStyle const *style, const NR::Matrix *transform)
+PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Matrix *transform)
 {
     if (style) {
         float rgb[3];
@@ -335,16 +335,16 @@ PrintEmfWin32::create_pen(SPStyle const *style, const NR::Matrix *transform)
         DWORD *dash = NULL;
         float oldmiterlimit;
 
-        using NR::X;
-        using NR::Y;
+        using Geom::X;
+        using Geom::Y;
 
-        NR::Matrix tf = *transform;
+        Geom::Matrix tf = *transform;
 
-        NR::Point zero(0, 0);
-        NR::Point one(1, 1);
-        NR::Point p0(zero * tf);
-        NR::Point p1(one * tf);
-        NR::Point p(p1 - p0);
+        Geom::Point zero(0, 0);
+        Geom::Point one(1, 1);
+        Geom::Point p0(zero * tf);
+        Geom::Point p1(one * tf);
+        Geom::Point p(p1 - p0);
 
         double scale = sqrt( (p[X]*p[X]) + (p[Y]*p[Y]) ) / sqrt(2);
 
@@ -513,12 +513,12 @@ PrintEmfWin32::cmp_bpath(const NArtBpath *bp1, const NArtBpath *bp2)
 }
 
 unsigned int
-PrintEmfWin32::bind(Inkscape::Extension::Print *mod, NR::Matrix const *transform, float opacity)
+PrintEmfWin32::bind(Inkscape::Extension::Print *mod, Geom::Matrix const *transform, float opacity)
 {
-    NR::Matrix tr = *transform;
+    Geom::Matrix tr = *transform;
     
     if (m_tr_stack.size()) {
-        NR::Matrix tr_top = m_tr_stack.top();
+        Geom::Matrix tr_top = m_tr_stack.top();
         m_tr_stack.push(tr * tr_top);
     } else {
         m_tr_stack.push(tr);
@@ -536,12 +536,12 @@ PrintEmfWin32::release(Inkscape::Extension::Print *mod)
 
 unsigned int
 PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
-               Geom::PathVector const &pathv, NR::Matrix const *transform, SPStyle const *style,
+               Geom::PathVector const &pathv, Geom::Matrix const *transform, SPStyle const *style,
                NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
 {
     if (!hdc) return 0;
 
-    NR::Matrix tf = m_tr_stack.top();
+    Geom::Matrix tf = m_tr_stack.top();
 
     flush_fill(); // flush any pending fills
 
@@ -567,12 +567,12 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
 
 unsigned int
 PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
-                  Geom::PathVector const &pathv, const NR::Matrix *transform, const SPStyle *style,
+                  Geom::PathVector const &pathv, const Geom::Matrix *transform, const SPStyle *style,
                   const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
 {
     if (!hdc) return 0;
 
-    NR::Matrix tf = m_tr_stack.top();
+    Geom::Matrix tf = m_tr_stack.top();
 
     NArtBpath * bpath = BPath_from_2GeomPath(pathv);
 
@@ -610,7 +610,7 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
 
 
 bool
-PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const NR::Matrix *transform, NRRect const *pbox)
+PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const Geom::Matrix *transform, NRRect const *pbox)
 {
     NR::Matrix tf = *transform;
     const NArtBpath *bp = bpath;
@@ -645,12 +645,12 @@ PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const NR::Matrix *tran
     bp = bpath;
     while (bp->code != NR_END)
     {
-        using NR::X;
-        using NR::Y;
+        using Geom::X;
+        using Geom::Y;
 
-        NR::Point p1(bp->c(1) * tf);
-        NR::Point p2(bp->c(2) * tf);
-        NR::Point p3(bp->c(3) * tf);
+        Geom::Point p1(bp->c(1) * tf);
+        Geom::Point p2(bp->c(2) * tf);
+        Geom::Point p3(bp->c(3) * tf);
 
         p1[X] = (p1[X] * IN_PER_PX * dwDPI);
         p2[X] = (p2[X] * IN_PER_PX * dwDPI);
@@ -768,12 +768,12 @@ PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const NR::Matrix *tran
 }
 
 unsigned int
-PrintEmfWin32::print_bpath(const NArtBpath *bp, const NR::Matrix *transform, NRRect const *pbox)
+PrintEmfWin32::print_bpath(NArtBpath const *bp, Geom::Matrix const *transform, NRRect const *pbox)
 {
     unsigned int closed;
     NR::Matrix tf = *transform;
 
-    simple_shape = print_simple_shape(bp, &tf, pbox);
+    simple_shape = print_simple_shape(bp, transform, pbox);
 
     if (simple_shape)
         return TRUE;
@@ -781,12 +781,12 @@ PrintEmfWin32::print_bpath(const NArtBpath *bp, const NR::Matrix *transform, NRR
     BeginPath( hdc );
     closed = FALSE;
     while (bp->code != NR_END) {
-        using NR::X;
-        using NR::Y;
+        using Geom::X;
+        using Geom::Y;
 
-        NR::Point p1(bp->c(1) * tf);
-        NR::Point p2(bp->c(2) * tf);
-        NR::Point p3(bp->c(3) * tf);
+        Geom::Point p1(bp->c(1) * tf);
+        Geom::Point p2(bp->c(2) * tf);
+        Geom::Point p3(bp->c(3) * tf);
 
         p1[X] = (p1[X] * IN_PER_PX * dwDPI);
         p2[X] = (p2[X] * IN_PER_PX * dwDPI);
@@ -854,7 +854,7 @@ PrintEmfWin32::textToPath(Inkscape::Extension::Print * ext)
 }
 
 unsigned int
-PrintEmfWin32::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
+PrintEmfWin32::text(Inkscape::Extension::Print *mod, char const *text, Geom::Point p,
               SPStyle const *const style)
 {
     if (!hdc) return 0;
@@ -961,14 +961,14 @@ PrintEmfWin32::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
     // Transparent text background
     SetBkMode(hdc, TRANSPARENT);
 
-    NR::Matrix tf = m_tr_stack.top();
+    Geom::Matrix tf = m_tr_stack.top();
 
     p = p * tf;
-    p[NR::X] = (p[NR::X] * IN_PER_PX * dwDPI);
-    p[NR::Y] = (p[NR::Y] * IN_PER_PX * dwDPI);
+    p[Geom::X] = (p[Geom::X] * IN_PER_PX * dwDPI);
+    p[Geom::Y] = (p[Geom::Y] * IN_PER_PX * dwDPI);
 
-    LONG const xpos = (LONG) round(p[NR::X]);
-    LONG const ypos = (LONG) round(rc.bottom-p[NR::Y]);
+    LONG const xpos = (LONG) round(p[Geom::X]);
+    LONG const ypos = (LONG) round(rc.bottom-p[Geom::Y]);
 
     if (PrintWin32::is_os_wide()) {
         gunichar2 *unicode_text = g_utf8_to_utf16( text, -1, NULL, NULL, NULL );
