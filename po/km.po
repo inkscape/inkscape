@@ -1,17 +1,15 @@
-# translation of km.po to khmer
+# translation of km.po to Khmer
 # Auk Piseth <piseth_dv@khmeros.info>, 2006.
 # Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007, 2008.
-# Khoem Sokhem<khoemsokhem@khmeros.info>,2008-02-22 08:56+0700.
-# អេង វណ្ណៈ <evannak@khmeros.info>, 2008.
 # Eng Vannak <evannak@khmeros.info>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-08-11 14:38+0700\n"
-"Last-Translator: Eng Vannak <evannak@khmeros.info>\n"
-"Language-Team: khmer <support@khmeros.info>\n"
+"PO-Revision-Date: 2008-08-12 08:27+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5895,7 +5893,7 @@ msgstr "ទទឹង​លំនាំ​"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
 msgid "Scale the width of the pattern in units of its length"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ទទឹង​នៃ​លំនាំ​ជា​ឯកកត្តា​​នៃ​ប្រវែង​របស់​វា"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​ទទឹង​របស់​លំនាំ​គិត​ជា​ឯកតា​នៃ​ប្រវែង​របស់​វា"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:66
 msgid "Spacing"
@@ -17895,7 +17893,7 @@ msgstr "ស្រមោល"
 
 #: ../share/extensions/polyhedron_3d.inx.h:39
 msgid "Small Triambic Icosahedron"
-msgstr ""
+msgstr "Triambic Icosahedron តូច"
 
 #: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Cube"
@@ -17928,7 +17926,7 @@ msgstr "កាត់​ទ្វាទសត័ល​ឲ្យ​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:49
 msgid "Truncated Icosahedron"
-msgstr ""
+msgstr "Icosahedron បានកាត់​ឲ្យ​ខ្លី"
 
 #: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Octahedron"
@@ -18006,7 +18004,7 @@ msgstr "ប្រើ​ការ​ចែកចាយ​ធម្មតា​"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:1
 msgid "Alphabet Soup"
-msgstr ""
+msgstr "Alphabet Soup"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:2
 msgid "Random Seed"
@@ -18030,7 +18028,7 @@ msgstr "ប្រភេទ​កូដ​ផលិត​ផល ៖"
 
 #: ../share/extensions/restack.inx.h:2
 msgid "Arbitrary Angle:"
-msgstr ""
+msgstr "មុំ Arbitrary ៖"
 
 #: ../share/extensions/restack.inx.h:4
 msgid "Bottom"
