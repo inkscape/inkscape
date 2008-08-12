@@ -291,6 +291,7 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
 
     // Next, get all points to consider for snapping
     SnapManager const &m = _desktop->namedview->snap_manager;
+    _snap_points.clear();
     to_2geom(selection->getSnapPoints(m.getIncludeItemCenter()), _snap_points);
     std::vector<Geom::Point> snap_points_hull;
     to_2geom(selection->getSnapPointsConvexHull(), snap_points_hull);
@@ -945,8 +946,8 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
             /* Choose the smaller difference in scale.  Since s[X] == s[Y] we can
             ** just compare difference in s[X].
             */
-            bd = bb.getSnapped() ? fabs(bb.getTransformation()[NR::X] - default_scale[NR::X]) : NR_HUGE;
-            sd = sn.getSnapped() ? fabs(sn.getTransformation()[NR::X] - geom_scale[NR::X]) : NR_HUGE;
+            bd = bb.getSnapped() ? fabs(bb.getTransformation()[NR::X] - default_scale_2geom[Geom::X]) : NR_HUGE;
+            sd = sn.getSnapped() ? fabs(sn.getTransformation()[NR::X] - geom_scale_2geom[Geom::X]) : NR_HUGE;
         } else {
             /* Scale aspect ratio is unlocked */
             Geom::Scale default_scale_2geom = to_2geom(default_scale);
@@ -955,8 +956,8 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
             sn = m.freeSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, geom_scale_2geom, to_2geom(_origin_for_specpoints));
 
             /* Pick the snap that puts us closest to the original scale */
-            bd = bb.getSnapped() ? fabs(NR::L2(bb.getTransformation()) - NR::L2(default_scale.point())) : NR_HUGE;
-            sd = sn.getSnapped() ? fabs(NR::L2(sn.getTransformation()) - NR::L2(geom_scale.point())) : NR_HUGE;
+            bd = bb.getSnapped() ? fabs(NR::L2(bb.getTransformation()) - NR::L2(NR::Point(default_scale_2geom[Geom::X], default_scale_2geom[Geom::Y]))) : NR_HUGE;
+            sd = sn.getSnapped() ? fabs(NR::L2(sn.getTransformation()) - NR::L2(NR::Point(geom_scale_2geom[Geom::X], geom_scale_2geom[Geom::Y]))) : NR_HUGE;
         }
 
         if (!(bb.getSnapped() || sn.getSnapped())) {
@@ -1042,41 +1043,42 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
 
         Geom::Scale default_scale_2geom = to_2geom(default_scale);
         Geom::Scale geom_scale_2geom = to_2geom(geom_scale);
+
         bb = m.constrainedSnapStretch(Snapper::SNAPPOINT_BBOX, _bbox_points, Geom::Coord(default_scale_2geom[axis]), to_2geom(_origin_for_bboxpoints), Geom::Dim2(axis), symmetrical);
         sn = m.constrainedSnapStretch(Snapper::SNAPPOINT_NODE, _snap_points, Geom::Coord(geom_scale_2geom[axis]), to_2geom(_origin_for_specpoints), Geom::Dim2(axis), symmetrical);
 
         if (bb.getSnapped()) {
             // We snapped the bbox (which is either visual or geometric)
-            bd = fabs(bb.getTransformation()[axis] - default_scale[axis]);
-            default_scale[axis] = bb.getTransformation()[axis];
+            bd = fabs(bb.getTransformation()[axis] - default_scale_2geom[axis]);
+            default_scale_2geom[axis] = bb.getTransformation()[axis];
         }
 
         if (sn.getSnapped()) {
-            sd = fabs(sn.getTransformation()[axis] - geom_scale[axis]);
-            geom_scale[axis] = sn.getTransformation()[axis];
+            sd = fabs(sn.getTransformation()[axis] - geom_scale_2geom[axis]);
+            geom_scale_2geom[axis] = sn.getTransformation()[axis];
         }
 
         if (symmetrical) {
             // on ctrl, apply symmetrical scaling instead of stretching
             // Preserve aspect ratio, but never flip in the dimension not being edited (by using fabs())
-            default_scale[perp] = fabs(default_scale[axis]);
-            geom_scale[perp] = fabs(geom_scale[axis]);
+            default_scale_2geom[perp] = fabs(default_scale_2geom[axis]);
+            geom_scale_2geom[perp] = fabs(geom_scale_2geom[axis]);
         }
 
         if (!(bb.getSnapped() || sn.getSnapped())) {
             // We didn't snap at all! Don't update the handle position, just calculate the new transformation
-            _calcAbsAffineDefault(default_scale);
+            _calcAbsAffineDefault(from_2geom(default_scale_2geom));
             _desktop->snapindicator->remove_snappoint();
         } else if (bd < sd) {
             _desktop->snapindicator->set_new_snappoint(bb);
             // Calculate the new transformation and update the handle position
-            pt = _calcAbsAffineDefault(default_scale);
+            pt = _calcAbsAffineDefault(from_2geom(default_scale_2geom));
         } else {
             _desktop->snapindicator->set_new_snappoint(sn);
             // We snapped the special points (e.g. nodes), which are not at the visual bbox
             // The handle location however (pt) might however be at the visual bbox, so we
             // will have to calculate pt taking the stroke width into account
-            pt = _calcAbsAffineGeom(geom_scale);
+            pt = _calcAbsAffineGeom(from_2geom(geom_scale_2geom));
         }
     }
 
