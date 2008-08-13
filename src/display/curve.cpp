@@ -360,15 +360,18 @@ SPCurve::first_path() const
 }
 
 /**
- * Return first point of first subpath or (0,0).  TODO: shouldn't this be (NR_HUGE, NR_HUGE) to be able to tell it apart from normal (0,0) ?
+ * Return first point of first subpath or nothing when the path is empty.
  */
-Geom::Point
+boost::optional<Geom::Point>
 SPCurve::first_point() const
 {
-    if (is_empty())
-        return Geom::Point(0, 0);
+    boost::optional<Geom::Point> retval;
 
-    return _pathv.front().initialPoint();
+    if (!is_empty()) {
+        retval = _pathv.front().initialPoint();
+    }
+
+    return retval;
 }
 
 /**
@@ -414,7 +417,7 @@ SPCurve::penultimate_point() const
 }
 
 /**
- * Return last point of last subpath or (0,0).  TODO: shouldn't this be (NR_HUGE, NR_HUGE) to be able to tell it apart from normal (0,0) ?
+ * Return last point of last subpath or nothing when the curve is empty.
  * If the last path is only a moveto, then return that point.
  */
 boost::optional<Geom::Point>
@@ -422,10 +425,11 @@ SPCurve::last_point() const
 {
     boost::optional<Geom::Point> retval;
 
-    if (is_empty())
-        return Geom::Point(0, 0);
+    if (!is_empty()) {
+        retval = _pathv.back().finalPoint();
+    }
 
-    return _pathv.back().finalPoint();
+    return retval;
 }
 
 /**
@@ -500,8 +504,8 @@ SPCurve::append_continuous(SPCurve const *c1, gdouble tolerance)
         return this;
     }
 
-    if ( (fabs(this->last_point()[X] - c1->first_point()[X]) <= tolerance)
-         && (fabs(this->last_point()[Y] - c1->first_point()[Y]) <= tolerance) )
+    if ( (fabs((*this->last_point())[X] - (*c1->first_point())[X]) <= tolerance)
+         && (fabs((*this->last_point())[Y] - (*c1->first_point())[Y]) <= tolerance) )
     {
     // c1's first subpath can be appended to this curve's last subpath
         Geom::PathVector::const_iterator path_it = c1->_pathv.begin();
@@ -548,8 +552,8 @@ SPCurve::stretch_endpoints(Geom::Point const &new_p0, Geom::Point const &new_p1)
         return;
     }
 
-    Geom::Point const offset0( new_p0 - first_point() );
-    Geom::Point const offset1( new_p1 - last_point() );
+    Geom::Point const offset0( new_p0 - *first_point() );
+    Geom::Point const offset1( new_p1 - *last_point() );
 
     Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2 = _pathv.front().toPwSb();
     Geom::Piecewise<Geom::SBasis> arclength = Geom::arcLengthSb(pwd2);

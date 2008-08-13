@@ -101,12 +101,12 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
         NR::Point other_endpt;
         NR::Point last_seg_pt;
         if (h2attItem[0] != NULL) {
-            other_endpt = path->curve->last_point();
+            other_endpt = *(path->curve->last_point());
             last_seg_pt = *(path->curve->second_point());
             ind = 0;
         }
         else {
-            other_endpt = path->curve->first_point();
+            other_endpt = *(path->curve->first_point());
             last_seg_pt = *(path->curve->penultimate_point());
             ind = 1;
         }

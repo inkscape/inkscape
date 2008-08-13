@@ -1170,10 +1170,10 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
     if (cc->active_conn == item)
     {
         // Just adjust handle positions.
-        Geom::Point startpt = curve->first_point() * i2d;
+        Geom::Point startpt = *(curve->first_point()) * i2d;
         sp_knot_set_position(cc->endpt_handle[0], startpt, 0);
 
-        Geom::Point endpt = curve->last_point() * i2d;
+        Geom::Point endpt = *(curve->last_point()) * i2d;
         sp_knot_set_position(cc->endpt_handle[1], endpt, 0);
 
         return;
@@ -1237,10 +1237,10 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
                 G_CALLBACK(endpt_handler), cc);
     }
 
-    Geom::Point startpt = curve->first_point() * i2d;
+    Geom::Point startpt = *(curve->first_point()) * i2d;
     sp_knot_set_position(cc->endpt_handle[0], startpt, 0);
 
-    Geom::Point endpt = curve->last_point() * i2d;
+    Geom::Point endpt = *(curve->last_point()) * i2d;
     sp_knot_set_position(cc->endpt_handle[1], endpt, 0);
 
     sp_knot_show(cc->endpt_handle[0]);

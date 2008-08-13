@@ -41,7 +41,7 @@ LPEOffset::~LPEOffset()
 void
 LPEOffset::doOnApply(SPLPEItem *lpeitem)
 {
-    offset_pt.param_set_and_write_new_value(SP_SHAPE(lpeitem)->curve->first_point());
+    offset_pt.param_set_and_write_new_value(*(SP_SHAPE(lpeitem)->curve->first_point()));
 }
 
 static void append_half_circle(Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,

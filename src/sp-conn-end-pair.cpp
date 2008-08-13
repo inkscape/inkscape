@@ -178,10 +178,10 @@ SPConnEndPair::getEndpoints(NR::Point endPts[]) const {
         else
         {
             if (h == 0) {
-                endPts[h] = curve->first_point();
+                endPts[h] = *(curve->first_point());
             }
             else {
-                endPts[h] = curve->last_point();
+                endPts[h] = *(curve->last_point());
             }
         }
     }

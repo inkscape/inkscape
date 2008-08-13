@@ -48,8 +48,8 @@ public:
     Geom::Path const * last_path() const;
     Geom::Curve const * first_segment() const;
     Geom::Path const * first_path() const;
-    Geom::Point first_point() const;
-    Geom::Point last_point() const;
+    boost::optional<Geom::Point> first_point() const;
+    boost::optional<Geom::Point> last_point() const;
     boost::optional<Geom::Point> second_point() const;
     boost::optional<Geom::Point> penultimate_point() const;
 
