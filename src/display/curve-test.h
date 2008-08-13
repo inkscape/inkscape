@@ -227,7 +227,7 @@ public:
         pv.push_back(path3);
         TS_ASSERT_EQUALS( *(SPCurve(pv).second_point()) , Geom::Point(1,0));
         pv.insert(pv.begin(), path4);
-        TS_ASSERT_EQUALS( SPCurve(pv).second_point() == false, true );
+        TS_ASSERT_EQUALS( *SPCurve(pv).second_point(), Geom::Point(0,0) );
     }
 
     void testPenultimatePoint()
