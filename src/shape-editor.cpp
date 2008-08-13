@@ -23,7 +23,7 @@
 #include "desktop-handles.h"
 #include "knotholder.h"
 #include "live_effects/parameter/pointparam-knotholder.h"
-#include "node-context.h"
+#include "nodepath.h"
 #include "xml/node-event-vector.h"
 #include "prefs-utils.h"
 #include "object-edit.h"

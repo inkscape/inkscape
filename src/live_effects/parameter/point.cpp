@@ -19,12 +19,7 @@
 #include "verbs.h"
 
 // needed for on-canvas editting:
-#include "tools-switch.h"
-#include "node-context.h"
-#include "shape-editor.h"
 #include "desktop.h"
-#include "selection.h"
-#include "libnr/nr-convert2geom.h"
 
 namespace Inkscape {
 

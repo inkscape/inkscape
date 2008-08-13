@@ -10,19 +10,9 @@
  */
 
 #include "live_effects/effect.h"
-#include "live_effects/parameter/parameter.h"
 #include "live_effects/parameter/path.h"
 #include "live_effects/parameter/enum.h"
 #include "live_effects/parameter/bool.h"
-
-// needed for on-canvas editting:
-#include "tools-switch.h"
-#include "shape-editor.h"
-#include "node-context.h"
-#include "desktop-handles.h"
-#include "selection.h"
-#include "nodepath.h"
-
 
 namespace Inkscape {
 namespace LivePathEffect {
