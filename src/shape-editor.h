@@ -99,7 +99,7 @@ public:
     void set_type_of_segments(NRPathcode code);
 
     void move_nodes(gdouble dx, gdouble dy);
-    void move_nodes_screen(gdouble dx, gdouble dy);
+    void move_nodes_screen(SPDesktop *desktop, gdouble dx, gdouble dy);
 
     void rotate_nodes(gdouble angle, int which, bool screen);
 

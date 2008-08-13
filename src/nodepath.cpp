@@ -837,26 +837,6 @@ static gchar *create_typestr(Inkscape::NodePath::Path *np)
 }
 
 /**
- * Returns current path in context. // later eliminate this function at all!
- */
-static Inkscape::NodePath::Path *sp_nodepath_current()
-{
-    if (!SP_ACTIVE_DESKTOP) {
-        return NULL;
-    }
-
-    SPEventContext *event_context = (SP_ACTIVE_DESKTOP)->event_context;
-
-    if (!SP_IS_NODE_CONTEXT(event_context)) {
-        return NULL;
-    }
-
-    return SP_NODE_CONTEXT(event_context)->shape_editor->get_nodepath();
-}
-
-
-
-/**
  \brief Fills node and handle positions for three nodes, splitting line
   marked by end at distance t.
  */
@@ -1576,11 +1556,10 @@ sp_node_selected_move(Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy
  * Move node selection off screen and commit the change.
  */
 void
-sp_node_selected_move_screen(Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy)
+sp_node_selected_move_screen(SPDesktop *desktop, Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy)
 {
     // borrowed from sp_selection_move_screen in selection-chemistry.c
     // we find out the current zoom factor and divide deltas by it
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     gdouble zoom = desktop->current_zoom();
     gdouble zdx = dx / zoom;
@@ -1952,7 +1931,7 @@ sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Po
     curve->unref();
 
     //find segment to segment
-    Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(segment_index);
+    Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(nodepath, segment_index);
 
     //fixme: this can return NULL, so check before proceeding.
     g_return_if_fail(e != NULL);
@@ -1998,7 +1977,7 @@ sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
     curve->unref();
 
     //find segment to split
-    Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(segment_index);
+    Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(nodepath, segment_index);
 
     //don't know why but t seems to flip for lines
     if (sp_node_path_code_from_side(e, sp_node_get_side(e, -1)) == NR_LINETO) {
@@ -2024,9 +2003,9 @@ sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
  * cf. app/vectors/gimpbezierstroke.c, gimp_bezier_stroke_point_move_relative()
  */
 void
-sp_nodepath_curve_drag(int node, double t, NR::Point delta)
+sp_nodepath_curve_drag(Inkscape::NodePath::Path *nodepath, int node, double t, NR::Point delta)
 {
-    Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(node);
+    Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(nodepath, node);
 
     //fixme: e and e->p can be NULL, so check for those before proceeding
     g_return_if_fail(e != NULL);
@@ -4643,11 +4622,10 @@ static NRPathcode sp_node_path_code_from_side(Inkscape::NodePath::Node *node,Ink
  * Return node with the given index
  */
 Inkscape::NodePath::Node *
-sp_nodepath_get_node_by_index(int index)
+sp_nodepath_get_node_by_index(Inkscape::NodePath::Path *nodepath, int index)
 {
     Inkscape::NodePath::Node *e = NULL;
 
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) {
         return e;
     }
@@ -4745,7 +4723,7 @@ sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)//!!!move to Sha
     if (nodepath) {
         desktop = nodepath->desktop;
     } else {
-        desktop = SP_ACTIVE_DESKTOP;
+        desktop = SP_ACTIVE_DESKTOP; // when this is eliminated also remove #include "inkscape.h" above
     }
 
     SPEventContext *ec = desktop->event_context;

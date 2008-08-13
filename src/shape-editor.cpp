@@ -441,7 +441,7 @@ void ShapeEditor::curve_drag(gdouble eventx, gdouble eventy) {
                                 eventy - this->curvepoint_event[NR::Y]);
         NR::Point const delta_dt(this->desktop->w2d(delta_w));
 
-        sp_nodepath_curve_drag (this->grab_node, this->grab_t, delta_dt); //!!! FIXME: which nodepath?!!! also uses current!!!
+        sp_nodepath_curve_drag (this->nodepath, this->grab_node, this->grab_t, delta_dt);
         this->curvepoint_event[NR::X] = x;
         this->curvepoint_event[NR::Y] = y;
 
@@ -517,8 +517,8 @@ void ShapeEditor::set_type_of_segments(NRPathcode code) {
     sp_node_selected_set_line_type(this->nodepath, code);
 }
 
-void ShapeEditor::move_nodes_screen(gdouble dx, gdouble dy) {
-    sp_node_selected_move_screen(this->nodepath, dx, dy);
+void ShapeEditor::move_nodes_screen(SPDesktop *desktop, gdouble dx, gdouble dy) {
+    sp_node_selected_move_screen(desktop, this->nodepath, dx, dy);
 }
 void ShapeEditor::move_nodes(gdouble dx, gdouble dy) {
     sp_node_selected_move(this->nodepath, dx, dy);

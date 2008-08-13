@@ -557,8 +557,8 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(mul*-10, 0); // shift
-                            else nc->shape_editor->move_nodes_screen(mul*-1, 0); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(desktop, mul*-10, 0); // shift
+                            else nc->shape_editor->move_nodes_screen(desktop, mul*-1, 0); // no shift
                         }
                         else { // no alt
                             if (MOD__SHIFT) nc->shape_editor->move_nodes(mul*-10*nudge, 0); // shift
@@ -574,8 +574,8 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(0, mul*10); // shift
-                            else nc->shape_editor->move_nodes_screen(0, mul*1); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(desktop, 0, mul*10); // shift
+                            else nc->shape_editor->move_nodes_screen(desktop, 0, mul*1); // no shift
                         }
                         else { // no alt
                             if (MOD__SHIFT) nc->shape_editor->move_nodes(0, mul*10*nudge); // shift
@@ -591,8 +591,8 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(mul*10, 0); // shift
-                            else nc->shape_editor->move_nodes_screen(mul*1, 0); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(desktop, mul*10, 0); // shift
+                            else nc->shape_editor->move_nodes_screen(desktop, mul*1, 0); // no shift
                         }
                         else { // no alt
                             if (MOD__SHIFT) nc->shape_editor->move_nodes(mul*10*nudge, 0); // shift
@@ -608,8 +608,8 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(0, mul*-10); // shift
-                            else nc->shape_editor->move_nodes_screen(0, mul*-1); // no shift
+                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(desktop, 0, mul*-10); // shift
+                            else nc->shape_editor->move_nodes_screen(desktop, 0, mul*-1); // no shift
                         }
                         else { // no alt
                             if (MOD__SHIFT) nc->shape_editor->move_nodes(0, mul*-10*nudge); // shift

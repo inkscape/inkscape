@@ -295,8 +295,8 @@ void sp_nodepath_selected_align(Inkscape::NodePath::Path *nodepath, NR::Dim2 axi
 void sp_nodepath_selected_distribute(Inkscape::NodePath::Path *nodepath, NR::Dim2 axis);
 void sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p, bool toggle);
 void sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p);
-void sp_nodepath_curve_drag(int node, double t, NR::Point delta);
-Inkscape::NodePath::Node * sp_nodepath_get_node_by_index(int index);
+void sp_nodepath_curve_drag(Inkscape::NodePath::Path *nodepath, int node, double t, NR::Point delta);
+Inkscape::NodePath::Node * sp_nodepath_get_node_by_index(Inkscape::NodePath::Path *np, int index);
 /* possibly private functions */
 
 void sp_node_selected_add_node (Inkscape::NodePath::Path *nodepath);
@@ -310,7 +310,7 @@ void sp_node_selected_delete_segment (Inkscape::NodePath::Path *nodepath);
 void sp_node_selected_set_type (Inkscape::NodePath::Path *nodepath, Inkscape::NodePath::NodeType type);
 void sp_node_selected_set_line_type (Inkscape::NodePath::Path *nodepath, NRPathcode code);
 void sp_node_selected_move (Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy);
-void sp_node_selected_move_screen (Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy);
+void sp_node_selected_move_screen (SPDesktop *desktop, Inkscape::NodePath::Path *nodepath, gdouble dx, gdouble dy);
 void sp_node_selected_move_absolute (Inkscape::NodePath::Path *nodepath, Geom::Coord val, Geom::Dim2 axis);
 Geom::Rect sp_node_selected_bbox (Inkscape::NodePath::Path *nodepath);
 boost::optional<Geom::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis);
