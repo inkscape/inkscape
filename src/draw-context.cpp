@@ -116,6 +116,24 @@ sp_draw_context_init(SPDrawContext *dc)
     dc->green_color = 0x00ff007f;
     dc->red_curve_is_valid = false;
 
+    dc->red_bpath = NULL;
+    dc->red_curve = NULL;
+
+    dc->blue_bpath = NULL;
+    dc->blue_curve = NULL;
+
+    dc->green_bpaths = NULL;
+    dc->green_curve = NULL;
+    dc->green_anchor = NULL;
+    dc->green_closed = false;
+
+    dc->white_item = NULL;
+    dc->white_curves = NULL;
+    dc->white_anchors = NULL;
+
+    dc->sa = NULL;
+    dc->ea = NULL;
+
     dc->waiting_LPE_type = Inkscape::LivePathEffect::INVALID_LPE;
 
     new (&dc->sel_changed_connection) sigc::connection();
