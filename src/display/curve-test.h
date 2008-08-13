@@ -215,32 +215,32 @@ public:
 
     void testSecondPoint()
     {
-        TS_ASSERT_EQUALS(SPCurve(Geom::PathVector(1, path1)).second_point() , Geom::Point(1,0));
-        TS_ASSERT_EQUALS(SPCurve(Geom::PathVector(1, path2)).second_point() , Geom::Point(3,0));
-        TS_ASSERT_EQUALS(SPCurve(Geom::PathVector(1, path3)).second_point() , Geom::Point(5,1));
-        TS_ASSERT_EQUALS(SPCurve(Geom::PathVector(1, path4)).second_point() , Geom::Point(3,5));
+        TS_ASSERT_EQUALS( *(SPCurve(Geom::PathVector(1, path1)).second_point()) , Geom::Point(1,0));
+        TS_ASSERT_EQUALS( *(SPCurve(Geom::PathVector(1, path2)).second_point()) , Geom::Point(3,0));
+        TS_ASSERT_EQUALS( *(SPCurve(Geom::PathVector(1, path3)).second_point()) , Geom::Point(5,1));
+        TS_ASSERT_EQUALS( *(SPCurve(Geom::PathVector(1, path4)).second_point()) , Geom::Point(3,5));
         Geom::PathVector pv;
         pv.push_back(path1);
         pv.push_back(path2);
         pv.push_back(path3);
-        TS_ASSERT_EQUALS(SPCurve(pv).second_point() , Geom::Point(1,0));
+        TS_ASSERT_EQUALS( *(SPCurve(pv).second_point()) , Geom::Point(1,0));
         pv.insert(pv.begin(), path4);
-        TS_ASSERT_EQUALS(SPCurve(pv).second_point() , Geom::Point(0,0));
+        TS_ASSERT_EQUALS( SPCurve(pv).second_point() == false, true );
     }
 
     void testPenultimatePoint()
     {
-        TS_ASSERT_EQUALS(SPCurve(Geom::PathVector(1, path1)).penultimate_point() , Geom::Point(1,1));
-        TS_ASSERT_EQUALS(SPCurve(Geom::PathVector(1, path2)).penultimate_point() , Geom::Point(3,0));
-        TS_ASSERT_EQUALS(SPCurve(Geom::PathVector(1, path3)).penultimate_point() , Geom::Point(6,4));
-        TS_ASSERT_EQUALS(SPCurve(Geom::PathVector(1, path4)).penultimate_point() , Geom::Point(3,5));
+        TS_ASSERT_EQUALS( *(SPCurve(Geom::PathVector(1, path1)).penultimate_point()) , Geom::Point(1,1));
+        TS_ASSERT_EQUALS( *(SPCurve(Geom::PathVector(1, path2)).penultimate_point()) , Geom::Point(3,0));
+        TS_ASSERT_EQUALS( *(SPCurve(Geom::PathVector(1, path3)).penultimate_point()) , Geom::Point(6,4));
+        TS_ASSERT_EQUALS( *(SPCurve(Geom::PathVector(1, path4)).penultimate_point()) , Geom::Point(3,5));
         Geom::PathVector pv;
         pv.push_back(path1);
         pv.push_back(path2);
         pv.push_back(path3);
-        TS_ASSERT_EQUALS(SPCurve(pv).penultimate_point() , Geom::Point(6,4));
+        TS_ASSERT_EQUALS( *(SPCurve(pv).penultimate_point()) , Geom::Point(6,4));
         pv.push_back(path4);
-        TS_ASSERT_EQUALS(SPCurve(pv).penultimate_point() , Geom::Point(8,4));
+        TS_ASSERT_EQUALS( *(SPCurve(pv).penultimate_point()) , Geom::Point(8,4));
     }
 
     // TODO: Rest of the methods

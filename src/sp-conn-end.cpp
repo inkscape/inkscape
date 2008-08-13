@@ -68,8 +68,8 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
         NR::Matrix h2i2anc[2];
         NR::Rect h2bbox_icoordsys[2];
         NR::Point last_seg_endPt[2] = {
-            path->curve->second_point(),
-            path->curve->penultimate_point()
+            *(path->curve->second_point()),
+            *(path->curve->penultimate_point())
         };
         for (unsigned h = 0; h < 2; ++h) {
             boost::optional<NR::Rect> bbox = h2attItem[h]->getBounds(NR::identity());
@@ -102,12 +102,12 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
         NR::Point last_seg_pt;
         if (h2attItem[0] != NULL) {
             other_endpt = path->curve->last_point();
-            last_seg_pt = path->curve->second_point();
+            last_seg_pt = *(path->curve->second_point());
             ind = 0;
         }
         else {
             other_endpt = path->curve->first_point();
-            last_seg_pt = path->curve->penultimate_point();
+            last_seg_pt = *(path->curve->penultimate_point());
             ind = 1;
         }
         NR::Point h2endPt_icoordsys[2];

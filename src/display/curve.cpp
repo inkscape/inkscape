@@ -373,48 +373,55 @@ SPCurve::first_point() const
 
 /**
  * Return the second point of first subpath or _movePos if curve too short.
- * If the pathvector is empty, this returns (0,0). If the first path is only a moveto, this method
+ * If the pathvector is empty, this returns nothing. If the first path is only a moveto, this method
  * returns the first point of the second path, if it exists. If there is no 2nd path, it returns the
  * first point of the first path.
- *
- * FIXME: for empty paths shouldn't this return (NR_HUGE,NR_HUGE)
  */
-Geom::Point
+boost::optional<Geom::Point>
 SPCurve::second_point() const
 {
-    if (is_empty()) {
-        return Geom::Point(0,0);
-    }
-    else if (_pathv.front().empty()) {
-        // first path is only a moveto
-        // check if there is second path
-        if (_pathv.size() > 1) {
-            return _pathv[1].initialPoint();
+    boost::optional<Geom::Point> retval;
+    if (!is_empty()) {
+        if (_pathv.front().empty()) {
+            // first path is only a moveto
+            // check if there is second path
+            if (_pathv.size() > 1) {
+                retval = _pathv[1].initialPoint();
+            } else {
+                retval = _pathv[0].initialPoint();
+            }
         } else {
-            return _pathv[0].initialPoint();
+            retval = _pathv.front()[0].finalPoint();
         }
     }
-    else
-        return _pathv.front()[0].finalPoint();
+
+    return retval;
 }
 
 /**
  * TODO: fix comment: Return the second-last point of last subpath or _movePos if curve too short.
  */
-Geom::Point
+boost::optional<Geom::Point>
 SPCurve::penultimate_point() const
 {
-    Geom::Curve const& back = _pathv.back().back_default();
-    return back.initialPoint();
+    boost::optional<Geom::Point> retval;
+    if (!is_empty()) {
+        Geom::Curve const& back = _pathv.back().back_default();
+        retval = back.initialPoint();
+    }
+
+    return retval;
 }
 
 /**
  * Return last point of last subpath or (0,0).  TODO: shouldn't this be (NR_HUGE, NR_HUGE) to be able to tell it apart from normal (0,0) ?
  * If the last path is only a moveto, then return that point.
  */
-Geom::Point
+boost::optional<Geom::Point>
 SPCurve::last_point() const
 {
+    boost::optional<Geom::Point> retval;
+
     if (is_empty())
         return Geom::Point(0, 0);
 

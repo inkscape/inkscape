@@ -20,6 +20,8 @@
 
 #include <2geom/forward.h>
 
+#include <boost/optional.hpp>
+
 class SPCurve {
 public:
     /* Constructors */
@@ -48,8 +50,8 @@ public:
     Geom::Path const * first_path() const;
     Geom::Point first_point() const;
     Geom::Point last_point() const;
-    Geom::Point second_point() const;
-    Geom::Point penultimate_point() const;
+    boost::optional<Geom::Point> second_point() const;
+    boost::optional<Geom::Point> penultimate_point() const;
 
     void reset();
 
