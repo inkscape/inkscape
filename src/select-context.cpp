@@ -231,8 +231,8 @@ sp_select_context_abort(SPEventContext *event_context)
             return true;
         }
     } else {
-        if (Inkscape::Rubberband::get()->is_started()) {
-            Inkscape::Rubberband::get()->stop();
+        if (Inkscape::Rubberband::get(desktop)->is_started()) {
+            Inkscape::Rubberband::get(desktop)->stop();
             rb_escaped = 1;
             SP_EVENT_CONTEXT(sc)->defaultMessageContext()->clear();
             SP_EVENT_CONTEXT(sc)->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selection canceled."));
@@ -441,8 +441,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 NR::Point const button_pt(event->button.x, event->button.y);
                 NR::Point const p(desktop->w2d(button_pt));
                 if (event->button.state & GDK_MOD1_MASK)
-                    Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
-                Inkscape::Rubberband::get()->start(desktop, p);
+                    Inkscape::Rubberband::get(desktop)->setMode(RUBBERBAND_MODE_TOUCHPATH);
+                Inkscape::Rubberband::get(desktop)->start(desktop, p);
                 if (sc->grabbed) {
                     sp_canvas_item_ungrab(sc->grabbed, event->button.time);
                     sc->grabbed = NULL;
@@ -495,7 +495,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     /* User has dragged fast, so we get events on root (lauris)*/
                     // not only that; we will end up here when ctrl-dragging as well
                     // and also when we started within tolerance, but trespassed tolerance outside of item
-                    Inkscape::Rubberband::get()->stop();
+                    Inkscape::Rubberband::get(desktop)->stop();
                     SP_EVENT_CONTEXT(sc)->defaultMessageContext()->clear();
                     item_at_point = desktop->item_at_point(NR::Point(event->button.x, event->button.y), FALSE);
                     if (!item_at_point) // if no item at this point, try at the click point (bug 1012200)
@@ -539,9 +539,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         sp_canvas_end_forced_full_redraws(desktop->canvas);
                     }
                 } else {
-                    if (Inkscape::Rubberband::get()->is_started()) {
-                        Inkscape::Rubberband::get()->move(p);
-                        if (Inkscape::Rubberband::get()->getMode() == RUBBERBAND_MODE_TOUCHPATH) {
+                    if (Inkscape::Rubberband::get(desktop)->is_started()) {
+                        Inkscape::Rubberband::get(desktop)->move(p);
+                        if (Inkscape::Rubberband::get(desktop)->getMode() == RUBBERBAND_MODE_TOUCHPATH) {
                             event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to rubberband selection"));
                         } else {
                             event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to touch selection"));
@@ -589,7 +589,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     }
                     sc->item = NULL;
                 } else {
-                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get(desktop);
                     if (r->is_started() && !within_tolerance) {
                         // this was a rubberband drag
                         GSList *items = NULL;
@@ -672,7 +672,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 desktop->updateNow();
             }
             if (event->button.button == 1) {
-                Inkscape::Rubberband::get()->stop(); // might have been started in another tool!
+                Inkscape::Rubberband::get(desktop)->stop(); // might have been started in another tool!
             }
             sc->button_press_shift = false;
             sc->button_press_ctrl = false;
@@ -692,10 +692,10 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if (!key_is_a_modifier (keyval)) {
                     event_context->defaultMessageContext()->clear();
             } else if (sc->grabbed || seltrans->isGrabbed()) {
-                if (Inkscape::Rubberband::get()->is_started()) {
+                if (Inkscape::Rubberband::get(desktop)->is_started()) {
                     // if Alt then change cursor to moving cursor:
                     if (alt) {
-                        Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
+                        Inkscape::Rubberband::get(desktop)->setMode(RUBBERBAND_MODE_TOUCHPATH);
                     }
                 } else {
                 // do not change the statusbar text when mousekey is down to move or transform the object,
@@ -922,10 +922,10 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                          || (keyval == GDK_Meta_L)
                          || (keyval == GDK_Meta_R));
 
-            if (Inkscape::Rubberband::get()->is_started()) {
+            if (Inkscape::Rubberband::get(desktop)->is_started()) {
                 // if Alt then change cursor to moving cursor:
                 if (alt) {
-                    Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_RECT);
+                    Inkscape::Rubberband::get(desktop)->setMode(RUBBERBAND_MODE_RECT);
                 }
             }
             }

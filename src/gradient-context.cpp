@@ -544,7 +544,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
             Geom::Point button_dt = to_2geom(desktop->w2d(button_w));
             if (event->button.state & GDK_SHIFT_MASK) {
-                Inkscape::Rubberband::get()->start(desktop, from_2geom(button_dt));
+                Inkscape::Rubberband::get(desktop)->start(desktop, from_2geom(button_dt));
             } else {
                 // remember clicked item, disregarding groups, honoring Alt; do nothing with Crtl to
                 // enable Ctrl+doubleclick of exactly the selected item(s)
@@ -579,8 +579,8 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                      event->motion.y);
             NR::Point const motion_dt = event_context->desktop->w2d(motion_w);
 
-            if (Inkscape::Rubberband::get()->is_started()) {
-                Inkscape::Rubberband::get()->move(motion_dt);
+            if (Inkscape::Rubberband::get(desktop)->is_started()) {
+                Inkscape::Rubberband::get(desktop)->move(motion_dt);
                 event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw around</b> handles to select them"));
             } else {
                 sp_gradient_drag(*rc, motion_dt, event->motion.state, event->motion.time);
@@ -637,7 +637,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (!event_context->within_tolerance) {
                     // we've been dragging, either do nothing (grdrag handles that),
                     // or rubberband-select if we have rubberband
-                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get(desktop);
                     if (r->is_started() && !event_context->within_tolerance) {
                         // this was a rubberband drag
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
@@ -665,7 +665,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 event_context->item_to_select = NULL;
                 ret = TRUE;
             }
-            Inkscape::Rubberband::get()->stop(); 
+            Inkscape::Rubberband::get(desktop)->stop(); 
         }
         break;
     case GDK_KEY_PRESS:

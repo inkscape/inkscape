@@ -492,8 +492,8 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
                     dc->repr = NULL;
                 }
 
-                Inkscape::Rubberband::get()->start(desktop, button_dt);
-                Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
+                Inkscape::Rubberband::get(desktop)->start(desktop, button_dt);
+                Inkscape::Rubberband::get(desktop)->setMode(RUBBERBAND_MODE_TOUCHPATH);
 
                 /* initialize first point */
                 dc->npoints = 0;
@@ -538,7 +538,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
                 }
                 ret = TRUE;
             }
-            Inkscape::Rubberband::get()->move(motion_dt);
+            Inkscape::Rubberband::get(desktop)->move(motion_dt);
         }
         break;
 
@@ -555,7 +555,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
         if (dc->dragging && event->button.button == 1 && !event_context->space_panning) {
             dc->dragging = FALSE;
 
-            boost::optional<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
+            boost::optional<NR::Rect> const b = Inkscape::Rubberband::get(desktop)->getRectangle();
 
             sp_eraser_apply(dc, motion_dt);
 
@@ -578,7 +578,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
                 dc->repr = NULL;
             }
 
-            Inkscape::Rubberband::get()->stop();
+            Inkscape::Rubberband::get(desktop)->stop();
             dc->_message_context->clear();
             ret = TRUE;
         }
@@ -647,7 +647,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
             }
             break;
         case GDK_Escape:
-            Inkscape::Rubberband::get()->stop();
+            Inkscape::Rubberband::get(desktop)->stop();
             if (dc->is_drawing) {
                 // if drawing, cancel, otherwise pass it up for deselecting
                 eraser_cancel (dc);
@@ -749,7 +749,7 @@ set_to_accumulated(SPEraserContext *dc)
                 if ( eraserMode ) {
                     toWorkOn = sp_document_partial_items_in_box(sp_desktop_document(desktop), desktop->dkey, bounds);
                 } else {
-                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+                    Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get(desktop);
                     toWorkOn = sp_document_items_at_points(sp_desktop_document(desktop), desktop->dkey, r->getPoints());
                 }
                 toWorkOn = g_slist_remove( toWorkOn, acid );

@@ -133,7 +133,7 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
                 yp = (gint) event->button.y;
                 within_tolerance = true;
 
-                Inkscape::Rubberband::get()->start(desktop, button_dt);
+                Inkscape::Rubberband::get(desktop)->start(desktop, button_dt);
 
                 escaped = false;
 
@@ -164,7 +164,7 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
 
                 NR::Point const motion_w(event->motion.x, event->motion.y);
                 NR::Point const motion_dt(desktop->w2d(motion_w));
-                Inkscape::Rubberband::get()->move(motion_dt);
+                Inkscape::Rubberband::get(desktop)->move(motion_dt);
                 gobble_motion_events(GDK_BUTTON1_MASK);
             }
             break;
@@ -174,7 +174,7 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
             NR::Point const button_w(event->button.x, event->button.y);
             NR::Point const button_dt(desktop->w2d(button_w));
             if ( event->button.button == 1  && !event_context->space_panning) {
-                boost::optional<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
+                boost::optional<NR::Rect> const b = Inkscape::Rubberband::get(desktop)->getRectangle();
                 if (b && !within_tolerance) {
                     desktop->set_display_area(*b, 10);
                 } else if (!escaped) {
@@ -185,7 +185,7 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
                 }
                 ret = TRUE;
             } 
-            Inkscape::Rubberband::get()->stop();
+            Inkscape::Rubberband::get(desktop)->stop();
             xp = yp = 0;
             escaped = false;
             break;
@@ -193,7 +193,7 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
         case GDK_KEY_PRESS:
             switch (get_group0_keyval (&event->key)) {
                 case GDK_Escape:
-                    Inkscape::Rubberband::get()->stop();
+                    Inkscape::Rubberband::get(desktop)->stop();
                     xp = yp = 0;
                     escaped = true;
                     ret = TRUE;

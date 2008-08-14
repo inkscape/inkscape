@@ -922,7 +922,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     if (is_point_fill) {
         fill_points.push_back(NR::Point(event->button.x, event->button.y));
     } else {
-        Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+        Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get(desktop);
         fill_points = r->getPoints();
     }
 
@@ -1199,8 +1199,8 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
                     dragging = true;
                     
                     NR::Point const p(desktop->w2d(button_w));
-                    Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
-                    Inkscape::Rubberband::get()->start(desktop, p);
+                    Inkscape::Rubberband::get(desktop)->setMode(RUBBERBAND_MODE_TOUCHPATH);
+                    Inkscape::Rubberband::get(desktop)->start(desktop, p);
                 }
             }
         }
@@ -1218,8 +1218,8 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
             
             NR::Point const motion_pt(event->motion.x, event->motion.y);
             NR::Point const p(desktop->w2d(motion_pt));
-            if (Inkscape::Rubberband::get()->is_started()) {
-                Inkscape::Rubberband::get()->move(p);
+            if (Inkscape::Rubberband::get(desktop)->is_started()) {
+                Inkscape::Rubberband::get(desktop)->move(p);
                 event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"));
                 gobble_motion_events(GDK_BUTTON1_MASK);
             }
@@ -1228,7 +1228,7 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
 
     case GDK_BUTTON_RELEASE:
         if (event->button.button == 1 && !event_context->space_panning) {
-            Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get();
+            Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get(desktop);
             if (r->is_started()) {
                 // set "busy" cursor
                 desktop->setWaitingCursor();

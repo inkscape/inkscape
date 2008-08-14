@@ -457,10 +457,10 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 // motion notify coordinates as given (no snapping back to origin)
                 within_tolerance = false;
 
-                if (Inkscape::Rubberband::get()->is_started()) {
-                    Inkscape::Rubberband::get()->move(motion_dt);
+                if (Inkscape::Rubberband::get(desktop)->is_started()) {
+                    Inkscape::Rubberband::get(desktop)->move(motion_dt);
                 } else {
-                    Inkscape::Rubberband::get()->start(desktop, motion_dt);
+                    Inkscape::Rubberband::get(desktop)->start(desktop, motion_dt);
                 } 
                 if (zoom_rb == 2)
                     gobble_motion_events(GDK_BUTTON2_MASK);
@@ -497,8 +497,8 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 ret = TRUE;
             } else if (zoom_rb == event->button.button) {
                 zoom_rb = 0;
-                boost::optional<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
-                Inkscape::Rubberband::get()->stop();
+                boost::optional<NR::Rect> const b = Inkscape::Rubberband::get(desktop)->getRectangle();
+                Inkscape::Rubberband::get(desktop)->stop();
                 if (b && !within_tolerance) {
                     desktop->set_display_area(*b, 10);
                 }

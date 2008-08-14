@@ -49,11 +49,11 @@ public:
 
     void setMode(int mode);
 
-    static Rubberband* get();
+    static Rubberband* get(SPDesktop *desktop);
 
 private:
 
-    Rubberband();
+    Rubberband(SPDesktop *desktop);
     static Rubberband* _instance;
     
     SPDesktop *_desktop;

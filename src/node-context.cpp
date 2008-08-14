@@ -296,7 +296,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 NR::Point const button_w(event->button.x,
                                          event->button.y);
                 NR::Point const button_dt(desktop->w2d(button_w));
-                Inkscape::Rubberband::get()->start(desktop, button_dt);
+                Inkscape::Rubberband::get(desktop)->start(desktop, button_dt);
                 nc->current_state = SP_NODE_CONTEXT_INACTIVE;
                 desktop->updateNow();
                 ret = TRUE;
@@ -343,11 +343,11 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                             break;
                         }
                     case SP_NODE_CONTEXT_RUBBERBAND_DRAGGING:
-                        if (Inkscape::Rubberband::get()->is_started()) {
+                        if (Inkscape::Rubberband::get(desktop)->is_started()) {
                             NR::Point const motion_w(event->motion.x,
                                                 event->motion.y);
                             NR::Point const motion_dt(desktop->w2d(motion_w));
-                            Inkscape::Rubberband::get()->move(motion_dt);
+                            Inkscape::Rubberband::get(desktop)->move(motion_dt);
                         }
                         break;
                 }
@@ -429,7 +429,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         selection->set(item_clicked);
                         desktop->updateNow();
                     }
-                    Inkscape::Rubberband::get()->stop();
+                    Inkscape::Rubberband::get(desktop)->stop();
                     ret = TRUE;
                     break;
                 }
@@ -437,7 +437,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if (event->type == GDK_BUTTON_RELEASE) {
                 event_context->xp = event_context->yp = 0;
                 if (event->button.button == 1) {
-                    boost::optional<NR::Rect> b = Inkscape::Rubberband::get()->getRectangle();
+                    boost::optional<NR::Rect> b = Inkscape::Rubberband::get(desktop)->getRectangle();
 
                     if (nc->shape_editor->hits_curve() && !event_context->within_tolerance) { //drag curve
                         nc->shape_editor->finish_drag();
@@ -452,7 +452,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         }
                     }
                     ret = TRUE;
-                    Inkscape::Rubberband::get()->stop();
+                    Inkscape::Rubberband::get(desktop)->stop();
                     desktop->updateNow();
                     nc->rb_escaped = false;
                     nc->drag = FALSE;
@@ -620,9 +620,9 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
                 case GDK_Escape:
                 {
-                    boost::optional<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
+                    boost::optional<NR::Rect> const b = Inkscape::Rubberband::get(desktop)->getRectangle();
                     if (b) {
-                        Inkscape::Rubberband::get()->stop();
+                        Inkscape::Rubberband::get(desktop)->stop();
                         nc->current_state = SP_NODE_CONTEXT_INACTIVE;
                         nc->rb_escaped = true;
                     } else {

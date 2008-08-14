@@ -182,7 +182,7 @@ sp_text_context_dispose(GObject *obj)
         tc->grabbed = NULL;
     }
 
-    Inkscape::Rubberband::get()->stop();
+    Inkscape::Rubberband::get(ec->desktop)->stop();
 
     if (ec->shape_knot_holder) {
         delete ec->shape_knot_holder;
@@ -613,7 +613,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
 
                 NR::Point const button_pt(event->button.x, event->button.y);
                 tc->p0 = desktop->w2d(button_pt);
-                Inkscape::Rubberband::get()->start(desktop, tc->p0);
+                Inkscape::Rubberband::get(desktop)->start(desktop, tc->p0);
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK,
                                     NULL, event->button.time);
@@ -649,7 +649,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                 NR::Point const motion_pt(event->motion.x, event->motion.y);
                 NR::Point const p = desktop->w2d(motion_pt);
 
-                Inkscape::Rubberband::get()->move(p);
+                Inkscape::Rubberband::get(desktop)->move(p);
                 gobble_motion_events(GDK_BUTTON1_MASK);
 
                 // status text
@@ -669,7 +669,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                     tc->grabbed = NULL;
                 }
 
-                Inkscape::Rubberband::get()->stop();
+                Inkscape::Rubberband::get(desktop)->stop();
 
                 if (tc->creating && event_context->within_tolerance) {
                     /* Button 1, set X & Y & new item */
@@ -1151,7 +1151,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                         sp_canvas_item_ungrab(tc->grabbed, GDK_CURRENT_TIME);
                                         tc->grabbed = NULL;
                                     }
-                                    Inkscape::Rubberband::get()->stop();
+                                    Inkscape::Rubberband::get(desktop)->stop();
                                 } else {
                                     sp_desktop_selection(desktop)->clear();
                                 }
@@ -1283,7 +1283,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                             sp_canvas_item_ungrab(tc->grabbed, GDK_CURRENT_TIME);
                             tc->grabbed = NULL;
                         }
-                        Inkscape::Rubberband::get()->stop();
+                        Inkscape::Rubberband::get(desktop)->stop();
                     }
                 }
             }

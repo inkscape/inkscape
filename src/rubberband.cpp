@@ -14,7 +14,6 @@
 
 #include "display/sodipodi-ctrlrect.h"
 #include "desktop.h"
-#include "inkscape.h"
 #include "desktop-handles.h"
 #include "rubberband.h"
 #include "display/canvas-bpath.h"
@@ -23,8 +22,8 @@
 
 Inkscape::Rubberband *Inkscape::Rubberband::_instance = NULL;
 
-Inkscape::Rubberband::Rubberband()
-    : _desktop(SP_ACTIVE_DESKTOP), _rect(NULL), _touchpath(NULL), _started(false)
+Inkscape::Rubberband::Rubberband(SPDesktop *dt)
+    : _desktop(dt), _rect(NULL), _touchpath(NULL), _started(false)
 {
     _points.clear();
     _mode = RUBBERBAND_MODE_RECT;
@@ -135,10 +134,10 @@ boost::optional<NR::Rect> Inkscape::Rubberband::getRectangle() const
     return NR::Rect(_start, _end);
 }
 
-Inkscape::Rubberband *Inkscape::Rubberband::get()
+Inkscape::Rubberband *Inkscape::Rubberband::get(SPDesktop *desktop)
 {
     if (_instance == NULL) {
-        _instance = new Inkscape::Rubberband;
+        _instance = new Inkscape::Rubberband(desktop);
     }
 
     return _instance;
