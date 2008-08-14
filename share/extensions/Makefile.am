@@ -49,6 +49,7 @@ extensions = \
 	eqtexsvg.py \
 	export_gimp_palette.py \
 	extractimage.py \
+	extrude.py \
 	ffgeom.py\
 	fig2dev-ext.py \
 	flatten.py \
@@ -159,6 +160,7 @@ modules = \
 	eqtexsvg.inx \
 	export_gimp_palette.inx \
 	extractimage.inx \
+	extrude.inx \
 	fig_input.inx \
 	flatten.inx \
 	fractalize.inx \
