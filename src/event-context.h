@@ -49,7 +49,7 @@ struct SPEventContext : public GObject {
     SPDesktop *desktop;
     Inkscape::XML::Node *prefs_repr;
     gchar const *const *cursor_shape;
-    gint hot_x, hot_y;
+    gint hot_x, hot_y; ///< indicates the cursor's hot spot
     GdkCursor *cursor;
 
     gint xp, yp;           ///< where drag started
