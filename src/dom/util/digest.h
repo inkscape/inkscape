@@ -74,6 +74,9 @@
 #include <vector>
 #include <string>
 
+#include <stdint.h>
+
+
 
 /**
  *  Base class.  Do not use instantiate class directly.  Rather, use of of the
@@ -244,13 +247,7 @@ protected:
      */              
     void incByteCount()
         {
-        if (nrBytesLo == 0xffffffffL)
-            {
-            nrBytesHi++;
-            nrBytesLo = 0;
-            }
-        else
-           nrBytesLo++;
+        nrBytes++;
         }
         
     /**
@@ -259,8 +256,7 @@ protected:
      */              
     void clearByteCount()
         {
-        nrBytesHi = nrBytesLo = 0;
-        nrBitsHi  = nrBitsLo  = 0;
+        nrBytes = nrBits = 0;
         }
         
     /**
@@ -270,8 +266,7 @@ protected:
      */                   
     void getBitCount()
         {
-        nrBitsLo = (nrBytesLo << 3) & 0xffffffff;
-        nrBitsHi = (nrBytesHi << 3) | ((nrBytesLo >> 29) & 7);
+        nrBits = (nrBytes << 3) & 0xFFFFFFFFFFFFFFFFLL;
         }
         
     /**
@@ -281,21 +276,21 @@ protected:
      */                   
     void appendBitCount()
         {
-        update((unsigned char)((nrBitsHi>>24) & 0xff));
-        update((unsigned char)((nrBitsHi>>16) & 0xff));
-        update((unsigned char)((nrBitsHi>> 8) & 0xff));
-        update((unsigned char)((nrBitsHi    ) & 0xff));
-        update((unsigned char)((nrBitsLo>>24) & 0xff));
-        update((unsigned char)((nrBitsLo>>16) & 0xff));
-        update((unsigned char)((nrBitsLo>> 8) & 0xff));
-        update((unsigned char)((nrBitsLo    ) & 0xff));
+        update((unsigned char)((nrBits>>56) & 0xff));
+        update((unsigned char)((nrBits>>48) & 0xff));
+        update((unsigned char)((nrBits>>40) & 0xff));
+        update((unsigned char)((nrBits>>32) & 0xff));
+        update((unsigned char)((nrBits>>24) & 0xff));
+        update((unsigned char)((nrBits>>16) & 0xff));
+        update((unsigned char)((nrBits>> 8) & 0xff));
+        update((unsigned char)((nrBits    ) & 0xff));
         }
 
-    //32/64 portable byte and bit counts
-    unsigned long nrBytesHi;
-    unsigned long nrBytesLo;
-    unsigned long nrBitsHi;
-    unsigned long nrBitsLo;
+    /**
+     * Bit and byte counts
+     */	     
+    uint64_t nrBytes;
+    uint64_t nrBits;
 };
 
 
@@ -348,12 +343,12 @@ protected:
 
 private:
 
-    unsigned long hashBuf[5];
-    unsigned long inBuf[80];
+    uint32_t hashBuf[5];
+    uint32_t inBuf[80];
 
-    int longNr;
-    int byteNr;
-    unsigned long inb[4];
+    int      longNr;
+    int      byteNr;
+    uint32_t inb[4];
 
 };
 
@@ -408,11 +403,11 @@ protected:
 
 private:
 
-    unsigned long hashBuf[8];
-    unsigned long inBuf[64];
-    int longNr;
-    int byteNr;
-    unsigned long inb[4];
+    uint32_t hashBuf[8];
+    uint32_t inBuf[64];
+    int      longNr;
+    int      byteNr;
+    uint32_t inb[4];
 
 };
 
@@ -464,11 +459,11 @@ protected:
 
 private:
 
-    unsigned long hashBuf[8];
-    unsigned long inBuf[64];
-    int longNr;
-    int byteNr;
-    unsigned long inb[4];
+    uint32_t hashBuf[8];
+    uint32_t inBuf[64];
+    int      longNr;
+    int      byteNr;
+    uint32_t inb[4];
 
 };
 
@@ -522,11 +517,11 @@ protected:
 
 private:
 
-    unsigned long long hashBuf[8];
-    unsigned long long inBuf[80];
-    int longNr;
-    int byteNr;
-    unsigned long long inb[8];
+    uint64_t hashBuf[8];
+    uint64_t inBuf[80];
+    int      longNr;
+    int      byteNr;
+    uint64_t inb[8];
 
 };
 
@@ -579,11 +574,11 @@ protected:
 
 private:
 
-    unsigned long long hashBuf[8];
-    unsigned long long inBuf[80];
-    int longNr;
-    int byteNr;
-    unsigned long long inb[8];
+    uint64_t hashBuf[8];
+    uint64_t inBuf[80];
+    int      longNr;
+    int      byteNr;
+    uint64_t inb[8];
 
 };
 
@@ -639,12 +634,12 @@ protected:
 
 private:
 
-    unsigned long hashBuf[4];
-    unsigned long inBuf[16];
+    uint32_t hashBuf[4];
+    uint32_t inBuf[16];
 
-    unsigned long inb[4];  // Buffer for input bytes as longs
-    int           byteNr;  // which byte in long
-    int           longNr;  // which long in 16-long buffer
+    uint32_t inb[4];  // Buffer for input bytes as longs
+    int      byteNr;  // which byte in long
+    int      longNr;  // which long in 16-long buffer
 
 };
 

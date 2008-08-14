@@ -32,7 +32,7 @@
  * Use this to print out a 64-bit int when otherwise difficult
  */
 /*
-static void pl(unsigned long long val)
+static void pl(uint64_t val)
 {
     for (int shift=56 ; shift>=0 ; shift-=8)
         {
@@ -45,11 +45,8 @@ static void pl(unsigned long long val)
 
 
 /**
- * 32/64-bit-isms.  These truncate their arguments to
- * unsigned 32-bit or unsigned 64-bit.  For our math,
- * we only require that unsigned longs be AT LEAST 32 bits,
- * and that unsigned long longs be AT LEAST 64 bits.  Their
- * exact lengths do not matter.
+ * 3These truncate their arguments to
+ * unsigned 32-bit or unsigned 64-bit.
  */
 #define TR32(x) ((x) & 0xffffffffL)
 #define TR64(x) ((x) & 0xffffffffffffffffLL)
@@ -223,7 +220,7 @@ void Sha1::update(unsigned char ch)
 {
     incByteCount();
 
-    inb[byteNr++] = (unsigned long)ch;
+    inb[byteNr++] = (uint32_t)ch;
     if (byteNr >= 4)
         {
         inBuf[longNr++] = inb[0] << 24 | inb[1] << 16 |
@@ -240,8 +237,8 @@ void Sha1::update(unsigned char ch)
 
 void Sha1::transform()
 {
-    unsigned long *W = inBuf;
-    unsigned long *H = hashBuf;
+    uint32_t *W = inBuf;
+    uint32_t *H = hashBuf;
 
     //for (int t = 0; t < 16 ; t++)
     //    printf("%2d %08lx\n", t, W[t]);
@@ -250,13 +247,13 @@ void Sha1::transform()
     for (int t = 16; t < 80 ; t++)
         W[t] = SHA_ROTL((W[t-3] ^ W[t-8] ^ W[t-14] ^ W[t-16]), 1);
 
-    unsigned long a = H[0];
-    unsigned long b = H[1];
-    unsigned long c = H[2];
-    unsigned long d = H[3];
-    unsigned long e = H[4];
+    uint32_t a = H[0];
+    uint32_t b = H[1];
+    uint32_t c = H[2];
+    uint32_t d = H[3];
+    uint32_t e = H[4];
 
-    unsigned long T;
+    uint32_t T;
 
     int t = 0;
     for ( ; t < 20 ; t++)
@@ -310,7 +307,7 @@ std::vector<unsigned char> Sha1::finish()
     update(0x80);
 
     //pad until we have a 56 of 64 bytes, allowing for 8 bytes at the end
-    while ((nrBytesLo & 63) != 56)
+    while ((nrBytes & 63) != 56)
         update(0);
 
     //##### Append length in bits
@@ -351,7 +348,7 @@ std::vector<unsigned char> Sha1::finish()
 #define    SHA_sigma1(x)  (SHA_Rot32(x, 17) ^ SHA_Rot32(x, 19) ^ ((x) >> 10))
 
 
-static unsigned long sha256table[64] =
+static uint32_t sha256table[64] =
 {
     0x428a2f98UL, 0x71374491UL, 0xb5c0fbcfUL, 0xe9b5dba5UL,
     0x3956c25bUL, 0x59f111f1UL, 0x923f82a4UL, 0xab1c5ed5UL,
@@ -410,7 +407,7 @@ void Sha224::update(unsigned char ch)
 {
     incByteCount();
 
-    inb[byteNr++] = (unsigned long)ch;
+    inb[byteNr++] = (uint32_t)ch;
     if (byteNr >= 4)
         {
         inBuf[longNr++] = inb[0] << 24 | inb[1] << 16 |
@@ -427,8 +424,8 @@ void Sha224::update(unsigned char ch)
 
 void Sha224::transform()
 {
-    unsigned long *W = inBuf;
-    unsigned long *H = hashBuf;
+    uint32_t *W = inBuf;
+    uint32_t *H = hashBuf;
 
     //for (int t = 0; t < 16 ; t++)
     //    printf("%2d %08lx\n", t, W[t]);
@@ -437,21 +434,21 @@ void Sha224::transform()
     for (int t = 16; t < 64 ; t++)
         W[t] = TR32(SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16]);
 
-    unsigned long a = H[0];
-    unsigned long b = H[1];
-    unsigned long c = H[2];
-    unsigned long d = H[3];
-    unsigned long e = H[4];
-    unsigned long f = H[5];
-    unsigned long g = H[6];
-    unsigned long h = H[7];
+    uint32_t a = H[0];
+    uint32_t b = H[1];
+    uint32_t c = H[2];
+    uint32_t d = H[3];
+    uint32_t e = H[4];
+    uint32_t f = H[5];
+    uint32_t g = H[6];
+    uint32_t h = H[7];
 
     for (int t = 0 ; t < 64 ; t++)
         {
         //see 4.1.1 for the boolops
-        unsigned long T1 = TR32(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
+        uint32_t T1 = TR32(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
             sha256table[t] + W[t]);
-        unsigned long T2 = TR32(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
+        uint32_t T2 = TR32(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
         h = g; g = f; f = e; e = TR32(d  + T1); d = c; c = b; b = a; a = TR32(T1 + T2);
         //printf("%2d %08lx %08lx %08lx %08lx %08lx %08lx %08lx %08lx\n",
         //         t, a, b, c, d, e, f, g, h);
@@ -480,7 +477,7 @@ std::vector<unsigned char> Sha224::finish()
     // Pad with a binary 1 (0x80)
     update(0x80);
     //append 0's to make a 56-byte buf.
-    while ((nrBytesLo & 63) != 56)
+    while ((nrBytes & 63) != 56)
         update(0);
 
     //##### Append length in bits
@@ -544,7 +541,7 @@ void Sha256::update(unsigned char ch)
 {
     incByteCount();
 
-    inb[byteNr++] = (unsigned long)ch;
+    inb[byteNr++] = (uint32_t)ch;
     if (byteNr >= 4)
         {
         inBuf[longNr++] = inb[0] << 24 | inb[1] << 16 |
@@ -563,8 +560,8 @@ void Sha256::update(unsigned char ch)
 
 void Sha256::transform()
 {
-    unsigned long *H = hashBuf;
-    unsigned long *W = inBuf;
+    uint32_t *H = hashBuf;
+    uint32_t *W = inBuf;
 
     //for (int t = 0; t < 16 ; t++)
     //    printf("%2d %08lx\n", t, W[t]);
@@ -573,21 +570,21 @@ void Sha256::transform()
     for (int t = 16; t < 64 ; t++)
         W[t] = TR32(SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16]);
 
-    unsigned long a = H[0];
-    unsigned long b = H[1];
-    unsigned long c = H[2];
-    unsigned long d = H[3];
-    unsigned long e = H[4];
-    unsigned long f = H[5];
-    unsigned long g = H[6];
-    unsigned long h = H[7];
+    uint32_t a = H[0];
+    uint32_t b = H[1];
+    uint32_t c = H[2];
+    uint32_t d = H[3];
+    uint32_t e = H[4];
+    uint32_t f = H[5];
+    uint32_t g = H[6];
+    uint32_t h = H[7];
 
     for (int t = 0 ; t < 64 ; t++)
         {
         //see 4.1.1 for the boolops
-        unsigned long T1 = TR32(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
+        uint32_t T1 = TR32(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
             sha256table[t] + W[t]);
-        unsigned long T2 = TR32(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
+        uint32_t T2 = TR32(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
         h = g; g = f; f = e; e = TR32(d  + T1); d = c; c = b; b = a; a = TR32(T1 + T2);
         //printf("%2d %08lx %08lx %08lx %08lx %08lx %08lx %08lx %08lx\n",
         //         t, a, b, c, d, e, f, g, h);
@@ -616,7 +613,7 @@ std::vector<unsigned char> Sha256::finish()
     // Pad with a binary 1 (0x80)
     update(0x80);
     //append 0's to make a 56-byte buf.
-    while ((nrBytesLo & 63) != 56)
+    while ((nrBytes & 63) != 56)
         update(0);
 
     //##### Append length in bits
@@ -662,7 +659,7 @@ std::vector<unsigned char> Sha256::finish()
 #define SHA_sigma1(x)  (SHA_Rot64(x, 19) ^ SHA_Rot64(x, 61) ^ ((x) >> 6))
 
 
-static unsigned long long sha512table[80] =
+static uint64_t sha512table[80] =
 {
     0x428a2f98d728ae22ULL, 0x7137449123ef65cdULL,
     0xb5c0fbcfec4d3b2fULL, 0xe9b5dba58189dbbcULL,
@@ -744,7 +741,7 @@ void Sha384::update(unsigned char ch)
 {
     incByteCount();
 
-    inb[byteNr++] = (unsigned long long)ch;
+    inb[byteNr++] = (uint64_t)ch;
     if (byteNr >= 8)
         {
         inBuf[longNr++] = inb[0] << 56 | inb[1] << 48 |
@@ -765,8 +762,8 @@ void Sha384::update(unsigned char ch)
 
 void Sha384::transform()
 {
-    unsigned long long *H = hashBuf;
-    unsigned long long *W = inBuf;
+    uint64_t *H = hashBuf;
+    uint64_t *W = inBuf;
 
     /*
     for (int t = 0; t < 16 ; t++)
@@ -781,21 +778,21 @@ void Sha384::transform()
     for (int t = 16; t < 80 ; t++)
         W[t] = TR64(SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16]);
 
-    unsigned long long a = H[0];
-    unsigned long long b = H[1];
-    unsigned long long c = H[2];
-    unsigned long long d = H[3];
-    unsigned long long e = H[4];
-    unsigned long long f = H[5];
-    unsigned long long g = H[6];
-    unsigned long long h = H[7];
+    uint64_t a = H[0];
+    uint64_t b = H[1];
+    uint64_t c = H[2];
+    uint64_t d = H[3];
+    uint64_t e = H[4];
+    uint64_t f = H[5];
+    uint64_t g = H[6];
+    uint64_t h = H[7];
 
     for (int t = 0 ; t < 80 ; t++)
         {
         //see 4.1.1 for the boolops
-        unsigned long long T1 = TR64(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
+        uint64_t T1 = TR64(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
             sha512table[t] + W[t]);
-        unsigned long long T2 = TR64(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
+        uint64_t T2 = TR64(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
         h = g; g = f; f = e; e = TR64(d  + T1); d = c; c = b; b = a; a = TR64(T1 + T2);
         }
 
@@ -823,7 +820,7 @@ std::vector<unsigned char> Sha384::finish()
     update((unsigned char)0x80);
     //append 0's to make a 112-byte buf.
     //we will loop around once if already over 112
-    while ((nrBytesLo & 127) != 112)
+    while ((nrBytes & 127) != 112)
         update(0);
         
     //append 128-bit size
@@ -900,7 +897,7 @@ void Sha512::update(unsigned char ch)
 {
     incByteCount();
 
-    inb[byteNr++] = (unsigned long long)ch;
+    inb[byteNr++] = (uint64_t)ch;
     if (byteNr >= 8)
         {
         inBuf[longNr++] = inb[0] << 56 | inb[1] << 48 |
@@ -921,8 +918,8 @@ void Sha512::update(unsigned char ch)
 
 void Sha512::transform()
 {
-    unsigned long long *W = inBuf;
-    unsigned long long *H = hashBuf;
+    uint64_t *W = inBuf;
+    uint64_t *H = hashBuf;
 
     /*
     for (int t = 0; t < 16 ; t++)
@@ -937,21 +934,21 @@ void Sha512::transform()
     for (int t = 16; t < 80 ; t++)
         W[t] = TR64(SHA_sigma1(W[t-2]) + W[t-7] + SHA_sigma0(W[t-15]) + W[t-16]);
 
-    unsigned long long a = H[0];
-    unsigned long long b = H[1];
-    unsigned long long c = H[2];
-    unsigned long long d = H[3];
-    unsigned long long e = H[4];
-    unsigned long long f = H[5];
-    unsigned long long g = H[6];
-    unsigned long long h = H[7];
+    uint64_t a = H[0];
+    uint64_t b = H[1];
+    uint64_t c = H[2];
+    uint64_t d = H[3];
+    uint64_t e = H[4];
+    uint64_t f = H[5];
+    uint64_t g = H[6];
+    uint64_t h = H[7];
 
     for (int t = 0 ; t < 80 ; t++)
         {
         //see 4.1.1 for the boolops
-        unsigned long long T1 = TR64(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
+        uint64_t T1 = TR64(h + SHA_SIGMA1(e) + SHA_Ch(e,f,g) +
             sha512table[t] + W[t]);
-        unsigned long long T2 = TR64(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
+        uint64_t T2 = TR64(SHA_SIGMA0(a) + SHA_Maj(a,b,c));
         h = g; g = f; f = e; e = TR64(d  + T1); d = c; c = b; b = a; a = TR64(T1 + T2);
         }
 
@@ -979,7 +976,7 @@ std::vector<unsigned char> Sha512::finish()
     update(0x80);
     //append 0's to make a 112-byte buf.
     //we will loop around once if already over 112
-    while ((nrBytesLo & 127) != 112)
+    while ((nrBytes & 127) != 112)
         update(0);
         
     //append 128-bit size
@@ -1047,11 +1044,11 @@ void Md5::update(unsigned char ch)
     incByteCount();
 
     //pack 64 bytes into 16 longs
-    inb[byteNr++] = (unsigned long)ch;
+    inb[byteNr++] = (uint32_t)ch;
     if (byteNr >= 4)
         {
         //note the little-endianness
-        unsigned long val =
+        uint32_t val =
              inb[3] << 24 | inb[2] << 16 | inb[1] << 8 | inb[0];
         inBuf[longNr++] = val;
         byteNr = 0;
@@ -1086,11 +1083,11 @@ void Md5::update(unsigned char ch)
  */
 void Md5::transform()
 {
-    unsigned long *i = inBuf;
-    unsigned long a  = hashBuf[0];
-    unsigned long b  = hashBuf[1];
-    unsigned long c  = hashBuf[2];
-    unsigned long d  = hashBuf[3];
+    uint32_t *i = inBuf;
+    uint32_t a  = hashBuf[0];
+    uint32_t b  = hashBuf[1];
+    uint32_t c  = hashBuf[2];
+    uint32_t d  = hashBuf[3];
 
     MD5STEP(F1, a, b, c, d, i[ 0] + 0xd76aa478,  7);
     MD5STEP(F1, d, a, b, c, i[ 1] + 0xe8c7b756, 12);
@@ -1184,14 +1181,14 @@ std::vector<unsigned char> Md5::finish()
 
     //##### Append length in bits
     // Don't use appendBitCount(), since md5 is little-endian
-    update((unsigned char)((nrBitsLo    ) & 0xff));
-    update((unsigned char)((nrBitsLo>> 8) & 0xff));
-    update((unsigned char)((nrBitsLo>>16) & 0xff));
-    update((unsigned char)((nrBitsLo>>24) & 0xff));
-    update((unsigned char)((nrBitsHi    ) & 0xff));
-    update((unsigned char)((nrBitsHi>> 8) & 0xff));
-    update((unsigned char)((nrBitsHi>>16) & 0xff));
-    update((unsigned char)((nrBitsHi>>24) & 0xff));
+    update((unsigned char)((nrBits    ) & 0xff));
+    update((unsigned char)((nrBits>> 8) & 0xff));
+    update((unsigned char)((nrBits>>16) & 0xff));
+    update((unsigned char)((nrBits>>24) & 0xff));
+    update((unsigned char)((nrBits>>32) & 0xff));
+    update((unsigned char)((nrBits>>40) & 0xff));
+    update((unsigned char)((nrBits>>48) & 0xff));
+    update((unsigned char)((nrBits>>56) & 0xff));
 
     //copy out answer
     std::vector<unsigned char> res;
