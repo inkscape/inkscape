@@ -159,6 +159,7 @@ static void
 sp_eraser_context_setup(SPEventContext *ec)
 {
     SPEraserContext *erc = SP_ERASER_CONTEXT(ec);
+    SPDesktop *desktop = ec->desktop;
 
     if (((SPEventContextClass *) eraser_parent_class)->setup)
         ((SPEventContextClass *) eraser_parent_class)->setup(ec);
@@ -169,11 +170,11 @@ sp_eraser_context_setup(SPEventContext *ec)
     erc->cal1 = new SPCurve();
     erc->cal2 = new SPCurve();
 
-    erc->currentshape = sp_canvas_item_new(sp_desktop_sketch(ec->desktop), SP_TYPE_CANVAS_BPATH, NULL);
+    erc->currentshape = sp_canvas_item_new(sp_desktop_sketch(desktop), SP_TYPE_CANVAS_BPATH, NULL);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(erc->currentshape), ERC_RED_RGBA, SP_WIND_RULE_EVENODD);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(erc->currentshape), 0x00000000, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     /* fixme: Cannot we cascade it to root more clearly? */
-    g_signal_connect(G_OBJECT(erc->currentshape), "event", G_CALLBACK(sp_desktop_root_handler), ec->desktop);
+    g_signal_connect(G_OBJECT(erc->currentshape), "event", G_CALLBACK(sp_desktop_root_handler), desktop);
 
 /*
 static ProfileFloatElement f_profile[PROFILE_FLOAT_SIZE] = {
@@ -202,7 +203,7 @@ static ProfileFloatElement f_profile[PROFILE_FLOAT_SIZE] = {
 
     erc->is_drawing = false;
 
-    erc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+    erc->_message_context = new Inkscape::MessageContext(desktop->messageStack());
 
     if (prefs_get_int_attribute("tools.eraser", "selcue", 0) != 0) {
         ec->enableSelectionCue();
@@ -476,8 +477,6 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
     switch (event->type) {
         case GDK_BUTTON_PRESS:
             if (event->button.button == 1 && !event_context->space_panning) {
-
-                SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
 
                 if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
                     return TRUE;
@@ -911,7 +910,9 @@ static double square(double const x)
 static void
 fit_and_split(SPEraserContext *dc, gboolean release)
 {
-    double const tolerance_sq = square( NR::expansion(SP_EVENT_CONTEXT(dc)->desktop->w2d()) * TOLERANCE_ERASER );
+    SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
+
+    double const tolerance_sq = square( NR::expansion(desktop->w2d()) * TOLERANCE_ERASER );
 
 #ifdef ERASER_VERBOSE
     g_print("[F&S:R=%c]", release?'T':'F');
@@ -1006,24 +1007,24 @@ fit_and_split(SPEraserContext *dc, gboolean release)
             gint eraserMode = (prefs_get_int_attribute("tools.eraser", "mode", 0) != 0) ? 1 : 0;
             g_assert(!dc->currentcurve->is_empty());
 
-            SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(SP_EVENT_CONTEXT(dc)->desktop),
+            SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(desktop),
                                                    SP_TYPE_CANVAS_BPATH,
                                                    NULL);
             SPCurve *curve = dc->currentcurve->copy();
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve);
             curve->unref();
 
-            guint32 fillColor = sp_desktop_get_color_tool (SP_ACTIVE_DESKTOP, "tools.eraser", true);
-            //guint32 strokeColor = sp_desktop_get_color_tool (SP_ACTIVE_DESKTOP, "tools.eraser", false);
-            double opacity = sp_desktop_get_master_opacity_tool (SP_ACTIVE_DESKTOP, "tools.eraser");
-            double fillOpacity = sp_desktop_get_opacity_tool (SP_ACTIVE_DESKTOP, "tools.eraser", true);
-            //double strokeOpacity = sp_desktop_get_opacity_tool (SP_ACTIVE_DESKTOP, "tools.eraser", false);
+            guint32 fillColor = sp_desktop_get_color_tool (desktop, "tools.eraser", true);
+            //guint32 strokeColor = sp_desktop_get_color_tool (desktop, "tools.eraser", false);
+            double opacity = sp_desktop_get_master_opacity_tool (desktop, "tools.eraser");
+            double fillOpacity = sp_desktop_get_opacity_tool (desktop, "tools.eraser", true);
+            //double strokeOpacity = sp_desktop_get_opacity_tool (desktop, "tools.eraser", false);
             sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cbp), ((fillColor & 0xffffff00) | SP_COLOR_F_TO_U(opacity*fillOpacity)), SP_WIND_RULE_EVENODD);
             //on second thougtht don't do stroke yet because we don't have stoke-width yet and because stoke appears between segments while drawing
             //sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cbp), ((strokeColor & 0xffffff00) | SP_COLOR_F_TO_U(opacity*strokeOpacity)), 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cbp), 0x00000000, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
             /* fixme: Cannot we cascade it to root more clearly? */
-            g_signal_connect(G_OBJECT(cbp), "event", G_CALLBACK(sp_desktop_root_handler), SP_EVENT_CONTEXT(dc)->desktop);
+            g_signal_connect(G_OBJECT(cbp), "event", G_CALLBACK(sp_desktop_root_handler), desktop);
 
             dc->segments = g_slist_prepend(dc->segments, cbp);
 
