@@ -682,7 +682,6 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
 
 
         // we finished the path; now apply any waiting LPEs or freehand shapes
-        // FIXME: placing this here seems to cause issues with undo!
         spdc_check_for_and_apply_waiting_LPE(dc, dc->selection->singleItem());
 
         sp_document_done(doc, SP_IS_PEN_CONTEXT(dc)? SP_VERB_CONTEXT_PEN : SP_VERB_CONTEXT_PENCIL, 
