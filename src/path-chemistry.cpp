@@ -30,7 +30,6 @@
 #include "libnr/nr-path.h"
 #include "text-editing.h"
 #include "style.h"
-#include "inkscape.h"
 #include "desktop.h"
 #include "document.h"
 #include "message-stack.h"
@@ -41,7 +40,7 @@
 #include "path-chemistry.h"
 
 /* Helper functions for sp_selected_path_to_curves */
-static void sp_selected_path_to_curves0(gboolean do_document_done, guint32 text_grouping_policy);
+static void sp_selected_path_to_curves0(SPDesktop *desktop, bool do_document_done, guint32 text_grouping_policy);
 static bool sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select);
 
 enum {
@@ -53,9 +52,8 @@ enum {
 };
 
 void
-sp_selected_path_combine(void)
+sp_selected_path_combine(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     SPDocument *doc = sp_desktop_document(desktop);
     
@@ -180,10 +178,8 @@ sp_selected_path_combine(void)
 }
 
 void
-sp_selected_path_break_apart(void)
+sp_selected_path_break_apart(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
@@ -285,20 +281,14 @@ sp_selected_path_break_apart(void)
 
 /* This function is an entry point from GUI */
 void
-sp_selected_path_to_curves(bool interactive)
+sp_selected_path_to_curves(SPDesktop *desktop, bool interactive)
 {
-    if (interactive) {
-        sp_selected_path_to_curves0(TRUE, SP_TOCURVE_INTERACTIVE);
-    } else {
-        sp_selected_path_to_curves0(false, 0);
-    }
+    sp_selected_path_to_curves0(desktop, interactive, interactive ? SP_TOCURVE_INTERACTIVE : 0);
 }
 
 static void
-sp_selected_path_to_curves0(gboolean interactive, guint32 /*text_grouping_policy*/)
+sp_selected_path_to_curves0(SPDesktop *desktop, bool interactive, guint32 /*text_grouping_policy*/)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
@@ -476,10 +466,8 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 
 // FIXME: THIS DOES NOT REVERSE THE NODETYPES ORDER!
 void
-sp_selected_path_reverse()
+sp_selected_path_reverse(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList *items = (GSList *) selection->itemList();
 

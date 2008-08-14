@@ -48,12 +48,12 @@ BlurEdge::load (Inkscape::Extension::Extension */*module*/)
 /**
     \brief  This actually blurs the edge.
     \param  module   The effect that was called (unused)
-    \param  document What should be edited.
+    \param  desktop What should be edited.
 */
 void
-BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * /*docCache*/)
+BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *desktop, Inkscape::Extension::Implementation::ImplementationDocumentCache * /*docCache*/)
 {
-    Inkscape::Selection * selection     = ((SPDesktop *)document)->selection;
+    Inkscape::Selection * selection     = static_cast<SPDesktop *>(desktop)->selection;
 
     float width = module->get_param_float("blur-width");
     int   steps = module->get_param_int("num-steps");
@@ -71,7 +71,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
         SPItem * spitem = *item;
 
         std::vector<Inkscape::XML::Node *> new_items(steps);
-        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document->doc());
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
         Inkscape::XML::Node * new_group = xml_doc->createElement("svg:g");
         (SP_OBJECT_REPR(spitem)->parent())->appendChild(new_group);
 
@@ -91,16 +91,16 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
 
             new_group->appendChild(new_items[i]);
             selection->add(new_items[i]);
-            sp_selected_path_to_curves();
+            sp_selected_path_to_curves(static_cast<SPDesktop *>(desktop));
 
             if (offset < 0.0) {
                 /* Doing an inset here folks */
                 offset *= -1.0;
                 prefs_set_double_attribute("options.defaultoffsetwidth", "value", offset);
-                sp_action_perform(Inkscape::Verb::get(SP_VERB_SELECTION_INSET)->get_action(document), NULL);
+                sp_action_perform(Inkscape::Verb::get(SP_VERB_SELECTION_INSET)->get_action(desktop), NULL);
             } else if (offset > 0.0) {
                 prefs_set_double_attribute("options.defaultoffsetwidth", "value", offset);
-                sp_action_perform(Inkscape::Verb::get(SP_VERB_SELECTION_OFFSET)->get_action(document), NULL);
+                sp_action_perform(Inkscape::Verb::get(SP_VERB_SELECTION_OFFSET)->get_action(desktop), NULL);
             }
 
             selection->clear();

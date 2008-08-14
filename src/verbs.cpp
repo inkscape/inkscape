@@ -1084,7 +1084,7 @@ SelectionVerb::perform(SPAction *action, void *data, void */*pdata*/)
             sp_selected_path_simplify();
             break;
         case SP_VERB_SELECTION_REVERSE:
-            sp_selected_path_reverse();
+            sp_selected_path_reverse(dt);
             break;
         case SP_VERB_SELECTION_TRACE:
             inkscape_dialogs_unhide();
@@ -1095,10 +1095,10 @@ SelectionVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
 
         case SP_VERB_SELECTION_COMBINE:
-            sp_selected_path_combine();
+            sp_selected_path_combine(dt);
             break;
         case SP_VERB_SELECTION_BREAK_APART:
-            sp_selected_path_break_apart();
+            sp_selected_path_break_apart(dt);
             break;
         case SP_VERB_SELECTION_GRIDTILE:
             inkscape_dialogs_unhide();
@@ -1332,7 +1332,7 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
             sp_selection_remove_transform();
             break;
         case SP_VERB_OBJECT_TO_CURVE:
-            sp_selected_path_to_curves();
+            sp_selected_path_to_curves(dt);
             break;
         case SP_VERB_OBJECT_FLOW_TEXT:
             text_flow_into_shape();

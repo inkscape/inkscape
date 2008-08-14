@@ -15,11 +15,11 @@
 
 #include "forward.h"
 
-void sp_selected_path_combine (void);
-void sp_selected_path_break_apart (void);
-void sp_selected_path_to_curves (bool interactive = true);
+void sp_selected_path_combine (SPDesktop *desktop);
+void sp_selected_path_break_apart (SPDesktop *desktop);
+void sp_selected_path_to_curves (SPDesktop *desktop, bool interactive = true);
 Inkscape::XML::Node *sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy);
-void sp_selected_path_reverse ();
+void sp_selected_path_reverse (SPDesktop *desktop);
 
 #endif
 

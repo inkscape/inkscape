@@ -539,7 +539,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_r:
                     if (MOD__SHIFT_ONLY) {
                         // FIXME: add top panel button
-                        sp_selected_path_reverse();
+                        sp_selected_path_reverse(desktop);
                         ret = TRUE;
                     }
                     break;
