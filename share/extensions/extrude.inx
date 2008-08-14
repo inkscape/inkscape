@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-    <_name>Motion</_name>
-    <id>org.ekips.filter.motion</id>
-	<dependency type="executable" location="extensions">motion.py</dependency>
+    <_name>Extrude</_name>
+    <id>org.greygreen.inkscape.effects.extrude</id>
+	<dependency type="executable" location="extensions">extrude.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
-	<param name="magnitude" type="float" min="0" max="1000" _gui-text="Magnitude">100</param>
-	<param name="angle" type="float" min="0.0" max="360.0" _gui-text="Angle">45</param>
+  <param name="mode" type="optiongroup" _gui-text="Mode:">
+     <option>Lines</option>
+     <option>Polygons</option>
+  </param>
     <effect>
 		<object-type>path</object-type>
                 <effects-menu>
@@ -13,6 +15,6 @@
                 </effects-menu>
     </effect>
     <script>
-        <command reldir="extensions" interpreter="python">motion.py</command>
+        <command reldir="extensions" interpreter="python">extrude.py</command>
     </script>
 </inkscape-extension>
