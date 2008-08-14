@@ -15,7 +15,6 @@
  */
 
 #include "config.h"
-#include "inkscape.h"
 
 #include <gdk/gdkkeysyms.h>
 #include <cstring>
@@ -403,23 +402,10 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             }
             break;
 
-        case GDK_T:
-            {
-                Inkscape::Selection *selection = sp_desktop_selection (inkscape_active_desktop());
-                SPItem *item = selection->singleItem();
-                if (item && SP_IS_RECT (item)) {
-                    g_print ("Scaling transformation matrix\n");
-                    SP_RECT (item)->transform = NR::Matrix(NR::scale(1.25, 1.5));
-                    SP_OBJECT (item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-                }
-                ret = TRUE;
-            }
-            break;
-
         case GDK_g:
         case GDK_G:
             if (MOD__SHIFT_ONLY) {
-                sp_selection_to_guides();
+                sp_selection_to_guides(desktop);
                 ret = true;
             }
             break;

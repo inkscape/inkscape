@@ -25,7 +25,6 @@
 #include <gtkmm/clipboard.h>
 
 #include "svg/svg.h"
-#include "inkscape.h"
 #include "desktop.h"
 #include "desktop-style.h"
 #include "selection.h"
@@ -183,9 +182,8 @@ void sp_selection_delete_impl(GSList const *items, bool propagate = true, bool p
 }
 
 
-void sp_selection_delete()
+void sp_selection_delete(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL) {
         return;
     }
@@ -236,9 +234,8 @@ void add_ids_recursive (std::vector<const gchar *> &ids, SPObject *obj)
     }
 }
 
-void sp_selection_duplicate(bool suppressDone)
+void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -320,9 +317,8 @@ void sp_selection_duplicate(bool suppressDone)
     g_slist_free(newsel);
 }
 
-void sp_edit_clear_all()
+void sp_edit_clear_all(SPDesktop *dt)
 {
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
     if (!dt)
         return;
 
@@ -363,9 +359,8 @@ get_all_items (GSList *list, SPObject *from, SPDesktop *desktop, bool onlyvisibl
     return list;
 }
 
-void sp_edit_select_all_full (bool force_all_layers, bool invert)
+void sp_edit_select_all_full (SPDesktop *dt, bool force_all_layers, bool invert)
 {
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
     if (!dt)
         return;
 
@@ -429,29 +424,28 @@ void sp_edit_select_all_full (bool force_all_layers, bool invert)
     }
 }
 
-void sp_edit_select_all ()
+void sp_edit_select_all (SPDesktop *desktop)
 {
-    sp_edit_select_all_full (false, false);
+    sp_edit_select_all_full (desktop, false, false);
 }
 
-void sp_edit_select_all_in_all_layers ()
+void sp_edit_select_all_in_all_layers (SPDesktop *desktop)
 {
-    sp_edit_select_all_full (true, false);
+    sp_edit_select_all_full (desktop, true, false);
 }
 
-void sp_edit_invert ()
+void sp_edit_invert (SPDesktop *desktop)
 {
-    sp_edit_select_all_full (false, true);
+    sp_edit_select_all_full (desktop, false, true);
 }
 
-void sp_edit_invert_in_all_layers ()
+void sp_edit_invert_in_all_layers (SPDesktop *desktop)
 {
-    sp_edit_select_all_full (true, true);
+    sp_edit_select_all_full (desktop, true, true);
 }
 
-void sp_selection_group()
+void sp_selection_group(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -541,9 +535,8 @@ void sp_selection_group()
     Inkscape::GC::release(group);
 }
 
-void sp_selection_ungroup()
+void sp_selection_ungroup(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -648,9 +641,8 @@ prev_sibling(SPObject *child)
 }
 
 void
-sp_selection_raise()
+sp_selection_raise(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop)
         return;
 
@@ -707,9 +699,8 @@ sp_selection_raise()
                      Q_("undo_action|Raise"));
 }
 
-void sp_selection_raise_to_top()
+void sp_selection_raise_to_top(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -744,9 +735,8 @@ void sp_selection_raise_to_top()
 }
 
 void
-sp_selection_lower()
+sp_selection_lower(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -807,9 +797,8 @@ sp_selection_lower()
                      _("Lower"));
 }
 
-void sp_selection_lower_to_bottom()
+void sp_selection_lower_to_bottom(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -869,10 +858,10 @@ sp_redo(SPDesktop *desktop, SPDocument *)
             desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing to redo."));
 }
 
-void sp_selection_cut()
+void sp_selection_cut(SPDesktop *desktop)
 {
     sp_selection_copy();
-    sp_selection_delete();
+    sp_selection_delete(desktop);
 }
 
 /**
@@ -922,26 +911,26 @@ void sp_selection_copy()
     cm->copy();
 }
 
-void sp_selection_paste(bool in_place)
+void sp_selection_paste(SPDesktop *desktop, bool in_place)
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
     if(cm->paste(in_place))
-        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_PASTE, _("Paste"));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_PASTE, _("Paste"));
 }
 
-void sp_selection_paste_style()
+void sp_selection_paste_style(SPDesktop *desktop)
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
     if(cm->pasteStyle())
-        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_PASTE_STYLE, _("Paste style"));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_PASTE_STYLE, _("Paste style"));
 }
 
 
-void sp_selection_paste_livepatheffect()
+void sp_selection_paste_livepatheffect(SPDesktop *desktop)
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
     if(cm->pastePathEffect())
-        sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_PASTE_LIVEPATHEFFECT,
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_PASTE_LIVEPATHEFFECT,
                      _("Paste live path effect"));
 }
 
@@ -953,9 +942,8 @@ void sp_selection_remove_livepatheffect_impl(SPItem *item)
     }
 }
 
-void sp_selection_remove_livepatheffect()
+void sp_selection_remove_livepatheffect(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL) return;
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -977,9 +965,8 @@ void sp_selection_remove_livepatheffect()
                      _("Remove live path effect"));
 }
 
-void sp_selection_remove_filter ()
+void sp_selection_remove_filter (SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL) return;
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -1000,26 +987,24 @@ void sp_selection_remove_filter ()
 }
 
 
-void sp_selection_paste_size (bool apply_x, bool apply_y)
+void sp_selection_paste_size (SPDesktop *desktop, bool apply_x, bool apply_y)
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
     if(cm->pasteSize(false, apply_x, apply_y))
-        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_EDIT_PASTE_SIZE,
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_PASTE_SIZE,
                      _("Paste size"));
 }
 
-void sp_selection_paste_size_separately (bool apply_x, bool apply_y)
+void sp_selection_paste_size_separately (SPDesktop *desktop, bool apply_x, bool apply_y)
 {
     Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
     if(cm->pasteSize(true, apply_x, apply_y))
-        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_EDIT_PASTE_SIZE_SEPARATELY,
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_PASTE_SIZE_SEPARATELY,
                      _("Paste size separately"));
 }
 
-void sp_selection_to_next_layer(bool suppressDone)
+void sp_selection_to_next_layer(SPDesktop *dt, bool suppressDone)
 {
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(dt);
 
     // check if something is selected
@@ -1063,10 +1048,8 @@ void sp_selection_to_next_layer(bool suppressDone)
     g_slist_free ((GSList *) items);
 }
 
-void sp_selection_to_prev_layer(bool suppressDone)
+void sp_selection_to_prev_layer(SPDesktop *dt, bool suppressDone)
 {
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(dt);
 
     // check if something is selected
@@ -1276,9 +1259,8 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
     }
 }
 
-void sp_selection_remove_transform()
+void sp_selection_remove_transform(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -1383,10 +1365,8 @@ void sp_selection_move_relative(Inkscape::Selection *selection, double dx, doubl
  *
  */
 
-void sp_selection_rotate_90_cw()
+void sp_selection_rotate_90_cw(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty())
@@ -1407,10 +1387,8 @@ void sp_selection_rotate_90_cw()
 /**
  * @brief Rotates selected objects 90 degrees counter-clockwise.
  */
-void sp_selection_rotate_90_ccw()
+void sp_selection_rotate_90_ccw(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty())
@@ -1536,9 +1514,8 @@ sp_selection_scale_times(Inkscape::Selection *selection, gdouble times)
 }
 
 void
-sp_selection_move(gdouble dx, gdouble dy)
+sp_selection_move(SPDesktop *desktop, gdouble dx, gdouble dy)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     if (selection->isEmpty()) {
         return;
@@ -1559,10 +1536,8 @@ sp_selection_move(gdouble dx, gdouble dy)
 }
 
 void
-sp_selection_move_screen(gdouble dx, gdouble dy)
+sp_selection_move_screen(SPDesktop *desktop, gdouble dx, gdouble dy)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     if (selection->isEmpty()) {
         return;
@@ -1639,9 +1614,8 @@ private:
 }
 
 void
-sp_selection_item_next(void)
+sp_selection_item_next(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     g_return_if_fail(desktop != NULL);
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -1667,10 +1641,9 @@ sp_selection_item_next(void)
 }
 
 void
-sp_selection_item_prev(void)
+sp_selection_item_prev(SPDesktop *desktop)
 {
-    SPDocument *document = SP_ACTIVE_DOCUMENT;
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDocument *document = sp_desktop_document(desktop);
     g_return_if_fail(document != NULL);
     g_return_if_fail(desktop != NULL);
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
@@ -1865,9 +1838,8 @@ void scroll_to_show_item(SPDesktop *desktop, SPItem *item)
 
 
 void
-sp_selection_clone()
+sp_selection_clone(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -1921,9 +1893,8 @@ sp_selection_clone()
 }
 
 void
-sp_selection_relink()
+sp_selection_relink(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop)
         return;
 
@@ -1970,9 +1941,8 @@ sp_selection_relink()
 
 
 void
-sp_selection_unlink()
+sp_selection_unlink(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop)
         return;
 
@@ -2036,9 +2006,8 @@ sp_selection_unlink()
 }
 
 void
-sp_select_clone_original()
+sp_select_clone_original(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -2109,9 +2078,8 @@ sp_select_clone_original()
 }
 
 
-void sp_selection_to_marker(bool apply)
+void sp_selection_to_marker(SPDesktop *desktop, bool apply)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -2205,9 +2173,8 @@ static void sp_selection_to_guides_recursive(SPItem *item, bool deleteitem, bool
     }
 }
 
-void sp_selection_to_guides()
+void sp_selection_to_guides(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -2232,9 +2199,8 @@ void sp_selection_to_guides()
 }
 
 void
-sp_selection_tile(bool apply)
+sp_selection_tile(SPDesktop *desktop, bool apply)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -2336,9 +2302,8 @@ sp_selection_tile(bool apply)
 }
 
 void
-sp_selection_untile()
+sp_selection_untile(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -2478,9 +2443,8 @@ sp_document_get_export_hints (SPDocument *doc, char const **filename, float *xdp
 }
 
 void
-sp_selection_create_bitmap_copy ()
+sp_selection_create_bitmap_copy (SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -2677,9 +2641,8 @@ sp_selection_create_bitmap_copy ()
  *
  */
 void
-sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
+sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_layer)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
 
@@ -2805,8 +2768,7 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
         sp_document_done (doc, SP_VERB_OBJECT_SET_MASK, _("Set mask"));
 }
 
-void sp_selection_unset_mask(bool apply_clip_path) {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
     if (desktop == NULL)
         return;
 

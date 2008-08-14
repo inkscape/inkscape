@@ -1097,7 +1097,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
         case GDK_g:
         case GDK_G:
             if (MOD__SHIFT_ONLY) {
-                sp_selection_to_guides();
+                sp_selection_to_guides(SP_EVENT_CONTEXT(pc)->desktop);
                 ret = true;
             }
             break;

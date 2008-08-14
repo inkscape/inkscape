@@ -520,7 +520,7 @@ pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint con
         case GDK_g:
         case GDK_G:
             if (mod_shift_only(state)) {
-                sp_selection_to_guides();
+                sp_selection_to_guides(SP_EVENT_CONTEXT(pc)->desktop);
                 ret = true;
             }
             break;

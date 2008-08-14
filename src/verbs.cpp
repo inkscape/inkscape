@@ -844,106 +844,106 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
             sp_redo(dt, sp_desktop_document(dt));
             break;
         case SP_VERB_EDIT_CUT:
-            sp_selection_cut();
+            sp_selection_cut(dt);
             break;
         case SP_VERB_EDIT_COPY:
             sp_selection_copy();
             break;
         case SP_VERB_EDIT_PASTE:
-            sp_selection_paste(false);
+            sp_selection_paste(dt, false);
             break;
         case SP_VERB_EDIT_PASTE_STYLE:
-            sp_selection_paste_style();
+            sp_selection_paste_style(dt);
             break;
         case SP_VERB_EDIT_PASTE_SIZE:
-            sp_selection_paste_size(true, true);
+            sp_selection_paste_size(dt, true, true);
             break;
         case SP_VERB_EDIT_PASTE_SIZE_X:
-            sp_selection_paste_size(true, false);
+            sp_selection_paste_size(dt, true, false);
             break;
         case SP_VERB_EDIT_PASTE_SIZE_Y:
-            sp_selection_paste_size(false, true);
+            sp_selection_paste_size(dt, false, true);
             break;
         case SP_VERB_EDIT_PASTE_SIZE_SEPARATELY:
-            sp_selection_paste_size_separately(true, true);
+            sp_selection_paste_size_separately(dt, true, true);
             break;
         case SP_VERB_EDIT_PASTE_SIZE_SEPARATELY_X:
-            sp_selection_paste_size_separately(true, false);
+            sp_selection_paste_size_separately(dt, true, false);
             break;
         case SP_VERB_EDIT_PASTE_SIZE_SEPARATELY_Y:
-            sp_selection_paste_size_separately(false, true);
+            sp_selection_paste_size_separately(dt, false, true);
             break;
         case SP_VERB_EDIT_PASTE_IN_PLACE:
-            sp_selection_paste(true);
+            sp_selection_paste(dt, true);
             break;
         case SP_VERB_EDIT_PASTE_LIVEPATHEFFECT:
-            sp_selection_paste_livepatheffect();
+            sp_selection_paste_livepatheffect(dt);
             break;
         case SP_VERB_EDIT_REMOVE_LIVEPATHEFFECT:
-            sp_selection_remove_livepatheffect();
+            sp_selection_remove_livepatheffect(dt);
             break;
         case SP_VERB_EDIT_REMOVE_FILTER:
-            sp_selection_remove_filter();
+            sp_selection_remove_filter(dt);
             break;
         case SP_VERB_EDIT_DELETE:
-            sp_selection_delete();
+            sp_selection_delete(dt);
             break;
         case SP_VERB_EDIT_DUPLICATE:
-            sp_selection_duplicate();
+            sp_selection_duplicate(dt);
             break;
         case SP_VERB_EDIT_CLONE:
-            sp_selection_clone();
+            sp_selection_clone(dt);
             break;
         case SP_VERB_EDIT_UNLINK_CLONE:
-            sp_selection_unlink();
+            sp_selection_unlink(dt);
             break;
         case SP_VERB_EDIT_RELINK_CLONE:
-            sp_selection_relink();
+            sp_selection_relink(dt);
             break;
         case SP_VERB_EDIT_CLONE_SELECT_ORIGINAL:
-            sp_select_clone_original();
+            sp_select_clone_original(dt);
             break;
         case SP_VERB_EDIT_SELECTION_2_MARKER:
-            sp_selection_to_marker();
+            sp_selection_to_marker(dt);
             break;
         case SP_VERB_EDIT_SELECTION_2_GUIDES:
-            sp_selection_to_guides();
+            sp_selection_to_guides(dt);
             break;
         case SP_VERB_EDIT_TILE:
-            sp_selection_tile();
+            sp_selection_tile(dt);
             break;
         case SP_VERB_EDIT_UNTILE:
-            sp_selection_untile();
+            sp_selection_untile(dt);
             break;
         case SP_VERB_EDIT_CLEAR_ALL:
-            sp_edit_clear_all();
+            sp_edit_clear_all(dt);
             break;
         case SP_VERB_EDIT_SELECT_ALL:
             if (tools_isactive(dt, TOOLS_NODES)) {
                 SP_NODE_CONTEXT(ec)->shape_editor->select_all_from_subpath(false);
             } else {
-                sp_edit_select_all();
+                sp_edit_select_all(dt);
             }
             break;
         case SP_VERB_EDIT_INVERT:
             if (tools_isactive(dt, TOOLS_NODES)) {
                 SP_NODE_CONTEXT(ec)->shape_editor->select_all_from_subpath(true);
             } else {
-                sp_edit_invert();
+                sp_edit_invert(dt);
             }
             break;
         case SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS:
             if (tools_isactive(dt, TOOLS_NODES)) {
                 SP_NODE_CONTEXT(ec)->shape_editor->select_all(false);
             } else {
-                sp_edit_select_all_in_all_layers();
+                sp_edit_select_all_in_all_layers(dt);
             }
             break;
         case SP_VERB_EDIT_INVERT_IN_ALL_LAYERS:
             if (tools_isactive(dt, TOOLS_NODES)) {
                 SP_NODE_CONTEXT(ec)->shape_editor->select_all(true);
             } else {
-                sp_edit_invert_in_all_layers();
+                sp_edit_invert_in_all_layers(dt);
             }
             break;
 
@@ -954,7 +954,7 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
                        && ec->_grdrag->isNonEmpty()) {
                 sp_gradient_context_select_next (ec);
             } else {
-                sp_selection_item_next();
+                sp_selection_item_next(dt);
             }
             break;
         case SP_VERB_EDIT_SELECT_PREV:
@@ -964,7 +964,7 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
                        && ec->_grdrag->isNonEmpty()) {
                 sp_gradient_context_select_prev (ec);
             } else {
-                sp_selection_item_prev();
+                sp_selection_item_prev(dt);
             }
             break;
 
@@ -1002,22 +1002,22 @@ SelectionVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_SELECTION_TO_FRONT:
-            sp_selection_raise_to_top();
+            sp_selection_raise_to_top(dt);
             break;
         case SP_VERB_SELECTION_TO_BACK:
-            sp_selection_lower_to_bottom();
+            sp_selection_lower_to_bottom(dt);
             break;
         case SP_VERB_SELECTION_RAISE:
-            sp_selection_raise();
+            sp_selection_raise(dt);
             break;
         case SP_VERB_SELECTION_LOWER:
-            sp_selection_lower();
+            sp_selection_lower(dt);
             break;
         case SP_VERB_SELECTION_GROUP:
-            sp_selection_group();
+            sp_selection_group(dt);
             break;
         case SP_VERB_SELECTION_UNGROUP:
-            sp_selection_ungroup();
+            sp_selection_ungroup(dt);
             break;
 
         case SP_VERB_SELECTION_TEXTTOPATH:
@@ -1091,7 +1091,7 @@ SelectionVerb::perform(SPAction *action, void *data, void */*pdata*/)
             dt->_dlg_mgr->showDialog("Trace");
             break;
         case SP_VERB_SELECTION_CREATE_BITMAP:
-            sp_selection_create_bitmap_copy();
+            sp_selection_create_bitmap_copy(dt);
             break;
 
         case SP_VERB_SELECTION_COMBINE:
@@ -1155,11 +1155,11 @@ LayerVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         }
         case SP_VERB_LAYER_MOVE_TO_NEXT: {
-            sp_selection_to_next_layer();
+            sp_selection_to_next_layer(dt);
             break;
         }
         case SP_VERB_LAYER_MOVE_TO_PREV: {
-            sp_selection_to_prev_layer();
+            sp_selection_to_prev_layer(dt);
             break;
         }
         case SP_VERB_LAYER_TO_TOP:
@@ -1232,11 +1232,11 @@ LayerVerb::perform(SPAction *action, void *data, void */*pdata*/)
                     g_free(name);
                 }
 
-                sp_edit_select_all();
-                sp_selection_duplicate(true);
-                sp_selection_to_prev_layer(true);
+                sp_edit_select_all(dt);
+                sp_selection_duplicate(dt, true);
+                sp_selection_to_prev_layer(dt, true);
                 dt->setCurrentLayer(new_layer);
-                sp_edit_select_all();
+                sp_edit_select_all(dt);
 
                 sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_DUPLICATE,
                                  _("Duplicate layer"));
@@ -1323,13 +1323,13 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_OBJECT_ROTATE_90_CW:
-            sp_selection_rotate_90_cw();
+            sp_selection_rotate_90_cw(dt);
             break;
         case SP_VERB_OBJECT_ROTATE_90_CCW:
-            sp_selection_rotate_90_ccw();
+            sp_selection_rotate_90_ccw(dt);
             break;
         case SP_VERB_OBJECT_FLATTEN:
-            sp_selection_remove_transform();
+            sp_selection_remove_transform(dt);
             break;
         case SP_VERB_OBJECT_TO_CURVE:
             sp_selected_path_to_curves(dt);
@@ -1383,22 +1383,22 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
                              _("Flip vertically"));
             break;
         case SP_VERB_OBJECT_SET_MASK:
-            sp_selection_set_mask(false, false);
+            sp_selection_set_mask(dt, false, false);
             break;
         case SP_VERB_OBJECT_EDIT_MASK:
             sp_selection_edit_clip_or_mask(dt, false);
             break;
         case SP_VERB_OBJECT_UNSET_MASK:
-            sp_selection_unset_mask(false);
+            sp_selection_unset_mask(dt, false);
             break;
         case SP_VERB_OBJECT_SET_CLIPPATH:
-            sp_selection_set_mask(true, false);
+            sp_selection_set_mask(dt, true, false);
             break;
         case SP_VERB_OBJECT_EDIT_CLIPPATH:
             sp_selection_edit_clip_or_mask(dt, true);
             break;
         case SP_VERB_OBJECT_UNSET_CLIPPATH:
-            sp_selection_unset_mask(true);
+            sp_selection_unset_mask(dt, true);
             break;
         default:
             break;

@@ -40,7 +40,6 @@
 #include "xml/node-event-vector.h"
 #include "prefs-utils.h"
 #include "context-fns.h"
-#include "inkscape.h"
 #include "desktop-style.h"
 #include "transf_mat_3x4.h"
 #include "perspective-line.h"
@@ -497,7 +496,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         case GDK_g:
         case GDK_G:
             if (MOD__SHIFT_ONLY) {
-                sp_selection_to_guides();
+                sp_selection_to_guides(desktop);
                 ret = true;
             }
             break;

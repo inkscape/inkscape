@@ -51,7 +51,6 @@
 #include "xml/repr.h"
 #include "context-fns.h"
 #include "sp-item.h"
-#include "inkscape.h"
 #include "color.h"
 #include "rubberband.h"
 #include "splivarot.h"
@@ -802,7 +801,7 @@ set_to_accumulated(SPEraserContext *dc)
                 g_slist_free(toWorkOn);
 
                 if ( !eraserMode ) {
-                    //sp_selection_delete();
+                    //sp_selection_delete(desktop);
                     remainingItems.clear();
                 }
 
