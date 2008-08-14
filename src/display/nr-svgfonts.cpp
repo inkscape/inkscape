@@ -30,6 +30,43 @@
 
 static cairo_user_data_key_t key;
 
+
+/**
+ * Felipe,
+ * Cairo is changing its userfont api a little bit for 1.7+, 1.8,
+ * etc.   This switch makes your code compile both on 1.6 and 1.7.  Is
+ * this ok?
+ * 
+ * Bob
+ */     
+#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 7, 0))
+
+static cairo_status_t font_init_cb (cairo_scaled_font_t  *scaled_font,
+		       cairo_t */*cairo*/, cairo_font_extents_t *metrics){
+	cairo_font_face_t*  face;
+	face = cairo_scaled_font_get_font_face(scaled_font);
+	SvgFont* instance = (SvgFont*) cairo_font_face_get_user_data(face, &key);
+	return instance->scaled_font_init(scaled_font, metrics);
+}
+
+static cairo_status_t font_text_to_glyphs_cb (
+                cairo_scaled_font_t  *scaled_font,
+				const char	         *utf8,
+				int                  /*utf8_len*/,
+				cairo_glyph_t	     **glyphs,
+				int		             *num_glyphs,
+				cairo_text_cluster_t **/*clusters*/,
+				int                  */*num_clusters*/,
+				cairo_bool_t         */*backward*/){
+	cairo_font_face_t*  face;
+	face = cairo_scaled_font_get_font_face(scaled_font);
+	SvgFont* instance = (SvgFont*) cairo_font_face_get_user_data(face, &key);
+	return instance->scaled_font_text_to_glyphs(scaled_font, utf8, glyphs, num_glyphs);
+}
+
+
+#else
+
 static cairo_status_t font_init_cb (cairo_scaled_font_t  *scaled_font,
 		       cairo_font_extents_t *metrics){
 	cairo_font_face_t*  face;
@@ -47,6 +84,9 @@ static cairo_status_t font_text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
 	SvgFont* instance = (SvgFont*) cairo_font_face_get_user_data(face, &key);
 	return instance->scaled_font_text_to_glyphs(scaled_font, utf8, glyphs, num_glyphs);
 }
+
+#endif
+
 
 static cairo_status_t font_render_glyph_cb (cairo_scaled_font_t  *scaled_font,
 			       unsigned long         glyph,
