@@ -16,36 +16,36 @@ struct SPItem;
 // boolean operations
 // work on the current selection
 // selection has 2 contain exactly 2 items
-void sp_selected_path_union ();
-void sp_selected_path_union_skip_undo ();
-void sp_selected_path_intersect ();
-void sp_selected_path_diff ();
-void sp_selected_path_diff_skip_undo ();
-void sp_selected_path_symdiff ();
-void sp_selected_path_cut ();
-void sp_selected_path_slice ();
+void sp_selected_path_union (SPDesktop *desktop);
+void sp_selected_path_union_skip_undo (SPDesktop *desktop);
+void sp_selected_path_intersect (SPDesktop *desktop);
+void sp_selected_path_diff (SPDesktop *desktop);
+void sp_selected_path_diff_skip_undo (SPDesktop *desktop);
+void sp_selected_path_symdiff (SPDesktop *desktop);
+void sp_selected_path_cut (SPDesktop *desktop);
+void sp_selected_path_slice (SPDesktop *desktop);
 
 // offset/inset of a curve
 // takes the fill-rule in consideration
 // offset amount is the stroke-width of the curve
-void sp_selected_path_offset ();
-void sp_selected_path_offset_screen (double pixels);
-void sp_selected_path_inset ();
-void sp_selected_path_inset_screen (double pixels);
-void sp_selected_path_create_offset ();
-void sp_selected_path_create_inset ();
-void sp_selected_path_create_updating_offset ();
-void sp_selected_path_create_updating_inset ();
+void sp_selected_path_offset (SPDesktop *desktop);
+void sp_selected_path_offset_screen (SPDesktop *desktop, double pixels);
+void sp_selected_path_inset (SPDesktop *desktop);
+void sp_selected_path_inset_screen (SPDesktop *desktop, double pixels);
+void sp_selected_path_create_offset (SPDesktop *desktop);
+void sp_selected_path_create_inset (SPDesktop *desktop);
+void sp_selected_path_create_updating_offset (SPDesktop *desktop);
+void sp_selected_path_create_updating_inset (SPDesktop *desktop);
 
-void sp_selected_path_create_offset_object_zero ();
-void sp_selected_path_create_updating_offset_object_zero ();
+void sp_selected_path_create_offset_object_zero (SPDesktop *desktop);
+void sp_selected_path_create_updating_offset_object_zero (SPDesktop *desktop);
 
 // outline of a curve
 // uses the stroke-width
-void sp_selected_path_outline ();
+void sp_selected_path_outline (SPDesktop *desktop);
 
 // simplifies a path (removes small segments and the like)
-void sp_selected_path_simplify ();
+void sp_selected_path_simplify (SPDesktop *desktop);
 
 Path *Path_for_item(SPItem *item, bool doTransformation, bool transformFull = true);
 Geom::PathVector* pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTransformation, bool transformFull, Geom::Matrix extraPreAffine, Geom::Matrix extraPostAffine);

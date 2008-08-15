@@ -444,7 +444,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
             double th_max = (0.6 - 0.59*sqrt(fidelity)) / NR::expansion(i2doc);
             double threshold = MAX(th_max, th_max*force);
             res->ConvertEvenLines(threshold);
-            res->Simplify(threshold / (SP_ACTIVE_DESKTOP->current_zoom()));
+            res->Simplify(threshold / (selection->desktop()->current_zoom()));
 
             if (newrepr) { // converting to path, need to replace the repr
                 bool is_selected = selection->includes(item);

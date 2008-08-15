@@ -33,7 +33,6 @@
 #include "text-editing.h"
 #include "sp-item-group.h"
 #include "style.h"
-#include "inkscape.h"
 #include "document.h"
 #include "message-stack.h"
 #include "selection.h"
@@ -63,64 +62,62 @@
 
 bool   Ancetre(Inkscape::XML::Node *a, Inkscape::XML::Node *who);
 
-void sp_selected_path_boolop(bool_op bop, const unsigned int verb=SP_VERB_NONE, const Glib::ustring description="");
-void sp_selected_path_do_offset(bool expand, double prefOffset);
-void sp_selected_path_create_offset_object(int expand, bool updating);
+void sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb=SP_VERB_NONE, const Glib::ustring description="");
+void sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset);
+void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updating);
 
 void
-sp_selected_path_union()
+sp_selected_path_union(SPDesktop *desktop)
 {
-    sp_selected_path_boolop(bool_op_union, SP_VERB_SELECTION_UNION, _("Union"));
-}
-
-void
-sp_selected_path_union_skip_undo()
-{
-    sp_selected_path_boolop(bool_op_union, SP_VERB_NONE, _("Union"));
+    sp_selected_path_boolop(desktop, bool_op_union, SP_VERB_SELECTION_UNION, _("Union"));
 }
 
 void
-sp_selected_path_intersect()
+sp_selected_path_union_skip_undo(SPDesktop *desktop)
 {
-    sp_selected_path_boolop(bool_op_inters, SP_VERB_SELECTION_INTERSECT, _("Intersection"));
+    sp_selected_path_boolop(desktop, bool_op_union, SP_VERB_NONE, _("Union"));
 }
 
 void
-sp_selected_path_diff()
+sp_selected_path_intersect(SPDesktop *desktop)
 {
-    sp_selected_path_boolop(bool_op_diff, SP_VERB_SELECTION_DIFF, _("Difference"));
+    sp_selected_path_boolop(desktop, bool_op_inters, SP_VERB_SELECTION_INTERSECT, _("Intersection"));
 }
 
 void
-sp_selected_path_diff_skip_undo()
+sp_selected_path_diff(SPDesktop *desktop)
 {
-    sp_selected_path_boolop(bool_op_diff, SP_VERB_NONE, _("Difference"));
+    sp_selected_path_boolop(desktop, bool_op_diff, SP_VERB_SELECTION_DIFF, _("Difference"));
 }
 
 void
-sp_selected_path_symdiff()
+sp_selected_path_diff_skip_undo(SPDesktop *desktop)
 {
-    sp_selected_path_boolop(bool_op_symdiff, SP_VERB_SELECTION_SYMDIFF, _("Exclusion"));
+    sp_selected_path_boolop(desktop, bool_op_diff, SP_VERB_NONE, _("Difference"));
+}
+
+void
+sp_selected_path_symdiff(SPDesktop *desktop)
+{
+    sp_selected_path_boolop(desktop, bool_op_symdiff, SP_VERB_SELECTION_SYMDIFF, _("Exclusion"));
 }
 void
-sp_selected_path_cut()
+sp_selected_path_cut(SPDesktop *desktop)
 {
-    sp_selected_path_boolop(bool_op_cut, SP_VERB_SELECTION_CUT, _("Division"));
+    sp_selected_path_boolop(desktop, bool_op_cut, SP_VERB_SELECTION_CUT, _("Division"));
 }
 void
-sp_selected_path_slice()
+sp_selected_path_slice(SPDesktop *desktop)
 {
-    sp_selected_path_boolop(bool_op_slice, SP_VERB_SELECTION_SLICE,  _("Cut path"));
+    sp_selected_path_boolop(desktop, bool_op_slice, SP_VERB_SELECTION_SLICE,  _("Cut path"));
 }
 
 
 // boolean operations
 // take the source paths from the file, do the operation, delete the originals and add the results
 void
-sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustring description)
+sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb, const Glib::ustring description)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     
     GSList *il = (GSList *) selection->itemList();
@@ -625,10 +622,8 @@ void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Matrix 
 }
 
 void
-sp_selected_path_outline()
+sp_selected_path_outline(SPDesktop *desktop)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
@@ -937,77 +932,74 @@ sp_selected_path_outline()
 
 
 void
-sp_selected_path_offset()
+sp_selected_path_offset(SPDesktop *desktop)
 {
     double prefOffset = prefs_get_double_attribute("options.defaultoffsetwidth", "value", 1.0);
 
-    sp_selected_path_do_offset(true, prefOffset);
+    sp_selected_path_do_offset(desktop, true, prefOffset);
 }
 void
-sp_selected_path_inset()
+sp_selected_path_inset(SPDesktop *desktop)
 {
     double prefOffset = prefs_get_double_attribute("options.defaultoffsetwidth", "value", 1.0);
 
-    sp_selected_path_do_offset(false, prefOffset);
+    sp_selected_path_do_offset(desktop, false, prefOffset);
 }
 
 void
-sp_selected_path_offset_screen(double pixels)
+sp_selected_path_offset_screen(SPDesktop *desktop, double pixels)
 {
-    sp_selected_path_do_offset(true,  pixels / SP_ACTIVE_DESKTOP->current_zoom());
+    sp_selected_path_do_offset(desktop, true,  pixels / desktop->current_zoom());
 }
 
 void
-sp_selected_path_inset_screen(double pixels)
+sp_selected_path_inset_screen(SPDesktop *desktop, double pixels)
 {
-    sp_selected_path_do_offset(false,  pixels / SP_ACTIVE_DESKTOP->current_zoom());
+    sp_selected_path_do_offset(desktop, false,  pixels / desktop->current_zoom());
 }
 
 
-void sp_selected_path_create_offset_object_zero()
+void sp_selected_path_create_offset_object_zero(SPDesktop *desktop)
 {
-    sp_selected_path_create_offset_object(0, false);
+    sp_selected_path_create_offset_object(desktop, 0, false);
 }
 
-void sp_selected_path_create_offset()
+void sp_selected_path_create_offset(SPDesktop *desktop)
 {
-    sp_selected_path_create_offset_object(1, false);
+    sp_selected_path_create_offset_object(desktop, 1, false);
 }
-void sp_selected_path_create_inset()
+void sp_selected_path_create_inset(SPDesktop *desktop)
 {
-    sp_selected_path_create_offset_object(-1, false);
-}
-
-void sp_selected_path_create_updating_offset_object_zero()
-{
-    sp_selected_path_create_offset_object(0, true);
+    sp_selected_path_create_offset_object(desktop, -1, false);
 }
 
-void sp_selected_path_create_updating_offset()
+void sp_selected_path_create_updating_offset_object_zero(SPDesktop *desktop)
 {
-    sp_selected_path_create_offset_object(1, true);
+    sp_selected_path_create_offset_object(desktop, 0, true);
 }
-void sp_selected_path_create_updating_inset()
+
+void sp_selected_path_create_updating_offset(SPDesktop *desktop)
 {
-    sp_selected_path_create_offset_object(-1, true);
+    sp_selected_path_create_offset_object(desktop, 1, true);
+}
+void sp_selected_path_create_updating_inset(SPDesktop *desktop)
+{
+    sp_selected_path_create_offset_object(desktop, -1, true);
 }
 
 void
-sp_selected_path_create_offset_object(int expand, bool updating)
+sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updating)
 {
     Inkscape::Selection *selection;
     Inkscape::XML::Node *repr;
     SPItem *item;
     SPCurve *curve;
     gchar *style, *str;
-    SPDesktop *desktop;
     float o_width, o_miter;
     JoinType o_join;
     ButtType o_butt;
 
     curve = NULL;
-
-    desktop = SP_ACTIVE_DESKTOP;
 
     selection = sp_desktop_selection(desktop);
 
@@ -1224,10 +1216,8 @@ sp_selected_path_create_offset_object(int expand, bool updating)
 
 
 void
-sp_selected_path_do_offset(bool expand, double prefOffset)
+sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
@@ -1669,11 +1659,9 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
 }
 
 void
-sp_selected_path_simplify_selection(float threshold, bool justCoalesce,
-                       float angleLimit, bool breakableAngles)
+sp_selected_path_simplify_selection(SPDesktop *desktop, float threshold, bool justCoalesce,
+                                    float angleLimit, bool breakableAngles)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
@@ -1704,7 +1692,7 @@ static double previousTime      = 0.0;
 static gdouble simplifyMultiply = 1.0;
 
 void
-sp_selected_path_simplify(void)
+sp_selected_path_simplify(SPDesktop *desktop)
 {
     gdouble simplifyThreshold =
         prefs_get_double_attribute("options.simplifythreshold", "value", 0.003);
@@ -1735,8 +1723,8 @@ sp_selected_path_simplify(void)
     //g_print("%g\n", simplify_threshold);
 
     //Make the actual call
-    sp_selected_path_simplify_selection(simplifyThreshold,
-                      simplifyJustCoalesce, 0.0, false);
+    sp_selected_path_simplify_selection(desktop, simplifyThreshold,
+                                        simplifyJustCoalesce, 0.0, false);
 }
 
 

@@ -1031,57 +1031,57 @@ SelectionVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
 
         case SP_VERB_SELECTION_UNION:
-            sp_selected_path_union();
+            sp_selected_path_union(dt);
             break;
         case SP_VERB_SELECTION_INTERSECT:
-            sp_selected_path_intersect();
+            sp_selected_path_intersect(dt);
             break;
         case SP_VERB_SELECTION_DIFF:
-            sp_selected_path_diff();
+            sp_selected_path_diff(dt);
             break;
         case SP_VERB_SELECTION_SYMDIFF:
-            sp_selected_path_symdiff();
+            sp_selected_path_symdiff(dt);
             break;
 
         case SP_VERB_SELECTION_CUT:
-            sp_selected_path_cut();
+            sp_selected_path_cut(dt);
             break;
         case SP_VERB_SELECTION_SLICE:
-            sp_selected_path_slice();
+            sp_selected_path_slice(dt);
             break;
 
         case SP_VERB_SELECTION_OFFSET:
-            sp_selected_path_offset();
+            sp_selected_path_offset(dt);
             break;
         case SP_VERB_SELECTION_OFFSET_SCREEN:
-            sp_selected_path_offset_screen(1);
+            sp_selected_path_offset_screen(dt, 1);
             break;
         case SP_VERB_SELECTION_OFFSET_SCREEN_10:
-            sp_selected_path_offset_screen(10);
+            sp_selected_path_offset_screen(dt, 10);
             break;
         case SP_VERB_SELECTION_INSET:
-            sp_selected_path_inset();
+            sp_selected_path_inset(dt);
             break;
         case SP_VERB_SELECTION_INSET_SCREEN:
-            sp_selected_path_inset_screen(1);
+            sp_selected_path_inset_screen(dt, 1);
             break;
         case SP_VERB_SELECTION_INSET_SCREEN_10:
-            sp_selected_path_inset_screen(10);
+            sp_selected_path_inset_screen(dt, 10);
             break;
         case SP_VERB_SELECTION_DYNAMIC_OFFSET:
-            sp_selected_path_create_offset_object_zero();
+            sp_selected_path_create_offset_object_zero(dt);
             tools_switch_current(TOOLS_NODES);
             break;
         case SP_VERB_SELECTION_LINKED_OFFSET:
-            sp_selected_path_create_updating_offset_object_zero();
+            sp_selected_path_create_updating_offset_object_zero(dt);
             tools_switch_current(TOOLS_NODES);
             break;
 
         case SP_VERB_SELECTION_OUTLINE:
-            sp_selected_path_outline();
+            sp_selected_path_outline(dt);
             break;
         case SP_VERB_SELECTION_SIMPLIFY:
-            sp_selected_path_simplify();
+            sp_selected_path_simplify(dt);
             break;
         case SP_VERB_SELECTION_REVERSE:
             sp_selected_path_reverse(dt);

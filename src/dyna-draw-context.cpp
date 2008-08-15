@@ -990,7 +990,7 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
 
         if (unionize) {
             sp_desktop_selection(desktop)->add(dc->repr);
-            sp_selected_path_union_skip_undo();
+            sp_selected_path_union_skip_undo(desktop);
         } else {
             if (dc->keep_selected) {
                 sp_desktop_selection(desktop)->set(dc->repr);
@@ -1093,7 +1093,9 @@ static double square(double const x)
 static void
 fit_and_split(SPDynaDrawContext *dc, gboolean release)
 {
-    double const tolerance_sq = square( NR::expansion(SP_EVENT_CONTEXT(dc)->desktop->w2d()) * TOLERANCE_CALLIGRAPHIC );
+    SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
+
+    double const tolerance_sq = square( NR::expansion(desktop->w2d()) * TOLERANCE_CALLIGRAPHIC );
 
 #ifdef DYNA_DRAW_VERBOSE
     g_print("[F&S:R=%c]", release?'T':'F');
@@ -1186,24 +1188,24 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
         if (!release) {
             g_assert(!dc->currentcurve->is_empty());
 
-            SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(SP_EVENT_CONTEXT(dc)->desktop),
+            SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(desktop),
                                                    SP_TYPE_CANVAS_BPATH,
                                                    NULL);
             SPCurve *curve = dc->currentcurve->copy();
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve);
             curve->unref();
 
-            guint32 fillColor = sp_desktop_get_color_tool (SP_ACTIVE_DESKTOP, "tools.calligraphic", true);
-            //guint32 strokeColor = sp_desktop_get_color_tool (SP_ACTIVE_DESKTOP, "tools.calligraphic", false);
-            double opacity = sp_desktop_get_master_opacity_tool (SP_ACTIVE_DESKTOP, "tools.calligraphic");
-            double fillOpacity = sp_desktop_get_opacity_tool (SP_ACTIVE_DESKTOP, "tools.calligraphic", true);
-            //double strokeOpacity = sp_desktop_get_opacity_tool (SP_ACTIVE_DESKTOP, "tools.calligraphic", false);
+            guint32 fillColor = sp_desktop_get_color_tool (desktop, "tools.calligraphic", true);
+            //guint32 strokeColor = sp_desktop_get_color_tool (desktop, "tools.calligraphic", false);
+            double opacity = sp_desktop_get_master_opacity_tool (desktop, "tools.calligraphic");
+            double fillOpacity = sp_desktop_get_opacity_tool (desktop, "tools.calligraphic", true);
+            //double strokeOpacity = sp_desktop_get_opacity_tool (desktop, "tools.calligraphic", false);
             sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cbp), ((fillColor & 0xffffff00) | SP_COLOR_F_TO_U(opacity*fillOpacity)), SP_WIND_RULE_EVENODD);
             //on second thougtht don't do stroke yet because we don't have stoke-width yet and because stoke appears between segments while drawing
             //sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cbp), ((strokeColor & 0xffffff00) | SP_COLOR_F_TO_U(opacity*strokeOpacity)), 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cbp), 0x00000000, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
             /* fixme: Cannot we cascade it to root more clearly? */
-            g_signal_connect(G_OBJECT(cbp), "event", G_CALLBACK(sp_desktop_root_handler), SP_EVENT_CONTEXT(dc)->desktop);
+            g_signal_connect(G_OBJECT(cbp), "event", G_CALLBACK(sp_desktop_root_handler), desktop);
 
             dc->segments = g_slist_prepend(dc->segments, cbp);
         }
