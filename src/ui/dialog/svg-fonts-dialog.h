@@ -14,6 +14,7 @@
 
 #include "ui/widget/panel.h"
 #include "sp-font.h"
+#include "sp-font-face.h"
 #include "verbs.h"
 #include "document.h"
 #include "desktop.h"
@@ -26,6 +27,8 @@
 #include <gtkmm/box.h>
 
 #include "display/nr-svgfonts.h"
+#include "attributes.h"
+
 
 class SvgFontDrawingArea : Gtk::DrawingArea{
 public:
@@ -70,10 +73,20 @@ public:
     void on_kerning_changed();
     void on_setwidth_changed();
 
+    class AttrEntry : public Gtk::HBox
+	{
+	public:
+	    AttrEntry(SvgFontsDialog* d, gchar* lbl, const SPAttributeEnum attr);
+	private:
+	    SvgFontsDialog* dialog;
+	    void on_attr_changed();
+	    Gtk::Entry entry;
+	    SPAttributeEnum attr;
+    };
+
 private:
-    Gtk::HBox* AttrEntry(gchar* lbl);
-    Gtk::HBox* AttrCombo(gchar* lbl);
-//    Gtk::HBox* AttrSpin(gchar* lbl);
+    Gtk::HBox* AttrCombo(gchar* lbl, const SPAttributeEnum attr);
+//    Gtk::HBox* AttrSpin(gchar* lbl, const SPAttributeEnum attr);
     Gtk::VBox* global_settings_tab();
     Gtk::VBox* kerning_tab();
     Gtk::VBox* glyphs_tab();

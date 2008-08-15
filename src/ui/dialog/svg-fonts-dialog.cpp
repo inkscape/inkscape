@@ -19,6 +19,7 @@
 #include "svg-fonts-dialog.h"
 #include <glibmm/i18n.h>
 #include <string.h>
+#include "xml/node.h"
 
 SvgFontDrawingArea::SvgFontDrawingArea(){
 	this->text = "";
@@ -59,15 +60,60 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-Gtk::HBox* SvgFontsDialog::AttrEntry(gchar* lbl){
+/*
+Gtk::HBox* SvgFontsDialog::AttrEntry(gchar* lbl, const SPAttributeEnum attr){
     Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
     hbox->add(* Gtk::manage(new Gtk::Label(lbl)) );
-    hbox->add(* Gtk::manage(new Gtk::Entry()) );
+    Gtk::Entry* entry = Gtk::manage(new Gtk::Entry());
+    hbox->add(* entry );
     hbox->show_all();
+
+    entry->signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_attr_changed));
     return hbox;
 }
+*/
 
-Gtk::HBox* SvgFontsDialog::AttrCombo(gchar* lbl){
+SvgFontsDialog::AttrEntry::AttrEntry(SvgFontsDialog* d, gchar* lbl, const SPAttributeEnum attr){
+    this->dialog = d;
+    this->attr = attr;
+    this->add(* Gtk::manage(new Gtk::Label(lbl)) );
+    this->add(entry);
+    this->show_all();
+
+    entry.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::AttrEntry::on_attr_changed));
+}
+
+void SvgFontsDialog::AttrEntry::on_attr_changed(){
+	g_warning("attr entry changed: %s", this->entry.get_text().c_str());
+
+	SPObject* o = NULL;
+        for(SPObject* node = this->dialog->get_selected_spfont()->children; node; node=node->next){
+            switch(this->attr){
+		case SP_PROP_FONT_FAMILY:
+			if (SP_IS_FONTFACE(node)){
+				o = node;
+				continue;
+			}
+			break;
+		default:
+			o = NULL;
+	    }
+        }
+
+	const gchar* name = (const gchar*)sp_attribute_name(this->attr);
+        if(name && o) {
+            SP_OBJECT_REPR(o)->setAttribute((const gchar*) name, this->entry.get_text().c_str());
+            o->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+
+            Glib::ustring undokey = "svgfonts:";
+            undokey += name;
+            sp_document_maybe_done(o->document, undokey.c_str(), SP_VERB_DIALOG_SVG_FONTS,
+                                   _("Set SVG Font attribute"));
+        }
+
+}
+
+Gtk::HBox* SvgFontsDialog::AttrCombo(gchar* lbl, const SPAttributeEnum attr){
     Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
     hbox->add(* Gtk::manage(new Gtk::Label(lbl)) );
     hbox->add(* Gtk::manage(new Gtk::ComboBox()) );
@@ -202,10 +248,13 @@ SPFont* SvgFontsDialog::get_selected_spfont()
 Gtk::VBox* SvgFontsDialog::global_settings_tab(){
     Gtk::VBox* global_vbox = Gtk::manage(new Gtk::VBox());
 
-    global_vbox->add(*AttrEntry((gchar*) "Family Name"));
-    global_vbox->add(*AttrCombo((gchar*) "Style"));
-    global_vbox->add(*AttrCombo((gchar*) "Variant"));
-    global_vbox->add(*AttrCombo((gchar*) "Weight"));
+    AttrEntry* familyname;
+    familyname = new AttrEntry(this, (gchar*) "Family Name", SP_PROP_FONT_FAMILY);
+
+    global_vbox->add(*familyname);
+    global_vbox->add(*AttrCombo((gchar*) "Style", SP_PROP_FONT_STYLE));
+    global_vbox->add(*AttrCombo((gchar*) "Variant", SP_PROP_FONT_VARIANT));
+    global_vbox->add(*AttrCombo((gchar*) "Weight", SP_PROP_FONT_WEIGHT));
 
 //Set Width (horiz_adv_x):
     Gtk::HBox* setwidth_hbox = Gtk::manage(new Gtk::HBox());
@@ -222,10 +271,10 @@ Gtk::VBox* SvgFontsDialog::global_settings_tab(){
 
 Gtk::VBox* SvgFontsDialog::glyphs_tab(){
     Gtk::VBox* glyphs_vbox = Gtk::manage(new Gtk::VBox());
-    glyphs_vbox->add(*AttrEntry((gchar*) "Glyph Name"));
-    glyphs_vbox->add(*AttrEntry((gchar*) "Unicode"));
-    //glyphs_vbox->add(*AttrSpin((gchar*) "Horizontal Advance"));
-    //glyphs_vbox->add(*AttrCombo((gchar*) "Missing Glyph"));
+    glyphs_vbox->add(*new SvgFontsDialog::AttrEntry(this, (gchar*) "Glyph Name", SP_ATTR_GLYPH_NAME));
+    glyphs_vbox->add(*new SvgFontsDialog::AttrEntry(this, (gchar*) "Unicode", SP_ATTR_UNICODE));
+    //glyphs_vbox->add(*AttrSpin((gchar*) "Horizontal Advance"), SP_ATTR_HORIZ_ADV_X);
+    //glyphs_vbox->add(*AttrCombo((gchar*) "Missing Glyph"), SP_ATTR_); ?
     return glyphs_vbox;
 }
 
