@@ -488,7 +488,6 @@ pencil_cancel (SPPencilContext *const pc)
     sp_canvas_end_forced_full_redraws(pc->desktop->canvas);
 }
 
-
 static gint
 pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint const state)
 {
@@ -505,16 +504,21 @@ pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint con
             break;
         case GDK_Escape:
             if (pc->npoints != 0) {
-                pencil_cancel (pc);
-                ret = TRUE;
+                // if drawing, cancel, otherwise pass it up for deselecting
+                if (pc->state != SP_PENCIL_CONTEXT_IDLE) {
+                    pencil_cancel (pc);
+                    ret = TRUE;
+                }
             }
             break;
         case GDK_z:
         case GDK_Z:
             if (mod_ctrl_only(state) && pc->npoints != 0) {
                 // if drawing, cancel, otherwise pass it up for undo
-                pencil_cancel (pc);
-                ret = TRUE;
+                if (pc->state != SP_PENCIL_CONTEXT_IDLE) {
+                    pencil_cancel (pc);
+                    ret = TRUE;
+                }
             }
             break;
         case GDK_g:
