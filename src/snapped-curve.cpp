@@ -55,8 +55,7 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
     // The point of intersection should be considered for snapping, but might be outside the snapping range
     // PS: We need p (the location of the mouse pointer) for find out which intersection is the
     // closest, as there might be multiple intersections of two curves
-    Geom::SimpleCrosser xr;
-    Geom::Crossings cs = xr.crossings(*(this->_curve), *(curve._curve));
+    Geom::Crossings cs = crossings(*(this->_curve), *(curve._curve));
      
     if (cs.size() > 0) {
         // There might be multiple intersections: find the closest
