@@ -198,6 +198,20 @@ Path::allNearestPoints(Point const& _point, double from, double to) const
 	return all_nearest;
 }
 
+std::vector<double>
+Path::nearestPointPerCurve(Point const& _point) const
+{
+	//return a single nearest point for each curve in this path
+	std::vector<double> np;
+	const Path& _path = *this;
+	for (Sequence::const_iterator it = _path.get_curves().begin() ; it != _path.get_curves().end()-1 ; ++it)
+	//for (std::vector<Path>::const_iterator it = _path.begin(); it != _path.end(), ++it){
+	{
+	    np.push_back((*it)->nearestPoint(_point));
+    }
+	return np;
+}  
+
 double Path::nearestPoint(Point const &_point, double from, double to, double *distance_squared) const
 {
 	if ( from > to ) std::swap(from, to);

@@ -31,7 +31,7 @@
  * the specific language governing rights and limitations.
  *
  */
- 
+
 #ifndef LIB2GEOM_SEEN_ANGLE_H
 #define LIB2GEOM_SEEN_ANGLE_H
 
@@ -55,12 +55,14 @@ double map_circular_arc_on_unit_interval( double angle, double start_angle, doub
 {
     double d = end_angle - start_angle;
     double t = angle - start_angle;
-    if ( !cw ) 
+    if ( !cw )
     {
     	d = -d;
     	t = -t;
     }
-    if ( d < 0 ) d += 2*M_PI;	
+    d = std::fmod(d, 2*M_PI);
+    t = std::fmod(t, 2*M_PI);
+    if ( d < 0 ) d += 2*M_PI;
     if ( t < 0 ) t += 2*M_PI;
     return t / d;
 }
@@ -70,21 +72,21 @@ Coord map_unit_interval_on_circular_arc(Coord t, double start_angle, double end_
 {
 	double sweep_angle = end_angle - start_angle;
 	if ( !cw ) sweep_angle = -sweep_angle;
+	sweep_angle = std::fmod(sweep_angle, 2*M_PI);
 	if ( sweep_angle < 0 ) sweep_angle += 2*M_PI;
-	
+
+	Coord angle = start_angle;
     if ( cw )
     {
-        Coord angle = start_angle + sweep_angle * t;
-        if ( !(angle < 2*M_PI) )
-            angle -= 2*M_PI;
-        return angle;
+        angle += sweep_angle * t;
     }
     else
     {
-        Coord angle = start_angle - sweep_angle * t;
-        if ( angle < 0 ) angle += 2*M_PI;
-        return angle;
+        angle -= sweep_angle * t;
     }
+    angle = std::fmod(angle, 2*M_PI);
+    if (angle < 0) angle += 2*M_PI;
+    return angle;
 }
 
 

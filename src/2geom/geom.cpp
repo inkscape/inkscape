@@ -50,7 +50,7 @@ namespace Geom {
  * x = (fb - ce)/(bd - ae)                \endverbatim
  *
  * If the denominator (bd-ae) is 0 then the lines are parallel, if the
- * numerators are then 0 then the lines coincide.
+ * numerators are 0 then the lines coincide.
  *
  * \todo Why not use existing but outcommented code below
  * (HAVE_NEW_INTERSECTOR_CODE)?
@@ -110,26 +110,64 @@ intersector_ccw(const Geom::Point& p0, const Geom::Point& p1,
     }
 }
 
+/** Determine whether the line segment from p00 to p01 intersects the
+    infinite line passing through p10 and p11. This doesn't find the
+    point of intersection, use the line_intersect function above,
+    or the segment_intersection interface below.
+
+    \pre neither segment is zero-length; i.e. p00 != p01 and p10 != p11.
+*/
+bool
+line_segment_intersectp(Geom::Point const &p00, Geom::Point const &p01,
+                        Geom::Point const &p10, Geom::Point const &p11)
+{
+    if(p00 == p01) return false;
+    if(p10 == p11) return false;
+
+    return ((intersector_ccw(p00, p01, p10) * intersector_ccw(p00, p01, p11)) <= 0 );
+}
+
+
 /** Determine whether two line segments intersect.  This doesn't find
     the point of intersection, use the line_intersect function above,
     or the segment_intersection interface below.
 
     \pre neither segment is zero-length; i.e. p00 != p01 and p10 != p11.
 */
-static bool
+bool
 segment_intersectp(Geom::Point const &p00, Geom::Point const &p01,
-                               Geom::Point const &p10, Geom::Point const &p11)
+                   Geom::Point const &p10, Geom::Point const &p11)
 {
     if(p00 == p01) return false;
     if(p10 == p11) return false;
 
     /* true iff (    (the p1 segment straddles the p0 infinite line)
      *           and (the p0 segment straddles the p1 infinite line) ). */
-    return ((intersector_ccw(p00,p01, p10)
-             *intersector_ccw(p00, p01, p11)) <=0 )
-        &&
-        ((intersector_ccw(p10,p11, p00)
-          *intersector_ccw(p10, p11, p01)) <=0 );
+    return (line_segment_intersectp(p00, p01, p10, p11) &&
+            line_segment_intersectp(p10, p11, p00, p01));
+}
+
+/** Determine whether \& where a line segments intersects an (infinite) line.
+
+If there is no intersection, then \a result remains unchanged.
+
+\pre neither segment is zero-length; i.e. p00 != p01 and p10 != p11.
+**/
+IntersectorKind
+line_segment_intersect(Geom::Point const &p00, Geom::Point const &p01,
+                       Geom::Point const &p10, Geom::Point const &p11,
+                       Geom::Point &result)
+{
+    if(line_segment_intersectp(p00, p01, p10, p11)) {
+        Geom::Point n0 = (p01 - p00).ccw();
+        double d0 = dot(n0,p00);
+
+        Geom::Point n1 = (p11 - p10).ccw();
+        double d1 = dot(n1,p10);
+        return line_intersection(n0, d0, n1, d1, result);
+    } else {
+        return no_intersection;
+    }
 }
 
 
@@ -141,8 +179,8 @@ If the two segments don't intersect, then \a result remains unchanged.
 **/
 IntersectorKind
 segment_intersect(Geom::Point const &p00, Geom::Point const &p01,
-                              Geom::Point const &p10, Geom::Point const &p11,
-                              Geom::Point &result)
+                  Geom::Point const &p10, Geom::Point const &p11,
+                  Geom::Point &result)
 {
     if(segment_intersectp(p00, p01, p10, p11)) {
         Geom::Point n0 = (p01 - p00).ccw();
@@ -173,6 +211,105 @@ line_twopoint_intersect(Geom::Point const &p00, Geom::Point const &p01,
     Geom::Point n1 = (p11 - p10).ccw();
     double d1 = dot(n1,p10);
     return line_intersection(n0, d0, n1, d1, result);
+}
+
+// this is used to compare points for std::sort below
+static bool
+is_less(Point const &A, Point const &B)
+{
+    if (A[X] < B[X]) {
+        return true;
+    } else if (A[X] == B[X] && A[Y] < B[Y]) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// TODO: this can doubtlessly be improved
+static void
+eliminate_duplicates_p(std::vector<Point> &pts)
+{
+    unsigned int size = pts.size();
+
+    if (size < 2)
+        return;
+
+    if (size == 2) {
+        if (pts[0] == pts[1]) {
+            pts.pop_back();
+        }
+    } else {
+        std::sort(pts.begin(), pts.end(), &is_less);
+        if (size == 3) {
+            if (pts[0] == pts[1]) {
+                pts.erase(pts.begin());
+            } else if (pts[1] == pts[2]) {
+                pts.pop_back();
+            }
+        } else {
+            // we have size == 4
+            if (pts[2] == pts[3]) {
+                pts.pop_back();
+            }
+            if (pts[0] == pts[1]) {
+                pts.erase(pts.begin());
+            }
+        }
+    }
+}
+
+/** Determine whether \& where an (infinite) line intersects a rectangle.
+ *
+ * \a c0, \a c1 are diagonal corners of the rectangle and
+ * \a p1, \a p1 are distinct points on the line
+ *
+ * \return A list (possibly empty) of points of intersection.  If two such points (say \a r0 and \a
+ * r1) then it is guaranteed that the order of \a r0, \a r1 along the line is the same as the that
+ * of \a c0, \a c1 (i.e., the vectors \a r1 - \a r0 and \a p1 - \a p0 point into the same
+ * direction).
+ */
+std::vector<Geom::Point>
+rect_line_intersect(Geom::Point const &c0, Geom::Point const &c1,
+                    Geom::Point const &p0, Geom::Point const &p1)
+{
+    using namespace Geom;
+
+    std::vector<Point> results;
+
+    Point A(c0);
+    Point C(c1);
+
+    Point B(A[X], C[Y]);
+    Point D(C[X], A[Y]);
+
+    Point res;
+
+    if (line_segment_intersect(p0, p1, A, B, res) == intersects) {
+        results.push_back(res);
+    }
+    if (line_segment_intersect(p0, p1, B, C, res) == intersects) {
+        results.push_back(res);
+    }
+    if (line_segment_intersect(p0, p1, C, D, res) == intersects) {
+        results.push_back(res);
+    }
+    if (line_segment_intersect(p0, p1, D, A, res) == intersects) {
+        results.push_back(res);
+    }
+
+    eliminate_duplicates_p(results);
+
+    if (results.size() == 2) {
+        // sort the results so that the order is the same as that of p0 and p1
+        Point dir1 (results[1] - results[0]);
+        Point dir2 (p1 - p0);
+        if (dot(dir1, dir2) < 0) {
+            std::swap(results[0], results[1]);
+        }
+    }
+
+    return results;
 }
 
 /**

@@ -87,6 +87,17 @@ PathVector operator+(PathVector const &path_in, Point const &p) {
     return ret;
 }
 
+inline
+Geom::Point initialPoint(PathVector const &path_in)
+{
+    return path_in.front().initialPoint();
+}
+
+inline
+Geom::Point finalPoint(PathVector const &path_in)
+{
+    return path_in.back().finalPoint();
+}
 
 PathVector reverse_paths_and_order (PathVector const & path_in);
 

@@ -943,19 +943,18 @@ Curve* SVGEllipticalArc::transformed(Matrix const& m) const
 
 Coord SVGEllipticalArc::map_to_02PI(Coord t) const
 {
+    Coord angle = start_angle();
     if ( sweep_flag() )
     {
-        Coord angle = start_angle() + sweep_angle() * t;
-        if ( !(angle < 2*M_PI) )
-            angle -= 2*M_PI;
-        return angle;
+        angle += sweep_angle() * t;
     }
     else
     {
-        Coord angle = start_angle() - sweep_angle() * t;
-        if ( angle < 0 ) angle += 2*M_PI;
-        return angle;
+        angle -= sweep_angle() * t;
     }
+    angle = std::fmod(angle, 2*M_PI);
+    if ( angle < 0 ) angle += 2*M_PI;
+    return angle;
 }
 
 Coord SVGEllipticalArc::map_to_01(Coord angle) const

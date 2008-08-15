@@ -69,6 +69,10 @@ line_twopoint_intersect(Geom::Point const &p00, Geom::Point const &p01,
 			Geom::Point const &p10, Geom::Point const &p11,
 			Geom::Point &result);
 
+std::vector<Geom::Point>
+rect_line_intersect(Geom::Point const &E, Geom::Point const &F,
+                    Geom::Point const &p0, Geom::Point const &p1);
+
 int centroid(std::vector<Geom::Point> p, Geom::Point& centroid, double &area);
 
 }

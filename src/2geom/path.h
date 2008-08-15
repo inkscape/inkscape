@@ -254,7 +254,7 @@ public:
 
   size_type max_size() const { return get_curves().max_size()-1; }
 
-  bool empty() const { return get_curves().size() == 1; }
+  bool empty() const { return closed() || (get_curves().size() == 1); }
   bool closed() const { return closed_; }
   void close(bool closed=true) { closed_ = closed; }
 
@@ -363,6 +363,8 @@ public:
 	  return allNearestPoints(_point, 0, sz);
   }
   
+  std::vector<double>
+  nearestPointPerCurve(Point const& _point) const;  
   
   double nearestPoint(Point const& _point, double from, double to, double *distance_squared = NULL) const;
   

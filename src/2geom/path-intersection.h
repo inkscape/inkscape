@@ -50,6 +50,11 @@ std::vector<double> path_mono_splits(Path const &p);
 CrossingSet crossings_among(std::vector<Path> const & p);
 Crossings self_crossings(Path const & a);
 
+inline Crossings crossings(Curve const & a, Curve const & b) {
+    DefaultCrosser c = DefaultCrosser();
+    return c.crossings(a, b);
+}
+
 inline Crossings crossings(Path const & a, Path const & b) {
     DefaultCrosser c = DefaultCrosser();
     return c.crossings(a, b);
