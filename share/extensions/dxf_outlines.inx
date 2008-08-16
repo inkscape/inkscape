@@ -12,6 +12,7 @@
                 <_filetypetooltip>Desktop Cutting Plotter</_filetypetooltip>
                 <dataloss>true</dataloss>
     </output>
+    <param name="ROBO" type="boolean" _gui-text="ROBO-Master output">false</param>
     <script>
         <command reldir="extensions" interpreter="python">dxf_outlines.py</command>
         <helper_extension>org.inkscape.output.svg.inkscape</helper_extension>
