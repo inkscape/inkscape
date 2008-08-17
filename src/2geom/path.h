@@ -254,7 +254,7 @@ public:
 
   size_type max_size() const { return get_curves().max_size()-1; }
 
-  bool empty() const { return closed() || (get_curves().size() == 1); }
+  bool empty() const { return get_curves().size() == 1; }
   bool closed() const { return closed_; }
   void close(bool closed=true) { closed_ = closed; }
 
