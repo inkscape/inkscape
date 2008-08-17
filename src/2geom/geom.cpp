@@ -8,6 +8,7 @@
 #endif
 #include <2geom/geom.h>
 #include <2geom/point.h>
+#include <algorithm>
 
 namespace Geom {
 
