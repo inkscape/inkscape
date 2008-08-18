@@ -76,8 +76,8 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {ANGLE_BISECTOR,        N_("Angle bisector"),          "angle_bisector"},
     {BEND_PATH,             N_("Bend"),                     "bend_path"},
     {BOOLOPS,               N_("Boolops"),                 "boolops"},
-    {CIRCLE_WITH_RADIUS,    N_("Circle (center+radius)"),   "circle_with_radius"},
-    {CIRCLE_3PTS,           N_("Circle through 3 points"), "circle_3pts"},
+    {CIRCLE_WITH_RADIUS,    N_("Circle (by center and radius)"),   "circle_with_radius"},
+    {CIRCLE_3PTS,           N_("Circle by 3 points"), "circle_3pts"},
     {CONSTRUCT_GRID,        N_("Construct grid"),          "construct_grid"},
 #ifdef LPE_ENABLE_TEST_EFFECTS
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),     "doeffectstacktest"},
