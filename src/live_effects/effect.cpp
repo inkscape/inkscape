@@ -64,6 +64,7 @@
 #include "live_effects/lpe-interpolate.h"
 #include "live_effects/lpe-text_label.h"
 #include "live_effects/lpe-path_length.h"
+#include "live_effects/lpe-line_segment.h"
 // end of includes
 
 namespace Inkscape {
@@ -87,6 +88,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {INTERPOLATE,           N_("Interpolate Sub-Paths"),   "interpolate"},
     {KNOT,                  N_("Knot"),                    "knot"},
     {LATTICE,               N_("Lattice Deformation"),     "lattice"},
+    {LINE_SEGMENT,          N_("Line Segment"),            "line_segment"},
     {MIRROR_SYMMETRY,       N_("Mirror symmetry"),         "mirror_symmetry"},
     {OFFSET,                N_("Offset"),                  "offset"},
     {PARALLEL,              N_("Parallel"),                "parallel"},
@@ -195,6 +197,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case PATH_LENGTH:
             neweffect = static_cast<Effect*> ( new LPEPathLength(lpeobj) );
+            break;
+        case LINE_SEGMENT:
+            neweffect = static_cast<Effect*> ( new LPELineSegment(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);

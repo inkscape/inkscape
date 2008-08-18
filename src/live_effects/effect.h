@@ -80,6 +80,7 @@ enum EffectType {
     INTERPOLATE,
     TEXT_LABEL,
     PATH_LENGTH,
+    LINE_SEGMENT,
     INVALID_LPE // This must be last
 };
 
