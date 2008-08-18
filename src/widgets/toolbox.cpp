@@ -4843,19 +4843,6 @@ sp_lpetool_test_value_changed(GtkAdjustment *adj, GObject *tbl)
         sp_lpe_item_update_patheffect(lpeitem, true, true);
     }
 
-    /**
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
-    SPItem *item = sp_desktop_selection(desktop)->singleItem();
-    if (item && SP_IS_LPE_ITEM(item)) {
-        SPLPEItem *lpeitem = SP_LPE_ITEM(item);
-        Effect* lpe = sp_lpe_item_get_current_lpe(lpeitem);
-        if (lpe->effectType() == ANGLE_BISECTOR) {
-            LPEAngleBisector *lpeab = dynamic_cast<LPEAngleBisector*>(lpe);
-            lpeab->length_left.param_set_value(gtk_adjustment_get_value(adj));
-        }
-    }
-    **/
-
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
