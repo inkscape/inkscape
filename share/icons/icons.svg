@@ -4958,9 +4958,9 @@
      inkscape:window-x="0"
      inkscape:window-height="738"
      inkscape:window-width="1024"
-     inkscape:cy="1097.5924"
-     inkscape:cx="601.19459"
-     inkscape:zoom="1.4142136"
+     inkscape:cy="1138.636"
+     inkscape:cx="700.76921"
+     inkscape:zoom="5.6568543"
      gridtolerance="6"
      snaptogrid="false"
      showgrid="true"
@@ -17178,4 +17178,12 @@ http://www.inkscape.org/</dc:description>
        d="m 352.20456,433.15821 c -17.90493,17.90622 -39.36169,32.2447 -62.75073,41.93467 -23.38904,9.68997 -48.6918,14.72379 -73.99963,14.72229"
        style="fill:none;stroke:#282828;stroke-width:24.9614296;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4.26999998;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:23.2" />
   </g>
+  <rect
+     style="opacity:1;color:#000000;fill:none;stroke:#0000ff;stroke-width:2.30013371;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.30013366, 2.30013366;stroke-dashoffset:0;marker:none;marker-start:none;marker-mid:none;marker-end:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+     id="lpetool_show_bbox"
+     width="10.660022"
+     height="16.847206"
+     x="715.56531"
+     y="86.075531"
+     inkscape:label="lpetool_show_bbox" />
 </svg>

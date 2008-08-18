@@ -43,9 +43,10 @@ static gint sp_lpetool_context_root_handler(SPEventContext *ec, GdkEvent *event)
 
 void sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data);
 
-const int num_subtools = 6;
+const int num_subtools = 7;
 
 Inkscape::LivePathEffect::EffectType lpesubtools[] = {
+    Inkscape::LivePathEffect::INVALID_LPE, // this must be here to account for the "all inactive" action
     Inkscape::LivePathEffect::LINE_SEGMENT,
     Inkscape::LivePathEffect::CIRCLE_3PTS,
     Inkscape::LivePathEffect::CIRCLE_WITH_RADIUS,
@@ -305,6 +306,14 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 void
 lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc)
 {
+    if (lc->canvas_bbox) {
+        gtk_object_destroy(GTK_OBJECT(lc->canvas_bbox));
+        lc->canvas_bbox = NULL;
+    }
+
+    if (prefs_get_int_attribute("tools.lpetool", "show_bbox", 1) == 0)
+        return;
+
     SPDocument *document = sp_desktop_document(lc->desktop);
     Geom::Coord w = sp_document_width(document);
     Geom::Coord h = sp_document_height(document);

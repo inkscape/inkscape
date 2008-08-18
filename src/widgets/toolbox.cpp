@@ -443,6 +443,8 @@ static gchar const * ui_descr =
 
         "  <toolbar name='LPEToolToolbar'>"
         "    <toolitem action='LPEToolModeAction' />"
+        "    <separator />"
+        "    <toolitem action='LPEShowBBoxAction' />"
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"
@@ -4797,8 +4799,8 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_int_attribute( "tools.lpetool", "mode", lpeToolMode );
     }
-    EffectType type = lpesubtools[lpeToolMode];
-    SPPenContext *pc = SP_PEN_CONTEXT(desktop->event_context);
+    //EffectType type = lpesubtools[lpeToolMode];
+    //SPPenContext *pc = SP_PEN_CONTEXT(desktop->event_context);
 
     // only take action if run by the attr_changed listener
     if (!g_object_get_data( tbl, "freeze" )) {
@@ -4878,6 +4880,19 @@ sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
     g_print ("\n");
 }
 
+static void
+lpetool_toggle_show_bbox (GtkToggleAction *act, gpointer data) {
+    SPDesktop *desktop = static_cast<SPDesktop *>(data);
+
+    bool show = gtk_toggle_action_get_active( act );
+    prefs_set_int_attribute ("tools.lpetool", "show_bbox",  show ? 1 : 0);
+
+    if (tools_isactive(desktop, TOOLS_LPETOOL)) {
+        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
+        lpetool_context_reset_limiting_bbox(lc);
+    }
+}
+
 static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     /** Automatically create a list of LPEs that get added to the toolbar **/
@@ -4886,8 +4901,17 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
 
         GtkTreeIter iter;
 
+        // the first toggle button represents the state that no subtool is active (remove this when
+        // this can be modeled by EgeSelectOneAction or some other action)
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("All inactive"),
+                            1, _("No geometric tool is active"),
+                            2, _("all_inactive"),
+                            -1 );
+
         Inkscape::LivePathEffect::EffectType type;
-        for (int i = 0; i < num_subtools; ++i) {
+        for (int i = 1; i < num_subtools; ++i) { // we start with i = 1 because INVALID_LPE was already added
             type =  lpesubtools[i];
             gtk_list_store_append( model, &iter );
             gtk_list_store_set( model, &iter,
@@ -4910,6 +4934,18 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         gint lpeToolMode = prefs_get_int_attribute("tools.lpetool", "mode", 0);
         ege_select_one_action_set_active( act, lpeToolMode );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_lpetool_mode_changed), holder );
+    }
+
+    /* Show limiting bounding box */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "LPEShowBBoxAction",
+                                                      _("Show limiting bounding box"),
+                                                      _("Show bounding box (is used to cut infinite lines)"),
+                                                      "lpetool_show_bbox",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(lpetool_toggle_show_bbox), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.lpetool", "show_bbox", 1 ) );
     }
 
     /* Test action */

@@ -1384,9 +1384,11 @@ void
 sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEffect::EffectType effect_type,
                                          unsigned int num_clicks, bool use_polylines)
 {
+    if (effect_type == Inkscape::LivePathEffect::INVALID_LPE)
+        return;
+
     g_print ("Now waiting for %s to be applied\n",
              Inkscape::LivePathEffect::LPETypeConverter.get_label(effect_type).c_str());
-    g_return_if_fail(effect_type != Inkscape::LivePathEffect::INVALID_LPE);
 
     pc->waiting_LPE_type = effect_type;
     pc->expecting_clicks_for_LPE = num_clicks;
