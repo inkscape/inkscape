@@ -1405,10 +1405,10 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
 
                 if (gamma_picked != 0) {
                     double power;
-                    if (gamma_picked < 0)
+                    if (gamma_picked > 0)
                         power = 1/(1 + fabs(gamma_picked));
                     else
-                        power = 1 + gamma_picked;
+                        power = 1 + fabs(gamma_picked);
 
                     val = pow (val, power);
                     r = pow (r, power);
