@@ -42,6 +42,8 @@ struct SPLPEToolContext : public SPPenContext {
     //int tool_state;
 
     ShapeEditor* shape_editor;
+
+    sigc::connection sel_changed_connection;
 };
 
 struct SPLPEToolContextClass : public SPEventContextClass{};

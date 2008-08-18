@@ -73,6 +73,8 @@ static void sp_lpetool_context_setup(SPEventContext *ec);
 static void sp_lpetool_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
 static gint sp_lpetool_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
+void sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data);
+
 const int num_subtools = 4;
 
 Inkscape::LivePathEffect::EffectType lpesubtools[] = {
@@ -132,6 +134,8 @@ sp_lpetool_context_init(SPLPEToolContext *lc)
     lc->hot_x = 4;
     lc->hot_y = 4;
 
+    new (&lc->sel_changed_connection) sigc::connection();
+
     //lc->tool_state = LPETOOL_STATE_NODE;
 }
 
@@ -140,6 +144,9 @@ sp_lpetool_context_dispose(GObject *object)
 {
     SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(object);
     delete lc->shape_editor;
+
+    lc->sel_changed_connection.disconnect();
+    lc->sel_changed_connection.~connection();
 
     G_OBJECT_CLASS(lpetool_parent_class)->dispose(object);
 }
@@ -154,6 +161,10 @@ sp_lpetool_context_setup(SPEventContext *ec)
 
     Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
     SPItem *item = selection->singleItem();
+
+    lc->sel_changed_connection.disconnect();
+    lc->sel_changed_connection =
+        selection->connectChanged(sigc::bind(sigc::ptr_fun(&sp_lpetool_context_selection_changed), (gpointer)lc));
 
     //lc->my_nc = new NodeContextCpp(lc->desktop, lc->prefs_repr, lc->key);
     lc->shape_editor = new ShapeEditor(ec->desktop);
@@ -220,7 +231,8 @@ gint
 sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
     SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(event_context);
-    //SPDesktop *desktop = event_context->desktop;
+    SPDesktop *desktop = event_context->desktop;
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     //gint ret = FALSE;
     bool ret = false;
@@ -228,7 +240,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     if (sp_pen_context_has_waiting_LPE(lc)) {
         // quit when we are waiting for a LPE to be applied
         g_print ("LPETool has waiting LPE. We call the pen tool parent context and return\n");
-        
+
         if (((SPEventContextClass *) lpetool_parent_class)->root_handler) {
             ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
         }
@@ -263,8 +275,8 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 }
 
                 ret = true;
-                break;
 
+                break;
                 /**
                 SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
 
