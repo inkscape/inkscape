@@ -24,10 +24,10 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 static const Util::EnumData<EndType> EndTypeData[] = {
-    {END_OPEN_BOTH    , N_("Open both"), "open_both"},
-    {END_OPEN_LEFT    , N_("Open left"), "open_left"},
-    {END_OPEN_RIGHT   , N_("Open right"), "open_right"},
     {END_CLOSED       , N_("Closed"), "closed"},
+    {END_OPEN_INITIAL , N_("Open start"), "open_start"},
+    {END_OPEN_FINAL   , N_("Open end"), "open_end"},
+    {END_OPEN_BOTH    , N_("Open both"), "open_both"},
 };
 static const Util::EnumDataConverter<EndType> EndTypeConverter(EndTypeData, sizeof(EndTypeData)/sizeof(*EndTypeData));
 
@@ -66,11 +66,11 @@ LPELineSegment::doEffect_path (std::vector<Geom::Path> const & path_in)
         return path_in;
     }
 
-    if (end_type == END_OPEN_RIGHT || end_type == END_OPEN_BOTH) {
+    if (end_type == END_OPEN_INITIAL || end_type == END_OPEN_BOTH) {
         A = intersections[0];
     }
 
-    if (end_type == END_OPEN_LEFT || end_type == END_OPEN_BOTH) {
+    if (end_type == END_OPEN_FINAL || end_type == END_OPEN_BOTH) {
         B = intersections[1];
     }
 

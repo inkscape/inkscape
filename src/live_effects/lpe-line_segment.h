@@ -22,8 +22,8 @@ namespace LivePathEffect {
 
 enum EndType {
     END_CLOSED,
-    END_OPEN_LEFT,
-    END_OPEN_RIGHT,
+    END_OPEN_INITIAL,
+    END_OPEN_FINAL,
     END_OPEN_BOTH
 };
 

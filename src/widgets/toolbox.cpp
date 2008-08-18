@@ -4915,13 +4915,13 @@ sp_line_segment_build_list(GObject *tbl)
     {
         GtkTreeIter iter;
         gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("Open both"), 1, 3, -1 );
-        gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter, 0, _("Closed"), 1, 0, -1 );
         gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("Open left"), 1, 1, -1 );
+        gtk_list_store_set( model, &iter, 0, _("Open start"), 1, 1, -1 );
         gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("Open right"), 1, 2, -1 );
+        gtk_list_store_set( model, &iter, 0, _("Open end"), 1, 2, -1 );
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter, 0, _("Open both"), 1, 3, -1 );
     }
 
     g_object_set_data(tbl, "line_segment_list_blocked", GINT_TO_POINTER(FALSE));
