@@ -2506,7 +2506,7 @@ Verb *Verb::_base_verbs[] = {
     new ContextVerb(SP_VERB_CONTEXT_ERASER, "ToolEraser", N_("Eraser"),
                     N_("Erase existing paths"), "draw_erase"),
     new ContextVerb(SP_VERB_CONTEXT_LPETOOL, "ToolLPETool", N_("LPE Tool"),
-                    N_("Write something sensible here"), "draw_lpetool"),
+                    N_("Do geometric constructions"), "draw_lpetool"),
     /* Tool prefs */
     new ContextVerb(SP_VERB_CONTEXT_SELECT_PREFS, "SelectPrefs", N_("Selector Preferences"),
                     N_("Open Preferences for the Selector tool"), NULL),
