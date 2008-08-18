@@ -48,6 +48,8 @@ struct SPLPEToolContext : public SPPenContext {
 
 struct SPLPEToolContextClass : public SPEventContextClass{};
 
+int lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type);
+bool lpetool_try_construction(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type);
 void lpetool_context_switch_mode(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type);
 void lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc);
 

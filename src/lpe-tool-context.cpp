@@ -239,7 +239,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 bool over_stroke = lc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), true);
                 g_print ("over_stroke: %s\n", over_stroke ? "true" : "false");
 
-                sp_pen_context_wait_for_LPE_mouse_clicks(lc, type, Effect::acceptsNumClicks(type));
+                sp_pen_context_wait_for_LPE_mouse_clicks(lc, type, Inkscape::LivePathEffect::Effect::acceptsNumClicks(type));
 
                 // we pass the mouse click on to pen tool as the first click which it should collect
                 ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
@@ -308,7 +308,11 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     return ret;
 }
 
-static int
+/*
+ * Finds the index in the list of geometric subtools corresponding to the given LPE type.
+ * Returns -1 if no subtool is found.
+ */
+int
 lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type) {
     for (int i = 0; i < num_subtools; ++i) {
         if (lpesubtools[i] == type) {
@@ -316,6 +320,24 @@ lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type) {
         }
     }
     return -1;
+}
+
+/*
+ * Attempts to perform the construction of the given type (i.e., to apply the corresponding LPE) to
+ * a single selected item. Returns whether we succeeded.
+ */
+bool
+lpetool_try_construction(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type)
+{
+    Inkscape::Selection *selection = sp_desktop_selection(lc->desktop);
+    SPItem *item = selection->singleItem();
+
+    // TODO: should we check whether type represents a valid geometric construction?
+    if (item && SP_IS_LPE_ITEM(item) && Inkscape::LivePathEffect::Effect::acceptsNumClicks(type) == 0) {
+        Inkscape::LivePathEffect::Effect::createAndApply(type, sp_desktop_document(lc->desktop), item);
+        return true;
+    }
+    return false;
 }
 
 void

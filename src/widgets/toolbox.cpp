@@ -4791,23 +4791,38 @@ static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* main
 // this is called when the mode is changed via the toolbar (i.e., one of the subtool buttons is pressed)
 static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
 {
+    g_print ("sp_lpetool_mode_changed()\n");
     using namespace Inkscape::LivePathEffect;
 
     SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
+    SPEventContext *ec = desktop->event_context;
+    if (!SP_IS_LPETOOL_CONTEXT(ec)) {
+        g_print ("event context is not a LPEToolContext!\n");
+        return;
+    }
 
     // only take action if run by the attr_changed listener
     if (!g_object_get_data(tbl, "freeze")) {
         // in turn, prevent listener from responding
         g_object_set_data(tbl, "freeze", GINT_TO_POINTER(TRUE));
 
-        // TODO: how can we set *all* actions inactive (such that no sutool is activated?)
-        gint lpeToolMode = ege_select_one_action_get_active(act);
-        if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-            prefs_set_int_attribute( "tools.lpetool", "mode", lpeToolMode );
+        gint mode = ege_select_one_action_get_active(act);
+        EffectType type = lpesubtools[mode];
+
+        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
+        bool success = lpetool_try_construction(lc, type);
+        if (success) {
+            // since the construction was already performed, we set the state back to inactive
+            ege_select_one_action_set_active(act, 0);
+            mode = 0;
+        } else {
+            // switch to the chosen subtool
+            SP_LPETOOL_CONTEXT(desktop->event_context)->mode = type;
         }
 
-        EffectType type = lpesubtools[lpeToolMode];
-        SP_LPETOOL_CONTEXT(desktop->event_context)->mode = type;
+        if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+            prefs_set_int_attribute( "tools.lpetool", "mode", mode );
+        }
 
         g_object_set_data(tbl, "freeze", GINT_TO_POINTER(FALSE));
     }
