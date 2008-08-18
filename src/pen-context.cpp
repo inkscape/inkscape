@@ -152,6 +152,7 @@ sp_pen_context_init(SPPenContext *pc)
 
     pc->num_clicks = 0;
     pc->waiting_LPE = NULL;
+    pc->waiting_item = NULL;
 }
 
 /**
@@ -564,7 +565,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
         }
     }
 
-    if (pc->expecting_clicks_for_LPE) {
+    if (pc->expecting_clicks_for_LPE > 0) {
         --pc->expecting_clicks_for_LPE;
     }
 
@@ -1383,10 +1384,12 @@ sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEff
 {
     g_print ("Now waiting for %s to be applied\n",
              Inkscape::LivePathEffect::LPETypeConverter.get_label(effect_type).c_str());
+    g_return_if_fail(effect_type != Inkscape::LivePathEffect::INVALID_LPE);
+
+    pc->waiting_LPE_type = effect_type;
     pc->expecting_clicks_for_LPE = num_clicks;
     pc->polylines_only = use_polylines;
     pc->polylines_paraxial = false; // TODO: think if this is correct for all cases
-    pc->waiting_LPE_type = effect_type;
 }
 
 static int pen_next_paraxial_direction(const SPPenContext *const pc,

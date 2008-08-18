@@ -251,11 +251,11 @@ Effect::createAndApply(EffectType type, SPDocument *doc, SPItem *item)
 Effect::Effect(LivePathEffectObject *lpeobject)
     : oncanvasedit_it(0),
       is_visible(_("Is visible?"), _("If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"), "is_visible", &wr, this, true),
-      done_pathparam_set(false),
       show_orig_path(false),
       lpeobj(lpeobject),
       concatenate_before_pwd2(false),
-      provides_own_flash_paths(true) // is automatically set to false if providesOwnFlashPaths() is not overridden
+      provides_own_flash_paths(true), // is automatically set to false if providesOwnFlashPaths() is not overridden
+      is_ready(false) // is automatically set to false if providesOwnFlashPaths() is not overridden
 {
     registerParameter( dynamic_cast<Parameter *>(&is_visible) );
 }
@@ -332,11 +332,11 @@ Effect::writeParamsToSVG() {
 /**
  * If the effect expects a path parameter (specified by a number of mouse clicks) before it is
  * applied, this is the method that processes the resulting path. Override it to customize it for
- * your LPE. But don't forget to call the parent method so that done_pathparam_set is set to true!
+ * your LPE. But don't forget to call the parent method so that is_ready is set to true!
  */
 void
 Effect::acceptParamPath (SPPath */*param_path*/) {
-    done_pathparam_set = true;
+    setReady();
 }
 
 /*

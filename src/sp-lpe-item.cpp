@@ -314,7 +314,7 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
 
             Inkscape::LivePathEffect::Effect *lpe = lpeobj->lpe;
             if (lpe->isVisible()) {
-                if (lpe->acceptsNumParams() > 0 && !lpe->pathParamAccepted()) {
+                if (lpe->acceptsNumParams() > 0 && !lpe->isReady()) {
                     // if the effect expects mouse input before being applied and the input is not finished
                     // yet, we don't alter the path
                     return;
@@ -480,11 +480,8 @@ void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset)
             // perform this once when the effect is applied
             lpe->doOnApply(SP_LPE_ITEM(lpeitem));
 
-            // if the effect expects a number of mouse clicks to set a parameter path, perform the
-            // necessary preparations
-            if (lpe->acceptsNumParams() > 0) {
-                lpe->doAcceptPathPreparations(lpeitem);
-            }
+            // indicate that all necessary preparations are done and the effect can be performed
+            lpe->setReady();
         }
 
         //Enable the path effects now that everything is ready to apply the new path effect

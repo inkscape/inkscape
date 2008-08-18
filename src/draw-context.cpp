@@ -157,8 +157,6 @@ sp_draw_context_dispose(GObject *object)
         dc->selection = NULL;
     }
 
-    dc->waiting_LPE_type = Inkscape::LivePathEffect::INVALID_LPE;
-
     spdc_free_colors(dc);
 
     G_OBJECT_CLASS(draw_parent_class)->dispose(object);
