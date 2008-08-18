@@ -44,7 +44,7 @@ static gint sp_lpetool_context_root_handler(SPEventContext *ec, GdkEvent *event)
 
 void sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data);
 
-const int num_subtools = 7;
+const int num_subtools = 8;
 
 Inkscape::LivePathEffect::EffectType lpesubtools[] = {
     Inkscape::LivePathEffect::INVALID_LPE, // this must be here to account for the "all inactive" action
@@ -54,6 +54,7 @@ Inkscape::LivePathEffect::EffectType lpesubtools[] = {
     Inkscape::LivePathEffect::PARALLEL,
     Inkscape::LivePathEffect::PERP_BISECTOR,
     Inkscape::LivePathEffect::ANGLE_BISECTOR,
+    Inkscape::LivePathEffect::MIRROR_SYMMETRY,
 };
 
 static SPPenContextClass *lpetool_parent_class = 0;
