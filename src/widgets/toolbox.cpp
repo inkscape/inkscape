@@ -4850,11 +4850,12 @@ void
 sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
 {
     using namespace Inkscape::LivePathEffect;
-    g_print ("sp_lpetool_toolbox_sel_changed()\n");
+    g_print ("sp_lpetool_toolbox_sel_changed()");
     {
         GtkAction* w = GTK_ACTION( g_object_get_data( tbl, "lpetool_test_action" ) );
         SPItem *item = selection->singleItem();
         if (item && SP_IS_LPE_ITEM(item)) {
+            g_print (" - item found\n");
             SPLPEItem *lpeitem = SP_LPE_ITEM(item);
             Effect* lpe = sp_lpe_item_get_current_lpe(lpeitem);
             if (lpe && lpe->effectType() == ANGLE_BISECTOR) {
@@ -4868,11 +4869,13 @@ sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
                 gtk_action_set_sensitive(w, FALSE);
             }
         } else {
+            g_print (" - unsetting item\n");
             g_object_set_data(tbl, "currentlpe", NULL);
             g_object_set_data(tbl, "currentlpeitem", NULL);
             gtk_action_set_sensitive(w, FALSE);
         }
     }
+    g_print ("\n");
 }
 
 static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)

@@ -361,6 +361,7 @@ sp_pen_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
 static gint
 sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event)
 {
+    g_print ("sp_pen_context_root_handler()\n");
     SPPenContext *const pc = SP_PEN_CONTEXT(ec);
 
     gint ret = FALSE;

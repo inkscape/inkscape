@@ -231,6 +231,7 @@ sp_erc_update_toolbox (SPDesktop *desktop, const gchar *id, double value)
 gint
 sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
+    //g_print ("sp_lpetool_context_root_handler()\n");
     SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(event_context);
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
@@ -247,7 +248,9 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
+            g_print ("GDK_BUTTON_PRESS\n");
             if (event->button.button == 1 && !event_context->space_panning) {
+                g_print ("   ... (passed if construct)\n");
                 // save drag origin
                 event_context->xp = (gint) event->button.x;
                 event_context->yp = (gint) event->button.y;
