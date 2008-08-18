@@ -4784,10 +4784,13 @@ static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* main
 //########################
 
 /* This is the list of subtools from which the toolbar of the LPETool is built automatically */
+static const int num_subtools = 4;
+
 static Inkscape::LivePathEffect::EffectType lpesubtools[] = {
     Inkscape::LivePathEffect::ANGLE_BISECTOR,
     Inkscape::LivePathEffect::CIRCLE_3PTS,
-    Inkscape::LivePathEffect::PERP_BISECTOR
+    Inkscape::LivePathEffect::PERP_BISECTOR,
+    Inkscape::LivePathEffect::CIRCLE_3PTS,
 };
 
 static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
@@ -4884,14 +4887,14 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         GtkTreeIter iter;
 
         Inkscape::LivePathEffect::EffectType type;
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < num_subtools; ++i) {
             type =  lpesubtools[i];
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter,
-                            0, Inkscape::LivePathEffect::LPETypeConverter.get_label(type).c_str(),
-                            1, Inkscape::LivePathEffect::LPETypeConverter.get_label(type).c_str(),
-                            2, Inkscape::LivePathEffect::LPETypeConverter.get_key(type).c_str(),
-                            -1 );
+            gtk_list_store_append( model, &iter );
+            gtk_list_store_set( model, &iter,
+                                0, Inkscape::LivePathEffect::LPETypeConverter.get_label(type).c_str(),
+                                1, Inkscape::LivePathEffect::LPETypeConverter.get_label(type).c_str(),
+                                2, Inkscape::LivePathEffect::LPETypeConverter.get_key(type).c_str(),
+                                -1 );
         }
 
         EgeSelectOneAction* act = ege_select_one_action_new( "LPEToolModeAction", (""), (""), NULL, GTK_TREE_MODEL(model) );
