@@ -17,6 +17,7 @@
 
 #include "forward.h"
 #include "pixmaps/cursor-pencil.xpm"
+#include "pixmaps/cursor-node.xpm"
 #include <gtk/gtk.h>
 #include "desktop.h"
 #include "message-context.h"
@@ -274,9 +275,6 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
                 }
 
-                ret = true;
-
-                break;
                 /**
                 SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
 
@@ -318,6 +316,27 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             }
             break;
         case GDK_MOTION_NOTIFY:
+        {
+            if (!lc->shape_editor->has_nodepath() || selection->singleItem() == NULL) {
+                break;
+            }
+
+            bool over_stroke = false;
+            over_stroke = lc->shape_editor->is_over_stroke(NR::Point(event->motion.x, event->motion.y), false);
+
+            if (over_stroke) {
+                event_context->cursor_shape = cursor_node_xpm;
+                event_context->hot_x = 1;
+                event_context->hot_y = 1;
+                sp_event_context_update_cursor(event_context);
+                //lc->cursor_drag = false;
+            } else {
+                lc->cursor_shape = cursor_pencil_xpm;
+                lc->hot_x = 4;
+                lc->hot_y = 4;
+                sp_event_context_update_cursor(event_context);
+                //lc->cursor_drag = false;
+            }
         /**
         {
             NR::Point const motion_w(event->motion.x,
@@ -347,6 +366,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             Inkscape::Rubberband::get()->move(motion_dt);
         }
         **/
+        }
         break;
 
 
@@ -494,13 +514,11 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         break;
     }
 
-    /**
     if (!ret) {
         if (((SPEventContextClass *) lpetool_parent_class)->root_handler) {
             ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
         }
     }
-    **/
 
     return ret;
 }
