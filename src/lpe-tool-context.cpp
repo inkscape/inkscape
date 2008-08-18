@@ -19,7 +19,6 @@
 
 #include <2geom/sbasis-geometric.h>
 #include <gdk/gdkkeysyms.h>
-//#include <gtk/gtkobject.h>
 
 #include "macros.h"
 #include "forward.h"
@@ -224,14 +223,14 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (lc->mode == Inkscape::LivePathEffect::INVALID_LPE) {
-                // don't do anything for now if we are inactive
-                desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Choose a construction tool from the toolbar."));
-                ret = true;
-                break;
-            }
-
             if (event->button.button == 1 && !event_context->space_panning) {
+                if (lc->mode == Inkscape::LivePathEffect::INVALID_LPE) {
+                    // don't do anything for now if we are inactive
+                    desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Choose a construction tool from the toolbar."));
+                    ret = true;
+                    break;
+                }
+
                 // save drag origin
                 event_context->xp = (gint) event->button.x;
                 event_context->yp = (gint) event->button.y;
