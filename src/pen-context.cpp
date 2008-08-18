@@ -1396,6 +1396,17 @@ sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEff
     pc->polylines_paraxial = false; // TODO: think if this is correct for all cases
 }
 
+void
+sp_pen_context_cancel_waiting_for_LPE(SPPenContext *pc)
+{
+    g_print ("Cancelled waiting for mouse clicks for %s\n",
+             Inkscape::LivePathEffect::LPETypeConverter.get_label(pc->waiting_LPE_type).c_str());
+
+    pc->waiting_LPE_type = Inkscape::LivePathEffect::INVALID_LPE;
+    pc->expecting_clicks_for_LPE = 0;
+    sp_pen_context_set_polyline_mode(pc);
+}
+
 static int pen_next_paraxial_direction(const SPPenContext *const pc,
                                        NR::Point const &pt, NR::Point const &origin, guint state) {
     /*
