@@ -149,7 +149,6 @@ bool Selection::includes(SPObject *obj) const {
 }
 
 void Selection::add(SPObject *obj, bool persist_selection_context/* = false */) {
-    g_print ("Selection::add()\n");
     g_return_if_fail(obj != NULL);
     g_return_if_fail(SP_IS_OBJECT(obj));
 
@@ -211,7 +210,6 @@ void Selection::toggle(SPObject *obj) {
 }
 
 void Selection::remove(SPObject *obj) {
-    g_print ("Selection::remove()\n");
     g_return_if_fail(obj != NULL);
     g_return_if_fail(SP_IS_OBJECT(obj));
     g_return_if_fail(includes(obj));

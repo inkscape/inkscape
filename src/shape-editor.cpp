@@ -62,7 +62,6 @@ ShapeEditor::~ShapeEditor() {
 }
 
 void ShapeEditor::unset_item(SubType type, bool keep_knotholder) {
-    g_print ("ShapeEditor::unset_item()\n");
     Inkscape::XML::Node *old_repr = NULL;
 
     switch (type) {
@@ -173,7 +172,6 @@ static void shapeeditor_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar 
                                            gchar const */*old_value*/, gchar const */*new_value*/,
                                            bool /*is_interactive*/, gpointer data)
 {
-    g_print ("shapeeditor_event_attr_changed()\n");
     gboolean changed_np = FALSE;
     gboolean changed_kh = FALSE;
 
@@ -226,7 +224,6 @@ static Inkscape::XML::NodeEventVector shapeeditor_repr_events = {
 
 
 void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
-    g_print ("ShapeEditor::set_item()\n");
     // this happens (and should only happen) when for an LPEItem having both knotholder and nodepath the knotholder
     // is adapted; in this case we don't want to delete the knotholder since this freezes the handles
     unset_item(type, keep_knotholder);
@@ -272,7 +269,6 @@ void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
 */
 void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject, const char * key)
 {
-    g_print ("ShapeEditor::set_item_lpe_path_parameter()\n");
     unset_item(SH_NODEPATH);
 
     this->grab_node = -1;
@@ -314,7 +310,6 @@ ShapeEditor::set_knotholder(KnotHolder * knot_holder)
    Why not make a reload function in NodePath and in KnotHolder? */
 void ShapeEditor::reset_item (SubType type, bool keep_knotholder)
 {
-    g_print ("ShapeEditor::reset_item()\n");
     switch (type) {
         case SH_NODEPATH:
             if ( (this->nodepath) && (IS_LIVEPATHEFFECT(this->nodepath->object)) ) {
@@ -347,7 +342,6 @@ void ShapeEditor::update_statusbar () {
 }
 
 bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
-    g_print ("ShapeEditor::is_over_stroke ()");
     if (!this->nodepath)
         return false; // no stroke in knotholder
 
@@ -359,10 +353,8 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
 
     SPCurve *curve;
     if (SP_IS_SHAPE(item)) {
-        g_print ("; getting curve from shape\n");
         curve = sp_shape_get_curve(SP_SHAPE(item));
     } else {
-        g_print ("; getting curve from nodepath's curve\n");
         this->nodepath->curve;   // not sure if np->curve is always up to date...
     }
     Geom::PathVector const &pathv = curve->get_pathvector();

@@ -167,7 +167,6 @@ destroys old and creates new nodepath and reassigns listeners to the new selecte
 void
 sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data)
 {
-    g_print ("sp_lpetool_context_selection_changed()\n");
     SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(data);
 
     // TODO: update ShapeEditorsCollective instead
@@ -197,7 +196,6 @@ sp_lpetool_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
 gint
 sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
-    //g_print ("sp_lpetool_context_root_handler()\n");
     SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(event_context);
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
@@ -206,24 +204,20 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
     if (sp_pen_context_has_waiting_LPE(lc)) {
         // quit when we are waiting for a LPE to be applied
-        g_print ("LPETool has waiting LPE. We call the pen tool parent context and return\n");
         ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
         return ret;
     }
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            g_print ("GDK_BUTTON_PRESS\n");
             if (lc->mode == Inkscape::LivePathEffect::INVALID_LPE) {
                 // don't do anything for now if we are inactive
                 desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Choose a construction tool from the toolbar."));
-                g_print ("Flash statusbar\n");
                 ret = true;
                 break;
             }
 
             if (event->button.button == 1 && !event_context->space_panning) {
-                g_print ("   ... (passed if construct)\n");
                 // save drag origin
                 event_context->xp = (gint) event->button.x;
                 event_context->yp = (gint) event->button.y;
@@ -234,11 +228,9 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 int mode = prefs_get_int_attribute("tools.lpetool", "mode", 0);
                 EffectType type = lpesubtools[mode];
-                g_print ("Activating mode %d\n", mode);
 
                 // save drag origin
                 bool over_stroke = lc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), true);
-                g_print ("over_stroke: %s\n", over_stroke ? "true" : "false");
 
                 sp_pen_context_wait_for_LPE_mouse_clicks(lc, type, Inkscape::LivePathEffect::Effect::acceptsNumClicks(type));
 
@@ -330,16 +322,13 @@ lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type) {
 int lpetool_item_has_construction(SPLPEToolContext *lc, SPItem *item)
 {
     if (!SP_IS_LPE_ITEM(item)) {
-        g_print ("item is not LPEItem; returning -1\n");
         return -1;
     }
 
     Inkscape::LivePathEffect::Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
     if (!lpe) {
-        g_print ("no valid construction; returning -1\n");
         return -1;
     }
-    g_print ("returning construction %d\n", lpetool_mode_to_index(lpe->effectType()));
     return lpetool_mode_to_index(lpe->effectType());
 }
 

@@ -3921,9 +3921,7 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
     if (!desktop) return;
     SPEventContext *ec = desktop->event_context;
     if (!ec) return;
-    g_print ("4\n");
     Inkscape::MessageContext *mc = get_message_context(ec);
-    g_print ("5\n");
     if (!mc) return;
 
     double degrees = 180 / M_PI * rnew.a;
@@ -4748,9 +4746,7 @@ sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)//!!!move to Sha
 
     SPEventContext *ec = desktop->event_context;
     if (!ec) return;
-    g_print ("6\n");
     Inkscape::MessageContext *mc = get_message_context(ec);
-    g_print ("7\n");
     if (!mc) return;
 
     inkscape_active_desktop()->emitToolSubselectionChanged(NULL);

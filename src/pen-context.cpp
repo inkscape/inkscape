@@ -361,7 +361,6 @@ sp_pen_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
 static gint
 sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event)
 {
-    g_print ("sp_pen_context_root_handler()\n");
     SPPenContext *const pc = SP_PEN_CONTEXT(ec);
 
     gint ret = FALSE;
@@ -1387,9 +1386,6 @@ sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEff
     if (effect_type == Inkscape::LivePathEffect::INVALID_LPE)
         return;
 
-    g_print ("Now waiting for %s to be applied\n",
-             Inkscape::LivePathEffect::LPETypeConverter.get_label(effect_type).c_str());
-
     pc->waiting_LPE_type = effect_type;
     pc->expecting_clicks_for_LPE = num_clicks;
     pc->polylines_only = use_polylines;
@@ -1399,9 +1395,6 @@ sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEff
 void
 sp_pen_context_cancel_waiting_for_LPE(SPPenContext *pc)
 {
-    g_print ("Cancelled waiting for mouse clicks for %s\n",
-             Inkscape::LivePathEffect::LPETypeConverter.get_label(pc->waiting_LPE_type).c_str());
-
     pc->waiting_LPE_type = Inkscape::LivePathEffect::INVALID_LPE;
     pc->expecting_clicks_for_LPE = 0;
     sp_pen_context_set_polyline_mode(pc);
