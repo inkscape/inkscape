@@ -185,6 +185,9 @@ protected:
     std::vector<std::pair<KnotHolderEntity*, const char*> > kh_entity_vector;
     int oncanvasedit_it;
     BoolParam is_visible;
+    BoolParam deactivate_knotholder; // the user can use this to deactivate knotholders (for
+                                     // convenience, because they may interfere with node handles
+                                     // during editing); this is probably only temporary
 
     bool show_orig_path; // set this to true in derived effects to automatically have the original
                          // path displayed as helperpath
