@@ -110,6 +110,7 @@ const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(L
 int
 Effect::acceptsNumClicks(EffectType type) {
     switch (type) {
+        case INVALID_LPE: return -1; // in case we want to distinguish between invalid LPE and valid ones that expect zero clicks
         case ANGLE_BISECTOR: return 3;
         case CIRCLE_3PTS: return 3;
         case CIRCLE_WITH_RADIUS: return 2;
