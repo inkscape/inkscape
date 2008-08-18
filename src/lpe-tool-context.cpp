@@ -241,11 +241,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     if (sp_pen_context_has_waiting_LPE(lc)) {
         // quit when we are waiting for a LPE to be applied
         g_print ("LPETool has waiting LPE. We call the pen tool parent context and return\n");
-
-        if (((SPEventContextClass *) lpetool_parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
-        }
-
+        ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
         return ret;
     }
 
@@ -271,9 +267,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 sp_pen_context_wait_for_LPE_mouse_clicks(lc, type, Effect::acceptsNumClicks(type));
 
                 // we pass the mouse click on to pen tool as the first click which it should collect
-                if (((SPEventContextClass *) lpetool_parent_class)->root_handler) {
-                    ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
-                }
+                ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
 
                 /**
                 SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
