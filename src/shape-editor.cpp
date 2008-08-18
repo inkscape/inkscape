@@ -30,6 +30,7 @@
 #include "style.h"
 #include "display/curve.h"
 #include <2geom/pathvector.h>
+#include "sp-shape.h"
 
 #include "shape-editor.h"
 
@@ -351,7 +352,12 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
     this->curvepoint_doc = desktop->w2d(event_p);
     this->curvepoint_doc *= sp_item_dt2i_affine(item);
 
-    SPCurve *curve = this->nodepath->curve;   // not sure if np->curve is always up to date...
+    SPCurve *curve;
+    if (SP_IS_SHAPE(item)) {
+        curve = sp_shape_get_curve(SP_SHAPE(item));
+    } else {
+        this->nodepath->curve;   // not sure if np->curve is always up to date...
+    }
     Geom::PathVector const &pathv = curve->get_pathvector();
     Geom::PathVectorPosition pvpos = Geom::nearestPoint(pathv, this->curvepoint_doc);
 
