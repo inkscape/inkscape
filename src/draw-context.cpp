@@ -439,9 +439,11 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
             if ( !c->is_closed() ) {
                 SPDrawAnchor *a;
                 a = sp_draw_anchor_new(dc, c, TRUE, *(c->first_point()));
-                dc->white_anchors = g_slist_prepend(dc->white_anchors, a);
+                if (a)
+                    dc->white_anchors = g_slist_prepend(dc->white_anchors, a);
                 a = sp_draw_anchor_new(dc, c, FALSE, *(c->last_point()));
-                dc->white_anchors = g_slist_prepend(dc->white_anchors, a);
+                if (a)
+                    dc->white_anchors = g_slist_prepend(dc->white_anchors, a);
             }
         }
         /* fixme: recalculate active anchor? */

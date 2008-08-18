@@ -17,6 +17,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "event-context.h"
+#include "lpe-tool-context.h"
 #include "display/sodipodi-ctrl.h"
 #include "display/curve.h"
 
@@ -26,6 +27,11 @@
 SPDrawAnchor *
 sp_draw_anchor_new(SPDrawContext *dc, SPCurve *curve, gboolean start, NR::Point delta)
 {
+    if (SP_IS_LPETOOL_CONTEXT(dc)) {
+        // suppress all kinds of anchors in LPEToolContext
+        return NULL;
+    }
+
     SPDesktop *dt = SP_EVENT_CONTEXT_DESKTOP(dc);
 
     SPDrawAnchor *a = g_new(SPDrawAnchor, 1);
