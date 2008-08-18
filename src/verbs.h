@@ -168,6 +168,7 @@ enum {
     SP_VERB_CONTEXT_PAINTBUCKET,
     SP_VERB_CONTEXT_LPE, /* not really a tool but used for editing LPE parameters on-canvas for example */
     SP_VERB_CONTEXT_ERASER,
+    SP_VERB_CONTEXT_LPETOOL, /* note that this is very different from SP_VERB_CONTEXT_LPE above! */
     /* Tool preferences */
     SP_VERB_CONTEXT_SELECT_PREFS,
     SP_VERB_CONTEXT_NODE_PREFS,
@@ -187,6 +188,7 @@ enum {
     SP_VERB_CONTEXT_CONNECTOR_PREFS,
     SP_VERB_CONTEXT_PAINTBUCKET_PREFS,
     SP_VERB_CONTEXT_ERASER_PREFS,
+    SP_VERB_CONTEXT_LPETOOL_PREFS,
     /* Zooming and desktop settings */
     SP_VERB_ZOOM_IN,
     SP_VERB_ZOOM_OUT,

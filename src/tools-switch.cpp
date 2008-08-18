@@ -43,6 +43,7 @@
 #include "eraser-context.h"
 #include "pen-context.h"
 #include "pencil-context.h"
+#include "lpe-tool-context.h"
 #include "text-context.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
@@ -76,6 +77,7 @@ static char const *const tool_names[] = {
     "tools.connector",
     "tools.paintbucket",
     "tools.eraser",
+    "tools.lpetool",
     NULL
 };
 
@@ -99,6 +101,7 @@ static char const *const tool_ids[] = {
     "connector",
     "paintbucket",
     "eraser",
+    "lpetool",
     NULL
 };
 
@@ -245,6 +248,12 @@ tools_switch(SPDesktop *dt, int num)
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
             dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to erase."));
+            break;
+        case TOOLS_LPETOOL:
+            dt->set_event_context(SP_TYPE_LPETOOL_CONTEXT, tool_names[num]);
+            dt->activate_guides(false);
+            inkscape_eventcontext_set(sp_desktop_event_context(dt));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("Choose a subtool from the toolbar"));
             break;
     }
 }

@@ -471,6 +471,10 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_eraser, _("Eraser"), iter_tools, PREFS_PAGE_TOOLS_ERASER);
     this->AddNewObjectsStyle(_page_eraser, "tools.eraser");
 
+    //LPETool
+    this->AddPage(_page_lpetool, _("LPE Tool"), iter_tools, PREFS_PAGE_TOOLS_LPETOOL);
+    this->AddNewObjectsStyle(_page_lpetool, "tools.lpetool");
+
     //Text
     this->AddPage(_page_text, _("Text"), iter_tools, PREFS_PAGE_TOOLS_TEXT);
     this->AddSelcueCheckbox(_page_text, "tools.text", true);

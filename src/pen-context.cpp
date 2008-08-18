@@ -41,6 +41,7 @@
 #include "helper/units.h"
 #include "macros.h"
 #include "context-fns.h"
+#include "tools-switch.h"
 
 static void sp_pen_context_class_init(SPPenContextClass *klass);
 static void sp_pen_context_init(SPPenContext *pc);

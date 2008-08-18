@@ -102,6 +102,7 @@ libinkpre_a_SOURCES =	\
 	layer-fns.cpp layer-fns.h	\
 	layer-manager.cpp layer-manager.h	\
 	line-geometry.cpp line-geometry.h	\
+	lpe-tool-context.cpp lpe-tool-context.h	\
 	macros.h	\
 	main-cmdlineact.cpp main-cmdlineact.h \
 	media.cpp media.h	\

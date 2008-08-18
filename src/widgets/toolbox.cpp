@@ -132,6 +132,7 @@ static GtkWidget *sp_empty_toolbox_new(SPDesktop *desktop);
 static void       sp_connector_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_paintbucket_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 static void       sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
+static void       sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 
 namespace { GtkWidget *sp_text_toolbox_new (SPDesktop *desktop); }
 
@@ -165,6 +166,7 @@ static struct {
     { "SPPenContext",      "pen_tool",       SP_VERB_CONTEXT_PEN, SP_VERB_CONTEXT_PEN_PREFS },
     { "SPDynaDrawContext", "dyna_draw_tool", SP_VERB_CONTEXT_CALLIGRAPHIC, SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS },
     { "SPEraserContext",   "eraser_tool",    SP_VERB_CONTEXT_ERASER, SP_VERB_CONTEXT_ERASER_PREFS },
+    { "SPLPEToolContext",  "lpetool_tool",   SP_VERB_CONTEXT_LPETOOL, SP_VERB_CONTEXT_LPETOOL_PREFS },
     { "SPFloodContext",    "paintbucket_tool",     SP_VERB_CONTEXT_PAINTBUCKET, SP_VERB_CONTEXT_PAINTBUCKET_PREFS },
     { "SPTextContext",     "text_tool",      SP_VERB_CONTEXT_TEXT, SP_VERB_CONTEXT_TEXT_PREFS },
     { "SPConnectorContext","connector_tool", SP_VERB_CONTEXT_CONNECTOR, SP_VERB_CONTEXT_CONNECTOR_PREFS },
@@ -209,6 +211,8 @@ static struct {
       SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS, "tools.calligraphic", N_("Style of new calligraphic strokes")},
     { "SPEraserContext", "eraser_toolbox", 0, sp_eraser_toolbox_prep,"EraserToolbar",
       SP_VERB_CONTEXT_ERASER_PREFS, "tools.eraser", _("TBD")},
+    { "SPLPEToolContext", "lpetool_toolbox", 0, sp_lpetool_toolbox_prep, "LPEToolToolbar",
+      SP_VERB_CONTEXT_LPETOOL_PREFS, "tools.lpetool", _("TBD")},
     { "SPTextContext",   "text_toolbox",   sp_text_toolbox_new, 0,               0,
       SP_VERB_INVALID, 0, 0},
     { "SPDropperContext", "dropper_toolbox", 0, sp_dropper_toolbox_prep,         "DropperToolbar",
@@ -432,6 +436,10 @@ static gchar const * ui_descr =
         "    <toolitem action='EraserWidthAction' />"
         "    <separator />"
         "    <toolitem action='EraserModeAction' />"
+        "  </toolbar>"
+
+        "  <toolbar name='LPEToolToolbar'>"
+        "    <toolitem action='LPEToolModeAction' />"
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"
@@ -1564,6 +1572,7 @@ setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='ToolPen' />"
         "    <toolitem action='ToolCalligraphic' />"
         "    <toolitem action='ToolEraser' />"
+        "    <toolitem action='ToolLPETool' />"
         "    <toolitem action='ToolPaintBucket' />"
         "    <toolitem action='ToolText' />"
         "    <toolitem action='ToolConnector' />"
@@ -4431,28 +4440,6 @@ static void sp_arctb_end_value_changed(GtkAdjustment *adj, GObject *tbl)
 }
 
 
-static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
-{
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
-    gint eraserMode = (ege_select_one_action_get_active( act ) != 0) ? 1 : 0;
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-        prefs_set_int_attribute( "tools.eraser", "mode", eraserMode );
-    }
-
-    // only take action if run by the attr_changed listener
-    if (!g_object_get_data( tbl, "freeze" )) {
-        // in turn, prevent listener from responding
-        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
-
-        if ( eraserMode != 0 ) {
-        } else {
-        }
-        // TODO finish implementation
-
-        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-    }
-}
-
 static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
@@ -4790,6 +4777,104 @@ static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* main
 }
 
 
+//########################
+//##      LPETool       ##
+//########################
+
+static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
+{
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
+    gint lpeToolMode = (ege_select_one_action_get_active(act) != 0) ? 1 : 0;
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+        prefs_set_int_attribute( "tools.lpetool", "mode", lpeToolMode );
+    }
+
+    // only take action if run by the attr_changed listener
+    if (!g_object_get_data( tbl, "freeze" )) {
+        // in turn, prevent listener from responding
+        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+        switch (lpeToolMode) {
+            case 0:
+                // angle bisector
+                g_print ("angle bisector\n");
+                break;
+            case 1:
+                // circle through 3 points
+                g_print ("circle through 3 points\n");
+                sp_pen_context_put_into_waiting_mode(desktop, Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
+                break;
+            default:
+                // don't do anything
+                break;
+        }
+        // TODO finish implementation
+
+        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+    }
+}
+
+static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
+{
+    {
+        GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
+
+        GtkTreeIter iter;
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Angle bisector"),
+                            1, _("Angle bisector"),
+                            2, "delete_object",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Circle through 3 points"),
+                            1, _("Circle through 3 points"),
+                            2, "difference",
+                            -1 );
+
+        EgeSelectOneAction* act = ege_select_one_action_new( "LPEToolModeAction", (""), (""), NULL, GTK_TREE_MODEL(model) );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_object_set_data( holder, "lpetool_mode_action", act );
+
+        ege_select_one_action_set_appearance( act, "full" );
+        ege_select_one_action_set_radio_action_type( act, INK_RADIO_ACTION_TYPE );
+        g_object_set( G_OBJECT(act), "icon-property", "iconId", NULL );
+        ege_select_one_action_set_icon_column( act, 2 );
+        ege_select_one_action_set_tooltip_column( act, 1  );
+
+        gint lpeToolMode = (prefs_get_int_attribute("tools.lpetool", "mode", 0) != 0) ? 1 : 0;
+        ege_select_one_action_set_active( act, lpeToolMode );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_lpetool_mode_changed), holder );
+    }
+}
+
+//########################
+//##       Eraser       ##
+//########################
+
+static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
+{
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    gint eraserMode = (ege_select_one_action_get_active( act ) != 0) ? 1 : 0;
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+        prefs_set_int_attribute( "tools.eraser", "mode", eraserMode );
+    }
+
+    // only take action if run by the attr_changed listener
+    if (!g_object_get_data( tbl, "freeze" )) {
+        // in turn, prevent listener from responding
+        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+        if ( eraserMode != 0 ) {
+        } else {
+        }
+        // TODO finish implementation
+
+        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+    }
+}
 
 static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {

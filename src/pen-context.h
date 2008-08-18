@@ -66,6 +66,8 @@ inline bool sp_pen_context_has_waiting_LPE(SPPenContext *pc) {
 void sp_pen_context_set_polyline_mode(SPPenContext *const pc);
 void sp_pen_context_wait_for_LPE_mouse_clicks(SPPenContext *pc, Inkscape::LivePathEffect::EffectType effect_type,
                                               unsigned int num_clicks, bool use_polylines = true);
+void sp_pen_context_put_into_waiting_mode(SPDesktop *desktop, Inkscape::LivePathEffect::EffectType effect_type,
+                                          unsigned int num_clicks, bool use_polylines = true);
 
 #endif /* !SEEN_PEN_CONTEXT_H */
 

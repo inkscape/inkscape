@@ -1487,6 +1487,9 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_CONTEXT_ERASER:
             tools_switch_current(TOOLS_ERASER);
             break;
+        case SP_VERB_CONTEXT_LPETOOL:
+            tools_switch_current(TOOLS_LPETOOL);
+            break;
 
         case SP_VERB_CONTEXT_SELECT_PREFS:
             prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SELECTOR);
@@ -1558,6 +1561,11 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         case SP_VERB_CONTEXT_ERASER_PREFS:
             prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_ERASER);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
+            break;
+        case SP_VERB_CONTEXT_LPETOOL_PREFS:
+            g_print ("TODO: Create preferences page for LPETool\n");
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_LPETOOL);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
 
@@ -2497,6 +2505,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Edit Live Path Effect parameters"), "draw_lpe"),
     new ContextVerb(SP_VERB_CONTEXT_ERASER, "ToolEraser", N_("Eraser"),
                     N_("Erase existing paths"), "draw_erase"),
+    new ContextVerb(SP_VERB_CONTEXT_LPETOOL, "ToolLPETool", N_("LPE Tool"),
+                    N_("Write something sensible here"), "draw_lpetool"),
     /* Tool prefs */
     new ContextVerb(SP_VERB_CONTEXT_SELECT_PREFS, "SelectPrefs", N_("Selector Preferences"),
                     N_("Open Preferences for the Selector tool"), NULL),
@@ -2534,6 +2544,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Open Preferences for the Paint Bucket tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_ERASER_PREFS, "EraserPrefs", N_("Eraser Preferences"),
                     N_("Open Preferences for the Eraser tool"), NULL),
+    new ContextVerb(SP_VERB_CONTEXT_LPETOOL_PREFS, "LPEToolPrefs", N_("LPE Tool Preferences"),
+                    N_("Open Preferences for the LPETool tool"), NULL),
 
     /* Zoom/View */
     new ZoomVerb(SP_VERB_ZOOM_IN, "ZoomIn", N_("Zoom In"), N_("Zoom in"), "zoom_in"),
