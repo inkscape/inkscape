@@ -1083,6 +1083,49 @@ ec_shape_event_attr_changed(Inkscape::XML::Node */*shape_repr*/, gchar const *na
 }
 
 
+void
+event_context_print_event_info(GdkEvent *event, bool print_return) {
+    switch (event->type) {
+        case GDK_BUTTON_PRESS:
+            g_print ("GDK_BUTTON_PRESS");
+            break;
+        case GDK_2BUTTON_PRESS:
+            g_print ("GDK_2BUTTON_PRESS");
+            break;
+        case GDK_3BUTTON_PRESS:
+            g_print ("GDK_3BUTTON_PRESS");
+            break;
+
+        case GDK_MOTION_NOTIFY:
+            g_print ("GDK_MOTION_NOTIFY");
+            break;
+        case GDK_ENTER_NOTIFY:
+            g_print ("GDK_ENTER_NOTIFY");
+            break;
+
+        case GDK_LEAVE_NOTIFY:
+            g_print ("GDK_LEAVE_NOTIFY");
+            break;
+        case GDK_BUTTON_RELEASE:
+            g_print ("GDK_BUTTON_RELEASE");
+            break;
+
+        case GDK_KEY_PRESS:
+            g_print ("GDK_KEY_PRESS: %d", get_group0_keyval(&event->key));
+            break;
+        case GDK_KEY_RELEASE:
+            g_print ("GDK_KEY_RELEASE: %d", get_group0_keyval(&event->key));
+            break;
+        default:
+            //g_print ("even type not recognized");
+            break;
+    }
+
+    if (print_return) {
+        g_print ("\n");
+    }
+}
+
 /*
   Local Variables:
   mode:c++

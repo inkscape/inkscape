@@ -125,6 +125,8 @@ void ec_shape_event_attr_changed(Inkscape::XML::Node *shape_repr,
                                      gchar const *name, gchar const *old_value, gchar const *new_value,
                                  bool const is_interactive, gpointer const data);
 
+void event_context_print_event_info(GdkEvent *event, bool print_return = true);
+
 #endif
 
 
