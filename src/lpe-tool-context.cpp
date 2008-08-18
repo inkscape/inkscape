@@ -16,8 +16,8 @@
 #include "config.h"
 
 #include "forward.h"
-#include "pixmaps/cursor-pencil.xpm"
 #include "pixmaps/cursor-node.xpm"
+#include "pixmaps/cursor-crosshairs.xpm"
 #include <gtk/gtk.h>
 #include "desktop.h"
 #include "message-context.h"
@@ -126,14 +126,9 @@ sp_lpetool_context_class_init(SPLPEToolContextClass *klass)
 static void
 sp_lpetool_context_init(SPLPEToolContext *lc)
 {
-    /**
-    lc->NodeContextCpp::cursor_shape = cursor_pencil_xpm;
-    lc->NodeContextCpp::hot_x = 4;
-    lc->NodeContextCpp::hot_y = 4;
-    **/
-    lc->cursor_shape = cursor_pencil_xpm;
-    lc->hot_x = 4;
-    lc->hot_y = 4;
+    lc->cursor_shape = cursor_crosshairs_xpm;
+    lc->hot_x = 7;
+    lc->hot_y = 7;
 
     new (&lc->sel_changed_connection) sigc::connection();
 
@@ -326,13 +321,11 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 event_context->hot_x = 1;
                 event_context->hot_y = 1;
                 sp_event_context_update_cursor(event_context);
-                //lc->cursor_drag = false;
             } else {
-                lc->cursor_shape = cursor_pencil_xpm;
-                lc->hot_x = 4;
-                lc->hot_y = 4;
+                lc->cursor_shape = cursor_crosshairs_xpm;
+                lc->hot_x = 7;
+                lc->hot_y = 7;
                 sp_event_context_update_cursor(event_context);
-                //lc->cursor_drag = false;
             }
         /**
         {
