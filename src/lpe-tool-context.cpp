@@ -194,7 +194,7 @@ sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer da
     // TODO: update ShapeEditorsCollective instead
     lc->shape_editor->unset_item(SH_NODEPATH);
     lc->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem(); 
+    SPItem *item = selection->singleItem();
     lc->shape_editor->set_item(item, SH_NODEPATH);
     lc->shape_editor->set_item(item, SH_KNOTHOLDER);
     lc->shape_editor->update_statusbar();
@@ -376,7 +376,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
 
             sp_lpetool_apply(dc, motion_dt);
-            
+
             // Remove all temporary line segments
             while (dc->segments) {
                 gtk_object_destroy(GTK_OBJECT(dc->segments->data));

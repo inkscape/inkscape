@@ -111,7 +111,7 @@ protected:
 
     DialogPage _page_mouse, _page_scrolling, _page_steps, _page_tools, _page_windows,
         _page_clones, _page_mask, _page_transforms, _page_filters, _page_select,
-        _page_importexport, _page_cms, _page_grids, _page_svgoutput, _page_misc, 
+        _page_importexport, _page_cms, _page_grids, _page_svgoutput, _page_misc,
         _page_ui, _page_autosave, _page_bitmaps;
     DialogPage _page_selector, _page_node, _page_tweak, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper, _page_lpetool;
