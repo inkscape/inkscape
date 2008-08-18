@@ -4786,7 +4786,8 @@ static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* main
 static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
-    gint lpeToolMode = (ege_select_one_action_get_active(act) != 0) ? 1 : 0;
+
+    gint lpeToolMode = ege_select_one_action_get_active(act);
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_int_attribute( "tools.lpetool", "mode", lpeToolMode );
     }
@@ -4922,7 +4923,7 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         ege_select_one_action_set_icon_column( act, 2 );
         ege_select_one_action_set_tooltip_column( act, 1  );
 
-        gint lpeToolMode = (prefs_get_int_attribute("tools.lpetool", "mode", 0) != 0) ? 1 : 0;
+        gint lpeToolMode = prefs_get_int_attribute("tools.lpetool", "mode", 0);
         ege_select_one_action_set_active( act, lpeToolMode );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_lpetool_mode_changed), holder );
     }
