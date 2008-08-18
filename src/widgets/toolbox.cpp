@@ -4840,7 +4840,10 @@ sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
     {
         GtkAction* w = GTK_ACTION(g_object_get_data(tbl, "lpetool_line_segment_action"));
         SPItem *item = selection->singleItem();
-        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(selection->desktop()->event_context);
+        SPEventContext *ec = selection->desktop()->event_context;
+        if (!SP_IS_LPETOOL_CONTEXT(ec))
+            return;
+        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(ec);
         if (item && SP_IS_LPE_ITEM(item) && lpetool_item_has_construction(lc, item)) {
             SPLPEItem *lpeitem = SP_LPE_ITEM(item);
             Effect* lpe = sp_lpe_item_get_current_lpe(lpeitem);
