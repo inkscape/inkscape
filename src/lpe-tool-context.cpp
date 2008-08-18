@@ -167,6 +167,7 @@ destroys old and creates new nodepath and reassigns listeners to the new selecte
 void
 sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data)
 {
+    g_print ("sp_lpetool_context_selection_changed()\n");
     SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(data);
 
     // TODO: update ShapeEditorsCollective instead
@@ -329,13 +330,16 @@ lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type) {
 int lpetool_item_has_construction(SPLPEToolContext *lc, SPItem *item)
 {
     if (!SP_IS_LPE_ITEM(item)) {
+        g_print ("item is not LPEItem; returning -1\n");
         return -1;
     }
 
     Inkscape::LivePathEffect::Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
     if (!lpe) {
+        g_print ("no valid construction; returning -1\n");
         return -1;
     }
+    g_print ("returning construction %d\n", lpetool_mode_to_index(lpe->effectType()));
     return lpetool_mode_to_index(lpe->effectType());
 }
 

@@ -4835,6 +4835,7 @@ void
 sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
 {
     using namespace Inkscape::LivePathEffect;
+    g_print ("sp_lpetool_toolbox_sel_changed()");
     {
         GtkAction* w = GTK_ACTION(g_object_get_data(tbl, "lpetool_line_segment_action"));
         SPItem *item = selection->singleItem();
@@ -4843,22 +4844,26 @@ sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
             SPLPEItem *lpeitem = SP_LPE_ITEM(item);
             Effect* lpe = sp_lpe_item_get_current_lpe(lpeitem);
             if (lpe && lpe->effectType() == LINE_SEGMENT) {
+                g_print (" - item with line segment LPE found\n");
                 LPELineSegment *lpels = static_cast<LPELineSegment*>(lpe);
                 g_object_set_data(tbl, "currentlpe", lpe);
                 g_object_set_data(tbl, "currentlpeitem", lpeitem);
                 gtk_action_set_sensitive(w, TRUE);
                 ege_select_one_action_set_active(act, lpels->end_type->get_value());
             } else {
+                g_print (" - unsetting item\n");
                 g_object_set_data(tbl, "currentlpe", NULL);
                 g_object_set_data(tbl, "currentlpeitem", NULL);
                 gtk_action_set_sensitive(w, FALSE);
             }
         } else {
+            g_print (" - unsetting item\n");
             g_object_set_data(tbl, "currentlpe", NULL);
             g_object_set_data(tbl, "currentlpeitem", NULL);
             gtk_action_set_sensitive(w, FALSE);
         }
     }
+    g_print ("\n");
 }
 
 static void
@@ -4901,6 +4906,7 @@ sp_line_segment_build_list(GObject *tbl)
 
 static void
 sp_lpetool_change_line_segment_type(EgeSelectOneAction* act, GObject* tbl) {
+    g_print ("sp_lpetool_change_line_segment_type()\n");
     using namespace Inkscape::LivePathEffect;
 
     // quit if run by the attr_changed listener
@@ -4913,7 +4919,15 @@ sp_lpetool_change_line_segment_type(EgeSelectOneAction* act, GObject* tbl) {
 
     LPELineSegment *lpe = static_cast<LPELineSegment *>(g_object_get_data(tbl, "currentlpe"));
     SPLPEItem *lpeitem = static_cast<SPLPEItem *>(g_object_get_data(tbl, "currentlpeitem"));
-    if (lpe) {
+    if (!lpeitem) {
+        g_print ("no lpeitem!\n");
+    } else {
+        g_print ("lpeitem found\n");
+    }
+    if (!lpe) {
+        g_print ("no LPE!\n");
+    } else {
+        g_print ("LPE found. Adjusting line segment type\n");
         SPLPEItem *lpeitem = static_cast<SPLPEItem *>(g_object_get_data(tbl, "currentlpeitem"));
         lpe->end_type.param_set_value(static_cast<Inkscape::LivePathEffect::EndType>(ege_select_one_action_get_active(act)));
         sp_lpe_item_update_patheffect(lpeitem, true, true);
