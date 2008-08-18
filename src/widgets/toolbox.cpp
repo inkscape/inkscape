@@ -452,6 +452,8 @@ static gchar const * ui_descr =
         "    <separator />"
         "    <toolitem action='LPEMeasuringAction' />"
         "    <toolitem action='LPEToolUnitsAction' />"
+        "    <separator />"
+        "    <toolitem action='LPEOpenLPEDialogAction' />"
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"
@@ -4994,6 +4996,17 @@ sp_lpetool_change_line_segment_type(EgeSelectOneAction* act, GObject* tbl) {
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
+static void
+lpetool_open_lpe_dialog (GtkToggleAction *act, gpointer data) {
+    SPDesktop *desktop = static_cast<SPDesktop *>(data);
+
+    if (tools_isactive(desktop, TOOLS_LPETOOL)) {
+        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
+        sp_action_perform(Inkscape::Verb::get(SP_VERB_DIALOG_LIVE_PATH_EFFECT)->get_action(desktop), NULL);
+    }
+    gtk_toggle_action_set_active(act, false);
+}
+
 static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     UnitTracker* tracker = new UnitTracker(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
@@ -5101,6 +5114,18 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         GtkAction* act = tracker->createAction( "LPEToolUnitsAction", _("Units"), ("") );
         gtk_action_group_add_action( mainActions, act );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(lpetool_unit_changed), (GObject*)holder );
+    }
+
+    /* Open LPE dialog (to adapt parameters numerically) */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "LPEOpenLPEDialogAction",
+                                                      _("Open LPE dialog"),
+                                                      _("Open LPE dialog (to adapt parameters numerically)"),
+                                                      "lpetool_open_lpe_dialog",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(lpetool_open_lpe_dialog), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), FALSE );
     }
 
     //watch selection
