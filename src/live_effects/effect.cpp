@@ -108,7 +108,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
 int
-Effect::acceptsNumParams(EffectType type) {
+Effect::acceptsNumClicks(EffectType type) {
     switch (type) {
         case ANGLE_BISECTOR: return 3;
         case PERP_BISECTOR: return 2;
@@ -298,7 +298,7 @@ Effect::doBeforeEffect (SPLPEItem */*lpeitem*/)
 /**
  * Effects can have a parameter path set before they are applied by accepting a nonzero number of
  * mouse clicks. This method activates the pen context, which waits for the specified number of
- * clicks. Override Effect::acceptsNumParams() to return the number of expected mouse clicks.
+ * clicks. Override Effect::acceptsNumClicks() to return the number of expected mouse clicks.
  */
 void
 Effect::doAcceptPathPreparations(SPLPEItem *lpeitem)
@@ -311,14 +311,14 @@ Effect::doAcceptPathPreparations(SPLPEItem *lpeitem)
 
     SPEventContext *ec = desktop->event_context;
     SPPenContext *pc = SP_PEN_CONTEXT(ec);
-    pc->expecting_clicks_for_LPE = this->acceptsNumParams();
+    pc->expecting_clicks_for_LPE = this->acceptsNumClicks();
     pc->waiting_LPE = this;
     pc->waiting_item = lpeitem;
     pc->polylines_only = true;
 
     ec->desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE,
         g_strdup_printf(_("Please specify a parameter path for the LPE '%s' with %d mouse clicks"),
-                        getName().c_str(), acceptsNumParams()));
+                        getName().c_str(), acceptsNumClicks()));
 }
 
 void

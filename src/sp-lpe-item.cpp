@@ -314,7 +314,7 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
 
             Inkscape::LivePathEffect::Effect *lpe = lpeobj->lpe;
             if (lpe->isVisible()) {
-                if (lpe->acceptsNumParams() > 0 && !lpe->isReady()) {
+                if (lpe->acceptsNumClicks() > 0 && !lpe->isReady()) {
                     // if the effect expects mouse input before being applied and the input is not finished
                     // yet, we don't alter the path
                     return;
