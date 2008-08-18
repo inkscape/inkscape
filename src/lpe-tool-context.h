@@ -16,6 +16,7 @@
  */
 
 #include "pen-context.h"
+#include "helper/units.h"
 
 #define SP_TYPE_LPETOOL_CONTEXT (sp_lpetool_context_get_type())
 #define SP_LPETOOL_CONTEXT(o) (GTK_CHECK_CAST((o), SP_TYPE_LPETOOL_CONTEXT, SPLPEToolContext))
@@ -36,6 +37,10 @@ enum LPEToolState {
     LPETOOL_STATE_NODE
 };
 
+namespace Inkscape {
+class Selection;
+}
+
 class ShapeEditor;
 
 struct SPLPEToolContext : public SPPenContext {
@@ -43,7 +48,10 @@ struct SPLPEToolContext : public SPPenContext {
     SPCanvasItem *canvas_bbox;
     Inkscape::LivePathEffect::EffectType mode;
 
+    std::map<SPPath *, SPCanvasItem*> *measuring_items;
+
     sigc::connection sel_changed_connection;
+    sigc::connection sel_modified_connection;
 };
 
 struct SPLPEToolContextClass : public SPEventContextClass{};
@@ -54,6 +62,10 @@ bool lpetool_try_construction(SPLPEToolContext *lc, Inkscape::LivePathEffect::Ef
 void lpetool_context_switch_mode(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type);
 void lpetool_get_limiting_bbox_corners(SPDocument *document, Geom::Point &A, Geom::Point &B);
 void lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc);
+void lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *selection = NULL);
+void lpetool_delete_measuring_items(SPLPEToolContext *lc);
+void lpetool_update_measuring_items(SPLPEToolContext *lc);
+void lpetool_show_measuring_info(SPLPEToolContext *lc, bool show = true);
 
 GType sp_lpetool_context_get_type(void);
 

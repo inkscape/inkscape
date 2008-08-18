@@ -449,6 +449,9 @@ static gchar const * ui_descr =
         "    <toolitem action='LPEBBoxFromSelectionAction' />"
         "    <separator />"
         "    <toolitem action='LPELineSegmentAction' />"
+        "    <separator />"
+        "    <toolitem action='LPEMeasuringAction' />"
+        "    <toolitem action='LPEToolUnitsAction' />"
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"
@@ -4831,35 +4834,48 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
 }
 
 void
+sp_lpetool_toolbox_sel_modified(Inkscape::Selection *selection, guint /*flags*/, GObject *tbl)
+{
+    SPEventContext *ec = selection->desktop()->event_context;
+    if (!SP_IS_LPETOOL_CONTEXT(ec))
+        return;
+
+    lpetool_update_measuring_items(SP_LPETOOL_CONTEXT(ec));
+}
+
+void
 sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
 {
     using namespace Inkscape::LivePathEffect;
-    {
-        GtkAction* w = GTK_ACTION(g_object_get_data(tbl, "lpetool_line_segment_action"));
-        SPItem *item = selection->singleItem();
-        SPEventContext *ec = selection->desktop()->event_context;
-        if (!SP_IS_LPETOOL_CONTEXT(ec))
-            return;
-        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(ec);
-        if (item && SP_IS_LPE_ITEM(item) && lpetool_item_has_construction(lc, item)) {
-            SPLPEItem *lpeitem = SP_LPE_ITEM(item);
-            Effect* lpe = sp_lpe_item_get_current_lpe(lpeitem);
-            if (lpe && lpe->effectType() == LINE_SEGMENT) {
-                LPELineSegment *lpels = static_cast<LPELineSegment*>(lpe);
-                g_object_set_data(tbl, "currentlpe", lpe);
-                g_object_set_data(tbl, "currentlpeitem", lpeitem);
-                gtk_action_set_sensitive(w, TRUE);
-                ege_select_one_action_set_active(EGE_SELECT_ONE_ACTION(w), lpels->end_type.get_value());
-            } else {
-                g_object_set_data(tbl, "currentlpe", NULL);
-                g_object_set_data(tbl, "currentlpeitem", NULL);
-                gtk_action_set_sensitive(w, FALSE);
-            }
+    SPEventContext *ec = selection->desktop()->event_context;
+    if (!SP_IS_LPETOOL_CONTEXT(ec))
+        return;
+    SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(ec);
+
+    lpetool_delete_measuring_items(lc);
+    lpetool_create_measuring_items(lc, selection);
+
+    // activate line segment combo box if a single item with LPELineSegment is selected
+    GtkAction* w = GTK_ACTION(g_object_get_data(tbl, "lpetool_line_segment_action"));
+    SPItem *item = selection->singleItem();
+    if (item && SP_IS_LPE_ITEM(item) && lpetool_item_has_construction(lc, item)) {
+        SPLPEItem *lpeitem = SP_LPE_ITEM(item);
+        Effect* lpe = sp_lpe_item_get_current_lpe(lpeitem);
+        if (lpe && lpe->effectType() == LINE_SEGMENT) {
+            LPELineSegment *lpels = static_cast<LPELineSegment*>(lpe);
+            g_object_set_data(tbl, "currentlpe", lpe);
+            g_object_set_data(tbl, "currentlpeitem", lpeitem);
+            gtk_action_set_sensitive(w, TRUE);
+            ege_select_one_action_set_active(EGE_SELECT_ONE_ACTION(w), lpels->end_type.get_value());
         } else {
             g_object_set_data(tbl, "currentlpe", NULL);
             g_object_set_data(tbl, "currentlpeitem", NULL);
             gtk_action_set_sensitive(w, FALSE);
         }
+    } else {
+        g_object_set_data(tbl, "currentlpe", NULL);
+        g_object_set_data(tbl, "currentlpeitem", NULL);
+        gtk_action_set_sensitive(w, FALSE);
     }
 }
 
@@ -4873,6 +4889,34 @@ lpetool_toggle_show_bbox (GtkToggleAction *act, gpointer data) {
     if (tools_isactive(desktop, TOOLS_LPETOOL)) {
         SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
         lpetool_context_reset_limiting_bbox(lc);
+    }
+}
+
+static void
+lpetool_toggle_show_measuring_info (GtkToggleAction *act, gpointer data) {
+    SPDesktop *desktop = static_cast<SPDesktop *>(data);
+    if (!tools_isactive(desktop, TOOLS_LPETOOL))
+        return;
+
+    SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
+    if (tools_isactive(desktop, TOOLS_LPETOOL)) {
+        bool show = gtk_toggle_action_get_active( act );
+        prefs_set_int_attribute ("tools.lpetool", "show_measuring_info",  show ? 1 : 0);
+        lpetool_show_measuring_info(lc, show);
+    }
+}
+
+static void
+lpetool_unit_changed(GtkAction* act, GObject* tbl) {
+    UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(tbl, "tracker"));
+    SPUnit const *unit = tracker->getActiveUnit();
+    prefs_set_int_attribute("tools.lpetool", "unitid", unit->unit_id);
+
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    if (SP_IS_LPETOOL_CONTEXT(desktop->event_context)) {
+        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
+        lpetool_delete_measuring_items(lc);
+        lpetool_create_measuring_items(lc);
     }
 }
 
@@ -4952,6 +4996,12 @@ sp_lpetool_change_line_segment_type(EgeSelectOneAction* act, GObject* tbl) {
 
 static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
+    UnitTracker* tracker = new UnitTracker(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
+    tracker->setActiveUnit(sp_desktop_namedview(desktop)->doc_units);
+    g_object_set_data(holder, "tracker", tracker);
+    SPUnit const *unit = tracker->getActiveUnit();
+    prefs_set_int_attribute("tools.lpetool", "unitid", unit->unit_id);
+
     /** Automatically create a list of LPEs that get added to the toolbar **/
     {
         GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
@@ -5034,8 +5084,32 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         gtk_action_group_add_action(mainActions, GTK_ACTION(act));
     }
 
+    /* Display measuring info for selected items */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "LPEMeasuringAction",
+                                                      _("Display measuring info"),
+                                                      _("Display measuring info for selected items"),
+                                                      "lpetool_measuring_info",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(lpetool_toggle_show_measuring_info), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.lpetool", "show_measuring_info", 1 ) );
+    }
+
+    // add the units menu
+    {
+        GtkAction* act = tracker->createAction( "LPEToolUnitsAction", _("Units"), ("") );
+        gtk_action_group_add_action( mainActions, act );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(lpetool_unit_changed), (GObject*)holder );
+    }
+
     //watch selection
     Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISNodeToolbox");
+
+    sigc::connection *c_selection_modified =
+        new sigc::connection (sp_desktop_selection (desktop)->connectModified
+                              (sigc::bind (sigc::ptr_fun (sp_lpetool_toolbox_sel_modified), (GObject*)holder)));
+    pool->add_connection ("selection-modified", c_selection_modified);
 
     sigc::connection *c_selection_changed =
         new sigc::connection (sp_desktop_selection (desktop)->connectChanged
