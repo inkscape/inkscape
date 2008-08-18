@@ -4783,14 +4783,25 @@ static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* main
 //##      LPETool       ##
 //########################
 
+/* This is the list of subtools from which the toolbar of the LPETool is built automatically */
+static Inkscape::LivePathEffect::EffectType lpesubtools[] = {
+    Inkscape::LivePathEffect::ANGLE_BISECTOR,
+    Inkscape::LivePathEffect::CIRCLE_3PTS,
+    Inkscape::LivePathEffect::PERP_BISECTOR
+};
+
 static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
 {
+    using namespace Inkscape::LivePathEffect;
+
     SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
 
+    // TODO: how can we set *all* actions inactive (such that no sutool is activated?)
     gint lpeToolMode = ege_select_one_action_get_active(act);
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_int_attribute( "tools.lpetool", "mode", lpeToolMode );
     }
+    EffectType type = lpesubtools[lpeToolMode];
     SPPenContext *pc = SP_PEN_CONTEXT(desktop->event_context);
 
     // only take action if run by the attr_changed listener
@@ -4798,22 +4809,11 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
         // in turn, prevent listener from responding
         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-        switch (lpeToolMode) {
-            case 0:
-                // angle bisector
-                sp_pen_context_wait_for_LPE_mouse_clicks(pc, Inkscape::LivePathEffect::ANGLE_BISECTOR, 3);
-                break;
-            case 1:
-                // circle through 3 points
-                //sp_pen_context_put_into_waiting_mode(desktop, Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
-                sp_pen_context_wait_for_LPE_mouse_clicks(pc, Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
-                //sp_pen_context_put_into_waiting_mode(desktop, Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
-                break;
-            default:
-                // don't do anything
-                break;
+        // activate the LPE corresponding to the chosen subtool
+        if (type != INVALID_LPE) {
+            sp_pen_context_wait_for_LPE_mouse_clicks(pc, type, Effect::acceptsNumClicks(type));
         }
-        // TODO finish implementation
+        // TODO: how can we take LPEs into account that don't expect any 'pre-clicks'?
 
         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
     }
@@ -4874,12 +4874,6 @@ sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
         }
     }
 }
-
-static Inkscape::LivePathEffect::EffectType lpesubtools[] = {
-    Inkscape::LivePathEffect::ANGLE_BISECTOR,
-    Inkscape::LivePathEffect::CIRCLE_3PTS,
-    Inkscape::LivePathEffect::PERP_BISECTOR
-};
 
 static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
