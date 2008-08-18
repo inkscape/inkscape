@@ -16,7 +16,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "event-context.h"
+//#include "event-context.h"
+#include "pen-context.h"
 
 #define SP_TYPE_LPETOOL_CONTEXT (sp_lpetool_context_get_type())
 #define SP_LPETOOL_CONTEXT(o) (GTK_CHECK_CAST((o), SP_TYPE_LPETOOL_CONTEXT, SPLPEToolContext))
@@ -27,7 +28,7 @@
 class SPLPEToolContext;
 class SPLPEToolContextClass;
 
-struct SPLPEToolContext : public SPEventContext {
+struct SPLPEToolContext : public SPPenContext {
 };
 
 struct SPLPEToolContextClass : public SPEventContextClass{};

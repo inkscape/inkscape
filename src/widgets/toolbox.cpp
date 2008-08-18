@@ -4802,7 +4802,9 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
             case 1:
                 // circle through 3 points
                 g_print ("circle through 3 points\n");
-                sp_pen_context_put_into_waiting_mode(desktop, Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
+                //sp_pen_context_put_into_waiting_mode(desktop, Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
+                sp_pen_context_wait_for_LPE_mouse_clicks(SP_PEN_CONTEXT(desktop->event_context), Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
+                //sp_pen_context_put_into_waiting_mode(desktop, Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
                 break;
             default:
                 // don't do anything

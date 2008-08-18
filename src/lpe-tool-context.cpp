@@ -71,7 +71,7 @@ static void sp_lpetool_context_set(SPEventContext *ec, gchar const *key, gchar c
 static gint sp_lpetool_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
 
-static SPEventContextClass *lpetool_parent_class = 0;
+static SPPenContextClass *lpetool_parent_class = 0;
 
 GType sp_lpetool_context_get_type(void)
 {
@@ -89,7 +89,7 @@ GType sp_lpetool_context_get_type(void)
             (GInstanceInitFunc)sp_lpetool_context_init,
             0 // value_table
         };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPLPEToolContext", &info, static_cast<GTypeFlags>(0));
+        type = g_type_register_static(SP_TYPE_PEN_CONTEXT, "SPLPEToolContext", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }
@@ -100,13 +100,13 @@ sp_lpetool_context_class_init(SPLPEToolContextClass *klass)
     GObjectClass *object_class = (GObjectClass *) klass;
     SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
 
-    lpetool_parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    lpetool_parent_class = (SPPenContextClass*)g_type_class_peek_parent(klass);
 
     object_class->dispose = sp_lpetool_context_dispose;
 
     event_context_class->setup = sp_lpetool_context_setup;
     event_context_class->set = sp_lpetool_context_set;
-    event_context_class->root_handler = sp_lpetool_context_root_handler;
+    //event_context_class->root_handler = sp_lpetool_context_root_handler;
 }
 
 static void
@@ -145,10 +145,16 @@ sp_lpetool_context_setup(SPEventContext *ec)
 static void
 sp_lpetool_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
 {
+    // FIXME: how to set this correcly? the value from preferences-skeleton.h doesn't seem to get
+    // read (it wants to set drag = 1)
+    lpetool_parent_class->set(ec, key, "drag");
+
+    /**
     //pass on up to parent class to handle common attributes.
     if ( lpetool_parent_class->set ) {
         lpetool_parent_class->set(ec, key, val);
     }
+    **/
 }
 
 /**
