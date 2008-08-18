@@ -4788,6 +4788,7 @@ static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* main
 
 // the subtools from which the toolbar is built automatically are listed in lpe-tool-context.h
 
+// this is called when the mode is changed via the toolbar (i.e., one of the subtool buttons is pressed)
 static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
 {
     using namespace Inkscape::LivePathEffect;

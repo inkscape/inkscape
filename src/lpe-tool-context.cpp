@@ -137,9 +137,9 @@ sp_lpetool_context_setup(SPEventContext *ec)
     lc->sel_changed_connection =
         selection->connectChanged(sigc::bind(sigc::ptr_fun(&sp_lpetool_context_selection_changed), (gpointer)lc));
 
-    //lc->my_nc = new NodeContextCpp(lc->desktop, lc->prefs_repr, lc->key);
     lc->shape_editor = new ShapeEditor(ec->desktop);
 
+    lpetool_context_switch_mode(lc, Inkscape::LivePathEffect::INVALID_LPE);
     lpetool_context_reset_limiting_bbox(lc);
 
 // TODO temp force:
@@ -297,6 +297,29 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     }
 
     return ret;
+}
+
+static int
+lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type) {
+    for (int i = 0; i < num_subtools; ++i) {
+        if (lpesubtools[i] == type) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void
+lpetool_context_switch_mode(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type)
+{
+    int index = lpetool_mode_to_index(type);
+    if (index != -1) {
+        lc->mode = type;
+        lc->desktop->setToolboxSelectOneValue ("lpetool_mode_action", index);
+    } else {
+        g_warning ("Invalid mode selected: %d", type);
+        return;
+    }
 }
 
 /*

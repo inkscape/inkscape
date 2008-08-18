@@ -34,6 +34,7 @@
 #include "macros.h"
 #include "message-stack.h"
 #include "pen-context.h"
+#include "lpe-tool-context.h"
 #include "prefs-utils.h"
 #include "selection.h"
 #include "selection-chemistry.h"
@@ -381,6 +382,11 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
         if (dc->waiting_LPE_type != INVALID_LPE) {
             Effect::createAndApply(dc->waiting_LPE_type, dc->desktop->doc(), item);
             dc->waiting_LPE_type = INVALID_LPE;
+
+            if (SP_IS_LPETOOL_CONTEXT(dc)) {
+                // since a geometric LPE was applied, we switch back to "inactive" mode
+                lpetool_context_switch_mode(SP_LPETOOL_CONTEXT(dc), Inkscape::LivePathEffect::INVALID_LPE);
+            }
         }
         if (SP_IS_PEN_CONTEXT(dc)) {
             sp_pen_context_set_polyline_mode(SP_PEN_CONTEXT(dc));
