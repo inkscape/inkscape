@@ -323,6 +323,23 @@ lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type) {
 }
 
 /*
+ * Checks whether an item has a construction applied as LPE and if so returns the index in
+ * lpesubtools of this construction
+ */
+int lpetool_item_has_construction(SPLPEToolContext *lc, SPItem *item)
+{
+    if (!SP_IS_LPE_ITEM(item)) {
+        return -1;
+    }
+
+    Inkscape::LivePathEffect::Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+    if (!lpe) {
+        return -1;
+    }
+    return lpetool_mode_to_index(lpe->effectType());
+}
+
+/*
  * Attempts to perform the construction of the given type (i.e., to apply the corresponding LPE) to
  * a single selected item. Returns whether we succeeded.
  */

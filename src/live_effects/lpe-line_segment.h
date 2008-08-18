@@ -36,9 +36,10 @@ public:
 
     virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
-private:
+//private:
     EnumParam<EndType> end_type;
 
+private:
     Geom::Point A, B; // intersections of the line segment with the limiting bounding box
     Geom::Coord w, h; // document width and height
 

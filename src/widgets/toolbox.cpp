@@ -69,6 +69,7 @@
 #include "node-context.h"
 #include "pen-context.h"
 #include "lpe-tool-context.h"
+#include "live_effects/lpe-line_segment.h"
 #include "shape-editor.h"
 #include "tweak-context.h"
 #include "sp-rect.h"
@@ -445,6 +446,8 @@ static gchar const * ui_descr =
         "    <toolitem action='LPEToolModeAction' />"
         "    <separator />"
         "    <toolitem action='LPEShowBBoxAction' />"
+        "    <separator />"
+        "    <toolitem action='LPELineSegmentAction' />"
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"
@@ -4828,63 +4831,34 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
     }
 }
 
-static void
-sp_lpetool_test_value_changed(GtkAdjustment *adj, GObject *tbl)
-{
-    g_print ("sp_lpetool_test_value_changed()\n");
-    using namespace Inkscape::LivePathEffect;
-
-    // quit if run by the attr_changed listener
-    if (g_object_get_data( tbl, "freeze" )) {
-        return;
-    }
-
-    // in turn, prevent listener from responding
-    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
-
-    LPEAngleBisector *lpeab = static_cast<LPEAngleBisector *>(g_object_get_data(tbl, "currentlpe"));
-    if (!lpeab) {
-        g_print ("no LPE!\n");
-    } else {
-        g_print ("LPE found. Adjusting left length\n");
-        SPLPEItem *lpeitem = static_cast<SPLPEItem *>(g_object_get_data(tbl, "currentlpeitem"));
-        lpeab->length_left.param_set_value(gtk_adjustment_get_value(adj));
-        sp_lpe_item_update_patheffect(lpeitem, true, true);
-    }
-
-    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-}
-
 void
 sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
 {
     using namespace Inkscape::LivePathEffect;
-    g_print ("sp_lpetool_toolbox_sel_changed()");
     {
-        GtkAction* w = GTK_ACTION( g_object_get_data( tbl, "lpetool_test_action" ) );
+        GtkAction* w = GTK_ACTION(g_object_get_data(tbl, "lpetool_line_segment_action"));
         SPItem *item = selection->singleItem();
-        if (item && SP_IS_LPE_ITEM(item)) {
-            g_print (" - item found\n");
+        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(selection->desktop()->event_context);
+        if (item && SP_IS_LPE_ITEM(item) && lpetool_item_has_construction(lc, item)) {
             SPLPEItem *lpeitem = SP_LPE_ITEM(item);
             Effect* lpe = sp_lpe_item_get_current_lpe(lpeitem);
-            if (lpe && lpe->effectType() == ANGLE_BISECTOR) {
-                LPEAngleBisector *lpeab = dynamic_cast<LPEAngleBisector*>(lpe);
-                g_object_set_data(tbl, "currentlpe", lpeab);
+            if (lpe && lpe->effectType() == LINE_SEGMENT) {
+                LPELineSegment *lpels = static_cast<LPELineSegment*>(lpe);
+                g_object_set_data(tbl, "currentlpe", lpe);
                 g_object_set_data(tbl, "currentlpeitem", lpeitem);
                 gtk_action_set_sensitive(w, TRUE);
+                ege_select_one_action_set_active(act, lpels->end_type->get_value());
             } else {
                 g_object_set_data(tbl, "currentlpe", NULL);
                 g_object_set_data(tbl, "currentlpeitem", NULL);
                 gtk_action_set_sensitive(w, FALSE);
             }
         } else {
-            g_print (" - unsetting item\n");
             g_object_set_data(tbl, "currentlpe", NULL);
             g_object_set_data(tbl, "currentlpeitem", NULL);
             gtk_action_set_sensitive(w, FALSE);
         }
     }
-    g_print ("\n");
 }
 
 static void
@@ -4898,6 +4872,54 @@ lpetool_toggle_show_bbox (GtkToggleAction *act, gpointer data) {
         SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
         lpetool_context_reset_limiting_bbox(lc);
     }
+}
+
+static void
+sp_line_segment_build_list(GObject *tbl) 
+{
+    g_object_set_data(tbl, "line_segment_list_blocked", GINT_TO_POINTER(TRUE));
+
+    EgeSelectOneAction* selector = static_cast<EgeSelectOneAction *>(g_object_get_data(tbl, "lpetool_line_segment_action"));
+    GtkListStore* model = GTK_LIST_STORE(ege_select_one_action_get_model(selector));
+    gtk_list_store_clear (model);
+
+    // TODO: we add the entries of rht combo box manually; later this should be done automatically
+    {
+        GtkTreeIter iter;
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter, 0, _("Closed"), 1, 0, -1 );
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter, 0, _("Open left"), 1, 1, -1 );
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter, 0, _("Open right"), 1, 2, -1 );
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter, 0, _("Open both"), 1, 3, -1 );
+    }
+
+    g_object_set_data(tbl, "line_segment_list_blocked", GINT_TO_POINTER(FALSE));
+}
+
+static void
+sp_lpetool_change_line_segment_type(EgeSelectOneAction* act, GObject* tbl) {
+    using namespace Inkscape::LivePathEffect;
+
+    // quit if run by the attr_changed listener
+    if (g_object_get_data(tbl, "freeze")) {
+        return;
+    }
+
+    // in turn, prevent listener from responding
+    g_object_set_data(tbl, "freeze", GINT_TO_POINTER(TRUE));
+
+    LPELineSegment *lpe = static_cast<LPELineSegment *>(g_object_get_data(tbl, "currentlpe"));
+    SPLPEItem *lpeitem = static_cast<SPLPEItem *>(g_object_get_data(tbl, "currentlpeitem"));
+    if (lpe) {
+        SPLPEItem *lpeitem = static_cast<SPLPEItem *>(g_object_get_data(tbl, "currentlpeitem"));
+        lpe->end_type.param_set_value(static_cast<Inkscape::LivePathEffect::EndType>(ege_select_one_action_get_active(act)));
+        sp_lpe_item_update_patheffect(lpeitem, true, true);
+    }
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
 static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
@@ -4955,25 +4977,21 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.lpetool", "show_bbox", 1 ) );
     }
 
-    /* Test action */
-    /**
+    /* Combo box to choose line segment type */
     {
-        EgeAdjustmentAction* eact = 0;
-        gchar const* labels[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        gdouble values[] = {1, 2, 3, 5, 10, 20, 50, 100, 200, 500};
-        eact = create_adjustment_action( "TestLPEAction",
-                                         _("Test value"), _("Test value:"), _("Test for interactive control widgets ..."),
-                                         "tools.lpetool", "testvalue", 0,
-                                         GTK_WIDGET(desktop->canvas), NULL us, holder, TRUE, "altx-lpetool",
-                                         -1e6, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
-                                         labels, values, G_N_ELEMENTS(labels),
-                                         sp_lpetool_test_value_changed );
-        //tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
-        g_object_set_data( holder, "lpetool_test_action", eact );
-        gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
-        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        GtkListStore* model = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+        EgeSelectOneAction* act = ege_select_one_action_new ("LPELineSegmentAction", "" , (_("Choose a line segment type")), NULL, GTK_TREE_MODEL(model));
+        ege_select_one_action_set_appearance (act, "compact");
+        g_object_set_data (holder, "lpetool_line_segment_action", act );
+
+        g_object_set_data(holder, "line_segment_list_blocked", GINT_TO_POINTER(FALSE));
+
+        sp_line_segment_build_list (holder);
+
+        g_signal_connect(G_OBJECT(act), "changed", G_CALLBACK(sp_lpetool_change_line_segment_type), holder);
+        gtk_action_set_sensitive( GTK_ACTION(act), FALSE );
+        gtk_action_group_add_action(mainActions, GTK_ACTION(act));
     }
-    **/
 
     //watch selection
     Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISNodeToolbox");
