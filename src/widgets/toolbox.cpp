@@ -106,6 +106,7 @@
 #include "ege-output-action.h"
 #include "ege-select-one-action.h"
 #include "helper/unit-tracker.h"
+#include "live_effects/lpe-angle_bisector.h"
 
 #include "svg/css-ostringstream.h"
 
@@ -4788,6 +4789,7 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_int_attribute( "tools.lpetool", "mode", lpeToolMode );
     }
+    SPPenContext *pc = SP_PEN_CONTEXT(desktop->event_context);
 
     // only take action if run by the attr_changed listener
     if (!g_object_get_data( tbl, "freeze" )) {
@@ -4797,13 +4799,12 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
         switch (lpeToolMode) {
             case 0:
                 // angle bisector
-                g_print ("angle bisector\n");
+                sp_pen_context_wait_for_LPE_mouse_clicks(pc, Inkscape::LivePathEffect::ANGLE_BISECTOR, 3);
                 break;
             case 1:
                 // circle through 3 points
-                g_print ("circle through 3 points\n");
                 //sp_pen_context_put_into_waiting_mode(desktop, Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
-                sp_pen_context_wait_for_LPE_mouse_clicks(SP_PEN_CONTEXT(desktop->event_context), Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
+                sp_pen_context_wait_for_LPE_mouse_clicks(pc, Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
                 //sp_pen_context_put_into_waiting_mode(desktop, Inkscape::LivePathEffect::CIRCLE_3PTS, 3);
                 break;
             default:
@@ -4816,6 +4817,74 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
     }
 }
 
+static void
+sp_lpetool_test_value_changed(GtkAdjustment *adj, GObject *tbl)
+{
+    g_print ("sp_lpetool_test_value_changed()\n");
+    using namespace Inkscape::LivePathEffect;
+
+    // quit if run by the attr_changed listener
+    if (g_object_get_data( tbl, "freeze" )) {
+        return;
+    }
+
+    // in turn, prevent listener from responding
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
+
+    LPEAngleBisector *lpeab = static_cast<LPEAngleBisector *>(g_object_get_data(tbl, "currentlpe"));
+    if (!lpeab) {
+        g_print ("no LPE!\n");
+    } else {
+        g_print ("LPE found. Adjusting left length\n");
+        SPLPEItem *lpeitem = static_cast<SPLPEItem *>(g_object_get_data(tbl, "currentlpeitem"));
+        lpeab->length_left.param_set_value(gtk_adjustment_get_value(adj));
+        sp_lpe_item_update_patheffect(lpeitem, true, true);
+    }
+
+    /**
+    SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
+    SPItem *item = sp_desktop_selection(desktop)->singleItem();
+    if (item && SP_IS_LPE_ITEM(item)) {
+        SPLPEItem *lpeitem = SP_LPE_ITEM(item);
+        Effect* lpe = sp_lpe_item_get_current_lpe(lpeitem);
+        if (lpe->effectType() == ANGLE_BISECTOR) {
+            LPEAngleBisector *lpeab = dynamic_cast<LPEAngleBisector*>(lpe);
+            lpeab->length_left.param_set_value(gtk_adjustment_get_value(adj));
+        }
+    }
+    **/
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+}
+
+void
+sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
+{
+    using namespace Inkscape::LivePathEffect;
+    g_print ("sp_node_toolbox_sel_changed()\n");
+    {
+        GtkAction* w = GTK_ACTION( g_object_get_data( tbl, "lpetool_test_action" ) );
+        SPItem *item = selection->singleItem();
+        if (item && SP_IS_LPE_ITEM(item)) {
+            SPLPEItem *lpeitem = SP_LPE_ITEM(item);
+            Effect* lpe = sp_lpe_item_get_current_lpe(lpeitem);
+            if (lpe && lpe->effectType() == ANGLE_BISECTOR) {
+                LPEAngleBisector *lpeab = dynamic_cast<LPEAngleBisector*>(lpe);
+                g_object_set_data(tbl, "currentlpe", lpeab);
+                g_object_set_data(tbl, "currentlpeitem", lpeitem);
+                gtk_action_set_sensitive(w, TRUE);
+            } else {
+                g_object_set_data(tbl, "currentlpe", NULL);
+                g_object_set_data(tbl, "currentlpeitem", NULL);
+                gtk_action_set_sensitive(w, FALSE);
+            }
+        } else {
+            g_object_set_data(tbl, "currentlpe", NULL);
+            g_object_set_data(tbl, "currentlpeitem", NULL);
+            gtk_action_set_sensitive(w, FALSE);
+        }
+    }
+}
 static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
     {
@@ -4850,6 +4919,34 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         ege_select_one_action_set_active( act, lpeToolMode );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_lpetool_mode_changed), holder );
     }
+
+    /* Test action */
+    /**
+    {
+        EgeAdjustmentAction* eact = 0;
+        gchar const* labels[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        gdouble values[] = {1, 2, 3, 5, 10, 20, 50, 100, 200, 500};
+        eact = create_adjustment_action( "TestLPEAction",
+                                         _("Test value"), _("Test value:"), _("Test for interactive control widgets ..."),
+                                         "tools.lpetool", "testvalue", 0,
+                                         GTK_WIDGET(desktop->canvas), NULL us, holder, TRUE, "altx-lpetool",
+                                         -1e6, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
+                                         labels, values, G_N_ELEMENTS(labels),
+                                         sp_lpetool_test_value_changed );
+        //tracker->addAdjustment( ege_adjustment_action_get_adjustment(eact) );
+        g_object_set_data( holder, "lpetool_test_action", eact );
+        gtk_action_set_sensitive( GTK_ACTION(eact), FALSE );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+    }
+    **/
+
+    //watch selection
+    Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISNodeToolbox");
+
+    sigc::connection *c_selection_changed =
+        new sigc::connection (sp_desktop_selection (desktop)->connectChanged
+                              (sigc::bind (sigc::ptr_fun(sp_lpetool_toolbox_sel_changed), (GObject*)holder)));
+    pool->add_connection ("selection-changed", c_selection_changed);
 }
 
 //########################

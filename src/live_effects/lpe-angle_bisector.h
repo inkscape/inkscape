@@ -37,7 +37,7 @@ public:
     friend class AB::KnotHolderEntityLeftEnd;
     friend class AB::KnotHolderEntityRightEnd;
 
-private:
+//private:
     ScalarParam length_left;
     ScalarParam length_right;
 
