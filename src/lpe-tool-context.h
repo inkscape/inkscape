@@ -41,10 +41,14 @@ class ShapeEditor;
 struct SPLPEToolContext : public SPPenContext {
     ShapeEditor* shape_editor;
 
+    SPCanvasItem *canvas_bbox;
+
     sigc::connection sel_changed_connection;
 };
 
 struct SPLPEToolContextClass : public SPEventContextClass{};
+
+void lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc);
 
 GType sp_lpetool_context_get_type(void);
 

@@ -27,6 +27,9 @@
 #include "shape-editor.h"
 #include "selection.h"
 #include "desktop-handles.h"
+#include "document.h"
+#include "display/curve.h"
+#include "display/canvas-bpath.h"
 
 #include "lpe-tool-context.h"
 
@@ -96,6 +99,8 @@ sp_lpetool_context_init(SPLPEToolContext *lc)
     lc->hot_x = 7;
     lc->hot_y = 7;
 
+    lc->canvas_bbox = NULL;
+
     new (&lc->sel_changed_connection) sigc::connection();
 }
 
@@ -104,6 +109,11 @@ sp_lpetool_context_dispose(GObject *object)
 {
     SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(object);
     delete lc->shape_editor;
+
+    if (lc->canvas_bbox) {
+        gtk_object_destroy(GTK_OBJECT(lc->canvas_bbox));
+        lc->canvas_bbox = NULL;
+    }
 
     lc->sel_changed_connection.disconnect();
     lc->sel_changed_connection.~connection();
@@ -128,6 +138,8 @@ sp_lpetool_context_setup(SPEventContext *ec)
 
     //lc->my_nc = new NodeContextCpp(lc->desktop, lc->prefs_repr, lc->key);
     lc->shape_editor = new ShapeEditor(ec->desktop);
+
+    lpetool_context_reset_limiting_bbox(lc);
 
 // TODO temp force:
     ec->enableSelectionCue();
@@ -284,6 +296,27 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     }
 
     return ret;
+}
+
+/*
+ * Reads the limiting bounding box from preferences and draws it on the screen
+ */
+// TODO: Note that currently the bbox is not user-settable; we simply use the page borders
+void
+lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc)
+{
+    SPDocument *document = sp_desktop_document(lc->desktop);
+    Geom::Coord w = sp_document_width(document);
+    Geom::Coord h = sp_document_height(document);
+
+    Geom::Point A(0,0);
+    Geom::Point B(w,h);
+
+    Geom::Rect rect(A, B);
+    SPCurve *curve = SPCurve::new_from_rect(rect);
+
+    lc->canvas_bbox = sp_canvas_bpath_new (sp_desktop_controls(lc->desktop), curve);
+    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(lc->canvas_bbox), 0x0000ffff, 0.8, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT, 5, 5);
 }
 
 /*
