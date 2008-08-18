@@ -40,13 +40,15 @@ static gint sp_lpetool_context_root_handler(SPEventContext *ec, GdkEvent *event)
 
 void sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data);
 
-const int num_subtools = 4;
+const int num_subtools = 6;
 
 Inkscape::LivePathEffect::EffectType lpesubtools[] = {
     Inkscape::LivePathEffect::LINE_SEGMENT,
-    Inkscape::LivePathEffect::ANGLE_BISECTOR,
     Inkscape::LivePathEffect::CIRCLE_3PTS,
+    Inkscape::LivePathEffect::CIRCLE_WITH_RADIUS,
+    Inkscape::LivePathEffect::PARALLEL,
     Inkscape::LivePathEffect::PERP_BISECTOR,
+    Inkscape::LivePathEffect::ANGLE_BISECTOR,
 };
 
 static SPPenContextClass *lpetool_parent_class = 0;
