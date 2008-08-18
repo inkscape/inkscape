@@ -71,6 +71,9 @@ public:
         return value;
     }
 
+    inline operator E()
+        { return value; };
+
     void param_set_default() {
         param_set_value(defvalue);
     }
