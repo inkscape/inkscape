@@ -5000,9 +5000,9 @@
      inkscape:window-x="0"
      inkscape:window-height="738"
      inkscape:window-width="1024"
-     inkscape:cy="1182.2813"
-     inkscape:cx="615.54988"
-     inkscape:zoom="4.0000001"
+     inkscape:cy="1166.7813"
+     inkscape:cx="662.21893"
+     inkscape:zoom="2.8284272"
      gridtolerance="6"
      snaptogrid="false"
      showgrid="true"
@@ -17111,7 +17111,7 @@ http://www.inkscape.org/</dc:description>
   </g>
   <g
      id="line_segment"
-     transform="translate(683.28998,-88.29195)"
+     transform="translate(733.28998,-88.29195)"
      inkscape:label="line_segment">
     <path
        style="fill:none;stroke:#5a5a5a;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none"
@@ -17144,7 +17144,7 @@ http://www.inkscape.org/</dc:description>
   <g
      id="circle_3pts"
      inkscape:label="circle_3pts"
-     transform="translate(20,0)">
+     transform="translate(70,0)">
     <path
        style="fill:none;stroke:#5a5a5a;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4.26999998;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:23.2"
        d="m 658.05993,95.558476 c 0,0.803815 -0.15982,1.607314 -0.46743,2.349942 -0.3076,0.742627 -0.76275,1.423799 -1.33108,1.99217 -0.56833,0.568372 -1.24941,1.023502 -1.99181,1.331072 -0.74242,0.30758 -1.54557,0.46736 -2.34888,0.46732 -0.80332,-5e-5 -1.60616,-0.15992 -2.34804,-0.46757 -0.74188,-0.30764 -1.42222,-0.76281 -1.98983,-1.331172 -0.5676,-0.568374 -1.02204,-1.249503 -1.32915,-1.992065 -0.30712,-0.742562 -0.46666,-1.545972 -0.46666,-2.349697 0,-0.803725 0.15954,-1.607135 0.46666,-2.349697 0.30711,-0.742562 0.76155,-1.423694 1.32915,-1.992065 0.56761,-0.568371 1.24795,-1.023534 1.98983,-1.331176 0.74188,-0.307641 1.54472,-0.467519 2.34804,-0.467567 0.80331,-4.2e-5 1.60646,0.159736 2.34888,0.467312 0.7424,0.307576 1.42348,0.762704 1.99181,1.331078 0.56833,0.568374 1.02348,1.249546 1.33108,1.992174 0.30761,0.742627 0.46743,1.546126 0.46743,2.349941"
@@ -17177,7 +17177,7 @@ http://www.inkscape.org/</dc:description>
   <g
      id="angle_bisector"
      inkscape:label="angle_bisector"
-     transform="translate(80,0)">
+     transform="translate(130,0)">
     <path
        sodipodi:nodetypes="cc"
        id="path4418-8-1"
@@ -17190,7 +17190,7 @@ http://www.inkscape.org/</dc:description>
        id="path4418-8-1-0" />
   </g>
   <g
-     transform="translate(60,2.2e-5)"
+     transform="translate(110,2.2e-5)"
      id="perp_bisector"
      inkscape:label="perp_bisector">
     <path
@@ -17227,11 +17227,11 @@ http://www.inkscape.org/</dc:description>
      id="lpetool_show_bbox"
      width="10.660022"
      height="16.847206"
-     x="775.56531"
+     x="825.56531"
      y="86.075531"
      inkscape:label="lpetool_show_bbox" />
   <g
-     transform="translate(42.93803,-0.728071)"
+     transform="translate(92.93803,-0.728071)"
      id="circle_3pts-5"
      inkscape:label="circle_3pts">
     <path
@@ -17262,7 +17262,7 @@ http://www.inkscape.org/</dc:description>
        x="0" />
   </g>
   <g
-     transform="matrix(0.42957364,0.90303183,-0.90303183,0.42957364,510.36774,-559.00216)"
+     transform="matrix(0.42957364,0.90303183,-0.90303183,0.42957364,560.36774,-559.00216)"
      id="parallel"
      inkscape:label="parallel">
     <path
@@ -17277,15 +17277,16 @@ http://www.inkscape.org/</dc:description>
        id="path4418-8-1-0-1-4-4-6" />
   </g>
   <g
-     id="all_inactive"
-     inkscape:label="all_inactive">
+     id="all_inactive_old"
+     inkscape:label="all_inactive_old"
+     transform="translate(50.204581,-4.3576165e-7)">
     <rect
        y="85.500015"
        x="612.75"
        height="24"
        width="20.25"
        id="rect5112"
-       style="opacity:1;color:#000000;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;marker-start:none;marker-mid:none;marker-end:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+       style="opacity:1;color:#000000;fill:none;stroke:none;stroke-width:3;marker:none;marker-start:none;marker-mid:none;marker-end:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <path
        id="path6027"
        d="m 619.17414,101.31135 7.40172,-7.622672"
@@ -17295,4 +17296,16 @@ http://www.inkscape.org/</dc:description>
        d="m 626.68633,101.20088 -7.62266,-7.401725"
        style="fill:none;stroke:#cb0000;stroke-width:3;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4.26999998;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:23.2" />
   </g>
+  <text
+     xml:space="preserve"
+     style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#008f00;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+     x="614.23224"
+     y="103.43147"
+     id="all_inactive"
+     sodipodi:linespacing="100%"
+     inkscape:label="all_inactive"><tspan
+       sodipodi:role="line"
+       id="tspan5899"
+       x="614.23224"
+       y="103.43147">none</tspan></text>
 </svg>
