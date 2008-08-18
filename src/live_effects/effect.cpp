@@ -111,9 +111,10 @@ int
 Effect::acceptsNumClicks(EffectType type) {
     switch (type) {
         case ANGLE_BISECTOR: return 3;
-        case PERP_BISECTOR: return 2;
         case CIRCLE_3PTS: return 3;
         case CIRCLE_WITH_RADIUS: return 2;
+        case LINE_SEGMENT: return 2;
+        case PERP_BISECTOR: return 2;
         default: return 0;
     }
 }

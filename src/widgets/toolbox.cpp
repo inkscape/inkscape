@@ -4787,10 +4787,10 @@ static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* main
 static const int num_subtools = 4;
 
 static Inkscape::LivePathEffect::EffectType lpesubtools[] = {
+    Inkscape::LivePathEffect::LINE_SEGMENT,
     Inkscape::LivePathEffect::ANGLE_BISECTOR,
     Inkscape::LivePathEffect::CIRCLE_3PTS,
     Inkscape::LivePathEffect::PERP_BISECTOR,
-    Inkscape::LivePathEffect::CIRCLE_3PTS,
 };
 
 static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
