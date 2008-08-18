@@ -36,8 +36,12 @@ enum LPEToolState {
     LPETOOL_STATE_NODE
 };
 
+class ShapeEditor;
+
 struct SPLPEToolContext : public SPPenContext {
-    LPEToolState tool_state;
+    //int tool_state;
+
+    ShapeEditor* shape_editor;
 };
 
 struct SPLPEToolContextClass : public SPEventContextClass{};

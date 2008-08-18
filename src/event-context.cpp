@@ -53,6 +53,8 @@
 #include "attributes.h"
 #include "rubberband.h"
 #include "selcue.h"
+#include "node-context.h"
+#include "lpe-tool-context.h"
 
 #include "event-context.h"
 
@@ -1034,6 +1036,19 @@ sp_event_context_over_item (SPDesktop *desktop, SPItem *item, NR::Point const p)
     g_slist_free (temp);
 
     return item_at_point;
+}
+
+ShapeEditor *
+sp_event_context_get_shape_editor (SPEventContext *ec)
+{
+    if (SP_IS_NODE_CONTEXT(ec)) {
+        return SP_NODE_CONTEXT(ec)->shape_editor;
+    } else if (SP_IS_LPETOOL_CONTEXT(ec)) {
+        return SP_LPETOOL_CONTEXT(ec)->shape_editor;
+    } else {
+        g_warning("ShapeEditor only exists in Node and Geometric Tool.");
+        return NULL;
+    }
 }
 
 /**

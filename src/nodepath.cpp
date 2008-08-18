@@ -37,6 +37,7 @@
 #include "message-stack.h"
 #include "message-context.h"
 #include "node-context.h"
+#include "lpe-tool-context.h"
 #include "shape-editor.h"
 #include "selection-chemistry.h"
 #include "selection.h"
@@ -834,6 +835,23 @@ static gchar *create_typestr(Inkscape::NodePath::Path *np)
     typestr[pos++] = '\0';
 
     return typestr;
+}
+
+// Returns different message contexts depending on the current context. This function should only
+// be called when ec is either a SPNodeContext or SPLPEToolContext, thus we return NULL in all
+// other cases.
+static Inkscape::MessageContext *
+get_message_context(SPEventContext *ec)
+{
+    Inkscape::MessageContext *mc;
+    if (SP_IS_NODE_CONTEXT(ec)) {
+        mc = SP_NODE_CONTEXT(ec)->_node_message_context;
+    } else if (SP_IS_LPETOOL_CONTEXT(ec)) {
+        mc = ec->defaultMessageContext();
+    } else {
+        g_warning ("Nodepath should only be present in Node tool or Geometric tool.");
+        return NULL;
+    }
 }
 
 /**
@@ -3903,7 +3921,9 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
     if (!desktop) return;
     SPEventContext *ec = desktop->event_context;
     if (!ec) return;
-    Inkscape::MessageContext *mc = SP_NODE_CONTEXT (ec)->_node_message_context;
+    g_print ("4\n");
+    Inkscape::MessageContext *mc = get_message_context(ec);
+    g_print ("5\n");
     if (!mc) return;
 
     double degrees = 180 / M_PI * rnew.a;
@@ -4728,7 +4748,9 @@ sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)//!!!move to Sha
 
     SPEventContext *ec = desktop->event_context;
     if (!ec) return;
-    Inkscape::MessageContext *mc = SP_NODE_CONTEXT (ec)->_node_message_context;
+    g_print ("6\n");
+    Inkscape::MessageContext *mc = get_message_context(ec);
+    g_print ("7\n");
     if (!mc) return;
 
     inkscape_active_desktop()->emitToolSubselectionChanged(NULL);

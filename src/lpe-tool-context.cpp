@@ -21,6 +21,9 @@
 #include "desktop.h"
 #include "message-context.h"
 #include "prefs-utils.h"
+#include "shape-editor.h"
+#include "selection.h"
+#include "desktop-handles.h"
 
 /**
 
@@ -135,7 +138,8 @@ sp_lpetool_context_init(SPLPEToolContext *lc)
 static void
 sp_lpetool_context_dispose(GObject *object)
 {
-    //SPLPEToolContext *erc = SP_LPETOOL_CONTEXT(object);
+    SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(object);
+    delete lc->shape_editor;
 
     G_OBJECT_CLASS(lpetool_parent_class)->dispose(object);
 }
@@ -148,15 +152,45 @@ sp_lpetool_context_setup(SPEventContext *ec)
     if (((SPEventContextClass *) lpetool_parent_class)->setup)
         ((SPEventContextClass *) lpetool_parent_class)->setup(ec);
 
-    lc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+    Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
+    SPItem *item = selection->singleItem();
 
     //lc->my_nc = new NodeContextCpp(lc->desktop, lc->prefs_repr, lc->key);
+    lc->shape_editor = new ShapeEditor(ec->desktop);
+
+// TODO temp force:
+    ec->enableSelectionCue();
+
+    if (item) {
+        lc->shape_editor->set_item(item, SH_NODEPATH);
+        lc->shape_editor->set_item(item, SH_KNOTHOLDER);
+    }
 
     if (prefs_get_int_attribute("tools.lpetool", "selcue", 0) != 0) {
         ec->enableSelectionCue();
     }
-// TODO temp force:
-    ec->enableSelectionCue();
+
+    lc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+
+    lc->shape_editor->update_statusbar();
+}
+
+/**
+\brief  Callback that processes the "changed" signal on the selection;
+destroys old and creates new nodepath and reassigns listeners to the new selected item's repr
+*/
+void
+sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data)
+{
+    SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(data);
+
+    // TODO: update ShapeEditorsCollective instead
+    lc->shape_editor->unset_item(SH_NODEPATH);
+    lc->shape_editor->unset_item(SH_KNOTHOLDER);
+    SPItem *item = selection->singleItem(); 
+    lc->shape_editor->set_item(item, SH_NODEPATH);
+    lc->shape_editor->set_item(item, SH_KNOTHOLDER);
+    lc->shape_editor->update_statusbar();
 }
 
 static void
@@ -204,31 +238,39 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-        {
-            using namespace Inkscape::LivePathEffect;
-
-            int mode = prefs_get_int_attribute("tools.lpetool", "mode", 0);
-            EffectType type = lpesubtools[mode];
-            g_print ("Activating mode %d\n", mode);
-
-            sp_pen_context_wait_for_LPE_mouse_clicks(lc, type, Effect::acceptsNumClicks(type));
-
-            // we pass the mouse click on to pen tool as the first click which it should collect
-            if (((SPEventContextClass *) lpetool_parent_class)->root_handler) {
-                ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
-            }
-
-            ret = true;
-            break;
-        }
-        /**
             if (event->button.button == 1 && !event_context->space_panning) {
+                // save drag origin
+                event_context->xp = (gint) event->button.x;
+                event_context->yp = (gint) event->button.y;
+                event_context->within_tolerance = true;
+                lc->shape_editor->cancel_hit();
+
+                using namespace Inkscape::LivePathEffect;
+
+                int mode = prefs_get_int_attribute("tools.lpetool", "mode", 0);
+                EffectType type = lpesubtools[mode];
+                g_print ("Activating mode %d\n", mode);
+
+                // save drag origin
+                bool over_stroke = lc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), true);
+                g_print ("over_stroke: %s\n", over_stroke ? "true" : "false");
+
+                sp_pen_context_wait_for_LPE_mouse_clicks(lc, type, Effect::acceptsNumClicks(type));
+
+                // we pass the mouse click on to pen tool as the first click which it should collect
+                if (((SPEventContextClass *) lpetool_parent_class)->root_handler) {
+                    ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
+                }
+
+                ret = true;
+                break;
+
+                /**
                 SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
 
                 NR::Point const button_w(event->button.x,
                                          event->button.y);
                 NR::Point const button_dt(desktop->w2d(button_w));
-
 
                 if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
                     return TRUE;
@@ -260,8 +302,8 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
                 dc->is_drawing = true;
+                **/
             }
-        **/
             break;
         case GDK_MOTION_NOTIFY:
         /**
@@ -440,11 +482,13 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         break;
     }
 
+    /**
     if (!ret) {
         if (((SPEventContextClass *) lpetool_parent_class)->root_handler) {
             ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
         }
     }
+    **/
 
     return ret;
 }

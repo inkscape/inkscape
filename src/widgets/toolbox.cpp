@@ -4850,7 +4850,7 @@ void
 sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
 {
     using namespace Inkscape::LivePathEffect;
-    g_print ("sp_node_toolbox_sel_changed()\n");
+    g_print ("sp_lpetool_toolbox_sel_changed()\n");
     {
         GtkAction* w = GTK_ACTION( g_object_get_data( tbl, "lpetool_test_action" ) );
         SPItem *item = selection->singleItem();
