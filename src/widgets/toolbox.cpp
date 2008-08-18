@@ -4795,30 +4795,21 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
 
     SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
 
-    // TODO: how can we set *all* actions inactive (such that no sutool is activated?)
-    gint lpeToolMode = ege_select_one_action_get_active(act);
-    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-        prefs_set_int_attribute( "tools.lpetool", "mode", lpeToolMode );
-    }
-    //EffectType type = lpesubtools[lpeToolMode];
-    //SPPenContext *pc = SP_PEN_CONTEXT(desktop->event_context);
-
     // only take action if run by the attr_changed listener
-    if (!g_object_get_data( tbl, "freeze" )) {
+    if (!g_object_get_data(tbl, "freeze")) {
         // in turn, prevent listener from responding
-        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+        g_object_set_data(tbl, "freeze", GINT_TO_POINTER(TRUE));
 
-        // this is now done in sp_lpetool_context_root_handler()
-        /**
-        // activate the LPE corresponding to the chosen subtool
-        if (type != INVALID_LPE) {
-            //lc->tool_state = LPETOOL_STATE_PEN;
-            sp_pen_context_wait_for_LPE_mouse_clicks(pc, type, Effect::acceptsNumClicks(type));
+        // TODO: how can we set *all* actions inactive (such that no sutool is activated?)
+        gint lpeToolMode = ege_select_one_action_get_active(act);
+        if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
+            prefs_set_int_attribute( "tools.lpetool", "mode", lpeToolMode );
         }
-        // TODO: how can we take LPEs into account that don't expect any 'pre-clicks'?
-        **/
 
-        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+        EffectType type = lpesubtools[lpeToolMode];
+        SP_LPETOOL_CONTEXT(desktop->event_context)->mode = type;
+
+        g_object_set_data(tbl, "freeze", GINT_TO_POINTER(FALSE));
     }
 }
 

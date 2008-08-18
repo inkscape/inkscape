@@ -30,6 +30,7 @@
 #include "document.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
+#include "message-stack.h"
 
 #include "lpe-tool-context.h"
 
@@ -212,6 +213,14 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     switch (event->type) {
         case GDK_BUTTON_PRESS:
             g_print ("GDK_BUTTON_PRESS\n");
+            if (lc->mode == Inkscape::LivePathEffect::INVALID_LPE) {
+                // don't do anything for now if we are inactive
+                desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Choose a subtool from the toolbar to perform a geometric construction."));
+                g_print ("Flash statusbar\n");
+                ret = true;
+                break;
+            }
+
             if (event->button.button == 1 && !event_context->space_panning) {
                 g_print ("   ... (passed if construct)\n");
                 // save drag origin
