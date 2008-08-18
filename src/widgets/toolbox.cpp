@@ -446,6 +446,7 @@ static gchar const * ui_descr =
         "    <toolitem action='LPEToolModeAction' />"
         "    <separator />"
         "    <toolitem action='LPEShowBBoxAction' />"
+        "    <toolitem action='LPEBBoxFromSelectionAction' />"
         "    <separator />"
         "    <toolitem action='LPELineSegmentAction' />"
         "  </toolbar>"
@@ -4849,7 +4850,7 @@ sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
                 g_object_set_data(tbl, "currentlpe", lpe);
                 g_object_set_data(tbl, "currentlpeitem", lpeitem);
                 gtk_action_set_sensitive(w, TRUE);
-                ege_select_one_action_set_active(act, lpels->end_type->get_value());
+                ege_select_one_action_set_active(EGE_SELECT_ONE_ACTION(w), lpels->end_type.get_value());
             } else {
                 g_print (" - unsetting item\n");
                 g_object_set_data(tbl, "currentlpe", NULL);
@@ -4877,6 +4878,33 @@ lpetool_toggle_show_bbox (GtkToggleAction *act, gpointer data) {
         SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
         lpetool_context_reset_limiting_bbox(lc);
     }
+}
+
+static void
+lpetool_toggle_set_bbox (GtkToggleAction *act, gpointer data) {
+    g_print ("lpetool_toggle_set_bbox()\n");
+    SPDesktop *desktop = static_cast<SPDesktop *>(data);
+    Inkscape::Selection *selection = desktop->selection;
+
+    boost::optional<NR::Rect> bbox = selection->bounds();
+
+    if (bbox) {
+        Geom::Point A(bbox->min());
+        Geom::Point B(bbox->max());
+
+        A *= desktop->doc2dt();
+        B *= desktop->doc2dt();
+
+        // TODO: should we provide a way to store points in prefs?
+        prefs_set_double_attribute ("tools.lpetool", "bbox_upperleftx", A[Geom::X]);
+        prefs_set_double_attribute ("tools.lpetool", "bbox_upperlefty", A[Geom::Y]);
+        prefs_set_double_attribute ("tools.lpetool", "bbox_lowerrightx", B[Geom::X]);
+        prefs_set_double_attribute ("tools.lpetool", "bbox_lowerrighty", B[Geom::Y]);
+
+        lpetool_context_reset_limiting_bbox(SP_LPETOOL_CONTEXT(desktop->event_context));
+    }
+
+    gtk_toggle_action_set_active(act, false);
 }
 
 static void
@@ -4990,6 +5018,19 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(lpetool_toggle_show_bbox), desktop );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.lpetool", "show_bbox", 1 ) );
     }
+
+    /* Set limiting bounding box to bbox of current selection */
+    {
+        InkToggleAction* act = ink_toggle_action_new( "LPEBBoxFromSelectionAction",
+                                                      _("Get limiting bounding box from selection"),
+                                                      _("Set limiting bounding box (used to cut infinite lines) to the bounding box of current selection"),
+                                                      "lpetool_set_bbox",
+                                                      Inkscape::ICON_SIZE_DECORATION );
+        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(lpetool_toggle_set_bbox), desktop );
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), FALSE );
+    }
+
 
     /* Combo box to choose line segment type */
     {

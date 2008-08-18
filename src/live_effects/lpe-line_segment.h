@@ -41,7 +41,7 @@ public:
 
 private:
     Geom::Point A, B; // intersections of the line segment with the limiting bounding box
-    Geom::Coord w, h; // document width and height
+    Geom::Point bboxA, bboxB; // upper left and lower right corner of limiting bounding box
 
     LPELineSegment(const LPELineSegment&);
     LPELineSegment& operator=(const LPELineSegment&);

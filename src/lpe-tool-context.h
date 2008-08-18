@@ -52,6 +52,7 @@ int lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type);
 int lpetool_item_has_construction(SPLPEToolContext *lc, SPItem *item);
 bool lpetool_try_construction(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type);
 void lpetool_context_switch_mode(SPLPEToolContext *lc, Inkscape::LivePathEffect::EffectType const type);
+void lpetool_get_limiting_bbox_corners(SPDocument *document, Geom::Point &A, Geom::Point &B);
 void lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc);
 
 GType sp_lpetool_context_get_type(void);

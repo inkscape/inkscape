@@ -374,6 +374,20 @@ lpetool_context_switch_mode(SPLPEToolContext *lc, Inkscape::LivePathEffect::Effe
     }
 }
 
+void
+lpetool_get_limiting_bbox_corners(SPDocument *document, Geom::Point &A, Geom::Point &B) {
+    Geom::Coord w = sp_document_width(document);
+    Geom::Coord h = sp_document_height(document);
+
+    double ulx = prefs_get_double_attribute ("tools.lpetool", "bbox_upperleftx", 0);
+    double uly = prefs_get_double_attribute ("tools.lpetool", "bbox_upperlefty", 0);
+    double lrx = prefs_get_double_attribute ("tools.lpetool", "bbox_lowerrightx", w);
+    double lry = prefs_get_double_attribute ("tools.lpetool", "bbox_lowerrighty", h);
+
+    A = Geom::Point(ulx, uly);
+    B = Geom::Point(lrx, lry);
+}
+
 /*
  * Reads the limiting bounding box from preferences and draws it on the screen
  */
@@ -390,11 +404,12 @@ lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc)
         return;
 
     SPDocument *document = sp_desktop_document(lc->desktop);
-    Geom::Coord w = sp_document_width(document);
-    Geom::Coord h = sp_document_height(document);
 
-    Geom::Point A(0,0);
-    Geom::Point B(w,h);
+    Geom::Point A, B;
+    lpetool_get_limiting_bbox_corners(document, A, B);
+    NR::Matrix doc2dt(lc->desktop->doc2dt());
+    A *= doc2dt;
+    B *= doc2dt;
 
     Geom::Rect rect(A, B);
     SPCurve *curve = SPCurve::new_from_rect(rect);

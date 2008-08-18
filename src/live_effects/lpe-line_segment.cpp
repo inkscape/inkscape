@@ -14,6 +14,7 @@
  */
 
 #include "live_effects/lpe-line_segment.h"
+#include "lpe-tool-context.h"
 
 #include <2geom/pathvector.h>
 #include <2geom/geom.h>
@@ -46,26 +47,19 @@ LPELineSegment::~LPELineSegment()
 void
 LPELineSegment::doBeforeEffect (SPLPEItem *lpeitem)
 {
-    SPDocument *document = SP_OBJECT_DOCUMENT(lpeitem);
-    w = sp_document_width(document);
-    h = sp_document_height(document);
-    
+    lpetool_get_limiting_bbox_corners(SP_OBJECT_DOCUMENT(lpeitem), bboxA, bboxB);
 }
 
 std::vector<Geom::Path>
 LPELineSegment::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
+    using namespace Geom;
     std::vector<Geom::Path> output;
 
-    A = Geom::initialPoint(path_in);
-    B = Geom::finalPoint(path_in);
+    A = initialPoint(path_in);
+    B = finalPoint(path_in);
 
-    Geom::Point E(0,0);
-    Geom::Point F(0,h);
-    Geom::Point G(w,h);
-    Geom::Point H(w,0);
-
-    std::vector<Geom::Point> intersections = Geom::rect_line_intersect(E, G, A, B);
+    std::vector<Point> intersections = rect_line_intersect(bboxA, bboxB, A, B);
 
     if (intersections.size() < 2) {
         g_print ("Possible error - no intersection with limiting bounding box.\n");
@@ -81,7 +75,7 @@ LPELineSegment::doEffect_path (std::vector<Geom::Path> const & path_in)
     }
 
     Geom::Path path(A);
-    path.appendNew<Geom::LineSegment>(B);
+    path.appendNew<LineSegment>(B);
 
     output.push_back(path);
 
