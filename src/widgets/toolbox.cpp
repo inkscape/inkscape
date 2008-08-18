@@ -14,10 +14,11 @@
 *   David Turner <novalis@gnu.org>
 *   Josh Andler <scislac@scislac.com>
 *   Jon A. Cruz <jon@joncruz.org>
+*   Maximilian Albert <maximilian.albert@gmail.com>
 *
 * Copyright (C) 2004 David Turner
 * Copyright (C) 2003 MenTaLguY
-* Copyright (C) 1999-2006 authors
+* Copyright (C) 1999-2008 authors
 * Copyright (C) 2001-2002 Ximian, Inc.
 *
 * Released under GNU GPL, read the file 'COPYING' for more information
@@ -4885,25 +4886,31 @@ sp_lpetool_toolbox_sel_changed(Inkscape::Selection *selection, GObject *tbl)
         }
     }
 }
+
+static Inkscape::LivePathEffect::EffectType lpesubtools[] = {
+    Inkscape::LivePathEffect::ANGLE_BISECTOR,
+    Inkscape::LivePathEffect::CIRCLE_3PTS,
+    Inkscape::LivePathEffect::PERP_BISECTOR
+};
+
 static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
+    /** Automatically create a list of LPEs that get added to the toolbar **/
     {
         GtkListStore* model = gtk_list_store_new( 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING );
 
         GtkTreeIter iter;
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter,
-                            0, _("Angle bisector"),
-                            1, _("Angle bisector"),
-                            2, "delete_object",
-                            -1 );
 
+        Inkscape::LivePathEffect::EffectType type;
+        for (int i = 0; i < 3; ++i) {
+            type =  lpesubtools[i];
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
-                            0, _("Circle through 3 points"),
-                            1, _("Circle through 3 points"),
-                            2, "difference",
+                            0, Inkscape::LivePathEffect::LPETypeConverter.get_label(type).c_str(),
+                            1, Inkscape::LivePathEffect::LPETypeConverter.get_label(type).c_str(),
+                            2, Inkscape::LivePathEffect::LPETypeConverter.get_key(type).c_str(),
                             -1 );
+        }
 
         EgeSelectOneAction* act = ege_select_one_action_new( "LPEToolModeAction", (""), (""), NULL, GTK_TREE_MODEL(model) );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
