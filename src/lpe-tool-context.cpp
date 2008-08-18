@@ -215,7 +215,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             g_print ("GDK_BUTTON_PRESS\n");
             if (lc->mode == Inkscape::LivePathEffect::INVALID_LPE) {
                 // don't do anything for now if we are inactive
-                desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Choose a subtool from the toolbar to perform a geometric construction."));
+                desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Choose a construction tool from the toolbar."));
                 g_print ("Flash statusbar\n");
                 ret = true;
                 break;

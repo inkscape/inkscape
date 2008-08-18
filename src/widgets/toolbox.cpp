@@ -4932,7 +4932,7 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
     {
         InkToggleAction* act = ink_toggle_action_new( "LPEShowBBoxAction",
                                                       _("Show limiting bounding box"),
-                                                      _("Show bounding box (is used to cut infinite lines)"),
+                                                      _("Show bounding box (used to cut infinite lines)"),
                                                       "lpetool_show_bbox",
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
