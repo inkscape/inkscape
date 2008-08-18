@@ -132,6 +132,10 @@ sp_lpetool_context_dispose(GObject *object)
     lc->sel_changed_connection.disconnect();
     lc->sel_changed_connection.~connection();
 
+    if (lc->_lpetool_message_context) {
+        delete lc->_lpetool_message_context;
+    }
+
     G_OBJECT_CLASS(lpetool_parent_class)->dispose(object);
 }
 
@@ -168,7 +172,8 @@ sp_lpetool_context_setup(SPEventContext *ec)
         ec->enableSelectionCue();
     }
 
-    lc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+    lc->_lpetool_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+
 
     lc->shape_editor->update_statusbar();
 }

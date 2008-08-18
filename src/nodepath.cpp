@@ -847,7 +847,7 @@ get_message_context(SPEventContext *ec)
     if (SP_IS_NODE_CONTEXT(ec)) {
         mc = SP_NODE_CONTEXT(ec)->_node_message_context;
     } else if (SP_IS_LPETOOL_CONTEXT(ec)) {
-        mc = ec->defaultMessageContext();
+        mc = SP_LPETOOL_CONTEXT(ec)->_lpetool_message_context;
     } else {
         g_warning ("Nodepath should only be present in Node tool or Geometric tool.");
         return NULL;
