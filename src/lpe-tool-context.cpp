@@ -13,7 +13,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 #include "forward.h"
 #include "pixmaps/cursor-node.xpm"
@@ -25,44 +27,6 @@
 #include "shape-editor.h"
 #include "selection.h"
 #include "desktop-handles.h"
-
-/**
-
-#include <gdk/gdkkeysyms.h>
-#include <glibmm/i18n.h>
-#include <string>
-#include <cstring>
-#include <numeric>
-
-#include "svg/svg.h"
-#include "display/canvas-bpath.h"
-#include "display/bezier-utils.h"
-
-#include <glib/gmem.h>
-#include "macros.h"
-#include "document.h"
-#include "selection.h"
-#include "desktop-events.h"
-#include "desktop-handles.h"
-#include "desktop-affine.h"
-#include "desktop-style.h"
-#include "xml/repr.h"
-#include "context-fns.h"
-#include "sp-item.h"
-#include "inkscape.h"
-#include "color.h"
-#include "rubberband.h"
-#include "splivarot.h"
-#include "sp-item-group.h"
-#include "sp-shape.h"
-#include "sp-path.h"
-#include "sp-text.h"
-#include "display/canvas-bpath.h"
-#include "display/canvas-arena.h"
-#include "livarot/Shape.h"
-#include <2geom/isnan.h>
-#include <2geom/pathvector.h>
-**/
 
 #include "lpe-tool-context.h"
 
