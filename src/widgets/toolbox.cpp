@@ -68,6 +68,7 @@
 #include "connector-context.h"
 #include "node-context.h"
 #include "pen-context.h"
+#include "lpe-tool-context.h"
 #include "shape-editor.h"
 #include "tweak-context.h"
 #include "sp-rect.h"
@@ -4783,15 +4784,7 @@ static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* main
 //##      LPETool       ##
 //########################
 
-/* This is the list of subtools from which the toolbar of the LPETool is built automatically */
-static const int num_subtools = 4;
-
-static Inkscape::LivePathEffect::EffectType lpesubtools[] = {
-    Inkscape::LivePathEffect::LINE_SEGMENT,
-    Inkscape::LivePathEffect::ANGLE_BISECTOR,
-    Inkscape::LivePathEffect::CIRCLE_3PTS,
-    Inkscape::LivePathEffect::PERP_BISECTOR,
-};
+// the subtools from which the toolbar is built automatically are listed in lpe-tool-context.h
 
 static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
 {
@@ -4812,11 +4805,15 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
         // in turn, prevent listener from responding
         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
+        // this is now done in sp_lpetool_context_root_handler()
+        /**
         // activate the LPE corresponding to the chosen subtool
         if (type != INVALID_LPE) {
+            //lc->tool_state = LPETOOL_STATE_PEN;
             sp_pen_context_wait_for_LPE_mouse_clicks(pc, type, Effect::acceptsNumClicks(type));
         }
         // TODO: how can we take LPEs into account that don't expect any 'pre-clicks'?
+        **/
 
         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
     }

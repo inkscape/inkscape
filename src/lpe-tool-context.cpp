@@ -70,6 +70,14 @@ static void sp_lpetool_context_setup(SPEventContext *ec);
 static void sp_lpetool_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
 static gint sp_lpetool_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
+const int num_subtools = 4;
+
+Inkscape::LivePathEffect::EffectType lpesubtools[] = {
+    Inkscape::LivePathEffect::LINE_SEGMENT,
+    Inkscape::LivePathEffect::ANGLE_BISECTOR,
+    Inkscape::LivePathEffect::CIRCLE_3PTS,
+    Inkscape::LivePathEffect::PERP_BISECTOR,
+};
 
 static SPPenContextClass *lpetool_parent_class = 0;
 
@@ -106,15 +114,22 @@ sp_lpetool_context_class_init(SPLPEToolContextClass *klass)
 
     event_context_class->setup = sp_lpetool_context_setup;
     event_context_class->set = sp_lpetool_context_set;
-    //event_context_class->root_handler = sp_lpetool_context_root_handler;
+    event_context_class->root_handler = sp_lpetool_context_root_handler;
 }
 
 static void
-sp_lpetool_context_init(SPLPEToolContext *erc)
+sp_lpetool_context_init(SPLPEToolContext *lc)
 {
-    erc->cursor_shape = cursor_pencil_xpm;
-    erc->hot_x = 4;
-    erc->hot_y = 4;
+    /**
+    lc->NodeContextCpp::cursor_shape = cursor_pencil_xpm;
+    lc->NodeContextCpp::hot_x = 4;
+    lc->NodeContextCpp::hot_y = 4;
+    **/
+    lc->cursor_shape = cursor_pencil_xpm;
+    lc->hot_x = 4;
+    lc->hot_y = 4;
+
+    //lc->tool_state = LPETOOL_STATE_NODE;
 }
 
 static void
@@ -128,12 +143,14 @@ sp_lpetool_context_dispose(GObject *object)
 static void
 sp_lpetool_context_setup(SPEventContext *ec)
 {
-    SPLPEToolContext *erc = SP_LPETOOL_CONTEXT(ec);
+    SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(ec);
 
     if (((SPEventContextClass *) lpetool_parent_class)->setup)
         ((SPEventContextClass *) lpetool_parent_class)->setup(ec);
 
-    erc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+    lc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+
+    //lc->my_nc = new NodeContextCpp(lc->desktop, lc->prefs_repr, lc->key);
 
     if (prefs_get_int_attribute("tools.lpetool", "selcue", 0) != 0) {
         ec->enableSelectionCue();
@@ -166,28 +183,57 @@ sp_erc_update_toolbox (SPDesktop *desktop, const gchar *id, double value)
 **/
 
 gint
-sp_lpetool_context_root_handler(SPEventContext *event_context,
-                                  GdkEvent *event)
+sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
-    //SPLPEToolContext *dc = SP_LPETOOL_CONTEXT(event_context);
+    SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(event_context);
     //SPDesktop *desktop = event_context->desktop;
 
-    gint ret = FALSE;
+    //gint ret = FALSE;
+    bool ret = false;
 
-    /**
+    if (sp_pen_context_has_waiting_LPE(lc)) {
+        // quit when we are waiting for a LPE to be applied
+        g_print ("LPETool has waiting LPE. We call the pen tool parent context and return\n");
+        
+        if (((SPEventContextClass *) lpetool_parent_class)->root_handler) {
+            ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
+        }
+
+        return ret;
+    }
+
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !event_context->space_panning) {
+        {
+            using namespace Inkscape::LivePathEffect;
 
+            int mode = prefs_get_int_attribute("tools.lpetool", "mode", 0);
+            EffectType type = lpesubtools[mode];
+            g_print ("Activating mode %d\n", mode);
+
+            sp_pen_context_wait_for_LPE_mouse_clicks(lc, type, Effect::acceptsNumClicks(type));
+
+            // we pass the mouse click on to pen tool as the first click which it should collect
+            if (((SPEventContextClass *) lpetool_parent_class)->root_handler) {
+                ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
+            }
+
+            ret = true;
+            break;
+        }
+        /**
+            if (event->button.button == 1 && !event_context->space_panning) {
                 SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
+
+                NR::Point const button_w(event->button.x,
+                                         event->button.y);
+                NR::Point const button_dt(desktop->w2d(button_w));
+
 
                 if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
                     return TRUE;
                 }
 
-                NR::Point const button_w(event->button.x,
-                                         event->button.y);
-                NR::Point const button_dt(desktop->w2d(button_w));
                 sp_lpetool_reset(dc, button_dt);
                 sp_lpetool_extinput(dc, event);
                 sp_lpetool_apply(dc, button_dt);
@@ -215,8 +261,10 @@ sp_lpetool_context_root_handler(SPEventContext *event_context,
                 sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
                 dc->is_drawing = true;
             }
+        **/
             break;
         case GDK_MOTION_NOTIFY:
+        /**
         {
             NR::Point const motion_w(event->motion.x,
                                      event->motion.y);
@@ -244,10 +292,12 @@ sp_lpetool_context_root_handler(SPEventContext *event_context,
             }
             Inkscape::Rubberband::get()->move(motion_dt);
         }
+        **/
         break;
 
 
     case GDK_BUTTON_RELEASE:
+    /**
     {
         NR::Point const motion_w(event->button.x, event->button.y);
         NR::Point const motion_dt(desktop->w2d(motion_w));
@@ -288,8 +338,10 @@ sp_lpetool_context_root_handler(SPEventContext *event_context,
         }
         break;
     }
+    **/
 
     case GDK_KEY_PRESS:
+        /**
         switch (get_group0_keyval (&event->key)) {
         case GDK_Up:
         case GDK_KP_Up:
@@ -369,9 +421,11 @@ sp_lpetool_context_root_handler(SPEventContext *event_context,
         default:
             break;
         }
+        **/
         break;
 
     case GDK_KEY_RELEASE:
+        /**
         switch (get_group0_keyval(&event->key)) {
             case GDK_Control_L:
             case GDK_Control_R:
@@ -380,11 +434,11 @@ sp_lpetool_context_root_handler(SPEventContext *event_context,
             default:
                 break;
         }
+        **/
 
     default:
         break;
     }
-    **/
 
     if (!ret) {
         if (((SPEventContextClass *) lpetool_parent_class)->root_handler) {

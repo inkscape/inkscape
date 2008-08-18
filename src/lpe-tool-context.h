@@ -6,7 +6,6 @@
  *
  * Authors:
  *   Maximilian Albert <maximilian.albert@gmail.com>
- *   Lauris Kaplinski <lauris@kaplinski.com>
  *
  * Copyright (C) 1998 The Free Software Foundation
  * Copyright (C) 1999-2002 authors
@@ -16,7 +15,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-//#include "event-context.h"
 #include "pen-context.h"
 
 #define SP_TYPE_LPETOOL_CONTEXT (sp_lpetool_context_get_type())
@@ -28,7 +26,18 @@
 class SPLPEToolContext;
 class SPLPEToolContextClass;
 
+/* This is the list of subtools from which the toolbar of the LPETool is built automatically */
+extern const int num_subtools;
+
+extern Inkscape::LivePathEffect::EffectType lpesubtools[];
+
+enum LPEToolState {
+    LPETOOL_STATE_PEN,
+    LPETOOL_STATE_NODE
+};
+
 struct SPLPEToolContext : public SPPenContext {
+    LPEToolState tool_state;
 };
 
 struct SPLPEToolContextClass : public SPEventContextClass{};
