@@ -187,6 +187,7 @@ src/live_effects/lpe-gears.cpp
 src/live_effects/lpe-interpolate.cpp
 src/live_effects/lpe-knot.cpp
 src/live_effects/lpe-lattice.cpp
+src/live_effects/lpe-line_segment.cpp
 src/live_effects/lpe-mirror_symmetry.cpp
 src/live_effects/lpe-offset.cpp
 src/live_effects/lpe-parallel.cpp
@@ -377,6 +378,7 @@ share/extensions/svg_and_media_zip_output.py
 [type: gettext/xml] share/extensions/eqtexsvg.inx
 [type: gettext/xml] share/extensions/export_gimp_palette.inx
 [type: gettext/xml] share/extensions/extractimage.inx
+[type: gettext/xml] share/extensions/extrude.inx
 [type: gettext/xml] share/extensions/fig_input.inx
 [type: gettext/xml] share/extensions/flatten.inx
 [type: gettext/xml] share/extensions/fractalize.inx
