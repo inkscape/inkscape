@@ -24,10 +24,10 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 static const Util::EnumData<EndType> EndTypeData[] = {
-    {END_CLOSED       , N_("Closed"), "closed"},
+    {END_OPEN_BOTH    , N_("Open both"), "open_both"},
     {END_OPEN_LEFT    , N_("Open left"), "open_left"},
     {END_OPEN_RIGHT   , N_("Open right"), "open_right"},
-    {END_OPEN_BOTH    , N_("Open both"), "open_both"},
+    {END_CLOSED       , N_("Closed"), "closed"},
 };
 static const Util::EnumDataConverter<EndType> EndTypeConverter(EndTypeData, sizeof(EndTypeData)/sizeof(*EndTypeData));
 
