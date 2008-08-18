@@ -107,6 +107,17 @@ const Util::EnumData<EffectType> LPETypeData[] = {
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
+int
+Effect::acceptsNumParams(EffectType type) {
+    switch (type) {
+        case ANGLE_BISECTOR: return 3;
+        case PERP_BISECTOR: return 2;
+        case CIRCLE_3PTS: return 3;
+        case CIRCLE_WITH_RADIUS: return 2;
+        default: return 0;
+    }
+}
+
 Effect*
 Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
 {

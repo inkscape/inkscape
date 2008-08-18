@@ -109,7 +109,8 @@ public:
     void writeParamsToSVG();
 
     virtual void acceptParamPath (SPPath *param_path);
-    virtual int acceptsNumParams() { return 0; }
+    static int acceptsNumParams(EffectType type);
+    int acceptsNumParams() { return acceptsNumParams(effectType()); }
     void doAcceptPathPreparations(SPLPEItem *lpeitem);
 
     inline bool pathParamAccepted() { return done_pathparam_set; }
