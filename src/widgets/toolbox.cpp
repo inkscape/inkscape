@@ -1581,7 +1581,7 @@ setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='ToolPen' />"
         "    <toolitem action='ToolCalligraphic' />"
         "    <toolitem action='ToolEraser' />"
-        "    <toolitem action='ToolLPETool' />"
+//        "    <toolitem action='ToolLPETool' />"
         "    <toolitem action='ToolPaintBucket' />"
         "    <toolitem action='ToolText' />"
         "    <toolitem action='ToolConnector' />"
