@@ -97,8 +97,6 @@ sp_lpetool_context_init(SPLPEToolContext *lc)
     lc->hot_y = 7;
 
     new (&lc->sel_changed_connection) sigc::connection();
-
-    //lc->tool_state = LPETOOL_STATE_NODE;
 }
 
 static void
@@ -181,14 +179,6 @@ sp_lpetool_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
     **/
 }
 
-/**
-void
-sp_erc_update_toolbox (SPDesktop *desktop, const gchar *id, double value)
-{
-    desktop->setToolboxAdjustmentValue (id, value);
-}
-**/
-
 gint
 sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
@@ -197,7 +187,6 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
-    //gint ret = FALSE;
     bool ret = false;
 
     if (sp_pen_context_has_waiting_LPE(lc)) {
@@ -232,45 +221,6 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 // we pass the mouse click on to pen tool as the first click which it should collect
                 ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
-
-                /**
-                SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
-
-                NR::Point const button_w(event->button.x,
-                                         event->button.y);
-                NR::Point const button_dt(desktop->w2d(button_w));
-
-                if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
-                    return TRUE;
-                }
-
-                sp_lpetool_reset(dc, button_dt);
-                sp_lpetool_extinput(dc, event);
-                sp_lpetool_apply(dc, button_dt);
-                dc->accumulated->reset();
-                if (dc->repr) {
-                    dc->repr = NULL;
-                }
-
-                Inkscape::Rubberband::get()->start(desktop, button_dt);
-                Inkscape::Rubberband::get()->setMode(RUBBERBAND_MODE_TOUCHPATH);
-
-                // initialize first point
-                dc->npoints = 0;
-
-                sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
-                                    ( GDK_KEY_PRESS_MASK |
-                                      GDK_BUTTON_RELEASE_MASK |
-                                      GDK_POINTER_MOTION_MASK |
-                                      GDK_BUTTON_PRESS_MASK ),
-                                    NULL,
-                                    event->button.time);
-
-                ret = TRUE;
-
-                sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
-                dc->is_drawing = true;
-                **/
             }
             break;
         case GDK_MOTION_NOTIFY:
@@ -293,166 +243,23 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 lc->hot_y = 7;
                 sp_event_context_update_cursor(event_context);
             }
-        /**
-        {
-            NR::Point const motion_w(event->motion.x,
-                                     event->motion.y);
-            NR::Point motion_dt(desktop->w2d(motion_w));
-            sp_lpetool_extinput(dc, event);
-
-            dc->_message_context->clear();
-
-            if ( dc->is_drawing && (event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning) {
-                dc->dragging = TRUE;
-
-                dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Drawing</b> an lpetool stroke"));
-
-                if (!sp_lpetool_apply(dc, motion_dt)) {
-                    ret = TRUE;
-                    break;
-                }
-
-                if ( dc->cur != dc->last ) {
-                    sp_lpetool_brush(dc);
-                    g_assert( dc->npoints > 0 );
-                    fit_and_split(dc, FALSE);
-                }
-                ret = TRUE;
-            }
-            Inkscape::Rubberband::get()->move(motion_dt);
-        }
-        **/
         }
         break;
 
 
     case GDK_BUTTON_RELEASE:
-    /**
     {
-        NR::Point const motion_w(event->button.x, event->button.y);
-        NR::Point const motion_dt(desktop->w2d(motion_w));
-
-        sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
-        sp_canvas_end_forced_full_redraws(desktop->canvas);
-        dc->is_drawing = false;
-
-        if (dc->dragging && event->button.button == 1 && !event_context->space_panning) {
-            dc->dragging = FALSE;
-
-            NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
-
-            sp_lpetool_apply(dc, motion_dt);
-
-            // Remove all temporary line segments
-            while (dc->segments) {
-                gtk_object_destroy(GTK_OBJECT(dc->segments->data));
-                dc->segments = g_slist_remove(dc->segments, dc->segments->data);
-            }
-
-            // Create object
-            fit_and_split(dc, TRUE);
-            accumulate_lpetool(dc);
-            set_to_accumulated(dc); // performs document_done
-
-            // reset accumulated curve
-            dc->accumulated->reset();
-
-            clear_current(dc);
-            if (dc->repr) {
-                dc->repr = NULL;
-            }
-
-            Inkscape::Rubberband::get()->stop();
-            dc->_message_context->clear();
-            ret = TRUE;
-        }
+        /**
         break;
+        **/
     }
-    **/
 
     case GDK_KEY_PRESS:
         /**
         switch (get_group0_keyval (&event->key)) {
-        case GDK_Up:
-        case GDK_KP_Up:
-            if (!MOD__CTRL_ONLY) {
-                dc->angle += 5.0;
-                if (dc->angle > 90.0)
-                    dc->angle = 90.0;
-                sp_erc_update_toolbox (desktop, "lpetool-angle", dc->angle);
-                ret = TRUE;
-            }
-            break;
-        case GDK_Down:
-        case GDK_KP_Down:
-            if (!MOD__CTRL_ONLY) {
-                dc->angle -= 5.0;
-                if (dc->angle < -90.0)
-                    dc->angle = -90.0;
-                sp_erc_update_toolbox (desktop, "lpetool-angle", dc->angle);
-                ret = TRUE;
-            }
-            break;
-        case GDK_Right:
-        case GDK_KP_Right:
-            if (!MOD__CTRL_ONLY) {
-                dc->width += 0.01;
-                if (dc->width > 1.0)
-                    dc->width = 1.0;
-                sp_erc_update_toolbox (desktop, "altx-lpetool", dc->width * 100); // the same spinbutton is for alt+x
-                ret = TRUE;
-            }
-            break;
-        case GDK_Left:
-        case GDK_KP_Left:
-            if (!MOD__CTRL_ONLY) {
-                dc->width -= 0.01;
-                if (dc->width < 0.01)
-                    dc->width = 0.01;
-                sp_erc_update_toolbox (desktop, "altx-lpetool", dc->width * 100);
-                ret = TRUE;
-            }
-            break;
-        case GDK_Home:
-        case GDK_KP_Home:
-            dc->width = 0.01;
-            sp_erc_update_toolbox (desktop, "altx-lpetool", dc->width * 100);
-            ret = TRUE;
-            break;
-        case GDK_End:
-        case GDK_KP_End:
-            dc->width = 1.0;
-            sp_erc_update_toolbox (desktop, "altx-lpetool", dc->width * 100);
-            ret = TRUE;
-            break;
-        case GDK_x:
-        case GDK_X:
-            if (MOD__ALT_ONLY) {
-                desktop->setToolboxFocusTo ("altx-lpetool");
-                ret = TRUE;
-            }
-            break;
-        case GDK_Escape:
-            Inkscape::Rubberband::get()->stop();
-            if (dc->is_drawing) {
-                // if drawing, cancel, otherwise pass it up for deselecting
-                lpetool_cancel (dc);
-                ret = TRUE;
-            }
-            break;
-        case GDK_z:
-        case GDK_Z:
-            if (MOD__CTRL_ONLY && dc->is_drawing) {
-                // if drawing, cancel, otherwise pass it up for undo
-                lpetool_cancel (dc);
-                ret = TRUE;
-            }
-            break;
-        default:
-            break;
         }
-        **/
         break;
+        **/
 
     case GDK_KEY_RELEASE:
         /**
