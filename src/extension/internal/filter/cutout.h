@@ -21,7 +21,7 @@ class Cutout : public Inkscape::Extension::Internal::Filter::Filter {
 public:
 	static void init (void) {
 		filter_init("cutout",     /* ID -- should be unique */
-		            N_("Coutout"), /* Name in the menus, should have a N_() around it for translation */
+		            N_("Cutout"), /* Name in the menus, should have a N_() around it for translation */
 		            N_("Artist text"),
 					             /* Menu tooltip to help users understand the name.  Should also have a N_() */
 					"<filter>\n"
