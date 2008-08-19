@@ -7,7 +7,6 @@
 /*
  * Authors:
  *   Maximilian Albert
- *   Johan Engelen
  *
  * Copyright (C) Maximilian Albert 2008 <maximilian.albert@gmail.com>
  *
@@ -16,6 +15,7 @@
 
 #include "live_effects/lpe-ruler.h"
 #include <2geom/piecewise.h>
+#include <2geom/sbasis-geometric.h>
 #include "inkscape.h"
 #include "desktop.h"
 
@@ -29,6 +29,14 @@ static const Util::EnumData<MarkDirType> MarkDirData[] = {
 };
 static const Util::EnumDataConverter<MarkDirType> MarkDirTypeConverter(MarkDirData, sizeof(MarkDirData)/sizeof(*MarkDirData));
 
+static const Util::EnumData<BorderMarkType> BorderMarkData[] = {
+    {BORDERMARK_NONE    , N_("None"),  "none"},
+    {BORDERMARK_START   , N_("Start"), "start"},
+    {BORDERMARK_END     , N_("End"),   "end"},
+    {BORDERMARK_BOTH    , N_("Both"),  "both"},
+};
+static const Util::EnumDataConverter<BorderMarkType> BorderMarkTypeConverter(BorderMarkData, sizeof(BorderMarkData)/sizeof(*BorderMarkData));
+
 LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     mark_distance(_("Mark distance"), _("Distance between successive ruler marks"), "mark_distance", &wr, this, 20.0),
@@ -38,7 +46,7 @@ LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
     shift(_("Shift marks by"), _("Shift marks by this many steps"), "shift", &wr, this, 0),
     mark_dir(_("Mark direction"), _("Direction of marks (when viewing along the path from start to end)"), "mark_dir", MarkDirTypeConverter, &wr, this, MARKDIR_LEFT),
     offset(_("Offset"), _("Offset of first mark"), "offset", &wr, this, 0.0),
-    draw_border_marks(_("Draw border marks?"), _("Check this to draw marks at the beginning and end of the path (even if this means that the distance to adjacent marks is smaller than usual)"), "draw_border_marks", &wr, this, true)
+    border_marks(_("Border marks"), _("Choose whether to draw marks at the beginning and end of the path"), "border_marks", BorderMarkTypeConverter, &wr, this, BORDERMARK_BOTH)
 {
     registerParameter(dynamic_cast<Parameter *>(&mark_distance));
     registerParameter(dynamic_cast<Parameter *>(&mark_length));
@@ -47,7 +55,7 @@ LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
     registerParameter(dynamic_cast<Parameter *>(&shift));
     registerParameter(dynamic_cast<Parameter *>(&offset));
     registerParameter(dynamic_cast<Parameter *>(&mark_dir));
-    registerParameter(dynamic_cast<Parameter *>(&draw_border_marks));
+    registerParameter(dynamic_cast<Parameter *>(&border_marks));
 
     major_mark_steps.param_make_integer();
     major_mark_steps.param_set_range(1, 1000);
@@ -67,7 +75,7 @@ Geom::Point LPERuler::n_major;
 Geom::Point LPERuler::n_minor;
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
-LPERuler::ruler_mark(Geom::Point const &A, Geom::Point const &n, MarkType marktype)
+LPERuler::ruler_mark(Geom::Point const &A, Geom::Point const &n, MarkType const &marktype)
 {
     using namespace Geom;
 
@@ -78,7 +86,7 @@ LPERuler::ruler_mark(Geom::Point const &A, Geom::Point const &n, MarkType markty
     switch (marktype) {
         case MARK_MAJOR:
             C = A;
-            D = A + mark_length * n;
+            D = A + n_major;
             if (mark_dir == MARKDIR_BOTH)
                 C -= n_major;
             break;
@@ -102,14 +110,14 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
 {
     using namespace Geom;
 
-    Point A(pwd2_in.firstValue());
-    Point B(pwd2_in.lastValue());
-    double path_length = L2(B - A);
+    Piecewise<D2<SBasis> > pwd2_arclength = arc_length_parametrization(pwd2_in);
+    Point A(pwd2_arclength.firstValue());
+    Point B(pwd2_arclength.lastValue());
+    double path_length = Geom::length(pwd2_arclength);
 
-    Piecewise<D2<SBasis> >output(D2<SBasis>(Linear(A[X], B[X]), Linear(A[Y], B[Y])));
+    Piecewise<D2<SBasis> > n = -rot90(unitVector(derivative(pwd2_arclength)));
+    Piecewise<D2<SBasis> >output(pwd2_arclength);
 
-    Point dir(unit_vector(B - A));
-    Point n(-rot90(dir));
     if (mark_dir == MARKDIR_RIGHT) {
         n *= -1.0;
     }
@@ -119,22 +127,20 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
     const int j_shift = static_cast<int>(shift) % mminterval;
 
     /* draw the ruler */
-    if (draw_border_marks && (offset != 0.0 || j_shift != 0))
-        output.concat (ruler_mark(A, n, MARK_MAJOR));
-    for (double i = offset; i < path_length; i += mark_distance, ++j) {
+    if ((border_marks == BORDERMARK_START || border_marks == BORDERMARK_BOTH) && (offset != 0.0 || j_shift != 0))
+        output.concat (ruler_mark(A, n.firstValue(), MARK_MAJOR));
+    for (double t = offset; t < path_length; t += mark_distance, ++j) {
         if ((j % mminterval) == j_shift) {
-            output.concat (ruler_mark(A + dir * i, n, MARK_MAJOR));
+            output.concat (ruler_mark(pwd2_arclength(t), n(t), MARK_MAJOR));
         } else {
-            output.concat (ruler_mark(A + dir * i, n, MARK_MINOR));
+            output.concat (ruler_mark(pwd2_arclength(t), n(t), MARK_MINOR));
         }
     }
-    if (draw_border_marks)
-        output.concat (ruler_mark(B, n, MARK_MAJOR));
+    if (border_marks == BORDERMARK_END || border_marks == BORDERMARK_BOTH)
+        output.concat (ruler_mark(B, n.lastValue(), MARK_MAJOR));
 
     return output;
 }
-
-/* ######################## */
 
 } //namespace LivePathEffect
 } /* namespace Inkscape */

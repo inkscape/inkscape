@@ -34,6 +34,13 @@ enum MarkDirType {
     MARKDIR_BOTH,
 };
 
+enum BorderMarkType {
+    BORDERMARK_NONE,
+    BORDERMARK_START,
+    BORDERMARK_END,
+    BORDERMARK_BOTH,
+};
+
 class LPERuler : public Effect {
 public:
     LPERuler(LivePathEffectObject *lpeobject);
@@ -42,7 +49,7 @@ public:
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
 private:
-    Geom::Piecewise<Geom::D2<Geom::SBasis> > ruler_mark(Geom::Point const &A, Geom::Point const &n, MarkType marktype);
+    Geom::Piecewise<Geom::D2<Geom::SBasis> > ruler_mark(Geom::Point const &A, Geom::Point const &n, MarkType const &marktype);
 
     ScalarParam mark_distance;
     ScalarParam mark_length;
@@ -51,7 +58,7 @@ private:
     ScalarParam shift;
     EnumParam<MarkDirType> mark_dir;
     ScalarParam offset;
-    BoolParam draw_border_marks;
+    EnumParam<BorderMarkType> border_marks;
 
     static Geom::Point n_major, n_minor; // used for internal computations
 
