@@ -17,10 +17,22 @@
 
 #include "live_effects/effect.h"
 #include "live_effects/parameter/text.h"
-#include "live_effects/parameter/unit.h"
+#include "live_effects/parameter/enum.h"
+#include "live_effects/parameter/bool.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
+
+enum MarkType {
+    MARK_MAJOR,
+    MARK_MINOR
+};
+
+enum MarkDirType {
+    MARKDIR_LEFT,
+    MARKDIR_RIGHT,
+    MARKDIR_BOTH,
+};
 
 class LPERuler : public Effect {
 public:
@@ -30,11 +42,19 @@ public:
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
 private:
+    Geom::Piecewise<Geom::D2<Geom::SBasis> > ruler_mark(Geom::Point const &A, Geom::Point const &n, MarkType marktype);
+
     ScalarParam mark_distance;
     ScalarParam mark_length;
-    ScalarParam scale;
-    TextParamInternal info_text;
-    UnitParam unit;
+    ScalarParam minor_mark_length;
+    ScalarParam major_mark_steps;
+    ScalarParam shift;
+    EnumParam<MarkDirType> mark_dir;
+    ScalarParam offset;
+    BoolParam draw_border_marks;
+
+    static Geom::Point n_major, n_minor; // used for internal computations
+
     LPERuler(const LPERuler&);
     LPERuler& operator=(const LPERuler&);
 };
