@@ -294,7 +294,7 @@ the group normally to see that it still remains grouped.</flowDiv></flowRoot>
 
 <rect id="d0e506" width="288" height="1000px" x="10" y="2522.7080728" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e506" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">Many of Inkscape's functions are available via <flowSpan style="font-style:italic">dialogs</flowSpan>. Probably the
 simplest way to paint an object some color is to open the Swatches dialog from the
-Objects menu, select an object, and click a swatch to paint it (change its fill
+View menu, select an object, and click a swatch to paint it (change its fill
 color).</flowDiv></flowRoot>
 
 <rect id="d0e512" width="288" height="1000px" x="10" y="2574.4723138" style="display:none"/><flowRoot style="font-size:8.4;font-style:normal;font-weight:normal;line-height:133.00000%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1.0000000;stroke:none;font-family:Bitstream Vera Serif"><flowRegion><use xlink:href="#d0e512" y="0" x="0"/></flowRegion><flowDiv xml:space="preserve">More powerful is the Fill and Stroke dialog
