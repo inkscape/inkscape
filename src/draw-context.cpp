@@ -680,15 +680,15 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
         if (!dc->white_item) {
             /* Attach repr */
             SPItem *item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
+
+            // we finished the path; now apply any waiting LPEs or freehand shapes
+            spdc_check_for_and_apply_waiting_LPE(dc, item);
+
             dc->selection->set(repr);
             Inkscape::GC::release(repr);
             item->transform = i2i_affine(desktop->currentRoot(), desktop->currentLayer());
             item->updateRepr();
         }
-
-
-        // we finished the path; now apply any waiting LPEs or freehand shapes
-        spdc_check_for_and_apply_waiting_LPE(dc, dc->selection->singleItem());
 
         sp_document_done(doc, SP_IS_PEN_CONTEXT(dc)? SP_VERB_CONTEXT_PEN : SP_VERB_CONTEXT_PENCIL, 
                          _("Draw path"));
