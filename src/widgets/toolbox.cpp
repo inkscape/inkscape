@@ -4895,16 +4895,18 @@ lpetool_toggle_show_bbox (GtkToggleAction *act, gpointer data) {
 }
 
 static void
-lpetool_toggle_show_measuring_info (GtkToggleAction *act, gpointer data) {
-    SPDesktop *desktop = static_cast<SPDesktop *>(data);
+lpetool_toggle_show_measuring_info (GtkToggleAction *act, GObject *tbl) {
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(tbl, "desktop"));
     if (!tools_isactive(desktop, TOOLS_LPETOOL))
         return;
 
+    GtkAction *unitact = static_cast<GtkAction*>(g_object_get_data(tbl, "lpetool_units_action"));
     SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
     if (tools_isactive(desktop, TOOLS_LPETOOL)) {
         bool show = gtk_toggle_action_get_active( act );
         prefs_set_int_attribute ("tools.lpetool", "show_measuring_info",  show ? 1 : 0);
         lpetool_show_measuring_info(lc, show);
+        gtk_action_set_sensitive(GTK_ACTION(unitact), show);
     }
 }
 
@@ -5105,7 +5107,7 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
                                                       "lpetool_measuring_info",
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(lpetool_toggle_show_measuring_info), desktop );
+        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(lpetool_toggle_show_measuring_info), holder );
         gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.lpetool", "show_measuring_info", 1 ) );
     }
 
@@ -5114,6 +5116,8 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         GtkAction* act = tracker->createAction( "LPEToolUnitsAction", _("Units"), ("") );
         gtk_action_group_add_action( mainActions, act );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(lpetool_unit_changed), (GObject*)holder );
+        g_object_set_data(holder, "lpetool_units_action", act);
+        gtk_action_set_sensitive(act, prefs_get_int_attribute ("tools.lpetool", "show_measuring_info", 1));
     }
 
     /* Open LPE dialog (to adapt parameters numerically) */
