@@ -434,7 +434,7 @@ static Glib::ustring _win32_getExePath()
 /**
  * Set up the PATH and PYTHONPATH environment variables on
  * win32
- */  
+ */
 static int _win32_set_inkscape_env(const Glib::ustring &exePath)
 {
 
@@ -477,7 +477,7 @@ static int _win32_set_inkscape_env(const Glib::ustring &exePath)
 /**
  * This is the classic main() entry point of the program, though on some
  * architectures it might be called by something else.
- */  
+ */
 int
 main(int argc, char **argv)
 {
@@ -505,7 +505,7 @@ main(int argc, char **argv)
 
    /**
     * Call bindtextdomain() for various machines's paths
-    */	   
+    */
 #ifdef ENABLE_NLS
 #ifdef WIN32
     Glib::ustring localePath = homedir;
@@ -1104,6 +1104,7 @@ sp_do_export_png(SPDocument *doc)
     unsigned long int height = 0;
 
     if (sp_export_width) {
+		errno=0;
         width = strtoul(sp_export_width, NULL, 0);
         if ((width < 1) || (width > PNG_UINT_31_MAX) || (errno == ERANGE) ) {
             g_warning("Export width %lu out of range (1 - %lu). Nothing exported.", width, (unsigned long int)PNG_UINT_31_MAX);
@@ -1113,6 +1114,7 @@ sp_do_export_png(SPDocument *doc)
     }
 
     if (sp_export_height) {
+		errno=0;
         height = strtoul(sp_export_height, NULL, 0);
         if ((height < 1) || (height > PNG_UINT_31_MAX)) {
             g_warning("Export height %lu out of range (1 - %lu). Nothing exported.", height, (unsigned long int)PNG_UINT_31_MAX);
