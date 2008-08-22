@@ -3921,7 +3921,14 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
     if (!desktop) return;
     SPEventContext *ec = desktop->event_context;
     if (!ec) return;
-    Inkscape::MessageContext *mc = get_message_context(ec);
+
+    // FIXME: this is an ad-hoc crash fix but we need to find a better way (which also works in LPEToolContext)
+    //Inkscape::MessageContext *mc = get_message_context(ec);
+    if (!SP_IS_NODE_CONTEXT(ec)) {
+        return;
+    }
+    Inkscape::MessageContext *mc = SP_NODE_CONTEXT(ec)->_node_message_context;
+
     if (!mc) return;
 
     double degrees = 180 / M_PI * rnew.a;
@@ -4746,7 +4753,14 @@ sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)//!!!move to Sha
 
     SPEventContext *ec = desktop->event_context;
     if (!ec) return;
-    Inkscape::MessageContext *mc = get_message_context(ec);
+
+    // FIXME: this is an ad-hoc crash fix but we need to find a better way (which also works in LPEToolContext)
+    //Inkscape::MessageContext *mc = get_message_context(ec);
+    if (!SP_IS_NODE_CONTEXT(ec)) {
+        return;
+    }
+
+    Inkscape::MessageContext *mc = SP_NODE_CONTEXT(ec)->_node_message_context;
     if (!mc) return;
 
     inkscape_active_desktop()->emitToolSubselectionChanged(NULL);
