@@ -23,6 +23,7 @@
 #include "xml/repr.h"
 #include "rdf.h"
 #include "sp-item-group.h"
+#include "inkscape.h"
 
 /*
 
@@ -538,6 +539,12 @@ rdf_set_repr_text ( Inkscape::XML::Node * repr,
     Inkscape::XML::Document * xmldoc = parent->document();
     g_return_val_if_fail (xmldoc != NULL, FALSE);
 
+    // set document's title element to the RDF title
+    if (!strcmp(entity->name, "title")) {
+        SPDocument *doc = SP_ACTIVE_DOCUMENT;
+        if(doc && doc->root) doc->root->setTitle(text);
+    }
+
     switch (entity->datatype) {
         case RDF_CONTENT:
             temp = sp_repr_children(parent);
@@ -779,17 +786,21 @@ rdf_get_work_entity(SPDocument * doc, struct rdf_work_entity_t * entity)
     g_return_val_if_fail (doc    != NULL, NULL);
     if ( entity == NULL ) return NULL;
     //printf("want '%s'\n",entity->title);
+    bool bIsTitle = !strcmp(entity->name, "title");
 
     Inkscape::XML::Node * item;
     if ( entity->datatype == RDF_XML ) {
         item = rdf_get_xml_repr ( doc, entity->tag, FALSE );
     }
     else {
-        item = rdf_get_work_repr( doc, entity->tag, FALSE );
+        item = rdf_get_work_repr( doc, entity->tag, bIsTitle ); // build title if necessary
     }
     if ( item == NULL ) return NULL;
-
     const gchar * result = rdf_get_repr_text ( item, entity );
+    if(!result && bIsTitle && doc->root) {         // if RDF title not set
+        result = doc->root->title();               // get the document's <title>
+        rdf_set_work_entity(doc, entity, result);  // and set the RDF
+    }
     //printf("found '%s' == '%s'\n", entity->title, result );
     return result;
 }
