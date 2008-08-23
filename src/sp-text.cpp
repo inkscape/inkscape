@@ -44,6 +44,8 @@
 #include "xml/quote.h"
 #include "xml/repr.h"
 #include "mod360.h"
+#include "sp-title.h"
+#include "sp-desc.h"
 
 #include "sp-textpath.h"
 #include "sp-tref.h"
@@ -308,6 +310,7 @@ sp_text_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
             repr = xml_doc->createElement("svg:text");
         GSList *l = NULL;
         for (SPObject *child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
             Inkscape::XML::Node *crepr = NULL;
             if (SP_IS_STRING(child)) {
                 crepr = xml_doc->createTextNode(SP_STRING(child)->string.c_str());
@@ -323,6 +326,7 @@ sp_text_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
         }
     } else {
         for (SPObject *child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
             if (SP_IS_STRING(child)) {
                 SP_OBJECT_REPR(child)->setContent(SP_STRING(child)->string.c_str());
             } else {

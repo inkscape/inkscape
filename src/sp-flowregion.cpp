@@ -15,6 +15,8 @@
 #include "sp-use.h"
 #include "style.h"
 #include "document.h"
+#include "sp-title.h"
+#include "sp-desc.h"
 
 #include "sp-flowregion.h"
 
@@ -240,6 +242,7 @@ sp_flowregion_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscap
 
         GSList *l = NULL;
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
             Inkscape::XML::Node *crepr = child->updateRepr(xml_doc, NULL, flags);
             if (crepr) l = g_slist_prepend(l, crepr);
         }
@@ -252,6 +255,7 @@ sp_flowregion_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscap
 
     } else {
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
             child->updateRepr(flags);
         }
     }

@@ -45,6 +45,8 @@
 #include "selection.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
+#include "sp-title.h"
+#include "sp-desc.h"
 
 static void sp_group_class_init (SPGroupClass *klass);
 static void sp_group_init (SPGroup *group);
@@ -233,6 +235,7 @@ sp_group_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XM
                 }
 		l = NULL;
 		for (child = sp_object_first_child(object); child != NULL; child = SP_OBJECT_NEXT(child) ) {
+			if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
 			crepr = child->updateRepr(xml_doc, NULL, flags);
 			if (crepr) l = g_slist_prepend (l, crepr);
 		}
@@ -243,6 +246,7 @@ sp_group_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XM
 		}
 	} else {
 		for (child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+			if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
 			child->updateRepr(flags);
 		}
 	}

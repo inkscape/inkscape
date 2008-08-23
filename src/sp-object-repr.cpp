@@ -81,6 +81,8 @@
 #include "sp-feturbulence.h"
 #include "sp-femergenode.h"
 #include "live_effects/lpeobject.h"
+#include "sp-title.h"
+#include "sp-desc.h"
 
 
 enum NameType { REPR_NAME, SODIPODI_TYPE };
@@ -138,6 +140,7 @@ populate_dtables()
         { "svg:color-profile", COLORPROFILE_TYPE },
         { "svg:clipPath", SP_TYPE_CLIPPATH },
         { "svg:defs", SP_TYPE_DEFS },
+        { "svg:desc", SP_TYPE_DESC },
         { "svg:ellipse", SP_TYPE_ELLIPSE },
         { "svg:filter", SP_TYPE_FILTER },
         /* Note: flow* elements are proposed additions for SVG 1.2, they aren't in
@@ -203,6 +206,7 @@ populate_dtables()
         { "svg:symbol", SP_TYPE_SYMBOL },
         { "svg:text", SP_TYPE_TEXT },
         { "svg:textPath", SP_TYPE_TEXTPATH },
+        { "svg:title", SP_TYPE_TITLE },
         { "svg:tref", SP_TYPE_TREF },
         { "svg:tspan", SP_TYPE_TSPAN },
         { "svg:use", SP_TYPE_USE },

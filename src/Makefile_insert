@@ -166,6 +166,7 @@ libinkpre_a_SOURCES =	\
 	sp-conn-end.cpp sp-conn-end.h	\
 	sp-cursor.cpp sp-cursor.h	\
 	sp-defs.cpp sp-defs.h	\
+	sp-desc.cpp sp-desc.h	\
 	sp-ellipse.cpp sp-ellipse.h	\
 	sp-feblend.cpp sp-feblend.h	\
 	sp-feblend-fns.h	\
@@ -271,6 +272,7 @@ libinkpre_a_SOURCES =	\
 	sp-switch.cpp sp-switch.h\
 	sp-text.cpp sp-text.h	\
 	sp-textpath.h	\
+	sp-title.cpp sp-title.h	\
 	sp-tref-reference.cpp sp-tref-reference.h \
 	sp-tref.cpp sp-tref.h \
 	sp-tspan.cpp sp-tspan.h	\
