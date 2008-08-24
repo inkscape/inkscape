@@ -339,6 +339,7 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
          items = items->next) {
 
         SPItem *item = SP_ITEM(items->data);
+    	SPDocument *document = item->document;
 
         if (SP_IS_PATH(item) && !SP_PATH(item)->original_curve) {
             continue; // already a path, and no path effect
@@ -387,6 +388,10 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
         Inkscape::XML::Node *parent = SP_OBJECT_REPR(item)->parent();
         // remember id
         char const *id = SP_OBJECT_REPR(item)->attribute("id");
+        // remember title
+        gchar *title = item->title();
+        // remember description
+        gchar *desc = item->desc();
 
         // It's going to resurrect, so we delete without notifying listeners.
         SP_OBJECT(item)->deleteObject(false);
@@ -395,6 +400,16 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
         repr->setAttribute("id", id);
         // add the new repr to the parent
         parent->appendChild(repr);
+        SPObject* newObj = document->getObjectByRepr(repr);
+        if (title && newObj) {
+        	newObj->setTitle(title);
+        	g_free(title);
+        }
+        if (desc && newObj) {
+        	newObj->setDesc(desc);
+        	g_free(desc);
+        }
+
         // move to the saved position
         repr->setPosition(pos > 0 ? pos : 0);
 

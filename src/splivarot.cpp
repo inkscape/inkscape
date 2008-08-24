@@ -473,7 +473,8 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
     gchar const *style = repr_source->attribute("style");
     gchar const *mask = repr_source->attribute("mask");
     gchar const *clip_path = repr_source->attribute("clip-path");
-
+    gchar *title = source->title();
+    gchar *desc = source->desc();
     // remove source paths
     selection->clear();
     for (GSList *l = il; l != NULL; l = l->next) {
@@ -582,13 +583,21 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
 
         repr->setAttribute("id", id);
         parent->appendChild(repr);
-        repr->setPosition(pos > 0 ? pos : 0);
+        if (title) {
+        	sp_desktop_document(desktop)->getObjectByRepr(repr)->setTitle(title);
+        }            
+        if (desc) {
+        	sp_desktop_document(desktop)->getObjectByRepr(repr)->setDesc(desc);
+        }
+		repr->setPosition(pos > 0 ? pos : 0);
 
         selection->add(repr);
         Inkscape::GC::release(repr);
     }
 
     g_free(transform);
+    if (title) g_free(title);
+    if (desc) g_free(desc);
 
     if (verb != SP_VERB_NONE) {
         sp_document_done(sp_desktop_document(desktop), verb, description);
@@ -803,7 +812,11 @@ sp_selected_path_outline(SPDesktop *desktop)
         Inkscape::XML::Node *parent = SP_OBJECT_REPR(item)->parent();
         // remember id
         char const *id = SP_OBJECT_REPR(item)->attribute("id");
-
+        // remember title
+        gchar *title = item->title();
+        // remember description
+        gchar *desc = item->desc();
+        
         if (res->descr_cmd.size() > 1) { // if there's 0 or 1 node left, drop this path altogether
 
             SPDocument * doc = sp_desktop_document(desktop);
@@ -835,10 +848,17 @@ sp_selected_path_outline(SPDesktop *desktop)
                 g_repr->setPosition(pos > 0 ? pos : 0);
 
                 g_repr->appendChild(repr);
+                // restore title, description, id, transform
                 repr->setAttribute("id", id);
                 SPItem *newitem = (SPItem *) doc->getObjectByRepr(repr);
                 sp_item_write_transform(newitem, repr, transform);
-
+                if (title) {
+                	newitem->setTitle(title);
+                }
+                if (desc) {
+                	newitem->setDesc(desc);
+                }
+                
                 SPShape *shape = SP_SHAPE(item);
 
                 Geom::PathVector const & pathv = curve->get_pathvector();
@@ -899,11 +919,18 @@ sp_selected_path_outline(SPDesktop *desktop)
                 // move to the saved position
                 repr->setPosition(pos > 0 ? pos : 0);
 
+                // restore title, description, id, transform
                 repr->setAttribute("id", id);
 
                 SPItem *newitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
                 sp_item_write_transform(newitem, repr, transform);
-
+                if (title) {
+                	newitem->setTitle(title);
+                }
+                if (desc) {
+                	newitem->setDesc(desc);
+                }
+                
                 selection->add(repr);
 
             }
@@ -915,6 +942,8 @@ sp_selected_path_outline(SPDesktop *desktop)
             SP_OBJECT(item)->deleteObject(false);
 
         }
+        if (title) g_free(title);
+        if (desc) g_free(desc);
 
         delete res;
         delete orig;
@@ -1521,7 +1550,11 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
     char const *id = SP_OBJECT_REPR(item)->attribute("id");
     // remember path effect
     char const *patheffect = SP_OBJECT_REPR(item)->attribute("inkscape:path-effect");
-
+    // remember title
+    gchar *title = item->title();
+    // remember description
+    gchar *desc = item->desc();
+    
     //If a group was selected, to not change the selection list
     if (modifySelection)
         selection->remove(item);
@@ -1576,7 +1609,17 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
 
     // restore path effect
     repr->setAttribute("inkscape:path-effect", patheffect);
-
+    
+    // restore title & description
+    if (title) {
+    	newitem->setTitle(title);
+        g_free(title);
+    }
+    if (desc) {
+    	newitem->setDesc(desc);
+        g_free(desc);
+    }
+    
     //If we are not in a selected group
     if (modifySelection)
         selection->add(repr);
