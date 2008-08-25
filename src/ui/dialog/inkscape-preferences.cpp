@@ -1065,6 +1065,9 @@ void InkscapePreferences::initPageMisc()
     _page_misc.add_line( false, _("Latency skew:"), _misc_latency_skew, _("(requires restart)"),
                            _("Factor by which the event clock is skewed from the actual time (0.9766 on some systems)."), false);
 
+    _misc_namedicon_delay.init( _("Pre-render named icons"), "options.iconrender", "named_nodelay", false);
+    _page_misc.add_line( false, "", _misc_namedicon_delay, "",
+                           _("When on, named icons will be rendered before displaying the ui. This is for working around bugs in GTK+ named icon notification"), true);
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }

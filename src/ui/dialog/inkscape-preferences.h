@@ -167,7 +167,7 @@ protected:
 
     PrefSpinButton  _importexport_export, _misc_recent, _misc_simpl;
     PrefSpinButton  _misc_latency_skew;
-    PrefCheckButton _misc_comment, _misc_forkvectors, _misc_scripts;
+    PrefCheckButton _misc_comment, _misc_forkvectors, _misc_scripts, _misc_namedicon_delay;
     PrefCombo       _misc_small_toolbar;
     PrefCombo       _misc_small_secondary;
     PrefCombo       _misc_small_tools;
