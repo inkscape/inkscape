@@ -272,7 +272,7 @@ sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG)) {
         /* This is suboptimal, because changing parent style schedules recalculation */
         /* But on the other hand - how can we know that parent does not tie style and transform */
-        boost::optional<NR::Rect> paintbox = SP_ITEM(object)->getBounds(NR::identity());
+        boost::optional<NR::Rect> paintbox = SP_ITEM(object)->getBounds(NR::identity(), SPItem::GEOMETRIC_BBOX);
         for (SPItemView *v = SP_ITEM (shape)->display; v != NULL; v = v->next) {
             NRArenaShape * const s = NR_ARENA_SHAPE(v->arenaitem);
             if (flags & SP_OBJECT_MODIFIED_FLAG) {
