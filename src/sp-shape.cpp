@@ -242,77 +242,76 @@ sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
     SPItem *item = (SPItem *) object;
     SPShape *shape = (SPShape *) object;
 
-	if (((SPObjectClass *) (parent_class))->update) {
-	  (* ((SPObjectClass *) (parent_class))->update) (object, ctx, flags);
-	}
+    if (((SPObjectClass *) (parent_class))->update) {
+        (* ((SPObjectClass *) (parent_class))->update) (object, ctx, flags);
+    }
 
-	/* This stanza checks that an object's marker style agrees with
-	 * the marker objects it has allocated.  sp_shape_set_marker ensures
-	 * that the appropriate marker objects are present (or absent) to
-	 * match the style.
-	 */
-	/* TODO:  It would be nice if this could be done at an earlier level */
-	for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
-	    sp_shape_set_marker (object, i, object->style->marker[i].value);
+    /* This stanza checks that an object's marker style agrees with
+     * the marker objects it has allocated.  sp_shape_set_marker ensures
+     * that the appropriate marker objects are present (or absent) to
+     * match the style.
+     */
+    /* TODO:  It would be nice if this could be done at an earlier level */
+    for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
+        sp_shape_set_marker (object, i, object->style->marker[i].value);
 	  }
 
-	if (flags & (SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-		SPStyle *style;
-		style = SP_OBJECT_STYLE (object);
-		if (style->stroke_width.unit == SP_CSS_UNIT_PERCENT) {
-			SPItemCtx *ictx = (SPItemCtx *) ctx;
-			double const aw = 1.0 / NR::expansion(ictx->i2vp);
-			style->stroke_width.computed = style->stroke_width.value * aw;
-			for (SPItemView *v = ((SPItem *) (shape))->display; v != NULL; v = v->next) {
-				nr_arena_shape_set_style ((NRArenaShape *) v->arenaitem, style);
-			}
-		}
-	}
+    if (flags & (SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
+        SPStyle *style;
+        style = SP_OBJECT_STYLE (object);
+        if (style->stroke_width.unit == SP_CSS_UNIT_PERCENT) {
+            SPItemCtx *ictx = (SPItemCtx *) ctx;
+            double const aw = 1.0 / NR::expansion(ictx->i2vp);
+            style->stroke_width.computed = style->stroke_width.value * aw;
+            for (SPItemView *v = ((SPItem *) (shape))->display; v != NULL; v = v->next) {
+                nr_arena_shape_set_style ((NRArenaShape *) v->arenaitem, style);
+            }
+        }
+    }
 
-	if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG)) {
-		/* This is suboptimal, because changing parent style schedules recalculation */
-		/* But on the other hand - how can we know that parent does not tie style and transform */
-                boost::optional<NR::Rect> paintbox = SP_ITEM(object)->getBounds(NR::identity());
-		for (SPItemView *v = SP_ITEM (shape)->display; v != NULL; v = v->next) {
-                    NRArenaShape * const s = NR_ARENA_SHAPE(v->arenaitem);
-                    if (flags & SP_OBJECT_MODIFIED_FLAG) {
-                        nr_arena_shape_set_path(s, shape->curve, (flags & SP_OBJECT_USER_MODIFIED_FLAG_B));
-                    }
-                    if (paintbox) {
-                        s->setPaintBox(*paintbox);
-                    }
-		}
-	}
+    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG)) {
+        /* This is suboptimal, because changing parent style schedules recalculation */
+        /* But on the other hand - how can we know that parent does not tie style and transform */
+        boost::optional<NR::Rect> paintbox = SP_ITEM(object)->getBounds(NR::identity());
+        for (SPItemView *v = SP_ITEM (shape)->display; v != NULL; v = v->next) {
+            NRArenaShape * const s = NR_ARENA_SHAPE(v->arenaitem);
+            if (flags & SP_OBJECT_MODIFIED_FLAG) {
+                nr_arena_shape_set_path(s, shape->curve, (flags & SP_OBJECT_USER_MODIFIED_FLAG_B));
+            }
+            if (paintbox) {
+                s->setPaintBox(*paintbox);
+            }
+        }
+    }
 
-        if (sp_shape_has_markers (shape)) {
+    if (sp_shape_has_markers (shape)) {
+        /* Dimension marker views */
+        for (SPItemView *v = item->display; v != NULL; v = v->next) {
 
-            /* Dimension marker views */
-            for (SPItemView *v = item->display; v != NULL; v = v->next) {
+            if (!v->arenaitem->key) {
+                /* Get enough keys for all, start, mid and end marker types,
+                ** and set this view's arenaitem key to the first of these keys.
+                */
+                NR_ARENA_ITEM_SET_KEY (
+                    v->arenaitem,
+                    sp_item_display_key_new (SP_MARKER_LOC_QTY)
+                    );
+            }
 
-                if (!v->arenaitem->key) {
-		    /* Get enough keys for all, start, mid and end marker types,
-		    ** and set this view's arenaitem key to the first of these keys.
-		    */
-		    NR_ARENA_ITEM_SET_KEY (
-                        v->arenaitem,
-                        sp_item_display_key_new (SP_MARKER_LOC_QTY)
-                        );
+            for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
+                if (shape->marker[i]) {
+                    sp_marker_show_dimension ((SPMarker *) shape->marker[i],
+                                              NR_ARENA_ITEM_GET_KEY (v->arenaitem) + i - SP_MARKER_LOC,
+                                              sp_shape_number_of_markers (shape, i));
                 }
-
-                for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
-                    if (shape->marker[i]) {
-                        sp_marker_show_dimension ((SPMarker *) shape->marker[i],
-                                                  NR_ARENA_ITEM_GET_KEY (v->arenaitem) + i - SP_MARKER_LOC,
-                                                  sp_shape_number_of_markers (shape, i));
-                    }
-		}
             }
+        }
 
-            /* Update marker views */
-            for (SPItemView *v = item->display; v != NULL; v = v->next) {
-                sp_shape_update_marker_view (shape, v->arenaitem);
-            }
-	}
+        /* Update marker views */
+        for (SPItemView *v = item->display; v != NULL; v = v->next) {
+            sp_shape_update_marker_view (shape, v->arenaitem);
+        }
+    }
 }
 
 /**
