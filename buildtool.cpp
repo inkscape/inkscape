@@ -39,7 +39,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.9.5"
+#define BUILDTOOL_VERSION  "BuildTool v0.9.6"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -5174,6 +5174,8 @@ bool MakeBase::removeFile(const String &file)
 #endif
 
     removeFromStatCache(native);
+
+    return true;
 }
 
 
@@ -7608,7 +7610,11 @@ public:
                 char *fname = (char *)fullName.c_str();
                 if (!quiet && verbose)
                     taskstatus("path: %s", fname);
-                if (!removeFile(fullName)) return false;
+                if (!removeFile(fullName))
+                    {
+                    //error("Could not delete file '%s'", fullName.c_str());
+                    return false;
+                    }
                 return true;
                 }
             case DEL_DIR:
@@ -7618,7 +7624,10 @@ public:
                 if (!quiet && verbose)
                     taskstatus("path: %s", fullDir.c_str());
                 if (!removeDirectory(fullDir))
+                    {
+                    //error("Could not delete directory '%s'", fullDir.c_str());
                     return false;
+                    }
                 return true;
                 }
             }
