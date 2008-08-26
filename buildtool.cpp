@@ -7600,7 +7600,6 @@ public:
         bool verbose     = parent.evalBool(verboseOpt, false);
         bool quiet       = parent.evalBool(quietOpt, false);
         bool failOnError = parent.evalBool(failOnErrorOpt, true);
-        struct stat finfo;
         switch (delType)
             {
             case DEL_FILE:
@@ -7610,7 +7609,7 @@ public:
                 char *fname = (char *)fullName.c_str();
                 if (!quiet && verbose)
                     taskstatus("path: %s", fname);
-                if (!removeFile(fullName))
+                if (failOnError && !removeFile(fullName))
                     {
                     //error("Could not delete file '%s'", fullName.c_str());
                     return false;
@@ -7623,7 +7622,7 @@ public:
                 String fullDir = parent.resolve(dirName);
                 if (!quiet && verbose)
                     taskstatus("path: %s", fullDir.c_str());
-                if (!removeDirectory(fullDir))
+                if (failOnError && !removeDirectory(fullDir))
                     {
                     //error("Could not delete directory '%s'", fullDir.c_str());
                     return false;
