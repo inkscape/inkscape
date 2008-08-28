@@ -1250,9 +1250,9 @@ bool
 CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, NRRect const *pbox)
 {
     NArtBpath * bpath = BPath_from_2GeomPath (pathv);
-    const_NRBPath *bp;
-    bp->path = bpath;
-    bool retvalue = renderPath(bp, style, pbox);
+    const_NRBPath bp;
+    bp.path = bpath;
+    bool retvalue = renderPath(&bp, style, pbox);
     g_free(bpath);
     return retvalue;
 }
