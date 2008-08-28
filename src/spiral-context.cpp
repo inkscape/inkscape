@@ -439,12 +439,14 @@ sp_spiral_drag(SPSpiralContext *sc, NR::Point p, guint state)
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
     }
 
-    Geom::Point const p0 = to_2geom(sp_desktop_dt2root_xy_point(desktop, sc->center));
-    Geom::Point p1 = to_2geom(sp_desktop_dt2root_xy_point(desktop, p));
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, sc->item);
-    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p1);
+    Geom::Point pt2g = to_2geom(p);
+    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
 
+    Geom::Point const p0 = to_2geom(sp_desktop_dt2root_xy_point(desktop, sc->center));
+    Geom::Point const p1 = to_2geom(sp_desktop_dt2root_xy_point(desktop, from_2geom(pt2g)));        
+    
     SPSpiral *spiral = SP_SPIRAL(sc->item);
 
     Geom::Point const delta = p1 - p0;
