@@ -306,6 +306,10 @@ typedef int uid_t;
  */
 static gint inkscape_autosave(gpointer)
 {
+    if (!inkscape->documents) { // nothing to autosave
+        return TRUE;
+    }
+
     // Use UID for separating autosave-documents between users if directory is multiuser
     uid_t uid = getuid();
 
