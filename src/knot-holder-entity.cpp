@@ -92,7 +92,7 @@ KnotHolderEntity::snap_knot_position(Geom::Point const &p)
     Geom::Matrix const i2d (sp_item_i2d_affine(item));
     Geom::Point s = p * i2d;
     SnapManager &m = desktop->namedview->snap_manager;
-    m.setup(desktop, item);
+    m.setup(desktop, true, item);
     m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, s);
     return s * i2d.inverse();
 }

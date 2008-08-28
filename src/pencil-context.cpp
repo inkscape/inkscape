@@ -350,7 +350,7 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                     p = to_2geom(anchor->dp);
                 } else if ((mevent.state & GDK_SHIFT_MASK) == 0) {
                     SnapManager &m = dt->namedview->snap_manager;
-                    m.setup(dt, NULL);
+                    m.setup(dt);
                     m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p);
                 }
                 if ( pc->npoints != 0 ) { // buttonpress may have happened before we entered draw context!

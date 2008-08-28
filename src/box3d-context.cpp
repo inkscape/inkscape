@@ -330,7 +330,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
 
             /* Snap center */
             SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop, bc->item);
+            m.setup(desktop, true, bc->item);
             m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, button_dt);
             bc->center = from_2geom(button_dt);
 
@@ -362,7 +362,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             Geom::Point motion_dt(to_2geom(desktop->w2d(motion_w)));
 
             SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop, bc->item);
+            m.setup(desktop, true, bc->item);
             m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
 
             bc->ctrl_dragged  = event->motion.state & GDK_CONTROL_MASK;

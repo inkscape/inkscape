@@ -282,7 +282,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             
             /* Snap center */
             SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop, NULL); //null, because we don't have an item yet
+            m.setup(desktop, true);
             Geom::Point pt2g = to_2geom(sc->center);
             m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
             sc->center = from_2geom(pt2g);
@@ -452,7 +452,7 @@ static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
 
     /* Snap corner point with no constraints */
     SnapManager &m = desktop->namedview->snap_manager;
-    m.setup(desktop, sc->item);
+    m.setup(desktop, true, sc->item);
     Geom::Point pt2g = to_2geom(p);
     m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);    
     

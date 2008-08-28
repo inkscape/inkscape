@@ -919,7 +919,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
     } else {
         // In all other cases we should try to snap now
         SnapManager &m = _desktop->namedview->snap_manager;
-        m.setup(NULL, _items_const);
+        m.setup(_desktop, false, _items_const);
 
         Inkscape::SnappedPoint bb, sn;
         NR::Coord bd(NR_HUGE);
@@ -1032,7 +1032,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
         // In all other cases we should try to snap now
 
         SnapManager &m = _desktop->namedview->snap_manager;
-        m.setup(NULL, _items_const);
+        m.setup(_desktop, false, _items_const);
 
         Inkscape::SnappedPoint bb, sn;
         g_assert(bb.getSnapped() == false); // Check initialization to catch any regression
@@ -1156,7 +1156,7 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
         // Snap to objects, grids, guides
 
         SnapManager &m = _desktop->namedview->snap_manager;
-        m.setup(NULL, _items_const);
+        m.setup(_desktop, false, _items_const);
 
         Inkscape::Snapper::ConstraintLine const constraint(component_vectors[dim_b]);
         NR::Point const s(skew[dim_a], scale[dim_a]);
@@ -1364,7 +1364,7 @@ void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &,
 void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
 {
     SnapManager &m = _desktop->namedview->snap_manager;
-    m.setup(_desktop, _items_const);
+    m.setup(_desktop, true, _items_const);
 
     /* The amount that we've moved by during this drag */
     Geom::Point dxy = to_2geom(xy - _point);

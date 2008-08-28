@@ -871,11 +871,11 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
     
     
     // Update the snap indicator, if requested
-    if (_desktop_for_snapindicator) {
+    if (_snapindicator) {
         if (bestSnappedPoint.getSnapped()) {
-            _desktop_for_snapindicator->snapindicator->set_new_snappoint(bestSnappedPoint);
+            _desktop->snapindicator->set_new_snappoint(bestSnappedPoint);
         } else {
-            _desktop_for_snapindicator->snapindicator->remove_snappoint();
+            _desktop->snapindicator->remove_snappoint();
         }
     }
     
@@ -883,19 +883,23 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
     return bestSnappedPoint;         
 }
 
-void SnapManager::setup(SPDesktop const *desktop_for_snapindicator, SPItem const *item_to_ignore, std::vector<Geom::Point> *unselected_nodes)
+void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, SPItem const *item_to_ignore, std::vector<Geom::Point> *unselected_nodes)
 {
-    _item_to_ignore = item_to_ignore;
+    g_assert(desktop != NULL);
+	_item_to_ignore = item_to_ignore;
     _items_to_ignore = NULL;
-    _desktop_for_snapindicator = desktop_for_snapindicator;
+    _desktop = desktop;
+    _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
 }
 
-void SnapManager::setup(SPDesktop const *desktop_for_snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<Geom::Point> *unselected_nodes)
+void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<Geom::Point> *unselected_nodes)
 {
-    _item_to_ignore = NULL;
+	g_assert(desktop != NULL);
+	_item_to_ignore = NULL;
     _items_to_ignore = &items_to_ignore;
-    _desktop_for_snapindicator = desktop_for_snapindicator;
+    _desktop = desktop;
+    _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;   
 }
 

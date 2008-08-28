@@ -1311,7 +1311,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
         
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
-            m.setup(NULL, SP_PATH(n->subpath->nodepath->item), &unselected_nodes);
+            m.setup(nodepath->desktop, false, SP_PATH(n->subpath->nodepath->item), &unselected_nodes);
             Inkscape::SnappedPoint s;
             if (constrained) {
                 Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
@@ -3778,7 +3778,7 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpo
 
     SPDesktop *desktop = n->subpath->nodepath->desktop;
     SnapManager &m = desktop->namedview->snap_manager;
-    m.setup(desktop, n->subpath->nodepath->item);
+    m.setup(desktop, true, n->subpath->nodepath->item);
     Inkscape::SnappedPoint s;
     
     if ((state & GDK_SHIFT_MASK) != 0) {

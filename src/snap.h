@@ -47,8 +47,8 @@ public:
 
     bool SomeSnapperMightSnap() const;
     
-    void setup(SPDesktop const *desktop_for_snapindicator = NULL, SPItem const *item_to_ignore = NULL, std::vector<Geom::Point> *unselected_nodes = NULL);
-    void setup(SPDesktop const *desktop_for_snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<Geom::Point> *unselected_nodes = NULL);
+    void setup(SPDesktop const *desktop, bool snapindicator = true, SPItem const *item_to_ignore = NULL, std::vector<Geom::Point> *unselected_nodes = NULL);
+    void setup(SPDesktop const *desktop, bool snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<Geom::Point> *unselected_nodes = NULL);
 
     // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a 
     // point if snapping has occured (by overwriting p); otherwise p is untouched    
@@ -172,7 +172,8 @@ private:
     
     std::vector<SPItem const *> *_items_to_ignore;
     SPItem const *_item_to_ignore;
-    SPDesktop const *_desktop_for_snapindicator;    
+    SPDesktop const *_desktop;
+    bool _snapindicator;
     std::vector<Geom::Point> *_unselected_nodes;                                    
     
     Inkscape::SnappedPoint _snapTransformed(Inkscape::Snapper::PointType type,

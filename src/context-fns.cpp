@@ -86,7 +86,7 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
     bool const control = state & GDK_CONTROL_MASK;
 
     SnapManager &m = desktop->namedview->snap_manager;
-    m.setup(NULL, item);
+    m.setup(desktop, false, item);
     Inkscape::SnappedPoint snappoint;
 
     if (control) {

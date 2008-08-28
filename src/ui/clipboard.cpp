@@ -803,7 +803,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
         offset = rel_pos_original;        
     } else { // Stick to the grid if snapping is enabled, otherwise paste at mouse position;
         SnapManager &m = desktop->namedview->snap_manager;
-        m.setup(NULL, NULL); //Don't display the snapindicator
+        m.setup(desktop, false); //Don't display the snapindicator
         offset = rel_pos_original + m.multipleOfGridPitch(rel_pos_mouse - rel_pos_original); 
     }
     

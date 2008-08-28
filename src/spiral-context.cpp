@@ -266,7 +266,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 sc->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
 
                 SnapManager &m = desktop->namedview->snap_manager;
-                m.setup(desktop, NULL); //null, because we don't have an item yet
+                m.setup(desktop);
                 Geom::Point pt2g = to_2geom(sc->center);
                 m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
                 sc->center = from_2geom(pt2g);
@@ -298,7 +298,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 Geom::Point motion_dt(to_2geom(event_context->desktop->w2d(motion_w)));
                 
                 SnapManager &m = desktop->namedview->snap_manager;
-                m.setup(desktop, sc->item);
+                m.setup(desktop, true, sc->item);
                 m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
                 sp_spiral_drag(sc, from_2geom(motion_dt), event->motion.state);
 
@@ -442,7 +442,7 @@ sp_spiral_drag(SPSpiralContext *sc, NR::Point p, guint state)
     Geom::Point const p0 = to_2geom(sp_desktop_dt2root_xy_point(desktop, sc->center));
     Geom::Point p1 = to_2geom(sp_desktop_dt2root_xy_point(desktop, p));
     SnapManager &m = desktop->namedview->snap_manager;
-    m.setup(desktop, sc->item);
+    m.setup(desktop, true, sc->item);
     m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p1);
 
     SPSpiral *spiral = SP_SPIRAL(sc->item);
