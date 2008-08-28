@@ -902,6 +902,7 @@ bool ClipboardManagerImpl::_pasteText()
  */
 SPCSSAttr *ClipboardManagerImpl::_parseColor(const Glib::ustring &text)
 {
+// TODO reuse existing code instead of replicating here.
     Glib::ustring::size_type len = text.bytes();
     char *str = const_cast<char *>(text.data());
     bool attempt_alpha = false;
@@ -1060,8 +1061,12 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
 {
     g_assert( _clipboardSPDoc != NULL );
 
-    const Glib::ustring target = sel.get_target();
+    Glib::ustring target = sel.get_target();
     if(target == "") return; // this shouldn't happen
+
+    if (target == CLIPBOARD_TEXT_TARGET) {
+        target = "image/x-inkscape-svg";
+    }
 
     Inkscape::Extension::DB::OutputList outlist;
     Inkscape::Extension::db.get_output_list(outlist);
@@ -1100,6 +1105,10 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
         }
         else
         {
+            if (!(*out)->loaded()) {
+                // Need to load the extension.
+                (*out)->set_state(Inkscape::Extension::Extension::STATE_LOADED);
+            }
             (*out)->save(_clipboardSPDoc, filename);
         }
         g_file_get_contents(filename, &data, &len, NULL);
@@ -1245,8 +1254,18 @@ void ClipboardManagerImpl::_setClipboardTargets()
     Inkscape::Extension::DB::OutputList outlist;
     Inkscape::Extension::db.get_output_list(outlist);
     std::list<Gtk::TargetEntry> target_list;
+    bool plaintextSet = false;
     for (Inkscape::Extension::DB::OutputList::const_iterator out = outlist.begin() ; out != outlist.end() ; ++out) {
-        target_list.push_back(Gtk::TargetEntry( (*out)->get_mimetype() ));
+        if ( !(*out)->deactivated() ) {
+            Glib::ustring mime = (*out)->get_mimetype();
+            if (mime != CLIPBOARD_TEXT_TARGET) {
+                if ( !plaintextSet && (mime.find("svg") == Glib::ustring::npos) ) {
+                    target_list.push_back(Gtk::TargetEntry(CLIPBOARD_TEXT_TARGET));
+                    plaintextSet = true;
+                }
+                target_list.push_back(Gtk::TargetEntry(mime));
+            }
+        }
     }
 
     // Add PNG export explicitly since there is no extension for this...
