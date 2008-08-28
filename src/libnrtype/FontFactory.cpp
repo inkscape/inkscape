@@ -821,7 +821,8 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
         res->Ref();
         AddInCache(res);
     }
-    res->InitTheFace();
+    if(res)
+	res->InitTheFace();
     return res;
 }
 

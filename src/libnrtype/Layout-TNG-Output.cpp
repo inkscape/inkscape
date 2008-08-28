@@ -116,22 +116,24 @@ void Layout::getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform, i
         _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
         NR::Matrix total_transform = glyph_matrix;
         total_transform *= transform;
-        boost::optional<NR::Rect> glyph_rect = _glyphs[glyph_index].span(this).font->BBox(_glyphs[glyph_index].glyph);
-        if (glyph_rect) {
-            NR::Point bmi = glyph_rect->min(), bma = glyph_rect->max();
-            NR::Point tlp(bmi[0],bmi[1]), trp(bma[0],bmi[1]), blp(bmi[0],bma[1]), brp(bma[0],bma[1]);
-            tlp *= total_transform;
-            trp *= total_transform;
-            blp *= total_transform;
-            brp *= total_transform;
-            *glyph_rect = NR::Rect(tlp,trp);
-            glyph_rect->expandTo(blp);
-            glyph_rect->expandTo(brp);
-            if ( (glyph_rect->min())[0] < bounding_box->x0 ) bounding_box->x0=(glyph_rect->min())[0];
-            if ( (glyph_rect->max())[0] > bounding_box->x1 ) bounding_box->x1=(glyph_rect->max())[0];
-            if ( (glyph_rect->min())[1] < bounding_box->y0 ) bounding_box->y0=(glyph_rect->min())[1];
-            if ( (glyph_rect->max())[1] > bounding_box->y1 ) bounding_box->y1=(glyph_rect->max())[1];
-        }
+        if(_glyphs[glyph_index].span(this).font) {
+	    boost::optional<NR::Rect> glyph_rect = _glyphs[glyph_index].span(this).font->BBox(_glyphs[glyph_index].glyph);
+            if (glyph_rect) {
+	        NR::Point bmi = glyph_rect->min(), bma = glyph_rect->max();
+	        NR::Point tlp(bmi[0],bmi[1]), trp(bma[0],bmi[1]), blp(bmi[0],bma[1]), brp(bma[0],bma[1]);
+                tlp *= total_transform;
+                trp *= total_transform;
+                blp *= total_transform;
+                brp *= total_transform;
+                *glyph_rect = NR::Rect(tlp,trp);
+                glyph_rect->expandTo(blp);
+                glyph_rect->expandTo(brp);
+                if ( (glyph_rect->min())[0] < bounding_box->x0 ) bounding_box->x0=(glyph_rect->min())[0];
+                if ( (glyph_rect->max())[0] > bounding_box->x1 ) bounding_box->x1=(glyph_rect->max())[0];
+                if ( (glyph_rect->min())[1] < bounding_box->y0 ) bounding_box->y0=(glyph_rect->min())[1];
+                if ( (glyph_rect->max())[1] > bounding_box->y1 ) bounding_box->y1=(glyph_rect->max())[1];
+            }
+	}
     }
 }
 

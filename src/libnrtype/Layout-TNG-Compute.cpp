@@ -475,9 +475,9 @@ class Layout::Calculator
                 new_span.in_input_stream_item = unbroken_span.input_index;
                 new_span.baseline_shift = _y_offset;
                 new_span.block_progression = _block_progression;
-                if (_flow._input_stream[unbroken_span.input_index]->Type() == TEXT_SOURCE) {
-                    new_span.font = para.pango_items[unbroken_span.pango_item_index].font;
-                    new_span.font->Ref();
+                if ((_flow._input_stream[unbroken_span.input_index]->Type() == TEXT_SOURCE) && (new_span.font = para.pango_items[unbroken_span.pango_item_index].font))
+                    {
+		    new_span.font->Ref();
                     new_span.font_size = unbroken_span.font_size;
                     new_span.direction = para.pango_items[unbroken_span.pango_item_index].item->analysis.level & 1 ? RIGHT_TO_LEFT : LEFT_TO_RIGHT;
                     new_span.input_stream_first_character = Glib::ustring::const_iterator(unbroken_span.input_stream_first_character.base() + it_span->start.char_byte);
@@ -562,7 +562,7 @@ class Layout::Calculator
                             new_glyph.x = x + unbroken_span.glyph_string->glyphs[glyph_index].geometry.x_offset * font_size_multiplier;
                             new_glyph.y = _y_offset + unbroken_span.glyph_string->glyphs[glyph_index].geometry.y_offset * font_size_multiplier;
                             new_glyph.width = unbroken_span.glyph_string->glyphs[glyph_index].geometry.width * font_size_multiplier;
-                            if (new_glyph.width == 0)
+                            if ((new_glyph.width == 0) && (para.pango_items[unbroken_span.pango_item_index].font))
                                 new_glyph.width = new_span.font_size * para.pango_items[unbroken_span.pango_item_index].font->Advance(unbroken_span.glyph_string->glyphs[glyph_index].glyph, false);
                                 // for some reason pango returns zero width for invalid glyph characters (those empty boxes), so go to freetype for the info
                         }
@@ -903,7 +903,8 @@ void Layout::Calculator::_computeFontLineHeight(font_instance *font, double font
         line_height->setZero();
         *line_height_multiplier = 1.0;
     }
-    font->FontMetrics(line_height->ascent, line_height->descent, line_height->leading);
+    else
+	font->FontMetrics(line_height->ascent, line_height->descent, line_height->leading);
     *line_height *= font_size;
 
     // yet another borked SPStyle member that we're going to have to fix ourselves
