@@ -879,44 +879,44 @@ void InkscapePreferences::initPageGrids()
     _grids_notebook.append_page(_grids_xy,     CanvasGrid::getName( GRID_RECTANGULAR ));
     _grids_notebook.append_page(_grids_axonom, CanvasGrid::getName( GRID_AXONOMETRIC ));
         _grids_xy_units.init("options.grids.xy", "units");
-        _grids_xy.add_line( false, _("Grid units"), _grids_xy_units, "", "", false);
+        _grids_xy.add_line( false, _("Grid units:"), _grids_xy_units, "", "", false);
         _grids_xy_origin_x.init("options.grids.xy", "origin_x", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
         _grids_xy_origin_y.init("options.grids.xy", "origin_y", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
-        _grids_xy.add_line( false, _("Origin X"), _grids_xy_origin_x, "", _("X coordinate of grid origin"), false);
-        _grids_xy.add_line( false, _("Origin Y"), _grids_xy_origin_y, "", _("Y coordinate of grid origin"), false);
+        _grids_xy.add_line( false, _("Origin X:"), _grids_xy_origin_x, "", _("X coordinate of grid origin"), false);
+        _grids_xy.add_line( false, _("Origin Y:"), _grids_xy_origin_y, "", _("Y coordinate of grid origin"), false);
         _grids_xy_spacing_x.init("options.grids.xy", "spacing_x", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
         _grids_xy_spacing_y.init("options.grids.xy", "spacing_y", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
-        _grids_xy.add_line( false, _("Spacing X"), _grids_xy_spacing_x, "", _("Distance between vertical grid lines"), false);
-        _grids_xy.add_line( false, _("Spacing Y"), _grids_xy_spacing_y, "", _("Distance between horizontal grid lines"), false);
+        _grids_xy.add_line( false, _("Spacing X:"), _grids_xy_spacing_x, "", _("Distance between vertical grid lines"), false);
+        _grids_xy.add_line( false, _("Spacing Y:"), _grids_xy_spacing_y, "", _("Distance between horizontal grid lines"), false);
 
-        _grids_xy_color.init(_("Grid line color"), "options.grids.xy", "color", 0x0000ff20);
-        _grids_xy.add_line( false, _("Grid line color"), _grids_xy_color, "", _("Color used for normal grid lines"), false);
-        _grids_xy_empcolor.init(_("Major grid line color"), "options.grids.xy", "empcolor", 0x0000ff40);
-        _grids_xy.add_line( false, _("Major grid line color"), _grids_xy_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
+        _grids_xy_color.init(_("Grid line color:"), "options.grids.xy", "color", 0x0000ff20);
+        _grids_xy.add_line( false, _("Grid line color:"), _grids_xy_color, "", _("Color used for normal grid lines"), false);
+        _grids_xy_empcolor.init(_("Major grid line color:"), "options.grids.xy", "empcolor", 0x0000ff40);
+        _grids_xy.add_line( false, _("Major grid line color:"), _grids_xy_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
         _grids_xy_empspacing.init("options.grids.xy", "empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
-        _grids_xy.add_line( false, _("Major grid line every"), _grids_xy_empspacing, "", "", false);
+        _grids_xy.add_line( false, _("Major grid line every:"), _grids_xy_empspacing, "", "", false);
         _grids_xy_dotted.init( _("Show dots instead of lines"), "options.grids.xy", "dotted", false);
         _grids_xy.add_line( false, "", _grids_xy_dotted, "", _("If set, display dots at gridpoints instead of gridlines"), false);
 
     // CanvasAxonomGrid properties:
         _grids_axonom_units.init("options.grids.axonom", "units");
-        _grids_axonom.add_line( false, _("Grid units"), _grids_axonom_units, "", "", false);
+        _grids_axonom.add_line( false, _("Grid units:"), _grids_axonom_units, "", "", false);
         _grids_axonom_origin_x.init("options.grids.axonom", "origin_x", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
         _grids_axonom_origin_y.init("options.grids.axonom", "origin_y", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
-        _grids_axonom.add_line( false, _("Origin X"), _grids_axonom_origin_x, "", _("X coordinate of grid origin"), false);
-        _grids_axonom.add_line( false, _("Origin Y"), _grids_axonom_origin_y, "", _("Y coordinate of grid origin"), false);
+        _grids_axonom.add_line( false, _("Origin X:"), _grids_axonom_origin_x, "", _("X coordinate of grid origin"), false);
+        _grids_axonom.add_line( false, _("Origin Y:"), _grids_axonom_origin_y, "", _("Y coordinate of grid origin"), false);
         _grids_axonom_spacing_y.init("options.grids.axonom", "spacing_y", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
-        _grids_axonom.add_line( false, _("Spacing Y"), _grids_axonom_spacing_y, "", _("Base length of z-axis"), false);
+        _grids_axonom.add_line( false, _("Spacing Y:"), _grids_axonom_spacing_y, "", _("Base length of z-axis"), false);
         _grids_axonom_angle_x.init("options.grids.axonom", "angle_x", -360.0, 360.0, 1.0, 10.0, 30.0, false, false);
         _grids_axonom_angle_z.init("options.grids.axonom", "angle_z", -360.0, 360.0, 1.0, 10.0, 30.0, false, false);
-        _grids_axonom.add_line( false, _("Angle X"), _grids_axonom_angle_x, "", _("Angle of x-axis"), false);
-        _grids_axonom.add_line( false, _("Angle Z"), _grids_axonom_angle_z, "", _("Angle of z-axis"), false);
-        _grids_axonom_color.init(_("Grid line color"), "options.grids.axonom", "color", 0x0000ff20);
-        _grids_axonom.add_line( false, _("Grid line color"), _grids_axonom_color, "", _("Color used for normal grid lines"), false);
-        _grids_axonom_empcolor.init(_("Major grid line color"), "options.grids.axonom", "empcolor", 0x0000ff40);
-        _grids_axonom.add_line( false, _("Major grid line color"), _grids_axonom_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
+        _grids_axonom.add_line( false, _("Angle X:"), _grids_axonom_angle_x, "", _("Angle of x-axis"), false);
+        _grids_axonom.add_line( false, _("Angle Z:"), _grids_axonom_angle_z, "", _("Angle of z-axis"), false);
+        _grids_axonom_color.init(_("Grid line color:"), "options.grids.axonom", "color", 0x0000ff20);
+        _grids_axonom.add_line( false, _("Grid line color:"), _grids_axonom_color, "", _("Color used for normal grid lines"), false);
+        _grids_axonom_empcolor.init(_("Major grid line color:"), "options.grids.axonom", "empcolor", 0x0000ff40);
+        _grids_axonom.add_line( false, _("Major grid line color:"), _grids_axonom_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
         _grids_axonom_empspacing.init("options.grids.axonom", "empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
-        _grids_axonom.add_line( false, _("Major grid line every"), _grids_axonom_empspacing, "", "", false);
+        _grids_axonom.add_line( false, _("Major grid line every:"), _grids_axonom_empspacing, "", "", false);
 
     this->AddPage(_page_grids, _("Grids"), PREFS_PAGE_GRIDS);
 }
@@ -932,7 +932,7 @@ void InkscapePreferences::initPageSVGOutput()
     _page_svgoutput.add_line( false, "", _svgoutput_inlineattrs, "", _("Put attributes on the same line as the element tag"), false);
 
     _svgoutput_indent.init("options.svgoutput", "indent", 0.0, 1000.0, 1.0, 2.0, 2.0, true, false);
-    _page_svgoutput.add_line( false, _("Indent, spaces"), _svgoutput_indent, "", _("The number of spaces to use for indenting nested elements; set to 0 for no indentation"), false);
+    _page_svgoutput.add_line( false, _("Indent, spaces:"), _svgoutput_indent, "", _("The number of spaces to use for indenting nested elements; set to 0 for no indentation"), false);
 
     _page_svgoutput.add_group_header( _("Path data"));
 
@@ -945,10 +945,10 @@ void InkscapePreferences::initPageSVGOutput()
     _page_svgoutput.add_group_header( _("Numbers"));
 
     _svgoutput_numericprecision.init("options.svgoutput", "numericprecision", 1.0, 16.0, 1.0, 2.0, 8.0, true, false);
-    _page_svgoutput.add_line( false, _("Numeric precision"), _svgoutput_numericprecision, "", _("How many digits to write after the decimal dot"), false);
+    _page_svgoutput.add_line( false, _("Numeric precision:"), _svgoutput_numericprecision, "", _("How many digits to write after the decimal dot"), false);
 
     _svgoutput_minimumexponent.init("options.svgoutput", "minimumexponent", -32.0, -1, 1.0, 2.0, -8.0, true, false);
-    _page_svgoutput.add_line( false, _("Minimum exponent"), _svgoutput_minimumexponent, "", _("The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero."), false);
+    _page_svgoutput.add_line( false, _("Minimum exponent:"), _svgoutput_minimumexponent, "", _("The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero."), false);
 
     this->AddPage(_page_svgoutput, _("SVG output"), PREFS_PAGE_SVGOUTPUT);
 }
@@ -984,11 +984,11 @@ void InkscapePreferences::initPageAutosave()
     _autosave_autosave_enable.init( _("Enable autosave (requires restart)"), "options.autosave", "enable", false);
     _page_autosave.add_line(false, "", _autosave_autosave_enable, "", _("Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"), false);
     _autosave_autosave_interval.init("options.autosave", "interval", 1.0, 10800.0, 1.0, 10.0, 10.0, true, false);
-    _page_autosave.add_line(true, _("Interval (in minutes)"), _autosave_autosave_interval, "", _("Interval (in minutes) at which document will be autosaved"), false);
+    _page_autosave.add_line(true, _("Interval (in minutes):"), _autosave_autosave_interval, "", _("Interval (in minutes) at which document will be autosaved"), false);
     _autosave_autosave_path.init("options.autosave", "path", true);
-    _page_autosave.add_line(true, _("Path"), _autosave_autosave_path, "", _("The directory where autosaves will be written"), false);
+    _page_autosave.add_line(true, _("Path:"), _autosave_autosave_path, "", _("The directory where autosaves will be written"), false);
     _autosave_autosave_max.init("options.autosave", "max", 1.0, 100.0, 1.0, 10.0, 10.0, true, false);
-    _page_autosave.add_line(true, _("Maximum number of autosaves"), _autosave_autosave_max, "", _("Maximum number of autosaved files; use this to limit the storage space used"), false);
+    _page_autosave.add_line(true, _("Maximum number of autosaves:"), _autosave_autosave_max, "", _("Maximum number of autosaved files; use this to limit the storage space used"), false);
 
     /* When changing the interval or enabling/disabling the autosave function,
      * update our running configuration
