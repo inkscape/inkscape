@@ -460,11 +460,11 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
             std::vector<double>::const_iterator np = anp.begin();
             unsigned int index = 0;
             for (; np != anp.end(); np++, index++) {
-                bool c1 = true;
-                bool c2 = true;
-                Geom::Point start_pt = desktop->doc2dt((*it_pv).pointAt(floor(*np))); 
-                Geom::Point end_pt = desktop->doc2dt((*it_pv).pointAt(ceil(*np)));
-                
+            	Geom::Curve const *curve = &((*it_pv).at_index(index));
+            	Geom::Point const sp_doc = curve->pointAt(*np);
+           	
+            	bool c1 = true;
+                bool c2 = true;                                
                 if (being_edited) {
                     /* If the path is being edited, then we should only snap though to stationary pieces of the path
                      * and not to the pieces that are being dragged around. This way we avoid 
@@ -472,14 +472,13 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                      * piece are unselected; if they are then this piece must be stationary 
                      */                    
                     g_assert(unselected_nodes != NULL);
+                    Geom::Point start_pt = desktop->doc2dt(curve->pointAt(0)); 
+                    Geom::Point end_pt = desktop->doc2dt(curve->pointAt(1));                                    
                     c1 = isUnselectedNode(start_pt, unselected_nodes);
                     c2 = isUnselectedNode(end_pt, unselected_nodes);
                 }
                 
-                Geom::Curve const *curve = &((*it_pv).at_index(index));
-                Geom::Point const sp_doc = curve->pointAt(*np);
-                Geom::Point const sp_dt = desktop->doc2dt(sp_doc);
-                
+                Geom::Point const sp_dt = desktop->doc2dt(sp_doc);                
                 if (!being_edited || (c1 && c2)) {
                     Geom::Coord const dist = Geom::distance(sp_doc, p_doc);
                     if (dist < getSnapperTolerance()) {
