@@ -164,7 +164,7 @@ draw_page (GtkPrintOperation */*operation*/,
 #endif
 
         bool ret = ctx->setSurfaceTarget (surface, true);        if (ret) {
-            ret = renderer.setupDocument (ctx, junk->_doc);
+            ret = renderer.setupDocument (ctx, junk->_doc, TRUE, NULL);
             if (ret) {
                 renderer.renderItem(ctx, junk->_base);
                 ret = ctx->finish();

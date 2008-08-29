@@ -76,7 +76,7 @@ ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int l
     bool ret = ctx->setPsTarget(filename);
     if(ret) {
         /* Render document */
-        ret = renderer->setupDocument(ctx, doc);
+        ret = renderer->setupDocument(ctx, doc, TRUE, NULL);
         if (ret) {
             renderer->renderItem(ctx, base);
             ret = ctx->finish();

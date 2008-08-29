@@ -621,7 +621,7 @@ CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
 }
 
 bool
-CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc)
+CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool pageBoundingBox, SPItem *base)
 {
     g_assert( ctx != NULL );
 
@@ -635,14 +635,12 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc)
     }
 
     NRRect d;
-    bool pageBoundingBox = true;
-    if (pageBoundingBox) {
+    if (pageBoundingBox || !base) {
         d.x0 = d.y0 = 0;
         d.x1 = ceil(ctx->_width);
         d.y1 = ceil(ctx->_height);
     } else {
-        SPItem* doc_item = SP_ITEM(sp_document_root(doc));
-        sp_item_invoke_bbox(doc_item, &d, sp_item_i2r_affine(doc_item), TRUE);
+        sp_item_invoke_bbox(base, &d, sp_item_i2r_affine(base), TRUE);
         if (ctx->_vector_based_target) {
             // convert from px to pt
             d.x0 *= PT_PER_PX;
@@ -653,7 +651,19 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc)
     }
     TRACE(("%f x %f\n", ctx->_width, ctx->_height));
 
-    return ctx->setupSurface(d.x1-d.x0, d.y1-d.y0);
+    bool ret = ctx->setupSurface(d.x1-d.x0, d.y1-d.y0);
+
+    if (ret && !pageBoundingBox && base)
+    {
+        Geom::Matrix tp(Geom::Translate(-d.x0 * (ctx->_vector_based_target ? PX_PER_PT : 1.0),
+                                    (d.y1 - ctx->_height) * (ctx->_vector_based_target ? PX_PER_PT : 1.0)));
+        ctx->transform(&tp);
+
+        ctx->_width  = d.x1 - d.x0;
+        ctx->_height = d.y1 - d.y0;
+    }
+    
+    return ret;
 }
 
 #include "macros.h" // SP_PRINT_*
