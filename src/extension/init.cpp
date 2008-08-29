@@ -161,9 +161,12 @@ init()
     Internal::EpsOutput::init();
     Internal::PrintPS::init();
 #ifdef HAVE_CAIRO_PDF
+    if (prefs_get_int_attribute("options.useoldpdfexporter", "value", 1) == 1) {
+    //g_print ("Using CairoPdfOutput: old pdf exporter\n");
     Internal::CairoPdfOutput::init();
     Internal::PrintCairoPDF::init();
-    if (0) {
+    } else {
+    //g_print ("Using CairoRendererPdfOutput: new pdf exporter\n");
     Internal::CairoRendererPdfOutput::init();
     Internal::CairoRendererOutput::init();
     }
