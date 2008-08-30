@@ -486,22 +486,22 @@ static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
     }
 
-    NR::Rect const r = Inkscape::snap_rectangular_box(desktop, rc.item, pt, rc.center, state);
+    Geom::Rect const r = Inkscape::snap_rectangular_box(desktop, rc.item, pt, rc.center, state);
 
-    sp_rect_position_set(SP_RECT(rc.item), r.min()[NR::X], r.min()[NR::Y], r.dimensions()[NR::X], r.dimensions()[NR::Y]);
+    sp_rect_position_set(SP_RECT(rc.item), r.min()[Geom::X], r.min()[Geom::Y], r.dimensions()[Geom::X], r.dimensions()[Geom::Y]);
     if ( rc.rx != 0.0 ) {
         sp_rect_set_rx (SP_RECT(rc.item), TRUE, rc.rx);
     }
     if ( rc.ry != 0.0 ) {
         if (rc.rx == 0.0)
-            sp_rect_set_ry (SP_RECT(rc.item), TRUE, CLAMP(rc.ry, 0, MIN(r.dimensions()[NR::X], r.dimensions()[NR::Y])/2));
+            sp_rect_set_ry (SP_RECT(rc.item), TRUE, CLAMP(rc.ry, 0, MIN(r.dimensions()[Geom::X], r.dimensions()[Geom::Y])/2));
         else
-            sp_rect_set_ry (SP_RECT(rc.item), TRUE, CLAMP(rc.ry, 0, r.dimensions()[NR::Y]));
+            sp_rect_set_ry (SP_RECT(rc.item), TRUE, CLAMP(rc.ry, 0, r.dimensions()[Geom::Y]));
     }
 
     // status text
-    double rdimx = r.dimensions()[NR::X];
-    double rdimy = r.dimensions()[NR::Y];
+    double rdimx = r.dimensions()[Geom::X];
+    double rdimy = r.dimensions()[Geom::Y];
     GString *xs = SP_PX_TO_METRIC_STRING(rdimx, desktop->namedview->getDefaultMetric());
     GString *ys = SP_PX_TO_METRIC_STRING(rdimy, desktop->namedview->getDefaultMetric());
     if (state & GDK_CONTROL_MASK) {

@@ -441,7 +441,7 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
         ctrl_save = true;
         state = state ^ GDK_CONTROL_MASK;
     }
-    NR::Rect r = Inkscape::snap_rectangular_box(desktop, ac->item, pt, ac->center, state);
+    Geom::Rect r = Inkscape::snap_rectangular_box(desktop, ac->item, pt, ac->center, state);
     if (ctrl_save) {
         state = state ^ GDK_CONTROL_MASK;
     }
@@ -456,23 +456,23 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
                 Geom::Point new_dir = pt * i2d - c;
                 new_dir[Geom::X] *= dir[Geom::Y] / dir[Geom::X];
                 double lambda = new_dir.length() / dir[Geom::Y];
-                r = NR::Rect (c - lambda*dir, c + lambda*dir);
+                r = Geom::Rect (c - lambda*dir, c + lambda*dir);
             }
         } else {
             /* with Alt+Ctrl (without Shift) we generate a perfect circle
                with diameter click point <--> mouse pointer */
                 double l = dir.length();
                 Geom::Point d (l, l);
-                r = NR::Rect (c - d, c + d);
+                r = Geom::Rect (c - d, c + d);
         }
     }
 
     sp_arc_position_set(SP_ARC(ac->item),
-                        r.midpoint()[NR::X], r.midpoint()[NR::Y],
-                        r.dimensions()[NR::X] / 2, r.dimensions()[NR::Y] / 2);
+                        r.midpoint()[Geom::X], r.midpoint()[Geom::Y],
+                        r.dimensions()[Geom::X] / 2, r.dimensions()[Geom::Y] / 2);
 
-    double rdimx = r.dimensions()[NR::X];
-    double rdimy = r.dimensions()[NR::Y];
+    double rdimx = r.dimensions()[Geom::X];
+    double rdimy = r.dimensions()[Geom::Y];
     GString *xs = SP_PX_TO_METRIC_STRING(rdimx, desktop->namedview->getDefaultMetric());
     GString *ys = SP_PX_TO_METRIC_STRING(rdimy, desktop->namedview->getDefaultMetric());
     if (state & GDK_CONTROL_MASK) {

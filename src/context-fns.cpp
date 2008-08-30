@@ -77,10 +77,10 @@ bool Inkscape::have_viable_layer(SPDesktop *desktop, MessageStack *message)
 }
 
 
-NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
-                                        NR::Point const &pt, NR::Point const &center, int state)
+Geom::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
+                                        Geom::Point const &pt, Geom::Point const &center, int state)
 {
-    NR::Point p[2];
+    Geom::Point p[2];
 
     bool const shift = state & GDK_SHIFT_MASK;
     bool const control = state & GDK_CONTROL_MASK;
@@ -94,26 +94,26 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
         /* Control is down: we are constrained to producing integer-ratio rectangles */
 
         /* Vector from the centre of the box to the point we are dragging to */
-        NR::Point delta = pt - center;
+        Geom::Point delta = pt - center;
 
         /* Round it so that we have an integer-ratio (or golden ratio) box */
-        if (fabs(delta[NR::X]) > fabs(delta[NR::Y]) && (delta[NR::Y] != 0.0)) {
-            double ratio = delta[NR::X] / delta[NR::Y];
+        if (fabs(delta[Geom::X]) > fabs(delta[Geom::Y]) && (delta[Geom::Y] != 0.0)) {
+            double ratio = delta[Geom::X] / delta[Geom::Y];
             double ratioabs = fabs (ratio);
             double sign = (ratio < 0 ? -1 : 1);
             if (midpt_1_goldenratio < ratioabs && ratioabs < midpt_goldenratio_2) {
-                delta[NR::X] = sign * goldenratio * delta[NR::Y];
+                delta[Geom::X] = sign * goldenratio * delta[Geom::Y];
             } else {
-                delta[NR::X] = floor(ratio + 0.5) * delta[NR::Y];
+                delta[Geom::X] = floor(ratio + 0.5) * delta[Geom::Y];
             }
-        } else if (delta[NR::X] != 0.0) {
-            double ratio = delta[NR::Y] / delta[NR::X];
+        } else if (delta[Geom::X] != 0.0) {
+            double ratio = delta[Geom::Y] / delta[Geom::X];
             double ratioabs = fabs (ratio);
             double sign = (ratio < 0 ? -1 : 1);
             if (midpt_1_goldenratio < ratioabs && ratioabs < midpt_goldenratio_2) {
-                delta[NR::Y] = sign * goldenratio * delta[NR::X];
+                delta[Geom::Y] = sign * goldenratio * delta[Geom::X];
             } else {
-                delta[NR::Y] = floor(delta[NR::Y] / delta[NR::X] + 0.5) * delta[NR::X];
+                delta[Geom::Y] = floor(delta[Geom::Y] / delta[Geom::X] + 0.5) * delta[Geom::X];
             }
         }
 
@@ -210,19 +210,19 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
     p[0] = sp_desktop_dt2root_xy_point(desktop, p[0]);
     p[1] = sp_desktop_dt2root_xy_point(desktop, p[1]);
     
-    return NR::Rect(NR::Point(MIN(p[0][NR::X], p[1][NR::X]), MIN(p[0][NR::Y], p[1][NR::Y])),
-                    NR::Point(MAX(p[0][NR::X], p[1][NR::X]), MAX(p[0][NR::Y], p[1][NR::Y])));
+    return Geom::Rect(Geom::Point(MIN(p[0][Geom::X], p[1][Geom::X]), MIN(p[0][Geom::Y], p[1][Geom::Y])),
+                    Geom::Point(MAX(p[0][Geom::X], p[1][Geom::X]), MAX(p[0][Geom::Y], p[1][Geom::Y])));
 }
 
 
 
-NR::Point Inkscape::setup_for_drag_start(SPDesktop *desktop, SPEventContext* ec, GdkEvent *ev)
+Geom::Point Inkscape::setup_for_drag_start(SPDesktop *desktop, SPEventContext* ec, GdkEvent *ev)
 {
     ec->xp = static_cast<gint>(ev->button.x);
     ec->yp = static_cast<gint>(ev->button.y);
     ec->within_tolerance = true;
 
-    NR::Point const p(ev->button.x, ev->button.y);
+    Geom::Point const p(ev->button.x, ev->button.y);
     ec->item_to_select = sp_event_context_find_item(desktop, p, ev->button.state & GDK_MOD1_MASK, TRUE);
     return ec->desktop->w2d(p);
 }

@@ -1,5 +1,19 @@
+#ifndef SEEN_CONTEXT_FNS_H
+#define SEEN_CONTEXT_FNS_H
+
+/*
+ * <description>
+ *
+ * Authors:
+ *
+ * Copyright (C) 
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
+
 #include <gdk/gdkevents.h>
-#include "libnr/nr-rect.h"
+#include <2geom/forward.h>
+
 struct SPDesktop;
 struct SPItem;
 
@@ -13,11 +27,13 @@ class MessageStack;
 
 extern bool have_viable_layer(SPDesktop *desktop, MessageContext *message);
 extern bool have_viable_layer(SPDesktop *desktop, MessageStack *message);
-::NR::Rect snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
-                              NR::Point const &pt, NR::Point const &center, int state);
-NR::Point setup_for_drag_start(SPDesktop *desktop, SPEventContext* ec, GdkEvent *ev);
+Geom::Rect snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
+                              Geom::Point const &pt, Geom::Point const &center, int state);
+Geom::Point setup_for_drag_start(SPDesktop *desktop, SPEventContext* ec, GdkEvent *ev);
 
 }
+
+#endif // !SEEN_CONTEXT_FNS_H
 
 /*
   Local Variables:
