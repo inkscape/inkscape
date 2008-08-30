@@ -25,7 +25,6 @@
 #include "sp-item.h"
 #include "sp-use.h"
 #include "display/curve.h"
-#include "desktop.h"
 #include "inkscape.h"
 #include "prefs-utils.h"
 #include "sp-text.h"
@@ -90,8 +89,6 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
         return;        
     }
     
-    SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
-
     if (first_point) {
         _candidates->clear();
     }
@@ -100,7 +97,8 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
     bbox_to_snap_incl.expandBy(getSnapperTolerance()); // see?
     
     for (SPObject* o = sp_object_first_child(parent); o != NULL; o = SP_OBJECT_NEXT(o)) {
-        if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !(desktop->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
+        g_assert(_desktop != NULL);
+    	if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !(_desktop->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
             // Don't snap to locked items, and
             // don't snap to hidden objects, unless they're a clipped path or a mask
             /* See if this item is on the ignore list */
@@ -414,16 +412,8 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
     _collectPaths(t, first_point);
     // Now we can finally do the real snapping, using the paths collected above
     
-    /* FIXME: this seems like a hack.  Perhaps Snappers should be
-    ** in SPDesktop rather than SPNamedView?
-    */
-    // TODO Diederik: shouldn't we just make all snapping code use document
-    // coordinates instead? Then we won't need a pointer to the desktop any longer
-    // At least we should define a clear boundary between those different coordinates,
-    // now this is not well defined
-    
-    SPDesktop const *desktop = SP_ACTIVE_DESKTOP;    
-    Geom::Point const p_doc = desktop->dt2doc(p);
+    g_assert(_desktop != NULL);    
+    Geom::Point const p_doc = _desktop->dt2doc(p);
     
     bool const node_tool_active = _snap_to_itempath && selected_path != NULL;
     
@@ -472,13 +462,13 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                      * piece are unselected; if they are then this piece must be stationary 
                      */                    
                     g_assert(unselected_nodes != NULL);
-                    Geom::Point start_pt = desktop->doc2dt(curve->pointAt(0)); 
-                    Geom::Point end_pt = desktop->doc2dt(curve->pointAt(1));                                    
+                    Geom::Point start_pt = _desktop->doc2dt(curve->pointAt(0)); 
+                    Geom::Point end_pt = _desktop->doc2dt(curve->pointAt(1));                                    
                     c1 = isUnselectedNode(start_pt, unselected_nodes);
                     c2 = isUnselectedNode(end_pt, unselected_nodes);
                 }
                 
-                Geom::Point const sp_dt = desktop->doc2dt(sp_doc);                
+                Geom::Point const sp_dt = _desktop->doc2dt(sp_doc);                
                 if (!being_edited || (c1 && c2)) {
                     Geom::Coord const dist = Geom::distance(sp_doc, p_doc);
                     if (dist < getSnapperTolerance()) {
@@ -521,11 +511,8 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     
     // Now we can finally do the real snapping, using the paths collected above
     
-    /* FIXME: this seems like a hack.  Perhaps Snappers should be
-    ** in SPDesktop rather than SPNamedView?
-    */
-    SPDesktop const *desktop = SP_ACTIVE_DESKTOP;    
-    Geom::Point const p_doc = desktop->dt2doc(p);    
+    g_assert(_desktop != NULL);
+    Geom::Point const p_doc = _desktop->dt2doc(p);    
     
     Geom::Point direction_vector = c.getDirection();
     if (!is_zero(direction_vector)) {
@@ -539,8 +526,8 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     // must lie within two points on the constraintline: p_min_on_cl and p_max_on_cl
     // The distance between those points is twice the snapping tolerance
     Geom::Point const p_proj_on_cl = project_on_linesegment(p, p1_on_cl, p2_on_cl);
-    Geom::Point const p_min_on_cl = desktop->dt2doc(p_proj_on_cl - getSnapperTolerance() * direction_vector);    
-    Geom::Point const p_max_on_cl = desktop->dt2doc(p_proj_on_cl + getSnapperTolerance() * direction_vector);
+    Geom::Point const p_min_on_cl = _desktop->dt2doc(p_proj_on_cl - getSnapperTolerance() * direction_vector);    
+    Geom::Point const p_max_on_cl = _desktop->dt2doc(p_proj_on_cl + getSnapperTolerance() * direction_vector);
     
     Geom::Path cl;
     std::vector<Geom::Path> clv;    
@@ -560,8 +547,8 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                         Geom::Point p_inters = p_min_on_cl + ((*m).ta) * (p_max_on_cl - p_min_on_cl);
                         // When it's within snapping range, then return it
                         // (within snapping range == between p_min_on_cl and p_max_on_cl == 0 < ta < 1)                        
-                        Geom::Coord dist = Geom::L2(desktop->dt2doc(p_proj_on_cl) - p_inters);
-                        SnappedPoint s(desktop->doc2dt(p_inters), SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
+                        Geom::Coord dist = Geom::L2(_desktop->dt2doc(p_proj_on_cl) - p_inters);
+                        SnappedPoint s(_desktop->doc2dt(p_inters), SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
                         sc.points.push_back(s);
                     }  
                 } 

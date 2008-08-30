@@ -17,6 +17,7 @@
 #include "snapper.h"
 #include "sp-path.h"
 #include "splivarot.h"
+#include "desktop.h"
 
 struct SPNamedView;
 struct SPItem;
@@ -69,6 +70,7 @@ public:
       void setIncludeItemCenter(bool s) {_include_item_center = s;}
       bool getIncludeItemCenter() const {return _include_item_center;}
       void setStrictSnapping(bool enabled) {_strict_snapping = enabled;}
+      void setDesktop(SPDesktop const *desktop) {_desktop = desktop;}
       void guideSnap(SnappedConstraints &sc,
                    Geom::Point const &p,
                  Geom::Point const &guide_normal) const;
@@ -108,9 +110,9 @@ private:
   
     void _snapNodes(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t,
-                      Geom::Point const &p, 
+                      Geom::Point const &p, // in desktop coordinates
                       bool const &first_point,
-                      std::vector<Geom::Point> *unselected_nodes) const;
+                      std::vector<Geom::Point> *unselected_nodes) const; // in desktop coordinates
                       
     void _snapTranslatingGuideToNodes(SnappedConstraints &sc,
                      Inkscape::Snapper::PointType const &t,
@@ -122,14 +124,14 @@ private:
   
     void _snapPaths(SnappedConstraints &sc,
                       Inkscape::Snapper::PointType const &t, 
-                      Geom::Point const &p,
+                      Geom::Point const &p,	// in desktop coordinates
                       bool const &first_point,
-                      std::vector<Geom::Point> *unselected_nodes,
+                      std::vector<Geom::Point> *unselected_nodes, // in desktop coordinates
                       SPPath const *selected_path) const;
                       
     void _snapPathsConstrained(SnappedConstraints &sc,
                  Inkscape::Snapper::PointType const &t,
-                 Geom::Point const &p,
+                 Geom::Point const &p, // in desktop coordinates
                  bool const &first_point,
                  ConstraintLine const &c) const;
   
@@ -155,6 +157,7 @@ private:
     //(snapping to grids and guides is not affected by this)
     bool _strict_snapping; 
     bool _include_item_center;
+    SPDesktop const *_desktop;
 };
 
 }
