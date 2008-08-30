@@ -9002,15 +9002,15 @@ msgstr[1] "<b>Groeien van %d</b> geselecteerde objecten"
 #, c-format
 msgid "<b>Attracting %d</b> selected object"
 msgid_plural "<b>Attracting %d</b> selected objects"
-msgstr[0] "Aantrekken van %d</b> geselecteerd object"
-msgstr[1] "Aantrekken van %d</b> geselecteerde objecten"
+msgstr[0] "<b>Aantrekken van %d</b> geselecteerd object"
+msgstr[1] "<b>Aantrekken van %d</b> geselecteerde objecten"
 
 #: ../src/tweak-context.cpp:985
 #, c-format
 msgid "<b>Repelling %d</b> selected object"
 msgid_plural "<b>Repelling %d</b> selected objects"
-msgstr[0] "Afstoten van %d</b> geselecteerd object"
-msgstr[1] "Afstoten van %d</b> geselecteerde objecten"
+msgstr[0] "<b>Afstoten van %d</b> geselecteerd object"
+msgstr[1] "<b>Afstoten van %d</b> geselecteerde objecten"
 
 #: ../src/tweak-context.cpp:990
 #, c-format
@@ -9206,13 +9206,13 @@ msgstr "about.svg"
 #: ../src/ui/dialog/aboutbox.cpp:338
 msgid "translator-credits"
 msgstr ""
-"Foppe Benedictus <foppe.benedictus@gmail.com>, 2007, 2008.\n"
-"Myckel Habets <myckel@sdf.lonestar.org>, 2008.\n"
+"Foppe Benedictus (foppe.benedictus@gmail.com), 2007, 2008.\n"
+"Myckel Habets (myckel@sdf.lonestar.org), 2008.\n"
 "\n"
 "Vorige vertalers:\n"
-"Ruud Steltenpool <svg@steltenpower.com>, 2006.\n"
-"Jeroen van der Vegt <ajvdvegt@123mail.org>, 2003, 2005.\n"
-"Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>, 2003."
+"Ruud Steltenpool (svg@steltenpower.com), 2006.\n"
+"Jeroen van der Vegt (ajvdvegt@123mail.org), 2003, 2005.\n"
+"Vincent van Adrighem (V.vanAdrighem@dirck.mine.nu), 2003."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:234
 #: ../src/ui/dialog/align-and-distribute.cpp:776
