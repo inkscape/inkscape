@@ -17,7 +17,7 @@
 
 #include <sigc++/connection.h>
 
-#include <libnr/nr-point.h>
+#include <2geom/point.h>
 #include "event-context.h"
 
 #define SP_TYPE_ARC_CONTEXT            (sp_arc_context_get_type())
@@ -31,7 +31,7 @@ class SPArcContextClass;
 
 struct SPArcContext : public SPEventContext {
     SPItem *item;
-    NR::Point center;
+    Geom::Point center;
 
     sigc::connection sel_changed_connection;
 

@@ -52,7 +52,7 @@ static void sp_arc_context_setup(SPEventContext *ec);
 static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 static gint sp_arc_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
 
-static void sp_arc_drag(SPArcContext *ec, NR::Point pt, guint state);
+static void sp_arc_drag(SPArcContext *ec, Geom::Point pt, guint state);
 static void sp_arc_finish(SPArcContext *ec);
 
 static SPEventContextClass *parent_class;
@@ -290,8 +290,8 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 // motion notify coordinates as given (no snapping back to origin)
                 event_context->within_tolerance = false;
 
-                NR::Point const motion_w(event->motion.x, event->motion.y);
-                NR::Point motion_dt(desktop->w2d(motion_w));
+                Geom::Point const motion_w(event->motion.x, event->motion.y);
+                Geom::Point motion_dt(desktop->w2d(motion_w));
                 
                 sp_arc_drag(ac, motion_dt, event->motion.state);
 
@@ -408,7 +408,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
     return ret;
 }
 
-static void sp_arc_drag(SPArcContext *ac, NR::Point pt, guint state)
+static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(ac)->desktop;
 
@@ -446,23 +446,23 @@ static void sp_arc_drag(SPArcContext *ac, NR::Point pt, guint state)
         state = state ^ GDK_CONTROL_MASK;
     }
 
-    NR::Point dir = r.dimensions() / 2;
+    Geom::Point dir = r.dimensions() / 2;
     if (state & GDK_MOD1_MASK) {
         /* With Alt let the ellipse pass through the mouse pointer */
-        NR::Point c = r.midpoint();
+        Geom::Point c = r.midpoint();
         if (!ctrl_save) {
-            if (fabs(dir[NR::X]) > 1E-6 && fabs(dir[NR::Y]) > 1E-6) {
-                NR::Matrix const i2d (sp_item_i2d_affine (ac->item));
-                NR::Point new_dir = pt * i2d - c;
-                new_dir[NR::X] *= dir[NR::Y] / dir[NR::X];
-                double lambda = NR::L2(new_dir) / dir[NR::Y];
+            if (fabs(dir[Geom::X]) > 1E-6 && fabs(dir[Geom::Y]) > 1E-6) {
+                Geom::Matrix const i2d (sp_item_i2d_affine (ac->item));
+                Geom::Point new_dir = pt * i2d - c;
+                new_dir[Geom::X] *= dir[Geom::Y] / dir[Geom::X];
+                double lambda = new_dir.length() / dir[Geom::Y];
                 r = NR::Rect (c - lambda*dir, c + lambda*dir);
             }
         } else {
             /* with Alt+Ctrl (without Shift) we generate a perfect circle
                with diameter click point <--> mouse pointer */
-                double l = NR::L2 (dir);
-                NR::Point d = NR::Point (l, l);
+                double l = dir.length();
+                Geom::Point d (l, l);
                 r = NR::Rect (c - d, c + d);
         }
     }
