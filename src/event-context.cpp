@@ -27,6 +27,8 @@
 # include "config.h"
 #endif
 
+#include "event-context.h"
+
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkmain.h>
@@ -55,8 +57,6 @@
 #include "selcue.h"
 #include "node-context.h"
 #include "lpe-tool-context.h"
-
-#include "event-context.h"
 
 static void sp_event_context_class_init(SPEventContextClass *klass);
 static void sp_event_context_init(SPEventContext *event_context);
@@ -333,7 +333,7 @@ static gdouble accelerate_scroll(GdkEvent *event, gdouble acceleration, SPCanvas
  */
 static gint sp_event_context_private_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
-    static NR::Point button_w;
+    static Geom::Point button_w;
     static unsigned int panning = 0;
     static unsigned int zoom_rb = 0;
 
@@ -370,7 +370,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             yp = (gint) event->button.y;
             within_tolerance = true;
 
-            button_w = NR::Point(event->button.x, event->button.y);
+            button_w = Geom::Point(event->button.x, event->button.y);
 
             switch (event->button.button) {
                 case 1:
@@ -440,14 +440,14 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                                          GDK_BUTTON2_MASK :
                                          (panning == 1 ? GDK_BUTTON1_MASK : GDK_BUTTON3_MASK));
 
-                    NR::Point const motion_w(event->motion.x, event->motion.y);
-                    NR::Point const moved_w( motion_w - button_w );
+                    Geom::Point const motion_w(event->motion.x, event->motion.y);
+                    Geom::Point const moved_w( motion_w - button_w );
                     event_context->desktop->scroll_world(moved_w, true); // we're still scrolling, do not redraw
                     ret = TRUE;
                 }
             } else if (zoom_rb) {
-                NR::Point const motion_w(event->motion.x, event->motion.y);
-                NR::Point const motion_dt(desktop->w2d(motion_w));
+                Geom::Point const motion_w(event->motion.x, event->motion.y);
+                Geom::Point const motion_dt(desktop->w2d(motion_w));
 
                 if ( within_tolerance
                      && ( abs( (gint) event->motion.x - xp ) < tolerance )
@@ -477,8 +477,8 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
                 }
-                NR::Point const event_w(event->button.x, event->button.y);
-                NR::Point const event_dt(desktop->w2d(event_w));
+                Geom::Point const event_w(event->button.x, event->button.y);
+                Geom::Point const event_dt(desktop->w2d(event_w));
                 desktop->zoom_relative_keep_point(event_dt,
                           (event->button.state & GDK_SHIFT_MASK) ? 1/zoom_inc : zoom_inc);
                 desktop->updateNow();
@@ -492,8 +492,8 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 // to make up for this, we scroll it once again to the button-up event coordinates
                 // (i.e. canvas will always get scrolled all the way to the mouse release point, 
                 // even if few intermediate steps were visible)
-                NR::Point const motion_w(event->button.x, event->button.y);
-                NR::Point const moved_w( motion_w - button_w );
+                Geom::Point const motion_w(event->button.x, event->button.y);
+                Geom::Point const moved_w( motion_w - button_w );
                 event_context->desktop->scroll_world(moved_w);
                 desktop->updateNow();
                 ret = TRUE;
@@ -664,7 +664,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                         break;
                 }
                 if (rel_zoom != 0.0) {
-                    NR::Point const scroll_dt = desktop->point();
+                    Geom::Point const scroll_dt = desktop->point();
                     desktop->zoom_relative_keep_point(scroll_dt, rel_zoom);
                 }
 
@@ -907,8 +907,8 @@ static void set_event_location(SPDesktop *desktop, GdkEvent *event)
         return;
     }
 
-    NR::Point const button_w(event->button.x, event->button.y);
-    NR::Point const button_dt(desktop->w2d(button_w));
+    Geom::Point const button_w(event->button.x, event->button.y);
+    Geom::Point const button_dt(desktop->w2d(button_w));
     desktop-> setPosition (button_dt);
     desktop->set_coordinate_status(button_dt);
 }
@@ -1004,7 +1004,7 @@ get_group0_keyval(GdkEventKey *event)
  * into_groups.
  */
 SPItem *
-sp_event_context_find_item (SPDesktop *desktop, NR::Point const p,
+sp_event_context_find_item (SPDesktop *desktop, Geom::Point const &p,
         bool select_under, bool into_groups)
 {
     SPItem *item;
@@ -1028,7 +1028,7 @@ sp_event_context_find_item (SPDesktop *desktop, NR::Point const p,
  * Honors into_groups.
  */
 SPItem *
-sp_event_context_over_item (SPDesktop *desktop, SPItem *item, NR::Point const p)
+sp_event_context_over_item (SPDesktop *desktop, SPItem *item, Geom::Point const &p)
 {
     GSList *temp = NULL;
     temp = g_slist_prepend (temp, item);

@@ -21,7 +21,7 @@
 #include <gdk/gdktypes.h>
 #include <gdk/gdkevents.h>
 
-#include <libnr/nr-forward.h>
+#include <2geom/forward.h>
 
 struct GrDrag;
 struct SPDesktop;
@@ -116,8 +116,8 @@ void sp_event_show_modifier_tip(Inkscape::MessageContext *message_context, GdkEv
 
 guint get_group0_keyval(GdkEventKey *event);
 
-SPItem *sp_event_context_find_item (SPDesktop *desktop, NR::Point const p, bool select_under, bool into_groups);
-SPItem *sp_event_context_over_item (SPDesktop *desktop, SPItem *item, NR::Point const p);
+SPItem *sp_event_context_find_item (SPDesktop *desktop, Geom::Point const &p, bool select_under, bool into_groups);
+SPItem *sp_event_context_over_item (SPDesktop *desktop, SPItem *item, Geom::Point const &p);
 
 ShapeEditor *sp_event_context_get_shape_editor (SPEventContext *ec);
 
