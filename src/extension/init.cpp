@@ -157,7 +157,7 @@ init()
     /* TODO: Change to Internal */
     Internal::Svg::init();
     Internal::Svgz::init();
-    Internal::PsOutput::init();
+    //Internal::PsOutput::init(); // disabled, to be deleted, replaced by CairoPsOutput
     Internal::EpsOutput::init();
     Internal::PrintPS::init();
 #ifdef HAVE_CAIRO_PDF
