@@ -52,7 +52,6 @@ Geom::PathVector* pathvector_for_curve(SPItem *item, SPCurve *curve, bool doTran
 SPCurve *curve_for_item(SPItem *item);
 boost::optional<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p, unsigned seg = 0);
 NR::Point get_point_on_Path(Path *path, int piece, double t);
-Path *bpath_to_Path(NArtBpath const *bpath);
 
 #endif
 

@@ -43,16 +43,10 @@
 #include <glibmm/i18n.h>
 #include "prefs-utils.h"
 
-#include "libnr/n-art-bpath.h"
-#include "libnr/nr-path.h"
 #include "xml/repr.h"
 #include "xml/repr-sorting.h"
 #include <2geom/pathvector.h>
-#include <libnr/nr-matrix-fns.h>
-#include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-matrix-translate-ops.h>
 #include <libnr/nr-scale-matrix-ops.h>
-#include <libnr/n-art-bpath-2geom.h>
 #include "helper/geom.h"
 
 #include "livarot/Path.h"
@@ -1851,64 +1845,6 @@ SPCurve* curve_for_item(SPItem *item)
     }
     
     return curve; // do not forget to unref the curve at some point!
-}
-
-Path *bpath_to_Path(NArtBpath const *bpath) 
-{
-    Path *dest = new Path;
-    dest->SetBackData(false);
-    {
-        int   i;
-        bool  closed = false;
-        float lastX  = 0.0;
-        float lastY  = 0.0;
-
-        for (i = 0; bpath[i].code != NR_END; i++) {
-            switch (bpath[i].code) {
-                case NR_LINETO:
-                    lastX = bpath[i].x3;
-                    lastY = bpath[i].y3;
-                    {
-                        NR::Point tmp(lastX, lastY);
-                        dest->LineTo(tmp);
-                    }
-                    break;
-
-                case NR_CURVETO:
-                {
-                    NR::Point tmp, tms, tme;
-                    tmp[0]=bpath[i].x3;
-                    tmp[1]=bpath[i].y3;
-                    tms[0]=3 * (bpath[i].x1 - lastX);
-                    tms[1]=3 * (bpath[i].y1 - lastY);
-                    tme[0]=3 * (bpath[i].x3 - bpath[i].x2);
-                    tme[1]=3 * (bpath[i].y3 - bpath[i].y2);
-                    dest->CubicTo(tmp,tms,tme);
-                }
-                lastX = bpath[i].x3;
-                lastY = bpath[i].y3;
-                break;
-
-                case NR_MOVETO_OPEN:
-                case NR_MOVETO:
-                    if (closed)
-                        dest->Close();
-                    closed = (bpath[i].code == NR_MOVETO);
-                    lastX = bpath[i].x3;
-                    lastY = bpath[i].y3;
-                    {
-                        NR::Point  tmp(lastX, lastY);
-                        dest->MoveTo(tmp);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        if (closed)
-            dest->Close();
-    }
-    return dest;
 }
 
 boost::optional<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p, unsigned seg)
