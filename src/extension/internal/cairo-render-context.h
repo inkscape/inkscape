@@ -55,6 +55,7 @@ struct CairoRenderState {
     unsigned int parent_has_userspace : 1;  // whether the parent's ctm should be applied
     float opacity;
     bool has_filtereffect;
+    Geom::Matrix item_transform;     // this item's item->transform, for correct clipping
 
     SPClipPath *clip_path;
     SPMask* mask;

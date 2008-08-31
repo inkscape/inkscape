@@ -586,6 +586,7 @@ CairoRenderer::setStateForItem(CairoRenderContext *ctx, SPItem const *item)
     CairoRenderState *state = ctx->getCurrentState();
     state->clip_path = item->clip_ref->getObject();
     state->mask = item->mask_ref->getObject();
+    state->item_transform = Geom::Matrix (item->transform);
 
     // If parent_has_userspace is true the parent state's transform
     // has to be used for the mask's/clippath's context.
@@ -696,7 +697,17 @@ CairoRenderer::applyClipPath(CairoRenderContext *ctx, SPClipPath const *cp)
     for (SPObject *child = sp_object_first_child(co) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
         if (SP_IS_ITEM(child)) {
             SPItem *item = SP_ITEM(child);
-            renderItem(ctx, item);
+
+            // combine transform of the item in clippath and the item using clippath:
+            Geom::Matrix tempmat (item->transform);
+            tempmat = tempmat * (ctx->getCurrentState()->item_transform);
+
+            // render this item in clippath
+            ctx->pushState();
+            ctx->transform(&tempmat);
+            setStateForItem(ctx, item);
+            sp_item_invoke_render(item, ctx);
+            ctx->popState();
         }
     }
     TRACE(("END clip\n"));
