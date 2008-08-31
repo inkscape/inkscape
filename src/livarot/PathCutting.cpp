@@ -29,6 +29,9 @@
 #include <2geom/curves.h>
 #include "../display/canvas-bpath.h"
 #include "helper/geom-curves.h"
+#include "helper/geom.h"
+
+#include "svg/svg.h"
 
 void  Path::DashPolyline(float head,float tail,float body,int nbD,float *dashs,bool stPlain,float stOffset)
 {
@@ -424,6 +427,7 @@ void  Path::LoadPath(Geom::Path const &path, Geom::Matrix const &tr, bool doTran
 
     // TODO: this can be optimized by not generating a new path here, but doing the transform in AddCurve
     //       directly on the curve parameters
+
     Geom::Path const pathtr = doTransformation ? path * tr : path;
 
     MoveTo( pathtr.initialPoint() );
@@ -452,8 +456,19 @@ void  Path::LoadPathVector(Geom::PathVector const &pv, Geom::Matrix const &tr, b
 {
     SetBackData (false);
     Reset();
-    for(Geom::PathVector::const_iterator it = pv.begin(); it != pv.end(); ++it) {
-        LoadPath(*it, tr, doTransformation, true);
+
+    // FIXME: 2geom is currently unable to maintain SVGElliptical arcs through transformation, and
+    // sometimes it crashes on a continuity error during conversions, therefore convert to beziers here.
+    // (the fix is of course to fix 2geom and then remove this if-statement, and just execute the 'else'-clause)
+    if (doTransformation) {
+        Geom::PathVector pvbezier = pathv_to_linear_and_cubic_beziers(pv);
+        for(Geom::PathVector::const_iterator it = pvbezier.begin(); it != pvbezier.end(); ++it) {
+            LoadPath(*it, tr, doTransformation, true);
+        }
+    } else {
+        for(Geom::PathVector::const_iterator it = pv.begin(); it != pv.end(); ++it) {
+            LoadPath(*it, tr, doTransformation, true);
+        }
     }
 }
 
