@@ -24,6 +24,7 @@
 #include "svg/stringstream.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-rect.h"
+#include <2geom/pathvector.h>
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -46,16 +47,14 @@ class PrintEmfWin32 : public Inkscape::Extension::Implementation::Implementation
 
     std::stack<Geom::Matrix> m_tr_stack;
     NArtBpath *fill_path;
-    NArtBpath *fill_path_copy;
     Geom::Matrix fill_transform;
-    NRRect fill_pbox;
 //    Geom::Matrix text_transform;
     bool stroke_and_fill;
     bool fill_only;
     bool simple_shape;
 
-    unsigned int print_bpath (const NArtBpath *bp, const Geom::Matrix *transform, NRRect const *pbox);
-    bool print_simple_shape (const NArtBpath *bp, const Geom::Matrix *transform, NRRect const *pbox);
+    unsigned int print_bpath (const NArtBpath *bp, const Geom::Matrix &transform);
+    bool print_simple_shape  (const NArtBpath *bp, const Geom::Matrix &transform);
 
 public:
     PrintEmfWin32 (void);

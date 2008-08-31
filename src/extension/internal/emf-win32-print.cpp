@@ -452,7 +452,7 @@ PrintEmfWin32::flush_fill()
     if (fill_path) {
         stroke_and_fill = false;
         fill_only = true;
-        print_bpath(fill_path, &fill_transform, &fill_pbox);
+        print_bpath(fill_path, fill_transform);
         fill_only = false;
         if (!simple_shape)
             FillPath( hdc );
@@ -557,7 +557,6 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
     fill_path = copy_bpath( bpath );
     g_free(bpath);
     fill_transform = tf;
-    fill_pbox = *pbox;
 
     // postpone fill in case of stroke-and-fill
 
@@ -589,7 +588,7 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
         return 0;
     }
 
-    print_bpath(bpath, &tf, pbox);
+    print_bpath(bpath, tf);
 
     if (stroke_and_fill) {
         if (!simple_shape)
@@ -610,9 +609,9 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
 
 
 bool
-PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const Geom::Matrix *transform, NRRect const *pbox)
+PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const Geom::Matrix &transform)
 {
-    NR::Matrix tf = *transform;
+    NR::Matrix tf = transform;
     const NArtBpath *bp = bpath;
     
     int nodes = 0;
@@ -768,12 +767,12 @@ PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const Geom::Matrix *tr
 }
 
 unsigned int
-PrintEmfWin32::print_bpath(NArtBpath const *bp, Geom::Matrix const *transform, NRRect const *pbox)
+PrintEmfWin32::print_bpath(NArtBpath const *bp, Geom::Matrix const &transform)
 {
     unsigned int closed;
-    NR::Matrix tf = *transform;
+    NR::Matrix tf = transform;
 
-    simple_shape = print_simple_shape(bp, transform, pbox);
+    simple_shape = print_simple_shape(bp, transform);
 
     if (simple_shape)
         return TRUE;
