@@ -962,8 +962,10 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
         pcs2dev[3] = pbox->y1 - pbox->y0;
     }
 
-    // calculate the size of the surface which has to be created
-    // the scaling needs to be taken into account in the ctm after the pattern transformation
+    // Calculate the size of the surface which has to be created so that the pattern resolution
+    // matches the output resolution (i.e., if the pattern is scaled up by a factor of two,
+    // the surface width should be scaled by a factor of two).
+    // The scaling needs to be taken into account in the ctm after the pattern transformation.
     Geom::Matrix temp;
     temp = pattern_transform * _state->transform;
     double width_scaler = sqrt(temp[0] * temp[0] + temp[2] * temp[2]);
@@ -974,8 +976,10 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
         width_scaler *= 1.25;
         height_scaler *= 1.25;
     }
-    double surface_width = ceil(bbox_width_scaler * width_scaler * width);
-    double surface_height = ceil(bbox_height_scaler * height_scaler * height);
+    // Cairo requires an integer pattern surface width/height.
+    // Subtract 0.5 to prevent small rounding errors from increasing pattern size by one pixel.
+    double surface_width = ceil(bbox_width_scaler * width_scaler * width - 0.5);
+    double surface_height = ceil(bbox_height_scaler * height_scaler * height - 0.5);
     TRACE(("surface size: %f x %f\n", surface_width, surface_height));
     // create new rendering context
     CairoRenderContext *pattern_ctx = cloneMe(surface_width, surface_height);
@@ -986,8 +990,8 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     double scale_height = surface_height / (bbox_height_scaler * height);
     if (scale_width != 1.0 || scale_height != 1.0 || _vector_based_target) {
         TRACE(("needed to scale with %f %f\n", scale_width, scale_height));
-        pcs2dev *= Geom::Scale(1.0 / scale_width, 1.0 / scale_height);
-        ps2user *= Geom::Scale(scale_width, scale_height);
+        pcs2dev *= Geom::Scale(scale_width, scale_height);
+        ps2user *= Geom::Scale(1.0 / scale_width, 1.0 / scale_height);
     }
 
     pattern_ctx->setTransform(&pcs2dev);
