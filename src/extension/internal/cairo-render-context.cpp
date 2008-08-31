@@ -27,14 +27,6 @@
 
 #include <signal.h>
 #include <errno.h>
-
-#include <libnr/n-art-bpath.h>
-#include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-matrix-fns.h>
-#include <libnr/nr-matrix-scale-ops.h>
-#include <libnr/nr-matrix-translate-ops.h>
-#include <libnr/nr-scale-matrix-ops.h>
-#include <libnr/n-art-bpath-2geom.h>
 #include <2geom/pathvector.h>
 
 #include <glib/gmem.h>
@@ -45,6 +37,7 @@
 #include "display/nr-arena-group.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
+#include "display/inkscape-cairo.h"
 #include "sp-item.h"
 #include "sp-item-group.h"
 #include "style.h"
@@ -678,7 +671,7 @@ CairoRenderContext::popLayer(void)
 }
 
 void
-CairoRenderContext::addClipPath(NArtBpath const *bp, SPIEnum const *fill_rule)
+CairoRenderContext::addClipPath(Geom::PathVector const &pv, SPIEnum const *fill_rule)
 {
     g_assert( _is_valid );
 
@@ -689,7 +682,7 @@ CairoRenderContext::addClipPath(NArtBpath const *bp, SPIEnum const *fill_rule)
     } else {
         cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_WINDING);
     }
-    addBpath(bp);
+    addPathVector(pv);
 }
 
 void
@@ -1253,24 +1246,13 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, NRRect const *pbox)
 bool
 CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, NRRect const *pbox)
 {
-    NArtBpath * bpath = BPath_from_2GeomPath (pathv);
-    const_NRBPath bp;
-    bp.path = bpath;
-    bool retvalue = renderPath(&bp, style, pbox);
-    g_free(bpath);
-    return retvalue;
-}
-
-bool
-CairoRenderContext::renderPath(const_NRBPath const *bpath, SPStyle const *style, NRRect const *pbox)
-{
     g_assert( _is_valid );
 
     if (_render_mode == RENDER_MODE_CLIP) {
         if (_clip_mode == CLIP_MODE_PATH) {
-            addClipPath(bpath->path, &style->fill_rule);
+            addClipPath(pathv, &style->fill_rule);
         } else {
-            setBpath(bpath->path);
+            setPathVector(pathv);
             if (style->fill_rule.value == SP_WIND_RULE_EVENODD) {
                 cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_EVEN_ODD);
             } else {
@@ -1295,7 +1277,7 @@ CairoRenderContext::renderPath(const_NRBPath const *bpath, SPStyle const *style,
 
     if (!style->fill.isNone()) {
         _setFillStyle(style, pbox);
-        setBpath(bpath->path);
+        setPathVector(pathv);
 
         if (style->fill_rule.value == SP_WIND_RULE_EVENODD) {
             cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_EVEN_ODD);
@@ -1312,7 +1294,7 @@ CairoRenderContext::renderPath(const_NRBPath const *bpath, SPStyle const *style,
     if (!style->stroke.isNone()) {
         _setStrokeStyle(style, pbox);
         if (style->fill.isNone())
-            setBpath(bpath->path);
+            setPathVector(pathv);
 
         cairo_stroke(_cr);
     }
@@ -1523,47 +1505,16 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Matrix const *font_ma
 /* Helper functions */
 
 void
-CairoRenderContext::addBpath(NArtBpath const *bp)
+CairoRenderContext::setPathVector(Geom::PathVector const &pv)
 {
-    bool closed = false;
-    while (bp->code != NR_END) {
-        switch (bp->code) {
-            case NR_MOVETO:
-                if (closed) {
-                    cairo_close_path(_cr);
-                }
-                closed = true;
-                cairo_move_to(_cr, bp->x3, bp->y3);
-                break;
-            case NR_MOVETO_OPEN:
-                if (closed) {
-                    cairo_close_path(_cr);
-                }
-                closed = false;
-                cairo_move_to(_cr, bp->x3, bp->y3);
-                break;
-            case NR_LINETO:
-                cairo_line_to(_cr, bp->x3, bp->y3);
-                break;
-            case NR_CURVETO:
-                cairo_curve_to(_cr, bp->x1, bp->y1, bp->x2, bp->y2, bp->x3, bp->y3);
-                break;
-            default:
-                break;
-        }
-        bp += 1;
-    }
-    if (closed) {
-        cairo_close_path(_cr);
-    }
+    cairo_new_path(_cr);
+    addPathVector(pv);
 }
 
 void
-CairoRenderContext::setBpath(NArtBpath const *bp)
+CairoRenderContext::addPathVector(Geom::PathVector const &pv)
 {
-    cairo_new_path(_cr);
-    if (bp)
-        addBpath(bp);
+    feed_pathvector_to_cairo(_cr, pv);
 }
 
 void

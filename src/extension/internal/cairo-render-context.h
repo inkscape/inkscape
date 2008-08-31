@@ -114,8 +114,8 @@ public:
     void setClipMode(CairoClipMode mode);
     CairoClipMode getClipMode(void) const;
 
-    void addBpath(NArtBpath const *bp);
-    void setBpath(NArtBpath const *bp);
+    void addPathVector(Geom::PathVector const &pv);
+    void setPathVector(Geom::PathVector const &pv);
 
     void pushLayer(void);
     void popLayer(void);
@@ -133,7 +133,7 @@ public:
     void getParentTransform(Geom::Matrix *copy) const;
 
     /* Clipping methods */
-    void addClipPath(NArtBpath const *bp, SPIEnum const *fill_rule);
+    void addClipPath(Geom::PathVector const &pv, SPIEnum const *fill_rule);
     void addClippingRect(double x, double y, double width, double height);
 
     /* Rendering methods */
