@@ -85,8 +85,8 @@ PsOutput::init (void)
 			"<param name=\"fontEmbedded\" gui-text=\"" N_("Embed fonts (Type 1 only)") "\" type=\"boolean\">false</param>\n"
 			"<output>\n"
 				"<extension>.ps</extension>\n"
-				"<mimetype>application/postscript</mimetype>\n"
-				"<filetypename>" N_("PostScript (*.ps)") "</filetypename>\n"
+				"<mimetype>image/x-postscript</mimetype>\n"
+				"<filetypename>" N_("PostScript (old exporter via print) (*.ps)") "</filetypename>\n"
 				"<filetypetooltip>" N_("PostScript File") "</filetypetooltip>\n"
 			"</output>\n"
 		"</inkscape-extension>", new PsOutput());

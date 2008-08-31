@@ -217,7 +217,7 @@ CairoPsOutput::init (void)
 {
 	Inkscape::Extension::build_from_mem(
 		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-			"<name>" N_("Cairo PS Output") "</name>\n"
+			"<name>" N_("PostScript") "</name>\n"
 			"<id>" SP_MODULE_KEY_PRINT_CAIRO_PS "</id>\n"
 			"<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level") "\" type=\"enum\" >\n"
 				"<_item value='PS3'>" N_("PostScript level 3") "</_item>\n"
@@ -230,8 +230,8 @@ CairoPsOutput::init (void)
 			"<param name=\"resolution\" gui-text=\"" N_("Preferred resolution (DPI) of bitmaps") "\" type=\"int\" min=\"72\" max=\"2400\">90</param>\n"
 			"<output>\n"
 				"<extension>.ps</extension>\n"
-                "<mimetype>application/ps</mimetype>\n"
-				"<filetypename>" N_("PostScript via Cairo (*.ps)") "</filetypename>\n"
+                                "<mimetype>image/x-postscript</mimetype>\n"
+				"<filetypename>" N_("PostScript (*.ps)") "</filetypename>\n"
 				"<filetypetooltip>" N_("PostScript File") "</filetypetooltip>\n"
 			"</output>\n"
 		"</inkscape-extension>", new CairoPsOutput());
