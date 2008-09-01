@@ -1,13 +1,10 @@
 [Desktop Entry]
 Version=1.0
-Encoding=UTF-8
-Name=No name
 _Name=Inkscape Vector Graphics Editor
 _Comment=Create and edit Scalable Vector Graphics images
 Type=Application
 Categories=Graphics;VectorGraphics;GTK;
 MimeType=image/svg+xml;image/svg+xml-compressed;
-FilePattern=inkscape;
 Exec=inkscape %F
 TryExec=inkscape
 Terminal=false
