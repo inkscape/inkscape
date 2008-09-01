@@ -14,8 +14,8 @@ static int SGN(t x) { return (x > 0 ? 1 : (x < 0 ? -1 : 0)); }
 
 const unsigned MAXDEPTH = 23; // Maximum depth for recursion.  Using floats means 23 bits precision max
 
-const double BEPSILON = ldexp(1.0,-MAXDEPTH-1); /*Flatness control value */
-
+const double BEPSILON = ldexp(1.0,(-MAXDEPTH-1)); /*Flatness control value */
+const double SECANT_EPSILON = 1e-13; // secant method converges much faster, get a bit more precision
 /**
  * This function is called _a lot_.  We have included various manual memory management stuff to reduce the amount of mallocing that goes on.  In the future it is possible that this will hurt performance.
  **/
@@ -24,7 +24,8 @@ public:
     double *Vtemp;
     unsigned N,degree;
     std::vector<double> &solutions;
-    Bernsteins(int degr, std::vector<double> &so) : N(degr+1), degree(degr),solutions(so) {
+    bool use_secant;
+    Bernsteins(int degr, std::vector<double> &so) : N(degr+1), degree(degr),solutions(so), use_secant(false) {
         Vtemp = new double[N*2];
     }
     ~Bernsteins() {
@@ -35,6 +36,8 @@ public:
                    double *Left,
                    double *Right);
 
+    double horner(const double *b, double t);
+    
     unsigned 
     control_poly_flat_enough(double const *V);
 
@@ -52,9 +55,10 @@ find_bernstein_roots(double const *w, /* The control points  */
                      unsigned degree,	/* The degree of the polynomial */
                      std::vector<double> &solutions, /* RETURN candidate t-values */
                      unsigned depth,	/* The depth of the recursion */
-                     double left_t, double right_t)
+                     double left_t, double right_t, bool use_secant)
 {  
     Bernsteins B(degree, solutions);
+    B.use_secant = use_secant;
     B.find_bernstein_roots(w, depth, left_t, right_t);
 }
 
@@ -96,17 +100,37 @@ Bernsteins::find_bernstein_roots(double const *w, /* The control points  */
         }
         
         // I thought secant method would be faster here, but it'aint. -- njh
-        
-        // The original code went to some effort to try and terminate early when the curve is sufficiently flat.  However, it seems that in practice it almost always bottoms out, so leaving this code out actually speeds things up
-        if(0) if (control_poly_flat_enough(w)) {
-                //printf("flatten out %d\n", depth);
-                const double Ax = right_t - left_t;
-                const double Ay = w[degree] - w[0];
-                
-                solutions.push_back(left_t - Ax*w[0] / Ay);
-                return;
+        // Actually, it was, I just was using the wrong method for bezier evaluation.  Horner's rule results in a very efficient algorithm - 10* faster (20080816)
+        // Future work: try using brent's method
+        if(use_secant) { // false position
+            double s = 0;double t = 1;
+            double e = 1e-10;
+            int n,side=0;
+            double r,fr,fs = w[0],ft = w[degree];
+ 
+            for (n = 1; n <= 100; n++)
+            {
+                r = (fs*t - ft*s) / (fs - ft);
+                if (fabs(t-s) < e*fabs(t+s)) break;
+                fr = horner(w, r);
+ 
+                if (fr * ft > 0)
+                {
+                    t = r; ft = fr;
+                    if (side==-1) fs /= 2;
+                    side = -1;
+                }
+                else if (fs * fr > 0)
+                {
+                    s = r;  fs = fr;
+                    if (side==+1) ft /= 2;
+                    side = +1;
+                }
+                else break;
             }
-
+            solutions.push_back(r*right_t + (1-r)*left_t);
+            return;
+        }
     }
 
     /* Otherwise, solve recursively after subdividing control polygon  */
@@ -195,6 +219,22 @@ Bernsteins::control_poly_flat_enough(double const *V)
     return error < BEPSILON * a;
 }
 
+// suggested by Sederberg.
+double Bernsteins::horner(const double *b, double t) {
+    int n = degree;
+    double u, bc, tn, tmp;
+    int i;
+    u = 1.0 - t;
+    bc = 1;
+    tn = 1;
+    tmp = b[0]*u;
+    for(i=1; i<n; i++){
+        tn = tn*t;
+        bc = bc*(n-i+1)/i;
+        tmp = (tmp + tn*bc*b[i])*u;
+    }
+    return (tmp + tn*t*b[n]);
+}
 
 
 };

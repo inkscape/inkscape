@@ -60,12 +60,34 @@ class SVGEllipticalArc : public Curve
         : m_initial_point(Point(0,0)), m_final_point(Point(0,0)),
           m_rx(0), m_ry(0), m_rot_angle(0),
           m_large_arc(true), m_sweep(true),
-          m_svg_compliant(_svg_compliant)
+          m_svg_compliant(_svg_compliant),
+          m_start_angle(0), m_end_angle(0),
+          m_center(Point(0,0))
     {
-        m_start_angle = m_end_angle = 0;
-        m_center = Point(0,0);
     }
 
+    /*
+     * constructor
+     *
+     * input parameters:
+     * _initial_point:     initial arc end point;
+     * _rx:                ellipse x-axis ray length
+     * _ry:                ellipse y-axis ray length
+     * _rot_angle:         ellipse x-axis rotation angle;
+     * _large_arc:         if true the largest arc is chosen,
+     *                     if false the smallest arc is chosen;
+     * _sweep :            if true the clockwise arc is chosen,
+     *                     if false the counter-clockwise arc is chosen;
+     * _final_point:       final arc end point;
+     * _svg_compliant:     if true the class behaviour follows the Standard
+     *                     SVG 1.1 implementation guidelines (see Appendix F.6)
+     *                     if false the class behavoiur is more strict
+     *                     on input parameter
+     *
+     * in case the initial and the final arc end-points overlaps
+     * a degenerate arc of zero length is generated
+     *
+     */
     SVGEllipticalArc( Point _initial_point, double _rx, double _ry,
                       double _rot_angle, bool _large_arc, bool _sweep,
                       Point _final_point,
@@ -196,9 +218,19 @@ class SVGEllipticalArc : public Curve
 
     std::vector<double> roots(double v, Dim2 d) const;
 
+    /*
+     * find all the points on the curve portion between "from" and "to"
+     * at the same smallest distance from the point "p" the points are returned
+     * as their parameter t value;
+     */
     std::vector<double>
     allNearestPoints( Point const& p, double from = 0, double to = 1 ) const;
 
+    /*
+     * find a point on the curve portion between "from" and "to"
+     * at the same smallest distance from the point "p";
+     * the point is returned as its parameter t value;
+     */
     double nearestPoint( Point const& p, double from = 0, double to = 1 ) const
     {
         if ( are_near(ray(X), ray(Y)) && are_near(center(), p) )
@@ -225,10 +257,22 @@ class SVGEllipticalArc : public Curve
 
     D2<SBasis> toSBasis() const;
 
+    /*
+     * return true if the angle argument (in radiants) is contained
+     * in the range [start_angle(), end_angle() ]
+     */
     bool containsAngle(Coord angle) const;
 
+    /*
+     * return the value of the d-dimensional coordinate related to "t"
+     * here t belongs to the [0,2PI] domain
+     */
     double valueAtAngle(Coord t, Dim2 d) const;
 
+    /*
+     * return the point related to the parameter value "t"
+     * here t belongs to the [0,2PI] domain
+     */
     Point pointAtAngle(Coord t) const
     {
         double sin_rot_angle = std::sin(rotation_angle());
@@ -240,6 +284,10 @@ class SVGEllipticalArc : public Curve
         return p * m;
     }
 
+    /*
+     * return the value of the d-dimensional coordinate related to "t"
+     * here t belongs to the [0,1] domain
+     */
     double valueAt(Coord t, Dim2 d) const
     {
         if (isDegenerate() && is_svg_compliant())
@@ -249,6 +297,10 @@ class SVGEllipticalArc : public Curve
         return valueAtAngle(tt, d);
     }
 
+    /*
+     * return the point related to the parameter value "t"
+     * here t belongs to the [0,1] domain
+     */
     Point pointAt(Coord t) const
     {
         if (isDegenerate() && is_svg_compliant())
@@ -284,6 +336,7 @@ class SVGEllipticalArc : public Curve
         return rarc;
     }
 
+
     double sweep_angle() const
     {
         Coord d = end_angle() - start_angle();
@@ -307,12 +360,16 @@ class SVGEllipticalArc : public Curve
     Point m_initial_point, m_final_point;
     double m_rx, m_ry, m_rot_angle;
     bool m_large_arc, m_sweep;
+    bool m_svg_compliant;
     double m_start_angle, m_end_angle;
     Point m_center;
-    bool m_svg_compliant;
 
 }; // end class SVGEllipticalArc
 
+
+/*
+ * useful for testing and debugging
+ */
 template< class charT >
 inline
 std::basic_ostream<charT> &
@@ -331,17 +388,44 @@ operator<< (std::basic_ostream<charT> & os, const SVGEllipticalArc & ea)
 
 
 
+// forward declation
 namespace detail
 {
     struct ellipse_equation;
 }
 
-
+/*
+ * make_elliptical_arc
+ *
+ * convert a parametric polynomial curve given in symmetric power basis form
+ * into an SVGEllipticalArc type; in order to be successfull the input curve
+ * has to look like an actual elliptical arc even if a certain tolerance
+ * is allowed through an ad-hoc parameter.
+ * The conversion is performed through an interpolation on a certain amount of
+ * sample points computed on the input curve;
+ * the interpolation computes the coefficients of the general implicit equation
+ * of an ellipse (A*X^2 + B*XY + C*Y^2 + D*X + E*Y + F = 0), then from the
+ * implicit equation we compute the parametric form.
+ *
+ */
 class make_elliptical_arc
 {
   public:
     typedef D2<SBasis> curve_type;
 
+    /*
+     * constructor
+     *
+     * it doesn't execute the conversion but set the input and output parameters
+     *
+     * _ea:         the output SVGEllipticalArc that will be generated;
+     * _curve:      the input curve to be converted;
+     * _total_samples: the amount of sample points to be taken
+     *                 on the input curve for performing the conversion
+     * _tolerance:     how much likelihood is required between the input curve
+     *                 and the generated elliptical arc; the smaller it is the
+     *                 the tolerance the higher it is the likelihood.
+     */
     make_elliptical_arc( SVGEllipticalArc& _ea,
                          curve_type const& _curve,
                          unsigned int _total_samples,
@@ -369,8 +453,13 @@ class make_elliptical_arc
     }
 
   public:
+    /*
+     * perform the actual conversion
+     * return true if the conversion is successfull, false on the contrary
+     */
     bool operator()()
     {
+        // initialize the reference
         const NL::Vector & coeff = fitter.result();
         fit();
         if ( !check_bound(1, coeff[0], coeff[1], coeff[2], coeff[3], coeff[4]) )
@@ -379,6 +468,11 @@ class make_elliptical_arc
         return true;
     }
 
+    /*
+     * you can set a boolean parameter to tell the conversion routine
+     * if the output elliptical arc has to be svg compliant or not;
+     * the default value is true
+     */
     bool svg_compliant_flag() const
     {
         return svg_compliant;
@@ -390,17 +484,24 @@ class make_elliptical_arc
     }
 
   private:
-      SVGEllipticalArc& ea;
-      const curve_type & curve;
-      Piecewise<D2<SBasis> > dcurve;
-      NL::LFMEllipse model;
+      SVGEllipticalArc& ea;                 // output elliptical arc
+      const curve_type & curve;             // input curve
+      Piecewise<D2<SBasis> > dcurve;        // derivative of the input curve
+      NL::LFMEllipse model;                 // model used for fitting
+      // perform the actual fitting task
       NL::least_squeares_fitter<NL::LFMEllipse> fitter;
+      // tolerance: the user-defined tolerance parameter;
+      // tol_at_extr: the tolerance at end-points automatically computed
+      // on the value of "tolerance", and usually more strict;
+      // tol_at_center: tolerance at the center of the ellipse
+      // angle_tol: tolerance for the angle btw the input curve tangent
+      // versor and the ellipse normal versor at the sample points
       double tolerance, tol_at_extr, tol_at_center, angle_tol;
-      Point initial_point, final_point;
-      unsigned int N;
+      Point initial_point, final_point;     // initial and final end-points
+      unsigned int N;                       // total samples
       unsigned int last; // N-1
       double partitions; // N-1
-      std::vector<Point> p; // sample points
+      std::vector<Point> p;                 // sample points
       double dist_err, dist_bound, angle_err;
       bool svg_compliant;
 };

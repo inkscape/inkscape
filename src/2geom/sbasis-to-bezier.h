@@ -4,7 +4,17 @@
 #include <2geom/d2.h>
 #include <2geom/path.h>
 
-namespace Geom{
+#include <vector>
+
+namespace Geom {
+
+void sbasis_to_bezier (Bezier & bz, SBasis const& sb, size_t sz = 0);
+void sbasis_to_bezier (std::vector<Point> & bz, D2<SBasis> const& sb, size_t sz = 0);
+void bezier_to_sbasis (SBasis & sb, Bezier const& bz);
+void bezier_to_sbasis (D2<SBasis> & sb, std::vector<Point> const& bz);
+
+
+#if 0
 // this produces a degree k bezier from a degree k sbasis
 Bezier
 sbasis_to_bezier(SBasis const &B, unsigned q = 0);
@@ -15,14 +25,19 @@ SBasis bezier_to_sbasis(Bezier const &B);
 
 std::vector<Geom::Point>
 sbasis_to_bezier(D2<SBasis> const &B, unsigned q = 0);
+#endif
+
 
 std::vector<Path> path_from_piecewise(Piecewise<D2<SBasis> > const &B, double tol, bool only_cubicbeziers = false);
 
 Path path_from_sbasis(D2<SBasis> const &B, double tol, bool only_cubicbeziers = false);
 inline Path cubicbezierpath_from_sbasis(D2<SBasis> const &B, double tol)
-    { return path_from_sbasis(B, tol, true); } ;
+    { return path_from_sbasis(B, tol, true); }
 
-};
+} // end namespace Geom
+
+
+
 #endif
 
 /*

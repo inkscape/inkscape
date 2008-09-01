@@ -103,7 +103,7 @@ class D2<Interval> {
     inline double maxExtent() const { return std::max(f[X].extent(), f[Y].extent()); }
 
     inline bool isEmpty()                 const { 
-	return f[X].isEmpty()        && f[Y].isEmpty(); 
+	return f[X].isEmpty()        || f[Y].isEmpty(); 
     }
     inline bool intersects(Rect const &r) const { 
 	return f[X].intersects(r[X]) && f[Y].intersects(r[Y]); 

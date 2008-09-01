@@ -25,6 +25,7 @@ struct Crossing {
 };
 
 
+/*
 struct Edge {
     unsigned node, path;
     double time;
@@ -49,7 +50,6 @@ struct CrossingNode {
     }
 };
 
-typedef std::vector<Crossing> Crossings;
 
 typedef std::vector<CrossingNode> CrossingGraph;
 
@@ -61,6 +61,7 @@ struct TimeOrder {
 
 class Path;
 CrossingGraph create_crossing_graph(std::vector<Path> const &p, Crossings const &crs);
+*/
 
 /*inline bool are_near(Crossing a, Crossing b) {
     return are_near(a.ta, b.ta) && are_near(a.tb, b.tb);
@@ -78,6 +79,7 @@ struct CrossingOrder {
     }
 };
 
+typedef std::vector<Crossing> Crossings;
 
 typedef std::vector<Crossings> CrossingSet;
 

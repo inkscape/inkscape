@@ -335,7 +335,10 @@ SVGEllipticalArc::roots(double v, Dim2 d) const
 }
 
 
-// D(E(t,C),t) = E(t+PI/2,O)
+// D(E(t,C),t) = E(t+PI/2,O), where C is the ellipse center
+// the derivative doesn't rotate the ellipse but there is a translation
+// of the parameter t by an angle of PI/2 so the ellipse points are shifted
+// of such an angle in the cw direction
 Curve* SVGEllipticalArc::derivative() const
 {
     if (isDegenerate() && is_svg_compliant())
@@ -411,10 +414,12 @@ bool SVGEllipticalArc::containsAngle(Coord angle) const
 
 Curve* SVGEllipticalArc::portion(double f, double t) const
 {
+    // fix input arguments
     if (f < 0) f = 0;
     if (f > 1) f = 1;
     if (t < 0) t = 0;
     if (t > 1) t = 1;
+
     if ( are_near(f, t) )
     {
         SVGEllipticalArc* arc = new SVGEllipticalArc();
@@ -424,6 +429,7 @@ Curve* SVGEllipticalArc::portion(double f, double t) const
         arc->m_sweep = m_sweep;
         arc->m_large_arc = m_large_arc;
     }
+
     SVGEllipticalArc* arc = new SVGEllipticalArc( *this );
     arc->m_initial_point = pointAt(f);
     arc->m_final_point = pointAt(t);
@@ -909,8 +915,6 @@ D2<SBasis> SVGEllipticalArc::toSBasis() const
     Coord cos_rot_angle = std::cos(rotation_angle());
     Coord sin_rot_angle = std::sin(rotation_angle());
     // order = 4 seems to be enough to get a perfect looking elliptical arc
-    // should it be choosen in function of the arc length anyway ?
-    // or maybe a user settable parameter: toSBasis(unsigned int order) ?
     SBasis arc_x = ray(X) * cos(param,4);
     SBasis arc_y = ray(Y) * sin(param,4);
     arc[0] = arc_x * cos_rot_angle - arc_y * sin_rot_angle + Linear(center(X),center(X));
@@ -928,8 +932,6 @@ D2<SBasis> SVGEllipticalArc::toSBasis() const
 
 Curve* SVGEllipticalArc::transformed(Matrix const& m) const
 {
-    // return SBasisCurve(toSBasis()).transformed(m);
-
     Ellipse e(center(X), center(Y), ray(X), ray(Y), rotation_angle());
     Ellipse et = e.transformed(m);
     Point inner_point = pointAt(0.5);
@@ -940,7 +942,11 @@ Curve* SVGEllipticalArc::transformed(Matrix const& m) const
     return ea.duplicate();
 }
 
-
+/*
+ * helper routine to convert the parameter t value
+ * btw [0,1] and [0,2PI] domain and back
+ *
+ */
 Coord SVGEllipticalArc::map_to_02PI(Coord t) const
 {
     Coord angle = start_angle();
@@ -966,7 +972,14 @@ Coord SVGEllipticalArc::map_to_01(Coord angle) const
 
 namespace detail
 {
-
+/*
+ * ellipse_equation
+ *
+ * this is an helper struct, it provides two routines:
+ * the first one evaluates the implicit form of an ellipse on a given point
+ * the second one computes the normal versor at a given point of an ellipse
+ * in implicit form
+ */
 struct ellipse_equation
 {
     ellipse_equation(double a, double b, double c, double d, double e, double f)
@@ -1017,6 +1030,10 @@ make_elliptical_arc( SVGEllipticalArc& _ea,
 {
 }
 
+/*
+ * check that the coefficients computed by the fit method satisfy
+ * the tolerance parameters at the k-th sample point
+ */
 bool
 make_elliptical_arc::
 bound_exceeded( unsigned int k, detail::ellipse_equation const & ee,
@@ -1024,39 +1041,50 @@ bound_exceeded( unsigned int k, detail::ellipse_equation const & ee,
 {
     dist_err = std::fabs( ee(p[k]) );
     dist_bound = std::fabs( e1x * p[k][X] + e1y * p[k][Y] + e2 );
+    // check that the angle btw the tangent versor to the input curve
+    // and the normal versor of the elliptical arc, both evaluate
+    // at the k-th sample point, are really othogonal
     angle_err = std::fabs( dot( dcurve(k/partitions), ee.normal(p[k]) ) );
     //angle_err *= angle_err;
     return ( dist_err  > dist_bound || angle_err > angle_tol );
 }
 
+/*
+ * check that the coefficients computed by the fit method satisfy
+ * the tolerance parameters at each sample point
+ */
 bool
 make_elliptical_arc::
 check_bound(double A, double B, double C, double D, double E, double F)
 {
-    // check error magnitude
     detail::ellipse_equation ee(A, B, C, D, E, F);
 
+    // check error magnitude at the end-points
     double e1x = (2*A + B) * tol_at_extr;
     double e1y = (B + 2*C) * tol_at_extr;
     double e2 = ((D + E)  + (A + B + C) * tol_at_extr) * tol_at_extr;
-    if ( bound_exceeded(0, ee, e1x, e1y, e2) )
+    if (bound_exceeded(0, ee, e1x, e1y, e2))
     {
         print_bound_error(0);
         return false;
     }
-    if ( bound_exceeded(0, ee, e1x, e1y, e2) )
+    if (bound_exceeded(0, ee, e1x, e1y, e2))
     {
         print_bound_error(last);
         return false;
     }
 
+    // e1x = derivative((ee(x,y), x) | x->tolerance, y->tolerance
     e1x = (2*A + B) * tolerance;
+    // e1y = derivative((ee(x,y), y) | x->tolerance, y->tolerance
     e1y = (B + 2*C) * tolerance;
+    // e2 = ee(tolerance, tolerance) - F;
     e2 = ((D + E)  + (A + B + C) * tolerance) * tolerance;
 //  std::cerr << "e1x = " << e1x << std::endl;
 //  std::cerr << "e1y = " << e1y << std::endl;
 //  std::cerr << "e2 = " << e2 << std::endl;
 
+    // check error magnitude at sample points
     for ( unsigned int k = 1; k < last; ++k )
     {
         if ( bound_exceeded(k, ee, e1x, e1y, e2) )
@@ -1069,6 +1097,12 @@ check_bound(double A, double B, double C, double D, double E, double F)
     return true;
 }
 
+/*
+ * fit
+ *
+ * supply the samples to the fitter and compute
+ * the ellipse implicit equation coefficients
+ */
 void make_elliptical_arc::fit()
 {
     for (unsigned int k = 0; k < N; ++k)

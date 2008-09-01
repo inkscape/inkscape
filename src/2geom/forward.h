@@ -3,7 +3,7 @@
  *
  * Authors:
  *  Johan Engelen <goejendaagh@zonnet.nl>
- * 
+ *
  * Copyright 2008  authors
  *
  * This library is free software; you can redistribute it and/or
@@ -37,6 +37,7 @@
 
 namespace Geom {
 
+class Bezier;
 template <unsigned> class BezierCurve;
 template<> class BezierCurve<0>;
 typedef BezierCurve<2> QuadraticBezier;

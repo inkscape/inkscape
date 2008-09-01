@@ -27,7 +27,7 @@ find_bernstein_roots(
     unsigned degree,	/* The degree of the polynomial */
     std::vector<double> & solutions,	/* RETURN candidate t-values */
     unsigned depth,	/* The depth of the recursion */
-    double left_t=0, double right_t=1);
+    double left_t=0, double right_t=1, bool use_secant=true);
 
 };
 #endif

@@ -84,8 +84,8 @@ public:
         return contains(val._b[0]) || contains(val._b[1]) || val.contains(*this);
     }
     
-    inline bool operator==(Interval other) { return _b[0] == other._b[0] && _b[1] == other._b[1]; }
-    inline bool operator!=(Interval other) { return _b[0] != other._b[0] || _b[1] != other._b[1]; }
+    inline bool operator==(Interval other) const { return _b[0] == other._b[0] && _b[1] == other._b[1]; }
+    inline bool operator!=(Interval other) const { return _b[0] != other._b[0] || _b[1] != other._b[1]; }
     
     //IMPL: OffsetableConcept
     //TODO: rename output_type to something else in the concept

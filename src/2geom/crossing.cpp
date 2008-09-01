@@ -27,7 +27,7 @@ double wrap_dist(double from, double to, double size, bool rev) {
         }
     }
 }
-
+/*
 CrossingGraph create_crossing_graph(std::vector<Path> const &p, Crossings const &crs) {
     std::vector<Point> locs;
     CrossingGraph ret;
@@ -75,7 +75,7 @@ CrossingGraph create_crossing_graph(std::vector<Path> const &p, Crossings const 
     }
     
     return ret;
- 
+ */
  /*  Various incoherent code bits   
     // list of sets of edges, each set corresponding to those emanating from the path
     CrossingGraph ret;
@@ -111,7 +111,7 @@ CrossingGraph create_crossing_graph(std::vector<Path> const &p, Crossings const 
         }
     }
 */
-}
+//}
 
 void merge_crossings(Crossings &a, Crossings &b, unsigned i) {
     Crossings n;

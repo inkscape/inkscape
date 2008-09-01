@@ -43,10 +43,19 @@
 #include <vector>
 
 
+/*
+ *  The least_square_fitter class represents a tool for solving a fitting
+ *  problem with respect to a given model that represents an expression
+ *  dependent from a parameter where the coefficients of this expression
+ *  are the unknowns of the fitting problem.
+ *  The minimizing solution is found by computing the pseudo-inverse
+ *  of the problem matrix
+ */
+
+
 namespace Geom { namespace NL {
 
 namespace detail {
-
 
 template< typename ModelT>
 class lsf_base

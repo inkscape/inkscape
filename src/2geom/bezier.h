@@ -36,7 +36,6 @@
 #include <2geom/coord.h>
 #include <valarray>
 #include <2geom/isnan.h>
-#include <2geom/bezier-to-sbasis.h>
 #include <2geom/d2.h>
 #include <2geom/solver.h>
 #include <boost/optional/optional.hpp>
@@ -50,7 +49,7 @@ inline Coord subdivideArr(Coord t, Coord const *v, Coord *left, Coord *right, un
     std::copy(v, v+order+1, vtemp[0]);
 
     /* Triangle computation	*/
-    for (unsigned i = 1; i <= order; i++) {	
+    for (unsigned i = 1; i <= order; i++) {
         for (unsigned j = 0; j <= order - i; j++) {
             vtemp[i][j] = lerp(t, vtemp[i-1][j], vtemp[i-1][j+1]);
         }
@@ -84,8 +83,8 @@ protected:
 public:
     unsigned int order() const { return c_.size()-1;}
     unsigned int size() const { return c_.size();}
-    
-    Bezier() :c_(0., 32) {}
+
+    Bezier() {}
     Bezier(const Bezier& b) :c_(b.c_) {}
     Bezier &operator=(Bezier const &other) {
         if ( c_.size() != other.c_.size() ) {
@@ -126,11 +125,21 @@ public:
         c_[0] = c0; c_[1] = c1; c_[2] = c2; c_[3] = c3;
     }
 
+    void resize (unsigned int n, Coord v = 0)
+    {
+        c_.resize (n, v);
+    }
+
+    void clear()
+    {
+        c_.resize(0);
+    }
+
     inline unsigned degree() const { return order(); }
 
     //IMPL: FragmentConcept
     typedef Coord output_type;
-    inline bool isZero() const { 
+    inline bool isZero() const {
         for(unsigned i = 0; i <= order(); i++) {
             if(c_[i] != 0) return false;
         }
@@ -151,23 +160,27 @@ public:
     inline Coord at0() const { return c_[0]; }
     inline Coord at1() const { return c_[order()]; }
 
-    inline Coord valueAt(double t) const { 
-        return subdivideArr(t, &c_[0], NULL, NULL, order()); 
+    inline Coord valueAt(double t) const {
+        return subdivideArr(t, &c_[0], NULL, NULL, order());
     }
     inline Coord operator()(double t) const { return valueAt(t); }
 
-    inline SBasis toSBasis() const { 
-        return bezier_to_sbasis(&c_[0], order());
-    }
+    SBasis toSBasis() const;
+//    inline SBasis toSBasis() const {
+//        SBasis sb;
+//        bezier_to_sbasis(sb, (*this));
+//        return sb;
+//        //return bezier_to_sbasis(&c_[0], order());
+//    }
 
     //Only mutator
     inline Coord &operator[](unsigned ix) { return c_[ix]; }
     inline Coord const &operator[](unsigned ix) const { return c_[ix]; }
     inline void setPoint(unsigned ix, double val) { c_[ix] = val; }
-    
+
     /* This is inelegant, as it uses several extra stores.  I think there might be a way to
      * evaluate roughly in situ. */
-    
+
     std::vector<Coord> valueAndDerivatives(Coord t, unsigned n_derivs) const {
         std::vector<Coord> val_n_der;
         Coord d_[order()+1];
@@ -186,7 +199,7 @@ public:
         val_n_der.resize(n_derivs);
         return val_n_der;
     }
-  
+
     std::pair<Bezier, Bezier > subdivide(Coord t) const {
         Bezier a(Bezier::Order(*this)), b(Bezier::Order(*this));
         subdivideArr(t, &c_[0], &a.c_[0], &b.c_[0], order());
@@ -199,6 +212,18 @@ public:
         return solutions;
     }
 };
+
+
+void bezier_to_sbasis (SBasis & sb, Bezier const& bz);
+
+
+inline
+SBasis Bezier::toSBasis() const {
+    SBasis sb;
+    bezier_to_sbasis(sb, (*this));
+    return sb;
+    //return bezier_to_sbasis(&c_[0], order());
+}
 
 //TODO: implement others
 inline Bezier operator+(const Bezier & a, double v) {
@@ -266,7 +291,7 @@ inline Bezier derivative(const Bezier & a) {
     //if(a.order() == 1) return Bezier(0.0);
     if(a.order() == 1) return Bezier(a.c_[1]-a.c_[0]);
     Bezier der(Bezier::Order(a.order()-1));
-    
+
     for(unsigned i = 0; i < a.order(); i++) {
         der.c_[i] = a.order()*(a.c_[i+1] - a.c_[i]);
     }
@@ -275,7 +300,7 @@ inline Bezier derivative(const Bezier & a) {
 
 inline Bezier integral(const Bezier & a) {
     Bezier inte(Bezier::Order(a.order()+1));
-    
+
     inte[0] = 0;
     for(unsigned i = 0; i < inte.order(); i++) {
         inte[i+1] = inte[i] + a[i]/(inte.order());

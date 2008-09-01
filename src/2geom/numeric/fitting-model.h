@@ -47,6 +47,30 @@
 
 namespace Geom { namespace NL {
 
+/*
+ * A model is an abstraction for an expression dependent from a parameter where
+ * the coefficients of this expression are the unknowns of the fitting problem.
+ * For a ceratain number of parameter values we know the related values
+ * the expression evaluates to: from each parameter value we get a row of
+ * the matrix of the fitting problem, from each expression value we get
+ * the related constant term.
+ * Example: given the model a*x^2 + b*x + c = 0; from x = 1 we get
+ * the equation a + b + c = 0, in this example the constant term is always
+ * the same for each parameter value.
+ *
+ * A model is required to implement 3 methods:
+ *
+ *  - size : returns the number of unknown coefficients that appear in
+ *           the expression of the fitting problem;
+ *  - feed : its input is a parameter value and the related expression value,
+ *           it generates a matrix row and a new entry of the constant vector
+ *           of the fitting problem;
+ *  - instance : it has an input parameter represented by the raw vector
+ *               solution of the fitting problem and an output parameter
+ *               of type InstanceType that return a specific object that is
+ *               generated using the fitting problem solution, in the example
+ *               above the object could be a Poly type.
+ */
 
 /*
  *   completely unknown models must inherit from this template class;

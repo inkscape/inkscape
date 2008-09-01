@@ -8,7 +8,7 @@
  *  multi-roots using bernstein method, one approach would be:
     sort c
     take median and find roots of that
-    whenever a segment lies entirely on one side of the median, 
+    whenever a segment lies entirely on one side of the median,
     find the median of the half and recurse.
 
     in essence we are implementing quicksort on a continuous function
@@ -126,7 +126,7 @@ Interval bounds_local(const SBasis &sb, const Interval &i, int order) {
          going from f(a)  up  to C with slope M takes at least time (C-f(a))/M
          From this we conclude there are no roots before a'=a+min((f(a)-c)/m,(C-f(a))/M).
          Do the same for b: compute some b' such that there are no roots in (b',b].
-         -if [a',b'] is not empty, repeat the process with [a',(a'+b')/2] and [(a'+b')/2,b']. 
+         -if [a',b'] is not empty, repeat the process with [a',(a'+b')/2] and [(a'+b')/2,b'].
   unfortunately, extra care is needed about rounding errors, and also to avoid the repetition of roots,
   making things tricky and unpleasant...
 */
@@ -147,7 +147,7 @@ static void multi_roots_internal(SBasis const &f,
 				 double fa,
 				 double b,
 				 double fb){
-    
+
     if (f.size()==0){
         int idx;
         idx=upper_level(levels,0,vtol);
@@ -157,7 +157,7 @@ static void multi_roots_internal(SBasis const &f,
         }
         return;
     }
-////usefull? 
+////usefull?
 //     if (f.size()==1){
 //         int idxa=upper_level(levels,fa);
 //         int idxb=upper_level(levels,fb);
@@ -188,7 +188,7 @@ static void multi_roots_internal(SBasis const &f,
         }
         return;
     }
-    
+
     int idxa=upper_level(levels,fa,vtol);
     int idxb=upper_level(levels,fb,vtol);
 
@@ -219,9 +219,9 @@ static void multi_roots_internal(SBasis const &f,
         if (bs.max()>0 && idxb>0)
             tb_lo=b+(levels.at(idxb-1)-fb)/bs.max();
     }
-    
+
     double t0,t1;
-    t0=std::min(ta_hi,ta_lo);    
+    t0=std::min(ta_hi,ta_lo);
     t1=std::max(tb_hi,tb_lo);
     //hum, rounding errors frighten me! so I add this +tol...
     if (t0>t1+htol) return;//no root here.
@@ -256,7 +256,7 @@ std::vector<std::vector<double> > multi_roots(SBasis const &f,
     std::vector<std::vector<double> > roots(levels.size(), std::vector<double>());
 
     SBasis df=derivative(f);
-    multi_roots_internal(f,df,levels,roots,htol,vtol,a,f(a),b,f(b));  
+    multi_roots_internal(f,df,levels,roots,htol,vtol,a,f(a),b,f(b));
 
     return(roots);
 }
@@ -283,9 +283,9 @@ double Laguerre_internal(SBasis const & p,
             b = xk*b + p[j];
             err = fabs(b) + abx*err;
         }
-        
+
         err *= 1e-7; // magic epsilon for convergence, should be computed from tol
-        
+
         double px = b;
         if(fabs(b) < err)
             return xk;
@@ -293,7 +293,7 @@ double Laguerre_internal(SBasis const & p,
         //    return xk;
         double G = d / px;
         double H = G*G - f / px;
-        
+
         //std::cout << "G = " << G << "H = " << H;
         double radicand = (n - 1)*(n*H-G*G);
         //assert(radicand.real() > 0);
@@ -315,7 +315,7 @@ double Laguerre_internal(SBasis const & p,
 #endif
 
 void subdiv_sbasis(SBasis const & s,
-                   std::vector<double> & roots, 
+                   std::vector<double> & roots,
                    double left, double right) {
     Interval bs = bounds_fast(s);
     if(bs.min() > 0 || bs.max() < 0)
@@ -345,12 +345,16 @@ std::vector<double> roots1(SBasis const & s) {
 
 std::vector<double> roots(SBasis const & s) {
     switch(s.size()) {
-    case 0:
-        return std::vector<double>();
-    case 1:
-        return roots1(s);
-    default:
-        return sbasis_to_bezier(s).roots();
+        case 0:
+            return std::vector<double>();
+        case 1:
+            return roots1(s);
+        default:
+        {
+            Bezier bz;
+            sbasis_to_bezier(bz, s);
+            return bz.roots();
+        }
     }
 }
 
