@@ -976,10 +976,14 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
         width_scaler *= 1.25;
         height_scaler *= 1.25;
     }
+
+#define SUBPIX_SCALE 1000
+
     // Cairo requires an integer pattern surface width/height.
     // Subtract 0.5 to prevent small rounding errors from increasing pattern size by one pixel.
-    double surface_width = ceil(bbox_width_scaler * width_scaler * width - 0.5);
-    double surface_height = ceil(bbox_height_scaler * height_scaler * height - 0.5);
+    // Multiply by SUBPIX_SCALE to allow for less than a pixel precision
+    double surface_width = MAX(ceil(SUBPIX_SCALE * bbox_width_scaler * width_scaler * width - 0.5), 1);
+    double surface_height = MAX(ceil(SUBPIX_SCALE * bbox_height_scaler * height_scaler * height - 0.5), 1);
     TRACE(("surface size: %f x %f\n", surface_width, surface_height));
     // create new rendering context
     CairoRenderContext *pattern_ctx = cloneMe(surface_width, surface_height);
