@@ -213,9 +213,9 @@ struct SPItemClass {
 
 /* Methods */
 
-void sp_item_invoke_bbox(SPItem const *item, boost::optional<NR::Rect> *bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
+void sp_item_invoke_bbox(SPItem const *item, boost::optional<NR::Rect> &bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
 void sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
-void sp_item_invoke_bbox_full(SPItem const *item, boost::optional<NR::Rect> *bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear);
+void sp_item_invoke_bbox_full(SPItem const *item, boost::optional<NR::Rect> &bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear);
 void sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear) __attribute__ ((deprecated));
 
 unsigned sp_item_pos_in_parent(SPItem *item);

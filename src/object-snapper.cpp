@@ -143,11 +143,11 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                         // Oh oh, this will get ugly. We cannot use sp_item_i2d_affine directly because we need to
                         // insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
                         sp_item_invoke_bbox(item, 
-                            &bbox_of_item, 
+                            bbox_of_item,
                             from_2geom(to_2geom(sp_item_i2doc_affine(item)) * matrix_to_desktop(additional_affine, item)),
                             true);
                     } else {
-                        sp_item_invoke_bbox(item, &bbox_of_item, sp_item_i2d_affine(item), true);
+                        sp_item_invoke_bbox(item, bbox_of_item, sp_item_i2d_affine(item), true);
                     }
                     if (bbox_of_item) {
                         // See if the item is within range                                    

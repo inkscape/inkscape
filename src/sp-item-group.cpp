@@ -708,7 +708,7 @@ void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned c
         if (SP_IS_ITEM(o) && !SP_ITEM(o)->isHidden()) {
             SPItem *child = SP_ITEM(o);
             NR::Matrix const ct(child->transform * transform);
-            sp_item_invoke_bbox_full(child, &dummy_bbox, ct, flags, FALSE);
+            sp_item_invoke_bbox_full(child, dummy_bbox, ct, flags, FALSE);
         }
         l = g_slist_remove (l, o);
     }

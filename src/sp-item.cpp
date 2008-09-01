@@ -724,12 +724,12 @@ boost::optional<NR::Rect> SPItem::getBounds(NR::Matrix const &transform,
                                       unsigned int /*dkey*/) const
 {
     boost::optional<NR::Rect> r;
-    sp_item_invoke_bbox_full(this, &r, transform, type, TRUE);
+    sp_item_invoke_bbox_full(this, r, transform, type, TRUE);
     return r;
 }
 
 void
-sp_item_invoke_bbox(SPItem const *item, boost::optional<NR::Rect> *bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
+sp_item_invoke_bbox(SPItem const *item, boost::optional<NR::Rect> &bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
 {
     sp_item_invoke_bbox_full(item, bbox, transform, type, clear);
 }
@@ -746,14 +746,13 @@ sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transfor
  * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
  * clones), in turn, call this function in their bbox methods. */
 void
-sp_item_invoke_bbox_full(SPItem const *item, boost::optional<NR::Rect> *bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear)
+sp_item_invoke_bbox_full(SPItem const *item, boost::optional<NR::Rect> &bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
-    g_assert(bbox != NULL);
 
     if (clear) {
-        *bbox = boost::optional<NR::Rect>();
+        bbox = boost::optional<NR::Rect>();
     }
 
     // TODO: replace NRRect by NR::Rect, for all SPItemClasses, and for SP_CLIPPATH
@@ -846,7 +845,7 @@ sp_item_invoke_bbox_full(SPItem const *item, boost::optional<NR::Rect> *bbox, NR
     // would therefore be translated into empty boost::optional<NR::Rect>() (see bug https://bugs.launchpad.net/inkscape/+bug/168684)
     boost::optional<NR::Rect> temp_bbox_new = NR::Rect(NR::Point(temp_bbox.x0, temp_bbox.y0), NR::Point(temp_bbox.x1, temp_bbox.y1));
 
-    *bbox = NR::union_bounds(*bbox, temp_bbox_new);
+    bbox = NR::union_bounds(bbox, temp_bbox_new);
 }
 
 // DEPRECATED to phase out the use of NRRect in favor of boost::optional<NR::Rect>
@@ -926,7 +925,7 @@ sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type)
 boost::optional<NR::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
 {
     boost::optional<NR::Rect> rect = boost::optional<NR::Rect>();
-    sp_item_invoke_bbox(item, &rect, sp_item_i2d_affine(item), TRUE, type);
+    sp_item_invoke_bbox(item, rect, sp_item_i2d_affine(item), TRUE, type);
     return rect;
 }
 
