@@ -264,8 +264,9 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
 
     SPCurve *curve = sp_nodepath_object_get_curve(object, repr_key_in);
 
-    if (curve == NULL)
+    if (curve == NULL) {
         return NULL;
+    }
 
     if (curve->get_segment_count() < 1) {
         curve->unref();
@@ -373,8 +374,9 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
  */
 void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
 
-    if (!np)  //soft fail, like delete
+    if (!np) {  //soft fail, like delete
         return;
+    }
 
     while (np->subpaths) {
         sp_nodepath_subpath_destroy((Inkscape::NodePath::SubPath *) np->subpaths->data);
@@ -419,9 +421,12 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
  */
 static gint sp_nodepath_subpath_get_node_count(Inkscape::NodePath::SubPath *subpath)
 {
-    if (!subpath)
-        return 0;
-    gint nodeCount = g_list_length(subpath->nodes);
+    int nodeCount = 0;
+
+    if (subpath) {
+        nodeCount = g_list_length(subpath->nodes);
+    }
+
     return nodeCount;
 }
 
@@ -430,12 +435,12 @@ static gint sp_nodepath_subpath_get_node_count(Inkscape::NodePath::SubPath *subp
  */
 static gint sp_nodepath_get_node_count(Inkscape::NodePath::Path *np)
 {
-    if (!np)
-        return 0;
     gint nodeCount = 0;
-    for (GList *item = np->subpaths ; item ; item=item->next) {
-       Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *)item->data;
-        nodeCount += g_list_length(subpath->nodes);
+    if (np) {
+        for (GList *item = np->subpaths ; item ; item=item->next) {
+            Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *)item->data;
+            nodeCount += g_list_length(subpath->nodes);
+        }
     }
     return nodeCount;
 }
@@ -445,9 +450,11 @@ static gint sp_nodepath_get_node_count(Inkscape::NodePath::Path *np)
  */
 static gint sp_nodepath_get_subpath_count(Inkscape::NodePath::Path *np)
 {
-    if (!np)
-        return 0;
-    return g_list_length (np->subpaths);
+    gint nodeCount = 0;
+    if (np) {
+        nodeCount = g_list_length(np->subpaths);
+    }
+    return nodeCount;
 }
 
 /**
@@ -455,9 +462,11 @@ static gint sp_nodepath_get_subpath_count(Inkscape::NodePath::Path *np)
  */
 static gint sp_nodepath_selection_get_node_count(Inkscape::NodePath::Path *np)
 {
-    if (!np)
-        return 0;
-    return g_list_length (np->selected);
+    gint nodeCount = 0;
+    if (np) {
+        nodeCount = g_list_length(np->selected);
+    }
+    return nodeCount;
 }
 
 /**
@@ -465,24 +474,24 @@ static gint sp_nodepath_selection_get_node_count(Inkscape::NodePath::Path *np)
  */
 static gint sp_nodepath_selection_get_subpath_count(Inkscape::NodePath::Path *np)
 {
-    if (!np)
-        return 0;
-    if (!np->selected)
-        return 0;
-    if (!np->selected->next)
-        return 1;
-    gint count = 0;
-    for (GList *spl = np->subpaths; spl != NULL; spl = spl->next) {
-        Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
-        for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
-            Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
-            if (node->selected) {
-                count ++;
-                break;
+    gint nodeCount = 0;
+    if (np && np->selected) {
+        if (!np->selected->next) {
+            nodeCount = 1;
+        } else {
+            for (GList *spl = np->subpaths; spl != NULL; spl = spl->next) {
+                Inkscape::NodePath::SubPath *subpath = static_cast<Inkscape::NodePath::SubPath *>(spl->data);
+                for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
+                    Inkscape::NodePath::Node *node = static_cast<Inkscape::NodePath::Node *>(nl->data);
+                    if (node->selected) {
+                        nodeCount++;
+                        break;
+                    }
+                }
             }
         }
     }
-    return count;
+    return nodeCount;
 }
 
 /**
@@ -597,7 +606,9 @@ Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, guint length)
         }
     }
 
-    while (pos < length) typestr[pos++] =Inkscape::NodePath::NODE_NONE;
+    while (pos < length) {
+        typestr[pos++] = Inkscape::NodePath::NODE_NONE;
+    }
 
     return typestr;
 }
@@ -843,15 +854,17 @@ static gchar *create_typestr(Inkscape::NodePath::Path *np)
 static Inkscape::MessageContext *
 get_message_context(SPEventContext *ec)
 {
-    Inkscape::MessageContext *mc;
+    Inkscape::MessageContext *mc = 0;
+
     if (SP_IS_NODE_CONTEXT(ec)) {
         mc = SP_NODE_CONTEXT(ec)->_node_message_context;
     } else if (SP_IS_LPETOOL_CONTEXT(ec)) {
         mc = SP_LPETOOL_CONTEXT(ec)->_lpetool_message_context;
     } else {
         g_warning ("Nodepath should only be present in Node tool or Geometric tool.");
-        return NULL;
     }
+
+    return mc;
 }
 
 /**
@@ -933,22 +946,24 @@ static Inkscape::NodePath::Node *sp_nodepath_node_break(Inkscape::NodePath::Node
     g_assert(node->subpath);
     g_assert(g_list_find(node->subpath->nodes, node));
 
-   Inkscape::NodePath::SubPath *sp = node->subpath;
+    Inkscape::NodePath::Node* result = 0;
+    Inkscape::NodePath::SubPath *sp = node->subpath;
     Inkscape::NodePath::Path *np    = sp->nodepath;
 
     if (sp->closed) {
         sp_nodepath_subpath_open(sp, node);
-        return sp->first;
-    } else {
+        result = sp->first;
+    } else if ( (node == sp->first) || (node == sp->last ) ){
         // no break for end nodes
-        if (node == sp->first) return NULL;
-        if (node == sp->last ) return NULL;
-
+        result = 0;
+    } else {
         // create a new subpath
-       Inkscape::NodePath::SubPath *newsubpath = sp_nodepath_subpath_new(np);
+        Inkscape::NodePath::SubPath *newsubpath = sp_nodepath_subpath_new(np);
 
         // duplicate the break node as start of the new subpath
-        Inkscape::NodePath::Node *newnode = sp_nodepath_node_new(newsubpath, NULL, (Inkscape::NodePath::NodeType)node->type, NR_MOVETO, &node->pos, &node->pos, &node->n.pos);
+        Inkscape::NodePath::Node *newnode = sp_nodepath_node_new(newsubpath, NULL,
+                                                                 static_cast<Inkscape::NodePath::NodeType>(node->type),
+                                                                 NR_MOVETO, &node->pos, &node->pos, &node->n.pos);
 
         // attach rest of curve to new node
         g_assert(node->n.other);
@@ -965,8 +980,9 @@ static Inkscape::NodePath::Node *sp_nodepath_node_break(Inkscape::NodePath::Node
         }
 
 
-        return newnode;
+        result = newnode;
     }
+    return result;
 }
 
 /**
@@ -987,10 +1003,11 @@ static Inkscape::NodePath::Node *sp_nodepath_node_duplicate(Inkscape::NodePath::
 
     Inkscape::NodePath::Node *newnode = sp_nodepath_node_new(sp, node, (Inkscape::NodePath::NodeType)node->type, code, &node->p.pos, &node->pos, &node->n.pos);
 
-    if (!node->n.other || !node->p.other) // if node is an endnode, select it
+    if (!node->n.other || !node->p.other) { // if node is an endnode, select it
         return node;
-    else
+    } else {
         return newnode; // otherwise select the newly created node
+    }
 }
 
 static void sp_node_handle_mirror_n_to_p(Inkscape::NodePath::Node *node)
@@ -1012,32 +1029,31 @@ static void sp_nodepath_set_line_type(Inkscape::NodePath::Node *end, NRPathcode 
     g_assert(end->subpath);
     g_assert(end->p.other);
 
-    if (end->code == static_cast< guint > ( code ) )
-        return;
+    if (end->code != static_cast<guint>(code) ) {
+        Inkscape::NodePath::Node *start = end->p.other;
 
-   Inkscape::NodePath::Node *start = end->p.other;
+        end->code = code;
 
-    end->code = code;
-
-    if (code == NR_LINETO) {
-        if (start->code == NR_LINETO) {
-            sp_nodepath_set_node_type (start, Inkscape::NodePath::NODE_CUSP);
-        }
-        if (end->n.other) {
-            if (end->n.other->code == NR_LINETO) {
-                sp_nodepath_set_node_type (end, Inkscape::NodePath::NODE_CUSP);
+        if (code == NR_LINETO) {
+            if (start->code == NR_LINETO) {
+                sp_nodepath_set_node_type(start, Inkscape::NodePath::NODE_CUSP);
             }
+            if (end->n.other) {
+                if (end->n.other->code == NR_LINETO) {
+                    sp_nodepath_set_node_type(end, Inkscape::NodePath::NODE_CUSP);
+                }
+            }
+        } else {
+            NR::Point delta = end->pos - start->pos;
+            start->n.pos = start->pos + delta / 3;
+            end->p.pos = end->pos - delta / 3;
+            sp_node_adjust_handle(start, 1);
+            sp_node_adjust_handle(end, -1);
         }
-    } else {
-        NR::Point delta = end->pos - start->pos;
-        start->n.pos = start->pos + delta / 3;
-        end->p.pos = end->pos - delta / 3;
-        sp_node_adjust_handle(start, 1);
-        sp_node_adjust_handle(end, -1);
-    }
 
-    sp_node_update_handles(start);
-    sp_node_update_handles(end);
+        sp_node_update_handles(start);
+        sp_node_update_handles(end);
+    }
 }
 
 /**
@@ -1085,6 +1101,7 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
 bool
 sp_node_side_is_line (Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeSide *side)
 {
+// TODO clean up multiple returns
         Inkscape::NodePath::Node *othernode = side->other;
         if (!othernode)
             return false;
@@ -1351,21 +1368,29 @@ near x = 0.
 double
 sculpt_profile (double x, double alpha, guint profile)
 {
-    if (x >= 1)
-        return 0;
-    if (x <= 0)
-        return 1;
+    double result = 1;
 
-    switch (profile) {
-        case SCULPT_PROFILE_LINEAR:
-        return 1 - x;
-        case SCULPT_PROFILE_BELL:
-        return (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5);
-        case SCULPT_PROFILE_ELLIPTIC:
-        return sqrt(1 - x*x);
+    if (x >= 1) {
+        result = 0;
+    } else if (x <= 0) {
+        result = 1;
+    } else {
+        switch (profile) {
+            case SCULPT_PROFILE_LINEAR:
+                result = 1 - x;
+                break;
+            case SCULPT_PROFILE_BELL:
+                result = (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5);
+                break;
+            case SCULPT_PROFILE_ELLIPTIC:
+                result = sqrt(1 - x*x);
+                break;
+            default:
+                g_warn_if_reached();
+        }
     }
 
-    return 1;
+    return result;
 }
 
 double
@@ -1778,10 +1803,10 @@ static void sp_nodepath_update_handles(Inkscape::NodePath::Path *nodepath)
 void
 sp_nodepath_show_handles(Inkscape::NodePath::Path *nodepath, bool show)
 {
-    if (nodepath == NULL) return;
-
-    nodepath->show_handles = show;
-    sp_nodepath_update_handles(nodepath);
+    if (nodepath) {
+        nodepath->show_handles = show;
+        sp_nodepath_update_handles(nodepath);
+    }
 }
 
 /**
@@ -3144,19 +3169,17 @@ sp_nodepath_remember_origins(Inkscape::NodePath::Path *nodepath)
 */
 GList *save_nodepath_selection(Inkscape::NodePath::Path *nodepath)
 {
-    if (!nodepath->selected) {
-        return NULL;
-    }
-
     GList *r = NULL;
-    guint i = 0;
-    for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
-       Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
-        for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
-           Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
-            i++;
-            if (node->selected) {
-                r = g_list_append(r, GINT_TO_POINTER(i));
+    if (nodepath->selected) {
+        guint i = 0;
+        for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
+            Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
+            for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
+                Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
+                i++;
+                if (node->selected) {
+                    r = g_list_append(r, GINT_TO_POINTER(i));
+                }
             }
         }
     }
@@ -3922,12 +3945,7 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
     SPEventContext *ec = desktop->event_context;
     if (!ec) return;
 
-    // FIXME: this is an ad-hoc crash fix but we need to find a better way (which also works in LPEToolContext)
-    //Inkscape::MessageContext *mc = get_message_context(ec);
-    if (!SP_IS_NODE_CONTEXT(ec)) {
-        return;
-    }
-    Inkscape::MessageContext *mc = SP_NODE_CONTEXT(ec)->_node_message_context;
+    Inkscape::MessageContext *mc = get_message_context(ec);
 
     if (!mc) return;
 
@@ -4591,19 +4609,19 @@ static void sp_nodepath_node_destroy(Inkscape::NodePath::Node *node)
 static Inkscape::NodePath::NodeSide *sp_node_get_side(Inkscape::NodePath::Node *node, gint which)
 {
     g_assert(node);
-
+    Inkscape::NodePath::NodeSide * result = 0;
     switch (which) {
         case -1:
-            return &node->p;
-        case 1:
-            return &node->n;
-        default:
+            result = &node->p;
             break;
+        case 1:
+            result = &node->n;
+            break;
+        default:
+            g_assert_not_reached();
     }
 
-    g_assert_not_reached();
-
-    return NULL;
+    return result;
 }
 
 /**
@@ -4612,13 +4630,17 @@ static Inkscape::NodePath::NodeSide *sp_node_get_side(Inkscape::NodePath::Node *
 static Inkscape::NodePath::NodeSide *sp_node_opposite_side(Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeSide *me)
 {
     g_assert(node);
+    Inkscape::NodePath::NodeSide *result = 0;
 
-    if (me == &node->p) return &node->n;
-    if (me == &node->n) return &node->p;
+    if (me == &node->p) {
+        result = &node->n;
+    } else if (me == &node->n) {
+        result = &node->p;
+    } else {
+        g_assert_not_reached();
+    }
 
-    g_assert_not_reached();
-
-    return NULL;
+    return result;
 }
 
 /**
@@ -4628,19 +4650,24 @@ static NRPathcode sp_node_path_code_from_side(Inkscape::NodePath::Node *node,Ink
 {
     g_assert(node);
 
+    NRPathcode result = NR_END;
     if (me == &node->p) {
-        if (node->p.other) return (NRPathcode)node->code;
-        return NR_MOVETO;
+        if (node->p.other) {
+            result = (NRPathcode)node->code;
+        } else {
+            result = NR_MOVETO;
+        }
+    } else if (me == &node->n) {
+        if (node->n.other) {
+            result = (NRPathcode)node->n.other->code;
+        } else {
+            result = NR_MOVETO;
+        }
+    } else {
+        g_assert_not_reached();
     }
 
-    if (me == &node->n) {
-        if (node->n.other) return (NRPathcode)node->n.other->code;
-        return NR_MOVETO;
-    }
-
-    g_assert_not_reached();
-
-    return NR_END;
+    return result;
 }
 
 /**
@@ -4754,13 +4781,7 @@ sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)//!!!move to Sha
     SPEventContext *ec = desktop->event_context;
     if (!ec) return;
 
-    // FIXME: this is an ad-hoc crash fix but we need to find a better way (which also works in LPEToolContext)
-    //Inkscape::MessageContext *mc = get_message_context(ec);
-    if (!SP_IS_NODE_CONTEXT(ec)) {
-        return;
-    }
-
-    Inkscape::MessageContext *mc = SP_NODE_CONTEXT(ec)->_node_message_context;
+    Inkscape::MessageContext *mc = get_message_context(ec);
     if (!mc) return;
 
     inkscape_active_desktop()->emitToolSubselectionChanged(NULL);
