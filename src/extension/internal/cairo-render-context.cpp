@@ -109,6 +109,7 @@ CairoRenderContext::CairoRenderContext(CairoRenderer *parent) :
     _dpi(72),
     _pdf_level(0),
     _ps_level(1),
+    _eps(false),
     _is_texttopath(FALSE),
     _is_filtertobitmap(FALSE),
     _bitmapresolution(72),
@@ -396,6 +397,11 @@ CairoRenderContext::setPsTarget(gchar const *utf8_fn)
 void CairoRenderContext::setPSLevel(unsigned int level)
 {
     _ps_level = level;
+}
+
+void CairoRenderContext::setEPS(bool eps)
+{
+    _eps = eps;
 }
 
 unsigned int CairoRenderContext::getPSLevel(void)
@@ -722,6 +728,7 @@ CairoRenderContext::setupSurface(double width, double height)
                 return FALSE;
             }
             cairo_ps_surface_restrict_to_level (surface, (cairo_ps_level_t)_ps_level);
+            cairo_ps_surface_set_eps (surface, (cairo_bool_t) _eps);
 #endif
             break;
 #endif

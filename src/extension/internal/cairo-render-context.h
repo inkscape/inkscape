@@ -90,6 +90,7 @@ public:
     bool setSurfaceTarget(cairo_surface_t *surface, bool is_vector);
 
     void setPSLevel(unsigned int level);
+    void setEPS(bool eps);
     unsigned int getPSLevel(void);
     void setPDFLevel(unsigned int level);
     void setTextToPath(bool texttopath);
@@ -156,6 +157,7 @@ protected:
     unsigned short _dpi;
     unsigned int _pdf_level;
     unsigned int _ps_level;
+    bool _eps;
     bool _is_texttopath;
     bool _is_filtertobitmap;
     int _bitmapresolution;

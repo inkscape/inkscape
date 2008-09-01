@@ -158,7 +158,7 @@ init()
     Internal::Svg::init();
     Internal::Svgz::init();
     //Internal::PsOutput::init(); // disabled, to be deleted, replaced by CairoPsOutput
-    Internal::EpsOutput::init();
+    //Internal::EpsOutput::init(); // disabled, to be deleted, replaced by CairoEpsOutput
     Internal::PrintPS::init();
 #ifdef HAVE_CAIRO_PDF
     if (prefs_get_int_attribute("options.useoldpdfexporter", "value", 1) == 1) {
@@ -171,6 +171,7 @@ init()
     Internal::CairoRendererOutput::init();
     }
     Internal::CairoPsOutput::init();
+    Internal::CairoEpsOutput::init();
 #endif
 #ifdef HAVE_POPPLER
     Internal::PdfInput::init();
