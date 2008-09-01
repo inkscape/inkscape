@@ -977,7 +977,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
         height_scaler *= 1.25;
     }
 
-#define SUBPIX_SCALE 1000
+#define SUBPIX_SCALE 100
 
     // Cairo requires an integer pattern surface width/height.
     // Subtract 0.5 to prevent small rounding errors from increasing pattern size by one pixel.
