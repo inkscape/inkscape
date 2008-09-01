@@ -1386,7 +1386,7 @@ sculpt_profile (double x, double alpha, guint profile)
                 result = sqrt(1 - x*x);
                 break;
             default:
-                g_warn_if_reached();
+                g_assert_not_reached();
         }
     }
 
