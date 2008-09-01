@@ -241,7 +241,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
             default:
                 /* Set first point of sequence */
                 if (bevent.state & GDK_CONTROL_MASK) {
-                    freehand_create_single_dot(event_context, from_2geom(p), "tools.freehand.pencil", bevent.state);
+                    spdc_create_single_dot(event_context, from_2geom(p), "tools.freehand.pencil", bevent.state);
                     ret = true;
                     break;
                 }

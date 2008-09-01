@@ -465,7 +465,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                         if (pc->npoints == 0) {
 
                             if (bevent.state & GDK_CONTROL_MASK) {
-                                freehand_create_single_dot(event_context, event_dt, "tools.freehand.pen", bevent.state);
+                                spdc_create_single_dot(event_context, event_dt, "tools.freehand.pen", bevent.state);
                                 ret = TRUE;
                                 break;
                             }

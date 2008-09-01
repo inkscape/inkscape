@@ -88,6 +88,7 @@ void spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed);
 void spdc_endpoint_snap_rotation(SPEventContext const *const ec, NR::Point &p, NR::Point const &o, guint state);
 void spdc_endpoint_snap_free(SPEventContext const *ec, NR::Point &p, guint state);
 void spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item);
+void spdc_create_single_dot(SPEventContext *ec, NR::Point const &pt, char const *tool, guint event_state);
 
 #endif
 
