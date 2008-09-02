@@ -784,20 +784,32 @@ static void sp_svg_write_curve(Inkscape::SVG::PathString & str, Geom::Curve cons
     }
 }
 
+static void sp_svg_write_path(Inkscape::SVG::PathString & str, Geom::Path const & p) {
+    str.moveTo( p.initialPoint()[0], p.initialPoint()[1] );
+
+    for(Geom::Path::const_iterator cit = p.begin(); cit != p.end_open(); cit++) {
+        sp_svg_write_curve(str, &(*cit));
+    }
+
+    if (p.closed()) {
+        str.closePath();
+    }
+}
+
 gchar * sp_svg_write_path(Geom::PathVector const &p) {
     Inkscape::SVG::PathString str;
 
     for(Geom::PathVector::const_iterator pit = p.begin(); pit != p.end(); pit++) {
-        str.moveTo( pit->initialPoint()[0], pit->initialPoint()[1] );
-
-        for(Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); cit++) {
-            sp_svg_write_curve(str, &(*cit));
-        }
-
-        if (pit->closed()) {
-            str.closePath();
-        }
+        sp_svg_write_path(str, *pit);
     }
+
+    return g_strdup(str.c_str());
+}
+
+gchar * sp_svg_write_path(Geom::Path const &p) {
+    Inkscape::SVG::PathString str;
+
+    sp_svg_write_path(str, p);
 
     return g_strdup(str.c_str());
 }

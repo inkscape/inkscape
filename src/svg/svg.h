@@ -70,6 +70,7 @@ NArtBpath * sp_svg_read_path (const char * str);
 Geom::PathVector sp_svg_read_pathv (char const * str);
 gchar * sp_svg_write_path (const NArtBpath * bpath);
 gchar * sp_svg_write_path (Geom::PathVector const &p);
+gchar * sp_svg_write_path (Geom::Path const &p);
 
 #endif
 
