@@ -24,4 +24,6 @@ live_effects_parameter_liblpeparam_a_SOURCES = \
 	live_effects/parameter/text.cpp	\
 	live_effects/parameter/text.h	\
 	live_effects/parameter/unit.cpp	\
-	live_effects/parameter/unit.h
+	live_effects/parameter/unit.h	\
+	live_effects/parameter/vector.cpp	\
+	live_effects/parameter/vector.h
