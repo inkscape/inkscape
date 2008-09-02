@@ -355,7 +355,7 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
     if (SP_IS_SHAPE(item)) {
         curve = sp_shape_get_curve(SP_SHAPE(item));
     } else {
-        this->nodepath->curve;   // not sure if np->curve is always up to date...
+        curve = this->nodepath->curve;   // not sure if np->curve is always up to date...
     }
     Geom::PathVector const &pathv = curve->get_pathvector();
     Geom::PathVectorPosition pvpos = Geom::nearestPoint(pathv, this->curvepoint_doc);
