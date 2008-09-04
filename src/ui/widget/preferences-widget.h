@@ -22,6 +22,8 @@
 #include <gtkmm/treeview.h>
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/box.h>
+#include <gtkmm/scale.h>
+#include <gtkmm/drawingarea.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/filechooserbutton.h>
 #include <sigc++/sigc++.h>
@@ -80,6 +82,48 @@ protected:
     bool _is_int;
     bool _is_percent;
     void on_value_changed();
+};
+
+class ZoomCorrRuler : public Gtk::DrawingArea {
+public:
+    ZoomCorrRuler(int width = 100, int height = 20);
+    void set_size(int x, int y);
+    void set_unit_conversion(double conv) { _unitconv = conv; }
+    void set_cairo_context(Cairo::RefPtr<Cairo::Context> cr);
+    void redraw();
+
+    int width() { return _min_width + _border*2; }
+
+    static const double textsize;
+    static const double textpadding;
+
+private:
+    bool on_expose_event(GdkEventExpose *event);
+    void draw_marks(Cairo::RefPtr<Cairo::Context> cr, double dist, int major_interval);
+
+    double _unitconv;
+    int _min_width;
+    int _height;
+    int _border;
+    int _drawing_width;
+};
+
+class ZoomCorrRulerSlider : public Gtk::VBox
+{
+public:
+    void init(int ruler_width, int ruler_height, double lower, double upper,
+              double step_increment, double page_increment, double default_value);
+
+private:
+    void on_slider_value_changed();
+    void on_spinbutton_value_changed();
+    void on_unit_changed();
+
+    Gtk::SpinButton _sb;
+    UnitMenu        _unit;
+    Gtk::HScale     _slider;
+    ZoomCorrRuler   _ruler;
+    bool freeze; // used to block recursive updates of slider and spinbutton
 };
 
 class PrefCombo : public Gtk::ComboBoxText

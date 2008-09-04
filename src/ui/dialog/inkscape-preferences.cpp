@@ -960,19 +960,23 @@ void InkscapePreferences::initPageUI()
 
     _misc_small_toolbar.init( "toolbox", "small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
     _page_ui.add_line( false, _("Commands bar icon size"), _misc_small_toolbar, "",
-                           _("Set the size for the commands toolbar to use (requires restart)"), false);
+                              _("Set the size for the commands toolbar to use (requires restart)"), false);
 
     _misc_small_secondary.init( "toolbox", "secondary", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 1 );
     _page_ui.add_line( false, _("Tool controls bar icon size"), _misc_small_secondary, "",
-                           _("Set the size for the secondary toolbar to use (requires restart)"), false);
+                              _("Set the size for the secondary toolbar to use (requires restart)"), false);
 
     _misc_small_tools.init( "toolbox.tools", "small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
     _page_ui.add_line( false, _("Main toolbar icon size"), _misc_small_tools, "",
-                           _("Set the size for the main tools to use (requires restart)"), false);
+                              _("Set the size for the main tools to use (requires restart)"), false);
 
     _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
     _page_ui.add_line( false, _("Maximum documents in Open Recent:"), _misc_recent, "",
-                           _("The maximum length of the Open Recent list in the File menu"), false);
+                              _("The maximum length of the Open Recent list in the File menu"), false);
+
+    _ui_zoom_correction.init(300, 30, 1.00, 200.0, 1.0, 10.0, 1.0);
+    _page_ui.add_line( false, _("Zoom correction factor (in %):"), _ui_zoom_correction, "",
+                              _("Adjust the slider until the length of the ruler on your screen matches its real length. This information is used when zooming to 1:1, 1:2, etc., to display objects in their true sizes"), true);
 
     this->AddPage(_page_ui, _("Interface"), PREFS_PAGE_UI);
 }

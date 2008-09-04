@@ -242,6 +242,212 @@ void PrefSpinButton::on_value_changed()
     }
 }
 
+const double ZoomCorrRuler::textsize = 7;
+const double ZoomCorrRuler::textpadding = 5;
+
+ZoomCorrRuler::ZoomCorrRuler(int width, int height) :
+    _unitconv(1.0),
+    _border(5)
+{
+    set_size(width, height);
+}
+
+void ZoomCorrRuler::set_size(int x, int y)
+{
+    _min_width = x;
+    _height = y;
+    set_size_request(x + _border*2, y + _border*2);
+}
+
+// The following two functions are borrowed from 2geom's toy-framework-2; if they are useful in
+// other locations, we should perhaps make them (or adapted versions of them) publicly available
+static void
+draw_text(cairo_t *cr, Geom::Point loc, const char* txt, bool bottom = "false",
+          double fontsize = ZoomCorrRuler::textsize, std::string fontdesc = "Sans") {
+    PangoLayout* layout = pango_cairo_create_layout (cr);
+    pango_layout_set_text(layout, txt, -1);
+
+    // set font and size
+    std::ostringstream sizestr;
+    sizestr << fontsize;
+    fontdesc = fontdesc + " " + sizestr.str();
+    PangoFontDescription *font_desc = pango_font_description_from_string(fontdesc.c_str());
+    pango_layout_set_font_description(layout, font_desc);
+    pango_font_description_free (font_desc);
+
+    PangoRectangle logical_extent;
+    pango_layout_get_pixel_extents(layout, NULL, &logical_extent);
+    cairo_move_to(cr, loc[Geom::X], loc[Geom::Y] - (bottom ? logical_extent.height : 0));
+    pango_cairo_show_layout(cr, layout);
+}
+
+static void
+draw_number(cairo_t *cr, Geom::Point pos, double num) {
+    std::ostringstream number;
+    number << num;
+    draw_text(cr, pos, number.str().c_str(), true);
+}
+
+/*
+ * \arg dist The distance between consecutive minor marks
+ * \arg major_interval Number of marks after which to draw a major mark
+ */
+void
+ZoomCorrRuler::draw_marks(Cairo::RefPtr<Cairo::Context> cr, double dist, int major_interval) {
+    const double zoomcorr = prefs_get_double_attribute("options.zoomcorrection", "value", 1.0);
+    double mark = 0;
+    int i = 0;
+    while (mark <= _drawing_width) {
+        cr->move_to(mark, _height);
+        if ((i % major_interval) == 0) {
+            // major mark
+            cr->line_to(mark, 0);
+            Geom::Point textpos(mark + 3, ZoomCorrRuler::textsize + ZoomCorrRuler::textpadding);
+            draw_number(cr->cobj(), textpos, dist * i);
+        } else {
+            // minor mark
+            cr->line_to(mark, ZoomCorrRuler::textsize + 2 * ZoomCorrRuler::textpadding);
+        }
+        mark += dist * zoomcorr / _unitconv;
+        ++i;
+    }
+}
+
+void
+ZoomCorrRuler::redraw() {
+    Glib::RefPtr<Gdk::Window> window = get_window();
+    Cairo::RefPtr<Cairo::Context> cr = window->create_cairo_context();
+
+    int w, h;
+    window->get_size(w, h);
+    _drawing_width = w - _border * 2;
+
+    cr->set_source_rgb(1.0, 1.0, 1.0);
+    cr->set_fill_rule(Cairo::FILL_RULE_WINDING);
+    cr->rectangle(0, 0, w, _height + _border*2);
+    cr->fill();
+
+    cr->set_source_rgb(0.0, 0.0, 0.0);
+    cr->set_line_width(0.5);
+
+    cr->translate(_border, _border); // so that we have a small white border around the ruler
+    cr->move_to (0, _height);
+    cr->line_to (_drawing_width, _height);
+
+    const char *abbr = prefs_get_string_attribute("options.zoomcorrection", "unit");
+    if (!strcmp(abbr, "cm")) {
+        draw_marks(cr, 0.1, 10);
+    } else if (!strcmp(abbr, "ft")) {
+        draw_marks(cr, 1/12.0, 12);
+    } else if (!strcmp(abbr, "in")) {
+        draw_marks(cr, 0.25, 4);
+    } else if (!strcmp(abbr, "m")) {
+        draw_marks(cr, 1/10.0, 10);
+    } else if (!strcmp(abbr, "mm")) {
+        draw_marks(cr, 10, 10);
+    } else if (!strcmp(abbr, "pc")) {
+        draw_marks(cr, 1, 10);
+    } else if (!strcmp(abbr, "pt")) {
+        draw_marks(cr, 10, 10);
+    } else if (!strcmp(abbr, "px")) {
+        draw_marks(cr, 10, 10);
+    } else {
+        draw_marks(cr, 1, 1);
+    }
+    cr->stroke();
+}
+
+bool
+ZoomCorrRuler::on_expose_event(GdkEventExpose *event) {
+    this->redraw();
+    return true;
+}
+
+void
+ZoomCorrRulerSlider::on_slider_value_changed()
+{
+    if (this->is_visible() || freeze) //only take action if user changed value
+    {
+        freeze = true;
+        prefs_set_double_attribute ("options.zoomcorrection", "value", _slider.get_value() / 100.0);
+        _sb.set_value(_slider.get_value());
+        _ruler.redraw();
+        freeze = false;
+    }
+}
+
+void
+ZoomCorrRulerSlider::on_spinbutton_value_changed()
+{
+    if (this->is_visible() || freeze) //only take action if user changed value
+    {
+        freeze = true;
+        prefs_set_double_attribute ("options.zoomcorrection", "value", _sb.get_value() / 100.0);
+        _slider.set_value(_sb.get_value());
+        _ruler.redraw();
+        freeze = false;
+    }
+}
+
+void
+ZoomCorrRulerSlider::on_unit_changed() {
+    if (GPOINTER_TO_INT(_unit.get_data("sensitive")) == 0) {
+        // when the unit menu is initialized, the unit is set to the default but
+        // it needs to be reset later so we don't perform the change in this case
+        return;
+    }
+    prefs_set_string_attribute ("options.zoomcorrection", "unit", _unit.getUnitAbbr().c_str());
+    double conv = _unit.getConversion(_unit.getUnitAbbr(), "px");
+    _ruler.set_unit_conversion(conv);
+    if (_ruler.is_visible()) {
+        _ruler.redraw();
+    }
+}
+
+void
+ZoomCorrRulerSlider::init(int ruler_width, int ruler_height, double lower, double upper,
+                      double step_increment, double page_increment, double default_value)
+{
+    double value = prefs_get_double_attribute_limited ("options.zoomcorrection", "value", default_value, lower, upper) * 100.0;
+
+    freeze = false;
+
+    _ruler.set_size(ruler_width, ruler_height);
+
+    _slider.set_size_request(_ruler.width(), -1);
+    _slider.set_range (lower, upper);
+    _slider.set_increments (step_increment, page_increment);
+    _slider.set_value (value);
+    _slider.set_digits(2);
+
+    _slider.signal_value_changed().connect(sigc::mem_fun(*this, &ZoomCorrRulerSlider::on_slider_value_changed));
+    _sb.signal_value_changed().connect(sigc::mem_fun(*this, &ZoomCorrRulerSlider::on_spinbutton_value_changed));
+    _unit.signal_changed().connect(sigc::mem_fun(*this, &ZoomCorrRulerSlider::on_unit_changed));
+
+    _sb.set_range (lower, upper);
+    _sb.set_increments (step_increment, page_increment);
+    _sb.set_value (value);
+    _sb.set_digits(2);
+
+    _unit.set_data("sensitive", GINT_TO_POINTER(0));
+    _unit.setUnitType(UNIT_TYPE_LINEAR);
+    _unit.set_data("sensitive", GINT_TO_POINTER(1));
+    _unit.setUnit(prefs_get_string_attribute ("options.zoomcorrection", "unit"));
+
+    Gtk::Table *table = Gtk::manage(new Gtk::Table());
+    Gtk::Alignment *alignment1 = Gtk::manage(new Gtk::Alignment(0.5,1,0,0));
+    Gtk::Alignment *alignment2 = Gtk::manage(new Gtk::Alignment(0.5,1,0,0));
+    alignment1->add(_sb);
+    alignment2->add(_unit);
+
+    table->attach(_slider,     0, 1, 0, 1);
+    table->attach(*alignment1, 1, 2, 0, 1, static_cast<Gtk::AttachOptions>(0));
+    table->attach(_ruler,      0, 1, 1, 2);
+    table->attach(*alignment2, 1, 2, 1, 2, static_cast<Gtk::AttachOptions>(0));
+
+    this->pack_start(*table, Gtk::PACK_EXPAND_WIDGET);
+}
+
 void PrefCombo::init(const std::string& prefs_path, const std::string& attr,
                      Glib::ustring labels[], int values[], int num_items, int default_value)
 {
