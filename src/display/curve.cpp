@@ -214,7 +214,8 @@ SPCurve::moveto(Geom::Point const &p)
 void
 SPCurve::lineto(Geom::Point const &p)
 {
-    lineto(p[Geom::X], p[Geom::Y]);
+    if (_pathv.empty())  g_message("SPCurve::lineto path is empty!");
+    else _pathv.back().appendNew<Geom::LineSegment>( p );
 }
 /**
  * Adds a line to the current subpath.
@@ -222,8 +223,7 @@ SPCurve::lineto(Geom::Point const &p)
 void
 SPCurve::lineto(gdouble x, gdouble y)
 {
-    if (_pathv.empty())  g_message("leeg");
-    else _pathv.back().appendNew<Geom::LineSegment>( Geom::Point(x,y) );
+    lineto(Geom::Point(x,y));
 }
 
 /**
@@ -232,11 +232,8 @@ SPCurve::lineto(gdouble x, gdouble y)
 void
 SPCurve::curveto(Geom::Point const &p0, Geom::Point const &p1, Geom::Point const &p2)
 {
-    using Geom::X;
-    using Geom::Y;
-    curveto( p0[X], p0[Y],
-             p1[X], p1[Y],
-             p2[X], p2[Y] );
+    if (_pathv.empty())  g_message("SPCurve::lineto path is empty!");
+    else _pathv.back().appendNew<Geom::CubicBezier>( p0, p1, p2 );
 }
 /**
  * Adds a bezier segment to the current subpath.
@@ -244,8 +241,7 @@ SPCurve::curveto(Geom::Point const &p0, Geom::Point const &p1, Geom::Point const
 void
 SPCurve::curveto(gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdouble y2)
 {
-    if (_pathv.empty())  g_message("leeg");
-    else _pathv.back().appendNew<Geom::CubicBezier>( Geom::Point(x0,y0), Geom::Point(x1,y1), Geom::Point(x2,y2) );
+    curveto( Geom::Point(x0,y0), Geom::Point(x1,y1), Geom::Point(x2,y2) );
 }
 
 /**
