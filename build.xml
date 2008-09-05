@@ -636,6 +636,7 @@
     <copy todir="${dist}" file="${devlibs}/bin/libgobject-2.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgtk-win32-2.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgthread-2.0-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libgio-2.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libcairo-2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpoppler-3.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangocairo-1.0-0.dll"/>
