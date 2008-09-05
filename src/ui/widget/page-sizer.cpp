@@ -169,6 +169,11 @@ static PaperSizeRec const inkscape_papers[] = {
     { "Icon 16x16",         16,   16, SP_UNIT_PX },
     { "Icon 32x32",         32,   32, SP_UNIT_PX },
     { "Icon 48x48",         48,   48, SP_UNIT_PX },
+    /* business cards; TODO: select landscape by default */
+    { "Business Card (ISO 7810 ID-1)",         53.98, 85.60, SP_UNIT_MM },
+    { "Business Card (US)",                     2,     3.5,  SP_UNIT_IN },
+    { "Business Card (Europe)",                55,    85,    SP_UNIT_MM },
+    { "Business Card (Australia/New Zealand)", 55,    90,    SP_UNIT_MM },
     { NULL,                  0,    0, SP_UNIT_PX },
 };
 
