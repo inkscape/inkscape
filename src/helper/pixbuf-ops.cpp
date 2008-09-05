@@ -27,6 +27,7 @@
 #include <sp-item.h>
 #include <sp-root.h>
 #include <sp-defs.h>
+#include "unit-constants.h"
 
 #include "libnr/nr-matrix-translate-ops.h"
 #include "libnr/nr-scale-ops.h"
@@ -90,7 +91,7 @@ sp_export_jpg_file(SPDocument *doc, gchar const *filename,
 GdkPixbuf*
 sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
                             double x0, double y0, double x1, double y1,
-                            unsigned width, unsigned height, double /*xdpi*/, double /*ydpi*/,
+                            unsigned width, unsigned height, double xdpi, double ydpi,
                             unsigned long bgcolor,
                             GSList *items_only)
 
@@ -108,16 +109,13 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
      double zoom_scale = 1.0;
      double padding = 1.0;
 
-     width = (int)ceil(screen[Geom::X].extent() * zoom_scale * padding);
-     height = (int)ceil(screen[Geom::Y].extent() * zoom_scale * padding);
-
      Geom::Point origin(screen.min()[Geom::X],
                       sp_document_height(doc) - screen[Geom::Y].extent() - screen.min()[Geom::Y]);
 
      origin[Geom::X] = origin[Geom::X] + (screen[Geom::X].extent() * ((1 - padding) / 2));
      origin[Geom::Y] = origin[Geom::Y] + (screen[Geom::Y].extent() * ((1 - padding) / 2));
 
-     Geom::Scale scale(zoom_scale, zoom_scale);
+     Geom::Scale scale( (xdpi / PX_PER_IN),   (ydpi / PX_PER_IN));
      Geom::Matrix affine = scale * Geom::Translate(-origin * scale);
 
      /* Create ArenaItems and set transform */

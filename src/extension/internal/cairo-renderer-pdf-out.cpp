@@ -219,7 +219,7 @@ CairoRendererPdfOutput::init (void)
 				"<_item value='PDF14'>" N_("PDF 1.4") "</_item>\n"
 			"</param>\n"
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert blur effects to bitmaps") "\" type=\"boolean\">false</param>\n"
+			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert filter effects to bitmaps") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"resolution\" gui-text=\"" N_("Preferred resolution (DPI) of bitmaps") "\" type=\"int\" min=\"72\" max=\"2400\">90</param>\n"
 			"<param name=\"exportDrawing\" gui-text=\"" N_("Export drawing, not page") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"exportCanvas\" gui-text=\"" N_("Export canvas") "\" type=\"boolean\">false</param>\n"

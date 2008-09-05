@@ -410,8 +410,6 @@ static void sp_root_render(SPItem *item, CairoRenderContext *ctx)
 */
 static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
 {
-    g_warning("render as bitmap");
-
     //the code now was copied from sp_selection_create_bitmap_copy
 
     SPDocument *document = SP_OBJECT(item)->document;
@@ -443,8 +441,12 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
 
 
     // The width and height of the bitmap in pixels
-    unsigned width = (unsigned) floor ((bbox.x1 - bbox.x0) * res / PX_PER_IN);
-    unsigned height =(unsigned) floor ((bbox.y1 - bbox.y0) * res / PX_PER_IN);
+    unsigned width = (unsigned) floor ((bbox.x1 - bbox.x0) * (res / PX_PER_IN));
+    unsigned height =(unsigned) floor ((bbox.y1 - bbox.y0) * (res / PX_PER_IN));
+    
+    double scale_x = (bbox.x1 - bbox.x0) / width;
+    double scale_y = (bbox.y1 - bbox.y0) / height;
+    
 
     // Find out if we have to run a filter
     gchar const *run = NULL;
@@ -482,7 +484,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
         shift_x = round (shift_x);
         shift_y = -round (-shift_y); // this gets correct rounding despite coordinate inversion, remove the negations when the inversion is gone
     }
-    t = (Geom::Matrix)(Geom::Scale(1, -1) * (Geom::Matrix)(Geom::Translate (shift_x, shift_y)* eek.inverse()));
+    t = (Geom::Matrix)(Geom::Scale(scale_x, -scale_y) * (Geom::Matrix)(Geom::Translate (shift_x, shift_y)* eek.inverse()));
 
     //t = t * ((Geom::Matrix)ctx->getCurrentState()->transform).inverse();
 
