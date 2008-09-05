@@ -19,6 +19,8 @@
 #endif
 
 #include <string.h>
+#include <vector>
+#include <string>
 
 #include <cmath>
 #include <gtkmm.h>
@@ -87,6 +89,20 @@ struct PaperSizeRec {
     SPUnitId const unit;      //units
 };
 
+// list of page formats that should be in landscape automatically
+static std::vector<std::string> lscape_papers;
+
+static void
+fill_landscape_papers() {
+    lscape_papers.push_back("US #10 Envelope");
+    lscape_papers.push_back("DL Envelope");
+    lscape_papers.push_back("Banner 468x60");
+    lscape_papers.push_back("Business Card (ISO 7810 ID-1)");
+    lscape_papers.push_back("Business Card (US)");
+    lscape_papers.push_back("Business Card (Europe)");
+    lscape_papers.push_back("Business Card (Australia/New Zealand)");
+}
+
 static PaperSizeRec const inkscape_papers[] = {
     { "A4",                210,  297, SP_UNIT_MM },
     { "US Letter",         8.5,   11, SP_UNIT_IN },
@@ -152,11 +168,9 @@ static PaperSizeRec const inkscape_papers[] = {
 
     { "CSE",               462,  649, SP_UNIT_PT },
     { "US #10 Envelope", 4.125,  9.5, SP_UNIT_IN },
-    // TODO: Select landscape by default.
     /* See http://www.hbp.com/content/PCR_envelopes.cfm for a much larger list of US envelope
        sizes. */
     { "DL Envelope",       110,  220, SP_UNIT_MM },
-    // TODO: Select landscape by default.
     { "Ledger/Tabloid",     11,   17, SP_UNIT_IN },
     /* Note that `Folio' (used in QPrinter/KPrinter) is deliberately absent from this list, as it
        means different sizes to different people: different people may expect the width to be
@@ -165,11 +179,10 @@ static PaperSizeRec const inkscape_papers[] = {
        page size to the list, then please consider using a name more specific than just `Folio' or
        `Foolscap Folio'. */
     { "Banner 468x60",      60,  468, SP_UNIT_PX },
-    // TODO: Select landscape by default.
     { "Icon 16x16",         16,   16, SP_UNIT_PX },
     { "Icon 32x32",         32,   32, SP_UNIT_PX },
     { "Icon 48x48",         48,   48, SP_UNIT_PX },
-    /* business cards; TODO: select landscape by default */
+    /* business cards */
     { "Business Card (ISO 7810 ID-1)",         53.98, 85.60, SP_UNIT_MM },
     { "Business Card (US)",                     2,     3.5,  SP_UNIT_IN },
     { "Business Card (Europe)",                55,    85,    SP_UNIT_MM },
@@ -213,6 +226,8 @@ PageSizer::PageSizer(Registry & _wr)
     _paperSizeListScroller.set_shadow_type(Gtk::SHADOW_IN);
     _paperSizeListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
     _paperSizeListScroller.set_size_request(-1, 90);
+
+    fill_landscape_papers();
 
     for (PaperSizeRec const *p = inkscape_papers; p->name; p++)
     {
@@ -449,6 +464,15 @@ PageSizer::on_paper_size_list_changed()
     PaperSize paper = piter->second;
     double w = paper.smaller;
     double h = paper.larger;
+
+    if (std::find(lscape_papers.begin(), lscape_papers.end(), paper.name.c_str()) != lscape_papers.end()) {
+        // enforce landscape mode if this is desired for the given page format
+        _landscape = true;
+    } else {
+        // otherwise we set portrait mode because
+        _landscape = false;
+    }
+
     SPUnit const &src_unit = sp_unit_get_by_id (paper.unit);
     sp_convert_distance (&w, &src_unit, &_px_unit);
     sp_convert_distance (&h, &src_unit, &_px_unit);
