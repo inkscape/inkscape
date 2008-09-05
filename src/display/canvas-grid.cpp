@@ -964,7 +964,7 @@ CanvasXYGridSnapper::_getSnapLines(Geom::Point const &p) const
     for (unsigned int i = 0; i < 2; ++i) {
 
         /* This is to make sure we snap to only visible grid lines */
-        double scaled_spacing = grid->sw[i]; // this is spacing of visible lines if screen pixels
+        double scaled_spacing = grid->sw[i]; // this is spacing of visible lines in screen pixels
 
         // convert screen pixels to px
         // FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
