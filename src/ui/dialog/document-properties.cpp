@@ -82,7 +82,7 @@ DocumentProperties::getInstance()
 
 DocumentProperties::DocumentProperties()
     : UI::Widget::Panel ("", "dialogs.documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
-      _page_page(1, 1), _page_guides(1, 1),
+      _page_page(1, 1, true, true), _page_guides(1, 1),
       _page_snap(1, 1), _page_snap_dtls(1, 1),
     //---------------------------------------------------------------
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
@@ -196,9 +196,15 @@ attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned const n, int st
         }
         else
         {
-            if (arr[i+1])
+            if (arr[i+1]) {
+                Gtk::AttachOptions yoptions = (Gtk::AttachOptions)0;
+                if (dynamic_cast<Inkscape::UI::Widget::PageSizer*>(arr[i+1])) {
+                    // only the PageSizer in Document Properties|Page should be stretched vertically
+                    yoptions = Gtk::FILL|Gtk::EXPAND;
+                }
                 table.attach(*arr[i+1], 1, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+                      Gtk::FILL|Gtk::EXPAND, yoptions, 0,0);
+            }
             else if (arr[i])
             {
                 Gtk::Label& label = reinterpret_cast<Gtk::Label&>(*arr[i]);

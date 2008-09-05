@@ -232,7 +232,7 @@ PageSizer::PageSizer(Registry & _wr)
     //    _paperSizeListSelection->select(iter);
 
 
-    pack_start (_paperSizeListBox, false, false, 0);
+    pack_start (_paperSizeListBox, true, true, 0);
     _paperSizeListLabel.set_label(_("P_age size:"));
     _paperSizeListLabel.set_use_underline();
     _paperSizeListBox.pack_start (_paperSizeListLabel, false, false, 0);
