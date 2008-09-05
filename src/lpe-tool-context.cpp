@@ -46,6 +46,7 @@ static void sp_lpetool_context_dispose(GObject *object);
 
 static void sp_lpetool_context_setup(SPEventContext *ec);
 static void sp_lpetool_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
+static gint sp_lpetool_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event);
 static gint sp_lpetool_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
 void sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer data);
@@ -99,6 +100,7 @@ sp_lpetool_context_class_init(SPLPEToolContextClass *klass)
     event_context_class->setup = sp_lpetool_context_setup;
     event_context_class->set = sp_lpetool_context_set;
     event_context_class->root_handler = sp_lpetool_context_root_handler;
+    event_context_class->item_handler = sp_lpetool_context_item_handler;
 }
 
 static void
@@ -209,6 +211,37 @@ sp_lpetool_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
         lpetool_parent_class->set(ec, key, val);
     }
     **/
+}
+
+static gint 
+sp_lpetool_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
+{
+    gint ret = FALSE;
+
+    switch (event->type) {
+        case GDK_BUTTON_PRESS:
+        {
+            // select the clicked item but do nothing else
+            Inkscape::Selection * const selection = sp_desktop_selection(ec->desktop);
+            selection->clear();
+            selection->add(item);
+            ret = TRUE;
+            break;
+        }
+        case GDK_BUTTON_RELEASE:
+            // TODO: do we need to catch this or can we pass it on to the parent handler?
+            ret = TRUE;
+            break;
+        default:
+            break;
+    }
+
+    if (!ret) {
+        if (((SPEventContextClass *) lpetool_parent_class)->item_handler)
+            ret = ((SPEventContextClass *) lpetool_parent_class)->item_handler(ec, item, event);
+    }
+
+    return ret;
 }
 
 gint
