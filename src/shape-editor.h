@@ -16,6 +16,7 @@
 #include <libnr/nr-forward.h>
 
 namespace Inkscape { namespace NodePath { class Path; } }
+namespace Inkscape { namespace XML { class Node; } }
 
 #include "libnr/nr-path-code.h"
 #include "libnr/nr-point.h"
@@ -136,6 +137,8 @@ private:
     bool hit;
     NR::Point curvepoint_event; // int coords from event
     NR::Point curvepoint_doc; // same, in doc coords
+
+    Inkscape::XML::Node *listener_attached_for;
 };
 
 

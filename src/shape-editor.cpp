@@ -54,6 +54,7 @@ ShapeEditor::ShapeEditor(SPDesktop *dt) {
     this->nodepath = NULL;
     this->knotholder = NULL;
     this->hit = false;
+    this->listener_attached_for = NULL;
 }
 
 ShapeEditor::~ShapeEditor() {
@@ -68,8 +69,11 @@ void ShapeEditor::unset_item(SubType type, bool keep_knotholder) {
         case SH_NODEPATH:
             if (this->nodepath) {
                 old_repr = this->nodepath->repr;
-                sp_repr_remove_listener_by_data(old_repr, this);
-                Inkscape::GC::release(old_repr);
+                if (old_repr && old_repr == listener_attached_for) {
+                    sp_repr_remove_listener_by_data(old_repr, this);
+                    Inkscape::GC::release(old_repr);
+                    listener_attached_for = NULL;
+                }
 
                 this->grab_node = -1;
                 sp_nodepath_destroy(this->nodepath);
@@ -79,8 +83,11 @@ void ShapeEditor::unset_item(SubType type, bool keep_knotholder) {
         case SH_KNOTHOLDER:
             if (this->knotholder) {
                 old_repr = this->knotholder->repr;
-                sp_repr_remove_listener_by_data(old_repr, this);
-                Inkscape::GC::release(old_repr);
+                if (old_repr && old_repr == listener_attached_for) {
+                    sp_repr_remove_listener_by_data(old_repr, this);
+                    Inkscape::GC::release(old_repr);
+                    listener_attached_for = NULL;
+                }
 
                 if (!keep_knotholder) {
                     delete this->knotholder;
@@ -168,11 +175,12 @@ bool ShapeEditor::nodepath_edits_repr_key(gchar const *name) {
     return false;
 }
 
-static void shapeeditor_np_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar const *name,
+static void shapeeditor_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar const *name,
                                            gchar const */*old_value*/, gchar const */*new_value*/,
                                            bool /*is_interactive*/, gpointer data)
 {
     gboolean changed_np = FALSE;
+    gboolean changed_kh = FALSE;
 
     g_assert(data);
     ShapeEditor *sh = ((ShapeEditor *) data);
@@ -181,6 +189,7 @@ static void shapeeditor_np_event_attr_changed(Inkscape::XML::Node */*repr*/, gch
     {
         changed_np = !sh->has_local_change(SH_NODEPATH);
         sh->decrement_local_change(SH_NODEPATH);
+
     }
 
     if (changed_np) {
@@ -197,17 +206,6 @@ static void shapeeditor_np_event_attr_changed(Inkscape::XML::Node */*repr*/, gch
         }
     }
 
-    sh->update_statusbar(); //TODO: sh->get_container()->update_statusbar();
-}
-
-static void shapeeditor_kh_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar const *name,
-                                           gchar const */*old_value*/, gchar const */*new_value*/,
-                                           bool /*is_interactive*/, gpointer data)
-{
-    gboolean changed_kh = FALSE;
-
-    g_assert(data);
-    ShapeEditor *sh = ((ShapeEditor *) data);
 
     if (sh->has_knotholder())
     {
@@ -223,20 +221,10 @@ static void shapeeditor_kh_event_attr_changed(Inkscape::XML::Node */*repr*/, gch
     sh->update_statusbar(); //TODO: sh->get_container()->update_statusbar();
 }
 
-
-
-static Inkscape::XML::NodeEventVector shapeeditor_np_repr_events = {
+static Inkscape::XML::NodeEventVector shapeeditor_repr_events = {
     NULL, /* child_added */
     NULL, /* child_removed */
-    shapeeditor_np_event_attr_changed,
-    NULL, /* content_changed */
-    NULL  /* order_changed */
-};
-
-static Inkscape::XML::NodeEventVector shapeeditor_kh_repr_events = {
-    NULL, /* child_added */
-    NULL, /* child_removed */
-    shapeeditor_kh_event_attr_changed,
+    shapeeditor_event_attr_changed,
     NULL, /* content_changed */
     NULL  /* order_changed */
 };
@@ -261,8 +249,11 @@ void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
 
                     // setting new listener
                     repr = SP_OBJECT_REPR(item);
-                    Inkscape::GC::anchor(repr);
-                    sp_repr_add_listener(repr, &shapeeditor_np_repr_events, this);
+                    if (repr != listener_attached_for) {
+                        Inkscape::GC::anchor(repr);
+                        sp_repr_add_listener(repr, &shapeeditor_repr_events, this);
+                        listener_attached_for = repr;
+                    }
                 }
                 break;
 
@@ -275,8 +266,11 @@ void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
                     this->knotholder->update_knots();
                     // setting new listener
                     repr = this->knotholder->repr;
-                    Inkscape::GC::anchor(repr);
-                    sp_repr_add_listener(repr, &shapeeditor_kh_repr_events, this);
+                    if (repr != listener_attached_for) {
+                        Inkscape::GC::anchor(repr);
+                        sp_repr_add_listener(repr, &shapeeditor_repr_events, this);
+                        listener_attached_for = repr;
+                    }
                 }
                 break;
         }
@@ -301,9 +295,10 @@ void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject,
 
             // setting new listener
             Inkscape::XML::Node *repr = SP_OBJECT_REPR(lpeobject);
-            if (repr) {
+            if (repr && repr != listener_attached_for) {
                 Inkscape::GC::anchor(repr);
-                sp_repr_add_listener(repr, &shapeeditor_np_repr_events, this);
+                sp_repr_add_listener(repr, &shapeeditor_repr_events, this);
+                listener_attached_for = repr;
             }
         }
     }
