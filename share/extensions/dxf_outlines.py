@@ -5,6 +5,7 @@ Copyright (C) 2008 Alvin Penner, penner@vaxxine.com
 
 - template dxf_outlines.dxf added Feb 2008 by Alvin Penner
 - ROBO-Master output option added Aug 2008 by Alvin Penner
+- ROBO-Master multispline output added Sept 2008 by Alvin Penner
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +27,8 @@ try:
     from numpy import *
     from numpy.linalg import solve
 except:
-    inkex.errormsg(_("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again."))
-    sys.exit()
+    inkex.errormsg("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.")
+    inkex.sys.exit()
 
 def pointdistance((x1,y1),(x2,y2)):
     return math.sqrt(((x2 - x1) ** 2) + ((y2 - y1) ** 2))
@@ -35,12 +36,24 @@ def pointdistance((x1,y1),(x2,y2)):
 def get_fit(u, csp, col):
     return (1-u)**3*csp[0][col] + 3*(1-u)**2*u*csp[1][col] + 3*(1-u)*u**2*csp[2][col] + u**3*csp[3][col]
 
+def get_matrix(u, i, j):
+    if j == i + 2:
+        return (u[i]-u[i-1])*(u[i]-u[i-1])/(u[i+2]-u[i-1])/(u[i+1]-u[i-1])
+    elif j == i + 1:
+        return ((u[i]-u[i-1])*(u[i+2]-u[i])/(u[i+2]-u[i-1]) + (u[i+1]-u[i])*(u[i]-u[i-2])/(u[i+1]-u[i-2]))/(u[i+1]-u[i-1])
+    elif j == i:
+        return (u[i+1]-u[i])*(u[i+1]-u[i])/(u[i+1]-u[i-2])/(u[i+1]-u[i-1])
+    else:
+        return 0
+
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-R", "--ROBO", action="store", type="string", dest="ROBO")
         self.dxf = []
-        self.handle = 255                       # initiallize handle for DXF ENTITY
+        self.handle = 255                       # handle for DXF ENTITY
+        self.csp_old = [[0.0,0.0]]*4            # previous spline
+        self.d = array([0], float)              # knot vector
     def output(self):
         print ''.join(self.dxf)
     def dxf_add(self, str):
@@ -54,59 +67,59 @@ class MyEffect(inkex.Effect):
         self.dxf_add("  0\nSPLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbSpline\n" % self.handle)
         self.dxf_add(" 70\n8\n 71\n3\n 72\n%d\n 73\n%d\n 74\n0\n" % (knots, ctrls))
         for i in range(2):
-            for j in range(4): 
+            for j in range(4):
                 self.dxf_add(" 40\n%d\n" % i)
         for i in csp:
             self.dxf_add(" 10\n%f\n 20\n%f\n 30\n0.0\n" % (i[0],i[1]))
     def ROBO_spline(self,csp):
         # this spline has zero curvature at the endpoints, as in ROBO-Master
-        knots = 10
-        ctrls = 6
-        fits = 4
-        xfit = zeros((6), dtype=float64)
-        xfit[0] = csp[0][0]
-        xfit[1] = get_fit(.333, csp, 0)
-        xfit[2] = get_fit(.667, csp, 0)
-        xfit[3] = csp[3][0]
-        yfit = zeros((6), dtype=float64)
-        yfit[0] = csp[0][1]
-        yfit[1] = get_fit(.333, csp, 1)
-        yfit[2] = get_fit(.667, csp, 1)
-        yfit[3] = csp[3][1]
-        d1 = pointdistance((xfit[0],yfit[0]),(xfit[1],yfit[1]))
-        d2 = pointdistance((xfit[1],yfit[1]),(xfit[2],yfit[2]))
-        d3 = pointdistance((xfit[2],yfit[2]),(xfit[3],yfit[3]))
-        u1 = d1/(d1 + d2 + d3)
-        u2 = (d1 + d2)/(d1 + d2 + d3)
-        solmatrix = zeros((6,6), dtype=float64)
-        solmatrix[0,0] = 1
-        solmatrix[1,1] = (1 - u1/u2)**2
-        solmatrix[1,2] = (2*u2 - u1*u2 - u1)*u1/u2/u2
-        solmatrix[1,3] = u1*u1/u2
-        solmatrix[2,2] = (1 - u2)**2/(1 - u1)
-        solmatrix[2,3] = (2*u2 - u1*u2 - u1)*(1 - u2)/(1 - u1)/(1 - u1)
-        solmatrix[2,4] = ((u2 - u1)/(1 - u1))**2
-        solmatrix[3,5] = 1
-        solmatrix[4,0] = u2
-        solmatrix[4,1] = -u1 - u2
-        solmatrix[4,2] = u1
-        solmatrix[5,3] = 1 - u2
-        solmatrix[5,4] = u1 + u2 - 2
-        solmatrix[5,5] = 1 - u1
-        xctrl = solve(solmatrix, xfit)
-        yctrl = solve(solmatrix, yfit)
+        if (abs(csp[0][0] - self.csp_old[3][0]) > .0001
+            or abs(csp[0][1] - self.csp_old[3][1]) > .0001
+            or abs((csp[1][1]-csp[0][1])*(self.csp_old[3][0]-self.csp_old[2][0]) - (csp[1][0]-csp[0][0])*(self.csp_old[3][1]-self.csp_old[2][1])) > .001):
+            self.ROBO_output()                              # terminate current spline
+            self.xfit = array([csp[0][0]], float)           # initiallize new spline
+            self.yfit = array([csp[0][1]], float)
+            self.d = array([0], float)
+        self.xfit = concatenate((self.xfit, zeros((3))))    # append to current spline
+        self.yfit = concatenate((self.yfit, zeros((3))))
+        self.d = concatenate((self.d, zeros((3))))
+        for i in range(1, 4):
+            j = len(self.d) + i - 4
+            self.xfit[j] = get_fit(i/3.0, csp, 0)
+            self.yfit[j] = get_fit(i/3.0, csp, 1)
+            self.d[j] = self.d[j-1] + pointdistance((self.xfit[j-1],self.yfit[j-1]),(self.xfit[j],self.yfit[j]))
+        self.csp_old = csp
+    def ROBO_output(self):
+        if len(self.d) == 1:
+            return
+        fits = len(self.d)
+        ctrls = fits + 2
+        knots = ctrls + 4
+        self.xfit = concatenate((self.xfit, zeros((2))))    # pad with 2 endpoint constraints
+        self.yfit = concatenate((self.yfit, zeros((2))))    # pad with 2 endpoint constraints
+        self.d = concatenate((self.d, zeros((6))))          # pad with 3 duplicates at each end
+        self.d[fits+2] = self.d[fits+1] = self.d[fits] = self.d[fits-1]
+        solmatrix = zeros((ctrls,ctrls), dtype=float)
+        for i in range(fits):
+            solmatrix[i,i]   = get_matrix(self.d, i, i)
+            solmatrix[i,i+1] = get_matrix(self.d, i, i+1)
+            solmatrix[i,i+2] = get_matrix(self.d, i, i+2)
+        solmatrix[fits, 0]   = self.d[2]/self.d[fits-1]     # curvature at start = 0
+        solmatrix[fits, 1]   = -(self.d[1] + self.d[2])/self.d[fits-1]
+        solmatrix[fits, 2]   = self.d[1]/self.d[fits-1]
+        solmatrix[fits+1, fits-1] = (self.d[fits-1] - self.d[fits-2])/self.d[fits-1]   # curvature at end = 0
+        solmatrix[fits+1, fits]   = (self.d[fits-3] + self.d[fits-2] - 2*self.d[fits-1])/self.d[fits-1]
+        solmatrix[fits+1, fits+1] = (self.d[fits-1] - self.d[fits-3])/self.d[fits-1]
+        xctrl = solve(solmatrix, self.xfit)
+        yctrl = solve(solmatrix, self.yfit)
         self.dxf_add("  0\nSPLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbSpline\n" % self.handle)
         self.dxf_add(" 70\n0\n 71\n3\n 72\n%d\n 73\n%d\n 74\n%d\n" % (knots, ctrls, fits))
-        for i in range(4):
-            self.dxf_add(" 40\n0\n")
-        self.dxf_add(" 40\n%f\n" % u1)
-        self.dxf_add(" 40\n%f\n" % u2)
-        for i in range(4):
-            self.dxf_add(" 40\n1\n")
-        for i in range(6):
+        for i in range(knots):
+            self.dxf_add(" 40\n%f\n" % self.d[i-3])
+        for i in range(ctrls):
             self.dxf_add(" 10\n%f\n 20\n%f\n 30\n0.0\n" % (xctrl[i],yctrl[i]))
-        for i in range(4):
-            self.dxf_add(" 11\n%f\n 21\n%f\n 31\n0.0\n" % (xfit[i],yfit[i]))
+        for i in range(fits):
+            self.dxf_add(" 11\n%f\n 21\n%f\n 31\n0.0\n" % (self.xfit[i],self.yfit[i]))
 
     def effect(self):
         #References:   Minimum Requirements for Creating a DXF File of a 3D Model By Paul Bourke
@@ -136,7 +149,9 @@ class MyEffect(inkex.Effect):
                         self.ROBO_spline([s[1],s[2],e[0],e[1]])
                     else:
                         self.dxf_spline([s[1],s[2],e[0],e[1]])
-
+        if self.options.ROBO == 'true':
+            self.handle += 1
+            self.ROBO_output()
         self.dxf_add(dxf_templates.r14_footer)
 
 if __name__ == '__main__':
