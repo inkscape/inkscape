@@ -13,10 +13,10 @@
  */
 
 #include <stdio.h>
+#include <gtk/gtk.h>
 #include <gtk/gtkclist.h>
 #include "../xml/repr.h"
 
-#include <glib.h>
 
 
 
