@@ -937,6 +937,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     // apply pattern transformation
     Geom::Matrix pattern_transform(pattern_patternTransform(pat));
     ps2user *= pattern_transform;
+    Geom::Point ori (ps2user[4], ps2user[5]);
 
     // create pattern contents coordinate system
     if (pat->viewBox_set) {
@@ -960,30 +961,16 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     } else if (pbox && pattern_patternContentUnits(pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
         pcs2dev[0] = pbox->x1 - pbox->x0;
         pcs2dev[3] = pbox->y1 - pbox->y0;
+
     }
 
-    // Calculate the size of the surface which has to be created so that the pattern resolution
-    // matches the output resolution (i.e., if the pattern is scaled up by a factor of two,
-    // the surface width should be scaled by a factor of two).
-    // The scaling needs to be taken into account in the ctm after the pattern transformation.
-    Geom::Matrix temp;
-    temp = pattern_transform * _state->transform;
-    double width_scaler = sqrt(temp[0] * temp[0] + temp[2] * temp[2]);
-    double height_scaler = sqrt(temp[1] * temp[1] + temp[3] * temp[3]);
-
-    if (_vector_based_target) {
-        // eliminate PT_PER_PX mul from these
-        width_scaler *= 1.25;
-        height_scaler *= 1.25;
-    }
-
+    // Calculate the size of the surface which has to be created 
 #define SUBPIX_SCALE 100
-
     // Cairo requires an integer pattern surface width/height.
     // Subtract 0.5 to prevent small rounding errors from increasing pattern size by one pixel.
     // Multiply by SUBPIX_SCALE to allow for less than a pixel precision
-    double surface_width = MAX(ceil(SUBPIX_SCALE * bbox_width_scaler * width_scaler * width - 0.5), 1);
-    double surface_height = MAX(ceil(SUBPIX_SCALE * bbox_height_scaler * height_scaler * height - 0.5), 1);
+    double surface_width = MAX(ceil(SUBPIX_SCALE * bbox_width_scaler * width - 0.5), 1);
+    double surface_height = MAX(ceil(SUBPIX_SCALE * bbox_height_scaler * height - 0.5), 1);
     TRACE(("surface size: %f x %f\n", surface_width, surface_height));
     // create new rendering context
     CairoRenderContext *pattern_ctx = cloneMe(surface_width, surface_height);
@@ -994,9 +981,13 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     double scale_height = surface_height / (bbox_height_scaler * height);
     if (scale_width != 1.0 || scale_height != 1.0 || _vector_based_target) {
         TRACE(("needed to scale with %f %f\n", scale_width, scale_height));
-        pcs2dev *= Geom::Scale(scale_width, scale_height);
-        ps2user *= Geom::Scale(1.0 / scale_width, 1.0 / scale_height);
+        pcs2dev *= Geom::Scale(SUBPIX_SCALE,SUBPIX_SCALE);
+        ps2user *= Geom::Scale(1.0/SUBPIX_SCALE,1.0/SUBPIX_SCALE);
     }
+
+    // despite scaling up/down by subpixel scaler, the origin point of the pattern must be the same
+    ps2user[4] = ori[Geom::X];
+    ps2user[5] = ori[Geom::Y];
 
     pattern_ctx->setTransform(&pcs2dev);
     pattern_ctx->pushState();
