@@ -25,7 +25,6 @@
 #include "libnr/nr-matrix-fns.h"
 #include <libnr/nr-pixops.h>
 #include <libnr/nr-convert2geom.h>
-#include <libnr/nr-path.h>
 #include "helper/geom.h"
 
 /*

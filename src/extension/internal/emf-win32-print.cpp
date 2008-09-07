@@ -41,7 +41,6 @@
 #include "libnr/nr-scale-translate-ops.h"
 #include "libnr/nr-translate-scale-ops.h"
 #include "libnr/nr-matrix-fns.h"
-#include "libnr/nr-path.h"
 #include "libnr/nr-pixblock.h"
 #include <libnr/n-art-bpath-2geom.h>
 #include "display/canvas-bpath.h"

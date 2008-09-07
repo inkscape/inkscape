@@ -12,7 +12,6 @@
 
 #include "extension.h"
 
-#include "libnr/nr-path.h"
 #include "display/nr-arena-forward.h"
 #include "forward.h"
 

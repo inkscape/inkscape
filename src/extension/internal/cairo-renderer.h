@@ -21,7 +21,6 @@
 #include <set>
 #include <string>
 
-#include "libnr/nr-path.h"
 //#include "libnrtype/font-instance.h"
 #include "style.h"
 

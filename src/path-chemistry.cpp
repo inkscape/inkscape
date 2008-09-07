@@ -27,7 +27,6 @@
 #include "sp-path.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
-#include "libnr/nr-path.h"
 #include "text-editing.h"
 #include "style.h"
 #include "desktop.h"

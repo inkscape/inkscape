@@ -48,8 +48,6 @@ libnr_libnr_a_SOURCES =	\
 	libnr/nr-maybe.h	\
 	libnr/nr-object.cpp	\
 	libnr/nr-object.h	\
-	libnr/nr-path.cpp	\
-	libnr/nr-path.h	\
 	libnr/nr-path-code.h	\
 	libnr/nr-pixblock-line.cpp	\
 	libnr/nr-pixblock-line.h	\

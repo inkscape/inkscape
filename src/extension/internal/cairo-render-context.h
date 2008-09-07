@@ -21,8 +21,6 @@
 #include <set>
 #include <string>
 
-#include "libnr/nr-path.h"
-#include <libnr/nr-matrix-ops.h>
 #include <2geom/forward.h>
 
 #include "style.h"
