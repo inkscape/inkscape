@@ -211,7 +211,7 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     angle_rad[Z] = deg_to_rad(angle_deg[Z]);
     tan_angle[Z] = tan(angle_rad[Z]);
 
-    snapper = new CanvasAxonomGridSnapper(this, namedview, 0);
+    snapper = new CanvasAxonomGridSnapper(this, &namedview->snap_manager, 0);
 
     if (repr) readRepr();
 }
@@ -654,7 +654,7 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     }
 }
 
-CanvasAxonomGridSnapper::CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SPNamedView const *nv, Geom::Coord const d) : LineSnapper(nv, d)
+CanvasAxonomGridSnapper::CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SnapManager const *sm, Geom::Coord const d) : LineSnapper(sm, d)
 {
     this->grid = grid;
 }

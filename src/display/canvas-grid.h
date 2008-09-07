@@ -161,7 +161,7 @@ private:
 class CanvasXYGridSnapper : public LineSnapper
 {
 public:
-    CanvasXYGridSnapper(CanvasXYGrid *grid, SPNamedView const *nv, Geom::Coord const d);
+    CanvasXYGridSnapper(CanvasXYGrid *grid, SnapManager const *sm, Geom::Coord const d);
     bool ThisSnapperMightSnap() const;
 
 private:

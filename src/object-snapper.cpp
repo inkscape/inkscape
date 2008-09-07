@@ -44,8 +44,8 @@ Inkscape::SnapCandidate::~SnapCandidate()
 {    
 }
 
-Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, Geom::Coord const d)
-    : Snapper(nv, d), _snap_to_itemnode(true), _snap_to_itempath(true),
+Inkscape::ObjectSnapper::ObjectSnapper(SnapManager const *sm, Geom::Coord const d)
+    : Snapper(sm, d), _snap_to_itemnode(true), _snap_to_itempath(true),
       _snap_to_bboxnode(true), _snap_to_bboxpath(true), _snap_to_page_border(false),
       _strict_snapping(true), _include_item_center(false)
 {
@@ -98,8 +98,8 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
     bbox_to_snap_incl.expandBy(getSnapperTolerance()); // see?
     
     for (SPObject* o = sp_object_first_child(parent); o != NULL; o = SP_OBJECT_NEXT(o)) {
-        g_assert(_named_view->snap_manager.getDesktop() != NULL);
-    	if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !(_named_view->snap_manager.getDesktop()->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
+        g_assert(_snapmanager->getDesktop() != NULL);
+    	if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !(_snapmanager->getDesktop()->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
             // Don't snap to locked items, and
             // don't snap to hidden objects, unless they're a clipped path or a mask
             /* See if this item is on the ignore list */
@@ -413,8 +413,8 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
     _collectPaths(t, first_point);
     // Now we can finally do the real snapping, using the paths collected above
     
-    g_assert(_named_view->snap_manager.getDesktop() != NULL);    
-    Geom::Point const p_doc = _named_view->snap_manager.getDesktop()->dt2doc(p);
+    g_assert(_snapmanager->getDesktop() != NULL);    
+    Geom::Point const p_doc = _snapmanager->getDesktop()->dt2doc(p);
     
     bool const node_tool_active = _snap_to_itempath && selected_path != NULL;
     
@@ -463,13 +463,13 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                      * piece are unselected; if they are then this piece must be stationary 
                      */                    
                     g_assert(unselected_nodes != NULL);
-                    Geom::Point start_pt = _named_view->snap_manager.getDesktop()->doc2dt(curve->pointAt(0)); 
-                    Geom::Point end_pt = _named_view->snap_manager.getDesktop()->doc2dt(curve->pointAt(1));                                    
+                    Geom::Point start_pt = _snapmanager->getDesktop()->doc2dt(curve->pointAt(0)); 
+                    Geom::Point end_pt = _snapmanager->getDesktop()->doc2dt(curve->pointAt(1));                                    
                     c1 = isUnselectedNode(start_pt, unselected_nodes);
                     c2 = isUnselectedNode(end_pt, unselected_nodes);
                 }
                 
-                Geom::Point const sp_dt = _named_view->snap_manager.getDesktop()->doc2dt(sp_doc);                
+                Geom::Point const sp_dt = _snapmanager->getDesktop()->doc2dt(sp_doc);                
                 if (!being_edited || (c1 && c2)) {
                     Geom::Coord const dist = Geom::distance(sp_doc, p_doc);
                     if (dist < getSnapperTolerance()) {
@@ -512,8 +512,8 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     
     // Now we can finally do the real snapping, using the paths collected above
     
-    g_assert(_named_view->snap_manager.getDesktop() != NULL);
-    Geom::Point const p_doc = _named_view->snap_manager.getDesktop()->dt2doc(p);    
+    g_assert(_snapmanager->getDesktop() != NULL);
+    Geom::Point const p_doc = _snapmanager->getDesktop()->dt2doc(p);    
     
     Geom::Point direction_vector = c.getDirection();
     if (!is_zero(direction_vector)) {
@@ -527,8 +527,8 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     // must lie within two points on the constraintline: p_min_on_cl and p_max_on_cl
     // The distance between those points is twice the snapping tolerance
     Geom::Point const p_proj_on_cl = project_on_linesegment(p, p1_on_cl, p2_on_cl);
-    Geom::Point const p_min_on_cl = _named_view->snap_manager.getDesktop()->dt2doc(p_proj_on_cl - getSnapperTolerance() * direction_vector);    
-    Geom::Point const p_max_on_cl = _named_view->snap_manager.getDesktop()->dt2doc(p_proj_on_cl + getSnapperTolerance() * direction_vector);
+    Geom::Point const p_min_on_cl = _snapmanager->getDesktop()->dt2doc(p_proj_on_cl - getSnapperTolerance() * direction_vector);    
+    Geom::Point const p_max_on_cl = _snapmanager->getDesktop()->dt2doc(p_proj_on_cl + getSnapperTolerance() * direction_vector);
     
     Geom::Path cl;
     std::vector<Geom::Path> clv;    
@@ -548,8 +548,8 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                         Geom::Point p_inters = p_min_on_cl + ((*m).ta) * (p_max_on_cl - p_min_on_cl);
                         // When it's within snapping range, then return it
                         // (within snapping range == between p_min_on_cl and p_max_on_cl == 0 < ta < 1)                        
-                        Geom::Coord dist = Geom::L2(_named_view->snap_manager.getDesktop()->dt2doc(p_proj_on_cl) - p_inters);
-                        SnappedPoint s(_named_view->snap_manager.getDesktop()->doc2dt(p_inters), SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
+                        Geom::Coord dist = Geom::L2(_snapmanager->getDesktop()->dt2doc(p_proj_on_cl) - p_inters);
+                        SnappedPoint s(_snapmanager->getDesktop()->doc2dt(p_inters), SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
                         sc.points.push_back(s);
                     }  
                 } 
@@ -567,14 +567,14 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
                                             std::vector<SPItem const *> const *it,
                                             std::vector<Geom::Point> *unselected_nodes) const
 {
-    if (_snap_enabled == false || getSnapFrom(t) == false || _named_view == NULL) {
+    if (_snap_enabled == false || getSnapFrom(t) == false ) {
         return;
     }
 
     /* Get a list of all the SPItems that we will try to snap to */
     if (first_point) {
         Geom::Rect const local_bbox_to_snap = bbox_to_snap ? *bbox_to_snap : Geom::Rect(p, p);
-        _findCandidates(sp_document_root(_named_view->document), it, first_point, local_bbox_to_snap, TRANSL_SNAP_XY, false, Geom::identity());
+        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, first_point, local_bbox_to_snap, TRANSL_SNAP_XY, false, Geom::identity());
     }
     
     if (_snap_to_itemnode || _snap_to_bboxnode || _snap_to_page_border) {
@@ -610,14 +610,14 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
                                                   ConstraintLine const &c,
                                                   std::vector<SPItem const *> const *it) const
 {
-    if (_snap_enabled == false || getSnapFrom(t) == false || _named_view == NULL) {
+    if (_snap_enabled == false || getSnapFrom(t) == false) {
         return;
     }
 
     /* Get a list of all the SPItems that we will try to snap to */
     if (first_point) {
         Geom::Rect const local_bbox_to_snap = bbox_to_snap ? *bbox_to_snap : Geom::Rect(p, p);
-        _findCandidates(sp_document_root(_named_view->document), it, first_point, local_bbox_to_snap, TRANSL_SNAP_XY, false, Geom::identity());
+        _findCandidates(sp_document_root(_snapmanager->getDocument()), it, first_point, local_bbox_to_snap, TRANSL_SNAP_XY, false, Geom::identity());
     }
     
     // A constrained snap, is a snap in only one degree of freedom (specified by the constraint line).
@@ -640,10 +640,6 @@ void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
                                         Geom::Point const &p,
                                         Geom::Point const &guide_normal) const
 {
-    if ( NULL == _named_view ) {
-        return;
-    }
-    
     /* Get a list of all the SPItems that we will try to snap to */
     std::vector<SPItem*> cand;
     std::vector<SPItem const *> const it; //just an empty list
@@ -667,7 +663,7 @@ void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
     // second time on an object; but should this point then be constrained to the
     // line, or can it be located anywhere?)
     
-    _findCandidates(sp_document_root(_named_view->document), &it, true, Geom::Rect(p, p), snap_dim, false, Geom::identity());
+    _findCandidates(sp_document_root(_snapmanager->getDocument()), &it, true, Geom::Rect(p, p), snap_dim, false, Geom::identity());
     _snapTranslatingGuideToNodes(sc, Inkscape::Snapper::SNAPPOINT_GUIDE, p, guide_normal);
     // _snapRotatingGuideToNodes has not been implemented yet. 
 }
@@ -697,7 +693,7 @@ void Inkscape::ObjectSnapper::_clear_paths() const
 
 Geom::PathVector* Inkscape::ObjectSnapper::_getBorderPathv() const
 {
-    Geom::Rect const border_rect = Geom::Rect(Geom::Point(0,0), Geom::Point(sp_document_width(_named_view->document),sp_document_height(_named_view->document)));
+    Geom::Rect const border_rect = Geom::Rect(Geom::Point(0,0), Geom::Point(sp_document_width(_snapmanager->getDocument()),sp_document_height(_snapmanager->getDocument())));
     return _getPathvFromRect(border_rect);        
 }
 
@@ -714,8 +710,8 @@ Geom::PathVector* Inkscape::ObjectSnapper::_getPathvFromRect(Geom::Rect const re
 
 void Inkscape::ObjectSnapper::_getBorderNodes(std::vector<Geom::Point> *points) const
 {
-    Geom::Coord w = sp_document_width(_named_view->document);
-    Geom::Coord h = sp_document_height(_named_view->document);
+    Geom::Coord w = sp_document_width(_snapmanager->getDocument());
+    Geom::Coord h = sp_document_height(_snapmanager->getDocument());
     points->push_back(Geom::Point(0,0));
     points->push_back(Geom::Point(0,h));
     points->push_back(Geom::Point(w,h));

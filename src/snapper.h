@@ -30,7 +30,7 @@ struct SnappedConstraints {
     std::list<Inkscape::SnappedCurve> curves;
 };
 
-struct SPNamedView;
+class SnapManager;
 struct SPItem;
 
 namespace Inkscape
@@ -41,7 +41,7 @@ class Snapper
 {
 public:
     Snapper() {}
-    Snapper(SPNamedView const *nv, ::Geom::Coord const d);
+    Snapper(SnapManager const *sm, ::Geom::Coord const d);
     virtual ~Snapper() {}
 
     /// Point types to snap.
@@ -112,12 +112,12 @@ public:
                                  std::vector<SPItem const *> const */*it*/) const {};
 
 protected:
-    SPNamedView const *_named_view;
-    int _snap_from; ///< bitmap of point types that we will snap from
+	SnapManager const *_snapmanager;		
+	int _snap_from; ///< bitmap of point types that we will snap from
     bool _snap_enabled; ///< true if this snapper is enabled, otherwise false
 
 private:
-    Geom::Coord _snapper_tolerance;   ///< snap tolerance in desktop coordinates
+	Geom::Coord _snapper_tolerance;   ///< snap tolerance in desktop coordinates
                                     // must be private to enforce the usage of getTolerance(), which retrieves
                                     // the tolerance in screen pixels (making it zoom independent)
 

@@ -19,7 +19,7 @@ namespace Inkscape
 class LineSnapper : public Snapper
 {
 public:
-  LineSnapper(SPNamedView const *nv, Geom::Coord const d);
+  LineSnapper(SnapManager const *sm, Geom::Coord const d);
 
   void freeSnap(SnappedConstraints &sc,
                    Inkscape::Snapper::PointType const &t,

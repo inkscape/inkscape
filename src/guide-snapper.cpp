@@ -17,7 +17,7 @@
 #include "sp-namedview.h"
 #include "sp-guide.h"
 
-Inkscape::GuideSnapper::GuideSnapper(SPNamedView const *nv, Geom::Coord const d) : LineSnapper(nv, d)
+Inkscape::GuideSnapper::GuideSnapper(SnapManager const *sm, Geom::Coord const d) : LineSnapper(sm, d)
 {
 
 }
@@ -26,11 +26,11 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(Geom::Poi
 {
     LineList s;
 
-    if ( NULL == _named_view || ThisSnapperMightSnap() == false) {
+    if ( NULL == _snapmanager->getNamedView() || ThisSnapperMightSnap() == false) {
         return s;
     }
 
-    for (GSList const *l = _named_view->guides; l != NULL; l = l->next) {
+    for (GSList const *l = _snapmanager->getNamedView()->guides; l != NULL; l = l->next) {
         SPGuide const *g = SP_GUIDE(l->data);
         s.push_back(std::make_pair(g->normal_to_line, g->point_on_line)); 
     }
@@ -43,7 +43,7 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(Geom::Poi
  */
 bool Inkscape::GuideSnapper::ThisSnapperMightSnap() const
 {
-    return _named_view == NULL ? false : (_snap_enabled && _snap_from != 0 && _named_view->showguides);
+    return _snapmanager->getNamedView() == NULL ? false : (_snap_enabled && _snap_from != 0 && _snapmanager->getNamedView()->showguides);
 }
 
 void Inkscape::GuideSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, Geom::Point const point_on_line) const

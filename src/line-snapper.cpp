@@ -18,7 +18,7 @@
 #include "snapped-line.h"
 #include <gtk/gtk.h>
 
-Inkscape::LineSnapper::LineSnapper(SPNamedView const *nv, Geom::Coord const d) : Snapper(nv, d)
+Inkscape::LineSnapper::LineSnapper(SnapManager const *sm, Geom::Coord const d) : Snapper(sm, d)
 {
 
 }

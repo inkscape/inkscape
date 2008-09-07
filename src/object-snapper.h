@@ -46,7 +46,7 @@ class ObjectSnapper : public Snapper
 {
 
 public:
-    ObjectSnapper(SPNamedView const *nv, Geom::Coord const d);
+    ObjectSnapper(SnapManager const *sm, Geom::Coord const d);
     ~ObjectSnapper();
 
       enum DimensionToSnap {

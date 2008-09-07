@@ -44,8 +44,8 @@ using std::vector;
  */
 
 SnapManager::SnapManager(SPNamedView const *v) :
-    guide(v, 0),
-    object(v, 0),
+    guide(this, 0),
+    object(this, 0),
     _named_view(v),
     _include_item_center(false),
     _snap_enabled_globally(true)
@@ -901,6 +901,11 @@ void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, std::vecto
     _desktop = desktop;
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;   
+}
+
+SPDocument *SnapManager::getDocument() const
+{
+	return _named_view->document;
 }
 
 /*

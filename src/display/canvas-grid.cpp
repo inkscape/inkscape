@@ -427,7 +427,7 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
     spacing[NR::Y] = sp_units_get_pixels( prefs_get_double_attribute ("options.grids.xy", "spacing_y", 0.0), *(gridunit) );
     render_dotted = prefs_get_int_attribute ("options.grids.xy", "dotted", 0) == 1;
 
-    snapper = new CanvasXYGridSnapper(this, namedview, 0);
+    snapper = new CanvasXYGridSnapper(this, &namedview->snap_manager, 0);
 
     if (repr) readRepr();
 }
@@ -947,7 +947,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     }
 }
 
-CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SPNamedView const *nv, NR::Coord const d) : LineSnapper(nv, d)
+CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SnapManager const *sm, NR::Coord const d) : LineSnapper(sm, d)
 {
     this->grid = grid;
 }
@@ -998,7 +998,7 @@ void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point co
  */
 bool CanvasXYGridSnapper::ThisSnapperMightSnap() const
 {
-    return _named_view == NULL ? false : (_snap_enabled && _snap_from != 0);
+    return _snap_enabled && _snap_from != 0;
 }
 
 

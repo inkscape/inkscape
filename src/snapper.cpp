@@ -23,11 +23,10 @@ Inkscape::Snapper::PointType const Inkscape::Snapper::SNAPPOINT_GUIDE = 0x4;
  *  \param nv Named view.
  *  \param d Snap tolerance.
  */
-Inkscape::Snapper::Snapper(SPNamedView const *nv, Geom::Coord const t) : _named_view(nv), _snap_enabled(true), _snapper_tolerance(t)
+Inkscape::Snapper::Snapper(SnapManager const *sm, Geom::Coord const t) : _snapmanager(sm), _snap_enabled(true), _snapper_tolerance(t)
 {
-    g_assert(_named_view != NULL);
-    g_assert(SP_IS_NAMEDVIEW(_named_view));
-
+    g_assert(_snapmanager != NULL);
+    
     setSnapFrom(SNAPPOINT_BBOX | SNAPPOINT_NODE, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
 }
 

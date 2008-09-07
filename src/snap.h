@@ -120,6 +120,8 @@ public:
     SnapperList getGridSnappers() const;
     
     SPDesktop const *getDesktop() const {return _desktop;}
+    SPNamedView const *getNamedView() const {return _named_view;}
+    SPDocument *getDocument() const;
     
     void setSnapModeBBox(bool enabled);
     void setSnapModeNode(bool enabled);
