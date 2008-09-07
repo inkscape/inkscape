@@ -931,10 +931,13 @@ boost::optional<NR::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType ty
 
 static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
 {
-    boost::optional<NR::Rect> bbox = item->getBounds(sp_item_i2d_affine(item));
-    /* Just the corners of the bounding box suffices given that we don't yet
-       support angled guide lines. */
+	/* This will only be called if the derived class doesn't override this.
+	 * see for example sp_genericellipse_snappoints in sp-ellipse.cpp	 
+	 * We don't know what shape we could be dealing with here, so we'll just
+	 * return the corners of the bounding box */
 
+	boost::optional<NR::Rect> bbox = item->getBounds(sp_item_i2d_affine(item));
+    
     if (bbox) {
         NR::Point p1, p2;
         p1 = bbox->min();
@@ -944,6 +947,7 @@ static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
         *p = p2;
         *p = NR::Point(p1[NR::Y], p2[NR::X]);
     }
+      
 }
 
 void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIter p)
