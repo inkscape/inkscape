@@ -17,7 +17,6 @@
 #include "snapper.h"
 #include "sp-path.h"
 #include "splivarot.h"
-#include "desktop.h"
 
 struct SPNamedView;
 struct SPItem;
@@ -70,7 +69,6 @@ public:
       void setIncludeItemCenter(bool s) {_include_item_center = s;}
       bool getIncludeItemCenter() const {return _include_item_center;}
       void setStrictSnapping(bool enabled) {_strict_snapping = enabled;}
-      void setDesktop(SPDesktop const *desktop) {_desktop = desktop;}
       void guideSnap(SnappedConstraints &sc,
                    Geom::Point const &p,
                  Geom::Point const &guide_normal) const;
@@ -157,7 +155,6 @@ private:
     //(snapping to grids and guides is not affected by this)
     bool _strict_snapping; 
     bool _include_item_center;
-    SPDesktop const *_desktop;
 };
 
 }

@@ -119,6 +119,8 @@ public:
     SnapperList getSnappers() const;
     SnapperList getGridSnappers() const;
     
+    SPDesktop const *getDesktop() const {return _desktop;}
+    
     void setSnapModeBBox(bool enabled);
     void setSnapModeNode(bool enabled);
     void setSnapModeGuide(bool enabled);

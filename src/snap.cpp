@@ -886,8 +886,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
 void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, SPItem const *item_to_ignore, std::vector<Geom::Point> *unselected_nodes)
 {
     g_assert(desktop != NULL);
-	object.setDesktop(desktop);
-    _item_to_ignore = item_to_ignore;
+	_item_to_ignore = item_to_ignore;
     _items_to_ignore = NULL;
     _desktop = desktop;
     _snapindicator = snapindicator;
@@ -897,7 +896,6 @@ void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, SPItem con
 void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<Geom::Point> *unselected_nodes)
 {
 	g_assert(desktop != NULL);
-	object.setDesktop(desktop);
 	_item_to_ignore = NULL;
     _items_to_ignore = &items_to_ignore;
     _desktop = desktop;
