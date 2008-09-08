@@ -97,10 +97,10 @@ fill_landscape_papers() {
     lscape_papers.push_back("US #10 Envelope");
     lscape_papers.push_back("DL Envelope");
     lscape_papers.push_back("Banner 468x60");
-    lscape_papers.push_back("Business Card (ISO 7810 ID-1)");
+    lscape_papers.push_back("Business Card (ISO 7810)");
     lscape_papers.push_back("Business Card (US)");
     lscape_papers.push_back("Business Card (Europe)");
-    lscape_papers.push_back("Business Card (Australia/New Zealand)");
+    lscape_papers.push_back("Business Card (Aus/NZ)");
 }
 
 static PaperSizeRec const inkscape_papers[] = {
@@ -183,11 +183,11 @@ static PaperSizeRec const inkscape_papers[] = {
     { "Icon 32x32",         32,   32, SP_UNIT_PX },
     { "Icon 48x48",         48,   48, SP_UNIT_PX },
     /* business cards */
-    { "Business Card (ISO 7810 ID-1)",         53.98, 85.60, SP_UNIT_MM },
-    { "Business Card (US)",                     2,     3.5,  SP_UNIT_IN },
-    { "Business Card (Europe)",                55,    85,    SP_UNIT_MM },
-    { "Business Card (Australia/New Zealand)", 55,    90,    SP_UNIT_MM },
-    { NULL,                  0,    0, SP_UNIT_PX },
+    { "Business Card (ISO 7810)", 53.98, 85.60, SP_UNIT_MM },
+    { "Business Card (US)",             2,     3.5,  SP_UNIT_IN },
+    { "Business Card (Europe)",        55,    85,    SP_UNIT_MM },
+    { "Business Card (Aus/NZ)",        55,    90,    SP_UNIT_MM },
+    { NULL,                     0,    0, SP_UNIT_PX },
 };
 
 
