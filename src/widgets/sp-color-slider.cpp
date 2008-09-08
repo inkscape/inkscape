@@ -331,10 +331,13 @@ sp_color_slider_set_adjustment (SPColorSlider *slider, GtkAdjustment *adjustment
 
 	if (!adjustment) {
 		adjustment = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 1.0, 0.01, 0.0, 0.0);
-	} else {
+	}
+#if GTK_CHECK_VERSION (2,14,0)
+    else {
         gtk_adjustment_set_page_increment(adjustment, 0.0);
         gtk_adjustment_set_page_size(adjustment, 0.0);
     }
+#endif
 
 	if (slider->adjustment != adjustment) {
 		if (slider->adjustment) {
