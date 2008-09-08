@@ -354,7 +354,7 @@ LivePathEffectEditor::onApply()
 
             // If item is a SPRect, convert it to path first:
             if ( SP_IS_RECT(item) ) {
-                sp_selected_path_to_curves(false);
+                sp_selected_path_to_curves(current_desktop, false);
                 item = sel->singleItem(); // get new item
             }
 

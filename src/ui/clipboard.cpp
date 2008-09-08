@@ -454,7 +454,7 @@ bool ClipboardManagerImpl::pastePathEffect()
             if ( effect ) {
                 _pasteDefs(tempdoc);
                 // make sure all selected items are converted to paths first (i.e. rectangles)
-                sp_selected_path_to_curves(false);
+                sp_selected_path_to_curves(desktop, false);
                 for (GSList *item = const_cast<GSList *>(selection->itemList()) ; item ; item = item->next) {
                     _applyPathEffect(reinterpret_cast<SPItem*>(item->data), effect);
                 }
