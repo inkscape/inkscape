@@ -263,7 +263,9 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_BUTTON_PRESS:
             if (event->button.button == 1 && !event_context->space_panning) {
                 if (lc->mode == Inkscape::LivePathEffect::INVALID_LPE) {
-                    // don't do anything for now if we are inactive
+                    // don't do anything for now if we are inactive (except clearing the selection
+                    // since this was a click into empty space)
+                    selection->clear();
                     desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Choose a construction tool from the toolbar."));
                     ret = true;
                     break;
