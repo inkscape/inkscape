@@ -5003,7 +5003,6 @@ lpetool_open_lpe_dialog (GtkToggleAction *act, gpointer data) {
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
 
     if (tools_isactive(desktop, TOOLS_LPETOOL)) {
-        SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
         sp_action_perform(Inkscape::Verb::get(SP_VERB_DIALOG_LIVE_PATH_EFFECT)->get_action(desktop), NULL);
     }
     gtk_toggle_action_set_active(act, false);
