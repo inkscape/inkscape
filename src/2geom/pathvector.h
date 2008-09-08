@@ -108,8 +108,19 @@ struct PathVectorPosition {
     // pathvector[path_nr].pointAt(t) is the position
     unsigned int path_nr;
     double       t;
+    PathVectorPosition() {}
+    PathVectorPosition(unsigned int path_nr,
+                       double       t) : path_nr(path_nr), t(t) {}
 };
-PathVectorPosition nearestPoint(PathVector const & path_in, Point const& _point, double *distance_squared = NULL);
+boost::optional<PathVectorPosition> nearestPoint(PathVector const & path_in, Point const& _point, double *distance_squared = NULL);
+
+std::vector<PathVectorPosition> allNearestPoints(PathVector const & path_in, Point const& _point, double *distance_squared = NULL);
+
+inline
+Point pointAt(PathVector const & path_in, PathVectorPosition const pvp) {
+    return path_in[pvp.path_nr].pointAt(pvp.t);
+}
+
 
 
 } // end namespace Geom

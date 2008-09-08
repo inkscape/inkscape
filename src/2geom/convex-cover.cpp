@@ -136,6 +136,8 @@ ConvexHull::graham_scan() {
 
 void
 ConvexHull::graham() {
+    if(is_degenerate()) // nothing to do
+        return;
     find_pivot();
     angle_sort();
     graham_scan();

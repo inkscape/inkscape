@@ -366,9 +366,13 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
 
     SPCurve *curve = this->nodepath->curve;   // not sure if np->curve is always up to date...
     Geom::PathVector const &pathv = curve->get_pathvector();
-    Geom::PathVectorPosition pvpos = Geom::nearestPoint(pathv, this->curvepoint_doc);
+    boost::optional<Geom::PathVectorPosition> pvpos = Geom::nearestPoint(pathv, this->curvepoint_doc);
+    if (!pvpos) {
+        g_print("Warning! Possible error?\n");
+        return false;
+    }
 
-    NR::Point nearest = pathv[pvpos.path_nr].pointAt(pvpos.t);
+    NR::Point nearest = pathv[pvpos->path_nr].pointAt(pvpos->t);
     NR::Point delta = nearest - this->curvepoint_doc;
 
     delta = desktop->d2w(delta);
@@ -385,9 +389,9 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
     if (remember && close) {
         // calculate index for nodepath's representation.
         double int_part;
-        double t = std::modf(pvpos.t, &int_part);
+        double t = std::modf(pvpos->t, &int_part);
         unsigned int segment_index = (unsigned int)int_part + 1;
-        for (unsigned int i = 0; i < pvpos.path_nr; ++i) {
+        for (unsigned int i = 0; i < pvpos->path_nr; ++i) {
             segment_index += pathv[i].size() + 1;
             if (pathv[i].closed())
                 segment_index += 1;

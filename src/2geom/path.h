@@ -306,7 +306,7 @@ public:
 	  {
 		  THROW_RANGEERROR("parameter t out of bounds");
 	  }
-	  if ( empty() ) return Point(0,0);
+	  if ( empty() ) return initialPoint(); // naked moveto
 	  double k, lt = modf(t, &k);
 	  unsigned int i = static_cast<unsigned int>(k);
 	  if ( i == sz ) 
@@ -325,7 +325,7 @@ public:
 	  {
 		  THROW_RANGEERROR("parameter t out of bounds");
 	  }
-	  if ( empty() ) return 0;
+	  if ( empty() ) return initialPoint()[d]; // naked moveto
 	  double k, lt = modf(t, &k);
 	  unsigned int i = static_cast<unsigned int>(k);
 	  if ( i == sz ) 

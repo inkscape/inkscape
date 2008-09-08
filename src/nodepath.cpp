@@ -1960,11 +1960,15 @@ sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Po
 
     SPCurve *curve = create_curve(nodepath);   // perhaps we can use nodepath->curve here instead?
     Geom::PathVector const &pathv = curve->get_pathvector();
-    Geom::PathVectorPosition pvpos = Geom::nearestPoint(pathv, p);
+    boost::optional<Geom::PathVectorPosition> pvpos = Geom::nearestPoint(pathv, p);
+    if (!pvpos) {
+        g_print ("Possible error?\n");
+        return;
+    }
 
     // calculate index for nodepath's representation.
-    unsigned int segment_index = floor(pvpos.t) + 1;
-    for (unsigned int i = 0; i < pvpos.path_nr; ++i) {
+    unsigned int segment_index = floor(pvpos->t) + 1;
+    for (unsigned int i = 0; i < pvpos->path_nr; ++i) {
         segment_index += pathv[i].size() + 1;
         if (pathv[i].closed()) {
             segment_index += 1;
@@ -2004,13 +2008,17 @@ sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
 
     SPCurve *curve = create_curve(nodepath);   // perhaps we can use nodepath->curve here instead?
     Geom::PathVector const &pathv = curve->get_pathvector();
-    Geom::PathVectorPosition pvpos = Geom::nearestPoint(pathv, p);
+    boost::optional<Geom::PathVectorPosition> pvpos = Geom::nearestPoint(pathv, p);
+    if (!pvpos) {
+        g_print ("Possible error?\n");
+        return;
+    }
 
     // calculate index for nodepath's representation.
     double int_part;
-    double t = std::modf(pvpos.t, &int_part);
+    double t = std::modf(pvpos->t, &int_part);
     unsigned int segment_index = (unsigned int)int_part + 1;
-    for (unsigned int i = 0; i < pvpos.path_nr; ++i) {
+    for (unsigned int i = 0; i < pvpos->path_nr; ++i) {
         segment_index += pathv[i].size() + 1;
         if (pathv[i].closed()) {
             segment_index += 1;

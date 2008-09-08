@@ -226,6 +226,11 @@ double Path::nearestPoint(Point const &_point, double from, double to, double *d
 	double eif, et = modf(to, &eif);
 	unsigned int si = static_cast<unsigned int>(sif);
 	unsigned int ei = static_cast<unsigned int>(eif);
+        if(sz == 0) {// naked moveto
+            if (distance_squared != NULL)
+                *distance_squared = distanceSq(_point, _path.initialPoint());
+            return 0;
+        }
 	if ( si == sz )
 	{
 		--si;

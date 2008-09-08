@@ -152,6 +152,8 @@ template <class T> ConvexHull operator*(ConvexHull const &p, T const &m) {
     return pr;
 }
 
+ConvexHull clip(ConvexHull const & ch, Point n, double d);
+
 //TODO: reinstate
 /*class ConvexCover{
 public:
