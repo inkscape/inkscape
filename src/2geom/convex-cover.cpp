@@ -267,6 +267,7 @@ proposed algorithm:  We must be very careful about rounding here.
 bool
 ConvexHull::no_colinear_points() const {
     // XXX: implement me!
+    return true; // TODO return proper value
 }
 
 bool
