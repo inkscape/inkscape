@@ -19,15 +19,11 @@
 #endif
 
 #include "extension/implementation/implementation.h"
-#include "extension/extension.h"
+//#include "extension/extension.h"
 
-#include "svg/stringstream.h"
-#include "libnr/nr-matrix.h"
-#include "libnr/nr-rect.h"
+//#include "libnr/nr-matrix.h"
+//#include "libnr/nr-rect.h"
 #include <2geom/pathvector.h>
-
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
 
 #include <stack>
 
@@ -46,15 +42,14 @@ class PrintEmfWin32 : public Inkscape::Extension::Implementation::Implementation
     HPEN hpen, hpenOld;
 
     std::stack<Geom::Matrix> m_tr_stack;
-    NArtBpath *fill_path;
+    Geom::PathVector fill_pathv;
     Geom::Matrix fill_transform;
-//    Geom::Matrix text_transform;
     bool stroke_and_fill;
     bool fill_only;
     bool simple_shape;
 
-    unsigned int print_bpath (const NArtBpath *bp, const Geom::Matrix &transform);
-    bool print_simple_shape  (const NArtBpath *bp, const Geom::Matrix &transform);
+    unsigned int print_pathv (Geom::PathVector const &pathv, const Geom::Matrix &transform);
+    bool print_simple_shape (Geom::PathVector const &pathv, const Geom::Matrix &transform);
 
 public:
     PrintEmfWin32 (void);
@@ -87,14 +82,11 @@ protected:
 
     void destroy_brush();
 
-    void create_pen(SPStyle const *style, const Geom::Matrix *transform);
+    void create_pen(SPStyle const *style, const Geom::Matrix &transform);
 
     void destroy_pen();
 
     void flush_fill();
-
-    NArtBpath *copy_bpath(const NArtBpath *bp);
-    int cmp_bpath(const NArtBpath *bp1, const NArtBpath *bp2);
 
 };
 

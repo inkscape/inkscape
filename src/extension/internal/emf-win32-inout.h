@@ -15,7 +15,6 @@
 #ifdef WIN32
 
 #include "extension/implementation/implementation.h"
-#include "style.h"
 
 namespace Inkscape {
 namespace Extension {

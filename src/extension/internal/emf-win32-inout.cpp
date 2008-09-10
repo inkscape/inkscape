@@ -27,42 +27,46 @@
 # include "config.h"
 #endif
 
-#include "win32.h"
-#include "emf-win32-print.h"
-#include "emf-win32-inout.h"
-#include "inkscape.h"
+//#include "inkscape.h"
 #include "sp-path.h"
 #include "style.h"
-#include "color.h"
-#include "display/curve.h"
-#include "libnr/nr-point-matrix-ops.h"
-#include "gtk/gtk.h"
+//#include "color.h"
+//#include "display/curve.h"
+//#include "libnr/nr-point-matrix-ops.h"
+//#include "gtk/gtk.h"
 #include "print.h"
-#include "glibmm/i18n.h"
-#include "extension/extension.h"
+//#include "glibmm/i18n.h"
+//#include "extension/extension.h"
 #include "extension/system.h"
 #include "extension/print.h"
 #include "extension/db.h"
 #include "extension/output.h"
-#include "document.h"
+//#include "document.h"
 #include "display/nr-arena.h"
 #include "display/nr-arena-item.h"
 
-#include "libnr/nr-rect.h"
-#include "libnr/nr-matrix.h"
-#include "libnr/nr-pixblock.h"
+//#include "libnr/nr-rect.h"
+//#include "libnr/nr-matrix.h"
+//#include "libnr/nr-pixblock.h"
 
-#include <stdio.h>
-#include <string.h>
+//#include <stdio.h>
+//#include <string.h>
 
-#include <vector>
-#include <string>
+//#include <vector>
+//#include <string>
 
-#include "io/sys.h"
+//#include "io/sys.h"
 
 #include "unit-constants.h"
 
 #include "clear-n_.h"
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
+#include "win32.h"
+#include "emf-win32-print.h"
+#include "emf-win32-inout.h"
 
 
 #define PRINT_EMF_WIN32 "org.inkscape.print.emf.win32"
@@ -90,7 +94,7 @@ EmfWin32::~EmfWin32 (void) //The destructor
 
 
 bool
-EmfWin32::check (Inkscape::Extension::Extension * module)
+EmfWin32::check (Inkscape::Extension::Extension * /*module*/)
 {
     if (NULL == Inkscape::Extension::db.get(PRINT_EMF_WIN32))
         return FALSE;
@@ -172,28 +176,20 @@ EmfWin32::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *
 
 typedef struct {
     int type;
+    int level;
     ENHMETARECORD *lpEMFR;
 } EMF_OBJECT, *PEMF_OBJECT;
 
-typedef struct emf_callback_data {
-    Glib::ustring *outsvg;
-    Glib::ustring *path;
+typedef struct emf_device_context {
     struct SPStyle style;
     class SPTextStyle tstyle;
     bool stroke_set;
     bool fill_set;
-    double xDPI, yDPI;
-    bool pathless_stroke;
-    bool inpath;
 
     SIZEL sizeWnd;
     SIZEL sizeView;
     float PixelsInX, PixelsInY;
     float PixelsOutX, PixelsOutY;
-    float MMX;
-    float MMY;
-    float dwInchesX;
-    float dwInchesY;
     POINTL winorg;
     POINTL vieworg;
     double ScaleInX, ScaleInY;
@@ -202,6 +198,27 @@ typedef struct emf_callback_data {
     bool textColorSet;
     DWORD textAlign;
     XFORM worldTransform;
+    POINTL cur;
+} EMF_DEVICE_CONTEXT, *PEMF_DEVICE_CONTEXT;
+
+#define EMF_MAX_DC 128
+
+typedef struct emf_callback_data {
+    Glib::ustring *outsvg;
+    Glib::ustring *path;
+
+    EMF_DEVICE_CONTEXT dc[EMF_MAX_DC+1]; // FIXME: This should be dynamic..
+    int level;
+    
+    double xDPI, yDPI;
+    bool pathless_stroke;
+    bool inpath;
+
+    float MMX;
+    float MMY;
+    float dwInchesX;
+    float dwInchesY;
+
     unsigned int id;
     CHAR *pDesc;
 
@@ -218,15 +235,15 @@ output_style(PEMF_CALLBACK_DATA d, int iType)
     char tmp[1024] = {0};
 
     float fill_rgb[3];
-    sp_color_get_rgb_floatv( &(d->style.fill.value.color), fill_rgb );
+    sp_color_get_rgb_floatv( &(d->dc[d->level].style.fill.value.color), fill_rgb );
     
     float stroke_rgb[3];
-    sp_color_get_rgb_floatv(&(d->style.stroke.value.color), stroke_rgb);
+    sp_color_get_rgb_floatv(&(d->dc[d->level].style.stroke.value.color), stroke_rgb);
 
     tmp_id << "\n\tid=\"" << (d->id++) << "\"";
     *(d->outsvg) += tmp_id.str().c_str();
     *(d->outsvg) += "\n\tstyle=\"";
-    if (iType == EMR_STROKEPATH || !d->fill_set) {
+    if (iType == EMR_STROKEPATH || !d->dc[d->level].fill_set) {
         tmp_style << "fill:none;";
     } else {
         snprintf(tmp, 1023,
@@ -237,18 +254,18 @@ output_style(PEMF_CALLBACK_DATA d, int iType)
         tmp_style << tmp;
         snprintf(tmp, 1023,
                  "fill-rule:%s;",
-                 d->style.fill_rule.value == 0 ? "evenodd" : "nonzero");
+                 d->dc[d->level].style.fill_rule.value == 0 ? "evenodd" : "nonzero");
         tmp_style << tmp;
         tmp_style << "fill-opacity:1;";
 
-        if (d->fill_set && d->stroke_set && d->style.stroke_width.value == 1 &&
+        if (d->dc[d->level].fill_set && d->dc[d->level].stroke_set && d->dc[d->level].style.stroke_width.value == 1 &&
             fill_rgb[0]==stroke_rgb[0] && fill_rgb[1]==stroke_rgb[1] && fill_rgb[2]==stroke_rgb[2])
         {
-            d->stroke_set = false;
+            d->dc[d->level].stroke_set = false;
         }
     }
 
-    if (iType == EMR_FILLPATH || !d->stroke_set) {
+    if (iType == EMR_FILLPATH || !d->dc[d->level].stroke_set) {
         tmp_style << "stroke:none;";
     } else {
         snprintf(tmp, 1023,
@@ -259,33 +276,33 @@ output_style(PEMF_CALLBACK_DATA d, int iType)
         tmp_style << tmp;
 
         tmp_style << "stroke-width:" <<
-            MAX( 0.001, d->style.stroke_width.value ) << "px;";
+            MAX( 0.001, d->dc[d->level].style.stroke_width.value ) << "px;";
 
         tmp_style << "stroke-linecap:" <<
-            (d->style.stroke_linecap.computed == 0 ? "butt" :
-             d->style.stroke_linecap.computed == 1 ? "round" :
-             d->style.stroke_linecap.computed == 2 ? "square" :
+            (d->dc[d->level].style.stroke_linecap.computed == 0 ? "butt" :
+             d->dc[d->level].style.stroke_linecap.computed == 1 ? "round" :
+             d->dc[d->level].style.stroke_linecap.computed == 2 ? "square" :
              "unknown") << ";";
 
         tmp_style << "stroke-linejoin:" <<
-            (d->style.stroke_linejoin.computed == 0 ? "miter" :
-             d->style.stroke_linejoin.computed == 1 ? "round" :
-             d->style.stroke_linejoin.computed == 2 ? "bevel" :
+            (d->dc[d->level].style.stroke_linejoin.computed == 0 ? "miter" :
+             d->dc[d->level].style.stroke_linejoin.computed == 1 ? "round" :
+             d->dc[d->level].style.stroke_linejoin.computed == 2 ? "bevel" :
              "unknown") << ";";
 
-        if (d->style.stroke_linejoin.computed == 0) {
+        if (d->dc[d->level].style.stroke_linejoin.computed == 0) {
             tmp_style << "stroke-miterlimit:" <<
-                MAX( 0.01, d->style.stroke_miterlimit.value ) << ";";
+                MAX( 0.01, d->dc[d->level].style.stroke_miterlimit.value ) << ";";
         }
 
-        if (d->style.stroke_dasharray_set &&
-            d->style.stroke_dash.n_dash && d->style.stroke_dash.dash)
+        if (d->dc[d->level].style.stroke_dasharray_set &&
+            d->dc[d->level].style.stroke_dash.n_dash && d->dc[d->level].style.stroke_dash.dash)
         {
             tmp_style << "stroke-dasharray:";
-            for (int i=0; i<d->style.stroke_dash.n_dash; i++) {
+            for (int i=0; i<d->dc[d->level].style.stroke_dash.n_dash; i++) {
                 if (i)
                     tmp_style << ",";
-                tmp_style << d->style.stroke_dash.dash[i];
+                tmp_style << d->dc[d->level].style.stroke_dash.dash[i];
             }
             tmp_style << ";";
             tmp_style << "stroke-dashoffset:0;";
@@ -303,18 +320,18 @@ output_style(PEMF_CALLBACK_DATA d, int iType)
 static double
 _pix_x_to_point(PEMF_CALLBACK_DATA d, double px)
 {
-    double tmp = px - d->winorg.x;
-    tmp *= d->ScaleInX ? d->ScaleInX : 1.0;
-    tmp += d->vieworg.x;
+    double tmp = px - d->dc[d->level].winorg.x;
+    tmp *= d->dc[d->level].ScaleInX ? d->dc[d->level].ScaleInX : 1.0;
+    tmp += d->dc[d->level].vieworg.x;
     return tmp;
 }
 
 static double
 _pix_y_to_point(PEMF_CALLBACK_DATA d, double px)
 {
-    double tmp = px - d->winorg.y;
-    tmp *= d->ScaleInY ? d->ScaleInY : 1.0;
-    tmp += d->vieworg.y;
+    double tmp = px - d->dc[d->level].winorg.y;
+    tmp *= d->dc[d->level].ScaleInY ? d->dc[d->level].ScaleInY : 1.0;
+    tmp += d->dc[d->level].vieworg.y;
     return tmp;
 }
 
@@ -325,8 +342,8 @@ pix_to_x_point(PEMF_CALLBACK_DATA d, double px, double py)
     double ppx = _pix_x_to_point(d, px);
     double ppy = _pix_y_to_point(d, py);
 
-    double x = ppx * d->worldTransform.eM11 + ppy * d->worldTransform.eM21 + d->worldTransform.eDx;
-    x *= d->ScaleOutX ? d->ScaleOutX : DEVICESCALE;
+    double x = ppx * d->dc[d->level].worldTransform.eM11 + ppy * d->dc[d->level].worldTransform.eM21 + d->dc[d->level].worldTransform.eDx;
+    x *= d->dc[d->level].ScaleOutX ? d->dc[d->level].ScaleOutX : DEVICESCALE;
     
     return x;
 }
@@ -337,8 +354,8 @@ pix_to_y_point(PEMF_CALLBACK_DATA d, double px, double py)
     double ppx = _pix_x_to_point(d, px);
     double ppy = _pix_y_to_point(d, py);
 
-    double y = ppx * d->worldTransform.eM12 + ppy * d->worldTransform.eM22 + d->worldTransform.eDy;
-    y *= d->ScaleOutY ? d->ScaleOutY : DEVICESCALE;
+    double y = ppx * d->dc[d->level].worldTransform.eM12 + ppy * d->dc[d->level].worldTransform.eM22 + d->dc[d->level].worldTransform.eDy;
+    y *= d->dc[d->level].ScaleOutY ? d->dc[d->level].ScaleOutY : DEVICESCALE;
     
     return y;
 }
@@ -346,8 +363,14 @@ pix_to_y_point(PEMF_CALLBACK_DATA d, double px, double py)
 static double
 pix_to_size_point(PEMF_CALLBACK_DATA d, double px)
 {
-    double dx = pix_to_x_point(d, px, 0);
-    double dy = pix_to_y_point(d, px, 0);
+    double ppx = px * (d->dc[d->level].ScaleInX ? d->dc[d->level].ScaleInX : 1.0);
+    double ppy = 0;
+
+    double dx = ppx * d->dc[d->level].worldTransform.eM11 + ppy * d->dc[d->level].worldTransform.eM21;
+    dx *= d->dc[d->level].ScaleOutX ? d->dc[d->level].ScaleOutX : DEVICESCALE;
+    double dy = ppx * d->dc[d->level].worldTransform.eM12 + ppy * d->dc[d->level].worldTransform.eM22;
+    dy *= d->dc[d->level].ScaleOutY ? d->dc[d->level].ScaleOutY : DEVICESCALE;
+
     double tmp = sqrt(dx * dx + dy * dy);
     return tmp;
 }
@@ -372,32 +395,32 @@ select_pen(PEMF_CALLBACK_DATA d, int index)
         {
             int i = 0;
             int penstyle = (pEmr->lopn.lopnStyle & PS_STYLE_MASK);
-            d->style.stroke_dash.n_dash =
+            d->dc[d->level].style.stroke_dash.n_dash =
                 penstyle == PS_DASHDOTDOT ? 6 : penstyle == PS_DASHDOT ? 4 : 2;
-            if (d->style.stroke_dash.dash)
-                delete[] d->style.stroke_dash.dash;
-            d->style.stroke_dash.dash = new double[d->style.stroke_dash.n_dash];
+            if (d->dc[d->level].style.stroke_dash.dash && (d->level==0 || (d->level>0 && d->dc[d->level].style.stroke_dash.dash!=d->dc[d->level-1].style.stroke_dash.dash)))
+                delete[] d->dc[d->level].style.stroke_dash.dash;
+            d->dc[d->level].style.stroke_dash.dash = new double[d->dc[d->level].style.stroke_dash.n_dash];
             if (penstyle==PS_DASH || penstyle==PS_DASHDOT || penstyle==PS_DASHDOTDOT) {
-                d->style.stroke_dash.dash[i++] = 3;
-                d->style.stroke_dash.dash[i++] = 1;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 3;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
             }
             if (penstyle==PS_DOT || penstyle==PS_DASHDOT || penstyle==PS_DASHDOTDOT) {
-                d->style.stroke_dash.dash[i++] = 1;
-                d->style.stroke_dash.dash[i++] = 1;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
             }
             if (penstyle==PS_DASHDOTDOT) {
-                d->style.stroke_dash.dash[i++] = 1;
-                d->style.stroke_dash.dash[i++] = 1;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
             }
             
-            d->style.stroke_dasharray_set = 1;
+            d->dc[d->level].style.stroke_dasharray_set = 1;
             break;
         }
         
         case PS_SOLID:
         default:
         {
-            d->style.stroke_dasharray_set = 0;
+            d->dc[d->level].style.stroke_dasharray_set = 0;
             break;
         }
     }
@@ -405,18 +428,18 @@ select_pen(PEMF_CALLBACK_DATA d, int index)
     switch (pEmr->lopn.lopnStyle & PS_ENDCAP_MASK) {
         case PS_ENDCAP_ROUND:
         {
-            d->style.stroke_linecap.computed = 1;
+            d->dc[d->level].style.stroke_linecap.computed = 1;
             break;
         }
         case PS_ENDCAP_SQUARE:
         {
-            d->style.stroke_linecap.computed = 2;
+            d->dc[d->level].style.stroke_linecap.computed = 2;
             break;
         }
         case PS_ENDCAP_FLAT:
         default:
         {
-            d->style.stroke_linecap.computed = 0;
+            d->dc[d->level].style.stroke_linecap.computed = 0;
             break;
         }
     }
@@ -424,39 +447,47 @@ select_pen(PEMF_CALLBACK_DATA d, int index)
     switch (pEmr->lopn.lopnStyle & PS_JOIN_MASK) {
         case PS_JOIN_BEVEL:
         {
-            d->style.stroke_linejoin.computed = 2;
+            d->dc[d->level].style.stroke_linejoin.computed = 2;
             break;
         }
         case PS_JOIN_MITER:
         {
-            d->style.stroke_linejoin.computed = 0;
+            d->dc[d->level].style.stroke_linejoin.computed = 0;
             break;
         }
         case PS_JOIN_ROUND:
         default:
         {
-            d->style.stroke_linejoin.computed = 1;
+            d->dc[d->level].style.stroke_linejoin.computed = 1;
             break;
         }
     }
 
-    d->stroke_set = true;
+    d->dc[d->level].stroke_set = true;
 
     if (pEmr->lopn.lopnStyle == PS_NULL) {
-        d->style.stroke_width.value = 0;
-        d->stroke_set = false;
+        d->dc[d->level].style.stroke_width.value = 0;
+        d->dc[d->level].stroke_set = false;
     } else if (pEmr->lopn.lopnWidth.x) {
-        d->style.stroke_width.value = pix_to_size_point( d, pEmr->lopn.lopnWidth.x );
+        int cur_level = d->level;
+        d->level = d->emf_obj[index].level;
+        double pen_width = pix_to_size_point( d, pEmr->lopn.lopnWidth.x );
+        d->level = cur_level;
+        d->dc[d->level].style.stroke_width.value = pen_width;
     } else { // this stroke should always be rendered as 1 pixel wide, independent of zoom level (can that be done in SVG?)
-        //d->style.stroke_width.value = 1.0;
-        d->style.stroke_width.value = pix_to_size_point( d, 1 );
+        //d->dc[d->level].style.stroke_width.value = 1.0;
+        int cur_level = d->level;
+        d->level = d->emf_obj[index].level;
+        double pen_width = pix_to_size_point( d, 1 );
+        d->level = cur_level;
+        d->dc[d->level].style.stroke_width.value = pen_width;
     }
 
     double r, g, b;
     r = SP_COLOR_U_TO_F( GetRValue(pEmr->lopn.lopnColor) );
     g = SP_COLOR_U_TO_F( GetGValue(pEmr->lopn.lopnColor) );
     b = SP_COLOR_U_TO_F( GetBValue(pEmr->lopn.lopnColor) );
-    d->style.stroke.value.color.set( r, g, b );
+    d->dc[d->level].style.stroke.value.color.set( r, g, b );
 }
 
 
@@ -475,16 +506,20 @@ select_extpen(PEMF_CALLBACK_DATA d, int index)
         case PS_USERSTYLE:
         {
             if (pEmr->elp.elpNumEntries) {
-                d->style.stroke_dash.n_dash = pEmr->elp.elpNumEntries;
-                if (d->style.stroke_dash.dash)
-                    delete[] d->style.stroke_dash.dash;
-                d->style.stroke_dash.dash = new double[pEmr->elp.elpNumEntries];
+                d->dc[d->level].style.stroke_dash.n_dash = pEmr->elp.elpNumEntries;
+                if (d->dc[d->level].style.stroke_dash.dash && (d->level==0 || (d->level>0 && d->dc[d->level].style.stroke_dash.dash!=d->dc[d->level-1].style.stroke_dash.dash)))
+                    delete[] d->dc[d->level].style.stroke_dash.dash;
+                d->dc[d->level].style.stroke_dash.dash = new double[pEmr->elp.elpNumEntries];
                 for (unsigned int i=0; i<pEmr->elp.elpNumEntries; i++) {
-                    d->style.stroke_dash.dash[i] = pix_to_size_point( d, pEmr->elp.elpStyleEntry[i] );
+                    int cur_level = d->level;
+                    d->level = d->emf_obj[index].level;
+                    double dash_length = pix_to_size_point( d, pEmr->elp.elpStyleEntry[i] );
+                    d->level = cur_level;
+                    d->dc[d->level].style.stroke_dash.dash[i] = dash_length;
                 }
-                d->style.stroke_dasharray_set = 1;
+                d->dc[d->level].style.stroke_dasharray_set = 1;
             } else {
-                d->style.stroke_dasharray_set = 0;
+                d->dc[d->level].style.stroke_dasharray_set = 0;
             }
             break;
         }
@@ -496,32 +531,32 @@ select_extpen(PEMF_CALLBACK_DATA d, int index)
         {
             int i = 0;
             int penstyle = (pEmr->elp.elpPenStyle & PS_STYLE_MASK);
-            d->style.stroke_dash.n_dash =
+            d->dc[d->level].style.stroke_dash.n_dash =
                 penstyle == PS_DASHDOTDOT ? 6 : penstyle == PS_DASHDOT ? 4 : 2;
-            if (d->style.stroke_dash.dash)
-                delete[] d->style.stroke_dash.dash;
-            d->style.stroke_dash.dash = new double[d->style.stroke_dash.n_dash];
+            if (d->dc[d->level].style.stroke_dash.dash && (d->level==0 || (d->level>0 && d->dc[d->level].style.stroke_dash.dash!=d->dc[d->level-1].style.stroke_dash.dash)))
+                delete[] d->dc[d->level].style.stroke_dash.dash;
+            d->dc[d->level].style.stroke_dash.dash = new double[d->dc[d->level].style.stroke_dash.n_dash];
             if (penstyle==PS_DASH || penstyle==PS_DASHDOT || penstyle==PS_DASHDOTDOT) {
-                d->style.stroke_dash.dash[i++] = 3;
-                d->style.stroke_dash.dash[i++] = 2;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 3;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 2;
             }
             if (penstyle==PS_DOT || penstyle==PS_DASHDOT || penstyle==PS_DASHDOTDOT) {
-                d->style.stroke_dash.dash[i++] = 1;
-                d->style.stroke_dash.dash[i++] = 2;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 2;
             }
             if (penstyle==PS_DASHDOTDOT) {
-                d->style.stroke_dash.dash[i++] = 1;
-                d->style.stroke_dash.dash[i++] = 2;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 1;
+                d->dc[d->level].style.stroke_dash.dash[i++] = 2;
             }
             
-            d->style.stroke_dasharray_set = 1;
+            d->dc[d->level].style.stroke_dasharray_set = 1;
             break;
         }
         
         case PS_SOLID:
         default:
         {
-            d->style.stroke_dasharray_set = 0;
+            d->dc[d->level].style.stroke_dasharray_set = 0;
             break;
         }
     }
@@ -529,18 +564,18 @@ select_extpen(PEMF_CALLBACK_DATA d, int index)
     switch (pEmr->elp.elpPenStyle & PS_ENDCAP_MASK) {
         case PS_ENDCAP_ROUND:
         {
-            d->style.stroke_linecap.computed = 1;
+            d->dc[d->level].style.stroke_linecap.computed = 1;
             break;
         }
         case PS_ENDCAP_SQUARE:
         {
-            d->style.stroke_linecap.computed = 2;
+            d->dc[d->level].style.stroke_linecap.computed = 2;
             break;
         }
         case PS_ENDCAP_FLAT:
         default:
         {
-            d->style.stroke_linecap.computed = 0;
+            d->dc[d->level].style.stroke_linecap.computed = 0;
             break;
         }
     }
@@ -548,32 +583,40 @@ select_extpen(PEMF_CALLBACK_DATA d, int index)
     switch (pEmr->elp.elpPenStyle & PS_JOIN_MASK) {
         case PS_JOIN_BEVEL:
         {
-            d->style.stroke_linejoin.computed = 2;
+            d->dc[d->level].style.stroke_linejoin.computed = 2;
             break;
         }
         case PS_JOIN_MITER:
         {
-            d->style.stroke_linejoin.computed = 0;
+            d->dc[d->level].style.stroke_linejoin.computed = 0;
             break;
         }
         case PS_JOIN_ROUND:
         default:
         {
-            d->style.stroke_linejoin.computed = 1;
+            d->dc[d->level].style.stroke_linejoin.computed = 1;
             break;
         }
     }
 
-    d->stroke_set = true;
+    d->dc[d->level].stroke_set = true;
 
     if (pEmr->elp.elpPenStyle == PS_NULL) {
-        d->style.stroke_width.value = 0;
-        d->stroke_set = false;
+        d->dc[d->level].style.stroke_width.value = 0;
+        d->dc[d->level].stroke_set = false;
     } else if (pEmr->elp.elpWidth) {
-        d->style.stroke_width.value = pix_to_size_point( d, pEmr->elp.elpWidth );
+        int cur_level = d->level;
+        d->level = d->emf_obj[index].level;
+        double pen_width = pix_to_size_point( d, pEmr->elp.elpWidth );
+        d->level = cur_level;
+        d->dc[d->level].style.stroke_width.value = pen_width;
     } else { // this stroke should always be rendered as 1 pixel wide, independent of zoom level (can that be done in SVG?)
-        //d->style.stroke_width.value = 1.0;
-        d->style.stroke_width.value = pix_to_size_point( d, 1 );
+        //d->dc[d->level].style.stroke_width.value = 1.0;
+        int cur_level = d->level;
+        d->level = d->emf_obj[index].level;
+        double pen_width = pix_to_size_point( d, 1 );
+        d->level = cur_level;
+        d->dc[d->level].style.stroke_width.value = pen_width;
     }
 
     double r, g, b;
@@ -581,7 +624,7 @@ select_extpen(PEMF_CALLBACK_DATA d, int index)
     g = SP_COLOR_U_TO_F( GetGValue(pEmr->elp.elpColor) );
     b = SP_COLOR_U_TO_F( GetBValue(pEmr->elp.elpColor) );
 
-    d->style.stroke.value.color.set( r, g, b );
+    d->dc[d->level].style.stroke.value.color.set( r, g, b );
 }
 
 
@@ -601,10 +644,10 @@ select_brush(PEMF_CALLBACK_DATA d, int index)
         r = SP_COLOR_U_TO_F( GetRValue(pEmr->lb.lbColor) );
         g = SP_COLOR_U_TO_F( GetGValue(pEmr->lb.lbColor) );
         b = SP_COLOR_U_TO_F( GetBValue(pEmr->lb.lbColor) );
-        d->style.fill.value.color.set( r, g, b );
+        d->dc[d->level].style.fill.value.color.set( r, g, b );
     }
 
-    d->fill_set = true;
+    d->dc[d->level].fill_set = true;
 }
 
 
@@ -619,8 +662,12 @@ select_font(PEMF_CALLBACK_DATA d, int index)
     if (!pEmr)
         return;
 
-    d->style.font_size.computed = pix_to_size_point( d, pEmr->elfw.elfLogFont.lfHeight );
-    d->style.font_weight.value =
+    int cur_level = d->level;
+    d->level = d->emf_obj[index].level;
+    double font_size = pix_to_size_point( d, pEmr->elfw.elfLogFont.lfHeight );
+    d->level = cur_level;
+    d->dc[d->level].style.font_size.computed = font_size;
+    d->dc[d->level].style.font_weight.value =
         pEmr->elfw.elfLogFont.lfWeight == FW_THIN ? SP_CSS_FONT_WEIGHT_100 :
         pEmr->elfw.elfLogFont.lfWeight == FW_EXTRALIGHT ? SP_CSS_FONT_WEIGHT_200 :
         pEmr->elfw.elfLogFont.lfWeight == FW_LIGHT ? SP_CSS_FONT_WEIGHT_300 :
@@ -635,13 +682,14 @@ select_font(PEMF_CALLBACK_DATA d, int index)
         pEmr->elfw.elfLogFont.lfWeight == FW_EXTRALIGHT ? SP_CSS_FONT_WEIGHT_LIGHTER :
         pEmr->elfw.elfLogFont.lfWeight == FW_EXTRABOLD ? SP_CSS_FONT_WEIGHT_BOLDER :
         FW_NORMAL;
-    d->style.font_style.value = (pEmr->elfw.elfLogFont.lfItalic ? SP_CSS_FONT_STYLE_ITALIC : SP_CSS_FONT_STYLE_NORMAL);
-    d->style.text_decoration.underline = pEmr->elfw.elfLogFont.lfUnderline;
-    d->style.text_decoration.line_through = pEmr->elfw.elfLogFont.lfStrikeOut;
-    if (d->tstyle.font_family.value)
-        g_free(d->tstyle.font_family.value);
-    d->tstyle.font_family.value =
+    d->dc[d->level].style.font_style.value = (pEmr->elfw.elfLogFont.lfItalic ? SP_CSS_FONT_STYLE_ITALIC : SP_CSS_FONT_STYLE_NORMAL);
+    d->dc[d->level].style.text_decoration.underline = pEmr->elfw.elfLogFont.lfUnderline;
+    d->dc[d->level].style.text_decoration.line_through = pEmr->elfw.elfLogFont.lfStrikeOut;
+    if (d->dc[d->level].tstyle.font_family.value)
+        g_free(d->dc[d->level].tstyle.font_family.value);
+    d->dc[d->level].tstyle.font_family.value =
         (gchar *) g_utf16_to_utf8( (gunichar2*) pEmr->elfw.elfLogFont.lfFaceName, -1, NULL, NULL, NULL );
+    d->dc[d->level].style.text_transform.value = ((pEmr->elfw.elfLogFont.lfEscapement + 3600) % 3600) / 10;
 }
 
 static void
@@ -662,12 +710,13 @@ insert_object(PEMF_CALLBACK_DATA d, int index, int type, ENHMETARECORD *pObj)
     if (index >= 0 && index < d->n_obj) {
         delete_object(d, index);
         d->emf_obj[index].type = type;
+        d->emf_obj[index].level = d->level;
         d->emf_obj[index].lpEMFR = pObj;
     }
 }
 
 static void
-assert_empty_path(PEMF_CALLBACK_DATA d, const char *fun)
+assert_empty_path(PEMF_CALLBACK_DATA d, const char * /*fun*/)
 {
     if (!d->path->empty()) {
         // g_debug("emf-win32-inout: assert_empty_path failed for %s\n", fun);
@@ -689,7 +738,7 @@ assert_empty_path(PEMF_CALLBACK_DATA d, const char *fun)
 
 
 static int CALLBACK
-myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nObj, LPARAM lpData)
+myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD *lpEMFR, int /*nObj*/, LPARAM lpData)
 {
     PEMF_CALLBACK_DATA d;
     SVGOStringStream tmp_outsvg;
@@ -739,14 +788,14 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             d->xDPI = 2540;
             d->yDPI = 2540;
 
-            d->PixelsInX = pEmr->rclFrame.right - pEmr->rclFrame.left;
-            d->PixelsInY = pEmr->rclFrame.bottom - pEmr->rclFrame.top;
+            d->dc[d->level].PixelsInX = pEmr->rclFrame.right - pEmr->rclFrame.left;
+            d->dc[d->level].PixelsInY = pEmr->rclFrame.bottom - pEmr->rclFrame.top;
 
-            d->MMX = d->PixelsInX / 100.0;
-            d->MMY = d->PixelsInY / 100.0;
+            d->MMX = d->dc[d->level].PixelsInX / 100.0;
+            d->MMY = d->dc[d->level].PixelsInY / 100.0;
 
-            d->PixelsOutX = d->MMX * PX_PER_MM;
-            d->PixelsOutY = d->MMY * PX_PER_MM;
+            d->dc[d->level].PixelsOutX = d->MMX * PX_PER_MM;
+            d->dc[d->level].PixelsOutY = d->MMY * PX_PER_MM;
             
             tmp_outsvg <<
                 "  width=\"" << d->MMX << "mm\"\n" <<
@@ -766,7 +815,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                 // dynamic allocation succeeded.
                 if ( d->emf_obj != NULL )
                 {
-                    for( unsigned int i=0; i < d->n_obj; ++i )
+                    for( int i=0; i < d->n_obj; ++i )
                         d->emf_obj[i].lpEMFR = NULL;
                 } //if
 
@@ -994,39 +1043,39 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
 
             PEMRSETWINDOWEXTEX pEmr = (PEMRSETWINDOWEXTEX) lpEMFR;
 
-            d->sizeWnd = pEmr->szlExtent;
+            d->dc[d->level].sizeWnd = pEmr->szlExtent;
 
-            if (!d->sizeWnd.cx || !d->sizeWnd.cy) {
-                d->sizeWnd = d->sizeView;
-                if (!d->sizeWnd.cx || !d->sizeWnd.cy) {
-                    d->sizeWnd.cx = d->PixelsOutX;
-                    d->sizeWnd.cy = d->PixelsOutY;
+            if (!d->dc[d->level].sizeWnd.cx || !d->dc[d->level].sizeWnd.cy) {
+                d->dc[d->level].sizeWnd = d->dc[d->level].sizeView;
+                if (!d->dc[d->level].sizeWnd.cx || !d->dc[d->level].sizeWnd.cy) {
+                    d->dc[d->level].sizeWnd.cx = d->dc[d->level].PixelsOutX;
+                    d->dc[d->level].sizeWnd.cy = d->dc[d->level].PixelsOutY;
                 }
             }
 
-            if (!d->sizeView.cx || !d->sizeView.cy) {
-                d->sizeView = d->sizeWnd;
+            if (!d->dc[d->level].sizeView.cx || !d->dc[d->level].sizeView.cy) {
+                d->dc[d->level].sizeView = d->dc[d->level].sizeWnd;
             }
 
-            d->PixelsInX = d->sizeWnd.cx;
-            d->PixelsInY = d->sizeWnd.cy;
+            d->dc[d->level].PixelsInX = d->dc[d->level].sizeWnd.cx;
+            d->dc[d->level].PixelsInY = d->dc[d->level].sizeWnd.cy;
             
-            if (d->PixelsInX && d->PixelsInY) {
-                d->ScaleInX = (double) d->sizeView.cx / (double) d->PixelsInX;
-                d->ScaleInY = (double) d->sizeView.cy / (double) d->PixelsInY;
+            if (d->dc[d->level].PixelsInX && d->dc[d->level].PixelsInY) {
+                d->dc[d->level].ScaleInX = (double) d->dc[d->level].sizeView.cx / (double) d->dc[d->level].PixelsInX;
+                d->dc[d->level].ScaleInY = (double) d->dc[d->level].sizeView.cy / (double) d->dc[d->level].PixelsInY;
             }
             else {
-                d->ScaleInX = 1;
-                d->ScaleInY = 1;
+                d->dc[d->level].ScaleInX = 1;
+                d->dc[d->level].ScaleInY = 1;
             }
 
-            if (d->sizeView.cx && d->sizeView.cy) {
-                d->ScaleOutX = (double) d->PixelsOutX / (double) d->sizeView.cx;
-                d->ScaleOutY = (double) d->PixelsOutY / (double) d->sizeView.cy;
+            if (d->dc[d->level].sizeView.cx && d->dc[d->level].sizeView.cy) {
+                d->dc[d->level].ScaleOutX = (double) d->dc[d->level].PixelsOutX / (double) d->dc[d->level].sizeView.cx;
+                d->dc[d->level].ScaleOutY = (double) d->dc[d->level].PixelsOutY / (double) d->dc[d->level].sizeView.cy;
             }
             else {
-                d->ScaleOutX = DEVICESCALE;
-                d->ScaleOutY = DEVICESCALE;
+                d->dc[d->level].ScaleOutX = DEVICESCALE;
+                d->dc[d->level].ScaleOutY = DEVICESCALE;
             }
 
             break;
@@ -1036,7 +1085,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             dbg_str << "<!-- EMR_SETWINDOWORGEX -->\n";
 
             PEMRSETWINDOWORGEX pEmr = (PEMRSETWINDOWORGEX) lpEMFR;
-            d->winorg = pEmr->ptlOrigin;
+            d->dc[d->level].winorg = pEmr->ptlOrigin;
             break;
         }
         case EMR_SETVIEWPORTEXTEX:
@@ -1045,39 +1094,39 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
 
             PEMRSETVIEWPORTEXTEX pEmr = (PEMRSETVIEWPORTEXTEX) lpEMFR;
 
-            d->sizeView = pEmr->szlExtent;
+            d->dc[d->level].sizeView = pEmr->szlExtent;
 
-            if (!d->sizeView.cx || !d->sizeView.cy) {
-                d->sizeView = d->sizeWnd;
-                if (!d->sizeView.cx || !d->sizeView.cy) {
-                    d->sizeView.cx = d->PixelsOutX;
-                    d->sizeView.cy = d->PixelsOutY;
+            if (!d->dc[d->level].sizeView.cx || !d->dc[d->level].sizeView.cy) {
+                d->dc[d->level].sizeView = d->dc[d->level].sizeWnd;
+                if (!d->dc[d->level].sizeView.cx || !d->dc[d->level].sizeView.cy) {
+                    d->dc[d->level].sizeView.cx = d->dc[d->level].PixelsOutX;
+                    d->dc[d->level].sizeView.cy = d->dc[d->level].PixelsOutY;
                 }
             }
 
-            if (!d->sizeWnd.cx || !d->sizeWnd.cy) {
-                d->sizeWnd = d->sizeView;
+            if (!d->dc[d->level].sizeWnd.cx || !d->dc[d->level].sizeWnd.cy) {
+                d->dc[d->level].sizeWnd = d->dc[d->level].sizeView;
             }
 
-            d->PixelsInX = d->sizeWnd.cx;
-            d->PixelsInY = d->sizeWnd.cy;
+            d->dc[d->level].PixelsInX = d->dc[d->level].sizeWnd.cx;
+            d->dc[d->level].PixelsInY = d->dc[d->level].sizeWnd.cy;
             
-            if (d->PixelsInX && d->PixelsInY) {
-                d->ScaleInX = (double) d->sizeView.cx / (double) d->PixelsInX;
-                d->ScaleInY = (double) d->sizeView.cy / (double) d->PixelsInY;
+            if (d->dc[d->level].PixelsInX && d->dc[d->level].PixelsInY) {
+                d->dc[d->level].ScaleInX = (double) d->dc[d->level].sizeView.cx / (double) d->dc[d->level].PixelsInX;
+                d->dc[d->level].ScaleInY = (double) d->dc[d->level].sizeView.cy / (double) d->dc[d->level].PixelsInY;
             }
             else {
-                d->ScaleInX = 1;
-                d->ScaleInY = 1;
+                d->dc[d->level].ScaleInX = 1;
+                d->dc[d->level].ScaleInY = 1;
             }
 
-            if (d->sizeView.cx && d->sizeView.cy) {
-                d->ScaleOutX = (double) d->PixelsOutX / (double) d->sizeView.cx;
-                d->ScaleOutY = (double) d->PixelsOutY / (double) d->sizeView.cy;
+            if (d->dc[d->level].sizeView.cx && d->dc[d->level].sizeView.cy) {
+                d->dc[d->level].ScaleOutX = (double) d->dc[d->level].PixelsOutX / (double) d->dc[d->level].sizeView.cx;
+                d->dc[d->level].ScaleOutY = (double) d->dc[d->level].PixelsOutY / (double) d->dc[d->level].sizeView.cy;
             }
             else {
-                d->ScaleOutX = DEVICESCALE;
-                d->ScaleOutY = DEVICESCALE;
+                d->dc[d->level].ScaleOutX = DEVICESCALE;
+                d->dc[d->level].ScaleOutY = DEVICESCALE;
             }
 
             break;
@@ -1087,7 +1136,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             dbg_str << "<!-- EMR_SETVIEWPORTORGEX -->\n";
 
             PEMRSETVIEWPORTORGEX pEmr = (PEMRSETVIEWPORTORGEX) lpEMFR;
-            d->vieworg = pEmr->ptlOrigin;
+            d->dc[d->level].vieworg = pEmr->ptlOrigin;
             break;
         }
         case EMR_SETBRUSHORGEX:
@@ -1119,7 +1168,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             dbg_str << "<!-- EMR_SETPOLYFILLMODE -->\n";
 
             PEMRSETPOLYFILLMODE pEmr = (PEMRSETPOLYFILLMODE) lpEMFR;
-            d->style.fill_rule.value =
+            d->dc[d->level].style.fill_rule.value =
                 (pEmr->iMode == ALTERNATE ? 0 :
                  pEmr->iMode == WINDING ? 1 : 0);
             break;
@@ -1135,7 +1184,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             dbg_str << "<!-- EMR_SETTEXTALIGN -->\n";
 
             PEMRSETTEXTALIGN pEmr = (PEMRSETTEXTALIGN) lpEMFR;
-            d->textAlign = pEmr->iMode;
+            d->dc[d->level].textAlign = pEmr->iMode;
             break;
         }
         case EMR_SETCOLORADJUSTMENT:
@@ -1146,8 +1195,8 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             dbg_str << "<!-- EMR_SETTEXTCOLOR -->\n";
 
             PEMRSETTEXTCOLOR pEmr = (PEMRSETTEXTCOLOR) lpEMFR;
-            d->textColor = pEmr->crColor;
-            d->textColorSet = true;
+            d->dc[d->level].textColor = pEmr->crColor;
+            d->dc[d->level].textColorSet = true;
             break;
         }
         case EMR_SETBKCOLOR:
@@ -1166,6 +1215,8 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                 d->pathless_stroke = true;
                 *(d->path) = "d=\"";
             }
+
+            d->dc[d->level].cur = pEmr->ptl;
 
             tmp_path <<
                 "\n\tM " <<
@@ -1190,16 +1241,39 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             break;
         case EMR_SAVEDC:
             dbg_str << "<!-- EMR_SAVEDC -->\n";
+
+            if (d->level < EMF_MAX_DC) {
+                d->dc[d->level + 1] = d->dc[d->level];
+                d->level = d->level + 1;
+            }
             break;
         case EMR_RESTOREDC:
+        {
             dbg_str << "<!-- EMR_RESTOREDC -->\n";
+            
+            PEMRRESTOREDC pEmr = (PEMRRESTOREDC) lpEMFR;
+            int old_level = d->level;
+            if (pEmr->iRelative >= 0) {
+                if (pEmr->iRelative < d->level)
+                    d->level = pEmr->iRelative;
+            }
+            else {
+                if (d->level + pEmr->iRelative >= 0)
+                    d->level = d->level + pEmr->iRelative;
+            }
+            while (old_level > d->level) {
+                if (d->dc[old_level].style.stroke_dash.dash && (old_level==0 || (old_level>0 && d->dc[old_level].style.stroke_dash.dash!=d->dc[old_level-1].style.stroke_dash.dash)))
+                    delete[] d->dc[old_level].style.stroke_dash.dash;
+                old_level--;
+            }
             break;
+        }
         case EMR_SETWORLDTRANSFORM:
         {
             dbg_str << "<!-- EMR_SETWORLDTRANSFORM -->\n";
 
             PEMRSETWORLDTRANSFORM pEmr = (PEMRSETWORLDTRANSFORM) lpEMFR;
-            d->worldTransform = pEmr->xform;
+            d->dc[d->level].worldTransform = pEmr->xform;
             break;
         }
         case EMR_MODIFYWORLDTRANSFORM:
@@ -1210,16 +1284,16 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             switch (pEmr->iMode)
             {
                 case MWT_IDENTITY:
-                    d->worldTransform.eM11 = 1.0;
-                    d->worldTransform.eM12 = 0.0;
-                    d->worldTransform.eM21 = 0.0;
-                    d->worldTransform.eM22 = 1.0;
-                    d->worldTransform.eDx  = 0.0;
-                    d->worldTransform.eDy  = 0.0;
+                    d->dc[d->level].worldTransform.eM11 = 1.0;
+                    d->dc[d->level].worldTransform.eM12 = 0.0;
+                    d->dc[d->level].worldTransform.eM21 = 0.0;
+                    d->dc[d->level].worldTransform.eM22 = 1.0;
+                    d->dc[d->level].worldTransform.eDx  = 0.0;
+                    d->dc[d->level].worldTransform.eDy  = 0.0;
                     break;
                 case MWT_LEFTMULTIPLY:
                 {
-//                    d->worldTransform = pEmr->xform * worldTransform;
+//                    d->dc[d->level].worldTransform = pEmr->xform * worldTransform;
 
                     float a11 = pEmr->xform.eM11;
                     float a12 = pEmr->xform.eM12;
@@ -1231,14 +1305,14 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                     float a32 = pEmr->xform.eDy;
                     float a33 = 1.0;
 
-                    float b11 = d->worldTransform.eM11;
-                    float b12 = d->worldTransform.eM12;
+                    float b11 = d->dc[d->level].worldTransform.eM11;
+                    float b12 = d->dc[d->level].worldTransform.eM12;
                     //float b13 = 0.0;
-                    float b21 = d->worldTransform.eM21;
-                    float b22 = d->worldTransform.eM22;
+                    float b21 = d->dc[d->level].worldTransform.eM21;
+                    float b22 = d->dc[d->level].worldTransform.eM22;
                     //float b23 = 0.0;
-                    float b31 = d->worldTransform.eDx;
-                    float b32 = d->worldTransform.eDy;
+                    float b31 = d->dc[d->level].worldTransform.eDx;
+                    float b32 = d->dc[d->level].worldTransform.eDy;
                     //float b33 = 1.0;
 
                     float c11 = a11*b11 + a12*b21 + a13*b31;;
@@ -1251,27 +1325,27 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                     float c32 = a31*b12 + a32*b22 + a33*b32;;
                     //float c33 = a31*b13 + a32*b23 + a33*b33;;
 
-                    d->worldTransform.eM11 = c11;;
-                    d->worldTransform.eM12 = c12;;
-                    d->worldTransform.eM21 = c21;;
-                    d->worldTransform.eM22 = c22;;
-                    d->worldTransform.eDx = c31;
-                    d->worldTransform.eDy = c32;
+                    d->dc[d->level].worldTransform.eM11 = c11;;
+                    d->dc[d->level].worldTransform.eM12 = c12;;
+                    d->dc[d->level].worldTransform.eM21 = c21;;
+                    d->dc[d->level].worldTransform.eM22 = c22;;
+                    d->dc[d->level].worldTransform.eDx = c31;
+                    d->dc[d->level].worldTransform.eDy = c32;
                     
                     break;
                 }
                 case MWT_RIGHTMULTIPLY:
                 {
-//                    d->worldTransform = worldTransform * pEmr->xform;
+//                    d->dc[d->level].worldTransform = worldTransform * pEmr->xform;
 
-                    float a11 = d->worldTransform.eM11;
-                    float a12 = d->worldTransform.eM12;
+                    float a11 = d->dc[d->level].worldTransform.eM11;
+                    float a12 = d->dc[d->level].worldTransform.eM12;
                     float a13 = 0.0;
-                    float a21 = d->worldTransform.eM21;
-                    float a22 = d->worldTransform.eM22;
+                    float a21 = d->dc[d->level].worldTransform.eM21;
+                    float a22 = d->dc[d->level].worldTransform.eM22;
                     float a23 = 0.0;
-                    float a31 = d->worldTransform.eDx;
-                    float a32 = d->worldTransform.eDy;
+                    float a31 = d->dc[d->level].worldTransform.eDx;
+                    float a32 = d->dc[d->level].worldTransform.eDy;
                     float a33 = 1.0;
 
                     float b11 = pEmr->xform.eM11;
@@ -1294,18 +1368,18 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                     float c32 = a31*b12 + a32*b22 + a33*b32;;
                     //float c33 = a31*b13 + a32*b23 + a33*b33;;
 
-                    d->worldTransform.eM11 = c11;;
-                    d->worldTransform.eM12 = c12;;
-                    d->worldTransform.eM21 = c21;;
-                    d->worldTransform.eM22 = c22;;
-                    d->worldTransform.eDx = c31;
-                    d->worldTransform.eDy = c32;
+                    d->dc[d->level].worldTransform.eM11 = c11;;
+                    d->dc[d->level].worldTransform.eM12 = c12;;
+                    d->dc[d->level].worldTransform.eM21 = c21;;
+                    d->dc[d->level].worldTransform.eM22 = c22;;
+                    d->dc[d->level].worldTransform.eDx = c31;
+                    d->dc[d->level].worldTransform.eDy = c32;
 
                     break;
                 }
 //                case MWT_SET:
                 default:
-                    d->worldTransform = pEmr->xform;
+                    d->dc[d->level].worldTransform = pEmr->xform;
                     break;
             }
             break;
@@ -1321,7 +1395,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                 index -= ENHMETA_STOCK_OBJECT;
                 switch (index) {
                     case NULL_BRUSH:
-                        d->fill_set = false;
+                        d->dc[d->level].fill_set = false;
                         break;
                     case BLACK_BRUSH:
                     case DKGRAY_BRUSH:
@@ -1347,23 +1421,23 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                                 val = 255.0 / 255.0;
                                 break;
                         }
-                        d->style.fill.value.color.set( val, val, val );
+                        d->dc[d->level].style.fill.value.color.set( val, val, val );
 
-                        d->fill_set = true;
+                        d->dc[d->level].fill_set = true;
                         break;
                     }
                     case NULL_PEN:
-                        d->stroke_set = false;
+                        d->dc[d->level].stroke_set = false;
                         break;
                     case BLACK_PEN:
                     case WHITE_PEN:
                     {
                         float val = index == BLACK_PEN ? 0 : 1;
-                        d->style.stroke_dasharray_set = 0;
-                        d->style.stroke_width.value = 1.0;
-                        d->style.stroke.value.color.set( val, val, val );
+                        d->dc[d->level].style.stroke_dasharray_set = 0;
+                        d->dc[d->level].style.stroke_width.value = 1.0;
+                        d->dc[d->level].style.stroke.value.color.set( val, val, val );
 
-                        d->stroke_set = true;
+                        d->dc[d->level].stroke_set = true;
 
                         break;
                     }
@@ -1547,11 +1621,12 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             dbg_str << "<!-- EMR_SETMITERLIMIT -->\n";
 
             PEMRSETMITERLIMIT pEmr = (PEMRSETMITERLIMIT) lpEMFR;
-            d->style.stroke_miterlimit.value = pix_to_size_point( d, pEmr->eMiterLimit );
 
-            if (d->style.stroke_miterlimit.value < 1)
-                d->style.stroke_miterlimit.value = 1.0;
-
+            float miterlimit = pEmr->eMiterLimit;
+            miterlimit = miterlimit * 4.0 / 10.0;
+            d->dc[d->level].style.stroke_miterlimit.value = pix_to_size_point( d, miterlimit );
+            if (d->dc[d->level].style.stroke_miterlimit.value < 1)
+                d->dc[d->level].style.stroke_miterlimit.value = 4.0;
             break;
         }
         case EMR_BEGINPATH:
@@ -1678,7 +1753,6 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                 (EMREXTCREATEFONTINDIRECTW *) malloc( sizeof(EMREXTCREATEFONTINDIRECTW) );
             pFont->elfw = pEmr->elfw;
             insert_object(d, index, EMR_EXTCREATEFONTINDIRECTW, (ENHMETARECORD *) pFont);
-
             break;
         }
         case EMR_EXTTEXTOUTA:
@@ -1695,8 +1769,13 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
             double x1 = pEmr->emrtext.ptlReference.x;
             double y1 = pEmr->emrtext.ptlReference.y;
             
-            if (!(d->textAlign & TA_BOTTOM))
-                y1 += fabs(d->style.font_size.computed);
+            if (d->dc[d->level].textAlign & TA_UPDATECP) {
+                x1 = d->dc[d->level].cur.x;
+                y1 = d->dc[d->level].cur.y;
+            }
+
+            if (!(d->dc[d->level].textAlign & TA_BOTTOM))
+                y1 += fabs(d->dc[d->level].style.font_size.computed);
             
             double x = pix_to_x_point(d, x1, y1);
             double y = pix_to_y_point(d, x1, y1);
@@ -1722,10 +1801,10 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                 gchar *escaped_text = g_markup_escape_text(ansi_text, -1);
 
                 float text_rgb[3];
-                sp_color_get_rgb_floatv( &(d->style.fill.value.color), text_rgb );
+                sp_color_get_rgb_floatv( &(d->dc[d->level].style.fill.value.color), text_rgb );
 
-                if (!d->textColorSet) {
-                    d->textColor = RGB(SP_COLOR_F_TO_U(text_rgb[0]),
+                if (!d->dc[d->level].textColorSet) {
+                    d->dc[d->level].textColor = RGB(SP_COLOR_F_TO_U(text_rgb[0]),
                                        SP_COLOR_F_TO_U(text_rgb[1]),
                                        SP_COLOR_F_TO_U(text_rgb[2]));
                 }
@@ -1733,15 +1812,15 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                 char tmp[128];
                 snprintf(tmp, 127,
                          "fill:#%02x%02x%02x;",
-                         GetRValue(d->textColor),
-                         GetGValue(d->textColor),
-                         GetBValue(d->textColor));
+                         GetRValue(d->dc[d->level].textColor),
+                         GetGValue(d->dc[d->level].textColor),
+                         GetBValue(d->dc[d->level].textColor));
 
-                bool i = (d->style.font_style.value == SP_CSS_FONT_STYLE_ITALIC);
-                //bool o = (d->style.font_style.value == SP_CSS_FONT_STYLE_OBLIQUE);
-                bool b = (d->style.font_weight.value == SP_CSS_FONT_WEIGHT_BOLD) ||
-                    (d->style.font_weight.value >= SP_CSS_FONT_WEIGHT_500 && d->style.font_weight.value <= SP_CSS_FONT_WEIGHT_900);
-                int lcr = ((d->textAlign & TA_CENTER) == TA_CENTER) ? 2 : ((d->textAlign & TA_RIGHT) == TA_RIGHT) ? 1 : 0;
+                bool i = (d->dc[d->level].style.font_style.value == SP_CSS_FONT_STYLE_ITALIC);
+                //bool o = (d->dc[d->level].style.font_style.value == SP_CSS_FONT_STYLE_OBLIQUE);
+                bool b = (d->dc[d->level].style.font_weight.value == SP_CSS_FONT_WEIGHT_BOLD) ||
+                    (d->dc[d->level].style.font_weight.value >= SP_CSS_FONT_WEIGHT_500 && d->dc[d->level].style.font_weight.value <= SP_CSS_FONT_WEIGHT_900);
+                int lcr = ((d->dc[d->level].textAlign & TA_CENTER) == TA_CENTER) ? 2 : ((d->dc[d->level].textAlign & TA_RIGHT) == TA_RIGHT) ? 1 : 0;
 
                 assert_empty_path(d, "EMR_EXTTEXTOUTW");
 
@@ -1750,14 +1829,20 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
                 ts << "        xml:space=\"preserve\"\n";
                 ts << "        x=\"" << x << "\"\n";
                 ts << "        y=\"" << y << "\"\n";
+                if (d->dc[d->level].style.text_transform.value) {
+                    ts << "        transform=\""
+                       << "rotate(-" << d->dc[d->level].style.text_transform.value
+                       << " " << x << " " << y << ")"
+                       << "\"\n";
+                }
                 ts << "        style=\""
-                   << "font-size:" << fabs(d->style.font_size.computed) << "px;"
+                   << "font-size:" << fabs(d->dc[d->level].style.font_size.computed) << "px;"
                    << tmp
                    << "font-style:" << (i ? "italic" : "normal") << ";"
                    << "font-weight:" << (b ? "bold" : "normal") << ";"
                    << "text-align:" << (lcr==2 ? "center" : lcr==1 ? "end" : "start") << ";"
                    << "text-anchor:" << (lcr==2 ? "middle" : lcr==1 ? "end" : "start") << ";"
-                   << "font-family:" << d->tstyle.font_family.value << ";"
+                   << "font-family:" << d->dc[d->level].tstyle.font_family.value << ";"
                    << "\"\n";
                 ts << "    >";
                 ts << escaped_text;
@@ -2058,7 +2143,7 @@ myEnhMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, ENHMETARECORD *lpEMFR, int nOb
 }
 
 static int CALLBACK
-myMetaFileProc(HDC hDC, HANDLETABLE *lpHTable, METARECORD *lpMFR, int nObj, LPARAM lpData)
+myMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, METARECORD * /*lpMFR*/, int /*nObj*/, LPARAM /*lpData*/)
 {
     g_warning("Unable to import Windows Meta File.\n");
     return 0;
@@ -2084,18 +2169,18 @@ typedef struct
 
 
 SPDocument *
-EmfWin32::open( Inkscape::Extension::Input *mod, const gchar *uri )
+EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 {
     EMF_CALLBACK_DATA d;
 
     memset(&d, 0, sizeof(d));
 
-    d.worldTransform.eM11 = 1.0;
-    d.worldTransform.eM12 = 0.0;
-    d.worldTransform.eM21 = 0.0;
-    d.worldTransform.eM22 = 1.0;
-    d.worldTransform.eDx  = 0.0;
-    d.worldTransform.eDy  = 0.0;
+    d.dc[0].worldTransform.eM11 = 1.0;
+    d.dc[0].worldTransform.eM12 = 0.0;
+    d.dc[0].worldTransform.eM21 = 0.0;
+    d.dc[0].worldTransform.eM22 = 1.0;
+    d.dc[0].worldTransform.eDx  = 0.0;
+    d.dc[0].worldTransform.eDy  = 0.0;
     
     gsize bytesRead = 0;
     gsize bytesWritten = 0;
@@ -2298,8 +2383,8 @@ EmfWin32::open( Inkscape::Extension::Input *mod, const gchar *uri )
         delete[] d.emf_obj;
     }
     
-    if (d.style.stroke_dash.dash)
-        delete[] d.style.stroke_dash.dash;
+    if (d.dc[0].style.stroke_dash.dash)
+        delete[] d.dc[0].style.stroke_dash.dash;
 
     if  (local_fn)
         g_free(local_fn);

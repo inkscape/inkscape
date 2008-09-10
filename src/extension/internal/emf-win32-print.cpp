@@ -27,56 +27,62 @@
 # include "config.h"
 #endif
 
-#include <string.h>
-#include <signal.h>
-#include <errno.h>
+//#include <string.h>
+//#include <signal.h>
+//#include <errno.h>
 
-#include "libnr/n-art-bpath.h"
-#include "libnr/nr-point-matrix-ops.h"
-#include "libnr/nr-rect.h"
-#include "libnr/nr-matrix.h"
+//#include "libnr/n-art-bpath.h"
+//#include "libnr/nr-point-matrix-ops.h"
+//#include "libnr/nr-rect.h"
+//#include "libnr/nr-matrix.h"
 #include "libnr/nr-matrix-ops.h"
-#include "libnr/nr-matrix-scale-ops.h"
-#include "libnr/nr-matrix-translate-ops.h"
+//#include "libnr/nr-matrix-scale-ops.h"
+//#include "libnr/nr-matrix-translate-ops.h"
 #include "libnr/nr-scale-translate-ops.h"
-#include "libnr/nr-translate-scale-ops.h"
-#include "libnr/nr-matrix-fns.h"
-#include "libnr/nr-pixblock.h"
-#include <libnr/n-art-bpath-2geom.h>
-#include "display/canvas-bpath.h"
+//#include "libnr/nr-translate-scale-ops.h"
+//#include "libnr/nr-matrix-fns.h"
+//#include "libnr/nr-pixblock.h"
+#include "libnr/n-art-bpath-2geom.h"
+#include <2geom/pathvector.h>
+#include <2geom/rect.h>
+#include <2geom/bezier-curve.h>
+#include <2geom/hvlinesegment.h>
+#include "helper/geom.h"
+#include "helper/geom-curves.h"
+//#include "display/canvas-bpath.h"
 #include "sp-item.h"
 
-#include "glib.h"
-#include "gtk/gtkdialog.h"
-#include "gtk/gtkbox.h"
-#include "gtk/gtkstock.h"
+//#include "glib.h"
+//#include "gtk/gtkdialog.h"
+//#include "gtk/gtkbox.h"
+//#include "gtk/gtkstock.h"
 
-#include "glibmm/i18n.h"
-#include "enums.h"
-#include "document.h"
+//#include "glibmm/i18n.h"
+//#include "enums.h"
+//#include "document.h"
 #include "style.h"
-#include "sp-paint-server.h"
+//#include "sp-paint-server.h"
 #include "inkscape_version.h"
 
-#include "libnrtype/FontFactory.h"
-#include "libnrtype/font-instance.h"
-#include "libnrtype/font-style-to-pos.h"
+//#include "libnrtype/FontFactory.h"
+//#include "libnrtype/font-instance.h"
+//#include "libnrtype/font-style-to-pos.h"
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 
 #include "win32.h"
 #include "emf-win32-print.h"
 
 #include "unit-constants.h"
 
-#include "extension/extension.h"
+//#include "extension/extension.h"
 #include "extension/system.h"
 #include "extension/print.h"
 
-#include "io/sys.h"
+//#include "io/sys.h"
 
-#include "macros.h"
-
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+//#include "macros.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -90,7 +96,6 @@ PrintEmfWin32::PrintEmfWin32 (void):
     hbrush(NULL),
     hbrushOld(NULL),
     hpen(NULL),
-    fill_path(NULL),
     stroke_and_fill(false),
     fill_only(false),
     simple_shape(false)
@@ -117,7 +122,7 @@ PrintEmfWin32::~PrintEmfWin32 (void)
 
 
 unsigned int
-PrintEmfWin32::setup (Inkscape::Extension::Print *mod)
+PrintEmfWin32::setup (Inkscape::Extension::Print * /*mod*/)
 {
     return TRUE;
 }
@@ -247,7 +252,7 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
 
 
 unsigned int
-PrintEmfWin32::finish (Inkscape::Extension::Print *mod)
+PrintEmfWin32::finish (Inkscape::Extension::Print * /*mod*/)
 {
     if (!hdc) return 0;
 
@@ -266,8 +271,8 @@ PrintEmfWin32::finish (Inkscape::Extension::Print *mod)
 
 
 unsigned int
-PrintEmfWin32::comment (Inkscape::Extension::Print * module,
-                                const char *comment)
+PrintEmfWin32::comment (Inkscape::Extension::Print * /*module*/,
+                        const char * /*comment*/)
 {
     if (!hdc) return 0;
 
@@ -316,14 +321,15 @@ PrintEmfWin32::destroy_brush()
 
 
 void
-PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Matrix *transform)
+PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Matrix &transform)
 {
     if (style) {
         float rgb[3];
 
         sp_color_get_rgb_floatv(&style->stroke.value.color, rgb);
 
-        LOGBRUSH lb = {0};
+        LOGBRUSH lb;
+        ZeroMemory(&lb, sizeof(lb));
         lb.lbStyle = BS_SOLID;
         lb.lbColor = RGB( 255*rgb[0], 255*rgb[1], 255*rgb[2] );
 
@@ -332,17 +338,14 @@ PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Matrix *transform)
         int linejoin = 0;
         DWORD n_dash = 0;
         DWORD *dash = NULL;
-        float oldmiterlimit;
 
         using Geom::X;
         using Geom::Y;
 
-        Geom::Matrix tf = *transform;
-
         Geom::Point zero(0, 0);
         Geom::Point one(1, 1);
-        Geom::Point p0(zero * tf);
-        Geom::Point p1(one * tf);
+        Geom::Point p0(zero * transform);
+        Geom::Point p1(one * transform);
         Geom::Point p(p1 - p0);
 
         double scale = sqrt( (p[X]*p[X]) + (p[Y]*p[Y]) ) / sqrt(2);
@@ -415,12 +418,18 @@ PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Matrix *transform)
         hpenOld = (HPEN) SelectObject( hdc, hpen );
 
         if (linejoin == PS_JOIN_MITER) {
+            float oldmiterlimit;
             float miterlimit = style->stroke_miterlimit.value;
+
+            miterlimit = miterlimit * 10.0 / 4.0;
             if (miterlimit < 1)
-                miterlimit = 4.0;
+                miterlimit = 10.0;
+
+            miterlimit = miterlimit * IN_PER_PX * dwDPI;
+
             SetMiterLimit(
                 hdc,
-                miterlimit * IN_PER_PX * dwDPI,
+                miterlimit,
                 &oldmiterlimit );
         }
 
@@ -448,71 +457,20 @@ PrintEmfWin32::destroy_pen()
 void
 PrintEmfWin32::flush_fill()
 {
-    if (fill_path) {
+    if (!fill_pathv.empty()) {
         stroke_and_fill = false;
         fill_only = true;
-        print_bpath(fill_path, fill_transform);
+        print_pathv(fill_pathv, fill_transform);
         fill_only = false;
         if (!simple_shape)
             FillPath( hdc );
         destroy_brush();
-        delete[] fill_path;
-        fill_path = NULL;
+        fill_pathv.clear();
     }
-}
-
-
-NArtBpath *
-PrintEmfWin32::copy_bpath(const NArtBpath *bp)
-{
-    NArtBpath *tmp = (NArtBpath *) bp;
-    int num = 1;
-    
-    while (tmp->code != NR_END) {
-        num++;
-        tmp += 1;
-    }
-
-    tmp = new NArtBpath[num];
-    while (num--) {
-        tmp[num] = bp[num];
-    }
-
-    return tmp;
-}
-
-
-int
-PrintEmfWin32::cmp_bpath(const NArtBpath *bp1, const NArtBpath *bp2)
-{
-    if (!bp1 || !bp2) {
-        return 1;
-    }
-    
-    while (bp1->code != NR_END && bp2->code != NR_END) {
-        if (bp1->code != bp2->code) {
-            return 1;
-        }
-
-        if ( fabs(bp1->x1 - bp2->x1) > 0.00000001 ||
-             fabs(bp1->y1 - bp2->y1) > 0.00000001 ||
-             fabs(bp1->x2 - bp2->x2) > 0.00000001 ||
-             fabs(bp1->y2 - bp2->y2) > 0.00000001 ||
-             fabs(bp1->x3 - bp2->x3) > 0.00000001 ||
-             fabs(bp1->y3 - bp2->y3) > 0.00000001 )
-        {
-            return 1;
-        }
-        
-        bp1 += 1;
-        bp2 += 1;
-    }
-    
-    return bp1->code != NR_END || bp2->code != NR_END;
 }
 
 unsigned int
-PrintEmfWin32::bind(Inkscape::Extension::Print *mod, Geom::Matrix const *transform, float opacity)
+PrintEmfWin32::bind(Inkscape::Extension::Print * /*mod*/, Geom::Matrix const *transform, float /*opacity*/)
 {
     Geom::Matrix tr = *transform;
     
@@ -527,16 +485,16 @@ PrintEmfWin32::bind(Inkscape::Extension::Print *mod, Geom::Matrix const *transfo
 }
 
 unsigned int
-PrintEmfWin32::release(Inkscape::Extension::Print *mod)
+PrintEmfWin32::release(Inkscape::Extension::Print * /*mod*/)
 {
     m_tr_stack.pop();
     return 1;
 }
 
 unsigned int
-PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
-               Geom::PathVector const &pathv, Geom::Matrix const *transform, SPStyle const *style,
-               NRRect const *pbox, NRRect const *dbox, NRRect const *bbox)
+PrintEmfWin32::fill(Inkscape::Extension::Print * /*mod*/,
+                    Geom::PathVector const &pathv, Geom::Matrix const * /*transform*/, SPStyle const *style,
+                    NRRect const * /*pbox*/, NRRect const * /*dbox*/, NRRect const * /*bbox*/)
 {
     if (!hdc) return 0;
 
@@ -552,9 +510,8 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
         return 0;
     }
 
-    NArtBpath * bpath = BPath_from_2GeomPath(pathv);
-    fill_path = copy_bpath( bpath );
-    g_free(bpath);
+    fill_pathv.clear();
+    std::copy(pathv.begin(), pathv.end(), std::back_inserter(fill_pathv));
     fill_transform = tf;
 
     // postpone fill in case of stroke-and-fill
@@ -564,43 +521,39 @@ PrintEmfWin32::fill(Inkscape::Extension::Print *mod,
 
 
 unsigned int
-PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
-                  Geom::PathVector const &pathv, const Geom::Matrix *transform, const SPStyle *style,
-                  const NRRect *pbox, const NRRect *dbox, const NRRect *bbox)
+PrintEmfWin32::stroke (Inkscape::Extension::Print * /*mod*/,
+                       Geom::PathVector const &pathv, const Geom::Matrix * /*transform*/, const SPStyle *style,
+                       const NRRect * /*pbox*/, const NRRect * /*dbox*/, const NRRect * /*bbox*/)
 {
     if (!hdc) return 0;
 
     Geom::Matrix tf = m_tr_stack.top();
 
-    NArtBpath * bpath = BPath_from_2GeomPath(pathv);
-
-    stroke_and_fill = ( cmp_bpath( bpath, fill_path ) == 0 );
+    stroke_and_fill = ( pathv == fill_pathv );
 
     if (!stroke_and_fill) {
         flush_fill(); // flush any pending fills
     }
 
     if (style->stroke.isColor()) {
-        create_pen(style, &tf);
+        create_pen(style, tf);
     } else {
-        // create_pen(NULL, &tf);
+        // create_pen(NULL, tf);
         return 0;
     }
 
-    print_bpath(bpath, tf);
+    print_pathv(pathv, tf);
 
     if (stroke_and_fill) {
         if (!simple_shape)
             StrokeAndFillPath( hdc );
         destroy_brush();
-        delete[] fill_path;
-        fill_path = NULL;
+        fill_pathv.clear();
     } else {
         if (!simple_shape)
             StrokePath( hdc );
     }
 
-    g_free(bpath);
     destroy_pen();
 
     return 0;
@@ -608,31 +561,32 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print *mod,
 
 
 bool
-PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const Geom::Matrix &transform)
+PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Matrix &transform)
 {
-    NR::Matrix tf = transform;
-    const NArtBpath *bp = bpath;
+    Geom::PathVector pv = pathv_to_linear_and_cubic_beziers( pathv * transform );
     
     int nodes = 0;
     int moves = 0;
     int lines = 0;
     int curves = 0;
 
-    while (bp->code != NR_END) {
+    for (Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit)
+    {
+        moves++;
         nodes++;
-        switch (bp->code) {
-            case NR_MOVETO:
-            case NR_MOVETO_OPEN:
-                moves++;
-                break;
-            case NR_LINETO:
+        
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); ++cit)
+        {
+            nodes++;
+            
+            if ( is_straight_curve(*cit) ) {
                 lines++;
-                break;
-            case NR_CURVETO:
+            }
+            else if (Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
+                cubic = cubic;
                 curves++;
-                break;
+            }
         }
-        bp += 1;
     }
 
     if (!nodes)
@@ -640,39 +594,85 @@ PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const Geom::Matrix &tr
     
     POINT *lpPoints = new POINT[moves + lines + curves*3];
     int i = 0;
-    bp = bpath;
-    while (bp->code != NR_END)
+
+    /**
+     * For all Subpaths in the <path>
+     */	     
+    for (Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit)
     {
         using Geom::X;
         using Geom::Y;
 
-        Geom::Point p1(bp->c(1) * tf);
-        Geom::Point p2(bp->c(2) * tf);
-        Geom::Point p3(bp->c(3) * tf);
+        Geom::Point p0 = pit->initialPoint();
 
-        p1[X] = (p1[X] * IN_PER_PX * dwDPI);
-        p2[X] = (p2[X] * IN_PER_PX * dwDPI);
-        p3[X] = (p3[X] * IN_PER_PX * dwDPI);
-        p1[Y] = (p1[Y] * IN_PER_PX * dwDPI);
-        p2[Y] = (p2[Y] * IN_PER_PX * dwDPI);
-        p3[Y] = (p3[Y] * IN_PER_PX * dwDPI);
+        p0[X] = (p0[X] * IN_PER_PX * dwDPI);
+        p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
+                
+        LONG const x0 = (LONG) round(p0[X]);
+        LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
 
-        LONG const x1 = (LONG) round(p1[X]);
-        LONG const y1 = (LONG) round(rc.bottom-p1[Y]);
-        LONG const x2 = (LONG) round(p2[X]);
-        LONG const y2 = (LONG) round(rc.bottom-p2[Y]);
-        LONG const x3 = (LONG) round(p3[X]);
-        LONG const y3 = (LONG) round(rc.bottom-p3[Y]);
+        lpPoints[i].x = x0;
+        lpPoints[i].y = y0;
+        i = i + 1;
 
-        switch (bp->code) {
-            case NR_MOVETO:
-            case NR_MOVETO_OPEN:
-            case NR_LINETO:
-                lpPoints[i].x = x3;
-                lpPoints[i].y = y3;
+        /**
+         * For all segments in the subpath
+         */
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); ++cit)
+        {
+            if ( is_straight_curve(*cit) )
+            {
+                //Geom::Point p0 = cit->initialPoint();
+                Geom::Point p1 = cit->finalPoint();
+
+                //p0[X] = (p0[X] * IN_PER_PX * dwDPI);
+                p1[X] = (p1[X] * IN_PER_PX * dwDPI);
+                //p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
+                p1[Y] = (p1[Y] * IN_PER_PX * dwDPI);
+                
+                //LONG const x0 = (LONG) round(p0[X]);
+                //LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
+                LONG const x1 = (LONG) round(p1[X]);
+                LONG const y1 = (LONG) round(rc.bottom-p1[Y]);
+
+                lpPoints[i].x = x1;
+                lpPoints[i].y = y1;
                 i = i + 1;
-                break;
-            case NR_CURVETO:
+            }
+            else if (Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
+            {
+                std::vector<Geom::Point> points = cubic->points();
+                //Geom::Point p0 = points[0];
+                Geom::Point p1 = points[1];
+                Geom::Point p2 = points[2];
+                Geom::Point p3 = points[3];
+
+                //p0[X] = (p0[X] * IN_PER_PX * dwDPI);
+                p1[X] = (p1[X] * IN_PER_PX * dwDPI);
+                p2[X] = (p2[X] * IN_PER_PX * dwDPI);
+                p3[X] = (p3[X] * IN_PER_PX * dwDPI);
+                //p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
+                p1[Y] = (p1[Y] * IN_PER_PX * dwDPI);
+                p2[Y] = (p2[Y] * IN_PER_PX * dwDPI);
+                p3[Y] = (p3[Y] * IN_PER_PX * dwDPI);
+                
+                //LONG const x0 = (LONG) round(p0[X]);
+                //LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
+                LONG const x1 = (LONG) round(p1[X]);
+                LONG const y1 = (LONG) round(rc.bottom-p1[Y]);
+                LONG const x2 = (LONG) round(p2[X]);
+                LONG const y2 = (LONG) round(rc.bottom-p2[Y]);
+                LONG const x3 = (LONG) round(p3[X]);
+                LONG const y3 = (LONG) round(rc.bottom-p3[Y]);
+
+                POINT pt[3];
+                pt[0].x = x1;
+                pt[0].y = y1;
+                pt[1].x = x2;
+                pt[1].y = y2;
+                pt[2].x = x3;
+                pt[2].y = y3;
+
                 lpPoints[i].x = x1;
                 lpPoints[i].y = y1;
                 lpPoints[i+1].x = x2;
@@ -680,10 +680,8 @@ PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const Geom::Matrix &tr
                 lpPoints[i+2].x = x3;
                 lpPoints[i+2].y = y3;
                 i = i + 3;
-                break;
+            }
         }
-        
-        bp += 1;
     }
 
     bool done = false;
@@ -766,60 +764,83 @@ PrintEmfWin32::print_simple_shape(const NArtBpath *bpath, const Geom::Matrix &tr
 }
 
 unsigned int
-PrintEmfWin32::print_bpath(NArtBpath const *bp, Geom::Matrix const &transform)
+PrintEmfWin32::print_pathv(Geom::PathVector const &pathv, const Geom::Matrix &transform)
 {
-    unsigned int closed;
-    NR::Matrix tf = transform;
-
-    simple_shape = print_simple_shape(bp, transform);
+    simple_shape = print_simple_shape(pathv, transform);
 
     if (simple_shape)
         return TRUE;
+
+    Geom::PathVector pv = pathv_to_linear_and_cubic_beziers( pathv * transform );
     
     BeginPath( hdc );
-    closed = FALSE;
-    while (bp->code != NR_END) {
+
+    /**
+     * For all Subpaths in the <path>
+     */	     
+    for (Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit)
+    {
         using Geom::X;
         using Geom::Y;
 
-        Geom::Point p1(bp->c(1) * tf);
-        Geom::Point p2(bp->c(2) * tf);
-        Geom::Point p3(bp->c(3) * tf);
+        Geom::Point p0 = pit->initialPoint();
 
-        p1[X] = (p1[X] * IN_PER_PX * dwDPI);
-        p2[X] = (p2[X] * IN_PER_PX * dwDPI);
-        p3[X] = (p3[X] * IN_PER_PX * dwDPI);
-        p1[Y] = (p1[Y] * IN_PER_PX * dwDPI);
-        p2[Y] = (p2[Y] * IN_PER_PX * dwDPI);
-        p3[Y] = (p3[Y] * IN_PER_PX * dwDPI);
+        p0[X] = (p0[X] * IN_PER_PX * dwDPI);
+        p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
+                
+        LONG const x0 = (LONG) round(p0[X]);
+        LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
 
-        LONG const x1 = (LONG) round(p1[X]);
-        LONG const y1 = (LONG) round(rc.bottom-p1[Y]);
-        LONG const x2 = (LONG) round(p2[X]);
-        LONG const y2 = (LONG) round(rc.bottom-p2[Y]);
-        LONG const x3 = (LONG) round(p3[X]);
-        LONG const y3 = (LONG) round(rc.bottom-p3[Y]);
+        MoveToEx( hdc, x0, y0, NULL );
 
-        switch (bp->code) {
-            case NR_MOVETO:
-                if (closed) {
-                    CloseFigure( hdc );
-                }
-                closed = TRUE;
-                MoveToEx( hdc, x3, y3, NULL );
-                break;
-            case NR_MOVETO_OPEN:
-                if (closed) {
-                    CloseFigure( hdc );
-                }
-                closed = FALSE;
-                MoveToEx( hdc, x3, y3, NULL );
-                break;
-            case NR_LINETO:
-                LineTo( hdc, x3, y3 );
-                break;
-            case NR_CURVETO:
+        /**
+         * For all segments in the subpath
+         */
+        for (Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_open(); ++cit)
+        {
+            if ( is_straight_curve(*cit) )
             {
+                //Geom::Point p0 = cit->initialPoint();
+                Geom::Point p1 = cit->finalPoint();
+
+                //p0[X] = (p0[X] * IN_PER_PX * dwDPI);
+                p1[X] = (p1[X] * IN_PER_PX * dwDPI);
+                //p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
+                p1[Y] = (p1[Y] * IN_PER_PX * dwDPI);
+                
+                //LONG const x0 = (LONG) round(p0[X]);
+                //LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
+                LONG const x1 = (LONG) round(p1[X]);
+                LONG const y1 = (LONG) round(rc.bottom-p1[Y]);
+
+                LineTo( hdc, x1, y1 );
+            }
+            else if (Geom::CubicBezier const *cubic = dynamic_cast<Geom::CubicBezier const*>(&*cit))
+            {
+                std::vector<Geom::Point> points = cubic->points();
+                //Geom::Point p0 = points[0];
+                Geom::Point p1 = points[1];
+                Geom::Point p2 = points[2];
+                Geom::Point p3 = points[3];
+
+                //p0[X] = (p0[X] * IN_PER_PX * dwDPI);
+                p1[X] = (p1[X] * IN_PER_PX * dwDPI);
+                p2[X] = (p2[X] * IN_PER_PX * dwDPI);
+                p3[X] = (p3[X] * IN_PER_PX * dwDPI);
+                //p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
+                p1[Y] = (p1[Y] * IN_PER_PX * dwDPI);
+                p2[Y] = (p2[Y] * IN_PER_PX * dwDPI);
+                p3[Y] = (p3[Y] * IN_PER_PX * dwDPI);
+                
+                //LONG const x0 = (LONG) round(p0[X]);
+                //LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
+                LONG const x1 = (LONG) round(p1[X]);
+                LONG const y1 = (LONG) round(rc.bottom-p1[Y]);
+                LONG const x2 = (LONG) round(p2[X]);
+                LONG const y2 = (LONG) round(rc.bottom-p2[Y]);
+                LONG const x3 = (LONG) round(p3[X]);
+                LONG const y3 = (LONG) round(rc.bottom-p3[Y]);
+
                 POINT pt[3];
                 pt[0].x = x1;
                 pt[0].y = y1;
@@ -829,19 +850,21 @@ PrintEmfWin32::print_bpath(NArtBpath const *bp, Geom::Matrix const &transform)
                 pt[2].y = y3;
 
                 PolyBezierTo( hdc, pt, 3 );
-                break;
             }
-            default:
-                break;
+            else
+            {
+                g_warning("logical error, because pathv_to_linear_and_cubic_beziers was used");
+            }
         }
-        bp += 1;
+
+        if (pit->end_default() == pit->end_closed()) {
+            CloseFigure( hdc );
+        }
     }
-    if (closed) {
-        CloseFigure( hdc );
-    }
+
     EndPath( hdc );
 
-    return closed;
+    return TRUE;
 }
 
 
@@ -852,8 +875,8 @@ PrintEmfWin32::textToPath(Inkscape::Extension::Print * ext)
 }
 
 unsigned int
-PrintEmfWin32::text(Inkscape::Extension::Print *mod, char const *text, Geom::Point p,
-              SPStyle const *const style)
+PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom::Point p,
+                    SPStyle const *const style)
 {
     if (!hdc) return 0;
 
