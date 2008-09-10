@@ -540,6 +540,12 @@ SPCurve::backspace()
 
 /**
  * TODO: add comments about what this method does and what assumptions are made and requirements are put on SPCurve
+ (2:08:18 AM) Johan: basically, i convert the path to pw<d2>
+(2:08:27 AM) Johan: then i calculate an offset path
+(2:08:29 AM) Johan: to move the knots
+(2:08:36 AM) Johan: then i add it
+(2:08:40 AM) Johan: then convert back to path
+If I remember correctly, this moves the firstpoint to new_p0, and the lastpoint to new_p1, and moves all nodes in between according to their arclength (interpolates the movement amount)
  */
 void
 SPCurve::stretch_endpoints(Geom::Point const &new_p0, Geom::Point const &new_p1)
