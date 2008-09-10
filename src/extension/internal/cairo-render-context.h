@@ -138,7 +138,6 @@ public:
 
     /* Rendering methods */
     bool renderPathVector(Geom::PathVector const & pathv, SPStyle const *style, NRRect const *pbox);
-    bool renderPath(const_NRBPath const *bpath, SPStyle const *style, NRRect const *pbox);
     bool renderImage(unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
                      Geom::Matrix const *image_transform, SPStyle const *style);
     bool renderGlyphtext(PangoFont *font, Geom::Matrix const *font_matrix,

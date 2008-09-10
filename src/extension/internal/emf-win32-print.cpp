@@ -31,7 +31,6 @@
 //#include <signal.h>
 //#include <errno.h>
 
-//#include "libnr/n-art-bpath.h"
 //#include "libnr/nr-point-matrix-ops.h"
 //#include "libnr/nr-rect.h"
 //#include "libnr/nr-matrix.h"
@@ -42,7 +41,6 @@
 //#include "libnr/nr-translate-scale-ops.h"
 //#include "libnr/nr-matrix-fns.h"
 //#include "libnr/nr-pixblock.h"
-#include "libnr/n-art-bpath-2geom.h"
 #include <2geom/pathvector.h>
 #include <2geom/rect.h>
 #include <2geom/bezier-curve.h>

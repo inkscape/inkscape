@@ -66,9 +66,7 @@ double sp_svg_read_percentage (const char * str, double def);
 
 /* NB! As paths can be long, we use here dynamic string */
 
-NArtBpath * sp_svg_read_path (const char * str);
 Geom::PathVector sp_svg_read_pathv (char const * str);
-gchar * sp_svg_write_path (const NArtBpath * bpath);
 gchar * sp_svg_write_path (Geom::PathVector const &p);
 gchar * sp_svg_write_path (Geom::Path const &p);
 

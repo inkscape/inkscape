@@ -74,10 +74,6 @@ public:
 	virtual unsigned int bind (Inkscape::Extension::Print * module, const Geom::Matrix *transform, float opacity);
 	virtual unsigned int release (Inkscape::Extension::Print * module);
 	virtual unsigned int comment (Inkscape::Extension::Print * module, const char * comment);
-	virtual unsigned int fill (Inkscape::Extension::Print * module, const const_NRBPath *bpath, const Geom::Matrix *ctm, const SPStyle *style,
-			       const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
-	virtual unsigned int stroke (Inkscape::Extension::Print * module, const const_NRBPath *bpath, const Geom::Matrix *transform, const SPStyle *style,
-				 const NRRect *pbox, const NRRect *dbox, const NRRect *bbox);
 	virtual unsigned int image (Inkscape::Extension::Print * module, unsigned char *px, unsigned int w, unsigned int h, unsigned int rs,
 				const Geom::Matrix *transform, const SPStyle *style);
         */

@@ -293,18 +293,6 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
  * Returns index of first NR_END bpath in array.
  */
 
-/* Obsolete
-static unsigned sp_bpath_length(NArtBpath const bpath[])
-{
-    g_return_val_if_fail(bpath != NULL, FALSE);
-    unsigned ret = 0;
-    while ( bpath[ret].code != NR_END ) {
-        ++ret;
-    }
-    ++ret;
-    return ret;
-}*/
-
 void Inkscape::ObjectSnapper::_collectPaths(Inkscape::Snapper::PointType const &t,
                                          bool const &first_point) const
 {
