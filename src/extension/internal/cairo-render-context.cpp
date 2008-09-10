@@ -590,13 +590,16 @@ CairoRenderContext::popLayer(void)
                     cairo_set_source_rgba(clip_ctx->_cr, 1.0, 1.0, 1.0, 1.0);
 
                 // copy over the correct CTM
+                // It must be stored in item_transform of current state after pushState.
+                Geom::Matrix item_transform; 
                 if (_state->parent_has_userspace)
-                    clip_ctx->setTransform(&getParentState()->transform);
+                    item_transform = getParentState()->transform;
                 else
-                    clip_ctx->setTransform(&_state->transform);
+                    item_transform = _state->transform;
 
                 // apply the clip path
                 clip_ctx->pushState();
+                clip_ctx->getCurrentState()->item_transform = item_transform;
                 _renderer->applyClipPath(clip_ctx, clip_path);
                 clip_ctx->popState();
 
