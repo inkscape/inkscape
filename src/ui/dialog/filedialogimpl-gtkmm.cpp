@@ -849,9 +849,12 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
                                               const Glib::ustring &dir,
                                               FileDialogType fileTypes,
                                               const Glib::ustring &title,
-                                              const Glib::ustring &/*default_key*/ ) :
+                                              const Glib::ustring &/*default_key*/,
+                                              const gchar* docTitle) :
     FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.save_as")
 {
+    FileSaveDialog::myDocTitle = docTitle;
+
     /* One file at a time */
     set_select_multiple(false);
 

@@ -67,6 +67,7 @@
 #include "inkscape.h"
 #include "uri.h"
 #include "id-clash.h"
+#include "dialogs/rdf.h"
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs.h>
@@ -749,13 +750,15 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
     } else {
         dialog_title = (char const *) _("Select file to save to");
     }
+    gchar* doc_title = doc->root->title();
     Inkscape::UI::Dialog::FileSaveDialog *saveDialog =
         Inkscape::UI::Dialog::FileSaveDialog::create(
             parentWindow,
             save_loc,
             Inkscape::UI::Dialog::SVG_TYPES,
             dialog_title,
-            default_extension
+            default_extension,
+            doc_title ? doc_title : ""
             );
 
     saveDialog->setSelectionType(extension);
@@ -765,6 +768,11 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
         delete saveDialog;
         return success;
     }
+
+    // set new title here (call RDF to ensure metadata and title element are updated)
+    rdf_set_work_entity(doc, rdf_find_entity("title"), saveDialog->getDocTitle().c_str());
+    // free up old string
+    if(doc_title) g_free(doc_title);
 
     Glib::ustring fileName = saveDialog->getFilename();
     Inkscape::Extension::Extension *selectionType = saveDialog->getSelectionType();
@@ -897,10 +905,10 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
         Inkscape::XML::Document *xml_in_doc = sp_document_repr_doc(in_doc);
 
         prevent_id_clashes(doc, in_doc);
-        
+
         SPObject *in_defs = SP_DOCUMENT_DEFS(in_doc);
         Inkscape::XML::Node *last_def = SP_OBJECT_REPR(in_defs)->lastChild();
-        
+
         SPCSSAttr *style = sp_css_attr_from_object(SP_DOCUMENT_ROOT(doc));
 
         // Count the number of top-level items in the imported document.
@@ -945,7 +953,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
                 if (newgroup) newgroup->appendChild(newitem);
                 else new_obj = place_to_insert->appendChildRepr(newitem);
             }
-            
+
             // don't lose top-level defs or style elements
             else if (SP_OBJECT_REPR(child)->type() == Inkscape::XML::ELEMENT_NODE) {
                 const gchar *tag = SP_OBJECT_REPR(child)->name();

@@ -62,8 +62,8 @@ bool hasSuffix(const Glib::ustring &str, const Glib::ustring &ext);
 /**
  * Return true if the image is loadable by Gdk, else false
  */
-bool isValidImageFile(const Glib::ustring &fileName);    
-    
+bool isValidImageFile(const Glib::ustring &fileName);
+
 /**
  * This class provides an implementation-independent API for
  * file "Open" dialogs.  Using a standard interface obviates the need
@@ -89,7 +89,7 @@ public:
      * @param fileTypes one of FileDialogTypes
      * @param title the title of the dialog
      */
-    static FileOpenDialog *create(Gtk::Window& parentWindow, 
+    static FileOpenDialog *create(Gtk::Window& parentWindow,
                                   const Glib::ustring &path,
                                   FileDialogType fileTypes,
                                   const char *title);
@@ -117,15 +117,15 @@ public:
     Glib::ustring getFilename();
 
     virtual std::vector<Glib::ustring> getFilenames() = 0;
-    
+
     virtual Glib::ustring getCurrentDirectory() = 0;
-    
+
 protected:
     /**
      * Filename that was given
      */
     Glib::ustring myFilename;
-    
+
 }; //FileOpenDialog
 
 
@@ -158,11 +158,12 @@ public:
      * @param title the title of the dialog
      * @param key a list of file types from which the user can select
      */
-    static FileSaveDialog *create(Gtk::Window& parentWindow, 
+    static FileSaveDialog *create(Gtk::Window& parentWindow,
                                   const Glib::ustring &path,
                                   FileDialogType fileTypes,
                                   const char *title,
-                                  const Glib::ustring &default_key);
+                                  const Glib::ustring &default_key,
+                                  const gchar *docTitle);
 
 
     /**
@@ -191,7 +192,12 @@ public:
      * Get the file name chosen by the user.   Valid after an [OK]
      */
     Glib::ustring getFilename ();
-    
+
+    /**
+     * Get the document title chosen by the user.   Valid after an [OK]
+     */
+    Glib::ustring getDocTitle ();
+
     virtual Glib::ustring getCurrentDirectory() = 0;
 
 protected:
@@ -200,12 +206,17 @@ protected:
      * Filename that was given
      */
     Glib::ustring myFilename;
-    
+
+    /**
+     * Doc Title that was given
+     */
+    Glib::ustring myDocTitle;
+
     /**
      * List of known file extensions.
      */
     std::set<Glib::ustring> knownExtensions;
-    
+
 
     void appendExtension(Glib::ustring& path, Inkscape::Extension::Output* outputExtension);
 
@@ -248,7 +259,7 @@ public:
      * @param title the title of the dialog
      * @param key a list of file types from which the user can select
      */
-    static FileExportDialog *create(Gtk::Window& parentWindow, 
+    static FileExportDialog *create(Gtk::Window& parentWindow,
                                     const Glib::ustring &path,
                                     FileDialogType fileTypes,
                                     const char *title,
@@ -279,28 +290,28 @@ public:
      * Return the selected filename, if any.  If not, return ""
      */
     virtual Glib::ustring getFilename () =0;
-    
+
     /**
      * Return the scope of the export.  One of the enumerated types
-     * in ScopeType     
+     * in ScopeType
      */
     virtual ScopeType getScope() = 0;
-    
+
     /**
      * Return left side of the exported region
      */
     virtual double getSourceX() = 0;
-    
+
     /**
      * Return the top of the exported region
      */
     virtual double getSourceY() = 0;
-    
+
     /**
      * Return the width of the exported region
      */
     virtual double getSourceWidth() = 0;
-    
+
     /**
      * Return the height of the exported region
      */
@@ -346,7 +357,7 @@ public:
      */
     virtual unsigned long getBackground() = 0;
 
-    
+
 
 }; //FileExportDialog
 

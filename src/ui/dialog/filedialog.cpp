@@ -88,7 +88,7 @@ FileOpenDialog *FileOpenDialog::create(Gtk::Window &parentWindow,
 #else
     FileOpenDialog *dialog = new FileOpenDialogImplGtk(parentWindow, path, fileTypes, title);
 #endif
-	
+
 	return dialog;
 }
 
@@ -104,16 +104,17 @@ Glib::ustring FileOpenDialog::getFilename()
 /**
  * Public factory method.  Used in file.cpp
  */
-FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow, 
+FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow,
 									   const Glib::ustring &path,
                                        FileDialogType fileTypes,
                                        const char *title,
-                                       const Glib::ustring &default_key)
+                                       const Glib::ustring &default_key,
+                                       const gchar *docTitle)
 {
 #ifdef WIN32
-    FileSaveDialog *dialog = new FileSaveDialogImplWin32(parentWindow, path, fileTypes, title, default_key);
+    FileSaveDialog *dialog = new FileSaveDialogImplWin32(parentWindow, path, fileTypes, title, default_key, docTitle);
 #else
-    FileSaveDialog *dialog = new FileSaveDialogImplGtk(parentWindow, path, fileTypes, title, default_key);
+    FileSaveDialog *dialog = new FileSaveDialogImplGtk(parentWindow, path, fileTypes, title, default_key, docTitle);
 #endif
     return dialog;
 }
@@ -121,6 +122,11 @@ FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow,
 Glib::ustring FileSaveDialog::getFilename()
 {
     return myFilename;
+}
+
+Glib::ustring FileSaveDialog::getDocTitle()
+{
+	return myDocTitle;
 }
 
 //void FileSaveDialog::change_path(const Glib::ustring& path)
@@ -162,7 +168,7 @@ void FileSaveDialog::appendExtension(Glib::ustring& path, Inkscape::Extension::O
 /**
  * Public factory method.  Used in file.cpp
  */
- FileExportDialog *FileExportDialog::create(Gtk::Window& parentWindow, 
+ FileExportDialog *FileExportDialog::create(Gtk::Window& parentWindow,
 										   const Glib::ustring &path,
                                            FileDialogType fileTypes,
                                            const char *title,

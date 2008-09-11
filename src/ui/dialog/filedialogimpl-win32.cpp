@@ -108,7 +108,7 @@ FileDialogBaseWin32::FileDialogBaseWin32(Gtk::Window &parent,
 
 	_filter_index = 1;
 	_filter_count = 0;
-	
+
     _title = (wchar_t*)g_utf8_to_utf16(title, -1, NULL, NULL, NULL);
 	g_assert(_title != NULL);
 
@@ -166,7 +166,7 @@ FileOpenDialogImplWin32::FileOpenDialogImplWin32(Gtk::Window &parent,
     _preview_image_width = 0;
     _preview_image_height = 0;
     _preview_emf_image = false;
-	
+
 	_mutex = NULL;
 
     createFilterMenu();
@@ -274,10 +274,10 @@ void FileOpenDialogImplWin32::createFilterMenu()
                     all_image_files.filter_length +
                     all_image_files.name_length + 3 + 1;
      // Add 3 for 2*2 \0s and a *, and 1 for a trailing \0
-	 
+
 	_filter = new wchar_t[filter_length];
     wchar_t *filterptr = _filter;
-	
+
     for(list<Filter>::iterator filter_iterator = filter_list.begin();
         filter_iterator != filter_list.end(); filter_iterator++)
     {
@@ -303,7 +303,7 @@ void FileOpenDialogImplWin32::createFilterMenu()
         _extension_map[extension_index++] = filter.mod;
     }
     *(filterptr++) = L'\0';
-	
+
 	_filter_count = extension_index;
     _filter_index = 2;	// Select the 2nd filter in the list - 2 is NOT the 3rd
 }
@@ -314,7 +314,7 @@ void FileOpenDialogImplWin32::GetOpenFileName_thread()
 
     g_assert(this != NULL);
 	g_assert(_mutex != NULL);
-    
+
     WCHAR* current_directory_string = (WCHAR*)g_utf8_to_utf16(
         _current_directory.data(), _current_directory.length(),
 		NULL, NULL, NULL);
@@ -1010,7 +1010,7 @@ MyGetEnhMetaFileW( const WCHAR *filename )
         if (hmf) {
             // Convert Windows Metafile to Enhanced Metafile
             DWORD nSize = GetMetaFileBitsEx( hmf, 0, NULL );
-            
+
             if (nSize) {
                 BYTE *lpvData = new BYTE[nSize];
                 if (lpvData) {
@@ -1447,9 +1447,13 @@ FileSaveDialogImplWin32::FileSaveDialogImplWin32(Gtk::Window &parent,
             const Glib::ustring &dir,
             FileDialogType fileTypes,
             const char *title,
-            const Glib::ustring &/*default_key*/) :
-    FileDialogBaseWin32(parent, dir, title, fileTypes, "dialogs.save_as")
+            const Glib::ustring &/*default_key*/,
+            const char *docTitle) :
+    FileDialogBaseWin32(parent, dir, title, fileTypes, "dialogs.save_as"),
+        _title_label(NULL),
+        _title_edit(NULL)
 {
+    FileSaveDialog::myDocTitle = docTitle;
     createFilterMenu();
 }
 
@@ -1560,9 +1564,11 @@ void FileSaveDialogImplWin32::GetSaveFileName_thread()
     ofn.nMaxFileTitle = 0;
     ofn.lpstrInitialDir = current_directory_string;
     ofn.lpstrTitle = _title;
-    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_EXPLORER | OFN_ENABLEHOOK;
     ofn.lpstrFilter = _filter;
     ofn.nFilterIndex = _filter_index;
+    ofn.lpfnHook = GetSaveFileName_hookproc;
+    ofn.lCustData = (LPARAM)this;
 
     _result = GetSaveFileNameW(&ofn) != 0;
 
@@ -1590,7 +1596,7 @@ FileSaveDialogImplWin32::show()
 
     _result = false;
     _main_loop = g_main_loop_new(g_main_context_default(), FALSE);
-	
+
 	if(_main_loop != NULL)
 	{
 	    if(Glib::Thread::create(sigc::mem_fun(*this, &FileSaveDialogImplWin32::GetSaveFileName_thread), true))
@@ -1599,7 +1605,7 @@ FileSaveDialogImplWin32::show()
 	    if(_result)
 	        appendExtension(myFilename, (Inkscape::Extension::Output*)_extension);
 	}
-	
+
     return _result;
 }
 
@@ -1607,6 +1613,87 @@ void FileSaveDialogImplWin32::setSelectionType( Inkscape::Extension::Extension *
 {
     // If no pointer to extension is passed in, look up based on filename extension.
 
+}
+
+UINT_PTR CALLBACK FileSaveDialogImplWin32::GetSaveFileName_hookproc(
+    HWND hdlg, UINT uiMsg, WPARAM, LPARAM lParam)
+{
+    FileSaveDialogImplWin32 *pImpl = (FileSaveDialogImplWin32*)
+        GetWindowLongPtr(hdlg, GWLP_USERDATA);
+
+    switch(uiMsg)
+    {
+    case WM_INITDIALOG:
+        {
+            HWND hParentWnd = GetParent(hdlg);
+            HINSTANCE hInstance = GetModuleHandle(NULL);
+
+            // get size/pos of typical combo box
+            RECT rEDT1, rCB1, rROOT, rST;
+            GetWindowRect(GetDlgItem(hParentWnd, cmb1), &rCB1);
+            GetWindowRect(GetDlgItem(hParentWnd, cmb13), &rEDT1);
+            GetWindowRect(GetDlgItem(hParentWnd, stc2), &rST);
+            GetWindowRect(hdlg, &rROOT);
+            int ydelta = rCB1.top - rEDT1.top;
+
+            // Make the window a bit longer
+            RECT rcRect;
+            GetWindowRect(hParentWnd, &rcRect);
+            MoveWindow(hParentWnd, rcRect.left, rcRect.top, rcRect.right - rcRect.left,
+                       rcRect.bottom - rcRect.top + ydelta, FALSE);
+
+            // It is not necessary to delete stock objects by calling DeleteObject
+            HGDIOBJ dlgFont = GetStockObject(DEFAULT_GUI_FONT);
+
+            // Set the pointer to the object
+            OPENFILENAMEW *ofn = (OPENFILENAMEW*)lParam;
+            SetWindowLongPtr(hdlg, GWLP_USERDATA, ofn->lCustData);
+            SetWindowLongPtr(hParentWnd, GWLP_USERDATA, ofn->lCustData);
+            pImpl = (FileSaveDialogImplWin32*)ofn->lCustData;
+
+            // Create the Title label and edit control
+            pImpl->_title_label = CreateWindowEx(NULL, "STATIC", "Title:",
+                                        WS_VISIBLE|WS_CHILD,
+                                        CW_USEDEFAULT, CW_USEDEFAULT, rCB1.left-rST.left, rST.bottom-rST.top,
+                                        hParentWnd, NULL, hInstance, NULL);
+            if(pImpl->_title_label) {
+              if(dlgFont) SendMessage(pImpl->_title_label, WM_SETFONT, (WPARAM)dlgFont, MAKELPARAM(FALSE, 0));
+              SetWindowPos(pImpl->_title_label, NULL, rST.left-rROOT.left, rST.top+ydelta-rROOT.top,
+                           rCB1.left-rST.left, rST.bottom-rST.top, SWP_SHOWWINDOW|SWP_NOZORDER);
+            }
+
+            pImpl->_title_edit = CreateWindowEx(WS_EX_CLIENTEDGE, "EDIT", "",
+                                        WS_VISIBLE|WS_CHILD|WS_TABSTOP|ES_AUTOHSCROLL,
+                                        CW_USEDEFAULT, CW_USEDEFAULT, rCB1.right-rCB1.left, rCB1.bottom-rCB1.top,
+                                        hParentWnd, NULL, hInstance, NULL);
+            if(pImpl->_title_edit) {
+              if(dlgFont) SendMessage(pImpl->_title_edit, WM_SETFONT, (WPARAM)dlgFont, MAKELPARAM(FALSE, 0));
+              SetWindowPos(pImpl->_title_edit, NULL, rCB1.left-rROOT.left, rCB1.top+ydelta-rROOT.top,
+                           rCB1.right-rCB1.left, rCB1.bottom-rCB1.top, SWP_SHOWWINDOW|SWP_NOZORDER);
+              // TODO: make sure this works for Unicode
+              SetWindowText(pImpl->_title_edit, pImpl->myDocTitle.c_str());
+            }
+        }
+        break;
+    case WM_DESTROY:
+      {
+        if(pImpl->_title_edit) {
+          int length = GetWindowTextLength(pImpl->_title_edit)+1;
+          char* temp_title = new char[length];
+          GetWindowText(pImpl->_title_edit, temp_title, length);
+          pImpl->myDocTitle = temp_title;
+          delete[] temp_title;
+          DestroyWindow(pImpl->_title_label);
+          pImpl->_title_label = NULL;
+          DestroyWindow(pImpl->_title_edit);
+          pImpl->_title_edit = NULL;
+        }
+      }
+      break;
+    }
+
+    // Use default dialog behaviour
+    return 0;
 }
 
 }

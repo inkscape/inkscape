@@ -16,9 +16,9 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
- 
+
 #include "filedialog.h"
- 
+
 //General includes
 #include <unistd.h>
 #include <sys/stat.h>
@@ -54,7 +54,7 @@
 
 //For export dialog
 #include "ui/widget/scalar-unit.h"
- 
+
 namespace Inkscape
 {
 namespace UI
@@ -250,7 +250,7 @@ public:
     Glib::ustring getFilename();
 
     std::vector<Glib::ustring> getFilenames();
-	
+
 	Glib::ustring getCurrentDirectory();
 
 private:
@@ -285,11 +285,12 @@ class FileSaveDialogImplGtk : public FileSaveDialog, public FileDialogBaseGtk
 {
 
 public:
-    FileSaveDialogImplGtk(Gtk::Window &parentWindow, 
+    FileSaveDialogImplGtk(Gtk::Window &parentWindow,
     		           const Glib::ustring &dir,
                        FileDialogType fileTypes,
                        const Glib::ustring &title,
-                       const Glib::ustring &default_key);
+                       const Glib::ustring &default_key,
+                       const gchar* docTitle);
 
     virtual ~FileSaveDialogImplGtk();
 
@@ -381,10 +382,10 @@ public:
 
     /**
      * Return the scope of the export.  One of the enumerated types
-     * in ScopeType     
+     * in ScopeType
      */
     ScopeType getScope()
-        { 
+        {
         if (pageButton.get_active())
             return SCOPE_PAGE;
         else if (selectionButton.get_active())
@@ -395,25 +396,25 @@ public:
             return SCOPE_DOCUMENT;
 
         }
-    
+
     /**
      * Return left side of the exported region
      */
     double getSourceX()
         { return sourceX0Spinner.getValue(); }
-    
+
     /**
      * Return the top of the exported region
      */
     double getSourceY()
         { return sourceY1Spinner.getValue(); }
-    
+
     /**
      * Return the width of the exported region
      */
     double getSourceWidth()
         { return sourceWidthSpinner.getValue(); }
-    
+
     /**
      * Return the height of the exported region
      */

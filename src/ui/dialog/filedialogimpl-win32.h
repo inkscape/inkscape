@@ -57,7 +57,7 @@ public:
 protected:
     /// The dialog type
     FileDialogType dialogType;
-	
+
 	/// A pointer to the GTK main-loop context object. This
     /// is used to keep the rest of the inkscape UI running
     /// while the file dialog is displayed
@@ -89,10 +89,10 @@ protected:
     /// The index of the currently selected filter.
 	/// This value must be greater than or equal to 1,
 	/// and less than or equal to _filter_count.
-    int _filter_index;
-	
+    unsigned int _filter_index;
+
 	/// The number of filters registered
-	int _filter_count;
+	unsigned int _filter_count;
 
     /// An array of the extensions associated with the
     /// file types of each filter. So the Nth entry of
@@ -100,7 +100,7 @@ protected:
     /// filter in the list. NULL if no specific extension is
     /// specified/
     Inkscape::Extension::Extension **_extension_map;
-	
+
 	/// The currently selected extension. Valid after an [OK]
     Inkscape::Extension::Extension *_extension;
 };
@@ -209,11 +209,11 @@ private:
 
     /// This flag is set true if a file has been selected
     bool _file_selected;
-	
+
 	/// This flag is set true when the GetOpenFileName call
     /// has returned
     bool _finished;
-	
+
     /// This mutex is used to ensure that the worker thread
     /// that calls GetOpenFileName cannot collide with the
     /// main Inkscape thread
@@ -280,7 +280,7 @@ private:
     /// @return Returns true if the image loaded successfully
     bool set_emf_preview();
 
-    /// This flag is set true when a meta file is previewed 
+    /// This flag is set true when a meta file is previewed
     bool _preview_emf_image;
 
     /// Renders the unshrunk preview image to a windows HTBITMAP
@@ -309,7 +309,8 @@ public:
                        const Glib::ustring &dir,
                        FileDialogType fileTypes,
                        const char *title,
-                       const Glib::ustring &default_key);
+                       const Glib::ustring &default_key,
+                       const char *docTitle);
 
     /// Destructor
     virtual ~FileSaveDialogImplWin32();
@@ -333,6 +334,9 @@ public:
     virtual void setSelectionType( Inkscape::Extension::Extension *key );
 
 private:
+	/// A handle to the title label and edit box
+    HWND _title_label;
+    HWND _title_edit;
 
     /// Create a filter menu for this type of dialog
     void createFilterMenu();
@@ -340,6 +344,10 @@ private:
     /// The controller function for the thread which calls
     /// GetSaveFileName
     void GetSaveFileName_thread();
+
+    /// A message proc which is called by the standard dialog
+    /// proc
+    static UINT_PTR CALLBACK GetSaveFileName_hookproc(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam);
 
 };
 
