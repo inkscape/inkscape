@@ -4226,7 +4226,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
         gdouble values[] = {0, 20, 40, 60, 90, 100};
         EgeAdjustmentAction* eact = create_adjustment_action( "FixationAction",
                                                               _("Fixation"), _("Fixation:"),
-                                                              _("Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed angle)"),
+                                                              _("Angle behavior (0 = nib always perpendicular to stroke direction, 100 = fixed angle)"),
                                                               "tools.calligraphic", "flatness", 90,
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
                                                               0.0, 100, 1.0, 10.0,
