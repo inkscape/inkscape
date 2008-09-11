@@ -398,15 +398,20 @@ SPCurve::second_point() const
 }
 
 /**
- * TODO: fix comment: Return the second-last point of last subpath or _movePos if curve too short.
+ * Return the second-last point of last subpath or first point when that last subpath has only a moveto.
  */
 boost::optional<Geom::Point>
 SPCurve::penultimate_point() const
 {
     boost::optional<Geom::Point> retval;
     if (!is_empty()) {
-        Geom::Curve const& back = _pathv.back().back_default();
-        retval = back.initialPoint();
+        Geom::Path const &lastpath = _pathv.back();
+        if (!lastpath.empty()) {
+            Geom::Curve const &back = lastpath.back_default();
+            retval = back.initialPoint();
+        } else {
+            retval = lastpath.initialPoint();
+        }
     }
 
     return retval;
