@@ -120,7 +120,7 @@ public:
 
     void testIsClosed()
     {
-        TS_ASSERT(SPCurve(Geom::PathVector()).is_closed()); // An empty conjuction is true
+        TS_ASSERT(!SPCurve(Geom::PathVector()).is_closed());
         Geom::PathVector pv(1, Geom::Path());
         TS_ASSERT(!SPCurve(pv).is_closed());
         pv[0].close();
