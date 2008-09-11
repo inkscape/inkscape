@@ -1469,7 +1469,7 @@ bool Layout::Calculator::calculate()
 
 void Layout::_calculateCursorShapeForEmpty()
 {
-    _empty_cursor_shape.position = NR::Point(0, 0);
+    _empty_cursor_shape.position = Geom::Point(0, 0);
     _empty_cursor_shape.height = 0.0;
     _empty_cursor_shape.rotation = 0.0;
     if (_input_stream.empty() || _input_stream.front()->Type() != TEXT_SOURCE)
@@ -1496,7 +1496,7 @@ void Layout::_calculateCursorShapeForEmpty()
     _empty_cursor_shape.rotation = caret_slope;
 
     if (_input_wrap_shapes.empty()) {
-        _empty_cursor_shape.position = NR::Point(text_source->x.empty() || !text_source->x.front()._set ? 0.0 : text_source->x.front().computed,
+        _empty_cursor_shape.position = Geom::Point(text_source->x.empty() || !text_source->x.front()._set ? 0.0 : text_source->x.front().computed,
                                                  text_source->y.empty() || !text_source->y.front()._set ? 0.0 : text_source->y.front().computed);
     } else {
         Direction block_progression = text_source->styleGetBlockProgression();
@@ -1504,9 +1504,9 @@ void Layout::_calculateCursorShapeForEmpty()
         std::vector<ScanlineMaker::ScanRun> scan_runs = scanline_maker.makeScanline(line_height);
         if (!scan_runs.empty()) {
             if (block_progression == LEFT_TO_RIGHT || block_progression == RIGHT_TO_LEFT)
-                _empty_cursor_shape.position = NR::Point(scan_runs.front().y + font_size, scan_runs.front().x_start);
+                _empty_cursor_shape.position = Geom::Point(scan_runs.front().y + font_size, scan_runs.front().x_start);
             else
-                _empty_cursor_shape.position = NR::Point(scan_runs.front().x_start, scan_runs.front().y + font_size);
+                _empty_cursor_shape.position = Geom::Point(scan_runs.front().x_start, scan_runs.front().y + font_size);
         }
     }
 }

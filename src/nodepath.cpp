@@ -3712,7 +3712,7 @@ node_request(SPKnot */*knot*/, NR::Point *p, guint state, gpointer data)
         }
     }
 
-    n->subpath->nodepath->desktop->scroll_to_point(p);
+    n->subpath->nodepath->desktop->scroll_to_point(*p);
 
     return TRUE;
 }

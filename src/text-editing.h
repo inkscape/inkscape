@@ -32,10 +32,10 @@ bool sp_te_input_is_empty (SPObject const *item);
 
 unsigned sp_text_get_length(SPObject const *item);
 unsigned sp_text_get_length_upto(SPObject const *item, SPObject const *upto);
-std::vector<NR::Point> sp_te_create_selection_quads(SPItem const *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, NR::Matrix const &transform);
+std::vector<Geom::Point> sp_te_create_selection_quads(SPItem const *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, Geom::Matrix const &transform);
 
-Inkscape::Text::Layout::iterator sp_te_get_position_by_coords (SPItem const *item, NR::Point &i_p);
-void sp_te_get_cursor_coords (SPItem const *item, Inkscape::Text::Layout::iterator const &position, NR::Point &p0, NR::Point &p1);
+Inkscape::Text::Layout::iterator sp_te_get_position_by_coords (SPItem const *item, Geom::Point const &i_p);
+void sp_te_get_cursor_coords (SPItem const *item, Inkscape::Text::Layout::iterator const &position, Geom::Point &p0, Geom::Point &p1);
 double sp_te_get_average_linespacing (SPItem *text);
 
 

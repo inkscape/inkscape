@@ -59,10 +59,10 @@ struct NRArenaGlyphsClass {
 	NRArenaItemClass parent_class;
 };
 
-void nr_arena_glyphs_set_path (NRArenaGlyphs *glyphs,
-			       SPCurve *curve, unsigned int lieutenant,
-			       font_instance *font, int glyph,
-			       const NR::Matrix *transform);
+void nr_arena_glyphs_set_path ( NRArenaGlyphs *glyphs,
+                                SPCurve *curve, unsigned int lieutenant,
+                                font_instance *font, int glyph,
+                                Geom::Matrix const *transform   );
 void nr_arena_glyphs_set_style (NRArenaGlyphs *glyphs, SPStyle *style);
 
 /* Integrated group of component glyphss */
@@ -100,7 +100,7 @@ struct NRArenaGlyphsGroupClass {
 
 void nr_arena_glyphs_group_clear (NRArenaGlyphsGroup *group);
 
-void nr_arena_glyphs_group_add_component (NRArenaGlyphsGroup *group, font_instance *font, int glyph, const NR::Matrix *transform);
+void nr_arena_glyphs_group_add_component (NRArenaGlyphsGroup *group, font_instance *font, int glyph, Geom::Matrix const &transform);
 
 void nr_arena_glyphs_group_set_style (NRArenaGlyphsGroup *group, SPStyle *style);
 

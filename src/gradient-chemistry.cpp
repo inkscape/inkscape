@@ -31,6 +31,9 @@
 #include "sp-tspan.h"
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-point-fns.h>
+#include <libnr/nr-matrix-ops.h>
+#include <libnr/nr-rotate-ops.h>
+#include <2geom/transforms.h>
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "svg/svg-color.h"
@@ -299,9 +302,9 @@ sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item)
         sp_repr_set_svg_double(repr, "r", width/2);
 
         // we want it to be elliptic, not circular
-        NR::Matrix squeeze = NR::Matrix (NR::translate (-center)) *
-            NR::Matrix (NR::scale(1, height/width)) *
-            NR::Matrix (NR::translate (center));
+        Geom::Matrix squeeze = Geom::Translate (-center) *
+            Geom::Scale(1, height/width) *
+            Geom::Translate (center);
 
         gr->gradientTransform = squeeze;
         {

@@ -13,6 +13,7 @@
 #include <libnrtype/font-style.h>
 #include <livarot/livarot-forward.h>
 #include "libnr/nr-rect.h"
+#include <2geom/d2.h>
 
 // the font_instance are the template of several raster_font; they provide metrics and outlines
 // that are drawn by the raster_font, so the raster_font needs info relative to the way the 
@@ -77,10 +78,10 @@ public:
     bool                 FontMetrics(double &ascent, double &descent, double &leading);
     bool                 FontSlope(double &run, double &rise);
                                 // for generating slanted cursors for oblique fonts
-    boost::optional<NR::Rect>             BBox(int glyph_id);
+    boost::optional<Geom::Rect>             BBox(int glyph_id);
 
 		// creates a rasterfont for the given style
-    raster_font*         RasterFont(NR::Matrix const &trs, double stroke_width,
+    raster_font*         RasterFont(Geom::Matrix const &trs, double stroke_width,
                                     bool vertical = false, JoinType stroke_join = join_straight,
                                     ButtType stroke_cap = butt_straight, float miter_limit = 4.0);
 		// the dashes array in iStyle is copied

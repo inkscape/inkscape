@@ -50,6 +50,8 @@
 #include "libnr/nr-matrix-translate-ops.h"
 #include "libnr/nr-rotate-fns.h"
 #include "libnr/nr-scale-ops.h"
+#include <libnr/nr-matrix-ops.h>
+#include <libnr/nr-rotate-ops.h>
 #include "libnr/nr-scale-translate-ops.h"
 #include "libnr/nr-translate-matrix-ops.h"
 #include "libnr/nr-translate-scale-ops.h"
@@ -152,7 +154,7 @@ GSList *sp_selection_paste_impl (SPDocument *doc, SPObject *parent, GSList **cli
         NR::Matrix local (sp_item_i2doc_affine(SP_ITEM(parent)));
         if (!local.test_identity()) {
             gchar const *t_str = copy->attribute("transform");
-            NR::Matrix item_t (NR::identity());
+            Geom::Matrix item_t (NR::identity());
             if (t_str)
                 sp_svg_transform_read(t_str, &item_t);
             item_t *= local.inverse();
@@ -489,7 +491,7 @@ void sp_selection_group(SPDesktop *desktop)
                 // At this point, current may already have no item, due to its being a clone whose original is already moved away
                 // So we copy it artificially calculating the transform from its repr->attr("transform") and the parent transform
                 gchar const *t_str = current->attribute("transform");
-                NR::Matrix item_t (NR::identity());
+                Geom::Matrix item_t (NR::identity());
                 if (t_str)
                     sp_svg_transform_read(t_str, &item_t);
                 item_t *= sp_item_i2doc_affine(SP_ITEM(doc->getObjectByRepr(current->parent())));

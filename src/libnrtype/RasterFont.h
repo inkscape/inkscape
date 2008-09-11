@@ -36,7 +36,7 @@ public:
     void                          Ref(void);
 
 		// utility functions
-    NR::Point      Advance(int glyph_id);
+    Geom::Point      Advance(int glyph_id);
     void           BBox(int glyph_id,NRRect *area);         
 
 		// attempts to load a glyph and return a raster_glyph on which you can call Blit

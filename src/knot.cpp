@@ -381,7 +381,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                 NR::Point const motion_dt = knot->desktop->w2d(motion_w);
                 Geom::Point p = motion_dt - knot->grabbed_rel_pos;
                 sp_knot_request_position (knot, p, event->motion.state);
-                knot->desktop->scroll_to_point (&motion_dt);
+                knot->desktop->scroll_to_point (motion_dt);
                 knot->desktop->set_coordinate_status(knot->pos); // display the coordinate of knot, not cursor - they may be different!
                 if (event->motion.state & GDK_BUTTON1_MASK)
                     gobble_motion_events(GDK_BUTTON1_MASK);

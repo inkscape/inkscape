@@ -59,7 +59,7 @@ void Layout::LineHeight::max(LineHeight const &other)
     if (other.leading > leading) leading = other.leading;
 }
 
-void Layout::_getGlyphTransformMatrix(int glyph_index, NR::Matrix *matrix) const
+void Layout::_getGlyphTransformMatrix(int glyph_index, Geom::Matrix *matrix) const
 {
     Span const &span = _glyphs[glyph_index].span(this);
     double sin_rotation = sin(_glyphs[glyph_index].rotation);
@@ -90,9 +90,9 @@ void Layout::show(NRArenaGroup *in_arena, NRRect const *paintbox) const
         nr_arena_glyphs_group_set_style(nr_group, text_source->style);
         while (glyph_index < (int)_glyphs.size() && _characters[_glyphs[glyph_index].in_character].in_span == span_index) {
             if (_characters[_glyphs[glyph_index].in_character].in_glyph != -1) {
-                NR::Matrix glyph_matrix;
+                Geom::Matrix glyph_matrix;
                 _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
-                nr_arena_glyphs_group_add_component(nr_group, _spans[span_index].font, _glyphs[glyph_index].glyph, &glyph_matrix);
+                nr_arena_glyphs_group_add_component(nr_group, _spans[span_index].font, _glyphs[glyph_index].glyph, glyph_matrix);
             }
             glyph_index++;
         }
@@ -101,7 +101,7 @@ void Layout::show(NRArenaGroup *in_arena, NRRect const *paintbox) const
     nr_arena_item_request_update(NR_ARENA_ITEM(in_arena), NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
-void Layout::getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform, int start, int length) const
+void Layout::getBoundingBox(NRRect *bounding_box, Geom::Matrix const &transform, int start, int length) const
 {
     for (unsigned glyph_index = 0 ; glyph_index < _glyphs.size() ; glyph_index++) {
         if (_characters[_glyphs[glyph_index].in_character].in_glyph == -1) continue;
@@ -112,20 +112,20 @@ void Layout::getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform, i
             if ((int) _glyphs[glyph_index].in_character > start + length) continue;
         }
         // this could be faster
-        NR::Matrix glyph_matrix;
+        Geom::Matrix glyph_matrix;
         _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
-        NR::Matrix total_transform = glyph_matrix;
+        Geom::Matrix total_transform = glyph_matrix;
         total_transform *= transform;
         if(_glyphs[glyph_index].span(this).font) {
-	    boost::optional<NR::Rect> glyph_rect = _glyphs[glyph_index].span(this).font->BBox(_glyphs[glyph_index].glyph);
+	    boost::optional<Geom::Rect> glyph_rect = _glyphs[glyph_index].span(this).font->BBox(_glyphs[glyph_index].glyph);
             if (glyph_rect) {
-	        NR::Point bmi = glyph_rect->min(), bma = glyph_rect->max();
-	        NR::Point tlp(bmi[0],bmi[1]), trp(bma[0],bmi[1]), blp(bmi[0],bma[1]), brp(bma[0],bma[1]);
+	        Geom::Point bmi = glyph_rect->min(), bma = glyph_rect->max();
+	        Geom::Point tlp(bmi[0],bmi[1]), trp(bma[0],bmi[1]), blp(bmi[0],bma[1]), brp(bma[0],bma[1]);
                 tlp *= total_transform;
                 trp *= total_transform;
                 blp *= total_transform;
                 brp *= total_transform;
-                *glyph_rect = NR::Rect(tlp,trp);
+                *glyph_rect = Geom::Rect(tlp,trp);
                 glyph_rect->expandTo(blp);
                 glyph_rect->expandTo(brp);
                 if ( (glyph_rect->min())[0] < bounding_box->x0 ) bounding_box->x0=(glyph_rect->min())[0];
@@ -139,7 +139,7 @@ void Layout::getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform, i
 
 void Layout::print(SPPrintContext *ctx,
                    NRRect const *pbox, NRRect const *dbox, NRRect const *bbox,
-                   NR::Matrix const &ctm) const
+                   Geom::Matrix const &ctm) const
 {
     if (_input_stream.empty()) return;
 
@@ -154,7 +154,7 @@ void Layout::print(SPPrintContext *ctx,
                 glyph_index++;
             continue;
         }
-        NR::Matrix glyph_matrix;
+        Geom::Matrix glyph_matrix;
         Span const &span = _spans[_characters[_glyphs[glyph_index].in_character].in_span];
         InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream[span.in_input_stream_item]);
         if (text_to_path || _path_fitted) {
@@ -169,8 +169,8 @@ void Layout::print(SPPrintContext *ctx,
             }
             glyph_index++;
         } else {
-            NR::Point g_pos(0,0);    // all strings are output at (0,0) because we do the translation using the matrix
-            glyph_matrix = NR::Matrix(NR::scale(1.0, -1.0) * NR::Matrix(NR::rotate(_glyphs[glyph_index].rotation)));
+            Geom::Point g_pos(0,0);    // all strings are output at (0,0) because we do the translation using the matrix
+            glyph_matrix = Geom::Scale(1.0, -1.0) * (Geom::Matrix)Geom::Rotate(_glyphs[glyph_index].rotation);
             if (block_progression == LEFT_TO_RIGHT || block_progression == RIGHT_TO_LEFT) {
                 glyph_matrix[4] = span.line(this).baseline_y + span.baseline_shift;
                 // since we're outputting character codes, not glyphs, we want the character x
@@ -230,7 +230,7 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
         Span const &span = _spans[_characters[_glyphs[glyph_index].in_character].in_span];
         InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream[span.in_input_stream_item]);
 
-        NR::Matrix glyph_matrix;
+        Geom::Matrix glyph_matrix;
         _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
         if (clip_mode) {
             Geom::PathVector const *pathv = span.font->PathVector(_glyphs[glyph_index].glyph);
@@ -243,13 +243,13 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
             continue;
         }
 
-        NR::Matrix font_matrix;
+        Geom::Matrix font_matrix;
         if (_path_fitted == NULL) {
             font_matrix = glyph_matrix;
             font_matrix[4] = 0;
             font_matrix[5] = 0;
         } else {
-            font_matrix.set_identity();
+            font_matrix.setIdentity();
         }
 
         Glib::ustring::const_iterator span_iter = span.input_stream_first_character;
@@ -300,14 +300,14 @@ void Layout::showGlyphs(CairoRenderContext *ctx) const
         
         if (_path_fitted) {
             ctx->pushState();
-            ctx->transform(&to_2geom(glyph_matrix));
+            ctx->transform(&glyph_matrix);
         } else if (opacity != 1.0) {
             ctx->pushState();
             ctx->setStateForStyle(style);
             ctx->pushLayer();
         }
         if (glyph_index - first_index > 0)
-            ctx->renderGlyphtext(span.font->pFont, &to_2geom(font_matrix), glyphtext, style);
+            ctx->renderGlyphtext(span.font->pFont, &font_matrix, glyphtext, style);
         if (_path_fitted)
             ctx->popState();
         else if (opacity != 1.0) {
@@ -440,7 +440,7 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
             NR::Point tangent;
             const_cast<Path&>(path).PointAndTangentAt(point_otp[0].piece, point_otp[0].t, point, tangent);
             _empty_cursor_shape.position = point;
-            _empty_cursor_shape.rotation = atan2(tangent[NR::Y], tangent[NR::X]);
+            _empty_cursor_shape.rotation = atan2(tangent[Geom::Y], tangent[Geom::X]);
         }
     }
 
@@ -478,7 +478,6 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
         if (midpoint_offset >= 0.0 && midpoint_otp != NULL && midpoint_otp[0].piece >= 0) {
             NR::Point midpoint;
             NR::Point tangent;
-
             const_cast<Path&>(path).PointAndTangentAt(midpoint_otp[0].piece, midpoint_otp[0].t, midpoint, tangent);
 
             if (start_offset >= 0.0 && end_offset >= 0.0) {
@@ -504,7 +503,7 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
                                 tangent = endpoint - startpoint;
                                 tangent.normalize();
                             } else {
-                                tangent = NR::Point (0,0);
+                                tangent = Geom::Point (0,0);
                             }
                         }
                         g_free(end_otp);
@@ -544,7 +543,7 @@ SPCurve *Layout::convertToCurves(iterator const &from_glyph, iterator const &to_
     GSList *cc = NULL;
 
     for (int glyph_index = from_glyph._glyph_index ; glyph_index < to_glyph._glyph_index ; glyph_index++) {
-        NR::Matrix glyph_matrix;
+        Geom::Matrix glyph_matrix;
         Span const &span = _glyphs[glyph_index].span(this);
         _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
 
@@ -573,12 +572,12 @@ SPCurve *Layout::convertToCurves(iterator const &from_glyph, iterator const &to_
     return curve;
 }
 
-void Layout::transform(NR::Matrix const &transform)
+void Layout::transform(Geom::Matrix const &transform)
 {
     // this is all massively oversimplified
     // I can't actually think of anybody who'll want to use it at the moment, so it'll stay simple
     for (unsigned glyph_index = 0 ; glyph_index < _glyphs.size() ; glyph_index++) {
-        NR::Point point(_glyphs[glyph_index].x, _glyphs[glyph_index].y);
+        Geom::Point point(_glyphs[glyph_index].x, _glyphs[glyph_index].y);
         point *= transform;
         _glyphs[glyph_index].x = point[0];
         _glyphs[glyph_index].y = point[1];

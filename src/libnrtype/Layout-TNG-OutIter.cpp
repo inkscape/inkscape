@@ -12,8 +12,7 @@
 #include "livarot/Path.h"
 #include "font-instance.h"
 #include "svg/svg-length.h"
-#include "libnr/nr-matrix-translate-ops.h"
-#include "libnr/nr-translate-rotate-ops.h"
+#include <2geom/transforms.h>
 #include "style.h"
 
 namespace Inkscape {
@@ -86,7 +85,7 @@ Layout::iterator Layout::getNearestCursorPositionTo(double x, double y) const
     double local_y = y;
 
     if (_path_fitted) {
-        Path::cut_position position = const_cast<Path*>(_path_fitted)->PointToCurvilignPosition(NR::Point(x, y));
+        Path::cut_position position = const_cast<Path*>(_path_fitted)->PointToCurvilignPosition(Geom::Point(x, y));
         local_x = const_cast<Path*>(_path_fitted)->PositionToLength(position.piece, position.t);
         return _cursorXOnLineToIterator(0, local_x + _chunks.front().left_x);
     }
@@ -157,11 +156,11 @@ Layout::iterator Layout::getNearestCursorPositionTo(double x, double y) const
 
 Layout::iterator Layout::getLetterAt(double x, double y) const
 {
-    NR::Point point(x, y);
+    Geom::Point point(x, y);
 
     double rotation;
     for (iterator it = begin() ; it != end() ; it.nextCharacter()) {
-        NR::Rect box = characterBoundingBox(it, &rotation);
+        Geom::Rect box = characterBoundingBox(it, &rotation);
         // todo: rotation
         if (box.contains(point)) return it;
     }
@@ -201,20 +200,20 @@ Layout::iterator Layout::sourceToIterator(void *source_cookie) const
     return sourceToIterator(source_cookie, Glib::ustring::const_iterator(std::string::const_iterator(NULL)));
 }
 
-boost::optional<NR::Rect> Layout::glyphBoundingBox(iterator const &it, double *rotation) const
+boost::optional<Geom::Rect> Layout::glyphBoundingBox(iterator const &it, double *rotation) const
 {
    if (rotation) *rotation = _glyphs[it._glyph_index].rotation;
    return _glyphs[it._glyph_index].span(this).font->BBox(_glyphs[it._glyph_index].glyph);
 }
 
-NR::Point Layout::characterAnchorPoint(iterator const &it) const
+Geom::Point Layout::characterAnchorPoint(iterator const &it) const
 {
     if (_characters.empty())
         return _empty_cursor_shape.position;
     if (it._char_index == _characters.size()) {
-        return NR::Point(_chunks.back().left_x + _spans.back().x_end, _lines.back().baseline_y + _spans.back().baseline_shift);
+        return Geom::Point(_chunks.back().left_x + _spans.back().x_end, _lines.back().baseline_y + _spans.back().baseline_shift);
     } else {
-        return NR::Point(_characters[it._char_index].chunk(this).left_x
+        return Geom::Point(_characters[it._char_index].chunk(this).left_x
                              + _spans[_characters[it._char_index].in_span].x_start
                              + _characters[it._char_index].x,
                          _characters[it._char_index].line(this).baseline_y
@@ -222,12 +221,12 @@ NR::Point Layout::characterAnchorPoint(iterator const &it) const
     }
 }
 
-NR::Point Layout::chunkAnchorPoint(iterator const &it) const
+Geom::Point Layout::chunkAnchorPoint(iterator const &it) const
 {
     unsigned chunk_index;
 
     if (_chunks.empty())
-        return NR::Point(0.0, 0.0);
+        return Geom::Point(0.0, 0.0);
 
     if (_characters.empty())
         chunk_index = 0;
@@ -237,18 +236,18 @@ NR::Point Layout::chunkAnchorPoint(iterator const &it) const
 
     Alignment alignment = _paragraphs[_lines[_chunks[chunk_index].in_line].in_paragraph].alignment;
     if (alignment == LEFT || alignment == FULL)
-        return NR::Point(_chunks[chunk_index].left_x, _lines[chunk_index].baseline_y);
+        return Geom::Point(_chunks[chunk_index].left_x, _lines[chunk_index].baseline_y);
 
     double chunk_width = _getChunkWidth(chunk_index);
     if (alignment == RIGHT)
-        return NR::Point(_chunks[chunk_index].left_x + chunk_width, _lines[chunk_index].baseline_y);
+        return Geom::Point(_chunks[chunk_index].left_x + chunk_width, _lines[chunk_index].baseline_y);
     //centre
-    return NR::Point(_chunks[chunk_index].left_x + chunk_width * 0.5, _lines[chunk_index].baseline_y);
+    return Geom::Point(_chunks[chunk_index].left_x + chunk_width * 0.5, _lines[chunk_index].baseline_y);
 }
 
-NR::Rect Layout::characterBoundingBox(iterator const &it, double *rotation) const
+Geom::Rect Layout::characterBoundingBox(iterator const &it, double *rotation) const
 {
-    NR::Point top_left, bottom_right;
+    Geom::Point top_left, bottom_right;
     unsigned char_index = it._char_index;
 
     if (_path_fitted) {
@@ -266,11 +265,11 @@ NR::Rect Layout::characterBoundingBox(iterator const &it, double *rotation) cons
             Span const &span = _characters[char_index].span(this);
 
             const_cast<Path*>(_path_fitted)->PointAndTangentAt(midpoint_otp[0].piece, midpoint_otp[0].t, midpoint, tangent);
-            top_left[NR::X] = midpoint[NR::X] - cluster_half_width;
-            top_left[NR::Y] = midpoint[NR::Y] - span.line_height.ascent;
-            bottom_right[NR::X] = midpoint[NR::X] + cluster_half_width;
-            bottom_right[NR::Y] = midpoint[NR::Y] + span.line_height.descent;
-            NR::Point normal = tangent.cw();
+            top_left[Geom::X] = midpoint[Geom::X] - cluster_half_width;
+            top_left[Geom::Y] = midpoint[Geom::Y] - span.line_height.ascent;
+            bottom_right[Geom::X] = midpoint[Geom::X] + cluster_half_width;
+            bottom_right[Geom::Y] = midpoint[Geom::Y] + span.line_height.descent;
+            Geom::Point normal = tangent.cw();
             top_left += span.baseline_shift * normal;
             bottom_right += span.baseline_shift * normal;
             if (rotation)
@@ -279,27 +278,27 @@ NR::Rect Layout::characterBoundingBox(iterator const &it, double *rotation) cons
         g_free(midpoint_otp);
     } else {
         if (it._char_index == _characters.size()) {
-            top_left[NR::X] = bottom_right[NR::X] = _chunks.back().left_x + _spans.back().x_end;
+            top_left[Geom::X] = bottom_right[Geom::X] = _chunks.back().left_x + _spans.back().x_end;
             char_index--;
         } else {
             double span_x = _spans[_characters[it._char_index].in_span].x_start + _characters[it._char_index].chunk(this).left_x;
-            top_left[NR::X] = span_x + _characters[it._char_index].x;
+            top_left[Geom::X] = span_x + _characters[it._char_index].x;
             if (it._char_index + 1 == _characters.size() || _characters[it._char_index + 1].in_span != _characters[it._char_index].in_span)
-                bottom_right[NR::X] = _spans[_characters[it._char_index].in_span].x_end + _characters[it._char_index].chunk(this).left_x;
+                bottom_right[Geom::X] = _spans[_characters[it._char_index].in_span].x_end + _characters[it._char_index].chunk(this).left_x;
             else
-                bottom_right[NR::X] = span_x + _characters[it._char_index + 1].x;
+                bottom_right[Geom::X] = span_x + _characters[it._char_index + 1].x;
         }
 
         double baseline_y = _characters[char_index].line(this).baseline_y + _characters[char_index].span(this).baseline_shift;
         if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
             double span_height = _spans[_characters[char_index].in_span].line_height.ascent + _spans[_characters[char_index].in_span].line_height.descent;
-            top_left[NR::Y] = top_left[NR::X];
-            top_left[NR::X] = baseline_y - span_height * 0.5;
-            bottom_right[NR::Y] = bottom_right[NR::X];
-            bottom_right[NR::X] = baseline_y + span_height * 0.5;
+            top_left[Geom::Y] = top_left[Geom::X];
+            top_left[Geom::X] = baseline_y - span_height * 0.5;
+            bottom_right[Geom::Y] = bottom_right[Geom::X];
+            bottom_right[Geom::X] = baseline_y + span_height * 0.5;
         } else {
-            top_left[NR::Y] = baseline_y - _spans[_characters[char_index].in_span].line_height.ascent;
-            bottom_right[NR::Y] = baseline_y + _spans[_characters[char_index].in_span].line_height.descent;
+            top_left[Geom::Y] = baseline_y - _spans[_characters[char_index].in_span].line_height.ascent;
+            bottom_right[Geom::Y] = baseline_y + _spans[_characters[char_index].in_span].line_height.descent;
         }
 
         if (rotation) {
@@ -312,12 +311,12 @@ NR::Rect Layout::characterBoundingBox(iterator const &it, double *rotation) cons
         }
     }
 
-    return NR::Rect(top_left, bottom_right);
+    return Geom::Rect(top_left, bottom_right);
 }
 
-std::vector<NR::Point> Layout::createSelectionShape(iterator const &it_start, iterator const &it_end, NR::Matrix const &transform) const
+std::vector<Geom::Point> Layout::createSelectionShape(iterator const &it_start, iterator const &it_end, Geom::Matrix const &transform) const
 {
-    std::vector<NR::Point> quads;
+    std::vector<Geom::Point> quads;
     unsigned char_index;
     unsigned end_char_index;
     
@@ -336,53 +335,53 @@ std::vector<NR::Point> Layout::createSelectionShape(iterator const &it_start, it
         double char_rotation = _glyphs[_characters[char_index].in_glyph].rotation;
         unsigned span_index = _characters[char_index].in_span;
 
-        NR::Point top_left, bottom_right;
+        Geom::Point top_left, bottom_right;
         if (_path_fitted || char_rotation != 0.0) {
-            NR::Rect box = characterBoundingBox(iterator(this, char_index), &char_rotation);
+            Geom::Rect box = characterBoundingBox(iterator(this, char_index), &char_rotation);
             top_left = box.min();
             bottom_right = box.max();
             char_index++;
         } else {   // for straight text we can be faster by combining all the character boxes in a span into one box
             double span_x = _spans[span_index].x_start + _spans[span_index].chunk(this).left_x;
-            top_left[NR::X] = span_x + _characters[char_index].x;
+            top_left[Geom::X] = span_x + _characters[char_index].x;
             while (char_index < end_char_index && _characters[char_index].in_span == span_index)
                 char_index++;
             if (char_index == _characters.size() || _characters[char_index].in_span != span_index)
-                bottom_right[NR::X] = _spans[span_index].x_end + _spans[span_index].chunk(this).left_x;
+                bottom_right[Geom::X] = _spans[span_index].x_end + _spans[span_index].chunk(this).left_x;
             else
-                bottom_right[NR::X] = span_x + _characters[char_index].x;
+                bottom_right[Geom::X] = span_x + _characters[char_index].x;
 
             double baseline_y = _spans[span_index].line(this).baseline_y + _spans[span_index].baseline_shift;
             if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
                 double span_height = _spans[span_index].line_height.ascent + _spans[span_index].line_height.descent;
-                top_left[NR::Y] = top_left[NR::X];
-                top_left[NR::X] = baseline_y - span_height * 0.5;
-                bottom_right[NR::Y] = bottom_right[NR::X];
-                bottom_right[NR::X] = baseline_y + span_height * 0.5;
+                top_left[Geom::Y] = top_left[Geom::X];
+                top_left[Geom::X] = baseline_y - span_height * 0.5;
+                bottom_right[Geom::Y] = bottom_right[Geom::X];
+                bottom_right[Geom::X] = baseline_y + span_height * 0.5;
             } else {
-                top_left[NR::Y] = baseline_y - _spans[span_index].line_height.ascent;
-                bottom_right[NR::Y] = baseline_y + _spans[span_index].line_height.descent;
+                top_left[Geom::Y] = baseline_y - _spans[span_index].line_height.ascent;
+                bottom_right[Geom::Y] = baseline_y + _spans[span_index].line_height.descent;
             }
         }
 
-        NR::Rect char_box(top_left, bottom_right);
-        if (char_box.extent(NR::X) == 0.0 || char_box.extent(NR::Y) == 0.0)
+        Geom::Rect char_box(top_left, bottom_right);
+        if (char_box.dimensions()[Geom::X] == 0.0 || char_box.dimensions()[Geom::Y] == 0.0)
             continue;
-        NR::Point center_of_rotation((top_left[NR::X] + bottom_right[NR::X]) * 0.5,
-                                     top_left[NR::Y] + _spans[span_index].line_height.ascent);
-        NR::Matrix total_transform = NR::translate(-center_of_rotation) * NR::rotate(char_rotation) * NR::translate(center_of_rotation) * transform;
+        Geom::Point center_of_rotation((top_left[Geom::X] + bottom_right[Geom::X]) * 0.5,
+                                     top_left[Geom::Y] + _spans[span_index].line_height.ascent);
+        Geom::Matrix total_transform = Geom::Translate(-center_of_rotation) * Geom::Rotate(char_rotation) * Geom::Translate(center_of_rotation) * transform;
         for(int i = 0; i < 4; i ++)
             quads.push_back(char_box.corner(i) * total_transform);
     }
     return quads;
 }
 
-void Layout::queryCursorShape(iterator const &it, NR::Point *position, double *height, double *rotation) const
+void Layout::queryCursorShape(iterator const &it, Geom::Point &position, double &height, double &rotation) const
 {
     if (_characters.empty()) {
-        *position = _empty_cursor_shape.position;
-        *height = _empty_cursor_shape.height;
-        *rotation = _empty_cursor_shape.rotation;
+        position = _empty_cursor_shape.position;
+        height = _empty_cursor_shape.height;
+        rotation = _empty_cursor_shape.rotation;
     } else {
         // we want to cursor to be positioned where the left edge of a character that is about to be typed will be.
         // this means x & rotation are the current values but y & height belong to the previous character.
@@ -423,43 +422,47 @@ void Layout::queryCursorShape(iterator const &it, NR::Point *position, double *h
                 point += x * tangent;
             if (x > path_length )
                 point += (x - path_length) * tangent;
-            *rotation = atan2(tangent);
-            (*position)[NR::X] = point[NR::X] - tangent[NR::Y] * span->baseline_shift;
-            (*position)[NR::Y] = point[NR::Y] + tangent[NR::X] * span->baseline_shift;
+            rotation = atan2(tangent);
+            position[Geom::X] = point[Geom::X] - tangent[Geom::Y] * span->baseline_shift;
+            position[Geom::Y] = point[Geom::Y] + tangent[Geom::X] * span->baseline_shift;
         } else {
             // text is not on a path
             if (it._char_index >= _characters.size()) {
                 span = &_spans.back();
-                (*position)[NR::X] = _chunks[span->in_chunk].left_x + span->x_end;
-                *rotation = _glyphs.empty() ? 0.0 : _glyphs.back().rotation;
+                position[Geom::X] = _chunks[span->in_chunk].left_x + span->x_end;
+                rotation = _glyphs.empty() ? 0.0 : _glyphs.back().rotation;
             } else {
                 span = &_spans[_characters[it._char_index].in_span];
-                (*position)[NR::X] = _chunks[span->in_chunk].left_x + span->x_start + _characters[it._char_index].x;
-                if (it._glyph_index == -1) *rotation = 0.0;
-                else if(it._glyph_index == 0) *rotation = _glyphs[0].rotation;
-                else *rotation = _glyphs[it._glyph_index - 1].rotation;
+                position[Geom::X] = _chunks[span->in_chunk].left_x + span->x_start + _characters[it._char_index].x;
+                if (it._glyph_index == -1) {
+                    rotation = 0.0;
+                } else if(it._glyph_index == 0) {
+                    rotation = _glyphs[0].rotation;
+                } else{
+                    rotation = _glyphs[it._glyph_index - 1].rotation;
+                }
                 // the first char in a line wants to have the y of the new line, so in that case we don't switch to the previous span
                 if (it._char_index != 0 && _characters[it._char_index - 1].chunk(this).in_line == _chunks[span->in_chunk].in_line)
                     span = &_spans[_characters[it._char_index - 1].in_span];
             }
-            (*position)[NR::Y] = span->line(this).baseline_y + span->baseline_shift;
+            position[Geom::Y] = span->line(this).baseline_y + span->baseline_shift;
         }
         // up to now *position is the baseline point, not the final point which will be the bottom of the descent
         if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
-            *height = span->line_height.ascent + span->line_height.descent;
-            *rotation += M_PI / 2;
-            std::swap((*position)[NR::X], (*position)[NR::Y]);
-            (*position)[NR::X] -= sin(*rotation) * *height * 0.5;
-            (*position)[NR::Y] += cos(*rotation) * *height * 0.5;
+            height = span->line_height.ascent + span->line_height.descent;
+            rotation += M_PI / 2;
+            std::swap(position[Geom::X], position[Geom::Y]);
+            position[Geom::X] -= sin(rotation) * height * 0.5;
+            position[Geom::Y] += cos(rotation) * height * 0.5;
         } else {
             double caret_slope_run = 0.0, caret_slope_rise = 1.0;
             if (span->font)
                 const_cast<font_instance*>(span->font)->FontSlope(caret_slope_run, caret_slope_rise);
             double caret_slope = atan2(caret_slope_run, caret_slope_rise);
-            *height = (span->line_height.ascent + span->line_height.descent) / cos(caret_slope);
-            *rotation += caret_slope;
-            (*position)[NR::X] -= sin(*rotation) * span->line_height.descent;
-            (*position)[NR::Y] += cos(*rotation) * span->line_height.descent;
+            height = (span->line_height.ascent + span->line_height.descent) / cos(caret_slope);
+            rotation += caret_slope;
+            position[Geom::X] -= sin(rotation) * span->line_height.descent;
+            position[Geom::Y] += cos(rotation) * span->line_height.descent;
         }
     }
 }

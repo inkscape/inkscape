@@ -565,7 +565,7 @@ void ShapeEditor::select_next () {
     if (this->nodepath) {
         sp_nodepath_select_next (this->nodepath);
         if (this->nodepath->numSelected() >= 1) {
-            this->desktop->scroll_to_point(&(this->nodepath->singleSelectedCoords()), 1.0);
+            this->desktop->scroll_to_point(this->nodepath->singleSelectedCoords(), 1.0);
         }
     }
 }
@@ -573,7 +573,7 @@ void ShapeEditor::select_prev () {
     if (this->nodepath) {
         sp_nodepath_select_prev (this->nodepath);
         if (this->nodepath->numSelected() >= 1) {
-            this->desktop->scroll_to_point(&(this->nodepath->singleSelectedCoords()), 1.0);
+            this->desktop->scroll_to_point(this->nodepath->singleSelectedCoords(), 1.0);
         }
     }
 }

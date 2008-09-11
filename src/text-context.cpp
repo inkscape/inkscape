@@ -1568,29 +1568,29 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
     if (!tc->desktop) return;
 
     if (tc->text) {
-        NR::Point p0, p1;
+        Geom::Point p0, p1;
         sp_te_get_cursor_coords(tc->text, tc->text_sel_end, p0, p1);
-        NR::Point const d0 = p0 * from_2geom(sp_item_i2d_affine(SP_ITEM(tc->text)));
-        NR::Point const d1 = p1 * from_2geom(sp_item_i2d_affine(SP_ITEM(tc->text)));
+        Geom::Point const d0 = p0 * sp_item_i2d_affine(SP_ITEM(tc->text));
+        Geom::Point const d1 = p1 * sp_item_i2d_affine(SP_ITEM(tc->text));
 
         // scroll to show cursor
         if (scroll_to_see) {
-            NR::Point const center = SP_EVENT_CONTEXT(tc)->desktop->get_display_area().midpoint();
+            Geom::Point const center = SP_EVENT_CONTEXT(tc)->desktop->get_display_area().midpoint();
             if (NR::L2(d0 - center) > NR::L2(d1 - center))
                 // unlike mouse moves, here we must scroll all the way at first shot, so we override the autoscrollspeed
-                SP_EVENT_CONTEXT(tc)->desktop->scroll_to_point(&d0, 1.0);
+                SP_EVENT_CONTEXT(tc)->desktop->scroll_to_point(d0, 1.0);
             else
-                SP_EVENT_CONTEXT(tc)->desktop->scroll_to_point(&d1, 1.0);
+                SP_EVENT_CONTEXT(tc)->desktop->scroll_to_point(d1, 1.0);
         }
 
         sp_canvas_item_show(tc->cursor);
         sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), d0, d1);
 
         /* fixme: ... need another transformation to get canvas widget coordinate space? */
-        im_cursor.x = (int) floor(d0[NR::X]);
-        im_cursor.y = (int) floor(d0[NR::Y]);
-        im_cursor.width = (int) floor(d1[NR::X]) - im_cursor.x;
-        im_cursor.height = (int) floor(d1[NR::Y]) - im_cursor.y;
+        im_cursor.x = (int) floor(d0[Geom::X]);
+        im_cursor.y = (int) floor(d0[Geom::Y]);
+        im_cursor.width = (int) floor(d1[Geom::X]) - im_cursor.x;
+        im_cursor.height = (int) floor(d1[Geom::Y]) - im_cursor.y;
 
         tc->show = TRUE;
         tc->phase = 1;
@@ -1636,7 +1636,7 @@ static void sp_text_context_update_text_selection(SPTextContext *tc)
     }
     tc->text_selection_quads.clear();
 
-    std::vector<NR::Point> quads;
+    std::vector<Geom::Point> quads;
     if (tc->text != NULL)
         quads = sp_te_create_selection_quads(tc->text, tc->text_sel_start, tc->text_sel_end, sp_item_i2d_affine(tc->text));
     for (unsigned i = 0 ; i < quads.size() ; i += 4) {

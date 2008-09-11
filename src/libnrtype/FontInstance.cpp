@@ -87,7 +87,7 @@ bool  font_style_equal::operator()(const font_style &a,const font_style &b) {
 typedef struct ft2_to_liv {
 	Path*        theP;
 	double       scale;
-	NR::Point    last;
+	Geom::Point    last;
 } ft2_to_liv;
 
 // Note: Freetype 2.2.1 redefined function signatures for functions to be placed in an
@@ -105,7 +105,7 @@ typedef FT_Vector FREETYPE_VECTOR;
 // see nr-type-ft2.cpp for the freetype -> artBPath on which this code is based
 static int ft2_move_to(FREETYPE_VECTOR *to, void * i_user) {
 	ft2_to_liv* user=(ft2_to_liv*)i_user;
-	NR::Point   p(user->scale*to->x,user->scale*to->y);
+	Geom::Point   p(user->scale*to->x,user->scale*to->y);
 	//	printf("m  t=%f %f\n",p[0],p[1]);
 	user->theP->MoveTo(p);
 	user->last=p;
@@ -115,7 +115,7 @@ static int ft2_move_to(FREETYPE_VECTOR *to, void * i_user) {
 static int ft2_line_to(FREETYPE_VECTOR *to, void *i_user)
 {
 	ft2_to_liv* user=(ft2_to_liv*)i_user;
-	NR::Point   p(user->scale*to->x,user->scale*to->y);
+	Geom::Point   p(user->scale*to->x,user->scale*to->y);
 	//	printf("l  t=%f %f\n",p[0],p[1]);
 	user->theP->LineTo(p);
 	user->last=p;
@@ -125,7 +125,7 @@ static int ft2_line_to(FREETYPE_VECTOR *to, void *i_user)
 static int ft2_conic_to(FREETYPE_VECTOR *control, FREETYPE_VECTOR *to, void *i_user)
 {
 	ft2_to_liv* user=(ft2_to_liv*)i_user;
-	NR::Point   p(user->scale*to->x,user->scale*to->y),c(user->scale*control->x,user->scale*control->y);
+	Geom::Point   p(user->scale*to->x,user->scale*to->y),c(user->scale*control->x,user->scale*control->y);
 	//	printf("b c=%f %f  t=%f %f\n",c[0],c[1],p[0],p[1]);
 	user->theP->BezierTo(p);
 	user->theP->IntermBezierTo(c);
@@ -137,7 +137,7 @@ static int ft2_conic_to(FREETYPE_VECTOR *control, FREETYPE_VECTOR *to, void *i_u
 static int ft2_cubic_to(FREETYPE_VECTOR *control1, FREETYPE_VECTOR *control2, FREETYPE_VECTOR *to, void *i_user)
 {
 	ft2_to_liv* user=(ft2_to_liv*)i_user;
-	NR::Point   p(user->scale*to->x,user->scale*to->y),
+	Geom::Point   p(user->scale*to->x,user->scale*to->y),
 	c1(user->scale*control1->x,user->scale*control1->y),
 	c2(user->scale*control2->x,user->scale*control2->y);
 	//	printf("c c1=%f %f  c2=%f %f   t=%f %f\n",c1[0],c1[1],c2[0],c2[1],p[0],p[1]);
@@ -407,9 +407,9 @@ int font_instance::MapUnicodeChar(gunichar c)
 
 
 #ifdef USE_PANGO_WIN32
-static inline NR::Point pointfx_to_nrpoint(const POINTFX &p, double scale)
+static inline Geom::Point pointfx_to_nrpoint(const POINTFX &p, double scale)
 {
-    return NR::Point(*(long*)&p.x / 65536.0 * scale,
+    return Geom::Point(*(long*)&p.x / 65536.0 * scale,
                      *(long*)&p.y / 65536.0 * scale);
 }
 #endif
@@ -486,9 +486,9 @@ void font_instance::LoadGlyph(int glyph_id)
                                 {
                                     g_assert(polyCurve->cpfx >= 2);
                                     endp -= 2;
-                                    NR::Point this_mid=pointfx_to_nrpoint(p[0], scale);
+                                    Geom::Point this_mid=pointfx_to_nrpoint(p[0], scale);
                                     while ( p != endp ) {
-                                        NR::Point next_mid=pointfx_to_nrpoint(p[1], scale);
+                                        Geom::Point next_mid=pointfx_to_nrpoint(p[1], scale);
 	                                    n_g.outline->BezierTo((next_mid+this_mid)/2);
 	                                    n_g.outline->IntermBezierTo(this_mid);
 	                                    n_g.outline->EndBezierTo();
@@ -546,7 +546,7 @@ void font_instance::LoadGlyph(int glyph_id)
 				ft2_to_liv   tData;
 				tData.theP=n_g.outline;
 				tData.scale=1.0/((double)theFace->units_per_EM);
-				tData.last=NR::Point(0,0);
+				tData.last=Geom::Point(0,0);
 				FT_Outline_Decompose (&theFace->glyph->outline, &ft2_outline_funcs, &tData);
 			}
 			doAdd=true;
@@ -613,7 +613,7 @@ bool font_instance::FontSlope(double &run, double &rise)
 	return true;
 }
 
-boost::optional<NR::Rect> font_instance::BBox(int glyph_id)
+boost::optional<Geom::Rect> font_instance::BBox(int glyph_id)
 {
 	int no=-1;
 	if ( id_to_no.find(glyph_id) == id_to_no.end() ) {
@@ -627,11 +627,11 @@ boost::optional<NR::Rect> font_instance::BBox(int glyph_id)
 		no=id_to_no[glyph_id];
 	}
 	if ( no < 0 ) {
-            return boost::optional<NR::Rect>();
+            return boost::optional<Geom::Rect>();
         } else {
-	    NR::Point rmin(glyphs[no].bbox[0],glyphs[no].bbox[1]);
-	    NR::Point rmax(glyphs[no].bbox[2],glyphs[no].bbox[3]);
-	    return NR::Rect(rmin, rmax);
+	    Geom::Point rmin(glyphs[no].bbox[0],glyphs[no].bbox[1]);
+	    Geom::Point rmax(glyphs[no].bbox[2],glyphs[no].bbox[3]);
+	    return Geom::Rect(rmin, rmax);
         }
 }
 
@@ -699,7 +699,7 @@ double font_instance::Advance(int glyph_id,bool vertical)
 }
 
 
-raster_font* font_instance::RasterFont(const NR::Matrix &trs, double stroke_width, bool vertical, JoinType stroke_join, ButtType stroke_cap, float /*miter_limit*/)
+raster_font* font_instance::RasterFont(const Geom::Matrix &trs, double stroke_width, bool vertical, JoinType stroke_join, ButtType stroke_cap, float /*miter_limit*/)
 {
 	font_style  nStyle;
 	nStyle.transform=trs;

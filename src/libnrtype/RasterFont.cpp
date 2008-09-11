@@ -26,7 +26,7 @@ void          font_style::Apply(Path* src,Shape* dest) {
 	if ( stroke_width > 0 ) {
 		if ( nbDash > 0 ) {
 			double dlen = 0.0;
-			const float scale = 1/*NR::expansion(transform)*/;
+			const float scale = 1/*Geom::expansion(transform)*/;
 			for (int i = 0; i < nbDash; i++)  dlen += dashes[i] * scale;
 			if (dlen >= 0.01) {
 				float   sc_offset = dash_offset * scale;
@@ -96,26 +96,26 @@ raster_glyph*  raster_font::GetGlyph(int glyph_id)
   }
   return res;
 }
-NR::Point      raster_font::Advance(int glyph_id)
+Geom::Point      raster_font::Advance(int glyph_id)
 {
-	if ( daddy == NULL ) return NR::Point(0,0);
+	if ( daddy == NULL ) return Geom::Point(0,0);
 	double    a=daddy->Advance(glyph_id,style.vertical);
-	NR::Point f_a=(style.vertical)?NR::Point(0,a):NR::Point(a,0);
+	Geom::Point f_a=(style.vertical)?Geom::Point(0,a):Geom::Point(a,0);
 	return f_a*style.transform;
 }
 void           raster_font::BBox(int glyph_id,NRRect *area)
 {
 	area->x0=area->y0=area->x1=area->y1=0;
 	if ( daddy == NULL ) return;
-	boost::optional<NR::Rect> res=daddy->BBox(glyph_id);
+	boost::optional<Geom::Rect> res=daddy->BBox(glyph_id);
 	if (res) {
-		NR::Point bmi=res->min(),bma=res->max();
-		NR::Point tlp(bmi[0],bmi[1]),trp(bma[0],bmi[1]),blp(bmi[0],bma[1]),brp(bma[0],bma[1]);
+		Geom::Point bmi=res->min(),bma=res->max();
+		Geom::Point tlp(bmi[0],bmi[1]),trp(bma[0],bmi[1]),blp(bmi[0],bma[1]),brp(bma[0],bma[1]);
 		tlp=tlp*style.transform;
 		trp=trp*style.transform;
 		blp=blp*style.transform;
 		brp=brp*style.transform;
-		*res=NR::Rect(tlp,trp);
+		*res=Geom::Rect(tlp,trp);
 		res->expandTo(blp);
 		res->expandTo(brp);
 		area->x0=(res->min())[0];
@@ -356,7 +356,7 @@ void      raster_glyph::LoadSubPixelPosition(int no)
   delete theI;
 }
 
-void      raster_glyph::Blit(const NR::Point &at,NRPixBlock &over)
+void      raster_glyph::Blit(const Geom::Point &at,NRPixBlock &over)
 {
   if ( nb_sub_pixel <= 0 ) return;
   int pv=(int)ceil(at[1]);

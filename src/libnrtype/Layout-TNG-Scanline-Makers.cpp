@@ -85,9 +85,9 @@ Layout::ShapeScanlineMaker::ShapeScanlineMaker(Shape const *shape, Layout::Direc
         _shape_needs_freeing = true;
         temp_rotated_shape->Copy(const_cast<Shape*>(shape));
         switch (block_progression) {
-            case BOTTOM_TO_TOP: temp_rotated_shape->Transform(NR::Matrix(1.0, 0.0, 0.0, -1.0, 0.0, 0.0)); break;  // reflect about x axis
-            case LEFT_TO_RIGHT: temp_rotated_shape->Transform(NR::Matrix(0.0, 1.0, 1.0, 0.0, 0.0, 0.0)); break;   // reflect about y=x
-            case RIGHT_TO_LEFT: temp_rotated_shape->Transform(NR::Matrix(0.0, -1.0, 1.0, 0.0, 0.0, 0.0)); break;  // reflect about y=-x
+            case BOTTOM_TO_TOP: temp_rotated_shape->Transform(Geom::Matrix(1.0, 0.0, 0.0, -1.0, 0.0, 0.0)); break;  // reflect about x axis
+            case LEFT_TO_RIGHT: temp_rotated_shape->Transform(Geom::Matrix(0.0, 1.0, 1.0, 0.0, 0.0, 0.0)); break;   // reflect about y=x
+            case RIGHT_TO_LEFT: temp_rotated_shape->Transform(Geom::Matrix(0.0, -1.0, 1.0, 0.0, 0.0, 0.0)); break;  // reflect about y=-x
             default: break;
         }
         _rotated_shape = new Shape;

@@ -255,7 +255,7 @@ nr_arena_glyphs_pick(NRArenaItem *item, NR::Point p, gdouble /*delta*/, unsigned
 }
 
 void
-nr_arena_glyphs_set_path(NRArenaGlyphs *glyphs, SPCurve */*curve*/, unsigned int /*lieutenant*/, font_instance *font, gint glyph, NR::Matrix const *transform)
+nr_arena_glyphs_set_path(NRArenaGlyphs *glyphs, SPCurve */*curve*/, unsigned int /*lieutenant*/, font_instance *font, gint glyph, Geom::Matrix const *transform)
 {
     nr_return_if_fail(glyphs != NULL);
     nr_return_if_fail(NR_IS_ARENA_GLYPHS(glyphs));
@@ -607,7 +607,7 @@ nr_arena_glyphs_group_clear(NRArenaGlyphsGroup *sg)
 }
 
 void
-nr_arena_glyphs_group_add_component(NRArenaGlyphsGroup *sg, font_instance *font, int glyph, NR::Matrix const *transform)
+nr_arena_glyphs_group_add_component(NRArenaGlyphsGroup *sg, font_instance *font, int glyph, Geom::Matrix const &transform)
 {
     NRArenaGroup *group;
 
@@ -622,7 +622,7 @@ nr_arena_glyphs_group_add_component(NRArenaGlyphsGroup *sg, font_instance *font,
         NRArenaItem *new_arena = NRArenaGlyphs::create(group->arena);
         nr_arena_item_append_child(NR_ARENA_ITEM(group), new_arena);
         nr_arena_item_unref(new_arena);
-        nr_arena_glyphs_set_path(NR_ARENA_GLYPHS(new_arena), NULL, FALSE, font, glyph, transform);
+        nr_arena_glyphs_set_path(NR_ARENA_GLYPHS(new_arena), NULL, FALSE, font, glyph, &transform);
         nr_arena_glyphs_set_style(NR_ARENA_GLYPHS(new_arena), sg->style);
     }
 }

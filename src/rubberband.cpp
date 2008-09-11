@@ -79,7 +79,7 @@ void Inkscape::Rubberband::move(NR::Point const &p)
         return;
 
     _end = p;
-    _desktop->scroll_to_point(&p);
+    _desktop->scroll_to_point(p);
     _touchpath_curve->lineto(p);
 
     NR::Point next = _desktop->d2w(p);

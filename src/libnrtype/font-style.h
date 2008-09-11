@@ -1,7 +1,7 @@
 #ifndef SEEN_LIBNRTYPE_FONT_STYLE_H
 #define SEEN_LIBNRTYPE_FONT_STYLE_H
 
-#include <libnr/nr-matrix.h>
+#include <2geom/matrix.h>
 #include <livarot/LivarotDefs.h>
 #include <livarot/livarot-forward.h>
 
@@ -9,7 +9,7 @@
 
 // Different raster styles.
 struct font_style {
-    NR::Matrix    transform; // the ctm. contains the font-size
+    Geom::Matrix  transform; // the ctm. contains the font-size
     bool          vertical;  // should be rendered vertically or not? 
 		                // good font support would take the glyph alternates for vertical mode, when present
     double        stroke_width; // if 0, the glyph is filled; otherwise stroked

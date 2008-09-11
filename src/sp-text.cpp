@@ -432,7 +432,7 @@ static void sp_text_snappoints(SPItem const *item, SnapPointsIter p)
     // the baseline anchor of the first char
     Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
     if(layout != NULL) {
-        *p = layout->characterAnchorPoint(layout->begin()) * from_2geom(sp_item_i2d_affine(item));
+        *p = layout->characterAnchorPoint(layout->begin()) * sp_item_i2d_affine(item);
     }
 }
 

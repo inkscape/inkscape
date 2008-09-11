@@ -31,7 +31,7 @@ public:
 
 		// the interesting function: blits the glyph onto over
 		// over should be a mask, ie a NRPixBlock with one 8bit plane
-    void      Blit(NR::Point const &at, NRPixBlock &over); // alpha only
+    void      Blit(Geom::Point const &at, NRPixBlock &over); // alpha only
 };
 
 

@@ -14,10 +14,11 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include "libnr/nr-rect.h"
-#include "libnr/nr-matrix.h"
-#include "libnr/nr-matrix-ops.h"
-#include "libnr/nr-rotate-ops.h"
+#include <libnr/nr-matrix-ops.h>
+#include <libnr/nr-rotate-ops.h>
+#include <libnr/nr-rect.h>
+#include <2geom/d2.h>
+#include <2geom/matrix.h>
 #include <glibmm/ustring.h>
 #include <pango/pango-break.h>
 #include <algorithm>
@@ -332,7 +333,7 @@ public:
       \param transform     The transform to be applied to the entire object
                            prior to calculating its bounds.
     */
-    void getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform, int start = -1, int length = -1) const;
+    void getBoundingBox(NRRect *bounding_box, Geom::Matrix const &transform, int start = -1, int length = -1) const;
 
     /** Sends all the glyphs to the given print context.
      \param ctx   I have
@@ -341,7 +342,7 @@ public:
      \param bbox  parameters
      \param ctm   do yet
     */
-    void print(SPPrintContext *ctx, NRRect const *pbox, NRRect const *dbox, NRRect const *bbox, NR::Matrix const &ctm) const;
+    void print(SPPrintContext *ctx, NRRect const *pbox, NRRect const *dbox, NRRect const *bbox, Geom::Matrix const &ctm) const;
 
 #ifdef HAVE_CAIRO_PDF    
     /** Renders all the glyphs to the given Cairo rendering context.
@@ -375,7 +376,7 @@ public:
     /** Apply the given transform to all the output presently stored in
     this object. This only transforms the glyph positions, The glyphs
     themselves will not be transformed. */
-    void transform(NR::Matrix const &transform);
+    void transform(Geom::Matrix const &transform);
 
     //@}
 
@@ -418,13 +419,13 @@ public:
     /** Returns an iterator pointing to the cursor position for a mouse
     click at the given coordinates. */
     iterator getNearestCursorPositionTo(double x, double y) const;
-    inline iterator getNearestCursorPositionTo(NR::Point &point) const;
+    inline iterator getNearestCursorPositionTo(Geom::Point const &point) const;
 
     /** Returns an iterator pointing to the letter whose bounding box contains
     the given coordinates. end() if the point is not over any letter. The
     iterator will \em not point at the specific glyph within the character. */
     iterator getLetterAt(double x, double y) const;
-    inline iterator getLetterAt(NR::Point &point) const;
+    inline iterator getLetterAt(Geom::Point &point) const;
 
     /** Returns an iterator pointing to the character in the output which
     was created from the given input. If the character at the given byte
@@ -448,7 +449,7 @@ public:
     /** Returns the bounding box of the given glyph, and its rotation.
     The centre of rotation is the horizontal centre of the box at the
     text baseline. */
-    boost::optional<NR::Rect> glyphBoundingBox(iterator const &it, double *rotation) const;
+    boost::optional<Geom::Rect> glyphBoundingBox(iterator const &it, double *rotation) const;
 
     /** Returns the zero-based line number of the character pointed to by
     \a it. */
@@ -477,22 +478,22 @@ public:
     void getSourceOfCharacter(iterator const &it, void **source_cookie, Glib::ustring::iterator *text_iterator = NULL) const;
 
     /** For latin text, the left side of the character, on the baseline */
-    NR::Point characterAnchorPoint(iterator const &it) const;
+    Geom::Point characterAnchorPoint(iterator const &it) const;
 
     /** This is that value to apply to the x,y attributes of tspan role=line
     elements, and hence it takes alignment into account. */
-    NR::Point chunkAnchorPoint(iterator const &it) const;
+    Geom::Point chunkAnchorPoint(iterator const &it) const;
 
     /** Returns the box extents (not ink extents) of the given character.
     The centre of rotation is at the horizontal centre of the box on the
     text baseline. */
-    NR::Rect characterBoundingBox(iterator const &it, double *rotation = NULL) const;
+    Geom::Rect characterBoundingBox(iterator const &it, double *rotation = NULL) const;
 
     /** Basically uses characterBoundingBox() on all the characters from
     \a start to \a end and returns the union of these boxes. The return value
     is a list of zero or more quadrilaterals specified by a group of four
     points for each, thus size() is always a multiple of four. */
-    std::vector<NR::Point> createSelectionShape(iterator const &it_start, iterator const &it_end, NR::Matrix const &transform) const;
+    std::vector<Geom::Point> createSelectionShape(iterator const &it_start, iterator const &it_end, Geom::Matrix const &transform) const;
 
     /** Returns true if \a it points to a character which is a valid cursor
     position, as defined by Pango. */
@@ -507,7 +508,7 @@ public:
       \param rotation  The angle to draw from \a position. Radians, zero up,
                        increasing clockwise.
     */
-    void queryCursorShape(iterator const &it, NR::Point *position, double *height, double *rotation) const;
+    void queryCursorShape(iterator const &it, Geom::Point &position, double &height, double &rotation) const;
 
     /** Returns true if \a it points to a character which is a the start of
     a word, as defined by Pango. */
@@ -652,7 +653,7 @@ private:
     void _calculateCursorShapeForEmpty();
 
     struct CursorShape {
-        NR::Point position;
+        Geom::Point position;
         double height;
         double rotation;
     } _empty_cursor_shape;
@@ -737,7 +738,7 @@ private:
 
     /** gets the overall matrix that transforms the given glyph from local
     space to world space. */
-    void _getGlyphTransformMatrix(int glyph_index, NR::Matrix *matrix) const;
+    void _getGlyphTransformMatrix(int glyph_index, Geom::Matrix *matrix) const;
 
     // loads of functions to drill down the object tree, all of them
     // annoyingly similar and all of them requiring predicate functors.
@@ -954,10 +955,10 @@ inline void Layout::validateIterator(Layout::iterator *it) const
         it->_glyph_index = _characters[it->_char_index].in_glyph;
 }
 
-inline Layout::iterator Layout::getNearestCursorPositionTo(NR::Point &point) const
+inline Layout::iterator Layout::getNearestCursorPositionTo(Geom::Point const &point) const
     {return getNearestCursorPositionTo(point[0], point[1]);}
 
-inline Layout::iterator Layout::getLetterAt(NR::Point &point) const
+inline Layout::iterator Layout::getLetterAt(Geom::Point &point) const
     {return getLetterAt(point[0], point[1]);}
 
 inline unsigned Layout::lineIndex(iterator const &it) const

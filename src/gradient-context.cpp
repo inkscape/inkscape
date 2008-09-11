@@ -225,7 +225,7 @@ sp_gradient_context_select_next (SPEventContext *event_context)
 
     GrDragger *d = drag->select_next();
 
-    event_context->desktop->scroll_to_point(&(d->point), 1.0);
+    event_context->desktop->scroll_to_point(d->point, 1.0);
 }
 
 void
@@ -236,7 +236,7 @@ sp_gradient_context_select_prev (SPEventContext *event_context)
 
     GrDragger *d = drag->select_prev();
 
-    event_context->desktop->scroll_to_point(&(d->point), 1.0);
+    event_context->desktop->scroll_to_point(d->point, 1.0);
 }
 
 static bool

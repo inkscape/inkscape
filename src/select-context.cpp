@@ -530,7 +530,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         }
                         if (!seltrans->isEmpty())
                             seltrans->moveTo(p, event->button.state);
-                        desktop->scroll_to_point(&p);
+                        desktop->scroll_to_point(p);
                         gobble_motion_events(GDK_BUTTON1_MASK);
                         ret = TRUE;
                     } else {

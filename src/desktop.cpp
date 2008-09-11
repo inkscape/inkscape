@@ -1038,7 +1038,7 @@ SPDesktop::scroll_world (double dx, double dy, bool is_scrolling)
 }
 
 bool
-SPDesktop::scroll_to_point (NR::Point const *p, gdouble autoscrollspeed)
+SPDesktop::scroll_to_point (Geom::Point const &p, gdouble autoscrollspeed)
 {
     gdouble autoscrolldistance = (gdouble) prefs_get_int_attribute_limited ("options.autoscrolldistance", "value", 0, -1000, 10000);
 
@@ -1046,26 +1046,26 @@ SPDesktop::scroll_to_point (NR::Point const *p, gdouble autoscrollspeed)
     autoscrolldistance /= expansion(_d2w);
     NR::Rect const dbox = NR::expand(get_display_area(), -autoscrolldistance);
 
-    if (!((*p)[NR::X] > dbox.min()[NR::X] && (*p)[NR::X] < dbox.max()[NR::X]) ||
-        !((*p)[NR::Y] > dbox.min()[NR::Y] && (*p)[NR::Y] < dbox.max()[NR::Y])   ) {
+    if (!(p[NR::X] > dbox.min()[NR::X] && p[NR::X] < dbox.max()[NR::X]) ||
+        !(p[NR::Y] > dbox.min()[NR::Y] && p[NR::Y] < dbox.max()[NR::Y])   ) {
 
-        NR::Point const s_w( (*p) * _d2w );
+        NR::Point const s_w( p * (Geom::Matrix)_d2w );
 
         gdouble x_to;
-        if ((*p)[NR::X] < dbox.min()[NR::X])
+        if (p[NR::X] < dbox.min()[NR::X])
             x_to = dbox.min()[NR::X];
-        else if ((*p)[NR::X] > dbox.max()[NR::X])
+        else if (p[NR::X] > dbox.max()[NR::X])
             x_to = dbox.max()[NR::X];
         else
-            x_to = (*p)[NR::X];
+            x_to = p[NR::X];
 
         gdouble y_to;
-        if ((*p)[NR::Y] < dbox.min()[NR::Y])
+        if (p[NR::Y] < dbox.min()[NR::Y])
             y_to = dbox.min()[NR::Y];
-        else if ((*p)[NR::Y] > dbox.max()[NR::Y])
+        else if (p[NR::Y] > dbox.max()[NR::Y])
             y_to = dbox.max()[NR::Y];
         else
-            y_to = (*p)[NR::Y];
+            y_to = p[NR::Y];
 
         NR::Point const d_dt(x_to, y_to);
         NR::Point const d_w( d_dt * _d2w );

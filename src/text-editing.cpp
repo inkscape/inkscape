@@ -78,34 +78,34 @@ sp_te_input_is_empty (SPObject const *item)
 }
 
 Inkscape::Text::Layout::iterator
-sp_te_get_position_by_coords (SPItem const *item, NR::Point &i_p)
+sp_te_get_position_by_coords (SPItem const *item, Geom::Point const &i_p)
 {
-    NR::Matrix im (sp_item_i2d_affine (item));
+    Geom::Matrix im (sp_item_i2d_affine (item));
     im = im.inverse();
 
-    NR::Point p = i_p * im;
+    Geom::Point p = i_p * im;
     Inkscape::Text::Layout const *layout = te_get_layout(item);
     return layout->getNearestCursorPositionTo(p);
 }
 
-std::vector<NR::Point> sp_te_create_selection_quads(SPItem const *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, NR::Matrix const &transform)
+std::vector<Geom::Point> sp_te_create_selection_quads(SPItem const *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, Geom::Matrix const &transform)
 {
     if (start == end)
-        return std::vector<NR::Point>();
+        return std::vector<Geom::Point>();
     Inkscape::Text::Layout const *layout = te_get_layout(item);
     if (layout == NULL)
-        return std::vector<NR::Point>();
+        return std::vector<Geom::Point>();
 
     return layout->createSelectionShape(start, end, transform);
 }
 
 void
-sp_te_get_cursor_coords (SPItem const *item, Inkscape::Text::Layout::iterator const &position, NR::Point &p0, NR::Point &p1)
+sp_te_get_cursor_coords (SPItem const *item, Inkscape::Text::Layout::iterator const &position, Geom::Point &p0, Geom::Point &p1)
 {
     Inkscape::Text::Layout const *layout = te_get_layout(item);
     double height, rotation;
-    layout->queryCursorShape(position, &p0, &height, &rotation);
-    p1 = NR::Point(p0[NR::X] + height * sin(rotation), p0[NR::Y] - height * cos(rotation));
+    layout->queryCursorShape(position, p0, height, rotation);
+    p1 = Geom::Point(p0[NR::X] + height * sin(rotation), p0[NR::Y] - height * cos(rotation));
 }
 
 SPStyle const * sp_te_style_at_position(SPItem const *text, Inkscape::Text::Layout::iterator const &position)
