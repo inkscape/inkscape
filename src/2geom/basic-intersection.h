@@ -35,14 +35,31 @@ find_self_intersections(std::vector<Point> const & A);
  *                      at which crossing happens
  *
  *  This routine is based on the Bezier Clipping Algorithm,
- *  see: Sederberg - Computer Aided Geometric Design
+ *  see: Sederberg, Nishita, 1990 - Curve intersection using Bezier clipping
  */
 void find_intersections (std::vector< std::pair<double, double> > & xs,
                          std::vector<Point> const& A,
                          std::vector<Point> const& B,
                          double precision = 1e-5);
 
-};
+/*
+ * find_collinear_normal
+ *
+ *  input: A, B       - set of control points of two Bezier curve
+ *  input: precision  - required precision of computation
+ *  output: xs        - set of pairs of parameter values
+ *                      at which there are collinear normals
+ *
+ *  This routine is based on the Bezier Clipping Algorithm,
+ *  see: Sederberg, Nishita, 1990 - Curve intersection using Bezier clipping
+ */
+void find_collinear_normal (std::vector< std::pair<double, double> >& xs,
+                            std::vector<Point> const& A,
+                            std::vector<Point> const& B,
+                            double precision = 1e-5);
+
+
+}
 
 /*
   Local Variables:

@@ -35,9 +35,8 @@
  *   MenTaLguY <mental@rydia.net>
  */
 
-#ifdef _2GEOM_D2  /*This is intentional: we don't actually want anyone to
-                    include this, other than D2.h.  If somone else tries, D2
-                    won't be defined.  If it is, this will already be included. */
+#include <2geom/d2.h>
+
 #ifndef _2GEOM_RECT
 #define _2GEOM_RECT
 
@@ -188,7 +187,7 @@ double distance( Point const& p, Rect const& rect )
 } // end namespace Geom
 
 #endif //_2GEOM_RECT
-#endif //_2GEOM_D2
+
 /*
   Local Variables:
   mode:c++

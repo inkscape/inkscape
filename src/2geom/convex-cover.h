@@ -61,11 +61,12 @@ public: // XXX: should be private :)
 public:
     std::vector<Point> boundary;
     //Point centroid;
-    
+
     void merge(Point p);
     bool contains_point(Point p);
-    
+
     inline Point operator[](int i) const {
+
         int l = boundary.size();
         if(l == 0) return Point();
         return boundary[i >= 0 ? i % l : (i % l) + l];
@@ -86,7 +87,11 @@ public:
 
     template <typename T>
     ConvexHull(T b, T e) :boundary(b,e) {}
-    
+
+    ~ConvexHull()
+    {
+    }
+
 public:
     /** Is the convex hull clockwise?  We use the definition of clockwise from point.h
     **/
@@ -94,30 +99,31 @@ public:
     bool no_colinear_points() const;
     bool top_point_first() const;
     bool meets_invariants() const;
-    
+
     // contains no points
     bool empty() const { return boundary.empty();}
-    
+
     // contains exactly one point
     bool singular() const { return boundary.size() == 1;}
 
     //  all points are on a line
     bool linear() const { return boundary.size() == 2;}
     bool is_degenerate() const;
-    
+
     // area of the convex hull
     double centroid_and_area(Geom::Point& centroid) const;
     double area() const {
         Point tmp;
         return centroid_and_area(tmp);
     }
-    
-    // furthest point in a direction (lg time) 
+
+    // furthest point in a direction (lg time)
     Point const * furthest(Point direction) const;
 
     bool is_left(Point p, int n);
     int find_left(Point p);
     double narrowest_diameter(Point &a, Point &b, Point &c);
+
 };
 
 // do two convex hulls intersect?
@@ -143,9 +149,9 @@ unsigned find_bottom_right(ConvexHull const &a);
  */
 template <class T> ConvexHull operator*(ConvexHull const &p, T const &m) {
     ConvexHull pr;
-    
+
     pr.boundary.reserve(p.boundary.size());
-    
+
     for(unsigned i = 0; i < p.boundary.size(); i++) {
         pr.boundary.push_back(p.boundary[i]*m);
     }
@@ -159,7 +165,7 @@ ConvexHull clip(ConvexHull const & ch, Point n, double d);
 public:
     Path const* path;
     std::vector<ConvexHull> cc;
-    
+
     ConvexCover(Path const &sp);
 };*/
 
