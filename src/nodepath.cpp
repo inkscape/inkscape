@@ -564,7 +564,8 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
             /* Remember that last closing segment is always a lineto, but its length can be zero if the path is visually closed already
              * If the length is zero, don't add it to the nodepath. */
             Geom::Curve const &closing_seg = pit->back_closed();
-            if ( ! closing_seg.isDegenerate() ) {
+//            if ( ! closing_seg.isDegenerate() ) {
+            if ( ! are_near(closing_seg.initialPoint(), closing_seg.finalPoint()) ) {
                 NR::Point pos = closing_seg.finalPoint() * (Geom::Matrix)np->i2d;
                 sp_nodepath_node_new(sp, NULL, t[i++], NR_LINETO, &pos, &pos, &pos);
             }
