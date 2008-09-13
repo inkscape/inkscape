@@ -122,6 +122,8 @@ private :
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
         if (!selection) return;
 
+        bool sel_as_group = (prefs_get_int_attribute("dialogs.align", "sel-as-groups", 0) != 0);
+
         using Inkscape::Util::GSListConstIterator;
         std::list<SPItem *> selected;
         selected.insert<GSListConstIterator<SPItem *> >(selected.end(), selection->itemList(), NULL);
@@ -151,7 +153,9 @@ private :
                 );
             //remove the master from the selection
             SPItem * thing = *master;
-            selected.erase(master);
+            if (!sel_as_group) {
+                selected.erase(master);
+            }
             //Compute the anchor point
             boost::optional<NR::Rect> b = sp_item_bbox_desktop (thing);
             if (b) {
@@ -208,16 +212,21 @@ private :
         prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
         bool changed = false;
-        //Move each item in the selected list
+        boost::optional<NR::Rect> b;
+        if (sel_as_group)
+            b = selection->bounds();
+
+        //Move each item in the selected list separately
         for (std::list<SPItem *>::iterator it(selected.begin());
              it != selected.end();
              it++)
         {
             sp_document_ensure_up_to_date(sp_desktop_document (desktop));
-            boost::optional<NR::Rect> b = sp_item_bbox_desktop (*it);
+            if (!sel_as_group)
+                b = sp_item_bbox_desktop (*it);
             if (b) {
                 Geom::Point const sp(a.sx0 * b->min()[Geom::X] + a.sx1 * b->max()[Geom::X],
-                                   a.sy0 * b->min()[Geom::Y] + a.sy1 * b->max()[Geom::Y]);
+                                     a.sy0 * b->min()[Geom::Y] + a.sy1 * b->max()[Geom::Y]);
                 Geom::Point const mp_rel( mp - sp );
                 if (LInfty(mp_rel) > 1e-9) {
                     sp_item_move_rel(*it, NR::translate(mp_rel));
@@ -783,7 +792,8 @@ AlignAndDistribute::AlignAndDistribute()
       _removeOverlapTable(1, 5, false),
       _graphLayoutTable(1, 5, false),
       _nodesTable(1, 4, true),
-      _anchorLabel(_("Relative to: "))
+      _anchorLabel(_("Relative to: ")),
+      _selgrpLabel(_("Treat selection as group: "))
 {
 
     //Instanciate the align buttons
@@ -910,7 +920,13 @@ AlignAndDistribute::AlignAndDistribute()
     _anchorBox.pack_start(_anchorLabel);
     _anchorBox.pack_start(_combo);
 
+    _selgrpBox.pack_start(_selgrpLabel);
+    _selgrpBox.pack_start(_selgrp);
+    _selgrp.set_active(prefs_get_int_attribute("dialogs.align", "sel-as-groups", 0));
+    _selgrp.signal_toggled().connect(sigc::mem_fun(*this, &AlignAndDistribute::on_selgrp_toggled));
+
     _alignBox.pack_start(_anchorBox);
+    _alignBox.pack_start(_selgrpBox);
     _alignBox.pack_start(_alignTable);
 
     _alignFrame.add(_alignBox);
@@ -955,6 +971,13 @@ AlignAndDistribute::~AlignAndDistribute()
 void AlignAndDistribute::on_ref_change(){
 
     prefs_set_int_attribute("dialogs.align", "align-to", _combo.get_active_row_number());
+
+    //Make blink the master
+}
+
+void AlignAndDistribute::on_selgrp_toggled(){
+
+    prefs_set_int_attribute("dialogs.align", "sel-as-groups", _selgrp.get_active());
 
     //Make blink the master
 }

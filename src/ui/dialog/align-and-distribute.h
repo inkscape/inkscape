@@ -70,6 +70,7 @@ public:
 protected:
 
     void on_ref_change();
+    void on_selgrp_toggled();
     void addDistributeButton(const Glib::ustring &id, const Glib::ustring tiptext, 
                                       guint row, guint col, bool onInterSpace, 
                                       Geom::Dim2 orientation, float kBegin, float kEnd);
@@ -94,8 +95,11 @@ protected:
     Gtk::Frame _alignFrame, _distributeFrame, _removeOverlapFrame, _graphLayoutFrame, _nodesFrame;
     Gtk::Table _alignTable, _distributeTable, _removeOverlapTable, _graphLayoutTable, _nodesTable;
     Gtk::HBox _anchorBox;
+    Gtk::HBox _selgrpBox;
     Gtk::VBox _alignBox;
     Gtk::Label _anchorLabel;
+    Gtk::Label _selgrpLabel;
+    Gtk::CheckButton _selgrp;
     Gtk::ComboBoxText _combo;
     Gtk::Tooltips _tooltips;
 
