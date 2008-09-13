@@ -593,6 +593,8 @@ SPCurve::move_endpoints(Geom::Point const &new_p0, Geom::Point const &new_p1)
 
 /**
  * returns the number of nodes in a path, used for statusbar text when selecting an spcurve.
+ * Sum of nodes in all the paths. When a path is closed, and its closing line segment is of zero-length,
+ * this function will not count the closing knot double (so basically ignores the closing line segment when it has zero length)
  */
 guint
 SPCurve::nodes_in_path() const
@@ -602,6 +604,13 @@ SPCurve::nodes_in_path() const
         nr += (*it).size();
 
         nr++; // count last node (this works also for closed paths because although they don't have a 'last node', they do have an extra segment
+
+        if (it->closed()) {
+            Geom::Curve const &c = it->back_closed();
+            if (are_near(c.initialPoint(), c.finalPoint())) {
+                nr--;   // do not count closing knot double for zero-length closing line segments
+            }
+        }
     }
 
     return nr;
