@@ -509,8 +509,8 @@ main(int argc, char **argv)
 #ifdef ENABLE_NLS
 #ifdef WIN32
     Glib::ustring localePath = homedir;
-	localePath += "\\";
-	localePath += PACKAGE_LOCALE_DIR;
+    localePath += "\\";
+    localePath += PACKAGE_LOCALE_DIR;
     bindtextdomain(GETTEXT_PACKAGE, localePath.c_str());
 #else
 #ifdef ENABLE_BINRELOC
