@@ -18,6 +18,7 @@
 #endif
 
 #include "live_effects/effect.h"
+#include "live_effects/lpe-path_length.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
 
@@ -352,6 +353,19 @@ sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write)
 
     if (!sp_lpe_item_path_effects_enabled(lpeitem))
         return;
+
+    // TODO: hack! this will be removed when path length measuring is reimplemented in a better way
+    PathEffectList lpelist = sp_lpe_item_get_effect_list(lpeitem);
+    std::list<Inkscape::LivePathEffect::LPEObjectReference *>::iterator i;
+    for (i = lpelist.begin(); i != lpelist.end(); ++i) {
+        Inkscape::LivePathEffect::Effect *lpe = (*i)->lpeobject->lpe;
+        if (dynamic_cast<Inkscape::LivePathEffect::LPEPathLength *>(lpe)) {
+            if (!lpe->isVisible()) {
+                // we manually disable text for LPEPathLength
+                dynamic_cast<Inkscape::LivePathEffect::LPEPathLength *>(lpe)->hideCanvasText();
+            }
+        }
+    }
 
     SPLPEItem *top;
 
