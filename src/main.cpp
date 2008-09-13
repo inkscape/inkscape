@@ -498,7 +498,7 @@ main(int argc, char **argv)
     */
     Glib::ustring homedir = _win32_getExePath();
     SetCurrentDirectory(homedir.c_str());
-	_win32_set_inkscape_env(homedir);
+    _win32_set_inkscape_env(homedir);
     RegistryTool rt;
     rt.setPathInfo();
 #endif
@@ -1104,7 +1104,7 @@ sp_do_export_png(SPDocument *doc)
     unsigned long int height = 0;
 
     if (sp_export_width) {
-		errno=0;
+        errno=0;
         width = strtoul(sp_export_width, NULL, 0);
         if ((width < 1) || (width > PNG_UINT_31_MAX) || (errno == ERANGE) ) {
             g_warning("Export width %lu out of range (1 - %lu). Nothing exported.", width, (unsigned long int)PNG_UINT_31_MAX);
@@ -1114,7 +1114,7 @@ sp_do_export_png(SPDocument *doc)
     }
 
     if (sp_export_height) {
-		errno=0;
+        errno=0;
         height = strtoul(sp_export_height, NULL, 0);
         if ((height < 1) || (height > PNG_UINT_31_MAX)) {
             g_warning("Export height %lu out of range (1 - %lu). Nothing exported.", height, (unsigned long int)PNG_UINT_31_MAX);
