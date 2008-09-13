@@ -153,9 +153,12 @@ private :
                 );
             //remove the master from the selection
             SPItem * thing = *master;
-            if (!sel_as_group) {
+            // TODO: either uncomment or remove the following commented lines, depending on which
+            //       behaviour of moving objects makes most sense; also cf. discussion at
+            //       https://bugs.launchpad.net/inkscape/+bug/255933
+            /*if (!sel_as_group) { */
                 selected.erase(master);
-            }
+            /*}*/
             //Compute the anchor point
             boost::optional<NR::Rect> b = sp_item_bbox_desktop (thing);
             if (b) {
