@@ -22,9 +22,11 @@ namespace LivePathEffect {
 
 LPEPathLength::LPEPathLength(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
+    scale(_("Scale"), _("Scaling factor"), "scale", &wr, this, 1.0),
     info_text(this),
     unit(_("Unit"), _("Unit"), "unit", &wr, this)
 {
+    registerParameter(dynamic_cast<Parameter *>(&scale));
     registerParameter(dynamic_cast<Parameter *>(&info_text));
     registerParameter(dynamic_cast<Parameter *>(&unit));
 }
@@ -34,12 +36,10 @@ LPEPathLength::~LPEPathLength()
 
 }
 
-bool
+void
 LPEPathLength::hideCanvasText() {
     // this is only used in sp-lpe-item.cpp to hide the canvas text when the effect is invisible
     info_text.param_setValue("");
-// TODO must return something to avoid nasty bugs
-    g_warning("random value");
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
@@ -48,7 +48,7 @@ LPEPathLength::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
     using namespace Geom;
 
     /* convert the measured length to the correct unit ... */
-    double lengthval = Geom::length(pwd2_in);
+    double lengthval = Geom::length(pwd2_in) * scale;
     gboolean success = sp_convert_distance(&lengthval, &sp_unit_get_by_id(SP_UNIT_PX), unit);
 
     /* ... set it as the canvas text ... */
