@@ -572,7 +572,7 @@ CairoRenderContext::popLayer(void)
                 clip_ctx->setImageTarget(CAIRO_FORMAT_A8);
                 clip_ctx->setClipMode(CLIP_MODE_MASK);
                 if (!clip_ctx->setupSurface(_width, _height)) {
-                    TRACE(("setupSurface failed\n"));
+                    TRACE(("clip: setupSurface failed\n"));
                     _renderer->destroyContext(clip_ctx);
                     return;
                 }
@@ -593,9 +593,9 @@ CairoRenderContext::popLayer(void)
                 // It must be stored in item_transform of current state after pushState.
                 Geom::Matrix item_transform; 
                 if (_state->parent_has_userspace)
-                    item_transform = getParentState()->transform;
+                    item_transform = getParentState()->transform * _state->item_transform;
                 else
-                    item_transform = _state->transform;
+                    item_transform = _state->item_transform;
 
                 // apply the clip path
                 clip_ctx->pushState();
@@ -617,16 +617,30 @@ CairoRenderContext::popLayer(void)
         if (mask) {
             // create rendering context for mask
             CairoRenderContext *mask_ctx = _renderer->createContext();
-            mask_ctx->setupSurface(_width, _height);
+
+            // Fix Me: This is a kludge. PDF and PS output is set to 72 dpi but the
+            // Cairo surface is expecting the mask to be 90 dpi.
+            float surface_width = _width;
+            float surface_height = _height;
+            if( _vector_based_target ) {
+                surface_width *= 1.25;
+                surface_height *= 1.25;
+            }
+            mask_ctx->setupSurface( surface_width, surface_height );
+            TRACE(("mask surface: %f x %f at %i dpi\n", surface_width, surface_height, _dpi ));
 
             // set rendering mode to normal
             setRenderMode(RENDER_MODE_NORMAL);
 
             // copy the correct CTM to mask context
+            /*
             if (_state->parent_has_userspace)
                 mask_ctx->setTransform(&getParentState()->transform);
             else
                 mask_ctx->setTransform(&_state->transform);
+            */
+            // This is probably not correct... but it seems to do the trick.
+            mask_ctx->setTransform(&_state->item_transform);
 
             // render mask contents to mask_ctx
             _renderer->applyMask(mask_ctx, mask);
@@ -646,18 +660,18 @@ CairoRenderContext::popLayer(void)
             unsigned char *pixels = cairo_image_surface_get_data(mask_image);
 
             // premultiply with opacity
-            if (_state->opacity != 1.0) {
-                TRACE(("premul w/ %f\n", opacity));
-                guint8 int_opacity = (guint8)(255 * opacity);
-                for (int row = 0 ; row < height; row++) {
-                    unsigned char *row_data = pixels + (row * stride);
-                    for (int i = 0 ; i < width; i++) {
-                        guint32 *pixel = (guint32 *)row_data + i;
-                        *pixel = ((((*pixel & 0x00ff0000) >> 16) * 13817 +
-                                ((*pixel & 0x0000ff00) >>  8) * 46518 +
-                                ((*pixel & 0x000000ff)      ) * 4688) *
-                                int_opacity);
-                    }
+            // In SVG, the rgb channels as well as the alpha channel is used in masking.
+            // In Cairo, only the alpha channel is used thus requiring this conversion.
+            TRACE(("premul w/ %f\n", opacity));
+            guint8 int_opacity = (guint8)(255 * opacity);
+            for (int row = 0 ; row < height; row++) {
+                unsigned char *row_data = pixels + (row * stride);
+                for (int i = 0 ; i < width; i++) {
+                    guint32 *pixel = (guint32 *)row_data + i;
+                    *pixel = ((((*pixel & 0x00ff0000) >> 16) * 13817 +
+                               ((*pixel & 0x0000ff00) >>  8) * 46518 +
+                               ((*pixel & 0x000000ff)      ) * 4688) *
+                              int_opacity);
                 }
             }
 
@@ -974,7 +988,7 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
     // Multiply by SUBPIX_SCALE to allow for less than a pixel precision
     double surface_width = MAX(ceil(SUBPIX_SCALE * bbox_width_scaler * width - 0.5), 1);
     double surface_height = MAX(ceil(SUBPIX_SCALE * bbox_height_scaler * height - 0.5), 1);
-    TRACE(("surface size: %f x %f\n", surface_width, surface_height));
+    TRACE(("pattern surface size: %f x %f\n", surface_width, surface_height));
     // create new rendering context
     CairoRenderContext *pattern_ctx = cloneMe(surface_width, surface_height);
 
