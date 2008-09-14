@@ -38,6 +38,8 @@ bool
 LPEPathLength::hideCanvasText() {
     // this is only used in sp-lpe-item.cpp to hide the canvas text when the effect is invisible
     info_text.param_setValue("");
+// TODO must return something to avoid nasty bugs
+    g_warning("random value");
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> >
