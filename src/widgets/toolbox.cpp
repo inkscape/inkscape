@@ -3868,7 +3868,7 @@ static void update_presets_list (GObject *tbl)
         bool match = true;
 
         for ( Inkscape::Util::List<Inkscape::XML::AttributeRecord const> iter = preset_repr->attributeList();
-              iter; 
+              iter;
               ++iter ) {
             const gchar *attr_name = g_quark_to_string(iter->key);
             if (!strcmp(attr_name, "id") || !strcmp(attr_name, "name"))
@@ -3891,12 +3891,12 @@ static void update_presets_list (GObject *tbl)
                         match = false;
                         break;
                     }
-                } 
-            } 
+                }
+            }
         }
 
         if (match) {
-            // newly added item is at the same index as the 
+            // newly added item is at the same index as the
             // save command, so we need to change twice for it to take effect
             ege_select_one_action_set_active(sel, 0);
             ege_select_one_action_set_active(sel, i);
@@ -3993,7 +3993,7 @@ static gchar const *const widget_names[] = {
 };
 
 
-static void sp_dcc_build_presets_list(GObject *tbl) 
+static void sp_dcc_build_presets_list(GObject *tbl)
 {
     g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(TRUE));
 
@@ -4036,7 +4036,7 @@ static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
     SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop" );
     if (! desktop) return;
 
-    if (g_object_get_data(tbl, "presets_blocked")) 
+    if (g_object_get_data(tbl, "presets_blocked"))
         return;
 
     Inkscape::UI::Dialogs::CalligraphicProfileDialog::show(desktop);
@@ -4071,7 +4071,7 @@ static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
     }
 
     if (new_index == -1) {
-        // no preset with this name, create 
+        // no preset with this name, create
         new_index = total_prefs + 1;
         gchar *profile_id = g_strdup_printf("dcc%d", new_index);
         pref_path = create_pref("tools.calligraphic.preset", profile_id);
@@ -4120,7 +4120,7 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
         return;
     }
 
-    if (g_object_get_data(tbl, "presets_blocked")) 
+    if (g_object_get_data(tbl, "presets_blocked"))
         return;
 
     gchar *const preset_path = get_pref_nth_child("tools.calligraphic.preset", preset_index);
@@ -4131,7 +4131,7 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
         Inkscape::XML::Node *preset_repr = inkscape_get_repr(INKSCAPE, preset_path);
 
         for ( Inkscape::Util::List<Inkscape::XML::AttributeRecord const> iter = preset_repr->attributeList();
-              iter; 
+              iter;
               ++iter ) {
             const gchar *attr_name = g_quark_to_string(iter->key);
             if (!strcmp(attr_name, "id") || !strcmp(attr_name, "name"))
@@ -4835,8 +4835,7 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
     }
 }
 
-void
-sp_lpetool_toolbox_sel_modified(Inkscape::Selection *selection, guint /*flags*/, GObject *tbl)
+void sp_lpetool_toolbox_sel_modified(Inkscape::Selection *selection, guint /*flags*/, GObject */*tbl*/)
 {
     SPEventContext *ec = selection->desktop()->event_context;
     if (!SP_IS_LPETOOL_CONTEXT(ec))
@@ -4910,8 +4909,7 @@ lpetool_toggle_show_measuring_info (GtkToggleAction *act, GObject *tbl) {
     }
 }
 
-static void
-lpetool_unit_changed(GtkAction* act, GObject* tbl) {
+static void lpetool_unit_changed(GtkAction* /*act*/, GObject* tbl) {
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(tbl, "tracker"));
     SPUnit const *unit = tracker->getActiveUnit();
     prefs_set_int_attribute("tools.lpetool", "unitid", unit->unit_id);
@@ -4951,7 +4949,7 @@ lpetool_toggle_set_bbox (GtkToggleAction *act, gpointer data) {
 }
 
 static void
-sp_line_segment_build_list(GObject *tbl) 
+sp_line_segment_build_list(GObject *tbl)
 {
     g_object_set_data(tbl, "line_segment_list_blocked", GINT_TO_POINTER(TRUE));
 
@@ -5286,7 +5284,7 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
     // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
     if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING) {
         // there are no texts in selection, read from prefs
- 
+
         Inkscape::XML::Node *repr = inkscape_get_repr (INKSCAPE, "tools.text");
         if (repr) {
             sp_style_read_from_repr (query, repr);

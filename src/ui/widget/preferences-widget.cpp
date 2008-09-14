@@ -358,7 +358,7 @@ ZoomCorrRuler::redraw() {
 }
 
 bool
-ZoomCorrRuler::on_expose_event(GdkEventExpose *event) {
+ZoomCorrRuler::on_expose_event(GdkEventExpose */*event*/) {
     this->redraw();
     return true;
 }
