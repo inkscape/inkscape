@@ -151,6 +151,7 @@ enum {
     SP_ARG_QUERY_HEIGHT,
     SP_ARG_QUERY_ALL,
     SP_ARG_QUERY_ID,
+    SP_ARG_SHELL,
     SP_ARG_VERSION,
     SP_ARG_VACUUM_DEFS,
     SP_ARG_VERB_LIST,
@@ -202,11 +203,54 @@ static gboolean sp_query_height = FALSE;
 static gboolean sp_query_all = FALSE;
 static gchar *sp_query_id = NULL;
 static int sp_new_gui = FALSE;
+static gboolean sp_shell = FALSE;
 static gboolean sp_vacuum_defs = FALSE;
 
 static gchar *sp_export_png_utf8 = NULL;
 static gchar *sp_export_svg_utf8 = NULL;
 static gchar *sp_global_printer_utf8 = NULL;
+
+
+/**
+ *  Reset variables to default values.
+ */
+static void resetCommandlineGlobals() {
+        sp_global_printer = NULL;
+        sp_export_png = NULL;
+        sp_export_dpi = NULL;
+        sp_export_area = NULL;
+        sp_export_area_drawing = FALSE;
+        sp_export_area_canvas = FALSE;
+        sp_export_width = NULL;
+        sp_export_height = NULL;
+        sp_export_id = NULL;
+        sp_export_background = NULL;
+        sp_export_background_opacity = NULL;
+        sp_export_area_snap = FALSE;
+        sp_export_use_hints = FALSE;
+        sp_export_id_only = FALSE;
+        sp_export_svg = NULL;
+        sp_export_ps = NULL;
+        sp_export_eps = NULL;
+        sp_export_pdf = NULL;
+        #ifdef WIN32
+        sp_export_emf = NULL;
+        #endif //WIN32
+        sp_export_text_to_path = FALSE;
+        sp_export_font = FALSE;
+        sp_export_bbox_page = FALSE;
+        sp_query_x = FALSE;
+        sp_query_y = FALSE;
+        sp_query_width = FALSE;
+        sp_query_height = FALSE;
+        sp_query_all = FALSE;
+        sp_query_id = NULL;
+        sp_vacuum_defs = FALSE;
+
+        sp_export_png_utf8 = NULL;
+        sp_export_svg_utf8 = NULL;
+        sp_global_printer_utf8 = NULL;
+}
 
 #ifdef WIN32
 static bool replaceArgs( int& argc, char**& argv );
@@ -407,6 +451,11 @@ struct poptOption options[] = {
      N_("Object ID to select when Inkscape opens."),
      N_("OBJECT-ID")},
 
+    {"shell", 0,
+     POPT_ARG_NONE, &sp_shell, SP_ARG_SHELL,
+     N_("Start Inkscape in interative shell mode."),
+     NULL},
+
     POPT_AUTOHELP POPT_TABLEEND
 };
 
@@ -583,6 +632,7 @@ main(int argc, char **argv)
             || !strcmp(argv[i], "-Y")
             || !strncmp(argv[i], "--query-y", 14)
             || !strcmp(argv[i], "--vacuum-defs")
+            || !strncmp(argv[i], "--shell", 7)
            )
         {
             /* main_console handles any exports -- not the gui */
@@ -807,48 +857,26 @@ sp_main_gui(int argc, char const **argv)
     return 0;
 }
 
-int
-sp_main_console(int argc, char const **argv)
+/**
+ * Process file list
+ */
+void sp_process_file_list(GSList *fl)
 {
-    /* We are started in text mode */
-
-    /* Do this g_type_init(), so that we can use Xft/Freetype2 (Pango)
-     * in a non-Gtk environment.  Used in libnrtype's
-     * FontInstance.cpp and FontFactory.cpp.
-     * http://mail.gnome.org/archives/gtk-list/2003-December/msg00063.html
-     */
-    g_type_init();
-    char **argv2 = const_cast<char **>(argv);
-    gtk_init_check( &argc, &argv2 );
-    //setlocale(LC_ALL, "");
-
-    GSList *fl = NULL;
-    int retVal = sp_common_main( argc, argv, &fl );
-    g_return_val_if_fail(retVal == 0, 1);
-
-    if (fl == NULL) {
-        g_print("Nothing to do!\n");
-        exit(0);
-    }
-
-    inkscape_application_init(argv[0], false);
-
     while (fl) {
-        SPDocument *doc;
-
-        doc = Inkscape::Extension::open(NULL, (gchar *)fl->data);
+        const gchar *filename = (gchar *)fl->data;
+        SPDocument *doc = Inkscape::Extension::open(NULL, filename);
         if (doc == NULL) {
-            doc = Inkscape::Extension::open(Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG), (gchar *)fl->data);
+            doc = Inkscape::Extension::open(Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG), filename);
         }
         if (doc == NULL) {
-            g_warning("Specified document %s cannot be opened (is it valid SVG file?)", (gchar *) fl->data);
+            g_warning("Specified document %s cannot be opened (is it valid SVG file?)", filename);
         } else {
             if (sp_vacuum_defs) {
                 vacuum_document(doc);
             }
             if (sp_vacuum_defs && !sp_export_svg) {
                 // save under the name given in the command line
-                sp_repr_save_file(doc->rdoc, (gchar *)fl->data, SP_SVG_NS_URI);
+                sp_repr_save_file(doc->rdoc, filename, SP_SVG_NS_URI);
             }
             if (sp_global_printer) {
                 sp_print_document_to_file(doc, sp_global_printer);
@@ -872,11 +900,11 @@ sp_main_console(int argc, char const **argv)
             }
             if (sp_export_pdf) {
                 do_export_pdf(doc, sp_export_pdf, "application/pdf");
-            }
+                }
 #ifdef WIN32
-            if (sp_export_emf) {
-                do_export_emf(doc, sp_export_emf, "image/x-emf");
-            }
+                if (sp_export_emf) {
+                    do_export_emf(doc, sp_export_emf, "image/x-emf");
+                }
 #endif //WIN32
             if (sp_query_all) {
                 do_query_all (doc);
@@ -886,10 +914,114 @@ sp_main_console(int argc, char const **argv)
                 do_query_dimension (doc, false, sp_query_x? NR::X : NR::Y, sp_query_id);
             }
         }
-
+        delete doc; /// \todo: Check the proper way to delete a SPDocument.
         fl = g_slist_remove(fl, fl->data);
     }
+}
 
+/**
+ * Run the application as an interactive shell, parsing command lines from stdin
+ * Returns -1 on error.
+ */
+int sp_main_shell(char const* command_name)
+{
+    int retval = 0;
+
+    const unsigned int buffer_size = 4096;
+    gchar *command_line = g_strnfill(buffer_size, 0);
+    g_strlcpy(command_line, command_name, buffer_size);
+    gsize offset = g_strlcat(command_line, " ", buffer_size);
+    gsize sizeLeft = buffer_size - offset;
+    gchar *useme = command_line + offset;
+
+    fprintf(stdout, "Inkscape %s interactive shell mode. Type 'quit' to quit.\n", INKSCAPE_VERSION);
+    fflush(stdout);
+    char* linedata = 0;
+    do {
+        fprintf(stdout, ">");
+        fflush(stdout);
+        if ((linedata = fgets(useme, sizeLeft, stdin))) {
+            size_t len = strlen(useme);
+            if ( (len >= sizeLeft - 1) || (useme[len - 1] != '\n') ) {
+                fprintf(stdout, "ERROR: Command line too long\n");
+                // Consume rest of line
+                retval = -1; // If the while loop completes, this remains -1
+                while (fgets(useme, sizeLeft, stdin) && retval) {
+                    len = strlen(command_line);
+                    if ( (len < buffer_size) && (command_line[len-1] == '\n') ) {
+                        retval = 0;
+                    }
+                }
+            } else {
+                useme[--len] = '\0';  // Strip newline
+                if (useme[len - 1] == '\r') {
+                    useme[--len] = '\0';
+                }
+                if ( strcmp(useme, "quit") == 0 ) {
+                    // Time to quit
+                    fprintf(stdout, "done\n");
+                    fflush(stdout);
+                    linedata = 0; // mark for exit
+                } else if ( len < 1 ) {
+                    // blank string. Do nothing.
+                } else {
+                    GError* parseError = 0;
+                    gchar** argv = 0;
+                    gint argc = 0;
+                    if ( g_shell_parse_argv(useme, &argc, &argv, &parseError) ) {
+                        poptContext ctx = poptGetContext(NULL, argc, const_cast<const gchar**>(argv), options, 0);
+                        poptSetOtherOptionHelp(ctx, _("[OPTIONS...] [FILE...]\n\nAvailable options:"));
+                        if ( ctx ) {
+                            GSList *fl = sp_process_args(ctx);
+                            sp_process_file_list(fl);
+                            poptFreeContext(ctx);
+                        } else {
+                            retval = 1; // not sure why. But this was the previous return value
+                        }
+                        resetCommandlineGlobals();
+                        g_strfreev(argv);
+                    } else {
+                        g_warning("problem parsing command-line");
+                    }
+                }
+            }
+        } // if (linedata...
+    } while (linedata && (retval == 0));
+
+    g_free(command_line);
+    return retval;
+}
+
+int sp_main_console(int argc, char const **argv)
+{
+    /* We are started in text mode */
+
+    /* Do this g_type_init(), so that we can use Xft/Freetype2 (Pango)
+     * in a non-Gtk environment.  Used in libnrtype's
+     * FontInstance.cpp and FontFactory.cpp.
+     * http://mail.gnome.org/archives/gtk-list/2003-December/msg00063.html
+     */
+    g_type_init();
+    char **argv2 = const_cast<char **>(argv);
+    gtk_init_check( &argc, &argv2 );
+    //setlocale(LC_ALL, "");
+
+    GSList *fl = NULL;
+    int retVal = sp_common_main( argc, argv, &fl );
+    g_return_val_if_fail(retVal == 0, 1);
+
+    if (fl == NULL && !sp_shell) {
+        g_print("Nothing to do!\n");
+        exit(0);
+    }
+
+    inkscape_application_init(argv[0], false);
+
+    if (sp_shell) {
+        sp_main_shell(argv[0]); // Run as interactive shell
+    } else {
+        sp_process_file_list(fl); // Normal command line invokation
+    }
     inkscape_unref();
 
     return 0;
