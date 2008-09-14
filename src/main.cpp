@@ -1177,7 +1177,14 @@ sp_do_export_png(SPDocument *doc)
 
             // write object bbox to area
             sp_document_ensure_up_to_date (doc);
-            sp_item_invoke_bbox((SPItem *) o_area, &area, sp_item_i2r_affine((SPItem *) o_area), TRUE);
+            boost::optional<NR::Rect> areaMaybe;
+            sp_item_invoke_bbox((SPItem *) o_area, areaMaybe, sp_item_i2r_affine((SPItem *) o_area), TRUE);
+            if (areaMaybe) {
+                area = NRRect(areaMaybe);
+            } else {
+                g_warning("Unable to determine a valid bounding box. Nothing exported.");
+                return;
+            }
         } else {
             g_warning("Object with id=\"%s\" was not found in the document. Nothing exported.", sp_export_id);
             return;
@@ -1229,8 +1236,9 @@ sp_do_export_png(SPDocument *doc)
     }
 
     // default dpi
-    if (dpi == 0.0)
+    if (dpi == 0.0) {
         dpi = PX_PER_IN;
+    }
 
     unsigned long int width = 0;
     unsigned long int height = 0;
