@@ -24,11 +24,13 @@ LPEPathLength::LPEPathLength(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     scale(_("Scale"), _("Scaling factor"), "scale", &wr, this, 1.0),
     info_text(this),
-    unit(_("Unit"), _("Unit"), "unit", &wr, this)
+    unit(_("Unit"), _("Unit"), "unit", &wr, this),
+    display_unit(_("Display unit"), _("Print unit after path length"), "display_unit", &wr, this, true)
 {
     registerParameter(dynamic_cast<Parameter *>(&scale));
     registerParameter(dynamic_cast<Parameter *>(&info_text));
     registerParameter(dynamic_cast<Parameter *>(&unit));
+    registerParameter(dynamic_cast<Parameter *>(&display_unit));
 }
 
 LPEPathLength::~LPEPathLength()
@@ -52,7 +54,8 @@ LPEPathLength::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
     gboolean success = sp_convert_distance(&lengthval, &sp_unit_get_by_id(SP_UNIT_PX), unit);
 
     /* ... set it as the canvas text ... */
-    gchar *arc_length = g_strdup_printf("%.2f %s", lengthval, success ? unit.get_abbreviation() : "px");
+    gchar *arc_length = g_strdup_printf("%.2f %s", lengthval,
+                                        display_unit ? (success ? unit.get_abbreviation() : "px") : "");
     info_text.param_setValue(arc_length);
     g_free(arc_length);
 

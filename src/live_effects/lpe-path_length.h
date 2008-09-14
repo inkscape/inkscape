@@ -17,6 +17,7 @@
 #include "live_effects/effect.h"
 #include "live_effects/parameter/text.h"
 #include "live_effects/parameter/unit.h"
+#include "live_effects/parameter/bool.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -36,6 +37,7 @@ private:
     ScalarParam scale;
     TextParamInternal info_text;
     UnitParam unit;
+    BoolParam display_unit;
 };
 
 } //namespace LivePathEffect
