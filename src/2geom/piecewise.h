@@ -372,13 +372,14 @@ Piecewise<T> portion(const Piecewise<T> &pw, double from, double to) {
 
     unsigned i = pw.segN(from);
     ret.push_cut(from);
-    if(i == pw.size() - 1 || to < pw.cuts[i + 1]) {    //to/from inhabit the same segment
+    if(i == pw.size() - 1 || to <= pw.cuts[i + 1]) {    //to/from inhabit the same segment
         ret.push(elem_portion(pw, i, from, to), to);
         return ret;
     }
     ret.push_seg(portion( pw[i], pw.segT(from, i), 1.0 ));
     i++;
     unsigned fi = pw.segN(to, i);
+    if (to == pw.cuts[fi]) fi-=1;
 
     ret.segs.insert(ret.segs.end(), pw.segs.begin() + i, pw.segs.begin() + fi);  //copy segs
     ret.cuts.insert(ret.cuts.end(), pw.cuts.begin() + i, pw.cuts.begin() + fi + 1);  //and their cuts
