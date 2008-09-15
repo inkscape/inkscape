@@ -233,9 +233,9 @@ static void resetCommandlineGlobals() {
         sp_export_ps = NULL;
         sp_export_eps = NULL;
         sp_export_pdf = NULL;
-        #ifdef WIN32
+#ifdef WIN32
         sp_export_emf = NULL;
-        #endif //WIN32
+#endif //WIN32
         sp_export_text_to_path = FALSE;
         sp_export_font = FALSE;
         sp_export_bbox_page = FALSE;
@@ -869,7 +869,7 @@ void sp_process_file_list(GSList *fl)
             doc = Inkscape::Extension::open(Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG), filename);
         }
         if (doc == NULL) {
-            g_warning("Specified document %s cannot be opened (is it valid SVG file?)", filename);
+            g_warning("Specified document %s cannot be opened (is it a valid SVG file?)", filename);
         } else {
             if (sp_vacuum_defs) {
                 vacuum_document(doc);
@@ -959,16 +959,17 @@ int sp_main_shell(char const* command_name)
                 }
                 if ( strcmp(useme, "quit") == 0 ) {
                     // Time to quit
-                    fprintf(stdout, "done\n");
                     fflush(stdout);
-                    linedata = 0; // mark for exit
+                    exit(0);
                 } else if ( len < 1 ) {
                     // blank string. Do nothing.
                 } else {
                     GError* parseError = 0;
                     gchar** argv = 0;
                     gint argc = 0;
-                    if ( g_shell_parse_argv(useme, &argc, &argv, &parseError) ) {
+                    // add a dummy "inkscape" in front, as popt expects the program name there:
+                    gchar *cl = g_strdup_printf ("inkscape %s", useme);
+                    if ( g_shell_parse_argv(cl, &argc, &argv, &parseError) ) {
                         poptContext ctx = poptGetContext(NULL, argc, const_cast<const gchar**>(argv), options, 0);
                         poptSetOtherOptionHelp(ctx, _("[OPTIONS...] [FILE...]\n\nAvailable options:"));
                         if ( ctx ) {
@@ -981,8 +982,9 @@ int sp_main_shell(char const* command_name)
                         resetCommandlineGlobals();
                         g_strfreev(argv);
                     } else {
-                        g_warning("problem parsing command-line");
+                        g_warning("problem parsing commandline: %s", useme);
                     }
+                    g_free(cl);
                 }
             }
         } // if (linedata...
