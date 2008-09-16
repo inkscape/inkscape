@@ -1663,7 +1663,7 @@ sp_item_view_new_prepend(SPItemView *list, SPItem *item, unsigned flags, unsigne
     new_view->next = list;
     new_view->flags = flags;
     new_view->key = key;
-    new_view->arenaitem = nr_arena_item_ref(arenaitem);
+    new_view->arenaitem = arenaitem;
 
     return new_view;
 }
