@@ -59,7 +59,7 @@
 #ifdef WITH_LIBWPG
 #include "internal/wpg-input.h"
 #endif
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "io/sys.h"
 
 #ifdef WITH_IMAGE_MAGICK
@@ -127,7 +127,8 @@ static void
 update_pref(gchar const *pref_path, gchar const *pref_attr,
             gchar const *pref_default) // , GSList *extension_family)
 {
-    gchar const *pref = prefs_get_string_attribute(pref_path,pref_attr);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring pref = prefs->getString(pref_path, pref_attr);
     /*
     gboolean missing=TRUE;
     for (GSList *list = extension_family; list; list = g_slist_next(list)) {
@@ -139,8 +140,8 @@ update_pref(gchar const *pref_path, gchar const *pref_attr,
         if (!strcmp(extension->get_id(),pref)) missing=FALSE;
     }
     */
-    if (!Inkscape::Extension::db.get( pref ) /*missing*/) {
-        prefs_set_string_attribute(pref_path, pref_attr, pref_default);
+    if (!Inkscape::Extension::db.get( pref.data() ) /*missing*/) {
+        prefs->setString(pref_path, pref_attr, pref_default);
     }
 }
 
@@ -154,6 +155,8 @@ update_pref(gchar const *pref_path, gchar const *pref_attr,
 void
 init()
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    
     /* TODO: Change to Internal */
     Internal::Svg::init();
     Internal::Svgz::init();
@@ -161,7 +164,7 @@ init()
     //Internal::EpsOutput::init(); // disabled, to be deleted, replaced by CairoEpsOutput
     Internal::PrintPS::init();
 #ifdef HAVE_CAIRO_PDF
-    if (prefs_get_int_attribute("options.useoldpdfexporter", "value", 1) == 1) {
+    if (prefs->getInt("options.useoldpdfexporter", "value", 1) == 1) {
     //g_print ("Using CairoPdfOutput: old pdf exporter\n");
     Internal::CairoPdfOutput::init();
     Internal::PrintCairoPDF::init();

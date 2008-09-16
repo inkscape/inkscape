@@ -18,7 +18,7 @@
 #include "attributes.h"
 #include "inkscape.h"
 #include "document.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #include "dom/uri.h"
 #include "dom/util/digest.h"
@@ -38,9 +38,10 @@ static cmsHPROFILE colorprofile_get_proof_profile_handle();
 extern guint update_in_progress;
 #define DEBUG_MESSAGE(key, ...) \
 {\
-    gint dump = prefs_get_int_attribute_limited("options.scislac", #key, 0, 0, 1);\
-    gint dumpD = prefs_get_int_attribute_limited("options.scislac", #key"D", 0, 0, 1);\
-    gint dumpD2 = prefs_get_int_attribute_limited("options.scislac", #key"D2", 0, 0, 1);\
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();\
+    bool dump = prefs->getBool("options.scislac", #key);\
+    bool dumpD = prefs->getBool("options.scislac", #key"D");\
+    bool dumpD2 = prefs->getBool("options.scislac", #key"D2");\
     dumpD &= ( (update_in_progress == 0) || dumpD2 );\
     if ( dump )\
     {\
@@ -672,7 +673,7 @@ static cmsHTRANSFORM transf = 0;
 cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
 {
     static cmsHPROFILE theOne = 0;
-    static std::string lastURI;
+    static Glib::ustring lastURI;
 
     static bool init = false;
     if ( !init ) {
@@ -682,10 +683,11 @@ cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
         init = true;
     }
 
-    gchar const * uri = prefs_get_string_attribute("options.displayprofile", "uri");
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring uri = prefs->getString("options.displayprofile", "uri");
 
-    if ( uri && *uri ) {
-        if ( lastURI != std::string(uri) ) {
+    if ( !uri.empty() ) {
+        if ( uri != lastURI ) {
             lastURI.clear();
             if ( theOne ) {
                 cmsCloseProfile( theOne );
@@ -694,7 +696,7 @@ cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
                 cmsDeleteTransform( transf );
                 transf = 0;
             }
-            theOne = cmsOpenProfileFromFile( uri, "r" );
+            theOne = cmsOpenProfileFromFile( uri.data(), "r" );
             if ( theOne ) {
                 // a display profile must have the proper stuff
                 icColorSpaceSignature space = cmsGetColorSpace(theOne);
@@ -730,7 +732,7 @@ cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
 cmsHPROFILE Inkscape::colorprofile_get_proof_profile_handle()
 {
     static cmsHPROFILE theOne = 0;
-    static std::string lastURI;
+    static Glib::ustring lastURI;
 
     static bool init = false;
     if ( !init ) {
@@ -740,11 +742,12 @@ cmsHPROFILE Inkscape::colorprofile_get_proof_profile_handle()
         init = true;
     }
 
-    long long int which = prefs_get_int_attribute_limited( "options.softproof", "enable", 0, 0, 1 );
-    gchar const * uri = prefs_get_string_attribute("options.softproof", "uri");
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool which = prefs->getBool( "options.softproof", "enable");
+    Glib::ustring uri = prefs->getString("options.softproof", "uri");
 
-    if ( which && uri && *uri ) {
-        if ( lastURI != std::string(uri) ) {
+    if ( which && !uri.empty() ) {
+        if ( lastURI != uri ) {
             lastURI.clear();
             if ( theOne ) {
                 cmsCloseProfile( theOne );
@@ -753,7 +756,7 @@ cmsHPROFILE Inkscape::colorprofile_get_proof_profile_handle()
                 cmsDeleteTransform( transf );
                 transf = 0;
             }
-            theOne = cmsOpenProfileFromFile( uri, "r" );
+            theOne = cmsOpenProfileFromFile( uri.data(), "r" );
             if ( theOne ) {
                 // a display profile must have the proper stuff
                 icColorSpaceSignature space = cmsGetColorSpace(theOne);
@@ -795,7 +798,8 @@ static void free_transforms();
 
 cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
 {
-    long long int fromDisplay = prefs_get_int_attribute_limited( "options.displayprofile", "from_display", 0, 0, 1 );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool fromDisplay = prefs->getBool( "options.displayprofile", "from_display");
     if ( fromDisplay ) {
         if ( transf ) {
             cmsDeleteTransform(transf);
@@ -804,15 +808,15 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
         return 0;
     }
 
-    bool warn = prefs_get_int_attribute_limited( "options.softproof", "gamutwarn", 0, 0, 1 );
-    int intent = prefs_get_int_attribute_limited( "options.displayprofile", "intent", 0, 0, 3 );
-    int proofIntent = prefs_get_int_attribute_limited( "options.softproof", "intent", 0, 0, 3 );
-    bool bpc = prefs_get_int_attribute_limited( "options.softproof", "bpc", 0, 0, 1 );
+    bool warn = prefs->getBool( "options.softproof", "gamutwarn");
+    int intent = prefs->getIntLimited( "options.displayprofile", "intent", 0, 0, 3 );
+    int proofIntent = prefs->getIntLimited( "options.softproof", "intent", 0, 0, 3 );
+    bool bpc = prefs->getBool( "options.softproof", "bpc");
 #if defined(cmsFLAGS_PRESERVEBLACK)
-    bool preserveBlack = prefs_get_int_attribute_limited( "options.softproof", "preserveblack", 0, 0, 1 );
+    bool preserveBlack = prefs->getBool( "options.softproof", "preserveblack");
 #endif //defined(cmsFLAGS_PRESERVEBLACK)
-    gchar const* colorStr = prefs_get_string_attribute("options.softproof", "gamutcolor");
-    Gdk::Color gamutColor( (colorStr && colorStr[0]) ? colorStr : "#808080");
+    Glib::ustring colorStr = prefs->getString("options.softproof", "gamutcolor");
+    Gdk::Color gamutColor( colorStr.empty() ? "#808080" : colorStr );
 
     if ( (warn != gamutWarn)
          || (lastIntent != intent)
@@ -958,21 +962,22 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_per( Glib::ustring const& id )
         return 0;
     }
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool found = false;
     for ( std::vector< std::vector<MemProfile> >::iterator it = perMonitorProfiles.begin(); it != perMonitorProfiles.end() && !found; ++it ) {
         for ( std::vector<MemProfile>::iterator it2 = it->begin(); it2 != it->end() && !found; ++it2 ) {
             if ( id == it2->id ) {
                 MemProfile& item = *it2;
 
-                bool warn = prefs_get_int_attribute_limited( "options.softproof", "gamutwarn", 0, 0, 1 );
-                int intent = prefs_get_int_attribute_limited( "options.displayprofile", "intent", 0, 0, 3 );
-                int proofIntent = prefs_get_int_attribute_limited( "options.softproof", "intent", 0, 0, 3 );
-                bool bpc = prefs_get_int_attribute_limited( "options.softproof", "bpc", 0, 0, 1 );
+                bool warn = prefs->getBool( "options.softproof", "gamutwarn");
+                int intent = prefs->getIntLimited( "options.displayprofile", "intent", 0, 0, 3 );
+                int proofIntent = prefs->getIntLimited( "options.softproof", "intent", 0, 0, 3 );
+                bool bpc = prefs->getBool( "options.softproof", "bpc");
 #if defined(cmsFLAGS_PRESERVEBLACK)
-                bool preserveBlack = prefs_get_int_attribute_limited( "options.softproof", "preserveblack", 0, 0, 1 );
+                bool preserveBlack = prefs->getBool( "options.softproof", "preserveblack");
 #endif //defined(cmsFLAGS_PRESERVEBLACK)
-                gchar const* colorStr = prefs_get_string_attribute("options.softproof", "gamutcolor");
-                Gdk::Color gamutColor( (colorStr && colorStr[0]) ? colorStr : "#808080");
+                Glib::ustring colorStr = prefs->getString("options.softproof", "gamutcolor");
+                Gdk::Color gamutColor( colorStr.empty() ? "#808080" : colorStr );
 
                 if ( (warn != gamutWarn)
                      || (lastIntent != intent)

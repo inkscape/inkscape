@@ -41,8 +41,7 @@ Application::Application(int argc, char **argv, bool use_gui, bool new_gui)
     if (argv != NULL) {
         _argv = argv;   // TODO:  Is this correct?
     }
-
-    Inkscape::Preferences::loadSkeleton();
+    
     if (new_gui) {
         _gtk_main = new Gtk::Main(argc, argv, true);
 
@@ -105,8 +104,6 @@ Application::run()
      */
     if (_gtk_main != NULL) {
         g_assert(_app_impl != NULL);
-
-        Inkscape::Preferences::load();
         g_warning("Running main window");
         Gtk::Window *win = static_cast<Gtk::Window*>(_app_impl->getWindow());
         g_assert(win != NULL);
@@ -126,7 +123,7 @@ Application::run()
 void
 Application::exit()
 {
-    Inkscape::Preferences::save();
+    Inkscape::Preferences::unload();
 
     if (_gtk_main != NULL) {
         _gtk_main->quit();

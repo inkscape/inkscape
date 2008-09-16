@@ -17,6 +17,7 @@
 
 #include <extension/extension.h>
 #include "string.h"
+#include "preferences.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -51,7 +52,8 @@ ParamString::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * 
     _value = g_strdup(in);
 
     gchar * prefname = this->pref_name();
-    prefs_set_string_attribute(PREF_DIR, prefname, _value);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setString(PREF_DIR, prefname, _value);
     g_free(prefname);
 
     return _value;
@@ -77,11 +79,12 @@ ParamString::ParamString (const gchar * name, const gchar * guitext, const gchar
         defaultval = sp_repr_children(xml)->content();
 
     gchar * pref_name = this->pref_name();
-    const gchar * paramval = prefs_get_string_attribute(PREF_DIR, pref_name);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring paramval = prefs->getString(PREF_DIR, pref_name);
     g_free(pref_name);
 
-    if (paramval != NULL)
-        defaultval = paramval;
+    if (!paramval.empty())
+        defaultval = paramval.data();
     if (defaultval != NULL)
         _value = g_strdup(defaultval);
     

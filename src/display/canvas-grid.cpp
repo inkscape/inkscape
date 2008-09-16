@@ -29,7 +29,7 @@
 #include "desktop.h"
 
 #include "../document.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #include "canvas-grid.h"
 #include "canvas-axonomgrid.h"
@@ -415,17 +415,18 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
 CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
     : CanvasGrid(nv, in_repr, in_doc, GRID_RECTANGULAR)
 {
-    gridunit = sp_unit_get_by_abbreviation( prefs_get_string_attribute("options.grids.xy", "units") );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gridunit = sp_unit_get_by_abbreviation( prefs->getString("options.grids.xy", "units").data() );
     if (!gridunit)
         gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
-    origin[NR::X] = sp_units_get_pixels( prefs_get_double_attribute ("options.grids.xy", "origin_x", 0.0), *(gridunit) );
-    origin[NR::Y] = sp_units_get_pixels( prefs_get_double_attribute ("options.grids.xy", "origin_y", 0.0), *(gridunit) );
-    color = prefs_get_int_attribute("options.grids.xy", "color", 0x0000ff20);
-    empcolor = prefs_get_int_attribute("options.grids.xy", "empcolor", 0x0000ff40);
-    empspacing = prefs_get_int_attribute("options.grids.xy", "empspacing", 5);
-    spacing[NR::X] = sp_units_get_pixels( prefs_get_double_attribute ("options.grids.xy", "spacing_x", 0.0), *(gridunit) );
-    spacing[NR::Y] = sp_units_get_pixels( prefs_get_double_attribute ("options.grids.xy", "spacing_y", 0.0), *(gridunit) );
-    render_dotted = prefs_get_int_attribute ("options.grids.xy", "dotted", 0) == 1;
+    origin[NR::X] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "origin_x", 0.0), *gridunit);
+    origin[NR::Y] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "origin_y", 0.0), *gridunit);
+    color = prefs->getInt("options.grids.xy", "color", 0x0000ff20);
+    empcolor = prefs->getInt("options.grids.xy", "empcolor", 0x0000ff40);
+    empspacing = prefs->getInt("options.grids.xy", "empspacing", 5);
+    spacing[NR::X] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "spacing_x", 0.0), *gridunit);
+    spacing[NR::Y] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "spacing_y", 0.0), *gridunit);
+    render_dotted = prefs->getBool("options.grids.xy", "dotted", false);
 
     snapper = new CanvasXYGridSnapper(this, &namedview->snap_manager, 0);
 
@@ -886,8 +887,9 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     gint const  ylinestart = (gint) Inkscape::round((syg - ow[NR::Y]) / sw[NR::Y]);
 
     //set correct coloring, depending preference (when zoomed out, always major coloring or minor coloring)
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint32 _empcolor;
-    bool no_emp_when_zoomed_out = prefs_get_int_attribute ("options.grids", "no_emphasize_when_zoomedout", 0) == 1;
+    bool no_emp_when_zoomed_out = prefs->getBool("options.grids", "no_emphasize_when_zoomedout", false);
     if( (scaled[NR::X] || scaled[NR::Y]) && no_emp_when_zoomed_out ) {
         _empcolor = color;
     } else {

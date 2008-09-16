@@ -69,7 +69,7 @@
 #include "svg/svg.h" // for sp_svg_transform_write, used in _copySelection
 #include "svg/css-ostringstream.h" // used in _parseColor
 #include "file.h" // for file_import, used in _pasteImage
-#include "prefs-utils.h" // for prefs_get_string_attribute, used in _pasteImage
+#include "preferences.h" // for used in _pasteImage
 #include "text-context.h"
 #include "text-editing.h"
 #include "tools-switch.h"
@@ -270,7 +270,7 @@ bool ClipboardManagerImpl::paste(bool in_place)
 
     Glib::ustring target = _getBestTarget();
 
-    // Special cases of clipboard content handling go here 00ff00
+    // Special cases of clipboard content handling go here
     // Note that target priority is determined in _getBestTarget.
     // TODO: Handle x-special/gnome-copied-files and text/uri-list to support pasting files
 
@@ -858,13 +858,14 @@ bool ClipboardManagerImpl::_pasteImage()
     // in 1 second.
     time_t rawtime;
     char image_filename[128];
-    gchar const *save_folder;
 
     time(&rawtime);
     strftime(image_filename, 128, "inkscape_pasted_image_%Y%m%d_%H%M%S.png", localtime( &rawtime ));
-    save_folder = (gchar const *) prefs_get_string_attribute("dialogs.save_as", "path");
+    /// @todo Check whether the encoding is correct here
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    std::string save_folder = Glib::filename_from_utf8(prefs->getString("dialogs.save_as", "path"));
 
-    gchar *image_path = g_build_filename(save_folder, image_filename, NULL);
+    gchar *image_path = g_build_filename(save_folder.data(), image_filename, NULL);
     img->save(image_path, "png");
     file_import(doc, image_path, NULL);
     g_free(image_path);

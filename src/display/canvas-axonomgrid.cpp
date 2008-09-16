@@ -36,7 +36,7 @@
 #include "desktop.h"
 
 #include "document.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #define SAFE_SETPIXEL   //undefine this when it is certain that setpixel is never called with invalid params
 
@@ -193,17 +193,18 @@ attach_all(Gtk::Table &table, Gtk::Widget const *const arr[], unsigned size, int
 CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc)
     : CanvasGrid(nv, in_repr, in_doc, GRID_AXONOMETRIC)
 {
-    gridunit = sp_unit_get_by_abbreviation( prefs_get_string_attribute("options.grids.axonom", "units") );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gridunit = sp_unit_get_by_abbreviation( prefs->getString("options.grids.axonom", "units").data() );
     if (!gridunit)
         gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
-    origin[NR::X] = sp_units_get_pixels( prefs_get_double_attribute ("options.grids.axonom", "origin_x", 0.0), *(gridunit) );
-    origin[NR::Y] = sp_units_get_pixels( prefs_get_double_attribute ("options.grids.axonom", "origin_y", 0.0), *(gridunit) );
-    color = prefs_get_int_attribute("options.grids.axonom", "color", 0x0000ff20);
-    empcolor = prefs_get_int_attribute("options.grids.axonom", "empcolor", 0x0000ff40);
-    empspacing = prefs_get_int_attribute("options.grids.axonom", "empspacing", 5);
-    lengthy = sp_units_get_pixels( prefs_get_double_attribute ("options.grids.axonom", "spacing_y", 1.0), *(gridunit) );
-    angle_deg[X] = prefs_get_double_attribute ("options.grids.axonom", "angle_x", 30.0);
-    angle_deg[Z] = prefs_get_double_attribute ("options.grids.axonom", "angle_z", 30.0);
+    origin[NR::X] = sp_units_get_pixels( prefs->getDouble("options.grids.axonom", "origin_x", 0.0), *gridunit );
+    origin[NR::Y] = sp_units_get_pixels( prefs->getDouble("options.grids.axonom", "origin_y", 0.0), *gridunit );
+    color = prefs->getInt("options.grids.axonom", "color", 0x0000ff20);
+    empcolor = prefs->getInt("options.grids.axonom", "empcolor", 0x0000ff40);
+    empspacing = prefs->getInt("options.grids.axonom", "empspacing", 5);
+    lengthy = sp_units_get_pixels( prefs->getDouble("options.grids.axonom", "spacing_y", 1.0), *gridunit );
+    angle_deg[X] = prefs->getDouble("options.grids.axonom", "angle_x", 30.0);
+    angle_deg[Z] = prefs->getDouble("options.grids.axonom", "angle_z", 30.0);
     angle_deg[Y] = 0;
 
     angle_rad[X] = deg_to_rad(angle_deg[X]);
@@ -547,8 +548,9 @@ void
 CanvasAxonomGrid::Render (SPCanvasBuf *buf)
 {
     //set correct coloring, depending preference (when zoomed out, always major coloring or minor coloring)
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint32 _empcolor;
-    bool preference = prefs_get_int_attribute ("options.grids", "no_emphasize_when_zoomedout", 0) == 1;
+    bool preference = prefs->getBool("options.grids", "no_emphasize_when_zoomedout", false);
     if( scaled && preference ) {
         _empcolor = color;
     } else {

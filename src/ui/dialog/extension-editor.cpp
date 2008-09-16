@@ -23,7 +23,7 @@
 
 #include "extension-editor.h"
 #include "verbs.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "interface.h"
 
 #include "extension/extension.h"
@@ -83,9 +83,10 @@ ExtensionEditor::ExtensionEditor()
     vbox_page->pack_start(*notebook, true, true, 0);
 
     Inkscape::Extension::db.foreach(dbfunc, this);
-
-    gchar const * defaultext = prefs_get_string_attribute("dialogs.extensioneditor", "selected-extension");
-    if (defaultext == NULL) defaultext = "org.inkscape.input.svg";
+    
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring defaultext = prefs->getString("dialogs.extensioneditor", "selected-extension");
+    if (defaultext.empty()) defaultext = "org.inkscape.input.svg";
     this->setExtension(defaultext);
 
     show_all_children();
@@ -135,7 +136,8 @@ ExtensionEditor::on_pagelist_selection_changed (void)
         Glib::ustring name = row[_page_list_columns._col_name];
 
         /* Set the selection in the preferences */
-        prefs_set_string_attribute("dialogs.extensioneditor", "selected-extension", id.c_str());
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setString("dialogs.extensioneditor", "selected-extension", id);
 
         /* Adjust the dialog's title */
         gchar title[500];

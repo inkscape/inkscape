@@ -21,7 +21,7 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/alignment.h>
 
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "inkscape-preferences.h"
 #include "verbs.h"
 #include "selcue.h"
@@ -227,27 +227,27 @@ void InkscapePreferences::initPageSteps()
                           _("Zoom tool click, +/- keys, and middle click zoom in and out by this multiplier"), false);
 }
 
-void InkscapePreferences::AddSelcueCheckbox(DialogPage& p, const std::string& prefs_path, bool def_value)
+void InkscapePreferences::AddSelcueCheckbox(DialogPage &p, Glib::ustring const &prefs_path, bool def_value)
 {
     PrefCheckButton* cb = Gtk::manage( new PrefCheckButton);
     cb->init ( _("Show selection cue"), prefs_path, "selcue", def_value);
     p.add_line( false, "", *cb, "", _("Whether selected objects display a selection cue (the same as in selector)"));
 }
 
-void InkscapePreferences::AddGradientCheckbox(DialogPage& p, const std::string& prefs_path, bool def_value)
+void InkscapePreferences::AddGradientCheckbox(DialogPage &p, Glib::ustring const &prefs_path, bool def_value)
 {
     PrefCheckButton* cb = Gtk::manage( new PrefCheckButton);
     cb->init ( _("Enable gradient editing"), prefs_path, "gradientdrag", def_value);
     p.add_line( false, "", *cb, "", _("Whether selected objects display gradient editing controls"));
 }
 
-void InkscapePreferences::AddConvertGuidesCheckbox(DialogPage& p, const std::string& prefs_path, bool def_value) {
+void InkscapePreferences::AddConvertGuidesCheckbox(DialogPage &p, Glib::ustring const &prefs_path, bool def_value) {
     PrefCheckButton* cb = Gtk::manage( new PrefCheckButton);
     cb->init ( _("Conversion to guides uses edges instead of bounding box"), prefs_path, "convertguides", def_value);
     p.add_line( false, "", *cb, "", _("Converting an object to guides places these along the object's true edges (imitating the object's shape), not along the bounding box."));
 }
 
-void InkscapePreferences::AddDotSizeSpinbutton(DialogPage& p, const std::string& prefs_path, double def_value)
+void InkscapePreferences::AddDotSizeSpinbutton(DialogPage &p, Glib::ustring const &prefs_path, double def_value)
 {
     PrefSpinButton* sb = Gtk::manage( new PrefSpinButton);
     sb->init ( prefs_path, "dot-size", 0.0, 1000.0, 0.1, 10.0, def_value, false, false);
@@ -306,7 +306,7 @@ void StyleFromSelectionToTool(gchar const *prefs_path, StyleSwatch *swatch)
     }
 }
 
-void InkscapePreferences::AddNewObjectsStyle(DialogPage& p, const std::string& prefs_path, const gchar* banner)
+void InkscapePreferences::AddNewObjectsStyle(DialogPage &p, Glib::ustring const &prefs_path, const gchar *banner)
 {
     if (banner)
         p.add_group_header(banner);
@@ -704,15 +704,16 @@ void InkscapePreferences::initPageImportExport()
 #if ENABLE_LCMS
 static void profileComboChanged( Gtk::ComboBoxText* combo )
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int rowNum = combo->get_active_row_number();
     if ( rowNum < 1 ) {
-        prefs_set_string_attribute( "options.displayprofile", "uri", "" );
+        prefs->setString("options.displayprofile", "uri", "");
     } else {
         Glib::ustring active = combo->get_active_text();
 
         Glib::ustring path = get_path_for_profile(active);
         if ( !path.empty() ) {
-            prefs_set_string_attribute( "options.displayprofile", "uri", path.c_str() );
+            prefs->setString("options.displayprofile", "uri", path);
         }
     }
 }
@@ -720,10 +721,11 @@ static void profileComboChanged( Gtk::ComboBoxText* combo )
 static void proofComboChanged( Gtk::ComboBoxText* combo )
 {
     Glib::ustring active = combo->get_active_text();
-
     Glib::ustring path = get_path_for_profile(active);
+    
     if ( !path.empty() ) {
-        prefs_set_string_attribute( "options.softproof", "uri", path.c_str() );
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setString("options.softproof", "uri", path);
     }
 }
 
@@ -735,13 +737,15 @@ static void gamutColorChanged( Gtk::ColorButton* btn ) {
 
     gchar* tmp = g_strdup_printf("#%02x%02x%02x", (r >> 8), (g >> 8), (b >> 8) );
 
-    prefs_set_string_attribute( "options.softproof", "gamutcolor", tmp );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setString("options.softproof", "gamutcolor", tmp);
     g_free(tmp);
 }
 #endif // ENABLE_LCMS
 
 void InkscapePreferences::initPageCMS()
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int const numIntents = 4;
     /* TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm */
     Glib::ustring intentLabels[numIntents] = {_("Perceptual"), _("Relative Colorimetric"), _("Saturation"), _("Absolute Colorimetric")};
@@ -780,8 +784,8 @@ void InkscapePreferences::initPageCMS()
     _page_cms.add_line( false, "", _cms_gamutwarn, "",
                         _("Highlights colors that are out of gamut for the target device."), false);
 
-    gchar const* colorStr = prefs_get_string_attribute("options.softproof", "gamutcolor");
-    Gdk::Color tmpColor( (colorStr && colorStr[0]) ? colorStr : "#00ff00");
+    Glib::ustring colorStr = prefs->getString("options.softproof", "gamutcolor");
+    Gdk::Color tmpColor( colorStr.empty() ? "#00ff00" : colorStr);
     _cms_gamutcolor.set_color( tmpColor );
     _page_cms.add_line( true, _("Out of gamut warning color:"), _cms_gamutcolor, "",
                         _("Selects the color used for out of gamut warning."), false);
@@ -814,7 +818,7 @@ void InkscapePreferences::initPageCMS()
 #if ENABLE_LCMS
     {
         std::vector<Glib::ustring> names = ::Inkscape::colorprofile_get_display_names();
-        Glib::ustring current = prefs_get_string_attribute( "options.displayprofile", "uri" );
+        Glib::ustring current = prefs->getString( "options.displayprofile", "uri" );
 
         gint index = 0;
         _cms_display_profile.append_text(_("<none>"));
@@ -832,8 +836,7 @@ void InkscapePreferences::initPageCMS()
         }
 
         names = ::Inkscape::colorprofile_get_softproof_names();
-        const gchar * tmp = prefs_get_string_attribute( "options.softproof", "uri" );
-        current = tmp ? tmp : "";
+        current = prefs->getString("options.softproof", "uri");
         index = 0;
         for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
             _cms_proof_profile.append_text( *it );
@@ -1026,9 +1029,10 @@ void InkscapePreferences::initPageBitmaps()
     _misc_bitmap_autoreload.init(_("Automatically reload bitmaps"), "options.bitmapautoreload", "value", true);
     _page_bitmaps.add_line( false, "", _misc_bitmap_autoreload, "",
                            _("Automatically reload linked images when file is changed on disk"));
-    gchar const *choices = prefs_get_string_attribute("options.bitmapeditor", "choices");
-    if ( choices && choices[0] ) {
-        gchar** splits = g_strsplit(choices, ",", 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring choices = prefs->getString("options.bitmapeditor", "choices");
+    if (!choices.empty()) {
+        gchar** splits = g_strsplit(choices.data(), ",", 0);
         gint numIems = g_strv_length(splits);
 
         Glib::ustring labels[numIems];
@@ -1093,7 +1097,8 @@ bool InkscapePreferences::SetMaxDialogSize(const Gtk::TreeModel::iterator& iter)
 bool InkscapePreferences::PresentPage(const Gtk::TreeModel::iterator& iter)
 {
     Gtk::TreeModel::Row row = *iter;
-    int desired_page = prefs_get_int_attribute("dialogs.preferences", "page", 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int desired_page = prefs->getInt("dialogs.preferences", "page", 0);
     if (desired_page == row[_page_list_columns._col_id])
     {
         if (desired_page >= PREFS_PAGE_TOOLS && desired_page <= PREFS_PAGE_TOOLS_DROPPER)
@@ -1117,7 +1122,8 @@ void InkscapePreferences::on_pagelist_selection_changed()
             _page_frame.remove();
         Gtk::TreeModel::Row row = *iter;
         _current_page = row[_page_list_columns._col_page];
-        prefs_set_int_attribute("dialogs.preferences", "page", row[_page_list_columns._col_id]);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setInt("dialogs.preferences", "page", row[_page_list_columns._col_id]);
         _page_title.set_markup("<span size='large'><b>" + row[_page_list_columns._col_name] + "</b></span>");
         _page_frame.add(*_current_page);
         _current_page->show();

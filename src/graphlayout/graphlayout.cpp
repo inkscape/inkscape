@@ -33,7 +33,7 @@
 #include "libavoid/geomtypes.h"
 #include "libcola/cola.h"
 #include "libvpsc/generate-constraints.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 using namespace std;
 using namespace cola;
@@ -140,22 +140,13 @@ void graphlayout(GSList const *const items) {
         }
 	}
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 	SimpleConstraints scx,scy;
-	double ideal_connector_length = prefs_get_double_attribute("tools.connector","length",100);
+	double ideal_connector_length = prefs->getDouble("tools.connector", "length", 100.0);
 	double directed_edge_height_modifier = 1.0;
-	gchar const *directed_str = NULL, *overlaps_str = NULL;
-	directed_str = prefs_get_string_attribute("tools.connector",
-		       	"directedlayout");
-	overlaps_str = prefs_get_string_attribute("tools.connector",
-		       	"avoidoverlaplayout");
-	bool avoid_overlaps = false;
-	bool directed = false;
-    if (directed_str && !strcmp(directed_str, "true")) {
-	    directed = true;
-	}
-    if (overlaps_str && !strcmp(overlaps_str, "true")) {
-	    avoid_overlaps = true;
-	}
+	
+	bool directed =       prefs->getBool("tools.connector", "directedlayout");
+	bool avoid_overlaps = prefs->getBool("tools.connector", "avoidoverlaplayout");
 
 	for (list<SPItem *>::iterator i(selected.begin());
 		i != selected.end();

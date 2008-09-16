@@ -25,7 +25,7 @@
 #include "helper/units.h"
 #include "widgets/icon.h"
 #include "../inkscape.h"
-#include "../prefs-utils.h"
+#include "preferences.h"
 #include "dialog-events.h"
 #include "../macros.h"
 #include "../verbs.h"
@@ -124,10 +124,11 @@ clonetiler_dialog_delete (GtkObject */*object*/, GdkEvent * /*event*/, gpointer 
     if (x<0) x=0;
     if (y<0) y=0;
 
-    prefs_set_int_attribute (prefs_path, "x", x);
-    prefs_set_int_attribute (prefs_path, "y", y);
-    prefs_set_int_attribute (prefs_path, "w", w);
-    prefs_set_int_attribute (prefs_path, "h", h);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(prefs_path, "x", x);
+    prefs->setInt(prefs_path, "y", y);
+    prefs->setInt(prefs_path, "w", w);
+    prefs->setInt(prefs_path, "h", h);
 
     return FALSE; // which means, go ahead and destroy it
 
@@ -147,10 +148,10 @@ on_picker_color_changed (guint rgba)
 
     is_updating = true;
 
-    Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, prefs_path);
     gchar c[32];
     sp_svg_write_color(c, sizeof(c), rgba);
-    repr->setAttribute("initial_color", c);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setString(prefs_path, "initial_color", c);
 
     is_updating = false;
 }
@@ -1102,7 +1103,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
         return;
-
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     // check if something is selected
@@ -1133,89 +1134,89 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
 
     clonetiler_remove (NULL, NULL, false);
 
-    double shiftx_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shiftx_per_i", 0, -10000, 10000);
-    double shifty_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shifty_per_i", 0, -10000, 10000);
-    double shiftx_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shiftx_per_j", 0, -10000, 10000);
-    double shifty_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shifty_per_j", 0, -10000, 10000);
-    double shiftx_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shiftx_rand", 0, 0, 1000);
-    double shifty_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "shifty_rand", 0, 0, 1000);
-    double shiftx_exp   =        prefs_get_double_attribute_limited (prefs_path, "shiftx_exp",   1, 0, 10);
-    double shifty_exp   =        prefs_get_double_attribute_limited (prefs_path, "shifty_exp", 1, 0, 10);
-    int    shiftx_alternate =    prefs_get_int_attribute (prefs_path, "shiftx_alternate", 0);
-    int    shifty_alternate =    prefs_get_int_attribute (prefs_path, "shifty_alternate", 0);
-    int    shiftx_cumulate  =    prefs_get_int_attribute (prefs_path, "shiftx_cumulate", 0);
-    int    shifty_cumulate  =    prefs_get_int_attribute (prefs_path, "shifty_cumulate", 0);
-    int    shiftx_excludew  =    prefs_get_int_attribute (prefs_path, "shiftx_excludew", 0);
-    int    shifty_excludeh  =    prefs_get_int_attribute (prefs_path, "shifty_excludeh", 0);
+    double shiftx_per_i = 0.01 * prefs->getDoubleLimited(prefs_path, "shiftx_per_i", 0, -10000, 10000);
+    double shifty_per_i = 0.01 * prefs->getDoubleLimited(prefs_path, "shifty_per_i", 0, -10000, 10000);
+    double shiftx_per_j = 0.01 * prefs->getDoubleLimited(prefs_path, "shiftx_per_j", 0, -10000, 10000);
+    double shifty_per_j = 0.01 * prefs->getDoubleLimited(prefs_path, "shifty_per_j", 0, -10000, 10000);
+    double shiftx_rand  = 0.01 * prefs->getDoubleLimited(prefs_path, "shiftx_rand", 0, 0, 1000);
+    double shifty_rand  = 0.01 * prefs->getDoubleLimited(prefs_path, "shifty_rand", 0, 0, 1000);
+    double shiftx_exp   =        prefs->getDoubleLimited(prefs_path, "shiftx_exp",   1, 0, 10);
+    double shifty_exp   =        prefs->getDoubleLimited(prefs_path, "shifty_exp", 1, 0, 10);
+    bool   shiftx_alternate =    prefs->getBool(prefs_path, "shiftx_alternate");
+    bool   shifty_alternate =    prefs->getBool(prefs_path, "shifty_alternate");
+    bool   shiftx_cumulate  =    prefs->getBool(prefs_path, "shiftx_cumulate");
+    bool   shifty_cumulate  =    prefs->getBool(prefs_path, "shifty_cumulate");
+    bool   shiftx_excludew  =    prefs->getBool(prefs_path, "shiftx_excludew");
+    bool   shifty_excludeh  =    prefs->getBool(prefs_path, "shifty_excludeh");
 
-    double scalex_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scalex_per_i", 0, -100, 1000);
-    double scaley_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scaley_per_i", 0, -100, 1000);
-    double scalex_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scalex_per_j", 0, -100, 1000);
-    double scaley_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scaley_per_j", 0, -100, 1000);
-    double scalex_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scalex_rand",  0, 0, 1000);
-    double scaley_rand  = 0.01 * prefs_get_double_attribute_limited (prefs_path, "scaley_rand",  0, 0, 1000);
-    double scalex_exp   =        prefs_get_double_attribute_limited (prefs_path, "scalex_exp",   1, 0, 10);
-    double scaley_exp   =        prefs_get_double_attribute_limited (prefs_path, "scaley_exp",   1, 0, 10);
-    double scalex_log       =    prefs_get_double_attribute_limited (prefs_path, "scalex_log",   0, 0, 10);
-    double scaley_log       =    prefs_get_double_attribute_limited (prefs_path, "scaley_log",   0, 0, 10);
-    int    scalex_alternate =    prefs_get_int_attribute (prefs_path, "scalex_alternate", 0);
-    int    scaley_alternate =    prefs_get_int_attribute (prefs_path, "scaley_alternate", 0);
-    int    scalex_cumulate  =    prefs_get_int_attribute (prefs_path, "scalex_cumulate", 0);
-    int    scaley_cumulate  =    prefs_get_int_attribute (prefs_path, "scaley_cumulate", 0);
+    double scalex_per_i = 0.01 * prefs->getDoubleLimited(prefs_path, "scalex_per_i", 0, -100, 1000);
+    double scaley_per_i = 0.01 * prefs->getDoubleLimited(prefs_path, "scaley_per_i", 0, -100, 1000);
+    double scalex_per_j = 0.01 * prefs->getDoubleLimited(prefs_path, "scalex_per_j", 0, -100, 1000);
+    double scaley_per_j = 0.01 * prefs->getDoubleLimited(prefs_path, "scaley_per_j", 0, -100, 1000);
+    double scalex_rand  = 0.01 * prefs->getDoubleLimited(prefs_path, "scalex_rand",  0, 0, 1000);
+    double scaley_rand  = 0.01 * prefs->getDoubleLimited(prefs_path, "scaley_rand",  0, 0, 1000);
+    double scalex_exp   =        prefs->getDoubleLimited(prefs_path, "scalex_exp",   1, 0, 10);
+    double scaley_exp   =        prefs->getDoubleLimited(prefs_path, "scaley_exp",   1, 0, 10);
+    double scalex_log       =    prefs->getDoubleLimited(prefs_path, "scalex_log",   0, 0, 10);
+    double scaley_log       =    prefs->getDoubleLimited(prefs_path, "scaley_log",   0, 0, 10);
+    bool   scalex_alternate =    prefs->getBool(prefs_path, "scalex_alternate");
+    bool   scaley_alternate =    prefs->getBool(prefs_path, "scaley_alternate");
+    bool   scalex_cumulate  =    prefs->getBool(prefs_path, "scalex_cumulate");
+    bool   scaley_cumulate  =    prefs->getBool(prefs_path, "scaley_cumulate");
 
-    double rotate_per_i =        prefs_get_double_attribute_limited (prefs_path, "rotate_per_i", 0, -180, 180);
-    double rotate_per_j =        prefs_get_double_attribute_limited (prefs_path, "rotate_per_j", 0, -180, 180);
-    double rotate_rand =  0.01 * prefs_get_double_attribute_limited (prefs_path, "rotate_rand", 0, 0, 100);
-    int    rotate_alternatei   = prefs_get_int_attribute (prefs_path, "rotate_alternatei", 0);
-    int    rotate_alternatej   = prefs_get_int_attribute (prefs_path, "rotate_alternatej", 0);
-    int    rotate_cumulatei    = prefs_get_int_attribute (prefs_path, "rotate_cumulatei", 0);
-    int    rotate_cumulatej    = prefs_get_int_attribute (prefs_path, "rotate_cumulatej", 0);
+    double rotate_per_i =        prefs->getDoubleLimited(prefs_path, "rotate_per_i", 0, -180, 180);
+    double rotate_per_j =        prefs->getDoubleLimited(prefs_path, "rotate_per_j", 0, -180, 180);
+    double rotate_rand =  0.01 * prefs->getDoubleLimited(prefs_path, "rotate_rand", 0, 0, 100);
+    bool   rotate_alternatei   = prefs->getBool(prefs_path, "rotate_alternatei");
+    bool   rotate_alternatej   = prefs->getBool(prefs_path, "rotate_alternatej");
+    bool   rotate_cumulatei    = prefs->getBool(prefs_path, "rotate_cumulatei");
+    bool   rotate_cumulatej    = prefs->getBool(prefs_path, "rotate_cumulatej");
 
-    double blur_per_i =   0.01 * prefs_get_double_attribute_limited (prefs_path, "blur_per_i", 0, 0, 100);
-    double blur_per_j =   0.01 * prefs_get_double_attribute_limited (prefs_path, "blur_per_j", 0, 0, 100);
-    int    blur_alternatei =     prefs_get_int_attribute (prefs_path, "blur_alternatei", 0);
-    int    blur_alternatej =     prefs_get_int_attribute (prefs_path, "blur_alternatej", 0);
-    double blur_rand =    0.01 * prefs_get_double_attribute_limited (prefs_path, "blur_rand", 0, 0, 100);
+    double blur_per_i =   0.01 * prefs->getDoubleLimited(prefs_path, "blur_per_i", 0, 0, 100);
+    double blur_per_j =   0.01 * prefs->getDoubleLimited(prefs_path, "blur_per_j", 0, 0, 100);
+    bool   blur_alternatei =     prefs->getBool(prefs_path, "blur_alternatei");
+    bool   blur_alternatej =     prefs->getBool(prefs_path, "blur_alternatej");
+    double blur_rand =    0.01 * prefs->getDoubleLimited(prefs_path, "blur_rand", 0, 0, 100);
 
-    double opacity_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "opacity_per_i", 0, 0, 100);
-    double opacity_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "opacity_per_j", 0, 0, 100);
-    int    opacity_alternatei =   prefs_get_int_attribute (prefs_path, "opacity_alternatei", 0);
-    int    opacity_alternatej =   prefs_get_int_attribute (prefs_path, "opacity_alternatej", 0);
-    double opacity_rand =  0.01 * prefs_get_double_attribute_limited (prefs_path, "opacity_rand", 0, 0, 100);
+    double opacity_per_i = 0.01 * prefs->getDoubleLimited(prefs_path, "opacity_per_i", 0, 0, 100);
+    double opacity_per_j = 0.01 * prefs->getDoubleLimited(prefs_path, "opacity_per_j", 0, 0, 100);
+    bool   opacity_alternatei =   prefs->getBool(prefs_path, "opacity_alternatei");
+    bool   opacity_alternatej =   prefs->getBool(prefs_path, "opacity_alternatej");
+    double opacity_rand =  0.01 * prefs->getDoubleLimited(prefs_path, "opacity_rand", 0, 0, 100);
 
-    const gchar *initial_color =     prefs_get_string_attribute (prefs_path, "initial_color");
-    double hue_per_j =        0.01 * prefs_get_double_attribute_limited (prefs_path, "hue_per_j", 0, -100, 100);
-    double hue_per_i =        0.01 * prefs_get_double_attribute_limited (prefs_path, "hue_per_i", 0, -100, 100);
-    double hue_rand  =        0.01 * prefs_get_double_attribute_limited (prefs_path, "hue_rand", 0, 0, 100);
-    double saturation_per_j = 0.01 * prefs_get_double_attribute_limited (prefs_path, "saturation_per_j", 0, -100, 100);
-    double saturation_per_i = 0.01 * prefs_get_double_attribute_limited (prefs_path, "saturation_per_i", 0, -100, 100);
-    double saturation_rand =  0.01 * prefs_get_double_attribute_limited (prefs_path, "saturation_rand", 0, 0, 100);
-    double lightness_per_j =  0.01 * prefs_get_double_attribute_limited (prefs_path, "lightness_per_j", 0, -100, 100);
-    double lightness_per_i =  0.01 * prefs_get_double_attribute_limited (prefs_path, "lightness_per_i", 0, -100, 100);
-    double lightness_rand =   0.01 * prefs_get_double_attribute_limited (prefs_path, "lightness_rand", 0, 0, 100);
-    int    color_alternatej = prefs_get_int_attribute (prefs_path, "color_alternatej", 0);
-    int    color_alternatei = prefs_get_int_attribute (prefs_path, "color_alternatei", 0);
+    Glib::ustring initial_color =    prefs->getString(prefs_path, "initial_color");
+    double hue_per_j =        0.01 * prefs->getDoubleLimited(prefs_path, "hue_per_j", 0, -100, 100);
+    double hue_per_i =        0.01 * prefs->getDoubleLimited(prefs_path, "hue_per_i", 0, -100, 100);
+    double hue_rand  =        0.01 * prefs->getDoubleLimited(prefs_path, "hue_rand", 0, 0, 100);
+    double saturation_per_j = 0.01 * prefs->getDoubleLimited(prefs_path, "saturation_per_j", 0, -100, 100);
+    double saturation_per_i = 0.01 * prefs->getDoubleLimited(prefs_path, "saturation_per_i", 0, -100, 100);
+    double saturation_rand =  0.01 * prefs->getDoubleLimited(prefs_path, "saturation_rand", 0, 0, 100);
+    double lightness_per_j =  0.01 * prefs->getDoubleLimited(prefs_path, "lightness_per_j", 0, -100, 100);
+    double lightness_per_i =  0.01 * prefs->getDoubleLimited(prefs_path, "lightness_per_i", 0, -100, 100);
+    double lightness_rand =   0.01 * prefs->getDoubleLimited(prefs_path, "lightness_rand", 0, 0, 100);
+    bool   color_alternatej = prefs->getBool(prefs_path, "color_alternatej");
+    bool   color_alternatei = prefs->getBool(prefs_path, "color_alternatei");
 
-    int type = prefs_get_int_attribute (prefs_path, "symmetrygroup", 0);
+    int    type = prefs->getInt(prefs_path, "symmetrygroup", 0);
 
-    int keepbbox = prefs_get_int_attribute (prefs_path, "keepbbox", 1);
+    bool   keepbbox = prefs->getBool(prefs_path, "keepbbox", true);
 
-    int imax = prefs_get_int_attribute (prefs_path, "imax", 2);
-    int jmax = prefs_get_int_attribute (prefs_path, "jmax", 2);
+    int    imax = prefs->getInt(prefs_path, "imax", 2);
+    int    jmax = prefs->getInt(prefs_path, "jmax", 2);
 
-    int fillrect = prefs_get_int_attribute (prefs_path, "fillrect", 0);
-    double fillwidth = prefs_get_double_attribute_limited (prefs_path, "fillwidth", 50, 0, 1e6);
-    double fillheight = prefs_get_double_attribute_limited (prefs_path, "fillheight", 50, 0, 1e6);
+    bool   fillrect = prefs->getBool(prefs_path, "fillrect");
+    double fillwidth = prefs->getDoubleLimited(prefs_path, "fillwidth", 50, 0, 1e6);
+    double fillheight = prefs->getDoubleLimited(prefs_path, "fillheight", 50, 0, 1e6);
 
-    int dotrace = prefs_get_int_attribute (prefs_path, "dotrace", 0);
-    int pick = prefs_get_int_attribute (prefs_path, "pick", 0);
-    int pick_to_presence = prefs_get_int_attribute (prefs_path, "pick_to_presence", 0);
-    int pick_to_size = prefs_get_int_attribute (prefs_path, "pick_to_size", 0);
-    int pick_to_color = prefs_get_int_attribute (prefs_path, "pick_to_color", 0);
-    int pick_to_opacity = prefs_get_int_attribute (prefs_path, "pick_to_opacity", 0);
-    double rand_picked = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_picked", 0, 0, 100);
-    int invert_picked = prefs_get_int_attribute (prefs_path, "invert_picked", 0);
-    double gamma_picked = prefs_get_double_attribute_limited (prefs_path, "gamma_picked", 0, -10, 10);
+    bool   dotrace = prefs->getBool(prefs_path, "dotrace");
+    int    pick = prefs->getInt(prefs_path, "pick");
+    bool   pick_to_presence = prefs->getBool(prefs_path, "pick_to_presence");
+    bool   pick_to_size = prefs->getBool(prefs_path, "pick_to_size");
+    bool   pick_to_color = prefs->getBool(prefs_path, "pick_to_color");
+    bool   pick_to_opacity = prefs->getBool(prefs_path, "pick_to_opacity");
+    double rand_picked = 0.01 * prefs->getDoubleLimited(prefs_path, "rand_picked", 0, 0, 100);
+    bool   invert_picked = prefs->getBool(prefs_path, "invert_picked");
+    double gamma_picked = prefs->getDoubleLimited(prefs_path, "gamma_picked", 0, -10, 10);
 
     if (dotrace) {
         clonetiler_trace_setup (sp_desktop_document(desktop), 1.0, SP_ITEM (obj));
@@ -1244,9 +1245,9 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
         x0 = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-x0", 0);
         y0 = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-y0", 0);
     } else {
-        int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
-        SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
-            SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
+        bool prefs_bbox = prefs->getBool("tools", "bounding_box", false);
+        SPItem::BBoxType bbox_type = ( prefs_bbox ? 
+            SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX );
         boost::optional<NR::Rect> r = SP_ITEM(obj)->getBounds(sp_item_i2doc_affine(SP_ITEM(obj)),
                                                         bbox_type);
         if (r) {
@@ -1319,8 +1320,8 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
             gchar color_string[32]; *color_string = 0;
 
             // Color tab
-            if (initial_color) {
-                guint32 rgba = sp_svg_read_color (initial_color, 0x000000ff);
+            if (!initial_color.empty()) {
+                guint32 rgba = sp_svg_read_color (initial_color.data(), 0x000000ff);
                 float hsl[3];
                 sp_color_rgb_to_hsl_floatv (hsl, SP_RGBA32_R_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_B_F(rgba));
 
@@ -1544,7 +1545,8 @@ static void
 clonetiler_checkbox_toggled (GtkToggleButton *tb, gpointer *data)
 {
     const gchar *attr = (const gchar *) data;
-    prefs_set_int_attribute (prefs_path, attr, gtk_toggle_button_get_active (tb));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool(prefs_path, attr, gtk_toggle_button_get_active(tb));
 }
 
 static GtkWidget *
@@ -1555,7 +1557,8 @@ clonetiler_checkbox (GtkTooltips *tt, const char *tip, const char *attr)
     GtkWidget *b = gtk_check_button_new ();
     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, tip, NULL);
 
-    int value = prefs_get_int_attribute (prefs_path, attr, 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool value = prefs->getBool(prefs_path, attr);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(b), value);
 
     gtk_box_pack_end (GTK_BOX (hb), b, FALSE, TRUE, 0);
@@ -1571,8 +1574,9 @@ clonetiler_checkbox (GtkTooltips *tt, const char *tip, const char *attr)
 static void
 clonetiler_value_changed (GtkAdjustment *adj, gpointer data)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     const gchar *pref = (const gchar *) data;
-    prefs_set_double_attribute (prefs_path, pref, adj->value);
+    prefs->setDouble(prefs_path, pref, adj->value);
 }
 
 static GtkWidget *
@@ -1597,7 +1601,8 @@ clonetiler_spinbox (GtkTooltips *tt, const char *tip, const char *attr, double l
         gtk_entry_set_width_chars (GTK_ENTRY (sb), 4);
         gtk_box_pack_start (GTK_BOX (hb), sb, FALSE, FALSE, SB_MARGIN);
 
-        double value = prefs_get_double_attribute_limited (prefs_path, attr, exponent? 1 : 0, lower, upper);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        double value = prefs->getDoubleLimited(prefs_path, attr, exponent? 1.0 : 0.0, lower, upper);
         gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
         gtk_signal_connect(GTK_OBJECT(a), "value_changed",
                            GTK_SIGNAL_FUNC(clonetiler_value_changed), (gpointer) attr);
@@ -1621,28 +1626,32 @@ clonetiler_spinbox (GtkTooltips *tt, const char *tip, const char *attr, double l
 static void
 clonetiler_symgroup_changed( GtkMenuItem */*item*/, gpointer data )
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gint group_new = GPOINTER_TO_INT (data);
-    prefs_set_int_attribute ( prefs_path, "symmetrygroup", group_new );
+    prefs->setInt(prefs_path, "symmetrygroup", group_new);
 }
 
 static void
 clonetiler_xy_changed (GtkAdjustment *adj, gpointer data)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     const gchar *pref = (const gchar *) data;
-    prefs_set_int_attribute (prefs_path, pref, (int) floor(adj->value + 0.5));
+    prefs->setInt(prefs_path, pref, (int) floor(adj->value + 0.5));
 }
 
 static void
 clonetiler_keep_bbox_toggled( GtkToggleButton *tb, gpointer /*data*/ )
 {
-    prefs_set_int_attribute (prefs_path, "keepbbox", gtk_toggle_button_get_active (tb));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool(prefs_path, "keepbbox", gtk_toggle_button_get_active(tb));
 }
 
 static void
 clonetiler_pick_to (GtkToggleButton *tb, gpointer data)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     const gchar *pref = (const gchar *) data;
-    prefs_set_int_attribute (prefs_path, pref, gtk_toggle_button_get_active (tb));
+    prefs->setBool(prefs_path, pref, gtk_toggle_button_get_active(tb));
 }
 
 
@@ -1741,8 +1750,9 @@ clonetiler_table_x_y_rand (int values)
 static void
 clonetiler_pick_switched( GtkToggleButton */*tb*/, gpointer data )
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint v = GPOINTER_TO_INT (data);
-    prefs_set_int_attribute (prefs_path, "pick", v);
+    prefs->setInt(prefs_path, "pick", v);
 }
 
 
@@ -1759,7 +1769,8 @@ clonetiler_switch_to_create( GtkToggleButton */*tb*/, GtkWidget *dlg )
         gtk_widget_set_sensitive (widthheight, FALSE);
     }
 
-    prefs_set_int_attribute (prefs_path, "fillrect", 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool(prefs_path, "fillrect", false);
 }
 
 
@@ -1776,7 +1787,8 @@ clonetiler_switch_to_fill( GtkToggleButton */*tb*/, GtkWidget *dlg )
         gtk_widget_set_sensitive (widthheight, TRUE);
     }
 
-    prefs_set_int_attribute (prefs_path, "fillrect", 1);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool(prefs_path, "fillrect", true);
 }
 
 
@@ -1789,7 +1801,8 @@ clonetiler_fill_width_changed (GtkAdjustment *adj, GtkWidget *u)
     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
     gdouble const pixels = sp_units_get_pixels (raw_dist, unit);
 
-    prefs_set_double_attribute (prefs_path, "fillwidth", pixels);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble(prefs_path, "fillwidth", pixels);
 }
 
 static void
@@ -1799,7 +1812,8 @@ clonetiler_fill_height_changed (GtkAdjustment *adj, GtkWidget *u)
     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
     gdouble const pixels = sp_units_get_pixels (raw_dist, unit);
 
-    prefs_set_double_attribute (prefs_path, "fillheight", pixels);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble(prefs_path, "fillheight", pixels);
 }
 
 
@@ -1808,7 +1822,8 @@ clonetiler_do_pick_toggled( GtkToggleButton *tb, gpointer /*data*/ )
 {
     GtkWidget *vvb = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "dotrace");
 
-    prefs_set_int_attribute (prefs_path, "dotrace", gtk_toggle_button_get_active (tb));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool(prefs_path, "dotrace", gtk_toggle_button_get_active (tb));
 
     if (vvb)
         gtk_widget_set_sensitive (vvb, gtk_toggle_button_get_active (tb));
@@ -1820,6 +1835,7 @@ clonetiler_do_pick_toggled( GtkToggleButton *tb, gpointer /*data*/ )
 void
 clonetiler_dialog (void)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (!dlg)
     {
         gchar title[500];
@@ -1827,13 +1843,13 @@ clonetiler_dialog (void)
 
         dlg = sp_window_new (title, TRUE);
         if (x == -1000 || y == -1000) {
-            x = prefs_get_int_attribute (prefs_path, "x", -1000);
-            y = prefs_get_int_attribute (prefs_path, "y", -1000);
+            x = prefs->getInt(prefs_path, "x", -1000);
+            y = prefs->getInt(prefs_path, "y", -1000);
         }
 
         if (w ==0 || h == 0) {
-            w = prefs_get_int_attribute (prefs_path, "w", 0);
-            h = prefs_get_int_attribute (prefs_path, "h", 0);
+            w = prefs->getInt(prefs_path, "w", 0);
+            h = prefs->getInt(prefs_path, "h", 0);
         }
 
 //        if (x<0) x=0;
@@ -1897,7 +1913,7 @@ clonetiler_dialog (void)
             gtk_box_pack_start (GTK_BOX (vb), om, FALSE, FALSE, SB_MARGIN);
 
             GtkWidget *m = gtk_menu_new ();
-            int current = prefs_get_int_attribute (prefs_path, "symmetrygroup", 0);
+            int current = prefs->getInt(prefs_path, "symmetrygroup", 0);
 
             struct SymGroups {
                 int group;
@@ -2445,7 +2461,7 @@ clonetiler_dialog (void)
             GtkWidget *l = gtk_label_new (_("Initial color: "));
             gtk_box_pack_start (GTK_BOX (hb), l, FALSE, FALSE, 0);
 
-            guint32 rgba = 0x000000ff | sp_svg_read_color (prefs_get_string_attribute(prefs_path, "initial_color"), 0x000000ff);
+            guint32 rgba = 0x000000ff | sp_svg_read_color (prefs->getString(prefs_path, "initial_color").data(), 0x000000ff);
             color_picker = new Inkscape::UI::Widget::ColorPicker (*new Glib::ustring(_("Initial color of tiled clones")), *new Glib::ustring(_("Initial color for clones (works only if the original has unset fill or stroke)")), rgba, false);
             _color_changed_connection = color_picker->connectChanged (sigc::ptr_fun(on_picker_color_changed));
 
@@ -2577,8 +2593,8 @@ clonetiler_dialog (void)
 
             GtkWidget *b  = gtk_check_button_new_with_label (_("Trace the drawing under the tiles"));
             g_object_set_data (G_OBJECT(b), "uncheckable", GINT_TO_POINTER(TRUE));
-            gint old = prefs_get_int_attribute (prefs_path, "dotrace", 0);
-            gtk_toggle_button_set_active ((GtkToggleButton *) b, old != 0);
+            bool old = prefs->getBool(prefs_path, "dotrace");
+            gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
             gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("For each clone, pick a value from the drawing in that clone's location and apply it to the clone"), NULL);
             gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
 
@@ -2609,7 +2625,7 @@ clonetiler_dialog (void)
                     clonetiler_table_attach (table, radio, 0.0, 1, 1);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_COLOR));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs_get_int_attribute(prefs_path, "pick", 0) == PICK_COLOR);
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path, "pick", 0) == PICK_COLOR);
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("Opacity"));
@@ -2617,7 +2633,7 @@ clonetiler_dialog (void)
                     clonetiler_table_attach (table, radio, 0.0, 2, 1);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_OPACITY));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs_get_int_attribute(prefs_path, "pick", 0) == PICK_OPACITY);
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path, "pick", 0) == PICK_OPACITY);
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("R"));
@@ -2625,7 +2641,7 @@ clonetiler_dialog (void)
                     clonetiler_table_attach (table, radio, 0.0, 1, 2);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_R));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs_get_int_attribute(prefs_path, "pick", 0) == PICK_R);
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path, "pick", 0) == PICK_R);
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("G"));
@@ -2633,7 +2649,7 @@ clonetiler_dialog (void)
                     clonetiler_table_attach (table, radio, 0.0, 2, 2);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_G));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs_get_int_attribute(prefs_path, "pick", 0) == PICK_G);
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path, "pick", 0) == PICK_G);
                 }
                 {
                     radio = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (radio)), _("B"));
@@ -2641,7 +2657,7 @@ clonetiler_dialog (void)
                     clonetiler_table_attach (table, radio, 0.0, 3, 2);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_B));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs_get_int_attribute(prefs_path, "pick", 0) == PICK_B);
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path, "pick", 0) == PICK_B);
                 }
                 {
                     //TRANSLATORS: only translate "string" in "context|string".
@@ -2651,7 +2667,7 @@ clonetiler_dialog (void)
                     clonetiler_table_attach (table, radio, 0.0, 1, 3);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_H));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs_get_int_attribute(prefs_path, "pick", 0) == PICK_H);
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path, "pick", 0) == PICK_H);
                 }
                 {
                     //TRANSLATORS: only translate "string" in "context|string".
@@ -2661,7 +2677,7 @@ clonetiler_dialog (void)
                     clonetiler_table_attach (table, radio, 0.0, 2, 3);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_S));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs_get_int_attribute(prefs_path, "pick", 0) == PICK_S);
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path, "pick", 0) == PICK_S);
                 }
                 {
                     //TRANSLATORS: only translate "string" in "context|string".
@@ -2671,7 +2687,7 @@ clonetiler_dialog (void)
                     clonetiler_table_attach (table, radio, 0.0, 3, 3);
                     gtk_signal_connect (GTK_OBJECT (radio), "toggled",
                                         GTK_SIGNAL_FUNC (clonetiler_pick_switched), GINT_TO_POINTER(PICK_L));
-                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs_get_int_attribute(prefs_path, "pick", 0) == PICK_L);
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), prefs->getInt(prefs_path, "pick", 0) == PICK_L);
                 }
 
             }
@@ -2732,8 +2748,8 @@ clonetiler_dialog (void)
 
                 {
                     GtkWidget *b  = gtk_check_button_new_with_label (_("Presence"));
-                    gint old = prefs_get_int_attribute (prefs_path, "pick_to_presence", 1);
-                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old != 0);
+                    bool old = prefs->getBool(prefs_path, "pick_to_presence", true);
+                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Each clone is created with the probability determined by the picked value in that point"), NULL);
                     clonetiler_table_attach (table, b, 0.0, 1, 1);
                     gtk_signal_connect(GTK_OBJECT(b), "toggled",
@@ -2742,8 +2758,8 @@ clonetiler_dialog (void)
 
                 {
                     GtkWidget *b  = gtk_check_button_new_with_label (_("Size"));
-                    gint old = prefs_get_int_attribute (prefs_path, "pick_to_size", 0);
-                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old != 0);
+                    bool old = prefs->getBool(prefs_path, "pick_to_size");
+                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Each clone's size is determined by the picked value in that point"), NULL);
                     clonetiler_table_attach (table, b, 0.0, 2, 1);
                     gtk_signal_connect(GTK_OBJECT(b), "toggled",
@@ -2752,8 +2768,8 @@ clonetiler_dialog (void)
 
                 {
                     GtkWidget *b  = gtk_check_button_new_with_label (_("Color"));
-                    gint old = prefs_get_int_attribute (prefs_path, "pick_to_color", 0);
-                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old != 0);
+                    bool old = prefs->getBool(prefs_path, "pick_to_color", 0);
+                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Each clone is painted by the picked color (the original must have unset fill or stroke)"), NULL);
                     clonetiler_table_attach (table, b, 0.0, 1, 2);
                     gtk_signal_connect(GTK_OBJECT(b), "toggled",
@@ -2762,15 +2778,15 @@ clonetiler_dialog (void)
 
                 {
                     GtkWidget *b  = gtk_check_button_new_with_label (_("Opacity"));
-                    gint old = prefs_get_int_attribute (prefs_path, "pick_to_opacity", 0);
-                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old != 0);
+                    bool old = prefs->getBool(prefs_path, "pick_to_opacity", 0);
+                    gtk_toggle_button_set_active ((GtkToggleButton *) b, old);
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Each clone's opacity is determined by the picked value in that point"), NULL);
                     clonetiler_table_attach (table, b, 0.0, 2, 2);
                     gtk_signal_connect(GTK_OBJECT(b), "toggled",
                                        GTK_SIGNAL_FUNC(clonetiler_pick_to), (gpointer) "pick_to_opacity");
                 }
             }
-           gtk_widget_set_sensitive (vvb, prefs_get_int_attribute (prefs_path, "dotrace", 0));
+           gtk_widget_set_sensitive (vvb, prefs->getBool(prefs_path, "dotrace"));
         }
         }
 
@@ -2788,7 +2804,7 @@ clonetiler_dialog (void)
 
                 {
                     GtkObject *a = gtk_adjustment_new(0.0, 1, 500, 1, 10, 10);
-                    int value = prefs_get_int_attribute (prefs_path, "jmax", 2);
+                    int value = prefs->getInt(prefs_path, "jmax", 2);
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
                     GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), sb, _("How many rows in the tiling"), NULL);
@@ -2808,7 +2824,7 @@ clonetiler_dialog (void)
 
                 {
                     GtkObject *a = gtk_adjustment_new(0.0, 1, 500, 1, 10, 10);
-                    int value = prefs_get_int_attribute (prefs_path, "imax", 2);
+                    int value = prefs->getInt(prefs_path, "imax", 2);
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
                     GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
                     gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), sb, _("How many columns in the tiling"), NULL);
@@ -2835,7 +2851,7 @@ clonetiler_dialog (void)
                     GtkObject *a = gtk_adjustment_new (0.0, -1e6, 1e6, 1.0, 10.0, 10.0);
                     sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a));
 
-                    double value = prefs_get_double_attribute (prefs_path, "fillwidth", 50);
+                    double value = prefs->getDouble(prefs_path, "fillwidth", 50.0);
                     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
                     gdouble const units = sp_pixels_get_units (value, unit);
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), units);
@@ -2859,7 +2875,7 @@ clonetiler_dialog (void)
                     GtkObject *a = gtk_adjustment_new (0.0, -1e6, 1e6, 1.0, 10.0, 10.0);
                     sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a));
 
-                    double value = prefs_get_double_attribute (prefs_path, "fillheight", 50);
+                    double value = prefs->getDouble(prefs_path, "fillheight", 50.0);
                     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
                     gdouble const units = sp_pixels_get_units (value, unit);
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), units);
@@ -2886,7 +2902,7 @@ clonetiler_dialog (void)
                 clonetiler_table_attach (table, radio, 0.0, 1, 1);
                 gtk_signal_connect (GTK_OBJECT (radio), "toggled", GTK_SIGNAL_FUNC (clonetiler_switch_to_create), (gpointer) dlg);
             }
-            if (prefs_get_int_attribute(prefs_path, "fillrect", 0) == 0) {
+            if (!prefs->getBool(prefs_path, "fillrect")) {
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
                 gtk_toggle_button_toggled (GTK_TOGGLE_BUTTON (radio));
             }
@@ -2896,7 +2912,7 @@ clonetiler_dialog (void)
                 clonetiler_table_attach (table, radio, 0.0, 2, 1);
                 gtk_signal_connect (GTK_OBJECT (radio), "toggled", GTK_SIGNAL_FUNC (clonetiler_switch_to_fill), (gpointer) dlg);
             }
-            if (prefs_get_int_attribute(prefs_path, "fillrect", 0) == 1) {
+            if (prefs->getBool(prefs_path, "fillrect")) {
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
                 gtk_toggle_button_toggled (GTK_TOGGLE_BUTTON (radio));
             }
@@ -2909,8 +2925,8 @@ clonetiler_dialog (void)
             gtk_box_pack_start (GTK_BOX (mainbox), hb, FALSE, FALSE, 0);
 
             GtkWidget *b  = gtk_check_button_new_with_label (_("Use saved size and position of the tile"));
-            gint keepbbox = prefs_get_int_attribute (prefs_path, "keepbbox", 1);
-            gtk_toggle_button_set_active ((GtkToggleButton *) b, keepbbox != 0);
+            bool keepbbox = prefs->getBool(prefs_path, "keepbbox", true);
+            gtk_toggle_button_set_active ((GtkToggleButton *) b, keepbbox);
             gtk_tooltips_set_tip (GTK_TOOLTIPS (tt), b, _("Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"), NULL);
             gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
 

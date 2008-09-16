@@ -37,7 +37,7 @@
 #include "path-prefix.h"
 #include "swatches.h"
 #include "sp-item.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #include "eek-preview.h"
 
@@ -1046,10 +1046,11 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
 
     if ( !possible.empty() ) {
         JustForNow* first = 0;
-        gchar const* targetName = 0;
+        Glib::ustring targetName;
         if ( _prefs_path ) {
-            targetName = prefs_get_string_attribute( _prefs_path, "palette" );
-            if ( targetName ) {
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            targetName = prefs->getString(_prefs_path, "palette");
+            if (!targetName.empty()) {
                 for ( std::vector<JustForNow*>::iterator iter = possible.begin(); iter != possible.end(); ++iter ) {
                     if ( (*iter)->_name == targetName ) {
                         first = *iter;
@@ -1123,7 +1124,8 @@ void SwatchesPanel::_handleAction( int setId, int itemId )
                 JustForNow* curr = possible[itemId];
 
                 if ( _prefs_path ) {
-                    prefs_set_string_attribute( _prefs_path, "palette", curr->_name.c_str() );
+                    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                    prefs->setString(_prefs_path, "palette", curr->_name);
                 }
 
                 if ( curr->_prefWidth > 0 ) {

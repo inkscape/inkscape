@@ -25,6 +25,7 @@
 #include <color.h>
 #include "widgets/sp-color-selector.h"
 #include "widgets/sp-color-notebook.h"
+#include "preferences.h"
 
 
 namespace Inkscape {
@@ -47,7 +48,9 @@ ParamColor::set( guint32 in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*
     gchar * prefname = this->pref_name();
     std::string value;
     string(value);
-    prefs_set_string_attribute(PREF_DIR, prefname, value.c_str());
+    
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setString(PREF_DIR, prefname, value);
     g_free(prefname);
 
     return _value;
@@ -62,11 +65,12 @@ ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar *
         defaulthex = sp_repr_children(xml)->content();
 
     gchar * pref_name = this->pref_name();
-    const gchar * paramval = prefs_get_string_attribute(PREF_DIR, pref_name);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring paramval = prefs->getString(PREF_DIR, pref_name);
     g_free(pref_name);
 
-    if (paramval != NULL)
-        defaulthex = paramval;
+    if (!paramval.empty())
+        defaulthex = paramval.data();
 
     _value = atoi(defaulthex);
 

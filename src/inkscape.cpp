@@ -49,9 +49,9 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include <cstring>
 #include "helper/sp-marshal.h"
 #include "dialogs/debugdialog.h"
+#include "dialogs/input.h"
 #include "application/application.h"
 #include "application/editor.h"
-#include "preferences.h"
 
 
 #include "document.h"
@@ -60,8 +60,8 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include "selection.h"
 #include "event-context.h"
 #include "inkscape-private.h"
-#include "prefs-utils.h"
 #include "xml/repr.h"
+#include "preferences.h"
 #include "io/sys.h"
 #include "message-stack.h"
 
@@ -106,14 +106,6 @@ static void inkscape_dispose (GObject *object);
 
 static void inkscape_activate_desktop_private (Inkscape::Application *inkscape, SPDesktop *desktop);
 static void inkscape_deactivate_desktop_private (Inkscape::Application *inkscape, SPDesktop *desktop);
-
-static bool inkscape_init_config (Inkscape::XML::Document *doc, const gchar *config_name, const gchar *skeleton,
-				  unsigned int skel_size,
-				  const gchar *e_mkdir,
-				  const gchar *e_notdir,
-				  const gchar *e_ccf,
-				  const gchar *e_cwf,
-				  const gchar *warn);
 
 struct Inkscape::Application {
     GObject object;
@@ -309,14 +301,15 @@ static gint inkscape_autosave(gpointer)
     if (!inkscape->documents) { // nothing to autosave
         return TRUE;
     }
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // Use UID for separating autosave-documents between users if directory is multiuser
     uid_t uid = getuid();
 
     Glib::ustring autosave_dir;
     {
-        gchar const* tmp = prefs_get_string_attribute("options.autosave", "path");
-        if ( tmp ) {
+        Glib::ustring tmp = prefs->getString("options.autosave", "path");
+        if (!tmp.empty()) {
             autosave_dir = tmp;
         } else {
             autosave_dir = Glib::get_tmp_dir();
@@ -334,7 +327,7 @@ static gint inkscape_autosave(gpointer)
     gchar sptstr[256];
     strftime(sptstr, 256, "%Y_%m_%d_%H_%M_%S", sptm);
 
-    gint autosave_max = prefs_get_int_attribute("options.autosave", "max", 10);
+    gint autosave_max = prefs->getInt("options.autosave", "max", 10);
 
     gint docnum = 0;
 
@@ -439,6 +432,7 @@ static gint inkscape_autosave(gpointer)
 void inkscape_autosave_init()
 {
     static guint32 autosave_timeout_id = 0;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // Turn off any previously initiated timeouts
     if ( autosave_timeout_id ) {
@@ -446,14 +440,14 @@ void inkscape_autosave_init()
         autosave_timeout_id = 0;
     }
 
-    // g_debug("options.autosave.enable = %lld", prefs_get_int_attribute_limited("options.autosave", "enable", 1, 0, 1));
+    // g_debug("options.autosave.enable = %d", prefs->getBool("options.autosave", "enable", true));
     // Is autosave enabled?
-    if( prefs_get_int_attribute_limited("options.autosave", "enable", 1, 0, 1) != 1 ){
+    if (!prefs->getBool("options.autosave", "enable", true)){
         autosave_timeout_id = 0;
     } else {
         // Turn on autosave
-        guint32 timeout = prefs_get_int_attribute("options.autosave", "interval", 10) * 60;
-        // g_debug("options.autosave.interval = %lld", prefs_get_int_attribute("options.autosave", "interval", 10));
+        guint32 timeout = prefs->getInt("options.autosave", "interval", 10) * 60;
+        // g_debug("options.autosave.interval = %d", prefs->getInt("options.autosave", "interval", 10));
 #if GLIB_CHECK_VERSION(2,14,0)
         autosave_timeout_id = g_timeout_add_seconds(timeout, inkscape_autosave, NULL);
 #else
@@ -496,7 +490,7 @@ inkscape_dispose (GObject *object)
 
     g_assert (!inkscape->desktops);
 
-    Inkscape::Preferences::save();
+    Inkscape::Preferences::unload();
 
     if (inkscape->menus) {
         /* fixme: This is not the best place */
@@ -678,7 +672,7 @@ inkscape_crash_handler (int /*signum*/)
         }
     }
 
-    Inkscape::Preferences::save();
+    Inkscape::Preferences::unload();
 
     fprintf (stderr, "Emergency save completed. Inkscape will close now.\n");
     fprintf (stderr, "If you can reproduce this crash, please file a bug at www.inkscape.org\n");
@@ -769,10 +763,12 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     inkscape->use_gui = use_gui;
     inkscape->argv0 = g_strdup(argv0);
 
-    /* Attempt to load the preferences, and set the save_preferences flag to TRUE
-       if we could, or FALSE if we couldn't */
+    /* Load the preferences and menus; Later menu layout should be merged into prefs */
+    Inkscape::Preferences::use_gui = use_gui;
     Inkscape::Preferences::load();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     inkscape_load_menus(inkscape);
+    sp_input_load_from_preferences();
 
     /* DebugDialog redirection.  On Linux, default to OFF, on Win32, default to ON.
 	 * Use only if use_gui is enabled 
@@ -783,7 +779,7 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
 #define DEFAULT_LOG_REDIRECT false
 #endif
 
-    if (use_gui == TRUE && prefs_get_int_attribute("dialogs.debug", "redirect", DEFAULT_LOG_REDIRECT))
+    if (use_gui == TRUE && prefs->getBool("dialogs.debug", "redirect", DEFAULT_LOG_REDIRECT))
     {
 		Inkscape::UI::Dialogs::DebugDialog::getInstance()->captureLogMessages();
     }
@@ -791,7 +787,7 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     /* Check for global remapping of Alt key */
     if(use_gui)
     {
-        inkscape_mapalt(guint(prefs_get_int_attribute("options.mapalt","value",0)));
+        inkscape_mapalt(guint(prefs->getInt("options.mapalt", "value", 0)));
     }
 
     /* Initialize the extensions */
@@ -817,83 +813,6 @@ gboolean inkscape_app_use_gui( Inkscape::Application const * app )
 }
 
 /**
- * Preference management
- * We use '.' as separator
- *
- * Returns TRUE if the config file was successfully loaded, FALSE if not.
- */
-bool
-inkscape_load_config (const gchar *filename, Inkscape::XML::Document *config, const gchar *skeleton,
-		      unsigned int skel_size, const gchar *e_notreg, const gchar *e_notxml,
-		      const gchar *e_notsp, const gchar *warn)
-{
-    gchar *fn = profile_path(filename);
-    if (!Inkscape::IO::file_test(fn, G_FILE_TEST_EXISTS)) {
-        bool result;
-        /* No such file */
-        result = inkscape_init_config (config, filename, skeleton,
-                                       skel_size,
-                                       _("Cannot create directory %s.\n%s"),
-                                       _("%s is not a valid directory.\n%s"),
-                                       _("Cannot create file %s.\n%s"),
-                                       _("Cannot write file %s.\n%s"),
-                                       _("Although Inkscape will run, it will use default settings,\n"
-                                         "and any changes made in preferences will not be saved."));
-        g_free (fn);
-        return result;
-    }
-
-    if (!Inkscape::IO::file_test(fn, G_FILE_TEST_IS_REGULAR)) {
-        /* Not a regular file */
-        gchar *safeFn = Inkscape::IO::sanitizeString(fn);
-        GtkWidget *w = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_OK, e_notreg, safeFn, warn);
-        gtk_dialog_run (GTK_DIALOG (w));
-        gtk_widget_destroy (w);
-        g_free(safeFn);
-        g_free (fn);
-        return false;
-    }
-
-    Inkscape::XML::Document *doc = sp_repr_read_file (fn, NULL);
-    if (doc == NULL) {
-        /* Not an valid xml file */
-        gchar *safeFn = Inkscape::IO::sanitizeString(fn);
-        GtkWidget *w = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_OK, e_notxml, safeFn, warn);
-        gtk_dialog_run (GTK_DIALOG (w));
-        gtk_widget_destroy (w);
-        g_free(safeFn);
-        g_free (fn);
-        return false;
-    }
-
-    Inkscape::XML::Node *root = doc->root();
-    if (strcmp (root->name(), "inkscape")) {
-        gchar *safeFn = Inkscape::IO::sanitizeString(fn);
-        GtkWidget *w = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_OK, e_notsp, safeFn, warn);
-        gtk_dialog_run (GTK_DIALOG (w));
-        gtk_widget_destroy (w);
-        Inkscape::GC::release(doc);
-        g_free(safeFn);
-        g_free (fn);
-        return false;
-    }
-
-    /** \todo this is a hack, need to figure out how to get
-     *        a reasonable merge working with the menus.xml file */
-    if (skel_size == MENUS_SKELETON_SIZE) {
-        if (INKSCAPE)
-            INKSCAPE->menus = doc;
-        doc = config;
-    } else {
-        config->root()->mergeFrom(doc->root(), "id");
-    }
-
-    Inkscape::GC::release(doc);
-    g_free (fn);
-    return true;
-}
-
-/**
  *  Menus management
  *
  */
@@ -901,77 +820,28 @@ bool
 inkscape_load_menus (Inkscape::Application *inkscape)
 {
     gchar *fn = profile_path(MENUS_FILE);
-    bool retval = false;
-    if (Inkscape::IO::file_test(fn, G_FILE_TEST_EXISTS)) {
-        retval = inkscape_load_config (MENUS_FILE,
-				 inkscape->menus,
-				 menus_skeleton,
-				 MENUS_SKELETON_SIZE,
-				 _("%s is not a regular file.\n%s"),
-				 _("%s not a valid XML file, or\n"
-				   "you don't have read permissions on it.\n%s"),
-				 _("%s is not a valid menus file.\n%s"),
-				 _("Inkscape will run with default menus.\n"
-                                   "New menus will not be saved."));
-    } else {
-        INKSCAPE->menus = sp_repr_read_mem(menus_skeleton, MENUS_SKELETON_SIZE, NULL);
-        if (INKSCAPE->menus != NULL)
-            retval = true;
+    gchar *menus_xml = NULL; gsize len = 0;
+    
+    if (g_file_get_contents(fn, &menus_xml, &len, NULL)) {
+        // load the menus_xml file
+        INKSCAPE->menus = sp_repr_read_mem(menus_xml, len, NULL);
+        g_free(menus_xml);
+        if (INKSCAPE->menus) return true;
     }
-    g_free(fn);
-    return retval;
+    INKSCAPE->menus = sp_repr_read_mem(menus_skeleton, MENUS_SKELETON_SIZE, NULL);
+    if (INKSCAPE->menus) return true;
+    return false;
 }
 
 /**
- * We use '.' as separator
- * \param inkscape Unused
+ * @deprecated Use the Preferences class instead, and try not to use _getNode
  */
 Inkscape::XML::Node *
 inkscape_get_repr (Inkscape::Application *inkscape, const gchar *key)
 {
-    if ( (key == NULL) || (inkscape == NULL) ) {
-        return NULL;
-    }
-
-    Inkscape::XML::Node *prefs = Inkscape::Preferences::get();
-    if ( !prefs ) {
-        return NULL;
-    }
-
-    Inkscape::XML::Node *repr = prefs->root();
-    if (!repr) return NULL;
-    g_assert (!(strcmp (repr->name(), "inkscape")));
-
-    gchar const *s = key;
-    while ((s) && (*s)) {
-
-        /* Find next name */
-        gchar const *e = strchr (s, '.');
-        guint len;
-        if (e) {
-            len = e++ - s;
-        } else {
-            len = strlen (s);
-        }
-
-        Inkscape::XML::Node* child;
-        for (child = repr->firstChild(); child != NULL; child = child->next()) {
-            gchar const *id = child->attribute("id");
-            if ((id) && (strlen (id) == len) && (!strncmp (id, s, len)))
-            {
-                break;
-            }
-        }
-        if (child == NULL) {
-            return NULL;
-        }
-
-        repr = child;
-        s = e;
-    }
-    return repr;
+    Inkscape::Preferences *ps = Inkscape::Preferences::get();
+    return ps->_getNode(key);
 }
-
 
 
 void
@@ -1414,120 +1284,6 @@ inkscape_active_event_context (void)
 # HELPERS
 #####################*/
 
-static bool
-inkscape_init_config (Inkscape::XML::Document */*doc*/, const gchar *config_name, const gchar *skeleton,
-		      unsigned int skel_size,
-		      const gchar *e_mkdir,
-		      const gchar *e_notdir,
-		      const gchar *e_ccf,
-		      const gchar *e_cwf,
-		      const gchar *warn)
-{
-    gchar *dn = profile_path(NULL);
-    bool use_gui = (Inkscape::NSApplication::Application::getNewGui())? Inkscape::NSApplication::Application::getUseGui() : inkscape->use_gui;
-    if (!Inkscape::IO::file_test(dn, G_FILE_TEST_EXISTS)) {
-        if (Inkscape::IO::mkdir_utf8name(dn))
-        {
-            if (use_gui) {
-                // Cannot create directory
-                gchar *safeDn = Inkscape::IO::sanitizeString(dn);
-                GtkWidget *w = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_OK, e_mkdir, safeDn, warn);
-                gtk_dialog_run (GTK_DIALOG (w));
-                gtk_widget_destroy (w);
-                g_free(safeDn);
-                g_free (dn);
-                return false;
-            } else {
-                g_warning(e_mkdir, dn, warn);
-                g_free (dn);
-                return false;
-            }
-        }
-
-        // Also create (empty for now) subdirectories for the user's stuff
-        {
-            gchar *temp_dn = profile_path("templates");
-            Inkscape::IO::mkdir_utf8name(temp_dn);
-        }
-        {
-            gchar *temp_dn = profile_path("keys");
-            Inkscape::IO::mkdir_utf8name(temp_dn);
-        }
-        {
-            gchar *temp_dn = profile_path("icons");
-            Inkscape::IO::mkdir_utf8name(temp_dn);
-        }
-        {
-            gchar *temp_dn = profile_path("extensions");
-            Inkscape::IO::mkdir_utf8name(temp_dn);
-        }
-        {
-            gchar *temp_dn = profile_path("palettes");
-            Inkscape::IO::mkdir_utf8name(temp_dn);
-        }
-
-    } else if (!Inkscape::IO::file_test(dn, G_FILE_TEST_IS_DIR)) {
-        if (use_gui) {
-            // Not a directory
-            gchar *safeDn = Inkscape::IO::sanitizeString(dn);
-            GtkWidget *w = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_OK, e_notdir, safeDn, warn);
-            gtk_dialog_run (GTK_DIALOG (w));
-            gtk_widget_destroy (w);
-            g_free( safeDn );
-            g_free (dn);
-            return false;
-        } else {
-            g_warning(e_notdir, dn, warn);
-            g_free(dn);
-            return false;
-        }
-    }
-    g_free (dn);
-
-    gchar *fn = profile_path(config_name);
-
-    Inkscape::IO::dump_fopen_call(fn, "H");
-    FILE *fh = Inkscape::IO::fopen_utf8name(fn, "w");
-    if (!fh) {
-        if (use_gui) {
-            /* Cannot create file */
-            gchar *safeFn = Inkscape::IO::sanitizeString(fn);
-            GtkWidget *w = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_OK, e_ccf, safeFn, warn);
-            gtk_dialog_run (GTK_DIALOG (w));
-            gtk_widget_destroy (w);
-            g_free(safeFn);
-            g_free (fn);
-            return false;
-        } else {
-            g_warning(e_ccf, fn, warn);
-            g_free(fn);
-            return false;
-        }
-    }
-    if ( fwrite(skeleton, 1, skel_size, fh) != skel_size ) {
-        if (use_gui) {
-            /* Cannot create file */
-            gchar *safeFn = Inkscape::IO::sanitizeString(fn);
-            GtkWidget *w = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_OK, e_cwf, safeFn, warn);
-            gtk_dialog_run (GTK_DIALOG (w));
-            gtk_widget_destroy (w);
-            g_free(safeFn);
-            g_free (fn);
-            fclose(fh);
-            return false;
-        } else {
-            g_warning(e_cwf, fn, warn);
-            g_free(fn);
-            fclose(fh);
-            return false;
-        }
-    }
-
-    g_free(fn);
-    fclose(fh);
-    return true;
-}
-
 void
 inkscape_refresh_display (Inkscape::Application *inkscape)
 {
@@ -1549,36 +1305,19 @@ inkscape_exit (Inkscape::Application */*inkscape*/)
     //emit shutdown signal so that dialogs could remember layout
     g_signal_emit (G_OBJECT (INKSCAPE), inkscape_signals[SHUTDOWN_SIGNAL], 0);
 
-    Inkscape::Preferences::save();
+    Inkscape::Preferences::unload();
     gtk_main_quit ();
 }
 
-gchar *
+char *
 homedir_path(const char *filename)
 {
     static const gchar *homedir = NULL;
     if (!homedir) {
         homedir = g_get_home_dir();
-        gchar* utf8Path = g_filename_to_utf8( homedir, -1, NULL, NULL, NULL );
-        if ( utf8Path )
-        {
-                homedir = utf8Path;
-                if (!g_utf8_validate(homedir, -1, NULL)) {
-                    g_warning( "g_get_home_dir() post A IS NOT UTF-8" );
-                }
-        }
     }
     if (!homedir) {
         gchar * path = g_path_get_dirname(INKSCAPE->argv0);
-        gchar* utf8Path = g_filename_to_utf8( path, -1, NULL, NULL, NULL );
-        g_free(path);
-        if ( utf8Path )
-        {
-            homedir = utf8Path;
-            if (!g_utf8_validate(homedir, -1, NULL)) {
-                g_warning( "g_get_home_dir() post B IS NOT UTF-8" );
-            }
-        }
     }
     return g_build_filename(homedir, filename, NULL);
 }

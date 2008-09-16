@@ -21,7 +21,7 @@
 #include "inkscape.h"
 #include "persp3d.h"
 #include "box3d-context.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "desktop-style.h"
 #include "box3d.h"
 
@@ -239,16 +239,17 @@ box3d_side_set_shape (SPShape *shape)
 void
 box3d_side_apply_style (Box3DSide *side) {
     Inkscape::XML::Node *repr_face = SP_OBJECT_REPR(SP_OBJECT(side));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    gchar *descr = g_strconcat ("desktop.", box3d_side_axes_string (side), NULL);
-    const gchar * cur_style = prefs_get_string_attribute(descr, "style");
-    g_free (descr);    
+    Glib::ustring descr = "desktop.";
+    descr += box3d_side_axes_string(side);
+    Glib::ustring cur_style = prefs->getString(descr, "style");    
     
     SPDesktop *desktop = inkscape_active_desktop();
-    bool use_current = prefs_get_int_attribute("tools.shapes.3dbox", "usecurrent", 0);
-    if (use_current && cur_style !=NULL) {
+    bool use_current = prefs->getBool("tools.shapes.3dbox", "usecurrent", false);
+    if (use_current && !cur_style.empty()) {
         /* use last used style */
-        repr_face->setAttribute("style", cur_style);
+        repr_face->setAttribute("style", cur_style.data());
     } else {
         /* use default style */
         GString *pstring = g_string_new("");

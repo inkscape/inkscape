@@ -39,7 +39,7 @@
 #include "filter-enums.h"
 #include "inkscape.h"
 #include "path-prefix.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "selection.h"
 #include "sp-feblend.h"
 #include "sp-fecolormatrix.h"
@@ -661,9 +661,10 @@ private:
     void select_file(){
 
         //# Get the current directory for finding files
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         Glib::ustring open_path;
-        char *attr = (char *)prefs_get_string_attribute("dialogs.open", "path");
-        if (attr)
+        Glib::ustring attr = prefs->getString("dialogs.open", "path");
+        if (!attr.empty())
             open_path = attr;
 
         //# Test if the open_path directory exists
@@ -707,7 +708,7 @@ private:
 
             open_path = fileName;
             open_path.append(G_DIR_SEPARATOR_S);
-            prefs_set_string_attribute("dialogs.open", "path", open_path.c_str());
+            prefs->setString("dialogs.open", "path", open_path);
 
             _entry.set_text(fileName);
         }
@@ -2294,7 +2295,8 @@ void FilterEffectsDialog::add_primitive()
 
 void FilterEffectsDialog::update_primitive_infobox()
 {
-    if (prefs_get_int_attribute ("options.showfiltersinfobox", "value", 1)){
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("options.showfiltersinfobox", "value", true)){
         _infobox_icon.show();
         _infobox_desc.show();
     } else {
@@ -2478,7 +2480,8 @@ void FilterEffectsDialog::update_settings_view()
     for(unsigned int i=0; i<vect1.size(); i++) vect1[i]->hide_all();
     _empty_settings.show();
 
-    if (prefs_get_int_attribute ("options.showfiltersinfobox", "value", 1)){
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("options.showfiltersinfobox", "value", true)){
         _infobox_icon.show();
         _infobox_desc.show();
     } else {

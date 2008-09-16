@@ -18,7 +18,7 @@
 #include "desktop.h"
 #include "document.h"
 #include "message-stack.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "ui/dialog/dialog-manager.h"
 
 static void sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop, GtkMenu *menu);
@@ -316,13 +316,14 @@ sp_image_image_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 }
 
 static gchar* getImageEditorName() {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gchar* value = 0;
-    gchar const *choices = prefs_get_string_attribute("options.bitmapeditor", "choices");
-    if ( choices && choices[0] ) {
-        gchar** splits = g_strsplit(choices, ",", 0);
+    Glib::ustring choices = prefs->getString("options.bitmapeditor", "choices");
+    if (!choices.empty()) {
+        gchar** splits = g_strsplit(choices.data(), ",", 0);
         gint numIems = g_strv_length(splits);
 
-        int setting = prefs_get_int_attribute_limited("options.bitmapeditor", "value", 0, 0, numIems);
+        int setting = prefs->getIntLimited("options.bitmapeditor", "value", 0, 0, numIems);
         value = g_strdup(splits[setting]);
 
         g_strfreev(splits);

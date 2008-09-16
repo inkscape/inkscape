@@ -1,5 +1,6 @@
 /**
- * Whiteboard share with chatroom dialog
+ * @file
+ * @brief Whiteboard share with chatroom dialog
  *
  * Authors:
  * David Yip <yipdw@rose-hulman.edu>
@@ -20,7 +21,7 @@
 #include "inkscape.h"
 #include "desktop.h"
 
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #include "jabber_whiteboard/typedefs.h"
 #include "jabber_whiteboard/session-manager.h"
@@ -33,9 +34,7 @@
 #include "util/ucompose.hpp"
 
 namespace Inkscape {
-
 namespace UI {
-
 namespace Dialog {
 
 WhiteboardShareWithChatroomDialog* 
@@ -60,7 +59,7 @@ WhiteboardShareWithChatroomDialogImpl::~WhiteboardShareWithChatroomDialogImpl()
 void
 WhiteboardShareWithChatroomDialogImpl::setSessionManager()
 {
-        this->_desktop = this->getDesktop();
+    this->_desktop = this->getDesktop();
 	this->_sm = this->_desktop->whiteboard_session_manager();
 
 }
@@ -82,10 +81,10 @@ WhiteboardShareWithChatroomDialogImpl::_construct()
 	this->_labels[2].set_mnemonic_widget(this->_roompass);
 	this->_labels[3].set_mnemonic_widget(this->_handle);
 
-
-	this->_roomname.set_text(prefs_get_string_attribute("whiteboard.room", "name"));
-	this->_confserver.set_text(prefs_get_string_attribute("whiteboard.room", "server"));
-	this->_handle.set_text(prefs_get_string_attribute("whiteboard.server", "username"));
+	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+	this->_roomname.set_text(prefs->getString("whiteboard.room", "name"));
+	this->_confserver.set_text(prefs->getString("whiteboard.room", "server"));
+	this->_handle.set_text(prefs->getString("whiteboard.server", "username"));
 
 	// Pack table
 	this->_layout.attach(this->_labels[0], 0, 1, 0, 1);
@@ -147,8 +146,17 @@ WhiteboardShareWithChatroomDialogImpl::_respCallback(int resp)
 	}
 }
 
-}
+} // namespace Dialog
+} // namespace UI
+} // namespace Inkscape
 
-}
-
-}
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

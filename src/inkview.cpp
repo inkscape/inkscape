@@ -210,7 +210,8 @@ main (int argc, const char **argv)
     LIBXML_TEST_VERSION
 
     Inkscape::GC::init();
-    Inkscape::Preferences::loadSkeleton();
+    Inkscape::Preferences::use_gui = false;
+    Inkscape::Preferences::load();
 
     gtk_init (&argc, (char ***) &argv);
 
@@ -234,7 +235,6 @@ main (int argc, const char **argv)
     ss.fullscreen = false;
 
     inkscape = (Inkscape::Application *)g_object_new (SP_TYPE_INKSCAPE, NULL);
-    Inkscape::Preferences::load();
     
     // starting at where the commandline options stopped parsing because
     // we want all the files to be in the list

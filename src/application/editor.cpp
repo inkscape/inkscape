@@ -331,7 +331,7 @@ Editor::exit()
 {
     //emit shutdown signal so that dialogs could remember layout
     _shutdown_signal.emit();
-    Inkscape::Preferences::save();
+    Inkscape::Preferences::unload();
 }
 
 //==================================================================

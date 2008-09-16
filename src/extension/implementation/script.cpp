@@ -45,7 +45,7 @@ FIXME:
 #include "selection.h"
 #include "sp-namedview.h"
 #include "io/sys.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "../system.h"
 #include "extension/effect.h"
 #include "extension/output.h"
@@ -136,9 +136,10 @@ resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
     interpName = interp->defaultval;
 
     // 1.  Check preferences
-    gchar const *prefInterp = prefs_get_string_attribute("extensions", interp->prefstring);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring prefInterp = prefs->getString("extensions", interp->prefstring);
 
-    if (prefInterp) {
+    if (!prefInterp.empty()) {
         interpName = prefInterp;
         return interpName;
     }

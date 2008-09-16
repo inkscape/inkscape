@@ -19,7 +19,6 @@
 #include "inkscape.h"
 #include "desktop.h"
 
-#include "preferences.h"
 #include "effect.h"
 #include "implementation/implementation.h"
 

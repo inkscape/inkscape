@@ -32,7 +32,7 @@
 #include "document.h"
 #include "sp-ellipse.h"
 
-#include "prefs-utils.h"
+#include "preferences.h"
 
 /* Common parent class */
 
@@ -858,11 +858,12 @@ sp_arc_position_set(SPArc *arc, gdouble x, gdouble y, gdouble rx, gdouble ry)
     ge->cy.computed = y;
     ge->rx.computed = rx;
     ge->ry.computed = ry;
-    if (prefs_get_double_attribute("tools.shapes.arc", "start", 0.0) != 0)
-        ge->start = prefs_get_double_attribute("tools.shapes.arc", "start", 0.0);
-    if (prefs_get_double_attribute("tools.shapes.arc", "end", 0.0) != 0)
-        ge->end = prefs_get_double_attribute("tools.shapes.arc", "end", 0.0);
-    if (!prefs_get_string_attribute("tools.shapes.arc", "open"))
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getDouble("tools.shapes.arc", "start", 0.0) != 0)
+        ge->start = prefs->getDouble("tools.shapes.arc", "start", 0.0);
+    if (prefs->getDouble("tools.shapes.arc", "end", 0.0) != 0)
+        ge->end = prefs->getDouble("tools.shapes.arc", "end", 0.0);
+    if (!prefs->getBool("tools.shapes.arc", "open"))
         ge->closed = 1;
     else
         ge->closed = 0;

@@ -33,6 +33,7 @@
 #include <sp-object.h>
 
 #include "enum.h"
+#include "preferences.h"
 
 /** \brief  The root directory in the preferences database for extension
             related parameters. */
@@ -104,13 +105,14 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
         defaultval = sp_repr_children(xml)->attribute("value");
 
     gchar * pref_name = this->pref_name();
-    const gchar * paramval = prefs_get_string_attribute(PREF_DIR, pref_name);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring paramval = prefs->getString(PREF_DIR, pref_name);
     g_free(pref_name);
 
-    if (paramval != NULL)
-        defaultval = paramval;
+    if (!paramval.empty())
+        defaultval = paramval.data();
     if (defaultval != NULL)
-        _value = g_strdup(defaultval);  // allocate space for _value
+        _value = g_strdup(defaultval);
 
     return;
 }
@@ -157,7 +159,8 @@ ParamComboBox::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node 
         if (_value != NULL) g_free(_value);
         _value = g_strdup(settext->c_str());
         gchar * prefname = this->pref_name();
-        prefs_set_string_attribute(PREF_DIR, prefname, _value);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setString(PREF_DIR, prefname, _value);
         g_free(prefname);
     }
 

@@ -50,9 +50,9 @@
 #include "selection-chemistry.h"
 
 #include "dialog-events.h"
-#include "../prefs-utils.h"
-#include "../verbs.h"
-#include "../interface.h"
+#include "preferences.h"
+#include "verbs.h"
+#include "interface.h"
 
 #include "extension/output.h"
 #include "extension/db.h"
@@ -169,11 +169,12 @@ sp_export_dialog_delete ( GtkObject */*object*/, GdkEvent */*event*/, gpointer /
 
     if (x<0) x=0;
     if (y<0) y=0;
-
-    prefs_set_int_attribute (prefs_path, "x", x);
-    prefs_set_int_attribute (prefs_path, "y", y);
-    prefs_set_int_attribute (prefs_path, "w", w);
-    prefs_set_int_attribute (prefs_path, "h", h);
+    
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(prefs_path, "x", x);
+    prefs->setInt(prefs_path, "y", y);
+    prefs->setInt(prefs_path, "w", w);
+    prefs->setInt(prefs_path, "h", h);
 
     return FALSE; // which means, go ahead and destroy it
 
@@ -390,6 +391,7 @@ batch_export_clicked (GtkWidget *widget, GtkObject *base)
 void
 sp_export_dialog (void)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (!dlg) {
 
         gchar title[500];
@@ -398,13 +400,13 @@ sp_export_dialog (void)
         dlg = sp_window_new (title, TRUE);
 
         if (x == -1000 || y == -1000) {
-            x = prefs_get_int_attribute (prefs_path, "x", 0);
-            y = prefs_get_int_attribute (prefs_path, "y", 0);
+            x = prefs->getInt(prefs_path, "x", 0);
+            y = prefs->getInt(prefs_path, "y", 0);
         }
 
         if (w ==0 || h == 0) {
-            w = prefs_get_int_attribute (prefs_path, "w", 0);
-            h = prefs_get_int_attribute (prefs_path, "h", 0);
+            w = prefs->getInt(prefs_path, "w", 0);
+            h = prefs->getInt(prefs_path, "h", 0);
         }
 
 //        if (x<0) x=0;
@@ -482,9 +484,7 @@ sp_export_dialog (void)
                                        dlg );
 
             sp_export_spinbutton_new ( "xdpi",
-                                       prefs_get_double_attribute
-                                       ( "dialogs.export.defaultxdpi",
-                                         "value", DPI_BASE),
+                                       prefs->getDouble("dialogs.export.defaultxdpi", "value", DPI_BASE),
                                        0.01, 100000.0, 0.1, 1.0, NULL, GTK_WIDGET(t->gobj()), 3, 0,
                                        NULL, _("dp_i"), 2, 1,
                                        G_CALLBACK (sp_export_xdpi_value_changed),
@@ -501,9 +501,7 @@ sp_export_dialog (void)
              * Needs fixing: there's no way to set ydpi currently, so we use
              *       the defaultxdpi value here, too...
              */
-            sp_export_spinbutton_new ( "ydpi", prefs_get_double_attribute
-                                       ( "dialogs.export.defaultxdpi",
-                                         "value", DPI_BASE),
+            sp_export_spinbutton_new ( "ydpi", prefs->getDouble("dialogs.export.defaultxdpi", "value", DPI_BASE),
                                        0.01, 100000.0, 0.1, 1.0, NULL, GTK_WIDGET(t->gobj()), 3, 1,
                                        NULL, _("dpi"), 2, 0, NULL, dlg );
 
@@ -702,14 +700,14 @@ sp_export_find_default_selection(GtkWidget * dlg)
 
     /* Try using the preferences */
     if (key == SELECTION_NUMBER_OF) {
-        const gchar *what = NULL;
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         int i = SELECTION_NUMBER_OF;
 
-        what = prefs_get_string_attribute ("dialogs.export.exportarea", "value");
+        Glib::ustring what = prefs->getString("dialogs.export.exportarea", "value");
 
-        if (what != NULL) {
+        if (!what.empty()) {
             for (i = 0; i < SELECTION_NUMBER_OF; i++) {
-                if (!strcmp (what, selection_names[i])) {
+                if (what == selection_names[i]) {
                     break;
                 }
             }
@@ -883,8 +881,8 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
         } // switch
 
         // remember area setting
-        prefs_set_string_attribute ( "dialogs.export.exportarea",
-                                     "value", selection_names[key]);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setString("dialogs.export.exportarea", "value", selection_names[key]);
 
         if ( key != SELECTION_CUSTOM && bbox ) {
             sp_export_set_area (base, bbox->min()[NR::X],
@@ -1798,7 +1796,8 @@ sp_export_xdpi_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
     xdpi = sp_export_value_get (base, "xdpi");
 
     // remember xdpi setting
-    prefs_set_double_attribute ("dialogs.export.defaultxdpi", "value", xdpi);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble("dialogs.export.defaultxdpi", "value", xdpi);
 
     bmwidth = (x1 - x0) * xdpi / DPI_BASE;
 

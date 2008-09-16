@@ -19,7 +19,7 @@
 #include "inkscape.h"
 #include "desktop.h"
 #include "message-stack.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #include "jabber_whiteboard/session-manager.h"
 
@@ -82,10 +82,12 @@ WhiteboardConnectDialogImpl::_construct()
 	this->_labels[2].set_mnemonic_widget(this->_password);
 	this->_labels[3].set_mnemonic_widget(this->_port);
 
-	this->_server.set_text(prefs_get_string_attribute("whiteboard.server", "name"));
-	this->_port.set_text(prefs_get_string_attribute("whiteboard.server", "port"));
-	this->_username.set_text(prefs_get_string_attribute("whiteboard.server", "username"));
-	this->_usessl.set_active((prefs_get_int_attribute("whiteboard.server", "ssl", 0) == 1) ? true : false);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+	this->_server.set_text(prefs->getString("whiteboard.server", "name"));
+	/// @todo Convert port to an integer preference?
+	this->_port.set_text(prefs->getString("whiteboard.server", "port"));
+	this->_username.set_text(prefs->getString("whiteboard.server", "username"));
+	this->_usessl.set_active(prefs->getBool("whiteboard.server", "ssl", false);
 
 	this->_layout.attach(this->_labels[0], 0, 1, 0, 1);
 	this->_layout.attach(this->_labels[1], 0, 1, 1, 2);
@@ -195,6 +197,7 @@ WhiteboardConnectDialogImpl::_registerCallback()
 void
 WhiteboardConnectDialogImpl::_respCallback(int resp)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 	if (resp == GTK_RESPONSE_OK) 
 	{
 		Glib::ustring server, port, username, password;
@@ -233,7 +236,7 @@ WhiteboardConnectDialogImpl::_respCallback(int resp)
 					this->_desktop->messageStack()->flash(INFORMATION_MESSAGE, msg.data());
 	
 					// Save preferences
-					prefs_set_string_attribute(this->_prefs_path, "server", this->_server.get_text().c_str());
+					prefs->setString(this->_prefs_path, "server", this->_server.get_text());
 					break;
 				default:
 					break;
@@ -271,7 +274,7 @@ WhiteboardConnectDialogImpl::_respCallback(int resp)
 					this->_desktop->messageStack()->flash(INFORMATION_MESSAGE, msg.data());
 	
 					// Save preferences
-					prefs_set_string_attribute(this->_prefs_path, "server", this->_server.get_text().c_str());
+					prefs->setString(this->_prefs_path, "server", this->_server.get_text());
 					break;
 				default:
 					break;
@@ -297,11 +300,11 @@ WhiteboardConnectDialogImpl::_useSSLClickedCallback()
 	}
 }
 
-}
+} // namespace Dialog
 
-}
+} // namespace UI
 
-}
+} // namespace Inkscape
 
 /*
   Local Variables:

@@ -25,6 +25,7 @@
 #include "gc-core.h"
 #include <dialogs/dialog-events.h>
 #include "io/sys.h"
+#include "preferences.h"
 
 namespace Inkscape
 {
@@ -306,8 +307,9 @@ void FileListViewText::on_cursor_changed()
     //get file url
     fileUrl = get_text(posArray[0], 1); //http url
 
+    //Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     //Glib::ustring fileUrl = "dav://"; //dav url
-    //fileUrl.append(prefs_get_string_attribute("options.ocalurl", "str"));
+    //fileUrl.append(prefs->getString("options.ocalurl", "str"));
     //fileUrl.append("/dav.php/");
     //fileUrl.append(get_text(posArray[0], 3)); //author dir
     //fileUrl.append("/");
@@ -418,11 +420,12 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
 
     notFoundLabel->hide();
     descriptionLabel->set_text("");
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     Glib::ustring searchTag = searchTagEntry->get_text();
     // create the ocal uri to get rss feed
     Glib::ustring uri = "http://";
-    uri.append(prefs_get_string_attribute("options.ocalurl", "str"));
+    uri.append(prefs->getString("options.ocalurl", "str"));
     uri.append("/media/feed/rss/");
     uri.append(searchTag);
     if (!Glib::get_charset()) //If we are not utf8
