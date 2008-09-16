@@ -77,7 +77,6 @@ LatexOutput::save (Inkscape::Extension::Output *mod2, SPDocument *doc, const gch
     /* Release arena */
     sp_item_invoke_hide (mod->base, mod->dkey);
     mod->base = NULL;
-    nr_arena_item_unref (mod->root);
     mod->root = NULL;
     nr_object_unref ((NRObject *) mod->arena);
     mod->arena = NULL;

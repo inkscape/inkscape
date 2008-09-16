@@ -208,7 +208,6 @@ SPSVGView::setDocument (SPDocument *document)
 
         if (ai) {
             nr_arena_item_add_child (SP_CANVAS_ARENA (_drawing)->root, ai, NULL);
-            nr_arena_item_unref (ai);
         }
 
         doRescale (!_rescale);

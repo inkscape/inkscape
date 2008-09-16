@@ -344,7 +344,6 @@ sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
         NRArenaItem *ac = sp_item_invoke_show(SP_ITEM(use->child), arena, key, flags);
         if (ac) {
             nr_arena_item_add_child(ai, ac, NULL);
-            nr_arena_item_unref(ac);
         }
         NR::translate t(use->x.computed,
                         use->y.computed);
@@ -529,7 +528,6 @@ sp_use_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUse *use)
                     ai = sp_item_invoke_show(SP_ITEM(use->child), NR_ARENA_ITEM_ARENA(v->arenaitem), v->key, v->flags);
                     if (ai) {
                         nr_arena_item_add_child(v->arenaitem, ai, NULL);
-                        nr_arena_item_unref(ai);
                     }
                 }
 

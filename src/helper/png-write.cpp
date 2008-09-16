@@ -386,11 +386,10 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
         g_free(ebp.px);
     }
 
-    // Hide items
+    // Hide items, this releases arenaitem
     sp_item_invoke_hide(SP_ITEM(sp_document_root(doc)), dkey);
 
-    /* Free Arena and ArenaItem */
-    nr_arena_item_unref(ebp.root);
+    /* Free arena */
     nr_object_unref((NRObject *) arena);
 
     // restore saved blur quality

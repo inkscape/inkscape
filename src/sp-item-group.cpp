@@ -605,7 +605,6 @@ void CGroup::onChildAdded(Inkscape::XML::Node *child) {
 
                 if (ac) {
                     nr_arena_item_append_child (v->arenaitem, ac);
-                    nr_arena_item_unref (ac);
                 }
             }
         }
@@ -624,7 +623,6 @@ void CGroup::onChildAdded(Inkscape::XML::Node *child) {
                 if (ac) {
                     nr_arena_item_add_child (v->arenaitem, ac, NULL);
                     nr_arena_item_set_order (ac, position);
-                    nr_arena_item_unref (ac);
                 }
             }
         }
@@ -774,7 +772,6 @@ void CGroup::_showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, u
             if (ac) {
                 nr_arena_item_add_child (ai, ac, ar);
                 ar = ac;
-                nr_arena_item_unref (ac);
             }
         }
         l = g_slist_remove (l, o);

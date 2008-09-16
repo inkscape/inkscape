@@ -270,7 +270,6 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
             SP_ITEM_SHOW_DISPLAY);
     if (ai) {
         nr_arena_item_add_child (SP_CANVAS_ARENA (drawing)->root, ai, NULL);
-        nr_arena_item_unref (ai);
     }
 
     namedview->show(this);
@@ -1399,7 +1398,6 @@ SPDesktop::setDocument (SPDocument *doc)
                 SP_ITEM_SHOW_DISPLAY);
         if (ai) {
             nr_arena_item_add_child (SP_CANVAS_ARENA (drawing)->root, ai, NULL);
-            nr_arena_item_unref (ai);
         }
         namedview->show(this);
         /* Ugly hack */

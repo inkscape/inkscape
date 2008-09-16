@@ -724,7 +724,6 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 					NRArenaItem *cai;
 					cai = sp_item_invoke_show (SP_ITEM (child), pp->arena, pp->dkey, SP_ITEM_REFERENCE_FLAGS);
 					nr_arena_item_append_child (pp->root, cai);
-					nr_arena_item_unref (cai);
 				}
 			}
 			break; // do not go further up the chain if children are found

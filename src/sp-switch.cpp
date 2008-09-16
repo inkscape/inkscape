@@ -172,7 +172,6 @@ void CSwitch::_showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, 
             if (ac) {
                 nr_arena_item_add_child (ai, ac, ar);
                 ar = ac;
-                nr_arena_item_unref (ac);
             }
         }
         l = g_slist_remove (l, o);

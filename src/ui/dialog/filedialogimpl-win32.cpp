@@ -913,7 +913,6 @@ bool FileOpenDialogImplWin32::set_svg_preview()
     // Tidy up
     sp_document_unref(svgDoc);
     sp_item_invoke_hide((SPItem*)(svgDoc->root), key);
-    nr_arena_item_unref(root);
     nr_object_unref((NRObject *) arena);
 
     // Create the GDK pixbuf

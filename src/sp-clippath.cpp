@@ -171,7 +171,6 @@ sp_clippath_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::
                                                   SP_ITEM_REFERENCE_FLAGS);
             if (ac) {
                 nr_arena_item_add_child(v->arenaitem, ac, NULL);
-                nr_arena_item_unref(ac);
             }
         }
     }
@@ -271,7 +270,6 @@ sp_clippath_show(SPClipPath *cp, NRArena *arena, unsigned int key)
             if (ac) {
                 /* The order is not important in clippath */
                 nr_arena_item_add_child(ai, ac, NULL);
-                nr_arena_item_unref(ac);
             }
         }
     }

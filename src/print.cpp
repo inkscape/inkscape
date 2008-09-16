@@ -113,7 +113,6 @@ sp_print_preview_document(SPDocument *doc)
         /* Release arena */
         sp_item_invoke_hide(mod->base, mod->dkey);
         mod->base = NULL;
-        nr_arena_item_unref(mod->root);
         mod->root = NULL;
         nr_object_unref((NRObject *) mod->arena);
         mod->arena = NULL;
@@ -140,7 +139,6 @@ sp_print_document(Gtk::Window& parentWindow, SPDocument *doc)
 
     // Release arena
     sp_item_invoke_hide(base, dkey);
-    nr_arena_item_unref(root);
     nr_object_unref((NRObject *) arena);
 }
 
@@ -175,7 +173,6 @@ sp_print_document_to_file(SPDocument *doc, gchar const *filename)
     /* Release arena */
     sp_item_invoke_hide(mod->base, mod->dkey);
     mod->base = NULL;
-    nr_arena_item_unref(mod->root);
     mod->root = NULL;
     nr_object_unref((NRObject *) mod->arena);
     mod->arena = NULL;

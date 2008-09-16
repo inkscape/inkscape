@@ -874,7 +874,6 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     // Hide items
     sp_item_invoke_hide(SP_ITEM(sp_document_root(document)), dkey);
     
-    nr_arena_item_unref(root);
     nr_object_unref((NRObject *) arena);
     
     guchar *trace_px = g_new(guchar, width * height);

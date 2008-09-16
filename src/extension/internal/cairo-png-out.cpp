@@ -77,7 +77,6 @@ png_render_document_to_file(SPDocument *doc, gchar const *filename)
 
     /* Release arena */
     sp_item_invoke_hide(base, dkey);
-    nr_arena_item_unref(root);
     nr_object_unref((NRObject *) arena);
 /* end */
     delete renderer;
