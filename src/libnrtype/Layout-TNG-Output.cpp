@@ -450,9 +450,10 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
         double character_advance;
         Span const &span = _characters[char_index].span(this);
 
-        for (next_cluster_char_index = char_index + 1 ;
-             next_cluster_char_index < _characters.size() && !_characters[next_cluster_char_index].char_attributes.is_cursor_position;
-             next_cluster_char_index++);
+        for (next_cluster_char_index = char_index + 1 ; next_cluster_char_index < _characters.size() ; next_cluster_char_index++) {
+            if (_characters[next_cluster_char_index].in_glyph != -1 && _characters[next_cluster_char_index].char_attributes.is_cursor_position)
+                break;
+        }
 
         if (next_cluster_char_index == _characters.size()) {
             next_cluster_glyph_index = _glyphs.size();
