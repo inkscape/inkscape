@@ -1,7 +1,7 @@
 /** @file
  * @brief  Singleton class to access the preferences file in a convenient way.
- *
- * Authors:
+ */
+/* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  *
  * Copyright (C) 2008 Authors
@@ -16,13 +16,9 @@
 #include <string>
 #include <climits>
 #include <cfloat>
+#include "xml/xml-forward.h"
 
 namespace Inkscape {
-namespace XML {
-    class Node;
-    class Document;
-    class NodeObserver;
-} // namespace XML
 
 /**
  * @brief Preference storage class

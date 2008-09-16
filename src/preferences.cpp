@@ -1,7 +1,7 @@
 /** @file
  * @brief  Singleton class to access the preferences file - implementation
- *
- * Authors:
+ */
+/* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  *
  * Copyright (C) 2008 Authors
@@ -71,8 +71,10 @@ void Preferences::_load()
 {
     _loadDefaults();
     
-    Glib::ustring not_saved = _("Inkscape will run with default settings, "
+    Glib::ustring const not_saved = _("Inkscape will run with default settings, "
                                 "and new settings will not be saved. ");
+    
+    // NOTE: After we upgrade to Glib 2.16, use Glib::ustring::compose
     
     // 1. Does the file exist?
     if (!g_file_test(_prefs_filename.data(), G_FILE_TEST_EXISTS)) {
@@ -82,8 +84,12 @@ void Preferences::_load()
             // No - create the profile directory
             if (g_mkdir(_prefs_dir.data(), 0755)) {
                 // the creation failed
-                _errorDialog(Glib::ustring::compose(_("Cannot create profile directory %1."),
-                    Glib::filename_to_utf8(_prefs_dir)), not_saved);
+                //_errorDialog(Glib::ustring::compose(_("Cannot create profile directory %1."),
+                //    Glib::filename_to_utf8(_prefs_dir)), not_saved);
+                gchar *msg = g_strdup_printf(_("Cannot create profile directory %s."),
+                    Glib::filename_to_utf8(_prefs_dir).data());
+                _errorDialog(msg, not_saved);
+                g_free(msg);
                 return;
             }
             // create some subdirectories for user stuff
@@ -96,15 +102,23 @@ void Preferences::_load()
             
         } else if (!g_file_test(_prefs_dir.data(), G_FILE_TEST_IS_DIR)) {
             // The profile dir is not actually a directory
-            _errorDialog(Glib::ustring::compose(_("%1 is not a valid directory."),
-                Glib::filename_to_utf8(_prefs_dir)), not_saved);
+            //_errorDialog(Glib::ustring::compose(_("%1 is not a valid directory."),
+            //    Glib::filename_to_utf8(_prefs_dir)), not_saved);
+            gchar *msg = g_strdup_printf(_("%s is not a valid directory."),
+                Glib::filename_to_utf8(_prefs_dir).data());
+            _errorDialog(msg, not_saved);
+            g_free(msg);
             return;
         }
         // The profile dir exists and is valid.
         if (!g_file_set_contents(_prefs_filename.data(), preferences_skeleton, PREFERENCES_SKELETON_SIZE, NULL)) {
             // The write failed.
-            _errorDialog(Glib::ustring::compose(_("Failed to create the preferences file %1."),
-                Glib::filename_to_utf8(_prefs_filename)), not_saved);
+            //_errorDialog(Glib::ustring::compose(_("Failed to create the preferences file %1."),
+            //    Glib::filename_to_utf8(_prefs_filename)), not_saved);
+            gchar *msg = g_strdup_printf(_("Failed to create the preferences file %s."),
+                Glib::filename_to_utf8(_prefs_filename).data());
+            _errorDialog(msg, not_saved);
+            g_free(msg);
             return;
         }
         
@@ -117,30 +131,46 @@ void Preferences::_load()
     // Yes, the pref file exists.
     // 2. Is it a regular file?
     if (!g_file_test(_prefs_filename.data(), G_FILE_TEST_IS_REGULAR)) {
-        _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
-            Glib::filename_to_utf8(_prefs_filename)), not_saved);
+        //_errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
+        //    Glib::filename_to_utf8(_prefs_filename)), not_saved);
+        gchar *msg = g_strdup_printf(_("The preferences file %s is not a regular file."),
+            Glib::filename_to_utf8(_prefs_filename).data());
+        _errorDialog(msg, not_saved);
+        g_free(msg);
         return;
     }
     
     // 3. Is the file readable?
     gchar *prefs_xml = NULL; gsize len = 0;
     if (!g_file_get_contents(_prefs_filename.data(), &prefs_xml, &len, NULL)) {
-        _errorDialog(Glib::ustring::compose(_("The preferences file %1 could not be read."),
-            Glib::filename_to_utf8(_prefs_filename)), not_saved);
+        //_errorDialog(Glib::ustring::compose(_("The preferences file %1 could not be read."),
+        //    Glib::filename_to_utf8(_prefs_filename)), not_saved);
+        gchar *msg = g_strdup_printf(_("The preferences file %s could not be read."),
+            Glib::filename_to_utf8(_prefs_filename).data());
+        _errorDialog(msg, not_saved);
+        g_free(msg);
         return;
     }
     // 4. Is it valid XML?
     Inkscape::XML::Document *prefs_read = sp_repr_read_mem(prefs_xml, len, NULL);
     g_free(prefs_xml);
     if (!prefs_read) {
-        _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
-            Glib::filename_to_utf8(_prefs_filename)), not_saved);
+        //_errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
+        //    Glib::filename_to_utf8(_prefs_filename)), not_saved);
+        gchar *msg = g_strdup_printf(_("The preferences file %s is not a valid XML document."),
+            Glib::filename_to_utf8(_prefs_filename).data());
+        _errorDialog(msg, not_saved);
+        g_free(msg);
         return;
     }
     // 5. Basic sanity check: does the root element have a correct name?
     if (strcmp(prefs_read->root()->name(), "inkscape")) {
-        _errorDialog(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
-            Glib::filename_to_utf8(_prefs_filename)), not_saved);
+        //_errorDialog(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
+        //    Glib::filename_to_utf8(_prefs_filename)), not_saved);
+        gchar *msg = g_strdup_printf(_("The file %s is not a valid Inkscape preferences file."),
+            Glib::filename_to_utf8(_prefs_filename).data());
+        _errorDialog(msg, not_saved);
+        g_free(msg);
         Inkscape::GC::release(prefs_read);
         return;
     }
@@ -337,8 +367,11 @@ Glib::ustring Preferences::getString(Glib::ustring const &pref_key, Glib::ustrin
  */
 void Preferences::setBool(Glib::ustring const &pref_key, Glib::ustring const &attr, bool value)
 {
+    /// @todo Boolean values should be stored as "true" and "false",
+    /// but this is not possible ude to an interaction with event contexts.
+    /// Investigate this in depth.
     Inkscape::XML::Node *node = _getNode(pref_key, true);
-    node->setAttribute(attr.data(), ( value ? "true" : "false" ));
+    node->setAttribute(attr.data(), ( value ? "1" : "0" ));
 }
 
 /**
@@ -454,9 +487,9 @@ Preferences *Preferences::_instance = NULL;
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
-  fill-column:75
+  fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

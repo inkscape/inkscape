@@ -3927,7 +3927,7 @@ static void update_presets_list (GObject *tbl)
             // newly added item is at the same index as the
             // save command, so we need to change twice for it to take effect
             ege_select_one_action_set_active(sel, 0);
-            ege_select_one_action_set_active(sel, i);
+            ege_select_one_action_set_active(sel, i + 1); // one-based index
             return;
         }
     }
