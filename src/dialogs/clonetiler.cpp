@@ -854,6 +854,7 @@ static NRArena const *trace_arena = NULL;
 static unsigned trace_visionkey;
 static NRArenaItem *trace_root;
 static gdouble trace_zoom;
+static SPDocument *trace_doc;
 
 static void
 clonetiler_trace_hide_tiled_clones_recursively (SPObject *from)
@@ -874,15 +875,16 @@ clonetiler_trace_setup (SPDocument *doc, gdouble zoom, SPItem *original)
     trace_arena = NRArena::create();
     /* Create ArenaItem and set transform */
     trace_visionkey = sp_item_display_key_new(1);
-    trace_root = sp_item_invoke_show( SP_ITEM(SP_DOCUMENT_ROOT (doc)),
+    trace_doc = doc;
+    trace_root = sp_item_invoke_show( SP_ITEM(SP_DOCUMENT_ROOT (trace_doc)),
                                       (NRArena *) trace_arena, trace_visionkey, SP_ITEM_SHOW_DISPLAY);
 
     // hide the (current) original and any tiled clones, we only want to pick the background
     sp_item_invoke_hide(original, trace_visionkey);
-    clonetiler_trace_hide_tiled_clones_recursively (SP_OBJECT(SP_DOCUMENT_ROOT (doc)));
+    clonetiler_trace_hide_tiled_clones_recursively (SP_OBJECT(SP_DOCUMENT_ROOT (trace_doc)));
 
-    sp_document_root (doc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-    sp_document_ensure_up_to_date(doc);
+    sp_document_root (trace_doc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    sp_document_ensure_up_to_date(trace_doc);
 
     trace_zoom = zoom;
 }
@@ -964,6 +966,9 @@ clonetiler_trace_pick (NR::Rect box)
 static void
 clonetiler_trace_finish ()
 {
+    if (trace_doc) {
+        sp_item_invoke_hide(SP_ITEM(sp_document_root(trace_doc)), trace_visionkey);
+    }
     if (trace_arena) {
         ((NRObject *) trace_arena)->unreference();
         trace_arena = NULL;
