@@ -47,6 +47,7 @@
 #include "live_effects/lpeobject-reference.h"
 #include "sp-title.h"
 #include "sp-desc.h"
+#include "sp-switch.h"
 
 static void sp_group_class_init (SPGroupClass *klass);
 static void sp_group_init (SPGroup *group);
@@ -222,51 +223,54 @@ sp_group_modified (SPObject *object, guint flags)
 static Inkscape::XML::Node *
 sp_group_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
-	SPGroup *group;
-	SPObject *child;
-	Inkscape::XML::Node *crepr;
+    SPGroup *group;
+    SPObject *child;
+    Inkscape::XML::Node *crepr;
 
-	group = SP_GROUP (object);
+    group = SP_GROUP (object);
 
-	if (flags & SP_OBJECT_WRITE_BUILD) {
-		GSList *l;
-		if (!repr) {
-                    repr = xml_doc->createElement("svg:g");
-                }
-		l = NULL;
-		for (child = sp_object_first_child(object); child != NULL; child = SP_OBJECT_NEXT(child) ) {
-			if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
-			crepr = child->updateRepr(xml_doc, NULL, flags);
-			if (crepr) l = g_slist_prepend (l, crepr);
-		}
-		while (l) {
-			repr->addChild((Inkscape::XML::Node *) l->data, NULL);
-			Inkscape::GC::release((Inkscape::XML::Node *) l->data);
-			l = g_slist_remove (l, l->data);
-		}
-	} else {
-		for (child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-			if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
-			child->updateRepr(flags);
-		}
-	}
+    if (flags & SP_OBJECT_WRITE_BUILD) {
+        GSList *l;
+        if (!repr) {
+            if (SP_IS_SWITCH(object))
+                repr = xml_doc->createElement("svg:switch");
+            else
+                repr = xml_doc->createElement("svg:g");
+        }
+        l = NULL;
+        for (child = sp_object_first_child(object); child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
+            crepr = child->updateRepr(xml_doc, NULL, flags);
+            if (crepr) l = g_slist_prepend (l, crepr);
+        }
+        while (l) {
+            repr->addChild((Inkscape::XML::Node *) l->data, NULL);
+            Inkscape::GC::release((Inkscape::XML::Node *) l->data);
+            l = g_slist_remove (l, l->data);
+        }
+    } else {
+        for (child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            if (SP_IS_TITLE(child) || SP_IS_DESC(child)) continue;
+            child->updateRepr(flags);
+        }
+    }
 
-	if ( flags & SP_OBJECT_WRITE_EXT ) {
-		const char *value;
-		if ( group->_layer_mode == SPGroup::LAYER ) {
-			value = "layer";
-		} else if ( flags & SP_OBJECT_WRITE_ALL ) {
-			value = "group";
-		} else {
-			value = NULL;
-		}
-		repr->setAttribute("inkscape:groupmode", value);
-	}
+    if ( flags & SP_OBJECT_WRITE_EXT ) {
+        const char *value;
+        if ( group->_layer_mode == SPGroup::LAYER ) {
+            value = "layer";
+        } else if ( flags & SP_OBJECT_WRITE_ALL ) {
+            value = "group";
+        } else {
+            value = NULL;
+        }
+        repr->setAttribute("inkscape:groupmode", value);
+    }
 
-	if (((SPObjectClass *) (parent_class))->write)
-		((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (parent_class))->write)
+        ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
 
-	return repr;
+    return repr;
 }
 
 static void
