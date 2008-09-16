@@ -960,16 +960,14 @@ int sp_main_shell(char const* command_name)
                 if ( strcmp(useme, "quit") == 0 ) {
                     // Time to quit
                     fflush(stdout);
-                    exit(0);
+                    linedata = 0; // mark for exit
                 } else if ( len < 1 ) {
                     // blank string. Do nothing.
                 } else {
                     GError* parseError = 0;
                     gchar** argv = 0;
                     gint argc = 0;
-                    // add a dummy "inkscape" in front, as popt expects the program name there:
-                    gchar *cl = g_strdup_printf ("inkscape %s", useme);
-                    if ( g_shell_parse_argv(cl, &argc, &argv, &parseError) ) {
+                    if ( g_shell_parse_argv(command_line, &argc, &argv, &parseError) ) {
                         poptContext ctx = poptGetContext(NULL, argc, const_cast<const gchar**>(argv), options, 0);
                         poptSetOtherOptionHelp(ctx, _("[OPTIONS...] [FILE...]\n\nAvailable options:"));
                         if ( ctx ) {
@@ -984,7 +982,6 @@ int sp_main_shell(char const* command_name)
                     } else {
                         g_warning("problem parsing commandline: %s", useme);
                     }
-                    g_free(cl);
                 }
             }
         } // if (linedata...
@@ -1021,6 +1018,7 @@ int sp_main_console(int argc, char const **argv)
 
     if (sp_shell) {
         sp_main_shell(argv[0]); // Run as interactive shell
+        exit(0);
     } else {
         sp_process_file_list(fl); // Normal command line invokation
     }
