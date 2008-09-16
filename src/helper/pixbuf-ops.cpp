@@ -169,6 +169,8 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
                                           (GdkPixbufDestroyNotify)g_free,
                                           NULL);
 
+     nr_arena_item_unref(root);
+
 //    gdk_pixbuf_save (pixbuf, "C:\\temp\\internal.jpg", "jpeg", NULL, "quality","100", NULL);
 
     return pixbuf;
