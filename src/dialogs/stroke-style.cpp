@@ -688,6 +688,9 @@ sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPD
 
         m->append(*i);
     }
+
+    sp_item_invoke_hide(SP_ITEM(sp_document_root(sandbox)), visionkey);
+    nr_object_unref((NRObject *) arena);
 }
 
 /**

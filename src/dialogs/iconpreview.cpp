@@ -268,7 +268,6 @@ void IconPreviewPanel::renderPreview( SPObject* obj )
     /* Create ArenaItem and set transform */
     unsigned int visionkey = sp_item_display_key_new(1);
 
-    /* fixme: Memory manage root if needed (Lauris) */
     root = sp_item_invoke_show ( SP_ITEM( SP_DOCUMENT_ROOT(doc) ),
                                  arena, visionkey, SP_ITEM_SHOW_DISPLAY );
 
@@ -285,6 +284,9 @@ void IconPreviewPanel::renderPreview( SPObject* obj )
         images[i]->queue_draw();
     }
     updateMagnify();
+
+    sp_item_invoke_hide(SP_ITEM(sp_document_root(doc)), visionkey);
+    nr_object_unref((NRObject *) arena);
 }
 
 void IconPreviewPanel::updateMagnify()
