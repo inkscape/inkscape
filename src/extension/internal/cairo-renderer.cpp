@@ -266,7 +266,7 @@ static void sp_group_render(SPItem *item, CairoRenderContext *ctx)
 {
     SPGroup *group = SP_GROUP(item);
     CairoRenderer *renderer = ctx->getRenderer();
-    TRACE(("group op: %f\n", SP_SCALE24_TO_FLOAT(SP_OBJECT_STYLE(item)->opacity.value)));
+    TRACE(("sp_group_renderer opacity: %f\n", SP_SCALE24_TO_FLOAT(SP_OBJECT_STYLE(item)->opacity.value)));
 
     GSList *l = g_slist_reverse(group->childList(false));
     while (l) {
@@ -438,12 +438,14 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     if(res == 0) {
         res = PX_PER_IN;
     }
+    TRACE(("sp_asbitmap_render: resolution: %f\n", res ));
 
 
     // The width and height of the bitmap in pixels
     unsigned width = (unsigned) floor ((bbox.x1 - bbox.x0) * (res / PX_PER_IN));
     unsigned height =(unsigned) floor ((bbox.y1 - bbox.y0) * (res / PX_PER_IN));
     
+    // Scale to exactly fit integer bitmap (is this really necessary?)
     double scale_x = (bbox.x1 - bbox.x0) / width;
     double scale_y = (bbox.y1 - bbox.y0) / height;
     
@@ -486,7 +488,8 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     }
     t = (Geom::Matrix)(Geom::Scale(scale_x, -scale_y) * (Geom::Matrix)(Geom::Translate (shift_x, shift_y)* eek.inverse()));
 
-    //t = t * ((Geom::Matrix)ctx->getCurrentState()->transform).inverse();
+    // Must subtract orginal item transform.
+    t = t * ((Geom::Matrix)ctx->getCurrentState()->item_transform).inverse();
 
     // Do the export
     GdkPixbuf *pb = sp_generate_internal_bitmap(document, NULL,
@@ -597,7 +600,7 @@ CairoRenderer::setStateForItem(CairoRenderContext *ctx, SPItem const *item)
     // transformation before rendering the item.
     if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item) || SP_IS_IMAGE(item))
         state->parent_has_userspace = TRUE;
-    TRACE(("set op: %f\n", state->opacity));
+    TRACE(("setStateForItem opacity: %f\n", state->opacity));
 }
 
 void
@@ -609,6 +612,7 @@ CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
     CairoRenderState *state = ctx->getCurrentState();
     state->need_layer = ( state->mask || state->clip_path || state->opacity != 1.0 );
 
+    // Draw item on a temporary surface so a mask, clip path, or opacity can be applied to it.
     if (state->need_layer) {
         state->merge_opacity = FALSE;
         ctx->pushLayer();
@@ -652,7 +656,7 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool page
             d.y1 *= PT_PER_PX;
         }
     }
-    TRACE(("%f x %f\n", ctx->_width, ctx->_height));
+    TRACE(("setupDocument: %f x %f\n", ctx->_width, ctx->_height));
 
     bool ret = ctx->setupSurface(d.x1-d.x0, d.y1-d.y0);
 
