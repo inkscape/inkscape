@@ -298,6 +298,7 @@ static gboolean sp_nv_read_opacity(gchar const *str, guint32 *color)
 void
 CanvasAxonomGrid::readRepr()
 {
+    /// @todo Replace direct XML preference node manipulation with calls to public prefs API
     gchar const *value;
     if ( (value = repr->attribute("originx")) ) {
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::X], &gridunit);
@@ -350,12 +351,12 @@ CanvasAxonomGrid::readRepr()
     }
 
     if ( (value = repr->attribute("visible")) ) {
-        visible = (strcmp(value,"true") == 0);
+        visible = (strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
     }
 
     if ( (value = repr->attribute("enabled")) ) {
         g_assert(snapper != NULL);
-        snapper->setEnabled(strcmp(value,"true") == 0);
+        snapper->setEnabled(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
     }
 
     for (GSList *l = canvasitems; l != NULL; l = l->next) {

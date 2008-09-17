@@ -614,16 +614,16 @@ CanvasXYGrid::readRepr()
     }
 
     if ( (value = repr->attribute("dotted")) ) {
-        render_dotted = (strcmp(value,"true") == 0);
+        render_dotted = (strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
     }
 
     if ( (value = repr->attribute("visible")) ) {
-        visible = (strcmp(value,"true") == 0);
+        visible = (strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
     }
     
     if ( (value = repr->attribute("enabled")) ) {
         g_assert(snapper != NULL);
-        snapper->setEnabled(strcmp(value,"true") == 0);
+        snapper->setEnabled(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
     }
 
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
