@@ -80,31 +80,39 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
     Matrix m0;
     VonKochRefType type = reftype.get_value();
     if (type==VKREF_BBOX){
-        Rect bbox = path_in[0].boundsExact();
-        for(unsigned i=1; i < path_in.size(); i++){
-            bbox.unionWith(path_in[i].boundsExact());
-        }
-        m0 = Matrix(bbox[X].extent(),0,0,bbox[X].extent(), bbox.min()[X], (bbox.min()[Y]+bbox.max()[Y])/2);
+        Rect bbox = Rect(boundingbox_X,boundingbox_Y);
+        m0 = Matrix(boundingbox_X.extent(),0,0,boundingbox_X.extent(), boundingbox_X.min(), boundingbox_Y.middle());
+
     }else{
         if (generating_path.size()==0) return path_in;
         Point p = generating_path.back().back().pointAt(0);
-        Point u = generating_path.back().back().pointAt(0.999)-p;
+        Point u = generating_path.back().back().pointAt(1)-p;
         m0 = Matrix(u[X], u[Y],-u[Y], u[X], p[X], p[Y]);
     }
     m0 = m0.inverse();
 
+
     std::vector<Matrix> transforms;
+    unsigned end = generating_path.size(); 
+    if (type==VKREF_SEG) end-=1;
     for (unsigned i=0; i<generating_path.size(); i++){
-        unsigned end = generating_path[i].size(); 
-        if(type==VKREF_SEG && i==generating_path.size()-1) end-=1;
-        for (unsigned j=0; j<end; j++){   
-            Point p = generating_path[i].pointAt(j);
-            Point u = generating_path[i].pointAt(j+0.999)-generating_path[i].pointAt(j+0.001);
-            Matrix m = Matrix(u[X], u[Y],-u[Y], u[X], p[X], p[Y]);
+        Matrix m;
+        if(generating_path[i].size()==1){
+            Point p = generating_path[i].pointAt(0);
+            Point u = generating_path[i].pointAt(1)-p;
+            m = Matrix(u[X], u[Y],-u[Y], u[X], p[X], p[Y]);
+            m = m0*m;
+            transforms.push_back(m);
+        }else if(generating_path[i].size()>=2){
+            Point p = generating_path[i].pointAt(1);
+            Point u = generating_path[i].pointAt(2)-p;
+            Point v = p-generating_path[i].pointAt(0);
+            m = Matrix(u[X], u[Y],v[X], v[Y], p[X], p[Y]);
             m = m0*m;
             transforms.push_back(m);
         }
     }
+
     if (transforms.size()==0) return path_in;
 
     //Do nothing if the output is too complex... 
@@ -151,43 +159,28 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
 }
 
 void
+LPEVonKoch::doBeforeEffect (SPLPEItem *lpeitem)
+{
+    original_bbox(lpeitem);
+}
+
+
+void
 LPEVonKoch::resetDefaults(SPItem * item)
 {
-    if (!SP_IS_PATH(item)) return;
-
     using namespace Geom;
-
-    // set the bend path to run horizontally in the middle of the bounding box of the original path
-    Piecewise<D2<SBasis> > pwd2;
-    std::vector<Geom::Path> temppath = sp_svg_read_pathv( SP_OBJECT_REPR(item)->attribute("inkscape:original-d"));
-    for (unsigned int i=0; i < temppath.size(); i++) {
-        pwd2.concat( temppath[i].toPwSb() );
-    }
-
-    D2<Piecewise<SBasis> > d2pw = make_cuts_independent(pwd2);
-    Interval bndsX = bounds_exact(d2pw[0]);
-    Interval bndsY = bounds_exact(d2pw[1]);
-    Point start(bndsX.min(), (bndsY.max()+bndsY.min())/2);
-    Point end(bndsX.max(), (bndsY.max()+bndsY.min())/2);
+    original_bbox(SP_LPE_ITEM(item));
+    Point start(boundingbox_X.min(), boundingbox_Y.middle());
+    Point end(boundingbox_X.max(), boundingbox_Y.middle());
 
     std::vector<Geom::Path> paths;
-    Geom::Path path;
-    path = Geom::Path();
-    path.start( start );
+    Geom::Path path = Geom::Path(start);
     path.appendNew<Geom::LineSegment>( end );
-    paths.push_back(path * Matrix(1./3,0,0,1./3,start[X]*2./3,start[Y]*2./3 + bndsY.extent()/2));
-    paths.push_back(path * Matrix(1./3,0,0,1./3,  end[X]*2./3,  end[Y]*2./3 + bndsY.extent()/2));
+    paths.push_back(path * Matrix(1./3,0,0,1./3,start[X]*2./3,start[Y]*2./3 + boundingbox_Y.extent()/2));
+    paths.push_back(path * Matrix(1./3,0,0,1./3,  end[X]*2./3,  end[Y]*2./3 + boundingbox_Y.extent()/2));
     paths.push_back(path);
 
     generator.set_new_value(paths, true);
-
-    
-
-
-//     Piecewise<D2<SBasis> > default_gen;
-//     default_gen.concat(Piecewise<D2<SBasis> >(D2<SBasis>(Linear(bndsX.min(),bndsX.max()),Linear((bndsY.min()+bndsY.max())/2))));
-//     default_gen.concat(Piecewise<D2<SBasis> >(D2<SBasis>(Linear(bndsX.max(),bndsX.max()+bndsX.extent()/2),Linear((bndsY.min()+bndsY.max())/2))));
-//     generator.set_new_value(default_gen, true);
 }
 
 void

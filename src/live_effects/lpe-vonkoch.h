@@ -10,6 +10,7 @@
  */
 
 #include "live_effects/effect.h"
+#include "live_effects/lpegroupbbox.h"
 #include "live_effects/parameter/path.h"
 #include "live_effects/parameter/enum.h"
 #include "live_effects/parameter/bool.h"
@@ -35,7 +36,7 @@ public:
     virtual void param_setup_nodepath(Inkscape::NodePath::Path *np);  
   };
 
-class LPEVonKoch : public Effect {
+class LPEVonKoch : public Effect, GroupBBoxEffect {
 public:
     LPEVonKoch(LivePathEffectObject *lpeobject);
     virtual ~LPEVonKoch();
@@ -43,6 +44,8 @@ public:
     virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
     virtual void resetDefaults(SPItem * item);
+
+    virtual void doBeforeEffect(SPLPEItem * item);
 
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 
