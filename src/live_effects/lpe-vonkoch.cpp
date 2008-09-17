@@ -50,12 +50,14 @@ LPEVonKoch::LPEVonKoch(LivePathEffectObject *lpeobject) :
     generator(_("Generating path"), _("Path whos segments define the fractal"), "generator", &wr, this, "M0,0 L3,0 M0,1 L1,1 M 2,1 L3,1"),
     drawall(_("Draw all generations"), _("If unchecked, draw only the last generation"), "drawall", &wr, this, true),
     reftype(_("Reference"), _("Generating path segments define transforms in reference to bbox or last segment"), "reftype", VonKochRefTypeConverter, &wr, this, VKREF_BBOX),
+    similar_only(_("Use uniform scale/rotation only"), _("If off, 2segments component of generating path can be used to define a general rtansform. If on, they only affect the orientation preserving/reversing of the transform."), "similar_only", &wr, this, false),
     maxComplexity(_("Max complexity"), _("Disable effect if the output is too complex"), "maxComplexity", &wr, this, 1000)
 {
     registerParameter( dynamic_cast<Parameter *>(&generator) );
     registerParameter( dynamic_cast<Parameter *>(&nbgenerations) );
     registerParameter( dynamic_cast<Parameter *>(&drawall) );
     registerParameter( dynamic_cast<Parameter *>(&reftype) );
+    registerParameter( dynamic_cast<Parameter *>(&similar_only) );
     registerParameter( dynamic_cast<Parameter *>(&maxComplexity) );
 
     nbgenerations.param_make_integer();
@@ -107,6 +109,11 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
             Point p = generating_path[i].pointAt(1);
             Point u = generating_path[i].pointAt(2)-p;
             Point v = p-generating_path[i].pointAt(0);
+            if (similar_only){
+                int sign = (u[X]*v[Y]-u[Y]*v[X]>=0?1:-1);
+                v[X] = -u[Y]*sign;
+                v[Y] =  u[X]*sign;
+            }
             m = Matrix(u[X], u[Y],v[X], v[Y], p[X], p[Y]);
             m = m0*m;
             transforms.push_back(m);

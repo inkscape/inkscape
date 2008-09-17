@@ -52,6 +52,7 @@ public:
 private:
     ScalarParam  nbgenerations;
     VonKochPathParam    generator;
+    BoolParam    similar_only;
     BoolParam    drawall;
     EnumParam<VonKochRefType> reftype;
     ScalarParam  maxComplexity;
