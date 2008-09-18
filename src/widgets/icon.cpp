@@ -319,12 +319,15 @@ sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
                     addPreRender( lsize, name );
 
                     // Add a hook to render if set visible before prerender is done.
-                    g_signal_connect( G_OBJECT(img), "map", G_CALLBACK(imageMapCB), GINT_TO_POINTER(0) );
+                    g_signal_connect( G_OBJECT(img), "map", G_CALLBACK(imageMapCB), GINT_TO_POINTER(static_cast<int>(lsize)) );
+                    if ( dump ) {
+                        g_message("      connecting %p for imageMapCB for [%s] %d", img, name, (int)lsize);
+                    }
                 }
                 widget = GTK_WIDGET(img);
                 img = 0;
                 if ( dump ) {
-                    g_message( "loaded gtk  '%s' %d  (GTK_IMAGE_STOCK) %s", name, lsize, (stockFound ? "STOCK" : "local") );
+                    g_message( "loaded gtk  '%s' %d  (GTK_IMAGE_STOCK) %s  on %p", name, lsize, (stockFound ? "STOCK" : "local"), widget );
                 }
             } else if ( type == GTK_IMAGE_ICON_NAME ) {
                 widget = GTK_WIDGET(img);
@@ -1068,12 +1071,15 @@ void imageMapCB(GtkWidget* widget, gpointer user_data) {
     gchar* id = 0;
     GtkIconSize size = GTK_ICON_SIZE_INVALID;
     gtk_image_get_stock(GTK_IMAGE(widget), &id, &size);
+    int lsize = GPOINTER_TO_INT(user_data);
     if ( id ) {
+        int psize = sp_icon_get_phys_size(lsize);
+        //g_message("imageMapCB(%p) for %s:%d:%d", widget, id, lsize, psize);
         for ( std::vector<preRenderItem>::iterator it = pendingRenders.begin(); it != pendingRenders.end(); ++it ) {
-            if ( (it->_name == id) && (it->_lsize == static_cast<Inkscape::IconSize>(size)) ) {
-                int psize = sp_icon_get_phys_size(size);
-                prerender_icon(id, size, psize);
+            if ( (it->_name == id) && (it->_lsize == static_cast<Inkscape::IconSize>(lsize)) ) {
+                prerender_icon(id, lsize, psize);
                 pendingRenders.erase(it);
+                //g_message("    prerender for %s:%d:%d", id, lsize, psize);
                 break;
             }
         }
