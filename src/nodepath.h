@@ -52,14 +52,14 @@ class Radial{
 /**  Amplitude */
 	double a;
 	Radial() {}
-	//	Radial(NR::Point const &p); // Convert a point to radial coordinates
+	//	Radial(Geom::Point const &p); // Convert a point to radial coordinates
 	Radial(Radial &p) : r(p.r),a(p.a) {}
-	//	operator NR::Point() const;
+	//	operator Geom::Point() const;
 
 /**
- * Construct Radial from NR::Point.
+ * Construct Radial from Geom::Point.
  */
-Radial(NR::Point const &p)
+Radial(Geom::Point const &p)
 {
 	r = NR::L2(p);
 	if (r > 0) {
@@ -70,14 +70,14 @@ Radial(NR::Point const &p)
 }
 
 /**
- * Cast Radial to cartesian NR::Point.
+ * Cast Radial to cartesian Geom::Point.
  */
-operator NR::Point() const
+operator Geom::Point() const
 {
 	if (a == HUGE_VAL) {
-		return NR::Point(0,0);
+		return Geom::Point(0,0);
 	} else {
-		return r*NR::Point(cos(a), sin(a));
+		return r*Geom::Point(cos(a), sin(a));
 	}
 }
 
@@ -157,11 +157,11 @@ class NodeSide{
 /**  Pointer to the next node, */
 	Node * other;
 /**  Position */
-	NR::Point pos;
+	Geom::Point pos;
 /**  Origin (while dragging) in radial notation */
 	Radial origin_radial;
 /**  Origin (while dragging) in x/y notation */
-	NR::Point origin;
+	Geom::Point origin;
 /**  Knots are Inkscape's way of providing draggable points.  This
  *  Knot is the point on the curve representing the control point in a
  *  bezier curve.*/
@@ -185,9 +185,9 @@ class Node {
 /**  Boolean.  Am I currently selected or not? */
 	guint selected : 1;
 /**  */
-	NR::Point pos;
+	Geom::Point pos;
 /**  */
-	NR::Point origin;
+	Geom::Point origin;
 /**  Knots are Inkscape's way of providing draggable points.  This
  *  Knot is the point on the curve representing the endpoint.*/
 	SPKnot * knot;
@@ -230,7 +230,7 @@ class Path {
 	GList * selected;
 /**  Transforms (userspace <---> virtual space?   someone please describe )
 	 njh: I'd be guessing that these are item <-> desktop transforms.*/
-	NR::Matrix i2d, d2i;
+	Geom::Matrix i2d, d2i;
 /**  The DOM node which describes this NodePath */
     Inkscape::XML::Node *repr;
     gchar *repr_key;
@@ -239,7 +239,7 @@ class Path {
 	void selection(std::list<Node *> &l);
 
 	guint numSelected() {return (selected? g_list_length(selected) : 0);}
-	NR::Point& singleSelectedCoords() {return (((Node *) selected->data)->pos);}
+	Geom::Point& singleSelectedCoords() {return (((Node *) selected->data)->pos);}
 
     /// draw a "sketch" of the path by using these variables
     SPCanvasItem *helper_path;
@@ -291,11 +291,11 @@ gboolean nodepath_repr_typestr_changed (Inkscape::NodePath::Path * np, const cha
 gboolean node_key (GdkEvent * event);
 void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotation);
 void sp_nodepath_update_statusbar (Inkscape::NodePath::Path *nodepath);
-void sp_nodepath_selected_align(Inkscape::NodePath::Path *nodepath, NR::Dim2 axis);
-void sp_nodepath_selected_distribute(Inkscape::NodePath::Path *nodepath, NR::Dim2 axis);
-void sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p, bool toggle);
-void sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p);
-void sp_nodepath_curve_drag(Inkscape::NodePath::Path *nodepath, int node, double t, NR::Point delta);
+void sp_nodepath_selected_align(Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis);
+void sp_nodepath_selected_distribute(Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis);
+void sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, Geom::Point p, bool toggle);
+void sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, Geom::Point p);
+void sp_nodepath_curve_drag(Inkscape::NodePath::Path *nodepath, int node, double t, Geom::Point delta);
 Inkscape::NodePath::Node * sp_nodepath_get_node_by_index(Inkscape::NodePath::Path *np, int index);
 /* possibly private functions */
 
@@ -328,6 +328,6 @@ void sp_nodepath_selected_nodes_rotate (Inkscape::NodePath::Path * nodepath, gdo
 void sp_nodepath_selected_nodes_scale (Inkscape::NodePath::Path * nodepath, gdouble grow, int which);
 void sp_nodepath_selected_nodes_scale_screen (Inkscape::NodePath::Path * nodepath, gdouble grow, int which);
 
-void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, boost::optional<NR::Point> center);
+void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis, boost::optional<Geom::Point> center);
 
 #endif

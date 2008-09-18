@@ -61,7 +61,7 @@ public:
 
     void update_statusbar ();
 
-    bool is_over_stroke (NR::Point event_p, bool remember);
+    bool is_over_stroke (Geom::Point event_p, bool remember);
 
     void add_node_near_point(); // uses the shapeeditor's remembered point, if any
 
@@ -115,10 +115,10 @@ public:
     void show_handles (bool show);
     void show_helperpath (bool show);
 
-    void flip (NR::Dim2 axis, boost::optional<NR::Point> center = boost::optional<NR::Point>());
+    void flip (Geom::Dim2 axis, boost::optional<Geom::Point> center = boost::optional<Geom::Point>());
 
-    void distribute (NR::Dim2 axis);
-    void align (NR::Dim2 axis);
+    void distribute (Geom::Dim2 axis);
+    void align (Geom::Dim2 axis);
 
     bool nodepath_edits_repr_key(gchar const *name);
 
@@ -135,8 +135,8 @@ private:
     double grab_t;
     int grab_node; // number of node grabbed by sp_node_context_is_over_stroke
     bool hit;
-    NR::Point curvepoint_event; // int coords from event
-    NR::Point curvepoint_doc; // same, in doc coords
+    Geom::Point curvepoint_event; // int coords from event
+    Geom::Point curvepoint_doc; // same, in doc coords
 
     Inkscape::XML::Node *listener_attached_for;
 };

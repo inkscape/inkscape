@@ -24,10 +24,10 @@ enum PencilState {
  * SPPencilContext: a context for pencil tool events
  */
 struct SPPencilContext : public SPDrawContext {
-    NR::Point p[16];
+    Geom::Point p[16];
     gint npoints;
     PencilState state;
-    NR::Point req_tangent;
+    Geom::Point req_tangent;
 
     bool is_drawing;
 };

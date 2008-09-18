@@ -466,25 +466,25 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
  *  \param state  keyboard state to check if ctrl was pressed
 */
 
-void spdc_endpoint_snap_rotation(SPEventContext const *const ec, NR::Point &p, NR::Point const &o,
+void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p, Geom::Point const &o,
                                  guint state)
 {
     unsigned const snaps = abs(prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12));
     /* 0 means no snapping. */
 
     /* mirrored by fabs, so this corresponds to 15 degrees */
-    NR::Point best; /* best solution */
+    Geom::Point best; /* best solution */
     double bn = NR_HUGE; /* best normal */
     double bdot = 0;
-    NR::Point v = NR::Point(0, 1);
+    Geom::Point v = Geom::Point(0, 1);
     double const r00 = cos(M_PI / snaps), r01 = sin(M_PI / snaps);
     double const r10 = -r01, r11 = r00;
 
-    NR::Point delta = p - o;
+    Geom::Point delta = p - o;
 
     for (unsigned i = 0; i < snaps; i++) {
-        double const ndot = fabs(dot(v,NR::rot90(delta)));
-        NR::Point t(r00*v[NR::X] + r01*v[NR::Y],
+        double const ndot = fabs(dot(v,Geom::rot90(delta)));
+        Geom::Point t(r00*v[NR::X] + r01*v[NR::Y],
                     r10*v[NR::X] + r11*v[NR::Y]);
         if (ndot < bn) {
             /* I think it is better numerically to use the normal, rather than the dot product
@@ -513,7 +513,7 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, NR::Point &p, N
 }
 
 
-void spdc_endpoint_snap_free(SPEventContext const * const ec, NR::Point& p, guint const /*state*/)
+void spdc_endpoint_snap_free(SPEventContext const * const ec, Geom::Point& p, guint const /*state*/)
 {
     SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
     m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
@@ -711,7 +711,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
  * Returns FIRST active anchor (the activated one).
  */
 SPDrawAnchor *
-spdc_test_inside(SPDrawContext *dc, NR::Point p)
+spdc_test_inside(SPDrawContext *dc, Geom::Point p)
 {
     SPDrawAnchor *active = NULL;
 
@@ -793,7 +793,7 @@ spdc_free_colors(SPDrawContext *dc)
 }
 
 /* Create a single dot represented by a circle */
-void spdc_create_single_dot(SPEventContext *ec, NR::Point const &pt, char const *tool, guint event_state) {
+void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char const *tool, guint event_state) {
     g_return_if_fail(!strcmp(tool, "tools.freehand.pen") || !strcmp(tool, "tools.freehand.pencil"));
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(ec);
@@ -825,8 +825,8 @@ void spdc_create_single_dot(SPEventContext *ec, NR::Point const &pt, char const 
 
     /* put the circle where the mouse click occurred and set the diameter to the
        current stroke width, multiplied by the amount specified in the preferences */
-    NR::Matrix const i2d (sp_item_i2d_affine (item));
-    NR::Point pp = pt * i2d;
+    Geom::Matrix const i2d (sp_item_i2d_affine (item));
+    Geom::Point pp = pt * i2d;
     double rad = 0.5 * prefs_get_double_attribute(tool, "dot-size", 3.0);
     if (event_state & GDK_MOD1_MASK) {
         /* TODO: We vary the dot size between 0.5*rad and 1.5*rad, where rad is the dot size

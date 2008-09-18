@@ -82,13 +82,13 @@ static void sp_common_context_init(SPCommonContext *ctx)
     ctx->repr = 0;
 
     /* Common values */
-    ctx->cur = NR::Point(0,0);
-    ctx->last = NR::Point(0,0);
-    ctx->vel = NR::Point(0,0);
+    ctx->cur = Geom::Point(0,0);
+    ctx->last = Geom::Point(0,0);
+    ctx->vel = Geom::Point(0,0);
     ctx->vel_max = 0;
-    ctx->acc = NR::Point(0,0);
-    ctx->ang = NR::Point(0,0);
-    ctx->del = NR::Point(0,0);
+    ctx->acc = Geom::Point(0,0);
+    ctx->ang = Geom::Point(0,0);
+    ctx->del = Geom::Point(0,0);
 
     /* attributes */
     ctx->dragging = FALSE;

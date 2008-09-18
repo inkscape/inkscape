@@ -89,14 +89,14 @@ static gint sp_dyna_draw_context_root_handler(SPEventContext *ec, GdkEvent *even
 
 static void clear_current(SPDynaDrawContext *dc);
 static void set_to_accumulated(SPDynaDrawContext *dc, bool unionize);
-static void add_cap(SPCurve *curve, NR::Point const &from, NR::Point const &to, double rounding);
+static void add_cap(SPCurve *curve, Geom::Point const &from, Geom::Point const &to, double rounding);
 static bool accumulate_calligraphic(SPDynaDrawContext *dc);
 
 static void fit_and_split(SPDynaDrawContext *ddc, gboolean release);
 
-static void sp_dyna_draw_reset(SPDynaDrawContext *ddc, NR::Point p);
-static NR::Point sp_dyna_draw_get_npoint(SPDynaDrawContext const *ddc, NR::Point v);
-static NR::Point sp_dyna_draw_get_vpoint(SPDynaDrawContext const *ddc, NR::Point n);
+static void sp_dyna_draw_reset(SPDynaDrawContext *ddc, Geom::Point p);
+static Geom::Point sp_dyna_draw_get_npoint(SPDynaDrawContext const *ddc, Geom::Point v);
+static Geom::Point sp_dyna_draw_get_vpoint(SPDynaDrawContext const *ddc, Geom::Point n);
 static void draw_temporary_box(SPDynaDrawContext *dc);
 
 
@@ -156,9 +156,9 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     ddc->hatch_spacing_step = 0;
     new (&ddc->hatch_pointer_past) std::list<double>();
     new (&ddc->hatch_nearest_past) std::list<double>();
-    ddc->hatch_last_nearest = NR::Point(0,0);
-    ddc->hatch_last_pointer = NR::Point(0,0);
-    ddc->hatch_vector_accumulated = NR::Point(0,0);
+    ddc->hatch_last_nearest = Geom::Point(0,0);
+    ddc->hatch_last_pointer = Geom::Point(0,0);
+    ddc->hatch_vector_accumulated = Geom::Point(0,0);
     ddc->hatch_escaped = false;
     ddc->hatch_area = NULL;
     ddc->hatch_item = NULL;
@@ -270,32 +270,32 @@ flerp(double f0, double f1, double p)
 }
 
 /* Get normalized point */
-static NR::Point
-sp_dyna_draw_get_npoint(SPDynaDrawContext const *dc, NR::Point v)
+static Geom::Point
+sp_dyna_draw_get_npoint(SPDynaDrawContext const *dc, Geom::Point v)
 {
     NR::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
     double const max = MAX ( drect.dimensions()[NR::X], drect.dimensions()[NR::Y] );
-    return NR::Point(( v[NR::X] - drect.min()[NR::X] ) / max,  ( v[NR::Y] - drect.min()[NR::Y] ) / max);
+    return Geom::Point(( v[NR::X] - drect.min()[NR::X] ) / max,  ( v[NR::Y] - drect.min()[NR::Y] ) / max);
 }
 
 /* Get view point */
-static NR::Point
-sp_dyna_draw_get_vpoint(SPDynaDrawContext const *dc, NR::Point n)
+static Geom::Point
+sp_dyna_draw_get_vpoint(SPDynaDrawContext const *dc, Geom::Point n)
 {
     NR::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
     double const max = MAX ( drect.dimensions()[NR::X], drect.dimensions()[NR::Y] );
-    return NR::Point(n[NR::X] * max + drect.min()[NR::X], n[NR::Y] * max + drect.min()[NR::Y]);
+    return Geom::Point(n[NR::X] * max + drect.min()[NR::X], n[NR::Y] * max + drect.min()[NR::Y]);
 }
 
 static void
-sp_dyna_draw_reset(SPDynaDrawContext *dc, NR::Point p)
+sp_dyna_draw_reset(SPDynaDrawContext *dc, Geom::Point p)
 {
     dc->last = dc->cur = sp_dyna_draw_get_npoint(dc, p);
-    dc->vel = NR::Point(0,0);
+    dc->vel = Geom::Point(0,0);
     dc->vel_max = 0;
-    dc->acc = NR::Point(0,0);
-    dc->ang = NR::Point(0,0);
-    dc->del = NR::Point(0,0);
+    dc->acc = Geom::Point(0,0);
+    dc->ang = Geom::Point(0,0);
+    dc->del = Geom::Point(0,0);
 }
 
 static void
@@ -319,16 +319,16 @@ sp_dyna_draw_extinput(SPDynaDrawContext *dc, GdkEvent *event)
 
 
 static gboolean
-sp_dyna_draw_apply(SPDynaDrawContext *dc, NR::Point p)
+sp_dyna_draw_apply(SPDynaDrawContext *dc, Geom::Point p)
 {
-    NR::Point n = sp_dyna_draw_get_npoint(dc, p);
+    Geom::Point n = sp_dyna_draw_get_npoint(dc, p);
 
     /* Calculate mass and drag */
     double const mass = flerp(1.0, 160.0, dc->mass);
     double const drag = flerp(0.0, 0.5, dc->drag * dc->drag);
 
     /* Calculate force and acceleration */
-    NR::Point force = n - dc->cur;
+    Geom::Point force = n - dc->cur;
 
     // If force is below the absolute threshold DYNA_EPSILON,
     // or we haven't yet reached DYNA_VEL_START (i.e. at the beginning of stroke)
@@ -357,7 +357,7 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, NR::Point p)
         gdouble length = std::sqrt(dc->xtilt*dc->xtilt + dc->ytilt*dc->ytilt);;
 
         if (length > 0) {
-            NR::Point ang1 = NR::Point(dc->ytilt/length, dc->xtilt/length);
+            Geom::Point ang1 = Geom::Point(dc->ytilt/length, dc->xtilt/length);
             a1 = atan2(ang1);
         }
         else
@@ -366,7 +366,7 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, NR::Point p)
     else {
         // 1b. fixed dc->angle (absolutely flat nib):
         double const radians = ( (dc->angle - 90) / 180.0 ) * M_PI;
-        NR::Point ang1 = NR::Point(-sin(radians),  cos(radians));
+        Geom::Point ang1 = Geom::Point(-sin(radians),  cos(radians));
         a1 = atan2(ang1);
     }
 
@@ -375,7 +375,7 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, NR::Point p)
     if ( mag_vel < DYNA_EPSILON ) {
         return FALSE;
     }
-    NR::Point ang2 = NR::rot90(dc->vel) / mag_vel;
+    Geom::Point ang2 = NR::rot90(dc->vel) / mag_vel;
 
     // 3. Average them using flatness parameter:
     // calculate angles
@@ -397,13 +397,13 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, NR::Point p)
 
     // Try to detect a sudden flip when the new angle differs too much from the previous for the
     // current velocity; in that case discard this move
-    double angle_delta = NR::L2(NR::Point (cos (new_ang), sin (new_ang)) - dc->ang);
+    double angle_delta = NR::L2(Geom::Point (cos (new_ang), sin (new_ang)) - dc->ang);
     if ( angle_delta / NR::L2(dc->vel) > 4000 ) {
         return FALSE;
     }
 
     // convert to point
-    dc->ang = NR::Point (cos (new_ang), sin (new_ang));
+    dc->ang = Geom::Point (cos (new_ang), sin (new_ang));
 
 //    g_print ("force %g  acc %g  vel_max %g  vel %g  a1 %g  a2 %g  new_ang %g\n", NR::L2(force), NR::L2(dc->acc), dc->vel_max, NR::L2(dc->vel), a1, a2, new_ang);
 
@@ -430,8 +430,8 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
 
     // get the real brush point, not the same as pointer (affected by hatch tracking and/or mass
     // drag)
-    NR::Point brush = sp_dyna_draw_get_vpoint(dc, dc->cur);
-    NR::Point brush_w = SP_EVENT_CONTEXT(dc)->desktop->d2w(brush); 
+    Geom::Point brush = sp_dyna_draw_get_vpoint(dc, dc->cur);
+    Geom::Point brush_w = SP_EVENT_CONTEXT(dc)->desktop->d2w(brush); 
 
     double trace_thick = 1;
     if (dc->trace_bg) {
@@ -486,8 +486,8 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
         dezoomify_factor /= SP_EVENT_CONTEXT(dc)->desktop->current_zoom();
     }
 
-    NR::Point del_left = dezoomify_factor * (width + tremble_left) * dc->ang;
-    NR::Point del_right = dezoomify_factor * (width + tremble_right) * dc->ang;
+    Geom::Point del_left = dezoomify_factor * (width + tremble_left) * dc->ang;
+    Geom::Point del_right = dezoomify_factor * (width + tremble_right) * dc->ang;
 
     dc->point1[dc->npoints] = brush + del_left;
     dc->point2[dc->npoints] = brush - del_right;
@@ -543,9 +543,9 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     return TRUE;
                 }
 
-                NR::Point const button_w(event->button.x,
+                Geom::Point const button_w(event->button.x,
                                          event->button.y);
-                NR::Point const button_dt(desktop->w2d(button_w));
+                Geom::Point const button_dt(desktop->w2d(button_w));
                 sp_dyna_draw_reset(dc, button_dt);
                 sp_dyna_draw_extinput(dc, event);
                 sp_dyna_draw_apply(dc, button_dt);
@@ -573,19 +573,19 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             break;
         case GDK_MOTION_NOTIFY:
         {
-            NR::Point const motion_w(event->motion.x,
+            Geom::Point const motion_w(event->motion.x,
                                      event->motion.y);
-            NR::Point motion_dt(desktop->w2d(motion_w));
+            Geom::Point motion_dt(desktop->w2d(motion_w));
             sp_dyna_draw_extinput(dc, event);
 
             dc->_message_context->clear();
 
             // for hatching:
             double hatch_dist = 0;
-            NR::Point hatch_unit_vector(0,0);
-            NR::Point nearest(0,0);
-            NR::Point pointer(0,0);
-            NR::Matrix motion_to_curve(NR::identity());
+            Geom::Point hatch_unit_vector(0,0);
+            Geom::Point nearest(0,0);
+            Geom::Point pointer(0,0);
+            Geom::Matrix motion_to_curve(Geom::identity());
 
             if (event->motion.state & GDK_CONTROL_MASK) { // hatching - sense the item
 
@@ -703,7 +703,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                             }
 
                             // This is the track pointer that we will use instead of the real one
-                            NR::Point new_pointer = nearest + target * hatch_unit_vector;
+                            Geom::Point new_pointer = nearest + target * hatch_unit_vector;
 
                             // some limited feedback: allow persistent pulling to slightly change
                             // the spacing
@@ -746,21 +746,21 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             if (event->motion.state & GDK_CONTROL_MASK) { 
                 if (dc->hatch_spacing == 0 && hatch_dist != 0) { 
                     // Haven't set spacing yet: gray, center free, update radius live
-                    NR::Point c = desktop->w2d(motion_w);
+                    Geom::Point c = desktop->w2d(motion_w);
                     NR::Matrix const sm (NR::scale(hatch_dist, hatch_dist) * NR::translate(c));
                     sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                     sp_canvas_item_show(dc->hatch_area);
                 } else if (dc->dragging && !dc->hatch_escaped) {
                     // Tracking: green, center snapped, fixed radius
-                    NR::Point c = motion_dt;
+                    Geom::Point c = motion_dt;
                     NR::Matrix const sm (NR::scale(dc->hatch_spacing, dc->hatch_spacing) * NR::translate(c));
                     sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x00FF00ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                     sp_canvas_item_show(dc->hatch_area);
                 } else if (dc->dragging && dc->hatch_escaped) {
                     // Tracking escaped: red, center free, fixed radius
-                    NR::Point c = desktop->w2d(motion_w);
+                    Geom::Point c = desktop->w2d(motion_w);
                     NR::Matrix const sm (NR::scale(dc->hatch_spacing, dc->hatch_spacing) * NR::translate(c));
 
                     sp_canvas_item_affine_absolute(dc->hatch_area, sm);
@@ -768,7 +768,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     sp_canvas_item_show(dc->hatch_area);
                 } else {
                     // Not drawing but spacing set: gray, center snapped, fixed radius
-                    NR::Point c = (nearest + dc->hatch_spacing * hatch_unit_vector) * motion_to_curve.inverse();
+                    Geom::Point c = (nearest + dc->hatch_spacing * hatch_unit_vector) * motion_to_curve.inverse();
                     if (!IS_NAN(c[NR::X]) && !IS_NAN(c[NR::Y])) {
                         NR::Matrix const sm (NR::scale(dc->hatch_spacing, dc->hatch_spacing) * NR::translate(c));
                         sp_canvas_item_affine_absolute(dc->hatch_area, sm);
@@ -785,8 +785,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
     case GDK_BUTTON_RELEASE:
     {
-        NR::Point const motion_w(event->button.x, event->button.y);
-        NR::Point const motion_dt(desktop->w2d(motion_w));
+        Geom::Point const motion_w(event->button.x, event->button.y);
+        Geom::Point const motion_dt(desktop->w2d(motion_w));
 
         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
         sp_canvas_end_forced_full_redraws(desktop->canvas);
@@ -820,9 +820,9 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
             if (!dc->hatch_pointer_past.empty()) dc->hatch_pointer_past.clear();
             if (!dc->hatch_nearest_past.empty()) dc->hatch_nearest_past.clear();
-            dc->hatch_last_nearest = NR::Point(0,0);
-            dc->hatch_last_pointer = NR::Point(0,0);
-            dc->hatch_vector_accumulated = NR::Point(0,0);
+            dc->hatch_last_nearest = Geom::Point(0,0);
+            dc->hatch_last_pointer = Geom::Point(0,0);
+            dc->hatch_vector_accumulated = Geom::Point(0,0);
             dc->hatch_escaped = false;
             dc->hatch_item = NULL;
             dc->hatch_livarot_path = NULL;
@@ -1010,15 +1010,15 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
 
 static void
 add_cap(SPCurve *curve,
-        NR::Point const &from,
-        NR::Point const &to, 
+        Geom::Point const &from,
+        Geom::Point const &to, 
         double rounding)
 {
     if (NR::L2( to - from ) > DYNA_EPSILON) {
-        NR::Point vel = rounding * NR::rot90( to - from ) / sqrt(2.0);
+        Geom::Point vel = rounding * NR::rot90( to - from ) / sqrt(2.0);
         double mag = NR::L2(vel);
 
-        NR::Point v = mag * NR::rot90( to - from ) / NR::L2( to - from );
+        Geom::Point v = mag * NR::rot90( to - from ) / NR::L2( to - from );
         curve->curveto(from + v, to + v, to);
     }
 }
@@ -1125,12 +1125,12 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
             dc->cal2->moveto(dc->point2[0]);
         }
 
-        NR::Point b1[BEZIER_MAX_LENGTH];
+        Geom::Point b1[BEZIER_MAX_LENGTH];
         gint const nb1 = sp_bezier_fit_cubic_r(b1, dc->point1, dc->npoints,
                                                tolerance_sq, BEZIER_MAX_BEZIERS);
         g_assert( nb1 * BEZIER_SIZE <= gint(G_N_ELEMENTS(b1)) );
 
-        NR::Point b2[BEZIER_MAX_LENGTH];
+        Geom::Point b2[BEZIER_MAX_LENGTH];
         gint const nb2 = sp_bezier_fit_cubic_r(b2, dc->point2, dc->npoints,
                                                tolerance_sq, BEZIER_MAX_BEZIERS);
         g_assert( nb2 * BEZIER_SIZE <= gint(G_N_ELEMENTS(b2)) );
@@ -1144,11 +1144,11 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
             if (! release) {
                 dc->currentcurve->reset();
                 dc->currentcurve->moveto(b1[0]);
-                for (NR::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
+                for (Geom::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
                     dc->currentcurve->curveto(bp1[1], bp1[2], bp1[3]);
                 }
                 dc->currentcurve->lineto(b2[BEZIER_SIZE*(nb2-1) + 3]);
-                for (NR::Point *bp2 = b2 + BEZIER_SIZE * ( nb2 - 1 ); bp2 >= b2; bp2 -= BEZIER_SIZE) {
+                for (Geom::Point *bp2 = b2 + BEZIER_SIZE * ( nb2 - 1 ); bp2 >= b2; bp2 -= BEZIER_SIZE) {
                     dc->currentcurve->curveto(bp2[2], bp2[1], bp2[0]);
                 }
                 // FIXME: dc->segments is always NULL at this point??
@@ -1160,10 +1160,10 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
             }
 
             /* Current calligraphic */
-            for (NR::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
+            for (Geom::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
                 dc->cal1->curveto(bp1[1], bp1[2], bp1[3]);
             }
-            for (NR::Point *bp2 = b2; bp2 < b2 + BEZIER_SIZE * nb2; bp2 += BEZIER_SIZE) {
+            for (Geom::Point *bp2 = b2; bp2 < b2 + BEZIER_SIZE * nb2; bp2 += BEZIER_SIZE) {
                 dc->cal2->curveto(bp2[1], bp2[2], bp2[3]);
             }
         } else {

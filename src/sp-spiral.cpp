@@ -41,7 +41,7 @@ static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p);
 static void sp_spiral_set_shape (SPShape *shape);
 static void sp_spiral_update_patheffect (SPLPEItem *lpeitem, bool write);
 
-static NR::Point sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t);
+static Geom::Point sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t);
 
 static SPShapeClass *parent_class;
 
@@ -336,9 +336,9 @@ static void
 sp_spiral_fit_and_draw (SPSpiral const *spiral,
 			SPCurve	 *c,
 			double dstep,
-			NR::Point darray[],
-			NR::Point const &hat1,
-			NR::Point &hat2,
+			Geom::Point darray[],
+			Geom::Point const &hat1,
+			Geom::Point &hat2,
 			double *t)
 {
 #define BEZIER_SIZE   4
@@ -347,7 +347,7 @@ sp_spiral_fit_and_draw (SPSpiral const *spiral,
 	g_assert (dstep > 0);
 	g_assert (is_unit_vector (hat1));
 
-	NR::Point bezier[BEZIER_LENGTH];
+	Geom::Point bezier[BEZIER_LENGTH];
 	double d;
 	int depth, i;
 
@@ -418,7 +418,7 @@ sp_spiral_fit_and_draw (SPSpiral const *spiral,
 static void
 sp_spiral_set_shape (SPShape *shape)
 {
-	NR::Point darray[SAMPLE_SIZE + 1];
+	Geom::Point darray[SAMPLE_SIZE + 1];
 	double t;
 
 	SPSpiral *spiral = SP_SPIRAL(shape);
@@ -444,8 +444,8 @@ sp_spiral_set_shape (SPShape *shape)
 	double const tstep = SAMPLE_STEP / spiral->revo;
 	double const dstep = tstep / (SAMPLE_SIZE - 1);
 
-	NR::Point hat1 = sp_spiral_get_tangent (spiral, spiral->t0);
-	NR::Point hat2;
+	Geom::Point hat1 = sp_spiral_get_tangent (spiral, spiral->t0);
+	Geom::Point hat2;
 	for (t = spiral->t0; t < (1.0 - tstep);) {
 		sp_spiral_fit_and_draw (spiral, c, dstep, darray, hat1, hat2, &t);
 
@@ -509,7 +509,7 @@ static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p)
  * than 1.0, though some callers go slightly beyond 1.0 for curve-fitting
  * purposes.)
  */
-NR::Point sp_spiral_get_xy (SPSpiral const *spiral, gdouble t)
+Geom::Point sp_spiral_get_xy (SPSpiral const *spiral, gdouble t)
 {
 	g_assert (spiral != NULL);
 	g_assert (SP_IS_SPIRAL(spiral));
@@ -523,8 +523,8 @@ NR::Point sp_spiral_get_xy (SPSpiral const *spiral, gdouble t)
 	double const rad = spiral->rad * pow(t, (double) spiral->exp);
 	double const arg = 2.0 * M_PI * spiral->revo * t + spiral->arg;
 
-	return NR::Point(rad * cos (arg) + spiral->cx,
-			 rad * sin (arg) + spiral->cy);
+	return Geom::Point(rad * cos (arg) + spiral->cx,
+                           rad * sin (arg) + spiral->cy);
 }
 
 
@@ -537,10 +537,10 @@ NR::Point sp_spiral_get_xy (SPSpiral const *spiral, gdouble t)
  *  \pre p != NULL.
  *  \post is_unit_vector(*p).
  */
-static NR::Point
+static Geom::Point
 sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t)
 {
-	NR::Point ret(1.0, 0.0);
+	Geom::Point ret(1.0, 0.0);
 	g_return_val_if_fail (( ( spiral != NULL )
 				&& SP_IS_SPIRAL(spiral) ),
 			      ret);
@@ -554,11 +554,11 @@ sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t)
 	double const c = cos (arg);
 
 	if (spiral->exp == 0.0) {
-		ret = NR::Point(-s, c);
+		ret = Geom::Point(-s, c);
 	} else if (t_scaled == 0.0) {
-		ret = NR::Point(c, s);
+		ret = Geom::Point(c, s);
 	} else {
-		NR::Point unrotated(spiral->exp, t_scaled);
+		Geom::Point unrotated(spiral->exp, t_scaled);
 		double const s_len = L2 (unrotated);
 		g_assert (s_len != 0);
 		/** \todo
@@ -573,8 +573,8 @@ sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t)
 		/* ret = spiral->exp * (c, s) + t_scaled * (-s, c);
 		   alternatively ret = (spiral->exp, t_scaled) * (( c, s),
 								  (-s, c)).*/
-		ret = NR::Point(dot(unrotated, NR::Point(c, -s)),
-				dot(unrotated, NR::Point(s, c)));
+		ret = Geom::Point(dot(unrotated, Geom::Point(c, -s)),
+                                  dot(unrotated, Geom::Point(s, c)));
 		/* ret should already be approximately normalized: the
 		   matrix ((c, -s), (s, c)) is orthogonal (it just
 		   rotates by arg), and unrotated has been normalized,

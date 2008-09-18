@@ -53,10 +53,10 @@ static void sp_pen_context_set(SPEventContext *ec, gchar const *key, gchar const
 static gint sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event);
 static gint sp_pen_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
 
-static void spdc_pen_set_initial_point(SPPenContext *pc, NR::Point const p);
-static void spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool statusbar, guint status = 0);
-static void spdc_pen_set_ctrl(SPPenContext *pc, NR::Point const p, guint state);
-static void spdc_pen_finish_segment(SPPenContext *pc, NR::Point p, guint state);
+static void spdc_pen_set_initial_point(SPPenContext *pc, Geom::Point const p);
+static void spdc_pen_set_subsequent_point(SPPenContext *const pc, Geom::Point const p, bool statusbar, guint status = 0);
+static void spdc_pen_set_ctrl(SPPenContext *pc, Geom::Point const p, guint state);
+static void spdc_pen_finish_segment(SPPenContext *pc, Geom::Point p, guint state);
 
 static void spdc_pen_finish(SPPenContext *pc, gboolean closed);
 
@@ -70,14 +70,14 @@ static void spdc_reset_colors(SPPenContext *pc);
 static void pen_disable_events(SPPenContext *const pc);
 static void pen_enable_events(SPPenContext *const pc);
 
-static NR::Point pen_drag_origin_w(0, 0);
+static Geom::Point pen_drag_origin_w(0, 0);
 static bool pen_within_tolerance = false;
 
 static SPDrawContextClass *pen_parent_class;
 
-static int pen_next_paraxial_direction(const SPPenContext *const pc, NR::Point const &pt, NR::Point const &origin, guint state);
-static void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, NR::Point &pt, guint const state);
-static NR::Point pen_get_intermediate_horiz_vert(const SPPenContext *const pc, NR::Point const &pt, guint const state);
+static int pen_next_paraxial_direction(const SPPenContext *const pc, Geom::Point const &pt, Geom::Point const &origin, guint state);
+static void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt, guint const state);
+static Geom::Point pen_get_intermediate_horiz_vert(const SPPenContext *const pc, Geom::Point const &pt, guint const state);
 
 static int pen_last_paraxial_dir = 0; // last used direction in horizontal/vertical mode; 0 = horizontal, 1 = vertical
 
@@ -292,7 +292,7 @@ sp_pen_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
  * Snaps new node relative to the previous node.
  */
 static void
-spdc_endpoint_snap(SPPenContext const *const pc, NR::Point &p, guint const state)
+spdc_endpoint_snap(SPPenContext const *const pc, Geom::Point &p, guint const state)
 {
     if ((state & GDK_CONTROL_MASK)) { //CTRL enables angular snapping
         if (pc->npoints > 0) {
@@ -315,7 +315,7 @@ spdc_endpoint_snap(SPPenContext const *const pc, NR::Point &p, guint const state
  * Snaps new node's handle relative to the new node.
  */
 static void
-spdc_endpoint_snap_handle(SPPenContext const *const pc, NR::Point &p, guint const state)
+spdc_endpoint_snap_handle(SPPenContext const *const pc, Geom::Point &p, guint const state)
 {
     g_return_if_fail(( pc->npoints == 2 ||
                        pc->npoints == 5   ));
@@ -413,8 +413,8 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
 
     SPDrawContext * const dc = SP_DRAW_CONTEXT(pc);
     SPDesktop * const desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
-    NR::Point const event_w(bevent.x, bevent.y);
-    NR::Point const event_dt(desktop->w2d(event_w));
+    Geom::Point const event_w(bevent.x, bevent.y);
+    Geom::Point const event_dt(desktop->w2d(event_w));
     SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
 
     gint ret = FALSE;
@@ -475,7 +475,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
 
                             /* Set start anchor */
                             pc->sa = anchor;
-                            NR::Point p;
+                            Geom::Point p;
                             if (anchor && !sp_pen_context_has_waiting_LPE(pc)) {
                                 /* Adjust point to anchor if needed; if we have a waiting LPE, we need
                                    a fresh path to be created so don't continue an existing one */
@@ -509,7 +509,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
 
                             /* Set end anchor */
                             pc->ea = anchor;
-                            NR::Point p;
+                            Geom::Point p;
                             if (anchor) {
                                 p = anchor->dp;
                                 // we hit an anchor, will finish the curve (either with or without closing)
@@ -594,7 +594,7 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
         return FALSE;
     }
 
-    NR::Point const event_w(mevent.x,
+    Geom::Point const event_w(mevent.x,
                             mevent.y);
     if (pen_within_tolerance) {
         gint const tolerance = prefs_get_int_attribute_limited("options.dragtolerance",
@@ -609,7 +609,7 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
     pen_within_tolerance = false;
 
     /* Find desktop coordinates */
-    NR::Point p = dt->w2d(event_w);
+    Geom::Point p = dt->w2d(event_w);
 
     /* Test, whether we hit any anchor */
     SPDrawAnchor *anchor = spdc_test_inside(pc, event_w);
@@ -715,10 +715,10 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
 
         SPDrawContext *dc = SP_DRAW_CONTEXT (pc);
 
-        NR::Point const event_w(revent.x,
+        Geom::Point const event_w(revent.x,
                                 revent.y);
         /* Find desktop coordinates */
-        NR::Point p = pc->desktop->w2d(event_w);
+        Geom::Point p = pc->desktop->w2d(event_w);
 
         /* Test whether we hit any anchor. */
         SPDrawAnchor *anchor = spdc_test_inside(pc, event_w);
@@ -890,7 +890,7 @@ pen_redraw_all (SPPenContext *const pc)
         if ( cubic &&
              (*cubic)[2] != to_2geom(pc->p[0]) )
         {
-            NR::Point p2 = (*cubic)[2];
+            Geom::Point p2 = (*cubic)[2];
             SP_CTRL(pc->c0)->moveto(p2);
             sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl0), p2, pc->p[0]);
             sp_canvas_item_show (pc->c0);
@@ -914,13 +914,13 @@ pen_lastpoint_move (SPPenContext *const pc, gdouble x, gdouble y)
     } else {
         // start anchor too
         if (pc->green_anchor) {
-            pc->green_anchor->dp += NR::Point(x, y);
+            pc->green_anchor->dp += Geom::Point(x, y);
         }
     }
 
     // red
-    pc->p[0] += NR::Point(x, y);
-    pc->p[1] += NR::Point(x, y);
+    pc->p[0] += Geom::Point(x, y);
+    pc->p[1] += Geom::Point(x, y);
     pen_redraw_all(pc);
 }
 
@@ -938,7 +938,7 @@ pen_lastpoint_tocurve (SPPenContext *const pc)
 
     Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const *>( pc->green_curve->last_segment() );
     if ( cubic ) {
-        pc->p[1] = pc->p[0] + (NR::Point)( (*cubic)[3] - (*cubic)[2] );
+        pc->p[1] = pc->p[0] + (Geom::Point)( (*cubic)[3] - (*cubic)[2] );
     } else {
         pc->p[1] = pc->p[0] + (1./3)*(pc->p[3] - pc->p[0]);
     }
@@ -1136,8 +1136,8 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                 } else {
                     pc->p[1] = pc->p[0];
                 }
-                NR::Point const pt(( pc->npoints < 4
-                                     ? (NR::Point)(crv->finalPoint())
+                Geom::Point const pt(( pc->npoints < 4
+                                     ? (Geom::Point)(crv->finalPoint())
                                      : pc->p[3] ));
                 pc->npoints = 2;
                 pc->green_curve->backspace();
@@ -1182,7 +1182,7 @@ spdc_reset_colors(SPPenContext *pc)
 
 
 static void
-spdc_pen_set_initial_point(SPPenContext *const pc, NR::Point const p)
+spdc_pen_set_initial_point(SPPenContext *const pc, Geom::Point const p)
 {
     g_assert( pc->npoints == 0 );
 
@@ -1200,14 +1200,14 @@ spdc_pen_set_initial_point(SPPenContext *const pc, NR::Point const p)
  * two parameters ("angle %3.2f&#176;, distance %s").
  */ 
 static void
-spdc_pen_set_angle_distance_status_message(SPPenContext *const pc, NR::Point const p, int pc_point_to_compare, gchar const *message)
+spdc_pen_set_angle_distance_status_message(SPPenContext *const pc, Geom::Point const p, int pc_point_to_compare, gchar const *message)
 {
     g_assert(pc != NULL);
     g_assert((pc_point_to_compare == 0) || (pc_point_to_compare == 3)); // exclude control handles
     g_assert(message != NULL);
 
     SPDesktop *desktop = SP_EVENT_CONTEXT(pc)->desktop;
-    NR::Point rel = p - pc->p[pc_point_to_compare];
+    Geom::Point rel = p - pc->p[pc_point_to_compare];
     GString *dist = SP_PX_TO_METRIC_STRING(NR::L2(rel), desktop->namedview->getDefaultMetric());
     double angle = atan2(rel[NR::Y], rel[NR::X]) * 180 / M_PI;
     if (prefs_get_int_attribute("options.compassangledisplay", "value", 0) != 0)
@@ -1218,7 +1218,7 @@ spdc_pen_set_angle_distance_status_message(SPPenContext *const pc, NR::Point con
 }
 
 static void
-spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool statusbar, guint status)
+spdc_pen_set_subsequent_point(SPPenContext *const pc, Geom::Point const p, bool statusbar, guint status)
 {
     g_assert( pc->npoints != 0 );
     /* todo: Check callers to see whether 2 <= npoints is guaranteed. */
@@ -1232,7 +1232,7 @@ spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool st
     pc->red_curve->moveto(pc->p[0]);
     if (pc->polylines_paraxial && !statusbar) {
         // we are drawing horizontal/vertical lines and hit an anchor; draw an L-shaped path
-        NR::Point intermed = p;
+        Geom::Point intermed = p;
         pen_set_to_nearest_horiz_vert(pc, intermed, status);
         pc->red_curve->lineto(intermed);
         pc->red_curve->lineto(p);
@@ -1260,7 +1260,7 @@ spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool st
 }
 
 static void
-spdc_pen_set_ctrl(SPPenContext *const pc, NR::Point const p, guint const state)
+spdc_pen_set_ctrl(SPPenContext *const pc, Geom::Point const p, guint const state)
 {
     sp_canvas_item_show(pc->c1);
     sp_canvas_item_show(pc->cl1);
@@ -1280,7 +1280,7 @@ spdc_pen_set_ctrl(SPPenContext *const pc, NR::Point const p, guint const state)
         bool is_symm = false;
         if ( ( ( pc->mode == SP_PEN_CONTEXT_MODE_CLICK ) && ( state & GDK_CONTROL_MASK ) ) ||
              ( ( pc->mode == SP_PEN_CONTEXT_MODE_DRAG ) &&  !( state & GDK_SHIFT_MASK  ) ) ) {
-            NR::Point delta = p - pc->p[3];
+            Geom::Point delta = p - pc->p[3];
             pc->p[2] = pc->p[3] - delta;
             is_symm = true;
             pc->red_curve->reset();
@@ -1303,7 +1303,7 @@ spdc_pen_set_ctrl(SPPenContext *const pc, NR::Point const p, guint const state)
 }
 
 static void
-spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const p, guint const state)
+spdc_pen_finish_segment(SPPenContext *const pc, Geom::Point const p, guint const state)
 {
     if (pc->polylines_paraxial) {
         pen_last_paraxial_dir = pen_next_paraxial_direction(pc, p, pc->p[0], state);
@@ -1401,7 +1401,7 @@ sp_pen_context_cancel_waiting_for_LPE(SPPenContext *pc)
 }
 
 static int pen_next_paraxial_direction(const SPPenContext *const pc,
-                                       NR::Point const &pt, NR::Point const &origin, guint state) {
+                                       Geom::Point const &pt, Geom::Point const &origin, guint state) {
     /*
      * after the first mouse click we determine whether the mouse pointer is closest to a
      * horizontal or vertical segment; for all subsequent mouse clicks, we use the direction
@@ -1420,9 +1420,9 @@ static int pen_next_paraxial_direction(const SPPenContext *const pc,
     }
 }
 
-void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, NR::Point &pt, guint const state)
+void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt, guint const state)
 {
-    NR::Point const &origin = pc->p[0];
+    Geom::Point const &origin = pc->p[0];
 
     int next_dir = pen_next_paraxial_direction(pc, pt, origin, state);
 
@@ -1435,14 +1435,14 @@ void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, NR::Point &pt, 
     }
 }
 
-NR::Point pen_get_intermediate_horiz_vert(const SPPenContext *const pc, NR::Point const &pt)
+Geom::Point pen_get_intermediate_horiz_vert(const SPPenContext *const pc, Geom::Point const &pt)
 {
-    NR::Point const &origin = pc->p[0];
+    Geom::Point const &origin = pc->p[0];
 
     if (pen_last_paraxial_dir == 0) {
-        return NR::Point (origin[NR::X], pt[NR::Y]);
+        return Geom::Point (origin[NR::X], pt[NR::Y]);
     } else {
-        return NR::Point (pt[NR::X], origin[NR::Y]);
+        return Geom::Point (pt[NR::X], origin[NR::Y]);
     }
 }
 

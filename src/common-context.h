@@ -22,7 +22,7 @@
 #include "event-context.h"
 #include "display/curve.h"
 #include "display/display-forward.h"
-#include <libnr/nr-point.h>
+#include <2geom/point.h>
 
 #define SP_TYPE_COMMON_CONTEXT (sp_common_context_get_type())
 #define SP_COMMON_CONTEXT(o) (GTK_CHECK_CAST((o), SP_TYPE_COMMON_CONTEXT, SPCommonContext))
@@ -55,10 +55,10 @@ struct SPCommonContext : public SPEventContext {
     SPCurve *cal2;
 
     /** left edge points for this segment */
-    NR::Point point1[SAMPLING_SIZE];
+    Geom::Point point1[SAMPLING_SIZE];
 
     /** right edge points for this segment */
-    NR::Point point2[SAMPLING_SIZE];
+    Geom::Point point2[SAMPLING_SIZE];
 
     /** number of edge points for this segment */
     gint npoints;
@@ -67,13 +67,13 @@ struct SPCommonContext : public SPEventContext {
     Inkscape::XML::Node *repr;
 
     /* common */
-    NR::Point cur;
-    NR::Point vel;
+    Geom::Point cur;
+    Geom::Point vel;
     double vel_max;
-    NR::Point acc;
-    NR::Point ang;
-    NR::Point last;
-    NR::Point del;
+    Geom::Point acc;
+    Geom::Point ang;
+    Geom::Point last;
+    Geom::Point del;
 
     /* extended input data */
     gdouble pressure;

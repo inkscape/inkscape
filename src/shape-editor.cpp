@@ -354,7 +354,7 @@ void ShapeEditor::update_statusbar () {
         sp_nodepath_update_statusbar(this->nodepath);
 }
 
-bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
+bool ShapeEditor::is_over_stroke (Geom::Point event_p, bool remember) {
     if (!this->nodepath)
         return false; // no stroke in knotholder
 
@@ -372,8 +372,8 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
         return false;
     }
 
-    NR::Point nearest = pathv[pvpos->path_nr].pointAt(pvpos->t);
-    NR::Point delta = nearest - this->curvepoint_doc;
+    Geom::Point nearest = pathv[pvpos->path_nr].pointAt(pvpos->t);
+    Geom::Point delta = nearest - this->curvepoint_doc;
 
     delta = desktop->d2w(delta);
 
@@ -397,8 +397,8 @@ bool ShapeEditor::is_over_stroke (NR::Point event_p, bool remember) {
                 segment_index += 1;
         }
 
-        this->curvepoint_event[NR::X] = (gint) event_p [NR::X];
-        this->curvepoint_event[NR::Y] = (gint) event_p [NR::Y];
+        this->curvepoint_event[Geom::X] = (gint) event_p [Geom::X];
+        this->curvepoint_event[Geom::Y] = (gint) event_p [Geom::Y];
         this->hit = true;
         this->grab_t = t;
         this->grab_node = segment_index;
@@ -450,17 +450,17 @@ void ShapeEditor::curve_drag(gdouble eventx, gdouble eventy) {
 
 
         // The coordinates hasn't changed since the last motion event, abort
-        if (this->curvepoint_event[NR::X] == x &&
-            this->curvepoint_event[NR::Y] == y)
+        if (this->curvepoint_event[Geom::X] == x &&
+            this->curvepoint_event[Geom::Y] == y)
             return;
 
-        NR::Point const delta_w(eventx - this->curvepoint_event[NR::X],
-                                eventy - this->curvepoint_event[NR::Y]);
-        NR::Point const delta_dt(this->desktop->w2d(delta_w));
+        Geom::Point const delta_w(eventx - this->curvepoint_event[Geom::X],
+                                  eventy - this->curvepoint_event[Geom::Y]);
+        Geom::Point const delta_dt(this->desktop->w2d(delta_w));
 
         sp_nodepath_curve_drag (this->nodepath, this->grab_node, this->grab_t, delta_dt);
-        this->curvepoint_event[NR::X] = x;
-        this->curvepoint_event[NR::Y] = y;
+        this->curvepoint_event[Geom::X] = x;
+        this->curvepoint_event[Geom::Y] = y;
 
     }
     if (this->knotholder) {
@@ -588,16 +588,16 @@ void ShapeEditor::show_helperpath (bool show) {
         sp_nodepath_show_helperpath (this->nodepath, show);
 }
 
-void ShapeEditor::flip (NR::Dim2 axis, boost::optional<NR::Point> center) {
+void ShapeEditor::flip (Geom::Dim2 axis, boost::optional<Geom::Point> center) {
     if (this->nodepath)
         sp_nodepath_flip (this->nodepath, axis, center);
 }
 
-void ShapeEditor::distribute (NR::Dim2 axis) {
+void ShapeEditor::distribute (Geom::Dim2 axis) {
     if (this->nodepath)
         sp_nodepath_selected_distribute (this->nodepath, axis);
 }
-void ShapeEditor::align (NR::Dim2 axis) {
+void ShapeEditor::align (Geom::Dim2 axis) {
     if (this->nodepath)
         sp_nodepath_selected_align (this->nodepath, axis);
 }

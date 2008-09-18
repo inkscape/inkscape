@@ -48,8 +48,8 @@ struct SPDynaDrawContext : public SPCommonContext {
     Path *hatch_livarot_path;
     std::list<double> hatch_nearest_past;
     std::list<double> hatch_pointer_past;
-    NR::Point hatch_last_nearest, hatch_last_pointer;
-    NR::Point hatch_vector_accumulated;
+    Geom::Point hatch_last_nearest, hatch_last_pointer;
+    Geom::Point hatch_vector_accumulated;
     bool hatch_escaped;
     SPCanvasItem *hatch_area;
 

@@ -30,7 +30,7 @@ enum {
  * SPPenContext: a context for pen tool events.
  */
 struct SPPenContext : public SPDrawContext {
-    NR::Point p[5];
+    Geom::Point p[5];
 
     /** \invar npoints in {0, 2, 5}. */
     // npoints somehow determines the type of the node (what does it mean, exactly? the number of Bezier handles?)

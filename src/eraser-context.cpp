@@ -89,14 +89,14 @@ static gint sp_eraser_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
 static void clear_current(SPEraserContext *dc);
 static void set_to_accumulated(SPEraserContext *dc);
-static void add_cap(SPCurve *curve, NR::Point const &pre, NR::Point const &from, NR::Point const &to, NR::Point const &post, double rounding);
+static void add_cap(SPCurve *curve, Geom::Point const &pre, Geom::Point const &from, Geom::Point const &to, Geom::Point const &post, double rounding);
 static void accumulate_eraser(SPEraserContext *dc);
 
 static void fit_and_split(SPEraserContext *erc, gboolean release);
 
-static void sp_eraser_reset(SPEraserContext *erc, NR::Point p);
-static NR::Point sp_eraser_get_npoint(SPEraserContext const *erc, NR::Point v);
-static NR::Point sp_eraser_get_vpoint(SPEraserContext const *erc, NR::Point n);
+static void sp_eraser_reset(SPEraserContext *erc, Geom::Point p);
+static Geom::Point sp_eraser_get_npoint(SPEraserContext const *erc, Geom::Point v);
+static Geom::Point sp_eraser_get_vpoint(SPEraserContext const *erc, Geom::Point n);
 static void draw_temporary_box(SPEraserContext *dc);
 
 
@@ -228,32 +228,32 @@ flerp(double f0, double f1, double p)
 }
 
 /* Get normalized point */
-static NR::Point
-sp_eraser_get_npoint(SPEraserContext const *dc, NR::Point v)
+static Geom::Point
+sp_eraser_get_npoint(SPEraserContext const *dc, Geom::Point v)
 {
     NR::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
     double const max = MAX ( drect.dimensions()[NR::X], drect.dimensions()[NR::Y] );
-    return NR::Point(( v[NR::X] - drect.min()[NR::X] ) / max,  ( v[NR::Y] - drect.min()[NR::Y] ) / max);
+    return Geom::Point(( v[NR::X] - drect.min()[NR::X] ) / max,  ( v[NR::Y] - drect.min()[NR::Y] ) / max);
 }
 
 /* Get view point */
-static NR::Point
-sp_eraser_get_vpoint(SPEraserContext const *dc, NR::Point n)
+static Geom::Point
+sp_eraser_get_vpoint(SPEraserContext const *dc, Geom::Point n)
 {
     NR::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
     double const max = MAX ( drect.dimensions()[NR::X], drect.dimensions()[NR::Y] );
-    return NR::Point(n[NR::X] * max + drect.min()[NR::X], n[NR::Y] * max + drect.min()[NR::Y]);
+    return Geom::Point(n[NR::X] * max + drect.min()[NR::X], n[NR::Y] * max + drect.min()[NR::Y]);
 }
 
 static void
-sp_eraser_reset(SPEraserContext *dc, NR::Point p)
+sp_eraser_reset(SPEraserContext *dc, Geom::Point p)
 {
     dc->last = dc->cur = sp_eraser_get_npoint(dc, p);
-    dc->vel = NR::Point(0,0);
+    dc->vel = Geom::Point(0,0);
     dc->vel_max = 0;
-    dc->acc = NR::Point(0,0);
-    dc->ang = NR::Point(0,0);
-    dc->del = NR::Point(0,0);
+    dc->acc = Geom::Point(0,0);
+    dc->ang = Geom::Point(0,0);
+    dc->del = Geom::Point(0,0);
 }
 
 static void
@@ -277,16 +277,16 @@ sp_eraser_extinput(SPEraserContext *dc, GdkEvent *event)
 
 
 static gboolean
-sp_eraser_apply(SPEraserContext *dc, NR::Point p)
+sp_eraser_apply(SPEraserContext *dc, Geom::Point p)
 {
-    NR::Point n = sp_eraser_get_npoint(dc, p);
+    Geom::Point n = sp_eraser_get_npoint(dc, p);
 
     /* Calculate mass and drag */
     double const mass = flerp(1.0, 160.0, dc->mass);
     double const drag = flerp(0.0, 0.5, dc->drag * dc->drag);
 
     /* Calculate force and acceleration */
-    NR::Point force = n - dc->cur;
+    Geom::Point force = n - dc->cur;
 
     // If force is below the absolute threshold ERASER_EPSILON,
     // or we haven't yet reached ERASER_VEL_START (i.e. at the beginning of stroke)
@@ -315,7 +315,7 @@ sp_eraser_apply(SPEraserContext *dc, NR::Point p)
         gdouble length = std::sqrt(dc->xtilt*dc->xtilt + dc->ytilt*dc->ytilt);;
 
         if (length > 0) {
-            NR::Point ang1 = NR::Point(dc->ytilt/length, dc->xtilt/length);
+            Geom::Point ang1 = Geom::Point(dc->ytilt/length, dc->xtilt/length);
             a1 = atan2(ang1);
         }
         else
@@ -324,7 +324,7 @@ sp_eraser_apply(SPEraserContext *dc, NR::Point p)
     else {
         // 1b. fixed dc->angle (absolutely flat nib):
         double const radians = ( (dc->angle - 90) / 180.0 ) * M_PI;
-        NR::Point ang1 = NR::Point(-sin(radians),  cos(radians));
+        Geom::Point ang1 = Geom::Point(-sin(radians),  cos(radians));
         a1 = atan2(ang1);
     }
 
@@ -333,7 +333,7 @@ sp_eraser_apply(SPEraserContext *dc, NR::Point p)
     if ( mag_vel < ERASER_EPSILON ) {
         return FALSE;
     }
-    NR::Point ang2 = NR::rot90(dc->vel) / mag_vel;
+    Geom::Point ang2 = NR::rot90(dc->vel) / mag_vel;
 
     // 3. Average them using flatness parameter:
     // calculate angles
@@ -355,13 +355,13 @@ sp_eraser_apply(SPEraserContext *dc, NR::Point p)
 
     // Try to detect a sudden flip when the new angle differs too much from the previous for the
     // current velocity; in that case discard this move
-    double angle_delta = NR::L2(NR::Point (cos (new_ang), sin (new_ang)) - dc->ang);
+    double angle_delta = NR::L2(Geom::Point (cos (new_ang), sin (new_ang)) - dc->ang);
     if ( angle_delta / NR::L2(dc->vel) > 4000 ) {
         return FALSE;
     }
 
     // convert to point
-    dc->ang = NR::Point (cos (new_ang), sin (new_ang));
+    dc->ang = Geom::Point (cos (new_ang), sin (new_ang));
 
 //    g_print ("force %g  acc %g  vel_max %g  vel %g  a1 %g  a2 %g  new_ang %g\n", NR::L2(force), NR::L2(dc->acc), dc->vel_max, NR::L2(dc->vel), a1, a2, new_ang);
 
@@ -388,8 +388,8 @@ sp_eraser_brush(SPEraserContext *dc)
 
     // get the real brush point, not the same as pointer (affected by hatch tracking and/or mass
     // drag)
-    NR::Point brush = sp_eraser_get_vpoint(dc, dc->cur);
-    NR::Point brush_w = SP_EVENT_CONTEXT(dc)->desktop->d2w(brush); 
+    Geom::Point brush = sp_eraser_get_vpoint(dc, dc->cur);
+    Geom::Point brush_w = SP_EVENT_CONTEXT(dc)->desktop->d2w(brush); 
 
     double trace_thick = 1;
 
@@ -426,8 +426,8 @@ sp_eraser_brush(SPEraserContext *dc)
         dezoomify_factor /= SP_EVENT_CONTEXT(dc)->desktop->current_zoom();
     }
 
-    NR::Point del_left = dezoomify_factor * (width + tremble_left) * dc->ang;
-    NR::Point del_right = dezoomify_factor * (width + tremble_right) * dc->ang;
+    Geom::Point del_left = dezoomify_factor * (width + tremble_left) * dc->ang;
+    Geom::Point del_right = dezoomify_factor * (width + tremble_right) * dc->ang;
 
     dc->point1[dc->npoints] = brush + del_left;
     dc->point2[dc->npoints] = brush - del_right;
@@ -481,9 +481,9 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
                     return TRUE;
                 }
 
-                NR::Point const button_w(event->button.x,
+                Geom::Point const button_w(event->button.x,
                                          event->button.y);
-                NR::Point const button_dt(desktop->w2d(button_w));
+                Geom::Point const button_dt(desktop->w2d(button_w));
                 sp_eraser_reset(dc, button_dt);
                 sp_eraser_extinput(dc, event);
                 sp_eraser_apply(dc, button_dt);
@@ -514,9 +514,9 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
             break;
         case GDK_MOTION_NOTIFY:
         {
-            NR::Point const motion_w(event->motion.x,
+            Geom::Point const motion_w(event->motion.x,
                                      event->motion.y);
-            NR::Point motion_dt(desktop->w2d(motion_w));
+            Geom::Point motion_dt(desktop->w2d(motion_w));
             sp_eraser_extinput(dc, event);
 
             dc->_message_context->clear();
@@ -545,8 +545,8 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
 
     case GDK_BUTTON_RELEASE:
     {
-        NR::Point const motion_w(event->button.x, event->button.y);
-        NR::Point const motion_dt(desktop->w2d(motion_w));
+        Geom::Point const motion_w(event->button.x, event->button.y);
+        Geom::Point const motion_dt(desktop->w2d(motion_w));
 
         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
         sp_canvas_end_forced_full_redraws(desktop->canvas);
@@ -835,27 +835,27 @@ set_to_accumulated(SPEraserContext *dc)
 
 static void
 add_cap(SPCurve *curve,
-        NR::Point const &pre, NR::Point const &from,
-        NR::Point const &to, NR::Point const &post,
+        Geom::Point const &pre, Geom::Point const &from,
+        Geom::Point const &to, Geom::Point const &post,
         double rounding)
 {
-    NR::Point vel = rounding * NR::rot90( to - from ) / sqrt(2.0);
+    Geom::Point vel = rounding * NR::rot90( to - from ) / sqrt(2.0);
     double mag = NR::L2(vel);
 
-    NR::Point v_in = from - pre;
+    Geom::Point v_in = from - pre;
     double mag_in = NR::L2(v_in);
     if ( mag_in > ERASER_EPSILON ) {
         v_in = mag * v_in / mag_in;
     } else {
-        v_in = NR::Point(0, 0);
+        v_in = Geom::Point(0, 0);
     }
 
-    NR::Point v_out = to - post;
+    Geom::Point v_out = to - post;
     double mag_out = NR::L2(v_out);
     if ( mag_out > ERASER_EPSILON ) {
         v_out = mag * v_out / mag_out;
     } else {
-        v_out = NR::Point(0, 0);
+        v_out = Geom::Point(0, 0);
     }
 
     if ( NR::L2(v_in) > ERASER_EPSILON || NR::L2(v_out) > ERASER_EPSILON ) {
@@ -941,12 +941,12 @@ fit_and_split(SPEraserContext *dc, gboolean release)
             dc->cal2->moveto(dc->point2[0]);
         }
 
-        NR::Point b1[BEZIER_MAX_LENGTH];
+        Geom::Point b1[BEZIER_MAX_LENGTH];
         gint const nb1 = sp_bezier_fit_cubic_r(b1, dc->point1, dc->npoints,
                                                tolerance_sq, BEZIER_MAX_BEZIERS);
         g_assert( nb1 * BEZIER_SIZE <= gint(G_N_ELEMENTS(b1)) );
 
-        NR::Point b2[BEZIER_MAX_LENGTH];
+        Geom::Point b2[BEZIER_MAX_LENGTH];
         gint const nb2 = sp_bezier_fit_cubic_r(b2, dc->point2, dc->npoints,
                                                tolerance_sq, BEZIER_MAX_BEZIERS);
         g_assert( nb2 * BEZIER_SIZE <= gint(G_N_ELEMENTS(b2)) );
@@ -960,12 +960,12 @@ fit_and_split(SPEraserContext *dc, gboolean release)
             if (! release) {
                 dc->currentcurve->reset();
                 dc->currentcurve->moveto(b1[0]);
-                for (NR::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
+                for (Geom::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
                     dc->currentcurve->curveto(bp1[1],
                                      bp1[2], bp1[3]);
                 }
                 dc->currentcurve->lineto(b2[BEZIER_SIZE*(nb2-1) + 3]);
-                for (NR::Point *bp2 = b2 + BEZIER_SIZE * ( nb2 - 1 ); bp2 >= b2; bp2 -= BEZIER_SIZE) {
+                for (Geom::Point *bp2 = b2 + BEZIER_SIZE * ( nb2 - 1 ); bp2 >= b2; bp2 -= BEZIER_SIZE) {
                     dc->currentcurve->curveto(bp2[2], bp2[1], bp2[0]);
                 }
                 // FIXME: dc->segments is always NULL at this point??
@@ -977,10 +977,10 @@ fit_and_split(SPEraserContext *dc, gboolean release)
             }
 
             /* Current eraser */
-            for (NR::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
+            for (Geom::Point *bp1 = b1; bp1 < b1 + BEZIER_SIZE * nb1; bp1 += BEZIER_SIZE) {
                 dc->cal1->curveto(bp1[1], bp1[2], bp1[3]);
             }
-            for (NR::Point *bp2 = b2; bp2 < b2 + BEZIER_SIZE * nb2; bp2 += BEZIER_SIZE) {
+            for (Geom::Point *bp2 = b2; bp2 < b2 + BEZIER_SIZE * nb2; bp2 += BEZIER_SIZE) {
                 dc->cal2->curveto(bp2[1], bp2[2], bp2[3]);
             }
         } else {

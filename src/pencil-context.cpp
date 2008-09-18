@@ -53,15 +53,15 @@ static gint pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotio
 static gint pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &revent);
 static gint pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint const state);
 
-static void spdc_set_startpoint(SPPencilContext *pc, NR::Point const p);
-static void spdc_set_endpoint(SPPencilContext *pc, NR::Point const p);
+static void spdc_set_startpoint(SPPencilContext *pc, Geom::Point const p);
+static void spdc_set_endpoint(SPPencilContext *pc, Geom::Point const p);
 static void spdc_finish_endpoint(SPPencilContext *pc);
-static void spdc_add_freehand_point(SPPencilContext *pc, NR::Point p, guint state);
+static void spdc_add_freehand_point(SPPencilContext *pc, Geom::Point p, guint state);
 static void fit_and_split(SPPencilContext *pc);
 
 
 static SPDrawContextClass *pencil_parent_class;
-static NR::Point pencil_drag_origin_w(0, 0);
+static Geom::Point pencil_drag_origin_w(0, 0);
 static bool pencil_within_tolerance = false;
 
 /**
@@ -121,7 +121,7 @@ sp_pencil_context_init(SPPencilContext *pc)
 
     pc->npoints = 0;
     pc->state = SP_PENCIL_CONTEXT_IDLE;
-    pc->req_tangent = NR::Point(0, 0);
+    pc->req_tangent = Geom::Point(0, 0);
 }
 
 /**
@@ -152,7 +152,7 @@ sp_pencil_context_dispose(GObject *object)
 
 /** Snaps new node relative to the previous node. */
 static void
-spdc_endpoint_snap(SPPencilContext const *pc, NR::Point &p, guint const state)
+spdc_endpoint_snap(SPPencilContext const *pc, Geom::Point &p, guint const state)
 {
     if ((state & GDK_CONTROL_MASK)) { //CTRL enables constrained snapping
         spdc_endpoint_snap_rotation(pc, p, pc->p[0], state);
@@ -222,7 +222,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
             return TRUE;
         }
 
-        NR::Point const button_w(bevent.x, bevent.y);
+        Geom::Point const button_w(bevent.x, bevent.y);
 
         /* Find desktop coordinates */
         Geom::Point p = pc->desktop->w2d(button_w);
@@ -230,7 +230,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
         /* Test whether we hit any anchor. */
         SPDrawAnchor *anchor = spdc_test_inside(pc, button_w);
 
-        pencil_drag_origin_w = NR::Point(bevent.x,bevent.y);
+        pencil_drag_origin_w = Geom::Point(bevent.x,bevent.y);
         pencil_within_tolerance = true;
 
         switch (pc->state) {
@@ -303,15 +303,15 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
     }
 
     /* Find desktop coordinates */
-    Geom::Point p = to_2geom(dt->w2d(NR::Point(mevent.x, mevent.y)));
+    Geom::Point p = to_2geom(dt->w2d(Geom::Point(mevent.x, mevent.y)));
 
     /* Test whether we hit any anchor. */
-    SPDrawAnchor *anchor = spdc_test_inside(pc, NR::Point(mevent.x, mevent.y));
+    SPDrawAnchor *anchor = spdc_test_inside(pc, Geom::Point(mevent.x, mevent.y));
 
     if (pencil_within_tolerance) {
         gint const tolerance = prefs_get_int_attribute_limited("options.dragtolerance",
                                                                "value", 0, 0, 100);
-        if ( NR::LInfty( NR::Point(mevent.x,mevent.y) - pencil_drag_origin_w ) < tolerance ) {
+        if ( NR::LInfty( Geom::Point(mevent.x,mevent.y) - pencil_drag_origin_w ) < tolerance ) {
             return FALSE;   // Do not drag if we're within tolerance from origin.
         }
     }
@@ -327,7 +327,7 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
             if (anchor) {
                 p = to_2geom(anchor->dp);
             } else {
-                NR::Point ptnr = from_2geom(p);
+                Geom::Point ptnr = from_2geom(p);
                 spdc_endpoint_snap(pc, ptnr, mevent.state);
                 p = to_2geom(ptnr);
             }
@@ -394,10 +394,10 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
         pc->is_drawing = false;
 
         /* Find desktop coordinates */
-        NR::Point p = dt->w2d(NR::Point(revent.x, revent.y));
+        Geom::Point p = dt->w2d(Geom::Point(revent.x, revent.y));
 
         /* Test whether we hit any anchor. */
-        SPDrawAnchor *anchor = spdc_test_inside(pc, NR::Point(revent.x,
+        SPDrawAnchor *anchor = spdc_test_inside(pc, Geom::Point(revent.x,
                                                               revent.y));
 
         switch (pc->state) {
@@ -538,7 +538,7 @@ pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint con
  * Reset points and set new starting point.
  */
 static void
-spdc_set_startpoint(SPPencilContext *const pc, NR::Point const p)
+spdc_set_startpoint(SPPencilContext *const pc, Geom::Point const p)
 {
     pc->npoints = 0;
     pc->red_curve_is_valid = false;
@@ -558,7 +558,7 @@ spdc_set_startpoint(SPPencilContext *const pc, NR::Point const p)
  * We change RED curve.
  */
 static void
-spdc_set_endpoint(SPPencilContext *const pc, NR::Point const p)
+spdc_set_endpoint(SPPencilContext *const pc, Geom::Point const p)
 {
     if (pc->npoints == 0) {
         return;
@@ -609,7 +609,7 @@ spdc_finish_endpoint(SPPencilContext *const pc)
 }
 
 static void
-spdc_add_freehand_point(SPPencilContext *pc, NR::Point p, guint /*state*/)
+spdc_add_freehand_point(SPPencilContext *pc, Geom::Point p, guint /*state*/)
 {
     g_assert( pc->npoints > 0 );
     g_return_if_fail(unsigned(pc->npoints) < G_N_ELEMENTS(pc->p));
@@ -637,10 +637,10 @@ fit_and_split(SPPencilContext *pc)
     double const tolerance_sq = 0.02 * square( NR::expansion(pc->desktop->w2d()) * tol) 
         * exp(0.2*tol - 2);
 
-    NR::Point b[4];
+    Geom::Point b[4];
     g_assert(is_zero(pc->req_tangent)
              || is_unit_vector(pc->req_tangent));
-    NR::Point const tHatEnd(0, 0);
+    Geom::Point const tHatEnd(0, 0);
     int const n_segs = sp_bezier_fit_cubic_full(b, NULL, pc->p, pc->npoints,
                                                 pc->req_tangent, tHatEnd, tolerance_sq, 1);
     if ( n_segs > 0
@@ -663,10 +663,10 @@ fit_and_split(SPPencilContext *pc)
             g_assert( last_seg );      // Relevance: validity of (*last_seg)[2]
             pc->p[0] = last_seg->finalPoint();
             pc->npoints = 1;
-            NR::Point const req_vec( pc->p[0] - (*last_seg)[2] );
-            pc->req_tangent = ( ( NR::is_zero(req_vec) || !in_svg_plane(req_vec) )
-                                ? NR::Point(0, 0)
-                                : NR::unit_vector(req_vec) );
+            Geom::Point const req_vec( pc->p[0] - (*last_seg)[2] );
+            pc->req_tangent = ( ( Geom::is_zero(req_vec) || !in_svg_plane(req_vec) )
+                                ? Geom::Point(0, 0)
+                                : Geom::unit_vector(req_vec) );
         }
 
         pc->green_curve->append_continuous(pc->red_curve, 0.0625);

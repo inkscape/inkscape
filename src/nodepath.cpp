@@ -126,14 +126,14 @@ static void sp_node_adjust_handles(Inkscape::NodePath::Node *node);
 static void node_clicked(SPKnot *knot, guint state, gpointer data);
 static void node_grabbed(SPKnot *knot, guint state, gpointer data);
 static void node_ungrabbed(SPKnot *knot, guint state, gpointer data);
-static gboolean node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data);
+static gboolean node_request(SPKnot *knot, Geom::Point *p, guint state, gpointer data);
 
 /* Handle event callbacks */
 static void node_handle_clicked(SPKnot *knot, guint state, gpointer data);
 static void node_handle_grabbed(SPKnot *knot, guint state, gpointer data);
 static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data);
-static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpointer data);
-static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer data);
+static gboolean node_handle_request(SPKnot *knot, Geom::Point *p, guint state, gpointer data);
+static void node_handle_moved(SPKnot *knot, Geom::Point *p, guint state, gpointer data);
 static gboolean node_handle_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::Node *n);
 
 /* Constructors and destructors */
@@ -143,7 +143,7 @@ static void sp_nodepath_subpath_destroy(Inkscape::NodePath::SubPath *subpath);
 static void sp_nodepath_subpath_close(Inkscape::NodePath::SubPath *sp);
 static void sp_nodepath_subpath_open(Inkscape::NodePath::SubPath *sp,Inkscape::NodePath::Node *n);
 static Inkscape::NodePath::Node * sp_nodepath_node_new(Inkscape::NodePath::SubPath *sp,Inkscape::NodePath::Node *next,Inkscape::NodePath::NodeType type, NRPathcode code,
-                                         NR::Point *ppos, NR::Point *pos, NR::Point *npos);
+                                         Geom::Point *ppos, Geom::Point *pos, Geom::Point *npos);
 static void sp_nodepath_node_destroy(Inkscape::NodePath::Node *node);
 
 /* Helpers */
@@ -533,7 +533,7 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
 
         Inkscape::NodePath::SubPath *sp = sp_nodepath_subpath_new(np);
 
-        NR::Point ppos = pit->initialPoint() * (Geom::Matrix)np->i2d;
+        Geom::Point ppos = pit->initialPoint() * (Geom::Matrix)np->i2d;
         NRPathcode pcode = NR_MOVETO;
 
         /* Johan: Note that this is pretty arcane code. I am pretty sure it is working correctly, be very certain to change it! (better to just rewrite this whole method)*/
@@ -542,7 +542,7 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
                 dynamic_cast<Geom::HLineSegment const*>(&*cit) ||
                 dynamic_cast<Geom::VLineSegment const*>(&*cit) )
             {
-                NR::Point pos = cit->initialPoint() * (Geom::Matrix)np->i2d;
+                Geom::Point pos = cit->initialPoint() * (Geom::Matrix)np->i2d;
                 sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &pos);
 
                 ppos = cit->finalPoint() * (Geom::Matrix)np->i2d;
@@ -550,8 +550,8 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
             }
             else if(Geom::CubicBezier const *cubic_bezier = dynamic_cast<Geom::CubicBezier const*>(&*cit)) {
                 std::vector<Geom::Point> points = cubic_bezier->points();
-                NR::Point pos = points[0] * (Geom::Matrix)np->i2d;
-                NR::Point npos = points[1] * (Geom::Matrix)np->i2d;
+                Geom::Point pos = points[0] * (Geom::Matrix)np->i2d;
+                Geom::Point npos = points[1] * (Geom::Matrix)np->i2d;
                 sp_nodepath_node_new(sp, NULL, t[i++], pcode, &ppos, &pos, &npos);
 
                 ppos = points[2] * (Geom::Matrix)np->i2d;
@@ -566,7 +566,7 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
             Geom::Curve const &closing_seg = pit->back_closed();
             // Don't use !closing_seg.isDegenerate() as it is too precise, and does not account for floating point rounding probs (LP bug #257289)
             if ( ! are_near(closing_seg.initialPoint(), closing_seg.finalPoint()) ) {
-                NR::Point pos = closing_seg.finalPoint() * (Geom::Matrix)np->i2d;
+                Geom::Point pos = closing_seg.finalPoint() * (Geom::Matrix)np->i2d;
                 sp_nodepath_node_new(sp, NULL, t[i++], NR_LINETO, &pos, &pos, &pos);
             }
 
@@ -753,10 +753,10 @@ static SPCurve *create_curve(Inkscape::NodePath::Path *np)
 
     for (GList *spl = np->subpaths; spl != NULL; spl = spl->next) {
        Inkscape::NodePath::SubPath *sp = (Inkscape::NodePath::SubPath *) spl->data;
-        curve->moveto(sp->first->pos * np->d2i);
+       curve->moveto(sp->first->pos * np->d2i);
        Inkscape::NodePath::Node *n = sp->first->n.other;
         while (n) {
-            NR::Point const end_pt = n->pos * np->d2i;
+            Geom::Point const end_pt = n->pos * np->d2i;
             switch (n->code) {
                 case NR_LINETO:
                     curve->lineto(end_pt);
@@ -1045,7 +1045,7 @@ static void sp_nodepath_set_line_type(Inkscape::NodePath::Node *end, NRPathcode 
                 }
             }
         } else {
-            NR::Point delta = end->pos - start->pos;
+            Geom::Point delta = end->pos - start->pos;
             start->n.pos = start->pos + delta / 3;
             end->p.pos = end->pos - delta / 3;
             sp_node_adjust_handle(start, 1);
@@ -1206,13 +1206,13 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
                 node->code = NR_CURVETO;
                 node->n.other->code = NR_CURVETO;
 
-                NR::Point leg_prev = node->pos - node->p.other->pos;
-                NR::Point leg_next = node->pos - node->n.other->pos;
+                Geom::Point leg_prev = node->pos - node->p.other->pos;
+                Geom::Point leg_next = node->pos - node->n.other->pos;
 
                 double norm_leg_prev = L2(leg_prev);
                 double norm_leg_next = L2(leg_next);
 
-                NR::Point delta;
+                Geom::Point delta;
                 if (norm_leg_next > 0.0) {
                     delta = (norm_leg_prev / norm_leg_next) * leg_next - leg_prev;
                     (&delta)->normalize();
@@ -1259,9 +1259,9 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
 /**
  * Move node to point, and adjust its and neighbouring handles.
  */
-void sp_node_moveto(Inkscape::NodePath::Node *node, NR::Point p)
+void sp_node_moveto(Inkscape::NodePath::Node *node, Geom::Point p)
 {
-    NR::Point delta = p - node->pos;
+    Geom::Point delta = p - node->pos;
     node->pos = p;
 
     node->p.pos += delta;
@@ -1304,8 +1304,8 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
                                             Inkscape::Snapper::ConstraintLine const &constraint = Geom::Point())
 {
     NR::Coord best = NR_HUGE;
-    NR::Point delta(dx, dy);
-    NR::Point best_pt = delta;
+    Geom::Point delta(dx, dy);
+    Geom::Point best_pt = delta;
     Inkscape::SnappedPoint best_abs;
     
     if (snap) {    
@@ -1395,7 +1395,7 @@ sculpt_profile (double x, double alpha, guint profile)
 }
 
 double
-bezier_length (NR::Point a, NR::Point ah, NR::Point bh, NR::Point b)
+bezier_length (Geom::Point a, Geom::Point ah, Geom::Point bh, Geom::Point b)
 {
     // extremely primitive for now, don't have time to look for the real one
     double lower = NR::L2(b - a);
@@ -1404,7 +1404,7 @@ bezier_length (NR::Point a, NR::Point ah, NR::Point bh, NR::Point b)
 }
 
 void
-sp_nodepath_move_node_and_handles (Inkscape::NodePath::Node *n, NR::Point delta, NR::Point delta_n, NR::Point delta_p)
+sp_nodepath_move_node_and_handles (Inkscape::NodePath::Node *n, Geom::Point delta, Geom::Point delta_n, Geom::Point delta_p)
 {
     n->pos = n->origin + delta;
     n->n.pos = n->n.origin + delta_n;
@@ -1418,7 +1418,7 @@ sp_nodepath_move_node_and_handles (Inkscape::NodePath::Node *n, NR::Point delta,
  * on how far they are from the dragged node n.
  */
 static void
-sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::NodePath::Node *n, NR::Point delta)
+sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::NodePath::Node *n, Geom::Point delta)
 {
     g_assert (n);
     g_assert (nodepath);
@@ -1822,7 +1822,7 @@ void Inkscape::NodePath::Path::selection(std::list<Node *> &l)
 /**
  * Align selected nodes on the specified axis.
  */
-void sp_nodepath_selected_align(Inkscape::NodePath::Path *nodepath, NR::Dim2 axis)
+void sp_nodepath_selected_align(Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis)
 {
     if ( !nodepath || !nodepath->selected ) { // no nodepath, or no nodes selected
         return;
@@ -1832,7 +1832,7 @@ void sp_nodepath_selected_align(Inkscape::NodePath::Path *nodepath, NR::Dim2 axi
         return;
     }
    Inkscape::NodePath::Node *pNode = reinterpret_cast<Inkscape::NodePath::Node *>(nodepath->selected->data);
-    NR::Point dest(pNode->pos);
+    Geom::Point dest(pNode->pos);
     for (GList *l = nodepath->selected; l != NULL; l = l->next) {
         pNode = reinterpret_cast<Inkscape::NodePath::Node *>(l->data);
         if (pNode) {
@@ -1850,7 +1850,7 @@ struct NodeSort
    Inkscape::NodePath::Node *_node;
     NR::Coord _coord;
     /// \todo use vectorof pointers instead of calling copy ctor
-    NodeSort(Inkscape::NodePath::Node *node, NR::Dim2 axis) :
+    NodeSort(Inkscape::NodePath::Node *node, Geom::Dim2 axis) :
         _node(node), _coord(node->pos[axis])
     {}
 
@@ -1864,7 +1864,7 @@ static bool operator<(NodeSort const &a, NodeSort const &b)
 /**
  * Distribute selected nodes on the specified axis.
  */
-void sp_nodepath_selected_distribute(Inkscape::NodePath::Path *nodepath, NR::Dim2 axis)
+void sp_nodepath_selected_distribute(Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis)
 {
     if ( !nodepath || !nodepath->selected ) { // no nodepath, or no nodes selected
         return;
@@ -1897,7 +1897,7 @@ void sp_nodepath_selected_distribute(Inkscape::NodePath::Path *nodepath, NR::Dim
           it < sorted.end();
           it ++ )
     {
-        NR::Point dest((*it)._node->pos);
+        Geom::Point dest((*it)._node->pos);
         dest[axis] = pos;
         sp_node_moveto((*it)._node, dest);
         pos += step;
@@ -1953,7 +1953,7 @@ sp_node_selected_add_node(Inkscape::NodePath::Path *nodepath)
  * Select segment nearest to point
  */
 void
-sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p, bool toggle)
+sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, Geom::Point p, bool toggle)
 {
     if (!nodepath) {
         return;
@@ -2001,7 +2001,7 @@ sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Po
  * Add a node nearest to point
  */
 void
-sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
+sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, Geom::Point p)
 {
     if (!nodepath) {
         return;
@@ -2055,7 +2055,7 @@ sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
  * cf. app/vectors/gimpbezierstroke.c, gimp_bezier_stroke_point_move_relative()
  */
 void
-sp_nodepath_curve_drag(Inkscape::NodePath::Path *nodepath, int node, double t, NR::Point delta)
+sp_nodepath_curve_drag(Inkscape::NodePath::Path *nodepath, int node, double t, Geom::Point delta)
 {
     Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(nodepath, node);
 
@@ -2082,8 +2082,8 @@ sp_nodepath_curve_drag(Inkscape::NodePath::Path *nodepath, int node, double t, N
         sp_nodepath_set_line_type(e, NR_CURVETO);
     }
 
-    NR::Point offsetcoord0 = ((1-feel_good)/(3*t*(1-t)*(1-t))) * delta;
-    NR::Point offsetcoord1 = (feel_good/(3*t*t*(1-t))) * delta;
+    Geom::Point offsetcoord0 = ((1-feel_good)/(3*t*(1-t)*(1-t))) * delta;
+    Geom::Point offsetcoord1 = (feel_good/(3*t*t*(1-t))) * delta;
     e->p.other->n.pos += offsetcoord0;
     e->p.pos += offsetcoord1;
 
@@ -2165,7 +2165,7 @@ static void do_node_selected_join(Inkscape::NodePath::Path *nodepath, Inkscape::
     /* a and b are endpoints */
 
     // if one of the two nodes is mouseovered, fix its position
-    NR::Point c;
+    Geom::Point c;
     if (a->knot && SP_KNOT_IS_MOUSEOVER(a->knot)) {
         c = a->pos;
     } else if (b->knot && SP_KNOT_IS_MOUSEOVER(b->knot)) {
@@ -2188,7 +2188,7 @@ static void do_node_selected_join(Inkscape::NodePath::Path *nodepath, Inkscape::
     /* a and b are separate subpaths */
     Inkscape::NodePath::SubPath *sa = a->subpath;
     Inkscape::NodePath::SubPath *sb = b->subpath;
-    NR::Point p;
+    Geom::Point p;
     Inkscape::NodePath::Node *n;
     NRPathcode code;
     if (a == sa->first) {
@@ -2279,7 +2279,7 @@ static void do_node_selected_join_segment(Inkscape::NodePath::Path *nodepath, In
     Inkscape::NodePath::SubPath *sb = b->subpath;
 
     Inkscape::NodePath::Node *n;
-    NR::Point p;
+    Geom::Point p;
     NRPathcode code;
     if (a == sa->first) {
         code = (NRPathcode) sa->first->n.other->code;
@@ -2415,7 +2415,7 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
         //calculate points for each segment
         int rate = 5;
         float period = 1.0 / rate;
-        std::vector<NR::Point> data;
+        std::vector<Geom::Point> data;
         if (!just_delete) {
             data.push_back(sample_cursor->pos);
             for (Inkscape::NodePath::Node *curr=sample_cursor; curr; curr=curr->n.other) {
@@ -2426,15 +2426,15 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
                 }
 
                 //sample points on the contiguous selected segment
-                NR::Point *bez;
-                bez = new NR::Point [4];
+                Geom::Point *bez;
+                bez = new Geom::Point [4];
                 bez[0] = curr->pos;
                 bez[1] = curr->n.pos;
                 bez[2] = curr->n.other->p.pos;
                 bez[3] = curr->n.other->pos;
                 for (int i=1; i<rate; i++) {
                     gdouble t = i * period;
-                    NR::Point p = bezier_pt(3, bez, t);
+                    Geom::Point p = bezier_pt(3, bez, t);
                     data.push_back(p);
                 }
                 data.push_back(curr->n.other->pos);
@@ -2449,12 +2449,12 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
 
         if (!just_delete) {
             //calculate the best fitting single segment and adjust the endpoints
-            NR::Point *adata;
-            adata = new NR::Point [data.size()];
+            Geom::Point *adata;
+            adata = new Geom::Point [data.size()];
             copy(data.begin(), data.end(), adata);
 
-            NR::Point *bez;
-            bez = new NR::Point [4];
+            Geom::Point *bez;
+            bez = new Geom::Point [4];
             //would decreasing error create a better fitting approximation?
             gdouble error = 1.0;
             gint ret;
@@ -3246,7 +3246,7 @@ static void sp_node_adjust_handle(Inkscape::NodePath::Node *node, gint which_adj
         // other is a line, and we are either smooth or symm
        Inkscape::NodePath::Node *othernode = other->other;
         double len = NR::L2(me->pos - node->pos);
-        NR::Point delta = node->pos - othernode->pos;
+        Geom::Point delta = node->pos - othernode->pos;
         double linelen = NR::L2(delta);
         if (linelen < 1e-18)
             return;
@@ -3261,7 +3261,7 @@ static void sp_node_adjust_handle(Inkscape::NodePath::Node *node, gint which_adj
     } else {
         // smoothify
         double len = NR::L2(me->pos - node->pos);
-        NR::Point delta = other->pos - node->pos;
+        Geom::Point delta = other->pos - node->pos;
         double otherlen = NR::L2(delta);
         if (otherlen < 1e-18) return;
         me->pos = node->pos - (len / otherlen) * delta;
@@ -3293,7 +3293,7 @@ static void sp_node_adjust_handles(Inkscape::NodePath::Node *node)
     }
 
     /* both are curves */
-    NR::Point const delta( node->n.pos - node->p.pos );
+    Geom::Point const delta( node->n.pos - node->p.pos );
 
     if (node->type == Inkscape::NodePath::NODE_SYMM) {
         node->p.pos = node->pos - delta / 2;
@@ -3497,10 +3497,10 @@ static void node_ungrabbed(SPKnot */*knot*/, guint /*state*/, gpointer data)
  * \param closest  Pointer to the point struct where the result is stored.
  * \todo FIXME: use dot product perhaps?
  */
-static void point_line_closest(NR::Point *p, double a, NR::Point *closest)
+static void point_line_closest(Geom::Point *p, double a, Geom::Point *closest)
 {
     if (a == HUGE_VAL) { // vertical
-        *closest = NR::Point(0, (*p)[NR::Y]);
+        *closest = Geom::Point(0, (*p)[NR::Y]);
     } else {
         (*closest)[NR::X] = ( a * (*p)[NR::Y] + (*p)[NR::X]) / (a*a + 1);
         (*closest)[NR::Y] = a * (*closest)[NR::X];
@@ -3512,9 +3512,9 @@ static void point_line_closest(NR::Point *p, double a, NR::Point *closest)
  * \param p  A point.
  * \param a  Angle of the line; it is assumed to go through coordinate origin.
  */
-static double point_line_distance(NR::Point *p, double a)
+static double point_line_distance(Geom::Point *p, double a)
 {
-    NR::Point c;
+    Geom::Point c;
     point_line_closest(p, a, &c);
     return sqrt(((*p)[NR::X] - c[NR::X])*((*p)[NR::X] - c[NR::X]) + ((*p)[NR::Y] - c[NR::Y])*((*p)[NR::Y] - c[NR::Y]));
 }
@@ -3524,14 +3524,14 @@ static double point_line_distance(NR::Point *p, double a)
  * \todo fixme: This goes to "moved" event? (lauris)
  */
 static gboolean
-node_request(SPKnot */*knot*/, NR::Point *p, guint state, gpointer data)
+node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
 {
     double yn, xn, yp, xp;
     double an, ap, na, pa;
     double d_an, d_ap, d_na, d_pa;
     gboolean collinear = FALSE;
-    NR::Point c;
-    NR::Point pr;
+    Geom::Point c;
+    Geom::Point pr;
 
     Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
@@ -3542,7 +3542,7 @@ node_request(SPKnot */*knot*/, NR::Point *p, guint state, gpointer data)
          ( ((state & GDK_SHIFT_MASK) && ((n->n.other && n->n.pos == n->pos) || (n->p.other && n->p.pos == n->pos)))
            || n->dragging_out ) )
     {
-       NR::Point mouse = (*p);
+       Geom::Point mouse = (*p);
 
        if (!n->dragging_out) {
            // This is the first drag-out event; find out which handle to drag out
@@ -3587,7 +3587,7 @@ node_request(SPKnot */*knot*/, NR::Point *p, guint state, gpointer data)
 
            // if there's another handle, make sure the one we drag out starts parallel to it
            if (opposite->pos != n->pos) {
-               mouse = n->pos - NR::L2(mouse - n->pos) * NR::unit_vector(opposite->pos - n->pos);
+               mouse = n->pos - Geom::L2(mouse - n->pos) * Geom::unit_vector(opposite->pos - n->pos);
            }
 
            // knots might not be created yet!
@@ -3788,7 +3788,7 @@ static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data)
 /**
  * Node handle "request" signal callback.
  */
-static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
+static gboolean node_handle_request(SPKnot *knot, Geom::Point *p, guint state, gpointer data)
 {
     Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
@@ -3823,10 +3823,10 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpo
     if (othernode) {
         if ((n->type != Inkscape::NodePath::NODE_CUSP) && sp_node_side_is_line(n, opposite)) {
             /* We are smooth node adjacent with line */
-            NR::Point const delta = *p - n->pos;
+            Geom::Point const delta = *p - n->pos;
             NR::Coord const len = NR::L2(delta);
             Inkscape::NodePath::Node *othernode = opposite->other;
-            NR::Point const ndelta = n->pos - othernode->pos;
+            Geom::Point const ndelta = n->pos - othernode->pos;
             NR::Coord const linelen = NR::L2(ndelta);
             if (len > NR_EPSILON && linelen > NR_EPSILON) {
                 NR::Coord const scal = dot(delta, ndelta) / linelen;
@@ -3858,7 +3858,7 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpo
 /**
  * Node handle moved callback.
  */
-static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer data)
+static void node_handle_moved(SPKnot *knot, Geom::Point *p, guint state, gpointer data)
 {
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
@@ -3902,7 +3902,7 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
         // 3. Snap to the angle of the opposite line, if any
         Inkscape::NodePath::Node *othernode = other->other;
         if (othernode) {
-            NR::Point other_to_snap(0,0);
+            Geom::Point other_to_snap(0,0);
             if (sp_node_side_is_line(n, other)) {
                 other_to_snap = othernode->pos - n->pos;
             } else {
@@ -3932,14 +3932,14 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
         && rme.a != HUGE_VAL && rnew.a != HUGE_VAL && (fabs(rme.a - rnew.a) > 0.001 || n->type ==Inkscape::NodePath::NODE_SYMM)) {
         // rotate the other handle correspondingly, if both old and new angles exist and are not the same
         rother.a += rnew.a - rme.a;
-        other->pos = NR::Point(rother) + n->pos;
+        other->pos = Geom::Point(rother) + n->pos;
         if (other->knot) {
             sp_ctrlline_set_coords(SP_CTRLLINE(other->line), n->pos, other->pos);
             sp_knot_moveto(other->knot, other->pos);
         }
     }
 
-    me->pos = NR::Point(rnew) + n->pos;
+    me->pos = Geom::Point(rnew) + n->pos;
     sp_ctrlline_set_coords(SP_CTRLLINE(me->line), n->pos, me->pos);
 
     // move knot, but without emitting the signal:
@@ -4100,10 +4100,10 @@ static void node_rotate_one (Inkscape::NodePath::Node *n, gdouble angle, int whi
         node_rotate_one_internal (*n, angle, rme, rother, both);
     }
 
-    me->pos = n->pos + NR::Point(rme);
+    me->pos = n->pos + Geom::Point(rme);
 
     if (both || n->type == Inkscape::NodePath::NODE_SMOOTH || n->type == Inkscape::NodePath::NODE_SYMM) {
-        other->pos =  n->pos + NR::Point(rother);
+        other->pos =  n->pos + Geom::Point(rother);
     }
 
     // this function is only called from sp_nodepath_selected_nodes_rotate that will update display at the end,
@@ -4141,7 +4141,7 @@ void sp_nodepath_selected_nodes_rotate(Inkscape::NodePath::Path *nodepath, gdoub
             rot = angle;
         }
 
-        NR::Point rot_center;
+        Geom::Point rot_center;
         if (Inkscape::NodePath::Path::active_node == NULL)
             rot_center = box.midpoint();
         else
@@ -4238,10 +4238,10 @@ static void node_scale_one (Inkscape::NodePath::Node *n, gdouble grow, int which
         }
     }
 
-    me->pos = n->pos + NR::Point(rme);
+    me->pos = n->pos + Geom::Point(rme);
 
     if (both || n->type == Inkscape::NodePath::NODE_SYMM) {
-        other->pos = n->pos + NR::Point(rother);
+        other->pos = n->pos + Geom::Point(rother);
     }
 
     // this function is only called from sp_nodepath_selected_nodes_scale that will update display at the end,
@@ -4272,7 +4272,7 @@ void sp_nodepath_selected_nodes_scale(Inkscape::NodePath::Path *nodepath, gdoubl
 
         double scale = (box.maxExtent() + grow)/box.maxExtent();
 
-        NR::Point scale_center;
+        Geom::Point scale_center;
         if (Inkscape::NodePath::Path::active_node == NULL)
             scale_center = box.midpoint();
         else
@@ -4304,7 +4304,7 @@ void sp_nodepath_selected_nodes_scale_screen(Inkscape::NodePath::Path *nodepath,
 /**
  * Flip selected nodes horizontally/vertically.
  */
-void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, boost::optional<NR::Point> center)
+void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis, boost::optional<Geom::Point> center)
 {
     if (!nodepath || !nodepath->selected) return;
 
@@ -4324,7 +4324,7 @@ void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis, boost:
         }
         NR::Matrix t =
             NR::Matrix (NR::translate(- *center)) *
-            NR::Matrix ((axis == NR::X)? NR::scale(-1, 1) : NR::scale(1, -1)) *
+            NR::Matrix ((axis == Geom::X)? NR::scale(-1, 1) : NR::scale(1, -1)) *
             NR::Matrix (NR::translate(*center));
 
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
@@ -4446,7 +4446,7 @@ static void sp_nodepath_subpath_open(Inkscape::NodePath::SubPath *sp,Inkscape::N
  * \param npos Handle position in previous direction
  */
 Inkscape::NodePath::Node *
-sp_nodepath_node_new(Inkscape::NodePath::SubPath *sp, Inkscape::NodePath::Node *next, Inkscape::NodePath::NodeType type, NRPathcode code, NR::Point *ppos, NR::Point *pos, NR::Point *npos)
+sp_nodepath_node_new(Inkscape::NodePath::SubPath *sp, Inkscape::NodePath::Node *next, Inkscape::NodePath::NodeType type, NRPathcode code, Geom::Point *ppos, Geom::Point *pos, Geom::Point *npos)
 {
     g_assert(sp);
     g_assert(sp->nodepath);

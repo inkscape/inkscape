@@ -1352,11 +1352,11 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
                 if (active_node) {
 
                     // ... flip the selected nodes about that node
-                    SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::X, active_node->pos);
+                    SP_NODE_CONTEXT(ec)->shape_editor->flip(Geom::X, active_node->pos);
                 } else {
 
                     // ... or else about the center of their bounding box.
-                    SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::X);
+                    SP_NODE_CONTEXT(ec)->shape_editor->flip(Geom::X);
                 }
 
             // When working with the selector tool, flip the selection about its rotation center
@@ -1372,9 +1372,9 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
             if (tools_isactive(dt, TOOLS_NODES)) {
                 Inkscape::NodePath::Node *active_node = Inkscape::NodePath::Path::active_node;
                 if (active_node) {
-                    SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::Y, active_node->pos);
+                    SP_NODE_CONTEXT(ec)->shape_editor->flip(Geom::Y, active_node->pos);
                 } else {
-                    SP_NODE_CONTEXT(ec)->shape_editor->flip(NR::Y);
+                    SP_NODE_CONTEXT(ec)->shape_editor->flip(Geom::Y);
                 }
             } else {
                 sp_selection_scale_relative(sel, center, NR::scale(1.0, -1.0));
