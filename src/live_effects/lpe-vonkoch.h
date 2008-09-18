@@ -27,13 +27,13 @@ enum VonKochRefType {
 class VonKochPathParam : public PathParam{
 public:
     VonKochPathParam ( const Glib::ustring& label,
-		       const Glib::ustring& tip,
-		       const Glib::ustring& key,
-		       Inkscape::UI::Widget::Registry* wr,
-		       Effect* effect,
-		       const gchar * default_value = "M0,0 L1,1"):PathParam(label,tip,key,wr,effect,default_value){};
+                       const Glib::ustring& tip,
+                       const Glib::ustring& key,
+                       Inkscape::UI::Widget::Registry* wr,
+                       Effect* effect,
+                       const gchar * default_value = "M0,0 L1,1"):PathParam(label,tip,key,wr,effect,default_value){};
     virtual ~VonKochPathParam();
-    virtual void param_setup_nodepath(Inkscape::NodePath::Path *np);  
+    virtual void param_setup_nodepath(Inkscape::NodePath::Path *np);
   };
 
 class LPEVonKoch : public Effect, GroupBBoxEffect {

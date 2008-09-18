@@ -28,12 +28,12 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 VonKochPathParam::~VonKochPathParam()
-{  
+{
 }
 
 void
 VonKochPathParam::param_setup_nodepath(Inkscape::NodePath::Path *np)
-{  
+{
     PathParam::param_setup_nodepath(np);
     sp_nodepath_make_straight_path(np);
 }
@@ -48,9 +48,9 @@ LPEVonKoch::LPEVonKoch(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     nbgenerations(_("Nb of generations"), _("Depth of the recursion --- keep low!!"), "nbgenerations", &wr, this, 1),
     generator(_("Generating path"), _("Path whos segments define the fractal"), "generator", &wr, this, "M0,0 L3,0 M0,1 L1,1 M 2,1 L3,1"),
+    similar_only(_("Use uniform scale/rotation only"), _("If off, 2segments component of generating path can be used to define a general rtansform. If on, they only affect the orientation preserving/reversing of the transform."), "similar_only", &wr, this, false),
     drawall(_("Draw all generations"), _("If unchecked, draw only the last generation"), "drawall", &wr, this, true),
     reftype(_("Reference"), _("Generating path segments define transforms in reference to bbox or last segment"), "reftype", VonKochRefTypeConverter, &wr, this, VKREF_BBOX),
-    similar_only(_("Use uniform scale/rotation only"), _("If off, 2segments component of generating path can be used to define a general rtansform. If on, they only affect the orientation preserving/reversing of the transform."), "similar_only", &wr, this, false),
     maxComplexity(_("Max complexity"), _("Disable effect if the output is too complex"), "maxComplexity", &wr, this, 1000)
 {
     registerParameter( dynamic_cast<Parameter *>(&generator) );
@@ -95,7 +95,7 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
 
 
     std::vector<Matrix> transforms;
-    unsigned end = generating_path.size(); 
+    unsigned end = generating_path.size();
     if (type==VKREF_SEG) end-=1;
     for (unsigned i=0; i<generating_path.size(); i++){
         Matrix m;
@@ -122,11 +122,11 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
 
     if (transforms.size()==0) return path_in;
 
-    //Do nothing if the output is too complex... 
+    //Do nothing if the output is too complex...
     int path_in_complexity = 0;
     for (unsigned k = 0; k < path_in.size(); k++){
             path_in_complexity+=path_in[k].size();
-    }    
+    }
     double complexity = pow(transforms.size(),nbgenerations)*path_in_complexity;
     if (drawall.get_value()){
         int k = transforms.size();
@@ -145,7 +145,7 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
     //Generate path:
     std::vector<Geom::Path> pathi = path_in;
     std::vector<Geom::Path> path_out = path_in;
-    
+
     for (unsigned i = 0; i<nbgenerations; i++){
         if (drawall.get_value()){
             path_out =  path_in;
@@ -156,7 +156,7 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
         }
         for (unsigned j = 0; j<transforms.size(); j++){
             for (unsigned k = 0; k<pathi.size() && complexity < maxComplexity; k++){
-                path_out.push_back(pathi[k]*transforms[j]); 
+                path_out.push_back(pathi[k]*transforms[j]);
                 complexity+=pathi[k].size();
             }
         }
