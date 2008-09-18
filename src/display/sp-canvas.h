@@ -205,13 +205,13 @@ void sp_canvas_request_redraw(SPCanvas *canvas, int x1, int y1, int x2, int y2);
 void sp_canvas_force_full_redraw_after_interruptions(SPCanvas *canvas, unsigned int count);
 void sp_canvas_end_forced_full_redraws(SPCanvas *canvas);
 
-bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, NR::Point const &world);
+bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, Geom::Point const &world);
 
 void sp_canvas_window_to_world(SPCanvas const *canvas, double winx, double winy, double *worldx, double *worldy);
 void sp_canvas_world_to_window(SPCanvas const *canvas, double worldx, double worldy, double *winx, double *winy);
 
-NR::Point sp_canvas_window_to_world(SPCanvas const *canvas, NR::Point const win);
-NR::Point sp_canvas_world_to_window(SPCanvas const *canvas, NR::Point const world);
+Geom::Point sp_canvas_window_to_world(SPCanvas const *canvas, Geom::Point const win);
+Geom::Point sp_canvas_world_to_window(SPCanvas const *canvas, Geom::Point const world);
 
 #endif // SEEN_SP_CANVAS_H
 

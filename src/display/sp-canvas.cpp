@@ -315,7 +315,7 @@ sp_canvas_item_invoke_update (SPCanvasItem *item, NR::Matrix const &affine, unsi
  * maintaining the affine invariant.
  */
 static double
-sp_canvas_item_invoke_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item)
+sp_canvas_item_invoke_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item)
 {
     if (SP_CANVAS_ITEM_GET_CLASS (item)->point)
         return SP_CANVAS_ITEM_GET_CLASS (item)->point (item, p, actual_item);
@@ -1421,7 +1421,7 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
 
         /* find the closest item */
         if (canvas->root->flags & SP_CANVAS_ITEM_VISIBLE) {
-            sp_canvas_item_invoke_point (canvas->root, NR::Point(x, y), &canvas->new_current_item);
+            sp_canvas_item_invoke_point (canvas->root, Geom::Point(x, y), &canvas->new_current_item);
         } else {
             canvas->new_current_item = NULL;
         }
@@ -1734,7 +1734,7 @@ struct PaintRectSetup {
     NRRectL big_rect;
     GTimeVal start_time;
     int max_pixels;
-    NR::Point mouse_loc;
+    Geom::Point mouse_loc;
 };
 
 /**
@@ -1890,7 +1890,7 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
     // Save the mouse location
     gint x, y;
     gdk_window_get_pointer (GTK_WIDGET(canvas)->window, &x, &y, NULL);
-    setup.mouse_loc = sp_canvas_window_to_world (canvas, NR::Point(x,y));
+    setup.mouse_loc = sp_canvas_window_to_world (canvas, Geom::Point(x,y));
 
     if (canvas->rendermode != Inkscape::RENDERMODE_OUTLINE) {
         // use 256K as a compromise to not slow down gradients
@@ -2269,29 +2269,29 @@ void sp_canvas_world_to_window(SPCanvas const *canvas, double worldx, double wor
 /**
  * Converts point from win to world coordinates.
  */
-NR::Point sp_canvas_window_to_world(SPCanvas const *canvas, NR::Point const win)
+Geom::Point sp_canvas_window_to_world(SPCanvas const *canvas, Geom::Point const win)
 {
     g_assert (canvas != NULL);
     g_assert (SP_IS_CANVAS (canvas));
 
-    return NR::Point(canvas->x0 + win[0], canvas->y0 + win[1]);
+    return Geom::Point(canvas->x0 + win[0], canvas->y0 + win[1]);
 }
 
 /**
  * Converts point from world to win coordinates.
  */
-NR::Point sp_canvas_world_to_window(SPCanvas const *canvas, NR::Point const world)
+Geom::Point sp_canvas_world_to_window(SPCanvas const *canvas, Geom::Point const world)
 {
     g_assert (canvas != NULL);
     g_assert (SP_IS_CANVAS (canvas));
 
-    return NR::Point(world[0] - canvas->x0, world[1] - canvas->y0);
+    return Geom::Point(world[0] - canvas->x0, world[1] - canvas->y0);
 }
 
 /**
  * Returns true if point given in world coordinates is inside window.
  */
-bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, NR::Point const &world)
+bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, Geom::Point const &world)
 {
     g_assert( canvas != NULL );
     g_assert(SP_IS_CANVAS(canvas));
@@ -2311,8 +2311,8 @@ bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, NR::Point const &w
 NR::Rect SPCanvas::getViewbox() const
 {
     GtkWidget const *w = GTK_WIDGET(this);
-    return NR::Rect(NR::Point(dx0, dy0),
-                    NR::Point(dx0 + w->allocation.width, dy0 + w->allocation.height));
+    return NR::Rect(Geom::Point(dx0, dy0),
+                    Geom::Point(dx0 + w->allocation.width, dy0 + w->allocation.height));
 }
 
 /**
