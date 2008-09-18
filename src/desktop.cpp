@@ -158,8 +158,8 @@ SPDesktop::SPDesktop() :
     _doc2dt( NR::Matrix(NR::scale(1, -1)) ),
     grids_visible( false )
 {
-    _d2w.set_identity();
-    _w2d.set_identity();
+    _d2w.setIdentity();
+    _w2d.setIdentity();
 
     selection = Inkscape::GC::release( new Inkscape::Selection(this) );
 }
@@ -204,7 +204,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     g_signal_connect (G_OBJECT (main), "event", G_CALLBACK (sp_desktop_root_handler), this);
 
     table = sp_canvas_item_new (main, SP_TYPE_CTRLRECT, NULL);
-    SP_CTRLRECT(table)->setRectangle(NR::Rect(NR::Point(-80000, -80000), NR::Point(80000, 80000)));
+    SP_CTRLRECT(table)->setRectangle(NR::Rect(Geom::Point(-80000, -80000), Geom::Point(80000, 80000)));
     SP_CTRLRECT(table)->setColor(0x00000000, true, 0x00000000);
     sp_canvas_item_move_to_z (table, 0);
 
@@ -241,8 +241,8 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
 
     // display rect and zoom are now handled in sp_desktop_widget_realize()
 
-    NR::Rect const d(NR::Point(0.0, 0.0),
-                     NR::Point(sp_document_width(document), sp_document_height(document)));
+    NR::Rect const d(Geom::Point(0.0, 0.0),
+                     Geom::Point(sp_document_width(document), sp_document_height(document)));
 
     SP_CTRLRECT(page)->setRectangle(d);
     SP_CTRLRECT(page_border)->setRectangle(d);
@@ -647,7 +647,7 @@ SPDesktop::push_event_context (GtkType type, const gchar *config, unsigned int k
  * Sets the coordinate status to a given point
  */
 void
-SPDesktop::set_coordinate_status (NR::Point p) {
+SPDesktop::set_coordinate_status (Geom::Point p) {
     _widget->setCoordinateStatus(p);
 }
 
@@ -655,7 +655,7 @@ SPDesktop::set_coordinate_status (NR::Point p) {
  * \see sp_document_item_from_list_at_point_bottom()
  */
 SPItem *
-SPDesktop::item_from_list_at_point_bottom (const GSList *list, NR::Point const p) const
+SPDesktop::item_from_list_at_point_bottom (const GSList *list, Geom::Point const p) const
 {
     g_return_val_if_fail (doc() != NULL, NULL);
     return sp_document_item_from_list_at_point_bottom (dkey, SP_GROUP (doc()->root), list, p);
@@ -665,7 +665,7 @@ SPDesktop::item_from_list_at_point_bottom (const GSList *list, NR::Point const p
  * \see sp_document_item_at_point()
  */
 SPItem *
-SPDesktop::item_at_point (NR::Point const p, bool into_groups, SPItem *upto) const
+SPDesktop::item_at_point (Geom::Point const p, bool into_groups, SPItem *upto) const
 {
     g_return_val_if_fail (doc() != NULL, NULL);
     return sp_document_item_at_point (doc(), dkey, p, into_groups, upto);
@@ -675,7 +675,7 @@ SPDesktop::item_at_point (NR::Point const p, bool into_groups, SPItem *upto) con
  * \see sp_document_group_at_point()
  */
 SPItem *
-SPDesktop::group_at_point (NR::Point const p) const
+SPDesktop::group_at_point (Geom::Point const p) const
 {
     g_return_val_if_fail (doc() != NULL, NULL);
     return sp_document_group_at_point (doc(), dkey, p);
@@ -685,17 +685,17 @@ SPDesktop::group_at_point (NR::Point const p) const
  * \brief  Returns the mouse point in document coordinates; if mouse is
  * outside the canvas, returns the center of canvas viewpoint
  */
-NR::Point
+Geom::Point
 SPDesktop::point() const
 {
-    NR::Point p = _widget->getPointer();
-    NR::Point pw = sp_canvas_window_to_world (canvas, p);
+    Geom::Point p = _widget->getPointer();
+    Geom::Point pw = sp_canvas_window_to_world (canvas, p);
     p = w2d(pw);
 
     NR::Rect const r = canvas->getViewbox();
 
-    NR::Point r0 = w2d(r.min());
-    NR::Point r1 = w2d(r.max());
+    Geom::Point r0 = w2d(r.min());
+    Geom::Point r1 = w2d(r.max());
 
     if (p[NR::X] >= r0[NR::X] &&
         p[NR::X] <= r1[NR::X] &&
@@ -752,7 +752,7 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
 
     NR::Rect const viewbox = NR::expand(canvas->getViewbox(), border);
 
-    double scale = expansion(_d2w);
+    double scale = _d2w.descrim();
     double newscale;
     if (((x1 - x0) * viewbox.dimensions()[NR::Y]) > ((y1 - y0) * viewbox.dimensions()[NR::X])) {
         newscale = viewbox.dimensions()[NR::X] / (x1 - x0);
@@ -782,7 +782,7 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
     sp_box3d_context_update_lines(event_context);
 
     _widget->updateRulers();
-    _widget->updateScrollbars(expansion(_d2w));
+    _widget->updateScrollbars(_d2w.descrim());
     _widget->updateZoom();
 }
 
@@ -800,8 +800,8 @@ NR::Rect SPDesktop::get_display_area() const
 
     double const scale = _d2w[0];
 
-    return NR::Rect(NR::Point(viewbox.min()[NR::X] / scale, viewbox.max()[NR::Y] / -scale),
-                    NR::Point(viewbox.max()[NR::X] / scale, viewbox.min()[NR::Y] / -scale));
+    return NR::Rect(Geom::Point(viewbox.min()[NR::X] / scale, viewbox.max()[NR::Y] / -scale),
+                    Geom::Point(viewbox.max()[NR::X] / scale, viewbox.min()[NR::Y] / -scale));
 }
 
 /**
@@ -865,7 +865,7 @@ SPDesktop::zoom_absolute_keep_point (double cx, double cy, double px, double py,
     // maximum or minimum zoom reached, but there's no exact equality because of rounding errors;
     // this check prevents "sliding" when trying to zoom in at maximum zoom;
     /// \todo someone please fix calculations properly and remove this hack
-    if (fabs(expansion(_d2w) - zoom) < 0.0001*zoom && (fabs(SP_DESKTOP_ZOOM_MAX - zoom) < 0.01 || fabs(SP_DESKTOP_ZOOM_MIN - zoom) < 0.000001))
+    if (fabs(_d2w.descrim() - zoom) < 0.0001*zoom && (fabs(SP_DESKTOP_ZOOM_MAX - zoom) < 0.01 || fabs(SP_DESKTOP_ZOOM_MIN - zoom) < 0.000001))
         return;
 
     NR::Rect const viewbox = canvas->getViewbox();
@@ -910,7 +910,7 @@ SPDesktop::zoom_relative_keep_point (double cx, double cy, double zoom)
         cy = area.max()[NR::Y];
     }
 
-    gdouble const scale = expansion(_d2w) * zoom;
+    gdouble const scale = _d2w.descrim() * zoom;
     double const px = (cx - area.min()[NR::X]) / area.dimensions()[NR::X];
     double const py = (cy - area.min()[NR::Y]) / area.dimensions()[NR::Y];
 
@@ -923,7 +923,7 @@ SPDesktop::zoom_relative_keep_point (double cx, double cy, double zoom)
 void
 SPDesktop::zoom_relative (double cx, double cy, double zoom)
 {
-    gdouble scale = expansion(_d2w) * zoom;
+    gdouble scale = _d2w.descrim() * zoom;
     zoom_absolute (cx, cy, scale);
 }
 
@@ -933,8 +933,8 @@ SPDesktop::zoom_relative (double cx, double cy, double zoom)
 void
 SPDesktop::zoom_page()
 {
-    NR::Rect d(NR::Point(0, 0),
-               NR::Point(sp_document_width(doc()), sp_document_height(doc())));
+    NR::Rect d(Geom::Point(0, 0),
+               Geom::Point(sp_document_width(doc()), sp_document_height(doc())));
 
     if (d.isEmpty(1.0)) {
         return;
@@ -955,8 +955,8 @@ SPDesktop::zoom_page_width()
         return;
     }
 
-    NR::Rect d(NR::Point(0, a.midpoint()[NR::Y]),
-               NR::Point(sp_document_width(doc()), a.midpoint()[NR::Y]));
+    NR::Rect d(Geom::Point(0, a.midpoint()[NR::Y]),
+               Geom::Point(sp_document_width(doc()), a.midpoint()[NR::Y]));
 
     set_display_area(d, 10);
 }
@@ -1013,7 +1013,7 @@ SPDesktop::zoom_drawing()
 void
 SPDesktop::scroll_world_in_svg_coords (double dx, double dy, bool is_scrolling)
 {
-    double scale = expansion(_d2w);
+    double scale = _d2w.descrim();
     scroll_world(dx*scale, dy*scale, is_scrolling);
 }
 
@@ -1033,7 +1033,7 @@ SPDesktop::scroll_world (double dx, double dy, bool is_scrolling)
     sp_box3d_context_update_lines(event_context);
 
     _widget->updateRulers();
-    _widget->updateScrollbars(expansion(_d2w));
+    _widget->updateScrollbars(_d2w.descrim());
 }
 
 bool
@@ -1042,13 +1042,13 @@ SPDesktop::scroll_to_point (Geom::Point const &p, gdouble autoscrollspeed)
     gdouble autoscrolldistance = (gdouble) prefs_get_int_attribute_limited ("options.autoscrolldistance", "value", 0, -1000, 10000);
 
     // autoscrolldistance is in screen pixels, but the display area is in document units
-    autoscrolldistance /= expansion(_d2w);
+    autoscrolldistance /= _d2w.descrim();
     NR::Rect const dbox = NR::expand(get_display_area(), -autoscrolldistance);
 
     if (!(p[NR::X] > dbox.min()[NR::X] && p[NR::X] < dbox.max()[NR::X]) ||
         !(p[NR::Y] > dbox.min()[NR::Y] && p[NR::Y] < dbox.max()[NR::Y])   ) {
 
-        NR::Point const s_w( p * (Geom::Matrix)_d2w );
+        Geom::Point const s_w( p * (Geom::Matrix)_d2w );
 
         gdouble x_to;
         if (p[NR::X] < dbox.min()[NR::X])
@@ -1066,9 +1066,9 @@ SPDesktop::scroll_to_point (Geom::Point const &p, gdouble autoscrollspeed)
         else
             y_to = p[NR::Y];
 
-        NR::Point const d_dt(x_to, y_to);
-        NR::Point const d_w( d_dt * _d2w );
-        NR::Point const moved_w( d_w - s_w );
+        Geom::Point const d_dt(x_to, y_to);
+        Geom::Point const d_w( d_dt * _d2w );
+        Geom::Point const moved_w( d_w - s_w );
 
         if (autoscrollspeed == 0)
             autoscrollspeed = prefs_get_double_attribute_limited ("options.autoscrollspeed", "value", 1, 0, 10);
@@ -1124,7 +1124,7 @@ SPDesktop::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
 }
 
 void
-SPDesktop::setWindowPosition (NR::Point p)
+SPDesktop::setWindowPosition (Geom::Point p)
 {
     _widget->setPosition (p);
 }
@@ -1327,7 +1327,7 @@ void SPDesktop::toggleSnapping()
 void
 SPDesktop::onPositionSet (double x, double y)
 {
-    _widget->viewSetPosition (NR::Point(x,y));
+    _widget->viewSetPosition (Geom::Point(x,y));
 }
 
 void
@@ -1434,7 +1434,7 @@ SPDesktop::onDocumentResized (gdouble width, gdouble height)
 {
     _doc2dt[5] = height;
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (drawing), _doc2dt);
-    NR::Rect const a(NR::Point(0, 0), NR::Point(width, height));
+    NR::Rect const a(Geom::Point(0, 0), Geom::Point(width, height));
     SP_CTRLRECT(page)->setRectangle(a);
     SP_CTRLRECT(page_border)->setRectangle(a);
 }
@@ -1459,7 +1459,7 @@ SPDesktop::_onSelectionModified
 (Inkscape::Selection */*selection*/, guint /*flags*/, SPDesktop *dt)
 {
     if (!dt->_widget) return;
-    dt->_widget->updateScrollbars (expansion(dt->_d2w));
+    dt->_widget->updateScrollbars (dt->_d2w.descrim());
 }
 
 static void
@@ -1650,32 +1650,32 @@ _update_snap_distances (SPDesktop *desktop)
 }
 
 
-NR::Matrix SPDesktop::w2d() const
+Geom::Matrix SPDesktop::w2d() const
 {
     return _w2d;
 }
 
-NR::Point SPDesktop::w2d(NR::Point const &p) const
+Geom::Point SPDesktop::w2d(Geom::Point const &p) const
 {
     return p * _w2d;
 }
 
-NR::Point SPDesktop::d2w(NR::Point const &p) const
+Geom::Point SPDesktop::d2w(Geom::Point const &p) const
 {
     return p * _d2w;
 }
 
-NR::Matrix SPDesktop::doc2dt() const
+Geom::Matrix SPDesktop::doc2dt() const
 {
     return _doc2dt;
 }
 
-NR::Point SPDesktop::doc2dt(NR::Point const &p) const
+Geom::Point SPDesktop::doc2dt(Geom::Point const &p) const
 {
     return p * _doc2dt;
 }
 
-NR::Point SPDesktop::dt2doc(NR::Point const &p) const
+Geom::Point SPDesktop::dt2doc(Geom::Point const &p) const
 {
     return p * _doc2dt.inverse();
 }

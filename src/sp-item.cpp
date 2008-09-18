@@ -310,12 +310,12 @@ bool SPItem::isCenterSet() {
     return (transform_center_x != 0 || transform_center_y != 0);
 }
 
-NR::Point SPItem::getCenter() const {
+Geom::Point SPItem::getCenter() const {
     boost::optional<NR::Rect> bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
-        return bbox->midpoint() + NR::Point (this->transform_center_x, this->transform_center_y);
+        return to_2geom(bbox->midpoint()) + Geom::Point (this->transform_center_x, this->transform_center_y);
     } else {
-        return NR::Point (0, 0); // something's wrong!
+        return Geom::Point (0, 0); // something's wrong!
     }
 }
 

@@ -230,7 +230,7 @@ void graphlayout(GSList const *const items) {
                 if(item_box) {
                     NR::Point const curr(item_box->midpoint());
                     NR::Point const dest(r->getCentreX(),r->getCentreY());
-                    sp_item_move_rel(u, NR::translate(dest - curr));
+                    sp_item_move_rel(u, Geom::Translate(dest - curr));
                 }
             }
 		}
@@ -247,3 +247,14 @@ void graphlayout(GSList const *const items) {
 }
 // vim: set cindent 
 // vim: ts=4 sw=4 et tw=0 wm=0
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

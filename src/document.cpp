@@ -559,8 +559,8 @@ void SPDocument::fitToRect(NR::Rect const &rect)
     sp_document_set_width(this, w, &px);
     sp_document_set_height(this, h, &px);
 
-    NR::translate const tr(NR::Point(0, (old_height - h))
-                           - rect.min());
+    Geom::Translate const tr(Geom::Point(0, (old_height - h))
+                             - to_2geom(rect.min()));
     SP_GROUP(root)->translateChildItems(tr);
     SPNamedView *nv = sp_document_namedview(this, 0);
     if(nv) {

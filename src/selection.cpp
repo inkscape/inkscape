@@ -393,6 +393,31 @@ boost::optional<NR::Rect> Selection::bounds(SPItem::BBoxType type) const
     return bbox;
 }
 
+// TODO: This should be replaces by a proper 2geom function
+inline Geom::Rect union_bounds_2geom(boost::optional<Geom::Rect> const & a, Geom::Rect const &b) {
+    if (a) {
+        return union_bounds_2geom(*a, b);
+    } else {
+        return b;
+    }
+}
+
+boost::optional<Geom::Rect> Selection::bounds_2geom(SPItem::BBoxType type) const
+{
+    GSList const *items = const_cast<Selection *>(this)->itemList();
+
+    boost::optional<NR::Rect> bbox;
+    for ( GSList const *i = items ; i != NULL ; i = i->next ) {
+        bbox = union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data), type));
+    }
+    // TODO: eliminate this conversion after the switch to 2geom
+    boost::optional<Geom::Rect> bbox_ret;
+    if (bbox) {
+        bbox_ret = to_2geom(*bbox);
+    }
+    return bbox_ret;
+}
+
 NRRect *Selection::boundsInDocument(NRRect *bbox, SPItem::BBoxType type) const {
     g_return_val_if_fail (bbox != NULL, NULL);
 
@@ -420,9 +445,9 @@ boost::optional<NR::Rect> Selection::boundsInDocument(SPItem::BBoxType type) con
 }
 
 /** Extract the position of the center from the first selected object */
-boost::optional<NR::Point> Selection::center() const {
+boost::optional<Geom::Point> Selection::center() const {
     GSList *items = (GSList *) const_cast<Selection *>(this)->itemList();
-    NR::Point center;
+    Geom::Point center;
     if (items) {
         SPItem *first = reinterpret_cast<SPItem*>(g_slist_last(items)->data); // from the first item in selection
         if (first->isCenterSet()) { // only if set explicitly
@@ -431,9 +456,9 @@ boost::optional<NR::Point> Selection::center() const {
     }
     boost::optional<NR::Rect> bbox = bounds();
     if (bbox) {
-        return bounds()->midpoint();
+        return to_2geom(bounds()->midpoint());
     } else {
-        return boost::optional<NR::Point>();
+        return boost::optional<Geom::Point>();
     }
 }
 

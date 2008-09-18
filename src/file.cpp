@@ -273,12 +273,12 @@ sp_file_revert_dialog()
 
         // remember current zoom and view
         double zoom = desktop->current_zoom();
-        NR::Point c = desktop->get_display_area().midpoint();
+        Geom::Point c = desktop->get_display_area().midpoint();
 
         reverted = sp_file_open(uri,NULL);
         if (reverted) {
             // restore zoom and view
-            desktop->zoom_absolute(c[NR::X], c[NR::Y], zoom);
+            desktop->zoom_absolute(c[Geom::X], c[Geom::Y], zoom);
         }
     } else {
         reverted = false;
@@ -990,9 +990,9 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
                 bool const saved_pref = prefs->getBool("options.transform", "pattern", true);
                 prefs->setBool("options.transform", "pattern", true);
                 sp_document_ensure_up_to_date(sp_desktop_document(desktop));
-                boost::optional<NR::Rect> sel_bbox = selection->bounds();
+                boost::optional<Geom::Rect> sel_bbox = selection->bounds_2geom();
                 if (sel_bbox) {
-                    NR::Point m( desktop->point() - sel_bbox->midpoint() );
+                    Geom::Point m( desktop->point() - sel_bbox->midpoint() );
                     sp_selection_move_relative(selection, m);
                 }
                 prefs->setBool("options.transform", "pattern", saved_pref);

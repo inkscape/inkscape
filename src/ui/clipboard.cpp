@@ -142,7 +142,7 @@ private:
     void _createInternalClipboard();
     void _discardInternalClipboard();
     Inkscape::XML::Node *_createClipNode();
-    NR::scale _getScale(Geom::Point const &, Geom::Point const &, Geom::Rect const &, bool, bool);
+    Geom::Scale _getScale(Geom::Point const &, Geom::Point const &, Geom::Rect const &, bool, bool);
     Glib::ustring _getBestTarget();
     void _setClipboardTargets();
     void _setClipboardColor(guint32);
@@ -1174,7 +1174,7 @@ void ClipboardManagerImpl::_discardInternalClipboard()
 /**
  * @brief Get the scale to resize an item, based on the command and desktop state
  */
-NR::scale ClipboardManagerImpl::_getScale(Geom::Point const &min, Geom::Point const &max, Geom::Rect const &obj_rect, bool apply_x, bool apply_y)
+Geom::Scale ClipboardManagerImpl::_getScale(Geom::Point const &min, Geom::Point const &max, Geom::Rect const &obj_rect, bool apply_x, bool apply_y)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     double scale_x = 1.0;
@@ -1193,7 +1193,7 @@ NR::scale ClipboardManagerImpl::_getScale(Geom::Point const &min, Geom::Point co
         if (apply_y && !apply_x) scale_x = scale_y;
     }
 
-    return NR::scale(scale_x, scale_y);
+    return Geom::Scale(scale_x, scale_y);
 }
 
 

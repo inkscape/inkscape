@@ -50,7 +50,7 @@ static void sp_spiral_context_set(SPEventContext *ec, gchar const *key, gchar co
 
 static gint sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 
-static void sp_spiral_drag(SPSpiralContext *sc, NR::Point p, guint state);
+static void sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state);
 static void sp_spiral_finish(SPSpiralContext *sc);
 
 static SPEventContextClass *parent_class;
@@ -294,8 +294,8 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 // motion notify coordinates as given (no snapping back to origin)
                 event_context->within_tolerance = false;
 
-                NR::Point const motion_w(event->motion.x, event->motion.y);
-                Geom::Point motion_dt(to_2geom(event_context->desktop->w2d(motion_w)));
+                Geom::Point const motion_w(event->motion.x, event->motion.y);
+                Geom::Point motion_dt(event_context->desktop->w2d(motion_w));
                 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop, true, sc->item);
@@ -411,7 +411,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 }
 
 static void
-sp_spiral_drag(SPSpiralContext *sc, NR::Point p, guint state)
+sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
 

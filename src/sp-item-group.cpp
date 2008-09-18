@@ -574,17 +574,17 @@ void SPGroup::_updateLayerMode(unsigned int display_key) {
 	}
 }
 
-void SPGroup::translateChildItems(NR::translate const &tr)
+void SPGroup::translateChildItems(Geom::Translate const &tr)
 {
-	if (this->hasChildren())
-	{
-		SPObject *o = NULL;
-		for (o = sp_object_first_child(SP_OBJECT(this)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
-			if (SP_IS_ITEM (o)) {
-				sp_item_move_rel(static_cast<SPItem *>(o), tr);
-			}
-		}
-	}
+    if (this->hasChildren())
+    {
+        SPObject *o = NULL;
+        for (o = sp_object_first_child(SP_OBJECT(this)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
+            if (SP_IS_ITEM (o)) {
+                sp_item_move_rel(static_cast<SPItem *>(o), tr);
+            }
+        }
+    }
 }
 
 CGroup::CGroup(SPGroup *group) {

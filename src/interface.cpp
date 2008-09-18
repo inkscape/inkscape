@@ -1252,9 +1252,9 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 int const saved_pref = prefs_get_int_attribute("options.transform", "pattern", 1);
                 prefs_set_int_attribute("options.transform", "pattern", 1);
                 sp_document_ensure_up_to_date(sp_desktop_document(desktop));
-                boost::optional<NR::Rect> sel_bbox = selection->bounds();
+                boost::optional<Geom::Rect> sel_bbox = selection->bounds_2geom();
                 if (sel_bbox) {
-                    NR::Point m( desktop->point() - sel_bbox->midpoint() );
+                    Geom::Point m( desktop->point() - sel_bbox->midpoint() );
                     sp_selection_move_relative(selection, m);
                 }
                 prefs_set_int_attribute("options.transform", "pattern", saved_pref);

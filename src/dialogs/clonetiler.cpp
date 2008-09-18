@@ -221,7 +221,7 @@ enum {
 };
 
 
-static NR::Matrix
+static Geom::Matrix
 clonetiler_get_transform (
 
     // symmetry group
@@ -312,7 +312,7 @@ clonetiler_get_transform (
     if ( shifty_exp != 1.0 ) shiftj = pow( shiftj, shifty_exp );
 
     // Final shift
-    NR::Matrix rect_translate (NR::translate (w * shifti, h * shiftj));
+    Geom::Matrix rect_translate (Geom::Translate (w * shifti, h * shiftj));
 
     // Rotation (in degrees) ------------
     double delta_rotationi = 0.0;
@@ -395,25 +395,25 @@ clonetiler_get_transform (
 
 
     // Calculate transformation matrices, translating back to "center of tile" (rotation center) before transforming
-    NR::Matrix drot_c   = NR::translate(-cx, -cy) * NR::rotate (M_PI*dr/180)    * NR::translate(cx, cy);
+    Geom::Matrix drot_c   = Geom::Translate(-cx, -cy) * Geom::Rotate (M_PI*dr/180)    * Geom::Translate(cx, cy);
 
-    NR::Matrix dscale_c = NR::translate(-cx, -cy) * NR::scale (scalex, scaley)  * NR::translate(cx, cy);
+    Geom::Matrix dscale_c = Geom::Translate(-cx, -cy) * Geom::Scale (scalex, scaley)  * Geom::Translate(cx, cy);
 
-    NR::Matrix d_s_r = dscale_c * drot_c;
+    Geom::Matrix d_s_r = dscale_c * drot_c;
 
-    NR::Matrix rotate_180_c  = NR::translate(-cx, -cy) * NR::rotate (M_PI)      * NR::translate(cx, cy);
+    Geom::Matrix rotate_180_c  = Geom::Translate(-cx, -cy) * Geom::Rotate (M_PI)      * Geom::Translate(cx, cy);
 
-    NR::Matrix rotate_90_c   = NR::translate(-cx, -cy) * NR::rotate (-M_PI/2)   * NR::translate(cx, cy);
-    NR::Matrix rotate_m90_c  = NR::translate(-cx, -cy) * NR::rotate ( M_PI/2)   * NR::translate(cx, cy);
+    Geom::Matrix rotate_90_c   = Geom::Translate(-cx, -cy) * Geom::Rotate (-M_PI/2)   * Geom::Translate(cx, cy);
+    Geom::Matrix rotate_m90_c  = Geom::Translate(-cx, -cy) * Geom::Rotate ( M_PI/2)   * Geom::Translate(cx, cy);
 
-    NR::Matrix rotate_120_c  = NR::translate(-cx, -cy) * NR::rotate (-2*M_PI/3) * NR::translate(cx, cy);
-    NR::Matrix rotate_m120_c = NR::translate(-cx, -cy) * NR::rotate ( 2*M_PI/3) * NR::translate(cx, cy);
+    Geom::Matrix rotate_120_c  = Geom::Translate(-cx, -cy) * Geom::Rotate (-2*M_PI/3) * Geom::Translate(cx, cy);
+    Geom::Matrix rotate_m120_c = Geom::Translate(-cx, -cy) * Geom::Rotate ( 2*M_PI/3) * Geom::Translate(cx, cy);
 
-    NR::Matrix rotate_60_c   = NR::translate(-cx, -cy) * NR::rotate (-M_PI/3)   * NR::translate(cx, cy);
-    NR::Matrix rotate_m60_c  = NR::translate(-cx, -cy) * NR::rotate ( M_PI/3)   * NR::translate(cx, cy);
+    Geom::Matrix rotate_60_c   = Geom::Translate(-cx, -cy) * Geom::Rotate (-M_PI/3)   * Geom::Translate(cx, cy);
+    Geom::Matrix rotate_m60_c  = Geom::Translate(-cx, -cy) * Geom::Rotate ( M_PI/3)   * Geom::Translate(cx, cy);
 
-    NR::Matrix flip_x        = NR::translate(-cx, -cy) * NR::scale (-1, 1)      * NR::translate(cx, cy);
-    NR::Matrix flip_y        = NR::translate(-cx, -cy) * NR::scale (1, -1)      * NR::translate(cx, cy);
+    Geom::Matrix flip_x        = Geom::Translate(-cx, -cy) * Geom::Scale (-1, 1)      * Geom::Translate(cx, cy);
+    Geom::Matrix flip_y        = Geom::Translate(-cx, -cy) * Geom::Scale (1, -1)      * Geom::Translate(cx, cy);
 
 
     // Create tile with required symmetry
@@ -538,9 +538,9 @@ clonetiler_get_transform (
 
     case TILE_P4:
     {
-        NR::Matrix ori  (NR::translate ((w + h) * pow((i/2), shiftx_exp) + dx,  (h + w) * pow((j/2), shifty_exp) + dy));
-        NR::Matrix dia1 (NR::translate (w/2 + h/2, -h/2 + w/2));
-        NR::Matrix dia2 (NR::translate (-w/2 + h/2, h/2 + w/2));
+        Geom::Matrix ori  (Geom::Translate ((w + h) * pow((i/2), shiftx_exp) + dx,  (h + w) * pow((j/2), shifty_exp) + dy));
+        Geom::Matrix dia1 (Geom::Translate (w/2 + h/2, -h/2 + w/2));
+        Geom::Matrix dia2 (Geom::Translate (-w/2 + h/2, h/2 + w/2));
         if (j % 2 == 0) {
             if (i % 2 == 0) {
                 return d_s_r * ori;
@@ -560,28 +560,28 @@ clonetiler_get_transform (
     case TILE_P4M:
     {
         double max = MAX(w, h);
-        NR::Matrix ori (NR::translate ((max + max) * pow((i/4), shiftx_exp) + dx,  (max + max) * pow((j/2), shifty_exp) + dy));
-        NR::Matrix dia1 (NR::translate ( w/2 - h/2, h/2 - w/2));
-        NR::Matrix dia2 (NR::translate (-h/2 + w/2, w/2 - h/2));
+        Geom::Matrix ori (Geom::Translate ((max + max) * pow((i/4), shiftx_exp) + dx,  (max + max) * pow((j/2), shifty_exp) + dy));
+        Geom::Matrix dia1 (Geom::Translate ( w/2 - h/2, h/2 - w/2));
+        Geom::Matrix dia2 (Geom::Translate (-h/2 + w/2, w/2 - h/2));
         if (j % 2 == 0) {
             if (i % 4 == 0) {
                 return d_s_r * ori;
             } else if (i % 4 == 1) {
                 return d_s_r * flip_y * rotate_m90_c * dia1 * ori;
             } else if (i % 4 == 2) {
-                return d_s_r * rotate_m90_c * dia1 * NR::translate (h, 0) * ori;
+                return d_s_r * rotate_m90_c * dia1 * Geom::Translate (h, 0) * ori;
             } else if (i % 4 == 3) {
-                return d_s_r * flip_x * NR::translate (w, 0) * ori;
+                return d_s_r * flip_x * Geom::Translate (w, 0) * ori;
             }
         } else {
             if (i % 4 == 0) {
-                return d_s_r * flip_y * NR::translate(0, h) * ori;
+                return d_s_r * flip_y * Geom::Translate(0, h) * ori;
             } else if (i % 4 == 1) {
-                return d_s_r * rotate_90_c * dia2 * NR::translate(0, h) * ori;
+                return d_s_r * rotate_90_c * dia2 * Geom::Translate(0, h) * ori;
             } else if (i % 4 == 2) {
-                return d_s_r * flip_y * rotate_90_c * dia2 * NR::translate(h, 0) * NR::translate(0, h) * ori;
+                return d_s_r * flip_y * rotate_90_c * dia2 * Geom::Translate(h, 0) * Geom::Translate(0, h) * ori;
             } else if (i % 4 == 3) {
-                return d_s_r * flip_y * flip_x * NR::translate(w, 0) * NR::translate(0, h) * ori;
+                return d_s_r * flip_y * flip_x * Geom::Translate(w, 0) * Geom::Translate(0, h) * ori;
             }
         }
     }
@@ -590,9 +590,9 @@ clonetiler_get_transform (
     case TILE_P4G:
     {
         double max = MAX(w, h);
-        NR::Matrix ori (NR::translate ((max + max) * pow((i/4), shiftx_exp) + dx,  (max + max) * pow(j, shifty_exp) + dy));
-        NR::Matrix dia1 (NR::translate ( w/2 + h/2, h/2 - w/2));
-        NR::Matrix dia2 (NR::translate (-h/2 + w/2, w/2 + h/2));
+        Geom::Matrix ori (Geom::Translate ((max + max) * pow((i/4), shiftx_exp) + dx,  (max + max) * pow(j, shifty_exp) + dy));
+        Geom::Matrix dia1 (Geom::Translate ( w/2 + h/2, h/2 - w/2));
+        Geom::Matrix dia2 (Geom::Translate (-h/2 + w/2, w/2 + h/2));
         if (((i/4) + j) % 2 == 0) {
             if (i % 4 == 0) {
                 return d_s_r * ori;
@@ -605,13 +605,13 @@ clonetiler_get_transform (
             }
         } else {
             if (i % 4 == 0) {
-                return d_s_r * flip_y * NR::translate (0, h) * ori;
+                return d_s_r * flip_y * Geom::Translate (0, h) * ori;
             } else if (i % 4 == 1) {
-                return d_s_r * flip_y * rotate_m90_c * dia1 * NR::translate (-h, 0) * ori;
+                return d_s_r * flip_y * rotate_m90_c * dia1 * Geom::Translate (-h, 0) * ori;
             } else if (i % 4 == 2) {
-                return d_s_r * flip_y * rotate_90_c * dia2 * NR::translate (h, 0) * ori;
+                return d_s_r * flip_y * rotate_90_c * dia2 * Geom::Translate (h, 0) * ori;
             } else if (i % 4 == 3) {
-                return d_s_r * flip_x * NR::translate (w, 0) * ori;
+                return d_s_r * flip_x * Geom::Translate (w, 0) * ori;
             }
         }
     }
@@ -621,20 +621,20 @@ clonetiler_get_transform (
     {
         double width;
         double height;
-        NR::Matrix dia1;
-        NR::Matrix dia2;
+        Geom::Matrix dia1;
+        Geom::Matrix dia2;
         if (w > h) {
             width  = w + w * cos60;
             height = 2 * w * sin60;
-            dia1 = NR::Matrix (NR::translate (w/2 + w/2 * cos60, -(w/2 * sin60)));
-            dia2 = dia1 * NR::Matrix (NR::translate (0, 2 * (w/2 * sin60)));
+            dia1 = Geom::Matrix (Geom::Translate (w/2 + w/2 * cos60, -(w/2 * sin60)));
+            dia2 = dia1 * Geom::Matrix (Geom::Translate (0, 2 * (w/2 * sin60)));
         } else {
             width = h * cos (M_PI/6);
             height = h;
-            dia1 = NR::Matrix (NR::translate (h/2 * cos30, -(h/2 * sin30)));
-            dia2 = dia1 * NR::Matrix (NR::translate (0, h/2));
+            dia1 = Geom::Matrix (Geom::Translate (h/2 * cos30, -(h/2 * sin30)));
+            dia2 = dia1 * Geom::Matrix (Geom::Translate (0, h/2));
         }
-        NR::Matrix ori (NR::translate (width * pow((2*(i/3) + j%2), shiftx_exp) + dx,  (height/2) * pow(j, shifty_exp) + dy));
+        Geom::Matrix ori (Geom::Translate (width * pow((2*(i/3) + j%2), shiftx_exp) + dx,  (height/2) * pow(j, shifty_exp) + dy));
         if (i % 3 == 0) {
             return d_s_r * ori;
         } else if (i % 3 == 1) {
@@ -647,23 +647,23 @@ clonetiler_get_transform (
 
     case TILE_P31M:
     {
-        NR::Matrix ori;
-        NR::Matrix dia1;
-        NR::Matrix dia2;
-        NR::Matrix dia3;
-        NR::Matrix dia4;
+        Geom::Matrix ori;
+        Geom::Matrix dia1;
+        Geom::Matrix dia2;
+        Geom::Matrix dia3;
+        Geom::Matrix dia4;
         if (w > h) {
-            ori = NR::Matrix(NR::translate (w * pow((i/6) + 0.5*(j%2), shiftx_exp) + dx,  (w * cos30) * pow(j, shifty_exp) + dy));
-            dia1 = NR::Matrix (NR::translate (0, h/2) * NR::translate (w/2, 0) * NR::translate (w/2 * cos60, -w/2 * sin60) * NR::translate (-h/2 * cos30, -h/2 * sin30) );
-            dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, h * sin30));
-            dia3 = dia2 * NR::Matrix (NR::translate (0, 2 * (w/2 * sin60 - h/2 * sin30)));
-            dia4 = dia3 * NR::Matrix (NR::translate (-h * cos30, h * sin30));
+            ori = Geom::Matrix(Geom::Translate (w * pow((i/6) + 0.5*(j%2), shiftx_exp) + dx,  (w * cos30) * pow(j, shifty_exp) + dy));
+            dia1 = Geom::Matrix (Geom::Translate (0, h/2) * Geom::Translate (w/2, 0) * Geom::Translate (w/2 * cos60, -w/2 * sin60) * Geom::Translate (-h/2 * cos30, -h/2 * sin30) );
+            dia2 = dia1 * Geom::Matrix (Geom::Translate (h * cos30, h * sin30));
+            dia3 = dia2 * Geom::Matrix (Geom::Translate (0, 2 * (w/2 * sin60 - h/2 * sin30)));
+            dia4 = dia3 * Geom::Matrix (Geom::Translate (-h * cos30, h * sin30));
         } else {
-            ori  = NR::Matrix (NR::translate (2*h * cos30  * pow((i/6 + 0.5*(j%2)), shiftx_exp) + dx,  (2*h - h * sin30) * pow(j, shifty_exp) + dy));
-            dia1 = NR::Matrix (NR::translate (0, -h/2) * NR::translate (h/2 * cos30, h/2 * sin30));
-            dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, h * sin30));
-            dia3 = dia2 * NR::Matrix (NR::translate (0, h/2));
-            dia4 = dia3 * NR::Matrix (NR::translate (-h * cos30, h * sin30));
+            ori  = Geom::Matrix (Geom::Translate (2*h * cos30  * pow((i/6 + 0.5*(j%2)), shiftx_exp) + dx,  (2*h - h * sin30) * pow(j, shifty_exp) + dy));
+            dia1 = Geom::Matrix (Geom::Translate (0, -h/2) * Geom::Translate (h/2 * cos30, h/2 * sin30));
+            dia2 = dia1 * Geom::Matrix (Geom::Translate (h * cos30, h * sin30));
+            dia3 = dia2 * Geom::Matrix (Geom::Translate (0, h/2));
+            dia4 = dia3 * Geom::Matrix (Geom::Translate (-h * cos30, h * sin30));
         }
         if (i % 6 == 0) {
             return d_s_r * ori;
@@ -676,7 +676,7 @@ clonetiler_get_transform (
         } else if (i % 6 == 4) {
             return d_s_r * rotate_120_c * dia4 * ori;
         } else if (i % 6 == 5) {
-            return d_s_r * flip_y * NR::translate(0, h) * ori;
+            return d_s_r * flip_y * Geom::Translate(0, h) * ori;
         }
     }
     break;
@@ -685,26 +685,26 @@ clonetiler_get_transform (
     {
         double width;
         double height;
-        NR::Matrix dia1;
-        NR::Matrix dia2;
-        NR::Matrix dia3;
-        NR::Matrix dia4;
+        Geom::Matrix dia1;
+        Geom::Matrix dia2;
+        Geom::Matrix dia3;
+        Geom::Matrix dia4;
         if (w > h) {
             width = w + w * cos60;
             height = 2 * w * sin60;
-            dia1 = NR::Matrix (NR::translate (0, h/2) * NR::translate (w/2, 0) * NR::translate (w/2 * cos60, -w/2 * sin60) * NR::translate (-h/2 * cos30, -h/2 * sin30) );
-            dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, h * sin30));
-            dia3 = dia2 * NR::Matrix (NR::translate (0, 2 * (w/2 * sin60 - h/2 * sin30)));
-            dia4 = dia3 * NR::Matrix (NR::translate (-h * cos30, h * sin30));
+            dia1 = Geom::Matrix (Geom::Translate (0, h/2) * Geom::Translate (w/2, 0) * Geom::Translate (w/2 * cos60, -w/2 * sin60) * Geom::Translate (-h/2 * cos30, -h/2 * sin30) );
+            dia2 = dia1 * Geom::Matrix (Geom::Translate (h * cos30, h * sin30));
+            dia3 = dia2 * Geom::Matrix (Geom::Translate (0, 2 * (w/2 * sin60 - h/2 * sin30)));
+            dia4 = dia3 * Geom::Matrix (Geom::Translate (-h * cos30, h * sin30));
         } else {
             width = 2 * h * cos (M_PI/6);
             height = 2 * h;
-            dia1 = NR::Matrix (NR::translate (0, -h/2) * NR::translate (h/2 * cos30, h/2 * sin30));
-            dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, h * sin30));
-            dia3 = dia2 * NR::Matrix (NR::translate (0, h/2));
-            dia4 = dia3 * NR::Matrix (NR::translate (-h * cos30, h * sin30));
+            dia1 = Geom::Matrix (Geom::Translate (0, -h/2) * Geom::Translate (h/2 * cos30, h/2 * sin30));
+            dia2 = dia1 * Geom::Matrix (Geom::Translate (h * cos30, h * sin30));
+            dia3 = dia2 * Geom::Matrix (Geom::Translate (0, h/2));
+            dia4 = dia3 * Geom::Matrix (Geom::Translate (-h * cos30, h * sin30));
         }
-        NR::Matrix ori (NR::translate (width * pow((2*(i/6) + j%2), shiftx_exp) + dx,  (height/2) * pow(j, shifty_exp) + dy));
+        Geom::Matrix ori (Geom::Translate (width * pow((2*(i/6) + j%2), shiftx_exp) + dx,  (height/2) * pow(j, shifty_exp) + dy));
         if (i % 6 == 0) {
             return d_s_r * ori;
         } else if (i % 6 == 1) {
@@ -716,31 +716,31 @@ clonetiler_get_transform (
         } else if (i % 6 == 4) {
             return d_s_r * rotate_120_c * dia4 * ori;
         } else if (i % 6 == 5) {
-            return d_s_r * flip_y * NR::translate(0, h) * ori;
+            return d_s_r * flip_y * Geom::Translate(0, h) * ori;
         }
     }
     break;
 
     case TILE_P6:
     {
-        NR::Matrix ori;
-        NR::Matrix dia1;
-        NR::Matrix dia2;
-        NR::Matrix dia3;
-        NR::Matrix dia4;
-        NR::Matrix dia5;
+        Geom::Matrix ori;
+        Geom::Matrix dia1;
+        Geom::Matrix dia2;
+        Geom::Matrix dia3;
+        Geom::Matrix dia4;
+        Geom::Matrix dia5;
         if (w > h) {
-            ori = NR::Matrix(NR::translate (w * pow((2*(i/6) + (j%2)), shiftx_exp) + dx,  (2*w * sin60) * pow(j, shifty_exp) + dy));
-            dia1 = NR::Matrix (NR::translate (w/2 * cos60, -w/2 * sin60));
-            dia2 = dia1 * NR::Matrix (NR::translate (w/2, 0));
-            dia3 = dia2 * NR::Matrix (NR::translate (w/2 * cos60, w/2 * sin60));
-            dia4 = dia3 * NR::Matrix (NR::translate (-w/2 * cos60, w/2 * sin60));
-            dia5 = dia4 * NR::Matrix (NR::translate (-w/2, 0));
+            ori = Geom::Matrix(Geom::Translate (w * pow((2*(i/6) + (j%2)), shiftx_exp) + dx,  (2*w * sin60) * pow(j, shifty_exp) + dy));
+            dia1 = Geom::Matrix (Geom::Translate (w/2 * cos60, -w/2 * sin60));
+            dia2 = dia1 * Geom::Matrix (Geom::Translate (w/2, 0));
+            dia3 = dia2 * Geom::Matrix (Geom::Translate (w/2 * cos60, w/2 * sin60));
+            dia4 = dia3 * Geom::Matrix (Geom::Translate (-w/2 * cos60, w/2 * sin60));
+            dia5 = dia4 * Geom::Matrix (Geom::Translate (-w/2, 0));
         } else {
-            ori = NR::Matrix(NR::translate (2*h * cos30 * pow((i/6 + 0.5*(j%2)), shiftx_exp) + dx,  (h + h * sin30) * pow(j, shifty_exp) + dy));
-            dia1 = NR::Matrix (NR::translate (-w/2, -h/2) * NR::translate (h/2 * cos30, -h/2 * sin30) * NR::translate (w/2 * cos60, w/2 * sin60));
-            dia2 = dia1 * NR::Matrix (NR::translate (-w/2 * cos60, -w/2 * sin60) * NR::translate (h/2 * cos30, -h/2 * sin30) * NR::translate (h/2 * cos30, h/2 * sin30) * NR::translate (-w/2 * cos60, w/2 * sin60));
-            dia3 = dia2 * NR::Matrix (NR::translate (w/2 * cos60, -w/2 * sin60) * NR::translate (h/2 * cos30, h/2 * sin30) * NR::translate (-w/2, h/2));
+            ori = Geom::Matrix(Geom::Translate (2*h * cos30 * pow((i/6 + 0.5*(j%2)), shiftx_exp) + dx,  (h + h * sin30) * pow(j, shifty_exp) + dy));
+            dia1 = Geom::Matrix (Geom::Translate (-w/2, -h/2) * Geom::Translate (h/2 * cos30, -h/2 * sin30) * Geom::Translate (w/2 * cos60, w/2 * sin60));
+            dia2 = dia1 * Geom::Matrix (Geom::Translate (-w/2 * cos60, -w/2 * sin60) * Geom::Translate (h/2 * cos30, -h/2 * sin30) * Geom::Translate (h/2 * cos30, h/2 * sin30) * Geom::Translate (-w/2 * cos60, w/2 * sin60));
+            dia3 = dia2 * Geom::Matrix (Geom::Translate (w/2 * cos60, -w/2 * sin60) * Geom::Translate (h/2 * cos30, h/2 * sin30) * Geom::Translate (-w/2, h/2));
             dia4 = dia3 * dia1.inverse();
             dia5 = dia3 * dia2.inverse();
         }
@@ -763,28 +763,28 @@ clonetiler_get_transform (
     case TILE_P6M:
     {
 
-        NR::Matrix ori;
-        NR::Matrix dia1, dia2, dia3, dia4, dia5, dia6, dia7, dia8, dia9, dia10;
+        Geom::Matrix ori;
+        Geom::Matrix dia1, dia2, dia3, dia4, dia5, dia6, dia7, dia8, dia9, dia10;
         if (w > h) {
-            ori = NR::Matrix(NR::translate (w * pow((2*(i/12) + (j%2)), shiftx_exp) + dx,  (2*w * sin60) * pow(j, shifty_exp) + dy));
-            dia1 = NR::Matrix (NR::translate (w/2, h/2) * NR::translate (-w/2 * cos60, -w/2 * sin60) * NR::translate (-h/2 * cos30, h/2 * sin30));
-            dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, -h * sin30));
-            dia3 = dia2 * NR::Matrix (NR::translate (-h/2 * cos30, h/2 * sin30) * NR::translate (w * cos60, 0) * NR::translate (-h/2 * cos30, -h/2 * sin30));
-            dia4 = dia3 * NR::Matrix (NR::translate (h * cos30, h * sin30));
-            dia5 = dia4 * NR::Matrix (NR::translate (-h/2 * cos30, -h/2 * sin30) * NR::translate (-w/2 * cos60, w/2 * sin60) * NR::translate (w/2, -h/2));
-            dia6 = dia5 * NR::Matrix (NR::translate (0, h));
+            ori = Geom::Matrix(Geom::Translate (w * pow((2*(i/12) + (j%2)), shiftx_exp) + dx,  (2*w * sin60) * pow(j, shifty_exp) + dy));
+            dia1 = Geom::Matrix (Geom::Translate (w/2, h/2) * Geom::Translate (-w/2 * cos60, -w/2 * sin60) * Geom::Translate (-h/2 * cos30, h/2 * sin30));
+            dia2 = dia1 * Geom::Matrix (Geom::Translate (h * cos30, -h * sin30));
+            dia3 = dia2 * Geom::Matrix (Geom::Translate (-h/2 * cos30, h/2 * sin30) * Geom::Translate (w * cos60, 0) * Geom::Translate (-h/2 * cos30, -h/2 * sin30));
+            dia4 = dia3 * Geom::Matrix (Geom::Translate (h * cos30, h * sin30));
+            dia5 = dia4 * Geom::Matrix (Geom::Translate (-h/2 * cos30, -h/2 * sin30) * Geom::Translate (-w/2 * cos60, w/2 * sin60) * Geom::Translate (w/2, -h/2));
+            dia6 = dia5 * Geom::Matrix (Geom::Translate (0, h));
             dia7 = dia6 * dia1.inverse();
             dia8 = dia6 * dia2.inverse();
             dia9 = dia6 * dia3.inverse();
             dia10 = dia6 * dia4.inverse();
         } else {
-            ori = NR::Matrix(NR::translate (4*h * cos30 * pow((i/12 + 0.5*(j%2)), shiftx_exp) + dx,  (2*h  + 2*h * sin30) * pow(j, shifty_exp) + dy));
-            dia1 = NR::Matrix (NR::translate (-w/2, -h/2) * NR::translate (h/2 * cos30, -h/2 * sin30) * NR::translate (w/2 * cos60, w/2 * sin60));
-            dia2 = dia1 * NR::Matrix (NR::translate (h * cos30, -h * sin30));
-            dia3 = dia2 * NR::Matrix (NR::translate (-w/2 * cos60, -w/2 * sin60) * NR::translate (h * cos30, 0) * NR::translate (-w/2 * cos60, w/2 * sin60));
-            dia4 = dia3 * NR::Matrix (NR::translate (h * cos30, h * sin30));
-            dia5 = dia4 * NR::Matrix (NR::translate (w/2 * cos60, -w/2 * sin60) * NR::translate (h/2 * cos30, h/2 * sin30) * NR::translate (-w/2, h/2));
-            dia6 = dia5 * NR::Matrix (NR::translate (0, h));
+            ori = Geom::Matrix(Geom::Translate (4*h * cos30 * pow((i/12 + 0.5*(j%2)), shiftx_exp) + dx,  (2*h  + 2*h * sin30) * pow(j, shifty_exp) + dy));
+            dia1 = Geom::Matrix (Geom::Translate (-w/2, -h/2) * Geom::Translate (h/2 * cos30, -h/2 * sin30) * Geom::Translate (w/2 * cos60, w/2 * sin60));
+            dia2 = dia1 * Geom::Matrix (Geom::Translate (h * cos30, -h * sin30));
+            dia3 = dia2 * Geom::Matrix (Geom::Translate (-w/2 * cos60, -w/2 * sin60) * Geom::Translate (h * cos30, 0) * Geom::Translate (-w/2 * cos60, w/2 * sin60));
+            dia4 = dia3 * Geom::Matrix (Geom::Translate (h * cos30, h * sin30));
+            dia5 = dia4 * Geom::Matrix (Geom::Translate (w/2 * cos60, -w/2 * sin60) * Geom::Translate (h/2 * cos30, h/2 * sin30) * Geom::Translate (-w/2, h/2));
+            dia6 = dia5 * Geom::Matrix (Geom::Translate (0, h));
             dia7 = dia6 * dia1.inverse();
             dia8 = dia6 * dia2.inverse();
             dia9 = dia6 * dia3.inverse();
@@ -813,7 +813,7 @@ clonetiler_get_transform (
         } else if (i % 12 == 10) {
             return d_s_r * rotate_60_c * dia10 * ori;
         } else if (i % 12 == 11) {
-            return d_s_r * flip_y * NR::translate (0, h) * ori;
+            return d_s_r * flip_y * Geom::Translate (0, h) * ori;
         }
     }
     break;
@@ -1222,7 +1222,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
         clonetiler_trace_setup (sp_desktop_document(desktop), 1.0, SP_ITEM (obj));
     }
 
-    NR::Point center;
+    Geom::Point center;
     double w;
     double h;
     double x0;
@@ -1238,7 +1238,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
 
         double cx = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-cx", 0);
         double cy = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-cy", 0);
-        center = NR::Point (cx, cy);
+        center = Geom::Point (cx, cy);
 
         w = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-w", 0);
         h = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-h", 0);
@@ -1257,14 +1257,14 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
             y0 = r->min()[NR::Y];
             center = desktop->dt2doc(SP_ITEM(obj)->getCenter());
 
-            sp_repr_set_svg_double(obj_repr, "inkscape:tile-cx", center[NR::X]);
-            sp_repr_set_svg_double(obj_repr, "inkscape:tile-cy", center[NR::Y]);
+            sp_repr_set_svg_double(obj_repr, "inkscape:tile-cx", center[Geom::X]);
+            sp_repr_set_svg_double(obj_repr, "inkscape:tile-cy", center[Geom::Y]);
             sp_repr_set_svg_double(obj_repr, "inkscape:tile-w", w);
             sp_repr_set_svg_double(obj_repr, "inkscape:tile-h", h);
             sp_repr_set_svg_double(obj_repr, "inkscape:tile-x0", x0);
             sp_repr_set_svg_double(obj_repr, "inkscape:tile-y0", y0);
         } else {
-            center = NR::Point(0, 0);
+            center = Geom::Point(0, 0);
             w = h = 0;
             x0 = y0 = 0;
         }
@@ -1290,25 +1290,25 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
             // Note: We create a clone at 0,0 too, right over the original, in case our clones are colored
 
             // Get transform from symmetry, shift, scale, rotation
-            NR::Matrix t = clonetiler_get_transform (type, i, j, center[NR::X], center[NR::Y], w, h,
-                                                     shiftx_per_i,     shifty_per_i,
-                                                     shiftx_per_j,     shifty_per_j,
-                                                     shiftx_rand,      shifty_rand,
-                                                     shiftx_exp,       shifty_exp,
-                                                     shiftx_alternate, shifty_alternate,
-                                                     shiftx_cumulate,  shifty_cumulate,
-                                                     shiftx_excludew,  shifty_excludeh,
-                                                     scalex_per_i,     scaley_per_i,
-                                                     scalex_per_j,     scaley_per_j,
-                                                     scalex_rand,      scaley_rand,
-                                                     scalex_exp,       scaley_exp,
-                                                     scalex_log,       scaley_log,
-                                                     scalex_alternate, scaley_alternate,
-                                                     scalex_cumulate,  scaley_cumulate,
-                                                     rotate_per_i,     rotate_per_j,
-                                                     rotate_rand,
-                                                     rotate_alternatei, rotate_alternatej,
-                                                     rotate_cumulatei,  rotate_cumulatej      );
+            Geom::Matrix t = clonetiler_get_transform (type, i, j, center[Geom::X], center[Geom::Y], w, h,
+                                                       shiftx_per_i,     shifty_per_i,
+                                                       shiftx_per_j,     shifty_per_j,
+                                                       shiftx_rand,      shifty_rand,
+                                                       shiftx_exp,       shifty_exp,
+                                                       shiftx_alternate, shifty_alternate,
+                                                       shiftx_cumulate,  shifty_cumulate,
+                                                       shiftx_excludew,  shifty_excludeh,
+                                                       scalex_per_i,     scaley_per_i,
+                                                       scalex_per_j,     scaley_per_j,
+                                                       scalex_rand,      scaley_rand,
+                                                       scalex_exp,       scaley_exp,
+                                                       scalex_log,       scaley_log,
+                                                       scalex_alternate, scaley_alternate,
+                                                       scalex_cumulate,  scaley_cumulate,
+                                                       rotate_per_i,     rotate_per_j,
+                                                       rotate_rand,
+                                                       rotate_alternatei, rotate_alternatej,
+                                                       rotate_cumulatei,  rotate_cumulatej      );
 
             cur = center * t - center;
             if (fillrect) {
@@ -1443,7 +1443,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
                     }
                 }
                 if (pick_to_size) {
-                    t = NR::translate(-center[NR::X], -center[NR::Y]) * NR::scale (val, val) * NR::translate(center[NR::X], center[NR::Y]) * t;
+                    t = Geom::Translate(-center[Geom::X], -center[Geom::Y]) * Geom::Scale (val, val) * Geom::Translate(center[Geom::X], center[Geom::Y]) * t;
                 }
                 if (pick_to_opacity) {
                     opacity *= val;
@@ -1468,7 +1468,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
             clone->setAttribute("inkscape:tiled-clone-of", id_href);
             clone->setAttribute("xlink:href", id_href);
 
-            NR::Point new_center;
+            Geom::Point new_center;
             bool center_set = false;
             if (obj_repr->attribute("inkscape:transform-center-x") || obj_repr->attribute("inkscape:transform-center-y")) {
                 new_center = desktop->dt2doc(SP_ITEM(obj)->getCenter()) * t;

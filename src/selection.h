@@ -21,7 +21,7 @@
 #include <list>
 #include <sigc++/sigc++.h>
 
-#include "libnr/nr-rect.h"
+//#include "libnr/nr-rect.h"
 #include "libnr/nr-convex-hull.h"
 #include "forward.h"
 #include "gc-managed.h"
@@ -244,6 +244,7 @@ public:
     NRRect *bounds(NRRect *dest, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
     /** @brief Returns the bounding rectangle of the selection */
     boost::optional<NR::Rect> bounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
+    boost::optional<Geom::Rect> bounds_2geom(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
      * @brief Returns the bounding rectangle of the selection
@@ -262,7 +263,7 @@ public:
     /**
      * @brief Returns the rotation/skew center of the selection
      */
-    boost::optional<NR::Point> center() const;
+    boost::optional<Geom::Point> center() const;
 
     /**
      * @brief Gets the selection's snap points.

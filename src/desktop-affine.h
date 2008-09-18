@@ -14,13 +14,13 @@
  */
 
 #include "forward.h"
-#include <libnr/nr-forward.h>
+#include <2geom/forward.h>
 
-NR::Matrix const sp_desktop_root2dt_affine(SPDesktop const *dt);
-NR::Matrix const sp_desktop_dt2root_affine(SPDesktop const *dt);
+Geom::Matrix const sp_desktop_root2dt_affine(SPDesktop const *dt);
+Geom::Matrix const sp_desktop_dt2root_affine(SPDesktop const *dt);
 
-NR::Point sp_desktop_root2dt_xy_point(SPDesktop const *dt, const NR::Point p);
-NR::Point sp_desktop_dt2root_xy_point(SPDesktop const *dt, const NR::Point p);
+Geom::Point sp_desktop_root2dt_xy_point(SPDesktop const *dt, const Geom::Point p);
+Geom::Point sp_desktop_dt2root_xy_point(SPDesktop const *dt, const Geom::Point p);
 
 #endif
 

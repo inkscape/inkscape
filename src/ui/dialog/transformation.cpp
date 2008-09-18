@@ -638,7 +638,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
                       it < sorted.end();
                       it ++ )
                 {
-                    sp_item_move_rel(it->item, NR::translate(move, 0));
+                    sp_item_move_rel(it->item, Geom::Translate(move, 0));
                     // move each next object by x relative to previous
                     move += x;
                 }
@@ -662,7 +662,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
                       it < sorted.end();
                       it ++ )
                 {
-                    sp_item_move_rel(it->item, NR::translate(0, move));
+                    sp_item_move_rel(it->item, Geom::Translate(0, move));
                     // move each next object by x relative to previous
                     move += y;
                 }
@@ -689,7 +689,7 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
     if (prefs_get_int_attribute_limited ("dialogs.transformation", "applyseparately", 0, 0, 1) == 1) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
-            NR::scale scale (0,0);
+            Geom::Scale scale (0,0);
             // the values are increments!
             if (_units_scale.isAbsolute()) {
                 boost::optional<NR::Rect> bbox(sp_item_bbox_desktop(item));
@@ -698,14 +698,14 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
                     if (fabs(new_width) < 1e-6) new_width = 1e-6; // not 0, as this would result in a nasty no-bbox object
                     double new_height = scaleY;
                     if (fabs(new_height) < 1e-6) new_height = 1e-6;
-                    scale = NR::scale(new_width / bbox->extent(Geom::X), new_height / bbox->extent(Geom::Y));
+                    scale = Geom::Scale(new_width / bbox->extent(Geom::X), new_height / bbox->extent(Geom::Y));
                 }
             } else {
                 double new_width = scaleX;
                 if (fabs(new_width) < 1e-6) new_width = 1e-6;
                 double new_height = scaleY;
                 if (fabs(new_height) < 1e-6) new_height = 1e-6;
-                scale = NR::scale(new_width / 100.0, new_height / 100.0);
+                scale = Geom::Scale(new_width / 100.0, new_height / 100.0);
             }
             sp_item_scale_rel (item, scale);
         }
@@ -713,20 +713,20 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
         boost::optional<NR::Rect> bbox(selection->bounds());
         if (bbox) {
             Geom::Point center(bbox->midpoint()); // use rotation center?
-            NR::scale scale (0,0);
+            Geom::Scale scale (0,0);
             // the values are increments!
             if (_units_scale.isAbsolute()) {
                 double new_width = scaleX;
                 if (fabs(new_width) < 1e-6) new_width = 1e-6;
                 double new_height = scaleY;
                 if (fabs(new_height) < 1e-6) new_height = 1e-6;
-                scale = NR::scale(new_width / bbox->extent(Geom::X), new_height / bbox->extent(Geom::Y));
+                scale = Geom::Scale(new_width / bbox->extent(Geom::X), new_height / bbox->extent(Geom::Y));
             } else {
                 double new_width = scaleX;
                 if (fabs(new_width) < 1e-6) new_width = 1e-6;
                 double new_height = scaleY;
                 if (fabs(new_height) < 1e-6) new_height = 1e-6;
-                scale = NR::scale(new_width / 100.0, new_height / 100.0);
+                scale = Geom::Scale(new_width / 100.0, new_height / 100.0);
             }
             sp_selection_scale_relative(selection, center, scale);
         }
@@ -744,10 +744,10 @@ Transformation::applyPageRotate(Inkscape::Selection *selection)
     if (prefs_get_int_attribute_limited ("dialogs.transformation", "applyseparately", 0, 0, 1) == 1) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
-            sp_item_rotate_rel(item, NR::rotate (angle*M_PI/180.0));
+            sp_item_rotate_rel(item, Geom::Rotate (angle*M_PI/180.0));
         }
     } else {
-        boost::optional<NR::Point> center = selection->center();
+        boost::optional<Geom::Point> center = selection->center();
         if (center) {
             sp_selection_rotate_relative(selection, *center, angle);
         }
@@ -787,7 +787,7 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
         }
     } else { // transform whole selection
         boost::optional<NR::Rect> bbox = selection->bounds();
-        boost::optional<NR::Point> center = selection->center();
+        boost::optional<Geom::Point> center = selection->center();
 
         if ( bbox && center ) {
             double width  = bbox->extent(Geom::X);

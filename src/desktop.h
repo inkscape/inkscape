@@ -221,11 +221,11 @@ struct SPDesktop : public Inkscape::UI::View::View
     void set_event_context (GtkType type, const gchar *config);
     void push_event_context (GtkType type, const gchar *config, unsigned int key);
 
-    void set_coordinate_status (NR::Point p);
-    SPItem *item_from_list_at_point_bottom (const GSList *list, NR::Point const p) const;
-    SPItem *item_at_point (NR::Point const p, bool into_groups, SPItem *upto = NULL) const;
-    SPItem *group_at_point (NR::Point const p) const;
-    NR::Point point() const;
+    void set_coordinate_status (Geom::Point p);
+    SPItem *item_from_list_at_point_bottom (const GSList *list, Geom::Point const p) const;
+    SPItem *item_at_point (Geom::Point const p, bool into_groups, SPItem *upto = NULL) const;
+    SPItem *group_at_point (Geom::Point const p) const;
+    Geom::Point point() const;
 
     NR::Rect get_display_area() const;
     void set_display_area (double x0, double y0, double x1, double y1, double border, bool log = true);
@@ -234,7 +234,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void zoom_relative (double cx, double cy, double zoom);
     void zoom_absolute_keep_point (double cx, double cy, double px, double py, double zoom);
     void zoom_relative_keep_point (double cx, double cy, double zoom);
-    void zoom_relative_keep_point (NR::Point const &c, double const zoom)
+    void zoom_relative_keep_point (Geom::Point const &c, double const zoom)
     {
             using NR::X;
             using NR::Y;
@@ -252,7 +252,7 @@ struct SPDesktop : public Inkscape::UI::View::View
 
     bool scroll_to_point (Geom::Point const &s_dt, gdouble autoscrollspeed = 0);
     void scroll_world (double dx, double dy, bool is_scrolling = false);
-    void scroll_world (NR::Point const scroll, bool is_scrolling = false)
+    void scroll_world (Geom::Point const scroll, bool is_scrolling = false)
     {
         using NR::X;
         using NR::Y;
@@ -261,7 +261,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void scroll_world_in_svg_coords (double dx, double dy, bool is_scrolling = false);
 
     void getWindowGeometry (gint &x, gint &y, gint &w, gint &h);
-    void setWindowPosition (NR::Point p);
+    void setWindowPosition (Geom::Point p);
     void setWindowSize (gint w, gint h);
     void setWindowTransient (void* p, int transient_policy=1);
     Gtk::Window* getToplevel();
@@ -302,12 +302,12 @@ struct SPDesktop : public Inkscape::UI::View::View
     void registerEditWidget (Inkscape::UI::View::EditWidgetInterface *widget)
     { _widget = widget; }
 
-    NR::Matrix w2d() const; //transformation from window to desktop coordinates (used for zooming)
-    NR::Point w2d(NR::Point const &p) const;
-    NR::Point d2w(NR::Point const &p) const;
-    NR::Matrix doc2dt() const;
-    NR::Point doc2dt(NR::Point const &p) const;
-    NR::Point dt2doc(NR::Point const &p) const;
+    Geom::Matrix w2d() const; //transformation from window to desktop coordinates (used for zooming)
+    Geom::Point w2d(Geom::Point const &p) const;
+    Geom::Point d2w(Geom::Point const &p) const;
+    Geom::Matrix doc2dt() const;
+    Geom::Point doc2dt(Geom::Point const &p) const;
+    Geom::Point dt2doc(Geom::Point const &p) const;
 
     virtual void setDocument (SPDocument* doc);
     virtual bool shutdown();
@@ -322,9 +322,9 @@ private:
     Inkscape::Application     *_inkscape;
     Inkscape::MessageContext  *_guides_message_context;
     bool _active;
-    NR::Matrix _w2d;
-    NR::Matrix _d2w;
-    NR::Matrix _doc2dt;
+    Geom::Matrix _w2d;
+    Geom::Matrix _d2w;
+    Geom::Matrix _doc2dt;
 
     bool grids_visible; /* don't set this variable directly, use the method below */
     void set_grids_visible(bool visible);

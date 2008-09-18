@@ -48,7 +48,6 @@
 #include <glibmm/i18n.h>
 #include "libnr/nr-matrix-rotate-ops.h"
 #include "libnr/nr-matrix-translate-ops.h"
-#include "libnr/nr-rotate-fns.h"
 #include "libnr/nr-scale-ops.h"
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-rotate-ops.h>
@@ -1144,7 +1143,7 @@ value of set_i2d==false is only used by seltrans when it's dragging objects live
 that case, items are already in the new position, but the repr is in the old, and this function
 then simply updates the repr from item->transform.
  */
-void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const &affine, bool set_i2d)
+void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix const &affine, bool set_i2d)
 {
     if (selection->isEmpty())
         return;
@@ -1152,7 +1151,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
     for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = SP_ITEM(l->data);
 
-        NR::Point old_center(0,0);
+        Geom::Point old_center(0,0);
         if (set_i2d && item->isCenterSet())
             old_center = item->getCenter();
 
@@ -1225,7 +1224,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
             NR::Matrix t_inv =parent_transform * from_2geom(matrix_to_desktop (matrix_from_desktop (affine.inverse(), item), item)) * parent_transform.inverse();
             NR::Matrix result = t_inv * item->transform * t;
 
-            if ((prefs_parallel || prefs_unmoved) && affine.is_translation()) {
+            if ((prefs_parallel || prefs_unmoved) && affine.isTranslation()) {
                 // we need to cancel out the move compensation, too
 
                 // find out the clone move, same as in sp_use_move_compensate
@@ -1257,7 +1256,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
 
         // if we're moving the actual object, not just updating the repr, we can transform the
         // center by the same matrix (only necessary for non-translations)
-        if (set_i2d && item->isCenterSet() && !affine.is_translation()) {
+        if (set_i2d && item->isCenterSet() && !affine.isTranslation()) {
             item->setCenter(old_center * affine);
             SP_OBJECT(item)->updateRepr();
         }
@@ -1306,7 +1305,7 @@ sp_selection_scale_absolute(Inkscape::Selection *selection,
 }
 
 
-void sp_selection_scale_relative(Inkscape::Selection *selection, NR::Point const &align, NR::scale const &scale)
+void sp_selection_scale_relative(Inkscape::Selection *selection, Geom::Point const &align, Geom::Scale const &scale)
 {
     if (selection->isEmpty())
         return;
@@ -1318,41 +1317,41 @@ void sp_selection_scale_relative(Inkscape::Selection *selection, NR::Point const
     }
 
     // FIXME: ARBITRARY LIMIT: don't try to scale above 1 Mpx, it won't display properly and will crash sooner or later anyway
-    if ( bbox->extent(NR::X) * scale[NR::X] > 1e6  ||
-         bbox->extent(NR::Y) * scale[NR::Y] > 1e6 )
+    if ( bbox->extent(NR::X) * scale[Geom::X] > 1e6  ||
+         bbox->extent(NR::Y) * scale[Geom::Y] > 1e6 )
     {
         return;
     }
 
-    NR::translate const n2d(-align);
-    NR::translate const d2n(align);
-    NR::Matrix const final( n2d * scale * d2n );
+    Geom::Translate const n2d(-align);
+    Geom::Translate const d2n(align);
+    Geom::Matrix const final( n2d * scale * d2n );
     sp_selection_apply_affine(selection, final);
 }
 
 void
-sp_selection_rotate_relative(Inkscape::Selection *selection, NR::Point const &center, gdouble const angle_degrees)
+sp_selection_rotate_relative(Inkscape::Selection *selection, Geom::Point const &center, gdouble const angle_degrees)
 {
-    NR::translate const d2n(center);
-    NR::translate const n2d(-center);
-    NR::rotate const rotate(rotate_degrees(angle_degrees));
-    NR::Matrix const final( NR::Matrix(n2d) * rotate * d2n );
+    Geom::Translate const d2n(center);
+    Geom::Translate const n2d(-center);
+    Geom::Rotate const rotate(Geom::Rotate::from_degrees(angle_degrees));
+    Geom::Matrix const final( Geom::Matrix(n2d) * rotate * d2n );
     sp_selection_apply_affine(selection, final);
 }
 
 void
-sp_selection_skew_relative(Inkscape::Selection *selection, NR::Point const &align, double dx, double dy)
+sp_selection_skew_relative(Inkscape::Selection *selection, Geom::Point const &align, double dx, double dy)
 {
-    NR::translate const d2n(align);
-    NR::translate const n2d(-align);
-    NR::Matrix const skew(1, dy,
-                          dx, 1,
-                          0, 0);
-    NR::Matrix const final( n2d * skew * d2n );
+    Geom::Translate const d2n(align);
+    Geom::Translate const n2d(-align);
+    Geom::Matrix const skew(1, dy,
+                            dx, 1,
+                            0, 0);
+    Geom::Matrix const final( n2d * skew * d2n );
     sp_selection_apply_affine(selection, final);
 }
 
-void sp_selection_move_relative(Inkscape::Selection *selection, NR::Point const &move)
+void sp_selection_move_relative(Inkscape::Selection *selection, Geom::Point const &move)
 {
     sp_selection_apply_affine(selection, NR::Matrix(NR::translate(move)));
 }
@@ -1362,15 +1361,10 @@ void sp_selection_move_relative(Inkscape::Selection *selection, double dx, doubl
     sp_selection_apply_affine(selection, NR::Matrix(NR::translate(dx, dy)));
 }
 
-
 /**
- * \brief sp_selection_rotate_90
- *
- * This function rotates selected objects 90 degrees clockwise.
- *
+ * @brief Rotates selected objects 90 degrees, either clock-wise or counter-clockwise, depending on the value of ccw
  */
-
-void sp_selection_rotate_90_cw(SPDesktop *desktop)
+void sp_selection_rotate_90(SPDesktop *desktop, bool ccw)
 {
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
@@ -1378,36 +1372,15 @@ void sp_selection_rotate_90_cw(SPDesktop *desktop)
         return;
 
     GSList const *l = selection->itemList();
-    NR::rotate const rot_neg_90(NR::Point(0, -1));
+    Geom::Rotate const rot_90(NR::Point(0, ccw ? 1 : -1)); // pos. or neg. rotation, depending on the value of ccw
     for (GSList const *l2 = l ; l2 != NULL ; l2 = l2->next) {
         SPItem *item = SP_ITEM(l2->data);
-        sp_item_rotate_rel(item, rot_neg_90);
+        sp_item_rotate_rel(item, rot_90);
     }
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_ROTATE_90_CCW,
-                     _("Rotate 90&#176; CW"));
-}
-
-
-/**
- * @brief Rotates selected objects 90 degrees counter-clockwise.
- */
-void sp_selection_rotate_90_ccw(SPDesktop *desktop)
-{
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-
-    if (selection->isEmpty())
-        return;
-
-    GSList const *l = selection->itemList();
-    NR::rotate const rot_neg_90(NR::Point(0, 1));
-    for (GSList const *l2 = l ; l2 != NULL ; l2 = l2->next) {
-        SPItem *item = SP_ITEM(l2->data);
-        sp_item_rotate_rel(item, rot_neg_90);
-    }
-
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_ROTATE_90_CW,
-                     _("Rotate 90&#176; CCW"));
+    sp_document_done(sp_desktop_document(desktop),
+                     ccw ? SP_VERB_OBJECT_ROTATE_90_CCW : SP_VERB_OBJECT_ROTATE_90_CW,
+                     ccw ? _("Rotate 90&#176; CCW") : _("Rotate 90&#176; CW"));
 }
 
 void
@@ -1416,7 +1389,7 @@ sp_selection_rotate(Inkscape::Selection *selection, gdouble const angle_degrees)
     if (selection->isEmpty())
         return;
 
-    boost::optional<NR::Point> center = selection->center();
+    boost::optional<Geom::Point> center = selection->center();
     if (!center) {
         return;
     }
@@ -1441,7 +1414,7 @@ sp_selection_rotate_screen(Inkscape::Selection *selection, gdouble angle)
         return;
 
     boost::optional<NR::Rect> const bbox(selection->bounds());
-    boost::optional<NR::Point> center = selection->center();
+    boost::optional<Geom::Point> center = selection->center();
 
     if ( !bbox || !center ) {
         return;
@@ -1483,7 +1456,7 @@ sp_selection_scale(Inkscape::Selection *selection, gdouble grow)
     }
 
     double const times = 1.0 + grow / max_len;
-    sp_selection_scale_relative(selection, center, NR::scale(times, times));
+    sp_selection_scale_relative(selection, center, Geom::Scale(times, times));
 
     sp_document_maybe_done(sp_desktop_document(selection->desktop()),
                            ( (grow > 0)
@@ -1513,7 +1486,7 @@ sp_selection_scale_times(Inkscape::Selection *selection, gdouble times)
     }
 
     NR::Point const center(sel_bbox->midpoint());
-    sp_selection_scale_relative(selection, center, NR::scale(times, times));
+    sp_selection_scale_relative(selection, center, Geom::Scale(times, times));
     sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_CONTEXT_SELECT,
                      _("Scale by whole factor"));
 }
@@ -2104,7 +2077,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
 
     sp_document_ensure_up_to_date(doc);
     boost::optional<NR::Rect> r = selection->bounds();
-    boost::optional<NR::Point> c = selection->center();
+    boost::optional<Geom::Point> c = selection->center();
     if ( !r || !c || r->isEmpty() ) {
         return;
     }

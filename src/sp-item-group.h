@@ -27,34 +27,34 @@ class CGroup;
 namespace NR{ struct translate; }
 
 struct SPGroup : public SPLPEItem {
-	enum LayerMode { GROUP, LAYER };
+    enum LayerMode { GROUP, LAYER };
 
-	LayerMode _layer_mode;
-	std::map<unsigned int, LayerMode> _display_modes;
+    LayerMode _layer_mode;
+    std::map<unsigned int, LayerMode> _display_modes;
 
-	LayerMode layerMode() const { return _layer_mode; }
-	void setLayerMode(LayerMode mode);
+    LayerMode layerMode() const { return _layer_mode; }
+    void setLayerMode(LayerMode mode);
 
-	LayerMode effectiveLayerMode(unsigned int display_key) const {
-		if ( _layer_mode == LAYER ) {
-			return LAYER;
-		} else {
-			return layerDisplayMode(display_key);
-		}
-	}
+    LayerMode effectiveLayerMode(unsigned int display_key) const {
+        if ( _layer_mode == LAYER ) {
+            return LAYER;
+        } else {
+            return layerDisplayMode(display_key);
+        }
+    }
 
-	LayerMode layerDisplayMode(unsigned int display_key) const;
-	void setLayerDisplayMode(unsigned int display_key, LayerMode mode);
-	void translateChildItems(NR::translate const &tr);
+    LayerMode layerDisplayMode(unsigned int display_key) const;
+    void setLayerDisplayMode(unsigned int display_key, LayerMode mode);
+    void translateChildItems(Geom::Translate const &tr);
 
     CGroup *group;
     
 private:
-	void _updateLayerMode(unsigned int display_key=0);
+    void _updateLayerMode(unsigned int display_key=0);
 };
 
 struct SPGroupClass {
-	SPLPEItemClass parent_class;
+    SPLPEItemClass parent_class;
 };
 
 /*
@@ -93,3 +93,14 @@ GSList *sp_item_group_item_list (SPGroup *group);
 SPObject *sp_item_group_get_child_by_name (SPGroup *group, SPObject *ref, const gchar *name);
 
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

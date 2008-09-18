@@ -1323,10 +1323,10 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_OBJECT_ROTATE_90_CW:
-            sp_selection_rotate_90_cw(dt);
+            sp_selection_rotate_90(dt, false);
             break;
         case SP_VERB_OBJECT_ROTATE_90_CCW:
-            sp_selection_rotate_90_ccw(dt);
+            sp_selection_rotate_90(dt, true);
             break;
         case SP_VERB_OBJECT_FLATTEN:
             sp_selection_remove_transform(dt);
@@ -1362,7 +1362,7 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
             // When working with the selector tool, flip the selection about its rotation center
             // (if it is visible) or about the center of the bounding box.
             } else {
-                sp_selection_scale_relative(sel, center, NR::scale(-1.0, 1.0));
+                sp_selection_scale_relative(sel, center, Geom::Scale(-1.0, 1.0));
             }
             sp_document_done(sp_desktop_document(dt), SP_VERB_OBJECT_FLIP_HORIZONTAL,
                              _("Flip horizontally"));
@@ -1377,7 +1377,7 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
                     SP_NODE_CONTEXT(ec)->shape_editor->flip(Geom::Y);
                 }
             } else {
-                sp_selection_scale_relative(sel, center, NR::scale(1.0, -1.0));
+                sp_selection_scale_relative(sel, center, Geom::Scale(1.0, -1.0));
             }
             sp_document_done(sp_desktop_document(dt), SP_VERB_OBJECT_FLIP_VERTICAL,
                              _("Flip vertically"));

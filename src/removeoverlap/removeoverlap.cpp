@@ -67,7 +67,7 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 		NR::Point const curr = it->midpoint;
 		NR::Point const dest(it->vspc_rect->getCentreX(),
 				     it->vspc_rect->getCentreY());
-		sp_item_move_rel(it->item, NR::translate(dest - curr));
+		sp_item_move_rel(it->item, Geom::Translate(dest - curr));
 		delete it->vspc_rect;
 	}
 }

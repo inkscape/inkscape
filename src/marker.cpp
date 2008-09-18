@@ -24,7 +24,6 @@
 #include "libnr/nr-matrix-translate-ops.h"
 #include "libnr/nr-scale-matrix-ops.h"
 #include "libnr/nr-translate-matrix-ops.h"
-#include "libnr/nr-rotate-fns.h"
 #include "libnr/nr-convert2geom.h"
 #include <2geom/matrix.h>
 #include "svg/svg.h"
@@ -635,43 +634,43 @@ sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
                           unsigned int key, unsigned int pos,
                           Geom::Matrix const &base, float linewidth)
 {
-	for (SPMarkerView *v = marker->views; v != NULL; v = v->next) {
-		if (v->key == key) {
-			if (pos >= v->size) {
-			  return NULL;
-			}
-			if (!v->items[pos]) {
-				/* Parent class ::show method */
-				v->items[pos] = ((SPItemClass *) parent_class)->show ((SPItem *) marker,
-										      parent->arena, key,
-										      SP_ITEM_REFERENCE_FLAGS);
-				if (v->items[pos]) {
-					/* fixme: Position (Lauris) */
-					nr_arena_item_add_child (parent, v->items[pos], NULL);
-					/* nr_arena_item_unref (v->items[pos]); */
-					nr_arena_group_set_child_transform((NRArenaGroup *) v->items[pos], &marker->c2p);
-				}
-			}
-			if (v->items[pos]) {
-				NR::Matrix m;
-				if (marker->orient_auto) {
-					m = base;
-				} else {
-					/* fixme: Orient units (Lauris) */
-					m = NR::Matrix(rotate_degrees(marker->orient));
-					m *= NR::get_translation(base);
-				}
-				if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-					m = NR::scale(linewidth) * m;
-				}
+    for (SPMarkerView *v = marker->views; v != NULL; v = v->next) {
+        if (v->key == key) {
+            if (pos >= v->size) {
+                return NULL;
+            }
+            if (!v->items[pos]) {
+                /* Parent class ::show method */
+                v->items[pos] = ((SPItemClass *) parent_class)->show ((SPItem *) marker,
+                                                                      parent->arena, key,
+                                                                      SP_ITEM_REFERENCE_FLAGS);
+                if (v->items[pos]) {
+                    /* fixme: Position (Lauris) */
+                    nr_arena_item_add_child (parent, v->items[pos], NULL);
+                    /* nr_arena_item_unref (v->items[pos]); */
+                    nr_arena_group_set_child_transform((NRArenaGroup *) v->items[pos], &marker->c2p);
+                }
+            }
+            if (v->items[pos]) {
+                Geom::Matrix m;
+                if (marker->orient_auto) {
+                    m = base;
+                } else {
+                    /* fixme: Orient units (Lauris) */
+                    m = Geom::Matrix(Geom::Rotate::from_degrees(marker->orient));
+                    m *= Geom::Translate(base[4], base[5]); // TODO: this was NR::get_translation() originally; should it be extracted into a new 2geom function?
+                }
+                if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+                    m = Geom::Scale(linewidth) * m;
+                }
+                
+                nr_arena_item_set_transform(v->items[pos], m);
+            }
+            return v->items[pos];
+        }
+    }
 
-				nr_arena_item_set_transform(v->items[pos], m);
-			}
-			return v->items[pos];
-		}
-	}
-
-	return NULL;
+    return NULL;
 }
 
 /**
@@ -759,3 +758,14 @@ generate_marker (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matri
     Inkscape::GC::release(repr);
     return mark_id;
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
