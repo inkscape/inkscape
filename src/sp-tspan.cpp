@@ -57,7 +57,7 @@ static void sp_tspan_release(SPObject *object);
 static void sp_tspan_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_tspan_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_tspan_modified(SPObject *object, unsigned flags);
-static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static Inkscape::XML::Node *sp_tspan_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static char *sp_tspan_description (SPItem *item);
 
@@ -203,7 +203,7 @@ sp_tspan_modified(SPObject *object, unsigned flags)
     }
 }
 
-static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const /*flags*/)
+static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
 {
     // find out the ancestor text which holds our layout
     SPObject *parent_text = SP_OBJECT(item);
@@ -216,7 +216,7 @@ static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
     // Add stroke width
     SPStyle* style=SP_OBJECT_STYLE (item);
     if (!style->stroke.isNone()) {
-        double const scale = expansion(transform);
+        double const scale = transform.descrim();
         if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
             double const width = MAX(0.125, style->stroke_width.computed * scale);
             if ( fabs(bbox->x1 - bbox->x0) > -0.00001 && fabs(bbox->y1 - bbox->y0) > -0.00001 ) {

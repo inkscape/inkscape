@@ -41,7 +41,7 @@
 
 #include "dropper-context.h"
 #include "message-context.h"
-#include "libnr/nr-scale-translate-ops.h"
+//#include "libnr/nr-scale-translate-ops.h"
 
 static void sp_dropper_context_class_init(SPDropperContextClass *klass);
 static void sp_dropper_context_init(SPDropperContext *dc);
@@ -164,7 +164,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
     switch (event->type) {
 	case GDK_BUTTON_PRESS:
             if (event->button.button == 1 && !event_context->space_panning) {
-                dc->centre = NR::Point(event->button.x, event->button.y);
+                dc->centre = Geom::Point(event->button.x, event->button.y);
                 dc->dragging = TRUE;
                 ret = TRUE;
             }
@@ -184,24 +184,24 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                     // calculate average
 
                     // radius
-                    rw = std::min(NR::L2(NR::Point(event->button.x, event->button.y) - dc->centre), 400.0);
+                    rw = std::min(Geom::L2(Geom::Point(event->button.x, event->button.y) - dc->centre), 400.0);
 
                     if (rw == 0) { // happens sometimes, little idea why...
                         break;
                     }
 
-                    NR::Point const cd = desktop->w2d(dc->centre);
-                    NR::Matrix const w2dt = desktop->w2d();
-                    const double scale = rw * NR::expansion(w2dt);
-                    NR::Matrix const sm( NR::scale(scale, scale) * NR::translate(cd) );
+                    Geom::Point const cd = desktop->w2d(dc->centre);
+                    Geom::Matrix const w2dt = desktop->w2d();
+                    const double scale = rw * w2dt.descrim();
+                    Geom::Matrix const sm( Geom::Scale(scale, scale) * Geom::Translate(cd) );
                     sp_canvas_item_affine_absolute(dc->area, sm);
                     sp_canvas_item_show(dc->area);
 
                     /* Get buffer */
-                    const int x0 = (int) floor(dc->centre[NR::X] - rw);
-                    const int y0 = (int) floor(dc->centre[NR::Y] - rw);
-                    const int x1 = (int) ceil(dc->centre[NR::X] + rw);
-                    const int y1 = (int) ceil(dc->centre[NR::Y] + rw);
+                    const int x0 = (int) floor(dc->centre[Geom::X] - rw);
+                    const int y0 = (int) floor(dc->centre[Geom::Y] - rw);
+                    const int x1 = (int) ceil(dc->centre[Geom::X] + rw);
+                    const int y1 = (int) ceil(dc->centre[Geom::Y] + rw);
 
                     if ((x1 > x0) && (y1 > y0)) {
                         NRPixBlock pb;
@@ -211,8 +211,8 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                         for (int y = y0; y < y1; y++) {
                             const unsigned char *s = NR_PIXBLOCK_PX(&pb) + (y - y0) * pb.rs;
                             for (int x = x0; x < x1; x++) {
-                                const double dx = x - dc->centre[NR::X];
-                                const double dy = y - dc->centre[NR::Y];
+                                const double dx = x - dc->centre[Geom::X];
+                                const double dy = y - dc->centre[Geom::Y];
                                 const double w = exp(-((dx * dx) + (dy * dy)) / (rw * rw));
                                 W += w;
                                 R += w * s[0];

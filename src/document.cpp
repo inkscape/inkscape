@@ -546,13 +546,12 @@ gdouble sp_document_height(SPDocument *document)
  * this function fits the canvas to that rect by resizing the canvas
  * and translating the document root into position.
  */
-void SPDocument::fitToRect(NR::Rect const &rect)
+void SPDocument::fitToRect(Geom::Rect const &rect)
 {
     g_return_if_fail(!rect.isEmpty());
 
-    using NR::X; using NR::Y;
-    double const w = rect.extent(X);
-    double const h = rect.extent(Y);
+    double const w = rect.width();
+    double const h = rect.height();
 
     double const old_height = sp_document_height(this);
     SPUnit const &px(sp_unit_get_by_id(SP_UNIT_PX));
@@ -564,7 +563,7 @@ void SPDocument::fitToRect(NR::Rect const &rect)
     SP_GROUP(root)->translateChildItems(tr);
     SPNamedView *nv = sp_document_namedview(this, 0);
     if(nv) {
-        NR::translate tr2(-rect.min());
+        Geom::Translate tr2(-rect.min());
         nv->translateGuides(tr2);
 
         // update the viewport so the drawing appears to stay where it was
@@ -877,18 +876,18 @@ sp_document_idle_handler(gpointer data)
     }
 }
 
-static bool is_within(NR::Rect const &area, NR::Rect const &box)
+static bool is_within(Geom::Rect const &area, Geom::Rect const &box)
 {
     return area.contains(box);
 }
 
-static bool overlaps(NR::Rect const &area, NR::Rect const &box)
+static bool overlaps(Geom::Rect const &area, Geom::Rect const &box)
 {
     return area.intersects(box);
 }
 
-static GSList *find_items_in_area(GSList *s, SPGroup *group, unsigned int dkey, NR::Rect const &area,
-                                  bool (*test)(NR::Rect const &, NR::Rect const &), bool take_insensitive = false)
+static GSList *find_items_in_area(GSList *s, SPGroup *group, unsigned int dkey, Geom::Rect const &area,
+                                  bool (*test)(Geom::Rect const &, Geom::Rect const &), bool take_insensitive = false)
 {
     g_return_val_if_fail(SP_IS_GROUP(group), s);
 
@@ -900,7 +899,7 @@ static GSList *find_items_in_area(GSList *s, SPGroup *group, unsigned int dkey, 
             s = find_items_in_area(s, SP_GROUP(o), dkey, area, test);
         } else {
             SPItem *child = SP_ITEM(o);
-            boost::optional<NR::Rect> box = sp_item_bbox_desktop(child);
+            boost::optional<Geom::Rect> box = to_2geom(sp_item_bbox_desktop(child));
             if ( box && test(area, *box) && (take_insensitive || child->isVisibleAndUnlocked(dkey))) {
                 s = g_slist_append(s, child);
             }
@@ -931,7 +930,7 @@ Returns the bottommost item from the list which is at the point, or NULL if none
 */
 SPItem*
 sp_document_item_from_list_at_point_bottom(unsigned int dkey, SPGroup *group, GSList const *list,
-                                           NR::Point const p, bool take_insensitive)
+                                           Geom::Point const p, bool take_insensitive)
 {
     g_return_val_if_fail(group, NULL);
 
@@ -968,7 +967,7 @@ upwards in z-order and returns what it has found so far (i.e. the found item is
 guaranteed to be lower than upto).
  */
 SPItem*
-find_item_at_point(unsigned int dkey, SPGroup *group, NR::Point const p, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
+find_item_at_point(unsigned int dkey, SPGroup *group, Geom::Point const p, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
 {
     SPItem *seen = NULL, *newseen = NULL;
 
@@ -1010,7 +1009,7 @@ Returns the topmost non-layer group from the descendants of group which is at po
 p, or NULL if none. Recurses into layers but not into groups.
  */
 SPItem*
-find_group_at_point(unsigned int dkey, SPGroup *group, NR::Point const p)
+find_group_at_point(unsigned int dkey, SPGroup *group, Geom::Point const p)
 {
     SPItem *seen = NULL;
 
@@ -1044,7 +1043,7 @@ find_group_at_point(unsigned int dkey, SPGroup *group, NR::Point const p)
  *
  */
 
-GSList *sp_document_items_in_box(SPDocument *document, unsigned int dkey, NR::Rect const &box)
+GSList *sp_document_items_in_box(SPDocument *document, unsigned int dkey, Geom::Rect const &box)
 {
     g_return_val_if_fail(document != NULL, NULL);
     g_return_val_if_fail(document->priv != NULL, NULL);
@@ -1059,7 +1058,7 @@ GSList *sp_document_items_in_box(SPDocument *document, unsigned int dkey, NR::Re
  *
  */
 
-GSList *sp_document_partial_items_in_box(SPDocument *document, unsigned int dkey, NR::Rect const &box)
+GSList *sp_document_partial_items_in_box(SPDocument *document, unsigned int dkey, Geom::Rect const &box)
 {
     g_return_val_if_fail(document != NULL, NULL);
     g_return_val_if_fail(document->priv != NULL, NULL);
@@ -1068,7 +1067,7 @@ GSList *sp_document_partial_items_in_box(SPDocument *document, unsigned int dkey
 }
 
 GSList *
-sp_document_items_at_points(SPDocument *document, unsigned const key, std::vector<NR::Point> points)
+sp_document_items_at_points(SPDocument *document, unsigned const key, std::vector<Geom::Point> points)
 {
     GSList *items = NULL;
 
@@ -1080,7 +1079,7 @@ sp_document_items_at_points(SPDocument *document, unsigned const key, std::vecto
 
     for(unsigned int i = 0; i < points.size(); i++) {
         SPItem *item = sp_document_item_at_point(document, key, points[i],
-                                         false, NULL);
+                                                 false, NULL);
         if (item && !g_slist_find(items, item))
             items = g_slist_prepend (items, item);
     }
@@ -1092,7 +1091,7 @@ sp_document_items_at_points(SPDocument *document, unsigned const key, std::vecto
 }
 
 SPItem *
-sp_document_item_at_point(SPDocument *document, unsigned const key, NR::Point const p,
+sp_document_item_at_point(SPDocument *document, unsigned const key, Geom::Point const p,
                           gboolean const into_groups, SPItem *upto)
 {
     g_return_val_if_fail(document != NULL, NULL);
@@ -1102,7 +1101,7 @@ sp_document_item_at_point(SPDocument *document, unsigned const key, NR::Point co
 }
 
 SPItem*
-sp_document_group_at_point(SPDocument *document, unsigned int key, NR::Point const p)
+sp_document_group_at_point(SPDocument *document, unsigned int key, Geom::Point const p)
 {
     g_return_val_if_fail(document != NULL, NULL);
     g_return_val_if_fail(document->priv != NULL, NULL);

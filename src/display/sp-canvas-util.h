@@ -28,15 +28,15 @@ sp_canvas_clear_buffer (SPCanvasBuf * buf);
 
 /* get i2p (item to parent) affine transformation as general 6-element array */
 
-NR::Matrix sp_canvas_item_i2p_affine (SPCanvasItem * item);
+Geom::Matrix sp_canvas_item_i2p_affine (SPCanvasItem * item);
 
 /* get i2i (item to item) affine transformation as general 6-element array */
 
-NR::Matrix sp_canvas_item_i2i_affine (SPCanvasItem * from, SPCanvasItem * to);
+Geom::Matrix sp_canvas_item_i2i_affine (SPCanvasItem * from, SPCanvasItem * to);
 
 /* set item affine matrix to achieve given i2w matrix */
 
-void sp_canvas_item_set_i2w_affine (SPCanvasItem * item, NR::Matrix const & aff);
+void sp_canvas_item_set_i2w_affine (SPCanvasItem * item, Geom::Matrix const & aff);
 
 void sp_canvas_item_move_to_z (SPCanvasItem * item, gint z);
 

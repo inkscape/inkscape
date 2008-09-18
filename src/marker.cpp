@@ -52,7 +52,7 @@ static Inkscape::XML::Node *sp_marker_write (SPObject *object, Inkscape::XML::Do
 
 static NRArenaItem *sp_marker_private_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static void sp_marker_private_hide (SPItem *item, unsigned int key);
-static void sp_marker_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_marker_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_marker_print (SPItem *item, SPPrintContext *ctx);
 
 static void sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destroyitems);
@@ -120,7 +120,7 @@ sp_marker_init (SPMarker *marker)
 {
 	marker->viewBox_set = FALSE;
 
-	marker->c2p.set_identity();
+	marker->c2p.setIdentity();
 }
 
 /**
@@ -376,7 +376,7 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	rctx.vp.y1 = marker->markerHeight.computed;
 
 	/* Start with identity transform */
-	marker->c2p.set_identity();
+	marker->c2p.setIdentity();
 
 	/* Viewbox is always present, either implicitly or explicitly */
 	if (marker->viewBox_set) {
@@ -445,7 +445,7 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	}
 
     {
-        NR::Matrix q;
+        Geom::Matrix q;
 	    /* Compose additional transformation from scale and position */
 	    q[0] = width / (vb->x1 - vb->x0);
 	    q[1] = 0.0;
@@ -459,18 +459,18 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 
 	/* Append reference translation */
 	/* fixme: lala (Lauris) */
-    marker->c2p = NR::translate(-marker->refX.computed, -marker->refY.computed) * marker->c2p;
+        marker->c2p = Geom::Translate(-marker->refX.computed, -marker->refY.computed) * marker->c2p;
 
 	rctx.i2doc = marker->c2p * rctx.i2doc;
 
 	/* If viewBox is set reinitialize child viewport */
 	/* Otherwise it already correct */
 	if (marker->viewBox_set) {
-		rctx.vp.x0 = marker->viewBox.x0;
-		rctx.vp.y0 = marker->viewBox.y0;
-		rctx.vp.x1 = marker->viewBox.x1;
-		rctx.vp.y1 = marker->viewBox.y1;
-		rctx.i2vp = NR::identity();
+            rctx.vp.x0 = marker->viewBox.x0;
+            rctx.vp.y0 = marker->viewBox.y0;
+            rctx.vp.x1 = marker->viewBox.x1;
+            rctx.vp.y1 = marker->viewBox.y1;
+            rctx.i2vp = Geom::identity();
 	}
 
 	/* And invoke parent method */
@@ -479,11 +479,12 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 
 	/* As last step set additional transform of arena group */
 	for (v = marker->views; v != NULL; v = v->next) {
-		for (unsigned i = 0 ; i < v->size ; i++) {
-			if (v->items[i]) {
-				nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->items[i]), &marker->c2p);
-			}
-		}
+            for (unsigned i = 0 ; i < v->size ; i++) {
+                if (v->items[i]) {
+                    NR::Matrix tmp = from_2geom(marker->c2p);
+                    nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->items[i]), &tmp);
+                }
+            }
 	}
 }
 
@@ -572,7 +573,7 @@ sp_marker_private_hide (SPItem */*item*/, unsigned int /*key*/)
  * This routine is disabled to break propagation.
  */
 static void
-sp_marker_bbox(SPItem const *, NRRect *, NR::Matrix const &, unsigned const)
+sp_marker_bbox(SPItem const *, NRRect *, Geom::Matrix const &, unsigned const)
 {
 	/* Break propagation */
 }
@@ -648,7 +649,8 @@ sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
                     /* fixme: Position (Lauris) */
                     nr_arena_item_add_child (parent, v->items[pos], NULL);
                     /* nr_arena_item_unref (v->items[pos]); */
-                    nr_arena_group_set_child_transform((NRArenaGroup *) v->items[pos], &marker->c2p);
+                    NR::Matrix tmp = from_2geom(marker->c2p);
+                    nr_arena_group_set_child_transform((NRArenaGroup *) v->items[pos], &tmp);
                 }
             }
             if (v->items[pos]) {
@@ -722,7 +724,7 @@ sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destro
 }
 
 const gchar *
-generate_marker (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matrix /*transform*/, NR::Matrix move)
+generate_marker (GSList *reprs, NR::Rect bounds, SPDocument *document, Geom::Matrix /*transform*/, Geom::Matrix move)
 {
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
@@ -747,9 +749,9 @@ generate_marker (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matri
             Inkscape::XML::Node *node = (Inkscape::XML::Node *)(i->data);
         SPItem *copy = SP_ITEM(mark_object->appendChildRepr(node));
 
-        NR::Matrix dup_transform;
+        Geom::Matrix dup_transform;
         if (!sp_svg_transform_read (node->attribute("transform"), &dup_transform))
-            dup_transform = NR::identity();
+            dup_transform = Geom::identity();
         dup_transform *= move;
 
         sp_item_write_transform(copy, SP_OBJECT_REPR(copy), dup_transform);

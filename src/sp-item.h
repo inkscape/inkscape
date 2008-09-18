@@ -84,11 +84,11 @@ class SPItemCtx;
 struct SPItemCtx {
     SPCtx ctx;
     /** Item to document transformation */
-    NR::Matrix i2doc;
+    Geom::Matrix i2doc;
     /** Viewport size */
     NRRect vp;
     /** Item to viewport transformation */
-    NR::Matrix i2vp;
+    Geom::Matrix i2vp;
 };
 
 /** Abstract base class for all visible shapes. */
@@ -107,7 +107,7 @@ struct SPItem : public SPObject {
     double transform_center_x;
     double transform_center_y;
 
-    NR::Matrix transform;
+    Geom::Matrix transform;
     
     SPClipPathReference *clip_ref;
     SPMaskReference *mask_ref;
@@ -180,7 +180,7 @@ struct SPItemClass {
     SPObjectClass parent_class;
 
     /** BBox union in given coordinate system */
-    void (* bbox) (SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+    void (* bbox) (SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
     
     /** Printing method. Assumes ctm is set to item affine matrix */
     /* \todo Think about it, and maybe implement generic export method instead (Lauris) */

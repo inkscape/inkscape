@@ -12,8 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <libnr/nr-point.h>
-
 #include "display/display-forward.h"
 #include "event-context.h"
 
@@ -30,21 +28,21 @@ enum {
 };
 
 struct SPDropperContext {
-	SPEventContext event_context;
+    SPEventContext event_context;
 
-	unsigned int dragging : 1;
+    unsigned int dragging : 1;
 
-	SPCanvasItem *area;
-	NR::Point centre;
+    SPCanvasItem *area;
+    Geom::Point centre;
 
-	double R;
-	double G;
-	double B;
-	double alpha;
+    double R;
+    double G;
+    double B;
+    double alpha;
 };
 
 struct SPDropperContextClass {
-	SPEventContextClass parent_class;
+    SPEventContextClass parent_class;
 };
 
 GType sp_dropper_context_get_type (void);
@@ -52,3 +50,14 @@ GType sp_dropper_context_get_type (void);
 guint32 sp_dropper_context_get_color(SPEventContext *ec);
 
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

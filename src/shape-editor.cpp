@@ -381,10 +381,10 @@ bool ShapeEditor::is_over_stroke (Geom::Point event_p, bool remember) {
         (( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
            desktop->current_zoom() *
            SP_OBJECT_STYLE (item)->stroke_width.computed * 0.5 *
-           NR::expansion(sp_item_i2d_affine(item))
+           to_2geom(sp_item_i2d_affine(item)).descrim()
          : 0.0)
-         + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100)) /NR::expansion(sp_item_i2d_affine(item)); 
-    bool close = (NR::L2 (delta) < stroke_tolerance);
+         + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100)) / to_2geom(sp_item_i2d_affine(item)).descrim();
+    bool close = (Geom::L2 (delta) < stroke_tolerance);
 
     if (remember && close) {
         // calculate index for nodepath's representation.
@@ -475,7 +475,7 @@ void ShapeEditor::finish_drag() {
     }
 }
 
-void ShapeEditor::select_rect(NR::Rect const &rect, bool add) {
+void ShapeEditor::select_rect(Geom::Rect const &rect, bool add) {
     if (this->nodepath) {
         sp_nodepath_select_rect(this->nodepath, rect, add);
     }

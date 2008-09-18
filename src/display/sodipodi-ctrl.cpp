@@ -8,6 +8,7 @@
  *
  */
 
+#include <2geom/transforms.h>
 #include "sp-canvas-util.h"
 #include "display-forward.h"
 #include "sodipodi-ctrl.h"
@@ -31,10 +32,10 @@ static void sp_ctrl_init (SPCtrl *ctrl);
 static void sp_ctrl_destroy (GtkObject *object);
 static void sp_ctrl_set_arg (GtkObject *object, GtkArg *arg, guint arg_id);
 
-static void sp_ctrl_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
+static void sp_ctrl_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
 static void sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
-static double sp_ctrl_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item);
+static double sp_ctrl_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 
 
 static SPCanvasItemClass *parent_class;
@@ -202,7 +203,7 @@ sp_ctrl_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
 }
 
 static void
-sp_ctrl_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+sp_ctrl_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     SPCtrl *ctrl;
     gint x, y;
@@ -272,14 +273,14 @@ sp_ctrl_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags
 }
 
 static double
-sp_ctrl_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item)
+sp_ctrl_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item)
 {
     SPCtrl *ctrl = SP_CTRL (item);
 
     *actual_item = item;
 
-    double const x = p[NR::X];
-    double const y = p[NR::Y];
+    double const x = p[Geom::X];
+    double const y = p[Geom::Y];
 
     if ((x >= ctrl->box.x0) && (x <= ctrl->box.x1) && (y >= ctrl->box.y0) && (y <= ctrl->box.y1)) return 0.0;
 
@@ -540,8 +541,8 @@ sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)
     ctrl->shown = TRUE;
 }
 
-void SPCtrl::moveto (NR::Point const p) {
-    sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (this), NR::Matrix(NR::translate (p)));
+void SPCtrl::moveto (Geom::Point const p) {
+    sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (this), Geom::Matrix(Geom::Translate (p)));
     _moved = true;
 }
 

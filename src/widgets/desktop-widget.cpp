@@ -652,7 +652,7 @@ sp_desktop_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
     }
 
     if (GTK_WIDGET_REALIZED (widget)) {
-        Geom::Rect const area = to_2geom(dtw->desktop->get_display_area());
+        Geom::Rect const area = dtw->desktop->get_display_area();
         double zoom = dtw->desktop->current_zoom();
 
         if (GTK_WIDGET_CLASS(dtw_parent_class)->size_allocate) {
@@ -663,7 +663,7 @@ sp_desktop_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
             /* Calculate zoom per pixel */
             double const zpsp = zoom / hypot (area.dimensions()[Geom::X], area.dimensions()[Geom::Y]);
             /* Find new visible area */
-            Geom::Rect newarea = to_2geom(dtw->desktop->get_display_area());
+            Geom::Rect newarea = dtw->desktop->get_display_area();
             /* Calculate adjusted zoom */
             zoom = zpsp * hypot(newarea.dimensions()[Geom::X], newarea.dimensions()[Geom::Y]);
             dtw->desktop->zoom_absolute(newarea.midpoint()[Geom::X], newarea.midpoint()[Geom::Y], zoom);
@@ -1503,7 +1503,7 @@ sp_dtw_zoom_value_changed (GtkSpinButton *spin, gpointer data)
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET (data);
     SPDesktop *desktop = dtw->desktop;
 
-    Geom::Rect const d = to_2geom(desktop->get_display_area());
+    Geom::Rect const d = desktop->get_display_area();
     g_signal_handler_block (spin, dtw->zoom_update);
     desktop->zoom_absolute (d.midpoint()[Geom::X], d.midpoint()[Geom::Y], zoom_factor);
     g_signal_handler_unblock (spin, dtw->zoom_update);
@@ -1558,7 +1558,7 @@ sp_dtw_zoom_populate_popup (GtkEntry */*entry*/, GtkMenu *menu, gpointer data)
 static void
 sp_dtw_zoom_menu_handler (SPDesktop *dt, gdouble factor)
 {
-    Geom::Rect const d = to_2geom(dt->get_display_area());
+    Geom::Rect const d = dt->get_display_area();
     dt->zoom_absolute(d.midpoint()[Geom::X], d.midpoint()[Geom::Y], factor);
 }
 
@@ -1706,10 +1706,10 @@ sp_desktop_widget_update_scrollbars (SPDesktopWidget *dtw, double scale)
                    Geom::Point(darea.max()[Geom::X] * scale + 64,
                              darea.min()[Geom::Y] * -scale + 64));
 
-    NR::Rect viewbox = dtw->canvas->getViewbox();
+    Geom::Rect viewbox = dtw->canvas->getViewbox();
 
     /* Viewbox is always included into scrollable region */
-    carea = NR::union_bounds(carea, viewbox);
+    carea = NR::union_bounds(carea, from_2geom(viewbox));
 
     set_adjustment(dtw->hadj, carea.min()[Geom::X], carea.max()[Geom::X],
                    viewbox.dimensions()[Geom::X],

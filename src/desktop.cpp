@@ -57,6 +57,7 @@
 #include <sigc++/functors/mem_fun.h>
 #include <gtkmm.h>
 
+#include <2geom/rect.h>
 #include "macros.h"
 #include "inkscape-private.h"
 #include "desktop.h"
@@ -79,7 +80,6 @@
 #include "display/sp-canvas-util.h"
 #include "display/canvas-temporary-item-list.h"
 #include "display/snap-indicator.h"
-#include "libnr/nr-rect-ops.h"
 #include "ui/dialog/dialog-manager.h"
 #include "xml/repr.h"
 #include "message-context.h"
@@ -204,7 +204,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     g_signal_connect (G_OBJECT (main), "event", G_CALLBACK (sp_desktop_root_handler), this);
 
     table = sp_canvas_item_new (main, SP_TYPE_CTRLRECT, NULL);
-    SP_CTRLRECT(table)->setRectangle(NR::Rect(Geom::Point(-80000, -80000), Geom::Point(80000, 80000)));
+    SP_CTRLRECT(table)->setRectangle(Geom::Rect(Geom::Point(-80000, -80000), Geom::Point(80000, 80000)));
     SP_CTRLRECT(table)->setColor(0x00000000, true, 0x00000000);
     sp_canvas_item_move_to_z (table, 0);
 
@@ -241,8 +241,8 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
 
     // display rect and zoom are now handled in sp_desktop_widget_realize()
 
-    NR::Rect const d(Geom::Point(0.0, 0.0),
-                     Geom::Point(sp_document_width(document), sp_document_height(document)));
+    Geom::Rect const d(Geom::Point(0.0, 0.0),
+                       Geom::Point(sp_document_width(document), sp_document_height(document)));
 
     SP_CTRLRECT(page)->setRectangle(d);
     SP_CTRLRECT(page_border)->setRectangle(d);
@@ -527,10 +527,10 @@ bool SPDesktop::isLayer(SPObject *object) const {
  */
 bool SPDesktop::isWithinViewport (SPItem *item) const
 {
-    NR::Rect const viewport = get_display_area();
+    Geom::Rect const viewport = get_display_area();
     boost::optional<NR::Rect> const bbox = sp_item_bbox_desktop(item);
     if (bbox) {
-        return viewport.contains(*bbox);
+        return viewport.contains(to_2geom(*bbox));
     } else {
         return true;
     }
@@ -692,15 +692,15 @@ SPDesktop::point() const
     Geom::Point pw = sp_canvas_window_to_world (canvas, p);
     p = w2d(pw);
 
-    NR::Rect const r = canvas->getViewbox();
+    Geom::Rect const r = canvas->getViewbox();
 
     Geom::Point r0 = w2d(r.min());
     Geom::Point r1 = w2d(r.max());
 
-    if (p[NR::X] >= r0[NR::X] &&
-        p[NR::X] <= r1[NR::X] &&
-        p[NR::Y] >= r1[NR::Y] &&
-        p[NR::Y] <= r0[NR::Y])
+    if (p[Geom::X] >= r0[Geom::X] &&
+        p[Geom::X] <= r1[Geom::X] &&
+        p[Geom::Y] >= r1[Geom::Y] &&
+        p[Geom::Y] <= r0[Geom::Y])
     {
         return p;
     } else {
@@ -714,7 +714,7 @@ SPDesktop::point() const
 void
 SPDesktop::push_current_zoom (GList **history)
 {
-    NR::Rect const area = get_display_area();
+    Geom::Rect const area = get_display_area();
 
     NRRect *old_zoom = g_new(NRRect, 1);
     old_zoom->x0 = area.min()[NR::X];
@@ -750,14 +750,16 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
     double const cx = 0.5 * (x0 + x1);
     double const cy = 0.5 * (y0 + y1);
 
-    NR::Rect const viewbox = NR::expand(canvas->getViewbox(), border);
+    // FIXME: This 2geom idiom doesn't allow us to declare dbox const
+    Geom::Rect viewbox = canvas->getViewbox();
+    viewbox.expandBy(border);
 
     double scale = _d2w.descrim();
     double newscale;
-    if (((x1 - x0) * viewbox.dimensions()[NR::Y]) > ((y1 - y0) * viewbox.dimensions()[NR::X])) {
-        newscale = viewbox.dimensions()[NR::X] / (x1 - x0);
+    if (((x1 - x0) * viewbox.dimensions()[Geom::Y]) > ((y1 - y0) * viewbox.dimensions()[Geom::X])) {
+        newscale = viewbox.dimensions()[Geom::X] / (x1 - x0);
     } else {
-        newscale = viewbox.dimensions()[NR::Y] / (y1 - y0);
+        newscale = viewbox.dimensions()[Geom::Y] / (y1 - y0);
     }
 
     newscale = CLAMP(newscale, SP_DESKTOP_ZOOM_MIN, SP_DESKTOP_ZOOM_MAX); // unit: 'screen pixels' per 'document pixels'
@@ -786,22 +788,22 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
     _widget->updateZoom();
 }
 
-void SPDesktop::set_display_area(NR::Rect const &a, NR::Coord b, bool log)
+void SPDesktop::set_display_area(Geom::Rect const &a, Geom::Coord b, bool log)
 {
-    set_display_area(a.min()[NR::X], a.min()[NR::Y], a.max()[NR::X], a.max()[NR::Y], b, log);
+    set_display_area(a.min()[Geom::X], a.min()[Geom::Y], a.max()[Geom::X], a.max()[Geom::Y], b, log);
 }
 
 /**
  * Return viewbox dimensions.
  */
-NR::Rect SPDesktop::get_display_area() const
+Geom::Rect SPDesktop::get_display_area() const
 {
-    NR::Rect const viewbox = canvas->getViewbox();
+    Geom::Rect const viewbox = canvas->getViewbox();
 
     double const scale = _d2w[0];
 
-    return NR::Rect(Geom::Point(viewbox.min()[NR::X] / scale, viewbox.max()[NR::Y] / -scale),
-                    Geom::Point(viewbox.max()[NR::X] / scale, viewbox.min()[NR::Y] / -scale));
+    return Geom::Rect(Geom::Point(viewbox.min()[Geom::X] / scale, viewbox.max()[Geom::Y] / -scale),
+                      Geom::Point(viewbox.max()[Geom::X] / scale, viewbox.min()[Geom::Y] / -scale));
 }
 
 /**
@@ -868,7 +870,7 @@ SPDesktop::zoom_absolute_keep_point (double cx, double cy, double px, double py,
     if (fabs(_d2w.descrim() - zoom) < 0.0001*zoom && (fabs(SP_DESKTOP_ZOOM_MAX - zoom) < 0.01 || fabs(SP_DESKTOP_ZOOM_MIN - zoom) < 0.000001))
         return;
 
-    NR::Rect const viewbox = canvas->getViewbox();
+    Geom::Rect const viewbox = canvas->getViewbox();
 
     double const width2 = viewbox.dimensions()[NR::X] / zoom;
     double const height2 = viewbox.dimensions()[NR::Y] / zoom;
@@ -895,7 +897,7 @@ SPDesktop::zoom_absolute (double cx, double cy, double zoom)
 void
 SPDesktop::zoom_relative_keep_point (double cx, double cy, double zoom)
 {
-    NR::Rect const area = get_display_area();
+    Geom::Rect const area = get_display_area();
 
     if (cx < area.min()[NR::X]) {
         cx = area.min()[NR::X];
@@ -933,10 +935,11 @@ SPDesktop::zoom_relative (double cx, double cy, double zoom)
 void
 SPDesktop::zoom_page()
 {
-    NR::Rect d(Geom::Point(0, 0),
-               Geom::Point(sp_document_width(doc()), sp_document_height(doc())));
+    Geom::Rect d(Geom::Point(0, 0),
+                 Geom::Point(sp_document_width(doc()), sp_document_height(doc())));
 
-    if (d.isEmpty(1.0)) {
+    // FIXME: the original NR::Rect::isEmpty call contained an additional threshold of 1.0; is it safe to ignore it?
+    if (d.isEmpty()) {
         return;
     }
 
@@ -949,14 +952,14 @@ SPDesktop::zoom_page()
 void
 SPDesktop::zoom_page_width()
 {
-    NR::Rect const a = get_display_area();
+    Geom::Rect const a = get_display_area();
 
     if (sp_document_width(doc()) < 1.0) {
         return;
     }
 
-    NR::Rect d(Geom::Point(0, a.midpoint()[NR::Y]),
-               Geom::Point(sp_document_width(doc()), a.midpoint()[NR::Y]));
+    Geom::Rect d(Geom::Point(0, a.midpoint()[Geom::Y]),
+                 Geom::Point(sp_document_width(doc()), a.midpoint()[Geom::Y]));
 
     set_display_area(d, 10);
 }
@@ -967,9 +970,10 @@ SPDesktop::zoom_page_width()
 void
 SPDesktop::zoom_selection()
 {
-    boost::optional<NR::Rect> const d = selection->bounds();
+    boost::optional<Geom::Rect> const d = to_2geom(selection->bounds());
 
-    if ( !d || d->isEmpty(0.1) ) {
+    // FIXME: the original NR::Rect::isEmpty call contained an additional threshold of 0.1; is it safe to ignore it?
+    if ( !d || d->isEmpty() ) {
         return;
     }
 
@@ -995,12 +999,13 @@ SPDesktop::zoom_drawing()
     SPItem *docitem = SP_ITEM (sp_document_root (doc()));
     g_return_if_fail (docitem != NULL);
 
-    boost::optional<NR::Rect> d = sp_item_bbox_desktop(docitem);
+    boost::optional<Geom::Rect> d = to_2geom(sp_item_bbox_desktop(docitem));
 
     /* Note that the second condition here indicates that
     ** there are no items in the drawing.
     */
-    if ( !d || d->isEmpty(1.0) ) {
+    // FIXME: the original NR::Rect::isEmpty call contained an additional threshold of 1.0; is it safe to ignore it?
+    if ( !d || d->isEmpty() ) {
         return;
     }
 
@@ -1025,9 +1030,9 @@ SPDesktop::scroll_world (double dx, double dy, bool is_scrolling)
 {
     g_assert(_widget);
 
-    NR::Rect const viewbox = canvas->getViewbox();
+    Geom::Rect const viewbox = canvas->getViewbox();
 
-    sp_canvas_scroll_to(canvas, viewbox.min()[NR::X] - dx, viewbox.min()[NR::Y] - dy, FALSE, is_scrolling);
+    sp_canvas_scroll_to(canvas, viewbox.min()[Geom::X] - dx, viewbox.min()[Geom::Y] - dy, FALSE, is_scrolling);
 
     /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
     sp_box3d_context_update_lines(event_context);
@@ -1043,7 +1048,9 @@ SPDesktop::scroll_to_point (Geom::Point const &p, gdouble autoscrollspeed)
 
     // autoscrolldistance is in screen pixels, but the display area is in document units
     autoscrolldistance /= _d2w.descrim();
-    NR::Rect const dbox = NR::expand(get_display_area(), -autoscrolldistance);
+    // FIXME: This 2geom idiom doesn't allow us to declare dbox const
+    Geom::Rect dbox = get_display_area();
+    dbox.expandBy(-autoscrolldistance);
 
     if (!(p[NR::X] > dbox.min()[NR::X] && p[NR::X] < dbox.max()[NR::X]) ||
         !(p[NR::Y] > dbox.min()[NR::Y] && p[NR::Y] < dbox.max()[NR::Y])   ) {
@@ -1434,7 +1441,7 @@ SPDesktop::onDocumentResized (gdouble width, gdouble height)
 {
     _doc2dt[5] = height;
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (drawing), _doc2dt);
-    NR::Rect const a(Geom::Point(0, 0), Geom::Point(width, height));
+    Geom::Rect const a(Geom::Point(0, 0), Geom::Point(width, height));
     SP_CTRLRECT(page)->setRectangle(a);
     SP_CTRLRECT(page_border)->setRectangle(a);
 }

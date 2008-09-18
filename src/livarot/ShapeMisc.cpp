@@ -528,7 +528,7 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int wildPath,in
 
 
 int
-Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter, bool do_profile, NR::Point c, NR::Point vector, double radius, NR::Matrix *i2doc)
+Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter, bool do_profile, Geom::Point c, Geom::Point vector, double radius, Geom::Matrix *i2doc)
 {
   Reset (0, 0);
   MakeBackData(a->_has_back_data);
@@ -584,7 +584,7 @@ Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter,
       enB = a->CyclePrevAt (a->getEdge(i).en, i);
     }
     
-    NR::Point stD, seD, enD;
+    Geom::Point stD, seD, enD;
     double stL, seL, enL;
     stD = a->getEdge(stB).dx;
     seD = a->getEdge(i).dx;
@@ -597,21 +597,21 @@ Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter,
     MiscNormalize (enD);
     MiscNormalize (seD);
     
-    NR::Point ptP;
+    Geom::Point ptP;
     int stNo, enNo;
     ptP = a->getPoint(a->getEdge(i).st).x;
 
-  	NR::Point to_center = ptP * (*i2doc) - c;
-  	NR::Point to_center_normalized = (1/NR::L2(to_center)) * to_center;
+  	Geom::Point to_center = ptP * (*i2doc) - c;
+  	Geom::Point to_center_normalized = (1/Geom::L2(to_center)) * to_center;
 
 		double this_power;
 		if (do_profile && i2doc) {
 			double alpha = 1;
 			double x;
   		if (mode == tweak_mode_repel) {
-				x = (NR::L2(to_center)/radius);
+				x = (Geom::L2(to_center)/radius);
 			} else {
-				x = (NR::L2(ptP * (*i2doc) - c)/radius);
+				x = (Geom::L2(ptP * (*i2doc) - c)/radius);
 			}
 			if (x > 1) {
 				this_power = 0;
@@ -635,11 +635,11 @@ Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter,
 		if (this_power != 0)
 			done_something = true;
 
-		double scaler = 1 / NR::expansion(*i2doc);
+		double scaler = 1 / (*i2doc).descrim();
 
-		NR::Point this_vec(0,0);
+		Geom::Point this_vec(0,0);
     if (mode == tweak_mode_push) {
-			NR::Matrix tovec (*i2doc);
+			Geom::Matrix tovec (*i2doc);
 			tovec[4] = tovec[5] = 0;
 			tovec = tovec.inverse();
 			this_vec = this_power * (vector * tovec) ;
@@ -647,7 +647,7 @@ Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter,
 			this_vec = this_power * scaler * to_center_normalized;
 		} else if (mode == tweak_mode_roughen) {
   		double angle = g_random_double_range(0, 2*M_PI);
-	  	this_vec = g_random_double_range(0, 1) * this_power * scaler * NR::Point(sin(angle), cos(angle));
+	  	this_vec = g_random_double_range(0, 1) * this_power * scaler * Geom::Point(sin(angle), cos(angle));
 		}
 
     int   usePathID=-1;

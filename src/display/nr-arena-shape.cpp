@@ -1094,7 +1094,7 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
              && shape->_fill.opacity > 1e-3 && !outline);
 
     if (item->arena->canvasarena) {
-        Geom::Rect viewbox = to_2geom(item->arena->canvasarena->item.canvas->getViewbox());
+        Geom::Rect viewbox = item->arena->canvasarena->item.canvas->getViewbox();
         viewbox.expandBy (width);
         pathv_matrix_point_bbox_wind_distance(shape->curve->get_pathvector(), shape->ctm, p, NULL, needfill? &wind : NULL, &dist, 0.5, &viewbox);
     } else {

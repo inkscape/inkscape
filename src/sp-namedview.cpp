@@ -759,7 +759,7 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
             desktop->setWindowSize(w, h);
         }
         if (x>0 && y>0) {
-            desktop->setWindowPosition(NR::Point(x, y));
+            desktop->setWindowPosition(Geom::Point(x, y));
         }
     }
 
@@ -813,15 +813,15 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     gint save_geometry_in_file =
         (1==prefs_get_int_attribute("options.savewindowgeometry", "value", 0));
     Inkscape::XML::Node *view = SP_OBJECT_REPR(desktop->namedview);
-    NR::Rect const r = desktop->get_display_area();
+    Geom::Rect const r = desktop->get_display_area();
 
     // saving window geometry is not undoable
     bool saved = sp_document_get_undo_sensitive(sp_desktop_document(desktop));
     sp_document_set_undo_sensitive(sp_desktop_document(desktop), false);
 
     sp_repr_set_svg_double(view, "inkscape:zoom", desktop->current_zoom());
-    sp_repr_set_svg_double(view, "inkscape:cx", r.midpoint()[NR::X]);
-    sp_repr_set_svg_double(view, "inkscape:cy", r.midpoint()[NR::Y]);
+    sp_repr_set_svg_double(view, "inkscape:cx", r.midpoint()[Geom::X]);
+    sp_repr_set_svg_double(view, "inkscape:cy", r.midpoint()[Geom::Y]);
 
     if (save_geometry_in_file) {
         gint w, h, x, y;
@@ -1061,7 +1061,7 @@ Inkscape::CanvasGrid * sp_namedview_get_first_enabled_grid(SPNamedView *namedvie
     return NULL;
 }
 
-void SPNamedView::translateGuides(NR::translate const &tr) {
+void SPNamedView::translateGuides(Geom::Translate const &tr) {
     for (GSList *l = guides; l != NULL; l = l->next) {
         SPGuide &guide = *SP_GUIDE(l->data);
         Geom::Point point_on_line = guide.point_on_line;

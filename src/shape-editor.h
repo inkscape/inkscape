@@ -75,7 +75,7 @@ public:
 
     void finish_drag ();
 
-    void select_rect (NR::Rect  const &rect, bool add);
+    void select_rect (Geom::Rect  const &rect, bool add);
 
     bool has_selection ();
     void deselect ();

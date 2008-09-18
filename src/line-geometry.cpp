@@ -26,14 +26,14 @@ namespace Box3D {
  * of the segment. Otherwise interpret it as the direction of the line.
  * FIXME: Think of a better way to distinguish between the two constructors of lines.
  */
-Line::Line(NR::Point const &start, NR::Point const &vec, bool is_endpoint) {
+Line::Line(Geom::Point const &start, Geom::Point const &vec, bool is_endpoint) {
     pt = start;
     if (is_endpoint)
         v_dir = vec - start;
     else
     	v_dir = vec;
     normal = v_dir.ccw();
-    d0 = NR::dot(normal, pt);
+    d0 = Geom::dot(normal, pt);
 }
 
 Line::Line(Line const &line) {
@@ -52,38 +52,38 @@ Line &Line::operator=(Line const &line) {
     return *this;
 }
 
-boost::optional<NR::Point> Line::intersect(Line const &line) {
-    NR::Coord denom = NR::dot(v_dir, line.normal);
-    boost::optional<NR::Point> no_point;
+boost::optional<Geom::Point> Line::intersect(Line const &line) {
+    Geom::Coord denom = Geom::dot(v_dir, line.normal);
+    boost::optional<Geom::Point> no_point;
     if (fabs(denom) < 1e-6)
         return no_point;
 
-    NR::Coord lambda = (line.d0 - NR::dot(pt, line.normal)) / denom;
+    Geom::Coord lambda = (line.d0 - Geom::dot(pt, line.normal)) / denom;
     return pt + lambda * v_dir;
 }
 
-void Line::set_direction(NR::Point const &dir)
+void Line::set_direction(Geom::Point const &dir)
 {
     v_dir = dir;
     normal = v_dir.ccw();
-    d0 = NR::dot(normal, pt);
+    d0 = Geom::dot(normal, pt);
 }
 
-NR::Point Line::closest_to(NR::Point const &pt)
+Geom::Point Line::closest_to(Geom::Point const &pt)
 {
 	/* return the intersection of this line with a perpendicular line passing through pt */ 
-    boost::optional<NR::Point> result = this->intersect(Line(pt, (this->v_dir).ccw(), false));
-    g_return_val_if_fail (result, NR::Point (0.0, 0.0));
+    boost::optional<Geom::Point> result = this->intersect(Line(pt, (this->v_dir).ccw(), false));
+    g_return_val_if_fail (result, Geom::Point (0.0, 0.0));
     return *result;
 }
 
-double Line::lambda (NR::Point const pt)
+double Line::lambda (Geom::Point const pt)
 {
-    double sign = (NR::dot (pt - this->pt, this->v_dir) > 0) ? 1.0 : -1.0;
-    double lambda = sign * NR::L2 (pt - this->pt);
+    double sign = (Geom::dot (pt - this->pt, this->v_dir) > 0) ? 1.0 : -1.0;
+    double lambda = sign * Geom::L2 (pt - this->pt);
     // FIXME: It may speed things up (but how much?) if we assume that
     //        pt lies on the line and thus skip the following test
-    NR::Point test = point_from_lambda (lambda);
+    Geom::Point test = point_from_lambda (lambda);
     if (!pts_coincide (pt, test)) {
         g_warning ("Point does not lie on line.\n");
         return 0;
@@ -92,7 +92,7 @@ double Line::lambda (NR::Point const pt)
 }
 
 /* The coordinates of w with respect to the basis {v1, v2} */
-std::pair<double, double> coordinates (NR::Point const &v1, NR::Point const &v2, NR::Point const &w)
+std::pair<double, double> coordinates (Geom::Point const &v1, Geom::Point const &v2, Geom::Point const &w)
 {
     double det = determinant (v1, v2);;
     if (fabs (det) < epsilon) {
@@ -106,25 +106,25 @@ std::pair<double, double> coordinates (NR::Point const &v1, NR::Point const &v2,
 }
 
 /* whether w lies inside the sector spanned by v1 and v2 */
-bool lies_in_sector (NR::Point const &v1, NR::Point const &v2, NR::Point const &w)
+bool lies_in_sector (Geom::Point const &v1, Geom::Point const &v2, Geom::Point const &w)
 {
     std::pair<double, double> coords = coordinates (v1, v2, w);
     if (coords.first == HUGE_VAL) {
         // catch the case that the vectors are not linearly independent
         // FIXME: Can we assume that it's safe to return true if the vectors point in different directions?
-        return (NR::dot (v1, v2) < 0);
+        return (Geom::dot (v1, v2) < 0);
     }
     return (coords.first >= 0 and coords.second >= 0);
 }
 
-bool lies_in_quadrangle (NR::Point const &A, NR::Point const &B, NR::Point const &C, NR::Point const &D, NR::Point const &pt)
+bool lies_in_quadrangle (Geom::Point const &A, Geom::Point const &B, Geom::Point const &C, Geom::Point const &D, Geom::Point const &pt)
 {
     return (lies_in_sector (D - A, B - A, pt - A) && lies_in_sector (D - C, B - C, pt - C));
 }
 
-static double pos_angle (NR::Point v, NR::Point w)
+static double pos_angle (Geom::Point v, Geom::Point w)
 {
-    return fabs (NR::atan2 (v) - NR::atan2 (w));
+    return fabs (Geom::atan2 (v) - Geom::atan2 (w));
 }
 
 /*
@@ -132,16 +132,16 @@ static double pos_angle (NR::Point v, NR::Point w)
  * starting at pt and going into direction dir.
  * If none of the sides is hit, it returns a pair containing two identical points.
  */
-std::pair<NR::Point, NR::Point>
-side_of_intersection (NR::Point const &A, NR::Point const &B, NR::Point const &C, NR::Point const &D,
-                      NR::Point const &pt, NR::Point const &dir)
+std::pair<Geom::Point, Geom::Point>
+side_of_intersection (Geom::Point const &A, Geom::Point const &B, Geom::Point const &C, Geom::Point const &D,
+                      Geom::Point const &pt, Geom::Point const &dir)
 {
-    NR::Point dir_A (A - pt);
-    NR::Point dir_B (B - pt);
-    NR::Point dir_C (C - pt);
-    NR::Point dir_D (D - pt);
+    Geom::Point dir_A (A - pt);
+    Geom::Point dir_B (B - pt);
+    Geom::Point dir_C (C - pt);
+    Geom::Point dir_D (D - pt);
 
-    std::pair<NR::Point, NR::Point> result;
+    std::pair<Geom::Point, Geom::Point> result;
     double angle = -1;
     double tmp_angle;
 
@@ -178,24 +178,24 @@ side_of_intersection (NR::Point const &A, NR::Point const &B, NR::Point const &C
     }
 }
 
-boost::optional<NR::Point> Line::intersection_with_viewbox (SPDesktop *desktop)
+boost::optional<Geom::Point> Line::intersection_with_viewbox (SPDesktop *desktop)
 {
-    NR::Rect vb = desktop->get_display_area();
+    Geom::Rect vb = desktop->get_display_area();
     /* remaining viewbox corners */
-    NR::Point ul (vb.min()[NR::X], vb.max()[NR::Y]);
-    NR::Point lr (vb.max()[NR::X], vb.min()[NR::Y]);
+    Geom::Point ul (vb.min()[Geom::X], vb.max()[Geom::Y]);
+    Geom::Point lr (vb.max()[Geom::X], vb.min()[Geom::Y]);
 
-    std::pair <NR::Point, NR::Point> e = side_of_intersection (vb.min(), lr, vb.max(), ul, this->pt, this->v_dir);
+    std::pair <Geom::Point, Geom::Point> e = side_of_intersection (vb.min(), lr, vb.max(), ul, this->pt, this->v_dir);
     if (e.first == e.second) {
         // perspective line lies outside the canvas
-        return boost::optional<NR::Point>();
+        return boost::optional<Geom::Point>();
     }
 
     Line line (e.first, e.second);
     return this->intersect (line);
 }
 
-void create_canvas_point(NR::Point const &pos, double size, guint32 rgba)
+void create_canvas_point(Geom::Point const &pos, double size, guint32 rgba)
 {
     SPDesktop *desktop = inkscape_active_desktop();
     SPCanvasItem * canvas_pt = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRL,
@@ -208,7 +208,7 @@ void create_canvas_point(NR::Point const &pos, double size, guint32 rgba)
     SP_CTRL(canvas_pt)->moveto(pos);
 }
 
-void create_canvas_line(NR::Point const &p1, NR::Point const &p2, guint32 rgba)
+void create_canvas_line(Geom::Point const &p1, Geom::Point const &p2, guint32 rgba)
 {
     SPDesktop *desktop = inkscape_active_desktop();
     SPCanvasItem *line = sp_canvas_item_new(sp_desktop_controls(desktop),

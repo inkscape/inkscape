@@ -51,7 +51,7 @@ static void sp_root_modified(SPObject *object, guint flags);
 static Inkscape::XML::Node *sp_root_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static NRArenaItem *sp_root_show(SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
-static void sp_root_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_root_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_root_print(SPItem *item, SPPrintContext *ctx);
 
 static SPGroupClass *parent_class;
@@ -131,7 +131,7 @@ sp_root_init(SPRoot *root)
     /* root->viewbox.set_identity(); */
     root->viewBox_set = FALSE;
 
-    root->c2p.set_identity();
+    root->c2p.setIdentity();
 
     root->defs = NULL;
 }
@@ -434,7 +434,7 @@ sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
     SPItemCtx rctx = *ictx;
 
     /* Calculate child to parent transformation */
-    root->c2p.set_identity();
+    root->c2p.setIdentity();
 
     if (object->parent) {
         /*
@@ -444,8 +444,8 @@ sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
          * fixme: height seems natural, as this makes the inner svg element
          * fixme: self-contained. The spec is vague here.
          */
-        root->c2p = NR::Matrix(NR::translate(root->x.computed,
-                                             root->y.computed));
+        root->c2p = Geom::Matrix(Geom::Translate(root->x.computed,
+                                                 root->y.computed));
     }
 
     if (root->viewBox_set) {
@@ -512,17 +512,17 @@ sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
         }
 
         /* Compose additional transformation from scale and position */
-        NR::Point const viewBox_min(root->viewBox.x0,
+        Geom::Point const viewBox_min(root->viewBox.x0,
                                     root->viewBox.y0);
-        NR::Point const viewBox_max(root->viewBox.x1,
+        Geom::Point const viewBox_max(root->viewBox.x1,
                                     root->viewBox.y1);
-        NR::scale const viewBox_length( viewBox_max - viewBox_min );
-        NR::scale const new_length(width, height);
+        Geom::Scale const viewBox_length( viewBox_max - viewBox_min );
+        Geom::Scale const new_length(width, height);
 
         /* Append viewbox transformation */
         /* TODO: The below looks suspicious to me (pjrm): I wonder whether the RHS
            expression should have c2p at the beginning rather than at the end.  Test it. */
-        root->c2p = NR::translate(-viewBox_min) * ( new_length / viewBox_length ) * NR::translate(x, y) * root->c2p;
+        root->c2p = Geom::Translate(-viewBox_min) * ( new_length * viewBox_length.inverse() ) * Geom::Translate(x, y) * root->c2p;
     }
 
     rctx.i2doc = root->c2p * rctx.i2doc;
@@ -644,12 +644,12 @@ sp_root_show(SPItem *item, NRArena *arena, unsigned int key, unsigned int flags)
  * Virtual bbox callback.
  */
 static void
-sp_root_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
+sp_root_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags)
 {
     SPRoot const *root = SP_ROOT(item);
 
     if (((SPItemClass *) (parent_class))->bbox) {
-        NR::Matrix const product( root->c2p * transform );
+        Geom::Matrix const product( to_2geom(root->c2p) * transform );
         ((SPItemClass *) (parent_class))->bbox(item, bbox,
                                                product,
                                                flags);

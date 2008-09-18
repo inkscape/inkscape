@@ -171,7 +171,7 @@ static void
 sp_canvas_item_init (SPCanvasItem *item)
 {
     item->flags |= SP_CANVAS_ITEM_VISIBLE;
-    item->xform = NR::Matrix(NR::identity());
+    item->xform = Geom::Matrix(Geom::identity());
 }
 
 /**
@@ -246,7 +246,7 @@ sp_canvas_item_dispose (GObject *object)
     // this redraws only the stroke of the rect to be deleted,
     // avoiding redraw of the entire area
     if (SP_IS_CTRLRECT(item)) {
-        SP_CTRLRECT(object)->setRectangle(NR::Rect(NR::Point(0,0),NR::Point(0,0)));
+        SP_CTRLRECT(object)->setRectangle(Geom::Rect(Geom::Point(0,0),Geom::Point(0,0)));
         SP_CTRLRECT(object)->update(item->xform, 0);
     } else {
         redraw_if_visible (item);
@@ -284,10 +284,10 @@ sp_canvas_item_dispose (GObject *object)
  * NB! affine is parent2canvas.
  */
 static void
-sp_canvas_item_invoke_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+sp_canvas_item_invoke_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     /* Apply the child item's transform */
-    NR::Matrix child_affine = item->xform * affine;
+    Geom::Matrix child_affine = item->xform * affine;
 
     /* apply object flags to child flags */
     int child_flags = flags & ~SP_CANVAS_UPDATE_REQUESTED;
@@ -331,7 +331,7 @@ sp_canvas_item_invoke_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **a
  * @affine: An affine transformation matrix.
  */
 void
-sp_canvas_item_affine_absolute (SPCanvasItem *item, NR::Matrix const &affine)
+sp_canvas_item_affine_absolute (SPCanvasItem *item, Geom::Matrix const &affine)
 {
     item->xform = affine;
 
@@ -586,11 +586,11 @@ sp_canvas_item_ungrab (SPCanvasItem *item, guint32 etime)
  * Returns the product of all transformation matrices from the root item down
  * to the item.
  */
-NR::Matrix sp_canvas_item_i2w_affine(SPCanvasItem const *item)
+Geom::Matrix sp_canvas_item_i2w_affine(SPCanvasItem const *item)
 {
     g_assert (SP_IS_CANVAS_ITEM (item)); // should we get this?
 
-    NR::Matrix affine = NR::identity();
+    Geom::Matrix affine = Geom::identity();
 
     while (item) {
         affine *= item->xform;
@@ -685,8 +685,8 @@ static void sp_canvas_group_class_init (SPCanvasGroupClass *klass);
 static void sp_canvas_group_init (SPCanvasGroup *group);
 static void sp_canvas_group_destroy (GtkObject *object);
 
-static void sp_canvas_group_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
-static double sp_canvas_group_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item);
+static void sp_canvas_group_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static double sp_canvas_group_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 static void sp_canvas_group_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *group_parent_class;
@@ -770,10 +770,10 @@ sp_canvas_group_destroy (GtkObject *object)
  * Update handler for canvas groups
  */
 static void
-sp_canvas_group_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+sp_canvas_group_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     SPCanvasGroup const *group = SP_CANVAS_GROUP (item);
-    NR::ConvexHull corners(NR::Point(0, 0));
+    NR::ConvexHull corners(Geom::Point(0, 0));
     bool empty=true;
 
     for (GList *list = group->items; list; list = list->next) {
@@ -783,12 +783,12 @@ sp_canvas_group_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 
         if ( i->x2 > i->x1 && i->y2 > i->y1 ) {
             if (empty) {
-                corners = NR::ConvexHull(NR::Point(i->x1, i->y1));
+                corners = NR::ConvexHull(Geom::Point(i->x1, i->y1));
                 empty = false;
             } else {
-                corners.add(NR::Point(i->x1, i->y1));
+                corners.add(Geom::Point(i->x1, i->y1));
             }
-            corners.add(NR::Point(i->x2, i->y2));
+            corners.add(Geom::Point(i->x2, i->y2));
         }
     }
 
@@ -808,11 +808,11 @@ sp_canvas_group_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
  * Point handler for canvas groups.
  */
 static double
-sp_canvas_group_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item)
+sp_canvas_group_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item)
 {
     SPCanvasGroup const *group = SP_CANVAS_GROUP (item);
-    double const x = p[NR::X];
-    double const y = p[NR::Y];
+    double const x = p[Geom::X];
+    double const y = p[Geom::Y];
     int x1 = (int)(x - item->canvas->close_enough);
     int y1 = (int)(y - item->canvas->close_enough);
     int x2 = (int)(x + item->canvas->close_enough);
@@ -1821,7 +1821,7 @@ The default for now is the strips mode.
         lo.x1 = mid;
         hi.x0 = mid;
 
-        if (setup->mouse_loc[NR::X] < mid) {
+        if (setup->mouse_loc[Geom::X] < mid) {
             // Always paint towards the mouse first
             return sp_canvas_paint_rect_internal(setup, lo)
                 && sp_canvas_paint_rect_internal(setup, hi);
@@ -1838,7 +1838,7 @@ The default for now is the strips mode.
         lo.y1 = mid;
         hi.y0 = mid;
 
-        if (setup->mouse_loc[NR::Y] < mid) {
+        if (setup->mouse_loc[Geom::Y] < mid) {
             // Always paint towards the mouse first
             return sp_canvas_paint_rect_internal(setup, lo)
                 && sp_canvas_paint_rect_internal(setup, hi);
@@ -2029,7 +2029,7 @@ static int
 paint (SPCanvas *canvas)
 {
     if (canvas->need_update) {
-        sp_canvas_item_invoke_update (canvas->root, NR::identity(), 0);
+        sp_canvas_item_invoke_update (canvas->root, Geom::identity(), 0);
         canvas->need_update = FALSE;
     }
 
@@ -2086,7 +2086,7 @@ do_update (SPCanvas *canvas)
 
     /* Cause the update if necessary */
     if (canvas->need_update) {
-        sp_canvas_item_invoke_update (canvas->root, NR::identity(), 0);
+        sp_canvas_item_invoke_update (canvas->root, Geom::identity(), 0);
         canvas->need_update = FALSE;
     }
 
@@ -2296,23 +2296,21 @@ bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, Geom::Point const 
     g_assert( canvas != NULL );
     g_assert(SP_IS_CANVAS(canvas));
 
-    using NR::X;
-    using NR::Y;
     GtkWidget const &w = *GTK_WIDGET(canvas);
-    return ( ( canvas->x0 <= world[X] )  &&
-             ( canvas->y0 <= world[Y] )  &&
-             ( world[X] < canvas->x0 + w.allocation.width )  &&
-             ( world[Y] < canvas->y0 + w.allocation.height ) );
+    return ( ( canvas->x0 <= world[Geom::X] )  &&
+             ( canvas->y0 <= world[Geom::Y] )  &&
+             ( world[Geom::X] < canvas->x0 + w.allocation.width )  &&
+             ( world[Geom::Y] < canvas->y0 + w.allocation.height ) );
 }
 
 /**
- * Return canvas window coordinates as NR::Rect.
+ * Return canvas window coordinates as Geom::Rect.
  */
-NR::Rect SPCanvas::getViewbox() const
+Geom::Rect SPCanvas::getViewbox() const
 {
     GtkWidget const *w = GTK_WIDGET(this);
-    return NR::Rect(Geom::Point(dx0, dy0),
-                    Geom::Point(dx0 + w->allocation.width, dy0 + w->allocation.height));
+    return Geom::Rect(Geom::Point(dx0, dy0),
+                      Geom::Point(dx0 + w->allocation.width, dy0 + w->allocation.height));
 }
 
 /**

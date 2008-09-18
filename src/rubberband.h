@@ -15,10 +15,10 @@
  */
 
 #include "forward.h"
-#include "libnr/nr-forward.h"
-#include "libnr/nr-point.h"
 #include <boost/optional.hpp>
 #include <vector>
+#include <2geom/point.h>
+#include <2geom/rect.h>
 
 /* fixme: do multidocument safe */
 
@@ -38,14 +38,14 @@ class Rubberband
 {
 public:
 
-    void start(SPDesktop *desktop, NR::Point const &p);
-    void move(NR::Point const &p);
-    boost::optional<NR::Rect> getRectangle() const;
+    void start(SPDesktop *desktop, Geom::Point const &p);
+    void move(Geom::Point const &p);
+    boost::optional<Geom::Rect> getRectangle() const;
     void stop();
     bool is_started();
 
     inline int getMode() {return _mode;}
-    inline std::vector<NR::Point> getPoints() {return _points;}
+    inline std::vector<Geom::Point> getPoints() {return _points;}
 
     void setMode(int mode);
 
@@ -57,10 +57,10 @@ private:
     static Rubberband* _instance;
     
     SPDesktop *_desktop;
-    NR::Point _start;
-    NR::Point _end;
+    Geom::Point _start;
+    Geom::Point _end;
 
-    std::vector<NR::Point> _points;
+    std::vector<Geom::Point> _points;
 
     CtrlRect *_rect;
     SPCanvasItem *_touchpath;

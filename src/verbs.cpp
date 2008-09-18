@@ -1621,8 +1621,8 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
                 }
             }
 
-            NR::Rect const d = dt->get_display_area();
-            dt->zoom_relative( d.midpoint()[NR::X], d.midpoint()[NR::Y], mul*zoom_inc);
+            Geom::Rect const d = dt->get_display_area();
+            dt->zoom_relative( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], mul*zoom_inc);
             break;
         }
         case SP_VERB_ZOOM_OUT:
@@ -1639,29 +1639,29 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
                 }
             }
 
-            NR::Rect const d = dt->get_display_area();
-            dt->zoom_relative( d.midpoint()[NR::X], d.midpoint()[NR::Y], 1 / (mul*zoom_inc) );
+            Geom::Rect const d = dt->get_display_area();
+            dt->zoom_relative( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], 1 / (mul*zoom_inc) );
             break;
         }
         case SP_VERB_ZOOM_1_1:
         {
             double zcorr = prefs_get_double_attribute ("options.zoomcorrection", "value", 1.0);
-            NR::Rect const d = dt->get_display_area();
-            dt->zoom_absolute( d.midpoint()[NR::X], d.midpoint()[NR::Y], 1.0 * zcorr );
+            Geom::Rect const d = dt->get_display_area();
+            dt->zoom_absolute( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], 1.0 * zcorr );
             break;
         }
         case SP_VERB_ZOOM_1_2:
         {
             double zcorr = prefs_get_double_attribute ("options.zoomcorrection", "value", 1.0);
-            NR::Rect const d = dt->get_display_area();
-            dt->zoom_absolute( d.midpoint()[NR::X], d.midpoint()[NR::Y], 0.5 * zcorr );
+            Geom::Rect const d = dt->get_display_area();
+            dt->zoom_absolute( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], 0.5 * zcorr );
             break;
         }
         case SP_VERB_ZOOM_2_1:
         {
             double zcorr = prefs_get_double_attribute ("options.zoomcorrection", "value", 1.0);
-            NR::Rect const d = dt->get_display_area();
-            dt->zoom_absolute( d.midpoint()[NR::X], d.midpoint()[NR::Y], 2.0 * zcorr );
+            Geom::Rect const d = dt->get_display_area();
+            dt->zoom_absolute( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], 2.0 * zcorr );
             break;
         }
         case SP_VERB_ZOOM_PAGE:

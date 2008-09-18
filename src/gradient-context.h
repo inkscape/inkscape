@@ -16,7 +16,6 @@
 
 #include <sigc++/sigc++.h>
 #include "event-context.h"
-#include "libnr/nr-point.h"
 
 #define SP_TYPE_GRADIENT_CONTEXT            (sp_gradient_context_get_type())
 #define SP_GRADIENT_CONTEXT(obj)            (GTK_CHECK_CAST((obj), SP_TYPE_GRADIENT_CONTEXT, SPGradientContext))
@@ -29,13 +28,13 @@ class SPGradientContextClass;
 
 struct SPGradientContext : public SPEventContext {
 
-    NR::Point origin;
+    Geom::Point origin;
         
     bool cursor_addnode;
     
     bool node_added;
 
-    NR::Point mousepoint_doc; // stores mousepoint when over_line in doc coords
+    Geom::Point mousepoint_doc; // stores mousepoint when over_line in doc coords
         
     Inkscape::MessageContext *_message_context;
 

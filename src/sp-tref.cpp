@@ -65,7 +65,7 @@ static void sp_tref_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_tref_modified(SPObject *object, guint flags);
 static Inkscape::XML::Node *sp_tref_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static void sp_tref_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_tref_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static gchar *sp_tref_description(SPItem *item);
 
 static void sp_tref_href_changed(SPObject *old_ref, SPObject *ref, SPTRef *tref);
@@ -320,7 +320,7 @@ sp_tref_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
  *  The code for this function is swiped from the tspan bbox code, since tref should work pretty much the same way
  */
 static void
-sp_tref_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const /*flags*/)
+sp_tref_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
 {
     // find out the ancestor text which holds our layout
     SPObject *parent_text = SP_OBJECT(item);
@@ -334,7 +334,7 @@ sp_tref_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsi
     // Add stroke width
     SPStyle* style=SP_OBJECT_STYLE (item);
     if (!style->stroke.isNone()) {
-        double const scale = expansion(transform);
+        double const scale = transform.descrim();
         if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
             double const width = MAX(0.125, style->stroke_width.computed * scale);
             if ( fabs(bbox->x1 - bbox->x0) > -0.00001 && fabs(bbox->y1 - bbox->y0) > -0.00001 ) {

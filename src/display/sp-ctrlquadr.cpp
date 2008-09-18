@@ -23,8 +23,8 @@
 
 struct SPCtrlQuadr : public SPCanvasItem{
     guint32 rgba;
-    NR::Point p1, p2, p3, p4;
-    NR::Matrix affine;    
+    Geom::Point p1, p2, p3, p4;
+    Geom::Matrix affine;    
 };
 
 struct SPCtrlQuadrClass : public SPCanvasItemClass{};
@@ -33,7 +33,7 @@ static void sp_ctrlquadr_class_init (SPCtrlQuadrClass *klass);
 static void sp_ctrlquadr_init (SPCtrlQuadr *ctrlquadr);
 static void sp_ctrlquadr_destroy (GtkObject *object);
 
-static void sp_ctrlquadr_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
+static void sp_ctrlquadr_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
 static void sp_ctrlquadr_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class;
@@ -76,10 +76,10 @@ static void
 sp_ctrlquadr_init (SPCtrlQuadr *ctrlquadr)
 {
     ctrlquadr->rgba = 0x000000ff;
-    ctrlquadr->p1 = NR::Point(0, 0);
-    ctrlquadr->p2 = NR::Point(0, 0);
-    ctrlquadr->p3 = NR::Point(0, 0);
-    ctrlquadr->p4 = NR::Point(0, 0);
+    ctrlquadr->p1 = Geom::Point(0, 0);
+    ctrlquadr->p2 = Geom::Point(0, 0);
+    ctrlquadr->p3 = Geom::Point(0, 0);
+    ctrlquadr->p4 = Geom::Point(0, 0);
 }
 
 static void
@@ -97,7 +97,7 @@ sp_ctrlquadr_render (SPCanvasItem *item, SPCanvasBuf *buf)
 {
     SPCtrlQuadr *cq = SP_CTRLQUADR (item);
 
-    NR::Rect area (NR::Point(buf->rect.x0, buf->rect.y0), NR::Point(buf->rect.x1, buf->rect.y1));
+    //NR::Rect area (NR::Point(buf->rect.x0, buf->rect.y0), NR::Point(buf->rect.x1, buf->rect.y1));
 
     if (!buf->ct)
         return;
@@ -105,18 +105,18 @@ sp_ctrlquadr_render (SPCanvasItem *item, SPCanvasBuf *buf)
     // RGB / BGR
     cairo_new_path(buf->ct);
 
-    NR::Point min = NR::Point(buf->rect.x0, buf->rect.y0);
+    Geom::Point min = Geom::Point(buf->rect.x0, buf->rect.y0);
 
-    NR::Point p1 = (cq->p1 * cq->affine) - min;
-    NR::Point p2 = (cq->p2 * cq->affine) - min;
-    NR::Point p3 = (cq->p3 * cq->affine) - min;
-    NR::Point p4 = (cq->p4 * cq->affine) - min;
+    Geom::Point p1 = (cq->p1 * cq->affine) - min;
+    Geom::Point p2 = (cq->p2 * cq->affine) - min;
+    Geom::Point p3 = (cq->p3 * cq->affine) - min;
+    Geom::Point p4 = (cq->p4 * cq->affine) - min;
 
-    cairo_move_to(buf->ct, p1[NR::X], p1[NR::Y]);
-    cairo_line_to(buf->ct, p2[NR::X], p2[NR::Y]);
-    cairo_line_to(buf->ct, p3[NR::X], p3[NR::Y]);
-    cairo_line_to(buf->ct, p4[NR::X], p4[NR::Y]);
-    cairo_line_to(buf->ct, p1[NR::X], p1[NR::Y]);
+    cairo_move_to(buf->ct, p1[Geom::X], p1[Geom::Y]);
+    cairo_line_to(buf->ct, p2[Geom::X], p2[Geom::Y]);
+    cairo_line_to(buf->ct, p3[Geom::X], p3[Geom::Y]);
+    cairo_line_to(buf->ct, p4[Geom::X], p4[Geom::Y]);
+    cairo_line_to(buf->ct, p1[Geom::X], p1[Geom::Y]);
 
     // FIXME: this is supposed to draw inverse but cairo apparently is unable of this trick :(
     //cairo_set_operator (buf->ct, CAIRO_OPERATOR_XOR);
@@ -139,7 +139,7 @@ sp_ctrlquadr_render (SPCanvasItem *item, SPCanvasBuf *buf)
 
 
 static void
-sp_ctrlquadr_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+sp_ctrlquadr_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     SPCtrlQuadr *cq = SP_CTRLQUADR (item);
 
@@ -152,15 +152,15 @@ sp_ctrlquadr_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int 
 
     cq->affine = affine;
 
-    NR::Point p1(cq->p1 * affine);
-    NR::Point p2(cq->p2 * affine);
-    NR::Point p3(cq->p3 * affine);
-    NR::Point p4(cq->p4 * affine);
+    Geom::Point p1(cq->p1 * affine);
+    Geom::Point p2(cq->p2 * affine);
+    Geom::Point p3(cq->p3 * affine);
+    Geom::Point p4(cq->p4 * affine);
         
-    item->x1 = (int)(MIN4(p1[NR::X], p2[NR::X], p3[NR::X], p4[NR::X]));
-    item->y1 = (int)(MIN4(p1[NR::Y], p2[NR::Y], p3[NR::Y], p4[NR::Y]));
-    item->x2 = (int)(MAX4(p1[NR::X], p2[NR::X], p3[NR::X], p4[NR::X]));
-    item->y2 = (int)(MAX4(p1[NR::Y], p2[NR::Y], p3[NR::Y], p4[NR::Y]));
+    item->x1 = (int)(MIN4(p1[Geom::X], p2[Geom::X], p3[Geom::X], p4[Geom::X]));
+    item->y1 = (int)(MIN4(p1[Geom::Y], p2[Geom::Y], p3[Geom::Y], p4[Geom::Y]));
+    item->x2 = (int)(MAX4(p1[Geom::X], p2[Geom::X], p3[Geom::X], p4[Geom::X]));
+    item->y2 = (int)(MAX4(p1[Geom::Y], p2[Geom::Y], p3[Geom::Y], p4[Geom::Y]));
 
     sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }
@@ -180,7 +180,7 @@ sp_ctrlquadr_set_rgba32 (SPCtrlQuadr *cl, guint32 rgba)
 }
 
 void
-sp_ctrlquadr_set_coords (SPCtrlQuadr *cl, NR::Point p1, NR::Point p2, NR::Point p3, NR::Point p4)
+sp_ctrlquadr_set_coords (SPCtrlQuadr *cl, Geom::Point p1, Geom::Point p2, Geom::Point p3, Geom::Point p4)
 {
     g_return_if_fail (cl != NULL);
     g_return_if_fail (SP_IS_CTRLQUADR (cl));

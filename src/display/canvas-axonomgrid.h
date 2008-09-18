@@ -7,7 +7,6 @@
   */
 
 #include <display/sp-canvas.h>
-#include <libnr/nr-coord.h>
 #include "xml/repr.h"
 #include <gtkmm/box.h>
 
@@ -35,7 +34,7 @@ public:
     CanvasAxonomGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc);
     virtual ~CanvasAxonomGrid();
 
-    void Update (NR::Matrix const &affine, unsigned int flags);
+    void Update (Geom::Matrix const &affine, unsigned int flags);
     void Render (SPCanvasBuf *buf);
     
     void readRepr();
@@ -48,13 +47,13 @@ public:
     
     bool scaled;          /**< Whether the grid is in scaled mode */
     
-    NR::Point ow;         /**< Transformed origin by the affine for the zoom */
+    Geom::Point ow;         /**< Transformed origin by the affine for the zoom */
     double lyw;           /**< Transformed length y by the affine for the zoom */
     double lxw_x;
     double lxw_z;
     double spacing_ylines;
                           
-    NR::Point sw;          /**< the scaling factors of the affine transform */
+    Geom::Point sw;          /**< the scaling factors of the affine transform */
 
 protected:
     virtual Gtk::Widget * newSpecificWidget();

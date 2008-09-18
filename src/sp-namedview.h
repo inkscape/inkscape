@@ -21,7 +21,6 @@
 
 #include "helper/helper-forward.h"
 #include "sp-object-group.h"
-#include "libnr/nr-point.h"
 #include "sp-metric.h"
 #include "snap.h"
 
@@ -88,7 +87,7 @@ struct SPNamedView : public SPObjectGroup {
     GSList const *getViewList() const;
     SPMetric getDefaultMetric() const;
 
-    void translateGuides(NR::translate const &translation);
+    void translateGuides(Geom::Translate const &translation);
     void scrollAllDesktops(double dx, double dy, bool is_scrolling);
 };
 

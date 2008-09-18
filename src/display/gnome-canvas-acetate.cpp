@@ -21,8 +21,8 @@ static void sp_canvas_acetate_class_init (SPCanvasAcetateClass *klass);
 static void sp_canvas_acetate_init (SPCanvasAcetate *acetate);
 static void sp_canvas_acetate_destroy (GtkObject *object);
 
-static void sp_canvas_acetate_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
-static double sp_canvas_acetate_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item);
+static void sp_canvas_acetate_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
+static double sp_canvas_acetate_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 
 static SPCanvasItemClass *parent_class;
 
@@ -82,7 +82,7 @@ sp_canvas_acetate_destroy (GtkObject *object)
 }
 
 static void
-sp_canvas_acetate_update( SPCanvasItem *item, NR::Matrix const &/*affine*/, unsigned int /*flags*/ )
+sp_canvas_acetate_update( SPCanvasItem *item, Geom::Matrix const &/*affine*/, unsigned int /*flags*/ )
 {
     item->x1 = -G_MAXINT;
     item->y1 = -G_MAXINT;
@@ -91,7 +91,7 @@ sp_canvas_acetate_update( SPCanvasItem *item, NR::Matrix const &/*affine*/, unsi
 }
 
 static double
-sp_canvas_acetate_point( SPCanvasItem *item, NR::Point /*p*/, SPCanvasItem **actual_item )
+sp_canvas_acetate_point( SPCanvasItem *item, Geom::Point /*p*/, SPCanvasItem **actual_item )
 {
     *actual_item = item;
 

@@ -453,7 +453,7 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
     // to get a correct style attribute for the new path
     SPItem* item_source = SP_ITEM(source);
     NR::Matrix i2root(sp_item_i2root_affine(item_source));
-    sp_item_adjust_stroke(item_source, NR::expansion(i2root));
+    sp_item_adjust_stroke(item_source, i2root.descrim());
     sp_item_adjust_pattern(item_source, i2root);
     sp_item_adjust_gradient(item_source, i2root);
     sp_item_adjust_livepatheffect(item_source, i2root);
@@ -601,13 +601,14 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
 }
 
 static
-void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Matrix marker_transform, NR::scale stroke_scale, NR::Matrix transform,
-                                       Inkscape::XML::Node *g_repr, Inkscape::XML::Document *xml_doc, SPDocument * doc )
+void sp_selected_path_outline_add_marker( SPObject *marker_object, Geom::Matrix marker_transform,
+                                          Geom::Scale stroke_scale, Geom::Matrix transform,
+                                          Inkscape::XML::Node *g_repr, Inkscape::XML::Document *xml_doc, SPDocument * doc )
 {
     SPMarker* marker = SP_MARKER (marker_object);
     SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker_object));
 
-    NR::Matrix tr(marker_transform);
+    Geom::Matrix tr(marker_transform);
 
     if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
         tr = stroke_scale * tr;
@@ -685,7 +686,7 @@ sp_selected_path_outline(SPDesktop *desktop)
         }
 
         NR::Matrix const transform(item->transform);
-        float const scale = NR::expansion(transform);
+        float const scale = transform.descrim();
         gchar const *mask = SP_OBJECT_REPR(item)->attribute("mask");
         gchar const *clip_path = SP_OBJECT_REPR(item)->attribute("clip-path");
 
@@ -860,7 +861,7 @@ sp_selected_path_outline(SPDesktop *desktop)
                     if ( SPObject *marker_obj = shape->marker[SP_MARKER_LOC_START] ) {
                         Geom::Matrix const m (sp_shape_marker_get_transform_at_start(path_it->front()));
                         sp_selected_path_outline_add_marker( marker_obj, m,
-                                                             NR::scale(i_style->stroke_width.computed), transform,
+                                                             Geom::Scale(i_style->stroke_width.computed), transform,
                                                              g_repr, xml_doc, doc );
                     }
 
@@ -875,9 +876,9 @@ sp_selected_path_outline(SPDesktop *desktop)
                              * there should be a midpoint marker between last segment and closing straight line segment
                              */
                             Geom::Matrix const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
-                            sp_selected_path_outline_add_marker( midmarker_obj, m,
-                                                                 NR::scale(i_style->stroke_width.computed), transform,
-                                                                 g_repr, xml_doc, doc );
+                            sp_selected_path_outline_add_marker(midmarker_obj, m,
+                                                                Geom::Scale(i_style->stroke_width.computed), transform,
+                                                                g_repr, xml_doc, doc);
 
                             ++curve_it1;
                             ++curve_it2;
@@ -895,7 +896,7 @@ sp_selected_path_outline(SPDesktop *desktop)
 
                         Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
                         sp_selected_path_outline_add_marker( marker_obj, m,
-                                                             NR::scale(i_style->stroke_width.computed), transform,
+                                                             Geom::Scale(i_style->stroke_width.computed), transform,
                                                              g_repr, xml_doc, doc );
                     }
                 }
@@ -1047,7 +1048,7 @@ sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updat
 
     NR::Matrix const transform(item->transform);
 
-    sp_item_write_transform(item, SP_OBJECT_REPR(item), NR::identity());
+    sp_item_write_transform(item, SP_OBJECT_REPR(item), Geom::identity());
 
     style = g_strdup(SP_OBJECT(item)->repr->attribute("style"));
 
@@ -1273,7 +1274,7 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
 
         NR::Matrix const transform(item->transform);
 
-        sp_item_write_transform(item, SP_OBJECT_REPR(item), NR::identity());
+        sp_item_write_transform(item, SP_OBJECT_REPR(item), Geom::identity());
 
         gchar *style = g_strdup(SP_OBJECT_REPR(item)->attribute("style"));
 
@@ -1522,7 +1523,7 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
        this is necessary so that the item is transformed twice back and forth,
        allowing all compensations to cancel out regardless of the preferences
     */
-    sp_item_write_transform(item, SP_OBJECT_REPR(item), NR::identity());
+    sp_item_write_transform(item, SP_OBJECT_REPR(item), Geom::identity());
 
     gchar *style = g_strdup(SP_OBJECT_REPR(item)->attribute("style"));
     gchar *mask = g_strdup(SP_OBJECT_REPR(item)->attribute("mask"));

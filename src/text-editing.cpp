@@ -948,8 +948,8 @@ sp_te_adjust_kerning_screen (SPItem *item, Inkscape::Text::Layout::iterator cons
     // divide increment by zoom
     // divide increment by matrix expansion
     gdouble factor = 1 / desktop->current_zoom();
-    NR::Matrix t (sp_item_i2doc_affine(item));
-    factor = factor / NR::expansion(t);
+    Geom::Matrix t (sp_item_i2doc_affine(item));
+    factor = factor / t.descrim();
     by = factor * by;
 
     unsigned char_index;
@@ -970,8 +970,8 @@ sp_te_adjust_rotation_screen(SPItem *text, Inkscape::Text::Layout::iterator cons
     // divide increment by zoom
     // divide increment by matrix expansion
     gdouble factor = 1 / desktop->current_zoom();
-    NR::Matrix t (sp_item_i2doc_affine(text));
-    factor = factor / NR::expansion(t);
+    Geom::Matrix t (sp_item_i2doc_affine(text));
+    factor = factor / t.descrim();
     Inkscape::Text::Layout const *layout = te_get_layout(text);
     if (layout == NULL) return;
     SPObject *source_item = 0;
@@ -1055,7 +1055,7 @@ sp_te_adjust_tspan_letterspacing_screen(SPItem *text, Inkscape::Text::Layout::it
     gdouble const zoom = desktop->current_zoom();
     gdouble const zby = (by
                          / (zoom * (nb_let > 1 ? nb_let - 1 : 1))
-                         / NR::expansion(sp_item_i2doc_affine(SP_ITEM(source_obj))));
+                         / to_2geom(sp_item_i2doc_affine(SP_ITEM(source_obj))).descrim());
     val += zby;
 
     if (start == end) {
@@ -1127,8 +1127,8 @@ sp_te_adjust_linespacing_screen (SPItem *text, Inkscape::Text::Layout::iterator 
     gdouble zby = by / (desktop->current_zoom() * (line_count == 0 ? 1 : line_count));
 
     // divide increment by matrix expansion
-    NR::Matrix t (sp_item_i2doc_affine (SP_ITEM(text)));
-    zby = zby / NR::expansion(t);
+    Geom::Matrix t (sp_item_i2doc_affine (SP_ITEM(text)));
+    zby = zby / t.descrim();
 
     switch (style->line_height.unit) {
         case SP_CSS_UNIT_NONE:

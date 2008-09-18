@@ -215,12 +215,12 @@ sp_text_context_setup(SPEventContext *ec)
     sp_canvas_item_hide(tc->cursor);
 
     tc->indicator = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLRECT, NULL);
-    SP_CTRLRECT(tc->indicator)->setRectangle(NR::Rect(NR::Point(0, 0), NR::Point(100, 100)));
+    SP_CTRLRECT(tc->indicator)->setRectangle(Geom::Rect(Geom::Point(0, 0), Geom::Point(100, 100)));
     SP_CTRLRECT(tc->indicator)->setColor(0x0000ff7f, false, 0);
     sp_canvas_item_hide(tc->indicator);
 
     tc->frame = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLRECT, NULL);
-    SP_CTRLRECT(tc->frame)->setRectangle(NR::Rect(NR::Point(0, 0), NR::Point(100, 100)));
+    SP_CTRLRECT(tc->frame)->setRectangle(Geom::Rect(Geom::Point(0, 0), Geom::Point(100, 100)));
     SP_CTRLRECT(tc->frame)->setColor(0x0000ff7f, false, 0);
     sp_canvas_item_hide(tc->frame);
 
@@ -437,7 +437,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
             item_ungrouped = desktop->item_at_point(NR::Point(event->button.x, event->button.y), TRUE);
             if (SP_IS_TEXT(item_ungrouped) || SP_IS_FLOWTEXT(item_ungrouped)) {
                 sp_canvas_item_show(tc->indicator);
-                boost::optional<NR::Rect> ibbox = sp_item_bbox_desktop(item_ungrouped);
+                boost::optional<Geom::Rect> ibbox = to_2geom(sp_item_bbox_desktop(item_ungrouped));
                 if (ibbox) {
                     SP_CTRLRECT(tc->indicator)->setRectangle(*ibbox);
                 }
@@ -815,8 +815,8 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                         int screenlines = 1;
                         if (tc->text) {
                             double spacing = sp_te_get_average_linespacing(tc->text);
-                            NR::Rect const d = desktop->get_display_area();
-                            screenlines = (int) floor(fabs(d.min()[NR::Y] - d.max()[NR::Y])/spacing) - 1;
+                            Geom::Rect const d = desktop->get_display_area();
+                            screenlines = (int) floor(fabs(d.min()[Geom::Y] - d.max()[Geom::Y])/spacing) - 1;
                             if (screenlines <= 0)
                                 screenlines = 1;
                         }
@@ -1599,7 +1599,7 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
             SPItem *frame = SP_FLOWTEXT(tc->text)->get_frame (NULL); // first frame only
             if (frame) {
                 sp_canvas_item_show(tc->frame);
-                boost::optional<NR::Rect> frame_bbox = sp_item_bbox_desktop(frame);
+                boost::optional<Geom::Rect> frame_bbox = to_2geom(sp_item_bbox_desktop(frame));
                 if (frame_bbox) {
                     SP_CTRLRECT(tc->frame)->setRectangle(*frame_bbox);
                 }

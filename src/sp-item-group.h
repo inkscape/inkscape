@@ -24,8 +24,6 @@
 
 class CGroup;
 
-namespace NR{ struct translate; }
-
 struct SPGroup : public SPLPEItem {
     enum LayerMode { GROUP, LAYER };
 
@@ -69,7 +67,7 @@ public:
     virtual void onChildRemoved(Inkscape::XML::Node *child);
     virtual void onUpdate(SPCtx *ctx, unsigned int flags);
     virtual void onModified(guint flags);
-    virtual void calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+    virtual void calculateBBox(NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
     virtual void onPrint(SPPrintContext *ctx);
     virtual void onOrderChanged(Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
     virtual gchar *getDescription();

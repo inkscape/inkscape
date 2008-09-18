@@ -59,9 +59,9 @@ static void sp_canvas_bpath_class_init (SPCanvasBPathClass *klass);
 static void sp_canvas_bpath_init (SPCanvasBPath *path);
 static void sp_canvas_bpath_destroy (GtkObject *object);
 
-static void sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
+static void sp_canvas_bpath_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
 static void sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf);
-static double sp_canvas_bpath_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item);
+static double sp_canvas_bpath_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 
 static SPCanvasItemClass *parent_class;
 
@@ -128,7 +128,7 @@ sp_canvas_bpath_destroy (GtkObject *object)
 }
 
 static void
-sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+sp_canvas_bpath_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     SPCanvasBPath *cbp = SP_CANVAS_BPATH (item);
 
@@ -204,7 +204,7 @@ sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf)
 }
 
 static double
-sp_canvas_bpath_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item)
+sp_canvas_bpath_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item)
 {
     SPCanvasBPath *cbp = SP_CANVAS_BPATH (item);
 
@@ -214,7 +214,7 @@ sp_canvas_bpath_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_it
         return NR_HUGE;
 
     double width = 0.5;
-    Geom::Rect viewbox = to_2geom(item->canvas->getViewbox());
+    Geom::Rect viewbox = item->canvas->getViewbox();
     viewbox.expandBy (width);
     double dist = NR_HUGE;
     pathv_matrix_point_bbox_wind_distance(cbp->curve->get_pathvector(), cbp->affine, p, NULL, NULL, &dist, 0.5, &viewbox);
@@ -295,7 +295,7 @@ static void sp_canvastext_class_init (SPCanvasTextClass *klass);
 static void sp_canvastext_init (SPCanvasText *canvastext);
 static void sp_canvastext_destroy (GtkObject *object);
 
-static void sp_canvastext_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
+static void sp_canvastext_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
 static void sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class_ct;
@@ -337,8 +337,8 @@ static void
 sp_canvastext_init (SPCanvasText *canvastext)
 {
     canvastext->rgba = 0x0000ff7f;
-    canvastext->s[NR::X] = canvastext->s[NR::Y] = 0.0;
-    canvastext->affine = NR::identity();
+    canvastext->s[Geom::X] = canvastext->s[Geom::Y] = 0.0;
+    canvastext->affine = Geom::identity();
     canvastext->fontsize = 10.0;
     canvastext->item = NULL;
     canvastext->desktop = NULL;
@@ -377,9 +377,9 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
     guint32 rgba = cl->rgba;
     cairo_set_source_rgba(buf->ct, SP_RGBA32_B_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_R_F(rgba), SP_RGBA32_A_F(rgba));
 
-    NR::Point s = cl->s * cl->affine;
-    double offsetx = s[NR::X] - buf->rect.x0;
-    double offsety = s[NR::Y] - buf->rect.y0;
+    Geom::Point s = cl->s * cl->affine;
+    double offsetx = s[Geom::X] - buf->rect.x0;
+    double offsety = s[Geom::Y] - buf->rect.y0;
     offsetx -= anchor_offset_x;
     offsety += anchor_offset_y;
 
@@ -392,7 +392,7 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
 }
 
 static void
-sp_canvastext_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+sp_canvastext_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     SPCanvasText *cl = SP_CANVASTEXT (item);
 
@@ -405,7 +405,7 @@ sp_canvastext_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int
 
     cl->affine = affine;
 
-    NR::Point s = cl->s * affine;
+    Geom::Point s = cl->s * affine;
 
     // set up a temporary cairo_t to measure the text extents; it would be better to compute this in the render()
     // method but update() seems to be called before so we don't have the information available when we need it
@@ -414,10 +414,10 @@ sp_canvastext_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int
     cairo_text_extents_t bbox;
     cairo_text_extents(&tmp_buf, cl->text, &bbox);
     **/
-    item->x1 = s[NR::X] + 0;
-    item->y1 = s[NR::Y] - cl->fontsize;
-    item->x2 = s[NR::X] + cl->fontsize * strlen(cl->text);
-    item->y2 = s[NR::Y] + cl->fontsize * 0.5; // for letters below the baseline
+    item->x1 = s[Geom::X] + 0;
+    item->y1 = s[Geom::Y] - cl->fontsize;
+    item->x2 = s[Geom::X] + cl->fontsize * strlen(cl->text);
+    item->y2 = s[Geom::Y] + cl->fontsize * 0.5; // for letters below the baseline
 
     // adjust update region according to anchor shift
     // FIXME: use the correct text extent
@@ -471,20 +471,20 @@ sp_canvastext_set_rgba32 (SPCanvasText *ct, guint32 rgba)
 void
 sp_canvastext_set_coords (SPCanvasText *ct, gdouble x0, gdouble y0)
 {
-    sp_canvastext_set_coords(ct, NR::Point(x0, y0));
+    sp_canvastext_set_coords(ct, Geom::Point(x0, y0));
 }
 
 void
-sp_canvastext_set_coords (SPCanvasText *ct, const NR::Point start)
+sp_canvastext_set_coords (SPCanvasText *ct, const Geom::Point start)
 {
-    NR::Point pos = ct->desktop->doc2dt(start);
+    Geom::Point pos = ct->desktop->doc2dt(start);
 
     g_return_if_fail (ct != NULL);
     g_return_if_fail (SP_IS_CANVASTEXT (ct));
 
-    if (DIFFER (pos[0], ct->s[NR::X]) || DIFFER (pos[1], ct->s[NR::Y])) {
-        ct->s[NR::X] = pos[0];
-        ct->s[NR::Y] = pos[1];
+    if (DIFFER (pos[0], ct->s[Geom::X]) || DIFFER (pos[1], ct->s[Geom::Y])) {
+        ct->s[Geom::X] = pos[0];
+        ct->s[Geom::Y] = pos[1];
         sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
     }
     sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));

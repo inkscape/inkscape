@@ -380,8 +380,8 @@ struct bitmap_coords_info {
     PaintBucketChannels method;
     unsigned char *dtc;
     unsigned char *merged_orig_pixel;
-    NR::Rect bbox;
-    NR::Rect screen;
+    Geom::Rect bbox;
+    Geom::Rect screen;
     unsigned int max_queue_size;
     unsigned int current_step;
 };
@@ -417,7 +417,7 @@ inline static bool check_if_pixel_is_paintable(guchar *px, unsigned char *trace_
  * \param transform The transform to apply to the final SVG path.
  * \param union_with_selection If true, merge the final SVG path with the current selection.
  */
-static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *desktop, NR::Matrix transform, unsigned int min_x, unsigned int max_x, unsigned int min_y, unsigned int max_y, bool union_with_selection) {
+static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *desktop, Geom::Matrix transform, unsigned int min_x, unsigned int max_x, unsigned int min_y, unsigned int max_y, bool union_with_selection) {
     SPDocument *document = sp_desktop_document(desktop);
 
     unsigned char *trace_t;
@@ -510,10 +510,10 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
             sp_item_write_transform(SP_ITEM(reprobj), pathRepr, transform, NULL);
             
             // premultiply the item transform by the accumulated parent transform in the paste layer
-            NR::Matrix local (sp_item_i2doc_affine(SP_GROUP(desktop->currentLayer())));
-            if (!local.test_identity()) {
+            Geom::Matrix local (sp_item_i2doc_affine(SP_GROUP(desktop->currentLayer())));
+            if (!local.isIdentity()) {
                 gchar const *t_str = pathRepr->attribute("transform");
-                NR::Matrix item_t (NR::identity());
+                Geom::Matrix item_t (Geom::identity());
                 if (t_str)
                     sp_svg_transform_read(t_str, &item_t);
                 item_t *= local.inverse();
@@ -625,10 +625,10 @@ inline static unsigned int paint_pixel(guchar *px, guchar *trace_px, unsigned ch
  * \param x The X coordinate.
  * \param y The Y coordinate.
  */
-static void push_point_onto_queue(std::deque<NR::Point> *fill_queue, unsigned int max_queue_size, unsigned char *trace_t, unsigned int x, unsigned int y) {
+static void push_point_onto_queue(std::deque<Geom::Point> *fill_queue, unsigned int max_queue_size, unsigned char *trace_t, unsigned int x, unsigned int y) {
     if (!is_pixel_queued(trace_t)) {
         if ((fill_queue->size() < max_queue_size)) {
-            fill_queue->push_back(NR::Point(x, y));
+            fill_queue->push_back(Geom::Point(x, y));
             mark_pixel_queued(trace_t);
         }
     }
@@ -642,10 +642,10 @@ static void push_point_onto_queue(std::deque<NR::Point> *fill_queue, unsigned in
  * \param x The X coordinate.
  * \param y The Y coordinate.
  */
-static void shift_point_onto_queue(std::deque<NR::Point> *fill_queue, unsigned int max_queue_size, unsigned char *trace_t, unsigned int x, unsigned int y) {
+static void shift_point_onto_queue(std::deque<Geom::Point> *fill_queue, unsigned int max_queue_size, unsigned char *trace_t, unsigned int x, unsigned int y) {
     if (!is_pixel_queued(trace_t)) {
         if ((fill_queue->size() < max_queue_size)) {
-            fill_queue->push_front(NR::Point(x, y));
+            fill_queue->push_front(Geom::Point(x, y));
             mark_pixel_queued(trace_t);
         }
     }
@@ -659,7 +659,7 @@ static void shift_point_onto_queue(std::deque<NR::Point> *fill_queue, unsigned i
  * \param orig_color The original selected pixel to use as the fill target color.
  * \param bci The bitmap_coords_info structure.
  */
-static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci, unsigned int *min_x, unsigned int *max_x) {
+static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<Geom::Point> *fill_queue, guchar *px, guchar *trace_px, unsigned char *orig_color, bitmap_coords_info bci, unsigned int *min_x, unsigned int *max_x) {
     bool aborted = false;
     bool reached_screen_boundary = false;
     bool ok;
@@ -679,7 +679,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
     bool can_paint_top = (top_ty > 0);
     bool can_paint_bottom = (bottom_ty < bci.height);
 
-    NR::Point t = fill_queue->front();
+    Geom::Point t = fill_queue->front();
 
     do {
         ok = false;
@@ -697,7 +697,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
                 paint_directions = paint_pixel(px, trace_px, orig_color, bci, current_trace_t);
                 if (bci.radius == 0) {
                     mark_pixel_checked(current_trace_t);
-                    if ((t[NR::X] == bci.x) && (t[NR::Y] == bci.y)) {
+                    if ((t[Geom::X] == bci.x) && (t[Geom::Y] == bci.y)) {
                         fill_queue->pop_front(); t = fill_queue->front();
                     }
                 }
@@ -755,7 +755,7 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
                 initial_paint = false;
             }
         } else {
-            if (bci.bbox.min()[NR::X] > bci.screen.min()[NR::X]) {
+            if (bci.bbox.min()[Geom::X] > bci.screen.min()[Geom::X]) {
                 aborted = true; break;
             } else {
                 reached_screen_boundary = true;
@@ -771,15 +771,15 @@ static ScanlineCheckResult perform_bitmap_scanline_check(std::deque<NR::Point> *
 /**
  * \brief Sort the rendered pixel buffer check queue vertically.
  */
-static bool sort_fill_queue_vertical(NR::Point a, NR::Point b) {
-    return a[NR::Y] > b[NR::Y];
+static bool sort_fill_queue_vertical(Geom::Point a, Geom::Point b) {
+    return a[Geom::Y] > b[Geom::Y];
 }
 
 /**
  * \brief Sort the rendered pixel buffer check queue horizontally.
  */
-static bool sort_fill_queue_horizontal(NR::Point a, NR::Point b) {
-    return a[NR::X] > b[NR::X];
+static bool sort_fill_queue_horizontal(Geom::Point a, Geom::Point b) {
+    return a[Geom::X] > b[Geom::X];
 }
 
 /**
@@ -801,7 +801,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     sp_document_ensure_up_to_date (document);
     
     SPItem *document_root = SP_ITEM(SP_DOCUMENT_ROOT(document));
-    boost::optional<NR::Rect> bbox = document_root->getBounds(NR::identity());
+    boost::optional<Geom::Rect> bbox = to_2geom(document_root->getBounds(Geom::identity()));
 
     if (!bbox) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));
@@ -814,19 +814,19 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     // fill areas off the screen can be included in the fill.
     double padding = 1.6;
 
-    NR::Rect screen = desktop->get_display_area();
+    Geom::Rect screen = desktop->get_display_area();
 
-    unsigned int width = (int)ceil(screen.extent(NR::X) * zoom_scale * padding);
-    unsigned int height = (int)ceil(screen.extent(NR::Y) * zoom_scale * padding);
+    unsigned int width = (int)ceil(screen.width() * zoom_scale * padding);
+    unsigned int height = (int)ceil(screen.height() * zoom_scale * padding);
 
-    NR::Point origin(screen.min()[NR::X],
-                     sp_document_height(document) - screen.extent(NR::Y) - screen.min()[NR::Y]);
+    Geom::Point origin(screen.min()[Geom::X],
+                       sp_document_height(document) - screen.height() - screen.min()[Geom::Y]);
                     
-    origin[NR::X] = origin[NR::X] + (screen.extent(NR::X) * ((1 - padding) / 2));
-    origin[NR::Y] = origin[NR::Y] + (screen.extent(NR::Y) * ((1 - padding) / 2));
+    origin[Geom::X] = origin[Geom::X] + (screen.width() * ((1 - padding) / 2));
+    origin[Geom::Y] = origin[Geom::Y] + (screen.height() * ((1 - padding) / 2));
     
-    NR::scale scale(zoom_scale, zoom_scale);
-    NR::Matrix affine = scale * NR::translate(-origin * scale);
+    Geom::Scale scale(zoom_scale, zoom_scale);
+    Geom::Matrix affine = scale * Geom::Translate(-origin * scale);
     
     /* Create ArenaItems and set transform */
     NRArenaItem *root = sp_item_invoke_show(SP_ITEM(sp_document_root(document)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
@@ -879,10 +879,10 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     guchar *trace_px = g_new(guchar, width * height);
     memset(trace_px, 0x00, width * height);
     
-    std::deque<NR::Point> fill_queue;
-    std::queue<NR::Point> color_queue;
+    std::deque<Geom::Point> fill_queue;
+    std::queue<Geom::Point> color_queue;
     
-    std::vector<NR::Point> fill_points;
+    std::vector<Geom::Point> fill_points;
     
     bool aborted = false;
     int y_limit = height - 1;
@@ -919,24 +919,24 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     bci.current_step = 0;
 
     if (is_point_fill) {
-        fill_points.push_back(NR::Point(event->button.x, event->button.y));
+        fill_points.push_back(Geom::Point(event->button.x, event->button.y));
     } else {
         Inkscape::Rubberband::Rubberband *r = Inkscape::Rubberband::get(desktop);
         fill_points = r->getPoints();
     }
 
     for (unsigned int i = 0; i < fill_points.size(); i++) {
-        NR::Point pw = NR::Point(fill_points[i][NR::X] / zoom_scale, sp_document_height(document) + (fill_points[i][NR::Y] / zoom_scale)) * affine;
+        Geom::Point pw = Geom::Point(fill_points[i][Geom::X] / zoom_scale, sp_document_height(document) + (fill_points[i][Geom::Y] / zoom_scale)) * affine;
 
-        pw[NR::X] = (int)MIN(width - 1, MAX(0, pw[NR::X]));
-        pw[NR::Y] = (int)MIN(height - 1, MAX(0, pw[NR::Y]));
+        pw[Geom::X] = (int)MIN(width - 1, MAX(0, pw[Geom::X]));
+        pw[Geom::Y] = (int)MIN(height - 1, MAX(0, pw[Geom::Y]));
 
         if (is_touch_fill) {
             if (i == 0) {
                 color_queue.push(pw);
             } else {
-                unsigned char *trace_t = get_trace_pixel(trace_px, (int)pw[NR::X], (int)pw[NR::Y], width);
-                push_point_onto_queue(&fill_queue, bci.max_queue_size, trace_t, (int)pw[NR::X], (int)pw[NR::Y]);
+                unsigned char *trace_t = get_trace_pixel(trace_px, (int)pw[Geom::X], (int)pw[Geom::Y], width);
+                push_point_onto_queue(&fill_queue, bci.max_queue_size, trace_t, (int)pw[Geom::X], (int)pw[Geom::Y]);
             }
         } else {
             color_queue.push(pw);
@@ -955,11 +955,11 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     unsigned int max_x = 0;
 
     while (!color_queue.empty() && !aborted) {
-        NR::Point color_point = color_queue.front();
+        Geom::Point color_point = color_queue.front();
         color_queue.pop();
 
-        int cx = (int)color_point[NR::X];
-        int cy = (int)color_point[NR::Y];
+        int cx = (int)color_point[Geom::X];
+        int cy = (int)color_point[Geom::Y];
 
         unsigned char *orig_px = get_pixel(px, cx, cy, width);
         unsigned char orig_color[4];
@@ -992,7 +992,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
         unsigned long old_fill_queue_size = fill_queue.size();
 
         while (!fill_queue.empty() && !aborted) {
-            NR::Point cp = fill_queue.front();
+            Geom::Point cp = fill_queue.front();
 
             if (bci.radius == 0) {
                 unsigned long new_fill_queue_size = fill_queue.size();
@@ -1009,14 +1009,14 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                     if (new_fill_queue_size > old_fill_queue_size) {
                         std::sort(fill_queue.begin(), fill_queue.end(), sort_fill_queue_vertical);
 
-                        std::deque<NR::Point>::iterator start_sort = fill_queue.begin();
-                        std::deque<NR::Point>::iterator end_sort = fill_queue.begin();
-                        unsigned int sort_y = (unsigned int)cp[NR::Y];
+                        std::deque<Geom::Point>::iterator start_sort = fill_queue.begin();
+                        std::deque<Geom::Point>::iterator end_sort = fill_queue.begin();
+                        unsigned int sort_y = (unsigned int)cp[Geom::Y];
                         unsigned int current_y = sort_y;
                         
-                        for (std::deque<NR::Point>::iterator i = fill_queue.begin(); i != fill_queue.end(); i++) {
-                            NR::Point current = *i;
-                            current_y = (unsigned int)current[NR::Y];
+                        for (std::deque<Geom::Point>::iterator i = fill_queue.begin(); i != fill_queue.end(); i++) {
+                            Geom::Point current = *i;
+                            current_y = (unsigned int)current[Geom::Y];
                             if (current_y != sort_y) {
                                 if (start_sort != end_sort) {
                                     std::sort(start_sort, end_sort, sort_fill_queue_horizontal);
@@ -1039,8 +1039,8 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
 
             fill_queue.pop_front();
 
-            int x = (int)cp[NR::X];
-            int y = (int)cp[NR::Y];
+            int x = (int)cp[Geom::X];
+            int y = (int)cp[Geom::Y];
 
             min_y = MIN((unsigned int)y, min_y);
             max_y = MAX((unsigned int)y, max_y);
@@ -1050,7 +1050,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                 mark_pixel_checked(trace_t);
 
                 if (y == 0) {
-                    if (bbox->min()[NR::Y] > screen.min()[NR::Y]) {
+                    if (bbox->min()[Geom::Y] > screen.min()[Geom::Y]) {
                         aborted = true; break;
                     } else {
                         reached_screen_boundary = true;
@@ -1058,7 +1058,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
                 }
 
                 if (y == y_limit) {
-                    if (bbox->max()[NR::Y] < screen.max()[NR::Y]) {
+                    if (bbox->max()[Geom::Y] < screen.max()[Geom::Y]) {
                         aborted = true; break;
                     } else {
                         reached_screen_boundary = true;
@@ -1131,10 +1131,10 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     if (min_x > trace_padding) { min_x -= trace_padding; }
     if (max_x < (width - 1 - trace_padding)) { max_x += trace_padding; }
 
-    NR::Point min_start = NR::Point(min_x, min_y);
+    Geom::Point min_start = Geom::Point(min_x, min_y);
     
-    affine = scale * NR::translate(-origin * scale - min_start);
-    NR::Matrix inverted_affine = NR::Matrix(affine).inverse();
+    affine = scale * Geom::Translate(-origin * scale - min_start);
+    Geom::Matrix inverted_affine = Geom::Matrix(affine).inverse();
     
     do_trace(bci, trace_px, desktop, inverted_affine, min_x, max_x, min_y, max_y, union_with_selection);
 
@@ -1152,8 +1152,8 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
         if ((event->button.state & GDK_CONTROL_MASK) && event->button.button == 1 && !event_context->space_panning) {
-            NR::Point const button_w(event->button.x,
-                                    event->button.y);
+            Geom::Point const button_w(event->button.x,
+                                       event->button.y);
             
             SPItem *item = sp_event_context_find_item (desktop, button_w, TRUE, TRUE);
             
@@ -1186,18 +1186,18 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
     case GDK_BUTTON_PRESS:
         if (event->button.button == 1 && !event_context->space_panning) {
             if (!(event->button.state & GDK_CONTROL_MASK)) {
-                NR::Point const button_w(event->button.x,
-                                        event->button.y);
+                Geom::Point const button_w(event->button.x,
+                                           event->button.y);
     
                 if (Inkscape::have_viable_layer(desktop, event_context->defaultMessageContext())) {
                     // save drag origin
-                    event_context->xp = (gint) button_w[NR::X];
-                    event_context->yp = (gint) button_w[NR::Y];
+                    event_context->xp = (gint) button_w[Geom::X];
+                    event_context->yp = (gint) button_w[Geom::Y];
                     event_context->within_tolerance = true;
                       
                     dragging = true;
                     
-                    NR::Point const p(desktop->w2d(button_w));
+                    Geom::Point const p(desktop->w2d(button_w));
                     Inkscape::Rubberband::get(desktop)->setMode(RUBBERBAND_MODE_TOUCHPATH);
                     Inkscape::Rubberband::get(desktop)->start(desktop, p);
                 }
@@ -1215,8 +1215,8 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
             
             event_context->within_tolerance = false;
             
-            NR::Point const motion_pt(event->motion.x, event->motion.y);
-            NR::Point const p(desktop->w2d(motion_pt));
+            Geom::Point const motion_pt(event->motion.x, event->motion.y);
+            Geom::Point const p(desktop->w2d(motion_pt));
             if (Inkscape::Rubberband::get(desktop)->is_started()) {
                 Inkscape::Rubberband::get(desktop)->move(p);
                 event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"));

@@ -21,7 +21,7 @@
 #include <sigc++/class_slot.h>
 
 #include "libcroco/cr-cascade.h"
-#include "libnr/nr-forward.h"
+#include <2geom/rect.h>
 
 #include "gc-managed.h"
 #include "gc-finalized.h"
@@ -40,6 +40,10 @@ struct SPDesktop;
 struct SPItem;
 struct SPObject;
 struct SPGroup;
+
+namespace Geom {
+    class Point;
+}
 
 namespace Inkscape {
     struct Application;
@@ -160,7 +164,7 @@ public:
     sigc::connection _selection_changed_connection;
     sigc::connection _desktop_activated_connection;
 
-    void fitToRect(NR::Rect const &rect);
+    void fitToRect(Geom::Rect const &rect);
 };
 
 SPDocument *sp_document_new (const gchar *uri, unsigned int keepalive, bool make_new = false);
@@ -254,12 +258,12 @@ sigc::connection sp_document_resources_changed_connect(SPDocument *document, con
  * Misc
  */
 
-GSList * sp_document_items_in_box(SPDocument *document, unsigned int dkey, NR::Rect const &box);
-GSList * sp_document_partial_items_in_box(SPDocument *document, unsigned int dkey, NR::Rect const &box);
-SPItem* sp_document_item_from_list_at_point_bottom (unsigned int dkey, SPGroup *group, const GSList *list, NR::Point const p, bool take_insensitive = false);
-SPItem * sp_document_item_at_point (SPDocument *document, unsigned int key, NR::Point const p, gboolean into_groups, SPItem *upto = NULL);
-GSList *sp_document_items_at_points(SPDocument *document, unsigned const key, std::vector<NR::Point> points);
-SPItem *sp_document_group_at_point (SPDocument *document, unsigned int key,  NR::Point const p);
+GSList * sp_document_items_in_box(SPDocument *document, unsigned int dkey, Geom::Rect const &box);
+GSList * sp_document_partial_items_in_box(SPDocument *document, unsigned int dkey, Geom::Rect const &box);
+SPItem* sp_document_item_from_list_at_point_bottom (unsigned int dkey, SPGroup *group, const GSList *list, Geom::Point const p, bool take_insensitive = false);
+SPItem * sp_document_item_at_point (SPDocument *document, unsigned int key, Geom::Point const p, gboolean into_groups, SPItem *upto = NULL);
+GSList *sp_document_items_at_points(SPDocument *document, unsigned const key, std::vector<Geom::Point> points);
+SPItem *sp_document_group_at_point (SPDocument *document, unsigned int key,  Geom::Point const p);
 
 void sp_document_set_uri (SPDocument *document, const gchar *uri);
 void sp_document_resized_signal_emit (SPDocument *doc, gdouble width, gdouble height);

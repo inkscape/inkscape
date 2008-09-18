@@ -201,7 +201,7 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
                 if (x>0 && y>0) {
                     SPDesktop *active_desktop = SP_ACTIVE_DESKTOP;
                     if (active_desktop == desktop || active_desktop==NULL) {
-                        desktop->setWindowPosition(NR::Point(x, y));
+                        desktop->setWindowPosition(Geom::Point(x, y));
                     }
                 }
             }
@@ -1062,7 +1062,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
             int destX = 0;
             int destY = 0;
             gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
-            NR::Point where( sp_canvas_window_to_world( desktop->canvas, NR::Point( destX, destY ) ) );
+            Geom::Point where( sp_canvas_window_to_world( desktop->canvas, Geom::Point( destX, destY ) ) );
 
             SPItem *item = desktop->item_at_point( where, true );
             if ( item )
@@ -1189,7 +1189,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                                 ( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
                                   desktop->current_zoom() *
                                   SP_OBJECT_STYLE (item)->stroke_width.computed *
-                                  NR::expansion(sp_item_i2d_affine(item)) * 0.5
+                                  to_2geom(sp_item_i2d_affine(item)).descrim() * 0.5
                                   : 0.0)
                                 + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100); 
 

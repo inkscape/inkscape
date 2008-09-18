@@ -29,9 +29,8 @@
 #include <gtk/gtktypeutils.h>
 #include <sigc++/sigc++.h>
 
-#include "libnr/nr-matrix.h"
-#include "libnr/nr-matrix-fns.h"
-#include "libnr/nr-rect.h"
+#include <2geom/matrix.h>
+
 #include "ui/view/view.h"
 #include "ui/view/edit-widget-interface.h"
 
@@ -227,18 +226,16 @@ struct SPDesktop : public Inkscape::UI::View::View
     SPItem *group_at_point (Geom::Point const p) const;
     Geom::Point point() const;
 
-    NR::Rect get_display_area() const;
+    Geom::Rect get_display_area() const;
     void set_display_area (double x0, double y0, double x1, double y1, double border, bool log = true);
-    void set_display_area(NR::Rect const &a, NR::Coord border, bool log = true);
+    void set_display_area(Geom::Rect const &a, Geom::Coord border, bool log = true);
     void zoom_absolute (double cx, double cy, double zoom);
     void zoom_relative (double cx, double cy, double zoom);
     void zoom_absolute_keep_point (double cx, double cy, double px, double py, double zoom);
     void zoom_relative_keep_point (double cx, double cy, double zoom);
     void zoom_relative_keep_point (Geom::Point const &c, double const zoom)
     {
-            using NR::X;
-            using NR::Y;
-            zoom_relative_keep_point (c[X], c[Y], zoom);
+            zoom_relative_keep_point (c[Geom::X], c[Geom::Y], zoom);
     }
 
     void zoom_page();
@@ -246,7 +243,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void zoom_drawing();
     void zoom_selection();
     void zoom_grab_focus();
-    double current_zoom() const  { return NR::expansion(_d2w); }
+    double current_zoom() const  { return _d2w.descrim(); }
     void prev_zoom();
     void next_zoom();
 
@@ -254,9 +251,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void scroll_world (double dx, double dy, bool is_scrolling = false);
     void scroll_world (Geom::Point const scroll, bool is_scrolling = false)
     {
-        using NR::X;
-        using NR::Y;
-        scroll_world(scroll[X], scroll[Y], is_scrolling);
+        scroll_world(scroll[Geom::X], scroll[Geom::Y], is_scrolling);
     }
     void scroll_world_in_svg_coords (double dx, double dy, bool is_scrolling = false);
 

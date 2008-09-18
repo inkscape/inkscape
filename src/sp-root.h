@@ -20,7 +20,6 @@
 #define SP_IS_ROOT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_ROOT))
 #define SP_IS_ROOT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_ROOT))
 
-#include <libnr/nr-matrix.h>
 #include "version.h"
 #include "svg/svg-length.h"
 #include "enums.h"
@@ -49,7 +48,7 @@ struct SPRoot : public SPGroup {
     unsigned int aspect_clip : 1;
 
     /** Child to parent additional transform. */
-    NR::Matrix c2p;
+    Geom::Matrix c2p;
 
     gchar *onload;
 

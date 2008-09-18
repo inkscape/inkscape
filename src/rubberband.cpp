@@ -18,7 +18,6 @@
 #include "rubberband.h"
 #include "display/canvas-bpath.h"
 #include "display/curve.h"
-#include "libnr/nr-point.h"
 
 Inkscape::Rubberband *Inkscape::Rubberband::_instance = NULL;
 
@@ -45,7 +44,7 @@ void Inkscape::Rubberband::delete_canvas_items()
 }
 
 
-void Inkscape::Rubberband::start(SPDesktop *d, NR::Point const &p)
+void Inkscape::Rubberband::start(SPDesktop *d, Geom::Point const &p)
 {
     _points.clear();
     _touchpath_curve->reset();
@@ -73,7 +72,7 @@ void Inkscape::Rubberband::stop()
         sp_canvas_end_forced_full_redraws(_desktop->canvas);
 }
 
-void Inkscape::Rubberband::move(NR::Point const &p)
+void Inkscape::Rubberband::move(Geom::Point const &p)
 {
     if (!_started) 
         return;
@@ -82,13 +81,13 @@ void Inkscape::Rubberband::move(NR::Point const &p)
     _desktop->scroll_to_point(p);
     _touchpath_curve->lineto(p);
 
-    NR::Point next = _desktop->d2w(p);
+    Geom::Point next = _desktop->d2w(p);
     // we want the points to be at most 0.5 screen pixels apart,
     // so that we don't lose anything small;
     // if they are farther apart, we interpolate more points
-    if (_points.size() > 0 && NR::L2(next-_points.back()) > 0.5) {
-        NR::Point prev = _points.back();
-        int subdiv = 2 * (int) round(NR::L2(next-prev) + 0.5);
+    if (_points.size() > 0 && Geom::L2(next-_points.back()) > 0.5) {
+        Geom::Point prev = _points.back();
+        int subdiv = 2 * (int) round(Geom::L2(next-prev) + 0.5);
         for (int i = 1; i <= subdiv; i ++) {
             _points.push_back(prev + ((double)i/subdiv) * (next - prev));
         }
@@ -100,7 +99,7 @@ void Inkscape::Rubberband::move(NR::Point const &p)
         if (_rect == NULL) {
             _rect = static_cast<CtrlRect *>(sp_canvas_item_new(sp_desktop_controls(_desktop), SP_TYPE_CTRLRECT, NULL));
         }
-        _rect->setRectangle(NR::Rect(_start, _end));
+        _rect->setRectangle(Geom::Rect(_start, _end));
 
         sp_canvas_item_show(_rect);
         if (_touchpath)
@@ -125,13 +124,13 @@ void Inkscape::Rubberband::setMode(int mode)
     _mode = mode;
 }
 
-boost::optional<NR::Rect> Inkscape::Rubberband::getRectangle() const
+boost::optional<Geom::Rect> Inkscape::Rubberband::getRectangle() const
 {
     if (!_started) {
-        return boost::optional<NR::Rect>();
+        return boost::optional<Geom::Rect>();
     }
 
-    return NR::Rect(_start, _end);
+    return Geom::Rect(_start, _end);
 }
 
 Inkscape::Rubberband *Inkscape::Rubberband::get(SPDesktop *desktop)

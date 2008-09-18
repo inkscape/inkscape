@@ -81,7 +81,7 @@ public:
 
     GridCanvasItem * createCanvasItem(SPDesktop * desktop);
 
-    virtual void Update (NR::Matrix const &affine, unsigned int flags) = 0;
+    virtual void Update (Geom::Matrix const &affine, unsigned int flags) = 0;
     virtual void Render (SPCanvasBuf *buf) = 0;
 
     virtual void readRepr() = 0;
@@ -89,7 +89,7 @@ public:
 
     Gtk::Widget * newWidget();
 
-    NR::Point origin;     /**< Origin of the grid */
+    Geom::Point origin;     /**< Origin of the grid */
     guint32 color;        /**< Color for normal lines */
     guint32 empcolor;     /**< Color for emphasis lines */
     gint empspacing;      /**< Spacing between emphasis lines */
@@ -131,18 +131,18 @@ public:
     CanvasXYGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument * in_doc);
     virtual ~CanvasXYGrid();
 
-    void Update (NR::Matrix const &affine, unsigned int flags);
+    void Update (Geom::Matrix const &affine, unsigned int flags);
     void Render (SPCanvasBuf *buf);
 
     void readRepr();
     void onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive);
 
-    NR::Point spacing; /**< Spacing between elements of the grid */
+    Geom::Point spacing; /**< Spacing between elements of the grid */
     bool scaled[2];    /**< Whether the grid is in scaled mode, which can
                             be different in the X or Y direction, hense two
                             variables */
-    NR::Point ow;      /**< Transformed origin by the affine for the zoom */
-    NR::Point sw;      /**< Transformed spacing by the affine for the zoom */
+    Geom::Point ow;      /**< Transformed origin by the affine for the zoom */
+    Geom::Point sw;      /**< Transformed spacing by the affine for the zoom */
 
 protected:
     virtual Gtk::Widget * newSpecificWidget();

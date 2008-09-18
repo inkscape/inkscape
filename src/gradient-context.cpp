@@ -249,8 +249,8 @@ sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, NR::Point
 
     SPCtrlLine* line = SP_CTRLLINE(item);
 
-    NR::Point nearest = snap_vector_midpoint (rc->mousepoint_doc, line->s, line->e, 0);
-    double dist_screen = NR::L2 (rc->mousepoint_doc - nearest) * desktop->current_zoom();
+    Geom::Point nearest = snap_vector_midpoint (rc->mousepoint_doc, line->s, line->e, 0);
+    double dist_screen = Geom::L2 (rc->mousepoint_doc - nearest) * desktop->current_zoom();
 
     double tolerance = (double) SP_EVENT_CONTEXT(rc)->tolerance;
 
@@ -641,7 +641,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     if (r->is_started() && !event_context->within_tolerance) {
                         // this was a rubberband drag
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
-                            boost::optional<NR::Rect> const b = r->getRectangle();
+                            boost::optional<Geom::Rect> const b = r->getRectangle();
                             drag->selectRect(*b);
                         }
                     }

@@ -63,7 +63,7 @@ static void sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags);
 static void sp_shape_modified (SPObject *object, unsigned int flags);
 static Inkscape::XML::Node *sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 void sp_shape_print (SPItem * item, SPPrintContext * ctx);
 static NRArenaItem *sp_shape_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static void sp_shape_hide (SPItem *item, unsigned int key);
@@ -484,7 +484,7 @@ sp_shape_modified (SPObject *object, unsigned int flags)
  * Calculates the bounding box for item, storing it into bbox.
  * This also includes the bounding boxes of any markers included in the shape.
  */
-static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
+static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags)
 {
     SPShape const *shape = SP_SHAPE (item);
 
@@ -502,7 +502,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
             
             SPStyle* style=SP_OBJECT_STYLE (item);
             if (!style->stroke.isNone()) {
-                double const scale = expansion(transform);
+                double const scale = transform.descrim();
                 if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
                     double const width = MAX(0.125, style->stroke_width.computed * scale);
                     if ( fabs(cbbox.x1-cbbox.x0) > -0.00001 && fabs(cbbox.y1-cbbox.y0) > -0.00001 ) {
@@ -523,10 +523,10 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
                         SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_START]);
                         SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_START]));
 
-                        NR::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
+                        Geom::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                            tr = NR::scale(style->stroke_width.computed) * tr;
+                            tr = Geom::Scale(style->stroke_width.computed) * tr;
                         }
 
                         // total marker transform
@@ -534,7 +534,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
 
                         // get bbox of the marker with that transform
                         NRRect marker_bbox;
-                        sp_item_invoke_bbox (marker_item, &marker_bbox, tr, true);
+                        sp_item_invoke_bbox (marker_item, &marker_bbox, from_2geom(tr), true);
                         // union it with the shape bbox
                         nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
                     }
@@ -551,10 +551,10 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
                             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_MID]);
                             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_MID]));
 
-                            NR::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                            Geom::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
 
                             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                                tr = NR::scale(style->stroke_width.computed) * tr;
+                                tr = Geom::Scale(style->stroke_width.computed) * tr;
                             }
 
                             // total marker transform
@@ -562,7 +562,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
 
                             // get bbox of the marker with that transform
                             NRRect marker_bbox;
-                            sp_item_invoke_bbox (marker_item, &marker_bbox, tr, true);
+                            sp_item_invoke_bbox (marker_item, &marker_bbox, from_2geom(tr), true);
                             // union it with the shape bbox
                             nr_rect_d_union (&cbbox, &cbbox, &marker_bbox);
 
@@ -583,10 +583,10 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
                         }
                         Geom::Curve const &lastcurve = (*path_it)[index];
 
-                        NR::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
+                        Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
 
                         if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                            tr = NR::scale(style->stroke_width.computed) * tr;
+                            tr = Geom::Scale(style->stroke_width.computed) * tr;
                         }
 
                         // total marker transform
@@ -656,10 +656,10 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_START]);
             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_START]));
 
-            NR::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
+            Geom::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                tr = NR::scale(style->stroke_width.computed) * tr;
+                tr = Geom::Scale(style->stroke_width.computed) * tr;
             }
 
             tr = marker_item->transform * marker->c2p * tr;
@@ -682,10 +682,10 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
                 SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_MID]);
                 SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_MID]));
 
-                NR::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                Geom::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
 
                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                    tr = NR::scale(style->stroke_width.computed) * tr;
+                    tr = Geom::Scale(style->stroke_width.computed) * tr;
                 }
 
                 tr = marker_item->transform * marker->c2p * tr;
@@ -712,10 +712,10 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
             }
             Geom::Curve const &lastcurve = (*path_it)[index];
 
-            NR::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
+            Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                tr = NR::scale(style->stroke_width.computed) * tr;
+                tr = Geom::Scale(style->stroke_width.computed) * tr;
             }
 
             tr = marker_item->transform * marker->c2p * tr;

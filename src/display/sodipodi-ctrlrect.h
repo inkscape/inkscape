@@ -32,16 +32,16 @@ public:
     void init();
     void setColor(guint32 b, bool h, guint f);
     void setShadow(int s, guint c);
-    void setRectangle(NR::Rect const &r);
+    void setRectangle(Geom::Rect const &r);
     void setDashed(bool d);
 
     void render(SPCanvasBuf *buf);
-    void update(NR::Matrix const &affine, unsigned int flags);
+    void update(Geom::Matrix const &affine, unsigned int flags);
     
 private:
     void _requestUpdate();
     
-    NR::Rect _rect;
+    Geom::Rect _rect;
     bool _has_fill;
     bool _dashed;
     NRRectL _area;

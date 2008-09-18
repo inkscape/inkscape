@@ -231,18 +231,18 @@ flerp(double f0, double f1, double p)
 static Geom::Point
 sp_eraser_get_npoint(SPEraserContext const *dc, Geom::Point v)
 {
-    NR::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
-    double const max = MAX ( drect.dimensions()[NR::X], drect.dimensions()[NR::Y] );
-    return Geom::Point(( v[NR::X] - drect.min()[NR::X] ) / max,  ( v[NR::Y] - drect.min()[NR::Y] ) / max);
+    Geom::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
+    double const max = MAX ( drect.dimensions()[Geom::X], drect.dimensions()[Geom::Y] );
+    return Geom::Point(( v[Geom::X] - drect.min()[Geom::X] ) / max,  ( v[Geom::Y] - drect.min()[Geom::Y] ) / max);
 }
 
 /* Get view point */
 static Geom::Point
 sp_eraser_get_vpoint(SPEraserContext const *dc, Geom::Point n)
 {
-    NR::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
-    double const max = MAX ( drect.dimensions()[NR::X], drect.dimensions()[NR::Y] );
-    return Geom::Point(n[NR::X] * max + drect.min()[NR::X], n[NR::Y] * max + drect.min()[NR::Y]);
+    Geom::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
+    double const max = MAX ( drect.dimensions()[Geom::X], drect.dimensions()[Geom::Y] );
+    return Geom::Point(n[Geom::X] * max + drect.min()[Geom::X], n[Geom::Y] * max + drect.min()[Geom::Y]);
 }
 
 static void
@@ -555,8 +555,6 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
         if (dc->dragging && event->button.button == 1 && !event_context->space_panning) {
             dc->dragging = FALSE;
 
-            boost::optional<NR::Rect> const b = Inkscape::Rubberband::get(desktop)->getRectangle();
-
             sp_eraser_apply(dc, motion_dt);
 
             /* Remove all temporary line segments */
@@ -741,8 +739,8 @@ set_to_accumulated(SPEraserContext *dc)
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
 
             SPItem* acid = SP_ITEM(desktop->doc()->getObjectByRepr(dc->repr));
-            boost::optional<NR::Rect> eraserBbox = acid->getBounds(NR::identity());
-            NR::Rect bounds = (*eraserBbox) * desktop->doc2dt();
+            boost::optional<Geom::Rect> eraserBbox = to_2geom(acid->getBounds(Geom::identity()));
+            Geom::Rect bounds = (*eraserBbox) * desktop->doc2dt();
             std::vector<SPItem*> remainingItems;
             GSList* toWorkOn = 0;
             if (selection->isEmpty()) {
@@ -763,7 +761,7 @@ set_to_accumulated(SPEraserContext *dc)
                     for (GSList *i = toWorkOn ; i ; i = i->next ) {
                         SPItem *item = SP_ITEM(i->data);
                         if ( eraserMode ) {
-                            boost::optional<NR::Rect> bbox = item->getBounds(NR::identity());
+                            boost::optional<Geom::Rect> bbox = to_2geom(item->getBounds(Geom::identity()));
                             if (bbox && bbox->intersects(*eraserBbox)) {
                                 Inkscape::XML::Node* dup = dc->repr->duplicate(xml_doc);
                                 dc->repr->parent()->appendChild(dup);
@@ -911,7 +909,7 @@ fit_and_split(SPEraserContext *dc, gboolean release)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
 
-    double const tolerance_sq = square( NR::expansion(desktop->w2d()) * TOLERANCE_ERASER );
+    double const tolerance_sq = square( desktop->w2d().descrim() * TOLERANCE_ERASER );
 
 #ifdef ERASER_VERBOSE
     g_print("[F&S:R=%c]", release?'T':'F');

@@ -32,9 +32,9 @@ static void sp_canvas_arena_class_init(SPCanvasArenaClass *klass);
 static void sp_canvas_arena_init(SPCanvasArena *group);
 static void sp_canvas_arena_destroy(GtkObject *object);
 
-static void sp_canvas_arena_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
+static void sp_canvas_arena_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
 static void sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf);
-static double sp_canvas_arena_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item);
+static double sp_canvas_arena_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 static gint sp_canvas_arena_event (SPCanvasItem *item, GdkEvent *event);
 
 static gint sp_canvas_arena_send_event (SPCanvasArena *arena, GdkEvent *event);
@@ -137,7 +137,7 @@ sp_canvas_arena_destroy (GtkObject *object)
 }
 
 static void
-sp_canvas_arena_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+sp_canvas_arena_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     SPCanvasArena *arena = SP_CANVAS_ARENA (item);
 
@@ -165,8 +165,8 @@ sp_canvas_arena_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
             ec.send_event = TRUE;
             ec.subwindow = ec.window;
             ec.time = GDK_CURRENT_TIME;
-            ec.x = arena->c[NR::X];
-            ec.y = arena->c[NR::Y];
+            ec.x = arena->c[Geom::X];
+            ec.y = arena->c[Geom::Y];
             /* fixme: */
             if (arena->active) {
                 ec.type = GDK_LEAVE_NOTIFY;
@@ -227,7 +227,7 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
 }
 
 static double
-sp_canvas_arena_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item)
+sp_canvas_arena_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item)
 {
     SPCanvasArena *arena = SP_CANVAS_ARENA (item);
 
@@ -267,7 +267,7 @@ sp_canvas_arena_event (SPCanvasItem *item, GdkEvent *event)
                 arena->cursor = TRUE;
 
                 /* TODO ... event -> arena transform? */
-                arena->c = NR::Point(event->crossing.x, event->crossing.y);
+                arena->c = Geom::Point(event->crossing.x, event->crossing.y);
 
                 /* fixme: Not sure abut this, but seems the right thing (Lauris) */
                 nr_arena_item_invoke_update (arena->root, NULL, &arena->gc, NR_ARENA_ITEM_STATE_PICK, NR_ARENA_ITEM_STATE_NONE);
@@ -288,7 +288,7 @@ sp_canvas_arena_event (SPCanvasItem *item, GdkEvent *event)
 
         case GDK_MOTION_NOTIFY:
             /* TODO ... event -> arena transform? */
-            arena->c = NR::Point(event->motion.x, event->motion.y);
+            arena->c = Geom::Point(event->motion.x, event->motion.y);
 
             /* fixme: Not sure abut this, but seems the right thing (Lauris) */
             nr_arena_item_invoke_update (arena->root, NULL, &arena->gc, NR_ARENA_ITEM_STATE_PICK, NR_ARENA_ITEM_STATE_NONE);

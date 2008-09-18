@@ -34,7 +34,7 @@ static void sp_ctrlline_class_init (SPCtrlLineClass *klass);
 static void sp_ctrlline_init (SPCtrlLine *ctrlline);
 static void sp_ctrlline_destroy (GtkObject *object);
 
-static void sp_ctrlline_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
+static void sp_ctrlline_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
 static void sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class;
@@ -77,7 +77,7 @@ static void
 sp_ctrlline_init (SPCtrlLine *ctrlline)
 {
     ctrlline->rgba = 0x0000ff7f;
-    ctrlline->s[NR::X] = ctrlline->s[NR::Y] = ctrlline->e[NR::X] = ctrlline->e[NR::Y] = 0.0;
+    ctrlline->s[Geom::X] = ctrlline->s[Geom::Y] = ctrlline->e[Geom::X] = ctrlline->e[Geom::Y] = 0.0;
     ctrlline->item=NULL;
 }
 
@@ -111,17 +111,17 @@ sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf)
     cairo_set_line_width(buf->ct, 1);
     cairo_new_path(buf->ct);
 
-    NR::Point s = cl->s * cl->affine;
-    NR::Point e = cl->e * cl->affine;
+    Geom::Point s = cl->s * cl->affine;
+    Geom::Point e = cl->e * cl->affine;
 
-    cairo_move_to (buf->ct, s[NR::X] - buf->rect.x0, s[NR::Y] - buf->rect.y0);
-    cairo_line_to (buf->ct, e[NR::X] - buf->rect.x0, e[NR::Y] - buf->rect.y0);
+    cairo_move_to (buf->ct, s[Geom::X] - buf->rect.x0, s[Geom::Y] - buf->rect.y0);
+    cairo_line_to (buf->ct, e[Geom::X] - buf->rect.x0, e[Geom::Y] - buf->rect.y0);
 
     cairo_stroke(buf->ct);
 }
 
 static void
-sp_ctrlline_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+sp_ctrlline_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     SPCtrlLine *cl = SP_CTRLLINE (item);
 
@@ -134,13 +134,13 @@ sp_ctrlline_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int f
 
     cl->affine = affine;
 
-    NR::Point s = cl->s * affine;
-    NR::Point e = cl->e * affine;
+    Geom::Point s = cl->s * affine;
+    Geom::Point e = cl->e * affine;
 
-    item->x1 = round(MIN(s[NR::X], e[NR::X]) - 1);
-    item->y1 = round(MIN(s[NR::Y], e[NR::Y]) - 1);
-    item->x2 = round(MAX(s[NR::X], e[NR::X]) + 1);
-    item->y2 = round(MAX(s[NR::Y], e[NR::Y]) + 1);
+    item->x1 = round(MIN(s[Geom::X], e[Geom::X]) - 1);
+    item->y1 = round(MIN(s[Geom::Y], e[Geom::Y]) - 1);
+    item->x2 = round(MAX(s[Geom::X], e[Geom::X]) + 1);
+    item->y2 = round(MAX(s[Geom::Y], e[Geom::Y]) + 1);
 
     sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }
@@ -168,17 +168,17 @@ sp_ctrlline_set_coords (SPCtrlLine *cl, gdouble x0, gdouble y0, gdouble x1, gdou
     g_return_if_fail (cl != NULL);
     g_return_if_fail (SP_IS_CTRLLINE (cl));
 
-    if (DIFFER (x0, cl->s[NR::X]) || DIFFER (y0, cl->s[NR::Y]) || DIFFER (x1, cl->e[NR::X]) || DIFFER (y1, cl->e[NR::Y])) {
-        cl->s[NR::X] = x0;
-        cl->s[NR::Y] = y0;
-        cl->e[NR::X] = x1;
-        cl->e[NR::Y] = y1;
+    if (DIFFER (x0, cl->s[Geom::X]) || DIFFER (y0, cl->s[Geom::Y]) || DIFFER (x1, cl->e[Geom::X]) || DIFFER (y1, cl->e[Geom::Y])) {
+        cl->s[Geom::X] = x0;
+        cl->s[Geom::Y] = y0;
+        cl->e[Geom::X] = x1;
+        cl->e[Geom::Y] = y1;
         sp_canvas_item_request_update (SP_CANVAS_ITEM (cl));
     }
 }
 
 void
-sp_ctrlline_set_coords (SPCtrlLine *cl, const NR::Point start, const NR::Point end)
+sp_ctrlline_set_coords (SPCtrlLine *cl, const Geom::Point start, const Geom::Point end)
 {
     sp_ctrlline_set_coords(cl, start[0], start[1], end[0], end[1]);
 }

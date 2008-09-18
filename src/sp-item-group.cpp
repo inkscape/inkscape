@@ -63,7 +63,7 @@ static void sp_group_modified (SPObject *object, guint flags);
 static Inkscape::XML::Node *sp_group_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_group_set(SPObject *object, unsigned key, char const *value);
 
-static void sp_group_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_group_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_group_print (SPItem * item, SPPrintContext *ctx);
 static gchar * sp_group_description (SPItem * item);
 static NR::Matrix sp_group_set_transform(SPItem *item, NR::Matrix const &xform);
@@ -274,7 +274,7 @@ sp_group_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XM
 }
 
 static void
-sp_group_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
+sp_group_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags)
 {
     SP_GROUP(item)->group->calculateBBox(bbox, transform, flags);
 }
@@ -422,8 +422,8 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 			Inkscape::XML::Node *nrepr = SP_OBJECT_REPR (child)->duplicate(prepr->document());
 
 			// Merging transform
-			NR::Matrix ctrans;
-			NR::Matrix const g(gitem->transform);
+			Geom::Matrix ctrans;
+			Geom::Matrix const g(gitem->transform);
 			if (SP_IS_USE(citem) && sp_use_get_original (SP_USE(citem)) &&
 					SP_OBJECT_PARENT (sp_use_get_original (SP_USE(citem))) == SP_OBJECT(group)) {
 				// make sure a clone's effective transform is the same as was under group
@@ -700,7 +700,7 @@ void CGroup::onModified(guint flags) {
     }
 }
 
-void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned const flags) {
+void CGroup::calculateBBox(NRRect *bbox, Geom::Matrix const &transform, unsigned const flags) {
 
     boost::optional<NR::Rect> dummy_bbox;
 
@@ -709,7 +709,7 @@ void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned c
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM(o) && !SP_ITEM(o)->isHidden()) {
             SPItem *child = SP_ITEM(o);
-            NR::Matrix const ct(child->transform * transform);
+            Geom::Matrix const ct(to_2geom(child->transform) * transform);
             sp_item_invoke_bbox_full(child, dummy_bbox, ct, flags, FALSE);
         }
         l = g_slist_remove (l, o);

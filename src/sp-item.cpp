@@ -997,7 +997,7 @@ sp_item_invoke_print(SPItem *item, SPPrintContext *ctx)
 {
     if (!item->isHidden()) {
         if (((SPItemClass *) G_OBJECT_GET_CLASS(item))->print) {
-            if (!item->transform.test_identity()
+            if (!item->transform.isIdentity()
                 || SP_OBJECT_STYLE(item)->opacity.value != SP_SCALE24_MAX)
             {
                 sp_print_bind(ctx, item->transform, SP_SCALE24_TO_FLOAT(SP_OBJECT_STYLE(item)->opacity.value));

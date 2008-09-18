@@ -634,7 +634,7 @@ fit_and_split(SPPencilContext *pc)
     g_assert( pc->npoints > 1 );
 
     double const tol = prefs_get_double_attribute_limited("tools.freehand.pencil",                                                                             "tolerance", 10.0, 1.0, 100.0);
-    double const tolerance_sq = 0.02 * square( NR::expansion(pc->desktop->w2d()) * tol) 
+    double const tolerance_sq = 0.02 * square( pc->desktop->w2d().descrim() * tol) 
         * exp(0.2*tol - 2);
 
     Geom::Point b[4];

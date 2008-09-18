@@ -52,7 +52,7 @@ static void grid_canvasitem_class_init (GridCanvasItemClass *klass);
 static void grid_canvasitem_init (GridCanvasItem *grid);
 static void grid_canvasitem_destroy (GtkObject *object);
 
-static void grid_canvasitem_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
+static void grid_canvasitem_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
 static void grid_canvasitem_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass * parent_class;
@@ -124,7 +124,7 @@ grid_canvasitem_render (SPCanvasItem * item, SPCanvasBuf * buf)
 }
 
 static void
-grid_canvasitem_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+grid_canvasitem_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     GridCanvasItem *gridcanvasitem = INKSCAPE_GRID_CANVASITEM (item);
 
@@ -419,13 +419,13 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
     gridunit = sp_unit_get_by_abbreviation( prefs->getString("options.grids.xy", "units").data() );
     if (!gridunit)
         gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
-    origin[NR::X] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "origin_x", 0.0), *gridunit);
-    origin[NR::Y] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "origin_y", 0.0), *gridunit);
+    origin[Geom::X] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "origin_x", 0.0), *gridunit);
+    origin[Geom::Y] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "origin_y", 0.0), *gridunit);
     color = prefs->getInt("options.grids.xy", "color", 0x0000ff20);
     empcolor = prefs->getInt("options.grids.xy", "empcolor", 0x0000ff40);
     empspacing = prefs->getInt("options.grids.xy", "empspacing", 5);
-    spacing[NR::X] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "spacing_x", 0.0), *gridunit);
-    spacing[NR::Y] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "spacing_y", 0.0), *gridunit);
+    spacing[Geom::X] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "spacing_x", 0.0), *gridunit);
+    spacing[Geom::Y] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "spacing_y", 0.0), *gridunit);
     render_dotted = prefs->getBool("options.grids.xy", "dotted", false);
 
     snapper = new CanvasXYGridSnapper(this, &namedview->snap_manager, 0);
@@ -568,27 +568,27 @@ CanvasXYGrid::readRepr()
 {
     gchar const *value;
     if ( (value = repr->attribute("originx")) ) {
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::X], &gridunit);
-        origin[NR::X] = sp_units_get_pixels(origin[NR::X], *(gridunit));
+        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[Geom::X], &gridunit);
+        origin[Geom::X] = sp_units_get_pixels(origin[Geom::X], *(gridunit));
     }
 
     if ( (value = repr->attribute("originy")) ) {
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::Y], &gridunit);
-        origin[NR::Y] = sp_units_get_pixels(origin[NR::Y], *(gridunit));
+        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[Geom::Y], &gridunit);
+        origin[Geom::Y] = sp_units_get_pixels(origin[Geom::Y], *(gridunit));
     }
 
     if ( (value = repr->attribute("spacingx")) ) {
-        double oldVal = spacing[NR::X];
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[NR::X], &gridunit);
-        validateScalar( oldVal, &spacing[NR::X]);
-        spacing[NR::X] = sp_units_get_pixels(spacing[NR::X], *(gridunit));
+        double oldVal = spacing[Geom::X];
+        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[Geom::X], &gridunit);
+        validateScalar( oldVal, &spacing[Geom::X]);
+        spacing[Geom::X] = sp_units_get_pixels(spacing[Geom::X], *(gridunit));
 
     }
     if ( (value = repr->attribute("spacingy")) ) {
-        double oldVal = spacing[NR::Y];
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[NR::Y], &gridunit);
-        validateScalar( oldVal, &spacing[NR::Y]);
-        spacing[NR::Y] = sp_units_get_pixels(spacing[NR::Y], *(gridunit));
+        double oldVal = spacing[Geom::Y];
+        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[Geom::Y], &gridunit);
+        validateScalar( oldVal, &spacing[Geom::Y]);
+        spacing[Geom::Y] = sp_units_get_pixels(spacing[Geom::Y], *(gridunit));
 
     }
 
@@ -719,16 +719,16 @@ _wr.setUpdating (false);
     _rumg->setUnit (gridunit);
 
     gdouble val;
-    val = origin[NR::X];
+    val = origin[Geom::X];
     val = sp_pixels_get_units (val, *(gridunit));
     _rsu_ox->setValue (val);
-    val = origin[NR::Y];
+    val = origin[Geom::Y];
     val = sp_pixels_get_units (val, *(gridunit));
     _rsu_oy->setValue (val);
-    val = spacing[NR::X];
+    val = spacing[Geom::X];
     double gridx = sp_pixels_get_units (val, *(gridunit));
     _rsu_sx->setValue (gridx);
-    val = spacing[NR::Y];
+    val = spacing[Geom::Y];
     double gridy = sp_pixels_get_units (val, *(gridunit));
     _rsu_sy->setValue (gridy);
 
@@ -761,16 +761,16 @@ CanvasXYGrid::updateWidgets()
     _rumg.setUnit (gridunit);
 
     gdouble val;
-    val = origin[NR::X];
+    val = origin[Geom::X];
     val = sp_pixels_get_units (val, *(gridunit));
     _rsu_ox.setValue (val);
-    val = origin[NR::Y];
+    val = origin[Geom::Y];
     val = sp_pixels_get_units (val, *(gridunit));
     _rsu_oy.setValue (val);
-    val = spacing[NR::X];
+    val = spacing[Geom::X];
     double gridx = sp_pixels_get_units (val, *(gridunit));
     _rsu_sx.setValue (gridx);
-    val = spacing[NR::Y];
+    val = spacing[Geom::Y];
     double gridy = sp_pixels_get_units (val, *(gridunit));
     _rsu_sy.setValue (gridy);
 
@@ -789,11 +789,11 @@ CanvasXYGrid::updateWidgets()
 
 
 void
-CanvasXYGrid::Update (NR::Matrix const &affine, unsigned int /*flags*/)
+CanvasXYGrid::Update (Geom::Matrix const &affine, unsigned int /*flags*/)
 {
     ow = origin * affine;
     sw = spacing * affine;
-    sw -= NR::Point(affine[4], affine[5]);
+    sw -= Geom::Point(affine[4], affine[5]);
 
     for(int dim = 0; dim < 2; dim++) {
         gint scaling_factor = empspacing;
@@ -881,16 +881,16 @@ grid_dot (SPCanvasBuf *buf, gint x, gint y, guint32 rgba)
 void
 CanvasXYGrid::Render (SPCanvasBuf *buf)
 {
-    gdouble const sxg = floor ((buf->rect.x0 - ow[NR::X]) / sw[NR::X]) * sw[NR::X] + ow[NR::X];
-    gint const  xlinestart = (gint) Inkscape::round((sxg - ow[NR::X]) / sw[NR::X]);
-    gdouble const syg = floor ((buf->rect.y0 - ow[NR::Y]) / sw[NR::Y]) * sw[NR::Y] + ow[NR::Y];
-    gint const  ylinestart = (gint) Inkscape::round((syg - ow[NR::Y]) / sw[NR::Y]);
+    gdouble const sxg = floor ((buf->rect.x0 - ow[Geom::X]) / sw[Geom::X]) * sw[Geom::X] + ow[Geom::X];
+    gint const  xlinestart = (gint) Inkscape::round((sxg - ow[Geom::X]) / sw[Geom::X]);
+    gdouble const syg = floor ((buf->rect.y0 - ow[Geom::Y]) / sw[Geom::Y]) * sw[Geom::Y] + ow[Geom::Y];
+    gint const  ylinestart = (gint) Inkscape::round((syg - ow[Geom::Y]) / sw[Geom::Y]);
 
     //set correct coloring, depending preference (when zoomed out, always major coloring or minor coloring)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint32 _empcolor;
     bool no_emp_when_zoomed_out = prefs->getBool("options.grids", "no_emphasize_when_zoomedout", false);
-    if( (scaled[NR::X] || scaled[NR::Y]) && no_emp_when_zoomed_out ) {
+    if( (scaled[Geom::X] || scaled[Geom::Y]) && no_emp_when_zoomed_out ) {
         _empcolor = color;
     } else {
         _empcolor = empcolor;
@@ -899,9 +899,9 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     if (!render_dotted) {
         gint ylinenum;
         gdouble y;
-        for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[NR::Y], ylinenum++) {
+        for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[Geom::Y], ylinenum++) {
             gint const y0 = (gint) Inkscape::round(y);
-            if (!scaled[NR::Y] && (ylinenum % empspacing) != 0) {
+            if (!scaled[Geom::Y] && (ylinenum % empspacing) != 0) {
                 grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, color);
             } else {
                 grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, _empcolor);
@@ -910,9 +910,9 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
 
         gint xlinenum;
         gdouble x;
-        for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
+        for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[Geom::X], xlinenum++) {
             gint const ix = (gint) Inkscape::round(x);
-            if (!scaled[NR::X] && (xlinenum % empspacing) != 0) {
+            if (!scaled[Geom::X] && (xlinenum % empspacing) != 0) {
                 grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, color);
             } else {
                 grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, _empcolor);
@@ -921,16 +921,16 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     } else {
         gint ylinenum;
         gdouble y;
-        for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[NR::Y], ylinenum++) {
+        for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += sw[Geom::Y], ylinenum++) {
             gint const iy = (gint) Inkscape::round(y);
 
             gint xlinenum;
             gdouble x;
-            for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[NR::X], xlinenum++) {
+            for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += sw[Geom::X], xlinenum++) {
                 gint const ix = (gint) Inkscape::round(x);
-                if ( (!scaled[NR::X] && (xlinenum % empspacing) != 0)
-                     || (!scaled[NR::Y] && (ylinenum % empspacing) != 0)
-                     || ((scaled[NR::X] || scaled[NR::Y]) && no_emp_when_zoomed_out) )
+                if ( (!scaled[Geom::X] && (xlinenum % empspacing) != 0)
+                     || (!scaled[Geom::Y] && (ylinenum % empspacing) != 0)
+                     || ((scaled[Geom::X] || scaled[Geom::Y]) && no_emp_when_zoomed_out) )
                 {
                     grid_dot (buf, ix, iy, color | (guint32)0x000000FF); // put alpha to max value
                 } else {
@@ -949,7 +949,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     }
 }
 
-CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SnapManager const *sm, NR::Coord const d) : LineSnapper(sm, d)
+CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SnapManager const *sm, Geom::Coord const d) : LineSnapper(sm, d)
 {
     this->grid = grid;
 }

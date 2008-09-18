@@ -19,6 +19,9 @@
 #include <glibmm/ustring.h>
 #include <gdk/gdkevents.h>
 #include <list>
+#include <2geom/forward.h>
+#include <boost/optional.hpp>
+
 
 struct SPCanvasItem;
 class SPCurve;
@@ -61,9 +64,9 @@ class Radial{
  */
 Radial(Geom::Point const &p)
 {
-	r = NR::L2(p);
+	r = Geom::L2(p);
 	if (r > 0) {
-		a = NR::atan2 (p);
+		a = Geom::atan2 (p);
 	} else {
 		a = HUGE_VAL; //undefined
 	}
@@ -283,7 +286,7 @@ void sp_nodepath_select_all (Inkscape::NodePath::Path *nodepath, bool invert);
 void sp_nodepath_select_all_from_subpath(Inkscape::NodePath::Path *nodepath, bool invert);
 void sp_nodepath_select_next (Inkscape::NodePath::Path *nodepath);
 void sp_nodepath_select_prev (Inkscape::NodePath::Path *nodepath);
-void sp_nodepath_select_rect (Inkscape::NodePath::Path * nodepath, NR::Rect const &b, gboolean incremental);
+void sp_nodepath_select_rect (Inkscape::NodePath::Path * nodepath, Geom::Rect const &b, gboolean incremental);
 GList *save_nodepath_selection (Inkscape::NodePath::Path *nodepath);
 void restore_nodepath_selection (Inkscape::NodePath::Path *nodepath, GList *r);
 gboolean nodepath_repr_d_changed (Inkscape::NodePath::Path * np, const char *newd);

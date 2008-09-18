@@ -25,8 +25,8 @@ struct SPItem;
 struct SPCtrlLine : public SPCanvasItem{
     SPItem *item;  // the item to which this line belongs in some sense; may be NULL for some users
     guint32 rgba;
-    NR::Point s, e;
-    NR::Matrix affine;
+    Geom::Point s, e;
+    Geom::Matrix affine;
 };
 struct SPCtrlLineClass : public SPCanvasItemClass{};
 
@@ -34,7 +34,7 @@ GType sp_ctrlline_get_type (void);
 
 void sp_ctrlline_set_rgba32 (SPCtrlLine *cl, guint32 rgba);
 void sp_ctrlline_set_coords (SPCtrlLine *cl, gdouble x0, gdouble y0, gdouble x1, gdouble y1);
-void sp_ctrlline_set_coords (SPCtrlLine *cl, const NR::Point start, const NR::Point end);
+void sp_ctrlline_set_coords (SPCtrlLine *cl, const Geom::Point start, const Geom::Point end);
 
 
 

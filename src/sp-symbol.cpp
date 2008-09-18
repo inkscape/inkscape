@@ -40,7 +40,7 @@ static Inkscape::XML::Node *sp_symbol_write (SPObject *object, Inkscape::XML::Do
 
 static NRArenaItem *sp_symbol_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static void sp_symbol_hide (SPItem *item, unsigned int key);
-static void sp_symbol_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_symbol_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_symbol_print (SPItem *item, SPPrintContext *ctx);
 
 static SPGroupClass *parent_class;
@@ -441,7 +441,7 @@ sp_symbol_hide (SPItem *item, unsigned int key)
 }
 
 static void
-sp_symbol_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
+sp_symbol_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags)
 {
     SPSymbol const *symbol = SP_SYMBOL(item);
 
@@ -449,7 +449,7 @@ sp_symbol_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, un
         /* Cloned <symbol> is actually renderable */
 
         if (((SPItemClass *) (parent_class))->bbox) {
-            Geom::Matrix const a( symbol->c2p * (Geom::Matrix)transform );
+            Geom::Matrix const a( symbol->c2p * transform );
             ((SPItemClass *) (parent_class))->bbox(item, bbox, a, flags);
         }
     }

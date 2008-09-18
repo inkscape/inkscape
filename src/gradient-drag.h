@@ -121,7 +121,7 @@ public: // FIXME: make more of this private!
     void deselectAll();
 		void selectAll();
 		void selectByCoords(std::vector<NR::Point> coords);
-    void selectRect(NR::Rect const &r);
+    void selectRect(Geom::Rect const &r);
 
     bool dropColor(SPItem *item, gchar *c, NR::Point p);
 

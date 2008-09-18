@@ -71,7 +71,7 @@ static void sp_image_set (SPObject *object, unsigned int key, const gchar *value
 static void sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags);
 static Inkscape::XML::Node *sp_image_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static void sp_image_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_image_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_image_print (SPItem * item, SPPrintContext *ctx);
 static gchar * sp_image_description (SPItem * item);
 static void sp_image_snappoints(SPItem const *item, SnapPointsIter p);
@@ -1033,7 +1033,7 @@ sp_image_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XM
 }
 
 static void
-sp_image_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const /*flags*/)
+sp_image_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
 {
 	SPImage const &image = *SP_IMAGE(item);
 
@@ -1043,10 +1043,10 @@ sp_image_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, uns
 		double const x1 = x0 + image.width.computed;
 		double const y1 = y0 + image.height.computed;
 
-		nr_rect_union_pt(bbox, NR::Point(x0, y0) * transform);
-		nr_rect_union_pt(bbox, NR::Point(x1, y0) * transform);
-		nr_rect_union_pt(bbox, NR::Point(x1, y1) * transform);
-		nr_rect_union_pt(bbox, NR::Point(x0, y1) * transform);
+		nr_rect_union_pt(bbox, Geom::Point(x0, y0) * transform);
+		nr_rect_union_pt(bbox, Geom::Point(x1, y0) * transform);
+		nr_rect_union_pt(bbox, Geom::Point(x1, y1) * transform);
+		nr_rect_union_pt(bbox, Geom::Point(x0, y1) * transform);
 	}
 }
 

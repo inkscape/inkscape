@@ -120,8 +120,8 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
 
         // Scale the style by the inverse of the accumulated parent transform in the paste context.
         {
-            NR::Matrix const local(sp_item_i2doc_affine(SP_ITEM(o)));
-            double const ex(NR::expansion(local));
+            Geom::Matrix const local(sp_item_i2doc_affine(SP_ITEM(o)));
+            double const ex(local.descrim());
             if ( ( ex != 0. )
                  && ( ex != 1. ) ) {
                 sp_css_attr_scale(css_set, 1/ex);
@@ -405,7 +405,7 @@ stroke_average_width (GSList const *objects)
         if (!SP_IS_ITEM (l->data))
             continue;
 
-        NR::Matrix i2d = sp_item_i2d_affine (SP_ITEM(l->data));
+        Geom::Matrix i2d = sp_item_i2d_affine (SP_ITEM(l->data));
 
         SPObject *object = SP_OBJECT(l->data);
 
@@ -416,7 +416,7 @@ stroke_average_width (GSList const *objects)
             notstroked = false;
         }
 
-        avgwidth += SP_OBJECT_STYLE (object)->stroke_width.computed * NR::expansion(i2d);
+        avgwidth += SP_OBJECT_STYLE (object)->stroke_width.computed * i2d.descrim();
     }
 
     if (notstroked)
@@ -671,8 +671,8 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
 
         n_stroked ++;
 
-        NR::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
-        double sw = style->stroke_width.computed * NR::expansion(i2d);
+        Geom::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
+        double sw = style->stroke_width.computed * i2d.descrim();
 
         if (prev_sw != -1 && fabs(sw - prev_sw) > 1e-3)
             same_sw = false;
@@ -887,7 +887,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
         if (!style) continue;
 
         texts ++;
-        size += style->font_size.computed * NR::expansion(sp_item_i2d_affine(SP_ITEM(obj))); /// \todo FIXME: we assume non-% units here
+        size += style->font_size.computed * Geom::Matrix(sp_item_i2d_affine(SP_ITEM(obj))).descrim(); /// \todo FIXME: we assume non-% units here
 
         if (style->letter_spacing.normal) {
             if (!different && (letterspacing_prev == 0 || letterspacing_prev == letterspacing))
@@ -1222,7 +1222,7 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
         if (!style) continue;
         if (!SP_IS_ITEM(obj)) continue;
 
-        NR::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
+        Geom::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
 
         items ++;
 
@@ -1238,7 +1238,7 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
                     if(SP_IS_GAUSSIANBLUR(primitive)) {
                         SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
                         float num = spblur->stdDeviation.getNumber();
-                        blur_sum += num * NR::expansion(i2d);
+                        blur_sum += num * i2d.descrim();
                         if (blur_prev != -1 && fabs (num - blur_prev) > 1e-2) // rather low tolerance because difference in blur radii is much harder to notice than e.g. difference in sizes
                             same_blur = false;
                         blur_prev = num;

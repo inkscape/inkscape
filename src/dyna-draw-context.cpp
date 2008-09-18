@@ -273,18 +273,18 @@ flerp(double f0, double f1, double p)
 static Geom::Point
 sp_dyna_draw_get_npoint(SPDynaDrawContext const *dc, Geom::Point v)
 {
-    NR::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
-    double const max = MAX ( drect.dimensions()[NR::X], drect.dimensions()[NR::Y] );
-    return Geom::Point(( v[NR::X] - drect.min()[NR::X] ) / max,  ( v[NR::Y] - drect.min()[NR::Y] ) / max);
+    Geom::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
+    double const max = MAX ( drect.dimensions()[Geom::X], drect.dimensions()[Geom::Y] );
+    return Geom::Point(( v[Geom::X] - drect.min()[Geom::X] ) / max,  ( v[Geom::Y] - drect.min()[Geom::Y] ) / max);
 }
 
 /* Get view point */
 static Geom::Point
 sp_dyna_draw_get_vpoint(SPDynaDrawContext const *dc, Geom::Point n)
 {
-    NR::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
-    double const max = MAX ( drect.dimensions()[NR::X], drect.dimensions()[NR::Y] );
-    return Geom::Point(n[NR::X] * max + drect.min()[NR::X], n[NR::Y] * max + drect.min()[NR::Y]);
+    Geom::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
+    double const max = MAX ( drect.dimensions()[Geom::X], drect.dimensions()[Geom::Y] );
+    return Geom::Point(n[Geom::X] * max + drect.min()[Geom::X], n[Geom::Y] * max + drect.min()[Geom::Y]);
 }
 
 static void
@@ -1095,7 +1095,7 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
 
-    double const tolerance_sq = square( NR::expansion(desktop->w2d()) * TOLERANCE_CALLIGRAPHIC );
+    double const tolerance_sq = square( desktop->w2d().descrim() * TOLERANCE_CALLIGRAPHIC );
 
 #ifdef DYNA_DRAW_VERBOSE
     g_print("[F&S:R=%c]", release?'T':'F');

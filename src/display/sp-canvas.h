@@ -36,8 +36,9 @@
 #include <glibmm/ustring.h>
 
 #include <libnr/nr-matrix.h>
-#include <libnr/nr-rect.h>
 #include <libnr/nr-rect-l.h>
+
+#include <2geom/rect.h>
 
 G_BEGIN_DECLS
 
@@ -75,17 +76,17 @@ struct SPCanvasItem : public GtkObject {
 
     double x1, y1, x2, y2;
     NR::Rect bounds;
-    NR::Matrix xform;
+    Geom::Matrix xform;
 };
 
 /**
  * The vtable of an SPCanvasItem.
  */
 struct _SPCanvasItemClass : public GtkObjectClass {
-    void (* update) (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
+    void (* update) (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
 
     void (* render) (SPCanvasItem *item, SPCanvasBuf *buf);
-    double (* point) (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item);
+    double (* point) (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
 
     int (* event) (SPCanvasItem *item, GdkEvent *event);
 };
@@ -96,7 +97,7 @@ G_END_DECLS
 
 #define sp_canvas_item_set gtk_object_set
 
-void sp_canvas_item_affine_absolute(SPCanvasItem *item, NR::Matrix const &aff);
+void sp_canvas_item_affine_absolute(SPCanvasItem *item, Geom::Matrix const &aff);
 
 void sp_canvas_item_raise(SPCanvasItem *item, int positions);
 void sp_canvas_item_lower(SPCanvasItem *item, int positions);
@@ -105,7 +106,7 @@ void sp_canvas_item_hide(SPCanvasItem *item);
 int sp_canvas_item_grab(SPCanvasItem *item, unsigned int event_mask, GdkCursor *cursor, guint32 etime);
 void sp_canvas_item_ungrab(SPCanvasItem *item, guint32 etime);
 
-NR::Matrix sp_canvas_item_i2w_affine(SPCanvasItem const *item);
+Geom::Matrix sp_canvas_item_i2w_affine(SPCanvasItem const *item);
 
 void sp_canvas_item_grab_focus(SPCanvasItem *item);
 
@@ -190,7 +191,7 @@ struct SPCanvas {
 
     bool is_scrolling;
 
-    NR::Rect getViewbox() const;
+    Geom::Rect getViewbox() const;
     NR::IRect getViewboxIntegers() const;
 };
 

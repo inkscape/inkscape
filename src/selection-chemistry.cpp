@@ -153,7 +153,7 @@ GSList *sp_selection_paste_impl (SPDocument *doc, SPObject *parent, GSList **cli
         NR::Matrix local (sp_item_i2doc_affine(SP_ITEM(parent)));
         if (!local.test_identity()) {
             gchar const *t_str = copy->attribute("transform");
-            Geom::Matrix item_t (NR::identity());
+            Geom::Matrix item_t (Geom::identity());
             if (t_str)
                 sp_svg_transform_read(t_str, &item_t);
             item_t *= local.inverse();
@@ -492,7 +492,7 @@ void sp_selection_group(SPDesktop *desktop)
                 // At this point, current may already have no item, due to its being a clone whose original is already moved away
                 // So we copy it artificially calculating the transform from its repr->attr("transform") and the parent transform
                 gchar const *t_str = current->attribute("transform");
-                Geom::Matrix item_t (NR::identity());
+                Geom::Matrix item_t (Geom::identity());
                 if (t_str)
                     sp_svg_transform_read(t_str, &item_t);
                 item_t *= sp_item_i2doc_affine(SP_ITEM(doc->getObjectByRepr(current->parent())));
@@ -899,7 +899,7 @@ take_style_from_item (SPItem *item)
     }
 
     // FIXME: also transform gradient/pattern fills, by forking? NO, this must be nondestructive
-    double ex = NR::expansion(sp_item_i2doc_affine(item));
+    double ex = to_2geom(sp_item_i2doc_affine(item)).descrim();
     if (ex != 1.0) {
         css = sp_css_attr_scale (css, ex);
     }
@@ -1219,32 +1219,34 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
             sp_object_read_attr (SP_OBJECT (item), "transform");
 
             // calculate the matrix we need to apply to the clone to cancel its induced transform from its original
-            NR::Matrix parent_transform = sp_item_i2root_affine(SP_ITEM(SP_OBJECT_PARENT (item)));
-            NR::Matrix t = parent_transform * from_2geom(matrix_to_desktop (matrix_from_desktop (affine, item), item)) * parent_transform.inverse();
-            NR::Matrix t_inv =parent_transform * from_2geom(matrix_to_desktop (matrix_from_desktop (affine.inverse(), item), item)) * parent_transform.inverse();
-            NR::Matrix result = t_inv * item->transform * t;
+            Geom::Matrix parent_transform = sp_item_i2root_affine(SP_ITEM(SP_OBJECT_PARENT (item)));
+            Geom::Matrix t = parent_transform * matrix_to_desktop (matrix_from_desktop (affine, item), item) * parent_transform.inverse();
+            NR::Matrix t_nr = from_2geom(t);
+            Geom::Matrix t_inv =parent_transform * matrix_to_desktop (matrix_from_desktop (affine.inverse(), item), item) * parent_transform.inverse();
+            Geom::Matrix result = t_inv * item->transform * t;
 
             if ((prefs_parallel || prefs_unmoved) && affine.isTranslation()) {
                 // we need to cancel out the move compensation, too
 
                 // find out the clone move, same as in sp_use_move_compensate
-                NR::Matrix parent = sp_use_get_parent_transform (SP_USE(item));
-                NR::Matrix clone_move = parent.inverse() * t * parent;
+                Geom::Matrix parent = sp_use_get_parent_transform (SP_USE(item));
+                Geom::Matrix clone_move = parent.inverse() * t * parent;
 
                 if (prefs_parallel) {
-                    NR::Matrix move = result * clone_move * t_inv;
-                    sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &move);
+                    Geom::Matrix move = result * clone_move * t_inv;
+                    NR::Matrix move_nr = from_2geom(move);
+                    sp_item_write_transform(item, SP_OBJECT_REPR(item), from_2geom(move), &move_nr);
 
                 } else if (prefs_unmoved) {
                     //if (SP_IS_USE(sp_use_get_original(SP_USE(item))))
                     //    clone_move = NR::identity();
-                    NR::Matrix move = result * clone_move;
-                    sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &t);
+                    Geom::Matrix move = result * clone_move;
+                    sp_item_write_transform(item, SP_OBJECT_REPR(item), from_2geom(move), &t_nr);
                 }
 
             } else {
                 // just apply the result
-                sp_item_write_transform(item, SP_OBJECT_REPR(item), result, &t);
+                sp_item_write_transform(item, SP_OBJECT_REPR(item), result, &t_nr);
             }
 
         } else {
@@ -1802,15 +1804,15 @@ SPItem *next_item(SPDesktop *desktop, GSList *path, SPObject *root,
  */
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item)
 {
-    NR::Rect dbox = desktop->get_display_area();
-    boost::optional<NR::Rect> sbox = sp_item_bbox_desktop(item);
+    Geom::Rect dbox = desktop->get_display_area();
+    boost::optional<Geom::Rect> sbox = to_2geom(sp_item_bbox_desktop(item));
 
     if ( sbox && dbox.contains(*sbox) == false ) {
-        NR::Point const s_dt = sbox->midpoint();
-        NR::Point const s_w = desktop->d2w(s_dt);
-        NR::Point const d_dt = dbox.midpoint();
-        NR::Point const d_w = desktop->d2w(d_dt);
-        NR::Point const moved_w( d_w - s_w );
+        Geom::Point const s_dt = sbox->midpoint();
+        Geom::Point const s_w = desktop->d2w(s_dt);
+        Geom::Point const d_dt = dbox.midpoint();
+        Geom::Point const d_w = desktop->d2w(d_dt);
+        Geom::Point const moved_w( d_w - s_w );
         gint const dx = (gint) moved_w[X];
         gint const dy = (gint) moved_w[Y];
         desktop->scroll_world(dx, dy);
@@ -2083,9 +2085,9 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     }
 
     // calculate the transform to be applied to objects to move them to 0,0
-    NR::Point move_p = NR::Point(0, sp_document_height(doc)) - *c;
-    move_p[NR::Y] = -move_p[NR::Y];
-    NR::Matrix move = NR::Matrix (NR::translate (move_p));
+    Geom::Point move_p = Geom::Point(0, sp_document_height(doc)) - *c;
+    move_p[Geom::Y] = -move_p[Geom::Y];
+    Geom::Matrix move = Geom::Matrix (Geom::Translate (move_p));
 
     GSList *items = g_slist_copy((GSList *) selection->itemList());
 
@@ -2094,7 +2096,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT_PARENT (items->data);
 
-    NR::Matrix parent_transform (sp_item_i2root_affine(SP_ITEM(parent)));
+    Geom::Matrix parent_transform (sp_item_i2root_affine(SP_ITEM(parent)));
 
     // remember the position of the first item
     gint pos = SP_OBJECT_REPR (items->data)->position();
@@ -2125,8 +2127,9 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     prefs->setInt("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
     gchar const *mark_id = generate_marker(repr_copies, bounds, doc,
-                                           ( NR::Matrix(NR::translate(desktop->dt2doc(NR::Point(r->min()[NR::X],
-                                                                                                r->max()[NR::Y]))))
+                                           ( Geom::Matrix(Geom::Translate(desktop->dt2doc(
+                                                                              Geom::Point(r->min()[Geom::X],
+                                                                                          r->max()[Geom::Y]))))
                                              * parent_transform.inverse() ),
                                            parent_transform * move);
     (void)mark_id;
@@ -2326,7 +2329,7 @@ sp_selection_untile(SPDesktop *desktop)
 
         SPPattern *pattern = pattern_getroot (SP_PATTERN (server));
 
-        NR::Matrix pat_transform = pattern_patternTransform (SP_PATTERN (server));
+        Geom::Matrix pat_transform = to_2geom(pattern_patternTransform (SP_PATTERN (server)));
         pat_transform *= item->transform;
 
         for (SPObject *child = sp_object_first_child(SP_OBJECT(pattern)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
@@ -2339,7 +2342,7 @@ sp_selection_untile(SPDesktop *desktop)
             // this is needed to make sure the new item has curve (simply requestDisplayUpdate does not work)
             sp_document_ensure_up_to_date (doc);
 
-            NR::Matrix transform( i->transform * pat_transform );
+            Geom::Matrix transform( i->transform * pat_transform );
             sp_item_write_transform(i, SP_OBJECT_REPR(i), transform);
 
             new_select = g_slist_prepend(new_select, i);
@@ -2858,7 +2861,7 @@ fit_canvas_to_selection(SPDesktop *desktop)
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to fit canvas to."));
         return false;
     }
-    boost::optional<NR::Rect> const bbox(desktop->selection->bounds());
+    boost::optional<Geom::Rect> const bbox(to_2geom(desktop->selection->bounds()));
     if (bbox && !bbox->isEmpty()) {
         doc->fitToRect(*bbox);
         return true;
@@ -2886,7 +2889,7 @@ fit_canvas_to_drawing(SPDocument *doc)
 
     sp_document_ensure_up_to_date(doc);
     SPItem const *const root = SP_ITEM(doc->root);
-    boost::optional<NR::Rect> const bbox(root->getBounds(sp_item_i2r_affine(root)));
+    boost::optional<Geom::Rect> const bbox(to_2geom(root->getBounds(sp_item_i2r_affine(root))));
     if (bbox && !bbox->isEmpty()) {
         doc->fitToRect(*bbox);
         return true;

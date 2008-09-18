@@ -1447,7 +1447,7 @@ GrDrag::selectByCoords(std::vector<NR::Point> coords)
 \brief Select all stops/draggers that fall within the rect
 */
 void
-GrDrag::selectRect(NR::Rect const &r)
+GrDrag::selectRect(Geom::Rect const &r)
 {
     for (GList *l = this->draggers; l != NULL; l = l->next) {
         GrDragger *d = ((GrDragger *) l->data);

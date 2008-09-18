@@ -69,7 +69,7 @@ static void sp_text_update (SPObject *object, SPCtx *ctx, guint flags);
 static void sp_text_modified (SPObject *object, guint flags);
 static Inkscape::XML::Node *sp_text_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static void sp_text_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_text_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static NRArenaItem *sp_text_show (SPItem *item, NRArena *arena, unsigned key, unsigned flags);
 static void sp_text_hide (SPItem *item, unsigned key);
 static char *sp_text_description (SPItem *item);
@@ -353,14 +353,14 @@ sp_text_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
 }
 
 static void
-sp_text_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const /*flags*/)
+sp_text_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
 {
     SP_TEXT(item)->layout.getBoundingBox(bbox, transform);
 
     // Add stroke width
     SPStyle* style=SP_OBJECT_STYLE (item);
     if (!style->stroke.isNone()) {
-        double const scale = expansion(transform);
+        double const scale = transform.descrim();
         if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
             double const width = MAX(0.125, style->stroke_width.computed * scale);
             if ( fabs(bbox->x1 - bbox->x0) > -0.00001 && fabs(bbox->y1 - bbox->y0) > -0.00001 ) {

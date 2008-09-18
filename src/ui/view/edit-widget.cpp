@@ -1375,7 +1375,7 @@ EditWidget::updateRulers()
     //Geom::Point gridorigin = _namedview->gridorigin;
     /// \todo Why was the origin corrected for the grid origin? (johan)
     
-    Geom::Rect const viewbox = to_2geom(_svg_canvas.spobj()->getViewbox());
+    Geom::Rect const viewbox = _svg_canvas.spobj()->getViewbox();
     double lo, up, pos, max;
     double const scale = _desktop->current_zoom();
     double s = viewbox.min()[Geom::X] / scale; //- gridorigin[Geom::X];
@@ -1408,10 +1408,10 @@ EditWidget::updateScrollbars (double scale)
     NR::Rect carea( Geom::Point(darea.min()[Geom::X] * scale - 64, darea.max()[Geom::Y] * -scale - 64),
                     Geom::Point(darea.max()[Geom::X] * scale + 64, darea.min()[Geom::Y] * -scale + 64)  );
 
-    NR::Rect const viewbox = _svg_canvas.spobj()->getViewbox();
+    Geom::Rect const viewbox = _svg_canvas.spobj()->getViewbox();
 
     /* Viewbox is always included into scrollable region */
-    carea = NR::union_bounds(carea, viewbox);
+    carea = NR::union_bounds(carea, from_2geom(viewbox));
 
     Gtk::Adjustment *adj = _bottom_scrollbar.get_adjustment();
     adj->set_value(viewbox.min()[Geom::X]);
@@ -1642,14 +1642,14 @@ EditWidget::onWindowSizeAllocate (Gtk::Allocation &newall)
         return;
     }
 
-    Geom::Rect const area = to_2geom(_desktop->get_display_area());
+    Geom::Rect const area = _desktop->get_display_area();
     double zoom = _desktop->current_zoom();
 
     if (_sticky_zoom.get_active()) {
         /* Calculate zoom per pixel */
         double const zpsp = zoom / hypot(area.dimensions()[Geom::X], area.dimensions()[Geom::Y]);
         /* Find new visible area */
-        Geom::Rect const newarea = to_2geom(_desktop->get_display_area());
+        Geom::Rect const newarea = _desktop->get_display_area();
         /* Calculate adjusted zoom */
         zoom = zpsp * hypot(newarea.dimensions()[Geom::X], newarea.dimensions()[Geom::Y]);
     }

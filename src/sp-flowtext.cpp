@@ -47,7 +47,7 @@ static Inkscape::XML::Node *sp_flowtext_write(SPObject *object, Inkscape::XML::D
 static void sp_flowtext_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_flowtext_set(SPObject *object, unsigned key, gchar const *value);
 
-static void sp_flowtext_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_flowtext_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_flowtext_description(SPItem *item);
 static NRArenaItem *sp_flowtext_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags);
@@ -176,7 +176,7 @@ sp_flowtext_update(SPObject *object, SPCtx *ctx, unsigned flags)
     group->rebuildLayout();
 
     NRRect paintbox;
-    sp_item_invoke_bbox(group, &paintbox, NR::identity(), TRUE);
+    sp_item_invoke_bbox(group, &paintbox, Geom::identity(), TRUE);
     for (SPItemView *v = group->display; v != NULL; v = v->next) {
         group->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
         nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
@@ -198,7 +198,7 @@ sp_flowtext_modified(SPObject *object, guint flags)
     if (flags & ( SP_OBJECT_STYLE_MODIFIED_FLAG )) {
         SPFlowtext *text = SP_FLOWTEXT(object);
         NRRect paintbox;
-        sp_item_invoke_bbox(text, &paintbox, NR::identity(), TRUE);
+        sp_item_invoke_bbox(text, &paintbox, Geom::identity(), TRUE);
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
             text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
             nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
@@ -323,7 +323,7 @@ sp_flowtext_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::
 }
 
 static void
-sp_flowtext_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const /*flags*/)
+sp_flowtext_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
 {
     SPFlowtext *group = SP_FLOWTEXT(item);
     group->layout.getBoundingBox(bbox, transform);
@@ -331,7 +331,7 @@ sp_flowtext_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, 
     // Add stroke width
     SPStyle* style=SP_OBJECT_STYLE (item);
     if ( !style->stroke.isNone() ) {
-        double const scale = expansion(transform);
+        double const scale = transform.descrim();
         if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
             double const width = MAX(0.125, style->stroke_width.computed * scale);
             if ( fabs(bbox->x1 - bbox->x0) > -0.00001 && fabs(bbox->y1 - bbox->y0) > -0.00001 ) {
@@ -350,7 +350,7 @@ sp_flowtext_print(SPItem *item, SPPrintContext *ctx)
     SPFlowtext *group = SP_FLOWTEXT(item);
 
     NRRect pbox;
-    sp_item_invoke_bbox(item, &pbox, NR::identity(), TRUE);
+    sp_item_invoke_bbox(item, &pbox, Geom::identity(), TRUE);
     NRRect bbox;
     boost::optional<NR::Rect> bbox_maybe = sp_item_bbox_desktop(item);
     if (!bbox_maybe) {
@@ -390,7 +390,7 @@ sp_flowtext_show(SPItem *item, NRArena *arena, unsigned/* key*/, unsigned /*flag
 
     // pass the bbox of the flowtext object as paintbox (used for paintserver fills)
     NRRect paintbox;
-    sp_item_invoke_bbox(item, &paintbox, NR::identity(), TRUE);
+    sp_item_invoke_bbox(item, &paintbox, Geom::identity(), TRUE);
     group->layout.show(flowed, &paintbox);
 
     return flowed;
@@ -556,7 +556,7 @@ SPFlowtext::getAsText()
             // set x,y attributes only when we need to
             bool set_x = false;
             bool set_y = false;
-            if (!item->transform.test_identity()) {
+            if (!item->transform.isIdentity()) {
                 set_x = set_y = true;
             } else {
                 Inkscape::Text::Layout::iterator it_chunk_start = it;

@@ -290,7 +290,7 @@ public:
     // the result is NOT a polygon; you need a subsequent call to ConvertToShape to get a real polygon
     int MakeOffset(Shape *of, double dec, JoinType join, double miter, bool do_profile=false, double cx = 0, double cy = 0, double radius = 0, NR::Matrix *i2doc = NULL);
 
-    int MakeTweak (int mode, Shape *a, double dec, JoinType join, double miter, bool do_profile, NR::Point c, NR::Point vector, double radius, NR::Matrix *i2doc);
+    int MakeTweak (int mode, Shape *a, double dec, JoinType join, double miter, bool do_profile, Geom::Point c, Geom::Point vector, double radius, Geom::Matrix *i2doc);
   
     int PtWinding(const NR::Point px) const; // plus rapide
     int Winding(const NR::Point px) const;

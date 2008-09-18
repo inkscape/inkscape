@@ -197,8 +197,8 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     gridunit = sp_unit_get_by_abbreviation( prefs->getString("options.grids.axonom", "units").data() );
     if (!gridunit)
         gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
-    origin[NR::X] = sp_units_get_pixels( prefs->getDouble("options.grids.axonom", "origin_x", 0.0), *gridunit );
-    origin[NR::Y] = sp_units_get_pixels( prefs->getDouble("options.grids.axonom", "origin_y", 0.0), *gridunit );
+    origin[Geom::X] = sp_units_get_pixels( prefs->getDouble("options.grids.axonom", "origin_x", 0.0), *gridunit );
+    origin[Geom::Y] = sp_units_get_pixels( prefs->getDouble("options.grids.axonom", "origin_y", 0.0), *gridunit );
     color = prefs->getInt("options.grids.axonom", "color", 0x0000ff20);
     empcolor = prefs->getInt("options.grids.axonom", "empcolor", 0x0000ff40);
     empspacing = prefs->getInt("options.grids.axonom", "empspacing", 5);
@@ -301,12 +301,12 @@ CanvasAxonomGrid::readRepr()
     /// @todo Replace direct XML preference node manipulation with calls to public prefs API
     gchar const *value;
     if ( (value = repr->attribute("originx")) ) {
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::X], &gridunit);
-        origin[NR::X] = sp_units_get_pixels(origin[NR::X], *(gridunit));
+        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[Geom::X], &gridunit);
+        origin[Geom::X] = sp_units_get_pixels(origin[Geom::X], *(gridunit));
     }
     if ( (value = repr->attribute("originy")) ) {
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[NR::Y], &gridunit);
-        origin[NR::Y] = sp_units_get_pixels(origin[NR::Y], *(gridunit));
+        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[Geom::Y], &gridunit);
+        origin[Geom::Y] = sp_units_get_pixels(origin[Geom::Y], *(gridunit));
     }
 
     if ( (value = repr->attribute("spacingy")) ) {
@@ -445,10 +445,10 @@ _wr.setUpdating (false);
     _rumg->setUnit (gridunit);
 
     gdouble val;
-    val = origin[NR::X];
+    val = origin[Geom::X];
     val = sp_pixels_get_units (val, *(gridunit));
     _rsu_ox->setValue (val);
-    val = origin[NR::Y];
+    val = origin[Geom::Y];
     val = sp_pixels_get_units (val, *(gridunit));
     _rsu_oy->setValue (val);
     val = lengthy;
@@ -484,10 +484,10 @@ CanvasAxonomGrid::updateWidgets()
     _rumg.setUnit (gridunit);
 
     gdouble val;
-    val = origin[NR::X];
+    val = origin[Geom::X];
     val = sp_pixels_get_units (val, *(gridunit));
     _rsu_ox.setValue (val);
-    val = origin[NR::Y];
+    val = origin[Geom::Y];
     val = sp_pixels_get_units (val, *(gridunit));
     _rsu_oy.setValue (val);
     val = lengthy;
@@ -510,10 +510,10 @@ CanvasAxonomGrid::updateWidgets()
 
 
 void
-CanvasAxonomGrid::Update (NR::Matrix const &affine, unsigned int /*flags*/)
+CanvasAxonomGrid::Update (Geom::Matrix const &affine, unsigned int /*flags*/)
 {
     ow = origin * affine;
-    sw = NR::Point(fabs(affine[0]),fabs(affine[3]));
+    sw = Geom::Point(fabs(affine[0]),fabs(affine[3]));
 
     for(int dim = 0; dim < 2; dim++) {
         gint scaling_factor = empspacing;
@@ -534,10 +534,10 @@ CanvasAxonomGrid::Update (NR::Matrix const &affine, unsigned int /*flags*/)
 
     }
 
-    spacing_ylines = sw[NR::X] * lengthy  /(tan_angle[X] + tan_angle[Z]);
-    lyw            = sw[NR::Y] * lengthy;
-    lxw_x          = (lengthy / tan_angle[X]) * sw[NR::X];
-    lxw_z          = (lengthy / tan_angle[Z]) * sw[NR::X];
+    spacing_ylines = sw[Geom::X] * lengthy  /(tan_angle[X] + tan_angle[Z]);
+    lyw            = sw[Geom::Y] * lengthy;
+    lxw_x          = (lengthy / tan_angle[X]) * sw[Geom::X];
+    lxw_z          = (lengthy / tan_angle[Z]) * sw[Geom::X];
 
     if (empspacing == 0) {
         scaled = TRUE;
@@ -563,12 +563,12 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     // bc = buffer patch coordinates
 
     // tl = topleft ; br = bottomright
-    NR::Point buf_tl_gc;
-    NR::Point buf_br_gc;
-    buf_tl_gc[NR::X] = buf->rect.x0 - ow[NR::X];
-    buf_tl_gc[NR::Y] = buf->rect.y0 - ow[NR::Y];
-    buf_br_gc[NR::X] = buf->rect.x1 - ow[NR::X];
-    buf_br_gc[NR::Y] = buf->rect.y1 - ow[NR::Y];
+    Geom::Point buf_tl_gc;
+    Geom::Point buf_br_gc;
+    buf_tl_gc[Geom::X] = buf->rect.x0 - ow[Geom::X];
+    buf_tl_gc[Geom::Y] = buf->rect.y0 - ow[Geom::Y];
+    buf_br_gc[Geom::X] = buf->rect.x1 - ow[Geom::X];
+    buf_br_gc[Geom::Y] = buf->rect.y1 - ow[Geom::Y];
 
     gdouble x;
     gdouble y;
@@ -576,9 +576,9 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     // render the three separate line groups representing the main-axes
 
     // x-axis always goes from topleft to bottomright. (0,0) - (1,1)
-    gdouble const xintercept_y_bc = (buf_tl_gc[NR::X] * tan_angle[X]) - buf_tl_gc[NR::Y] ;
+    gdouble const xintercept_y_bc = (buf_tl_gc[Geom::X] * tan_angle[X]) - buf_tl_gc[Geom::Y] ;
     gdouble const xstart_y_sc = ( xintercept_y_bc - floor(xintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
-    gint const xlinestart = (gint) Inkscape::round( (xstart_y_sc - buf->rect.x0*tan_angle[X] -ow[NR::Y]) / lyw );
+    gint const xlinestart = (gint) Inkscape::round( (xstart_y_sc - buf->rect.x0*tan_angle[X] -ow[Geom::Y]) / lyw );
     gint xlinenum = xlinestart;
     // lines starting on left side.
     for (y = xstart_y_sc; y < buf->rect.y1; y += lyw, xlinenum++) {
@@ -610,8 +610,8 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     }
 
     // y-axis lines (vertical)
-    gdouble const ystart_x_sc = floor (buf_tl_gc[NR::X] / spacing_ylines) * spacing_ylines + ow[NR::X];
-    gint const  ylinestart = (gint) Inkscape::round((ystart_x_sc - ow[NR::X]) / spacing_ylines);
+    gdouble const ystart_x_sc = floor (buf_tl_gc[Geom::X] / spacing_ylines) * spacing_ylines + ow[Geom::X];
+    gint const  ylinestart = (gint) Inkscape::round((ystart_x_sc - ow[Geom::X]) / spacing_ylines);
     gint ylinenum = ylinestart;
     for (x = ystart_x_sc; x < buf->rect.x1; x += spacing_ylines, ylinenum++) {
         gint const x0 = (gint) Inkscape::round(x);
@@ -624,9 +624,9 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     }
 
     // z-axis always goes from bottomleft to topright. (0,1) - (1,0)
-    gdouble const zintercept_y_bc = (buf_tl_gc[NR::X] * -tan_angle[Z]) - buf_tl_gc[NR::Y] ;
+    gdouble const zintercept_y_bc = (buf_tl_gc[Geom::X] * -tan_angle[Z]) - buf_tl_gc[Geom::Y] ;
     gdouble const zstart_y_sc = ( zintercept_y_bc - floor(zintercept_y_bc/lyw)*lyw ) + buf->rect.y0;
-    gint const  zlinestart = (gint) Inkscape::round( (zstart_y_sc + buf->rect.x0*tan_angle[Z] - ow[NR::Y]) / lyw );
+    gint const  zlinestart = (gint) Inkscape::round( (zstart_y_sc + buf->rect.x0*tan_angle[Z] - ow[Geom::Y]) / lyw );
     gint zlinenum = zlinestart;
     // lines starting from left side
     for (y = zstart_y_sc; y < buf->rect.y1; y += lyw, zlinenum++) {

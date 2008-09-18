@@ -626,7 +626,7 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
 
             font_instance *tface = fprev->rfont->daddy;
 
-            double theSize = NR::expansion(fprev->rfont->style.transform);
+            double theSize = fprev->rfont->style.transform.descrim();
 
             gchar const *p;
             if (fprev->phrase) {

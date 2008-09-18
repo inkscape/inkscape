@@ -499,7 +499,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 ret = TRUE;
             } else if (zoom_rb == event->button.button) {
                 zoom_rb = 0;
-                boost::optional<NR::Rect> const b = Inkscape::Rubberband::get(desktop)->getRectangle();
+                boost::optional<Geom::Rect> const b = Inkscape::Rubberband::get(desktop)->getRectangle();
                 Inkscape::Rubberband::get(desktop)->stop();
                 if (b && !within_tolerance) {
                     desktop->set_display_area(*b, 10);

@@ -31,7 +31,7 @@ static void sp_ctrlrect_class_init(SPCtrlRectClass *c);
 static void sp_ctrlrect_init(CtrlRect *ctrlrect);
 static void sp_ctrlrect_destroy(GtkObject *object);
 
-static void sp_ctrlrect_update(SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
+static void sp_ctrlrect_update(SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags);
 static void sp_ctrlrect_render(SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass *parent_class;
@@ -161,7 +161,7 @@ static void sp_ctrlrect_render(SPCanvasItem *item, SPCanvasBuf *buf)
 }
 
 
-static void sp_ctrlrect_update(SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+static void sp_ctrlrect_update(SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     SP_CTRLRECT(item)->update(affine, flags);
 }
@@ -177,7 +177,7 @@ void CtrlRect::init()
     _area.x0 = _area.y0 = 0;
     _area.x1 = _area.y1 = 0;
 
-    _rect = NR::Rect(NR::Point(0,0),NR::Point(0,0));
+    _rect = Geom::Rect(Geom::Point(0,0),Geom::Point(0,0));
 
     _shadow_size = 0;
 
@@ -221,7 +221,7 @@ void CtrlRect::render(SPCanvasBuf *buf)
 }
 
 
-void CtrlRect::update(NR::Matrix const &affine, unsigned int flags)
+void CtrlRect::update(Geom::Matrix const &affine, unsigned int flags)
 {
     if (((SPCanvasItemClass *) parent_class)->update) {
         ((SPCanvasItemClass *) parent_class)->update(this, affine, flags);
@@ -255,12 +255,12 @@ void CtrlRect::update(NR::Matrix const &affine, unsigned int flags)
         }
     }
 
-    NR::Rect bbox(_rect.min() * affine, _rect.max() * affine);
+    Geom::Rect bbox(_rect.min() * affine, _rect.max() * affine);
 
-    _area.x0 = (int) floor(bbox.min()[NR::X] + 0.5);
-    _area.y0 = (int) floor(bbox.min()[NR::Y] + 0.5);
-    _area.x1 = (int) floor(bbox.max()[NR::X] + 0.5);
-    _area.y1 = (int) floor(bbox.max()[NR::Y] + 0.5);
+    _area.x0 = (int) floor(bbox.min()[Geom::X] + 0.5);
+    _area.y0 = (int) floor(bbox.min()[Geom::Y] + 0.5);
+    _area.x1 = (int) floor(bbox.max()[Geom::X] + 0.5);
+    _area.y1 = (int) floor(bbox.max()[Geom::Y] + 0.5);
 
     _shadow_size = _shadow;
 
@@ -312,7 +312,7 @@ void CtrlRect::setShadow(int s, guint c)
     _requestUpdate();
 }
 
-void CtrlRect::setRectangle(NR::Rect const &r)
+void CtrlRect::setRectangle(Geom::Rect const &r)
 {
     _rect = r;
     _requestUpdate();

@@ -45,6 +45,14 @@ inline NR::Rect from_2geom(Geom::Rect const & rect2geom) {
     NR::Rect rect(rect2geom.min(), rect2geom.max());
     return rect;
 }
+inline boost::optional<Geom::Rect> to_2geom(boost::optional<NR::Rect> const & rect) {
+    boost::optional<Geom::Rect> rect2geom;
+    if (!rect) {
+        return rect2geom;
+    }
+    rect2geom = to_2geom(*rect);
+    return rect2geom;
+}
 
 inline NR::scale from_2geom(Geom::Scale const & in) {
     return NR::scale(in[Geom::X], in[Geom::Y]);

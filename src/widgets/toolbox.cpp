@@ -6372,8 +6372,9 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
     GSList *items = get_avoided_items(NULL, desktop->currentRoot(), desktop);
     for ( GSList const *iter = items ; iter != NULL ; iter = iter->next ) {
         SPItem *item = reinterpret_cast<SPItem *>(iter->data);
-        NR::Matrix m = NR::identity();
-        avoid_item_move(&m, item);
+        Geom::Matrix m = Geom::identity();
+        NR::Matrix m_NR = from_2geom(m);
+        avoid_item_move(&m_NR, item);
     }
 
     if (items) {

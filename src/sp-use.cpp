@@ -51,7 +51,7 @@ static Inkscape::XML::Node *sp_use_write(SPObject *object, Inkscape::XML::Docume
 static void sp_use_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_use_modified(SPObject *object, guint flags);
 
-static void sp_use_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
+static void sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_use_snappoints(SPItem const *item, SnapPointsIter p);
 static void sp_use_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_use_description(SPItem *item);
@@ -269,15 +269,15 @@ sp_use_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::
 }
 
 static void
-sp_use_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
+sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags)
 {
     SPUse const *use = SP_USE(item);
 
     if (use->child && SP_IS_ITEM(use->child)) {
         SPItem *child = SP_ITEM(use->child);
-        NR::Matrix const ct( child->transform
-                             * NR::translate(use->x.computed,
-                                             use->y.computed)
+        Geom::Matrix const ct( child->transform
+                             * Geom::Translate(use->x.computed,
+                                               use->y.computed)
                              * transform );
         sp_item_invoke_bbox_full(child, bbox, ct, flags, FALSE);
     }

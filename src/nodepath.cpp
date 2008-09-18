@@ -63,7 +63,7 @@
 #include "display/snap-indicator.h"
 #include "snapped-point.h"
 
-class NR::Matrix;
+class Geom::Matrix;
 
 /// \todo
 /// evil evil evil. FIXME: conflict of two different Path classes!
@@ -533,7 +533,7 @@ static void subpaths_from_pathvector(Inkscape::NodePath::Path *np, Geom::PathVec
 
         Inkscape::NodePath::SubPath *sp = sp_nodepath_subpath_new(np);
 
-        Geom::Point ppos = pit->initialPoint() * (Geom::Matrix)np->i2d;
+        Geom::Point ppos = pit->initialPoint() * np->i2d;
         NRPathcode pcode = NR_MOVETO;
 
         /* Johan: Note that this is pretty arcane code. I am pretty sure it is working correctly, be very certain to change it! (better to just rewrite this whole method)*/
@@ -890,16 +890,16 @@ static void sp_nodepath_line_midpoint(Inkscape::NodePath::Node *new_path,Inkscap
         new_path->code = NR_CURVETO;
         gdouble s      = 1 - t;
         for (int dim = 0; dim < 2; dim++) {
-            NR::Coord const f000 = start->pos[dim];
-            NR::Coord const f001 = start->n.pos[dim];
-            NR::Coord const f011 = end->p.pos[dim];
-            NR::Coord const f111 = end->pos[dim];
-            NR::Coord const f00t = s * f000 + t * f001;
-            NR::Coord const f01t = s * f001 + t * f011;
-            NR::Coord const f11t = s * f011 + t * f111;
-            NR::Coord const f0tt = s * f00t + t * f01t;
-            NR::Coord const f1tt = s * f01t + t * f11t;
-            NR::Coord const fttt = s * f0tt + t * f1tt;
+            Geom::Coord const f000 = start->pos[dim];
+            Geom::Coord const f001 = start->n.pos[dim];
+            Geom::Coord const f011 = end->p.pos[dim];
+            Geom::Coord const f111 = end->pos[dim];
+            Geom::Coord const f00t = s * f000 + t * f001;
+            Geom::Coord const f01t = s * f001 + t * f011;
+            Geom::Coord const f11t = s * f011 + t * f111;
+            Geom::Coord const f0tt = s * f00t + t * f01t;
+            Geom::Coord const f1tt = s * f01t + t * f11t;
+            Geom::Coord const fttt = s * f0tt + t * f1tt;
             start->n.pos[dim]    = f00t;
             new_path->p.pos[dim] = f0tt;
             new_path->pos[dim]   = fttt;
@@ -1118,8 +1118,8 @@ sp_node_side_is_line (Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeSi
         if (!other_to_me)
             return false;
         bool is_line = 
-             (NR::L2(othernode->pos - other_to_me->pos) < 1e-6 &&
-              NR::L2(node->pos - side->pos) < 1e-6);
+             (Geom::L2(othernode->pos - other_to_me->pos) < 1e-6 &&
+              Geom::L2(node->pos - side->pos) < 1e-6);
         return is_line;
 }
 
@@ -1156,8 +1156,8 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
             }
         }
 */
-        bool p_has_handle = (NR::L2(node->pos  - node->p.pos) > 1e-6);
-        bool n_has_handle = (NR::L2(node->pos  - node->n.pos) > 1e-6);
+        bool p_has_handle = (Geom::L2(node->pos  - node->p.pos) > 1e-6);
+        bool n_has_handle = (Geom::L2(node->pos  - node->n.pos) > 1e-6);
         bool p_is_line = sp_node_side_is_line(node, &node->p);
         bool n_is_line = sp_node_side_is_line(node, &node->n);
 
@@ -1186,16 +1186,16 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
                 // pull n handle
                 node->n.other->code = NR_CURVETO;
                 double len =  (type == Inkscape::NodePath::NODE_SYMM)?
-                    NR::L2(node->p.pos - node->pos) :
-                    NR::L2(node->n.other->pos - node->pos) / 3;
-                node->n.pos = node->pos - (len / NR::L2(node->p.pos - node->pos)) * (node->p.pos - node->pos);
+                    Geom::L2(node->p.pos - node->pos) :
+                    Geom::L2(node->n.other->pos - node->pos) / 3;
+                node->n.pos = node->pos - (len / Geom::L2(node->p.pos - node->pos)) * (node->p.pos - node->pos);
             } else if (n_has_handle && node->p.other) {
                 // pull p handle
                 node->code = NR_CURVETO;
                 double len =  (type == Inkscape::NodePath::NODE_SYMM)?
-                    NR::L2(node->n.pos - node->pos) :
-                    NR::L2(node->p.other->pos - node->pos) / 3;
-                node->p.pos = node->pos - (len / NR::L2(node->n.pos - node->pos)) * (node->n.pos - node->pos);
+                    Geom::L2(node->n.pos - node->pos) :
+                    Geom::L2(node->p.other->pos - node->pos) / 3;
+                node->p.pos = node->pos - (len / Geom::L2(node->n.pos - node->pos)) * (node->n.pos - node->pos);
             }
         } else if (!p_has_handle && !n_has_handle) {
             if ((p_is_line && n_is_line) || (!p_is_line && node->p.other && !n_is_line && node->n.other)) {
@@ -1234,15 +1234,15 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
                     if (type != Inkscape::NodePath::NODE_SYMM) {
                         // pull n handle
                         node->n.other->code = NR_CURVETO;
-                        double len =  NR::L2(node->n.other->pos - node->pos) / 3;
-                        node->n.pos = node->pos + (len / NR::L2(node->p.other->pos - node->pos)) * (node->p.other->pos - node->pos);
+                        double len =  Geom::L2(node->n.other->pos - node->pos) / 3;
+                        node->n.pos = node->pos + (len / Geom::L2(node->p.other->pos - node->pos)) * (node->p.other->pos - node->pos);
                     }
                 } else if (n_is_line && node->p.other) {
                     if (type != Inkscape::NodePath::NODE_SYMM) {
                         // pull p handle
                         node->code = NR_CURVETO;
-                        double len =  NR::L2(node->p.other->pos - node->pos) / 3;
-                        node->p.pos = node->pos + (len / NR::L2(node->n.other->pos - node->pos)) * (node->n.other->pos - node->pos);
+                        double len =  Geom::L2(node->p.other->pos - node->pos) / 3;
+                        node->p.pos = node->pos + (len / Geom::L2(node->n.other->pos - node->pos)) * (node->n.other->pos - node->pos);
                     }
                 }
             }
@@ -1299,11 +1299,11 @@ void sp_node_moveto(Inkscape::NodePath::Node *node, Geom::Point p)
 /**
  * Call sp_node_moveto() for node selection and handle possible snapping.
  */
-static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, NR::Coord dx, NR::Coord dy,
+static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, Geom::Coord dx, Geom::Coord dy,
                                             bool const snap, bool constrained = false, 
                                             Inkscape::Snapper::ConstraintLine const &constraint = Geom::Point())
 {
-    NR::Coord best = NR_HUGE;
+    Geom::Coord best = NR_HUGE;
     Geom::Point delta(dx, dy);
     Geom::Point best_pt = delta;
     Inkscape::SnappedPoint best_abs;
@@ -1398,8 +1398,8 @@ double
 bezier_length (Geom::Point a, Geom::Point ah, Geom::Point bh, Geom::Point b)
 {
     // extremely primitive for now, don't have time to look for the real one
-    double lower = NR::L2(b - a);
-    double upper = NR::L2(ah - a) + NR::L2(bh - ah) + NR::L2(bh - b);
+    double lower = Geom::L2(b - a);
+    double upper = Geom::L2(ah - a) + Geom::L2(bh - ah) + Geom::L2(bh - b);
     return (lower + upper)/2;
 }
 
@@ -1505,8 +1505,8 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
                     if (n_node->selected) {
                         sp_nodepath_move_node_and_handles (n_node,
                                                            sculpt_profile (n_range / n_sel_range, alpha, profile) * delta,
-                                                           sculpt_profile ((n_range + NR::L2(n_node->n.origin - n_node->origin)) / n_sel_range, alpha, profile) * delta,
-                                                           sculpt_profile ((n_range - NR::L2(n_node->p.origin - n_node->origin)) / n_sel_range, alpha, profile) * delta);
+                                                           sculpt_profile ((n_range + Geom::L2(n_node->n.origin - n_node->origin)) / n_sel_range, alpha, profile) * delta,
+                                                           sculpt_profile ((n_range - Geom::L2(n_node->p.origin - n_node->origin)) / n_sel_range, alpha, profile) * delta);
                     }
                     if (n_node == p_node) {
                         n_going = false;
@@ -1522,8 +1522,8 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
                     if (p_node->selected) {
                         sp_nodepath_move_node_and_handles (p_node,
                                                            sculpt_profile (p_range / p_sel_range, alpha, profile) * delta,
-                                                           sculpt_profile ((p_range - NR::L2(p_node->n.origin - p_node->origin)) / p_sel_range, alpha, profile) * delta,
-                                                           sculpt_profile ((p_range + NR::L2(p_node->p.origin - p_node->origin)) / p_sel_range, alpha, profile) * delta);
+                                                           sculpt_profile ((p_range - Geom::L2(p_node->n.origin - p_node->origin)) / p_sel_range, alpha, profile) * delta,
+                                                           sculpt_profile ((p_range + Geom::L2(p_node->p.origin - p_node->origin)) / p_sel_range, alpha, profile) * delta);
                     }
                     if (p_node == n_node) {
                         n_going = false;
@@ -1535,7 +1535,7 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
 
     } else {
         // Multiple subpaths have selected nodes:
-        // use spatial mode, where the distance from n to node being dragged is measured directly as NR::L2.
+        // use spatial mode, where the distance from n to node being dragged is measured directly as Geom::L2.
         // TODO: correct these distances taking into account their angle relative to the bisector, so as to
         // fix the pear-like shape when sculpting e.g. a ring
 
@@ -1546,7 +1546,7 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
             for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
                 Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
                 if (node->selected) {
-                    direct_range = MAX(direct_range, NR::L2(node->origin - n->origin));
+                    direct_range = MAX(direct_range, Geom::L2(node->origin - n->origin));
                 }
             }
         }
@@ -1559,9 +1559,9 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
                 if (node->selected) {
                     if (direct_range > 1e-6) {
                         sp_nodepath_move_node_and_handles (node,
-                                                       sculpt_profile (NR::L2(node->origin - n->origin) / direct_range, alpha, profile) * delta,
-                                                       sculpt_profile (NR::L2(node->n.origin - n->origin) / direct_range, alpha, profile) * delta,
-                                                       sculpt_profile (NR::L2(node->p.origin - n->origin) / direct_range, alpha, profile) * delta);
+                                                       sculpt_profile (Geom::L2(node->origin - n->origin) / direct_range, alpha, profile) * delta,
+                                                       sculpt_profile (Geom::L2(node->n.origin - n->origin) / direct_range, alpha, profile) * delta,
+                                                       sculpt_profile (Geom::L2(node->p.origin - n->origin) / direct_range, alpha, profile) * delta);
                     } else {
                         sp_nodepath_move_node_and_handles (node, delta, delta, delta);
                     }
@@ -1637,7 +1637,7 @@ void sp_node_selected_move_absolute(Inkscape::NodePath::Path *nodepath, Geom::Co
 }
 
 /**
- * If the coordinates of all selected nodes coincide, return the common coordinate; otherwise return NR::Nothing
+ * If the coordinates of all selected nodes coincide, return the common coordinate; otherwise return Geom::Nothing
  */
 boost::optional<Geom::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis)
 {
@@ -1647,7 +1647,7 @@ boost::optional<Geom::Coord> sp_node_selected_common_coord (Inkscape::NodePath::
     // determine coordinate of first selected node
     GList *nsel = nodepath->selected;
     Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) nsel->data;
-    NR::Coord coord = n->pos[axis];
+    Geom::Coord coord = n->pos[axis];
     bool coincide = true;
 
     // compare it to the coordinates of all the other selected nodes
@@ -1704,7 +1704,7 @@ static void sp_node_update_handle(Inkscape::NodePath::Node *node, gint which, gb
    Inkscape::NodePath::NodeSide *side = sp_node_get_side(node, which);
     NRPathcode code = sp_node_path_code_from_side(node, side);
 
-    show_handle = show_handle && (code == NR_CURVETO) && (NR::L2(side->pos - node->pos) > 1e-6);
+    show_handle = show_handle && (code == NR_CURVETO) && (Geom::L2(side->pos - node->pos) > 1e-6);
 
     if (show_handle) {
         if (!side->knot) { // No handle knot at all
@@ -1848,7 +1848,7 @@ void sp_nodepath_selected_align(Inkscape::NodePath::Path *nodepath, Geom::Dim2 a
 struct NodeSort
 {
    Inkscape::NodePath::Node *_node;
-    NR::Coord _coord;
+    Geom::Coord _coord;
     /// \todo use vectorof pointers instead of calling copy ctor
     NodeSort(Inkscape::NodePath::Node *node, Geom::Dim2 axis) :
         _node(node), _coord(node->pos[axis])
@@ -2997,7 +2997,7 @@ void sp_nodepath_select_prev(Inkscape::NodePath::Path *nodepath)
 /**
  * \brief Select all nodes that are within the rectangle.
  */
-void sp_nodepath_select_rect(Inkscape::NodePath::Path *nodepath, NR::Rect const &b, gboolean incremental)
+void sp_nodepath_select_rect(Inkscape::NodePath::Path *nodepath, Geom::Rect const &b, gboolean incremental)
 {
     if (!incremental) {
         sp_nodepath_deselect(nodepath);
@@ -3131,13 +3131,13 @@ nodepath_grow_selection_spatially (Inkscape::NodePath::Path *nodepath, Inkscape:
            if (node == n)
                continue;
            if (node->selected) {
-               if (NR::L2(node->pos - n->pos) > farthest_dist) {
-                   farthest_dist = NR::L2(node->pos - n->pos);
+               if (Geom::L2(node->pos - n->pos) > farthest_dist) {
+                   farthest_dist = Geom::L2(node->pos - n->pos);
                    farthest_selected = node;
                }
            } else {
-               if (NR::L2(node->pos - n->pos) < closest_dist) {
-                   closest_dist = NR::L2(node->pos - n->pos);
+               if (Geom::L2(node->pos - n->pos) < closest_dist) {
+                   closest_dist = Geom::L2(node->pos - n->pos);
                    closest_unselected = node;
                }
            }
@@ -3245,9 +3245,9 @@ static void sp_node_adjust_handle(Inkscape::NodePath::Node *node, gint which_adj
     if (sp_node_side_is_line(node, other)) {
         // other is a line, and we are either smooth or symm
        Inkscape::NodePath::Node *othernode = other->other;
-        double len = NR::L2(me->pos - node->pos);
+        double len = Geom::L2(me->pos - node->pos);
         Geom::Point delta = node->pos - othernode->pos;
-        double linelen = NR::L2(delta);
+        double linelen = Geom::L2(delta);
         if (linelen < 1e-18)
             return;
         me->pos = node->pos + (len / linelen)*delta;
@@ -3260,9 +3260,9 @@ static void sp_node_adjust_handle(Inkscape::NodePath::Node *node, gint which_adj
         return;
     } else {
         // smoothify
-        double len = NR::L2(me->pos - node->pos);
+        double len = Geom::L2(me->pos - node->pos);
         Geom::Point delta = other->pos - node->pos;
-        double otherlen = NR::L2(delta);
+        double otherlen = Geom::L2(delta);
         if (otherlen < 1e-18) return;
         me->pos = node->pos - (len / otherlen) * delta;
     }
@@ -3302,9 +3302,9 @@ static void sp_node_adjust_handles(Inkscape::NodePath::Node *node)
     }
 
     /* We are smooth */
-    double plen = NR::L2(node->p.pos - node->pos);
+    double plen = Geom::L2(node->p.pos - node->pos);
     if (plen < 1e-18) return;
-    double nlen = NR::L2(node->n.pos - node->pos);
+    double nlen = Geom::L2(node->n.pos - node->pos);
     if (nlen < 1e-18) return;
     node->p.pos = node->pos - (plen / (plen + nlen)) * delta;
     node->n.pos = node->pos + (nlen / (plen + nlen)) * delta;
@@ -3500,10 +3500,10 @@ static void node_ungrabbed(SPKnot */*knot*/, guint /*state*/, gpointer data)
 static void point_line_closest(Geom::Point *p, double a, Geom::Point *closest)
 {
     if (a == HUGE_VAL) { // vertical
-        *closest = Geom::Point(0, (*p)[NR::Y]);
+        *closest = Geom::Point(0, (*p)[Geom::Y]);
     } else {
-        (*closest)[NR::X] = ( a * (*p)[NR::Y] + (*p)[NR::X]) / (a*a + 1);
-        (*closest)[NR::Y] = a * (*closest)[NR::X];
+        (*closest)[Geom::X] = ( a * (*p)[Geom::Y] + (*p)[Geom::X]) / (a*a + 1);
+        (*closest)[Geom::Y] = a * (*closest)[Geom::X];
     }
 }
 
@@ -3516,7 +3516,7 @@ static double point_line_distance(Geom::Point *p, double a)
 {
     Geom::Point c;
     point_line_closest(p, a, &c);
-    return sqrt(((*p)[NR::X] - c[NR::X])*((*p)[NR::X] - c[NR::X]) + ((*p)[NR::Y] - c[NR::Y])*((*p)[NR::Y] - c[NR::Y]));
+    return sqrt(((*p)[Geom::X] - c[Geom::X])*((*p)[Geom::X] - c[Geom::X]) + ((*p)[Geom::Y] - c[Geom::Y])*((*p)[Geom::Y] - c[Geom::Y]));
 }
 
 /**
@@ -3546,8 +3546,8 @@ node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
 
        if (!n->dragging_out) {
            // This is the first drag-out event; find out which handle to drag out
-           double appr_n = (n->n.other ? NR::L2(n->n.other->pos - n->pos) - NR::L2(n->n.other->pos - (*p)) : -HUGE_VAL);
-           double appr_p = (n->p.other ? NR::L2(n->p.other->pos - n->pos) - NR::L2(n->p.other->pos - (*p)) : -HUGE_VAL);
+           double appr_n = (n->n.other ? Geom::L2(n->n.other->pos - n->pos) - Geom::L2(n->n.other->pos - (*p)) : -HUGE_VAL);
+           double appr_p = (n->p.other ? Geom::L2(n->p.other->pos - n->pos) - Geom::L2(n->p.other->pos - (*p)) : -HUGE_VAL);
 
            if (appr_p == -HUGE_VAL && appr_n == -HUGE_VAL) // orphan node?
                return FALSE;
@@ -3571,8 +3571,8 @@ node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
                    opposite = &n->p;
                    n->n.other->code = NR_CURVETO;
                } else { // find out to which handle of the adjacent node we're closer; note that n->n.other == n->p.other
-                   double appr_other_n = (n->n.other ? NR::L2(n->n.other->n.pos - n->pos) - NR::L2(n->n.other->n.pos - (*p)) : -HUGE_VAL);
-                   double appr_other_p = (n->n.other ? NR::L2(n->n.other->p.pos - n->pos) - NR::L2(n->n.other->p.pos - (*p)) : -HUGE_VAL);
+                   double appr_other_n = (n->n.other ? Geom::L2(n->n.other->n.pos - n->pos) - Geom::L2(n->n.other->n.pos - (*p)) : -HUGE_VAL);
+                   double appr_other_p = (n->n.other ? Geom::L2(n->n.other->p.pos - n->pos) - Geom::L2(n->n.other->p.pos - (*p)) : -HUGE_VAL);
                    if (appr_other_p > appr_other_n) { // closer to other's p handle
                        n->dragging_out = &n->n;
                        opposite = &n->p;
@@ -3605,28 +3605,28 @@ node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
 
         // calculate relative distances of handles
         // n handle:
-        yn = n->n.pos[NR::Y] - n->pos[NR::Y];
-        xn = n->n.pos[NR::X] - n->pos[NR::X];
+        yn = n->n.pos[Geom::Y] - n->pos[Geom::Y];
+        xn = n->n.pos[Geom::X] - n->pos[Geom::X];
         // if there's no n handle (straight line), see if we can use the direction to the next point on path
         if ((n->n.other && n->n.other->code == NR_LINETO) || fabs(yn) + fabs(xn) < 1e-6) {
             if (n->n.other) { // if there is the next point
                 if (L2(n->n.other->p.pos - n->n.other->pos) < 1e-6) // and the next point has no handle either
-                    yn = n->n.other->origin[NR::Y] - n->origin[NR::Y]; // use origin because otherwise the direction will change as you drag
-                    xn = n->n.other->origin[NR::X] - n->origin[NR::X];
+                    yn = n->n.other->origin[Geom::Y] - n->origin[Geom::Y]; // use origin because otherwise the direction will change as you drag
+                    xn = n->n.other->origin[Geom::X] - n->origin[Geom::X];
             }
         }
         if (xn < 0) { xn = -xn; yn = -yn; } // limit the angle to between 0 and pi
         if (yn < 0) { xn = -xn; yn = -yn; }
 
         // p handle:
-        yp = n->p.pos[NR::Y] - n->pos[NR::Y];
-        xp = n->p.pos[NR::X] - n->pos[NR::X];
+        yp = n->p.pos[Geom::Y] - n->pos[Geom::Y];
+        xp = n->p.pos[Geom::X] - n->pos[Geom::X];
         // if there's no p handle (straight line), see if we can use the direction to the prev point on path
         if (n->code == NR_LINETO || fabs(yp) + fabs(xp) < 1e-6) {
             if (n->p.other) {
                 if (L2(n->p.other->n.pos - n->p.other->pos) < 1e-6)
-                    yp = n->p.other->origin[NR::Y] - n->origin[NR::Y];
-                    xp = n->p.other->origin[NR::X] - n->origin[NR::X];
+                    yp = n->p.other->origin[Geom::Y] - n->origin[Geom::Y];
+                    xp = n->p.other->origin[Geom::X] - n->origin[Geom::X];
             }
         }
         if (xp < 0) { xp = -xp; yp = -yp; } // limit the angle to between 0 and pi
@@ -3680,24 +3680,24 @@ node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
 
             // move the node to the closest point
             sp_nodepath_selected_nodes_move(n->subpath->nodepath,
-                                            n->origin[NR::X] + c[NR::X] - n->pos[NR::X],
-                                            n->origin[NR::Y] + c[NR::Y] - n->pos[NR::Y], 
+                                            n->origin[Geom::X] + c[Geom::X] - n->pos[Geom::X],
+                                            n->origin[Geom::Y] + c[Geom::Y] - n->pos[Geom::Y], 
                                             true);
 
         } else {  // constraining to hor/vert
 
-            if (fabs((*p)[NR::X] - n->origin[NR::X]) > fabs((*p)[NR::Y] - n->origin[NR::Y])) { // snap to hor
+            if (fabs((*p)[Geom::X] - n->origin[Geom::X]) > fabs((*p)[Geom::Y] - n->origin[Geom::Y])) { // snap to hor
                 sp_nodepath_selected_nodes_move(n->subpath->nodepath,
-                                                (*p)[NR::X] - n->pos[NR::X], 
-                                                n->origin[NR::Y] - n->pos[NR::Y],
+                                                (*p)[Geom::X] - n->pos[Geom::X], 
+                                                n->origin[Geom::Y] - n->pos[Geom::Y],
                                                 true, 
-                                                true, Inkscape::Snapper::ConstraintLine(component_vectors[NR::X]));
+                                                true, Inkscape::Snapper::ConstraintLine(component_vectors[Geom::X]));
             } else { // snap to vert
                 sp_nodepath_selected_nodes_move(n->subpath->nodepath,
-                                                n->origin[NR::X] - n->pos[NR::X],
-                                                (*p)[NR::Y] - n->pos[NR::Y],
+                                                n->origin[Geom::X] - n->pos[Geom::X],
+                                                (*p)[Geom::Y] - n->pos[Geom::Y],
                                                 true,
-                                                true, Inkscape::Snapper::ConstraintLine(component_vectors[NR::Y]));
+                                                true, Inkscape::Snapper::ConstraintLine(component_vectors[Geom::Y]));
             }
         }
     } else { // move freely
@@ -3706,8 +3706,8 @@ node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
                 sp_nodepath_selected_nodes_sculpt(n->subpath->nodepath, n, (*p) - n->origin);
             } else {
                 sp_nodepath_selected_nodes_move(n->subpath->nodepath,
-                                            (*p)[NR::X] - n->pos[NR::X],
-                                            (*p)[NR::Y] - n->pos[NR::Y],
+                                            (*p)[Geom::X] - n->pos[Geom::X],
+                                            (*p)[Geom::Y] - n->pos[Geom::Y],
                                             (state & GDK_SHIFT_MASK) == 0);
             }
         }
@@ -3824,12 +3824,12 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point *p, guint state, g
         if ((n->type != Inkscape::NodePath::NODE_CUSP) && sp_node_side_is_line(n, opposite)) {
             /* We are smooth node adjacent with line */
             Geom::Point const delta = *p - n->pos;
-            NR::Coord const len = NR::L2(delta);
+            Geom::Coord const len = Geom::L2(delta);
             Inkscape::NodePath::Node *othernode = opposite->other;
             Geom::Point const ndelta = n->pos - othernode->pos;
-            NR::Coord const linelen = NR::L2(ndelta);
+            Geom::Coord const linelen = Geom::L2(ndelta);
             if (len > NR_EPSILON && linelen > NR_EPSILON) {
-                NR::Coord const scal = dot(delta, ndelta) / linelen;
+                Geom::Coord const scal = dot(delta, ndelta) / linelen;
                 (*p) = n->pos + (scal / linelen) * ndelta;
             }
             if ((state & GDK_SHIFT_MASK) == 0) {
@@ -3908,7 +3908,7 @@ static void node_handle_moved(SPKnot *knot, Geom::Point *p, guint state, gpointe
             } else {
                 other_to_snap = other->pos - n->pos;
             }
-            if (NR::L2(other_to_snap) > 1e-3) {
+            if (Geom::L2(other_to_snap) > 1e-3) {
                 Radial rother_to_snap(other_to_snap);
                 /* The closest PI/2 angle, starting from the angle of the opposite line segment */
                 double const a_oppo = rother_to_snap.a + floor((rnew.a - rother_to_snap.a)/(M_PI/2) + 0.5) * (M_PI/2);
@@ -3994,12 +3994,12 @@ static gboolean node_handle_event(SPKnot *knot, GdkEvent *event,Inkscape::NodePa
             break;
         case GDK_ENTER_NOTIFY:
             // we use an experimentally determined threshold that seems to work fine
-            if (NR::L2(n->pos - knot->pos) < 0.75)
+            if (Geom::L2(n->pos - knot->pos) < 0.75)
                 Inkscape::NodePath::Path::active_node = n;
             break;
         case GDK_LEAVE_NOTIFY:
             // we use an experimentally determined threshold that seems to work fine
-            if (NR::L2(n->pos - knot->pos) < 0.75)
+            if (Geom::L2(n->pos - knot->pos) < 0.75)
                 Inkscape::NodePath::Path::active_node = NULL;
             break;
         default:
@@ -4058,8 +4058,8 @@ static void node_rotate_one (Inkscape::NodePath::Node *n, gdouble angle, int whi
     Inkscape::NodePath::NodeSide *me, *other;
     bool both = false;
 
-    double xn = n->n.other? n->n.other->pos[NR::X] : n->pos[NR::X];
-    double xp = n->p.other? n->p.other->pos[NR::X] : n->pos[NR::X];
+    double xn = n->n.other? n->n.other->pos[Geom::X] : n->pos[Geom::X];
+    double xp = n->p.other? n->p.other->pos[Geom::X] : n->pos[Geom::X];
 
     if (!n->n.other) { // if this is an endnode, select its single handle regardless of "which"
         me = &(n->p);
@@ -4125,7 +4125,7 @@ void sp_nodepath_selected_nodes_rotate(Inkscape::NodePath::Path *nodepath, gdoub
        // rotate as an object:
 
         Inkscape::NodePath::Node *n0 = (Inkscape::NodePath::Node *) nodepath->selected->data;
-        NR::Rect box (n0->pos, n0->pos); // originally includes the first selected node
+        Geom::Rect box (n0->pos, n0->pos); // originally includes the first selected node
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             box.expandTo (n->pos); // contain all selected nodes
@@ -4135,7 +4135,7 @@ void sp_nodepath_selected_nodes_rotate(Inkscape::NodePath::Path *nodepath, gdoub
         if (screen) {
             gdouble const zoom = nodepath->desktop->current_zoom();
             gdouble const zmove = angle / zoom;
-            gdouble const r = NR::L2(box.max() - box.midpoint());
+            gdouble const r = Geom::L2(box.max() - box.midpoint());
             rot = atan2(zmove, r);
         } else {
             rot = angle;
@@ -4147,10 +4147,10 @@ void sp_nodepath_selected_nodes_rotate(Inkscape::NodePath::Path *nodepath, gdoub
         else
             rot_center = Inkscape::NodePath::Path::active_node->pos;
 
-        NR::Matrix t =
-            NR::Matrix (NR::translate(-rot_center)) *
-            NR::Matrix (NR::rotate(rot)) *
-            NR::Matrix (NR::translate(rot_center));
+        Geom::Matrix t =
+            Geom::Matrix (Geom::Translate(-rot_center)) *
+            Geom::Matrix (Geom::Rotate(rot)) *
+            Geom::Matrix (Geom::Translate(rot_center));
 
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
@@ -4172,8 +4172,8 @@ static void node_scale_one (Inkscape::NodePath::Node *n, gdouble grow, int which
     bool both = false;
     Inkscape::NodePath::NodeSide *me, *other;
 
-    double xn = n->n.other? n->n.other->pos[NR::X] : n->pos[NR::X];
-    double xp = n->p.other? n->p.other->pos[NR::X] : n->pos[NR::X];
+    double xn = n->n.other? n->n.other->pos[Geom::X] : n->pos[Geom::X];
+    double xp = n->p.other? n->p.other->pos[Geom::X] : n->pos[Geom::X];
 
     if (!n->n.other) { // if this is an endnode, select its single handle regardless of "which"
         me = &(n->p);
@@ -4264,7 +4264,7 @@ void sp_nodepath_selected_nodes_scale(Inkscape::NodePath::Path *nodepath, gdoubl
         // scale nodes as an "object":
 
         Inkscape::NodePath::Node *n0 = (Inkscape::NodePath::Node *) nodepath->selected->data;
-        NR::Rect box (n0->pos, n0->pos); // originally includes the first selected node
+        Geom::Rect box (n0->pos, n0->pos); // originally includes the first selected node
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             box.expandTo (n->pos); // contain all selected nodes
@@ -4278,10 +4278,10 @@ void sp_nodepath_selected_nodes_scale(Inkscape::NodePath::Path *nodepath, gdoubl
         else
             scale_center = Inkscape::NodePath::Path::active_node->pos;
 
-        NR::Matrix t =
-            NR::Matrix (NR::translate(-scale_center)) *
-            NR::Matrix (NR::scale(scale, scale)) *
-            NR::Matrix (NR::translate(scale_center));
+        Geom::Matrix t =
+            Geom::Matrix (Geom::Translate(-scale_center)) *
+            Geom::Matrix (Geom::Scale(scale, scale)) *
+            Geom::Matrix (Geom::Translate(scale_center));
 
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
@@ -4322,10 +4322,10 @@ void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis, boos
         if (!center) {
             center = box.midpoint();
         }
-        NR::Matrix t =
-            NR::Matrix (NR::translate(- *center)) *
-            NR::Matrix ((axis == Geom::X)? NR::scale(-1, 1) : NR::scale(1, -1)) *
-            NR::Matrix (NR::translate(*center));
+        Geom::Matrix t =
+            Geom::Matrix (Geom::Translate(- *center)) *
+            Geom::Matrix ((axis == Geom::X)? Geom::Scale(-1, 1) : Geom::Scale(1, -1)) *
+            Geom::Matrix (Geom::Translate(*center));
 
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
@@ -4465,7 +4465,7 @@ sp_nodepath_node_new(Inkscape::NodePath::SubPath *sp, Inkscape::NodePath::Node *
     } else {
         if (fabs (Inkscape::Util::triangle_area (*pos, *ppos, *npos)) < 1e-2) {
             // points are (almost) collinear
-            if (NR::L2(*pos - *ppos) < 1e-6 || NR::L2(*pos - *npos) < 1e-6) {
+            if (Geom::L2(*pos - *ppos) < 1e-6 || Geom::L2(*pos - *npos) < 1e-6) {
                 // endnode, or a node with a retracted handle
                 n->type = Inkscape::NodePath::NODE_CUSP;
             } else {
@@ -4730,7 +4730,7 @@ static gchar const *sp_node_type_description(Inkscape::NodePath::Node *node)
 
     for (int which = -1; which <= 1; which += 2) {
         Inkscape::NodePath::NodeSide *side = sp_node_get_side(node, which);
-        if (side->other && NR::L2(side->pos - node->pos) < 1e-6)
+        if (side->other && Geom::L2(side->pos - node->pos) < 1e-6)
             retracted ++;
         if (!side->other)
             endnode = true;

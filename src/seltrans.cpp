@@ -525,7 +525,7 @@ void Inkscape::SelTrans::stamp()
 
             SPItem *copy_item = (SPItem *) sp_desktop_document(_desktop)->getObjectByRepr(copy_repr);
 
-            NR::Matrix const *new_affine;
+            Geom::Matrix const *new_affine;
             if (_show == SHOW_OUTLINE) {
                 NR::Matrix const i2d(sp_item_i2d_affine(original_item));
                 NR::Matrix const i2dnew( i2d * _current_relative_affine );
@@ -902,7 +902,7 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
     NR::Point pt_geom = _getGeomHandlePos(pt);
     NR::scale geom_scale = calcScaleFactors(_point_geom, pt_geom, _origin_for_specpoints);
 
-    _absolute_affine = NR::identity(); //Initialize the scaler
+    _absolute_affine = Geom::identity(); //Initialize the scaler
 
     if (state & GDK_MOD1_MASK) { // scale by an integer multiplier/divider
         // We're scaling either the visual or the geometric bbox here (see the comment above)
@@ -1017,7 +1017,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
     NR::scale geom_scale = calcScaleFactors(_point_geom, pt_geom, _origin_for_specpoints);
     geom_scale[perp] = 1;
 
-    _absolute_affine = NR::identity(); //Initialize the scaler
+    _absolute_affine = Geom::identity(); //Initialize the scaler
 
     if (state & GDK_MOD1_MASK) { // stretch by an integer multiplier/divider
         if (fabs(default_scale[axis]) > 1) {
@@ -1184,7 +1184,7 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
     pt[dim_a] = initial_delta[dim_a] * scale[dim_a] + _origin[dim_a];
 
     // Calculate the relative affine
-    _relative_affine = NR::identity();
+    _relative_affine = Geom::identity();
     _relative_affine[2*dim_a + dim_a] = (pt[dim_a] - _origin[dim_a]) / initial_delta[dim_a];
     _relative_affine[2*dim_a + (dim_b)] = (pt[dim_b] - _point[dim_b]) / initial_delta[dim_a];
     _relative_affine[2*(dim_b) + (dim_a)] = 0;
