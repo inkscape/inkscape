@@ -54,17 +54,17 @@ GType box3d_get_type (void);
 
 void box3d_position_set (SPBox3D *box);
 Proj::Pt3 box3d_get_proj_corner (SPBox3D const *box, guint id);
-NR::Point box3d_get_corner_screen (SPBox3D const *box, guint id, bool item_coords = true);
+Geom::Point box3d_get_corner_screen (SPBox3D const *box, guint id, bool item_coords = true);
 Proj::Pt3 box3d_get_proj_center (SPBox3D *box);
-NR::Point box3d_get_center_screen (SPBox3D *box);
+Geom::Point box3d_get_center_screen (SPBox3D *box);
 
-void box3d_set_corner (SPBox3D *box, guint id, NR::Point const &new_pos, Box3D::Axis movement, bool constrained);
-void box3d_set_center (SPBox3D *box, NR::Point const &new_pos, NR::Point const &old_pos, Box3D::Axis movement, bool constrained);
-void box3d_corners_for_PLs (const SPBox3D * box, Proj::Axis axis, NR::Point &corner1, NR::Point &corner2, NR::Point &corner3, NR::Point &corner4);
+void box3d_set_corner (SPBox3D *box, guint id, Geom::Point const &new_pos, Box3D::Axis movement, bool constrained);
+void box3d_set_center (SPBox3D *box, Geom::Point const &new_pos, Geom::Point const &old_pos, Box3D::Axis movement, bool constrained);
+void box3d_corners_for_PLs (const SPBox3D * box, Proj::Axis axis, Geom::Point &corner1, Geom::Point &corner2, Geom::Point &corner3, Geom::Point &corner4);
 bool box3d_recompute_z_orders (SPBox3D *box);
 void box3d_set_z_orders (SPBox3D *box);
 
-int box3d_pt_lies_in_PL_sector (SPBox3D const *box, NR::Point const &pt, int id1, int id2, Box3D::Axis axis);
+int box3d_pt_lies_in_PL_sector (SPBox3D const *box, Geom::Point const &pt, int id1, int id2, Box3D::Axis axis);
 int box3d_VP_lies_in_PL_sector (SPBox3D const *box, Proj::Axis vpdir, int id1, int id2, Box3D::Axis axis);
 
 void box3d_relabel_corners(SPBox3D *box);

@@ -13,9 +13,9 @@
 
 #include "transf_mat_3x4.h"
 #include <gtk/gtk.h>
+#include <2geom/matrix.h>
 #include "svg/stringstream.h"
 #include "syseq.h"
-#include "libnr/nr-matrix.h"
 #include "document.h"
 #include "inkscape.h"
 
@@ -61,11 +61,11 @@ TransfMat3x4::image (Pt3 const &point) {
 }
 
 Pt3
-TransfMat3x4::preimage (NR::Point const &pt, double coord, Proj::Axis axis) {
+TransfMat3x4::preimage (Geom::Point const &pt, double coord, Proj::Axis axis) {
     double x[4];
     double v[3];
-    v[0] = pt[NR::X];
-    v[1] = pt[NR::Y];
+    v[0] = pt[Geom::X];
+    v[1] = pt[Geom::Y];
     v[2] = 1.0;
     int index = (int) axis;
 
@@ -93,10 +93,10 @@ void
 TransfMat3x4::toggle_finite (Proj::Axis axis) {
     g_return_if_fail (axis != Proj::W);
     if (has_finite_image(axis)) {
-        NR::Point dir (column(axis).affine());
-        NR::Point origin (column(Proj::W).affine());
+        Geom::Point dir (column(axis).affine());
+        Geom::Point origin (column(Proj::W).affine());
         dir -= origin;
-        set_column (axis, Proj::Pt2(dir[NR::X], dir[NR::Y], 0));
+        set_column (axis, Proj::Pt2(dir[Geom::X], dir[Geom::Y], 0));
     } else {
         Proj::Pt2 dir (column(axis));
         Proj::Pt2 origin (column(Proj::W).affine());
@@ -131,7 +131,7 @@ TransfMat3x4::operator==(const TransfMat3x4 &rhs) const
 
 /* multiply a projective matrix by an affine matrix */
 TransfMat3x4
-TransfMat3x4::operator*(NR::Matrix const &A) const {
+TransfMat3x4::operator*(Geom::Matrix const &A) const {
     TransfMat3x4 ret;
 
     // Is it safe to always use the currently active document?
@@ -141,7 +141,7 @@ TransfMat3x4::operator*(NR::Matrix const &A) const {
      * Note: The strange multiplication involving the document height is due to the buggy
      *       intertwining of SVG and document coordinates. Essentially, what we do is first
      *       convert from "real-world" to SVG coordinates, then apply the transformation A
-     *       (by multiplying with the NR::Matrix) and then convert back from SVG to real-world
+     *       (by multiplying with the Geom::Matrix) and then convert back from SVG to real-world
      *       coordinates. Maybe there is even a more Inkscape-ish way to achieve this?
      *       Once Inkscape has gotton rid of the two different coordiate systems, we can change
      *       this function to an ordinary matrix multiplication.
@@ -160,7 +160,7 @@ TransfMat3x4::operator*(NR::Matrix const &A) const {
 // FIXME: Shouldn't rather operator* call operator*= for efficiency? (Because in operator*=
 //        there is in principle no need to create a temporary object, which happens in the assignment)
 TransfMat3x4 &
-TransfMat3x4::operator*=(NR::Matrix const &A) {
+TransfMat3x4::operator*=(Geom::Matrix const &A) {
     *this = *this * A;
     return *this;
 }

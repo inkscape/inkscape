@@ -31,7 +31,7 @@ class Box3DContextClass;
 
 struct Box3DContext : public SPEventContext {
     SPItem *item;
-    NR::Point center;
+    Geom::Point center;
 
     /**
      * save three corners while dragging:
@@ -41,9 +41,9 @@ struct Box3DContext : public SPEventContext {
      *    if we are ctrl-dragging but is constrained to the perspective line from drag_ptC
      *    to the vanishing point Y otherwise)
      */
-    NR::Point drag_origin;
-    NR::Point drag_ptB;
-    NR::Point drag_ptC;
+    Geom::Point drag_origin;
+    Geom::Point drag_ptB;
+    Geom::Point drag_ptC;
 
     Proj::Pt3 drag_origin_proj;
     Proj::Pt3 drag_ptB_proj;

@@ -302,12 +302,12 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
     switch (event->type) {
     case GDK_BUTTON_PRESS:
         if ( event->button.button == 1  && !event_context->space_panning) {
-            NR::Point const button_w(event->button.x,
-                                     event->button.y);
+            Geom::Point const button_w(event->button.x,
+                                       event->button.y);
 
             // save drag origin
-            event_context->xp = (gint) button_w[NR::X];
-            event_context->yp = (gint) button_w[NR::Y];
+            event_context->xp = (gint) button_w[Geom::X];
+            event_context->yp = (gint) button_w[Geom::Y];
             event_context->within_tolerance = true;
             
             // remember clicked item, *not* disregarding groups (since a 3D box is a group), honoring Alt
@@ -357,9 +357,9 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             // motion notify coordinates as given (no snapping back to origin)
             event_context->within_tolerance = false;
 
-            NR::Point const motion_w(event->motion.x,
-                                     event->motion.y);
-            Geom::Point motion_dt(to_2geom(desktop->w2d(motion_w)));
+            Geom::Point const motion_w(event->motion.x,
+                                       event->motion.y);
+            Geom::Point motion_dt(desktop->w2d(motion_w));
 
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, true, bc->item);

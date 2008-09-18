@@ -13,7 +13,7 @@
 #define SEEN_VANISHING_POINT_H
 
 #include <set>
-#include "libnr/nr-point.h"
+#include <2geom/point.h>
 #include "knot.h"
 #include "selection.h"
 #include "axis-manip.h"
@@ -66,8 +66,8 @@ public:
         g_return_val_if_fail (_persp, false);
         return persp3d_get_VP (_persp, _axis).is_finite();
     }
-    inline NR::Point get_pos() const {
-        g_return_val_if_fail (_persp, NR::Point (NR_HUGE, NR_HUGE));
+    inline Geom::Point get_pos() const {
+        g_return_val_if_fail (_persp, Geom::Point (NR_HUGE, NR_HUGE));
         return persp3d_get_VP (_persp,_axis).affine();
     }
     inline Persp3D * get_perspective() const {
@@ -122,16 +122,16 @@ struct less_ptr : public std::binary_function<VanishingPoint *, VanishingPoint *
 
 struct VPDragger {
 public:
-    VPDragger(VPDrag *parent, NR::Point p, VanishingPoint &vp);
+    VPDragger(VPDrag *parent, Geom::Point p, VanishingPoint &vp);
     ~VPDragger();
 
     VPDrag *parent;
     SPKnot *knot;
 
     // position of the knot, desktop coords
-    NR::Point point;
+    Geom::Point point;
     // position of the knot before it began to drag; updated when released
-    NR::Point point_original;
+    Geom::Point point_original;
 
     bool dragging_started;
 
@@ -150,7 +150,7 @@ public:
     void mergePerspectives(); // remove duplicate perspectives
 
     void updateBoxDisplays();
-    void updateVPs(NR::Point const &pt);
+    void updateVPs(Geom::Point const &pt);
     void updateZOrders();
 
     void printVPs();
@@ -199,7 +199,7 @@ public:
 private:
     //void deselect_all();
 
-    void addLine (NR::Point p1, NR::Point p2, guint32 rgba);
+    void addLine (Geom::Point p1, Geom::Point p2, guint32 rgba);
 
     Inkscape::Selection *selection;
     sigc::connection sel_changed_connection;

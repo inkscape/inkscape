@@ -45,12 +45,12 @@ Pt2::normalize() {
     pt[2] = 1.0;
 }
 
-NR::Point
+Geom::Point
 Pt2::affine() {
   if (fabs(pt[2]) < epsilon) {
-    return NR::Point (NR_HUGE, NR_HUGE);
+    return Geom::Point (NR_HUGE, NR_HUGE);
   }
-  return NR::Point (pt[0]/pt[2], pt[1]/pt[2]);
+  return Geom::Point (pt[0]/pt[2], pt[1]/pt[2]);
 }
 
 gchar *

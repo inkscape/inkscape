@@ -56,9 +56,9 @@ inline Persp3D * persp3d_get_from_repr (Inkscape::XML::Node *repr) {
 inline Proj::Pt2 persp3d_get_VP (Persp3D *persp, Proj::Axis axis) {
     return persp->tmat.column(axis);
 }
-NR::Point persp3d_get_PL_dir_from_pt (Persp3D *persp, NR::Point const &pt, Proj::Axis axis); // convenience wrapper around the following two
-NR::Point persp3d_get_finite_dir (Persp3D *persp, NR::Point const &pt, Proj::Axis axis);
-NR::Point persp3d_get_infinite_dir (Persp3D *persp, Proj::Axis axis);
+Geom::Point persp3d_get_PL_dir_from_pt (Persp3D *persp, Geom::Point const &pt, Proj::Axis axis); // convenience wrapper around the following two
+Geom::Point persp3d_get_finite_dir (Persp3D *persp, Geom::Point const &pt, Proj::Axis axis);
+Geom::Point persp3d_get_infinite_dir (Persp3D *persp, Proj::Axis axis);
 double persp3d_get_infinite_angle (Persp3D *persp, Proj::Axis axis);
 bool persp3d_VP_is_finite (Persp3D *persp, Proj::Axis axis);
 void persp3d_toggle_VP (Persp3D *persp, Proj::Axis axis, bool set_undo = true);
@@ -66,7 +66,7 @@ void persp3d_toggle_VPs (std::list<Persp3D *>, Proj::Axis axis);
 void persp3d_set_VP_state (Persp3D *persp, Proj::Axis axis, Proj::VPState state);
 void persp3d_rotate_VP (Persp3D *persp, Proj::Axis axis, double angle, bool alt_pressed); // angle is in degrees
 void persp3d_update_with_point (Persp3D *persp, Proj::Axis const axis, Proj::Pt2 const &new_image);
-void persp3d_apply_affine_transformation (Persp3D *persp, NR::Matrix const &xform);
+void persp3d_apply_affine_transformation (Persp3D *persp, Geom::Matrix const &xform);
 gchar * persp3d_pt_to_str (Persp3D *persp, Proj::Axis const axis);
 
 void persp3d_add_box (Persp3D *persp, SPBox3D *box);

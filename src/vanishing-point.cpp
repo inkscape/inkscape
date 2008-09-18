@@ -77,12 +77,12 @@ have_VPs_of_same_perspective (VPDragger *dr1, VPDragger *dr2)
 }
 
 static void
-vp_knot_moved_handler (SPKnot */*knot*/, NR::Point const *ppointer, guint state, gpointer data)
+vp_knot_moved_handler (SPKnot */*knot*/, Geom::Point const *ppointer, guint state, gpointer data)
 {
     VPDragger *dragger = (VPDragger *) data;
     VPDrag *drag = dragger->parent;
 
-    NR::Point p = *ppointer;
+    Geom::Point p = *ppointer;
 
     // FIXME: take from prefs
     double snap_dist = SNAP_DIST / inkscape_active_desktop()->current_zoom();
@@ -248,7 +248,7 @@ VanishingPoint::selectedBoxes(Inkscape::Selection *sel) {
     return sel_boxes;
 }
 
-VPDragger::VPDragger(VPDrag *parent, NR::Point p, VanishingPoint &vp)
+VPDragger::VPDragger(VPDrag *parent, Geom::Point p, VanishingPoint &vp)
 {
     this->parent = parent;
 
@@ -440,7 +440,7 @@ VPDragger::updateBoxDisplays ()
 }
 
 void
-VPDragger::updateVPs (NR::Point const &pt)
+VPDragger::updateVPs (Geom::Point const &pt)
 {
     for (std::list<VanishingPoint>::iterator i = this->vps.begin(); i != this->vps.end(); ++i) {
         (*i).set_pos (pt);
@@ -657,14 +657,14 @@ VPDrag::drawLinesForFace (const SPBox3D *box, Proj::Axis axis) //, guint corner1
         default: g_assert_not_reached();
     }
 
-    NR::Point corner1, corner2, corner3, corner4;
+    Geom::Point corner1, corner2, corner3, corner4;
     box3d_corners_for_PLs (box, axis, corner1, corner2, corner3, corner4);
 
     g_return_if_fail (box3d_get_perspective(box));
     Proj::Pt2 vp = persp3d_get_VP (box3d_get_perspective(box), axis);
     if (vp.is_finite()) {
         // draw perspective lines for finite VPs
-        NR::Point pt = vp.affine();
+        Geom::Point pt = vp.affine();
         if (this->front_or_rear_lines & 0x1) {
             // draw 'front' perspective lines
             this->addLine (corner1, pt, color);
@@ -677,7 +677,7 @@ VPDrag::drawLinesForFace (const SPBox3D *box, Proj::Axis axis) //, guint corner1
         }
     } else {
         // draw perspective lines for infinite VPs
-        boost::optional<NR::Point> pt1, pt2, pt3, pt4;
+        boost::optional<Geom::Point> pt1, pt2, pt3, pt4;
         Persp3D *persp = box3d_get_perspective(box);
         SPDesktop *desktop = inkscape_active_desktop (); // FIXME: Store the desktop in VPDrag
         Box3D::PerspectiveLine pl (corner1, axis, persp);
@@ -721,7 +721,7 @@ VPDrag::addDragger (VanishingPoint &vp)
         // don't create draggers for infinite vanishing points
         return;
     }
-    NR::Point p = vp.get_pos();
+    Geom::Point p = vp.get_pos();
 
     for (GList *i = this->draggers; i != NULL; i = i->next) {
         VPDragger *dragger = (VPDragger *) i->data;
@@ -755,7 +755,7 @@ VPDrag::swap_perspectives_of_VPs(Persp3D *persp2, Persp3D *persp1)
 Create a line from p1 to p2 and add it to the lines list
  */
 void
-VPDrag::addLine (NR::Point p1, NR::Point p2, guint32 rgba)
+VPDrag::addLine (Geom::Point p1, Geom::Point p2, guint32 rgba)
 {
     SPCanvasItem *line = sp_canvas_item_new(sp_desktop_controls(inkscape_active_desktop()), SP_TYPE_CTRLLINE, NULL);
     sp_ctrlline_set_coords(SP_CTRLLINE(line), p1, p2);

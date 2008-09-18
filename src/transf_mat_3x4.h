@@ -12,7 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "libnr/nr-point-fns.h"
 #include "proj_pt.h"
 #include "axis-manip.h"
 
@@ -25,22 +24,22 @@ public:
     TransfMat3x4(TransfMat3x4 const &rhs);
     Pt2 column (Proj::Axis axis) const;
     Pt2 image (Pt3 const &point);
-    Pt3 preimage (NR::Point const &pt, double coord = 0, Axis = Z);
+    Pt3 preimage (Geom::Point const &pt, double coord = 0, Axis = Z);
     void set_image_pt (Proj::Axis axis, Proj::Pt2 const &pt);
     void toggle_finite (Proj::Axis axis);
     double get_infinite_angle (Proj::Axis axis) {
         if (has_finite_image(axis)) {
-            return NR_HUGE;
+            return 1e18; //this used to be NR_HUGE before 2geom conversion
         }
         Pt2 vp(column(axis));
-        return NR::atan2(NR::Point(vp[0], vp[1])) * 180.0/M_PI;
+        return Geom::atan2(Geom::Point(vp[0], vp[1])) * 180.0/M_PI;
     }
     void set_infinite_direction (Proj::Axis axis, double angle) { // angle is in degrees
         g_return_if_fail(tmat[2][axis] == 0); // don't set directions for finite VPs
 
         double a = angle * M_PI/180;
-        NR::Point pt(tmat[0][axis], tmat[1][axis]);
-        double rad = NR::L2(pt);
+        Geom::Point pt(tmat[0][axis], tmat[1][axis]);
+        double rad = Geom::L2(pt);
         set_image_pt(axis, Proj::Pt2(cos (a) * rad, sin (a) * rad, 0.0));
     }
     inline bool has_finite_image (Proj::Axis axis) { return (tmat[2][axis] != 0.0); }
@@ -48,8 +47,8 @@ public:
     gchar * pt_to_str (Proj::Axis axis);
 
     bool operator==(const TransfMat3x4 &rhs) const;
-    TransfMat3x4 operator*(NR::Matrix const &A) const;
-    TransfMat3x4 &operator*=(NR::Matrix const &A);
+    TransfMat3x4 operator*(Geom::Matrix const &A) const;
+    TransfMat3x4 &operator*=(Geom::Matrix const &A);
 
     void print() const;
 

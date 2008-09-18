@@ -288,7 +288,7 @@ persp3d_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
 }
 
 /* convenience wrapper around persp3d_get_finite_dir() and persp3d_get_infinite_dir() */
-NR::Point persp3d_get_PL_dir_from_pt (Persp3D *persp, NR::Point const &pt, Proj::Axis axis) {
+Geom::Point persp3d_get_PL_dir_from_pt (Persp3D *persp, Geom::Point const &pt, Proj::Axis axis) {
     if (persp3d_VP_is_finite(persp, axis)) {
         return persp3d_get_finite_dir(persp, pt, axis);
     } else {
@@ -296,20 +296,20 @@ NR::Point persp3d_get_PL_dir_from_pt (Persp3D *persp, NR::Point const &pt, Proj:
     }
 }
 
-NR::Point
-persp3d_get_finite_dir (Persp3D *persp, NR::Point const &pt, Proj::Axis axis) {
+Geom::Point
+persp3d_get_finite_dir (Persp3D *persp, Geom::Point const &pt, Proj::Axis axis) {
     Box3D::PerspectiveLine pl(pt, axis, persp);
     return pl.direction();
 }
 
-NR::Point
+Geom::Point
 persp3d_get_infinite_dir (Persp3D *persp, Proj::Axis axis) {
     Proj::Pt2 vp(persp3d_get_VP(persp, axis));
     if (vp[2] != 0.0) {
         g_print ("VP should be infinite but is (%f : %f : %f)\n", vp[0], vp[1], vp[2]);
-        g_return_val_if_fail(vp[2] != 0.0, NR::Point(0.0, 0.0));
+        g_return_val_if_fail(vp[2] != 0.0, Geom::Point(0.0, 0.0));
     }
-    return NR::Point(vp[0], vp[1]);
+    return Geom::Point(vp[0], vp[1]);
 }
 
 double
@@ -361,8 +361,8 @@ persp3d_rotate_VP (Persp3D *persp, Proj::Axis axis, double angle, bool alt_press
         return;
     }
     Proj::Pt2 v_dir_proj (persp->tmat.column(axis));
-    NR::Point v_dir (v_dir_proj[0], v_dir_proj[1]);
-    double a = NR::atan2 (v_dir) * 180/M_PI;
+    Geom::Point v_dir (v_dir_proj[0], v_dir_proj[1]);
+    double a = Geom::atan2 (v_dir) * 180/M_PI;
     a += alt_pressed ? 0.5 * ((angle > 0 ) - (angle < 0)) : angle; // the r.h.s. yields +/-0.5 or angle
     persp->tmat.set_infinite_direction (axis, a);
 
@@ -376,7 +376,7 @@ persp3d_update_with_point (Persp3D *persp, Proj::Axis const axis, Proj::Pt2 cons
 }
 
 void
-persp3d_apply_affine_transformation (Persp3D *persp, NR::Matrix const &xform) {
+persp3d_apply_affine_transformation (Persp3D *persp, Geom::Matrix const &xform) {
     persp->tmat *= xform;
     persp3d_update_box_reprs(persp);
     SP_OBJECT(persp)->updateRepr(SP_OBJECT_WRITE_EXT);
