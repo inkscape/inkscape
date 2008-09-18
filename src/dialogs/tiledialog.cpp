@@ -23,7 +23,6 @@
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
 
-#include "libnr/nr-matrix-ops.h"
 #include "verbs.h"
 #include "prefs-utils.h"
 #include "inkscape.h"
@@ -46,11 +45,11 @@
 int
 sp_compare_x_position(SPItem *first, SPItem *second)
 {
-    using NR::X;
-    using NR::Y;
+    using Geom::X;
+    using Geom::Y;
 
-    boost::optional<NR::Rect> a = first->getBounds(sp_item_i2doc_affine(first));
-    boost::optional<NR::Rect> b = second->getBounds(sp_item_i2doc_affine(second));
+    boost::optional<Geom::Rect> a = to_2geom(first->getBounds(sp_item_i2doc_affine(first)));
+    boost::optional<Geom::Rect> b = to_2geom(second->getBounds(sp_item_i2doc_affine(second)));
 
     if ( !a || !b ) {
         // FIXME?
@@ -89,18 +88,18 @@ sp_compare_x_position(SPItem *first, SPItem *second)
 int
 sp_compare_y_position(SPItem *first, SPItem *second)
 {
-    boost::optional<NR::Rect> a = first->getBounds(sp_item_i2doc_affine(first));
-    boost::optional<NR::Rect> b = second->getBounds(sp_item_i2doc_affine(second));
+    boost::optional<Geom::Rect> a = to_2geom(first->getBounds(sp_item_i2doc_affine(first)));
+    boost::optional<Geom::Rect> b = to_2geom(second->getBounds(sp_item_i2doc_affine(second)));
 
     if ( !a || !b ) {
         // FIXME?
         return 0;
     }
 
-    if (a->min()[NR::Y] > b->min()[NR::Y]) {
+    if (a->min()[Geom::Y] > b->min()[Geom::Y]) {
         return 1;
     }
-    if (a->min()[NR::Y] < b->min()[NR::Y]) {
+    if (a->min()[Geom::Y] < b->min()[Geom::Y]) {
         return -1;
     }
     
@@ -169,22 +168,22 @@ void TileDialog::Grid_Arrange ()
     cnt=0;
     for (; items != NULL; items = items->next) {
         SPItem *item = SP_ITEM(items->data);
-        boost::optional<NR::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
+        boost::optional<Geom::Rect> b = to_2geom(item->getBounds(sp_item_i2doc_affine(item)));
         if (!b) {
             continue;
         }
 
-        width = b->dimensions()[NR::X];
-        height = b->dimensions()[NR::Y];
+        width = b->dimensions()[Geom::X];
+        height = b->dimensions()[Geom::Y];
 
-        cx = b->midpoint()[NR::X];
-        cy = b->midpoint()[NR::Y];
+        cx = b->midpoint()[Geom::X];
+        cy = b->midpoint()[Geom::Y];
 
-        if (b->min()[NR::X] < grid_left) {
-            grid_left = b->min()[NR::X];
+        if (b->min()[Geom::X] < grid_left) {
+            grid_left = b->min()[Geom::X];
         }
-        if (b->min()[NR::Y] < grid_top) {
-            grid_top = b->min()[NR::Y];
+        if (b->min()[Geom::Y] < grid_top) {
+            grid_top = b->min()[Geom::Y];
         }
         if (width > col_width) {
             col_width = width;
@@ -211,10 +210,10 @@ void TileDialog::Grid_Arrange ()
         const GSList *sizes = sorted;
         for (; sizes != NULL; sizes = sizes->next) {
             SPItem *item = SP_ITEM(sizes->data);
-            boost::optional<NR::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
+            boost::optional<Geom::Rect> b = to_2geom(item->getBounds(sp_item_i2doc_affine(item)));
             if (b) {
-                width = b->dimensions()[NR::X];
-                height = b->dimensions()[NR::Y];
+                width = b->dimensions()[Geom::X];
+                height = b->dimensions()[Geom::Y];
                 if (width > col_widths[(cnt % NoOfCols)]) {
                     col_widths[(cnt % NoOfCols)] = width;
                 }
@@ -268,14 +267,14 @@ void TileDialog::Grid_Arrange ()
     }
 
 
-    boost::optional<NR::Rect> sel_bbox = selection->bounds();
+    boost::optional<Geom::Rect> sel_bbox = to_2geom(selection->bounds());
     // Fit to bbox, calculate padding between rows accordingly.
     if ( sel_bbox && !SpaceManualRadioButton.get_active() ){
 #ifdef DEBUG_GRID_ARRANGE
-g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_height,total_col_width, b.extent(NR::X), b.extent(NR::Y));
+g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_height,total_col_width, b.extent(Geom::X), b.extent(Geom::Y));
 #endif
-        paddingx = (sel_bbox->extent(NR::X) - total_col_width) / (NoOfCols -1);
-        paddingy = (sel_bbox->extent(NR::Y) - total_row_height) / (NoOfRows -1);
+        paddingx = (sel_bbox->width() - total_col_width) / (NoOfCols -1);
+        paddingy = (sel_bbox->height() - total_row_height) / (NoOfRows -1);
     }
 
 /*
@@ -318,15 +317,15 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
              for (; current_row != NULL; current_row = current_row->next) {
                  SPItem *item=SP_ITEM(current_row->data);
                  Inkscape::XML::Node *repr = SP_OBJECT_REPR(item);
-                 boost::optional<NR::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
-                 NR::Point min;
+                 boost::optional<Geom::Rect> b = to_2geom(item->getBounds(sp_item_i2doc_affine(item)));
+                 Geom::Point min;
                  if (b) {
-                     width = b->dimensions()[NR::X];
-                     height = b->dimensions()[NR::Y];
+                     width = b->dimensions()[Geom::X];
+                     height = b->dimensions()[Geom::Y];
                      min = b->min();
                  } else {
                      width = height = 0;
-                     min = NR::Point(0, 0);
+                     min = Geom::Point(0, 0);
                  }
 
                  row = cnt / NoOfCols;
@@ -336,7 +335,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
                  new_y = grid_top + (((row_heights[row] - height)/2)*VertAlign) + row_ys[row];
 
                  // signs are inverted between x and y due to y inversion
-                 NR::Point move = NR::Point(new_x - min[NR::X], min[NR::Y] - new_y);
+                 Geom::Point move = Geom::Point(new_x - min[Geom::X], min[Geom::Y] - new_y);
                  Geom::Matrix const affine = Geom::Matrix(Geom::Translate(move));
                  sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * affine);
                  sp_item_write_transform(item, repr, item->transform,  NULL);

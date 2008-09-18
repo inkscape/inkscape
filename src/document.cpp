@@ -42,7 +42,6 @@
 #include <cstring>
 #include "application/application.h"
 #include "application/editor.h"
-#include "libnr/nr-matrix-fns.h"
 #include "xml/repr.h"
 #include "helper/units.h"
 #include "inkscape-private.h"
@@ -55,7 +54,6 @@
 #include "unit-constants.h"
 #include "prefs-utils.h"
 #include "libavoid/router.h"
-#include "libnr/nr-rect.h"
 #include "sp-item-group.h"
 #include "profile-manager.h"
 #include "persp3d.h"
@@ -542,7 +540,7 @@ gdouble sp_document_height(SPDocument *document)
 }
 
 /**
- * Given an NR::Rect that may, for example, correspond to the bbox of an object,
+ * Given a Geom::Rect that may, for example, correspond to the bbox of an object,
  * this function fits the canvas to that rect by resizing the canvas
  * and translating the document root into position.
  */
@@ -789,7 +787,7 @@ void
 sp_document_setup_viewport (SPDocument *doc, SPItemCtx *ctx)
 {
     ctx->ctx.flags = 0;
-    ctx->i2doc = NR::identity();
+    ctx->i2doc = Geom::identity();
     /* Set up viewport in case svg has it defined as percentages */
     if (SP_ROOT(doc->root)->viewBox_set) { // if set, take from viewBox
         ctx->vp.x0 = SP_ROOT(doc->root)->viewBox.x0;
@@ -802,7 +800,7 @@ sp_document_setup_viewport (SPDocument *doc, SPItemCtx *ctx)
         ctx->vp.x1 = 210 * PX_PER_MM;
         ctx->vp.y1 = 297 * PX_PER_MM;
     }
-    ctx->i2vp = NR::identity();
+    ctx->i2vp = Geom::identity();
 }
 
 /**

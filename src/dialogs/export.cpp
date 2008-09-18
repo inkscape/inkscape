@@ -778,12 +778,12 @@ sp_export_selection_modified ( Inkscape::Application */*inkscape*/,
             if ( SP_ACTIVE_DESKTOP ) {
                 SPDocument *doc;
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
-                boost::optional<NR::Rect> bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
+                boost::optional<Geom::Rect> bbox = to_2geom(sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc))));
                 if (bbox) {
-                    sp_export_set_area (base, bbox->min()[NR::X],
-                                              bbox->min()[NR::Y],
-                                              bbox->max()[NR::X],
-                                              bbox->max()[NR::Y]);
+                    sp_export_set_area (base, bbox->min()[Geom::X],
+                                              bbox->min()[Geom::Y],
+                                              bbox->max()[Geom::X],
+                                              bbox->max()[Geom::Y]);
                 }
             }
             break;
@@ -837,7 +837,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
     if ( SP_ACTIVE_DESKTOP )
     {
         SPDocument *doc;
-        boost::optional<NR::Rect> bbox;
+        boost::optional<Geom::Rect> bbox;
         doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
         /* Notice how the switch is used to 'fall through' here to get
@@ -847,7 +847,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
             case SELECTION_SELECTION:
                 if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false)
                 {
-                    bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds();
+                    bbox = to_2geom((sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds());
                     /* Only if there is a selection that we can set
                        do we break, otherwise we fall through to the
                        drawing */
@@ -859,7 +859,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                 /** \todo
                  * This returns wrong values if the document has a viewBox.
                  */
-                bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
+                bbox = to_2geom(sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc))));
                 /* If the drawing is valid, then we'll use it and break
                    otherwise we drop through to the page settings */
                 if (bbox) {
@@ -868,9 +868,8 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                     break;
                 }
             case SELECTION_PAGE:
-                bbox = NR::Rect(NR::Point(0.0, 0.0),
-                                NR::Point(sp_document_width(doc), sp_document_height(doc))
-                                );
+                bbox = Geom::Rect(Geom::Point(0.0, 0.0),
+                                  Geom::Point(sp_document_width(doc), sp_document_height(doc)));
 
                 // std::cout << "Using selection: PAGE" << std::endl;
                 key = SELECTION_PAGE;
@@ -885,10 +884,10 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
         prefs->setString("dialogs.export.exportarea", "value", selection_names[key]);
 
         if ( key != SELECTION_CUSTOM && bbox ) {
-            sp_export_set_area (base, bbox->min()[NR::X],
-                                      bbox->min()[NR::Y],
-                                      bbox->max()[NR::X],
-                                      bbox->max()[NR::Y]);
+            sp_export_set_area (base, bbox->min()[Geom::X],
+                                      bbox->min()[Geom::Y],
+                                      bbox->max()[Geom::X],
+                                      bbox->max()[Geom::Y]);
         }
 
     } // end of if ( SP_ACTIVE_DESKTOP )
@@ -1347,14 +1346,14 @@ sp_export_browse_clicked (GtkButton */*button*/, gpointer /*userdata*/)
 
 // TODO: Move this to nr-rect-fns.h.
 static bool
-sp_export_bbox_equal(NR::Rect const &one, NR::Rect const &two)
+sp_export_bbox_equal(Geom::Rect const &one, Geom::Rect const &two)
 {
     double const epsilon = pow(10.0, -EXPORT_COORD_PRECISION);
     return (
-        (fabs(one.min()[NR::X] - two.min()[NR::X]) < epsilon) &&
-        (fabs(one.min()[NR::Y] - two.min()[NR::Y]) < epsilon) &&
-        (fabs(one.max()[NR::X] - two.max()[NR::X]) < epsilon) &&
-        (fabs(one.max()[NR::Y] - two.max()[NR::Y]) < epsilon)
+        (fabs(one.min()[Geom::X] - two.min()[Geom::X]) < epsilon) &&
+        (fabs(one.min()[Geom::Y] - two.min()[Geom::Y]) < epsilon) &&
+        (fabs(one.max()[Geom::X] - two.max()[Geom::X]) < epsilon) &&
+        (fabs(one.max()[Geom::Y] - two.max()[Geom::Y]) < epsilon)
         );
 }
 
@@ -1387,11 +1386,11 @@ sp_export_detect_size(GtkObject * base) {
     selection_type this_test[SELECTION_NUMBER_OF + 1];
     selection_type key = SELECTION_NUMBER_OF;
 
-    NR::Point x(sp_export_value_get_px (base, "x0"),
-                sp_export_value_get_px (base, "y0"));
-    NR::Point y(sp_export_value_get_px (base, "x1"),
-                sp_export_value_get_px (base, "y1"));
-    NR::Rect current_bbox(x, y);
+    Geom::Point x(sp_export_value_get_px (base, "x0"),
+                  sp_export_value_get_px (base, "y0"));
+    Geom::Point y(sp_export_value_get_px (base, "x1"),
+                  sp_export_value_get_px (base, "y1"));
+    Geom::Rect current_bbox(x, y);
     //std::cout << "Current " << current_bbox;
 
     this_test[0] = (selection_type)(GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(base), "selection-type")));
@@ -1408,7 +1407,7 @@ sp_export_detect_size(GtkObject * base) {
         switch (this_test[i]) {
             case SELECTION_SELECTION:
                 if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
-                    boost::optional<NR::Rect> bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds();
+                    boost::optional<Geom::Rect> bbox = to_2geom((sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds());
 
                     //std::cout << "Selection " << bbox;
                     if ( bbox && sp_export_bbox_equal(*bbox,current_bbox)) {
@@ -1419,7 +1418,7 @@ sp_export_detect_size(GtkObject * base) {
             case SELECTION_DRAWING: {
                 SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
-                boost::optional<NR::Rect> bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
+                boost::optional<Geom::Rect> bbox = to_2geom(sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc))));
 
                 // std::cout << "Drawing " << bbox2;
                 if ( bbox && sp_export_bbox_equal(*bbox,current_bbox) ) {
@@ -1433,10 +1432,10 @@ sp_export_detect_size(GtkObject * base) {
 
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
-                NR::Point x(0.0, 0.0);
-                NR::Point y(sp_document_width(doc),
-                            sp_document_height(doc));
-                NR::Rect bbox(x, y);
+                Geom::Point x(0.0, 0.0);
+                Geom::Point y(sp_document_width(doc),
+                              sp_document_height(doc));
+                Geom::Rect bbox(x, y);
 
                 // std::cout << "Page " << bbox;
                 if (sp_export_bbox_equal(bbox,current_bbox)) {

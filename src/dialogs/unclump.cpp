@@ -21,45 +21,45 @@
 // cache the centers, widths, and heights of items
 
 //FIXME: make a class with these cashes as members instead of globals 
-std::map<const gchar *, NR::Point> c_cache;
-std::map<const gchar *, NR::Point> wh_cache;
+std::map<const gchar *, Geom::Point> c_cache;
+std::map<const gchar *, Geom::Point> wh_cache;
 
 /**
 Center of bbox of item
 */
-NR::Point
+Geom::Point
 unclump_center (SPItem *item)
 {
-    std::map<const gchar *, NR::Point>::iterator i = c_cache.find(SP_OBJECT_ID(item));
+    std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(SP_OBJECT_ID(item));
     if ( i != c_cache.end() ) {
         return i->second;
     }
 
-    boost::optional<NR::Rect> r = item->getBounds(sp_item_i2d_affine(item));
+    boost::optional<Geom::Rect> r = to_2geom(item->getBounds(sp_item_i2d_affine(item)));
     if (r) {
-    	NR::Point const c = r->midpoint();
+    	Geom::Point const c = r->midpoint();
     	c_cache[SP_OBJECT_ID(item)] = c;
         return c; 
     } else {
 	// FIXME
-        return NR::Point(0, 0);
+        return Geom::Point(0, 0);
     }
 }
 
-NR::Point
+Geom::Point
 unclump_wh (SPItem *item)
 {
-    NR::Point wh;
-    std::map<const gchar *, NR::Point>::iterator i = wh_cache.find(SP_OBJECT_ID(item));
+    Geom::Point wh;
+    std::map<const gchar *, Geom::Point>::iterator i = wh_cache.find(SP_OBJECT_ID(item));
     if ( i != wh_cache.end() ) {
         wh = i->second;
     } else {
-        boost::optional<NR::Rect> r = item->getBounds(sp_item_i2d_affine(item));
+        boost::optional<Geom::Rect> r = to_2geom(item->getBounds(sp_item_i2d_affine(item)));
 	if (r) {
             wh = r->dimensions();
             wh_cache[SP_OBJECT_ID(item)] = wh;
         } else {
-	    wh = NR::Point(0, 0);
+	    wh = Geom::Point(0, 0);
         }
     }
 
@@ -74,30 +74,30 @@ May be negative if the edge of item1 is between the center and the edge of item2
 double
 unclump_dist (SPItem *item1, SPItem *item2)
 {
-	NR::Point c1 = unclump_center (item1);
-	NR::Point c2 = unclump_center (item2);
+	Geom::Point c1 = unclump_center (item1);
+	Geom::Point c2 = unclump_center (item2);
 
-	NR::Point wh1 = unclump_wh (item1);
-	NR::Point wh2 = unclump_wh (item2);
+	Geom::Point wh1 = unclump_wh (item1);
+	Geom::Point wh2 = unclump_wh (item2);
 
 	// angle from each item's center to the other's, unsqueezed by its w/h, normalized to 0..pi/2
-	double a1 = atan2 ((c2 - c1)[NR::Y], (c2 - c1)[NR::X] * wh1[NR::Y]/wh1[NR::X]);
+	double a1 = atan2 ((c2 - c1)[Geom::Y], (c2 - c1)[Geom::X] * wh1[Geom::Y]/wh1[Geom::X]);
 	a1 = fabs (a1);
 	if (a1 > M_PI/2) a1 = M_PI - a1;
 
-	double a2 = atan2 ((c1 - c2)[NR::Y], (c1 - c2)[NR::X] * wh2[NR::Y]/wh2[NR::X]);
+	double a2 = atan2 ((c1 - c2)[Geom::Y], (c1 - c2)[Geom::X] * wh2[Geom::Y]/wh2[Geom::X]);
 	a2 = fabs (a2);
 	if (a2 > M_PI/2) a2 = M_PI - a2;
 
 	// get the radius of each item for the given angle
-	double r1 = 0.5 * (wh1[NR::X] + (wh1[NR::Y] - wh1[NR::X]) * (a1/(M_PI/2)));
-	double r2 = 0.5 * (wh2[NR::X] + (wh2[NR::Y] - wh2[NR::X]) * (a2/(M_PI/2)));
+	double r1 = 0.5 * (wh1[Geom::X] + (wh1[Geom::Y] - wh1[Geom::X]) * (a1/(M_PI/2)));
+	double r2 = 0.5 * (wh2[Geom::X] + (wh2[Geom::Y] - wh2[Geom::X]) * (a2/(M_PI/2)));
 
 	// dist between centers minus angle-adjusted radii
-	double dist_r =  (NR::L2 (c2 - c1) - r1 - r2);
+	double dist_r =  (Geom::L2 (c2 - c1) - r1 - r2);
 
-	double stretch1 = wh1[NR::Y]/wh1[NR::X];
-	double stretch2 = wh2[NR::Y]/wh2[NR::X];
+	double stretch1 = wh1[Geom::Y]/wh1[Geom::X];
+	double stretch2 = wh2[Geom::Y]/wh2[Geom::X];
 
 	if ((stretch1 > 1.5 || stretch1 < 0.66) && (stretch2 > 1.5 || stretch2 < 0.66)) {
 
@@ -105,54 +105,54 @@ unclump_dist (SPItem *item1, SPItem *item2)
 		dists.push_back (dist_r);
 
 		// If both objects are not circle-like, find dists between four corners
-		std::vector<NR::Point> c1_points(2);
+		std::vector<Geom::Point> c1_points(2);
 		{
 			double y_closest;
-			if (c2[NR::Y] > c1[NR::Y] + wh1[NR::Y]/2) {
-				y_closest = c1[NR::Y] + wh1[NR::Y]/2;
-			} else if (c2[NR::Y] < c1[NR::Y] - wh1[NR::Y]/2) {
-				y_closest = c1[NR::Y] - wh1[NR::Y]/2;
+			if (c2[Geom::Y] > c1[Geom::Y] + wh1[Geom::Y]/2) {
+				y_closest = c1[Geom::Y] + wh1[Geom::Y]/2;
+			} else if (c2[Geom::Y] < c1[Geom::Y] - wh1[Geom::Y]/2) {
+				y_closest = c1[Geom::Y] - wh1[Geom::Y]/2;
 			} else {
-				y_closest = c2[NR::Y];
+				y_closest = c2[Geom::Y];
 			}
-			c1_points[0] = NR::Point (c1[NR::X], y_closest);
+			c1_points[0] = Geom::Point (c1[Geom::X], y_closest);
 			double x_closest;
-			if (c2[NR::X] > c1[NR::X] + wh1[NR::X]/2) {
-				x_closest = c1[NR::X] + wh1[NR::X]/2;
-			} else if (c2[NR::X] < c1[NR::X] - wh1[NR::X]/2) {
-				x_closest = c1[NR::X] - wh1[NR::X]/2;
+			if (c2[Geom::X] > c1[Geom::X] + wh1[Geom::X]/2) {
+				x_closest = c1[Geom::X] + wh1[Geom::X]/2;
+			} else if (c2[Geom::X] < c1[Geom::X] - wh1[Geom::X]/2) {
+				x_closest = c1[Geom::X] - wh1[Geom::X]/2;
 			} else {
-				x_closest = c2[NR::X];
+				x_closest = c2[Geom::X];
 			}
-			c1_points[1] = NR::Point (x_closest, c1[NR::Y]);
+			c1_points[1] = Geom::Point (x_closest, c1[Geom::Y]);
 		}
 
 
-		std::vector<NR::Point> c2_points(2);
+		std::vector<Geom::Point> c2_points(2);
 		{
 			double y_closest;
-			if (c1[NR::Y] > c2[NR::Y] + wh2[NR::Y]/2) {
-				y_closest = c2[NR::Y] + wh2[NR::Y]/2;
-			} else if (c1[NR::Y] < c2[NR::Y] - wh2[NR::Y]/2) {
-				y_closest = c2[NR::Y] - wh2[NR::Y]/2;
+			if (c1[Geom::Y] > c2[Geom::Y] + wh2[Geom::Y]/2) {
+				y_closest = c2[Geom::Y] + wh2[Geom::Y]/2;
+			} else if (c1[Geom::Y] < c2[Geom::Y] - wh2[Geom::Y]/2) {
+				y_closest = c2[Geom::Y] - wh2[Geom::Y]/2;
 			} else {
-				y_closest = c1[NR::Y];
+				y_closest = c1[Geom::Y];
 			}
-			c2_points[0] = NR::Point (c2[NR::X], y_closest);
+			c2_points[0] = Geom::Point (c2[Geom::X], y_closest);
 			double x_closest;
-			if (c1[NR::X] > c2[NR::X] + wh2[NR::X]/2) {
-				x_closest = c2[NR::X] + wh2[NR::X]/2;
-			} else if (c1[NR::X] < c2[NR::X] - wh2[NR::X]/2) {
-				x_closest = c2[NR::X] - wh2[NR::X]/2;
+			if (c1[Geom::X] > c2[Geom::X] + wh2[Geom::X]/2) {
+				x_closest = c2[Geom::X] + wh2[Geom::X]/2;
+			} else if (c1[Geom::X] < c2[Geom::X] - wh2[Geom::X]/2) {
+				x_closest = c2[Geom::X] - wh2[Geom::X]/2;
 			} else {
-				x_closest = c1[NR::X];
+				x_closest = c1[Geom::X];
 			}
-			c2_points[1] = NR::Point (x_closest, c2[NR::Y]);
+			c2_points[1] = Geom::Point (x_closest, c2[Geom::Y]);
 		}
 
 		for (int i = 0; i < 2; i ++) {
 			for (int j = 0; j < 2; j ++) {
-				dists.push_back (NR::L2 (c1_points[i] - c2_points[j]));
+				dists.push_back (Geom::L2 (c1_points[i] - c2_points[j]));
 			}
 		}
 
@@ -243,20 +243,20 @@ item to \a closest. Returns a newly created list which must be freed.
 GSList *
 unclump_remove_behind (SPItem *item, SPItem *closest, GSList *rest)
 {
-    NR::Point it = unclump_center (item);
-    NR::Point p1 = unclump_center (closest);
+    Geom::Point it = unclump_center (item);
+    Geom::Point p1 = unclump_center (closest);
 
     // perpendicular through closest to the direction to item:
-    NR::Point perp = NR::rot90(it - p1);
-    NR::Point p2 = p1 + perp;
+    Geom::Point perp = Geom::rot90(it - p1);
+    Geom::Point p2 = p1 + perp;
 
     // get the standard Ax + By + C = 0 form for p1-p2:
-    double A = p1[NR::Y] - p2[NR::Y];
-    double B = p2[NR::X] - p1[NR::X];
-    double C = p2[NR::Y] * p1[NR::X] - p1[NR::Y] * p2[NR::X];
+    double A = p1[Geom::Y] - p2[Geom::Y];
+    double B = p2[Geom::X] - p1[Geom::X];
+    double C = p2[Geom::Y] * p1[Geom::X] - p1[Geom::Y] * p2[Geom::X];
 
     // substitute the item into it:
-    double val_item = A * it[NR::X] + B * it[NR::Y] + C;
+    double val_item = A * it[Geom::X] + B * it[Geom::Y] + C;
 
     GSList *out = NULL;
 
@@ -266,8 +266,8 @@ unclump_remove_behind (SPItem *item, SPItem *closest, GSList *rest)
         if (other == item)
             continue;
 
-        NR::Point o = unclump_center (other);
-        double val_other = A * o[NR::X] + B * o[NR::Y] + C;
+        Geom::Point o = unclump_center (other);
+        double val_other = A * o[Geom::X] + B * o[Geom::Y] + C;
 
         if (val_item * val_other <= 1e-6) {
             // different signs, which means item and other are on the different sides of p1-p2 line; skip
@@ -285,18 +285,18 @@ Moves \a what away from \a from by \a dist
 void
 unclump_push (SPItem *from, SPItem *what, double dist)
 {
-    NR::Point it = unclump_center (what);
-    NR::Point p = unclump_center (from);
-    NR::Point by = dist * NR::unit_vector (- (p - it));
+    Geom::Point it = unclump_center (what);
+    Geom::Point p = unclump_center (from);
+    Geom::Point by = dist * Geom::unit_vector (- (p - it));
 
     Geom::Matrix move = Geom::Translate (by);
 
-    std::map<const gchar *, NR::Point>::iterator i = c_cache.find(SP_OBJECT_ID(what));
+    std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(SP_OBJECT_ID(what));
     if ( i != c_cache.end() ) {
         i->second *= move;
     }
 
-    //g_print ("push %s at %g,%g from %g,%g by %g,%g, dist %g\n", SP_OBJECT_ID(what), it[NR::X],it[NR::Y], p[NR::X],p[NR::Y], by[NR::X],by[NR::Y], dist);
+    //g_print ("push %s at %g,%g from %g,%g by %g,%g, dist %g\n", SP_OBJECT_ID(what), it[Geom::X],it[Geom::Y], p[Geom::X],p[Geom::Y], by[Geom::X],by[Geom::Y], dist);
 
     sp_item_set_i2d_affine(what, sp_item_i2d_affine(what) * move);
     sp_item_write_transform(what, SP_OBJECT_REPR(what), what->transform, NULL);
@@ -308,18 +308,18 @@ Moves \a what towards \a to by \a dist
 void
 unclump_pull (SPItem *to, SPItem *what, double dist)
 {
-    NR::Point it = unclump_center (what);
-    NR::Point p = unclump_center (to);
-    NR::Point by = dist * NR::unit_vector (p - it);
+    Geom::Point it = unclump_center (what);
+    Geom::Point p = unclump_center (to);
+    Geom::Point by = dist * Geom::unit_vector (p - it);
 
     Geom::Matrix move = Geom::Translate (by);
 
-    std::map<const gchar *, NR::Point>::iterator i = c_cache.find(SP_OBJECT_ID(what));
+    std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(SP_OBJECT_ID(what));
     if ( i != c_cache.end() ) {
         i->second *= move;
     }
 
-    //g_print ("pull %s at %g,%g to %g,%g by %g,%g, dist %g\n", SP_OBJECT_ID(what), it[NR::X],it[NR::Y], p[NR::X],p[NR::Y], by[NR::X],by[NR::Y], dist);
+    //g_print ("pull %s at %g,%g to %g,%g by %g,%g, dist %g\n", SP_OBJECT_ID(what), it[Geom::X],it[Geom::Y], p[Geom::X],p[Geom::Y], by[Geom::X],by[Geom::Y], dist);
 
     sp_item_set_i2d_affine(what, sp_item_i2d_affine(what) * move);
     sp_item_write_transform(what, SP_OBJECT_REPR(what), what->transform, NULL);

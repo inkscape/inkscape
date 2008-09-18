@@ -78,7 +78,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
 
     gdk_window_get_pointer(GTK_WIDGET(dtw->canvas)->window, &wx, &wy, NULL);
-    NR::Point const event_win(wx, wy);
+    Geom::Point const event_win(wx, wy);
 
     gint width, height;
     gdk_window_get_geometry(GTK_WIDGET(dtw->canvas)->window, NULL /*x*/, NULL /*y*/, &width, &height, NULL/*depth*/);
@@ -87,8 +87,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     case GDK_BUTTON_PRESS:
             if (event->button.button == 1) {
                 dragging = true;
-                NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
-                NR::Point const event_dt(desktop->w2d(event_w));
+                Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
+                Geom::Point const event_dt(desktop->w2d(event_w));
 
                 // explicitly show guidelines; if I draw a guide, I want them on
                 sp_repr_set_boolean(repr, "showguides", TRUE);
@@ -139,7 +139,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
             break;
     case GDK_MOTION_NOTIFY:
             if (dragging) {
-                NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
+                Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point event_dt(desktop->w2d(event_w));
                 
                 SnapManager &m = desktop->namedview->snap_manager;
@@ -154,7 +154,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     case GDK_BUTTON_RELEASE:
             if (dragging && event->button.button == 1) {
                 gdk_pointer_ungrab(event->button.time);
-                NR::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
+                Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point event_dt(desktop->w2d(event_w));
                 
                 SnapManager &m = desktop->namedview->snap_manager;
@@ -255,8 +255,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
     case GDK_BUTTON_RELEASE:
             if (dragging && event->button.button == 1) {
                 if (moved) {
-                    NR::Point const event_w(event->button.x,
-                                            event->button.y);
+                    Geom::Point const event_w(event->button.x,
+                                              event->button.y);
                     Geom::Point event_dt(desktop->w2d(event_w));
 
                     SnapManager &m = desktop->namedview->snap_manager;
