@@ -346,7 +346,7 @@ static gint inkscape_autosave(gpointer)
             struct stat sb;
             time_t min_time = 0;
             gint count = 0;
-            
+
             // Look for previous autosaves
             gchar* baseName = g_strdup_printf( "inkscape-autosave-%d", uid );
             g_dir_rewind(autosave_dir_ptr);
@@ -368,7 +368,7 @@ static gint inkscape_autosave(gpointer)
             }
 
             // g_debug("%d previous autosaves exists. Max = %d", count, autosave_max);
-            
+
             // Have we reached the limit for number of autosaves?
             if ( count >= autosave_max ){
                 // Remove the oldest file
@@ -475,7 +475,7 @@ inkscape_init (SPObject * object)
 
     inkscape->dialogs_toggle = TRUE;
 
-    inkscape->mapalt=GDK_MOD1_MASK;    
+    inkscape->mapalt=GDK_MOD1_MASK;
 }
 
 static void
@@ -566,7 +566,7 @@ inkscape_crash_handler (int /*signum*/)
 
     static gint recursion = FALSE;
 
-    /* 
+    /*
      * reset all signal handlers: any further crashes should just be allowed
      * to crash normally.
      * */
@@ -577,7 +577,7 @@ inkscape_crash_handler (int /*signum*/)
 #ifndef WIN32
     signal (SIGBUS,  bus_handler  );
 #endif
-    
+
     /* Stop bizarre loops */
     if (recursion) {
         abort ();
@@ -771,7 +771,7 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     sp_input_load_from_preferences();
 
     /* DebugDialog redirection.  On Linux, default to OFF, on Win32, default to ON.
-	 * Use only if use_gui is enabled 
+	 * Use only if use_gui is enabled
 	 */
 #ifdef WIN32
 #define DEFAULT_LOG_REDIRECT true
@@ -816,12 +816,11 @@ gboolean inkscape_app_use_gui( Inkscape::Application const * app )
  *  Menus management
  *
  */
-bool
-inkscape_load_menus (Inkscape::Application *inkscape)
+bool inkscape_load_menus (Inkscape::Application */*inkscape*/)
 {
     gchar *fn = profile_path(MENUS_FILE);
     gchar *menus_xml = NULL; gsize len = 0;
-    
+
     if (g_file_get_contents(fn, &menus_xml, &len, NULL)) {
         // load the menus_xml file
         INKSCAPE->menus = sp_repr_read_mem(menus_xml, len, NULL);
@@ -836,8 +835,7 @@ inkscape_load_menus (Inkscape::Application *inkscape)
 /**
  * @deprecated Use the Preferences class instead, and try not to use _getNode
  */
-Inkscape::XML::Node *
-inkscape_get_repr (Inkscape::Application *inkscape, const gchar *key)
+Inkscape::XML::Node *inkscape_get_repr(Inkscape::Application */*inkscape*/, const gchar *key)
 {
     Inkscape::Preferences *ps = Inkscape::Preferences::get();
     return ps->_getNode(key);
@@ -1194,7 +1192,7 @@ inkscape_add_document (SPDocument *document)
     if (!Inkscape::NSApplication::Application::getNewGui())
     {
         if ( inkscape->document_set.find(document) == inkscape->document_set.end() ) {
-    
+
             inkscape->documents = g_slist_append (inkscape->documents, document);
         }
         inkscape->document_set.insert(document);
@@ -1317,6 +1315,7 @@ homedir_path(const char *filename)
         homedir = g_get_home_dir();
     }
     if (!homedir) {
+// TODO check this. It looks broken
         gchar * path = g_path_get_dirname(INKSCAPE->argv0);
     }
     return g_build_filename(homedir, filename, NULL);
