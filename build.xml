@@ -302,6 +302,7 @@
             <exclude name="deptool.cpp"/>
             <!--<exclude name="test-main.cpp"/>-->
             <!--<exclude name="test-src.cpp"/>-->
+            <exclude name="display/test-display.cpp"/>
             <exclude name="display/testnr.cpp"/>
             <exclude name="display/bezier-utils-test.cpp"/>
             <exclude name="dom/work/.*"/>
