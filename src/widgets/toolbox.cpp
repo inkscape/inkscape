@@ -3692,6 +3692,48 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         GtkTreeIter iter;
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
+                            0, _("Move mode"),
+                            1, _("Move objects in any direction"),
+                            2, "tweak_move_mode",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Move in/out mode"),
+                            1, _("Move objects towards cursor; with Shift from cursor"),
+                            2, "tweak_move_mode_inout",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Move jitter mode"),
+                            1, _("Move objects in random directions"),
+                            2, "tweak_move_mode_jitter",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Scale mode"),
+                            1, _("Scale objects, with Shift scale up"),
+                            2, "tweak_scale_mode",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Rotate mode"),
+                            1, _("Rotate objects, with Shift counterclockwise"),
+                            2, "tweak_rotate_mode",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Duplicate/delete mode"),
+                            1, _("Duplicate objects, with Shift delete"),
+                            2, "tweak_moreless_mode",
+                            -1 );
+
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
                             0, _("Push mode"),
                             1, _("Push parts of paths in any direction"),
                             2, "tweak_push_mode",
@@ -3699,30 +3741,16 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
-                            0, _("Shrink mode"),
-                            1, _("Shrink (inset) parts of paths"),
+                            0, _("Shrink/grow mode"),
+                            1, _("Shrink (inset) parts of paths; with Shift grow (outset)"),
                             2, "tweak_shrink_mode",
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
-                            0, _("Grow mode"),
-                            1, _("Grow (outset) parts of paths"),
-                            2, "tweak_grow_mode",
-                            -1 );
-
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter,
-                            0, _("Attract mode"),
-                            1, _("Attract parts of paths towards cursor"),
+                            0, _("Attract/repel mode"),
+                            1, _("Attract parts of paths towards cursor; with Shift from cursor"),
                             2, "tweak_attract_mode",
-                            -1 );
-
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter,
-                            0, _("Repel mode"),
-                            1, _("Repel parts of paths from cursor"),
-                            2, "tweak_repel_mode",
                             -1 );
 
         gtk_list_store_append( model, &iter );

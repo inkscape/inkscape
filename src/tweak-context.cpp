@@ -33,6 +33,7 @@
 #include "desktop-affine.h"
 #include "desktop-style.h"
 #include "message-context.h"
+#include "pixmaps/cursor-tweak-move.xpm"
 #include "pixmaps/cursor-thin.xpm"
 #include "pixmaps/cursor-thicken.xpm"
 #include "pixmaps/cursor-attract.xpm"
@@ -71,6 +72,7 @@
 #include "prefs-utils.h"
 #include "style.h"
 #include "box3d.h"
+#include "sp-item-transform.h"
 
 #include "tweak-context.h"
 
@@ -170,35 +172,92 @@ sp_tweak_context_dispose(GObject *object)
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
-void
-sp_tweak_update_cursor (SPTweakContext *tc, gint mode)
+bool is_transform_mode (gint mode)
 {
-    SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
-   switch (mode) {
+    return (mode == TWEAK_MODE_MOVE || 
+            mode == TWEAK_MODE_MOVE_IN_OUT || 
+            mode == TWEAK_MODE_MOVE_JITTER || 
+            mode == TWEAK_MODE_SCALE || 
+            mode == TWEAK_MODE_ROTATE || 
+            mode == TWEAK_MODE_MORELESS);
+}
+
+bool is_color_mode (gint mode)
+{
+    return (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER);
+}
+
+void
+sp_tweak_update_cursor (SPTweakContext *tc, bool with_shift)
+{
+   SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
+   SPDesktop *desktop = event_context->desktop;
+
+                guint num = 0;
+                gchar *sel_message = NULL;
+                if (!desktop->selection->isEmpty()) {
+                    num = g_slist_length((GSList *) desktop->selection->itemList());
+                    sel_message = g_strdup_printf(_("<b>%i</b> objects selected"), num);
+                } else {
+                    sel_message = g_strdup_printf(_("<b>Nothing</b> selected"));
+                }
+
+
+   switch (tc->mode) {
+       case TWEAK_MODE_MOVE:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag to <b>move</b>."), sel_message);
+                           break;
+           event_context->cursor_shape = cursor_tweak_move_xpm;
+           break;
+       case TWEAK_MODE_MOVE_IN_OUT:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."), sel_message);
+           break;
+       case TWEAK_MODE_MOVE_JITTER:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>move randomly</b>."), sel_message);
+           break;
+       case TWEAK_MODE_SCALE:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."), sel_message);
+           break;
+       case TWEAK_MODE_ROTATE:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>rotate clockwise</b>; with Shift, <b>counterclockwise</b>."), sel_message);
+           break;
+       case TWEAK_MODE_MORELESS:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."), sel_message);
+           break;
        case TWEAK_MODE_PUSH:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag to <b>push paths</b>."), sel_message);
            event_context->cursor_shape = cursor_push_xpm;
            break;
-       case TWEAK_MODE_SHRINK:
-           event_context->cursor_shape = cursor_thin_xpm;
+       case TWEAK_MODE_SHRINK_GROW:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."), sel_message);
+           if (with_shift) {
+               event_context->cursor_shape = cursor_thicken_xpm;
+           } else {
+               event_context->cursor_shape = cursor_thin_xpm;
+           }
            break;
-       case TWEAK_MODE_GROW:
-           event_context->cursor_shape = cursor_thicken_xpm;
-           break;
-       case TWEAK_MODE_ATTRACT:
-           event_context->cursor_shape = cursor_attract_xpm;
-           break;
-       case TWEAK_MODE_REPEL:
-           event_context->cursor_shape = cursor_repel_xpm;
+       case TWEAK_MODE_ATTRACT_REPEL:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."), sel_message);
+           if (with_shift) {
+               event_context->cursor_shape = cursor_repel_xpm;
+           } else {
+               event_context->cursor_shape = cursor_attract_xpm;
+           }
            break;
        case TWEAK_MODE_ROUGHEN:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>roughen paths</b>."), sel_message);
            event_context->cursor_shape = cursor_roughen_xpm;
            break;
        case TWEAK_MODE_COLORPAINT:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>paint objects</b> with color."), sel_message);
+           break;
        case TWEAK_MODE_COLORJITTER:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>randomize colors</b>."), sel_message);
            event_context->cursor_shape = cursor_color_xpm;
            break;
    }
    sp_event_context_update_cursor(event_context);
+   g_free(sel_message);
 }
 
 static bool
@@ -241,6 +300,10 @@ sp_tweak_context_setup(SPEventContext *ec)
         sp_canvas_item_hide(tc->dilate_area);
     }
 
+    tc->is_drawing = false;
+
+    tc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
+
     sp_event_context_read(ec, "width");
     sp_event_context_read(ec, "mode");
     sp_event_context_read(ec, "fidelity");
@@ -250,10 +313,6 @@ sp_tweak_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "dol");
     sp_event_context_read(ec, "dos");
     sp_event_context_read(ec, "doo");
-
-    tc->is_drawing = false;
-
-    tc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 
     tc->style_set_connection = ec->desktop->connectSetStyle( // catch style-setting signal in this tool
         sigc::bind(sigc::ptr_fun(&sp_tweak_context_style_set), tc)
@@ -279,7 +338,7 @@ sp_tweak_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
     } else if (!strcmp(key, "mode")) {
         gint64 const dval = ( val ? g_ascii_strtoll (val, NULL, 10) : 0 );
         tc->mode = dval;
-        sp_tweak_update_cursor(tc, tc->mode);
+        sp_tweak_update_cursor(tc, false);
     } else if (!strcmp(key, "fidelity")) {
         double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.0 );
         tc->fidelity = CLAMP(dval, 0.0, 1.0);
@@ -316,7 +375,7 @@ get_dilate_radius (SPTweakContext *tc)
 }
 
 double
-get_dilate_force (SPTweakContext *tc)
+get_path_force (SPTweakContext *tc)
 {
     double force = 8 * (tc->usepressure? tc->pressure : TC_DEFAULT_PRESSURE)
         /sqrt(SP_EVENT_CONTEXT(tc)->desktop->current_zoom());
@@ -326,12 +385,19 @@ get_dilate_force (SPTweakContext *tc)
     return force * tc->force;
 }
 
+double
+get_move_force (SPTweakContext *tc)
+{
+    double force = (tc->usepressure? tc->pressure : TC_DEFAULT_PRESSURE);
+    return force * tc->force;
+}
+
 bool
-sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Point p, NR::Point vector, gint mode, double radius, double force, double fidelity)
+sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Point p, NR::Point vector, gint mode, double radius, double force, double fidelity, bool reverse)
 {
     bool did = false;
 
-    if (SP_IS_BOX3D(item)) {
+    if (SP_IS_BOX3D(item) && !is_transform_mode(mode) && !is_color_mode(mode)) {
         // convert 3D boxes to ordinary groups before tweaking their shapes
         item = SP_ITEM(box3d_convert_to_group(SP_BOX3D(item)));
         selection->add(item);
@@ -340,12 +406,108 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
     if (SP_IS_GROUP(item)) {
         for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             if (SP_IS_ITEM(child)) {
-                if (sp_tweak_dilate_recursive (selection, SP_ITEM(child), p, vector, mode, radius, force, fidelity))
+                if (sp_tweak_dilate_recursive (selection, SP_ITEM(child), p, vector, mode, radius, force, fidelity, reverse))
                     did = true;
             }
         }
 
-    } else if (SP_IS_PATH(item) || SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+    } else {
+        if (mode == TWEAK_MODE_MOVE) {
+
+            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            if (a) {
+                double x = NR::L2(a->midpoint() - p)/radius;
+                if (a->contains(p)) x = 0;
+                if (x < 1) {
+                    Geom::Point move = force * 0.5 * (cos(M_PI * x) + 1) * vector;
+                    sp_item_move_rel(item, Geom::Translate(move[Geom::X], -move[Geom::Y]));
+                    did = true;
+                }
+            }
+
+        } else if (mode == TWEAK_MODE_MOVE_IN_OUT) {
+
+            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            if (a) {
+                double x = NR::L2(a->midpoint() - p)/radius;
+                if (a->contains(p)) x = 0;
+                if (x < 1) {
+                    Geom::Point move = force * 0.5 * (cos(M_PI * x) + 1) * 
+                        (reverse? (a->midpoint() - p) : (p - a->midpoint()));
+                    sp_item_move_rel(item, Geom::Translate(move[Geom::X], -move[Geom::Y]));
+                    did = true;
+                }
+            }
+
+        } else if (mode == TWEAK_MODE_MOVE_JITTER) {
+
+            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            if (a) {
+                double dp = g_random_double_range(0, M_PI*2);
+                double dr = g_random_double_range(0, radius);
+                double x = NR::L2(a->midpoint() - p)/radius;
+                if (a->contains(p)) x = 0;
+                if (x < 1) {
+                    Geom::Point move = force * 0.5 * (cos(M_PI * x) + 1) * NR::Point(cos(dp)*dr, sin(dp)*dr);
+                    sp_item_move_rel(item, Geom::Translate(move[Geom::X], -move[Geom::Y]));
+                    did = true;
+                }
+            }
+
+        } else if (mode == TWEAK_MODE_SCALE) {
+
+            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            if (a) {
+                double x = NR::L2(a->midpoint() - p)/radius;
+                if (a->contains(p)) x = 0;
+                if (x < 1) {
+                    double scale = 1 + (reverse? force : -force) * 0.05 * (cos(M_PI * x) + 1);
+                    sp_item_scale_rel(item, Geom::Scale(scale, scale));
+                    did = true;
+                }
+            }
+
+        } else if (mode == TWEAK_MODE_ROTATE) {
+
+            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            if (a) {
+                double x = NR::L2(a->midpoint() - p)/radius;
+                if (a->contains(p)) x = 0;
+                if (x < 1) {
+                    double angle = (reverse? force : -force) * 0.05 * (cos(M_PI * x) + 1) * M_PI;
+                    sp_item_rotate_rel(item, Geom::Rotate(angle));
+                    did = true;
+                }
+            }
+
+        } else if (mode == TWEAK_MODE_MORELESS) {
+
+            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            if (a) {
+                double x = NR::L2(a->midpoint() - p)/radius;
+                if (a->contains(p)) x = 0;
+                if (x < 1) {
+                    double prob = force * 0.5 * (cos(M_PI * x) + 1);
+                    double chance = g_random_double_range(0, 1);
+                    if (chance <= prob) {
+                        if (reverse) { // delete
+                            sp_object_ref(SP_OBJECT(item), NULL);
+                            SP_OBJECT(item)->deleteObject(true, true);
+                            sp_object_unref(SP_OBJECT(item), NULL);
+                        } else { // duplicate
+                            SPDocument *doc = SP_OBJECT_DOCUMENT(item);
+                            Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
+                            Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
+                            Inkscape::XML::Node *parent = old_repr->parent();
+                            Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
+                            parent->appendChild(copy);
+                            Inkscape::GC::release(copy);
+                        }
+                    }
+                }
+            }
+
+        } else if (SP_IS_PATH(item) || SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
 
         Inkscape::XML::Node *newrepr = NULL;
         gint pos = 0;
@@ -408,15 +570,15 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
             vector = 1/NR::L2(vector) * vector;
 
         bool did_this = false;
-        if (mode == TWEAK_MODE_SHRINK || mode == TWEAK_MODE_GROW) {
+        if (mode == TWEAK_MODE_SHRINK_GROW) {
             if (theShape->MakeTweak(tweak_mode_grow, theRes,
-                                 mode == TWEAK_MODE_GROW? force : -force,
+                                 reverse? force : -force,
                                  join_straight, 4.0,
                                  true, p, NR::Point(0,0), radius, &i2doc) == 0) // 0 means the shape was actually changed
               did_this = true;
-        } else if (mode == TWEAK_MODE_ATTRACT || mode == TWEAK_MODE_REPEL) {
+        } else if (mode == TWEAK_MODE_ATTRACT_REPEL) {
             if (theShape->MakeTweak(tweak_mode_repel, theRes,
-                                 mode == TWEAK_MODE_REPEL? force : -force,
+                                 reverse? force : -force,
                                  join_straight, 4.0,
                                  true, p, NR::Point(0,0), radius, &i2doc) == 0)
               did_this = true;
@@ -494,6 +656,8 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
         if (did_this)
             did = true;
+    }
+
     }
 
     return did;
@@ -796,7 +960,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
 
 
 bool
-sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point vector)
+sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point vector, bool reverse)
 {
     Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(tc)->desktop);
     SPDesktop *desktop = SP_EVENT_CONTEXT(tc)->desktop;
@@ -807,11 +971,6 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point v
 
     bool did = false;
     double radius = get_dilate_radius(tc);
-    double force = get_dilate_force(tc);
-    if (radius == 0 || force == 0) {
-        return false;
-    }
-    double color_force = MIN(sqrt(force)/20.0, 1);
 
     SPItem *item_at_point = SP_EVENT_CONTEXT(tc)->desktop->item_at_point(event_p, TRUE);
 
@@ -820,13 +979,20 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point v
     guint32 stroke_goal = sp_desktop_get_color_tool(desktop, "tools.tweak", false, &do_stroke);
     double opacity_goal = sp_desktop_get_master_opacity_tool(desktop, "tools.tweak", &do_opacity);
 
+    double path_force = get_path_force(tc);
+    if (radius == 0 || path_force == 0) {
+        return false;
+    }
+    double move_force = get_move_force(tc);
+    double color_force = MIN(sqrt(path_force)/20.0, 1);
+
     for (GSList *items = g_slist_copy((GSList *) selection->itemList());
          items != NULL;
          items = items->next) {
 
         SPItem *item = (SPItem *) items->data;
 
-        if (tc->mode == TWEAK_MODE_COLORPAINT || tc->mode == TWEAK_MODE_COLORJITTER) {
+        if (is_color_mode (tc->mode)) {
             if (do_fill || do_stroke || do_opacity) {
                 if (sp_tweak_color_recursive (tc->mode, item, item_at_point,
                                           fill_goal, do_fill,
@@ -835,8 +1001,11 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point v
                                           p, radius, color_force, tc->do_h, tc->do_s, tc->do_l, tc->do_o))
                 did = true;
             }
+        } else if (is_transform_mode(tc->mode)) {
+            if (sp_tweak_dilate_recursive (selection, item, p, vector, tc->mode, radius, move_force, tc->fidelity, reverse))
+                did = true;
         } else {
-            if (sp_tweak_dilate_recursive (selection, item, p, vector, tc->mode, radius, force, tc->fidelity))
+            if (sp_tweak_dilate_recursive (selection, item, p, vector, tc->mode, radius, path_force, tc->fidelity, reverse))
                 did = true;
         }
     }
@@ -854,16 +1023,16 @@ sp_tweak_update_area (SPTweakContext *tc)
 }
 
 void
-sp_tweak_switch_mode (SPTweakContext *tc, gint mode)
+sp_tweak_switch_mode (SPTweakContext *tc, gint mode, bool with_shift)
 {
     SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue ("tweak_tool_mode", mode);
     // need to set explicitly, because the prefs may not have changed by the previous
     tc->mode = mode;
-    sp_tweak_update_cursor (tc, mode);
+    sp_tweak_update_cursor (tc, with_shift);
 }
 
 void
-sp_tweak_switch_mode_temporarily (SPTweakContext *tc, gint mode)
+sp_tweak_switch_mode_temporarily (SPTweakContext *tc, gint mode, bool with_shift)
 {
    // Juggling about so that prefs have the old value but tc->mode and the button show new mode:
    gint now_mode = prefs_get_int_attribute("tools.tweak", "mode", 0);
@@ -872,7 +1041,7 @@ sp_tweak_switch_mode_temporarily (SPTweakContext *tc, gint mode)
    prefs_set_int_attribute("tools.tweak", "mode", now_mode);
    // changing prefs changed tc->mode, restore back :)
    tc->mode = mode;
-   sp_tweak_update_cursor (tc, mode);
+   sp_tweak_update_cursor (tc, with_shift);
 }
 
 gint
@@ -932,56 +1101,12 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                     num = g_slist_length((GSList *) desktop->selection->itemList());
                 }
                 if (num == 0) {
-                    tc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Nothing selected!</b> Select objects to tweak."));
-                } else {
-                    switch (tc->mode) {
-                        case TWEAK_MODE_PUSH:
-                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      ngettext("<b>Pushing %d</b> selected object",
-                                                      "<b>Pushing %d</b> selected objects", num), num);
-                           break;
-                        case TWEAK_MODE_SHRINK:
-                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      ngettext("<b>Shrinking %d</b> selected object",
-                                                      "<b>Shrinking %d</b> selected objects", num), num);
-                           break;
-                        case TWEAK_MODE_GROW:
-                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      ngettext("<b>Growing %d</b> selected object",
-                                                      "<b>Growing %d</b> selected objects", num), num);
-                           break;
-                        case TWEAK_MODE_ATTRACT:
-                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      ngettext("<b>Attracting %d</b> selected object",
-                                                      "<b>Attracting %d</b> selected objects", num), num);
-                           break;
-                        case TWEAK_MODE_REPEL:
-                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      ngettext("<b>Repelling %d</b> selected object",
-                                                      "<b>Repelling %d</b> selected objects", num), num);
-                           break;
-                        case TWEAK_MODE_ROUGHEN:
-                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      ngettext("<b>Roughening %d</b> selected object",
-                                                      "<b>Roughening %d</b> selected objects", num), num);
-                           break;
-                        case TWEAK_MODE_COLORPAINT:
-                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      ngettext("<b>Painting %d</b> selected object",
-                                                      "<b>Painting %d</b> selected objects", num), num);
-                           break;
-                        case TWEAK_MODE_COLORJITTER:
-                           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE,
-                                                      ngettext("<b>Jittering colors in %d</b> selected object",
-                                                      "<b>Jittering colors in %d</b> selected objects", num), num);
-                           break;
-                    }
+                    tc->_message_context->flash(Inkscape::ERROR_MESSAGE, _("<b>Nothing selected!</b> Select objects to tweak."));
                 }
-
 
             // dilating:
             if (tc->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK )) {
-                sp_tweak_dilate (tc, motion_w, motion_doc, motion_doc - tc->last_push);
+                sp_tweak_dilate (tc, motion_w, motion_doc, motion_doc - tc->last_push, event->button.state & GDK_SHIFT_MASK? true : false);
                 //tc->last_push = motion_doc;
                 tc->has_dilated = true;
                 // it's slow, so prevent clogging up with events
@@ -1005,39 +1130,55 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
             if (!tc->has_dilated) {
                 // if we did not rub, do a light tap
                 tc->pressure = 0.03;
-                sp_tweak_dilate (tc, motion_w, desktop->dt2doc(motion_dt), NR::Point(0,0));
+                sp_tweak_dilate (tc, motion_w, desktop->dt2doc(motion_dt), NR::Point(0,0), MOD__SHIFT);
             }
             tc->is_dilating = false;
             tc->has_dilated = false;
             switch (tc->mode) {
+                case TWEAK_MODE_MOVE:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                     SP_VERB_CONTEXT_TWEAK, _("Move tweak"));
+                    break;
+                case TWEAK_MODE_MOVE_IN_OUT:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                     SP_VERB_CONTEXT_TWEAK, _("Move in/out tweak"));
+                    break;
+                case TWEAK_MODE_MOVE_JITTER:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                     SP_VERB_CONTEXT_TWEAK, _("Move jitter tweak"));
+                    break;
+                case TWEAK_MODE_SCALE:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                     SP_VERB_CONTEXT_TWEAK, _("Scale tweak"));
+                    break;
+                case TWEAK_MODE_ROTATE:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                     SP_VERB_CONTEXT_TWEAK, _("Rotate tweak"));
+                    break;
+                case TWEAK_MODE_MORELESS:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                     SP_VERB_CONTEXT_TWEAK, _("Duplicate/delete tweak"));
+                    break;
                 case TWEAK_MODE_PUSH:
                     sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Push tweak"));
+                                     SP_VERB_CONTEXT_TWEAK, _("Push path tweak"));
                     break;
-                case TWEAK_MODE_SHRINK:
+                case TWEAK_MODE_SHRINK_GROW:
                     sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Shrink tweak"));
+                                     SP_VERB_CONTEXT_TWEAK, _("Shrink/grow path tweak"));
                     break;
-                case TWEAK_MODE_GROW:
+                case TWEAK_MODE_ATTRACT_REPEL:
                     sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Grow tweak"));
-                    break;
-                case TWEAK_MODE_ATTRACT:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Attract tweak"));
-                    break;
-                case TWEAK_MODE_REPEL:
-                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Repel tweak"));
+                                     SP_VERB_CONTEXT_TWEAK, _("Attract/repel path tweak"));
                     break;
                 case TWEAK_MODE_ROUGHEN:
                     sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
-                                     SP_VERB_CONTEXT_TWEAK, _("Roughen tweak"));
+                                     SP_VERB_CONTEXT_TWEAK, _("Roughen path tweak"));
                     break;
                 case TWEAK_MODE_COLORPAINT:
                     sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
                                      SP_VERB_CONTEXT_TWEAK, _("Color paint tweak"));
-		    break;
+                    break;
                 case TWEAK_MODE_COLORJITTER:
                     sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
                                      SP_VERB_CONTEXT_TWEAK, _("Color jitter tweak"));
@@ -1049,67 +1190,99 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
 
     case GDK_KEY_PRESS:
         switch (get_group0_keyval (&event->key)) {
-        case GDK_p:
-        case GDK_P:
+        case GDK_m:
+        case GDK_M:
+        case GDK_0:
+            if (MOD__SHIFT_ONLY) {
+                sp_tweak_switch_mode(tc, TWEAK_MODE_MOVE, MOD__SHIFT);
+                ret = TRUE;
+            }
+            break;
+        case GDK_i:
+        case GDK_I:
         case GDK_1:
             if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_PUSH);
+                sp_tweak_switch_mode(tc, TWEAK_MODE_MOVE_IN_OUT, MOD__SHIFT);
+                ret = TRUE;
+            }
+            break;
+        case GDK_z:
+        case GDK_Z:
+        case GDK_2:
+            if (MOD__SHIFT_ONLY) {
+                sp_tweak_switch_mode(tc, TWEAK_MODE_MOVE_JITTER, MOD__SHIFT);
+                ret = TRUE;
+            }
+            break;
+        case GDK_less:
+        case GDK_comma:
+        case GDK_greater:
+        case GDK_period:
+        case GDK_3:
+            if (MOD__SHIFT_ONLY) {
+                sp_tweak_switch_mode(tc, TWEAK_MODE_SCALE, MOD__SHIFT);
+                ret = TRUE;
+            }
+            break;
+        case GDK_bracketright:
+        case GDK_bracketleft:
+        case GDK_4:
+            if (MOD__SHIFT_ONLY) {
+                sp_tweak_switch_mode(tc, TWEAK_MODE_ROTATE, MOD__SHIFT);
+                ret = TRUE;
+            }
+            break;
+        case GDK_d:
+        case GDK_D:
+        case GDK_5:
+            if (MOD__SHIFT_ONLY) {
+                sp_tweak_switch_mode(tc, TWEAK_MODE_MORELESS, MOD__SHIFT);
+                ret = TRUE;
+            }
+            break;
+        case GDK_p:
+        case GDK_P:
+        case GDK_6:
+            if (MOD__SHIFT_ONLY) {
+                sp_tweak_switch_mode(tc, TWEAK_MODE_PUSH, MOD__SHIFT);
                 ret = TRUE;
             }
             break;
         case GDK_s:
         case GDK_S:
-        case GDK_2:
+        case GDK_7:
             if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_SHRINK);
-                ret = TRUE;
-            }
-            break;
-        case GDK_g:
-        case GDK_G:
-        case GDK_3:
-            if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_GROW);
+                sp_tweak_switch_mode(tc, TWEAK_MODE_SHRINK_GROW, MOD__SHIFT);
                 ret = TRUE;
             }
             break;
         case GDK_a:
         case GDK_A:
-        case GDK_4:
+        case GDK_8:
             if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_ATTRACT);
-                ret = TRUE;
-            }
-            break;
-        case GDK_e:
-        case GDK_E:
-        case GDK_5:
-            if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_REPEL);
+                sp_tweak_switch_mode(tc, TWEAK_MODE_ATTRACT_REPEL, MOD__SHIFT);
                 ret = TRUE;
             }
             break;
         case GDK_r:
         case GDK_R:
-        case GDK_6:
+        case GDK_9:
             if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_ROUGHEN);
+                sp_tweak_switch_mode(tc, TWEAK_MODE_ROUGHEN, MOD__SHIFT);
                 ret = TRUE;
             }
             break;
         case GDK_c:
         case GDK_C:
-        case GDK_7:
             if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_COLORPAINT);
+                sp_tweak_switch_mode(tc, TWEAK_MODE_COLORPAINT, MOD__SHIFT);
                 ret = TRUE;
             }
             break;
         case GDK_j:
         case GDK_J:
-        case GDK_8:
             if (MOD__SHIFT_ONLY) {
-                sp_tweak_switch_mode(tc, TWEAK_MODE_COLORJITTER);
+                sp_tweak_switch_mode(tc, TWEAK_MODE_COLORJITTER, MOD__SHIFT);
                 ret = TRUE;
             }
             break;
@@ -1178,19 +1351,14 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
             }
             break;
 
-        case GDK_Control_L:
-        case GDK_Control_R:
-            if (MOD__SHIFT) {
-                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_GROW);
-            } else {
-                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_SHRINK);
-            }
-            break;
         case GDK_Shift_L:
         case GDK_Shift_R:
-            if (MOD__CTRL) {
-                sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_GROW);
-            }
+            sp_tweak_update_cursor(tc, true);
+            break;
+
+        case GDK_Control_L:
+        case GDK_Control_R:
+            sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_SHRINK_GROW, MOD__SHIFT);
             break;
         default:
             break;
@@ -1199,20 +1367,17 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
 
     case GDK_KEY_RELEASE:
         switch (get_group0_keyval(&event->key)) {
-            case GDK_Control_L:
-            case GDK_Control_R:
-                sp_tweak_switch_mode (tc, prefs_get_int_attribute("tools.tweak", "mode", 0));
-                tc->_message_context->clear();
-                break;
             case GDK_Shift_L:
             case GDK_Shift_R:
-                if (MOD__CTRL) {
-                    sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_SHRINK);
-                }
+                sp_tweak_update_cursor(tc, false);
                 break;
-            break;
+            case GDK_Control_L:
+            case GDK_Control_R:
+                sp_tweak_switch_mode (tc, prefs_get_int_attribute("tools.tweak", "mode", 0), MOD__SHIFT);
+                tc->_message_context->clear();
+                break;
             default:
-                sp_tweak_switch_mode (tc, prefs_get_int_attribute("tools.tweak", "mode", 0));
+                sp_tweak_switch_mode (tc, prefs_get_int_attribute("tools.tweak", "mode", 0), MOD__SHIFT);
                 break;
         }
 
