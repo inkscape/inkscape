@@ -818,6 +818,11 @@ with the segment; another Shift+S will expand a second handle</note>
 </group>
 
 <group>
+<title>Edit fills and path effects</title>
+<note>Node tool can also edit the handles of a pattern fill, gradient fill, and the editable handles of path effects.</note> 
+</group>
+
+<group>
 <title>Cancel</title>
 <keys><key><misc f="Esc"/></key> <action>cancel rubberband or move</action></keys>
 <note>Press Esc while mouse button is still down to cancel rubberband selection, node move, handle move, or handle move.</note>
@@ -833,6 +838,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <group>
 <title>Operation</title>
 <mouse><key><left-drag/></key> <action>act on selected paths in the current mode</action></mouse>
+<mouse><key><shift/><left-drag/></key> <action>reverse current mode (when applicable)</action></mouse>
 <mouse><key><ctrl/><left-drag/></key> <action>act temporarily switching to shrink mode</action></mouse>
 <mouse><key><ctrl/><shift/><left-drag/></key> <action>act temporarily switching to grow mode</action></mouse>
 <note>The amount of tweaking action is the greatest at the center of the circular area and drops off smoothly towards the edges.</note>
@@ -840,12 +846,22 @@ with the segment; another Shift+S will expand a second handle</note>
 
 <group>
 <title>Modes</title>
-<keys><key><shift/>p</key> <action>push mode</action></keys>
-<keys><key><shift/>s</key> <action>shrink (inset) mode</action></keys>
-<keys><key><shift/>g</key> <action>grow (outset) mode</action></keys>
-<keys><key><shift/>a</key> <action>attract mode</action></keys>
-<keys><key><shift/>e</key> <action>repel mode</action></keys>
-<keys><key><shift/>r</key> <action>roughen mode</action></keys>
+<keys><key><shift/>m</key><key><shift/>0</key> <action>move mode</action></keys>
+<keys><key><shift/>i</key><key><shift/>1</key> <action>move in/out mode</action></keys>
+<note>Drag moves objects inwards to cursor, drag with Shift moves outwards from cursor</note>
+<keys><key><shift/>z</key><key><shift/>2</key> <action>move jitter mode</action></keys>
+<keys><key><shift/>&lt;</key><key><shift/>&gt;</key><key><shift/>3</key> <action>scale mode</action></keys>
+<note>Drag scales objects down, drag with Shift scales up</note>
+<keys><key><shift/>[</key><key><shift/>]</key><key><shift/>4</key> <action>rotate mode</action></keys>
+<note>Drag rotates objects clockwise, drag with Shift, counterclockwise</note>
+<keys><key><shift/>d</key><key><shift/>5</key> <action>duplicate/delete mode</action></keys>
+<note>Drag randomly duplicates objects, drag with Shift randomly deletes</note>
+<keys><key><shift/>p</key><key><shift/>6</key> <action>push path mode</action></keys>
+<keys><key><shift/>s</key><key><shift/>7</key> <action>shrink/grow path mode</action></keys>
+<note>Drag insets paths, drag with Shift outsets</note>
+<keys><key><shift/>a</key><key><shift/>8</key> <action>attract/repel path mode</action></keys>
+<note>Drag attracts paths to cursor, drag with Shift repels</note>
+<keys><key><shift/>r</key><key><shift/>9</key> <action>roughen mode</action></keys>
 <keys><key><shift/>c</key> <action>color paint mode</action></keys>
 <keys><key><shift/>j</key> <action>color jitter mode</action></keys>
 </group>
