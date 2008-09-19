@@ -2234,8 +2234,14 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
     p += sp_style_write_ienum(p, c + BMAX - p, "text-anchor", enum_text_anchor, &style->text_anchor, NULL, flags);
 
     /// \todo fixme: Per type methods need default flag too (lauris)
-    p += sp_style_write_iscale24(p, c + BMAX - p, "opacity", &style->opacity, NULL, flags);
-    p += sp_style_write_ipaint(p, c + BMAX - p, "color", &style->color, NULL, flags);
+
+    if (style->opacity.value != SP_SCALE24_MAX) {
+        p += sp_style_write_iscale24(p, c + BMAX - p, "opacity", &style->opacity, NULL, flags);
+    }
+
+    if (!style->color.noneSet) { // CSS does not permit "none" for color
+        p += sp_style_write_ipaint(p, c + BMAX - p, "color", &style->color, NULL, flags);
+    }
 
     p += sp_style_write_ipaint(p, c + BMAX - p, "fill", &style->fill, NULL, flags);
     // if fill:none, skip writing fill properties
@@ -2297,24 +2303,30 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
         }
     }
 
+    bool marker_none = false;
+    gchar *master = style->marker[SP_MARKER_LOC].value;
     if (style->marker[SP_MARKER_LOC].set) {
         p += g_snprintf(p, c + BMAX - p, "marker:%s;", style->marker[SP_MARKER_LOC].value);
     } else if (flags == SP_STYLE_FLAG_ALWAYS) {
         p += g_snprintf(p, c + BMAX - p, "marker:none;");
+        marker_none = true;
     }
-    if (style->marker[SP_MARKER_LOC_START].set) {
+    if (style->marker[SP_MARKER_LOC_START].set 
+       && (!master || strcmp(master, style->marker[SP_MARKER_LOC_START].value))) {
         p += g_snprintf(p, c + BMAX - p, "marker-start:%s;", style->marker[SP_MARKER_LOC_START].value);
-    } else if (flags == SP_STYLE_FLAG_ALWAYS) {
+    } else if (flags == SP_STYLE_FLAG_ALWAYS && !marker_none) {
         p += g_snprintf(p, c + BMAX - p, "marker-start:none;");
     }
-    if (style->marker[SP_MARKER_LOC_MID].set) {
+    if (style->marker[SP_MARKER_LOC_MID].set
+       && (!master || strcmp(master, style->marker[SP_MARKER_LOC_MID].value))) {
         p += g_snprintf(p, c + BMAX - p, "marker-mid:%s;", style->marker[SP_MARKER_LOC_MID].value);
-    } else if (flags == SP_STYLE_FLAG_ALWAYS) {
+    } else if (flags == SP_STYLE_FLAG_ALWAYS && !marker_none) {
         p += g_snprintf(p, c + BMAX - p, "marker-mid:none;");
     }
-    if (style->marker[SP_MARKER_LOC_END].set) {
+    if (style->marker[SP_MARKER_LOC_END].set
+       && (!master || strcmp(master, style->marker[SP_MARKER_LOC_END].value))) {
         p += g_snprintf(p, c + BMAX - p, "marker-end:%s;", style->marker[SP_MARKER_LOC_END].value);
-    } else if (flags == SP_STYLE_FLAG_ALWAYS) {
+    } else if (flags == SP_STYLE_FLAG_ALWAYS && !marker_none) {
         p += g_snprintf(p, c + BMAX - p, "marker-end:none;");
     }
 
@@ -2385,7 +2397,10 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
     if (from->opacity.set && from->opacity.value != SP_SCALE24_MAX) {
         p += sp_style_write_iscale24(p, c + BMAX - p, "opacity", &from->opacity, &to->opacity, SP_STYLE_FLAG_IFSET);
     }
-    p += sp_style_write_ipaint(p, c + BMAX - p, "color", &from->color, &to->color, SP_STYLE_FLAG_IFSET);
+
+    if (!from->color.noneSet) { // CSS does not permit "none" for color
+        p += sp_style_write_ipaint(p, c + BMAX - p, "color", &from->color, &to->color, SP_STYLE_FLAG_IFSET);
+    }
 
     p += sp_style_write_ipaint(p, c + BMAX - p, "fill", &from->fill, &to->fill, SP_STYLE_FLAG_IFDIFF);
     // if fill:none, skip writing fill properties
@@ -2440,16 +2455,17 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
     }
 
     /* markers */
-    if (from->marker[SP_MARKER_LOC].value != NULL) {
-        p += g_snprintf(p, c + BMAX - p, "marker:%s;",       from->marker[SP_MARKER_LOC].value);
+    gchar *master = from->marker[SP_MARKER_LOC].value;
+    if (master != NULL) {
+        p += g_snprintf(p, c + BMAX - p, "marker:%s;", master);
     }
-    if (from->marker[SP_MARKER_LOC_START].value != NULL) {
+    if (from->marker[SP_MARKER_LOC_START].value != NULL && (!master || strcmp(master, from->marker[SP_MARKER_LOC_START].value))) {
         p += g_snprintf(p, c + BMAX - p, "marker-start:%s;", from->marker[SP_MARKER_LOC_START].value);
     }
-    if (from->marker[SP_MARKER_LOC_MID].value != NULL) {
+    if (from->marker[SP_MARKER_LOC_MID].value != NULL && (!master || strcmp(master, from->marker[SP_MARKER_LOC_MID].value))) {
         p += g_snprintf(p, c + BMAX - p, "marker-mid:%s;",   from->marker[SP_MARKER_LOC_MID].value);
     }
-    if (from->marker[SP_MARKER_LOC_END].value != NULL) {
+    if (from->marker[SP_MARKER_LOC_END].value != NULL && (!master || strcmp(master, from->marker[SP_MARKER_LOC_END].value))) {
         p += g_snprintf(p, c + BMAX - p, "marker-end:%s;",   from->marker[SP_MARKER_LOC_END].value);
     }
 
@@ -4006,6 +4022,7 @@ sp_css_attr_unset_uris(SPCSSAttr *css)
     if (is_url(sp_repr_css_property(css, "color-profile", NULL))) sp_repr_css_set_property(css, "color-profile", NULL);
     if (is_url(sp_repr_css_property(css, "cursor", NULL))) sp_repr_css_set_property(css, "cursor", NULL);
     if (is_url(sp_repr_css_property(css, "filter", NULL))) sp_repr_css_set_property(css, "filter", NULL);
+    if (is_url(sp_repr_css_property(css, "marker", NULL))) sp_repr_css_set_property(css, "marker", NULL);
     if (is_url(sp_repr_css_property(css, "marker-start", NULL))) sp_repr_css_set_property(css, "marker-start", NULL);
     if (is_url(sp_repr_css_property(css, "marker-mid", NULL))) sp_repr_css_set_property(css, "marker-mid", NULL);
     if (is_url(sp_repr_css_property(css, "marker-end", NULL))) sp_repr_css_set_property(css, "marker-end", NULL);
