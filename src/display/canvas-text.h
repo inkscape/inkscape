@@ -27,8 +27,8 @@ struct SPCanvasText : public SPCanvasItem{
     guint32 rgba;
 
     gchar* text;
-    NR::Point s;
-    NR::Matrix affine;
+    Geom::Point s;
+    Geom::Matrix affine;
     double fontsize;
     double anchor_x;
     double anchor_y;

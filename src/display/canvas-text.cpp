@@ -141,7 +141,7 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned i
 
     cl->affine = affine;
 
-    NR::Point s = cl->s * affine;
+    Geom::Point s = cl->s * affine;
 
     // set up a temporary cairo_t to measure the text extents; it would be better to compute this in the render()
     // method but update() seems to be called before so we don't have the information available when we need it
