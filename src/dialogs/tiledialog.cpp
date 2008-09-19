@@ -569,7 +569,7 @@ void TileDialog::updateSelection()
     const GSList *items = selection->itemList();
     int selcount = g_slist_length((GSList *)items);
 
-    if (NoOfColsSpinner.get_value()>1){
+    if (NoOfColsSpinner.get_value()>1 && NoOfRowsSpinner.get_value()>1){
         // Update the number of rows assuming number of columns wanted remains same.
         double NoOfRows = ceil(selcount / NoOfColsSpinner.get_value());
         NoOfRowsSpinner.set_value(NoOfRows);
@@ -581,8 +581,11 @@ void TileDialog::updateSelection()
             prefs_set_double_attribute ("dialogs.gridtiler", "NoOfCols", NoOfCols);
         }
     } else {
-        NoOfColsSpinner.set_value(selcount);
-        prefs_set_double_attribute ("dialogs.gridtiler", "NoOfCols", selcount);
+        double PerRow = ceil(sqrt(selcount));
+        double PerCol = ceil(sqrt(selcount));
+        NoOfRowsSpinner.set_value(PerRow);
+        NoOfColsSpinner.set_value(PerCol);
+        prefs_set_double_attribute ("dialogs.gridtiler", "NoOfCols", PerCol);
 
     }
 
@@ -643,8 +646,8 @@ TileDialog::TileDialog()
 
     /*#### Number of Rows ####*/
 
-    double PerRow = selcount;
-    double PerCol = 1;
+    double PerRow = ceil(sqrt(selcount));
+    double PerCol = ceil(sqrt(selcount));
 
     #ifdef DEBUG_GRID_ARRANGE
         g_print("/n PerRox = %f PerCol = %f selcount = %d",PerRow,PerCol,selcount);
