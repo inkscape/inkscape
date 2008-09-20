@@ -748,8 +748,10 @@ CairoRenderer::applyMask(CairoRenderContext *ctx, SPMask const *mask)
         ctx->setTransform(&t);
     }
 
-    // clip mask contents
-    ctx->addClippingRect(mask_bbox.x0, mask_bbox.y0, mask_bbox.x1 - mask_bbox.x0, mask_bbox.y1 - mask_bbox.y0);
+    // Clip mask contents... but...
+    // The mask's bounding box is the "geometric bounding box" which doesn't allow for
+    // filters which extend outside the bounding box. So don't clip.
+    // ctx->addClippingRect(mask_bbox.x0, mask_bbox.y0, mask_bbox.x1 - mask_bbox.x0, mask_bbox.y1 - mask_bbox.y0);
 
     ctx->pushState();
 
