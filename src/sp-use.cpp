@@ -139,6 +139,12 @@ sp_use_finalize(GObject *obj)
 {
     SPUse *use = (SPUse *) obj;
 
+    if (use->child) {
+        sp_object_detach(SP_OBJECT(obj), use->child);
+        use->child = NULL;
+    }
+
+    use->ref->detach();
     delete use->ref;
 
     use->_delete_connection.~connection();
@@ -170,7 +176,10 @@ sp_use_release(SPObject *object)
 {
     SPUse *use = SP_USE(object);
 
-    use->child = NULL;
+    if (use->child) {
+        sp_object_detach(object, use->child);
+        use->child = NULL;
+    }
 
     use->_delete_connection.disconnect();
     use->_changed_connection.disconnect();
