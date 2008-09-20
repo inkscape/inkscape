@@ -107,6 +107,7 @@ Filter::merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Ink
 		if (from_child == from->firstChild() && !strcmp("filter", from->name()) && srcGraphic != NULL && to_child->attribute("in") == NULL) {
 			to_child->setAttribute("in", srcGraphic);
 		}
+    Inkscape::GC::release(to_child);
 	}
 
 	return;
@@ -143,6 +144,8 @@ Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *d
 			Glib::ustring url = "url(#"; url += newfilterroot->attribute("id"); url += ")";
 
 			merge_filters(newfilterroot, get_filter(module)->root(), xmldoc);
+  
+      Inkscape::GC::release(newfilterroot);
 
 			sp_repr_css_set_property(css, "filter", url.c_str());
 			sp_repr_css_set(node, css, "style");
@@ -175,6 +178,8 @@ Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *d
 			filternode->appendChild(alpha);
 
 			merge_filters(filternode, get_filter(module)->root(), xmldoc, FILTER_SRC_GRAPHIC, FILTER_SRC_GRAPHIC_ALPHA);
+
+      Inkscape::GC::release(alpha);
 		}
     }
 

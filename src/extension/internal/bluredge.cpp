@@ -106,6 +106,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
             selection->clear();
         }
 
+        Inkscape::GC::release(new_group);
     }
 
     prefs_set_double_attribute("options.defaultoffsetwidth", "value", old_offset);

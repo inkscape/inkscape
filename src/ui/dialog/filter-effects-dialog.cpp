@@ -1063,6 +1063,7 @@ private:
                     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(prim->document);
                     Inkscape::XML::Node *repr = xml_doc->createElement(_light_source.get_active_data()->key.c_str());
                     prim->repr->appendChild(repr);
+                    Inkscape::GC::release(repr);
                 }
 
                 sp_document_done(prim->document, SP_VERB_DIALOG_FILTER_EFFECTS, _("New light source"));

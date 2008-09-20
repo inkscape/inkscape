@@ -191,6 +191,8 @@ Effect::~Effect (void)
 {
     if (get_last_effect() == this)
         set_last_effect(NULL);
+    if (_menu_node)
+        Inkscape::GC::release(_menu_node);
     return;
 }
 

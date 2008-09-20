@@ -173,6 +173,10 @@ sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
     SP_OBJECT(item)->deleteObject(false);
     repr->addChild(child, NULL);
     child->setAttribute("id", id);
+
+    Inkscape::GC::release(repr);
+    Inkscape::GC::release(child);
+
     sp_document_done(SP_OBJECT_DOCUMENT(object), SP_VERB_NONE,
                      _("Create link"));
 

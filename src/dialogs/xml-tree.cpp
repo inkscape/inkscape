@@ -1381,6 +1381,7 @@ void cmd_new_element_node(GtkObject */*object*/, gpointer /*data*/)
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(current_document);
         Inkscape::XML::Node *new_repr;
         new_repr = xml_doc->createElement(name.text);
+        Inkscape::GC::release(new_repr);
         g_free(name.text);
         selected_repr->appendChild(new_repr);
         set_tree_select(new_repr);

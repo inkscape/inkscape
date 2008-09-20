@@ -533,6 +533,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
 
         // add the new repr to the parent
         parent->appendChild(repr);
+        Inkscape::GC::release(repr);
 
         // move to the saved position
         repr->setPosition(pos > 0 ? pos + 1 : 1);

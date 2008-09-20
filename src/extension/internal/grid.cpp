@@ -124,6 +124,7 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
     path->setAttribute("style", style.c_str());
 
     current_layer->appendChild(path);
+		Inkscape::GC::release(path);
 
     return;
 }

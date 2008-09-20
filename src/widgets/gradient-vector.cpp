@@ -480,17 +480,20 @@ verify_grad(SPGradient *gradient)
 		sp_repr_set_css_double(child, "offset", 0.0);
 		child->setAttribute("style", os.str().c_str());
 		SP_OBJECT_REPR (gradient)->addChild(child, NULL);
+		Inkscape::GC::release(child);
 
 		child = xml_doc->createElement("svg:stop");
 		sp_repr_set_css_double(child, "offset", 1.0);
 		child->setAttribute("style", os.str().c_str());
 		SP_OBJECT_REPR (gradient)->addChild(child, NULL);
+		Inkscape::GC::release(child);
 	}
 	if (i < 2) {
 		sp_repr_set_css_double(SP_OBJECT_REPR(stop), "offset", 0.0);
 		Inkscape::XML::Node *child = SP_OBJECT_REPR(stop)->duplicate(SP_OBJECT_REPR(gradient)->document());
 		sp_repr_set_css_double(child, "offset", 1.0);
 		SP_OBJECT_REPR(gradient)->addChild(child, SP_OBJECT_REPR (stop));
+		Inkscape::GC::release(child);
 	}
 }
 

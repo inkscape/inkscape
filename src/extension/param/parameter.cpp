@@ -320,6 +320,7 @@ Parameter::new_child (Inkscape::XML::Node * parent)
     retval->setAttribute("name", _name);
 
     parent->appendChild(retval);
+    Inkscape::GC::release(retval);
     return retval;
 }
 
@@ -346,6 +347,7 @@ Parameter::document_param_node (SPDocument * doc)
         params = xml_doc->createElement("inkscape:extension-param");
         params->setAttribute("extension", extension->get_id());
         defs->appendChild(params);
+        Inkscape::GC::release(params);
     }
 
     return params;
