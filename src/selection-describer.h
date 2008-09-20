@@ -24,9 +24,12 @@ class MessageStack;
 class SelectionDescriber : public sigc::trackable {
 public:
     SelectionDescriber(Inkscape::Selection *selection, MessageStack *stack);
+    ~SelectionDescriber();
 
 private:
     void _updateMessageFromSelection(Inkscape::Selection *selection);
+
+    sigc::connection *_selection_changed_connection;
 
     MessageContext _context;
 };

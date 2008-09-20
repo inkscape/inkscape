@@ -97,8 +97,16 @@ namespace Inkscape {
 SelectionDescriber::SelectionDescriber(Inkscape::Selection *selection, MessageStack *stack)
 : _context(stack)
 {
-    selection->connectChanged(sigc::mem_fun(*this, &SelectionDescriber::_updateMessageFromSelection));
+    _selection_changed_connection = new sigc::connection (
+             selection->connectChanged(
+                 sigc::mem_fun(*this, &SelectionDescriber::_updateMessageFromSelection)));
     _updateMessageFromSelection(selection);
+}
+
+SelectionDescriber::~SelectionDescriber()
+{
+    _selection_changed_connection->disconnect();
+    delete _selection_changed_connection;
 }
 
 void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *selection) {
