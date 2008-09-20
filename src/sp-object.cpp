@@ -817,7 +817,8 @@ sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::No
 
     object->document = document;
     object->repr = repr;
-    Inkscape::GC::anchor(repr);
+    if (!cloned)
+        Inkscape::GC::anchor(repr);
     object->cloned = cloned;
 
     if (!SP_OBJECT_IS_CLONED(object)) {
@@ -885,6 +886,8 @@ void SPObject::releaseReferences() {
         this->_default_label = NULL;
 
         this->document->bindObjectToRepr(this->repr, NULL);
+
+        Inkscape::GC::release(this->repr);
     } else {
         g_assert(!this->id);
     }
@@ -892,8 +895,6 @@ void SPObject::releaseReferences() {
     if (this->style) {
         this->style = sp_style_unref(this->style);
     }
-
-    Inkscape::GC::release(this->repr);
 
     this->document = NULL;
     this->repr = NULL;
