@@ -98,7 +98,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
     
     for (SPObject* o = sp_object_first_child(parent); o != NULL; o = SP_OBJECT_NEXT(o)) {
         g_assert(_snapmanager->getDesktop() != NULL);
-    	if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !(_snapmanager->getDesktop()->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
+        if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !(_snapmanager->getDesktop()->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
             // Don't snap to locked items, and
             // don't snap to hidden objects, unless they're a clipped path or a mask
             /* See if this item is on the ignore list */
@@ -249,7 +249,7 @@ void Inkscape::ObjectSnapper::_snapNodes(SnappedConstraints &sc,
     for (std::vector<Geom::Point>::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
         Geom::Coord dist = Geom::L2(*k - p);        
         if (dist < getSnapperTolerance() && dist < s.getDistance()) {
-            s = SnappedPoint(*k, SNAPTARGET_NODE, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
+            s = SnappedPoint(*k, SNAPTARGET_NODE, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
             success = true;
         }
     }
@@ -278,7 +278,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
         Geom::Coord dist = Geom::L2(*k - p_proj); // distance from node to the guide         
         Geom::Coord dist2 = Geom::L2(p - p_proj); // distance from projection of node on the guide, to the mouse location
         if ((dist < tol && dist2 < tol || getSnapperAlwaysSnap()) && dist < s.getDistance()) {
-            s = SnappedPoint(*k, SNAPTARGET_NODE, dist, tol, getSnapperAlwaysSnap());
+            s = SnappedPoint(*k, SNAPTARGET_NODE, dist, tol, getSnapperAlwaysSnap(), true);
             success = true;
         }
     }
@@ -438,10 +438,10 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
             std::vector<double>::const_iterator np = anp.begin();
             unsigned int index = 0;
             for (; np != anp.end(); np++, index++) {
-            	Geom::Curve const *curve = &((*it_pv).at_index(index));
-            	Geom::Point const sp_doc = curve->pointAt(*np);
-           	
-            	bool c1 = true;
+                Geom::Curve const *curve = &((*it_pv).at_index(index));
+                Geom::Point const sp_doc = curve->pointAt(*np);
+               
+                bool c1 = true;
                 bool c2 = true;                                
                 if (being_edited) {
                     /* If the path is being edited, then we should only snap though to stationary pieces of the path
@@ -460,7 +460,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                 if (!being_edited || (c1 && c2)) {
                     Geom::Coord const dist = Geom::distance(sp_doc, p_doc);
                     if (dist < getSnapperTolerance()) {
-                        sc.curves.push_back(Inkscape::SnappedCurve(from_2geom(sp_dt), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), curve));   
+                        sc.curves.push_back(Inkscape::SnappedCurve(from_2geom(sp_dt), dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve));   
                     }
                 }
             }        
@@ -536,7 +536,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                         // When it's within snapping range, then return it
                         // (within snapping range == between p_min_on_cl and p_max_on_cl == 0 < ta < 1)                        
                         Geom::Coord dist = Geom::L2(_snapmanager->getDesktop()->dt2doc(p_proj_on_cl) - p_inters);
-                        SnappedPoint s(_snapmanager->getDesktop()->doc2dt(p_inters), SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap());
+                        SnappedPoint s(_snapmanager->getDesktop()->doc2dt(p_inters), SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
                         sc.points.push_back(s);
                     }  
                 } 

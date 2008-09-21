@@ -42,8 +42,8 @@ class SnappedPoint
 
 public:
     SnappedPoint();
-    SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2);
-    SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a);
+    SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2);
+    SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
     ~SnappedPoint();
 
     Geom::Coord getDistance() const;
@@ -51,11 +51,12 @@ public:
     Geom::Coord getTolerance() const;
     bool getAlwaysSnap() const;
     Geom::Coord getSecondDistance() const;
+    void setSecondDistance(Geom::Coord const d) {_second_distance = d;}
     Geom::Coord getSecondTolerance() const;
     bool getSecondAlwaysSnap() const;
     
-    /* This is the preferred method to find out which point we have snapped,
-     * to because it only returns a point if snapping has actually occured
+    /* This is the preferred method to find out which point we have snapped
+     * to, because it only returns a point if snapping has actually occured
      * (by overwriting p)
      */ 
     void getPoint(Geom::Point &p) const;
@@ -69,16 +70,21 @@ public:
     Geom::Point getPoint() const {return _point;}
      
     bool getAtIntersection() const {return _at_intersection;}
+    bool getFullyConstrained() const {return _fully_constrained;}        
     bool getSnapped() const {return _distance < NR_HUGE;}
     Geom::Point getTransformation() const {return _transformation;}
     void setTransformation(Geom::Point const t) {_transformation = t;}
     void setTarget(SnapTargetType const target) {_target = target;}
     SnapTargetType getTarget() {return _target;}
     
+    bool isOtherOneBetter(SnappedPoint const &other_one) const;
+    
 protected:
     Geom::Point _point; // Location of the snapped point
     SnapTargetType _target; // Describes to what we've snapped to
-    bool _at_intersection; // If true, the snapped point is at an intersection 
+    bool _at_intersection; // If true, the snapped point is at an intersection
+    bool _fully_constrained; // When snapping for example to a node, then the snap will be "fully constrained". 
+                            // When snapping to a line however, the snap is only partly constrained (i.e. only in one dimension)
     
     /* Distance from original point to snapped point. If the snapped point is at
        an intersection of e.g. two lines, then this is the distance to the closest

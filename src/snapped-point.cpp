@@ -12,18 +12,19 @@
 #include "snapped-point.h"
 
 // overloaded constructor
-Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a)
+Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained)
     : _point(p), _target(target), _distance(d), _tolerance(t), _always_snap(a)
 {
     _at_intersection = false;
+    _fully_constrained = fully_constrained;
     _second_distance = NR_HUGE;
     _second_tolerance = 0;
     _second_always_snap = false;
     _transformation = Geom::Point(1,1);
 }
 
-Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2)
-    : _point(p), _target(target), _at_intersection(at_intersection), _distance(d), _tolerance(t), _always_snap(a),
+Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2)
+    : _point(p), _target(target), _at_intersection(at_intersection), _fully_constrained(fully_constrained), _distance(d), _tolerance(t), _always_snap(a),
     _second_distance(d2), _second_tolerance(t2), _second_always_snap(a2)
 {
     _transformation = Geom::Point(1,1);
@@ -102,6 +103,27 @@ bool getClosestSP(std::list<Inkscape::SnappedPoint> &list, Inkscape::SnappedPoin
     }
 
     return success;
+}
+
+bool Inkscape::SnappedPoint::isOtherOneBetter(Inkscape::SnappedPoint const &other_one) const
+{
+    // If it's closer
+    bool c2 = other_one.getDistance() < getDistance();
+    // or, if it's for a snapper with "always snap" turned on, and the previous wasn't
+    bool c3 = other_one.getAlwaysSnap() && !getAlwaysSnap();
+    // But in no case fall back from a snapper with "always snap" on to one with "always snap" off
+    bool c3n = !other_one.getAlwaysSnap() && getAlwaysSnap();
+    // or, if we have a fully constrained snappoint (e.g. to a node), while the previous one was only partly constrained (e.g. to a line)
+    bool c4 = other_one.getFullyConstrained() && !getFullyConstrained();
+    // But in no case fall back; (has less priority than c3n, so it is allowed to fall back when c3 is true, see below)       
+    bool c4n = !other_one.getFullyConstrained() && getFullyConstrained(); 
+    // or, if it's just as close then consider the second distance
+    // (which is only relevant for points at an intersection)
+    bool c5a = (other_one.getDistance() == getDistance()); 
+    bool c5b = other_one.getSecondDistance() < getSecondDistance();
+    
+    // std::cout << "c2 = " << c2 << " | c3 = " << c3 << " | c3n = " << c3n << " | c4 = " << c4 << " | c4n = " << c4n << " | c5a = " << c5a << " | c5b = " << c5b;
+    return (c2 || c3 || c4 || (c5a && c5b)) && !c3n && (!c4n || c3);       
 }
 
 /*

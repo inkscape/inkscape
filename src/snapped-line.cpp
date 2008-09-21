@@ -67,12 +67,12 @@ Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegmen
         bool const use_this_as_primary = c1 || c2;
         Inkscape::SnappedLineSegment const *primarySLS = use_this_as_primary ? this : &line;
         Inkscape::SnappedLineSegment const *secondarySLS = use_this_as_primary ? &line : this;
-        return SnappedPoint(intersection, SNAPTARGET_PATH_INTERSECTION, primarySLS->getDistance(), primarySLS->getTolerance(), primarySLS->getAlwaysSnap(), true, 
+        return SnappedPoint(intersection, SNAPTARGET_PATH_INTERSECTION, primarySLS->getDistance(), primarySLS->getTolerance(), primarySLS->getAlwaysSnap(), true, true,
                                           secondarySLS->getDistance(), secondarySLS->getTolerance(), secondarySLS->getAlwaysSnap());
 	}
     
     // No intersection
-    return SnappedPoint(intersection, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(intersection, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
 };
 
 
@@ -142,14 +142,14 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
         bool const use_this_as_primary = c1 || c2;
         Inkscape::SnappedLine const *primarySL = use_this_as_primary ? this : &line;
         Inkscape::SnappedLine const *secondarySL = use_this_as_primary ? &line : this;
-        return SnappedPoint(intersection, Inkscape::SNAPTARGET_UNDEFINED, primarySL->getDistance(), primarySL->getTolerance(), primarySL->getAlwaysSnap(), true, 
+        return SnappedPoint(intersection, Inkscape::SNAPTARGET_UNDEFINED, primarySL->getDistance(), primarySL->getTolerance(), primarySL->getAlwaysSnap(), true, true,
                                           secondarySL->getDistance(), secondarySL->getTolerance(), secondarySL->getAlwaysSnap());
         // The type of the snap target is yet undefined, as we cannot tell whether 
         // we're snapping to grid or the guide lines; must be set by on a higher level                                          
     }
     
     // No intersection
-    return SnappedPoint(intersection, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, NR_HUGE, 0, false);
+    return SnappedPoint(intersection, SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
 }
 
 // search for the closest snapped line segment
