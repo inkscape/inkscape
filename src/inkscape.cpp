@@ -18,7 +18,7 @@
 #endif
 
 
-#include <set>
+#include <map>
 #include "debug/simple-event.h"
 #include "debug/event-tracker.h"
 
@@ -110,8 +110,7 @@ static void inkscape_deactivate_desktop_private (Inkscape::Application *inkscape
 struct Inkscape::Application {
     GObject object;
     Inkscape::XML::Document *menus;
-    std::multiset<SPDocument *> document_set;
-    GSList *documents;
+    std::map<SPDocument *, int> document_set;
     GSList *desktops;
     gchar *argv0;
     gboolean dialogs_toggle;
@@ -298,7 +297,7 @@ typedef int uid_t;
  */
 static gint inkscape_autosave(gpointer)
 {
-    if (!inkscape->documents) { // nothing to autosave
+    if (inkscape->document_set.empty()) { // nothing to autosave
         return TRUE;
     }
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -332,11 +331,14 @@ static gint inkscape_autosave(gpointer)
     gint docnum = 0;
 
     SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Autosaving documents..."));
-    for (GSList *docList = inkscape->documents; docList; docList = docList->next) {
+    for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin(); 
+          iter != inkscape->document_set.end(); 
+          ++iter) {
+
+        SPDocument *doc = iter->first;
+
         ++docnum;
 
-        // TODO replace this with SP_DOCUMENT() when linking issues are addressed:
-        SPDocument *doc = static_cast<SPDocument *>(docList->data);
         Inkscape::XML::Node *repr = sp_document_repr_root(doc);
         // g_debug("Document %d: \"%s\" %s", docnum, doc ? doc->name : "(null)", doc ? (doc->isModifiedSinceSave() ? "(dirty)" : "(clean)") : "(null)");
 
@@ -466,11 +468,10 @@ inkscape_init (SPObject * object)
         g_assert_not_reached ();
     }
 
-    new (&inkscape->document_set) std::multiset<SPDocument *>();
+    new (&inkscape->document_set) std::map<SPDocument *, int>();
 
     inkscape->menus = sp_repr_read_mem (_(menus_skeleton), MENUS_SKELETON_SIZE, NULL);
 
-    inkscape->documents = NULL;
     inkscape->desktops = NULL;
 
     inkscape->dialogs_toggle = TRUE;
@@ -483,11 +484,6 @@ inkscape_dispose (GObject *object)
 {
     Inkscape::Application *inkscape = (Inkscape::Application *) object;
 
-    while (inkscape->documents) {
-        // we don't otherwise unref, so why here?
-        sp_document_unref((SPDocument *)inkscape->documents->data);
-    }
-
     g_assert (!inkscape->desktops);
 
     Inkscape::Preferences::unload();
@@ -498,7 +494,7 @@ inkscape_dispose (GObject *object)
         inkscape->menus = NULL;
     }
 
-    inkscape->document_set.~multiset();
+    inkscape->document_set.~map();
 
     G_OBJECT_CLASS (parent_class)->dispose (object);
 
@@ -597,10 +593,11 @@ inkscape_crash_handler (int /*signum*/)
     gint count = 0;
     GSList *savednames = NULL;
     GSList *failednames = NULL;
-    for (GSList *l = inkscape->documents; l != NULL; l = l->next) {
-        SPDocument *doc;
+    for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin(); 
+          iter != inkscape->document_set.end(); 
+          ++iter) {
+        SPDocument *doc = iter->first;
         Inkscape::XML::Node *repr;
-        doc = (SPDocument *) l->data;
         repr = sp_document_repr_root (doc);
         if (doc->isModifiedSinceSave()) {
             const gchar *docname, *d0, *d;
@@ -1191,11 +1188,18 @@ inkscape_add_document (SPDocument *document)
 
     if (!Inkscape::NSApplication::Application::getNewGui())
     {
-        if ( inkscape->document_set.find(document) == inkscape->document_set.end() ) {
-
-            inkscape->documents = g_slist_append (inkscape->documents, document);
+        // try to insert the pair into the list
+        if (!(inkscape->document_set.insert(std::make_pair(document, 1)).second)) {
+            //insert failed, this key (document) is already in the list
+            for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin(); 
+                   iter != inkscape->document_set.end(); 
+                   ++iter) {
+                if (iter->first == document) {
+                    // found this document in list, increase its count
+                    iter->second ++;
+                }
+           }
         }
-        inkscape->document_set.insert(document);
     }
     else
     {
@@ -1204,17 +1208,28 @@ inkscape_add_document (SPDocument *document)
 }
 
 
-
-void
+// returns true if this was last reference to this document, so you can delete it
+bool
 inkscape_remove_document (SPDocument *document)
 {
-    g_return_if_fail (document != NULL);
+    g_return_val_if_fail (document != NULL, false);
 
     if (!Inkscape::NSApplication::Application::getNewGui())
     {
-        inkscape->document_set.erase(document);
-        if ( inkscape->document_set.find(document) != inkscape->document_set.end() ) {
-            inkscape->documents = g_slist_remove (inkscape->documents, document);
+        for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin(); 
+                  iter != inkscape->document_set.end(); 
+                  ++iter) {
+            if (iter->first == document) {
+                // found this document in list, decrease its count
+                iter->second --;
+                if (iter->second < 1) {
+                    // this was the last one, remove the pair from list
+                    inkscape->document_set.erase (iter);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
     }
     else
@@ -1222,7 +1237,7 @@ inkscape_remove_document (SPDocument *document)
         Inkscape::NSApplication::Editor::removeDocument (document);
     }
 
-    return;
+    return false;
 }
 
 SPDesktop *
@@ -1315,8 +1330,7 @@ homedir_path(const char *filename)
         homedir = g_get_home_dir();
     }
     if (!homedir) {
-// TODO check this. It looks broken
-        gchar * path = g_path_get_dirname(INKSCAPE->argv0);
+        homedir = g_path_get_dirname(INKSCAPE->argv0);
     }
     return g_build_filename(homedir, filename, NULL);
 }

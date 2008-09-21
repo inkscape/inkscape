@@ -45,7 +45,7 @@ void inkscape_remove_desktop (SPDesktop * desktop);
 void inkscape_activate_desktop (SPDesktop * desktop);
 void inkscape_reactivate_desktop (SPDesktop * desktop);
 void inkscape_add_document (SPDocument *document);
-void inkscape_remove_document (SPDocument *document);
+bool inkscape_remove_document (SPDocument *document);
 
 void inkscape_set_color (SPColor *color, float opacity);
 
