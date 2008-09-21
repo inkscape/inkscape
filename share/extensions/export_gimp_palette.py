@@ -24,7 +24,7 @@ def walk(node):
             walk(child)
 
 def checkStyle(node):
-    if node.hasAttributes():
+    if hasattr(node,"hasAttributes") and node.hasAttributes():
         sa=node.getAttribute('style')
         if sa!='':
             styles=simplestyle.parseStyle(sa)
