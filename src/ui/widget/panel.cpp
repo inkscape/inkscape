@@ -44,7 +44,7 @@ static const int PANEL_SETTING_NEXTFREE = 4;
 
 void Panel::prep() {
     GtkIconSize sizes[] = {
-        static_cast<GtkIconSize>(Inkscape::ICON_SIZE_DECORATION),
+        Inkscape::getRegisteredIconSize(Inkscape::ICON_SIZE_DECORATION),
         GTK_ICON_SIZE_MENU,
         GTK_ICON_SIZE_SMALL_TOOLBAR,
         GTK_ICON_SIZE_BUTTON,
@@ -122,13 +122,13 @@ void Panel::_init()
 	    Glib::ustring two_label(_("Grid"));
 	    Gtk::RadioMenuItem *one = manage(new Gtk::RadioMenuItem(group, one_label));
 	    Gtk::RadioMenuItem *two = manage(new Gtk::RadioMenuItem(group, two_label));
-	
+
 	    if (panel_mode == 0) {
 	        one->set_active(true);
 	    } else if (panel_mode == 1) {
 	        two->set_active(true);
 	    }
-	
+
 	    _menu->append(*one);
 	    _non_horizontal.push_back(one);
 	    _menu->append(*two);
@@ -139,10 +139,10 @@ void Panel::_init()
 	    one->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 0));
 	    two->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 1));
     }
-    
+
     {
     	Glib::ustring heightItemLabel(Q_("swatches|Size"));
-    	
+
     	//TRANSLATORS: Indicates size of colour swatches
         const gchar *heightLabels[] = {
             N_("tiny"),
@@ -152,11 +152,11 @@ void Panel::_init()
             N_("large"),
             N_("huge")
         };
-        
+
         Gtk::MenuItem *sizeItem = manage(new Gtk::MenuItem(heightItemLabel));
         Gtk::Menu *sizeMenu = manage(new Gtk::Menu());
         sizeItem->set_submenu(*sizeMenu);
-                        
+
         Gtk::RadioMenuItem::Group heightGroup;
         for (unsigned int i = 0; i < G_N_ELEMENTS(heightLabels); i++) {
             Glib::ustring _label(Q_(heightLabels[i]));
@@ -167,13 +167,13 @@ void Panel::_init()
             }
             _item->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_SIZE, i));
        }
-        
-       _menu->append(*sizeItem);        
+
+       _menu->append(*sizeItem);
     }
-    
+
     {
         Glib::ustring widthItemLabel(Q_("swatches|Width"));
-        
+
         //TRANSLATORS: Indicates width of colour swatches
         const gchar *widthLabels[] = {
             N_("narrower"),
@@ -220,7 +220,7 @@ void Panel::_init()
 
         check->signal_toggled().connect(sigc::bind<Gtk::CheckMenuItem*>(sigc::mem_fun(*this, &Panel::_wrapToggled), check));
     }
-    
+
     Gtk::SeparatorMenuItem *sep;
     sep = manage(new Gtk::SeparatorMenuItem());
     _menu->append(*sep);
@@ -245,7 +245,7 @@ void Panel::_init()
         gint width = 0;
         gint height = 0;
 
-        if ( gtk_icon_size_lookup( static_cast<GtkIconSize>(Inkscape::ICON_SIZE_DECORATION), &width, &height ) ) {
+        if ( gtk_icon_size_lookup( Inkscape::getRegisteredIconSize(Inkscape::ICON_SIZE_DECORATION), &width, &height ) ) {
             _temp_arrow.set_size_request(width, height);
         }
 

@@ -2,6 +2,7 @@
 
 
 #include <glib/gi18n.h>
+#include <gtk/gtkalignment.h>
 #include <gtk/gtktooltips.h>
 #include <gtk/gtktoolitem.h>
 #include <gtk/gtktoggletoolbutton.h>
@@ -325,7 +326,7 @@ static void ink_toggle_action_class_init( InkToggleActionClass* klass )
                                                            "Icon Size",
                                                            "The size the icon",
                                                            (int)Inkscape::ICON_SIZE_MENU,
-                                                           (int)Inkscape::ICON_SIZE_DECORATION,
+                                                           (int)99,
                                                            (int)Inkscape::ICON_SIZE_SMALL_TOOLBAR,
                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
@@ -360,7 +361,7 @@ InkToggleAction* ink_toggle_action_new( const gchar *name,
                                            "label", label,
                                            "tooltip", tooltip,
                                            "iconId", inkId,
-                                           "iconSize", size,
+                                           "iconSize", Inkscape::getRegisteredIconSize(size),
                                            NULL );
 
     InkToggleAction* action = INK_TOGGLE_ACTION( obj );
@@ -434,7 +435,9 @@ static GtkWidget* ink_toggle_action_create_tool_item( GtkAction* action )
         GtkToolButton* button = GTK_TOOL_BUTTON(item);
         if ( act->private_data->iconId ) {
             GtkWidget* child = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
-            gtk_tool_button_set_icon_widget( button, child );
+            GtkWidget* align = gtk_alignment_new( 0.5, 0.5, 0.0, 0.0 );
+            gtk_container_add( GTK_CONTAINER(align), child );
+            gtk_tool_button_set_icon_widget( button, align );
         } else {
             gchar *label;
             g_object_get (G_OBJECT(action), "short_label", &label, NULL);
@@ -585,7 +588,7 @@ InkRadioAction* ink_radio_action_new( const gchar *name,
                                            "label", label,
                                            "tooltip", tooltip,
                                            "iconId", inkId,
-                                           "iconSize", size,
+                                           "iconSize", Inkscape::getRegisteredIconSize(size),
                                            NULL );
 
     InkRadioAction* action = INK_RADIO_ACTION( obj );
