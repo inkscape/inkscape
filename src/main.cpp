@@ -913,7 +913,8 @@ void sp_process_file_list(GSList *fl)
             } else if (sp_query_x || sp_query_y) {
                 do_query_dimension (doc, false, sp_query_x? NR::X : NR::Y, sp_query_id);
             }
-            Inkscape::GC::release (doc); 
+
+            delete doc;
         }
         fl = g_slist_remove(fl, fl->data);
     }
