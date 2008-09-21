@@ -84,9 +84,6 @@ View::View()
  */
 View::~View()
 {
-    if (_doc) {
-        inkscape_remove_document(_doc);
-    }
     _close();
 }
 
@@ -101,7 +98,11 @@ void View::_close() {
     if (_doc) {
         _document_uri_set_connection.disconnect();
         _document_resized_connection.disconnect();
-        _doc = 0;
+        if (inkscape_remove_document(_doc)) {
+            // this was the last view of this document, so delete it
+            delete _doc;
+        }
+        _doc = NULL;
     }
     
    Inkscape::Verb::delete_all_view (this);
@@ -142,7 +143,10 @@ void View::setDocument(SPDocument *doc) {
     if (_doc) {
         _document_uri_set_connection.disconnect();
         _document_resized_connection.disconnect();
-        inkscape_remove_document(_doc);
+        if (inkscape_remove_document(_doc)) {
+            // this was the last view of this document, so delete it
+            delete _doc;
+        }
     }
 
     inkscape_add_document(doc);
