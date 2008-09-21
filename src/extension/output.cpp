@@ -206,7 +206,7 @@ Output::prefs (void)
 	a document so that the implementation only has to worry about geting
 	bits on the disk.
 
-	The big thing that it does is remove and readd the fields that are
+	The big thing that it does is remove and read the fields that are
 	only used at runtime and shouldn't be saved.  One that may surprise
 	people is the output extension.  This is not saved so that the IDs
 	could be changed, and old files will still work properly.
@@ -218,7 +218,7 @@ Output::save (SPDocument * doc, const gchar * uri)
             imp->save(this, doc, uri);
         }
         catch (...) {
-            throw;
+            g_warning("There was an error saving the file.");
         }
 
 	return;
