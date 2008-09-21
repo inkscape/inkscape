@@ -339,6 +339,11 @@ void SPDesktop::destroy()
         temporary_item_list = NULL;
     }
 
+    if (selection) {
+        delete selection;
+        selection = NULL;
+    }
+
     namedview->hide(this);
 
     _activate_connection.disconnect();
