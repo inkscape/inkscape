@@ -140,8 +140,12 @@ struct DocumentSubset::Relations : public GC::Managed<GC::ATOMIC>,
         for ( Map::iterator iter=records.begin()
             ; iter != records.end() ; ++iter )
         {
-            if ((*iter).first)
+            if ((*iter).first) {
                 sp_object_unref((*iter).first);
+                Record &record=(*iter).second;
+                record.release_connection.disconnect();
+                record.position_changed_connection.disconnect();
+            }
         }
     }
 
