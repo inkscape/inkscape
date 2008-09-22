@@ -84,6 +84,7 @@ sp_export_jpg_file(SPDocument *doc, gchar const *filename,
      g_snprintf(c, 32, "%f", quality);
      gboolean saved = gdk_pixbuf_save (pixbuf, filename, "jpeg", NULL, "quality", c, NULL);
      g_free(c);
+     gdk_pixbuf_unref (pixbuf);
      if (saved) return true;
      else return false;
 }
@@ -106,7 +107,6 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
 
      Geom::Rect screen=Geom::Rect(Geom::Point(x0,y0), Geom::Point(x1, y1));
 
-     double zoom_scale = 1.0;
      double padding = 1.0;
 
      Geom::Point origin(screen.min()[Geom::X],
@@ -169,7 +169,8 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
                                           (GdkPixbufDestroyNotify)g_free,
                                           NULL);
 
-     nr_arena_item_unref(root);
+     sp_item_invoke_hide (SP_ITEM(sp_document_root(doc)), dkey);
+     nr_object_unref((NRObject *) arena);
 
 //    gdk_pixbuf_save (pixbuf, "C:\\temp\\internal.jpg", "jpeg", NULL, "quality","100", NULL);
 
