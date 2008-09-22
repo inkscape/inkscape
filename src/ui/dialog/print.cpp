@@ -110,8 +110,8 @@ draw_page (GtkPrintOperation */*operation*/,
 
             sp_export_png_file(junk->_doc, tmp_png.c_str(), 0.0, 0.0,
                 width, height,
-                (unsigned long)(width * PT_PER_IN / PX_PER_IN),
-                (unsigned long)(height * PT_PER_IN / PX_PER_IN),
+                (unsigned long)(width * dpi / PX_PER_IN),
+                (unsigned long)(height * dpi / PX_PER_IN),
                 dpi, dpi, bgcolor, NULL, NULL, true, NULL);
 
             // This doesn't seem to work:
@@ -126,10 +126,14 @@ draw_page (GtkPrintOperation */*operation*/,
             {
                 Cairo::RefPtr<Cairo::ImageSurface> png = Cairo::ImageSurface::create_from_png (tmp_png);
                 cairo_t *cr = gtk_print_context_get_cairo_context (context);
+		cairo_matrix_t m;
+		cairo_get_matrix(cr, &m);
+		cairo_scale(cr, PT_PER_IN / dpi, PT_PER_IN / dpi);
                 // FIXME: why is the origin offset??
                 cairo_set_source_surface(cr, png->cobj(), -16.0, -16.0);
+		cairo_paint(cr);
+		cairo_set_matrix(cr, &m);
             }
-            cairo_paint(gtk_print_context_get_cairo_context (context));
 
             // Clean up
             unlink (tmp_png.c_str());
