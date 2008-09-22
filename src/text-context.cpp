@@ -208,6 +208,14 @@ sp_text_context_setup(SPEventContext *ec)
 {
     SPTextContext *tc = SP_TEXT_CONTEXT(ec);
     SPDesktop *desktop = ec->desktop;
+    GtkSettings* settings = gtk_settings_get_default();
+    gint timeout = 0;
+    g_object_get( settings, "gtk-cursor-blink-time", &timeout, NULL );
+    if (timeout < 0) {
+        timeout = 200;
+    } else {
+        timeout /= 2;
+    }
 
     tc->cursor = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL);
     sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), 100, 0, 100, 100);
@@ -224,7 +232,7 @@ sp_text_context_setup(SPEventContext *ec)
     SP_CTRLRECT(tc->frame)->setColor(0x0000ff7f, false, 0);
     sp_canvas_item_hide(tc->frame);
 
-    tc->timeout = gtk_timeout_add(200, (GtkFunction) sp_text_context_timeout, ec);
+    tc->timeout = gtk_timeout_add(timeout, (GtkFunction) sp_text_context_timeout, ec);
 
     tc->imc = gtk_im_multicontext_new();
     if (tc->imc) {
@@ -1655,12 +1663,13 @@ static gint
 sp_text_context_timeout(SPTextContext *tc)
 {
     if (tc->show) {
+        sp_canvas_item_show(tc->cursor);
         if (tc->phase) {
             tc->phase = 0;
-            sp_canvas_item_hide(tc->cursor);
+            sp_ctrlline_set_rgba32(SP_CTRLLINE(tc->cursor), 0xffffffff);
         } else {
             tc->phase = 1;
-            sp_canvas_item_show(tc->cursor);
+            sp_ctrlline_set_rgba32(SP_CTRLLINE(tc->cursor), 0x000000ff);
         }
     }
 
