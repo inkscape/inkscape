@@ -20,7 +20,7 @@ namespace LivePathEffect {
 LPEdoEffectStackTest::LPEdoEffectStackTest(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     step(_("Stack step"), ("How deep we should go into the stack"), "step", &wr, this),
-    point(_("point param"), "tooltip of point parameter", "point_param", &wr, this,Geom::Point(0,0)),
+    point(_("point param"), "tooltip of point parameter", "point_param", &wr, this),
     path(_("path param"), "tooltip of path parameter", "path_param", &wr, this,"M 0,100 100,0")
 {
     registerParameter( dynamic_cast<Parameter *>(&step) );
