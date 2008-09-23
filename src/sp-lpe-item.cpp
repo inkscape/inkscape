@@ -202,21 +202,20 @@ sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *value)
                     std::string href;
                     while (std::getline(iss, href, ';'))
                     {
-                        Inkscape::LivePathEffect::LPEObjectReference *path_effect_ref;
-                        path_effect_ref = new Inkscape::LivePathEffect::LPEObjectReference(SP_OBJECT(lpeitem));
+                        Inkscape::LivePathEffect::LPEObjectReference *path_effect_ref = new Inkscape::LivePathEffect::LPEObjectReference(SP_OBJECT(lpeitem));
                         path_effect_ref->changedSignal().connect(sigc::bind(sigc::ptr_fun(lpeobject_ref_changed), SP_LPE_ITEM(object)));
                         // Now do the attaching, which emits the changed signal.
                         // Fixme, it should not do this changed signal and updating before all effects are added to the path_effect_list
                         try {
                             path_effect_ref->link(href.c_str());
-                        } catch (Inkscape::BadURIException &e) {
+                        } catch (Inkscape::BadURIException e) {
                             g_warning("BadURIException: %s", e.what());
                             path_effect_ref->unlink();
                             delete path_effect_ref;
                             path_effect_ref = NULL;
                         }
 
-                        if (path_effect_ref) {
+                        if (path_effect_ref && path_effect_ref->lpeobject && path_effect_ref->lpeobject->lpe) {
                             lpeitem->path_effect_list->push_back(path_effect_ref);
                         }
                     }

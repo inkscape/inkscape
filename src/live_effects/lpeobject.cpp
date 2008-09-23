@@ -215,12 +215,11 @@ livepatheffect_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscap
         repr = xml_doc->createElement("inkscape:path-effect");
     }
 
-    if ((flags & SP_OBJECT_WRITE_ALL) || lpeobj->effecttype_set)
+    if ((flags & SP_OBJECT_WRITE_ALL) || lpeobj->lpe) {
         repr->setAttribute("effect", Inkscape::LivePathEffect::LPETypeConverter.get_key(lpeobj->effecttype).c_str());
 
-//    lpeobj->lpe->write(repr); something like this.
-
-    lpeobj->lpe->writeParamsToSVG();
+        lpeobj->lpe->writeParamsToSVG();
+    }
 
     if (((SPObjectClass *) livepatheffect_parent_class)->write)
         (* ((SPObjectClass *) livepatheffect_parent_class)->write)(object, xml_doc, repr, flags);
