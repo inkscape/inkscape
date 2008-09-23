@@ -35,8 +35,6 @@ public:
 
     NodeType type() const { return Inkscape::XML::DOCUMENT_NODE; }
 
-    NodeObserver *logger() { return this; }
-
     bool inTransaction() { return _in_transaction; }
 
     void beginTransaction();
@@ -73,6 +71,7 @@ protected:
     {
         return new SimpleDocument(*this);
     }
+    NodeObserver *logger() { return this; }
 
 private:
     bool _in_transaction;

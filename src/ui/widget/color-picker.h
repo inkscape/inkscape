@@ -1,11 +1,7 @@
-#ifndef __COLOR_PICKER_H__
-#define __COLOR_PICKER_H__
-
-/**
- * \file  Color picker button \& window.
+/** @file
+ * @brief Color picker button and window.
  */
-/*
- * Authors:
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *
@@ -13,6 +9,9 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifndef __COLOR_PICKER_H__
+#define __COLOR_PICKER_H__
 
 #include <sigc++/sigc++.h>
 #include <gtkmm/button.h>

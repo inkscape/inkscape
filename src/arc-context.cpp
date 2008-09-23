@@ -1,20 +1,19 @@
-#define __SP_ARC_CONTEXT_C__
-
-/** \file Ellipse drawing context. */
-
-/*
- * Authors:
+/** @file
+ * @brief Ellipse drawing context
+ */
+/* Authors:
  *   Mitsuru Oka
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Johan Engelen <johan@shouraizou.nl>
  *
- * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 2002      Mitsuru Oka
- * Copyright (C) 2000-2002 Lauris Kaplinski
+ * Copyright (C) 2000-2006 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#define __SP_ARC_CONTEXT_C__
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>

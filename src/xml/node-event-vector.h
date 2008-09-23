@@ -1,10 +1,7 @@
-#ifndef SEEN_INKSCAPE_XML_SP_REPR_EVENT_VECTOR
-#define SEEN_INKSCAPE_XML_SP_REPR_EVENT_VECTOR
-
-/*
- * Fuzzy DOM-like tree implementation
- *
- * Authors:
+/** @file
+ * @brief Deprecated structure for a set of callbacks for node state changes
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
  *
@@ -14,6 +11,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifndef SEEN_INKSCAPE_XML_SP_REPR_EVENT_VECTOR
+#define SEEN_INKSCAPE_XML_SP_REPR_EVENT_VECTOR
+
 #include <glib/gtypes.h>
 
 #include "xml/node.h"
@@ -21,6 +21,10 @@
 namespace Inkscape {
 namespace XML {
 
+/**
+ * @brief Structure holding callbacks for node state changes
+ * @deprecated Derive an observer object from the NodeObserver class instead
+ */
 struct NodeEventVector {
 	/* Immediate signals */
 	void (* child_added) (Node *repr, Node *child, Node *ref, void * data);
@@ -33,13 +37,24 @@ struct NodeEventVector {
 }
 }
 
+/**
+ * @brief Generate events corresponding to the node's state
+ * @deprecated Use Node::synthesizeEvents(NodeObserver &) instead
+ */
 inline void sp_repr_synthesize_events (Inkscape::XML::Node *repr, const Inkscape::XML::NodeEventVector *vector, void * data) {
 	repr->synthesizeEvents(vector, data);
 }
-                                                                                
+/**
+ * @brief Add a set of callbacks for node state changes and its associated data
+ * @deprecated Use Node::addObserver() instead
+ */                                                                                
 inline void sp_repr_add_listener (Inkscape::XML::Node *repr, const Inkscape::XML::NodeEventVector *vector, void * data) {
 	repr->addListener(vector, data);
 }
+/**
+ * @brief Remove a set of callbacks based on associated data
+ * @deprecated Use Node::removeObserver() instead
+ */
 inline void sp_repr_remove_listener_by_data (Inkscape::XML::Node *repr, void * data) {
 	repr->removeListenerByData(data);
 }

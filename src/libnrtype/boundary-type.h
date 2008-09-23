@@ -1,7 +1,9 @@
+/** @file
+ * @brief Definition of the BoundaryType enum
+ */
+
 #ifndef LIBNRTYPE_BOUNDARY_TYPE_H_INKSCAPE
 #define LIBNRTYPE_BOUNDARY_TYPE_H_INKSCAPE
-
-/** \file Definition of the BoundaryType enum. */
 
 /**
  * The different kinds of semantic boundaries in text; or rather,

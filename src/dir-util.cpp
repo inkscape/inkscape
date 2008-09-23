@@ -1,4 +1,6 @@
-/** \file Some utility functions for filenames. */
+/** @file
+ * @brief Utility functions for filenames
+ */
 
 #define DIR_UTIL_C
 

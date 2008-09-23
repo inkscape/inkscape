@@ -1,7 +1,7 @@
-/*
- * Inkscape::XML::TextNode - simple text node implementation
- *
- * Copyright 2004-2005 MenTaLguY <mental@rydia.net>
+/** @file
+ * @brief Text node implementation
+ */
+/* Copyright 2004-2005 MenTaLguY <mental@rydia.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,6 +22,9 @@ namespace Inkscape {
 
 namespace XML {
 
+/**
+ * @brief Text node, e.g. "Some text" in &lt;group&gt;Some text&lt;/group&gt;
+ */
 struct TextNode : public SimpleNode {
     TextNode(Util::ptr_shared<char> content, Document *doc)
     : SimpleNode(g_quark_from_static_string("string"), doc)

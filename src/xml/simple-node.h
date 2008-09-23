@@ -1,7 +1,7 @@
-/*
- * SimpleNode - generic XML node implementation
- *
- * Copyright 2004-2005 MenTaLguY <mental@rydia.net>
+/** @file
+ * @brief GC-managed XML node implementation
+ */
+/* Copyright 2004-2005 MenTaLguY <mental@rydia.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -9,7 +9,6 @@
  * of the License, or (at your option) any later version.
  *
  * See the file COPYING for details.
- *
  */
 
 #ifndef SEEN_INKSCAPE_XML_SIMPLE_NODE_H
@@ -26,6 +25,11 @@ namespace Inkscape {
 
 namespace XML {
 
+/**
+ * @brief Default implementation of the XML node stored in memory.
+ *
+ * @see Inkscape::XML::Node
+ */
 class SimpleNode
 : virtual public Node, public Inkscape::GC::Managed<>
 {

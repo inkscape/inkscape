@@ -331,6 +331,7 @@ libinkpost_a_SOURCES =	\
 	gc-finalized.h gc-finalized.cpp	\
 	gc-managed.h	\
 	gc-soft-ptr.h	\
+	gc-allocator.h  \
 	gc.cpp	\
 	gradient-chemistry.cpp gradient-chemistry.h	\
 	ink-action.cpp	\

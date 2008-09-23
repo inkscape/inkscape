@@ -26,7 +26,7 @@ bool id_permitted_internal(GQuark qname) {
 
 bool id_permitted_internal_memoized(GQuark qname) {
     typedef std::map<GQuark, bool> IdPermittedMap;
-    IdPermittedMap id_permitted_names;
+    static IdPermittedMap id_permitted_names;
 
     IdPermittedMap::iterator found;
     found = id_permitted_names.find(qname);
@@ -57,21 +57,7 @@ struct node_matches {
     Node const &node;
 };
 
-/** Returns the sibling before \a node in \a node's parent's children,
- *  or NULL if \a node is the first of those children (or if child is
- *  NULL or has no parent).
- *
- *  Useful in combination with Node::addChild, when you want to insert
- *  a new child _before_ a given existing child.
- *
- *  Note: Involves a linear search (unlike next_node).
- *
- * \pre Links are correct, i.e. \a node isin its parent's children.
- *
- * \post (ret == NULL
- *        ? node == NULL || node->parent() == NULL || node->parent()->firstChild() == node
- *        : ret->next() == node).
- */
+// documentation moved to header
 Node *previous_node(Node *node) {
     using Inkscape::Algorithms::find_if_before;
 
@@ -93,7 +79,6 @@ Node *previous_node(Node *node) {
 }
 }
 
-
 /*
   Local Variables:
   mode:c++
@@ -103,4 +88,4 @@ Node *previous_node(Node *node) {
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

@@ -1,3 +1,7 @@
+/** @file
+ * @brief Key-value pair representing an attribute
+ */
+
 #ifndef SEEN_XML_SP_REPR_ATTR_H
 #define SEEN_XML_SP_REPR_ATTR_H
 
@@ -12,11 +16,19 @@
 namespace Inkscape {
 namespace XML {
 
+/**
+ * @brief Key-value pair representing an attribute
+ *
+ * Internally, the attributes of each node in the XML tree are
+ * represented by this structure.
+ */
 struct AttributeRecord : public Inkscape::GC::Managed<> {
     AttributeRecord(GQuark k, Inkscape::Util::ptr_shared<char> v)
     : key(k), value(v) {}
 
+    /** @brief GQuark corresponding to the name of the attribute */
     GQuark key;
+    /** @brief Shared pointer to the value of the attribute */
     Inkscape::Util::ptr_shared<char> value;
 
     // accept default copy constructor and assignment operator

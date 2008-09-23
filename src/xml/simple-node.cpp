@@ -1,7 +1,7 @@
-/*
- * SimpleNode - simple XML node implementation
- *
- * Copyright 2003-2005 MenTaLguY <mental@rydia.net>
+/** @file
+ * @brief Garbage collected XML node implementation
+ */
+/* Copyright 2003-2005 MenTaLguY <mental@rydia.net>
  * Copyright 2003 Nathan Hurst
  * Copyright 1999-2003 Lauris Kaplinski
  * Copyright 2000-2002 Ximian Inc.
@@ -12,7 +12,6 @@
  * of the License, or (at your option) any later version.
  *
  * See the file COPYING for details.
- *
  */
 
 #include <cstring>
@@ -628,4 +627,4 @@ void SimpleNode::mergeFrom(Node const *src, gchar const *key) {
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

@@ -1,6 +1,9 @@
+/** @file
+ * @brief SweepTreeList definition
+ */
+
 #ifndef INKSCAPE_LIVAROT_SWEEP_TREE_LIST_H
 #define INKSCAPE_LIVAROT_SWEEP_TREE_LIST_H
-/** \file SweepTreeList definition. */
 
 class Shape;
 class SweepTree;

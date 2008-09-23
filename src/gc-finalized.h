@@ -23,7 +23,7 @@ namespace Inkscape {
 
 namespace GC {
 
-/* @brief a mix-in ensuring that a object's destructor will get called before
+/* @brief A mix-in ensuring that an object's destructor will get called before
  *        the garbage collector destroys it
  *
  * Normally, the garbage collector does not call destructors before destroying
@@ -39,7 +39,7 @@ namespace GC {
  *      happens.
  *
  *      The best way to limit this effect is to only make "leaf" objects
- *      (i.e. those that don't point to other finalizaable objects)
+ *      (i.e. those that don't point to other finalizable objects)
  *      finalizable, and otherwise use GC::soft_ptr<> instead of a regular
  *      pointer for "backreferences" (e.g. parent pointers in a tree
  *      structure), so that those references can be cleared to break any
@@ -48,22 +48,19 @@ namespace GC {
  *      @see Inkscape::GC::soft_ptr<>
  *
  *   2. Because there is no guarantee when the collector will destroy
- *      objects, there is no guarantee when the destructor will get called.
- *
- *      It may not get called until the very end of the program, or ever.
+ *      objects, it is impossible to tell in advance when the destructor
+ *      will get called. It may not get called until the very end
+ *      of the program, or ever.
  *
  *   3. If allocated in arrays, only the first object in the array will
  *      have its destructor called, unless you make other arrangements by
  *      registering your own finalizer instead.
  *
- *   4. Similarly, making multiple GC::Finalized-derived objects members
- *      of a non-finalized but garbage-collected object generally won't
- *      work unless you take care of registering finalizers yourself.
- *
- * [n.b., by "member", I mean an actual by-value-member of a type that
- *  derives from GC::Finalized, not simply a member that's a pointer or a
- *  reference to such a type]
- *
+ *   4. Similarly, putting a finalized object as a member in another
+ *      garbage collected but non-finalized object will cause the member
+ *      object's destructor not to be called when the parent object is
+ *      collected, unless you register the finalizer yourself (by "member"
+ *      we mean an actual by-value member, not a reference or a pointer).
  */
 class Finalized {
 public:

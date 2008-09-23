@@ -45,6 +45,12 @@ static char const *get_local_name(CRXMLNodePtr n) { return local_part(static_cas
 static gboolean is_element_node(CRXMLNodePtr n) { return static_cast<Node const *>(n)->type() == ELEMENT_NODE; }
 }
 
+/**
+ * @brief Interface for XML nodes used by libcroco
+ *
+ * This structure defines operations on Inkscape::XML::Node used by the libcroco
+ * CSS parsing library.
+ */
 CRNodeIface const croco_node_iface = {
     get_parent,
     get_first_child,

@@ -50,7 +50,8 @@ xml_libspxml_a_SOURCES =	\
 	xml/subtree.cpp	\
 	xml/subtree.h	\
 	xml/text-node.h \
-	xml/invalid-operation-exception.h
+	xml/invalid-operation-exception.h \
+	xml/xml-forward.h
 
 xml/test-xml-main.cpp: xml/test-xml.cpp $(xml_test_xml_includes)
 	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o xml/test-xml-main.cpp $(xml_test_xml_includes)

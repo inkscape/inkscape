@@ -1,7 +1,7 @@
-/** \file
- * Inkscape::GC::Managed - base class for GC-managed objects
- *
- * Copyright 2004 MenTaLguY <mental@rydia.net>
+/** @file
+ * @brief Base class for GC-managed objects
+ */
+/* Copyright 2004 MenTaLguY <mental@rydia.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -9,7 +9,6 @@
  * of the License, or (at your option) any later version.
  *
  * See the file COPYING for details.
- *
  */
 
 #ifndef SEEN_INKSCAPE_GC_MANAGED_H

@@ -1,7 +1,7 @@
-/*
- * Inkscape::XML::PINode - simple XML comment implementation
- *
- * Copyright 2004-2005 MenTaLguY <mental@rydia.net>
+/** @file
+ * @brief Processing instruction node implementation
+ */
+/* Copyright 2004-2005 MenTaLguY <mental@rydia.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -9,7 +9,6 @@
  * of the License, or (at your option) any later version.
  *
  * See the file COPYING for details.
- *
  */
 
 #ifndef SEEN_INKSCAPE_XML_PI_NODE_H
@@ -22,6 +21,9 @@ namespace Inkscape {
 
 namespace XML {
 
+/**
+ * @brief Processing instruction node, e.g. &lt;?xml version="1.0" encoding="utf-8" standalone="no"?&gt;
+ */
 struct PINode : public SimpleNode {
     PINode(GQuark target, Util::ptr_shared<char> content, Document *doc)
     : SimpleNode(target, doc)

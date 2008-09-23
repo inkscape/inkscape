@@ -1,4 +1,6 @@
-/** \file operator functions over (NR::Point, NR::Matrix). */
+/** @file
+ * @brief Operator functions over (NR::Point, NR::Matrix)
+ */
 #ifndef SEEN_NR_POINT_MATRIX_OPS_H
 #define SEEN_NR_POINT_MATRIX_OPS_H
 

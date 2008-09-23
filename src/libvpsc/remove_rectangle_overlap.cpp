@@ -1,5 +1,5 @@
-/**
- * \brief remove overlaps between a set of rectangles.
+/** @file
+ * @brief remove overlaps between a set of rectangles.
  *
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>

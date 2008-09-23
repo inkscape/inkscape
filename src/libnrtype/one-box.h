@@ -1,4 +1,6 @@
-/** \file Definition of struct one_box. */
+/** @file
+ * @brief Definition of struct one_box
+ */
 
 #ifndef LIBNRTYPE_ONE_BOX_H_INKSCAPE
 #define LIBNRTYPE_ONE_BOX_H_INKSCAPE

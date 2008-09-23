@@ -1,7 +1,7 @@
-/*
+/** @file
  * Inkscape::XML::CompositeNodeObserver - combine multiple observers
- *
- * Copyright 2005 MenTaLguY <mental@rydia.net>
+ */
+/* Copyright 2005 MenTaLguY <mental@rydia.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,6 +25,14 @@ namespace XML {
 
 class NodeEventVector;
 
+/**
+ * @brief An observer that relays notifications to multiple other observers
+ *
+ * This special observer keeps a list of other observer objects and sends
+ * the notifications it receives to all of them. The implementation of the class
+ * allows an observer to remove itself from this object during a method call.
+ * For the documentation of callback methods, see NodeObserver.
+ */
 class CompositeNodeObserver : public NodeObserver, public GC::Managed<> {
 public:
     struct ObserverRecord : public GC::Managed<> {
@@ -38,9 +46,25 @@ public:
     CompositeNodeObserver()
     : _iterating(0), _active_marked(0), _pending_marked(0) {}
 
+    /**
+     * @brief Add an observer to the list
+     * @param observer The observer object to add
+     */
     void add(NodeObserver &observer);
-    void addListener(NodeEventVector const &vector, void *data);
+    /**
+     * @brief Remove an observer from the list
+     * @param observer The observer object to remove
+     */
     void remove(NodeObserver &observer);
+    /**
+     * @brief Add a set of callbacks with associated data
+     * @deprecated Use add() instead
+     */
+    void addListener(NodeEventVector const &vector, void *data);
+    /**
+     * @brief Remove a set of callbacks by its associated data
+     * @deprecated Use remove() instead
+     */
     void removeListenerByData(void *data);
     
     void notifyChildAdded(Node &node, Node &child, Node *prev);
@@ -69,9 +93,8 @@ private:
     void _finishIteration();
 };
 
-}
-
-}
+} // namespace XML
+} // namespace Inkscape
 
 #endif
 /*

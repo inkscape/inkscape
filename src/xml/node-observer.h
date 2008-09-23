@@ -1,7 +1,11 @@
-/*
- * Inkscape::XML::NodeObserver - interface implemented by observers of XML nodes
+/** @file
+ * @brief Interface for XML node observers
+ */
+/* Authors:
+ *   MenTaLguY <mental@rydia.net>
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com> (documentation)
  *
- * Copyright 2005 MenTaLguY <mental@rydia.net>
+ * Copyright 2005-2008 Authors
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -9,7 +13,6 @@
  * of the License, or (at your option) any later version.
  *
  * See the file COPYING for details.
- *
  */
 
 #ifndef SEEN_INKSCAPE_XML_NODE_OBSERVER_H
@@ -17,43 +20,103 @@
 
 #include <glib/gquark.h>
 #include "util/share.h"
-
-namespace Inkscape {
-namespace XML {
-class Node;
-}
-}
+#include "xml/xml-forward.h"
 
 
 namespace Inkscape {
-
 namespace XML {
 
+/**
+ * @brief Interface for XML node observers
+ *
+ * This pure abstract class defines an interface for objects that can receive
+ * XML node state change notifications. The observer has to be registered using
+ * the Node::addObserver() method to be notified of changes of this node only,
+ * or using Node::addSubtreeObserver() to also receive notifications about its
+ * descendants. All observer methods are called when the operations in question have
+ * been completed, just before returning from the modifying methods.
+ *
+ * Be careful when e.g. changing an attribute of @c node in notifyAttributeChanged().
+ * The method will be called again due to the XML modification performed in it. If you
+ * don't take special precautions to ignore the second call, it will result in infinite
+ * recursion.
+ */
 class NodeObserver {
 public:
     NodeObserver() {}
-    
     virtual ~NodeObserver() {}
     
+    /**
+     * @brief Child addition callback
+     *
+     * This method is called whenever a child is added to the observed node. The @c prev
+     * parameter is NULL when the newly added child is first in the sibling order.
+     *
+     * @param node The changed XML node
+     * @param child The newly added child node
+     * @param prev The node after which the new child was inserted into the sibling order, or NULL
+     */
     virtual void notifyChildAdded(Node &node, Node &child, Node *prev)=0;
 
+    /**
+     * @brief Child removal callback
+     *
+     * This method is called whenever a child is removed from the observed node. The @c prev
+     * parameter is NULL when the removed child was first in the sibling order.
+     *
+     * @param node The changed XML node
+     * @param child The removed child node
+     * @param prev The node that was before the removed node in sibling order, or NULL
+     */
     virtual void notifyChildRemoved(Node &node, Node &child, Node *prev)=0;
 
+    /**
+     * @brief Child order change callback
+     *
+     * This method is called whenever the order of a node's children is changed using
+     * Node::changeOrder(). The @c old_prev parameter is NULL if the relocated node
+     * was first in the sibling order before the order change, and @c new_prev is NULL
+     * if it was moved to the first position by this operation.
+     *
+     * @param node The changed XML node
+     * @param child The child node that was relocated in the sibling order
+     * @param old_prev The node that was before @c child prior to the order change
+     * @param new_prev The node that is before @c child after the order change
+     */
     virtual void notifyChildOrderChanged(Node &node, Node &child,
                                          Node *old_prev, Node *new_prev)=0;
 
+    /**
+     * @brief Content change callback
+     *
+     * This method is called whenever a node's content is changed using Node::setContent(),
+     * e.g. for text or comment nodes.
+     *
+     * @param node The changed XML node
+     * @param old_content Old content of @c node
+     * @param new_content New content of @c node
+     */
     virtual void notifyContentChanged(Node &node,
                                       Util::ptr_shared<char> old_content,
                                       Util::ptr_shared<char> new_content)=0;
 
+    /**
+     * @brief Attribute change callback
+     *
+     * This method is called whenever one of a node's attributes is changed.
+     *
+     * @param node The changed XML node
+     * @param name GQuark corresponding to the attribute's name
+     * @param old_value Old value of the modified attribute
+     * @param new_value New value of the modified attribute
+     */
     virtual void notifyAttributeChanged(Node &node, GQuark name,
                                         Util::ptr_shared<char> old_value,
                                         Util::ptr_shared<char> new_value)=0;
 };
 
-}
-
-}
+} // namespace XML
+} // namespace Inkscape
 
 #endif
 /*

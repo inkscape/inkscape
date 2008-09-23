@@ -1,9 +1,12 @@
-/** \file Definition of struct one_glyph. */
-
-/*
- * License: May be redistributed with or without modifications under the terms of the Gnu General
- * Public License as published by the Free Software Foundation, version 2 or (at your option) any
- * later version.
+/** @file
+ * @brief Definition of struct one_glyph
+ */
+/* This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * See the file COPYING for details.
  */
 
 #ifndef LIBNRTYPE_ONE_GLYPH_H_INKSCAPE

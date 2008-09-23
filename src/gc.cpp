@@ -1,7 +1,7 @@
-/*
- * Inkscape::GC - Wrapper for Boehm GC
- *
- * Authors:
+/** @file
+ * @brief Wrapper for Boehm GC
+ */
+/* Authors:
  *   MenTaLguY <mental@rydia.net>
  *
  * Copyright (C) 2004 MenTaLguY

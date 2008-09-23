@@ -1,7 +1,7 @@
-/*
- * Inkscape::XML::ElementNode - simple XML element implementation
- *
- * Copyright 2004-2005 MenTaLguY <mental@rydia.net>
+/** @file
+ * @brief Element node implementation
+ */
+/* Copyright 2004-2005 MenTaLguY <mental@rydia.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,6 +21,9 @@ namespace Inkscape {
 
 namespace XML {
 
+/**
+ * @brief Element node, e.g. &lt;group /&gt;
+ */
 class ElementNode : public SimpleNode {
 public:
     ElementNode(int code, Document *doc)

@@ -65,8 +65,6 @@ public:
 
     void handleChange(Message::Wrapper &wrapper, Pedro::Element* data);
 
-    NodeObserver *logger() { return this; }
-
     // 
     // XML::Session methods
     // 
@@ -135,6 +133,7 @@ protected:
 	{
 		return new InkboardDocument(*this);
 	}
+	NodeObserver *logger() { return this; }
 
 private:
     void _initBindings();

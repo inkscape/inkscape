@@ -190,7 +190,7 @@ void PrefWatcher::notifyAttributeChanged( Node &node, GQuark name,
         } else if (strcmp("displayprofile", id) == 0) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             Glib::ustring current = prefs->getString("options.displayprofile", "uri");
-            bool enabled = current.length() > 0;
+            bool enabled = !current.empty();
 
             for ( std::list<SPDesktopWidget*>::iterator it = dtws.begin(); it != dtws.end(); ++it ) {
                 SPDesktopWidget* dtw = *it;
@@ -208,12 +208,11 @@ void PrefWatcher::notifyAttributeChanged( Node &node, GQuark name,
                 (*it)->requestCanvasUpdate();
             }
         }
-#else
-    {
-        (void)node;
-        (void)name;
-#endif // ENABLE_LCMS
     }
+#else
+    (void)node;
+    (void)name;
+#endif // ENABLE_LCMS
 }
 
 static PrefWatcher* watcher = 0;

@@ -1,7 +1,7 @@
-/*
- * Inkscape::XML::LogBuilder - NodeObserver which builds an event log
- *
- * Copyright 2005 MenTaLguY <mental@rydia.net>
+/** @file
+ * @brief Object building an event log
+ */
+/* Copyright 2005 MenTaLguY <mental@rydia.net>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -9,28 +9,45 @@
  * of the License, or (at your option) any later version.
  *
  * See the file COPYING for details.
- *
  */
 
 #ifndef SEEN_INKSCAPE_XML_LOG_BUILDER_H
 #define SEEN_INKSCAPE_XML_LOG_BUILDER_H
 
 #include "gc-managed.h"
+#include "xml/xml-forward.h"
 #include "xml/node-observer.h"
 
 namespace Inkscape {
 namespace XML {
 
-class Event;
-
+/**
+ * @brief Event log builder
+ *
+ * This object records all events sent to it via the public methods in an internal event log.
+ * Calling detach() then returns the built log. Calling discard() will clear all the events
+ * recorded so far.
+ */
 class LogBuilder {
 public:
     LogBuilder() : _log(NULL) {}
     ~LogBuilder() { discard(); }
 
+    /** @name Manipulate the recorded event log
+     * @{ */
+    /**
+     * @brief Clear the internal log
+     */
     void discard();
+    /**
+     * @brief Get the internal event log
+     * @return The recorded event chain
+     */
     Event *detach();
+    /*@}*/
 
+    /** @name Record events in the log
+     * @{ */
     void addChild(Node &node, Node &child, Node *prev);
 
     void removeChild(Node &node, Node &child, Node *prev);
@@ -45,6 +62,7 @@ public:
     void setAttribute(Node &node, GQuark name,
                       Util::ptr_shared<char> old_value,
                       Util::ptr_shared<char> new_value);
+    /*@}*/
 
 private:
     Event *_log;

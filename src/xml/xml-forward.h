@@ -35,6 +35,7 @@ struct NodeSiblingIteratorStrategy;
 struct NodeParentIteratorStrategy;
 class  NodeObserver;
 class  Node;
+struct PINode;
 class  SimpleDocument;
 class  SimpleNode;
 class  Subtree;
