@@ -2561,7 +2561,7 @@ msgstr "  tipo: "
 
 #: ../src/extension/dependency.cpp:263
 msgid "  location: "
-msgstr "  locazione: "
+msgstr "  posizione: "
 
 #: ../src/extension/dependency.cpp:264
 msgid "  string: "
