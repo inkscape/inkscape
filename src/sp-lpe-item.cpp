@@ -217,6 +217,11 @@ sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *value)
 
                         if (path_effect_ref && path_effect_ref->lpeobject && path_effect_ref->lpeobject->lpe) {
                             lpeitem->path_effect_list->push_back(path_effect_ref);
+                        } else {
+                            // something has gone wrong in finding the right patheffect. For example when the specified LPE name does not exist.
+                            path_effect_ref->unlink();
+                            delete path_effect_ref;
+                            path_effect_ref = NULL;
                         }
                     }
                 }
