@@ -923,7 +923,7 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
                                                        void (*callback)(GtkAdjustment *, GObject *),
                                                        gdouble climb = 0.1, guint digits = 3, double factor = 1.0 )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     GtkAdjustment* adj = GTK_ADJUSTMENT( gtk_adjustment_new( prefs->getDouble(path, data, def) * factor,
                                                              lower, upper, step, page, page ) );
     if (us) {
@@ -1061,7 +1061,7 @@ sp_node_path_edit_symmetrical(void)
 }
 
 static void toggle_show_handles (GtkToggleAction *act, gpointer /*data*/) {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool show = gtk_toggle_action_get_active( act );
     prefs->setBool("tools.nodes", "show_handles",  show);
     ShapeEditor *shape_editor = get_current_shape_editor();
@@ -1253,7 +1253,7 @@ sp_node_toolbox_sel_modified (Inkscape::Selection *selection, guint /*flags*/, G
 
 static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
     tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
     g_object_set_data( holder, "tracker", tracker );
@@ -1652,7 +1652,7 @@ update_tool_toolbox( SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget
 static void
 setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     GtkSizeGroup* grouper = gtk_size_group_new( GTK_SIZE_GROUP_BOTH );
     Glib::RefPtr<Gtk::ActionGroup> mainActions = create_or_fetch_actions( desktop );
     GtkUIManager* mgr = gtk_ui_manager_new();
@@ -1907,7 +1907,7 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("tools.shapes.star", "proportion", adj->value);
     }
 
@@ -1951,7 +1951,7 @@ static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *d
     bool flat = ege_select_one_action_get_active( act ) == 0;
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setBool( "tools.shapes.star", "isflatsided", flat);
     }
 
@@ -1994,7 +1994,7 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("tools.shapes.star", "rounded", (gdouble) adj->value);
     }
 
@@ -2029,7 +2029,7 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("tools.shapes.star", "randomized", (gdouble) adj->value);
     }
 
@@ -2076,7 +2076,7 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
 
     GtkAdjustment *adj = 0;
 
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool isFlatSided = prefs->getBool("tools.shapes.star", "isflatsided", true);
 
     if (!strcmp(name, "inkscape:randomized")) {
@@ -2235,7 +2235,7 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     {
         EgeAdjustmentAction* eact = 0;
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    	bool isFlatSided = prefs->getBool("tools.shapes.star", "isflatsided", true);
+        bool isFlatSided = prefs->getBool("tools.shapes.star", "isflatsided", true);
 
         /* Flatsided checkbox */
         {
@@ -2391,7 +2391,7 @@ sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_name,
     SPUnit const *unit = tracker->getActiveUnit();
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("tools.shapes.rect", value_name, sp_units_get_pixels(adj->value, *unit));
     }
 
@@ -2928,7 +2928,7 @@ static void box3d_vp_z_state_changed( GtkToggleAction *act, GtkAction *box3d_ang
 
 static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     EgeAdjustmentAction* eact = 0;
     SPDocument *document = sp_desktop_document (desktop);
     Persp3D *persp = document->current_persp3d;
@@ -3072,7 +3072,7 @@ sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_nam
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("tools.shapes.spiral", value_name, adj->value);
     }
 
@@ -3321,7 +3321,7 @@ static void freehand_mode_changed(EgeSelectOneAction* act, GObject* tbl)
 {
     gint mode = ege_select_one_action_get_active(act);
 
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt(freehand_tool_name(tbl), "freehand-mode", mode);
 
     SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
@@ -3338,7 +3338,7 @@ static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* ho
 {
     /* Freehand mode toggle buttons */
     {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         guint freehandMode = prefs->getInt(( tool_is_pencil ? "tools.freehand.pencil" : "tools.freehand.pen" ), "freehand-mode", 0);
         Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
 
@@ -3420,7 +3420,7 @@ static void
 freehand_add_advanced_shape_options(GtkActionGroup* mainActions, GObject* holder, bool tool_is_pencil) {
     /*advanced shape options */
     {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         GtkListStore* model = gtk_list_store_new( 2, G_TYPE_STRING, G_TYPE_INT );
 
         GList* items = 0;
@@ -3505,8 +3505,8 @@ sp_pencil_tb_tolerance_value_changed_external(Inkscape::XML::Node */*repr*/,
 
     GtkAdjustment * adj = (GtkAdjustment*)g_object_get_data(tbl,
                                                             "tolerance");
-	
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double v = prefs->getDouble("tools.freehand.pencil", "tolerance", adj->value);
     gtk_adjustment_set_value(adj, v);
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -3579,19 +3579,19 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 
 static void sp_tweak_width_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble( "tools.tweak", "width", adj->value * 0.01 );
 }
 
 static void sp_tweak_force_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble( "tools.tweak", "force", adj->value * 0.01 );
 }
 
 static void sp_tweak_pressure_state_changed( GtkToggleAction *act, gpointer /*data*/ )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("tools.tweak", "usepressure", gtk_toggle_action_get_active(act));
 }
 
@@ -3626,24 +3626,24 @@ static void sp_tweak_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 
 static void sp_tweak_fidelity_value_changed( GtkAdjustment *adj, GObject */*tbl*/ )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble( "tools.tweak", "fidelity", adj->value * 0.01 );
 }
 
 static void tweak_toggle_doh (GtkToggleAction *act, gpointer /*data*/) {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("tools.tweak", "doh", gtk_toggle_action_get_active(act));
 }
 static void tweak_toggle_dos (GtkToggleAction *act, gpointer /*data*/) {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("tools.tweak", "dos", gtk_toggle_action_get_active(act));
 }
 static void tweak_toggle_dol (GtkToggleAction *act, gpointer /*data*/) {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("tools.tweak", "dol", gtk_toggle_action_get_active(act));
 }
 static void tweak_toggle_doo (GtkToggleAction *act, gpointer /*data*/) {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("tools.tweak", "doo", gtk_toggle_action_get_active(act));
 }
 
@@ -3904,7 +3904,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 //########################
 static void update_presets_list (GObject *tbl)
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (g_object_get_data(tbl, "presets_blocked"))
         return;
 
@@ -3966,77 +3966,77 @@ static void update_presets_list (GObject *tbl)
 
 static void sp_ddc_mass_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble( "tools.calligraphic", "mass", adj->value * 0.01 );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_wiggle_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble( "tools.calligraphic", "wiggle", adj->value * 0.01 );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_angle_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble( "tools.calligraphic", "angle", adj->value );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_width_value_changed( GtkAdjustment *adj, GObject *tbl )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble( "tools.calligraphic", "width", adj->value * 0.01 );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_velthin_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble("tools.calligraphic", "thinning", adj->value * 0.01 );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_flatness_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble( "tools.calligraphic", "flatness", adj->value * 0.01);
     update_presets_list(tbl);
 }
 
 static void sp_ddc_tremor_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble( "tools.calligraphic", "tremor", adj->value * 0.01 );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_cap_rounding_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble( "tools.calligraphic", "cap_rounding", adj->value );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_pressure_state_changed( GtkToggleAction *act, GObject*  tbl )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("tools.calligraphic", "usepressure", gtk_toggle_action_get_active( act ));
     update_presets_list(tbl);
 }
 
 static void sp_ddc_trace_background_changed( GtkToggleAction *act, GObject*  tbl )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("tools.calligraphic", "tracebackground", gtk_toggle_action_get_active( act ));
     update_presets_list(tbl);
 }
 
 static void sp_ddc_tilt_state_changed( GtkToggleAction *act, GObject*  tbl )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     GtkAction * calligraphy_angle = static_cast<GtkAction *> (g_object_get_data(tbl,"angle_action"));
     prefs->setBool("tools.calligraphic", "usetilt", gtk_toggle_action_get_active( act ));
     update_presets_list(tbl);
@@ -4101,7 +4101,7 @@ static void sp_dcc_build_presets_list(GObject *tbl)
 
 static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop" );
     if (! desktop) return;
 
@@ -4179,8 +4179,8 @@ static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
 
 static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
 
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-	
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
     gint preset_index = ege_select_one_action_get_active( act );
     gint save_presets_index = GPOINTER_TO_INT(g_object_get_data(tbl, "save_presets_index"));
 
@@ -4193,17 +4193,17 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
     if (g_object_get_data(tbl, "presets_blocked"))
         return;
 
-	// preset_index is one-based so we subtract 1
+    // preset_index is one-based so we subtract 1
     Glib::ustring preset_path = prefs->getNthChild("tools.calligraphic.preset", preset_index - 1);
 
     if (!preset_path.empty()) {
         g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(TRUE)); //temporarily block the selector so no one will updadte it while we're reading it
 
-		/// @todo Remove the use of _getNode() in this fragment, modify
-		/// the public interface of Preferences if necessary
+        /// @todo Remove the use of _getNode() in this fragment, modify
+        /// the public interface of Preferences if necessary
         Inkscape::XML::Node *preset_repr = prefs->_getNode(preset_path);
 
-		// Shouldn't this be std::map?
+        // Shouldn't this be std::map?
         for ( Inkscape::Util::List<Inkscape::XML::AttributeRecord const> iter = preset_repr->attributeList();
               iter;
               ++iter ) {
@@ -4237,7 +4237,7 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl) {
 
 static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     {
         g_object_set_data(holder, "presets_blocked", GINT_TO_POINTER(TRUE));
 
@@ -4464,7 +4464,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
 
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("tools.shapes.arc", value_name, (adj->value * M_PI)/ 180);
     }
 
@@ -4533,8 +4533,8 @@ static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    	prefs->setBool("tools.shapes.arc", "open", ege_select_one_action_get_active(act) != 0);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setBool("tools.shapes.arc", "open", ege_select_one_action_get_active(act) != 0);
     }
 
     // quit if run by the attr_changed listener
@@ -4685,8 +4685,8 @@ static void sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GOb
 
 static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-	
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
     EgeAdjustmentAction* eact = 0;
     Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
 
@@ -4798,7 +4798,7 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
 //########################
 
 static void toggle_dropper_pick_alpha( GtkToggleAction* act, gpointer tbl ) {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt( "tools.dropper", "pick", gtk_toggle_action_get_active( act ) );
     GtkAction* set_action = GTK_ACTION( g_object_get_data(G_OBJECT(tbl), "set_action") );
     if ( set_action ) {
@@ -4813,7 +4813,7 @@ static void toggle_dropper_pick_alpha( GtkToggleAction* act, gpointer tbl ) {
 }
 
 static void toggle_dropper_set_alpha( GtkToggleAction* act, gpointer tbl ) {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt( "tools.dropper", "setalpha", gtk_toggle_action_get_active( act ) ? 1 : 0 );
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
@@ -4828,7 +4828,7 @@ static void toggle_dropper_set_alpha( GtkToggleAction* act, gpointer tbl ) {
  */
 static void sp_dropper_toolbox_prep(SPDesktop */*desktop*/, GtkActionGroup* mainActions, GObject* holder)
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gint pickAlpha = prefs->getInt( "tools.dropper", "pick", 1 );
 
     {
@@ -4904,7 +4904,7 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
         }
 
         if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-        	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             prefs->setInt( "tools.lpetool", "mode", mode );
         }
 
@@ -4980,7 +4980,7 @@ lpetool_toggle_show_measuring_info (GtkToggleAction *act, GObject *tbl) {
     GtkAction *unitact = static_cast<GtkAction*>(g_object_get_data(tbl, "lpetool_units_action"));
     SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
     if (tools_isactive(desktop, TOOLS_LPETOOL)) {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         bool show = gtk_toggle_action_get_active( act );
         prefs->setInt("tools.lpetool", "show_measuring_info",  show ? 1 : 0);
         lpetool_show_measuring_info(lc, show);
@@ -5093,7 +5093,7 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
     tracker->setActiveUnit(sp_desktop_namedview(desktop)->doc_units);
     g_object_set_data(holder, "tracker", tracker);
     SPUnit const *unit = tracker->getActiveUnit();
-    
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt("tools.lpetool", "unitid", unit->unit_id);
 
@@ -5235,7 +5235,7 @@ static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
     gint eraserMode = (ege_select_one_action_get_active( act ) != 0) ? 1 : 0;
     if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
-    	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setInt( "tools.eraser", "mode", eraserMode );
     }
 
@@ -5300,8 +5300,8 @@ static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
         ege_select_one_action_set_icon_column( act, 2 );
         ege_select_one_action_set_tooltip_column( act, 1  );
 
-		/// @todo Convert to boolean?
-		Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        /// @todo Convert to boolean?
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         gint eraserMode = (prefs->getInt("tools.eraser", "mode", 0) != 0) ? 1 : 0;
         ege_select_one_action_set_active( act, eraserMode );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(sp_erasertb_mode_changed), holder );
@@ -6435,14 +6435,14 @@ static void sp_connector_graph_layout(void)
 
 static void sp_directed_graph_layout_toggled( GtkToggleAction* act, GtkObject */*tbl*/ )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("tools.connector", "directedlayout",
                 gtk_toggle_action_get_active( act ));
 }
 
 static void sp_nooverlaps_graph_layout_toggled( GtkToggleAction* act, GtkObject */*tbl*/ )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("tools.connector", "avoidoverlaplayout",
                 gtk_toggle_action_get_active( act ));
 }
@@ -6450,7 +6450,7 @@ static void sp_nooverlaps_graph_layout_toggled( GtkToggleAction* act, GtkObject 
 
 static void connector_length_changed(GtkAdjustment *adj, GObject* tbl)
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble("tools.connector", "length", adj->value);
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
@@ -6488,7 +6488,7 @@ static Inkscape::XML::NodeEventVector connector_tb_repr_events = {
 
 static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder )
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Inkscape::IconSize secondarySize = prefToSize("toolbox", "secondary", 1);
 
     {
@@ -6605,13 +6605,13 @@ static void paintbucket_channels_changed(EgeSelectOneAction* act, GObject* /*tbl
 
 static void paintbucket_threshold_changed(GtkAdjustment *adj, GObject */*tbl*/)
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt("tools.paintbucket", "threshold", (gint)adj->value);
 }
 
 static void paintbucket_autogap_changed(EgeSelectOneAction* act, GObject */*tbl*/)
 {
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt("tools.paintbucket", "autogap", ege_select_one_action_get_active( act ));
 }
 
