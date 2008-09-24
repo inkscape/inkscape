@@ -30,6 +30,7 @@
 #include <sp-root.h>
 #include <sp-defs.h>
 #include "prefs-utils.h"
+#include "dialogs/rdf.h"
 
 /* This is an example of how to use libpng to read and write PNG files.
  * The file libpng.txt is much more verbose then this.  If you have not
@@ -61,8 +62,65 @@ typedef struct SPPNGBD {
     int rowstride;
 } SPPNGBD;
 
+/**
+ * A simple wrapper to list png_text.
+ */
+class PngTextList {
+public:
+    PngTextList() : count(0), textItems(0) {}
+    ~PngTextList();
+
+    void add(gchar const* key, gchar const* text);
+    gint getCount() {return count;}
+    png_text* getPtext() {return textItems;}
+
+private:
+    gint count;
+    png_text* textItems;
+};
+
+PngTextList::~PngTextList() {
+    for (gint i = 0; i < count; i++) {
+        if (textItems[i].key) {
+            g_free(textItems[i].key);
+        }
+        if (textItems[i].text) {
+            g_free(textItems[i].text);
+        }
+    }
+}
+
+void PngTextList::add(gchar const* key, gchar const* text)
+{
+    if (count < 0) {
+        count = 0;
+        textItems = 0;
+    }
+    png_text* tmp = (count > 0) ? g_try_renew(png_text, textItems, count + 1): g_try_new(png_text, 1);
+    if (tmp) {
+        textItems = tmp;
+        count++;
+
+        png_text* item = &(textItems[count - 1]);
+        item->compression = PNG_TEXT_COMPRESSION_NONE;
+        item->key = g_strdup(key);
+        item->text = g_strdup(text);
+        item->text_length = 0;
+#ifdef PNG_iTXt_SUPPORTED
+        item->itxt_length = 0;
+        item->lang = 0;
+        item->lang_key = 0;
+#endif // PNG_iTXt_SUPPORTED
+    } else {
+        g_warning("Unable to allocate arrary for %d PNG text data.", count);
+        textItems = 0;
+        count = 0;
+    }
+}
+
 static bool
-sp_png_write_rgba_striped(gchar const *filename, unsigned long int width, unsigned long int height, double xdpi, double ydpi,
+sp_png_write_rgba_striped(SPDocument *doc,
+                          gchar const *filename, unsigned long int width, unsigned long int height, double xdpi, double ydpi,
                           int (* get_rows)(guchar const **rows, int row, int num_rows, void *data),
                           void *data)
 {
@@ -71,7 +129,6 @@ sp_png_write_rgba_striped(gchar const *filename, unsigned long int width, unsign
     png_structp png_ptr;
     png_infop info_ptr;
     png_color_8 sig_bit;
-    png_text text_ptr[3];
     png_uint_32 r;
 
     g_return_val_if_fail(filename != NULL, false);
@@ -141,11 +198,49 @@ sp_png_write_rgba_striped(gchar const *filename, unsigned long int width, unsign
     sig_bit.alpha = 8;
     png_set_sBIT(png_ptr, info_ptr, &sig_bit);
 
-    /* Made by Inkscape comment */
-    text_ptr[0].key = "Software";
-    text_ptr[0].text = "www.inkscape.org";
-    text_ptr[0].compression = PNG_TEXT_COMPRESSION_NONE;
-    png_set_text(png_ptr, info_ptr, text_ptr, 1);
+    PngTextList textList;
+
+    textList.add("Software", "www.inkscape.org"); // Made by Inkscape comment
+    {
+        const gchar* pngToDc[] = {"Title", "title",
+                               "Author", "creator",
+                               "Description", "description",
+                               //"Copyright", "",
+                               "Creation Time", "date",
+                               //"Disclaimer", "",
+                               //"Warning", "",
+                               "Source", "source"
+                               //"Comment", ""
+        };
+        for (size_t i = 0; i < G_N_ELEMENTS(pngToDc); i += 2) {
+            struct rdf_work_entity_t * entity = rdf_find_entity ( pngToDc[i + 1] );
+            if (entity) {
+                gchar const* data = rdf_get_work_entity(doc, entity);
+                if (data && *data) {
+                    textList.add(pngToDc[i], data);
+                }
+            } else {
+                g_warning("Unable to find entity [%s]", pngToDc[i + 1]);
+            }            
+        }
+
+
+        struct rdf_license_t *license =  rdf_get_license(doc);
+        if (license) {
+            if (license->name && license->uri) {
+                gchar* tmp = g_strdup_printf("%s %s", license->name, license->uri);
+                textList.add("Copyright", tmp);
+                g_free(tmp);
+            } else if (license->name) {
+                textList.add("Copyright", license->name);
+            } else if (license->uri) {
+                textList.add("Copyright", license->uri);
+            }
+        }
+    }
+    if (textList.getCount() > 0) {
+        png_set_text(png_ptr, info_ptr, textList.getPtext(), textList.getCount());
+    }
 
     /* other optional chunks like cHRM, bKGD, tRNS, tIME, oFFs, pHYs, */
     /* note that if sRGB is present the cHRM chunk must be ignored
@@ -377,12 +472,12 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     if ((width < 256) || ((width * height) < 32768)) {
         ebp.px = nr_pixelstore_64K_new(FALSE, 0);
         ebp.sheight = 65536 / (4 * width);
-        write_status = sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
+        write_status = sp_png_write_rgba_striped(doc, filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         nr_pixelstore_64K_free(ebp.px);
     } else {
         ebp.px = g_new(guchar, 4 * 64 * width);
         ebp.sheight = 64;
-        write_status = sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
+        write_status = sp_png_write_rgba_striped(doc, filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         g_free(ebp.px);
     }
 
