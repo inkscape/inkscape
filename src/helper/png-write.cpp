@@ -221,7 +221,7 @@ sp_png_write_rgba_striped(SPDocument *doc,
                 }
             } else {
                 g_warning("Unable to find entity [%s]", pngToDc[i + 1]);
-            }            
+            }
         }
 
 
