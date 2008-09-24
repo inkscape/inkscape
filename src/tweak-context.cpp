@@ -197,7 +197,7 @@ sp_tweak_update_cursor (SPTweakContext *tc, bool with_shift)
                 gchar *sel_message = NULL;
                 if (!desktop->selection->isEmpty()) {
                     num = g_slist_length((GSList *) desktop->selection->itemList());
-                    sel_message = g_strdup_printf(_("<b>%i</b> objects selected"), num);
+                    sel_message = g_strdup_printf(ngettext("<b>%i</b> object selected","<b>%i</b> objects selected",num), num);
                 } else {
                     sel_message = g_strdup_printf(_("<b>Nothing</b> selected"));
                 }
