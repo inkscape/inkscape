@@ -91,6 +91,8 @@
 
 //#define TRACE(_args) g_printf _args
 #define TRACE(_args)
+//#define TEST(_args) _args
+#define TEST(_args)
 
 // FIXME: expose these from sp-clippath/mask.cpp
 struct SPClipPathView {
@@ -266,7 +268,7 @@ static void sp_group_render(SPItem *item, CairoRenderContext *ctx)
 {
     SPGroup *group = SP_GROUP(item);
     CairoRenderer *renderer = ctx->getRenderer();
-    TRACE(("sp_group_renderer opacity: %f\n", SP_SCALE24_TO_FLOAT(SP_OBJECT_STYLE(item)->opacity.value)));
+    TRACE(("sp_group_render opacity: %f\n", SP_SCALE24_TO_FLOAT(SP_OBJECT_STYLE(item)->opacity.value)));
 
     GSList *l = g_slist_reverse(group->childList(false));
     while (l) {
@@ -406,33 +408,17 @@ static void sp_root_render(SPItem *item, CairoRenderContext *ctx)
 }
 
 /**
-    this function convert the item to a raster image and include the raster into the cairo renderer
+    This function converts the item to a raster image and includes the image into the cairo renderer.
+    It is only used for filters and then only when rendering filters as bitmaps is requested.
 */
 static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
 {
-    //the code now was copied from sp_selection_create_bitmap_copy
 
-    SPDocument *document = SP_OBJECT(item)->document;
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
-
-    // Get the bounding box of the selection
-    //boost::optional<Geom::Rect> _bbox = item->getBounds(sp_item_i2d_affine(item));
-    // NRRect bbox = item->getBounds(sp_item_i2d_affine(item));
-    NRRect bbox(item->getBounds(sp_item_i2d_affine(item)));
-
-
-    // List of the items to show; all others will be hidden
-    GSList *items = NULL; //g_slist_copy ((GSList *) selection->itemList());
-    items = g_slist_append(items, item);
-
-    // Remember parent and z-order of the topmost one
-    gint pos = SP_OBJECT_REPR(g_slist_last(items)->data)->position();
-    SPObject *parent_object = SP_OBJECT_PARENT(g_slist_last(items)->data);
-    Inkscape::XML::Node *parent = SP_OBJECT_REPR(parent_object);
+    // The code was adapted from sp_selection_create_bitmap_copy in selection-chemistry.cpp
 
     // Calculate resolution
     double res;
-    /** @TODO reimplement the resolution stuff
+    /** @TODO reimplement the resolution stuff   (WHY?)
     */
     res = ctx->getBitmapResolution();
     if(res == 0) {
@@ -440,108 +426,58 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     }
     TRACE(("sp_asbitmap_render: resolution: %f\n", res ));
 
+    // Get the bounding box of the selection in document coordinates.
+    NRRect bbox(item->getBounds(sp_item_i2d_affine(item), SPItem::RENDERING_BBOX ));
 
     // The width and height of the bitmap in pixels
     unsigned width = (unsigned) floor ((bbox.x1 - bbox.x0) * (res / PX_PER_IN));
     unsigned height =(unsigned) floor ((bbox.y1 - bbox.y0) * (res / PX_PER_IN));
     
-    // Scale to exactly fit integer bitmap (is this really necessary?)
+    // Scale to exactly fit integer bitmap inside bounding box
     double scale_x = (bbox.x1 - bbox.x0) / width;
     double scale_y = (bbox.y1 - bbox.y0) / height;
-    
 
-    // Find out if we have to run a filter
-    gchar const *run = NULL;
-    gchar const *filter = NULL;
-    /** @TODO reimplement the filter stuff
-    //gchar const *filter = prefs_get_string_attribute ("options.createbitmap", "filter");
-    if (filter) {
-        // filter command is given;
-        // see if we have a parameter to pass to it
-        gchar const *param1 = prefs_get_string_attribute ("options.createbitmap", "filter_param1");
-        if (param1) {
-            if (param1[strlen(param1) - 1] == '%') {
-                // if the param string ends with %, interpret it as a percentage of the image's max dimension
-                gchar p1[256];
-                g_ascii_dtostr (p1, 256, ceil (g_ascii_strtod (param1, NULL) * MAX(width, height) / 100));
-                // the first param is always the image filename, the second is param1
-                run = g_strdup_printf ("%s \"%s\" %s", filter, filepath, p1);
-            } else {
-                // otherwise pass the param1 unchanged
-                run = g_strdup_printf ("%s \"%s\" %s", filter, filepath, param1);
-            }
-        } else {
-            // run without extra parameter
-            run = g_strdup_printf ("%s \"%s\"", filter, filepath);
-        }
-    }
-    */
-    // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
-    Geom::Matrix eek = sp_item_i2d_affine (SP_ITEM(parent_object));
-    Geom::Matrix t;
-
+    // Location of bounding box in document coordinates.
     double shift_x = bbox.x0;
     double shift_y = bbox.y1;
-    if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
-        shift_x = round (shift_x);
-        shift_y = -round (-shift_y); // this gets correct rounding despite coordinate inversion, remove the negations when the inversion is gone
-    }
-    t = (Geom::Matrix)(Geom::Scale(scale_x, -scale_y) * (Geom::Matrix)(Geom::Translate (shift_x, shift_y)* eek.inverse()));
 
-    // Must subtract orginal item transform.
-    t = t * ((Geom::Matrix)ctx->getCurrentState()->item_transform).inverse();
+    // For default 90 dpi, snap bitmap to pixel grid
+    if (res == PX_PER_IN) { 
+        shift_x = round (shift_x);
+        shift_y = -round (-shift_y); // Correct rounding despite coordinate inversion.
+                                     // Remove the negations when the inversion is gone.
+    }
+
+    // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
+
+    // Matix to put bitmap in correct place on document
+    Geom::Matrix t_on_document = (Geom::Matrix)(Geom::Scale (scale_x, -scale_y)) *
+                                 (Geom::Matrix)(Geom::Translate (shift_x, shift_y));
+
+    // ctx matrix already includes item transformation. We must substract.
+    Geom::Matrix t_item =  sp_item_i2d_affine (item);
+    Geom::Matrix t = t_on_document * t_item.inverse();
 
     // Do the export
+    SPDocument *document = SP_OBJECT(item)->document;
+    GSList *items = NULL;
+    items = g_slist_append(items, item);
+
     GdkPixbuf *pb = sp_generate_internal_bitmap(document, NULL,
         bbox.x0, bbox.y0, bbox.x1, bbox.y1, width, height, res, res, (guint32) 0xffffff00, items );
 
-    // Run filter, if any
-    /*
-    if (run) {
-        g_print ("Running external filter: %s\n", run);
-        system (run);
-    }
-    */
     if (pb) {
+        TEST(gdk_pixbuf_save( pb, "bitmap.png", "png", NULL, NULL ));
         unsigned char *px = gdk_pixbuf_get_pixels (pb);
         unsigned int w = gdk_pixbuf_get_width(pb);
         unsigned int h = gdk_pixbuf_get_height(pb);
         unsigned int rs = gdk_pixbuf_get_rowstride(pb);
-        Geom::Matrix matrix;
-        matrix = t;
-        //matrix = ((Geom::Matrix)ctx->getCurrentState()->transform).inverse();
-        //matrix.set_identity();
-
-        ctx->renderImage (px, w, h, rs, &matrix, SP_OBJECT_STYLE (item));
-    /*
-        // Create the repr for the image
-        Inkscape::XML::Node * repr = xml_doc->createElement("svg:image");
-        repr->setAttribute("xlink:href", filename);
-        repr->setAttribute("sodipodi:absref", filepath);
-        if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
-            sp_repr_set_svg_double(repr, "width", width);
-            sp_repr_set_svg_double(repr, "height", height);
-        } else {
-            sp_repr_set_svg_double(repr, "width", (bbox.x1 - bbox.x0));
-            sp_repr_set_svg_double(repr, "height", (bbox.y1 - bbox.y0));
-        }
-
-        // Write transform
-        gchar *c=sp_svg_transform_write(t);
-        repr->setAttribute("transform", c);
-        g_free(c);
-
-        // add the new repr to the parent
-        parent->appendChild(repr);
-        Inkscape::GC::release(repr);
-
-        // move to the saved position
-        repr->setPosition(pos > 0 ? pos + 1 : 1);
-    */
+        ctx->renderImage (px, w, h, rs, &t, SP_OBJECT_STYLE (item));
         gdk_pixbuf_unref (pb);
     }
     g_slist_free (items);
 }
+
 
 static void sp_item_invoke_render(SPItem *item, CairoRenderContext *ctx)
 {
@@ -676,6 +612,7 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool page
 
 #include "macros.h" // SP_PRINT_*
 
+// Apply an SVG clip path
 void
 CairoRenderer::applyClipPath(CairoRenderContext *ctx, SPClipPath const *cp)
 {
@@ -730,6 +667,7 @@ CairoRenderer::applyClipPath(CairoRenderContext *ctx, SPClipPath const *cp)
     ctx->setRenderMode(saved_mode);
 }
 
+// Apply an SVG mask
 void
 CairoRenderer::applyMask(CairoRenderContext *ctx, SPMask const *mask)
 {
