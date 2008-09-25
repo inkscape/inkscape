@@ -197,7 +197,7 @@ PathParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
 {
     // If not already in nodecontext, goto it!
     if (!tools_isactive(dt, TOOLS_NODES)) {
-        tools_switch_current(TOOLS_NODES);
+        tools_switch(dt, TOOLS_NODES);
     }
 
     ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;

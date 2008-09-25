@@ -30,6 +30,7 @@
 #include <sigc++/sigc++.h>
 
 #include <2geom/matrix.h>
+#include <2geom/rect.h>
 
 #include "ui/view/view.h"
 #include "ui/view/edit-widget-interface.h"
@@ -112,9 +113,12 @@ struct SPDesktop : public Inkscape::UI::View::View
     SPCanvasItem  *page;        ///< page background
     SPCanvasItem  *page_border; ///< page border
     SPCSSAttr     *current;     ///< current style
+    bool           _focusMode;  ///< Whether we're focused working or general working
 
     GList *zooms_past;
     GList *zooms_future;
+    bool _quick_zoom_enabled; ///< Signifies that currently we're in quick zoom mode
+	Geom::Rect _quick_zoom_stored_area;  ///< The area of the screen before quick zoom
     unsigned int dkey;
     unsigned int number;
     guint window_state;
@@ -246,6 +250,9 @@ struct SPDesktop : public Inkscape::UI::View::View
     double current_zoom() const  { return _d2w.descrim(); }
     void prev_zoom();
     void next_zoom();
+    void zoom_quick(bool enable = true);
+	/** \brief  Returns whether the desktop is in quick zoom mode or not */
+	bool quick_zoomed(void) { return _quick_zoom_enabled; }
 
     bool scroll_to_point (Geom::Point const &s_dt, gdouble autoscrollspeed = 0);
     void scroll_world (double dx, double dy, bool is_scrolling = false);
@@ -289,10 +296,12 @@ struct SPDesktop : public Inkscape::UI::View::View
     bool is_iconified();
     bool is_maximized();
     bool is_fullscreen();
+    bool is_focusMode();
 
     void iconify();
     void maximize();
     void fullscreen();
+    void focusMode(bool mode = true);
 
     void registerEditWidget (Inkscape::UI::View::EditWidgetInterface *widget)
     { _widget = widget; }

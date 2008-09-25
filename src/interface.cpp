@@ -633,14 +633,18 @@ checkitem_toggled(GtkCheckMenuItem *menuitem, gpointer user_data)
     gchar const *pref = (gchar const *) user_data;
     Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(menuitem), "view");
 
-    gchar const *pref_path;
-    if (reinterpret_cast<SPDesktop*>(view)->is_fullscreen())
+    gchar *pref_path;
+    if (reinterpret_cast<SPDesktop*>(view)->is_focusMode()) {
+        pref_path = g_strconcat("focus.", pref, NULL);
+    } else if (reinterpret_cast<SPDesktop*>(view)->is_fullscreen()) {
         pref_path = g_strconcat("fullscreen.", pref, NULL);
-    else
+    } else {
         pref_path = g_strconcat("window.", pref, NULL);
+	}
 
     gboolean checked = gtk_check_menu_item_get_active(menuitem);
     prefs_set_int_attribute(pref_path, "state", checked);
+	g_free(pref_path);
 
     reinterpret_cast<SPDesktop*>(view)->layoutWidget();
 }

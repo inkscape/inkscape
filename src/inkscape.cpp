@@ -147,12 +147,7 @@ static void (* fpe_handler)  (int) = SIG_DFL;
 static void (* ill_handler)  (int) = SIG_DFL;
 static void (* bus_handler)  (int) = SIG_DFL;
 
-#ifdef WIN32
 #define INKSCAPE_PROFILE_DIR "Inkscape"
-#else
-#define INKSCAPE_PROFILE_DIR ".inkscape"
-#endif
-
 #define MENUS_FILE "menus.xml"
 
 
@@ -626,20 +621,20 @@ inkscape_crash_handler (int /*signum*/)
 
             if (!docname || !*docname) docname = "emergency";
             // try saving to the profile location
-            g_snprintf (c, 1024, "%.256s.%s.%d", docname, sptstr, count);
+            g_snprintf (c, 1024, "%.256s.%s.%d.svg", docname, sptstr, count);
             gchar * location = homedir_path(c);
             Inkscape::IO::dump_fopen_call(location, "E");
             file = Inkscape::IO::fopen_utf8name(location, "w");
             g_free(location);
             if (!file) {
                 // try saving to /tmp
-                g_snprintf (c, 1024, "/tmp/inkscape-%.256s.%s.%d", docname, sptstr, count);
+                g_snprintf (c, 1024, "/tmp/inkscape-%.256s.%s.%d.svg", docname, sptstr, count);
                 Inkscape::IO::dump_fopen_call(c, "G");
                 file = Inkscape::IO::fopen_utf8name(c, "w");
             }
             if (!file) {
                 // try saving to the current directory
-                g_snprintf (c, 1024, "inkscape-%.256s.%s.%d", docname, sptstr, count);
+                g_snprintf (c, 1024, "inkscape-%.256s.%s.%d.svg", docname, sptstr, count);
                 Inkscape::IO::dump_fopen_call(c, "F");
                 file = Inkscape::IO::fopen_utf8name(c, "w");
             }
@@ -1392,7 +1387,7 @@ profile_path(const char *filename)
         }
 #endif
         if (!prefdir) {
-            prefdir = homedir_path(NULL);
+            prefdir = homedir_path(".config");
         }
     }
     return g_build_filename(prefdir, INKSCAPE_PROFILE_DIR, filename, NULL);

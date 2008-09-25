@@ -513,11 +513,11 @@ void InkscapePreferences::initPageWindows()
     _win_ontop_agressive.init ( _("Aggressive"), "options.transientpolicy", "value", 2, false, &_win_ontop_none);
 
     _page_windows.add_group_header( _("Saving window geometry (size and position):"));
-    _page_windows.add_line( false, "", _win_save_geom_off, "",
+    _page_windows.add_line( true, "", _win_save_geom_off, "",
                             _("Let the window manager determine placement of all windows"));
-    _page_windows.add_line( false, "", _win_save_geom_prefs, "",
+    _page_windows.add_line( true, "", _win_save_geom_prefs, "",
                             _("Remember and use the last window's geometry (saves geometry to user preferences)"));
-    _page_windows.add_line( false, "", _win_save_geom, "",
+    _page_windows.add_line( true, "", _win_save_geom, "",
                             _("Save and restore window geometry for each document (saves geometry in the document)"));
 
     _page_windows.add_group_header( _("Dialog behavior (requires restart):"));
@@ -535,6 +535,16 @@ void InkscapePreferences::initPageWindows()
                             _("Dialogs stay on top of document windows"));
     _page_windows.add_line( true, "", _win_ontop_agressive, "",
                             _("Same as Normal but may work better with some window managers"));
+#endif
+
+#if GTK_VERSION_GE(2, 12)
+	_page_windows.add_group_header( _("Dialog Transparency:"));
+	_win_trans_focus.init("dialogs.transparency", "on-focus", 0.5, 1.0, 0.01, 0.1, 1.0, false, false);
+	_page_windows.add_line( true, _("Opacity when focused:"), _win_trans_focus, "", "");
+	_win_trans_blur.init("dialogs.transparency", "on-blur", 0.0, 1.0, 0.01, 0.1, 0.5, false, false);
+	_page_windows.add_line( true, _("Opacity when unfocused:"), _win_trans_blur, "", "");
+	_win_trans_time.init("dialogs.transparency", "animate-time", 0, 1000, 10, 100, 100, true, false);
+	_page_windows.add_line( true, _("Time of opacity change animation:"), _win_trans_time, "ms", "");
 #endif
 
     _page_windows.add_group_header( _("Miscellaneous:"));

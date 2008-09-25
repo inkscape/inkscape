@@ -27,6 +27,16 @@ static char const preferences_skeleton[] =
 "    <group id=\"rulers\" state=\"1\"/>\n"
 "    <group id=\"scrollbars\" state=\"1\"/>\n"
 "  </group>\n"
+"  <group id=\"focus\">\n"
+"    <group id=\"menu\" state=\"0\"/>\n"
+"    <group id=\"commands\" state=\"0\"/>\n"
+"    <group id=\"toppanel\" state=\"0\"/>\n"
+"    <group id=\"toolbox\" state=\"0\"/>\n"
+"    <group id=\"statusbar\" state=\"0\"/>\n"
+"    <group id=\"panels\" state=\"0\"/>\n"
+"    <group id=\"rulers\" state=\"0\"/>\n"
+"    <group id=\"scrollbars\" state=\"0\"/>\n"
+"  </group>\n"
 "\n"
 "  <group id=\"documents\">\n"
 "    <group id=\"recent\"/>\n"
@@ -185,6 +195,15 @@ static char const preferences_skeleton[] =
 "    <group id=\"colorpickerwindow\" />\n"
 "    <group id=\"undo-history\" />\n"
 "    <group id=\"filtereffects\" />\n"
+"    <group id=\"transparency\"\n"
+"       on-focus=\"1.0\"\n"
+"       on-blur=\"0.50\"\n"
+#ifdef WIN32
+"       animate-time=\"0\"\n" // apparently windows sucks (flickers)
+#else
+"       animate-time=\"100\"\n" // time to change in ms
+#endif
+"      />\n"
 "  </group>\n"
 "  <group id=\"printing\">\n"
 "    <settings id=\"ps\"/>\n"
@@ -299,6 +318,8 @@ static char const preferences_skeleton[] =
 "  </group>\n"
 "\n"
 "  <group id=\"extensions\">"
+// NOTE: This gets filled in by the extensions themselves based on
+// the properties that they provide in their INX files.
 "  </group>\n"
 "\n"
 "  <group id=\"desktop\""

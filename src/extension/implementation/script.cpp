@@ -11,23 +11,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/*
-TODO:
-FIXME:
-  After Inkscape makes a formal requirement for a GTK version above 2.11.4, please
-  replace all the instances of ink_ext_XXXXXX in this file that represent
-  svg files with ink_ext_XXXXXX.svg . Doing so will prevent errors in extensions
-  that call inkscape to manipulate the file.
-
-  "** (inkscape:5848): WARNING **: Format autodetect failed. The file is being opened as SVG."
-
-  references:
-  http://www.gtk.org/api/2.6/glib/glib-File-Utilities.html#g-mkstemp
-  http://ftp.gnome.org/pub/gnome/sources/glib/2.11/glib-2.11.4.changes
-  http://developer.gnome.org/doc/API/2.0/glib/glib-File-Utilities.html#g-mkstemp
-
-  --Aaron Spike
-*/
 #define __INKSCAPE_EXTENSION_IMPLEMENTATION_SCRIPT_C__
 
 #ifdef HAVE_CONFIG_H
@@ -77,18 +60,17 @@ namespace Inkscape {
 namespace Extension {
 namespace Implementation {
 
-void pump_events (void) {
+/** \brief  Make GTK+ events continue to come through a little bit
+	
+	This just keeps coming the events through so that we'll make the GUI
+	update and look pretty.
+*/
+void
+Script::pump_events (void) {
     while( Gtk::Main::events_pending() )
         Gtk::Main::iteration();
     return;
 }
-
-//Interpreter lookup table
-struct interpreter_t {
-        gchar const *identity;
-        gchar const *prefstring;
-        gchar const *defaultval;
-};
 
 
 /** \brief  A table of what interpreters to call for a given language
@@ -97,7 +79,7 @@ struct interpreter_t {
     given script.  It also tracks the preference to use to overwrite
     the given interpreter to a custom one per user.
 */
-static interpreter_t const interpreterTab[] = {
+Script::interpreter_t const Script::interpreterTab[] = {
         {"perl",   "perl-interpreter",   "perl"   },
 #ifdef WIN32
         {"python", "python-interpreter", "pythonw" },
@@ -111,12 +93,13 @@ static interpreter_t const interpreterTab[] = {
 
 
 
-/**
- * Look up an interpreter name, and translate to something that
- * is executable
- */
-static Glib::ustring
-resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
+/** \brief Look up an interpreter name, and translate to something that
+           is executable
+    \param interpNameArg  The name of the interpreter that we're looking
+	                      for, should be an entry in interpreterTab
+*/
+Glib::ustring
+Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
 {
 
     Glib::ustring interpName = interpNameArg;
@@ -184,8 +167,6 @@ resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
     return interpName;
 }
 
-
-
 /** \brief     This function creates a script object and sets up the
                variables.
     \return    A script object
@@ -198,7 +179,6 @@ Script::Script() :
     Implementation()
 {
 }
-
 
 /**
  *   brief     Destructor
@@ -573,7 +553,7 @@ Script::open(Inkscape::Extension::Input *module,
     std::string tempfilename_out;
     int tempfd_out = 0;
     try {
-        tempfd_out = Inkscape::IO::file_open_tmp(tempfilename_out, "ink_ext_XXXXXX");
+        tempfd_out = Inkscape::IO::file_open_tmp(tempfilename_out, "ink_ext_XXXXXX.svg");
     } catch (...) {
         /// \todo Popup dialog here
         return NULL;
@@ -647,7 +627,7 @@ Script::save(Inkscape::Extension::Output *module,
     std::string tempfilename_in;
     int tempfd_in = 0;
     try {
-        tempfd_in = Inkscape::IO::file_open_tmp(tempfilename_in, "ink_ext_XXXXXX");
+        tempfd_in = Inkscape::IO::file_open_tmp(tempfilename_in, "ink_ext_XXXXXX.svg");
     } catch (...) {
         /// \todo Popup dialog here
         return;

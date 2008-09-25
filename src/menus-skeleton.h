@@ -134,6 +134,8 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"ViewNew\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"FullScreen\" />\n"
+// Not quite ready to be in the menus.
+// "       <verb verb-id=\"FocusToggle\" />\n"
 "   </submenu>\n"
 "   <submenu name=\"" N_("_Layer") "\">\n"
 "       <verb verb-id=\"LayerNew\" />\n"

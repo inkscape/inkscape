@@ -64,7 +64,7 @@ public:
     typedef std::list<Input *> InputList;
     typedef std::list<Effect *> EffectList;
 
-    InputList  &get_input_list (InputList &ou_list);
+    InputList  &get_input_list  (InputList &ou_list);
     OutputList &get_output_list (OutputList &ou_list);
     EffectList &get_effect_list (EffectList &ou_list);
 }; /* class DB */

@@ -133,6 +133,7 @@ SPDesktop::SPDesktop() :
     page( 0 ),
     page_border( 0 ),
     current( 0 ),
+	_focusMode(false),
     zooms_past( 0 ),
     zooms_future( 0 ),
     dkey( 0 ),
@@ -861,6 +862,102 @@ SPDesktop::next_zoom()
     zooms_future = g_list_remove (zooms_future, ((NRRect *) zooms_future->data));
 }
 
+#include "tools-switch.h"
+#include "node-context.h"
+#include "shape-editor.h"
+#include "nodepath.h"
+
+/** \brief  Performs a quick zoom into what the user is working on
+	\param  enable  Whether we're going in or out of quick zoom
+
+*/
+void 
+SPDesktop::zoom_quick (bool enable)
+{
+	if (enable == _quick_zoom_enabled) {
+		return;
+	}
+
+	if (enable == true) {
+		_quick_zoom_stored_area = get_display_area();
+		bool zoomed = false;
+
+		if (!zoomed) {
+			SPItem * singleItem = selection->singleItem();
+			if (singleItem != NULL && tools_isactive(this, TOOLS_NODES)) {
+				SPNodeContext * ncontext = SP_NODE_CONTEXT(event_context);
+
+				Inkscape::NodePath::Path * nodepath = ncontext->shape_editor->get_nodepath();
+				// printf("I've got a nodepath, crazy\n");
+
+				Geom::Rect nodes;
+				bool firstnode = true;
+
+				if (nodepath->selected) {
+					for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
+					   Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
+						for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
+						   Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
+							if (node->selected) {
+								// printf("\tSelected node\n");
+								if (firstnode) {
+									nodes = Geom::Rect(node->pos, node->pos);
+									firstnode = false;
+								} else {
+									nodes.expandTo(node->pos);
+								}
+
+								if (node->p.other != NULL) {
+									/* Include previous node pos */
+									nodes.expandTo(node->p.other->pos);
+
+									/* Include previous handle */
+									if (!sp_node_side_is_line(node, &node->p)) {
+										nodes.expandTo(node->p.pos);
+									}
+								}
+
+								if (node->n.other != NULL) {
+									/* Include previous node pos */
+									nodes.expandTo(node->n.other->pos);
+
+									/* Include previous handle */
+									if (!sp_node_side_is_line(node, &node->n)) {
+										nodes.expandTo(node->n.pos);
+									}
+								}
+							}
+						}
+					}
+
+					if (!firstnode && nodes.area() * 2.0 < _quick_zoom_stored_area.area()) {
+						set_display_area(nodes, 10);
+						zoomed = true;
+					}
+				}
+			}
+		}
+
+		if (!zoomed) {
+			boost::optional<Geom::Rect> const d = selection->bounds_2geom();
+			if (d && !d->isEmpty() && d->area() * 2.0 < _quick_zoom_stored_area.area()) {
+				set_display_area(*d, 10);
+				zoomed = true;
+			} 
+		}
+
+		if (!zoomed) {
+			zoom_relative(_quick_zoom_stored_area.midpoint()[NR::X], _quick_zoom_stored_area.midpoint()[NR::Y], 2.0);
+			zoomed = true;
+		}
+	} else {
+		set_display_area(_quick_zoom_stored_area, 0);
+	}
+
+	_quick_zoom_enabled = enable;
+	return;
+}
+
 /**
  * Zoom to point with absolute zoom factor.
  */
@@ -1127,6 +1224,33 @@ void
 SPDesktop::fullscreen()
 {
     _widget->setFullscreen();
+}
+
+/** \brief  Checks to see if the user is working in focused mode
+
+	Returns the value of \c _focusMode
+*/
+bool
+SPDesktop::is_focusMode()
+{
+	return _focusMode;
+}
+
+/** \brief  Changes whether the user is in focus mode or not
+	\param  mode  Which mode the view should be in
+
+*/
+void
+SPDesktop::focusMode (bool mode)
+{
+	if (mode == _focusMode) { return; }
+
+	_focusMode = mode;
+
+	layoutWidget();
+	//sp_desktop_widget_layout(SPDesktopWidget);
+
+	return;
 }
 
 void

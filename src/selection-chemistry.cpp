@@ -1688,7 +1688,7 @@ void sp_selection_edit_clip_or_mask(SPDesktop * dt, bool clip)
                     if ( SP_IS_ITEM(child) ) {
                         // If not already in nodecontext, goto it!
                         if (!tools_isactive(dt, TOOLS_NODES)) {
-                            tools_switch_current(TOOLS_NODES);
+                            tools_switch(dt, TOOLS_NODES);
                         }
 
                         ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;

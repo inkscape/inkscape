@@ -17,6 +17,7 @@
 
 #include <iostream>
 #include <vector>
+#include <gtkmm/base.h>
 #include <gtkmm/table.h>
 #include <gtkmm/colorbutton.h>
 #include <gtkmm/comboboxtext.h>
@@ -140,6 +141,9 @@ protected:
     PrefRadioButton _win_ontop_none, _win_ontop_normal, _win_ontop_agressive;
     PrefRadioButton _win_save_geom_off, _win_save_geom, _win_save_geom_prefs;
     PrefCheckButton _win_hide_task, _win_zoom_resize , _win_show_close;
+	PrefSpinButton _win_trans_focus; /**< The dialog transparency setting for when the dialog is focused. */
+	PrefSpinButton _win_trans_blur;  /**< The dialog transparency setting for when the dialog is out of focus. */
+	PrefSpinButton _win_trans_time;  /**< How much time to go from one transparency setting to another */
 
     PrefCheckButton _calligrapy_use_abs_size;
     PrefCheckButton _calligrapy_keep_selected;

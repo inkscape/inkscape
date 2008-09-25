@@ -533,6 +533,16 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                         ret = TRUE;
                     }
                     break;
+                case GDK_Q:
+                case GDK_q:
+					if (desktop->quick_zoomed()) {
+						ret = TRUE;
+					}
+                    if (!MOD__SHIFT && !MOD__CTRL && !MOD__ALT) {
+						desktop->zoom_quick(true);
+                        ret = TRUE;
+                    }
+                    break;
                 case GDK_W:
                 case GDK_w:
                 case GDK_F4:
@@ -627,6 +637,13 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                         }
                         ret= TRUE;
                     } 
+                    break;
+                case GDK_Q:
+                case GDK_q:
+					if (desktop->quick_zoomed()) {
+						desktop->zoom_quick(false);
+                        ret = TRUE;
+                    }
                     break;
                 default:
                     break;

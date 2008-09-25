@@ -199,6 +199,20 @@ private:
                  const std::list<std::string> &in_params,
                  const Glib::ustring &filein,
                  file_listener &fileout);
+
+	void pump_events (void);
+
+	/** \brief  A definition of an interpreter, which can be specified
+	            in the INX file, but we need to know what to call */
+	struct interpreter_t {
+			gchar const *identity;    /**< The ID that is in the INX file */
+			gchar const *prefstring;  /**< The preferences key that can override the default */
+			gchar const *defaultval;  /**< The default value if there are no preferences */
+	};
+    static interpreter_t const interpreterTab[];
+
+	Glib::ustring resolveInterpreterExecutable(const Glib::ustring &interpNameArg);
+
 }; // class Script
 
 

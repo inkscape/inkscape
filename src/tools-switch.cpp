@@ -258,13 +258,6 @@ tools_switch(SPDesktop *dt, int num)
     }
 }
 
-void
-tools_switch_current(int num)
-{
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
-    if (dt) tools_switch(dt, num);
-}
-
 void tools_switch_by_item(SPDesktop *dt, SPItem *item)
 {
     if (SP_IS_RECT(item)) {

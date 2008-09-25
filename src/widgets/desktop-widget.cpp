@@ -1194,48 +1194,72 @@ sp_desktop_widget_fullscreen(SPDesktopWidget *dtw)
 void
 sp_desktop_widget_layout (SPDesktopWidget *dtw)
 {
-    bool fullscreen = dtw->desktop->is_fullscreen();
+	gchar * pref_path = NULL;
+	gchar const * pref_root = NULL;
+
+	if (dtw->desktop->is_focusMode()) {
+		pref_root = "focus.";
+	} else if (dtw->desktop->is_fullscreen()) {
+		pref_root = "fullscreen.";
+	} else {
+		pref_root = "window.";
+	}
+
+	pref_path = g_strconcat(pref_root, "menu", NULL);
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    if (!prefs->getBool(( fullscreen ? "fullscreen.menu" : "window.menu" ), "state", true)) {
+    if (!prefs->getBool(pref_path, "state", true)) {
         gtk_widget_hide_all (dtw->menubar);
     } else {
         gtk_widget_show_all (dtw->menubar);
     }
+	g_free(pref_path);
 
-    if (!prefs->getBool(( fullscreen ? "fullscreen.commands" : "window.commands" ), "state", true)) {
+	pref_path = g_strconcat(pref_root, "commands", NULL);
+    if (!prefs->getBool(pref_path, "state", true)) {
         gtk_widget_hide_all (dtw->commands_toolbox);
     } else {
         gtk_widget_show_all (dtw->commands_toolbox);
     }
+	g_free(pref_path);
 
-    if (!prefs->getBool(( fullscreen ? "fullscreen.toppanel" : "window.toppanel" ), "state", true)) {
+	pref_path = g_strconcat(pref_root, "toppanel", NULL);
+    if (!prefs->getBool(pref_path, "state", true)) {
         gtk_widget_hide_all (dtw->aux_toolbox);
     } else {
         // we cannot just show_all because that will show all tools' panels;
         // this is a function from toolbox.cpp that shows only the current tool's panel
         show_aux_toolbox (dtw->aux_toolbox);
     }
+	g_free(pref_path);
 
-    if (!prefs->getBool(( fullscreen ? "fullscreen.toolbox" : "window.toolbox" ), "state", true)) {
+	pref_path = g_strconcat(pref_root, "toolbox", NULL);
+    if (!prefs->getBool(pref_path, "state", true)) {
         gtk_widget_hide_all (dtw->tool_toolbox);
     } else {
         gtk_widget_show_all (dtw->tool_toolbox);
     }
+	g_free(pref_path);
 
-    if (!prefs->getBool(( fullscreen ? "fullscreen.statusbar" : "window.statusbar" ), "state", true)) {
+	pref_path = g_strconcat(pref_root, "statusbar", NULL);
+    if (!prefs->getBool(pref_path, "state", true)) {
         gtk_widget_hide_all (dtw->statusbar);
     } else {
         gtk_widget_show_all (dtw->statusbar);
     }
+	g_free(pref_path);
 
-    if (!prefs->getBool(( fullscreen ? "fullscreen.panels" : "window.panels" ), "state", true)) {
+	pref_path = g_strconcat(pref_root, "panels", NULL);
+    if (!prefs->getBool(pref_path, "state", true)) {
         gtk_widget_hide_all( dtw->panels );
     } else {
         gtk_widget_show_all( dtw->panels );
     }
+	g_free(pref_path);
 
-    if (!prefs->getBool(( fullscreen ? "fullscreen.scrollbars" : "window.scrollbars" ), "state", true)) {
+	pref_path = g_strconcat(pref_root, "scrollbars", NULL);
+    if (!prefs->getBool(pref_path, "state", true)) {
         gtk_widget_hide_all (dtw->hscrollbar);
         gtk_widget_hide_all (dtw->vscrollbar_box);
         gtk_widget_hide_all( dtw->cms_adjust );
@@ -1244,14 +1268,19 @@ sp_desktop_widget_layout (SPDesktopWidget *dtw)
         gtk_widget_show_all (dtw->vscrollbar_box);
         gtk_widget_show_all( dtw->cms_adjust );
     }
+	g_free(pref_path);
 
-    if (!prefs->getBool(( fullscreen ? "fullscreen.rulers" : "window.rulers" ), "state", true)) {
+	pref_path = g_strconcat(pref_root, "rulers", NULL);
+    if (!prefs->getBool(pref_path, "state", true)) {
         gtk_widget_hide_all (dtw->hruler);
         gtk_widget_hide_all (dtw->vruler);
     } else {
         gtk_widget_show_all (dtw->hruler);
         gtk_widget_show_all (dtw->vruler);
     }
+	g_free(pref_path);
+
+	return;
 }
 
 void

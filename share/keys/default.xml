@@ -215,6 +215,7 @@ override) the bindings in the main default.xml.
 <!-- View -->
 
   <bind key="F11" action="FullScreen" display="true"/> 
+  <bind key="F11" action="FocusToggle" modifiers="Shift" display="true"/> 
 
   <bind key="Tab" modifiers="Ctrl" action="NextWindow" display="true"/>
   <bind key="ISO_Left_Tab" modifiers="Ctrl" action="NextWindow" />

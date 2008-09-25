@@ -1070,13 +1070,12 @@ SelectionVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         case SP_VERB_SELECTION_DYNAMIC_OFFSET:
             sp_selected_path_create_offset_object_zero(dt);
-            tools_switch_current(TOOLS_NODES);
+            tools_switch(dt, TOOLS_NODES);
             break;
         case SP_VERB_SELECTION_LINKED_OFFSET:
             sp_selected_path_create_updating_offset_object_zero(dt);
-            tools_switch_current(TOOLS_NODES);
+            tools_switch(dt, TOOLS_NODES);
             break;
-
         case SP_VERB_SELECTION_OUTLINE:
             sp_selected_path_outline(dt);
             break;
@@ -1434,61 +1433,61 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
     switch (verb) {
         case SP_VERB_CONTEXT_SELECT:
-            tools_switch_current(TOOLS_SELECT);
+            tools_switch(dt, TOOLS_SELECT);
             break;
         case SP_VERB_CONTEXT_NODE:
-            tools_switch_current(TOOLS_NODES);
+            tools_switch(dt, TOOLS_NODES);
             break;
         case SP_VERB_CONTEXT_TWEAK:
-            tools_switch_current(TOOLS_TWEAK);
+            tools_switch(dt, TOOLS_TWEAK);
             break;
         case SP_VERB_CONTEXT_RECT:
-            tools_switch_current(TOOLS_SHAPES_RECT);
+            tools_switch(dt, TOOLS_SHAPES_RECT);
             break;
         case SP_VERB_CONTEXT_3DBOX:
-            tools_switch_current(TOOLS_SHAPES_3DBOX);
+            tools_switch(dt, TOOLS_SHAPES_3DBOX);
             break;
         case SP_VERB_CONTEXT_ARC:
-            tools_switch_current(TOOLS_SHAPES_ARC);
+            tools_switch(dt, TOOLS_SHAPES_ARC);
             break;
         case SP_VERB_CONTEXT_STAR:
-            tools_switch_current(TOOLS_SHAPES_STAR);
+            tools_switch(dt, TOOLS_SHAPES_STAR);
             break;
         case SP_VERB_CONTEXT_SPIRAL:
-            tools_switch_current(TOOLS_SHAPES_SPIRAL);
+            tools_switch(dt, TOOLS_SHAPES_SPIRAL);
             break;
         case SP_VERB_CONTEXT_PENCIL:
-            tools_switch_current(TOOLS_FREEHAND_PENCIL);
+            tools_switch(dt, TOOLS_FREEHAND_PENCIL);
             break;
         case SP_VERB_CONTEXT_PEN:
-            tools_switch_current(TOOLS_FREEHAND_PEN);
+            tools_switch(dt, TOOLS_FREEHAND_PEN);
             break;
         case SP_VERB_CONTEXT_CALLIGRAPHIC:
-            tools_switch_current(TOOLS_CALLIGRAPHIC);
+            tools_switch(dt, TOOLS_CALLIGRAPHIC);
             break;
         case SP_VERB_CONTEXT_TEXT:
-            tools_switch_current(TOOLS_TEXT);
+            tools_switch(dt, TOOLS_TEXT);
             break;
         case SP_VERB_CONTEXT_GRADIENT:
-            tools_switch_current(TOOLS_GRADIENT);
+            tools_switch(dt, TOOLS_GRADIENT);
             break;
         case SP_VERB_CONTEXT_ZOOM:
-            tools_switch_current(TOOLS_ZOOM);
+            tools_switch(dt, TOOLS_ZOOM);
             break;
         case SP_VERB_CONTEXT_DROPPER:
-            tools_switch_current(TOOLS_DROPPER);
+            tools_switch(dt, TOOLS_DROPPER);
             break;
         case SP_VERB_CONTEXT_CONNECTOR:
-            tools_switch_current (TOOLS_CONNECTOR);
+            tools_switch(dt,  TOOLS_CONNECTOR);
             break;
         case SP_VERB_CONTEXT_PAINTBUCKET:
-            tools_switch_current(TOOLS_PAINTBUCKET);
+            tools_switch(dt, TOOLS_PAINTBUCKET);
             break;
         case SP_VERB_CONTEXT_ERASER:
-            tools_switch_current(TOOLS_ERASER);
+            tools_switch(dt, TOOLS_ERASER);
             break;
         case SP_VERB_CONTEXT_LPETOOL:
-            tools_switch_current(TOOLS_LPETOOL);
+            tools_switch(dt, TOOLS_LPETOOL);
             break;
 
         case SP_VERB_CONTEXT_SELECT_PREFS:
@@ -1702,6 +1701,9 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
             dt->fullscreen();
             break;
 #endif /* HAVE_GTK_WINDOW_FULLSCREEN */
+        case SP_VERB_FOCUSTOGGLE:
+            dt->focusMode(!dt->is_focusMode());
+            break;
         case SP_VERB_VIEW_NEW:
             sp_ui_new_view();
             break;
@@ -2572,6 +2574,8 @@ Verb *Verb::_base_verbs[] = {
     new ZoomVerb(SP_VERB_FULLSCREEN, "FullScreen", N_("_Fullscreen"), N_("Stretch this document window to full screen"),
                  "view-fullscreen"),
 #endif /* HAVE_GTK_WINDOW_FULLSCREEN */
+    new ZoomVerb(SP_VERB_FOCUSTOGGLE, "FocusToggle", N_("Toggle _Focus Mode"), N_("Remove excess toolbars to focus on drawing"),
+                 NULL),
     new ZoomVerb(SP_VERB_VIEW_NEW, "ViewNew", N_("Duplic_ate Window"), N_("Open a new window with the same document"),
                  "window-new"),
     new ZoomVerb(SP_VERB_VIEW_NEW_PREVIEW, "ViewNewPreview", N_("_New View Preview"),

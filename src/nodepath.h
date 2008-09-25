@@ -300,6 +300,8 @@ void sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, G
 void sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, Geom::Point p);
 void sp_nodepath_curve_drag(Inkscape::NodePath::Path *nodepath, int node, double t, Geom::Point delta);
 Inkscape::NodePath::Node * sp_nodepath_get_node_by_index(Inkscape::NodePath::Path *np, int index);
+bool sp_node_side_is_line (Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeSide *side);
+
 /* possibly private functions */
 
 void sp_node_selected_add_node (Inkscape::NodePath::Path *nodepath);

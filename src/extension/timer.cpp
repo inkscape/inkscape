@@ -31,7 +31,7 @@ bool ExpirationTimer::timer_started = false;
     This function creates the timer, and sets the time to the current
     time, plus what ever the current timeout is.  Also, if this is
     the first timer extension, the timer is kicked off.  This function
-    also sets up teh circularly linked list of all the timers.
+    also sets up the circularly linked list of all the timers.
 */
 ExpirationTimer::ExpirationTimer (Extension * in_extension):
     locked(0),
