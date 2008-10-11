@@ -123,7 +123,7 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
      nr_arena_item_set_transform(NR_ARENA_ITEM(root), affine);
 
      NRGC gc(NULL);
-     gc.transform.set_identity();
+     gc.transform.setIdentity();
 
      // We show all and then hide all items we don't want, instead of showing only requested items,
      // because that would not work if the shown item references something in defs

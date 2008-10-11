@@ -1,6 +1,7 @@
 #ifndef __SP_ITEM_UPDATE_CNS_H__
 #define __SP_ITEM_UPDATE_CNS_H__
 #include <forward.h>
+#include <2geom/forward.h>
 
 void sp_item_update_cns(SPItem &item, SPDesktop const &desktop);
 

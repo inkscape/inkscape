@@ -35,7 +35,7 @@ unclump_center (SPItem *item)
         return i->second;
     }
 
-    boost::optional<Geom::Rect> r = to_2geom(item->getBounds(sp_item_i2d_affine(item)));
+    boost::optional<Geom::Rect> r = item->getBounds(sp_item_i2d_affine(item));
     if (r) {
     	Geom::Point const c = r->midpoint();
     	c_cache[SP_OBJECT_ID(item)] = c;
@@ -54,7 +54,7 @@ unclump_wh (SPItem *item)
     if ( i != wh_cache.end() ) {
         wh = i->second;
     } else {
-        boost::optional<Geom::Rect> r = to_2geom(item->getBounds(sp_item_i2d_affine(item)));
+        boost::optional<Geom::Rect> r = item->getBounds(sp_item_i2d_affine(item));
 	if (r) {
             wh = r->dimensions();
             wh_cache[SP_OBJECT_ID(item)] = wh;

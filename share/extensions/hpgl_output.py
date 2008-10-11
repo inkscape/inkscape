@@ -32,16 +32,17 @@ class MyEffect(inkex.Effect):
         path = '//svg:path'
         for node in self.document.getroot().xpath(path, namespaces=inkex.NSS):
             d = node.get('d')
-            p = cubicsuperpath.parsePath(d)
-            cspsubdiv.cspsubdiv(p, self.options.flat)
-            for sp in p:
-                first = True
-                for csp in sp:
-                    cmd = 'PD'
-                    if first:
-                        cmd = 'PU'
-                    first = False
-                    self.hpgl.append('%s%s,%s;' % (cmd,csp[1][0],csp[1][1]))
+            if len(simplepath.parsePath(d)):
+                p = cubicsuperpath.parsePath(d)
+                cspsubdiv.cspsubdiv(p, self.options.flat)
+                for sp in p:
+                    first = True
+                    for csp in sp:
+                        cmd = 'PD'
+                        if first:
+                            cmd = 'PU'
+                        first = False
+                        self.hpgl.append('%s%s,%s;' % (cmd,csp[1][0],csp[1][1]))
 
 e = MyEffect()
 e.affect()

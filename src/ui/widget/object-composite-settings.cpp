@@ -114,10 +114,10 @@ ObjectCompositeSettings::_blendBlurValueChanged()
     // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
     sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
 
-    boost::optional<NR::Rect> bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
+    boost::optional<Geom::Rect> bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
     double radius;
     if (bbox) {
-        double perimeter = bbox->extent(Geom::X) + bbox->extent(Geom::Y);
+        double perimeter = bbox->dimensions()[Geom::X] + bbox->dimensions()[Geom::Y];   // fixme: this is only half the perimeter, is that correct?
         radius = _fe_cb.get_blur_value() * perimeter / 400;
     } else {
         radius = 0;
@@ -260,9 +260,9 @@ ObjectCompositeSettings::_subjectChanged() {
             case QUERY_STYLE_SINGLE:
             case QUERY_STYLE_MULTIPLE_AVERAGED:
             case QUERY_STYLE_MULTIPLE_SAME:
-                boost::optional<NR::Rect> bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
+                boost::optional<Geom::Rect> bbox = _subject->getBounds(SPItem::GEOMETRIC_BBOX);
                 if (bbox) {
-                    double perimeter = bbox->extent(Geom::X) + bbox->extent(Geom::Y);
+                    double perimeter = bbox->dimensions()[Geom::X] + bbox->dimensions()[Geom::Y];   // fixme: this is only half the perimeter, is that correct?
                     _fe_cb.set_blur_sensitive(true);
                     //update blur widget value
                     float radius = query->filter_gaussianBlur_deviation.value;

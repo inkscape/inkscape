@@ -617,10 +617,11 @@ AC_SUBST(IMAGEMAGICK_LIBS)
 AC_SUBST(IMAGEMAGICK_CFLAGS)
 
 dnl ***********************************************************************************************************
-dnl Check for a Cairo version that implements user-fonts feature, so that we conditionally add SVGFonts support
+dnl Check for a Cairo version that implements user-fonts feature (with a stable API, that is cairo > 1.7.6),
+dnl so that we conditionally add SVGFonts support
 dnl ***********************************************************************************************************
 
-PKG_CHECK_MODULES(CAIRO_USER_FONTS, cairo > 1.6.4, cairouserfonts=yes, cairouserfonts=no)
+PKG_CHECK_MODULES(CAIRO_USER_FONTS, cairo > 1.7.6, cairouserfonts=yes, cairouserfonts=no)
 if test "x$cairouserfonts" = "xyes"; then
        AC_DEFINE(ENABLE_SVG_FONTS, 1, [SVG Fonts should be used])
 fi

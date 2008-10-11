@@ -215,7 +215,7 @@ sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *value)
                             path_effect_ref = NULL;
                         }
 
-                        if (path_effect_ref && path_effect_ref->lpeobject && path_effect_ref->lpeobject->lpe) {
+                        if (path_effect_ref && path_effect_ref->lpeobject && path_effect_ref->lpeobject->get_lpe()) {
                             lpeitem->path_effect_list->push_back(path_effect_ref);
                         } else {
                             // something has gone wrong in finding the right patheffect. For example when the specified LPE name does not exist.
@@ -312,12 +312,12 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
                 g_warning("sp_lpe_item_perform_path_effect - NULL lpeobj in list!");
                 return;
             }
-            if (!lpeobj->lpe) {
+            Inkscape::LivePathEffect::Effect *lpe = lpeobj->get_lpe();
+            if (!lpe) {
                 g_warning("sp_lpe_item_perform_path_effect - lpeobj without lpe!");
                 return;
             }
 
-            Inkscape::LivePathEffect::Effect *lpe = lpeobj->lpe;
             if (lpe->isVisible()) {
                 if (lpe->acceptsNumClicks() > 0 && !lpe->isReady()) {
                     // if the effect expects mouse input before being applied and the input is not finished
@@ -362,7 +362,7 @@ sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write)
     PathEffectList lpelist = sp_lpe_item_get_effect_list(lpeitem);
     std::list<Inkscape::LivePathEffect::LPEObjectReference *>::iterator i;
     for (i = lpelist.begin(); i != lpelist.end(); ++i) {
-        Inkscape::LivePathEffect::Effect *lpe = (*i)->lpeobject->lpe;
+        Inkscape::LivePathEffect::Effect *lpe = (*i)->lpeobject->get_lpe();
         if (dynamic_cast<Inkscape::LivePathEffect::LPEPathLength *>(lpe)) {
             if (!lpe->isVisible()) {
                 // we manually disable text for LPEPathLength
@@ -487,8 +487,8 @@ void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset)
         sp_lpe_item_create_original_path_recursive(lpeitem);
 
         LivePathEffectObject *lpeobj = lpeitem->path_effect_list->back()->lpeobject;
-        if (lpeobj && lpeobj->lpe) {
-            Inkscape::LivePathEffect::Effect *lpe = lpeobj->lpe;
+        if (lpeobj && lpeobj->get_lpe()) {
+            Inkscape::LivePathEffect::Effect *lpe = lpeobj->get_lpe();
             // Ask the path effect to reset itself if it doesn't have parameters yet
             if (reset) {
                 // has to be called when all the subitems have their lpes applied
@@ -607,8 +607,9 @@ sp_lpe_item_has_path_effect_of_type(SPLPEItem *lpeitem, int type)
 {
     std::list<Inkscape::LivePathEffect::LPEObjectReference *>::iterator i;
     for (i = lpeitem->path_effect_list->begin(); i != lpeitem->path_effect_list->end(); ++i) {
-        if ((*i)->lpeobject->lpe->effectType() == type) {
-            return (*i)->lpeobject->lpe;
+        Inkscape::LivePathEffect::Effect* lpe = (*i)->lpeobject->get_lpe();
+        if (lpe && (lpe->effectType() == type)) {
+            return lpe;
         }
     }
     return NULL;
@@ -629,8 +630,8 @@ bool sp_lpe_item_can_accept_freehand_shape(SPLPEItem *lpeitem)
 void sp_lpe_item_edit_next_param_oncanvas(SPLPEItem *lpeitem, SPDesktop *dt)
 {
     Inkscape::LivePathEffect::LPEObjectReference *lperef = sp_lpe_item_get_current_lpereference(lpeitem);
-    if (lperef && lperef->lpeobject && lperef->lpeobject->lpe) {
-        lperef->lpeobject->lpe->editNextParamOncanvas(SP_ITEM(lpeitem), dt);
+    if (lperef && lperef->lpeobject && lperef->lpeobject->get_lpe()) {
+        lperef->lpeobject->get_lpe()->editNextParamOncanvas(SP_ITEM(lpeitem), dt);
     }
 }
 
@@ -714,7 +715,7 @@ Inkscape::LivePathEffect::Effect* sp_lpe_item_get_current_lpe(SPLPEItem *lpeitem
     Inkscape::LivePathEffect::LPEObjectReference* lperef = sp_lpe_item_get_current_lpereference(lpeitem);
 
     if (lperef && lperef->lpeobject)
-        return lperef->lpeobject->lpe;
+        return lperef->lpeobject->get_lpe();
     else
         return NULL;
 }

@@ -24,6 +24,7 @@
 #include "display/nr-filter-blend.h"
 #include "libnr/nr-matrix-fns.h"
 #include "libnr/nr-matrix-ops.h"
+#include "helper/geom.h"
 
 static void nr_arena_group_class_init (NRArenaGroupClass *klass);
 static void nr_arena_group_init (NRArenaGroup *group);
@@ -37,7 +38,7 @@ static void nr_arena_group_set_child_position (NRArenaItem *item, NRArenaItem *c
 static unsigned int nr_arena_group_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int state, unsigned int reset);
 static unsigned int nr_arena_group_render (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
 static unsigned int nr_arena_group_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
-static NRArenaItem *nr_arena_group_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
+static NRArenaItem *nr_arena_group_pick (NRArenaItem *item, Geom::Point p, double delta, unsigned int sticky);
 
 static NRArenaItemClass *parent_class;
 
@@ -87,7 +88,7 @@ nr_arena_group_init (NRArenaGroup *group)
     group->children = NULL;
     group->last = NULL;
     group->style = NULL;
-    group->child_transform.set_identity();
+    group->child_transform.setIdentity();
 }
 
 static NRArenaItem *
@@ -250,7 +251,7 @@ nr_arena_group_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 }
 
 static NRArenaItem *
-nr_arena_group_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky)
+nr_arena_group_pick (NRArenaItem *item, Geom::Point p, double delta, unsigned int sticky)
 {
     NRArenaGroup *group = NR_ARENA_GROUP (item);
 
@@ -272,17 +273,17 @@ nr_arena_group_set_transparent (NRArenaGroup *group, unsigned int transparent)
     group->transparent = transparent;
 }
 
-void nr_arena_group_set_child_transform(NRArenaGroup *group, NR::Matrix const &t)
+void nr_arena_group_set_child_transform(NRArenaGroup *group, Geom::Matrix const &t)
 {
-    NR::Matrix nt(t);
+    Geom::Matrix nt(t);
     nr_arena_group_set_child_transform(group, &nt);
 }
 
-void nr_arena_group_set_child_transform(NRArenaGroup *group, NR::Matrix const *t)
+void nr_arena_group_set_child_transform(NRArenaGroup *group, Geom::Matrix const *t)
 {
-    if (!t) t = &NR_MATRIX_IDENTITY;
+    if (!t) t = &GEOM_MATRIX_IDENTITY;
 
-    if (!NR::matrix_equalp(*t, group->child_transform, NR_EPSILON)) {
+    if (!Geom::matrix_equalp(*t, group->child_transform, NR_EPSILON)) {
         nr_arena_item_request_render (NR_ARENA_ITEM (group));
         group->child_transform = *t;
         nr_arena_item_request_update (NR_ARENA_ITEM (group), NR_ARENA_ITEM_STATE_ALL, TRUE);

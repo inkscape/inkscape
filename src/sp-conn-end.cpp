@@ -11,8 +11,8 @@
 #include "document.h"
 
 
-static void change_endpts(SPCurve *const curve, NR::Point const h2endPt[2]);
-static NR::Point calc_bbox_conn_pt(NR::Rect const &bbox, NR::Point const &p);
+static void change_endpts(SPCurve *const curve, Geom::Point const h2endPt[2]);
+static Geom::Point calc_bbox_conn_pt(Geom::Rect const &bbox, Geom::Point const &p);
 static double signed_one(double const x);
 
 SPConnEnd::SPConnEnd(SPObject *const owner) :
@@ -36,7 +36,7 @@ get_nearest_common_ancestor(SPObject const *const obj, SPItem const *const objs[
 }
 
 static void
-sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
+sp_conn_end_move_compensate(Geom::Matrix const */*mp*/, SPItem */*moved_item*/,
                             SPPath *const path,
                             bool const updatePathRepr = true)
 {
@@ -60,19 +60,19 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
 
     SPItem const *const path_item = SP_ITEM(path);
     SPObject const *const ancestor = get_nearest_common_ancestor(path_item, h2attItem);
-    NR::Matrix const path2anc(i2anc_affine(path_item, ancestor));
+    Geom::Matrix const path2anc(i2anc_affine(path_item, ancestor));
 
     if (h2attItem[0] != NULL && h2attItem[1] != NULL) {
         /* Initial end-points: centre of attached object. */
-        NR::Point h2endPt_icoordsys[2];
-        NR::Matrix h2i2anc[2];
-        NR::Rect h2bbox_icoordsys[2];
-        NR::Point last_seg_endPt[2] = {
+        Geom::Point h2endPt_icoordsys[2];
+        Geom::Matrix h2i2anc[2];
+        Geom::Rect h2bbox_icoordsys[2];
+        Geom::Point last_seg_endPt[2] = {
             *(path->curve->second_point()),
             *(path->curve->penultimate_point())
         };
         for (unsigned h = 0; h < 2; ++h) {
-            boost::optional<NR::Rect> bbox = h2attItem[h]->getBounds(NR::identity());
+            boost::optional<Geom::Rect> bbox = h2attItem[h]->getBounds(Geom::identity());
             if (!bbox) {
                 if (updatePathRepr) {
                     path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -87,7 +87,7 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
 
         // For each attached object, change the corresponding point to be
         // on the edge of the bbox.
-        NR::Point h2endPt_pcoordsys[2];
+        Geom::Point h2endPt_pcoordsys[2];
         for (unsigned h = 0; h < 2; ++h) {
             h2endPt_icoordsys[h] = calc_bbox_conn_pt(h2bbox_icoordsys[h],
                                          ( last_seg_endPt[h] * h2i2anc[h].inverse() ));
@@ -98,8 +98,8 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
         // We leave the unattached endpoint where it is, and adjust the
         // position of the attached endpoint to be on the edge of the bbox.
         unsigned ind;
-        NR::Point other_endpt;
-        NR::Point last_seg_pt;
+        Geom::Point other_endpt;
+        Geom::Point last_seg_pt;
         if (h2attItem[0] != NULL) {
             other_endpt = *(path->curve->last_point());
             last_seg_pt = *(path->curve->second_point());
@@ -110,12 +110,12 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
             last_seg_pt = *(path->curve->penultimate_point());
             ind = 1;
         }
-        NR::Point h2endPt_icoordsys[2];
-        NR::Matrix h2i2anc;
+        Geom::Point h2endPt_icoordsys[2];
+        Geom::Matrix h2i2anc;
 
-        NR::Rect otherpt_rect = NR::Rect(other_endpt, other_endpt);
-        NR::Rect h2bbox_icoordsys[2] = { otherpt_rect, otherpt_rect };
-        boost::optional<NR::Rect> bbox = h2attItem[ind]->getBounds(NR::identity());
+        Geom::Rect otherpt_rect = Geom::Rect(other_endpt, other_endpt);
+        Geom::Rect h2bbox_icoordsys[2] = { otherpt_rect, otherpt_rect };
+        boost::optional<Geom::Rect> bbox = h2attItem[ind]->getBounds(NR::identity());
         if (!bbox) {
             if (updatePathRepr) {
                 path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -132,7 +132,7 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
 
         // For the attached object, change the corresponding point to be
         // on the edge of the bbox.
-        NR::Point h2endPt_pcoordsys[2];
+        Geom::Point h2endPt_pcoordsys[2];
         h2endPt_icoordsys[ind] = calc_bbox_conn_pt(h2bbox_icoordsys[ind],
                                                  ( last_seg_pt * h2i2anc.inverse() ));
         h2endPt_pcoordsys[ind] = h2endPt_icoordsys[ind] * h2i2anc * path2anc.inverse();
@@ -151,7 +151,7 @@ sp_conn_end_move_compensate(NR::Matrix const */*mp*/, SPItem */*moved_item*/,
 // TODO: This triggering of makeInvalidPath could be cleaned up to be
 //       another option passed to move_compensate.
 static void
-sp_conn_end_shape_move_compensate(NR::Matrix const *mp, SPItem *moved_item,
+sp_conn_end_shape_move_compensate(Geom::Matrix const *mp, SPItem *moved_item,
                             SPPath *const path)
 {
     if (path->connEndPair.isAutoRoutingConn()) {
@@ -180,25 +180,25 @@ sp_conn_adjust_path(SPPath *const path)
     sp_conn_end_move_compensate(NULL, NULL, path, updatePathRepr);
 }
 
-static NR::Point
-calc_bbox_conn_pt(NR::Rect const &bbox, NR::Point const &p)
+static Geom::Point
+calc_bbox_conn_pt(Geom::Rect const &bbox, Geom::Point const &p)
 {
-    using NR::X;
-    using NR::Y;
-    NR::Point const ctr(bbox.midpoint());
-    NR::Point const lengths(bbox.dimensions());
+    using Geom::X;
+    using Geom::Y;
+    Geom::Point const ctr(bbox.midpoint());
+    Geom::Point const lengths(bbox.dimensions());
     if ( ctr == p ) {
 	/* Arbitrarily choose centre of right edge. */
-	return NR::Point(ctr[X] + .5 * lengths[X],
+	return Geom::Point(ctr[X] + .5 * lengths[X],
 			 ctr[Y]);
     }
-    NR::Point const cp( p - ctr );
-    NR::Dim2 const edgeDim = ( ( fabs(lengths[Y] * cp[X]) <
+    Geom::Point const cp( p - ctr );
+    Geom::Dim2 const edgeDim = ( ( fabs(lengths[Y] * cp[X]) <
 	   		         fabs(lengths[X] * cp[Y])  )
 			       ? Y
 			       : X );
-    NR::Dim2 const otherDim = (NR::Dim2) !edgeDim;
-    NR::Point offset;
+    Geom::Dim2 const otherDim = (Geom::Dim2) !edgeDim;
+    Geom::Point offset;
     offset[edgeDim] = (signed_one(cp[edgeDim])
 		       * lengths[edgeDim]);
     offset[otherDim] = (lengths[edgeDim]
@@ -221,7 +221,7 @@ static double signed_one(double const x)
 }
 
 static void
-change_endpts(SPCurve *const curve, NR::Point const h2endPt[2])
+change_endpts(SPCurve *const curve, Geom::Point const h2endPt[2])
 {
 #if 0
     curve->reset();

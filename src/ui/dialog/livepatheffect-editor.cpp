@@ -176,7 +176,7 @@ LivePathEffectEditor::~LivePathEffectEditor()
 }
 
 void
-LivePathEffectEditor::showParams(LivePathEffect::Effect* effect)
+LivePathEffectEditor::showParams(LivePathEffect::Effect& effect)
 {
     if (effectwidget) {
         effectcontrol_vbox.remove(*effectwidget);
@@ -184,8 +184,8 @@ LivePathEffectEditor::showParams(LivePathEffect::Effect* effect)
         effectwidget = NULL;
     }
 
-    explain_label.set_markup("<b>" + effect->getName() + "</b>");
-    effectwidget = effect->newWidget(&tooltips);
+    explain_label.set_markup("<b>" + effect.getName() + "</b>");
+    effectwidget = effect.newWidget(&tooltips);
     if (effectwidget) {
         effectcontrol_vbox.pack_start(*effectwidget, true, true);
     }
@@ -200,7 +200,7 @@ LivePathEffectEditor::selectInList(LivePathEffect::Effect* effect)
 {
     Gtk::TreeNodeChildren chi = effectlist_view.get_model()->children();
     for (Gtk::TreeIter ci = chi.begin() ; ci != chi.end(); ci++) {
-        if (ci->get_value(columns.lperef)->lpeobject->lpe == effect)
+        if (ci->get_value(columns.lperef)->lpeobject->get_lpe() == effect)
             effectlist_view.get_selection()->select(ci);
     }
 }
@@ -259,7 +259,7 @@ LivePathEffectEditor::onSelectionChanged(Inkscape::Selection *sel)
                 if ( sp_lpe_item_has_path_effect(lpeitem) ) {
                     Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(lpeitem);
                     if (lpe) {
-                        showParams(lpe);
+                        showParams(*lpe);
                         lpe_list_locked = true; 
                         selectInList(lpe);
                     } else {
@@ -295,10 +295,17 @@ LivePathEffectEditor::effect_list_reload(SPLPEItem *lpeitem)
     PathEffectList::iterator it;
     for( it = effectlist.begin() ; it!=effectlist.end(); it++ )
     {
-         Gtk::TreeModel::Row row = *(effectlist_store->append());
-         row[columns.col_name] = (*it)->lpeobject->lpe->getName();
-         row[columns.lperef] = *it;
-         row[columns.col_visible] = (*it)->lpeobject->lpe->isVisible();
+        if ((*it)->lpeobject->get_lpe()) {
+            Gtk::TreeModel::Row row = *(effectlist_store->append());
+            row[columns.col_name] = (*it)->lpeobject->get_lpe()->getName();
+            row[columns.lperef] = *it;
+            row[columns.col_visible] = (*it)->lpeobject->get_lpe()->isVisible();
+        } else {
+            Gtk::TreeModel::Row row = *(effectlist_store->append());
+            row[columns.col_name] = "Unknown effect!";
+            row[columns.lperef] = *it;
+            row[columns.col_visible] = false;
+        }
     }
 }
 
@@ -427,9 +434,11 @@ void LivePathEffectEditor::on_effect_selection_changed()
     LivePathEffect::LPEObjectReference * lperef = (*it)[columns.lperef];
 
     if (lperef && current_lpeitem) {
-        lpe_list_locked = true; // prevent reload of the list which would lose selection
-        sp_lpe_item_set_current_path_effect(current_lpeitem, lperef);
-        showParams(lperef->lpeobject->lpe);
+        if (lperef->lpeobject->get_lpe()) {
+            lpe_list_locked = true; // prevent reload of the list which would lose selection
+            sp_lpe_item_set_current_path_effect(current_lpeitem, lperef);
+            showParams(*lperef->lpeobject->get_lpe());
+        }
     }
 }
 
@@ -440,12 +449,12 @@ void LivePathEffectEditor::on_visibility_toggled( Glib::ustring const& str )
 
     LivePathEffect::LPEObjectReference * lpeobjref = row[columns.lperef];
 
-    if ( lpeobjref ) {
+    if ( lpeobjref && lpeobjref->lpeobject->get_lpe() ) {
         bool newValue = !row[columns.col_visible];
         row[columns.col_visible] = newValue;
         /* FIXME: this explicit writing to SVG is wrong. The lpe_item should have a method to disable/enable an effect within its stack.
          * So one can call:  lpe_item->setActive(lpeobjref->lpeobject); */
-        lpeobjref->lpeobject->lpe->getRepr()->setAttribute("is_visible", newValue ? "true" : "false");
+        lpeobjref->lpeobject->get_lpe()->getRepr()->setAttribute("is_visible", newValue ? "true" : "false");
         sp_document_done( sp_desktop_document(current_desktop), SP_VERB_DIALOG_LIVE_PATH_EFFECT,
                           newValue ? _("Activate path effect") : _("Deactivate path effect"));
     }

@@ -47,7 +47,7 @@ static void nr_arena_glyphs_finalize(NRObject *object);
 
 static guint nr_arena_glyphs_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset);
 static guint nr_arena_glyphs_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
-static NRArenaItem *nr_arena_glyphs_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
+static NRArenaItem *nr_arena_glyphs_pick(NRArenaItem *item, Geom::Point p, double delta, unsigned int sticky);
 
 static NRArenaItemClass *glyphs_parent_class;
 
@@ -145,8 +145,8 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
     float const scale = NR::expansion(gc->transform);
 
     if (!glyphs->style->fill.isNone()) {
-        NR::Matrix t;
-        t = glyphs->g_transform * gc->transform;
+        Geom::Matrix t;
+        t = to_2geom(glyphs->g_transform) * gc->transform;
         glyphs->x = t[4];
         glyphs->y = t[5];
         t[4]=0;
@@ -167,8 +167,8 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
 
     if (!glyphs->style->stroke.isNone()) {
         /* Build state data */
-        NR::Matrix t;
-        t = glyphs->g_transform * gc->transform;
+        Geom::Matrix t;
+        t = to_2geom(glyphs->g_transform) * gc->transform;
         glyphs->x = t[4];
         glyphs->y = t[5];
         t[4]=0;
@@ -237,7 +237,7 @@ nr_arena_glyphs_clip(NRArenaItem *item, NRRectL */*area*/, NRPixBlock */*pb*/)
 }
 
 static NRArenaItem *
-nr_arena_glyphs_pick(NRArenaItem *item, NR::Point p, gdouble /*delta*/, unsigned int /*sticky*/)
+nr_arena_glyphs_pick(NRArenaItem *item, Geom::Point p, gdouble /*delta*/, unsigned int /*sticky*/)
 {
     NRArenaGlyphs *glyphs;
 
@@ -246,8 +246,8 @@ nr_arena_glyphs_pick(NRArenaItem *item, NR::Point p, gdouble /*delta*/, unsigned
     if (!glyphs->font ) return NULL;
     if (!glyphs->style) return NULL;
 
-    double const x = p[NR::X];
-    double const y = p[NR::Y];
+    double const x = p[Geom::X];
+    double const y = p[Geom::Y];
     /* With text we take a simple approach: pick if the point is in a characher bbox */
     if ((x >= item->bbox.x0) && (y >= item->bbox.y0) && (x <= item->bbox.x1) && (y <= item->bbox.y1)) return item;
 
@@ -323,7 +323,7 @@ static void nr_arena_glyphs_group_finalize(NRObject *object);
 static guint nr_arena_glyphs_group_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset);
 static unsigned int nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
 static unsigned int nr_arena_glyphs_group_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
-static NRArenaItem *nr_arena_glyphs_group_pick(NRArenaItem *item, NR::Point p, gdouble delta, unsigned int sticky);
+static NRArenaItem *nr_arena_glyphs_group_pick(NRArenaItem *item, Geom::Point p, gdouble delta, unsigned int sticky);
 
 static NRArenaGroupClass *group_parent_class;
 
@@ -465,8 +465,8 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
             Geom::PathVector const * pathv = g->font->PathVector(g->glyph);
 
             cairo_new_path(ct);
-            Geom::Matrix transform = g->g_transform * group->ctm;
-            feed_pathvector_to_cairo (ct, *pathv, transform, (pb->area).upgrade(), false, 0);
+            Geom::Matrix transform = to_2geom(g->g_transform) * group->ctm;
+            feed_pathvector_to_cairo (ct, *pathv, transform, to_2geom((pb->area).upgrade()), false, 0);
             cairo_fill(ct);
             pb->empty = FALSE;
         }
@@ -582,7 +582,7 @@ nr_arena_glyphs_group_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 }
 
 static NRArenaItem *
-nr_arena_glyphs_group_pick(NRArenaItem *item, NR::Point p, gdouble delta, unsigned int sticky)
+nr_arena_glyphs_group_pick(NRArenaItem *item, Geom::Point p, gdouble delta, unsigned int sticky)
 {
     NRArenaItem *picked = NULL;
 

@@ -3774,6 +3774,14 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
                             2, "tweak_colorjitter_mode",
                             -1 );
 
+        gtk_list_store_append( model, &iter );
+        gtk_list_store_set( model, &iter,
+                            0, _("Blur mode"),
+                            1, _("Blur selected objects more; with Shift, blur less"),
+                            2, "tweak_blur_mode",
+                            -1 );
+
+
         EgeSelectOneAction* act = ege_select_one_action_new( "TweakModeAction", _("Mode"), (""), NULL, GTK_TREE_MODEL(model) );
         g_object_set( act, "short_label", _("Mode:"), NULL );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
@@ -5007,7 +5015,7 @@ lpetool_toggle_set_bbox (GtkToggleAction *act, gpointer data) {
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
     Inkscape::Selection *selection = desktop->selection;
 
-    boost::optional<NR::Rect> bbox = selection->bounds();
+    boost::optional<Geom::Rect> bbox = selection->bounds();
 
     if (bbox) {
         Geom::Point A(bbox->min());
@@ -5230,6 +5238,13 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
 //##       Eraser       ##
 //########################
 
+static void sp_erc_width_value_changed( GtkAdjustment *adj, GObject *tbl )
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble( "tools.eraser", "width", adj->value * 0.01 );
+    update_presets_list(tbl);
+}
+
 static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
@@ -5266,7 +5281,7 @@ static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
                                                               GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-eraser",
                                                               1, 100, 1.0, 0.0,
                                                               labels, values, G_N_ELEMENTS(labels),
-                                                              sp_ddc_width_value_changed,  0.01, 0, 100 );
+                                                              sp_erc_width_value_changed,  0.01, 0, 100 );
         ege_adjustment_action_set_appearance( eact, TOOLBAR_SLIDER_HINT );
         gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
         gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
@@ -6401,8 +6416,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
     for ( GSList const *iter = items ; iter != NULL ; iter = iter->next ) {
         SPItem *item = reinterpret_cast<SPItem *>(iter->data);
         Geom::Matrix m = Geom::identity();
-        NR::Matrix m_NR = from_2geom(m);
-        avoid_item_move(&m_NR, item);
+        avoid_item_move(&m, item);
     }
 
     if (items) {

@@ -137,7 +137,7 @@ PatternKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &ori
 
     if (state)  {
         Geom::Point const q = p_snapped - sp_pattern_extract_trans(pat);
-        sp_item_adjust_pattern(item, NR::Matrix(NR::translate(q)));
+        sp_item_adjust_pattern(item, NR::Matrix(Geom::Translate(q)));
     }
 
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -182,7 +182,7 @@ PatternKnotHolderEntityAngle::knot_set(Geom::Point const &p, Geom::Point const &
 
     // get the scale from the current transform so we can keep it.
     Geom::Point scl = sp_pattern_extract_scale(pat);
-    NR::Matrix rot = NR::Matrix(NR::scale(scl)) * NR::Matrix(NR::rotate(theta));
+    NR::Matrix rot = NR::Matrix(Geom::Scale(scl)) * NR::Matrix(Geom::Rotate(theta));
     Geom::Point const t = sp_pattern_extract_trans(pat);
     rot[4] = t[NR::X];
     rot[5] = t[NR::Y];

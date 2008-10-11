@@ -97,7 +97,7 @@
           tofile="${src}/helper/sp-marshal.cpp"/>
           
     <makefile file="inkscape_version.h">
-        #define INKSCAPE_VERSION "${version}"
+        #define INKSCAPE_VERSION "${version}, revision ${svn.revision}"
     </makefile>
     <makefile file="config.h">
         #ifndef _CONFIG_H_
@@ -186,10 +186,11 @@
   ########################################################################
   -->
   <target name="touchabout"
-      description="update the modification time of aboutdialog.cpp">
-    <!-- not good <touch file="${src}/ui/dialog/aboutdialog.cpp"/> -->
+      description="update the modification time of aboutbox.cpp">
+    <!-- not good <touch file="${src}/ui/dialog/aboutbox.cpp"/> -->
     <!-- better -->
-    <delete file="${build}/obj/ui/dialog/aboutdialog.o"/>
+    <delete file="${build}/obj/ui/dialog/aboutbox.o"/>
+    <delete file="inkscape_version.h"/>
   </target>
 
 
@@ -342,8 +343,8 @@
             <exclude name="widgets/test-widgets.cpp"/>
             <exclude name="xml/quote-test.cpp"/>
             <exclude name="xml/repr-action-test.cpp"/>
-            <!--<exclude name="xml/test-xml.cpp"/>-->
-            <exclude name="xml/test-xml-main.cpp"/>
+            <exclude name="xml/test-xml.cpp"/>
+            <!--<exclude name="xml/test-xml-main.cpp"/>-->
             <exclude name="io/streamtest.cpp"/>
             <!--JABBER-->
             <exclude name="pedro/pedrogui.cpp"/>
@@ -884,6 +885,7 @@
     <delete dir="${dist}"/>
     <delete file="build.dep"/>
     <delete file="config.h"/>
+    <delete file="inkscape_version.h"/>
 
     <delete file="${src}/test-main.cpp"/>
     <delete file="${src}/test-src.cpp"/>

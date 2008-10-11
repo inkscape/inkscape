@@ -747,21 +747,21 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 if (dc->hatch_spacing == 0 && hatch_dist != 0) { 
                     // Haven't set spacing yet: gray, center free, update radius live
                     Geom::Point c = desktop->w2d(motion_w);
-                    NR::Matrix const sm (NR::scale(hatch_dist, hatch_dist) * NR::translate(c));
+                    NR::Matrix const sm (Geom::Scale(hatch_dist, hatch_dist) * Geom::Translate(c));
                     sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                     sp_canvas_item_show(dc->hatch_area);
                 } else if (dc->dragging && !dc->hatch_escaped) {
                     // Tracking: green, center snapped, fixed radius
                     Geom::Point c = motion_dt;
-                    NR::Matrix const sm (NR::scale(dc->hatch_spacing, dc->hatch_spacing) * NR::translate(c));
+                    NR::Matrix const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
                     sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x00FF00ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                     sp_canvas_item_show(dc->hatch_area);
                 } else if (dc->dragging && dc->hatch_escaped) {
                     // Tracking escaped: red, center free, fixed radius
                     Geom::Point c = desktop->w2d(motion_w);
-                    NR::Matrix const sm (NR::scale(dc->hatch_spacing, dc->hatch_spacing) * NR::translate(c));
+                    NR::Matrix const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
 
                     sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0xFF0000ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
@@ -770,7 +770,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     // Not drawing but spacing set: gray, center snapped, fixed radius
                     Geom::Point c = (nearest + dc->hatch_spacing * hatch_unit_vector) * motion_to_curve.inverse();
                     if (!IS_NAN(c[NR::X]) && !IS_NAN(c[NR::Y])) {
-                        NR::Matrix const sm (NR::scale(dc->hatch_spacing, dc->hatch_spacing) * NR::translate(c));
+                        NR::Matrix const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
                         sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                         sp_canvas_item_show(dc->hatch_area);

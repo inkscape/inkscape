@@ -51,7 +51,7 @@ static void box3d_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *box3d_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *box3d_description(SPItem *item);
-static NR::Matrix box3d_set_transform(SPItem *item, NR::Matrix const &xform);
+static Geom::Matrix box3d_set_transform(SPItem *item, Geom::Matrix const &xform);
 static void box3d_convert_to_guides(SPItem *item);
 
 static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box);
@@ -327,8 +327,8 @@ box3d_position_set (SPBox3D *box)
     }
 }
 
-static NR::Matrix
-box3d_set_transform(SPItem *item, NR::Matrix const &xform)
+static Geom::Matrix
+box3d_set_transform(SPItem *item, Geom::Matrix const &xform)
 {
     SPBox3D *box = SP_BOX3D(item);
 
@@ -363,7 +363,7 @@ box3d_set_transform(SPItem *item, NR::Matrix const &xform)
         persp3d_unset_transforms(transf_persp);
     }
 
-    NR::Matrix ret(NR::transform(xform));
+    Geom::Matrix ret(Geom::Matrix(xform).without_translation());
     gdouble const sw = hypot(ret[0], ret[1]);
     gdouble const sh = hypot(ret[2], ret[3]);
 
@@ -385,7 +385,7 @@ box3d_set_transform(SPItem *item, NR::Matrix const &xform)
         }
     }
 
-    return NR::identity();
+    return Geom::identity();
 }
 
 Proj::Pt3
@@ -491,7 +491,7 @@ box3d_snap (SPBox3D *box, int id, Proj::Pt3 const &pt_proj, Proj::Pt3 const &sta
     // determine the distances to all potential snapping points
     double snap_dists[num_snap_lines];
     for (int i = 0; i < num_snap_lines; ++i) {
-        snap_dists[i] = NR::L2 (snap_pts[i] - pt) * zoom;
+        snap_dists[i] = Geom::L2 (snap_pts[i] - pt) * zoom;
     }
 
     // while we are within a given tolerance of the starting point,
@@ -714,7 +714,7 @@ box3d_XY_axes_are_swapped (SPBox3D *box) {
     v1.normalize();
     v2.normalize();
 
-    return (v1[NR::X]*v2[NR::Y] - v1[NR::Y]*v2[NR::X] > 0);
+    return (v1[Geom::X]*v2[Geom::Y] - v1[Geom::Y]*v2[Geom::X] > 0);
 }
 
 static inline void
@@ -1054,12 +1054,12 @@ box3d_recompute_z_orders (SPBox3D *box) {
         Geom::Point vp_x = persp3d_get_VP(persp, Proj::X).affine();
         Geom::Point vp_y = persp3d_get_VP(persp, Proj::Y).affine();
         Geom::Point vp_z = persp3d_get_VP(persp, Proj::Z).affine();
-        Geom::Point vpx(vp_x[NR::X], vp_x[NR::Y]);
-        Geom::Point vpy(vp_y[NR::X], vp_y[NR::Y]);
-        Geom::Point vpz(vp_z[NR::X], vp_z[NR::Y]);
+        Geom::Point vpx(vp_x[Geom::X], vp_x[Geom::Y]);
+        Geom::Point vpy(vp_y[Geom::X], vp_y[Geom::Y]);
+        Geom::Point vpz(vp_z[Geom::X], vp_z[Geom::Y]);
 
         Geom::Point c3 = box3d_get_corner_screen(box, 3, false);
-        Geom::Point corner3(c3[NR::X], c3[NR::Y]);
+        Geom::Point corner3(c3[Geom::X], c3[Geom::Y]);
 
         if (box3d_half_line_crosses_joining_line (corner3, vpx, vpy, vpz)) {
             central_axis = Box3D::X;
@@ -1081,9 +1081,9 @@ box3d_recompute_z_orders (SPBox3D *box) {
         Geom::Point c2(box3d_get_corner_screen(box, 2, false));
         Geom::Point c7(box3d_get_corner_screen(box, 7, false));
 
-        Geom::Point corner1(c1[NR::X], c1[NR::Y]);
-        Geom::Point corner2(c2[NR::X], c2[NR::Y]);
-        Geom::Point corner7(c7[NR::X], c7[NR::Y]);
+        Geom::Point corner1(c1[Geom::X], c1[Geom::Y]);
+        Geom::Point corner2(c2[Geom::X], c2[Geom::Y]);
+        Geom::Point corner7(c7[Geom::X], c7[Geom::Y]);
         // FIXME: At present we don't use the information about central_corner computed above.
         switch (central_axis) {
             case Box3D::Y:

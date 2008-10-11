@@ -409,7 +409,7 @@ sp_star_get_curvepoint (SPStar *star, SPStarPoint point, gint index, bool previ)
 		guint32 seed = point_unique_int (o);
 
 		// randomly rotate (by step 3 from the seed) and scale (by step 4) the vector
-		ret = ret * NR::Matrix (NR::rotate (star->randomized * M_PI * rnd (seed, 3)));
+		ret = ret * NR::Matrix (Geom::Rotate (star->randomized * M_PI * rnd (seed, 3)));
 		ret *= ( 1 + star->randomized * rnd (seed, 4));
 
 		// the randomized corner point

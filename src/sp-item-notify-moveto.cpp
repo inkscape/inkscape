@@ -3,7 +3,7 @@
  */
 
 #include <sp-item.h>
-#include <libnr/nr-matrix-translate-ops.h>
+#include <2geom/transforms.h>
 #include <sp-guide.h>
 #include <sp-item-rm-unsatisfied-cns.h>
 using std::vector;
@@ -20,11 +20,11 @@ void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoin
 {
     g_return_if_fail(SP_IS_ITEM(&item));
     g_return_if_fail( unsigned(snappoint_ix) < 8 );
-    NR::Point const dir( mv_g.normal_to_line );
+    Geom::Point const dir( mv_g.normal_to_line );
     double const dir_lensq(dot(dir, dir));
     g_return_if_fail( dir_lensq != 0 );
 
-    std::vector<NR::Point> snappoints;
+    std::vector<Geom::Point> snappoints;
     sp_item_snappoints(&item, true, SnapPointsIter(snappoints));
     g_return_if_fail( snappoint_ix < int(snappoints.size()) );
 
@@ -39,7 +39,7 @@ void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoin
        pos0 + s * dot(dir, dir) = position.
        s * lensq(dir) = position - pos0.
        s = (position - pos0) / dot(dir, dir). */
-    NR::translate const tr( ( position - pos0 )
+    Geom::Translate const tr( ( position - pos0 )
                             * ( dir / dir_lensq ) );
     sp_item_set_i2d_affine(&item, sp_item_i2d_affine(&item) * tr);
     /// \todo Reget snappoints, check satisfied.

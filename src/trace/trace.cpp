@@ -28,7 +28,7 @@
 #include <sp-shape.h>
 #include <sp-image.h>
 #include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-scale-translate-ops.h>
+#include <2geom/transforms.h>
 
 #include <display/nr-arena.h>
 #include <display/nr-arena-shape.h>
@@ -507,8 +507,8 @@ void Tracer::traceThread()
     double iwscale = width  / iwidth;
     double ihscale = height / iheight;
 
-    NR::translate trans(x, y);
-    NR::scale scal(iwscale, ihscale);
+    Geom::Translate trans(x, y);
+    Geom::Scale scal(iwscale, ihscale);
 
     //# Convolve scale, translation, and the original transform
     NR::Matrix tf(scal * trans);

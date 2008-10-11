@@ -25,6 +25,7 @@
 #include <boost/optional.hpp>
 #include <libnr/nr-point-matrix-ops.h>
 #include <libnr/nr-forward.h>
+#include <2geom/rect.h>
 
 namespace NR {
 
@@ -243,6 +244,9 @@ struct NRRect {
     explicit NRRect(boost::optional<NR::Rect> const &rect);
     operator boost::optional<NR::Rect>() const { return upgrade(); }
     boost::optional<NR::Rect> upgrade() const;
+    explicit NRRect(boost::optional<Geom::Rect> const &rect);
+    operator boost::optional<Geom::Rect>() const { return upgrade_2geom(); }
+    boost::optional<Geom::Rect> upgrade_2geom() const;
 
     NR::Coord x0, y0, x1, y1;
 };

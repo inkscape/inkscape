@@ -48,7 +48,7 @@ struct CairoGlyphInfo {
 
 struct CairoRenderState {
     unsigned int merge_opacity : 1;     // whether fill/stroke opacity can be mul'd with item opacity
-    unsigned int need_layer : 1;
+    unsigned int need_layer : 1;        // whether object is masked, clipped, and/or has a non-zero opacity
     unsigned int has_overflow : 1;
     unsigned int parent_has_userspace : 1;  // whether the parent's ctm should be applied
     float opacity;
@@ -164,7 +164,7 @@ protected:
     unsigned int _is_valid : 1;
     unsigned int _vector_based_target : 1;
 
-    cairo_t *_cr;
+    cairo_t *_cr; // Cairo context
     cairo_surface_t *_surface;
     cairo_surface_type_t _target;
     cairo_format_t _target_format;

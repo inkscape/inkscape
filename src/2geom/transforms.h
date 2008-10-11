@@ -84,6 +84,7 @@ class Rotate {
     explicit Rotate(Coord x, Coord y) { Rotate(Point(x, y)); }
     inline operator Matrix() const { return Matrix(vec[X], vec[Y], -vec[Y], vec[X], 0, 0); }
 
+    inline Point vector() const { return vec; }
     inline Coord operator[](Dim2 const dim) const { return vec[dim]; }
     inline Coord operator[](unsigned const dim) const { return vec[dim]; }
     inline bool operator==(Rotate const &o) const { return vec == o.vec; }

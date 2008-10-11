@@ -13,6 +13,7 @@
 #include <2geom/matrix.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
+#include <2geom/isnan.h>
 #include "helper/geom-nodetype.h"
 #include "helper/geom-curves.h"
 
@@ -25,6 +26,8 @@
 #include "inkscape.h"
 #include "desktop.h"
 
+#define SPIRO_SHOW_INFINITE_COORDINATE_CALLS
+
 typedef struct {
     bezctx base;
     SPCurve *curve;
@@ -34,39 +37,55 @@ typedef struct {
 void bezctx_ink_moveto(bezctx *bc, double x, double y, int /*is_open*/)
 {
     bezctx_ink *bi = (bezctx_ink *) bc;
-    bi->curve->moveto(x, y);
+    if ( IS_FINITE(x) && IS_FINITE(y) ) {
+        bi->curve->moveto(x, y);
+    }
+#ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
+    else {
+        g_message("lpe moveto not finite");
+    }
+#endif
 }
 
 void bezctx_ink_lineto(bezctx *bc, double x, double y)
 {
     bezctx_ink *bi = (bezctx_ink *) bc;
-    bi->curve->lineto(x, y);
+    if ( IS_FINITE(x) && IS_FINITE(y) ) {
+        bi->curve->lineto(x, y);
+    }
+#ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
+    else {
+        g_message("lpe lineto not finite");
+    }
+#endif
 }
 
 void bezctx_ink_quadto(bezctx *bc, double xm, double ym, double x3, double y3)
 {
     bezctx_ink *bi = (bezctx_ink *) bc;
 
-    double x0, y0;
-    double x1, y1;
-    double x2, y2;
-
-    Geom::Point last = *(bi->curve->last_point());
-    x0 = last[Geom::X];
-    y0 = last[Geom::Y];
-    x1 = xm + (1./3) * (x0 - xm);
-    y1 = ym + (1./3) * (y0 - ym);
-    x2 = xm + (1./3) * (x3 - xm);
-    y2 = ym + (1./3) * (y3 - ym);
-
-    bi->curve->curveto(x1, y1, x2, y2, x3, y3);
+    if ( IS_FINITE(xm) && IS_FINITE(ym) && IS_FINITE(x3) && IS_FINITE(y3) ) {
+        bi->curve->quadto(xm, ym, x3, y3);
+    }
+#ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
+    else {
+        g_message("lpe quadto not finite");
+    }
+#endif
 }
 
 void bezctx_ink_curveto(bezctx *bc, double x1, double y1, double x2, double y2,
 		    double x3, double y3)
 {
     bezctx_ink *bi = (bezctx_ink *) bc;
-    bi->curve->curveto(x1, y1, x2, y2, x3, y3);
+    if ( IS_FINITE(x1) && IS_FINITE(y1) && IS_FINITE(x2) && IS_FINITE(y2) ) {
+        bi->curve->curveto(x1, y1, x2, y2, x3, y3);
+    }
+#ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
+    else {
+        g_message("lpe curveto not finite");
+    }
+#endif
 }
 
 bezctx *
@@ -213,20 +232,6 @@ LPESpiro::doEffect(SPCurve * curve)
     }
 
     g_free (path);
-
-    // FIXME: refactor the spiro code such that it cannot generate non-continous paths!
-    // sometimes, the code above generates a path that is not continuous: caused by chaotic algorithm?
-    // The continuity error always happens after a lot of curveto calls (a big path probably that spins to infinity?)
-    // if so, undo the effect by resetting the original path.
-    try {
-        curve->get_pathvector() * Geom::identity(); // tests for continuity, this makes LPE Spiro slower of course :-(
-    }
-    catch (Geom::ContinuityError & e) {
-        g_warning("Exception during LPE Spiro execution. \n %s", e.what());
-        SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
-            _("An exception occurred during execution of the Spiro Path Effect.") );
-        curve->set_pathvector(original_pathv);
-    }
 }
 
 }; //namespace LivePathEffect

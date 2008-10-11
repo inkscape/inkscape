@@ -68,11 +68,15 @@
 #include "display/canvas-arena.h"
 #include "display/curve.h"
 #include "livarot/Shape.h"
-#include "2geom/isnan.h"
+#include <2geom/isnan.h>
+#include <2geom/transforms.h>
 #include "prefs-utils.h"
 #include "style.h"
 #include "box3d.h"
 #include "sp-item-transform.h"
+#include "filter-chemistry.h"
+#include "sp-gaussian-blur-fns.h"
+#include "sp-gaussian-blur.h"
 
 #include "tweak-context.h"
 
@@ -184,7 +188,7 @@ bool is_transform_mode (gint mode)
 
 bool is_color_mode (gint mode)
 {
-    return (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER);
+    return (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER || mode == TWEAK_MODE_BLUR);
 }
 
 void
@@ -253,6 +257,10 @@ sp_tweak_update_cursor (SPTweakContext *tc, bool with_shift)
            break;
        case TWEAK_MODE_COLORJITTER:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>randomize colors</b>."), sel_message);
+           event_context->cursor_shape = cursor_color_xpm;
+           break;
+       case TWEAK_MODE_BLUR:
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."), sel_message);
            event_context->cursor_shape = cursor_color_xpm;
            break;
    }
@@ -393,7 +401,7 @@ get_move_force (SPTweakContext *tc)
 }
 
 bool
-sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Point p, NR::Point vector, gint mode, double radius, double force, double fidelity, bool reverse)
+sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::Point p, Geom::Point vector, gint mode, double radius, double force, double fidelity, bool reverse)
 {
     bool did = false;
 
@@ -403,7 +411,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
         selection->add(item);
     }
 
-    if (SP_IS_GROUP(item)) {
+    if (SP_IS_GROUP(item) && !SP_IS_BOX3D(item)) {
         for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             if (SP_IS_ITEM(child)) {
                 if (sp_tweak_dilate_recursive (selection, SP_ITEM(child), p, vector, mode, radius, force, fidelity, reverse))
@@ -414,9 +422,9 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
     } else {
         if (mode == TWEAK_MODE_MOVE) {
 
-            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
-                double x = NR::L2(a->midpoint() - p)/radius;
+                double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
                 if (x < 1) {
                     Geom::Point move = force * 0.5 * (cos(M_PI * x) + 1) * vector;
@@ -427,9 +435,9 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
         } else if (mode == TWEAK_MODE_MOVE_IN_OUT) {
 
-            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
-                double x = NR::L2(a->midpoint() - p)/radius;
+                double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
                 if (x < 1) {
                     Geom::Point move = force * 0.5 * (cos(M_PI * x) + 1) * 
@@ -441,14 +449,14 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
         } else if (mode == TWEAK_MODE_MOVE_JITTER) {
 
-            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
                 double dp = g_random_double_range(0, M_PI*2);
                 double dr = g_random_double_range(0, radius);
-                double x = NR::L2(a->midpoint() - p)/radius;
+                double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
                 if (x < 1) {
-                    Geom::Point move = force * 0.5 * (cos(M_PI * x) + 1) * NR::Point(cos(dp)*dr, sin(dp)*dr);
+                    Geom::Point move = force * 0.5 * (cos(M_PI * x) + 1) * Geom::Point(cos(dp)*dr, sin(dp)*dr);
                     sp_item_move_rel(item, Geom::Translate(move[Geom::X], -move[Geom::Y]));
                     did = true;
                 }
@@ -456,9 +464,9 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
         } else if (mode == TWEAK_MODE_SCALE) {
 
-            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
-                double x = NR::L2(a->midpoint() - p)/radius;
+                double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
                 if (x < 1) {
                     double scale = 1 + (reverse? force : -force) * 0.05 * (cos(M_PI * x) + 1);
@@ -469,9 +477,9 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
         } else if (mode == TWEAK_MODE_ROTATE) {
 
-            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
-                double x = NR::L2(a->midpoint() - p)/radius;
+                double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
                 if (x < 1) {
                     double angle = (reverse? force : -force) * 0.05 * (cos(M_PI * x) + 1) * M_PI;
@@ -482,9 +490,9 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
         } else if (mode == TWEAK_MODE_MORELESS) {
 
-            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
-                double x = NR::L2(a->midpoint() - p)/radius;
+                double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
                 if (x < 1) {
                     double prob = force * 0.5 * (cos(M_PI * x) + 1);
@@ -498,9 +506,14 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
                             SPDocument *doc = SP_OBJECT_DOCUMENT(item);
                             Inkscape::XML::Document* xml_doc = sp_document_repr_doc(doc);
                             Inkscape::XML::Node *old_repr = SP_OBJECT_REPR(item);
+                            SPObject *old_obj = doc->getObjectByRepr(old_repr);
                             Inkscape::XML::Node *parent = old_repr->parent();
                             Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
                             parent->appendChild(copy);
+                            SPObject *new_obj = doc->getObjectByRepr(copy);
+                            if (selection->includes(old_obj)) {
+                                selection->add(new_obj);
+                            }
                             Inkscape::GC::release(copy);
                         }
                     }
@@ -528,9 +541,9 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
 
 
         // skip those paths whose bboxes are entirely out of reach with our radius
-        boost::optional<NR::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item));
+        boost::optional<Geom::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item));
         if (bbox) {
-            bbox->growBy(radius);
+            bbox->expandBy(radius);
             if (!bbox->contains(p)) {
                 return false;
             }
@@ -566,21 +579,21 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
             theRes->ConvertToShape(theShape, fill_nonZero);
         }
 
-        if (NR::L2(vector) != 0)
-            vector = 1/NR::L2(vector) * vector;
+        if (Geom::L2(vector) != 0)
+            vector = 1/Geom::L2(vector) * vector;
 
         bool did_this = false;
         if (mode == TWEAK_MODE_SHRINK_GROW) {
             if (theShape->MakeTweak(tweak_mode_grow, theRes,
                                  reverse? force : -force,
                                  join_straight, 4.0,
-                                 true, p, NR::Point(0,0), radius, &i2doc) == 0) // 0 means the shape was actually changed
+                                 true, p, Geom::Point(0,0), radius, &i2doc) == 0) // 0 means the shape was actually changed
               did_this = true;
         } else if (mode == TWEAK_MODE_ATTRACT_REPEL) {
             if (theShape->MakeTweak(tweak_mode_repel, theRes,
                                  reverse? force : -force,
                                  join_straight, 4.0,
-                                 true, p, NR::Point(0,0), radius, &i2doc) == 0)
+                                 true, p, Geom::Point(0,0), radius, &i2doc) == 0)
               did_this = true;
         } else if (mode == TWEAK_MODE_PUSH) {
             if (theShape->MakeTweak(tweak_mode_push, theRes,
@@ -592,7 +605,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, NR::Poi
             if (theShape->MakeTweak(tweak_mode_roughen, theRes,
                                  force,
                                  join_straight, 4.0,
-                                 true, p, NR::Point(0,0), radius, &i2doc) == 0)
+                                 true, p, Geom::Point(0,0), radius, &i2doc) == 0)
               did_this = true;
         }
 
@@ -784,7 +797,7 @@ tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
 
         // This is the matrix which moves and rotates the gradient line
         // so it's oriented along the X axis:
-        NR::Matrix norm = NR::Matrix(NR::translate(-p1)) * NR::Matrix(NR::rotate(-atan2(pdiff[NR::Y], pdiff[NR::X])));
+        NR::Matrix norm = NR::Matrix(Geom::Translate(-p1)) * NR::Matrix(Geom::Rotate(-atan2(pdiff[NR::Y], pdiff[NR::X])));
 
         // Transform the mouse point by it to find out its projection onto the gradient line:
         NR::Point pnorm = p * norm;
@@ -878,6 +891,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
                           guint32 fill_goal, bool do_fill,
                           guint32 stroke_goal, bool do_stroke,
                           float opacity_goal, bool do_opacity,
+                          bool do_blur, bool reverse,
                           NR::Point p, double radius, double force,
                           bool do_h, bool do_s, bool do_l, bool do_o)
 {
@@ -890,6 +904,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
                                           fill_goal, do_fill,
                                           stroke_goal, do_stroke,
                                           opacity_goal, do_opacity,
+                                          do_blur, reverse,
                                           p, radius, force, do_h, do_s, do_l, do_o))
                     did = true;
             }
@@ -900,13 +915,13 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         if (!style) {
             return false;
         }
-        boost::optional<NR::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item),
+        boost::optional<Geom::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item),
                                                         SPItem::GEOMETRIC_BBOX);
         if (!bbox) {
             return false;
         }
 
-        NR::Rect brush(p - NR::Point(radius, radius), p + NR::Point(radius, radius));
+        Geom::Rect brush(p - Geom::Point(radius, radius), p + Geom::Point(radius, radius));
 
         NR::Point center = bbox->midpoint();
         double this_force;
@@ -928,6 +943,54 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         }
 
         if (this_force > 0.002) {
+
+            if (do_blur) {
+                boost::optional<Geom::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item),
+                                                        SPItem::GEOMETRIC_BBOX);
+                if (!bbox) {
+                    return did;
+                }
+
+                double blur_now = 0;
+                Geom::Matrix i2d = sp_item_i2d_affine (item);
+                if (style->filter.set && style->getFilter()) {
+                    //cycle through filter primitives
+                    SPObject *primitive_obj = style->getFilter()->children;
+                    while (primitive_obj) {
+                        if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) {
+                            SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);
+                            //if primitive is gaussianblur
+                            if(SP_IS_GAUSSIANBLUR(primitive)) {
+                                SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
+                                float num = spblur->stdDeviation.getNumber();
+                                blur_now += num * i2d.descrim(); // sum all blurs in the filter
+                            }
+                        }
+                        primitive_obj = primitive_obj->next;
+                    }
+                }
+                double perimeter = bbox->dimensions()[Geom::X] + bbox->dimensions()[Geom::Y];
+                blur_now = blur_now / perimeter;
+
+                double blur_new;
+                if (reverse) 
+                    blur_new = blur_now - 0.06 * force;
+                else
+                    blur_new = blur_now + 0.06 * force;
+                if (blur_new < 0.0005 && blur_new < blur_now) {
+                    blur_new = 0;
+                }
+
+                if (blur_new == 0) {
+                    remove_filter(item, false);
+                } else {
+                    double radius = blur_new * perimeter;
+                    SPFilter *filter = modify_filter_gaussian_blur_from_item(SP_OBJECT_DOCUMENT(item), item, radius);
+
+                    sp_style_set_property_url(item, "filter", filter, false);
+                }
+                return true; // do not do colors, blur is a separate mode
+            }
 
             if (do_fill) {
                 if (style->fill.isPaintserver()) {
@@ -978,6 +1041,19 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point v
     guint32 fill_goal = sp_desktop_get_color_tool(desktop, "tools.tweak", true, &do_fill);
     guint32 stroke_goal = sp_desktop_get_color_tool(desktop, "tools.tweak", false, &do_stroke);
     double opacity_goal = sp_desktop_get_master_opacity_tool(desktop, "tools.tweak", &do_opacity);
+    if (reverse) {
+        fill_goal = SP_RGBA32_U_COMPOSE(
+            (255 - SP_RGBA32_R_U(fill_goal)),
+            (255 - SP_RGBA32_G_U(fill_goal)),
+            (255 - SP_RGBA32_B_U(fill_goal)),
+            (255 - SP_RGBA32_A_U(fill_goal)));
+        stroke_goal = SP_RGBA32_U_COMPOSE(
+            (255 - SP_RGBA32_R_U(stroke_goal)),
+            (255 - SP_RGBA32_G_U(stroke_goal)),
+            (255 - SP_RGBA32_B_U(stroke_goal)),
+            (255 - SP_RGBA32_A_U(stroke_goal)));
+        opacity_goal = 1 - opacity_goal;
+    }
 
     double path_force = get_path_force(tc);
     if (radius == 0 || path_force == 0) {
@@ -998,6 +1074,7 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point v
                                           fill_goal, do_fill,
                                           stroke_goal, do_stroke,
                                           opacity_goal, do_opacity,
+                                          tc->mode == TWEAK_MODE_BLUR, reverse,
                                           p, radius, color_force, tc->do_h, tc->do_s, tc->do_l, tc->do_o))
                 did = true;
             }
@@ -1017,7 +1094,7 @@ void
 sp_tweak_update_area (SPTweakContext *tc)
 {
         double radius = get_dilate_radius(tc);
-        NR::Matrix const sm (NR::scale(radius, radius) * NR::translate(SP_EVENT_CONTEXT(tc)->desktop->point()));
+        NR::Matrix const sm (Geom::Scale(radius, radius) * Geom::Translate(SP_EVENT_CONTEXT(tc)->desktop->point()));
         sp_canvas_item_affine_absolute(tc->dilate_area, sm);
         sp_canvas_item_show(tc->dilate_area);
 }
@@ -1092,7 +1169,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
 
             // draw the dilating cursor
                 double radius = get_dilate_radius(tc);
-                NR::Matrix const sm (NR::scale(radius, radius) * NR::translate(desktop->w2d(motion_w)));
+                NR::Matrix const sm (Geom::Scale(radius, radius) * Geom::Translate(desktop->w2d(motion_w)));
                 sp_canvas_item_affine_absolute(tc->dilate_area, sm);
                 sp_canvas_item_show(tc->dilate_area);
 
@@ -1182,6 +1259,10 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                 case TWEAK_MODE_COLORJITTER:
                     sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
                                      SP_VERB_CONTEXT_TWEAK, _("Color jitter tweak"));
+                    break;
+                case TWEAK_MODE_BLUR:
+                    sp_document_done(sp_desktop_document(SP_EVENT_CONTEXT(tc)->desktop),
+                                     SP_VERB_CONTEXT_TWEAK, _("Blur tweak"));
                     break;
             }
         }
@@ -1283,6 +1364,13 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
         case GDK_J:
             if (MOD__SHIFT_ONLY) {
                 sp_tweak_switch_mode(tc, TWEAK_MODE_COLORJITTER, MOD__SHIFT);
+                ret = TRUE;
+            }
+            break;
+        case GDK_b:
+        case GDK_B:
+            if (MOD__SHIFT_ONLY) {
+                sp_tweak_switch_mode(tc, TWEAK_MODE_BLUR, MOD__SHIFT);
                 ret = TRUE;
             }
             break;

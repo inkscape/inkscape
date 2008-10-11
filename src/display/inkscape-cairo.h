@@ -21,7 +21,7 @@ class SPCanvasBuf;
 
 cairo_t *nr_create_cairo_context_canvasbuf (NRRectL *area, SPCanvasBuf *b);
 cairo_t *nr_create_cairo_context (NRRectL *area, NRPixBlock *pb);
-void feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Matrix trans, boost::optional<NR::Rect> area, bool optimize_stroke, double stroke_width);
+void feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Matrix trans, boost::optional<Geom::Rect> area, bool optimize_stroke, double stroke_width);
 void feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv);
 
 #endif

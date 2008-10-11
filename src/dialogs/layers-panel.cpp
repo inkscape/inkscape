@@ -88,6 +88,17 @@ static gboolean layers_panel_activated( GtkObject */*object*/, GdkEvent * /*even
     return FALSE;
 }
 
+static gboolean layers_panel_deactivated( GtkObject */*object*/, GdkEvent * /*event*/, gpointer data )
+{
+    if ( data )
+    {
+        LayersPanel* panel = reinterpret_cast<LayersPanel*>(data);
+        panel->setDesktop(NULL);
+    }
+
+    return FALSE;
+}
+
 
 void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned int code, char const* iconName, char const* fallback )
 {
@@ -710,6 +721,7 @@ LayersPanel::LayersPanel() :
     }
 
     g_signal_connect( G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK( layers_panel_activated ), this );
+    g_signal_connect( G_OBJECT(INKSCAPE), "deactivate_desktop", G_CALLBACK( layers_panel_deactivated ), this );
     setDesktop( targetDesktop );
 
     show_all_children();
@@ -719,6 +731,8 @@ LayersPanel::LayersPanel() :
 
 LayersPanel::~LayersPanel()
 {
+    setDesktop(NULL);
+
     _compositeSettings.setSubject(NULL);
 
     if ( _model )

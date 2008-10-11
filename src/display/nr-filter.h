@@ -155,7 +155,7 @@ public:
      * The given bounding box should be a bounding box as specified in
      * SVG standard and in user coordinate system.
      */
-    Rect filter_effect_area(Rect const &bbox);
+    Geom::Rect filter_effect_area(Geom::Rect const &bbox);
 
     /** Creates a new filter with space for one filter element */
     Filter();

@@ -21,11 +21,11 @@ using vpsc::Rectangle;
 namespace {
 	struct Record {
 		SPItem *item;
-		NR::Point midpoint;
+		Geom::Point midpoint;
 		Rectangle *vspc_rect;
 
 		Record() {}
-		Record(SPItem *i, NR::Point m, Rectangle *r)
+		Record(SPItem *i, Geom::Point m, Rectangle *r)
 		: item(i), midpoint(m), vspc_rect(r) {}
 	};
 }
@@ -42,16 +42,16 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 	std::vector<Record> records;
 	std::vector<Rectangle *> rs;
 
-	NR::Point const gap(xGap, yGap);
+	Geom::Point const gap(xGap, yGap);
 	for (std::list<SPItem *>::iterator it(selected.begin());
 		it != selected.end();
 		++it)
 	{
-		using NR::X; using NR::Y;
-		boost::optional<NR::Rect> item_box(sp_item_bbox_desktop(*it));
+		using Geom::X; using Geom::Y;
+		boost::optional<Geom::Rect> item_box(sp_item_bbox_desktop(*it));
 		if (item_box) {
-			NR::Point min(item_box->min() - .5*gap);
-			NR::Point max(item_box->max() + .5*gap);
+			Geom::Point min(item_box->min() - .5*gap);
+			Geom::Point max(item_box->max() + .5*gap);
 			Rectangle *vspc_rect = new Rectangle(min[X], max[X], min[Y], max[Y]);
 			records.push_back(Record(*it, item_box->midpoint(), vspc_rect));
 			rs.push_back(vspc_rect);
@@ -64,8 +64,8 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 	      it != records.end();
 	      ++it )
 	{
-		NR::Point const curr = it->midpoint;
-		NR::Point const dest(it->vspc_rect->getCentreX(),
+		Geom::Point const curr = it->midpoint;
+		Geom::Point const dest(it->vspc_rect->getCentreX(),
 				     it->vspc_rect->getCentreY());
 		sp_item_move_rel(it->item, Geom::Translate(dest - curr));
 		delete it->vspc_rect;

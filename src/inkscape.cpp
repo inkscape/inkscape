@@ -148,6 +148,7 @@ static void (* ill_handler)  (int) = SIG_DFL;
 static void (* bus_handler)  (int) = SIG_DFL;
 
 #define INKSCAPE_PROFILE_DIR "Inkscape"
+#define INKSCAPE_LEGACY_PROFILE_DIR ".inkscape"
 #define MENUS_FILE "menus.xml"
 
 
@@ -326,8 +327,8 @@ static gint inkscape_autosave(gpointer)
     gint docnum = 0;
 
     SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Autosaving documents..."));
-    for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin(); 
-          iter != inkscape->document_set.end(); 
+    for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
+          iter != inkscape->document_set.end();
           ++iter) {
 
         SPDocument *doc = iter->first;
@@ -588,8 +589,8 @@ inkscape_crash_handler (int /*signum*/)
     gint count = 0;
     GSList *savednames = NULL;
     GSList *failednames = NULL;
-    for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin(); 
-          iter != inkscape->document_set.end(); 
+    for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
+          iter != inkscape->document_set.end();
           ++iter) {
         SPDocument *doc = iter->first;
         Inkscape::XML::Node *repr;
@@ -763,8 +764,8 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     sp_input_load_from_preferences();
 
     /* DebugDialog redirection.  On Linux, default to OFF, on Win32, default to ON.
-	 * Use only if use_gui is enabled
-	 */
+     * Use only if use_gui is enabled
+     */
 #ifdef WIN32
 #define DEFAULT_LOG_REDIRECT true
 #else
@@ -773,7 +774,7 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
 
     if (use_gui == TRUE && prefs->getBool("dialogs.debug", "redirect", DEFAULT_LOG_REDIRECT))
     {
-		Inkscape::UI::Dialogs::DebugDialog::getInstance()->captureLogMessages();
+        Inkscape::UI::Dialogs::DebugDialog::getInstance()->captureLogMessages();
     }
 
     /* Check for global remapping of Alt key */
@@ -1186,8 +1187,8 @@ inkscape_add_document (SPDocument *document)
         // try to insert the pair into the list
         if (!(inkscape->document_set.insert(std::make_pair(document, 1)).second)) {
             //insert failed, this key (document) is already in the list
-            for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin(); 
-                   iter != inkscape->document_set.end(); 
+            for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
+                   iter != inkscape->document_set.end();
                    ++iter) {
                 if (iter->first == document) {
                     // found this document in list, increase its count
@@ -1211,8 +1212,8 @@ inkscape_remove_document (SPDocument *document)
 
     if (!Inkscape::NSApplication::Application::getNewGui())
     {
-        for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin(); 
-                  iter != inkscape->document_set.end(); 
+        for (std::map<SPDocument*,int>::iterator iter = inkscape->document_set.begin();
+                  iter != inkscape->document_set.end();
                   ++iter) {
             if (iter->first == document) {
                 // found this document in list, decrease its count
@@ -1384,13 +1385,27 @@ profile_path(const char *filename)
                 }
                 */
             }
+
+            if (prefdir) {
+                prefdir = g_build_filename(prefdir, INKSCAPE_PROFILE_DIR, NULL);
+            }
         }
 #endif
         if (!prefdir) {
-            prefdir = homedir_path(".config");
+            prefdir = g_build_filename(g_get_user_config_dir(), INKSCAPE_PROFILE_DIR, NULL);
+            gchar * legacyDir = homedir_path(INKSCAPE_LEGACY_PROFILE_DIR);
+
+            // TODO here is a point to hook in preference migration
+
+            if ( !Inkscape::IO::file_test( prefdir, G_FILE_TEST_EXISTS ) && Inkscape::IO::file_test( legacyDir, G_FILE_TEST_EXISTS ) ) {
+                prefdir = legacyDir;
+            } else {
+                g_free(legacyDir);
+                legacyDir = 0;
+            }
         }
     }
-    return g_build_filename(prefdir, INKSCAPE_PROFILE_DIR, filename, NULL);
+    return g_build_filename(prefdir, filename, NULL);
 }
 
 Inkscape::XML::Node *

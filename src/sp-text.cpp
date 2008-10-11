@@ -25,6 +25,7 @@
 # include "config.h"
 #endif
 
+#include <2geom/matrix.h>
 #include <libnr/nr-matrix-fns.h>
 #include <libnrtype/FontFactory.h>
 #include <libnrtype/font-instance.h>
@@ -74,7 +75,7 @@ static NRArenaItem *sp_text_show (SPItem *item, NRArena *arena, unsigned key, un
 static void sp_text_hide (SPItem *item, unsigned key);
 static char *sp_text_description (SPItem *item);
 static void sp_text_snappoints(SPItem const *item, SnapPointsIter p);
-static NR::Matrix sp_text_set_transform(SPItem *item, NR::Matrix const &xform);
+static Geom::Matrix sp_text_set_transform(SPItem *item, Geom::Matrix const &xform);
 static void sp_text_print (SPItem *item, SPPrintContext *gpc);
 
 static SPItemClass *text_parent_class;
@@ -436,8 +437,8 @@ static void sp_text_snappoints(SPItem const *item, SnapPointsIter p)
     }
 }
 
-static NR::Matrix
-sp_text_set_transform (SPItem *item, NR::Matrix const &xform)
+static Geom::Matrix
+sp_text_set_transform (SPItem *item, Geom::Matrix const &xform)
 {
     SPText *text = SP_TEXT(item);
 
@@ -454,12 +455,12 @@ sp_text_set_transform (SPItem *item, NR::Matrix const &xform)
 // (e.g. it broke stroke width on copy/pasting of style from horizontally stretched to vertically
 // stretched shape). Using fontsize_expansion only here broke setting the style via font
 // dialog. This needs to be investigated further.
-    double const ex = NR::expansion(xform);
+    double const ex = xform.descrim();
     if (ex == 0) {
         return xform;
     }
 
-    NR::Matrix ret(NR::transform(xform));
+    Geom::Matrix ret(Geom::Matrix(xform).without_translation());
     ret[0] /= ex;
     ret[1] /= ex;
     ret[2] /= ex;

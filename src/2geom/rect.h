@@ -140,6 +140,18 @@ inline Rect unify(Rect const & a, Rect const & b) {
     return Rect(unify(a[X], b[X]), unify(a[Y], b[Y]));
 }
 
+/** Returns the smallest rectangle that encloses both rectangles.
+  * An empty argument is assumed to be an empty rectangle */
+inline boost::optional<Rect> unify(boost::optional<Rect> const & a, boost::optional<Rect> const & b) {
+    if (!a) {
+        return b;
+    } else if (!b) {
+        return a;
+    } else {
+        return unify(*a, *b);
+    }
+}
+
 inline Rect union_list(std::vector<Rect> const &r) {
     if(r.empty()) return Rect(Interval(0,0), Interval(0,0));
     Rect ret = r[0];

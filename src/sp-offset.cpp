@@ -91,7 +91,7 @@ static void refresh_offset_source(SPOffset* offset);
 static void sp_offset_start_listening(SPOffset *offset,SPObject* to);
 static void sp_offset_quit_listening(SPOffset *offset);
 static void sp_offset_href_changed(SPObject *old_ref, SPObject *ref, SPOffset *offset);
-static void sp_offset_move_compensate(NR::Matrix const *mp, SPItem *original, SPOffset *self);
+static void sp_offset_move_compensate(Geom::Matrix const *mp, SPItem *original, SPOffset *self);
 static void sp_offset_delete_self(SPObject *deleted, SPOffset *self);
 static void sp_offset_source_modified (SPObject *iSource, guint flags, SPItem *item);
 
@@ -510,7 +510,7 @@ sp_offset_set_shape(SPShape *shape)
         theRes->ConvertToForme (orig, 1, originaux);
 
         SPItem *item = shape;
-        boost::optional<NR::Rect> bbox = sp_item_bbox_desktop (item);
+        boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop (item);
         if ( bbox && !bbox->isEmpty() ) {
             gdouble size = L2(bbox->dimensions());
             gdouble const exp = NR::expansion(item->transform);
@@ -1021,23 +1021,23 @@ sp_offset_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPOffset *offse
 }
 
 static void
-sp_offset_move_compensate(NR::Matrix const *mp, SPItem */*original*/, SPOffset *self)
+sp_offset_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPOffset *self)
 {
     guint mode = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_PARALLEL);
     if (mode == SP_CLONE_COMPENSATION_NONE) return;
 
-    NR::Matrix m(*mp);
-    if (!(m.is_translation())) return;
+    Geom::Matrix m(*mp);
+    if (!(m.isTranslation())) return;
 
     // calculate the compensation matrix and the advertized movement matrix
     SPItem *item = SP_ITEM(self);
 
-    NR::Matrix compensate;
-    NR::Matrix advertized_move;
+    Geom::Matrix compensate;
+    Geom::Matrix advertized_move;
 
     if (mode == SP_CLONE_COMPENSATION_UNMOVED) {
-        compensate = NR::identity();
-        advertized_move.set_identity();
+        compensate = Geom::identity();
+        advertized_move.setIdentity();
     } else if (mode == SP_CLONE_COMPENSATION_PARALLEL) {
         compensate = m;
         advertized_move = m;

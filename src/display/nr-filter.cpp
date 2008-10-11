@@ -114,13 +114,13 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     Matrix trans = item->ctm;
     FilterSlot slot(_slot_count, item);
 
-    Rect item_bbox;
+    Geom::Rect item_bbox;
     if (item->item_bbox) {
         item_bbox = *(item->item_bbox);
     } else {
         // Bounding box might not exist, so create a dummy one.
-        Point zero(0, 0);
-        item_bbox = Rect(zero, zero);
+        Geom::Point zero(0, 0);
+        item_bbox = Geom::Rect(zero, zero);
     }
     if (item_bbox.min()[X] > item_bbox.max()[X]
         || item_bbox.min()[Y] > item_bbox.max()[Y])
@@ -129,7 +129,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
         return 1;
     }
 
-    Rect filter_area = filter_effect_area(item_bbox);
+    Geom::Rect filter_area = filter_effect_area(item_bbox);
     if (item_bbox.isEmpty()) {
         // It's no use to try and filter an empty object.
         return 1;
@@ -137,8 +137,8 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
         
     FilterUnits units(_filter_units, _primitive_units);
     units.set_ctm(trans);
-    units.set_item_bbox(item_bbox);
-    units.set_filter_area(filter_area);
+    units.set_item_bbox(from_2geom(item_bbox));
+    units.set_filter_area(from_2geom(filter_area));
 
     // TODO: with filterRes of 0x0 should return an empty image
     if (_x_pixels > 0) {
@@ -224,11 +224,11 @@ void Filter::bbox_enlarge(NRRectL &bbox) {
 
     /* TODO: this is wrong. Should use bounding box in user coordinates
      * and find its extents in display coordinates. */
-    Point min(bbox.x0, bbox.y0);
-    Point max(bbox.x1, bbox.y1);
-    Rect tmp_bbox(min, max);
+    Geom::Point min(bbox.x0, bbox.y0);
+    Geom::Point max(bbox.x1, bbox.y1);
+    Geom::Rect tmp_bbox(min, max);
 
-    Rect enlarged = filter_effect_area(tmp_bbox);
+    Geom::Rect enlarged = filter_effect_area(tmp_bbox);
 
     bbox.x0 = (ICoord)enlarged.min()[X];
     bbox.y0 = (ICoord)enlarged.min()[Y];
@@ -236,7 +236,7 @@ void Filter::bbox_enlarge(NRRectL &bbox) {
     bbox.y1 = (ICoord)enlarged.max()[Y];
 }
 
-Rect Filter::filter_effect_area(Rect const &bbox)
+Geom::Rect Filter::filter_effect_area(Geom::Rect const &bbox)
 {
     Point minp, maxp;
     double len_x = bbox.max()[X] - bbox.min()[X];
@@ -277,7 +277,7 @@ Rect Filter::filter_effect_area(Rect const &bbox)
     } else {
         g_warning("Error in NR::Filter::bbox_enlarge: unrecognized value of _filter_units");
     }
-    Rect area(minp, maxp);
+    Geom::Rect area(minp, maxp);
     return area;
 }
 

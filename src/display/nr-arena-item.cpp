@@ -25,6 +25,7 @@
 #include "nr-arena.h"
 #include "nr-arena-item.h"
 #include "gc-core.h"
+#include "helper/geom.h"
 
 #include "nr-filter.h"
 #include "libnr/nr-rect.h"
@@ -619,7 +620,7 @@ nr_arena_item_invoke_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 }
 
 NRArenaItem *
-nr_arena_item_invoke_pick (NRArenaItem *item, NR::Point p, double delta,
+nr_arena_item_invoke_pick (NRArenaItem *item, Geom::Point p, double delta,
                            unsigned int sticky)
 {
     nr_return_val_if_fail (item != NULL, NULL);
@@ -633,9 +634,9 @@ nr_arena_item_invoke_pick (NRArenaItem *item, NR::Point p, double delta,
     if (!sticky && !(item->visible && item->sensitive))
         return NULL;
 
-    // TODO: rewrite using NR::Rect
-    const double x = p[NR::X];
-    const double y = p[NR::Y];
+    // TODO: rewrite using Geom::Rect
+    const double x = p[Geom::X];
+    const double y = p[Geom::Y];
 
     if (((x + delta) >= item->bbox.x0) &&
         ((x - delta) < item->bbox.x1) &&
@@ -711,14 +712,14 @@ nr_arena_item_append_child (NRArenaItem *parent, NRArenaItem *child)
 }
 
 void
-nr_arena_item_set_transform (NRArenaItem *item, NR::Matrix const &transform)
+nr_arena_item_set_transform (NRArenaItem *item, Geom::Matrix const &transform)
 {
-    NR::Matrix const t (transform);
+    Geom::Matrix const t (transform);
     nr_arena_item_set_transform (item, &t);
 }
 
 void
-nr_arena_item_set_transform (NRArenaItem *item, NR::Matrix const *transform)
+nr_arena_item_set_transform (NRArenaItem *item, Geom::Matrix const *transform)
 {
     nr_return_if_fail (item != NULL);
     nr_return_if_fail (NR_IS_ARENA_ITEM (item));
@@ -726,17 +727,17 @@ nr_arena_item_set_transform (NRArenaItem *item, NR::Matrix const *transform)
     if (!transform && !item->transform)
         return;
 
-    const NR::Matrix *md = (item->transform) ? item->transform : &NR_MATRIX_IDENTITY;
-    const NR::Matrix *ms = (transform) ? transform : &NR_MATRIX_IDENTITY;
+    const Geom::Matrix *md = (item->transform) ? item->transform : &GEOM_MATRIX_IDENTITY;
+    const Geom::Matrix *ms = (transform) ? transform : &GEOM_MATRIX_IDENTITY;
 
-    if (!NR::matrix_equalp(*md, *ms, NR_EPSILON)) {
+    if (!Geom::matrix_equalp(*md, *ms, NR_EPSILON)) {
         nr_arena_item_request_render (item);
-        if (!transform || transform->test_identity()) {
+        if (!transform || transform->isIdentity()) {
             /* Set to identity affine */
             item->transform = NULL;
         } else {
             if (!item->transform)
-                item->transform = new (GC::ATOMIC) NR::Matrix ();
+                item->transform = new (GC::ATOMIC) Geom::Matrix ();
             *item->transform = *transform;
         }
         nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, TRUE);
@@ -836,12 +837,12 @@ nr_arena_item_set_order (NRArenaItem *item, int order)
 }
 
 void
-nr_arena_item_set_item_bbox (NRArenaItem *item, boost::optional<NR::Rect> &bbox)
+nr_arena_item_set_item_bbox (NRArenaItem *item, boost::optional<Geom::Rect> &bbox)
 {
     nr_return_if_fail(item != NULL);
     nr_return_if_fail(NR_IS_ARENA_ITEM(item));
 
-    item->item_bbox = bbox;
+    if(bbox)  item->item_bbox = *bbox;
 }
 
 /** Returns a background image for use with filter effects. */

@@ -86,7 +86,8 @@ findShadowedTime(Geom::Path const &patha,
     cutterPath.appendNew<LineSegment> (B-width*N);
     cutterPath.appendNew<LineSegment> (B+width*N);
     cutterPath.appendNew<LineSegment> (A+width*N);
-    cutterPath.appendNew<LineSegment> (A-width*N);
+    cutterPath.close();
+    //cutterPath.appendNew<LineSegment> (A-width*N);
     cutter.push_back(cutterPath);
 
     std::vector<Geom::Path> patha_as_vect = std::vector<Geom::Path>(1,patha);
@@ -135,16 +136,47 @@ split_at_horiz_vert_tgt (std::vector<Geom::Path> const & path_in){
 //LPEKnot specific Crossing Data manipulation.
 //---------------------------------------------------------------------------
 
-//TODO: evaluate how lpeknot specific that is. Worth being moved to 2geom?
+//TODO: Fix this in 2Geom: I think CrossingSets should not contain duplicates.
+Geom::CrossingSet crossingSet_remove_double(Geom::CrossingSet const &input){
+    Geom::CrossingSet result(input.size());
+    //Yeah, I know, there is a "unique" algorithm for that...
+    Geom::Crossing last;
+    for( unsigned i=0; i<input.size(); i++){
+        for( unsigned j=0; j<input[i].size(); j++){
+            if( j==0 || !(input[i][j]==last) ){
+                result[i].push_back(input[i][j]);
+                last = input[i][j];
+            }else{
+                g_warning("Duplicate found in a Geom::CrossingSet!");
+            }
+        }
+    }
+    return result;
+}
+
+//TODO: evaluate how usefull/lpeknot specific that is. Worth being moved to 2geom? (I doubt it)
 namespace LPEKnotNS {
+
+//Yet another crossing data representation. Not sure at all it is usefull!
+// +: >Given a point, you immediately know which strings are meeting there,
+//    and the index of the crossing along each string. This makes it easy to check 
+//    topology change. In a CrossingSet, you have to do some search to know the index
+//    of the crossing along "the second" string (i.e. find the symetric crossing)... 
+//    >Each point is stored only once.    
+//    However, we don't have so many crossing points in general, so none of these points might be relevant.
+//    
+// -: one more clumsy data representation, and "parallelism" failures to expect...
+//    (in particular, duplicates are hateful with this respect...)
 
 CrossingPoints::CrossingPoints(Geom::CrossingSet const &input, std::vector<Geom::Path> const &path) : std::vector<CrossingPoint>()
 {
     using namespace Geom;
+    g_print("JF>\nCrossing set content:\n");
     for( unsigned i=0; i<input.size(); i++){
         Crossings i_crossings = input[i];
         for( unsigned n=0; n<i_crossings.size(); n++ ){
             Crossing c = i_crossings[n];
+            g_print("JF> (%u,%u) at times (%f,%f) ----->",c.a,c.b,c.ta,c.tb);
             unsigned j = c.getOther(i);
             if (i<j || (i==j && c.ta<c.tb) ){
                 CrossingPoint cp;
@@ -163,6 +195,19 @@ CrossingPoints::CrossingPoints(Geom::CrossingSet const &input, std::vector<Geom:
                 cp.nj = std::find(input[j].begin(),input[j].end(),c_bar)-input[j].begin();
                 cp.sign = 1;
                 push_back(cp);
+                g_print("i=%u, ni=%u, j=%u, nj=%u\n",cp.i,cp.ni,cp.j,cp.nj);
+            }
+            else{
+                g_print("\n");
+                bool found = false;
+                for( unsigned ii=0; ii<input.size(); ii++){
+                    Crossings ii_crossings = input[ii];
+                    for( unsigned nn=0; nn<ii_crossings.size(); nn++ ){
+                        Crossing cc = ii_crossings[nn];
+                        if (cc.b==c.a && cc.a==c.b && cc.ta==c.tb && cc.tb==c.ta) found = true;
+                    }
+                }
+                assert( found );
             }
         }
     }
@@ -214,6 +259,7 @@ CrossingPoints::get(unsigned const i, unsigned const ni)
             ((*this)[k].j==i && (*this)[k].nj==ni)
             ) return (*this)[k];
     }
+    g_warning("LPEKnotNS::CrossingPoints::get error. %uth crossing along string %u not found.",ni,i);
     assert(false);//debug purpose...
     return CrossingPoint();
 }
@@ -335,6 +381,20 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &input_path)
     std::vector<Geom::Path> path_in = split_at_horiz_vert_tgt(input_path);
 
     CrossingSet crossingTable = crossings_among(path_in);
+
+    for(unsigned i=0;i<crossingTable.size();i++){
+        for(unsigned j=0;j<crossingTable[i].size();j++){
+            g_print("JF>avant: %u,%u,%f,%f\n",crossingTable[i][j].a, crossingTable[i][j].b, crossingTable[i][j].ta, crossingTable[i][j].tb);
+        }
+    }
+    crossingTable = crossingSet_remove_double(crossingTable);
+
+    for(unsigned i=0;i<crossingTable.size();i++){
+        for(unsigned j=0;j<crossingTable[i].size();j++){
+            g_print("JF>apres: %u,%u,%f,%f\n",crossingTable[i][j].a, crossingTable[i][j].b, crossingTable[i][j].ta, crossingTable[i][j].tb);
+        }
+    }
+
     crossing_points = LPEKnotNS::CrossingPoints(crossingTable, path_in);
     crossing_points.inherit_signs(old_crdata);
     crossing_points_vector.param_set_and_write_new_value(crossing_points.to_vector());

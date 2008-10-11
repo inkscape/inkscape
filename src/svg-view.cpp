@@ -100,7 +100,7 @@ SPSVGView::doRescale (bool event)
     }
 
     if (_drawing) {
-        sp_canvas_item_affine_absolute (_drawing, NR::Matrix(NR::scale(_hscale, _vscale)));
+        sp_canvas_item_affine_absolute (_drawing, NR::Matrix(Geom::Scale(_hscale, _vscale)));
     }
 
     if (event) {

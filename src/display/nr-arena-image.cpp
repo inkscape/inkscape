@@ -13,6 +13,7 @@
  */
 
 #include <libnr/nr-compose-transform.h>
+#include <2geom/transforms.h>
 #include <libnr/nr-blit.h>
 #include "../prefs-utils.h"
 #include "nr-arena-image.h"
@@ -40,7 +41,7 @@ static void nr_arena_image_finalize (NRObject *object);
 
 static unsigned int nr_arena_image_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int state, unsigned int reset);
 static unsigned int nr_arena_image_render (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
-static NRArenaItem *nr_arena_image_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
+static NRArenaItem *nr_arena_image_pick (NRArenaItem *item, Geom::Point p, double delta, unsigned int sticky);
 
 static NRArenaItemClass *parent_class;
 
@@ -88,7 +89,7 @@ nr_arena_image_init (NRArenaImage *image)
     image->width = 256.0;
     image->height = 256.0;
 
-    image->grid2px.set_identity();
+    image->grid2px.setIdentity();
 
     image->style = 0;
 }
@@ -106,7 +107,7 @@ nr_arena_image_finalize (NRObject *object)
 static unsigned int
 nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned int /*state*/, unsigned int /*reset*/ )
 {
-    NR::Matrix grid2px;
+    Geom::Matrix grid2px;
 
     NRArenaImage *image = NR_ARENA_IMAGE (item);
 
@@ -115,7 +116,7 @@ nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned 
 
     /* Copy affine */
     grid2px = gc->transform.inverse();
-    double hscale, vscale; // todo: replace with NR::scale
+    double hscale, vscale; // todo: replace with Geom::Scale
     if (image->px) {
         hscale = image->pxw / image->width;
         vscale = image->pxh / image->height;
@@ -143,12 +144,12 @@ nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned 
         bbox.x1 = image->x + image->width;
         bbox.y1 = image->y + image->height;
 
-        image->c00 = (NR::Point(bbox.x0, bbox.y0) * gc->transform);
-        image->c01 = (NR::Point(bbox.x0, bbox.y1) * gc->transform);
-        image->c10 = (NR::Point(bbox.x1, bbox.y0) * gc->transform);
-        image->c11 = (NR::Point(bbox.x1, bbox.y1) * gc->transform);
+        image->c00 = (Geom::Point(bbox.x0, bbox.y0) * gc->transform);
+        image->c01 = (Geom::Point(bbox.x0, bbox.y1) * gc->transform);
+        image->c10 = (Geom::Point(bbox.x1, bbox.y0) * gc->transform);
+        image->c11 = (Geom::Point(bbox.x1, bbox.y1) * gc->transform);
 
-        nr_rect_d_matrix_transform (&bbox, &bbox, &gc->transform);
+        nr_rect_d_matrix_transform (&bbox, &bbox, from_2geom(gc->transform));
 
         item->bbox.x0 = (int) floor (bbox.x0);
         item->bbox.y0 = (int) floor (bbox.y0);
@@ -179,7 +180,7 @@ nr_arena_image_render( cairo_t *ct, NRArenaItem *item, NRRectL */*area*/, NRPixB
 
     NRArenaImage *image = NR_ARENA_IMAGE (item);
 
-    NR::Matrix d2s;
+    Geom::Matrix d2s;
 
     d2s[0] = b2i[0];
     d2s[1] = b2i[1];
@@ -235,23 +236,23 @@ nr_arena_image_render( cairo_t *ct, NRArenaItem *item, NRRectL */*area*/, NRPixB
         cairo_set_line_width(ct, 0.5);
         cairo_new_path(ct);
 
-        NR::Point shift(pb->area.x0, pb->area.y0);
-        NR::Point c00 = image->c00 - shift;
-        NR::Point c01 = image->c01 - shift;
-        NR::Point c11 = image->c11 - shift;
-        NR::Point c10 = image->c10 - shift;
+        Geom::Point shift(pb->area.x0, pb->area.y0);
+        Geom::Point c00 = image->c00 - shift;
+        Geom::Point c01 = image->c01 - shift;
+        Geom::Point c11 = image->c11 - shift;
+        Geom::Point c10 = image->c10 - shift;
 
-        cairo_move_to (ct, c00[NR::X], c00[NR::Y]);
+        cairo_move_to (ct, c00[Geom::X], c00[Geom::Y]);
 
         // the box
-        cairo_line_to (ct, c10[NR::X], c10[NR::Y]);
-        cairo_line_to (ct, c11[NR::X], c11[NR::Y]);
-        cairo_line_to (ct, c01[NR::X], c01[NR::Y]);
-        cairo_line_to (ct, c00[NR::X], c00[NR::Y]);
+        cairo_line_to (ct, c10[Geom::X], c10[Geom::Y]);
+        cairo_line_to (ct, c11[Geom::X], c11[Geom::Y]);
+        cairo_line_to (ct, c01[Geom::X], c01[Geom::Y]);
+        cairo_line_to (ct, c00[Geom::X], c00[Geom::Y]);
         // the diagonals
-        cairo_line_to (ct, c11[NR::X], c11[NR::Y]);
-        cairo_move_to (ct, c10[NR::X], c10[NR::Y]);
-        cairo_line_to (ct, c01[NR::X], c01[NR::Y]);
+        cairo_line_to (ct, c11[Geom::X], c11[Geom::Y]);
+        cairo_move_to (ct, c10[Geom::X], c10[Geom::Y]);
+        cairo_line_to (ct, c01[Geom::X], c01[Geom::Y]);
 
         cairo_stroke(ct);
 
@@ -263,14 +264,14 @@ nr_arena_image_render( cairo_t *ct, NRArenaItem *item, NRRectL */*area*/, NRPixB
 
 /** Calculates the closest distance from p to the segment a1-a2*/
 double
-distance_to_segment (NR::Point p, NR::Point a1, NR::Point a2)
+distance_to_segment (Geom::Point p, Geom::Point a1, Geom::Point a2)
 {
     // calculate sides of the triangle and their squares
-    double d1 = NR::L2(p - a1);
+    double d1 = Geom::L2(p - a1);
     double d1_2 = d1 * d1;
-    double d2 = NR::L2(p - a2);
+    double d2 = Geom::L2(p - a2);
     double d2_2 = d2 * d2;
-    double a = NR::L2(a1 - a2);
+    double a = Geom::L2(a1 - a2);
     double a_2 = a * a;
 
     // if one of the angles at the base is > 90, return the corresponding side
@@ -283,7 +284,7 @@ distance_to_segment (NR::Point p, NR::Point a1, NR::Point a2)
 }
 
 static NRArenaItem *
-nr_arena_image_pick( NRArenaItem *item, NR::Point p, double delta, unsigned int /*sticky*/ )
+nr_arena_image_pick( NRArenaItem *item, Geom::Point p, double delta, unsigned int /*sticky*/ )
 {
     NRArenaImage *image = NR_ARENA_IMAGE (item);
 
@@ -311,9 +312,9 @@ nr_arena_image_pick( NRArenaItem *item, NR::Point p, double delta, unsigned int 
         int const width = image->pxw;
         int const height = image->pxh;
         int const rowstride = image->pxrs;
-        NR::Point tp = p * image->grid2px;
-        int const ix = (int)(tp[NR::X]);
-        int const iy = (int)(tp[NR::Y]);
+        Geom::Point tp = p * image->grid2px;
+        int const ix = (int)(tp[Geom::X]);
+        int const iy = (int)(tp[Geom::Y]);
 
         if ((ix < 0) || (iy < 0) || (ix >= width) || (iy >= height))
             return NULL;

@@ -31,7 +31,7 @@ static void sp_line_set (SPObject *object, unsigned int key, const gchar *value)
 static Inkscape::XML::Node *sp_line_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *sp_line_description (SPItem * item);
-static NR::Matrix sp_line_set_transform(SPItem *item, NR::Matrix const &xform);
+static Geom::Matrix sp_line_set_transform(SPItem *item, Geom::Matrix const &xform);
 
 static void sp_line_update (SPObject *object, SPCtx *ctx, guint flags);
 static void sp_line_set_shape (SPShape *shape);
@@ -188,28 +188,28 @@ sp_line_description(SPItem */*item*/)
     return g_strdup(_("<b>Line</b>"));
 }
 
-static NR::Matrix
-sp_line_set_transform (SPItem *item, NR::Matrix const &xform)
+static Geom::Matrix
+sp_line_set_transform (SPItem *item, Geom::Matrix const &xform)
 {
 	SPLine *line = SP_LINE (item);
-	NR::Point points[2];
+	Geom::Point points[2];
 
-	points[0] = NR::Point(line->x1.computed, line->y1.computed);
-	points[1] = NR::Point(line->x2.computed, line->y2.computed);
+	points[0] = Geom::Point(line->x1.computed, line->y1.computed);
+	points[1] = Geom::Point(line->x2.computed, line->y2.computed);
 
 	points[0] *= xform;
 	points[1] *= xform;
 
-	line->x1.computed = points[0][NR::X];
-	line->y1.computed = points[0][NR::Y];
-	line->x2.computed = points[1][NR::X];
-	line->y2.computed = points[1][NR::Y];
+	line->x1.computed = points[0][Geom::X];
+	line->y1.computed = points[0][Geom::Y];
+	line->x2.computed = points[1][Geom::X];
+	line->y2.computed = points[1][Geom::Y];
 
-	sp_item_adjust_stroke(item, NR::expansion(xform));
+	sp_item_adjust_stroke(item, xform.descrim());
 
 	SP_OBJECT (item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
 
-	return NR::identity();
+	return Geom::identity();
 }
 
 static void

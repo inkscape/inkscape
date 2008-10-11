@@ -251,7 +251,6 @@ PrintWin32::finish (Inkscape::Extension::Print *mod)
     float scalex, scaley;
     int x0, y0, x1, y1;
     int width, height;
-    NR::Matrix affine;
     unsigned char *px;
     int sheight, row;
     BITMAPINFO bmInfo = {
@@ -293,14 +292,9 @@ PrintWin32::finish (Inkscape::Extension::Print *mod)
     scaley = dpiY / 72.0;
 
     // We simply map document 0,0 to physical page 0,0
-    affine[0] = scalex / 1.25;
-    affine[1] = 0.0;
-    affine[2] = 0.0;
-    affine[3] = scaley / 1.25;
-    affine[4] = 0.0;
-    affine[5] = 0.0;
+    Geom::Matrix affine = Geom::Scale(scalex / 1.25, scaley / 1.25);
 
-    nr_arena_item_set_transform (mod->root, &affine);
+    nr_arena_item_set_transform (mod->root, affine);
 
     // Calculate printable area in device coordinates
     x0 = pPhysicalOffsetX;
@@ -333,7 +327,7 @@ PrintWin32::finish (Inkscape::Extension::Print *mod)
         bbox.x1 = bbox.x0 + width;
         bbox.y1 = bbox.y0 + num_rows;
         /* Update to renderable state */
-        gc.transform.set_identity();
+        gc.transform.setIdentity();
         nr_arena_item_invoke_update (mod->root, &bbox, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
 
         nr_pixblock_setup_extern (&pb, NR_PIXBLOCK_MODE_R8G8B8A8N, bbox.x0, bbox.y0, bbox.x1, bbox.y1, px, 4 * (bbox.x1 - bbox.x0), FALSE, FALSE);

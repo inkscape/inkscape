@@ -191,11 +191,13 @@ sp_nodepath_create_helperpaths(Inkscape::NodePath::Path *np) {
     PathEffectList lpelist = sp_lpe_item_get_effect_list(lpeitem);
     for (PathEffectList::iterator i = lpelist.begin(); i != lpelist.end(); ++i) {
         Inkscape::LivePathEffect::LPEObjectReference *lperef = (*i);
-        Inkscape::LivePathEffect::Effect *lpe = lperef->lpeobject->lpe;
-        // create new canvas items from the effect's helper paths
-        std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
-        for (std::vector<Geom::PathVector>::iterator j = hpaths.begin(); j != hpaths.end(); ++j) {
-            (*np->helper_path_vec)[lpe].push_back(canvasitem_from_pathvec(np, *j, true));
+        Inkscape::LivePathEffect::Effect *lpe = lperef->lpeobject->get_lpe();
+        if (lpe) {
+            // create new canvas items from the effect's helper paths
+            std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
+            for (std::vector<Geom::PathVector>::iterator j = hpaths.begin(); j != hpaths.end(); ++j) {
+                (*np->helper_path_vec)[lpe].push_back(canvasitem_from_pathvec(np, *j, true));
+            }
         }
     }
 }
@@ -211,17 +213,19 @@ sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np) {
     SPLPEItem *lpeitem = SP_LPE_ITEM(np->item);
     PathEffectList lpelist = sp_lpe_item_get_effect_list(lpeitem);
     for (PathEffectList::iterator i = lpelist.begin(); i != lpelist.end(); ++i) {
-        Inkscape::LivePathEffect::Effect *lpe = (*i)->lpeobject->lpe;
-        /* update canvas items from the effect's helper paths; note that this code relies on the
-         * fact that getHelperPaths() will always return the same number of helperpaths in the same
-         * order as during their creation in sp_nodepath_create_helperpaths
-         */
-        std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
-        for (unsigned int j = 0; j < hpaths.size(); ++j) {
-            SPCurve *curve = new SPCurve(hpaths[j]);
-            curve->transform(np->i2d);
-            sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(((*np->helper_path_vec)[lpe])[j]), curve);
-            curve = curve->unref();
+        Inkscape::LivePathEffect::Effect *lpe = (*i)->lpeobject->get_lpe();
+        if (lpe) {
+            /* update canvas items from the effect's helper paths; note that this code relies on the
+             * fact that getHelperPaths() will always return the same number of helperpaths in the same
+             * order as during their creation in sp_nodepath_create_helperpaths
+             */
+            std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
+            for (unsigned int j = 0; j < hpaths.size(); ++j) {
+                SPCurve *curve = new SPCurve(hpaths[j]);
+                curve->transform(np->i2d);
+                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(((*np->helper_path_vec)[lpe])[j]), curve);
+                curve = curve->unref();
+            }
         }
     }
 }
@@ -316,10 +320,15 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->d2i  = np->i2d.inverse();
 
     np->repr = repr;
-    if (repr_key_in) { // apparantly the object is an LPEObject
+    if (repr_key_in) { // apparently the object is an LPEObject (this is a dirty check, hopefully nobody tries feeding non-lpeobjects into this method with non-null repr_key_in)
         np->repr_key = g_strdup(repr_key_in);
         np->repr_nodetypes_key = g_strconcat(np->repr_key, "-nodetypes", NULL);
-        Inkscape::LivePathEffect::Parameter *lpeparam = LIVEPATHEFFECT(object)->lpe->getParameter(repr_key_in);
+        Inkscape::LivePathEffect::Effect * lpe = LIVEPATHEFFECT(object)->get_lpe();
+        if (!lpe) {
+            g_error("sp_nodepath_new: lpeobject without real lpe passed as argument!");
+            sp_nodepath_destroy(np);
+        }
+        Inkscape::LivePathEffect::Parameter *lpeparam = lpe->getParameter(repr_key_in);
         if (lpeparam) {
             lpeparam->param_setup_nodepath(np);
         }
@@ -4874,10 +4883,13 @@ void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve) {
             sp_shape_set_curve(SP_SHAPE(np->object), curve, true);
         }
     } else if ( IS_LIVEPATHEFFECT(np->object) ) {
-        Inkscape::LivePathEffect::PathParam *pathparam = dynamic_cast<Inkscape::LivePathEffect::PathParam *>( LIVEPATHEFFECT(np->object)->lpe->getParameter(np->repr_key) );
-        if (pathparam) {
-            pathparam->set_new_value(np->curve->get_pathvector(), false); // do not write to SVG
-            np->object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        Inkscape::LivePathEffect::Effect * lpe = LIVEPATHEFFECT(np->object)->get_lpe();
+        if (lpe) {
+            Inkscape::LivePathEffect::PathParam *pathparam = dynamic_cast<Inkscape::LivePathEffect::PathParam *>( lpe->getParameter(np->repr_key) );
+            if (pathparam) {
+                pathparam->set_new_value(np->curve->get_pathvector(), false); // do not write to SVG
+                np->object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            }
         }
     }
 }

@@ -28,19 +28,7 @@
 #include <signal.h>
 #include <errno.h>
 
-#include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-matrix-fns.h>
-#include <libnr/nr-matrix-translate-ops.h>
-#include <libnr/nr-scale-matrix-ops.h>
-
-#include "libnr/nr-matrix-rotate-ops.h"
-#include "libnr/nr-matrix-translate-ops.h"
-#include "libnr/nr-rotate-fns.h"
-#include "libnr/nr-scale-ops.h"
-#include "libnr/nr-scale-translate-ops.h"
-#include "libnr/nr-translate-matrix-ops.h"
-#include "libnr/nr-translate-scale-ops.h"
-#include "libnr/nr-convert2geom.h"
+#include "libnr/nr-rect.h"
 #include <2geom/transforms.h>
 #include <2geom/pathvector.h>
 

@@ -16,9 +16,9 @@
  */
 
 #include <sigc++/sigc++.h>
-#include <libnr/nr-point.h>
-#include <libnr/nr-matrix.h>
-#include <libnr/nr-rect.h>
+#include <2geom/point.h>
+#include <2geom/matrix.h>
+#include <2geom/rect.h>
 #include "knot.h"
 #include "forward.h"
 #include "selcue.h"
@@ -33,7 +33,7 @@ class SPSelTransHandle;
 namespace Inkscape
 {
 
-NR::scale calcScaleFactors(NR::Point const &initial_point, NR::Point const &new_point, NR::Point const &origin, bool const skew = false);
+Geom::Scale calcScaleFactors(Geom::Point const &initial_point, Geom::Point const &new_point, Geom::Point const &origin, bool const skew = false);
 
 namespace XML
 {
@@ -52,26 +52,26 @@ public:
 
     void increaseState();
     void resetState();
-    void setCenter(NR::Point const &p);
-    void grab(NR::Point const &p, gdouble x, gdouble y, bool show_handles);
-    void transform(NR::Matrix const &rel_affine, NR::Point const &norm);
+    void setCenter(Geom::Point const &p);
+    void grab(Geom::Point const &p, gdouble x, gdouble y, bool show_handles);
+    void transform(Geom::Matrix const &rel_affine, Geom::Point const &norm);
     void ungrab();
     void stamp();
-    void moveTo(NR::Point const &xy, guint state);
-    void stretch(SPSelTransHandle const &handle, NR::Point &pt, guint state);
-    void scale(NR::Point &pt, guint state);
-    void skew(SPSelTransHandle const &handle, NR::Point &pt, guint state);
-    void rotate(NR::Point &pt, guint state);
-    gboolean scaleRequest(NR::Point &pt, guint state);
-    gboolean stretchRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state);
-    gboolean skewRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state);
-    gboolean rotateRequest(NR::Point &pt, guint state);
-    gboolean centerRequest(NR::Point &pt, guint state);
+    void moveTo(Geom::Point const &xy, guint state);
+    void stretch(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
+    void scale(Geom::Point &pt, guint state);
+    void skew(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
+    void rotate(Geom::Point &pt, guint state);
+    gboolean scaleRequest(Geom::Point &pt, guint state);
+    gboolean stretchRequest(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
+    gboolean skewRequest(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
+    gboolean rotateRequest(Geom::Point &pt, guint state);
+    gboolean centerRequest(Geom::Point &pt, guint state);
 
-    gboolean handleRequest(SPKnot *knot, NR::Point *position, guint state, SPSelTransHandle const &handle);
+    gboolean handleRequest(SPKnot *knot, Geom::Point *position, guint state, SPSelTransHandle const &handle);
     void handleGrab(SPKnot *knot, guint state, SPSelTransHandle const &handle);
     void handleClick(SPKnot *knot, guint state, SPSelTransHandle const &handle);
-    void handleNewEvent(SPKnot *knot, NR::Point *position, guint state, SPSelTransHandle const &handle);
+    void handleNewEvent(SPKnot *knot, Geom::Point *position, guint state, SPSelTransHandle const &handle);
 
     enum Show
     {
@@ -99,9 +99,9 @@ private:
     void _selModified(Inkscape::Selection *selection, guint flags);
     void _showHandles(SPKnot *knot[], SPSelTransHandle const handle[], gint num,
                       gchar const *even_tip, gchar const *odd_tip);
-    NR::Point _getGeomHandlePos(NR::Point const &visual_handle_pos);
-    NR::Point _calcAbsAffineDefault(NR::scale const default_scale);
-    NR::Point _calcAbsAffineGeom(NR::scale const geom_scale);
+    Geom::Point _getGeomHandlePos(Geom::Point const &visual_handle_pos);
+    Geom::Point _calcAbsAffineDefault(Geom::Scale const default_scale);
+    Geom::Point _calcAbsAffineGeom(Geom::Scale const geom_scale);
 
     enum State {
         STATE_SCALE, //scale or stretch
@@ -112,8 +112,8 @@ private:
 
     std::vector<SPItem *> _items;
     std::vector<SPItem const *> _items_const;
-    std::vector<NR::Matrix> _items_affines;
-    std::vector<NR::Point> _items_centers;
+    std::vector<Geom::Matrix> _items_affines;
+    std::vector<Geom::Point> _items_centers;
     
     std::vector<Geom::Point> _snap_points;
     std::vector<Geom::Point> _bbox_points;
@@ -131,30 +131,30 @@ private:
 
     SPItem::BBoxType _snap_bbox_type;
     
-    boost::optional<NR::Rect> _bbox;
-    boost::optional<NR::Rect> _approximate_bbox;
-    boost::optional<NR::Rect> _geometric_bbox;
+    boost::optional<Geom::Rect> _bbox;
+    boost::optional<Geom::Rect> _approximate_bbox;
+    boost::optional<Geom::Rect> _geometric_bbox;
     gdouble _strokewidth;
     
-    NR::Matrix _current_relative_affine;
-    NR::Matrix _absolute_affine;
-    NR::Matrix _relative_affine;
+    Geom::Matrix _current_relative_affine;
+    Geom::Matrix _absolute_affine;
+    Geom::Matrix _relative_affine;
     /* According to Merriam - Webster's online dictionary
      * Affine: a transformation (as a translation, a rotation, or a uniform stretching) that carries straight
      * lines into straight lines and parallel lines into parallel lines but may alter distance between points
      * and angles between lines <affine geometry>
      */
     
-    NR::Point _opposite; ///< opposite point to where a scale is taking place    
-    NR::Point _opposite_for_specpoints;
-    NR::Point _opposite_for_bboxpoints;
-    NR::Point _origin_for_specpoints;
-    NR::Point _origin_for_bboxpoints;
+    Geom::Point _opposite; ///< opposite point to where a scale is taking place    
+    Geom::Point _opposite_for_specpoints;
+    Geom::Point _opposite_for_bboxpoints;
+    Geom::Point _origin_for_specpoints;
+    Geom::Point _origin_for_bboxpoints;
 
     gdouble _handle_x;
     gdouble _handle_y;
 
-    boost::optional<NR::Point> _center;
+    boost::optional<Geom::Point> _center;
     bool _center_is_set; ///< we've already set _center, no need to reread it from items
 
     SPKnot *_shandle[8];
@@ -167,9 +167,9 @@ private:
     guint _sel_modified_id;
     GSList *_stamp_cache;
 
-    NR::Point _origin; ///< position of origin for transforms
-    NR::Point _point; ///< original position of the knot being used for the current transform
-    NR::Point _point_geom; ///< original position of the knot being used for the current transform
+    Geom::Point _origin; ///< position of origin for transforms
+    Geom::Point _point; ///< original position of the knot being used for the current transform
+    Geom::Point _point_geom; ///< original position of the knot being used for the current transform
     Inkscape::MessageContext _message_context;
     sigc::connection _sel_changed_connection;
     sigc::connection _sel_modified_connection;

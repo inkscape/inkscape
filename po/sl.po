@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.46\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-07-29 17:48+0400\n"
-"PO-Revision-Date: 2008-07-29 17:24+0100\n"
+"PO-Revision-Date: 2008-10-05 18:21+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -3401,9 +3401,8 @@ msgstr "Datoteka EPS (Encapsulated Postscript)"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/apparition.h:24
-#, fuzzy
 msgid "Apparition"
-msgstr "Nasičenost"
+msgstr "Prikazen"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/apparition.h:25
@@ -3490,19 +3489,17 @@ msgstr "Črna, zabrisana padajoča senca"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/emboss.h:22
-#, fuzzy
 msgid "Emboss effect"
-msgstr "Brez učinkov"
+msgstr "Učinek reliefne okrasitve"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/etched-glass.h:24
 msgid "Etched Glass"
-msgstr ""
+msgstr "Jedkano steklo"
 
 #: ../src/extension/internal/filter/filter-file.cpp:32
-#, fuzzy
 msgid "Bundled"
-msgstr "Zaobljeno"
+msgstr "Zavito"
 
 #: ../src/extension/internal/filter/filter-file.cpp:33
 msgid "Personal"
@@ -3540,7 +3537,7 @@ msgstr "Umetniško besedilo"
 #. ID -- should be unique
 #: ../src/extension/internal/filter/jelly-bean.h:24
 msgid "Jelly Bean"
-msgstr ""
+msgstr "Bonbonček"
 
 #. Name in the menus, should have a N_() around it for translation
 #: ../src/extension/internal/filter/jelly-bean.h:25
@@ -3619,9 +3616,8 @@ msgstr "Ne deluje, hrošč"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/ridged-border.h:24
-#, fuzzy
 msgid "Ridged Border"
-msgstr "Robni način"
+msgstr "Slemenast rob"
 
 #. ID -- should be unique
 #: ../src/extension/internal/filter/ripple.h:24
@@ -3668,9 +3664,8 @@ msgid "Snow"
 msgstr "Sneg"
 
 #: ../src/extension/internal/filter/snow.h:34
-#, fuzzy
 msgid "Drift Size"
-msgstr "Velikost pike"
+msgstr "Velikost zameta"
 
 #: ../src/extension/internal/filter/snow.h:40
 msgid "When the weather outside is frightening..."
@@ -5605,9 +5600,8 @@ msgstr "Spregledovanje pisave brez družine, ki bi sesula Pango"
 
 #. {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
 #: ../src/live_effects/effect.cpp:75
-#, fuzzy
 msgid "Angle bisector"
-msgstr "Kot v smeri X"
+msgstr "Središčnica kota"
 
 #: ../src/live_effects/effect.cpp:76
 msgid "Bend"
@@ -5672,9 +5666,8 @@ msgstr "Vzorec vzdolž poti"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
 #: ../src/live_effects/effect.cpp:94
-#, fuzzy
 msgid "Perpendicular bisector"
-msgstr "(pravokotno na potezo, \"čopič\")"
+msgstr "Pravokotna središčnica"
 
 #: ../src/live_effects/effect.cpp:95
 msgid "Perspective path"
@@ -5694,7 +5687,7 @@ msgstr "Skica"
 
 #: ../src/live_effects/effect.cpp:99
 msgid "Spiro spline"
-msgstr ""
+msgstr "Spiro-zlepek"
 
 #: ../src/live_effects/effect.cpp:100
 msgid "Stitch Sub-Paths"
@@ -5723,7 +5716,7 @@ msgstr "Brez učinkov"
 #: ../src/live_effects/effect.cpp:296
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
-msgstr ""
+msgstr "Navedite pot parametrov za LPE '%s' z %d kliki miške"
 
 #: ../src/live_effects/effect.cpp:580
 #, c-format
@@ -5797,7 +5790,7 @@ msgstr "Zasuka izvirnik pod kotom 90 stopinj, preden ga ukrivi vzdolž poti ukri
 
 #: ../src/live_effects/lpe-boolops.cpp:23
 msgid "Null"
-msgstr ""
+msgstr "Nič"
 
 #: ../src/live_effects/lpe-boolops.cpp:24
 msgid "Intersect"
@@ -6039,13 +6032,12 @@ msgid "Determines the number of steps from start to end path."
 msgstr "Določa število korakov od začetka do konca poti."
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-#, fuzzy
 msgid "Equidistant spacing"
-msgstr "Razširi razmik med črtami"
+msgstr "Ekvidistanten razmik"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid "If true, the spacing between intermediates is constant along the length of the path. If false, the distance depends on the location of the nodes of the trajectory path."
-msgstr ""
+msgstr "Če je resnično, bo razmik med vmesnimi točkami konstanten vzdolž cele dolžine poti. Če bo neresnično, bo razdalja odvisna od položaja vozlišč poti trajektorije."
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:27
@@ -6139,7 +6131,7 @@ msgstr "Črta, ki služi kot 'zrcalo' za odsev"
 
 #: ../src/live_effects/lpe-offset.cpp:30
 msgid "Handle to control the distance of the offset from the curve"
-msgstr ""
+msgstr "Ročica za nadzor odmika od krivulje"
 
 #: ../src/live_effects/lpe-parallel.cpp:50
 msgid "Adjust the offset"
@@ -6232,7 +6224,7 @@ msgstr "Odmiki v enoti velikosti vzorca"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 msgid "Spacing, tangential and normal offset are expressed as a ratio of width/height"
-msgstr ""
+msgstr "Razmik, tangencialni in navadni odmik so izraženi kot razmerje širina/višina"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:71
 #: ../share/extensions/pathalongpath.inx.h:7
@@ -6328,9 +6320,8 @@ msgstr "Faktor spremembe velikosti za razdaljo merila"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-skeleton.cpp:33
-#, fuzzy
 msgid "Float parameter"
-msgstr "Parametri učinka"
+msgstr "Parameter plav. vejice"
 
 #: ../src/live_effects/lpe-skeleton.cpp:33
 msgid "just a real number like 1.4!"
@@ -6367,7 +6358,6 @@ msgid "Max. overlap"
 msgstr "Najv. prekrivanje"
 
 #: ../src/live_effects/lpe-sketch.cpp:41
-#, fuzzy
 msgid "How much successive strokes should overlap (relative to maximum length)"
 msgstr "Koliko zaporednih potez naj se prekriva (relativno glede na največjo dolžino)."
 
@@ -6408,7 +6398,6 @@ msgid "Tremble frequency"
 msgstr "Frekvenca tresenja"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
-#, fuzzy
 msgid "Average number of tremble periods in an approximating stroke"
 msgstr "Povprečno število period tresenja v približku poteze"
 
@@ -6422,7 +6411,7 @@ msgstr "Koliko konstrukcijskih črt (tangent) naj bo narisanih"
 
 #: ../src/live_effects/lpe-sketch.cpp:55
 msgid "Scale factor relating curvature and length of construction lines (try 5*offset)"
-msgstr ""
+msgstr "Faktor razmerja med ukrivljenostjo in dolžino konstrukcijskih črt (poskusite 5*odmik)"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Max. length"
@@ -6477,14 +6466,12 @@ msgid "Stack step"
 msgstr "Korak skladanja"
 
 #: ../src/live_effects/lpe-test-doEffect-stack.cpp:24
-#, fuzzy
 msgid "point param"
-msgstr "pentagram"
+msgstr "Točkovni parameter"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:42
-#, fuzzy
 msgid "Bounding box"
-msgstr "Okvir, ki naj bo uporabljen:"
+msgstr "Robni okvir"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:43
 msgid "Last gen. segment"
@@ -6520,7 +6507,7 @@ msgstr "Sklic"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "Generating path segments define transforms in reference to bbox or last segment"
-msgstr ""
+msgstr "Ustvarjanje odsekov poti določa transformacije glede na obrobni okvir ali zadnji odsek"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:53
 msgid "Max complexity"
@@ -8693,9 +8680,8 @@ msgid "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> 
 msgstr "<b>Kliknite</b> ali <b>kliknite in povlecite</b>, da začnete pot. S <b>Shift</b> dodajate k izbrani poti. S <b>Ctrl+klik</b> ustvarite posamične pike."
 
 #: ../src/tools-switch.cpp:205
-#, fuzzy
 msgid "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
-msgstr "<b>Povlecite</b>, da narišete kaligrafsko potezo; s <b>Ctrl</b> sledite vodilu, z <b>Alt</b> pa tanjšate/debelite potezo. S <b>tipkami puščic</b> prilagodite širino (levo/desno) in kot nagiba (gor/dol)."
+msgstr "<b>Povlecite</b>, da narišete kaligrafsko potezo; s <b>Ctrl</b> sledite poti vodila. S <b>puščičnimi tipkami</b> prilagodite širino (levo/desno) in kot nagiba (gor/dol)."
 
 #: ../src/tools-switch.cpp:217
 msgid "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, <b>drag handles</b> to adjust gradients."
@@ -9409,9 +9395,8 @@ msgid "Snap to page border"
 msgstr "Pripni na rob strani"
 
 #: ../src/ui/dialog/document-properties.cpp:114
-#, fuzzy
 msgid "Snap bounding box corners and nodes to the page border"
-msgstr "Pripni oglišča okvirov in vodila na robove strani"
+msgstr "Pripni oglišča okvirov in vozlišča na robove strani"
 
 #. ---------------------------------------------------------------
 #. Applies to both nodes and guides, but not to bboxes, that's why its located here
@@ -11272,9 +11257,8 @@ msgid "Show dots instead of lines"
 msgstr "Pokaži pike namesto črt"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:889
-#, fuzzy
 msgid "If set, display dots at gridpoints instead of gridlines"
-msgstr "Če je nastavljeno, prikaže mrežne točke v obliki pik namesto mrežnih črt."
+msgstr "Če je nastavljeno, prikaže namesto mrežnih črt mrežne točke v obliki pik."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:902
 msgid "Angle X"
@@ -11297,9 +11281,8 @@ msgid "XML formatting"
 msgstr "Oblikovanje XML"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:921
-#, fuzzy
 msgid "Inline attributes"
-msgstr "Vdelane lastnosti"
+msgstr "Lastnosti vdelanosti"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:922
 msgid "Put attributes on the same line as the element tag"
@@ -11510,7 +11493,7 @@ msgstr "Kako močen je privzeto ukaz poenostavi. Če ga izberete večkrat zapore
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Latency skew:"
-msgstr ""
+msgstr "Nagib latence:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "(requires restart)"
@@ -11518,7 +11501,7 @@ msgstr "(zahteva ponoven zagon)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Factor by which the event clock is skewed from the actual time (0.9766 on some systems)."
-msgstr ""
+msgstr "Faktor, za katerega je zamaknjena ura dogodka od dejanskega časa (na nekaterih sistemih 0,9766)."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1059
 msgid "Misc"
@@ -11774,7 +11757,7 @@ msgstr "_Pisava"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:198
 msgid "Set width (not working yet):"
-msgstr ""
+msgstr "Določite širino (še ne deluje):"
 
 #. Kerning Setup:
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:207
@@ -11783,11 +11766,11 @@ msgstr "Nastavitev spodsekavanja:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:209
 msgid "1st Glyph:"
-msgstr ""
+msgstr "1. reliefna brazda"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:211
 msgid "2nd Glyph:"
-msgstr ""
+msgstr "2. reliefna brazda:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:222
 msgid "Kerning value:"
@@ -13743,13 +13726,13 @@ msgstr "_Odstrani s poti"
 
 #: ../src/verbs.cpp:2329
 msgid "Remove Manual _Kerns"
-msgstr "Odstrani ročno _zgoščevanje"
+msgstr "Odstrani ročno _spodsekavanje"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2332
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr "Odstrani vsa ročna vrtenja črk v besedilu"
+msgstr "Odstrani vsa ročna spodsekavanja in sukanja črk v besedilu"
 
 #: ../src/verbs.cpp:2334
 msgid "_Union"
@@ -15478,7 +15461,7 @@ msgstr "Slog novih kaligrafskih potez"
 
 #: ../src/widgets/toolbox.cpp:211
 msgid "TBD"
-msgstr ""
+msgstr "BŠD"
 
 #: ../src/widgets/toolbox.cpp:221
 msgid "Style of Paint Bucket fill objects"
@@ -16024,14 +16007,12 @@ msgid "Create regular Bezier path"
 msgstr "Ustari pravilno Bézierovo pot"
 
 #: ../src/widgets/toolbox.cpp:3307
-#, fuzzy
 msgid "Spiro"
-msgstr "Spirala"
+msgstr "Spiro"
 
 #: ../src/widgets/toolbox.cpp:3308
-#, fuzzy
 msgid "Create Spiro path"
-msgstr "Ustvari spiralo"
+msgstr "Ustvari spiro-pot"
 
 #: ../src/widgets/toolbox.cpp:3315
 #: ../src/widgets/toolbox.cpp:3675
@@ -16039,14 +16020,12 @@ msgid "Mode:"
 msgstr "Način:"
 
 #: ../src/widgets/toolbox.cpp:3343
-#, fuzzy
 msgid "Triangle in"
-msgstr "Trikotnik"
+msgstr "Notranji trikotnik"
 
 #: ../src/widgets/toolbox.cpp:3344
-#, fuzzy
 msgid "Triangle out"
-msgstr "Trikotnik"
+msgstr "Zunanji trikotnik"
 
 #: ../src/widgets/toolbox.cpp:3346
 msgid "From clipboard"
@@ -16074,9 +16053,8 @@ msgid "How much smoothing (simplifying) is applied to the line"
 msgstr "Koliko glajenja (poenostavljanja) naj bo izvedenega na črti"
 
 #: ../src/widgets/toolbox.cpp:3495
-#, fuzzy
 msgid "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
-msgstr "Povrni lastnosti oblike na privzete (uporabite Nastavitve Inkscapea >Orodja za nastavitev privzetih vrednosti)"
+msgstr "Ponastavi lastnosti pisala na privzete (uporabite Nastavitve > Orodja za spremembo privzetih vrednosti)"
 
 #. Width
 #: ../src/widgets/toolbox.cpp:3582
@@ -16801,7 +16779,7 @@ msgstr "Najprej pretvorite predmete v poti!  (Vrnjeno: [%s].)"
 
 #: ../share/extensions/perspective.py:29
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
-msgstr ""
+msgstr "Modula numpy ali numpy.linalg ni mogoče uvoziti. Ta modula sta obvezna za to razširitev. Namestite ju in poskusite znova.  Na Debianu podobnemu sistemu lahko to storite z naslednjim ukazom: sudo apt-get install python-numpy."
 
 #: ../share/extensions/perspective.py:64
 msgid "This extension requires that the second selected path be four nodes long."
@@ -16809,7 +16787,7 @@ msgstr "Ta razširitev zahteva, da je druga izbrana pot dolga štiri vozlišča.
 
 #: ../share/extensions/polyhedron_3d.py:60
 msgid "Failed to import the numpy module. This module is required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
-msgstr ""
+msgstr "Modula numpy ni mogoče uvoziti. Ta modul je obvezen za to razširitev. Namestite ga in poskusite znova.  Na Debianu podobnemu sistemu lahko to storite z naslednjim ukazom: sudo apt-get install python-numpy."
 
 #: ../share/extensions/summersnight.py:32
 msgid "The second path must be exactly four nodes long."
@@ -17360,9 +17338,8 @@ msgid "Save Guides:"
 msgstr "Shrani vodila:"
 
 #: ../share/extensions/grid_cartesian.inx.h:1
-#, fuzzy
 msgid "Border Thickness [px]"
-msgstr "Debelina robu / slik. točke"
+msgstr "Debelina robu [slik. točke]"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
 msgid "Cartesian Grid"
@@ -17385,40 +17362,39 @@ msgid "Logarithmic Y Subdiv. (Base given by entry above)"
 msgstr "Logaritemska podrazdelitev Y (osnovo podaja gornji vnos)"
 
 #: ../share/extensions/grid_cartesian.inx.h:7
+#, fuzzy
 msgid "Major X Division Spacing [px]"
-msgstr ""
+msgstr "Razmik pri razdelitvi glavne osi X [slik. točke]"
 
 #: ../share/extensions/grid_cartesian.inx.h:8
 #, fuzzy
 msgid "Major X Division Thickness [px]"
-msgstr "Debelina črte / slik. točke"
+msgstr "Debelina razreza glavne osi X [slik. točke]"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
+#, fuzzy
 msgid "Major X Divisions"
-msgstr ""
+msgstr "Razdelitev glavne osi X"
 
 #: ../share/extensions/grid_cartesian.inx.h:10
 msgid "Major Y Division Spacing"
-msgstr ""
+msgstr "Razmik pri razdelitvi glavne osi Y"
 
 #: ../share/extensions/grid_cartesian.inx.h:11
-#, fuzzy
 msgid "Major Y Division Thickness [px]"
-msgstr "Debelina črte / slik. točke"
+msgstr "Debelina razreza glavne osi Y [slik. točke]"
 
 #: ../share/extensions/grid_cartesian.inx.h:12
 msgid "Major Y Divisions"
-msgstr ""
+msgstr "Razdelitev glavne osi Y"
 
 #: ../share/extensions/grid_cartesian.inx.h:13
-#, fuzzy
 msgid "Minor X Division Thickness [px]"
-msgstr "Debelina črte / slik. točke"
+msgstr "Debelina razreza drugotne osi X [slik. točke]"
 
 #: ../share/extensions/grid_cartesian.inx.h:14
-#, fuzzy
 msgid "Minor Y Division Thickness [px]"
-msgstr "Debelina črte / slik. točke"
+msgstr "Debelina razreza drugotne osi Y [slik. točke]"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
 msgid "Subdivisions per Major X Division"
@@ -17445,12 +17421,14 @@ msgid "Subsubdivs. per Y Subdivision"
 msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:1
+#, fuzzy
 msgid "Angle Divisions"
-msgstr ""
+msgstr "Razdelitev kota"
 
 #: ../share/extensions/grid_polar.inx.h:2
+#, fuzzy
 msgid "Angle Divisions at Centre"
-msgstr ""
+msgstr "Razdelitev kota iz središča"
 
 #: ../share/extensions/grid_polar.inx.h:3
 msgid "Centre Dot Diameter [px]"
@@ -18108,7 +18086,6 @@ msgid "Barcode Type:"
 msgstr "Vrsta črtne kode:"
 
 #: ../share/extensions/restack.inx.h:2
-#, fuzzy
 msgid "Arbitrary Angle:"
 msgstr "Arbitrarni kot:"
 

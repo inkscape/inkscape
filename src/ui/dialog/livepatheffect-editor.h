@@ -53,7 +53,7 @@ private:
 
     void set_sensitize_all(bool sensitive);
 
-    void showParams(LivePathEffect::Effect* effect);
+    void showParams(LivePathEffect::Effect& effect);
     void showText(Glib::ustring const &str);
     void selectInList(LivePathEffect::Effect* effect);
 

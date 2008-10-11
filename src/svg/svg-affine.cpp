@@ -24,12 +24,8 @@
 #include <glib/gstrfuncs.h>
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-matrix-translate-ops.h>
-#include <libnr/nr-rotate-fns.h>
-#include <libnr/nr-rotate-matrix-ops.h>
-#include <libnr/nr-scale-matrix-ops.h>
-#include <libnr/nr-translate-matrix-ops.h>
-#include <libnr/nr-translate-rotate-ops.h>
+#include <2geom/transforms.h>
+#include <2geom/angle.h>
 #include <libnr/nr-convert2geom.h>
 #include "svg.h"
 #include "prefs-utils.h"
@@ -128,24 +124,24 @@ sp_svg_transform_read(gchar const *str, NR::Matrix *transform)
 			} else if (n_args != 2) {
 				return false;
 			}
-			a = NR::translate(args[0], args[1]) * a;
+			a = Geom::Translate(args[0], args[1]) * a;
 		} else if (!strcmp (keyword, "scale")) {
 			if (n_args == 1) {
 				args[1] = args[0];
 			} else if (n_args != 2) {
 				return false;
 			}
-			a = NR::scale(args[0], args[1]) * a;
+			a = Geom::Scale(args[0], args[1]) * a;
 		} else if (!strcmp (keyword, "rotate")) {
 			if (n_args != 1 && n_args != 3) {
 				return false;
 			}
-			NR::rotate const rot(rotate_degrees(args[0]));
+			Geom::Rotate const rot(Geom::deg_to_rad(args[0]));
 			if (n_args == 3) {
-				a = ( NR::translate(-args[1], -args[2])
+				a = ( Geom::Translate(-args[1], -args[2])
 				      * rot
-				      * NR::translate(args[1], args[2])
-				      * a );
+				      * Geom::Translate(args[1], args[2])
+				      * Geom::Matrix(a) );
 			} else {
 				a = rot * a;
 			}

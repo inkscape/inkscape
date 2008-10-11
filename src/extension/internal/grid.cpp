@@ -85,9 +85,9 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
         bounding_area = Geom::Rect(  Geom::Point(0,0),
                                      Geom::Point(sp_document_width(doc), sp_document_height(doc))  );
     } else {
-        boost::optional<NR::Rect> bounds = selection->bounds();
+        boost::optional<Geom::Rect> bounds = selection->bounds();
         if (bounds) {
-            bounding_area = to_2geom(*bounds);
+            bounding_area = *bounds;
         }
 
         gdouble doc_height  =  sp_document_height(document->doc());

@@ -319,20 +319,20 @@ new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdo
 SPFilter *
 new_filter_simple_from_item (SPDocument *document, SPItem *item, const char *mode, gdouble radius)
 {
-    boost::optional<NR::Rect> const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
+    boost::optional<Geom::Rect> const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
 
     double width;
     double height;
     if (r) {
-        width = r->extent(NR::X);
-        height= r->extent(NR::Y);
+        width = r->dimensions()[Geom::X];
+        height= r->dimensions()[Geom::Y];
     } else {
         width = height = 0;
     }
 
-    NR::Matrix i2d (sp_item_i2d_affine (item) );
+    Geom::Matrix i2d (sp_item_i2d_affine (item) );
 
-    return (new_filter_blend_gaussian_blur (document, mode, radius, NR::expansion(i2d), NR::expansionX(i2d), NR::expansionY(i2d), width, height));
+    return (new_filter_blend_gaussian_blur (document, mode, radius, i2d.descrim(), i2d.expansionX(), i2d.expansionY(), width, height));
 }
 
 /**
@@ -374,12 +374,12 @@ modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
         stdDeviation /= expansion;
 
     // Get the object size
-    boost::optional<NR::Rect> const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
+    boost::optional<Geom::Rect> const r = sp_item_bbox_desktop(item, SPItem::GEOMETRIC_BBOX);
     double width;
     double height;
     if (r) {
-        width = r->extent(NR::X);
-        height= r->extent(NR::Y);
+        width = r->dimensions()[Geom::X];
+        height= r->dimensions()[Geom::Y];
     } else {
         width = height = 0;
     }

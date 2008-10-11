@@ -749,7 +749,7 @@ ArcKnotHolderEntityStart::knot_set(Geom::Point const &p, Geom::Point const &/*or
     ge->closed = (sp_genericellipse_side(ge, p) == -1) ? TRUE : FALSE;
 
     Geom::Point delta = p - Geom::Point(ge->cx.computed, ge->cy.computed);
-    NR::scale sc(ge->rx.computed, ge->ry.computed);
+    Geom::Scale sc(ge->rx.computed, ge->ry.computed);
     ge->start = atan2(delta * sc.inverse());
     if ( ( state & GDK_CONTROL_MASK )
          && snaps )
@@ -780,7 +780,7 @@ ArcKnotHolderEntityEnd::knot_set(Geom::Point const &p, Geom::Point const &/*orig
     ge->closed = (sp_genericellipse_side(ge, p) == -1) ? TRUE : FALSE;
 
     Geom::Point delta = p - Geom::Point(ge->cx.computed, ge->cy.computed);
-    NR::scale sc(ge->rx.computed, ge->ry.computed);
+    Geom::Scale sc(ge->rx.computed, ge->ry.computed);
     ge->end = atan2(delta * sc.inverse());
     if ( ( state & GDK_CONTROL_MASK )
          && snaps )

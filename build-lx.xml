@@ -102,7 +102,7 @@
     <copy file="${src}/helper/sp-marshal.cpp.mingw"
           tofile="${src}/helper/sp-marshal.cpp"/>
     <makefile file="inkscape_version.h">
-        #define INKSCAPE_VERSION "${version}"
+        #define INKSCAPE_VERSION "${version}, revision ${svn.revision}"
     </makefile>
     <makefile file="config.h">
         #ifndef _CONFIG_H_
@@ -188,10 +188,10 @@
   ########################################################################
   -->
   <target name="touchabout"
-      description="update the modification time of aboutdialog.cpp">
-    <!-- not good <touch file="${src}/ui/dialog/aboutdialog.cpp"/> -->
+      description="update the modification time of aboutbox.cpp">
+    <!-- not good <touch file="${src}/ui/dialog/aboutbox.cpp"/> -->
     <!-- better -->
-    <delete file="${build}/obj/ui/dialog/aboutdialog.o"/>
+    <delete file="${build}/obj/ui/dialog/aboutbox.o"/>
   </target>
 
 

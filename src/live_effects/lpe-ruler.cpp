@@ -19,6 +19,7 @@
 #include "inkscape.h"
 #include "desktop.h"
 
+
 namespace Inkscape {
 namespace LivePathEffect {
 
@@ -110,34 +111,51 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
 {
     using namespace Geom;
 
-    Piecewise<D2<SBasis> > pwd2_arclength = arc_length_parametrization(pwd2_in);
-    Point A(pwd2_arclength.firstValue());
-    Point B(pwd2_arclength.lastValue());
-    double path_length = Geom::length(pwd2_arclength);
-
-    Piecewise<D2<SBasis> > n = -rot90(unitVector(derivative(pwd2_arclength)));
-    Piecewise<D2<SBasis> >output(pwd2_arclength);
-
-    if (mark_dir == MARKDIR_RIGHT) {
-        n *= -1.0;
-    }
-
-    int j = 0;
     const int mminterval = static_cast<int>(major_mark_steps);
-    const int j_shift = static_cast<int>(shift) % mminterval;
+    const int i_shift = static_cast<int>(shift) % mminterval;
+    int sign = (mark_dir == MARKDIR_RIGHT ? 1 : -1 );
 
-    /* draw the ruler */
-    if ((border_marks == BORDERMARK_START || border_marks == BORDERMARK_BOTH) && (offset != 0.0 || j_shift != 0))
-        output.concat (ruler_mark(A, n.firstValue(), MARK_MAJOR));
-    for (double t = offset; t < path_length; t += mark_distance, ++j) {
-        if ((j % mminterval) == j_shift) {
-            output.concat (ruler_mark(pwd2_arclength(t), n(t), MARK_MAJOR));
+    Piecewise<D2<SBasis> >output(pwd2_in);
+    Piecewise<D2<SBasis> >speed = derivative(pwd2_in);
+    Piecewise<SBasis> arclength = arcLengthSb(pwd2_in);
+    double totlength = arclength.lastValue();
+    
+    //find at which times to draw a mark:
+    std::vector<double> s_cuts;
+    for (double s = offset; s<totlength; s+=mark_distance){
+        s_cuts.push_back(s);
+    }
+    std::vector<std::vector<double> > roots = multi_roots(arclength, s_cuts);
+    std::vector<double> t_cuts;
+    g_warning("times:");
+    for (unsigned v=0; v<roots.size();v++){
+        //FIXME: 2geom multi_roots solver seem to sometimes "repeat" solutions.
+        //Here, we are supposed to have one and only one solution for each s.
+        if(roots[v].size()>0) 
+            t_cuts.push_back(roots[v][0]);
+    }
+    //draw the marks
+    for (unsigned i=0; i<t_cuts.size(); i++){
+        Point A = pwd2_in(t_cuts[i]);
+        Point n = rot90(unit_vector(speed(t_cuts[i])))*sign;
+        if ((i % mminterval) == i_shift) {
+            output.concat (ruler_mark(A, n, MARK_MAJOR));
         } else {
-            output.concat (ruler_mark(pwd2_arclength(t), n(t), MARK_MINOR));
+            output.concat (ruler_mark(A, n, MARK_MINOR));
         }
     }
-    if (border_marks == BORDERMARK_END || border_marks == BORDERMARK_BOTH)
-        output.concat (ruler_mark(B, n.lastValue(), MARK_MAJOR));
+    //eventually draw a mark at start
+    if ((border_marks == BORDERMARK_START || border_marks == BORDERMARK_BOTH) && (offset != 0.0 || i_shift != 0)){
+        Point A = pwd2_in.firstValue();
+        Point n = rot90(unit_vector(speed.firstValue()))*sign;
+        output.concat (ruler_mark(A, n, MARK_MAJOR));
+    }
+    //eventually draw a mark at end
+    if (border_marks == BORDERMARK_END || border_marks == BORDERMARK_BOTH){
+        Point A = pwd2_in.lastValue();
+        Point n = rot90(unit_vector(speed.lastValue()))*sign;
+        output.concat (ruler_mark(A, n, MARK_MAJOR));
+    }
 
     return output;
 }

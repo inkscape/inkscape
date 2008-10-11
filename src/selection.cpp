@@ -24,6 +24,7 @@
 #include "desktop-handles.h"
 #include "document.h"
 #include "selection.h"
+#include "helper/recthull.h"
 #include "xml/repr.h"
 
 #include "sp-shape.h"
@@ -378,44 +379,19 @@ Inkscape::XML::Node *Selection::singleRepr() {
 NRRect *Selection::bounds(NRRect *bbox, SPItem::BBoxType type) const
 {
     g_return_val_if_fail (bbox != NULL, NULL);
-    *bbox = NRRect(bounds(type));
+    bounds(bbox, type);
     return bbox;
 }
 
-boost::optional<NR::Rect> Selection::bounds(SPItem::BBoxType type) const
+boost::optional<Geom::Rect> Selection::bounds(SPItem::BBoxType type) const
 {
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
-    boost::optional<NR::Rect> bbox;
+    boost::optional<Geom::Rect> bbox;
     for ( GSList const *i = items ; i != NULL ; i = i->next ) {
-        bbox = NR::union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data), type));
+        bbox = unify(bbox, sp_item_bbox_desktop(SP_ITEM(i->data), type));
     }
     return bbox;
-}
-
-// TODO: This should be replaces by a proper 2geom function
-inline Geom::Rect union_bounds_2geom(boost::optional<Geom::Rect> const & a, Geom::Rect const &b) {
-    if (a) {
-        return union_bounds_2geom(*a, b);
-    } else {
-        return b;
-    }
-}
-
-boost::optional<Geom::Rect> Selection::bounds_2geom(SPItem::BBoxType type) const
-{
-    GSList const *items = const_cast<Selection *>(this)->itemList();
-
-    boost::optional<NR::Rect> bbox;
-    for ( GSList const *i = items ; i != NULL ; i = i->next ) {
-        bbox = union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data), type));
-    }
-    // TODO: eliminate this conversion after the switch to 2geom
-    boost::optional<Geom::Rect> bbox_ret;
-    if (bbox) {
-        bbox_ret = to_2geom(*bbox);
-    }
-    return bbox_ret;
 }
 
 NRRect *Selection::boundsInDocument(NRRect *bbox, SPItem::BBoxType type) const {
@@ -439,9 +415,9 @@ NRRect *Selection::boundsInDocument(NRRect *bbox, SPItem::BBoxType type) const {
     return bbox;
 }
 
-boost::optional<NR::Rect> Selection::boundsInDocument(SPItem::BBoxType type) const {
+boost::optional<Geom::Rect> Selection::boundsInDocument(SPItem::BBoxType type) const {
     NRRect r;
-    return boundsInDocument(&r, type)->upgrade();
+    return to_2geom(boundsInDocument(&r, type)->upgrade());
 }
 
 /** Extract the position of the center from the first selected object */
@@ -454,9 +430,9 @@ boost::optional<Geom::Point> Selection::center() const {
             return first->getCenter();
         }
     }
-    boost::optional<NR::Rect> bbox = bounds();
+    boost::optional<Geom::Rect> bbox = bounds();
     if (bbox) {
-        return to_2geom(bounds()->midpoint());
+        return bounds()->midpoint();
     } else {
         return boost::optional<Geom::Point>();
     }
@@ -465,9 +441,9 @@ boost::optional<Geom::Point> Selection::center() const {
 /**
  * Compute the list of points in the selection that are to be considered for snapping.
  */
-std::vector<NR::Point> Selection::getSnapPoints(bool includeItemCenter) const {
+std::vector<Geom::Point> Selection::getSnapPoints(bool includeItemCenter) const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
-    std::vector<NR::Point> p;
+    std::vector<Geom::Point> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
         SPItem *this_item = SP_ITEM(iter->data);
         sp_item_snappoints(this_item, false, SnapPointsIter(p));
@@ -481,24 +457,24 @@ std::vector<NR::Point> Selection::getSnapPoints(bool includeItemCenter) const {
     return p;
 }
 
-std::vector<NR::Point> Selection::getSnapPointsConvexHull() const {
+std::vector<Geom::Point> Selection::getSnapPointsConvexHull() const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
-    std::vector<NR::Point> p;
+    std::vector<Geom::Point> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
 		sp_item_snappoints(SP_ITEM(iter->data), false, SnapPointsIter(p));
     }
 
-    std::vector<NR::Point> pHull;
+    std::vector<Geom::Point> pHull;
     if (!p.empty()) {
-        std::vector<NR::Point>::iterator i;
-        NR::ConvexHull cvh(p.front());
+        std::vector<Geom::Point>::iterator i;
+        Geom::RectHull cvh(p.front());
         for (i = p.begin(); i != p.end(); i++) {
             // these are the points we get back
             cvh.add(*i);
         }
 
-        boost::optional<NR::Rect> rHull = cvh.bounds();
+        boost::optional<Geom::Rect> rHull = cvh.bounds();
         if (rHull) {
             for ( unsigned i = 0 ; i < 4 ; ++i ) {
                 pHull.push_back(rHull->corner(i));

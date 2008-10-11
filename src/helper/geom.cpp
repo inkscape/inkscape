@@ -494,8 +494,32 @@ pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv )
     return output;
 }
 
+namespace Geom {
+
+bool transform_equalp(Geom::Matrix const &m0, Geom::Matrix const &m1, Geom::Coord const epsilon) {
+    return
+        NR_DF_TEST_CLOSE(m0[0], m1[0], epsilon) &&
+        NR_DF_TEST_CLOSE(m0[1], m1[1], epsilon) &&
+        NR_DF_TEST_CLOSE(m0[2], m1[2], epsilon) &&
+        NR_DF_TEST_CLOSE(m0[3], m1[3], epsilon);
+}
 
 
+bool translate_equalp(Geom::Matrix const &m0, Geom::Matrix const &m1, Geom::Coord const epsilon) {
+    return NR_DF_TEST_CLOSE(m0[4], m1[4], epsilon) && NR_DF_TEST_CLOSE(m0[5], m1[5], epsilon);
+}
+
+
+bool matrix_equalp(Geom::Matrix const &m0, Geom::Matrix const &m1, Geom::Coord const epsilon) {
+    return transform_equalp(m0, m1, epsilon) && translate_equalp(m0, m1, epsilon);
+}
+
+} //end namespace Geom
+/*
+The following predefined objects are for reference
+and comparison.
+*/
+Geom::Matrix GEOM_MATRIX_IDENTITY = Geom::identity();
 
 /*
   Local Variables:

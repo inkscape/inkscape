@@ -1308,7 +1308,7 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
     if (sel->isEmpty())
         return;
 
-    boost::optional<NR::Rect> bbox = sel->bounds();
+    boost::optional<Geom::Rect> bbox = sel->bounds();
     if (!bbox) {
         return;
     }

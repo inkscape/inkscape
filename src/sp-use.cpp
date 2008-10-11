@@ -22,7 +22,7 @@
 
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-fns.h>
-#include "libnr/nr-matrix-translate-ops.h"
+#include <2geom/transforms.h>
 #include <glibmm/i18n.h>
 #include "display/nr-arena-group.h"
 #include "attributes.h"
@@ -299,7 +299,7 @@ sp_use_print(SPItem *item, SPPrintContext *ctx)
     SPUse *use = SP_USE(item);
 
     if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
-        NR::Matrix tp(NR::translate(use->x.computed, use->y.computed));
+        NR::Matrix tp(Geom::Translate(use->x.computed, use->y.computed));
         sp_print_bind(ctx, tp, 1.0);
         translated = true;
     }
@@ -354,7 +354,7 @@ sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
         if (ac) {
             nr_arena_item_add_child(ai, ac, NULL);
         }
-        NR::translate t(use->x.computed,
+        Geom::Translate t(use->x.computed,
                         use->y.computed);
         nr_arena_group_set_child_transform(NR_ARENA_GROUP(ai), NR::Matrix(t));
     }
@@ -424,7 +424,7 @@ sp_use_get_root_transform(SPUse *use)
         if (SP_IS_USE(i_tem)) {
             SPUse *i_use = SP_USE(i_tem);
             if ((i_use->x._set && i_use->x.computed != 0) || (i_use->y._set && i_use->y.computed != 0)) {
-                t = t * NR::translate(i_use->x._set ? i_use->x.computed : 0, i_use->y._set ? i_use->y.computed : 0);
+                t = t * Geom::Translate(i_use->x._set ? i_use->x.computed : 0, i_use->y._set ? i_use->y.computed : 0);
             }
         }
 
@@ -442,9 +442,9 @@ sp_use_get_root_transform(SPUse *use)
 NR::Matrix
 sp_use_get_parent_transform(SPUse *use)
 {
-    NR::Matrix t(NR::identity());
+    Geom::Matrix t(Geom::identity());
     if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
-        t *= NR::translate(use->x._set ? use->x.computed : 0,
+        t *= Geom::Translate(use->x._set ? use->x.computed : 0,
                            use->y._set ? use->y.computed : 0);
     }
 
@@ -458,7 +458,7 @@ sp_use_get_parent_transform(SPUse *use)
  * clone's transform.
  */
 static void
-sp_use_move_compensate(NR::Matrix const *mp, SPItem */*original*/, SPUse *self)
+sp_use_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPUse *self)
 {
     // the clone is orphaned; or this is not a real use, but a clone of another use;
     // we skip it, otherwise duplicate compensation will occur
@@ -476,26 +476,26 @@ sp_use_move_compensate(NR::Matrix const *mp, SPItem */*original*/, SPUse *self)
     if (mode == SP_CLONE_COMPENSATION_NONE)
         return;
 
-    NR::Matrix m(*mp);
+    Geom::Matrix m(*mp);
 
     // this is not a simple move, do not try to compensate
-    if (!(m.is_translation()))
+    if (!(m.isTranslation()))
         return;
 
     // restore item->transform field from the repr, in case it was changed by seltrans
     sp_object_read_attr (SP_OBJECT (self), "transform");
 
-    NR::Matrix t = sp_use_get_parent_transform(self);
-    NR::Matrix clone_move = t.inverse() * m * t;
+    Geom::Matrix t = sp_use_get_parent_transform(self);
+    Geom::Matrix clone_move = t.inverse() * m * t;
 
     // calculate the compensation matrix and the advertized movement matrix
-    NR::Matrix advertized_move;
+    Geom::Matrix advertized_move;
     if (mode == SP_CLONE_COMPENSATION_PARALLEL) {
         clone_move = clone_move.inverse() * m;
         advertized_move = m;
     } else if (mode == SP_CLONE_COMPENSATION_UNMOVED) {
         clone_move = clone_move.inverse();
-        advertized_move.set_identity();
+        advertized_move.setIdentity();
     } else {
         g_assert_not_reached();
     }
@@ -623,7 +623,7 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
 
     /* As last step set additional transform of arena group */
     for (SPItemView *v = item->display; v != NULL; v = v->next) {
-        NR::Matrix t(NR::translate(use->x.computed, use->y.computed));
+        NR::Matrix t(Geom::Translate(use->x.computed, use->y.computed));
         nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), t);
     }
 }
@@ -671,7 +671,7 @@ sp_use_unlink(SPUse *use)
     g_return_val_if_fail(orig, NULL);
 
     // Calculate the accumulated transform, starting from the original.
-    NR::Matrix t = sp_use_get_root_transform(use);
+    Geom::Matrix t = sp_use_get_root_transform(use);
 
     Inkscape::XML::Node *copy = NULL;
     if (SP_IS_SYMBOL(orig)) { // make a group, copy children
@@ -724,7 +724,7 @@ sp_use_unlink(SPUse *use)
     SPItem *item = SP_ITEM(unlinked);
     // Set the accummulated transform.
     {
-        NR::Matrix nomove(NR::identity());
+        Geom::Matrix nomove(Geom::identity());
         // Advertise ourselves as not moving.
         sp_item_write_transform(item, SP_OBJECT_REPR(item), t, &nomove);
     }

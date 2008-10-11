@@ -170,7 +170,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path)
 
 /** Feeds path-creating calls to the cairo context translating them from the Path, with the given transform and shift */
 static void
-feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, boost::optional<NR::Rect> area, bool optimize_stroke, double stroke_width)
+feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, boost::optional<Geom::Rect> area, bool optimize_stroke, double stroke_width)
 {
     if (!area || area->isEmpty())
         return;
@@ -179,9 +179,9 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, boo
 
     // Transform all coordinates to coords within "area"
     Geom::Point shift = area->min();
-    NR::Rect view = *area;
-    view.growBy (stroke_width);
-    view = view * (NR::Matrix)Geom::Translate(-shift);
+    Geom::Rect view = *area;
+    view.expandBy (stroke_width);
+    view = view * (Geom::Matrix)Geom::Translate(-shift);
     //  Pass transformation to feed_curve, so that we don't need to create a whole new path.
     Geom::Matrix transshift(trans * Geom::Translate(-shift));
 
@@ -189,7 +189,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, boo
     cairo_move_to(ct, initial[0], initial[1] );
 
     for(Geom::Path::const_iterator cit = path.begin(); cit != path.end_open(); ++cit) {
-        feed_curve_to_cairo(ct, *cit, transshift, to_2geom(view), optimize_stroke);
+        feed_curve_to_cairo(ct, *cit, transshift, view, optimize_stroke);
     }
 
     if (path.closed()) {
@@ -214,7 +214,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, boo
 /** Feeds path-creating calls to the cairo context translating them from the PathVector, with the given transform and shift
  *  One must have done cairo_new_path(ct); before calling this function. */
 void
-feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Matrix trans, boost::optional<NR::Rect> area, bool optimize_stroke, double stroke_width)
+feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv, Geom::Matrix trans, boost::optional<Geom::Rect> area, bool optimize_stroke, double stroke_width)
 {
     if (!area || area->isEmpty())
         return;

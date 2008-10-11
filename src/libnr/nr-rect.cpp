@@ -28,11 +28,30 @@ NRRect::NRRect(boost::optional<NR::Rect> const &rect) {
     }
 }
 
+NRRect::NRRect(boost::optional<Geom::Rect> const &rect) {
+    if (rect) {
+        x0 = rect->min()[Geom::X];
+        y0 = rect->min()[Geom::Y];
+        x1 = rect->max()[Geom::X];
+        y1 = rect->max()[Geom::Y];
+    } else {
+        nr_rect_d_set_empty(this);
+    }
+}
+
 boost::optional<NR::Rect> NRRect::upgrade() const {
     if (nr_rect_d_test_empty_ptr(this)) {
         return boost::optional<NR::Rect>();
     } else {
         return NR::Rect(NR::Point(x0, y0), NR::Point(x1, y1));
+    }
+}
+
+boost::optional<Geom::Rect> NRRect::upgrade_2geom() const {
+    if (nr_rect_d_test_empty_ptr(this)) {
+        return boost::optional<Geom::Rect>();
+    } else {
+        return Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1));
     }
 }
 

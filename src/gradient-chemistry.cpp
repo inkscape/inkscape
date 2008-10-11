@@ -284,21 +284,21 @@ sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item)
 
     // calculate the bbox of the item
     sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
-    boost::optional<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
+    boost::optional<Geom::Rect> bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
 
     if ( !bbox || bbox->isEmpty() )
         return gr;
 
-    NR::Coord const width = bbox->dimensions()[NR::X];
-    NR::Coord const height = bbox->dimensions()[NR::Y];
+    Geom::Coord const width = bbox->dimensions()[Geom::X];
+    Geom::Coord const height = bbox->dimensions()[Geom::Y];
 
-    NR::Point const center = bbox->midpoint();
+    Geom::Point const center = bbox->midpoint();
 
     if (SP_IS_RADIALGRADIENT(gr)) {
-        sp_repr_set_svg_double(repr, "cx", center[NR::X]);
-        sp_repr_set_svg_double(repr, "cy", center[NR::Y]);
-        sp_repr_set_svg_double(repr, "fx", center[NR::X]);
-        sp_repr_set_svg_double(repr, "fy", center[NR::Y]);
+        sp_repr_set_svg_double(repr, "cx", center[Geom::X]);
+        sp_repr_set_svg_double(repr, "cy", center[Geom::Y]);
+        sp_repr_set_svg_double(repr, "fx", center[Geom::X]);
+        sp_repr_set_svg_double(repr, "fy", center[Geom::Y]);
         sp_repr_set_svg_double(repr, "r", width/2);
 
         // we want it to be elliptic, not circular
@@ -313,10 +313,10 @@ sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item)
             g_free(c);
         }
     } else {
-        sp_repr_set_svg_double(repr, "x1", (center - NR::Point(width/2, 0))[NR::X]);
-        sp_repr_set_svg_double(repr, "y1", (center - NR::Point(width/2, 0))[NR::Y]);
-        sp_repr_set_svg_double(repr, "x2", (center + NR::Point(width/2, 0))[NR::X]);
-        sp_repr_set_svg_double(repr, "y2", (center + NR::Point(width/2, 0))[NR::Y]);
+        sp_repr_set_svg_double(repr, "x1", (center - Geom::Point(width/2, 0))[Geom::X]);
+        sp_repr_set_svg_double(repr, "y1", (center - Geom::Point(width/2, 0))[Geom::Y]);
+        sp_repr_set_svg_double(repr, "x2", (center + Geom::Point(width/2, 0))[Geom::X]);
+        sp_repr_set_svg_double(repr, "y2", (center + Geom::Point(width/2, 0))[Geom::Y]);
     }
 
     // set the gradientUnits
@@ -344,15 +344,15 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
 
         // calculate the bbox of the item
         sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
-        NR::Matrix bbox2user;
-        boost::optional<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
+        Geom::Matrix bbox2user;
+        boost::optional<Geom::Rect> bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
         if ( bbox && !bbox->isEmpty() ) {
-            bbox2user = NR::Matrix(bbox->dimensions()[NR::X], 0,
-                                   0, bbox->dimensions()[NR::Y],
-                                   bbox->min()[NR::X], bbox->min()[NR::Y]);
+            bbox2user = Geom::Matrix(bbox->dimensions()[Geom::X], 0,
+                                   0, bbox->dimensions()[Geom::Y],
+                                   bbox->min()[Geom::X], bbox->min()[Geom::Y]);
         } else {
             // would be degenerate otherwise
-            bbox2user = NR::identity();
+            bbox2user = Geom::identity();
         }
 
         /* skew is the additional transform, defined by the proportions of the item, that we need
@@ -369,8 +369,8 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
          *   gradient vector in user space due to application of the non-uniform scaling
          *   transformation from bounding box space to user space.
          */
-        NR::Matrix skew = bbox2user;
-        double exp = NR::expansion(skew);
+        Geom::Matrix skew = bbox2user;
+        double exp = skew.descrim();
         skew[0] /= exp;
         skew[1] /= exp;
         skew[2] /= exp;
@@ -388,40 +388,40 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
 
         // Matrix to convert points to userspace coords; postmultiply by inverse of skew so
         // as to cancel it out when it's applied to the gradient during rendering
-        NR::Matrix point_convert = bbox2user * skew.inverse();
+        Geom::Matrix point_convert = bbox2user * skew.inverse();
 
         if (SP_IS_RADIALGRADIENT(gr)) {
             SPRadialGradient *rg = SP_RADIALGRADIENT(gr);
 
             // original points in the bbox coords
-            NR::Point c_b = NR::Point(rg->cx.computed, rg->cy.computed);
-            NR::Point f_b = NR::Point(rg->fx.computed, rg->fy.computed);
+            Geom::Point c_b = Geom::Point(rg->cx.computed, rg->cy.computed);
+            Geom::Point f_b = Geom::Point(rg->fx.computed, rg->fy.computed);
             double r_b = rg->r.computed;
 
             // converted points in userspace coords
-            NR::Point c_u = c_b * point_convert;
-            NR::Point f_u = f_b * point_convert;
-            double r_u = r_b * NR::expansion(point_convert);
+            Geom::Point c_u = c_b * point_convert;
+            Geom::Point f_u = f_b * point_convert;
+            double r_u = r_b * point_convert.descrim();
 
-            sp_repr_set_svg_double(repr, "cx", c_u[NR::X]);
-            sp_repr_set_svg_double(repr, "cy", c_u[NR::Y]);
-            sp_repr_set_svg_double(repr, "fx", f_u[NR::X]);
-            sp_repr_set_svg_double(repr, "fy", f_u[NR::Y]);
+            sp_repr_set_svg_double(repr, "cx", c_u[Geom::X]);
+            sp_repr_set_svg_double(repr, "cy", c_u[Geom::Y]);
+            sp_repr_set_svg_double(repr, "fx", f_u[Geom::X]);
+            sp_repr_set_svg_double(repr, "fy", f_u[Geom::Y]);
             sp_repr_set_svg_double(repr, "r", r_u);
 
         } else {
             SPLinearGradient *lg = SP_LINEARGRADIENT(gr);
 
-            NR::Point p1_b = NR::Point(lg->x1.computed, lg->y1.computed);
-            NR::Point p2_b = NR::Point(lg->x2.computed, lg->y2.computed);
+            Geom::Point p1_b = Geom::Point(lg->x1.computed, lg->y1.computed);
+            Geom::Point p2_b = Geom::Point(lg->x2.computed, lg->y2.computed);
 
-            NR::Point p1_u = p1_b * point_convert;
-            NR::Point p2_u = p2_b * point_convert;
+            Geom::Point p1_u = p1_b * point_convert;
+            Geom::Point p2_u = p2_b * point_convert;
 
-            sp_repr_set_svg_double(repr, "x1", p1_u[NR::X]);
-            sp_repr_set_svg_double(repr, "y1", p1_u[NR::Y]);
-            sp_repr_set_svg_double(repr, "x2", p2_u[NR::X]);
-            sp_repr_set_svg_double(repr, "y2", p2_u[NR::Y]);
+            sp_repr_set_svg_double(repr, "x1", p1_u[Geom::X]);
+            sp_repr_set_svg_double(repr, "y1", p1_u[Geom::Y]);
+            sp_repr_set_svg_double(repr, "x2", p2_u[Geom::X]);
+            sp_repr_set_svg_double(repr, "y2", p2_u[Geom::Y]);
         }
 
         // set the gradientUnits
@@ -935,12 +935,12 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 				double move_angle = NR::atan2(p_w - c_w) - r1_angle;
 				double move_stretch = NR::L2(p_w - c_w) / NR::L2(r1_w - c_w);
 
-				NR::Matrix move = NR::Matrix (NR::translate (-c_w)) *
-												 NR::Matrix (NR::rotate(-r1_angle)) *
-												 NR::Matrix (NR::scale(move_stretch, scale? move_stretch : 1)) *
-												 NR::Matrix (NR::rotate(r1_angle)) *
-												 NR::Matrix (NR::rotate(move_angle)) *
-												 NR::Matrix (NR::translate (c_w));
+				NR::Matrix move = NR::Matrix (Geom::Translate (-c_w)) *
+												 NR::Matrix (Geom::Rotate(-r1_angle)) *
+												 NR::Matrix (Geom::Scale(move_stretch, scale? move_stretch : 1)) *
+												 NR::Matrix (Geom::Rotate(r1_angle)) *
+												 NR::Matrix (Geom::Rotate(move_angle)) *
+												 NR::Matrix (Geom::Translate (c_w));
 
 				new_transform = gradient->gradientTransform * i2d * move * i2d.inverse();
 				transform_set = true;
@@ -954,12 +954,12 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 				double move_angle = NR::atan2(p_w - c_w) - r2_angle;
 				double move_stretch = NR::L2(p_w - c_w) / NR::L2(r2_w - c_w);
 
-				NR::Matrix move = NR::Matrix (NR::translate (-c_w)) *
-												 NR::Matrix (NR::rotate(-r2_angle)) *
-												 NR::Matrix (NR::scale(move_stretch, scale? move_stretch : 1)) *
-												 NR::Matrix (NR::rotate(r2_angle)) *
-												 NR::Matrix (NR::rotate(move_angle)) *
-												 NR::Matrix (NR::translate (c_w));
+				NR::Matrix move = NR::Matrix (Geom::Translate (-c_w)) *
+												 NR::Matrix (Geom::Rotate(-r2_angle)) *
+												 NR::Matrix (Geom::Scale(move_stretch, scale? move_stretch : 1)) *
+												 NR::Matrix (Geom::Rotate(r2_angle)) *
+												 NR::Matrix (Geom::Rotate(move_angle)) *
+												 NR::Matrix (Geom::Translate (c_w));
 
 				new_transform = gradient->gradientTransform * i2d * move * i2d.inverse();
 				transform_set = true;
@@ -1044,10 +1044,10 @@ sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool
 {
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
 
-    NR::Point p (0, 0);
+    Geom::Point p (0, 0);
 
     if (!gradient)
-        return p;
+        return from_2geom(p);
 
     if (SP_IS_LINEARGRADIENT(gradient)) {
         SPLinearGradient *lg = SP_LINEARGRADIENT(gradient);
@@ -1061,7 +1061,7 @@ sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool
             case POINT_LG_MID:
                 {   
                     gdouble offset = lg->vector.stops.at(point_i).offset;
-                    p = (1-offset) * NR::Point(lg->x1.computed, lg->y1.computed) + offset * NR::Point(lg->x2.computed, lg->y2.computed);
+                    p = (1-offset) * Geom::Point(lg->x1.computed, lg->y1.computed) + offset * Geom::Point(lg->x2.computed, lg->y2.computed);
                 }
                 break;
         }
@@ -1069,27 +1069,27 @@ sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool
         SPRadialGradient *rg = SP_RADIALGRADIENT(gradient);
         switch (point_type) {
             case POINT_RG_CENTER:
-                p = NR::Point (rg->cx.computed, rg->cy.computed);
+                p = Geom::Point (rg->cx.computed, rg->cy.computed);
                 break;
             case POINT_RG_FOCUS:
-                p = NR::Point (rg->fx.computed, rg->fy.computed);
+                p = Geom::Point (rg->fx.computed, rg->fy.computed);
                 break;
             case POINT_RG_R1:
-                p = NR::Point (rg->cx.computed + rg->r.computed, rg->cy.computed);
+                p = Geom::Point (rg->cx.computed + rg->r.computed, rg->cy.computed);
                 break;
             case POINT_RG_R2:
-                p = NR::Point (rg->cx.computed, rg->cy.computed - rg->r.computed);
+                p = Geom::Point (rg->cx.computed, rg->cy.computed - rg->r.computed);
                 break;
             case POINT_RG_MID1:
                 {
                     gdouble offset = rg->vector.stops.at(point_i).offset;
-                    p = (1-offset) * NR::Point (rg->cx.computed, rg->cy.computed) + offset * NR::Point(rg->cx.computed + rg->r.computed, rg->cy.computed);
+                    p = (1-offset) * Geom::Point (rg->cx.computed, rg->cy.computed) + offset * Geom::Point(rg->cx.computed + rg->r.computed, rg->cy.computed);
                 }        
                 break;
             case POINT_RG_MID2:
                 {
                     gdouble offset = rg->vector.stops.at(point_i).offset;
-                    p = (1-offset) * NR::Point (rg->cx.computed, rg->cy.computed) + offset * NR::Point(rg->cx.computed, rg->cy.computed - rg->r.computed);
+                    p = (1-offset) * Geom::Point (rg->cx.computed, rg->cy.computed) + offset * Geom::Point(rg->cx.computed, rg->cy.computed - rg->r.computed);
                 }        
                 break;
         }
@@ -1097,15 +1097,15 @@ sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool
 
     if (SP_GRADIENT(gradient)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
-        boost::optional<NR::Rect> bbox = item->getBounds(NR::identity()); // we need "true" bbox without item_i2d_affine
+        boost::optional<Geom::Rect> bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
         if (bbox) {
-            p *= NR::Matrix(bbox->dimensions()[NR::X], 0,
-                            0, bbox->dimensions()[NR::Y],
-                            bbox->min()[NR::X], bbox->min()[NR::Y]);
+            p *= Geom::Matrix(bbox->dimensions()[Geom::X], 0,
+                            0, bbox->dimensions()[Geom::Y],
+                            bbox->min()[Geom::X], bbox->min()[Geom::Y]);
         }
     }
-    p *= NR::Matrix(gradient->gradientTransform) * (NR::Matrix)sp_item_i2d_affine(item);
-    return p;
+    p *= Geom::Matrix(gradient->gradientTransform) * (Geom::Matrix)sp_item_i2d_affine(item);
+    return from_2geom(p);
 }
 
 

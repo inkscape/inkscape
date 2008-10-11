@@ -117,7 +117,8 @@ static void pointparam_knot_moved_handler(SPKnot */*knot*/, Geom::Point const *p
     Inkscape::SVGOStringStream os;
     os << pos;
 
-    kh->lpeobject->lpe->setParameter(kh->repr_key, os.str().c_str());
+    // note: get_lpe() will always return a valid pointer?
+    kh->lpeobject->get_lpe()->setParameter(kh->repr_key, os.str().c_str());
 }
 
 static void pointparam_knot_ungrabbed_handler(SPKnot *knot, unsigned int /*state*/, PointParamKnotHolder *kh)

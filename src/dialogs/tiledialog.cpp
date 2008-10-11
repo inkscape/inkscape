@@ -48,8 +48,8 @@ sp_compare_x_position(SPItem *first, SPItem *second)
     using Geom::X;
     using Geom::Y;
 
-    boost::optional<Geom::Rect> a = to_2geom(first->getBounds(sp_item_i2doc_affine(first)));
-    boost::optional<Geom::Rect> b = to_2geom(second->getBounds(sp_item_i2doc_affine(second)));
+    boost::optional<Geom::Rect> a = first->getBounds(sp_item_i2doc_affine(first));
+    boost::optional<Geom::Rect> b = second->getBounds(sp_item_i2doc_affine(second));
 
     if ( !a || !b ) {
         // FIXME?
@@ -88,8 +88,8 @@ sp_compare_x_position(SPItem *first, SPItem *second)
 int
 sp_compare_y_position(SPItem *first, SPItem *second)
 {
-    boost::optional<Geom::Rect> a = to_2geom(first->getBounds(sp_item_i2doc_affine(first)));
-    boost::optional<Geom::Rect> b = to_2geom(second->getBounds(sp_item_i2doc_affine(second)));
+    boost::optional<Geom::Rect> a = first->getBounds(sp_item_i2doc_affine(first));
+    boost::optional<Geom::Rect> b = second->getBounds(sp_item_i2doc_affine(second));
 
     if ( !a || !b ) {
         // FIXME?
@@ -168,7 +168,7 @@ void TileDialog::Grid_Arrange ()
     cnt=0;
     for (; items != NULL; items = items->next) {
         SPItem *item = SP_ITEM(items->data);
-        boost::optional<Geom::Rect> b = to_2geom(item->getBounds(sp_item_i2doc_affine(item)));
+        boost::optional<Geom::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
         if (!b) {
             continue;
         }
@@ -210,7 +210,7 @@ void TileDialog::Grid_Arrange ()
         const GSList *sizes = sorted;
         for (; sizes != NULL; sizes = sizes->next) {
             SPItem *item = SP_ITEM(sizes->data);
-            boost::optional<Geom::Rect> b = to_2geom(item->getBounds(sp_item_i2doc_affine(item)));
+            boost::optional<Geom::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
             if (b) {
                 width = b->dimensions()[Geom::X];
                 height = b->dimensions()[Geom::Y];
@@ -267,7 +267,7 @@ void TileDialog::Grid_Arrange ()
     }
 
 
-    boost::optional<Geom::Rect> sel_bbox = to_2geom(selection->bounds());
+    boost::optional<Geom::Rect> sel_bbox = selection->bounds();
     // Fit to bbox, calculate padding between rows accordingly.
     if ( sel_bbox && !SpaceManualRadioButton.get_active() ){
 #ifdef DEBUG_GRID_ARRANGE
@@ -317,7 +317,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
              for (; current_row != NULL; current_row = current_row->next) {
                  SPItem *item=SP_ITEM(current_row->data);
                  Inkscape::XML::Node *repr = SP_OBJECT_REPR(item);
-                 boost::optional<Geom::Rect> b = to_2geom(item->getBounds(sp_item_i2doc_affine(item)));
+                 boost::optional<Geom::Rect> b = item->getBounds(sp_item_i2doc_affine(item));
                  Geom::Point min;
                  if (b) {
                      width = b->dimensions()[Geom::X];
@@ -345,11 +345,8 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
              g_slist_free (current_row);
     }
 
-    NRRect b;
-            selection->bounds(&b);
-
-            sp_document_done (sp_desktop_document (desktop), SP_VERB_SELECTION_GRIDTILE, 
-                              _("Arrange in a grid"));
+    sp_document_done (sp_desktop_document (desktop), SP_VERB_SELECTION_GRIDTILE, 
+                      _("Arrange in a grid"));
 
 }
 

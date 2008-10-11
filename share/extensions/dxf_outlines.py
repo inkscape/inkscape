@@ -134,21 +134,22 @@ class MyEffect(inkex.Effect):
         for node in self.document.getroot().xpath(path, namespaces=inkex.NSS):
             d = node.get('d')
             sim = simplepath.parsePath(d)
-            simplepath.scalePath(sim,scale,-scale)
-            simplepath.translatePath(sim,0,h*scale)            
-            p = cubicsuperpath.CubicSuperPath(sim)
-            for sub in p:
-                for i in range(len(sub)-1):
-                    # generate unique handle for DXF ENTITY
-                    self.handle += 1
-                    s = sub[i]
-                    e = sub[i+1]
-                    if s[1] == s[2] and e[0] == e[1]:
-                        self.dxf_line([s[1],e[1]])
-                    elif (self.options.ROBO == 'true'):
-                        self.ROBO_spline([s[1],s[2],e[0],e[1]])
-                    else:
-                        self.dxf_spline([s[1],s[2],e[0],e[1]])
+            if len(sim):
+                simplepath.scalePath(sim,scale,-scale)
+                simplepath.translatePath(sim,0,h*scale)            
+                p = cubicsuperpath.CubicSuperPath(sim)
+                for sub in p:
+                    for i in range(len(sub)-1):
+                        # generate unique handle for DXF ENTITY
+                        self.handle += 1
+                        s = sub[i]
+                        e = sub[i+1]
+                        if s[1] == s[2] and e[0] == e[1]:
+                            self.dxf_line([s[1],e[1]])
+                        elif (self.options.ROBO == 'true'):
+                            self.ROBO_spline([s[1],s[2],e[0],e[1]])
+                        else:
+                            self.dxf_spline([s[1],s[2],e[0],e[1]])
         if self.options.ROBO == 'true':
             self.handle += 1
             self.ROBO_output()

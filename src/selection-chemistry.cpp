@@ -50,10 +50,7 @@
 #include "libnr/nr-matrix-translate-ops.h"
 #include "libnr/nr-scale-ops.h"
 #include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-rotate-ops.h>
-#include "libnr/nr-scale-translate-ops.h"
-#include "libnr/nr-translate-matrix-ops.h"
-#include "libnr/nr-translate-scale-ops.h"
+#include <2geom/transforms.h>
 #include "xml/repr.h"
 #include "style.h"
 #include "document-private.h"
@@ -617,14 +614,14 @@ sp_item_list_common_parent_group(GSList const *items)
 }
 
 /** Finds out the minimum common bbox of the selected items. */
-static boost::optional<NR::Rect>
+static boost::optional<Geom::Rect>
 enclose_items(GSList const *items)
 {
     g_assert(items != NULL);
 
-    boost::optional<NR::Rect> r;
+    boost::optional<Geom::Rect> r;
     for (GSList const *i = items; i; i = i->next) {
-        r = NR::union_bounds(r, sp_item_bbox_desktop((SPItem *) i->data));
+        r = Geom::unify(r, sp_item_bbox_desktop((SPItem *) i->data));
     }
     return r;
 }
@@ -670,7 +667,7 @@ sp_selection_raise(SPDesktop *desktop)
     rev = g_slist_sort(rev, (GCompareFunc) sp_item_repr_compare_position);
 
     // Determine the common bbox of the selected items.
-    boost::optional<NR::Rect> selected = enclose_items(items);
+    boost::optional<Geom::Rect> selected = enclose_items(items);
 
     // Iterate over all objects in the selection (starting from top).
     if (selected) {
@@ -680,7 +677,7 @@ sp_selection_raise(SPDesktop *desktop)
             for (SPObject *newref = child->next; newref; newref = newref->next) {
                 // if the sibling is an item AND overlaps our selection,
                 if (SP_IS_ITEM(newref)) {
-                    boost::optional<NR::Rect> newref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
+                    boost::optional<Geom::Rect> newref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
                     if ( newref_bbox && selected->intersects(*newref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if (!g_slist_find((GSList *) items, newref)) {
@@ -760,7 +757,7 @@ sp_selection_lower(SPDesktop *desktop)
     Inkscape::XML::Node *grepr = SP_OBJECT_REPR(group);
 
     // Determine the common bbox of the selected items.
-    boost::optional<NR::Rect> selected = enclose_items(items);
+    boost::optional<Geom::Rect> selected = enclose_items(items);
 
     /* Construct direct-ordered list of selected children. */
     GSList *rev = g_slist_copy((GSList *) items);
@@ -775,7 +772,7 @@ sp_selection_lower(SPDesktop *desktop)
             for (SPObject *newref = prev_sibling(child); newref; newref = prev_sibling(newref)) {
                 // if the sibling is an item AND overlaps our selection,
                 if (SP_IS_ITEM(newref)) {
-                    boost::optional<NR::Rect> ref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
+                    boost::optional<Geom::Rect> ref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
                     if ( ref_bbox && selected->intersects(*ref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if (!g_slist_find((GSList *) items, newref)) {
@@ -1221,7 +1218,6 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
             // calculate the matrix we need to apply to the clone to cancel its induced transform from its original
             Geom::Matrix parent_transform = sp_item_i2root_affine(SP_ITEM(SP_OBJECT_PARENT (item)));
             Geom::Matrix t = parent_transform * matrix_to_desktop (matrix_from_desktop (affine, item), item) * parent_transform.inverse();
-            NR::Matrix t_nr = from_2geom(t);
             Geom::Matrix t_inv =parent_transform * matrix_to_desktop (matrix_from_desktop (affine.inverse(), item), item) * parent_transform.inverse();
             Geom::Matrix result = t_inv * item->transform * t;
 
@@ -1234,19 +1230,18 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
 
                 if (prefs_parallel) {
                     Geom::Matrix move = result * clone_move * t_inv;
-                    NR::Matrix move_nr = from_2geom(move);
-                    sp_item_write_transform(item, SP_OBJECT_REPR(item), from_2geom(move), &move_nr);
+                    sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &move);
 
                 } else if (prefs_unmoved) {
                     //if (SP_IS_USE(sp_use_get_original(SP_USE(item))))
                     //    clone_move = NR::identity();
                     Geom::Matrix move = result * clone_move;
-                    sp_item_write_transform(item, SP_OBJECT_REPR(item), from_2geom(move), &t_nr);
+                    sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &t);
                 }
 
             } else {
                 // just apply the result
-                sp_item_write_transform(item, SP_OBJECT_REPR(item), result, &t_nr);
+                sp_item_write_transform(item, SP_OBJECT_REPR(item), result, &t);
             }
 
         } else {
@@ -1290,17 +1285,17 @@ sp_selection_scale_absolute(Inkscape::Selection *selection,
     if (selection->isEmpty())
         return;
 
-    boost::optional<NR::Rect> const bbox(selection->bounds());
+    boost::optional<Geom::Rect> const bbox(selection->bounds());
     if ( !bbox || bbox->isEmpty() ) {
         return;
     }
 
-    NR::translate const p2o(-bbox->min());
+    Geom::Translate const p2o(-bbox->min());
 
-    NR::scale const newSize(x1 - x0,
+    Geom::Scale const newSize(x1 - x0,
                             y1 - y0);
-    NR::scale const scale( newSize / NR::scale(bbox->dimensions()) );
-    NR::translate const o2n(x0, y0);
+    Geom::Scale const scale( newSize * Geom::Scale(bbox->dimensions()).inverse() );
+    Geom::Translate const o2n(x0, y0);
     NR::Matrix const final( p2o * scale * o2n );
 
     sp_selection_apply_affine(selection, final);
@@ -1312,15 +1307,15 @@ void sp_selection_scale_relative(Inkscape::Selection *selection, Geom::Point con
     if (selection->isEmpty())
         return;
 
-    boost::optional<NR::Rect> const bbox(selection->bounds());
+    boost::optional<Geom::Rect> const bbox(selection->bounds());
 
     if ( !bbox || bbox->isEmpty() ) {
         return;
     }
 
     // FIXME: ARBITRARY LIMIT: don't try to scale above 1 Mpx, it won't display properly and will crash sooner or later anyway
-    if ( bbox->extent(NR::X) * scale[Geom::X] > 1e6  ||
-         bbox->extent(NR::Y) * scale[Geom::Y] > 1e6 )
+    if ( bbox->dimensions()[NR::X] * scale[Geom::X] > 1e6  ||
+         bbox->dimensions()[NR::Y] * scale[Geom::Y] > 1e6 )
     {
         return;
     }
@@ -1355,12 +1350,12 @@ sp_selection_skew_relative(Inkscape::Selection *selection, Geom::Point const &al
 
 void sp_selection_move_relative(Inkscape::Selection *selection, Geom::Point const &move)
 {
-    sp_selection_apply_affine(selection, NR::Matrix(NR::translate(move)));
+    sp_selection_apply_affine(selection, NR::Matrix(Geom::Translate(move)));
 }
 
 void sp_selection_move_relative(Inkscape::Selection *selection, double dx, double dy)
 {
-    sp_selection_apply_affine(selection, NR::Matrix(NR::translate(dx, dy)));
+    sp_selection_apply_affine(selection, NR::Matrix(Geom::Translate(dx, dy)));
 }
 
 /**
@@ -1406,6 +1401,21 @@ sp_selection_rotate(Inkscape::Selection *selection, gdouble const angle_degrees)
                            _("Rotate"));
 }
 
+// helper function:
+static
+Geom::Point
+cornerFarthestFrom(Geom::Rect const &r, Geom::Point const &p){
+    Geom::Point m = r.midpoint();
+    unsigned i = 0;
+    if (p[X] < m[X]) {
+        i = 1;
+    }
+    if (p[Y] < m[Y]) {
+        i = 3 - i;
+    }
+    return r.corner(i);
+}
+
 /**
 \param  angle   the angle in "angular pixels", i.e. how many visible pixels must move the outermost point of the rotated object
 */
@@ -1415,7 +1425,7 @@ sp_selection_rotate_screen(Inkscape::Selection *selection, gdouble angle)
     if (selection->isEmpty())
         return;
 
-    boost::optional<NR::Rect> const bbox(selection->bounds());
+    boost::optional<Geom::Rect> const bbox(selection->bounds());
     boost::optional<Geom::Point> center = selection->center();
 
     if ( !bbox || !center ) {
@@ -1424,7 +1434,7 @@ sp_selection_rotate_screen(Inkscape::Selection *selection, gdouble angle)
 
     gdouble const zoom = selection->desktop()->current_zoom();
     gdouble const zmove = angle / zoom;
-    gdouble const r = NR::L2(bbox->cornerFarthestFrom(*center) - *center);
+    gdouble const r = Geom::L2(cornerFarthestFrom(*bbox, *center) - *center);
 
     gdouble const zangle = 180 * atan2(zmove, r) / M_PI;
 
@@ -1444,12 +1454,12 @@ sp_selection_scale(Inkscape::Selection *selection, gdouble grow)
     if (selection->isEmpty())
         return;
 
-    boost::optional<NR::Rect> const bbox(selection->bounds());
+    boost::optional<Geom::Rect> const bbox(selection->bounds());
     if (!bbox) {
         return;
     }
 
-    NR::Point const center(bbox->midpoint());
+    Geom::Point const center(bbox->midpoint());
 
     // you can't scale "do nizhe pola" (below zero)
     double const max_len = bbox->maxExtent();
@@ -1481,13 +1491,13 @@ sp_selection_scale_times(Inkscape::Selection *selection, gdouble times)
     if (selection->isEmpty())
         return;
 
-    boost::optional<NR::Rect> sel_bbox = selection->bounds();
+    boost::optional<Geom::Rect> sel_bbox = selection->bounds();
 
     if (!sel_bbox) {
         return;
     }
 
-    NR::Point const center(sel_bbox->midpoint());
+    Geom::Point const center(sel_bbox->midpoint());
     sp_selection_scale_relative(selection, center, Geom::Scale(times, times));
     sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_CONTEXT_SELECT,
                      _("Scale by whole factor"));
@@ -1805,7 +1815,7 @@ SPItem *next_item(SPDesktop *desktop, GSList *path, SPObject *root,
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item)
 {
     Geom::Rect dbox = desktop->get_display_area();
-    boost::optional<Geom::Rect> sbox = to_2geom(sp_item_bbox_desktop(item));
+    boost::optional<Geom::Rect> sbox = sp_item_bbox_desktop(item);
 
     if ( sbox && dbox.contains(*sbox) == false ) {
         Geom::Point const s_dt = sbox->midpoint();
@@ -2036,8 +2046,8 @@ sp_select_clone_original(SPDesktop *desktop)
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         bool highlight = prefs->getBool("options.highlightoriginal", "value");
         if (highlight) {
-            boost::optional<NR::Rect> a = item->getBounds(sp_item_i2d_affine(item));
-            boost::optional<NR::Rect> b = original->getBounds(sp_item_i2d_affine(original));
+            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2d_affine(item));
+            boost::optional<Geom::Rect> b = original->getBounds(sp_item_i2d_affine(original));
             if ( a && b ) {
                 // draw a flashing line between the objects
                 SPCurve *curve = new SPCurve();
@@ -2078,7 +2088,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     }
 
     sp_document_ensure_up_to_date(doc);
-    boost::optional<NR::Rect> r = selection->bounds();
+    boost::optional<Geom::Rect> r = selection->bounds();
     boost::optional<Geom::Point> c = selection->center();
     if ( !r || !c || r->isEmpty() ) {
         return;
@@ -2202,15 +2212,15 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     }
 
     sp_document_ensure_up_to_date(doc);
-    boost::optional<NR::Rect> r = selection->bounds();
+    boost::optional<Geom::Rect> r = selection->bounds();
     if ( !r || r->isEmpty() ) {
         return;
     }
 
     // calculate the transform to be applied to objects to move them to 0,0
-    NR::Point move_p = NR::Point(0, sp_document_height(doc)) - (r->min() + NR::Point (0, r->extent(NR::Y)));
-    move_p[NR::Y] = -move_p[NR::Y];
-    NR::Matrix move = NR::Matrix (NR::translate (move_p));
+    Geom::Point move_p = Geom::Point(0, sp_document_height(doc)) - (r->min() + Geom::Point (0, r->dimensions()[NR::Y]));
+    move_p[Geom::Y] = -move_p[Geom::Y];
+    NR::Matrix move = NR::Matrix (Geom::Translate (move_p));
 
     GSList *items = g_slist_copy((GSList *) selection->itemList());
 
@@ -2251,7 +2261,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     prefs->setInt("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
     gchar const *pat_id = pattern_tile(repr_copies, bounds, doc,
-                                       ( NR::Matrix(NR::translate(desktop->dt2doc(NR::Point(r->min()[NR::X],
+                                       ( NR::Matrix(Geom::Translate(desktop->dt2doc(NR::Point(r->min()[NR::X],
                                                                                             r->max()[NR::Y]))))
                                          * parent_transform.inverse() ),
                                        parent_transform * move);
@@ -2545,8 +2555,8 @@ sp_selection_create_bitmap_copy (SPDesktop *desktop)
     }
 
     // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
-    NR::Matrix eek (sp_item_i2d_affine (SP_ITEM(parent_object)));
-    NR::Matrix t;
+    Geom::Matrix eek (sp_item_i2d_affine (SP_ITEM(parent_object)));
+    Geom::Matrix t;
 
     double shift_x = bbox.x0;
     double shift_y = bbox.y1;
@@ -2554,7 +2564,7 @@ sp_selection_create_bitmap_copy (SPDesktop *desktop)
         shift_x = round (shift_x);
         shift_y = -round (-shift_y); // this gets correct rounding despite coordinate inversion, remove the negations when the inversion is gone
     }
-    t = NR::scale(1, -1) * NR::translate (shift_x, shift_y) * eek.inverse();
+    t = Geom::Scale(1, -1) * Geom::Translate (shift_x, shift_y) * eek.inverse();
 
     // Do the export
     sp_export_png_file(document, filepath,
@@ -2861,7 +2871,7 @@ fit_canvas_to_selection(SPDesktop *desktop)
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to fit canvas to."));
         return false;
     }
-    boost::optional<Geom::Rect> const bbox(to_2geom(desktop->selection->bounds()));
+    boost::optional<Geom::Rect> const bbox(desktop->selection->bounds());
     if (bbox && !bbox->isEmpty()) {
         doc->fitToRect(*bbox);
         return true;
@@ -2889,7 +2899,7 @@ fit_canvas_to_drawing(SPDocument *doc)
 
     sp_document_ensure_up_to_date(doc);
     SPItem const *const root = SP_ITEM(doc->root);
-    boost::optional<Geom::Rect> const bbox(to_2geom(root->getBounds(sp_item_i2r_affine(root))));
+    boost::optional<Geom::Rect> const bbox(root->getBounds(sp_item_i2r_affine(root)));
     if (bbox && !bbox->isEmpty()) {
         doc->fitToRect(*bbox);
         return true;

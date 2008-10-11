@@ -80,7 +80,7 @@ sp_conn_end_pair_build(SPObject *object)
 
 
 static void
-avoid_conn_move(NR::Matrix const */*mp*/, SPItem *moved_item)
+avoid_conn_move(Geom::Matrix const */*mp*/, SPItem *moved_item)
 {
     // Reroute connector
     SPPath *path = SP_PATH(moved_item);
@@ -167,7 +167,7 @@ SPConnEndPair::getEndpoints(NR::Point endPts[]) const {
 
     for (unsigned h = 0; h < 2; ++h) {
         if ( h2attItem[h] ) {
-            boost::optional<NR::Rect> bbox = h2attItem[h]->getBounds(sp_item_i2doc_affine(h2attItem[h]));
+            boost::optional<Geom::Rect> bbox = h2attItem[h]->getBounds(sp_item_i2doc_affine(h2attItem[h]));
             if (bbox) {
                 endPts[h] = bbox->midpoint();
             } else {

@@ -6,7 +6,7 @@
 #include <approx-equal.h>
 
 void satisfied_guide_cns(SPDesktop const &desktop,
-                         std::vector<NR::Point> const &snappoints,
+                         std::vector<Geom::Point> const &snappoints,
                          std::vector<SPGuideConstraint> &cns)
 {
     SPNamedView const &nv = *sp_desktop_namedview(&desktop);

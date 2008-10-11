@@ -41,7 +41,7 @@ bool SPUseReference::_acceptObject(SPObject * const obj) const
 
 
 static void sp_usepath_href_changed(SPObject *old_ref, SPObject *ref, SPUsePath *offset);
-static void sp_usepath_move_compensate(NR::Matrix const *mp, SPItem *original, SPUsePath *self);
+static void sp_usepath_move_compensate(Geom::Matrix const *mp, SPItem *original, SPUsePath *self);
 static void sp_usepath_delete_self(SPObject *deleted, SPUsePath *offset);
 static void sp_usepath_source_modified(SPObject *iSource, guint flags, SPUsePath *offset);
 
@@ -139,7 +139,7 @@ sp_usepath_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUsePath *off
 }
 
 static void
-sp_usepath_move_compensate(NR::Matrix const *mp, SPItem *original, SPUsePath *self)
+sp_usepath_move_compensate(Geom::Matrix const *mp, SPItem *original, SPUsePath *self)
 {
     guint mode = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_PARALLEL);
     if (mode == SP_CLONE_COMPENSATION_NONE) {

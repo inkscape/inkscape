@@ -352,11 +352,11 @@ sp_flowtext_print(SPItem *item, SPPrintContext *ctx)
     NRRect pbox;
     sp_item_invoke_bbox(item, &pbox, Geom::identity(), TRUE);
     NRRect bbox;
-    boost::optional<NR::Rect> bbox_maybe = sp_item_bbox_desktop(item);
+    boost::optional<Geom::Rect> bbox_maybe = sp_item_bbox_desktop(item);
     if (!bbox_maybe) {
         return;
     }
-    bbox = NRRect(*bbox_maybe);
+    bbox = NRRect(from_2geom(*bbox_maybe));
 
     NRRect dbox;
     dbox.x0 = 0.0;

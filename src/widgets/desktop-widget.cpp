@@ -1724,20 +1724,20 @@ sp_desktop_widget_update_scrollbars (SPDesktopWidget *dtw, double scale)
 
     /* The desktop region we always show unconditionally */
     SPDocument *doc = dtw->desktop->doc();
-    NR::Rect darea(Geom::Point(-sp_document_width(doc), -sp_document_height(doc)),
-                   Geom::Point(2 * sp_document_width(doc), 2 * sp_document_height(doc)));
-    darea = NR::union_bounds(darea, sp_item_bbox_desktop(SP_ITEM(SP_DOCUMENT_ROOT(doc))));
+    Geom::Rect darea ( Geom::Point(-sp_document_width(doc), -sp_document_height(doc)),
+                     Geom::Point(2 * sp_document_width(doc), 2 * sp_document_height(doc))  );
+    SPObject* root = doc->root;
+    SPItem* item = SP_ITEM(root);
+    boost::optional<Geom::Rect> deskarea = Geom::unify(darea, sp_item_bbox_desktop(item));
 
     /* Canvas region we always show unconditionally */
-    NR::Rect carea(Geom::Point(darea.min()[Geom::X] * scale - 64,
-                             darea.max()[Geom::Y] * -scale - 64),
-                   Geom::Point(darea.max()[Geom::X] * scale + 64,
-                             darea.min()[Geom::Y] * -scale + 64));
+    Geom::Rect carea( Geom::Point(deskarea->min()[Geom::X] * scale - 64, deskarea->max()[Geom::Y] * -scale - 64),
+                    Geom::Point(deskarea->max()[Geom::X] * scale + 64, deskarea->min()[Geom::Y] * -scale + 64)  );
 
     Geom::Rect viewbox = dtw->canvas->getViewbox();
 
     /* Viewbox is always included into scrollable region */
-    carea = NR::union_bounds(carea, from_2geom(viewbox));
+    carea = Geom::unify(carea, viewbox);
 
     set_adjustment(dtw->hadj, carea.min()[Geom::X], carea.max()[Geom::X],
                    viewbox.dimensions()[Geom::X],

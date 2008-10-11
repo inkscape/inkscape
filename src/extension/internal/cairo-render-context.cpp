@@ -116,7 +116,7 @@ CairoRenderContext::CairoRenderContext(CairoRenderer *parent) :
     _stream(NULL),
     _is_valid(FALSE),
     _vector_based_target(FALSE),
-    _cr(NULL),
+    _cr(NULL), // Cairo context
     _surface(NULL),
     _target(CAIRO_SURFACE_TYPE_IMAGE),
     _target_format(CAIRO_FORMAT_ARGB32),
@@ -481,8 +481,8 @@ void
 CairoRenderContext::setClipMode(CairoClipMode mode)
 {
     switch (mode) {
-        case CLIP_MODE_PATH:
-        case CLIP_MODE_MASK:
+        case CLIP_MODE_PATH: // Clip is rendered as a path for vector output
+        case CLIP_MODE_MASK: // Clip is rendered as a bitmap for raster output.
             _clip_mode = mode;
             break;
         default:
@@ -538,9 +538,23 @@ CairoRenderContext::popLayer(void)
     g_assert( _is_valid );
 
     float opacity = _state->opacity;
-    TRACE(("--popLayer w/ %f\n", opacity));
+    TRACE(("--popLayer w/ opacity %f\n", opacity));
 
-    // apply clipPath or mask if present
+    /*
+     At this point, the Cairo source is ready. A Cairo mask must be created if required.
+     Care must be taken of transformatons as Cairo, like PS and PDF, treats clip paths and
+     masks independently of the objects they effect while in SVG the clip paths and masks
+     are defined relative to the objects they are attached to.
+     Notes:
+     1. An SVG object may have both a clip path and a mask!
+     2. An SVG clip path can be composed of an object with a clip path. This is not handled properly.
+     3. An SVG clipped or masked object may be first drawn off the page and then translated onto
+        the page (document). This is also not handled properly.
+     4. The code converts all SVG masks to bitmaps. This shouldn't be necessary.
+     5. Cairo expects a mask to use only the alpha channel. SVG masks combine the RGB luminance with
+        alpha. This is handled here by doing a pixel by pixel conversion.
+    */
+
     SPClipPath *clip_path = _state->clip_path;
     SPMask *mask = _state->mask;
     if (clip_path || mask) {
@@ -548,15 +562,17 @@ CairoRenderContext::popLayer(void)
         CairoRenderContext *clip_ctx = 0;
         cairo_surface_t *clip_mask = 0;
 
+        // Apply any clip path first
         if (clip_path) {
+            TRACE(("  Applying clip\n"));
             if (_render_mode == RENDER_MODE_CLIP)
                 mask = NULL;    // disable mask when performing nested clipping
 
             if (_vector_based_target) {
-                setClipMode(CLIP_MODE_PATH);
+                setClipMode(CLIP_MODE_PATH); // Vector
                 if (!mask) {
                     cairo_pop_group_to_source(_cr);
-                    _renderer->applyClipPath(this, clip_path);
+                    _renderer->applyClipPath(this, clip_path); // Uses cairo_clip()
                     if (opacity == 1.0)
                         cairo_paint(_cr);
                     else
@@ -570,7 +586,10 @@ CairoRenderContext::popLayer(void)
                 // setup a new rendering context
                 clip_ctx = _renderer->createContext();
                 clip_ctx->setImageTarget(CAIRO_FORMAT_A8);
-                clip_ctx->setClipMode(CLIP_MODE_MASK);
+                clip_ctx->setClipMode(CLIP_MODE_MASK);  // Raster
+                // This code ties the clipping to the document coordinates. It doesn't allow
+                // for a clipped object intially drawn off the page and then translated onto
+                // the page.
                 if (!clip_ctx->setupSurface(_width, _height)) {
                     TRACE(("clip: setupSurface failed\n"));
                     _renderer->destroyContext(clip_ctx);
@@ -583,7 +602,7 @@ CairoRenderContext::popLayer(void)
                 cairo_paint(clip_ctx->_cr);
                 cairo_restore(clip_ctx->_cr);
 
-                // if a mask won't be applied set opacity too
+                // If a mask won't be applied set opacity too. (The clip is represented by a solid Cairo mask.)
                 if (!mask)
                     cairo_set_source_rgba(clip_ctx->_cr, 1.0, 1.0, 1.0, opacity);
                 else
@@ -614,7 +633,9 @@ CairoRenderContext::popLayer(void)
             }
         }
 
+        // Apply any mask second
         if (mask) {
+            TRACE(("  Applying mask\n"));
             // create rendering context for mask
             CairoRenderContext *mask_ctx = _renderer->createContext();
 
@@ -685,6 +706,7 @@ CairoRenderContext::popLayer(void)
             _renderer->destroyContext(mask_ctx);
         }
     } else {
+        // No clip path or mask
         cairo_pop_group_to_source(_cr);
         if (opacity == 1.0)
             cairo_paint(_cr);

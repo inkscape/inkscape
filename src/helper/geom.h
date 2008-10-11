@@ -25,6 +25,17 @@ void pathv_matrix_point_bbox_wind_distance ( Geom::PathVector const & pathv, Geo
 
 Geom::PathVector pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv );
 
+/*
+The following predefined objects are for reference
+and comparison.  They are defined in helper/geom.cpp
+*/
+extern Geom::Matrix GEOM_MATRIX_IDENTITY;
+
+namespace Geom{
+bool transform_equalp(Geom::Matrix const &m0, Geom::Matrix const &m1, Geom::Coord const epsilon);
+bool translate_equalp(Geom::Matrix const &m0, Geom::Matrix const &m1, Geom::Coord const epsilon);
+bool matrix_equalp(Geom::Matrix const &m0, Geom::Matrix const &m1, Geom::Coord const epsilon);
+}
 #endif  // INKSCAPE_HELPER_GEOM_H
 
 /*

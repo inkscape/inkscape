@@ -243,8 +243,7 @@ public:
     /** @brief Returns the bounding rectangle of the selection */
     NRRect *bounds(NRRect *dest, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
     /** @brief Returns the bounding rectangle of the selection */
-    boost::optional<NR::Rect> bounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
-    boost::optional<Geom::Rect> bounds_2geom(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
+    boost::optional<Geom::Rect> bounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
      * @brief Returns the bounding rectangle of the selection
@@ -258,7 +257,7 @@ public:
      *
      * \todo how is this different from bounds()?
      */
-    boost::optional<NR::Rect> boundsInDocument(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
+    boost::optional<Geom::Rect> boundsInDocument(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
      * @brief Returns the rotation/skew center of the selection
@@ -269,13 +268,13 @@ public:
      * @brief Gets the selection's snap points.
      * @return Selection's snap points
      */
-    std::vector<NR::Point> getSnapPoints(bool includeItemCenter) const;
+    std::vector<Geom::Point> getSnapPoints(bool includeItemCenter) const;
 
     /**
      * @brief Gets the snap points of a selection that form a convex hull.
      * @return Selection's convex hull points
      */
-    std::vector<NR::Point> getSnapPointsConvexHull() const;
+    std::vector<Geom::Point> getSnapPointsConvexHull() const;
 
     /**
      * @brief Connects a slot to be notified of selection changes

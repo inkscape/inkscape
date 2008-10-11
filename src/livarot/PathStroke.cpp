@@ -8,7 +8,7 @@
 
 #include "Path.h"
 #include "Shape.h"
-#include <libnr/nr-rotate-ops.h>
+#include <2geom/transforms.h>
 
 /*
  * stroking polylines into a Shape instance
@@ -729,7 +729,7 @@ void Path::RecRound(Shape *dest, int sNo, int eNo, // start and end index
     ang /= lod;
 
     int nbS = (int) floor(ang);
-    NR::rotate omega(((sia > 0) ? -lod : lod));
+    Geom::Rotate omega(((sia > 0) ? -lod : lod));
     NR::Point cur = iS - origine;
     //  StrokeNormalize(cur);
     //  cur*=width;

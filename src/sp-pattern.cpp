@@ -20,7 +20,7 @@
 #include <string>
 #include <libnr/nr-matrix-ops.h>
 #include "libnr/nr-matrix-fns.h"
-#include <libnr/nr-translate-matrix-ops.h>
+#include <2geom/transforms.h>
 #include "macros.h"
 #include "svg/svg.h"
 #include "display/nr-arena.h"
@@ -705,7 +705,7 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 			pp->pcs2px = pattern_patternTransform(pat) * full_transform;
 		}
 
-		pp->pcs2px = NR::translate (pattern_x (pat), pattern_y (pat)) * pp->pcs2px;
+		pp->pcs2px = Geom::Translate (pattern_x (pat), pattern_y (pat)) * pp->pcs2px;
 	}
 
 	/* Create arena */

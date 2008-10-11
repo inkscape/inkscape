@@ -30,17 +30,6 @@
 
 static cairo_user_data_key_t key;
 
-
-/**
- * Felipe,
- * Cairo is changing its userfont api a little bit for 1.7+, 1.8,
- * etc.   This switch makes your code compile both on 1.6 and 1.7.  Is
- * this ok?
- * 
- * Bob
- */     
-#if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 7, 0))
-
 static cairo_status_t font_init_cb (cairo_scaled_font_t  *scaled_font,
 		       cairo_t */*cairo*/, cairo_font_extents_t *metrics){
 	cairo_font_face_t*  face;
@@ -52,41 +41,17 @@ static cairo_status_t font_init_cb (cairo_scaled_font_t  *scaled_font,
 static cairo_status_t font_text_to_glyphs_cb (
                 cairo_scaled_font_t  *scaled_font,
 				const char	         *utf8,
-				int                  /*utf8_len*/,
+				int                  utf8_len,
 				cairo_glyph_t	     **glyphs,
 				int		             *num_glyphs,
-				cairo_text_cluster_t **/*clusters*/,
-				int                  */*num_clusters*/,
-				cairo_bool_t         */*backward*/){
+				cairo_text_cluster_t **clusters,
+				int                  *num_clusters,
+				cairo_text_cluster_flags_t         *flags){
 	cairo_font_face_t*  face;
 	face = cairo_scaled_font_get_font_face(scaled_font);
 	SvgFont* instance = (SvgFont*) cairo_font_face_get_user_data(face, &key);
-	return instance->scaled_font_text_to_glyphs(scaled_font, utf8, glyphs, num_glyphs);
+	return instance->scaled_font_text_to_glyphs(scaled_font, utf8, utf8_len, glyphs, num_glyphs, clusters, num_clusters, flags);
 }
-
-
-#else
-
-static cairo_status_t font_init_cb (cairo_scaled_font_t  *scaled_font,
-		       cairo_font_extents_t *metrics){
-	cairo_font_face_t*  face;
-	face = cairo_scaled_font_get_font_face(scaled_font);
-	SvgFont* instance = (SvgFont*) cairo_font_face_get_user_data(face, &key);
-	return instance->scaled_font_init(scaled_font, metrics);
-}
-
-static cairo_status_t font_text_to_glyphs_cb (cairo_scaled_font_t *scaled_font,
-				const char	*utf8,
-				cairo_glyph_t	**glyphs,
-				int		*num_glyphs){
-	cairo_font_face_t*  face;
-	face = cairo_scaled_font_get_font_face(scaled_font);
-	SvgFont* instance = (SvgFont*) cairo_font_face_get_user_data(face, &key);
-	return instance->scaled_font_text_to_glyphs(scaled_font, utf8, glyphs, num_glyphs);
-}
-
-#endif
-
 
 static cairo_status_t font_render_glyph_cb (cairo_scaled_font_t  *scaled_font,
 			       unsigned long         glyph,
@@ -136,12 +101,16 @@ unsigned int compare_them(char* s1, char* s2){
 cairo_status_t
 SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 				const char	*utf8,
+				int             utf8_len,
 				cairo_glyph_t	**glyphs,
-				int		*num_glyphs)
+				int		*num_glyphs,
+				cairo_text_cluster_t **clusters,
+				int                  *num_clusters,
+				cairo_text_cluster_flags_t         *flags)
 {
 	//This function receives a text string to be rendered. It then defines what is the sequence of glyphs that
-	// is used to properly render this string. It alse defines the respective coordinates of each glyph. Thus, it
-	// has to read the attributes od the SVGFont hkern and vkern nodes in order to adjust the glyph kerning.
+	// is used to properly render this string. It also defines the respective coordinates of each glyph. Thus, it
+	// has to read the attributes of the SVGFont hkern and vkern nodes in order to adjust the glyph kerning.
 	//It also determines the usage of the missing-glyph in portions of the string that does not match any of the declared glyphs.
 
     unsigned long i;
@@ -258,8 +227,8 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
         //This glyph has a path description on its d attribute, so we render it:
         cairo_new_path(cr);
         Geom::Scale s(1.0/((SPFont*) node->parent)->horiz_adv_x);
-        NRRect area(0,0,1,1); //I need help here!
-        feed_pathvector_to_cairo (cr, pathv, s, area.upgrade(), false, 0);
+        Geom::Rect area( Geom::Point(0,0), Geom::Point(1,1) ); //I need help here!    (reaction: note that the 'area' parameter is an *optional* rect, so you can pass an empty boost::optional<Geom::Rect>() )
+        feed_pathvector_to_cairo (cr, pathv, s, area, false, 0);
         cairo_fill(cr);
     }
 

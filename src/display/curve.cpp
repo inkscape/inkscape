@@ -200,6 +200,7 @@ SPCurve::moveto(gdouble x, gdouble y)
 }
 /**
  * Perform a moveto to a point, thus starting a new subpath.
+ * Point p must be finite.
  */
 void
 SPCurve::moveto(Geom::Point const &p)
@@ -209,16 +210,17 @@ SPCurve::moveto(Geom::Point const &p)
 }
 
 /**
- * Calls SPCurve::lineto() with a point's coordinates.
+ * Adds a line to the current subpath.
+ * Point p must be finite.
  */
 void
 SPCurve::lineto(Geom::Point const &p)
 {
-    if (_pathv.empty())  g_message("SPCurve::lineto path is empty!");
+    if (_pathv.empty())  g_message("SPCurve::lineto - path is empty!");
     else _pathv.back().appendNew<Geom::LineSegment>( p );
 }
 /**
- * Adds a line to the current subpath.
+ * Calls SPCurve::lineto( Geom::Point(x,y) )
  */
 void
 SPCurve::lineto(gdouble x, gdouble y)
@@ -227,16 +229,38 @@ SPCurve::lineto(gdouble x, gdouble y)
 }
 
 /**
- * Calls SPCurve::curveto() with coordinates of three points.
+ * Adds a quadratic bezier segment to the current subpath.
+ * All points must be finite.
+ */
+void
+SPCurve::quadto(Geom::Point const &p1, Geom::Point const &p2)
+{
+    if (_pathv.empty())  g_message("SPCurve::quadto - path is empty!");
+    else _pathv.back().appendNew<Geom::QuadraticBezier>( p1, p2);
+}
+/**
+ * Calls SPCurve::quadto( Geom::Point(x1,y1), Geom::Point(x2,y2) )
+ * All coordinates must be finite.
+ */
+void
+SPCurve::quadto(gdouble x1, gdouble y1, gdouble x2, gdouble y2)
+{
+    quadto( Geom::Point(x1,y1), Geom::Point(x2,y2) );
+}
+
+/**
+ * Adds a bezier segment to the current subpath.
+ * All points must be finite.
  */
 void
 SPCurve::curveto(Geom::Point const &p0, Geom::Point const &p1, Geom::Point const &p2)
 {
-    if (_pathv.empty())  g_message("SPCurve::lineto path is empty!");
+    if (_pathv.empty())  g_message("SPCurve::curveto - path is empty!");
     else _pathv.back().appendNew<Geom::CubicBezier>( p0, p1, p2 );
 }
 /**
- * Adds a bezier segment to the current subpath.
+ * Calls SPCurve::curveto( Geom::Point(x0,y0), Geom::Point(x1,y1), Geom::Point(x2,y2) )
+ * All coordinates must be finite.
  */
 void
 SPCurve::curveto(gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdouble y2)

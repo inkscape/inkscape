@@ -39,7 +39,7 @@
  *
  */
 
-#define BUILDTOOL_VERSION  "BuildTool v0.9.6"
+#define BUILDTOOL_VERSION  "BuildTool v0.9.9"
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -3189,10 +3189,18 @@ protected:
     /**
      *    If this prefix is seen in a substitution, use as a
      *    pkg-config 'libs' query
-     *             example:  <property pkg-config="pcl"/>
+     *             example:  <property pkg-config-libs="pcl"/>
      *             ${pcl.gtkmm}
      */
     String pclPrefix;
+
+    /**
+     *    If this prefix is seen in a substitution, use as a
+     *    Subversion "svn info" query
+     *             example:  <property subversion="svn"/>
+     *             ${svn.Revision}
+     */
+    String svnPrefix;
 
 
 
@@ -3631,6 +3639,112 @@ private:
     char *parsebuf;
     int parselen;
 };
+
+
+
+/**
+ * Execute the "svn info" command and parse the result.
+ * This is a simple, small class. Define here, because it
+ * is used by MakeBase implementation methods. 
+ */
+class SvnInfo : public MakeBase
+{
+public:
+
+#if 0
+    /**
+     * Safe way. Execute "svn info --xml" and parse the result.  Search for
+     * elements/attributes.  Safe from changes in format.
+     */
+    bool query(const String &name, String &res)
+    {
+        String cmd = "svn info --xml";
+    
+        String outString, errString;
+        bool ret = executeCommand(cmd.c_str(), "", outString, errString);
+        if (!ret)
+            {
+            error("error executing '%s': %s", cmd.c_str(), errString.c_str());
+            return false;
+            }
+        Parser parser;
+        Element *elem = parser.parse(outString); 
+        if (!elem)
+            {
+            error("error parsing 'svn info' xml result: %s", outString.c_str());
+            return false;
+            }
+        
+        res = elem->getTagValue(name);
+        if (res.size()==0)
+            {
+            res = elem->getTagAttribute("entry", name);
+            }
+        return true;
+    } 
+#else
+
+
+    /**
+     * Universal way.  Parse the file directly.  Not so safe from
+     * changes in format.
+     */
+    bool query(const String &name, String &res)
+    {
+        String fileName = resolve(".svn/entries");
+        String nFileName = getNativePath(fileName);
+        
+        std::map<String, String> properties;
+        
+        FILE *f = fopen(nFileName.c_str(), "r");
+        if (!f)
+            {
+            error("could not open SVN 'entries' file");
+            return false;
+            }
+
+        const char *fieldNames[] =
+            {
+            "format-nbr",
+            "name",
+            "kind",
+            "revision",
+            "url",
+            "repos",
+            "schedule",
+            "text-time",
+            "checksum",
+            "committed-date",
+            "committed-rev",
+            "last-author",
+            "has-props",
+            "has-prop-mods",
+            "cachable-props",
+            };
+
+        for (int i=0 ; i<15 ; i++)
+            {
+            inbuf[0] = '\0';
+            if (feof(f) || !fgets(inbuf, 255, f))
+                break;
+            properties[fieldNames[i]] = trim(inbuf);
+            }
+        fclose(f);
+        
+        res = properties[name];
+        
+        return true;
+    } 
+    
+private:
+
+    char inbuf[256];
+
+#endif
+
+};
+
+
 
 
 
@@ -4581,6 +4695,16 @@ bool MakeBase::lookupProperty(const String &propertyName, String &result)
         varname = varname.substr(pclPrefix.size());
         String val;
         if (!pkgConfigQuery(varname, 2, val))
+            return false;
+        result = val;
+        }
+    else if (svnPrefix.size() > 0 &&
+        varname.compare(0, svnPrefix.size(), svnPrefix) == 0)
+        {
+        varname = varname.substr(svnPrefix.size());
+        String val;
+        SvnInfo svnInfo;
+        if (!svnInfo.query(varname, val))
             return false;
         result = val;
         }
@@ -5605,9 +5729,6 @@ bool PkgConfig::query(const String &pkgName)
     
     return true;
 }
-
-
-
 
 
 //########################################################################
@@ -8086,13 +8207,14 @@ public:
     virtual bool execute()
         {
         String fileName = parent.eval(fileNameOpt, "");
+        bool force      = parent.evalBool(forceOpt, false);
         String text     = parent.eval(textOpt, "");
 
         taskstatus("%s", fileName.c_str());
         String fullName = parent.resolve(fileName);
-        if (!isNewerThan(parent.getURI().getPath(), fullName))
+        if (!force && !isNewerThan(parent.getURI().getPath(), fullName))
             {
-            //trace("skipped <makefile>");
+            taskstatus("skipped");
             return true;
             }
         String fullNative = getNativePath(fullName);
@@ -8116,6 +8238,8 @@ public:
         {
         if (!parent.getAttribute(elem, "file", fileNameOpt))
             return false;
+        if (!parent.getAttribute(elem, "force", forceOpt))
+            return false;
         if (fileNameOpt.size() == 0)
             {
             error("<makefile> requires 'file=\"filename\"' attribute");
@@ -8131,6 +8255,7 @@ public:
 private:
 
     String fileNameOpt;
+    String forceOpt;
     String textOpt;
 };
 
@@ -9371,6 +9496,7 @@ void Make::init()
     pcPrefix        = "pc.";
     pccPrefix       = "pcc.";
     pclPrefix       = "pcl.";
+    svnPrefix       = "svn.";
     properties.clear();
     for (unsigned int i = 0 ; i < allTasks.size() ; i++)
         delete allTasks[i];
@@ -9788,6 +9914,16 @@ bool Make::parseProperty(Element *elem)
                 }
             pclPrefix = attrVal;
             pclPrefix.push_back('.');
+            }
+        else if (attrName == "subversion")
+            {
+            if (attrVal.find('.') != attrVal.npos)
+                {
+                error("subversion prefix cannot have a '.' in it");
+                return false;
+                }
+            svnPrefix = attrVal;
+            svnPrefix.push_back('.');
             }
         }
 

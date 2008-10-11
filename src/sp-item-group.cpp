@@ -66,7 +66,7 @@ static void sp_group_set(SPObject *object, unsigned key, char const *value);
 static void sp_group_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_group_print (SPItem * item, SPPrintContext *ctx);
 static gchar * sp_group_description (SPItem * item);
-static NR::Matrix sp_group_set_transform(SPItem *item, NR::Matrix const &xform);
+static Geom::Matrix sp_group_set_transform(SPItem *item, Geom::Matrix const &xform);
 static NRArenaItem *sp_group_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static void sp_group_hide (SPItem * item, unsigned int key);
 static void sp_group_snappoints (SPItem const *item, SnapPointsIter p);
@@ -290,15 +290,15 @@ static gchar * sp_group_description (SPItem * item)
     return SP_GROUP(item)->group->getDescription();
 }
 
-static NR::Matrix
-sp_group_set_transform(SPItem *item, NR::Matrix const &xform)
+static Geom::Matrix
+sp_group_set_transform(SPItem *item, Geom::Matrix const &xform)
 {
     Inkscape::Selection *selection = sp_desktop_selection(inkscape_active_desktop());
     persp3d_split_perspectives_according_to_selection(selection);
 
-    NR::Matrix last_trans;
+    Geom::Matrix last_trans;
     sp_svg_transform_read(SP_OBJECT_REPR(item)->attribute("transform"), &last_trans);
-    NR::Matrix inc_trans = last_trans.inverse()*xform;
+    Geom::Matrix inc_trans = last_trans.inverse()*xform;
 
     std::list<Persp3D *> plist = selection->perspList();
     for (std::list<Persp3D *>::iterator i = plist.begin(); i != plist.end(); ++i) {
@@ -702,7 +702,7 @@ void CGroup::onModified(guint flags) {
 
 void CGroup::calculateBBox(NRRect *bbox, Geom::Matrix const &transform, unsigned const flags) {
 
-    boost::optional<NR::Rect> dummy_bbox;
+    boost::optional<Geom::Rect> dummy_bbox;
 
     GSList *l = _group->childList(false, SPObject::ActionBBox);
     while (l) {
@@ -837,7 +837,9 @@ sp_group_update_patheffect (SPLPEItem *lpeitem, bool write)
         for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); it++)
         {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
-            lpeobj->lpe->doBeforeEffect(lpeitem);
+            if (lpeobj->get_lpe()) {
+                lpeobj->get_lpe()->doBeforeEffect(lpeitem);
+            }
         }
         
         sp_group_perform_patheffect(SP_GROUP(lpeitem), SP_GROUP(lpeitem));

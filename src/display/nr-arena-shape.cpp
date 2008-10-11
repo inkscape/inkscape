@@ -58,7 +58,7 @@ static void nr_arena_shape_set_child_position(NRArenaItem *item, NRArenaItem *ch
 static guint nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset);
 static unsigned int nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
 static guint nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
-static NRArenaItem *nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
+static NRArenaItem *nr_arena_shape_pick(NRArenaItem *item, Geom::Point p, double delta, unsigned int sticky);
 
 static NRArenaItemClass *shape_parent_class;
 
@@ -113,7 +113,7 @@ nr_arena_shape_init(NRArenaShape *shape)
     shape->paintbox.x0 = shape->paintbox.y0 = 0.0F;
     shape->paintbox.x1 = shape->paintbox.y1 = 256.0F;
 
-    shape->ctm.set_identity();
+    shape->ctm.setIdentity();
     shape->fill_painter = NULL;
     shape->stroke_painter = NULL;
     shape->cached_fill = NULL;
@@ -127,8 +127,8 @@ nr_arena_shape_init(NRArenaShape *shape)
 
     shape->approx_bbox.x0 = shape->approx_bbox.y0 = 0;
     shape->approx_bbox.x1 = shape->approx_bbox.y1 = 0;
-    shape->cached_fctm.set_identity();
-    shape->cached_sctm.set_identity();
+    shape->cached_fctm.setIdentity();
+    shape->cached_sctm.setIdentity();
 
     shape->markers = NULL;
 
@@ -282,7 +282,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
 
         if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
             float width, scale;
-            scale = NR::expansion(gc->transform);
+            scale = gc->transform.descrim();
             width = MAX(0.125, shape->_stroke.width * scale);
             if ( fabs(shape->_stroke.width * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
                 boundingbox.expandBy(width);
@@ -303,7 +303,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     if ( area && nr_rect_l_test_intersect_ptr(area, &shape->approx_bbox) ) shape->delayed_shp=false;
 
     /* Release state data */
-    if (TRUE || !NR::transform_equalp(gc->transform, shape->ctm, NR_EPSILON)) {
+    if (TRUE || !Geom::transform_equalp(gc->transform, shape->ctm, NR_EPSILON)) {
         /* Concept test */
         if (shape->fill_shp) {
             delete shape->fill_shp;
@@ -393,8 +393,8 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     return NR_ARENA_ITEM_STATE_ALL;
 }
 
-int matrix_is_isometry(NR::Matrix p) {
-    NR::Matrix   tp;
+int matrix_is_isometry(Geom::Matrix p) {
+    Geom::Matrix   tp;
     // transposition
     tp[0]=p[0];
     tp[1]=p[2];
@@ -402,9 +402,9 @@ int matrix_is_isometry(NR::Matrix p) {
     tp[3]=p[3];
     for (int i = 4; i < 6; i++) // shut valgrind up :)
         tp[i] = p[i] = 0;
-    NR::Matrix   isom = tp*p; // A^T * A = adjunct?
+    Geom::Matrix   isom = tp*p; // A^T * A = adjunct?
     // Is the adjunct nearly an identity function?
-    if (isom.is_translation(0.01)) {
+    if (isom.isTranslation(0.01)) {
         // the transformation is an isometry -> no need to recompute
         // the uncrossed polygon
         if ( p.det() < 0 )
@@ -446,7 +446,7 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool fo
 //        ((shape->curve->get_length() > 2) || (SP_CURVE_BPATH(shape->curve)[1].code == NR_CURVETO)) ) {  // <-- this used to be the old code, i think it has to determine that the path has a sort of 'internal region' where fill would occur
           has_inner_area(shape->curve->get_pathvector()) ) {
         if (TRUE || !shape->fill_shp) {
-            NR::Matrix  cached_to_new = NR::identity();
+            Geom::Matrix  cached_to_new = Geom::identity();
             int isometry = 0;
             if ( shape->cached_fill ) {
                 if (shape->cached_fctm == gc->transform) {
@@ -508,7 +508,7 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool fo
                 shape->fill_shp->Reset(shape->cached_fill->numberOfPoints(),
                                        shape->cached_fill->numberOfEdges());
                 for (int i = 0; i < shape->cached_fill->numberOfPoints(); i++)
-                    shape->fill_shp->AddPoint(shape->cached_fill->getPoint(i).x * cached_to_new);
+                    shape->fill_shp->AddPoint(to_2geom(shape->cached_fill->getPoint(i).x) * cached_to_new);
                 if ( isometry == 1 ) {
                     for (int i = 0; i < shape->cached_fill->numberOfEdges(); i++)
                         shape->fill_shp->AddEdge(shape->cached_fill->getEdge(i).st,
@@ -532,7 +532,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
 {
     SPStyle* style = shape->style;
 
-    float const scale = NR::expansion(gc->transform);
+    float const scale = gc->transform.descrim();
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
@@ -556,7 +556,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
             width = style_width;
         }
 
-        NR::Matrix  cached_to_new = NR::identity();
+        Geom::Matrix  cached_to_new = Geom::identity();
 
         int isometry = 0;
         if ( shape->cached_stroke ) {
@@ -664,7 +664,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
                 shape->stroke_shp=new Shape;
             shape->stroke_shp->Reset(shape->cached_stroke->numberOfPoints(), shape->cached_stroke->numberOfEdges());
             for (int i = 0; i < shape->cached_stroke->numberOfPoints(); i++)
-                shape->stroke_shp->AddPoint(shape->cached_stroke->getPoint(i).x * cached_to_new);
+                shape->stroke_shp->AddPoint(to_2geom(shape->cached_stroke->getPoint(i).x) * cached_to_new);
             if ( isometry == 1 ) {
                 for (int i = 0; i < shape->cached_stroke->numberOfEdges(); i++)
                     shape->stroke_shp->AddEdge(shape->cached_stroke->getEdge(i).st,
@@ -716,7 +716,7 @@ nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::Rect &bbox)
 
 // cairo outline rendering:
 static unsigned int
-cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, boost::optional<NR::Rect> area)
+cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, boost::optional<Geom::Rect> area)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
 
@@ -748,7 +748,7 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
     SPStyle const *style = shape->style;
 
-    float const scale = NR::expansion(shape->ctm);
+    float const scale = shape->ctm.descrim();
 
     if (fabs(shape->_stroke.width * scale) < 0.01)
         return;
@@ -813,7 +813,7 @@ cairo_arena_shape_render_stroke(NRArenaItem *item, NRRectL *area, NRPixBlock *pb
     cairo_set_tolerance(ct, 0.1);
     cairo_new_path(ct);
 
-    feed_pathvector_to_cairo (ct, shape->curve->get_pathvector(), shape->ctm, area->upgrade(), true, style_width);
+    feed_pathvector_to_cairo (ct, shape->curve->get_pathvector(), shape->ctm, to_2geom(area->upgrade()), true, style_width);
 
     cairo_stroke(ct);
 
@@ -842,7 +842,7 @@ nr_arena_shape_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock 
     if (outline) { // cairo outline rendering
 
         pb->empty = FALSE;
-        unsigned int ret = cairo_arena_shape_render_outline (ct, item, (&pb->area)->upgrade());
+        unsigned int ret = cairo_arena_shape_render_outline (ct, item, to_2geom((&pb->area)->upgrade()));
         if (ret & NR_ARENA_ITEM_STATE_INVALID) return ret;
 
     } else {
@@ -1056,7 +1056,7 @@ nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 }
 
 static NRArenaItem *
-nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /*sticky*/)
+nr_arena_shape_pick(NRArenaItem *item, Geom::Point p, double delta, unsigned int /*sticky*/)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
 
@@ -1082,7 +1082,7 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
     if (outline) {
         width = 0.5;
     } else if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE && shape->_stroke.opacity > 1e-3) {
-        float const scale = NR::expansion(shape->ctm);
+        float const scale = shape->ctm.descrim();
         width = MAX(0.125, shape->_stroke.width * scale) / 2;
     } else {
         width = 0;
@@ -1359,12 +1359,12 @@ nr_arena_shape_set_paintbox(NRArenaShape *shape, NRRect const *pbox)
     nr_arena_item_request_update(shape, NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
-void NRArenaShape::setPaintBox(NR::Rect const &pbox)
+void NRArenaShape::setPaintBox(Geom::Rect const &pbox)
 {
-    paintbox.x0 = pbox.min()[NR::X];
-    paintbox.y0 = pbox.min()[NR::Y];
-    paintbox.x1 = pbox.max()[NR::X];
-    paintbox.y1 = pbox.max()[NR::Y];
+    paintbox.x0 = pbox.min()[Geom::X];
+    paintbox.y0 = pbox.min()[Geom::Y];
+    paintbox.x1 = pbox.max()[Geom::X];
+    paintbox.y1 = pbox.max()[Geom::Y];
 
     nr_arena_item_request_update(this, NR_ARENA_ITEM_STATE_ALL, FALSE);
 }

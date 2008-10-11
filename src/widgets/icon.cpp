@@ -658,11 +658,7 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
         if (object && SP_IS_ITEM(object)) {
             /* Find bbox in document */
             Geom::Matrix const i2doc(sp_item_i2doc_affine(SP_ITEM(object)));
-            boost::optional<NR::Rect> nrdbox = SP_ITEM(object)->getBounds(i2doc);
-            boost::optional<Geom::Rect> dbox;
-            if (nrdbox) {
-                dbox = to_2geom(*nrdbox);
-            }
+            boost::optional<Geom::Rect> dbox = SP_ITEM(object)->getBounds(i2doc);
 
             if ( SP_OBJECT_PARENT(object) == NULL )
             {
@@ -676,7 +672,7 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                 /* Update to renderable state */
                 double sf = 1.0;
                 nr_arena_item_set_transform(root, (Geom::Matrix)Geom::Scale(sf, sf));
-                gc.transform.set_identity();
+                gc.transform.setIdentity();
                 nr_arena_item_invoke_update( root, NULL, &gc,
                                              NR_ARENA_ITEM_STATE_ALL,
                                              NR_ARENA_ITEM_STATE_NONE );
@@ -708,7 +704,7 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                         sf = (double)psize / (double)block;
 
                         nr_arena_item_set_transform(root, (Geom::Matrix)Geom::Scale(sf, sf));
-                        gc.transform.set_identity();
+                        gc.transform.setIdentity();
                         nr_arena_item_invoke_update( root, NULL, &gc,
                                                      NR_ARENA_ITEM_STATE_ALL,
                                                      NR_ARENA_ITEM_STATE_NONE );

@@ -185,7 +185,11 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
     parallel_offset.resetRandomizer();
     strokelength_rdm.resetRandomizer();
     strokeoverlap_rdm.resetRandomizer();
+    ends_tolerance.resetRandomizer();
+    tremble_size.resetRandomizer();
     tgtlength_rdm.resetRandomizer();
+
+
 
     // some variables for futur use (for construction lines; compute arclength only once...)
     // notations will be : t = path time, s = distance from start along the path.

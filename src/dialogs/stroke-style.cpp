@@ -592,7 +592,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
 
     // Find object's bbox in document
     Geom::Matrix const i2doc(sp_item_i2doc_affine(SP_ITEM(object)));
-    boost::optional<NR::Rect> dbox = SP_ITEM(object)->getBounds(i2doc);
+    boost::optional<Geom::Rect> dbox = SP_ITEM(object)->getBounds(i2doc);
 
     if (!dbox) {
         return NULL;
@@ -608,7 +608,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
     Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(svg_preview_cache.get_preview_from_cache(key));
 
     if (!pixbuf) {
-        pixbuf = Glib::wrap(render_pixbuf(root, sf, to_2geom(*dbox), psize));
+        pixbuf = Glib::wrap(render_pixbuf(root, sf, *dbox, psize));
         svg_preview_cache.set_preview_in_cache(key, pixbuf->gobj());
     }
 

@@ -778,7 +778,7 @@ sp_export_selection_modified ( Inkscape::Application */*inkscape*/,
             if ( SP_ACTIVE_DESKTOP ) {
                 SPDocument *doc;
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
-                boost::optional<Geom::Rect> bbox = to_2geom(sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc))));
+                boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
                 if (bbox) {
                     sp_export_set_area (base, bbox->min()[Geom::X],
                                               bbox->min()[Geom::Y],
@@ -847,7 +847,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
             case SELECTION_SELECTION:
                 if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false)
                 {
-                    bbox = to_2geom((sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds());
+                    bbox = sp_desktop_selection (SP_ACTIVE_DESKTOP)->bounds();
                     /* Only if there is a selection that we can set
                        do we break, otherwise we fall through to the
                        drawing */
@@ -859,7 +859,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                 /** \todo
                  * This returns wrong values if the document has a viewBox.
                  */
-                bbox = to_2geom(sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc))));
+                bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
                 /* If the drawing is valid, then we'll use it and break
                    otherwise we drop through to the page settings */
                 if (bbox) {
@@ -1407,7 +1407,7 @@ sp_export_detect_size(GtkObject * base) {
         switch (this_test[i]) {
             case SELECTION_SELECTION:
                 if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
-                    boost::optional<Geom::Rect> bbox = to_2geom((sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds());
+                    boost::optional<Geom::Rect> bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds();
 
                     //std::cout << "Selection " << bbox;
                     if ( bbox && sp_export_bbox_equal(*bbox,current_bbox)) {
@@ -1418,7 +1418,7 @@ sp_export_detect_size(GtkObject * base) {
             case SELECTION_DRAWING: {
                 SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
-                boost::optional<Geom::Rect> bbox = to_2geom(sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc))));
+                boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
 
                 // std::cout << "Drawing " << bbox2;
                 if ( bbox && sp_export_bbox_equal(*bbox,current_bbox) ) {

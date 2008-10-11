@@ -56,7 +56,7 @@ static void sp_path_build(SPObject *object, SPDocument *document, Inkscape::XML:
 static void sp_path_set(SPObject *object, unsigned key, gchar const *value);
 
 static Inkscape::XML::Node *sp_path_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static NR::Matrix sp_path_set_transform(SPItem *item, NR::Matrix const &xform);
+static Geom::Matrix sp_path_set_transform(SPItem *item, Geom::Matrix const &xform);
 static gchar * sp_path_description(SPItem *item);
 static void sp_path_convert_to_guides(SPItem *item);
 
@@ -348,14 +348,14 @@ sp_path_update(SPObject *object, SPCtx *ctx, guint flags)
 /**
  * Writes the given transform into the repr for the given item.
  */
-static NR::Matrix
-sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
+static Geom::Matrix
+sp_path_set_transform(SPItem *item, Geom::Matrix const &xform)
 {
     SPShape *shape = (SPShape *) item;
     SPPath *path = (SPPath *) item;
 
     if (!shape->curve) { // 0 nodes, nothing to transform
-        return NR::identity();
+        return Geom::identity();
     }
 
     // Transform the original-d path or the (ordinary) path
@@ -366,7 +366,7 @@ sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
     }
 
     // Adjust stroke
-    sp_item_adjust_stroke(item, NR::expansion(xform));
+    sp_item_adjust_stroke(item, xform.descrim());
 
     // Adjust pattern fill
     sp_item_adjust_pattern(item, xform);
@@ -380,35 +380,37 @@ sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
 
     // nothing remains - we've written all of the transform, so return identity
-    return NR::identity();
+    return Geom::identity();
 }
 
 static void
 sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
 {
-    SPShape *shape = (SPShape *) lpeitem;
-    SPPath *path = (SPPath *) lpeitem;
-    if (path->original_curve) {
-        SPCurve *curve = path->original_curve->copy();
-        sp_shape_set_curve_insync(shape, curve, TRUE);
-        sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
-        SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-        curve->unref();
+    SPShape * const shape = (SPShape *) lpeitem;
+    SPPath * const path = (SPPath *) lpeitem;
 
-        if (write) {
-            // could also do SP_OBJECT(shape)->updateRepr();  but only the d attribute needs updating.
-            Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
-            if ( shape->curve != NULL ) {
-                gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
-                repr->setAttribute("d", str);
-                g_free(str);
-            } else {
-                repr->setAttribute("d", NULL);
+    if (sp_lpe_item_has_path_effect(lpeitem) && sp_lpe_item_path_effects_enabled(lpeitem)) {
+        if (path->original_curve) {
+            SPCurve *curve = path->original_curve->copy();
+            sp_shape_set_curve_insync(shape, curve, TRUE);
+            sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
+            SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            curve->unref();
+
+            if (write) {
+                // could also do SP_OBJECT(shape)->updateRepr();  but only the d attribute needs updating.
+                Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
+                if ( shape->curve != NULL ) {
+                    gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
+                    repr->setAttribute("d", str);
+                    g_free(str);
+                } else {
+                    repr->setAttribute("d", NULL);
+                }
             }
         }
-    } else {
-
     }
+    // else: do nothing.
 }
 
 

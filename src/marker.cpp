@@ -481,7 +481,7 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	for (v = marker->views; v != NULL; v = v->next) {
             for (unsigned i = 0 ; i < v->size ; i++) {
                 if (v->items[i]) {
-                    NR::Matrix tmp = from_2geom(marker->c2p);
+                    Geom::Matrix tmp = marker->c2p;
                     nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->items[i]), &tmp);
                 }
             }
@@ -649,7 +649,7 @@ sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
                     /* fixme: Position (Lauris) */
                     nr_arena_item_add_child (parent, v->items[pos], NULL);
                     /* nr_arena_item_unref (v->items[pos]); */
-                    NR::Matrix tmp = from_2geom(marker->c2p);
+                    Geom::Matrix tmp = marker->c2p;
                     nr_arena_group_set_child_transform((NRArenaGroup *) v->items[pos], &tmp);
                 }
             }

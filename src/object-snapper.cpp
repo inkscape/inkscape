@@ -138,20 +138,20 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                 if (SP_IS_GROUP(o)) {
                     _findCandidates(o, it, false, bbox_to_snap, snap_dim, false, Geom::identity());
                 } else {
-                    boost::optional<NR::Rect> bbox_of_item = NR::Rect();
+                    boost::optional<Geom::Rect> bbox_of_item = Geom::Rect();
                     if (clip_or_mask) {
                         // Oh oh, this will get ugly. We cannot use sp_item_i2d_affine directly because we need to
                         // insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
                         sp_item_invoke_bbox(item, 
                             bbox_of_item,
-                            from_2geom(to_2geom(sp_item_i2doc_affine(item)) * matrix_to_desktop(additional_affine, item)),
+                            sp_item_i2doc_affine(item) * matrix_to_desktop(additional_affine, item),
                             true);
                     } else {
                         sp_item_invoke_bbox(item, bbox_of_item, sp_item_i2d_affine(item), true);
                     }
                     if (bbox_of_item) {
                         // See if the item is within range                                    
-                        if (bbox_to_snap_incl.intersects(to_2geom(*bbox_of_item))) {
+                        if (bbox_to_snap_incl.intersects(*bbox_of_item)) {
                             // This item is within snapping range, so record it as a candidate
                             _candidates->push_back(SnapCandidate(item, clip_or_mask, additional_affine));
                         }                        
@@ -204,9 +204,7 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::Snapper::PointType const &
             //Collect all nodes so we can snap to them
             if (_snap_to_itemnode) {
                 if (!(_strict_snapping && !p_is_a_node) || p_is_a_guide) {
-                    std::vector<NR::Point> dummy_vctr;
-                    sp_item_snappoints(root_item, _include_item_center, SnapPointsIter(dummy_vctr));
-                    to_2geom(dummy_vctr, *_points_to_snap_to);
+                    sp_item_snappoints(root_item, _include_item_center, SnapPointsIter(*_points_to_snap_to));
                 }
             }
 
@@ -216,10 +214,10 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::Snapper::PointType const &
                     // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                     // of the item AND the bbox of the clipping path at the same time
                     if (!(*i).clip_or_mask) {  
-                        boost::optional<NR::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
+                        boost::optional<Geom::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
                         if (b) {
                             for ( unsigned k = 0 ; k < 4 ; k++ ) {
-                                _points_to_snap_to->push_back(to_2geom(b->corner(k)));
+                                _points_to_snap_to->push_back(b->corner(k));
                             }
                         }
                     }

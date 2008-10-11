@@ -14,7 +14,7 @@
  *  http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
  *
  * Copyright (C) 2007 authors
- * Released under GNU GPL, read the file 'COPYING' for more information
+ * Released under GNU GPL version 2 (or later), read the file 'COPYING' for more information
  */
 
 #include "display/nr-arena-item.h"

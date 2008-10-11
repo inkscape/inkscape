@@ -43,7 +43,7 @@ static void sp_rect_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_rect_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *sp_rect_description(SPItem *item);
-static NR::Matrix sp_rect_set_transform(SPItem *item, NR::Matrix const &xform);
+static Geom::Matrix sp_rect_set_transform(SPItem *item, Geom::Matrix const &xform);
 static void sp_rect_convert_to_guides(SPItem *item);
 
 static void sp_rect_set_shape(SPShape *shape);
@@ -336,17 +336,17 @@ sp_rect_set_ry(SPRect *rect, gboolean set, gdouble value)
 /* fixme: Use preferred units somehow (Lauris) */
 /* fixme: Alternately preserve whatever units there are (lauris) */
 
-static NR::Matrix
-sp_rect_set_transform(SPItem *item, NR::Matrix const &xform)
+static Geom::Matrix
+sp_rect_set_transform(SPItem *item, Geom::Matrix const &xform)
 {
     SPRect *rect = SP_RECT(item);
 
     /* Calculate rect start in parent coords. */
-    NR::Point pos( NR::Point(rect->x.computed, rect->y.computed) * xform );
+    Geom::Point pos( Geom::Point(rect->x.computed, rect->y.computed) * xform );
 
     /* This function takes care of translation and scaling, we return whatever parts we can't
        handle. */
-    NR::Matrix ret(NR::transform(xform));
+    Geom::Matrix ret(Geom::Matrix(xform).without_translation());
     gdouble const sw = hypot(ret[0], ret[1]);
     gdouble const sh = hypot(ret[2], ret[3]);
     if (sw > 1e-9) {
@@ -376,8 +376,8 @@ sp_rect_set_transform(SPItem *item, NR::Matrix const &xform)
 
     /* Find start in item coords */
     pos = pos * ret.inverse();
-    rect->x = pos[NR::X];
-    rect->y = pos[NR::Y];
+    rect->x = pos[Geom::X];
+    rect->y = pos[Geom::Y];
 
     sp_rect_set_shape(rect);
 

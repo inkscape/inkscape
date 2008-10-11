@@ -59,6 +59,8 @@ public:
     void moveto(gdouble x, gdouble y);
     void lineto(Geom::Point const &p);
     void lineto(gdouble x, gdouble y);
+    void quadto(Geom::Point const &p1, Geom::Point const &p2);
+    void quadto(gdouble x1, gdouble y1, gdouble x2, gdouble y2);
     void curveto(Geom::Point const &p0, Geom::Point const &p1, Geom::Point const &p2);
     void curveto(gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdouble y2);
     void closepath();

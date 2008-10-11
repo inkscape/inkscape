@@ -11,8 +11,7 @@
 #include "livarot/path-description.h"
 
 #include <libnr/nr-matrix.h>
-#include <libnr/nr-rotate-ops.h>
-#include <libnr/nr-scale-ops.h>
+#include <2geom/transforms.h>
 
 /*
  * path description -> polyline
@@ -1089,23 +1088,24 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
 
     double sang;
     double eang;
-    NR::Point dr;
-    ArcAnglesAndCenter(iS, iE, rx, ry, angle, large, wise, sang, eang, dr);
+    NR::Point dr_temp;
+    ArcAnglesAndCenter(iS, iE, rx, ry, angle, large, wise, sang, eang, dr_temp);
+    Geom::Point dr = dr_temp;
     /* TODO: This isn't as good numerically as treating iS and iE as primary.  E.g. consider
        the case of low curvature (i.e. very large radius). */
 
-    NR::scale const ar(rx, ry);
-    NR::rotate cb( angle + sang );
+    Geom::Scale const ar(rx, ry);
+    Geom::Rotate cb( angle + sang );
     if (wise) {
 
         double const incr = -0.1;
         if ( sang < eang ) {
             sang += 2*M_PI;
         }
-        NR::rotate const omega(incr);
+        Geom::Rotate const omega(incr);
         for (double b = sang + incr ; b > eang ; b += incr) {
             cb = omega * cb;
-            AddPoint( cb.vec * ar + dr );
+            AddPoint( cb.vector() * ar + dr );
         }
 
     } else {
@@ -1114,10 +1114,10 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
         if ( sang > eang ) {
             sang -= 2*M_PI;
         }
-        NR::rotate const omega(incr);
+        Geom::Rotate const omega(incr);
         for (double b = sang + incr ; b < eang ; b += incr) {
             cb = omega * cb;
-            AddPoint( cb.vec * ar + dr);
+            AddPoint( cb.vector() * ar + dr);
         }
     }
 }
@@ -1231,23 +1231,24 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
 
     double sang;
     double eang;
-    NR::Point dr;
-    ArcAnglesAndCenter(iS, iE, rx, ry, angle, large, wise, sang, eang, dr);
+    NR::Point dr_temp;
+    ArcAnglesAndCenter(iS, iE, rx, ry, angle, large, wise, sang, eang, dr_temp);
+    Geom::Point dr = dr_temp;
     /* TODO: This isn't as good numerically as treating iS and iE as primary.  E.g. consider
        the case of low curvature (i.e. very large radius). */
 
-    NR::scale const ar(rx, ry);
-    NR::rotate cb(angle + sang);
+    Geom::Scale const ar(rx, ry);
+    Geom::Rotate cb(angle + sang);
     if (wise) {
 
         double const incr = -0.1;
         if ( sang < eang ) {
             sang += 2*M_PI;
         }
-        NR::rotate const omega(incr);
+        Geom::Rotate const omega(incr);
         for (double b = sang + incr; b > eang; b += incr) {
             cb = omega * cb;
-            AddPoint(cb.vec * ar + dr, piece, (sang - b) / (sang - eang));
+            AddPoint(cb.vector() * ar + dr, piece, (sang - b) / (sang - eang));
         }
 
     } else {
@@ -1256,10 +1257,10 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
         if ( sang > eang ) {
             sang -= 2 * M_PI;
         }
-        NR::rotate const omega(incr);
+        Geom::Rotate const omega(incr);
         for (double b = sang + incr ; b < eang ; b += incr) {
             cb = omega * cb;
-            AddPoint(cb.vec * ar + dr, piece, (b - sang) / (eang - sang));
+            AddPoint(cb.vector() * ar + dr, piece, (b - sang) / (eang - sang));
         }
     }
 }
@@ -1348,23 +1349,24 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
 
     double sang;
     double eang;
-    NR::Point dr;
-    ArcAnglesAndCenter(iS, iE, rx, ry, angle, large, wise, sang, eang, dr);
+    NR::Point dr_temp;
+    ArcAnglesAndCenter(iS, iE, rx, ry, angle, large, wise, sang, eang, dr_temp);
+    Geom::Point dr = dr_temp;
     /* TODO: This isn't as good numerically as treating iS and iE as primary.  E.g. consider
        the case of low curvature (i.e. very large radius). */
 
-    NR::scale const ar(rx, ry);
-    NR::rotate cb(angle + sang);
+    Geom::Scale const ar(rx, ry);
+    Geom::Rotate cb(angle + sang);
     if (wise) {
 
         double const incr = -0.1;
         if ( sang < eang ) {
             sang += 2*M_PI;
         }
-        NR::rotate const omega(incr);
+        Geom::Rotate const omega(incr);
         for (double b = sang + incr; b > eang ;b += incr) {
             cb = omega * cb;
-            AddPoint(cb.vec * ar + dr, piece, (sang - b) / (sang - eang));
+            AddPoint(cb.vector() * ar + dr, piece, (sang - b) / (sang - eang));
         }
 
     } else {
@@ -1372,10 +1374,10 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
         if ( sang > eang ) {
             sang -= 2*M_PI;
         }
-        NR::rotate const omega(incr);
+        Geom::Rotate const omega(incr);
         for (double b = sang + incr ; b < eang ; b += incr) {
             cb = omega * cb;
-            AddPoint(cb.vec * ar + dr, piece, (b - sang) / (eang - sang));
+            AddPoint(cb.vector() * ar + dr, piece, (b - sang) / (eang - sang));
         }
     }
 }

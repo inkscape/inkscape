@@ -896,10 +896,10 @@ clonetiler_trace_pick (NR::Rect box)
     if (!trace_arena)
         return 0;
 
-    NR::Matrix t(NR::scale(trace_zoom, trace_zoom));
+    Geom::Matrix t(Geom::Scale(trace_zoom, trace_zoom));
     nr_arena_item_set_transform(trace_root, &t);
     NRGC gc(NULL);
-    gc.transform.set_identity();
+    gc.transform.setIdentity();
     nr_arena_item_invoke_update( trace_root, NULL, &gc,
                                  NR_ARENA_ITEM_STATE_ALL,
                                  NR_ARENA_ITEM_STATE_NONE );
@@ -1248,13 +1248,13 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
         bool prefs_bbox = prefs->getBool("tools", "bounding_box", false);
         SPItem::BBoxType bbox_type = ( prefs_bbox ? 
             SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX );
-        boost::optional<NR::Rect> r = SP_ITEM(obj)->getBounds(sp_item_i2doc_affine(SP_ITEM(obj)),
+        boost::optional<Geom::Rect> r = SP_ITEM(obj)->getBounds(sp_item_i2doc_affine(SP_ITEM(obj)),
                                                         bbox_type);
         if (r) {
-            w = r->dimensions()[NR::X];
-            h = r->dimensions()[NR::Y];
-            x0 = r->min()[NR::X];
-            y0 = r->min()[NR::Y];
+            w = r->dimensions()[Geom::X];
+            h = r->dimensions()[Geom::Y];
+            x0 = r->min()[Geom::X];
+            y0 = r->min()[Geom::Y];
             center = desktop->dt2doc(SP_ITEM(obj)->getCenter());
 
             sp_repr_set_svg_double(obj_repr, "inkscape:tile-cx", center[Geom::X]);

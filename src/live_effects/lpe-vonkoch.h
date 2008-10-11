@@ -12,30 +12,38 @@
 #include "live_effects/effect.h"
 #include "live_effects/lpegroupbbox.h"
 #include "live_effects/parameter/path.h"
-#include "live_effects/parameter/enum.h"
+#include "live_effects/parameter/point.h"
 #include "live_effects/parameter/bool.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
 
-enum VonKochRefType {
-    VKREF_BBOX = 0,
-    VKREF_SEG,
-    VKREF_END // This must be last
-};
-
 class VonKochPathParam : public PathParam{
 public:
     VonKochPathParam ( const Glib::ustring& label,
-                       const Glib::ustring& tip,
-                       const Glib::ustring& key,
-                       Inkscape::UI::Widget::Registry* wr,
-                       Effect* effect,
-                       const gchar * default_value = "M0,0 L1,1"):PathParam(label,tip,key,wr,effect,default_value){};
-    virtual ~VonKochPathParam();
-    virtual void param_setup_nodepath(Inkscape::NodePath::Path *np);
+		       const Glib::ustring& tip,
+		       const Glib::ustring& key,
+		       Inkscape::UI::Widget::Registry* wr,
+		       Effect* effect,
+		       const gchar * default_value = "M0,0 L1,1"):PathParam(label,tip,key,wr,effect,default_value){}
+    virtual ~VonKochPathParam(){}
+    virtual void param_setup_nodepath(Inkscape::NodePath::Path *np);  
   };
 
+  //FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
+class VonKochRefPathParam : public PathParam{
+public:
+    VonKochRefPathParam ( const Glib::ustring& label,
+		       const Glib::ustring& tip,
+		       const Glib::ustring& key,
+		       Inkscape::UI::Widget::Registry* wr,
+		       Effect* effect,
+		       const gchar * default_value = "M0,0 L1,1"):PathParam(label,tip,key,wr,effect,default_value){}
+    virtual ~VonKochRefPathParam(){}
+    virtual void param_setup_nodepath(Inkscape::NodePath::Path *np);  
+    virtual bool param_readSVGValue(const gchar * strvalue);  
+  };
+ 
 class LPEVonKoch : public Effect, GroupBBoxEffect {
 public:
     LPEVonKoch(LivePathEffectObject *lpeobject);
@@ -49,15 +57,21 @@ public:
 
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 
+    //Usefull??
+    //    protected: 
+    //virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec); 
+
 private:
     ScalarParam  nbgenerations;
     VonKochPathParam    generator;
     BoolParam    similar_only;
     BoolParam    drawall;
-    EnumParam<VonKochRefType> reftype;
+    //BoolParam    draw_boxes;
+    //FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
+    VonKochRefPathParam    ref_path;
+    //    PointParam   refA;
+    //    PointParam   refB;
     ScalarParam  maxComplexity;
-
-    //void on_pattern_pasted();
 
     LPEVonKoch(const LPEVonKoch&);
     LPEVonKoch& operator=(const LPEVonKoch&);

@@ -38,7 +38,7 @@ GdkPixbuf* render_pixbuf(NRArenaItem* root, double scale_factor, const Geom::Rec
     Geom::Matrix t(Geom::Scale(scale_factor, scale_factor));
     nr_arena_item_set_transform(root, t);
 
-    gc.transform.set_identity();
+    gc.transform.setIdentity();
     nr_arena_item_invoke_update( root, NULL, &gc,
                                  NR_ARENA_ITEM_STATE_ALL,
                                  NR_ARENA_ITEM_STATE_NONE );

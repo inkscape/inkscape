@@ -60,11 +60,12 @@
 #include "nr-arena-forward.h"
 #include "display/nr-filter.h"
 #include <cairo.h>
+#include <libnr/nr-convert2geom.h>
 
 struct NRGC {
     NRGC(NRGC const *p) : parent(p) {}
     NRGC const *parent;
-    NR::Matrix transform;
+    Geom::Matrix transform;
 };
 
 struct NRArenaItem : public NRObject {
@@ -91,9 +92,9 @@ struct NRArenaItem : public NRObject {
     NRRectL bbox;
     /* BBox in item coordinates - this should be a bounding box as
      * specified in SVG standard. Required by filters. */
-    boost::optional<NR::Rect> item_bbox;
+    boost::optional<Geom::Rect> item_bbox;
     /* Our affine */
-    NR::Matrix *transform;
+    Geom::Matrix *transform;
     /* Clip item */
     NRArenaItem *clip;
     /* Mask item */
@@ -107,7 +108,7 @@ struct NRArenaItem : public NRObject {
     void *data;
 
     /* Current Transformation Matrix */
-    NR::Matrix ctm;
+    Geom::Matrix ctm;
 
     /* These hold background buffer state for filter rendering */
     NRPixBlock *background_pb;
@@ -128,7 +129,7 @@ struct NRArenaItemClass : public NRObjectClass {
     unsigned int (* update) (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int state, unsigned int reset);
     unsigned int (* render) (cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
     unsigned int (* clip) (NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
-    NRArenaItem * (* pick) (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
+    NRArenaItem * (* pick) (NRArenaItem *item, Geom::Point p, double delta, unsigned int sticky);
 };
 
 #define NR_ARENA_ITEM_ARENA(ai) (((NRArenaItem *) (ai))->arena)
@@ -158,7 +159,7 @@ unsigned int nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC
 unsigned int nr_arena_item_invoke_render(cairo_t *ct, NRArenaItem *item, NRRectL const *area, NRPixBlock *pb, unsigned int flags);
 
 unsigned int nr_arena_item_invoke_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
-NRArenaItem *nr_arena_item_invoke_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
+NRArenaItem *nr_arena_item_invoke_pick (NRArenaItem *item, Geom::Point p, double delta, unsigned int sticky);
 
 void nr_arena_item_request_update (NRArenaItem *item, unsigned int reset, unsigned int propagate);
 void nr_arena_item_request_render (NRArenaItem *item);
@@ -169,15 +170,15 @@ NRArenaItem *nr_arena_item_unparent (NRArenaItem *item);
 
 void nr_arena_item_append_child (NRArenaItem *parent, NRArenaItem *child);
 
-void nr_arena_item_set_transform(NRArenaItem *item, NR::Matrix const &transform);
-void nr_arena_item_set_transform(NRArenaItem *item, NR::Matrix const *transform);
+void nr_arena_item_set_transform(NRArenaItem *item, Geom::Matrix const &transform);
+void nr_arena_item_set_transform(NRArenaItem *item, Geom::Matrix const *transform);
 void nr_arena_item_set_opacity (NRArenaItem *item, double opacity);
 void nr_arena_item_set_sensitive (NRArenaItem *item, unsigned int sensitive);
 void nr_arena_item_set_visible (NRArenaItem *item, unsigned int visible);
 void nr_arena_item_set_clip (NRArenaItem *item, NRArenaItem *clip);
 void nr_arena_item_set_mask (NRArenaItem *item, NRArenaItem *mask);
 void nr_arena_item_set_order (NRArenaItem *item, int order);
-void nr_arena_item_set_item_bbox (NRArenaItem *item, boost::optional<NR::Rect> &bbox);
+void nr_arena_item_set_item_bbox (NRArenaItem *item, boost::optional<Geom::Rect> &bbox);
 
 NRPixBlock *nr_arena_item_get_background (NRArenaItem const *item, int depth = 0);
 

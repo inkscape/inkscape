@@ -445,7 +445,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
             item_ungrouped = desktop->item_at_point(NR::Point(event->button.x, event->button.y), TRUE);
             if (SP_IS_TEXT(item_ungrouped) || SP_IS_FLOWTEXT(item_ungrouped)) {
                 sp_canvas_item_show(tc->indicator);
-                boost::optional<Geom::Rect> ibbox = to_2geom(sp_item_bbox_desktop(item_ungrouped));
+                boost::optional<Geom::Rect> ibbox = sp_item_bbox_desktop(item_ungrouped);
                 if (ibbox) {
                     SP_CTRLRECT(tc->indicator)->setRectangle(*ibbox);
                 }
@@ -1607,7 +1607,7 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
             SPItem *frame = SP_FLOWTEXT(tc->text)->get_frame (NULL); // first frame only
             if (frame) {
                 sp_canvas_item_show(tc->frame);
-                boost::optional<Geom::Rect> frame_bbox = to_2geom(sp_item_bbox_desktop(frame));
+                boost::optional<Geom::Rect> frame_bbox = sp_item_bbox_desktop(frame);
                 if (frame_bbox) {
                     SP_CTRLRECT(tc->frame)->setRectangle(*frame_bbox);
                 }

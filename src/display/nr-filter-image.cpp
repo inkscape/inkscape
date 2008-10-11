@@ -62,7 +62,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         Matrix identity(1.0, 0.0,
                    0.0, 1.0,
                    0.0, 0.0);
-        boost::optional<NR::Rect> area = SVGElem->getBounds(identity);
+        boost::optional<Geom::Rect> area = SVGElem->getBounds(identity);
         
         NRRectL rect;
         rect.x0=area->min()[NR::X];
@@ -80,9 +80,9 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         NRGC gc(NULL);
         /* Update to renderable state */
         double sf = 1.0;
-        NR::Matrix t(NR::scale(sf, sf));
+        Geom::Matrix t(Geom::Scale(sf, sf));
         nr_arena_item_set_transform(ai, &t);
-        gc.transform.set_identity();
+        gc.transform.setIdentity();
         nr_arena_item_invoke_update( ai, NULL, &gc,
                                              NR_ARENA_ITEM_STATE_ALL,
                                              NR_ARENA_ITEM_STATE_NONE );

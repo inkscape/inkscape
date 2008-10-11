@@ -113,7 +113,7 @@ struct NRArenaShape : public NRArenaItem {
     SPStyle *style;
     NRRect paintbox;
     /* State data */
-    NR::Matrix ctm;
+    Geom::Matrix ctm;
 
     SPPainter *fill_painter;
     SPPainter *stroke_painter;
@@ -136,8 +136,8 @@ struct NRArenaShape : public NRArenaItem {
     // polygon to get the *_shp polygon.  Otherwise, recompute so this
     // works fine for translation and rotation, but not scaling and
     // skewing
-    NR::Matrix cached_fctm;
-    NR::Matrix cached_sctm;
+    Geom::Matrix cached_fctm;
+    Geom::Matrix cached_sctm;
     NRRectL cached_farea;
     NRRectL cached_sarea;
     bool cached_fpartialy;
@@ -170,7 +170,7 @@ struct NRArenaShape : public NRArenaItem {
     void setLineJoin(JoinType join);
     void setMitreLimit(double limit);
 
-    void setPaintBox(NR::Rect const &pbox);
+    void setPaintBox(Geom::Rect const &pbox);
 
     void _invalidateCachedFill() {
         if (cached_fill) {

@@ -8,7 +8,7 @@
 #include "sp-gradient.h"
 #include "svg/svg.h"
 #include "xml/repr.h"
-
+#include <2geom/transforms.h>
 
 class SPGradientTest : public DocumentUsingTest
 {
@@ -56,7 +56,7 @@ public:
         SP_OBJECT(gr)->document = _doc;
 
         sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTTRANSFORM, "translate(5, 8)");
-        TS_ASSERT_EQUALS( gr->gradientTransform, NR::Matrix(NR::translate(5, 8)) );
+        TS_ASSERT_EQUALS( gr->gradientTransform, NR::Matrix(Geom::Translate(5, 8)) );
 
         sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTTRANSFORM, "");
         TS_ASSERT_EQUALS( gr->gradientTransform, NR::identity() );

@@ -156,7 +156,7 @@ SPDesktop::SPDesktop() :
     _active( false ),
     _w2d(),
     _d2w(),
-    _doc2dt( NR::Matrix(NR::scale(1, -1)) ),
+    _doc2dt( NR::Matrix(Geom::Scale(1, -1)) ),
     grids_visible( false )
 {
     _d2w.setIdentity();
@@ -534,9 +534,9 @@ bool SPDesktop::isLayer(SPObject *object) const {
 bool SPDesktop::isWithinViewport (SPItem *item) const
 {
     Geom::Rect const viewport = get_display_area();
-    boost::optional<NR::Rect> const bbox = sp_item_bbox_desktop(item);
+    boost::optional<Geom::Rect> const bbox = sp_item_bbox_desktop(item);
     if (bbox) {
-        return viewport.contains(to_2geom(*bbox));
+        return viewport.contains(*bbox);
     } else {
         return true;
     }
@@ -773,8 +773,8 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
     int clear = FALSE;
     if (!NR_DF_TEST_CLOSE (newscale, scale, 1e-4 * scale)) {
         /* Set zoom factors */
-        _d2w = NR::Matrix(NR::scale(newscale, -newscale));
-        _w2d = NR::Matrix(NR::scale(1/newscale, 1/-newscale));
+        _d2w = NR::Matrix(Geom::Scale(newscale, -newscale));
+        _w2d = NR::Matrix(Geom::Scale(1/newscale, 1/-newscale));
         sp_canvas_item_affine_absolute(SP_CANVAS_ITEM(main), _d2w);
         clear = TRUE;
     }
@@ -939,7 +939,7 @@ SPDesktop::zoom_quick (bool enable)
 		}
 
 		if (!zoomed) {
-			boost::optional<Geom::Rect> const d = selection->bounds_2geom();
+			boost::optional<Geom::Rect> const d = selection->bounds();
 			if (d && !d->isEmpty() && d->area() * 2.0 < _quick_zoom_stored_area.area()) {
 				set_display_area(*d, 10);
 				zoomed = true;
@@ -1072,7 +1072,7 @@ SPDesktop::zoom_page_width()
 void
 SPDesktop::zoom_selection()
 {
-    boost::optional<Geom::Rect> const d = to_2geom(selection->bounds());
+    boost::optional<Geom::Rect> const d = selection->bounds();
 
     // FIXME: the original NR::Rect::isEmpty call contained an additional threshold of 0.1; is it safe to ignore it?
     if ( !d || d->isEmpty() ) {
@@ -1101,7 +1101,7 @@ SPDesktop::zoom_drawing()
     SPItem *docitem = SP_ITEM (sp_document_root (doc()));
     g_return_if_fail (docitem != NULL);
 
-    boost::optional<Geom::Rect> d = to_2geom(sp_item_bbox_desktop(docitem));
+    boost::optional<Geom::Rect> d = sp_item_bbox_desktop(docitem);
 
     /* Note that the second condition here indicates that
     ** there are no items in the drawing.

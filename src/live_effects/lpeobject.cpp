@@ -21,15 +21,6 @@
 
 //#define LIVEPATHEFFECT_VERBOSE
 
-static void livepatheffect_class_init(LivePathEffectObjectClass *klass);
-static void livepatheffect_init(LivePathEffectObject *stop);
-
-static void livepatheffect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-static void livepatheffect_release(SPObject *object);
-
-static void livepatheffect_set(SPObject *object, unsigned key, gchar const *value);
-static Inkscape::XML::Node *livepatheffect_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-
 static void livepatheffect_on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
 
 static SPObjectClass *livepatheffect_parent_class;
@@ -37,7 +28,7 @@ static SPObjectClass *livepatheffect_parent_class;
  * Registers the LivePathEffect class with Gdk and returns its type number.
  */
 GType
-livepatheffect_get_type ()
+LivePathEffectObject::livepatheffect_get_type ()
 {
     static GType livepatheffect_type = 0;
 
@@ -45,11 +36,11 @@ livepatheffect_get_type ()
         GTypeInfo livepatheffect_info = {
             sizeof (LivePathEffectObjectClass),
             NULL, NULL,
-            (GClassInitFunc) livepatheffect_class_init,
+            (GClassInitFunc) LivePathEffectObject::livepatheffect_class_init,
             NULL, NULL,
             sizeof (LivePathEffectObject),
             16,
-            (GInstanceInitFunc) livepatheffect_init,
+            (GInstanceInitFunc) LivePathEffectObject::livepatheffect_init,
             NULL,
         };
         livepatheffect_type = g_type_register_static (SP_TYPE_OBJECT, "LivePathEffectObject", &livepatheffect_info, (GTypeFlags)0);
@@ -69,8 +60,8 @@ static Inkscape::XML::NodeEventVector const livepatheffect_repr_events = {
 /**
  * Callback to initialize livepatheffect vtable.
  */
-static void
-livepatheffect_class_init(LivePathEffectObjectClass *klass)
+void
+LivePathEffectObject::livepatheffect_class_init(LivePathEffectObjectClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
 
@@ -86,8 +77,8 @@ livepatheffect_class_init(LivePathEffectObjectClass *klass)
 /**
  * Callback to initialize livepatheffect object.
  */
-static void
-livepatheffect_init(LivePathEffectObject *lpeobj)
+void
+LivePathEffectObject::livepatheffect_init(LivePathEffectObject *lpeobj)
 {
 #ifdef LIVEPATHEFFECT_VERBOSE
     g_message("Init livepatheffectobject");
@@ -101,8 +92,8 @@ livepatheffect_init(LivePathEffectObject *lpeobj)
 /**
  * Virtual build: set livepatheffect attributes from its associated XML node.
  */
-static void
-livepatheffect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+void
+LivePathEffectObject::livepatheffect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
 #ifdef LIVEPATHEFFECT_VERBOSE
     g_message("Build livepatheffect");
@@ -126,8 +117,8 @@ livepatheffect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node
 /**
  * Virtual release of livepatheffect members before destruction.
  */
-static void
-livepatheffect_release(SPObject *object)
+void
+LivePathEffectObject::livepatheffect_release(SPObject *object)
 {
 #ifdef LIVEPATHEFFECT_VERBOSE
     g_print("Releasing livepatheffect");
@@ -168,8 +159,8 @@ livepatheffect_release(SPObject *object)
 /**
  * Virtual set: set attribute to value.
  */
-static void
-livepatheffect_set(SPObject *object, unsigned key, gchar const *value)
+void
+LivePathEffectObject::livepatheffect_set(SPObject *object, unsigned key, gchar const *value)
 {
     LivePathEffectObject *lpeobj = LIVEPATHEFFECT(object);
 #ifdef LIVEPATHEFFECT_VERBOSE
@@ -202,8 +193,8 @@ livepatheffect_set(SPObject *object, unsigned key, gchar const *value)
 /**
  * Virtual write: write object attributes to repr.
  */
-static Inkscape::XML::Node *
-livepatheffect_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+Inkscape::XML::Node *
+LivePathEffectObject::livepatheffect_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
 #ifdef LIVEPATHEFFECT_VERBOSE
     g_print("Write livepatheffect");
@@ -243,10 +234,10 @@ livepatheffect_on_repr_attr_changed ( Inkscape::XML::Node * /*repr*/,
         return;
 
     LivePathEffectObject *lpeobj = (LivePathEffectObject*) data;
-    if (!lpeobj->lpe)
+    if (!lpeobj->get_lpe())
         return;
 
-    lpeobj->lpe->setParameter(key, newval);
+    lpeobj->get_lpe()->setParameter(key, newval);
 
     lpeobj->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }

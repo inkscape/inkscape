@@ -553,7 +553,7 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
         int const width = (int) (_width * dots_per_pt + 0.5);
         int const height = (int) (_height * dots_per_pt + 0.5);
 
-        NR::Matrix affine;
+        Geom::Matrix affine;
         affine[0] = width / ((x1 - x0) * PX_PER_PT);
         affine[1] = 0.0;
         affine[2] = 0.0;
@@ -575,7 +575,7 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
 
             /* Update to renderable state. */
             NRGC gc(NULL);
-            gc.transform.set_identity();
+            gc.transform.setIdentity();
             nr_arena_item_invoke_update(mod->root, &bbox, &gc, NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
             /* Render */
             /* This should take guchar* instead of unsigned char*) */

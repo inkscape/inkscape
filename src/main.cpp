@@ -1053,11 +1053,11 @@ do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gch
         SPItem *item = ((SPItem *) o);
 
         // "true" SVG bbox for scripting
-        boost::optional<NR::Rect> area = item->getBounds(sp_item_i2doc_affine(item));
+        boost::optional<Geom::Rect> area = item->getBounds(sp_item_i2doc_affine(item));
         if (area) {
             Inkscape::SVGOStringStream os;
             if (extent) {
-                os << area->extent(axis);
+                os << area->dimensions()[axis];
             } else {
                 os << area->min()[axis];
             }
@@ -1086,14 +1086,14 @@ do_query_all_recurse (SPObject *o)
 {
     SPItem *item = ((SPItem *) o);
     if (o->id && SP_IS_ITEM(item)) {
-        boost::optional<NR::Rect> area = item->getBounds(sp_item_i2doc_affine(item));
+        boost::optional<Geom::Rect> area = item->getBounds(sp_item_i2doc_affine(item));
         if (area) {
             Inkscape::SVGOStringStream os;
             os << o->id;
-            os << "," << area->min()[NR::X];
-            os << "," << area->min()[NR::Y];
-            os << "," << area->extent(NR::X);
-            os << "," << area->extent(NR::Y);
+            os << "," << area->min()[Geom::X];
+            os << "," << area->min()[Geom::Y];
+            os << "," << area->dimensions()[Geom::X];
+            os << "," << area->dimensions()[Geom::Y];
             g_print ("%s\n", os.str().c_str());
         }
     }
@@ -1178,7 +1178,7 @@ sp_do_export_png(SPDocument *doc)
 
             // write object bbox to area
             sp_document_ensure_up_to_date (doc);
-            boost::optional<NR::Rect> areaMaybe;
+            boost::optional<Geom::Rect> areaMaybe;
             sp_item_invoke_bbox((SPItem *) o_area, areaMaybe, sp_item_i2r_affine((SPItem *) o_area), TRUE);
             if (areaMaybe) {
                 area = NRRect(areaMaybe);

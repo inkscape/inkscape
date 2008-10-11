@@ -964,10 +964,10 @@ static Geom::Matrix getODFTransform(const SPItem *item)
  */
 static boost::optional<Geom::Rect> getODFBoundingBox(const SPItem *item)
 {
-    boost::optional<NR::Rect> bbox_temp = sp_item_bbox_desktop((SPItem *)item);
+    boost::optional<Geom::Rect> bbox_temp = sp_item_bbox_desktop((SPItem *)item);
     boost::optional<Geom::Rect> bbox;
     if (bbox_temp) {
-        bbox = to_2geom(*bbox_temp);
+        bbox = *bbox_temp;
         double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
         Geom::Matrix doc2dt_tf = Geom::Matrix(Geom::Scale(1.0, -1.0));
         doc2dt_tf            = doc2dt_tf * Geom::Matrix(Geom::Translate(0, doc_height));

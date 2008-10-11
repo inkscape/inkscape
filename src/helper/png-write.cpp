@@ -325,7 +325,7 @@ sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
     bbox.y1 = row + num_rows;
     /* Update to renderable state */
     NRGC gc(NULL);
-    gc.transform.set_identity();
+    gc.transform.setIdentity();
 
     nr_arena_item_invoke_update(ebp->root, &bbox, &gc,
            NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);

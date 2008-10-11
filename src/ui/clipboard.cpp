@@ -407,17 +407,17 @@ bool ClipboardManagerImpl::pasteSize(bool separately, bool apply_x, bool apply_y
         if (separately) {
             for (GSList *i = const_cast<GSList*>(selection->itemList()) ; i ; i = i->next) {
                 SPItem *item = SP_ITEM(i->data);
-                boost::optional<NR::Rect> obj_size = sp_item_bbox_desktop(item);
+                boost::optional<Geom::Rect> obj_size = sp_item_bbox_desktop(item);
                 if ( !obj_size || obj_size->isEmpty() ) continue;
-                sp_item_scale_rel(item, _getScale(min, max, to_2geom(*obj_size), apply_x, apply_y));
+                sp_item_scale_rel(item, _getScale(min, max, *obj_size, apply_x, apply_y));
             }
         }
         // resize the selection as a whole
         else {
-            boost::optional<NR::Rect> sel_size = selection->bounds();
+            boost::optional<Geom::Rect> sel_size = selection->bounds();
             if ( sel_size && !sel_size->isEmpty() ) {
                 sp_selection_scale_relative(selection, sel_size->midpoint(),
-                    _getScale(min, max, to_2geom(*sel_size), apply_x, apply_y));
+                    _getScale(min, max, *sel_size, apply_x, apply_y));
             }
         }
         pasted = true;
@@ -571,7 +571,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
         }
     }
 
-    boost::optional<NR::Rect> size = selection->bounds();
+    boost::optional<Geom::Rect> size = selection->bounds();
     if (size) {
         sp_repr_set_point(_clipnode, "min", size->min());
         sp_repr_set_point(_clipnode, "max", size->max());
@@ -786,7 +786,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
     selection->setReprList(pasted_objects);         // Change the selection to the freshly pasted objects
     sp_document_ensure_up_to_date(target_document); // What does this do?
     
-    boost::optional<NR::Rect> sel_bbox = selection->bounds(); //In desktop coordinates
+    boost::optional<Geom::Rect> sel_bbox = selection->bounds(); //In desktop coordinates
     // PS: We could also have used the min/max corners calculated above, instead of selection->bounds() because 
     // we know that after pasting the upper left corner of the selection will be aligend to the corresponding 
     // page corner. Using the boundingbox of the selection is more foolproof though

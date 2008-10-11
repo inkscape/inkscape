@@ -119,7 +119,7 @@ struct SPItem : public SPObject {
     
     std::vector<SPGuideConstraint> constraints;
     
-    sigc::signal<void, NR::Matrix const *, SPItem *> _transformed_signal;
+    sigc::signal<void, Geom::Matrix const *, SPItem *> _transformed_signal;
 
     void init();    
     bool isLocked() const;
@@ -138,7 +138,7 @@ struct SPItem : public SPObject {
     
     void setExplicitlyHidden(bool val);
 
-    void setCenter(NR::Point object_centre);
+    void setCenter(Geom::Point object_centre);
     void unsetCenter();
     bool isCenterSet();
     Geom::Point getCenter() const;
@@ -147,19 +147,19 @@ struct SPItem : public SPObject {
     
     bool isVisibleAndUnlocked(unsigned display_key) const;
     
-    NR::Matrix getRelativeTransform(SPObject const *obj) const;
+    Geom::Matrix getRelativeTransform(SPObject const *obj) const;
     
     void raiseOne();
     void lowerOne();
     void raiseToTop();
     void lowerToBottom();
 
-    boost::optional<NR::Rect> getBounds(NR::Matrix const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
+    boost::optional<Geom::Rect> getBounds(Geom::Matrix const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
 
     sigc::connection _clip_ref_connection;
     sigc::connection _mask_ref_connection;
 
-    sigc::connection connectTransformed(sigc::slot<void, NR::Matrix const *, SPItem *> slot)  {
+    sigc::connection connectTransformed(sigc::slot<void, Geom::Matrix const *, SPItem *> slot)  {
         return _transformed_signal.connect(slot);
     }
 
@@ -173,7 +173,7 @@ private:
     mutable EvaluatedStatus _evaluated_status;
 };
 
-typedef std::back_insert_iterator<std::vector<NR::Point> > SnapPointsIter;
+typedef std::back_insert_iterator<std::vector<Geom::Point> > SnapPointsIter;
 
 /// The SPItem vtable.
 struct SPItemClass {
@@ -198,7 +198,7 @@ struct SPItemClass {
     void (* snappoints) (SPItem const *item, SnapPointsIter p);
     
     /** Apply the transform optimally, and return any residual transformation */
-    NR::Matrix (* set_transform)(SPItem *item, NR::Matrix const &transform);
+    Geom::Matrix (* set_transform)(SPItem *item, Geom::Matrix const &transform);
 
     /** Convert the item to guidelines */
     void (* convert_to_guides)(SPItem *item);
@@ -213,10 +213,10 @@ struct SPItemClass {
 
 /* Methods */
 
-void sp_item_invoke_bbox(SPItem const *item, boost::optional<NR::Rect> &bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
-void sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
-void sp_item_invoke_bbox_full(SPItem const *item, boost::optional<NR::Rect> &bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear);
-void sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear) __attribute__ ((deprecated));
+void sp_item_invoke_bbox(SPItem const *item, boost::optional<Geom::Rect> &bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
+void sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
+void sp_item_invoke_bbox_full(SPItem const *item, boost::optional<Geom::Rect> &bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear);
+void sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear) __attribute__ ((deprecated));
 
 unsigned sp_item_pos_in_parent(SPItem *item);
 
@@ -230,17 +230,17 @@ void sp_item_invoke_hide(SPItem *item, unsigned int key);
 
 void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIter p);
 
-void sp_item_adjust_pattern(SPItem *item, /* NR::Matrix const &premul, */ NR::Matrix const &postmul, bool set = false);
-void sp_item_adjust_gradient(SPItem *item, /* NR::Matrix const &premul, */ NR::Matrix const &postmul, bool set = false);
+void sp_item_adjust_pattern(SPItem *item, /* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);
+void sp_item_adjust_gradient(SPItem *item, /* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);
 void sp_item_adjust_stroke(SPItem *item, gdouble ex);
 void sp_item_adjust_stroke_width_recursive(SPItem *item, gdouble ex);
-void sp_item_adjust_paint_recursive(SPItem *item, NR::Matrix advertized_transform, NR::Matrix t_ancestors, bool is_pattern);
-void sp_item_adjust_livepatheffect(SPItem *item, NR::Matrix const &postmul, bool set = false);
+void sp_item_adjust_paint_recursive(SPItem *item, Geom::Matrix advertized_transform, Geom::Matrix t_ancestors, bool is_pattern);
+void sp_item_adjust_livepatheffect(SPItem *item, Geom::Matrix const &postmul, bool set = false);
 
-void sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix const *transform, NR::Matrix const *adv = NULL);
-void sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix const &transform, NR::Matrix const *adv = NULL, bool compensate = true);
+void sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix const *transform, Geom::Matrix const *adv = NULL);
+void sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix const &transform, Geom::Matrix const *adv = NULL, bool compensate = true);
 
-void sp_item_set_item_transform(SPItem *item, NR::Matrix const &transform);
+void sp_item_set_item_transform(SPItem *item, Geom::Matrix const &transform);
 
 void sp_item_convert_item_to_guides(SPItem *item);
 
@@ -251,7 +251,7 @@ gint sp_item_event (SPItem *item, SPEvent *event);
 NRArenaItem *sp_item_get_arenaitem(SPItem *item, unsigned int key);
 
 void sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
-boost::optional<NR::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
+boost::optional<Geom::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
 
 Geom::Matrix i2anc_affine(SPObject const *item, SPObject const *ancestor);
 Geom::Matrix i2i_affine(SPObject const *src, SPObject const *dest);

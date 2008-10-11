@@ -67,10 +67,12 @@
 #include "algorithms/find-last-if.h"
 #include "util/reverse-list.h"
 #include <2geom/rect.h>
+#include <2geom/matrix.h>
 #include <2geom/transforms.h>
 
 #include "xml/repr.h"
 #include "extract-uri.h"
+#include "helper/geom.h"
 
 #include "live_effects/lpeobject.h"
 #include "live_effects/effect.h"
@@ -159,7 +161,7 @@ void SPItem::init() {
     this->_is_evaluated = true;
     this->_evaluated_status = StatusUnknown;
 
-    this->transform = NR::identity();
+    this->transform = Geom::identity();
 
     this->display = NULL;
 
@@ -175,7 +177,7 @@ void SPItem::init() {
 
     this->avoidRef = new SPAvoidRef(this);
 
-    new (&this->_transformed_signal) sigc::signal<void, NR::Matrix const *, SPItem *>();
+    new (&this->_transformed_signal) sigc::signal<void, Geom::Matrix const *, SPItem *>();
 }
 
 bool SPItem::isVisibleAndUnlocked() const {
@@ -288,13 +290,13 @@ SPItem::setExplicitlyHidden(bool const val) {
  * Sets the transform_center_x and transform_center_y properties to retain the rotation centre
  */
 void
-SPItem::setCenter(NR::Point object_centre) {
-    boost::optional<NR::Rect> bbox = getBounds(sp_item_i2d_affine(this));
+SPItem::setCenter(Geom::Point object_centre) {
+    boost::optional<Geom::Rect> bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
-        transform_center_x = object_centre[NR::X] - bbox->midpoint()[NR::X];
+        transform_center_x = object_centre[Geom::X] - bbox->midpoint()[Geom::X];
         if (fabs(transform_center_x) < 1e-5) // rounding error
             transform_center_x = 0;
-        transform_center_y = object_centre[NR::Y] - bbox->midpoint()[NR::Y];
+        transform_center_y = object_centre[Geom::Y] - bbox->midpoint()[Geom::Y];
         if (fabs(transform_center_y) < 1e-5) // rounding error
             transform_center_y = 0;
     }
@@ -311,7 +313,7 @@ bool SPItem::isCenterSet() {
 }
 
 Geom::Point SPItem::getCenter() const {
-    boost::optional<NR::Rect> bbox = getBounds(sp_item_i2d_affine(this));
+    boost::optional<Geom::Rect> bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
         return to_2geom(bbox->midpoint()) + Geom::Point (this->transform_center_x, this->transform_center_y);
     } else {
@@ -455,11 +457,11 @@ sp_item_set(SPObject *object, unsigned key, gchar const *value)
 
     switch (key) {
         case SP_ATTR_TRANSFORM: {
-            NR::Matrix t;
+            Geom::Matrix t;
             if (value && sp_svg_transform_read(value, &t)) {
                 sp_item_set_item_transform(item, t);
             } else {
-                sp_item_set_item_transform(item, NR::identity());
+                sp_item_set_item_transform(item, Geom::identity());
             }
             break;
         }
@@ -553,7 +555,7 @@ clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item)
     }
     if (SP_IS_CLIPPATH(clip)) {
         NRRect bbox;
-        sp_item_invoke_bbox(item, &bbox, NR::identity(), TRUE);
+        sp_item_invoke_bbox(item, &bbox, Geom::identity(), TRUE);
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
             if (!v->arenaitem->key) {
                 NR_ARENA_ITEM_SET_KEY(v->arenaitem, sp_item_display_key_new(3));
@@ -581,7 +583,7 @@ mask_ref_changed(SPObject *old_mask, SPObject *mask, SPItem *item)
     }
     if (SP_IS_MASK(mask)) {
         NRRect bbox;
-        sp_item_invoke_bbox(item, &bbox, NR::identity(), TRUE);
+        sp_item_invoke_bbox(item, &bbox, Geom::identity(), TRUE);
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
             if (!v->arenaitem->key) {
                 NR_ARENA_ITEM_SET_KEY(v->arenaitem, sp_item_display_key_new(3));
@@ -617,7 +619,7 @@ sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
 
         if ( clip_path || mask ) {
             NRRect bbox;
-            sp_item_invoke_bbox(item, &bbox, NR::identity(), TRUE);
+            sp_item_invoke_bbox(item, &bbox, Geom::identity(), TRUE);
             if (clip_path) {
                 for (SPItemView *v = item->display; v != NULL; v = v->next) {
                     sp_clippath_set_bbox(clip_path, NR_ARENA_ITEM_GET_KEY(v->arenaitem), &bbox);
@@ -641,8 +643,8 @@ sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
     /* Update bounding box data used by filters */
     if (item->style->filter.set && item->display) {
         NRRect item_bbox;
-        sp_item_invoke_bbox(item, &item_bbox, NR::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
-        boost::optional<NR::Rect> i_bbox = item_bbox;
+        sp_item_invoke_bbox(item, &item_bbox, Geom::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
+        boost::optional<Geom::Rect> i_bbox = item_bbox;
 
         SPItemView *itemview = item->display;
         do {
@@ -719,24 +721,24 @@ sp_item_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape
     return repr;
 }
 
-boost::optional<NR::Rect> SPItem::getBounds(NR::Matrix const &transform,
+boost::optional<Geom::Rect> SPItem::getBounds(Geom::Matrix const &transform,
                                       SPItem::BBoxType type,
                                       unsigned int /*dkey*/) const
 {
-    boost::optional<NR::Rect> r;
+    boost::optional<Geom::Rect> r;
     sp_item_invoke_bbox_full(this, r, transform, type, TRUE);
     return r;
 }
 
 void
-sp_item_invoke_bbox(SPItem const *item, boost::optional<NR::Rect> &bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
+sp_item_invoke_bbox(SPItem const *item, boost::optional<Geom::Rect> &bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
 {
     sp_item_invoke_bbox_full(item, bbox, transform, type, clear);
 }
 
-// DEPRECATED to phase out the use of NRRect in favor of boost::optional<NR::Rect>
+// DEPRECATED to phase out the use of NRRect in favor of boost::optional<Geom::Rect>
 void
-sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
+sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
 {
     sp_item_invoke_bbox_full(item, bbox, transform, type, clear);
 }
@@ -746,16 +748,16 @@ sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transfor
  * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
  * clones), in turn, call this function in their bbox methods. */
 void
-sp_item_invoke_bbox_full(SPItem const *item, boost::optional<NR::Rect> &bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear)
+sp_item_invoke_bbox_full(SPItem const *item, boost::optional<Geom::Rect> &bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
 
     if (clear) {
-        bbox = boost::optional<NR::Rect>();
+        bbox = boost::optional<Geom::Rect>();
     }
 
-    // TODO: replace NRRect by NR::Rect, for all SPItemClasses, and for SP_CLIPPATH
+    // TODO: replace NRRect by Geom::Rect, for all SPItemClasses, and for SP_CLIPPATH
 
     NRRect temp_bbox;
     temp_bbox.x0 = temp_bbox.y0 = NR_HUGE;
@@ -809,11 +811,11 @@ sp_item_invoke_bbox_full(SPItem const *item, boost::optional<NR::Rect> &bbox, NR
                 }
 
                 // transform the expansions by the item's transform:
-                NR::Matrix i2d(sp_item_i2d_affine (item));
-                dx0 *= NR::expansionX(i2d);
-                dx1 *= NR::expansionX(i2d);
-                dy0 *= NR::expansionY(i2d);
-                dy1 *= NR::expansionY(i2d);
+                Geom::Matrix i2d(sp_item_i2d_affine (item));
+                dx0 *= i2d.expansionX();
+                dx1 *= i2d.expansionX();
+                dy0 *= i2d.expansionY();
+                dy1 *= i2d.expansionY();
 
                 // expand the bbox
                 temp_bbox.x0 += dx0;
@@ -835,26 +837,26 @@ sp_item_invoke_bbox_full(SPItem const *item, boost::optional<NR::Rect> &bbox, NR
         // or it has explicitely been set to be like this (e.g. in sp_shape_bbox)
         
         // When x0 > x1 or y0 > y1, the bbox is considered to be "nothing", although it has not been 
-        // explicitely defined this way for NRRects (as opposed to boost::optional<NR::Rect>)
+        // explicitely defined this way for NRRects (as opposed to boost::optional<Geom::Rect>)
         // So union bbox with nothing = do nothing, just return
         return;
     }
 
-    // Do not use temp_bbox.upgrade() here, because it uses a test that returns an empty boost::optional<NR::Rect>()
+    // Do not use temp_bbox.upgrade() here, because it uses a test that returns an empty boost::optional<Geom::Rect>()
     // for any rectangle with zero area. The geometrical bbox of for example a vertical line
-    // would therefore be translated into empty boost::optional<NR::Rect>() (see bug https://bugs.launchpad.net/inkscape/+bug/168684)
-    boost::optional<NR::Rect> temp_bbox_new = NR::Rect(NR::Point(temp_bbox.x0, temp_bbox.y0), NR::Point(temp_bbox.x1, temp_bbox.y1));
+    // would therefore be translated into empty boost::optional<Geom::Rect>() (see bug https://bugs.launchpad.net/inkscape/+bug/168684)
+    boost::optional<Geom::Rect> temp_bbox_new = Geom::Rect(Geom::Point(temp_bbox.x0, temp_bbox.y0), Geom::Point(temp_bbox.x1, temp_bbox.y1));
 
-    bbox = NR::union_bounds(bbox, temp_bbox_new);
+    bbox = Geom::unify(bbox, temp_bbox_new);
 }
 
-// DEPRECATED to phase out the use of NRRect in favor of boost::optional<NR::Rect>
+// DEPRECATED to phase out the use of NRRect in favor of boost::optional<Geom::Rect>
 /** Calls \a item's subclass' bounding box method; clips it by the bbox of clippath, if any; and
  * unions the resulting bbox with \a bbox. If \a clear is true, empties \a bbox first. Passes the
  * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
  * clones), in turn, call this function in their bbox methods. */
 void
-sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear)
+sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
@@ -922,9 +924,9 @@ sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type)
     sp_item_invoke_bbox(item, bbox, sp_item_i2d_affine(item), TRUE, type);
 }
 
-boost::optional<NR::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
+boost::optional<Geom::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
 {
-    boost::optional<NR::Rect> rect = boost::optional<NR::Rect>();
+    boost::optional<Geom::Rect> rect = boost::optional<Geom::Rect>();
     sp_item_invoke_bbox(item, rect, sp_item_i2d_affine(item), TRUE, type);
     return rect;
 }
@@ -936,16 +938,16 @@ static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
 	 * We don't know what shape we could be dealing with here, so we'll just
 	 * return the corners of the bounding box */
 
-	boost::optional<NR::Rect> bbox = item->getBounds(sp_item_i2d_affine(item));
+	boost::optional<Geom::Rect> bbox = item->getBounds(sp_item_i2d_affine(item));
     
     if (bbox) {
-        NR::Point p1, p2;
+        Geom::Point p1, p2;
         p1 = bbox->min();
         p2 = bbox->max();
         *p = p1;
-        *p = NR::Point(p1[NR::X], p2[NR::Y]);
+        *p = Geom::Point(p1[Geom::X], p2[Geom::Y]);
         *p = p2;
-        *p = NR::Point(p1[NR::Y], p2[NR::X]);
+        *p = Geom::Point(p1[Geom::Y], p2[Geom::X]);
     }
       
 }
@@ -977,14 +979,14 @@ void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIt
 	    	// obj is a group object, the children are the actual clippers
 	        for (SPObject *child = (*o)->children ; child ; child = child->next) {
 	            if (SP_IS_ITEM(child)) {
-	            	std::vector<NR::Point> p_clip_or_mask;	            	    
+	            	std::vector<Geom::Point> p_clip_or_mask;	            	    
 	            	// Please note the recursive call here!
 	            	sp_item_snappoints(SP_ITEM(child), includeItemCenter, SnapPointsIter(p_clip_or_mask));
 	            	// Take into account the transformation of the item being clipped or masked
-	            	for (std::vector<NR::Point>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
+	            	for (std::vector<Geom::Point>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
             	    	// All snappoints are in desktop coordinates, but the item's transformation is
 	            		// in document coordinates. Hence the awkward construction below
-	            		*p = (*p_orig) * from_2geom(matrix_to_desktop (matrix_from_desktop (item->transform, item), item));
+	            		*p = (*p_orig) * matrix_to_desktop (matrix_from_desktop (item->transform, item), item);
             	    }
 	            }
 	    	}
@@ -1101,7 +1103,7 @@ sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
 
             // Update bbox, in case the clip uses bbox units
             NRRect bbox;
-            sp_item_invoke_bbox(item, &bbox, NR::identity(), TRUE);
+            sp_item_invoke_bbox(item, &bbox, Geom::identity(), TRUE);
             sp_clippath_set_bbox(SP_CLIPPATH(cp), clip_key, &bbox);
             SP_OBJECT(cp)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
@@ -1120,14 +1122,14 @@ sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
 
             // Update bbox, in case the mask uses bbox units
             NRRect bbox;
-            sp_item_invoke_bbox(item, &bbox, NR::identity(), TRUE);
+            sp_item_invoke_bbox(item, &bbox, Geom::identity(), TRUE);
             sp_mask_set_bbox(SP_MASK(mask), mask_key, &bbox);
             SP_OBJECT(mask)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
         NR_ARENA_ITEM_SET_DATA(ai, item);
         NRRect item_bbox;
-        sp_item_invoke_bbox(item, &item_bbox, NR::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
-        boost::optional<NR::Rect> i_bbox = item_bbox;
+        sp_item_invoke_bbox(item, &item_bbox, Geom::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
+        boost::optional<Geom::Rect> i_bbox = item_bbox;
         nr_arena_item_set_item_bbox(ai, i_bbox);
     }
 
@@ -1175,7 +1177,7 @@ sp_item_invoke_hide(SPItem *item, unsigned key)
 // Adjusters
 
 void
-sp_item_adjust_pattern (SPItem *item, NR::Matrix const &postmul, bool set)
+sp_item_adjust_pattern (SPItem *item, Geom::Matrix const &postmul, bool set)
 {
     SPStyle *style = SP_OBJECT_STYLE (item);
 
@@ -1198,7 +1200,7 @@ sp_item_adjust_pattern (SPItem *item, NR::Matrix const &postmul, bool set)
 }
 
 void
-sp_item_adjust_gradient (SPItem *item, NR::Matrix const &postmul, bool set)
+sp_item_adjust_gradient (SPItem *item, Geom::Matrix const &postmul, bool set)
 {
     SPStyle *style = SP_OBJECT_STYLE (item);
 
@@ -1255,13 +1257,13 @@ sp_item_adjust_stroke (SPItem *item, gdouble ex)
 /**
  * Find out the inverse of previous transform of an item (from its repr)
  */
-NR::Matrix
+Geom::Matrix
 sp_item_transform_repr (SPItem *item)
 {
-    NR::Matrix t_old(NR::identity());
+    Geom::Matrix t_old(Geom::identity());
     gchar const *t_attr = SP_OBJECT_REPR(item)->attribute("transform");
     if (t_attr) {
-        NR::Matrix t;
+        Geom::Matrix t;
         if (sp_svg_transform_read(t_attr, &t)) {
             t_old = t;
         }
@@ -1293,7 +1295,7 @@ sp_item_adjust_stroke_width_recursive(SPItem *item, double expansion)
  * Recursively adjust rx and ry of rects.
  */
 void
-sp_item_adjust_rects_recursive(SPItem *item, NR::Matrix advertized_transform)
+sp_item_adjust_rects_recursive(SPItem *item, Geom::Matrix advertized_transform)
 {
     if (SP_IS_RECT (item)) {
         sp_rect_compensate_rxry (SP_RECT(item), advertized_transform);
@@ -1309,13 +1311,13 @@ sp_item_adjust_rects_recursive(SPItem *item, NR::Matrix advertized_transform)
  * Recursively compensate pattern or gradient transform.
  */
 void
-sp_item_adjust_paint_recursive (SPItem *item, NR::Matrix advertized_transform, NR::Matrix t_ancestors, bool is_pattern)
+sp_item_adjust_paint_recursive (SPItem *item, Geom::Matrix advertized_transform, Geom::Matrix t_ancestors, bool is_pattern)
 {
 // _Before_ full pattern/gradient transform: t_paint * t_item * t_ancestors
 // _After_ full pattern/gradient transform: t_paint_new * t_item * t_ancestors * advertised_transform
 // By equating these two expressions we get t_paint_new = t_paint * paint_delta, where:
-    NR::Matrix t_item = sp_item_transform_repr (item);
-    NR::Matrix paint_delta = t_item * t_ancestors * advertized_transform * t_ancestors.inverse() * t_item.inverse();
+    Geom::Matrix t_item = sp_item_transform_repr (item);
+    Geom::Matrix paint_delta = t_item * t_ancestors * advertized_transform * t_ancestors.inverse() * t_item.inverse();
 
 // Within text, we do not fork gradients, and so must not recurse to avoid double compensation;
 // also we do not recurse into clones, because a clone's child is the ghost of its original -
@@ -1343,7 +1345,7 @@ sp_item_adjust_paint_recursive (SPItem *item, NR::Matrix advertized_transform, N
 }
 
 void
-sp_item_adjust_livepatheffect (SPItem *item, NR::Matrix const &postmul, bool set)
+sp_item_adjust_livepatheffect (SPItem *item, Geom::Matrix const &postmul, bool set)
 {
     if ( !SP_IS_LPE_ITEM(item) )
         return;
@@ -1362,8 +1364,8 @@ sp_item_adjust_livepatheffect (SPItem *item, NR::Matrix const &postmul, bool set
                     sp_lpe_item_replace_path_effect(lpeitem, lpeobj, new_lpeobj);
                 }
         
-                if (lpeobj->lpe) {
-                    Inkscape::LivePathEffect::Effect * effect = lpeobj->lpe;
+                if (lpeobj->get_lpe()) {
+                    Inkscape::LivePathEffect::Effect * effect = lpeobj->get_lpe();
                     effect->transform_multiply(postmul, set);
                 }
             }
@@ -1372,14 +1374,14 @@ sp_item_adjust_livepatheffect (SPItem *item, NR::Matrix const &postmul, bool set
 }
 
 /**
- * A temporary wrapper for the next function accepting the NR::Matrix
- * instead of NR::Matrix
+ * A temporary wrapper for the next function accepting the Geom::Matrix
+ * instead of Geom::Matrix
  */
 void
-sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix const *transform, NR::Matrix const *adv)
+sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix const *transform, Geom::Matrix const *adv)
 {
     if (transform == NULL)
-        sp_item_write_transform(item, repr, NR::identity(), adv);
+        sp_item_write_transform(item, repr, Geom::identity(), adv);
     else
         sp_item_write_transform(item, repr, *transform, adv);
 }
@@ -1393,14 +1395,14 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix cons
  * the repr is updated with the new transform.
  */
 void
-sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix const &transform, NR::Matrix const *adv, bool compensate)
+sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix const &transform, Geom::Matrix const *adv, bool compensate)
 {
     g_return_if_fail(item != NULL);
     g_return_if_fail(SP_IS_ITEM(item));
     g_return_if_fail(repr != NULL);
 
     // calculate the relative transform, if not given by the adv attribute
-    NR::Matrix advertized_transform;
+    Geom::Matrix advertized_transform;
     if (adv != NULL) {
         advertized_transform = *adv;
     } else {
@@ -1411,7 +1413,7 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix cons
 
          // recursively compensate for stroke scaling, depending on user preference
         if (prefs_get_int_attribute("options.transform", "stroke", 1) == 0) {
-            double const expansion = 1. / NR::expansion(advertized_transform);
+            double const expansion = 1. / advertized_transform.descrim();
             sp_item_adjust_stroke_width_recursive(item, expansion);
         }
 
@@ -1422,28 +1424,28 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix cons
 
         // recursively compensate pattern fill if it's not to be transformed
         if (prefs_get_int_attribute("options.transform", "pattern", 1) == 0) {
-            sp_item_adjust_paint_recursive (item, advertized_transform.inverse(), NR::identity(), true);
+            sp_item_adjust_paint_recursive (item, advertized_transform.inverse(), Geom::identity(), true);
         }
         /// \todo FIXME: add the same else branch as for gradients below, to convert patterns to userSpaceOnUse as well
         /// recursively compensate gradient fill if it's not to be transformed
         if (prefs_get_int_attribute("options.transform", "gradient", 1) == 0) {
-            sp_item_adjust_paint_recursive (item, advertized_transform.inverse(), NR::identity(), false);
+            sp_item_adjust_paint_recursive (item, advertized_transform.inverse(), Geom::identity(), false);
         } else {
             // this converts the gradient/pattern fill/stroke, if any, to userSpaceOnUse; we need to do
             // it here _before_ the new transform is set, so as to use the pre-transform bbox
-            sp_item_adjust_paint_recursive (item, NR::identity(), NR::identity(), false);
+            sp_item_adjust_paint_recursive (item, Geom::identity(), Geom::identity(), false);
         }
 
     } // endif(compensate)
 
     gint preserve = prefs_get_int_attribute("options.preservetransform", "value", 0);
-    NR::Matrix transform_attr (transform);
+    Geom::Matrix transform_attr (transform);
     if ( // run the object's set_transform (i.e. embed transform) only if:
          ((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform && // it does have a set_transform method
              !preserve && // user did not chose to preserve all transforms
              !item->clip_ref->getObject() && // the object does not have a clippath
              !item->mask_ref->getObject() && // the object does not have a mask
-         !(!transform.is_translation() && SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->getFilter())
+         !(!transform.isTranslation() && SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->getFilter())
              // the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
         ) {
         transform_attr = ((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform(item, transform);
@@ -1478,7 +1480,7 @@ sp_item_event(SPItem *item, SPEvent *event)
  * gradients, patterns as sp_item_write_transform does.
  */
 void
-sp_item_set_item_transform(SPItem *item, NR::Matrix const &transform)
+sp_item_set_item_transform(SPItem *item, Geom::Matrix const &transform)
 {
     g_return_if_fail(item != NULL);
     g_return_if_fail(SP_IS_ITEM(item));
@@ -1536,7 +1538,7 @@ i2i_affine(SPObject const *src, SPObject const *dest) {
     return i2anc_affine(src, ancestor) * i2anc_affine(dest, ancestor).inverse();
 }
 
-NR::Matrix SPItem::getRelativeTransform(SPObject const *dest) const {
+Geom::Matrix SPItem::getRelativeTransform(SPObject const *dest) const {
     return i2i_affine(this, dest);
 }
 
@@ -1729,7 +1731,7 @@ sp_item_convert_to_guides(SPItem *item) {
     SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
         SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
 
-    boost::optional<NR::Rect> bbox = sp_item_bbox_desktop(item, bbox_type);
+    boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop(item, bbox_type);
     if (!bbox) {
         g_warning ("Cannot determine item's bounding box during conversion to guides.\n");
         return;
@@ -1737,10 +1739,10 @@ sp_item_convert_to_guides(SPItem *item) {
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
-    NR::Point A((*bbox).min());
-    NR::Point C((*bbox).max());
-    NR::Point B(A[NR::X], C[NR::Y]);
-    NR::Point D(C[NR::X], A[NR::Y]);
+    Geom::Point A((*bbox).min());
+    Geom::Point C((*bbox).max());
+    Geom::Point B(A[Geom::X], C[Geom::Y]);
+    Geom::Point D(C[Geom::X], A[Geom::Y]);
 
     pts.push_back(std::make_pair(A, B));
     pts.push_back(std::make_pair(B, C));

@@ -29,6 +29,7 @@
 #include <gtkmm.h>
 
 #include <helper/sp-marshal.h>
+#include <helper/recthull.h>
 #include <display/sp-canvas.h>
 #include "display-forward.h"
 #include <libnr/nr-matrix-fns.h>
@@ -773,7 +774,7 @@ static void
 sp_canvas_group_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     SPCanvasGroup const *group = SP_CANVAS_GROUP (item);
-    NR::ConvexHull corners(Geom::Point(0, 0));
+    Geom::RectHull corners(Geom::Point(0, 0));
     bool empty=true;
 
     for (GList *list = group->items; list; list = list->next) {
@@ -783,7 +784,7 @@ sp_canvas_group_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned
 
         if ( i->x2 > i->x1 && i->y2 > i->y1 ) {
             if (empty) {
-                corners = NR::ConvexHull(Geom::Point(i->x1, i->y1));
+                corners = Geom::RectHull(Geom::Point(i->x1, i->y1));
                 empty = false;
             } else {
                 corners.add(Geom::Point(i->x1, i->y1));
@@ -792,12 +793,12 @@ sp_canvas_group_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned
         }
     }
 
-    boost::optional<NR::Rect> const bounds = corners.bounds();
+    boost::optional<Geom::Rect> const bounds = corners.bounds();
     if (bounds) {
-        item->x1 = bounds->min()[NR::X];
-        item->y1 = bounds->min()[NR::Y];
-        item->x2 = bounds->max()[NR::X];
-        item->y2 = bounds->max()[NR::Y];
+        item->x1 = bounds->min()[Geom::X];
+        item->y1 = bounds->min()[Geom::Y];
+        item->x2 = bounds->max()[Geom::X];
+        item->y2 = bounds->max()[Geom::Y];
     } else {
         // FIXME ?
         item->x1 = item->x2 = item->y1 = item->y2 = 0;

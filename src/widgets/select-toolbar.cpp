@@ -68,7 +68,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
         int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
         SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
             SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
-        boost::optional<NR::Rect> const bbox(sel->bounds(bbox_type));
+        boost::optional<Geom::Rect> const bbox(sel->bounds(bbox_type));
         if ( bbox && !bbox->isEmpty() ) {
             UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(G_OBJECT(spw), "tracker"));
             SPUnit const &unit = *tracker->getActiveUnit();
@@ -76,8 +76,8 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
             struct { char const *key; double val; } const keyval[] = {
                 { "X", bbox->min()[X] },
                 { "Y", bbox->min()[Y] },
-                { "width", bbox->extent(X) },
-                { "height", bbox->extent(Y) }
+                { "width", bbox->dimensions()[X] },
+                { "height", bbox->dimensions()[Y] }
             };
 
             if (unit.base == SP_UNIT_DIMENSIONLESS) {
@@ -158,7 +158,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
     SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
         SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
-    boost::optional<NR::Rect> bbox = selection->bounds(bbox_type);
+    boost::optional<Geom::Rect> bbox = selection->bounds(bbox_type);
 
     if ( !bbox || bbox->isEmpty() ) {
         g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
@@ -182,27 +182,27 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         x0 = sp_units_get_pixels (a_x->value, unit);
         y0 = sp_units_get_pixels (a_y->value, unit);
         x1 = x0 + sp_units_get_pixels (a_w->value, unit);
-        xrel = sp_units_get_pixels (a_w->value, unit) / bbox->extent(Geom::X);
+        xrel = sp_units_get_pixels (a_w->value, unit) / bbox->dimensions()[Geom::X];
         y1 = y0 + sp_units_get_pixels (a_h->value, unit);
-        yrel = sp_units_get_pixels (a_h->value, unit) / bbox->extent(Geom::Y);
+        yrel = sp_units_get_pixels (a_h->value, unit) / bbox->dimensions()[Geom::Y];
     } else {
         double const x0_propn = a_x->value * unit.unittobase;
         x0 = bbox->min()[Geom::X] * x0_propn;
         double const y0_propn = a_y->value * unit.unittobase;
         y0 = y0_propn * bbox->min()[Geom::Y];
         xrel = a_w->value * unit.unittobase;
-        x1 = x0 + xrel * bbox->extent(Geom::X);
+        x1 = x0 + xrel * bbox->dimensions()[Geom::X];
         yrel = a_h->value * unit.unittobase;
-        y1 = y0 + yrel * bbox->extent(Geom::Y);
+        y1 = y0 + yrel * bbox->dimensions()[Geom::Y];
     }
 
     // Keep proportions if lock is on
     GtkToggleAction *lock = GTK_TOGGLE_ACTION( g_object_get_data(G_OBJECT(spw), "lock") );
     if ( gtk_toggle_action_get_active(lock) ) {
         if (adj == a_h) {
-            x1 = x0 + yrel * bbox->extent(Geom::X);
+            x1 = x0 + yrel * bbox->dimensions()[Geom::X];
         } else if (adj == a_w) {
-            y1 = y0 + xrel * bbox->extent(Geom::Y);
+            y1 = y0 + xrel * bbox->dimensions()[Geom::Y];
         }
     }
 

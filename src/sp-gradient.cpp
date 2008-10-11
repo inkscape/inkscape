@@ -24,8 +24,7 @@
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-scale-ops.h>
-#include <libnr/nr-matrix-translate-ops.h>
-#include "libnr/nr-scale-translate-ops.h"
+#include <2geom/transforms.h>
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
@@ -1253,9 +1252,9 @@ NR::Matrix
 sp_gradient_get_g2d_matrix(SPGradient const *gr, NR::Matrix const &ctm, NR::Rect const &bbox)
 {
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
-        return ( NR::scale(bbox.dimensions())
-                 * NR::translate(bbox.min())
-                 * ctm );
+        return ( Geom::Scale(bbox.dimensions())
+                 * Geom::Translate(bbox.min())
+                 * Geom::Matrix(ctm) );
     } else {
         return ctm;
     }
@@ -1266,9 +1265,9 @@ sp_gradient_get_gs2d_matrix(SPGradient const *gr, NR::Matrix const &ctm, NR::Rec
 {
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         return ( gr->gradientTransform
-                 * NR::scale(bbox.dimensions())
-                 * NR::translate(bbox.min())
-                 * ctm );
+                 * Geom::Scale(bbox.dimensions())
+                 * Geom::Translate(bbox.min())
+                 * Geom::Matrix(ctm) );
     } else {
         return gr->gradientTransform * ctm;
     }
@@ -1281,8 +1280,8 @@ sp_gradient_set_gs2d_matrix(SPGradient *gr, NR::Matrix const &ctm,
     gr->gradientTransform = gs2d * ctm.inverse();
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX ) {
         gr->gradientTransform = ( gr->gradientTransform
-                                  / NR::translate(bbox.min())
-                                  / NR::scale(bbox.dimensions()) );
+                                  * Geom::Translate(-bbox.min())
+                                  * Geom::Scale(bbox.dimensions()).inverse() );
     }
     gr->gradientTransform_set = TRUE;
 

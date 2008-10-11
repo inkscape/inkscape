@@ -990,7 +990,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
                 bool const saved_pref = prefs->getBool("options.transform", "pattern", true);
                 prefs->setBool("options.transform", "pattern", true);
                 sp_document_ensure_up_to_date(sp_desktop_document(desktop));
-                boost::optional<Geom::Rect> sel_bbox = selection->bounds_2geom();
+                boost::optional<Geom::Rect> sel_bbox = selection->bounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );
                     sp_selection_move_relative(selection, m);

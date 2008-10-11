@@ -2,12 +2,12 @@
 #define __SATISFIED_GUIDE_CNS_H__
 
 #include <forward.h>
-#include <libnr/nr-forward.h>
+#include <2geom/forward.h>
 #include <vector>
 class SPGuideConstraint;
 
 void satisfied_guide_cns(SPDesktop const &desktop,
-                         std::vector<NR::Point> const &snappoints,
+                         std::vector<Geom::Point> const &snappoints,
                          std::vector<SPGuideConstraint> &cns);
 
 

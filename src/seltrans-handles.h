@@ -13,6 +13,7 @@
  */
 
 #include "display/sodipodi-ctrl.h"
+#include <2geom/forward.h>
 
 namespace Inkscape
 {
@@ -23,29 +24,29 @@ class SPSelTransHandle;
 
 // request handlers
 gboolean sp_sel_trans_scale_request(Inkscape::SelTrans *seltrans,
-				    SPSelTransHandle const &handle, NR::Point &p, guint state);
+				    SPSelTransHandle const &handle, Geom::Point &p, guint state);
 gboolean sp_sel_trans_stretch_request(Inkscape::SelTrans *seltrans,
-				      SPSelTransHandle const &handle, NR::Point &p, guint state);
+				      SPSelTransHandle const &handle, Geom::Point &p, guint state);
 gboolean sp_sel_trans_skew_request(Inkscape::SelTrans *seltrans,
-				   SPSelTransHandle const &handle, NR::Point &p, guint state);
+				   SPSelTransHandle const &handle, Geom::Point &p, guint state);
 gboolean sp_sel_trans_rotate_request(Inkscape::SelTrans *seltrans,
-				     SPSelTransHandle const &handle, NR::Point &p, guint state);
+				     SPSelTransHandle const &handle, Geom::Point &p, guint state);
 gboolean sp_sel_trans_center_request(Inkscape::SelTrans *seltrans,
-				     SPSelTransHandle const &handle, NR::Point &p, guint state);
+				     SPSelTransHandle const &handle, Geom::Point &p, guint state);
 
 // action handlers
-void sp_sel_trans_scale(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, NR::Point &p, guint state);
-void sp_sel_trans_stretch(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, NR::Point &p, guint state);
-void sp_sel_trans_skew(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, NR::Point &p, guint state);
-void sp_sel_trans_rotate(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, NR::Point &p, guint state);
-void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, NR::Point &p, guint state);
+void sp_sel_trans_scale(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
+void sp_sel_trans_stretch(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
+void sp_sel_trans_skew(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
+void sp_sel_trans_rotate(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
+void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
 
 struct SPSelTransHandle {
 	GtkAnchorType anchor;
 	GdkCursorType cursor;
 	guint control;
-	void (* action) (Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, NR::Point &p, guint state);
-	gboolean (* request) (Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, NR::Point &p, guint state);
+	void (* action) (Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
+	gboolean (* request) (Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
 	gdouble x, y;
 };
 

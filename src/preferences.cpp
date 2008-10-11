@@ -2,7 +2,7 @@
  * @brief  Singleton class to access the preferences file - implementation
  */
 /* Authors:
- *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Krzysztof Kosinski <tweenk.pl@gmail.com>
  *
  * Copyright (C) 2008 Authors
  *
@@ -35,11 +35,11 @@ Preferences::Preferences() :
     gchar *path = profile_path(NULL);
     _prefs_dir = path;
     g_free(path);
-    
+
     path = profile_path(_prefs_basename.data());
     _prefs_filename = path;
     g_free(path);
-    
+
     _load();
 }
 
@@ -70,12 +70,12 @@ void Preferences::_loadDefaults()
 void Preferences::_load()
 {
     _loadDefaults();
-    
+
     Glib::ustring const not_saved = _("Inkscape will run with default settings, "
                                 "and new settings will not be saved. ");
-    
+
     // NOTE: After we upgrade to Glib 2.16, use Glib::ustring::compose
-    
+
     // 1. Does the file exist?
     if (!g_file_test(_prefs_filename.data(), G_FILE_TEST_EXISTS)) {
         // No - we need to create one.
@@ -99,7 +99,7 @@ void Preferences::_load()
                 g_mkdir(dir, 0755);
                 g_free(dir);
             }
-            
+
         } else if (!g_file_test(_prefs_dir.data(), G_FILE_TEST_IS_DIR)) {
             // The profile dir is not actually a directory
             //_errorDialog(Glib::ustring::compose(_("%1 is not a valid directory."),
@@ -121,13 +121,13 @@ void Preferences::_load()
             g_free(msg);
             return;
         }
-        
+
         // The prefs file was just created.
         // We can return now and skip the rest of the load process.
         _writable = true;
         return;
     }
-    
+
     // Yes, the pref file exists.
     // 2. Is it a regular file?
     if (!g_file_test(_prefs_filename.data(), G_FILE_TEST_IS_REGULAR)) {
@@ -139,7 +139,7 @@ void Preferences::_load()
         g_free(msg);
         return;
     }
-    
+
     // 3. Is the file readable?
     gchar *prefs_xml = NULL; gsize len = 0;
     if (!g_file_get_contents(_prefs_filename.data(), &prefs_xml, &len, NULL)) {
@@ -174,7 +174,7 @@ void Preferences::_load()
         Inkscape::GC::release(prefs_read);
         return;
     }
-    
+
     // Merge the loaded prefs with defaults.
     _prefs_doc->root()->mergeFrom(prefs_read->root(), "id");
     Inkscape::GC::release(prefs_read);
@@ -187,7 +187,7 @@ void Preferences::_load()
 void Preferences::save()
 {
     if (!_writable) return; // no-op if the prefs file is not writable
-    
+
     // sp_repr_save_file uses utf-8 instead of the glib filename encoding.
     // I don't know why filenames are kept in utf-8 in Inkscape and then
     // converted to filename encoding when necessary through sepcial functions
@@ -285,7 +285,7 @@ bool Preferences::getBool(Glib::ustring const &pref_key, Glib::ustring const &at
     gchar const *rawstr = node->attribute(attr.data());
     if(!rawstr || !rawstr[0]) return def;
     Glib::ustring str = rawstr;
-    
+
     // This is to handle legacy preferences using ints as booleans
     if (str == "true" || str == "1") return true;
     return false;
@@ -431,11 +431,11 @@ Inkscape::XML::Node *Preferences::_getNode(Glib::ustring const &pref_key, bool c
     Inkscape::XML::Node *node = _prefs_doc->root(), *child = NULL;
     gchar **splits = g_strsplit(pref_key.data(), ".", 0);
     int part_i = 0;
-    
+
     while(splits[part_i]) {
         for (child = node->firstChild(); child; child = child->next())
             if (!strcmp(splits[part_i], child->attribute("id"))) break;
-        
+
         // If the previous loop found a matching key, child now contains the node
         // matching the processed key part. If no node was found then it is NULL.
         if (!child) {
@@ -445,7 +445,7 @@ Inkscape::XML::Node *Preferences::_getNode(Glib::ustring const &pref_key, bool c
                     child = node->document()->createElement("group");
                     child->setAttribute("id", splits[part_i]);
                     node->appendChild(child);
-                    
+
                     ++part_i;
                     node = child;
                 }
@@ -455,7 +455,7 @@ Inkscape::XML::Node *Preferences::_getNode(Glib::ustring const &pref_key, bool c
                 return NULL;
             }
         }
-        
+
         ++part_i;
         node = child;
     }
@@ -482,7 +482,7 @@ Preferences *Preferences::_instance = NULL;
 
 
 } // namespace Inkscape
- 
+
 /*
   Local Variables:
   mode:c++

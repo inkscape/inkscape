@@ -160,7 +160,7 @@ private :
                 selected.erase(master);
             /*}*/
             //Compute the anchor point
-            boost::optional<NR::Rect> b = sp_item_bbox_desktop (thing);
+            boost::optional<Geom::Rect> b = sp_item_bbox_desktop (thing);
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -177,7 +177,7 @@ private :
 
         case AlignAndDistribute::DRAWING:
         {
-            boost::optional<NR::Rect> b = sp_item_bbox_desktop
+            boost::optional<Geom::Rect> b = sp_item_bbox_desktop
                 ( (SPItem *) sp_document_root (sp_desktop_document (desktop)) );
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
@@ -190,7 +190,7 @@ private :
 
         case AlignAndDistribute::SELECTION:
         {
-            boost::optional<NR::Rect> b =  selection->bounds();
+            boost::optional<Geom::Rect> b =  selection->bounds();
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -215,7 +215,7 @@ private :
         prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
         bool changed = false;
-        boost::optional<NR::Rect> b;
+        boost::optional<Geom::Rect> b;
         if (sel_as_group)
             b = selection->bounds();
 
@@ -330,9 +330,9 @@ private :
             it != selected.end();
             ++it)
         {
-            boost::optional<NR::Rect> bbox = sp_item_bbox_desktop(*it);
+            boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop(*it);
             if (bbox) {
-                sorted.push_back(BBoxSort(*it, to_2geom(*bbox), _orientation, _kBegin, _kEnd));
+                sorted.push_back(BBoxSort(*it, *bbox, _orientation, _kBegin, _kEnd));
             }
         }
         //sort bbox by anchors
@@ -602,7 +602,7 @@ private :
         //Check 2 or more selected objects
         if (selected.size() < 2) return;
 
-        boost::optional<NR::Rect> sel_bbox = selection->bounds();
+        boost::optional<Geom::Rect> sel_bbox = selection->bounds();
         if (!sel_bbox) {
             return;
         }
@@ -611,7 +611,7 @@ private :
         // nor drift on sequential randomizations. Discard cache on global (or better active
         // desktop's) selection_change signal.
         if (!_dialog.randomize_bbox) {
-            _dialog.randomize_bbox = to_2geom(*sel_bbox);
+            _dialog.randomize_bbox = *sel_bbox;
         }
 
         // see comment in ActionAlign above
@@ -623,13 +623,13 @@ private :
             ++it)
         {
             sp_document_ensure_up_to_date(sp_desktop_document (desktop));
-            boost::optional<NR::Rect> item_box = sp_item_bbox_desktop (*it);
+            boost::optional<Geom::Rect> item_box = sp_item_bbox_desktop (*it);
             if (item_box) {
                 // find new center, staying within bbox
-                double x = _dialog.randomize_bbox->min()[Geom::X] + (*item_box).extent(Geom::X)/2 +
-                    g_random_double_range (0, (*_dialog.randomize_bbox)[Geom::X].extent() - (*item_box).extent(Geom::X));
-                double y = _dialog.randomize_bbox->min()[Geom::Y] + (*item_box).extent(Geom::Y)/2 +
-                    g_random_double_range (0, (*_dialog.randomize_bbox)[Geom::Y].extent() - (*item_box).extent(Geom::Y));
+                double x = _dialog.randomize_bbox->min()[Geom::X] + (*item_box)[Geom::X].extent() /2 +
+                    g_random_double_range (0, (*_dialog.randomize_bbox)[Geom::X].extent() - (*item_box)[Geom::X].extent());
+                double y = _dialog.randomize_bbox->min()[Geom::Y] + (*item_box)[Geom::Y].extent()/2 +
+                    g_random_double_range (0, (*_dialog.randomize_bbox)[Geom::Y].extent() - (*item_box)[Geom::Y].extent());
                 // displacement is the new center minus old:
                 NR::Point t = NR::Point (x, y) - 0.5*(item_box->max() + item_box->min());
                 sp_item_move_rel(*it, Geom::Translate(t));
@@ -1099,9 +1099,9 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = -1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            boost::optional<NR::Rect> b = sp_item_bbox_desktop (*it);
+            boost::optional<Geom::Rect> b = sp_item_bbox_desktop (*it);
             if (b) {
-                gdouble dim = (*b).extent(horizontal ? Geom::X : Geom::Y);
+                gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();
                 if (dim > max) {
                     max = dim;
                     master = it;
@@ -1116,9 +1116,9 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = 1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            boost::optional<NR::Rect> b = sp_item_bbox_desktop (*it);
+            boost::optional<Geom::Rect> b = sp_item_bbox_desktop (*it);
             if (b) {
-                gdouble dim = (*b).extent(horizontal ? Geom::X : Geom::Y);
+                gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();
                 if (dim < max) {
                     max = dim;
                     master = it;

@@ -1097,7 +1097,7 @@ EditWidget::initStatusbar()
 
     _select_status.property_xalign() = 0.0;
     _select_status.property_yalign() = 0.5;
-    _select_status.set_markup (_("<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."));
+    _select_status.set_markup (_("<b>Welcome to Inkscape!</b> Use shape or drawing tools to create objects; use selector (arrow) to move or transform them."));
     // include this again with Gtk+-2.6
 #if GTK_VERSION_GE(2,6)
      gtk_label_set_ellipsize (GTK_LABEL(_select_status.gobj()), PANGO_ELLIPSIZE_END);
@@ -1400,18 +1400,20 @@ EditWidget::updateScrollbars (double scale)
 
     /* The desktop region we always show unconditionally */
     SPDocument *doc = _desktop->doc();
-    NR::Rect darea ( Geom::Point(-sp_document_width(doc), -sp_document_height(doc)),
+    Geom::Rect darea ( Geom::Point(-sp_document_width(doc), -sp_document_height(doc)),
                      Geom::Point(2 * sp_document_width(doc), 2 * sp_document_height(doc))  );
-    darea = NR::union_bounds(darea, sp_item_bbox_desktop(SP_ITEM(SP_DOCUMENT_ROOT(doc))));
+    SPObject* root = doc->root;
+    SPItem* item = SP_ITEM(root);
+    boost::optional<Geom::Rect> deskarea = Geom::unify(darea, sp_item_bbox_desktop(item));
 
     /* Canvas region we always show unconditionally */
-    NR::Rect carea( Geom::Point(darea.min()[Geom::X] * scale - 64, darea.max()[Geom::Y] * -scale - 64),
-                    Geom::Point(darea.max()[Geom::X] * scale + 64, darea.min()[Geom::Y] * -scale + 64)  );
+    Geom::Rect carea( Geom::Point(deskarea->min()[Geom::X] * scale - 64, deskarea->max()[Geom::Y] * -scale - 64),
+                    Geom::Point(deskarea->max()[Geom::X] * scale + 64, deskarea->min()[Geom::Y] * -scale + 64)  );
 
     Geom::Rect const viewbox = _svg_canvas.spobj()->getViewbox();
 
     /* Viewbox is always included into scrollable region */
-    carea = NR::union_bounds(carea, from_2geom(viewbox));
+    carea = Geom::unify(carea, viewbox);
 
     Gtk::Adjustment *adj = _bottom_scrollbar.get_adjustment();
     adj->set_value(viewbox.min()[Geom::X]);

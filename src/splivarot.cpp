@@ -1647,7 +1647,7 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
 
   bool didSomething = false;
 
-  boost::optional<NR::Rect> selectionBbox = selection->bounds();
+  boost::optional<Geom::Rect> selectionBbox = selection->bounds();
   if (!selectionBbox) {
     return false;
   }
@@ -1668,7 +1668,7 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
           continue;
 
       if (simplifyIndividualPaths) {
-          boost::optional<NR::Rect> itemBbox = item->getBounds(sp_item_i2d_affine(item));
+          boost::optional<Geom::Rect> itemBbox = item->getBounds(sp_item_i2d_affine(item));
           if (itemBbox) {
               simplifySize      = L2(itemBbox->dimensions());
           } else {
