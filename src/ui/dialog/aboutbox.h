@@ -1,10 +1,10 @@
-/**
- * \brief About Widget - Adds the "about" doc to the Gnome::UI::About Class
+/** @file
+ * @brief Inkscape About box
  *
  * The standard Gnome::UI::About class doesn't include a place to stuff
  * a renderable View that holds the classic Inkscape "about.svg".
- *
- * Author:
+ */
+/* Author:
  *   Kees Cook <kees@outflux.net>
  *
  * Copyright (C) 2005 Kees Cook

@@ -11,8 +11,6 @@
 #include "enums.h"
 #include "live_effects/lpeobject-reference.h"
 #include "live_effects/lpeobject.h"
-
-#include "prefs-utils.h"
 #include "uri.h"
 
 namespace Inkscape {

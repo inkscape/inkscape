@@ -38,18 +38,6 @@
 #include <2geom/pathvector.h>
 #include "path-chemistry.h"
 
-/* Helper functions for sp_selected_path_to_curves */
-static void sp_selected_path_to_curves0(SPDesktop *desktop, bool do_document_done, guint32 text_grouping_policy);
-static bool sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select);
-
-enum {
-    /* Not used yet. This is the placeholder of Lauris's idea. */
-    SP_TOCURVE_INTERACTIVE       = 1 << 0,
-    SP_TOCURVE_GROUPING_BY_WORD  = 1 << 1,
-    SP_TOCURVE_GROUPING_BY_LINE  = 1 << 2,
-    SP_TOCURVE_GROUPING_BY_WHOLE = 1 << 3
-};
-
 void
 sp_selected_path_combine(SPDesktop *desktop)
 {
@@ -282,12 +270,6 @@ sp_selected_path_break_apart(SPDesktop *desktop)
 void
 sp_selected_path_to_curves(SPDesktop *desktop, bool interactive)
 {
-    sp_selected_path_to_curves0(desktop, interactive, interactive ? SP_TOCURVE_INTERACTIVE : 0);
-}
-
-static void
-sp_selected_path_to_curves0(SPDesktop *desktop, bool interactive, guint32 /*text_grouping_policy*/)
-{
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
@@ -328,7 +310,7 @@ sp_selected_path_to_curves0(SPDesktop *desktop, bool interactive, guint32 /*text
     }
 }
 
-static bool
+bool
 sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_select)
 {
     bool did = false;
@@ -427,12 +409,86 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
     if (!item)
         return NULL;
 
+    Inkscape::XML::Document *xml_doc = SP_OBJECT_REPR(item)->document();
+
+    if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+        // Special treatment for text: convert each glyph to separate path, then group the paths
+        Inkscape::XML::Node *g_repr = xml_doc->createElement("svg:g");
+        g_repr->setAttribute("transform", SP_OBJECT_REPR(item)->attribute("transform"));
+        /* Mask */
+        gchar *mask_str = (gchar *) SP_OBJECT_REPR(item)->attribute("mask");
+        if ( mask_str )
+            g_repr->setAttribute("mask", mask_str);
+        /* Clip path */
+        gchar *clip_path_str = (gchar *) SP_OBJECT_REPR(item)->attribute("clip-path");
+        if ( clip_path_str )
+            g_repr->setAttribute("clip-path", clip_path_str);
+        /* Rotation center */
+        g_repr->setAttribute("inkscape:transform-center-x", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-x"), false);
+        g_repr->setAttribute("inkscape:transform-center-y", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-y"), false);
+        /* Whole text's style */
+        gchar *style_str = sp_style_write_difference(SP_OBJECT_STYLE(item),
+                                             SP_OBJECT_STYLE(SP_OBJECT_PARENT(item)));
+        g_repr->setAttribute("style", style_str);
+        g_free(style_str);
+        Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin(); 
+        do {
+            Inkscape::Text::Layout::iterator iter_next = iter;
+            iter_next.nextGlyph(); // iter_next is one glyph ahead from iter
+            if (iter == iter_next)
+                break;
+
+            /* This glyph's style */
+            SPObject const *pos_obj = 0;
+            void *rawptr = 0;
+            te_get_layout(item)->getSourceOfCharacter(iter, &rawptr);
+            if (!rawptr || !SP_IS_OBJECT(rawptr)) // no source for glyph, abort
+                break;
+            pos_obj = SP_OBJECT(rawptr);
+            while (SP_IS_STRING(pos_obj) && SP_OBJECT_PARENT(pos_obj)) {
+               pos_obj = SP_OBJECT_PARENT(pos_obj);   // SPStrings don't have style
+            }
+            gchar *style_str = sp_style_write_difference(SP_OBJECT_STYLE(pos_obj),
+                                                 SP_OBJECT_STYLE(SP_OBJECT_PARENT(pos_obj)));
+
+            // get path from iter to iter_next:
+            SPCurve *curve = te_get_layout(item)->convertToCurves(iter, iter_next);
+            iter = iter_next; // shift to next glyph
+            if (!curve) { // error converting this glyph
+                g_free (style_str);
+                continue;
+            }
+            if (curve->is_empty()) { // whitespace glyph?
+                curve->unref();
+                g_free (style_str);
+                continue;
+            }
+
+            Inkscape::XML::Node *p_repr = xml_doc->createElement("svg:path");
+
+            gchar *def_str = sp_svg_write_path(curve->get_pathvector());
+            p_repr->setAttribute("d", def_str);
+            g_free(def_str);
+            curve->unref();
+
+            p_repr->setAttribute("style", style_str);
+            g_free(style_str);
+
+            g_repr->appendChild(p_repr);
+            Inkscape::GC::release(p_repr);
+
+            if (iter == te_get_layout(item)->end())
+                break;
+
+        } while (true);
+
+        return g_repr;
+    }
+
     SPCurve *curve = NULL;
     if (SP_IS_SHAPE(item)) {
         curve = sp_shape_get_curve(SP_SHAPE(item));
-    } else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
-        curve = te_get_layout(item)->convertToCurves();
-    }
+    } 
 
     if (!curve)
         return NULL;
@@ -445,7 +501,6 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
         return NULL;
     }
 
-    Inkscape::XML::Document *xml_doc = SP_OBJECT_REPR(item)->document();
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
     /* Transformation */
     repr->setAttribute("transform", SP_OBJECT_REPR(item)->attribute("transform"));

@@ -32,7 +32,7 @@
 #include "gradient-context.h"
 #include "gradient-chemistry.h"
 #include <glibmm/i18n.h>
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "gradient-drag.h"
 #include "gradient-chemistry.h"
 #include "xml/repr.h"
@@ -203,7 +203,8 @@ static void sp_gradient_context_setup(SPEventContext *ec)
         ((SPEventContextClass *) parent_class)->setup(ec);
     }
 
-    if (prefs_get_int_attribute("tools.gradient", "selcue", 1) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/gradient/selcue", true)) {
         ec->enableSelectionCue();
     }
 
@@ -488,11 +489,12 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     SPGradientContext *rc = SP_GRADIENT_CONTEXT(event_context);
 
-    event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
-    double const nudge = prefs_get_double_attribute_limited("options.nudgedistance", "value", 2, 0, 1000); // in px
+    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+    double const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000); // in px
 
     GrDrag *drag = event_context->_grdrag;
     g_assert (drag);
@@ -516,8 +518,8 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             } else {
                 for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
                     SPItem *item = SP_ITEM(i->data);
-                    SPGradientType new_type = (SPGradientType) prefs_get_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR);
-                    guint new_fill = prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1);
+                    SPGradientType new_type = (SPGradientType) prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR);
+                    guint new_fill = prefs->getInt("/tools/gradient/newfillorstroke", 1);
 
                     SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop,                                                                                   SP_OBJECT (item), new_fill);
 
@@ -554,7 +556,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 /* Snap center to nearest magnetic point */
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
-                m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, button_dt);
+                m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, button_dt);
                 rc->origin = from_2geom(button_dt);
             }
 
@@ -861,8 +863,9 @@ static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint /*
     SPEventContext *ec = SP_EVENT_CONTEXT(&rc);
 
     if (!selection->isEmpty()) {
-        int type = prefs_get_int_attribute ("tools.gradient", "newgradient", 1);
-        int fill_or_stroke = prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int type = prefs->getInt("/tools/gradient/newgradient", 1);
+        int fill_or_stroke = prefs->getInt("/tools/gradient/newfillorstroke", 1);
 
         SPGradient *vector;
         if (ec->item_to_select) {

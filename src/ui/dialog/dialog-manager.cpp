@@ -45,6 +45,7 @@
 
 #include "ui/dialog/floating-behavior.h"
 #include "ui/dialog/dock-behavior.h"
+#include "preferences.h"
 
 namespace Inkscape {
 namespace UI {
@@ -84,7 +85,8 @@ DialogManager::DialogManager() {
     using namespace Behavior;
     using namespace Inkscape::UI::Dialogs; // temporary
 
-    int dialogs_type = prefs_get_int_attribute_limited ("options.dialogtype", "value", DOCK, 0, 1);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int dialogs_type = prefs->getIntLimited("/options/dialogtype/value", DOCK, 0, 1);
 
     if (dialogs_type == FLOATING) {
 
@@ -150,7 +152,8 @@ DialogManager::~DialogManager() {
 
 DialogManager &DialogManager::getInstance()
 {
-    int dialogs_type = prefs_get_int_attribute_limited ("options.dialogtype", "value", DOCK, 0, 1);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int dialogs_type = prefs->getIntLimited("/options/dialogtype/value", DOCK, 0, 1);
 
     /* Use singleton behavior for floating dialogs */
     if (dialogs_type == FLOATING) {

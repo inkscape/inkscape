@@ -1,7 +1,7 @@
 /** \file
  * \brief  Document Properties dialog
- *
- * Authors:
+ */
+/* Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *
@@ -78,7 +78,7 @@ protected:
     RegisteredCheckButton _rcbsnon, _rcbsnbbp, _rcbsnbbn, _rcbsnpb;
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbic;
+    RegisteredCheckButton _rcbic, _rcbsm;
     RegisteredCheckButton _rcbsigg, _rcbsils;
     //---------------------------------------------------------------
     Gtk::Notebook   _grids_notebook;
@@ -90,8 +90,6 @@ protected:
     Gtk::Label      _grids_label_def;
     Gtk::HBox       _grids_space;
     //---------------------------------------------------------------
-
-    gchar const *_prefs_path;
 
     Gtk::HBox& _createPageTabLabel(const Glib::ustring& label, const char *label_image);
 
@@ -114,9 +112,9 @@ private:
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

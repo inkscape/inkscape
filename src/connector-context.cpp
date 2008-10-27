@@ -59,7 +59,7 @@
 #include "message-stack.h"
 #include "selection.h"
 #include "inkscape.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "sp-path.h"
 #include "display/canvas-bpath.h"
 #include "display/sodipodi-ctrl.h"
@@ -85,9 +85,9 @@ static gint sp_connector_context_root_handler(SPEventContext *ec, GdkEvent *even
 static gint sp_connector_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
 
 // Stuff borrowed from DrawContext
-static void spcc_connector_set_initial_point(SPConnectorContext *cc, NR::Point const p);
-static void spcc_connector_set_subsequent_point(SPConnectorContext *cc, NR::Point const p);
-static void spcc_connector_finish_segment(SPConnectorContext *cc, NR::Point p);
+static void spcc_connector_set_initial_point(SPConnectorContext *cc, Geom::Point const p);
+static void spcc_connector_set_subsequent_point(SPConnectorContext *cc, Geom::Point const p);
+static void spcc_connector_finish_segment(SPConnectorContext *cc, Geom::Point p);
 static void spcc_reset_colors(SPConnectorContext *cc);
 static void spcc_connector_finish(SPConnectorContext *cc);
 static void spcc_concat_colors_and_flush(SPConnectorContext *cc);
@@ -103,11 +103,11 @@ static void cc_set_active_shape(SPConnectorContext *cc, SPItem *item);
 static void cc_clear_active_shape(SPConnectorContext *cc);
 static void cc_set_active_conn(SPConnectorContext *cc, SPItem *item);
 static void cc_clear_active_conn(SPConnectorContext *cc);
-static gchar *conn_pt_handle_test(SPConnectorContext *cc, NR::Point& w);
+static gchar *conn_pt_handle_test(SPConnectorContext *cc, Geom::Point& w);
 static bool cc_item_is_shape(SPItem *item);
 static void cc_selection_changed(Inkscape::Selection *selection, gpointer data);
 static void cc_connector_rerouting_finish(SPConnectorContext *const cc,
-        NR::Point *const p);
+        Geom::Point *const p);
 
 static void shape_event_attr_deleted(Inkscape::XML::Node *repr,
         Inkscape::XML::Node *child, Inkscape::XML::Node *ref, gpointer data);
@@ -116,7 +116,7 @@ static void shape_event_attr_changed(Inkscape::XML::Node *repr, gchar const *nam
         gpointer data);
 
 
-static NR::Point connector_drag_origin_w(0, 0);
+static Geom::Point connector_drag_origin_w(0, 0);
 static bool connector_within_tolerance = false;
 static SPEventContextClass *parent_class;
 
@@ -283,7 +283,8 @@ sp_connector_context_setup(SPEventContext *ec)
     // Notice the initial selection.
     cc_selection_changed(cc->selection, (gpointer) cc);
 
-    if (prefs_get_int_attribute("tools.connector", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/connector/selcue", 0)) {
         ec->enableSelectionCue();
     }
 
@@ -373,7 +374,7 @@ cc_clear_active_conn(SPConnectorContext *cc)
 
 
 static gchar *
-conn_pt_handle_test(SPConnectorContext *cc, NR::Point& p)
+conn_pt_handle_test(SPConnectorContext *cc, Geom::Point& p)
 {
     // TODO: this will need to change when there are more connection
     //       points available for each shape.
@@ -398,7 +399,7 @@ sp_connector_context_item_handler(SPEventContext *event_context, SPItem *item, G
 
     SPConnectorContext *cc = SP_CONNECTOR_CONTEXT(event_context);
 
-    NR::Point p(event->button.x, event->button.y);
+    Geom::Point p(event->button.x, event->button.y);
 
     switch (event->type) {
         case GDK_BUTTON_RELEASE:
@@ -488,9 +489,9 @@ sp_connector_context_root_handler(SPEventContext *ec, GdkEvent *event)
 static gint
 connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const &bevent)
 {
-    NR::Point const event_w(bevent.x, bevent.y);
+    Geom::Point const event_w(bevent.x, bevent.y);
     /* Find desktop coordinates */
-    NR::Point p = cc->desktop->w2d(event_w);
+    Geom::Point p = cc->desktop->w2d(event_w);
     SPEventContext *event_context = SP_EVENT_CONTEXT(cc);
 
     gint ret = FALSE;
@@ -502,12 +503,12 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
             return TRUE;
         }
 
-        NR::Point const event_w(bevent.x,
+        Geom::Point const event_w(bevent.x,
                                 bevent.y);
         connector_drag_origin_w = event_w;
         connector_within_tolerance = true;
 
-        NR::Point const event_dt = cc->desktop->w2d(event_w);
+        Geom::Point const event_dt = cc->desktop->w2d(event_w);
         switch (cc->state) {
             case SP_CONNECTOR_CONTEXT_STOP:
                 /* This is allowed, if we just cancelled curve */
@@ -520,7 +521,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
 
                     /* Set start anchor */
                     /* Create green anchor */
-                    NR::Point p = event_dt;
+                    Geom::Point p = event_dt;
 
                     // Test whether we clicked on a connection point
                     cc->sid = conn_pt_handle_test(cc, p);
@@ -532,7 +533,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                         // as there's no other points to go off.
                         SnapManager &m = cc->desktop->namedview->snap_manager;
                         m.setup(cc->desktop);
-                        m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
+                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
                     }
                     spcc_connector_set_initial_point(cc, from_2geom(pt2g));
 
@@ -590,17 +591,17 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
 {
     gint ret = FALSE;
     SPEventContext *event_context = SP_EVENT_CONTEXT(cc);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
         // allow middle-button scrolling
         return FALSE;
     }
 
-    NR::Point const event_w(mevent.x, mevent.y);
+    Geom::Point const event_w(mevent.x, mevent.y);
 
     if (connector_within_tolerance) {
-        gint const tolerance = prefs_get_int_attribute_limited("options.dragtolerance",
-                                                               "value", 0, 0, 100);
+        gint const tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
         if ( NR::LInfty( event_w - connector_drag_origin_w ) < tolerance ) {
             return FALSE;   // Do not drag if we're within tolerance from origin.
         }
@@ -675,10 +676,10 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
         SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
         SPDocument *doc = sp_desktop_document(desktop);
 
-        NR::Point const event_w(revent.x, revent.y);
+        Geom::Point const event_w(revent.x, revent.y);
 
         /* Find desktop coordinates */
-        NR::Point p = cc->desktop->w2d(event_w);
+        Geom::Point p = cc->desktop->w2d(event_w);
 
         switch (cc->state) {
             //case SP_CONNECTOR_CONTEXT_POINT:
@@ -766,7 +767,7 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
 
 
 static void
-cc_connector_rerouting_finish(SPConnectorContext *const cc, NR::Point *const p)
+cc_connector_rerouting_finish(SPConnectorContext *const cc, Geom::Point *const p)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
     SPDocument *doc = sp_desktop_document(desktop);
@@ -814,7 +815,7 @@ spcc_reset_colors(SPConnectorContext *cc)
 
 
 static void
-spcc_connector_set_initial_point(SPConnectorContext *const cc, NR::Point const p)
+spcc_connector_set_initial_point(SPConnectorContext *const cc, Geom::Point const p)
 {
     g_assert( cc->npoints == 0 );
 
@@ -826,15 +827,15 @@ spcc_connector_set_initial_point(SPConnectorContext *const cc, NR::Point const p
 
 
 static void
-spcc_connector_set_subsequent_point(SPConnectorContext *const cc, NR::Point const p)
+spcc_connector_set_subsequent_point(SPConnectorContext *const cc, Geom::Point const p)
 {
     g_assert( cc->npoints != 0 );
 
     SPDesktop *dt = cc->desktop;
-    NR::Point o = dt->dt2doc(cc->p[0]);
-    NR::Point d = dt->dt2doc(p);
-    Avoid::Point src(o[NR::X], o[NR::Y]);
-    Avoid::Point dst(d[NR::X], d[NR::Y]);
+    Geom::Point o = dt->dt2doc(cc->p[0]);
+    Geom::Point d = dt->dt2doc(p);
+    Avoid::Point src(o[Geom::X], o[Geom::Y]);
+    Avoid::Point dst(d[Geom::X], d[Geom::Y]);
 
     if (!cc->newConnRef) {
         Avoid::Router *router = sp_desktop_document(dt)->router;
@@ -850,11 +851,11 @@ spcc_connector_set_subsequent_point(SPConnectorContext *const cc, NR::Point cons
     cc->newConnRef->calcRouteDist();
 
     cc->red_curve->reset();
-    NR::Point pt(route.ps[0].x, route.ps[0].y);
+    Geom::Point pt(route.ps[0].x, route.ps[0].y);
     cc->red_curve->moveto(pt);
 
     for (int i = 1; i < route.pn; ++i) {
-        NR::Point p(route.ps[i].x, route.ps[i].y);
+        Geom::Point p(route.ps[i].x, route.ps[i].y);
         cc->red_curve->lineto(p);
     }
     cc->red_curve->transform(dt->doc2dt());
@@ -919,7 +920,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
 
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         /* Set style */
-        sp_desktop_apply_style_tool(desktop, repr, "tools.connector", false);
+        sp_desktop_apply_style_tool(desktop, repr, "/tools/connector", false);
 
         gchar *str = sp_svg_write_path( c->get_pathvector() );
         g_assert( str != NULL );
@@ -966,7 +967,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
 
 
 static void
-spcc_connector_finish_segment(SPConnectorContext *const cc, NR::Point const /*p*/)
+spcc_connector_finish_segment(SPConnectorContext *const cc, Geom::Point const /*p*/)
 {
     if (!cc->red_curve->is_empty()) {
         cc->green_curve->append_continuous(cc->red_curve, 0.0625);
@@ -1068,7 +1069,7 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, SPConnectorContext *cc)
                 unsigned ind = (cc->active_handle == cc->endpt_handle[0]) ? 0 : 1;
                 sp_conn_end_detach(cc->clickeditem, ind);
 
-                NR::Point origin;
+                Geom::Point origin;
                 if (cc->clickedhandle == cc->endpt_handle[0]) {
                     origin = cc->endpt_handle[1]->pos;
                 }
@@ -1258,7 +1259,8 @@ static bool cc_item_is_shape(SPItem *item)
         }
     }
     else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
-        if (prefs_get_int_attribute("tools.connector", "ignoretext", 1) == 1) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        if (prefs->getBool("/tools/connector/ignoretext", true)) {
             // Don't count text as a shape we can connect connector to.
             return false;
         }

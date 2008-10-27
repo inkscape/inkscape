@@ -379,7 +379,7 @@ Inkscape::XML::Node *Selection::singleRepr() {
 NRRect *Selection::bounds(NRRect *bbox, SPItem::BBoxType type) const
 {
     g_return_val_if_fail (bbox != NULL, NULL);
-    bounds(bbox, type);
+    *bbox = NRRect(bounds(type));
     return bbox;
 }
 
@@ -441,15 +441,20 @@ boost::optional<Geom::Point> Selection::center() const {
 /**
  * Compute the list of points in the selection that are to be considered for snapping.
  */
-std::vector<Geom::Point> Selection::getSnapPoints(bool includeItemCenter) const {
+std::vector<Geom::Point> Selection::getSnapPoints(SnapPreferences const *snapprefs) const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
+    
+    SnapPreferences snapprefs_dummy = *snapprefs; // create a local copy of the snapping prefs
+    snapprefs_dummy.setIncludeItemCenter(false); // locally disable snapping to the item center
+    
     std::vector<Geom::Point> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
         SPItem *this_item = SP_ITEM(iter->data);
-        sp_item_snappoints(this_item, false, SnapPointsIter(p));
+        sp_item_snappoints(this_item, SnapPointsIter(p), &snapprefs_dummy);
+       
         //Include the transformation origin for snapping
-        //For a group only the group's origin is considered
-        if (includeItemCenter) {
+        //For a selection or group only the overall origin is considered
+        if (snapprefs != NULL && snapprefs->getIncludeItemCenter()) {
         	p.push_back(this_item->getCenter());
         }  
     }
@@ -457,12 +462,12 @@ std::vector<Geom::Point> Selection::getSnapPoints(bool includeItemCenter) const 
     return p;
 }
 
-std::vector<Geom::Point> Selection::getSnapPointsConvexHull() const {
+std::vector<Geom::Point> Selection::getSnapPointsConvexHull(SnapPreferences const *snapprefs) const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
     std::vector<Geom::Point> p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-		sp_item_snappoints(SP_ITEM(iter->data), false, SnapPointsIter(p));
+		sp_item_snappoints(SP_ITEM(iter->data), SnapPointsIter(p), snapprefs);
     }
 
     std::vector<Geom::Point> pHull;
@@ -521,31 +526,31 @@ SPObject *Selection::_objectForXMLNode(Inkscape::XML::Node *repr) const {
 }
 
 guint Selection::numberOfLayers() {
-      GSList const *items = const_cast<Selection *>(this)->itemList();
-	GSList *layers = NULL;
-	for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-		SPObject *layer = desktop()->layerForObject(SP_OBJECT(iter->data));
-		if (g_slist_find (layers, layer) == NULL) {
-			layers = g_slist_prepend (layers, layer);
-		}
-	}
-	guint ret = g_slist_length (layers);
-	g_slist_free (layers);
-	return ret;
+    GSList const *items = const_cast<Selection *>(this)->itemList();
+    GSList *layers = NULL;
+    for (GSList const *iter = items; iter != NULL; iter = iter->next) {
+        SPObject *layer = desktop()->layerForObject(SP_OBJECT(iter->data));
+        if (g_slist_find (layers, layer) == NULL) {
+            layers = g_slist_prepend (layers, layer);
+        }
+    }
+    guint ret = g_slist_length (layers);
+    g_slist_free (layers);
+    return ret;
 }
 
 guint Selection::numberOfParents() {
-      GSList const *items = const_cast<Selection *>(this)->itemList();
-	GSList *parents = NULL;
-	for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-		SPObject *parent = SP_OBJECT_PARENT(iter->data);
-		if (g_slist_find (parents, parent) == NULL) {
-			parents = g_slist_prepend (parents, parent);
-		}
-	}
-	guint ret = g_slist_length (parents);
-	g_slist_free (parents);
-	return ret;
+    GSList const *items = const_cast<Selection *>(this)->itemList();
+    GSList *parents = NULL;
+    for (GSList const *iter = items; iter != NULL; iter = iter->next) {
+        SPObject *parent = SP_OBJECT_PARENT(iter->data);
+        if (g_slist_find (parents, parent) == NULL) {
+            parents = g_slist_prepend (parents, parent);
+        }
+    }
+    guint ret = g_slist_length (parents);
+    g_slist_free (parents);
+    return ret;
 }
 
 }

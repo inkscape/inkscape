@@ -27,7 +27,7 @@
 #include <gtkmm/image.h>
 
 #include "path-prefix.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "inkscape.h"
 #include "document.h"
 #include "sp-item.h"
@@ -280,7 +280,8 @@ static void setupLegacyNaming() {
 static GtkWidget *
 sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
 {
-    static gint dump = prefs_get_int_attribute_limited( "debug.icons", "dumpGtk", 0, 0, 1 );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    static bool dump = prefs->getBool( "/debug/icons/dumpGtk");
 
     GtkWidget *widget = 0;
         gint trySize = CLAMP( static_cast<gint>(lsize), 0, static_cast<gint>(G_N_ELEMENTS(iconSizeLookup) - 1) );
@@ -336,7 +337,7 @@ sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
                 // Add a hook to render if set visible before prerender is done.
                 g_signal_connect( G_OBJECT(widget), "map", G_CALLBACK(imageMapNamedCB), GINT_TO_POINTER(0) );
 
-                if ( prefs_get_int_attribute_limited( "options.iconrender", "named_nodelay", 0, 0, 1 ) ) {
+                if ( prefs->getBool("/options/iconrender/named_nodelay") ) {
                     int psize = sp_icon_get_phys_size(lsize);
                     prerender_icon(name, mappedSize, psize);
                 } else {
@@ -408,7 +409,8 @@ static void injectCustomSize()
     // TODO - still need to handle the case of theme changes and resize, especially as we can't re-register a string.
     if ( !sizeMapDone )
     {
-        gint dump = prefs_get_int_attribute_limited( "debug.icons", "dumpDefault", 0, 0, 1 );
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        bool dump = prefs->getBool( "/debug/icons/dumpDefault");
         gint width = 0;
         gint height = 0;
         if ( gtk_icon_size_lookup(GTK_ICON_SIZE_MENU, &width, &height ) ) {
@@ -493,7 +495,8 @@ int sp_icon_get_phys_size(int size)
 
     if ( !init ) {
         sizeDirty = false;
-        gint dump = prefs_get_int_attribute_limited( "debug.icons", "dumpDefault", 0, 0, 1 );
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        bool dump = prefs->getBool("/debug/icons/dumpDefault");
 
         if ( dump ) {
             g_message( "Default icon sizes:" );
@@ -650,7 +653,8 @@ extern "C" guchar *
 sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                   gchar const *name, unsigned psize )
 {
-    gint const dump = prefs_get_int_attribute_limited( "debug.icons", "dumpSvg", 0, 0, 1 );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool const dump = prefs->getBool("/debug/icons/dumpSvg");
     guchar *px = NULL;
 
     if (doc) {
@@ -763,7 +767,7 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                                              NR_ARENA_ITEM_RENDER_NO_CACHE );
                 nr_pixblock_release(&B);
 
-                gint useOverlay = prefs_get_int_attribute_limited( "debug.icons", "overlaySvg", 0, 0, 1 );
+                bool useOverlay = prefs->getBool("/debug/icons/overlaySvg");
                 if ( useOverlay ) {
                     sp_icon_overlay_pixels( px, psize, psize, 4 * psize, 0x00, 0x00, 0xff );
                 }
@@ -890,7 +894,8 @@ static void populate_placeholder_icon(gchar const* name, GtkIconSize size)
 }
 
 static void addToIconSet(GdkPixbuf* pb, gchar const* name, GtkIconSize lsize, unsigned psize) {
-    static gint dump = prefs_get_int_attribute_limited( "debug.icons", "dumpGtk", 0, 0, 1 );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    static bool dump = prefs->getBool("/debug/icons/dumpGtk");
     GtkStockItem stock;
     gboolean stockFound = gtk_stock_lookup( name, &stock );
     if ( !stockFound ) {
@@ -924,7 +929,8 @@ static void addToIconSet(GdkPixbuf* pb, gchar const* name, GtkIconSize lsize, un
 // returns true if icon needed preloading, false if nothing was done
 bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
 {
-    static gint dump = prefs_get_int_attribute_limited( "debug.icons", "dumpGtk", 0, 0, 1 );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    static bool dump = prefs->getBool("/debug/icons/dumpGtk");
     Glib::ustring key = icon_cache_key(name, lsize, psize);
     GdkPixbuf *pb = get_cached_pixbuf(key);
     if (pb) {

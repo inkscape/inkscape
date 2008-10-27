@@ -33,7 +33,7 @@ NRType nr_arena_glyphs_get_type (void);
 struct NRArenaGlyphs : public NRArenaItem {
 	/* Glyphs data */
 	SPStyle *style;
-	NR::Matrix g_transform;
+	Geom::Matrix g_transform;
 	font_instance *font;
 	gint glyph;
 
@@ -41,7 +41,7 @@ struct NRArenaGlyphs : public NRArenaItem {
 	raster_font *sfont;
 	float x, y;
 
-//	NR::Matrix cached_tr;
+//	Geom::Matrix cached_tr;
 //	Shape  *cached_shp;
 //	bool   cached_shp_dirty;
 //	bool   cached_style_dirty;

@@ -1,11 +1,10 @@
-/**
- * \brief Print dialog
- *
- * Authors:
+/** @file
+ * @brief Print dialog
+ */
+/* Authors:
  *   Kees Cook <kees@outflux.net>
  *
  * Copyright (C) 2007 Kees Cook
- *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
@@ -260,3 +259,14 @@ Gtk::PrintOperationResult Print::run(Gtk::PrintOperationAction, Gtk::Window &par
 } // namespace Dialog
 } // namespace UI
 } // namespace Inkscape
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

@@ -352,6 +352,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:snap-nodes", true},
     {"inkscape:snap-guide", true},
     {"inkscape:snap-center", true},
+    {"inkscape:snap-smooth-nodes", true},
     {"inkscape:snap-intersection-grid-guide", true},
     {"inkscape:snap-intersection-paths", true},
     {"inkscape:pageopacity", true},

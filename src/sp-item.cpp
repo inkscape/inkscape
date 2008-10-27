@@ -49,7 +49,7 @@
 #include "sp-pattern.h"
 #include "sp-switch.h"
 #include "gradient-chemistry.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "conn-avoid-ref.h"
 #include "conditions.h"
 #include "sp-filter-reference.h"
@@ -90,7 +90,7 @@ static void sp_item_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_item_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *sp_item_private_description(SPItem *item);
-static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p);
+static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
 
 static SPItemView *sp_item_view_new_prepend(SPItemView *list, SPItem *item, unsigned flags, unsigned key, NRArenaItem *arenaitem);
 static SPItemView *sp_item_view_list_remove(SPItemView *list, SPItemView *view);
@@ -721,6 +721,10 @@ sp_item_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape
     return repr;
 }
 
+/**
+ * \return  There is no guarantee that the return value will contain a rectangle.
+            If this item does not have a boundingbox, it might well be empty.
+ */
 boost::optional<Geom::Rect> SPItem::getBounds(Geom::Matrix const &transform,
                                       SPItem::BBoxType type,
                                       unsigned int /*dkey*/) const
@@ -746,7 +750,10 @@ sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transf
 /** Calls \a item's subclass' bounding box method; clips it by the bbox of clippath, if any; and
  * unions the resulting bbox with \a bbox. If \a clear is true, empties \a bbox first. Passes the
  * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
- * clones), in turn, call this function in their bbox methods. */
+ * clones), in turn, call this function in their bbox methods. 
+ * \retval bbox  Note that there is no guarantee that bbox will contain a rectangle when the
+ *               function returns. If this item does not have a boundingbox, this might well be empty.
+ */
 void
 sp_item_invoke_bbox_full(SPItem const *item, boost::optional<Geom::Rect> &bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear)
 {
@@ -931,7 +938,7 @@ boost::optional<Geom::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType 
     return rect;
 }
 
-static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
+static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
 	/* This will only be called if the derived class doesn't override this.
 	 * see for example sp_genericellipse_snappoints in sp-ellipse.cpp	 
@@ -952,7 +959,7 @@ static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p)
       
 }
 
-void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIter p)
+void sp_item_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
 	g_assert (item != NULL);
     g_assert (SP_IS_ITEM(item));
@@ -960,11 +967,11 @@ void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIt
     // Get the snappoints of the item
     SPItemClass const &item_class = *(SPItemClass const *) G_OBJECT_GET_CLASS(item);
     if (item_class.snappoints) {
-        item_class.snappoints(item, p);
+        item_class.snappoints(item, p, snapprefs);
     }
 
     // Get the snappoints at the item's center
-    if (includeItemCenter) {
+    if (snapprefs != NULL && snapprefs->getIncludeItemCenter()) {
     	*p = item->getCenter();
     }    
     
@@ -981,7 +988,7 @@ void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIt
 	            if (SP_IS_ITEM(child)) {
 	            	std::vector<Geom::Point> p_clip_or_mask;	            	    
 	            	// Please note the recursive call here!
-	            	sp_item_snappoints(SP_ITEM(child), includeItemCenter, SnapPointsIter(p_clip_or_mask));
+	            	sp_item_snappoints(SP_ITEM(child), SnapPointsIter(p_clip_or_mask), snapprefs);
 	            	// Take into account the transformation of the item being clipped or masked
 	            	for (std::vector<Geom::Point>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
             	    	// All snappoints are in desktop coordinates, but the item's transformation is
@@ -1409,26 +1416,27 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix co
         advertized_transform = sp_item_transform_repr (item).inverse() * transform;
     }
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (compensate) {
 
          // recursively compensate for stroke scaling, depending on user preference
-        if (prefs_get_int_attribute("options.transform", "stroke", 1) == 0) {
+        if (!prefs->getBool("/options/transform/stroke", true)) {
             double const expansion = 1. / advertized_transform.descrim();
             sp_item_adjust_stroke_width_recursive(item, expansion);
         }
 
         // recursively compensate rx/ry of a rect if requested
-        if (prefs_get_int_attribute("options.transform", "rectcorners", 1) == 0) {
+        if (!prefs->getBool("/options/transform/rectcorners", true)) {
             sp_item_adjust_rects_recursive(item, advertized_transform);
         }
 
         // recursively compensate pattern fill if it's not to be transformed
-        if (prefs_get_int_attribute("options.transform", "pattern", 1) == 0) {
+        if (!prefs->getBool("/options/transform/pattern", true)) {
             sp_item_adjust_paint_recursive (item, advertized_transform.inverse(), Geom::identity(), true);
         }
         /// \todo FIXME: add the same else branch as for gradients below, to convert patterns to userSpaceOnUse as well
         /// recursively compensate gradient fill if it's not to be transformed
-        if (prefs_get_int_attribute("options.transform", "gradient", 1) == 0) {
+        if (!prefs->getBool("/options/transform/gradient", true)) {
             sp_item_adjust_paint_recursive (item, advertized_transform.inverse(), Geom::identity(), false);
         } else {
             // this converts the gradient/pattern fill/stroke, if any, to userSpaceOnUse; we need to do
@@ -1438,7 +1446,7 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix co
 
     } // endif(compensate)
 
-    gint preserve = prefs_get_int_attribute("options.preservetransform", "value", 0);
+    gint preserve = prefs->getBool("/options/preservetransform/value", 0);
     Geom::Matrix transform_attr (transform);
     if ( // run the object's set_transform (i.e. embed transform) only if:
          ((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform && // it does have a set_transform method
@@ -1727,7 +1735,8 @@ sp_item_convert_to_guides(SPItem *item) {
     SPNamedView *nv = sp_desktop_namedview(dt);
     (void)nv;
 
-    int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int prefs_bbox = prefs->getInt("/tools/bounding_box", 0);
     SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
         SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
 

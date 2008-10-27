@@ -26,7 +26,7 @@
 
 #include "panel.h"
 #include "icon-size.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "desktop-handles.h"
 #include "inkscape.h"
 #include "dialogs/eek-preview.h"
@@ -94,50 +94,40 @@ void Panel::_init()
     Glib::ustring tmp("<");
     _anchor = Gtk::ANCHOR_CENTER;
 
-    guint panel_size = 0;
-    if (_prefs_path) {
-        panel_size = prefs_get_int_attribute_limited( _prefs_path, "panel_size", 1, 0, static_cast<long long>(PREVIEW_SIZE_HUGE) );
-    }
-
-    guint panel_mode = 0;
-    if (_prefs_path) {
-        panel_mode = prefs_get_int_attribute_limited( _prefs_path, "panel_mode", 1, 0, 10 );
-    }
-
-    guint panel_wrap = 0;
-    if (_prefs_path) {
-        panel_wrap = prefs_get_int_attribute_limited( _prefs_path, "panel_wrap", 0, 0, 1 );
-    }
-
-    guint panel_ratio = 100;
-    if (_prefs_path) {
-        panel_ratio = prefs_get_int_attribute_limited( _prefs_path, "panel_ratio", 100, 0, 500 );
+    guint panel_size = 0, panel_mode = 0, panel_ratio = 100;
+    bool panel_wrap = 0;
+    if (!_prefs_path.empty()) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        panel_wrap = prefs->getBool(_prefs_path + "/panel_wrap");
+        panel_size = prefs->getIntLimited(_prefs_path + "/panel_size", 1, 0, PREVIEW_SIZE_HUGE);
+        panel_mode = prefs->getIntLimited(_prefs_path + "/panel_mode", 1, 0, 10);
+        panel_ratio = prefs->getIntLimited(_prefs_path + "/panel_ratio", 100, 0, 500 );
     }
 
     _menu = new Gtk::Menu();
 
     {
-	    Gtk::RadioMenuItem::Group group;
-	    Glib::ustring one_label(_("List"));
-	    Glib::ustring two_label(_("Grid"));
-	    Gtk::RadioMenuItem *one = manage(new Gtk::RadioMenuItem(group, one_label));
-	    Gtk::RadioMenuItem *two = manage(new Gtk::RadioMenuItem(group, two_label));
+        Gtk::RadioMenuItem::Group group;
+        Glib::ustring one_label(_("List"));
+        Glib::ustring two_label(_("Grid"));
+        Gtk::RadioMenuItem *one = manage(new Gtk::RadioMenuItem(group, one_label));
+        Gtk::RadioMenuItem *two = manage(new Gtk::RadioMenuItem(group, two_label));
 
-	    if (panel_mode == 0) {
-	        one->set_active(true);
-	    } else if (panel_mode == 1) {
-	        two->set_active(true);
-	    }
+        if (panel_mode == 0) {
+            one->set_active(true);
+        } else if (panel_mode == 1) {
+            two->set_active(true);
+        }
 
-	    _menu->append(*one);
-	    _non_horizontal.push_back(one);
-	    _menu->append(*two);
-	    _non_horizontal.push_back(two);
-	    Gtk::MenuItem* sep = manage(new Gtk::SeparatorMenuItem());
-	    _menu->append(*sep);
-	    _non_horizontal.push_back(sep);
-	    one->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 0));
-	    two->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 1));
+        _menu->append(*one);
+        _non_horizontal.push_back(one);
+        _menu->append(*two);
+        _non_horizontal.push_back(two);
+        Gtk::MenuItem* sep = manage(new Gtk::SeparatorMenuItem());
+        _menu->append(*sep);
+        _non_horizontal.push_back(sep);
+        one->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 0));
+        two->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_MODE, 1));
     }
 
     {
@@ -336,21 +326,14 @@ void Panel::present()
 
 void Panel::restorePanelPrefs()
 {
-    guint panel_size = 0;
-    if (_prefs_path) {
-        panel_size = prefs_get_int_attribute_limited(_prefs_path, "panel_size", 1, 0, static_cast<long long>(PREVIEW_SIZE_HUGE));
-    }
-    guint panel_mode = 0;
-    if (_prefs_path) {
-        panel_mode = prefs_get_int_attribute_limited(_prefs_path, "panel_mode", 1, 0, 10);
-    }
-    guint panel_wrap = 0;
-    if (_prefs_path) {
-        panel_wrap = prefs_get_int_attribute_limited(_prefs_path, "panel_wrap", 0, 0, 1 );
-    }
-    guint panel_ratio = 100;
-    if (_prefs_path) {
-        panel_ratio = prefs_get_int_attribute_limited(_prefs_path, "panel_ratio", 000, 0, 500 );
+    guint panel_size = 0, panel_mode = 0, panel_ratio = 100;
+    bool panel_wrap = 0;
+    if (!_prefs_path.empty()) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        panel_wrap = prefs->getBool(_prefs_path + "/panel_wrap");
+        panel_size = prefs->getIntLimited(_prefs_path + "/panel_size", 1, 0, PREVIEW_SIZE_HUGE);
+        panel_mode = prefs->getIntLimited(_prefs_path + "/panel_mode", 1, 0, 10);
+        panel_ratio = prefs->getIntLimited(_prefs_path + "/panel_ratio", 000, 0, 500 );
     }
     _bounceCall(PANEL_SETTING_SIZE, panel_size);
     _bounceCall(PANEL_SETTING_MODE, panel_mode);
@@ -375,8 +358,9 @@ void Panel::_bounceCall(int i, int j)
     _menu->set_active(0);
     switch (i) {
     case PANEL_SETTING_SIZE:
-        if (_prefs_path) {
-            prefs_set_int_attribute(_prefs_path, "panel_size", j);
+        if (!_prefs_path.empty()) {
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            prefs->setInt(_prefs_path + "/panel_size", j);
         }
         if (_fillable) {
             ViewType curr_type = _fillable->getPreviewType();
@@ -413,8 +397,9 @@ void Panel::_bounceCall(int i, int j)
         }
         break;
     case PANEL_SETTING_MODE:
-        if (_prefs_path) {
-            prefs_set_int_attribute (_prefs_path, "panel_mode", j);
+        if (!_prefs_path.empty()) {
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            prefs->setInt(_prefs_path + "/panel_mode", j);
         }
         if (_fillable) {
             ::PreviewSize curr_size = _fillable->getPreviewSize();
@@ -436,8 +421,9 @@ void Panel::_bounceCall(int i, int j)
         }
         break;
     case PANEL_SETTING_SHAPE:
-        if (_prefs_path) {
-            prefs_set_int_attribute (_prefs_path, "panel_ratio", j);
+        if (!_prefs_path.empty()) {
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            prefs->setInt(_prefs_path + "/panel_ratio", j);
         }
         if ( _fillable ) {
             ViewType curr_type = _fillable->getPreviewType();
@@ -446,8 +432,9 @@ void Panel::_bounceCall(int i, int j)
         }
         break;
     case PANEL_SETTING_WRAP:
-        if (_prefs_path) {
-            prefs_set_int_attribute (_prefs_path, "panel_wrap", j ? 1 : 0);
+        if (!_prefs_path.empty()) {
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            prefs->setBool(_prefs_path + "/panel_wrap", j);
         }
         if ( _fillable ) {
             _fillable->setWrap(j);
@@ -468,7 +455,7 @@ void Panel::_wrapToggled(Gtk::CheckMenuItem* toggler)
 
 gchar const *Panel::getPrefsPath() const
 {
-    return _prefs_path;
+    return _prefs_path.data();
 }
 
 Glib::ustring const &Panel::getLabel() const

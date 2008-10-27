@@ -15,7 +15,7 @@
 #include "svg/path-string.h"
 #include "svg/stringstream.h"
 #include "svg/svg.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include <algorithm>
 
 // 1<=numericprecision<=16, doubles are only accurate upto (slightly less than) 16 digits (and less than one digit doesn't make sense)
@@ -27,11 +27,12 @@ int Inkscape::SVG::PathString::numericprecision;
 int Inkscape::SVG::PathString::minimumexponent;
 
 Inkscape::SVG::PathString::PathString() :
-    allow_relative_coordinates(0 != prefs_get_int_attribute("options.svgoutput", "allowrelativecoordinates", 1)),
-    force_repeat_commands(0 != prefs_get_int_attribute("options.svgoutput", "forcerepeatcommands", 0))
+    allow_relative_coordinates(Inkscape::Preferences::get()->getBool("/options/svgoutput/allowrelativecoordinates", true)),
+    force_repeat_commands(Inkscape::Preferences::get()->getBool("/options/svgoutput/forcerepeatcommands"))
 {
-    numericprecision = std::max<int>(minprec,std::min<int>(maxprec,prefs_get_int_attribute("options.svgoutput", "numericprecision", 8)));
-    minimumexponent = prefs_get_int_attribute("options.svgoutput", "minimumexponent", -8);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    numericprecision = std::max<int>(minprec,std::min<int>(maxprec, prefs->getInt("/options/svgoutput/numericprecision", 8)));
+    minimumexponent = prefs->getInt("/options/svgoutput/minimumexponent", -8);
 }
 
 void Inkscape::SVG::PathString::_appendOp(char abs_op, char rel_op) {

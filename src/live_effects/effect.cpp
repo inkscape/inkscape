@@ -491,7 +491,7 @@ Effect::getHelperPaths(SPLPEItem *lpeitem)
     std::vector<Geom::PathVector> hp_vec;
 
     if (!SP_IS_SHAPE(lpeitem)) {
-        g_print ("How to handle helperpaths for non-shapes?\n");
+        g_print ("How to handle helperpaths for non-shapes?\n"); // non-shapes are for example SPGroups.
         return hp_vec;
     }
 

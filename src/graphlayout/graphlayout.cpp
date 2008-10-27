@@ -1,14 +1,15 @@
-/** \file
- * Interface between Inkscape code (SPItem) and graphlayout functions.
+/** @file
+ * @brief Interface between Inkscape code (SPItem) and graphlayout functions.
  */
 /*
-* Authors:
-*   Tim Dwyer <Tim.Dwyer@infotech.monash.edu.au>
-*
-* Copyright (C) 2005 Authors
-*
-* Released under GNU GPL.  Read the file 'COPYING' for more information.
-*/
+ * Authors:
+ *   Tim Dwyer <Tim.Dwyer@infotech.monash.edu.au>
+ *
+ * Copyright (C) 2005 Authors
+ *
+ * Released under GNU GPL.  Read the file 'COPYING' for more information.
+ */
+
 #include <iostream>
 #include <config.h>
 #include <map>
@@ -142,11 +143,11 @@ void graphlayout(GSList const *const items) {
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 	SimpleConstraints scx,scy;
-	double ideal_connector_length = prefs->getDouble("tools.connector", "length", 100.0);
+	double ideal_connector_length = prefs->getDouble("/tools/connector/length", 100.0);
 	double directed_edge_height_modifier = 1.0;
 	
-	bool directed =       prefs->getBool("tools.connector", "directedlayout");
-	bool avoid_overlaps = prefs->getBool("tools.connector", "avoidoverlaplayout");
+	bool directed =       prefs->getBool("/tools/connector/directedlayout");
+	bool avoid_overlaps = prefs->getBool("/tools/connector/avoidoverlaplayout");
 
 	for (list<SPItem *>::iterator i(selected.begin());
 		i != selected.end();

@@ -71,7 +71,7 @@
 #include "ui/dialog/dialog-manager.h"
 #include "ui/dialog/inkscape-preferences.h"
 #include "interface.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "splivarot.h"
 #include "sp-namedview.h"
 #include "sp-flowtext.h"
@@ -1314,7 +1314,7 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
     }
     // If the rotation center of the selection is visible, choose it as reference point
     // for horizontal and vertical flips. Otherwise, take the center of the bounding box.
-    NR::Point center;
+    Geom::Point center;
     if (tools_isactive(dt, TOOLS_SELECT) && sel->center() && SP_SELECT_CONTEXT(ec)->_seltrans->centerIsVisible())
         center = *sel->center();
     else
@@ -1431,6 +1431,7 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
         }
     }
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     switch (verb) {
         case SP_VERB_CONTEXT_SELECT:
             tools_switch(dt, TOOLS_SELECT);
@@ -1491,80 +1492,80 @@ ContextVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
 
         case SP_VERB_CONTEXT_SELECT_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SELECTOR);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_SELECTOR);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_NODE_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_NODE);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_NODE);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_TWEAK_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_TWEAK);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_TWEAK);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_RECT_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SHAPES_RECT);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_SHAPES_RECT);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_3DBOX_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SHAPES_3DBOX);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_SHAPES_3DBOX);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_ARC_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SHAPES_ELLIPSE);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_SHAPES_ELLIPSE);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_STAR_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SHAPES_STAR);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_SHAPES_STAR);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_SPIRAL_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SHAPES_SPIRAL);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_SHAPES_SPIRAL);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_PENCIL_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_PENCIL);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_PENCIL);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_PEN_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_PEN);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_PEN);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_CALLIGRAPHY);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_CALLIGRAPHY);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_TEXT_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_TEXT);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_TEXT);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_GRADIENT_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_GRADIENT);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_GRADIENT);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_ZOOM_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_ZOOM);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_ZOOM);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_DROPPER_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_DROPPER);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_DROPPER);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_CONNECTOR_PREFS:
-            prefs_set_int_attribute ("dialogs.preferences", "page", PREFS_PAGE_TOOLS_CONNECTOR);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_CONNECTOR);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_PAINTBUCKET_PREFS:
-            prefs_set_int_attribute ("dialogs.preferences", "page", PREFS_PAGE_TOOLS_PAINTBUCKET);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_PAINTBUCKET);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_ERASER_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_ERASER);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_ERASER);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_LPETOOL_PREFS:
             g_print ("TODO: Create preferences page for LPETool\n");
-            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_LPETOOL);
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_LPETOOL);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
 
@@ -1601,9 +1602,9 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(dt->namedview);
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gdouble zoom_inc =
-        prefs_get_double_attribute_limited( "options.zoomincrement",
-                                            "value", 1.414213562, 1.01, 10 );
+        prefs->getDoubleLimited( "/options/zoomincrement/value", 1.414213562, 1.01, 10 );
 
     switch (GPOINTER_TO_INT(data)) {
         case SP_VERB_ZOOM_IN:
@@ -1644,21 +1645,21 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
         }
         case SP_VERB_ZOOM_1_1:
         {
-            double zcorr = prefs_get_double_attribute ("options.zoomcorrection", "value", 1.0);
+            double zcorr = prefs->getDouble("/options/zoomcorrection/value", 1.0);
             Geom::Rect const d = dt->get_display_area();
             dt->zoom_absolute( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], 1.0 * zcorr );
             break;
         }
         case SP_VERB_ZOOM_1_2:
         {
-            double zcorr = prefs_get_double_attribute ("options.zoomcorrection", "value", 1.0);
+            double zcorr = prefs->getDouble("/options/zoomcorrection/value", 1.0);
             Geom::Rect const d = dt->get_display_area();
             dt->zoom_absolute( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], 0.5 * zcorr );
             break;
         }
         case SP_VERB_ZOOM_2_1:
         {
-            double zcorr = prefs_get_double_attribute ("options.zoomcorrection", "value", 1.0);
+            double zcorr = prefs->getDouble("/options/zoomcorrection/value", 1.0);
             Geom::Rect const d = dt->get_display_area();
             dt->zoom_absolute( d.midpoint()[Geom::X], d.midpoint()[Geom::Y], 2.0 * zcorr );
             break;

@@ -555,7 +555,6 @@ void inkscape_ref (void) {}
 void inkscape_unref (void) {}
 void inkscape_add_document (SPDocument *document) {}
 void inkscape_remove_document (SPDocument *document) {}
-Inkscape::XML::Node *inkscape_get_repr (Inkscape::Application *inkscape, const gchar *key) {return NULL;}
 #endif
 
 

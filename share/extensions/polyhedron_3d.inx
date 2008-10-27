@@ -8,21 +8,21 @@
         <page name="common" _gui-text="Model File">
             <param name="obj" type="optiongroup" appearance="minimal" _gui-text="Object:">
                 <_option value="cube">Cube</_option>
-                <_option value="t_cube">Truncated Cube</_option>
-                <_option value="sn_cube">Snub Cube</_option>
+                <_option value="trunc_cube">Truncated Cube</_option>
+                <_option value="snub_cube">Snub Cube</_option>
                 <_option value="cuboct">Cuboctohedron</_option>
                 <_option value="tet">Tetrahedron</_option>
-                <_option value="t_tet">Truncated Tetrahedron</_option>
+                <_option value="trunc_tet">Truncated Tetrahedron</_option>
                 <_option value="oct">Octahedron</_option>
-                <_option value="t_oct">Truncated Octahedron</_option>
+                <_option value="trunc_oct">Truncated Octahedron</_option>
                 <_option value="icos">Icosahedron</_option>
-                <_option value="t_icos">Truncated Icosahedron</_option>
-                <_option value="s_t_icos">Small Triambic Icosahedron</_option>
+                <_option value="trunc_icos">Truncated Icosahedron</_option>
+                <_option value="small_triam_icos">Small Triambic Icosahedron</_option>
                 <_option value="dodec">Dodecahedron</_option>
-                <_option value="t_dodec">Truncated Dodecahedron</_option>
-                <_option value="sn_dodec">Snub Dodecahedron</_option>
-                <_option value="g_dodec">Great Dodecahedron</_option>
-                <_option value="g_s_dodec">Great Stellated Dodecahedron</_option>
+                <_option value="trunc_dodec">Truncated Dodecahedron</_option>
+                <_option value="snub_dodec">Snub Dodecahedron</_option>
+                <_option value="great_dodec">Great Dodecahedron</_option>
+                <_option value="great_stel_dodec">Great Stellated Dodecahedron</_option>
                 <_option value="from_file">Load From File</_option>
                 </param>
             <param name="spec_file" type="string"  _gui-text="Filename:">great_rhombicuboct.obj</param>
@@ -84,7 +84,6 @@
                 <_option value="max">Maximum</_option>
                 <_option value="min">Minimum</_option>
                 <_option value="mean">Mean</_option></param>
-            <param name="norm" type="boolean" _gui-text="Report Normal Vector Information">0</param>
         </page>
     </param>
     <effect>

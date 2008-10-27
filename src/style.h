@@ -3,8 +3,8 @@
 
 /** \file
  * SPStyle - a style object for SPItem objects
- *
- * Authors:
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
@@ -382,7 +382,7 @@ SPStyle *sp_style_unref(SPStyle *style);
 
 void sp_style_read_from_object(SPStyle *style, SPObject *object);
 
-void sp_style_read_from_repr(SPStyle *style, Inkscape::XML::Node *repr);
+void sp_style_read_from_prefs(SPStyle *style, Glib::ustring const &path);
 
 void sp_style_merge_from_style_string(SPStyle *style, gchar const *p);
 

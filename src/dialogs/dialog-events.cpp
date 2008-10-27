@@ -21,7 +21,7 @@
 #include <gtk/gtk.h>
 #include "desktop.h"
 #include "inkscape-private.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "event-context.h"
 
 #include "dialog-events.h"
@@ -172,16 +172,17 @@ sp_dialog_event_handler (GtkWindow *win, GdkEvent *event, gpointer data)
 void
 sp_transientize (GtkWidget *dialog)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 #ifndef WIN32  // FIXME: Temporary Win32 special code to enable transient dialogs
     // _set_skip_taskbar_hint makes transient dialogs NON-transient! When dialogs
     // are made transient (_set_transient_for), they are already removed from
     // the taskbar in Win32.
-    if (prefs_get_int_attribute ( "options.dialogsskiptaskbar", "value", 0)) {
+    if (prefs->getBool( "/options/dialogsskiptaskbar/value")) {
         gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), TRUE);
     }
 #endif
 
-    gint transient_policy = prefs_get_int_attribute_limited ( "options.transientpolicy", "value", 1, 0, 2 );
+    gint transient_policy = prefs->getIntLimited("/options/transientpolicy/value", 1, 0, 2);
 
 #ifdef WIN32 // Win32 special code to enable transient dialogs
     transient_policy = 2;
@@ -207,7 +208,8 @@ void
 sp_transientize_callback ( Inkscape::Application * /*inkscape*/,
                            SPDesktop *desktop, win_data *wd )
 {
-    gint transient_policy = prefs_get_int_attribute_limited ( "options.transientpolicy", "value", 1, 0, 2);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gint transient_policy = prefs->getIntLimited( "/options/transientpolicy/value", 1, 0, 2);
 
 #ifdef WIN32 // Win32 special code to enable transient dialogs
     transient_policy = 2;

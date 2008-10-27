@@ -35,7 +35,7 @@
 #include "message-stack.h"
 #include "pen-context.h"
 #include "lpe-tool-context.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "selection.h"
 #include "selection-chemistry.h"
 #include "snap.h"
@@ -49,7 +49,7 @@ static void sp_draw_context_init(SPDrawContext *dc);
 static void sp_draw_context_dispose(GObject *object);
 
 static void sp_draw_context_setup(SPEventContext *ec);
-static void sp_draw_context_set(SPEventContext *ec, gchar const *key, gchar const *value);
+static void sp_draw_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static void sp_draw_context_finish(SPEventContext *ec);
 
 static gint sp_draw_context_root_handler(SPEventContext *event_context, GdkEvent *event);
@@ -225,7 +225,7 @@ sp_draw_context_finish(SPEventContext *ec)
 }
 
 static void
-sp_draw_context_set(SPEventContext */*ec*/, const gchar */*key*/, const gchar */*value*/)
+sp_draw_context_set(SPEventContext */*ec*/, Inkscape::Preferences::Entry */*val*/)
 {
 }
 
@@ -263,12 +263,12 @@ sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
     return ret;
 }
 
-static char const *
+static Glib::ustring const
 tool_name(SPDrawContext *dc)
 {
     return ( SP_IS_PEN_CONTEXT(dc)
-             ? "tools.freehand.pen"
-             : "tools.freehand.pencil" );
+             ? "/tools/freehand/pen"
+             : "/tools/freehand/pencil" );
 }
 
 static void
@@ -292,13 +292,14 @@ void
 spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 {
     using namespace Inkscape::LivePathEffect;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     if (item && SP_IS_LPE_ITEM(item)) {
-        if (prefs_get_int_attribute(tool_name(dc), "freehand-mode", 0) == 1) {
+        if (prefs->getBool(tool_name(dc) + "/freehand-mode", 0) == 1) {
             Effect::createAndApply(SPIRO, dc->desktop->doc(), item);
         }
 
-        int shape = prefs_get_int_attribute(tool_name(dc), "shape", 0);
+        int shape = prefs->getInt(tool_name(dc) + "/shape", 0);
         bool shape_applied = false;
         SPCSSAttr *css_item = sp_css_attr_from_object (SP_OBJECT(item), SP_STYLE_FLAG_ALWAYS);
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
@@ -469,7 +470,8 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
 void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p, Geom::Point const &o,
                                  guint state)
 {
-    unsigned const snaps = abs(prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    unsigned const snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
     /* 0 means no snapping. */
 
     /* mirrored by fabs, so this corresponds to 15 degrees */
@@ -484,8 +486,8 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p,
 
     for (unsigned i = 0; i < snaps; i++) {
         double const ndot = fabs(dot(v,Geom::rot90(delta)));
-        Geom::Point t(r00*v[NR::X] + r01*v[NR::Y],
-                    r10*v[NR::X] + r11*v[NR::Y]);
+        Geom::Point t(r00*v[Geom::X] + r01*v[Geom::Y],
+                    r10*v[Geom::X] + r11*v[Geom::Y]);
         if (ndot < bn) {
             /* I think it is better numerically to use the normal, rather than the dot product
              * to assess solutions, but I haven't proven it. */
@@ -506,7 +508,7 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p,
             SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
             m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
             Geom::Point pt2g = to_2geom(p);
-            m.constrainedSnapReturnByRef( Inkscape::Snapper::SNAPPOINT_NODE, pt2g, Inkscape::Snapper::ConstraintLine(best));
+            m.constrainedSnapReturnByRef( Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::Snapper::ConstraintLine(best));
             p = from_2geom(pt2g);
         }
     }
@@ -518,7 +520,7 @@ void spdc_endpoint_snap_free(SPEventContext const * const ec, Geom::Point& p, gu
     SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
     m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
     Geom::Point pt2g = to_2geom(p);
-    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
+    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
     p = from_2geom(pt2g);
 }
 
@@ -666,7 +668,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
         } else {
             repr = xml_doc->createElement("svg:path");
             /* Set style */
-            sp_desktop_apply_style_tool(desktop, repr, tool_name(dc), false);
+            sp_desktop_apply_style_tool(desktop, repr, tool_name(dc).data(), false);
         }
 
         gchar *str = sp_svg_write_path( c->get_pathvector() );
@@ -794,7 +796,8 @@ spdc_free_colors(SPDrawContext *dc)
 
 /* Create a single dot represented by a circle */
 void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char const *tool, guint event_state) {
-    g_return_if_fail(!strcmp(tool, "tools.freehand.pen") || !strcmp(tool, "tools.freehand.pencil"));
+    g_return_if_fail(!strcmp(tool, "/tools/freehand/pen") || !strcmp(tool, "/tools/freehand/pencil"));
+    Glib::ustring tool_path = tool;
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(ec);
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
@@ -825,9 +828,11 @@ void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char cons
 
     /* put the circle where the mouse click occurred and set the diameter to the
        current stroke width, multiplied by the amount specified in the preferences */
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    
     Geom::Matrix const i2d (sp_item_i2d_affine (item));
     Geom::Point pp = pt * i2d;
-    double rad = 0.5 * prefs_get_double_attribute(tool, "dot-size", 3.0);
+    double rad = 0.5 * prefs->getDouble(tool_path + "/dot-size", 3.0);
     if (event_state & GDK_MOD1_MASK) {
         /* TODO: We vary the dot size between 0.5*rad and 1.5*rad, where rad is the dot size
            as specified in prefs. Very simple, but it might be sufficient in practice. If not,
@@ -840,8 +845,8 @@ void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char cons
         rad *= 2;
     }
 
-    sp_repr_set_svg_double (repr, "sodipodi:cx", pp[NR::X]);
-    sp_repr_set_svg_double (repr, "sodipodi:cy", pp[NR::Y]);
+    sp_repr_set_svg_double (repr, "sodipodi:cx", pp[Geom::X]);
+    sp_repr_set_svg_double (repr, "sodipodi:cy", pp[Geom::Y]);
     sp_repr_set_svg_double (repr, "sodipodi:rx", rad * stroke_width);
     sp_repr_set_svg_double (repr, "sodipodi:ry", rad * stroke_width);
     item->updateRepr();

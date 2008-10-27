@@ -1,10 +1,10 @@
-#ifndef __SCRIPTDIALOG_H__
-#define __SCRIPTDIALOG_H__
-/*
- * This dialog is for launching scripts whose main purpose if
- * the scripting of Inkscape itself.
+/** @file
+ * @brief Script dialog
  *
- * Authors:
+ * This dialog is for launching scripts whose main purpose is
+ * the scripting of Inkscape itself.
+ */
+/* Authors:
  *   Bob Jamison
  *   Other dudes from The Inkscape Organization
  *
@@ -13,6 +13,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifndef __SCRIPTDIALOG_H__
+#define __SCRIPTDIALOG_H__
 
 #include "ui/widget/panel.h"
 #include "verbs.h"
@@ -35,7 +37,7 @@ class ScriptDialog : public UI::Widget::Panel
      * Constructor
      */
     ScriptDialog() : 
-     UI::Widget::Panel("", "dialogs.script", SP_VERB_DIALOG_SCRIPT)
+     UI::Widget::Panel("", "/dialogs/script", SP_VERB_DIALOG_SCRIPT)
     {}
 
 
@@ -62,8 +64,15 @@ class ScriptDialog : public UI::Widget::Panel
 } //namespace UI
 } //namespace Inkscape
 
-
-
-
 #endif /* __DEBUGDIALOG_H__ */
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

@@ -1,10 +1,8 @@
-#define INKSCAPE_CANVAS_GRID_C
-
-/*
- *
- * Copyright (C) Johan Engelen 2006-2007 <johan@shouraizou.nl>
+/** @file
+ * @brief Cartesian grid implementation
+ */
+/* Copyright (C) Johan Engelen 2006-2007 <johan@shouraizou.nl>
  * Copyright (C) Lauris Kaplinski 2000
- *
  */
 
 /* As a general comment, I am not exactly proud of how things are done.
@@ -13,6 +11,7 @@
  * Don't be shy to correct things.
  */
 
+#define INKSCAPE_CANVAS_GRID_C
 
 #include "sp-canvas-util.h"
 #include "util/mathfns.h" 
@@ -416,17 +415,17 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
     : CanvasGrid(nv, in_repr, in_doc, GRID_RECTANGULAR)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gridunit = sp_unit_get_by_abbreviation( prefs->getString("options.grids.xy", "units").data() );
+    gridunit = sp_unit_get_by_abbreviation( prefs->getString("/options/grids/xy/units").data() );
     if (!gridunit)
         gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
-    origin[Geom::X] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "origin_x", 0.0), *gridunit);
-    origin[Geom::Y] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "origin_y", 0.0), *gridunit);
-    color = prefs->getInt("options.grids.xy", "color", 0x0000ff20);
-    empcolor = prefs->getInt("options.grids.xy", "empcolor", 0x0000ff40);
-    empspacing = prefs->getInt("options.grids.xy", "empspacing", 5);
-    spacing[Geom::X] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "spacing_x", 0.0), *gridunit);
-    spacing[Geom::Y] = sp_units_get_pixels(prefs->getDouble("options.grids.xy", "spacing_y", 0.0), *gridunit);
-    render_dotted = prefs->getBool("options.grids.xy", "dotted", false);
+    origin[Geom::X] = sp_units_get_pixels(prefs->getDouble("/options/grids/xy/origin_x", 0.0), *gridunit);
+    origin[Geom::Y] = sp_units_get_pixels(prefs->getDouble("/options/grids/xy/origin_y", 0.0), *gridunit);
+    color = prefs->getInt("/options/grids/xy/color", 0x0000ff20);
+    empcolor = prefs->getInt("/options/grids/xy/empcolor", 0x0000ff40);
+    empspacing = prefs->getInt("/options/grids/xy/empspacing", 5);
+    spacing[Geom::X] = sp_units_get_pixels(prefs->getDouble("/options/grids/xy/spacing_x", 0.0), *gridunit);
+    spacing[Geom::Y] = sp_units_get_pixels(prefs->getDouble("/options/grids/xy/spacing_y", 0.0), *gridunit);
+    render_dotted = prefs->getBool("/options/grids/xy/dotted", false);
 
     snapper = new CanvasXYGridSnapper(this, &namedview->snap_manager, 0);
 
@@ -889,7 +888,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     //set correct coloring, depending preference (when zoomed out, always major coloring or minor coloring)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint32 _empcolor;
-    bool no_emp_when_zoomed_out = prefs->getBool("options.grids", "no_emphasize_when_zoomedout", false);
+    bool no_emp_when_zoomed_out = prefs->getBool("/options/grids/no_emphasize_when_zoomedout", false);
     if( (scaled[Geom::X] || scaled[Geom::Y]) && no_emp_when_zoomed_out ) {
         _empcolor = color;
     } else {
@@ -1000,14 +999,10 @@ void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point co
  */
 bool CanvasXYGridSnapper::ThisSnapperMightSnap() const
 {
-    return _snap_enabled && _snap_from != 0;
+    return _snapmanager->snapprefs.getSnapModeBBoxOrNodes();
 }
 
-
-
-
-
-}; /* namespace Inkscape */
+} // namespace Inkscape
 
 
 /*

@@ -45,7 +45,7 @@ extern "C" {
 #include <libnrtype/font-style-to-pos.h>
 
 #include "dialog-events.h"
-#include "../prefs-utils.h"
+#include "../preferences.h"
 #include "../verbs.h"
 #include "../interface.h"
 #include "svg/css-ostringstream.h"
@@ -80,7 +80,7 @@ static GtkWidget *dlg = NULL;
 static win_data wd;
 // impossible original values to make sure they are read from prefs
 static gint x = -1000, y = -1000, w = 0, h = 0;
-static gchar const *prefs_path = "dialogs.textandfont";
+static Glib::ustring const prefs_path = "/dialogs/textandfont/";
 
 
 
@@ -104,10 +104,11 @@ sp_text_edit_dialog_delete( GtkObject */*object*/, GdkEvent */*event*/, gpointer
     if (x<0) x=0;
     if (y<0) y=0;
 
-    prefs_set_int_attribute (prefs_path, "x", x);
-    prefs_set_int_attribute (prefs_path, "y", y);
-    prefs_set_int_attribute (prefs_path, "w", w);
-    prefs_set_int_attribute (prefs_path, "h", h);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(prefs_path + "x", x);
+    prefs->setInt(prefs_path + "y", y);
+    prefs->setInt(prefs_path + "w", w);
+    prefs->setInt(prefs_path + "h", h);
 
     return FALSE; // which means, go ahead and destroy it
 }
@@ -142,16 +143,16 @@ sp_text_edit_dialog (void)
 
         gchar title[500];
         sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_DIALOG_TEXT), title);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
         dlg = sp_window_new (title, TRUE);
         if (x == -1000 || y == -1000) {
-            x = prefs_get_int_attribute (prefs_path, "x", -1000);
-            y = prefs_get_int_attribute (prefs_path, "y", -1000);
+            x = prefs->getInt(prefs_path + "x", -1000);
+            y = prefs->getInt(prefs_path + "y", -1000);
         }
-
         if (w ==0 || h == 0) {
-            w = prefs_get_int_attribute (prefs_path, "w", 0);
-            h = prefs_get_int_attribute (prefs_path, "h", 0);
+            w = prefs->getInt(prefs_path + "w", 0);
+            h = prefs->getInt(prefs_path + "h", 0);
         }
 
 //        if (x<0) x=0;
@@ -608,9 +609,10 @@ sp_text_edit_dialog_set_default( GtkButton */*button*/, GtkWidget *dlg )
     GtkWidget *def = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "default");
 
     SPCSSAttr *css = sp_get_text_dialog_style ();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     g_object_set_data (G_OBJECT (dlg), "blocked", GINT_TO_POINTER (TRUE));
-    sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
+    prefs->mergeStyle("/tools/text/style", css);
     g_object_set_data (G_OBJECT (dlg), "blocked", GINT_TO_POINTER (FALSE));
 
     sp_repr_css_attr_unref (css);
@@ -650,7 +652,8 @@ sp_text_edit_dialog_apply( GtkButton */*button*/, GtkWidget *dlg )
 
     if (items == 0) {
         // no text objects; apply style to prefs for new objects
-        sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->mergeStyle("/tools/text/style", css);
         gtk_widget_set_sensitive (def, FALSE);
     } else if (items == 1) {
         /* exactly one text object; now set its text, too */
@@ -749,13 +752,7 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
         // (Ok to not get a font specification - must just rely on the family and style in that case)
         if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING
                 || result_numbers == QUERY_STYLE_NOTHING) {
-            repr = inkscape_get_repr (INKSCAPE, "tools.text");
-            if (repr) {
-                gtk_widget_set_sensitive (notebook, TRUE);
-                sp_style_read_from_repr (query, repr);
-            } else {
-                gtk_widget_set_sensitive (notebook, FALSE);
-            }
+            sp_style_read_from_prefs(query, "/tools/text");
         }
 
         // FIXME: process result_family/style == QUERY_STYLE_MULTIPLE_DIFFERENT by showing "Many" in the lists

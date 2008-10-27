@@ -72,7 +72,7 @@ static void sp_genericellipse_init(SPGenericEllipse *ellipse);
 
 static void sp_genericellipse_update(SPObject *object, SPCtx *ctx, guint flags);
 
-static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p);
+static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
 
 static void sp_genericellipse_set_shape(SPShape *shape);
 static void sp_genericellipse_update_patheffect (SPLPEItem *lpeitem, bool write);
@@ -248,7 +248,7 @@ static void sp_genericellipse_set_shape(SPShape *shape)
     curve->unref();
 }
 
-static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p)
+static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_GENERICELLIPSE(item));
@@ -859,11 +859,11 @@ sp_arc_position_set(SPArc *arc, gdouble x, gdouble y, gdouble rx, gdouble ry)
     ge->rx.computed = rx;
     ge->ry.computed = ry;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (prefs->getDouble("tools.shapes.arc", "start", 0.0) != 0)
-        ge->start = prefs->getDouble("tools.shapes.arc", "start", 0.0);
-    if (prefs->getDouble("tools.shapes.arc", "end", 0.0) != 0)
-        ge->end = prefs->getDouble("tools.shapes.arc", "end", 0.0);
-    if (!prefs->getBool("tools.shapes.arc", "open"))
+    if (prefs->getDouble("/tools/shapes/arc/start", 0.0) != 0)
+        ge->start = prefs->getDouble("/tools/shapes/arc/start", 0.0);
+    if (prefs->getDouble("/tools/shapes/arc/end", 0.0) != 0)
+        ge->end = prefs->getDouble("/tools/shapes/arc/end", 0.0);
+    if (!prefs->getBool("/tools/shapes/arc/open"))
         ge->closed = 1;
     else
         ge->closed = 0;

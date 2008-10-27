@@ -21,21 +21,21 @@
 #endif
 
 
-#include <widgets/sp-widget.h>
-#include <sp-linear-gradient.h>
-#include <sp-pattern.h>
-#include <sp-radial-gradient.h>
-#include <widgets/paint-selector.h>
-#include <style.h>
-#include <gradient-chemistry.h>
-#include <desktop-style.h>
-#include <desktop-handles.h>
-#include <selection.h>
-#include <inkscape.h>
-#include <document-private.h>
-#include <xml/repr.h>
+#include "widgets/sp-widget.h"
+#include "sp-linear-gradient.h"
+#include "sp-pattern.h"
+#include "sp-radial-gradient.h"
+#include "widgets/paint-selector.h"
+#include "style.h"
+#include "gradient-chemistry.h"
+#include "desktop-style.h"
+#include "desktop-handles.h"
+#include "selection.h"
+#include "inkscape.h"
+#include "document-private.h"
+#include "xml/repr.h"
 #include <glibmm/i18n.h>
-#include <display/sp-canvas.h>
+#include "display/sp-canvas.h"
 
 
 // These can be deleted once we sort out the libart dependence.

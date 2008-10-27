@@ -1,7 +1,7 @@
-/**
- * \brief Extension editor
- *
- * Authors:
+/** @file
+ * @brief Extension editor dialog
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Ted Gould <ted@gould.cx>
  *

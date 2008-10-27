@@ -1,12 +1,15 @@
-/**
- * Whiteboard connection establishment dialog
- *
- * Authors:
- * David Yip <yipdw@rose-hulman.edu>
- * Jason Segal, Jonas Collaros, Stephen Montgomery, Brandi Soggs, Matthew Weinstock (original C/Gtk version)
+/** @file
+ * @brief Whiteboard connection dialog - implementation
+ */
+/* Authors:
+ *   David Yip <yipdw@rose-hulman.edu>
+ *   Jason Segal
+ *   Jonas Collaros
+ *   Stephen Montgomery
+ *   Brandi Soggs
+ *   Matthew Weinstock (original C/Gtk version)
  *
  * Copyright (c) 2004-2005 Authors
- *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -83,11 +86,11 @@ WhiteboardConnectDialogImpl::_construct()
 	this->_labels[3].set_mnemonic_widget(this->_port);
 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-	this->_server.set_text(prefs->getString("whiteboard.server", "name"));
+	this->_server.set_text(prefs->getString("/whiteboard/server/name"));
 	/// @todo Convert port to an integer preference?
-	this->_port.set_text(prefs->getString("whiteboard.server", "port"));
-	this->_username.set_text(prefs->getString("whiteboard.server", "username"));
-	this->_usessl.set_active(prefs->getBool("whiteboard.server", "ssl", false);
+	this->_port.set_text(prefs->getString("/whiteboard/server/port"));
+	this->_username.set_text(prefs->getString("/whiteboard/server/username"));
+	this->_usessl.set_active(prefs->getBool("/whiteboard/server/ssl", false);
 
 	this->_layout.attach(this->_labels[0], 0, 1, 0, 1);
 	this->_layout.attach(this->_labels[1], 0, 1, 1, 2);
@@ -236,7 +239,7 @@ WhiteboardConnectDialogImpl::_respCallback(int resp)
 					this->_desktop->messageStack()->flash(INFORMATION_MESSAGE, msg.data());
 	
 					// Save preferences
-					prefs->setString(this->_prefs_path, "server", this->_server.get_text());
+					prefs->setString(this->_prefs_path + "/server", this->_server.get_text());
 					break;
 				default:
 					break;
@@ -274,7 +277,7 @@ WhiteboardConnectDialogImpl::_respCallback(int resp)
 					this->_desktop->messageStack()->flash(INFORMATION_MESSAGE, msg.data());
 	
 					// Save preferences
-					prefs->setString(this->_prefs_path, "server", this->_server.get_text());
+					prefs->setString(this->_prefs_path + "/server", this->_server.get_text());
 					break;
 				default:
 					break;

@@ -1,7 +1,7 @@
-/**
- * \brief A floating dialog implementation.
- *
- * Author:
+/** @file
+ * @brief A floating dialog implementation.
+ */
+/* Author:
  *   Gustav Broberg <broberg@kth.se>
  *
  * Copyright (C) 2007 Authors

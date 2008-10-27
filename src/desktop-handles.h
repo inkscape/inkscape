@@ -25,8 +25,8 @@ namespace Inkscape {
 #define SP_DESKTOP_ZOOM_MIN 0.01
 
 #define SP_COORDINATES_UNDERLINE_NONE (0)
-#define SP_COORDINATES_UNDERLINE_X (1 << NR::X)
-#define SP_COORDINATES_UNDERLINE_Y (1 << NR::Y)
+#define SP_COORDINATES_UNDERLINE_X (1 << Geom::X)
+#define SP_COORDINATES_UNDERLINE_Y (1 << Geom::Y)
 
 SPEventContext * sp_desktop_event_context (SPDesktop const * desktop);
 Inkscape::Selection * sp_desktop_selection (SPDesktop const * desktop);

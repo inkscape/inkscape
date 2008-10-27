@@ -27,6 +27,7 @@
 
 #include "guide-snapper.h"
 #include "object-snapper.h"
+#include "snap-preferences.h"
 
 class SPNamedView;
 
@@ -45,19 +46,19 @@ public:
 
     typedef std::list<const Inkscape::Snapper*> SnapperList;
 
-    bool SomeSnapperMightSnap() const;
+    bool someSnapperMightSnap() const;
     
     void setup(SPDesktop const *desktop, bool snapindicator = true, SPItem const *item_to_ignore = NULL, std::vector<Geom::Point> *unselected_nodes = NULL);
     void setup(SPDesktop const *desktop, bool snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<Geom::Point> *unselected_nodes = NULL);
 
     // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a 
     // point if snapping has occured (by overwriting p); otherwise p is untouched    
-    void freeSnapReturnByRef(Inkscape::Snapper::PointType point_type,
+    void freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
                       Geom::Point &p,
                       bool first_point = true,
                       boost::optional<Geom::Rect> const &bbox_to_snap = boost::optional<Geom::Rect>()) const;
     
-    Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType point_type,
+    Inkscape::SnappedPoint freeSnap(Inkscape::SnapPreferences::PointType point_type,
                                     Geom::Point const &p,
                                     bool first_point = true,
                                     boost::optional<Geom::Rect> const &bbox_to_snap = boost::optional<Geom::Rect>() ) const;
@@ -66,13 +67,13 @@ public:
     
     // constrainedSnapReturnByRef() is preferred over constrainedSnap(), because it only returns a 
     // point, by overwriting p, if snapping has occured; otherwise p is untouched
-    void constrainedSnapReturnByRef(Inkscape::Snapper::PointType point_type,
+    void constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
                              Geom::Point &p,
                              Inkscape::Snapper::ConstraintLine const &constraint,
                              bool first_point = true,
                              boost::optional<Geom::Rect> const &bbox_to_snap = boost::optional<Geom::Rect>()) const;
     
-    Inkscape::SnappedPoint constrainedSnap(Inkscape::Snapper::PointType point_type,
+    Inkscape::SnappedPoint constrainedSnap(Inkscape::SnapPreferences::PointType point_type,
                                            Geom::Point const &p,
                                            Inkscape::Snapper::ConstraintLine const &constraint,
                                            bool first_point = true,
@@ -80,33 +81,33 @@ public:
                                            
     void guideSnap(Geom::Point &p, Geom::Point const &guide_normal) const;
 
-    Inkscape::SnappedPoint freeSnapTranslation(Inkscape::Snapper::PointType point_type,
+    Inkscape::SnappedPoint freeSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
                                                std::vector<Geom::Point> const &p,
                                                Geom::Point const &tr) const;
 
-    Inkscape::SnappedPoint constrainedSnapTranslation(Inkscape::Snapper::PointType point_type,
+    Inkscape::SnappedPoint constrainedSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
                                                       std::vector<Geom::Point> const &p,
                                                       Inkscape::Snapper::ConstraintLine const &constraint,
                                                       Geom::Point const &tr) const;
 
-    Inkscape::SnappedPoint freeSnapScale(Inkscape::Snapper::PointType point_type,
+    Inkscape::SnappedPoint freeSnapScale(Inkscape::SnapPreferences::PointType point_type,
                                          std::vector<Geom::Point> const &p,
                                          Geom::Scale const &s,
                                          Geom::Point const &o) const;
 
-    Inkscape::SnappedPoint constrainedSnapScale(Inkscape::Snapper::PointType point_type,
+    Inkscape::SnappedPoint constrainedSnapScale(Inkscape::SnapPreferences::PointType point_type,
                                                 std::vector<Geom::Point> const &p,
                                                 Geom::Scale const &s,
                                                 Geom::Point const &o) const;
 
-    Inkscape::SnappedPoint constrainedSnapStretch(Inkscape::Snapper::PointType point_type,
+    Inkscape::SnappedPoint constrainedSnapStretch(Inkscape::SnapPreferences::PointType point_type,
                                                   std::vector<Geom::Point> const &p,
                                                   Geom::Coord const &s,
                                                   Geom::Point const &o,
                                                   Geom::Dim2 d,
                                                   bool uniform) const;
 
-    Inkscape::SnappedPoint constrainedSnapSkew(Inkscape::Snapper::PointType point_type,
+    Inkscape::SnappedPoint constrainedSnapSkew(Inkscape::SnapPreferences::PointType point_type,
                                                std::vector<Geom::Point> const &p,
                                                Inkscape::Snapper::ConstraintLine const &constraint,
                                                Geom::Point const &s, // s[0] = skew factor, s[1] = scale factor
@@ -115,6 +116,7 @@ public:
                                         
     Inkscape::GuideSnapper guide;      ///< guide snapper
     Inkscape::ObjectSnapper object;    ///< snapper to other objects
+    Inkscape::SnapPreferences snapprefs;
 
     SnapperList getSnappers() const;
     SnapperList getGridSnappers() const;
@@ -123,56 +125,16 @@ public:
     SPNamedView const *getNamedView() const {return _named_view;}
     SPDocument *getDocument() const;
     
-    void setSnapModeBBox(bool enabled);
-    void setSnapModeNode(bool enabled);
-    void setSnapModeGuide(bool enabled);
-    bool getSnapModeBBox() const;
-    bool getSnapModeNode() const;
-    bool getSnapModeGuide() const;
-    
-    void setSnapIntersectionGG(bool enabled) {_intersectionGG = enabled;}
-    void setSnapIntersectionCS(bool enabled) {_intersectionCS = enabled;}
-    bool getSnapIntersectionGG() {return _intersectionGG;}
-    bool getSnapIntersectionCS() {return _intersectionCS;}    
-
-    void setIncludeItemCenter(bool enabled)    {
-        _include_item_center = enabled;
-        // also store a local copy in the object-snapper instead of passing it through many functions
-        object.setIncludeItemCenter(enabled);
-	}
-    
-    bool getIncludeItemCenter() const {
-        return _include_item_center;
-    }
-    
-    void setSnapEnabledGlobally(bool enabled) {
-        _snap_enabled_globally = enabled;   
-    }
-        
-    bool getSnapEnabledGlobally() const {
-        return _snap_enabled_globally;   
-    }
-    
-    void toggleSnapEnabledGlobally() {
-        _snap_enabled_globally = !_snap_enabled_globally;   
-    }
-        
 protected:
     SPNamedView const *_named_view;
 
 private:
-
-    enum Transformation {
+	enum Transformation {
         TRANSLATION,
         SCALE,
         STRETCH,
         SKEW
     };
-    
-    bool _include_item_center; //If true, snapping nodes will also snap the item's center
-    bool _intersectionGG;
-    bool _intersectionCS;
-    bool _snap_enabled_globally; //Toggles ALL snapping
     
     std::vector<SPItem const *> *_items_to_ignore;
     SPItem const *_item_to_ignore;
@@ -180,7 +142,7 @@ private:
     bool _snapindicator;
     std::vector<Geom::Point> *_unselected_nodes;                                    
     
-    Inkscape::SnappedPoint _snapTransformed(Inkscape::Snapper::PointType type,
+    Inkscape::SnappedPoint _snapTransformed(Inkscape::SnapPreferences::PointType type,
                                             std::vector<Geom::Point> const &points,
                                             bool constrained,
                                             Inkscape::Snapper::ConstraintLine const &constraint,

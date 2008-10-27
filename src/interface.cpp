@@ -1,9 +1,9 @@
 #define __SP_INTERFACE_C__
 
-/**
- * Main UI stuff
- *
- * Authors:
+/** @file
+ * @brief Main UI stuff
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
  *   bulia byak <buliabyak@users.sf.net>
@@ -23,7 +23,7 @@
 #include "inkscape-private.h"
 #include "extension/effect.h"
 #include "widgets/icon.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "path-prefix.h"
 
 #include "shortcuts.h"
@@ -132,6 +132,7 @@ static void sp_ui_menu_item_set_sensitive(SPAction *action,
 static void sp_ui_menu_item_set_name(SPAction *action, 
                                      Glib::ustring name,
                                      void *data);
+static void sp_recent_open(GtkRecentChooser *, gpointer);
 
 SPActionEventVector menu_item_event_vector = {
     {NULL},
@@ -170,15 +171,16 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
 		win->signal_window_state_event().connect(sigc::mem_fun(*desktop, &SPDesktop::onWindowStateEvent));
 		win->signal_focus_in_event().connect(sigc::mem_fun(*desktop_widget, &SPDesktopWidget::onFocusInEvent));
 	
+	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         gint prefs_geometry = 
-            (2==prefs_get_int_attribute("options.savewindowgeometry", "value", 0));
+            (2==prefs->getInt("/options/savewindowgeometry/value", 0));
         if (prefs_geometry) {
-            gint pw = prefs_get_int_attribute("desktop.geometry", "width", -1);
-            gint ph = prefs_get_int_attribute("desktop.geometry", "height", -1);
-            gint px = prefs_get_int_attribute("desktop.geometry", "x", -1);
-            gint py = prefs_get_int_attribute("desktop.geometry", "y", -1);
-            gint full = prefs_get_int_attribute("desktop.geometry", "fullscreen", 0);
-            gint maxed = prefs_get_int_attribute("desktop.geometry", "maximized", 0);
+            gint pw = prefs->getInt("/desktop/geometry/width", -1);
+            gint ph = prefs->getInt("/desktop/geometry/height", -1);
+            gint px = prefs->getInt("/desktop/geometry/x", -1);
+            gint py = prefs->getInt("/desktop/geometry/y", -1);
+            gint full = prefs->getBool("/desktop/geometry/fullscreen");
+            gint maxed = prefs->getBool("/desktop/geometry/maximized");
             if (pw>0 && ph>0) {
                 gint w = MIN(gdk_screen_width(), pw);
                 gint h = MIN(gdk_screen_height(), ph);
@@ -633,18 +635,20 @@ checkitem_toggled(GtkCheckMenuItem *menuitem, gpointer user_data)
     gchar const *pref = (gchar const *) user_data;
     Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(menuitem), "view");
 
-    gchar *pref_path;
+    Glib::ustring pref_path;
     if (reinterpret_cast<SPDesktop*>(view)->is_focusMode()) {
-        pref_path = g_strconcat("focus.", pref, NULL);
+        pref_path = "/focus/";
     } else if (reinterpret_cast<SPDesktop*>(view)->is_fullscreen()) {
-        pref_path = g_strconcat("fullscreen.", pref, NULL);
+        pref_path = "/fullscreen/";
     } else {
-        pref_path = g_strconcat("window.", pref, NULL);
-	}
+        pref_path = "/window/";
+    }
+    pref_path += pref;
+    pref_path += "/state";
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gboolean checked = gtk_check_menu_item_get_active(menuitem);
-    prefs_set_int_attribute(pref_path, "state", checked);
-	g_free(pref_path);
+    prefs->setBool(pref_path, checked);
 
     reinterpret_cast<SPDesktop*>(view)->layoutWidget();
 }
@@ -657,13 +661,16 @@ checkitem_update(GtkWidget *widget, GdkEventExpose */*event*/, gpointer user_dat
     gchar const *pref = (gchar const *) user_data;
     Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(menuitem), "view");
 
-    gchar const *pref_path;
-    if ((static_cast<SPDesktop*>(view))->is_fullscreen())
-        pref_path = g_strconcat("fullscreen.", pref, NULL);
-    else
-        pref_path = g_strconcat("window.", pref, NULL);
+    Glib::ustring pref_path;
+    if ((static_cast<SPDesktop*>(view))->is_fullscreen()) {
+        pref_path = "/fullscreen/";
+    } else {
+        pref_path = "/window/";
+    }
+    pref_path += pref;
 
-    gint ison = prefs_get_int_attribute_limited(pref_path, "state", 1, 0, 1);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool ison = prefs->getBool(pref_path + "/state", true);
 
     g_signal_handlers_block_by_func(G_OBJECT(menuitem), (gpointer)(GCallback)checkitem_toggled, user_data);
     gtk_check_menu_item_set_active(menuitem, ison);
@@ -737,9 +744,16 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
 }
 
 static void
-sp_recent_open(GtkWidget */*widget*/, gchar const *uri)
+sp_recent_open(GtkRecentChooser *recent_menu, gpointer /*user_data*/)
 {
-    sp_file_open(uri, NULL);
+    // dealing with the bizarre filename convention in Inkscape for now
+    gchar *uri = gtk_recent_chooser_get_current_uri(GTK_RECENT_CHOOSER(recent_menu));
+    gchar *local_fn = g_filename_from_uri(uri, NULL, NULL);
+    gchar *utf8_fn = g_filename_to_utf8(local_fn, -1, NULL, NULL, NULL);
+    sp_file_open(utf8_fn, NULL);
+    g_free(utf8_fn);
+    g_free(local_fn);
+    g_free(uri);
 }
 
 static void
@@ -802,35 +816,6 @@ sp_menu_append_new_templates(GtkWidget *menu, Inkscape::UI::View::View *view)
         // toss the dirname
         g_free(dirname);
         sources.pop_front();
-    }
-}
-
-void
-sp_menu_append_recent_documents(GtkWidget *menu, Inkscape::UI::View::View* /* view */)
-{
-    gchar const **recent = prefs_get_recent_files();
-    if (recent) {
-        int i;
-
-        for (i = 0; recent[i] != NULL; i += 2) {
-            gchar const *uri = recent[i];
-            gchar const *name = recent[i + 1];
-
-            GtkWidget *item = gtk_menu_item_new_with_label(name);
-            gtk_widget_show(item);
-            g_signal_connect(G_OBJECT(item),
-                             "activate",
-                             G_CALLBACK(sp_recent_open),
-                             (gpointer)uri);
-            gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-        }
-
-        g_free(recent);
-    } else {
-        GtkWidget *item = gtk_menu_item_new_with_label(_("None"));
-        gtk_widget_show(item);
-        gtk_widget_set_sensitive(item, FALSE);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
     }
 }
 
@@ -929,7 +914,25 @@ sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI:
             continue;
         }
         if (!strcmp(menu_pntr->name(), "recent-file-list")) {
-            sp_menu_append_recent_documents(menu, view);
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+            // create recent files menu
+            int max_recent = prefs->getInt("/options/maxrecentdocuments/value");
+            GtkWidget *recent_menu = gtk_recent_chooser_menu_new_for_manager(gtk_recent_manager_get_default());
+            gtk_recent_chooser_set_limit(GTK_RECENT_CHOOSER(recent_menu), max_recent);
+            // sort most recently used documents first to preserve previous behavior
+            gtk_recent_chooser_set_sort_type(GTK_RECENT_CHOOSER(recent_menu), GTK_RECENT_SORT_MRU);
+            g_signal_connect(G_OBJECT(recent_menu), "item-activated", G_CALLBACK(sp_recent_open), (gpointer) NULL);
+            
+            // add filter to only open files added by Inkscape
+            GtkRecentFilter *inkscape_only_filter = gtk_recent_filter_new();
+            gtk_recent_filter_add_application(inkscape_only_filter, "inkscape");
+            gtk_recent_chooser_add_filter(GTK_RECENT_CHOOSER(recent_menu), inkscape_only_filter);
+
+            GtkWidget *recent_item = gtk_menu_item_new_with_mnemonic(_("Open _Recent"));
+            gtk_menu_item_set_submenu(GTK_MENU_ITEM(recent_item), recent_menu);
+            
+            gtk_menu_append(GTK_MENU(menu), GTK_WIDGET(recent_item));
             continue;
         }
         if (!strcmp(menu_pntr->name(), "objects-checkboxes")) {
@@ -1188,6 +1191,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                         if (position) {
                             NR::Point nearest = get_point_on_Path(livarot_path, position->piece, position->t);
                             NR::Point delta = nearest - button_doc;
+                            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                             delta = desktop->d2w(delta);
                             double stroke_tolerance =
                                 ( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
@@ -1195,7 +1199,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                                   SP_OBJECT_STYLE (item)->stroke_width.computed *
                                   to_2geom(sp_item_i2d_affine(item)).descrim() * 0.5
                                   : 0.0)
-                                + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100); 
+                                + prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100); 
 
                             if (NR::L2 (delta) < stroke_tolerance) {
                                 fillnotstroke = false;
@@ -1253,15 +1257,16 @@ sp_ui_drag_data_received(GtkWidget *widget,
             // To move the imported object, we must temporarily set the "transform pattern with
             // object" option.
             {
-                int const saved_pref = prefs_get_int_attribute("options.transform", "pattern", 1);
-                prefs_set_int_attribute("options.transform", "pattern", 1);
+                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                bool const saved_pref = prefs->getBool("/options/transform/pattern", true);
+                prefs->setBool("/options/transform/pattern", true);
                 sp_document_ensure_up_to_date(sp_desktop_document(desktop));
                 boost::optional<Geom::Rect> sel_bbox = selection->bounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );
                     sp_selection_move_relative(selection, m);
                 }
-                prefs_set_int_attribute("options.transform", "pattern", saved_pref);
+                prefs->setBool("/options/transform/pattern", saved_pref);
             }
 
             Inkscape::GC::release(newgroup);

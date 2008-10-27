@@ -24,7 +24,7 @@
 #include <gtkmm/stock.h>
 
 #include "verbs.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "inkscape.h"
 #include "desktop-handles.h"
 #include "selection.h"
@@ -383,7 +383,8 @@ void TileDialog::on_row_spinbutton_changed()
 
     double PerCol = ceil(selcount / NoOfColsSpinner.get_value());
     NoOfRowsSpinner.set_value(PerCol);
-    prefs_set_double_attribute ("dialogs.gridtiler", "NoOfCols", NoOfColsSpinner.get_value());
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble("/dialogs/gridtiler/NoOfCols", NoOfColsSpinner.get_value());
     updating=false;
 }
 
@@ -407,7 +408,8 @@ void TileDialog::on_col_spinbutton_changed()
 
     double PerRow = ceil(selcount / NoOfRowsSpinner.get_value());
     NoOfColsSpinner.set_value(PerRow);
-    prefs_set_double_attribute ("dialogs.gridtiler", "NoOfCols", PerRow);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble("/dialogs/gridtiler/NoOfCols", PerRow);
 
     updating=false;
 }
@@ -417,8 +419,8 @@ void TileDialog::on_col_spinbutton_changed()
  */
 void TileDialog::on_xpad_spinbutton_changed()
 {
-
-    prefs_set_double_attribute ("dialogs.gridtiler", "XPad", XPadSpinner.get_value());
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble("/dialogs/gridtiler/XPad", XPadSpinner.get_value());
 
 }
 
@@ -427,9 +429,8 @@ void TileDialog::on_xpad_spinbutton_changed()
  */
 void TileDialog::on_ypad_spinbutton_changed()
 {
-
-    prefs_set_double_attribute ("dialogs.gridtiler", "YPad", YPadSpinner.get_value());
-
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble("/dialogs/gridtiler/YPad", YPadSpinner.get_value());
 }
 
 
@@ -438,13 +439,13 @@ void TileDialog::on_ypad_spinbutton_changed()
  */
 void TileDialog::on_RowSize_checkbutton_changed()
 {
-
-   if (RowHeightButton.get_active()) {
-       prefs_set_double_attribute ("dialogs.gridtiler", "AutoRowSize", 20);
-   } else {
-       prefs_set_double_attribute ("dialogs.gridtiler", "AutoRowSize", -20);
-   }
-   RowHeightBox.set_sensitive ( !RowHeightButton.get_active());
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (RowHeightButton.get_active()) {
+        prefs->setDouble("/dialogs/gridtiler/AutoRowSize", 20);
+    } else {
+        prefs->setDouble("/dialogs/gridtiler/AutoRowSize", -20);
+    }
+    RowHeightBox.set_sensitive ( !RowHeightButton.get_active());
 }
 
 /**
@@ -452,14 +453,13 @@ void TileDialog::on_RowSize_checkbutton_changed()
  */
 void TileDialog::on_ColSize_checkbutton_changed()
 {
-
-   if (ColumnWidthButton.get_active()) {
-       prefs_set_double_attribute ("dialogs.gridtiler", "AutoColSize", 20);
-   } else {
-       prefs_set_double_attribute ("dialogs.gridtiler", "AutoColSize", -20);
-   }
-   ColumnWidthBox.set_sensitive ( !ColumnWidthButton.get_active());
-
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (ColumnWidthButton.get_active()) {
+        prefs->setDouble("/dialogs/gridtiler/AutoColSize", 20);
+    } else {
+        prefs->setDouble("/dialogs/gridtiler/AutoColSize", -20);
+    }
+    ColumnWidthBox.set_sensitive ( !ColumnWidthButton.get_active());
 }
 
 /**
@@ -474,7 +474,8 @@ void TileDialog::on_rowSize_spinbutton_changed()
 
     // in turn, prevent listener from responding
     updating = true;
-    prefs_set_double_attribute ("dialogs.gridtiler", "RowHeight", RowHeightSpinner.get_value());
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble("/dialogs/gridtiler/RowHeight", RowHeightSpinner.get_value());
     updating=false;
 
 }
@@ -491,7 +492,8 @@ void TileDialog::on_colSize_spinbutton_changed()
 
     // in turn, prevent listener from responding
     updating = true;
-    prefs_set_double_attribute ("dialogs.gridtiler", "ColWidth", ColumnWidthSpinner.get_value());
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble("/dialogs/gridtiler/ColWidth", ColumnWidthSpinner.get_value());
     updating=false;
 
 }
@@ -501,13 +503,14 @@ void TileDialog::on_colSize_spinbutton_changed()
  */
 void TileDialog::Spacing_button_changed()
 {
-   if (SpaceManualRadioButton.get_active()) {
-       prefs_set_double_attribute ("dialogs.gridtiler", "SpacingType", 20);
-   } else {
-       prefs_set_double_attribute ("dialogs.gridtiler", "SpacingType", -20);
-   }
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (SpaceManualRadioButton.get_active()) {
+        prefs->setDouble("/dialogs/gridtiler/SpacingType", 20);
+    } else {
+        prefs->setDouble("/dialogs/gridtiler/SpacingType", -20);
+    }
 
-   SizesHBox.set_sensitive ( SpaceManualRadioButton.get_active());
+    SizesHBox.set_sensitive ( SpaceManualRadioButton.get_active());
 }
 
 /**
@@ -515,17 +518,17 @@ void TileDialog::Spacing_button_changed()
  */
 void TileDialog::VertAlign_changed()
 {
-   if (VertTopRadioButton.get_active()) {
-       VertAlign = 0;
-       prefs_set_double_attribute ("dialogs.gridtiler", "VertAlign", 0);
-   } else if (VertCentreRadioButton.get_active()){
-       VertAlign = 1;
-       prefs_set_double_attribute ("dialogs.gridtiler", "VertAlign", 1);
-   } else if (VertBotRadioButton.get_active()){
-       VertAlign = 2;
-       prefs_set_double_attribute ("dialogs.gridtiler", "VertAlign", 2);
-   }
-
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (VertTopRadioButton.get_active()) {
+        VertAlign = 0;
+        prefs->setInt("/dialogs/gridtiler/VertAlign", 0);
+    } else if (VertCentreRadioButton.get_active()){
+        VertAlign = 1;
+        prefs->setInt("/dialogs/gridtiler/VertAlign", 1);
+    } else if (VertBotRadioButton.get_active()){
+        VertAlign = 2;
+        prefs->setInt("/dialogs/gridtiler/VertAlign", 2);
+    }
 }
 
 /**
@@ -533,17 +536,17 @@ void TileDialog::VertAlign_changed()
  */
 void TileDialog::HorizAlign_changed()
 {
-   if (HorizLeftRadioButton.get_active()) {
-       HorizAlign = 0;
-       prefs_set_double_attribute ("dialogs.gridtiler", "HorizAlign", 0);
-   } else if (HorizCentreRadioButton.get_active()){
-       HorizAlign = 1;
-       prefs_set_double_attribute ("dialogs.gridtiler", "HorizAlign", 1);
-   } else if (HorizRightRadioButton.get_active()){
-       HorizAlign = 2;
-       prefs_set_double_attribute ("dialogs.gridtiler", "HorizAlign", 2);
-   }
-
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (HorizLeftRadioButton.get_active()) {
+        HorizAlign = 0;
+        prefs->setInt("/dialogs/gridtiler/HorizAlign", 0);
+    } else if (HorizCentreRadioButton.get_active()){
+        HorizAlign = 1;
+        prefs->setInt("/dialogs/gridtiler/HorizAlign", 1);
+    } else if (HorizRightRadioButton.get_active()){
+        HorizAlign = 2;
+        prefs->setInt("/dialogs/gridtiler/HorizAlign", 2);
+    }
 }
 
 /**
@@ -551,14 +554,14 @@ void TileDialog::HorizAlign_changed()
  */
 void TileDialog::updateSelection()
 {
-    double col_width, row_height;
     // quit if run by the attr_changed listener
     if (updating) {
-            return;
-        }
+        return;
+    }
 
-    col_width=0;
-    row_height=0;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    double col_width = 0;
+    double row_height = 0;
     // in turn, prevent listener from responding
     updating = true;
     SPDesktop *desktop = getDesktop();
@@ -575,14 +578,14 @@ void TileDialog::updateSelection()
         if (selcount<NoOfColsSpinner.get_value()) {
             double NoOfCols = ceil(selcount / NoOfRowsSpinner.get_value());
             NoOfColsSpinner.set_value(NoOfCols);
-            prefs_set_double_attribute ("dialogs.gridtiler", "NoOfCols", NoOfCols);
+            prefs->setInt("/dialogs/gridtiler/NoOfCols", NoOfCols);
         }
     } else {
         double PerRow = ceil(sqrt(selcount));
         double PerCol = ceil(sqrt(selcount));
         NoOfRowsSpinner.set_value(PerRow);
         NoOfColsSpinner.set_value(PerCol);
-        prefs_set_double_attribute ("dialogs.gridtiler", "NoOfCols", PerCol);
+        prefs->setInt("/dialogs/gridtiler/NoOfCols", static_cast<int>(PerCol));
 
     }
 
@@ -610,10 +613,11 @@ static void updateSelectionCallback(Inkscape::Application */*inkscape*/, Inkscap
  * Constructor
  */
 TileDialog::TileDialog()
-    : UI::Widget::Panel("", "dialogs.gridtiler", SP_VERB_SELECTION_GRIDTILE)
+    : UI::Widget::Panel("", "/dialogs/gridtiler", SP_VERB_SELECTION_GRIDTILE)
 {
      // bool used by spin button callbacks to stop loops where they change each other.
     updating = false;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // could not do this in gtkmm - there's no Gtk::SizeGroup public constructor (!)
     GtkSizeGroup *_col1 = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
@@ -663,7 +667,7 @@ TileDialog::TileDialog()
     gtk_size_group_add_widget(_col1, (GtkWidget *) NoOfRowsBox.gobj());
 
     RowHeightButton.set_label(_("Equal height"));
-    double AutoRow = prefs_get_double_attribute ("dialogs.gridtiler", "AutoRowSize", 15);
+    double AutoRow = prefs->getDouble("/dialogs/gridtiler/AutoRowSize", 15);
     if (AutoRow>0)
          AutoRowSize=true;
     else
@@ -693,7 +697,7 @@ TileDialog::TileDialog()
         VertBotRadioButton.signal_toggled().connect(sigc::mem_fun(*this, &TileDialog::VertAlign_changed));
         VertAlignVBox.pack_start(VertBotRadioButton, false, false, 0);
 
-        VertAlign = prefs_get_double_attribute ("dialogs.gridtiler", "VertAlign", 1);
+        VertAlign = prefs->getInt("/dialogs/gridtiler/VertAlign", 1);
         if (VertAlign == 0) {
             VertTopRadioButton.set_active(TRUE);
         }
@@ -733,7 +737,7 @@ TileDialog::TileDialog()
     gtk_size_group_add_widget(_col3, (GtkWidget *) NoOfColsBox.gobj());
 
     ColumnWidthButton.set_label(_("Equal width"));
-    double AutoCol = prefs_get_double_attribute ("dialogs.gridtiler", "AutoColSize", 15);
+    double AutoCol = prefs->getDouble("/dialogs/gridtiler/AutoColSize", 15);
     if (AutoCol>0)
          AutoColSize=true;
     else
@@ -767,7 +771,7 @@ TileDialog::TileDialog()
 
         HorizAlignHBox.pack_start(*(new Gtk::HBox()), true, true, 0); // centering strut
 
-        HorizAlign = prefs_get_double_attribute ("dialogs.gridtiler", "HorizAlign", 1);
+        HorizAlign = prefs->getInt("/dialogs/gridtiler/HorizAlign", 1);
         if (HorizAlign == 0) {
             HorizLeftRadioButton.set_active(TRUE);
         }
@@ -810,7 +814,7 @@ TileDialog::TileDialog()
         YPadSpinner.set_digits(1);
         YPadSpinner.set_increments(0.2, 2);
         YPadSpinner.set_range(-10000, 10000);
-        double YPad = prefs_get_double_attribute ("dialogs.gridtiler", "YPad", 15);
+        double YPad = prefs->getDouble("/dialogs/gridtiler/YPad", 15);
         YPadSpinner.set_value(YPad);
         YPadBox.pack_start(YPadSpinner, true, true, MARGIN);
         tips.set_tip(YPadSpinner, _("Vertical spacing between rows (px units)"));
@@ -835,7 +839,7 @@ TileDialog::TileDialog()
         XPadSpinner.set_digits(1);
         XPadSpinner.set_increments(0.2, 2);
         XPadSpinner.set_range(-10000, 10000);
-        double XPad = prefs_get_double_attribute ("dialogs.gridtiler", "XPad", 15);
+        double XPad = prefs->getDouble("/dialogs/gridtiler/XPad", 15);
         XPadSpinner.set_value(XPad);
         XPadBox.pack_start(XPadSpinner, true, true, MARGIN);
         tips.set_tip(XPadSpinner, _("Horizontal spacing between columns (px units)"));
@@ -850,7 +854,7 @@ TileDialog::TileDialog()
 
     contents->pack_start(TileBox);
 
-    double SpacingType = prefs_get_double_attribute ("dialogs.gridtiler", "SpacingType", 15);
+    double SpacingType = prefs->getDouble("/dialogs/gridtiler/SpacingType", 15);
     if (SpacingType>0) {
         ManualSpacing=true;
     } else {
@@ -867,19 +871,9 @@ TileDialog::TileDialog()
     show_all_children();
 }
 
-
-
-
-
-
 } //namespace Dialog
 } //namespace UI
 } //namespace Inkscape
-
-//#########################################################################
-//## E N D    O F    F I L E
-//#########################################################################
-
 
 /*
   Local Variables:
@@ -890,7 +884,4 @@ TileDialog::TileDialog()
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
-
-
-
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 ::

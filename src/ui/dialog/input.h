@@ -1,3 +1,12 @@
+/** @file
+ * @brief Input devices dialog (new)
+ */
+/* Author:
+ *   Jon A. Cruz
+ *
+ * Copyright (C) 2008 Author
+ * Released under GNU GPL.  Read the file 'COPYING' for more information.
+ */
 
 #ifndef INKSCAPE_UI_DIALOG_INPUT_H
 #define INKSCAPE_UI_DIALOG_INPUT_H
@@ -16,7 +25,7 @@ class InputDialog : public UI::Widget::Panel
 public:
     static InputDialog &getInstance();
 
-    InputDialog() : UI::Widget::Panel("", "dialogs.inputdevices2", SP_VERB_DIALOG_INPUT2) {}
+    InputDialog() : UI::Widget::Panel("", "/dialogs/inputdevices2", SP_VERB_DIALOG_INPUT2) {}
     virtual ~InputDialog() {}
 };
 

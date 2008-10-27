@@ -1,11 +1,10 @@
-/**
- * \brief LivePathEffect dialog
- *
- * Author:
+/** @file
+ * @brief Live Path Effect editing dialog
+ */
+/* Author:
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
  * Copyright (C) 2007 Author
- *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 

@@ -19,7 +19,7 @@
 #include "knotholder.h"
 #include "sp-item.h"
 #include "style.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "macros.h"
 #include <libnr/nr-matrix-ops.h>
 #include "sp-pattern.h"
@@ -93,7 +93,7 @@ KnotHolderEntity::snap_knot_position(Geom::Point const &p)
     Geom::Point s = p * i2d;
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, item);
-    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, s);
+    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, s);
     return s * i2d.inverse();
 }
 
@@ -168,7 +168,8 @@ PatternKnotHolderEntityAngle::knot_get()
 void
 PatternKnotHolderEntityAngle::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
-    int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 

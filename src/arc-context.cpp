@@ -34,7 +34,7 @@
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
 #include "object-edit.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "message-context.h"
 #include "desktop.h"
 #include "desktop-style.h"
@@ -208,11 +208,12 @@ static void sp_arc_context_setup(SPEventContext *ec)
         sigc::bind(sigc::ptr_fun(&sp_arc_context_selection_changed), (gpointer) ac)
         );
 
-    if (prefs_get_int_attribute("tools.shapes", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/shapes/selcue")) {
         ec->enableSelectionCue();
     }
 
-    if (prefs_get_int_attribute("tools.shapes", "gradientdrag", 0) != 0) {
+    if (prefs->getBool("/tools/shapes/gradientdrag")) {
         ec->enableGrDrag();
     }
 
@@ -250,8 +251,9 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     SPArcContext *ac = SP_ARC_CONTEXT(event_context);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
+    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     gint ret = FALSE;
 
@@ -266,7 +268,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
                 Geom::Point pt2g = to_2geom(ac->center);
-                m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
+                m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
                 ac->center = from_2geom(pt2g);
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -423,7 +425,7 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
         repr->setAttribute("sodipodi:type", "arc");
 
         /* Set style */
-        sp_desktop_apply_style_tool(desktop, repr, "tools.shapes.arc", false);
+        sp_desktop_apply_style_tool(desktop, repr, "/tools/shapes/arc", false);
 
         ac->item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
         Inkscape::GC::release(repr);

@@ -14,20 +14,17 @@
 #include "inkscape.h"
 #include "desktop.h"
 
-Inkscape::Snapper::PointType const Inkscape::Snapper::SNAPPOINT_BBOX = 0x1;
-Inkscape::Snapper::PointType const Inkscape::Snapper::SNAPPOINT_NODE = 0x2;
-Inkscape::Snapper::PointType const Inkscape::Snapper::SNAPPOINT_GUIDE = 0x4;
-
 /**
  *  Construct new Snapper for named view.
  *  \param nv Named view.
  *  \param d Snap tolerance.
  */
-Inkscape::Snapper::Snapper(SnapManager const *sm, Geom::Coord const t) : _snapmanager(sm), _snap_enabled(true), _snapper_tolerance(t)
+Inkscape::Snapper::Snapper(SnapManager const *sm, Geom::Coord const t) : 
+	_snapmanager(sm), 
+	_snap_enabled(true),
+	_snapper_tolerance(t)
 {
     g_assert(_snapmanager != NULL);
-    
-    setSnapFrom(SNAPPOINT_BBOX | SNAPPOINT_NODE, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
 }
 
 /**
@@ -50,29 +47,6 @@ Geom::Coord Inkscape::Snapper::getSnapperTolerance() const
 bool Inkscape::Snapper::getSnapperAlwaysSnap() const
 {
     return _snapper_tolerance == 10000; //TODO: Replace this threshold of 10000 by a constant; see also tolerance-slider.cpp
-}
-
-/**
- *  Turn on/off snapping of specific point types.
- *  \param t Point type.
- *  \param s true to snap to this point type, otherwise false;
- */
-void Inkscape::Snapper::setSnapFrom(PointType t, bool s)
-{
-    if (s) {
-        _snap_from |= t;
-    } else {
-        _snap_from &= ~t;
-    }
-}
-
-/**
- *  \param t Point type.
- *  \return true if snapper will snap this type of point, otherwise false.
- */
-bool Inkscape::Snapper::getSnapFrom(PointType t) const
-{
-    return (_snap_from & t);
 }
 
 /**

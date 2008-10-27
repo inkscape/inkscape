@@ -21,6 +21,7 @@
 #include "snapped-point.h"
 #include "snapped-line.h"
 #include "snapped-curve.h"
+#include "snap-preferences.h"
 
 struct SnappedConstraints {
     std::list<Inkscape::SnappedPoint> points;
@@ -40,19 +41,10 @@ namespace Inkscape
 class Snapper
 {
 public:
-    Snapper() {}
-    Snapper(SnapManager const *sm, ::Geom::Coord const d);
-    virtual ~Snapper() {}
-
-    /// Point types to snap.
-    typedef int PointType;
-    static const PointType SNAPPOINT_NODE;
-    static const PointType SNAPPOINT_BBOX;
-    static const PointType SNAPPOINT_GUIDE;
-
-    void setSnapFrom(PointType t, bool s);
-    bool getSnapFrom(PointType t) const;
-
+	Snapper() {}
+	Snapper(SnapManager const *sm, ::Geom::Coord const t);
+	virtual ~Snapper() {}
+	
     void setSnapperTolerance(Geom::Coord t);
     Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
     bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
@@ -60,13 +52,14 @@ public:
     /**
     *  \return true if this Snapper will snap at least one kind of point.
     */
-    virtual bool ThisSnapperMightSnap() const {return (_snap_enabled && _snap_from != 0);} // will likely be overridden by derived classes
+    //virtual bool ThisSnapperMightSnap() const;
+    virtual bool ThisSnapperMightSnap() const {return _snap_enabled;} // will likely be overridden by derived classes
 
     void setEnabled(bool s);
     bool getEnabled() const {return _snap_enabled;}
 
     virtual void freeSnap(SnappedConstraints &/*sc*/,
-                          PointType const &/*t*/,
+                          SnapPreferences::PointType const &/*t*/,
                           Geom::Point const &/*p*/,
                           bool const &/*first_point*/,
                           boost::optional<Geom::Rect> const &/*bbox_to_snap*/,
@@ -104,7 +97,7 @@ public:
     };
 
     virtual void constrainedSnap(SnappedConstraints &/*sc*/,
-                                 PointType const &/*t*/,
+    							 SnapPreferences::PointType const &/*t*/,
                                  Geom::Point const &/*p*/,
                                  bool const &/*first_point*/,
                                  boost::optional<Geom::Rect> const &/*bbox_to_snap*/,
@@ -112,15 +105,14 @@ public:
                                  std::vector<SPItem const *> const */*it*/) const {};
 
 protected:
-	SnapManager const *_snapmanager;		
-	int _snap_from; ///< bitmap of point types that we will snap from
-    bool _snap_enabled; ///< true if this snapper is enabled, otherwise false
+	SnapManager const *_snapmanager;
+	
+	bool _snap_enabled; ///< true if this snapper is enabled, otherwise false
 
 private:
 	Geom::Coord _snapper_tolerance;   ///< snap tolerance in desktop coordinates
                                     // must be private to enforce the usage of getTolerance(), which retrieves
                                     // the tolerance in screen pixels (making it zoom independent)
-
 };
 
 }

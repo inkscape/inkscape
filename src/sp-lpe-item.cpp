@@ -309,11 +309,17 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
         {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
             if (!lpeobj) {
+                /** \todo Investigate the cause of this.
+                 * For example, this happens when copy pasting an object with LPE applied. Probably because the object is pasted while the effect is not yet pasted to defs, and cannot be found.
+                 */
                 g_warning("sp_lpe_item_perform_path_effect - NULL lpeobj in list!");
                 return;
             }
             Inkscape::LivePathEffect::Effect *lpe = lpeobj->get_lpe();
             if (!lpe) {
+                /** \todo Investigate the cause of this.
+                 * Not sure, but I think this can happen when an unknown effect type is specified...
+                 */
                 g_warning("sp_lpe_item_perform_path_effect - lpeobj without lpe!");
                 return;
             }
@@ -335,8 +341,10 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
                 }
                 catch (std::exception & e) {
                     g_warning("Exception during LPE %s execution. \n %s", lpe->getName().c_str(), e.what());
-                    SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
-                        _("An exception occurred during execution of the Path Effect.") );
+                    if (SP_ACTIVE_DESKTOP && SP_ACTIVE_DESKTOP->messageStack()) {
+                        SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
+                                        _("An exception occurred during execution of the Path Effect.") );
+                    }
                 }
             }
         }
@@ -362,11 +370,13 @@ sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write)
     PathEffectList lpelist = sp_lpe_item_get_effect_list(lpeitem);
     std::list<Inkscape::LivePathEffect::LPEObjectReference *>::iterator i;
     for (i = lpelist.begin(); i != lpelist.end(); ++i) {
-        Inkscape::LivePathEffect::Effect *lpe = (*i)->lpeobject->get_lpe();
-        if (dynamic_cast<Inkscape::LivePathEffect::LPEPathLength *>(lpe)) {
-            if (!lpe->isVisible()) {
-                // we manually disable text for LPEPathLength
-                dynamic_cast<Inkscape::LivePathEffect::LPEPathLength *>(lpe)->hideCanvasText();
+        if ((*i)->lpeobject) {
+            Inkscape::LivePathEffect::Effect *lpe = (*i)->lpeobject->get_lpe();
+            if (dynamic_cast<Inkscape::LivePathEffect::LPEPathLength *>(lpe)) {
+                if (!lpe->isVisible()) {
+                    // we manually disable text for LPEPathLength
+                    dynamic_cast<Inkscape::LivePathEffect::LPEPathLength *>(lpe)->hideCanvasText();
+                }
             }
         }
     }

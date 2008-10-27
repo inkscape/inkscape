@@ -35,7 +35,7 @@
 #include "2geom/geom.h"
 #include "sp-guide.h"
 #include "sp-namedview.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #include "desktop.h"
 #include "desktop-handles.h"
@@ -1416,8 +1416,9 @@ box3d_push_back_corner_pair(SPBox3D *box, std::list<std::pair<Geom::Point, Geom:
 void
 box3d_convert_to_guides(SPItem *item) {
     SPBox3D *box = SP_BOX3D(item);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    if (prefs_get_int_attribute("tools.shapes.3dbox", "convertguides", 1) == 0) {
+    if (!prefs->getBool("/tools/shapes/3dbox/convertguides", true)) {
         sp_item_convert_to_guides(SP_ITEM(box));
         return;
     }

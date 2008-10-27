@@ -1,8 +1,7 @@
-/*
- * A simple dialog for setting the parameters for autotracing a
- * bitmap <image> into an svg <path>
- *
- * Authors:
+/** @file
+ * @brief Bitmap tracing settings dialog - implementation
+ */
+/* Authors:
  *   Bob Jamison <rjamison@titan.com>
  *   Stéphane Gimenez <dev@gim.name>
  *   Other dudes from The Inkscape Organization

@@ -70,7 +70,7 @@
 #include "livarot/Shape.h"
 #include <2geom/isnan.h>
 #include <2geom/transforms.h>
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "style.h"
 #include "box3d.h"
 #include "sp-item-transform.h"
@@ -89,7 +89,7 @@ static void sp_tweak_context_init(SPTweakContext *ddc);
 static void sp_tweak_context_dispose(GObject *object);
 
 static void sp_tweak_context_setup(SPEventContext *ec);
-static void sp_tweak_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
+static void sp_tweak_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_tweak_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
 static SPEventContextClass *parent_class;
@@ -274,9 +274,8 @@ sp_tweak_context_style_set(SPCSSAttr const *css, SPTweakContext *tc)
     if (tc->mode == TWEAK_MODE_COLORPAINT) { // intercept color setting only in this mode
         // we cannot store properties with uris
         css = sp_css_attr_unset_uris ((SPCSSAttr *) css);
-
-        sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.tweak"), (SPCSSAttr *) css, "style");
-
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setStyle("/tools/tweak/style", const_cast<SPCSSAttr*>(css));
         return true;
     }
     return false;
@@ -325,44 +324,42 @@ sp_tweak_context_setup(SPEventContext *ec)
     tc->style_set_connection = ec->desktop->connectSetStyle( // catch style-setting signal in this tool
         sigc::bind(sigc::ptr_fun(&sp_tweak_context_style_set), tc)
     );
-
-    if (prefs_get_int_attribute("tools.tweak", "selcue", 0) != 0) {
+    
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/tweak/selcue")) {
         ec->enableSelectionCue();
     }
 
-    if (prefs_get_int_attribute("tools.tweak", "gradientdrag", 0) != 0) {
+    if (prefs->getBool("/tools/tweak/gradientdrag")) {
         ec->enableGrDrag();
     }
 }
 
 static void
-sp_tweak_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
+sp_tweak_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     SPTweakContext *tc = SP_TWEAK_CONTEXT(ec);
+    Glib::ustring path = val->getEntryName();
 
-    if (!strcmp(key, "width")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.1 );
-        tc->width = CLAMP(dval, -1000.0, 1000.0);
-    } else if (!strcmp(key, "mode")) {
-        gint64 const dval = ( val ? g_ascii_strtoll (val, NULL, 10) : 0 );
-        tc->mode = dval;
+    if (path == "width") {
+        tc->width = CLAMP(val->getDouble(0.1), -1000.0, 1000.0);
+    } else if (path == "mode") {
+        tc->mode = val->getInt();
         sp_tweak_update_cursor(tc, false);
-    } else if (!strcmp(key, "fidelity")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.0 );
-        tc->fidelity = CLAMP(dval, 0.0, 1.0);
-    } else if (!strcmp(key, "force")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : 1.0 );
-        tc->force = CLAMP(dval, 0, 1.0);
-    } else if (!strcmp(key, "usepressure")) {
-        tc->usepressure = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "doh")) {
-        tc->do_h = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "dos")) {
-        tc->do_s = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "dol")) {
-        tc->do_l = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "doo")) {
-        tc->do_o = (val && strcmp(val, "0"));
+    } else if (path == "fidelity") {
+        tc->fidelity = CLAMP(val->getDouble(), 0.0, 1.0);
+    } else if (path == "force") {
+        tc->force = CLAMP(val->getDouble(1.0), 0, 1.0);
+    } else if (path == "usepressure") {
+        tc->usepressure = val->getBool();
+    } else if (path == "doh") {
+        tc->do_h = val->getBool();
+    } else if (path == "dos") {
+        tc->do_s = val->getBool();
+    } else if (path == "dol") {
+        tc->do_l = val->getBool();
+    } else if (path == "doo") {
+        tc->do_o = val->getBool();
     }
 }
 
@@ -408,6 +405,19 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
     if (SP_IS_BOX3D(item) && !is_transform_mode(mode) && !is_color_mode(mode)) {
         // convert 3D boxes to ordinary groups before tweaking their shapes
         item = SP_ITEM(box3d_convert_to_group(SP_BOX3D(item)));
+        selection->add(item);
+    }
+
+    if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+        GSList *items = g_slist_prepend (NULL, item);
+        GSList *selected = NULL;
+        GSList *to_select = NULL;
+        SPDocument *doc = SP_OBJECT_DOCUMENT(item);
+        sp_item_list_to_curves (items, &selected, &to_select);
+        g_slist_free (items);
+        SPObject* newObj = doc->getObjectByRepr((Inkscape::XML::Node *) to_select->data);
+        g_slist_free (to_select);
+        item = (SPItem *) newObj;
         selection->add(item);
     }
 
@@ -520,7 +530,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                 }
             }
 
-        } else if (SP_IS_PATH(item) || SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+        } else if (SP_IS_PATH(item) || SP_IS_SHAPE(item)) {
 
         Inkscape::XML::Node *newrepr = NULL;
         gint pos = 0;
@@ -1038,10 +1048,28 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point v
     SPItem *item_at_point = SP_EVENT_CONTEXT(tc)->desktop->item_at_point(event_p, TRUE);
 
     bool do_fill = false, do_stroke = false, do_opacity = false;
-    guint32 fill_goal = sp_desktop_get_color_tool(desktop, "tools.tweak", true, &do_fill);
-    guint32 stroke_goal = sp_desktop_get_color_tool(desktop, "tools.tweak", false, &do_stroke);
-    double opacity_goal = sp_desktop_get_master_opacity_tool(desktop, "tools.tweak", &do_opacity);
+    guint32 fill_goal = sp_desktop_get_color_tool(desktop, "/tools/tweak", true, &do_fill);
+    guint32 stroke_goal = sp_desktop_get_color_tool(desktop, "/tools/tweak", false, &do_stroke);
+    double opacity_goal = sp_desktop_get_master_opacity_tool(desktop, "/tools/tweak", &do_opacity);
     if (reverse) {
+#if 0
+        // HSL inversion 
+        float hsv[3];
+        float rgb[3];
+        sp_color_rgb_to_hsv_floatv (hsv, 
+                                    SP_RGBA32_R_F(fill_goal),
+                                    SP_RGBA32_G_F(fill_goal),
+                                    SP_RGBA32_B_F(fill_goal));
+        sp_color_hsv_to_rgb_floatv (rgb, hsv[0]<.5? hsv[0]+.5 : hsv[0]-.5, 1 - hsv[1], 1 - hsv[2]);
+        fill_goal = SP_RGBA32_F_COMPOSE(rgb[0], rgb[1], rgb[2], 1);
+        sp_color_rgb_to_hsv_floatv (hsv, 
+                                    SP_RGBA32_R_F(stroke_goal),
+                                    SP_RGBA32_G_F(stroke_goal),
+                                    SP_RGBA32_B_F(stroke_goal));
+        sp_color_hsv_to_rgb_floatv (rgb, hsv[0]<.5? hsv[0]+.5 : hsv[0]-.5, 1 - hsv[1], 1 - hsv[2]);
+        stroke_goal = SP_RGBA32_F_COMPOSE(rgb[0], rgb[1], rgb[2], 1);
+#else
+        // RGB inversion 
         fill_goal = SP_RGBA32_U_COMPOSE(
             (255 - SP_RGBA32_R_U(fill_goal)),
             (255 - SP_RGBA32_G_U(fill_goal)),
@@ -1052,6 +1080,7 @@ sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point v
             (255 - SP_RGBA32_G_U(stroke_goal)),
             (255 - SP_RGBA32_B_U(stroke_goal)),
             (255 - SP_RGBA32_A_U(stroke_goal)));
+#endif
         opacity_goal = 1 - opacity_goal;
     }
 
@@ -1111,11 +1140,12 @@ sp_tweak_switch_mode (SPTweakContext *tc, gint mode, bool with_shift)
 void
 sp_tweak_switch_mode_temporarily (SPTweakContext *tc, gint mode, bool with_shift)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
    // Juggling about so that prefs have the old value but tc->mode and the button show new mode:
-   gint now_mode = prefs_get_int_attribute("tools.tweak", "mode", 0);
+   gint now_mode = prefs->getInt("/tools/tweak/mode", 0);
    SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue ("tweak_tool_mode", mode);
    // button has changed prefs, restore
-   prefs_set_int_attribute("tools.tweak", "mode", now_mode);
+   prefs->setInt("/tools/tweak/mode", now_mode);
    // changing prefs changed tc->mode, restore back :)
    tc->mode = mode;
    sp_tweak_update_cursor (tc, with_shift);
@@ -1453,7 +1483,8 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
         }
         break;
 
-    case GDK_KEY_RELEASE:
+    case GDK_KEY_RELEASE: {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         switch (get_group0_keyval(&event->key)) {
             case GDK_Shift_L:
             case GDK_Shift_R:
@@ -1461,13 +1492,14 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                 break;
             case GDK_Control_L:
             case GDK_Control_R:
-                sp_tweak_switch_mode (tc, prefs_get_int_attribute("tools.tweak", "mode", 0), MOD__SHIFT);
+                sp_tweak_switch_mode (tc, prefs->getInt("/tools/tweak/mode"), MOD__SHIFT);
                 tc->_message_context->clear();
                 break;
             default:
-                sp_tweak_switch_mode (tc, prefs_get_int_attribute("tools.tweak", "mode", 0), MOD__SHIFT);
+                sp_tweak_switch_mode (tc, prefs->getInt("/tools/tweak/mode"), MOD__SHIFT);
                 break;
         }
+    }
 
     default:
         break;

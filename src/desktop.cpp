@@ -70,7 +70,7 @@
 #include "sp-namedview.h"
 #include "color.h"
 #include "sp-item-group.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "object-hierarchy.h"
 #include "helper/units.h"
 #include "display/canvas-arena.h"
@@ -133,7 +133,7 @@ SPDesktop::SPDesktop() :
     page( 0 ),
     page_border( 0 ),
     current( 0 ),
-	_focusMode(false),
+    _focusMode(false),
     zooms_past( 0 ),
     zooms_future( 0 ),
     dkey( 0 ),
@@ -156,7 +156,7 @@ SPDesktop::SPDesktop() :
     _active( false ),
     _w2d(),
     _d2w(),
-    _doc2dt( NR::Matrix(Geom::Scale(1, -1)) ),
+    _doc2dt( Geom::Scale(1, -1) ),
     grids_visible( false )
 {
     _d2w.setIdentity();
@@ -170,10 +170,11 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
 {
     // Temporary workaround for link order issues:
     Inkscape::DeviceManager::getManager().getDevices();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     _guides_message_context = new Inkscape::MessageContext(const_cast<Inkscape::MessageStack*>(messageStack()));
 
-    current = sp_repr_css_attr_inherited (inkscape_get_repr (INKSCAPE, "desktop"), "style");
+    current = prefs->getStyle("/desktop/style");
 
     namedview = nv;
     canvas = aCanvas;
@@ -216,9 +217,9 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     drawing = sp_canvas_item_new (main, SP_TYPE_CANVAS_ARENA, NULL);
     g_signal_connect (G_OBJECT (drawing), "arena_event", G_CALLBACK (_arena_handler), this);
 
-    SP_CANVAS_ARENA (drawing)->arena->delta = prefs_get_double_attribute ("options.cursortolerance", "value", 1.0); // default is 1 px
+    SP_CANVAS_ARENA (drawing)->arena->delta = prefs->getDouble("/options/cursortolerance/value", 1.0); // default is 1 px
 
-    if (prefs_get_int_attribute("options.startmode", "outline", 0)) {
+    if (prefs->getBool("/options/startmode/outline")) {
         // Start in outline mode
         setDisplayModeOutline();
     } else {
@@ -238,7 +239,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
      * call "set" instead of "push".  Can we assume that there is only one
      * context ever?
      */
-    push_event_context (SP_TYPE_SELECT_CONTEXT, "tools.select", SP_EVENT_CONTEXT_STATIC);
+    push_event_context (SP_TYPE_SELECT_CONTEXT, "/tools/select", SP_EVENT_CONTEXT_STATIC);
 
     // display rect and zoom are now handled in sp_desktop_widget_realize()
 
@@ -613,8 +614,7 @@ SPDesktop::set_event_context (GtkType type, const gchar *config)
         g_object_unref (G_OBJECT (ec));
     }
 
-    Inkscape::XML::Node *repr = (config) ? inkscape_get_repr (_inkscape, config) : NULL;
-    ec = sp_event_context_new (type, this, repr, SP_EVENT_CONTEXT_STATIC);
+    ec = sp_event_context_new (type, this, config, SP_EVENT_CONTEXT_STATIC);
     ec->next = event_context;
     event_context = ec;
     sp_event_context_activate (ec);
@@ -628,7 +628,6 @@ void
 SPDesktop::push_event_context (GtkType type, const gchar *config, unsigned int key)
 {
     SPEventContext *ref, *ec;
-    Inkscape::XML::Node *repr;
 
     if (event_context && event_context->key == key) return;
     ref = event_context;
@@ -641,8 +640,7 @@ SPDesktop::push_event_context (GtkType type, const gchar *config, unsigned int k
     }
 
     if (event_context) sp_event_context_deactivate (event_context);
-    repr = (config) ? inkscape_get_repr (INKSCAPE, config) : NULL;
-    ec = sp_event_context_new (type, this, repr, key);
+    ec = sp_event_context_new (type, this, config, key);
     ec->next = event_context;
     event_context = ec;
     sp_event_context_activate (ec);
@@ -723,10 +721,10 @@ SPDesktop::push_current_zoom (GList **history)
     Geom::Rect const area = get_display_area();
 
     NRRect *old_zoom = g_new(NRRect, 1);
-    old_zoom->x0 = area.min()[NR::X];
-    old_zoom->x1 = area.max()[NR::X];
-    old_zoom->y0 = area.min()[NR::Y];
-    old_zoom->y1 = area.max()[NR::Y];
+    old_zoom->x0 = area.min()[Geom::X];
+    old_zoom->x1 = area.max()[Geom::X];
+    old_zoom->y0 = area.min()[Geom::Y];
+    old_zoom->y1 = area.max()[Geom::Y];
     if ( *history == NULL
          || !( ( ((NRRect *) ((*history)->data))->x0 == old_zoom->x0 ) &&
                ( ((NRRect *) ((*history)->data))->x1 == old_zoom->x1 ) &&
@@ -773,15 +771,15 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
     int clear = FALSE;
     if (!NR_DF_TEST_CLOSE (newscale, scale, 1e-4 * scale)) {
         /* Set zoom factors */
-        _d2w = NR::Matrix(Geom::Scale(newscale, -newscale));
-        _w2d = NR::Matrix(Geom::Scale(1/newscale, 1/-newscale));
+        _d2w = Geom::Scale(newscale, -newscale);
+        _w2d = Geom::Scale(1/newscale, 1/-newscale);
         sp_canvas_item_affine_absolute(SP_CANVAS_ITEM(main), _d2w);
         clear = TRUE;
     }
 
     /* Calculate top left corner (in document pixels) */
-    x0 = cx - 0.5 * viewbox.dimensions()[NR::X] / newscale;
-    y1 = cy + 0.5 * viewbox.dimensions()[NR::Y] / newscale;
+    x0 = cx - 0.5 * viewbox.dimensions()[Geom::X] / newscale;
+    y1 = cy + 0.5 * viewbox.dimensions()[Geom::Y] / newscale;
 
     /* Scroll */
     sp_canvas_scroll_to (canvas, x0 * newscale - border, y1 * -newscale - border, clear);
@@ -868,94 +866,94 @@ SPDesktop::next_zoom()
 #include "nodepath.h"
 
 /** \brief  Performs a quick zoom into what the user is working on
-	\param  enable  Whether we're going in or out of quick zoom
+    \param  enable  Whether we're going in or out of quick zoom
 
 */
 void 
 SPDesktop::zoom_quick (bool enable)
 {
-	if (enable == _quick_zoom_enabled) {
-		return;
-	}
+    if (enable == _quick_zoom_enabled) {
+        return;
+    }
 
-	if (enable == true) {
-		_quick_zoom_stored_area = get_display_area();
-		bool zoomed = false;
+    if (enable == true) {
+        _quick_zoom_stored_area = get_display_area();
+        bool zoomed = false;
 
-		if (!zoomed) {
-			SPItem * singleItem = selection->singleItem();
-			if (singleItem != NULL && tools_isactive(this, TOOLS_NODES)) {
-				SPNodeContext * ncontext = SP_NODE_CONTEXT(event_context);
+        if (!zoomed) {
+            SPItem * singleItem = selection->singleItem();
+            if (singleItem != NULL && tools_isactive(this, TOOLS_NODES)) {
+                SPNodeContext * ncontext = SP_NODE_CONTEXT(event_context);
 
-				Inkscape::NodePath::Path * nodepath = ncontext->shape_editor->get_nodepath();
-				// printf("I've got a nodepath, crazy\n");
+                Inkscape::NodePath::Path * nodepath = ncontext->shape_editor->get_nodepath();
+                // printf("I've got a nodepath, crazy\n");
 
-				Geom::Rect nodes;
-				bool firstnode = true;
+                Geom::Rect nodes;
+                bool firstnode = true;
 
-				if (nodepath->selected) {
-					for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
-					   Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
-						for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
-						   Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
-							if (node->selected) {
-								// printf("\tSelected node\n");
-								if (firstnode) {
-									nodes = Geom::Rect(node->pos, node->pos);
-									firstnode = false;
-								} else {
-									nodes.expandTo(node->pos);
-								}
+                if (nodepath->selected) {
+                    for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
+                       Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
+                        for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
+                           Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
+                            if (node->selected) {
+                                // printf("\tSelected node\n");
+                                if (firstnode) {
+                                    nodes = Geom::Rect(node->pos, node->pos);
+                                    firstnode = false;
+                                } else {
+                                    nodes.expandTo(node->pos);
+                                }
 
-								if (node->p.other != NULL) {
-									/* Include previous node pos */
-									nodes.expandTo(node->p.other->pos);
+                                if (node->p.other != NULL) {
+                                    /* Include previous node pos */
+                                    nodes.expandTo(node->p.other->pos);
 
-									/* Include previous handle */
-									if (!sp_node_side_is_line(node, &node->p)) {
-										nodes.expandTo(node->p.pos);
-									}
-								}
+                                    /* Include previous handle */
+                                    if (!sp_node_side_is_line(node, &node->p)) {
+                                        nodes.expandTo(node->p.pos);
+                                    }
+                                }
 
-								if (node->n.other != NULL) {
-									/* Include previous node pos */
-									nodes.expandTo(node->n.other->pos);
+                                if (node->n.other != NULL) {
+                                    /* Include previous node pos */
+                                    nodes.expandTo(node->n.other->pos);
 
-									/* Include previous handle */
-									if (!sp_node_side_is_line(node, &node->n)) {
-										nodes.expandTo(node->n.pos);
-									}
-								}
-							}
-						}
-					}
+                                    /* Include previous handle */
+                                    if (!sp_node_side_is_line(node, &node->n)) {
+                                        nodes.expandTo(node->n.pos);
+                                    }
+                                }
+                            }
+                        }
+                    }
 
-					if (!firstnode && nodes.area() * 2.0 < _quick_zoom_stored_area.area()) {
-						set_display_area(nodes, 10);
-						zoomed = true;
-					}
-				}
-			}
-		}
+                    if (!firstnode && nodes.area() * 2.0 < _quick_zoom_stored_area.area()) {
+                        set_display_area(nodes, 10);
+                        zoomed = true;
+                    }
+                }
+            }
+        }
 
-		if (!zoomed) {
-			boost::optional<Geom::Rect> const d = selection->bounds();
-			if (d && !d->isEmpty() && d->area() * 2.0 < _quick_zoom_stored_area.area()) {
-				set_display_area(*d, 10);
-				zoomed = true;
-			} 
-		}
+        if (!zoomed) {
+            boost::optional<Geom::Rect> const d = selection->bounds();
+            if (d && !d->isEmpty() && d->area() * 2.0 < _quick_zoom_stored_area.area()) {
+                set_display_area(*d, 10);
+                zoomed = true;
+            } 
+        }
 
-		if (!zoomed) {
-			zoom_relative(_quick_zoom_stored_area.midpoint()[NR::X], _quick_zoom_stored_area.midpoint()[NR::Y], 2.0);
-			zoomed = true;
-		}
-	} else {
-		set_display_area(_quick_zoom_stored_area, 0);
-	}
+        if (!zoomed) {
+            zoom_relative(_quick_zoom_stored_area.midpoint()[Geom::X], _quick_zoom_stored_area.midpoint()[Geom::Y], 2.0);
+            zoomed = true;
+        }
+    } else {
+        set_display_area(_quick_zoom_stored_area, 0);
+    }
 
-	_quick_zoom_enabled = enable;
-	return;
+    _quick_zoom_enabled = enable;
+    return;
 }
 
 /**
@@ -974,8 +972,8 @@ SPDesktop::zoom_absolute_keep_point (double cx, double cy, double px, double py,
 
     Geom::Rect const viewbox = canvas->getViewbox();
 
-    double const width2 = viewbox.dimensions()[NR::X] / zoom;
-    double const height2 = viewbox.dimensions()[NR::Y] / zoom;
+    double const width2 = viewbox.dimensions()[Geom::X] / zoom;
+    double const height2 = viewbox.dimensions()[Geom::Y] / zoom;
 
     set_display_area(cx - px * width2,
                      cy - py * height2,
@@ -1001,22 +999,22 @@ SPDesktop::zoom_relative_keep_point (double cx, double cy, double zoom)
 {
     Geom::Rect const area = get_display_area();
 
-    if (cx < area.min()[NR::X]) {
-        cx = area.min()[NR::X];
+    if (cx < area.min()[Geom::X]) {
+        cx = area.min()[Geom::X];
     }
-    if (cx > area.max()[NR::X]) {
-        cx = area.max()[NR::X];
+    if (cx > area.max()[Geom::X]) {
+        cx = area.max()[Geom::X];
     }
-    if (cy < area.min()[NR::Y]) {
-        cy = area.min()[NR::Y];
+    if (cy < area.min()[Geom::Y]) {
+        cy = area.min()[Geom::Y];
     }
-    if (cy > area.max()[NR::Y]) {
-        cy = area.max()[NR::Y];
+    if (cy > area.max()[Geom::Y]) {
+        cy = area.max()[Geom::Y];
     }
 
     gdouble const scale = _d2w.descrim() * zoom;
-    double const px = (cx - area.min()[NR::X]) / area.dimensions()[NR::X];
-    double const py = (cy - area.min()[NR::Y]) / area.dimensions()[NR::Y];
+    double const px = (cx - area.min()[Geom::X]) / area.dimensions()[Geom::X];
+    double const py = (cy - area.min()[Geom::Y]) / area.dimensions()[Geom::Y];
 
     zoom_absolute_keep_point(cx, cy, px, py, scale);
 }
@@ -1146,7 +1144,11 @@ SPDesktop::scroll_world (double dx, double dy, bool is_scrolling)
 bool
 SPDesktop::scroll_to_point (Geom::Point const &p, gdouble autoscrollspeed)
 {
-    gdouble autoscrolldistance = (gdouble) prefs_get_int_attribute_limited ("options.autoscrolldistance", "value", 0, -1000, 10000);
+    using Geom::X;
+    using Geom::Y;
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gdouble autoscrolldistance = (gdouble) prefs->getIntLimited("/options/autoscrolldistance/value", 0, -1000, 10000);
 
     // autoscrolldistance is in screen pixels, but the display area is in document units
     autoscrolldistance /= _d2w.descrim();
@@ -1154,33 +1156,33 @@ SPDesktop::scroll_to_point (Geom::Point const &p, gdouble autoscrollspeed)
     Geom::Rect dbox = get_display_area();
     dbox.expandBy(-autoscrolldistance);
 
-    if (!(p[NR::X] > dbox.min()[NR::X] && p[NR::X] < dbox.max()[NR::X]) ||
-        !(p[NR::Y] > dbox.min()[NR::Y] && p[NR::Y] < dbox.max()[NR::Y])   ) {
+    if (!(p[X] > dbox.min()[X] && p[X] < dbox.max()[X]) ||
+        !(p[Y] > dbox.min()[Y] && p[Y] < dbox.max()[Y])   ) {
 
         Geom::Point const s_w( p * (Geom::Matrix)_d2w );
 
         gdouble x_to;
-        if (p[NR::X] < dbox.min()[NR::X])
-            x_to = dbox.min()[NR::X];
-        else if (p[NR::X] > dbox.max()[NR::X])
-            x_to = dbox.max()[NR::X];
+        if (p[X] < dbox.min()[X])
+            x_to = dbox.min()[X];
+        else if (p[X] > dbox.max()[X])
+            x_to = dbox.max()[X];
         else
-            x_to = p[NR::X];
+            x_to = p[X];
 
         gdouble y_to;
-        if (p[NR::Y] < dbox.min()[NR::Y])
-            y_to = dbox.min()[NR::Y];
-        else if (p[NR::Y] > dbox.max()[NR::Y])
-            y_to = dbox.max()[NR::Y];
+        if (p[Y] < dbox.min()[Y])
+            y_to = dbox.min()[Y];
+        else if (p[Y] > dbox.max()[Y])
+            y_to = dbox.max()[Y];
         else
-            y_to = p[NR::Y];
+            y_to = p[Y];
 
         Geom::Point const d_dt(x_to, y_to);
         Geom::Point const d_w( d_dt * _d2w );
         Geom::Point const moved_w( d_w - s_w );
 
         if (autoscrollspeed == 0)
-            autoscrollspeed = prefs_get_double_attribute_limited ("options.autoscrollspeed", "value", 1, 0, 10);
+            autoscrollspeed = prefs->getDoubleLimited("/options/autoscrollspeed/value", 1, 0, 10);
 
         if (autoscrollspeed != 0)
             scroll_world (autoscrollspeed * moved_w);
@@ -1228,29 +1230,29 @@ SPDesktop::fullscreen()
 
 /** \brief  Checks to see if the user is working in focused mode
 
-	Returns the value of \c _focusMode
+    Returns the value of \c _focusMode
 */
 bool
 SPDesktop::is_focusMode()
 {
-	return _focusMode;
+    return _focusMode;
 }
 
 /** \brief  Changes whether the user is in focus mode or not
-	\param  mode  Which mode the view should be in
+    \param  mode  Which mode the view should be in
 
 */
 void
 SPDesktop::focusMode (bool mode)
 {
-	if (mode == _focusMode) { return; }
+    if (mode == _focusMode) { return; }
 
-	_focusMode = mode;
+    _focusMode = mode;
 
-	layoutWidget();
-	//sp_desktop_widget_layout(SPDesktopWidget);
+    layoutWidget();
+    //sp_desktop_widget_layout(SPDesktopWidget);
 
-	return;
+    return;
 }
 
 void
@@ -1344,7 +1346,7 @@ bool SPDesktop::onDeleteUI (GdkEventAny*)
 bool
 SPDesktop::onWindowStateEvent (GdkEventWindowState* event)
 {
-	// Record the desktop window's state
+    // Record the desktop window's state
     window_state = event->new_window_state;
 
     // Layout may differ depending on full-screen mode or not
@@ -1353,7 +1355,7 @@ SPDesktop::onWindowStateEvent (GdkEventWindowState* event)
         layoutWidget();
     }
 
-	return false;
+    return false;
 }
 
 void
@@ -1383,8 +1385,8 @@ SPDesktop::isToolboxButtonActive (gchar const *id)
 void
 SPDesktop::emitToolSubselectionChanged(gpointer data)
 {
-	_tool_subselection_changed.emit(data);
-	inkscape_subselection_changed (this);
+    _tool_subselection_changed.emit(data);
+    inkscape_subselection_changed (this);
 }
 
 void
@@ -1452,7 +1454,7 @@ void SPDesktop::showGrids(bool show, bool dirty_document)
 
 void SPDesktop::toggleSnapping()
 {
-    bool v = namedview->snap_manager.getSnapEnabledGlobally();
+    bool v = namedview->snap_manager.snapprefs.getSnapEnabledGlobally();
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(namedview);
     sp_repr_set_boolean(repr, "inkscape:snap-global", !v);
 }
@@ -1731,7 +1733,7 @@ _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
                 int order = sp_canvas_item_order (desktop->page_border);
                 int morder = sp_canvas_item_order (desktop->drawing);
                 if (morder > order) sp_canvas_item_raise (desktop->page_border,
-				    morder - order);
+                    morder - order);
             }
         } else {
                 sp_canvas_item_hide (desktop->page_border);
@@ -1747,14 +1749,15 @@ _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
             ((CtrlRect *) desktop->page_border)->setShadow(0, 0x00000000);
         }
 
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         if (SP_RGBA32_A_U(nv->pagecolor) < 128 ||
             (SP_RGBA32_R_U(nv->pagecolor) +
              SP_RGBA32_G_U(nv->pagecolor) +
              SP_RGBA32_B_U(nv->pagecolor)) >= 384) {
             // the background color is light or transparent, use black outline
-            SP_CANVAS_ARENA (desktop->drawing)->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "onlight", 0xff);
+            SP_CANVAS_ARENA (desktop->drawing)->arena->outlinecolor = prefs->getInt("/options/wireframecolors/onlight", 0xff);
         } else { // use white outline
-            SP_CANVAS_ARENA (desktop->drawing)->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "ondark", 0xffffffff);
+            SP_CANVAS_ARENA (desktop->drawing)->arena->outlinecolor = prefs->getInt("/options/wireframecolors/ondark", 0xffffffff);
         }
     }
 }

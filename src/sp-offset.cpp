@@ -31,7 +31,7 @@
 #include "livarot/Shape.h"
 
 #include "enums.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "sp-text.h"
 #include "sp-offset.h"
 #include "sp-use-reference.h"
@@ -83,7 +83,7 @@ static void sp_offset_update (SPObject * object, SPCtx * ctx, guint flags);
 static void sp_offset_release (SPObject * object);
 
 static gchar *sp_offset_description (SPItem * item);
-static void sp_offset_snappoints(SPItem const *item, SnapPointsIter p);
+static void sp_offset_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
 static void sp_offset_set_shape (SPShape * shape);
 
 static void refresh_offset_source(SPOffset* offset);
@@ -241,7 +241,7 @@ sp_offset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
         gchar const *oldA = object->repr->attribute("inkscape:href");
         if (oldA) {
             size_t lA = strlen(oldA);
-            char *nA=(char*)malloc((lA+1)*sizeof(char));
+            char *nA=(char*)malloc((1+lA+1)*sizeof(char));
             memcpy(nA+1,oldA,lA*sizeof(char));
             nA[0]='#';
             nA[lA+1]=0;
@@ -718,10 +718,10 @@ sp_offset_set_shape(SPShape *shape)
 /**
  * Virtual snappoints function.
  */
-static void sp_offset_snappoints(SPItem const *item, SnapPointsIter p)
+static void sp_offset_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
     if (((SPItemClass *) parent_class)->snappoints) {
-        ((SPItemClass *) parent_class)->snappoints (item, p);
+        ((SPItemClass *) parent_class)->snappoints (item, p, snapprefs);
     }
 }
 
@@ -885,7 +885,7 @@ sp_offset_distance_to_original (SPOffset * offset, NR::Point px)
                     }
                     while (cb >= 0 && pb >= 0 && pb != fb);
                 }
-	    }
+            }
         }
         // loop over the edges to try to improve the distance
         for (int i = 0; i < theRes->numberOfEdges(); i++)
@@ -895,7 +895,7 @@ sp_offset_distance_to_original (SPOffset * offset, NR::Point px)
             NR::Point nx = ex - sx;
             double len = sqrt (dot(nx,nx));
             if (len > 0.0001)
-	    {
+            {
                 NR::Point   pxsx=px-sx;
                 double ab = dot(nx,pxsx);
                 if (ab > 0 && ab < len * len)
@@ -908,7 +908,7 @@ sp_offset_distance_to_original (SPOffset * offset, NR::Point px)
                         arSet = true;
                     }
                 }
-	    }
+            }
         }
         if (arSet || ptSet)
         {
@@ -1023,7 +1023,8 @@ sp_offset_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPOffset *offse
 static void
 sp_offset_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPOffset *self)
 {
-    guint mode = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_PARALLEL);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    guint mode = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_PARALLEL);
     if (mode == SP_CLONE_COMPENSATION_NONE) return;
 
     Geom::Matrix m(*mp);
@@ -1055,7 +1056,8 @@ sp_offset_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPOffset
 static void
 sp_offset_delete_self(SPObject */*deleted*/, SPOffset *offset)
 {
-    guint const mode = prefs_get_int_attribute("options.cloneorphans", "value", SP_CLONE_ORPHANS_UNLINK);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    guint const mode = prefs->getInt("/options/cloneorphans/value", SP_CLONE_ORPHANS_UNLINK);
 
     if (mode == SP_CLONE_ORPHANS_UNLINK) {
         // leave it be. just forget about the source

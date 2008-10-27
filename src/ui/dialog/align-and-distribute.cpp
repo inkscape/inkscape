@@ -1,7 +1,7 @@
-/**
- * \brief Align and Distribute dialog
- *
- * Authors:
+/** @file
+ * @brief Align and Distribute dialog - implementation
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Aubanel MONNIER <aubi@libertysurf.fr>
  *   Frank Felfe <innerspace@iname.com>
@@ -39,7 +39,7 @@
 #include "desktop-handles.h"
 #include "macros.h"
 #include "sp-item-transform.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "enums.h"
 
 #include "sp-text.h"
@@ -122,7 +122,8 @@ private :
         Inkscape::Selection *selection = sp_desktop_selection(desktop);
         if (!selection) return;
 
-        bool sel_as_group = (prefs_get_int_attribute("dialogs.align", "sel-as-groups", 0) != 0);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        bool sel_as_group = prefs->getBool("/dialogs/align/sel-as-groups");
 
         using Inkscape::Util::GSListConstIterator;
         std::list<SPItem *> selected;
@@ -211,8 +212,8 @@ private :
         // a selected original, they will be unmoved too, possibly contrary to user's
         // expecation. However this is a minor point compared to making align/distribute always
         // work as expected, and "unmoved" is the default option anyway.
-        int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
-        prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+        int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+        prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
         bool changed = false;
         boost::optional<Geom::Rect> b;
@@ -239,7 +240,7 @@ private :
         }
 
         // restore compensation setting
-        prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
+        prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
         if (changed) {
             sp_document_done ( sp_desktop_document (desktop) , SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
@@ -339,8 +340,9 @@ private :
         std::sort(sorted.begin(), sorted.end());
 
         // see comment in ActionAlign above
-        int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
-        prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+        prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
         unsigned int len = sorted.size();
         bool changed = false;
@@ -397,7 +399,7 @@ private :
         }
 
         // restore compensation setting
-        prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
+        prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
         if (changed) {
             sp_document_done ( sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
@@ -497,8 +499,9 @@ private :
         if (!_dialog.getDesktop()) return;
 
         // see comment in ActionAlign above
-        int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
-        prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+        prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
         // xGap and yGap are the minimum space required between bounding rectangles.
         double const xGap = removeOverlapXGap.get_value();
@@ -507,7 +510,7 @@ private :
                       xGap, yGap);
 
         // restore compensation setting
-        prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
+        prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
         sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                          _("Remove overlaps"));
@@ -531,13 +534,14 @@ private :
         if (!_dialog.getDesktop()) return;
 
         // see comment in ActionAlign above
-        int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
-        prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+        prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
         graphlayout(sp_desktop_selection(_dialog.getDesktop())->itemList());
 
         // restore compensation setting
-        prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
+        prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
         sp_document_done(sp_desktop_document(_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                          _("Arrange connector network"));
@@ -561,13 +565,14 @@ private :
         if (!_dialog.getDesktop()) return;
 
         // see comment in ActionAlign above
-        int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
-        prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+        prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
         unclump ((GSList *) sp_desktop_selection(_dialog.getDesktop())->itemList());
 
         // restore compensation setting
-        prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
+        prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
         sp_document_done (sp_desktop_document (_dialog.getDesktop()), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                           _("Unclump"));
@@ -615,8 +620,9 @@ private :
         }
 
         // see comment in ActionAlign above
-        int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
-        prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+        prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
         for (std::list<SPItem *>::iterator it(selected.begin());
             it != selected.end();
@@ -631,13 +637,13 @@ private :
                 double y = _dialog.randomize_bbox->min()[Geom::Y] + (*item_box)[Geom::Y].extent()/2 +
                     g_random_double_range (0, (*_dialog.randomize_bbox)[Geom::Y].extent() - (*item_box)[Geom::Y].extent());
                 // displacement is the new center minus old:
-                NR::Point t = NR::Point (x, y) - 0.5*(item_box->max() + item_box->min());
+                Geom::Point t = Geom::Point (x, y) - 0.5*(item_box->max() + item_box->min());
                 sp_item_move_rel(*it, Geom::Translate(t));
             }
         }
 
         // restore compensation setting
-        prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
+        prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
         sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
                           _("Randomize positions"));
@@ -783,7 +789,7 @@ void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selecti
 
 
 AlignAndDistribute::AlignAndDistribute()
-    : UI::Widget::Panel ("", "dialogs.align", SP_VERB_DIALOG_ALIGN_DISTRIBUTE),
+    : UI::Widget::Panel ("", "/dialogs/align", SP_VERB_DIALOG_ALIGN_DISTRIBUTE),
       randomize_bbox(),
       _alignFrame(_("Align")),
       _distributeFrame(_("Distribute")),
@@ -798,6 +804,7 @@ AlignAndDistribute::AlignAndDistribute()
       _anchorLabel(_("Relative to: ")),
       _selgrpLabel(_("Treat selection as group: "))
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     //Instanciate the align buttons
     addAlignButton("al_left_out",
@@ -917,7 +924,7 @@ AlignAndDistribute::AlignAndDistribute()
     _combo.append_text(_("Drawing"));
     _combo.append_text(_("Selection"));
 
-    _combo.set_active(prefs_get_int_attribute("dialogs.align", "align-to", 6));
+    _combo.set_active(prefs->getInt("/dialogs/align/align-to", 6));
     _combo.signal_changed().connect(sigc::mem_fun(*this, &AlignAndDistribute::on_ref_change));
 
     _anchorBox.pack_start(_anchorLabel);
@@ -925,7 +932,7 @@ AlignAndDistribute::AlignAndDistribute()
 
     _selgrpBox.pack_start(_selgrpLabel);
     _selgrpBox.pack_start(_selgrp);
-    _selgrp.set_active(prefs_get_int_attribute("dialogs.align", "sel-as-groups", 0));
+    _selgrp.set_active(prefs->getBool("/dialogs/align/sel-as-groups"));
     _selgrp.signal_toggled().connect(sigc::mem_fun(*this, &AlignAndDistribute::on_selgrp_toggled));
 
     _alignBox.pack_start(_anchorBox);
@@ -972,15 +979,15 @@ AlignAndDistribute::~AlignAndDistribute()
 }
 
 void AlignAndDistribute::on_ref_change(){
-
-    prefs_set_int_attribute("dialogs.align", "align-to", _combo.get_active_row_number());
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt("/dialogs/align/align-to", _combo.get_active_row_number());
 
     //Make blink the master
 }
 
 void AlignAndDistribute::on_selgrp_toggled(){
-
-    prefs_set_int_attribute("dialogs.align", "sel-as-groups", _selgrp.get_active());
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt("/dialogs/align/sel-as-groups", _selgrp.get_active());
 
     //Make blink the master
 }

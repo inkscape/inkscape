@@ -15,7 +15,7 @@ void sp_item_rm_unsatisfied_cns(SPItem &item)
         return;
     }
     std::vector<Geom::Point> snappoints;
-    sp_item_snappoints(&item, true, SnapPointsIter(snappoints));
+    sp_item_snappoints(&item, SnapPointsIter(snappoints), NULL);
     for (unsigned i = item.constraints.size(); i--;) {
         g_assert( i < item.constraints.size() );
         SPGuideConstraint const &cn = item.constraints[i];

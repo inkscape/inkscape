@@ -15,14 +15,11 @@
 
 #include "sp-item.h"
 #include "conn-avoid-ref.h"
-#include "libnr/nr-rect-ops.h"
 #include "libavoid/polyutil.h"
 #include "libavoid/router.h"
 #include "libavoid/connector.h"
 #include "xml/simple-node.h"
 #include "document.h"
-#include "prefs-utils.h"
-
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "sp-namedview.h"
@@ -206,9 +203,9 @@ static Avoid::Polygn avoid_item_poly(SPItem const *item)
     poly = Avoid::newPoly(4);
 
     for (unsigned n = 0; n < 4; ++n) {
-        NR::Point hullPoint = rExpandedHull.corner(n);
-        poly.ps[n].x = hullPoint[NR::X];
-        poly.ps[n].y = hullPoint[NR::Y];
+        Geom::Point hullPoint = rExpandedHull.corner(n);
+        poly.ps[n].x = hullPoint[Geom::X];
+        poly.ps[n].y = hullPoint[Geom::Y];
     }
 
     return poly;

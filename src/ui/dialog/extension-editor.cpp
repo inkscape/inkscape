@@ -1,7 +1,7 @@
-/**
- * \brief Extension editor dialog
- *
- * Authors:
+/** @file
+ * @brief Extension editor dialog
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Ted Gould <ted@gould.cx>
  *
@@ -43,7 +43,7 @@ namespace Dialog {
     a new extension is selected, the notebooks are changed appropriately.
 */
 ExtensionEditor::ExtensionEditor()
-    : UI::Widget::Panel ("", "dialogs.extensioneditor", SP_VERB_DIALOG_EXTENSIONEDITOR)
+    : UI::Widget::Panel ("", "/dialogs/extensioneditor", SP_VERB_DIALOG_EXTENSIONEDITOR)
 {
     _notebook_info.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     _notebook_help.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
@@ -85,7 +85,7 @@ ExtensionEditor::ExtensionEditor()
     Inkscape::Extension::db.foreach(dbfunc, this);
     
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring defaultext = prefs->getString("dialogs.extensioneditor", "selected-extension");
+    Glib::ustring defaultext = prefs->getString("/dialogs/extensioneditor/selected-extension");
     if (defaultext.empty()) defaultext = "org.inkscape.input.svg";
     this->setExtension(defaultext);
 
@@ -137,7 +137,7 @@ ExtensionEditor::on_pagelist_selection_changed (void)
 
         /* Set the selection in the preferences */
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString("dialogs.extensioneditor", "selected-extension", id);
+        prefs->setString("/dialogs/extensioneditor/selected-extension", id);
 
         /* Adjust the dialog's title */
         gchar title[500];

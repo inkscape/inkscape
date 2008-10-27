@@ -1,13 +1,15 @@
-/**
- * @file
- * @brief Whiteboard share with chatroom dialog
- *
- * Authors:
- * David Yip <yipdw@rose-hulman.edu>
- * Jason Segal, Jonas Collaros, Stephen Montgomery, Brandi Soggs, Matthew Weinstock (original C/Gtk version)
+/** @file
+ * @brief Whiteboard share with chatroom dialog - implementation
+ */
+/* Authors:
+ *   David Yip <yipdw@rose-hulman.edu>
+ *   Jason Segal
+ *   Jonas Collaros
+ *   Stephen Montgomery
+ *   Brandi Soggs
+ *   Matthew Weinstock (original C/Gtk version)
  *
  * Copyright (c) 2004-2005 Authors
- *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -82,9 +84,9 @@ WhiteboardShareWithChatroomDialogImpl::_construct()
 	this->_labels[3].set_mnemonic_widget(this->_handle);
 
 	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-	this->_roomname.set_text(prefs->getString("whiteboard.room", "name"));
-	this->_confserver.set_text(prefs->getString("whiteboard.room", "server"));
-	this->_handle.set_text(prefs->getString("whiteboard.server", "username"));
+	this->_roomname.set_text(prefs->getString("/whiteboard/room/name"));
+	this->_confserver.set_text(prefs->getString("/whiteboard/room/server"));
+	this->_handle.set_text(prefs->getString("/whiteboard/server/username"));
 
 	// Pack table
 	this->_layout.attach(this->_labels[0], 0, 1, 0, 1);

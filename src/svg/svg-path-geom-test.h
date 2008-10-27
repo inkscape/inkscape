@@ -3,7 +3,7 @@
 #include "2geom/curves.h"
 #include "2geom/pathvector.h"
 #include "svg/svg.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "streq.h"
 #include <stdio.h>
 #include <string>
@@ -392,10 +392,11 @@ public:
         Geom::PathVector pv;
         char * path_str;
         // Default values
-        prefs_set_int_attribute("options.svgoutput", "allowrelativecoordinates", 1);
-        prefs_set_int_attribute("options.svgoutput", "forcerepeatcommands", 0);
-        prefs_set_int_attribute("options.svgoutput", "numericprecision", 8);
-        prefs_set_int_attribute("options.svgoutput", "minimumexponent", -8);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setBool("/options/svgoutput/allowrelativecoordinates", true);
+        prefs->setBool("/options/svgoutput/forcerepeatcommands", false);
+        prefs->setInt("/options/svgoutput/numericprecision", 8);
+        prefs->setInt("/options/svgoutput/minimumexponent", -8);
         pv = sp_svg_read_pathv("M 123456781,1.23456781e-8 L 123456782,1.23456782e-8 L 123456785,1.23456785e-8 L 10123456400,1.23456785e-8 L 123456789,1.23456789e-8 L 123456789,101.234564e-8 L 123456789,1.23456789e-8");
         path_str = sp_svg_write_path(pv);
         TS_ASSERT_RELATION( streq_rel , "m 123456780,1.2345678e-8 0,0 10,1e-15 9999999210,0 -9999999210,0 0,9.99999921e-7 0,-9.99999921e-7" , path_str );

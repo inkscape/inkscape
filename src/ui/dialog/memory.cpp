@@ -1,7 +1,7 @@
-/**
- * \brief Memory statistics dialog
- *
- * Authors:
+/** @file
+ * @brief Memory statistics dialog
+ */
+/* Authors:
  *   MenTaLguY <mental@rydia.net>
  *
  * Copyright (C) 2005 
@@ -204,7 +204,7 @@ void Memory::Private::stop_update_task() {
 }
 
 Memory::Memory() 
-    : UI::Widget::Panel ("", "dialogs.memory", SP_VERB_HELP_MEMORY, _("Recalculate")),
+    : UI::Widget::Panel ("", "/dialogs/memory", SP_VERB_HELP_MEMORY, _("Recalculate")),
       _private(*(new Memory::Private())) 
 {
     _getContents()->add(_private.view);

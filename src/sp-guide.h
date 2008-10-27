@@ -14,7 +14,7 @@
 #include <vector>
 
 #include "display/display-forward.h"
-#include "libnr/nr-point.h"
+#include <2geom/point.h>
 #include "sp-object.h"
 #include "sp-guide-attachment.h"
 
@@ -26,7 +26,7 @@
 
 /* Represents the constraint on p that dot(g.direction, p) == g.position. */
 struct SPGuide : public SPObject {
-    NR::Point normal_to_line;
+    Geom::Point normal_to_line;
     Geom::Point point_on_line;
 
     guint32 color;
@@ -53,7 +53,7 @@ void sp_guide_show(SPGuide *guide, SPCanvasGroup *group, GCallback handler);
 void sp_guide_hide(SPGuide *guide, SPCanvas *canvas);
 void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive);
 
-Geom::Point sp_guide_position_from_pt(SPGuide const *guide, NR::Point const &pt);
+Geom::Point sp_guide_position_from_pt(SPGuide const *guide, Geom::Point const &pt);
 double sp_guide_distance_from_pt(SPGuide const *guide, Geom::Point const &pt);
 void sp_guide_moveto(SPGuide const &guide, Geom::Point const point_on_line, bool const commit);
 void sp_guide_set_normal(SPGuide const &guide, Geom::Point const normal_to_line, bool const commit);

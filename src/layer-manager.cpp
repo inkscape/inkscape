@@ -16,7 +16,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "layer-manager.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "ui/view/view.h"
 #include "selection.h"
 #include "sp-object.h"
@@ -150,7 +150,8 @@ void LayerManager::setCurrentLayer( SPObject* obj )
     if ( _desktop->currentRoot() ) {
         _desktop->setCurrentLayer( obj );
 
-        if ( prefs_get_int_attribute_limited("options.selection", "layerdeselect", 1, 0, 1) ) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        if (prefs->getBool("/options/selection/layerdeselect", true)) {
             sp_desktop_selection( _desktop )->clear();
         }
     }

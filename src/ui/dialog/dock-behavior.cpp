@@ -1,7 +1,7 @@
-/**
- * \brief A dockable dialog implementation.
- *
- * Author:
+/** @file
+ * @brief A dockable dialog implementation.
+ */
+/* Author:
  *   Gustav Broberg <broberg@kth.se>
  *
  * Copyright (C) 2007 Authors
@@ -22,7 +22,7 @@
 #include "ui/widget/dock.h"
 #include "verbs.h"
 #include "dialog.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "dialogs/dialog-events.h"
 
 #include <gtkmm/invisible.h>
@@ -44,7 +44,7 @@ DockBehavior::DockBehavior(Dialog &dialog) :
                (Inkscape::Verb::get(dialog._verb_num)->get_image() ?
                 Inkscape::Verb::get(dialog._verb_num)->get_image() : ""),
                static_cast<Widget::DockItem::State>(
-                   prefs_get_int_attribute (_dialog._prefs_path, "state",
+                   Inkscape::Preferences::get()->getInt(_dialog._prefs_path + "/state",
                                             UI::Widget::DockItem::DOCKED_STATE)))
 {
     // Connect signals
@@ -178,7 +178,8 @@ DockBehavior::_onHide()
 {
     _dialog.save_geometry();
     _dialog._user_hidden = true;
-    prefs_set_int_attribute (_dialog._prefs_path, "state", _dock_item.getPrevState());
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(_dialog._prefs_path + "/state", _dock_item.getPrevState());
 }
 
 void
@@ -186,7 +187,8 @@ DockBehavior::_onStateChanged(Widget::DockItem::State /*prev_state*/,
                               Widget::DockItem::State new_state)
 {
 // TODO probably need to avoid window calls unless the state is different. Check.
-    prefs_set_int_attribute (_dialog._prefs_path, "state", new_state);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(_dialog._prefs_path + "/state", new_state);
 
     if (new_state == Widget::DockItem::FLOATING_STATE) {
         if (Gtk::Window *floating_win = _dock_item.getWindow())
@@ -210,13 +212,15 @@ DockBehavior::onShowF12()
 void
 DockBehavior::onShutdown()
 {
-    prefs_set_int_attribute (_dialog._prefs_path, "state", _dock_item.getPrevState());
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(_dialog._prefs_path + "/state", _dock_item.getPrevState());
 }
 
 void
 DockBehavior::onDesktopActivated(SPDesktop *desktop)
 {
-    gint transient_policy = prefs_get_int_attribute_limited ( "options.transientpolicy", "value", 1, 0, 2);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gint transient_policy = prefs->getIntLimited( "/options/transientpolicy/value", 1, 0, 2);
 
 #ifdef WIN32 // Win32 special code to enable transient dialogs
     transient_policy = 2;

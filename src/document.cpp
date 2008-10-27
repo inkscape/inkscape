@@ -52,7 +52,7 @@
 #include "document-private.h"
 #include "dir-util.h"
 #include "unit-constants.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "libavoid/router.h"
 #include "sp-item-group.h"
 #include "profile-manager.h"
@@ -258,6 +258,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     SPDocument *document;
     Inkscape::XML::Node *rroot;
     Inkscape::Version sodipodi_version;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     rroot = rdoc->root();
 
@@ -313,18 +314,38 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     // creating namedview
     if (!sp_item_group_get_child_by_name((SPGroup *) document->root, NULL, "sodipodi:namedview")) {
         // if there's none in the document already,
-        Inkscape::XML::Node *r = NULL;
         Inkscape::XML::Node *rnew = NULL;
-        r = inkscape_get_repr(INKSCAPE, "template.base");
-        // see if there's a template with id="base" in the preferences
-        if (!r) {
-            // if there's none, create an empty element
-            rnew = rdoc->createElement("sodipodi:namedview");
-            rnew->setAttribute("id", "base");
-        } else {
-            // otherwise, take from preferences
-            rnew = r->duplicate(rroot->document());
+        
+        rnew = rdoc->createElement("sodipodi:namedview");
+        //rnew->setAttribute("id", "base");
+
+        // Add namedview data from the preferences
+        // we can't use getAllEntries because this could produce non-SVG doubles
+        Glib::ustring pagecolor = prefs->getString("/template/base/pagecolor");
+        if (!pagecolor.empty()) {
+            rnew->setAttribute("pagecolor", pagecolor.data());
         }
+        Glib::ustring bordercolor = prefs->getString("/template/base/pagecolor");
+        if (!bordercolor.empty()) {
+            rnew->setAttribute("bordercolor", bordercolor.data());
+        }
+        sp_repr_set_svg_double(rnew, "borderopacity",
+            prefs->getDouble("/template/base/borderopacity", 1.0));
+        sp_repr_set_svg_double(rnew, "objecttolerance",
+            prefs->getDouble("/template/base/objecttolerance", 10.0));
+        sp_repr_set_svg_double(rnew, "gridtolerance",
+            prefs->getDouble("/template/base/gridtolerance", 10.0));
+        sp_repr_set_svg_double(rnew, "guidetolerance",
+            prefs->getDouble("/template/base/guidetolerance", 10.0));
+        sp_repr_set_svg_double(rnew, "inkscape:pageopacity",
+            prefs->getDouble("/template/base/inkscape:pageopacity", 0.0));
+        sp_repr_set_int(rnew, "inkscape:pageshadow",
+            prefs->getInt("/template/base/inkscape:pageshadow", 2));
+        sp_repr_set_int(rnew, "inkscape:window-width",
+            prefs->getInt("/template/base/inkscape:window-width", 640));
+        sp_repr_set_int(rnew, "inkscape:window-height",
+            prefs->getInt("/template/base/inkscape:window-height", 480));
+        
         // insert into the document
         rroot->addChild(rnew, NULL);
         // clean up
@@ -931,8 +952,8 @@ sp_document_item_from_list_at_point_bottom(unsigned int dkey, SPGroup *group, GS
                                            Geom::Point const p, bool take_insensitive)
 {
     g_return_val_if_fail(group, NULL);
-
-    gdouble delta = prefs_get_double_attribute ("options.cursortolerance", "value", 1.0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gdouble delta = prefs->getDouble("/options/cursortolerance/value", 1.0);
 
     for (SPObject *o = sp_object_first_child(SP_OBJECT(group)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
 
@@ -968,8 +989,8 @@ SPItem*
 find_item_at_point(unsigned int dkey, SPGroup *group, Geom::Point const p, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
 {
     SPItem *seen = NULL, *newseen = NULL;
-
-    gdouble delta = prefs_get_double_attribute ("options.cursortolerance", "value", 1.0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gdouble delta = prefs->getDouble("/options/cursortolerance/value", 1.0);
 
     for (SPObject *o = sp_object_first_child(SP_OBJECT(group)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
         if (!SP_IS_ITEM(o)) continue;
@@ -1010,8 +1031,8 @@ SPItem*
 find_group_at_point(unsigned int dkey, SPGroup *group, Geom::Point const p)
 {
     SPItem *seen = NULL;
-
-    gdouble delta = prefs_get_double_attribute ("options.cursortolerance", "value", 1.0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gdouble delta = prefs->getDouble("/options/cursortolerance/value", 1.0);
 
     for (SPObject *o = sp_object_first_child(SP_OBJECT(group)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
         if (!SP_IS_ITEM(o)) continue;
@@ -1068,12 +1089,13 @@ GSList *
 sp_document_items_at_points(SPDocument *document, unsigned const key, std::vector<Geom::Point> points)
 {
     GSList *items = NULL;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // When picking along the path, we don't want small objects close together
     // (such as hatching strokes) to obscure each other by their deltas,
     // so we temporarily set delta to a small value
-    gdouble saved_delta = prefs_get_double_attribute ("options.cursortolerance", "value", 1.0);
-    prefs_set_double_attribute ("options.cursortolerance", "value", 0.25);
+    gdouble saved_delta = prefs->getDouble("/options/cursortolerance/value", 1.0);
+    prefs->setDouble("/options/cursortolerance/value", 0.25);
 
     for(unsigned int i = 0; i < points.size(); i++) {
         SPItem *item = sp_document_item_at_point(document, key, points[i],
@@ -1083,7 +1105,7 @@ sp_document_items_at_points(SPDocument *document, unsigned const key, std::vecto
     }
 
     // and now we restore it back
-    prefs_set_double_attribute ("options.cursortolerance", "value", saved_delta);
+    prefs->setDouble("/options/cursortolerance/value", saved_delta);
 
     return items;
 }

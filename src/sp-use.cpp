@@ -32,7 +32,7 @@
 #include "uri.h"
 #include "print.h"
 #include "xml/repr.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "style.h"
 #include "sp-symbol.h"
 #include "sp-use.h"
@@ -52,7 +52,7 @@ static void sp_use_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_use_modified(SPObject *object, guint flags);
 
 static void sp_use_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
-static void sp_use_snappoints(SPItem const *item, SnapPointsIter p);
+static void sp_use_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
 static void sp_use_print(SPItem *item, SPPrintContext *ctx);
 static gchar *sp_use_description(SPItem *item);
 static NRArenaItem *sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags);
@@ -471,7 +471,8 @@ sp_use_move_compensate(Geom::Matrix const *mp, SPItem */*original*/, SPUse *self
         return;
     }
 
-    guint mode = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_PARALLEL);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    guint mode = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_PARALLEL);
     // user wants no compensation
     if (mode == SP_CLONE_COMPENSATION_NONE)
         return;
@@ -556,7 +557,8 @@ sp_use_delete_self(SPObject */*deleted*/, SPUse *self)
         return;
     }
 
-    guint const mode = prefs_get_int_attribute("options.cloneorphans", "value",
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    guint const mode = prefs->getInt("/options/cloneorphans/value",
                                                SP_CLONE_ORPHANS_UNLINK);
 
     if (mode == SP_CLONE_ORPHANS_UNLINK) {
@@ -739,7 +741,7 @@ sp_use_get_original(SPUse *use)
 }
 
 static void
-sp_use_snappoints(SPItem const *item, SnapPointsIter p)
+sp_use_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
     g_assert (item != NULL);
     g_assert (SP_IS_ITEM(item));
@@ -751,7 +753,7 @@ sp_use_snappoints(SPItem const *item, SnapPointsIter p)
     
     SPItemClass const &item_class = *(SPItemClass const *) G_OBJECT_GET_CLASS(root);
     if (item_class.snappoints) {
-        item_class.snappoints(root, p);
+        item_class.snappoints(root, p, snapprefs);
     }
 }
 

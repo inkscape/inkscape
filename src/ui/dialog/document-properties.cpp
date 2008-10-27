@@ -1,8 +1,7 @@
-/** \file
- *
- * Document properties dialog, Gtkmm-style
- *
- * Authors:
+/** @file
+ * @brief Document properties dialog, Gtkmm-style
+ */
+/* Authors:
  *   bulia byak <buliabyak@users.sf.net>
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -28,7 +27,7 @@
 
 #include "xml/node-event-vector.h"
 #include "helper/units.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #include "inkscape.h"
 #include "verbs.h"
@@ -81,7 +80,7 @@ DocumentProperties::getInstance()
 }
 
 DocumentProperties::DocumentProperties()
-    : UI::Widget::Panel ("", "dialogs.documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
+    : UI::Widget::Panel ("", "/dialogs/documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
       _page_page(1, 1, true, true), _page_guides(1, 1),
       _page_snap(1, 1), _page_snap_dtls(1, 1),
     //---------------------------------------------------------------
@@ -115,6 +114,7 @@ DocumentProperties::DocumentProperties()
     //---------------------------------------------------------------
        //Applies to both nodes and guides, but not to bboxes, that's why its located here
       _rcbic( _("Rotation _center"), _("Consider the rotation center of an object when snapping"), "inkscape:snap-center", _wr),
+      _rcbsm( _("_Smooth nodes"), _("Snap to smooth nodes too, instead of only snapping to cusp nodes"), "inkscape:snap-smooth-nodes", _wr),
       _rcbsigg(_("_Grid with guides"), _("Snap to grid-guide intersections"), "inkscape:snap-intersection-grid-guide", _wr),
       _rcbsils(_("_Paths"), _("Snap to intersections of paths ('snap to paths' must be enabled, see the previous tab)"),
                 "inkscape:snap-intersection-paths", _wr),
@@ -123,9 +123,8 @@ DocumentProperties::DocumentProperties()
       //TRANSLATORS: In Grid|_New translate only the word _New. It ref to grid
       _grids_button_new(Q_("Grid|_New"), _("Create new grid.")),
       _grids_button_remove(_("_Remove"), _("Remove selected grid.")),
-      _grids_label_def("", Gtk::ALIGN_LEFT),
+      _grids_label_def("", Gtk::ALIGN_LEFT)
     //---------------------------------------------------------------
-      _prefs_path("dialogs.documentoptions")
 {
     _tt.enable();
     _getContents()->set_spacing (4);
@@ -376,6 +375,7 @@ DocumentProperties::build_snap_dtls()
         0,                  0,
         label_m,            0,
         0,                  &_rcbic,
+        0,					&_rcbsm
     };
 
     attach_all(_page_snap_dtls.table(), array, G_N_ELEMENTS(array));
@@ -496,12 +496,13 @@ DocumentProperties::update()
 
     //-----------------------------------------------------------snap
 
-    _rcbsnbb.setActive (nv->snap_manager.getSnapModeBBox());
-    _rcbsnn.setActive (nv->snap_manager.getSnapModeNode());
-    _rcbsng.setActive (nv->snap_manager.getSnapModeGuide());
-    _rcbic.setActive (nv->snap_manager.getIncludeItemCenter());
-    _rcbsigg.setActive (nv->snap_manager.getSnapIntersectionGG());
-    _rcbsils.setActive (nv->snap_manager.getSnapIntersectionCS());
+    _rcbsnbb.setActive (nv->snap_manager.snapprefs.getSnapModeBBox());
+    _rcbsnn.setActive (nv->snap_manager.snapprefs.getSnapModeNode());
+    _rcbsng.setActive (nv->snap_manager.snapprefs.getSnapModeGuide());
+    _rcbic.setActive (nv->snap_manager.snapprefs.getIncludeItemCenter());
+    _rcbsm.setActive (nv->snap_manager.snapprefs.getSnapSmoothNodes());
+    _rcbsigg.setActive (nv->snap_manager.snapprefs.getSnapIntersectionGG());
+    _rcbsils.setActive (nv->snap_manager.snapprefs.getSnapIntersectionCS());
     _rcbsnop.setActive(nv->snap_manager.object.getSnapToItemPath());
     _rcbsnon.setActive(nv->snap_manager.object.getSnapToItemNode());
     _rcbsnbbp.setActive(nv->snap_manager.object.getSnapToBBoxPath());
@@ -513,7 +514,7 @@ DocumentProperties::update()
 
     _rsu_gusn.setValue (nv->guidetolerance);
 
-    _rcbs.setActive (nv->snap_manager.getSnapEnabledGlobally());
+    _rcbs.setActive (nv->snap_manager.snapprefs.getSnapEnabledGlobally());
     _rcbsi.setActive (nv->snapindicator);
 
     //-----------------------------------------------------------grids page
@@ -666,9 +667,9 @@ DocumentProperties::onRemoveGrid()
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

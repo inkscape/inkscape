@@ -23,7 +23,7 @@
 #include "selection.h"
 #include "inkscape.h"
 #include "style.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "sp-use.h"
 #include "sp-feblend.h"
 #include "sp-filter.h"
@@ -159,22 +159,22 @@ void
 sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write_current)
 {
     if (write_current) {
-// 1. Set internal value
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        // 1. Set internal value
         sp_repr_css_merge(desktop->current, css);
 
-// 1a. Write to prefs; make a copy and unset any URIs first
+        // 1a. Write to prefs; make a copy and unset any URIs first
         SPCSSAttr *css_write = sp_repr_css_attr_new();
         sp_repr_css_merge(css_write, css);
         sp_css_attr_unset_uris(css_write);
-        sp_repr_css_change(inkscape_get_repr(INKSCAPE, "desktop"), css_write, "style");
+        prefs->mergeStyle("/desktop/style", css_write);
+        
         for (const GSList *i = desktop->selection->itemList(); i != NULL; i = i->next) {
             /* last used styles for 3D box faces are stored separately */
             if (SP_IS_BOX3D_SIDE (i->data)) {
                 const char * descr  = box3d_side_axes_string(SP_BOX3D_SIDE(i->data));
                 if (descr != NULL) {
-                    gchar *style_grp = g_strconcat ("desktop.", descr, NULL);
-                    sp_repr_css_change(inkscape_get_repr(INKSCAPE, style_grp), css_write, "style");
-                    g_free (style_grp);
+                    prefs->mergeStyle(Glib::ustring("/desktop/") + descr + "/style", css_write);
                 }
             }
         }
@@ -243,19 +243,17 @@ sp_desktop_get_color(SPDesktop *desktop, bool is_fill)
 }
 
 double
-sp_desktop_get_master_opacity_tool(SPDesktop *desktop, char const *tool, bool *has_opacity)
+sp_desktop_get_master_opacity_tool(SPDesktop *desktop, Glib::ustring const &tool, bool *has_opacity)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     SPCSSAttr *css = NULL;
     gfloat value = 1.0; // default if nothing else found
     if (has_opacity)
         *has_opacity = false;
-    if (prefs_get_double_attribute(tool, "usecurrent", 0) != 0) {
+    if (prefs->getBool(tool + "/usecurrent")) {
         css = sp_desktop_get_style(desktop, true);
-    } else { 
-        Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
-        if (tool_repr) {
-            css = sp_repr_css_attr_inherited(tool_repr, "style");
-        }
+    } else {
+        css = prefs->getStyle(tool + "/style");
     }
    
     if (css) {
@@ -276,17 +274,15 @@ sp_desktop_get_master_opacity_tool(SPDesktop *desktop, char const *tool, bool *h
     return value;
 }
 double
-sp_desktop_get_opacity_tool(SPDesktop *desktop, char const *tool, bool is_fill)
+sp_desktop_get_opacity_tool(SPDesktop *desktop, Glib::ustring const &tool, bool is_fill)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     SPCSSAttr *css = NULL;
     gfloat value = 1.0; // default if nothing else found
-    if (prefs_get_double_attribute(tool, "usecurrent", 0) != 0) {
+    if (prefs->getBool(tool + "/usecurrent")) {
         css = sp_desktop_get_style(desktop, true);
     } else { 
-        Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
-        if (tool_repr) {
-            css = sp_repr_css_attr_inherited(tool_repr, "style");
-        }
+        css = prefs->getStyle(tool + "/style");
     }
    
     if (css) {
@@ -305,19 +301,17 @@ sp_desktop_get_opacity_tool(SPDesktop *desktop, char const *tool, bool is_fill)
 }
 
 guint32
-sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill, bool *has_color)
-{
+sp_desktop_get_color_tool(SPDesktop *desktop, Glib::ustring const &tool, bool is_fill, bool *has_color)
+{   
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     SPCSSAttr *css = NULL;
     guint32 r = 0; // if there's no color, return black
     if (has_color)
         *has_color = false;
-    if (prefs_get_int_attribute(tool, "usecurrent", 0) != 0) {
+    if (prefs->getBool(tool + "/usecurrent")) {
         css = sp_desktop_get_style(desktop, true);
     } else {
-        Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
-        if (tool_repr) {
-            css = sp_repr_css_attr_inherited(tool_repr, "style");
-        }
+        css = prefs->getStyle(tool + "/style");
     }
    
     if (css) {
@@ -342,18 +336,17 @@ sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill, bo
  * Apply the desktop's current style or the tool style to repr.
  */
 void
-sp_desktop_apply_style_tool(SPDesktop *desktop, Inkscape::XML::Node *repr, char const *tool, bool with_text)
+sp_desktop_apply_style_tool(SPDesktop *desktop, Inkscape::XML::Node *repr, Glib::ustring const &tool_path, bool with_text)
 {
     SPCSSAttr *css_current = sp_desktop_get_style(desktop, with_text);
-    if ((prefs_get_int_attribute(tool, "usecurrent", 0) != 0) && css_current) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    
+    if (prefs->getBool(tool_path + "/usecurrent") && css_current) {
         sp_repr_css_set(repr, css_current, "style");
     } else {
-        Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
-        if (tool_repr) {
-            SPCSSAttr *css = sp_repr_css_attr_inherited(tool_repr, "style");
-            sp_repr_css_set(repr, css, "style");
-            sp_repr_css_attr_unref(css);
-        }
+        SPCSSAttr *css = prefs->getStyle(tool_path + "/style");
+        sp_repr_css_set(repr, css, "style");
+        sp_repr_css_attr_unref(css);
     }
     if (css_current) {
         sp_repr_css_attr_unref(css_current);
@@ -368,21 +361,19 @@ double
 sp_desktop_get_font_size_tool(SPDesktop *desktop)
 {
     (void)desktop; // TODO cleanup
-    gchar const *desktop_style = inkscape_get_repr(INKSCAPE, "desktop")->attribute("style");
-    gchar const *style_str = NULL;
-    if ((prefs_get_int_attribute("tools.text", "usecurrent", 0) != 0) && desktop_style) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring desktop_style = prefs->getString("/desktop/style");
+    Glib::ustring style_str;
+    if ((prefs->getBool("/tools/text/usecurrent")) && !desktop_style.empty()) {
         style_str = desktop_style;
     } else {
-        Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, "tools.text");
-        if (tool_repr) {
-            style_str = tool_repr->attribute("style");
-        }
+        style_str = prefs->getString("/tools/text/style");
     }
 
     double ret = 12;
-    if (style_str) {
+    if (!style_str.empty()) {
         SPStyle *style = sp_style_new(SP_ACTIVE_DOCUMENT);
-        sp_style_merge_from_style_string(style, style_str);
+        sp_style_merge_from_style_string(style, style_str.data());
         ret = style->font_size.computed;
         sp_style_unref(style);
     }

@@ -36,7 +36,7 @@
 #include "snap.h"
 #include "display/canvas-grid.h"
 #include "display/canvas-axonomgrid.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "helper/action.h"
 #include "tools-switch.h"
 #include <2geom/point.h>
@@ -52,8 +52,9 @@ int sp_desktop_root_handler(SPCanvasItem */*item*/, GdkEvent *event, SPDesktop *
     static bool first = true;
 
     if ( first ) {
-        if ( prefs_get_int_attribute("options.useextinput", "value", 1)
-            && prefs_get_int_attribute("options.switchonextinput", "value", 0) ) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        if ( prefs->getBool("/options/useextinput/value", true)
+            && prefs->getBool("/options/switchonextinput/value") ) {
             watch = true;
             init_extended();
         }

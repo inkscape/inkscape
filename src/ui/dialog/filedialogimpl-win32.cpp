@@ -1,7 +1,7 @@
-/**
- * Implementation of the file dialog interfaces defined in filedialog.h for Win32
- *
- * Authors:
+/** @file
+ * @brief Implementation of native file dialogs for Win32
+ */
+/* Authors:
  *   Joel Holdsworth
  *   The Inkscape Organization
  *
@@ -29,7 +29,6 @@
 
 //Inkscape includes
 #include "inkscape.h"
-#include "prefs-utils.h"
 #include <dialogs/dialog-events.h>
 #include <extension/input.h>
 #include <extension/output.h>
@@ -1710,4 +1709,4 @@ UINT_PTR CALLBACK FileSaveDialogImplWin32::GetSaveFileName_hookproc(
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

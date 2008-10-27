@@ -118,7 +118,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     GList *zooms_past;
     GList *zooms_future;
     bool _quick_zoom_enabled; ///< Signifies that currently we're in quick zoom mode
-	Geom::Rect _quick_zoom_stored_area;  ///< The area of the screen before quick zoom
+    Geom::Rect _quick_zoom_stored_area;  ///< The area of the screen before quick zoom
     unsigned int dkey;
     unsigned int number;
     guint window_state;

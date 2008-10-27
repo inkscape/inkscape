@@ -34,10 +34,10 @@ options:
     -A, --export-pdf=FILENAME
 
     -T, --export-text-to-path
-    -B, --export-bbox-page 
-    -F, --export-embed-fonts
 
     -l, --export-plain-svg=FILENAME             
+
+    -p, --print=PRINTER
 
     -I, --query-id=ID     
     -X, --query-x
@@ -52,7 +52,7 @@ options:
         --verb=VERB-ID
         --select=OBJECT-ID
 
-    -p, --print=PRINTER
+        --shell
 
     -g, --with-gui                    
     -z, --without-gui                 
@@ -65,10 +65,11 @@ options:
 
 B<Inkscape> is a GUI editor for B<Scalable Vector Graphics (SVG)> format
 drawing files, with capabilities similar to B<Adobe Illustrator>,
-B<CorelDraw>, B<Visio>, etc. Inkscape features include versatile
+B<CorelDraw>, B<Xara Xtreme>, etc. Inkscape features include versatile
 shapes, bezier paths, freehand drawing, multi-line text, text on path,
 alpha blending, arbitrary affine transforms, gradient and pattern fills, node
-editing, SVG-to-PNG export, grouping, layers, live clones, and more.  The interface is
+editing, many export and import formats including PNG and PDF, grouping, 
+layers, live clones, and a lot more.  The interface is
 designed to be comfortable and efficient for skilled users, while
 remaining conformant to B<GNOME> standards so that users familiar with
 other GNOME applications can learn its interface rapidly.
@@ -106,15 +107,20 @@ is the lower-left corner.
 
 =item B<-C>, B<--export-area-canvas>
 
-In PNG and PDF export, exported area is the entire canvas (page). Usually this is the default, so you
-don't need to specify this unless you are using --export-id to export a specific object.
+In PNG, PDF, PS, and EPS export, exported area is the canvas (page). This is the default
+for PNG, PDF, and PS, so you don't need to specify this unless you are using --export-id 
+to export a specific object. In EPS, however, this is not the default; moreover, for EPS, 
+the specification of the format does not allow its bounding box to extend beyond its content. 
+This means that when --export-area-canvas is used with EPS export, the canvas bounding box 
+will be trimmed inwards to the bounding box of the content if it is smaller.
 
 =item B<-D>, B<--export-area-drawing>
 
-In PNG and PDF export, exported area is the entire drawing (not canvas), i.e. the bounding box
-of all objects of the document. With this option, the exported image will
-display just the visible objects of the document without margins or cropping. For PNG, can be
-used in combination wtih --export-use-hints.
+In PNG, PDF, PS, and EPS export, exported area is the drawing (not canvas), i.e. the bounding box
+of all objects of the document (or of the exported object if --export-id is used). 
+With this option, the exported image will
+display all the visible objects of the document without margins or cropping. This is the default
+export area for EPS. For PNG, it can be used in combination wtih --export-use-hints.
 
 =item B<--export-area-snap>
 
@@ -158,10 +164,10 @@ This value overrides the --export-dpi setting (or the DPI hint if used with --ex
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-For PNG and PDF export, the id attribute value of the object that you want 
-to export from the document.  By
+For PNG, PS, EPS, and PDF export, the id attribute value of the object that you want 
+to export from the document; all other objects are not exported.  By
 default the exported area is the bounding box of the object; you can override this using
---export-area, --export-area-canvas, or --export-area-drawing.
+--export-area (PNG only) or --export-area-canvas.
 
 =item B<-j>, B<--export-id-only>
 
@@ -242,37 +248,25 @@ then the value of 255 (full opacity) will be used.
 
 =item B<-P> I<FILENAME>, B<--export-ps>=I<FILENAME>
 
-Export document(s) to PostScript format. Note that PostScript does not support transparency, so any transparency in the original SVG will be lost. This option can be used together with --export-bbox-page and --export-text-to-path.
+Export document(s) to PostScript format. Note that PostScript does not support transparency, so any transparent objects in the original SVG will be automatically rasterized. Used fonts are subset and embedded. The default export area is canvas; you can set it to drawing by --export-area-drawing. You can 
+specify --export-id to export a single object (all other are hidden); in that case 
+export area is that object's bounding box, but can be set to canvas by --export-area-canvas.
 
 =item B<-E> I<FILENAME>, B<--export-eps>=I<FILENAME>
 
-Export document(s) to Encapsulated PostScript format. Note that PostScript does not support transparency, so any transparency in the original SVG will be lost. This option can be used together with --export-bbox-page and --export-text-to-path.
+Export document(s) to Encapsulated PostScript format. Note that PostScript does not support transparency, so any transparent objects in the original SVG will be automatically rasterized. Used fonts are subset and embedded. The default export area is drawing; you can set it to canvas, however see --export-area-canvas for applicable limitation. You can specify --export-id to export a single object (all other are hidden).
 
 =item B<-A> I<FILENAME>, B<--export-pdf>=I<FILENAME>
 
-Export document(s) to PDF 1.4 format. This format preserves the 
-transparency in the original SVG (though not all PDF viewers 
-can display it yet). This option can be used together with 
---export-text-to-path (currently this is required, because 
-exporting text as text is not yet supported). 
-
-By default, the entire document
-is exported and the page size of the PDF is that of the SVG document. You can 
-specify --export-id to export a single object (with PDF page the size 
-of that object's bounding box) and --export-area-drawing to make the 
-exported PDF page show the entire drawing (by default the SVG page).
+Export document(s) to PDF format. This format preserves the 
+transparency in the original SVG. Used fonts are subset and embedded. 
+The default export area is canvas; you can set it to drawing by --export-area-drawing. You can 
+specify --export-id to export a single object (all other are hidden); in that case 
+export area is that object's bounding box, but can be set to canvas by --export-area-canvas.
 
 =item B<-T>, B<--export-text-to-path>
 
 Convert text objects to paths on export, where applicable (currently works for PS, EPS, and PDF export).
-
-=item B<-B>, B<--export-bbox-page>
-
-Export files with the bounding box set to the page size, where applicable (currently works for PS and EPS export).
-
-=item B<-F>, B<--export-embed-fonts>
-
-Embed fonts used in the document into exported PS/EPS file. Note: only Type 1 fonts can be embedded, not TrueType.
 
 =item B<-I>, B<--query-id>
 
@@ -300,6 +294,17 @@ Query the height of of the drawing or, if specified, of the object with --query-
 Prints a comma delimited listing of all objects in the SVG document with
 IDs defined, along with their x, y, width, and height values.
 
+=item B<--shell>
+
+With this parameter, Inkscape will enter an interactive command line shell mode. In this
+mode, you type in commands at the prompt and Inkscape executes them, without you having
+to run a new copy of Inkscape for each command. This feature is mostly useful for
+scripting and server uses: it adds no new capabilities but allows you to improve the
+speed and memory requirements of any script that repeatedly calls Inkscape to perform
+command line tasks (such as export or conversions). Each command in shell mode must be a
+complete valid Inkscape command line but without the Inkscape program name, for example
+"file.svg --export-pdf=file.pdf".
+
 =item B<--vacuum-defs>
 
 Remove all unused items from the <lt>defs<gt> section of the SVG file.  If this
@@ -313,9 +318,8 @@ This is assumed for -p, -e, -l, and --vacuum-defs options.
 
 =item B<--g-fatal-warnings>
 
-Part of the standard GTK option that are recognized.  This forces any GTK
-warnings to cause Inkscape to abort.  This option is listed because it gets
-used for debugging.
+This standard GTK option forces any warnings, usually harmless, to cause Inkscape to
+abort (useful for debugging).
 
 =item B<--usage>
 
@@ -325,57 +329,17 @@ Display a brief usage message.
 
 =head1 CONFIGURATION
 
-The preferences.xml configuration file located in ~/.inkscape/ is used
-to customize the application settings for the user.  
+The main configuration file is located in ~/.config/Inkscape/preferences.xml; it stores
+a variety of customization settings that you can change in Inkscape (mostly in the
+Inkscape Preferences dialog).  Also in the subdirectories there, you can place your own:
 
-=over 8
+B<$HOME>/.config/Inkscape/extensions/ - extension effects.
 
-=item B<interface> 
+B<$HOME>/.config/Inkscape/icons/ - icons.
 
-The B<interface> element(s) of the config file is used to set parameters
-related to the GUI interface, such as the open/closed status of various
-GUI elements, etc. 
+B<$HOME>/.config/Inkscape/keys/ - keyboard maps.
 
-=item B<group id="documents">
-
-The documents group is used for containing the recent files list.  Each
-document is listed with its uri (path) and name indicated.
-
-=item B<group id="template">
-
-The template group is used for storing parameters related to blank
-documents. 
-
-=item B<group id="tools">
-
-The tools group is used for storing the user style preferences for
-different event contexts (i.e., shapes, freehand or calligraphic stroke
-properties, etc.).
-
-=item B<group id="palette">
-
-The palette group allows setting of dash styles.  This allows you to
-define the stroke lengths for different kinds of dashes.
-
-=item B<group id="dialogs">
-
-The dialogs group allows persisting the position and width of each of
-the dialogs in the application, so that they'll start up in the last
-place the user had them at the next time the app is run.
-
-=item B<group id="printing">
-
-The printing group is for storing different printer settings.  Each
-setting is identified with an id.  Properties include I<bitmap>
-(true/false), I<resolution>, and I<destination>.
-
-=item B<group id="options">
-
-The options group allows persisting various user selected options
-including I<nudgedistance>, I<rotationstep>, I<cursortolerance>, and
-I<dragtolerance>. 
-
-=back
+B<$HOME>/.config/Inkscape/templates/ - new file templates.
 
 =head1 DIAGNOSTICS
 
@@ -459,17 +423,6 @@ the matching icon name.  (For example, to load the "fill_none" icon from
 a file, the bounding box seen for SVG id "fill_none" is rendered as the
 icon, whether it comes from I<fill_none.svg> or I<icons.svg>.)
 
-=head1 FILES
-
-B<$HOME>/.inkscape/preferences.xml - The user's preference settings. 
-
-B<$HOME>/.inkscape/extensions/ - Directory with user's extension effects.
-
-B<$HOME>/.inkscape/icons/ - Directory with user's icons.
-
-B<$HOME>/.inkscape/keys/ - Directory with user's keyboard maps.
-
-B<$HOME>/.inkscape/templates/ - Directory with user's new file templates.
 
 
 =head1 OTHER INFO
@@ -510,7 +463,7 @@ L<http://www.w3.org/TR/DOM-Level-2-Core/>
 To learn Inkscape's GUI operation, read the tutorials in Help > Tutorials.
 
 Apart from SVG, Inkscape can import (File > Import) most bitmap formats 
-(PNG, BMP, JPG, XPM, GIF, etc.), plain text (requires Perl), PDF, 
+(PNG, BMP, JPG, XPM, GIF, etc.), plain text (requires Perl), PS and EPS (requires Ghostscript), PDF 
 and AI format (AI version 9.0 or newer). 
 
 Inkscape exports 32-bit PNG images (File > Export) as well as AI, PS, EPS, PDF, DXF, 
@@ -595,7 +548,7 @@ making Open Source more visually stimulating to larger audiences.
 
 =head1 COPYRIGHT AND LICENSE
 
-B<Copyright (C)> 1999-2007 by Authors.  
+B<Copyright (C)> 1999-2008 by Authors.  
 
 B<Inkscape> is free software; you can redistribute it and/or modify it
 under the terms of the GPL.  

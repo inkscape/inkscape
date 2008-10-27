@@ -1,8 +1,7 @@
-/** \file
- *
- * Document metadata dialog, Gtkmm-style
- *
- * Authors:
+/** @file
+ * @brief Document metadata dialog, Gtkmm-style
+ */
+/* Authors:
  *   bulia byak <buliabyak@users.sf.net>
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -67,9 +66,8 @@ DocumentMetadata::getInstance()
 
 
 DocumentMetadata::DocumentMetadata()
-    : UI::Widget::Panel ("", "dialogs.documentmetadata", SP_VERB_DIALOG_METADATA),
-      _page_metadata1(1, 1), _page_metadata2(1, 1),
-      _prefs_path("dialogs.documentmetadata")
+    : UI::Widget::Panel ("", "/dialogs/documentmetadata", SP_VERB_DIALOG_METADATA),
+      _page_metadata1(1, 1), _page_metadata2(1, 1)
 {
     hide();
     _tt.enable();
@@ -255,9 +253,9 @@ on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

@@ -66,9 +66,6 @@ public:
       bool getSnapToBBoxPath() const {return _snap_to_bboxpath;}
       void setSnapToPageBorder(bool s) {_snap_to_page_border = s;}
       bool getSnapToPageBorder() const {return _snap_to_page_border;}
-      void setIncludeItemCenter(bool s) {_include_item_center = s;}
-      bool getIncludeItemCenter() const {return _include_item_center;}
-      void setStrictSnapping(bool enabled) {_strict_snapping = enabled;}
       void guideSnap(SnappedConstraints &sc,
                    Geom::Point const &p,
                  Geom::Point const &guide_normal) const;
@@ -77,7 +74,7 @@ public:
       bool GuidesMightSnap() const;
   
       void freeSnap(SnappedConstraints &sc,
-                      Inkscape::Snapper::PointType const &t,
+                      Inkscape::SnapPreferences::PointType const &t,
                       Geom::Point const &p,
                       bool const &first_point,
                       boost::optional<Geom::Rect> const &bbox_to_snap,
@@ -85,7 +82,7 @@ public:
                       std::vector<Geom::Point> *unselected_nodes) const;
 
       void constrainedSnap(SnappedConstraints &sc,
-                      Inkscape::Snapper::PointType const &t,
+                      Inkscape::SnapPreferences::PointType const &t,
                       Geom::Point const &p,
                       bool const &first_point,                                                                   
                       boost::optional<Geom::Rect> const &bbox_to_snap,
@@ -107,35 +104,35 @@ private:
                        Geom::Matrix const additional_affine) const;
   
     void _snapNodes(SnappedConstraints &sc,
-                      Inkscape::Snapper::PointType const &t,
+                      Inkscape::SnapPreferences::PointType const &t,
                       Geom::Point const &p, // in desktop coordinates
                       bool const &first_point,
                       std::vector<Geom::Point> *unselected_nodes) const; // in desktop coordinates
                       
     void _snapTranslatingGuideToNodes(SnappedConstraints &sc,
-                     Inkscape::Snapper::PointType const &t,
+                     Inkscape::SnapPreferences::PointType const &t,
                      Geom::Point const &p,
                      Geom::Point const &guide_normal) const;
                      
-    void _collectNodes(Inkscape::Snapper::PointType const &t,
+    void _collectNodes(Inkscape::SnapPreferences::PointType const &t,
                   bool const &first_point) const;
   
     void _snapPaths(SnappedConstraints &sc,
-                      Inkscape::Snapper::PointType const &t, 
+                      Inkscape::SnapPreferences::PointType const &t, 
                       Geom::Point const &p,	// in desktop coordinates
                       bool const &first_point,
                       std::vector<Geom::Point> *unselected_nodes, // in desktop coordinates
                       SPPath const *selected_path) const;
                       
     void _snapPathsConstrained(SnappedConstraints &sc,
-                 Inkscape::Snapper::PointType const &t,
+                 Inkscape::SnapPreferences::PointType const &t,
                  Geom::Point const &p, // in desktop coordinates
                  bool const &first_point,
                  ConstraintLine const &c) const;
   
     bool isUnselectedNode(Geom::Point const &point, std::vector<Geom::Point> const *unselected_nodes) const;
   
-    void _collectPaths(Inkscape::Snapper::PointType const &t, 
+    void _collectPaths(Inkscape::SnapPreferences::PointType const &t, 
                   bool const &first_point) const;
                   
     void _clear_paths() const;
@@ -154,7 +151,6 @@ private:
     //snap bbox corners to nodes, or nodes to bboxes.
     //(snapping to grids and guides is not affected by this)
     bool _strict_snapping; 
-    bool _include_item_center;
 };
 
 }

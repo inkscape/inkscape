@@ -1,9 +1,7 @@
-/** \file
- * Parameters for extensions.
+/** @file
+ * @brief Parameters for extensions.
  */
-
-/*
- * Author:
+/* Author:
  *   Ted Gould <ted@gould.cx>
  *   Johan Engelen <johan@shouraizou.nl>
  *
@@ -386,6 +384,8 @@ Parameter::string (std::list <std::string> &list)
     return;
 }
 
+Glib::ustring const extension_pref_root = "/extensions/";
+
 }  /* namespace Extension */
 }  /* namespace Inkscape */
 
@@ -398,4 +398,4 @@ Parameter::string (std::list <std::string> &list)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

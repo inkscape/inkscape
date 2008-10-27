@@ -1,12 +1,15 @@
-/**
- * Whiteboard connection establishment dialog
- *
- * Authors:
- * David Yip <yipdw@rose-hulman.edu>
- * Jason Segal, Jonas Collaros, Stephen Montgomery, Brandi Soggs, Matthew Weinstock (original C/Gtk version)
+/** @file
+ * @brief Whiteboard connection dialog
+ */
+/* Authors:
+ *   David Yip <yipdw@rose-hulman.edu>
+ *   Jason Segal
+ *   Jonas Collaros
+ *   Stephen Montgomery
+ *   Brandi Soggs
+ *   Matthew Weinstock (original C/Gtk version)
  *
  * Copyright (c) 2004-2005 Authors
- *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -34,7 +37,7 @@ namespace Dialog {
 
 class WhiteboardConnectDialog : public Dialog {
 public:
-	WhiteboardConnectDialog() : Dialog("dialogs.whiteboard_connect", SP_VERB_DIALOG_WHITEBOARD_CONNECT)
+	WhiteboardConnectDialog() : Dialog("/dialogs/whiteboard_connect", SP_VERB_DIALOG_WHITEBOARD_CONNECT)
 	{
 
 	}

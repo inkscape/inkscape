@@ -105,7 +105,7 @@ sp_te_get_cursor_coords (SPItem const *item, Inkscape::Text::Layout::iterator co
     Inkscape::Text::Layout const *layout = te_get_layout(item);
     double height, rotation;
     layout->queryCursorShape(position, p0, height, rotation);
-    p1 = Geom::Point(p0[NR::X] + height * sin(rotation), p0[NR::Y] - height * cos(rotation));
+    p1 = Geom::Point(p0[Geom::X] + height * sin(rotation), p0[Geom::Y] - height * cos(rotation));
 }
 
 SPStyle const * sp_te_style_at_position(SPItem const *text, Inkscape::Text::Layout::iterator const &position)

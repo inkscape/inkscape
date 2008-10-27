@@ -35,7 +35,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "sp-root.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "tools-switch.h"
 #include "message-stack.h"
 #include "selection-describer.h"
@@ -47,7 +47,7 @@ static void sp_select_context_init(SPSelectContext *select_context);
 static void sp_select_context_dispose(GObject *object);
 
 static void sp_select_context_setup(SPEventContext *ec);
-static void sp_select_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
+static void sp_select_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 static gint sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
 
@@ -179,18 +179,20 @@ sp_select_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "show");
     sp_event_context_read(ec, "transform");
 
-    if (prefs_get_int_attribute("tools.select", "gradientdrag", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/select/gradientdrag")) {
         ec->enableGrDrag();
     }
 }
 
 static void
-sp_select_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
+sp_select_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     SPSelectContext *sc = SP_SELECT_CONTEXT(ec);
+    Glib::ustring path = val->getEntryName();
 
-    if (!strcmp(key, "show")) {
-        if (val && !strcmp(val, "outline")) {
+    if (path == "show") {
+        if (val->getString() == "outline") {
             sc->_seltrans->setShow(Inkscape::SelTrans::SHOW_OUTLINE);
         } else {
             sc->_seltrans->setShow(Inkscape::SelTrans::SHOW_CONTENT);
@@ -293,7 +295,8 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
     SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
     Inkscape::SelTrans *seltrans = sc->_seltrans;
 
-    tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     // make sure we still have valid objects to move around
     if (sc->item && SP_OBJECT_DOCUMENT( SP_OBJECT(sc->item))==NULL) {
@@ -400,10 +403,12 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
     Inkscape::SelTrans *seltrans = sc->_seltrans;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    gdouble const nudge = prefs_get_double_attribute_limited("options.nudgedistance", "value", 2, 0, 1000); // in px
-    gdouble const offset = prefs_get_double_attribute_limited("options.defaultscale", "value", 2, 0, 1000);
-    tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
-    int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000); // in px
+    gdouble const offset = prefs->getDoubleLimited("/options/defaultscale/value", 2, 0, 1000);
+    tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+    int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
     // make sure we still have valid objects to move around
     if (sc->item && SP_OBJECT_DOCUMENT( SP_OBJECT(sc->item))==NULL) {

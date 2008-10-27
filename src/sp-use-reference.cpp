@@ -16,7 +16,7 @@
 
 #include "display/curve.h"
 #include "livarot/Path.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "sp-shape.h"
 #include "sp-text.h"
 #include "uri.h"
@@ -141,7 +141,8 @@ sp_usepath_href_changed(SPObject */*old_ref*/, SPObject */*ref*/, SPUsePath *off
 static void
 sp_usepath_move_compensate(Geom::Matrix const *mp, SPItem *original, SPUsePath *self)
 {
-    guint mode = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_PARALLEL);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    guint mode = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_PARALLEL);
     if (mode == SP_CLONE_COMPENSATION_NONE) {
         return;
     }
@@ -183,7 +184,8 @@ sp_usepath_move_compensate(Geom::Matrix const *mp, SPItem *original, SPUsePath *
 static void
 sp_usepath_delete_self(SPObject */*deleted*/, SPUsePath *offset)
 {
-    guint const mode = prefs_get_int_attribute("options.cloneorphans", "value", SP_CLONE_ORPHANS_UNLINK);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    guint const mode = prefs->getInt("/options/cloneorphans/value", SP_CLONE_ORPHANS_UNLINK);
 
     if (mode == SP_CLONE_ORPHANS_UNLINK) {
         // leave it be. just forget about the source

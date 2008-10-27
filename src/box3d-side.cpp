@@ -241,19 +241,20 @@ box3d_side_apply_style (Box3DSide *side) {
     Inkscape::XML::Node *repr_face = SP_OBJECT_REPR(SP_OBJECT(side));
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    Glib::ustring descr = "desktop.";
+    Glib::ustring descr = "/desktop/";
     descr += box3d_side_axes_string(side);
-    Glib::ustring cur_style = prefs->getString(descr, "style");    
+    descr += "/style";
+    Glib::ustring cur_style = prefs->getString(descr);    
     
     SPDesktop *desktop = inkscape_active_desktop();
-    bool use_current = prefs->getBool("tools.shapes.3dbox", "usecurrent", false);
+    bool use_current = prefs->getBool("/tools/shapes/3dbox/usecurrent", false);
     if (use_current && !cur_style.empty()) {
         /* use last used style */
         repr_face->setAttribute("style", cur_style.data());
     } else {
         /* use default style */
         GString *pstring = g_string_new("");
-        g_string_printf (pstring, "tools.shapes.3dbox.%s", box3d_side_axes_string(side));
+        g_string_printf (pstring, "/tools/shapes/3dbox/%s", box3d_side_axes_string(side));
         sp_desktop_apply_style_tool (desktop, repr_face, pstring->str, false);
     }
 }

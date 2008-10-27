@@ -61,23 +61,35 @@ CairoEpsOutput::check (Inkscape::Extension::Extension * module)
 }
 
 static bool
-ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level, bool texttopath, bool filtertobitmap, int resolution, bool eps = false)
+ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level, bool texttopath, bool filtertobitmap, int resolution, const gchar * const exportId, bool exportDrawing, bool exportCanvas, bool eps = false)
 {
-    CairoRenderer *renderer;
-    CairoRenderContext *ctx;
-
     sp_document_ensure_up_to_date(doc);
 
-/* Start */
+    SPItem *base = NULL;
+
+    bool pageBoundingBox = TRUE;
+    if (exportId && strcmp(exportId, "")) {
+        // we want to export the given item only
+        base = SP_ITEM(doc->getObjectById(exportId));
+        pageBoundingBox = exportCanvas;
+    }
+    else {
+        // we want to export the entire document from root
+        base = SP_ITEM(sp_document_root(doc));
+        pageBoundingBox = !exportDrawing;
+    }
+
+    if (!base)
+        return false;
+
     /* Create new arena */
-    SPItem *base = SP_ITEM(sp_document_root(doc));
     NRArena *arena = NRArena::create();
     unsigned dkey = sp_item_display_key_new(1);
-    NRArenaItem *root = sp_item_invoke_show(base, arena, dkey, SP_ITEM_SHOW_DISPLAY);
+    sp_item_invoke_show(base, arena, dkey, SP_ITEM_SHOW_DISPLAY);
 
     /* Create renderer and context */
-    renderer = new CairoRenderer();
-    ctx = renderer->createContext();
+    CairoRenderer *renderer = new CairoRenderer();
+    CairoRenderContext *ctx = renderer->createContext();
     ctx->setPSLevel(level);
     ctx->setEPS(eps);
     ctx->setTextToPath(texttopath);
@@ -87,22 +99,21 @@ ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int l
     bool ret = ctx->setPsTarget(filename);
     if(ret) {
         /* Render document */
-        ret = renderer->setupDocument(ctx, doc, TRUE, NULL);
+        ret = renderer->setupDocument(ctx, doc, pageBoundingBox, base);
         if (ret) {
             renderer->renderItem(ctx, base);
             ret = ctx->finish();
         }
     }
-    renderer->destroyContext(ctx);
 
     /* Release arena */
     sp_item_invoke_hide(base, dkey);
     nr_object_unref((NRObject *) arena);
-/* end */
+
+    renderer->destroyContext(ctx);
     delete renderer;
 
     return ret;
-
 }
 
 
@@ -122,89 +133,51 @@ CairoPsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gc
     if (ext == NULL)
         return;
 
-    const gchar *old_level = NULL;
     const gchar *new_level = NULL;
-    int level = 1;
+    int level = CAIRO_PS_LEVEL_2;
     try {
-        old_level = ext->get_param_enum("PSlevel");
         new_level = mod->get_param_enum("PSlevel");
-        if((new_level != NULL) && (g_ascii_strcasecmp("PS2", new_level) == 0))
-            level = 0;
-//        ext->set_param_enum("PSlevel", new_level);
-    }
-    catch(...) {
-        g_warning("Parameter <PSlevel> might not exists");
-    }
+        if((new_level != NULL) && !(g_ascii_strcasecmp("PS3", new_level) == 0))
+            level = CAIRO_PS_LEVEL_3;
+    } catch(...) {}
 
-    bool old_textToPath  = FALSE;
     bool new_textToPath  = FALSE;
     try {
-        old_textToPath  = ext->get_param_bool("textToPath");
         new_textToPath  = mod->get_param_bool("textToPath");
-        ext->set_param_bool("textToPath", new_textToPath);
-    }
-    catch(...) {
-        g_warning("Parameter <textToPath> might not exists");
-    }
+    } catch(...) {}
 
-    bool old_blurToBitmap  = FALSE;
     bool new_blurToBitmap  = FALSE;
     try {
-        old_blurToBitmap  = ext->get_param_bool("blurToBitmap");
         new_blurToBitmap  = mod->get_param_bool("blurToBitmap");
-        ext->set_param_bool("blurToBitmap", new_blurToBitmap);
-    }
-    catch(...) {
-        g_warning("Parameter <blurToBitmap> might not exists");
-    }
+    } catch(...) {}
 
-    int old_bitmapResolution  = 72;
     int new_bitmapResolution  = 72;
     try {
-        old_bitmapResolution  = ext->get_param_int("resolution");
         new_bitmapResolution = mod->get_param_int("resolution");
-        ext->set_param_int("resolution", new_bitmapResolution);
-    }
-    catch(...) {
-        g_warning("Parameter <resolution> might not exists");
-    }
+    } catch(...) {}
+
+    bool new_areaCanvas  = true;
+    try {
+        new_areaCanvas = mod->get_param_bool("areaCanvas");
+    } catch(...) {}
+
+    bool new_areaDrawing  = true;
+    try {
+        new_areaDrawing = mod->get_param_bool("areaDrawing");
+    } catch(...) {}
+
+    const gchar *new_exportId = NULL;
+    try {
+        new_exportId = mod->get_param_string("exportId");
+    } catch(...) {}
 
 	gchar * final_name;
 	final_name = g_strdup_printf("> %s", uri);
-	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution);
+	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaCanvas);
 	g_free(final_name);
-
-    try {
-        ext->set_param_int("resolution", old_bitmapResolution);
-    }
-    catch(...) {
-        g_warning("Parameter <resolution> might not exists");
-    }
-    try {
-        ext->set_param_bool("blurToBitmap", old_blurToBitmap);
-    }
-    catch(...) {
-        g_warning("Parameter <blurToBitmap> might not exists");
-    }
-    try {
-        ext->set_param_bool("textToPath", old_textToPath);
-    }
-    catch(...) {
-        g_warning("Parameter <textToPath> might not exists");
-    }
-    try {
-//        ext->set_param_enum("PSlevel", old_level);
-    }
-    catch(...) {
-        g_warning("Parameter <PSlevel> might not exists");
-    }
-
 
 	if (!ret)
 	    throw Inkscape::Extension::Output::save_failed();
-
-	return;
-
 }
 
 
@@ -224,89 +197,51 @@ CairoEpsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const g
     if (ext == NULL)
         return;
 
-    const gchar *old_level = NULL;
     const gchar *new_level = NULL;
-    int level = 1;
+    int level = CAIRO_PS_LEVEL_2;
     try {
-        old_level = ext->get_param_enum("PSlevel");
         new_level = mod->get_param_enum("PSlevel");
-        if((new_level != NULL) && (g_ascii_strcasecmp("PS2", new_level) == 0))
-            level = 0;
-//        ext->set_param_enum("PSlevel", new_level);
-    }
-    catch(...) {
-        g_warning("Parameter <PSlevel> might not exists");
-    }
+        if((new_level != NULL) && !(g_ascii_strcasecmp("PS3", new_level) == 0))
+            level = CAIRO_PS_LEVEL_3;
+    } catch(...) {}
 
-    bool old_textToPath  = FALSE;
     bool new_textToPath  = FALSE;
     try {
-        old_textToPath  = ext->get_param_bool("textToPath");
         new_textToPath  = mod->get_param_bool("textToPath");
-        ext->set_param_bool("textToPath", new_textToPath);
-    }
-    catch(...) {
-        g_warning("Parameter <textToPath> might not exists");
-    }
+    } catch(...) {}
 
-    bool old_blurToBitmap  = FALSE;
     bool new_blurToBitmap  = FALSE;
     try {
-        old_blurToBitmap  = ext->get_param_bool("blurToBitmap");
         new_blurToBitmap  = mod->get_param_bool("blurToBitmap");
-        ext->set_param_bool("blurToBitmap", new_blurToBitmap);
-    }
-    catch(...) {
-        g_warning("Parameter <blurToBitmap> might not exists");
-    }
+    } catch(...) {}
 
-    int old_bitmapResolution  = 72;
     int new_bitmapResolution  = 72;
     try {
-        old_bitmapResolution  = ext->get_param_int("resolution");
         new_bitmapResolution = mod->get_param_int("resolution");
-        ext->set_param_int("resolution", new_bitmapResolution);
-    }
-    catch(...) {
-        g_warning("Parameter <resolution> might not exists");
-    }
+    } catch(...) {}
+
+    bool new_areaCanvas  = true;
+    try {
+        new_areaCanvas = mod->get_param_bool("areaCanvas");
+    } catch(...) {}
+
+    bool new_areaDrawing  = true;
+    try {
+        new_areaDrawing = mod->get_param_bool("areaDrawing");
+    } catch(...) {}
+
+    const gchar *new_exportId = NULL;
+    try {
+        new_exportId = mod->get_param_string("exportId");
+    } catch(...) {}
 
 	gchar * final_name;
 	final_name = g_strdup_printf("> %s", uri);
-	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution, true);
+	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaCanvas, true);
 	g_free(final_name);
-
-    try {
-        ext->set_param_int("resolution", old_bitmapResolution);
-    }
-    catch(...) {
-        g_warning("Parameter <resolution> might not exists");
-    }
-    try {
-        ext->set_param_bool("blurToBitmap", old_blurToBitmap);
-    }
-    catch(...) {
-        g_warning("Parameter <blurToBitmap> might not exists");
-    }
-    try {
-        ext->set_param_bool("textToPath", old_textToPath);
-    }
-    catch(...) {
-        g_warning("Parameter <textToPath> might not exists");
-    }
-    try {
-//        ext->set_param_enum("PSlevel", old_level);
-    }
-    catch(...) {
-        g_warning("Parameter <PSlevel> might not exists");
-    }
-
 
 	if (!ret)
 	    throw Inkscape::Extension::Output::save_failed();
-
-	return;
-
 }
 
 
@@ -344,9 +279,12 @@ CairoPsOutput::init (void)
                 "<_item value='PS2'>" N_("PostScript level 2") "</_item>\n"
 #endif
             "</param>\n"
+			"<param name=\"areaCanvas\" gui-text=\"" N_("Export area is whole canvas") "\" type=\"boolean\">true</param>\n"
+			"<param name=\"areaDrawing\" gui-text=\"" N_("Export area is the drawing") "\" type=\"boolean\">true</param>\n"
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert blur effects to bitmaps") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"resolution\" gui-text=\"" N_("Preferred resolution (DPI) of bitmaps") "\" type=\"int\" min=\"72\" max=\"2400\">90</param>\n"
+			"<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID") "\" type=\"string\"></param>\n"
 			"<output>\n"
 				"<extension>.ps</extension>\n"
                                 "<mimetype>image/x-postscript</mimetype>\n"
@@ -378,9 +316,12 @@ CairoEpsOutput::init (void)
                 "<_item value='PS2'>" N_("PostScript level 2") "</_item>\n"
 #endif
             "</param>\n"
+			"<param name=\"areaCanvas\" gui-text=\"" N_("Export area is whole canvas") "\" type=\"boolean\">true</param>\n"
+			"<param name=\"areaDrawing\" gui-text=\"" N_("Export area is the drawing") "\" type=\"boolean\">true</param>\n"
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert blur effects to bitmaps") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"resolution\" gui-text=\"" N_("Preferred resolution (DPI) of bitmaps") "\" type=\"int\" min=\"72\" max=\"2400\">90</param>\n"
+			"<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID") "\" type=\"string\"></param>\n"
 			"<output>\n"
 				"<extension>.eps</extension>\n"
                                 "<mimetype>image/x-e-postscript</mimetype>\n"

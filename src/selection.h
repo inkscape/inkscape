@@ -268,13 +268,13 @@ public:
      * @brief Gets the selection's snap points.
      * @return Selection's snap points
      */
-    std::vector<Geom::Point> getSnapPoints(bool includeItemCenter) const;
+    std::vector<Geom::Point> getSnapPoints(SnapPreferences const *snapprefs) const;
 
     /**
      * @brief Gets the snap points of a selection that form a convex hull.
      * @return Selection's convex hull points
      */
-    std::vector<Geom::Point> getSnapPointsConvexHull() const;
+    std::vector<Geom::Point> getSnapPointsConvexHull(SnapPreferences const *snapprefs) const;
 
     /**
      * @brief Connects a slot to be notified of selection changes

@@ -13,10 +13,10 @@
 #include <gtkmm/box.h>
 #include <gtkmm/spinbutton.h>
 
-#include <xml/node.h>
-
+#include "xml/node.h"
 #include "../extension.h"
 #include "bool.h"
+#include "preferences.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -36,7 +36,8 @@ ParamBool::ParamBool (const gchar * name, const gchar * guitext, const gchar * d
     }
 
     gchar * pref_name = this->pref_name();
-    _value = (bool)prefs_get_int_attribute(PREF_DIR, pref_name, _value);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    _value = prefs->getBool(extension_pref_root + pref_name, _value);
     g_free(pref_name);
 
     return;
@@ -57,7 +58,8 @@ ParamBool::set( bool in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
     _value = in;
 
     gchar * prefname = this->pref_name();
-    prefs_set_int_attribute(PREF_DIR, prefname, _value == true ? 1 : 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool(extension_pref_root + prefname, _value);
     g_free(prefname);
 
     return _value;
@@ -150,3 +152,14 @@ ParamBool::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signa
 
 }  /* namespace Extension */
 }  /* namespace Inkscape */
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

@@ -41,7 +41,7 @@
 #include "display/canvas-bpath.h"
 #include "display/curve.h"
 #include <glibmm/i18n.h>
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #include "xml/repr.h"
 #include "xml/repr-sorting.h"
@@ -958,14 +958,16 @@ sp_selected_path_outline(SPDesktop *desktop)
 void
 sp_selected_path_offset(SPDesktop *desktop)
 {
-    double prefOffset = prefs_get_double_attribute("options.defaultoffsetwidth", "value", 1.0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    double prefOffset = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0);
 
     sp_selected_path_do_offset(desktop, true, prefOffset);
 }
 void
 sp_selected_path_inset(SPDesktop *desktop)
 {
-    double prefOffset = prefs_get_double_attribute("options.defaultoffsetwidth", "value", 1.0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    double prefOffset = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0);
 
     sp_selected_path_do_offset(desktop, false, prefOffset);
 }
@@ -1090,9 +1092,8 @@ sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updat
         }
 
         {
-            double prefOffset = 1.0;
-            prefOffset = prefs_get_double_attribute("options.defaultoffsetwidth", "value", prefOffset);
-            o_width = prefOffset;
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            o_width = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0);
         }
 
         if (o_width < 0.01)
@@ -1635,65 +1636,66 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
                                 float angleLimit, bool breakableAngles,
                                 bool modifySelection)
 {
-  bool simplifyIndividualPaths =
-    (bool) prefs_get_int_attribute("options.simplifyindividualpaths", "value", 0);
-  
-  gchar *simplificationType;
-  if (simplifyIndividualPaths) {
-      simplificationType = _("Simplifying paths (separately):");
-  } else {
-      simplificationType = _("Simplifying paths:");
-  }
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool simplifyIndividualPaths = prefs->getBool("/options/simplifyindividualpaths/value");
 
-  bool didSomething = false;
+    gchar *simplificationType;
+    if (simplifyIndividualPaths) {
+        simplificationType = _("Simplifying paths (separately):");
+    } else {
+        simplificationType = _("Simplifying paths:");
+    }
 
-  boost::optional<Geom::Rect> selectionBbox = selection->bounds();
-  if (!selectionBbox) {
-    return false;
-  }
-  gdouble selectionSize  = L2(selectionBbox->dimensions());
+    bool didSomething = false;
 
-  gdouble simplifySize  = selectionSize;
-  
-  int pathsSimplified = 0;
-  int totalPathCount  = g_slist_length(items);
-  
-  // set "busy" cursor
-  desktop->setWaitingCursor();
-  
-  for (; items != NULL; items = items->next) {
-      SPItem *item = (SPItem *) items->data;
-      
-      if (!(SP_IS_GROUP(item) || SP_IS_SHAPE(item) || SP_IS_TEXT(item)))
+    boost::optional<Geom::Rect> selectionBbox = selection->bounds();
+    if (!selectionBbox) {
+        return false;
+    }
+    gdouble selectionSize  = L2(selectionBbox->dimensions());
+
+    gdouble simplifySize  = selectionSize;
+
+    int pathsSimplified = 0;
+    int totalPathCount  = g_slist_length(items);
+
+    // set "busy" cursor
+    desktop->setWaitingCursor();
+
+    for (; items != NULL; items = items->next) {
+        SPItem *item = (SPItem *) items->data;
+
+        if (!(SP_IS_GROUP(item) || SP_IS_SHAPE(item) || SP_IS_TEXT(item)))
           continue;
 
-      if (simplifyIndividualPaths) {
-          boost::optional<Geom::Rect> itemBbox = item->getBounds(sp_item_i2d_affine(item));
-          if (itemBbox) {
-              simplifySize      = L2(itemBbox->dimensions());
-          } else {
-              simplifySize      = 0;
-          }
-      }
+        if (simplifyIndividualPaths) {
+            boost::optional<Geom::Rect> itemBbox = item->getBounds(sp_item_i2d_affine(item));
+            if (itemBbox) {
+                simplifySize      = L2(itemBbox->dimensions());
+            } else {
+                simplifySize      = 0;
+            }
+        }
 
-      pathsSimplified++;
+        pathsSimplified++;
 
-      if (pathsSimplified % 20 == 0) {
-        gchar *message = g_strdup_printf(_("%s <b>%d</b> of <b>%d</b> paths simplified..."), simplificationType, pathsSimplified, totalPathCount);
-        desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, message);
-      }
+        if (pathsSimplified % 20 == 0) {
+            gchar *message = g_strdup_printf(_("%s <b>%d</b> of <b>%d</b> paths simplified..."),
+                simplificationType, pathsSimplified, totalPathCount);
+            desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, message);
+        }
 
-      didSomething |= sp_selected_path_simplify_item(desktop, selection, item,
-                          threshold, justCoalesce, angleLimit, breakableAngles, simplifySize, modifySelection);
-  }
+        didSomething |= sp_selected_path_simplify_item(desktop, selection, item,
+            threshold, justCoalesce, angleLimit, breakableAngles, simplifySize, modifySelection);
+    }
 
-  desktop->clearWaitingCursor();
+    desktop->clearWaitingCursor();
 
-  if (pathsSimplified > 20) {
-    desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, g_strdup_printf(_("<b>%d</b> paths simplified."), pathsSimplified));
-  }
-  
-  return didSomething;
+    if (pathsSimplified > 20) {
+        desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, g_strdup_printf(_("<b>%d</b> paths simplified."), pathsSimplified));
+    }
+
+    return didSomething;
 }
 
 void
@@ -1732,10 +1734,10 @@ static gdouble simplifyMultiply = 1.0;
 void
 sp_selected_path_simplify(SPDesktop *desktop)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gdouble simplifyThreshold =
-        prefs_get_double_attribute("options.simplifythreshold", "value", 0.003);
-    bool simplifyJustCoalesce =
-        (bool) prefs_get_int_attribute("options.simplifyjustcoalesce", "value", 0);
+        prefs->getDouble("/options/simplifythreshold/value", 0.003);
+    bool simplifyJustCoalesce = prefs->getBool("/options/simplifyjustcoalesce/value", 0);
 
     //Get the current time
     GTimeVal currentTimeVal;

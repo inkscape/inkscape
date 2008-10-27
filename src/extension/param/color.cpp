@@ -50,7 +50,7 @@ ParamColor::set( guint32 in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*
     string(value);
     
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setString(PREF_DIR, prefname, value);
+    prefs->setString(extension_pref_root + prefname, value);
     g_free(prefname);
 
     return _value;
@@ -66,7 +66,7 @@ ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar *
 
     gchar * pref_name = this->pref_name();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring paramval = prefs->getString(PREF_DIR, pref_name);
+    Glib::ustring paramval = prefs->getString(extension_pref_root + pref_name);
     g_free(pref_name);
 
     if (!paramval.empty())

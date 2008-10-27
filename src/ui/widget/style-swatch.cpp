@@ -1,10 +1,11 @@
-/**
- * \brief Static style swatch (fill, stroke, opacity)
- *
- * Author:
+/** @file
+ * @brief Static style swatch (fill, stroke, opacity)
+ */
+/* Authors:
  *   buliabyak@gmail.com
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  *
- * Copyright (C) 2005 author
+ * Copyright (C) 2005-2008 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -26,10 +27,10 @@
 #include "sp-radial-gradient-fns.h"
 #include "sp-pattern.h"
 #include "xml/repr.h"
-#include "xml/node-event-vector.h"
 #include "widgets/widget-sizes.h"
 #include "helper/units.h"
 #include "helper/action.h"
+#include "preferences.h"
 #include "inkscape.h"
 
 enum {
@@ -37,74 +38,80 @@ enum {
     SS_STROKE
 };
 
-static void style_swatch_attr_changed( Inkscape::XML::Node *repr, gchar const *name,
-                                       gchar const */*old_value*/, gchar const */*new_value*/,
-                                       bool /*is_interactive*/, gpointer data)
-{
-    Inkscape::UI::Widget::StyleSwatch *ss = (Inkscape::UI::Widget::StyleSwatch *) data;
-
-    if (!strcmp (name, "style")) { // FIXME: watching only for the style attr, no CSS attrs
-        SPCSSAttr *css = sp_repr_css_attr_inherited(repr, "style");
-        ss->setStyle (css);
-    }
-}
-
-
-static Inkscape::XML::NodeEventVector style_swatch_repr_events =
-{
-    NULL, /* child_added */
-    NULL, /* child_removed */
-    style_swatch_attr_changed,
-    NULL, /* content_changed */
-    NULL  /* order_changed */
-};
-
-
-static void style_swatch_tool_attr_changed( Inkscape::XML::Node */*repr*/, gchar const *name,
-                                            gchar const */*old_value*/, gchar const *new_value,
-                                            bool /*is_interactive*/, gpointer data)
-{
-    Inkscape::UI::Widget::StyleSwatch *ss = (Inkscape::UI::Widget::StyleSwatch *) data;
-
-    if (!strcmp (name, "usecurrent")) { // FIXME: watching only for the style attr, no CSS attrs
-        if (!strcmp (new_value, "1")) {
-            ss->setWatched (inkscape_get_repr(INKSCAPE, "desktop"), inkscape_get_repr(INKSCAPE, ss->_tool_path));
-        } else {
-            ss->setWatched (inkscape_get_repr(INKSCAPE, ss->_tool_path), NULL);
-        }
-        // UGLY HACK: we have to reconnect to the watched tool repr again, retrieving it from the stored
-        // tool_path, because the actual repr keeps shifting with each change, no idea why
-        ss->setWatchedTool(ss->_tool_path, false);
-    }
-}
-
-static Inkscape::XML::NodeEventVector style_swatch_tool_repr_events =
-{
-    NULL, /* child_added */
-    NULL, /* child_removed */
-    style_swatch_tool_attr_changed,
-    NULL, /* content_changed */
-    NULL  /* order_changed */
-};
-
 namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * @brief Watches whether the tool uses the current style
+ */
+class StyleSwatch::ToolObserver : public Inkscape::Preferences::Observer {
+public:
+    ToolObserver(Glib::ustring const &path, StyleSwatch &ss) : 
+        Observer(path),
+        _style_swatch(ss)
+    {}
+    virtual void notify(Inkscape::Preferences::Entry const &val);
+private:
+    StyleSwatch &_style_swatch;
+};
+
+/**
+ * @brief Watches for changes in the observed style pref
+ */
+class StyleSwatch::StyleObserver : public Inkscape::Preferences::Observer {
+public:
+    StyleObserver(Glib::ustring const &path, StyleSwatch &ss) :
+        Observer(path),
+        _style_swatch(ss)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        this->notify(prefs->getEntry(path));
+    }
+    virtual void notify(Inkscape::Preferences::Entry const &val) {
+        SPCSSAttr *css = val.getInheritedStyle();
+        _style_swatch.setStyle(css);
+        sp_repr_css_attr_unref(css);
+    }
+private:
+    StyleSwatch &_style_swatch;
+};
+
+void StyleSwatch::ToolObserver::notify(Inkscape::Preferences::Entry const &val)
+{
+    bool usecurrent = val.getBool();
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (_style_swatch._style_obs) delete _style_swatch._style_obs;
+
+    if (usecurrent) {
+        _style_swatch._style_obs = new StyleObserver("/desktop/style", _style_swatch);
+        
+        // If desktop's last-set style is empty, a tool uses its own fixed style even if set to use
+        // last-set (so long as it's empty). To correctly show this, we get the tool's style
+        // if the desktop's style is empty.
+        SPCSSAttr *css = prefs->getStyle("/desktop/style");
+        if (!css->attributeList()) {
+            SPCSSAttr *css2 = prefs->getInheritedStyle(_style_swatch._tool_path + "/style");
+            _style_swatch.setStyle(css2);
+            sp_repr_css_attr_unref(css2);
+        }
+        sp_repr_css_attr_unref(css);
+    } else {
+        _style_swatch._style_obs = new StyleObserver(_style_swatch._tool_path + "/style", _style_swatch);
+    }
+    prefs->addObserver(*_style_swatch._style_obs);
+}
+
 StyleSwatch::StyleSwatch(SPCSSAttr *css, gchar const *main_tip)
     :
-      _tool_path(NULL),
-      _desktop(0),
-      _verb_t(0),
-      _css (NULL),
-
-      _watched(NULL),
-      _watched_tool(NULL),
-
+      _desktop(NULL),
+      _verb_t(NULL),
+      _css(NULL),
+      _tool_obs(NULL),
+      _style_obs(NULL),
       _table(2, 6),
-
       _sw_unit(NULL),
-
       _tooltips ()
 {
     _label[SS_FILL].set_markup(_("Fill:"));
@@ -185,72 +192,33 @@ StyleSwatch::~StyleSwatch()
         delete _color_preview[i];
     }
 
-    if (_watched) {
-        sp_repr_remove_listener_by_data(_watched, this);
-        Inkscape::GC::release(_watched);
-        _watched = NULL;
-    }
-
-    if (_watched_tool) {
-        sp_repr_remove_listener_by_data(_watched_tool, this);
-        Inkscape::GC::release(_watched_tool);
-        _watched_tool = NULL;
-        _tool_path = NULL;
-    }
-}
-
-void
-StyleSwatch::setWatched(Inkscape::XML::Node *watched, Inkscape::XML::Node *secondary)
-{
-    if (_watched) {
-        sp_repr_remove_listener_by_data(_watched, this);
-        Inkscape::GC::release(_watched);
-        _watched = NULL;
-    }
-
-    if (watched) {
-        _watched = watched;
-        Inkscape::GC::anchor(_watched);
-        sp_repr_add_listener(_watched, &style_swatch_repr_events, this);
-        sp_repr_synthesize_events(_watched, &style_swatch_repr_events, this);
-
-        // If desktop's last-set style is empty, a tool uses its own fixed style even if set to use
-        // last-set (so long as it's empty). To correctly show this, we're passed the second repr,
-        // that of the tool prefs node, from which we now setStyle if the watched repr's style is
-        // empty.
-        if (secondary) {
-            SPCSSAttr *css = sp_repr_css_attr_inherited(watched, "style");
-            if (!css->attributeList()) { // is css empty?
-                SPCSSAttr *css_secondary = sp_repr_css_attr_inherited(secondary, "style");
-                this->setStyle (css_secondary);
-            }
-        }
-    }
+    if (_style_obs) delete _style_obs;
+    if (_tool_obs) delete _tool_obs;
 }
 
 void
 StyleSwatch::setWatchedTool(const char *path, bool synthesize)
 {
-    if (_watched_tool) {
-        sp_repr_remove_listener_by_data(_watched_tool, this);
-        Inkscape::GC::release(_watched_tool);
-        _watched_tool = NULL;
-        _tool_path = NULL;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    
+    if (_tool_obs) {
+        delete _tool_obs;
+        _tool_obs = NULL;
     }
 
     if (path) {
-        _tool_path = (char *) path;
-        Inkscape::XML::Node *watched_tool = inkscape_get_repr(INKSCAPE, path);
-        if (watched_tool) {
-            _watched_tool = watched_tool;
-            Inkscape::GC::anchor(_watched_tool);
-            sp_repr_add_listener(_watched_tool, &style_swatch_tool_repr_events, this);
-            if (synthesize) {
-                sp_repr_synthesize_events(_watched_tool, &style_swatch_tool_repr_events, this);
-            }
-        }
+        _tool_path = path;
+        _tool_obs = new ToolObserver(_tool_path + "/usecurrent", *this);
+        prefs->addObserver(*_tool_obs);
+    } else {
+        _tool_path = "";
     }
-
+    
+    // hack until there is a real synthesize events function for prefs,
+    // which shouldn't be hard to write once there is sufficient need for it
+    if (synthesize && _tool_obs) {
+        _tool_obs->notify(prefs->getEntry(_tool_path + "/usecurrent"));
+    }
 }
 
 

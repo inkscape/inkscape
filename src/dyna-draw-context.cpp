@@ -46,7 +46,7 @@
 #include "desktop-affine.h"
 #include "desktop-style.h"
 #include "message-context.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "pixmaps/cursor-calligraphy.xpm"
 #include "libnr/nr-matrix-ops.h"
 #include "libnr/nr-scale-translate-ops.h"
@@ -84,7 +84,7 @@ static void sp_dyna_draw_context_init(SPDynaDrawContext *ddc);
 static void sp_dyna_draw_context_dispose(GObject *object);
 
 static void sp_dyna_draw_context_setup(SPEventContext *ec);
-static void sp_dyna_draw_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
+static void sp_dyna_draw_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *value);
 static gint sp_dyna_draw_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
 static void clear_current(SPDynaDrawContext *dc);
@@ -236,27 +236,28 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "cap_rounding");
 
     ddc->is_drawing = false;
-
     ddc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 
-    if (prefs_get_int_attribute("tools.calligraphic", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/calligraphic/selcue")) {
         ec->enableSelectionCue();
     }
 }
 
 static void
-sp_dyna_draw_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
+sp_dyna_draw_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     SPDynaDrawContext *ddc = SP_DYNA_DRAW_CONTEXT(ec);
+    Glib::ustring path = val->getEntryName();
 
-    if (!strcmp(key, "tracebackground")) {
-        ddc->trace_bg = (val && strcmp(val, "0"));
-    } else if (!strcmp(key, "keep_selected")) {
-        ddc->keep_selected = (val && strcmp(val, "0"));
+    if (path == "tracebackground") {
+        ddc->trace_bg = val->getBool();
+    } else if (path == "keep_selected") {
+        ddc->keep_selected = val->getBool();
     } else {
         //pass on up to parent class to handle common attributes.
         if ( dd_parent_class->set ) {
-            dd_parent_class->set(ec, key, val);
+            dd_parent_class->set(ec, val);
         }
     }
 
@@ -337,7 +338,7 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, Geom::Point p)
     // This prevents flips, blobs, and jerks caused by microscopic tremor of the tablet pen,
     // especially bothersome at the start of the stroke where we don't yet have the inertia to
     // smooth them out.
-    if ( NR::L2(force) < DYNA_EPSILON || (dc->vel_max < DYNA_VEL_START && NR::L2(force) < DYNA_EPSILON_START)) {
+    if ( Geom::L2(force) < DYNA_EPSILON || (dc->vel_max < DYNA_VEL_START && Geom::L2(force) < DYNA_EPSILON_START)) {
         return FALSE;
     }
 
@@ -346,8 +347,8 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, Geom::Point p)
     /* Calculate new velocity */
     dc->vel += dc->acc;
 
-    if (NR::L2(dc->vel) > dc->vel_max)
-        dc->vel_max = NR::L2(dc->vel);
+    if (Geom::L2(dc->vel) > dc->vel_max)
+        dc->vel_max = Geom::L2(dc->vel);
 
     /* Calculate angle of drawing tool */
 
@@ -371,11 +372,11 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, Geom::Point p)
     }
 
     // 2. perpendicular to dc->vel (absolutely non-flat nib):
-    gdouble const mag_vel = NR::L2(dc->vel);
+    gdouble const mag_vel = Geom::L2(dc->vel);
     if ( mag_vel < DYNA_EPSILON ) {
         return FALSE;
     }
-    Geom::Point ang2 = NR::rot90(dc->vel) / mag_vel;
+    Geom::Point ang2 = Geom::rot90(dc->vel) / mag_vel;
 
     // 3. Average them using flatness parameter:
     // calculate angles
@@ -397,8 +398,8 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, Geom::Point p)
 
     // Try to detect a sudden flip when the new angle differs too much from the previous for the
     // current velocity; in that case discard this move
-    double angle_delta = NR::L2(Geom::Point (cos (new_ang), sin (new_ang)) - dc->ang);
-    if ( angle_delta / NR::L2(dc->vel) > 4000 ) {
+    double angle_delta = Geom::L2(Geom::Point (cos (new_ang), sin (new_ang)) - dc->ang);
+    if ( angle_delta / Geom::L2(dc->vel) > 4000 ) {
         return FALSE;
     }
 
@@ -437,8 +438,8 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
     if (dc->trace_bg) {
         // pick single pixel
         NRPixBlock pb;
-        int x = (int) floor(brush_w[NR::X]);
-        int y = (int) floor(brush_w[NR::Y]);
+        int x = (int) floor(brush_w[Geom::X]);
+        int y = (int) floor(brush_w[Geom::Y]);
         nr_pixblock_setup_fast(&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, x, y, x+1, y+1, TRUE);
         sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(sp_desktop_drawing(SP_EVENT_CONTEXT(dc)->desktop)), &pb);
         const unsigned char *s = NR_PIXBLOCK_PX(&pb);
@@ -453,7 +454,7 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
         //g_print ("L %g thick %g\n", L, trace_thick);
     }
 
-    double width = (pressure_thick * trace_thick - vel_thin * NR::L2(dc->vel)) * dc->width;
+    double width = (pressure_thick * trace_thick - vel_thin * Geom::L2(dc->vel)) * dc->width;
 
     double tremble_left = 0, tremble_right = 0;
     if (dc->tremor > 0) {
@@ -473,8 +474,8 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
         // (2) deflection depends on width, but is upped for small widths for better visual uniformity across widths;
         // (3) deflection somewhat depends on speed, to prevent fast strokes looking
         // comparatively smooth and slow ones excessively jittery
-        tremble_left  = (y1)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*NR::L2(dc->vel));
-        tremble_right = (y2)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*NR::L2(dc->vel));
+        tremble_left  = (y1)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*Geom::L2(dc->vel));
+        tremble_right = (y2)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*Geom::L2(dc->vel));
     }
 
     if ( width < 0.02 * dc->width ) {
@@ -644,11 +645,11 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     // mass recommended; with zero mass, jerks are still quite noticeable).
 
                     double speed = 1;
-                    if (NR::L2(dc->hatch_last_nearest) != 0) {
+                    if (Geom::L2(dc->hatch_last_nearest) != 0) {
                         // the distance nearest moved since the last motion event
-                        double nearest_moved = NR::L2(nearest - dc->hatch_last_nearest);
+                        double nearest_moved = Geom::L2(nearest - dc->hatch_last_nearest);
                         // the distance pointer moved since the last motion event
-                        double pointer_moved = NR::L2(pointer - dc->hatch_last_pointer);
+                        double pointer_moved = Geom::L2(pointer - dc->hatch_last_pointer);
                         // store them in stacks limited to SPEED_ELEMENTS
                         dc->hatch_nearest_past.push_front(nearest_moved);
                         if (dc->hatch_nearest_past.size() > SPEED_ELEMENTS)
@@ -686,7 +687,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                         // summed, to detect if we accidentally flipped to the other side of the
                         // guide
                         double dot = NR::dot (pointer - nearest, dc->hatch_vector_accumulated);
-                        dot /= NR::L2(pointer - nearest) * NR::L2(dc->hatch_vector_accumulated);
+                        dot /= Geom::L2(pointer - nearest) * Geom::L2(dc->hatch_vector_accumulated);
 
                         if (dc->hatch_spacing != 0) { // spacing was already set
                             double target;
@@ -769,7 +770,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 } else {
                     // Not drawing but spacing set: gray, center snapped, fixed radius
                     Geom::Point c = (nearest + dc->hatch_spacing * hatch_unit_vector) * motion_to_curve.inverse();
-                    if (!IS_NAN(c[NR::X]) && !IS_NAN(c[NR::Y])) {
+                    if (!IS_NAN(c[Geom::X]) && !IS_NAN(c[Geom::Y])) {
                         NR::Matrix const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
                         sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
@@ -973,7 +974,7 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
             Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
             /* Set style */
-            sp_desktop_apply_style_tool (desktop, repr, "tools.calligraphic", false);
+            sp_desktop_apply_style_tool (desktop, repr, "/tools/calligraphic", false);
 
             dc->repr = repr;
 
@@ -1014,11 +1015,11 @@ add_cap(SPCurve *curve,
         Geom::Point const &to, 
         double rounding)
 {
-    if (NR::L2( to - from ) > DYNA_EPSILON) {
+    if (Geom::L2( to - from ) > DYNA_EPSILON) {
         Geom::Point vel = rounding * NR::rot90( to - from ) / sqrt(2.0);
-        double mag = NR::L2(vel);
+        double mag = Geom::L2(vel);
 
-        Geom::Point v = mag * NR::rot90( to - from ) / NR::L2( to - from );
+        Geom::Point v = mag * NR::rot90( to - from ) / Geom::L2( to - from );
         curve->curveto(from + v, to + v, to);
     }
 }
@@ -1195,11 +1196,11 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve);
             curve->unref();
 
-            guint32 fillColor = sp_desktop_get_color_tool (desktop, "tools.calligraphic", true);
-            //guint32 strokeColor = sp_desktop_get_color_tool (desktop, "tools.calligraphic", false);
-            double opacity = sp_desktop_get_master_opacity_tool (desktop, "tools.calligraphic");
-            double fillOpacity = sp_desktop_get_opacity_tool (desktop, "tools.calligraphic", true);
-            //double strokeOpacity = sp_desktop_get_opacity_tool (desktop, "tools.calligraphic", false);
+            guint32 fillColor = sp_desktop_get_color_tool (desktop, "/tools/calligraphic", true);
+            //guint32 strokeColor = sp_desktop_get_color_tool (desktop, "/tools/calligraphic", false);
+            double opacity = sp_desktop_get_master_opacity_tool (desktop, "/tools/calligraphic");
+            double fillOpacity = sp_desktop_get_opacity_tool (desktop, "/tools/calligraphic", true);
+            //double strokeOpacity = sp_desktop_get_opacity_tool (desktop, "/tools/calligraphic", false);
             sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cbp), ((fillColor & 0xffffff00) | SP_COLOR_F_TO_U(opacity*fillOpacity)), SP_WIND_RULE_EVENODD);
             //on second thougtht don't do stroke yet because we don't have stoke-width yet and because stoke appears between segments while drawing
             //sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cbp), ((strokeColor & 0xffffff00) | SP_COLOR_F_TO_U(opacity*strokeOpacity)), 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);

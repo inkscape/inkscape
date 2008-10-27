@@ -39,7 +39,7 @@
 #include "object-edit.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "context-fns.h"
 
 //static const double goldenratio = 1.61803398874989484820; // golden ratio
@@ -49,7 +49,7 @@ static void sp_rect_context_init(SPRectContext *rect_context);
 static void sp_rect_context_dispose(GObject *object);
 
 static void sp_rect_context_setup(SPEventContext *ec);
-static void sp_rect_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
+static void sp_rect_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 
 static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 static gint sp_rect_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
@@ -218,31 +218,29 @@ static void sp_rect_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "rx");
     sp_event_context_read(ec, "ry");
 
-    if (prefs_get_int_attribute("tools.shapes", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/shapes/selcue")) {
         ec->enableSelectionCue();
     }
 
-    if (prefs_get_int_attribute("tools.shapes", "gradientdrag", 0) != 0) {
+    if (prefs->getBool("/tools/shapes/gradientdrag")) {
         ec->enableGrDrag();
     }
 
     rc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 }
 
-static void sp_rect_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
+static void sp_rect_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     SPRectContext *rc = SP_RECT_CONTEXT(ec);
 
     /* fixme: Proper error handling for non-numeric data.  Use a locale-independent function like
      * g_ascii_strtod (or a thin wrapper that does the right thing for invalid values inf/nan). */
-    if ( strcmp(key, "rx") == 0 ) {
-        rc->rx = ( val
-                         ? g_ascii_strtod (val, NULL)
-                         : 0.0 );
-    } else if ( strcmp(key, "ry") == 0 ) {
-        rc->ry = ( val
-                         ? g_ascii_strtod (val, NULL)
-                         : 0.0 );
+    Glib::ustring name = val->getEntryName();
+    if ( name == "rx" ) {
+        rc->rx = val->getDoubleLimited(); // prevents NaN and +/-Inf from messing up
+    } else if ( name == "ry" ) {
+        rc->ry = val->getDoubleLimited();
     }
 }
 
@@ -279,8 +277,9 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     SPRectContext *rc = SP_RECT_CONTEXT(event_context);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
+    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     gint ret = FALSE;
     switch (event->type) {
@@ -306,7 +305,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             /* Snap center */
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
-            m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, button_dt);
+            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, button_dt);
             rc->center = from_2geom(button_dt);
             
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -476,7 +475,7 @@ static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
         Inkscape::XML::Node *repr = xml_doc->createElement("svg:rect");
 
         /* Set style */
-        sp_desktop_apply_style_tool (desktop, repr, "tools.shapes.rect", false);
+        sp_desktop_apply_style_tool (desktop, repr, "/tools/shapes/rect", false);
 
         rc.item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
         Inkscape::GC::release(repr);

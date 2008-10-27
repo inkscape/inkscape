@@ -27,7 +27,7 @@
 #include "message-context.h"
 #include "modifier-fns.h"
 #include "sp-path.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "snap.h"
 #include "pixmaps/cursor-pencil.xpm"
 #include "display/bezier-utils.h"
@@ -130,7 +130,8 @@ sp_pencil_context_init(SPPencilContext *pc)
 static void
 sp_pencil_context_setup(SPEventContext *ec)
 {
-    if (prefs_get_int_attribute("tools.freehand.pencil", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/freehand/pencil/selcue")) {
         ec->enableSelectionCue();
     }
 
@@ -241,7 +242,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
             default:
                 /* Set first point of sequence */
                 if (bevent.state & GDK_CONTROL_MASK) {
-                    spdc_create_single_dot(event_context, from_2geom(p), "tools.freehand.pencil", bevent.state);
+                    spdc_create_single_dot(event_context, from_2geom(p), "/tools/freehand/pencil", bevent.state);
                     ret = true;
                     break;
                 }
@@ -259,7 +260,13 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating new path"));
                         SnapManager &m = desktop->namedview->snap_manager;
                         m.setup(desktop);
-                        m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p);
+                        Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+                        if (s.getSnapped()) {
+                        	s.getPoint(p);
+                        	pc->pencil_has_snapped_before = true;
+                        } else {
+                        	pc->pencil_has_snapped_before = false;
+                        }
                     } else if (selection->singleItem() && SP_IS_PATH(selection->singleItem())) {
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Appending to selected path"));
                     }
@@ -309,8 +316,8 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
     SPDrawAnchor *anchor = spdc_test_inside(pc, Geom::Point(mevent.x, mevent.y));
 
     if (pencil_within_tolerance) {
-        gint const tolerance = prefs_get_int_attribute_limited("options.dragtolerance",
-                                                               "value", 0, 0, 100);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        gint const tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
         if ( NR::LInfty( Geom::Point(mevent.x,mevent.y) - pencil_drag_origin_w ) < tolerance ) {
             return FALSE;   // Do not drag if we're within tolerance from origin.
         }
@@ -346,16 +353,25 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                  * fixme: I am not sure whether we want to snap to anchors
                  * in middle of freehand (Lauris)
                  */
+                SnapManager &m = dt->namedview->snap_manager;
+                
                 if (anchor) {
                     p = to_2geom(anchor->dp);
                 } else if ((mevent.state & GDK_SHIFT_MASK) == 0) {
-                    SnapManager &m = dt->namedview->snap_manager;
                     m.setup(dt);
-                    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, p);
+                    Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+                    if (s.getSnapped()) {
+                    	s.getPoint(p);
+                    	pc->pencil_has_snapped_before = true;
+                    }
                 }
-                if ( pc->npoints != 0 ) { // buttonpress may have happened before we entered draw context!
-                    spdc_add_freehand_point(pc, from_2geom(p), mevent.state);
-                    ret = TRUE;
+                if ( pc->npoints != 0) { // buttonpress may have happened before we entered draw context!
+                	if (!(pc->pencil_has_snapped_before && m.snapprefs.getSnapPostponedGlobally())) {
+	                    // When snapping is enabled but temporarily on hold because the mouse is moving 
+                		// fast, then we don't want to add nodes off-grid
+                		spdc_add_freehand_point(pc, from_2geom(p), mevent.state);
+	                    ret = TRUE;
+                	}
                 }
 
                 if (anchor && !pc->anchor_statusbar) {
@@ -633,7 +649,8 @@ fit_and_split(SPPencilContext *pc)
 {
     g_assert( pc->npoints > 1 );
 
-    double const tol = prefs_get_double_attribute_limited("tools.freehand.pencil",                                                                             "tolerance", 10.0, 1.0, 100.0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0);
     double const tolerance_sq = 0.02 * square( pc->desktop->w2d().descrim() * tol) 
         * exp(0.2*tol - 2);
 

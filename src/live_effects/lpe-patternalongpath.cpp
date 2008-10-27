@@ -195,13 +195,6 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
     return output;
 }
 
-void
-LPEPatternAlongPath::transform_multiply(Geom::Matrix const& postmul, bool set)
-{
-    // TODO: implement correct transformation instead of this default behavior
-    Effect::transform_multiply(postmul, set);
-}
-
 LPEFreehandShape::LPEFreehandShape(LivePathEffectObject *lpeobject) : LPEPatternAlongPath(lpeobject)
 {
 }

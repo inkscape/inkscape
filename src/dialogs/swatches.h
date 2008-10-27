@@ -90,7 +90,7 @@ private:
 class SwatchesPanel : public Inkscape::UI::Widget::Panel
 {
 public:
-    SwatchesPanel(gchar const* prefsPath = "dialogs.swatches");
+    SwatchesPanel(gchar const* prefsPath = "/dialogs/swatches");
     virtual ~SwatchesPanel();
 
     static SwatchesPanel& getInstance();

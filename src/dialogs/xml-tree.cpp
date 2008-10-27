@@ -54,7 +54,7 @@
 #include "widgets/icon.h"
 
 #include "dialog-events.h"
-#include "../prefs-utils.h"
+#include "../preferences.h"
 #include "../verbs.h"
 #include "../interface.h"
 
@@ -78,7 +78,7 @@ static sigc::connection document_replaced_connection;
 static win_data wd;
 // impossible original values to make sure they are read from prefs
 static gint x = -1000, y = -1000, w = 0, h = 0;
-static gchar const *const prefs_path = "dialogs.xml";
+static Glib::ustring const prefs_path = "/dialogs/xml/";
 static GtkWidget *status = NULL;
 static Inkscape::MessageStack *_message_stack = NULL;
 static Inkscape::MessageContext *_message_context = NULL;
@@ -212,13 +212,14 @@ void sp_xml_tree_dialog()
         gtk_tooltips_enable(tooltips);
 
         dlg = sp_window_new("", TRUE);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         if (x == -1000 || y == -1000) {
-            x = prefs_get_int_attribute(prefs_path, "x", -1000);
-            y = prefs_get_int_attribute(prefs_path, "y", -1000);
+            x = prefs->getInt(prefs_path + "x", -1000);
+            y = prefs->getInt(prefs_path + "y", -1000);
         }
         if (w ==0 || h == 0) {
-            w = prefs_get_int_attribute(prefs_path, "w", 0);
-            h = prefs_get_int_attribute(prefs_path, "h", 0);
+            w = prefs->getInt(prefs_path + "w", 0);
+            h = prefs->getInt(prefs_path + "h", 0);
         }
 
 //        if (x<0) x=0;
@@ -924,10 +925,11 @@ static gboolean on_delete(GtkObject */*object*/, GdkEvent */*event*/, gpointer /
     if (x<0) x=0;
     if (y<0) y=0;
 
-    prefs_set_int_attribute(prefs_path, "x", x);
-    prefs_set_int_attribute(prefs_path, "y", y);
-    prefs_set_int_attribute(prefs_path, "w", w);
-    prefs_set_int_attribute(prefs_path, "h", h);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(prefs_path + "x", x);
+    prefs->setInt(prefs_path + "y", y);
+    prefs->setInt(prefs_path + "w", w);
+    prefs->setInt(prefs_path + "h", h);
 
     return FALSE; // which means, go ahead and destroy it
 }

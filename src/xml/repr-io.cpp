@@ -29,7 +29,7 @@
 #include "io/stringstream.h"
 #include "io/gzipstream.h"
 
-#include "prefs-utils.h"
+#include "preferences.h"
 
 using Inkscape::IO::Writer;
 using Inkscape::Util::List;
@@ -511,8 +511,9 @@ void
 sp_repr_save_writer(Document *doc, Inkscape::IO::Writer *out,
               gchar const *default_ns)
 {
-    int inlineattrs = prefs_get_int_attribute("options.svgoutput", "inlineattrs", 0);
-    int indent = prefs_get_int_attribute("options.svgoutput", "indent", 2);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool inlineattrs = prefs->getBool("/options/svgoutput/inlineattrs");
+    int indent = prefs->getInt("/options/svgoutput/indent", 2);
 
     /* fixme: do this The Right Way */
     out->writeString( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" );

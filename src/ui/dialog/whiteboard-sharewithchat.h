@@ -1,12 +1,15 @@
-/**
- * Whiteboard share with chatroom dialog
- *
- * Authors:
- * David Yip <yipdw@rose-hulman.edu>
- * Jason Segal, Jonas Collaros, Stephen Montgomery, Brandi Soggs, Matthew Weinstock (original C/Gtk version)
+/** @file
+ * @brief Whiteboard share with chatroom dialog
+ */
+/* Authors:
+ *   David Yip <yipdw@rose-hulman.edu>
+ *   Jason Segal
+ *   Jonas Collaros
+ *   Stephen Montgomery
+ *   Brandi Soggs
+ *   Matthew Weinstock (original C/Gtk version)
  *
  * Copyright (c) 2004-2005 Authors
- *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -35,7 +38,7 @@ namespace Dialog {
 
 class WhiteboardShareWithChatroomDialog : public Dialog {
 public:
-	WhiteboardShareWithChatroomDialog() : Dialog("dialogs.whiteboard_sharewithuser", SP_VERB_DIALOG_WHITEBOARD_SHAREWITHUSER)
+	WhiteboardShareWithChatroomDialog() : Dialog("/dialogs/whiteboard_sharewithuser", SP_VERB_DIALOG_WHITEBOARD_SHAREWITHUSER)
 	{
 
 	}

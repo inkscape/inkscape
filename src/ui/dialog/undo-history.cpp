@@ -1,11 +1,10 @@
-/**
- * \brief Undo History dialog
- *
- * Author:
+/** @file
+ * @brief Undo History dialog - implementation
+ */
+/* Author:
  *   Gustav Broberg <broberg@kth.se>
  *
  * Copyright (C) 2006 Authors
- *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
@@ -125,7 +124,7 @@ UndoHistory::setDesktop(SPDesktop* desktop)
 }
 
 UndoHistory::UndoHistory()
-    : UI::Widget::Panel ("", "dialogs.undo-history", SP_VERB_DIALOG_UNDO_HISTORY),
+    : UI::Widget::Panel ("", "/dialogs/undo-history", SP_VERB_DIALOG_UNDO_HISTORY),
       _document (sp_desktop_document(getDesktop())),
       _event_log (getDesktop() ? getDesktop()->event_log : NULL),
       _columns (_event_log ? &_event_log->getColumns() : NULL),

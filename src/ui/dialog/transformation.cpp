@@ -1,12 +1,11 @@
-/**
- * \brief Object Transformation dialog
- *
- * Authors:
+/** @file
+ * \brief Transform dialog - implementation
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   buliabyak@gmail.com
  *
  * Copyright (C) 2004, 2005 Authors
- *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
@@ -26,7 +25,7 @@
 #include "selection.h"
 #include "selection-chemistry.h"
 #include "verbs.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "sp-item-transform.h"
 #include "macros.h"
 #include "sp-item.h"
@@ -74,7 +73,7 @@ void on_selection_modified( Inkscape::Application */*inkscape*/,
  *
  */
 Transformation::Transformation()
-    : UI::Widget::Panel ("", "dialogs.transformation", SP_VERB_DIALOG_TRANSFORM),
+    : UI::Widget::Panel ("", "/dialogs/transformation", SP_VERB_DIALOG_TRANSFORM),
       _page_move              (4, 2),
       _page_scale             (4, 2),
       _page_rotate            (4, 2),
@@ -134,7 +133,8 @@ Transformation::Transformation()
 
     // Apply separately
     contents->pack_start(_check_apply_separately, true, true);
-    _check_apply_separately.set_active(prefs_get_int_attribute_limited ("dialogs.transformation", "applyseparately", 0, 0, 1));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    _check_apply_separately.set_active(prefs->getBool("/dialogs/transformation/applyseparately"));
     _check_apply_separately.signal_toggled().connect(sigc::mem_fun(*this, &Transformation::onApplySeparatelyToggled));
 
     // make sure all spinbuttons activate Apply on pressing Enter
@@ -599,7 +599,8 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
     double x = _scalar_move_horizontal.getValue("px");
     double y = _scalar_move_vertical.getValue("px");
 
-    if (prefs_get_int_attribute_limited ("dialogs.transformation", "applyseparately", 0, 0, 1) == 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (!prefs->getBool("/dialogs/transformation/applyseparately")) {
         // move selection as a whole
         if (_check_move_relative.get_active()) {
             sp_selection_move_relative(selection, x, y);
@@ -686,7 +687,8 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
     double scaleX = _scalar_scale_horizontal.getValue("px");
     double scaleY = _scalar_scale_vertical.getValue("px");
 
-    if (prefs_get_int_attribute_limited ("dialogs.transformation", "applyseparately", 0, 0, 1) == 1) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/dialogs/transformation/applyseparately")) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
             Geom::Scale scale (0,0);
@@ -741,7 +743,8 @@ Transformation::applyPageRotate(Inkscape::Selection *selection)
 {
     double angle = _scalar_rotate.getValue("deg");
 
-    if (prefs_get_int_attribute_limited ("dialogs.transformation", "applyseparately", 0, 0, 1) == 1) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/dialogs/transformation/applyseparately")) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
             sp_item_rotate_rel(item, Geom::Rotate (angle*M_PI/180.0));
@@ -760,7 +763,8 @@ Transformation::applyPageRotate(Inkscape::Selection *selection)
 void
 Transformation::applyPageSkew(Inkscape::Selection *selection)
 {
-    if (prefs_get_int_attribute_limited ("dialogs.transformation", "applyseparately", 0, 0, 1) == 1) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/dialogs/transformation/applyseparately")) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
 
@@ -826,7 +830,7 @@ Transformation::applyPageTransform(Inkscape::Selection *selection)
     double e = _scalar_transform_e.getValue();
     double f = _scalar_transform_f.getValue();
 
-    NR::Matrix displayed(a, b, c, d, e, f);
+    Geom::Matrix displayed(a, b, c, d, e, f);
 
     if (_check_replace_matrix.get_active()) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
@@ -1046,15 +1050,14 @@ Transformation::onClear()
 void
 Transformation::onApplySeparatelyToggled()
 {
-    prefs_set_int_attribute ("dialogs.transformation", "applyseparately", _check_apply_separately.get_active()? 1 : 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/dialogs/transformation/applyseparately", _check_apply_separately.get_active());
 }
 
 
 } // namespace Dialog
 } // namespace UI
 } // namespace Inkscape
-
-
 
 /*
   Local Variables:

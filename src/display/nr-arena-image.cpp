@@ -15,7 +15,7 @@
 #include <libnr/nr-compose-transform.h>
 #include <2geom/transforms.h>
 #include <libnr/nr-blit.h>
-#include "../prefs-utils.h"
+#include "../preferences.h"
 #include "nr-arena-image.h"
 #include "style.h"
 #include "display/nr-arena.h"
@@ -173,7 +173,8 @@ nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned 
 static unsigned int
 nr_arena_image_render( cairo_t *ct, NRArenaItem *item, NRRectL */*area*/, NRPixBlock *pb, unsigned int /*flags*/ )
 {
-    nr_arena_image_x_sample = prefs_get_int_attribute ("options.bitmapoversample", "value", 1);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    nr_arena_image_x_sample = prefs->getInt("/options/bitmapoversample/value", 1);
     nr_arena_image_y_sample = nr_arena_image_x_sample;
 
     bool outline = (item->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
@@ -228,7 +229,7 @@ nr_arena_image_render( cairo_t *ct, NRArenaItem *item, NRRectL */*area*/, NRPixB
         if (!ct)
             return item->state;
 
-        guint32 rgba = prefs_get_int_attribute("options.wireframecolors", "images", 0xff0000ff);
+        guint32 rgba = prefs->getInt("/options/wireframecolors/images", 0xff0000ff);
         // FIXME: we use RGBA buffers but cairo writes BGRA (on i386), so we must cheat
         // by setting color channels in the "wrong" order
         cairo_set_source_rgba(ct, SP_RGBA32_B_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_R_F(rgba), SP_RGBA32_A_F(rgba));

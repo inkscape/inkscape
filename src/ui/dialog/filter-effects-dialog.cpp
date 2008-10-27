@@ -1,7 +1,7 @@
-/**
- * \brief Filter Effects dialog
- *
- * Authors:
+/** @file
+ * @brief Filter Effects dialog
+ */
+/* Authors:
  *   Nicholas Bishop <nicholasbishop@gmail.org>
  *   Rodrigo Kumpera <kumpera@gmail.com>
  *   Felipe C. da S. Sanches <felipe.sanches@gmail.com>
@@ -663,7 +663,7 @@ private:
         //# Get the current directory for finding files
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         Glib::ustring open_path;
-        Glib::ustring attr = prefs->getString("dialogs.open", "path");
+        Glib::ustring attr = prefs->getString("/dialogs/open/path");
         if (!attr.empty())
             open_path = attr;
 
@@ -708,7 +708,7 @@ private:
 
             open_path = fileName;
             open_path.append(G_DIR_SEPARATOR_S);
-            prefs->setString("dialogs.open", "path", open_path);
+            prefs->setString("/dialogs/open/path", open_path);
 
             _entry.set_text(fileName);
         }
@@ -2090,7 +2090,7 @@ int FilterEffectsDialog::PrimitiveList::primitive_count() const
 /*** FilterEffectsDialog ***/
 
 FilterEffectsDialog::FilterEffectsDialog()
-    : UI::Widget::Panel("", "dialogs.filtereffects", SP_VERB_DIALOG_FILTER_EFFECTS),
+    : UI::Widget::Panel("", "/dialogs/filtereffects", SP_VERB_DIALOG_FILTER_EFFECTS),
       _add_primitive_type(FPConverter),
       _add_primitive(_("Add Effect:")),
       _empty_settings(_("No effect selected"), Gtk::ALIGN_LEFT),
@@ -2297,7 +2297,7 @@ void FilterEffectsDialog::add_primitive()
 void FilterEffectsDialog::update_primitive_infobox()
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (prefs->getBool("options.showfiltersinfobox", "value", true)){
+    if (prefs->getBool("/options/showfiltersinfobox/value", true)){
         _infobox_icon.show();
         _infobox_desc.show();
     } else {
@@ -2482,7 +2482,7 @@ void FilterEffectsDialog::update_settings_view()
     _empty_settings.show();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (prefs->getBool("options.showfiltersinfobox", "value", true)){
+    if (prefs->getBool("/options/showfiltersinfobox/value", true)){
         _infobox_icon.show();
         _infobox_desc.show();
     } else {

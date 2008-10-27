@@ -6,8 +6,8 @@
  */
 
 #include <glib/gtypes.h>
+#include <2geom/point.h>
 
-#include "libnr/nr-point.h"
 struct SPDrawContext;
 struct SPCurve;
 struct SPCanvasItem;
@@ -19,15 +19,15 @@ struct SPDrawAnchor {
     SPCurve *curve;
     guint start : 1;
     guint active : 1;
-    NR::Point dp;
+    Geom::Point dp;
     SPCanvasItem *ctrl;
 };
 
 
 SPDrawAnchor *sp_draw_anchor_new(SPDrawContext *dc, SPCurve *curve, gboolean start,
-                                 NR::Point delta);
+                                 Geom::Point delta);
 SPDrawAnchor *sp_draw_anchor_destroy(SPDrawAnchor *anchor);
-SPDrawAnchor *sp_draw_anchor_test(SPDrawAnchor *anchor, NR::Point w, gboolean activate);
+SPDrawAnchor *sp_draw_anchor_test(SPDrawAnchor *anchor, Geom::Point w, gboolean activate);
 
 
 #endif /* !SEEN_DRAW_ANCHOR_H */

@@ -1,13 +1,12 @@
-/**
- * \brief LivePathEffect dialog
- *
- * Authors:
+/** @file
+ * @brief Live Path Effect editing dialog - implementation
+ */
+/* Authors:
  *   Johan Engelen <j.b.c.engelen@utwente.nl>
  *   Steren Giannini <steren.giannini@gmail.com>
  *   Bastien Bouclet <bgkweb@gmail.com>
  *
- * Copyright (C) 2007 Author
- *
+ * Copyright (C) 2007 Authors
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
@@ -68,7 +67,7 @@ static void lpeeditor_selection_modified (Inkscape::Selection * selection, guint
  */
 
 LivePathEffectEditor::LivePathEffectEditor()
-    : UI::Widget::Panel("", "dialogs.livepatheffect", SP_VERB_DIALOG_LIVE_PATH_EFFECT),
+    : UI::Widget::Panel("", "/dialogs/livepatheffect", SP_VERB_DIALOG_LIVE_PATH_EFFECT),
       lpe_list_locked(false),
       combo_effecttype(Inkscape::LivePathEffect::LPETypeConverter),
       effectwidget(NULL),

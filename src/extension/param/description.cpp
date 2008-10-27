@@ -20,14 +20,10 @@
 #include <gtkmm/box.h>
 #include <gtkmm/spinbutton.h>
 #include <sstream>
-
-
 #include <glibmm/i18n.h>
 
-#include <xml/node.h>
-
-#include <extension/extension.h>
-#include <prefs-utils.h>
+#include "xml/node.h"
+#include "extension/extension.h"
 
 namespace Inkscape {
 namespace Extension {

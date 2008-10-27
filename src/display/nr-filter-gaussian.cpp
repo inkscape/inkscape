@@ -30,7 +30,7 @@
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-matrix-fns.h"
 #include "util/fixed_point.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 // IIR filtering method based on:
 // L.J. van Vliet, I.T. Young, and P.W. Verbeek, Recursive Gaussian Derivative Filters,
@@ -85,7 +85,7 @@ namespace NR {
 
 FilterGaussian::FilterGaussian()
 {
-    _deviation_x = _deviation_y = prefs_get_double_attribute("options.filtertest", "value", 1.0);
+    _deviation_x = _deviation_y = 0.0;
 }
 
 FilterPrimitive *FilterGaussian::create()
@@ -545,7 +545,8 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
     int const PC = NR_PIXBLOCK_BPP(in);
 
     // Subsampling constants
-    int const quality = prefs_get_int_attribute("options.blurquality", "value", 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int const quality = prefs->getInt("/options/blurquality/value");
     int const x_step_l2 = _effect_subsample_step_log2(deviation_x_org, quality);
     int const y_step_l2 = _effect_subsample_step_log2(deviation_y_org, quality);
     int const x_step = 1<<x_step_l2;

@@ -21,7 +21,8 @@
 #include <gdk/gdktypes.h>
 #include <gdk/gdkevents.h>
 
-#include <2geom/forward.h>
+#include "2geom/forward.h"
+#include "preferences.h"
 
 struct GrDrag;
 struct SPDesktop;
@@ -48,7 +49,7 @@ struct SPEventContext : public GObject {
     SPEventContext *next;
     unsigned key;
     SPDesktop *desktop;
-    Inkscape::XML::Node *prefs_repr;
+    Inkscape::Preferences::Observer *pref_observer;
     gchar const *const *cursor_shape;
     gint hot_x, hot_y; ///< indicates the cursor's hot spot
     GdkCursor *cursor;
@@ -83,7 +84,7 @@ struct SPEventContext : public GObject {
 struct SPEventContextClass : public GObjectClass {
     void (* setup)(SPEventContext *ec);
     void (* finish)(SPEventContext *ec);
-    void (* set)(SPEventContext *ec, gchar const *key, gchar const *val);
+    void (* set)(SPEventContext *ec, Inkscape::Preferences::Entry *val);
     void (* activate)(SPEventContext *ec);
     void (* deactivate)(SPEventContext *ec);
     gint (* root_handler)(SPEventContext *ec, GdkEvent *event);
@@ -95,7 +96,7 @@ struct SPEventContextClass : public GObjectClass {
 
 #define SP_EVENT_CONTEXT_STATIC 0
 
-SPEventContext *sp_event_context_new(GType type, SPDesktop *desktop, Inkscape::XML::Node *prefs_repr, unsigned key);
+SPEventContext *sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path, unsigned key);
 void sp_event_context_finish(SPEventContext *ec);
 void sp_event_context_read(SPEventContext *ec, gchar const *key);
 void sp_event_context_activate(SPEventContext *ec);

@@ -75,7 +75,7 @@ pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int
     /* Create new arena */
     NRArena *arena = NRArena::create();
     unsigned dkey = sp_item_display_key_new(1);
-    NRArenaItem *root = sp_item_invoke_show(base, arena, dkey, SP_ITEM_SHOW_DISPLAY);
+    sp_item_invoke_show(base, arena, dkey, SP_ITEM_SHOW_DISPLAY);
 
     /* Create renderer and context */
     CairoRenderer *renderer = new CairoRenderer();
@@ -98,7 +98,7 @@ pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int
     /* Release arena */
     sp_item_invoke_hide(base, dkey);
     nr_object_unref((NRObject *) arena);
-/* end */
+
     renderer->destroyContext(ctx);
     delete renderer;
 
@@ -134,7 +134,7 @@ CairoRendererPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc,
 //            level = 1;
     }
     catch(...) {
-//        g_warning("Parameter <PDFversion> might not exists");
+//        g_warning("Parameter <PDFversion> might not exist");
     }
 
     bool new_textToPath  = FALSE;
@@ -142,7 +142,7 @@ CairoRendererPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc,
         new_textToPath  = mod->get_param_bool("textToPath");
     }
     catch(...) {
-        g_warning("Parameter <textToPath> might not exists");
+        g_warning("Parameter <textToPath> might not exist");
     }
 
     bool new_blurToBitmap  = FALSE;
@@ -150,7 +150,7 @@ CairoRendererPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc,
         new_blurToBitmap  = mod->get_param_bool("blurToBitmap");
     }
     catch(...) {
-        g_warning("Parameter <blurToBitmap> might not exists");
+        g_warning("Parameter <blurToBitmap> might not exist");
     }
 
     int new_bitmapResolution  = 72;
@@ -158,7 +158,7 @@ CairoRendererPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc,
         new_bitmapResolution = mod->get_param_int("resolution");
     }
     catch(...) {
-        g_warning("Parameter <resolution> might not exists");
+        g_warning("Parameter <resolution> might not exist");
     }
 
     const gchar *new_exportId = NULL;
@@ -166,23 +166,23 @@ CairoRendererPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc,
         new_exportId = mod->get_param_string("exportId");
     }
     catch(...) {
-        g_warning("Parameter <exportId> might not exists");
+        g_warning("Parameter <exportId> might not exist");
     }
 
     bool new_exportDrawing  = FALSE;
     try {
-        new_exportDrawing  = mod->get_param_bool("exportDrawing");
+        new_exportDrawing  = mod->get_param_bool("areaDrawing");
     }
     catch(...) {
-        g_warning("Parameter <exportDrawing> might not exists");
+        g_warning("Parameter <areaDrawing> might not exist");
     }
 
     bool new_exportCanvas  = FALSE;
     try {
-        new_exportCanvas  = mod->get_param_bool("exportCanvas");
+        new_exportCanvas  = mod->get_param_bool("areaCanvas");
     }
     catch(...) {
-        g_warning("Parameter <exportCanvas> might not exists");
+        g_warning("Parameter <exportCanvas> might not exist");
     }
 
     gchar * final_name;
@@ -194,8 +194,6 @@ CairoRendererPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc,
 
     if (!ret)
         throw Inkscape::Extension::Output::save_failed();
-
-    return;
 }
 
 #include "clear-n_.h"
@@ -220,8 +218,8 @@ CairoRendererPdfOutput::init (void)
 			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"blurToBitmap\" gui-text=\"" N_("Convert filter effects to bitmaps") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"resolution\" gui-text=\"" N_("Preferred resolution (DPI) of bitmaps") "\" type=\"int\" min=\"72\" max=\"2400\">90</param>\n"
-			"<param name=\"exportDrawing\" gui-text=\"" N_("Export drawing, not page") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"exportCanvas\" gui-text=\"" N_("Export canvas") "\" type=\"boolean\">false</param>\n"
+			"<param name=\"areaDrawing\" gui-text=\"" N_("Export drawing, not page") "\" type=\"boolean\">false</param>\n"
+			"<param name=\"areaCanvas\" gui-text=\"" N_("Export canvas") "\" type=\"boolean\">false</param>\n"
 			"<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID") "\" type=\"string\"></param>\n"
 			"<output>\n"
 				"<extension>.pdf</extension>\n"

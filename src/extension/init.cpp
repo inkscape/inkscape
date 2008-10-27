@@ -19,6 +19,7 @@
 
 
 #include "inkscape.h"
+#include <glibmm/ustring.h>
 #include <glibmm/i18n.h>
 
 #include "system.h"
@@ -118,17 +119,16 @@ static void check_extensions();
  * \brief     Examines the given string preference and checks to see
  *            that at least one of the registered extensions matches
  *            it.  If not, a default is assigned.
- * \param     pref_path        Preference path to load
- * \param     pref_attr        Attribute to load from the preference
+ * \param     pref_path        Preference path to update
  * \param     pref_default     Default string to set
  * \param     extension_family List of extensions to search
  */
 static void
-update_pref(gchar const *pref_path, gchar const *pref_attr,
+update_pref(Glib::ustring const &pref_path,
             gchar const *pref_default) // , GSList *extension_family)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring pref = prefs->getString(pref_path, pref_attr);
+    Glib::ustring pref = prefs->getString(pref_path);
     /*
     gboolean missing=TRUE;
     for (GSList *list = extension_family; list; list = g_slist_next(list)) {
@@ -141,7 +141,7 @@ update_pref(gchar const *pref_path, gchar const *pref_attr,
     }
     */
     if (!Inkscape::Extension::db.get( pref.data() ) /*missing*/) {
-        prefs->setString(pref_path, pref_attr, pref_default);
+        prefs->setString(pref_path, pref_default);
     }
 }
 
@@ -164,7 +164,7 @@ init()
     //Internal::EpsOutput::init(); // disabled, to be deleted, replaced by CairoEpsOutput
     Internal::PrintPS::init();
 #ifdef HAVE_CAIRO_PDF
-    if (prefs->getInt("options.useoldpdfexporter", "value", 1) == 1) {
+    if (prefs->getBool("/options/useoldpdfexporter/value")) {
     //g_print ("Using CairoPdfOutput: old pdf exporter\n");
     Internal::CairoPdfOutput::init();
     Internal::PrintCairoPDF::init();
@@ -268,7 +268,7 @@ init()
     /* This is a hack to deal with updating saved outdated module
      * names in the prefs...
      */
-    update_pref("dialogs.save_as", "default",
+    update_pref("/dialogs/save_as/default",
                 SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE
                 // Inkscape::Extension::db.get_output_list()
         );

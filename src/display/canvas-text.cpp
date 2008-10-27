@@ -74,8 +74,8 @@ static void
 sp_canvastext_init (SPCanvasText *canvastext)
 {
     canvastext->rgba = 0x0000ff7f;
-    canvastext->s[NR::X] = canvastext->s[NR::Y] = 0.0;
-    canvastext->affine = NR::identity();
+    canvastext->s[Geom::X] = canvastext->s[Geom::Y] = 0.0;
+    canvastext->affine = Geom::identity();
     canvastext->fontsize = 10.0;
     canvastext->item = NULL;
     canvastext->text = NULL;
@@ -113,9 +113,9 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
     guint32 rgba = cl->rgba;
     cairo_set_source_rgba(buf->ct, SP_RGBA32_B_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_R_F(rgba), SP_RGBA32_A_F(rgba));
 
-    NR::Point s = cl->s * cl->affine;
-    double offsetx = s[NR::X] - buf->rect.x0;
-    double offsety = s[NR::Y] - buf->rect.y0;
+    Geom::Point s = cl->s * cl->affine;
+    double offsetx = s[Geom::X] - buf->rect.x0;
+    double offsety = s[Geom::Y] - buf->rect.y0;
     offsetx -= anchor_offset_x;
     offsety += anchor_offset_y;
 
@@ -150,10 +150,10 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned i
     cairo_text_extents_t bbox;
     cairo_text_extents(&tmp_buf, cl->text, &bbox);
     **/
-    item->x1 = s[NR::X] + 0;
-    item->y1 = s[NR::Y] - cl->fontsize;
-    item->x2 = s[NR::X] + cl->fontsize * strlen(cl->text);
-    item->y2 = s[NR::Y] + cl->fontsize * 0.5; // for letters below the baseline
+    item->x1 = s[Geom::X] + 0;
+    item->y1 = s[Geom::Y] - cl->fontsize;
+    item->x2 = s[Geom::X] + cl->fontsize * strlen(cl->text);
+    item->y2 = s[Geom::Y] + cl->fontsize * 0.5; // for letters below the baseline
 
     // adjust update region according to anchor shift
     // FIXME: use the correct text extent
@@ -208,16 +208,16 @@ sp_canvastext_set_coords (SPCanvasText *ct, gdouble x0, gdouble y0)
     g_return_if_fail (ct != NULL);
     g_return_if_fail (SP_IS_CANVASTEXT (ct));
 
-    if (DIFFER (x0, ct->s[NR::X]) || DIFFER (y0, ct->s[NR::Y])) {
-        ct->s[NR::X] = x0;
-        ct->s[NR::Y] = y0;
+    if (DIFFER (x0, ct->s[Geom::X]) || DIFFER (y0, ct->s[Geom::Y])) {
+        ct->s[Geom::X] = x0;
+        ct->s[Geom::Y] = y0;
         sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
     }
     sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
 }
 
 void
-sp_canvastext_set_coords (SPCanvasText *ct, const NR::Point start)
+sp_canvastext_set_coords (SPCanvasText *ct, const Geom::Point start)
 {
     sp_canvastext_set_coords(ct, start[0], start[1]);
 }

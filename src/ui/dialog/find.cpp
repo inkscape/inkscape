@@ -22,13 +22,12 @@
 #include "helper/window.h"
 #include "macros.h"
 #include "inkscape.h"
-#include "document.h"
 #include "desktop.h"
+#include "document.h"
 #include "selection.h"
 #include "desktop-handles.h"
 
 #include "dialogs/dialog-events.h"
-#include "prefs-utils.h"
 #include "verbs.h"
 #include "interface.h"
 #include "sp-text.h"
@@ -49,7 +48,7 @@
 #include "sp-use.h"
 #include "sp-image.h"
 #include "sp-offset.h"
-#include <xml/repr.h>
+#include "xml/repr.h"
 
 
 namespace Inkscape {
@@ -57,7 +56,7 @@ namespace UI {
 namespace Dialog {
 
 Find::Find()
-    : UI::Widget::Panel("", "dialogs.find", SP_VERB_DIALOG_FIND),
+    : UI::Widget::Panel("", "/dialogs/find", SP_VERB_DIALOG_FIND),
       _entry_text(_("_Text: "), _("Find objects by their text content (exact or partial match)")),
       _entry_id(_("_ID: "), _("Find objects by the value of the id attribute (exact or partial match)")),
       _entry_style(_("_Style: "), _("Find objects by the value of the style attribute (exact or partial match)")),

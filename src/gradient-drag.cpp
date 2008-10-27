@@ -27,11 +27,12 @@
 #include "desktop-style.h"
 #include "document.h"
 #include "display/sp-ctrlline.h"
+#include "display/sp-canvas-util.h"
 #include "xml/repr.h"
 #include "svg/css-ostringstream.h"
 #include "svg/svg.h"
 #include "libnr/nr-point-fns.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "sp-item.h"
 #include "style.h"
 #include "knot.h"
@@ -581,7 +582,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
         SPDesktop *desktop = dragger->parent->desktop;
         SnapManager &m = desktop->namedview->snap_manager;
         m.setup(desktop);
-        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(p));
+        Inkscape::SnappedPoint s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(p));
         if (s.getSnapped()) {
             p = s.getPoint();
             sp_knot_moveto (knot, p);
@@ -614,7 +615,8 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
     }
 
     if (state & GDK_CONTROL_MASK) {
-        unsigned snaps = abs(prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12));
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        unsigned snaps = abs(prefs->getInt("/options/rotationsnapsperpi/value", 12));
         /* 0 means no snapping. */
 
         // This list will store snap vectors from all draggables of dragger
@@ -1282,7 +1284,7 @@ GrDragger::GrDragger (GrDrag *parent, NR::Point p, GrDraggable *draggable)
     this->knot = sp_knot_new (parent->desktop, NULL);
     this->knot->setMode(SP_KNOT_MODE_XOR);
     this->knot->setFill(GR_KNOT_COLOR_NORMAL, GR_KNOT_COLOR_MOUSEOVER, GR_KNOT_COLOR_MOUSEOVER);
-    this->knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
+    this->knot->setStroke(0x0000007f, 0x0000007f, 0x0000007f);
     sp_knot_update_ctrl(this->knot);
 
     // move knot to the given point
@@ -1526,6 +1528,7 @@ GrDrag::addLine (SPItem *item, NR::Point p1, NR::Point p2, guint32 rgba)
 {
     SPCanvasItem *line = sp_canvas_item_new(sp_desktop_controls(this->desktop),
                                                             SP_TYPE_CTRLLINE, NULL);
+    sp_canvas_item_move_to_z(line, 0);
     SP_CTRLLINE(line)->item = item;
     sp_ctrlline_set_coords(SP_CTRLLINE(line), p1, p2);
     if (rgba != GR_LINE_COLOR_FILL) // fill is the default, so don't set color for it to speed up redraw

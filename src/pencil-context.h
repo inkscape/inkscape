@@ -30,6 +30,7 @@ struct SPPencilContext : public SPDrawContext {
     Geom::Point req_tangent;
 
     bool is_drawing;
+    bool pencil_has_snapped_before;
 };
 
 /// The SPPencilContext vtable (empty).

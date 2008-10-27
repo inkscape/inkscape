@@ -223,13 +223,6 @@ ParamNotebookPage::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sig
 }
 
 
-
-
-
-
-
-
-
 ParamNotebook::ParamNotebook (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
     Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext)
 {
@@ -264,7 +257,7 @@ ParamNotebook::ParamNotebook (const gchar * name, const gchar * guitext, const g
 
     gchar * pref_name = this->pref_name();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring paramval = prefs->getString(PREF_DIR, pref_name);
+    Glib::ustring paramval = prefs->getString(extension_pref_root + pref_name);
     g_free(pref_name);
 
     if (!paramval.empty())
@@ -317,7 +310,8 @@ ParamNotebook::set (const int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*
     _value = g_strdup(page->name());
 
     gchar * prefname = this->pref_name();
-    prefs_set_string_attribute(PREF_DIR, prefname, _value);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setString(extension_pref_root + prefname, _value);
     g_free(prefname);
 
     return _value;
@@ -434,4 +428,4 @@ ParamNotebook::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::s
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

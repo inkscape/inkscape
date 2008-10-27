@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 import sys, inkex, pathmodifier
 from simpletransform import *
+import gettext
+_ = gettext.gettext
 
 class Dimension(pathmodifier.PathModifier):
     def __init__(self):

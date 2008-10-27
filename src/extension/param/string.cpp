@@ -13,9 +13,8 @@
 #include <gtkmm/box.h>
 #include <gtkmm/spinbutton.h>
 
-#include <xml/node.h>
-
-#include <extension/extension.h>
+#include "xml/node.h"
+#include "extension/extension.h"
 #include "string.h"
 #include "preferences.h"
 
@@ -53,7 +52,7 @@ ParamString::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * 
 
     gchar * prefname = this->pref_name();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setString(PREF_DIR, prefname, _value);
+    prefs->setString(extension_pref_root + prefname, _value);
     g_free(prefname);
 
     return _value;
@@ -80,7 +79,7 @@ ParamString::ParamString (const gchar * name, const gchar * guitext, const gchar
 
     gchar * pref_name = this->pref_name();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring paramval = prefs->getString(PREF_DIR, pref_name);
+    Glib::ustring paramval = prefs->getString(extension_pref_root + pref_name);
     g_free(pref_name);
 
     if (!paramval.empty())

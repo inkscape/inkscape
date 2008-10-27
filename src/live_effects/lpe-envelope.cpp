@@ -248,13 +248,6 @@ LPEEnvelope::resetDefaults(SPItem * item)
     bend_path4.set_new_value( path4.toPwSb(), true );
 }
 
-void
-LPEEnvelope::transform_multiply(Geom::Matrix const& postmul, bool set)
-{
-    // TODO: implement correct transformation instead of this default behavior
-    Effect::transform_multiply(postmul, set);
-}
-
 
 } // namespace LivePathEffect
 } /* namespace Inkscape */

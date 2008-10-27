@@ -1,7 +1,7 @@
-/**
- * \brief A desktop dock pane to dock dialogs, a custom wrapper around gdl-dock.
- *
- * Author:
+/** @file
+ * @brief A desktop dock pane to dock dialogs, a custom wrapper around gdl-dock.
+ */
+/* Author:
  *   Gustav Broberg <broberg@kth.se>
  *
  * Copyright (C) 2007 Authors

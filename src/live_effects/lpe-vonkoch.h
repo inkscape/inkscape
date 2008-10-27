@@ -55,8 +55,6 @@ public:
 
     virtual void doBeforeEffect(SPLPEItem * item);
 
-    virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
-
     //Usefull??
     //    protected: 
     //virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec); 

@@ -36,7 +36,7 @@
 #include "xml/repr.h"
 
 #include "../dialogs/dialog-events.h"
-#include "../prefs-utils.h"
+#include "../preferences.h"
 #include "svg/css-ostringstream.h"
 #include "sp-stop.h"
 
@@ -65,7 +65,7 @@ static guint signals[LAST_SIGNAL] = {0};
 static GtkWidget *dlg = NULL;
 static win_data wd;
 static gint x = -1000, y = -1000, w = 0, h = 0; // impossible original values to make sure they are read from prefs
-static gchar const *prefs_path = "dialogs.gradienteditor";
+static Glib::ustring const prefs_path = "/dialogs/gradienteditor/";
 
 GtkType
 sp_gradient_vector_selector_get_type (void)
@@ -892,67 +892,68 @@ sp_gradient_vector_widget_new (SPGradient *gradient, SPStop *select_stop)
 GtkWidget *
 sp_gradient_vector_editor_new (SPGradient *gradient, SPStop *stop)
 {
-	GtkWidget *wid;
+    GtkWidget *wid;
 
-	if (dlg == NULL) {
+    if (dlg == NULL) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-		dlg = sp_window_new (_("Gradient editor"), TRUE);
-		if (x == -1000 || y == -1000) {
-			x = prefs_get_int_attribute (prefs_path, "x", 0);
-			y = prefs_get_int_attribute (prefs_path, "y", 0);
-		}
-		if (w ==0 || h == 0) {
-			w = prefs_get_int_attribute (prefs_path, "w", 0);
-			h = prefs_get_int_attribute (prefs_path, "h", 0);
-		}
+        dlg = sp_window_new (_("Gradient editor"), TRUE);
+        if (x == -1000 || y == -1000) {
+            x = prefs->getInt(prefs_path + "x", -1000);
+            y = prefs->getInt(prefs_path + "y", -1000);
+        }
+        if (w ==0 || h == 0) {
+            w = prefs->getInt(prefs_path + "w", 0);
+            h = prefs->getInt(prefs_path + "h", 0);
+        }
 
-                if (x<0) x=0;
-                if (y<0) y=0;
+        if (x<0) x=0;
+        if (y<0) y=0;
 
-		if (x != 0 || y != 0)
-			gtk_window_move ((GtkWindow *) dlg, x, y);
-		else
-			gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
-		if (w && h) gtk_window_resize ((GtkWindow *) dlg, w, h);
-		sp_transientize (dlg);
-		wd.win = dlg;
-		wd.stop = 0;
-		g_signal_connect (G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd);
-		gtk_signal_connect (GTK_OBJECT (dlg), "event", GTK_SIGNAL_FUNC (sp_dialog_event_handler), dlg);
-		gtk_signal_connect (GTK_OBJECT (dlg), "destroy", G_CALLBACK (sp_gradient_vector_dialog_destroy), dlg);
-		gtk_signal_connect (GTK_OBJECT (dlg), "delete_event", G_CALLBACK (sp_gradient_vector_dialog_delete), dlg);
-		g_signal_connect (G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (sp_gradient_vector_dialog_delete), dlg);
-		g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg );
-		g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg );
+        if (x != 0 || y != 0)
+	        gtk_window_move ((GtkWindow *) dlg, x, y);
+        else
+	        gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
+        if (w && h) gtk_window_resize ((GtkWindow *) dlg, w, h);
+        sp_transientize (dlg);
+        wd.win = dlg;
+        wd.stop = 0;
+        g_signal_connect (G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd);
+        gtk_signal_connect (GTK_OBJECT (dlg), "event", GTK_SIGNAL_FUNC (sp_dialog_event_handler), dlg);
+        gtk_signal_connect (GTK_OBJECT (dlg), "destroy", G_CALLBACK (sp_gradient_vector_dialog_destroy), dlg);
+        gtk_signal_connect (GTK_OBJECT (dlg), "delete_event", G_CALLBACK (sp_gradient_vector_dialog_delete), dlg);
+        g_signal_connect (G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (sp_gradient_vector_dialog_delete), dlg);
+        g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg );
+        g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg );
 
-		gtk_container_set_border_width (GTK_CONTAINER (dlg), PAD);
+        gtk_container_set_border_width (GTK_CONTAINER (dlg), PAD);
 
-		wid = (GtkWidget*)sp_gradient_vector_widget_new (gradient, stop);
-		g_object_set_data (G_OBJECT (dlg), "gradient-vector-widget", wid);
-		/* Connect signals */
-		gtk_widget_show (wid);
-		gtk_container_add (GTK_CONTAINER (dlg), wid);
-	} else {
-		// FIXME: temp fix for 0.38
-		// Simply load_gradient into the editor does not work for multi-stop gradients,
-		// as the stop list and other widgets are in a wrong state and crash readily.
-		// Instead we just delete the window (by sending the delete signal)
-		// and call sp_gradient_vector_editor_new again, so it creates the window anew.
+        wid = (GtkWidget*)sp_gradient_vector_widget_new (gradient, stop);
+        g_object_set_data (G_OBJECT (dlg), "gradient-vector-widget", wid);
+        /* Connect signals */
+        gtk_widget_show (wid);
+        gtk_container_add (GTK_CONTAINER (dlg), wid);
+    } else {
+        // FIXME: temp fix for 0.38
+        // Simply load_gradient into the editor does not work for multi-stop gradients,
+        // as the stop list and other widgets are in a wrong state and crash readily.
+        // Instead we just delete the window (by sending the delete signal)
+        // and call sp_gradient_vector_editor_new again, so it creates the window anew.
 
-		GdkEventAny event;
-		GtkWidget *widget = (GtkWidget *) dlg;
-		event.type = GDK_DELETE;
-		event.window = widget->window;
-		event.send_event = TRUE;
-		g_object_ref (G_OBJECT (event.window));
-		gtk_main_do_event ((GdkEvent*)&event);
-		g_object_unref (G_OBJECT (event.window));
+        GdkEventAny event;
+        GtkWidget *widget = (GtkWidget *) dlg;
+        event.type = GDK_DELETE;
+        event.window = widget->window;
+        event.send_event = TRUE;
+        g_object_ref (G_OBJECT (event.window));
+        gtk_main_do_event ((GdkEvent*)&event);
+        g_object_unref (G_OBJECT (event.window));
 
-		g_assert (dlg == NULL);
-		sp_gradient_vector_editor_new (gradient, stop);
-	}
+        g_assert (dlg == NULL);
+        sp_gradient_vector_editor_new (gradient, stop);
+    }
 
-	return dlg;
+    return dlg;
 }
 
 static void
@@ -1051,18 +1052,19 @@ sp_gradient_vector_dialog_destroy (GtkObject *object, gpointer data)
 static gboolean
 sp_gradient_vector_dialog_delete (GtkWidget *widget, GdkEvent *event, GtkWidget *dialog)
 {
-	gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
-	gtk_window_get_size ((GtkWindow *) dlg, &w, &h);
+    gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
+    gtk_window_get_size ((GtkWindow *) dlg, &w, &h);
 
     if (x<0) x=0;
     if (y<0) y=0;
 
-	prefs_set_int_attribute (prefs_path, "x", x);
-	prefs_set_int_attribute (prefs_path, "y", y);
-	prefs_set_int_attribute (prefs_path, "w", w);
-	prefs_set_int_attribute (prefs_path, "h", h);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(prefs_path + "x", x);
+    prefs->setInt(prefs_path + "y", y);
+    prefs->setInt(prefs_path + "w", w);
+    prefs->setInt(prefs_path + "h", h);
 
-	return FALSE; // which means, go ahead and destroy it
+    return FALSE; // which means, go ahead and destroy it
 }
 
 /* Widget destroy handler */

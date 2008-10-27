@@ -1,8 +1,7 @@
-/**
- * \brief Base class for dialogs in Inkscape.  This class provides certain
- *        common behaviors and styles wanted of all dialogs in the application.
- *
- * Authors:
+/** @file
+ * @brief Base class for dialogs in Inkscape - implementation
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   buliabyak@gmail.com
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
@@ -30,7 +29,7 @@
 #include "dialog-manager.h"
 #include "modifier-fns.h"
 #include "shortcuts.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "interface.h"
 #include "verbs.h"
 
@@ -206,10 +205,11 @@ Dialog::read_geometry()
 {
     _user_hidden = false;
 
-    int x = prefs_get_int_attribute (_prefs_path, "x", -1000);
-    int y = prefs_get_int_attribute (_prefs_path, "y", -1000);
-    int w = prefs_get_int_attribute (_prefs_path, "w", 0);
-    int h = prefs_get_int_attribute (_prefs_path, "h", 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int x = prefs->getInt(_prefs_path + "/x", -1000);
+    int y = prefs->getInt(_prefs_path + "/y", -1000);
+    int w = prefs->getInt(_prefs_path + "/w", 0);
+    int h = prefs->getInt(_prefs_path + "/h", 0);
 
     // g_print ("read %d %d %d %d\n", x, y, w, h);
 
@@ -245,10 +245,11 @@ Dialog::save_geometry()
     if (x<0) x=0;
     if (y<0) y=0;
 
-    prefs_set_int_attribute (_prefs_path, "x", x);
-    prefs_set_int_attribute (_prefs_path, "y", y);
-    prefs_set_int_attribute (_prefs_path, "w", w);
-    prefs_set_int_attribute (_prefs_path, "h", h);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(_prefs_path + "/x", x);
+    prefs->setInt(_prefs_path + "/y", y);
+    prefs->setInt(_prefs_path + "/w", w);
+    prefs->setInt(_prefs_path + "/h", h);
 
 }
 

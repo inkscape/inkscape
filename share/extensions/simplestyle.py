@@ -191,6 +191,21 @@ def parseColor(c):
         c=svgcolors[c]
     if c.startswith('#') and len(c)==4:
         c='#'+c[1:2]+c[1:2]+c[2:3]+c[2:3]+c[3:]+c[3:]
+    elif c.startswith('rgb('):
+        # remove the rgb(...) stuff
+        tmp = c.strip()[4:-1]
+        numbers = [number.strip() for number in tmp.split(',')]
+        converted_numbers = []
+        if len(numbers) == 3:
+            for num in numbers:
+                if num.endswith(r'%'):
+                    converted_numbers.append( int(int(num[0:-1])*255/100))
+                else:
+                    converted_numbers.append(int(num))
+            return tuple(converted_numbers)
+        else:    
+            return (0,0,0)
+        
     r=int(c[1:3],16)
     g=int(c[3:5],16)
     b=int(c[5:],16)

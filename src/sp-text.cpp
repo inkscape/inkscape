@@ -74,7 +74,7 @@ static void sp_text_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &t
 static NRArenaItem *sp_text_show (SPItem *item, NRArena *arena, unsigned key, unsigned flags);
 static void sp_text_hide (SPItem *item, unsigned key);
 static char *sp_text_description (SPItem *item);
-static void sp_text_snappoints(SPItem const *item, SnapPointsIter p);
+static void sp_text_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
 static Geom::Matrix sp_text_set_transform(SPItem *item, Geom::Matrix const &xform);
 static void sp_text_print (SPItem *item, SPPrintContext *gpc);
 
@@ -428,7 +428,7 @@ sp_text_description(SPItem *item)
     return ret;
 }
 
-static void sp_text_snappoints(SPItem const *item, SnapPointsIter p)
+static void sp_text_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
     // the baseline anchor of the first char
     Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);

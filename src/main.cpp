@@ -141,10 +141,7 @@ enum {
     SP_ARG_EXPORT_EMF,
 #endif //WIN32
     SP_ARG_EXPORT_TEXT_TO_PATH,
-    SP_ARG_EXPORT_FONT,
-    SP_ARG_EXPORT_BBOX_PAGE,
     SP_ARG_EXTENSIONDIR,
-    SP_ARG_FIT_PAGE_TO_DRAWING,
     SP_ARG_QUERY_X,
     SP_ARG_QUERY_Y,
     SP_ARG_QUERY_WIDTH,
@@ -163,8 +160,7 @@ enum {
 int sp_main_gui(int argc, char const **argv);
 int sp_main_console(int argc, char const **argv);
 static void sp_do_export_png(SPDocument *doc);
-static void do_export_ps(SPDocument* doc, gchar const* uri, char const *mime);
-static void do_export_pdf(SPDocument* doc, gchar const* uri, char const *mime);
+static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const *mime);
 #ifdef WIN32
 static void do_export_emf(SPDocument* doc, gchar const* uri, char const *mime);
 #endif //WIN32
@@ -195,7 +191,6 @@ static gchar *sp_export_emf = NULL;
 #endif //WIN32
 static gboolean sp_export_text_to_path = FALSE;
 static gboolean sp_export_font = FALSE;
-static gboolean sp_export_bbox_page = FALSE;
 static gboolean sp_query_x = FALSE;
 static gboolean sp_query_y = FALSE;
 static gboolean sp_query_width = FALSE;
@@ -238,7 +233,6 @@ static void resetCommandlineGlobals() {
 #endif //WIN32
         sp_export_text_to_path = FALSE;
         sp_export_font = FALSE;
-        sp_export_bbox_page = FALSE;
         sp_query_x = FALSE;
         sp_query_y = FALSE;
         sp_query_width = FALSE;
@@ -381,16 +375,6 @@ struct poptOption options[] = {
      N_("Convert text object to paths on export (EPS)"),
      NULL},
 
-    {"export-embed-fonts", 'F',
-     POPT_ARG_NONE, &sp_export_font, SP_ARG_EXPORT_FONT,
-     N_("Embed fonts on export (Type 1 only) (EPS)"),
-     NULL},
-
-    {"export-bbox-page", 'B',
-     POPT_ARG_NONE, &sp_export_bbox_page, SP_ARG_EXPORT_BBOX_PAGE,
-     N_("Export files with the bounding box set to the page size (EPS)"),
-     NULL},
-
     {"query-x", 'X',
      POPT_ARG_NONE, &sp_query_x, SP_ARG_QUERY_X,
      // TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
@@ -521,6 +505,26 @@ static int _win32_set_inkscape_env(const Glib::ustring &exePath)
 }
 #endif
 
+/**
+ * Add INKSCAPE_EXTENSIONDIR to PYTHONPATH so that extensions in users home
+ * can find inkex.py et al. (Bug #197475)
+ */
+static int set_extensions_env()
+{
+    char *oldenv = getenv("PYTHONPATH");
+    Glib::ustring tmp = INKSCAPE_EXTENSIONDIR;
+    if (oldenv != NULL) {
+#ifdef WIN32
+        tmp += ";";
+#else
+        tmp += ":";
+#endif
+        tmp += oldenv;
+    }
+    setenv("PYTHONPATH", tmp.c_str(), 1);
+    
+    return 0;
+}
 
 
 /**
@@ -551,6 +555,9 @@ main(int argc, char **argv)
     RegistryTool rt;
     rt.setPathInfo();
 #endif
+
+    // Bug #197475
+    set_extensions_env();
 
    /**
     * Call bindtextdomain() for various machines's paths
@@ -893,18 +900,18 @@ void sp_process_file_list(GSList *fl)
                 sp_repr_save_file(repr->document(), sp_export_svg, SP_SVG_NS_URI);
             }
             if (sp_export_ps) {
-                do_export_ps(doc, sp_export_ps, "image/x-postscript");
+                do_export_ps_pdf(doc, sp_export_ps, "image/x-postscript");
             }
             if (sp_export_eps) {
-                do_export_ps(doc, sp_export_eps, "image/x-e-postscript");
+                do_export_ps_pdf(doc, sp_export_eps, "image/x-e-postscript");
             }
             if (sp_export_pdf) {
-                do_export_pdf(doc, sp_export_pdf, "application/pdf");
-                }
+                do_export_ps_pdf(doc, sp_export_pdf, "application/pdf");
+            }
 #ifdef WIN32
-                if (sp_export_emf) {
-                    do_export_emf(doc, sp_export_emf, "image/x-emf");
-                }
+            if (sp_export_emf) {
+                do_export_emf(doc, sp_export_emf, "image/x-emf");
+            }
 #endif //WIN32
             if (sp_query_all) {
                 do_query_all (doc);
@@ -981,7 +988,7 @@ int sp_main_shell(char const* command_name)
                         resetCommandlineGlobals();
                         g_strfreev(argv);
                     } else {
-                        g_warning("problem parsing commandline: %s", useme);
+                        g_warning("Cannot parse commandline: %s", useme);
                     }
                 }
             }
@@ -1023,7 +1030,6 @@ int sp_main_console(int argc, char const **argv)
     } else {
         sp_process_file_list(fl); // Normal command line invokation
     }
-    inkscape_unref();
 
     return 0;
 }
@@ -1319,77 +1325,14 @@ sp_do_export_png(SPDocument *doc)
 
 
 /**
- *  Perform an export of either PS or EPS.
+ *  Perform a PDF/PS/EPS export
  *
  *  \param doc Document to export.
  *  \param uri URI to export to.
  *  \param mime MIME type to export as.
  */
 
-static void do_export_ps(SPDocument* doc, gchar const* uri, char const* mime)
-{
-    Inkscape::Extension::DB::OutputList o;
-    Inkscape::Extension::db.get_output_list(o);
-    Inkscape::Extension::DB::OutputList::const_iterator i = o.begin();
-    while (i != o.end() && strcmp( (*i)->get_mimetype(), mime ) != 0) {
-        i++;
-    }
-
-    if (i == o.end())
-    {
-        g_warning ("Could not find an extension to export to MIME type %s.", mime);
-        return;
-    }
-
-    bool old_text_to_path = false;
-    bool old_font_embedded = false;
-    bool old_bbox_page = false;
-
-    try {
-        old_text_to_path = (*i)->get_param_bool("textToPath");
-        (*i)->set_param_bool("textToPath", sp_export_text_to_path);
-    }
-    catch (...) {
-        g_warning ("Could not set export-text-to-path option for this export.");
-    }
-
-    try {
-        old_font_embedded = (*i)->get_param_bool("fontEmbedded");
-        (*i)->set_param_bool("fontEmbedded", sp_export_font);
-    }
-    catch (...) {
-        g_warning ("Could not set export-font option for this export.");
-    }
-
-    try {
-        old_bbox_page = (*i)->get_param_bool("pageBoundingBox");
-        (*i)->set_param_bool("pageBoundingBox", sp_export_bbox_page);
-    }
-    catch (...) {
-        g_warning ("Could not set export-bbox-page option for this export.");
-    }
-
-    (*i)->save(doc, uri);
-
-    try {
-        (*i)->set_param_bool("textToPath", old_text_to_path);
-        (*i)->set_param_bool("fontEmbedded", old_font_embedded);
-        (*i)->set_param_bool("pageBoundingBox", old_bbox_page);
-    }
-    catch (...) {
-
-    }
-}
-
-/**
- *  Perform a PDF export
- *
- *  \param doc Document to export.
- *  \param uri URI to export to.
- *  \param mime MIME type to export as.
- */
-
-static void do_export_pdf(SPDocument* doc, gchar const* uri, char const* mime)
+static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
 {
     Inkscape::Extension::DB::OutputList o;
     Inkscape::Extension::db.get_output_list(o);
@@ -1415,16 +1358,33 @@ static void do_export_pdf(SPDocument* doc, gchar const* uri, char const* mime)
         (*i)->set_param_string ("exportId", "");
     }
 
+    if (sp_export_area_canvas && sp_export_area_drawing) {
+        g_warning ("You cannot use --export-area-canvas and --export-area-drawing at the same time; only the former will take effect.");
+        sp_export_area_drawing = false;
+    }
+
     if (sp_export_area_drawing) {
-        (*i)->set_param_bool ("exportDrawing", TRUE);
+        (*i)->set_param_bool ("areaDrawing", TRUE);
     } else {
-        (*i)->set_param_bool ("exportDrawing", FALSE);
+        (*i)->set_param_bool ("areaDrawing", FALSE);
     }
 
     if (sp_export_area_canvas) {
-        (*i)->set_param_bool ("exportCanvas", TRUE);
+        if (sp_export_eps) {
+            g_warning ("EPS cannot have its bounding box extend beyond its content, so if your drawing is smaller than the canvas, --export-area-canvas will clip it to drawing.");
+        } 
+        (*i)->set_param_bool ("areaCanvas", TRUE);
     } else {
-        (*i)->set_param_bool ("exportCanvas", FALSE);
+        (*i)->set_param_bool ("areaCanvas", FALSE);
+    }
+
+    if (!sp_export_area_drawing && !sp_export_area_canvas && !sp_export_id) { 
+        // neither is set, set canvas as default for ps/pdf and drawing for eps
+        if (sp_export_eps) {
+            try {
+               (*i)->set_param_bool("areaDrawing", TRUE);
+            } catch (...) {}
+        } 
     }
 
     if (sp_export_text_to_path) {
@@ -1746,7 +1706,7 @@ sp_process_args(poptContext ctx)
     GSList *fl = NULL;
 
     gint a;
-    while ((a = poptGetNextOpt(ctx)) >= 0) {
+    while ((a = poptGetNextOpt(ctx)) != -1) {
         switch (a) {
             case SP_ARG_FILE: {
                 gchar const *fn = poptGetOptArg(ctx);
@@ -1782,6 +1742,11 @@ sp_process_args(poptContext ctx)
                     // printf("Adding in: %s\n", arg);
                     new Inkscape::CmdLineAction((a == SP_ARG_VERB), arg);
                 }
+                break;
+            }
+            case POPT_ERROR_BADOPT: {
+                g_warning ("Invalid option %s", poptBadOption(ctx, 0));
+                exit(1);
                 break;
             }
             default: {

@@ -80,10 +80,10 @@ static Geom::Point const unconstrained_tangent(0, 0);
 #ifdef BEZIER_DEBUG
 # define DOUBLE_ASSERT(x) g_assert( ( (x) > -SP_HUGE ) && ( (x) < SP_HUGE ) )
 # define BEZIER_ASSERT(b) do { \
-           DOUBLE_ASSERT((b)[0][NR::X]); DOUBLE_ASSERT((b)[0][NR::Y]);  \
-           DOUBLE_ASSERT((b)[1][NR::X]); DOUBLE_ASSERT((b)[1][NR::Y]);  \
-           DOUBLE_ASSERT((b)[2][NR::X]); DOUBLE_ASSERT((b)[2][NR::Y]);  \
-           DOUBLE_ASSERT((b)[3][NR::X]); DOUBLE_ASSERT((b)[3][NR::Y]);  \
+           DOUBLE_ASSERT((b)[0][Geom::X]); DOUBLE_ASSERT((b)[0][Geom::Y]);  \
+           DOUBLE_ASSERT((b)[1][Geom::X]); DOUBLE_ASSERT((b)[1][Geom::Y]);  \
+           DOUBLE_ASSERT((b)[2][Geom::X]); DOUBLE_ASSERT((b)[2][Geom::Y]);  \
+           DOUBLE_ASSERT((b)[3][Geom::X]); DOUBLE_ASSERT((b)[3][Geom::Y]);  \
          } while(0)
 #else
 # define DOUBLE_ASSERT(x) do { } while(0)
@@ -148,8 +148,8 @@ copy_without_nans_or_adjacent_duplicates(Geom::Point const src[], unsigned src_l
         if ( si == src_len ) {
             return 0;
         }
-        if (!IS_NAN(src[si][NR::X]) &&
-            !IS_NAN(src[si][NR::Y])) {
+        if (!IS_NAN(src[si][Geom::X]) &&
+            !IS_NAN(src[si][Geom::Y])) {
             dest[0] = Geom::Point(src[si]);
             ++si;
             break;
@@ -160,8 +160,8 @@ copy_without_nans_or_adjacent_duplicates(Geom::Point const src[], unsigned src_l
     for (; si < src_len; ++si) {
         Geom::Point const src_pt = Geom::Point(src[si]);
         if ( src_pt != dest[di]
-             && !IS_NAN(src_pt[NR::X])
-             && !IS_NAN(src_pt[NR::Y])) {
+             && !IS_NAN(src_pt[Geom::X])
+             && !IS_NAN(src_pt[Geom::Y])) {
             dest[++di] = src_pt;
         }
     }
@@ -806,7 +806,7 @@ sp_darray_center_tangent(Geom::Point const d[],
     if ( d[center + 1] == d[center - 1] ) {
         /* Rotate 90 degrees in an arbitrary direction. */
         Geom::Point const diff = d[center] - d[center - 1];
-        ret = NR::rot90(diff);
+        ret = Geom::rot90(diff);
     } else {
         ret = d[center - 1] - d[center + 1];
     }
@@ -959,11 +959,11 @@ compute_hook(Geom::Point const &a, Geom::Point const &b, double const u, BezierC
 {
     Geom::Point const P = bezier_pt(3, bezCurve, u);
     Geom::Point const diff = .5 * (a + b) - P;
-    double const dist = NR::L2(diff);
+    double const dist = Geom::L2(diff);
     if (dist < tolerance) {
         return 0;
     }
-    double const allowed = NR::L2(b - a) + tolerance;
+    double const allowed = Geom::L2(b - a) + tolerance;
     return dist / allowed;
     /** \todo 
      * effic: Hooks are very rare.  We could start by comparing 

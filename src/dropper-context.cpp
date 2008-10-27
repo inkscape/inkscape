@@ -30,7 +30,7 @@
 #include "color.h"
 #include "color-rgba.h"
 #include "desktop-style.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "sp-namedview.h"
 #include "desktop.h"
 #include "desktop-handles.h"
@@ -114,11 +114,12 @@ static void sp_dropper_context_setup(SPEventContext *ec)
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->area), 0x0000007f, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_item_hide(dc->area);
 
-    if (prefs_get_int_attribute("tools.dropper", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/dropper/selcue")) {
         ec->enableSelectionCue();
     }
 
-    if (prefs_get_int_attribute("tools.dropper", "gradientdrag", 0) != 0) {
+    if (prefs->getBool("/tools/dropper/gradientdrag")) {
         ec->enableGrDrag();
     }
 }
@@ -142,10 +143,11 @@ static void sp_dropper_context_finish(SPEventContext *ec)
 guint32 sp_dropper_context_get_color(SPEventContext *ec)
 {
     SPDropperContext *dc = SP_DROPPER_CONTEXT(ec);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     
-    int pick = prefs_get_int_attribute("tools.dropper", "pick",
+    int pick = prefs->getInt("/tools/dropper/pick",
                                        SP_DROPPER_PICK_VISIBLE);
-    int setalpha = prefs_get_int_attribute("tools.dropper", "setalpha", 1);
+    bool setalpha = prefs->getBool("/tools/dropper/setalpha", true);
     
     return SP_RGBA32_F_COMPOSE(dc->R, dc->G, dc->B,
         (pick == SP_DROPPER_PICK_ACTUAL && setalpha) ? dc->alpha : 1.0);
@@ -157,9 +159,10 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
     SPDropperContext *dc = (SPDropperContext *) event_context;
     int ret = FALSE;
     SPDesktop *desktop = event_context->desktop;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    int pick = prefs_get_int_attribute("tools.dropper", "pick", SP_DROPPER_PICK_VISIBLE);
-    int setalpha = prefs_get_int_attribute("tools.dropper", "setalpha", 1);
+    int pick = prefs->getInt("/tools/dropper/pick", SP_DROPPER_PICK_VISIBLE);
+    bool setalpha = prefs->getBool("/tools/dropper/setalpha", true);
 
     switch (event->type) {
 	case GDK_BUTTON_PRESS:

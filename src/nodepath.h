@@ -145,6 +145,8 @@ typedef enum {
 	NODE_CUSP,
 /**  This node continuously joins two segments. */
 	NODE_SMOOTH,
+/**  This node has automatic handles. */
+	NODE_AUTO,
 /**  This node is symmetric. */
 	NODE_SYMM
 } NodeType;

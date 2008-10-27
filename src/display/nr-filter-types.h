@@ -37,6 +37,14 @@ enum FilterSlotType {
 /* Unnamed slot is for NR::FilterSlot internal use. Passing it as
  * parameter to NR::FilterSlot accessors may have unforeseen consequences. */
 
+enum FilterQuality {
+    FILTER_QUALITY_BEST = 2,
+    FILTER_QUALITY_BETTER = 1,
+    FILTER_QUALITY_NORMAL = 0,
+    FILTER_QUALITY_WORSE = -1,
+    FILTER_QUALITY_WORST = -2
+};
+
 } /* namespace NR */
 
 #endif // __NR_FILTER_TYPES_H__

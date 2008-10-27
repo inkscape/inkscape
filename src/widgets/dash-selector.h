@@ -1,10 +1,10 @@
 #ifndef __SP_DASH_SELECTOR_NEW_H__
 #define __SP_DASH_SELECTOR_NEW_H__
 
-/*
- * Optionmenu for selecting dash patterns
- *
- * Author:
+/** @file
+ * @brief Option menu for selecting dash patterns
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Maximilian Albert <maximilian.albert> (gtkmm-ification)
  *
@@ -13,8 +13,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "xml/repr.h"
-
+#include <glibmm/ustring.h>
 #include <gtkmm/box.h>
 #include <sigc++/signal.h>
 
@@ -28,7 +27,7 @@ class Adjustment;
 // TODO: should we rather derive this from OptionMenu and add the spinbutton somehow else?
 class SPDashSelector : public Gtk::HBox {
 public:
-    SPDashSelector(Inkscape::XML::Node *drepr);
+    SPDashSelector();
     ~SPDashSelector();
 
     void set_dash(int ndash, double *dash, double offset);
@@ -37,13 +36,15 @@ public:
     sigc::signal<void> changed_signal;
 
 private:
-    static void init_dashes(Inkscape::XML::Node *drepr);
+    static void init_dashes();
     void dash_activate(Gtk::MenuItem *mi);
     void offset_value_changed();
     Gtk::MenuItem *menu_item_new(double *pattern);
 
     Gtk::OptionMenu *dash;
     Gtk::Adjustment *offset;
+    
+    static gchar const *const _prefs_path;
 };
 
 #endif

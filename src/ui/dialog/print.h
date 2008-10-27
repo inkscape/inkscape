@@ -1,11 +1,10 @@
-/**
- * \brief Print dialog
- *
- * Authors:
+/** @file
+ * @brief Print dialog
+ */
+/* Authors:
  *   Kees Cook <kees@outflux.net>
  *
  * Copyright (C) 2007 Kees Cook
- *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 

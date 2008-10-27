@@ -1,7 +1,7 @@
-/**
- * \brief A floating dialog implementation.
- *
- * Author:
+/** @file
+ * @brief Floating dialog implementation.
+ */
+/* Author:
  *   Gustav Broberg <broberg@kth.se>
  *
  * Copyright (C) 2007 Authors
@@ -21,7 +21,7 @@
 #include "desktop.h"
 #include "dialogs/dialog-events.h"
 #include "interface.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "verbs.h"
 
 namespace Inkscape {
@@ -35,9 +35,9 @@ FloatingBehavior::FloatingBehavior(Dialog &dialog) :
 #if GTK_VERSION_GE(2, 12)
 	,_dialog_active(_d->property_is_active())
 	,_steps(0)
-	,_trans_focus(prefs_get_double_attribute_limited("dialogs.transparency", "on-focus", 0.95, 0.0, 1.0))
-	,_trans_blur(prefs_get_double_attribute_limited("dialogs.transparency", "on-blur", 0.50, 0.0, 1.0))
-	,_trans_time(prefs_get_int_attribute_limited("dialogs.transparency", "animate-time", 100, 0, 5000))
+	,_trans_focus(Inkscape::Preferences::get()->getDoubleLimited("/dialogs/transparency/on-focus", 0.95, 0.0, 1.0))
+	,_trans_blur(Inkscape::Preferences::get()->getDoubleLimited("/dialogs/transparency/on-blur", 0.50, 0.0, 1.0))
+	,_trans_time(Inkscape::Preferences::get()->getIntLimited("/dialogs/transparency/animate-time", 100, 0, 5000))
 #endif
 {
     hide();
@@ -65,28 +65,30 @@ FloatingBehavior::FloatingBehavior(Dialog &dialog) :
 	zero so that the transition happens instantaneously.  This occurs on
 	windows as opacity changes cause flicker there.
 */
-void FloatingBehavior::_focus_event (void) {
-	_steps = 0;
-	_trans_focus = prefs_get_double_attribute_limited("dialogs.transparency", "on-focus", 0.95, 0.0, 1.0);
-	_trans_blur = prefs_get_double_attribute_limited("dialogs.transparency", "on-blur", 0.50, 0.0, 1.0);
-	_trans_time = prefs_get_int_attribute_limited("dialogs.transparency", "animate-time", 100, 0, 5000);
+void FloatingBehavior::_focus_event (void)
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    _steps = 0;
+    _trans_focus = prefs->getDoubleLimited("/dialogs/transparency/on-focus", 0.95, 0.0, 1.0);
+    _trans_blur = prefs->getDoubleLimited("/dialogs/transparency/on-blur", 0.50, 0.0, 1.0);
+    _trans_time = prefs->getIntLimited("/dialogs/transparency/animate-time", 100, 0, 5000);
 
-	if (_trans_time != 0) {
-		float diff = _trans_focus - _trans_blur;
-		if (diff < 0.0) diff *= -1.0;
+    if (_trans_time != 0) {
+        float diff = _trans_focus - _trans_blur;
+        if (diff < 0.0) diff *= -1.0;
 
-		while (diff > 0.05) {
-			_steps++;
-			diff = diff / 2.0;
-		}
+        while (diff > 0.05) {
+            _steps++;
+            diff = diff / 2.0;
+        }
 
-		if (_steps != 0) {
-			Glib::signal_timeout().connect(sigc::mem_fun(this, &FloatingBehavior::_trans_timer), _trans_time / _steps);
-		}
-	}
-	_trans_timer();
+        if (_steps != 0) {
+            Glib::signal_timeout().connect(sigc::mem_fun(this, &FloatingBehavior::_trans_timer), _trans_time / _steps);
+        }
+    }
+    _trans_timer();
 
-	return;
+    return;
 }
 
 /** \brief  Move the opacity of a window towards our goal
@@ -177,7 +179,8 @@ FloatingBehavior::onShutdown() {}
 void
 FloatingBehavior::onDesktopActivated (SPDesktop *desktop)
 {
-    gint transient_policy = prefs_get_int_attribute_limited ( "options.transientpolicy", "value", 1, 0, 2);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gint transient_policy = prefs->getIntLimited("/options/transientpolicy/value", 1, 0, 2);
 
 #ifdef WIN32 // Win32 special code to enable transient dialogs
     transient_policy = 2;

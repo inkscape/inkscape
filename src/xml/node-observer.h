@@ -29,7 +29,7 @@ namespace XML {
 /**
  * @brief Interface for XML node observers
  *
- * This pure abstract class defines an interface for objects that can receive
+ * This class defines an interface for objects that can receive
  * XML node state change notifications. The observer has to be registered using
  * the Node::addObserver() method to be notified of changes of this node only,
  * or using Node::addSubtreeObserver() to also receive notifications about its
@@ -40,6 +40,11 @@ namespace XML {
  * The method will be called again due to the XML modification performed in it. If you
  * don't take special precautions to ignore the second call, it will result in infinite
  * recursion.
+ *
+ * The virtual methods of this class do nothing by default, so you don't need to provide
+ * stubs for things you don't use. A good idea is to make the observer register itself
+ * on construction and unregister itself on destruction. This will ensure there are
+ * no dangling references.
  */
 class NodeObserver {
 public:
@@ -56,7 +61,7 @@ public:
      * @param child The newly added child node
      * @param prev The node after which the new child was inserted into the sibling order, or NULL
      */
-    virtual void notifyChildAdded(Node &node, Node &child, Node *prev)=0;
+    virtual void notifyChildAdded(Node &node, Node &child, Node *prev) {}
 
     /**
      * @brief Child removal callback
@@ -68,7 +73,7 @@ public:
      * @param child The removed child node
      * @param prev The node that was before the removed node in sibling order, or NULL
      */
-    virtual void notifyChildRemoved(Node &node, Node &child, Node *prev)=0;
+    virtual void notifyChildRemoved(Node &node, Node &child, Node *prev) {}
 
     /**
      * @brief Child order change callback
@@ -84,7 +89,7 @@ public:
      * @param new_prev The node that is before @c child after the order change
      */
     virtual void notifyChildOrderChanged(Node &node, Node &child,
-                                         Node *old_prev, Node *new_prev)=0;
+                                         Node *old_prev, Node *new_prev) {}
 
     /**
      * @brief Content change callback
@@ -98,7 +103,7 @@ public:
      */
     virtual void notifyContentChanged(Node &node,
                                       Util::ptr_shared<char> old_content,
-                                      Util::ptr_shared<char> new_content)=0;
+                                      Util::ptr_shared<char> new_content) {}
 
     /**
      * @brief Attribute change callback
@@ -112,7 +117,7 @@ public:
      */
     virtual void notifyAttributeChanged(Node &node, GQuark name,
                                         Util::ptr_shared<char> old_value,
-                                        Util::ptr_shared<char> new_value)=0;
+                                        Util::ptr_shared<char> new_value) {}
 };
 
 } // namespace XML

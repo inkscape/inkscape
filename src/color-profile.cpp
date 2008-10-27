@@ -39,9 +39,9 @@ extern guint update_in_progress;
 #define DEBUG_MESSAGE(key, ...) \
 {\
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();\
-    bool dump = prefs->getBool("options.scislac", #key);\
-    bool dumpD = prefs->getBool("options.scislac", #key"D");\
-    bool dumpD2 = prefs->getBool("options.scislac", #key"D2");\
+    bool dump = prefs->getBool(Glib::ustring("/options/scislac/") + #key);\
+    bool dumpD = prefs->getBool(Glib::ustring("/options/scislac/") + #key"D");\
+    bool dumpD2 = prefs->getBool(Glib::ustring("/options/scislac/") + #key"D2");\
     dumpD &= ( (update_in_progress == 0) || dumpD2 );\
     if ( dump )\
     {\
@@ -684,7 +684,7 @@ cmsHPROFILE Inkscape::colorprofile_get_system_profile_handle()
     }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring uri = prefs->getString("options.displayprofile", "uri");
+    Glib::ustring uri = prefs->getString("/options/displayprofile/uri");
 
     if ( !uri.empty() ) {
         if ( uri != lastURI ) {
@@ -743,8 +743,8 @@ cmsHPROFILE Inkscape::colorprofile_get_proof_profile_handle()
     }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool which = prefs->getBool( "options.softproof", "enable");
-    Glib::ustring uri = prefs->getString("options.softproof", "uri");
+    bool which = prefs->getBool( "/options/softproof/enable");
+    Glib::ustring uri = prefs->getString("/options/softproof/uri");
 
     if ( which && !uri.empty() ) {
         if ( lastURI != uri ) {
@@ -799,7 +799,7 @@ static void free_transforms();
 cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool fromDisplay = prefs->getBool( "options.displayprofile", "from_display");
+    bool fromDisplay = prefs->getBool( "/options/displayprofile/from_display");
     if ( fromDisplay ) {
         if ( transf ) {
             cmsDeleteTransform(transf);
@@ -808,14 +808,14 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
         return 0;
     }
 
-    bool warn = prefs->getBool( "options.softproof", "gamutwarn");
-    int intent = prefs->getIntLimited( "options.displayprofile", "intent", 0, 0, 3 );
-    int proofIntent = prefs->getIntLimited( "options.softproof", "intent", 0, 0, 3 );
-    bool bpc = prefs->getBool( "options.softproof", "bpc");
+    bool warn = prefs->getBool( "/options/softproof/gamutwarn");
+    int intent = prefs->getIntLimited( "/options/displayprofile/intent", 0, 0, 3 );
+    int proofIntent = prefs->getIntLimited( "/options/softproof/intent", 0, 0, 3 );
+    bool bpc = prefs->getBool( "/options/softproof/bpc");
 #if defined(cmsFLAGS_PRESERVEBLACK)
-    bool preserveBlack = prefs->getBool( "options.softproof", "preserveblack");
+    bool preserveBlack = prefs->getBool( "/options/softproof/preserveblack");
 #endif //defined(cmsFLAGS_PRESERVEBLACK)
-    Glib::ustring colorStr = prefs->getString("options.softproof", "gamutcolor");
+    Glib::ustring colorStr = prefs->getString("/options/softproof/gamutcolor");
     Gdk::Color gamutColor( colorStr.empty() ? "#808080" : colorStr );
 
     if ( (warn != gamutWarn)
@@ -969,14 +969,14 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_per( Glib::ustring const& id )
             if ( id == it2->id ) {
                 MemProfile& item = *it2;
 
-                bool warn = prefs->getBool( "options.softproof", "gamutwarn");
-                int intent = prefs->getIntLimited( "options.displayprofile", "intent", 0, 0, 3 );
-                int proofIntent = prefs->getIntLimited( "options.softproof", "intent", 0, 0, 3 );
-                bool bpc = prefs->getBool( "options.softproof", "bpc");
+                bool warn = prefs->getBool( "/options/softproof/gamutwarn");
+                int intent = prefs->getIntLimited( "/options/displayprofile/intent", 0, 0, 3 );
+                int proofIntent = prefs->getIntLimited( "/options/softproof/intent", 0, 0, 3 );
+                bool bpc = prefs->getBool( "/options/softproof/bpc");
 #if defined(cmsFLAGS_PRESERVEBLACK)
-                bool preserveBlack = prefs->getBool( "options.softproof", "preserveblack");
+                bool preserveBlack = prefs->getBool( "/options/softproof/preserveblack");
 #endif //defined(cmsFLAGS_PRESERVEBLACK)
-                Glib::ustring colorStr = prefs->getString("options.softproof", "gamutcolor");
+                Glib::ustring colorStr = prefs->getString("/options/softproof/gamutcolor");
                 Gdk::Color gamutColor( colorStr.empty() ? "#808080" : colorStr );
 
                 if ( (warn != gamutWarn)

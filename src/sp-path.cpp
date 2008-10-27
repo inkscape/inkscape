@@ -42,7 +42,6 @@
 #include "inkscape.h"
 #include "style.h"
 #include "message-stack.h"
-#include "prefs-utils.h"
 #include "selection.h"
 
 #define noPATH_VERBOSE
@@ -383,34 +382,34 @@ sp_path_set_transform(SPItem *item, Geom::Matrix const &xform)
     return Geom::identity();
 }
 
+
 static void
 sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
 {
     SPShape * const shape = (SPShape *) lpeitem;
     SPPath * const path = (SPPath *) lpeitem;
 
-    if (sp_lpe_item_has_path_effect(lpeitem) && sp_lpe_item_path_effects_enabled(lpeitem)) {
-        if (path->original_curve) {
-            SPCurve *curve = path->original_curve->copy();
-            sp_shape_set_curve_insync(shape, curve, TRUE);
-            sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
-            SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            curve->unref();
+    if (path->original_curve) {
+        // if a path does not have an lpeitem applied, then reset the curve to the original_curve.
+        // This is very important for LPEs on groups to work properly!
+        SPCurve *curve = path->original_curve->copy();
+        sp_shape_set_curve_insync(shape, curve, TRUE);
+        sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
+        SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);        // this might be optimized in future for the case when this path is in a group with lpe applied (and will therefore have its curve change again when the group LPE is applied)
+        curve->unref();
 
-            if (write) {
-                // could also do SP_OBJECT(shape)->updateRepr();  but only the d attribute needs updating.
-                Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
-                if ( shape->curve != NULL ) {
-                    gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
-                    repr->setAttribute("d", str);
-                    g_free(str);
-                } else {
-                    repr->setAttribute("d", NULL);
-                }
+        if (write) {
+            // could also do SP_OBJECT(shape)->updateRepr();  but only the d attribute needs updating.
+            Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
+            if ( shape->curve != NULL ) {
+                gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
+                repr->setAttribute("d", str);
+                g_free(str);
+            } else {
+                repr->setAttribute("d", NULL);
             }
         }
     }
-    // else: do nothing.
 }
 
 

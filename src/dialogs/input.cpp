@@ -1,9 +1,9 @@
 #define __SP_INPUT_C__
 
-/*
- * Extended input devices dialog
- *
- * Authors:
+/** @file
+ * @brief Extended input devices dialog
+ */
+/* Authors:
  *   Nicklas Lindgren <nili@lysator.liu.se>
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *
@@ -19,14 +19,14 @@
 #include <gtk/gtkinputdialog.h>
 #include <glibmm/ustring.h>
 
-#include "../inkscape.h"
-#include "../macros.h"
-#include "../verbs.h"
-#include "../interface.h"
-#include "../xml/repr.h"
+#include "macros.h"
+#include "verbs.h"
+#include "inkscape.h"
+#include "interface.h"
+#include "xml/repr.h"
 
-#include "dialog-events.h"
-#include "../prefs-utils.h"
+#include "dialogs/dialog-events.h"
+#include "preferences.h"
 
 #define MIN_ONSCREEN_DISTANCE 50
 
@@ -35,7 +35,7 @@ static win_data wd;
 
 // impossible original values to make sure they are read from prefs
 static gint x = -1000, y = -1000, w = 0, h = 0;
-static const gchar *prefs_path = "dialogs.input";
+static Glib::ustring const prefs_path = "/dialogs/input/";
 
 static void
 sp_input_dialog_destroy (GtkObject */*object*/, gpointer /*data*/)
@@ -48,16 +48,17 @@ sp_input_dialog_destroy (GtkObject */*object*/, gpointer /*data*/)
 static gboolean
 sp_input_dialog_delete (GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
     gtk_window_get_size ((GtkWindow *) dlg, &w, &h);
 
     if (x<0) x=0;
     if (y<0) y=0;
 
-    prefs_set_int_attribute (prefs_path, "x", x);
-    prefs_set_int_attribute (prefs_path, "y", y);
-    prefs_set_int_attribute (prefs_path, "w", w);
-    prefs_set_int_attribute (prefs_path, "h", h);
+    prefs->setInt(prefs_path + "x", x);
+    prefs->setInt(prefs_path + "y", y);
+    prefs->setInt(prefs_path + "w", w);
+    prefs->setInt(prefs_path + "h", h);
 
     return FALSE; // which means, go ahead and destroy it
 
@@ -70,25 +71,21 @@ static const gchar *axis_use_strings[GDK_AXIS_LAST] = {
 void
 sp_input_load_from_preferences (void)
 {
-    Inkscape::XML::Node *devices = inkscape_get_repr(INKSCAPE, "devices");
-    if (devices == NULL)
-        return;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    Inkscape::XML::Node *repr;
-    GList *list_ptr;
-
-    for (list_ptr = gdk_devices_list(); list_ptr != NULL; list_ptr = list_ptr->next) {
+    for (GList *list_ptr = gdk_devices_list(); list_ptr != NULL; list_ptr = list_ptr->next) {
         GdkDevice *device = static_cast<GdkDevice *>(list_ptr->data);
-        repr = sp_repr_lookup_child(devices, "id", device->name);
-        if (repr != NULL) {
+        //repr = sp_repr_lookup_child(devices, "id", device->name);
+        Glib::ustring device_path = Glib::ustring("/devices/") + device->name;
+        if (/*repr != NULL*/ 1) {
             GdkInputMode mode;
-            const gchar *attribute = repr->attribute("mode");
+            Glib::ustring device_mode = prefs->getString(device_path + "/mode");
 
-            if (attribute == NULL)
+            if (device_mode.empty())
                 mode = GDK_MODE_DISABLED;
-            else if (!strcmp(attribute, "screen"))
+            else if (device_mode == "screen")
                 mode = GDK_MODE_SCREEN;
-            else if (!strcmp(attribute, "window"))
+            else if (device_mode == "window")
                 mode = GDK_MODE_WINDOW;
             else
                 mode = GDK_MODE_DISABLED;
@@ -97,50 +94,40 @@ sp_input_load_from_preferences (void)
                 gdk_device_set_mode(device, mode);
             }
 
-            const gchar *temp_ptr;
-            Glib::ustring::size_type pos0;
-            Glib::ustring::size_type pos1;
-            gint i;
-            gint j;
-
+            Glib::ustring::size_type pos0, pos1;
             GdkAxisUse axis_use;
 
-            temp_ptr = repr->attribute("axes");
-            if (temp_ptr != NULL) {
-                const Glib::ustring temp_str = temp_ptr;
-                pos0 = pos1 = 0;
-                for (i=0; i < device->num_axes; i++) {
-                    pos1 = temp_str.find(";", pos0);
-                    if (pos1 == Glib::ustring::npos)
-                        break;  // Too few axis specifications
+            //temp_ptr = repr->attribute("axes");
+            Glib::ustring const axes_str = prefs->getString(device_path + "/axes");
+            pos0 = pos1 = 0;
+            for (gint i=0; i < device->num_axes; i++) {
+                pos1 = axes_str.find(';', pos0);
+                if (pos1 == Glib::ustring::npos)
+                    break;  // Too few axis specifications
 
-                    axis_use = GDK_AXIS_IGNORE;
-                    for (j=0; j < GDK_AXIS_LAST; j++)
-                        if (!strcmp(temp_str.substr(pos0, pos1-pos0).c_str(), axis_use_strings[j])) {
-                            axis_use = static_cast<GdkAxisUse>(j);
-                            break;
-                        }
-                    gdk_device_set_axis_use(device, i, axis_use);
-                    pos0 = pos1 + 1;
-                }
+                axis_use = GDK_AXIS_IGNORE;
+                for (gint j=0; j < GDK_AXIS_LAST; j++)
+                    if (!strcmp(axes_str.substr(pos0, pos1-pos0).c_str(), axis_use_strings[j])) {
+                        axis_use = static_cast<GdkAxisUse>(j);
+                        break;
+                    }
+                gdk_device_set_axis_use(device, i, axis_use);
+                pos0 = pos1 + 1;
             }
 
             guint keyval;
             GdkModifierType modifier;
 
-            temp_ptr = repr->attribute("keys");
-            if (temp_ptr != NULL) {
-                const Glib::ustring temp_str = temp_ptr;
-                pos0 = pos1 = 0;
-                for (i=0; i < device->num_keys; i++) {
-                    pos1 = temp_str.find(";", pos0);
-                    if (pos1 == Glib::ustring::npos)
-                        break;  // Too few key specifications
+            Glib::ustring const keys_str = prefs->getString(device_path + "/keys");
+            pos0 = pos1 = 0;
+            for (gint i=0; i < device->num_keys; i++) {
+                pos1 = keys_str.find(';', pos0);
+                if (pos1 == Glib::ustring::npos)
+                    break;  // Too few key specifications
 
-                    gtk_accelerator_parse(temp_str.substr(pos0, pos1-pos0).c_str(), &keyval, &modifier);
-                    gdk_device_set_key(device, i, keyval, modifier);
-                    pos0 = pos1 + 1;
-                }
+                gtk_accelerator_parse(keys_str.substr(pos0, pos1-pos0).c_str(), &keyval, &modifier);
+                gdk_device_set_key(device, i, keyval, modifier);
+                pos0 = pos1 + 1;
             }
         }
     }
@@ -149,56 +136,43 @@ sp_input_load_from_preferences (void)
 void
 sp_input_save_to_preferences (void)
 {
-    Inkscape::XML::Node *devices = inkscape_get_repr(INKSCAPE, "devices");
-    if (devices == NULL)
-        // TODO: find a clean way to add a node to the preferences root, or
-        // give an error message
-        return;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    Inkscape::XML::Node *repr;
-    GList *list_ptr;
-
-    for (list_ptr = gdk_devices_list(); list_ptr != NULL; list_ptr = list_ptr->next) {
-        gint i;
-        Glib::ustring temp_attribute;
+    for (GList *list_ptr = gdk_devices_list(); list_ptr != NULL; list_ptr = list_ptr->next) {
         GdkDevice *device = static_cast<GdkDevice *>(list_ptr->data);
 
-        repr = sp_repr_lookup_child(devices, "id", device->name);
-        if (repr == NULL) {
-            repr = devices->document()->createElement("group");
-            repr->setAttribute("id", device->name);
-            devices->appendChild(repr);
-            Inkscape::GC::release(repr);
-        }
+        //repr = sp_repr_lookup_child(devices, "id", device->name);
+        Glib::ustring device_path = Glib::ustring("/devices/") + device->name;
+
         switch (device->mode) {
             default:
             case GDK_MODE_DISABLED: {
-                repr->setAttribute("mode", "disabled");
+                prefs->setString(device_path + "/mode", "disabled");
                 break;
             }
             case GDK_MODE_SCREEN: {
-                repr->setAttribute("mode", "screen");
+                prefs->setString(device_path + "/mode", "screen");
                 break;
             }
             case GDK_MODE_WINDOW: {
-                repr->setAttribute("mode", "window");
+                prefs->setString(device_path + "/mode", "window");
                 break;
             }
         }
 
-        temp_attribute = "";
-        for (i=0; i < device->num_axes; i++) {
+        Glib::ustring temp_attribute = "";
+        for (gint i=0; i < device->num_axes; i++) {
             temp_attribute += axis_use_strings[device->axes[i].use];
             temp_attribute += ";";
         }
-        repr->setAttribute("axes", temp_attribute.c_str());
+        prefs->setString(device_path + "/axes", temp_attribute);
 
         temp_attribute = "";
-        for (i=0; i < device->num_keys; i++) {
+        for (gint i=0; i < device->num_keys; i++) {
             temp_attribute += gtk_accelerator_name(device->keys[i].keyval, device->keys[i].modifiers);
             temp_attribute += ";";
         }
-        repr->setAttribute("keys", temp_attribute.c_str());
+        prefs->setString(device_path + "/keys", temp_attribute);
     }
 }
 
@@ -208,14 +182,11 @@ sp_input_save_button (GtkObject */*object*/, gpointer /*data*/)
     sp_input_save_to_preferences();
 }
 
-/**
- * \brief  Dialog
- *
- */
 void
 sp_input_dialog (void)
 {
     if (dlg == NULL) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
         gchar title[500];
         sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_DIALOG_INPUT), title);
@@ -223,13 +194,13 @@ sp_input_dialog (void)
         dlg = gtk_input_dialog_new();
 
         if (x == -1000 || y == -1000) {
-            x = prefs_get_int_attribute (prefs_path, "x", -1000);
-            y = prefs_get_int_attribute (prefs_path, "y", -1000);
+            x = prefs->getInt(prefs_path + "x", -1000);
+            y = prefs->getInt(prefs_path + "y", -1000);
         }
 
         if (w ==0 || h == 0) {
-            w = prefs_get_int_attribute (prefs_path, "w", 0);
-            h = prefs_get_int_attribute (prefs_path, "h", 0);
+            w = prefs->getInt(prefs_path + "w", 0);
+            h = prefs->getInt(prefs_path + "h", 0);
         }
 
 //        if (x<0) x=0;

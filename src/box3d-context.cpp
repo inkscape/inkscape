@@ -38,7 +38,7 @@
 #include "object-edit.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "context-fns.h"
 #include "desktop-style.h"
 #include "transf_mat_3x4.h"
@@ -247,12 +247,13 @@ static void sp_box3d_context_setup(SPEventContext *ec)
     );
 
     bc->_vpdrag = new Box3D::VPDrag(sp_desktop_document (ec->desktop));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    if (prefs_get_int_attribute("tools.shapes", "selcue", 0) != 0) {
+    if (prefs->getBool("/tools/shapes/selcue")) {
         ec->enableSelectionCue();
     }
 
-    if (prefs_get_int_attribute("tools.shapes", "gradientdrag", 0) != 0) {
+    if (prefs->getBool("/tools/shapes/gradientdrag")) {
         ec->enableGrDrag();
     }
 
@@ -290,13 +291,14 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
 
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
-    int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
     Box3DContext *bc = SP_BOX3D_CONTEXT(event_context);
     g_assert (SP_ACTIVE_DOCUMENT->current_persp3d);
     Persp3D *cur_persp = SP_ACTIVE_DOCUMENT->current_persp3d;
 
-    event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
+    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     gint ret = FALSE;
     switch (event->type) {
@@ -331,7 +333,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             /* Snap center */
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, true, bc->item);
-            m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, button_dt);
+            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, button_dt);
             bc->center = from_2geom(button_dt);
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -363,7 +365,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
 
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, true, bc->item);
-            m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
+            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, motion_dt);
 
             bc->ctrl_dragged  = event->motion.state & GDK_CONTROL_MASK;
 
@@ -397,7 +399,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                     bc->drag_ptC_proj = cur_persp->tmat.preimage (from_2geom(motion_dt), bc->drag_ptB_proj[Proj::X], Proj::X);
                 }
                 Geom::Point pt2g = to_2geom(bc->drag_ptC);
-                m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
+                m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
                 bc->drag_ptC = from_2geom(pt2g);
             }
 
@@ -583,7 +585,7 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
         repr->setAttribute("sodipodi:type", "inkscape:box3d");
 
         /* Set style */
-        sp_desktop_apply_style_tool (desktop, repr, "tools.shapes.3dbox", false);
+        sp_desktop_apply_style_tool (desktop, repr, "/tools/shapes/3dbox", false);
 
         bc.item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
         Inkscape::GC::release(repr);

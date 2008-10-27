@@ -1,15 +1,12 @@
+/** @file
+ * @brief Cartesian grid item for the Inkscape canvas
+ */
+/* Copyright (C) Johan Engelen 2006-2007 <johan@shouraizou.nl>
+ * Copyright (C) Lauris Kaplinski 2000
+ */
+
 #ifndef INKSCAPE_CANVAS_GRID_H
 #define INKSCAPE_CANVAS_GRID_H
-
-/*
- * Inkscape::CXYGrid
- *
- * Generic (and quite unintelligent) grid item for gnome canvas
- *
- * Copyright (C) Johan Engelen 2006-2007 <johan@shouraizou.nl>
- * Copyright (C) Lauris Kaplinski 2000
- *
- */
 
 #include <cstring>
 #include <string>

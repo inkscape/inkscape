@@ -39,7 +39,7 @@ static void sp_star_set (SPObject *object, unsigned int key, const gchar *value)
 static void sp_star_update (SPObject *object, SPCtx *ctx, guint flags);
 
 static gchar * sp_star_description (SPItem * item);
-static void sp_star_snappoints(SPItem const *item, SnapPointsIter p);
+static void sp_star_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
 
 static void sp_star_set_shape (SPShape *shape);
 static void sp_star_update_patheffect (SPLPEItem *lpeitem, bool write);
@@ -520,10 +520,10 @@ sp_star_position_set (SPStar *star, gint sides, NR::Point center, gdouble r1, gd
 
 /* fixme: We should use all corners of star (Lauris) */
 
-static void sp_star_snappoints(SPItem const *item, SnapPointsIter p)
+static void sp_star_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
 	if (((SPItemClass *) parent_class)->snappoints) {
-		((SPItemClass *) parent_class)->snappoints (item, p);
+		((SPItemClass *) parent_class)->snappoints (item, p, snapprefs);
 	}
 }
 

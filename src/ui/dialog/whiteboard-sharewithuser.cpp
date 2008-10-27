@@ -1,7 +1,7 @@
-/**
- * Whiteboard share with user dialog
- *
- * Authors:
+/** @file
+ * Whiteboard share with user dialog - implementation
+ */
+/* Authors:
  * David Yip <yipdw@rose-hulman.edu>
  * Jason Segal, Jonas Collaros, Stephen Montgomery, Brandi Soggs, Matthew Weinstock (original C/Gtk version)
  *

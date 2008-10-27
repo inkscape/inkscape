@@ -3,7 +3,6 @@
 #endif
 #include "document-private.h"
 #include <dir-util.h>
-#include "prefs-utils.h"
 #include "extension/system.h"
 #include "gdkpixbuf-input.h"
 #include "selection-chemistry.h"

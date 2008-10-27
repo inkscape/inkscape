@@ -25,12 +25,10 @@
 #include <gtkmm/radiobuttongroup.h>
 #include <gtkmm/tooltips.h>
 #include <gtkmm/label.h>
-
 #include <glibmm/i18n.h>
 
-#include <xml/node.h>
-
-#include <extension/extension.h>
+#include "xml/node.h"
+#include "extension/extension.h"
 #include "preferences.h"
 #include "document-private.h"
 #include "sp-object.h"
@@ -113,7 +111,7 @@ ParamRadioButton::ParamRadioButton (const gchar * name,
 
     gchar * pref_name = this->pref_name();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring paramval = prefs->getString(PREF_DIR, pref_name);
+    Glib::ustring paramval = prefs->getString(extension_pref_root + pref_name);
     g_free(pref_name);
 
     if (!paramval.empty())
@@ -167,7 +165,7 @@ ParamRadioButton::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::No
         _value = g_strdup(settext->c_str());
         gchar * prefname = this->pref_name();
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString(PREF_DIR, prefname, _value);
+        prefs->setString(extension_pref_root + prefname, _value);
         g_free(prefname);
     }
 

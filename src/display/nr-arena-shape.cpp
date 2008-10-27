@@ -29,7 +29,6 @@
 #include <livarot/float-line.h>
 #include <livarot/int-line.h>
 #include <style.h>
-#include "prefs-utils.h"
 #include "inkscape-cairo.h"
 #include "helper/geom.h"
 #include "helper/geom-curves.h"

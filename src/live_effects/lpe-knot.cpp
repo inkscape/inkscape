@@ -28,6 +28,8 @@
 #include <2geom/path-intersection.h>
 #include <2geom/elliptical-arc.h>
 
+#include <exception>
+
 namespace Inkscape {
 namespace LivePathEffect {
 
@@ -171,12 +173,12 @@ namespace LPEKnotNS {
 CrossingPoints::CrossingPoints(Geom::CrossingSet const &input, std::vector<Geom::Path> const &path) : std::vector<CrossingPoint>()
 {
     using namespace Geom;
-    g_print("JF>\nCrossing set content:\n");
+//    g_print("JF>\nCrossing set content:\n");
     for( unsigned i=0; i<input.size(); i++){
         Crossings i_crossings = input[i];
         for( unsigned n=0; n<i_crossings.size(); n++ ){
             Crossing c = i_crossings[n];
-            g_print("JF> (%u,%u) at times (%f,%f) ----->",c.a,c.b,c.ta,c.tb);
+//            g_print("JF> (%u,%u) at times (%f,%f) ----->",c.a,c.b,c.ta,c.tb);
             unsigned j = c.getOther(i);
             if (i<j || (i==j && c.ta<c.tb) ){
                 CrossingPoint cp;
@@ -195,10 +197,10 @@ CrossingPoints::CrossingPoints(Geom::CrossingSet const &input, std::vector<Geom:
                 cp.nj = std::find(input[j].begin(),input[j].end(),c_bar)-input[j].begin();
                 cp.sign = 1;
                 push_back(cp);
-                g_print("i=%u, ni=%u, j=%u, nj=%u\n",cp.i,cp.ni,cp.j,cp.nj);
+//                g_print("i=%u, ni=%u, j=%u, nj=%u\n",cp.i,cp.ni,cp.j,cp.nj);
             }
             else{
-                g_print("\n");
+//                g_print("\n");
                 bool found = false;
                 for( unsigned ii=0; ii<input.size(); ii++){
                     Crossings ii_crossings = input[ii];
@@ -207,7 +209,9 @@ CrossingPoints::CrossingPoints(Geom::CrossingSet const &input, std::vector<Geom:
                         if (cc.b==c.a && cc.a==c.b && cc.ta==c.tb && cc.tb==c.ta) found = true;
                     }
                 }
-                assert( found );
+                if (!found) {
+                    throw std::exception();
+                }
             }
         }
     }
@@ -384,14 +388,14 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &input_path)
 
     for(unsigned i=0;i<crossingTable.size();i++){
         for(unsigned j=0;j<crossingTable[i].size();j++){
-            g_print("JF>avant: %u,%u,%f,%f\n",crossingTable[i][j].a, crossingTable[i][j].b, crossingTable[i][j].ta, crossingTable[i][j].tb);
+//            g_print("JF>avant: %u,%u,%f,%f\n",crossingTable[i][j].a, crossingTable[i][j].b, crossingTable[i][j].ta, crossingTable[i][j].tb);
         }
     }
     crossingTable = crossingSet_remove_double(crossingTable);
 
     for(unsigned i=0;i<crossingTable.size();i++){
         for(unsigned j=0;j<crossingTable[i].size();j++){
-            g_print("JF>apres: %u,%u,%f,%f\n",crossingTable[i][j].a, crossingTable[i][j].b, crossingTable[i][j].ta, crossingTable[i][j].tb);
+//            g_print("JF>apres: %u,%u,%f,%f\n",crossingTable[i][j].a, crossingTable[i][j].b, crossingTable[i][j].ta, crossingTable[i][j].tb);
         }
     }
 

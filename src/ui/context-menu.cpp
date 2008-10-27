@@ -50,11 +50,13 @@ sp_object_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
 #include "document.h"
 #include "desktop-handles.h"
 #include "selection.h"
-
+#include "selection-chemistry.h"
 #include "dialogs/item-properties.h"
 #include "dialogs/object-attributes.h"
 
 #include "sp-path.h"
+#include "sp-clippath.h"
+#include "sp-mask.h"
 
 
 static void sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu);
@@ -85,7 +87,10 @@ sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop, GtkMenu *m
 static void sp_item_properties(GtkMenuItem *menuitem, SPItem *item);
 static void sp_item_select_this(GtkMenuItem *menuitem, SPItem *item);
 static void sp_item_create_link(GtkMenuItem *menuitem, SPItem *item);
-
+static void sp_set_mask(GtkMenuItem *menuitem, SPItem *item);
+static void sp_release_mask(GtkMenuItem *menuitem, SPItem *item);
+static void sp_set_clip(GtkMenuItem *menuitem, SPItem *item);
+static void sp_release_clip(GtkMenuItem *menuitem, SPItem *item);
 /* Generate context menu item section */
 
 static void
@@ -123,6 +128,51 @@ sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_widget_set_sensitive(w, !SP_IS_ANCHOR(item));
     gtk_widget_show(w);
     gtk_menu_append(GTK_MENU(m), w);
+    /* Set mask */
+    w = gtk_menu_item_new_with_mnemonic(_("Set Mask"));
+    gtk_object_set_data(GTK_OBJECT(w), "desktop", desktop);
+    gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_set_mask), item);
+    if ((item && item->mask_ref && item->mask_ref->getObject()) || (item->clip_ref && item->clip_ref->getObject())) {
+        gtk_widget_set_sensitive(w, FALSE);
+    } else {
+        gtk_widget_set_sensitive(w, TRUE);
+    }
+    gtk_widget_show(w);
+    gtk_menu_append(GTK_MENU(m), w);
+    /* Release mask */
+    w = gtk_menu_item_new_with_mnemonic(_("Release Mask"));
+    gtk_object_set_data(GTK_OBJECT(w), "desktop", desktop);
+    gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_release_mask), item);
+    if (item && item->mask_ref && item->mask_ref->getObject()) {
+        gtk_widget_set_sensitive(w, TRUE);
+    } else {
+        gtk_widget_set_sensitive(w, FALSE);
+    }
+    gtk_widget_show(w);
+    gtk_menu_append(GTK_MENU(m), w);
+    /* Set Clip */
+    w = gtk_menu_item_new_with_mnemonic(_("Set Clip"));
+    gtk_object_set_data(GTK_OBJECT(w), "desktop", desktop);
+    gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_set_clip), item);
+    if ((item && item->mask_ref && item->mask_ref->getObject()) || (item->clip_ref && item->clip_ref->getObject())) {
+        gtk_widget_set_sensitive(w, FALSE);
+    } else {
+        gtk_widget_set_sensitive(w, TRUE);
+    }
+    gtk_widget_show(w);
+    gtk_menu_append(GTK_MENU(m), w);
+    /* Release Clip */
+    w = gtk_menu_item_new_with_mnemonic(_("Release Clip"));
+    gtk_object_set_data(GTK_OBJECT(w), "desktop", desktop);
+    gtk_signal_connect(GTK_OBJECT(w), "activate", GTK_SIGNAL_FUNC(sp_release_clip), item);
+    if (item && item->clip_ref && item->clip_ref->getObject()) {
+        gtk_widget_set_sensitive(w, TRUE);
+    } else {
+        gtk_widget_set_sensitive(w, FALSE);
+    }
+    gtk_widget_show(w);
+    gtk_menu_append(GTK_MENU(m), w);
+
 }
 
 static void
@@ -139,6 +189,63 @@ sp_item_properties(GtkMenuItem *menuitem, SPItem *item)
 
     sp_item_dialog();
 }
+
+
+static void
+sp_set_mask(GtkMenuItem *menuitem, SPItem *item)
+{
+    SPDesktop *desktop;
+
+    g_assert(SP_IS_ITEM(item));
+
+    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+
+	sp_selection_set_mask(desktop, false, false);
+}
+
+
+static void
+sp_release_mask(GtkMenuItem *menuitem, SPItem *item)
+{
+    SPDesktop *desktop;
+
+    g_assert(SP_IS_ITEM(item));
+
+    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+
+    sp_selection_unset_mask(desktop, false);
+}
+
+
+static void
+sp_set_clip(GtkMenuItem *menuitem, SPItem *item)
+{
+    SPDesktop *desktop;
+
+    g_assert(SP_IS_ITEM(item));
+
+    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+
+	sp_selection_set_mask(desktop, true, false);
+}
+
+
+static void
+sp_release_clip(GtkMenuItem *menuitem, SPItem *item)
+{
+    SPDesktop *desktop;
+
+    g_assert(SP_IS_ITEM(item));
+
+    desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+
+    sp_selection_unset_mask(desktop, true);
+}
+
 
 static void
 sp_item_select_this(GtkMenuItem *menuitem, SPItem *item)
@@ -322,12 +429,12 @@ sp_image_image_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 static gchar* getImageEditorName() {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gchar* value = 0;
-    Glib::ustring choices = prefs->getString("options.bitmapeditor", "choices");
+    Glib::ustring choices = prefs->getString("/options/bitmapeditor/choices");
     if (!choices.empty()) {
         gchar** splits = g_strsplit(choices.data(), ",", 0);
         gint numIems = g_strv_length(splits);
 
-        int setting = prefs->getIntLimited("options.bitmapeditor", "value", 0, 0, numIems);
+        int setting = prefs->getIntLimited("/options/bitmapeditor/value", 0, 0, numIems);
         value = g_strdup(splits[setting]);
 
         g_strfreev(splits);

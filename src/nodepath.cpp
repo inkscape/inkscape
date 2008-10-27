@@ -21,10 +21,10 @@
 #include "display/sodipodi-ctrl.h"
 #include "display/sp-canvas-util.h"
 #include <glibmm/i18n.h>
-#include <2geom/pathvector.h>
-#include <2geom/sbasis-to-bezier.h>
-#include <2geom/bezier-curve.h>
-#include <2geom/hvlinesegment.h>
+#include "2geom/pathvector.h"
+#include "2geom/sbasis-to-bezier.h"
+#include "2geom/bezier-curve.h"
+#include "2geom/hvlinesegment.h"
 #include "helper/units.h"
 #include "helper/geom.h"
 #include "knot.h"
@@ -42,7 +42,7 @@
 #include "selection-chemistry.h"
 #include "selection.h"
 #include "xml/repr.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "sp-metrics.h"
 #include "sp-path.h"
 #include "libnr/nr-matrix-ops.h"
@@ -53,7 +53,6 @@
 #include <algorithm>
 #include <cstring>
 #include <cmath>
-#include <string>
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
 #include "live_effects/effect.h"
@@ -63,7 +62,7 @@
 #include "display/snap-indicator.h"
 #include "snapped-point.h"
 
-class Geom::Matrix;
+namespace Geom { class Matrix; }
 
 /// \todo
 /// evil evil evil. FIXME: conflict of two different Path classes!
@@ -121,6 +120,7 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
 /* Adjust handle placement, if the node or the other handle is moved */
 static void sp_node_adjust_handle(Inkscape::NodePath::Node *node, gint which_adjust);
 static void sp_node_adjust_handles(Inkscape::NodePath::Node *node);
+static void sp_node_adjust_handles_auto(Inkscape::NodePath::Node *node);
 
 /* Node event callbacks */
 static void node_clicked(SPKnot *knot, guint state, gpointer data);
@@ -284,6 +284,8 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
         return NULL;
     }
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
     // Set defaults
     np->desktop     = desktop;
     np->object      = object;
@@ -294,10 +296,10 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->show_handles = show_handles;
     np->helper_path = NULL;
     np->helper_path_vec = new HelperPathList;
-    np->helperpath_rgba = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
+    np->helperpath_rgba = prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff);
     np->helperpath_width = 1.0;
     np->curve = curve->copy();
-    np->show_helperpath = (prefs_get_int_attribute ("tools.nodes", "show_helperpath",  0) == 1);
+    np->show_helperpath = prefs->getBool("/tools/nodes/show_helperpath");
     if (SP_IS_LPE_ITEM(object)) {
         Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(object));
         if (lpe && lpe->isVisible() && lpe->showOrigPath()) {
@@ -602,6 +604,9 @@ Inkscape::NodePath::NodeType * parse_nodetypes(gchar const *types, guint length)
                     case 's':
                         typestr[pos++] =Inkscape::NodePath::NODE_SMOOTH;
                         break;
+                    case 'a':
+                        typestr[pos++] =Inkscape::NodePath::NODE_AUTO;
+                        break;
                     case 'z':
                         typestr[pos++] =Inkscape::NodePath::NODE_SYMM;
                         break;
@@ -823,6 +828,9 @@ static gchar *create_typestr(Inkscape::NodePath::Path *np)
                     break;
                 case Inkscape::NodePath::NODE_SMOOTH:
                     code = 's';
+                    break;
+                case Inkscape::NodePath::NODE_AUTO:
+                    code = 'a';
                     break;
                 case Inkscape::NodePath::NODE_SYMM:
                     code = 'z';
@@ -1053,6 +1061,15 @@ static void sp_nodepath_set_line_type(Inkscape::NodePath::Node *end, NRPathcode 
                     sp_nodepath_set_node_type(end, Inkscape::NodePath::NODE_CUSP);
                 }
             }
+
+            if (start->type == Inkscape::NodePath::NODE_AUTO)
+                start->type = Inkscape::NodePath::NODE_SMOOTH;
+            if (end->type == Inkscape::NodePath::NODE_AUTO)
+                end->type = Inkscape::NodePath::NODE_SMOOTH;
+    
+            sp_node_adjust_handle(start, -1);
+            sp_node_adjust_handle(end, 1);
+
         } else {
             Geom::Point delta = end->pos - start->pos;
             start->n.pos = start->pos + delta / 3;
@@ -1065,6 +1082,25 @@ static void sp_nodepath_set_line_type(Inkscape::NodePath::Node *end, NRPathcode 
         sp_node_update_handles(end);
     }
 }
+
+static void
+sp_nodepath_update_node_knot(Inkscape::NodePath::Node *node)
+{
+    if (node->type == Inkscape::NodePath::NODE_CUSP) {
+        node->knot->setShape (SP_KNOT_SHAPE_DIAMOND);
+        node->knot->setSize (node->selected? 11 : 9);
+        sp_knot_update_ctrl(node->knot);
+    } else if (node->type == Inkscape::NodePath::NODE_AUTO) {
+        node->knot->setShape (SP_KNOT_SHAPE_CIRCLE);
+        node->knot->setSize (node->selected? 11 : 9);
+        sp_knot_update_ctrl(node->knot);
+    } else {
+        node->knot->setShape (SP_KNOT_SHAPE_SQUARE);
+        node->knot->setSize (node->selected? 9 : 7);
+        sp_knot_update_ctrl(node->knot);
+    }
+}
+
 
 /**
  * Change node type, and its handles accordingly.
@@ -1082,15 +1118,7 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
 
     node->type = type;
 
-    if (node->type == Inkscape::NodePath::NODE_CUSP) {
-        node->knot->setShape (SP_KNOT_SHAPE_DIAMOND);
-        node->knot->setSize (node->selected? 11 : 9);
-        sp_knot_update_ctrl(node->knot);
-    } else {
-        node->knot->setShape (SP_KNOT_SHAPE_SQUARE);
-        node->knot->setSize (node->selected? 9 : 7);
-        sp_knot_update_ctrl(node->knot);
-    }
+    sp_nodepath_update_node_knot(node);
 
     // if one of handles is mouseovered, preserve its position
     if (node->p.knot && SP_KNOT_IS_MOUSEOVER(node->p.knot)) {
@@ -1140,6 +1168,13 @@ sp_node_side_is_line (Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeSi
 */
 void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeType type)
 {
+    if (type == Inkscape::NodePath::NODE_AUTO) {
+        if (node->p.other != NULL)
+            node->code = NR_CURVETO;
+        if (node->n.other != NULL)
+            node->n.other->code = NR_CURVETO;
+    }
+
     if (type == Inkscape::NodePath::NODE_SYMM || type == Inkscape::NodePath::NODE_SMOOTH) {
 
 /* 
@@ -1215,28 +1250,7 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
                 node->code = NR_CURVETO;
                 node->n.other->code = NR_CURVETO;
 
-                Geom::Point leg_prev = node->pos - node->p.other->pos;
-                Geom::Point leg_next = node->pos - node->n.other->pos;
-
-                double norm_leg_prev = L2(leg_prev);
-                double norm_leg_next = L2(leg_next);
-
-                Geom::Point delta;
-                if (norm_leg_next > 0.0) {
-                    delta = (norm_leg_prev / norm_leg_next) * leg_next - leg_prev;
-                    (&delta)->normalize();
-                }
-
-                if (type == Inkscape::NodePath::NODE_SYMM) {
-                    double norm_leg_avg = (norm_leg_prev + norm_leg_next) / 2;
-                    node->p.pos = node->pos + 0.3 * norm_leg_avg * delta;
-                    node->n.pos = node->pos - 0.3 * norm_leg_avg * delta;
-                } else {
-                    // length of handle is proportional to distance to adjacent node
-                    node->p.pos = node->pos + 0.3 * norm_leg_prev * delta;
-                    node->n.pos = node->pos - 0.3 * norm_leg_next * delta;
-                }
-
+                sp_node_adjust_handles_auto(node);
             } else {
                 // pull the handle opposite to line segment, making it half-smooth
                 if (p_is_line && node->n.other) {
@@ -1270,11 +1284,16 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
  */
 void sp_node_moveto(Inkscape::NodePath::Node *node, Geom::Point p)
 {
-    Geom::Point delta = p - node->pos;
-    node->pos = p;
+    if (node->type == Inkscape::NodePath::NODE_AUTO) {
+        node->pos = p;
+        sp_node_adjust_handles_auto(node);
+    } else {
+        Geom::Point delta = p - node->pos;
+        node->pos = p;
 
-    node->p.pos += delta;
-    node->n.pos += delta;
+        node->p.pos += delta;
+        node->n.pos += delta;
+    }
 
     Inkscape::NodePath::Node *node_p = NULL;
     Inkscape::NodePath::Node *node_n = NULL;
@@ -1285,11 +1304,19 @@ void sp_node_moveto(Inkscape::NodePath::Node *node, Geom::Point p)
             sp_node_adjust_handle(node->p.other, -1);
             node_p = node->p.other;
         }
+        if (!node->p.other->selected && node->p.other->type == Inkscape::NodePath::NODE_AUTO) {
+            sp_node_adjust_handles_auto(node->p.other);
+            node_p = node->p.other;
+        }
     }
     if (node->n.other) {
         if (node->n.other->code == NR_LINETO) {
             sp_node_adjust_handle(node, -1);
             sp_node_adjust_handle(node->n.other, 1);
+            node_n = node->n.other;
+        }
+        if (!node->n.other->selected && node->n.other->type == Inkscape::NodePath::NODE_AUTO) {
+            sp_node_adjust_handles_auto(node->n.other);
             node_n = node->n.other;
         }
     }
@@ -1343,9 +1370,9 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
             if (constrained) {
                 Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
                 dedicated_constraint.setPoint(n->pos);
-                s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(n->pos + delta), dedicated_constraint);
+                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), dedicated_constraint);
             } else {
-                s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(n->pos + delta));
+                s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta));
             }            
             if (s.getSnapped() && (s.getDistance() < best)) {
                 best = s.getDistance();
@@ -1443,7 +1470,8 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
     if (pressure > 0.5)
         alpha = 1/alpha;
 
-    guint profile = prefs_get_int_attribute("tools.nodes", "sculpting_profile", SCULPT_PROFILE_BELL);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    guint profile = prefs->getInt("/tools/nodes/sculpting_profile", SCULPT_PROFILE_BELL);
 
     if (sp_nodepath_selection_get_subpath_count(nodepath) <= 1) {
         // Only one subpath has selected nodes:
@@ -2071,6 +2099,15 @@ sp_nodepath_curve_drag(Inkscape::NodePath::Path *nodepath, int node, double t, G
     //fixme: e and e->p can be NULL, so check for those before proceeding
     g_return_if_fail(e != NULL);
     g_return_if_fail(&e->p != NULL);
+
+    if (e->type == Inkscape::NodePath::NODE_AUTO) {
+        e->type = Inkscape::NodePath::NODE_SMOOTH;
+        sp_nodepath_update_node_knot (e);
+    }
+    if (e->p.other->type == Inkscape::NodePath::NODE_AUTO) {
+        e->p.other->type = Inkscape::NodePath::NODE_SMOOTH;
+        sp_nodepath_update_node_knot (e->p.other);
+    }
 
     /* feel good is an arbitrary parameter that distributes the delta between handles
      * if t of the drag point is less than 1/6 distance form the endpoint only
@@ -3232,6 +3269,10 @@ static void sp_node_adjust_handle(Inkscape::NodePath::Node *node, gint which_adj
 {
     g_assert(node);
 
+    // nothing to do for auto nodes (sp_node_adjust_handles() does the job)
+    if (node->type == Inkscape::NodePath::NODE_AUTO)
+        return;
+
    Inkscape::NodePath::NodeSide *me = sp_node_get_side(node, which_adjust);
    Inkscape::NodePath::NodeSide *other = sp_node_opposite_side(node, me);
 
@@ -3291,6 +3332,11 @@ static void sp_node_adjust_handles(Inkscape::NodePath::Node *node)
     if (node->p.other == NULL) return;
     if (node->n.other == NULL) return;
 
+    if (node->type == Inkscape::NodePath::NODE_AUTO) {
+        sp_node_adjust_handles_auto(node);
+        return;
+    }
+
     if (sp_node_side_is_line(node, &node->p)) {
         sp_node_adjust_handle(node, 1);
         return;
@@ -3317,6 +3363,30 @@ static void sp_node_adjust_handles(Inkscape::NodePath::Node *node)
     if (nlen < 1e-18) return;
     node->p.pos = node->pos - (plen / (plen + nlen)) * delta;
     node->n.pos = node->pos + (nlen / (plen + nlen)) * delta;
+}
+
+static void sp_node_adjust_handles_auto(Inkscape::NodePath::Node *node)
+{
+    if (node->p.other == NULL || node->n.other == NULL) {
+        node->p.pos = node->pos;
+        node->n.pos = node->pos;
+        return;
+    }
+
+    Geom::Point leg_prev = to_2geom(node->p.other->pos - node->pos);
+    Geom::Point leg_next = to_2geom(node->n.other->pos - node->pos);
+ 
+    double norm_leg_prev = Geom::L2(leg_prev);
+    double norm_leg_next = Geom::L2(leg_next);
+ 
+    Geom::Point delta;
+    if (norm_leg_next > 0.0) {
+        delta = (norm_leg_prev / norm_leg_next) * leg_next - leg_prev;
+        delta.normalize();
+    }
+ 
+    node->p.pos = node->pos - norm_leg_prev / 3 * delta;
+    node->n.pos = node->pos + norm_leg_next / 3 * delta;
 }
 
 /**
@@ -3422,6 +3492,10 @@ gboolean node_key(GdkEvent *event)
                 sp_nodepath_set_node_type(Inkscape::NodePath::Path::active_node,Inkscape::NodePath::NODE_SMOOTH);
                 ret = TRUE;
                 break;
+            case GDK_a:
+                sp_nodepath_set_node_type(Inkscape::NodePath::Path::active_node,Inkscape::NodePath::NODE_AUTO);
+                ret = TRUE;
+                break;
             case GDK_y:
                 sp_nodepath_set_node_type(Inkscape::NodePath::Path::active_node,Inkscape::NodePath::NODE_SYMM);
                 ret = TRUE;
@@ -3451,6 +3525,8 @@ static void node_clicked(SPKnot */*knot*/, guint state, gpointer data)
                 sp_nodepath_convert_node_type (n,Inkscape::NodePath::NODE_SMOOTH);
             } else if (n->type == Inkscape::NodePath::NODE_SMOOTH) {
                 sp_nodepath_convert_node_type (n,Inkscape::NodePath::NODE_SYMM);
+            } else if (n->type == Inkscape::NodePath::NODE_SYMM) {
+                sp_nodepath_convert_node_type (n,Inkscape::NodePath::NODE_AUTO);
             } else {
                 sp_nodepath_convert_node_type (n,Inkscape::NodePath::NODE_CUSP);
             }
@@ -3757,6 +3833,12 @@ static void node_handle_grabbed(SPKnot *knot, guint state, gpointer data)
 {
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
+    // convert auto -> smooth when dragging handle
+   if (n->type == Inkscape::NodePath::NODE_AUTO) {
+        n->type = Inkscape::NodePath::NODE_SMOOTH;
+        sp_nodepath_update_node_knot (n);
+   }
+
     if (!n->selected) {
         sp_nodepath_node_select(n, (state & GDK_SHIFT_MASK), FALSE);
     }
@@ -3842,16 +3924,16 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point *p, guint state, g
                 (*p) = n->pos + (scal / linelen) * ndelta;
             }
             if ((state & GDK_SHIFT_MASK) == 0) {
-            	s = m.constrainedSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(*p), Inkscape::Snapper::ConstraintLine(*p, ndelta));
+            	s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(*p), Inkscape::Snapper::ConstraintLine(*p, ndelta));
             }
         } else {
         	if ((state & GDK_SHIFT_MASK) == 0) {
-        		s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(*p));
+        		s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(*p));
         	}
         }
     } else {
     	if ((state & GDK_SHIFT_MASK) == 0) {
-    		s = m.freeSnap(Inkscape::Snapper::SNAPPOINT_NODE, to_2geom(*p));
+    		s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(*p));
     	}
     }
     
@@ -3870,6 +3952,7 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point *p, guint state, g
 static void node_handle_moved(SPKnot *knot, Geom::Point *p, guint state, gpointer data)
 {
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
+   Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
    Inkscape::NodePath::NodeSide *me;
    Inkscape::NodePath::NodeSide *other;
@@ -3891,7 +3974,7 @@ static void node_handle_moved(SPKnot *knot, Geom::Point *p, guint state, gpointe
     Radial rnew(*p - n->pos);
 
     if (state & GDK_CONTROL_MASK && rnew.a != HUGE_VAL) {
-        int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
+        int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
         /* 0 interpreted as "no snapping". */
 
         // 1. Snap to the closest PI/snaps angle, starting from zero.
@@ -3970,7 +4053,7 @@ static void node_handle_moved(SPKnot *knot, Geom::Point *p, guint state, gpointe
     double degrees = 180 / M_PI * rnew.a;
     if (degrees > 180) degrees -= 360;
     if (degrees < -180) degrees += 360;
-    if (prefs_get_int_attribute("options.compassangledisplay", "value", 0) != 0)
+    if (prefs->getBool("/options/compassangledisplay/value"))
         degrees = angle_to_compass (degrees);
 
     GString *length = SP_PX_TO_METRIC_STRING(rnew.r, desktop->namedview->getDefaultMetric());
@@ -4517,7 +4600,7 @@ sp_nodepath_node_new(Inkscape::NodePath::SubPath *sp, Inkscape::NodePath::Node *
     n->knot = sp_knot_new(sp->nodepath->desktop, _("<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"));
     sp_knot_set_position(n->knot, *pos, 0);
 
-    n->knot->setShape ((n->type == Inkscape::NodePath::NODE_CUSP)? SP_KNOT_SHAPE_DIAMOND : SP_KNOT_SHAPE_SQUARE);
+    n->knot->setShape ((n->type == Inkscape::NodePath::NODE_CUSP)? SP_KNOT_SHAPE_DIAMOND : (n->type == Inkscape::NodePath::NODE_AUTO)? SP_KNOT_SHAPE_CIRCLE : SP_KNOT_SHAPE_SQUARE);
     n->knot->setSize ((n->type == Inkscape::NodePath::NODE_CUSP)? 9 : 7);
     n->knot->setAnchor (GTK_ANCHOR_CENTER);
     n->knot->setFill(NODE_FILL, NODE_FILL_HI, NODE_FILL_HI);
@@ -4757,6 +4840,8 @@ static gchar const *sp_node_type_description(Inkscape::NodePath::Node *node)
                 case Inkscape::NodePath::NODE_SMOOTH:
                     // TRANSLATORS: "smooth" is an adjective here
                     return _("smooth");
+                case Inkscape::NodePath::NODE_AUTO:
+                    return _("auto");
                 case Inkscape::NodePath::NODE_SYMM:
                     return _("symmetric");
             }
@@ -4894,14 +4979,14 @@ void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve) {
     }
 }
 
-/**
+/*
 SPCanvasItem *
 sp_nodepath_path_to_canvasitem(Inkscape::NodePath::Path *np, SPPath *path) {
     return sp_nodepath_make_helper_item(np, sp_path_get_curve_for_edit(path));
 }
-**/
+*/
 
-/**
+/*
 SPCanvasItem *
 sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem *item, guint32 color = 0xff0000ff) {
     SPCurve *flash_curve = curve->copy();
@@ -4919,10 +5004,11 @@ sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem
 
 SPCanvasItem *
 sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     return sp_nodepath_generate_helperpath(desktop, sp_path_get_curve_for_edit(path), SP_ITEM(path),
-                                           prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff));
+                                           prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff));
 }
-**/
+*/
 
 SPCanvasItem *
 sp_nodepath_helperpath_from_path(SPDesktop *desktop, SPPath *path) {
@@ -4932,7 +5018,8 @@ sp_nodepath_helperpath_from_path(SPDesktop *desktop, SPPath *path) {
     SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
     // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
     // unless we also flash the nodes...
-    guint32 color = prefs_get_int_attribute("tools.nodes", "highlight_color", 0xff0000ff);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    guint32 color = prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvasitem), 0, SP_WIND_RULE_NONZERO);
     sp_canvas_item_show(canvasitem);

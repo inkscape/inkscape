@@ -2,7 +2,7 @@
 #include <cassert>
 #include <cstdlib>
 
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "svg/svg-color.h"
 #include "svg/svg-icc-color.h"
 
@@ -18,12 +18,13 @@ class SVGColorTest : public CxxTest::TestSuite
 public:
     void check_rgb24(unsigned const rgb24)
     {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         char css[8];
-        prefs_set_int_attribute("options.svgoutput", "usenamedcolors", 0);
+        prefs->setBool("/options/svgoutput/usenamedcolors", false);
         sp_svg_write_color(css, sizeof(css), rgb24 << 8);
         TS_ASSERT_EQUALS(sp_svg_read_color(css, 0xff),
                          rgb24 << 8);
-        prefs_set_int_attribute("options.svgoutput", "usenamedcolors", 1);
+        prefs->setBool("/options/svgoutput/usenamedcolors", true);
         sp_svg_write_color(css, sizeof(css), rgb24 << 8);
         TS_ASSERT_EQUALS(sp_svg_read_color(css, 0xff),
                          rgb24 << 8);

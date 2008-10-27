@@ -46,7 +46,7 @@
 
 #include "macros.h"
 #include "path-prefix.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "file.h"
 #include "application/editor.h"
 #include "edit-widget.h"
@@ -1056,9 +1056,9 @@ EditWidget::initRightScrollbar()
 void
 EditWidget::initStickyZoom()
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     _viewport_table.attach(_sticky_zoom, 2, 3, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-
-    _sticky_zoom.set_active (prefs_get_int_attribute ("options.stickyzoom", "value", 0) != 0);
+    _sticky_zoom.set_active (prefs->getBool("/options/stickyzoom/value"));
     _tooltips.set_tip (_sticky_zoom, _("Zoom drawing if window size changes"));
 
     /// \todo icon not implemented
@@ -1437,30 +1437,32 @@ EditWidget::updateScrollbars (double scale)
 void
 EditWidget::toggleRulers()
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (_top_ruler.is_visible())
     {
         _top_ruler.hide_all();
         _left_ruler.hide_all();
-        prefs_set_int_attribute (_desktop->is_fullscreen() ? "fullscreen.rulers" : "window.rulers", "state", 0);
+        prefs->setBool(_desktop->is_fullscreen() ? "/fullscreen/rulers/state" : "/window/rulers/state", false);
     } else {
         _top_ruler.show_all();
         _left_ruler.show_all();
-        prefs_set_int_attribute (_desktop->is_fullscreen() ? "fullscreen.rulers" : "window.rulers", "state", 1);
+        prefs->setBool(_desktop->is_fullscreen() ? "/fullscreen/rulers/state" : "/window/rulers/state", true);
     }
 }
 
 void
 EditWidget::toggleScrollbars()
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (_bottom_scrollbar.is_visible())
     {
         _bottom_scrollbar.hide_all();
         _right_scrollbar.hide_all();
-        prefs_set_int_attribute (_desktop->is_fullscreen() ? "fullscreen.scrollbars" : "window.scrollbars", "state", 0);
+        prefs->setBool(_desktop->is_fullscreen() ? "/fullscreen/scrollbars/state" : "/window/scrollbars/state", false);
     } else {
         _bottom_scrollbar.show_all();
         _right_scrollbar.show_all();
-        prefs_set_int_attribute (_desktop->is_fullscreen() ? "fullscreen.scrollbars" : "window.scrollbars", "state", 1);
+        prefs->setBool(_desktop->is_fullscreen() ? "/fullscreen/scrollbars/state" : "/window/scrollbars/state", true);
     }
 }
 
@@ -1662,8 +1664,8 @@ EditWidget::onWindowSizeAllocate (Gtk::Allocation &newall)
 void
 EditWidget::onWindowRealize()
 {
-    NR::Rect d(Geom::Point(0, 0),
-               Geom::Point(sp_document_width(_desktop->doc()), sp_document_height(_desktop->doc())));
+    NR::Rect d( Geom::Point(0, 0),
+                  Geom::Point(sp_document_width(_desktop->doc()), sp_document_height(_desktop->doc())) );
 
     if (d.isEmpty(1.0)) {
         return;

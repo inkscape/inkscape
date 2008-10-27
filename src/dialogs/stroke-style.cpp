@@ -8,6 +8,7 @@
  *   Bryce Harrington <brycehar@bryceharrington.org>
  *   bulia byak <buliabyak@users.sf.net>
  *   Maximilian Albert <maximilian.albert@gmail.com>
+ *   Josh Andler <scislac@users.sf.net>
  *
  * Copyright (C) 2001-2005 authors
  * Copyright (C) 2001 Ximian, Inc.
@@ -59,6 +60,7 @@
 #include "helper/stock-items.h"
 #include "io/sys.h"
 #include "ui/cache/svg_preview_cache.h"
+#include "xml/repr.h"
 
 #include "dialogs/stroke-style.h"
 
@@ -1080,7 +1082,7 @@ sp_stroke_style_line_widget_new(void)
     gint i = 0;
 
     /* Stroke width */
-    spw_label(t, _("Width:"), 0, i);
+    spw_label(t, Q_("StrokeWidth|Width:"), 0, i);
 
     hb = spw_hbox(t, 3, 1, i);
 
@@ -1209,7 +1211,7 @@ sp_stroke_style_line_widget_new(void)
 
     /* Dash */
     spw_label(t, _("Dashes:"), 0, i);
-    ds = manage(new SPDashSelector(inkscape_get_repr(INKSCAPE, "palette.dashes")));
+    ds = manage(new SPDashSelector);
 
     ds->show();
     t->attach(*ds, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
@@ -1227,6 +1229,7 @@ sp_stroke_style_line_widget_new(void)
     // (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
     spw_label(t, _("Start Markers:"), 0, i);
     marker_start_menu = ink_marker_menu(spw ,"marker-start", sandbox);
+    tt->set_tip(*marker_start_menu, _("Start Markers are drawn on the first node of a path or shape"));
     marker_start_menu_connection = marker_start_menu->signal_changed().connect(
         sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
             sigc::ptr_fun(&sp_marker_select), marker_start_menu, spw, SP_MARKER_LOC_START));
@@ -1237,6 +1240,7 @@ sp_stroke_style_line_widget_new(void)
     i++;
     spw_label(t, _("Mid Markers:"), 0, i);
     marker_mid_menu = ink_marker_menu(spw ,"marker-mid", sandbox);
+    tt->set_tip(*marker_mid_menu, _("Mid Markers are drawn on every node of a path or shape except the first and last nodes"));
     marker_mid_menu_connection = marker_mid_menu->signal_changed().connect(
         sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
             sigc::ptr_fun(&sp_marker_select), marker_mid_menu,spw, SP_MARKER_LOC_MID));
@@ -1247,6 +1251,7 @@ sp_stroke_style_line_widget_new(void)
     i++;
     spw_label(t, _("End Markers:"), 0, i);
     marker_end_menu = ink_marker_menu(spw ,"marker-end", sandbox);
+    tt->set_tip(*marker_end_menu, _("End Markers are drawn on the last node of a path or shape"));
     marker_end_menu_connection = marker_end_menu->signal_changed().connect(
         sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
             sigc::ptr_fun(&sp_marker_select), marker_end_menu, spw, SP_MARKER_LOC_END));

@@ -39,14 +39,14 @@
 #include "object-edit.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "context-fns.h"
 
 static void sp_spiral_context_class_init(SPSpiralContextClass * klass);
 static void sp_spiral_context_init(SPSpiralContext *spiral_context);
 static void sp_spiral_context_dispose(GObject *object);
 static void sp_spiral_context_setup(SPEventContext *ec);
-static void sp_spiral_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
+static void sp_spiral_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 
 static gint sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 
@@ -217,11 +217,11 @@ sp_spiral_context_setup(SPEventContext *ec)
     sc->sel_changed_connection.disconnect();
     sc->sel_changed_connection = selection->connectChanged(sigc::bind(sigc::ptr_fun(&sp_spiral_context_selection_changed), (gpointer)sc));
 
-    if (prefs_get_int_attribute("tools.shapes", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/shapes/selcue")) {
         ec->enableSelectionCue();
     }
-
-    if (prefs_get_int_attribute("tools.shapes", "gradientdrag", 0) != 0) {
+    if (prefs->getBool("/tools/shapes/gradientdrag")) {
         ec->enableGrDrag();
     }
 
@@ -229,19 +229,17 @@ sp_spiral_context_setup(SPEventContext *ec)
 }
 
 static void
-sp_spiral_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
+sp_spiral_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     SPSpiralContext *sc = SP_SPIRAL_CONTEXT(ec);
+    Glib::ustring name = val->getEntryName();
 
-    if (!strcmp(key, "expansion")) {
-        sc->exp = (val) ? g_ascii_strtod(val, NULL) : 1.0;
-        sc->exp = CLAMP(sc->exp, 0.0, 1000.0);
-    } else if (!strcmp(key, "revolution")) {
-        sc->revo = (val) ? g_ascii_strtod(val, NULL) : 3.0;
-        sc->revo = CLAMP(sc->revo, 0.05, 40.0);
-    } else if (!strcmp(key, "t0")) {
-        sc->t0 = (val) ? g_ascii_strtod(val, NULL) : 0.0;
-        sc->t0 = CLAMP(sc->t0, 0.0, 0.999);
+    if (name == "expansion") {
+        sc->exp = CLAMP(val->getDouble(), 0.0, 1000.0);
+    } else if (name == "revolution") {
+        sc->revo = CLAMP(val->getDouble(3.0), 0.05, 40.0);
+    } else if (name == "t0") {
+        sc->t0 = CLAMP(val->getDouble(), 0.0, 0.999);
     }
 }
 
@@ -254,7 +252,8 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
     SPSpiralContext *sc = SP_SPIRAL_CONTEXT(event_context);
 
-    event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     gint ret = FALSE;
 
@@ -268,7 +267,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
                 Geom::Point pt2g = to_2geom(sc->center);
-                m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
+                m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
                 sc->center = from_2geom(pt2g);
 
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -299,7 +298,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop, true, sc->item);
-                m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, motion_dt);
+                m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, motion_dt);
                 sp_spiral_drag(sc, from_2geom(motion_dt), event->motion.state);
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
@@ -415,7 +414,8 @@ sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
 
-    int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
     if (!sc->item) {
 
@@ -429,7 +429,7 @@ sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state)
         repr->setAttribute("sodipodi:type", "spiral");
 
         /* Set style */
-        sp_desktop_apply_style_tool(desktop, repr, "tools.shapes.spiral", false);
+        sp_desktop_apply_style_tool(desktop, repr, "/tools/shapes/spiral", false);
 
         sc->item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
         Inkscape::GC::release(repr);
@@ -442,7 +442,7 @@ sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state)
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, sc->item);
     Geom::Point pt2g = to_2geom(p);
-    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
+    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
 
     Geom::Point const p0 = to_2geom(sp_desktop_dt2root_xy_point(desktop, sc->center));
     Geom::Point const p1 = to_2geom(sp_desktop_dt2root_xy_point(desktop, from_2geom(pt2g)));        

@@ -863,7 +863,7 @@ bool ClipboardManagerImpl::_pasteImage()
     strftime(image_filename, 128, "inkscape_pasted_image_%Y%m%d_%H%M%S.png", localtime( &rawtime ));
     /// @todo Check whether the encoding is correct here
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    std::string save_folder = Glib::filename_from_utf8(prefs->getString("dialogs.save_as", "path"));
+    std::string save_folder = Glib::filename_from_utf8(prefs->getString("/dialogs/save_as/path"));
 
     gchar *image_path = g_build_filename(save_folder.data(), image_filename, NULL);
     img->save(image_path, "png");

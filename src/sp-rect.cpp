@@ -30,7 +30,7 @@
 #include <glibmm/i18n.h>
 #include "xml/repr.h"
 #include "sp-guide.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #define noRECT_VERBOSE
 
@@ -47,7 +47,7 @@ static Geom::Matrix sp_rect_set_transform(SPItem *item, Geom::Matrix const &xfor
 static void sp_rect_convert_to_guides(SPItem *item);
 
 static void sp_rect_set_shape(SPShape *shape);
-static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p);
+static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
 
 static SPShapeClass *parent_class;
 
@@ -546,7 +546,7 @@ sp_rect_get_visible_height(SPRect *rect)
 /**
  * Sets the snappoint p to the unrounded corners of the rectangle
  */
-static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p)
+static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
     /* This method overrides sp_shape_snappoints, which is the default for any shape. The default method
     returns all eight points along the path of a rounded rectangle, but not the real corners. Snapping
@@ -572,7 +572,8 @@ void
 sp_rect_convert_to_guides(SPItem *item) {
     SPRect *rect = SP_RECT(item);
 
-    if (prefs_get_int_attribute("tools.shapes.rect", "convertguides", 1) == 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (!prefs->getBool("/tools/shapes/rect/convertguides", true)) {
         sp_item_convert_to_guides(SP_ITEM(rect));
         return;
     }

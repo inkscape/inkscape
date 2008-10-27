@@ -1,10 +1,11 @@
-/**
- * \brief Static style swatch (fill, stroke, opacity)
- *
- * Author:
+/** @file
+ * @brief Static style swatch (fill, stroke, opacity)
+ */
+/* Authors:
  *   buliabyak@gmail.com
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  *
- * Copyright (C) 2005 author
+ * Copyright (C) 2005-2008 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -20,20 +21,14 @@
 
 #include <glibmm/i18n.h>
 
-#include <desktop.h>
-#include <verbs.h>
-
+#include "desktop.h"
+#include "verbs.h"
 #include "button.h"
+#include "preferences.h"
 
 class SPUnit;
 class SPStyle;
 class SPCSSAttr;
-
-namespace Inkscape {
-namespace XML {
-class Node;
-}
-}
 
 namespace Inkscape {
 namespace UI {
@@ -50,40 +45,32 @@ public:
     void setStyle(SPCSSAttr *attr);
     SPCSSAttr *getStyle();
 
-    void setWatched (Inkscape::XML::Node *watched, Inkscape::XML::Node *secondary);
     void setWatchedTool (const char *path, bool synthesize);
 
     void setClickVerb(sp_verb_t verb_t);
     void setDesktop(SPDesktop *desktop);
     bool on_click(GdkEventButton *event);
 
-    char *_tool_path;
+private:
+    class ToolObserver;
+    class StyleObserver;
 
-protected:
     SPDesktop *_desktop;
-
     sp_verb_t _verb_t;
-
     SPCSSAttr *_css;
-
-    Inkscape::XML::Node *_watched;
-    Inkscape::XML::Node *_watched_tool;
+    ToolObserver *_tool_obs;
+    StyleObserver *_style_obs;
+    Glib::ustring _tool_path;
 
     Gtk::EventBox _swatch;
-
     Gtk::Table _table;
-
     Gtk::Label _label[2];
-
     Gtk::EventBox _place[2];
     Gtk::EventBox _opacity_place;
-
     Gtk::Label _value[2];
     Gtk::Label _opacity_value;
-
     Gtk::Widget *_color_preview[2];
     Glib::ustring __color[2];
-
     Gtk::HBox _stroke;
     Gtk::EventBox _stroke_width_place;
     Gtk::Label _stroke_width;
@@ -91,6 +78,8 @@ protected:
     SPUnit *_sw_unit;
 
     Gtk::Tooltips _tooltips;
+    
+friend class ToolObserver;
 };
 
 

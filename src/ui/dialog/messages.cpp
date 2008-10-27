@@ -1,9 +1,7 @@
-/*
- * A very simple dialog for displaying Inkscape messages. Messages
- * sent to g_log(), g_warning(), g_message(), ets, are routed here,
- * in order to avoid messing with the startup console.
- *
- * Authors:
+/** @file
+ * @brief Messages dialog - implementation
+ */
+/* Authors:
  *   Bob Jamison
  *   Other dudes from The Inkscape Organization
  *
@@ -46,7 +44,7 @@ void Messages::clear()
  * Constructor
  */
 Messages::Messages()
-    : UI::Widget::Panel("", "dialogs.messages", SP_VERB_DIALOG_DEBUG)
+    : UI::Widget::Panel("", "/dialogs/messages", SP_VERB_DIALOG_DEBUG)
 {
     Gtk::Box *contents = _getContents();
 
@@ -183,6 +181,13 @@ void Messages::releaseLogMessages()
 } //namespace UI
 } //namespace Inkscape
 
-//#########################################################################
-//## E N D    O F    F I L E
-//#########################################################################
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

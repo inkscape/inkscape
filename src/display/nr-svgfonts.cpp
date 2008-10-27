@@ -91,11 +91,17 @@ SvgFont::scaled_font_init (cairo_scaled_font_t  *scaled_font,
   return CAIRO_STATUS_SUCCESS;
 }
 
-unsigned int compare_them(char* s1, char* s2){
-	unsigned int p=0;
-	while((s1[p] == s2[p]) && s1[p] != '\0' && s2[p] != '\0') p++;
-	if (s1[p]=='\0') return p;
-	else return 0;
+unsigned int size_of_substring(gchar* substring, gchar* str){
+	const gchar* original_substring = substring;
+
+	while((g_utf8_get_char(substring)==g_utf8_get_char(str)) && g_utf8_get_char(substring) != 0 && g_utf8_get_char(str) != 0){
+		substring = g_utf8_next_char(substring);
+		str = g_utf8_next_char(str);
+	}
+	if (g_utf8_get_char(substring)==0)
+		return substring - original_substring;
+	else
+		return 0;
 }
 
 cairo_status_t
@@ -115,14 +121,30 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 
     unsigned long i;
     int count = 0;
-    char* _utf8 = (char*) utf8;
+    gchar* _utf8 = (gchar*) utf8;
     unsigned int len;
 
-    //First we findout whats the worst case number of glyphs.
-    while(_utf8[0] != '\0'){
-	_utf8++;
-	count++;
+    bool missing;
+    //First we findout whats the number of glyphs needed.
+    while(g_utf8_get_char(_utf8) != 0){
+	missing = true;
+	for (i=0; i < (unsigned long) this->glyphs.size(); i++){
+            if ( (len = size_of_substring(this->glyphs[i]->unicode, _utf8)) ){
+		//TODO: store this cluster
+		_utf8+=len;
+		count++;
+		missing=false;
+		break;
+	    }
+	}
+	if (missing){
+		//TODO: store this cluster
+		_utf8++;
+		count++;
+	}
     }
+
+//g_warning("count is %d", count);
 
     //We use that info to allocate memory for the glyphs
     *glyphs = (cairo_glyph_t*) malloc(count*sizeof(cairo_glyph_t));
@@ -134,10 +156,10 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
     double x=0, y=0;//These vars store the position of the glyph within the rendered string
     bool is_horizontal_text = true; //TODO
     _utf8 = (char*) utf8;
-    while(_utf8[0] != '\0'){
+    while(g_utf8_get_char(_utf8) != 0){
 	len = 0;
         for (i=0; i < (unsigned long) this->glyphs.size(); i++){
-            if ( (len = compare_them(this->glyphs[i]->unicode, _utf8)) ){
+            if ( (len = size_of_substring(this->glyphs[i]->unicode, _utf8)) ){
 		//check whether is there a glyph declared on the SVG document
 		// that matches with the text string in its current position
 	        for(SPObject* node = this->font->children;previous_unicode && node;node=node->next){
@@ -167,7 +189,7 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 		//advance glyph coordinates:
 		if (is_horizontal_text) x++;
 		else y++;
-                _utf8+=len; //advance 'len' chars in our string pointer
+                _utf8+=len; //advance 'len' bytes in our string pointer
 		//continue;
 		goto dirty;
             }
@@ -180,7 +202,7 @@ dirty:
 		//advance glyph coordinates:
 		if (is_horizontal_text) x++;
 		else y++;
-		_utf8++; //advance 1 char in our string pointer
+		_utf8 = g_utf8_next_char(_utf8); //advance 1 char in our string pointer
 	}
     }
     *num_glyphs = count;

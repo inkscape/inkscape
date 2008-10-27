@@ -1,10 +1,7 @@
-#ifndef __FILE_DIALOG_H__
-#define __FILE_DIALOG_H__
-/**
- * Defines the FileOpenDialog, FileSaveDialog, and FileExportDialog
- * and their supporting classes.
- *
- * Authors:
+/** @file
+ * @brief Virtual base definitions for native file dialogs
+ */
+/* Authors:
  *   Bob Jamison <rwjj@earthlink.net>
  *   Joel Holdsworth
  *   Inkscape Guys
@@ -15,6 +12,9 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifndef __FILE_DIALOG_H__
+#define __FILE_DIALOG_H__
 
 #include <glibmm.h>
 #include <vector>

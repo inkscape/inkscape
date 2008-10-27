@@ -35,7 +35,7 @@
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-convex-hull.h>
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "inkscape.h"
 #include "sodipodi-ctrlrect.h"
 #if ENABLE_LCMS
@@ -45,6 +45,8 @@
 #include "libnr/nr-blit.h"
 #include "display/inkscape-cairo.h"
 #include "debug/gdk-event-latency-tracker.h"
+#include "desktop.h"
+#include "sp-namedview.h"
 
 using Inkscape::Debug::GdkEventLatencyTracker;
 
@@ -945,6 +947,10 @@ static void sp_canvas_dirty_rect(SPCanvas* canvas, int nl, int nt, int nr, int n
 static void sp_canvas_mark_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb, uint8_t val);
 static int do_update (SPCanvas *canvas);
 
+static gboolean sp_canvas_snap_watchdog_callback(gpointer data); 
+static void sp_canvas_snap_watchdog_set(SPCanvas *canvas, GdkEventMotion *event); 
+static void sp_canvas_snap_watchdog_kill(SPCanvas *canvas);
+
 /**
  * Registers the SPCanvas class if necessary, and returns the type ID
  * associated to it.
@@ -1042,6 +1048,8 @@ sp_canvas_init (SPCanvas *canvas)
 
     canvas->is_scrolling = false;
 
+    canvas->watchdog_id = 0;
+    canvas->watchdog_event = NULL;
 }
 
 /**
@@ -1106,7 +1114,7 @@ static void track_latency(GdkEvent const *event) {
     GdkEventLatencyTracker &tracker = GdkEventLatencyTracker::default_tracker();
     boost::optional<double> latency = tracker.process(event);
     if (latency && *latency > 2.0) {
-        g_warning("Event latency reached %f sec (%1.4f)", *latency, tracker.getSkew());
+        //g_warning("Event latency reached %f sec (%1.4f)", *latency, tracker.getSkew());
     }
 }
 
@@ -1157,7 +1165,8 @@ sp_canvas_realize (GtkWidget *widget)
     widget->window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
     gdk_window_set_user_data (widget->window, widget);
 
-    if ( prefs_get_int_attribute ("options.useextinput", "value", 1) )
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if ( prefs->getBool("/options/useextinput/value", true) )
         gtk_widget_set_events(widget, attributes.event_mask);
 
     widget->style = gtk_style_attach (widget->style, widget->window);
@@ -1574,7 +1583,10 @@ static inline void request_motions(GdkWindow *w, GdkEventMotion *event) {
 static int
 sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
 {
-    int status;
+    static guint32 prev_time;
+	static boost::optional<Geom::Point> prev_pos;
+	
+	int status;
     SPCanvas *canvas = SP_CANVAS (widget);
 
     track_latency((GdkEvent *)event);
@@ -1584,7 +1596,52 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
 
     if (canvas->pixmap_gc == NULL) // canvas being deleted
         return FALSE;
+    
+    // Snap when speed drops below e.g. 0.1 px/msec, or when no motion events have occured for 100 msec.
+	// i.e. snap when we're at stand still. The speed threshold enforces snapping for tablets, which will never
+	// be full at stand still and might keep spitting out motion events.
+    
+    // When moving at speeds around the speed limit, Inkscape might snap for one motion event but not for the 
+    // next, which will make the object that's being dragged jump from the snapped position to the mouse 
+    // position and back again. That could be annoying, but I don't see an easy way around this. 
 
+    if (event->type == GDK_MOTION_NOTIFY) {    	
+    	Geom::Point event_pos(event->x, event->y);
+    	guint32 event_t = gdk_event_get_time ( (GdkEvent *) event );
+    	    	
+    	sp_canvas_snap_watchdog_kill(canvas);
+    	SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    	
+    	if (prev_pos) {
+    		Geom::Coord dist = Geom::L2(event_pos - *prev_pos);
+    		guint32 delta_t = event_t - prev_time;
+    		gdouble speed = delta_t > 0 ? dist/delta_t : 1000;
+    		// std::cout << "speed = " << speed << " px/msec " << "| time passed = " << delta_t << " msec" << std::endl;
+    		if (speed < 0.1) {
+				if (dt) {
+					dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
+				}
+			} else {
+				// We're moving fast, so postpone any snapping until the next GDK_MOTION_NOTIFY event. 
+				if (dt) {
+					dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(true);
+				}
+				// We must snap at some point in time though, so set a watchdog timer at 100 msec from
+				// now, just in case there's no future motion event that's under the speed limit.
+				sp_canvas_snap_watchdog_set(canvas, event);
+			}
+		} else {
+			// This is the first GDK_MOTION_NOTIFY event, so postpone snapping and set the watchdog
+			if (dt) {
+				dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(true);
+			}
+			sp_canvas_snap_watchdog_set(canvas, event);
+		}
+			
+    	prev_pos = event_pos;
+    	prev_time = event_t;
+    }
+    
     canvas->state = event->state;
     pick_current_item (canvas, (GdkEvent *) event);
 
@@ -1597,6 +1654,43 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
     return status;
 }
 
+gboolean sp_canvas_snap_watchdog_callback(gpointer data) 
+{
+	SPDesktop *dt = SP_ACTIVE_DESKTOP;
+	if (dt) {
+		dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
+	}
+	
+	SPCanvas *canvas = reinterpret_cast<SPCanvas *>(data);
+	emit_event(canvas, canvas->watchdog_event);
+	gdk_event_free(canvas->watchdog_event);
+	canvas->watchdog_event = NULL;
+	canvas->watchdog_id = 0;
+    
+	return FALSE;
+}
+
+void sp_canvas_snap_watchdog_set(SPCanvas *canvas, GdkEventMotion *event) 
+{
+	g_assert(canvas->watchdog_id == 0);
+	canvas->watchdog_id = g_timeout_add(100, &sp_canvas_snap_watchdog_callback, canvas);
+	g_assert(canvas->watchdog_event == NULL);
+	canvas->watchdog_event = gdk_event_copy( (GdkEvent *) event); 
+}
+
+void sp_canvas_snap_watchdog_kill(SPCanvas *canvas) 
+{
+	if (canvas->watchdog_id) { 
+        g_source_remove(canvas->watchdog_id); // Kill the watchdog
+        canvas->watchdog_id = 0;
+    }
+	
+	if (canvas->watchdog_event) {
+		gdk_event_free(canvas->watchdog_event);
+		canvas->watchdog_event = NULL;
+	}
+}
+	
 static void
 sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1, int draw_x1, int draw_y1, int draw_x2, int draw_y2, int sw)
 {
@@ -1635,7 +1729,8 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
 
 #if ENABLE_LCMS
     cmsHTRANSFORM transf = 0;
-    long long int fromDisplay = prefs_get_int_attribute_limited( "options.displayprofile", "from_display", 0, 0, 1 );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool fromDisplay = prefs->getBool( "/options/displayprofile/from_display");
     if ( fromDisplay ) {
         transf = Inkscape::colorprofile_get_display_per( canvas->cms_key ? *(canvas->cms_key) : "" );
     } else {

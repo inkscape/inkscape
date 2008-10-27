@@ -1,8 +1,9 @@
-/**
- * \brief Fill and Stroke dialog,
- * based on sp_object_properties_dialog
+/** @file
+ * @brief Fill and Stroke dialog - implementation
  *
- * Authors:
+ * Based on the old sp_object_properties_dialog.
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Gustav Broberg <broberg@kth.se>
  *
@@ -10,10 +11,6 @@
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
-
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
 
 #include "desktop-handles.h"
 #include "desktop-style.h"
@@ -39,7 +36,7 @@ namespace UI {
 namespace Dialog {
 
 FillAndStroke::FillAndStroke()
-    : UI::Widget::Panel ("", "dialogs.fillstroke", SP_VERB_DIALOG_FILL_STROKE),
+    : UI::Widget::Panel ("", "/dialogs/fillstroke", SP_VERB_DIALOG_FILL_STROKE),
       _page_fill(1, 1, true, true),
       _page_stroke_paint(1, 1, true, true),
       _page_stroke_style(1, 1, true, true),

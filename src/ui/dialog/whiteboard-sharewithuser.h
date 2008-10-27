@@ -1,7 +1,7 @@
-/**
- * Whiteboard share with user dialog
- *
- * Authors:
+/** @file
+ * @brief Whiteboard share with user dialog
+ */
+/* Authors:
  * David Yip <yipdw@rose-hulman.edu>
  * Jason Segal, Jonas Collaros, Stephen Montgomery, Brandi Soggs, Matthew Weinstock (original C/Gtk version)
  *
@@ -33,7 +33,7 @@ namespace Inkscape {
 
 class WhiteboardShareWithUserDialog : public Dialog {
 public:
-	WhiteboardShareWithUserDialog() : Dialog("dialogs.whiteboard_sharewithuser", SP_VERB_DIALOG_WHITEBOARD_SHAREWITHUSER)
+	WhiteboardShareWithUserDialog() : Dialog("/dialogs/whiteboard_sharewithuser", SP_VERB_DIALOG_WHITEBOARD_SHAREWITHUSER)
 	{
 
 	}

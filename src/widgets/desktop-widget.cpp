@@ -2,8 +2,8 @@
 
 /** \file
  * Desktop widget implementation
- *
- * Authors:
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
@@ -57,7 +57,6 @@
 #include "ege-select-one-action.h"
 #include "ege-color-prof-tracker.h"
 #include "color-profile-fns.h"
-#include "xml/node-observer.h"
 #include "box3d-context.h"
 #include "sp-image.h"
 
@@ -114,48 +113,68 @@ static void sp_dtw_zoom_selection (GtkMenuItem *item, gpointer data);
 
 SPViewWidgetClass *dtw_parent_class;
 
-using Inkscape::XML::Node;
-
-class PrefWatcher : public Inkscape::XML::NodeObserver {
+class CMSPrefWatcher {
 public:
-    PrefWatcher();
-    virtual ~PrefWatcher();
+    CMSPrefWatcher() :
+        _dpw(*this),
+        _spw(*this),
+        _tracker(ege_color_prof_tracker_new(0))
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        g_signal_connect( G_OBJECT(_tracker), "modified", G_CALLBACK(hook), this );
+        prefs->addObserver(_dpw);
+        prefs->addObserver(_spw);
+    }
+    virtual ~CMSPrefWatcher() {}
 
-
-    virtual void notifyChildAdded( Node &/*node*/, Node &/*child*/, Node */*prev*/ ) {}
-    virtual void notifyChildRemoved( Node &/*node*/, Node &/*child*/, Node */*prev*/ ) {}
-    virtual void notifyChildOrderChanged( Node &/*node*/, Node &/*child*/,
-                                          Node */*old_prev*/, Node */*new_prev*/ ) {}
-    virtual void notifyContentChanged( Node &/*node*/,
-                                       Inkscape::Util::ptr_shared<char> /*old_content*/,
-                                       Inkscape::Util::ptr_shared<char> /*new_content*/ ) {}
-    virtual void notifyAttributeChanged( Node &node, GQuark name,
-                                         Inkscape::Util::ptr_shared<char> old_value,
-                                         Inkscape::Util::ptr_shared<char> new_value );
-    void add( SPDesktopWidget* dtw );
-    void remove( SPDesktopWidget* dtw );
+    //virtual void notify(PrefValue &);
+    void add( SPDesktopWidget* dtw ) {
+        _widget_list.push_back(dtw);
+    }
+    void remove( SPDesktopWidget* dtw ) {
+        _widget_list.remove(dtw);
+    }
 
 private:
-    static void hook(EgeColorProfTracker *tracker, gint a, gint b, PrefWatcher *watcher);
+    static void hook(EgeColorProfTracker *tracker, gint a, gint b, CMSPrefWatcher *watcher);
+    
+    class DisplayProfileWatcher : public Inkscape::Preferences::Observer {
+    public:
+        DisplayProfileWatcher(CMSPrefWatcher &pw) : Observer("/options/displayprofile"), _pw(pw) {}
+        virtual void notify(Inkscape::Preferences::Entry const &val) {
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            _pw._setCmsSensitive(!prefs->getString("/options/displayprofile/uri").empty());
+            _pw._refreshAll();
+        }
+    private:
+        CMSPrefWatcher &_pw;
+    };
+    
+    DisplayProfileWatcher _dpw;
+    
+    class SoftProofWatcher : public Inkscape::Preferences::Observer {
+    public:
+        SoftProofWatcher(CMSPrefWatcher &pw) : Observer("/options/softproof"), _pw(pw) {}
+        virtual void notify(Inkscape::Preferences::Entry const &) {
+            _pw._refreshAll();
+        }
+    private:
+        CMSPrefWatcher &_pw;
+    };
+    
+    SoftProofWatcher _spw;
+    
+    void _refreshAll();
+    void _setCmsSensitive(bool value);
 
-    std::list<SPDesktopWidget*> dtws;
+    std::list<SPDesktopWidget*> _widget_list;
     EgeColorProfTracker *_tracker;
+    
+    friend class DisplayProfileWatcher;
+    friend class SoftproofWatcher;
 };
 
-PrefWatcher::PrefWatcher() :
-    NodeObserver(),
-    dtws(),
-    _tracker(0)
-{
-    _tracker = ege_color_prof_tracker_new(0);
-    g_signal_connect( G_OBJECT(_tracker), "modified", G_CALLBACK(hook), this );
-}
-
-PrefWatcher::~PrefWatcher()
-{
-}
-
-void PrefWatcher::hook(EgeColorProfTracker */*tracker*/, gint screen, gint monitor, PrefWatcher */*watcher*/)
+void CMSPrefWatcher::hook(EgeColorProfTracker */*tracker*/, gint screen, gint monitor, CMSPrefWatcher */*watcher*/)
 {
 #if ENABLE_LCMS
     unsigned char* buf = 0;
@@ -166,56 +185,32 @@ void PrefWatcher::hook(EgeColorProfTracker */*tracker*/, gint screen, gint monit
 #endif // ENABLE_LCMS
 }
 
-void PrefWatcher::add( SPDesktopWidget* dtw )
-{
-    dtws.push_back(dtw);
-}
-
-void PrefWatcher::remove( SPDesktopWidget* dtw )
-{
-    dtws.remove(dtw);
-}
-
-void PrefWatcher::notifyAttributeChanged( Node &node, GQuark name,
-                                          Inkscape::Util::ptr_shared<char> /*old_value*/,
-                                          Inkscape::Util::ptr_shared<char> /*new_value*/ )
+/// @todo Use conditional compilation in saner places. The whole PrefWatcher
+/// object is unnecessary if ENABLE_LCMS is not defined.
+void CMSPrefWatcher::_refreshAll()
 {
 #if ENABLE_LCMS
-    (void)name;
-    if ( strcmp("group", node.name()) == 0 ) {
-        gchar const* id = node.attribute("id");
-        bool refresh = false;
-        if ( !id ) {
-            // bad
-        } else if (strcmp("displayprofile", id) == 0) {
-            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-            Glib::ustring current = prefs->getString("options.displayprofile", "uri");
-            bool enabled = !current.empty();
-
-            for ( std::list<SPDesktopWidget*>::iterator it = dtws.begin(); it != dtws.end(); ++it ) {
-                SPDesktopWidget* dtw = *it;
-                if ( GTK_WIDGET_SENSITIVE( dtw->cms_adjust ) != enabled ) {
-                    cms_adjust_set_sensitive( dtw, enabled );
-                }
-            }
-            refresh = true;
-        } else if (strcmp("softproof", id) == 0) {
-            refresh = true;
-        }
-
-        if ( refresh ) {
-            for ( std::list<SPDesktopWidget*>::iterator it = dtws.begin(); it != dtws.end(); ++it ) {
-                (*it)->requestCanvasUpdate();
-            }
-        }
+    for ( std::list<SPDesktopWidget*>::iterator it = _widget_list.begin(); it != _widget_list.end(); ++it ) {
+        (*it)->requestCanvasUpdate();
     }
-#else
-    (void)node;
-    (void)name;
 #endif // ENABLE_LCMS
 }
 
-static PrefWatcher* watcher = 0;
+void CMSPrefWatcher::_setCmsSensitive(bool enabled)
+{
+#if ENABLE_LCMS
+    for ( std::list<SPDesktopWidget*>::iterator it = _widget_list.begin(); it != _widget_list.end(); ++it ) {
+        SPDesktopWidget *dtw = *it;
+        if ( GTK_WIDGET_SENSITIVE( dtw->cms_adjust ) != enabled ) {
+            cms_adjust_set_sensitive( dtw, enabled );
+        }
+    }
+#else
+    (void) enabled;
+#endif // ENABLE_LCMS
+}
+
+static CMSPrefWatcher* watcher = NULL;
 
 void
 SPDesktopWidget::setMessage (Inkscape::MessageType type, const gchar *message)
@@ -317,7 +312,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     {
         using Inkscape::UI::Dialogs::SwatchesPanel;
 
-        SwatchesPanel* swatches = new SwatchesPanel("embedded.swatches");
+        SwatchesPanel* swatches = new SwatchesPanel("/embedded/swatches");
         swatches->setOrientation( Gtk::ANCHOR_SOUTH );
         dtw->panels = GTK_WIDGET(swatches->gobj());
         gtk_box_pack_end( GTK_BOX( dtw->vbox ), dtw->panels, FALSE, TRUE, 0 );
@@ -378,7 +373,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
                                                  "sticky_zoom",
                                                  _("Zoom drawing if window size changes"),
                                                  dtw->tt);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dtw->sticky_zoom), prefs->getBool("options.stickyzoom", "value"));
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dtw->sticky_zoom), prefs->getBool("/options/stickyzoom/value"));
     gtk_box_pack_start (GTK_BOX (dtw->vscrollbar_box), dtw->sticky_zoom, FALSE, FALSE, 0);
     dtw->vadj = (GtkAdjustment *) gtk_adjustment_new (0.0, -4000.0, 4000.0, 10.0, 100.0, 4.0);
     dtw->vscrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (dtw->vadj));
@@ -402,11 +397,11 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
                                                dtw->tt );
 #if ENABLE_LCMS
     {
-        Glib::ustring current = prefs->getString("options.displayprofile", "uri");
+        Glib::ustring current = prefs->getString("/options/displayprofile/uri");
         bool enabled = current.length() > 0;
         cms_adjust_set_sensitive( dtw, enabled );
         if ( enabled ) {
-            bool active = prefs->getBool("options.displayprofile", "enable");
+            bool active = prefs->getBool("/options/displayprofile/enable");
             if ( active ) {
                 sp_button_toggle_set_down( SP_BUTTON(dtw->cms_adjust), TRUE );
             }
@@ -418,10 +413,8 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
 #endif // ENABLE_LCMS
     gtk_table_attach( GTK_TABLE(canvas_tbl), dtw->cms_adjust, 2, 3, 2, 3, (GtkAttachOptions)(GTK_SHRINK), (GtkAttachOptions)(GTK_SHRINK), 0, 0);
     {
-        Inkscape::Preferences* prefs = Inkscape::Preferences::get();
         if (!watcher) {
-            watcher = new PrefWatcher();
-            prefs->addPrefsObserver( watcher );
+            watcher = new CMSPrefWatcher();
         }
         watcher->add(dtw);
     }
@@ -429,20 +422,20 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     /* Canvas */
     dtw->canvas = SP_CANVAS (sp_canvas_new_aa ());
 #if ENABLE_LCMS
-    dtw->canvas->enable_cms_display_adj = prefs->getBool("options.displayprofile", "enable");
+    dtw->canvas->enable_cms_display_adj = prefs->getBool("/options/displayprofile/enable");
 #endif // ENABLE_LCMS
     GTK_WIDGET_SET_FLAGS (GTK_WIDGET (dtw->canvas), GTK_CAN_FOCUS);
     style = gtk_style_copy (GTK_WIDGET (dtw->canvas)->style);
     style->bg[GTK_STATE_NORMAL] = style->white;
     gtk_widget_set_style (GTK_WIDGET (dtw->canvas), style);
-    if ( prefs->getBool("options.useextinput", "value", true) )
+    if ( prefs->getBool("/options/useextinput/value", true) )
       gtk_widget_set_extension_events(GTK_WIDGET (dtw->canvas) , GDK_EXTENSION_EVENTS_ALL); //set extension events for tablets, unless disabled in preferences
     g_signal_connect (G_OBJECT (dtw->canvas), "event", G_CALLBACK (sp_desktop_widget_event), dtw);
     gtk_table_attach (GTK_TABLE (canvas_tbl), GTK_WIDGET(dtw->canvas), 1, 2, 1, 2, (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), 0, 0);
 
     /* Dock */
     bool create_dock =
-        prefs->getIntLimited("options.dialogtype", "value", Inkscape::UI::Dialog::FLOATING, 0, 1) ==
+        prefs->getIntLimited("/options/dialogtype/value", Inkscape::UI::Dialog::FLOATING, 0, 1) ==
         Inkscape::UI::Dialog::DOCK;
 
     if (create_dock) {
@@ -782,7 +775,7 @@ void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
         dtw->canvas->enable_cms_display_adj = down;
         dtw->requestCanvasUpdate();
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setBool("options.displayprofile", "enable", down);
+        prefs->setBool("/options/displayprofile/enable", down);
     }
 #endif // ENABLE_LCMS
 }
@@ -948,18 +941,18 @@ SPDesktopWidget::shutdown()
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         bool maxed = desktop->is_maximized();
         bool full = desktop->is_fullscreen();
-        prefs->setBool("desktop.geometry", "fullscreen", full);
-        prefs->setBool("desktop.geometry", "maximized", maxed);
+        prefs->setBool("/desktop/geometry/fullscreen", full);
+        prefs->setBool("/desktop/geometry/maximized", maxed);
         gint w, h, x, y;
         desktop->getWindowGeometry(x, y, w, h);
         // Don't save geom for maximized windows.  It
         // just tells you the current maximized size, which is not
         // as useful as whatever value it had previously.
         if (!maxed && !full) {
-            prefs->setInt("desktop.geometry", "width", w);
-            prefs->setInt("desktop.geometry", "height", h);
-            prefs->setInt("desktop.geometry", "x", x);
-            prefs->setInt("desktop.geometry", "y", y);
+            prefs->setInt("/desktop/geometry/width", w);
+            prefs->setInt("/desktop/geometry/height", h);
+            prefs->setInt("/desktop/geometry/x", x);
+            prefs->setInt("/desktop/geometry/y", y);
         }
     }
 
@@ -1148,10 +1141,10 @@ sp_desktop_widget_maximize(SPDesktopWidget *dtw)
                 Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                 gint w, h, x, y;
                 dtw->getWindowGeometry(x, y, w, h);
-                prefs->setInt("desktop.geometry", "width", w);
-                prefs->setInt("desktop.geometry", "height", h);
-                prefs->setInt("desktop.geometry", "x", x);
-                prefs->setInt("desktop.geometry", "y", y);
+                prefs->setInt("/desktop/geometry/width", w);
+                prefs->setInt("/desktop/geometry/height", h);
+                prefs->setInt("/desktop/geometry/x", x);
+                prefs->setInt("/desktop/geometry/y", y);
             }
             gtk_window_maximize(topw);
         }
@@ -1176,10 +1169,10 @@ sp_desktop_widget_fullscreen(SPDesktopWidget *dtw)
                 Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                 gint w, h, x, y;
                 dtw->getWindowGeometry(x, y, w, h);
-                prefs->setInt("desktop.geometry", "width", w);
-                prefs->setInt("desktop.geometry", "height", h);
-                prefs->setInt("desktop.geometry", "x", x);
-                prefs->setInt("desktop.geometry", "y", y);
+                prefs->setInt("/desktop/geometry/width", w);
+                prefs->setInt("/desktop/geometry/height", h);
+                prefs->setInt("/desktop/geometry/x", x);
+                prefs->setInt("/desktop/geometry/y", y);
             }
             gtk_window_fullscreen(topw);
             // widget layout is triggered by the resulting window_state_event
@@ -1194,72 +1187,56 @@ sp_desktop_widget_fullscreen(SPDesktopWidget *dtw)
 void
 sp_desktop_widget_layout (SPDesktopWidget *dtw)
 {
-	gchar * pref_path = NULL;
-	gchar const * pref_root = NULL;
-
-	if (dtw->desktop->is_focusMode()) {
-		pref_root = "focus.";
-	} else if (dtw->desktop->is_fullscreen()) {
-		pref_root = "fullscreen.";
-	} else {
-		pref_root = "window.";
-	}
-
-	pref_path = g_strconcat(pref_root, "menu", NULL);
-
+    Glib::ustring pref_root;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    if (!prefs->getBool(pref_path, "state", true)) {
+    if (dtw->desktop->is_focusMode()) {
+	    pref_root = "/focus/";
+    } else if (dtw->desktop->is_fullscreen()) {
+	    pref_root = "/fullscreen/";
+    } else {
+	    pref_root = "/window/";
+    }
+
+    if (!prefs->getBool(pref_root + "menu/state", true)) {
         gtk_widget_hide_all (dtw->menubar);
     } else {
         gtk_widget_show_all (dtw->menubar);
     }
-	g_free(pref_path);
 
-	pref_path = g_strconcat(pref_root, "commands", NULL);
-    if (!prefs->getBool(pref_path, "state", true)) {
+    if (!prefs->getBool(pref_root + "commands/state", true)) {
         gtk_widget_hide_all (dtw->commands_toolbox);
     } else {
         gtk_widget_show_all (dtw->commands_toolbox);
     }
-	g_free(pref_path);
 
-	pref_path = g_strconcat(pref_root, "toppanel", NULL);
-    if (!prefs->getBool(pref_path, "state", true)) {
+    if (!prefs->getBool(pref_root + "toppanel/state", true)) {
         gtk_widget_hide_all (dtw->aux_toolbox);
     } else {
         // we cannot just show_all because that will show all tools' panels;
         // this is a function from toolbox.cpp that shows only the current tool's panel
         show_aux_toolbox (dtw->aux_toolbox);
     }
-	g_free(pref_path);
 
-	pref_path = g_strconcat(pref_root, "toolbox", NULL);
-    if (!prefs->getBool(pref_path, "state", true)) {
+    if (!prefs->getBool(pref_root + "toolbox/state", true)) {
         gtk_widget_hide_all (dtw->tool_toolbox);
     } else {
         gtk_widget_show_all (dtw->tool_toolbox);
     }
-	g_free(pref_path);
 
-	pref_path = g_strconcat(pref_root, "statusbar", NULL);
-    if (!prefs->getBool(pref_path, "state", true)) {
+    if (!prefs->getBool(pref_root + "statusbar/state", true)) {
         gtk_widget_hide_all (dtw->statusbar);
     } else {
         gtk_widget_show_all (dtw->statusbar);
     }
-	g_free(pref_path);
 
-	pref_path = g_strconcat(pref_root, "panels", NULL);
-    if (!prefs->getBool(pref_path, "state", true)) {
+    if (!prefs->getBool(pref_root + "panels/state", true)) {
         gtk_widget_hide_all( dtw->panels );
     } else {
         gtk_widget_show_all( dtw->panels );
     }
-	g_free(pref_path);
 
-	pref_path = g_strconcat(pref_root, "scrollbars", NULL);
-    if (!prefs->getBool(pref_path, "state", true)) {
+    if (!prefs->getBool(pref_root + "scrollbars/state", true)) {
         gtk_widget_hide_all (dtw->hscrollbar);
         gtk_widget_hide_all (dtw->vscrollbar_box);
         gtk_widget_hide_all( dtw->cms_adjust );
@@ -1268,19 +1245,14 @@ sp_desktop_widget_layout (SPDesktopWidget *dtw)
         gtk_widget_show_all (dtw->vscrollbar_box);
         gtk_widget_show_all( dtw->cms_adjust );
     }
-	g_free(pref_path);
 
-	pref_path = g_strconcat(pref_root, "rulers", NULL);
-    if (!prefs->getBool(pref_path, "state", true)) {
+    if (!prefs->getBool(pref_root + "rulers/state", true)) {
         gtk_widget_hide_all (dtw->hruler);
         gtk_widget_hide_all (dtw->vruler);
     } else {
         gtk_widget_show_all (dtw->hruler);
         gtk_widget_show_all (dtw->vruler);
     }
-	g_free(pref_path);
-
-	return;
 }
 
 void
@@ -1468,7 +1440,7 @@ sp_desktop_widget_adjustment_value_changed (GtkAdjustment */*adj*/, SPDesktopWid
 bool SPDesktopWidget::onFocusInEvent(GdkEventFocus*)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (prefs->getBool("options.bitmapautoreload", "value", true)) {
+    if (prefs->getBool("/options/bitmapautoreload/value", true)) {
         GSList const *imageList = sp_document_get_resource_list(desktop->doc(), "image");
         for (GSList const *p = imageList; p; p = p->next) {
             SPImage* image = SP_IMAGE(p->data);
@@ -1646,11 +1618,11 @@ sp_desktop_widget_toggle_rulers (SPDesktopWidget *dtw)
     if (GTK_WIDGET_VISIBLE (dtw->hruler)) {
         gtk_widget_hide_all (dtw->hruler);
         gtk_widget_hide_all (dtw->vruler);
-        prefs->setBool(dtw->desktop->is_fullscreen() ? "fullscreen.rulers" : "window.rulers", "state", false);
+        prefs->setBool(dtw->desktop->is_fullscreen() ? "/fullscreen/rulers/state" : "/window/rulers/state", false);
     } else {
         gtk_widget_show_all (dtw->hruler);
         gtk_widget_show_all (dtw->vruler);
-        prefs->setBool(dtw->desktop->is_fullscreen() ? "fullscreen.rulers" : "window.rulers", "state", true);
+        prefs->setBool(dtw->desktop->is_fullscreen() ? "/fullscreen/rulers/state" : "/window/rulers/state", true);
     }
 }
 
@@ -1662,12 +1634,12 @@ sp_desktop_widget_toggle_scrollbars (SPDesktopWidget *dtw)
         gtk_widget_hide_all (dtw->hscrollbar);
         gtk_widget_hide_all (dtw->vscrollbar_box);
         gtk_widget_hide_all( dtw->cms_adjust );
-        prefs->setBool(dtw->desktop->is_fullscreen() ? "fullscreen.scrollbars" : "window.scrollbars", "state", false);
+        prefs->setBool(dtw->desktop->is_fullscreen() ? "/fullscreen/scrollbars/state" : "/window/scrollbars/state", false);
     } else {
         gtk_widget_show_all (dtw->hscrollbar);
         gtk_widget_show_all (dtw->vscrollbar_box);
         gtk_widget_show_all( dtw->cms_adjust );
-        prefs->setBool(dtw->desktop->is_fullscreen() ? "fullscreen.scrollbars" : "window.scrollbars", "state", true);
+        prefs->setBool(dtw->desktop->is_fullscreen() ? "/fullscreen/scrollbars/state" : "/window/scrollbars/state", true);
     }
 }
 
@@ -1690,10 +1662,10 @@ sp_spw_toggle_menubar (SPDesktopWidget *dtw, bool is_fullscreen)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (GTK_WIDGET_VISIBLE (dtw->menubar)) {
         gtk_widget_hide_all (dtw->menubar);
-        prefs->setBool(is_fullscreen ? "fullscreen.menu" : "window.menu", "state", false);
+        prefs->setBool(is_fullscreen ? "/fullscreen/menu/state" : "/window/menu/state", false);
     } else {
         gtk_widget_show_all (dtw->menubar);
-        prefs->setBool(is_fullscreen ? "fullscreen.menu" : "window.menu", "state", true);
+        prefs->setBool(is_fullscreen ? "/fullscreen/menu/state" : "/window/menu/state", true);
     }
 }
 */

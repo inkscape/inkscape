@@ -37,8 +37,7 @@
 struct SPMarkerView {
 	SPMarkerView *next;
 	unsigned int key;
-	unsigned int size;
-	NRArenaItem *items[1];
+  std::vector<NRArenaItem *> items;
 };
 
 static void sp_marker_class_init (SPMarkerClass *klass);
@@ -479,12 +478,12 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 
 	/* As last step set additional transform of arena group */
 	for (v = marker->views; v != NULL; v = v->next) {
-            for (unsigned i = 0 ; i < v->size ; i++) {
+      for (unsigned i = 0 ; i < v->items.size() ; i++) {
                 if (v->items[i]) {
                     Geom::Matrix tmp = marker->c2p;
                     nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->items[i]), &tmp);
                 }
-            }
+      }
 	}
 }
 
@@ -609,7 +608,7 @@ sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
 	for (view = marker->views; view != NULL; view = view->next) {
 		if (view->key == key) break;
 	}
-	if (view && (view->size != size)) {
+	if (view && (view->items.size() != size)) {
 		/* Free old view and allocate new */
 		/* Parent class ::hide method */
 		((SPItemClass *) parent_class)->hide ((SPItem *) marker, key);
@@ -617,12 +616,15 @@ sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
 		view = NULL;
 	}
 	if (!view) {
-		view = (SPMarkerView *)g_malloc (sizeof (SPMarkerView) + (size) * sizeof (NRArenaItem *));
-		for (i = 0; i < size; i++) view->items[i] = NULL;
+    view = (SPMarkerView *) g_new (SPMarkerView, 1);
+    new (&view->items) std::vector<NRArenaItem *>;
+    view->items.clear();
+		for (i = 0; i < size; i++) {
+        view->items.push_back(NULL);
+    }
 		view->next = marker->views;
 		marker->views = view;
 		view->key = key;
-		view->size = size;
 	}
 }
 
@@ -637,7 +639,7 @@ sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
 {
     for (SPMarkerView *v = marker->views; v != NULL; v = v->next) {
         if (v->key == key) {
-            if (pos >= v->size) {
+            if (pos >= v->items.size()) {
                 return NULL;
             }
             if (!v->items[pos]) {
@@ -715,16 +717,17 @@ sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destro
 		v->next = view->next;
 	}
 	if (destroyitems) {
-		for (i = 0; i < view->size; i++) {
+      for (i = 0; i < view->items.size(); i++) {
 			/* We have to walk through the whole array because there may be hidden items */
 			if (view->items[i]) nr_arena_item_unref (view->items[i]);
 		}
 	}
+  view->items.clear();
 	g_free (view);
 }
 
 const gchar *
-generate_marker (GSList *reprs, NR::Rect bounds, SPDocument *document, Geom::Matrix /*transform*/, Geom::Matrix move)
+generate_marker (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix /*transform*/, Geom::Matrix move)
 {
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
@@ -736,8 +739,8 @@ generate_marker (GSList *reprs, NR::Rect bounds, SPDocument *document, Geom::Mat
     // stroke width:
     //repr->setAttribute("markerUnits", "userSpaceOnUse");
 
-    sp_repr_set_svg_double(repr, "markerWidth", bounds.extent(NR::X));
-    sp_repr_set_svg_double(repr, "markerHeight", bounds.extent(NR::Y));
+    sp_repr_set_svg_double(repr, "markerWidth", bounds.dimensions()[Geom::X]);
+    sp_repr_set_svg_double(repr, "markerHeight", bounds.dimensions()[Geom::Y]);
 
     repr->setAttribute("orient", "auto");
 

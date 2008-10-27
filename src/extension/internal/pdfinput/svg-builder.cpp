@@ -1210,7 +1210,9 @@ void SvgBuilder::_flushText() {
         last_delta_pos = delta_pos;
 
         // Append the character to the text buffer
-        text_buffer.append((char *)&glyph.code, 1);
+	if (0 != glyph.code[0]) {
+            text_buffer.append((char *)&glyph.code, 1);
+	}
 
         glyphs_in_a_row++;
         i++;

@@ -128,13 +128,12 @@ void DialogPage::set_tip(Gtk::Widget& widget, Glib::ustring const &tip)
 }
 
 void PrefCheckButton::init(Glib::ustring const &label, Glib::ustring const &prefs_path,
-    Glib::ustring const &attr, bool default_value)
+    bool default_value)
 {
     _prefs_path = prefs_path;
-    _attr = attr;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     this->set_label(label);
-    this->set_active( prefs->getBool(_prefs_path, _attr, default_value) );
+    this->set_active( prefs->getBool(_prefs_path, default_value) );
 }
 
 void PrefCheckButton::on_toggled()
@@ -142,15 +141,14 @@ void PrefCheckButton::on_toggled()
     if (this->is_visible()) //only take action if the user toggled it
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setBool(_prefs_path, _attr, this->get_active());
+        prefs->setBool(_prefs_path, this->get_active());
     }
 }
 
 void PrefRadioButton::init(Glib::ustring const &label, Glib::ustring const &prefs_path,
-    Glib::ustring const &attr, Glib::ustring const &string_value, bool default_value, PrefRadioButton* group_member)
+    Glib::ustring const &string_value, bool default_value, PrefRadioButton* group_member)
 {
     _prefs_path = prefs_path;
-    _attr = attr;
     _value_type = VAL_STRING;
     _string_value = string_value;
     (void)default_value;
@@ -161,7 +159,7 @@ void PrefRadioButton::init(Glib::ustring const &label, Glib::ustring const &pref
         this->set_group(rbg);
     }
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring val = prefs->getString(_prefs_path, _attr);
+    Glib::ustring val = prefs->getString(_prefs_path);
     if ( !val.empty() )
         this->set_active(val == _string_value);
     else
@@ -169,10 +167,9 @@ void PrefRadioButton::init(Glib::ustring const &label, Glib::ustring const &pref
 }
 
 void PrefRadioButton::init(Glib::ustring const &label, Glib::ustring const &prefs_path,
-    Glib::ustring const &attr, int int_value, bool default_value, PrefRadioButton* group_member)
+    int int_value, bool default_value, PrefRadioButton* group_member)
 {
     _prefs_path = prefs_path;
-    _attr = attr;
     _value_type = VAL_INT;
     _int_value = int_value;
     this->set_label(label);
@@ -183,9 +180,9 @@ void PrefRadioButton::init(Glib::ustring const &label, Glib::ustring const &pref
     }
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (default_value)
-        this->set_active( prefs->getInt(_prefs_path, _attr, int_value) == _int_value );
+        this->set_active( prefs->getInt(_prefs_path, int_value) == _int_value );
     else
-        this->set_active( prefs->getInt(_prefs_path, _attr, int_value + 1) == _int_value );
+        this->set_active( prefs->getInt(_prefs_path, int_value + 1) == _int_value );
 }
 
 void PrefRadioButton::on_toggled()
@@ -196,30 +193,29 @@ void PrefRadioButton::on_toggled()
     if (this->is_visible() && this->get_active() ) //only take action if toggled by user (to active)
     {
         if ( _value_type == VAL_STRING )
-            prefs->setString(_prefs_path, _attr, _string_value);
+            prefs->setString(_prefs_path, _string_value);
         else if ( _value_type == VAL_INT )
-            prefs->setInt(_prefs_path, _attr, _int_value);
+            prefs->setInt(_prefs_path, _int_value);
     }
 }
 
-void PrefSpinButton::init(Glib::ustring const &prefs_path, Glib::ustring const &attr,
+void PrefSpinButton::init(Glib::ustring const &prefs_path,
               double lower, double upper, double step_increment, double page_increment,
               double default_value, bool is_int, bool is_percent)
 {
     _prefs_path = prefs_path;
-    _attr = attr;
     _is_int = is_int;
     _is_percent = is_percent;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double value;
     if (is_int) {
         if (is_percent) {
-            value = 100 * prefs->getDoubleLimited(prefs_path, attr, default_value, lower/100.0, upper/100.0);
+            value = 100 * prefs->getDoubleLimited(prefs_path, default_value, lower/100.0, upper/100.0);
         } else {
-            value = (double) prefs->getIntLimited(prefs_path, attr, (int) default_value, (int) lower, (int) upper);
+            value = (double) prefs->getIntLimited(prefs_path, (int) default_value, (int) lower, (int) upper);
         }
     } else {
-        value = prefs->getDoubleLimited(prefs_path, attr, default_value, lower, upper);
+        value = prefs->getDoubleLimited(prefs_path, default_value, lower, upper);
     }
 
     this->set_range (lower, upper);
@@ -243,12 +239,12 @@ void PrefSpinButton::on_value_changed()
     {
         if (_is_int) {
             if (_is_percent) {
-                prefs->setDouble(_prefs_path, _attr, this->get_value()/100.0);
+                prefs->setDouble(_prefs_path, this->get_value()/100.0);
             } else {
-                prefs->setInt(_prefs_path, _attr, (int) this->get_value());
+                prefs->setInt(_prefs_path, (int) this->get_value());
             }
         } else {
-            prefs->setDouble(_prefs_path, _attr, this->get_value());
+            prefs->setDouble(_prefs_path, this->get_value());
         }
     }
 }
@@ -273,7 +269,7 @@ void ZoomCorrRuler::set_size(int x, int y)
 // The following two functions are borrowed from 2geom's toy-framework-2; if they are useful in
 // other locations, we should perhaps make them (or adapted versions of them) publicly available
 static void
-draw_text(cairo_t *cr, Geom::Point loc, const char* txt, bool bottom = "false",
+draw_text(cairo_t *cr, Geom::Point loc, const char* txt, bool bottom = false,
           double fontsize = ZoomCorrRuler::textsize, std::string fontdesc = "Sans") {
     PangoLayout* layout = pango_cairo_create_layout (cr);
     pango_layout_set_text(layout, txt, -1);
@@ -306,7 +302,7 @@ draw_number(cairo_t *cr, Geom::Point pos, double num) {
 void
 ZoomCorrRuler::draw_marks(Cairo::RefPtr<Cairo::Context> cr, double dist, int major_interval) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    const double zoomcorr = prefs->getDouble("options.zoomcorrection", "value", 1.0);
+    const double zoomcorr = prefs->getDouble("/options/zoomcorrection/value", 1.0);
     double mark = 0;
     int i = 0;
     while (mark <= _drawing_width) {
@@ -347,7 +343,7 @@ ZoomCorrRuler::redraw() {
     cr->line_to (_drawing_width, _height);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring abbr = prefs->getString("options.zoomcorrection", "unit");
+    Glib::ustring abbr = prefs->getString("/options/zoomcorrection/unit");
     if (abbr == "cm") {
         draw_marks(cr, 0.1, 10);
     } else if (abbr == "ft") {
@@ -383,7 +379,7 @@ ZoomCorrRulerSlider::on_slider_value_changed()
     {
         freeze = true;
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setDouble("options.zoomcorrection", "value", _slider.get_value() / 100.0);
+        prefs->setDouble("/options/zoomcorrection/value", _slider.get_value() / 100.0);
         _sb.set_value(_slider.get_value());
         _ruler.redraw();
         freeze = false;
@@ -397,7 +393,7 @@ ZoomCorrRulerSlider::on_spinbutton_value_changed()
     {
         freeze = true;
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setDouble("options.zoomcorrection", "value", _sb.get_value() / 100.0);
+        prefs->setDouble("/options/zoomcorrection/value", _sb.get_value() / 100.0);
         _slider.set_value(_sb.get_value());
         _ruler.redraw();
         freeze = false;
@@ -412,7 +408,7 @@ ZoomCorrRulerSlider::on_unit_changed() {
         return;
     }
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setString("options.zoomcorrection", "unit", _unit.getUnitAbbr());
+    prefs->setString("/options/zoomcorrection/unit", _unit.getUnitAbbr());
     double conv = _unit.getConversion(_unit.getUnitAbbr(), "px");
     _ruler.set_unit_conversion(conv);
     if (_ruler.is_visible()) {
@@ -425,7 +421,7 @@ ZoomCorrRulerSlider::init(int ruler_width, int ruler_height, double lower, doubl
                       double step_increment, double page_increment, double default_value)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    double value = prefs->getDoubleLimited("options.zoomcorrection", "value", default_value, lower, upper) * 100.0;
+    double value = prefs->getDoubleLimited("/options/zoomcorrection/value", default_value, lower, upper) * 100.0;
 
     freeze = false;
 
@@ -449,7 +445,7 @@ ZoomCorrRulerSlider::init(int ruler_width, int ruler_height, double lower, doubl
     _unit.set_data("sensitive", GINT_TO_POINTER(0));
     _unit.setUnitType(UNIT_TYPE_LINEAR);
     _unit.set_data("sensitive", GINT_TO_POINTER(1));
-    _unit.setUnit(prefs->getString("options.zoomcorrection", "unit"));
+    _unit.setUnit(prefs->getString("/options/zoomcorrection/unit"));
 
     Gtk::Table *table = Gtk::manage(new Gtk::Table());
     Gtk::Alignment *alignment1 = Gtk::manage(new Gtk::Alignment(0.5,1,0,0));
@@ -465,14 +461,13 @@ ZoomCorrRulerSlider::init(int ruler_width, int ruler_height, double lower, doubl
     this->pack_start(*table, Gtk::PACK_EXPAND_WIDGET);
 }
 
-void PrefCombo::init(Glib::ustring const &prefs_path, Glib::ustring const &attr,
+void PrefCombo::init(Glib::ustring const &prefs_path,
                      Glib::ustring labels[], int values[], int num_items, int default_value)
 {
     _prefs_path = prefs_path;
-    _attr = attr;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int row = 0;
-    int value = prefs->getInt(_prefs_path, _attr, default_value);
+    int value = prefs->getInt(_prefs_path, default_value);
 
     for (int i = 0 ; i < num_items; ++i)
     {
@@ -489,22 +484,21 @@ void PrefCombo::on_changed()
     if (this->is_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setInt(_prefs_path, _attr, _values[this->get_active_row_number()]);
+        prefs->setInt(_prefs_path, _values[this->get_active_row_number()]);
     }
 }
 
-void PrefEntryButtonHBox::init(Glib::ustring const &prefs_path, Glib::ustring const &attr,
+void PrefEntryButtonHBox::init(Glib::ustring const &prefs_path,
             bool visibility, Glib::ustring const &default_string)
 {
     _prefs_path = prefs_path;
-    _attr = attr;
     _default_string = default_string;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     relatedEntry = new Gtk::Entry();
     relatedButton = new Gtk::Button(_("Reset"));
     relatedEntry->set_invisible_char('*');
     relatedEntry->set_visibility(visibility);
-    relatedEntry->set_text(prefs->getString(_prefs_path, _attr));
+    relatedEntry->set_text(prefs->getString(_prefs_path));
     this->pack_start(*relatedEntry);
     this->pack_start(*relatedButton);
     relatedButton->signal_clicked().connect(
@@ -518,7 +512,7 @@ void PrefEntryButtonHBox::onRelatedEntryChangedCallback()
     if (this->is_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString(_prefs_path, _attr, relatedEntry->get_text());
+        prefs->setString(_prefs_path, relatedEntry->get_text());
     }
 }
 
@@ -527,18 +521,17 @@ void PrefEntryButtonHBox::onRelatedButtonClickedCallback()
     if (this->is_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString(_prefs_path, _attr, _default_string);
+        prefs->setString(_prefs_path, _default_string);
         relatedEntry->set_text(_default_string);
     }
 }
 
 
-void PrefFileButton::init(Glib::ustring const &prefs_path, Glib::ustring const &attr)
+void PrefFileButton::init(Glib::ustring const &prefs_path)
 {
     _prefs_path = prefs_path;
-    _attr = attr;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    select_filename(Glib::filename_from_utf8(prefs->getString(_prefs_path, _attr)));
+    select_filename(Glib::filename_from_utf8(prefs->getString(_prefs_path)));
 
     signal_selection_changed().connect(sigc::mem_fun(*this, &PrefFileButton::onFileChanged));
 }
@@ -546,18 +539,16 @@ void PrefFileButton::init(Glib::ustring const &prefs_path, Glib::ustring const &
 void PrefFileButton::onFileChanged()
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setString(_prefs_path, _attr, Glib::filename_to_utf8(get_filename()));
+    prefs->setString(_prefs_path, Glib::filename_to_utf8(get_filename()));
 }
 
-void PrefEntry::init(Glib::ustring const &prefs_path, Glib::ustring const &attr,
-            bool visibility)
+void PrefEntry::init(Glib::ustring const &prefs_path, bool visibility)
 {
     _prefs_path = prefs_path;
-    _attr = attr;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     this->set_invisible_char('*');
     this->set_visibility(visibility);
-    this->set_text(prefs->getString(_prefs_path, _attr));
+    this->set_text(prefs->getString(_prefs_path));
 }
 
 void PrefEntry::on_changed()
@@ -565,18 +556,17 @@ void PrefEntry::on_changed()
     if (this->is_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString(_prefs_path, _attr, this->get_text());
+        prefs->setString(_prefs_path, this->get_text());
     }
 }
 
-void PrefColorPicker::init(Glib::ustring const &label, Glib::ustring const &prefs_path, Glib::ustring const &attr,
+void PrefColorPicker::init(Glib::ustring const &label, Glib::ustring const &prefs_path,
                            guint32 default_rgba)
 {
     _prefs_path = prefs_path;
-    _attr = attr;
     _title = label;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    this->setRgba32( prefs->getInt(_prefs_path, _attr, (int)default_rgba) );
+    this->setRgba32( prefs->getInt(_prefs_path, (int)default_rgba) );
 }
 
 void PrefColorPicker::on_changed (guint32 rgba)
@@ -584,17 +574,16 @@ void PrefColorPicker::on_changed (guint32 rgba)
     if (this->is_visible()) //only take action if the user toggled it
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setInt(_prefs_path, _attr, (int) rgba);
+        prefs->setInt(_prefs_path, (int) rgba);
     }
 }
 
-void PrefUnit::init(Glib::ustring const &prefs_path, Glib::ustring const &attr)
+void PrefUnit::init(Glib::ustring const &prefs_path)
 {
     _prefs_path = prefs_path;
-    _attr = attr;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     setUnitType(UNIT_TYPE_LINEAR);
-    setUnit(prefs->getString(_prefs_path, _attr));
+    setUnit(prefs->getString(_prefs_path));
 }
 
 void PrefUnit::on_changed()
@@ -602,7 +591,7 @@ void PrefUnit::on_changed()
     if (this->is_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString(_prefs_path, _attr, getUnitAbbr());
+        prefs->setString(_prefs_path, getUnitAbbr());
     }
 }
 

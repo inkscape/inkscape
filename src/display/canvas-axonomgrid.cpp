@@ -194,17 +194,17 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     : CanvasGrid(nv, in_repr, in_doc, GRID_AXONOMETRIC)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gridunit = sp_unit_get_by_abbreviation( prefs->getString("options.grids.axonom", "units").data() );
+    gridunit = sp_unit_get_by_abbreviation( prefs->getString("/options/grids/axonom/units").data() );
     if (!gridunit)
         gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
-    origin[Geom::X] = sp_units_get_pixels( prefs->getDouble("options.grids.axonom", "origin_x", 0.0), *gridunit );
-    origin[Geom::Y] = sp_units_get_pixels( prefs->getDouble("options.grids.axonom", "origin_y", 0.0), *gridunit );
-    color = prefs->getInt("options.grids.axonom", "color", 0x0000ff20);
-    empcolor = prefs->getInt("options.grids.axonom", "empcolor", 0x0000ff40);
-    empspacing = prefs->getInt("options.grids.axonom", "empspacing", 5);
-    lengthy = sp_units_get_pixels( prefs->getDouble("options.grids.axonom", "spacing_y", 1.0), *gridunit );
-    angle_deg[X] = prefs->getDouble("options.grids.axonom", "angle_x", 30.0);
-    angle_deg[Z] = prefs->getDouble("options.grids.axonom", "angle_z", 30.0);
+    origin[Geom::X] = sp_units_get_pixels( prefs->getDouble("/options/grids/axonom/origin_x", 0.0), *gridunit );
+    origin[Geom::Y] = sp_units_get_pixels( prefs->getDouble("/options/grids/axonom/origin_y", 0.0), *gridunit );
+    color = prefs->getInt("/options/grids/axonom/color", 0x0000ff20);
+    empcolor = prefs->getInt("/options/grids/axonom/empcolor", 0x0000ff40);
+    empspacing = prefs->getInt("/options/grids/axonom/empspacing", 5);
+    lengthy = sp_units_get_pixels( prefs->getDouble("/options/grids/axonom/spacing_y", 1.0), *gridunit );
+    angle_deg[X] = prefs->getDouble("/options/grids/axonom/angle_x", 30.0);
+    angle_deg[Z] = prefs->getDouble("/options/grids/axonom/angle_z", 30.0);
     angle_deg[Y] = 0;
 
     angle_rad[X] = deg_to_rad(angle_deg[X]);
@@ -298,7 +298,6 @@ static gboolean sp_nv_read_opacity(gchar const *str, guint32 *color)
 void
 CanvasAxonomGrid::readRepr()
 {
-    /// @todo Replace direct XML preference node manipulation with calls to public prefs API
     gchar const *value;
     if ( (value = repr->attribute("originx")) ) {
         sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[Geom::X], &gridunit);
@@ -551,7 +550,7 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     //set correct coloring, depending preference (when zoomed out, always major coloring or minor coloring)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint32 _empcolor;
-    bool preference = prefs->getBool("options.grids", "no_emphasize_when_zoomedout", false);
+    bool preference = prefs->getBool("/options/grids/no_emphasize_when_zoomedout", false);
     if( scaled && preference ) {
         _empcolor = color;
     } else {

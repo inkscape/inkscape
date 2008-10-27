@@ -1,4 +1,37 @@
+/** @file
+ * @brief Input devices dialog (new) - implementation
+ */
+/* Author:
+ *   Jon A. Cruz
+ *
+ * Copyright (C) 2008 Author
+ * Released under GNU GPL.  Read the file 'COPYING' for more information.
+ */
 
+#include <map>
+#include <set>
+#include <glib/gprintf.h>
+#include <glibmm/i18n.h>
+#include <gtkmm/comboboxtext.h>
+#include <gtkmm/enums.h>
+#include <gtkmm/eventbox.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/image.h>
+#include <gtkmm/menubar.h>
+#include <gtkmm/notebook.h>
+#include <gtkmm/paned.h>
+#include <gtkmm/progressbar.h>
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/table.h>
+#include <gtkmm/treemodel.h>
+#include <gtkmm/treemodelcolumn.h>
+#include <gtkmm/treestore.h>
+#include <gtkmm/treeview.h>
+
+#include "ui/widget/panel.h"
+#include "device-manager.h"
+
+#include "input.h"
 
 /* XPM */
 static char const * core_xpm[] = {
@@ -281,35 +314,6 @@ static char const * axis_on_xpm[] = {
 " ..++++++++++++++++++.. ",
 "  ....................  ",
 "                        "};
-
-
-
-
-
-#include <map>
-#include <set>
-#include <glib/gprintf.h>
-#include <glibmm/i18n.h>
-#include <gtkmm/comboboxtext.h>
-#include <gtkmm/enums.h>
-#include <gtkmm/eventbox.h>
-#include <gtkmm/frame.h>
-#include <gtkmm/image.h>
-#include <gtkmm/menubar.h>
-#include <gtkmm/notebook.h>
-#include <gtkmm/paned.h>
-#include <gtkmm/progressbar.h>
-#include <gtkmm/scrolledwindow.h>
-#include <gtkmm/table.h>
-#include <gtkmm/treemodel.h>
-#include <gtkmm/treemodelcolumn.h>
-#include <gtkmm/treestore.h>
-#include <gtkmm/treeview.h>
-
-#include "ui/widget/panel.h"
-#include "device-manager.h"
-
-#include "input.h"
 
 using Inkscape::InputDevice;
 

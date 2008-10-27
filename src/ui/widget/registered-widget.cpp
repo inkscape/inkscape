@@ -155,6 +155,8 @@ RegisteredScalarUnit::RegisteredScalarUnit (const Glib::ustring& label, const Gl
 {
     init_parent(key, wr, repr_in, doc_in);
 
+    setProgrammatically = false;
+
     initScalar (-1e6, 1e6);
     setUnit (rum.getUnitMenu()->getUnitAbbr());
     setDigits (2);
@@ -203,6 +205,8 @@ RegisteredScalar::RegisteredScalar ( const Glib::ustring& label, const Glib::ust
 {
     init_parent(key, wr, repr_in, doc_in);
 
+    setProgrammatically = false;
+
     setRange (-1e6, 1e6);
     setDigits (2);
     setIncrements(0.1, 1.0);
@@ -248,6 +252,8 @@ RegisteredText::RegisteredText ( const Glib::ustring& label, const Glib::ustring
     : RegisteredWidget<Text>(label, tip)
 {
     init_parent(key, wr, repr_in, doc_in);
+
+    setProgrammatically = false;
 
     setText("");
     _activate_connection = signal_activate().connect (sigc::mem_fun (*this, &RegisteredText::on_activate));
@@ -596,6 +602,8 @@ RegisteredRandom::RegisteredRandom ( const Glib::ustring& label, const Glib::ust
     : RegisteredWidget<Random> (label, tip)
 {
     init_parent(key, wr, repr_in, doc_in);
+
+    setProgrammatically = false;
 
     setRange (-1e6, 1e6);
     setDigits (2);

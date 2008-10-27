@@ -22,22 +22,14 @@
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/tooltips.h>
 #include <gtkmm/label.h>
-
 #include <glibmm/i18n.h>
 
-#include <xml/node.h>
-
-#include <extension/extension.h>
-#include <prefs-utils.h>
-#include <document-private.h>
-#include <sp-object.h>
-
+#include "xml/node.h"
+#include "extension/extension.h"
+#include "document-private.h"
+#include "sp-object.h"
 #include "enum.h"
 #include "preferences.h"
-
-/** \brief  The root directory in the preferences database for extension
-            related parameters. */
-#define PREF_DIR "extensions"
 
 namespace Inkscape {
 namespace Extension {
@@ -106,7 +98,7 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
 
     gchar * pref_name = this->pref_name();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring paramval = prefs->getString(PREF_DIR, pref_name);
+    Glib::ustring paramval = prefs->getString(extension_pref_root + pref_name);
     g_free(pref_name);
 
     if (!paramval.empty())
@@ -160,7 +152,7 @@ ParamComboBox::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node 
         _value = g_strdup(settext->c_str());
         gchar * prefname = this->pref_name();
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString(PREF_DIR, prefname, _value);
+        prefs->setString(extension_pref_root + prefname, _value);
         g_free(prefname);
     }
 

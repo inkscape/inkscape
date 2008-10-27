@@ -120,7 +120,7 @@ Script::resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
 
     // 1.  Check preferences
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring prefInterp = prefs->getString("extensions", interp->prefstring);
+    Glib::ustring prefInterp = prefs->getString("/extensions/" + Glib::ustring(interp->prefstring));
 
     if (!prefInterp.empty()) {
         interpName = prefInterp;

@@ -48,7 +48,7 @@
 #include "interface.h"
 #include "macros.h"
 #include "tools-switch.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "message-context.h"
 #include "gradient-drag.h"
 #include "object-edit.h"
@@ -166,10 +166,8 @@ sp_event_context_dispose(GObject *object)
         ec->desktop = NULL;
     }
 
-    if (ec->prefs_repr) {
-        sp_repr_remove_listener_by_data(ec->prefs_repr, ec);
-        Inkscape::GC::release(ec->prefs_repr);
-        ec->prefs_repr = NULL;
+    if (ec->pref_observer) {
+        delete ec->pref_observer;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
@@ -338,17 +336,19 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
     static unsigned int zoom_rb = 0;
 
     SPDesktop *desktop = event_context->desktop;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    tolerance = prefs_get_int_attribute_limited(
-            "options.dragtolerance","value", 0, 0, 100);
-    double const zoom_inc = prefs_get_double_attribute_limited(
-            "options.zoomincrement", "value", M_SQRT2, 1.01, 10);
-    double const acceleration = prefs_get_double_attribute_limited(
-            "options.scrollingacceleration", "value", 0, 0, 6);
-    int const key_scroll = prefs_get_int_attribute_limited(
-            "options.keyscroll", "value", 10, 0, 1000);
-    int const wheel_scroll = prefs_get_int_attribute_limited(
-            "options.wheelscroll", "value", 40, 0, 1000);
+    /// @todo REmove redundant /value in preference keys
+    tolerance = prefs->getIntLimited(
+            "/options/dragtolerance/value", 0, 0, 100);
+    double const zoom_inc = prefs->getDoubleLimited(
+            "/options/zoomincrement/value", M_SQRT2, 1.01, 10);
+    double const acceleration = prefs->getDoubleLimited(
+            "/options/scrollingacceleration/value", 0, 0, 6);
+    int const key_scroll = prefs->getIntLimited(
+            "/options/keyscroll/value", 10, 0, 1000);
+    int const wheel_scroll = prefs->getIntLimited(
+            "/options/wheelscroll/value", 40, 0, 1000);
 
     gint ret = FALSE;
 
@@ -603,7 +603,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     }
                     break;
                 case GDK_space:
-                    if (prefs_get_int_attribute("options.spacepans","value", 0) == 1) {
+                    if (prefs->getBool("/options/spacepans/value")) {
                         event_context->space_panning = true;
                         event_context->_message_context->set(Inkscape::INFORMATION_MESSAGE, _("<b>Space+mouse drag</b> to pan canvas"));
                         ret= TRUE;
@@ -652,7 +652,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
         case GDK_SCROLL:
         {
             bool ctrl = (event->scroll.state & GDK_CONTROL_MASK);
-            bool wheelzooms = (prefs_get_int_attribute("options.wheelzooms","value", 0) == 1);
+            bool wheelzooms = prefs->getBool("/options/wheelzooms/value");
             /* shift + wheel, pan left--right */
             if (event->scroll.state & GDK_SHIFT_MASK) {
                 switch (event->scroll.direction) {
@@ -738,34 +738,30 @@ sp_event_context_private_item_handler(SPEventContext *ec, SPItem *item, GdkEvent
 }
 
 /**
- * Gets called when attribute changes value.
+ * @brief An observer that relays pref changes to the derived classes
  */
-static void
-sp_ec_repr_attr_changed(Inkscape::XML::Node */*prefs_repr*/, gchar const *key, gchar const */*oldval*/, gchar const *newval,
-                        bool /*is_interactive*/, gpointer data)
-{
-    SPEventContext *ec;
-
-    ec = SP_EVENT_CONTEXT(data);
-
-    if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->set) {
-        ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->set(ec, key, newval);
+class ToolPrefObserver : public Inkscape::Preferences::Observer {
+public:
+    ToolPrefObserver(Glib::ustring const &path, SPEventContext *ec) :
+        Inkscape::Preferences::Observer(path),
+        _ec(ec) {}
+    virtual void notify(Inkscape::Preferences::Entry const &val)
+    {   
+        if (((SPEventContextClass *) G_OBJECT_GET_CLASS(_ec))->set) {
+            ((SPEventContextClass *) G_OBJECT_GET_CLASS(_ec))->set(_ec,
+                const_cast<Inkscape::Preferences::Entry*>(&val));
+        }
     }
-}
-
-Inkscape::XML::NodeEventVector sp_ec_event_vector = {
-    NULL, /* Child added */
-    NULL, /* Child removed */
-    sp_ec_repr_attr_changed,
-    NULL, /* Content changed */
-    NULL /* Order changed */
+private:
+    SPEventContext * const _ec;
 };
 
 /**
  * Creates new SPEventContext object and calls its virtual setup() function.
+ * @todo This is bogus. pref_path should be a private property of the inheriting objects.
  */
 SPEventContext *
-sp_event_context_new(GType type, SPDesktop *desktop, Inkscape::XML::Node *prefs_repr, unsigned int key)
+sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path, unsigned int key)
 {
     g_return_val_if_fail(g_type_is_a(type, SP_TYPE_EVENT_CONTEXT), NULL);
     g_return_val_if_fail(desktop != NULL, NULL);
@@ -775,10 +771,13 @@ sp_event_context_new(GType type, SPDesktop *desktop, Inkscape::XML::Node *prefs_
     ec->desktop = desktop;
     ec->_message_context = new Inkscape::MessageContext(desktop->messageStack());
     ec->key = key;
-    ec->prefs_repr = prefs_repr;
-    if (ec->prefs_repr) {
-        Inkscape::GC::anchor(ec->prefs_repr);
-        sp_repr_add_listener(ec->prefs_repr, &sp_ec_event_vector, ec);
+    ec->pref_observer = NULL;
+    
+    if (pref_path) {
+        ec->pref_observer = new ToolPrefObserver(pref_path, ec);
+        
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->addObserver(*(ec->pref_observer));
     }
 
     if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->setup)
@@ -848,10 +847,11 @@ sp_event_context_read(SPEventContext *ec, gchar const *key)
     g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
     g_return_if_fail(key != NULL);
 
-    if (ec->prefs_repr) {
-        gchar const *val = ec->prefs_repr->attribute(key);
-        if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->set)
-            ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->set(ec, key, val);
+    if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->set) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences::Entry val = prefs->getEntry(
+            ec->pref_observer->observed_path + '/' + key );
+        ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->set(ec, &val);
     }
 }
 

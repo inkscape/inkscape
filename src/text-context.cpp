@@ -44,7 +44,7 @@
 #include "object-edit.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "rubberband.h"
 #include "sp-metrics.h"
 #include "context-fns.h"
@@ -137,7 +137,7 @@ sp_text_context_init(SPTextContext *tc)
     tc->imc = NULL;
 
     tc->text = NULL;
-    tc->pdoc = NR::Point(0, 0);
+    tc->pdoc = Geom::Point(0, 0);
     new (&tc->text_sel_start) Inkscape::Text::Layout::iterator();
     new (&tc->text_sel_end) Inkscape::Text::Layout::iterator();
     new (&tc->text_selection_quads) std::vector<SPCanvasItem*>();
@@ -285,10 +285,11 @@ sp_text_context_setup(SPEventContext *ec)
 
     sp_text_context_selection_changed(sp_desktop_selection(desktop), tc);
 
-    if (prefs_get_int_attribute("tools.text", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/text/selcue")) {
         ec->enableSelectionCue();
     }
-    if (prefs_get_int_attribute("tools.text", "gradientdrag", 0) != 0) {
+    if (prefs->getBool("/tools/text/gradientdrag")) {
         ec->enableGrDrag();
     }
 }
@@ -360,12 +361,12 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
         case GDK_BUTTON_PRESS:
             if (event->button.button == 1 && !event_context->space_panning) {
                 // find out clicked item, disregarding groups
-                item_ungrouped = desktop->item_at_point(NR::Point(event->button.x, event->button.y), TRUE);
+                item_ungrouped = desktop->item_at_point(Geom::Point(event->button.x, event->button.y), TRUE);
                 if (SP_IS_TEXT(item_ungrouped) || SP_IS_FLOWTEXT(item_ungrouped)) {
                     sp_desktop_selection(desktop)->set(item_ungrouped);
                     if (tc->text) {
                         // find out click point in document coordinates
-                        NR::Point p = desktop->w2d(NR::Point(event->button.x, event->button.y));
+                        Geom::Point p = desktop->w2d(Geom::Point(event->button.x, event->button.y));
                         // set the cursor closest to that point
                         tc->text_sel_start = tc->text_sel_end = sp_te_get_position_by_coords(tc->text, p);
                         // update display
@@ -413,7 +414,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                 Inkscape::Text::Layout const *layout = te_get_layout(tc->text);
                 if (!layout) break;
                 // find out click point in document coordinates
-                NR::Point p = desktop->w2d(NR::Point(event->button.x, event->button.y));
+                Geom::Point p = desktop->w2d(Geom::Point(event->button.x, event->button.y));
                 // set the cursor closest to that point
                 Inkscape::Text::Layout::iterator new_end = sp_te_get_position_by_coords(tc->text, p);
                 if (tc->dragging == 2) {
@@ -442,7 +443,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                 break;
             }
             // find out item under mouse, disregarding groups
-            item_ungrouped = desktop->item_at_point(NR::Point(event->button.x, event->button.y), TRUE);
+            item_ungrouped = desktop->item_at_point(Geom::Point(event->button.x, event->button.y), TRUE);
             if (SP_IS_TEXT(item_ungrouped) || SP_IS_FLOWTEXT(item_ungrouped)) {
                 sp_canvas_item_show(tc->indicator);
                 boost::optional<Geom::Rect> ibbox = sp_item_bbox_desktop(item_ungrouped);
@@ -490,10 +491,10 @@ sp_text_context_setup_text(SPTextContext *tc)
     rtext->setAttribute("xml:space", "preserve"); // we preserve spaces in the text objects we create
 
     /* Set style */
-    sp_desktop_apply_style_tool(SP_EVENT_CONTEXT_DESKTOP(ec), rtext, "tools.text", true);
+    sp_desktop_apply_style_tool(SP_EVENT_CONTEXT_DESKTOP(ec), rtext, "/tools/text", true);
 
-    sp_repr_set_svg_double(rtext, "x", tc->pdoc[NR::X]);
-    sp_repr_set_svg_double(rtext, "y", tc->pdoc[NR::Y]);
+    sp_repr_set_svg_double(rtext, "x", tc->pdoc[Geom::X]);
+    sp_repr_set_svg_double(rtext, "y", tc->pdoc[Geom::Y]);
 
     /* Create <tspan> */
     Inkscape::XML::Node *rtspan = xml_doc->createElement("svg:tspan");
@@ -604,7 +605,8 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
 
     sp_text_context_validate_cursor_iterators(tc);
 
-    event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
@@ -619,7 +621,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                 event_context->yp = (gint) event->button.y;
                 event_context->within_tolerance = true;
 
-                NR::Point const button_pt(event->button.x, event->button.y);
+                Geom::Point const button_pt(event->button.x, event->button.y);
                 tc->p0 = desktop->w2d(button_pt);
                 Inkscape::Rubberband::get(desktop)->start(desktop, tc->p0);
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -654,15 +656,15 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                 // motion notify coordinates as given (no snapping back to origin)
                 event_context->within_tolerance = false;
 
-                NR::Point const motion_pt(event->motion.x, event->motion.y);
-                NR::Point const p = desktop->w2d(motion_pt);
+                Geom::Point const motion_pt(event->motion.x, event->motion.y);
+                Geom::Point const p = desktop->w2d(motion_pt);
 
                 Inkscape::Rubberband::get(desktop)->move(p);
                 gobble_motion_events(GDK_BUTTON1_MASK);
 
                 // status text
-                GString *xs = SP_PX_TO_METRIC_STRING(fabs((p - tc->p0)[NR::X]), desktop->namedview->getDefaultMetric());
-                GString *ys = SP_PX_TO_METRIC_STRING(fabs((p - tc->p0)[NR::Y]), desktop->namedview->getDefaultMetric());
+                GString *xs = SP_PX_TO_METRIC_STRING(fabs((p - tc->p0)[Geom::X]), desktop->namedview->getDefaultMetric());
+                GString *ys = SP_PX_TO_METRIC_STRING(fabs((p - tc->p0)[Geom::Y]), desktop->namedview->getDefaultMetric());
                 event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Flowed text frame</b>: %s &#215; %s"), xs->str, ys->str);
                 g_string_free(xs, FALSE);
                 g_string_free(ys, FALSE);
@@ -682,7 +684,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                 if (tc->creating && event_context->within_tolerance) {
                     /* Button 1, set X & Y & new item */
                     sp_desktop_selection(desktop)->clear();
-                    NR::Point dtp = desktop->w2d(NR::Point(event->button.x, event->button.y));
+                    Geom::Point dtp = desktop->w2d(Geom::Point(event->button.x, event->button.y));
                     tc->pdoc = sp_desktop_dt2root_xy_point(desktop, dtp);
 
                     tc->show = TRUE;
@@ -694,19 +696,19 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                     // Cursor height is defined by the new text object's font size; it needs to be set
                     // articifically here, for the text object does not exist yet:
                     double cursor_height = sp_desktop_get_font_size_tool(desktop);
-                    sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), dtp, dtp + NR::Point(0, cursor_height));
+                    sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), dtp, dtp + Geom::Point(0, cursor_height));
                     event_context->_message_context->set(Inkscape::NORMAL_MESSAGE, _("Type text; <b>Enter</b> to start new line.")); // FIXME:: this is a copy of a string from _update_cursor below, do not desync
 
                     event_context->within_tolerance = false;
                 } else if (tc->creating) {
-                    NR::Point const button_pt(event->button.x, event->button.y);
-                    NR::Point p1 = desktop->w2d(button_pt);
+                    Geom::Point const button_pt(event->button.x, event->button.y);
+                    Geom::Point p1 = desktop->w2d(button_pt);
                     double cursor_height = sp_desktop_get_font_size_tool(desktop);
-                    if (fabs(p1[NR::Y] - tc->p0[NR::Y]) > cursor_height) {
+                    if (fabs(p1[Geom::Y] - tc->p0[Geom::Y]) > cursor_height) {
                         // otherwise even one line won't fit; most probably a slip of hand (even if bigger than tolerance)
                         SPItem *ft = create_flowtext_with_internal_frame (desktop, tc->p0, p1);
                         /* Set style */
-                        sp_desktop_apply_style_tool(desktop, SP_OBJECT_REPR(ft), "tools.text", true);
+                        sp_desktop_apply_style_tool(desktop, SP_OBJECT_REPR(ft), "/tools/text", true);
                         sp_desktop_selection(desktop)->set(ft);
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Flowed text is created."));
                         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
@@ -1020,9 +1022,9 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(mul*-10, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*-10, 0));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(mul*-1, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*-1, 0));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(desktop), "kern:left", SP_VERB_CONTEXT_TEXT,
@@ -1045,9 +1047,9 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(mul*10, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*10, 0));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(mul*1, 0));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*1, 0));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(desktop), "kern:right", SP_VERB_CONTEXT_TEXT,
@@ -1070,9 +1072,9 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, mul*-10));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*-10));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, mul*-1));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*-1));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(desktop), "kern:up", SP_VERB_CONTEXT_TEXT,
@@ -1096,9 +1098,9 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
                                         if (MOD__SHIFT)
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, mul*10));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*10));
                                         else
-                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, NR::Point(0, mul*1));
+                                            sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*1));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(desktop), "kern:down", SP_VERB_CONTEXT_TEXT,
@@ -1584,7 +1586,7 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
         // scroll to show cursor
         if (scroll_to_see) {
             Geom::Point const center = SP_EVENT_CONTEXT(tc)->desktop->get_display_area().midpoint();
-            if (NR::L2(d0 - center) > NR::L2(d1 - center))
+            if (Geom::L2(d0 - center) > Geom::L2(d1 - center))
                 // unlike mouse moves, here we must scroll all the way at first shot, so we override the autoscrollspeed
                 SP_EVENT_CONTEXT(tc)->desktop->scroll_to_point(d0, 1.0);
             else

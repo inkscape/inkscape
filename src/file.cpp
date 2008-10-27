@@ -18,8 +18,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/**
- * Note: This file needs to be cleaned up extensively.
+/** @file
+ * @note This file needs to be cleaned up extensively.
  * What it probably needs is to have one .h file for
  * the API, and two or more .cpp files for the implementations.
  */
@@ -28,6 +28,7 @@
 # include "config.h"
 #endif
 
+#include <gtk/gtk.h>
 #include <glib/gmem.h>
 #include <libnr/nr-pixops.h>
 
@@ -89,6 +90,17 @@
 
 void dump_str(gchar const *str, gchar const *prefix);
 void dump_ustr(Glib::ustring const &ustr);
+
+// what gets passed here is not actually an URI... it is an UTF-8 encoded filename (!)
+static void sp_file_add_recent(gchar const *uri)
+{
+    GtkRecentManager *recent = gtk_recent_manager_get_default();
+    gchar *fn = g_filename_from_utf8(uri, -1, NULL, NULL, NULL);
+    gchar *uri_to_add = g_filename_to_uri(fn, NULL, NULL);
+    gtk_recent_manager_add_item(recent, uri_to_add);
+    g_free(uri_to_add);
+    g_free(fn);
+}
 
 
 /*######################
@@ -219,7 +231,7 @@ sp_file_open(const Glib::ustring &uri,
         sp_namedview_update_layers_from_document(desktop);
 
         if (add_to_recent) {
-            prefs_set_recent_file(SP_DOCUMENT_URI(doc), SP_DOCUMENT_NAME(doc));
+            sp_file_add_recent(SP_DOCUMENT_URI(doc));
         }
 
         return TRUE;
@@ -386,7 +398,7 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
 
     if(open_path.empty())
     {
-        Glib::ustring attr = prefs->getString("dialogs.open", "path");
+        Glib::ustring attr = prefs->getString("/dialogs/open/path");
         if (!attr.empty()) open_path = attr;
     }
 
@@ -498,7 +510,7 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
 
         open_path = Glib::path_get_dirname (fileName);
         open_path.append(G_DIR_SEPARATOR_S);
-        prefs->setString("dialogs.open", "path", open_path);
+        prefs->setString("/dialogs/open/path", open_path);
 
         sp_file_open(fileName, selection);
     }
@@ -689,7 +701,7 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
     Glib::ustring default_extension;
     char *attr = (char *)repr->attribute("inkscape:output_extension");
     if (!attr) {
-        Glib::ustring attr2 = prefs->getString("dialogs.save_as", "default");
+        Glib::ustring attr2 = prefs->getString("/dialogs/save_as/default");
         if(!attr2.empty()) default_extension = attr2;
     } else {
         default_extension = attr;
@@ -710,7 +722,7 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
         if (extension)
             filename_extension = extension->get_extension();
 
-        Glib::ustring attr3 = prefs->getString("dialogs.save_as", "path");
+        Glib::ustring attr3 = prefs->getString("/dialogs/save_as/path");
         if (!attr3.empty())
             save_path = attr3;
 
@@ -793,12 +805,13 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
 
         success = file_save(parentWindow, doc, fileName, selectionType, TRUE, !is_copy);
 
-        if (success)
-            prefs_set_recent_file(SP_DOCUMENT_URI(doc), SP_DOCUMENT_NAME(doc));
+        if (success) {
+            sp_file_add_recent(SP_DOCUMENT_URI(doc));
+        }
 
         save_path = Glib::path_get_dirname(fileName);
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString("dialogs.save_as", "path", save_path);
+        prefs->setString("/dialogs/save_as/path", save_path);
 
         return success;
     }
@@ -987,15 +1000,15 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
             // object" option.
             {
                 Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-                bool const saved_pref = prefs->getBool("options.transform", "pattern", true);
-                prefs->setBool("options.transform", "pattern", true);
+                bool const saved_pref = prefs->getBool("/options/transform/pattern", true);
+                prefs->setBool("/options/transform/pattern", true);
                 sp_document_ensure_up_to_date(sp_desktop_document(desktop));
                 boost::optional<Geom::Rect> sel_bbox = selection->bounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );
                     sp_selection_move_relative(selection, m);
                 }
-                prefs->setBool("options.transform", "pattern", saved_pref);
+                prefs->setBool("/options/transform/pattern", saved_pref);
             }
         }
 
@@ -1100,7 +1113,7 @@ sp_file_export_dialog(void *widget)
     Glib::ustring default_extension;
     char *attr = (char *)repr->attribute("inkscape:output_extension");
     if (!attr) {
-        Glib::ustring attr2 = prefs->getString("dialogs.save_as", "default");
+        Glib::ustring attr2 = prefs->getString("/dialogs/save_as/default");
         if(!attr2.empty()) default_extension = attr2;
     } else {
         default_extension = attr;
@@ -1118,7 +1131,7 @@ sp_file_export_dialog(void *widget)
         if (extension)
             filename_extension = extension->get_extension();
 
-        Glib::ustring attr3 = prefs->getString("dialogs.save_as", "path");
+        Glib::ustring attr3 = prefs->getString("/dialogs/save_as/path");
         if (!attr3.empty())
             export_path = attr3;
 
@@ -1177,11 +1190,13 @@ sp_file_export_dialog(void *widget)
 
         success = file_save(doc, fileName, selectionType, TRUE, FALSE);
 
-        if (success)
-            prefs_set_recent_file(SP_DOCUMENT_URI(doc), SP_DOCUMENT_NAME(doc));
+        if (success) {
+            Glib::RefPtr<Gtk::RecentManager> recent = Gtk::RecentManager::get_default();
+            recent->add_item(SP_DOCUMENT_URI(doc));
+        }
 
         export_path = fileName;
-        prefs->setString("dialogs.save_as", "path", export_path);
+        prefs->setString("/dialogs/save_as/path", export_path);
 
         return success;
     }
@@ -1301,8 +1316,8 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     // Create the uri
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Glib::ustring uri = "dav://";
-    Glib::ustring username = prefs->getString("options.ocalusername", "str");
-    Glib::ustring password = prefs->getString("options.ocalpassword", "str");
+    Glib::ustring username = prefs->getString("/options/ocalusername/str");
+    Glib::ustring password = prefs->getString("/options/ocalpassword/str");
     if (username.empty() || password.empty())
     {
         if(!gotSuccess)
@@ -1322,7 +1337,7 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     uri.append(":");
     uri.append(password);
     uri.append("@");
-    uri.append(prefs->getString("options.ocalurl", "str"));
+    uri.append(prefs->getString("/options/ocalurl/str"));
     uri.append("/dav.php/");
     uri.append(Glib::path_get_basename(fileName));
 

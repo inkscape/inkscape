@@ -1047,9 +1047,9 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
     if ( !possible.empty() ) {
         JustForNow* first = 0;
         Glib::ustring targetName;
-        if ( _prefs_path ) {
+        if ( !_prefs_path.empty() ) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-            targetName = prefs->getString(_prefs_path, "palette");
+            targetName = prefs->getString(_prefs_path + "/palette");
             if (!targetName.empty()) {
                 for ( std::vector<JustForNow*>::iterator iter = possible.begin(); iter != possible.end(); ++iter ) {
                     if ( (*iter)->_name == targetName ) {
@@ -1123,9 +1123,9 @@ void SwatchesPanel::_handleAction( int setId, int itemId )
                 _holder->clear();
                 JustForNow* curr = possible[itemId];
 
-                if ( _prefs_path ) {
+                if ( !_prefs_path.empty() ) {
                     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-                    prefs->setString(_prefs_path, "palette", curr->_name);
+                    prefs->setString(_prefs_path + "/palette", curr->_name);
                 }
 
                 if ( curr->_prefWidth > 0 ) {

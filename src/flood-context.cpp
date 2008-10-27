@@ -1,21 +1,24 @@
 #define __SP_FLOOD_CONTEXT_C__
 
-/** \file
-* Bucket fill drawing context, works by bitmap filling an area on a rendered version of the current display and then tracing the result using potrace.
-*
-* Author:
-*   Lauris Kaplinski <lauris@kaplinski.com>
-*   bulia byak <buliabyak@users.sf.net>
-*   John Bintz <jcoswell@coswellproductions.org>
-*
-* Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
-* Copyright (C) 2000-2005 authors
-* Copyright (C) 2000-2001 Ximian, Inc.
-*
-* Released under GNU GPL, read the file 'COPYING' for more information
-*/
+/** @file
+ * @brief Bucket fill drawing context, works by bitmap filling an area on a rendered version
+ * of the current display and then tracing the result using potrace.
+ */
+/* Author:
+ *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   bulia byak <buliabyak@users.sf.net>
+ *   John Bintz <jcoswell@coswellproductions.org>
+ *
+ * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) 2000-2005 authors
+ * Copyright (C) 2000-2001 Ximian, Inc.
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
 
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 #include <gdk/gdkkeysyms.h>
 #include <queue>
@@ -40,7 +43,7 @@
 #include "object-edit.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "context-fns.h"
 #include "rubberband.h"
 
@@ -223,7 +226,8 @@ static void sp_flood_context_setup(SPEventContext *ec)
 
     rc->_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 
-    if (prefs_get_int_attribute("tools.paintbucket", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/paintbucket/selcue")) {
         rc->enableSelectionCue();
     }
 }
@@ -437,6 +441,7 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
     }
 
     Inkscape::Trace::Potrace::PotraceTracingEngine pte;
+    pte.keepGoing = 1;
     std::vector<Inkscape::Trace::TracingEngineResult> results = pte.traceGrayMap(gray_map);
     gray_map->destroy(gray_map);
 
@@ -445,7 +450,8 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
 
     long totalNodeCount = 0L;
 
-    double offset = prefs_get_double_attribute("tools.paintbucket", "offset", 0.0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    double offset = prefs->getDouble("/tools/paintbucket/offset", 0.0);
 
     for (unsigned int i=0 ; i<results.size() ; i++) {
         Inkscape::Trace::TracingEngineResult result = results[i];
@@ -453,7 +459,7 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
 
         Inkscape::XML::Node *pathRepr = xml_doc->createElement("svg:path");
         /* Set style */
-        sp_desktop_apply_style_tool (desktop, pathRepr, "tools.paintbucket", false);
+        sp_desktop_apply_style_tool (desktop, pathRepr, "/tools/paintbucket", false);
 
         Geom::PathVector pathv = sp_svg_read_pathv(result.getPathData().c_str());
         Path *path = new Path;
@@ -887,8 +893,9 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     bool aborted = false;
     int y_limit = height - 1;
 
-    PaintBucketChannels method = (PaintBucketChannels)prefs_get_int_attribute("tools.paintbucket", "channels", 0);
-    int threshold = prefs_get_int_attribute_limited("tools.paintbucket", "threshold", 1, 0, 100);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    PaintBucketChannels method = (PaintBucketChannels) prefs->getInt("/tools/paintbucket/channels", 0);
+    int threshold = prefs->getIntLimited("/tools/paintbucket/threshold", 1, 0, 100);
 
     switch(method) {
         case FLOOD_CHANNELS_ALPHA:
@@ -914,7 +921,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     bci.bbox = *bbox;
     bci.screen = screen;
     bci.dtc = dtc;
-    bci.radius = prefs_get_int_attribute_limited("tools.paintbucket", "autogap", 0, 0, 3);
+    bci.radius = prefs->getIntLimited("/tools/paintbucket/autogap", 0, 0, 3);
     bci.max_queue_size = (width * height) / 4;
     bci.current_step = 0;
 
@@ -1159,7 +1166,7 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
             
             Inkscape::XML::Node *pathRepr = SP_OBJECT_REPR(item);
             /* Set style */
-            sp_desktop_apply_style_tool (desktop, pathRepr, "tools.paintbucket", false);
+            sp_desktop_apply_style_tool (desktop, pathRepr, "/tools/paintbucket", false);
             sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET, _("Set style on object"));
             ret = TRUE;
         }
@@ -1308,7 +1315,8 @@ static void sp_flood_finish(SPFloodContext *rc)
 
 void flood_channels_set_channels( gint channels )
 {
-    prefs_set_int_attribute("tools.paintbucket", "channels", channels);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt("/tools/paintbucket/channels", channels);
 }
 
 /*

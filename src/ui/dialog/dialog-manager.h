@@ -1,8 +1,8 @@
-/**
- * \brief Object for managing a set of dialogs, including their signals and
+/** @file
+ * @brief Object for managing a set of dialogs, including their signals and
  *        construction/caching/destruction of them.
- *
- * Author:
+ */
+/* Author:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Jon Phillips <jon@rejon.org>
  *   

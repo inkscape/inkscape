@@ -16,7 +16,7 @@
 #include "desktop.h"
 #include "selection.h"
 #include "helper/action.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "path-chemistry.h"
 #include "sp-item.h"
 
@@ -58,7 +58,8 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
     float width = module->get_param_float("blur-width");
     int   steps = module->get_param_int("num-steps");
 
-    double old_offset = prefs_get_double_attribute("options.defaultoffsetwidth", "value", 1.0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    double old_offset = prefs->getDouble("/options/defaultoffsetwidth/value", 1.0);
 
     using Inkscape::Util::GSListConstIterator;
     // TODO need to properly refcount the items, at least
@@ -96,10 +97,10 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
             if (offset < 0.0) {
                 /* Doing an inset here folks */
                 offset *= -1.0;
-                prefs_set_double_attribute("options.defaultoffsetwidth", "value", offset);
+                prefs->setDouble("/options/defaultoffsetwidth/value", offset);
                 sp_action_perform(Inkscape::Verb::get(SP_VERB_SELECTION_INSET)->get_action(desktop), NULL);
             } else if (offset > 0.0) {
-                prefs_set_double_attribute("options.defaultoffsetwidth", "value", offset);
+                prefs->setDouble("/options/defaultoffsetwidth/value", offset);
                 sp_action_perform(Inkscape::Verb::get(SP_VERB_SELECTION_OFFSET)->get_action(desktop), NULL);
             }
 
@@ -109,7 +110,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
         Inkscape::GC::release(new_group);
     }
 
-    prefs_set_double_attribute("options.defaultoffsetwidth", "value", old_offset);
+    prefs->setDouble("/options/defaultoffsetwidth/value", old_offset);
 
     selection->clear();
     selection->add(items.begin(), items.end());

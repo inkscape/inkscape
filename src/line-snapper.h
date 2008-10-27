@@ -7,6 +7,9 @@
  *
  *    Authors:
  *      Carl Hetherington <inkscape@carlh.net>
+ * 		Diederik van Lierop <mail@diedenrezi.nl>
+ * 
+ * 	  Copyright (C) 1999-2008 Authors
  *
  *    Released under GNU GPL, read the file 'COPYING' for more information.
  */
@@ -22,7 +25,7 @@ public:
   LineSnapper(SnapManager const *sm, Geom::Coord const d);
 
   void freeSnap(SnappedConstraints &sc,
-                   Inkscape::Snapper::PointType const &t,
+                   Inkscape::SnapPreferences::PointType const &t,
                    Geom::Point const &p,
                    bool const &first_point,
                    boost::optional<Geom::Rect> const &bbox_to_snap,
@@ -30,7 +33,7 @@ public:
                    std::vector<Geom::Point> *unselected_nodes) const;
   
   void constrainedSnap(SnappedConstraints &sc,
-                          Inkscape::Snapper::PointType const &t,
+                          Inkscape::SnapPreferences::PointType const &t,
                           Geom::Point const &p,
                           bool const &first_point,
                           boost::optional<Geom::Rect> const &bbox_to_snap,

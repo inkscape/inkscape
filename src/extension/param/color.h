@@ -8,10 +8,10 @@
  */
 
 #include <gtkmm/widget.h>
-#include <xml/node.h>
-#include <document.h>
+#include "xml/node.h"
+#include "document.h"
 #include <color.h>
-#include "parameter.h"
+#include "extension/param/parameter.h"
 
 namespace Inkscape {
 namespace Extension {

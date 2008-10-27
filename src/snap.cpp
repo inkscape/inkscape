@@ -46,12 +46,10 @@ using std::vector;
 SnapManager::SnapManager(SPNamedView const *v) :
     guide(this, 0),
     object(this, 0),
-    _named_view(v),
-    _include_item_center(false),
-    _snap_enabled_globally(true)
+    snapprefs(),
+    _named_view(v)    
 {    
 }
-
 
 /**
  *  \return List of snappers that we use.
@@ -93,9 +91,9 @@ SnapManager::getGridSnappers() const
  * \return true if one of the snappers will try to snap something.
  */
 
-bool SnapManager::SomeSnapperMightSnap() const
+bool SnapManager::someSnapperMightSnap() const
 {
-    if (!_snap_enabled_globally) {
+    if ( !snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally() ) {
         return false;
     }
     
@@ -106,67 +104,6 @@ bool SnapManager::SomeSnapperMightSnap() const
     }
     
     return (i != s.end());
-}
-
-/*
- *  The snappers have too many parameters to adjust individually. Therefore only
- *  two snapping modes are presented to the user: snapping bounding box corners (to 
- *  other bounding boxes, grids or guides), and/or snapping nodes (to other nodes,
- *  paths, grids or guides). To select either of these modes (or both), use the 
- *  methods defined below: setSnapModeBBox() and setSnapModeNode().
- * 
- * */
-
-
-void SnapManager::setSnapModeBBox(bool enabled)
-{
-    //The default values are being set in sp_namedview_set() (in sp-namedview.cpp)
-    guide.setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
-    
-    for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
-        Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
-        grid->snapper->setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
-    }
-    
-    object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled);
-    //object.setSnapToBBoxNode(enabled); // On second thought, these should be controlled
-    //object.setSnapToBBoxPath(enabled); // separately by the snapping prefs dialog
-    object.setStrictSnapping(true); //don't snap bboxes to nodes/paths and vice versa    
-}
-
-bool SnapManager::getSnapModeBBox() const
-{
-    return guide.getSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX);
-}
-
-void SnapManager::setSnapModeNode(bool enabled)
-{
-    guide.setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
-    
-    for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
-        Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
-        grid->snapper->setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
-    }
-        
-    object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled);
-    //object.setSnapToItemNode(enabled); // On second thought, these should be controlled
-    //object.setSnapToItemPath(enabled); // separately by the snapping prefs dialog 
-    object.setStrictSnapping(true);
-}
-
-bool SnapManager::getSnapModeNode() const
-{
-    return guide.getSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE);
-}
-
-void SnapManager::setSnapModeGuide(bool enabled)
-{
-    object.setSnapFrom(Inkscape::Snapper::SNAPPOINT_GUIDE, enabled);
-}
-
-bool SnapManager::getSnapModeGuide() const
-{
-    return object.getSnapFrom(Inkscape::Snapper::SNAPPOINT_GUIDE);
 }
 
 /**
@@ -180,7 +117,7 @@ bool SnapManager::getSnapModeGuide() const
  *  \return Snapped point.
  */
 
-void SnapManager::freeSnapReturnByRef(Inkscape::Snapper::PointType point_type,
+void SnapManager::freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
                                              Geom::Point &p,
                                              bool first_point,
                                              boost::optional<Geom::Rect> const &bbox_to_snap) const
@@ -200,12 +137,12 @@ void SnapManager::freeSnapReturnByRef(Inkscape::Snapper::PointType point_type,
  *  \return Snapped point.
  */
 
-Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType point_type,
+Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapPreferences::PointType point_type,
                                              Geom::Point const &p,
                                              bool first_point,
                                              boost::optional<Geom::Rect> const &bbox_to_snap) const
 {
-    if (!SomeSnapperMightSnap()) {
+    if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
     
@@ -241,7 +178,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType point_
 // PS: Wether we really find a multiple also depends on the snapping range!
 Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
 {
-    if (!_snap_enabled_globally) 
+    if (!snapprefs.getSnapEnabledGlobally()) // No need to check for snapprefs.getSnapPostponedGlobally() here 
         return t;
     
     //FIXME: this code should actually do this: add new grid snappers that are active for this desktop. now it just adds all gridsnappers
@@ -269,7 +206,7 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
                 Geom::Point const t_offset = from_2geom(t) + grid->origin;
                 SnappedConstraints sc;    
                 // Only the first three parameters are being used for grid snappers
-                snapper->freeSnap(sc, Inkscape::Snapper::SNAPPOINT_NODE, t_offset, TRUE, boost::optional<Geom::Rect>(), NULL, NULL);
+                snapper->freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_NODE, t_offset, TRUE, boost::optional<Geom::Rect>(), NULL, NULL);
                 // Find the best snap for this grid, including intersections of the grid-lines
                 Inkscape::SnappedPoint s = findBestSnap(t_offset, sc, false);
                 if (s.getSnapped() && (s.getDistance() < nearest_distance)) {
@@ -299,7 +236,7 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
  *  \return Snapped point.
  */
 
-void SnapManager::constrainedSnapReturnByRef(Inkscape::Snapper::PointType point_type,
+void SnapManager::constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
                                                     Geom::Point &p,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
                                                     bool first_point,
@@ -321,13 +258,13 @@ void SnapManager::constrainedSnapReturnByRef(Inkscape::Snapper::PointType point_
  *  \return Snapped point.
  */
 
-Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType point_type,
+Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::PointType point_type,
                                                     Geom::Point const &p,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
                                                     bool first_point,
                                                     boost::optional<Geom::Rect> const &bbox_to_snap) const
 {
-    if (!SomeSnapperMightSnap()) {
+    if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
     
@@ -358,8 +295,8 @@ void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) con
 {
     // This method is used to snap a guide to nodes, while dragging the guide around
     
-    if (!(object.GuidesMightSnap() && _snap_enabled_globally)) {
-        return;
+    if ( !(object.GuidesMightSnap() && snapprefs.getSnapEnabledGlobally()) || snapprefs.getSnapPostponedGlobally() ) {
+    	return;
     }
     
     SnappedConstraints sc;
@@ -387,7 +324,7 @@ void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) con
  */
 
 Inkscape::SnappedPoint SnapManager::_snapTransformed(
-    Inkscape::Snapper::PointType type,
+    Inkscape::SnapPreferences::PointType type,
     std::vector<Geom::Point> const &points,
     bool constrained,
     Inkscape::Snapper::ConstraintLine const &constraint,
@@ -405,7 +342,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     /* Quick check to see if we have any snappers that are enabled
     ** Also used to globally disable all snapping 
     */
-    if (SomeSnapperMightSnap() == false) {
+    if (someSnapperMightSnap() == false) {
         g_assert(points.size() > 0);
         return Inkscape::SnappedPoint();
     }
@@ -653,7 +590,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
  *  \return Snapped translation, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::Snapper::PointType point_type,
+Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
                                                         std::vector<Geom::Point> const &p,
                                                         Geom::Point const &tr) const
 {
@@ -673,7 +610,7 @@ Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::Snapper::Point
  *  \return Snapped translation, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::Snapper::PointType point_type,
+Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
                                                                std::vector<Geom::Point> const &p,
                                                                Inkscape::Snapper::ConstraintLine const &constraint,
                                                                Geom::Point const &tr) const
@@ -693,7 +630,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::Snapper
  *  \return Snapped scale, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::Snapper::PointType point_type,
+Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::SnapPreferences::PointType point_type,
                                                   std::vector<Geom::Point> const &p,
                                                   Geom::Scale const &s,
                                                   Geom::Point const &o) const
@@ -714,7 +651,7 @@ Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::Snapper::PointType p
  *  \return Snapped scale, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::Snapper::PointType point_type,
+Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::SnapPreferences::PointType point_type,
                                                          std::vector<Geom::Point> const &p,
                                                          Geom::Scale const &s,
                                                          Geom::Point const &o) const
@@ -737,7 +674,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::Snapper::Poin
  *  \return Snapped stretch, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::Snapper::PointType point_type,
+Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::SnapPreferences::PointType point_type,
                                                             std::vector<Geom::Point> const &p,
                                                             Geom::Coord const &s,
                                                             Geom::Point const &o,
@@ -760,7 +697,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::Snapper::Po
  *  \return Snapped skew, if a snap occurred, and a flag indicating whether a snap occurred.
  */
 
-Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(Inkscape::Snapper::PointType point_type,
+Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(Inkscape::SnapPreferences::PointType point_type,
                                                  std::vector<Geom::Point> const &p,
                                                  Inkscape::Snapper::ConstraintLine const &constraint,
                                                  Geom::Point const &s,  
@@ -774,7 +711,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(Inkscape::Snapper::Point
 	// NOT the case for example when rotating or skewing. The bounding box itself cannot possibly rotate or skew,
 	// so it's corners have a different transformation. The snappers cannot handle this, therefore snapping
 	// of bounding boxes is not allowed here.
-	g_assert(!(point_type & Inkscape::Snapper::SNAPPOINT_BBOX));
+	g_assert(!(point_type & Inkscape::SnapPreferences::SNAPPOINT_BBOX));
 	return _snapTransformed(point_type, p, true, constraint, SKEW, s, o, d, false);
 }
 
@@ -805,7 +742,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
         sp_list.push_back(Inkscape::SnappedPoint(closestCurve));
     }
     
-    if (_intersectionCS) {
+    if (snapprefs.getSnapIntersectionCS()) {
         // search for the closest snapped intersection of curves
         Inkscape::SnappedPoint closestCurvesIntersection;
         if (getClosestIntersectionCS(sc.curves, p, closestCurvesIntersection)) {
@@ -849,7 +786,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
         }
         
         // search for the closest snapped intersection of grid with guide lines
-        if (_intersectionGG) {
+        if (snapprefs.getSnapIntersectionGG()) {
             Inkscape::SnappedPoint closestGridGuidePoint;
             if (getClosestIntersectionSL(sc.grid_lines, sc.guide_lines, closestGridGuidePoint)) {
                 closestGridGuidePoint.setTarget(Inkscape::SNAPTARGET_GRID_GUIDE_INTERSECTION);

@@ -28,7 +28,7 @@
 #include <2geom/angle.h>
 #include <libnr/nr-convert2geom.h>
 #include "svg.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -194,15 +194,14 @@ sp_svg_transform_write(NR::Matrix const &transform)
 gchar *
 sp_svg_transform_write(NR::Matrix const *transform)
 {
-	double e;
-
 	if (!transform) {
 		return NULL;
 	}
+	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-	e = 0.000001 * NR::expansion(*transform);
-	int prec = prefs_get_int_attribute("options.svgoutput", "numericprecision", 8);
-	int min_exp = prefs_get_int_attribute("options.svgoutput", "minimumexponent", -8);
+	double e = 0.000001 * NR::expansion(*transform);
+	int prec = prefs->getInt("/options/svgoutput/numericprecision", 8);
+	int min_exp = prefs->getInt("/options/svgoutput/minimumexponent", -8);
 
 	/* fixme: We could use t1 * t1 + t2 * t2 here instead */
 	if (NR_DF_TEST_CLOSE ((*transform)[1], 0.0, e) && NR_DF_TEST_CLOSE ((*transform)[2], 0.0, e)) {

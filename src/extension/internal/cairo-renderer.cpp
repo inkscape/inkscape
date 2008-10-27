@@ -180,7 +180,12 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_START]);
             SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_START]));
 
-            Geom::Matrix tr(sp_shape_marker_get_transform_at_start(path_it->front()));
+            Geom::Matrix tr;
+            if (marker->orient_auto) {
+                tr = sp_shape_marker_get_transform_at_start(path_it->front());
+            } else {
+                tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(path_it->front().pointAt(0));
+            }
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                 tr = Geom::Scale(style->stroke_width.computed) * tr;
@@ -206,7 +211,12 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                 SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_MID]);
                 SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_MID]));
 
-                Geom::Matrix tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                Geom::Matrix tr;
+                if (marker->orient_auto) {
+                    tr = sp_shape_marker_get_transform(*curve_it1, *curve_it2);
+                } else {
+                    tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(curve_it1->pointAt(1));
+                }
 
                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                     tr = Geom::Scale(style->stroke_width.computed) * tr;
@@ -236,7 +246,12 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
             }
             Geom::Curve const &lastcurve = (*path_it)[index];
 
-            Geom::Matrix tr = sp_shape_marker_get_transform_at_end(lastcurve);
+            Geom::Matrix tr;
+            if (marker->orient_auto) {
+                tr = sp_shape_marker_get_transform_at_end(lastcurve);
+            } else {
+                tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));
+            }
 
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                 tr = Geom::Scale(style->stroke_width.computed) * tr;
@@ -557,42 +572,42 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool page
 {
     g_assert( ctx != NULL );
 
-    if (ctx->_vector_based_target) {
-        // width and height in pt
-        ctx->_width = sp_document_width(doc) * PT_PER_PX;
-        ctx->_height = sp_document_height(doc) * PT_PER_PX;
-    } else {
-        ctx->_width = sp_document_width(doc);
-        ctx->_height = sp_document_height(doc);
-    }
+    if (!base)
+        base = SP_ITEM(sp_document_root(doc));
 
     NRRect d;
-    if (pageBoundingBox || !base) {
+    if (pageBoundingBox) {
         d.x0 = d.y0 = 0;
-        d.x1 = ceil(ctx->_width);
-        d.y1 = ceil(ctx->_height);
+        d.x1 = ceil(sp_document_width(doc));
+        d.y1 = ceil(sp_document_height(doc));
     } else {
-        sp_item_invoke_bbox(base, &d, sp_item_i2r_affine(base), TRUE);
-        if (ctx->_vector_based_target) {
-            // convert from px to pt
-            d.x0 *= PT_PER_PX;
-            d.x1 *= PT_PER_PX;
-            d.y0 *= PT_PER_PX;
-            d.y1 *= PT_PER_PX;
-        }
+        sp_item_invoke_bbox(base, &d, sp_item_i2r_affine(base), TRUE, SPItem::RENDERING_BBOX);
     }
+
+    if (ctx->_vector_based_target) {
+        // convert from px to pt
+        d.x0 *= PT_PER_PX;
+        d.x1 *= PT_PER_PX;
+        d.y0 *= PT_PER_PX;
+        d.y1 *= PT_PER_PX;
+    }
+
+    ctx->_width = d.x1-d.x0;
+    ctx->_height = d.y1-d.y0;
+
     TRACE(("setupDocument: %f x %f\n", ctx->_width, ctx->_height));
 
-    bool ret = ctx->setupSurface(d.x1-d.x0, d.y1-d.y0);
+    bool ret = ctx->setupSurface(ctx->_width, ctx->_height);
 
-    if (ret && !pageBoundingBox && base)
+    if (ret && !pageBoundingBox)
     {
-        Geom::Matrix tp(Geom::Translate(-d.x0 * (ctx->_vector_based_target ? PX_PER_PT : 1.0),
-                                    (d.y1 - ctx->_height) * (ctx->_vector_based_target ? PX_PER_PT : 1.0)));
-        ctx->transform(&tp);
+        double high = sp_document_height(doc);
+        if (ctx->_vector_based_target)
+            high *= PT_PER_PX;
 
-        ctx->_width  = d.x1 - d.x0;
-        ctx->_height = d.y1 - d.y0;
+        Geom::Matrix tp(Geom::Translate(-d.x0 * (ctx->_vector_based_target ? PX_PER_PT : 1.0),
+                                    (d.y1 - high) * (ctx->_vector_based_target ? PX_PER_PT : 1.0)));
+        ctx->transform(&tp);
     }
     
     return ret;

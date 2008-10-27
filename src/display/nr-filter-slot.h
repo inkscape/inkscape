@@ -15,6 +15,7 @@
  */
 
 #include "libnr/nr-pixblock.h"
+#include "display/nr-filter-types.h"
 #include "display/nr-filter-units.h"
 
 struct NRArenaItem;
@@ -72,12 +73,17 @@ public:
     /** Sets the unit system to be used for the internal images. */
     void set_units(FilterUnits const &units);
 
+    /** Sets the filtering quality. Affects used interpolation methods */
+    void set_quality(FilterQuality const q);
+
 private:
     NRPixBlock **_slot;
     int *_slot_number;
     int _slot_count;
 
     int _last_out;
+
+    FilterQuality filterquality;
 
     NRArenaItem const *_arena_item;
 

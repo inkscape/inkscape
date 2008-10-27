@@ -75,7 +75,7 @@ struct SPCanvasItem : public GtkObject {
     SPCanvasItem *parent;
 
     double x1, y1, x2, y2;
-    NR::Rect bounds;
+    Geom::Rect bounds;
     Geom::Matrix xform;
 };
 
@@ -193,6 +193,9 @@ struct SPCanvas {
 
     Geom::Rect getViewbox() const;
     NR::IRect getViewboxIntegers() const;
+    
+    guint watchdog_id;
+    GdkEvent *watchdog_event;
 };
 
 GtkWidget *sp_canvas_new_aa();

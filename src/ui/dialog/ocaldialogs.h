@@ -1,17 +1,16 @@
-#ifndef __OCAL_DIALOG_H__
-#define __OCAL_DIALOG_H__
-/**
- * Defines the FileExportToOCALDialog, FileImportFromOCALDialog and 
- * FileExportToOCALPasswordDialog and their supporting classes.
- *
- * Authors:
+/** @file
+ * @brief Open Clip Art Library integration dialogs
+ */
+/* Authors:
  *   Bruno Dilly <bruno.dilly@gmail.com>
  *   Inkscape Guys
  *
  * Copyright (C) 2007 Bruno Dilly <bruno.dilly@gmail.com>
- *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+ 
+#ifndef __OCAL_DIALOG_H__
+#define __OCAL_DIALOG_H__
 
 #include <glibmm.h>
 #include <vector>
@@ -45,7 +44,6 @@
 #endif
 
 //Inkscape includes
-#include "prefs-utils.h"
 #include <extension/input.h>
 #include <extension/output.h>
 #include <extension/db.h>

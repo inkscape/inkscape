@@ -7,7 +7,7 @@
    #define's and `using' directives of the included file. */
 #include "bezier-utils.cpp"
 
-using NR::Point;
+using Geom::Point;
 
 static bool range_approx_equal(double const a[], double const b[], unsigned len);
 
@@ -22,9 +22,9 @@ static bool range_equal(T const a[], T const b[], unsigned len) {
     return true;
 }
 
-inline bool point_approx_equal(NR::Point const &a, NR::Point const &b, double const eps)
+inline bool point_approx_equal(Geom::Point const &a, Geom::Point const &b, double const eps)
 {
-    using NR::X; using NR::Y;
+    using Geom::X; using Geom::Y;
     return ( NR_DF_TEST_CLOSE(a[X], b[X], eps) &&
              NR_DF_TEST_CLOSE(a[Y], b[Y], eps) );
 }
@@ -86,7 +86,7 @@ int main(int /*argc*/, char */*argv*/[]) {
     utest_start("bezier-utils.cpp");
 
     UTEST_TEST("copy_without_nans_or_adjacent_duplicates") {
-        NR::Point const src[] = {
+        Geom::Point const src[] = {
             Point(2., 3.),
             Point(2., 3.),
             Point(0., 0.),

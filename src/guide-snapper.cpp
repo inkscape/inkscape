@@ -43,7 +43,7 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(Geom::Poi
  */
 bool Inkscape::GuideSnapper::ThisSnapperMightSnap() const
 {
-    return _snapmanager->getNamedView() == NULL ? false : (_snap_enabled && _snap_from != 0 && _snapmanager->getNamedView()->showguides);
+    return _snapmanager->getNamedView() == NULL ? false : (_snap_enabled && _snapmanager->snapprefs.getSnapModeBBoxOrNodes() && _snapmanager->getNamedView()->showguides);
 }
 
 void Inkscape::GuideSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, Geom::Point const point_on_line) const

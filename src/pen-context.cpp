@@ -29,7 +29,7 @@
 #include "draw-anchor.h"
 #include "message-stack.h"
 #include "message-context.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "sp-path.h"
 #include "display/curve.h"
 #include "pixmaps/cursor-pen.xpm"
@@ -49,7 +49,7 @@ static void sp_pen_context_dispose(GObject *object);
 
 static void sp_pen_context_setup(SPEventContext *ec);
 static void sp_pen_context_finish(SPEventContext *ec);
-static void sp_pen_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
+static void sp_pen_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event);
 static gint sp_pen_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
 
@@ -193,7 +193,8 @@ sp_pen_context_dispose(GObject *object)
 
 void
 sp_pen_context_set_polyline_mode(SPPenContext *const pc) {
-    guint mode = prefs_get_int_attribute("tools.freehand.pen", "freehand-mode", 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    guint mode = prefs->getInt("/tools/freehand/pen/freehand-mode", 0);
     pc->polylines_only = (mode == 2 || mode == 3);
     pc->polylines_paraxial = (mode == 3);
 }
@@ -233,7 +234,8 @@ sp_pen_context_setup(SPEventContext *ec)
 
     sp_pen_context_set_polyline_mode(pc);
 
-    if (prefs_get_int_attribute("tools.freehand.pen", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/freehand/pen/selcue")) {
         ec->enableSelectionCue();
     }
 }
@@ -275,12 +277,13 @@ sp_pen_context_finish(SPEventContext *ec)
  * Callback that sets key to value in pen context.
  */
 static void
-sp_pen_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
+sp_pen_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     SPPenContext *pc = SP_PEN_CONTEXT(ec);
+    Glib::ustring name = val->getEntryName();
 
-    if (!strcmp(key, "mode")) {
-        if ( val && !strcmp(val, "drag") ) {
+    if (name == "mode") {
+        if ( val->getString() == "drag" ) {
             pc->mode = SP_PEN_CONTEXT_MODE_DRAG;
         } else {
             pc->mode = SP_PEN_CONTEXT_MODE_CLICK;
@@ -465,7 +468,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                         if (pc->npoints == 0) {
 
                             if (bevent.state & GDK_CONTROL_MASK) {
-                                spdc_create_single_dot(event_context, event_dt, "tools.freehand.pen", bevent.state);
+                                spdc_create_single_dot(event_context, event_dt, "/tools/freehand/pen", bevent.state);
                                 ret = TRUE;
                                 break;
                             }
@@ -597,8 +600,8 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
     Geom::Point const event_w(mevent.x,
                             mevent.y);
     if (pen_within_tolerance) {
-        gint const tolerance = prefs_get_int_attribute_limited("options.dragtolerance",
-                                                               "value", 0, 0, 100);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        gint const tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
         if ( NR::LInfty( event_w - pen_drag_origin_w ) < tolerance ) {
             return FALSE;   // Do not drag if we're within tolerance from origin.
         }
@@ -962,7 +965,8 @@ static gint
 pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
 {
     gint ret = FALSE;
-    gdouble const nudge = prefs_get_double_attribute_limited("options.nudgedistance", "value", 2, 0, 1000); // in px
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000); // in px
 
     switch (get_group0_keyval (&event->key)) {
 
@@ -1210,7 +1214,8 @@ spdc_pen_set_angle_distance_status_message(SPPenContext *const pc, Geom::Point c
     Geom::Point rel = p - pc->p[pc_point_to_compare];
     GString *dist = SP_PX_TO_METRIC_STRING(NR::L2(rel), desktop->namedview->getDefaultMetric());
     double angle = atan2(rel[NR::Y], rel[NR::X]) * 180 / M_PI;
-    if (prefs_get_int_attribute("options.compassangledisplay", "value", 0) != 0)
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/options/compassangledisplay/value", 0) != 0)
         angle = angle_to_compass (angle);
 
     pc->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, message, angle, dist->str);

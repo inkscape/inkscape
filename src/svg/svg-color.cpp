@@ -32,7 +32,7 @@
 #include <errno.h>
 
 #include "strneq.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "svg-color.h"
 #include "svg-icc-color.h"
 
@@ -431,8 +431,9 @@ sp_svg_write_color(gchar *buf, unsigned const buflen, guint32 const rgba32)
 {
     g_assert(8 <= buflen);
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     unsigned const rgb24 = rgba32 >> 8;
-    if (prefs_get_int_attribute("options.svgoutput", "usenamedcolors", 0)) {
+    if (prefs->getBool("/options/svgoutput/usenamedcolors")) {
         rgb24_to_css(buf, rgb24);
     } else {
         g_snprintf(buf, buflen, "#%06x", rgb24);

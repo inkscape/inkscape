@@ -22,12 +22,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 import inkex, simplepath, cubicsuperpath, dxf_templates, math
+import gettext
+_ = gettext.gettext
 
 try:
     from numpy import *
     from numpy.linalg import solve
 except:
-    inkex.errormsg("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.")
+    inkex.errormsg(_("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again."))
     inkex.sys.exit()
 
 def pointdistance((x1,y1),(x2,y2)):

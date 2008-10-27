@@ -17,7 +17,7 @@
 #include "event-context.h"
 #include <forward.h>
 #include <display/display-forward.h>
-#include <libnr/nr-point.h>
+#include <2geom/point.h>
 #include "libavoid/connector.h"
 
 
@@ -44,7 +44,7 @@ enum {
 
 struct SPConnectorContext : public SPEventContext {
     Inkscape::Selection *selection;
-    NR::Point p[5];
+    Geom::Point p[5];
 
     /** \invar npoints in {0, 2}. */
     gint npoints;

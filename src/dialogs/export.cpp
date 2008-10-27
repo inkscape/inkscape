@@ -114,7 +114,7 @@ static void sp_export_filename_modified (GtkObject * object, gpointer data);
 static inline void sp_export_find_default_selection(GtkWidget * dlg);
 static void sp_export_detect_size(GtkObject * base);
 
-static const gchar *prefs_path = "dialogs.export";
+static Glib::ustring const prefs_path = "/dialogs/export/";
 
 // these all need to be reinitialized to their defaults during dialog_destroy
 static GtkWidget *dlg = NULL;
@@ -171,10 +171,10 @@ sp_export_dialog_delete ( GtkObject */*object*/, GdkEvent */*event*/, gpointer /
     if (y<0) y=0;
     
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setInt(prefs_path, "x", x);
-    prefs->setInt(prefs_path, "y", y);
-    prefs->setInt(prefs_path, "w", w);
-    prefs->setInt(prefs_path, "h", h);
+    prefs->setInt(prefs_path + "x", x);
+    prefs->setInt(prefs_path + "y", y);
+    prefs->setInt(prefs_path + "w", w);
+    prefs->setInt(prefs_path + "h", h);
 
     return FALSE; // which means, go ahead and destroy it
 
@@ -400,13 +400,13 @@ sp_export_dialog (void)
         dlg = sp_window_new (title, TRUE);
 
         if (x == -1000 || y == -1000) {
-            x = prefs->getInt(prefs_path, "x", 0);
-            y = prefs->getInt(prefs_path, "y", 0);
+            x = prefs->getInt(prefs_path + "x", 0);
+            y = prefs->getInt(prefs_path + "y", 0);
         }
 
         if (w ==0 || h == 0) {
-            w = prefs->getInt(prefs_path, "w", 0);
-            h = prefs->getInt(prefs_path, "h", 0);
+            w = prefs->getInt(prefs_path + "w", 0);
+            h = prefs->getInt(prefs_path + "h", 0);
         }
 
 //        if (x<0) x=0;
@@ -484,7 +484,7 @@ sp_export_dialog (void)
                                        dlg );
 
             sp_export_spinbutton_new ( "xdpi",
-                                       prefs->getDouble("dialogs.export.defaultxdpi", "value", DPI_BASE),
+                                       prefs->getDouble("/dialogs/export/defaultxdpi/value", DPI_BASE),
                                        0.01, 100000.0, 0.1, 1.0, NULL, GTK_WIDGET(t->gobj()), 3, 0,
                                        NULL, _("dp_i"), 2, 1,
                                        G_CALLBACK (sp_export_xdpi_value_changed),
@@ -501,7 +501,7 @@ sp_export_dialog (void)
              * Needs fixing: there's no way to set ydpi currently, so we use
              *       the defaultxdpi value here, too...
              */
-            sp_export_spinbutton_new ( "ydpi", prefs->getDouble("dialogs.export.defaultxdpi", "value", DPI_BASE),
+            sp_export_spinbutton_new ( "ydpi", prefs->getDouble("/dialogs/export/defaultxdpi/value", DPI_BASE),
                                        0.01, 100000.0, 0.1, 1.0, NULL, GTK_WIDGET(t->gobj()), 3, 1,
                                        NULL, _("dpi"), 2, 0, NULL, dlg );
 
@@ -703,7 +703,7 @@ sp_export_find_default_selection(GtkWidget * dlg)
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         int i = SELECTION_NUMBER_OF;
 
-        Glib::ustring what = prefs->getString("dialogs.export.exportarea", "value");
+        Glib::ustring what = prefs->getString("/dialogs/export/exportarea/value");
 
         if (!what.empty()) {
             for (i = 0; i < SELECTION_NUMBER_OF; i++) {
@@ -881,7 +881,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
 
         // remember area setting
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString("dialogs.export.exportarea", "value", selection_names[key]);
+        prefs->setString("/dialogs/export/exportarea/value", selection_names[key]);
 
         if ( key != SELECTION_CUSTOM && bbox ) {
             sp_export_set_area (base, bbox->min()[Geom::X],
@@ -1796,7 +1796,7 @@ sp_export_xdpi_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
 
     // remember xdpi setting
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble("dialogs.export.defaultxdpi", "value", xdpi);
+    prefs->setDouble("/dialogs/export/defaultxdpi/value", xdpi);
 
     bmwidth = (x1 - x0) * xdpi / DPI_BASE;
 

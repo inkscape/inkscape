@@ -1,7 +1,7 @@
-/**
- * Implementation of the file dialog interfaces defined in filedialogimpl.h
- *
- * Authors:
+/** @file
+ * @brief Implementation of the file dialog interfaces defined in filedialogimpl.h
+ */
+/* Authors:
  *   Bob Jamison
  *   Joel Holdsworth
  *   Bruno Dilly
@@ -24,6 +24,7 @@
 #include "interface.h"
 #include "io/sys.h"
 #include "path-prefix.h"
+#include "preferences.h"
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs.h>
@@ -570,9 +571,8 @@ SVGPreview::~SVGPreview()
 
 void FileDialogBaseGtk::internalSetup()
 {
-    bool enablePreview =
-        (bool)prefs_get_int_attribute( preferenceBase.c_str(),
-             "enable_preview", 1 );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool enablePreview = prefs->getBool( preferenceBase + "/enable_preview", true);
 
     previewCheckbox.set_label( Glib::ustring(_("Enable preview")) );
     previewCheckbox.set_active( enablePreview );
@@ -594,9 +594,9 @@ void FileDialogBaseGtk::internalSetup()
 
 void FileDialogBaseGtk::cleanup( bool showConfirmed )
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if ( showConfirmed )
-        prefs_set_int_attribute( preferenceBase.c_str(),
-               "enable_preview", previewCheckbox.get_active() );
+        prefs->setBool( preferenceBase + "/enable_preview", previewCheckbox.get_active() );
 }
 
 
@@ -643,7 +643,7 @@ FileOpenDialogImplGtk::FileOpenDialogImplGtk(Gtk::Window& parentWindow,
                                        const Glib::ustring &dir,
                                        FileDialogType fileTypes,
                                        const Glib::ustring &title) :
-    FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_OPEN, fileTypes, "dialogs.open")
+    FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_OPEN, fileTypes, "/dialogs/open")
 {
 
 
@@ -851,7 +851,7 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
                                               const Glib::ustring &title,
                                               const Glib::ustring &/*default_key*/,
                                               const gchar* docTitle) :
-    FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.save_as")
+    FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "/dialogs/save_as")
 {
     FileSaveDialog::myDocTitle = docTitle;
 
@@ -887,9 +887,9 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
     //createFilterMenu();
 
     //###### Do we want the .xxx extension automatically added?
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     fileTypeCheckbox.set_label(Glib::ustring(_("Append filename extension automatically")));
-    fileTypeCheckbox.set_active( (bool)prefs_get_int_attribute("dialogs.save_as",
-                                                               "append_extension", 1) );
+    fileTypeCheckbox.set_active(prefs->getBool("/dialogs/save_as/append_extension", true));
 
     createFileTypeMenu();
     fileTypeComboBox.set_size_request(200,40);
@@ -1071,27 +1071,23 @@ FileSaveDialogImplGtk::show()
     set_preview_widget_active(false);
     hide();
 
-    if (b == Gtk::RESPONSE_OK)
-        {
+    if (b == Gtk::RESPONSE_OK) {
         updateNameAndExtension();
-
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        
         // Store changes of the "Append filename automatically" checkbox back to preferences.
-        prefs_set_int_attribute("dialogs.save_as", "append_extension", fileTypeCheckbox.get_active());
+        prefs->setBool("/dialogs/save_as/append_extension", fileTypeCheckbox.get_active());
 
         // Store the last used save-as filetype to preferences.
-        prefs_set_string_attribute("dialogs.save_as", "default",
-                                   ( extension != NULL ? extension->get_id() : "" ));
+        prefs->setString("/dialogs/save_as/default", ( extension != NULL ? extension->get_id() : "" ));
 
         cleanup( true );
 
         return TRUE;
-        }
-    else
-        {
+    } else {
         cleanup( false );
-
         return FALSE;
-        }
+    }
 }
 
 
@@ -1314,7 +1310,7 @@ FileExportDialogImpl::FileExportDialogImpl( Gtk::Window& parentWindow,
                                             FileDialogType fileTypes,
                                             const Glib::ustring &title,
                                             const Glib::ustring &/*default_key*/ ) :
-            FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "dialogs.export"),
+            FileDialogBaseGtk(parentWindow, title, Gtk::FILE_CHOOSER_ACTION_SAVE, fileTypes, "/dialogs/export"),
             sourceX0Spinner("X0",         _("Left edge of source")),
             sourceY0Spinner("Y0",         _("Top edge of source")),
             sourceX1Spinner("X1",         _("Right edge of source")),
@@ -1325,7 +1321,8 @@ FileExportDialogImpl::FileExportDialogImpl( Gtk::Window& parentWindow,
             destHeightSpinner("Height",   _("Destination height")),
             destDPISpinner("DPI",         _("Resolution (dots per inch)"))
 {
-    append_extension = (bool)prefs_get_int_attribute("dialogs.save_as", "append_extension", 1);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    append_extension = prefs->getBool("/dialogs/save_as/append_extension", true);
 
     /* One file at a time */
     set_select_multiple(false);
@@ -1534,9 +1531,9 @@ FileExportDialogImpl::show()
         // FIXME: Why do we have more code
 
         append_extension = checkbox.get_active();
-        prefs_set_int_attribute("dialogs.save_as", "append_extension", append_extension);
-        prefs_set_string_attribute("dialogs.save_as", "default",
-                  ( extension != NULL ? extension->get_id() : "" ));
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setBool("/dialogs/save_as/append_extension", append_extension);
+        prefs->setBool("/dialogs/save_as/default", ( extension != NULL ? extension->get_id() : "" ));
         */
         return TRUE;
         }
@@ -1580,4 +1577,4 @@ FileExportDialogImpl::getFilename()
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

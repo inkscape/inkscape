@@ -24,7 +24,7 @@
 #include "color-profile.h"
 //#define DEBUG_LCMS
 #ifdef DEBUG_LCMS
-#include "prefs-utils.h"
+#include "preferences.h"
 #include <gtk/gtkmessagedialog.h>
 #endif // DEBUG_LCMS
 #endif // ENABLE_LCMS
@@ -34,10 +34,11 @@
 extern guint update_in_progress;
 #define DEBUG_MESSAGE(key, ...) \
 {\
-    gint dump = prefs_get_int_attribute_limited("options.scislac", #key, 0, 0, 1);\
-    gint dumpD = prefs_get_int_attribute_limited("options.scislac", #key"D", 0, 0, 1);\
-    gint dumpD2 = prefs_get_int_attribute_limited("options.scislac", #key"D2", 0, 0, 1);\
-    dumpD &= ( (update_in_progress == 0) || dumpD2 );\
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();\
+    bool dump = prefs->getBool("/options/scislac/" #key);\
+    bool dumpD = prefs->getBool("/options/scislac/" #key "D");\
+    bool dumpD2 = prefs->getBool("/options/scislac/" #key "D2");\
+    dumpD &&= ( (update_in_progress == 0) || dumpD2 );\
     if ( dump )\
     {\
         g_message( __VA_ARGS__ );\

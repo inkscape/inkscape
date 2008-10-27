@@ -25,6 +25,7 @@ namespace XML {
 struct Node;
 }
 }
+namespace Glib { class ustring; }
 
 enum { // what kind of a style the query is returning
     QUERY_STYLE_NOTHING,   // nothing was queried - e.g. no selection
@@ -57,11 +58,11 @@ void sp_desktop_set_color(SPDesktop *desktop, ColorRGBA const &color, bool is_re
 void sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change = true, bool write_current = true);
 SPCSSAttr *sp_desktop_get_style(SPDesktop *desktop, bool with_text);
 guint32 sp_desktop_get_color (SPDesktop *desktop, bool is_fill);
-double sp_desktop_get_master_opacity_tool(SPDesktop *desktop, char const *tool, bool* has_opacity = NULL);
-double sp_desktop_get_opacity_tool(SPDesktop *desktop, char const *tool, bool is_fill);
-guint32 sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill, bool* has_color = NULL);
+double sp_desktop_get_master_opacity_tool(SPDesktop *desktop, Glib::ustring const &tool, bool* has_opacity = NULL);
+double sp_desktop_get_opacity_tool(SPDesktop *desktop, Glib::ustring const &tool, bool is_fill);
+guint32 sp_desktop_get_color_tool(SPDesktop *desktop, Glib::ustring const &tool, bool is_fill, bool* has_color = NULL);
 double sp_desktop_get_font_size_tool (SPDesktop *desktop);
-void sp_desktop_apply_style_tool(SPDesktop *desktop, Inkscape::XML::Node *repr, char const *tool, bool with_text);
+void sp_desktop_apply_style_tool(SPDesktop *desktop, Inkscape::XML::Node *repr, Glib::ustring const &tool, bool with_text);
 
 gdouble stroke_average_width (GSList const *objects);
 

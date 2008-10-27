@@ -27,7 +27,7 @@
 #include <gtk/gtk.h>
 #include "desktop.h"
 #include "message-context.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "shape-editor.h"
 #include "selection.h"
 #include "desktop-handles.h"
@@ -45,7 +45,7 @@ static void sp_lpetool_context_init(SPLPEToolContext *erc);
 static void sp_lpetool_context_dispose(GObject *object);
 
 static void sp_lpetool_context_setup(SPEventContext *ec);
-static void sp_lpetool_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
+static void sp_lpetool_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *);
 static gint sp_lpetool_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event);
 static gint sp_lpetool_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
@@ -164,13 +164,15 @@ sp_lpetool_context_setup(SPEventContext *ec)
 
 // TODO temp force:
     ec->enableSelectionCue();
+    
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     if (item) {
         lc->shape_editor->set_item(item, SH_NODEPATH);
         lc->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
-    if (prefs_get_int_attribute("tools.lpetool", "selcue", 0) != 0) {
+    if (prefs->getBool("/tools/lpetool/selcue")) {
         ec->enableSelectionCue();
     }
 
@@ -199,18 +201,18 @@ sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer da
 }
 
 static void
-sp_lpetool_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
+sp_lpetool_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     // FIXME: how to set this correcly? the value from preferences-skeleton.h doesn't seem to get
     // read (it wants to set drag = 1)
-    lpetool_parent_class->set(ec, key, "drag");
+    // lpetool_parent_class->set(ec, key, "drag");
 
-    /**
+    /*
     //pass on up to parent class to handle common attributes.
     if ( lpetool_parent_class->set ) {
         lpetool_parent_class->set(ec, key, val);
     }
-    **/
+    */
 }
 
 static gint 
@@ -279,7 +281,8 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 using namespace Inkscape::LivePathEffect;
 
-                int mode = prefs_get_int_attribute("tools.lpetool", "mode", 0);
+                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                int mode = prefs->getInt("/tools/lpetool/mode");
                 EffectType type = lpesubtools[mode];
 
                 //bool over_stroke = lc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), true);
@@ -419,11 +422,12 @@ void
 lpetool_get_limiting_bbox_corners(SPDocument *document, Geom::Point &A, Geom::Point &B) {
     Geom::Coord w = sp_document_width(document);
     Geom::Coord h = sp_document_height(document);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    double ulx = prefs_get_double_attribute ("tools.lpetool", "bbox_upperleftx", 0);
-    double uly = prefs_get_double_attribute ("tools.lpetool", "bbox_upperlefty", 0);
-    double lrx = prefs_get_double_attribute ("tools.lpetool", "bbox_lowerrightx", w);
-    double lry = prefs_get_double_attribute ("tools.lpetool", "bbox_lowerrighty", h);
+    double ulx = prefs->getDouble("/tools/lpetool/bbox_upperleftx", 0);
+    double uly = prefs->getDouble("/tools/lpetool/bbox_upperlefty", 0);
+    double lrx = prefs->getDouble("/tools/lpetool/bbox_lowerrightx", w);
+    double lry = prefs->getDouble("/tools/lpetool/bbox_lowerrighty", h);
 
     A = Geom::Point(ulx, uly);
     B = Geom::Point(lrx, lry);
@@ -441,7 +445,8 @@ lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc)
         lc->canvas_bbox = NULL;
     }
 
-    if (prefs_get_int_attribute("tools.lpetool", "show_bbox", 1) == 0)
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (!prefs->getBool("/tools/lpetool/show_bbox", true))
         return;
 
     SPDocument *document = sp_desktop_document(lc->desktop);
@@ -479,10 +484,11 @@ set_pos_and_anchor(SPCanvasText *canvas_text, const Geom::Piecewise<Geom::D2<Geo
 void
 lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *selection)
 {
-    bool show = prefs_get_int_attribute ("tools.lpetool", "show_measuring_info",  1) == 1 ? true : false;
     if (!selection) {
         selection = sp_desktop_selection(lc->desktop);
     }
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool show = prefs->getBool("/tools/lpetool/show_measuring_info",  true);
 
     SPPath *path;
     SPCurve *curve;
@@ -500,7 +506,7 @@ lpetool_create_measuring_items(SPLPEToolContext *lc, Inkscape::Selection *select
             if (!show)
                 sp_canvas_item_hide(SP_CANVAS_ITEM(canvas_text));
 
-            SPUnitId unitid = static_cast<SPUnitId>(prefs_get_int_attribute("tools.lpetool", "unitid", SP_UNIT_PX));
+            SPUnitId unitid = static_cast<SPUnitId>(prefs->getInt("/tools/lpetool/unitid", SP_UNIT_PX));
             SPUnit unit = sp_unit_get_by_id(unitid);
 
             lengthval = Geom::length(pwd2);
@@ -528,6 +534,7 @@ lpetool_delete_measuring_items(SPLPEToolContext *lc)
 void
 lpetool_update_measuring_items(SPLPEToolContext *lc)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     SPPath *path;
     SPCurve *curve;
     double lengthval;
@@ -537,7 +544,7 @@ lpetool_update_measuring_items(SPLPEToolContext *lc)
         path = i->first;
         curve = sp_shape_get_curve(SP_SHAPE(path));
         Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2 = Geom::paths_to_pw(curve->get_pathvector());
-        SPUnitId unitid = static_cast<SPUnitId>(prefs_get_int_attribute("tools.lpetool", "unitid", SP_UNIT_PX));
+        SPUnitId unitid = static_cast<SPUnitId>(prefs->getInt("/tools/lpetool/unitid", SP_UNIT_PX));
         SPUnit unit = sp_unit_get_by_id(unitid);
         lengthval = Geom::length(pwd2);
         gboolean success;

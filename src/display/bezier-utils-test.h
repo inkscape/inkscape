@@ -19,9 +19,9 @@ static bool range_approx_equal(double const a[], double const b[], unsigned cons
     return true;
 }
 
-static inline bool point_approx_equal(NR::Point const &a, NR::Point const &b, double const eps)
+static inline bool point_approx_equal(Geom::Point const &a, Geom::Point const &b, double const eps)
 {
-    using NR::X; using NR::Y;
+    using Geom::X; using Geom::Y;
     return ( NR_DF_TEST_CLOSE(a[X], b[X], eps) &&
              NR_DF_TEST_CLOSE(a[Y], b[Y], eps) );
 }
@@ -35,7 +35,7 @@ static inline double square(double const x) {
     the most important test is that the root-mean-square of errors in the estimation are low rather
     than that the control points found are the same.
 **/
-static void compare_ctlpts(NR::Point const est_b[], NR::Point const exp_est_b[])
+static void compare_ctlpts(Geom::Point const est_b[], Geom::Point const exp_est_b[])
 {
     unsigned diff_mask = 0;
     for (unsigned i = 0; i < 4; ++i) {
@@ -62,13 +62,13 @@ static void compare_ctlpts(NR::Point const est_b[], NR::Point const exp_est_b[])
     }
 }
 
-static void compare_rms(NR::Point const est_b[], double const t[], NR::Point const d[], unsigned const n,
+static void compare_rms(Geom::Point const est_b[], double const t[], Geom::Point const d[], unsigned const n,
                         double const exp_rms_error)
 {
     double sum_errsq = 0.0;
     for (unsigned i = 0; i < n; ++i) {
-        NR::Point const fit_pt = bezier_pt(3, est_b, t[i]);
-        NR::Point const diff = fit_pt - d[i];
+        Geom::Point const fit_pt = bezier_pt(3, est_b, t[i]);
+        Geom::Point const diff = fit_pt - d[i];
         sum_errsq += dot(diff, diff);
     }
     double const rms_error = sqrt( sum_errsq / n );
@@ -84,13 +84,13 @@ static void compare_rms(NR::Point const est_b[], double const t[], NR::Point con
 
 class BezierUtilsTest : public CxxTest::TestSuite {
 public:
-    static NR::Point const c[4];
+    static Geom::Point const c[4];
     static double const t[24];
     static unsigned const n;
-    NR::Point d[24];
-    static NR::Point const src_b[4];
-    static NR::Point const tHat1;
-    static NR::Point const tHat2;
+    Geom::Point d[24];
+    static Geom::Point const src_b[4];
+    static Geom::Point const tHat1;
+    static Geom::Point const tHat2;
 
     BezierUtilsTest()
     {
@@ -109,23 +109,23 @@ public:
 
     void testCopyWithoutNansOrAdjacentDuplicates()
     {
-        NR::Point const src[] = {
-            NR::Point(2., 3.),
-            NR::Point(2., 3.),
-            NR::Point(0., 0.),
-            NR::Point(2., 3.),
-            NR::Point(2., 3.),
-            NR::Point(1., 9.),
-            NR::Point(1., 9.)
+        Geom::Point const src[] = {
+            Geom::Point(2., 3.),
+            Geom::Point(2., 3.),
+            Geom::Point(0., 0.),
+            Geom::Point(2., 3.),
+            Geom::Point(2., 3.),
+            Geom::Point(1., 9.),
+            Geom::Point(1., 9.)
         };
-        NR::Point const exp_dest[] = {
-            NR::Point(2., 3.),
-            NR::Point(0., 0.),
-            NR::Point(2., 3.),
-            NR::Point(1., 9.)
+        Geom::Point const exp_dest[] = {
+            Geom::Point(2., 3.),
+            Geom::Point(0., 0.),
+            Geom::Point(2., 3.),
+            Geom::Point(1., 9.)
         };
         g_assert( G_N_ELEMENTS(src) == 7 );
-        NR::Point dest[7];
+        Geom::Point dest[7];
         struct tst {
             unsigned src_ix0;
             unsigned src_len;
@@ -157,11 +157,11 @@ public:
 
     void testBezierPt1()
     {
-        NR::Point const a[] = {NR::Point(2.0, 4.0),
-                               NR::Point(1.0, 8.0)};
+        Geom::Point const a[] = {Geom::Point(2.0, 4.0),
+                               Geom::Point(1.0, 8.0)};
         TS_ASSERT_EQUALS( bezier_pt(1, a, 0.0) , a[0] );
         TS_ASSERT_EQUALS( bezier_pt(1, a, 1.0) , a[1] );
-        TS_ASSERT_EQUALS( bezier_pt(1, a, 0.5) , NR::Point(1.5, 6.0) );
+        TS_ASSERT_EQUALS( bezier_pt(1, a, 0.5) , Geom::Point(1.5, 6.0) );
         double const t[] = {0.5, 0.25, 0.3, 0.6};
         for (unsigned i = 0; i < G_N_ELEMENTS(t); ++i) {
             double const ti = t[i], si = 1.0 - ti;
@@ -171,17 +171,17 @@ public:
 
     void testBezierPt2()
     {
-        NR::Point const b[] = {NR::Point(1.0, 2.0),
-                               NR::Point(8.0, 4.0),
-                               NR::Point(3.0, 1.0)};
+        Geom::Point const b[] = {Geom::Point(1.0, 2.0),
+                               Geom::Point(8.0, 4.0),
+                               Geom::Point(3.0, 1.0)};
         TS_ASSERT_EQUALS( bezier_pt(2, b, 0.0) , b[0] );
         TS_ASSERT_EQUALS( bezier_pt(2, b, 1.0) , b[2] );
-        TS_ASSERT_EQUALS( bezier_pt(2, b, 0.5) , NR::Point(5.0, 2.75) );
+        TS_ASSERT_EQUALS( bezier_pt(2, b, 0.5) , Geom::Point(5.0, 2.75) );
         double const t[] = {0.5, 0.25, 0.3, 0.6};
         for (unsigned i = 0; i < G_N_ELEMENTS(t); ++i) {
             double const ti = t[i], si = 1.0 - ti;
-            NR::Point const exp_pt( si*si * b[0] + 2*si*ti * b[1] + ti*ti * b[2] );
-            NR::Point const pt(bezier_pt(2, b, ti));
+            Geom::Point const exp_pt( si*si * b[0] + 2*si*ti * b[1] + ti*ti * b[2] );
+            Geom::Point const pt(bezier_pt(2, b, ti));
             TS_ASSERT(point_approx_equal(pt, exp_pt, 1e-11));
         }
     }
@@ -190,7 +190,7 @@ public:
     {
         TS_ASSERT_EQUALS( bezier_pt(3, c, 0.0) , c[0] );
         TS_ASSERT_EQUALS( bezier_pt(3, c, 1.0) , c[3] );
-        TS_ASSERT_EQUALS( bezier_pt(3, c, 0.5) , NR::Point(4.0, 13.0/8.0) );
+        TS_ASSERT_EQUALS( bezier_pt(3, c, 0.5) , Geom::Point(4.0, 13.0/8.0) );
         double const t[] = {0.5, 0.25, 0.3, 0.6};
         for (unsigned i = 0; i < G_N_ELEMENTS(t); ++i) {
             double const ti = t[i], si = 1.0 - ti;
@@ -206,18 +206,18 @@ public:
     void testComputeMaxErrorRatio()
     {
         struct Err_tst {
-            NR::Point pt;
+            Geom::Point pt;
             double u;
             double err;
         } const err_tst[] = {
             {c[0], 0.0, 0.0},
-            {NR::Point(4.0, 13.0/8.0), 0.5, 0.0},
-            {NR::Point(4.0, 2.0), 0.5, 9.0/64.0},
-            {NR::Point(3.0, 2.0), 0.5, 1.0 + 9.0/64.0},
-            {NR::Point(6.0, 2.0), 0.5, 4.0 + 9.0/64.0},
+            {Geom::Point(4.0, 13.0/8.0), 0.5, 0.0},
+            {Geom::Point(4.0, 2.0), 0.5, 9.0/64.0},
+            {Geom::Point(3.0, 2.0), 0.5, 1.0 + 9.0/64.0},
+            {Geom::Point(6.0, 2.0), 0.5, 4.0 + 9.0/64.0},
             {c[3], 1.0, 0.0},
         };
-        NR::Point d[G_N_ELEMENTS(err_tst)];
+        Geom::Point d[G_N_ELEMENTS(err_tst)];
         double u[G_N_ELEMENTS(err_tst)];
         for (unsigned i = 0; i < G_N_ELEMENTS(err_tst); ++i) {
             Err_tst const &t = err_tst[i];
@@ -235,8 +235,8 @@ public:
     {
         /* n == 2 */
         {
-            NR::Point const d[] = {NR::Point(2.9415, -5.8149),
-                                   NR::Point(23.021, 4.9814)};
+            Geom::Point const d[] = {Geom::Point(2.9415, -5.8149),
+                                   Geom::Point(23.021, 4.9814)};
             double u[G_N_ELEMENTS(d)];
             double const exp_u[] = {0.0, 1.0};
             g_assert( G_N_ELEMENTS(u) == G_N_ELEMENTS(exp_u) );
@@ -248,9 +248,9 @@ public:
         {
             double const exp_u[] = {0.0, 0.1829, 0.2105, 0.2105, 0.619, 0.815, 0.999, 1.0};
             unsigned const n = G_N_ELEMENTS(exp_u);
-            NR::Point d[n];
+            Geom::Point d[n];
             double u[n];
-            NR::Point const a(-23.985, 4.915), b(4.9127, 5.203);
+            Geom::Point const a(-23.985, 4.915), b(4.9127, 5.203);
             for (unsigned i = 0; i < n; ++i) {
                 double bi = exp_u[i], ai = 1.0 - bi;
                 d[i] = ai * a  +  bi * b;
@@ -262,7 +262,7 @@ public:
 
     void testGenerateBezier()
     {
-        NR::Point est_b[4];
+        Geom::Point est_b[4];
         generate_bezier(est_b, d, t, n, tHat1, tHat2, 1.0);
 
         compare_ctlpts(est_b, src_b);
@@ -274,16 +274,16 @@ public:
 
     void testSpBezierFitCubicFull()
     {
-        NR::Point est_b[4];
+        Geom::Point est_b[4];
         int splitpoints[2];
         gint const succ = sp_bezier_fit_cubic_full(est_b, splitpoints, d, n, tHat1, tHat2, square(1.2), 1);
         TS_ASSERT_EQUALS( succ , 1 );
 
-        NR::Point const exp_est_b[4] = {
-            NR::Point(5.000000, -3.000000),
-            NR::Point(7.5753, -0.4247),
-            NR::Point(4.77533, 1.22467),
-            NR::Point(3, 3)
+        Geom::Point const exp_est_b[4] = {
+            Geom::Point(5.000000, -3.000000),
+            Geom::Point(7.5753, -0.4247),
+            Geom::Point(4.77533, 1.22467),
+            Geom::Point(3, 3)
         };
         compare_ctlpts(est_b, exp_est_b);
 
@@ -294,15 +294,15 @@ public:
 
     void testSpBezierFitCubic()
     {
-        NR::Point est_b[4];
+        Geom::Point est_b[4];
         gint const succ = sp_bezier_fit_cubic(est_b, d, n, square(1.2));
         TS_ASSERT_EQUALS( succ , 1 );
 
-        NR::Point const exp_est_b[4] = {
-            NR::Point(5.000000, -3.000000),
-            NR::Point(7.57134, -0.423509),
-            NR::Point(4.77929, 1.22426),
-            NR::Point(3, 3)
+        Geom::Point const exp_est_b[4] = {
+            Geom::Point(5.000000, -3.000000),
+            Geom::Point(7.57134, -0.423509),
+            Geom::Point(4.77929, 1.22426),
+            Geom::Point(3, 3)
         };
         compare_ctlpts(est_b, exp_est_b);
 
@@ -321,22 +321,22 @@ public:
 };
 
 // This is not very neat, but since we know this header is only included by the generated CxxTest file it shouldn't give any problems
-NR::Point const BezierUtilsTest::c[4] = {
-    NR::Point(1.0, 2.0),
-    NR::Point(8.0, 4.0),
-    NR::Point(3.0, 1.0),
-    NR::Point(-2.0, -4.0)};
+Geom::Point const BezierUtilsTest::c[4] = {
+    Geom::Point(1.0, 2.0),
+    Geom::Point(8.0, 4.0),
+    Geom::Point(3.0, 1.0),
+    Geom::Point(-2.0, -4.0)};
 double const BezierUtilsTest::t[24] = {
     0.0, .001, .03, .05, .09, .13, .18, .25, .29, .33,  .39, .44,
     .51,  .57, .62, .69, .75, .81, .91, .93, .97, .98, .999, 1.0};
 unsigned const BezierUtilsTest::n = G_N_ELEMENTS(BezierUtilsTest::t);
-NR::Point const BezierUtilsTest::src_b[4] = {
-    NR::Point(5., -3.),
-    NR::Point(8., 0.),
-    NR::Point(4., 2.),
-    NR::Point(3., 3.)};
-NR::Point const BezierUtilsTest::tHat1(unit_vector( BezierUtilsTest::src_b[1] - BezierUtilsTest::src_b[0] ));
-NR::Point const BezierUtilsTest::tHat2(unit_vector( BezierUtilsTest::src_b[2] - BezierUtilsTest::src_b[3] ));
+Geom::Point const BezierUtilsTest::src_b[4] = {
+    Geom::Point(5., -3.),
+    Geom::Point(8., 0.),
+    Geom::Point(4., 2.),
+    Geom::Point(3., 3.)};
+Geom::Point const BezierUtilsTest::tHat1(unit_vector( BezierUtilsTest::src_b[1] - BezierUtilsTest::src_b[0] ));
+Geom::Point const BezierUtilsTest::tHat2(unit_vector( BezierUtilsTest::src_b[2] - BezierUtilsTest::src_b[3] ));
 
 /*
   Local Variables:

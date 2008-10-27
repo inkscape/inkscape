@@ -16,7 +16,7 @@
 
 
 #include "inkscape.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "dialogs/extensions.h"
 #include "extension/extension.h"
 
@@ -24,7 +24,7 @@
 
 /** The name and group of the preference to say whether the error
     dialog should be shown on startup. */
-#define PREFERENCE_ID  "dialogs.extension-error", "show-on-startup"
+#define PREFERENCE_ID  "/dialogs/extension-error/show-on-startup"
 
 namespace Inkscape {
 namespace Extension {
@@ -59,10 +59,11 @@ ErrorFileNotice::ErrorFileNotice (void) :
     Gtk::VBox * vbox = get_vbox();
 
     /* This is some filler text, needs to change before relase */
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     checkbutton = Gtk::manage(new Gtk::CheckButton(_("Show dialog on startup")));
     vbox->pack_start(*checkbutton, true, false, 5);
     checkbutton->show();
-    checkbutton->set_active(prefs_get_int_attribute(PREFERENCE_ID, 1) == 0 ? false : true);
+    checkbutton->set_active(prefs->getBool(PREFERENCE_ID, true));
 
     checkbutton->signal_toggled().connect(sigc::mem_fun(this, &ErrorFileNotice::checkbox_toggle));
 
@@ -81,7 +82,8 @@ void
 ErrorFileNotice::checkbox_toggle (void)
 {
     // std::cout << "Toggle value" << std::endl;
-    prefs_set_int_attribute(PREFERENCE_ID, checkbutton->get_active() ? 1 : 0);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool(PREFERENCE_ID, checkbutton->get_active());
 }
 
 /** \brief Shows the dialog
@@ -92,7 +94,8 @@ ErrorFileNotice::checkbox_toggle (void)
 int
 ErrorFileNotice::run (void)
 {
-    if (prefs_get_int_attribute(PREFERENCE_ID, 1) == 0)
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (!prefs->getBool(PREFERENCE_ID, true))
         return 0;
     return Gtk::Dialog::run();
 }

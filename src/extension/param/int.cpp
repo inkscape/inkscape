@@ -13,9 +13,9 @@
 #include <gtkmm/box.h>
 #include <gtkmm/spinbutton.h>
 
-#include <xml/node.h>
-
-#include <extension/extension.h>
+#include "xml/node.h"
+#include "extension/extension.h"
+#include "preferences.h"
 #include "int.h"
 
 namespace Inkscape {
@@ -47,8 +47,9 @@ ParamInt::ParamInt (const gchar * name, const gchar * guitext, const gchar * des
         _min = 0;
     }
 
-    gchar * pref_name = this->pref_name();
-    _value = prefs_get_int_attribute(PREF_DIR, pref_name, _value);
+    gchar *pref_name = this->pref_name();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    _value = prefs->getInt(extension_pref_root + pref_name, _value);
     g_free(pref_name);
 
     // std::cout << "New Int::  value: " << _value << "  max: " << _max << "  min: " << _min << std::endl;
@@ -76,7 +77,8 @@ ParamInt::set (int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
     if (_value < _min) _value = _min;
 
     gchar * prefname = this->pref_name();
-    prefs_set_int_attribute(PREF_DIR, prefname, _value);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(extension_pref_root + prefname, _value);
     g_free(prefname);
 
     return _value;
@@ -157,3 +159,14 @@ ParamInt::string (std::string &string)
 
 }  /* namespace Extension */
 }  /* namespace Inkscape */
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

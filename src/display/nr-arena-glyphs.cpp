@@ -89,7 +89,7 @@ static void
 nr_arena_glyphs_init(NRArenaGlyphs *glyphs)
 {
     glyphs->style = NULL;
-    glyphs->g_transform.set_identity();
+    glyphs->g_transform.setIdentity();
     glyphs->font = NULL;
     glyphs->glyph = 0;
 
@@ -142,7 +142,7 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
     bbox.x0 = bbox.y0 = NR_HUGE;
     bbox.x1 = bbox.y1 = -NR_HUGE;
 
-    float const scale = NR::expansion(gc->transform);
+    float const scale = gc->transform.descrim();
 
     if (!glyphs->style->fill.isNone()) {
         Geom::Matrix t;
@@ -265,7 +265,7 @@ nr_arena_glyphs_set_path(NRArenaGlyphs *glyphs, SPCurve */*curve*/, unsigned int
     if (transform) {
         glyphs->g_transform = *transform;
     } else {
-        glyphs->g_transform.set_identity();
+        glyphs->g_transform.setIdentity();
     }
 
     if (font) font->Ref();
@@ -298,7 +298,7 @@ nr_arena_glyphs_fill_mask(NRArenaGlyphs *glyphs, NRRectL *area, NRPixBlock *m)
 
     if (glyphs->rfont && nr_rect_l_test_intersect_ptr(area, &item->bbox)) {
         raster_glyph *g = glyphs->rfont->GetGlyph(glyphs->glyph);
-        if ( g ) g->Blit(NR::Point(glyphs->x, glyphs->y), *m);
+        if ( g ) g->Blit(Geom::Point(glyphs->x, glyphs->y), *m);
     }
 
     return item->state;
@@ -310,7 +310,7 @@ nr_arena_glyphs_stroke_mask(NRArenaGlyphs *glyphs, NRRectL *area, NRPixBlock *m)
     NRArenaItem *item = NR_ARENA_ITEM(glyphs);
     if (glyphs->sfont && nr_rect_l_test_intersect_ptr(area, &item->bbox)) {
         raster_glyph *g=glyphs->sfont->GetGlyph(glyphs->glyph);
-        if ( g ) g->Blit(NR::Point(glyphs->x, glyphs->y),*m);
+        if ( g ) g->Blit(Geom::Point(glyphs->x, glyphs->y),*m);
     }
 
     return item->state;

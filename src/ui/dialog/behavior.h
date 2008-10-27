@@ -1,7 +1,7 @@
-/**
- * \brief Dialog behavior interface
- *
- * Author:
+/** @file
+ * @brief Dialog behavior interface
+ */
+/* Author:
  *   Gustav Broberg <broberg@kth.se>
  *
  * Copyright (C) 2007 Authors

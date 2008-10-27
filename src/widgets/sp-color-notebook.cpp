@@ -26,7 +26,7 @@
 #include <glibmm/i18n.h>
 
 #include "../dialogs/dialog-events.h"
-#include "../prefs-utils.h"
+#include "../preferences.h"
 #include "sp-color-notebook.h"
 #include "spw-utilities.h"
 #include "sp-color-scales.h"
@@ -97,19 +97,19 @@ sp_color_notebook_class_init (SPColorNotebookClass *klass)
 
 static void
 sp_color_notebook_switch_page(GtkNotebook *notebook,
-							  GtkNotebookPage *page,
-							  guint page_num,
-							  SPColorNotebook *colorbook)
+                              GtkNotebookPage *page,
+                              guint page_num,
+                              SPColorNotebook *colorbook)
 {
-	if ( colorbook )
-	{
+    if ( colorbook )
+    {
         ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
         nb->switchPage( notebook, page, page_num );
 
-	// remember the page we seitched to
-        prefs_set_int_attribute ("colorselector", "page", page_num);
-
-	}
+        // remember the page we seitched to
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setInt("/colorselector/page", page_num);
+    }
 }
 
 void ColorNotebook::switchPage(GtkNotebook*,
@@ -274,7 +274,8 @@ void ColorNotebook::init()
                       XPAD, YPAD);
 
 	// restore the last active page
-	gtk_notebook_set_current_page (GTK_NOTEBOOK (_book), prefs_get_int_attribute ("colorselector", "page", 0));
+	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+	gtk_notebook_set_current_page (GTK_NOTEBOOK (_book), prefs->getInt("/colorselector/page", 0));
 
 	{
 		gboolean found = FALSE;

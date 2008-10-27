@@ -1,7 +1,7 @@
-/**
- * \brief Align and Distribute dialog
- *
- * Authors:
+/** @file
+ * @brief Align and Distribute dialog
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Aubanel MONNIER <aubi@libertysurf.fr>
  *   Frank Felfe <innerspace@iname.com>

@@ -23,7 +23,7 @@
 #include <glibmm/ustring.h>
 #include <gtk/gtkmessagedialog.h>
 
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "sys.h"
 
 #ifdef WIN32
@@ -75,9 +75,10 @@ extern guint update_in_progress;
 
 #define DEBUG_MESSAGE(key, ...) \
 {\
-    gint dump = prefs_get_int_attribute_limited("options.bulia", #key, 0, 0, 1);\
-    gint dumpD = prefs_get_int_attribute_limited("options.bulia", #key"D", 0, 0, 1);\
-    gint dumpD2 = prefs_get_int_attribute_limited("options.bulia", #key"D2", 0, 0, 1);\
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get(); \
+    gint dump = prefs->getBool("/options/bulia/" #key) ? 1 : 0;\
+    gint dumpD = prefs->getBool("/options/bulia/" #key"D") ? 1 : 0;\
+    gint dumpD2 = prefs->getBool("/options/bulia/" #key"D2") ? 1 : 0;\
     dumpD &= ( (update_in_progress == 0) || dumpD2 );\
     if ( dump )\
     {\

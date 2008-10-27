@@ -30,7 +30,7 @@
 #include "nr-filter.h"
 #include "libnr/nr-rect.h"
 #include "nr-arena-group.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 namespace GC = Inkscape::GC;
 
@@ -343,13 +343,14 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
             // render clip and mask, if any
             guint32 saved_rgba = item->arena->outlinecolor; // save current outline color
             // render clippath as an object, using a different color
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             if (item->clip) {
-                item->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "clips", 0x00ff00ff); // green clips
+                item->arena->outlinecolor = prefs->getInt("/options/wireframecolors/clips", 0x00ff00ff); // green clips
                 NR_ARENA_ITEM_VIRTUAL (item->clip, render) (ct, item->clip, &carea, pb, flags);
             } 
             // render mask as an object, using a different color
             if (item->mask) {
-                item->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "masks", 0x0000ffff); // blue masks
+                item->arena->outlinecolor = prefs->getInt("/options/wireframecolors/masks", 0x0000ffff); // blue masks
                 NR_ARENA_ITEM_VIRTUAL (item->mask, render) (ct, item->mask, &carea, pb, flags);
             }
             item->arena->outlinecolor = saved_rgba; // restore outline color

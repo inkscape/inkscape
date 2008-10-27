@@ -36,7 +36,7 @@
 #include "widgets/icon.h"
 #include "ui/widget/imagetoggler.h"
 #include <gtkmm/widget.h>
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "xml/repr.h"
 #include "svg/css-ostringstream.h"
 #include "desktop-style.h"
@@ -581,7 +581,7 @@ bool LayersPanel::_rowSelectFunction( Glib::RefPtr<Gtk::TreeModel> const & /*mod
  * Constructor
  */
 LayersPanel::LayersPanel() :
-    UI::Widget::Panel("", "dialogs.layers", SP_VERB_DIALOG_LAYERS),
+    UI::Widget::Panel("", "/dialogs/layers", SP_VERB_DIALOG_LAYERS),
     _maxNestDepth(20),
     _mgr(0),
     _desktop(0),
@@ -590,7 +590,8 @@ LayersPanel::LayersPanel() :
     _toggleEvent(0),
     _compositeSettings(SP_VERB_DIALOG_LAYERS, "layers", UI::Widget::SimpleFilterModifier::BLEND)
 {
-    _maxNestDepth = prefs_get_int_attribute_limited("dialogs.layers", "maxDepth", 20, 1, 1000);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    _maxNestDepth = prefs->getIntLimited("/dialogs/layers/maxDepth", 20, 1, 1000);
 
     ModelColumns *zoop = new ModelColumns();
     _model = zoop;

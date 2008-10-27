@@ -130,7 +130,7 @@ vp_knot_moved_handler (SPKnot */*knot*/, Geom::Point const *ppointer, guint stat
         // without Shift; see if we need to snap to another dragger
         for (GList *di = dragger->parent->draggers; di != NULL; di = di->next) {
             VPDragger *d_new = (VPDragger *) di->data;
-            if ((d_new != dragger) && (NR::L2 (d_new->point - p) < snap_dist)) {
+            if ((d_new != dragger) && (Geom::L2 (d_new->point - p) < snap_dist)) {
                 if (have_VPs_of_same_perspective (dragger, d_new)) {
                     // this would result in degenerate boxes, which we disallow for the time being
                     continue;
@@ -457,7 +457,7 @@ VPDragger::updateZOrders ()
 
 void
 VPDragger::printVPs() {
-    g_print ("VPDragger at position (%f, %f):\n", point[NR::X], point[NR::Y]);
+    g_print ("VPDragger at position (%f, %f):\n", point[Geom::X], point[Geom::Y]);
     for (std::list<VanishingPoint>::iterator i = this->vps.begin(); i != this->vps.end(); ++i) {
         g_print ("    VP %s\n", (*i).axisString());
     }
@@ -725,7 +725,7 @@ VPDrag::addDragger (VanishingPoint &vp)
 
     for (GList *i = this->draggers; i != NULL; i = i->next) {
         VPDragger *dragger = (VPDragger *) i->data;
-        if (NR::L2 (dragger->point - p) < MERGE_DIST) {
+        if (Geom::L2 (dragger->point - p) < MERGE_DIST) {
             // distance is small, merge this draggable into dragger, no need to create new dragger
             dragger->addVP (vp);
             return;

@@ -42,7 +42,7 @@ void aux_toolbox_space(GtkWidget *tb, gint space);
 // utility
 void sp_toolbox_add_label(GtkWidget *tbl, gchar const *title, bool wide = true);
 
-Inkscape::IconSize prefToSize( gchar const *path, gchar const *attr, int base = 0 );
+Inkscape::IconSize prefToSize(Glib::ustring const &path, int base = 0 );
 
 #endif /* !SEEN_TOOLBOX_H */
 

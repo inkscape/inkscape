@@ -36,7 +36,7 @@ static void sp_spiral_set (SPObject *object, unsigned int key, const gchar *valu
 static void sp_spiral_update (SPObject *object, SPCtx *ctx, guint flags);
 
 static gchar * sp_spiral_description (SPItem * item);
-static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p);
+static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
 
 static void sp_spiral_set_shape (SPShape *shape);
 static void sp_spiral_update_patheffect (SPLPEItem *lpeitem, bool write);
@@ -494,10 +494,10 @@ sp_spiral_position_set       (SPSpiral          *spiral,
 /**
  * Virtual snappoints callback.
  */
-static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p)
+static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
 	if (((SPItemClass *) parent_class)->snappoints) {
-		((SPItemClass *) parent_class)->snappoints (item, p);
+		((SPItemClass *) parent_class)->snappoints (item, p, snapprefs);
 	}
 }
 

@@ -1,12 +1,7 @@
-#ifndef __INK_EXTENSION_PARAM_H__
-#define __INK_EXTENSION_PARAM_H__
-
-/** \file
- * Parameters for extensions.
+/** @file
+ * @brief Parameters for extensions.
  */
-
-/*
- * Authors:
+/* Authors:
  *   Ted Gould <ted@gould.cx>
  *
  * Copyright (C) 2005-2006 Authors
@@ -14,23 +9,28 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/** \brief  The root directory in the preferences database for extension-related parameters. */
-#define PREF_DIR "extensions"
+#ifndef SEEN_INK_EXTENSION_PARAM_H__
+#define SEEN_INK_EXTENSION_PARAM_H__
 
 #include <gtkmm/widget.h>
+#include <glibmm/i18n.h>
 
 #include "xml/document.h"
 #include "xml/node.h"
 #include "document.h"
-#include <extension/extension-forward.h>
-#include "prefs-utils.h"
-
-#include <glibmm/i18n.h>
-
+#include "extension/extension-forward.h"
 #include <color.h>
 
 namespace Inkscape {
 namespace Extension {
+
+/**
+ * @brief The root directory in the preferences database for extension-related parameters
+ *
+ * The directory path has both a leading and a trailing slash, so that extension_pref_root + pref_name works
+ * without having to append a separator.
+ */
+extern Glib::ustring const extension_pref_root;
 
 /** \brief  A class to represent the parameter of an extension
 
@@ -132,4 +132,4 @@ public:
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

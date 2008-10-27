@@ -1,7 +1,7 @@
-/**
- * Implementation of the ocal dialog interfaces defined in ocaldialog.h
- *
- * Authors:
+/** @file
+ * @brief Open Clip Art Library integration dialogs - implementation
+ */
+/* Authors:
  *   Bruno Dilly
  *   Other dudes from The Inkscape Organization
  *
@@ -309,7 +309,7 @@ void FileListViewText::on_cursor_changed()
 
     //Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     //Glib::ustring fileUrl = "dav://"; //dav url
-    //fileUrl.append(prefs->getString("options.ocalurl", "str"));
+    //fileUrl.append(prefs->getString("/options/ocalurl/str"));
     //fileUrl.append("/dav.php/");
     //fileUrl.append(get_text(posArray[0], 3)); //author dir
     //fileUrl.append("/");
@@ -425,7 +425,7 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
     Glib::ustring searchTag = searchTagEntry->get_text();
     // create the ocal uri to get rss feed
     Glib::ustring uri = "http://";
-    uri.append(prefs->getString("options.ocalurl", "str"));
+    uri.append(prefs->getString("/options/ocalurl/str"));
     uri.append("/media/feed/rss/");
     uri.append(searchTag);
     if (!Glib::get_charset()) //If we are not utf8

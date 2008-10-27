@@ -38,7 +38,7 @@
 #include "svg/svg.h"
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 
 // Terminology:
@@ -240,7 +240,8 @@ SPGradient *
 sp_gradient_fork_vector_if_necessary (SPGradient *gr)
 {
     // Some people actually prefer their gradient vectors to be shared...
-    if (prefs_get_int_attribute("options.forkgradientvectors", "value", 1) == 0)
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (!prefs->getBool("/options/forkgradientvectors/value", true))
         return gr;
 
     if (SP_OBJECT_HREFCOUNT(gr) > 1) {

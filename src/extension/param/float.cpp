@@ -13,9 +13,9 @@
 #include <gtkmm/box.h>
 #include <gtkmm/spinbutton.h>
 
-#include <xml/node.h>
-
-#include <extension/extension.h>
+#include "xml/node.h"
+#include "extension/extension.h"
+#include "preferences.h"
 #include "float.h"
 
 namespace Inkscape {
@@ -53,7 +53,8 @@ ParamFloat::ParamFloat (const gchar * name, const gchar * guitext, const gchar *
     }
 
     gchar * pref_name = this->pref_name();
-    _value = prefs_get_double_attribute(PREF_DIR, pref_name, _value);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    _value = prefs->getDouble(extension_pref_root + pref_name, _value);
     g_free(pref_name);
 
     // std::cout << "New Float::  value: " << _value << "  max: " << _max << "  min: " << _min << std::endl;
@@ -81,7 +82,8 @@ ParamFloat::set (float in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
     if (_value < _min) _value = _min;
 
     gchar * prefname = this->pref_name();
-    prefs_set_double_attribute(PREF_DIR, prefname, _value);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setDouble(extension_pref_root + prefname, _value);
     g_free(prefname);
 
     return _value;

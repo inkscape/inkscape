@@ -1,11 +1,10 @@
-/**
- * \brief Object Transformation dialog
- *
- * Author:
+/** @file
+ * @brief Transform dialog
+ */
+/* Author:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *
  * Copyright (C) 2004, 2005 Authors
- *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 

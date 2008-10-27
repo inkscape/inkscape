@@ -1,9 +1,9 @@
 #ifndef __FILE_DIALOGIMPL_H__
 #define __FILE_DIALOGIMPL_H__
-/**
- * Implementation of the file dialog interfaces defined in filedialogimpl.h
- *
- * Authors:
+/** @file
+ * @brief Implementation of the file dialog interfaces defined in filedialogimpl.h
+ */
+/* Authors:
  *   Bob Jamison
  *   Joel Holdsworth
  *   Bruno Dilly
@@ -39,18 +39,13 @@
 //Another hack
 #include <gtk/gtkentry.h>
 #include <gtk/gtkexpander.h>
-#ifdef WITH_GNOME_VFS
-# include <libgnomevfs/gnome-vfs-init.h>  // gnome_vfs_initialized
-#endif
 
 //Inkscape includes
-#include "prefs-utils.h"
-#include <extension/input.h>
-#include <extension/output.h>
-#include <extension/db.h>
+#include "extension/input.h"
+#include "extension/output.h"
+#include "extension/db.h"
 #include "inkscape.h"
 #include "svg-view-widget.h"
-#include "gc-core.h"
 
 //For export dialog
 #include "ui/widget/scalar-unit.h"
@@ -192,7 +187,7 @@ public:
 protected:
     void cleanup( bool showConfirmed );
 
-    Glib::ustring preferenceBase;
+    Glib::ustring const preferenceBase;
     /**
      * What type of 'open' are we? (open, import, place, etc)
      */
@@ -571,9 +566,9 @@ private:
 };
 
 
-}
-}
-}
+} // namespace Dialog
+} // namespace UI
+} // namespace Inkscape
 
 #endif /*__FILE_DIALOGIMPL_H__*/
 
@@ -586,4 +581,4 @@ private:
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

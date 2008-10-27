@@ -12,7 +12,7 @@
 #include "dock-item.h"
 #include "desktop.h"
 #include "inkscape.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "ui/widget/dock.h"
 #include "widgets/icon.h"
 
@@ -37,11 +37,11 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
     _gdl_dock_item(0),
     _dock_item_action_area(0)
 {
-
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     GdlDockItemBehavior gdl_dock_behavior =
-        (prefs_get_int_attribute_limited ("options.dock", "cancenterdock", 1, 0, 1) == 0 ?
-         GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER
-         : GDL_DOCK_ITEM_BEH_NORMAL);
+        (prefs->getBool("/options/dock/cancenterdock", true) ?
+            GDL_DOCK_ITEM_BEH_NORMAL :
+            GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER);
 
     if (!icon_name.empty()) {
         Gtk::Widget *icon = sp_icon_get_icon(icon_name, Inkscape::ICON_SIZE_MENU);

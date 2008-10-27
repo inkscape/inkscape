@@ -1,9 +1,9 @@
 #define __SP_DASH_SELECTOR_NEW_C__
 
-/*
- * Optionmenu for selecting dash patterns
- *
- * Author:
+/** @file
+ * @brief Option menu for selecting dash patterns - implementation
+ */
+/* Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Maximilian Albert <maximilian.albert@gmail.com>
@@ -28,6 +28,7 @@
 
 #include "style.h"
 #include "dialogs/dialog-events.h"
+#include "preferences.h"
 
 #include <gtkmm/optionmenu.h>
 #include <gtkmm/adjustment.h>
@@ -35,6 +36,8 @@
 
 
 #include "dash-selector.h"
+
+gchar const *const SPDashSelector::_prefs_path = "/palette/dashes";
 
 static double dash_0[] = {-1.0};
 static double dash_1_1[] = {1.0, 1.0, -1.0};
@@ -49,9 +52,9 @@ static double **dashes = NULL;
 
 static void sp_dash_selector_menu_item_image_realize(Gtk::Image *px, double *pattern);
 
-SPDashSelector::SPDashSelector(Inkscape::XML::Node *drepr) {
+SPDashSelector::SPDashSelector() {
     // TODO: find something more sensible here!!
-    init_dashes(drepr);
+    init_dashes();
 
     Gtk::Tooltips *tt = new Gtk::Tooltips();
 
@@ -89,39 +92,33 @@ SPDashSelector::~SPDashSelector() {
 }
 
 void
-SPDashSelector::init_dashes(Inkscape::XML::Node *drepr) {
+SPDashSelector::init_dashes() {
     if (!dashes) {
-        int ndashes = 0;
-        if (drepr) {
-            for (Inkscape::XML::Node *dr = drepr->firstChild(); dr; dr = dr->next()) {
-                if (!strcmp (dr->name(), "dash"))
-                    ndashes += 1;
-            }
-        }
-
-        if (ndashes > 0) {
+        
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        std::vector<Glib::ustring> dash_prefs = prefs->getAllDirs(_prefs_path);
+        
+        if (!dash_prefs.empty()) {
             int pos = 0;
             SPStyle *style = sp_style_new (NULL);
-            dashes = g_new (double *, ndashes + 1);
-            for (Inkscape::XML::Node *dr = drepr->firstChild(); dr; dr = dr->next()) {
-                if (!strcmp (dr->name(), "dash")) {
-                    sp_style_read_from_repr (style, dr);
-                    if (style->stroke_dash.n_dash > 0) {
-                        dashes[pos] = g_new (double, style->stroke_dash.n_dash + 1);
-                        double *d = dashes[pos];
-                        int i = 0;
-                        for (; i < style->stroke_dash.n_dash; i++) {
-                            d[i] = style->stroke_dash.dash[i];
-                        }
-                        d[i] = -1;
-                    } else {
-                        dashes[pos] = dash_0;
+            dashes = g_new (double *, dash_prefs.size() + 1);
+            
+            for (std::vector<Glib::ustring>::iterator i = dash_prefs.begin(); i != dash_prefs.end(); ++i) {
+                sp_style_read_from_prefs(style, *i);
+                
+                if (style->stroke_dash.n_dash > 0) {
+                    dashes[pos] = g_new (double, style->stroke_dash.n_dash + 1);
+                    double *d = dashes[pos];
+                    int i = 0;
+                    for (; i < style->stroke_dash.n_dash; i++) {
+                        d[i] = style->stroke_dash.dash[i];
                     }
-                    pos += 1;
+                    d[i] = -1;
+                } else {
+                    dashes[pos] = dash_0;
                 }
+                pos += 1;
             }
-            sp_style_unref (style);
-            dashes[pos] = NULL;
         } else {
             dashes = builtin_dashes;
         }

@@ -7,7 +7,7 @@
 #include "sp-item.h"
 
 #include "display/nr-arena-forward.h"
-
+#include <2geom/forward.h>
 #include "libnrtype/Layout-TNG.h"
 
 #define SP_TYPE_FLOWTEXT            (sp_flowtext_get_type ())
@@ -32,9 +32,9 @@ struct SPFlowtext : public SPItem {
     Inkscape::Text::Layout layout;
 
     /** discards the NRArena objects representing this text. */
-	void _clearFlow(NRArenaGroup* in_arena);
+    void _clearFlow(NRArenaGroup* in_arena);
 
-	double par_indent;
+    double par_indent;
 
 private:
     /** Recursively walks the xml tree adding tags and their contents. */
@@ -47,12 +47,12 @@ private:
 };
 
 struct SPFlowtextClass {
-	SPItemClass parent_class;
+    SPItemClass parent_class;
 };
 
 GType sp_flowtext_get_type (void);
 
-SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, NR::Point p1, NR::Point p2);
+SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p1, Geom::Point p2);
 
 #endif
 

@@ -1,16 +1,10 @@
-/**
- * Undo History dialog
- *
- * \brief A dialog for presenting an event log of commited, undone and redone events. Allows the
- * user to undo and redo multiple events in a more convenient way than repateaded ctrl-z,
- * ctrl-shift-z.
- *
- *
- * Author:
+/** @file
+ * @brief Undo History dialog
+ */
+/* Author:
  *   Gustav Broberg <broberg@kth.se>
  *
  * Copyright (C) 2006 Authors
- *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
@@ -111,11 +105,12 @@ private:
     struct NoFilter : Filter { bool operator() (const int& /*x*/) const { return true; } };
 };
 
-
 /**
- * 
+ * \brief Dialog for presenting document change history
+ *
+ * This dialog allows the user to undo and redo multiple events in a more convenient way
+ * than repateaded ctrl-z, ctrl-shift-z.
  */
-
 class UndoHistory : public Widget::Panel {
 public:
     virtual ~UndoHistory();

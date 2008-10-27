@@ -1,7 +1,7 @@
 /** \file
  * \brief  Document Metadata dialog
- *
- * Authors:
+ */
+/* Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *
@@ -62,7 +62,6 @@ protected:
     RDElist _rdflist;
     Licensor _licensor;
 
-    gchar const *_prefs_path;
     Registry _wr;
 
 private:
@@ -80,9 +79,9 @@ private:
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

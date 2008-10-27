@@ -37,7 +37,7 @@
 #include "style.h"
 #include "marker.h"
 #include "sp-path.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "attributes.h"
 
 #include "live_effects/lpeobject.h"
@@ -67,7 +67,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
 void sp_shape_print (SPItem * item, SPPrintContext * ctx);
 static NRArenaItem *sp_shape_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 static void sp_shape_hide (SPItem *item, unsigned int key);
-static void sp_shape_snappoints (SPItem const *item, SnapPointsIter p);
+static void sp_shape_snappoints (SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
 
 static void sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai);
 
@@ -251,7 +251,6 @@ sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
      * that the appropriate marker objects are present (or absent) to
      * match the style.
      */
-    /* TODO:  It would be nice if this could be done at an earlier level */
     for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
         sp_shape_set_marker (object, i, object->style->marker[i].value);
 	  }
@@ -287,7 +286,6 @@ sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
     if (sp_shape_has_markers (shape)) {
         /* Dimension marker views */
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
-
             for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
                 if (shape->marker[i]) {
                     sp_marker_show_dimension ((SPMarker *) shape->marker[i],
@@ -477,7 +475,6 @@ sp_shape_modified (SPObject *object, unsigned int flags)
 static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags)
 {
     SPShape const *shape = SP_SHAPE (item);
-
     if (shape->curve) {
 
         NRRect  cbbox;
@@ -612,7 +609,8 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 
 	if (!shape->curve) return;
 
-        gint add_comments = prefs_get_int_attribute_limited ("printing.debug", "add-label-comments", 0, 0, 1);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        gint add_comments = prefs->getBool("/printing/debug/add-label-comments");
         if (add_comments) {
             gchar * comment = g_strdup_printf("begin '%s'",
                                               SP_OBJECT(item)->defaultLabel());
@@ -731,39 +729,47 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 static NRArenaItem *
 sp_shape_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int /*flags*/)
 {
-	SPObject *object = SP_OBJECT(item);
-	SPShape *shape = SP_SHAPE(item);
+    SPObject *object = SP_OBJECT(item);
+    SPShape *shape = SP_SHAPE(item);
 
-	NRArenaItem *arenaitem = NRArenaShape::create(arena);
-        NRArenaShape * const s = NR_ARENA_SHAPE(arenaitem);
-	nr_arena_shape_set_style(s, object->style);
-	nr_arena_shape_set_path(s, shape->curve, false);
-        boost::optional<Geom::Rect> paintbox = item->getBounds(Geom::identity());
-        if (paintbox) {
-            s->setPaintBox(*paintbox);
+    NRArenaItem *arenaitem = NRArenaShape::create(arena);
+    NRArenaShape * const s = NR_ARENA_SHAPE(arenaitem);
+    nr_arena_shape_set_style(s, object->style);
+    nr_arena_shape_set_path(s, shape->curve, false);
+    boost::optional<Geom::Rect> paintbox = item->getBounds(Geom::identity());
+    if (paintbox) {
+        s->setPaintBox(*paintbox);
+    }
+
+    /* This stanza checks that an object's marker style agrees with
+     * the marker objects it has allocated.  sp_shape_set_marker ensures
+     * that the appropriate marker objects are present (or absent) to
+     * match the style.
+     */
+    for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
+        sp_shape_set_marker (object, i, object->style->marker[i].value);
+	  }
+
+    if (sp_shape_has_markers (shape)) {
+
+        /* provide key and dimension the marker views */
+        if (!arenaitem->key) {
+            NR_ARENA_ITEM_SET_KEY (arenaitem, sp_item_display_key_new (SP_MARKER_LOC_QTY));
         }
 
-        if (sp_shape_has_markers (shape)) {
-
-            /* Dimension the marker views */
-            if (!arenaitem->key) {
-                NR_ARENA_ITEM_SET_KEY (arenaitem, sp_item_display_key_new (SP_MARKER_LOC_QTY));
+        for (int i = 0; i < SP_MARKER_LOC_QTY; i++) {
+            if (shape->marker[i]) {
+                sp_marker_show_dimension ((SPMarker *) shape->marker[i],
+                                          NR_ARENA_ITEM_GET_KEY (arenaitem) + i - SP_MARKER_LOC,
+                                          sp_shape_number_of_markers (shape, i));
             }
+        }
 
-            for (int i = 0; i < SP_MARKER_LOC_QTY; i++) {
-                if (shape->marker[i]) {
-                    sp_marker_show_dimension ((SPMarker *) shape->marker[i],
-                                              NR_ARENA_ITEM_GET_KEY (arenaitem) + i - SP_MARKER_LOC,
-                                              sp_shape_number_of_markers (shape, i));
-		}
-            }
+        /* Update marker views */
+        sp_shape_update_marker_view (shape, arenaitem);
+    }
 
-
-            /* Update marker views */
-            sp_shape_update_marker_view (shape, arenaitem);
-	}
-
-	return arenaitem;
+    return arenaitem;
 }
 
 /**
@@ -1019,7 +1025,7 @@ sp_shape_set_curve_insync (SPShape *shape, SPCurve *curve, unsigned int owner)
 /**
  * Return all nodes in a path that are to be considered for snapping
  */
-static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
+static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_SHAPE(item));
@@ -1050,14 +1056,11 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
 
             Geom::NodeType nodetype = Geom::get_nodetype(*curve_it1, *curve_it2);
 
-            // Only add cusp nodes. TODO: Shouldn't this be a preference instead?
-            if (nodetype == Geom::NODE_NONE) {
+            // Depending on the snapping preferences, either add only cusp nodes, or add add both cusp and smooths nodes
+            if (snapprefs->getSnapSmoothNodes() || nodetype == Geom::NODE_NONE || nodetype == Geom::NODE_CUSP) {
                 *p = from_2geom(curve_it1->finalPoint() * i2d);
             }
-            if (nodetype == Geom::NODE_CUSP) {
-                *p = from_2geom(curve_it1->finalPoint() * i2d);
-            }
-
+            
             ++curve_it1;
             ++curve_it2;
         }

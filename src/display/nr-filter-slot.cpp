@@ -65,6 +65,9 @@ inline static int _min2(const double a, const double b) {
 namespace NR {
 
 FilterSlot::FilterSlot(int slots, NRArenaItem const *item)
+    : filterquality(FILTER_QUALITY_BEST),
+      _last_out(-1),
+      _arena_item(item)
 {
     _slot_count = ((slots > 0) ? slots : 2);
     _slot = new NRPixBlock*[_slot_count];
@@ -74,10 +77,6 @@ FilterSlot::FilterSlot(int slots, NRArenaItem const *item)
         _slot[i] = NULL;
         _slot_number[i] = NR_FILTER_SLOT_NOT_SET;
     }
-
-    _last_out = -1;
-
-    _arena_item = item;
 }
 
 FilterSlot::~FilterSlot()
@@ -163,7 +162,11 @@ void FilterSlot::get_final(int slot_nr, NRPixBlock *result) {
     memset(NR_PIXBLOCK_PX(result), 0, size);
 
     if (fabs(trans[1]) > 1e-6 || fabs(trans[2]) > 1e-6) {
-        transform_bicubic(result, final_usr, trans);
+        if (filterquality == FILTER_QUALITY_BEST) {
+            transform_bicubic(result, final_usr, trans);
+        } else {
+            transform_nearest(result, final_usr, trans);
+        }
     } else if (fabs(trans[0] - 1) > 1e-6 || fabs(trans[3] - 1) > 1e-6) {
         scale_bicubic(result, final_usr);
     } else {
@@ -223,7 +226,11 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
                 g_warning("Memory allocation failed in NR::FilterSlot::set (transform)");
                 return;
             }
-            transform_bicubic(trans_pb, pb, trans);
+            if (filterquality == FILTER_QUALITY_BEST) {
+                transform_bicubic(trans_pb, pb, trans);
+            } else {
+                transform_nearest(trans_pb, pb, trans);
+            }
             nr_pixblock_release(pb);
             delete pb;
             pb = trans_pb;
@@ -336,6 +343,10 @@ int FilterSlot::_get_index(int slot_nr)
 
 void FilterSlot::set_units(FilterUnits const &units) {
     this->units = units;
+}
+
+void FilterSlot::set_quality(FilterQuality const q) {
+    filterquality = q;
 }
 
 }

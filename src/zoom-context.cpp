@@ -21,7 +21,7 @@
 #include "desktop.h"
 #include "pixmaps/cursor-zoom.xpm"
 #include "pixmaps/cursor-zoom-out.xpm"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 #include "zoom-context.h"
 
@@ -91,10 +91,11 @@ sp_zoom_context_finish (SPEventContext *ec)
 
 static void sp_zoom_context_setup(SPEventContext *ec)
 {
-    if (prefs_get_int_attribute("tools.zoom", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/zoom/selcue")) {
         ec->enableSelectionCue();
     }
-    if (prefs_get_int_attribute("tools.zoom", "gradientdrag", 0) != 0) {
+    if (prefs->getBool("/tools/zoom/gradientdrag")) {
         ec->enableGrDrag();
     }
 
@@ -117,16 +118,17 @@ static gint sp_zoom_context_item_handler(SPEventContext *event_context, SPItem *
 static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
     SPDesktop *desktop = event_context->desktop;
-    tolerance = prefs_get_int_attribute_limited ("options.dragtolerance", "value", 0, 0, 100);
-    double const zoom_inc = prefs_get_double_attribute_limited("options.zoomincrement", "value", M_SQRT2, 1.01, 10);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+    double const zoom_inc = prefs->getDoubleLimited("/options/zoomincrement/value", M_SQRT2, 1.01, 10);
 
     gint ret = FALSE;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
         {
-            NR::Point const button_w(event->button.x, event->button.y);
-            NR::Point const button_dt(desktop->w2d(button_w));
+            Geom::Point const button_w(event->button.x, event->button.y);
+            Geom::Point const button_dt(desktop->w2d(button_w));
             if (event->button.button == 1 && !event_context->space_panning) {
                 // save drag origin
                 xp = (gint) event->button.x;
@@ -162,8 +164,8 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
                 // motion notify coordinates as given (no snapping back to origin)
                 within_tolerance = false;
 
-                NR::Point const motion_w(event->motion.x, event->motion.y);
-                NR::Point const motion_dt(desktop->w2d(motion_w));
+                Geom::Point const motion_w(event->motion.x, event->motion.y);
+                Geom::Point const motion_dt(desktop->w2d(motion_w));
                 Inkscape::Rubberband::get(desktop)->move(motion_dt);
                 gobble_motion_events(GDK_BUTTON1_MASK);
             }
@@ -171,8 +173,8 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
 
       	case GDK_BUTTON_RELEASE:
         {
-            NR::Point const button_w(event->button.x, event->button.y);
-            NR::Point const button_dt(desktop->w2d(button_w));
+            Geom::Point const button_w(event->button.x, event->button.y);
+            Geom::Point const button_dt(desktop->w2d(button_w));
             if ( event->button.button == 1  && !event_context->space_panning) {
                 boost::optional<Geom::Rect> const b = Inkscape::Rubberband::get(desktop)->getRectangle();
                 if (b && !within_tolerance) {

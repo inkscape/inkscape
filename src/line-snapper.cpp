@@ -6,7 +6,7 @@
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *   And others...
  * 
- * Copyright (C) 1999-2007 Authors
+ * Copyright (C) 1999-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -17,23 +17,23 @@
 #include "line-snapper.h"
 #include "snapped-line.h"
 #include <gtk/gtk.h>
+#include "snap.h"
 
 Inkscape::LineSnapper::LineSnapper(SnapManager const *sm, Geom::Coord const d) : Snapper(sm, d)
 {
-
 }
 
 void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
-                                                    Inkscape::Snapper::PointType const &t,
+                                                    Inkscape::SnapPreferences::PointType const &t,
                                                     Geom::Point const &p,
                                                     bool const &/*f*/,
                                                     boost::optional<Geom::Rect> const &/*bbox_to_snap*/,
                                                     std::vector<SPItem const *> const */*it*/,
                                                     std::vector<Geom::Point> */*unselected_nodes*/) const
 {
-    if (_snap_enabled == false || getSnapFrom(t) == false) {
+	if (_snap_enabled == false || _snapmanager->snapprefs.getSnapFrom(t) == false) {
         return;
-    }    
+    }   
     
     /* Get the lines that we will try to snap to */
     const LineList lines = _getSnapLines(p);
@@ -58,7 +58,7 @@ void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
 }
 
 void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
-                                               Inkscape::Snapper::PointType const &t,
+                                               Inkscape::SnapPreferences::PointType const &t,
                                                Geom::Point const &p,
                                                bool const &/*f*/,
                                                boost::optional<Geom::Rect> const &/*bbox_to_snap*/,
@@ -66,7 +66,7 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
                                                std::vector<SPItem const *> const */*it*/) const
 
 {
-    if (_snap_enabled == false || getSnapFrom(t) == false) {
+    if (_snap_enabled == false || _snapmanager->snapprefs.getSnapFrom(t) == false) {
         return;
     }
     

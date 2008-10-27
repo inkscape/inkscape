@@ -30,7 +30,7 @@
 #include "message-context.h"
 #include "node-context.h"
 #include "pixmaps/cursor-node-d.xpm"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "xml/node-event-vector.h"
 #include "style.h"
 #include "splivarot.h"
@@ -160,11 +160,11 @@ sp_node_context_setup(SPEventContext *ec)
         nc->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
-    if (prefs_get_int_attribute("tools.nodes", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/nodes/selcue")) {
         ec->enableSelectionCue();
     }
-
-    if (prefs_get_int_attribute("tools.nodes", "gradientdrag", 0) != 0) {
+    if (prefs->getBool("/tools/nodes/gradientdrag")) {
         ec->enableGrDrag();
     }
 
@@ -234,9 +234,10 @@ static gint
 sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
 {
     gint ret = FALSE;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    if (prefs_get_int_attribute ("tools.nodes", "pathflash_enabled", 0) == 1) {
-        guint timeout = prefs_get_int_attribute("tools.nodes", "pathflash_timeout", 500);
+    if (prefs->getBool("/tools/nodes/pathflash_enabled")) {
+        guint timeout = prefs->getInt("/tools/nodes/pathflash_timeout", 500);
         if (SP_IS_LPE_ITEM(item)) {
             Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
             if (lpe && (lpe->providesOwnFlashPaths() ||
@@ -260,12 +261,13 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
-    double const nudge = prefs_get_double_attribute_limited("options.nudgedistance", "value", 2, 0, 1000); // in px
-    event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100); // read every time, to make prefs changes really live
-    int const snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
-    double const offset = prefs_get_double_attribute_limited("options.defaultscale", "value", 2, 0, 1000);
+    double const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000); // in px
+    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100); // read every time, to make prefs changes really live
+    int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
+    double const offset = prefs->getDoubleLimited("/options/defaultscale/value", 2, 0, 1000);
 
     if ( (nc->flash_tempitem) && (nc->remove_flash_counter <= 0) ) {
         desktop->remove_temporary_canvasitem(nc->flash_tempitem);
@@ -495,6 +497,13 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_s:
                     if (MOD__SHIFT_ONLY) {
                         nc->shape_editor->set_node_type(Inkscape::NodePath::NODE_SMOOTH);
+                        ret = TRUE;
+                    }
+                    break;
+                case GDK_A:
+                case GDK_a:
+                    if (MOD__SHIFT_ONLY) {
+                        nc->shape_editor->set_node_type(Inkscape::NodePath::NODE_AUTO);
                         ret = TRUE;
                     }
                     break;

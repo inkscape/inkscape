@@ -1,11 +1,10 @@
-/**
- * \brief A panel holding dialog
- *
- * Authors:
+/** @file
+ * @brief A panel holding dialog
+ */
+/* Authors:
  *   Gustav Broberg <broberg@kth.se>
  *
  * Copyright (C) 2007 Authors
- *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
@@ -23,7 +22,7 @@
 #include "dialogs/swatches.h"
 #include "ui/dialog/floating-behavior.h"
 #include "ui/dialog/dock-behavior.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 
 namespace Inkscape {
 namespace UI {
@@ -147,7 +146,8 @@ PanelDialog<B>::PanelDialog(Panel &panel, char const *prefs_path, int const verb
     _document_replaced_connection =
         desktop->connectDocumentReplaced(sigc::mem_fun(*this, &PanelDialog::_propagateDocumentReplaced));
 
-    if (prefs_get_int_attribute ("dialogs", "showclose", 0) || !apply_label.empty()) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/dialogs/showclose") || !apply_label.empty()) {
         // TODO: make the order of buttons obey the global preference
         if (!apply_label.empty()) {
             panel.addResponseButton(apply_label, Gtk::RESPONSE_APPLY);
@@ -198,7 +198,8 @@ PanelDialog<Behavior::FloatingBehavior>::PanelDialog(Panel &panel, char const *p
     _document_replaced_connection =
         desktop->connectDocumentReplaced(sigc::mem_fun(*this, &PanelDialog::_propagateDocumentReplaced));
 
-    if (prefs_get_int_attribute ("dialogs", "showclose", 0) || !apply_label.empty()) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/dialogs/showclose") || !apply_label.empty()) {
         // TODO: make the order of buttons obey the global preference
         if (!apply_label.empty()) {
             panel.addResponseButton(apply_label, Gtk::RESPONSE_APPLY);

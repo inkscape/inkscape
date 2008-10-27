@@ -1,9 +1,7 @@
-/**
- * \brief Base class for dialogs in Inkscape.  This class provides certain common behaviors and
- *        styles wanted of all dialogs in the application.  Fundamental parts of the dialog's
- *        behavior is controlled by a Dialog::Behavior subclass instance connected to the dialog.
- *
- * Author:
+/** @file
+ * @brief Base class for dialogs in Inkscape
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Gustav Broberg <broberg@kth.se>
  *
@@ -38,6 +36,12 @@ void sp_retransientize(Inkscape::Application *inkscape, SPDesktop *desktop, gpoi
 gboolean sp_retransientize_again(gpointer dlgPtr);
 void sp_dialog_shutdown(GtkObject *object, gpointer dlgPtr);
 
+/** 
+ * @brief Base class for Inkscape dialogs
+ * This class provides certain common behaviors and styles wanted of all dialogs
+ * in the application.  Fundamental parts of the dialog's behavior are controlled by
+ * a Dialog::Behavior subclass instance connected to the dialog.
+ */
 class Dialog {
 
 public:
@@ -83,7 +87,7 @@ public:
     bool retransientize_suppress; // when true, do not retransientize (prevents races when switching new windows too fast)
 
 protected:
-    const char    *_prefs_path;
+    Glib::ustring const _prefs_path;
     int            _verb_num;
     Glib::ustring  _title;
     Glib::ustring  _apply_label;

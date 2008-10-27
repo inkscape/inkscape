@@ -303,7 +303,7 @@ static gint inkscape_autosave(gpointer)
 
     Glib::ustring autosave_dir;
     {
-        Glib::ustring tmp = prefs->getString("options.autosave", "path");
+        Glib::ustring tmp = prefs->getString("/options/autosave/path");
         if (!tmp.empty()) {
             autosave_dir = tmp;
         } else {
@@ -322,7 +322,7 @@ static gint inkscape_autosave(gpointer)
     gchar sptstr[256];
     strftime(sptstr, 256, "%Y_%m_%d_%H_%M_%S", sptm);
 
-    gint autosave_max = prefs->getInt("options.autosave", "max", 10);
+    gint autosave_max = prefs->getInt("/options/autosave/max", 10);
 
     gint docnum = 0;
 
@@ -438,14 +438,14 @@ void inkscape_autosave_init()
         autosave_timeout_id = 0;
     }
 
-    // g_debug("options.autosave.enable = %d", prefs->getBool("options.autosave", "enable", true));
+    // g_debug("options.autosave.enable = %d", prefs->getBool("/options/autosave/enable", true));
     // Is autosave enabled?
-    if (!prefs->getBool("options.autosave", "enable", true)){
+    if (!prefs->getBool("/options/autosave/enable", true)){
         autosave_timeout_id = 0;
     } else {
         // Turn on autosave
-        guint32 timeout = prefs->getInt("options.autosave", "interval", 10) * 60;
-        // g_debug("options.autosave.interval = %d", prefs->getInt("options.autosave", "interval", 10));
+        guint32 timeout = prefs->getInt("/options/autosave/interval", 10) * 60;
+        // g_debug("options.autosave.interval = %d", prefs->getInt("/options/autosave/interval", 10));
 #if GLIB_CHECK_VERSION(2,14,0)
         autosave_timeout_id = g_timeout_add_seconds(timeout, inkscape_autosave, NULL);
 #else
@@ -772,7 +772,7 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
 #define DEFAULT_LOG_REDIRECT false
 #endif
 
-    if (use_gui == TRUE && prefs->getBool("dialogs.debug", "redirect", DEFAULT_LOG_REDIRECT))
+    if (use_gui == TRUE && prefs->getBool("/dialogs/debug/redirect", DEFAULT_LOG_REDIRECT))
     {
         Inkscape::UI::Dialogs::DebugDialog::getInstance()->captureLogMessages();
     }
@@ -780,7 +780,7 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     /* Check for global remapping of Alt key */
     if(use_gui)
     {
-        inkscape_mapalt(guint(prefs->getInt("options.mapalt", "value", 0)));
+        inkscape_mapalt(guint(prefs->getInt("/options/mapalt/value", 0)));
     }
 
     /* Initialize the extensions */
@@ -823,15 +823,6 @@ bool inkscape_load_menus (Inkscape::Application */*inkscape*/)
     INKSCAPE->menus = sp_repr_read_mem(menus_skeleton, MENUS_SKELETON_SIZE, NULL);
     if (INKSCAPE->menus) return true;
     return false;
-}
-
-/**
- * @deprecated Use the Preferences class instead, and try not to use _getNode
- */
-Inkscape::XML::Node *inkscape_get_repr(Inkscape::Application */*inkscape*/, const gchar *key)
-{
-    Inkscape::Preferences *ps = Inkscape::Preferences::get();
-    return ps->_getNode(key);
 }
 
 

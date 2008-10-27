@@ -29,7 +29,7 @@
 #include <sp-item.h>
 #include <sp-root.h>
 #include <sp-defs.h>
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "dialogs/rdf.h"
 
 /* This is an example of how to use libpng to read and write PNG files.
@@ -409,8 +409,11 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     }
 
     // export with maximum blur rendering quality
-    int saved_quality = prefs_get_int_attribute("options.blurquality", "value", 0);
-    prefs_set_int_attribute("options.blurquality", "value", 2);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int saved_quality = prefs->getInt("/options/blurquality/value", 0);
+    prefs->setInt("/options/blurquality/value", 2);
+    int saved_filter_quality = prefs->getInt("/options/filterquality/value", 0);
+    prefs->setInt("/options/filterquality/value", 2);
 
     sp_document_ensure_up_to_date(doc);
 
@@ -487,8 +490,9 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     /* Free arena */
     nr_object_unref((NRObject *) arena);
 
-    // restore saved blur quality
-    prefs_set_int_attribute("options.blurquality", "value", saved_quality);
+    // restore saved blur and filter quality
+    prefs->setInt("/options/blurquality/value", saved_quality);
+    prefs->setInt("/options/filterquality/value", saved_filter_quality);
 
     return write_status;
 }

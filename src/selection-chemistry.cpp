@@ -260,7 +260,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
     std::vector<const gchar *> old_ids;
     std::vector<const gchar *> new_ids;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool relink_clones = prefs->getBool("options.relinkclonesonduplicate", "value");
+    bool relink_clones = prefs->getBool("/options/relinkclonesonduplicate/value");
 
     while (reprs) {
         Inkscape::XML::Node *old_repr = (Inkscape::XML::Node *) reprs->data;
@@ -368,9 +368,9 @@ void sp_edit_select_all_full (SPDesktop *dt, bool force_all_layers, bool invert)
     g_return_if_fail(SP_IS_GROUP(dt->currentLayer()));
     
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    PrefsSelectionContext inlayer = (PrefsSelectionContext) prefs->getInt("options.kbselection", "inlayer", PREFS_SELECTION_LAYER);
-    bool onlyvisible = prefs->getBool("options.kbselection", "onlyvisible", true);
-    bool onlysensitive = prefs->getBool("options.kbselection", "onlysensitive", true);
+    PrefsSelectionContext inlayer = (PrefsSelectionContext) prefs->getInt("/options/kbselection/inlayer", PREFS_SELECTION_LAYER);
+    bool onlyvisible = prefs->getBool("/options/kbselection/onlyvisible", true);
+    bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive", true);
 
     GSList *items = NULL;
 
@@ -1182,7 +1182,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
 
         // "clones are unmoved when original is moved" preference
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        int compensation = prefs->getInt("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+        int compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
         bool prefs_unmoved = (compensation == SP_CLONE_COMPENSATION_UNMOVED);
         bool prefs_parallel = (compensation == SP_CLONE_COMPENSATION_PARALLEL);
 
@@ -1610,9 +1610,9 @@ sp_selection_item_next(SPDesktop *desktop)
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    PrefsSelectionContext inlayer = (PrefsSelectionContext)prefs->getInt("options.kbselection", "inlayer", PREFS_SELECTION_LAYER);
-    bool onlyvisible = prefs->getBool("options.kbselection", "onlyvisible", true);
-    bool onlysensitive = prefs->getBool("options.kbselection", "onlysensitive", true);
+    PrefsSelectionContext inlayer = (PrefsSelectionContext)prefs->getInt("/options/kbselection/inlayer", PREFS_SELECTION_LAYER);
+    bool onlyvisible = prefs->getBool("/options/kbselection/onlyvisible", true);
+    bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive", true);
 
     SPObject *root;
     if (PREFS_SELECTION_ALL != inlayer) {
@@ -1640,9 +1640,9 @@ sp_selection_item_prev(SPDesktop *desktop)
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    PrefsSelectionContext inlayer = (PrefsSelectionContext) prefs->getInt("options.kbselection", "inlayer", PREFS_SELECTION_LAYER);
-    bool onlyvisible = prefs->getBool("options.kbselection", "onlyvisible", true);
-    bool onlysensitive = prefs->getBool("options.kbselection", "onlysensitive", true);
+    PrefsSelectionContext inlayer = (PrefsSelectionContext) prefs->getInt("/options/kbselection/inlayer", PREFS_SELECTION_LAYER);
+    bool onlyvisible = prefs->getBool("/options/kbselection/onlyvisible", true);
+    bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive", true);
 
     SPObject *root;
     if (PREFS_SELECTION_ALL != inlayer) {
@@ -1710,8 +1710,8 @@ void sp_selection_edit_clip_or_mask(SPDesktop * dt, bool clip)
                             // take colors from prefs (same as used in outline mode)
                             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                             np->helperpath_rgba = clip ? 
-                                prefs->getInt("options.wireframecolors", "clips", 0x00ff00ff) : 
-                                prefs->getInt("options.wireframecolors", "masks", 0x0000ffff);
+                                prefs->getInt("/options/wireframecolors/clips", 0x00ff00ff) : 
+                                prefs->getInt("/options/wireframecolors/masks", 0x0000ffff);
                             np->helperpath_width = 1.0;
                             sp_nodepath_show_helperpath(np, true);
                         }
@@ -2044,7 +2044,7 @@ sp_select_clone_original(SPDesktop *desktop)
 
     if (original) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        bool highlight = prefs->getBool("options.highlightoriginal", "value");
+        bool highlight = prefs->getBool("/options/highlightoriginal/value");
         if (highlight) {
             boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2d_affine(item));
             boost::optional<Geom::Rect> b = original->getBounds(sp_item_i2d_affine(original));
@@ -2119,7 +2119,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
         repr_copies = g_slist_prepend (repr_copies, dup);
     }
 
-    NR::Rect bounds(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
+    Geom::Rect bounds(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
 
     if (apply) {
         // delete objects so that their clones don't get alerted; this object will be restored shortly
@@ -2133,8 +2133,8 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     // without disturbing clones.
     // See ActorAlign::on_button_click() in src/ui/dialog/align-and-distribute.cpp
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int saved_compensation = prefs->getInt("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
-    prefs->setInt("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+    int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+    prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
     gchar const *mark_id = generate_marker(repr_copies, bounds, doc,
                                            ( Geom::Matrix(Geom::Translate(desktop->dt2doc(
@@ -2145,7 +2145,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     (void)mark_id;
 
     // restore compensation setting
-    prefs->setInt("options.clonecompensation", "value", saved_compensation);
+    prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
 
     g_slist_free (items);
@@ -2184,8 +2184,8 @@ void sp_selection_to_guides(SPDesktop *desktop)
     }
     
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool deleteitem = !prefs->getBool("tools", "cvg_keep_objects", 0);
-    bool wholegroups = prefs->getBool("tools", "cvg_convert_whole_groups", 0);
+    bool deleteitem = !prefs->getBool("/tools/cvg_keep_objects", 0);
+    bool wholegroups = prefs->getBool("/tools/cvg_convert_whole_groups", 0);
 
     for (GSList const *i = items; i != NULL; i = i->next) {
         sp_selection_to_guides_recursive(SP_ITEM(i->data), deleteitem, wholegroups);
@@ -2257,8 +2257,8 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     // without disturbing clones.
     // See ActorAlign::on_button_click() in src/ui/dialog/align-and-distribute.cpp
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int saved_compensation = prefs->getInt("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
-    prefs->setInt("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+    int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
+    prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
     gchar const *pat_id = pattern_tile(repr_copies, bounds, doc,
                                        ( NR::Matrix(Geom::Translate(desktop->dt2doc(NR::Point(r->min()[NR::X],
@@ -2267,7 +2267,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
                                        parent_transform * move);
 
     // restore compensation setting
-    prefs->setInt("options.clonecompensation", "value", saved_compensation);
+    prefs->setInt("/options/clonecompensation/value", saved_compensation);
 
     if (apply) {
         Inkscape::XML::Node *rect = xml_doc->createElement("svg:rect");
@@ -2499,8 +2499,8 @@ sp_selection_create_bitmap_copy (SPDesktop *desktop)
     // Calculate resolution
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double res;
-    int const prefs_res = prefs->getInt("options.createbitmap", "resolution", 0);
-    int const prefs_min = prefs->getInt("options.createbitmap", "minsize", 0);
+    int const prefs_res = prefs->getInt("/options/createbitmap/resolution", 0);
+    int const prefs_min = prefs->getInt("/options/createbitmap/minsize", 0);
     if (0 < prefs_res) {
         // If it's given explicitly in prefs, take it
         res = prefs_res;
@@ -2532,11 +2532,11 @@ sp_selection_create_bitmap_copy (SPDesktop *desktop)
 
     // Find out if we have to run an external filter
     gchar const *run = NULL;
-    Glib::ustring filter = prefs->getString("options.createbitmap", "filter");
+    Glib::ustring filter = prefs->getString("/options/createbitmap/filter");
     if (!filter.empty()) {
         // filter command is given;
         // see if we have a parameter to pass to it
-        Glib::ustring param1 = prefs->getString("options.createbitmap", "filter_param1");
+        Glib::ustring param1 = prefs->getString("/options/createbitmap/filter_param1");
         if (!param1.empty()) {
             if (param1[param1.length() - 1] == '%') {
                 // if the param string ends with %, interpret it as a percentage of the image's max dimension
@@ -2678,8 +2678,8 @@ sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_la
     GSList *apply_to_items = NULL;
     GSList *items_to_delete = NULL;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool topmost = prefs->getBool("options.maskobject", "topmost", true);
-    bool remove_original = prefs->getBool("options.maskobject", "remove", true);
+    bool topmost = prefs->getBool("/options/maskobject/topmost", true);
+    bool remove_original = prefs->getBool("/options/maskobject/remove", true);
 
     if (apply_to_layer) {
         // all selected items are used for mask, which is applied to a layer
@@ -2782,7 +2782,7 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
     }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool remove_original = prefs->getBool("options.maskobject", "remove", true);
+    bool remove_original = prefs->getBool("/options/maskobject/remove", true);
     sp_document_ensure_up_to_date(doc);
 
     gchar const *attributeName = apply_clip_path ? "clip-path" : "mask";

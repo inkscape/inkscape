@@ -1,18 +1,16 @@
-#ifndef __TRACEDIALOG_H__
-#define __TRACEDIALOG_H__
-/*
- * A simple dialog for setting the parameters for autotracing a
- * bitmap <image> into an svg <path>
- *
- * Authors:
+/** @file
+ * @brief Bitmap tracing settings dialog
+ */
+/* Authors:
  *   Bob Jamison
  *   Other dudes from The Inkscape Organization
  *
  * Copyright (C) 2004, 2005 Authors
- *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifndef __TRACEDIALOG_H__
+#define __TRACEDIALOG_H__
 
 #include "verbs.h"
 #include "ui/widget/panel.h"
@@ -34,7 +32,7 @@ public:
      * Constructor
      */
     TraceDialog() : 
-     UI::Widget::Panel("", "dialogs.trace", SP_VERB_SELECTION_TRACE)
+     UI::Widget::Panel("", "/dialogs/trace", SP_VERB_SELECTION_TRACE)
      {}
 
 
@@ -56,8 +54,15 @@ public:
 } //namespace UI
 } //namespace Inkscape
 
-
-
-
 #endif /* __TRACEDIALOG_H__ */
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

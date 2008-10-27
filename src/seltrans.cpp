@@ -1,9 +1,7 @@
-#define __SELTRANS_C__
-
-/*
- * Helper object for transforming selected items
- *
- * Authors:
+/** @file
+ * @brief Helper object for transforming selected items
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Carl Hetherington <inkscape@carlh.net>
@@ -41,7 +39,7 @@
 #include "verbs.h"
 #include <glibmm/i18n.h>
 #include "display/sp-ctrlline.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "xml/repr.h"
 #include "mod360.h"
 #include <2geom/angle.h>
@@ -101,8 +99,9 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _stamp_cache(NULL),
     _message_context(desktop->messageStack())
 {
-    int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
-    _snap_bbox_type = (prefs_bbox ==0)?
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int prefs_bbox = prefs->getBool("/tools/bounding_box");
+    _snap_bbox_type = !prefs_bbox ?
         SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
 
     g_return_if_fail(desktop != NULL);
@@ -287,8 +286,8 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     // Next, get all points to consider for snapping
     SnapManager const &m = _desktop->namedview->snap_manager;
     _snap_points.clear();
-    _snap_points = selection->getSnapPoints(m.getIncludeItemCenter());
-    std::vector<Geom::Point> snap_points_hull = selection->getSnapPointsConvexHull();
+    _snap_points = selection->getSnapPoints(&m.snapprefs);
+    std::vector<Geom::Point> snap_points_hull = selection->getSnapPointsConvexHull(&m.snapprefs);
     if (_snap_points.size() > 100) {
         /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
         An average user would rarely ever try to snap such a large number of nodes anyway, because
@@ -815,9 +814,10 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, Geom::Point *position, 
 void Inkscape::SelTrans::_selChanged(Inkscape::Selection */*selection*/)
 {
     if (!_grabbed) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         // reread in case it changed on the fly:
-        int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
-         _snap_bbox_type = (prefs_bbox ==0)?
+        int prefs_bbox = prefs->getBool("/tools/bounding_box");
+         _snap_bbox_type = !prefs_bbox ?
             SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
         //SPItem::APPROXIMATE_BBOX will be replaced by SPItem::VISUAL_BBOX, as soon as the latter is implemented properly
 
@@ -932,8 +932,8 @@ gboolean Inkscape::SelTrans::scaleRequest(Geom::Point &pt, guint state)
             }
 
             // Snap along a suitable constraint vector from the origin.
-            bb = m.constrainedSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, default_scale, _origin_for_bboxpoints);
-            sn = m.constrainedSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, geom_scale, _origin_for_specpoints);
+            bb = m.constrainedSnapScale(SnapPreferences::SNAPPOINT_BBOX, _bbox_points, default_scale, _origin_for_bboxpoints);
+            sn = m.constrainedSnapScale(SnapPreferences::SNAPPOINT_NODE, _snap_points, geom_scale, _origin_for_specpoints);
 
             /* Choose the smaller difference in scale.  Since s[X] == s[Y] we can
             ** just compare difference in s[X].
@@ -942,8 +942,8 @@ gboolean Inkscape::SelTrans::scaleRequest(Geom::Point &pt, guint state)
             sd = sn.getSnapped() ? fabs(sn.getTransformation()[Geom::X] - geom_scale[Geom::X]) : NR_HUGE;
         } else {
             /* Scale aspect ratio is unlocked */
-            bb = m.freeSnapScale(Snapper::SNAPPOINT_BBOX, _bbox_points, default_scale, _origin_for_bboxpoints);
-            sn = m.freeSnapScale(Snapper::SNAPPOINT_NODE, _snap_points, geom_scale, _origin_for_specpoints);
+            bb = m.freeSnapScale(SnapPreferences::SNAPPOINT_BBOX, _bbox_points, default_scale, _origin_for_bboxpoints);
+            sn = m.freeSnapScale(SnapPreferences::SNAPPOINT_NODE, _snap_points, geom_scale, _origin_for_specpoints);
 
             /* Pick the snap that puts us closest to the original scale */
             bd = bb.getSnapped() ? fabs(Geom::L2(bb.getTransformation()) - Geom::L2(Geom::Point(default_scale[Geom::X], default_scale[Geom::Y]))) : NR_HUGE;
@@ -1031,8 +1031,8 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, Geom
 
         bool symmetrical = state & GDK_CONTROL_MASK;
 
-        bb = m.constrainedSnapStretch(Snapper::SNAPPOINT_BBOX, _bbox_points, Geom::Coord(default_scale[axis]), _origin_for_bboxpoints, Geom::Dim2(axis), symmetrical);
-        sn = m.constrainedSnapStretch(Snapper::SNAPPOINT_NODE, _snap_points, Geom::Coord(geom_scale[axis]), _origin_for_specpoints, Geom::Dim2(axis), symmetrical);
+        bb = m.constrainedSnapStretch(SnapPreferences::SNAPPOINT_BBOX, _bbox_points, Geom::Coord(default_scale[axis]), _origin_for_bboxpoints, Geom::Dim2(axis), symmetrical);
+        sn = m.constrainedSnapStretch(SnapPreferences::SNAPPOINT_NODE, _snap_points, Geom::Coord(geom_scale[axis]), _origin_for_specpoints, Geom::Dim2(axis), symmetrical);
 
         if (bb.getSnapped()) {
             // We snapped the bbox (which is either visual or geometric)
@@ -1129,8 +1129,9 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, Geom::P
     double radians = atan(skew[dim_a] / scale[dim_a]);
 
     if (state & GDK_CONTROL_MASK) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         // Snap to defined angle increments
-        int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
+        int snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
         if (snaps) {
             double sections = floor(radians * snaps / M_PI + .5);
             if (fabs(sections) >= snaps / 2) {
@@ -1148,7 +1149,7 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, Geom::P
         Inkscape::Snapper::ConstraintLine const constraint(component_vectors[dim_b]);
         // When skewing, we cannot snap the corners of the bounding box, see the comment in "constrainedSnapSkew" for details
         Geom::Point const s(skew[dim_a], scale[dim_a]);
-        Inkscape::SnappedPoint sn = m.constrainedSnapSkew(Inkscape::Snapper::SNAPPOINT_NODE, _snap_points, constraint, s, _origin, Geom::Dim2(dim_b));
+        Inkscape::SnappedPoint sn = m.constrainedSnapSkew(Inkscape::SnapPreferences::SNAPPOINT_NODE, _snap_points, constraint, s, _origin, Geom::Dim2(dim_b));
 
         if (sn.getSnapped()) {
             // We snapped something, so change the skew to reflect it
@@ -1198,7 +1199,8 @@ gboolean Inkscape::SelTrans::rotateRequest(Geom::Point &pt, guint state)
      *    the handle; otherwise it will be relative to the center as set for the selection
      */
 
-    int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
     // rotate affine in rotate
     Geom::Point const d1 = _point - _origin;
@@ -1250,7 +1252,7 @@ gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
 {
     SnapManager &m = _desktop->namedview->snap_manager;
     m.setup(_desktop);
-    m.freeSnapReturnByRef(Snapper::SNAPPOINT_NODE, pt);
+    m.freeSnapReturnByRef(SnapPreferences::SNAPPOINT_NODE, pt);
 
     if (state & GDK_CONTROL_MASK) {
         if ( fabs(_point[Geom::X] - pt[Geom::X]) > fabs(_point[Geom::Y] - pt[Geom::Y]) ) {
@@ -1358,7 +1360,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
         ** FIXME: this will snap to more than just the grid, nowadays.
         */
 
-        m.freeSnapReturnByRef(Snapper::SNAPPOINT_NODE, dxy);
+        m.freeSnapReturnByRef(SnapPreferences::SNAPPOINT_NODE, dxy);
 
     } else if (!shift) {
 
@@ -1380,12 +1382,12 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
                 // the constraint-line once. The constraint lines are parallel, but might not be colinear.
                 // Therefore we will have to set the point through which the constraint-line runs
                 // individually for each point to be snapped; this will be handled however by _snapTransformed()
-                s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX,
+                s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_BBOX,
                                                          _bbox_points,
                                                          Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
                                                          dxy));
 
-                s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::SNAPPOINT_NODE,
+                s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_NODE,
                                                          _snap_points,
                                                          Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
                                                          dxy));
@@ -1399,8 +1401,8 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
     		g_get_current_time(&starttime); */
 
             /* Snap to things with no constraint */
-			s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_BBOX, _bbox_points, dxy));
-        	s.push_back(m.freeSnapTranslation(Inkscape::Snapper::SNAPPOINT_NODE, _snap_points, dxy));
+			s.push_back(m.freeSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_BBOX, _bbox_points, dxy));
+        	s.push_back(m.freeSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_NODE, _snap_points, dxy));
 
           	/*g_get_current_time(&endtime);
           	double elapsed = ((((double)endtime.tv_sec - starttime.tv_sec) * G_USEC_PER_SEC + (endtime.tv_usec - starttime.tv_usec))) / 1000.0;
@@ -1471,7 +1473,8 @@ Geom::Point Inkscape::SelTrans::_getGeomHandlePos(Geom::Point const &visual_hand
     Geom::Point normalized_handle_pos = (visual_handle_pos - new_bbox.min()) * Geom::Scale(new_bbox.dimensions()).inverse();
 
     // Calculate the absolute affine while taking into account the scaling of the stroke width
-    int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool transform_stroke = prefs->getBool("/options/transform/stroke", true);
     Geom::Matrix abs_affine = get_scale_transform_with_stroke (*_bbox, _strokewidth, transform_stroke,
                     new_bbox.min()[Geom::X], new_bbox.min()[Geom::Y], new_bbox.max()[Geom::X], new_bbox.max()[Geom::Y]);
 
@@ -1510,11 +1513,12 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineDefault(Geom::Scale const default_
     Geom::Point new_bbox_min = _approximate_bbox->min() * abs_affine;
     Geom::Point new_bbox_max = _approximate_bbox->max() * abs_affine;
 
-    int transform_stroke = false;
+    bool transform_stroke = false;
     gdouble strokewidth = 0;
 
     if ( _snap_bbox_type != SPItem::GEOMETRIC_BBOX) {
-        transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        transform_stroke = prefs->getBool("/options/transform/stroke", true);
         strokewidth = _strokewidth;
     }
 
@@ -1531,13 +1535,13 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
     _relative_affine = Geom::Matrix(geom_scale);
     _absolute_affine = Geom::Translate(-_origin_for_specpoints) * _relative_affine * Geom::Translate(_origin_for_specpoints);
 
-    bool const transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool const transform_stroke = prefs->getBool("/options/transform/stroke", true);
     Geom::Rect visual_bbox = get_visual_bbox(_geometric_bbox, _absolute_affine, _strokewidth, transform_stroke);
 
     // return the new handle position
     return visual_bbox.min() + visual_bbox.dimensions() * Geom::Scale(_handle_x, _handle_y);
 }
-
 
 /*
   Local Variables:
@@ -1548,4 +1552,4 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

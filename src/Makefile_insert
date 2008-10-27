@@ -81,7 +81,6 @@ libinkpre_a_SOURCES =	\
 	filter-chemistry.cpp filter-chemistry.h \
 	filter-enums.cpp filter-enums.h \
 	flood-context.cpp flood-context.h	\
-	fontsize-expansion.cpp fontsize-expansion.h	\
 	forward.h	\
 	gradient-context.cpp gradient-context.h \
 	gradient-drag.cpp gradient-drag.h \
@@ -131,8 +130,6 @@ libinkpre_a_SOURCES =	\
 	menus-skeleton.h	\
 	prefix.cpp	\
 	prefix.h	\
-	prefs-utils.cpp	\
-	prefs-utils.h	\
 	print.cpp print.h	\
 	profile-manager.cpp	\
 	profile-manager.h	\
@@ -151,6 +148,7 @@ libinkpre_a_SOURCES =	\
 	shape-editor.cpp shape-editor.h \
 	shortcuts.cpp shortcuts.h	\
 	snap.cpp snap.h	\
+	snap-preferences.cpp snap-preferences.h \
 	snapped-curve.cpp snapped-curve.h \
 	snapped-line.cpp snapped-line.h \
 	snapped-point.cpp snapped-point.h \

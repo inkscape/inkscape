@@ -46,7 +46,7 @@
 #include "desktop-affine.h"
 #include "desktop-style.h"
 #include "message-context.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "pixmaps/cursor-eraser.xpm"
 #include "xml/repr.h"
 #include "context-fns.h"
@@ -84,7 +84,7 @@ static void sp_eraser_context_init(SPEraserContext *erc);
 static void sp_eraser_context_dispose(GObject *object);
 
 static void sp_eraser_context_setup(SPEventContext *ec);
-static void sp_eraser_context_set(SPEventContext *ec, gchar const *key, gchar const *val);
+static void sp_eraser_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_eraser_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
 static void clear_current(SPEraserContext *dc);
@@ -204,7 +204,8 @@ static ProfileFloatElement f_profile[PROFILE_FLOAT_SIZE] = {
 
     erc->_message_context = new Inkscape::MessageContext(desktop->messageStack());
 
-    if (prefs_get_int_attribute("tools.eraser", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/eraser/selcue", 0) != 0) {
         ec->enableSelectionCue();
     }
 // TODO temp force:
@@ -213,11 +214,11 @@ static ProfileFloatElement f_profile[PROFILE_FLOAT_SIZE] = {
 }
 
 static void
-sp_eraser_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
+sp_eraser_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     //pass on up to parent class to handle common attributes.
     if ( eraser_parent_class->set ) {
-        eraser_parent_class->set(ec, key, val);
+        eraser_parent_class->set(ec, val);
     }
 }
 
@@ -295,7 +296,7 @@ sp_eraser_apply(SPEraserContext *dc, Geom::Point p)
     // This prevents flips, blobs, and jerks caused by microscopic tremor of the tablet pen,
     // especially bothersome at the start of the stroke where we don't yet have the inertia to
     // smooth them out.
-    if ( NR::L2(force) < ERASER_EPSILON || (dc->vel_max < ERASER_VEL_START && NR::L2(force) < ERASER_EPSILON_START)) {
+    if ( Geom::L2(force) < ERASER_EPSILON || (dc->vel_max < ERASER_VEL_START && Geom::L2(force) < ERASER_EPSILON_START)) {
         return FALSE;
     }
 
@@ -304,8 +305,8 @@ sp_eraser_apply(SPEraserContext *dc, Geom::Point p)
     /* Calculate new velocity */
     dc->vel += dc->acc;
 
-    if (NR::L2(dc->vel) > dc->vel_max)
-        dc->vel_max = NR::L2(dc->vel);
+    if (Geom::L2(dc->vel) > dc->vel_max)
+        dc->vel_max = Geom::L2(dc->vel);
 
     /* Calculate angle of drawing tool */
 
@@ -717,7 +718,7 @@ set_to_accumulated(SPEraserContext *dc)
             Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 
             /* Set style */
-            sp_desktop_apply_style_tool (desktop, repr, "tools.eraser", false);
+            sp_desktop_apply_style_tool (desktop, repr, "/tools/eraser", false);
 
             dc->repr = repr;
 
@@ -735,7 +736,9 @@ set_to_accumulated(SPEraserContext *dc)
         if ( dc->repr ) {
             bool wasSelection = false;
             Inkscape::Selection *selection = sp_desktop_selection(desktop);
-            gint eraserMode = (prefs_get_int_attribute("tools.eraser", "mode", 0) != 0) ? 1 : 0;
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            
+            gint eraserMode = prefs->getBool("/tools/eraser/mode") ? 1 : 0;
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
 
             SPItem* acid = SP_ITEM(desktop->doc()->getObjectByRepr(dc->repr));
@@ -1001,7 +1004,8 @@ fit_and_split(SPEraserContext *dc, gboolean release)
         g_print("[%d]Yup\n", dc->npoints);
 #endif
         if (!release) {
-            gint eraserMode = (prefs_get_int_attribute("tools.eraser", "mode", 0) != 0) ? 1 : 0;
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            gint eraserMode = prefs->getBool("/tools/eraser/mode") ? 1 : 0;
             g_assert(!dc->currentcurve->is_empty());
 
             SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(desktop),
@@ -1011,11 +1015,11 @@ fit_and_split(SPEraserContext *dc, gboolean release)
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve);
             curve->unref();
 
-            guint32 fillColor = sp_desktop_get_color_tool (desktop, "tools.eraser", true);
-            //guint32 strokeColor = sp_desktop_get_color_tool (desktop, "tools.eraser", false);
-            double opacity = sp_desktop_get_master_opacity_tool (desktop, "tools.eraser");
-            double fillOpacity = sp_desktop_get_opacity_tool (desktop, "tools.eraser", true);
-            //double strokeOpacity = sp_desktop_get_opacity_tool (desktop, "tools.eraser", false);
+            guint32 fillColor = sp_desktop_get_color_tool (desktop, "/tools/eraser", true);
+            //guint32 strokeColor = sp_desktop_get_color_tool (desktop, "/tools/eraser", false);
+            double opacity = sp_desktop_get_master_opacity_tool (desktop, "/tools/eraser");
+            double fillOpacity = sp_desktop_get_opacity_tool (desktop, "/tools/eraser", true);
+            //double strokeOpacity = sp_desktop_get_opacity_tool (desktop, "/tools/eraser", false);
             sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cbp), ((fillColor & 0xffffff00) | SP_COLOR_F_TO_U(opacity*fillOpacity)), SP_WIND_RULE_EVENODD);
             //on second thougtht don't do stroke yet because we don't have stoke-width yet and because stoke appears between segments while drawing
             //sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cbp), ((strokeColor & 0xffffff00) | SP_COLOR_F_TO_U(opacity*strokeOpacity)), 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);

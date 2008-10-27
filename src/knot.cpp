@@ -24,7 +24,7 @@
 #include "desktop-handles.h"
 #include "knot.h"
 #include "document.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "message-stack.h"
 #include "message-context.h"
 #include "event-context.h"
@@ -299,7 +299,8 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
     }
 
     g_object_ref(knot);
-    tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     switch (event->type) {
 	case GDK_2BUTTON_PRESS:

@@ -25,6 +25,7 @@
 #include <libnr/nr-rect.h>
 #include <2geom/forward.h>
 #include <libnr/nr-convert2geom.h>
+#include <snap-preferences.h>
 
 class SPGuideConstraint;
 struct SPClipPathReference;
@@ -195,7 +196,7 @@ struct SPItemClass {
     /** Write to an iterator the points that should be considered for snapping
      * as the item's `nodes'.
      */
-    void (* snappoints) (SPItem const *item, SnapPointsIter p);
+    void (* snappoints) (SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
     
     /** Apply the transform optimally, and return any residual transformation */
     Geom::Matrix (* set_transform)(SPItem *item, Geom::Matrix const &transform);
@@ -228,7 +229,7 @@ unsigned int sp_item_display_key_new(unsigned int numkeys);
 NRArenaItem *sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 void sp_item_invoke_hide(SPItem *item, unsigned int key);
 
-void sp_item_snappoints(SPItem const *item, bool includeItemCenter, SnapPointsIter p);
+void sp_item_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
 
 void sp_item_adjust_pattern(SPItem *item, /* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);
 void sp_item_adjust_gradient(SPItem *item, /* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);

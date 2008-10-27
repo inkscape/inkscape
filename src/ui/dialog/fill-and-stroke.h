@@ -1,8 +1,7 @@
-/**
- * \brief Fill and Stroke dialog
- * based on sp_object_properties_dialog
- *
- * Authors:
+/** @file
+ * @brief Fill and Stroke dialog
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Gustav Broberg <broberg@kth.se>
  *

@@ -38,7 +38,7 @@
 #include "pixmaps/cursor-star.xpm"
 #include "sp-metrics.h"
 #include <glibmm/i18n.h>
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
 #include "object-edit.h"
@@ -51,7 +51,7 @@ static void sp_star_context_init (SPStarContext * star_context);
 static void sp_star_context_dispose (GObject *object);
 
 static void sp_star_context_setup (SPEventContext *ec);
-static void sp_star_context_set (SPEventContext *ec, const gchar *key, const gchar *val);
+static void sp_star_context_set (SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_star_context_root_handler (SPEventContext *ec, GdkEvent *event);
 
 static void sp_star_drag (SPStarContext * sc, NR::Point p, guint state);
@@ -226,11 +226,12 @@ sp_star_context_setup (SPEventContext *ec)
     sc->sel_changed_connection.disconnect();
     sc->sel_changed_connection = selection->connectChanged(sigc::bind(sigc::ptr_fun(&sp_star_context_selection_changed), (gpointer)sc));
 
-    if (prefs_get_int_attribute("tools.shapes", "selcue", 0) != 0) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/tools/shapes/selcue")) {
         ec->enableSelectionCue();
     }
 
-    if (prefs_get_int_attribute("tools.shapes", "gradientdrag", 0) != 0) {
+    if (prefs->getBool("/tools/shapes/gradientdrag")) {
         ec->enableGrDrag();
     }
 
@@ -238,24 +239,21 @@ sp_star_context_setup (SPEventContext *ec)
 }
 
 static void
-sp_star_context_set (SPEventContext *ec, const gchar *key, const gchar *val)
+sp_star_context_set (SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     SPStarContext *sc = SP_STAR_CONTEXT (ec);
-    if (!strcmp (key, "magnitude")) {
-        sc->magnitude = (val) ? atoi (val) : 5;
-        sc->magnitude = CLAMP (sc->magnitude, 3, 1024);
-    } else if (!strcmp (key, "proportion")) {
-        sc->proportion = (val) ? g_ascii_strtod (val, NULL) : 0.5;
-        sc->proportion = CLAMP (sc->proportion, 0.01, 2.0);
-    } else if (!strcmp (key, "isflatsided")) {
-        if (val && !strcmp(val, "true"))
-            sc->isflatsided = true;
-        else
-            sc->isflatsided = false;
-    } else if (!strcmp (key, "rounded")) {
-        sc->rounded = (val) ? g_ascii_strtod (val, NULL) : 0.0;
-    } else if (!strcmp (key, "randomized")) {
-        sc->randomized = (val) ? g_ascii_strtod (val, NULL) : 0.0;
+    Glib::ustring path = val->getEntryName();
+    
+    if (path == "magnitude") {
+        sc->magnitude = CLAMP (val->getInt(5), 3, 1024);
+    } else if (path == "proportion") {
+        sc->proportion = CLAMP (val->getDouble(0.5), 0.01, 2.0);
+    } else if (path == "isflatsided") {
+        sc->isflatsided = val->getBool();
+    } else if (path == "rounded") {
+        sc->rounded = val->getDouble();
+    } else if (path == "randomized") {
+        sc->randomized = val->getDouble();
     }
 }
 
@@ -265,10 +263,11 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
 
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     SPStarContext *sc = SP_STAR_CONTEXT (event_context);
 
-    event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
+    event_context->tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
     gint ret = FALSE;
 
@@ -284,7 +283,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, true);
             Geom::Point pt2g = to_2geom(sc->center);
-            m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);
+            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
             sc->center = from_2geom(pt2g);
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -426,7 +425,8 @@ static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
 
-    int const snaps = prefs_get_int_attribute ("options.rotationsnapsperpi", "value", 12);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
     if (!sc->item) {
 
@@ -440,7 +440,7 @@ static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
         repr->setAttribute("sodipodi:type", "star");
 
         /* Set style */
-        sp_desktop_apply_style_tool(desktop, repr, "tools.shapes.star", false);
+        sp_desktop_apply_style_tool(desktop, repr, "/tools/shapes/star", false);
 
         sc->item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
         Inkscape::GC::release(repr);
@@ -454,7 +454,7 @@ static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, sc->item);
     Geom::Point pt2g = to_2geom(p);
-    m.freeSnapReturnByRef(Inkscape::Snapper::SNAPPOINT_NODE, pt2g);    
+    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);    
     
     Geom::Point const p0 = to_2geom(sp_desktop_dt2root_xy_point(desktop, sc->center));
     Geom::Point const p1 = to_2geom(sp_desktop_dt2root_xy_point(desktop, from_2geom(pt2g)));

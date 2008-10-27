@@ -1,7 +1,7 @@
-/**
- * \brief Filter Effects dialog
- *
- * Authors:
+/** @file
+ * @brief Filter Effects dialog
+ */
+/* Authors:
  *   Nicholas Bishop <nicholasbishop@gmail.com>
  *   Rodrigo Kumpera <kumpera@gmail.com>
  *

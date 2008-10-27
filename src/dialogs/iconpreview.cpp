@@ -25,7 +25,7 @@
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/stock.h>
 
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "inkscape.h"
 #include "document.h"
 #include "desktop-handles.h"
@@ -50,7 +50,7 @@ namespace Dialogs {
 IconPreviewPanel&
 IconPreviewPanel::getInstance()
 {
-    IconPreviewPanel &instance = *new IconPreviewPanel();
+    static IconPreviewPanel &instance = *new IconPreviewPanel();
 
     instance.refreshPreview();
 
@@ -82,39 +82,32 @@ void IconPreviewPanel::on_button_clicked(int which)
  * Constructor
  */
 IconPreviewPanel::IconPreviewPanel() :
-    UI::Widget::Panel("", "dialogs.iconpreview", SP_VERB_VIEW_ICON_PREVIEW),
+    UI::Widget::Panel("", "/dialogs/iconpreview", SP_VERB_VIEW_ICON_PREVIEW),
     hot(1),
     refreshButton(0),
     selectionButton(0)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     numEntries = 0;
-    Inkscape::XML::Node *things = inkscape_get_repr(INKSCAPE, "iconpreview.sizes.default");
-    if (things) {
-        std::vector<int> rawSizes;
-        for ( Inkscape::XML::Node *child = things->firstChild(); child; child = child->next() )
-        {
-            gchar const *id = child->attribute("id");
-            if ( id )
-            {
-                std::string path("iconpreview.sizes.default.");
-                path += id;
-                gint show = prefs_get_int_attribute_limited( path.c_str(), "show", 1, 0, 1 );
-                gint sizeVal = prefs_get_int_attribute( path.c_str(), "value", -1 );
-                if ( show && (sizeVal > 0) )
-                {
-                    rawSizes.push_back( sizeVal );
-                }
+
+    std::vector<Glib::ustring> pref_sizes = prefs->getAllDirs("/iconpreview/sizes/default");
+    std::vector<int> rawSizes;
+    
+    for (std::vector<Glib::ustring>::iterator i = pref_sizes.begin(); i != pref_sizes.end(); ++i) {
+        if (prefs->getBool(*i + "/show", true)) {
+            int sizeVal = prefs->getInt(*i + "/value", -1);
+            if (sizeVal > 0) {
+                rawSizes.push_back(sizeVal);
             }
         }
+    }
 
-        if ( !rawSizes.empty() )
-        {
-            numEntries = rawSizes.size();
-            sizes = new int[numEntries];
-            int i = 0;
-            for ( std::vector<int>::iterator it = rawSizes.begin(); it != rawSizes.end(); ++it, ++i ) {
-                sizes[i] = *it;
-            }
+    if ( !rawSizes.empty() ) {
+        numEntries = rawSizes.size();
+        sizes = new int[numEntries];
+        int i = 0;
+        for ( std::vector<int>::iterator it = rawSizes.begin(); it != rawSizes.end(); ++it, ++i ) {
+            sizes[i] = *it;
         }
     }
 
@@ -189,7 +182,7 @@ IconPreviewPanel::IconPreviewPanel() :
     tips.set_tip((*selectionButton), _("Selection only or whole document"));
     selectionButton->signal_clicked().connect( sigc::mem_fun(*this, &IconPreviewPanel::modeToggled) );
 
-    gint val = prefs_get_int_attribute_limited( "iconpreview", "selectionOnly", 0, 0, 1 );
+    gint val = prefs->getBool("/iconpreview/selectionOnly");
     selectionButton->set_active( val != 0 );
 
     refreshButton = new Gtk::Button(Gtk::Stock::REFRESH); // , GTK_RESPONSE_APPLY
@@ -248,7 +241,8 @@ void IconPreviewPanel::refreshPreview()
 
 void IconPreviewPanel::modeToggled()
 {
-    prefs_set_int_attribute( "iconpreview", "selectionOnly", (selectionButton && selectionButton->get_active()) ? 1 : 0 );
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/iconpreview/selectionOnly", (selectionButton && selectionButton->get_active()));
 
     refreshPreview();
 }
@@ -307,13 +301,9 @@ void IconPreviewPanel::updateMagnify()
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
-
-//#########################################################################
-//## E N D    O F    F I L E
-//#########################################################################
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

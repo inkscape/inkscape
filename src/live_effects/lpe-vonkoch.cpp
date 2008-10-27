@@ -305,14 +305,6 @@ LPEVonKoch::resetDefaults(SPItem * item)
     //generator.set_new_value(paths, true);
 }
 
-void
-LPEVonKoch::transform_multiply(Geom::Matrix const& postmul, bool set)
-{
-    // TODO: implement correct transformation instead of this default behavior
-    Effect::transform_multiply(postmul, set);
-}
-
-
 } // namespace LivePathEffect
 } /* namespace Inkscape */
 

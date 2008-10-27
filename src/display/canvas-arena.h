@@ -32,7 +32,7 @@ struct _SPCanvasArena {
 
     guint cursor : 1;
     guint sticky : 1;
-    NR::Point c; // what is this?
+    Geom::Point c; // what is this?
 
     NRArena *arena;
     NRArenaItem *root;

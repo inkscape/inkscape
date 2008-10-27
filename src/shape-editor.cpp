@@ -25,7 +25,7 @@
 #include "live_effects/parameter/pointparam-knotholder.h"
 #include "nodepath.h"
 #include "xml/node-event-vector.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "object-edit.h"
 #include "style.h"
 #include "display/curve.h"
@@ -241,7 +241,8 @@ void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
         switch(type) {
             case SH_NODEPATH:
                 if (SP_IS_LPE_ITEM(item)) {
-                    this->nodepath = sp_nodepath_new(desktop, item, (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
+                    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                    this->nodepath = sp_nodepath_new(desktop, item, (prefs->getBool("/tools/nodes/show_handles", true)));
                 }
                 if (this->nodepath) {
                     this->nodepath->shape_editor = this;
@@ -286,8 +287,9 @@ void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject,
     this->grab_node = -1;
 
     if (lpeobject) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         this->nodepath = sp_nodepath_new( desktop, lpeobject,
-                                          (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0),
+                                          (prefs->getInt("/tools/nodes/show_handles", true)),
                                           key, item);
         if (this->nodepath) {
             this->nodepath->shape_editor = this;
@@ -377,13 +379,14 @@ bool ShapeEditor::is_over_stroke (Geom::Point event_p, bool remember) {
 
     delta = desktop->d2w(delta);
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double stroke_tolerance =
         (( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
            desktop->current_zoom() *
            SP_OBJECT_STYLE (item)->stroke_width.computed * 0.5 *
            to_2geom(sp_item_i2d_affine(item)).descrim()
          : 0.0)
-         + prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100)) / to_2geom(sp_item_i2d_affine(item)).descrim();
+         + prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100)) / to_2geom(sp_item_i2d_affine(item)).descrim();
     bool close = (Geom::L2 (delta) < stroke_tolerance);
 
     if (remember && close) {

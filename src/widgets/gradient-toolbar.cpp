@@ -26,7 +26,7 @@
 #include "widgets/gradient-image.h"
 #include "style.h"
 
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "document-private.h"
 #include "desktop.h"
 #include "desktop-handles.h"
@@ -47,25 +47,27 @@
 //########################
 
 static void gr_toggle_type (GtkWidget *button, gpointer data) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     GtkWidget *linear = (GtkWidget *) g_object_get_data (G_OBJECT(data), "linear");
     GtkWidget *radial = (GtkWidget *) g_object_get_data (G_OBJECT(data), "radial");
     if (button == linear && gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (linear))) {
-        prefs_set_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR);
+        prefs->setInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR);
         if (radial) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radial), FALSE);
     } else if (button == radial && gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radial))) {
-        prefs_set_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_RADIAL);
+        prefs->setInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_RADIAL);
         if (linear) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (linear), FALSE);
     }
 }
 
 static void gr_toggle_fillstroke (GtkWidget *button, gpointer data) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     GtkWidget *fill = (GtkWidget *) g_object_get_data (G_OBJECT(data), "fill");
     GtkWidget *stroke = (GtkWidget *) g_object_get_data (G_OBJECT(data), "stroke");
     if (button == fill && gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (fill))) {
-        prefs_set_int_attribute ("tools.gradient", "newfillorstroke", 1);
+        prefs->setBool("/tools/gradient/newfillorstroke", true);
         if (stroke) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (stroke), FALSE);
     } else if (button == stroke && gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (stroke))) {
-        prefs_set_int_attribute ("tools.gradient", "newfillorstroke", 0);
+        prefs->setBool("/tools/gradient/newfillorstroke", false);
         if (fill) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (fill), FALSE);
     }
 }
@@ -113,8 +115,9 @@ gradient.
 void
 gr_apply_gradient (Inkscape::Selection *selection, GrDrag *drag, SPGradient *gr)
 {
-    SPGradientType new_type = (SPGradientType) prefs_get_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR);
-    guint new_fill = prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    SPGradientType new_type = (SPGradientType) prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR);
+    guint new_fill = prefs->getBool("/tools/gradient/newfillorstroke", true);
 
 
     // GRADIENTFIXME: make this work for multiple selected draggers.
@@ -512,6 +515,7 @@ gr_change_widget (SPDesktop *desktop)
 GtkWidget *
 sp_gradient_toolbox_new(SPDesktop *desktop)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     GtkWidget *tbl = gtk_toolbar_new();
 
     gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
@@ -537,7 +541,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_type), tbl);
     g_object_set_data(G_OBJECT(tbl), "linear", button);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-              prefs_get_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR) == SP_GRADIENT_TYPE_LINEAR);
+              prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR) == SP_GRADIENT_TYPE_LINEAR);
     gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
     }
 
@@ -551,7 +555,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_type), tbl);
     g_object_set_data(G_OBJECT(tbl), "radial", button);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-              prefs_get_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR) == SP_GRADIENT_TYPE_RADIAL);
+              prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR) == SP_GRADIENT_TYPE_RADIAL);
     gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
     }
 
@@ -579,7 +583,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_fillstroke), tbl);
     g_object_set_data(G_OBJECT(tbl), "fill", button);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                  prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1) == 1);
+                                  prefs->getBool("/tools/gradient/newfillorstroke", true));
     gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
     }
 
@@ -593,7 +597,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_fillstroke), tbl);
     g_object_set_data(G_OBJECT(tbl), "stroke", button);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                  prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1) == 0);
+                                  !prefs->getBool("/tools/gradient/newfillorstroke", true));
     gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
     }
 

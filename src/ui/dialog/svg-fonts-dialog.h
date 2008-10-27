@@ -1,11 +1,10 @@
-/**
- * \brief SVG Fonts dialog
- *
- * Authors:
+/** @file
+ * @brief SVG Fonts dialog
+ */
+/* Authors:
  *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
  *
  * Copyright (C) 2008 Authors
- *
  * Released under GNU GPLv2 (or later).  Read the file 'COPYING' for more information.
  */
 

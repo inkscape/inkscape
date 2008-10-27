@@ -1,11 +1,10 @@
-/**
- * \brief SVG Fonts dialog
- *
- * Authors:
+/** @file
+ * @brief SVG Fonts dialog - implementation
+ */
+/* Authors:
  *   Felipe C. da S. Sanches <felipe.sanches@gmail.com>
  *
  * Copyright (C) 2008 Authors
- *
  * Released under GNU GPLv2 (or later).  Read the file 'COPYING' for more information.
  */
 
@@ -249,12 +248,12 @@ Gtk::VBox* SvgFontsDialog::global_settings_tab(){
     Gtk::VBox* global_vbox = Gtk::manage(new Gtk::VBox());
 
     AttrEntry* familyname;
-    familyname = new AttrEntry(this, (gchar*) "Family Name", SP_PROP_FONT_FAMILY);
+    familyname = new AttrEntry(this, (gchar*) _("Family Name:"), SP_PROP_FONT_FAMILY);
 
     global_vbox->add(*familyname);
-    global_vbox->add(*AttrCombo((gchar*) "Style", SP_PROP_FONT_STYLE));
-    global_vbox->add(*AttrCombo((gchar*) "Variant", SP_PROP_FONT_VARIANT));
-    global_vbox->add(*AttrCombo((gchar*) "Weight", SP_PROP_FONT_WEIGHT));
+    global_vbox->add(*AttrCombo((gchar*) _("Style:"), SP_PROP_FONT_STYLE));
+    global_vbox->add(*AttrCombo((gchar*) _("Variant:"), SP_PROP_FONT_VARIANT));
+    global_vbox->add(*AttrCombo((gchar*) _("Weight:"), SP_PROP_FONT_WEIGHT));
 
 //Set Width (horiz_adv_x):
     Gtk::HBox* setwidth_hbox = Gtk::manage(new Gtk::HBox());
@@ -271,8 +270,8 @@ Gtk::VBox* SvgFontsDialog::global_settings_tab(){
 
 Gtk::VBox* SvgFontsDialog::glyphs_tab(){
     Gtk::VBox* glyphs_vbox = Gtk::manage(new Gtk::VBox());
-    glyphs_vbox->add(*new SvgFontsDialog::AttrEntry(this, (gchar*) "Glyph Name", SP_ATTR_GLYPH_NAME));
-    glyphs_vbox->add(*new SvgFontsDialog::AttrEntry(this, (gchar*) "Unicode", SP_ATTR_UNICODE));
+    glyphs_vbox->add(*new SvgFontsDialog::AttrEntry(this, (gchar*) _("Glyph Name:"), SP_ATTR_GLYPH_NAME));
+    glyphs_vbox->add(*new SvgFontsDialog::AttrEntry(this, (gchar*) _("Unicode:"), SP_ATTR_UNICODE));
     //glyphs_vbox->add(*AttrSpin((gchar*) "Horizontal Advance"), SP_ATTR_HORIZ_ADV_X);
     //glyphs_vbox->add(*AttrCombo((gchar*) "Missing Glyph"), SP_ATTR_); ?
     return glyphs_vbox;
@@ -309,7 +308,7 @@ Gtk::VBox* SvgFontsDialog::kerning_tab(){
 }
 
 SvgFontsDialog::SvgFontsDialog()
- : UI::Widget::Panel("", "dialogs.svgfonts", SP_VERB_DIALOG_SVG_FONTS)
+ : UI::Widget::Panel("", "/dialogs/svgfonts", SP_VERB_DIALOG_SVG_FONTS)
 {
     Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
     hbox->add(_font_list);

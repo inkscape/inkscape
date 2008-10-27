@@ -25,9 +25,9 @@ use strict;
 # Table generated automatically using:
 #  zcat /usr/share/man/man7/groff_char.7.gz |groff -man -Tutf8| col -pb | grep '\\\['|
 #   perl -CI -nae 'my ($ch, $seq) = @F; if (ord($ch) >= 128) { printf(" 0x\%x, q{\%s},\n", ord($ch), $seq); }'
-# with č (0x10d) manually translated as ˇc (\[ah]c).  (Anyone have a better translation, e.g. using
+# with č (0x10d) manually translated as cˇ (c\[ah]).  (Anyone have a better translation, e.g. using
 # overprint?  \[vc] doesn't work, btw.)
-# Similarly, ć (0x107) has been manually translated as ´c (\[aa]c).
+# Similarly, ć (0x107) has been manually translated as c´ (c\[aa]), and ń (0x144) as n´ (n\[aa]).
 my %map = (
  0xd0, q{\[-D]},
  0xf0, q{\[Sd]},
@@ -94,8 +94,8 @@ my %map = (
  0xe3, q{\[~a]},
  0xf1, q{\[~n]},
  0xf5, q{\[~o]},
- 0x107, q{\[aa]c},  # Added manually; see above.
- 0x10d, q{\[ah]c},  # Added manually; see above.
+ 0x107, q{c\[aa]}, # Added manually; see above.
+ 0x10d, q{c\[ah]}, # Added manually; see above.
  0x160, q{\[vS]},
  0x161, q{\[vs]},
  0x17d, q{\[vZ]},
@@ -104,6 +104,7 @@ my %map = (
  0xe7, q{\[,c]},
  0x141, q{\[/L]},
  0x142, q{\[/l]},
+ 0x144, q{n\[aa]}, # Added manually; see above.
  0xd8, q{\[/O]},
  0xf8, q{\[/o]},
  0xc5, q{\[oA]},

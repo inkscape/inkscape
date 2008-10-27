@@ -363,7 +363,7 @@ sp_flowtext_print(SPItem *item, SPPrintContext *ctx)
     dbox.y0 = 0.0;
     dbox.x1 = sp_document_width(SP_OBJECT_DOCUMENT(item));
     dbox.y1 = sp_document_height(SP_OBJECT_DOCUMENT(item));
-    NR::Matrix const ctm (sp_item_i2d_affine(item));
+    Geom::Matrix const ctm (sp_item_i2d_affine(item));
 
     group->layout.print(ctx, &pbox, &dbox, &bbox, ctm);
 }
@@ -533,9 +533,9 @@ SPFlowtext::getAsText()
     Inkscape::XML::Node *repr = xml_doc->createElement("svg:text");
     repr->setAttribute("xml:space", "preserve");
     repr->setAttribute("style", SP_OBJECT_REPR(this)->attribute("style"));
-    NR::Point anchor_point = this->layout.characterAnchorPoint(this->layout.begin());
-    sp_repr_set_svg_double(repr, "x", anchor_point[NR::X]);
-    sp_repr_set_svg_double(repr, "y", anchor_point[NR::Y]);
+    Geom::Point anchor_point = this->layout.characterAnchorPoint(this->layout.begin());
+    sp_repr_set_svg_double(repr, "x", anchor_point[Geom::X]);
+    sp_repr_set_svg_double(repr, "y", anchor_point[Geom::Y]);
 
     for (Inkscape::Text::Layout::iterator it = this->layout.begin() ; it != this->layout.end() ; ) {
         Inkscape::XML::Node *line_tspan = xml_doc->createElement("svg:tspan");
@@ -547,7 +547,7 @@ SPFlowtext::getAsText()
         while (it != it_line_end) {
 
             Inkscape::XML::Node *span_tspan = xml_doc->createElement("svg:tspan");
-            NR::Point anchor_point = this->layout.characterAnchorPoint(it);
+            Geom::Point anchor_point = this->layout.characterAnchorPoint(it);
             // use kerning to simulate justification and whatnot
             Inkscape::Text::Layout::iterator it_span_end = it;
             it_span_end.nextStartOfSpan();
@@ -574,9 +574,9 @@ SPFlowtext::getAsText()
                 attrs.dx[0] = 0.0;
             TextTagAttributes(attrs).writeTo(span_tspan);
             if (set_x)
-                sp_repr_set_svg_double(span_tspan, "x", anchor_point[NR::X]);  // FIXME: this will pick up the wrong end of counter-directional runs
+                sp_repr_set_svg_double(span_tspan, "x", anchor_point[Geom::X]);  // FIXME: this will pick up the wrong end of counter-directional runs
             if (set_y)
-                sp_repr_set_svg_double(span_tspan, "y", anchor_point[NR::Y]);
+                sp_repr_set_svg_double(span_tspan, "y", anchor_point[Geom::Y]);
 
             SPObject *source_obj = 0;
             void *rawptr = 0;
@@ -672,7 +672,7 @@ bool SPFlowtext::has_internal_frame()
 }
 
 
-SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, NR::Point p0, NR::Point p1)
+SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p0, Geom::Point p1)
 {
     SPDocument *doc = sp_desktop_document (desktop);
 
@@ -695,14 +695,14 @@ SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, NR::Point p0, N
 
     p0 = sp_desktop_dt2root_xy_point(desktop, p0);
     p1 = sp_desktop_dt2root_xy_point(desktop, p1);
-    using NR::X;
-    using NR::Y;
-    NR::Coord const x0 = MIN(p0[X], p1[X]);
-    NR::Coord const y0 = MIN(p0[Y], p1[Y]);
-    NR::Coord const x1 = MAX(p0[X], p1[X]);
-    NR::Coord const y1 = MAX(p0[Y], p1[Y]);
-    NR::Coord const w  = x1 - x0;
-    NR::Coord const h  = y1 - y0;
+    using Geom::X;
+    using Geom::Y;
+    Geom::Coord const x0 = MIN(p0[X], p1[X]);
+    Geom::Coord const y0 = MIN(p0[Y], p1[Y]);
+    Geom::Coord const x1 = MAX(p0[X], p1[X]);
+    Geom::Coord const y1 = MAX(p0[Y], p1[Y]);
+    Geom::Coord const w  = x1 - x0;
+    Geom::Coord const h  = y1 - y0;
 
     sp_rect_position_set(SP_RECT(rect), x0, y0, w, h);
     SP_OBJECT(rect)->updateRepr();

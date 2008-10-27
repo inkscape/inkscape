@@ -59,58 +59,34 @@
 
 static char const *const tool_names[] = {
     NULL,
-    "tools.select",
-    "tools.nodes",
-    "tools.tweak",
-    "tools.shapes.rect",
-    "tools.shapes.3dbox",
-    "tools.shapes.arc",
-    "tools.shapes.star",
-    "tools.shapes.spiral",
-    "tools.freehand.pencil",
-    "tools.freehand.pen",
-    "tools.calligraphic",
-    "tools.text",
-    "tools.gradient",
-    "tools.zoom",
-    "tools.dropper",
-    "tools.connector",
-    "tools.paintbucket",
-    "tools.eraser",
-    "tools.lpetool",
-    NULL
-};
-
-static char const *const tool_ids[] = {
-    NULL,
-    "select",
-    "nodes",
-    "tweak",
-    "rect",
-    "3dbox",
-    "arc",
-    "star",
-    "spiral",
-    "pencil",
-    "pen",
-    "calligraphic",
-    "text",
-    "gradient",
-    "zoom",
-    "dropper",
-    "connector",
-    "paintbucket",
-    "eraser",
-    "lpetool",
+    "/tools/select",
+    "/tools/nodes",
+    "/tools/tweak",
+    "/tools/shapes/rect",
+    "/tools/shapes/3dbox",
+    "/tools/shapes/arc",
+    "/tools/shapes/star",
+    "/tools/shapes/spiral",
+    "/tools/freehand/pencil",
+    "/tools/freehand/pen",
+    "/tools/calligraphic",
+    "/tools/text",
+    "/tools/gradient",
+    "/tools/zoom",
+    "/tools/dropper",
+    "/tools/connector",
+    "/tools/paintbucket",
+    "/tools/eraser",
+    "/tools/lpetool",
     NULL
 };
 
 static int
-tools_id2num(char const *id)
+tools_prefpath2num(char const *id)
 {
     int i = 1;
-    while (tool_ids[i]) {
-        if (strcmp(tool_ids[i], id) == 0)
+    while (tool_names[i]) {
+        if (strcmp(tool_names[i], id) == 0)
             return i;
         else i++;
     }
@@ -121,16 +97,16 @@ tools_id2num(char const *id)
 int
 tools_isactive(SPDesktop *dt, unsigned num)
 {
-    g_assert( num < G_N_ELEMENTS(tool_ids) );
+    g_assert( num < G_N_ELEMENTS(tool_names) );
     if (SP_IS_EVENT_CONTEXT(dt->event_context))
-        return (!strcmp(dt->event_context->prefs_repr->attribute("id"), tool_ids[num]));
+        return dt->event_context->pref_observer->observed_path == tool_names[num];
     else return FALSE;
 }
 
 int
 tools_active(SPDesktop *dt)
 {
-    return (tools_id2num(dt->event_context->prefs_repr->attribute("id")));
+    return tools_prefpath2num(dt->event_context->pref_observer->observed_path.data());
 }
 
 void

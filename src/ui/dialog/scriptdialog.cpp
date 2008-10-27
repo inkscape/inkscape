@@ -1,7 +1,7 @@
-/**
- *  Dialog for executing and monitoring script execution
- *  
- * Author:  
+/** @file
+ * @brief Dialog for executing and monitoring script execution
+ */
+/* Author:  
  *   Bob Jamison
  *
  * Copyright (C) 2004-2008 Authors
@@ -270,9 +270,13 @@ ScriptDialog &ScriptDialog::getInstance()
 } //namespace UI
 } //namespace Inkscape
 
-//#########################################################################
-//## E N D    O F    F I L E
-//#########################################################################
-
-
-
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

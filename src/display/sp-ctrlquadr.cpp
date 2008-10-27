@@ -97,7 +97,7 @@ sp_ctrlquadr_render (SPCanvasItem *item, SPCanvasBuf *buf)
 {
     SPCtrlQuadr *cq = SP_CTRLQUADR (item);
 
-    //NR::Rect area (NR::Point(buf->rect.x0, buf->rect.y0), NR::Point(buf->rect.x1, buf->rect.y1));
+    //Geom::Rect area (Geom::Point(buf->rect.x0, buf->rect.y0), Geom::Point(buf->rect.x1, buf->rect.y1));
 
     if (!buf->ct)
         return;

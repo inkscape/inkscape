@@ -1,7 +1,7 @@
-/**
- * \brief A desktop dock pane to dock dialogs.
- *
- * Author:
+/** @file
+ * @brief A desktop dock pane to dock dialogs.
+ */
+/* Author:
  *   Gustav Broberg <broberg@kth.se>
  *
  * Copyright (C) 2007 Authors
@@ -10,7 +10,7 @@
  */
 
 #include "inkscape.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "desktop.h"
 
 #include "dock.h"
@@ -74,8 +74,9 @@ Dock::Dock(Gtk::Orientation orientation)
 
     _scrolled_window->set_size_request(0);
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     GdlSwitcherStyle gdl_switcher_style =
-        static_cast<GdlSwitcherStyle>(prefs_get_int_attribute_limited("options.dock", "switcherstyle",
+        static_cast<GdlSwitcherStyle>(prefs->getIntLimited("/options/dock/switcherstyle",
                                                                       GDL_SWITCHER_STYLE_BOTH, 0, 4));
 
     g_object_set (GDL_DOCK_OBJECT(_gdl_dock)->master,
@@ -84,7 +85,7 @@ Dock::Dock(Gtk::Orientation orientation)
                   NULL);
 
     GdlDockBarStyle gdl_dock_bar_style =
-        static_cast<GdlDockBarStyle>(prefs_get_int_attribute_limited("options.dock", "dockbarstyle",
+        static_cast<GdlDockBarStyle>(prefs->getIntLimited("/options/dock/dockbarstyle",
                                                                      GDL_DOCK_BAR_BOTH, 0, 3));
 
     gdl_dock_bar_set_style(_gdl_dock_bar, gdl_dock_bar_style);

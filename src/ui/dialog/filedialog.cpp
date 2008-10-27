@@ -1,7 +1,7 @@
-/**
- * Implementation of the file dialog interfaces defined in filedialog.h
- *
- * Authors:
+/** @file
+ * @brief Implementation of the file dialog interfaces defined in filedialog.h
+ */
+/* Authors:
  *   Bob Jamison
  *   Joel Holdsworth
  *   Other dudes from The Inkscape Organization
@@ -194,4 +194,4 @@ void FileSaveDialog::appendExtension(Glib::ustring& path, Inkscape::Extension::O
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

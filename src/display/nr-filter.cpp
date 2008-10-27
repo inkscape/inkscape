@@ -46,6 +46,8 @@
 #include "libnr/nr-scale.h"
 #include "svg/svg-length.h"
 #include "sp-filter-units.h"
+#include "preferences.h"
+
 #if defined (SOLARIS) && (SOLARIS == 8)
 #include "round.h"
 using Inkscape::round;
@@ -111,8 +113,12 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
        return 1; 
     }
 
-    Matrix trans = item->ctm;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    FilterQuality const filterquality = (FilterQuality)prefs->getInt("/options/filterquality/value");
+
+    Geom::Matrix trans = item->ctm;
     FilterSlot slot(_slot_count, item);
+    slot.set_quality(filterquality);
 
     Geom::Rect item_bbox;
     if (item->item_bbox) {
@@ -130,7 +136,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     }
 
     Geom::Rect filter_area = filter_effect_area(item_bbox);
-    if (item_bbox.isEmpty()) {
+    if (item_bbox.area() == 0.0) {
         // It's no use to try and filter an empty object.
         return 1;
     }
@@ -152,18 +158,19 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
         units.set_automatic_resolution(false);
         units.set_resolution(_x_pixels, y_len);
     } else {
-        Point origo = filter_area.min();
+        Geom::Point origo = filter_area.min();
         origo *= trans;
-        Point max_i(filter_area.max()[X], filter_area.min()[Y]);
+        Geom::Point max_i(filter_area.max()[X], filter_area.min()[Y]);
         max_i *= trans;
-        Point max_j(filter_area.min()[X], filter_area.max()[Y]);
+        Geom::Point max_j(filter_area.min()[X], filter_area.max()[Y]);
         max_j *= trans;
         double i_len = sqrt((origo[X] - max_i[X]) * (origo[X] - max_i[X])
                             + (origo[Y] - max_i[Y]) * (origo[Y] - max_i[Y]));
         double j_len = sqrt((origo[X] - max_j[X]) * (origo[X] - max_j[X])
                             + (origo[Y] - max_j[Y]) * (origo[Y] - max_j[Y]));
         units.set_automatic_resolution(true);
-        units.set_resolution(i_len, j_len);
+        double const divisor = _resolution_divisor(filterquality);
+        units.set_resolution(i_len / divisor, j_len / divisor);
     }
 
     units.set_paraller(false);
@@ -211,7 +218,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     return 0;
 }
 
-void Filter::area_enlarge(NRRectL &bbox, Matrix const &m) {
+void Filter::area_enlarge(NRRectL &bbox, Geom::Matrix const &m) {
     for (int i = 0 ; i < _primitive_count ; i++) {
         if (_primitive[i]) _primitive[i]->area_enlarge(bbox, m);
     }
@@ -238,7 +245,7 @@ void Filter::bbox_enlarge(NRRectL &bbox) {
 
 Geom::Rect Filter::filter_effect_area(Geom::Rect const &bbox)
 {
-    Point minp, maxp;
+    Geom::Point minp, maxp;
     double len_x = bbox.max()[X] - bbox.min()[X];
     double len_y = bbox.max()[Y] - bbox.min()[Y];
     /* TODO: fetch somehow the object ex and em lengths */
@@ -430,6 +437,26 @@ void Filter::set_resolution(double const x_pixels, double const y_pixels) {
 void Filter::reset_resolution() {
     _x_pixels = -1;
     _y_pixels = -1;
+}
+
+double Filter::_resolution_divisor(FilterQuality const quality) const {
+    double divisor = 1;
+    switch (quality) {
+        case FILTER_QUALITY_WORST:
+            divisor = 8;
+            break;
+        case FILTER_QUALITY_WORSE:
+            divisor = 4;
+            break;
+        case FILTER_QUALITY_NORMAL:
+            divisor = 2;
+            break;
+        case FILTER_QUALITY_BETTER:
+        case FILTER_QUALITY_BEST:
+        default:
+            break;
+    }
+    return divisor;
 }
 
 } /* namespace NR */

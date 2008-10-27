@@ -1,7 +1,7 @@
-/**
- * \brief AboutBox - the Inkscape about dialog
- *
- * Authors:
+/** @file
+ * @brief Inkscape About box - implementation
+ */
+/* Authors:
  *   Derek P. Moore <derekm@hackunix.org>
  *   MenTaLguY <mental@rydia.net>
  *   Kees Cook <kees@outflux.net>

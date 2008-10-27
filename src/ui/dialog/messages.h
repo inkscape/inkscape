@@ -1,16 +1,15 @@
-/*
- * \brief Messages Dialog
+/** @file
+ * @brief Messages dialog
  *
  * A very simple dialog for displaying Inkscape messages. Messages
  * sent to g_log(), g_warning(), g_message(), ets, are routed here,
  * in order to avoid messing with the startup console.
- *
- * Authors:
+ */
+/* Authors:
  *   Bob Jamison
  *   Other dudes from The Inkscape Organization
  *
  * Copyright (C) 2004, 2005 Authors
- *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 

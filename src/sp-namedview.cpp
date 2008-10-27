@@ -30,7 +30,7 @@
 #include "sp-guide.h"
 #include "sp-item-group.h"
 #include "sp-namedview.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "desktop.h"
 #include "conn-avoid-ref.h" // for defaultConnSpacing.
 
@@ -251,6 +251,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:snap-nodes");
     sp_object_read_attr(object, "inkscape:snap-guide");
     sp_object_read_attr(object, "inkscape:snap-center");
+    sp_object_read_attr(object, "inkscape:snap-smooth-nodes");
     sp_object_read_attr(object, "inkscape:snap-intersection-grid-guide");
     sp_object_read_attr(object, "inkscape:snap-intersection-paths");
     sp_object_read_attr(object, "inkscape:object-paths");
@@ -454,7 +455,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_GLOBAL:
-            nv->snap_manager.setSnapEnabledGlobally(value ? sp_str_to_bool(value) : TRUE);
+            nv->snap_manager.snapprefs.setSnapEnabledGlobally(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_INDICATOR:
@@ -462,27 +463,31 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX:
-            nv->snap_manager.setSnapModeBBox(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.snapprefs.setSnapModeBBox(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_NODES:
-            nv->snap_manager.setSnapModeNode(value ? sp_str_to_bool(value) : TRUE);
+            nv->snap_manager.snapprefs.setSnapModeNode(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_CENTER:
-            nv->snap_manager.setIncludeItemCenter(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.snapprefs.setIncludeItemCenter(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
+    case SP_ATTR_INKSCAPE_SNAP_SMOOTH_NODES:
+            nv->snap_manager.snapprefs.setSnapSmoothNodes(value ? sp_str_to_bool(value) : FALSE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;           
     case SP_ATTR_INKSCAPE_SNAP_GUIDE:
-            nv->snap_manager.setSnapModeGuide(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.snapprefs.setSnapModeGuide(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE:
-            nv->snap_manager.setSnapIntersectionGG(value ? sp_str_to_bool(value) : TRUE);
+            nv->snap_manager.snapprefs.setSnapIntersectionGG(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_INTERS_PATHS:
-            nv->snap_manager.setSnapIntersectionCS(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.snapprefs.setSnapIntersectionCS(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_OBJECT_PATHS:
@@ -582,22 +587,12 @@ sp_namedview_add_grid(SPNamedView *nv, Inkscape::XML::Node *repr, SPDesktop *des
     if (!grid) {
         //create grid object
         Inkscape::GridType gridtype = Inkscape::CanvasGrid::getGridTypeFromSVGName(repr->attribute("type"));
-        SPDocument *doc = NULL;
-        if (desktop)
-            doc = sp_desktop_document(desktop);
-        else
-            doc = sp_desktop_document(static_cast<SPDesktop*>(nv->views->data));
-        if (!doc) {
+        if (!nv->document) {
             g_warning("sp_namedview_add_grid - how come doc is null here?!");
             return NULL;
         }
-        grid = Inkscape::CanvasGrid::NewGrid(nv, repr, doc, gridtype);
+        grid = Inkscape::CanvasGrid::NewGrid(nv, repr, nv->document, gridtype);
         nv->grids = g_slist_append(nv->grids, grid);
-        //Initialize the snapping parameters for the new grid
-        bool enabled_node = nv->snap_manager.getSnapModeNode();
-        bool enabled_bbox = nv->snap_manager.getSnapModeBBox();
-        grid->snapper->setSnapFrom(Inkscape::Snapper::SNAPPOINT_NODE, enabled_node);
-        grid->snapper->setSnapFrom(Inkscape::Snapper::SNAPPOINT_BBOX, enabled_bbox);
     }
 
     if (!desktop) {
@@ -742,8 +737,8 @@ void SPNamedView::show(SPDesktop *desktop)
 void sp_namedview_window_from_document(SPDesktop *desktop)
 {
     SPNamedView *nv = desktop->namedview;
-    gint geometry_from_file =
-        (1==prefs_get_int_attribute("options.savewindowgeometry", "value", 0));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool geometry_from_file = prefs->getBool("/options/savewindowgeometry/value");
 
     // restore window size and position stored with the document
     if (geometry_from_file) {
@@ -810,8 +805,8 @@ void sp_namedview_update_layers_from_document (SPDesktop *desktop)
 
 void sp_namedview_document_from_window(SPDesktop *desktop)
 {
-    gint save_geometry_in_file =
-        (1==prefs_get_int_attribute("options.savewindowgeometry", "value", 0));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool save_geometry_in_file = prefs->getBool("/options/savewindowgeometry/value", 0);
     Inkscape::XML::Node *view = SP_OBJECT_REPR(desktop->namedview);
     Geom::Rect const r = desktop->get_display_area();
 

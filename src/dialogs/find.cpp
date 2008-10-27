@@ -44,7 +44,7 @@ sp_find_dialog(){
 #include "desktop-handles.h"
 
 #include "dialog-events.h"
-#include "../prefs-utils.h"
+#include "../preferences.h"
 #include "../verbs.h"
 #include "../interface.h"
 #include "../sp-text.h"
@@ -77,7 +77,7 @@ static win_data wd;
 
 // impossible original values to make sure they are read from prefs
 static gint x = -1000, y = -1000, w = 0, h = 0;
-static gchar const *prefs_path = "dialogs.find";
+static Glib::ustring const prefs_path = "/dialogs/find/";
 
 
 
@@ -99,10 +99,11 @@ static gboolean sp_find_dialog_delete(GtkObject *, GdkEvent *, gpointer /*data*/
     if (x<0) x=0;
     if (y<0) y=0;
 
-    prefs_set_int_attribute (prefs_path, "x", x);
-    prefs_set_int_attribute (prefs_path, "y", y);
-    prefs_set_int_attribute (prefs_path, "w", w);
-    prefs_set_int_attribute (prefs_path, "h", h);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(prefs_path + "x", x);
+    prefs->setInt(prefs_path + "y", y);
+    prefs->setInt(prefs_path + "w", w);
+    prefs->setInt(prefs_path + "h", h);
 
     return FALSE; // which means, go ahead and destroy it
 }
@@ -647,15 +648,16 @@ sp_find_dialog_old (void)
     {
         gchar title[500];
         sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_DIALOG_FIND), title);
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
         dlg = sp_window_new (title, TRUE);
         if (x == -1000 || y == -1000) {
-            x = prefs_get_int_attribute (prefs_path, "x", -1000);
-            y = prefs_get_int_attribute (prefs_path, "y", -1000);
+            x = prefs->getInt(prefs_path + "x", -1000);
+            y = prefs->getInt(prefs_path + "y", -1000);
         }
         if (w ==0 || h == 0) {
-            w = prefs_get_int_attribute (prefs_path, "w", 0);
-            h = prefs_get_int_attribute (prefs_path, "h", 0);
+            w = prefs->getInt(prefs_path + "w", 0);
+            h = prefs->getInt(prefs_path + "h", 0);
         }
         
 //        if (x<0) x=0;

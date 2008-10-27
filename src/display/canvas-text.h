@@ -41,7 +41,7 @@ SPCanvasItem *sp_canvastext_new(SPCanvasGroup *parent, Geom::Point pos, gchar co
 
 void sp_canvastext_set_rgba32 (SPCanvasText *ct, guint32 rgba);
 void sp_canvastext_set_coords (SPCanvasText *ct, gdouble x0, gdouble y0);
-void sp_canvastext_set_coords (SPCanvasText *ct, const NR::Point start);
+void sp_canvastext_set_coords (SPCanvasText *ct, const Geom::Point start);
 void sp_canvastext_set_text (SPCanvasText *ct, gchar const* new_text);
 void sp_canvastext_set_number_as_text (SPCanvasText *ct, int num);
 void sp_canvastext_set_fontsize (SPCanvasText *ct, double size);

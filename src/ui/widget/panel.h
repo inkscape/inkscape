@@ -92,7 +92,7 @@ protected:
     /** Tooltips object for all descendants to use */
     Gtk::Tooltips _tooltips;
 
-    const gchar *_prefs_path;
+    Glib::ustring const _prefs_path;
 
     bool _menu_desired;
     Gtk::AnchorType _anchor;

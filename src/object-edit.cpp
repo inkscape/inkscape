@@ -25,7 +25,7 @@
 #include "sp-spiral.h"
 #include "sp-offset.h"
 #include "sp-flowtext.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "desktop-affine.h"
 #include "style.h"
 #include "desktop.h"
@@ -741,7 +741,8 @@ sp_genericellipse_side(SPGenericEllipse *ellipse, Geom::Point const &p)
 void
 ArcKnotHolderEntityStart::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
-    int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
@@ -772,7 +773,8 @@ ArcKnotHolderEntityStart::knot_get()
 void
 ArcKnotHolderEntityEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
-    int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
     SPGenericEllipse *ge = SP_GENERICELLIPSE(item);
     SPArc *arc = SP_ARC(item);
@@ -1080,7 +1082,8 @@ public:
 void
 SpiralKnotHolderEntityInner::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
-    int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
     SPSpiral *spiral = SP_SPIRAL(item);
 
@@ -1122,7 +1125,8 @@ SpiralKnotHolderEntityInner::knot_set(Geom::Point const &p, Geom::Point const &/
 void
 SpiralKnotHolderEntityOuter::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
-    int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
 
     SPSpiral *spiral = SP_SPIRAL(item);
 

@@ -23,7 +23,7 @@
 #include "text-editing.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
-#include "prefs-utils.h"
+#include "preferences.h"
 #include "selcue.h"
 
 Inkscape::SelCue::SelCue(SPDesktop *desktop)
@@ -70,15 +70,16 @@ void Inkscape::SelCue::_updateItemBboxes()
     }
     _text_baselines.clear();
 
-    gint mode = prefs_get_int_attribute ("options.selcue", "value", MARK);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gint mode = prefs->getInt("/options/selcue/value", MARK);
     if (mode == NONE) {
         return;
     }
 
     g_return_if_fail(_selection != NULL);
 
-    int prefs_bbox = prefs_get_int_attribute("tools", "bounding_box", 0);
-    SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
+    int prefs_bbox = prefs->getBool("/tools/bounding_box");
+    SPItem::BBoxType bbox_type = !prefs_bbox ? 
         SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
     
     for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {

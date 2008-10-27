@@ -129,12 +129,13 @@ public:
 
     virtual void setup_nodepath(Inkscape::NodePath::Path *np);
 
+    /// /todo: is this method really necessary? it causes UI inconsistensies... (johan)
     virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
 
-    // TODO: providesKnotholder() is currently used as an indicator of whether a nodepath is
+    // /TODO: providesKnotholder() is currently used as an indicator of whether a nodepath is
     // created for an item or not. When we allow both at the same time, this needs rethinking!
     bool providesKnotholder();
-    // TODO: in view of providesOwnFlashPaths() below, this is somewhat redundant
+    // /TODO: in view of providesOwnFlashPaths() below, this is somewhat redundant
     //       (but spiro lpe still needs it!)
     virtual LPEPathFlashType pathFlashType() { return DEFAULT; }
     void addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);

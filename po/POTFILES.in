@@ -372,6 +372,7 @@ share/extensions/svg_and_media_zip_output.py
 [type: gettext/xml] share/extensions/dia.inx
 [type: gettext/xml] share/extensions/dimension.inx
 [type: gettext/xml] share/extensions/dots.inx
+[type: gettext/xml] share/extensions/draw_from_triangle.inx
 [type: gettext/xml] share/extensions/dxf_input.inx
 [type: gettext/xml] share/extensions/dxf_outlines.inx
 [type: gettext/xml] share/extensions/dxf_output.inx

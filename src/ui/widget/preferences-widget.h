@@ -39,25 +39,23 @@ namespace Widget {
 class PrefCheckButton : public Gtk::CheckButton
 {
 public:
-    void init(Glib::ustring const &label, Glib::ustring const &prefs_path, Glib::ustring const &attr,
+    void init(Glib::ustring const &label, Glib::ustring const &prefs_path,
               bool default_value);
 protected:
     Glib::ustring _prefs_path;
-    Glib::ustring _attr;
     void on_toggled();
 };
 
 class PrefRadioButton : public Gtk::RadioButton
 {
 public:
-    void init(Glib::ustring const &label, Glib::ustring const &prefs_path, Glib::ustring const &attr,
+    void init(Glib::ustring const &label, Glib::ustring const &prefs_path,
               int int_value, bool default_value, PrefRadioButton* group_member);
-    void init(Glib::ustring const &label, Glib::ustring const &prefs_path, Glib::ustring const &attr,
+    void init(Glib::ustring const &label, Glib::ustring const &prefs_path,
               Glib::ustring const &string_value, bool default_value, PrefRadioButton* group_member);
     sigc::signal<void, bool> changed_signal;
 protected:
     Glib::ustring _prefs_path;
-    Glib::ustring _attr;
     Glib::ustring _string_value;
     int _value_type;
     enum
@@ -72,12 +70,11 @@ protected:
 class PrefSpinButton : public Gtk::SpinButton
 {
 public:
-    void init(Glib::ustring const &prefs_path, Glib::ustring const &attr,
+    void init(Glib::ustring const &prefs_path,
               double lower, double upper, double step_increment, double page_increment,
               double default_value, bool is_int, bool is_percent);
 protected:
     Glib::ustring _prefs_path;
-    Glib::ustring _attr;
     bool _is_int;
     bool _is_percent;
     void on_value_changed();
@@ -128,11 +125,10 @@ private:
 class PrefCombo : public Gtk::ComboBoxText
 {
 public:
-    void init(Glib::ustring const &prefs_path, Glib::ustring const &attr,
+    void init(Glib::ustring const &prefs_path,
               Glib::ustring labels[], int values[], int num_items, int default_value);
 protected:
     Glib::ustring _prefs_path;
-    Glib::ustring _attr;
     std::vector<int> _values;
     void on_changed();
 };
@@ -140,22 +136,19 @@ protected:
 class PrefEntry : public Gtk::Entry
 {
 public:
-    void init(Glib::ustring const &prefs_path, Glib::ustring const &attr,
-            bool mask);
+    void init(Glib::ustring const &prefs_path, bool mask);
 protected:
     Glib::ustring _prefs_path;
-    Glib::ustring _attr;
     void on_changed();
 };
 
 class PrefEntryButtonHBox : public Gtk::HBox
 {
 public:
-    void init(Glib::ustring const &prefs_path, Glib::ustring const &attr,
+    void init(Glib::ustring const &prefs_path,
             bool mask, Glib::ustring const &default_string);
 protected:
     Glib::ustring _prefs_path;
-    Glib::ustring _attr;
     Glib::ustring _default_string;
     Gtk::Button *relatedButton;
     Gtk::Entry *relatedEntry;
@@ -166,11 +159,10 @@ protected:
 class PrefFileButton : public Gtk::FileChooserButton
 {
 public:
-    void init(Glib::ustring const &prefs_path, Glib::ustring const &attr);
+    void init(Glib::ustring const &prefs_path);
 
 protected:
     Glib::ustring _prefs_path;
-    Glib::ustring _attr;
     void onFileChanged();
 };
 
@@ -180,22 +172,20 @@ public:
     PrefColorPicker() : ColorPicker("", "", 0, false) {};
     virtual ~PrefColorPicker() {};
 
-    void init(Glib::ustring const &abel, Glib::ustring const &prefs_path, Glib::ustring const &attr,
+    void init(Glib::ustring const &abel, Glib::ustring const &prefs_path,
               guint32 default_rgba);
 
 protected:
     Glib::ustring _prefs_path;
-    Glib::ustring _attr;
     virtual void on_changed (guint32 rgba);
 };
 
 class PrefUnit : public UnitMenu
 {
 public:
-    void init(Glib::ustring const &prefs_path, Glib::ustring const &attr);
+    void init(Glib::ustring const &prefs_path);
 protected:
     Glib::ustring _prefs_path;
-    Glib::ustring _attr;
     void on_changed();
 };
 
