@@ -33,6 +33,7 @@
 
 
 #include <2geom/sbasis-to-bezier.h>
+#include <2geom/d2.h>
 #include <2geom/choose.h>
 #include <2geom/svg-path.h>
 #include <2geom/exception.h>
@@ -87,11 +88,16 @@ int sgn(unsigned int j, unsigned int k)
 }
 
 
+/** Changes the basis of p to be bernstein.
+ \param p the Symmetric basis polynomial
+ \returns the Bernstein basis polynomial
+
+ if the degree is even q is the order in the symmetrical power basis,
+ if the degree is odd q is the order + 1
+ n is always the polynomial degree, i. e. the Bezier order
+*/
 void sbasis_to_bezier (Bezier & bz, SBasis const& sb, size_t sz)
 {
-    // if the degree is even q is the order in the symmetrical power basis,
-    // if the degree is odd q is the order + 1
-    // n is always the polynomial degree, i. e. the Bezier order
     size_t q, n;
     bool even;
     if (sz == 0)
@@ -141,6 +147,14 @@ void sbasis_to_bezier (Bezier & bz, SBasis const& sb, size_t sz)
     bz[n] = sb[0][1];
 }
 
+/** Changes the basis of p to be Bernstein.
+ \param p the D2 Symmetric basis polynomial
+ \returns the D2 Bernstein basis polynomial
+
+ if the degree is even q is the order in the symmetrical power basis,
+ if the degree is odd q is the order + 1
+ n is always the polynomial degree, i. e. the Bezier order
+*/
 void sbasis_to_bezier (std::vector<Point> & bz, D2<SBasis> const& sb, size_t sz)
 {
     Bezier bzx, bzy;
@@ -160,11 +174,16 @@ void sbasis_to_bezier (std::vector<Point> & bz, D2<SBasis> const& sb, size_t sz)
 }
 
 
+/** Changes the basis of p to be sbasis.
+ \param p the Bernstein basis polynomial
+ \returns the Symmetric basis polynomial
+
+ if the degree is even q is the order in the symmetrical power basis,
+ if the degree is odd q is the order + 1
+ n is always the polynomial degree, i. e. the Bezier order
+*/
 void bezier_to_sbasis (SBasis & sb, Bezier const& bz)
 {
-    // if the degree is even q is the order in the symmetrical power basis,
-    // if the degree is odd q is the order + 1
-    // n is always the polynomial degree, i. e. the Bezier order
     size_t n = bz.order();
     size_t q = (n+1) / 2;
     size_t even = (n & 1u) ? 0 : 1;
@@ -201,6 +220,14 @@ void bezier_to_sbasis (SBasis & sb, Bezier const& bz)
 }
 
 
+/** Changes the basis of d2 p to be sbasis.
+ \param p the d2 Bernstein basis polynomial
+ \returns the d2 Symmetric basis polynomial
+
+ if the degree is even q is the order in the symmetrical power basis,
+ if the degree is odd q is the order + 1
+ n is always the polynomial degree, i. e. the Bezier order
+*/
 void bezier_to_sbasis (D2<SBasis> & sb, std::vector<Point> const& bz)
 {
     size_t n = bz.size() - 1;
@@ -252,138 +279,8 @@ void bezier_to_sbasis (D2<SBasis> & sb, std::vector<Point> const& bz)
 
 }  // end namespace Geom
 
-namespace Geom{
-#if 0
 
-/* From Sanchez-Reyes 1997
-   W_{j,k} = W_{n0j, n-k} = choose(n-2k-1, j-k)choose(2k+1,k)/choose(n,j)
-     for k=0,...,q-1; j = k, ...,n-k-1
-   W_{q,q} = 1 (n even)
-
-This is wrong, it should read
-   W_{j,k} = W_{n0j, n-k} = choose(n-2k-1, j-k)/choose(n,j)
-     for k=0,...,q-1; j = k, ...,n-k-1
-   W_{q,q} = 1 (n even)
-
-*/
-double W(unsigned n, unsigned j, unsigned k) {
-    unsigned q = (n+1)/2;
-    if((n & 1) == 0 && j == q && k == q)
-        return 1;
-    if(k > n-k) return W(n, n-j, n-k);
-    assert((k <= q));
-    if(k >= q) return 0;
-    //assert(!(j >= n-k));
-    if(j >= n-k) return 0;
-    //assert(!(j < k));
-    if(j < k) return 0;
-    return choose<double>(n-2*k-1, j-k) /
-        choose<double>(n,j);
-}
-
-
-// this produces a degree 2q bezier from a degree k sbasis
-Bezier
-sbasis_to_bezier(SBasis const &B, unsigned q) {
-    if(q == 0) {
-        q = B.size();
-        /*if(B.back()[0] == B.back()[1]) {
-            n--;
-            }*/
-    }
-    unsigned n = q*2;
-    Bezier result = Bezier(Bezier::Order(n-1));
-    if(q > B.size())
-        q = B.size();
-    n--;
-    for(unsigned k = 0; k < q; k++) {
-        for(unsigned j = 0; j <= n-k; j++) {
-            result[j] += (W(n, j, k)*B[k][0] +
-                          W(n, n-j, k)*B[k][1]);
-        }
-    }
-    return result;
-}
-
-double mopi(int i) {
-    return (i&1)?-1:1;
-}
-
-// WARNING: this is wrong!
-// this produces a degree k sbasis from a degree 2q bezier
-SBasis
-bezier_to_sbasis(Bezier const &B) {
-    unsigned n = B.size();
-    unsigned q = (n+1)/2;
-    SBasis result;
-    result.resize(q+1);
-    for(unsigned k = 0; k < q; k++) {
-        result[k][0] = result[k][1] = 0;
-        for(unsigned j = 0; j <= n-k; j++) {
-            result[k][0] += mopi(int(j)-int(k))*W(n, j, k)*B[j];
-            result[k][1] += mopi(int(j)-int(k))*W(n, j, k)*B[j];
-            //W(n, n-j, k)*B[k][1]);
-        }
-    }
-    return result;
-}
-
-// this produces a 2q point bezier from a degree q sbasis
-std::vector<Geom::Point>
-sbasis_to_bezier(D2<SBasis> const &B, unsigned qq) {
-    std::vector<Geom::Point> result;
-    if(qq == 0) {
-        qq = sbasis_size(B);
-    }
-    unsigned n = qq * 2;
-    result.resize(n, Geom::Point(0,0));
-    n--;
-    for(unsigned dim = 0; dim < 2; dim++) {
-        unsigned q = qq;
-        if(q > B[dim].size())
-            q = B[dim].size();
-        for(unsigned k = 0; k < q; k++) {
-            for(unsigned j = 0; j <= n-k; j++) {
-                result[j][dim] += (W(n, j, k)*B[dim][k][0] +
-                             W(n, n-j, k)*B[dim][k][1]);
-                }
-        }
-    }
-    return result;
-}
-/*
-template <unsigned order>
-D2<Bezier<order> > sbasis_to_bezier(D2<SBasis> const &B) {
-    return D2<Bezier<order> >(sbasis_to_bezier<order>(B[0]), sbasis_to_bezier<order>(B[1]));
-}
-*/
-#endif
-
-#if 0 // using old path
-//std::vector<Geom::Point>
-// mutating
-void
-subpath_from_sbasis(Geom::OldPathSetBuilder &pb, D2<SBasis> const &B, double tol, bool initial) {
-    assert(B.IS_FINITE());
-    if(B.tail_error(2) < tol || B.size() == 2) { // nearly cubic enough
-        if(B.size() == 1) {
-            if (initial) {
-                pb.start_subpath(Geom::Point(B[0][0][0], B[1][0][0]));
-            }
-            pb.push_line(Geom::Point(B[0][0][1], B[1][0][1]));
-        } else {
-            std::vector<Geom::Point> bez = sbasis_to_bezier(B, 2);
-            if (initial) {
-                pb.start_subpath(bez[0]);
-            }
-            pb.push_cubic(bez[1], bez[2], bez[3]);
-        }
-    } else {
-        subpath_from_sbasis(pb, compose(B, Linear(0, 0.5)), tol, initial);
-        subpath_from_sbasis(pb, compose(B, Linear(0.5, 1)), tol, false);
-    }
-}
-
+#if 0 
 /*
 * This version works by inverting a reasonable upper bound on the error term after subdividing the
 * curve at $a$.  We keep biting off pieces until there is no more curve left.
@@ -431,9 +328,14 @@ subpath_from_sbasis_incremental(Geom::OldPathSetBuilder &pb, D2<SBasis> B, doubl
 
 #endif
 
-/*
- * If only_cubicbeziers is true, the resulting path may only contain CubicBezier curves.
- */
+namespace Geom{
+
+/** Make a path from a d2 sbasis.
+ \param p the d2 Symmetric basis polynomial
+ \returns a Path
+
+  If only_cubicbeziers is true, the resulting path may only contain CubicBezier curves.
+*/
 void build_from_sbasis(Geom::PathBuilder &pb, D2<SBasis> const &B, double tol, bool only_cubicbeziers) {
     if (!B.isFinite()) {
         THROW_EXCEPTION("assertion failed: B.isFinite()");
@@ -452,9 +354,12 @@ void build_from_sbasis(Geom::PathBuilder &pb, D2<SBasis> const &B, double tol, b
     }
 }
 
-/*
- * If only_cubicbeziers is true, the resulting path may only contain CubicBezier curves.
- */
+/** Make a path from a d2 sbasis.
+ \param p the d2 Symmetric basis polynomial
+ \returns a Path
+
+  If only_cubicbeziers is true, the resulting path may only contain CubicBezier curves.
+*/
 Path
 path_from_sbasis(D2<SBasis> const &B, double tol, bool only_cubicbeziers) {
     PathBuilder pb;
@@ -464,10 +369,13 @@ path_from_sbasis(D2<SBasis> const &B, double tol, bool only_cubicbeziers) {
     return pb.peek().front();
 }
 
-/*
- * If only_cubicbeziers is true, the resulting path may only contain CubicBezier curves.
- */
-//TODO: some of this logic should be lifted into svg-path
+/** Make a path from a d2 sbasis.
+ \param p the d2 Symmetric basis polynomial
+ \returns a Path
+
+  If only_cubicbeziers is true, the resulting path may only contain CubicBezier curves.
+ TODO: some of this logic should be lifted into svg-path
+*/
 std::vector<Geom::Path>
 path_from_piecewise(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &B, double tol, bool only_cubicbeziers) {
     Geom::PathBuilder pb;

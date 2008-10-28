@@ -1,5 +1,6 @@
-/*
- *  sbasis.h - S-power basis function class
+/**
+ * \file
+ * \brief Defines S-power basis function class
  *
  *  Authors:
  *   Nathan Hurst <njh@mail.csse.monash.edu.au>
@@ -138,6 +139,11 @@ Interval bounds_exact(SBasis const &a);
 Interval bounds_fast(SBasis const &a, int order = 0);
 Interval bounds_local(SBasis const &a, const Interval &t, int order = 0);
 
+/** Returns a function which reverses the domain of a.
+ \param a sbasis function
+
+useful for reversing a parameteric curve.
+*/
 inline SBasis reverse(SBasis const &a) {
     SBasis result;
     result.reserve(a.size());
@@ -257,7 +263,11 @@ inline SBasis& operator*=(SBasis& a, SBasis const & b) {
     return a;
 }
 
-//valuation: degree of the first non zero coefficient.
+/** Returns the degree of the first non zero coefficient.
+ \param a sbasis function
+ \param tol largest abs val considered 0
+ \returns first non zero coefficient
+*/
 inline unsigned 
 valuation(SBasis const &a, double tol=0){
     unsigned val=0;
@@ -276,6 +286,12 @@ SBasis inverse(SBasis a, int k);
 //TODO: requires g(0)=0 & g(1)=1 atm. generalization should be obvious.
 SBasis compose_inverse(SBasis const &f, SBasis const &g, unsigned order=2, double tol=1e-3);
 
+/** Returns the sbasis on domain [0,1] that was t on [from, to]
+ \param a sbasis function
+ \param from,to interval
+ \returns sbasis
+
+*/
 inline SBasis portion(const SBasis &t, double from, double to) { return compose(t, Linear(from, to)); }
 
 // compute f(g)
@@ -296,7 +312,7 @@ inline std::ostream &operator<< (std::ostream &out_file, const SBasis & p) {
     return out_file;
 }
 
-// These are deprecated, use sbasis-math versions if possible
+// These are deprecated, use sbasis-math.h versions if possible
 SBasis sin(Linear bo, int k);
 SBasis cos(Linear bo, int k);
 

@@ -1,8 +1,9 @@
 #ifndef SEEN_Geom_POINT_H
 #define SEEN_Geom_POINT_H
 
-/** \file
- * Cartesian point class.
+/**
+ *  \file
+ *  \brief Defines a Cartesian 2D Point class.
  */
 
 #include <iostream>
@@ -16,7 +17,7 @@ enum Dim2 { X=0, Y=1 };
 
 class Matrix;
 
-/// Cartesian point.
+/// Cartesian 2D point.
 class Point {
     Coord _pt[2];
 

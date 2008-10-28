@@ -1,6 +1,8 @@
+/**
+ * \file
+ * \brief  D2<Interval> specialization to Rect
+ */
 /*
- * rect.h - D2<Interval> specialization to Rect
- *
  * Copyright 2007 Michael Sloan <mgsloan@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -44,11 +46,15 @@
 #include <boost/optional/optional.hpp>
 
 namespace Geom {
-
+/** D2<Interval> specialization to Rect */
 typedef D2<Interval> Rect;
 
 Rect unify(const Rect &, const Rect &);
-
+/**
+ * %Rect class.
+ * The Rect class is actually a specialisation of D2<Interval>.
+ * 
+ */
 template<>
 class D2<Interval> {
   private:
@@ -74,7 +80,7 @@ class D2<Interval> {
     inline Point min() const { return Point(f[X].min(), f[Y].min()); }
     inline Point max() const { return Point(f[X].max(), f[Y].max()); }
 
-    /** returns the four corners of the rectangle in positive order
+    /** Returns the four corners of the rectangle in positive order
      *  (clockwise if +Y is up, anticlockwise if +Y is down) */
     Point corner(unsigned i) const {
         switch(i % 4) {
@@ -94,40 +100,43 @@ class D2<Interval> {
     inline double width() const { return f[X].extent(); }
     inline double height() const { return f[Y].extent(); }
 
-    /** returns a vector from min to max. */
+    /** Returns a vector from min to max. */
     inline Point dimensions() const { return Point(f[X].extent(), f[Y].extent()); }
     inline Point midpoint() const { return Point(f[X].middle(), f[Y].middle()); }
 
+/**
+ * Compute the area of this rectangle.  Note that a zero area rectangle is not necessarily empty - just as the interval [0,0] contains one point, the rectangle [0,0] x [0,0] contains 1 point and no area.
+ */
     inline double area() const { return f[X].extent() * f[Y].extent(); }
     inline double maxExtent() const { return std::max(f[X].extent(), f[Y].extent()); }
 
     inline bool isEmpty()                 const { 
-	return f[X].isEmpty()        || f[Y].isEmpty(); 
+        return f[X].isEmpty()        || f[Y].isEmpty(); 
     }
     inline bool intersects(Rect const &r) const { 
-	return f[X].intersects(r[X]) && f[Y].intersects(r[Y]); 
+        return f[X].intersects(r[X]) && f[Y].intersects(r[Y]); 
     }
     inline bool contains(Rect const &r)   const { 
-	return f[X].contains(r[X]) && f[Y].contains(r[Y]); 
+        return f[X].contains(r[X]) && f[Y].contains(r[Y]); 
     }
     inline bool contains(Point const &p)  const {
-	return f[X].contains(p[X]) && f[Y].contains(p[Y]);
+        return f[X].contains(p[X]) && f[Y].contains(p[Y]);
     }
 
     inline void expandTo(Point p)        { 
-	f[X].extendTo(p[X]);  f[Y].extendTo(p[Y]); 
+        f[X].extendTo(p[X]);  f[Y].extendTo(p[Y]); 
     }
     inline void unionWith(Rect const &b) { 
-	f[X].unionWith(b[X]); f[Y].unionWith(b[Y]); 
+        f[X].unionWith(b[X]); f[Y].unionWith(b[Y]); 
     }
 
     inline void expandBy(double amnt)    { 
-	f[X].expandBy(amnt);  f[Y].expandBy(amnt); 
+        f[X].expandBy(amnt);  f[Y].expandBy(amnt); 
     }
     inline void expandBy(Point const p)  { 
-	f[X].expandBy(p[X]);  f[Y].expandBy(p[Y]); 
+        f[X].expandBy(p[X]);  f[Y].expandBy(p[Y]); 
     }
-
+    
     /** Transforms the rect by m. Note that it gives correct results only for scales and translates,
         in the case of rotations, the area of the rect will grow as it cannot rotate. */
     inline Rect operator*(Matrix const m) const { 
@@ -140,8 +149,10 @@ inline Rect unify(Rect const & a, Rect const & b) {
     return Rect(unify(a[X], b[X]), unify(a[Y], b[Y]));
 }
 
-/** Returns the smallest rectangle that encloses both rectangles.
-  * An empty argument is assumed to be an empty rectangle */
+/** 
+ * Returns the smallest rectangle that encloses both rectangles.
+ * An empty argument is assumed to be an empty rectangle
+ */
 inline boost::optional<Rect> unify(boost::optional<Rect> const & a, boost::optional<Rect> const & b) {
     if (!a) {
         return b;
@@ -169,30 +180,33 @@ inline boost::optional<Rect> intersect(Rect const & a, Rect const & b) {
 inline
 double distanceSq( Point const& p, Rect const& rect )
 {
-	double dx = 0, dy = 0;
-	if ( p[X] < rect.left() )
-	{
-		dx = p[X] - rect.left();
-	}
-	else if ( p[X] > rect.right() )
-	{
-		dx = rect.right() - p[X];
-	}
-	if ( p[Y] < rect.top() )
-	{
-		dy = rect.top() - p[Y];
-	}
-	else if (  p[Y] > rect.bottom() )
-	{
-		dy = p[Y] - rect.bottom();
-	}
-	return dx*dx + dy*dy;
+    double dx = 0, dy = 0;
+    if ( p[X] < rect.left() )
+    {
+        dx = p[X] - rect.left();
+    }
+    else if ( p[X] > rect.right() )
+    {
+        dx = rect.right() - p[X];
+    }
+    if ( p[Y] < rect.top() )
+    {
+        dy = rect.top() - p[Y];
+    }
+    else if (  p[Y] > rect.bottom() )
+    {
+        dy = p[Y] - rect.bottom();
+    }
+    return dx*dx + dy*dy;
 }
 
+/**
+ * Returns the smallest distance between p and rect.
+ */
 inline 
 double distance( Point const& p, Rect const& rect )
 {
-	return std::sqrt(distanceSq(p, rect));
+    return std::sqrt(distanceSq(p, rect));
 }
 
 

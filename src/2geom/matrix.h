@@ -2,7 +2,7 @@
 #define __Geom_MATRIX_H__
 
 /** \file
- * Definition of Geom::Matrix types.
+ *  \brief Definition of Geom::Matrix types.
  *
  * Main authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>:

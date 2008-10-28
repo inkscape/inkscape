@@ -1,8 +1,9 @@
 #ifndef GEOM_CONVEX_COVER_H
 #define GEOM_CONVEX_COVER_H
 
-/*
- * convex-cover.h
+/**
+ * \file
+ * \brief \todo brief description
  *
  * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
  * Copyright 2006 Michael G. Sloan <mgsloan@gmail.com>

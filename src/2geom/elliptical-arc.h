@@ -1,5 +1,6 @@
-/*
- * Elliptical Arc - implementation of the svg elliptical arc path element
+/**
+ * \file
+ * \brief  Elliptical Arc - implementation of the svg elliptical arc path element
  *
  * Authors:
  * 		MenTaLguY <mental@rydia.net>

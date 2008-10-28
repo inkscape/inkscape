@@ -1,4 +1,4 @@
-/*
+/**
  * Inkscape::SVG::PathString - builder for SVG path strings
  *
  * Copyright 2007 MenTaLguY <mental@rydia.net>
@@ -113,6 +113,9 @@ public:
         return *this;
     }
 
+    /**
+     *  \param rot the angle in degrees
+     */
     PathString &arcTo(NR::Coord rx, NR::Coord ry, NR::Coord rot,
                       bool large_arc, bool sweep,
                       NR::Point p)

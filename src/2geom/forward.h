@@ -1,5 +1,6 @@
-/*
- * forward - this file contains forward declarations of 2geom types
+/**
+ * \file
+ * \brief  Contains forward declarations of 2geom types
  *
  * Authors:
  *  Johan Engelen <goejendaagh@zonnet.nl>

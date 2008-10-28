@@ -6,7 +6,7 @@
 
 namespace Geom {
 
-/** Scales this vector to make it a unit vector (within rounding error).
+/** \brief Scales this vector to make it a unit vector (within rounding error).
  *
  *  The current version tries to handle infinite coordinates gracefully,
  *  but it's not clear that any callers need that.
@@ -38,23 +38,23 @@ void Point::normalize() {
             }
         }
         switch (n_inf_coords) {
-        case 0: {
-            /* Can happen if both coords are near +/-DBL_MAX. */
-            *this /= 4.0;
-            len = hypot(_pt[0], _pt[1]);
-            assert(len != inf);
-            *this /= len;
-            break;
+            case 0: {
+                /* Can happen if both coords are near +/-DBL_MAX. */
+                *this /= 4.0;
+                len = hypot(_pt[0], _pt[1]);
+                assert(len != inf);
+                *this /= len;
+                break;
+            }
+            case 1: {
+                *this = tmp;
+                break;
+            }
+            case 2: {
+                *this = tmp * sqrt(0.5);
+                break;
+            }
         }
-        case 1: {
-            *this = tmp;
-            break;
-        }
-        case 2: {
-            *this = tmp * sqrt(0.5);
-            break;
-        }
-	}
     }
 }
 

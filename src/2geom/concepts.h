@@ -1,5 +1,6 @@
-/*
- * concepts.h - Declares various mathematical concepts, for restriction of template parameters
+/**
+ * \file
+ * \brief Declares various mathematical concepts, for restriction of template parameters
  *
  * Copyright 2007 Michael Sloan <mgsloan@gmail.com>
  *

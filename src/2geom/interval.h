@@ -1,5 +1,6 @@
-/*
- * interval.h - Simple closed interval class
+/**
+ * \file
+ * \brief  Simple closed interval class
  *
  * Copyright 2007 Michael Sloan <mgsloan@gmail.com>
  *

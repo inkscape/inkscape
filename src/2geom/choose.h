@@ -1,5 +1,6 @@
-/*
- * choose.h
+/**
+ * \file choose.h
+ * \brief  \todo brief description
  *
  * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
  *

@@ -1,5 +1,6 @@
-/*
- * this file is only a helper header to include all curve types at once
+/**
+ * \file
+ * \brief   this file is only a helper header to include all curve types at once
  *
  * Authors:
  * 		MenTaLguY <mental@rydia.net>

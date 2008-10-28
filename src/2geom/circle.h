@@ -1,5 +1,6 @@
-/*
- * Circle Curve
+/**
+ * \file
+ * \brief Circle Curve
  *
  * Authors:
  *      Marco Cecchetti <mrcekets at gmail.com>

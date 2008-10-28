@@ -1,5 +1,6 @@
-/*
- *  sbasis-math.h - some std functions to work with (pw)s-basis
+/**
+ * \file
+ * \brief some std functions to work with (pw)s-basis
  *
  *  Authors:
  *   Jean-Francois Barraud

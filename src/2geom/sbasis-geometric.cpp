@@ -127,6 +127,12 @@ Geom::cutAtRoots(Piecewise<D2<SBasis> > const &M, double ZERO){
     return partition(M,rts);
 }
 
+/** Return a function which gives the angle of vect at each point.
+ \param vect a piecewise parameteric curve.
+ \param tol the maximum error allowed.
+ \param order the maximum degree to use for approximation
+
+*/
 Piecewise<SBasis>
 Geom::atan2(Piecewise<D2<SBasis> > const &vect, double tol, unsigned order){
     Piecewise<SBasis> result;
@@ -152,24 +158,47 @@ Geom::atan2(Piecewise<D2<SBasis> > const &vect, double tol, unsigned order){
     }
     return result;
 }
+/** Return a function which gives the angle of vect at each point.
+ \param vect a piecewise parameteric curve.
+ \param tol the maximum error allowed.
+ \param order the maximum degree to use for approximation
+
+*/
 Piecewise<SBasis>
 Geom::atan2(D2<SBasis> const &vect, double tol, unsigned order){
     return atan2(Piecewise<D2<SBasis> >(vect),tol,order);
 }
 
-//tan2 is the pseudo-inverse of atan2.  It takes an angle and returns a unit_vector that points in the direction of angle.
+/** tan2 is the pseudo-inverse of atan2.  It takes an angle and returns a unit_vector that points in the direction of angle.
+ \param angle a piecewise function of angle wrt t.
+ \param tol the maximum error allowed.
+ \param order the maximum degree to use for approximation
+
+*/
 D2<Piecewise<SBasis> >
 Geom::tan2(SBasis const &angle, double tol, unsigned order){
     return tan2(Piecewise<SBasis>(angle), tol, order);
 }
 
+/** tan2 is the pseudo-inverse of atan2.  It takes an angle and returns a unit_vector that points in the direction of angle.
+ \param angle a piecewise function of angle wrt t.
+ \param tol the maximum error allowed.
+ \param order the maximum degree to use for approximation
+
+*/
 D2<Piecewise<SBasis> >
 Geom::tan2(Piecewise<SBasis> const &angle, double tol, unsigned order){
     return D2<Piecewise<SBasis> >(cos(angle, tol, order), sin(angle, tol, order));
 }
 
-//unitVector(x,y) is computed as (b,-a) where a and b are solutions of:
-//     ax+by=0 (eqn1)   and   a^2+b^2=1 (eqn2)
+/** Return a Piecewise<D2<SBasis> > which points in the same direction as V_in, but has unit_length.
+ \param V_in the original path.
+ \param tol the maximum error allowed.
+ \param order the maximum degree to use for approximation
+
+unitVector(x,y) is computed as (b,-a) where a and b are solutions of:
+     ax+by=0 (eqn1)   and   a^2+b^2=1 (eqn2)
+*/
 Piecewise<D2<SBasis> >
 Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
     D2<SBasis> V = RescaleForNonVanishingEnds(V_in);
@@ -234,6 +263,14 @@ Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
     }
 }
 
+/** Return a Piecewise<D2<SBasis> > which points in the same direction as V_in, but has unit_length.
+ \param V_in the original path.
+ \param tol the maximum error allowed.
+ \param order the maximum degree to use for approximation
+
+unitVector(x,y) is computed as (b,-a) where a and b are solutions of:
+     ax+by=0 (eqn1)   and   a^2+b^2=1 (eqn2)
+*/
 Piecewise<D2<SBasis> >
 Geom::unitVector(Piecewise<D2<SBasis> > const &V, double tol, unsigned order){
     Piecewise<D2<SBasis> > result;
@@ -248,6 +285,11 @@ Geom::unitVector(Piecewise<D2<SBasis> > const &V, double tol, unsigned order){
     return result;
 }
 
+/** returns a function giving the arclength at each point in M.
+ \param M the Element.
+ \param tol the maximum error allowed.
+
+*/
 Piecewise<SBasis> 
 Geom::arcLengthSb(Piecewise<D2<SBasis> > const &M, double tol){
     Piecewise<D2<SBasis> > dM = derivative(M);
@@ -256,11 +298,18 @@ Geom::arcLengthSb(Piecewise<D2<SBasis> > const &M, double tol){
     length-=length.segs.front().at0();
     return length;
 }
+
+/** returns a function giving the arclength at each point in M.
+ \param M the Element.
+ \param tol the maximum error allowed.
+
+*/
 Piecewise<SBasis> 
 Geom::arcLengthSb(D2<SBasis> const &M, double tol){
     return arcLengthSb(Piecewise<D2<SBasis> >(M), tol);
 }
 
+#if 0
 double
 Geom::length(D2<SBasis> const &M,
                  double tol){
@@ -273,9 +322,15 @@ Geom::length(Piecewise<D2<SBasis> > const &M,
     Piecewise<SBasis> length = arcLengthSb(M, tol);
     return length.segs.back().at1();
 }
+#endif
 
+/** returns a function giving the curvature at each point in M.
+ \param M the Element.
+ \param tol the maximum error allowed.
 
-// incomplete.
+ Todo:
+ * claimed incomplete.  Check.
+*/
 Piecewise<SBasis>
 Geom::curvature(D2<SBasis> const &M, double tol) {
     D2<SBasis> dM=derivative(M);
@@ -287,6 +342,13 @@ Geom::curvature(D2<SBasis> const &M, double tol) {
     return(k);
 }
 
+/** returns a function giving the curvature at each point in M.
+ \param M the Element.
+ \param tol the maximum error allowed.
+
+ Todo:
+ * claimed incomplete.  Check.
+*/
 Piecewise<SBasis> 
 Geom::curvature(Piecewise<D2<SBasis> > const &V, double tol){
     Piecewise<SBasis> result;
@@ -303,6 +365,12 @@ Geom::curvature(Piecewise<D2<SBasis> > const &V, double tol){
 
 //=================================================================
 
+/** Reparameterise M to have unit speed.
+ \param M the Element.
+ \param tol the maximum error allowed.
+ \param order the maximum degree to use for approximation
+
+*/
 Piecewise<D2<SBasis> >
 Geom::arc_length_parametrization(D2<SBasis> const &M,
                            unsigned order,
@@ -326,6 +394,12 @@ Geom::arc_length_parametrization(D2<SBasis> const &M,
     return u;
 }
 
+/** Reparameterise M to have unit speed.
+ \param M the Element.
+ \param tol the maximum error allowed.
+ \param order the maximum degree to use for approximation
+
+*/
 Piecewise<D2<SBasis> >
 Geom::arc_length_parametrization(Piecewise<D2<SBasis> > const &M,
                                  unsigned order,
@@ -338,17 +412,83 @@ Geom::arc_length_parametrization(Piecewise<D2<SBasis> > const &M,
     return(result);
 }
 
-/** centroid using sbasis integration.
- * This approach uses green's theorem to compute the area and centroid using integrals.  For curved
- * shapes this is much faster than converting to polyline.
+#include <gsl/gsl_integration.h>
+static double sb_length_integrating(double t, void* param) {
+    SBasis* pc = (SBasis*)param;
+    return sqrt((*pc)(t));
+}
+
+/** Calculates the length of a D2<SBasis> through gsl integration.
+ \param B the Element.
+ \param tol the maximum error allowed.
+ \param result variable to be incremented with the length of the path
+ \param abs_error variable to be incremented with the estimated error
+
+If you only want the length, this routine may be faster/more accurate.
+*/
+void Geom::length_integrating(D2<SBasis> const &B, double &result, double &abs_error, double tol) {
+    D2<SBasis> dB = derivative(B);
+    SBasis dB2 = dot(dB, dB);
+        
+    gsl_function F;
+    gsl_integration_workspace * w 
+        = gsl_integration_workspace_alloc (20);
+    F.function = &sb_length_integrating;
+    F.params = (void*)&dB2;
+    double quad_result, err;
+    /* We could probably use the non adaptive code here if we removed any cusps first. */
+         
+    gsl_integration_qag (&F, 0, 1, 0, tol, 20, 
+                         GSL_INTEG_GAUSS21, w, &quad_result, &err);
+        
+    abs_error += err;
+    result += quad_result;
+}
+
+/** Calculates the length of a D2<SBasis> through gsl integration.
+ \param s the Element.
+ \param tol the maximum error allowed.
+
+If you only want the total length, this routine faster and more accurate than constructing an arcLengthSb.
+*/
+double
+Geom::length(D2<SBasis> const &s,
+                 double tol){
+    double result = 0;
+    double abs_error = 0;
+    length_integrating(s, result, abs_error, tol);
+    return result;
+}
+/** Calculates the length of a Piecewise<D2<SBasis> > through gsl integration.
+ \param s the Element.
+ \param tol the maximum error allowed.
+
+If you only want the total length, this routine faster and more accurate than constructing an arcLengthSb.
+*/
+double
+Geom::length(Piecewise<D2<SBasis> > const &s,
+                 double tol){
+    double result = 0;
+    double abs_error = 0;
+    for (unsigned i=0; i < s.size();i++){
+        length_integrating(s[i], result, abs_error, tol);
+    }
+    return result;
+}
+
+/**
+ * Centroid using sbasis integration.
+ \param p the Element.
+ \param centroid on return contains the centroid of the shape
+ \param area on return contains the signed area of the shape.
+ 
+This approach uses green's theorem to compute the area and centroid using integrals.  For curved shapes this is much faster than converting to polyline.  Note that without an uncross operation the output is not the absolute area.
 
  * Returned values: 
     0 for normal execution;
     2 if area is zero, meaning centroid is meaningless.
 
- * Copyright Nathan Hurst 2006
  */
-
 unsigned Geom::centroid(Piecewise<D2<SBasis> > const &p, Point& centroid, double &area) {
     Point centroid_tmp(0,0);
     double atmp = 0;
@@ -372,6 +512,203 @@ unsigned Geom::centroid(Piecewise<D2<SBasis> > const &p, Point& centroid, double
         return 0;
     }
     return 2;
+}
+
+/**
+ * Find cubics with prescribed curvatures at both ends.
+ *
+ *  this requires to solve a system of the form
+ *
+ * \f[
+ *  \lambda_1 = a_0 \lambda_0^2 + c_0
+ *  \lambda_0 = a_1 \lambda_1^2 + c_1
+ * \f]
+ *
+ * which is a deg 4 equation in lambda 0.
+ * Below are basic functions dedicated to solving this assuming a0 and a1 !=0.
+ */
+
+static Interval
+find_bounds_for_lambda0(double aa0,double aa1,double cc0,double cc1,
+    int insist_on_speeds_signs){
+
+    double a0=aa0,a1=aa1,c0=cc0,c1=cc1;
+    Interval result;
+    bool flip = a1<0;
+    if (a1<0){a1=-a1; c1=-c1;}
+    if (a0<0){a0=-a0; c0=-c0;}
+    double a = (a0<a1 ? a0 : a1);
+    double c = (c0<c1 ? c0 : c1);
+    double delta = 1-4*a*c;
+    if ( delta < 0 )
+        return Interval();//return empty interval
+    double lambda_max = (1+std::sqrt(delta))/2/a;
+    
+    result = Interval(c,lambda_max);
+    if (flip) 
+        result *= -1;
+    if (insist_on_speeds_signs == 1){
+        if (result.max() < 0)//Caution: setMin with max<new min...
+            return Interval();//return empty interval
+        result.setMin(0);
+    }
+    return result;
+}
+
+static 
+std::vector<double>
+solve_lambda0(double a0,double a1,double c0,double c1,
+             int insist_on_speeds_signs){
+
+    SBasis p;
+    p.push_back(Linear( a1*c0*c0+c1, a1*a0*(a0+ 2*c0) +a1*c0*c0 +c1 -1  ));
+    p.push_back(Linear( -a1*a0*(a0+2*c0), -a1*a0*(3*a0+2*c0) ));
+    p.push_back(Linear( a1*a0*a0 ));
+
+    Interval domain = find_bounds_for_lambda0(a0,a1,c0,c1,insist_on_speeds_signs);
+    if ( domain.isEmpty() ) 
+        return std::vector<double>();
+    p = compose(p,Linear(domain.min(),domain.max()));
+    std::vector<double>rts = roots(p);
+    for (unsigned i=0; i<rts.size(); i++){
+        rts[i] = domain.min()+rts[i]*domain.extent();
+    }
+    return rts;
+}
+
+/**
+* \brief returns the cubics fitting direction and curvature of a given
+* input curve at two points.
+* 
+* The input can be the 
+*    value, speed, and acceleration
+* or
+*    value, speed, and cross(acceleration,speed) 
+* of the original curve at the both ends.
+* (the second is often technically usefull, as it avoids unnecessary division by |v|^2) 
+* Recall that K=1/R=cross(acceleration,speed)/|speed|^3.
+*
+* Moreover, a 7-th argument 'insist_on_speed_signs' can be supplied to select solutions:  
+* If insist_on_speed_signs == 1, only consider solutions where speeds at both ends are positively
+* proportional to the given ones.
+* If insist_on_speed_signs == 0, allow speeds to point in the opposite direction (both at the same time) 
+* If insist_on_speed_signs == -1, allow speeds to point in both direction independantly. 
+*/
+std::vector<D2<SBasis> >
+Geom::cubics_fitting_curvature(Point const &M0,   Point const &M1,
+                         Point const &dM0,  Point const &dM1,
+                         double d2M0xdM0,  double d2M1xdM1,
+                         int insist_on_speed_signs,
+                         double epsilon){
+    std::vector<D2<SBasis> > result;
+
+    //speed of cubic bezier will be lambda0*dM0 and lambda1*dM1,
+    //with lambda0 and lambda1 s.t. curvature at both ends is the same
+    //as the curvature of the given curve.
+    std::vector<double> lambda0,lambda1;
+    double dM1xdM0=cross(dM1,dM0);
+    if (fabs(dM1xdM0)<epsilon){
+        if (fabs(d2M0xdM0)<epsilon || fabs(d2M1xdM1)<epsilon){
+            return result;
+        }
+        double lbda02 = 6.*cross(M1-M0,dM0)/d2M0xdM0;
+        double lbda12 =-6.*cross(M1-M0,dM1)/d2M1xdM1;
+        if (lbda02<0 || lbda12<0){
+            return result;
+        }
+        lambda0.push_back(std::sqrt(lbda02) );
+        lambda1.push_back(std::sqrt(lbda12) );
+    }else{
+        //solve:  lambda1 = a0 lambda0^2 + c0
+        //        lambda0 = a1 lambda1^2 + c1
+        double a0,c0,a1,c1;
+        a0 = -d2M0xdM0/2/dM1xdM0;
+        c0 =  3*cross(M1-M0,dM0)/dM1xdM0;
+        a1 = -d2M1xdM1/2/dM1xdM0;
+        c1 = -3*cross(M1-M0,dM1)/dM1xdM0;
+
+        if (fabs(a0)<epsilon){
+            lambda1.push_back( c0 );
+            lambda0.push_back( a1*c0*c0 + c1 );
+        }else if (fabs(a1)<epsilon){
+            lambda0.push_back( c1 );
+            lambda1.push_back( a0*c1*c1 + c0 );
+        }else{
+            //find lamda0 by solving a deg 4 equation d0+d1*X+...+d4*X^4=0
+            double a[5];
+            a[0] = c1+a1*c0*c0;
+            a[1] = -1;
+            a[2] = 2*a1*a0*c0;
+            a[3] = 0;
+            a[4] = a1*a0*a0;
+            //vector<double> solns=solve_poly(a,4);
+            vector<double> solns=solve_lambda0(a0,a1,c0,c1,insist_on_speed_signs);
+            for (unsigned i=0;i<solns.size();i++){
+                double lbda0=solns[i];
+                double lbda1=c0+a0*lbda0*lbda0;
+                //is this solution pointing in the + direction at both ends?
+                if (lbda0>=0. && lbda1>=0.){
+                    lambda0.push_back( lbda0);
+                    lambda1.push_back( lbda1);
+                }
+                //is this solution pointing in the - direction at both ends?
+                else if (lbda0<=0. && lbda1<=0. && insist_on_speed_signs<=0){
+                    lambda0.push_back( lbda0);
+                    lambda1.push_back( lbda1);
+                }
+                //ok,this solution is pointing in the + and - directions.
+                else if (insist_on_speed_signs<0){
+                    lambda0.push_back( lbda0);
+                    lambda1.push_back( lbda1);
+                }
+            }
+        }
+    }
+    
+    for (unsigned i=0; i<lambda0.size(); i++){
+        Point V0 = lambda0[i]*dM0;
+        Point V1 = lambda1[i]*dM1;
+        D2<SBasis> cubic;
+        for(unsigned dim=0;dim<2;dim++){
+            cubic[dim] = Linear(M0[dim],M1[dim]);
+            cubic[dim].push_back(Linear( M0[dim]-M1[dim]+V0[dim],
+                                         -M0[dim]+M1[dim]-V1[dim]));
+        }
+#if 0
+           Piecewise<SBasis> k = curvature(result);
+           double dM0_l = dM0.length();
+           double dM1_l = dM1.length();
+           g_warning("Target radii: %f, %f", dM0_l*dM0_l*dM0_l/d2M0xdM0,dM1_l*dM1_l*dM1_l/d2M1xdM1);
+           g_warning("Obtained radii: %f, %f",1/k.valueAt(0),1/k.valueAt(1));
+#endif
+        result.push_back(cubic);
+    }
+    return(result);
+}
+
+std::vector<D2<SBasis> >
+Geom::cubics_fitting_curvature(Point const &M0,   Point const &M1,
+                         Point const &dM0,  Point const &dM1,
+                         Point const &d2M0, Point const &d2M1,
+                         int insist_on_speed_signs,
+                         double epsilon){
+    double d2M0xdM0 = cross(d2M0,dM0);
+    double d2M1xdM1 = cross(d2M1,dM1);
+    return cubics_fitting_curvature(M0,M1,dM0,dM1,d2M0xdM0,d2M1xdM1,insist_on_speed_signs,epsilon);
+}
+
+std::vector<D2<SBasis> >
+Geom::cubics_with_prescribed_curvature(Point const &M0,   Point const &M1,
+                                 Point const &dM0,  Point const &dM1,
+                                 double k0, double k1,
+                                 int insist_on_speed_signs,
+                                 double epsilon){
+    double length;
+    length = dM0.length();
+    double d2M0xdM0 = k0*length*length*length;
+    length = dM1.length();
+    double d2M1xdM1 = k1*length*length*length;
+    return cubics_fitting_curvature(M0,M1,dM0,dM1,d2M0xdM0,d2M1xdM1,insist_on_speed_signs,epsilon);
 }
 
 //}; // namespace

@@ -2,6 +2,12 @@
 
 namespace Geom{
 
+/** Changes the basis of p to be sbasis.
+ \param p the Monomial basis polynomial
+ \returns the Symmetric basis polynomial
+
+This algorithm is horribly slow and numerically terrible.  Only for testing.
+*/
 SBasis poly_to_sbasis(Poly const & p) {
     SBasis x = Linear(0, 1);
     SBasis r;
@@ -14,6 +20,12 @@ SBasis poly_to_sbasis(Poly const & p) {
 	
 }
 
+/** Changes the basis of p to be monomial.
+ \param p the Symmetric basis polynomial
+ \returns the Monomial basis polynomial
+
+This algorithm is horribly slow and numerically terrible.  Only for testing.
+*/
 Poly sbasis_to_poly(SBasis const & sb) {
     if(sb.isZero())
         return Poly();

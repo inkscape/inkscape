@@ -46,6 +46,7 @@
 #include <2geom/svg-path.h>
 #include <2geom/svg-path-parser.h>
 #include <2geom/exception.h>
+#include <2geom/angle.h>
 
 /*
  * Parses the path in str. When an error is found in the pathstring, this method
@@ -92,7 +93,7 @@ static void sp_svg_write_curve(Inkscape::SVG::PathString & str, Geom::Curve cons
     }
     else if(Geom::SVGEllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::SVGEllipticalArc const *>(c)) {
         str.arcTo( svg_elliptical_arc->ray(0), svg_elliptical_arc->ray(1),
-                   svg_elliptical_arc->rotation_angle(),
+                   Geom::rad_to_deg(svg_elliptical_arc->rotation_angle()),
                    svg_elliptical_arc->large_arc_flag(), svg_elliptical_arc->sweep_flag(),
                    svg_elliptical_arc->finalPoint() );
     }

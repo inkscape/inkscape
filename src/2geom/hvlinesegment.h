@@ -1,5 +1,6 @@
-/*
- * Horizontal and Vertical Line Segment
+/**
+ * \file
+ * \brief  Horizontal and Vertical Line Segment
  *
  * Copyright 2008  Marco Cecchetti <mrcekets at gmail.com>
  *

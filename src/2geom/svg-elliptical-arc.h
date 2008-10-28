@@ -1,5 +1,6 @@
-/*
- * Elliptical Arc - implementation of the svg elliptical arc path element
+/**
+ * \file
+ * \brief  Elliptical Arc - implementation of the SVGEllipticalArc path element
  *
  * Authors:
  *      MenTaLguY <mental@rydia.net>
@@ -66,20 +67,19 @@ class SVGEllipticalArc : public Curve
     {
     }
 
-    /*
-     * constructor
+    /**
+     * \brief constructor
      *
-     * input parameters:
-     * _initial_point:     initial arc end point;
-     * _rx:                ellipse x-axis ray length
-     * _ry:                ellipse y-axis ray length
-     * _rot_angle:         ellipse x-axis rotation angle;
-     * _large_arc:         if true the largest arc is chosen,
+     * \param _initial_point:     initial arc end point;
+     * \param _rx:                ellipse x-axis ray length
+     * \param _ry:                ellipse y-axis ray length
+     * \param _rot_angle:         ellipse x-axis rotation angle in radians;
+     * \param _large_arc:         if true the largest arc is chosen,
      *                     if false the smallest arc is chosen;
-     * _sweep :            if true the clockwise arc is chosen,
+     * \param _sweep :            if true the clockwise arc is chosen,
      *                     if false the counter-clockwise arc is chosen;
-     * _final_point:       final arc end point;
-     * _svg_compliant:     if true the class behaviour follows the Standard
+     * \param _final_point:       final arc end point;
+     * \param _svg_compliant:     if true the class behaviour follows the Standard
      *                     SVG 1.1 implementation guidelines (see Appendix F.6)
      *                     if false the class behavoiur is more strict
      *                     on input parameter

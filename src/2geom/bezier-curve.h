@@ -1,5 +1,6 @@
-/*
- * Bezier-Curve
+/**
+ * \file
+ * \brief Bezier-Curve
  *
  * Authors:
  * 		MenTaLguY <mental@rydia.net>

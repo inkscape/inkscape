@@ -1,5 +1,6 @@
-/*
- * Path - Series of continuous curves
+/**
+ * \file
+ * \brief  Path - Series of continuous curves
  *
  * Authors:
  * 		MenTaLguY <mental@rydia.net>
@@ -563,6 +564,11 @@ public:
       do_append(new StitchSegment(finalPoint(), p));
     }
   }
+
+
+  /*
+   * It is important to note that the coordinates passed to appendNew should be finite!
+   */
 
   template <typename CurveType, typename A>
   void appendNew(A a) {

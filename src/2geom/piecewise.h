@@ -1,5 +1,6 @@
-/*
- * piecewise.h - Piecewise function class
+/**
+ * \file
+ * \brief Piecewise function class
  *
  * Copyright 2007 Michael Sloan <mgsloan@gmail.com>
  *
@@ -40,7 +41,28 @@
 #include <boost/concept_check.hpp>
 
 namespace Geom {
-
+/**
+ * %Piecewise function class.
+ * The Piecewise class manages a sequence of elements of a type as segments and
+ * the ’cuts’ between them. These cuts are time values which separate the pieces.
+ * This function representation allows for more interesting functions, as it provides
+ * a viable output for operations such as inversion, which may require multiple
+ * SBasis to properly invert the original.
+ * As for technical details, while the actual SBasis segments begin on the ﬁrst
+ * cut and end on the last, the function is deﬁned throughout all inputs by ex-
+ * tending the ﬁrst and last segments. The exact switching between segments is
+ * arbitrarily such that beginnings (t=0) have preference over endings (t=1). This
+ * only matters if it is discontinuous at the location.
+ * \f[
+ *      f(t) \rightarrow \left\{ 
+ *      \begin{array}{cc}
+ *      s_1,& t <= c_2 \\
+ *      s_2,& c_2 <= t <= c_3\\
+ *      \ldots
+ *      s_n,& c_n <= t
+ *      \end{array}\right.
+ * \f]
+ */
 template <typename T>
 class Piecewise {
   BOOST_CLASS_REQUIRE(T, Geom, FragmentConcept);

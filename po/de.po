@@ -1101,7 +1101,7 @@ msgstr ""
 
 #: ../src/dialogs/export.cpp:631
 msgid "Hide all except selected"
-msgstr "Alle ausser ausgewählte verstecken"
+msgstr "Alle außer ausgewählte verstecken"
 
 #: ../src/dialogs/export.cpp:635
 msgid "In the exported image, hide all objects except those that are selected"

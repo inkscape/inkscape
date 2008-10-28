@@ -52,6 +52,11 @@ using namespace std;
 
 namespace Geom{
 
+/** Find the smallest interval that bounds a
+ \param a sbasis function
+ \returns inteval
+
+*/
 Interval bounds_exact(SBasis const &a) {
     Interval result = Interval(a.at0(), a.at1());
     SBasis df = derivative(a);
@@ -62,6 +67,11 @@ Interval bounds_exact(SBasis const &a) {
     return result;
 }
 
+/** Find a small interval that bounds a
+ \param a sbasis function
+ \returns inteval
+
+*/
 // I have no idea how this works, some clever bounding argument by jfb.
 Interval bounds_fast(const SBasis &sb, int order) {
     Interval res(0,0); // an empty sbasis is 0.
@@ -91,6 +101,13 @@ Interval bounds_fast(const SBasis &sb, int order) {
     return res;
 }
 
+/** Find a small interval that bounds a(t) for t in i to order order
+ \param sb sbasis function
+ \param i domain interval
+ \param order number of terms
+ \returns inteval
+
+*/
 Interval bounds_local(const SBasis &sb, const Interval &i, int order) {
     double t0=i.min(), t1=i.max(), lo=0., hi=0.;
     for(int j = sb.size()-1; j>=order; j--) {
@@ -246,6 +263,29 @@ static void multi_roots_internal(SBasis const &f,
     }
 }
 
+/** Solve f(t)=c for several c at once.
+    \param f sbasis function
+    \param levels vector of 'y' values
+    \param htol, vtol 
+    \param a, b left and right bounds
+    \returns a vector of vectors, one for each y giving roots
+
+Effectively computes:
+results = roots(f(y_i)) for all y_i
+
+* algo: -compute f at both ends of the given segment [a,b].
+         -compute bounds m<df(t)<M for df on the segment.
+         let c and C be the levels below and above f(a):
+         going from f(a) down to c with slope m takes at least time (f(a)-c)/m
+         going from f(a)  up  to C with slope M takes at least time (C-f(a))/M
+         From this we conclude there are no roots before a'=a+min((f(a)-c)/m,(C-f(a))/M).
+         Do the same for b: compute some b' such that there are no roots in (b',b].
+         -if [a',b'] is not empty, repeat the process with [a',(a'+b')/2] and [(a'+b')/2,b'].
+  unfortunately, extra care is needed about rounding errors, and also to avoid the repetition of roots,
+  making things tricky and unpleasant...
+
+TODO: Make sure the code is "rounding-errors proof" and take care about repetition of roots!
+*/
 std::vector<std::vector<double> > multi_roots(SBasis const &f,
                                       std::vector<double> const &levels,
                                       double htol,
@@ -262,57 +302,6 @@ std::vector<std::vector<double> > multi_roots(SBasis const &f,
 }
 //-------------------------------------
 
-#if 0
-double Laguerre_internal(SBasis const & p,
-                         double x0,
-                         double tol,
-                         bool & quad_root) {
-    double a = 2*tol;
-    double xk = x0;
-    double n = p.size();
-    quad_root = false;
-    while(a > tol) {
-        //std::cout << "xk = " << xk << std::endl;
-        Linear b = p.back();
-        Linear d(0), f(0);
-        double err = fabs(b);
-        double abx = fabs(xk);
-        for(int j = p.size()-2; j >= 0; j--) {
-            f = xk*f + d;
-            d = xk*d + b;
-            b = xk*b + p[j];
-            err = fabs(b) + abx*err;
-        }
-
-        err *= 1e-7; // magic epsilon for convergence, should be computed from tol
-
-        double px = b;
-        if(fabs(b) < err)
-            return xk;
-        //if(std::norm(px) < tol*tol)
-        //    return xk;
-        double G = d / px;
-        double H = G*G - f / px;
-
-        //std::cout << "G = " << G << "H = " << H;
-        double radicand = (n - 1)*(n*H-G*G);
-        //assert(radicand.real() > 0);
-        if(radicand < 0)
-            quad_root = true;
-        //std::cout << "radicand = " << radicand << std::endl;
-        if(G.real() < 0) // here we try to maximise the denominator avoiding cancellation
-            a = - std::sqrt(radicand);
-        else
-            a = std::sqrt(radicand);
-        //std::cout << "a = " << a << std::endl;
-        a = n / (a + G);
-        //std::cout << "a = " << a << std::endl;
-        xk -= a;
-    }
-    //std::cout << "xk = " << xk << std::endl;
-    return xk;
-}
-#endif
 
 void subdiv_sbasis(SBasis const & s,
                    std::vector<double> & roots,
@@ -343,6 +332,11 @@ std::vector<double> roots1(SBasis const & s) {
     return res;
 }
 
+/** Find all t s.t s(t) = 0
+ \param a sbasis function
+ \returns vector of zeros (roots)
+
+*/
 std::vector<double> roots(SBasis const & s) {
     switch(s.size()) {
         case 0:

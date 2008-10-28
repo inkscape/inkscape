@@ -38,28 +38,17 @@
 
 namespace Geom{
 
-/*** At some point we should work on tighter bounds for the error.  It is clear that the error is
- * bounded by the L1 norm over the tail of the series, but this is very loose, leading to far too
- * many cubic beziers.  I've changed this to be \sum _i=tail ^\infty |hat a_i| 2^-i but I have no
- * evidence that this is correct.
- */
-
-/*
-double SBasis::tail_error(unsigned tail) const {
-    double err = 0, s = 1./(1<<(2*tail)); // rough
-    for(unsigned i = tail; i < size(); i++) {
-        err += (fabs((*this)[i][0]) + fabs((*this)[i][1]))*s;
-        s /= 4;
-    }
-    return err;
-}
+/** bound the error from term truncation
+ \param tail first term to chop
+ \returns the largest possible error this truncation could give
 */
-
 double SBasis::tailError(unsigned tail) const {
   Interval bs = bounds_fast(*this, tail);
   return std::max(fabs(bs.min()),fabs(bs.max()));
 }
 
+/** test all coefficients are finite
+*/
 bool SBasis::isFinite() const {
     for(unsigned i = 0; i < size(); i++) {
         if(!(*this)[i].isFinite())
@@ -68,18 +57,30 @@ bool SBasis::isFinite() const {
     return true;
 }
 
+/** Compute the value and the first n derivatives
+ \param t position to evaluate
+ \param n number of derivatives (not counting value)
+ \returns a vector with the value and the n derivative evaluations
+
+There is an elegant way to compute the value and n derivatives for a polynomial using a variant of horner's rule.  Someone will someday work out how for sbasis.
+*/
 std::vector<double> SBasis::valueAndDerivatives(double t, unsigned n) const {
-    std::vector<double> ret(n+1);
-    ret[0]=valueAt(t);
+    std::vector<double> ret(n);
+    ret.push_back(valueAt(t));
     SBasis tmp = *this;
-    for(unsigned i = 1; i < n+1; i++) {
+    for(unsigned i = 0; i < n; i++) {
         tmp.derive();
-        ret[i] = tmp.valueAt(t);
+        ret[i+1] = tmp.valueAt(t);
     }
     return ret;
 }
 
 
+/** Compute the pointwise sum of a and b (Exact)
+ \param a,b sbasis functions
+ \returns sbasis equal to a+b
+
+*/
 SBasis operator+(const SBasis& a, const SBasis& b) {
     SBasis result;
     const unsigned out_size = std::max(a.size(), b.size());
@@ -98,6 +99,11 @@ SBasis operator+(const SBasis& a, const SBasis& b) {
     return result;
 }
 
+/** Compute the pointwise difference of a and b (Exact)
+ \param a,b sbasis functions
+ \returns sbasis equal to a-b
+
+*/
 SBasis operator-(const SBasis& a, const SBasis& b) {
     SBasis result;
     const unsigned out_size = std::max(a.size(), b.size());
@@ -116,6 +122,11 @@ SBasis operator-(const SBasis& a, const SBasis& b) {
     return result;
 }
 
+/** Compute the pointwise sum of a and b and store in a (Exact)
+ \param a,b sbasis functions
+ \returns sbasis equal to a+b
+
+*/
 SBasis& operator+=(SBasis& a, const SBasis& b) {
     const unsigned out_size = std::max(a.size(), b.size());
     const unsigned min_size = std::min(a.size(), b.size());
@@ -130,6 +141,11 @@ SBasis& operator+=(SBasis& a, const SBasis& b) {
     return a;
 }
 
+/** Compute the pointwise difference of a and b and store in a (Exact)
+ \param a,b sbasis functions
+ \returns sbasis equal to a-b
+
+*/
 SBasis& operator-=(SBasis& a, const SBasis& b) {
     const unsigned out_size = std::max(a.size(), b.size());
     const unsigned min_size = std::min(a.size(), b.size());
@@ -144,6 +160,11 @@ SBasis& operator-=(SBasis& a, const SBasis& b) {
     return a;
 }
 
+/** Compute the pointwise product of a and b (Exact)
+ \param a,b sbasis functions
+ \returns sbasis equal to a*b
+
+*/
 SBasis operator*(SBasis const &a, double k) {
     SBasis c;
     c.reserve(a.size());
@@ -152,6 +173,11 @@ SBasis operator*(SBasis const &a, double k) {
     return c;
 }
 
+/** Compute the pointwise product of a and b and store the value in a (Exact)
+ \param a,b sbasis functions
+ \returns sbasis equal to a*b
+
+*/
 SBasis& operator*=(SBasis& a, double b) {
     if (a.isZero()) return a;
     if (b == 0)
@@ -162,6 +188,12 @@ SBasis& operator*=(SBasis& a, double b) {
     return a;
 }
 
+/** multiply a by x^sh in place (Exact)
+ \param a sbasis function
+ \param sh power
+ \returns a
+
+*/
 SBasis shift(SBasis const &a, int sh) {
     SBasis c = a;
     if(sh > 0) {
@@ -172,6 +204,12 @@ SBasis shift(SBasis const &a, int sh) {
     return c;
 }
 
+/** multiply a by x^sh  (Exact)
+ \param a linear function
+ \param sh power
+ \returns a* x^sh 
+
+*/
 SBasis shift(Linear const &a, int sh) {
     SBasis c;
     if(sh > 0) {
@@ -208,6 +246,12 @@ SBasis multiply(SBasis const &a, SBasis const &b) {
 }
 #else
 
+/** Compute the pointwise product of a and b adding c (Exact)
+ \param a,b,c sbasis functions
+ \returns sbasis equal to a*b+c
+
+The added term is almost free
+*/
 SBasis multiply_add(SBasis const &a, SBasis const &b, SBasis c) {
     if(a.isZero() || b.isZero())
         return c;
@@ -229,6 +273,11 @@ SBasis multiply_add(SBasis const &a, SBasis const &b, SBasis c) {
     return c;
 }
 
+/** Compute the pointwise product of a and b (Exact)
+ \param a,b sbasis functions
+ \returns sbasis equal to a*b
+
+*/
 SBasis multiply(SBasis const &a, SBasis const &b) {
     SBasis c;
     if(a.isZero() || b.isZero())
@@ -236,6 +285,11 @@ SBasis multiply(SBasis const &a, SBasis const &b) {
     return multiply_add(a, b, c);
 }
 #endif 
+/** Compute the integral of a (Exact)
+ \param a sbasis functions
+ \returns sbasis integral(a)
+
+*/
 SBasis integral(SBasis const &c) {
     SBasis a;
     a.resize(c.size() + 1, Linear(0,0));
@@ -255,6 +309,11 @@ SBasis integral(SBasis const &c) {
     return a;
 }
 
+/** Compute the derivative of a (Exact)
+ \param a sbasis functions
+ \returns sbasis da/dt
+
+*/
 SBasis derivative(SBasis const &a) {
     SBasis c;
     c.resize(a.size(), Linear(0,0));
@@ -279,6 +338,9 @@ SBasis derivative(SBasis const &a) {
     return c;
 }
 
+/** Compute the derivative of this inplace (Exact)
+
+*/
 void SBasis::derive() { // in place version
     if(isZero()) return;
     for(unsigned k = 0; k < size()-1; k++) {
@@ -297,7 +359,13 @@ void SBasis::derive() { // in place version
     }
 }
 
-//TODO: convert int k to unsigned k, and remove cast
+/** Compute the sqrt of a
+ \param a sbasis functions
+ \returns sbasis \f[ \sqrt{a} \f]
+
+It is recommended to use the piecewise version unless you have good reason.
+TODO: convert int k to unsigned k, and remove cast
+*/
 SBasis sqrt(SBasis const &a, int k) {
     SBasis c;
     if(a.isZero() || k == 0)
@@ -319,7 +387,12 @@ SBasis sqrt(SBasis const &a, int k) {
     return c;
 }
 
-// return a kth order approx to 1/a)
+/** Compute the recpirocal of a
+ \param a sbasis functions
+ \returns sbasis 1/a
+
+It is recommended to use the piecewise version unless you have good reason.
+*/
 SBasis reciprocal(Linear const &a, int k) {
     SBasis c;
     assert(!a.isZero());
@@ -333,6 +406,12 @@ SBasis reciprocal(Linear const &a, int k) {
     return c;
 }
 
+/** Compute  a / b to k terms
+ \param a,b sbasis functions
+ \returns sbasis a/b
+
+It is recommended to use the piecewise version unless you have good reason.
+*/
 SBasis divide(SBasis const &a, SBasis const &b, int k) {
     SBasis c;
     assert(!a.isZero());
@@ -354,8 +433,12 @@ SBasis divide(SBasis const &a, SBasis const &b, int k) {
     return c;
 }
 
-// a(b)
-// return a0 + s(a1 + s(a2 +...  where s = (1-u)u; ak =(1 - u)a^0_k + ua^1_k
+/** Compute  a composed with b
+ \param a,b sbasis functions
+ \returns sbasis a(b(t))
+
+ return a0 + s(a1 + s(a2 +...  where s = (1-u)u; ak =(1 - u)a^0_k + ua^1_k
+*/
 SBasis compose(SBasis const &a, SBasis const &b) {
     SBasis s = multiply((SBasis(Linear(1,1))-b), b);
     SBasis r;
@@ -366,8 +449,12 @@ SBasis compose(SBasis const &a, SBasis const &b) {
     return r;
 }
 
-// a(b)
-// return a0 + s(a1 + s(a2 +...  where s = (1-u)u; ak =(1 - u)a^0_k + ua^1_k
+/** Compute  a composed with b to k terms
+ \param a,b sbasis functions
+ \returns sbasis a(b(t))
+
+ return a0 + s(a1 + s(a2 +...  where s = (1-u)u; ak =(1 - u)a^0_k + ua^1_k
+*/
 SBasis compose(SBasis const &a, SBasis const &b, unsigned k) {
     SBasis s = multiply((SBasis(Linear(1,1))-b), b);
     SBasis r;
@@ -394,9 +481,14 @@ endfor
 
 //#define DEBUG_INVERSION 1
 
+/** find the function a^-1 such that a^-1 composed with a to k terms is the identity function
+ \param a sbasis function
+ \returns sbasis a^-1 s.t. a^-1(a(t)) = 1
+
+ The function must have 'unit range'("a00 = 0 and a01 = 1") and be monotonic.
+*/
 SBasis inverse(SBasis a, int k) {
     assert(a.size() > 0);
-// the function should have 'unit range'("a00 = 0 and a01 = 1") and be monotonic.
     double a0 = a[0][0];
     if(a0 != 0) {
         a -= a0;
@@ -467,6 +559,12 @@ SBasis inverse(SBasis a, int k) {
     return c;
 }
 
+/** Compute the sine of a to k terms
+ \param b linear function
+ \returns sbasis sin(a)
+
+It is recommended to use the piecewise version unless you have good reason.
+*/
 SBasis sin(Linear b, int k) {
     SBasis s = Linear(std::sin(b[0]), std::sin(b[1]));
     Tri tr(s[0]);
@@ -486,15 +584,26 @@ SBasis sin(Linear b, int k) {
     return s;
 }
 
+/** Compute the cosine of a
+ \param b linear function
+ \returns sbasis cos(a)
+
+It is recommended to use the piecewise version unless you have good reason.
+*/
 SBasis cos(Linear bo, int k) {
     return sin(Linear(bo[0] + M_PI/2,
                       bo[1] + M_PI/2),
                k);
 }
 
-//compute fog^-1. ("zero" = double comparison threshold. *!*we might divide by "zero"*!*)
-//TODO: compute order according to tol?
-//TODO: requires g(0)=0 & g(1)=1 atm... adaptation to other cases should be obvious!
+/** compute fog^-1.
+ \param f,g sbasis functions
+ \returns sbasis f(g^-1(t)).
+
+("zero" = double comparison threshold. *!*we might divide by "zero"*!*)
+TODO: compute order according to tol?
+TODO: requires g(0)=0 & g(1)=1 atm... adaptation to other cases should be obvious!
+*/
 SBasis compose_inverse(SBasis const &f, SBasis const &g, unsigned order, double zero){
     SBasis result; //result
     SBasis r=f; //remainder

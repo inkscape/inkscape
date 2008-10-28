@@ -1,6 +1,6 @@
-/*
- * nearest point routines for D2<SBasis> and Piecewise<D2<SBasis>>
- *
+/**
+ * \file
+ * \brief  nearest point routines for D2<SBasis> and Piecewise<D2<SBasis>>
  *
  * Authors:
  *

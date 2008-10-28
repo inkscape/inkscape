@@ -1,7 +1,9 @@
 #ifndef LIB2GEOM_UTILS_HEADER
 #define LIB2GEOM_UTILS_HEADER
 
-/** Various utility functions.
+/**
+ * \file
+ * \brief  Various utility functions.
  *
  * Copyright 2007 Johan Engelen <goejendaagh@zonnet.nl>
  * Copyright 2006 Michael G. Sloan <mgsloan@gmail.com>

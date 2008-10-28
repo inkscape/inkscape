@@ -1,5 +1,6 @@
-/*
- * ciculator.h
+/**
+ * \file circulator.h
+ * \brief  \todo brief description
  *
  * Copyright 2006 MenTaLguY <mental@rydia.net>
  *

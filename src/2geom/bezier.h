@@ -1,5 +1,6 @@
-/*
- * bezier.h
+/**
+ * \file bezier.h
+ * \brief \todo brief description
  *
  * Copyright 2007  MenTaLguY <mental@rydia.net>
  * Copyright 2007  Michael Sloan <mgsloan@gmail.com>

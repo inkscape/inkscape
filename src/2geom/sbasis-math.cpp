@@ -45,9 +45,15 @@ namespace Geom {
 #include <math.h>
 
 //-|x|-----------------------------------------------------------------------
+/** Return the absolute value of a function pointwise.
+ \param f function
+*/
 Piecewise<SBasis> abs(SBasis const &f){
     return abs(Piecewise<SBasis>(f));
 }
+/** Return the absolute value of a function pointwise.
+ \param f function
+*/
 Piecewise<SBasis> abs(Piecewise<SBasis> const &f){
     Piecewise<SBasis> absf=partition(f,roots(f));
     for (unsigned i=0; i<absf.size(); i++){
@@ -57,15 +63,27 @@ Piecewise<SBasis> abs(Piecewise<SBasis> const &f){
 }
 
 //-max(x,y), min(x,y)--------------------------------------------------------
+/** Return the greater of the two functions pointwise.
+ \param f, g two functions
+*/
 Piecewise<SBasis> max(          SBasis  const &f,           SBasis  const &g){
     return max(Piecewise<SBasis>(f),Piecewise<SBasis>(g));
 }
+/** Return the greater of the two functions pointwise.
+ \param f, g two functions
+*/
 Piecewise<SBasis> max(Piecewise<SBasis> const &f,           SBasis  const &g){
     return max(f,Piecewise<SBasis>(g));
 }
+/** Return the greater of the two functions pointwise.
+ \param f, g two functions
+*/
 Piecewise<SBasis> max(          SBasis  const &f, Piecewise<SBasis> const &g){
     return max(Piecewise<SBasis>(f),g);
 }
+/** Return the greater of the two functions pointwise.
+ \param f, g two functions
+*/
 Piecewise<SBasis> max(Piecewise<SBasis> const &f, Piecewise<SBasis> const &g){
     Piecewise<SBasis> max=partition(f,roots(f-g));
     Piecewise<SBasis> gg =partition(g,max.cuts);
@@ -76,20 +94,38 @@ Piecewise<SBasis> max(Piecewise<SBasis> const &f, Piecewise<SBasis> const &g){
     return max;
 }
 
+/** Return the more negative of the two functions pointwise.
+ \param f, g two functions
+*/
 Piecewise<SBasis> 
 min(          SBasis  const &f,           SBasis  const &g){ return -max(-f,-g); }
+/** Return the more negative of the two functions pointwise.
+ \param f, g two functions
+*/
 Piecewise<SBasis> 
 min(Piecewise<SBasis> const &f,           SBasis  const &g){ return -max(-f,-g); }
+/** Return the more negative of the two functions pointwise.
+ \param f, g two functions
+*/
 Piecewise<SBasis> 
 min(          SBasis  const &f, Piecewise<SBasis> const &g){ return -max(-f,-g); }
+/** Return the more negative of the two functions pointwise.
+ \param f, g two functions
+*/
 Piecewise<SBasis> 
 min(Piecewise<SBasis> const &f, Piecewise<SBasis> const &g){ return -max(-f,-g); }
 
 
 //-sign(x)---------------------------------------------------------------
+/** Return the sign of the two functions pointwise.
+ \param f function
+*/
 Piecewise<SBasis> signSb(SBasis const &f){
     return signSb(Piecewise<SBasis>(f));
 }
+/** Return the sign of the two functions pointwise.
+ \param f function
+*/
 Piecewise<SBasis> signSb(Piecewise<SBasis> const &f){
     Piecewise<SBasis> sign=partition(f,roots(f));
     for (unsigned i=0; i<sign.size(); i++){
@@ -139,10 +175,16 @@ static Piecewise<SBasis> sqrt_internal(SBasis const &f,
     return sqrtf0;
 }
 
+/** Compute the sqrt of a function.
+ \param f function
+*/
 Piecewise<SBasis> sqrt(SBasis const &f, double tol, int order){
     return sqrt(max(f,Linear(tol*tol)),tol,order);
 }
 
+/** Compute the sqrt of a function.
+ \param f function
+*/
 Piecewise<SBasis> sqrt(Piecewise<SBasis> const &f, double tol, int order){
     Piecewise<SBasis> result;
     Piecewise<SBasis> zero = Piecewise<SBasis>(Linear(tol*tol));
@@ -159,9 +201,24 @@ Piecewise<SBasis> sqrt(Piecewise<SBasis> const &f, double tol, int order){
 
 //-Yet another sin/cos--------------------------------------------------------------
 
+/** Compute the sine of a function.
+ \param f function
+ \param tol maximum error
+ \param order maximum degree polynomial to use
+*/
 Piecewise<SBasis> sin(          SBasis  const &f, double tol, int order){return(cos(-f+M_PI/2,tol,order));}
+/** Compute the sine of a function.
+ \param f function
+ \param tol maximum error
+ \param order maximum degree polynomial to use
+*/
 Piecewise<SBasis> sin(Piecewise<SBasis> const &f, double tol, int order){return(cos(-f+M_PI/2,tol,order));}
 
+/** Compute the cosine of a function.
+ \param f function
+ \param tol maximum error
+ \param order maximum degree polynomial to use
+*/
 Piecewise<SBasis> cos(Piecewise<SBasis> const &f, double tol, int order){
     Piecewise<SBasis> result;
     for (unsigned i=0; i<f.size(); i++){
@@ -172,6 +229,11 @@ Piecewise<SBasis> cos(Piecewise<SBasis> const &f, double tol, int order){
     return result;
 }
 
+/** Compute the cosine of a function.
+ \param f function
+ \param tol maximum error
+ \param order maximum degree polynomial to use
+*/
 Piecewise<SBasis> cos(          SBasis  const &f, double tol, int order){
     double alpha = (f.at0()+f.at1())/2.;
     SBasis x = f-alpha;

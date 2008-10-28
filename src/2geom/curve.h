@@ -1,5 +1,6 @@
-/*
- * Abstract Curve Type
+/**
+ * \file
+ * \brief   Abstract Curve Type
  *
  * Authors:
  * 		MenTaLguY <mental@rydia.net>

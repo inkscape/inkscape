@@ -1,5 +1,6 @@
-/** @file
- * @brief Various geometrical calculations.
+/**
+ *  \file geom.cpp
+ *  \brief Various geometrical calculations.
  */
 
 #ifdef HAVE_CONFIG_H

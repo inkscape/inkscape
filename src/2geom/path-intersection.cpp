@@ -9,7 +9,8 @@
 
 namespace Geom {
 
-/* This function computes the winding of the path, given a reference point.
+/**
+ * This function computes the winding of the path, given a reference point.
  * Positive values correspond to counter-clockwise in the mathematical coordinate system,
  * and clockwise in screen coordinates.  This particular implementation casts a ray in
  * the positive x direction.  It iterates the path, checking for intersection with the
@@ -102,7 +103,8 @@ int winding(Path const &path, Point p) {
   return wind;
 }
 
-/* This function should only be applied to simple paths (regions), as otherwise
+/**
+ * This function should only be applied to simple paths (regions), as otherwise
  * a boolean winding direction is undefined.  It returns true for fill, false for
  * hole.  Defaults to using the sign of area when it reaches funny cases.
  */
@@ -143,13 +145,14 @@ bool path_direction(Path const &p) {
 
 //pair intersect code based on njh's pair-intersect
 
-// A little sugar for appending a list to another
+/** A little sugar for appending a list to another */
 template<typename T>
 void append(T &a, T const &b) {
     a.insert(a.end(), b.begin(), b.end());
 }
 
-/* Finds the intersection between the lines defined by A0 & A1, and B0 & B1.
+/**
+ * Finds the intersection between the lines defined by A0 & A1, and B0 & B1.
  * Returns through the last 3 parameters, returning the t-values on the lines
  * and the cross-product of the deltas (a useful byproduct).  The return value
  * indicates if the time values are within their proper range on the line segments.
@@ -255,7 +258,8 @@ intersect_polish_root (Curve const &A, double &s,
     gsl_vector_free (x);
 }
 
-/* This uses the local bounds functions of curves to generically intersect two.
+/**
+ * This uses the local bounds functions of curves to generically intersect two.
  * It passes in the curves, time intervals, and keeps track of depth, while
  * returning the results through the Crossings parameter.
  */
@@ -298,14 +302,16 @@ void pair_intersect(Curve const & A, double Al, double Ah,
                     A, Al, Ah,
                     ret, depth+1);
 }
-// A simple wrapper around pair_intersect
+
+/** A simple wrapper around pair_intersect */
 Crossings SimpleCrosser::crossings(Curve const &a, Curve const &b) {
     Crossings ret;
     pair_intersect(a, 0, 1, b, 0, 1, ret);
     return ret;
 }
 
-/* Takes two paths and time ranges on them, with the invariant that the
+/**
+ * Takes two paths and time ranges on them, with the invariant that the
  * paths are monotonic on the range.  Splits A when the linear intersection
  * doesn't exist or is inaccurate.  Uses the fact that it is monotonic to
  * do very fast local bounds.
@@ -346,7 +352,7 @@ void mono_pair(Path const &A, double Al, double Ah,
               ret, depth+1);
 }
 
-// This returns the times when the x or y derivative is 0 in the curve.
+/** This returns the times when the x or y derivative is 0 in the curve. */
 std::vector<double> curve_mono_splits(Curve const &d) {
     std::vector<double> rs = d.roots(0, X);
     append(rs, d.roots(0, Y));
@@ -354,7 +360,7 @@ std::vector<double> curve_mono_splits(Curve const &d) {
     return rs;
 }
 
-// Convenience function to add a value to each entry in a vector of doubles.
+/** Convenience function to add a value to each entry in a vector of doubles. */
 std::vector<double> offset_doubles(std::vector<double> const &x, double offs) {
     std::vector<double> ret;
     for(unsigned i = 0; i < x.size(); i++) {
@@ -363,7 +369,8 @@ std::vector<double> offset_doubles(std::vector<double> const &x, double offs) {
     return ret;
 }
 
-/* Finds all the monotonic splits for a path.  Only includes the split between
+/**
+ * Finds all the monotonic splits for a path.  Only includes the split between
  * curves if they switch derivative directions at that point.
  */
 std::vector<double> path_mono_splits(Path const &p) {
@@ -394,7 +401,8 @@ std::vector<double> path_mono_splits(Path const &p) {
     return ret;
 }
 
-/* Applies path_mono_splits to multiple paths, and returns the results such that 
+/**
+ * Applies path_mono_splits to multiple paths, and returns the results such that 
  * time-set i corresponds to Path i.
  */
 std::vector<std::vector<double> > paths_mono_splits(std::vector<Path> const &ps) {
@@ -404,7 +412,8 @@ std::vector<std::vector<double> > paths_mono_splits(std::vector<Path> const &ps)
     return ret;
 }
 
-/* Processes the bounds for a list of paths and a list of splits on them, yielding a list of rects for each.
+/**
+ * Processes the bounds for a list of paths and a list of splits on them, yielding a list of rects for each.
  * Each entry i corresponds to path i of the input.  The number of rects in each entry is guaranteed to be the
  * number of splits for that path, subtracted by one.
  */
@@ -419,7 +428,8 @@ std::vector<std::vector<Rect> > split_bounds(std::vector<Path> const &p, std::ve
     return ret;
 }
 
-/* This is the main routine of "MonoCrosser", and implements a monotonic strategy on multiple curves.
+/**
+ * This is the main routine of "MonoCrosser", and implements a monotonic strategy on multiple curves.
  * Finds crossings between two sets of paths, yielding a CrossingSet.  [0, a.size()) of the return correspond
  * to the sorted crossings of a with paths of b.  The rest of the return, [a.size(), a.size() + b.size()],
  * corresponds to the sorted crossings of b with paths of a.

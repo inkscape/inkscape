@@ -401,7 +401,7 @@ void  Path::AddCurve(Geom::Curve const &c)
     else if(Geom::SVGEllipticalArc const *svg_elliptical_arc = dynamic_cast<Geom::SVGEllipticalArc const *>(&c)) {
         ArcTo( svg_elliptical_arc->finalPoint(),
                svg_elliptical_arc->ray(0), svg_elliptical_arc->ray(1),
-               svg_elliptical_arc->rotation_angle(),
+               svg_elliptical_arc->rotation_angle(),  /// \todo check that this parameter is in radians (rotation_angle returns the angle in radians!)
                svg_elliptical_arc->large_arc_flag(), !svg_elliptical_arc->sweep_flag() );
     } else { 
         //this case handles sbasis as well as all other curve types

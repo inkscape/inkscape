@@ -1,6 +1,7 @@
-#line 1 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
-/*
- * parse SVG path specifications
+#line 1 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
+/**
+ * \file
+ * \brief parse SVG path specifications
  *
  * Copyright 2007 MenTaLguY <mental@rydia.net>
  * Copyright 2007 Aaron Spike <aaron@ekips.org>
@@ -138,7 +139,7 @@ private:
 };
 
 
-#line 142 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.cpp"
+#line 143 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.cpp"
 static const char _svg_path_actions[] = {
 	0, 1, 0, 1, 1, 1, 2, 1, 
 	3, 1, 4, 1, 5, 1, 15, 1, 
@@ -1143,7 +1144,7 @@ static const int svg_path_first_final = 270;
 
 static const int svg_path_en_main = 1;
 
-#line 142 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 143 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 
 
 void Parser::parse(char const *str)
@@ -1156,12 +1157,12 @@ throw(SVGPathParseError)
     _reset();
 
     
-#line 1160 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.cpp"
+#line 1161 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.cpp"
 	{
 	cs = svg_path_start;
 	}
 
-#line 1165 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.cpp"
+#line 1166 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.cpp"
 	{
 	int _klen;
 	unsigned int _trans;
@@ -1234,13 +1235,13 @@ _match:
 		switch ( *_acts++ )
 		{
 	case 0:
-#line 154 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 155 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             start = p;
         }
 	break;
 	case 1:
-#line 158 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 159 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             char const *end=p;
             std::string buf(start, end);
@@ -1249,55 +1250,55 @@ _match:
         }
 	break;
 	case 2:
-#line 165 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 166 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _push(1.0);
         }
 	break;
 	case 3:
-#line 169 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 170 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _push(0.0);
         }
 	break;
 	case 4:
-#line 173 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 174 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _absolute = true;
         }
 	break;
 	case 5:
-#line 177 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 178 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _absolute = false;
         }
 	break;
 	case 6:
-#line 181 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 182 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _moveTo(_pop_point());
         }
 	break;
 	case 7:
-#line 185 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 186 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _lineTo(_pop_point());
         }
 	break;
 	case 8:
-#line 189 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 190 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _hlineTo(Point(_pop_coord(X), _current[Y]));
         }
 	break;
 	case 9:
-#line 193 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 194 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _vlineTo(Point(_current[X], _pop_coord(Y)));
         }
 	break;
 	case 10:
-#line 197 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 198 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             Point p = _pop_point();
             Point c1 = _pop_point();
@@ -1306,7 +1307,7 @@ _match:
         }
 	break;
 	case 11:
-#line 204 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 205 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             Point p = _pop_point();
             Point c1 = _pop_point();
@@ -1314,7 +1315,7 @@ _match:
         }
 	break;
 	case 12:
-#line 210 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 211 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             Point p = _pop_point();
             Point c = _pop_point();
@@ -1322,19 +1323,19 @@ _match:
         }
 	break;
 	case 13:
-#line 216 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 217 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             Point p = _pop_point();
             _quadTo(_quad_tangent, p);
         }
 	break;
 	case 14:
-#line 221 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 222 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             Point point = _pop_point();
             bool sweep = _pop_flag();
             bool large_arc = _pop_flag();
-            double angle = _pop();
+            double angle = deg_to_rad(_pop());
             double ry = _pop();
             double rx = _pop();
 
@@ -1342,16 +1343,16 @@ _match:
         }
 	break;
 	case 15:
-#line 232 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 233 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{
             _closePath();
         }
 	break;
 	case 16:
-#line 368 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 369 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 	{goto _out;}
 	break;
-#line 1355 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.cpp"
+#line 1356 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.cpp"
 		}
 	}
 
@@ -1362,7 +1363,7 @@ _again:
 	goto _resume;
 	_out: {}
 	}
-#line 378 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
+#line 379 "/home/njh/svn/lib2geom/src/2geom/svg-path-parser.rl"
 
 
     if ( cs < svg_path_first_final ) {

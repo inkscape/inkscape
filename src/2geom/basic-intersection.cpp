@@ -517,6 +517,86 @@ std::vector<std::pair<double, double> > find_intersections( OldBezier a, OldBezi
     std::sort(parameters.begin(), parameters.end());
     return parameters;
 }
+
+
+/**
+ * Compute the Hausdorf distance from A to B only.
+ */
+double hausdorfl(D2<SBasis>& A, D2<SBasis> const& B,
+                 double m_precision,
+                 double *a_t, double* b_t) {
+    std::vector< std::pair<double, double> > xs;
+    std::vector<Point> Az, Bz;
+    sbasis_to_bezier (Az, A);
+    sbasis_to_bezier (Bz, B);
+    find_collinear_normal(xs, Az, Bz, m_precision);
+    double h_dist = 0, h_a_t = 0, h_b_t = 0;
+    double dist = 0;
+    Point Ax = A.at0();
+    double t = Geom::nearest_point(Ax, B);
+    dist = Geom::distance(Ax, B(t));
+    if (dist > h_dist) {
+        h_a_t = 0;
+        h_b_t = t;
+        h_dist = dist;
+    }
+    Ax = A.at1();
+    t = Geom::nearest_point(Ax, B);
+    dist = Geom::distance(Ax, B(t));
+    if (dist > h_dist) {
+        h_a_t = 1;
+        h_b_t = t;
+        h_dist = dist;
+    }
+    for (size_t i = 0; i < xs.size(); ++i)
+    {
+        Point At = A(xs[i].first);
+        Point Bu = B(xs[i].second);
+        double distAtBu = Geom::distance(At, Bu);
+        t = Geom::nearest_point(At, B);
+        dist = Geom::distance(At, B(t));
+        //FIXME: we might miss it due to floating point precision...
+        if (dist >= distAtBu-.1 && distAtBu > h_dist) {
+            h_a_t = xs[i].first;
+            h_b_t = xs[i].second;
+            h_dist = distAtBu;
+        }
+            
+    }
+    if(a_t) *a_t = h_a_t;
+    if(b_t) *b_t = h_b_t;
+    
+    return h_dist;
+}
+
+/** 
+ * Compute the symmetric Hausdorf distance.
+ */
+double hausdorf(D2<SBasis>& A, D2<SBasis> const& B,
+                 double m_precision,
+                 double *a_t, double* b_t) {
+    double h_dist = hausdorfl(A, B, m_precision, a_t, b_t);
+    
+    double dist = 0;
+    Point Bx = B.at0();
+    double t = Geom::nearest_point(Bx, A);
+    dist = Geom::distance(Bx, A(t));
+    if (dist > h_dist) {
+        if(a_t) *a_t = t;
+        if(b_t) *b_t = 0;
+        h_dist = dist;
+    }
+    Bx = B.at1();
+    t = Geom::nearest_point(Bx, A);
+    dist = Geom::distance(Bx, A(t));
+    if (dist > h_dist) {
+        if(a_t) *a_t = t;
+        if(b_t) *b_t = 1;
+        h_dist = dist;
+    }
+    
+    return h_dist;
+}
 };
 
 /*

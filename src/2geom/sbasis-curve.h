@@ -1,5 +1,6 @@
-/*
- * Simmetric Power Bais Curve
+/**
+ * \file
+ * \brief Symmetric Power Basis Curve
  *
  * Authors:
  * 		MenTaLguY <mental@rydia.net>

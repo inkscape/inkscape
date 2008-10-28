@@ -4,7 +4,10 @@
 #include <2geom/piecewise.h>
 #include <vector>
 
-/** two-dimensional geometric operators.  
+/**
+ * \file
+ * \brief two-dimensional geometric operators.  
+ *
  * Copyright 2007, JFBarraud
  * Copyright 2007, njh
  * 
@@ -61,6 +64,8 @@ Piecewise<SBasis> arcLengthSb(Piecewise<D2<SBasis> > const &M, double tol=.01);
 double length(          D2<SBasis>   const &M, double tol=.01);
 double length(Piecewise<D2<SBasis> > const &M, double tol=.01);
 
+void length_integrating(D2<SBasis> const &B, double &result, double &abs_error, double tol);
+
 Piecewise<D2<SBasis> >
 arc_length_parametrization(D2<SBasis> const &M, 
                            unsigned order=3, 
@@ -72,6 +77,27 @@ arc_length_parametrization(Piecewise<D2<SBasis> > const &M,
 
 
 unsigned centroid(Piecewise<D2<SBasis> > const &p, Point& centroid, double &area);
+
+std::vector<D2<SBasis> >
+cubics_fitting_curvature(Point const &M0,   Point const &M1,
+                         Point const &dM0,  Point const &dM1,
+                         double d2M0xdM0,  double d2M1xdM1,
+                         int insist_on_speed_signs = 1,
+                         double epsilon = 1e-5);
+
+std::vector<D2<SBasis> >
+cubics_fitting_curvature(Point const &M0,   Point const &M1,
+                         Point const &dM0,  Point const &dM1,
+                         Point const &d2M0, Point const &d2M1,
+                         int insist_on_speed_signs = 1,
+                         double epsilon = 1e-5);
+
+std::vector<D2<SBasis> >
+cubics_with_prescribed_curvature(Point const &M0,   Point const &M1,
+                                 Point const &dM0,  Point const &dM1,
+                                 double k0,         double k1,
+                                 int insist_on_speed_signs = 1,
+                                 double error = 1e-5);
 
 };
 

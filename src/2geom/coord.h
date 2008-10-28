@@ -1,5 +1,6 @@
-/*
- * coord.h
+/**
+ *  \file
+ *  \brief Defines the Coord "real" type with sufficient precision for coordinates.
  *
  * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
  *

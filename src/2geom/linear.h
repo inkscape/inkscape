@@ -1,5 +1,6 @@
-/*
- *  linear.h - Linear fragment function class
+/**
+ * \file
+ * \brief  Linear fragment function class
  *
  *  Authors:
  *   Nathan Hurst <njh@mail.csse.monash.edu.au>

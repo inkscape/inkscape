@@ -36,6 +36,7 @@
 #include <cstring>
 #include <string>
 #include <locale.h>
+#include <stdlib.h>
 
 #include <popt.h>
 #ifndef POPT_TABLEEND
@@ -521,7 +522,12 @@ static int set_extensions_env()
 #endif
         tmp += oldenv;
     }
+#ifdef WIN32
+    /// \todo this does not work on windows, cannot find the setenv method or an equivalent.
+    //setenv("PYTHONPATH", tmp.c_str(), 1);
+#else
     setenv("PYTHONPATH", tmp.c_str(), 1);
+#endif
     
     return 0;
 }

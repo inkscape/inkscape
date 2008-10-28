@@ -437,15 +437,15 @@ void Preferences::addObserver(Observer &o)
     if (!node) return;
     
     // set additional data
-    _ObserverData *d = new _ObserverData;
-    d->_node = node;
-    d->_is_attr = !attr_key.empty();
-    o._data = static_cast<void*>(d);
+    _ObserverData *priv_data = new _ObserverData;
+    priv_data->_node = node;
+    priv_data->_is_attr = !attr_key.empty();
+    o._data = static_cast<void*>(priv_data);
     
     _observer_map[&o] = new PrefNodeObserver(o, attr_key);
     
     // if we watch a single pref, we want to receive notifications only for a single node
-    if (d->_is_attr) {
+    if (priv_data->_is_attr) {
         node->addObserver( *(_observer_map[&o]) );
     } else {
         node->addSubtreeObserver( *(_observer_map[&o]) );
@@ -457,10 +457,15 @@ void Preferences::removeObserver(Observer &o)
     // prevent removing an observer which was not added
     if ( _observer_map.find(&o) == _observer_map.end() ) return;
     Inkscape::XML::Node *node = static_cast<_ObserverData*>(o._data)->_node;
-    delete static_cast<_ObserverData*>(o._data);
+    _ObserverData *priv_data = static_cast<_ObserverData*>(o._data);
     o._data = NULL;
     
-    node->removeSubtreeObserver( *(_observer_map[&o]) );
+    if (priv_data->_is_attr)
+        node->removeObserver( *(_observer_map[&o]) );
+    else
+        node->removeSubtreeObserver( *(_observer_map[&o]) );
+
+    delete priv_data;
     delete _observer_map[&o];
     _observer_map.erase(&o);
 }

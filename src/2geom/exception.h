@@ -1,7 +1,9 @@
 #ifndef LIB2GEOM_EXCEPTION_HEADER
 #define LIB2GEOM_EXCEPTION_HEADER
 
-/** Defines the different types of exceptions that 2geom can throw.
+/**
+ * \file
+ * \brief  Defines the different types of exceptions that 2geom can throw.
  *
  * Copyright 2007 Johan Engelen <goejendaagh@zonnet.nl>
  *
