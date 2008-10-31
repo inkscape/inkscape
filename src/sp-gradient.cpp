@@ -375,7 +375,7 @@ sp_gradient_init(SPGradient *gr)
     gr->units = SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX;
     gr->units_set = FALSE;
 
-    gr->gradientTransform = NR::identity();
+    gr->gradientTransform = Geom::identity();
     gr->gradientTransform_set = FALSE;
 
     gr->spread = SP_GRADIENT_SPREAD_PAD;
@@ -478,12 +478,12 @@ sp_gradient_set(SPObject *object, unsigned key, gchar const *value)
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_GRADIENTTRANSFORM: {
-            NR::Matrix t;
+            Geom::Matrix t;
             if (value && sp_svg_transform_read(value, &t)) {
                 gr->gradientTransform = t;
                 gr->gradientTransform_set = TRUE;
             } else {
-                gr->gradientTransform = NR::identity();
+                gr->gradientTransform = Geom::identity();
                 gr->gradientTransform_set = FALSE;
             }
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -1248,8 +1248,8 @@ sp_gradient_render_vector_block_rgb(SPGradient *gradient, guchar *buf,
     }
 }
 
-NR::Matrix
-sp_gradient_get_g2d_matrix(SPGradient const *gr, NR::Matrix const &ctm, NR::Rect const &bbox)
+Geom::Matrix
+sp_gradient_get_g2d_matrix(SPGradient const *gr, Geom::Matrix const &ctm, Geom::Rect const &bbox)
 {
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         return ( Geom::Scale(bbox.dimensions())
@@ -1260,8 +1260,8 @@ sp_gradient_get_g2d_matrix(SPGradient const *gr, NR::Matrix const &ctm, NR::Rect
     }
 }
 
-NR::Matrix
-sp_gradient_get_gs2d_matrix(SPGradient const *gr, NR::Matrix const &ctm, NR::Rect const &bbox)
+Geom::Matrix
+sp_gradient_get_gs2d_matrix(SPGradient const *gr, Geom::Matrix const &ctm, Geom::Rect const &bbox)
 {
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         return ( gr->gradientTransform
@@ -1274,8 +1274,8 @@ sp_gradient_get_gs2d_matrix(SPGradient const *gr, NR::Matrix const &ctm, NR::Rec
 }
 
 void
-sp_gradient_set_gs2d_matrix(SPGradient *gr, NR::Matrix const &ctm,
-                            NR::Rect const &bbox, NR::Matrix const &gs2d)
+sp_gradient_set_gs2d_matrix(SPGradient *gr, Geom::Matrix const &ctm,
+                            Geom::Rect const &bbox, Geom::Matrix const &gs2d)
 {
     gr->gradientTransform = gs2d * ctm.inverse();
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX ) {
@@ -1313,8 +1313,8 @@ static Inkscape::XML::Node *sp_lineargradient_write(SPObject *object, Inkscape::
                                                     guint flags);
 
 static SPPainter *sp_lineargradient_painter_new(SPPaintServer *ps,
-                                                NR::Matrix const &full_transform,
-                                                NR::Matrix const &parent_transform,
+                                                Geom::Matrix const &full_transform,
+                                                Geom::Matrix const &parent_transform,
                                                 NRRect const *bbox);
 static void sp_lineargradient_painter_free(SPPaintServer *ps, SPPainter *painter);
 
@@ -1467,8 +1467,8 @@ sp_lineargradient_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inks
  */
 static SPPainter *
 sp_lineargradient_painter_new(SPPaintServer *ps,
-                              NR::Matrix const &full_transform,
-                              NR::Matrix const &/*parent_transform*/,
+                              Geom::Matrix const &full_transform,
+                              Geom::Matrix const &/*parent_transform*/,
                               NRRect const *bbox)
 {
     SPLinearGradient *lg = SP_LINEARGRADIENT(ps);
@@ -1490,31 +1490,32 @@ sp_lineargradient_painter_new(SPPaintServer *ps,
      * or something similar. Originally I had 1023.9999 here - not sure
      * whether we have really to cut out ceil int (Lauris).
      */
-    NR::Matrix color2norm(NR::identity());
-    NR::Matrix color2px;
+    Geom::Matrix color2norm(Geom::identity());
+    Geom::Matrix color2px;
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
-        NR::Matrix norm2pos(NR::identity());
+        Geom::Matrix norm2pos(Geom::identity());
 
         /* BBox to user coordinate system */
-        NR::Matrix bbox2user(bbox->x1 - bbox->x0, 0, 0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
+        Geom::Matrix bbox2user(bbox->x1 - bbox->x0, 0, 0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
 
-        NR::Matrix color2pos = color2norm * norm2pos;
-        NR::Matrix color2tpos = color2pos * gr->gradientTransform;
-        NR::Matrix color2user = color2tpos * bbox2user;
+        Geom::Matrix color2pos = color2norm * norm2pos;
+        Geom::Matrix color2tpos = color2pos * gr->gradientTransform;
+        Geom::Matrix color2user = color2tpos * bbox2user;
         color2px = color2user * full_transform;
 
     } else {
         /* Problem: What to do, if we have mixed lengths and percentages? */
         /* Currently we do ignore percentages at all, but that is not good (lauris) */
 
-        NR::Matrix norm2pos(NR::identity());
-        NR::Matrix color2pos = color2norm * norm2pos;
-        NR::Matrix color2tpos = color2pos * gr->gradientTransform;
+        Geom::Matrix norm2pos(Geom::identity());
+        Geom::Matrix color2pos = color2norm * norm2pos;
+        Geom::Matrix color2tpos = color2pos * gr->gradientTransform;
         color2px = color2tpos * full_transform;
 
     }
-
-    nr_lgradient_renderer_setup(&lgp->lgr, gr->color, sp_gradient_get_spread(gr), &color2px,
+    // TODO: remove color2px_nr after converting to 2geom
+    NR::Matrix color2px_nr = from_2geom(color2px);
+    nr_lgradient_renderer_setup(&lgp->lgr, gr->color, sp_gradient_get_spread(gr), &color2px_nr,
                                 lg->x1.computed, lg->y1.computed,
                                 lg->x2.computed, lg->y2.computed);
 
@@ -1587,8 +1588,8 @@ static Inkscape::XML::Node *sp_radialgradient_write(SPObject *object, Inkscape::
                                                     guint flags);
 
 static SPPainter *sp_radialgradient_painter_new(SPPaintServer *ps,
-                                                NR::Matrix const &full_transform,
-                                                NR::Matrix const &parent_transform,
+                                                Geom::Matrix const &full_transform,
+                                                Geom::Matrix const &parent_transform,
                                                 NRRect const *bbox);
 static void sp_radialgradient_painter_free(SPPaintServer *ps, SPPainter *painter);
 
@@ -1749,8 +1750,8 @@ sp_radialgradient_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inks
  */
 static SPPainter *
 sp_radialgradient_painter_new(SPPaintServer *ps,
-                              NR::Matrix const &full_transform,
-                              NR::Matrix const &/*parent_transform*/,
+                              Geom::Matrix const &full_transform,
+                              Geom::Matrix const &/*parent_transform*/,
                               NRRect const *bbox)
 {
     SPRadialGradient *rg = SP_RADIALGRADIENT(ps);
@@ -1765,7 +1766,7 @@ sp_radialgradient_painter_new(SPPaintServer *ps,
 
     rgp->rg = rg;
 
-    NR::Matrix gs2px;
+    Geom::Matrix gs2px;
 
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         /** \todo
@@ -1774,9 +1775,9 @@ sp_radialgradient_painter_new(SPPaintServer *ps,
          */
 
         /* BBox to user coordinate system */
-        NR::Matrix bbox2user(bbox->x1 - bbox->x0, 0, 0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
+        Geom::Matrix bbox2user(bbox->x1 - bbox->x0, 0, 0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
 
-        NR::Matrix gs2user = gr->gradientTransform * bbox2user;
+        Geom::Matrix gs2user = gr->gradientTransform * bbox2user;
 
         gs2px = gs2user * full_transform;
     } else {
@@ -1788,9 +1789,10 @@ sp_radialgradient_painter_new(SPPaintServer *ps,
 
         gs2px = gr->gradientTransform * full_transform;
     }
-
+    // TODO: remove gs2px_nr after converting to 2geom
+    NR::Matrix gs2px_nr = from_2geom(gs2px);
     nr_rgradient_renderer_setup(&rgp->rgr, gr->color, sp_gradient_get_spread(gr),
-                                &gs2px,
+                                &gs2px_nr,
                                 rg->cx.computed, rg->cy.computed,
                                 rg->fx.computed, rg->fy.computed,
                                 rg->r.computed);

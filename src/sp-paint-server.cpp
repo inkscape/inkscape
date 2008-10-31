@@ -77,8 +77,8 @@ static void sp_paint_server_release(SPObject *object)
 }
 
 SPPainter *sp_paint_server_painter_new(SPPaintServer *ps,
-                                       NR::Matrix const &full_transform,
-                                       NR::Matrix const &parent_transform,
+                                       Geom::Matrix const &full_transform,
+                                       Geom::Matrix const &parent_transform,
                                        const NRRect *bbox)
 {
     g_return_val_if_fail(ps != NULL, NULL);

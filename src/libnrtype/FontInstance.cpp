@@ -8,6 +8,8 @@
  *
  */
 
+#define PANGO_ENABLE_ENGINE
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

@@ -22,7 +22,8 @@ Inkscape::SnapPreferences::PointType const Inkscape::SnapPreferences::SNAPPOINT_
 
 Inkscape::SnapPreferences::SnapPreferences() :
 	_include_item_center(false),
-    _snap_enabled_globally(true)
+    _snap_enabled_globally(true),
+    _snap_postponed_globally(false)
 {
 	setSnapFrom(SNAPPOINT_BBOX | SNAPPOINT_NODE, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
 }

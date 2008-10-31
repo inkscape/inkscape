@@ -1,16 +1,15 @@
-#ifndef __INKSCAPE_EXTENSION_INTERNAL_PRINT_EMF_WIN32_H__
-#define __INKSCAPE_EXTENSION_INTERNAL_PRINT_EMF_WIN32_H__
-
-/*
- * Enhanced Metafile Printing.
- *
- * Author:
+/** @file
+ * @brief Enhanced Metafile printing - implementation
+ */
+/* Author:
  *   Ulf Erikson <ulferikson@users.sf.net>
  *
  * Copyright (C) 2006-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+#ifndef __INKSCAPE_EXTENSION_INTERNAL_PRINT_EMF_WIN32_H__
+#define __INKSCAPE_EXTENSION_INTERNAL_PRINT_EMF_WIN32_H__
 
 #ifdef WIN32
 
@@ -100,11 +99,11 @@ protected:
 
 /*
   Local Variables:
-  mode:cpp
+  mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

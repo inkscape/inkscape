@@ -9,6 +9,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#define PANGO_ENABLE_ENGINE
+
 #include <gtk/gtkversion.h>
 #include "Layout-TNG.h"
 #include "style.h"

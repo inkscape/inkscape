@@ -83,25 +83,30 @@ public:
 
     Inkscape::SnappedPoint freeSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
                                                std::vector<Geom::Point> const &p,
+                                               Geom::Point const &pointer,
                                                Geom::Point const &tr) const;
 
     Inkscape::SnappedPoint constrainedSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
                                                       std::vector<Geom::Point> const &p,
+                                                      Geom::Point const &pointer,
                                                       Inkscape::Snapper::ConstraintLine const &constraint,
                                                       Geom::Point const &tr) const;
 
     Inkscape::SnappedPoint freeSnapScale(Inkscape::SnapPreferences::PointType point_type,
                                          std::vector<Geom::Point> const &p,
+                                         Geom::Point const &pointer,
                                          Geom::Scale const &s,
                                          Geom::Point const &o) const;
 
     Inkscape::SnappedPoint constrainedSnapScale(Inkscape::SnapPreferences::PointType point_type,
                                                 std::vector<Geom::Point> const &p,
+                                                Geom::Point const &pointer,
                                                 Geom::Scale const &s,
                                                 Geom::Point const &o) const;
 
     Inkscape::SnappedPoint constrainedSnapStretch(Inkscape::SnapPreferences::PointType point_type,
                                                   std::vector<Geom::Point> const &p,
+                                                  Geom::Point const &pointer,
                                                   Geom::Coord const &s,
                                                   Geom::Point const &o,
                                                   Geom::Dim2 d,
@@ -109,6 +114,7 @@ public:
 
     Inkscape::SnappedPoint constrainedSnapSkew(Inkscape::SnapPreferences::PointType point_type,
                                                std::vector<Geom::Point> const &p,
+                                               Geom::Point const &pointer,
                                                Inkscape::Snapper::ConstraintLine const &constraint,
                                                Geom::Point const &s, // s[0] = skew factor, s[1] = scale factor
                                                Geom::Point const &o,
@@ -144,6 +150,7 @@ private:
     
     Inkscape::SnappedPoint _snapTransformed(Inkscape::SnapPreferences::PointType type,
                                             std::vector<Geom::Point> const &points,
+                                            Geom::Point const &pointer,
                                             bool constrained,
                                             Inkscape::Snapper::ConstraintLine const &constraint,
                                             Transformation transformation_type,

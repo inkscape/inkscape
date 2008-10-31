@@ -1157,6 +1157,8 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
 
     g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
                      G_CALLBACK(&FilterModifier::on_activate_desktop), this);
+    g_signal_connect(G_OBJECT(INKSCAPE), "deactivate_desktop",
+                     G_CALLBACK(&FilterModifier::on_deactivate_desktop), this);
 
     on_activate_desktop(INKSCAPE, d.getDesktop(), this);
     update_filters();
@@ -1182,6 +1184,13 @@ void FilterEffectsDialog::FilterModifier::on_activate_desktop(Application*, SPDe
     me->_dialog.setDesktop(desktop);
 
     me->update_filters();
+}
+
+void FilterEffectsDialog::FilterModifier::on_deactivate_desktop(Application*, SPDesktop* desktop, FilterModifier* me)
+{
+    me->_doc_replaced.disconnect();
+    me->_resource_changed.disconnect();
+    me->_dialog.setDesktop(NULL);
 }
 
 

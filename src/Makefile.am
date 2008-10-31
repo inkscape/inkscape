@@ -27,7 +27,8 @@ INCLUDES =	\
 	$(POPPLER_GLIB_CFLAGS)	\
 	-DPOTRACE=\"potrace\"	\
 	$(INKSCAPE_CFLAGS) \
-	-I$(top_srcdir)/cxxtest
+	-I$(top_srcdir)/cxxtest \
+	$(WIN32_CFLAGS)
 
 include Makefile_insert
 include application/Makefile_insert

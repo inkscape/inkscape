@@ -87,6 +87,7 @@ private:
         };
 
         static void on_activate_desktop(Application*, SPDesktop*, FilterModifier*);
+        static void on_deactivate_desktop(Application*, SPDesktop*, FilterModifier*);
         void on_document_replaced(SPDesktop*, SPDocument*)
         {
             update_filters();

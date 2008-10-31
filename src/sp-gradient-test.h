@@ -9,6 +9,7 @@
 #include "svg/svg.h"
 #include "xml/repr.h"
 #include <2geom/transforms.h>
+#include "helper/geom.h"
 
 class SPGradientTest : public DocumentUsingTest
 {
@@ -32,8 +33,8 @@ public:
     {
         SPGradient *gr = static_cast<SPGradient *>(g_object_new(SP_TYPE_GRADIENT, NULL));
         if ( gr ) {
-            UTEST_ASSERT(gr->gradientTransform.test_identity());
-            UTEST_ASSERT(gr->gradientTransform == NR::identity());
+            UTEST_ASSERT(gr->gradientTransform.isIdentity());
+            UTEST_ASSERT(gr->gradientTransform == Geom::identity());
             g_object_unref(gr);
 
             dst = new SPGradientTest();
@@ -56,13 +57,13 @@ public:
         SP_OBJECT(gr)->document = _doc;
 
         sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTTRANSFORM, "translate(5, 8)");
-        TS_ASSERT_EQUALS( gr->gradientTransform, NR::Matrix(Geom::Translate(5, 8)) );
+        TS_ASSERT_EQUALS( gr->gradientTransform, Geom::Matrix(Geom::Translate(5, 8)) );
 
         sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTTRANSFORM, "");
-        TS_ASSERT_EQUALS( gr->gradientTransform, NR::identity() );
+        TS_ASSERT_EQUALS( gr->gradientTransform, Geom::identity() );
 
         sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTTRANSFORM, "rotate(90)");
-        TS_ASSERT_EQUALS( gr->gradientTransform, NR::Matrix(rotate_degrees(90)) );
+        TS_ASSERT_EQUALS( gr->gradientTransform, Geom::Matrix(rotate_degrees(90)) );
 
         g_object_unref(gr);
     }
@@ -79,10 +80,10 @@ public:
         SP_OBJECT(gr)->updateRepr(repr, SP_OBJECT_WRITE_ALL);
         {
             gchar const *tr = repr->attribute("gradientTransform");
-            NR::Matrix svd;
+            Geom::Matrix svd;
             bool const valid = sp_svg_transform_read(tr, &svd);
             TS_ASSERT( valid );
-            TS_ASSERT_EQUALS( svd, NR::Matrix(rotate_degrees(90)) );
+            TS_ASSERT_EQUALS( svd, Geom::Matrix(rotate_degrees(90)) );
         }
 
         g_object_unref(gr);
@@ -93,53 +94,53 @@ public:
     {
         SPGradient *gr = static_cast<SPGradient *>(g_object_new(SP_TYPE_GRADIENT, NULL));
         SP_OBJECT(gr)->document = _doc;
-        NR::Matrix const grXform(2, 1,
+        Geom::Matrix const grXform(2, 1,
                                  1, 3,
                                  4, 6);
         gr->gradientTransform = grXform;
-        NR::Rect const unit_rect(NR::Point(0, 0), NR::Point(1, 1));
+        Geom::Rect const unit_rect(Geom::Point(0, 0), Geom::Point(1, 1));
         {
-            NR::Matrix const g2d(sp_gradient_get_g2d_matrix(gr, NR::identity(), unit_rect));
-            NR::Matrix const gs2d(sp_gradient_get_gs2d_matrix(gr, NR::identity(), unit_rect));
-            TS_ASSERT_EQUALS( g2d, NR::identity() );
-            TS_ASSERT( NR::matrix_equalp(gs2d, gr->gradientTransform * g2d, 1e-12) );
+            Geom::Matrix const g2d(sp_gradient_get_g2d_matrix(gr, Geom::identity(), unit_rect));
+            Geom::Matrix const gs2d(sp_gradient_get_gs2d_matrix(gr, Geom::identity(), unit_rect));
+            TS_ASSERT_EQUALS( g2d, Geom::identity() );
+            TS_ASSERT( Geom::matrix_equalp(gs2d, gr->gradientTransform * g2d, 1e-12) );
 
-            sp_gradient_set_gs2d_matrix(gr, NR::identity(), unit_rect, gs2d);
-            TS_ASSERT( NR::matrix_equalp(gr->gradientTransform, grXform, 1e-12) );
+            sp_gradient_set_gs2d_matrix(gr, Geom::identity(), unit_rect, gs2d);
+            TS_ASSERT( Geom::matrix_equalp(gr->gradientTransform, grXform, 1e-12) );
         }
 
         gr->gradientTransform = grXform;
-        NR::Matrix const funny(2, 3,
+        Geom::Matrix const funny(2, 3,
                                4, 5,
                                6, 7);
         {
-            NR::Matrix const g2d(sp_gradient_get_g2d_matrix(gr, funny, unit_rect));
-            NR::Matrix const gs2d(sp_gradient_get_gs2d_matrix(gr, funny, unit_rect));
+            Geom::Matrix const g2d(sp_gradient_get_g2d_matrix(gr, funny, unit_rect));
+            Geom::Matrix const gs2d(sp_gradient_get_gs2d_matrix(gr, funny, unit_rect));
             TS_ASSERT_EQUALS( g2d, funny );
-            TS_ASSERT( NR::matrix_equalp(gs2d, gr->gradientTransform * g2d, 1e-12) );
+            TS_ASSERT( Geom::matrix_equalp(gs2d, gr->gradientTransform * g2d, 1e-12) );
 
             sp_gradient_set_gs2d_matrix(gr, funny, unit_rect, gs2d);
-            TS_ASSERT( NR::matrix_equalp(gr->gradientTransform, grXform, 1e-12) );
+            TS_ASSERT( Geom::matrix_equalp(gr->gradientTransform, grXform, 1e-12) );
         }
 
         gr->gradientTransform = grXform;
-        NR::Rect const larger_rect(NR::Point(5, 6), NR::Point(8, 10));
+        Geom::Rect const larger_rect(Geom::Point(5, 6), Geom::Point(8, 10));
         {
-            NR::Matrix const g2d(sp_gradient_get_g2d_matrix(gr, funny, larger_rect));
-            NR::Matrix const gs2d(sp_gradient_get_gs2d_matrix(gr, funny, larger_rect));
-            TS_ASSERT_EQUALS( g2d, NR::Matrix(3, 0,
+            Geom::Matrix const g2d(sp_gradient_get_g2d_matrix(gr, funny, larger_rect));
+            Geom::Matrix const gs2d(sp_gradient_get_gs2d_matrix(gr, funny, larger_rect));
+            TS_ASSERT_EQUALS( g2d, Geom::Matrix(3, 0,
                                               0, 4,
                                               5, 6) * funny );
-            TS_ASSERT( NR::matrix_equalp(gs2d, gr->gradientTransform * g2d, 1e-12) );
+            TS_ASSERT( Geom::matrix_equalp(gs2d, gr->gradientTransform * g2d, 1e-12) );
 
             sp_gradient_set_gs2d_matrix(gr, funny, larger_rect, gs2d);
-            TS_ASSERT( NR::matrix_equalp(gr->gradientTransform, grXform, 1e-12) );
+            TS_ASSERT( Geom::matrix_equalp(gr->gradientTransform, grXform, 1e-12) );
 
             sp_object_set(SP_OBJECT(gr), SP_ATTR_GRADIENTUNITS, "userSpaceOnUse");
-            NR::Matrix const user_g2d(sp_gradient_get_g2d_matrix(gr, funny, larger_rect));
-            NR::Matrix const user_gs2d(sp_gradient_get_gs2d_matrix(gr, funny, larger_rect));
+            Geom::Matrix const user_g2d(sp_gradient_get_g2d_matrix(gr, funny, larger_rect));
+            Geom::Matrix const user_gs2d(sp_gradient_get_gs2d_matrix(gr, funny, larger_rect));
             TS_ASSERT_EQUALS( user_g2d, funny );
-            TS_ASSERT( NR::matrix_equalp(user_gs2d, gr->gradientTransform * user_g2d, 1e-12) );
+            TS_ASSERT( Geom::matrix_equalp(user_gs2d, gr->gradientTransform * user_g2d, 1e-12) );
         }
         g_object_unref(gr);
     }

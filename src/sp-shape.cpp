@@ -286,6 +286,9 @@ sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
     if (sp_shape_has_markers (shape)) {
         /* Dimension marker views */
         for (SPItemView *v = item->display; v != NULL; v = v->next) {
+            if (!v->arenaitem->key) {
+                NR_ARENA_ITEM_SET_KEY (v->arenaitem, sp_item_display_key_new (SP_MARKER_LOC_QTY));
+            }
             for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
                 if (shape->marker[i]) {
                     sp_marker_show_dimension ((SPMarker *) shape->marker[i],

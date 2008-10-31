@@ -1,21 +1,21 @@
-#ifndef __FILE_DIALOGIMPL_H__
-#define __FILE_DIALOGIMPL_H__
 /** @file
  * @brief Implementation of the file dialog interfaces defined in filedialogimpl.h
  */
 /* Authors:
  *   Bob Jamison
+ *   Johan Engelen <johan@shouraizou.nl>
  *   Joel Holdsworth
  *   Bruno Dilly
  *   Other dudes from The Inkscape Organization
  *
- * Copyright (C) 2004-2007 Bob Jamison
- * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 2007-2008 Joel Holdsworth
+ * Copyright (C) 2004-2008 Authors
  * Copyright (C) 2004-2007 The Inkscape Organization
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifndef __FILE_DIALOGIMPL_H__
+#define __FILE_DIALOGIMPL_H__
 
 #include "filedialog.h"
 

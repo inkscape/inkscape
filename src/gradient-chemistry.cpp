@@ -443,7 +443,7 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
 }
 
 void
-sp_gradient_transform_multiply(SPGradient *gradient, NR::Matrix postmul, bool set)
+sp_gradient_transform_multiply(SPGradient *gradient, Geom::Matrix postmul, bool set)
 {
     if (set) {
         gradient->gradientTransform = postmul;
@@ -819,7 +819,7 @@ Set the position of point point_type of the gradient applied to item (either fil
 p_w (in desktop coordinates). Write_repr if you want the change to become permanent.
 */
 void
-sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::Point p_w, bool fill_or_stroke, bool write_repr, bool scale)
+sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, Geom::Point p_w, bool fill_or_stroke, bool write_repr, bool scale)
 {
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
 
@@ -828,8 +828,8 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 
     gradient = sp_gradient_convert_to_userspace (gradient, item, fill_or_stroke? "fill" : "stroke");
 
-    NR::Matrix i2d (sp_item_i2d_affine (item));
-    NR::Point p = p_w * i2d.inverse();
+    Geom::Matrix i2d (sp_item_i2d_affine (item));
+    Geom::Point p = p_w * i2d.inverse();
     p *= (gradient->gradientTransform).inverse();
     // now p is in gradient's original coordinates
 
@@ -840,11 +840,11 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
         switch (point_type) {
             case POINT_LG_BEGIN:
                 if (scale) {
-                    lg->x2.computed += (lg->x1.computed - p[NR::X]);
-                    lg->y2.computed += (lg->y1.computed - p[NR::Y]);
+                    lg->x2.computed += (lg->x1.computed - p[Geom::X]);
+                    lg->y2.computed += (lg->y1.computed - p[Geom::Y]);
                 }
-                lg->x1.computed = p[NR::X];
-                lg->y1.computed = p[NR::Y];
+                lg->x1.computed = p[Geom::X];
+                lg->y1.computed = p[Geom::Y];
                 if (write_repr) {
                     if (scale) {
                         sp_repr_set_svg_double(repr, "x2", lg->x2.computed);
@@ -858,11 +858,11 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
                 break;
             case POINT_LG_END:
                 if (scale) {
-                    lg->x1.computed += (lg->x2.computed - p[NR::X]);
-                    lg->y1.computed += (lg->y2.computed - p[NR::Y]);
+                    lg->x1.computed += (lg->x2.computed - p[Geom::X]);
+                    lg->y1.computed += (lg->y2.computed - p[Geom::Y]);
                 }
-                lg->x2.computed = p[NR::X];
-                lg->y2.computed = p[NR::Y];
+                lg->x2.computed = p[Geom::X];
+                lg->y2.computed = p[Geom::Y];
                 if (write_repr) {
                     if (scale) {
                         sp_repr_set_svg_double(repr, "x1", lg->x1.computed);
@@ -877,7 +877,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
             case POINT_LG_MID:
             {                              
                 // using X-coordinates only to determine the offset, assuming p has been snapped to the vector from begin to end.
-                double offset = get_offset_between_points (p, NR::Point(lg->x1.computed, lg->y1.computed), NR::Point(lg->x2.computed, lg->y2.computed));
+                double offset = get_offset_between_points (p, Geom::Point(lg->x1.computed, lg->y1.computed), Geom::Point(lg->x2.computed, lg->y2.computed));
                 SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (lg, false);
                 sp_gradient_ensure_vector(lg);
                 lg->vector.stops.at(point_i).offset = offset;
@@ -895,21 +895,21 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 		}
 	} else if (SP_IS_RADIALGRADIENT(gradient)) {
         SPRadialGradient *rg = SP_RADIALGRADIENT(gradient);
-        NR::Point c (rg->cx.computed, rg->cy.computed);
-        NR::Point c_w = c * gradient->gradientTransform * i2d; // now in desktop coords
-        if ((point_type == POINT_RG_R1 || point_type == POINT_RG_R2) && NR::L2 (p_w - c_w) < 1e-3) {
+        Geom::Point c (rg->cx.computed, rg->cy.computed);
+        Geom::Point c_w = c * gradient->gradientTransform * i2d; // now in desktop coords
+        if ((point_type == POINT_RG_R1 || point_type == POINT_RG_R2) && Geom::L2 (p_w - c_w) < 1e-3) {
             // prevent setting a radius too close to the center
             return;
         }
-        NR::Matrix new_transform;
+        Geom::Matrix new_transform;
         bool transform_set = false;
 
 		switch (point_type) {
 		case POINT_RG_CENTER:
-			rg->fx.computed = p[NR::X] + (rg->fx.computed - rg->cx.computed);
-			rg->fy.computed = p[NR::Y] + (rg->fy.computed - rg->cy.computed);
-			rg->cx.computed = p[NR::X];
-			rg->cy.computed = p[NR::Y];
+			rg->fx.computed = p[Geom::X] + (rg->fx.computed - rg->cx.computed);
+			rg->fy.computed = p[Geom::Y] + (rg->fy.computed - rg->cy.computed);
+			rg->cx.computed = p[Geom::X];
+			rg->cy.computed = p[Geom::Y];
 			if (write_repr) {
 				sp_repr_set_svg_double(repr, "fx", rg->fx.computed);
 				sp_repr_set_svg_double(repr, "fy", rg->fy.computed);
@@ -920,8 +920,8 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 			}
 			break;
 		case POINT_RG_FOCUS:
-			rg->fx.computed = p[NR::X];
-			rg->fy.computed = p[NR::Y];
+			rg->fx.computed = p[Geom::X];
+			rg->fy.computed = p[Geom::Y];
 			if (write_repr) {
 				sp_repr_set_svg_double(repr, "fx", rg->fx.computed);
 				sp_repr_set_svg_double(repr, "fy", rg->fy.computed);
@@ -931,17 +931,17 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 			break;
 		case POINT_RG_R1:
 			{
-                NR::Point r1_w = (c + NR::Point(rg->r.computed, 0)) * gradient->gradientTransform * i2d;
-				double r1_angle = NR::atan2(r1_w - c_w);
-				double move_angle = NR::atan2(p_w - c_w) - r1_angle;
-				double move_stretch = NR::L2(p_w - c_w) / NR::L2(r1_w - c_w);
+                Geom::Point r1_w = (c + Geom::Point(rg->r.computed, 0)) * gradient->gradientTransform * i2d;
+				double r1_angle = Geom::atan2(r1_w - c_w);
+				double move_angle = Geom::atan2(p_w - c_w) - r1_angle;
+				double move_stretch = Geom::L2(p_w - c_w) / Geom::L2(r1_w - c_w);
 
-				NR::Matrix move = NR::Matrix (Geom::Translate (-c_w)) *
-												 NR::Matrix (Geom::Rotate(-r1_angle)) *
-												 NR::Matrix (Geom::Scale(move_stretch, scale? move_stretch : 1)) *
-												 NR::Matrix (Geom::Rotate(r1_angle)) *
-												 NR::Matrix (Geom::Rotate(move_angle)) *
-												 NR::Matrix (Geom::Translate (c_w));
+				Geom::Matrix move = Geom::Matrix (Geom::Translate (-c_w)) *
+												 Geom::Matrix (Geom::Rotate(-r1_angle)) *
+												 Geom::Matrix (Geom::Scale(move_stretch, scale? move_stretch : 1)) *
+												 Geom::Matrix (Geom::Rotate(r1_angle)) *
+												 Geom::Matrix (Geom::Rotate(move_angle)) *
+												 Geom::Matrix (Geom::Translate (c_w));
 
 				new_transform = gradient->gradientTransform * i2d * move * i2d.inverse();
 				transform_set = true;
@@ -950,17 +950,17 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
 			}
 		case POINT_RG_R2:
 			{
-				NR::Point r2_w = (c + NR::Point(0, -rg->r.computed)) * gradient->gradientTransform * i2d;
-				double r2_angle = NR::atan2(r2_w - c_w);
-				double move_angle = NR::atan2(p_w - c_w) - r2_angle;
-				double move_stretch = NR::L2(p_w - c_w) / NR::L2(r2_w - c_w);
+				Geom::Point r2_w = (c + Geom::Point(0, -rg->r.computed)) * gradient->gradientTransform * i2d;
+				double r2_angle = Geom::atan2(r2_w - c_w);
+				double move_angle = Geom::atan2(p_w - c_w) - r2_angle;
+				double move_stretch = Geom::L2(p_w - c_w) / Geom::L2(r2_w - c_w);
 
-				NR::Matrix move = NR::Matrix (Geom::Translate (-c_w)) *
-												 NR::Matrix (Geom::Rotate(-r2_angle)) *
-												 NR::Matrix (Geom::Scale(move_stretch, scale? move_stretch : 1)) *
-												 NR::Matrix (Geom::Rotate(r2_angle)) *
-												 NR::Matrix (Geom::Rotate(move_angle)) *
-												 NR::Matrix (Geom::Translate (c_w));
+				Geom::Matrix move = Geom::Matrix (Geom::Translate (-c_w)) *
+												 Geom::Matrix (Geom::Rotate(-r2_angle)) *
+												 Geom::Matrix (Geom::Scale(move_stretch, scale? move_stretch : 1)) *
+												 Geom::Matrix (Geom::Rotate(r2_angle)) *
+												 Geom::Matrix (Geom::Rotate(move_angle)) *
+												 Geom::Matrix (Geom::Translate (c_w));
 
 				new_transform = gradient->gradientTransform * i2d * move * i2d.inverse();
 				transform_set = true;
@@ -969,8 +969,8 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
             }
         case POINT_RG_MID1:
             {
-                NR::Point start = NR::Point (rg->cx.computed, rg->cy.computed);
-                 NR::Point end   = NR::Point (rg->cx.computed + rg->r.computed, rg->cy.computed);
+                Geom::Point start = Geom::Point (rg->cx.computed, rg->cy.computed);
+                 Geom::Point end   = Geom::Point (rg->cx.computed + rg->r.computed, rg->cy.computed);
                 double offset = get_offset_between_points (p, start, end);
                 SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (rg, false);
                 sp_gradient_ensure_vector(rg);
@@ -985,8 +985,8 @@ sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::
                 break;
             }
         case POINT_RG_MID2:
-                NR::Point start = NR::Point (rg->cx.computed, rg->cy.computed);
-                NR::Point end   = NR::Point (rg->cx.computed, rg->cy.computed - rg->r.computed);
+                Geom::Point start = Geom::Point (rg->cx.computed, rg->cy.computed);
+                Geom::Point end   = Geom::Point (rg->cx.computed, rg->cy.computed - rg->r.computed);
                 double offset = get_offset_between_points (p, start, end);
                 SPGradient *vector = sp_gradient_get_forked_vector_if_necessary(rg, false);
                 sp_gradient_ensure_vector(rg);
@@ -1040,7 +1040,7 @@ Returns the position of point point_type of the gradient applied to item (either
 in desktop coordinates.
 */
 
-NR::Point
+Geom::Point
 sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke)
 {
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
@@ -1054,10 +1054,10 @@ sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool
         SPLinearGradient *lg = SP_LINEARGRADIENT(gradient);
         switch (point_type) {
             case POINT_LG_BEGIN:
-                p = NR::Point (lg->x1.computed, lg->y1.computed);
+                p = Geom::Point (lg->x1.computed, lg->y1.computed);
                 break;
             case POINT_LG_END:
-                p = NR::Point (lg->x2.computed, lg->y2.computed);
+                p = Geom::Point (lg->x2.computed, lg->y2.computed);
                 break;
             case POINT_LG_MID:
                 {   

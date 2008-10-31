@@ -515,19 +515,10 @@ static int set_extensions_env()
     char *oldenv = getenv("PYTHONPATH");
     Glib::ustring tmp = INKSCAPE_EXTENSIONDIR;
     if (oldenv != NULL) {
-#ifdef WIN32
-        tmp += ";";
-#else
-        tmp += ":";
-#endif
+        tmp += G_SEARCHPATH_SEPARATOR;
         tmp += oldenv;
     }
-#ifdef WIN32
-    /// \todo this does not work on windows, cannot find the setenv method or an equivalent.
-    //setenv("PYTHONPATH", tmp.c_str(), 1);
-#else
-    setenv("PYTHONPATH", tmp.c_str(), 1);
-#endif
+    g_setenv("PYTHONPATH", tmp.c_str(), TRUE);
     
     return 0;
 }

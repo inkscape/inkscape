@@ -1305,7 +1305,11 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
         return true;
     }
 
-    if (style->fill.isNone() && style->stroke.isNone())
+    bool no_fill = style->fill.isNone() || style->fill_opacity.value == 0;
+    bool no_stroke = style->stroke.isNone() || style->stroke_width.computed < 1e-9 || 
+                    style->fill_opacity.value == 0;
+
+    if (no_fill && no_stroke)
         return true;
 
     bool need_layer = ( !_state->merge_opacity && !_state->need_layer &&
@@ -1316,7 +1320,7 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
     else
         pushLayer();
 
-    if (!style->fill.isNone()) {
+    if (!no_fill) {
         _setFillStyle(style, pbox);
         setPathVector(pathv);
 
@@ -1326,15 +1330,15 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
             cairo_set_fill_rule(_cr, CAIRO_FILL_RULE_WINDING);
         }
 
-        if (style->stroke.isNone())
+        if (no_stroke)
             cairo_fill(_cr);
         else
             cairo_fill_preserve(_cr);
     }
 
-    if (!style->stroke.isNone()) {
+    if (!no_stroke) {
         _setStrokeStyle(style, pbox);
-        if (style->fill.isNone())
+        if (no_fill)
             setPathVector(pathv);
 
         cairo_stroke(_cr);

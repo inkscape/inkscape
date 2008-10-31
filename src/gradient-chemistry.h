@@ -66,11 +66,11 @@ guint32 average_color (guint32 c1, guint32 c2, gdouble p = 0.5);
 
 SPStop *sp_vector_add_stop (SPGradient *vector, SPStop* prev_stop, SPStop* next_stop, gfloat offset);
 
-void sp_gradient_transform_multiply (SPGradient *gradient, NR::Matrix postmul, bool set);
+void sp_gradient_transform_multiply (SPGradient *gradient, Geom::Matrix postmul, bool set);
 
 SPGradient * sp_item_gradient (SPItem *item, bool fill_or_stroke);
-void sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, NR::Point p_desk, bool fill_or_stroke, bool write_repr, bool scale);
-NR::Point sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
+void sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, Geom::Point p_desk, bool fill_or_stroke, bool write_repr, bool scale);
+Geom::Point sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
 SPGradient *sp_item_gradient_get_vector (SPItem *item, bool fill_or_stroke);
 SPGradientSpread sp_item_gradient_get_spread (SPItem *item, bool fill_or_stroke);
 

@@ -1,17 +1,15 @@
-/*
- * Enhanced Metafile Input/Output.
- *
- * Authors:
+/** @file
+ * @brief Enhanced Metafile Input/Output
+ */
+/* Authors:
  *   Ulf Erikson <ulferikson@users.sf.net>
  *
  * Copyright (C) 2006-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-
-#ifndef EXTENSION_INTERNAL_EMF_WIN32_H
-#define EXTENSION_INTERNAL_EMF_WIN32_H
-
+#ifndef SEEN_EXTENSION_INTERNAL_EMF_WIN32_H
+#define SEEN_EXTENSION_INTERNAL_EMF_WIN32_H
 #ifdef WIN32
 
 #include "extension/implementation/implementation.h"
@@ -56,4 +54,4 @@ private:
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

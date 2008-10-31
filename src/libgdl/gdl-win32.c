@@ -7,12 +7,10 @@
  *
  * This code is in public domain
  */
-
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#ifdef WIN32
 
 #include "gdl-win32.h"
+#include <windows.h>
 
 /* Platform detection */
 gboolean
@@ -40,3 +38,5 @@ is_os_vista()
 
 	return is_vista;
 }
+
+#endif

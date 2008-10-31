@@ -97,7 +97,8 @@ static SPDocument *current_document = NULL;
 static gint selected_attr = 0;
 static Inkscape::XML::Node *selected_repr = NULL;
 
-static void sp_xmltree_desktop_change( Inkscape::Application *inkscape,  SPDesktop *desktop, GtkWidget *dialog );
+static void sp_xmltree_desktop_activate( Inkscape::Application *inkscape,  SPDesktop *desktop, GtkWidget *dialog );
+static void sp_xmltree_desktop_deactivate( Inkscape::Application *inkscape,  SPDesktop *desktop, GtkWidget *dialog );
 
 static void set_tree_desktop(SPDesktop *desktop);
 static void set_tree_document(SPDocument *document);
@@ -612,10 +613,10 @@ void sp_xml_tree_dialog()
         gtk_widget_hide(text_container);
 
         g_signal_connect( G_OBJECT(INKSCAPE), "activate_desktop",
-                           G_CALLBACK(sp_xmltree_desktop_change), dlg);
+                           G_CALLBACK(sp_xmltree_desktop_activate), dlg);
 
         g_signal_connect( G_OBJECT(INKSCAPE), "deactivate_desktop",
-                           G_CALLBACK(sp_xmltree_desktop_change), dlg);
+                           G_CALLBACK(sp_xmltree_desktop_deactivate), dlg);
 
         g_signal_connect((GObject *) dlg, "key_press_event", (GCallback) sp_xml_tree_key_press, NULL);
 
@@ -650,14 +651,18 @@ static gboolean sp_xml_tree_key_press(GtkWidget */*widget*/, GdkEventKey *event)
 }
 
 
-static void sp_xmltree_desktop_change(Inkscape::Application */*inkscape*/,
+static void sp_xmltree_desktop_activate(Inkscape::Application */*inkscape*/,
                                       SPDesktop *desktop,
                                       GtkWidget */*dialog*/ )
 {
-    if (!desktop) {
-        return;
-    }
     set_tree_desktop(desktop);
+}
+
+static void sp_xmltree_desktop_deactivate(Inkscape::Application */*inkscape*/,
+                                      SPDesktop *desktop,
+                                      GtkWidget */*dialog*/ )
+{
+    set_tree_desktop(NULL);
 }
 
 

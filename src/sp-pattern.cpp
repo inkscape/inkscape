@@ -44,17 +44,17 @@ struct SPPatPainter {
 	SPPainter painter;
 	SPPattern *pat;
 
-	NR::Matrix ps2px;
-	NR::Matrix px2ps;
-	NR::Matrix pcs2px;
+	Geom::Matrix ps2px;
+	Geom::Matrix px2ps;
+	Geom::Matrix pcs2px;
 
 	NRArena *arena;
 	unsigned int dkey;
 	NRArenaItem *root;
 	
 	bool         use_cached_tile;
-	NR::Matrix     ca2pa;
-	NR::Matrix     pa2ca;
+	Geom::Matrix     ca2pa;
+	Geom::Matrix     pa2ca;
 	NRRectL      cached_bbox;
 	NRPixBlock   cached_tile;
 };
@@ -72,7 +72,7 @@ static void sp_pattern_modified (SPObject *object, unsigned int flags);
 static void pattern_ref_changed(SPObject *old_ref, SPObject *ref, SPPattern *pat);
 static void pattern_ref_modified (SPObject *ref, guint flags, SPPattern *pattern);
 
-static SPPainter *sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR::Matrix const &parent_transform, const NRRect *bbox);
+static SPPainter *sp_pattern_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, Geom::Matrix const &parent_transform, const NRRect *bbox);
 static void sp_pattern_painter_free (SPPaintServer *ps, SPPainter *painter);
 
 static SPPaintServerClass * pattern_parent_class;
@@ -474,7 +474,7 @@ sp_pattern_clone_if_necessary (SPItem *item, SPPattern *pattern, const gchar *pr
 }
 
 void
-sp_pattern_transform_multiply (SPPattern *pattern, NR::Matrix postmul, bool set)
+sp_pattern_transform_multiply (SPPattern *pattern, Geom::Matrix postmul, bool set)
 {
 	// this formula is for a different interpretation of pattern transforms as described in (*) in sp-pattern.cpp
 	// for it to work, we also need    sp_object_read_attr (SP_OBJECT (item), "transform");
@@ -494,15 +494,15 @@ sp_pattern_transform_multiply (SPPattern *pattern, NR::Matrix postmul, bool set)
 }
 
 const gchar *
-pattern_tile (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matrix transform, NR::Matrix move)
+pattern_tile (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matrix transform, Geom::Matrix move)
 {
 	Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
 	Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
 	Inkscape::XML::Node *repr = xml_doc->createElement("svg:pattern");
 	repr->setAttribute("patternUnits", "userSpaceOnUse");
-	sp_repr_set_svg_double(repr, "width", bounds.extent(NR::X));
-	sp_repr_set_svg_double(repr, "height", bounds.extent(NR::Y));
+	sp_repr_set_svg_double(repr, "width", bounds.dimensions()[Geom::X]);
+	sp_repr_set_svg_double(repr, "height", bounds.dimensions()[Geom::Y]);
 
 	gchar *t=sp_svg_transform_write(transform);
 	repr->setAttribute("patternTransform", t);
@@ -516,9 +516,9 @@ pattern_tile (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matrix t
 	        Inkscape::XML::Node *node = (Inkscape::XML::Node *)(i->data);
 		SPItem *copy = SP_ITEM(pat_object->appendChildRepr(node));
 
-		NR::Matrix dup_transform;
+		Geom::Matrix dup_transform;
 		if (!sp_svg_transform_read (node->attribute("transform"), &dup_transform))
-			dup_transform = NR::identity();
+			dup_transform = Geom::identity();
 		dup_transform *= move;
 
 		sp_item_write_transform(copy, SP_OBJECT_REPR(copy), dup_transform);
@@ -562,7 +562,7 @@ guint pattern_patternContentUnits (SPPattern *pat)
 	return pat->patternContentUnits;
 }
 
-NR::Matrix const &pattern_patternTransform(SPPattern const *pat)
+Geom::Matrix const &pattern_patternTransform(SPPattern const *pat)
 {
 	for (SPPattern const *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
 		if (pat_i->patternTransform_set)
@@ -637,7 +637,7 @@ Creates a painter (i.e. the thing that does actual filling at the given zoom).
 See (*) below for why the parent_transform may be necessary.
 */
 static SPPainter *
-sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR::Matrix const &/*parent_transform*/, const NRRect *bbox)
+sp_pattern_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, Geom::Matrix const &/*parent_transform*/, const NRRect *bbox)
 {
 	SPPattern *pat = SP_PATTERN (ps);
 	SPPatPainter *pp = g_new (SPPatPainter, 1);
@@ -649,10 +649,10 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 
 	if (pattern_patternUnits (pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
 		/* BBox to user coordinate system */
-		NR::Matrix bbox2user (bbox->x1 - bbox->x0, 0.0, 0.0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
+		Geom::Matrix bbox2user (bbox->x1 - bbox->x0, 0.0, 0.0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
 
 		// the final patternTransform, taking into account bbox
-		NR::Matrix const ps2user(pattern_patternTransform(pat) * bbox2user);
+		Geom::Matrix const ps2user(pattern_patternTransform(pat) * bbox2user);
 
 		// see (*) comment below
 		pp->ps2px = ps2user * full_transform;
@@ -683,9 +683,9 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 		gdouble tmp_y = pattern_height (pat) / (pattern_viewBox(pat)->y1 - pattern_viewBox(pat)->y0);
 
 		// FIXME: preserveAspectRatio must be taken into account here too!
-		NR::Matrix vb2ps (tmp_x, 0.0, 0.0, tmp_y, pattern_x(pat) - pattern_viewBox(pat)->x0 * tmp_x, pattern_y(pat) - pattern_viewBox(pat)->y0 * tmp_y);
+		Geom::Matrix vb2ps (tmp_x, 0.0, 0.0, tmp_y, pattern_x(pat) - pattern_viewBox(pat)->x0 * tmp_x, pattern_y(pat) - pattern_viewBox(pat)->y0 * tmp_y);
 
-		NR::Matrix vb2us = vb2ps * pattern_patternTransform(pat);
+		Geom::Matrix vb2us = vb2ps * pattern_patternTransform(pat);
 
 		// see (*)
 		pp->pcs2px = vb2us * full_transform;
@@ -693,9 +693,9 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 		/* No viewbox, have to parse units */
 		if (pattern_patternContentUnits (pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
 			/* BBox to user coordinate system */
-			NR::Matrix bbox2user (bbox->x1 - bbox->x0, 0.0, 0.0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
+			Geom::Matrix bbox2user (bbox->x1 - bbox->x0, 0.0, 0.0, bbox->y1 - bbox->y0, bbox->x0, bbox->y0);
 
-			NR::Matrix pcs2user = pattern_patternTransform(pat) * bbox2user;
+			Geom::Matrix pcs2user = pattern_patternTransform(pat) * bbox2user;
 
 			// see (*)
 			pp->pcs2px = pcs2user * full_transform;
@@ -736,7 +736,9 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 		one_tile.y0=pattern_y(pp->pat);
 		one_tile.x1=one_tile.x0+pattern_width (pp->pat);
 		one_tile.y1=one_tile.y0+pattern_height (pp->pat);
-		nr_rect_d_matrix_transform (&tr_tile, &one_tile, &pp->ps2px);
+		// TODO: remove ps2px_nr after converting to 2geom
+		NR::Matrix ps2px_nr = from_2geom(pp->ps2px);
+		nr_rect_d_matrix_transform (&tr_tile, &one_tile, &ps2px_nr);
 		int       tr_width=(int)ceil(1.3*(tr_tile.x1-tr_tile.x0));
 		int       tr_height=(int)ceil(1.3*(tr_tile.y1-tr_tile.y0));
 //		if ( tr_width < 10000 && tr_height < 10000 && tr_width*tr_height < 1000000 ) {
@@ -948,7 +950,9 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
             fabs(pp->px2ps[4]) < 1e6 &&
             fabs(pp->px2ps[5]) < 1e6) 
         {
-            nr_rect_d_matrix_transform (&psa, &ba, &pp->px2ps);
+	    // TODO: remove px2ps_nr after converting to 2geom
+	    NR::Matrix px2ps_nr = from_2geom(pp->px2ps);
+            nr_rect_d_matrix_transform (&psa, &ba, &px2ps_nr);
     		
     		psa.x0 = floor ((psa.x0 - pattern_x (pp->pat)) / pattern_width (pp->pat)) -1;
     		psa.y0 = floor ((psa.y0 - pattern_y (pp->pat)) / pattern_height (pp->pat)) -1;

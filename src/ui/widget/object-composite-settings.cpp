@@ -33,13 +33,23 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-void ObjectCompositeSettings::_on_desktop_switch(
+void ObjectCompositeSettings::_on_desktop_activate(
     Inkscape::Application */*application*/,
     SPDesktop *desktop,
     ObjectCompositeSettings *w
 ) {
     if (w->_subject) {
         w->_subject->setDesktop(desktop);
+    }
+}
+
+void ObjectCompositeSettings::_on_desktop_deactivate(
+    Inkscape::Application */*application*/,
+    SPDesktop *desktop,
+    ObjectCompositeSettings *w
+) {
+    if (w->_subject) {
+        w->_subject->setDesktop(NULL);
     }
 }
 
@@ -77,7 +87,8 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
 
     show_all_children();
 
-    _desktop_activated = g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (&ObjectCompositeSettings::_on_desktop_switch), this );
+    _desktop_activated = g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (&ObjectCompositeSettings::_on_desktop_activate), this );
+    _desktop_activated = g_signal_connect ( G_OBJECT (INKSCAPE), "deactivate_desktop", G_CALLBACK (&ObjectCompositeSettings::_on_desktop_deactivate), this );
 }
 
 ObjectCompositeSettings::~ObjectCompositeSettings() {

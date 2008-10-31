@@ -1110,7 +1110,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
         case GDK_BackSpace:
         case GDK_Delete:
         case GDK_KP_Delete:
-            if (pc->green_curve->is_empty()) {
+            if ( pc->green_curve->is_empty() || (pc->green_curve->last_segment() == NULL) ) {
                 if (!pc->red_curve->is_empty()) {
                     pen_cancel (pc);
                     ret = TRUE;
@@ -1132,8 +1132,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                     break;
                 }
                 // The code below assumes that pc->green_curve has only ONE path !
-                Geom::Path const & path = pc->green_curve->get_pathvector().back();
-                Geom::Curve const * crv = &path.back_default();
+                Geom::Curve const * crv = pc->green_curve->last_segment();
                 pc->p[0] = crv->initialPoint();
                 if ( Geom::CubicBezier const * cubic = dynamic_cast<Geom::CubicBezier const *>(crv)) {
                     pc->p[1] = (*cubic)[1];

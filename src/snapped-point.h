@@ -46,14 +46,16 @@ public:
     SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
     ~SnappedPoint();
 
-    Geom::Coord getDistance() const;
+    Geom::Coord getDistance() const {return _distance;}
     void setDistance(Geom::Coord const d) {_distance = d;}
-    Geom::Coord getTolerance() const;
-    bool getAlwaysSnap() const;
-    Geom::Coord getSecondDistance() const;
+    Geom::Coord getTolerance() const {return _tolerance;}
+    bool getAlwaysSnap() const {return _always_snap;}
+    Geom::Coord getSecondDistance() const {return _second_distance;}
     void setSecondDistance(Geom::Coord const d) {_second_distance = d;}
-    Geom::Coord getSecondTolerance() const;
-    bool getSecondAlwaysSnap() const;
+    Geom::Coord getSecondTolerance() const {return _second_tolerance;}
+    bool getSecondAlwaysSnap() const {return _second_always_snap;}
+    Geom::Coord getPointerDistance() const {return _pointer_distance;}
+    void setPointerDistance(Geom::Coord const d) {_pointer_distance = d;}
     
     /* This is the preferred method to find out which point we have snapped
      * to, because it only returns a point if snapping has actually occured
@@ -104,6 +106,8 @@ protected:
     bool _second_always_snap;
     /* The transformation (translation, scale, skew, or stretch) from the original point to the snapped point */
     Geom::Point _transformation;
+    /* Distance from the un-transformed point to the mouse pointer, measured at the point in time when dragging started */
+    Geom::Coord _pointer_distance;
 };    
 
 }

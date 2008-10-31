@@ -8,6 +8,8 @@
  *
  */
 
+#define PANGO_ENABLE_ENGINE
+
 #include "FontFactory.h"
 #include <libnrtype/font-instance.h>
 

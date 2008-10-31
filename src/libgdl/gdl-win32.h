@@ -1,6 +1,3 @@
-#ifndef __INKSCAPE_GDL_WIN32_H__
-#define __INKSCAPE_GDL_WIN32_H__
-
 /*
  * Windows stuff
  *
@@ -9,22 +6,16 @@
  *
  * This code is in public domain
  */
+#ifndef __INKSCAPE_GDL_WIN32_H__
+#define __INKSCAPE_GDL_WIN32_H__
+#ifdef WIN32
 
-
-
-#define WIN32_MAJORVERSION_VISTA               0x0006
-
-
-
-#include <config.h>
-#include <windows.h>
 #include <gdk/gdk.h>
 
-#ifndef WIN32
-#error "This file is only usable for Windows"
-#endif
+#define WIN32_MAJORVERSION_VISTA               0x0006
 
 /* Platform detection */
 gboolean is_os_vista();
 
+#endif // ifdef WIN32
 #endif /* __INKSCAPE_GDL_WIN32_H__ */

@@ -55,7 +55,8 @@ private:
     Gtk::VBox       _fe_vbox;
     Gtk::Alignment  _fe_alignment;
 
-    static void _on_desktop_switch(Inkscape::Application *application, SPDesktop *desktop, ObjectCompositeSettings *w);
+    static void _on_desktop_activate(Inkscape::Application *application, SPDesktop *desktop, ObjectCompositeSettings *w);
+    static void _on_desktop_deactivate(Inkscape::Application *application, SPDesktop *desktop, ObjectCompositeSettings *w);
     void _subjectChanged();
     sigc::connection _subject_changed;
 

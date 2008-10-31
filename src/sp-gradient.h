@@ -68,7 +68,7 @@ struct SPGradient : public SPPaintServer {
 	SPGradientUnits units;
 	guint units_set : 1;
 	/** gradientTransform attribute */
-	NR::Matrix gradientTransform;
+	Geom::Matrix gradientTransform;
 	guint gradientTransform_set : 1;
 	/** spreadMethod attribute */
 	SPGradientSpread spread;

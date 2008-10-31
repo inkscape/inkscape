@@ -483,6 +483,7 @@
            <include name="obj/winmain.o"/>
            <include name="libinkscape.a"/>
        </fileset>
+       <!-- WARNING: If you change these libraries, don't forget to change them for inkview and cxxtests below as well! -->
        <libs>
            -L${devlibs}/lib
            ${pcl.poppler-cairo} ${pcl.poppler-glib} ${pcl.poppler} 

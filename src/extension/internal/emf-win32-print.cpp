@@ -1,8 +1,7 @@
-/** \file
- * Enhanced Metafile Printing.
+/** @file
+ * @brief Enhanced Metafile printing
  */
-/*
- * Authors:
+/* Authors:
  *   Ulf Erikson <ulferikson@users.sf.net>
  *
  * Copyright (C) 2006-2008 Authors

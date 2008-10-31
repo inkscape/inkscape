@@ -49,14 +49,14 @@ struct SPPaintServer : public SPObject {
 struct SPPaintServerClass {
 	SPObjectClass sp_object_class;
 	/* Get SPPaint instance */
-	SPPainter * (* painter_new) (SPPaintServer *ps, NR::Matrix const &full_transform, NR::Matrix const &parent_transform, const NRRect *bbox);
+	SPPainter * (* painter_new) (SPPaintServer *ps, Geom::Matrix const &full_transform, Geom::Matrix const &parent_transform, const NRRect *bbox);
 	/* Free SPPaint instance */
 	void (* painter_free) (SPPaintServer *ps, SPPainter *painter);
 };
 
 GType sp_paint_server_get_type (void);
 
-SPPainter *sp_paint_server_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR::Matrix const &parent_transform, const NRRect *bbox);
+SPPainter *sp_paint_server_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, Geom::Matrix const &parent_transform, const NRRect *bbox);
 
 SPPainter *sp_painter_free (SPPainter *painter);
 

@@ -21,6 +21,7 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const 
     _second_tolerance = 0;
     _second_always_snap = false;
     _transformation = Geom::Point(1,1);
+    _pointer_distance = 0;
 }
 
 Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2)
@@ -28,6 +29,7 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const 
     _second_distance(d2), _second_tolerance(t2), _second_always_snap(a2)
 {
     _transformation = Geom::Point(1,1);
+    _pointer_distance = 0;
 }
 
 Inkscape::SnappedPoint::SnappedPoint()
@@ -42,44 +44,12 @@ Inkscape::SnappedPoint::SnappedPoint()
     _second_tolerance = 0;
     _second_always_snap = false;
     _transformation = Geom::Point(1,1);
+    _pointer_distance = 0;
 }
-
-
 
 Inkscape::SnappedPoint::~SnappedPoint()
 {
 }
-
-Geom::Coord Inkscape::SnappedPoint::getDistance() const
-{
-    return _distance;
-}
-
-Geom::Coord Inkscape::SnappedPoint::getTolerance() const
-{
-    return _tolerance;
-}
-
-bool Inkscape::SnappedPoint::getAlwaysSnap() const
-{
-    return _always_snap;
-}
-
-Geom::Coord Inkscape::SnappedPoint::getSecondDistance() const
-{
-    return _second_distance;
-}
-
-Geom::Coord Inkscape::SnappedPoint::getSecondTolerance() const
-{
-    return _second_tolerance;
-}
-
-bool Inkscape::SnappedPoint::getSecondAlwaysSnap() const
-{
-    return _second_always_snap;
-}
-
 
 void Inkscape::SnappedPoint::getPoint(Geom::Point &p) const
 {
@@ -107,23 +77,26 @@ bool getClosestSP(std::list<Inkscape::SnappedPoint> &list, Inkscape::SnappedPoin
 
 bool Inkscape::SnappedPoint::isOtherOneBetter(Inkscape::SnappedPoint const &other_one) const
 {
-    // If it's closer
-    bool c2 = other_one.getDistance() < getDistance();
+    double const w = 0.25; // weigth factor: controls which node should be preferrerd for snapping, which is either
+    // the node with the closest snap (w = 0), or the node closest to the mousepointer (w = 1)
+    
+	// If it's closer
+    bool c1 = (w * other_one.getPointerDistance() + (1-w) * other_one.getDistance()) < (w * getPointerDistance() + (1-w) * getDistance());
     // or, if it's for a snapper with "always snap" turned on, and the previous wasn't
-    bool c3 = other_one.getAlwaysSnap() && !getAlwaysSnap();
+    bool c2 = other_one.getAlwaysSnap() && !getAlwaysSnap();
     // But in no case fall back from a snapper with "always snap" on to one with "always snap" off
-    bool c3n = !other_one.getAlwaysSnap() && getAlwaysSnap();
+    bool c2n = !other_one.getAlwaysSnap() && getAlwaysSnap();
     // or, if we have a fully constrained snappoint (e.g. to a node), while the previous one was only partly constrained (e.g. to a line)
-    bool c4 = other_one.getFullyConstrained() && !getFullyConstrained();
+    bool c3 = other_one.getFullyConstrained() && !getFullyConstrained();
     // But in no case fall back; (has less priority than c3n, so it is allowed to fall back when c3 is true, see below)       
-    bool c4n = !other_one.getFullyConstrained() && getFullyConstrained(); 
+    bool c3n = !other_one.getFullyConstrained() && getFullyConstrained(); 
     // or, if it's just as close then consider the second distance
     // (which is only relevant for points at an intersection)
-    bool c5a = (other_one.getDistance() == getDistance()); 
-    bool c5b = other_one.getSecondDistance() < getSecondDistance();
+    bool c4a = (other_one.getDistance() == getDistance()); 
+    bool c4b = other_one.getSecondDistance() < getSecondDistance();
     
-    // std::cout << "c2 = " << c2 << " | c3 = " << c3 << " | c3n = " << c3n << " | c4 = " << c4 << " | c4n = " << c4n << " | c5a = " << c5a << " | c5b = " << c5b;
-    return (c2 || c3 || c4 || (c5a && c5b)) && !c3n && (!c4n || c3);       
+    // std::cout << "c1 = " << c1 << " | c2 = " << c2 << " | c2n = " << c2n << " | c3 = " << c3 << " | c3n = " << c3n << " | c4a = " << c4a << " | c4b = " << c4b;
+    return (c1 || c2 || c3 || (c4a && c4b)) && !c2n && (!c3n || c2);       
 }
 
 /*

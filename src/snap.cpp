@@ -313,7 +313,8 @@ void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) con
  *  of duplicated code.
  *
  *  \param type Type of points being snapped.
- *  \param points List of points to snap.
+ *  \param points List of points to snap (i.e. untransformed).
+ *  \param pointer Location of the mouse pointer, at the time when dragging started (i.e. "untransformed")
  *  \param constrained true if the snap is constrained.
  *  \param constraint Constraint line to use, if `constrained' is true, otherwise undefined.
  *  \param transformation_type Type of transformation to apply to points before trying to snap them.
@@ -326,6 +327,7 @@ void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) con
 Inkscape::SnappedPoint SnapManager::_snapTransformed(
     Inkscape::SnapPreferences::PointType type,
     std::vector<Geom::Point> const &points,
+    Geom::Point const &pointer,
     bool constrained,
     Inkscape::Snapper::ConstraintLine const &constraint,
     Transformation transformation_type,
@@ -446,6 +448,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             } else {
             	snapped_point = freeSnap(type, *j, i == points.begin(), bbox);
             }
+        	snapped_point.setPointerDistance(Geom::L2(pointer - *i));
         }
 
         Geom::Point result;
@@ -592,9 +595,10 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
 
 Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
                                                         std::vector<Geom::Point> const &p,
+                                                        Geom::Point const &pointer,
                                                         Geom::Point const &tr) const
 {
-    return _snapTransformed(point_type, p, false, Geom::Point(), TRANSLATION, tr, Geom::Point(), Geom::X, false);
+    return _snapTransformed(point_type, p, pointer, false, Geom::Point(), TRANSLATION, tr, Geom::Point(), Geom::X, false);
 }
 
 
@@ -612,10 +616,11 @@ Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::SnapPreference
 
 Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
                                                                std::vector<Geom::Point> const &p,
+                                                               Geom::Point const &pointer,
                                                                Inkscape::Snapper::ConstraintLine const &constraint,
                                                                Geom::Point const &tr) const
 {
-    return _snapTransformed(point_type, p, true, constraint, TRANSLATION, tr, Geom::Point(), Geom::X, false);
+    return _snapTransformed(point_type, p, pointer, true, constraint, TRANSLATION, tr, Geom::Point(), Geom::X, false);
 }
 
 
@@ -632,10 +637,11 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::SnapPre
 
 Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::SnapPreferences::PointType point_type,
                                                   std::vector<Geom::Point> const &p,
+                                                  Geom::Point const &pointer,
                                                   Geom::Scale const &s,
                                                   Geom::Point const &o) const
 {
-    return _snapTransformed(point_type, p, false, Geom::Point(), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false);
+    return _snapTransformed(point_type, p, pointer, false, Geom::Point(), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false);
 }
 
 
@@ -653,11 +659,12 @@ Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::SnapPreferences::Poi
 
 Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::SnapPreferences::PointType point_type,
                                                          std::vector<Geom::Point> const &p,
+                                                         Geom::Point const &pointer,
                                                          Geom::Scale const &s,
                                                          Geom::Point const &o) const
 {
     // When constrained scaling, only uniform scaling is supported.
-    return _snapTransformed(point_type, p, true, Geom::Point(), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true);
+    return _snapTransformed(point_type, p, pointer, true, Geom::Point(), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true);
 }
 
 
@@ -676,12 +683,13 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::SnapPreferenc
 
 Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::SnapPreferences::PointType point_type,
                                                             std::vector<Geom::Point> const &p,
+                                                            Geom::Point const &pointer,
                                                             Geom::Coord const &s,
                                                             Geom::Point const &o,
                                                             Geom::Dim2 d,
                                                             bool u) const
 {
-   return _snapTransformed(point_type, p, true, Geom::Point(), STRETCH, Geom::Point(s, s), o, d, u);
+   return _snapTransformed(point_type, p, pointer, true, Geom::Point(), STRETCH, Geom::Point(s, s), o, d, u);
 }
 
 
@@ -699,6 +707,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::SnapPrefere
 
 Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(Inkscape::SnapPreferences::PointType point_type,
                                                  std::vector<Geom::Point> const &p,
+                                                 Geom::Point const &pointer,
                                                  Inkscape::Snapper::ConstraintLine const &constraint,
                                                  Geom::Point const &s,  
                                                  Geom::Point const &o,
@@ -712,7 +721,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(Inkscape::SnapPreference
 	// so it's corners have a different transformation. The snappers cannot handle this, therefore snapping
 	// of bounding boxes is not allowed here.
 	g_assert(!(point_type & Inkscape::SnapPreferences::SNAPPOINT_BBOX));
-	return _snapTransformed(point_type, p, true, constraint, SKEW, s, o, d, false);
+	return _snapTransformed(point_type, p, pointer, true, constraint, SKEW, s, o, d, false);
 }
 
 Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedConstraints &sc, bool constrained) const

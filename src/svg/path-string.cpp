@@ -65,28 +65,28 @@ void Inkscape::SVG::PathString::_appendOp(char abs_op, char rel_op) {
     if ( !rel_op_repeated ) _rel_state.appendOp(rel_op);
 }
 
-void Inkscape::SVG::PathString::State::append(NR::Coord v) {
+void Inkscape::SVG::PathString::State::append(Geom::Coord v) {
     str += ' ';
     appendNumber(v);
 }
 
-void Inkscape::SVG::PathString::State::append(NR::Point p) {
+void Inkscape::SVG::PathString::State::append(Geom::Point p) {
     str += ' ';
-    appendNumber(p[NR::X]);
+    appendNumber(p[Geom::X]);
     str += ',';
-    appendNumber(p[NR::Y]);
+    appendNumber(p[Geom::Y]);
 }
 
-void Inkscape::SVG::PathString::State::append(NR::Coord v, NR::Coord& rv) {
+void Inkscape::SVG::PathString::State::append(Geom::Coord v, Geom::Coord& rv) {
     str += ' ';
     appendNumber(v, rv);
 }
 
-void Inkscape::SVG::PathString::State::append(NR::Point p, NR::Point &rp) {
+void Inkscape::SVG::PathString::State::append(Geom::Point p, Geom::Point &rp) {
     str += ' ';
-    appendNumber(p[NR::X], rp[NR::X]);
+    appendNumber(p[Geom::X], rp[Geom::X]);
     str += ',';
-    appendNumber(p[NR::Y], rp[NR::Y]);
+    appendNumber(p[Geom::Y], rp[Geom::Y]);
 }
 
 // NOTE: The following appendRelativeCoord function will not be exact if the total number of digits needed
@@ -95,7 +95,7 @@ void Inkscape::SVG::PathString::State::append(NR::Point p, NR::Point &rp) {
 // than the absolute value).
 
 // NOTE: This assumes v and r are already rounded (this includes flushing to zero if they are < 10^minexp)
-void Inkscape::SVG::PathString::State::appendRelativeCoord(NR::Coord v, NR::Coord r) {
+void Inkscape::SVG::PathString::State::appendRelativeCoord(Geom::Coord v, Geom::Coord r) {
     int const minexp = minimumexponent-numericprecision+1;
     int const digitsEnd = (int)floor(log10(std::min(fabs(v),fabs(r)))) - numericprecision; // Position just beyond the last significant digit of the smallest (in absolute sense) number
     double const roundeddiff = floor((v-r)*pow(10.,-digitsEnd-1)+.5);
@@ -112,14 +112,14 @@ void Inkscape::SVG::PathString::State::appendRelativeCoord(NR::Coord v, NR::Coor
     }
 }
 
-void Inkscape::SVG::PathString::State::appendRelative(NR::Point p, NR::Point r) {
+void Inkscape::SVG::PathString::State::appendRelative(Geom::Point p, Geom::Point r) {
     str += ' ';
-    appendRelativeCoord(p[NR::X], r[NR::X]);
+    appendRelativeCoord(p[Geom::X], r[Geom::X]);
     str += ',';
-    appendRelativeCoord(p[NR::Y], r[NR::Y]);
+    appendRelativeCoord(p[Geom::Y], r[Geom::Y]);
 }
 
-void Inkscape::SVG::PathString::State::appendRelative(NR::Coord v, NR::Coord r) {
+void Inkscape::SVG::PathString::State::appendRelative(Geom::Coord v, Geom::Coord r) {
     str += ' ';
     appendRelativeCoord(v, r);
 }

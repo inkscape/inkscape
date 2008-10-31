@@ -2220,7 +2220,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     // calculate the transform to be applied to objects to move them to 0,0
     Geom::Point move_p = Geom::Point(0, sp_document_height(doc)) - (r->min() + Geom::Point (0, r->dimensions()[NR::Y]));
     move_p[Geom::Y] = -move_p[Geom::Y];
-    NR::Matrix move = NR::Matrix (Geom::Translate (move_p));
+    Geom::Matrix move = Geom::Matrix (Geom::Translate (move_p));
 
     GSList *items = g_slist_copy((GSList *) selection->itemList());
 
@@ -2229,7 +2229,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT_PARENT (items->data);
 
-    NR::Matrix parent_transform (sp_item_i2root_affine(SP_ITEM(parent)));
+    Geom::Matrix parent_transform (sp_item_i2root_affine(SP_ITEM(parent)));
 
     // remember the position of the first item
     gint pos = SP_OBJECT_REPR (items->data)->position();
@@ -2243,7 +2243,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     // restore the z-order after prepends
     repr_copies = g_slist_reverse (repr_copies);
 
-    NR::Rect bounds(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
+    Geom::Rect bounds(desktop->dt2doc(r->min()), desktop->dt2doc(r->max()));
 
     if (apply) {
         // delete objects so that their clones don't get alerted; this object will be restored shortly
@@ -2261,9 +2261,9 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
     gchar const *pat_id = pattern_tile(repr_copies, bounds, doc,
-                                       ( NR::Matrix(Geom::Translate(desktop->dt2doc(NR::Point(r->min()[NR::X],
-                                                                                            r->max()[NR::Y]))))
-                                         * parent_transform.inverse() ),
+                                       ( Geom::Matrix(Geom::Translate(desktop->dt2doc(Geom::Point(r->min()[Geom::X],
+                                                                                            r->max()[Geom::Y]))))
+                                         * to_2geom(parent_transform.inverse()) ),
                                        parent_transform * move);
 
     // restore compensation setting
@@ -2273,13 +2273,13 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
         Inkscape::XML::Node *rect = xml_doc->createElement("svg:rect");
         rect->setAttribute("style", g_strdup_printf("stroke:none;fill:url(#%s)", pat_id));
 
-        NR::Point min = bounds.min() * parent_transform.inverse();
-        NR::Point max = bounds.max() * parent_transform.inverse();
+        Geom::Point min = bounds.min() * to_2geom(parent_transform.inverse());
+        Geom::Point max = bounds.max() * to_2geom(parent_transform.inverse());
 
-        sp_repr_set_svg_double(rect, "width", max[NR::X] - min[NR::X]);
-        sp_repr_set_svg_double(rect, "height", max[NR::Y] - min[NR::Y]);
-        sp_repr_set_svg_double(rect, "x", min[NR::X]);
-        sp_repr_set_svg_double(rect, "y", min[NR::Y]);
+        sp_repr_set_svg_double(rect, "width", max[Geom::X] - min[Geom::X]);
+        sp_repr_set_svg_double(rect, "height", max[Geom::Y] - min[Geom::Y]);
+        sp_repr_set_svg_double(rect, "x", min[Geom::X]);
+        sp_repr_set_svg_double(rect, "y", min[Geom::Y]);
 
         // restore parent and position
         SP_OBJECT_REPR (parent)->appendChild(rect);

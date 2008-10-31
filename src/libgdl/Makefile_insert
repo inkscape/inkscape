@@ -34,6 +34,8 @@ libgdl_libgdl_a_SOURCES =	\
 	libgdl/gdl-stock.c		\
 	libgdl/gdl-switcher.h		\
 	libgdl/gdl-switcher.c		\
+	libgdl/gdl-win32.h		\
+	libgdl/gdl-win32.c		\
 	libgdl/libgdltypebuiltins.h	\
 	libgdl/libgdltypebuiltins.c	\
 	libgdl/libgdlmarshal.h		\

@@ -2804,12 +2804,12 @@ static void sp_node_set_selected(Inkscape::NodePath::Node *node, gboolean select
     node->selected = selected;
 
     if (selected) {
-        node->knot->setSize ((node->type == Inkscape::NodePath::NODE_CUSP) ? 11 : 9);
+        node->knot->setSize ((node->type == Inkscape::NodePath::NODE_CUSP || node->type == Inkscape::NodePath::NODE_AUTO) ? 11 : 9);
         node->knot->setFill(NODE_FILL_SEL, NODE_FILL_SEL_HI, NODE_FILL_SEL_HI);
         node->knot->setStroke(NODE_STROKE_SEL, NODE_STROKE_SEL_HI, NODE_STROKE_SEL_HI);
         sp_knot_update_ctrl(node->knot);
     } else {
-        node->knot->setSize ((node->type == Inkscape::NodePath::NODE_CUSP) ? 9 : 7);
+        node->knot->setSize ((node->type == Inkscape::NodePath::NODE_CUSP || node->type == Inkscape::NodePath::NODE_AUTO) ? 9 : 7);
         node->knot->setFill(NODE_FILL, NODE_FILL_HI, NODE_FILL_HI);
         node->knot->setStroke(NODE_STROKE, NODE_STROKE_HI, NODE_STROKE_HI);
         sp_knot_update_ctrl(node->knot);
@@ -4600,12 +4600,11 @@ sp_nodepath_node_new(Inkscape::NodePath::SubPath *sp, Inkscape::NodePath::Node *
     n->knot = sp_knot_new(sp->nodepath->desktop, _("<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"));
     sp_knot_set_position(n->knot, *pos, 0);
 
-    n->knot->setShape ((n->type == Inkscape::NodePath::NODE_CUSP)? SP_KNOT_SHAPE_DIAMOND : (n->type == Inkscape::NodePath::NODE_AUTO)? SP_KNOT_SHAPE_CIRCLE : SP_KNOT_SHAPE_SQUARE);
-    n->knot->setSize ((n->type == Inkscape::NodePath::NODE_CUSP)? 9 : 7);
     n->knot->setAnchor (GTK_ANCHOR_CENTER);
     n->knot->setFill(NODE_FILL, NODE_FILL_HI, NODE_FILL_HI);
     n->knot->setStroke(NODE_STROKE, NODE_STROKE_HI, NODE_STROKE_HI);
-    sp_knot_update_ctrl(n->knot);
+
+    sp_nodepath_update_node_knot(n);
 
     g_signal_connect(G_OBJECT(n->knot), "event", G_CALLBACK(node_event), n);
     g_signal_connect(G_OBJECT(n->knot), "clicked", G_CALLBACK(node_clicked), n);

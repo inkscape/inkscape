@@ -140,9 +140,14 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/latex-pstricks-out.h	\
 	$(extension_internal_libwpg) \
 	$(extension_internal_image_magick_sources) \
-	\
 	extension/internal/filter/filter-all.cpp \
 	extension/internal/filter/filter-file.cpp \
 	extension/internal/filter/filter.cpp \
-	extension/internal/filter/filter.h
+	extension/internal/filter/filter.h \
+	extension/internal/win32.h \
+	extension/internal/win32.cpp \
+	extension/internal/emf-win32-print.h \
+	extension/internal/emf-win32-print.cpp \
+	extension/internal/emf-win32-inout.h \
+	extension/internal/emf-win32-inout.cpp 
 

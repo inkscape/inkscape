@@ -155,7 +155,6 @@ static void sp_image_render(SPItem *item, CairoRenderContext *ctx);
 static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx);
 static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx);
 
-/* TODO FIXME: this does not render painting-marker-01-f.svg of SVG1.1 Test suite correctly. (orientation of one of the markers middle left ) */
 static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 {
     NRRect pbox;
@@ -164,7 +163,6 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 
     if (!shape->curve) return;
 
-    /* fixme: Think (Lauris) */
     sp_item_invoke_bbox(item, &pbox, Geom::identity(), TRUE);
 
     SPStyle* style = SP_OBJECT_STYLE (item);
@@ -187,16 +185,22 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                 tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(path_it->front().pointAt(0));
             }
 
+            bool render = true;
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                tr = Geom::Scale(style->stroke_width.computed) * tr;
+                if (style->stroke_width.computed > 1e-9) {
+                    tr = Geom::Scale(style->stroke_width.computed) * tr;
+                } else {
+                    render = false; // stroke width zero and marker is thus scaled down to zero, skip
+                }
             }
 
-            tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
-
-            Geom::Matrix old_tr = marker_item->transform;
-            marker_item->transform = tr;
-            renderer->renderItem (ctx, marker_item);
-            marker_item->transform = old_tr;
+            if (render) {
+                tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
+                Geom::Matrix old_tr = marker_item->transform;
+                marker_item->transform = tr;
+                renderer->renderItem (ctx, marker_item);
+                marker_item->transform = old_tr;
+            }
         }
 
         if ( shape->marker[SP_MARKER_LOC_MID] && (path_it->size_default() > 1) ) {
@@ -218,16 +222,22 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                     tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(curve_it1->pointAt(1));
                 }
 
+                bool render = true;
                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                    tr = Geom::Scale(style->stroke_width.computed) * tr;
+                    if (style->stroke_width.computed > 1e-9) {
+                        tr = Geom::Scale(style->stroke_width.computed) * tr;
+                    } else {
+                        render = false; // stroke width zero and marker is thus scaled down to zero, skip
+                    }
                 }
 
-                tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
-
-                Geom::Matrix old_tr = marker_item->transform;
-                marker_item->transform = tr;
-                renderer->renderItem (ctx, marker_item);
-                marker_item->transform = old_tr;
+                if (render) {
+                    tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
+                    Geom::Matrix old_tr = marker_item->transform;
+                    marker_item->transform = tr;
+                    renderer->renderItem (ctx, marker_item);
+                    marker_item->transform = old_tr;
+                }
 
                 ++curve_it1;
                 ++curve_it2;
@@ -253,16 +263,22 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
                 tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));
             }
 
+            bool render = true;
             if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                tr = Geom::Scale(style->stroke_width.computed) * tr;
+                if (style->stroke_width.computed > 1e-9) {
+                    tr = Geom::Scale(style->stroke_width.computed) * tr;
+                } else {
+                    render = false; // stroke width zero and marker is thus scaled down to zero, skip
+                }
             }
 
-            tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
-
-            Geom::Matrix old_tr = marker_item->transform;
-            marker_item->transform = tr;
-            renderer->renderItem (ctx, marker_item);
-            marker_item->transform = old_tr;
+            if (render) {
+                tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
+                Geom::Matrix old_tr = marker_item->transform;
+                marker_item->transform = tr;
+                renderer->renderItem (ctx, marker_item);
+                marker_item->transform = old_tr;
+            }
         }
     }
 }

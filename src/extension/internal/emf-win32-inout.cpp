@@ -1,15 +1,13 @@
-/** \file
- * Enhanced Metafile Input and Output.
+/** @file
+ * @brief Windows-only Enhanced Metafile input and output.
  */
-/*
- * Authors:
+/* Authors:
  *   Ulf Erikson <ulferikson@users.sf.net>
  *
  * Copyright (C) 2006-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
- */
-/*
+ *
  * References:
  *  - How to Create & Play Enhanced Metafiles in Win32
  *      http://support.microsoft.com/kb/q145999/
@@ -2447,17 +2445,14 @@ EmfWin32::init (void)
 
 } } }  /* namespace Inkscape, Extension, Implementation */
 
-
 #endif /* WIN32 */
-
-
 /*
   Local Variables:
-  mode:cpp
+  mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

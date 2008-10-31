@@ -192,7 +192,7 @@ AC_CHECK_HEADERS([gc.h gc/gc.h],
 				  break], [gc_ok=no], [$gc_libs])
 		    break],
                  [gc_ok=no])
-if test "x$gc_ok" = "xyes"; then
+if test "x$gc_ok" = "xyes" && "x$cross_compiling" = "xno" ; then 
 	AC_MSG_CHECKING([libgc version 6.4+])
 	AC_RUN_IFELSE(
 		[AC_LANG_SOURCE([[
@@ -248,7 +248,7 @@ AC_MSG_CHECKING([for Win32 platform])
 case "$host" in
   *-*-mingw*)
     platform_win32=yes
-    INKSCAPE_CFLAGS="$INKSCAPE_CFLAGS -mms-bitfields -DLIBXML_STATIC"
+    WIN32_CFLAGS="-mms-bitfields -DLIBXML_STATIC"
     ;;
   *)
     platform_win32=no
@@ -256,6 +256,7 @@ case "$host" in
 esac
 AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
+AC_SUBST(WIN32_CFLAGS)
 
 AC_MSG_CHECKING([for Solaris platform])
 case "$host" in
@@ -282,10 +283,10 @@ AC_ARG_WITH(xft,
 
 if test "x$with_xft" != "xno" ; then
 	dnl Test fontconfig package
-	PKG_CHECK_MODULES(XFT, xft, xft_ok=yes, xft_ok=no)
+	PKG_CHECK_MODULES(XFT, fontconfig, xft_ok=yes, xft_ok=no)
 	if test "x$xft_ok" != "xyes"; then
 		dnl test xft package
-		PKG_CHECK_MODULES(XFT, fontconfig, xft_ok=yes, xft_ok=no)
+		PKG_CHECK_MODULES(XFT, xft, xft_ok=yes, xft_ok=no)
 		if test "x$xft_ok" != "xyes"; then
 			dnl Have to test xft presence
 			AC_CHECK_HEADER(X11/Xft/Xft.h, xft_ok=yes, xft_ok=no)

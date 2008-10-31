@@ -19,8 +19,7 @@
 #include <glibmm/ustring.h>
 #include <string>
 #include <stdio.h>
-#include "libnr/nr-point.h"
-#include "libnr/nr-point-ops.h"
+#include <2geom/point.h>
 
 namespace Inkscape {
 
@@ -53,11 +52,11 @@ public:
         return string().c_str();
     }
 
-    PathString &moveTo(NR::Coord x, NR::Coord y) {
-        return moveTo(NR::Point(x, y));
+    PathString &moveTo(Geom::Coord x, Geom::Coord y) {
+        return moveTo(Geom::Point(x, y));
     }
 
-    PathString &moveTo(NR::Point p) {
+    PathString &moveTo(Geom::Point p) {
         _appendOp('M','m');
         _appendPoint(p, true);
 
@@ -65,47 +64,47 @@ public:
         return *this;
     }
 
-    PathString &lineTo(NR::Coord x, NR::Coord y) {
-        return lineTo(NR::Point(x, y));
+    PathString &lineTo(Geom::Coord x, Geom::Coord y) {
+        return lineTo(Geom::Point(x, y));
     }
 
-    PathString &lineTo(NR::Point p) {
+    PathString &lineTo(Geom::Point p) {
         _appendOp('L','l');
         _appendPoint(p, true);
         return *this;
     }
 
-    PathString &horizontalLineTo(NR::Coord x) {
+    PathString &horizontalLineTo(Geom::Coord x) {
         _appendOp('H','h');
         _appendX(x, true);
         return *this;
     }
 
-    PathString &verticalLineTo(NR::Coord y) {
+    PathString &verticalLineTo(Geom::Coord y) {
         _appendOp('V','v');
         _appendY(y, true);
         return *this;
     }
 
-    PathString &quadTo(NR::Coord cx, NR::Coord cy, NR::Coord x, NR::Coord y) {
-        return quadTo(NR::Point(cx, cy), NR::Point(x, y));
+    PathString &quadTo(Geom::Coord cx, Geom::Coord cy, Geom::Coord x, Geom::Coord y) {
+        return quadTo(Geom::Point(cx, cy), Geom::Point(x, y));
     }
 
-    PathString &quadTo(NR::Point c, NR::Point p) {
+    PathString &quadTo(Geom::Point c, Geom::Point p) {
         _appendOp('Q','q');
         _appendPoint(c, false);
         _appendPoint(p, true);
         return *this;
     }
 
-    PathString &curveTo(NR::Coord x0, NR::Coord y0,
-                        NR::Coord x1, NR::Coord y1,
-                        NR::Coord x,  NR::Coord y)
+    PathString &curveTo(Geom::Coord x0, Geom::Coord y0,
+                        Geom::Coord x1, Geom::Coord y1,
+                        Geom::Coord x,  Geom::Coord y)
     {
-        return curveTo(NR::Point(x0, y0), NR::Point(x1, y1), NR::Point(x, y));
+        return curveTo(Geom::Point(x0, y0), Geom::Point(x1, y1), Geom::Point(x, y));
     }
 
-    PathString &curveTo(NR::Point c0, NR::Point c1, NR::Point p) {
+    PathString &curveTo(Geom::Point c0, Geom::Point c1, Geom::Point p) {
         _appendOp('C','c');
         _appendPoint(c0, false);
         _appendPoint(c1, false);
@@ -116,12 +115,12 @@ public:
     /**
      *  \param rot the angle in degrees
      */
-    PathString &arcTo(NR::Coord rx, NR::Coord ry, NR::Coord rot,
+    PathString &arcTo(Geom::Coord rx, Geom::Coord ry, Geom::Coord rot,
                       bool large_arc, bool sweep,
-                      NR::Point p)
+                      Geom::Point p)
     {
         _appendOp('A','a');
-        _appendValue(NR::Point(rx,ry));
+        _appendValue(Geom::Point(rx,ry));
         _appendValue(rot);
         _appendFlag(large_arc);
         _appendFlag(sweep);
@@ -145,32 +144,32 @@ private:
         _rel_state.append(flag);
     }
 
-    void _appendValue(NR::Coord v) {
+    void _appendValue(Geom::Coord v) {
         _abs_state.append(v);
         _rel_state.append(v);
     }
 
-    void _appendValue(NR::Point p) {
+    void _appendValue(Geom::Point p) {
         _abs_state.append(p);
         _rel_state.append(p);
     }
 
-    void _appendX(NR::Coord x, bool sc) {
+    void _appendX(Geom::Coord x, bool sc) {
         double rx;
         _abs_state.append(x, rx);
-        _rel_state.appendRelative(rx, _current_point[NR::X]);
-        if (sc) _current_point[NR::X] = rx;
+        _rel_state.appendRelative(rx, _current_point[Geom::X]);
+        if (sc) _current_point[Geom::X] = rx;
     }
 
-    void _appendY(NR::Coord y, bool sc) {
+    void _appendY(Geom::Coord y, bool sc) {
         double ry;
         _abs_state.append(y, ry);
-        _rel_state.appendRelative(ry, _current_point[NR::Y]);
-        if (sc) _current_point[NR::Y] = ry;
+        _rel_state.appendRelative(ry, _current_point[Geom::Y]);
+        if (sc) _current_point[Geom::Y] = ry;
     }
 
-    void _appendPoint(NR::Point p, bool sc) {
-        NR::Point rp;
+    void _appendPoint(Geom::Point p, bool sc) {
+        Geom::Point rp;
         _abs_state.append(p, rp);
         _rel_state.appendRelative(rp, _current_point);
         if (sc) _current_point = rp;
@@ -190,12 +189,12 @@ private:
             str += ( flag ? '1' : '0' );
         }
 
-        void append(NR::Coord v);
-        void append(NR::Point v);
-        void append(NR::Coord v, NR::Coord& rv);
-        void append(NR::Point p, NR::Point& rp);
-        void appendRelative(NR::Coord v, NR::Coord r);
-        void appendRelative(NR::Point p, NR::Point r);
+        void append(Geom::Coord v);
+        void append(Geom::Point v);
+        void append(Geom::Coord v, Geom::Coord& rv);
+        void append(Geom::Point p, Geom::Point& rp);
+        void appendRelative(Geom::Coord v, Geom::Coord r);
+        void appendRelative(Geom::Point p, Geom::Point r);
 
         bool operator<=(const State& s) const {
             if ( str.size() < s.str.size() ) return true;
@@ -214,11 +213,11 @@ private:
     private:
         void appendNumber(double v, int precision=numericprecision, int minexp=minimumexponent);
         void appendNumber(double v, double &rv, int precision=numericprecision, int minexp=minimumexponent);
-        void appendRelativeCoord(NR::Coord v, NR::Coord r);
+        void appendRelativeCoord(Geom::Coord v, Geom::Coord r);
     } _abs_state, _rel_state; // State with the last operator being an absolute/relative operator
 
-    NR::Point _initial_point;
-    NR::Point _current_point;
+    Geom::Point _initial_point;
+    Geom::Point _current_point;
 
     // If both states have a common prefix it is stored here.
     // Separating out the common prefix prevents repeated copying between the states
