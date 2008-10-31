@@ -11,6 +11,10 @@
  * See the file COPYING for details.
  */
 
+#ifndef SEEN_INKSCAPE_XML_NODE_H
+#error  You have included xml/simple-node.h in your document, which is an implementation.  Chances are that you want xml/node.h.  Please fix that.
+#endif
+
 #ifndef SEEN_INKSCAPE_XML_SIMPLE_NODE_H
 #define SEEN_INKSCAPE_XML_SIMPLE_NODE_H
 

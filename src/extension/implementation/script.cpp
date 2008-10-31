@@ -38,6 +38,7 @@
 #include "dialogs/dialog-events.h"
 #include "application/application.h"
 #include "xml/node.h"
+#include "xml/attribute-record.h"
 
 #include "util/glib-list-iterators.h"
 

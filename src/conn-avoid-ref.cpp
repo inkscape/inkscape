@@ -18,7 +18,7 @@
 #include "libavoid/polyutil.h"
 #include "libavoid/router.h"
 #include "libavoid/connector.h"
-#include "xml/simple-node.h"
+#include "xml/node.h"
 #include "document.h"
 #include "desktop.h"
 #include "desktop-handles.h"
