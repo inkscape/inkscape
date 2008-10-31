@@ -37,6 +37,7 @@
 #include "script.h"
 #include "dialogs/dialog-events.h"
 #include "application/application.h"
+#include "xml/node.h"
 
 #include "util/glib-list-iterators.h"
 
@@ -834,8 +835,26 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
         }
     }
 
-    oldroot->setAttribute("width", newroot->attribute("width"));
-    oldroot->setAttribute("height", newroot->attribute("height"));
+    {
+        using Inkscape::Util::List;
+        using Inkscape::XML::AttributeRecord;        
+        std::vector<gchar const *> attribs;
+
+        // Make a list of all attributes of the old root node.
+        for (List<AttributeRecord const> iter = oldroot->attributeList(); iter; ++iter) {
+            attribs.push_back(g_quark_to_string(iter->key));
+        }
+
+        // Delete the attributes of the old root nodes.
+        for (std::vector<gchar const *>::const_iterator it = attribs.begin(); it != attribs.end(); it++)
+            oldroot->setAttribute(*it, NULL);
+
+        // Set the new attributes.
+        for (List<AttributeRecord const> iter = newroot->attributeList(); iter; ++iter) {
+            gchar const *name = g_quark_to_string(iter->key);
+            oldroot->setAttribute(name, newroot->attribute(name));
+        }
+    }
 
     /** \todo  Restore correct layer */
     /** \todo  Restore correct selection */
