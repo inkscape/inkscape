@@ -446,19 +446,23 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     TRACE(("sp_asbitmap_render: resolution: %f\n", res ));
 
     // Get the bounding box of the selection in document coordinates.
-    NRRect bbox(item->getBounds(sp_item_i2d_affine(item), SPItem::RENDERING_BBOX ));
+    boost::optional<Geom::Rect> bbox = 
+           item->getBounds(sp_item_i2d_affine(item), SPItem::RENDERING_BBOX);
+
+    if (!bbox) // no bbox, e.g. empty group
+        return;
 
     // The width and height of the bitmap in pixels
-    unsigned width = (unsigned) floor ((bbox.x1 - bbox.x0) * (res / PX_PER_IN));
-    unsigned height =(unsigned) floor ((bbox.y1 - bbox.y0) * (res / PX_PER_IN));
+    unsigned width = (unsigned) floor ((bbox->max()[Geom::X] - bbox->min()[Geom::X]) * (res / PX_PER_IN));
+    unsigned height =(unsigned) floor ((bbox->max()[Geom::Y] - bbox->min()[Geom::Y]) * (res / PX_PER_IN));
     
     // Scale to exactly fit integer bitmap inside bounding box
-    double scale_x = (bbox.x1 - bbox.x0) / width;
-    double scale_y = (bbox.y1 - bbox.y0) / height;
+    double scale_x = (bbox->max()[Geom::X] - bbox->min()[Geom::X]) / width;
+    double scale_y = (bbox->max()[Geom::Y] - bbox->min()[Geom::Y]) / height;
 
     // Location of bounding box in document coordinates.
-    double shift_x = bbox.x0;
-    double shift_y = bbox.y1;
+    double shift_x = bbox->min()[Geom::X];
+    double shift_y = bbox->max()[Geom::Y];
 
     // For default 90 dpi, snap bitmap to pixel grid
     if (res == PX_PER_IN) { 
@@ -483,7 +487,8 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     items = g_slist_append(items, item);
 
     GdkPixbuf *pb = sp_generate_internal_bitmap(document, NULL,
-        bbox.x0, bbox.y0, bbox.x1, bbox.y1, width, height, res, res, (guint32) 0xffffff00, items );
+        bbox->min()[Geom::X], bbox->min()[Geom::Y], bbox->max()[Geom::X], bbox->max()[Geom::Y], 
+        width, height, res, res, (guint32) 0xffffff00, items );
 
     if (pb) {
         TEST(gdk_pixbuf_save( pb, "bitmap.png", "png", NULL, NULL ));

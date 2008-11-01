@@ -11,7 +11,7 @@
       <param name="times2pi" type="boolean" _gui-text="Multiply X range by 2*pi">false</param>
       <param name="ybottom" type="float" min="-1000.0" max="1000.0" _gui-text="Y value of rectangle's bottom">0.0</param>
       <param name="ytop" type="float" min="-1000.0" max="1000.0" _gui-text="Y value of rectangle's top">1.0</param>
-      <param name="samples" type="int" min="2" max="1000" _gui-text="Samples">8</param>
+      <param name="samples" type="int" min="2" max="1000" _gui-text="Number of samples">8</param>
       <param name="isoscale" type="boolean" _gui-text="Isotropic scaling (uses smallest of width/xrange or height/yrange)">false</param>
       <param name="polar" type="boolean" _gui-text="Use polar coordinates">true</param>
     </page>

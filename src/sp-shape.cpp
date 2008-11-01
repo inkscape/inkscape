@@ -171,6 +171,10 @@ sp_shape_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
     if (((SPObjectClass *) (parent_class))->build) {
        (*((SPObjectClass *) (parent_class))->build) (object, document, repr);
     }
+
+    for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
+        sp_shape_set_marker (object, i, object->style->marker[i].value);
+	  }
 }
 
 /**
@@ -196,10 +200,11 @@ sp_shape_release (SPObject *object)
 
 	for (i=SP_MARKER_LOC_START; i<SP_MARKER_LOC_QTY; i++) {
 	  if (shape->marker[i]) {
-	    sp_signal_disconnect_by_data (shape->marker[i], object);
 	    for (v = item->display; v != NULL; v = v->next) {
 	      sp_marker_hide ((SPMarker *) shape->marker[i], NR_ARENA_ITEM_GET_KEY (v->arenaitem) + i);
 	    }
+      shape->release_connect[i].disconnect();
+      shape->modified_connect[i].disconnect();
 	    shape->marker[i] = sp_object_hunref (shape->marker[i], object);
 	  }
 	}
@@ -894,7 +899,8 @@ sp_shape_marker_release (SPObject *marker, SPShape *shape)
 	      /* nr_arena_item_set_mask (v->arenaitem, NULL); */
 	    }
 	    /* Detach marker */
-	    sp_signal_disconnect_by_data (shape->marker[i], item);
+      shape->release_connect[i].disconnect();
+      shape->modified_connect[i].disconnect();
 	    shape->marker[i] = sp_object_hunref (shape->marker[i], item);
 	  }
 	}

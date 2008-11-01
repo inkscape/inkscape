@@ -1496,7 +1496,7 @@ writePath(Writer &outs, Geom::PathVector const &pathv,
     // convert the path to only lineto's and cubic curveto's:
     Geom::PathVector pv = pathv_to_linear_and_cubic_beziers(pathv * tf * Geom::Translate(xoff, yoff) * Geom::Scale(1000.));
 
-        for (Geom::PathVector::const_iterator pit = pathv.begin(); pit != pathv.end(); ++pit) {
+        for (Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit) {
 
             double destx = pit->initialPoint()[X];
             double desty = pit->initialPoint()[Y];
