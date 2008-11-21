@@ -249,7 +249,7 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
         //This glyph has a path description on its d attribute, so we render it:
         cairo_new_path(cr);
         Geom::Scale s(1.0/((SPFont*) node->parent)->horiz_adv_x);
-        Geom::Rect area( Geom::Point(0,0), Geom::Point(1,1) ); //I need help here!    (reaction: note that the 'area' parameter is an *optional* rect, so you can pass an empty boost::optional<Geom::Rect>() )
+        Geom::Rect area( Geom::Point(0,0), Geom::Point(1,1) ); //I need help here!    (reaction: note that the 'area' parameter is an *optional* rect, so you can pass an empty Geom::OptRect() )
         feed_pathvector_to_cairo (cr, pathv, s, area, false, 0);
         cairo_fill(cr);
     }

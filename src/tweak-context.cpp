@@ -432,7 +432,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
     } else {
         if (mode == TWEAK_MODE_MOVE) {
 
-            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -445,7 +445,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_MOVE_IN_OUT) {
 
-            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -459,7 +459,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_MOVE_JITTER) {
 
-            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
                 double dp = g_random_double_range(0, M_PI*2);
                 double dr = g_random_double_range(0, radius);
@@ -474,7 +474,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_SCALE) {
 
-            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -487,7 +487,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_ROTATE) {
 
-            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -500,7 +500,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
         } else if (mode == TWEAK_MODE_MORELESS) {
 
-            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2doc_affine(item));
+            Geom::OptRect a = item->getBounds(sp_item_i2doc_affine(item));
             if (a) {
                 double x = Geom::L2(a->midpoint() - p)/radius;
                 if (a->contains(p)) x = 0;
@@ -551,7 +551,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
 
 
         // skip those paths whose bboxes are entirely out of reach with our radius
-        boost::optional<Geom::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item));
+        Geom::OptRect bbox = item->getBounds(sp_item_i2doc_affine(item));
         if (bbox) {
             bbox->expandBy(radius);
             if (!bbox->contains(p)) {
@@ -925,7 +925,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         if (!style) {
             return false;
         }
-        boost::optional<Geom::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item),
+        Geom::OptRect bbox = item->getBounds(sp_item_i2doc_affine(item),
                                                         SPItem::GEOMETRIC_BBOX);
         if (!bbox) {
             return false;
@@ -955,7 +955,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
         if (this_force > 0.002) {
 
             if (do_blur) {
-                boost::optional<Geom::Rect> bbox = item->getBounds(sp_item_i2doc_affine(item),
+                Geom::OptRect bbox = item->getBounds(sp_item_i2doc_affine(item),
                                                         SPItem::GEOMETRIC_BBOX);
                 if (!bbox) {
                     return did;

@@ -1,7 +1,5 @@
-#ifndef SEEN_EEK_PREVIEW_H
-#define SEEN_EEK_PREVIEW_H
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- *
+/** @file
+ * @brief EEK preview stuff
  */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -38,6 +36,9 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+
+#ifndef SEEN_EEK_PREVIEW_H
+#define SEEN_EEK_PREVIEW_H
 
 #include <gtk/gtkdrawingarea.h>
 
@@ -131,5 +132,15 @@ void eek_preview_set_size_mappings( guint count, GtkIconSize const* sizes );
 
 G_END_DECLS
 
-
 #endif /* SEEN_EEK_PREVIEW_H */
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

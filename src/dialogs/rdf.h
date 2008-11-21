@@ -1,20 +1,16 @@
-/**
- *
- * \brief headers for RDF types
- * 
- * Authors:
+/** @file
+ * @brief headers for RDF types
+ */
+/* Authors:
  *  Kees Cook <kees@outflux.net>
  *
- * Copyright (C) 2004 Kees Cook <kees@outflux.net>
- * 
+ * Copyright (C) 2004 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
- * 
  */
 #ifndef _RDF_H_
 #define _RDF_H_
 
 #include <glib.h>
-
 #include <glibmm/i18n.h>
 #include "document.h"
 
@@ -121,4 +117,4 @@ void rdf_set_defaults ( SPDocument * doc );
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

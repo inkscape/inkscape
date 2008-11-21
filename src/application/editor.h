@@ -1,9 +1,8 @@
-/** \file
- * \brief  Class to manage an application used for editing SVG documents
- *         using GUI views
- *
- * \note  This class is a Singleton
- *
+/** @file
+ * @brief  Singleton class to manage an application used for editing SVG
+ *         documents using GUI views
+ */
+/*
  * Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de>

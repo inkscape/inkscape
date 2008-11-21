@@ -1,36 +1,18 @@
-#define __SP_XMLVIEW_TREE_C__
-
-/**
- * \brief  XML View
- *
- * Authors:
+/** @file
+ * @brief XML editor
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
+ *   David Turner
  *
  * Copyright (C) 1999-2006 Authors
- * Copyright (C) 2004 David Turner
- *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
-#include <gtk/gtkmain.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkvbox.h>
-#include <gtk/gtkhpaned.h>
-#include <gtk/gtkvpaned.h>
-#include <gtk/gtkhseparator.h>
-#include <gtk/gtkhbbox.h>
-#include <gtk/gtktoolbar.h>
-#include <gtk/gtkscrolledwindow.h>
-#include <gtk/gtkentry.h>
-#include <gtk/gtkarrow.h>
-
+#include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 #include "helper/window.h"
 #include "macros.h"

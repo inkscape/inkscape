@@ -510,8 +510,8 @@ sp_offset_set_shape(SPShape *shape)
         theRes->ConvertToForme (orig, 1, originaux);
 
         SPItem *item = shape;
-        boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop (item);
-        if ( bbox && !bbox->isEmpty() ) {
+        Geom::OptRect bbox = sp_item_bbox_desktop (item);
+        if ( bbox ) {
             gdouble size = L2(bbox->dimensions());
             gdouble const exp = NR::expansion(item->transform);
             if (exp != 0)

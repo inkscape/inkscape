@@ -1,5 +1,3 @@
-#define __SP_INPUT_C__
-
 /** @file
  * @brief Extended input devices dialog
  */
@@ -13,8 +11,9 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#   include <config.h>
 #endif
+
 #include <gtk/gtksignal.h>
 #include <gtk/gtkinputdialog.h>
 #include <glibmm/ustring.h>

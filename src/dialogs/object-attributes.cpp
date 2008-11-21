@@ -1,9 +1,7 @@
-#define __SP_OBJECT_ATTRIBUTES_C__
-
-/**
- * \brief  Generic properties editor
- *
- * Authors:
+/** @file
+ * @brief  Generic properties editor
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *
@@ -11,10 +9,6 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
 
 #include <glibmm/i18n.h>
 #include <string>
@@ -149,10 +143,7 @@ sp_object_attributes_dialog (SPObject *object, const gchar *tag)
             sp_object_attr_show_dialog (object, image_desc, tag);
         }
     } 
-
 } // end of sp_object_attributes_dialog()
-
-
 
 /*
   Local Variables:

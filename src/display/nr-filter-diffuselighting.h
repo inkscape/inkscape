@@ -19,9 +19,9 @@
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 #include "libnr/nr-matrix.h"
-#include "sp-fedistantlight.h"
-#include "sp-fepointlight.h"
-#include "sp-fespotlight.h"
+#include "filters/distantlight.h"
+#include "filters/pointlight.h"
+#include "filters/spotlight.h"
 #include "color.h"
 
 namespace NR {

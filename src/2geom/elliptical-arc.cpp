@@ -31,6 +31,7 @@
 #include <2geom/elliptical-arc.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/poly.h>
+#include <2geom/sbasis-math.h>
 
 #include <cfloat>
 #include <limits>
@@ -42,7 +43,7 @@ namespace Geom
 {
 
 
-Rect EllipticalArc::boundsExact() const
+OptRect EllipticalArc::boundsExact() const
 {
 	std::vector<double> extremes(4);
 	double cosrot = std::cos(rotation_angle());

@@ -56,12 +56,12 @@ public:
     void freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
                       Geom::Point &p,
                       bool first_point = true,
-                      boost::optional<Geom::Rect> const &bbox_to_snap = boost::optional<Geom::Rect>()) const;
+                      Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
     
     Inkscape::SnappedPoint freeSnap(Inkscape::SnapPreferences::PointType point_type,
                                     Geom::Point const &p,
                                     bool first_point = true,
-                                    boost::optional<Geom::Rect> const &bbox_to_snap = boost::optional<Geom::Rect>() ) const;
+                                    Geom::OptRect const &bbox_to_snap = Geom::OptRect() ) const;
     
     Geom::Point multipleOfGridPitch(Geom::Point const &t) const;
     
@@ -71,13 +71,13 @@ public:
                              Geom::Point &p,
                              Inkscape::Snapper::ConstraintLine const &constraint,
                              bool first_point = true,
-                             boost::optional<Geom::Rect> const &bbox_to_snap = boost::optional<Geom::Rect>()) const;
+                             Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
     
     Inkscape::SnappedPoint constrainedSnap(Inkscape::SnapPreferences::PointType point_type,
                                            Geom::Point const &p,
                                            Inkscape::Snapper::ConstraintLine const &constraint,
                                            bool first_point = true,
-                                           boost::optional<Geom::Rect> const &bbox_to_snap = boost::optional<Geom::Rect>()) const;
+                                           Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
                                            
     void guideSnap(Geom::Point &p, Geom::Point const &guide_normal) const;
 

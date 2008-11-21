@@ -49,13 +49,12 @@ public:
 
     void set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);
 
+    virtual bool providesKnotHolderEntities() { return true; }
     virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
 private:
     PointParam(const PointParam&);
     PointParam& operator=(const PointParam&);
-
-    void on_button_click();
 
     Geom::Point defvalue;
 

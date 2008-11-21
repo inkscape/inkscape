@@ -136,7 +136,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     }
 
     Geom::Rect filter_area = filter_effect_area(item_bbox);
-    if (item_bbox.area() == 0.0) {
+    if (item_bbox.hasZeroArea()) {
         // It's no use to try and filter an empty object.
         return 1;
     }

@@ -9,6 +9,7 @@
 #include <2geom/geom.h>
 #include <2geom/point.h>
 #include <algorithm>
+#include <2geom/rect.h>
 
 namespace Geom {
 
@@ -312,6 +313,14 @@ rect_line_intersect(Geom::Point const &c0, Geom::Point const &c1,
 
     return results;
 }
+
+std::vector<Geom::Point>
+rect_line_intersect(Geom::Rect &r,
+                    Geom::Point const &p0, Geom::Point const &p1)
+{
+    return rect_line_intersect(r.min(), r.max(), p0, p1);
+}
+
 
 /**
  * polyCentroid: Calculates the centroid (xCentroid, yCentroid) and area of a polygon, given its

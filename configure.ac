@@ -934,6 +934,7 @@ src/extension/implementation/makefile
 src/extension/internal/makefile
 src/extension/makefile
 src/extension/script/makefile
+src/filters/makefile
 src/helper/makefile
 src/inkjar/makefile
 src/io/makefile
@@ -971,6 +972,7 @@ share/extensions/alphabet_soup/Makefile
 share/extensions/Barcode/Makefile
 share/extensions/Poly3DObjects/Makefile
 share/extensions/xaml2svg/Makefile
+share/filters/Makefile
 share/fonts/Makefile
 share/gradients/Makefile
 share/icons/Makefile

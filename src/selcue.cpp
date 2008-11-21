@@ -85,7 +85,7 @@ void Inkscape::SelCue::_updateItemBboxes()
     for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = (SPItem *) l->data;
 
-        boost::optional<Geom::Rect> const b = sp_item_bbox_desktop(item, bbox_type);
+        Geom::OptRect const b = sp_item_bbox_desktop(item, bbox_type);
 
         SPCanvasItem* box = NULL;
 

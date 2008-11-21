@@ -1,9 +1,7 @@
-#define __SP_TEXT_EDIT_C__
-
-/**
- * \brief Text editing dialog
- *
- * Authors:
+/** @file
+ * @brief Text editing dialog
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@ximian.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
@@ -19,7 +17,6 @@
 #endif
 
 #include <libnrtype/font-instance.h>
-
 #include <gtk/gtk.h>
 
 #ifdef WITH_GTKSPELL

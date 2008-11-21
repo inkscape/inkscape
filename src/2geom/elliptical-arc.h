@@ -168,17 +168,17 @@ class EllipticalArc : public Curve
     }
     
     
-    Rect boundsFast() const
+    virtual OptRect boundsFast() const
     {
-    	return boundsExact();
+        return boundsExact();
     }
   
-    Rect boundsExact() const;
+    virtual OptRect boundsExact() const;
     
     // TODO: native implementation of the following methods
-    Rect boundsLocal(Interval i, unsigned int deg) const
+    virtual OptRect boundsLocal(OptInterval i, unsigned int deg) const
     {
-    	return SBasisCurve(toSBasis()).boundsLocal(i, deg);
+        return SBasisCurve(toSBasis()).boundsLocal(i, deg);
     }
     
     std::vector<double> roots(double v, Dim2 d) const;

@@ -1,12 +1,11 @@
-#define INKSCAPE_LPE_SKETCH_CPP
-/** \file
- * LPE <sketch> implementation
+/** @file
+ * @brief LPE sketch effect implementation
  */
-/*
- * Authors:
- *   Johan Engelen
-*
-* Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+/* Authors:
+ *   Jean-Francois Barraud <jf.barraud@gmail.com>
+ *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *
+ * Copyright (C) 2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -189,7 +188,7 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
 
     //----- Approximated Strokes.
     std::vector<Piecewise<D2<SBasis> > > pieces_in = split_at_discontinuities (pwd2_in);
-
+    
     //work separately on each component.
     for (unsigned pieceidx = 0; pieceidx < pieces_in.size(); pieceidx++){
 
@@ -247,17 +246,17 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
                 t1 = times[0];
                 
                 //pick a rdm perturbation, and collect the perturbed piece into output.
-                Piecewise<D2<SBasis> > pwperturb = computePerturbation(s0,s1);
+                Piecewise<D2<SBasis> > pwperturb = computePerturbation(s0-0.01,s1+0.01);
                 pwperturb = compose(pwperturb,portion(piecelength,t0,t1));
+
                 output.concat(portion(piece,t0,t1)+pwperturb);
-                
+
                 //step points: s0 = s1 - overlap.
                 //TODO: make sure this has to end?
                 s0 = s1 - strokeoverlap*(1-strokeoverlap_rdm)*(s1-s0);
             }
         }
     }
-
 
     //----- Construction lines.
     //TODO: choose places according to curvature?.
@@ -268,7 +267,9 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
     Piecewise<D2<SBasis> > m = pwd2_in;
     Piecewise<D2<SBasis> > v = derivative(pwd2_in);
     Piecewise<D2<SBasis> > a = derivative(v);
+
     for (unsigned i=0; i<nbtangents; i++){
+
         // pick a point where to draw a tangent (s = dist from start along path).
         double s = total_length * ( i + tgtlength_rdm ) / (nbtangents+1.);
         std::vector<double> times;  
@@ -290,6 +291,7 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
         }
         output.concat(Piecewise<D2<SBasis> >(tgt));
     }
+    
     return output;
 }
 
@@ -319,4 +321,4 @@ LPESketch::doBeforeEffect (SPLPEItem *lpeitem)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

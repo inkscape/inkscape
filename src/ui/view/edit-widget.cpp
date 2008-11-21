@@ -1404,7 +1404,7 @@ EditWidget::updateScrollbars (double scale)
                      Geom::Point(2 * sp_document_width(doc), 2 * sp_document_height(doc))  );
     SPObject* root = doc->root;
     SPItem* item = SP_ITEM(root);
-    boost::optional<Geom::Rect> deskarea = Geom::unify(darea, sp_item_bbox_desktop(item));
+    Geom::OptRect deskarea = Geom::unify(darea, sp_item_bbox_desktop(item));
 
     /* Canvas region we always show unconditionally */
     Geom::Rect carea( Geom::Point(deskarea->min()[Geom::X] * scale - 64, deskarea->max()[Geom::Y] * -scale - 64),

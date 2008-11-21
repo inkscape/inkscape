@@ -1,20 +1,11 @@
-#define INKSCAPE_LPE_CIRCLE_WITH_RADIUS_CPP
-/** \file
- * LPE <circle_with_radius> implementation, used as an example for a base starting class
- * when implementing new LivePathEffects.
- *
- * In vi, three global search-and-replaces will let you rename everything
- * in this and the .h file:
- *
- *   :%s/CIRCLE_WITH_RADIUS/YOURNAME/g
- *   :%s/CircleWithRadius/Yourname/g
- *   :%s/circle_with_radius/yourname/g
+/** @file
+ * @brief LPE effect that draws a circle based on two points and a radius
+ * - implementation
  */
-/*
- * Authors:
- *   Johan Engelen
-*
-* Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+/* Authors:
+ *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *
+ * Copyright (C) 2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -106,4 +97,4 @@ LPECircleWithRadius::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > & p
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

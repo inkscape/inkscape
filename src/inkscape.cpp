@@ -1,9 +1,7 @@
-#define __INKSCAPE_C__
-
-/*
- * Interface to main application
- *
- * Authors:
+/** @file
+ * @brief Legacy interface to main application
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *
@@ -37,38 +35,33 @@ using Inkscape::Extension::Internal::PrintWin32;
 # include <shlobj.h>
 #endif
 
-#include <signal.h>
-
+#include <cstring>
+#include <glib/gstdio.h>
+#include <glib.h>
+#include <glibmm/i18n.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmessagedialog.h>
-#include <glib.h>
-#include <glib/gstdio.h>
-
-#include <glibmm/i18n.h>
+#include <signal.h>
 #include <string>
-#include <cstring>
-#include "helper/sp-marshal.h"
-#include "dialogs/debugdialog.h"
-#include "dialogs/input.h"
 #include "application/application.h"
 #include "application/editor.h"
-
-
-#include "document.h"
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "selection.h"
+#include "dialogs/input.h"
+#include "document.h"
 #include "event-context.h"
-#include "inkscape-private.h"
-#include "xml/repr.h"
-#include "preferences.h"
-#include "io/sys.h"
-#include "message-stack.h"
-
-#include "extension/init.h"
 #include "extension/db.h"
+#include "extension/init.h"
 #include "extension/output.h"
 #include "extension/system.h"
+#include "helper/sp-marshal.h"
+#include "inkscape-private.h"
+#include "io/sys.h"
+#include "message-stack.h"
+#include "preferences.h"
+#include "selection.h"
+#include "ui/dialog/debug.h"
+#include "xml/repr.h"
 
 static Inkscape::Application *inkscape = NULL;
 
@@ -774,7 +767,7 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
 
     if (use_gui == TRUE && prefs->getBool("/dialogs/debug/redirect", DEFAULT_LOG_REDIRECT))
     {
-        Inkscape::UI::Dialogs::DebugDialog::getInstance()->captureLogMessages();
+        Inkscape::UI::Dialog::DebugDialog::getInstance()->captureLogMessages();
     }
 
     /* Check for global remapping of Alt key */

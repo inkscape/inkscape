@@ -16,14 +16,12 @@
 #include <2geom/path.h>
 #include <2geom/forward.h>
 #include "ui/widget/registry.h"
-#include "util/enums.h"
 #include "sp-lpe-item.h"
 #include "knotholder.h"
 #include "parameter/bool.h"
+#include "effect-enum.h"
 
 #define  LPE_CONVERSION_TOLERANCE 0.01    // FIXME: find good solution for this.
-
-#define LPE_ENABLE_TEST_EFFECTS
 
 struct SPDocument;
 struct SPDesktop;
@@ -48,44 +46,6 @@ namespace NodePath {
 }
 
 namespace LivePathEffect {
-
-enum EffectType {
-    BEND_PATH = 0,
-    PATTERN_ALONG_PATH,
-    FREEHAND_SHAPE,
-    SKETCH,
-    VONKOCH,
-    KNOT,
-#ifdef LPE_ENABLE_TEST_EFFECTS
-    DOEFFECTSTACK_TEST,
-#endif
-    GEARS,
-    CURVE_STITCH,
-    CIRCLE_WITH_RADIUS,
-    PERSPECTIVE_PATH,
-    SPIRO,
-    LATTICE,
-    ENVELOPE,
-    CONSTRUCT_GRID,
-    PERP_BISECTOR,
-    TANGENT_TO_CURVE,
-    MIRROR_SYMMETRY,
-    CIRCLE_3PTS,
-    ANGLE_BISECTOR,
-    PARALLEL,
-    COPY_ROTATE,
-    OFFSET,
-    RULER,
-    BOOLOPS,
-    INTERPOLATE,
-    TEXT_LABEL,
-    PATH_LENGTH,
-    LINE_SEGMENT,
-    INVALID_LPE // This must be last
-};
-
-extern const Util::EnumData<EffectType> LPETypeData[];
-extern const Util::EnumDataConverter<EffectType> LPETypeConverter;
 
 enum LPEPathFlashType {
     SUPPRESS_FLASH,

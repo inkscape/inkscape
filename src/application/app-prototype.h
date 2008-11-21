@@ -1,7 +1,7 @@
-/**
- * \brief  Base class for different application modes
- *
- * Author:
+/** @file
+ * @brief  Base class for different application modes
+ */
+/* Author:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *
  * Copyright (C) 2005 Bryce Harrington

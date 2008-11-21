@@ -114,6 +114,7 @@ InkscapePreferences::InkscapePreferences()
     initPageUI();
     initPageMouse();
     initPageScrolling();
+    initPageSnapping();
     initPageSteps();
     initPageWindows();
     initPageMisc();
@@ -196,6 +197,20 @@ void InkscapePreferences::initPageScrolling()
     _wheel_zoom.init ( _("Mouse wheel zooms by default"), "/options/wheelzooms/value", false);
     _page_scrolling.add_line( false, "", _wheel_zoom, "",
                             _("When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when off, it zooms with Ctrl and scrolls without Ctrl."));
+}
+
+void InkscapePreferences::initPageSnapping()
+{
+	
+	_snap_indicator.init( _("Enable snap indicator"), "/options/snapindicator/value", true);
+	_page_snapping.add_line( false, "", _snap_indicator, "",
+			_("After snapping, a symbol is drawn at the point that has snapped"));
+	    
+	_snap_delay.init("/options/snapdelay/value", 0, 1000, 50, 100, 300, 0);
+	_page_snapping.add_line( false, _("Delay (in msec):"), _snap_delay, "",
+                     _("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"), true);
+
+	this->AddPage(_page_snapping, _("Snapping"), PREFS_PAGE_SNAPPING);
 }
 
 void InkscapePreferences::initPageSteps()

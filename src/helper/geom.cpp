@@ -149,23 +149,21 @@ cubic_bbox (Geom::Coord x000, Geom::Coord y000, Geom::Coord x001, Geom::Coord y0
     }
 }
 
-Geom::Rect
+Geom::OptRect
 bounds_fast_transformed(Geom::PathVector const & pv, Geom::Matrix const & t)
 {
     return bounds_exact_transformed(pv, t); //use this as it is faster for now! :)
 //    return Geom::bounds_fast(pv * t);
 }
 
-Geom::Rect
+Geom::OptRect
 bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t)
 {
-    Geom::Rect bbox;
-    
     if (pv.empty())
-        return bbox;
+        return Geom::OptRect();
 
     Geom::Point initial = pv.front().initialPoint() * t;
-    bbox = Geom::Rect(initial, initial);        // obtain well defined bbox as starting point to unionWith
+    Geom::Rect bbox(initial, initial);        // obtain well defined bbox as starting point to unionWith
 
     for (Geom::PathVector::const_iterator it = pv.begin(); it != pv.end(); ++it) {
         bbox.expandTo(it->initialPoint() * t);
@@ -493,6 +491,19 @@ pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv )
     
     return output;
 }
+
+
+/**
+ * rounds all corners of the rectangle 'outwards', i.e. x0 and y0 are floored, x1 and y1 are ceiled.
+ */
+void round_rectangle_outwards(Geom::Rect & rect) {
+    Geom::Interval ints[2];
+    for (int i=0; i < 2; i++) {
+        ints[i] = Geom::Interval(std::floor(rect[i][0]), std::ceil(rect[i][1]));
+    }
+    rect = Geom::Rect(ints[0], ints[1]);
+}
+
 
 namespace Geom {
 

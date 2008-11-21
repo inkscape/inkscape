@@ -4,7 +4,6 @@
 
 bool in_dt_coordsys(SPObject const &item);
 
-
 #endif /* !SEEN_IN_DT_COORDSYS */
 
 /*

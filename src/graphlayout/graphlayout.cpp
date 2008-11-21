@@ -125,7 +125,7 @@ void graphlayout(GSList const *const items) {
 		++i)
 	{
 		SPItem *u=*i;
-		boost::optional<Geom::Rect> const item_box(sp_item_bbox_desktop(u));
+		Geom::OptRect const item_box(sp_item_bbox_desktop(u));
         if(item_box) {
             Geom::Point ll(item_box->min());
             Geom::Point ur(item_box->max());
@@ -227,7 +227,7 @@ void graphlayout(GSList const *const items) {
 			map<string,unsigned>::iterator i=nodelookup.find(u->id);
 			if(i!=nodelookup.end()) {
                 Rectangle* r=rs[i->second];
-                boost::optional<Geom::Rect> item_box(sp_item_bbox_desktop(u));
+                Geom::OptRect item_box(sp_item_bbox_desktop(u));
                 if(item_box) {
                     Geom::Point const curr(item_box->midpoint());
                     Geom::Point const dest(r->getCentreX(),r->getCentreY());

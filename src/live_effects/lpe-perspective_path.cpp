@@ -1,22 +1,11 @@
-#define INKSCAPE_LPE_PERSPECTIVE_PATH_CPP
-/** \file
- * LPE <perspective_path> implementation, used as an example for a base starting class
- * when implementing new LivePathEffects.
- *
- * In vi, three global search-and-replaces will let you rename everything
- * in this and the .h file:
- *
- *   :%s/PERSPECTIVE_PATH/YOURNAME/g
- *   :%s/PerspectivePath/Yourname/g
- *   :%s/perspective_path/yourname/g
+/** @file
+ * @brief LPE perspective path effect implementation.
  */
-/*
- * Authors:
- *   Johan Engelen
- *   Maximilian Albert
+/* Authors:
+ *   Maximilian Albert <maximilian.albert@gmail.com>
+ *   Johan Engelen <j.b.c.engelen@utwente.nl>
  *
- * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
- * Copyright (C) Maximilian Albert 2008 <maximilian.albert@gmail.com>
+ * Copyright (C) 2007-2008 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -198,4 +187,4 @@ KnotHolderEntityOffset::knot_get()
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

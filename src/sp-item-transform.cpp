@@ -38,7 +38,7 @@ sp_item_rotate_rel(SPItem *item, Geom::Rotate const &rotation)
 void
 sp_item_scale_rel (SPItem *item, Geom::Scale const &scale)
 {
-    boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop(item);
+    Geom::OptRect bbox = sp_item_bbox_desktop(item);
     if (bbox) {
         Geom::Translate const s(bbox->midpoint()); // use getCenter?
         sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * s.inverse() * scale * s);
@@ -95,7 +95,7 @@ get_scale_transform_with_stroke (Geom::Rect const &bbox_param, gdouble strokewid
     gdouble h1 = y1 - y0;
     gdouble r0 = strokewidth;
 
-    if (bbox.isEmpty()) {
+    if (bbox.hasZeroArea()) {
         Geom::Matrix move = Geom::Translate(x0 - bbox.min()[Geom::X], y0 - bbox.min()[Geom::Y]);
         return (move); // cannot scale from empty boxes at all, so only translate
     }
@@ -158,7 +158,7 @@ get_scale_transform_with_stroke (Geom::Rect const &bbox_param, gdouble strokewid
 }
 
 Geom::Rect
-get_visual_bbox (boost::optional<Geom::Rect> const &initial_geom_bbox, Geom::Matrix const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke)
+get_visual_bbox (Geom::OptRect const &initial_geom_bbox, Geom::Matrix const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke)
 {
     
     g_assert(initial_geom_bbox);

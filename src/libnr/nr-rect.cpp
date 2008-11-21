@@ -28,7 +28,7 @@ NRRect::NRRect(boost::optional<NR::Rect> const &rect) {
     }
 }
 
-NRRect::NRRect(boost::optional<Geom::Rect> const &rect) {
+NRRect::NRRect(Geom::OptRect const &rect) {
     if (rect) {
         x0 = rect->min()[Geom::X];
         y0 = rect->min()[Geom::Y];
@@ -47,9 +47,9 @@ boost::optional<NR::Rect> NRRect::upgrade() const {
     }
 }
 
-boost::optional<Geom::Rect> NRRect::upgrade_2geom() const {
+Geom::OptRect NRRect::upgrade_2geom() const {
     if (nr_rect_d_test_empty_ptr(this)) {
-        return boost::optional<Geom::Rect>();
+        return Geom::OptRect();
     } else {
         return Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1));
     }

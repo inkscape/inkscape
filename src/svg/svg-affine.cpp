@@ -37,18 +37,6 @@
 bool
 sp_svg_transform_read(gchar const *str, Geom::Matrix *transform)
 {
-    NR::Matrix mat;
-    if (sp_svg_transform_read(str, &mat)) {
-        *transform = mat;
-        return true;
-    } else {
-        return false;
-    }
-}
-
-bool
-sp_svg_transform_read(gchar const *str, NR::Matrix *transform)
-{
     int idx;
     char keyword[32];
     double args[6];
@@ -57,7 +45,7 @@ sp_svg_transform_read(gchar const *str, NR::Matrix *transform)
 
     if (str == NULL) return false;
 
-    NR::Matrix a(NR::identity());
+    Geom::Matrix a(Geom::identity());
 
     idx = 0;
     while (str[idx]) {
@@ -117,7 +105,7 @@ sp_svg_transform_read(gchar const *str, NR::Matrix *transform)
         /* ok, have parsed keyword and args, now modify the transform */
         if (!strcmp (keyword, "matrix")) {
             if (n_args != 6) return false;
-            a = (*NR_MATRIX_D_FROM_DOUBLE(args)) * a;
+            a = (*((Geom::Matrix *) &(args)[0])) * a;
         } else if (!strcmp (keyword, "translate")) {
             if (n_args == 1) {
                 args[1] = 0;
@@ -147,13 +135,13 @@ sp_svg_transform_read(gchar const *str, NR::Matrix *transform)
             }
         } else if (!strcmp (keyword, "skewX")) {
             if (n_args != 1) return false;
-            a = ( NR::Matrix(1, 0,
+            a = ( Geom::Matrix(1, 0,
                      tan(args[0] * M_PI / 180.0), 1,
                      0, 0)
                   * a );
         } else if (!strcmp (keyword, "skewY")) {
             if (n_args != 1) return false;
-            a = ( NR::Matrix(1, tan(args[0] * M_PI / 180.0),
+            a = ( Geom::Matrix(1, tan(args[0] * M_PI / 180.0),
                      0, 1,
                      0, 0)
                   * a );
@@ -264,16 +252,3 @@ sp_svg_transform_write(Geom::Matrix const *transform)
 {
     return sp_svg_transform_write(*transform);
 }
-
-gchar *
-sp_svg_transform_write(NR::Matrix const &transform)
-{
-    return sp_svg_transform_write((Geom::Matrix)transform);
-}
-
-gchar *
-sp_svg_transform_write(NR::Matrix const *transform)
-{
-    return sp_svg_transform_write(*transform);
-}
-

@@ -285,9 +285,9 @@ sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item)
 
     // calculate the bbox of the item
     sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
-    boost::optional<Geom::Rect> bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
+    Geom::OptRect bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
 
-    if ( !bbox || bbox->isEmpty() )
+    if (!bbox)
         return gr;
 
     Geom::Coord const width = bbox->dimensions()[Geom::X];
@@ -346,8 +346,8 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
         // calculate the bbox of the item
         sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
         Geom::Matrix bbox2user;
-        boost::optional<Geom::Rect> bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
-        if ( bbox && !bbox->isEmpty() ) {
+        Geom::OptRect bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
+        if ( bbox ) {
             bbox2user = Geom::Matrix(bbox->dimensions()[Geom::X], 0,
                                    0, bbox->dimensions()[Geom::Y],
                                    bbox->min()[Geom::X], bbox->min()[Geom::Y]);
@@ -1098,7 +1098,7 @@ sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool
 
     if (SP_GRADIENT(gradient)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(item));
-        boost::optional<Geom::Rect> bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
+        Geom::OptRect bbox = item->getBounds(Geom::identity()); // we need "true" bbox without item_i2d_affine
         if (bbox) {
             p *= Geom::Matrix(bbox->dimensions()[Geom::X], 0,
                             0, bbox->dimensions()[Geom::Y],

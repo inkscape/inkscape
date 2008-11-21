@@ -65,12 +65,12 @@ StyleSubject::iterator StyleSubject::Selection::begin() {
     }
 }
 
-boost::optional<Geom::Rect> StyleSubject::Selection::getBounds(SPItem::BBoxType type) {
+Geom::OptRect StyleSubject::Selection::getBounds(SPItem::BBoxType type) {
     Inkscape::Selection *selection = _getSelection();
     if (selection) {
         return selection->bounds(type);
     } else {
-        return boost::optional<Geom::Rect>();
+        return Geom::OptRect();
     }
 }
 
@@ -143,12 +143,12 @@ StyleSubject::iterator StyleSubject::CurrentLayer::begin() {
     return iterator(_getLayerSList());
 }
 
-boost::optional<Geom::Rect> StyleSubject::CurrentLayer::getBounds(SPItem::BBoxType type) {
+Geom::OptRect StyleSubject::CurrentLayer::getBounds(SPItem::BBoxType type) {
     SPObject *layer = _getLayer();
     if (layer && SP_IS_ITEM(layer)) {
         return sp_item_bbox_desktop(SP_ITEM(layer), type);
     } else {
-        return boost::optional<Geom::Rect>();
+        return Geom::OptRect();
     }
 }
 

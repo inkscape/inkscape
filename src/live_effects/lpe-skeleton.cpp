@@ -1,7 +1,7 @@
 #define INKSCAPE_LPE_SKELETON_CPP
 /** \file
- * LPE <skeleton> implementation, used as an example for a base starting class
- * when implementing new LivePathEffects.
+ * @brief Minimal dummy LPE effect implementation, used as an example for a base
+ * starting class when implementing new LivePathEffects.
  *
  * In vi, three global search-and-replaces will let you rename everything
  * in this and the .h file:
@@ -10,11 +10,10 @@
  *   :%s/Skeleton/Yourname/g
  *   :%s/skeleton/yourname/g
  */
-/*
- * Authors:
- *   Johan Engelen
+/* Authors:
+ *   Johan Engelen <j.b.c.engelen@utwente.nl>
  *
- * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+ * Copyright (C) 2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -84,7 +83,7 @@ LPESkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
  *  Define the classes for your knotholder handles here
  */
 
-/**
+/*
 namespace Skeleton {
 
 class KnotHolderEntityMyHandle : public LPEKnotHolderEntity
@@ -97,7 +96,7 @@ public:
 };
 
 } // namespace Skeleton
-**/
+*/
 
 /* ######################## */
 
@@ -113,4 +112,4 @@ public:
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

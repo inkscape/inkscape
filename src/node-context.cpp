@@ -444,7 +444,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if (event->type == GDK_BUTTON_RELEASE) {
                 event_context->xp = event_context->yp = 0;
                 if (event->button.button == 1) {
-                    boost::optional<Geom::Rect> b = Inkscape::Rubberband::get(desktop)->getRectangle();
+                    Geom::OptRect b = Inkscape::Rubberband::get(desktop)->getRectangle();
 
                     if (nc->shape_editor->hits_curve() && !event_context->within_tolerance) { //drag curve
                         nc->shape_editor->finish_drag();
@@ -634,7 +634,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
                 case GDK_Escape:
                 {
-                    boost::optional<Geom::Rect> const b = Inkscape::Rubberband::get(desktop)->getRectangle();
+                    Geom::OptRect const b = Inkscape::Rubberband::get(desktop)->getRectangle();
                     if (b) {
                         Inkscape::Rubberband::get(desktop)->stop();
                         nc->current_state = SP_NODE_CONTEXT_INACTIVE;

@@ -615,7 +615,7 @@ bool font_instance::FontSlope(double &run, double &rise)
 	return true;
 }
 
-boost::optional<Geom::Rect> font_instance::BBox(int glyph_id)
+Geom::OptRect font_instance::BBox(int glyph_id)
 {
 	int no=-1;
 	if ( id_to_no.find(glyph_id) == id_to_no.end() ) {
@@ -629,7 +629,7 @@ boost::optional<Geom::Rect> font_instance::BBox(int glyph_id)
 		no=id_to_no[glyph_id];
 	}
 	if ( no < 0 ) {
-            return boost::optional<Geom::Rect>();
+            return Geom::OptRect();
         } else {
 	    Geom::Point rmin(glyphs[no].bbox[0],glyphs[no].bbox[1]);
 	    Geom::Point rmax(glyphs[no].bbox[2],glyphs[no].bbox[3]);

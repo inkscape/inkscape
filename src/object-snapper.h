@@ -77,7 +77,7 @@ public:
                       Inkscape::SnapPreferences::PointType const &t,
                       Geom::Point const &p,
                       bool const &first_point,
-                      boost::optional<Geom::Rect> const &bbox_to_snap,
+                      Geom::OptRect const &bbox_to_snap,
                       std::vector<SPItem const *> const *it,
                       std::vector<Geom::Point> *unselected_nodes) const;
 
@@ -85,7 +85,7 @@ public:
                       Inkscape::SnapPreferences::PointType const &t,
                       Geom::Point const &p,
                       bool const &first_point,                                                                   
-                      boost::optional<Geom::Rect> const &bbox_to_snap,
+                      Geom::OptRect const &bbox_to_snap,
                       ConstraintLine const &c,
                       std::vector<SPItem const *> const *it) const;
   

@@ -26,19 +26,29 @@
 #include "ui/widget/scalar-unit.h"
 
 #include "xml/node-event-vector.h"
+#include "xml/repr.h"
 #include "helper/units.h"
 #include "preferences.h"
 
 #include "inkscape.h"
+#include "io/sys.h"
 #include "verbs.h"
 #include "document.h"
 #include "desktop-handles.h"
 #include "desktop.h"
 #include "sp-namedview.h"
+#include "sp-object-repr.h"
+#include "sp-root.h"
 #include "widgets/icon.h"
 #include "document-properties.h"
 
 #include "display/canvas-grid.h"
+
+#if ENABLE_LCMS
+#include <lcms.h>
+//#include "color-profile-fns.h"
+#include "color-profile.h"
+#endif // ENABLE_LCMS
 
 using std::pair;
 
@@ -82,7 +92,7 @@ DocumentProperties::getInstance()
 DocumentProperties::DocumentProperties()
     : UI::Widget::Panel ("", "/dialogs/documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
       _page_page(1, 1, true, true), _page_guides(1, 1),
-      _page_snap(1, 1), _page_snap_dtls(1, 1),
+      _page_snap(1, 1), _page_snap_dtls(1, 1), _page_cms(1, 1),
     //---------------------------------------------------------------
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
       _rcb_bord(_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false),
@@ -100,7 +110,6 @@ DocumentProperties::DocumentProperties()
       _rcp_hgui(_("_Highlight color:"), _("Highlighted guideline color"), _("Color of a guideline when it is under mouse"), "guidehicolor", "guidehiopacity", _wr),
     //---------------------------------------------------------------
       _rcbs(_("_Enable snapping"), _("Toggle snapping on or off"), "inkscape:snap-global", _wr),
-      _rcbsi(_("_Enable snap indicator"), _("After snapping, a symbol is drawn at the point that has snapped"), "inkscape:snap-indicator", _wr),
       _rcbsnbb(_("_Bounding box corners"), _("Only available in the selector tool: snap bounding box corners to guides, to grids, and to other bounding boxes (but not to nodes or paths)"),
                   "inkscape:snap-bbox", _wr),
       _rcbsnn(_("_Nodes"), _("Snap nodes (e.g. path nodes, special points in shapes, gradient handles, text base points, transformation origins, etc.) to guides, to grids, to paths and to other nodes"),
@@ -135,12 +144,16 @@ DocumentProperties::DocumentProperties()
     _notebook.append_page(_grids_vbox,     _("Grids"));
     _notebook.append_page(_page_snap,      _("Snap"));
     _notebook.append_page(_page_snap_dtls, _("Snap points"));
+    _notebook.append_page(_page_cms, _("Color Management"));
 
     build_page();
     build_guides();
     build_gridspage();
     build_snap();
     build_snap_dtls();
+#if ENABLE_LCMS
+    build_cms();
+#endif // ENABLE_LCMS
 
     _grids_button_new.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onNewGrid));
     _grids_button_remove.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onRemoveGrid));
@@ -312,8 +325,6 @@ DocumentProperties::build_snap()
     slaves.clear();
     slaves.push_back(&_rcbsnn);
     slaves.push_back(&_rcbsnbb);
-    slaves.push_back(&_rcbsi);
-
     _rcbs.setSlaveWidgets(slaves);
 
     Gtk::Label *label_g = manage (new Gtk::Label);
@@ -331,7 +342,6 @@ DocumentProperties::build_snap()
     {
         label_g,            0,
         0,                  &_rcbs,
-        0,                  &_rcbsi,
         0,                  0,
         label_w,            0,
         0,                  &_rcbsnn,
@@ -375,11 +385,207 @@ DocumentProperties::build_snap_dtls()
         0,                  0,
         label_m,            0,
         0,                  &_rcbic,
-        0,					&_rcbsm
+        0,                  &_rcbsm
     };
 
     attach_all(_page_snap_dtls.table(), array, G_N_ELEMENTS(array));
 }
+
+#if ENABLE_LCMS
+static void
+lcms_profile_get_name (cmsHPROFILE   profile, const gchar **name)
+{
+  if (profile)
+    {
+      *name = cmsTakeProductDesc (profile);
+
+      if (! *name)
+        *name = cmsTakeProductName (profile);
+
+      if (*name && ! g_utf8_validate (*name, -1, NULL))
+        *name = _("(invalid UTF-8 string)");
+    }
+  else
+    {
+      *name = _("None");
+    }
+}
+
+void
+DocumentProperties::populate_available_profiles(){
+
+    // add "None"
+/*    Gtk::MenuItem *i = new Gtk::MenuItem();
+    i->show();
+
+    i->set_data("filepath", NULL);
+    i->set_data("name", _("None"));
+
+    Gtk::HBox *hb = new Gtk::HBox(false,  0);
+    hb->show();
+
+    Gtk::Label *l = new Gtk::Label( _("None") );
+    l->show();
+    l->set_alignment(0.0, 0.5);
+
+    hb->pack_start(*l, true, true, 0);
+
+    hb->show();
+    i->add(*hb);
+    _menu.append(*i);
+*/
+    std::list<gchar *> sources;
+    sources.push_back( profile_path("color/icc") );
+    //sources.push_back( g_strdup(INKSCAPE_COLORPROFILESDIR) );
+
+    int index = 1;
+
+    // Use this loop to iterate through a list of possible document locations.
+    while (!sources.empty()) {
+        gchar *dirname = sources.front();
+
+        if ( Inkscape::IO::file_test( dirname, G_FILE_TEST_EXISTS )
+            && Inkscape::IO::file_test( dirname, G_FILE_TEST_IS_DIR )) {
+            GError *err = 0;
+            GDir *directory = g_dir_open(dirname, 0, &err);
+            if (!directory) {
+                gchar *safeDir = Inkscape::IO::sanitizeString(dirname);
+                g_warning(_("Color profiles directory (%s) is unavailable."), safeDir);
+                g_free(safeDir);
+            } else {
+                gchar *filename = 0;
+                while ((filename = (gchar *)g_dir_read_name(directory)) != NULL) {
+                    gchar* lower = g_ascii_strdown( filename, -1 );
+                    gchar* full = g_build_filename(dirname, filename, NULL);
+                    if ( !Inkscape::IO::file_test( full, G_FILE_TEST_IS_DIR ) ) {
+                        cmsHPROFILE hProfile = cmsOpenProfileFromFile(full, "r");
+                        if (hProfile != NULL){
+                            const gchar* name;
+                            lcms_profile_get_name(hProfile, &name);
+                            Gtk::MenuItem* mi = new Gtk::MenuItem();
+                            mi->set_data("filepath", g_strdup(full));
+                            mi->set_data("name", g_strdup(name));
+                            Gtk::HBox *hbox = new Gtk::HBox();
+                            hbox->show();
+                            Gtk::Label* lbl = manage(new Gtk::Label(name));
+                            lbl->show();
+                            hbox->pack_start(*lbl, true, true, 0);
+                            mi->add(*hbox);
+                            mi->show_all();
+                            _menu.append(*mi);
+        //                    g_free((void*)name);
+                        }
+                        cmsCloseProfile(hProfile);
+                        index++;
+                    }
+                    g_free(full);
+                    g_free(lower);
+                }
+                g_dir_close(directory);
+            }
+        }
+
+        // toss the dirname
+        g_free(dirname);
+        sources.pop_front();
+    }
+    _menu.show_all();
+}
+
+void
+DocumentProperties::onEmbedProfile()
+{
+//store this profile in the SVG document (create <color-profile> element in the XML)
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (!desktop){
+        g_warning("No active desktop");
+        return;
+    }
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+    Inkscape::XML::Node *cprofRepr = xml_doc->createElement("svg:color-profile");
+    cprofRepr->setAttribute("name", (gchar*) _menu.get_active()->get_data("name"));
+    cprofRepr->setAttribute("xlink:href", (gchar*) _menu.get_active()->get_data("filepath"));
+
+    /* Checks whether there is a defs element. Creates it when needed */
+    Inkscape::XML::Node *defsRepr = sp_repr_lookup_name(xml_doc, "svg:defs");
+    if (!defsRepr){
+        defsRepr = xml_doc->createElement("svg:defs");
+        xml_doc->root()->addChild(defsRepr, NULL);
+    }
+
+    g_assert(SP_ROOT(desktop->doc()->root)->defs);
+    defsRepr->addChild(cprofRepr, NULL);
+
+    Inkscape::GC::release(defsRepr);
+
+    // inform the document, so we can undo
+    sp_document_done(desktop->doc(), SP_VERB_EMBED_COLOR_PROFILE, _("Embed Color Profile"));
+
+    populate_embedded_profiles_box();
+}
+
+void
+DocumentProperties::populate_embedded_profiles_box()
+{
+    _EmbeddedProfilesListStore->clear();
+    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "iccprofile" );
+    while ( current ) {
+        SPObject* obj = SP_OBJECT(current->data);
+        Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
+        Gtk::TreeModel::Row row = *(_EmbeddedProfilesListStore->append());
+        row[_EmbeddedProfilesListColumns.nameColumn] = prof->name;
+//        row[_EmbeddedProfilesListColumns.previewColumn] = "Color Preview";
+        current = g_slist_next(current);
+    }
+}
+
+
+void
+DocumentProperties::build_cms()
+{
+    _page_cms.show();
+
+    Gtk::Label *label_embed= manage (new Gtk::Label);
+    label_embed->set_markup (_("<b>Embedded Color Profiles:</b>"));
+    Gtk::Label *label_avail = manage (new Gtk::Label);
+    label_avail->set_markup (_("<b>Available Color Profiles:</b>"));
+
+    _embed_btn.set_label("Embed Profile");
+
+    Gtk::Widget *const array[] =
+    {
+        label_embed,          0,
+        &_EmbeddedProfilesListScroller,      0,
+        label_avail,        0,
+        &_combo_avail,        &_embed_btn,
+    };
+
+    attach_all(_page_cms.table(), array, G_N_ELEMENTS(array));
+
+    populate_available_profiles();
+
+    _combo_avail.set_menu(_menu);
+    _combo_avail.set_history(0);
+    _combo_avail.show_all();
+
+    //# Set up the Embedded Profiles combo box
+    _EmbeddedProfilesListStore = Gtk::ListStore::create(_EmbeddedProfilesListColumns);
+    _EmbeddedProfilesList.set_model(_EmbeddedProfilesListStore);
+    _EmbeddedProfilesList.append_column(_("Profile Name"), _EmbeddedProfilesListColumns.nameColumn);
+//    _EmbeddedProfilesList.append_column(_("Color Preview"), _EmbeddedProfilesListColumns.previewColumn);
+    _EmbeddedProfilesList.set_headers_visible(false);
+    _EmbeddedProfilesList.set_fixed_height_mode(true);
+
+    populate_embedded_profiles_box();
+
+    _EmbeddedProfilesListScroller.add(_EmbeddedProfilesList);
+    _EmbeddedProfilesListScroller.set_shadow_type(Gtk::SHADOW_IN);
+    _EmbeddedProfilesListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
+    _EmbeddedProfilesListScroller.set_size_request(-1, 90);
+
+    _embed_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onEmbedProfile));
+}
+#endif // ENABLE_LCMS
 
 /**
 * Called for _updating_ the dialog (e.g. when a new grid was manually added in XML)
@@ -515,8 +721,6 @@ DocumentProperties::update()
     _rsu_gusn.setValue (nv->guidetolerance);
 
     _rcbs.setActive (nv->snap_manager.snapprefs.getSnapEnabledGlobally());
-    _rcbsi.setActive (nv->snapindicator);
-
     //-----------------------------------------------------------grids page
 
     update_gridspage();

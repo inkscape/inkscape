@@ -560,6 +560,11 @@ gdouble sp_document_height(SPDocument *document)
     return root->height.computed;
 }
 
+Geom::Point sp_document_dimensions(SPDocument *doc)
+{
+    return Geom::Point(sp_document_width(doc), sp_document_height(doc));
+}
+
 /**
  * Given a Geom::Rect that may, for example, correspond to the bbox of an object,
  * this function fits the canvas to that rect by resizing the canvas
@@ -567,8 +572,6 @@ gdouble sp_document_height(SPDocument *document)
  */
 void SPDocument::fitToRect(Geom::Rect const &rect)
 {
-    g_return_if_fail(!rect.isEmpty());
-
     double const w = rect.width();
     double const h = rect.height();
 
@@ -918,7 +921,7 @@ static GSList *find_items_in_area(GSList *s, SPGroup *group, unsigned int dkey, 
             s = find_items_in_area(s, SP_GROUP(o), dkey, area, test);
         } else {
             SPItem *child = SP_ITEM(o);
-            boost::optional<Geom::Rect> box = sp_item_bbox_desktop(child);
+            Geom::OptRect box = sp_item_bbox_desktop(child);
             if ( box && test(area, *box) && (take_insensitive || child->isVisibleAndUnlocked(dkey))) {
                 s = g_slist_append(s, child);
             }

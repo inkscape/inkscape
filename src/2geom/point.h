@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include <2geom/coord.h>
+#include <2geom/isnan.h>
 #include <2geom/utils.h>
 
 namespace Geom {
@@ -22,6 +23,7 @@ class Point {
     Coord _pt[2];
 
   public:
+    /// The default constructor creates an Point(0,0)  DO NOT RELY ON THIS, BEST NOT TO USE THIS CONSTRUCTOR
     inline Point()
     { _pt[X] = _pt[Y] = 0; }
 
@@ -80,6 +82,13 @@ class Point {
     }
 
     void normalize();
+
+    inline bool isFinite() const {
+        for ( unsigned i = 0 ; i < 2 ; ++i ) {
+            if(!IS_FINITE(_pt[i])) return false;
+        }
+        return true;
+    }
 
     inline Point operator+(Point const &o) const {
         return Point(_pt[X] + o._pt[X], _pt[Y] + o._pt[Y]);

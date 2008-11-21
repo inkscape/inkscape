@@ -1,8 +1,7 @@
-/**
- *
- * \brief  Dialog for renaming layers
- *
- * Author:
+/** @file
+ * @brief  Dialog for renaming layers
+ */
+/* Author:
  *   Bryce W. Harrington <bryce@bryceharrington.com>
  *
  * Copyright (C) 2004 Bryce Harrington

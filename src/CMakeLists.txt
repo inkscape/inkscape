@@ -204,10 +204,6 @@ snapped-line.cpp
 snapped-point.cpp
 snapper.cpp
 star-context.cpp
-streams-gzip.cpp
-streams-handles.cpp
-streams-jar.cpp
-streams-zlib.cpp
 style.cpp
 #style-test.cpp
 svg-view.cpp

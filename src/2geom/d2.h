@@ -400,19 +400,19 @@ namespace Geom{
 
 //Some D2 Fragment implementation which requires rect:
 template <typename T>
-Rect bounds_fast(const D2<T> &a) {
-    boost::function_requires<FragmentConcept<T> >();        
-    return Rect(bounds_fast(a[X]), bounds_fast(a[Y]));
+OptRect bounds_fast(const D2<T> &a) {
+    boost::function_requires<FragmentConcept<T> >();
+    return OptRect(bounds_fast(a[X]), bounds_fast(a[Y]));
 }
 template <typename T>
-Rect bounds_exact(const D2<T> &a) {
-    boost::function_requires<FragmentConcept<T> >();        
-    return Rect(bounds_exact(a[X]), bounds_exact(a[Y]));
+OptRect bounds_exact(const D2<T> &a) {
+    boost::function_requires<FragmentConcept<T> >();
+    return OptRect(bounds_exact(a[X]), bounds_exact(a[Y]));
 }
 template <typename T>
-Rect bounds_local(const D2<T> &a, const Interval &t) {
-    boost::function_requires<FragmentConcept<T> >();        
-    return Rect(bounds_local(a[X], t), bounds_local(a[Y], t));
+OptRect bounds_local(const D2<T> &a, const OptInterval &t) {
+    boost::function_requires<FragmentConcept<T> >();
+    return OptRect(bounds_local(a[X], t), bounds_local(a[Y], t));
 }
 };
 

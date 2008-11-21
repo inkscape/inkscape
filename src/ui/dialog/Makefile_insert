@@ -6,18 +6,19 @@ ui/dialog/clean:
 	rm -f ui/dialog/libuidialog.a $(ui_libuidialog_a_OBJECTS)
 
 ui_dialog_libuidialog_a_SOURCES =		\
-	ui/dialog/dialog-manager.cpp		\
-	ui/dialog/dialog-manager.h		\
-	ui/dialog/dialog.cpp			\
-	ui/dialog/dialog.h			\
-	ui/dialog/panel-dialog.h		\
-	ui/dialog/behavior.h			\
-	ui/dialog/dock-behavior.h		\
-	ui/dialog/dock-behavior.cpp		\
-	ui/dialog/floating-behavior.h		\
-	ui/dialog/floating-behavior.cpp		\
+	ui/dialog/aboutbox.cpp			\
+	ui/dialog/aboutbox.h			\
 	ui/dialog/align-and-distribute.cpp	\
 	ui/dialog/align-and-distribute.h	\
+	ui/dialog/behavior.h			\
+	ui/dialog/debug.cpp			\
+	ui/dialog/debug.h			\
+	ui/dialog/dialog.cpp			\
+	ui/dialog/dialog.h			\
+	ui/dialog/dialog-manager.cpp		\
+	ui/dialog/dialog-manager.h		\
+	ui/dialog/dock-behavior.cpp		\
+	ui/dialog/dock-behavior.h		\
 	ui/dialog/document-metadata.cpp  	\
 	ui/dialog/document-metadata.h    	\
 	ui/dialog/document-properties.cpp	\
@@ -28,40 +29,43 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/filedialog.h			\
 	ui/dialog/filedialogimpl-gtkmm.cpp      \
 	ui/dialog/filedialogimpl-gtkmm.h        \
+	ui/dialog/filedialogimpl-win32.cpp	\
+	ui/dialog/filedialogimpl-win32.h	\
 	ui/dialog/fill-and-stroke.cpp		\
 	ui/dialog/fill-and-stroke.h		\
-	ui/dialog/filter-effects-dialog.h	\
 	ui/dialog/filter-effects-dialog.cpp	\
+	ui/dialog/filter-effects-dialog.h	\
 	ui/dialog/find.cpp			\
 	ui/dialog/find.h			\
+	ui/dialog/floating-behavior.cpp		\
+	ui/dialog/floating-behavior.h		\
 	ui/dialog/inkscape-preferences.cpp	\
 	ui/dialog/inkscape-preferences.h	\
-	ui/dialog/input.cpp	\
-	ui/dialog/input.h	\
-	ui/dialog/livepatheffect-editor.cpp		\
-	ui/dialog/livepatheffect-editor.h		\
+	ui/dialog/input.cpp			\
+	ui/dialog/input.h			\
+	ui/dialog/livepatheffect-editor.cpp	\
+	ui/dialog/livepatheffect-editor.h	\
 	ui/dialog/memory.cpp			\
 	ui/dialog/memory.h			\
 	ui/dialog/messages.cpp			\
 	ui/dialog/messages.h			\
+	ui/dialog/ocaldialogs.cpp		\
+	ui/dialog/ocaldialogs.h			\
+	ui/dialog/panel-dialog.h		\
 	ui/dialog/print.cpp			\
 	ui/dialog/print.h			\
 	ui/dialog/scriptdialog.cpp		\
 	ui/dialog/scriptdialog.h		\
-	ui/dialog/svg-fonts-dialog.cpp	\
+	ui/dialog/svg-fonts-dialog.cpp		\
 	ui/dialog/svg-fonts-dialog.h		\
+	ui/dialog/tile.cpp			\
+	ui/dialog/tile.h			\
 	ui/dialog/tracedialog.cpp		\
 	ui/dialog/tracedialog.h			\
 	ui/dialog/transformation.cpp		\
 	ui/dialog/transformation.h		\
 	ui/dialog/undo-history.cpp		\
 	ui/dialog/undo-history.h		\
-	$(inkboard_dialogs)	\
-	ui/dialog/aboutbox.cpp		    \
-	ui/dialog/aboutbox.h            \
-	ui/dialog/ocaldialogs.cpp       \
-	ui/dialog/ocaldialogs.h \
-	ui/dialog/filedialogimpl-win32.h \
-	ui/dialog/filedialogimpl-win32.cpp 
+	$(inkboard_dialogs)
 
 ui/dialog/aboutbox.$(OBJEXT): inkscape_version.h

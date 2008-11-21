@@ -1,7 +1,5 @@
-#ifndef SEEN_EEK_COLOR_DEF_H
-#define SEEN_EEK_COLOR_DEF_H
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- *
+/** @file
+ * @brief EEK color definition
  */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -38,6 +36,9 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+
+#ifndef SEEN_EEK_COLOR_DEF_H
+#define SEEN_EEK_COLOR_DEF_H
 
 #include <string>
 #include <vector>
@@ -87,5 +88,15 @@ private:
 
 } // namespace eek
 
-
 #endif // SEEN_EEK_COLOR_DEF_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

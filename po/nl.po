@@ -3756,7 +3756,7 @@ msgstr "Het automatisch detecteren van de bestandsindeling is mislukt. Het besta
 #. localized share/templates/default.xx.svg file, where xx is your language code.
 #: ../src/file.cpp:136
 msgid "default.svg"
-msgstr "standaard.svg"
+msgstr "default.svg"
 
 #: ../src/file.cpp:222
 #: ../src/file.cpp:962

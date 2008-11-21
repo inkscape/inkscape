@@ -68,8 +68,8 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
         int prefs_bbox = prefs->getInt("/tools/bounding_box", 0);
         SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
             SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
-        boost::optional<Geom::Rect> const bbox(sel->bounds(bbox_type));
-        if ( bbox && !bbox->isEmpty() ) {
+        Geom::OptRect const bbox(sel->bounds(bbox_type));
+        if ( bbox ) {
             UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(G_OBJECT(spw), "tracker"));
             SPUnit const &unit = *tracker->getActiveUnit();
 
@@ -159,9 +159,9 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     int prefs_bbox = prefs->getInt("/tools/bounding_box");
     SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
         SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
-    boost::optional<Geom::Rect> bbox = selection->bounds(bbox_type);
+    Geom::OptRect bbox = selection->bounds(bbox_type);
 
-    if ( !bbox || bbox->isEmpty() ) {
+    if ( !bbox ) {
         g_object_set_data(G_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
         return;
     }

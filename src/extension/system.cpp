@@ -218,8 +218,9 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         throw Output::save_failed();
     }
 
-    if (!omod->prefs())
-        return;
+    if (!omod->prefs()) {
+        throw Output::save_cancelled();
+    }
 
     gchar *fileName = NULL;
     if (setextension) {

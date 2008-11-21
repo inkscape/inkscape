@@ -57,7 +57,7 @@ static void sp_gradient_context_setup(SPEventContext *ec);
 
 static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 
-static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint state, guint32 etime);
+static void sp_gradient_drag(SPGradientContext &rc, Geom::Point const pt, guint state, guint32 etime);
 
 static SPEventContextClass *parent_class;
 
@@ -241,7 +241,7 @@ sp_gradient_context_select_prev (SPEventContext *event_context)
 }
 
 static bool
-sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, NR::Point event_p)
+sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, Geom::Point event_p)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT (rc)->desktop;
 
@@ -260,10 +260,10 @@ sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, NR::Point
     return close;
 }
 
-std::vector<NR::Point>
+std::vector<Geom::Point>
 sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSList **next_stops)
 {
-    std::vector<NR::Point> coords;
+    std::vector<Geom::Point> coords;
 
     // for all selected draggers
     for (GList *i = drag->selected; i != NULL; i = i->next) {
@@ -349,7 +349,7 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
     GSList *these_stops = NULL;
     GSList *next_stops = NULL;
 
-    std::vector<NR::Point> coords = sp_gradient_context_get_stop_intervals (drag, &these_stops, &next_stops);
+    std::vector<Geom::Point> coords = sp_gradient_context_get_stop_intervals (drag, &these_stops, &next_stops);
 
     if (g_slist_length(these_stops) == 0 && drag->numSelected() == 1) {
         // if a single stop is selected, add between that stop and the next one
@@ -406,7 +406,7 @@ sp_gradient_simplify(SPGradientContext *rc, double tolerance)
     GSList *these_stops = NULL;
     GSList *next_stops = NULL;
 
-    std::vector<NR::Point> coords = sp_gradient_context_get_stop_intervals (drag, &these_stops, &next_stops);
+    std::vector<Geom::Point> coords = sp_gradient_context_get_stop_intervals (drag, &these_stops, &next_stops);
 
     GSList *todel = NULL;
 
@@ -464,7 +464,7 @@ sp_gradient_simplify(SPGradientContext *rc, double tolerance)
 
 
 static void
-sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  NR::Point mouse_p, guint32 /*etime*/)
+sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  Geom::Point mouse_p, guint32 /*etime*/)
 {
     // item is the selected item. mouse_p the location in doc coordinates of where to add the stop
 
@@ -508,7 +508,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if (drag->lines) {
                 for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
                     line = (SPCtrlLine*) l->data;
-                    over_line |= sp_gradient_context_is_over_line (rc, (SPItem*) line, NR::Point(event->motion.x, event->motion.y));
+                    over_line |= sp_gradient_context_is_over_line (rc, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
                 }
             }
             if (over_line) {
@@ -535,11 +535,11 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         break;
     case GDK_BUTTON_PRESS:
         if ( event->button.button == 1 && !event_context->space_panning ) {
-            NR::Point button_w(event->button.x, event->button.y);
+            Geom::Point button_w(event->button.x, event->button.y);
 
             // save drag origin
-            event_context->xp = (gint) button_w[NR::X];
-            event_context->yp = (gint) button_w[NR::Y];
+            event_context->xp = (gint) button_w[Geom::X];
+            event_context->yp = (gint) button_w[Geom::Y];
             event_context->within_tolerance = true;
 
             dragging = true;
@@ -577,9 +577,9 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             // motion notify coordinates as given (no snapping back to origin)
             event_context->within_tolerance = false;
 
-            NR::Point const motion_w(event->motion.x,
+            Geom::Point const motion_w(event->motion.x,
                                      event->motion.y);
-            NR::Point const motion_dt = event_context->desktop->w2d(motion_w);
+            Geom::Point const motion_dt = event_context->desktop->w2d(motion_w);
 
             if (Inkscape::Rubberband::get(desktop)->is_started()) {
                 Inkscape::Rubberband::get(desktop)->move(motion_dt);
@@ -594,7 +594,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             bool over_line = false;
             if (drag->lines) {
                 for (GSList *l = drag->lines; l != NULL; l = l->next) {
-                    over_line |= sp_gradient_context_is_over_line (rc, (SPItem*) l->data, NR::Point(event->motion.x, event->motion.y));
+                    over_line |= sp_gradient_context_is_over_line (rc, (SPItem*) l->data, Geom::Point(event->motion.x, event->motion.y));
                 }
             }
 
@@ -618,7 +618,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (drag->lines) {
                     for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
                         line = (SPCtrlLine*) l->data;
-                        over_line = sp_gradient_context_is_over_line (rc, (SPItem*) line, NR::Point(event->motion.x, event->motion.y));
+                        over_line = sp_gradient_context_is_over_line (rc, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
                         if (over_line)
                             break;
                     }
@@ -643,7 +643,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     if (r->is_started() && !event_context->within_tolerance) {
                         // this was a rubberband drag
                         if (r->getMode() == RUBBERBAND_MODE_RECT) {
-                            boost::optional<Geom::Rect> const b = r->getRectangle();
+                            Geom::OptRect const b = r->getRectangle();
                             drag->selectRect(*b);
                         }
                     }
@@ -855,7 +855,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     return ret;
 }
 
-static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint /*state*/, guint32 etime)
+static void sp_gradient_drag(SPGradientContext &rc, Geom::Point const pt, guint /*state*/, guint32 etime)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
     Inkscape::Selection *selection = sp_desktop_selection(desktop);

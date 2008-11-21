@@ -19,8 +19,7 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/tooltips.h>
 #include "ui/widget/combo-enums.h"
-#include "live_effects/effect.h"
-#include "live_effects/lpeobject-reference.h"
+#include "live_effects/effect-enum.h"
 #include <gtkmm/liststore.h>
 #include <gtkmm/treeview.h>
 #include <gtkmm/scrolledwindow.h>
@@ -29,8 +28,14 @@
 
 
 class SPDesktop;
+class SPLPEItem;
 
 namespace Inkscape {
+
+namespace LivePathEffect {
+    class Effect;
+    class LPEObjectReference;
+}
 
 namespace UI {
 namespace Dialog {

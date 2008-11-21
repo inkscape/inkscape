@@ -1,13 +1,13 @@
-/**
- * \brief Object for managing a set of dialogs, including their signals and
+/** @file
+ * @brief Object for managing a set of dialogs, including their signals and
  *        construction/caching/destruction of them.
- *
- * Authors:
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Jon Phillips <jon@rejon.org>
  *   Gustav Broberg <broberg@kth.se>
  *
- * Copyright (C) 2004--2007 Authors
+ * Copyright (C) 2004-2007 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -34,13 +34,13 @@
 #ifdef ENABLE_SVG_FONTS
 #include "ui/dialog/svg-fonts-dialog.h"
 #endif // ENABLE_SVG_FONTS
+#include "ui/dialog/tile.h"
 #include "ui/dialog/tracedialog.h"
 #include "ui/dialog/transformation.h"
 #include "ui/dialog/undo-history.h"
 #include "ui/dialog/panel-dialog.h"
 
 #include "dialogs/layers-panel.h"
-#include "dialogs/tiledialog.h"
 #include "dialogs/iconpreview.h"
 
 #include "ui/dialog/floating-behavior.h"

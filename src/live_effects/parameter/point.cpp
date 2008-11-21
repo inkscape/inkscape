@@ -7,7 +7,6 @@
  */
 
 #include "live_effects/parameter/point.h"
-#include "live_effects/parameter/pointparam-knotholder.h"
 #include "live_effects/effect.h"
 #include "svg/svg.h"
 #include "svg/stringstream.h"

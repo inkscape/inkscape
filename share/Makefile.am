@@ -1,6 +1,7 @@
 SUBDIRS = clipart \
           examples \
           extensions \
+          filters \
           fonts \
           gradients \
           icons \

@@ -167,7 +167,7 @@ SPConnEndPair::getEndpoints(NR::Point endPts[]) const {
 
     for (unsigned h = 0; h < 2; ++h) {
         if ( h2attItem[h] ) {
-            boost::optional<Geom::Rect> bbox = h2attItem[h]->getBounds(sp_item_i2doc_affine(h2attItem[h]));
+            Geom::OptRect bbox = h2attItem[h]->getBounds(sp_item_i2doc_affine(h2attItem[h]));
             if (bbox) {
                 endPts[h] = bbox->midpoint();
             } else {

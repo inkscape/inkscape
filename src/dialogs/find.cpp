@@ -1,9 +1,7 @@
-#define __SP_TRANSFORMATION_C__
-
-/**
- * \brief  Find dialog
- *
- * Authors:
+/** @file
+ * @brief  Find dialog
+ */
+/* Authors:
  *   bulia byak <bulia@users.sf.net>
  *
  * Copyright (C) 2004 Authors
@@ -11,13 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
-
 #include "widgets/icon.h"
-
 #include "message-stack.h"
 
 //TODO  : delete this
@@ -68,9 +60,6 @@ sp_find_dialog(){
 #include <xml/repr.h>
 
 #define MIN_ONSCREEN_DISTANCE 50
-
-using NR::X;
-using NR::Y;
 
 static GtkWidget *dlg = NULL;
 static win_data wd;

@@ -446,7 +446,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     TRACE(("sp_asbitmap_render: resolution: %f\n", res ));
 
     // Get the bounding box of the selection in document coordinates.
-    boost::optional<Geom::Rect> bbox = 
+    Geom::OptRect bbox = 
            item->getBounds(sp_item_i2d_affine(item), SPItem::RENDERING_BBOX);
 
     if (!bbox) // no bbox, e.g. empty group

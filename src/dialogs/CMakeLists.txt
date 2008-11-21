@@ -1,6 +1,5 @@
 SET(dialogs_SRC
 clonetiler.cpp
-debugdialog.cpp
 dialog-events.cpp
 eek-color-def.cpp
 eek-preview.cpp
@@ -21,7 +20,6 @@ sp-attribute-widget.cpp
 stroke-style.cpp
 swatches.cpp
 text-edit.cpp
-tiledialog.cpp
 unclump.cpp
 xml-tree.cpp
 )

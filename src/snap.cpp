@@ -120,7 +120,7 @@ bool SnapManager::someSnapperMightSnap() const
 void SnapManager::freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
                                              Geom::Point &p,
                                              bool first_point,
-                                             boost::optional<Geom::Rect> const &bbox_to_snap) const
+                                             Geom::OptRect const &bbox_to_snap) const
 {
     Inkscape::SnappedPoint const s = freeSnap(point_type, p, first_point, bbox_to_snap);                                                            
     s.getPoint(p);
@@ -140,7 +140,7 @@ void SnapManager::freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point
 Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapPreferences::PointType point_type,
                                              Geom::Point const &p,
                                              bool first_point,
-                                             boost::optional<Geom::Rect> const &bbox_to_snap) const
+                                             Geom::OptRect const &bbox_to_snap) const
 {
     if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
@@ -206,7 +206,7 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
                 Geom::Point const t_offset = from_2geom(t) + grid->origin;
                 SnappedConstraints sc;    
                 // Only the first three parameters are being used for grid snappers
-                snapper->freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_NODE, t_offset, TRUE, boost::optional<Geom::Rect>(), NULL, NULL);
+                snapper->freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_NODE, t_offset, TRUE, Geom::OptRect(), NULL, NULL);
                 // Find the best snap for this grid, including intersections of the grid-lines
                 Inkscape::SnappedPoint s = findBestSnap(t_offset, sc, false);
                 if (s.getSnapped() && (s.getDistance() < nearest_distance)) {
@@ -240,7 +240,7 @@ void SnapManager::constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointTyp
                                                     Geom::Point &p,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
                                                     bool first_point,
-                                                    boost::optional<Geom::Rect> const &bbox_to_snap) const
+                                                    Geom::OptRect const &bbox_to_snap) const
 {
     Inkscape::SnappedPoint const s = constrainedSnap(point_type, p, constraint, first_point, bbox_to_snap);                                                            
     s.getPoint(p);
@@ -262,7 +262,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
                                                     Geom::Point const &p,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
                                                     bool first_point,
-                                                    boost::optional<Geom::Rect> const &bbox_to_snap) const
+                                                    Geom::OptRect const &bbox_to_snap) const
 {
     if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
@@ -598,7 +598,7 @@ Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::SnapPreference
                                                         Geom::Point const &pointer,
                                                         Geom::Point const &tr) const
 {
-    return _snapTransformed(point_type, p, pointer, false, Geom::Point(), TRANSLATION, tr, Geom::Point(), Geom::X, false);
+    return _snapTransformed(point_type, p, pointer, false, Geom::Point(0,0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
 }
 
 
@@ -620,7 +620,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::SnapPre
                                                                Inkscape::Snapper::ConstraintLine const &constraint,
                                                                Geom::Point const &tr) const
 {
-    return _snapTransformed(point_type, p, pointer, true, constraint, TRANSLATION, tr, Geom::Point(), Geom::X, false);
+    return _snapTransformed(point_type, p, pointer, true, constraint, TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
 }
 
 
@@ -641,7 +641,7 @@ Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::SnapPreferences::Poi
                                                   Geom::Scale const &s,
                                                   Geom::Point const &o) const
 {
-    return _snapTransformed(point_type, p, pointer, false, Geom::Point(), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false);
+    return _snapTransformed(point_type, p, pointer, false, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false);
 }
 
 
@@ -664,7 +664,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::SnapPreferenc
                                                          Geom::Point const &o) const
 {
     // When constrained scaling, only uniform scaling is supported.
-    return _snapTransformed(point_type, p, pointer, true, Geom::Point(), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true);
+    return _snapTransformed(point_type, p, pointer, true, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true);
 }
 
 
@@ -689,7 +689,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::SnapPrefere
                                                             Geom::Dim2 d,
                                                             bool u) const
 {
-   return _snapTransformed(point_type, p, pointer, true, Geom::Point(), STRETCH, Geom::Point(s, s), o, d, u);
+   return _snapTransformed(point_type, p, pointer, true, Geom::Point(0,0), STRETCH, Geom::Point(s, s), o, d, u);
 }
 
 

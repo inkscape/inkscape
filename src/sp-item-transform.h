@@ -10,7 +10,7 @@ void sp_item_skew_rel (SPItem *item, double skewX, double skewY);
 void sp_item_move_rel(SPItem *item, Geom::Translate const &tr);
 
 Geom::Matrix get_scale_transform_with_stroke (Geom::Rect const &bbox, gdouble strokewidth, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1);
-Geom::Rect get_visual_bbox (boost::optional<Geom::Rect> const &initial_geom_bbox, Geom::Matrix const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke);
+Geom::Rect get_visual_bbox (Geom::OptRect const &initial_geom_bbox, Geom::Matrix const &abs_affine, gdouble const initial_strokewidth, bool const transform_stroke);
 
 
 #endif /* !SP_ITEM_TRANSFORM_H */

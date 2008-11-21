@@ -120,7 +120,12 @@ typedef std::vector<Crossings> CrossingSet;
 template<typename C>
 std::vector<Rect> bounds(C const &a) {
     std::vector<Rect> rs;
-    for(unsigned i = 0; i < a.size(); i++) rs.push_back(a[i].boundsFast());
+    for (unsigned i = 0; i < a.size(); i++) {
+        OptRect bb = a[i].boundsFast();
+        if (bb) {
+            rs.push_back(*bb);
+        }
+    }
     return rs;
 }
 

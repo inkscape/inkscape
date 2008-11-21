@@ -32,84 +32,73 @@
 #include <gtk/gtk.h>
 #include <iostream>
 #include <sstream>
-
-#include "widgets/button.h"
-#include "widgets/widget-sizes.h"
-#include "widgets/spw-utilities.h"
-#include "widgets/spinbutton-events.h"
-#include "dialogs/text-edit.h"
-#include "dialogs/dialog-events.h"
-
-#include "ui/widget/style-swatch.h"
-
-#include "verbs.h"
-#include "sp-namedview.h"
-#include "desktop.h"
-#include "desktop-handles.h"
-#include "xml/repr.h"
-#include "xml/node-event-vector.h"
-#include "xml/attribute-record.h"
 #include <glibmm/i18n.h>
-#include "helper/unit-menu.h"
-#include "helper/units.h"
-#include "live_effects/effect.h"
 
-#include "inkscape.h"
-#include "conn-avoid-ref.h"
-
-
-#include "select-toolbar.h"
-#include "gradient-toolbar.h"
-
-#include "connector-context.h"
-#include "node-context.h"
-#include "pen-context.h"
-#include "lpe-tool-context.h"
-#include "live_effects/lpe-line_segment.h"
-#include "shape-editor.h"
-#include "tweak-context.h"
-#include "sp-rect.h"
-#include "box3d.h"
-#include "box3d-context.h"
-#include "sp-star.h"
-#include "sp-spiral.h"
-#include "sp-ellipse.h"
-#include "sp-text.h"
-#include "sp-flowtext.h"
-#include "sp-clippath.h"
-#include "sp-mask.h"
-#include "style.h"
-#include "tools-switch.h"
-#include "selection.h"
-#include "selection-chemistry.h"
-#include "document-private.h"
-#include "desktop-style.h"
-#include "../libnrtype/font-lister.h"
-#include "../libnrtype/font-instance.h"
+#include "../box3d-context.h"
+#include "../box3d.h"
+#include "calligraphic-profile-rename.h"
+#include "../conn-avoid-ref.h"
 #include "../connection-pool.h"
-#include "../preferences.h"
-#include "../inkscape-stock.h"
+#include "../connector-context.h"
+#include "../desktop.h"
+#include "../desktop-handles.h"
+#include "../desktop-style.h"
+#include "../dialogs/dialog-events.h"
+#include "../dialogs/text-edit.h"
+#include "../document-private.h"
+#include "../ege-adjustment-action.h"
+#include "../ege-output-action.h"
+#include "../ege-select-one-action.h"
+#include "../flood-context.h"
+#include "gradient-toolbar.h"
+#include "../graphlayout/graphlayout.h"
+#include "../helper/unit-menu.h"
+#include "../helper/units.h"
+#include "../helper/unit-tracker.h"
 #include "icon.h"
-#include "graphlayout/graphlayout.h"
-#include "interface.h"
-#include "shortcuts.h"
-
-#include "mod360.h"
+#include "../ink-action.h"
+#include "../inkscape.h"
+#include "../inkscape-stock.h"
+#include "../interface.h"
+#include "../libnrtype/font-instance.h"
+#include "../libnrtype/font-lister.h"
+#include "../live_effects/effect.h"
+#include "../live_effects/lpe-angle_bisector.h"
+#include "../live_effects/lpe-line_segment.h"
+#include "../lpe-tool-context.h"
+#include "../mod360.h"
+#include "../node-context.h"
+#include "../pen-context.h"
+#include "../preferences.h"
+#include "../selection-chemistry.h"
+#include "../selection.h"
+#include "select-toolbar.h"
+#include "../shape-editor.h"
+#include "../shortcuts.h"
+#include "../sp-clippath.h"
+#include "../sp-ellipse.h"
+#include "../sp-flowtext.h"
+#include "../sp-mask.h"
+#include "../sp-namedview.h"
+#include "../sp-rect.h"
+#include "../sp-spiral.h"
+#include "../sp-star.h"
+#include "../sp-text.h"
+#include "../style.h"
+#include "../svg/css-ostringstream.h"
+#include "../tools-switch.h"
+#include "../tweak-context.h"
+#include "../ui/widget/style-swatch.h"
+#include "../verbs.h"
+#include "../widgets/button.h"
+#include "../widgets/spinbutton-events.h"
+#include "../widgets/spw-utilities.h"
+#include "../widgets/widget-sizes.h"
+#include "../xml/attribute-record.h"
+#include "../xml/node-event-vector.h"
+#include "../xml/repr.h"
 
 #include "toolbox.h"
-
-#include "flood-context.h"
-
-#include "ink-action.h"
-#include "ege-adjustment-action.h"
-#include "ege-output-action.h"
-#include "ege-select-one-action.h"
-#include "helper/unit-tracker.h"
-#include "live_effects/lpe-angle_bisector.h"
-
-#include "svg/css-ostringstream.h"
-
-#include "widgets/calligraphic-profile-rename.h"
 
 using Inkscape::UnitTracker;
 
@@ -4106,6 +4095,7 @@ static void sp_dcc_build_presets_list(GObject *tbl)
 
 static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
 {
+    using Inkscape::UI::Dialog::CalligraphicProfileRename;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop" );
     if (! desktop) return;
@@ -4113,13 +4103,13 @@ static void sp_dcc_save_profile (GtkWidget */*widget*/, GObject *tbl)
     if (g_object_get_data(tbl, "presets_blocked"))
         return;
 
-    Inkscape::UI::Dialogs::CalligraphicProfileDialog::show(desktop);
-    if ( ! Inkscape::UI::Dialogs::CalligraphicProfileDialog::applied()) {
+    CalligraphicProfileRename::show(desktop);
+    if ( !CalligraphicProfileRename::applied()) {
         // dialog cancelled
         update_presets_list (tbl);
         return;
     }
-    Glib::ustring profile_name = Inkscape::UI::Dialogs::CalligraphicProfileDialog::getProfileName();
+    Glib::ustring profile_name = CalligraphicProfileRename::getProfileName();
 
     if (profile_name.empty()) {
         // empty name entered
@@ -5007,7 +4997,7 @@ lpetool_toggle_set_bbox (GtkToggleAction *act, gpointer data) {
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
     Inkscape::Selection *selection = desktop->selection;
 
-    boost::optional<Geom::Rect> bbox = selection->bounds();
+    Geom::OptRect bbox = selection->bounds();
 
     if (bbox) {
         Geom::Point A(bbox->min());

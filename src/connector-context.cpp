@@ -602,7 +602,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
 
     if (connector_within_tolerance) {
         gint const tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
-        if ( NR::LInfty( event_w - connector_drag_origin_w ) < tolerance ) {
+        if ( Geom::LInfty( event_w - connector_drag_origin_w ) < tolerance ) {
             return FALSE;   // Do not drag if we're within tolerance from origin.
         }
     }
@@ -1149,7 +1149,7 @@ static void cc_set_active_shape(SPConnectorContext *cc, SPItem *item)
     }
 
 
-    boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop(cc->active_shape);
+    Geom::OptRect bbox = sp_item_bbox_desktop(cc->active_shape);
     if (bbox) {
         Geom::Point center = bbox->midpoint();
         sp_knot_set_position(cc->connpthandle, center, 0);

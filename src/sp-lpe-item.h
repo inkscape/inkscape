@@ -54,7 +54,7 @@ struct SPLPEItemClass {
 GType sp_lpe_item_get_type();
 
 void sp_lpe_item_update_patheffect (SPLPEItem *lpeitem, bool wholetree, bool write);
-void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve);
+bool sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve);
 void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, gchar *value, bool reset);
 void sp_lpe_item_add_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * new_lpeobj);
 void sp_lpe_item_replace_path_effect(SPLPEItem *lpeitem, LivePathEffectObject * old_lpeobj,

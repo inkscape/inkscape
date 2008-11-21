@@ -1,0 +1,77 @@
+#ifndef INKSCAPE_LPE_HATCHES_H
+#define INKSCAPE_LPE_HATCHES_H
+
+/** \file
+ * Implementation of the curve stitch effect, see lpe-hatches.cpp
+ */
+
+/*
+ * Authors:
+ *   JFBarraud
+ *
+ * Copyright (C) JF Barraud 2008.
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
+
+#include "live_effects/effect.h"
+#include "live_effects/parameter/point.h"
+#include "live_effects/parameter/parameter.h"
+#include "live_effects/parameter/bool.h"
+#include "live_effects/parameter/random.h"
+#include "live_effects/parameter/vector.h"
+
+namespace Inkscape {
+namespace LivePathEffect {
+
+class LPEHatches : public Effect {
+public:
+    LPEHatches(LivePathEffectObject *lpeobject);
+    virtual ~LPEHatches();
+
+    virtual Geom::Piecewise<Geom::D2<Geom::SBasis> >
+    doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
+
+    virtual void resetDefaults(SPItem * item);
+
+    virtual void doBeforeEffect(SPLPEItem * item);
+
+  std::vector<double>
+  generateLevels(Geom::Interval const &domain);
+
+  std::vector<std::vector<Geom::Point> >
+  linearSnake(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &f);
+
+  Geom::Piecewise<Geom::D2<Geom::SBasis> > 
+  smoothSnake(std::vector<std::vector<Geom::Point> > const &linearSnake);
+    
+private:
+  double hatch_dist;
+  RandomParam dist_rdm;
+  ScalarParam growth;
+  //topfront,topback,bottomfront,bottomback handle scales.
+  ScalarParam scale_tf, scale_tb, scale_bf, scale_bb;
+
+  RandomParam top_edge_variation;
+  RandomParam bot_edge_variation;
+  RandomParam top_tgt_variation;
+  RandomParam bot_tgt_variation;
+  RandomParam top_smth_variation;
+  RandomParam bot_smth_variation;
+
+  BoolParam fat_output, do_bend;
+  ScalarParam stroke_width_top;
+  ScalarParam stroke_width_bot;
+  ScalarParam front_thickness, back_thickness;
+
+  PointParam  bender;
+  VectorParam direction;
+
+  LPEHatches(const LPEHatches&);
+  LPEHatches& operator=(const LPEHatches&);
+};
+
+} //namespace LivePathEffect
+} //namespace Inkscape
+
+#endif

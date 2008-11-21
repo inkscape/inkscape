@@ -1,9 +1,9 @@
-/**
- * \brief  RDF manipulation functions
+/** @file
+ * @brief  RDF manipulation functions
  *
- * FIXME: move these to xml/ instead of dialogs/
- *
- * Authors:
+ * @todo move these to xml/ instead of dialogs/
+ */
+/* Authors:
  *   Kees Cook <kees@outflux.net>
  *   Jon Phillips <jon@rejon.org>
  *
@@ -11,14 +11,7 @@
  * Copyright (C) 2006 Jon Phillips <jon@rejon.org>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
- *
  */
-
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-
 
 #include "xml/repr.h"
 #include "rdf.h"
@@ -26,7 +19,6 @@
 #include "inkscape.h"
 
 /*
-
    Example RDF XML from various places...
  
 <rdf:RDF xmlns="http://creativecommons.org/ns#"
@@ -83,8 +75,6 @@ Bag example:
 <rdf:li>filetype</rdf:li>
 </rdf:Bag>
 </dc:subject>
-
-
 */
 
 struct rdf_double_t rdf_license_empty [] = {
@@ -1021,7 +1011,6 @@ rdf_set_defaults ( SPDocument * doc )
     }
 }
 
-
 /*
   Local Variables:
   mode:c++
@@ -1031,4 +1020,4 @@ rdf_set_defaults ( SPDocument * doc )
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

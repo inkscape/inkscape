@@ -1,15 +1,15 @@
-#ifndef __SP_STROKE_STYLE_H__
-#define __SP_STROKE_STYLE_H__
-
-/**
- * \brief  Stroke style dialog
- *
- * Author:
+/** @file
+ * @brief  Stroke style dialog
+ */
+/* Author:
  *   Lauris Kaplinski <lauris@ximian.com>
  *
  * Copyright (C) 2001 Ximian, Inc.
- *
+ * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifndef SEEN_DIALOGS_STROKE_STYLE_H
+#define SEEN_DIALOGS_STROKE_STYLE_H
 
 #include <glib.h>
 

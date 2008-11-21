@@ -19,6 +19,7 @@
 #include <interface.h>
 #include <libnr/nr-pixops.h>
 #include <libnr/nr-translate-scale-ops.h>
+#include <2geom/rect.h>
 #include <glib/gmessages.h>
 #include <png.h>
 #include "png-write.h"
@@ -386,9 +387,20 @@ hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
  *
  * \return true if succeeded (or if no action was taken), false if an error occurred.
  */
+bool sp_export_png_file (SPDocument *doc, gchar const *filename,
+                   double x0, double y0, double x1, double y1,
+                   unsigned long int width, unsigned long int height, double xdpi, double ydpi,
+                   unsigned long bgcolor,
+                   unsigned int (*status) (float, void *),
+                   void *data, bool force_overwrite,
+                   GSList *items_only)
+{
+    return sp_export_png_file(doc, filename, Geom::Rect(Geom::Point(x0,y0),Geom::Point(x1,y1)),
+                              width, height, xdpi, ydpi, bgcolor, status, data, force_overwrite, items_only);
+}
 bool
 sp_export_png_file(SPDocument *doc, gchar const *filename,
-                   double x0, double y0, double x1, double y1,
+                   Geom::Rect const &area,
                    unsigned long width, unsigned long height, double xdpi, double ydpi,
                    unsigned long bgcolor,
                    unsigned (*status)(float, void *),
@@ -399,8 +411,22 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     g_return_val_if_fail(filename != NULL, false);
     g_return_val_if_fail(width >= 1, false);
     g_return_val_if_fail(height >= 1, false);
+    g_return_val_if_fail(!area.hasZeroArea(), false);
 
-    if (!force_overwrite && !sp_ui_overwrite_file(filename)) {
+    //Make relative paths absolute, if possible:
+    gchar *path = 0;
+    if (!g_path_is_absolute(filename) && doc->uri) {
+        gchar *dirname = g_path_get_dirname(doc->uri);
+        if (dirname) {
+            path = g_build_filename(dirname, filename, NULL);
+            g_free(dirname);
+        }
+    }
+    if (!path) {
+        path = g_strdup(filename);
+    }
+
+    if (!force_overwrite && !sp_ui_overwrite_file(path)) {
         /* Remark: We return true so as not to invoke an error dialog in case export is cancelled
            by the user; currently this is safe because the callers only act when false is returned.
            If this changes in the future we need better distinction of return types (e.g., use int)
@@ -417,14 +443,10 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
 
     sp_document_ensure_up_to_date(doc);
 
-    /* Go to document coordinates */
-    {
-        gdouble const t = y0;
-        y0 = sp_document_height(doc) - y1;
-        y1 = sp_document_height(doc) - t;
-    }
+    /* Calculate translation by transforming to document coordinates (flipping Y)*/
+    Geom::Point translation = Geom::Point(-area[Geom::X][0], area[Geom::Y][1] - sp_document_height(doc));
 
-    /*
+    /*  This calculation is only valid when assumed that (x0,y0)= area.corner(0) and (x1,y1) = area.corner(2)
      * 1) a[0] * x0 + a[2] * y1 + a[4] = 0.0
      * 2) a[1] * x0 + a[3] * y1 + a[5] = 0.0
      * 3) a[0] * x1 + a[2] * y1 + a[4] = width
@@ -440,9 +462,9 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
      * (2) a[5] = -a[3] * y1
      */
 
-    Geom::Matrix const affine(Geom::Translate(-x0, -y0)
-                            * Geom::Scale(width / (x1 - x0),
-                                        height / (y1 - y0)));
+    Geom::Matrix const affine(Geom::Translate(translation)
+                            * Geom::Scale(width / area.width(),
+                                        height / area.height()));
 
     //SP_PRINT_MATRIX("SVG2PNG", &affine);
 
@@ -475,12 +497,12 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     if ((width < 256) || ((width * height) < 32768)) {
         ebp.px = nr_pixelstore_64K_new(FALSE, 0);
         ebp.sheight = 65536 / (4 * width);
-        write_status = sp_png_write_rgba_striped(doc, filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
+        write_status = sp_png_write_rgba_striped(doc, path, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         nr_pixelstore_64K_free(ebp.px);
     } else {
         ebp.px = g_new(guchar, 4 * 64 * width);
         ebp.sheight = 64;
-        write_status = sp_png_write_rgba_striped(doc, filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
+        write_status = sp_png_write_rgba_striped(doc, path, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         g_free(ebp.px);
     }
 
@@ -493,6 +515,8 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     // restore saved blur and filter quality
     prefs->setInt("/options/blurquality/value", saved_quality);
     prefs->setInt("/options/filterquality/value", saved_filter_quality);
+
+    g_free(path);
 
     return write_status;
 }

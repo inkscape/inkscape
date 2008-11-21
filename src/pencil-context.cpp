@@ -58,7 +58,7 @@ static void spdc_set_endpoint(SPPencilContext *pc, Geom::Point const p);
 static void spdc_finish_endpoint(SPPencilContext *pc);
 static void spdc_add_freehand_point(SPPencilContext *pc, Geom::Point p, guint state);
 static void fit_and_split(SPPencilContext *pc);
-
+static void interpolate(SPPencilContext *pc);
 
 static SPDrawContextClass *pencil_parent_class;
 static Geom::Point pencil_drag_origin_w(0, 0);
@@ -263,9 +263,9 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                         Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
                         if (s.getSnapped()) {
                         	s.getPoint(p);
-                        	pc->pencil_has_snapped_before = true;
+                        	pc->prev_snap_was_succesful = true;
                         } else {
-                        	pc->pencil_has_snapped_before = false;
+                        	pc->prev_snap_was_succesful = false;
                         }
                     } else if (selection->singleItem() && SP_IS_PATH(selection->singleItem())) {
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Appending to selected path"));
@@ -362,11 +362,13 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                     Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
                     if (s.getSnapped()) {
                     	s.getPoint(p);
-                    	pc->pencil_has_snapped_before = true;
+                    	pc->prev_snap_was_succesful = true;
+                    } else {
+                    	pc->prev_snap_was_succesful = false;
                     }
                 }
                 if ( pc->npoints != 0) { // buttonpress may have happened before we entered draw context!
-                	if (!(pc->pencil_has_snapped_before && m.snapprefs.getSnapPostponedGlobally())) {
+                	if (!(pc->prev_snap_was_succesful && m.snapprefs.getSnapPostponedGlobally())) {
 	                    // When snapping is enabled but temporarily on hold because the mouse is moving 
                 		// fast, then we don't want to add nodes off-grid
                 		spdc_add_freehand_point(pc, from_2geom(p), mevent.state);
@@ -450,6 +452,7 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
 
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Finishing freehand"));
 
+                interpolate(pc);
                 spdc_concat_colors_and_flush(pc, FALSE);
                 pc->sa = NULL;
                 pc->ea = NULL;
@@ -624,6 +627,7 @@ spdc_finish_endpoint(SPPencilContext *const pc)
     }
 }
 
+
 static void
 spdc_add_freehand_point(SPPencilContext *pc, Geom::Point p, guint /*state*/)
 {
@@ -633,6 +637,7 @@ spdc_add_freehand_point(SPPencilContext *pc, Geom::Point p, guint /*state*/)
     if ( ( p != pc->p[ pc->npoints - 1 ] )
          && in_svg_plane(p) )
     {
+        pc->ps.push_back(p);
         pc->p[pc->npoints++] = p;
         fit_and_split(pc);
     }
@@ -645,21 +650,94 @@ square(double const x)
 }
 
 static void
+interpolate(SPPencilContext *pc)
+{
+
+    g_assert( pc->ps.size() > 1 );
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
+    double const tolerance_sq = 0.02 * square( pc->desktop->w2d().descrim() * 
+                                               tol) * exp(0.2*tol - 2);
+
+    g_assert(is_zero(pc->req_tangent)
+             || is_unit_vector(pc->req_tangent));
+    Geom::Point const tHatEnd(0, 0);
+
+    guint n_points  = pc->ps.size();
+    pc->green_curve->reset();
+    pc->red_curve->reset();
+
+    Geom::Point * b = g_new(Geom::Point, 4*n_points);
+    Geom::Point * points = g_new(Geom::Point, 4*n_points);
+    for (int i = 0; i < pc->ps.size(); i++) { 
+        points[i] = pc->ps[i];
+    }
+
+    // worst case gives us a segment per point
+    int max_segs = 4*n_points;
+
+    int const n_segs = sp_bezier_fit_cubic_r(b, points, n_points,
+                                             tolerance_sq, max_segs);
+
+    if ( n_segs > 0)
+    {
+        /* Fit and draw and reset state */
+        pc->red_curve->reset();
+        pc->red_curve->moveto(b[0]);
+        for (int c = 0; c < n_segs; c++) { 
+            pc->red_curve->curveto(b[4*c+1], b[4*c+2], b[4*c+3]);
+        }
+        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
+        pc->red_curve_is_valid = true;
+
+        /* Fit and draw and copy last point */
+        g_assert(!pc->red_curve->is_empty());
+
+        /* Set up direction of next curve. */
+        {
+            Geom::CubicBezier const * last_seg = dynamic_cast<Geom::CubicBezier const *>(pc->red_curve->last_segment());
+            g_assert( last_seg );      // Relevance: validity of (*last_seg)[2]
+            pc->p[0] = last_seg->finalPoint();
+            pc->npoints = 1;
+            Geom::Point const req_vec( pc->p[0] - (*last_seg)[2] );
+            pc->req_tangent = ( ( Geom::is_zero(req_vec) || !in_svg_plane(req_vec) )
+                                ? Geom::Point(0, 0)
+                                : Geom::unit_vector(req_vec) );
+        }
+
+        pc->green_curve->append_continuous(pc->red_curve, 0.0625);
+        SPCurve *curve = pc->red_curve->copy();
+
+        /// \todo fixme:
+        SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(pc->desktop), curve);
+        curve->unref();
+        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), pc->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+
+        pc->green_bpaths = g_slist_prepend(pc->green_bpaths, cshape);
+
+        pc->red_curve_is_valid = false;
+    }
+    g_free(b);
+    g_free(points);
+    pc->ps.clear();
+}
+
+
+static void
 fit_and_split(SPPencilContext *pc)
 {
     g_assert( pc->npoints > 1 );
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0);
-    double const tolerance_sq = 0.02 * square( pc->desktop->w2d().descrim() * tol) 
-        * exp(0.2*tol - 2);
+    double const tolerance_sq = 0;
 
     Geom::Point b[4];
     g_assert(is_zero(pc->req_tangent)
              || is_unit_vector(pc->req_tangent));
     Geom::Point const tHatEnd(0, 0);
     int const n_segs = sp_bezier_fit_cubic_full(b, NULL, pc->p, pc->npoints,
-                                                pc->req_tangent, tHatEnd, tolerance_sq, 1);
+                                                pc->req_tangent, tHatEnd, 
+                                                tolerance_sq, 1);
     if ( n_segs > 0
          && unsigned(pc->npoints) < G_N_ELEMENTS(pc->p) )
     {

@@ -1,8 +1,7 @@
-/**
- *
- * \brief  Dialog for renaming layers
- *
- * Author:
+/** @file
+ * @brief Dialog for renaming layers
+ */
+/* Author:
  *   Bryce W. Harrington <bryce@bryceharrington.com>
  *   Andrius R. <knutux@gmail.com>
  *
@@ -12,12 +11,7 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include <gtkmm/stock.h>
-
 #include <glibmm/i18n.h>
 #include "inkscape.h"
 #include "desktop.h"

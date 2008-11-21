@@ -216,7 +216,6 @@ box3d_side_set_shape (SPShape *shape)
         return;
     }
 
-    SPCurve *c = new SPCurve();
     // TODO: Draw the correct quadrangle here
     //       To do this, determine the perspective of the box, the orientation of the side (e.g., XY-FRONT)
     //       compute the coordinates of the corners in P^3, project them onto the canvas, and draw the
@@ -225,14 +224,24 @@ box3d_side_set_shape (SPShape *shape)
     unsigned int corners[4];
     box3d_side_compute_corner_ids(side, corners);
 
+    SPCurve *c = new SPCurve();
     c->moveto(box3d_get_corner_screen(box, corners[0]));
     c->lineto(box3d_get_corner_screen(box, corners[1]));
     c->lineto(box3d_get_corner_screen(box, corners[2]));
     c->lineto(box3d_get_corner_screen(box, corners[3]));
-
     c->closepath();
-    sp_lpe_item_perform_path_effect(SP_LPE_ITEM (side), c);
-    sp_shape_set_curve_insync (SP_SHAPE (side), c, TRUE);
+
+    /* Reset the shape'scurve to the "original_curve"
+     * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
+    sp_shape_set_curve_insync (shape, c, TRUE);
+    if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(shape)) && sp_lpe_item_path_effects_enabled(SP_LPE_ITEM(shape))) {
+        SPCurve *c_lpe = c->copy();
+        bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (shape), c_lpe);
+        if (success) {
+            sp_shape_set_curve_insync (shape, c_lpe, TRUE);
+        }
+        c_lpe->unref();
+    }
     c->unref();
 }
 

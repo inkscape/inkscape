@@ -54,6 +54,14 @@ void Layout::appendText(Glib::ustring const &text, SPStyle *style, void *source_
         _copyInputVector(optional_attributes->dx, optional_attributes_offset, &new_source->dx, new_source->text_length);
         _copyInputVector(optional_attributes->dy, optional_attributes_offset, &new_source->dy, new_source->text_length);
         _copyInputVector(optional_attributes->rotate, optional_attributes_offset, &new_source->rotate, new_source->text_length);
+        if (!optional_attributes->rotate.empty() && optional_attributes_offset >= optional_attributes->rotate.size()) {
+            SVGLength last_rotate;
+            last_rotate = 0.f;
+            for (std::vector<SVGLength>::const_iterator it = optional_attributes->rotate.begin() ; it != optional_attributes->rotate.end() ; ++it)
+                if (it->_set)
+                    last_rotate = *it;
+            new_source->rotate.resize(1, last_rotate);
+        }
     }
     
     _input_stream.push_back(new_source);

@@ -173,7 +173,7 @@ sb2d_cubic_solve(SBasis2d const &f, Geom::Point const &A, Geom::Point const &B){
     double error = -1;
     unsigned best = 0;
     for (unsigned i=0; i<candidates.size(); i++){
-        Interval bounds = bounds_fast(compose(f,candidates[i]));
+        Interval bounds = *bounds_fast(compose(f,candidates[i]));
         double new_error = (fabs(bounds.max())>fabs(bounds.min()) ? fabs(bounds.max()) : fabs(bounds.min()) );
         if ( new_error < error || error < 0 ){
             error = new_error;

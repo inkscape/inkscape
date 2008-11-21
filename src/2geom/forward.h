@@ -62,6 +62,7 @@ class NotInvertible;
 class ContinuityError;
 
 class Interval;
+class OptInterval;
 class Linear;
 class Hat;
 class Tri;
@@ -81,6 +82,7 @@ class SBasis;
 class SBasisCurve;
 
 typedef D2<Interval> Rect;
+class OptRect;
 
 class Shape;
 class Region;

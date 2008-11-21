@@ -40,7 +40,7 @@ public:
 
     void start(SPDesktop *desktop, Geom::Point const &p);
     void move(Geom::Point const &p);
-    boost::optional<Geom::Rect> getRectangle() const;
+    Geom::OptRect getRectangle() const;
     void stop();
     bool is_started();
 

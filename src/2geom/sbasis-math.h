@@ -42,6 +42,7 @@
 
 #include <2geom/sbasis.h>
 #include <2geom/piecewise.h>
+#include <2geom/d2.h>
 
 namespace Geom{
 //-|x|---------------------------------------------------------------
@@ -81,6 +82,8 @@ Piecewise<SBasis> reciprocalOnDomain(Interval range, double tol=1e-3);
 Piecewise<SBasis> reciprocal(          SBasis const &f, double tol=1e-3, int order=3);
 Piecewise<SBasis> reciprocal(Piecewise<SBasis>const &f, double tol=1e-3, int order=3);
 
+//--interpolate------------------------------------------------------------
+Piecewise<SBasis> interpolate( std::vector<double> times, std::vector<double> values, unsigned smoothness = 1);
 }
 
 #endif //SEEN_GEOM_PW_SB_CALCULUS_H

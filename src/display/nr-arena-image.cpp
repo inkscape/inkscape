@@ -24,7 +24,7 @@
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
 #include "sp-gaussian-blur.h"
-#include "sp-feblend.h"
+#include "filters/blend.h"
 #include "display/nr-filter-blend.h"
 
 int nr_arena_image_x_sample = 1;

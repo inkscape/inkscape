@@ -187,6 +187,16 @@ static JavaFXOutput::String getStrokeLineJoin(unsigned value) {
 }
 
 
+/**
+ * Replace illegal characters for JavaFX for a underscore.
+ */
+static JavaFXOutput::String sanatize(const JavaFXOutput::String &badstr){
+    JavaFXOutput::String good(badstr);
+    for (int pos = 0; pos < badstr.length(); ++pos )
+        if((badstr.at(pos)=='-')||(badstr.at(pos)==' '))
+            good.replace(pos, 1, "_");
+    return good;
+}
 
 /**
  *  Output data to the buffer, printf()-style
@@ -298,11 +308,13 @@ bool JavaFXOutput::doTail()
  */
 bool JavaFXOutput::doGradient(SPGradient *grad, const String &id)
 {
+    String jfxid = sanatize(id);
+
     if (SP_IS_LINEARGRADIENT(grad))
         {
         SPLinearGradient *g = SP_LINEARGRADIENT(grad);
-        out("    /* create LinearGradient for %s */\n", id.c_str());
-        out("    private function %s(): LinearGradient {\n",  id.c_str());
+        out("    /* create LinearGradient for %s */\n", jfxid.c_str());
+        out("    private function %s(): LinearGradient {\n",  jfxid.c_str());
         out("        LinearGradient {\n");
         std::vector<SPGradientStop> stops = g->vector.stops;
         if (stops.size() > 0)
@@ -320,14 +332,14 @@ bool JavaFXOutput::doGradient(SPGradient *grad, const String &id)
             out("            ]\n");
             }
         out("        };\n");
-        out("    } // end LinearGradient: %s\n", id.c_str());
+        out("    } // end LinearGradient: %s\n", jfxid.c_str());
         out("\n\n");
         }
     else if (SP_IS_RADIALGRADIENT(grad))
         {
         SPRadialGradient *g = SP_RADIALGRADIENT(grad);
-        out("    /* create RadialGradient for %s */\n", id.c_str());
-        out("    private function %s() {\n", id.c_str());
+        out("    /* create RadialGradient for %s */\n", jfxid.c_str());
+        out("    private function %s() {\n", jfxid.c_str());
         out("        RadialGradient {\n");
         out("            centerX: %s\n", DSTR(g->cx.value));
         out("            centerY: %s\n", DSTR(g->cy.value));
@@ -350,12 +362,12 @@ bool JavaFXOutput::doGradient(SPGradient *grad, const String &id)
             out("            ]\n");
             }
         out("        };\n");
-        out("    } // end RadialGradient: %s\n", id.c_str());
+        out("    } // end RadialGradient: %s\n", jfxid.c_str());
         out("\n\n");
         }
     else
         {
-        err("Unknown gradient type for '%s'\n", id.c_str());
+        err("Unknown gradient type for '%s'\n", jfxid.c_str());
         return false;
         }
 
@@ -392,7 +404,7 @@ bool JavaFXOutput::doStyle(SPStyle *style)
             /* trim the anchor '#' from the front */
             if (uri.size() > 0 && uri[0]=='#')
                 uri = uri.substr(1);
-            out("            fill: %s()\n", uri.c_str());
+            out("            fill: %s()\n", sanatize(uri).c_str());
         }
     }
 
@@ -456,6 +468,8 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     using Geom::X;
     using Geom::Y;
 
+    String jfxid = sanatize(id);
+
     //### Get the Shape
     if (!SP_IS_SHAPE(item))//Bulia's suggestion.  Allow all shapes
         return true;
@@ -467,10 +481,10 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
 
     nrShapes++;
 
-    out("    /** path %s */\n", id.c_str());
-    out("    private function %s() : Path {\n",id.c_str());
+    out("    /** path %s */\n", jfxid.c_str());
+    out("    private function %s() : Path {\n",jfxid.c_str());
     out("        Path {\n");
-    out("            id: \"%s\"\n", id.c_str());
+    out("            id: \"%s\"\n", jfxid.c_str());
 
     /**
      * Output the style information
@@ -560,7 +574,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
 
     out("            ] // elements\n");
     out("        }; // Path\n");
-    out("    } // end path %s\n\n", id.c_str());
+    out("    } // end path %s\n\n", jfxid.c_str());
 
     double cminx = cminmax.min()[X];
     double cmaxx = cminmax.max()[X];
@@ -737,7 +751,8 @@ bool JavaFXOutput::doTree(SPDocument *doc)
 }
 
 
-bool JavaFXOutput::doBody(SPDocument *doc, SPObject *obj) {
+bool JavaFXOutput::doBody(SPDocument *doc, SPObject *obj)
+{
     /**
      * Check the type of node and process
      */

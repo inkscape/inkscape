@@ -74,10 +74,10 @@ public:
 
   virtual Curve *duplicate() const = 0;
 
-  virtual Rect boundsFast() const = 0;
-  virtual Rect boundsExact() const = 0;
-  virtual Rect boundsLocal(Interval i, unsigned deg) const = 0;
-  Rect boundsLocal(Interval i) const { return boundsLocal(i, 0); }
+  virtual OptRect boundsFast() const = 0;
+  virtual OptRect boundsExact() const = 0;
+  virtual OptRect boundsLocal(OptInterval i, unsigned deg) const = 0;
+  OptRect boundsLocal(OptInterval i) const { return boundsLocal(i, 0); }
 
   virtual std::vector<double> roots(double v, Dim2 d) const = 0;
 
@@ -133,12 +133,12 @@ public:
    */
   virtual Point unitTangentAt(Coord t, unsigned n = 3) const
   {
-    for (unsigned deriv_n = 1; deriv_n <= n; deriv_n++) {
-      Point deriv = pointAndDerivatives(t, deriv_n)[deriv_n];
-      Coord length = deriv.length();
+	std::vector<Point> derivs = pointAndDerivatives(t, n);
+	for (unsigned deriv_n = 1; deriv_n < derivs.size(); deriv_n++) {
+      Coord length = derivs[deriv_n].length();
       if ( ! are_near(length, 0) ) {
          // length of derivative is non-zero, so return unit vector
-         return deriv / length;
+    	  derivs[deriv_n] / length;
       }
     }
     return Point (0,0);

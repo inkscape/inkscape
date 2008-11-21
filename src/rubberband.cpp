@@ -124,10 +124,10 @@ void Inkscape::Rubberband::setMode(int mode)
     _mode = mode;
 }
 
-boost::optional<Geom::Rect> Inkscape::Rubberband::getRectangle() const
+Geom::OptRect Inkscape::Rubberband::getRectangle() const
 {
     if (!_started) {
-        return boost::optional<Geom::Rect>();
+        return Geom::OptRect();
     }
 
     return Geom::Rect(_start, _end);

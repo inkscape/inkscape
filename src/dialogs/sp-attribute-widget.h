@@ -1,12 +1,7 @@
-#ifndef __SP_ATTRIBUTE_WIDGET_H__
-#define __SP_ATTRIBUTE_WIDGET_H__
-
-/**
- * \brief  SPAttributeWidget
- *
- * Widget, that listens and modifies repr attributes
- *
- * Authors:
+/** @file
+ * @brief Widget that listens and modifies repr attributes
+ */
+/* Authors:
  *  Lauris Kaplinski <lauris@kaplinski.com>
  *
  * Copyright (C) 2002 authors
@@ -15,8 +10,10 @@
  * Licensed under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
+#ifndef SEEN_DIALOGS_SP_ATTRIBUTE_WIDGET_H
+#define SEEN_DIALOGS_SP_ATTRIBUTE_WIDGET_H
 
+#include <glib.h>
 #include <sigc++/connection.h>
 
 #define SP_TYPE_ATTRIBUTE_WIDGET (sp_attribute_widget_get_type ())
@@ -118,7 +115,6 @@ void sp_attribute_table_set_repr ( SPAttributeTable *spw,
                                    Inkscape::XML::Node *repr, gint num_attr, 
                                    const gchar **labels, 
                                    const gchar **attrs );
-
 
 #endif
 

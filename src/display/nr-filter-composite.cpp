@@ -12,7 +12,7 @@
 #include <cmath>
 
 #include "2geom/isnan.h"
-#include "sp-fecomposite.h"
+#include "filters/composite.h"
 #include "display/nr-filter-composite.h"
 #include "display/nr-filter-pixops.h"
 #include "display/nr-filter-slot.h"

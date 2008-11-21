@@ -72,7 +72,7 @@ private:
 
     friend Bezier portion(const Bezier & a, Coord from, Coord to);
 
-    friend Interval bounds_fast(Bezier const & b);
+    friend OptInterval bounds_fast(Bezier const & b);
 
     friend Bezier derivative(const Bezier & a);
 
@@ -185,10 +185,9 @@ public:
     std::vector<Coord> valueAndDerivatives(Coord t, unsigned n_derivs) const {
         std::vector<Coord> val_n_der;
         Coord d_[order()+1];
-        unsigned nn = n_derivs + 1; // the size of the result vector equals n_derivs+1
+        unsigned nn = n_derivs + 1; 	// the size of the result vector equals n_derivs+1 ...
         if(nn > order())
-            //nn = order();
-            nn = order()+1;
+            nn = order()+1; 			// .. but with a maximum of order() + 1!
         for(unsigned i = 0; i < size(); i++)
             d_[i] = c_[i];
         for(unsigned di = 0; di < nn; di++) {
@@ -309,18 +308,22 @@ inline Bezier integral(const Bezier & a) {
     return inte;
 }
 
-inline Interval bounds_fast(Bezier const & b) {
+inline OptInterval bounds_fast(Bezier const & b) {
     return Interval::fromArray(&b.c_[0], b.size());
 }
 
 //TODO: better bounds exact
-inline Interval bounds_exact(Bezier const & b) {
+inline OptInterval bounds_exact(Bezier const & b) {
     return bounds_exact(b.toSBasis());
 }
 
-inline Interval bounds_local(Bezier const & b, Interval i) {
-    return bounds_fast(portion(b, i.min(), i.max()));
+inline OptInterval bounds_local(Bezier const & b, OptInterval i) {
     //return bounds_local(b.toSBasis(), i);
+    if (i) {
+        return bounds_fast(portion(b, i->min(), i->max()));
+    } else {
+        return OptInterval();
+    }
 }
 
 inline std::ostream &operator<< (std::ostream &out_file, const Bezier & b) {

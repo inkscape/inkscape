@@ -20,6 +20,7 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <glib.h>
 #include "inkscape-private.h"
 #include "extension/effect.h"
 #include "widgets/icon.h"
@@ -926,7 +927,7 @@ sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI:
             
             // add filter to only open files added by Inkscape
             GtkRecentFilter *inkscape_only_filter = gtk_recent_filter_new();
-            gtk_recent_filter_add_application(inkscape_only_filter, "inkscape");
+            gtk_recent_filter_add_application(inkscape_only_filter, g_get_prgname());
             gtk_recent_chooser_add_filter(GTK_RECENT_CHOOSER(recent_menu), inkscape_only_filter);
 
             GtkWidget *recent_item = gtk_menu_item_new_with_mnemonic(_("Open _Recent"));
@@ -1261,7 +1262,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 bool const saved_pref = prefs->getBool("/options/transform/pattern", true);
                 prefs->setBool("/options/transform/pattern", true);
                 sp_document_ensure_up_to_date(sp_desktop_document(desktop));
-                boost::optional<Geom::Rect> sel_bbox = selection->bounds();
+                Geom::OptRect sel_bbox = selection->bounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );
                     sp_selection_move_relative(selection, m);

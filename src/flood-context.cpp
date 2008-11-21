@@ -807,7 +807,7 @@ static void sp_flood_do_flood_fill(SPEventContext *event_context, GdkEvent *even
     sp_document_ensure_up_to_date (document);
     
     SPItem *document_root = SP_ITEM(SP_DOCUMENT_ROOT(document));
-    boost::optional<Geom::Rect> bbox = document_root->getBounds(Geom::identity());
+    Geom::OptRect bbox = document_root->getBounds(Geom::identity());
 
     if (!bbox) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("<b>Area is not bounded</b>, cannot fill."));

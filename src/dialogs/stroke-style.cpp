@@ -1,9 +1,7 @@
-#define __SP_STROKE_STYLE_C__
-
-/**
- * \brief  Stroke style dialog
- *
- * Authors:
+/** @file
+ * @brief  Stroke style dialog
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Bryce Harrington <brycehar@bryceharrington.org>
  *   bulia byak <buliabyak@users.sf.net>
@@ -19,12 +17,6 @@
  */
 
 #define noSP_SS_VERBOSE
-
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-
-
 
 #include <glib/gmem.h>
 #include <gtk/gtk.h>
@@ -594,7 +586,7 @@ sp_marker_prev_new(unsigned psize, gchar const *mname,
 
     // Find object's bbox in document
     Geom::Matrix const i2doc(sp_item_i2doc_affine(SP_ITEM(object)));
-    boost::optional<Geom::Rect> dbox = SP_ITEM(object)->getBounds(i2doc);
+    Geom::OptRect dbox = SP_ITEM(object)->getBounds(i2doc);
 
     if (!dbox) {
         return NULL;
@@ -1834,7 +1826,6 @@ ink_extract_marker_name(gchar const *n, SPDocument *doc)
     return marker;
 }
 
-
 /*
   Local Variables:
   mode:c++
@@ -1844,4 +1835,4 @@ ink_extract_marker_name(gchar const *n, SPDocument *doc)
   fill-column:99
   End:
 */
-// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

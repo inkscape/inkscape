@@ -19,6 +19,7 @@
 #include <cstring>
 #include <string>
 #include <string.h>
+#include "config.h"
 #include "require-config.h"   /* HAVE_GTK_WINDOW_FULLSCREEN */
 #include "helper/helper-forward.h"
 #include "forward.h"
@@ -271,7 +272,9 @@ enum {
     SP_VERB_UNHIDE_ALL,
     SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS,
     /* Footer */
-    SP_VERB_LAST
+    SP_VERB_LAST,
+    /* Color management */
+    SP_VERB_EMBED_COLOR_PROFILE,
 };
 
 gchar *sp_action_get_title (const SPAction *action);

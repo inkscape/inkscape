@@ -46,12 +46,12 @@ public:
         }
 	}
 
-	boost::optional<Rect> const &bounds() const {
+	OptRect const &bounds() const {
 		return _bounds;
 	}
 	
 private:
-    boost::optional<Rect> _bounds;
+    OptRect _bounds;
 };
 
 } /* namespace Geom */

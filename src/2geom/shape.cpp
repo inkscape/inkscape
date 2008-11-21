@@ -349,7 +349,7 @@ void crossing_dual(unsigned &i, unsigned &j, CrossingSet const & crs) {
 
 //locate a crossing on the outside, by casting a ray through the middle of the bbox
 void outer_crossing(unsigned &ix, unsigned &jx, bool & dir, std::vector<Path> const & ps, CrossingSet const & crs) {
-    Rect bounds = ps[ix].boundsFast();
+    Rect bounds = *(ps[ix].boundsFast());
     double ry = bounds[Y].middle();
     double max_val = bounds.left(), max_t = 0;
     ix = ps.size();

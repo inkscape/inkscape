@@ -85,7 +85,7 @@ Grid::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc
         bounding_area = Geom::Rect(  Geom::Point(0,0),
                                      Geom::Point(sp_document_width(doc), sp_document_height(doc))  );
     } else {
-        boost::optional<Geom::Rect> bounds = selection->bounds();
+        Geom::OptRect bounds = selection->bounds();
         if (bounds) {
             bounding_area = *bounds;
         }

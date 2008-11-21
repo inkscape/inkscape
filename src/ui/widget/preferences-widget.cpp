@@ -461,6 +461,66 @@ ZoomCorrRulerSlider::init(int ruler_width, int ruler_height, double lower, doubl
     this->pack_start(*table, Gtk::PACK_EXPAND_WIDGET);
 }
 
+void
+PrefSlider::on_slider_value_changed()
+{
+    if (this->is_visible() || freeze) //only take action if user changed value
+    {
+        freeze = true;
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setDouble(_prefs_path, _slider.get_value());
+        _sb.set_value(_slider.get_value());
+        freeze = false;
+    }
+}
+
+void
+PrefSlider::on_spinbutton_value_changed()
+{
+    if (this->is_visible() || freeze) //only take action if user changed value
+    {
+        freeze = true;
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setDouble(_prefs_path, _sb.get_value());
+        _slider.set_value(_sb.get_value());
+        freeze = false;
+    }
+}
+
+void
+PrefSlider::init(Glib::ustring const &prefs_path,
+		double lower, double upper, double step_increment, double page_increment, double default_value, int digits)
+{
+	_prefs_path = prefs_path;
+	
+	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    double value = prefs->getDoubleLimited(prefs_path, default_value, lower, upper);
+
+    freeze = false;
+
+    _slider.set_range (lower, upper);
+    _slider.set_increments (step_increment, page_increment);
+    _slider.set_value (value);
+    _slider.set_digits(digits);
+    _slider.signal_value_changed().connect(sigc::mem_fun(*this, &PrefSlider::on_slider_value_changed));
+
+    _sb.signal_value_changed().connect(sigc::mem_fun(*this, &PrefSlider::on_spinbutton_value_changed));
+    _sb.set_range (lower, upper);
+    _sb.set_increments (step_increment, page_increment);
+    _sb.set_value (value);
+    _sb.set_digits(digits);
+
+    Gtk::Table *table = Gtk::manage(new Gtk::Table());
+    Gtk::Alignment *alignment1 = Gtk::manage(new Gtk::Alignment(0.5,1,0,0));
+    Gtk::Alignment *alignment2 = Gtk::manage(new Gtk::Alignment(0.5,1,0,0));
+    alignment1->add(_sb);
+    
+    table->attach(_slider,     0, 1, 0, 1);
+    table->attach(*alignment1, 1, 2, 0, 1, static_cast<Gtk::AttachOptions>(0));
+    
+    this->pack_start(*table, Gtk::PACK_EXPAND_WIDGET);
+}
+
 void PrefCombo::init(Glib::ustring const &prefs_path,
                      Glib::ustring labels[], int values[], int num_items, int default_value)
 {

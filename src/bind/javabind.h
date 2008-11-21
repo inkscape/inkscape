@@ -1,7 +1,6 @@
-#ifndef __JAVABIND_H__
-#define __JAVABIND_H__
 /**
- * This is a simple mechanism to bind Inkscape to Java, and thence
+ * @file
+ * @brief This is a simple mechanism to bind Inkscape to Java, and thence
  * to all of the nice things that can be layered upon that. 
  *
  * Authors:
@@ -23,6 +22,9 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+
+#ifndef __JAVABIND_H__
+#define __JAVABIND_H__
 
 #include <glibmm.h>
 #include <vector>

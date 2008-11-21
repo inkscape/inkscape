@@ -449,7 +449,7 @@ public:
     /** Returns the bounding box of the given glyph, and its rotation.
     The centre of rotation is the horizontal centre of the box at the
     text baseline. */
-    boost::optional<Geom::Rect> glyphBoundingBox(iterator const &it, double *rotation) const;
+    Geom::OptRect glyphBoundingBox(iterator const &it, double *rotation) const;
 
     /** Returns the zero-based line number of the character pointed to by
     \a it. */

@@ -614,12 +614,12 @@ sp_item_list_common_parent_group(GSList const *items)
 }
 
 /** Finds out the minimum common bbox of the selected items. */
-static boost::optional<Geom::Rect>
+static Geom::OptRect
 enclose_items(GSList const *items)
 {
     g_assert(items != NULL);
 
-    boost::optional<Geom::Rect> r;
+    Geom::OptRect r;
     for (GSList const *i = items; i; i = i->next) {
         r = Geom::unify(r, sp_item_bbox_desktop((SPItem *) i->data));
     }
@@ -667,7 +667,7 @@ sp_selection_raise(SPDesktop *desktop)
     rev = g_slist_sort(rev, (GCompareFunc) sp_item_repr_compare_position);
 
     // Determine the common bbox of the selected items.
-    boost::optional<Geom::Rect> selected = enclose_items(items);
+    Geom::OptRect selected = enclose_items(items);
 
     // Iterate over all objects in the selection (starting from top).
     if (selected) {
@@ -677,7 +677,7 @@ sp_selection_raise(SPDesktop *desktop)
             for (SPObject *newref = child->next; newref; newref = newref->next) {
                 // if the sibling is an item AND overlaps our selection,
                 if (SP_IS_ITEM(newref)) {
-                    boost::optional<Geom::Rect> newref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
+                    Geom::OptRect newref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
                     if ( newref_bbox && selected->intersects(*newref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if (!g_slist_find((GSList *) items, newref)) {
@@ -757,7 +757,7 @@ sp_selection_lower(SPDesktop *desktop)
     Inkscape::XML::Node *grepr = SP_OBJECT_REPR(group);
 
     // Determine the common bbox of the selected items.
-    boost::optional<Geom::Rect> selected = enclose_items(items);
+    Geom::OptRect selected = enclose_items(items);
 
     /* Construct direct-ordered list of selected children. */
     GSList *rev = g_slist_copy((GSList *) items);
@@ -772,7 +772,7 @@ sp_selection_lower(SPDesktop *desktop)
             for (SPObject *newref = prev_sibling(child); newref; newref = prev_sibling(newref)) {
                 // if the sibling is an item AND overlaps our selection,
                 if (SP_IS_ITEM(newref)) {
-                    boost::optional<Geom::Rect> ref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
+                    Geom::OptRect ref_bbox = sp_item_bbox_desktop(SP_ITEM(newref));
                     if ( ref_bbox && selected->intersects(*ref_bbox) ) {
                         // AND if it's not one of our selected objects,
                         if (!g_slist_find((GSList *) items, newref)) {
@@ -1285,8 +1285,8 @@ sp_selection_scale_absolute(Inkscape::Selection *selection,
     if (selection->isEmpty())
         return;
 
-    boost::optional<Geom::Rect> const bbox(selection->bounds());
-    if ( !bbox || bbox->isEmpty() ) {
+    Geom::OptRect const bbox(selection->bounds());
+    if ( !bbox ) {
         return;
     }
 
@@ -1307,9 +1307,9 @@ void sp_selection_scale_relative(Inkscape::Selection *selection, Geom::Point con
     if (selection->isEmpty())
         return;
 
-    boost::optional<Geom::Rect> const bbox(selection->bounds());
+    Geom::OptRect const bbox(selection->bounds());
 
-    if ( !bbox || bbox->isEmpty() ) {
+    if ( !bbox ) {
         return;
     }
 
@@ -1425,7 +1425,7 @@ sp_selection_rotate_screen(Inkscape::Selection *selection, gdouble angle)
     if (selection->isEmpty())
         return;
 
-    boost::optional<Geom::Rect> const bbox(selection->bounds());
+    Geom::OptRect const bbox(selection->bounds());
     boost::optional<Geom::Point> center = selection->center();
 
     if ( !bbox || !center ) {
@@ -1454,7 +1454,7 @@ sp_selection_scale(Inkscape::Selection *selection, gdouble grow)
     if (selection->isEmpty())
         return;
 
-    boost::optional<Geom::Rect> const bbox(selection->bounds());
+    Geom::OptRect const bbox(selection->bounds());
     if (!bbox) {
         return;
     }
@@ -1491,7 +1491,7 @@ sp_selection_scale_times(Inkscape::Selection *selection, gdouble times)
     if (selection->isEmpty())
         return;
 
-    boost::optional<Geom::Rect> sel_bbox = selection->bounds();
+    Geom::OptRect sel_bbox = selection->bounds();
 
     if (!sel_bbox) {
         return;
@@ -1815,7 +1815,7 @@ SPItem *next_item(SPDesktop *desktop, GSList *path, SPObject *root,
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item)
 {
     Geom::Rect dbox = desktop->get_display_area();
-    boost::optional<Geom::Rect> sbox = sp_item_bbox_desktop(item);
+    Geom::OptRect sbox = sp_item_bbox_desktop(item);
 
     if ( sbox && dbox.contains(*sbox) == false ) {
         Geom::Point const s_dt = sbox->midpoint();
@@ -2046,8 +2046,8 @@ sp_select_clone_original(SPDesktop *desktop)
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         bool highlight = prefs->getBool("/options/highlightoriginal/value");
         if (highlight) {
-            boost::optional<Geom::Rect> a = item->getBounds(sp_item_i2d_affine(item));
-            boost::optional<Geom::Rect> b = original->getBounds(sp_item_i2d_affine(original));
+            Geom::OptRect a = item->getBounds(sp_item_i2d_affine(item));
+            Geom::OptRect b = original->getBounds(sp_item_i2d_affine(original));
             if ( a && b ) {
                 // draw a flashing line between the objects
                 SPCurve *curve = new SPCurve();
@@ -2088,9 +2088,9 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     }
 
     sp_document_ensure_up_to_date(doc);
-    boost::optional<Geom::Rect> r = selection->bounds();
+    Geom::OptRect r = selection->bounds();
     boost::optional<Geom::Point> c = selection->center();
-    if ( !r || !c || r->isEmpty() ) {
+    if ( !r || !c ) {
         return;
     }
 
@@ -2212,8 +2212,8 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     }
 
     sp_document_ensure_up_to_date(doc);
-    boost::optional<Geom::Rect> r = selection->bounds();
-    if ( !r || r->isEmpty() ) {
+    Geom::OptRect r = selection->bounds();
+    if ( !r ) {
         return;
     }
 
@@ -2871,8 +2871,8 @@ fit_canvas_to_selection(SPDesktop *desktop)
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to fit canvas to."));
         return false;
     }
-    boost::optional<Geom::Rect> const bbox(desktop->selection->bounds());
-    if (bbox && !bbox->isEmpty()) {
+    Geom::OptRect const bbox(desktop->selection->bounds());
+    if (bbox) {
         doc->fitToRect(*bbox);
         return true;
     } else {
@@ -2899,8 +2899,8 @@ fit_canvas_to_drawing(SPDocument *doc)
 
     sp_document_ensure_up_to_date(doc);
     SPItem const *const root = SP_ITEM(doc->root);
-    boost::optional<Geom::Rect> const bbox(root->getBounds(sp_item_i2r_affine(root)));
-    if (bbox && !bbox->isEmpty()) {
+    Geom::OptRect const bbox(root->getBounds(sp_item_i2r_affine(root)));
+    if (bbox) {
         doc->fitToRect(*bbox);
         return true;
     } else {

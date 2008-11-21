@@ -57,7 +57,19 @@ namespace Geom{
  \returns inteval
 
 */
-Interval bounds_exact(SBasis const &a) {
+
+#ifdef USE_SBASIS_OF
+OptInterval bounds_exact(SBasisOf<double> const &a) {
+    Interval result = Interval(a.at0(), a.at1());
+    SBasisOf<double> df = derivative(a);
+    vector<double>extrema = roots(df);
+    for (unsigned i=0; i<extrema.size(); i++){
+        result.extendTo(a(extrema[i]));
+    }
+    return result;
+}
+#else
+OptInterval bounds_exact(SBasis const &a) {
     Interval result = Interval(a.at0(), a.at1());
     SBasis df = derivative(a);
     vector<double>extrema = roots(df);
@@ -66,6 +78,7 @@ Interval bounds_exact(SBasis const &a) {
     }
     return result;
 }
+#endif
 
 /** Find a small interval that bounds a
  \param a sbasis function
@@ -73,7 +86,11 @@ Interval bounds_exact(SBasis const &a) {
 
 */
 // I have no idea how this works, some clever bounding argument by jfb.
-Interval bounds_fast(const SBasis &sb, int order) {
+#ifdef USE_SBASIS_OF
+OptInterval bounds_fast(const SBasisOf<double> &sb, int order) {
+#else
+OptInterval bounds_fast(const SBasis &sb, int order) {
+#endif
     Interval res(0,0); // an empty sbasis is 0.
 
     for(int j = sb.size()-1; j>=order; j--) {
@@ -105,11 +122,15 @@ Interval bounds_fast(const SBasis &sb, int order) {
  \param sb sbasis function
  \param i domain interval
  \param order number of terms
- \returns inteval
+ \return interval
 
 */
-Interval bounds_local(const SBasis &sb, const Interval &i, int order) {
-    double t0=i.min(), t1=i.max(), lo=0., hi=0.;
+#ifdef USE_SBASIS_OF
+OptInterval bounds_local(const SBasisOf<double> &sb, const OptInterval &i, int order) {
+#else
+OptInterval bounds_local(const SBasis &sb, const OptInterval &i, int order) {
+#endif
+    double t0=i->min(), t1=i->max(), lo=0., hi=0.;
     for(int j = sb.size()-1; j>=order; j--) {
         double a=sb[j][0];
         double b=sb[j][1];
@@ -154,8 +175,13 @@ static int upper_level(vector<double> const &levels,double x,double tol=0.){
     return(upper_bound(levels.begin(),levels.end(),x-tol)-levels.begin());
 }
 
+#ifdef USE_SBASIS_OF
 static void multi_roots_internal(SBasis const &f,
 				 SBasis const &df,
+#else
+static void multi_roots_internal(SBasis const &f,
+				 SBasis const &df,
+#endif
 				 std::vector<double> const &levels,
 				 std::vector<std::vector<double> > &roots,
 				 double htol,
@@ -209,7 +235,7 @@ static void multi_roots_internal(SBasis const &f,
     int idxa=upper_level(levels,fa,vtol);
     int idxb=upper_level(levels,fb,vtol);
 
-    Interval bs = bounds_local(df,Interval(a,b));
+    Interval bs = *bounds_local(df,Interval(a,b));
 
     //first times when a level (higher or lower) can be reached from a or b.
     double ta_hi,tb_hi,ta_lo,tb_lo;
@@ -306,8 +332,8 @@ std::vector<std::vector<double> > multi_roots(SBasis const &f,
 void subdiv_sbasis(SBasis const & s,
                    std::vector<double> & roots,
                    double left, double right) {
-    Interval bs = bounds_fast(s);
-    if(bs.min() > 0 || bs.max() < 0)
+    OptInterval bs = bounds_fast(s);
+    if(!bs || bs->min() > 0 || bs->max() < 0)
         return; // no roots here
     if(s.tailError(1) < 1e-7) {
         double t = s[0][0] / (s[0][0] - s[0][1]);

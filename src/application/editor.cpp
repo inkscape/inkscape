@@ -1,9 +1,9 @@
-/** \file
- * \brief Editor Implementation class declaration for Inkscape.  This
+/** @file
+ * @brief Editor class declaration.  This
  *        singleton class implements much of the functionality of the former 
  *        'inkscape' object and its services and signals.
- *
- * Authors:
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Derek P. Moore <derekm@hackunix.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de>

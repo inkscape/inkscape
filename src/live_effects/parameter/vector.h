@@ -4,27 +4,25 @@
 /*
  * Inkscape::LivePathEffectParameters
  *
-* Copyright (C) Johan Engelen 2008 <j.b.c.engelen@utwente.nl>
+ * Copyright (C) Johan Engelen 2008 <j.b.c.engelen@utwente.nl>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <vector>
-
 #include <glib/gtypes.h>
+#include <2geom/point.h>
 
 #include <gtkmm/tooltips.h>
 
 #include "live_effects/parameter/parameter.h"
 
-#include "svg/svg.h"
-#include "svg/stringstream.h"
+#include "knot-holder-entity.h"
 
 namespace Inkscape {
 
 namespace LivePathEffect {
 
-template <typename StorageType>
+
 class VectorParam : public Parameter {
 public:
     VectorParam( const Glib::ustring& label,
@@ -32,76 +30,51 @@ public:
                 const Glib::ustring& key,
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
-                size_t n = 0 )
-        : Parameter(label, tip, key, wr, effect), _vector(n)
-    {
+                Geom::Point default_vector = Geom::Point(1,0) );
+    virtual ~VectorParam();
 
-    }
+    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
+    inline const gchar *handleTip() const { return param_tooltip.c_str(); }
 
-    virtual ~VectorParam() {
+    virtual bool param_readSVGValue(const gchar * strvalue);
+    virtual gchar * param_getSVGValue() const;
 
-    };
+    Geom::Point getVector() const { return vector; };
+    Geom::Point getOrigin() const { return origin; };
+    void setValues(Geom::Point const &new_origin, Geom::Point const &new_vector) { setVector(new_vector); setOrigin(new_origin); };
+    void setVector(Geom::Point const &new_vector) { vector = new_vector; };
+    void setOrigin(Geom::Point const &new_origin) { origin = new_origin; };
+    virtual void param_set_default();
 
-    std::vector<StorageType> const & data() const {
-        return _vector;
-    }
+    void set_and_write_new_values(Geom::Point const &new_origin, Geom::Point const &new_vector);
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * /*tooltips*/) {
-        return NULL;
-    }
+    virtual void param_transform_multiply(Geom::Matrix const &postmul, bool set);
 
-    virtual bool param_readSVGValue(const gchar * strvalue) {
-        _vector.clear();
-        gchar ** strarray = g_strsplit(strvalue, "|", 0);
-        gchar ** iter = strarray;
-        while (*iter != NULL) {
-            _vector.push_back( readsvg(*iter) );
-            iter++;
-        }
-        g_strfreev (strarray);
-        return true;
-    }
+    void set_vector_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);
+    void set_origin_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);
 
-    virtual gchar * param_getSVGValue() const {
-        Inkscape::SVGOStringStream os;
-        writesvg(os, _vector);
-        gchar * str = g_strdup(os.str().c_str());
-        return str;
-    }
-
-    void param_setValue(std::vector<StorageType> const &new_vector) {
-        _vector = new_vector;
-    }
-
-    void param_set_default() {
-        param_setValue( std::vector<StorageType>() );
-    }
-
-    void param_set_and_write_new_value(std::vector<StorageType> const &new_vector) {
-        Inkscape::SVGOStringStream os;
-        writesvg(os, new_vector);
-        gchar * str = g_strdup(os.str().c_str());
-        param_write_to_repr(str);
-        g_free(str);
-    }
+    virtual bool providesKnotHolderEntities() { return true; }
+    virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
 private:
     VectorParam(const VectorParam&);
     VectorParam& operator=(const VectorParam&);
 
-    std::vector<StorageType> _vector;
+    Geom::Point defvalue;
 
-    void writesvg(SVGOStringStream &str, std::vector<StorageType> const &vector) const {
-        for (unsigned int i = 0; i < vector.size(); ++i) {
-            if (i != 0) {
-                // separate items with pipe symbol
-                str << " | ";
-            }
-            str << vector[i];
-        }
-    }
+    Geom::Point origin;
+    Geom::Point vector;
 
-    StorageType readsvg(const gchar * str);
+    /// The looks of the vector and origin knots oncanvas
+    SPKnotShapeType vec_knot_shape;
+    SPKnotModeType  vec_knot_mode;
+    guint32         vec_knot_color;
+    SPKnotShapeType ori_knot_shape;
+    SPKnotModeType  ori_knot_mode;
+    guint32         ori_knot_color;
+
+    friend class VectorParamKnotHolderEntity_Origin;
+    friend class VectorParamKnotHolderEntity_Vector;
 };
 
 
@@ -110,14 +83,3 @@ private:
 } //namespace Inkscape
 
 #endif
-
-/*
-  Local Variables:
-  mode:c++
-  c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
-  indent-tabs-mode:nil
-  fill-column:99
-  End:
-*/
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

@@ -40,17 +40,21 @@ helper_libspchelp_a_SOURCES =	\
 	helper/stock-items.cpp	\
 	helper/stock-items.h	
 
-
-# TODO: Check that the generated sp-marshal.h is the same as before.
+# cmp exits with status 0 when there are no differences. if executes the commands
+# after "then" when the exit status of the if command is 0 (this is crazy).
 helper/sp-marshal.h: helper/sp-marshal.list
-	glib-genmarshal --prefix=sp_marshal --header $(srcdir)/helper/sp-marshal.list > helper/tmp.$$$$	\
-	 && mv helper/tmp.$$$$ helper/sp-marshal.h
+	glib-genmarshal --prefix=sp_marshal --header $(srcdir)/helper/sp-marshal.list > helper/tmp.sp-marshal.h
+	if cmp -s helper/sp-marshal.h helper/tmp.sp-marshal.h; \
+	then rm helper/tmp.sp-marshal.h; \
+	else mv helper/tmp.sp-marshal.h helper/sp-marshal.h; fi
 
 helper/sp-marshal.cpp: helper/sp-marshal.list helper/sp-marshal.h
 	( echo '#include "helper/sp-marshal.h"' &&	\
 	  glib-genmarshal --prefix=sp_marshal --body $(srcdir)/helper/sp-marshal.list )	\
-	 > helper/tmp.$$$$	\
-	 && mv helper/tmp.$$$$ helper/sp-marshal.cpp
+	 > helper/tmp.sp-marshal.cpp; \
+	if cmp -s helper/sp-marshal.cpp helper/tmp.sp-marshal.cpp; \
+	then rm helper/tmp.sp-marshal.cpp; \
+	else mv helper/tmp.sp-marshal.cpp helper/sp-marshal.cpp; fi
 
 helper/sp-marshal.cpp helper/sp-marshal.h: Makefile
 

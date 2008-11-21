@@ -1,15 +1,12 @@
-#define __UNCLUMP_C__
-
-/*
- * Unclumping objects
- *
- * Authors:
+/** @file
+ * @brief Unclumping objects
+ */
+/* Authors:
  *   bulia byak
  *
  * Copyright (C) 2005 Authors
- * Released under GNU GPL
+ * Released under GNU GPL, read the file 'COPYING' for more information
  */
-
 
 #include <algorithm>
 #include <map>
@@ -35,7 +32,7 @@ unclump_center (SPItem *item)
         return i->second;
     }
 
-    boost::optional<Geom::Rect> r = item->getBounds(sp_item_i2d_affine(item));
+    Geom::OptRect r = item->getBounds(sp_item_i2d_affine(item));
     if (r) {
     	Geom::Point const c = r->midpoint();
     	c_cache[SP_OBJECT_ID(item)] = c;
@@ -54,7 +51,7 @@ unclump_wh (SPItem *item)
     if ( i != wh_cache.end() ) {
         wh = i->second;
     } else {
-        boost::optional<Geom::Rect> r = item->getBounds(sp_item_i2d_affine(item));
+        Geom::OptRect r = item->getBounds(sp_item_i2d_affine(item));
 	if (r) {
             wh = r->dimensions();
             wh_cache[SP_OBJECT_ID(item)] = wh;
@@ -379,3 +376,14 @@ unclump (GSList *items)
         }
     }
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

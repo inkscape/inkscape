@@ -72,6 +72,7 @@ enum {
     PREFS_PAGE_UI,
     PREFS_PAGE_MOUSE,
     PREFS_PAGE_SCROLLING,
+    PREFS_PAGE_SNAPPING,
     PREFS_PAGE_STEPS,
     PREFS_PAGE_WINDOWS,
     PREFS_PAGE_MISC
@@ -110,7 +111,7 @@ protected:
     Gtk::TreeModel::Path _path_tools;
     Gtk::TreeModel::Path _path_shapes;
 
-    DialogPage _page_mouse, _page_scrolling, _page_steps, _page_tools, _page_windows,
+    DialogPage _page_mouse, _page_scrolling, _page_snapping, _page_steps, _page_tools, _page_windows,
         _page_clones, _page_mask, _page_transforms, _page_filters, _page_select,
         _page_importexport, _page_cms, _page_grids, _page_svgoutput, _page_misc,
         _page_ui, _page_autosave, _page_bitmaps;
@@ -125,6 +126,9 @@ protected:
     PrefSpinButton _scroll_wheel, _scroll_arrow_px, _scroll_arrow_acc, _scroll_auto_speed, _scroll_auto_thres;
     PrefCheckButton _scroll_space;
     PrefCheckButton _wheel_zoom;
+    
+    Gtk::HScale		*_slider_snapping_delay;
+    PrefCheckButton _snap_indicator;
 
     PrefCombo       _steps_rot_snap;
     PrefCheckButton _steps_compass;
@@ -172,6 +176,7 @@ protected:
 
     PrefSpinButton  _importexport_export, _misc_recent, _misc_simpl;
     ZoomCorrRulerSlider _ui_zoom_correction;
+    PrefSlider		_snap_delay;
     PrefSpinButton  _misc_latency_skew;
     PrefCheckButton _misc_comment, _misc_forkvectors, _misc_scripts, _misc_namedicon_delay;
     PrefCombo       _misc_small_toolbar;
@@ -255,6 +260,7 @@ protected:
     void on_pagelist_selection_changed();
     void initPageMouse();
     void initPageScrolling();
+    void initPageSnapping();
     void initPageSteps();
     void initPageTools();
     void initPageWindows();

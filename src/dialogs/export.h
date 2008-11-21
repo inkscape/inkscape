@@ -1,14 +1,24 @@
+/** @file
+ * @brief export to bitmap dialog
+ */
+/* Authors:
+ *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   bulia byak <buliabyak@users.sf.net>
+ *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *
+ * Copyright (C) 1999-2007 Authors
+ * Copyright (C) 2001-2002 Ximian, Inc.
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
+
 #ifndef SP_EXPORT_H
 #define SP_EXPORT_H
 
 /**
- * \brief export to bitmap dialog
- *
  * Creates a dialog window for exporting an image to a bitmap if one doesn't already exist and
- * shows it to the user.  If the dialog has already been created, it simply shows the window.
- *
+ * shows it to the user. If the dialog has already been created, it simply shows the window.
  */
-
 void sp_export_dialog (void);
 
 #endif

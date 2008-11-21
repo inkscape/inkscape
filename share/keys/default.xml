@@ -152,6 +152,10 @@ override) the bindings in the main default.xml.
 
   <bind action="CalligraphicPrefs" />
 
+  <bind key="E" modifiers="Shift" action="ToolEraser" display="true"/>
+
+  <bind action="EraserPrefs" />
+
   <bind key="F7" modifiers="Shift" action="ToolPaintBucket" display="true"/>
   <bind key="u" action="ToolPaintBucket" />
   <bind key="U" action="ToolPaintBucket" />
@@ -466,7 +470,9 @@ override) the bindings in the main default.xml.
 
 <!-- Layers -->
 
-  <bind action="LayerNew" />
+  <bind key="N" modifiers="Ctrl,Shift" action="LayerNew" display="true"/>
+  <bind key="n" modifiers="Ctrl,Shift" action="LayerNew" />
+
   <bind action="LayerRename" />
   <bind action="LayerNext" />
   <bind action="LayerPrev" />

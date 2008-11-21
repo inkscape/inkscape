@@ -1,9 +1,7 @@
-#define __SP_FILL_STYLE_C__
-
-/**
- * \brief  Fill style widget
- *
- * Authors:
+/** @file
+ * @brief  Fill style widget
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
  *   bulia byak <buliabyak@users.sf.net>

@@ -243,7 +243,7 @@ public:
     /** @brief Returns the bounding rectangle of the selection */
     NRRect *bounds(NRRect *dest, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
     /** @brief Returns the bounding rectangle of the selection */
-    boost::optional<Geom::Rect> bounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
+    Geom::OptRect bounds(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
      * @brief Returns the bounding rectangle of the selection
@@ -257,7 +257,7 @@ public:
      *
      * \todo how is this different from bounds()?
      */
-    boost::optional<Geom::Rect> boundsInDocument(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
+    Geom::OptRect boundsInDocument(SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
      * @brief Returns the rotation/skew center of the selection

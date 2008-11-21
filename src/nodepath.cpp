@@ -126,14 +126,14 @@ static void sp_node_adjust_handles_auto(Inkscape::NodePath::Node *node);
 static void node_clicked(SPKnot *knot, guint state, gpointer data);
 static void node_grabbed(SPKnot *knot, guint state, gpointer data);
 static void node_ungrabbed(SPKnot *knot, guint state, gpointer data);
-static gboolean node_request(SPKnot *knot, Geom::Point *p, guint state, gpointer data);
+static gboolean node_request(SPKnot *knot, Geom::Point const &p, guint state, gpointer data);
 
 /* Handle event callbacks */
 static void node_handle_clicked(SPKnot *knot, guint state, gpointer data);
 static void node_handle_grabbed(SPKnot *knot, guint state, gpointer data);
 static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data);
-static gboolean node_handle_request(SPKnot *knot, Geom::Point *p, guint state, gpointer data);
-static void node_handle_moved(SPKnot *knot, Geom::Point *p, guint state, gpointer data);
+static gboolean node_handle_request(SPKnot *knot, Geom::Point const &p, guint state, gpointer data);
+static void node_handle_moved(SPKnot *knot, Geom::Point const &p, guint state, gpointer data);
 static gboolean node_handle_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::Node *n);
 
 /* Constructors and destructors */
@@ -181,7 +181,7 @@ canvasitem_from_pathvec(Inkscape::NodePath::Path *np, Geom::PathVector const &pa
 
 static void
 sp_nodepath_create_helperpaths(Inkscape::NodePath::Path *np) {
-    //std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> >* helper_path_vec;
+    //std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> > helper_path_vec;
     if (!SP_IS_LPE_ITEM(np->item)) {
         g_print ("Only LPEItems can have helperpaths!\n");
         return;
@@ -196,7 +196,7 @@ sp_nodepath_create_helperpaths(Inkscape::NodePath::Path *np) {
             // create new canvas items from the effect's helper paths
             std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
             for (std::vector<Geom::PathVector>::iterator j = hpaths.begin(); j != hpaths.end(); ++j) {
-                (*np->helper_path_vec)[lpe].push_back(canvasitem_from_pathvec(np, *j, true));
+                np->helper_path_vec[lpe].push_back(canvasitem_from_pathvec(np, *j, true));
             }
         }
     }
@@ -204,7 +204,7 @@ sp_nodepath_create_helperpaths(Inkscape::NodePath::Path *np) {
 
 void
 sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np) {
-    //std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> >* helper_path_vec;
+    //std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *> > helper_path_vec;
     if (!SP_IS_LPE_ITEM(np->item)) {
         g_print ("Only LPEItems can have helperpaths!\n");
         return;
@@ -223,7 +223,7 @@ sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np) {
             for (unsigned int j = 0; j < hpaths.size(); ++j) {
                 SPCurve *curve = new SPCurve(hpaths[j]);
                 curve->transform(np->i2d);
-                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(((*np->helper_path_vec)[lpe])[j]), curve);
+                sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH((np->helper_path_vec[lpe])[j]), curve);
                 curve = curve->unref();
             }
         }
@@ -232,18 +232,21 @@ sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np) {
 
 static void
 sp_nodepath_destroy_helperpaths(Inkscape::NodePath::Path *np) {
-    for (HelperPathList::iterator i = np->helper_path_vec->begin(); i != np->helper_path_vec->end(); ++i) {
+    for (HelperPathList::iterator i = np->helper_path_vec.begin(); i != np->helper_path_vec.end(); ++i) {
         for (std::vector<SPCanvasItem *>::iterator j = (*i).second.begin(); j != (*i).second.end(); ++j) {
             GtkObject *temp = *j;
             *j = NULL;
             gtk_object_destroy(temp);
         }
     }
+    np->helper_path_vec.clear();
 }
 
 
 /**
  * \brief Creates new nodepath from item
+ *
+ * \todo create proper constructor for nodepath::path, this method returns null a constructor cannot so this cannot be simply converted to constructor.
  */
 Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, bool show_handles, const char * repr_key_in, SPItem *item)
 {
@@ -278,7 +281,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     }
 
     //Create new nodepath
-    Inkscape::NodePath::Path *np = g_new(Inkscape::NodePath::Path, 1);
+    Inkscape::NodePath::Path *np = new Inkscape::NodePath::Path();
     if (!np) {
         curve->unref();
         return NULL;
@@ -295,7 +298,6 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->local_change = 0;
     np->show_handles = show_handles;
     np->helper_path = NULL;
-    np->helper_path_vec = new HelperPathList;
     np->helperpath_rgba = prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff);
     np->helperpath_width = 1.0;
     np->curve = curve->copy();
@@ -328,7 +330,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
         Inkscape::LivePathEffect::Effect * lpe = LIVEPATHEFFECT(object)->get_lpe();
         if (!lpe) {
             g_error("sp_nodepath_new: lpeobject without real lpe passed as argument!");
-            sp_nodepath_destroy(np);
+            delete np;
         }
         Inkscape::LivePathEffect::Parameter *lpeparam = lpe->getParameter(repr_key_in);
         if (lpeparam) {
@@ -383,48 +385,39 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
 /**
  * Destroys nodepath's subpaths, then itself, also tell parent ShapeEditor about it.
  */
-void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
-
-    if (!np) {  //soft fail, like delete
-        return;
-    }
-
-    while (np->subpaths) {
-        sp_nodepath_subpath_destroy((Inkscape::NodePath::SubPath *) np->subpaths->data);
+Inkscape::NodePath::Path::~Path() {
+    while (this->subpaths) {
+        sp_nodepath_subpath_destroy((Inkscape::NodePath::SubPath *) this->subpaths->data);
     }
 
     //Inform the ShapeEditor that made me, if any, that I am gone.
-    if (np->shape_editor)
-        np->shape_editor->nodepath_destroyed();
+    if (this->shape_editor)
+        this->shape_editor->nodepath_destroyed();
 
-    g_assert(!np->selected);
+    g_assert(!this->selected);
 
-    if (np->helper_path) {
-        GtkObject *temp = np->helper_path;
-        np->helper_path = NULL;
+    if (this->helper_path) {
+        GtkObject *temp = this->helper_path;
+        this->helper_path = NULL;
         gtk_object_destroy(temp);
     }
-    if (np->curve) {
-        np->curve->unref();
-        np->curve = NULL;
+    if (this->curve) {
+        this->curve->unref();
+        this->curve = NULL;
     }
 
-    if (np->repr_key) {
-        g_free(np->repr_key);
-        np->repr_key = NULL;
+    if (this->repr_key) {
+        g_free(this->repr_key);
+        this->repr_key = NULL;
     }
-    if (np->repr_nodetypes_key) {
-        g_free(np->repr_nodetypes_key);
-        np->repr_nodetypes_key = NULL;
+    if (this->repr_nodetypes_key) {
+        g_free(this->repr_nodetypes_key);
+        this->repr_nodetypes_key = NULL;
     }
 
-    sp_nodepath_destroy_helperpaths(np);
-    delete np->helper_path_vec;
-    np->helper_path_vec = NULL;
+    sp_nodepath_destroy_helperpaths(this);
 
-    np->desktop = NULL;
-
-    g_free(np);
+    this->desktop = NULL;
 }
 
 /**
@@ -771,6 +764,9 @@ static SPCurve *create_curve(Inkscape::NodePath::Path *np)
        Inkscape::NodePath::Node *n = sp->first->n.other;
         while (n) {
             Geom::Point const end_pt = n->pos * np->d2i;
+            if (!IS_FINITE(n->pos[0]) || !IS_FINITE(n->pos[1])){
+                g_message("niet finite");
+            }
             switch (n->code) {
                 case NR_LINETO:
                     curve->lineto(end_pt);
@@ -2067,6 +2063,9 @@ sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, Geom::Point 
 
     //find segment to split
     Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(nodepath, segment_index);
+    if (!e) {
+        return;
+    }
 
     //don't know why but t seems to flip for lines
     if (sp_node_path_code_from_side(e, sp_node_get_side(e, -1)) == NR_LINETO) {
@@ -3609,7 +3608,7 @@ static double point_line_distance(Geom::Point *p, double a)
  * \todo fixme: This goes to "moved" event? (lauris)
  */
 static gboolean
-node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
+node_request(SPKnot */*knot*/, Geom::Point const &p, guint state, gpointer data)
 {
     double yn, xn, yp, xp;
     double an, ap, na, pa;
@@ -3627,12 +3626,12 @@ node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
          ( ((state & GDK_SHIFT_MASK) && ((n->n.other && n->n.pos == n->pos) || (n->p.other && n->p.pos == n->pos)))
            || n->dragging_out ) )
     {
-       Geom::Point mouse = (*p);
+       Geom::Point mouse = p;
 
        if (!n->dragging_out) {
            // This is the first drag-out event; find out which handle to drag out
-           double appr_n = (n->n.other ? Geom::L2(n->n.other->pos - n->pos) - Geom::L2(n->n.other->pos - (*p)) : -HUGE_VAL);
-           double appr_p = (n->p.other ? Geom::L2(n->p.other->pos - n->pos) - Geom::L2(n->p.other->pos - (*p)) : -HUGE_VAL);
+           double appr_n = (n->n.other ? Geom::L2(n->n.other->pos - n->pos) - Geom::L2(n->n.other->pos - p) : -HUGE_VAL);
+           double appr_p = (n->p.other ? Geom::L2(n->p.other->pos - n->pos) - Geom::L2(n->p.other->pos - p) : -HUGE_VAL);
 
            if (appr_p == -HUGE_VAL && appr_n == -HUGE_VAL) // orphan node?
                return FALSE;
@@ -3656,8 +3655,8 @@ node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
                    opposite = &n->p;
                    n->n.other->code = NR_CURVETO;
                } else { // find out to which handle of the adjacent node we're closer; note that n->n.other == n->p.other
-                   double appr_other_n = (n->n.other ? Geom::L2(n->n.other->n.pos - n->pos) - Geom::L2(n->n.other->n.pos - (*p)) : -HUGE_VAL);
-                   double appr_other_p = (n->n.other ? Geom::L2(n->n.other->p.pos - n->pos) - Geom::L2(n->n.other->p.pos - (*p)) : -HUGE_VAL);
+                   double appr_other_n = (n->n.other ? Geom::L2(n->n.other->n.pos - n->pos) - Geom::L2(n->n.other->n.pos - p) : -HUGE_VAL);
+                   double appr_other_p = (n->n.other ? Geom::L2(n->n.other->p.pos - n->pos) - Geom::L2(n->n.other->p.pos - p) : -HUGE_VAL);
                    if (appr_other_p > appr_other_n) { // closer to other's p handle
                        n->dragging_out = &n->n;
                        opposite = &n->p;
@@ -3681,7 +3680,7 @@ node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
        }
 
        // pass this on to the handle-moved callback
-       node_handle_moved(n->dragging_out->knot, &mouse, state, (gpointer) n);
+       node_handle_moved(n->dragging_out->knot, mouse, state, (gpointer) n);
        sp_node_update_handles(n);
        return TRUE;
    }
@@ -3744,7 +3743,7 @@ node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
             if (ap == 0) pa = HUGE_VAL; else pa = -1/ap;
 
             // mouse point relative to the node's original pos
-            pr = (*p) - n->origin;
+            pr = p - n->origin;
 
             // distances to the four lines (two handles and two perpendiculars)
             d_an = point_line_distance(&pr, an);
@@ -3771,16 +3770,16 @@ node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
 
         } else {  // constraining to hor/vert
 
-            if (fabs((*p)[Geom::X] - n->origin[Geom::X]) > fabs((*p)[Geom::Y] - n->origin[Geom::Y])) { // snap to hor
+            if (fabs(p[Geom::X] - n->origin[Geom::X]) > fabs(p[Geom::Y] - n->origin[Geom::Y])) { // snap to hor
                 sp_nodepath_selected_nodes_move(n->subpath->nodepath,
-                                                (*p)[Geom::X] - n->pos[Geom::X], 
+                                                p[Geom::X] - n->pos[Geom::X], 
                                                 n->origin[Geom::Y] - n->pos[Geom::Y],
                                                 true, 
                                                 true, Inkscape::Snapper::ConstraintLine(component_vectors[Geom::X]));
             } else { // snap to vert
                 sp_nodepath_selected_nodes_move(n->subpath->nodepath,
                                                 n->origin[Geom::X] - n->pos[Geom::X],
-                                                (*p)[Geom::Y] - n->pos[Geom::Y],
+                                                p[Geom::Y] - n->pos[Geom::Y],
                                                 true,
                                                 true, Inkscape::Snapper::ConstraintLine(component_vectors[Geom::Y]));
             }
@@ -3788,17 +3787,17 @@ node_request(SPKnot */*knot*/, Geom::Point *p, guint state, gpointer data)
     } else { // move freely
         if (n->is_dragging) {
             if (state & GDK_MOD1_MASK) { // sculpt
-                sp_nodepath_selected_nodes_sculpt(n->subpath->nodepath, n, (*p) - n->origin);
+                sp_nodepath_selected_nodes_sculpt(n->subpath->nodepath, n, p - n->origin);
             } else {
                 sp_nodepath_selected_nodes_move(n->subpath->nodepath,
-                                            (*p)[Geom::X] - n->pos[Geom::X],
-                                            (*p)[Geom::Y] - n->pos[Geom::Y],
+                                            p[Geom::X] - n->pos[Geom::X],
+                                            p[Geom::Y] - n->pos[Geom::Y],
                                             (state & GDK_SHIFT_MASK) == 0);
             }
         }
     }
 
-    n->subpath->nodepath->desktop->scroll_to_point(*p);
+    n->subpath->nodepath->desktop->scroll_to_point(p);
 
     return TRUE;
 }
@@ -3879,7 +3878,7 @@ static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data)
 /**
  * Node handle "request" signal callback.
  */
-static gboolean node_handle_request(SPKnot *knot, Geom::Point *p, guint state, gpointer data)
+static gboolean node_handle_request(SPKnot *knot, Geom::Point const &p, guint state, gpointer data)
 {
     Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
@@ -3907,39 +3906,36 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point *p, guint state, g
     if ((state & GDK_SHIFT_MASK) != 0) {
     	// We will not try to snap when the shift-key is pressed
     	// so remove the old snap indicator and don't wait for it to time-out  
-    	desktop->snapindicator->remove_snappoint();   	
+    	desktop->snapindicator->remove_snappoint();
     }
 
     Inkscape::NodePath::Node *othernode = opposite->other;
     if (othernode) {
         if ((n->type != Inkscape::NodePath::NODE_CUSP) && sp_node_side_is_line(n, opposite)) {
             /* We are smooth node adjacent with line */
-            Geom::Point const delta = *p - n->pos;
+            Geom::Point const delta = p - n->pos;
             Geom::Coord const len = Geom::L2(delta);
             Inkscape::NodePath::Node *othernode = opposite->other;
             Geom::Point const ndelta = n->pos - othernode->pos;
             Geom::Coord const linelen = Geom::L2(ndelta);
+            Geom::Point ptemp = p;
             if (len > NR_EPSILON && linelen > NR_EPSILON) {
                 Geom::Coord const scal = dot(delta, ndelta) / linelen;
-                (*p) = n->pos + (scal / linelen) * ndelta;
+                ptemp = n->pos + (scal / linelen) * ndelta;
             }
             if ((state & GDK_SHIFT_MASK) == 0) {
-            	s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(*p), Inkscape::Snapper::ConstraintLine(*p, ndelta));
+                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, ptemp, Inkscape::Snapper::ConstraintLine(ptemp, ndelta));
             }
         } else {
-        	if ((state & GDK_SHIFT_MASK) == 0) {
-        		s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(*p));
-        	}
+            if ((state & GDK_SHIFT_MASK) == 0) {
+                s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+            }
         }
     } else {
-    	if ((state & GDK_SHIFT_MASK) == 0) {
-    		s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(*p));
-    	}
+        if ((state & GDK_SHIFT_MASK) == 0) {
+            s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+        }
     }
-    
-    Geom::Point pt2g = *p;
-    s.getPoint(pt2g);
-    *p = pt2g;
     
     sp_node_adjust_handle(n, -which);
 
@@ -3949,7 +3945,7 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point *p, guint state, g
 /**
  * Node handle moved callback.
  */
-static void node_handle_moved(SPKnot *knot, Geom::Point *p, guint state, gpointer data)
+static void node_handle_moved(SPKnot *knot, Geom::Point const &p, guint state, gpointer data)
 {
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -3971,7 +3967,7 @@ static void node_handle_moved(SPKnot *knot, Geom::Point *p, guint state, gpointe
     // calculate radial coordinates of the grabbed handle, its other handle, and the mouse point
     Radial rme(me->pos - n->pos);
     Radial rother(other->pos - n->pos);
-    Radial rnew(*p - n->pos);
+    Radial rnew(p - n->pos);
 
     if (state & GDK_CONTROL_MASK && rnew.a != HUGE_VAL) {
         int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
@@ -4362,7 +4358,17 @@ void sp_nodepath_selected_nodes_scale(Inkscape::NodePath::Path *nodepath, gdoubl
             box.expandTo (n->pos); // contain all selected nodes
         }
 
+        if ( Geom::are_near(box.maxExtent(), 0) ) {
+            SPEventContext *ec = nodepath->desktop->event_context;
+            if (!ec) return;
+            Inkscape::MessageContext *mc = get_message_context(ec);
+            if (!mc) return;
+            mc->setF(Inkscape::WARNING_MESSAGE,
+                             _("Cannot scale nodes when all are at the same location."));
+            return;
+        }
         double scale = (box.maxExtent() + grow)/box.maxExtent();
+
 
         Geom::Point scale_center;
         if (Inkscape::NodePath::Path::active_node == NULL)
@@ -4371,9 +4377,9 @@ void sp_nodepath_selected_nodes_scale(Inkscape::NodePath::Path *nodepath, gdoubl
             scale_center = Inkscape::NodePath::Path::active_node->pos;
 
         Geom::Matrix t =
-            Geom::Matrix (Geom::Translate(-scale_center)) *
-            Geom::Matrix (Geom::Scale(scale, scale)) *
-            Geom::Matrix (Geom::Translate(scale_center));
+            Geom::Translate(-scale_center) *
+            Geom::Scale(scale, scale) *
+            Geom::Translate(scale_center);
 
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;

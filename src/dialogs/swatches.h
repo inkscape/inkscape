@@ -1,16 +1,14 @@
-
-#ifndef SEEN_SWATCHES_H
-#define SEEN_SWATCHES_H
-/*
- * A simple dialog for previewing icon representation.
- *
- * Authors:
+/** @file
+ * @brief Color swatches dialog
+ */
+/* Authors:
  *   Jon A. Cruz
  *
  * Copyright (C) 2005 Jon A. Cruz
- *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+#ifndef SEEN_DIALOGS_SWATCHES_H
+#define SEEN_DIALOGS_SWATCHES_H
 
 #include <gtkmm/textview.h>
 #include <gtkmm/tooltips.h>

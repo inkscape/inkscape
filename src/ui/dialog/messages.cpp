@@ -99,8 +99,8 @@ void Messages::message(char *msg)
     buffer->insert (buffer->end(), uMsg);
 }
 
-
-void dialogLoggingFunction(const gchar */*log_domain*/,
+// dialogLoggingCallback is already used in debug.cpp
+static void dialogLoggingCallback(const gchar */*log_domain*/,
                            GLogLevelFlags /*log_level*/,
                            const gchar *messageText,
                            gpointer user_data)
@@ -123,27 +123,27 @@ void Messages::captureLogMessages()
                              G_LOG_LEVEL_INFO    | G_LOG_LEVEL_DEBUG);
     if ( !handlerDefault ) {
         handlerDefault = g_log_set_handler(NULL, flags,
-              dialogLoggingFunction, (gpointer)this);
+              dialogLoggingCallback, (gpointer)this);
     }
     if ( !handlerGlibmm ) {
         handlerGlibmm = g_log_set_handler("glibmm", flags,
-              dialogLoggingFunction, (gpointer)this);
+              dialogLoggingCallback, (gpointer)this);
     }
     if ( !handlerAtkmm ) {
         handlerAtkmm = g_log_set_handler("atkmm", flags,
-              dialogLoggingFunction, (gpointer)this);
+              dialogLoggingCallback, (gpointer)this);
     }
     if ( !handlerPangomm ) {
         handlerPangomm = g_log_set_handler("pangomm", flags,
-              dialogLoggingFunction, (gpointer)this);
+              dialogLoggingCallback, (gpointer)this);
     }
     if ( !handlerGdkmm ) {
         handlerGdkmm = g_log_set_handler("gdkmm", flags,
-              dialogLoggingFunction, (gpointer)this);
+              dialogLoggingCallback, (gpointer)this);
     }
     if ( !handlerGtkmm ) {
         handlerGtkmm = g_log_set_handler("gtkmm", flags,
-              dialogLoggingFunction, (gpointer)this);
+              dialogLoggingCallback, (gpointer)this);
     }
     message((char*)"log capture started");
 }

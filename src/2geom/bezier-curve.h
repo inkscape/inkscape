@@ -104,15 +104,16 @@ public:
   void setPoint(unsigned ix, Point v) { inner[X].setPoint(ix, v[X]); inner[Y].setPoint(ix, v[Y]); }
   Point const operator[](unsigned ix) const { return Point(inner[X][ix], inner[Y][ix]); }
 
-  Rect boundsFast() const { return bounds_fast(inner); }
-  Rect boundsExact() const { return bounds_exact(inner); }
-  Rect boundsLocal(Interval i, unsigned deg) const {
-      if(i.min() == 0 && i.max() == 1) return boundsFast();
+  virtual OptRect boundsFast() const { return bounds_fast(inner); }
+  virtual OptRect boundsExact() const { return bounds_exact(inner); }
+  virtual OptRect boundsLocal(OptInterval i, unsigned deg) const {
+      if (!i) return OptRect();
+      if(i->min() == 0 && i->max() == 1) return boundsFast();
       if(deg == 0) return bounds_local(inner, i);
       // TODO: UUUUUUGGGLLY
-      if(deg == 1 && order > 1) return Rect(bounds_local(Geom::derivative(inner[X]), i),
-                                            bounds_local(Geom::derivative(inner[Y]), i));
-      return Rect(Interval(0,0), Interval(0,0));
+      if(deg == 1 && order > 1) return OptRect(bounds_local(Geom::derivative(inner[X]), i),
+                                               bounds_local(Geom::derivative(inner[Y]), i));
+      return OptRect();
   }
 //TODO: local
 

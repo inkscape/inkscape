@@ -535,7 +535,7 @@ bool SPDesktop::isLayer(SPObject *object) const {
 bool SPDesktop::isWithinViewport (SPItem *item) const
 {
     Geom::Rect const viewport = get_display_area();
-    boost::optional<Geom::Rect> const bbox = sp_item_bbox_desktop(item);
+    Geom::OptRect const bbox = sp_item_bbox_desktop(item);
     if (bbox) {
         return viewport.contains(*bbox);
     } else {
@@ -756,7 +756,7 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
 
     // FIXME: This 2geom idiom doesn't allow us to declare dbox const
     Geom::Rect viewbox = canvas->getViewbox();
-    viewbox.expandBy(border);
+    viewbox.expandBy(-border);
 
     double scale = _d2w.descrim();
     double newscale;
@@ -937,8 +937,8 @@ SPDesktop::zoom_quick (bool enable)
         }
 
         if (!zoomed) {
-            boost::optional<Geom::Rect> const d = selection->bounds();
-            if (d && !d->isEmpty() && d->area() * 2.0 < _quick_zoom_stored_area.area()) {
+            Geom::OptRect const d = selection->bounds();
+            if (d && d->area() * 2.0 < _quick_zoom_stored_area.area()) {
                 set_display_area(*d, 10);
                 zoomed = true;
             } 
@@ -1038,8 +1038,7 @@ SPDesktop::zoom_page()
     Geom::Rect d(Geom::Point(0, 0),
                  Geom::Point(sp_document_width(doc()), sp_document_height(doc())));
 
-    // FIXME: the original NR::Rect::isEmpty call contained an additional threshold of 1.0; is it safe to ignore it?
-    if (d.isEmpty()) {
+    if (d.minExtent() < 1.0) {
         return;
     }
 
@@ -1070,10 +1069,9 @@ SPDesktop::zoom_page_width()
 void
 SPDesktop::zoom_selection()
 {
-    boost::optional<Geom::Rect> const d = selection->bounds();
+    Geom::OptRect const d = selection->bounds();
 
-    // FIXME: the original NR::Rect::isEmpty call contained an additional threshold of 0.1; is it safe to ignore it?
-    if ( !d || d->isEmpty() ) {
+    if ( !d || d->minExtent() < 0.1 ) {
         return;
     }
 
@@ -1099,13 +1097,12 @@ SPDesktop::zoom_drawing()
     SPItem *docitem = SP_ITEM (sp_document_root (doc()));
     g_return_if_fail (docitem != NULL);
 
-    boost::optional<Geom::Rect> d = sp_item_bbox_desktop(docitem);
+    Geom::OptRect d = sp_item_bbox_desktop(docitem);
 
     /* Note that the second condition here indicates that
     ** there are no items in the drawing.
     */
-    // FIXME: the original NR::Rect::isEmpty call contained an additional threshold of 1.0; is it safe to ignore it?
-    if ( !d || d->isEmpty() ) {
+    if ( !d || d->minExtent() < 0.1 ) {
         return;
     }
 

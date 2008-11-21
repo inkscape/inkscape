@@ -61,8 +61,12 @@ LPEInterpolate::doEffect_path (Geom::PathVector const & path_in)
     Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_B = path_in[1].toPwSb();
 
     // Transform both paths to (0,0) midpoint, so they can easily be positioned along interpolate_path
-    pwd2_A -= Geom::bounds_exact(pwd2_A).midpoint();
-    pwd2_B -= Geom::bounds_exact(pwd2_B).midpoint();
+    if (Geom::OptRect bounds = Geom::bounds_exact(pwd2_A)) {
+        pwd2_A -= bounds->midpoint();
+    }
+    if (Geom::OptRect bounds = Geom::bounds_exact(pwd2_B)) {
+        pwd2_B -= bounds->midpoint();
+    }
 
     // Make sure both paths have the same number of segments and cuts at the same locations
     pwd2_B.setDomain(pwd2_A.domain());
@@ -99,14 +103,18 @@ LPEInterpolate::resetDefaults(SPItem * item)
     if ( (pathv.size() < 2) )
         return;
 
-    Geom::Rect bounds_A = pathv[0].boundsExact();
-    Geom::Rect bounds_B = pathv[1].boundsExact();
+    Geom::OptRect bounds_A = pathv[0].boundsExact();
+    Geom::OptRect bounds_B = pathv[1].boundsExact();
 
-    Geom::PathVector traj_pathv;
-    traj_pathv.push_back( Geom::Path() );
-    traj_pathv[0].start( bounds_A.midpoint() );
-    traj_pathv[0].appendNew<Geom::LineSegment>( bounds_B.midpoint() );
-    trajectory_path.set_new_value( traj_pathv, true );
+    if (bounds_A && bounds_B) {
+        Geom::PathVector traj_pathv;
+        traj_pathv.push_back( Geom::Path() );
+        traj_pathv[0].start( bounds_A->midpoint() );
+        traj_pathv[0].appendNew<Geom::LineSegment>( bounds_B->midpoint() );
+        trajectory_path.set_new_value( traj_pathv, true );
+    } else {
+        trajectory_path.param_set_and_write_default();
+    }
 }
 
 } //namespace LivePathEffect

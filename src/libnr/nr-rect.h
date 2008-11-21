@@ -244,9 +244,9 @@ struct NRRect {
     explicit NRRect(boost::optional<NR::Rect> const &rect);
     operator boost::optional<NR::Rect>() const { return upgrade(); }
     boost::optional<NR::Rect> upgrade() const;
-    explicit NRRect(boost::optional<Geom::Rect> const &rect);
-    operator boost::optional<Geom::Rect>() const { return upgrade_2geom(); }
-    boost::optional<Geom::Rect> upgrade_2geom() const;
+    explicit NRRect(Geom::OptRect const &rect);
+    operator Geom::OptRect() const { return upgrade_2geom(); }
+    Geom::OptRect upgrade_2geom() const;
 
     NR::Coord x0, y0, x1, y1;
 };

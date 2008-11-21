@@ -35,9 +35,11 @@ public:
 				"<effect>\n"
 					"<object-type>all</object-type>\n"
 					"<effects-menu>\n"
-						"<submenu name=\"" N_("Filter") "\" />\n"
+						"<submenu name=\"" N_("Filters") "\">\n"
+   						"<submenu name=\"Shadows and Glows\"/>\n"
+			      "</submenu>\n"
 					"</effects-menu>\n"
-					"<menu-tip>" N_("When the weather outside is frightening...") "</menu-tip>\n"
+					"<menu-tip>" N_("Snow has fallen on object") "</menu-tip>\n"
 				"</effect>\n"
 			"</inkscape-extension>\n", new Snow());
 	};

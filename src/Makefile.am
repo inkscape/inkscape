@@ -40,6 +40,7 @@ include extension/Makefile_insert
 include extension/implementation/Makefile_insert
 include extension/internal/Makefile_insert
 include extension/script/Makefile_insert
+include filters/Makefile_insert
 include helper/Makefile_insert
 include inkjar/Makefile_insert
 include io/Makefile_insert
@@ -87,6 +88,7 @@ noinst_LIBRARIES =	\
 	extension/internal/libinternal.a	\
 	extension/libextension.a	\
 	extension/script/libscript.a	\
+	filters/libfilters.a	\
 	bind/libbind.a	\
 	helper/libspchelp.a	\
 	io/libio.a	\
@@ -146,6 +148,7 @@ EXTRA_DIST =	\
 	extension/internal/makefile.in	\
 	extension/makefile.in	\
 	extension/script/makefile.in	\
+	filters/makefile.in \
 	helper/makefile.in	\
 	inkjar/makefile.in	\
 	io/makefile.in	\

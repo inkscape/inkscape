@@ -166,41 +166,6 @@ libinkpre_a_SOURCES =	\
 	sp-defs.cpp sp-defs.h	\
 	sp-desc.cpp sp-desc.h	\
 	sp-ellipse.cpp sp-ellipse.h	\
-	sp-feblend.cpp sp-feblend.h	\
-	sp-feblend-fns.h	\
-	sp-fecolormatrix.cpp sp-fecolormatrix.h	\
-	sp-fecolormatrix-fns.h	\
-	sp-fecomponenttransfer.cpp sp-fecomponenttransfer.h	\
-	sp-fecomponenttransfer-funcnode.cpp sp-fecomponenttransfer-funcnode.h	\
-	sp-fecomponenttransfer-fns.h	\
-	sp-fecomposite.cpp sp-fecomposite.h	\
-	sp-fecomposite-fns.h	\
-	sp-feconvolvematrix.cpp sp-feconvolvematrix.h	\
-	sp-feconvolvematrix-fns.h	\
-	sp-fediffuselighting.cpp sp-fediffuselighting.h	\
-	sp-fediffuselighting-fns.h	\
-	sp-fedisplacementmap.cpp sp-fedisplacementmap.h	\
-	sp-fedisplacementmap-fns.h	\
-	sp-fedistantlight.cpp sp-fedistantlight.h \
-	sp-feflood.cpp sp-feflood.h	\
-	sp-feflood-fns.h	\
-	sp-feimage.cpp sp-feimage.h	\
-	sp-feimage-fns.h	\
-	sp-femerge.cpp sp-femerge.h	\
-	sp-femerge-fns.h	\
-	sp-femergenode.cpp sp-femergenode.h \
-	sp-femorphology.cpp sp-femorphology.h	\
-	sp-femorphology-fns.h	\
-	sp-feoffset.cpp sp-feoffset.h	\
-	sp-feoffset-fns.h	\
-	sp-fepointlight.cpp sp-fepointlight.h \
-	sp-fespecularlighting.cpp sp-fespecularlighting.h	\
-	sp-fespecularlighting-fns.h	\
-	sp-fespotlight.cpp sp-fespotlight.h \
-	sp-fetile.cpp sp-fetile.h	\
-	sp-fetile-fns.h	\
-	sp-feturbulence.cpp sp-feturbulence.h	\
-	sp-feturbulence-fns.h	\
 	sp-filter-fns.h	\
 	sp-filter-primitive.cpp	\
 	sp-filter-primitive.h	\
@@ -279,10 +244,6 @@ libinkpre_a_SOURCES =	\
 	spiral-context.cpp spiral-context.h	\
 	splivarot.cpp splivarot.h	\
 	star-context.cpp star-context.h	\
-	streams-gzip.h streams-gzip.cpp	\
-	streams-handles.h streams-handles.cpp	\
-	streams-jar.h streams-jar.cpp	\
-	streams-zlib.h streams-zlib.cpp	\
 	style.cpp style.h	\
 	sp-style-elem.cpp sp-style-elem.h	\
 	svg-profile.h \
@@ -356,6 +317,7 @@ inkscape_private_libs =	\
 	pedro/libpedro.a	\
 	trace/libtrace.a	\
 	svg/libspsvg.a		\
+	filters/libfilters.a	\
 	widgets/libspwidgets.a	\
 	display/libspdisplay.a	\
 	helper/libspchelp.a	\

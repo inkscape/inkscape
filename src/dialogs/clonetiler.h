@@ -1,15 +1,14 @@
-#ifndef __SP_CLONE_TILER_H__
-#define __SP_CLONE_TILER_H__
-
-/**
- * \brief Clone tiling dialog
- *
- * Authors:
- *   bulia byak
+/** @file
+ * @brief Clone tiling dialog
+ */
+/* Authors:
+ *   bulia byak <buliabyak@users.sf.net>
  *
  * Copyright (C) 2004 Authors
- *
+ * Released under the GNU GPL, read the file 'COPYING' for more information
  */
+#ifndef __SP_CLONE_TILER_H__
+#define __SP_CLONE_TILER_H__
 
 #include <glib.h>
 

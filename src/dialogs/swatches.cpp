@@ -1,7 +1,7 @@
-/*
- * A simple panel for color swatches
- *
- * Authors:
+/** @file
+ * @brief Color swatches dialog
+ */
+/* Authors:
  *   Jon A. Cruz
  *   John Bintz
  *
@@ -10,9 +10,6 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
 
 #include <errno.h>
 

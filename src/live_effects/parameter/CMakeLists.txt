@@ -1,4 +1,5 @@
 SET(live_effects_parameter_SRC
+array.cpp
 bool.cpp
 parameter.cpp
 path.cpp

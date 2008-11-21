@@ -1,16 +1,13 @@
-/*
- * A simple dialog for previewing icon representation.
- *
- * Authors:
+/** @file
+ * @brief A simple dialog with information about extensions
+ */
+/* Authors:
  *   Jon A. Cruz
  *
  * Copyright (C) 2005 Jon A. Cruz
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
 
 #include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
 #include <gtkmm/scrolledwindow.h>
@@ -116,8 +113,17 @@ void ExtensionsPanel::rescan()
 //     g_message("\\------------------");
 }
 
-
-
 } //namespace Dialogs
 } //namespace UI
 } //namespace Inkscape
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

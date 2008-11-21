@@ -38,6 +38,7 @@
 
 #include <vector>
 #include <2geom/point.h>
+#include <2geom/rect.h>
 
 namespace Geom {
 
@@ -71,6 +72,11 @@ line_twopoint_intersect(Geom::Point const &p00, Geom::Point const &p01,
 
 std::vector<Geom::Point>
 rect_line_intersect(Geom::Point const &E, Geom::Point const &F,
+                    Geom::Point const &p0, Geom::Point const &p1);
+
+
+std::vector<Geom::Point>
+rect_line_intersect(Geom::Rect &r,
                     Geom::Point const &p0, Geom::Point const &p1);
 
 int centroid(std::vector<Geom::Point> p, Geom::Point& centroid, double &area);

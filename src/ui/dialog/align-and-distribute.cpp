@@ -161,7 +161,7 @@ private :
                 selected.erase(master);
             /*}*/
             //Compute the anchor point
-            boost::optional<Geom::Rect> b = sp_item_bbox_desktop (thing);
+            Geom::OptRect b = sp_item_bbox_desktop (thing);
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -178,7 +178,7 @@ private :
 
         case AlignAndDistribute::DRAWING:
         {
-            boost::optional<Geom::Rect> b = sp_item_bbox_desktop
+            Geom::OptRect b = sp_item_bbox_desktop
                 ( (SPItem *) sp_document_root (sp_desktop_document (desktop)) );
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
@@ -191,7 +191,7 @@ private :
 
         case AlignAndDistribute::SELECTION:
         {
-            boost::optional<Geom::Rect> b =  selection->bounds();
+            Geom::OptRect b =  selection->bounds();
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -216,7 +216,7 @@ private :
         prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
         bool changed = false;
-        boost::optional<Geom::Rect> b;
+        Geom::OptRect b;
         if (sel_as_group)
             b = selection->bounds();
 
@@ -331,7 +331,7 @@ private :
             it != selected.end();
             ++it)
         {
-            boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop(*it);
+            Geom::OptRect bbox = sp_item_bbox_desktop(*it);
             if (bbox) {
                 sorted.push_back(BBoxSort(*it, *bbox, _orientation, _kBegin, _kEnd));
             }
@@ -607,7 +607,7 @@ private :
         //Check 2 or more selected objects
         if (selected.size() < 2) return;
 
-        boost::optional<Geom::Rect> sel_bbox = selection->bounds();
+        Geom::OptRect sel_bbox = selection->bounds();
         if (!sel_bbox) {
             return;
         }
@@ -629,7 +629,7 @@ private :
             ++it)
         {
             sp_document_ensure_up_to_date(sp_desktop_document (desktop));
-            boost::optional<Geom::Rect> item_box = sp_item_bbox_desktop (*it);
+            Geom::OptRect item_box = sp_item_bbox_desktop (*it);
             if (item_box) {
                 // find new center, staying within bbox
                 double x = _dialog.randomize_bbox->min()[Geom::X] + (*item_box)[Geom::X].extent() /2 +
@@ -780,7 +780,7 @@ void on_tool_changed(Inkscape::Application */*inkscape*/, SPEventContext */*cont
 
 void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selection */*selection*/, AlignAndDistribute *daad)
 {
-    daad->randomize_bbox = boost::optional<Geom::Rect>();
+    daad->randomize_bbox = Geom::OptRect();
 }
 
 /////////////////////////////////////////////////////////
@@ -961,7 +961,7 @@ AlignAndDistribute::AlignAndDistribute()
 
     // Connect to the global selection change, to invalidate cached randomize_bbox
     g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (on_selection_changed), this);
-    randomize_bbox = boost::optional<Geom::Rect>();
+    randomize_bbox = Geom::OptRect();
 
     show_all_children();
 
@@ -1106,7 +1106,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = -1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            boost::optional<Geom::Rect> b = sp_item_bbox_desktop (*it);
+            Geom::OptRect b = sp_item_bbox_desktop (*it);
             if (b) {
                 gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();
                 if (dim > max) {
@@ -1123,7 +1123,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = 1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
-            boost::optional<Geom::Rect> b = sp_item_bbox_desktop (*it);
+            Geom::OptRect b = sp_item_bbox_desktop (*it);
             if (b) {
                 gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();
                 if (dim < max) {

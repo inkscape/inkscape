@@ -226,7 +226,7 @@ sp_pattern_set (SPObject *object, unsigned int key, const gchar *value)
 		object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 		break;
 	case SP_ATTR_PATTERNTRANSFORM: {
-		NR::Matrix t;
+		Geom::Matrix t;
 		if (value && sp_svg_transform_read (value, &t)) {
 			pat->patternTransform = t;
 			pat->patternTransform_set = TRUE;

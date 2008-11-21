@@ -102,8 +102,8 @@ Geom::Point finalPoint(PathVector const &path_in)
 
 PathVector reverse_paths_and_order (PathVector const & path_in);
 
-Rect bounds_fast( PathVector const & pv );
-Rect bounds_exact( PathVector const & pv );
+OptRect bounds_fast( PathVector const & pv );
+OptRect bounds_exact( PathVector const & pv );
 
 struct PathVectorPosition {
     // pathvector[path_nr].pointAt(t) is the position

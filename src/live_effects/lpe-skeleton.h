@@ -1,18 +1,16 @@
-#ifndef INKSCAPE_LPE_SKELETON_H
-#define INKSCAPE_LPE_SKELETON_H
-
-/** \file
- * LPE <skeleton> implementation, see lpe-skeleton.cpp.
+/** @file
+ * @brief Minimal LPE effect, see lpe-skeleton.cpp.
  */
-
-/*
- * Authors:
- *   Johan Engelen
+/* Authors:
+ *   Johan Engelen <j.b.c.engelen@utwente.nl>
  *
- * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+ * Copyright (C) 2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifndef INKSCAPE_LPE_SKELETON_H
+#define INKSCAPE_LPE_SKELETON_H
 
 #include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
@@ -65,4 +63,4 @@ private:
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

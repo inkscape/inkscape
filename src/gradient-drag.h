@@ -20,6 +20,7 @@
 
 #include <forward.h>
 #include <libnr/nr-forward.h>
+#include <2geom/point.h>
 #include <knot-enums.h>
 
 struct SPItem;
@@ -31,20 +32,20 @@ which has the gradient, whether it's fill or stroke, the point type (from the
 GrPointType enum), and the point number (needed if more than 2 stops are present).
 */
 struct GrDraggable {
-	GrDraggable(SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
+    GrDraggable(SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
     virtual ~GrDraggable();
 
-	SPItem *item;
-	gint point_type;
-	gint point_i;  // the stop number of this point ( = 0 POINT_LG_BEGIN and POINT_RG_CENTER)
-	bool fill_or_stroke;
+    SPItem *item;
+    gint point_type;
+    gint point_i;  // the stop number of this point ( = 0 POINT_LG_BEGIN and POINT_RG_CENTER)
+    bool fill_or_stroke;
 
-	SPObject *getServer();
+    SPObject *getServer();
 
-	bool mayMerge (GrDraggable *da2);
+    bool mayMerge (GrDraggable *da2);
 
     inline int equals (GrDraggable *other) {
-		return ((item == other->item) && (point_type == other->point_type) && (point_i == other->point_i) && (fill_or_stroke == other->fill_or_stroke));
+        return ((item == other->item) && (point_type == other->point_type) && (point_i == other->point_i) && (fill_or_stroke == other->fill_or_stroke));
     }
 };
 
@@ -56,45 +57,45 @@ be moved when the knot moves. Normally there's one draggable in the list, but th
 be more when draggers are snapped together.
 */
 struct GrDragger {
-	GrDragger (GrDrag *parent, NR::Point p, GrDraggable *draggable);
+    GrDragger (GrDrag *parent, Geom::Point p, GrDraggable *draggable);
     virtual ~GrDragger();
 
-	GrDrag *parent;
+    GrDrag *parent;
 
-	SPKnot *knot;
+    SPKnot *knot;
 
-	// position of the knot, desktop coords
-	NR::Point point;
-	// position of the knot before it began to drag; updated when released
-	NR::Point point_original;
+    // position of the knot, desktop coords
+    Geom::Point point;
+    // position of the knot before it began to drag; updated when released
+    Geom::Point point_original;
 
-	/** Connection to \a knot's "moved" signal, for blocking it (unused?). */
-	guint   handler_id;
+    /** Connection to \a knot's "moved" signal, for blocking it (unused?). */
+    guint handler_id;
 
-	GSList *draggables;
+    GSList *draggables;
 
-	void addDraggable(GrDraggable *draggable);
+    void addDraggable(GrDraggable *draggable);
 
-	void updateKnotShape();
-	void updateTip();
-	
-	void select();
-	void deselect();
-	bool isSelected();
+    void updateKnotShape();
+    void updateTip();
+    
+    void select();
+    void deselect();
+    bool isSelected();
 
-	void moveThisToDraggable (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, bool write_repr);
-	void moveOtherToDraggable (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, bool write_repr);
+    void moveThisToDraggable (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, bool write_repr);
+    void moveOtherToDraggable (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, bool write_repr);
     void updateMidstopDependencies (GrDraggable *draggable, bool write_repr);
     void updateDependencies (bool write_repr);
 
-	bool mayMerge (GrDragger *other);
-	bool mayMerge (GrDraggable *da2);
+    bool mayMerge (GrDragger *other);
+    bool mayMerge (GrDraggable *da2);
 
     bool isA (gint point_type);
     bool isA (SPItem *item, gint point_type, bool fill_or_stroke);
     bool isA (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke);
 
-	void fireDraggables (bool write_repr, bool scale_radial = false, bool merging_focus = false);
+    void fireDraggables (bool write_repr, bool scale_radial = false, bool merging_focus = false);
 };
 
 /**
@@ -107,26 +108,26 @@ public: // FIXME: make more of this private!
     GrDrag(SPDesktop *desktop);
     virtual ~GrDrag();
 
-		bool isNonEmpty() {return (draggers != NULL);}
-		bool hasSelection() {return (selected != NULL);}
-		guint numSelected() {return (selected? g_list_length(selected) : 0);}
-		guint numDraggers() {return (draggers? g_list_length(draggers) : 0);}
-		guint singleSelectedDraggerNumDraggables() {return (selected? g_slist_length(((GrDragger *) selected->data)->draggables) : 0);}
-		guint singleSelectedDraggerSingleDraggableType() {return (selected? ((GrDraggable *) ((GrDragger *) selected->data)->draggables->data)->point_type : 0);}
+    bool isNonEmpty() {return (draggers != NULL);}
+    bool hasSelection() {return (selected != NULL);}
+    guint numSelected() {return (selected? g_list_length(selected) : 0);}
+    guint numDraggers() {return (draggers? g_list_length(draggers) : 0);}
+    guint singleSelectedDraggerNumDraggables() {return (selected? g_slist_length(((GrDragger *) selected->data)->draggables) : 0);}
+    guint singleSelectedDraggerSingleDraggableType() {return (selected? ((GrDraggable *) ((GrDragger *) selected->data)->draggables->data)->point_type : 0);}
 
     // especially the selection must be private, fix gradient-context to remove direct access to it
     GList *selected; // list of GrDragger*
     void setSelected (GrDragger *dragger, bool add_to_selection = false, bool override = true);
     void setDeselected (GrDragger *dragger);
     void deselectAll();
-		void selectAll();
-		void selectByCoords(std::vector<NR::Point> coords);
+    void selectAll();
+    void selectByCoords(std::vector<Geom::Point> coords);
     void selectRect(Geom::Rect const &r);
 
-    bool dropColor(SPItem *item, gchar *c, NR::Point p);
+    bool dropColor(SPItem *item, gchar *c, Geom::Point p);
 
-		SPStop *addStopNearPoint (SPItem *item, NR::Point mouse_p, double tolerance);
-    
+    SPStop *addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance);
+
     void deleteSelected (bool just_one = false);
 
     guint32 getColor();
@@ -165,7 +166,7 @@ public: // FIXME: make more of this private!
 private: 
     void deselect_all();
 
-    void addLine (SPItem *item, NR::Point p1, NR::Point p2, guint32 rgba);
+    void addLine (SPItem *item, Geom::Point p1, Geom::Point p2, guint32 rgba);
 
     void addDragger (GrDraggable *draggable);
 

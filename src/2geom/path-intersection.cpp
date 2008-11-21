@@ -23,9 +23,9 @@ int winding(Path const &path, Point p) {
   Path::const_iterator start;
   for(Path::const_iterator iter = path.begin(); ; ++iter) {
     if(iter == path.end_closed()) { return 0; }
-    if(iter->initialPoint()[Y]!=p[Y])  { start = iter; break; }
-    if(iter->finalPoint()[Y]!=p[Y])    { start = iter; break; }
-    if(iter->boundsFast().height()!=0.){ start = iter; break; }
+    if(iter->initialPoint()[Y]!=p[Y])   { start = iter; break; }
+    if(iter->finalPoint()[Y]!=p[Y])     { start = iter; break; }
+    if(iter->boundsFast()->height()!=0.){ start = iter; break; }
   }
   int wind = 0;
   unsigned cnt = 0;
@@ -36,7 +36,7 @@ int winding(Path const &path, Point p) {
     cnt++;
     if(cnt > path.size()) return wind;  //some bug makes this required
     starting = false;
-    Rect bounds = iter->boundsFast();
+    Rect bounds = *(iter->boundsFast());
     Coord x = p[X], y = p[Y];
     
     if(x > bounds.right() || !bounds[Y].contains(y)) continue; //ray doesn't intersect box
@@ -70,7 +70,7 @@ int winding(Path const &path, Point p) {
         next++;
         for(; ; next++) {
             if(next == path.end_closed()) next = path.begin();
-            Rect bnds = next->boundsFast();
+            Rect bnds = *(next->boundsFast());
             //TODO: X considerations
             if(bnds.height() > 0) {
                 //It has diverged
@@ -267,13 +267,13 @@ void pair_intersect(Curve const & A, double Al, double Ah,
                     Curve const & B, double Bl, double Bh,
                     Crossings &ret,  unsigned depth=0) {
    // std::cout << depth << "(" << Al << ", " << Ah << ")\n";
-    Rect Ar = A.boundsLocal(Interval(Al, Ah));
-    if(Ar.isEmpty()) return;
+    OptRect Ar = A.boundsLocal(Interval(Al, Ah));
+    if (!Ar) return;
 
-    Rect Br = B.boundsLocal(Interval(Bl, Bh));
-    if(Br.isEmpty()) return;
+    OptRect Br = B.boundsLocal(Interval(Bl, Bh));
+    if (!Br) return;
     
-    if(!Ar.intersects(Br)) return;
+    if(! Ar->intersects(*Br)) return;
     
     //Checks the general linearity of the function
     if((depth > 12)) { // || (A.boundsLocal(Interval(Al, Ah), 1).maxExtent() < 0.1 

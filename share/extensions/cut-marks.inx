@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>Add Cut Marks</_name>
+	<id>org.inkscape.printing.addcutmarks</id>
+
+  <param name="use-rect" type="boolean" _gui-text="Use the selected rect to define the margin"></param>
+
+  <param name="sep" type="description">•••••••••••••••••••••••••••••••••••••••••••••</param>
+
+  <_param name="info1" type="description">The fields above are needed only if you don't use a rect:</_param>
+
+  <param name="unit" type="enum" _gui-text="Measurement unit:">
+    <item>cm</item>
+    <item>mm</item>
+    <item>in</item>
+    <item>px</item>
+  </param>
+  <param name="margin-r" type="float" min="0.0" _gui-text="Margin right">1.0</param>
+  <param name="margin-l" type="float" min="0.0" _gui-text="Margin left">1.0</param>
+  <param name="margin-t" type="float" min="0.0" _gui-text="Margin top">1.0</param>
+  <param name="margin-b" type="float" min="0.0" _gui-text="Margin bottom">1.5</param>
+
+	<effect>
+		<object-type>all</object-type>
+		<effects-menu>
+			<submenu _name="Printing"/>
+		</effects-menu>
+	</effect>
+
+	<script>
+		<command reldir="extensions" interpreter="perl">cut-marks.pl</command>
+	</script>
+
+</inkscape-extension>

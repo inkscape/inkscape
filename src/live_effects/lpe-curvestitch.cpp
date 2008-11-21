@@ -79,10 +79,13 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> const & path_in)
         endpoint_spacing_variation.resetRandomizer();
 
         D2<Piecewise<SBasis> > stroke = make_cuts_independent(strokepath.get_pwd2());
-        Interval bndsStroke = bounds_exact(stroke[0]);
-        gdouble scaling = bndsStroke.max() - bndsStroke.min();
-        Interval bndsStrokeY = bounds_exact(stroke[1]);
-        Point stroke_origin(bndsStroke.min(), (bndsStrokeY.max()+bndsStrokeY.min())/2);
+        OptInterval bndsStroke = bounds_exact(stroke[0]);
+        OptInterval bndsStrokeY = bounds_exact(stroke[1]);
+        if (!bndsStroke && !bndsStrokeY) {
+            return path_in;
+        }
+        gdouble scaling = bndsStroke->max() - bndsStroke->min();
+        Point stroke_origin(bndsStroke->min(), (bndsStrokeY->max()+bndsStrokeY->min())/2);
 
         std::vector<Geom::Path> path_out;
 
@@ -163,18 +166,22 @@ LPECurveStitch::resetDefaults(SPItem * item)
         pwd2.concat( temppath[i].toPwSb() );
     }
     D2<Piecewise<SBasis> > d2pw = make_cuts_independent(pwd2);
-    Interval bndsX = bounds_exact(d2pw[0]);
-    Interval bndsY = bounds_exact(d2pw[1]);
-    Point start(bndsX.min(), (bndsY.max()+bndsY.min())/2);
-    Point end(bndsX.max(), (bndsY.max()+bndsY.min())/2);
-
-    if ( !Geom::are_near(start,end) ) {
-        Geom::Path path;
-        path.start( start );
-        path.appendNew<Geom::LineSegment>( end );
-        strokepath.set_new_value( path.toPwSb(), true );
+    OptInterval bndsX = bounds_exact(d2pw[0]);
+    OptInterval bndsY = bounds_exact(d2pw[1]);
+    if (bndsX && bndsY) {
+        Point start(bndsX->min(), (bndsY->max()+bndsY->min())/2);
+        Point end(bndsX->max(), (bndsY->max()+bndsY->min())/2);
+        if ( !Geom::are_near(start,end) ) {
+            Geom::Path path;
+            path.start( start );
+            path.appendNew<Geom::LineSegment>( end );
+            strokepath.set_new_value( path.toPwSb(), true );
+        } else {
+            // bounding box is too small to make decent path. set to default default. :-)
+            strokepath.param_set_and_write_default();
+        }
     } else {
-        // bounding box is too small to make decent path. set to default default. :-)
+        // bounding box is non-existent. set to default default. :-)
         strokepath.param_set_and_write_default();
     }
 }

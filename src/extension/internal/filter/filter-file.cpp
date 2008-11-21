@@ -130,6 +130,8 @@ void
 Filter::filters_load_node (Inkscape::XML::Node * node, gchar * menuname)
 {
 	gchar const * label = node->attribute("inkscape:label");
+	gchar const * menu = node->attribute("inkscape:menu");
+	gchar const * menu_tooltip = node->attribute("inkscape:menu-tooltip");
 	gchar const * id = node->attribute("id");
 
 	if (label == NULL) {
@@ -143,12 +145,18 @@ Filter::filters_load_node (Inkscape::XML::Node * node, gchar * menuname)
             "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
-                    "<submenu name=\"" N_("Filter") "\">\n"
-						"<submenu name=\"%s\"/>\n"
-					"</submenu>\n"
+                    "<submenu name=\"" N_("Filters") "\">\n"
+         						"<submenu name=\"%s\"/>\n"
+    					      "</submenu>\n"
                 "</effects-menu>\n"
+                "<menu-tip>%s</menu-tip>\n"
             "</effect>\n"
-        "</inkscape-extension>\n", label, id, menuname);
+        "</inkscape-extension>\n", label, id, menu? menu : menuname, menu_tooltip? menu_tooltip : label);
+
+	// FIXME: Bad hack: since we pull out a single filter node out of SVG file and
+	// serialize it, it loses the namespace declarations from the root, so we must provide
+	// one right here for our inkscape attributes
+	node->setAttribute("xmlns:inkscape", SP_INKSCAPE_NS_URI);
 
 	mywriter writer;
 	sp_repr_write_stream(node, writer, 0, FALSE, g_quark_from_static_string("svg"), 0, 0);

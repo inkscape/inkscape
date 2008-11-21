@@ -65,7 +65,7 @@ public:
     std::list<SPItem *>::iterator find_master(std::list <SPItem *> &list, bool horizontal);
     void setMode(bool nodeEdit);
 
-    boost::optional<Geom::Rect> randomize_bbox;
+    Geom::OptRect randomize_bbox;
 
 protected:
 

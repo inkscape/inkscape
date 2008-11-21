@@ -383,11 +383,11 @@ NRRect *Selection::bounds(NRRect *bbox, SPItem::BBoxType type) const
     return bbox;
 }
 
-boost::optional<Geom::Rect> Selection::bounds(SPItem::BBoxType type) const
+Geom::OptRect Selection::bounds(SPItem::BBoxType type) const
 {
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
-    boost::optional<Geom::Rect> bbox;
+    Geom::OptRect bbox;
     for ( GSList const *i = items ; i != NULL ; i = i->next ) {
         bbox = unify(bbox, sp_item_bbox_desktop(SP_ITEM(i->data), type));
     }
@@ -415,7 +415,7 @@ NRRect *Selection::boundsInDocument(NRRect *bbox, SPItem::BBoxType type) const {
     return bbox;
 }
 
-boost::optional<Geom::Rect> Selection::boundsInDocument(SPItem::BBoxType type) const {
+Geom::OptRect Selection::boundsInDocument(SPItem::BBoxType type) const {
     NRRect r;
     return to_2geom(boundsInDocument(&r, type)->upgrade());
 }
@@ -430,7 +430,7 @@ boost::optional<Geom::Point> Selection::center() const {
             return first->getCenter();
         }
     }
-    boost::optional<Geom::Rect> bbox = bounds();
+    Geom::OptRect bbox = bounds();
     if (bbox) {
         return bounds()->midpoint();
     } else {
@@ -479,7 +479,7 @@ std::vector<Geom::Point> Selection::getSnapPointsConvexHull(SnapPreferences cons
             cvh.add(*i);
         }
 
-        boost::optional<Geom::Rect> rHull = cvh.bounds();
+        Geom::OptRect rHull = cvh.bounds();
         if (rHull) {
             for ( unsigned i = 0 ; i < 4 ; ++i ) {
                 pHull.push_back(rHull->corner(i));

@@ -615,7 +615,6 @@ class Layout::Calculator
                             iter_source_text++;
                             char_index_in_unbroken_span++;
                             char_byte = iter_source_text.base() - unbroken_span.input_stream_first_character.base();
-                            glyph_rotate = 0.0;
                         }
 
                         advance_width *= direction_sign;
@@ -1014,6 +1013,7 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                     if (text_source->dy.size() > char_index_in_source) new_span.dx = text_source->dy[char_index_in_source];
                 }
                 if (text_source->rotate.size() > char_index_in_source) new_span.rotate = text_source->rotate[char_index_in_source];
+                else if (char_index_in_source == 0) new_span.rotate = 0.f;
                 if (input_index == 0 && para->unbroken_spans.empty() && !new_span.y._set && _flow._input_wrap_shapes.empty()) {
                     // if we don't set an explicit y some of the automatic wrapping code takes over and moves the text vertically
                     // so that the top of the letters is at zero, not the baseline

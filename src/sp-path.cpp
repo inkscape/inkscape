@@ -388,19 +388,17 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
 {
     SPShape * const shape = (SPShape *) lpeitem;
     SPPath * const path = (SPPath *) lpeitem;
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
 
     if (path->original_curve) {
-        // if a path does not have an lpeitem applied, then reset the curve to the original_curve.
-        // This is very important for LPEs on groups to work properly!
         SPCurve *curve = path->original_curve->copy();
+        /* if a path does not have an lpeitem applied, then reset the curve to the original_curve.
+         * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
         sp_shape_set_curve_insync(shape, curve, TRUE);
-        sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
-        SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);        // this might be optimized in future for the case when this path is in a group with lpe applied (and will therefore have its curve change again when the group LPE is applied)
-        curve->unref();
 
-        if (write) {
+        bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
+        if (success && write) {
             // could also do SP_OBJECT(shape)->updateRepr();  but only the d attribute needs updating.
-            Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
             if ( shape->curve != NULL ) {
                 gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
                 repr->setAttribute("d", str);
@@ -408,7 +406,19 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
             } else {
                 repr->setAttribute("d", NULL);
             }
+        } else {
+            // LPE was unsuccesfull. Read the old 'd'-attribute.
+            if (gchar const * value = repr->attribute("d")) {
+                Geom::PathVector pv = sp_svg_read_pathv(value);
+                SPCurve *oldcurve = new SPCurve(pv);
+                if (oldcurve) {
+                    sp_shape_set_curve(shape, oldcurve, TRUE);
+                    oldcurve->unref();
+                }
+            }
         }
+        SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        curve->unref();
     }
 }
 

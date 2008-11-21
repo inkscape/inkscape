@@ -1,10 +1,7 @@
-#ifndef __SP_INPUT_H__
-#define __SP_INPUT_H__
-
-/**
- * \brief  Extended input device dialog
- *
- * Author:
+/** @file
+ * @brief  Extended input device dialog
+ */
+/* Author:
  *   Nicklas Lindgren <nili@lysator.liu.se>
  *
  * Copyright (C) 2005 Authors
@@ -12,6 +9,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifndef SEEN_DIALOGS_INPUT_H
+#define SEEN_DIALOGS_INPUT_H
 
 void sp_input_load_from_preferences (void);
 void sp_input_save_to_preferences (void);

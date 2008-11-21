@@ -1,11 +1,7 @@
-#define __SP_EXPORT_C__
-
-/** \file
- * \brief  PNG export dialog
+/** @file
+ * @brief  PNG export dialog
  */
-
-/*
- * Authors:
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
@@ -317,7 +313,7 @@ sp_export_dialog_area_box (GtkWidget * dlg)
                                dlg );
 
     sp_export_spinbutton_new ( "width", 0.0, 0.0, PNG_UINT_31_MAX, 0.1, 1.0,
-                               us->gobj(), GTK_WIDGET(t->gobj()), 4, 0, _("Width:"), NULL, EXPORT_COORD_PRECISION, 1,
+                               us->gobj(), GTK_WIDGET(t->gobj()), 4, 0, _("Wid_th:"), NULL, EXPORT_COORD_PRECISION, 1,
                                G_CALLBACK
                                    (sp_export_area_width_value_changed),
                                dlg );
@@ -333,7 +329,7 @@ sp_export_dialog_area_box (GtkWidget * dlg)
                                dlg );
 
     sp_export_spinbutton_new ( "height", 0.0, 0.0, PNG_UINT_31_MAX, 0.1, 1.0,
-                               us->gobj(), GTK_WIDGET(t->gobj()), 4, 1, _("Height:"), NULL, EXPORT_COORD_PRECISION, 1,
+                               us->gobj(), GTK_WIDGET(t->gobj()), 4, 1, _("Hei_ght:"), NULL, EXPORT_COORD_PRECISION, 1,
                                G_CALLBACK (sp_export_area_height_value_changed),
                                dlg );
 
@@ -492,7 +488,7 @@ sp_export_dialog (void)
 
             sp_export_spinbutton_new ( "bmheight", 16.0, 1.0, 1000000.0, 1.0, 10.0,
                                        NULL, GTK_WIDGET(t->gobj()), 0, 1,
-                                       _("Height:"), _("pixels at"), 0, 1,
+                                       _("_Height:"), _("pixels at"), 0, 1,
                                        G_CALLBACK
                                        (sp_export_bitmap_height_value_changed),
                                        dlg );
@@ -626,7 +622,7 @@ sp_export_dialog (void)
 
         {
             Gtk::HBox* hide_box = new Gtk::HBox(FALSE, 5);
-            GtkWidget *he = gtk_check_button_new_with_label(_("Hide all except selected"));
+            GtkWidget *he = gtk_check_button_new_with_label(_("Hide _all except selected"));
             gtk_widget_set_sensitive(GTK_WIDGET(he), TRUE);
             gtk_object_set_data(GTK_OBJECT(dlg), "hide_checkbox", he);
             hide_box->pack_start(*Glib::wrap(he), false, false);
@@ -778,7 +774,7 @@ sp_export_selection_modified ( Inkscape::Application */*inkscape*/,
             if ( SP_ACTIVE_DESKTOP ) {
                 SPDocument *doc;
                 doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
-                boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
+                Geom::OptRect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
                 if (bbox) {
                     sp_export_set_area (base, bbox->min()[Geom::X],
                                               bbox->min()[Geom::Y],
@@ -837,7 +833,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
     if ( SP_ACTIVE_DESKTOP )
     {
         SPDocument *doc;
-        boost::optional<Geom::Rect> bbox;
+        Geom::OptRect bbox;
         doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
         /* Notice how the switch is used to 'fall through' here to get
@@ -1102,26 +1098,27 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
                 dpi = DPI_BASE;
             }
 
-            NRRect area;
-            sp_item_invoke_bbox(item, &area, sp_item_i2r_affine((SPItem *) item), TRUE);
+            Geom::OptRect area;
+            sp_item_invoke_bbox(item, area, sp_item_i2r_affine((SPItem *) item), TRUE);
+            if (area) {
+                gint width = (gint) (area->width() * dpi / PX_PER_IN + 0.5);
+                gint height = (gint) (area->height() * dpi / PX_PER_IN + 0.5);
 
-            gint width = (gint) ((area.x1 - area.x0) * dpi / PX_PER_IN + 0.5);
-            gint height = (gint) ((area.y1 - area.y0) * dpi / PX_PER_IN + 0.5);
-
-            if (width > 1 && height > 1) {
-                /* Do export */
-                if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), fn,
-                                         area.x0, area.y0, area.x1, area.y1, width, height, dpi, dpi,
-                                         nv->pagecolor,
-                                         NULL, NULL, TRUE,  // overwrite without asking
-                                         hide ? (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList() : NULL
-                        )) {
-                    gchar * error;
-                    gchar * safeFile = Inkscape::IO::sanitizeString(fn);
-                    error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
-                    sp_ui_error_dialog(error);
-                    g_free(safeFile);
-                    g_free(error);
+                if (width > 1 && height > 1) {
+                    /* Do export */
+                    if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), fn,
+                                             *area, width, height, dpi, dpi,
+                                             nv->pagecolor,
+                                             NULL, NULL, TRUE,  // overwrite without asking
+                                             hide ? (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList() : NULL
+                            )) {
+                        gchar * error;
+                        gchar * safeFile = Inkscape::IO::sanitizeString(fn);
+                        error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
+                        sp_ui_error_dialog(error);
+                        g_free(safeFile);
+                        g_free(error);
+                    }
                 }
             }
             n++;
@@ -1183,7 +1180,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
 
     /* Do export */
     if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), filename_ext,
-                             x0, y0, x1, y1, width, height, xdpi, ydpi,
+                             Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1)), width, height, xdpi, ydpi,
                              nv->pagecolor,
                              sp_export_progress_callback, base, FALSE,
                              hide ? (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList() : NULL
@@ -1407,7 +1404,7 @@ sp_export_detect_size(GtkObject * base) {
         switch (this_test[i]) {
             case SELECTION_SELECTION:
                 if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
-                    boost::optional<Geom::Rect> bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds();
+                    Geom::OptRect bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds();
 
                     //std::cout << "Selection " << bbox;
                     if ( bbox && sp_export_bbox_equal(*bbox,current_bbox)) {
@@ -1418,7 +1415,7 @@ sp_export_detect_size(GtkObject * base) {
             case SELECTION_DRAWING: {
                 SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
-                boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
+                Geom::OptRect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
 
                 // std::cout << "Drawing " << bbox2;
                 if ( bbox && sp_export_bbox_equal(*bbox,current_bbox) ) {
@@ -1969,9 +1966,9 @@ sp_export_filename_modified (GtkObject * object, gpointer data)
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

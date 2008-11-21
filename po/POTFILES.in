@@ -11,7 +11,6 @@ src/context-fns.cpp
 src/desktop.cpp
 src/desktop-events.cpp
 src/dialogs/clonetiler.cpp
-src/dialogs/debugdialog.cpp
 src/dialogs/eek-color-def.cpp
 src/dialogs/export.cpp
 src/dialogs/fill-style.cpp
@@ -27,7 +26,6 @@ src/dialogs/sp-attribute-widget.cpp
 src/dialogs/stroke-style.cpp
 src/dialogs/swatches.cpp
 src/dialogs/text-edit.cpp
-src/dialogs/tiledialog.cpp
 src/dialogs/xml-tree.cpp
 src/display/canvas-axonomgrid.cpp
 src/display/canvas-grid.cpp
@@ -82,12 +80,10 @@ src/extension/internal/bitmap/threshold.cpp
 src/extension/internal/bitmap/unsharpmask.cpp
 src/extension/internal/bitmap/wave.cpp
 src/extension/internal/bluredge.cpp
-src/extension/internal/cairo-pdf-out.cpp
 src/extension/internal/cairo-ps-out.cpp
 src/extension/internal/cairo-renderer-pdf-out.cpp
 src/extension/internal/clear-n_.h
 src/extension/internal/emf-win32-inout.cpp
-src/extension/internal/eps-out.cpp
 src/extension/internal/filter/apparition.h
 src/extension/internal/filter/bloom.h
 src/extension/internal/filter/clouds.h
@@ -124,11 +120,8 @@ src/extension/internal/javafx-out.cpp
 src/extension/internal/latex-pstricks.cpp
 src/extension/internal/latex-pstricks-out.cpp
 src/extension/internal/odf.cpp
-src/extension/internal/pdf-cairo.cpp
 src/extension/internal/pdfinput/pdf-input.cpp
 src/extension/internal/pov-out.cpp
-src/extension/internal/ps.cpp
-src/extension/internal/ps-out.cpp
 src/extension/internal/svg.cpp
 src/extension/internal/svgz.cpp
 src/extension/internal/win32.cpp
@@ -186,6 +179,7 @@ src/live_effects/lpe-copy_rotate.cpp
 src/live_effects/lpe-curvestitch.cpp
 src/live_effects/lpe-envelope.cpp
 src/live_effects/lpe-gears.cpp
+src/live_effects/lpe-hatches.cpp
 src/live_effects/lpe-interpolate.cpp
 src/live_effects/lpe-knot.cpp
 src/live_effects/lpe-lattice.cpp
@@ -210,7 +204,6 @@ src/live_effects/parameter/enum.h
 src/live_effects/parameter/parameter.cpp
 src/live_effects/parameter/path.cpp
 src/live_effects/parameter/point.cpp
-src/live_effects/parameter/pointparam-knotholder.cpp
 src/live_effects/parameter/random.cpp
 src/live_effects/parameter/text.cpp
 src/live_effects/parameter/unit.cpp
@@ -269,6 +262,7 @@ src/ui/clipboard.cpp
 src/ui/context-menu.cpp
 src/ui/dialog/aboutbox.cpp
 src/ui/dialog/align-and-distribute.cpp
+src/ui/dialog/debug.cpp
 src/ui/dialog/document-metadata.cpp
 src/ui/dialog/document-properties.cpp
 src/ui/dialog/extension-editor.cpp
@@ -286,6 +280,7 @@ src/ui/dialog/print.cpp
 src/ui/dialog/scriptdialog.cpp
 src/ui/dialog/session-player.cpp
 src/ui/dialog/svg-fonts-dialog.cpp
+src/ui/dialog/tile.cpp
 src/ui/dialog/tracedialog.cpp
 src/ui/dialog/transformation.cpp
 src/ui/dialog/whiteboard-connect.cpp
@@ -369,6 +364,7 @@ share/extensions/svg_and_media_zip_output.py
 [type: gettext/xml] share/extensions/color_removered.inx
 [type: gettext/xml] share/extensions/color_replace.inx
 [type: gettext/xml] share/extensions/color_rgbbarrel.inx
+[type: gettext/xml] share/extensions/cut-marks.inx
 [type: gettext/xml] share/extensions/dia.inx
 [type: gettext/xml] share/extensions/dimension.inx
 [type: gettext/xml] share/extensions/dots.inx

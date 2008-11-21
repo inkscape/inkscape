@@ -352,7 +352,7 @@ sp_flowtext_print(SPItem *item, SPPrintContext *ctx)
     NRRect pbox;
     sp_item_invoke_bbox(item, &pbox, Geom::identity(), TRUE);
     NRRect bbox;
-    boost::optional<Geom::Rect> bbox_maybe = sp_item_bbox_desktop(item);
+    Geom::OptRect bbox_maybe = sp_item_bbox_desktop(item);
     if (!bbox_maybe) {
         return;
     }
@@ -577,6 +577,10 @@ SPFlowtext::getAsText()
                 sp_repr_set_svg_double(span_tspan, "x", anchor_point[Geom::X]);  // FIXME: this will pick up the wrong end of counter-directional runs
             if (set_y)
                 sp_repr_set_svg_double(span_tspan, "y", anchor_point[Geom::Y]);
+            if (line_tspan->childCount() == 0) {
+                sp_repr_set_svg_double(line_tspan, "x", anchor_point[Geom::X]);  // FIXME: this will pick up the wrong end of counter-directional runs
+                sp_repr_set_svg_double(line_tspan, "y", anchor_point[Geom::Y]);
+            }
 
             SPObject *source_obj = 0;
             void *rawptr = 0;

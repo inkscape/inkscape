@@ -150,6 +150,81 @@ split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwsbi
     return ret;
 }
 
+static void set_first_point(Piecewise<D2<SBasis> > &f, Point a){
+    if ( f.empty() ){
+        f.concat(Piecewise<D2<SBasis> >(D2<SBasis>(Linear(a[X]),Linear(a[Y]))));
+        return;
+    }
+    for (unsigned dim=0; dim<2; dim++){
+        if (f.segs.front()[dim].size() == 0){
+            f.segs.front()[dim].push_back(Linear(a[dim],0));
+        }else{
+            f.segs.front()[dim][0][0] = a[dim];
+        }
+    }
+}
+static void set_last_point(Piecewise<D2<SBasis> > &f, Point a){
+    if ( f.empty() ){
+        f.concat(Piecewise<D2<SBasis> >(D2<SBasis>(Linear(a[X]),Linear(a[Y]))));
+        return;
+    }
+    for (unsigned dim=0; dim<2; dim++){
+        if (f.segs.back()[dim].size() == 0){
+            f.segs.back()[dim].push_back(Linear(0,a[dim]));
+        }else{
+            f.segs.back()[dim][0][1] = a[dim];
+        }
+    }
+}
+
+std::vector<Piecewise<D2<SBasis> > > fuse_nearby_ends(std::vector<Piecewise<D2<SBasis> > > const &f, double tol){
+
+    if ( f.size()==0 ) return f;
+    std::vector<Piecewise<D2<SBasis> > > result;
+    std::vector<std::vector<unsigned> > pre_result;
+    for (unsigned i=0; i<f.size(); i++){
+        bool inserted = false;
+        Point a = f[i].firstValue();
+        Point b = f[i].lastValue();
+        for (unsigned j=0; j<pre_result.size(); j++){
+            Point aj = f.at(pre_result[j].back()).lastValue();
+            Point bj = f.at(pre_result[j].front()).firstValue();
+            if ( L2(a-aj) < tol ) {
+                pre_result[j].push_back(i);
+                inserted = true;
+                break;
+            }
+            if ( L2(b-bj) < tol ) {
+                pre_result[j].insert(pre_result[j].begin(),i);
+                inserted = true;
+                break;
+            }
+        }
+        if (!inserted) {
+            pre_result.push_back(std::vector<unsigned>());
+            pre_result.back().push_back(i);
+        }
+    }
+    for (unsigned i=0; i<pre_result.size(); i++){
+        Piecewise<D2<SBasis> > comp;
+        for (unsigned j=0; j<pre_result[i].size(); j++){
+            Piecewise<D2<SBasis> > new_comp = f.at(pre_result[i][j]);
+            if ( j>0 ){
+                set_first_point( new_comp, comp.segs.back().at1() );
+            }
+            comp.concat(new_comp);
+        }
+        if ( L2(comp.firstValue()-comp.lastValue()) < tol ){
+            //TODO: check sizes!!!
+            set_last_point( comp, comp.segs.front().at0() ); 
+        }
+        result.push_back(comp);
+    }
+    return result;
+    return f;
+}
+
+
 }  // namespace Geom
 
 

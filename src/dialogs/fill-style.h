@@ -1,10 +1,7 @@
-#ifndef __SP_FILL_STYLE_H__
-#define __SP_FILL_STYLE_H__
-
-/**
- * \brief  Fill style configuration
- *
- * Authors:
+/** @file
+ * @brief  Fill style configuration
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
  * Copyright (C) 2002 Lauris Kaplinski
@@ -12,10 +9,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifndef SEEN_DIALOGS_SP_FILL_STYLE_H
+#define SEEN_DIALOGS_SP_FILL_STYLE_H
+
 #include <glib.h>
-
 #include <gtk/gtkwidget.h>
-
 #include "forward.h"
 
 

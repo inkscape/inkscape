@@ -51,25 +51,25 @@ typedef std::map<Inkscape::LivePathEffect::Effect *, std::vector<SPCanvasItem *>
 class Radial{
  public:
 /**  Radius */
-	double r;
+    double r;
 /**  Amplitude */
-	double a;
-	Radial() {}
-	//	Radial(Geom::Point const &p); // Convert a point to radial coordinates
-	Radial(Radial &p) : r(p.r),a(p.a) {}
-	//	operator Geom::Point() const;
+    double a;
+    Radial() {}
+    //	Radial(Geom::Point const &p); // Convert a point to radial coordinates
+    Radial(Radial &p) : r(p.r),a(p.a) {}
+    //	operator Geom::Point() const;
 
 /**
  * Construct Radial from Geom::Point.
  */
 Radial(Geom::Point const &p)
 {
-	r = Geom::L2(p);
-	if (r > 0) {
-		a = Geom::atan2 (p);
-	} else {
-		a = HUGE_VAL; //undefined
-	}
+    r = Geom::L2(p);
+    if (r > 0) {
+        a = Geom::atan2 (p);
+    } else {
+        a = HUGE_VAL; //undefined
+    }
 }
 
 /**
@@ -77,11 +77,11 @@ Radial(Geom::Point const &p)
  */
 operator Geom::Point() const
 {
-	if (a == HUGE_VAL) {
-		return Geom::Point(0,0);
-	} else {
-		return r*Geom::Point(cos(a), sin(a));
-	}
+    if (a == HUGE_VAL) {
+        return Geom::Point(0,0);
+    } else {
+        return r*Geom::Point(cos(a), sin(a));
+    }
 }
 
 };
@@ -118,15 +118,15 @@ class Node;
 class SubPath {
  public:
 /**  The parent of this subpath */
-	Path * nodepath;
+    Path * nodepath;
 /**  Is this path closed (no endpoints) or not?*/
-	gboolean closed;
+    gboolean closed;
 /**  The nodes in this subpath. */
-	GList * nodes;
+    GList * nodes;
 /**  The first node of the subpath (does not imply open/closed)*/
-	Node * first;
+    Node * first;
 /**  The last node of the subpath */
-	Node * last;
+    Node * last;
 };
 
 
@@ -140,15 +140,15 @@ class SubPath {
  */
 typedef enum {
 /**  A normal node */
-	NODE_NONE,
+    NODE_NONE,
 /**  This node non-continuously joins two segments.*/
-	NODE_CUSP,
+    NODE_CUSP,
 /**  This node continuously joins two segments. */
-	NODE_SMOOTH,
+    NODE_SMOOTH,
 /**  This node has automatic handles. */
-	NODE_AUTO,
+    NODE_AUTO,
 /**  This node is symmetric. */
-	NODE_SYMM
+    NODE_SYMM
 } NodeType;
 
 
@@ -160,19 +160,19 @@ typedef enum {
 class NodeSide{
  public:
 /**  Pointer to the next node, */
-	Node * other;
+    Node * other;
 /**  Position */
-	Geom::Point pos;
+    Geom::Point pos;
 /**  Origin (while dragging) in radial notation */
-	Radial origin_radial;
+    Radial origin_radial;
 /**  Origin (while dragging) in x/y notation */
-	Geom::Point origin;
+    Geom::Point origin;
 /**  Knots are Inkscape's way of providing draggable points.  This
  *  Knot is the point on the curve representing the control point in a
  *  bezier curve.*/
-	SPKnot * knot;
+    SPKnot * knot;
 /**  What kind of rendering? */
-	SPCanvasItem * line;
+    SPCanvasItem * line;
 };
 
 /**
@@ -181,28 +181,28 @@ class NodeSide{
 class Node {
  public:
 /**  The parent subpath of this node */
-	SubPath * subpath;
+    SubPath * subpath;
 /**  Type is selected from NodeType.*/
-	guint type : 4;
+    guint type : 4;
 /**  Code refers to which ArtCode is used to represent the segment
  *  (which segment?).*/
-	guint code : 4;
+    guint code : 4;
 /**  Boolean.  Am I currently selected or not? */
-	guint selected : 1;
+    guint selected : 1;
 /**  */
-	Geom::Point pos;
+    Geom::Point pos;
 /**  */
-	Geom::Point origin;
+    Geom::Point origin;
 /**  Knots are Inkscape's way of providing draggable points.  This
  *  Knot is the point on the curve representing the endpoint.*/
-	SPKnot * knot;
+    SPKnot * knot;
 /**  The NodeSide in the 'next' direction */
-	NodeSide n;
+    NodeSide n;
 /**  The NodeSide in the 'previous' direction */
-	NodeSide p;
+    NodeSide p;
 
-	/** The pointer to the nodeside which we are dragging out with Shift */
-	NodeSide *dragging_out;
+    /** The pointer to the nodeside which we are dragging out with Shift */
+    NodeSide *dragging_out;
   
   /** Boolean.  Am I being dragged? */
   guint is_dragging : 1;
@@ -221,30 +221,37 @@ class Node {
  */
 class Path {
  public:
+    /** Constructor should private, people should create new nodepaths using sp_nodepath_new
+     *  But for some reason I cannot make sp_nodepath_new a friend :-(
+     */
+    Path() {};
+    /** Destructor */
+    ~Path();
+
 /**  Pointer to the current desktop, for reporting purposes */
-	SPDesktop * desktop;
+    SPDesktop * desktop;
 /**  The parent path of this nodepath */
-	SPObject * object;
+    SPObject * object;
 /**  The parent livepatheffect of this nodepath, if applicable */
     SPItem * item;
 /**  The context which created this nodepath.  Important if this nodepath is deleted */
-	ShapeEditor *shape_editor;
+    ShapeEditor *shape_editor;
 /**  The subpaths which comprise this NodePath */
-	GList * subpaths;
+    GList * subpaths;
 /**  A list of nodes which are currently selected */
-	GList * selected;
+    GList * selected;
 /**  Transforms (userspace <---> virtual space?   someone please describe )
-	 njh: I'd be guessing that these are item <-> desktop transforms.*/
-	Geom::Matrix i2d, d2i;
+     njh: I'd be guessing that these are item <-> desktop transforms.*/
+    Geom::Matrix i2d, d2i;
 /**  The DOM node which describes this NodePath */
     Inkscape::XML::Node *repr;
     gchar *repr_key;
     gchar *repr_nodetypes_key;
-	//STL compliant method to get the selected nodes
-	void selection(std::list<Node *> &l);
+    //STL compliant method to get the selected nodes
+    void selection(std::list<Node *> &l);
 
-	guint numSelected() {return (selected? g_list_length(selected) : 0);}
-	Geom::Point& singleSelectedCoords() {return (((Node *) selected->data)->pos);}
+    guint numSelected() {return (selected? g_list_length(selected) : 0);}
+    Geom::Point& singleSelectedCoords() {return (((Node *) selected->data)->pos);}
 
     /// draw a "sketch" of the path by using these variables
     SPCanvasItem *helper_path;
@@ -254,21 +261,21 @@ class Path {
     gdouble helperpath_width;
 
     // the helperpaths provided by all LPEs (and their paramaters) of the current item
-    HelperPathList* helper_path_vec;
+    HelperPathList helper_path_vec;
 
       /// true if we changed repr, to tell this change from an external one such as from undo, simplify, or another desktop
-	unsigned int local_change;
+    unsigned int local_change;
 
-	/// true if we're showing selected nodes' handles
-	bool show_handles;
+    /// true if we're showing selected nodes' handles
+    bool show_handles;
 
     /// true if the path cannot contain curves, just straight lines
     bool straight_path;
 
-	/// active_node points to the node that is currently mouseovered (= NULL if
-	/// there isn't any); we also consider the node mouseovered if it is covered
-	/// by one of its handles and the latter is mouseovered
-	static Node *active_node;
+    /// active_node points to the node that is currently mouseovered (= NULL if
+    /// there isn't any); we also consider the node mouseovered if it is covered
+    /// by one of its handles and the latter is mouseovered
+    static Node *active_node;
 };
 
 }  // namespace NodePath
@@ -282,7 +289,6 @@ enum {
 
 // Do function documentation in nodepath.cpp
 Inkscape::NodePath::Path * sp_nodepath_new (SPDesktop * desktop, SPObject *object, bool show_handles, const char * repr_key = NULL, SPItem *item = NULL);
-void sp_nodepath_destroy (Inkscape::NodePath::Path * nodepath);
 void sp_nodepath_deselect (Inkscape::NodePath::Path *nodepath);
 void sp_nodepath_select_all (Inkscape::NodePath::Path *nodepath, bool invert);
 void sp_nodepath_select_all_from_subpath(Inkscape::NodePath::Path *nodepath, bool invert);

@@ -155,7 +155,7 @@ struct SPItem : public SPObject {
     void raiseToTop();
     void lowerToBottom();
 
-    boost::optional<Geom::Rect> getBounds(Geom::Matrix const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
+    Geom::OptRect getBounds(Geom::Matrix const &transform, BBoxType type=APPROXIMATE_BBOX, unsigned int dkey=0) const;
 
     sigc::connection _clip_ref_connection;
     sigc::connection _mask_ref_connection;
@@ -214,9 +214,9 @@ struct SPItemClass {
 
 /* Methods */
 
-void sp_item_invoke_bbox(SPItem const *item, boost::optional<Geom::Rect> &bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
+void sp_item_invoke_bbox(SPItem const *item, Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
 void sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
-void sp_item_invoke_bbox_full(SPItem const *item, boost::optional<Geom::Rect> &bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear);
+void sp_item_invoke_bbox_full(SPItem const *item, Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear);
 void sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear) __attribute__ ((deprecated));
 
 unsigned sp_item_pos_in_parent(SPItem *item);
@@ -252,7 +252,7 @@ gint sp_item_event (SPItem *item, SPEvent *event);
 NRArenaItem *sp_item_get_arenaitem(SPItem *item, unsigned int key);
 
 void sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) __attribute__ ((deprecated));
-boost::optional<Geom::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
+Geom::OptRect sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX);
 
 Geom::Matrix i2anc_affine(SPObject const *item, SPObject const *ancestor);
 Geom::Matrix i2i_affine(SPObject const *src, SPObject const *dest);

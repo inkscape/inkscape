@@ -143,13 +143,19 @@ sp_canvas_bpath_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned
 
     cbp->affine = affine;
 
-    Geom::Rect bbox = bounds_exact_transformed(cbp->curve->get_pathvector(), affine);
+    Geom::OptRect bbox = bounds_exact_transformed(cbp->curve->get_pathvector(), affine);
 
-    item->x1 = (int)bbox.min()[Geom::X] - 1;
-    item->y1 = (int)bbox.min()[Geom::Y] - 1;
-    item->x2 = (int)bbox.max()[Geom::X] + 1;
-    item->y2 = (int)bbox.max()[Geom::Y] + 1;
-
+    if (bbox) {
+        item->x1 = (int)bbox->min()[Geom::X] - 1;
+        item->y1 = (int)bbox->min()[Geom::Y] - 1;
+        item->x2 = (int)bbox->max()[Geom::X] + 1;
+        item->y2 = (int)bbox->max()[Geom::Y] + 1;
+    } else {
+        item->x1 = 0;
+        item->y1 = 0;
+        item->x2 = 0;
+        item->y2 = 0;
+    }
     sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }
 

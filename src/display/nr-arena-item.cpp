@@ -255,9 +255,7 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
     item->ctm = childgc.transform;
 
     /* Invoke the real method */
-    item->state =
-        NR_ARENA_ITEM_VIRTUAL (item, update) (item, area, &childgc, state,
-                                              reset);
+    item->state = NR_ARENA_ITEM_VIRTUAL (item, update) (item, area, &childgc, state, reset);
     if (item->state & NR_ARENA_ITEM_STATE_INVALID)
         return item->state;
     /* Enlarge the bounding box to contain filter effects */
@@ -838,12 +836,12 @@ nr_arena_item_set_order (NRArenaItem *item, int order)
 }
 
 void
-nr_arena_item_set_item_bbox (NRArenaItem *item, boost::optional<Geom::Rect> &bbox)
+nr_arena_item_set_item_bbox (NRArenaItem *item, Geom::OptRect &bbox)
 {
     nr_return_if_fail(item != NULL);
     nr_return_if_fail(NR_IS_ARENA_ITEM(item));
 
-    if(bbox)  item->item_bbox = *bbox;
+    item->item_bbox = bbox;
 }
 
 /** Returns a background image for use with filter effects. */

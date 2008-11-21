@@ -1,9 +1,7 @@
-#define __SP_ITEM_PROPERTIES_C__
-
-/*
- * Object properties dialog
- *
- * Authors:
+/** @file
+ * @brief Object properties dialog
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>

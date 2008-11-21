@@ -42,6 +42,7 @@
 #include "live_effects/lpe-sketch.h"
 #include "live_effects/lpe-vonkoch.h"
 #include "live_effects/lpe-knot.h"
+#include "live_effects/lpe-hatches.h"
 #include "live_effects/lpe-test-doEffect-stack.h"
 #include "live_effects/lpe-gears.h"
 #include "live_effects/lpe-curvestitch.h"
@@ -99,6 +100,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {COPY_ROTATE,           N_("Rotate copies"),           "copy_rotate"},
     {RULER,                 N_("Ruler"),                   "ruler"},
     {SKETCH,                N_("Sketch"),                  "sketch"},
+    {HATCHES,               N_("Hatches"),                 "hatches"},
     {SPIRO,                 N_("Spiro spline"),            "spiro"},
     {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
@@ -136,6 +138,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case SKETCH:
             neweffect = static_cast<Effect*> ( new LPESketch(lpeobj) );
+            break;
+        case HATCHES:
+            neweffect = static_cast<Effect*> ( new LPEHatches(lpeobj) );
             break;
         case VONKOCH:
             neweffect = static_cast<Effect*> ( new LPEVonKoch(lpeobj) );
@@ -663,10 +668,9 @@ Effect::providesKnotholder()
     if (kh_entity_vector.size() > 0)
         return true;
 
-    // otherwise: are there any PointParams?
+    // otherwise: are there any parameters that have knotholderentities?
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
-//        if ( Inkscape::LivePathEffect::PointParam *pointparam = dynamic_cast<Inkscape::LivePathEffect::PointParam*>(*p) ) {
-        if (dynamic_cast<Inkscape::LivePathEffect::PointParam*>(*p)) {
+        if ((*p)->providesKnotHolderEntities()) {
             return true;
         }
     }

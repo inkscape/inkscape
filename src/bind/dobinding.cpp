@@ -1,6 +1,7 @@
 /**
- * This is a simple mechanism to bind Inkscape to Java, and thence
- * to all of the nice things that can be layered upon that. 
+ * @file
+ * @brief This is a simple mechanism to bind Inkscape to Java, and thence
+ * to all of the nice things that can be layered upon that.
  *
  * Authors:
  *   Bob Jamison

@@ -48,7 +48,7 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 		++it)
 	{
 		using Geom::X; using Geom::Y;
-		boost::optional<Geom::Rect> item_box(sp_item_bbox_desktop(*it));
+		Geom::OptRect item_box(sp_item_bbox_desktop(*it));
 		if (item_box) {
 			Geom::Point min(item_box->min() - .5*gap);
 			Geom::Point max(item_box->max() + .5*gap);

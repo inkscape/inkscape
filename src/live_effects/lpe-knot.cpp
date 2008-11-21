@@ -1,12 +1,10 @@
-#define INKSCAPE_LPE_KNOT_CPP
-/** \file
- * LPE <knot> implementation
+/** @file
+ * @brief LPE knot effect implementation
  */
-/*
- * Authors:
- *   JF Barraud
-*
-* Copyright (C) JF Barraud 2007 <jf.barraud@gmail.com>
+/* Authors:
+ *   Jean-Francois Barraud <jf.barraud@gmail.com>
+ *
+ * Copyright (C) 2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -107,8 +105,9 @@ findShadowedTime(Geom::Path const &patha,
     return Interval(tmin,tmax);
 }
 
+// TODO: Fix all this in 2geom!!!!
 //---------------------------------------------------------------------------
-// a 2Geom work around.
+// some 2Geom work around.
 //---------------------------------------------------------------------------
 
 //Cubic Bezier curves might self intersect; the 2geom code used to miss them.
@@ -133,28 +132,35 @@ split_at_horiz_vert_tgt (std::vector<Geom::Path> const & path_in){
     return ret;
 }
 
-
-//---------------------------------------------------------------------------
-//LPEKnot specific Crossing Data manipulation.
-//---------------------------------------------------------------------------
-
-//TODO: Fix this in 2Geom: I think CrossingSets should not contain duplicates.
+//TODO: Fix this in 2Geom; I think CrossingSets should not contain duplicates.
 Geom::CrossingSet crossingSet_remove_double(Geom::CrossingSet const &input){
     Geom::CrossingSet result(input.size());
     //Yeah, I know, there is a "unique" algorithm for that...
+    //Note: I'm not sure the duplicates are always consecutive!! (can be first and last, I think)
+    //Note: I also found crossings c with c.a==c.b and c.ta==c.tb . Is it normal?
+    //Note: I also found crossings c with c.ta or c.tb not in path[a] or path[b] domain. This is definitely not normal.
     Geom::Crossing last;
     for( unsigned i=0; i<input.size(); i++){
         for( unsigned j=0; j<input[i].size(); j++){
-            if( j==0 || !(input[i][j]==last) ){
-                result[i].push_back(input[i][j]);
-                last = input[i][j];
-            }else{
-                g_warning("Duplicate found in a Geom::CrossingSet!");
+            bool dup = false;
+            for ( unsigned k=0; k<result[i].size(); k++){
+                if ( input[i][j]==result[i][k] ){
+                    dup = true;
+                    g_warning("Duplicate found in a Geom::CrossingSet!");
+                    break;
+                }
+            }
+            if (!dup) {
+                result[i].push_back( input[i][j] );
             }
         }
     }
     return result;
 }
+
+//---------------------------------------------------------------------------
+//LPEKnot specific Crossing Data manipulation.
+//---------------------------------------------------------------------------
 
 //TODO: evaluate how usefull/lpeknot specific that is. Worth being moved to 2geom? (I doubt it)
 namespace LPEKnotNS {
@@ -173,15 +179,21 @@ namespace LPEKnotNS {
 CrossingPoints::CrossingPoints(Geom::CrossingSet const &input, std::vector<Geom::Path> const &path) : std::vector<CrossingPoint>()
 {
     using namespace Geom;
-//    g_print("JF>\nCrossing set content:\n");
+    //g_print("DBG>\nCrossing set content:\n");
     for( unsigned i=0; i<input.size(); i++){
         Crossings i_crossings = input[i];
         for( unsigned n=0; n<i_crossings.size(); n++ ){
             Crossing c = i_crossings[n];
-//            g_print("JF> (%u,%u) at times (%f,%f) ----->",c.a,c.b,c.ta,c.tb);
+            //g_print("DBG> [%u,%u]:(%u,%u) at times (%f,%f) ----->",i,n,c.a,c.b,c.ta,c.tb);
             unsigned j = c.getOther(i);
-            if (i<j || (i==j && c.ta<c.tb) ){
+            if (i<j || (i==j && c.ta<=c.tb) ){//FIXME: equality should not happen, but does happen.
                 CrossingPoint cp;
+                double ti = c.getTime(i);
+                //FIXME: times in crossing are sometimes out of range!!
+                //if (0<ti || ti > 1)g_print("oops! -->");
+                if (ti > 1) ti=1;
+                if (ti < 0) ti=0;
+
                 cp.pt = path[i].pointAt(c.getTime(i));
                 cp.i = i;
                 cp.j = j;
@@ -189,7 +201,7 @@ CrossingPoints::CrossingPoints(Geom::CrossingSet const &input, std::vector<Geom:
                 Crossing c_bar = c;
                 if (i==j){
                     c_bar.a  = c.b;
-                    c_bar.b  = c.a;
+                    c_bar.b  = c.a; 
                     c_bar.ta = c.tb;
                     c_bar.tb = c.ta;
                     c_bar.dir = !c.dir;
@@ -197,24 +209,37 @@ CrossingPoints::CrossingPoints(Geom::CrossingSet const &input, std::vector<Geom:
                 cp.nj = std::find(input[j].begin(),input[j].end(),c_bar)-input[j].begin();
                 cp.sign = 1;
                 push_back(cp);
-//                g_print("i=%u, ni=%u, j=%u, nj=%u\n",cp.i,cp.ni,cp.j,cp.nj);
-            }
-            else{
-//                g_print("\n");
+                //g_print("i=%u, ni=%u, j=%u, nj=%u\n",cp.i,cp.ni,cp.j,cp.nj);
+            }/*
+               else{
+                //debug purpose only: 
+                //This crossing is already registered in output. Just make sure it has a "mirror".
+                g_print("deja trouve?");
+                get(i,n);
                 bool found = false;
                 for( unsigned ii=0; ii<input.size(); ii++){
                     Crossings ii_crossings = input[ii];
                     for( unsigned nn=0; nn<ii_crossings.size(); nn++ ){
                         Crossing cc = ii_crossings[nn];
                         if (cc.b==c.a && cc.a==c.b && cc.ta==c.tb && cc.tb==c.ta) found = true;
+                        if ( (ii!=i || nn!=n) && 
+                             ( (cc.b==c.a && cc.a==c.b && cc.ta==c.tb && cc.tb==c.ta) ||
+                               (cc.a==c.a && cc.b==c.b && cc.ta==c.ta && cc.tb==c.tb) 
+                                 ) ) found = true;
                     }
                 }
-                if (!found) {
-                    throw std::exception();
-                }
+                assert( found );
+                g_print("  oui!\n");
             }
+             */
         }
     }
+
+    //g_print("CrossingPoints reslut:\n");
+    //for (unsigned k=0; k<size(); k++){
+    //    g_print("cpts[%u]: i=%u, ni=%u, j=%u, nj=%u\n",k,(*this)[k].i,(*this)[k].ni,(*this)[k].j,(*this)[k].nj);
+    //}
+
 }
 
 CrossingPoints::CrossingPoints(std::vector<double> const &input) : std::vector<CrossingPoint>()
@@ -386,18 +411,7 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &input_path)
 
     CrossingSet crossingTable = crossings_among(path_in);
 
-    for(unsigned i=0;i<crossingTable.size();i++){
-        for(unsigned j=0;j<crossingTable[i].size();j++){
-//            g_print("JF>avant: %u,%u,%f,%f\n",crossingTable[i][j].a, crossingTable[i][j].b, crossingTable[i][j].ta, crossingTable[i][j].tb);
-        }
-    }
     crossingTable = crossingSet_remove_double(crossingTable);
-
-    for(unsigned i=0;i<crossingTable.size();i++){
-        for(unsigned j=0;j<crossingTable[i].size();j++){
-//            g_print("JF>apres: %u,%u,%f,%f\n",crossingTable[i][j].a, crossingTable[i][j].b, crossingTable[i][j].ta, crossingTable[i][j].tb);
-        }
-    }
 
     crossing_points = LPEKnotNS::CrossingPoints(crossingTable, path_in);
     crossing_points.inherit_signs(old_crdata);
@@ -522,8 +536,8 @@ KnotHolderEntityCrossingSwitcher::knot_click(guint state)
 
 /* ######################## */
 
-} //namespace LivePathEffect (setq default-directory "c:/Documents And Settings/jf/Mes Documents/InkscapeSVN")
-} /* namespace Inkscape */
+} // namespace LivePathEffect
+} // namespace Inkscape
 
 /*
   Local Variables:
@@ -534,4 +548,4 @@ KnotHolderEntityCrossingSwitcher::knot_click(guint state)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

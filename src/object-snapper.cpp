@@ -138,7 +138,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                 if (SP_IS_GROUP(o)) {
                     _findCandidates(o, it, false, bbox_to_snap, snap_dim, false, Geom::identity());
                 } else {
-                    boost::optional<Geom::Rect> bbox_of_item = Geom::Rect();
+                    Geom::OptRect bbox_of_item = Geom::Rect();
                     if (clip_or_mask) {
                         // Oh oh, this will get ugly. We cannot use sp_item_i2d_affine directly because we need to
                         // insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
@@ -215,7 +215,7 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapPreferences::PointType
                     // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                     // of the item AND the bbox of the clipping path at the same time
                     if (!(*i).clip_or_mask) {  
-                        boost::optional<Geom::Rect> b = sp_item_bbox_desktop(root_item, bbox_type);
+                        Geom::OptRect b = sp_item_bbox_desktop(root_item, bbox_type);
                         if (b) {
                             for ( unsigned k = 0 ; k < 4 ; k++ ) {
                                 _points_to_snap_to->push_back(b->corner(k));
@@ -378,11 +378,12 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
                     // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                     // of the item AND the bbox of the clipping path at the same time
                     if (!(*i).clip_or_mask) { 
-                        NRRect rect;
-                        sp_item_invoke_bbox(root_item, &rect, i2doc, TRUE, bbox_type);
-                        Geom::Rect const rect2 = to_2geom(*rect.upgrade());
-                        Geom::PathVector *path = _getPathvFromRect(rect2);
-                        _paths_to_snap_to->push_back(path);                        
+                    	Geom::OptRect rect;
+                    	sp_item_invoke_bbox(root_item, rect, i2doc, TRUE, bbox_type);
+                        if (rect) {
+                        	Geom::PathVector *path = _getPathvFromRect(*rect);
+	                        _paths_to_snap_to->push_back(path);
+                        }
                     }
                 }
             }
@@ -406,8 +407,9 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
     bool const node_tool_active = _snap_to_itempath && selected_path != NULL;
     
     if (first_point) {
-        /* While editing a path in the node tool, findCandidates must ignore that path because 
-         * of the node snapping requirements (i.e. only unselected nodes must be snapable).
+        /* findCandidates() is used for snapping to both paths and nodes. It ignores the path that is
+         * currently being edited, because that path requires special care: when snapping to nodes 
+         * only the unselected nodes of that path should be considered, and these will be passed on separately.
          * This path must not be ignored however when snapping to the paths, so we add it here
          * manually when applicable. 
          * 
@@ -452,8 +454,15 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                     g_assert(unselected_nodes != NULL);
                     Geom::Point start_pt = _snapmanager->getDesktop()->doc2dt(curve->pointAt(0)); 
                     Geom::Point end_pt = _snapmanager->getDesktop()->doc2dt(curve->pointAt(1));                                    
-                    c1 = isUnselectedNode(start_pt, unselected_nodes);
-                    c2 = isUnselectedNode(end_pt, unselected_nodes);
+                    c1 = isUnselectedNode(start_pt, unselected_nodes); 
+                    c2 = isUnselectedNode(end_pt, unselected_nodes);  
+                    /* Unfortunately, this might yield false positives for coincident nodes. Inkscape might therefore mistakenly
+                     * snap to path segments that are not stationary. There are at least two possible ways to overcome this:
+                     * - Linking the individual nodes of the SPPath we have here, to the nodes of the NodePath::SubPath class as being
+                     *   used in sp_nodepath_selected_nodes_move. This class has a member variable called "selected". For this the nodes
+                     *   should be in the exact same order for both classes, so we can index them
+                     * - Replacing the SPPath being used here by the the NodePath::SubPath class; but how?
+                     */ 
                 }
                 
                 Geom::Point const sp_dt = _snapmanager->getDesktop()->doc2dt(sp_doc);                
@@ -550,7 +559,7 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
                                             Inkscape::SnapPreferences::PointType const &t,
                                             Geom::Point const &p,
                                             bool const &first_point,
-                                            boost::optional<Geom::Rect> const &bbox_to_snap,
+                                            Geom::OptRect const &bbox_to_snap,
                                             std::vector<SPItem const *> const *it,
                                             std::vector<Geom::Point> *unselected_nodes) const
 {
@@ -593,7 +602,7 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
                                                   Inkscape::SnapPreferences::PointType const &t,
                                                   Geom::Point const &p,
                                                   bool const &first_point,
-                                                  boost::optional<Geom::Rect> const &bbox_to_snap,
+                                                  Geom::OptRect const &bbox_to_snap,
                                                   ConstraintLine const &c,
                                                   std::vector<SPItem const *> const *it) const
 {

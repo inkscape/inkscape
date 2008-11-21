@@ -528,7 +528,7 @@ unsigned Geom::centroid(Piecewise<D2<SBasis> > const &p, Point& centroid, double
  * Below are basic functions dedicated to solving this assuming a0 and a1 !=0.
  */
 
-static Interval
+static OptInterval
 find_bounds_for_lambda0(double aa0,double aa1,double cc0,double cc1,
     int insist_on_speeds_signs){
 
@@ -541,7 +541,7 @@ find_bounds_for_lambda0(double aa0,double aa1,double cc0,double cc1,
     double c = (c0<c1 ? c0 : c1);
     double delta = 1-4*a*c;
     if ( delta < 0 )
-        return Interval();//return empty interval
+        return OptInterval();//return empty interval
     double lambda_max = (1+std::sqrt(delta))/2/a;
     
     result = Interval(c,lambda_max);
@@ -549,9 +549,10 @@ find_bounds_for_lambda0(double aa0,double aa1,double cc0,double cc1,
         result *= -1;
     if (insist_on_speeds_signs == 1){
         if (result.max() < 0)//Caution: setMin with max<new min...
-            return Interval();//return empty interval
+            return OptInterval();//return empty interval
         result.setMin(0);
     }
+    result = Interval(result.min()-.1,result.max()+.1);//just in case all our approx. were exact...
     return result;
 }
 
@@ -565,13 +566,13 @@ solve_lambda0(double a0,double a1,double c0,double c1,
     p.push_back(Linear( -a1*a0*(a0+2*c0), -a1*a0*(3*a0+2*c0) ));
     p.push_back(Linear( a1*a0*a0 ));
 
-    Interval domain = find_bounds_for_lambda0(a0,a1,c0,c1,insist_on_speeds_signs);
-    if ( domain.isEmpty() ) 
+    OptInterval domain = find_bounds_for_lambda0(a0,a1,c0,c1,insist_on_speeds_signs);
+    if ( !domain ) 
         return std::vector<double>();
-    p = compose(p,Linear(domain.min(),domain.max()));
+    p = compose(p,Linear(domain->min(),domain->max()));
     std::vector<double>rts = roots(p);
     for (unsigned i=0; i<rts.size(); i++){
-        rts[i] = domain.min()+rts[i]*domain.extent();
+        rts[i] = domain->min() + rts[i] * domain->extent();
     }
     return rts;
 }

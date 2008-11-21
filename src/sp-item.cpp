@@ -291,7 +291,7 @@ SPItem::setExplicitlyHidden(bool const val) {
  */
 void
 SPItem::setCenter(Geom::Point object_centre) {
-    boost::optional<Geom::Rect> bbox = getBounds(sp_item_i2d_affine(this));
+    Geom::OptRect bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
         transform_center_x = object_centre[Geom::X] - bbox->midpoint()[Geom::X];
         if (fabs(transform_center_x) < 1e-5) // rounding error
@@ -313,7 +313,7 @@ bool SPItem::isCenterSet() {
 }
 
 Geom::Point SPItem::getCenter() const {
-    boost::optional<Geom::Rect> bbox = getBounds(sp_item_i2d_affine(this));
+    Geom::OptRect bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
         return to_2geom(bbox->midpoint()) + Geom::Point (this->transform_center_x, this->transform_center_y);
     } else {
@@ -642,14 +642,13 @@ sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
 
     /* Update bounding box data used by filters */
     if (item->style->filter.set && item->display) {
-        NRRect item_bbox;
-        sp_item_invoke_bbox(item, &item_bbox, Geom::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
-        boost::optional<Geom::Rect> i_bbox = item_bbox;
+        Geom::OptRect item_bbox;
+        sp_item_invoke_bbox(item, item_bbox, Geom::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
 
         SPItemView *itemview = item->display;
         do {
             if (itemview->arenaitem)
-                nr_arena_item_set_item_bbox(itemview->arenaitem, i_bbox);
+                nr_arena_item_set_item_bbox(itemview->arenaitem, item_bbox);
         } while ( (itemview = itemview->next) );
     }
 
@@ -725,22 +724,22 @@ sp_item_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape
  * \return  There is no guarantee that the return value will contain a rectangle.
             If this item does not have a boundingbox, it might well be empty.
  */
-boost::optional<Geom::Rect> SPItem::getBounds(Geom::Matrix const &transform,
+Geom::OptRect SPItem::getBounds(Geom::Matrix const &transform,
                                       SPItem::BBoxType type,
                                       unsigned int /*dkey*/) const
 {
-    boost::optional<Geom::Rect> r;
+    Geom::OptRect r;
     sp_item_invoke_bbox_full(this, r, transform, type, TRUE);
     return r;
 }
 
 void
-sp_item_invoke_bbox(SPItem const *item, boost::optional<Geom::Rect> &bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
+sp_item_invoke_bbox(SPItem const *item, Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
 {
     sp_item_invoke_bbox_full(item, bbox, transform, type, clear);
 }
 
-// DEPRECATED to phase out the use of NRRect in favor of boost::optional<Geom::Rect>
+// DEPRECATED to phase out the use of NRRect in favor of Geom::OptRect
 void
 sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const clear, SPItem::BBoxType type)
 {
@@ -755,13 +754,13 @@ sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transf
  *               function returns. If this item does not have a boundingbox, this might well be empty.
  */
 void
-sp_item_invoke_bbox_full(SPItem const *item, boost::optional<Geom::Rect> &bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear)
+sp_item_invoke_bbox_full(SPItem const *item, Geom::OptRect &bbox, Geom::Matrix const &transform, unsigned const flags, unsigned const clear)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
 
     if (clear) {
-        bbox = boost::optional<Geom::Rect>();
+        bbox = Geom::OptRect();
     }
 
     // TODO: replace NRRect by Geom::Rect, for all SPItemClasses, and for SP_CLIPPATH
@@ -844,20 +843,20 @@ sp_item_invoke_bbox_full(SPItem const *item, boost::optional<Geom::Rect> &bbox, 
         // or it has explicitely been set to be like this (e.g. in sp_shape_bbox)
         
         // When x0 > x1 or y0 > y1, the bbox is considered to be "nothing", although it has not been 
-        // explicitely defined this way for NRRects (as opposed to boost::optional<Geom::Rect>)
+        // explicitely defined this way for NRRects (as opposed to Geom::OptRect)
         // So union bbox with nothing = do nothing, just return
         return;
     }
 
-    // Do not use temp_bbox.upgrade() here, because it uses a test that returns an empty boost::optional<Geom::Rect>()
+    // Do not use temp_bbox.upgrade() here, because it uses a test that returns an empty Geom::OptRect()
     // for any rectangle with zero area. The geometrical bbox of for example a vertical line
-    // would therefore be translated into empty boost::optional<Geom::Rect>() (see bug https://bugs.launchpad.net/inkscape/+bug/168684)
-    boost::optional<Geom::Rect> temp_bbox_new = Geom::Rect(Geom::Point(temp_bbox.x0, temp_bbox.y0), Geom::Point(temp_bbox.x1, temp_bbox.y1));
+    // would therefore be translated into empty Geom::OptRect() (see bug https://bugs.launchpad.net/inkscape/+bug/168684)
+    Geom::OptRect temp_bbox_new = Geom::Rect(Geom::Point(temp_bbox.x0, temp_bbox.y0), Geom::Point(temp_bbox.x1, temp_bbox.y1));
 
     bbox = Geom::unify(bbox, temp_bbox_new);
 }
 
-// DEPRECATED to phase out the use of NRRect in favor of boost::optional<Geom::Rect>
+// DEPRECATED to phase out the use of NRRect in favor of Geom::OptRect
 /** Calls \a item's subclass' bounding box method; clips it by the bbox of clippath, if any; and
  * unions the resulting bbox with \a bbox. If \a clear is true, empties \a bbox first. Passes the
  * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
@@ -931,9 +930,9 @@ sp_item_bbox_desktop(SPItem *item, NRRect *bbox, SPItem::BBoxType type)
     sp_item_invoke_bbox(item, bbox, sp_item_i2d_affine(item), TRUE, type);
 }
 
-boost::optional<Geom::Rect> sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
+Geom::OptRect sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
 {
-    boost::optional<Geom::Rect> rect = boost::optional<Geom::Rect>();
+    Geom::OptRect rect = Geom::OptRect();
     sp_item_invoke_bbox(item, rect, sp_item_i2d_affine(item), TRUE, type);
     return rect;
 }
@@ -945,7 +944,7 @@ static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p, Ink
 	 * We don't know what shape we could be dealing with here, so we'll just
 	 * return the corners of the bounding box */
 
-	boost::optional<Geom::Rect> bbox = item->getBounds(sp_item_i2d_affine(item));
+	Geom::OptRect bbox = item->getBounds(sp_item_i2d_affine(item));
     
     if (bbox) {
         Geom::Point p1, p2;
@@ -1134,10 +1133,9 @@ sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
             SP_OBJECT(mask)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
         NR_ARENA_ITEM_SET_DATA(ai, item);
-        NRRect item_bbox;
-        sp_item_invoke_bbox(item, &item_bbox, Geom::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
-        boost::optional<Geom::Rect> i_bbox = item_bbox;
-        nr_arena_item_set_item_bbox(ai, i_bbox);
+        Geom::OptRect item_bbox;
+        sp_item_invoke_bbox(item, item_bbox, Geom::identity(), TRUE, SPItem::GEOMETRIC_BBOX);
+        nr_arena_item_set_item_bbox(ai, item_bbox);
     }
 
     return ai;
@@ -1740,7 +1738,7 @@ sp_item_convert_to_guides(SPItem *item) {
     SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
         SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
 
-    boost::optional<Geom::Rect> bbox = sp_item_bbox_desktop(item, bbox_type);
+    Geom::OptRect bbox = sp_item_bbox_desktop(item, bbox_type);
     if (!bbox) {
         g_warning ("Cannot determine item's bounding box during conversion to guides.\n");
         return;

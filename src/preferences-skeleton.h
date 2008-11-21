@@ -248,6 +248,8 @@ static char const preferences_skeleton[] =
 "    <group id=\"wheelzooms\" value=\"0\"/>\n"
 "    <group id=\"transientpolicy\" value=\"1\"/>\n"
 "    <group id=\"scrollingacceleration\" value=\"0.4\"/>\n"
+"    <group id=\"snapdelay\" value=\"150\"/>\n"	
+"    <group id=\"snapindicator\" value=\"1\"/>\n"
 "    <group id=\"autoscrollspeed\" value=\"0.7\"/>\n"
 "    <group id=\"autoscrolldistance\" value=\"-10\"/>\n"
 "    <group id=\"simplifythreshold\" value=\"0.002\"/>\n"

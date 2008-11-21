@@ -11,18 +11,18 @@ widgets/clean:
 	rm -f widgets/libspwidgets.a $(widgets_libspwidgets_a_OBJECTS)
 
 widgets_libspwidgets_a_SOURCES =	\
-	widgets/button.cpp	\
-	widgets/button.h	\
+	widgets/button.cpp		\
+	widgets/button.h		\
 	widgets/calligraphic-profile-rename.cpp	\
 	widgets/calligraphic-profile-rename.h	\
 	widgets/dash-selector.cpp	\
-	widgets/dash-selector.h	\
+	widgets/dash-selector.h		\
 	widgets/dash-selector.cpp	\
-	widgets/dash-selector.h	\
+	widgets/dash-selector.h		\
 	widgets/desktop-widget.cpp	\
 	widgets/desktop-widget.h	\
 	widgets/font-selector.cpp	\
-	widgets/font-selector.h	\
+	widgets/font-selector.h		\
 	widgets/gradient-toolbar.cpp	\
 	widgets/gradient-toolbar.h	\
 	widgets/gradient-image.cpp	\
@@ -31,14 +31,14 @@ widgets_libspwidgets_a_SOURCES =	\
 	widgets/gradient-selector.h	\
 	widgets/gradient-vector.cpp	\
 	widgets/gradient-vector.h	\
-	widgets/icon.cpp	\
-	widgets/icon.h	\
-	widgets/layer-selector.h \
-	widgets/layer-selector.cpp \
+	widgets/icon.cpp		\
+	widgets/icon.h			\
+	widgets/layer-selector.h	\
+	widgets/layer-selector.cpp	\
 	widgets/paint-selector.cpp	\
 	widgets/paint-selector.h	\
-	widgets/ruler.cpp	\
-	widgets/ruler.h	\
+	widgets/ruler.cpp		\
+	widgets/ruler.h			\
 	widgets/select-toolbar.cpp	\
 	widgets/select-toolbar.h	\
 	widgets/shrink-wrap-button.cpp	\
@@ -61,8 +61,8 @@ widgets_libspwidgets_a_SOURCES =	\
 	widgets/sp-color-wheel-selector.h	\
 	widgets/sp-color-wheel.cpp	\
 	widgets/sp-color-wheel.h	\
-	widgets/sp-widget.cpp	\
-	widgets/sp-widget.h\
+	widgets/sp-widget.cpp		\
+	widgets/sp-widget.h		\
 	widgets/sp-xmlview-attr-list.cpp	\
 	widgets/sp-xmlview-attr-list.h	\
 	widgets/sp-xmlview-content.cpp	\
@@ -72,9 +72,9 @@ widgets_libspwidgets_a_SOURCES =	\
 	widgets/spinbutton-events.cpp	\
 	widgets/spinbutton-events.h	\
 	widgets/spw-utilities.cpp	\
-	widgets/spw-utilities.h	\
-	widgets/toolbox.cpp	\
-	widgets/toolbox.h	\
+	widgets/spw-utilities.h		\
+	widgets/toolbox.cpp		\
+	widgets/toolbox.h		\
 	widgets/widget-sizes.h
 
 widgets/button.$(OBJEXT): helper/sp-marshal.h

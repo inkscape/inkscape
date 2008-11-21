@@ -203,9 +203,10 @@ sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpointer da
 static void
 sp_lpetool_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
-    // FIXME: how to set this correcly? the value from preferences-skeleton.h doesn't seem to get
-    // read (it wants to set drag = 1)
-    // lpetool_parent_class->set(ec, key, "drag");
+    if (val->getEntryName() == "mode") {
+        Inkscape::Preferences::get()->setString("/tools/geometric/mode", "drag");
+        SP_PEN_CONTEXT(ec)->mode = SP_PEN_CONTEXT_MODE_DRAG;
+    }
 
     /*
     //pass on up to parent class to handle common attributes.

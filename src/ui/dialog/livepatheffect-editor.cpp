@@ -27,6 +27,7 @@
 #include "path-chemistry.h"
 #include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
+#include "live_effects/lpeobject-reference.h"
 #include "gtkmm/widget.h"
 #include <vector>
 #include "inkscape.h"

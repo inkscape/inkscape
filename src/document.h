@@ -21,7 +21,7 @@
 #include <sigc++/class_slot.h>
 
 #include "libcroco/cr-cascade.h"
-#include <2geom/rect.h>
+#include <2geom/forward.h>
 
 #include "gc-managed.h"
 #include "gc-finalized.h"
@@ -40,10 +40,6 @@ struct SPDesktop;
 struct SPItem;
 struct SPObject;
 struct SPGroup;
-
-namespace Geom {
-    class Point;
-}
 
 namespace Inkscape {
     struct Application;
@@ -187,6 +183,7 @@ SPDocument *sp_document_create(Inkscape::XML::Document *rdoc, gchar const *uri, 
 
 gdouble sp_document_width (SPDocument * document);
 gdouble sp_document_height (SPDocument * document);
+Geom::Point sp_document_dimensions (SPDocument * document);
 
 struct SPUnit;
 

@@ -962,10 +962,10 @@ static Geom::Matrix getODFTransform(const SPItem *item)
  * Get the bounding box of an item, as mapped onto
  * an ODF document, in cm.
  */
-static boost::optional<Geom::Rect> getODFBoundingBox(const SPItem *item)
+static Geom::OptRect getODFBoundingBox(const SPItem *item)
 {
-    boost::optional<Geom::Rect> bbox_temp = sp_item_bbox_desktop((SPItem *)item);
-    boost::optional<Geom::Rect> bbox;
+    Geom::OptRect bbox_temp = sp_item_bbox_desktop((SPItem *)item);
+    Geom::OptRect bbox;
     if (bbox_temp) {
         bbox = *bbox_temp;
         double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
@@ -1866,7 +1866,7 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
     Geom::Matrix tf        = getODFTransform(item);
 
     //### Get ODF bounding box params for item
-    boost::optional<Geom::Rect> bbox = getODFBoundingBox(item);
+    Geom::OptRect bbox = getODFBoundingBox(item);
     if (!bbox) {
         return true;
     }

@@ -16,9 +16,9 @@
 #include "libnr/nr-pixops.h"
 #include "display/nr-light.h"
 #include "display/nr-3dutils.h"
-#include "sp-fedistantlight.h"
-#include "sp-fepointlight.h"
-#include "sp-fespotlight.h"
+#include "filters/distantlight.h"
+#include "filters/pointlight.h"
+#include "filters/spotlight.h"
 
 namespace NR {
    

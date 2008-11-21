@@ -12,6 +12,7 @@
 #include "sp-canvas-util.h"
 #include "display-forward.h"
 #include "sodipodi-ctrl.h"
+#include "libnr/nr-pixops.h"
 
 enum {
     ARG_0,
@@ -121,6 +122,11 @@ sp_ctrl_destroy (GtkObject *object)
     g_return_if_fail (SP_IS_CTRL (object));
 
     ctrl = SP_CTRL (object);
+
+    if (ctrl->cache) {
+        g_free(ctrl->cache);
+        ctrl->cache = NULL;
+    }
 
     if (GTK_OBJECT_CLASS (parent_class)->destroy)
         (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
@@ -314,10 +320,12 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
 
     side = (ctrl->span * 2 +1);
     c = ctrl->span ;
-    g_free (ctrl->cache);
     size = (side) * (side) * 4;
-    ctrl->cache = (guchar*)g_malloc (size);
     if (side < 2) return;
+
+    if (ctrl->cache)
+        g_free (ctrl->cache);
+    ctrl->cache = (guchar*)g_malloc (size);
 
     switch (ctrl->shape) {
         case SP_CTRL_SHAPE_SQUARE:
@@ -482,9 +490,9 @@ sp_ctrl_build_cache (SPCtrl *ctrl)
 }
 
 // composite background, foreground, alpha for xor mode
-#define COMPOSE_X(b,f,a) ( ( ((guchar) b) * ((guchar) (0xff - a)) + ((guchar) ((b ^ ~f) + b/4 - (b>127? 63 : 0))) * ((guchar) a) ) / 0xff )
+#define COMPOSE_X(b,f,a) ( FAST_DIVIDE<255>( ((guchar) b) * ((guchar) (0xff - a)) + ((guchar) ((b ^ ~f) + b/4 - (b>127? 63 : 0))) * ((guchar) a) ) )
 // composite background, foreground, alpha for color mode
-#define COMPOSE_N(b,f,a) ( ( ((guchar) b) * ((guchar) (0xff - a)) + ((guchar) f) * ((guchar) a) ) / 0xff )
+#define COMPOSE_N(b,f,a) ( FAST_DIVIDE<255>( ((guchar) b) * ((guchar) (0xff - a)) + ((guchar) f) * ((guchar) a) ) )
 
 static void
 sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)

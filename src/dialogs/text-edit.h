@@ -1,12 +1,18 @@
-#ifndef SP_TEXT_EDIT_H
-#define SP_TEXT_EDIT_H
-
-/**
- * \brief text-edit
- *
- * Text editing and font changes
- *
+/** @file
+ * @brief Text-edit
  */
+/* Authors:
+ *   Lauris Kaplinski <lauris@ximian.com>
+ *   bulia byak <buliabyak@users.sf.net>
+ *   Johan Engelen <goejendaagh@zonnet.nl>
+ *
+ * Copyright (C) 1999-2007 Authors
+ * Copyright (C) 2000-2001 Ximian, Inc.
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
+#ifndef SEEN_DIALOGS_TEXT_EDIT_H
+#define SEEN_DIALOGS_TEXT_EDIT_H
 
 void sp_text_edit_dialog (void);
 void sp_text_edit_dialog_default_set_insensitive (); //FIXME: Replace trough a verb

@@ -25,7 +25,7 @@
 #include "style.h"
 #include "preferences.h"
 #include "sp-use.h"
-#include "sp-feblend.h"
+#include "filters/blend.h"
 #include "sp-filter.h"
 #include "sp-filter-reference.h"
 #include "sp-gaussian-blur.h"

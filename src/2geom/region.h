@@ -48,14 +48,14 @@ class Region {
     friend Shape shape_boolean(bool rev, Shape const & a, Shape const & b, CrossingSet const & crs);
 
     Path boundary;
-    mutable boost::optional<Rect> box;
+    mutable OptRect box;
     bool fill;
   public:
     Region() : fill(true) {}
     explicit Region(Path const &p) : boundary(p) { fill = path_direction(p); }
     Region(Path const &p, bool dir) : boundary(p), fill(dir) {}
-    Region(Path const &p, boost::optional<Rect> const &b) : boundary(p), box(b) { fill = path_direction(p); }
-    Region(Path const &p, boost::optional<Rect> const &b, bool dir) : boundary(p), box(b), fill(dir) {}
+    Region(Path const &p, OptRect const &b) : boundary(p), box(b) { fill = path_direction(p); }
+    Region(Path const &p, OptRect const &b, bool dir) : boundary(p), box(b), fill(dir) {}
     
     unsigned size() const { return boundary.size(); }
     
@@ -65,7 +65,7 @@ class Region {
     
     operator Path() const { return boundary; }
     Rect boundsFast() const {
-        if(!box) box = boost::optional<Rect>(boundary.boundsFast());
+        if(!box) box = boundary.boundsFast();  /// \todo this doesn't look right at all...
         return *box;
     }
     

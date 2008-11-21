@@ -25,18 +25,12 @@
 #include "system.h"
 #include "db.h"
 #include "internal/svgz.h"
-#include "internal/ps.h"
-#ifdef HAVE_CAIRO_PDF
-# include "internal/pdf-cairo.h"
-#endif
 #ifdef WIN32
 # include "internal/win32.h"
 # include "internal/emf-win32-inout.h"
 # include "internal/emf-win32-print.h"
 #endif
-#include "internal/ps-out.h"
 #ifdef HAVE_CAIRO_PDF
-# include "internal/cairo-pdf-out.h"
 # include "internal/cairo-renderer-pdf-out.h"
 # include "internal/cairo-png-out.h"
 # include "internal/cairo-ps-out.h"
@@ -52,7 +46,6 @@
 #include "internal/odf.h"
 #include "internal/latex-pstricks-out.h"
 #include "internal/latex-pstricks.h"
-#include "internal/eps-out.h"
 #include "internal/gdkpixbuf-input.h"
 #include "internal/bluredge.h"
 #include "internal/gimpgrad.h"
@@ -160,19 +153,12 @@ init()
     /* TODO: Change to Internal */
     Internal::Svg::init();
     Internal::Svgz::init();
-    //Internal::PsOutput::init(); // disabled, to be deleted, replaced by CairoPsOutput
-    //Internal::EpsOutput::init(); // disabled, to be deleted, replaced by CairoEpsOutput
-    Internal::PrintPS::init();
+
 #ifdef HAVE_CAIRO_PDF
-    if (prefs->getBool("/options/useoldpdfexporter/value")) {
-    //g_print ("Using CairoPdfOutput: old pdf exporter\n");
-    Internal::CairoPdfOutput::init();
-    Internal::PrintCairoPDF::init();
-    } else {
     //g_print ("Using CairoRendererPdfOutput: new pdf exporter\n");
     Internal::CairoRendererPdfOutput::init();
     Internal::CairoRendererOutput::init();
-    }
+
     Internal::CairoPsOutput::init();
     Internal::CairoEpsOutput::init();
 #endif

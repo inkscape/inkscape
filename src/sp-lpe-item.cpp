@@ -209,19 +209,17 @@ sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *value)
                         try {
                             path_effect_ref->link(href.c_str());
                         } catch (Inkscape::BadURIException e) {
-                            g_warning("BadURIException: %s", e.what());
+                            g_warning("BadURIException when trying to find LPE: %s", e.what());
                             path_effect_ref->unlink();
                             delete path_effect_ref;
                             path_effect_ref = NULL;
                         }
 
-                        if (path_effect_ref && path_effect_ref->lpeobject && path_effect_ref->lpeobject->get_lpe()) {
-                            lpeitem->path_effect_list->push_back(path_effect_ref);
-                        } else {
-                            // something has gone wrong in finding the right patheffect. For example when the specified LPE name does not exist.
-                            path_effect_ref->unlink();
-                            delete path_effect_ref;
-                            path_effect_ref = NULL;
+                        lpeitem->path_effect_list->push_back(path_effect_ref);
+                        if ( !(path_effect_ref->lpeobject && path_effect_ref->lpeobject->get_lpe()) ) {
+                            // something has gone wrong in finding the right patheffect.
+                            g_warning("Unknown LPE type specified, LPE stack effectively disabled");
+                            // keep the effect in the lpestack, so the whole stack is effectively disabled but maintained
                         }
                     }
                 }
@@ -300,9 +298,12 @@ sp_lpe_item_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::
     return repr;
 }
 
-void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
-    if (!lpeitem) return;
-    if (!curve) return;
+/**
+ * returns true when LPE was successful.
+ */
+bool sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
+    if (!lpeitem) return false;
+    if (!curve) return false;
 
     if (sp_lpe_item_has_path_effect(lpeitem) && sp_lpe_item_path_effects_enabled(lpeitem)) {
         for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); ++it)
@@ -313,22 +314,22 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
                  * For example, this happens when copy pasting an object with LPE applied. Probably because the object is pasted while the effect is not yet pasted to defs, and cannot be found.
                  */
                 g_warning("sp_lpe_item_perform_path_effect - NULL lpeobj in list!");
-                return;
+                return false;
             }
             Inkscape::LivePathEffect::Effect *lpe = lpeobj->get_lpe();
             if (!lpe) {
                 /** \todo Investigate the cause of this.
                  * Not sure, but I think this can happen when an unknown effect type is specified...
                  */
-                g_warning("sp_lpe_item_perform_path_effect - lpeobj without lpe!");
-                return;
+                g_warning("sp_lpe_item_perform_path_effect - lpeobj with invalid lpe in the stack!");
+                return false;
             }
 
             if (lpe->isVisible()) {
                 if (lpe->acceptsNumClicks() > 0 && !lpe->isReady()) {
                     // if the effect expects mouse input before being applied and the input is not finished
                     // yet, we don't alter the path
-                    return;
+                    return false;
                 }
 
                 // Groups have their doBeforeEffect called elsewhere
@@ -345,10 +346,13 @@ void sp_lpe_item_perform_path_effect(SPLPEItem *lpeitem, SPCurve *curve) {
                         SP_ACTIVE_DESKTOP->messageStack()->flash( Inkscape::WARNING_MESSAGE,
                                         _("An exception occurred during execution of the Path Effect.") );
                     }
+                    return false;
                 }
             }
         }
     }
+
+    return true;
 }
 
 /**

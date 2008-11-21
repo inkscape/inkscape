@@ -1,7 +1,7 @@
-/** \file
- * \brief  The top level class for managing the application.
- *
- * Authors:
+/** @file
+ * @brief  The top level class for managing the application
+ */
+/* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *

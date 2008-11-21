@@ -455,8 +455,17 @@ sp_spiral_set_shape (SPShape *shape)
 		sp_spiral_fit_and_draw (spiral, c, (1.0 - t)/(SAMPLE_SIZE - 1.0),
 					darray, hat1, hat2, &t);
 
-    sp_lpe_item_perform_path_effect(SP_LPE_ITEM (spiral), c);
-    sp_shape_set_curve_insync ((SPShape *) spiral, c, TRUE);
+    /* Reset the shape'scurve to the "original_curve"
+     * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
+    sp_shape_set_curve_insync (shape, c, TRUE);
+    if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(shape)) && sp_lpe_item_path_effects_enabled(SP_LPE_ITEM(shape))) {
+        SPCurve *c_lpe = c->copy();
+        bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (shape), c_lpe);
+        if (success) {
+            sp_shape_set_curve_insync (shape, c_lpe, TRUE);
+        }
+        c_lpe->unref();
+    }
     c->unref();
 }
 

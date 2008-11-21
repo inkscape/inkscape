@@ -15,9 +15,9 @@
 
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "sp-namedview.h"
 #include "display/sodipodi-ctrl.h"
 #include "knot.h"
+#include "preferences.h"
 
 namespace Inkscape {
 namespace Display {
@@ -47,9 +47,10 @@ SnapIndicator::set_new_snappoint(Inkscape::SnappedPoint const p)
     }
     */
     
-    SPNamedView *nv = sp_desktop_namedview(_desktop);
-    
-    if (nv->snapindicator) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool value = prefs->getBool("/options/snapindicator/value", true);
+    	
+    if (value) {
         // TODO add many different kinds of snap indicator :-)
         // For this we should use p->getTarget() to find out what has snapped 
         // and adjust the shape of the snapindicator accordingly, e.g. a cross

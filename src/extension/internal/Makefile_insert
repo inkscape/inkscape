@@ -98,16 +98,8 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/svg.cpp	\
 	extension/internal/svgz.h	\
 	extension/internal/svgz.cpp	\
-	extension/internal/ps.h	\
-	extension/internal/ps.cpp	\
-	extension/internal/ps-out.h	\
-	extension/internal/ps-out.cpp	\
-	extension/internal/pdf-cairo.cpp \
-	extension/internal/pdf-cairo.h \
 	extension/internal/pdf-input-cairo.cpp \
 	extension/internal/pdf-input-cairo.h \
-	extension/internal/cairo-pdf-out.h	\
-	extension/internal/cairo-pdf-out.cpp	\
 	extension/internal/cairo-ps-out.h	\
 	extension/internal/cairo-ps-out.cpp	\
 	extension/internal/cairo-render-context.h	\
@@ -118,8 +110,6 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/cairo-renderer-pdf-out.cpp	\
 	extension/internal/cairo-png-out.h \
 	extension/internal/cairo-png-out.cpp \
-	extension/internal/eps-out.h	\
-	extension/internal/eps-out.cpp	\
 	extension/internal/javafx-out.cpp	\
 	extension/internal/javafx-out.h	\
 	extension/internal/gdkpixbuf-input.h	\

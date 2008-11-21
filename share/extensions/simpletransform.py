@@ -27,10 +27,10 @@ def parseTransform(transf,mat=[[1.0,0.0,0.0],[0.0,1.0,0.0]]):
     if transf=="" or transf==None:
         return(mat)
     stransf = transf.strip()
-    result=re.match("(translate|scale|rotate|skewX|skewY|matrix)\s*\(([^)]*)\)",stransf)
+    result=re.match("(translate|scale|rotate|skewX|skewY|matrix)\s*\(([^)]*)\)\s*,?",stransf)
 #-- translate --
     if result.group(1)=="translate":
-        args=result.group(2).replace(' ',',').split(",")
+        args=result.group(2).replace(',',' ').split()
         dx=float(args[0])
         if len(args)==1:
             dy=0.0
@@ -39,7 +39,7 @@ def parseTransform(transf,mat=[[1.0,0.0,0.0],[0.0,1.0,0.0]]):
         matrix=[[1,0,dx],[0,1,dy]]
 #-- scale --
     if result.group(1)=="scale":
-        args=result.group(2).replace(' ',',').split(",")
+        args=result.group(2).replace(',',' ').split()
         sx=float(args[0])
         if len(args)==1:
             sy=sx
@@ -48,7 +48,7 @@ def parseTransform(transf,mat=[[1.0,0.0,0.0],[0.0,1.0,0.0]]):
         matrix=[[sx,0,0],[0,sy,0]]
 #-- rotate --
     if result.group(1)=="rotate":
-        args=result.group(2).replace(' ',',').split(",")
+        args=result.group(2).replace(',',' ').split()
         a=float(args[0])*math.pi/180
         if len(args)==1:
             cx,cy=(0.0,0.0)
@@ -65,7 +65,7 @@ def parseTransform(transf,mat=[[1.0,0.0,0.0],[0.0,1.0,0.0]]):
         matrix=[[1,0,0],[math.tan(a),1,0]]
 #-- matrix --
     if result.group(1)=="matrix":
-        a11,a21,a12,a22,v1,v2=result.group(2).replace(' ',',').split(",")
+        a11,a21,a12,a22,v1,v2=result.group(2).replace(',',' ').split()
         matrix=[[float(a11),float(a12),float(v1)],[float(a21),float(a22),float(v2)]]
 
     matrix=composeTransform(mat,matrix)

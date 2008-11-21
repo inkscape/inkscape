@@ -1,18 +1,17 @@
-#ifndef INKSCAPE_LPE_SKETCH_H
-#define INKSCAPE_LPE_SKETCH_H
-
 /** \file
- * LPE <sketch> implementation, see lpe-sketch.cpp.
+ * @brief LPE sketch effect implementation, see lpe-sketch.cpp.
  */
-
-/*
- * Authors:
- *   JFB, but derived from Johan Engelen!
-*
-* Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+/* Authors:
+ *   Jean-Francois Barraud <jf.barraud@gmail.com>
+ *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *
+ * Copyright (C) 2007 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifndef INKSCAPE_LPE_SKETCH_H
+#define INKSCAPE_LPE_SKETCH_H
 
 #include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
@@ -59,3 +58,14 @@ private:
 } //namespace Inkscape
 
 #endif
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

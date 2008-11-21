@@ -78,7 +78,7 @@ public:
     bool                 FontMetrics(double &ascent, double &descent, double &leading);
     bool                 FontSlope(double &run, double &rise);
                                 // for generating slanted cursors for oblique fonts
-    boost::optional<Geom::Rect>             BBox(int glyph_id);
+    Geom::OptRect             BBox(int glyph_id);
 
 		// creates a rasterfont for the given style
     raster_font*         RasterFont(Geom::Matrix const &trs, double stroke_width,

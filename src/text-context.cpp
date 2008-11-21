@@ -446,7 +446,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
             item_ungrouped = desktop->item_at_point(Geom::Point(event->button.x, event->button.y), TRUE);
             if (SP_IS_TEXT(item_ungrouped) || SP_IS_FLOWTEXT(item_ungrouped)) {
                 sp_canvas_item_show(tc->indicator);
-                boost::optional<Geom::Rect> ibbox = sp_item_bbox_desktop(item_ungrouped);
+                Geom::OptRect ibbox = sp_item_bbox_desktop(item_ungrouped);
                 if (ibbox) {
                     SP_CTRLRECT(tc->indicator)->setRectangle(*ibbox);
                 }
@@ -1609,7 +1609,7 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
             SPItem *frame = SP_FLOWTEXT(tc->text)->get_frame (NULL); // first frame only
             if (frame) {
                 sp_canvas_item_show(tc->frame);
-                boost::optional<Geom::Rect> frame_bbox = sp_item_bbox_desktop(frame);
+                Geom::OptRect frame_bbox = sp_item_bbox_desktop(frame);
                 if (frame_bbox) {
                     SP_CTRLRECT(tc->frame)->setRectangle(*frame_bbox);
                 }
@@ -1668,10 +1668,10 @@ sp_text_context_timeout(SPTextContext *tc)
         sp_canvas_item_show(tc->cursor);
         if (tc->phase) {
             tc->phase = 0;
-            sp_ctrlline_set_rgba32(SP_CTRLLINE(tc->cursor), 0xffffffff);
+            sp_ctrlline_set_rgba32(SP_CTRLLINE(tc->cursor), 0x000000ff);
         } else {
             tc->phase = 1;
-            sp_ctrlline_set_rgba32(SP_CTRLLINE(tc->cursor), 0x000000ff);
+            sp_ctrlline_set_rgba32(SP_CTRLLINE(tc->cursor), 0xffffffff);
         }
     }
 

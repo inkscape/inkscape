@@ -1,22 +1,21 @@
-#ifndef INKSCAPE_LPE_KNOT_H
-#define INKSCAPE_LPE_KNOT_H
-
 /** \file
- * LPE <knot> implementation, see lpe-knot.cpp.
+ * LPE knot effect implementation, see lpe-knot.cpp.
  */
-
-/*
- * Authors:
- *   JFB, but derived from Johan Engelen!
-*
-* Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+/* Authors:
+ *   Jean-Francois Barraud <jf.barraud@gmail.com>
+ *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *
+ * Copyright (C) Johan Engelen 2007
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifndef INKSCAPE_LPE_KNOT_H
+#define INKSCAPE_LPE_KNOT_H
+
 #include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
-#include "live_effects/parameter/vector.h"
+#include "live_effects/parameter/array.h"
 #include "live_effects/parameter/path.h"
 #include "2geom/crossing.h"
 
@@ -70,7 +69,7 @@ private:
   // add the parameters for your effect here:
   ScalarParam interruption_width;
   ScalarParam switcher_size;
-  VectorParam<double> crossing_points_vector;
+  ArrayParam<double> crossing_points_vector;
   LPEKnotNS::CrossingPoints crossing_points;
   
   

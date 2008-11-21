@@ -37,6 +37,15 @@
 #include <2geom/interval.h>
 #include <2geom/isnan.h>
 
+
+//#define USE_SBASIS_OF
+
+#ifdef USE_SBASIS_OF
+
+#include "linear-of.h"
+
+#else
+
 namespace Geom{
 
 inline double lerp(double t, double a, double b) { return a*(1-t) + b*t; }
@@ -100,9 +109,9 @@ public:
     //defined in sbasis.h
     inline SBasis toSBasis() const;
 
-    inline Interval bounds_exact() const { return Interval(a[0], a[1]); }
-    inline Interval bounds_fast() const { return bounds_exact(); }
-    inline Interval bounds_local(double u, double v) const { return Interval(valueAt(u), valueAt(v)); }
+    inline OptInterval bounds_exact() const { return Interval(a[0], a[1]); }
+    inline OptInterval bounds_fast() const { return bounds_exact(); }
+    inline OptInterval bounds_local(double u, double v) const { return Interval(valueAt(u), valueAt(v)); }
 
     operator Tri() const {
         return a[1] - a[0];
@@ -169,7 +178,9 @@ inline Linear operator/=(Linear & a, double b) {
     a[0] /= b; a[1] /= b;
     return a;
 }
-};
+
+}
+#endif
 
 #endif //SEEN_LINEAR_H
 

@@ -1,16 +1,16 @@
-#ifndef __DIALOG_EVENTS_H__
-#define __DIALOG_EVENTS_H__
-
-/**
- * \brief  Event handler for dialog windows
- *
- * Authors:
+/** @file
+ * @brief  Event handler for dialog windows
+ */
+/* Authors:
  *   bulia byak <bulia@dr.com>
  *
  * Copyright (C) 2003 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifndef __DIALOG_EVENTS_H__
+#define __DIALOG_EVENTS_H__
 
 #include <gtk/gtkstyle.h>
 #include <gtk/gtkwindow.h>
@@ -31,8 +31,8 @@ class Entry;
 }
  
 typedef struct { 
-  GtkWidget *win;
-  guint stop;
+    GtkWidget *win;
+    guint stop;
 } win_data;
 
 

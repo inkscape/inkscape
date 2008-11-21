@@ -1,15 +1,147 @@
-/** \file
- * Contains Doxygen documentation - main page.
- *
- * Authors:
+/** @file
+ * @brief Doxygen documentation - main page and namespace documentation.
+ */
+/* Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  *
- * Copyright (C) 2005-2006 authors
+ * Copyright (C) 2005-2008 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/** \mainpage The Inkscape Source Code Documentation
+// Note: % before a word prevents that word from being linkified
+
+/**
+ * @brief Main %Inkscape namespace
+ *
+ * This namespace contains all code internal to %Inkscape.
+ */
+namespace Inkscape {
+
+/**
+ * @brief Some STL-style algorithms
+ *
+ * This namespace contains a few generic algorithms used with the %XML tree.
+ */
+namespace Algorithms {}
+
+
+/**
+ * @brief Debugging utilities
+ *
+ * This namespace contains various debugging code which can help developers
+ * to pinpoint problems with their (or others') code.
+ */
+namespace Debug {}
+
+/**
+ * @brief Rendering-related code
+ *
+ * This namespace contains code related to the renderer.
+ */
+namespace Display {}
+
+/**
+ * @brief Extension support
+ *
+ * This namespace contains the extension subsystem and implementations
+ * of the internal extensions. This includes input and output filters, bitmap
+ * extensions, and printing.
+ */
+namespace Extension {}
+
+/**
+ * @brief Boehm-GC based garbage collector
+ *
+ * This namespace contains code related to the garbage collector and base
+ * classes for %GC-managed objects.
+ */
+namespace GC {}
+
+/**
+ * @brief Low-level IO code
+ *
+ * This namespace contains low level IO-related code, including a homegrown
+ * streams implementation, routines for formatting SVG output, and some
+ * file handling utility functions.
+ */
+namespace IO {}
+
+/**
+ * @brief Live Path Effects code
+ *
+ * This namespace contains classes and functions related to the implementation
+ * of Live Path Effects, which apply arbitrary transformation to a path and
+ * update whenever the original path is modified.
+ */
+namespace LivePathEffect {}
+
+/**
+ * @brief Tracing backend
+ *
+ * This namespace contains the integrated potrace-based tracing backend, used
+ * in the Trace Bitmap and Paint Bucket features.
+ */
+namespace Trace {}
+
+/**
+ * @brief User interface code
+ *
+ * This namespace contains everything related to the user interface of Inkscape.
+ */
+namespace UI {
+
+/**
+ * @brief Dialog code
+ *
+ * This namespace contains all code related to dialogs.
+ */
+namespace Dialog {}
+
+/**
+ * @brief Custom widgets
+ *
+ * This namespace contains custom user interface widgets used thorought
+ * Inkscape.
+ */
+namespace Widget {}
+
+} // namespace UI
+
+/**
+ * @brief Miscellaneous supporting code
+ *
+ * This namespace contains miscellaneous low-level code: an implementation of
+ * garbage-collected lists, tuples, generic pointer iterators and length unit
+ * handling.
+ */
+namespace Util {}
+
+/**
+ * @brief %Inkscape %XML tree
+ *
+ * This namespace contains classes and functions that comprise the XML tree
+ * of Inkscape documents.
+ *
+ * SVG documents in Inkscape are represented as two parallel hierarchies
+ * of nodes: the object tree, which contains all information about
+ * the document's state when loaded, and the %XML tree, which contains all
+ * information about the document's %XML representation. For this reason
+ * this tree is also called the "repr tree", and %XML nodes are called "reprs".
+ *
+ * The central class is XML::Node, which provides all operations. It should be
+ * noted that nodes are currently typeless and operations not valid for their
+ * type simply do nothing (like trying to iterate over children of a text node).
+ * In addition to standard DOM operations, the %XML tree supports observers -
+ * objects derived from Xml::NodeObserver which receive notifications about
+ * changes in the document tree.
+ */
+namespace XML {}
+
+} // namespace Inkscape
+
+/** \mainpage Inkscape Source Code Documentation
  * While the standard doxygen documentation can be accessed through the links
  * in the header, the following documents are additionally available to the
  * interested reader.
@@ -32,23 +164,26 @@
  *
  * \subsection liblinks External documentation on libraries used in inkscape
  *
- * <a href="http://www.gtkmm.org/gtkmm2/docs/">Gtkmm</a>
- * <a href="http://www.gtkmm.org/gtkmm2/docs/reference/html/dir_000003.html">atkmm</a>
- * <a href="http://www.gtkmm.org/gtkmm2/docs/reference/html/dir_000009.html">gdkmm</a>
- * <a href="http://www.gtkmm.org/gtkmm2/docs/reference/html/dir_000007.html">pangomm</a>
- * <a href="http://libsigc.sourceforge.net/libsigc1_2/reference/html/modules.html">libsigc++</a>
+ * C++:
+ * <a href="http://www.gtkmm.org/documentation.shtml">gtkmm</a>
+ * <a href="http://www.gtkmm.org/docs/gtkmm-2.4/docs/reference/html/namespaceAtk.html">atkmm</a>
+ * <a href="http://www.gtkmm.org/docs/gtkmm-2.4/docs/reference/html/namespaceGdk.html">gdkmm</a>
+ * <a href="http://www.gtkmm.org/docs/glibmm-2.4/docs/reference/html/namespaceGlib.html">glibmm</a>
+ * <a href="http://www.gtkmm.org/docs/pangomm-1.4/docs/reference/html/namespacePango.html">pangomm</a>
+ * <a href="http://libsigc.sourceforge.net/libsigc2/docs/index.html">libsigc++</a>
+ * C:
  * <a href="http://www.gtk.org/api/">GTK+</a>
  * <a href="http://developer.gnome.org/doc/API/2.0/gdk-pixbuf/index.html">gdk-pixbuf</a>
  * <a href="http://developer.gnome.org/doc/API/2.0/gobject/index.html">GObject</a>
  * <a href="http://developer.gnome.org/doc/API/2.0/atk/index.html">atk</a>
  * <a href="http://developer.gnome.org/doc/API/2.0/pango/index.html">pango</a>
- * <a href="http://developer.gnome.org/doc/API/2.0/gnome-vfs-2.0/">GnomeVFS</a>
- * <a href="http://libsigc.sourceforge.net/libsigc2/docs/index.html">libsigc</a>
  * <a href="http://developer.gnome.org/doc/API/2.0/ORBit/index.html">ORBit</a>
  * <a href="http://developer.gnome.org/doc/API/2.0/libbonobo/index.html">bonobo</a>
  * <a href="http://developer.gnome.org/doc/API/2.0/bonobo-activation/index.html">bonobo-activation</a>
  * <a href="http://xmlsoft.org/XSLT/html/libxslt-lib.html#LIBXSLT-LIB">libxslt</a>
  * <a href="http://xmlsoft.org/html/index.html">libxml2</a>
+ * Legacy:
+ * <a href="http://developer.gnome.org/doc/API/2.0/gnome-vfs-2.0/">GnomeVFS</a>
  *
  * \subsection stdlinks External standards documentation
  *
@@ -58,7 +193,7 @@
  * <a href="http://www.w3.org/Graphics/SVG/Test/">SVGTest</a>
  * <a href="http://www.libpng.org/pub/png/">PNG</a>
  * <a href="http://www.w3.org/TR/xslt">XSLT</a>
- * <a href="http://partners.adobe.com/public/developer/ps/index_specs.html">PS</a>
+ * <a href="http://partners.adobe.com/public/developer/ps/index_specs.html">PostScript</a>
  * <a href="http://developer.gnome.org/projects/gup/hig/">Gnome-HIG</a>
  */
 

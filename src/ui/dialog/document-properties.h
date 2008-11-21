@@ -50,8 +50,15 @@ protected:
     void  build_snap();
     void  build_snap_dtls();
     void  build_gridspage();
+#if ENABLE_LCMS
+    void  build_cms();
+#endif // ENABLE_LCMS
     void  init();
+
+    void  populate_available_profiles();
+    void  populate_embedded_profiles_box();
     virtual void  on_response (int);
+    void  onEmbedProfile();
 
     void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
     void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
@@ -61,7 +68,7 @@ protected:
     Gtk::Notebook  _notebook;
 
     NotebookPage   _page_page, _page_guides;
-    NotebookPage   _page_snap, _page_snap_dtls;
+    NotebookPage   _page_snap, _page_snap_dtls, _page_cms;
     Gtk::VBox      _grids_vbox;
 
     Registry _wr;
@@ -74,12 +81,28 @@ protected:
     RegisteredCheckButton _rcb_sgui, _rcbsng;
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbs, _rcbsi, _rcbsnbb, _rcbsnn, _rcbsnop;
+    RegisteredCheckButton _rcbs, _rcbsnbb, _rcbsnn, _rcbsnop;
     RegisteredCheckButton _rcbsnon, _rcbsnbbp, _rcbsnbbn, _rcbsnpb;
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
     //---------------------------------------------------------------
     RegisteredCheckButton _rcbic, _rcbsm;
     RegisteredCheckButton _rcbsigg, _rcbsils;
+    //---------------------------------------------------------------
+    Gtk::Menu   _menu;
+    Gtk::OptionMenu   _combo_avail;
+    Gtk::Button         _embed_btn;
+    class EmbeddedProfilesColumns : public Gtk::TreeModel::ColumnRecord
+        {
+        public:
+            EmbeddedProfilesColumns()
+               { add(nameColumn); add(previewColumn);  }
+            Gtk::TreeModelColumn<Glib::ustring> nameColumn;
+            Gtk::TreeModelColumn<Glib::ustring> previewColumn;
+        };
+    EmbeddedProfilesColumns _EmbeddedProfilesListColumns;
+    Glib::RefPtr<Gtk::ListStore> _EmbeddedProfilesListStore;
+    Gtk::TreeView _EmbeddedProfilesList;
+    Gtk::ScrolledWindow _EmbeddedProfilesListScroller;
     //---------------------------------------------------------------
     Gtk::Notebook   _grids_notebook;
     Gtk::HBox       _grids_hbox_crea;

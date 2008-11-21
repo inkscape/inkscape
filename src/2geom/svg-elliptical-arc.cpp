@@ -47,7 +47,7 @@ namespace Geom
 {
 
 
-Rect SVGEllipticalArc::boundsExact() const
+OptRect SVGEllipticalArc::boundsExact() const
 {
     if (isDegenerate() && is_svg_compliant())
         return chord().boundsExact();

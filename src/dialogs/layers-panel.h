@@ -1,5 +1,3 @@
-#ifndef SEEN_LAYERS_PANEL_H
-#define SEEN_LAYERS_PANEL_H
 /*
  * A simple dialog for layer UI.
  *
@@ -10,6 +8,9 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifndef SEEN_LAYERS_PANEL_H
+#define SEEN_LAYERS_PANEL_H
 
 #include <gtkmm/treeview.h>
 #include <gtkmm/treestore.h>

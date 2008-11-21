@@ -1,9 +1,7 @@
-#ifndef SEEN_ICON_PREVIEW_H
-#define SEEN_ICON_PREVIEW_H
-/*
- * A simple dialog for previewing icon representation.
- *
- * Authors:
+/** @file
+ * @brief A simple dialog for previewing icon representation.
+ */
+/* Authors:
  *   Jon A. Cruz
  *   Bob Jamison
  *   Other dudes from The Inkscape Organization
@@ -12,6 +10,9 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#ifndef SEEN_ICON_PREVIEW_H
+#define SEEN_ICON_PREVIEW_H
 
 #include <gtkmm/box.h>
 #include <gtkmm/button.h>

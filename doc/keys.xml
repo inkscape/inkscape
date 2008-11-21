@@ -32,6 +32,7 @@ RFE</a>).</p>
 <keys><key><keyf f="F6"/></key><key>p</key>	 <action>Freehand (Pencil) tool</action></keys>
 <keys><key><shift/><keyf f="F6"/></key><key>b</key>	 <action>Bezier (Pen) tool</action></keys>
 <keys><key><ctrl/><keyf f="F6"/></key><key>c</key>	 <action>Calligraphy tool</action></keys>
+<keys><key><shift/><keyf f="E"/></key><key>c</key>	 <action>Eraser tool</action></keys>
 <keys><key><shift/><keyf f="F7"/></key><key>u</key>	 <action>Paint Bucket tool</action></keys>
 <keys><key><ctrl/><keyf f="F1"/></key><key>g</key>	 <action>Gradient tool</action></keys>
 <keys><key><keyf f="F7"/></key><key>d</key>	 <action>Dropper tool</action></keys>
@@ -243,6 +244,11 @@ RFE</a>).</p>
 </section>
 
 *<section title="Layers" color="f6f9d9">
+
+<group>
+<keys><key><shift/><ctrl/><misc f="N"/></key> <action>create new layer</action></keys>
+</group>
+
 <group>
 <keys><key><shift/><misc f="PgUp"/></key> <action>move to layer above</action></keys>
 <keys><key><shift/><misc f="PgDn"/></key> <action>move to layer below</action></keys>

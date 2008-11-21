@@ -1,20 +1,12 @@
-#define __SP_ATTRIBUTE_WIDGET_C__
-
-/**
- * \brief  SPAttributeWidget
- *
- * Widget, that listens and modifies repr attributes
- *
- * Authors:
+/** @file
+ * @brief Widget that listens and modifies repr attributes
+ */
+/* Authors:
  *  Lauris Kaplinski <lauris@ximian.com>
  *
  * Copyright (C) 2001 Ximian, Inc.
- *
- * Licensed under GNU GPL
+ * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
 
 #include <gtk/gtktable.h>
 #include <gtk/gtklabel.h>

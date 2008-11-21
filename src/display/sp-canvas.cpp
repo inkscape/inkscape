@@ -795,7 +795,7 @@ sp_canvas_group_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned
         }
     }
 
-    boost::optional<Geom::Rect> const bounds = corners.bounds();
+    Geom::OptRect const bounds = corners.bounds();
     if (bounds) {
         item->x1 = bounds->min()[Geom::X];
         item->y1 = bounds->min()[Geom::Y];
@@ -1612,45 +1612,54 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
     // Snap when speed drops below e.g. 0.02 px/msec, or when no motion events have occured for some period.
 	// i.e. snap when we're at stand still. A speed threshold enforces snapping for tablets, which might never
 	// be fully at stand still and might keep spitting out motion events.
-    
-    if (event->type == GDK_MOTION_NOTIFY) {    	
-    	Geom::Point event_pos(event->x, event->y);
-    	guint32 event_t = gdk_event_get_time ( (GdkEvent *) event );
-    	    	
-    	if (dt) { // put snapping on hold
-			dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(true);
-		}    	    			
-    	
-    	if (prev_pos) {
-    		Geom::Coord dist = Geom::L2(event_pos - *prev_pos);
-    		guint32 delta_t = event_t - prev_time;
-    		gdouble speed = delta_t > 0 ? dist/delta_t : 1000;
-    		// std::cout << "speed = " << speed << " px/msec " << "| time passed = " << delta_t << " msec" << std::endl;
-    		if (speed > 0.02) { // Jitter threshold, might be needed for tablets 
-				// We're moving fast, so postpone any snapping until the next GDK_MOTION_NOTIFY event. We
-    			// will keep on postponing the snapping as long as the speed is high.
-				// We must snap at some point in time though, so set a watchdog timer at some time from
-				// now, just in case there's no future motion event that drops under the speed limit (when 
-    			// stoppping abruptly)
-    			sp_canvas_snap_watchdog_kill(canvas);
-    			sp_canvas_snap_watchdog_set(canvas, event); // watchdog is reset, i.e. pushed forward in time
-			} else { // Speed is very low, so we're virtually at stand still
-				// But if we're really standing still, then we should snap now. We could use some low-pass filtering, 
-				// otherwise snapping occurs for each jitter movement. For this filtering we'll leave the watchdog to expire,
-				// snap, and set a new watchdog again. 
-				if (canvas->watchdog_id == 0) { // no watchdog has been set 
-					// it might have already expired, so we'll set a new one; the snapping frequency will be limited by this
-					sp_canvas_snap_watchdog_set(canvas, event);
-				} // else: watchdog has been set before and we'll wait for it to expire
-			}
-		} else {
-			// This is the first GDK_MOTION_NOTIFY event, so postpone snapping and set the watchdog
-			sp_canvas_snap_watchdog_set(canvas, event);
-		}
+    if (dt) {
+	    bool const c1 = event->type == GDK_MOTION_NOTIFY;
+	    bool const c21 = event->state & GDK_BUTTON1_MASK; // Snapping only occurs when dragging with the left mouse button down
+	    bool const c22 = event->state & GDK_BUTTON2_MASK; // We shouldn't hold back any events when other mouse buttons have been
+	    bool const c23 = event->state & GDK_BUTTON3_MASK; // pressed, e.g. when scrolling with the middle mouse button; if we do then
+	    												  // Inkscape will get stuck in an unresponsive state
+	    bool const c3 = dt->namedview->snap_manager.snapprefs.getSnapEnabledGlobally();
+	    if (c1 && c21 && (!c22) && (!c23) && c3) {    	
+	    	Geom::Point event_pos(event->x, event->y);
+	    	guint32 event_t = gdk_event_get_time ( (GdkEvent *) event );
+	    	    	
+	    	dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(true); // put snapping on hold
 			
-    	prev_pos = event_pos;
-    	prev_time = event_t;
-    }
+	    	if (prev_pos) {
+	    		Geom::Coord dist = Geom::L2(event_pos - *prev_pos);
+	    		guint32 delta_t = event_t - prev_time;
+	    		gdouble speed = delta_t > 0 ? dist/delta_t : 1000;
+	    		// std::cout << "speed = " << speed << " px/msec " << "| time passed = " << delta_t << " msec" << std::endl;
+	    		if (speed > 0.02) { // Jitter threshold, might be needed for tablets 
+					// We're moving fast, so postpone any snapping until the next GDK_MOTION_NOTIFY event. We
+	    			// will keep on postponing the snapping as long as the speed is high.
+					// We must snap at some point in time though, so set a watchdog timer at some time from
+					// now, just in case there's no future motion event that drops under the speed limit (when 
+	    			// stoppping abruptly)
+	    			sp_canvas_snap_watchdog_kill(canvas);
+	    			sp_canvas_snap_watchdog_set(canvas, event); // watchdog is reset, i.e. pushed forward in time
+	    			// If the watchdog expires before a new motion event is received, we will snap (as explained
+	    			// above). This means however that when the timer is too short, we will always snap and that the
+	    			// speed threshold is ineffective. In the extreme case the delay is set to zero, and snapping will
+	    			// be immediate, as it used to be in the old days ;-). 
+				} else { // Speed is very low, so we're virtually at stand still
+					// But if we're really standing still, then we should snap now. We could use some low-pass filtering, 
+					// otherwise snapping occurs for each jitter movement. For this filtering we'll leave the watchdog to expire,
+					// snap, and set a new watchdog again. 
+					if (canvas->watchdog_id == 0) { // no watchdog has been set 
+						// it might have already expired, so we'll set a new one; the snapping frequency will be limited by this
+						sp_canvas_snap_watchdog_set(canvas, event);
+					} // else: watchdog has been set before and we'll wait for it to expire
+				}
+			} else {
+				// This is the first GDK_MOTION_NOTIFY event, so postpone snapping and set the watchdog
+				sp_canvas_snap_watchdog_set(canvas, event);
+			}
+				
+	    	prev_pos = event_pos;
+	    	prev_time = event_t;
+	    }
+	}
     
     canvas->state = event->state;
     pick_current_item (canvas, (GdkEvent *) event);
@@ -1687,8 +1696,10 @@ gboolean sp_canvas_snap_watchdog_callback(gpointer data)
 
 void sp_canvas_snap_watchdog_set(SPCanvas *canvas, GdkEventMotion *event) 
 {
+	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+	double value = prefs->getDoubleLimited("/options/snapdelay/value", 0, 0, 1000);
 	g_assert(canvas->watchdog_id == 0);
-	canvas->watchdog_id = g_timeout_add(400, &sp_canvas_snap_watchdog_callback, canvas);
+	canvas->watchdog_id = g_timeout_add(value, &sp_canvas_snap_watchdog_callback, canvas);
 	g_assert(canvas->watchdog_event == NULL);
 	canvas->watchdog_event = gdk_event_copy( (GdkEvent *) event); 
 }

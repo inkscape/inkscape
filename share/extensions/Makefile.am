@@ -38,6 +38,7 @@ extensions = \
 	color_replace.py\
 	cspsubdiv.py \
 	cubicsuperpath.py \
+	cut-marks.pl \
 	dia2svg.sh \
 	dimension.py \
 	dots.py \
@@ -63,6 +64,7 @@ extensions = \
 	hpgl_output.py \
 	ill2svg.pl \
 	inkex.py \
+	Inkscape.pm \
 	interp.py \
 	launch_webbrowser.py \
 	lindenmayer.py \
@@ -147,6 +149,7 @@ modules = \
 	color_removered.inx\
 	color_rgbbarrel.inx\
 	color_replace.inx\
+	cut-marks.inx \
 	dia.inx \
 	dimension.inx \
 	dots.inx \

@@ -22,7 +22,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "knotholder.h"
-#include "live_effects/parameter/pointparam-knotholder.h"
+#include "live_effects/parameter/point.h"
 #include "nodepath.h"
 #include "xml/node-event-vector.h"
 #include "preferences.h"
@@ -75,7 +75,7 @@ void ShapeEditor::unset_item(SubType type, bool keep_knotholder) {
                 }
 
                 this->grab_node = -1;
-                sp_nodepath_destroy(this->nodepath);
+                delete this->nodepath;
                 this->nodepath = NULL;
             }
             break;

@@ -41,6 +41,7 @@
 namespace Geom {
 
 
+#include <2geom/d2-sbasis.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -327,16 +328,42 @@ Piecewise<SBasis> reciprocalOnDomain(Interval range, double tol){
 }
 
 Piecewise<SBasis> reciprocal(SBasis const &f, double tol, int order){
-    Piecewise<SBasis> reciprocal_fn=reciprocalOnDomain(bounds_fast(f), tol);
+    Piecewise<SBasis> reciprocal_fn=reciprocalOnDomain(*bounds_fast(f), tol);
     Piecewise<SBasis> result=compose(reciprocal_fn,f);
     truncateResult(result,order);
     return(result);
 }
 Piecewise<SBasis> reciprocal(Piecewise<SBasis> const &f, double tol, int order){
-    Piecewise<SBasis> reciprocal_fn=reciprocalOnDomain(bounds_fast(f), tol);
+    Piecewise<SBasis> reciprocal_fn=reciprocalOnDomain(*bounds_fast(f), tol);
     Piecewise<SBasis> result=compose(reciprocal_fn,f);
     truncateResult(result,order);
     return(result);
+}
+
+/**
+ * \brief Retruns a Piecewise SBasis with prescribed values at prescribed times.
+ * 
+ * \param times: vector of times at which the values are given. Should be sorted in increasing order.
+ * \param values: vector of prescribed values. Should have the same size as times and be sorted accordingly.
+ * \param smoothness: (defaults to 1) regularity class of the result: 0=piecewise linear, 1=continuous derivative, etc...
+ */
+Piecewise<SBasis> interpolate(std::vector<double> times, std::vector<double> values, unsigned smoothness){
+    assert ( values.size() == times.size() );
+    if ( values.size() == 0 ) return Piecewise<SBasis>();
+    if ( values.size() == 1 ) return Piecewise<SBasis>(values[0]);//what about time??
+
+    SBasis sk = shift(Linear(1.),smoothness);
+    SBasis bump_in = integral(sk);
+    bump_in -= bump_in.at0();
+    bump_in /= bump_in.at1();
+    SBasis bump_out = reverse( bump_in );
+    
+    Piecewise<SBasis> result;
+    result.cuts.push_back(times[0]);
+    for (unsigned i = 0; i<values.size()-1; i++){
+        result.push(bump_out*values[i]+bump_in*values[i+1],times[i+1]);
+    }
+    return result;
 }
 
 }

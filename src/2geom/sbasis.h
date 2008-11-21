@@ -43,7 +43,14 @@
 #include <2geom/utils.h>
 #include <2geom/exception.h>
 
-namespace Geom {
+
+#ifdef USE_SBASIS_OF
+
+#include "sbasis-of.h"
+
+#else
+
+namespace Geom{
 
 /*** An empty SBasis is identically 0. */
 class SBasis : public std::vector<Linear>{
@@ -135,9 +142,9 @@ private:
 inline SBasis Linear::toSBasis() const { return SBasis(*this); }
 
 //implemented in sbasis-roots.cpp
-Interval bounds_exact(SBasis const &a);
-Interval bounds_fast(SBasis const &a, int order = 0);
-Interval bounds_local(SBasis const &a, const Interval &t, int order = 0);
+OptInterval bounds_exact(SBasis const &a);
+OptInterval bounds_fast(SBasis const &a, int order = 0);
+OptInterval bounds_local(SBasis const &a, const OptInterval &t, int order = 0);
 
 /** Returns a function which reverses the domain of a.
  \param a sbasis function
@@ -325,6 +332,7 @@ std::vector<std::vector<double> > multi_roots(SBasis const &f,
                                  double b=1);
     
 }
+#endif
 
 /*
   Local Variables:

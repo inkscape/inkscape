@@ -259,8 +259,8 @@ public:
   bool closed() const { return closed_; }
   void close(bool closed=true) { closed_ = closed; }
 
-  Rect boundsFast() const;
-  Rect boundsExact() const;
+  OptRect boundsFast() const;
+  OptRect boundsExact() const;
 
   Piecewise<D2<SBasis> > toPwSb() const {
     Piecewise<D2<SBasis> > ret;
@@ -566,8 +566,9 @@ public:
   }
 
 
-  /*
+  /**
    * It is important to note that the coordinates passed to appendNew should be finite!
+   * If one of the coordinates is infinite, 2geom will throw a ContinuityError exception.
    */
 
   template <typename CurveType, typename A>

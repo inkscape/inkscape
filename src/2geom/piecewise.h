@@ -80,6 +80,8 @@ class Piecewise {
         push_cut(1.);
     }
 
+    unsigned input_dim(){return 1;}
+
     typedef typename T::output_type output_type;
 
     explicit Piecewise(const output_type & v) {
@@ -198,14 +200,18 @@ class Piecewise {
     //Transforms the domain into another interval
     inline void setDomain(Interval dom) {
         if(empty()) return;
+        /* dom can not be empty
         if(dom.isEmpty()) {
             cuts.clear(); segs.clear();
             return;
-        }
+        }*/
         double cf = cuts.front();
         double o = dom.min() - cf, s = dom.extent() / (cuts.back() - cf);
         for(unsigned i = 0; i <= size(); i++)
             cuts[i] = (cuts[i] - cf) * s + o;
+        //fix floating point precision errors.
+        cuts[0] = dom.min();
+        cuts[size()] = dom.max();
     }
 
     //Concatenates this Piecewise function with another, offseting time of the other to match the end.
@@ -227,15 +233,15 @@ class Piecewise {
     inline void continuousConcat(const Piecewise<T> &other) {
         boost::function_requires<AddableConcept<typename T::output_type> >();
         if(other.empty()) return;
-        typename T::output_type y = segs.back().at1() - other.segs.front().at0();
 
         if(empty()) {
             for(unsigned i = 0; i < other.size(); i++)
-                push_seg(other[i] + y);
+                push_seg(other[i]);
             cuts = other.cuts;
             return;
         }
 
+        typename T::output_type y = segs.back().at1() - other.segs.front().at0();
         double t = cuts.back() - other.cuts.front();
         for(unsigned i = 0; i < other.size(); i++)
             push(other[i] + y, other.cuts[i + 1] + t);
@@ -278,11 +284,12 @@ inline typename FragmentConcept<T>::BoundsType bounds_exact(const Piecewise<T> &
 }
 
 template<typename T>
-inline typename FragmentConcept<T>::BoundsType bounds_local(const Piecewise<T> &f, const Interval &m) {
+inline typename FragmentConcept<T>::BoundsType bounds_local(const Piecewise<T> &f, const OptInterval &_m) {
     boost::function_requires<FragmentConcept<T> >();
 
-    if(f.empty()) return typename FragmentConcept<T>::BoundsType();
-    if(m.isEmpty()) return typename FragmentConcept<T>::BoundsType(f(m.min()));
+    if(f.empty() || !_m) return typename FragmentConcept<T>::BoundsType();
+    Interval const &m = *_m;
+    if(m.isSingular()) return typename FragmentConcept<T>::BoundsType(f(m.min()));
 
     unsigned fi = f.segN(m.min()), ti = f.segN(m.max());
     double ft = f.segT(m.min(), fi), tt = f.segT(m.max(), ti);
@@ -640,7 +647,7 @@ Piecewise<T> compose(Piecewise<T> const &f, SBasis const &g){
     }
 
     //first check bounds...
-    Interval bs = bounds_fast(g);
+    Interval bs = *bounds_fast(g);
     if (f.cuts.front() > bs.max()  || bs.min() > f.cuts.back()){
         int idx = (bs.max() < f.cuts[1]) ? 0 : f.cuts.size()-2;
         double t0 = f.cuts[idx], width = f.cuts[idx+1] - t0;

@@ -701,7 +701,7 @@ void CGroup::onModified(guint flags) {
 
 void CGroup::calculateBBox(NRRect *bbox, Geom::Matrix const &transform, unsigned const flags) {
 
-    boost::optional<Geom::Rect> dummy_bbox;
+    Geom::OptRect dummy_bbox;
 
     GSList *l = _group->childList(false, SPObject::ActionBBox);
     while (l) {
@@ -836,7 +836,7 @@ sp_group_update_patheffect (SPLPEItem *lpeitem, bool write)
         for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); it++)
         {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
-            if (lpeobj->get_lpe()) {
+            if (lpeobj && lpeobj->get_lpe()) {
                 lpeobj->get_lpe()->doBeforeEffect(lpeitem);
             }
         }

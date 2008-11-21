@@ -1,9 +1,7 @@
-#define __GUIDELINE_CPP__
-
-/*
- * simple guideline dialog
- *
- * Authors:
+/** @file
+ * @brief Simple guideline dialog
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Andrius R. <knutux@gmail.com>
  *   Johan Engelen
@@ -285,4 +283,3 @@ void GuidelinePropertiesDialog::_setup() {
   End:
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
-

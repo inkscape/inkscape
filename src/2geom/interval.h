@@ -44,17 +44,20 @@
 
 namespace Geom {
 
-/* Although an Interval where _b[0] > _b[1] is considered empty, for proper functioning of other methods,
- * a proper empty Interval is [+infinity, -infinity]. Then, expandTo(p) will set the interval to [p,p].
+class Interval;
+
+/** 
+ * \brief This class represents a range of numbers that is never empty.
+ *
+ * The endpoints are included in the range.
  */
 class Interval {
 private:
     Coord _b[2];
 
 public:
-    // The default constructor creates an empty interval, that ranges from +infinity to -infinity.
-    // Doing an expandTo(p) on this empty interval will correctly set the whole interval to [p,p].
-    explicit Interval() { _b[0] = +infinity();  _b[1] = -infinity(); }
+    /// The default constructor creates an interval [0,0]  DO NOT RELY ON THIS, BEST NOT TO USE THIS CONSTRUCTOR
+    explicit Interval() { _b[0] = 0;  _b[1] = 0; }
     explicit Interval(Coord u) { _b[0] = _b[1] = u; }
     /* When creating an Interval using the constructor specifying the exact range, the created interval
      * will be [u,v] when u<=v ; and will be [v,u] when v < u !!!
@@ -78,7 +81,8 @@ public:
     inline Coord extent() const { return _b[1] - _b[0]; }
     inline Coord middle() const { return (_b[1] + _b[0]) * 0.5; }
     
-    inline bool isEmpty() const { return _b[0] > _b[1]; }
+//    inline bool isEmpty() const { return _b[0] > _b[1]; }
+    inline bool isSingular() const { return _b[0] == _b[1]; }
     inline bool contains(Coord val) const { return _b[0] <= val && val <= _b[1]; }
     bool contains(const Interval & val) const { return _b[0] <= val._b[0] && val._b[1] <= _b[1]; }
     bool intersects(const Interval & val) const {
@@ -167,9 +171,15 @@ public:
         return result;
     }
     
+    /** When this would create an empty interval, the interval will be the centerpoint of the old range only.
+     */
     inline void expandBy(double amnt) {
         _b[0] -= amnt;
         _b[1] += amnt;
+        if (_b[0] > _b[1]) {
+            Coord halfway = (_b[0]+_b[1])/2;
+            _b[0] = _b[1] = halfway;
+        }
     }
     
     inline void unionWith(const Interval & a) {
@@ -214,12 +224,42 @@ inline Interval unify(const Interval & a, const Interval & b) {
     return Interval(std::min(a.min(), b.min()),
                     std::max(a.max(), b.max()));
 }
-inline boost::optional<Interval> intersect(const Interval & a, const Interval & b) {
+
+/**
+ * \brief OptInterval is an Interval that can be empty.
+ */
+class OptInterval : public boost::optional<Interval> {
+public:
+    OptInterval() : boost::optional<Interval>() {};
+    OptInterval(Interval const &a) : boost::optional<Interval>(a) {};
+    OptInterval(Coord u) : boost::optional<Interval>(Interval(u)) {};
+    OptInterval(Coord u, Coord v) : boost::optional<Interval>(Interval(u,v)) {};
+
+    /**
+     * Check whether this OptInterval is empty or not.
+     */
+    inline bool isEmpty() { return (*this == false); };
+    
+    /**
+     * If \c this is empty, copy argument \c a. Otherwise, union with it (and do nothing when \c a is empty)
+     */
+    inline void unionWith(const OptInterval & a) {
+        if (a) {
+            if (*this) { // check that we are not empty
+                (*this)->unionWith(*a);
+            } else {
+                *this = a;
+            }
+        }
+    }
+};
+
+inline OptInterval intersect(const Interval & a, const Interval & b) {
     Coord u = std::max(a.min(), b.min()),
           v = std::min(a.max(), b.max());
     //technically >= might be incorrect, but singulars suck
-    return u >= v ? boost::optional<Interval>()
-                  : boost::optional<Interval>(Interval(u, v));
+    return u >= v ? OptInterval()
+                  : OptInterval(Interval(u, v));
 }
 
 }

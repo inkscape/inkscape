@@ -1,5 +1,5 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- *
+/** @file
+ * @brief EEK preview stuff
  */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -655,27 +655,27 @@ static void eek_preview_init( EekPreview *preview )
 /*   GTK_STATE_SELECTED, */
 /*   GTK_STATE_INSENSITIVE */
 
-  if ( 0 ) {
-    GdkColor color = {0,0,0,0};
+    if ( 0 ) {
+        GdkColor color = {0,0,0,0};
 
-    color.red = 0xffff;
-    color.green = 0;
-    color.blue = 0xffff;
-    gdk_colormap_alloc_color( gdk_colormap_get_system(), &color, FALSE, TRUE );
-    gtk_widget_modify_bg(widg, GTK_STATE_ACTIVE, &color);
+        color.red = 0xffff;
+        color.green = 0;
+        color.blue = 0xffff;
+        gdk_colormap_alloc_color( gdk_colormap_get_system(), &color, FALSE, TRUE );
+        gtk_widget_modify_bg(widg, GTK_STATE_ACTIVE, &color);
 
-    color.red = 0;
-    color.green = 0xffff;
-    color.blue = 0;
-    gdk_colormap_alloc_color( gdk_colormap_get_system(), &color, FALSE, TRUE );
-    gtk_widget_modify_bg(widg, GTK_STATE_SELECTED, &color);
+        color.red = 0;
+        color.green = 0xffff;
+        color.blue = 0;
+        gdk_colormap_alloc_color( gdk_colormap_get_system(), &color, FALSE, TRUE );
+        gtk_widget_modify_bg(widg, GTK_STATE_SELECTED, &color);
 
-    color.red = 0xffff;
-    color.green = 0;
-    color.blue = 0;
-    gdk_colormap_alloc_color( gdk_colormap_get_system(), &color, FALSE, TRUE );
-    gtk_widget_modify_bg( widg, GTK_STATE_PRELIGHT, &color );
-  }
+        color.red = 0xffff;
+        color.green = 0;
+        color.blue = 0;
+        gdk_colormap_alloc_color( gdk_colormap_get_system(), &color, FALSE, TRUE );
+        gtk_widget_modify_bg( widg, GTK_STATE_PRELIGHT, &color );
+    }
 }
 
 
@@ -684,3 +684,13 @@ GtkWidget* eek_preview_new(void)
     return GTK_WIDGET( g_object_new( EEK_PREVIEW_TYPE, NULL ) );
 }
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

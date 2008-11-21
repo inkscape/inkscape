@@ -16,14 +16,16 @@
 #include <libnr/nr-forward.h>
 #include <libnr/nr-coord.h>
 
-Geom::Rect bounds_fast_transformed(Geom::PathVector const & pv, Geom::Matrix const & t);
-Geom::Rect bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t);
+Geom::OptRect bounds_fast_transformed(Geom::PathVector const & pv, Geom::Matrix const & t);
+Geom::OptRect bounds_exact_transformed(Geom::PathVector const & pv, Geom::Matrix const & t);
 
 void pathv_matrix_point_bbox_wind_distance ( Geom::PathVector const & pathv, Geom::Matrix const &m, Geom::Point const &pt,
                                              Geom::Rect *bbox, int *wind, Geom::Coord *dist,
                                              Geom::Coord tolerance, Geom::Rect const *viewbox);
 
 Geom::PathVector pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv );
+
+void round_rectangle_outwards(Geom::Rect & rect);
 
 /*
 The following predefined objects are for reference

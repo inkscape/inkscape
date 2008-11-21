@@ -200,15 +200,15 @@ class SVGEllipticalArc : public Curve
         return m_svg_compliant;
     }
 
-    Rect boundsFast() const
+    virtual OptRect boundsFast() const
     {
         return boundsExact();
     }
 
-    Rect boundsExact() const;
+    virtual OptRect boundsExact() const;
 
     // TODO: native implementation of the following methods
-    Rect boundsLocal(Interval i, unsigned int deg) const
+    virtual OptRect boundsLocal(OptInterval i, unsigned int deg) const
     {
         if (isDegenerate() && is_svg_compliant())
             return chord().boundsLocal(i, deg);

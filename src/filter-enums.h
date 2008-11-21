@@ -20,7 +20,7 @@
 #include "display/nr-filter-morphology.h"
 #include "display/nr-filter-turbulence.h"
 #include "display/nr-filter-types.h"
-#include "sp-fedisplacementmap.h"
+#include "filters/displacementmap.h"
 #include "util/enums.h"
 
 // Filter primitives

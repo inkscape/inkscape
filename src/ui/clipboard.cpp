@@ -407,15 +407,15 @@ bool ClipboardManagerImpl::pasteSize(bool separately, bool apply_x, bool apply_y
         if (separately) {
             for (GSList *i = const_cast<GSList*>(selection->itemList()) ; i ; i = i->next) {
                 SPItem *item = SP_ITEM(i->data);
-                boost::optional<Geom::Rect> obj_size = sp_item_bbox_desktop(item);
-                if ( !obj_size || obj_size->isEmpty() ) continue;
+                Geom::OptRect obj_size = sp_item_bbox_desktop(item);
+                if ( !obj_size ) continue;
                 sp_item_scale_rel(item, _getScale(min, max, *obj_size, apply_x, apply_y));
             }
         }
         // resize the selection as a whole
         else {
-            boost::optional<Geom::Rect> sel_size = selection->bounds();
-            if ( sel_size && !sel_size->isEmpty() ) {
+            Geom::OptRect sel_size = selection->bounds();
+            if ( sel_size ) {
                 sp_selection_scale_relative(selection, sel_size->midpoint(),
                     _getScale(min, max, *sel_size, apply_x, apply_y));
             }
@@ -571,7 +571,7 @@ void ClipboardManagerImpl::_copySelection(Inkscape::Selection *selection)
         }
     }
 
-    boost::optional<Geom::Rect> size = selection->bounds();
+    Geom::OptRect size = selection->bounds();
     if (size) {
         sp_repr_set_point(_clipnode, "min", size->min());
         sp_repr_set_point(_clipnode, "max", size->max());
@@ -786,7 +786,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
     selection->setReprList(pasted_objects);         // Change the selection to the freshly pasted objects
     sp_document_ensure_up_to_date(target_document); // What does this do?
     
-    boost::optional<Geom::Rect> sel_bbox = selection->bounds(); //In desktop coordinates
+    Geom::OptRect sel_bbox = selection->bounds(); //In desktop coordinates
     // PS: We could also have used the min/max corners calculated above, instead of selection->bounds() because 
     // we know that after pasting the upper left corner of the selection will be aligend to the corresponding 
     // page corner. Using the boundingbox of the selection is more foolproof though
@@ -1083,17 +1083,14 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
     try {
         if (out == outlist.end() && target == "image/png")
         {
-            NRRect area;
             gdouble dpi = PX_PER_IN;
             guint32 bgcolor = 0x00000000;
 
-            area.x0 = SP_ROOT(_clipboardSPDoc->root)->x.computed;
-            area.y0 = SP_ROOT(_clipboardSPDoc->root)->y.computed;
-            area.x1 = area.x0 + sp_document_width (_clipboardSPDoc);
-            area.y1 = area.y0 + sp_document_height (_clipboardSPDoc);
+            Geom::Point origin (SP_ROOT(_clipboardSPDoc->root)->x.computed, SP_ROOT(_clipboardSPDoc->root)->y.computed);
+            Geom::Rect area = Geom::Rect(origin, origin + sp_document_dimensions(_clipboardSPDoc));
 
-            unsigned long int width = (unsigned long int) ((area.x1 - area.x0) * dpi / PX_PER_IN + 0.5);
-            unsigned long int height = (unsigned long int) ((area.y1 - area.y0) * dpi / PX_PER_IN + 0.5);
+            unsigned long int width = (unsigned long int) (area.width() * dpi / PX_PER_IN + 0.5);
+            unsigned long int height = (unsigned long int) (area.height() * dpi / PX_PER_IN + 0.5);
 
             // read from namedview
             Inkscape::XML::Node *nv = sp_repr_lookup_name (_clipboardSPDoc->rroot, "sodipodi:namedview");
@@ -1102,7 +1099,7 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
             if (nv && nv->attribute("inkscape:pageopacity"))
                 bgcolor |= SP_COLOR_F_TO_U(sp_repr_get_double_attribute (nv, "inkscape:pageopacity", 1.0));
 
-            sp_export_png_file(_clipboardSPDoc, filename, area.x0, area.y0, area.x1, area.y1, width, height, dpi, dpi, bgcolor, NULL, NULL, true, NULL);
+            sp_export_png_file(_clipboardSPDoc, filename, area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, NULL);
         }
         else
         {

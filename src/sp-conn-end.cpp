@@ -72,7 +72,7 @@ sp_conn_end_move_compensate(Geom::Matrix const */*mp*/, SPItem */*moved_item*/,
             *(path->curve->penultimate_point())
         };
         for (unsigned h = 0; h < 2; ++h) {
-            boost::optional<Geom::Rect> bbox = h2attItem[h]->getBounds(Geom::identity());
+            Geom::OptRect bbox = h2attItem[h]->getBounds(Geom::identity());
             if (!bbox) {
                 if (updatePathRepr) {
                     path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -115,7 +115,7 @@ sp_conn_end_move_compensate(Geom::Matrix const */*mp*/, SPItem */*moved_item*/,
 
         Geom::Rect otherpt_rect = Geom::Rect(other_endpt, other_endpt);
         Geom::Rect h2bbox_icoordsys[2] = { otherpt_rect, otherpt_rect };
-        boost::optional<Geom::Rect> bbox = h2attItem[ind]->getBounds(NR::identity());
+        Geom::OptRect bbox = h2attItem[ind]->getBounds(NR::identity());
         if (!bbox) {
             if (updatePathRepr) {
                 path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);

@@ -13,7 +13,7 @@
 #include <vector>
 
 #include "2geom/isnan.h"
-#include "sp-femerge.h"
+#include "filters/merge.h"
 #include "display/nr-filter-merge.h"
 #include "display/nr-filter-pixops.h"
 #include "display/nr-filter-slot.h"

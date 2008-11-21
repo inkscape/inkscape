@@ -109,8 +109,6 @@ Filter::merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Ink
 		}
     Inkscape::GC::release(to_child);
 	}
-
-	return;
 }
 
 #define FILTER_SRC_GRAPHIC       "fbSourceGraphic"
@@ -139,8 +137,10 @@ Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *d
 		gchar const * filter = sp_repr_css_property(css, "filter", NULL);
 
 		if (filter == NULL) {
+
 			Inkscape::XML::Node * newfilterroot = xmldoc->createElement("svg:filter");
 			defsrepr->appendChild(newfilterroot);
+
 			Glib::ustring url = "url(#"; url += newfilterroot->attribute("id"); url += ")";
 
 			merge_filters(newfilterroot, get_filter(module)->root(), xmldoc);
@@ -189,7 +189,7 @@ Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *d
 #include "extension/internal/clear-n_.h"
 
 void
-Filter::filter_init (gchar const * id, gchar const * name, gchar const * tip, gchar const * filter)
+Filter::filter_init (gchar const * id, gchar const * name, gchar const * submenu, gchar const * tip, gchar const * filter)
 {
 	gchar * xml_str = g_strdup_printf(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
@@ -198,11 +198,12 @@ Filter::filter_init (gchar const * id, gchar const * name, gchar const * tip, gc
             "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
-                    "<submenu name=\"" N_("Filter") "\" />\n"
+                    "<submenu name=\"" N_("Filters") "\" />\n"
+         						"<submenu name=\"%s\"/>\n"
                 "</effects-menu>\n"
                 "<menu-tip>%s</menu-tip>\n"
             "</effect>\n"
-        "</inkscape-extension>\n", name, id, tip);
+        "</inkscape-extension>\n", name, id, submenu, tip);
     Inkscape::Extension::build_from_mem(xml_str, new Filter::Filter(filter));
 	g_free(xml_str);
     return;

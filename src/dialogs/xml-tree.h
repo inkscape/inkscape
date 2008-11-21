@@ -1,10 +1,7 @@
-#ifndef SP_XML_TREE_H
-#define SP_XML_TREE_H
-
-/**
- * \brief  XML tree editing dialog for Inkscape
- *
- * Copyright Lauris Kaplinski, 2000
+/** @file
+ * @brief XML tree editing dialog for Inkscape
+ */
+/* Copyright Lauris Kaplinski, 2000
  *
  * Released under GNU General Public License.
  *
@@ -12,6 +9,9 @@
  *   of Inkscape document, including foreign ones.
  *
  */
+
+#ifndef SEEN_DIALOGS_XML_TREE_H
+#define SEEN_DIALOGS_XML_TREE_H
 
 void sp_xml_tree_dialog (void);
 

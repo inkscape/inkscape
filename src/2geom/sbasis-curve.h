@@ -68,9 +68,9 @@ public:
   void setInitial(Point v) { for(unsigned d = 0; d < 2; d++) { inner[d][0][0] = v[d]; } }
   void setFinal(Point v)   { for(unsigned d = 0; d < 2; d++) { inner[d][0][1] = v[d]; } }
 
-  Rect boundsFast() const  { return bounds_fast(inner); }
-  Rect boundsExact() const { return bounds_exact(inner); }
-  Rect boundsLocal(Interval i, unsigned deg) const { return bounds_local(inner, i, deg); }
+  virtual OptRect boundsFast() const  { return bounds_fast(inner); }
+  virtual OptRect boundsExact() const { return bounds_exact(inner); }
+  virtual OptRect boundsLocal(OptInterval i, unsigned deg) const { return bounds_local(inner, i, deg); }
 
   std::vector<double> roots(double v, Dim2 d) const { return Geom::roots(inner[d] - v); }
   

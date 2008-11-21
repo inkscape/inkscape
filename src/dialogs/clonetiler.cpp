@@ -1,14 +1,12 @@
-#define __SP_CLONE_TILER_C__
-
-/*
+/** @file
  * Clone tiling dialog
- *
- * Authors:
+ */
+/* Authors:
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *
  * Copyright (C) 2004-2006 Authors
- * Released under GNU GPL
+ * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
 #ifdef HAVE_CONFIG_H
@@ -1246,7 +1244,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
         bool prefs_bbox = prefs->getBool("/tools/bounding_box", false);
         SPItem::BBoxType bbox_type = ( prefs_bbox ? 
             SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX );
-        boost::optional<Geom::Rect> r = SP_ITEM(obj)->getBounds(sp_item_i2doc_affine(SP_ITEM(obj)),
+        Geom::OptRect r = SP_ITEM(obj)->getBounds(sp_item_i2doc_affine(SP_ITEM(obj)),
                                                         bbox_type);
         if (r) {
             w = r->dimensions()[Geom::X];

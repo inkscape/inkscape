@@ -82,6 +82,7 @@
 #include "debug/log-display-config.h"
 
 #include "helper/png-write.h"
+#include "helper/geom.h"
 
 #include <extension/extension.h>
 #include <extension/system.h>
@@ -1056,7 +1057,7 @@ do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gch
         SPItem *item = ((SPItem *) o);
 
         // "true" SVG bbox for scripting
-        boost::optional<Geom::Rect> area = item->getBounds(sp_item_i2doc_affine(item));
+        Geom::OptRect area = item->getBounds(sp_item_i2doc_affine(item));
         if (area) {
             Inkscape::SVGOStringStream os;
             if (extent) {
@@ -1089,7 +1090,7 @@ do_query_all_recurse (SPObject *o)
 {
     SPItem *item = ((SPItem *) o);
     if (o->id && SP_IS_ITEM(item)) {
-        boost::optional<Geom::Rect> area = item->getBounds(sp_item_i2doc_affine(item));
+        Geom::OptRect area = item->getBounds(sp_item_i2doc_affine(item));
         if (area) {
             Inkscape::SVGOStringStream os;
             os << o->id;
@@ -1121,7 +1122,7 @@ sp_do_export_png(SPDocument *doc)
 
     GSList *items = NULL;
 
-    NRRect area;
+    Geom::Rect area;
     if (sp_export_id || sp_export_area_drawing) {
 
         SPObject *o = NULL;
@@ -1181,10 +1182,10 @@ sp_do_export_png(SPDocument *doc)
 
             // write object bbox to area
             sp_document_ensure_up_to_date (doc);
-            boost::optional<Geom::Rect> areaMaybe;
+            Geom::OptRect areaMaybe;
             sp_item_invoke_bbox((SPItem *) o_area, areaMaybe, sp_item_i2r_affine((SPItem *) o_area), TRUE);
             if (areaMaybe) {
-                area = NRRect(areaMaybe);
+                area = *areaMaybe;
             } else {
                 g_warning("Unable to determine a valid bounding box. Nothing exported.");
                 return;
@@ -1197,21 +1198,17 @@ sp_do_export_png(SPDocument *doc)
 
     if (sp_export_area) {
         /* Try to parse area (given in SVG pixels) */
-        if (!sscanf(sp_export_area, "%lg:%lg:%lg:%lg", &area.x0, &area.y0, &area.x1, &area.y1) == 4) {
+        gdouble x0,y0,x1,y1;
+        if (!sscanf(sp_export_area, "%lg:%lg:%lg:%lg", &x0, &y0, &x1, &y1) == 4) {
             g_warning("Cannot parse export area '%s'; use 'x0:y0:x1:y1'. Nothing exported.", sp_export_area);
             return;
         }
-        if ((area.x0 >= area.x1) || (area.y0 >= area.y1)) {
-            g_warning("Export area '%s' has negative width or height. Nothing exported.", sp_export_area);
-            return;
-        }
+        area = Geom::Rect(Geom::Interval(x0,x1), Geom::Interval(y0,y1));
     } else if (sp_export_area_canvas || !(sp_export_id || sp_export_area_drawing)) {
         /* Export the whole canvas */
         sp_document_ensure_up_to_date (doc);
-        area.x0 = SP_ROOT(doc->root)->x.computed;
-        area.y0 = SP_ROOT(doc->root)->y.computed;
-        area.x1 = area.x0 + sp_document_width (doc);
-        area.y1 = area.y0 + sp_document_height (doc);
+        Geom::Point origin (SP_ROOT(doc->root)->x.computed, SP_ROOT(doc->root)->y.computed);
+        area = Geom::Rect(origin, origin + sp_document_dimensions(doc));
     }
 
     // set filename and dpi from options, if not yet set from the hints
@@ -1233,10 +1230,7 @@ sp_do_export_png(SPDocument *doc)
     }
 
     if (sp_export_area_snap) {
-        area.x0 = std::floor (area.x0);
-        area.y0 = std::floor (area.y0);
-        area.x1 = std::ceil (area.x1);
-        area.y1 = std::ceil (area.y1);
+        round_rectangle_outwards(area);
     }
 
     // default dpi
@@ -1254,7 +1248,7 @@ sp_do_export_png(SPDocument *doc)
             g_warning("Export width %lu out of range (1 - %lu). Nothing exported.", width, (unsigned long int)PNG_UINT_31_MAX);
             return;
         }
-        dpi = (gdouble) width * PX_PER_IN / (area.x1 - area.x0);
+        dpi = (gdouble) width * PX_PER_IN / area.width();
     }
 
     if (sp_export_height) {
@@ -1264,15 +1258,15 @@ sp_do_export_png(SPDocument *doc)
             g_warning("Export height %lu out of range (1 - %lu). Nothing exported.", height, (unsigned long int)PNG_UINT_31_MAX);
             return;
         }
-        dpi = (gdouble) height * PX_PER_IN / (area.y1 - area.y0);
+        dpi = (gdouble) height * PX_PER_IN / area.height();
     }
 
     if (!sp_export_width) {
-        width = (unsigned long int) ((area.x1 - area.x0) * dpi / PX_PER_IN + 0.5);
+        width = (unsigned long int) (area.width() * dpi / PX_PER_IN + 0.5);
     }
 
     if (!sp_export_height) {
-        height = (unsigned long int) ((area.y1 - area.y0) * dpi / PX_PER_IN + 0.5);
+        height = (unsigned long int) (area.height() * dpi / PX_PER_IN + 0.5);
     }
 
     guint32 bgcolor = 0x00000000;
@@ -1307,12 +1301,12 @@ sp_do_export_png(SPDocument *doc)
 
     g_print("Background RRGGBBAA: %08x\n", bgcolor);
 
-    g_print("Area %g:%g:%g:%g exported to %lu x %lu pixels (%g dpi)\n", area.x0, area.y0, area.x1, area.y1, width, height, dpi);
+    g_print("Area %g:%g:%g:%g exported to %lu x %lu pixels (%g dpi)\n", area[Geom::X][0], area[Geom::Y][0], area[Geom::X][1], area[Geom::Y][1], width, height, dpi);
 
     g_print("Bitmap saved as: %s\n", filename);
 
     if ((width >= 1) && (height >= 1) && (width <= PNG_UINT_31_MAX) && (height <= PNG_UINT_31_MAX)) {
-        sp_export_png_file(doc, filename, area.x0, area.y0, area.x1, area.y1, width, height, dpi, dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
+        sp_export_png_file(doc, filename, area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
     } else {
         g_warning("Calculated bitmap dimensions %lu %lu are out of range (1 - %lu). Nothing exported.", width, height, (unsigned long int)PNG_UINT_31_MAX);
     }

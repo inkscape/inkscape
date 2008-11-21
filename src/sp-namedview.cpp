@@ -34,8 +34,6 @@
 #include "desktop.h"
 #include "conn-avoid-ref.h" // for defaultConnSpacing.
 
-
-#define DEFAULTTOLERANCE 0.4
 #define DEFAULTGRIDCOLOR 0x3f3fff25
 #define DEFAULTGRIDEMPCOLOR 0x3f3fff60
 #define DEFAULTGRIDEMPSPACING 5
@@ -113,8 +111,7 @@ static void sp_namedview_init(SPNamedView *nv)
     nv->guides = NULL;
     nv->viewcount = 0;
     nv->grids = NULL;
-    nv->snapindicator = false;
-
+    
     nv->default_layer_id = 0;
 
     nv->connector_spacing = defaultConnSpacing;
@@ -246,7 +243,6 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:window-x");
     sp_object_read_attr(object, "inkscape:window-y");
     sp_object_read_attr(object, "inkscape:snap-global");
-    sp_object_read_attr(object, "inkscape:snap-indicator");
     sp_object_read_attr(object, "inkscape:snap-bbox");
     sp_object_read_attr(object, "inkscape:snap-nodes");
     sp_object_read_attr(object, "inkscape:snap-guide");
@@ -327,7 +323,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
     case SP_ATTR_GRIDTOLERANCE:
             nv->gridtoleranceunit = &px;
-            nv->gridtolerance = DEFAULTTOLERANCE;
+            nv->gridtolerance = 10000;
             if (value) {
                 sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &nv->gridtolerance, &nv->gridtoleranceunit);
             }
@@ -335,7 +331,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
     case SP_ATTR_GUIDETOLERANCE:
             nv->guidetoleranceunit = &px;
-            nv->guidetolerance = DEFAULTTOLERANCE;
+            nv->guidetolerance = 20;
             if (value) {
                 sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &nv->guidetolerance, &nv->guidetoleranceunit);
             }
@@ -343,7 +339,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
     case SP_ATTR_OBJECTTOLERANCE:
             nv->objecttoleranceunit = &px;
-            nv->objecttolerance = DEFAULTTOLERANCE;
+            nv->objecttolerance = 20;
             if (value) {
                 sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &nv->objecttolerance, &nv->objecttoleranceunit);
             }
@@ -456,10 +452,6 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
     case SP_ATTR_INKSCAPE_SNAP_GLOBAL:
             nv->snap_manager.snapprefs.setSnapEnabledGlobally(value ? sp_str_to_bool(value) : TRUE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
-    case SP_ATTR_INKSCAPE_SNAP_INDICATOR:
-            nv->snapindicator = (value) ? sp_str_to_bool (value) : TRUE;
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_BBOX:

@@ -131,9 +131,9 @@ private:
 
     SPItem::BBoxType _snap_bbox_type;
     
-    boost::optional<Geom::Rect> _bbox;
-    boost::optional<Geom::Rect> _approximate_bbox;
-    boost::optional<Geom::Rect> _geometric_bbox;
+    Geom::OptRect _bbox;
+    Geom::OptRect _approximate_bbox;
+    Geom::OptRect _geometric_bbox;
     gdouble _strokewidth;
     
     Geom::Matrix _current_relative_affine;

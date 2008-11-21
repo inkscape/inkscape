@@ -190,7 +190,7 @@ static Avoid::Polygn avoid_item_poly(SPItem const *item)
     //       by the sp_*_update functions, e.g., text.
     sp_document_ensure_up_to_date(item->document);
     
-    boost::optional<Geom::Rect> rHull = item->getBounds(sp_item_i2doc_affine(item));
+    Geom::OptRect rHull = item->getBounds(sp_item_i2doc_affine(item));
     if (!rHull) {
         return Avoid::newPoly(0);
     }

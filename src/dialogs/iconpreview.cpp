@@ -1,7 +1,7 @@
-/*
- * A simple dialog for previewing icon representation.
- *
- * Authors:
+/** @file
+ * @brief A simple dialog for previewing icon representation.
+ */
+/* Authors:
  *   Jon A. Cruz
  *   Bob Jamison
  *   Other dudes from The Inkscape Organization

@@ -243,8 +243,17 @@ static void sp_genericellipse_set_shape(SPShape *shape)
     Geom::Matrix aff = Geom::Scale(rx, ry) * Geom::Translate(ellipse->cx.computed, ellipse->cy.computed);
     curve->transform(aff);
 
-    sp_lpe_item_perform_path_effect(SP_LPE_ITEM (ellipse), curve);
-    sp_shape_set_curve_insync((SPShape *) ellipse, curve, TRUE);
+    /* Reset the shape'scurve to the "original_curve"
+     * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
+    sp_shape_set_curve_insync (shape, curve, TRUE);
+    if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(shape)) && sp_lpe_item_path_effects_enabled(SP_LPE_ITEM(shape))) {
+        SPCurve *c_lpe = curve->copy();
+        bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM (shape), c_lpe);
+        if (success) {
+            sp_shape_set_curve_insync (shape, c_lpe, TRUE);
+        }
+        c_lpe->unref();
+    }
     curve->unref();
 }
 

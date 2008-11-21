@@ -1,5 +1,2 @@
-This new folder is part of the Inkscape 0.38 directory reorganization. Please place the appropriate files into this folder.
-
-Thank You!
-
-Inkscape Developers
+This is the root dir for Inkscape's resources that it loads at runtime: 
+icons, markers, filters, keyboard maps, etc.

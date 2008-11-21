@@ -229,7 +229,7 @@ nr_arena_shape_set_child_position(NRArenaItem *item, NRArenaItem *child, NRArena
 
 void nr_arena_shape_update_stroke(NRArenaShape *shape, NRGC* gc, NRRectL *area);
 void nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool force_shape = false);
-void nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::Rect &bbox);
+void nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::OptRect &bbox);
 
 /**
  * Updates the arena shape 'item' and all of its children, including the markers.
@@ -237,7 +237,7 @@ void nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::Rect &bbox);
 static guint
 nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset)
 {
-    Geom::Rect boundingbox;
+    Geom::OptRect boundingbox;
 
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
 
@@ -255,10 +255,15 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         if (state & NR_ARENA_ITEM_STATE_BBOX) {
             if (shape->curve) {
                 boundingbox = bounds_exact_transformed(shape->curve->get_pathvector(), gc->transform);
-                item->bbox.x0 = (gint32)(boundingbox[0][0] - 1.0F);
-                item->bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
-                item->bbox.x1 = (gint32)(boundingbox[0][1] + 1.9999F);
-                item->bbox.y1 = (gint32)(boundingbox[1][1] + 1.9999F);
+                /// \todo  just write item->bbox = boundingbox
+                if (boundingbox) {
+                    item->bbox.x0 = (gint32)((*boundingbox)[0][0] - 1.0F);
+                    item->bbox.y0 = (gint32)((*boundingbox)[1][0] - 1.0F);
+                    item->bbox.x1 = (gint32)((*boundingbox)[0][1] + 1.9999F);
+                    item->bbox.y1 = (gint32)((*boundingbox)[1][1] + 1.9999F);
+                } else {
+                    item->bbox = NR_RECT_L_EMPTY;
+                }
             }
             if (beststate & NR_ARENA_ITEM_STATE_BBOX) {
                 for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
@@ -271,43 +276,44 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
 
     shape->delayed_shp=true;
     shape->ctm = gc->transform;
-    boundingbox[0][0] = boundingbox[1][0] = NR_HUGE;
-    boundingbox[0][1] = boundingbox[1][1] = -NR_HUGE;
+    boundingbox = Geom::OptRect();
 
     bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == Inkscape::RENDERMODE_OUTLINE);
 
     if (shape->curve) {
         boundingbox = bounds_exact_transformed(shape->curve->get_pathvector(), gc->transform);
 
-        if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
+        if (boundingbox && (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline)) {
             float width, scale;
             scale = gc->transform.descrim();
             width = MAX(0.125, shape->_stroke.width * scale);
             if ( fabs(shape->_stroke.width * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
-                boundingbox.expandBy(width);
+                boundingbox->expandBy(width);
             }
             // those pesky miters, now
             float miterMax=width*shape->_stroke.mitre_limit;
             if ( miterMax > 0.01 ) {
                 // grunt mode. we should compute the various miters instead (one for each point on the curve)
-                boundingbox.expandBy(miterMax);
+                boundingbox->expandBy(miterMax);
             }
         }
+    } 
+
+    /// \todo  just write item->bbox = boundingbox
+    if (boundingbox) {
+        shape->approx_bbox.x0 = (gint32)((*boundingbox)[0][0] - 1.0F);
+        shape->approx_bbox.y0 = (gint32)((*boundingbox)[1][0] - 1.0F);
+        shape->approx_bbox.x1 = (gint32)((*boundingbox)[0][1] + 1.9999F);
+        shape->approx_bbox.y1 = (gint32)((*boundingbox)[1][1] + 1.9999F);
     } else {
+        shape->approx_bbox = NR_RECT_L_EMPTY;
     }
-    shape->approx_bbox.x0 = (gint32)(boundingbox[0][0] - 1.0F);
-    shape->approx_bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
-    shape->approx_bbox.x1 = (gint32)(boundingbox[0][1] + 1.9999F);
-    shape->approx_bbox.y1 = (gint32)(boundingbox[1][1] + 1.9999F);
     if ( area && nr_rect_l_test_intersect_ptr(area, &shape->approx_bbox) ) shape->delayed_shp=false;
 
     /* Release state data */
-    if (TRUE || !Geom::transform_equalp(gc->transform, shape->ctm, NR_EPSILON)) {
-        /* Concept test */
-        if (shape->fill_shp) {
-            delete shape->fill_shp;
-            shape->fill_shp = NULL;
-        }
+    if (shape->fill_shp) {
+        delete shape->fill_shp;
+        shape->fill_shp = NULL;
     }
     if (shape->stroke_shp) {
         delete shape->stroke_shp;
@@ -339,22 +345,28 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         nr_arena_shape_update_stroke(shape, gc, area);
         nr_arena_shape_update_fill(shape, gc, area);
 
-        boundingbox[0][0] = boundingbox[0][1] = boundingbox[1][0] = boundingbox[1][1] = 0.0;
+        boundingbox = Geom::OptRect();
         nr_arena_shape_add_bboxes(shape, boundingbox);
 
-        shape->approx_bbox.x0 = (gint32)(boundingbox[0][0] - 1.0F);
-        shape->approx_bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
-        shape->approx_bbox.x1 = (gint32)(boundingbox[0][1] + 1.9999F);
-        shape->approx_bbox.y1 = (gint32)(boundingbox[1][1] + 1.9999F);
+        /// \todo  just write shape->approx_bbox = boundingbox
+        if (boundingbox) {
+            shape->approx_bbox.x0 = (gint32)((*boundingbox)[0][0] - 1.0F);
+            shape->approx_bbox.y0 = (gint32)((*boundingbox)[1][0] - 1.0F);
+            shape->approx_bbox.x1 = (gint32)((*boundingbox)[0][1] + 1.9999F);
+            shape->approx_bbox.y1 = (gint32)((*boundingbox)[1][1] + 1.9999F);
+        } else {
+            shape->approx_bbox = NR_RECT_L_EMPTY;
+        }
     }
 
-    if (boundingbox.isEmpty())
+    if (!boundingbox)
         return NR_ARENA_ITEM_STATE_ALL;
 
-    item->bbox.x0 = (gint32)(boundingbox[0][0] - 1.0F);
-    item->bbox.y0 = (gint32)(boundingbox[1][0] - 1.0F);
-    item->bbox.x1 = (gint32)(boundingbox[0][1] + 1.0F);
-    item->bbox.y1 = (gint32)(boundingbox[1][1] + 1.0F);
+    /// \todo  just write item->bbox = boundingbox
+    item->bbox.x0 = (gint32)((*boundingbox)[0][0] - 1.0F);
+    item->bbox.y0 = (gint32)((*boundingbox)[1][0] - 1.0F);
+    item->bbox.x1 = (gint32)((*boundingbox)[0][1] + 1.0F);
+    item->bbox.y1 = (gint32)((*boundingbox)[1][1] + 1.0F);
     nr_arena_request_render_rect(item->arena, &item->bbox);
 
     item->render_opacity = TRUE;
@@ -442,9 +454,8 @@ void
 nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool force_shape)
 {
     if ((shape->_fill.paint.type() != NRArenaShape::Paint::NONE || force_shape) &&
-//        ((shape->curve->get_length() > 2) || (SP_CURVE_BPATH(shape->curve)[1].code == NR_CURVETO)) ) {  // <-- this used to be the old code, i think it has to determine that the path has a sort of 'internal region' where fill would occur
           has_inner_area(shape->curve->get_pathvector()) ) {
-        if (TRUE || !shape->fill_shp) {
+
             Geom::Matrix  cached_to_new = Geom::identity();
             int isometry = 0;
             if ( shape->cached_fill ) {
@@ -522,7 +533,6 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool fo
                 shape->fill_shp->needEdgesSorting();
             }
             shape->delayed_shp |= shape->cached_fpartialy;
-        }
     }
 }
 
@@ -683,7 +693,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
 
 
 void
-nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::Rect &bbox)
+nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::OptRect &bbox)
 {
     /* TODO: are these two if's mutually exclusive? ( i.e. "shape->stroke_shp <=> !shape->fill_shp" )
      * if so, then this can be written much more compact ! */
@@ -715,7 +725,7 @@ nr_arena_shape_add_bboxes(NRArenaShape* shape, Geom::Rect &bbox)
 
 // cairo outline rendering:
 static unsigned int
-cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, boost::optional<Geom::Rect> area)
+cairo_arena_shape_render_outline(cairo_t *ct, NRArenaItem *item, Geom::OptRect area)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE(item);
 

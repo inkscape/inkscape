@@ -9,6 +9,7 @@ ENDIF(WIN32)
 SET(ui_dialog_SRC
 aboutbox.cpp
 align-and-distribute.cpp
+debug.cpp
 dialog.cpp
 dialog-manager.cpp
 dock-behavior.cpp
@@ -33,6 +34,7 @@ print.cpp
 scriptdialog.cpp
 #session-player.cpp
 text-properties.cpp
+tile.cpp
 tracedialog.cpp
 transformation.cpp
 tree-editor.cpp

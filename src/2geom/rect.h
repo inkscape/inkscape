@@ -48,6 +48,7 @@
 namespace Geom {
 /** D2<Interval> specialization to Rect */
 typedef D2<Interval> Rect;
+class OptRect;
 
 Rect unify(const Rect &, const Rect &);
 /**
@@ -60,10 +61,12 @@ class D2<Interval> {
   private:
     Interval f[2];
   public:
-    /* The default constructor creates an empty rect, constructed of two empty Intervals. (users rely on this!)
+    /** Best not to use this constructor, do not rely on what it initializes the object to.
+     *The default constructor creates a rect of default intervals.
      */
     D2<Interval>() { f[X] = f[Y] = Interval(); }
     
+    public:
     D2<Interval>(Interval const &a, Interval const &b) {
         f[X] = a;
         f[Y] = b;
@@ -105,14 +108,20 @@ class D2<Interval> {
     inline Point midpoint() const { return Point(f[X].middle(), f[Y].middle()); }
 
 /**
- * Compute the area of this rectangle.  Note that a zero area rectangle is not necessarily empty - just as the interval [0,0] contains one point, the rectangle [0,0] x [0,0] contains 1 point and no area.
+ * \brief Compute the area of this rectangle.
+ *
+ * Note that a zero area rectangle is not empty - just as the interval [0,0] contains one point, the rectangle [0,0] x [0,0] contains 1 point and no area.
+ * \retval For a valid return value, the rect must be tested for emptyness first.
  */
     inline double area() const { return f[X].extent() * f[Y].extent(); }
-    inline double maxExtent() const { return std::max(f[X].extent(), f[Y].extent()); }
+    inline bool hasZeroArea(double eps = EPSILON) const { return (area() <= eps); }
 
-    inline bool isEmpty()                 const { 
-        return f[X].isEmpty()        || f[Y].isEmpty(); 
-    }
+    inline double maxExtent() const { return std::max(f[X].extent(), f[Y].extent()); }
+    inline double minExtent() const { return std::min(f[X].extent(), f[Y].extent()); }
+
+//    inline bool isEmpty()                 const { 
+//        return f[X].isEmpty()        || f[Y].isEmpty(); 
+//    }
     inline bool intersects(Rect const &r) const { 
         return f[X].intersects(r[X]) && f[Y].intersects(r[Y]); 
     }
@@ -129,38 +138,18 @@ class D2<Interval> {
     inline void unionWith(Rect const &b) { 
         f[X].unionWith(b[X]); f[Y].unionWith(b[Y]); 
     }
+    void unionWith(OptRect const &b);
 
-    inline void expandBy(double amnt)    { 
+    inline void expandBy(double amnt)    {
         f[X].expandBy(amnt);  f[Y].expandBy(amnt); 
     }
     inline void expandBy(Point const p)  { 
         f[X].expandBy(p[X]);  f[Y].expandBy(p[Y]); 
     }
-    
-    /** Transforms the rect by m. Note that it gives correct results only for scales and translates,
-        in the case of rotations, the area of the rect will grow as it cannot rotate. */
-    inline Rect operator*(Matrix const m) const { 
-        return unify(Rect(corner(0) * m, corner(2) * m),
-                     Rect(corner(1) * m, corner(3) * m));
-    }
 };
 
 inline Rect unify(Rect const & a, Rect const & b) {
     return Rect(unify(a[X], b[X]), unify(a[Y], b[Y]));
-}
-
-/** 
- * Returns the smallest rectangle that encloses both rectangles.
- * An empty argument is assumed to be an empty rectangle
- */
-inline boost::optional<Rect> unify(boost::optional<Rect> const & a, boost::optional<Rect> const & b) {
-    if (!a) {
-        return b;
-    } else if (!b) {
-        return a;
-    } else {
-        return unify(*a, *b);
-    }
 }
 
 inline Rect union_list(std::vector<Rect> const &r) {
@@ -169,12 +158,6 @@ inline Rect union_list(std::vector<Rect> const &r) {
     for(unsigned i = 1; i < r.size(); i++)
         ret.unionWith(r[i]);
     return ret;
-}
-
-inline boost::optional<Rect> intersect(Rect const & a, Rect const & b) {
-    boost::optional<Interval> x = intersect(a[X], b[X]);
-    boost::optional<Interval> y = intersect(a[Y], b[Y]);
-    return x && y ? boost::optional<Rect>(Rect(*x, *y)) : boost::optional<Rect>();
 }
 
 inline
@@ -209,6 +192,70 @@ double distance( Point const& p, Rect const& rect )
     return std::sqrt(distanceSq(p, rect));
 }
 
+/**
+ * The OptRect class can represent and empty Rect and non-empty Rects.
+ * If OptRect is not empty, it means that both X and Y intervals are not empty.
+ * 
+ */
+class OptRect : public boost::optional<Rect> {
+public:
+    OptRect() : boost::optional<Rect>() {};
+    OptRect(Rect const &a) : boost::optional<Rect>(a) {};
+
+    /**
+     * Creates an empty OptRect when one of the argument intervals is empty.
+     */
+    OptRect(OptInterval const &x_int, OptInterval const &y_int) {
+        if (x_int && y_int) {
+            *this = Rect(*x_int, *y_int);
+        }
+        // else, stay empty.
+    }
+
+    /**
+     * Check whether this OptRect is empty or not.
+     */
+    inline bool isEmpty() { return (*this == false); };
+
+    /**
+     * If \c this is empty, copy argument \c b. Otherwise, union with it (and do nothing when \c b is empty)
+     */
+    inline void unionWith(OptRect const &b) {
+        if (b) {
+            if (*this) { // check that we are not empty
+                (**this)[X].unionWith((*b)[X]);
+                (**this)[Y].unionWith((*b)[Y]);
+            } else {
+                *this = b;
+            }
+        }
+    }
+};
+
+
+/** 
+ * Returns the smallest rectangle that encloses both rectangles.
+ * An empty argument is assumed to be an empty rectangle
+ */
+inline OptRect unify(OptRect const & a, OptRect const & b) {
+    if (!a) {
+        return b;
+    } else if (!b) {
+        return a;
+    } else {
+        return unify(*a, *b);
+    }
+}
+
+inline OptRect intersect(Rect const & a, Rect const & b) {
+    return OptRect(intersect(a[X], b[X]), intersect(a[Y], b[Y]));
+}
+
+inline void Rect::unionWith(OptRect const &b) { 
+    if (b) {
+        unionWith(*b);
+    }
+}
 
 } // end namespace Geom
 

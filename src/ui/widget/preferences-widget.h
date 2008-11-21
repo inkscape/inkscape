@@ -122,6 +122,23 @@ private:
     bool freeze; // used to block recursive updates of slider and spinbutton
 };
 
+class PrefSlider : public Gtk::HBox
+{
+public:
+    void init(Glib::ustring const &prefs_path,
+    		  double lower, double upper, double step_increment, double page_increment, double default_value, int digits);
+
+private:
+    void on_slider_value_changed();
+    void on_spinbutton_value_changed();
+    
+    Glib::ustring _prefs_path;
+    Gtk::SpinButton _sb;
+    Gtk::HScale     _slider;
+    bool freeze; // used to block recursive updates of slider and spinbutton
+};
+
+
 class PrefCombo : public Gtk::ComboBoxText
 {
 public:

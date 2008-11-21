@@ -37,21 +37,20 @@
 #include <2geom/point.h>
 #include <vector>
 #include <boost/concept_check.hpp>
+#include <2geom/forward.h>
 
 namespace Geom {
 
 //forward decls
-template <typename T> class D2;
-
 template <typename T> struct ResultTraits;
 
 template <> struct ResultTraits<double> {
-  typedef Interval bounds_type;
+  typedef OptInterval bounds_type;
   typedef SBasis sb_type;
 };
 
 template <> struct ResultTraits<Point > {
-  typedef D2<Interval> bounds_type;
+  typedef OptRect bounds_type;
   typedef D2<SBasis> sb_type;
 };
 

@@ -1,9 +1,7 @@
-#define __DIALOG_EVENTS_C__
-
-/**
- * \brief  Event handler for dialog windows
- *
- * Authors:
+/** @file
+ * @brief  Event handler for dialog windows
+ */
+/* Authors:
  *   bulia byak <bulia@dr.com>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
@@ -31,9 +29,9 @@
 
 
 /**
-* \brief  This function is called to zero the transientize semaphore by a
-*         timeout.
-*/
+ * \brief  This function is called to zero the transientize semaphore by a
+ *         timeout.
+ */
 gboolean
 sp_allow_again (gpointer *wd)
 {

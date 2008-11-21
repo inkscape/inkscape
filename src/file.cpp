@@ -589,6 +589,9 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
         g_free(text);
         g_free(safeUri);
         return FALSE;
+    } catch (Inkscape::Extension::Output::save_cancelled &e) {
+        SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Document not saved."));
+        return FALSE;
     } catch (Inkscape::Extension::Output::no_overwrite &e) {
         return sp_file_save_dialog(parentWindow, doc);
     }
@@ -1003,7 +1006,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
                 bool const saved_pref = prefs->getBool("/options/transform/pattern", true);
                 prefs->setBool("/options/transform/pattern", true);
                 sp_document_ensure_up_to_date(sp_desktop_document(desktop));
-                boost::optional<Geom::Rect> sel_bbox = selection->bounds();
+                Geom::OptRect sel_bbox = selection->bounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );
                     sp_selection_move_relative(selection, m);

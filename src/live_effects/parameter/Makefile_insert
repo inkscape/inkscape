@@ -8,14 +8,14 @@ live_effects/parameter/clean:
 live_effects_parameter_liblpeparam_a_SOURCES = \
 	live_effects/parameter/parameter.cpp	\
 	live_effects/parameter/parameter.h	\
+	live_effects/parameter/array.cpp	\
+	live_effects/parameter/array.h	\
 	live_effects/parameter/bool.cpp	\
 	live_effects/parameter/bool.h	\
 	live_effects/parameter/random.cpp	\
 	live_effects/parameter/random.h	\
 	live_effects/parameter/point.cpp	\
 	live_effects/parameter/point.h	\
-	live_effects/parameter/pointparam-knotholder.cpp	\
-	live_effects/parameter/pointparam-knotholder.h	\
 	live_effects/parameter/enum.h	\
 	live_effects/parameter/path-reference.cpp	\
 	live_effects/parameter/path-reference.h	\

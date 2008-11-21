@@ -41,18 +41,18 @@
 #include "path-prefix.h"
 #include "preferences.h"
 #include "selection.h"
-#include "sp-feblend.h"
-#include "sp-fecolormatrix.h"
-#include "sp-fecomponenttransfer.h"
-#include "sp-fecomposite.h"
-#include "sp-feconvolvematrix.h"
-#include "sp-fedisplacementmap.h"
-#include "sp-fedistantlight.h"
-#include "sp-femerge.h"
-#include "sp-femergenode.h"
-#include "sp-feoffset.h"
-#include "sp-fepointlight.h"
-#include "sp-fespotlight.h"
+#include "filters/blend.h"
+#include "filters/colormatrix.h"
+#include "filters/componenttransfer.h"
+#include "filters/composite.h"
+#include "filters/convolvematrix.h"
+#include "filters/displacementmap.h"
+#include "filters/distantlight.h"
+#include "filters/merge.h"
+#include "filters/mergenode.h"
+#include "filters/offset.h"
+#include "filters/pointlight.h"
+#include "filters/spotlight.h"
 #include "sp-filter-primitive.h"
 #include "sp-gaussian-blur.h"
 
@@ -84,7 +84,7 @@ int input_count(const SPFilterPrimitive* prim)
     else if(SP_IS_FEMERGE(prim)) {
         // Return the number of feMergeNode connections plus an extra
         int count = 1;
-        for(const SPObject* o = prim->firstChild(); o; o = o->next, ++count);
+        for(const SPObject* o = prim->firstChild(); o; o = o->next, ++count){};
         return count;
     }
     else
@@ -1821,7 +1821,7 @@ int FilterEffectsDialog::PrimitiveList::find_index(const Gtk::TreeIter& target)
 {
     int i = 0;
     for(Gtk::TreeIter iter = _model->children().begin();
-        iter != target; ++iter, ++i);
+        iter != target; ++iter, ++i){};
     return i;
 }
 
