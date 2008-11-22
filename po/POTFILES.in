@@ -388,6 +388,7 @@ share/extensions/svg_and_media_zip_output.py
 [type: gettext/xml] share/extensions/gimp_xcf.inx
 [type: gettext/xml] share/extensions/grid_cartesian.inx
 [type: gettext/xml] share/extensions/grid_polar.inx
+[type: gettext/xml] share/extensions/guides_creator.inx
 [type: gettext/xml] share/extensions/handles.inx
 [type: gettext/xml] share/extensions/hpgl_output.inx
 [type: gettext/xml] share/extensions/inkscape_help_askaquestion.inx

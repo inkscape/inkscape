@@ -60,6 +60,7 @@ extensions = \
 	gimp_xcf.py \
 	grid_cartesian.py \
 	grid_polar.py \
+	guides_creator.py \
 	handles.py \
 	hpgl_output.py \
 	ill2svg.pl \
@@ -172,6 +173,7 @@ modules = \
 	gimp_xcf.inx \
 	grid_cartesian.inx \
 	grid_polar.inx \
+	guides_creator.inx \
 	handles.inx \
 	hpgl_output.inx \
 	inkscape_help_askaquestion.inx \
