@@ -41,7 +41,9 @@ void Inkscape::Snapper::setSnapperTolerance(Geom::Coord const d)
  */
 Geom::Coord Inkscape::Snapper::getSnapperTolerance() const
 {
-    return _snapper_tolerance / SP_ACTIVE_DESKTOP->current_zoom();
+	SPDesktop const *dt = _snapmanager->getDesktop();
+	double const zoom =  dt ? dt->current_zoom() : 1;
+	return _snapper_tolerance / zoom;
 }
 
 bool Inkscape::Snapper::getSnapperAlwaysSnap() const
