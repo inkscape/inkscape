@@ -16,9 +16,10 @@
 #include <algorithm>
 #include <cmath>
 #include <complex>
-#include <glib.h>
 #include <cstdlib>
+#include <glib.h>
 #include <limits>
+#include <omp.h>
 
 #include "2geom/isnan.h"
 
@@ -268,9 +269,11 @@ static void
 filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
              PT const *const src, int const sstr1, int const sstr2,
              int const n1, int const n2, IIRValue const b[N+1], double const M[N*N],
-             IIRValue *const tmpdata)
+             IIRValue *const tmpdata[], int const num_threads)
 {
+#pragma omp parallel for num_threads(num_threads)
     for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
+        unsigned int tid = omp_get_thread_num();
         // corresponding line in the source and output buffer
         PT const * srcimg = src  + c2*sstr2;
         PT       * dstimg = dest + c2*dstr2 + n1*dstr1;
@@ -288,7 +291,7 @@ filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
             for(unsigned int i=1; i<N+1; i++) {
                 for(unsigned int c=0; c<PC; c++) u[0][c] += u[i][c]*b[i];
             }
-            copy_n(u[0], PC, tmpdata+c1*PC);
+            copy_n(u[0], PC, tmpdata[tid]+c1*PC);
         }
         // Backward pass
         IIRValue v[N+1][PC];
@@ -303,7 +306,7 @@ filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
         int c1=n1-1;
         while(c1-->0) {
             for(unsigned int i=N; i>0; i--) copy_n(v[i-1], PC, v[i]);
-            copy_n(tmpdata+c1*PC, PC, v[0]);
+            copy_n(tmpdata[tid]+c1*PC, PC, v[0]);
             for(unsigned int c=0; c<PC; c++) v[0][c] *= b[0];
             for(unsigned int i=1; i<N+1; i++) {
                 for(unsigned int c=0; c<PC; c++) v[0][c] += v[i][c]*b[i];
@@ -326,11 +329,12 @@ template<typename PT, unsigned int PC>
 static void
 filter2D_FIR(PT *const dst, int const dstr1, int const dstr2,
              PT const *const src, int const sstr1, int const sstr2,
-             int const n1, int const n2, FIRValue const *const kernel, int const scr_len)
+             int const n1, int const n2, FIRValue const *const kernel, int const scr_len, int const num_threads)
 {
     // Past pixels seen (to enable in-place operation)
     PT history[scr_len+1][PC];
 
+#pragma omp parallel for num_threads(num_threads) private(history)
     for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
 
         // corresponding line in the source buffer
@@ -539,13 +543,14 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
     }
 
     // Some common constants
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int const width_org = in->area.x1-in->area.x0, height_org = in->area.y1-in->area.y0;
     double const deviation_x_org = _deviation_x * NR::expansionX(trans);
     double const deviation_y_org = _deviation_y * NR::expansionY(trans);
     int const PC = NR_PIXBLOCK_BPP(in);
+    int const NTHREADS = std::max(1,std::min(8,prefs->getInt("/options/threading/numthreads",omp_get_num_procs())));
 
     // Subsampling constants
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int const quality = prefs->getInt("/options/blurquality/value");
     int const x_step_l2 = _effect_subsample_step_log2(deviation_x_org, quality);
     int const y_step_l2 = _effect_subsample_step_log2(deviation_y_org, quality);
@@ -577,13 +582,19 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
     }
     // Temporary storage for IIR filter
     // NOTE: This can be eliminated, but it reduces the precision a bit
-    IIRValue * tmpdata = 0;
+    IIRValue * tmpdata[NTHREADS];
+    std::fill_n(tmpdata, NTHREADS, (IIRValue*)0);
     if ( use_IIR_x || use_IIR_y ) {
-        tmpdata = new IIRValue[std::max(width,height)*PC];
-        if (tmpdata == NULL) {
-            nr_pixblock_release(out);
-            delete out;
-            return 0;
+        for(int i=0; i<NTHREADS; i++) {
+            tmpdata[i] = new IIRValue[std::max(width,height)*PC];
+            if (tmpdata[i] == NULL) {
+                nr_pixblock_release(out);
+                while(i-->0) {
+                    delete[] tmpdata[i];
+                }
+                delete out;
+                return 0;
+            }
         }
     }
     NRPixBlock *ssin = in;
@@ -629,16 +640,16 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         // Filter (x)
         switch(in->mode) {
         case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            filter2D_IIR<unsigned char,1,false>(NR_PIXBLOCK_PX(out), 1, out->rs, NR_PIXBLOCK_PX(ssin), 1, ssin->rs, width, height, b, M, tmpdata);
+            filter2D_IIR<unsigned char,1,false>(NR_PIXBLOCK_PX(out), 1, out->rs, NR_PIXBLOCK_PX(ssin), 1, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            filter2D_IIR<unsigned char,3,false>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, b, M, tmpdata);
+            filter2D_IIR<unsigned char,3,false>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata);
+            filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
-            filter2D_IIR<unsigned char,4,true >(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata);
+            filter2D_IIR<unsigned char,4,true >(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
             break;
         default:
             assert(false);
@@ -651,16 +662,16 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         // Filter (x)
         switch(in->mode) {
         case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            filter2D_FIR<unsigned char,1>(NR_PIXBLOCK_PX(out), 1, out->rs, NR_PIXBLOCK_PX(ssin), 1, ssin->rs, width, height, kernel, scr_len_x);
+            filter2D_FIR<unsigned char,1>(NR_PIXBLOCK_PX(out), 1, out->rs, NR_PIXBLOCK_PX(ssin), 1, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            filter2D_FIR<unsigned char,3>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, kernel, scr_len_x);
+            filter2D_FIR<unsigned char,3>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, kernel, scr_len_x);
+            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
-            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, kernel, scr_len_x);
+            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
             break;
         default:
             assert(false);
@@ -688,16 +699,16 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         // Filter (y)
         switch(in->mode) {
         case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            filter2D_IIR<unsigned char,1,false>(NR_PIXBLOCK_PX(out), out->rs, 1, NR_PIXBLOCK_PX(out), out->rs, 1, height, width, b, M, tmpdata);
+            filter2D_IIR<unsigned char,1,false>(NR_PIXBLOCK_PX(out), out->rs, 1, NR_PIXBLOCK_PX(out), out->rs, 1, height, width, b, M, tmpdata, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            filter2D_IIR<unsigned char,3,false>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, b, M, tmpdata);
+            filter2D_IIR<unsigned char,3,false>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, b, M, tmpdata, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata);
+            filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
-            filter2D_IIR<unsigned char,4,true >(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata);
+            filter2D_IIR<unsigned char,4,true >(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata, NTHREADS);
             break;
         default:
             assert(false);
@@ -710,23 +721,25 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         // Filter (y)
         switch(in->mode) {
         case NR_PIXBLOCK_MODE_A8:        ///< Grayscale
-            filter2D_FIR<unsigned char,1>(NR_PIXBLOCK_PX(out), out->rs, 1, NR_PIXBLOCK_PX(out), out->rs, 1, height, width, kernel, scr_len_y);
+            filter2D_FIR<unsigned char,1>(NR_PIXBLOCK_PX(out), out->rs, 1, NR_PIXBLOCK_PX(out), out->rs, 1, height, width, kernel, scr_len_y, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
-            filter2D_FIR<unsigned char,3>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, kernel, scr_len_y);
+            filter2D_FIR<unsigned char,3>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, kernel, scr_len_y, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, kernel, scr_len_y);
+            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, kernel, scr_len_y, NTHREADS);
             break;
         case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
-            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, kernel, scr_len_y);
+            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, kernel, scr_len_y, NTHREADS);
             break;
         default:
             assert(false);
         };
     }
 
-    delete[] tmpdata; // deleting a nullptr has no effect, so this is save
+    for(int i=0; i<NTHREADS; i++) {
+        delete[] tmpdata[i]; // deleting a nullptr has no effect, so this is safe
+    }
 
     if ( !resampling ) {
         // No upsampling needed

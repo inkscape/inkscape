@@ -141,6 +141,15 @@ AC_PATH_PROG(MSGFMT, msgfmt, msgfmt)
 AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
 
 dnl ******************************
+dnl Check for OpenMP 
+dnl ******************************
+
+AX_OPENMP(,AC_MSG_ERROR([Inkscape requires OpenMP support to build]))
+dnl We have it, now set up the flags
+CXXFLAGS="$CXXFLAGS $OPENMP_CXXFLAGS"
+AC_CHECK_HEADER(omp.h)
+
+dnl ******************************
 dnl Check for libpng 
 dnl ******************************
 AC_CHECK_LIB(png, png_read_info, [AC_CHECK_HEADER(png.h, png_ok=yes, png_ok=no)], png_ok=no, -lz -lm)
@@ -663,7 +672,7 @@ if test "x$cairo_pdf" = "xyes"; then
 fi
 
 dnl Shouldn't we test for libpng and libz?
-INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz"
+INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz -lgomp"
 
 AC_CHECK_HEADER(popt.h,
 		[INKSCAPE_LIBS="$INKSCAPE_LIBS -lpopt"],
