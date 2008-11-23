@@ -46,12 +46,12 @@ public:
     SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
     ~SnappedPoint();
 
-    Geom::Coord getDistance() const {return _distance;}
-    void setDistance(Geom::Coord const d) {_distance = d;}
+    Geom::Coord getSnapDistance() const {return _distance;}
+    void setSnapDistance(Geom::Coord const d) {_distance = d;}
     Geom::Coord getTolerance() const {return _tolerance;}
     bool getAlwaysSnap() const {return _always_snap;}
-    Geom::Coord getSecondDistance() const {return _second_distance;}
-    void setSecondDistance(Geom::Coord const d) {_second_distance = d;}
+    Geom::Coord getSecondSnapDistance() const {return _second_distance;}
+    void setSecondSnapDistance(Geom::Coord const d) {_second_distance = d;}
     Geom::Coord getSecondTolerance() const {return _second_tolerance;}
     bool getSecondAlwaysSnap() const {return _second_always_snap;}
     Geom::Coord getPointerDistance() const {return _pointer_distance;}
@@ -79,7 +79,7 @@ public:
     void setTarget(SnapTargetType const target) {_target = target;}
     SnapTargetType getTarget() {return _target;}
     
-    bool isOtherOneBetter(SnappedPoint const &other_one) const;
+    bool isOtherOneBetter(SnappedPoint const &other_one, bool weighted) const;
     
 protected:
     Geom::Point _point; // Location of the snapped point

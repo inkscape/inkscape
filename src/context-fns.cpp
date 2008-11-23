@@ -140,7 +140,7 @@ Geom::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item
                                      Inkscape::Snapper::ConstraintLine(p[1] - p[0]));
 
             /* Choose the best snap and update points accordingly */
-            if (s[0].getDistance() < s[1].getDistance()) {
+            if (s[0].getSnapDistance() < s[1].getSnapDistance()) {
                 if (s[0].getSnapped()) {
                     p[0] = s[0].getPoint();
                     p[1] = 2 * center - s[0].getPoint();
@@ -178,7 +178,7 @@ Geom::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item
         s[0] = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(p[0]));
         s[1] = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(p[1]));
 
-        if (s[0].getDistance() < s[1].getDistance()) {
+        if (s[0].getSnapDistance() < s[1].getSnapDistance()) {
             if (s[0].getSnapped()) {
                 p[0] = s[0].getPoint();
                 p[1] = 2 * center - s[0].getPoint();

@@ -276,6 +276,10 @@ class Path {
     /// there isn't any); we also consider the node mouseovered if it is covered
     /// by one of its handles and the latter is mouseovered
     static Node *active_node;
+    
+    /// Location of mouse pointer when we started dragging, needed for snapping
+	Geom::Point drag_origin_mouse;
+
 };
 
 }  // namespace NodePath

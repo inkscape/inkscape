@@ -176,7 +176,7 @@ protected:
 
     PrefSpinButton  _importexport_export, _misc_recent, _misc_simpl;
     ZoomCorrRulerSlider _ui_zoom_correction;
-    PrefSlider		_snap_delay;
+    PrefSlider		_snap_delay, _snap_weight;
     PrefSpinButton  _misc_latency_skew;
     PrefCheckButton _misc_comment, _misc_forkvectors, _misc_scripts, _misc_namedicon_delay;
     PrefCombo       _misc_small_toolbar;

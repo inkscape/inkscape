@@ -22,7 +22,7 @@
 Inkscape::Snapper::Snapper(SnapManager const *sm, Geom::Coord const t) : 
 	_snapmanager(sm), 
 	_snap_enabled(true),
-	_snapper_tolerance(t)
+	_snapper_tolerance(std::max(t, 1.0))
 {
     g_assert(_snapmanager != NULL);
 }
@@ -33,7 +33,7 @@ Inkscape::Snapper::Snapper(SnapManager const *sm, Geom::Coord const t) :
  */
 void Inkscape::Snapper::setSnapperTolerance(Geom::Coord const d)
 {
-    _snapper_tolerance = d;
+    _snapper_tolerance = std::max(d, 1.0);
 }
 
 /**

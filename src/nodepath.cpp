@@ -314,6 +314,8 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     } else {
         np->item = SP_ITEM(object);
     }
+    
+    np->drag_origin_mouse = Geom::Point(NR_HUGE, NR_HUGE);
 
     // we need to update item's transform from the repr here,
     // because they may be out of sync when we respond
@@ -1335,10 +1337,9 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
                                             bool const snap, bool constrained = false, 
                                             Inkscape::Snapper::ConstraintLine const &constraint = Geom::Point())
 {
-    Geom::Coord best = NR_HUGE;
     Geom::Point delta(dx, dy);
     Geom::Point best_pt = delta;
-    Inkscape::SnappedPoint best_abs;
+    Inkscape::SnappedPoint best;
     
     if (snap) {    
         /* When dragging a (selected) node, it should only snap to other nodes (i.e. unselected nodes), and
@@ -1363,6 +1364,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             m.setup(nodepath->desktop, false, SP_PATH(n->subpath->nodepath->item), &unselected_nodes);
             Inkscape::SnappedPoint s;
+            
             if (constrained) {
                 Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
                 dedicated_constraint.setPoint(n->pos);
@@ -1370,15 +1372,18 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
             } else {
                 s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta));
             }            
-            if (s.getSnapped() && (s.getDistance() < best)) {
-                best = s.getDistance();
-                best_abs = s;
-                best_pt = from_2geom(s.getPoint()) - n->pos;
+            
+            if (s.getSnapped()) {
+            	s.setPointerDistance(Geom::L2(nodepath->drag_origin_mouse - n->origin));            	            
+            	if (!s.isOtherOneBetter(best, true)) {
+	                best = s;
+	                best_pt = from_2geom(s.getPoint()) - n->pos;
+            	}
             }
         }
                         
-        if (best_abs.getSnapped()) {
-            nodepath->desktop->snapindicator->set_new_snappoint(best_abs);
+        if (best.getSnapped()) {
+            nodepath->desktop->snapindicator->set_new_snappoint(best);
         } else {
             nodepath->desktop->snapindicator->remove_snappoint();    
         }
@@ -3546,7 +3551,7 @@ static void node_clicked(SPKnot */*knot*/, guint state, gpointer data)
 /**
  * Mouse grabbed node callback.
  */
-static void node_grabbed(SPKnot */*knot*/, guint state, gpointer data)
+static void node_grabbed(SPKnot *knot, guint state, gpointer data)
 {
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
@@ -3555,6 +3560,9 @@ static void node_grabbed(SPKnot */*knot*/, guint state, gpointer data)
     }
 
     n->is_dragging = true;
+    // Reconstruct and store the location of the mouse pointer at the time when we started dragging (needed for snapping)
+    n->subpath->nodepath->drag_origin_mouse = knot->grabbed_rel_pos + knot->drag_origin;  
+    
     sp_canvas_force_full_redraw_after_interruptions(n->subpath->nodepath->desktop->canvas, 5);
 
     sp_nodepath_remember_origins (n->subpath->nodepath);
@@ -3569,6 +3577,7 @@ static void node_ungrabbed(SPKnot */*knot*/, guint /*state*/, gpointer data)
 
    n->dragging_out = NULL;
    n->is_dragging = false;
+   n->subpath->nodepath->drag_origin_mouse = Geom::Point(NR_HUGE, NR_HUGE);
    sp_canvas_end_forced_full_redraws(n->subpath->nodepath->desktop->canvas);
 
    sp_nodepath_update_repr(n->subpath->nodepath, _("Move nodes"));
@@ -4579,7 +4588,7 @@ sp_nodepath_node_new(Inkscape::NodePath::SubPath *sp, Inkscape::NodePath::Node *
     n->pos      = *pos;
     n->p.pos    = *ppos;
     n->n.pos    = *npos;
-
+    
     n->dragging_out = NULL;
 
     Inkscape::NodePath::Node *prev;

@@ -209,10 +209,12 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
                 snapper->freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_NODE, t_offset, TRUE, Geom::OptRect(), NULL, NULL);
                 // Find the best snap for this grid, including intersections of the grid-lines
                 Inkscape::SnappedPoint s = findBestSnap(t_offset, sc, false);
-                if (s.getSnapped() && (s.getDistance() < nearest_distance)) {
-                    success = true;
+                if (s.getSnapped() && (s.getSnapDistance() < nearest_distance)) { 
+                    // use getSnapDistance() instead of getWeightedDistance() here because the pointer's position 
+                	// doesn't tell us anything about which node to snap
+                	success = true;
                     nearest_multiple = s.getPoint() - to_2geom(grid->origin);
-                    nearest_distance = s.getDistance();
+                    nearest_distance = s.getSnapDistance();
                 }
             }
         }
@@ -448,8 +450,9 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             } else {
             	snapped_point = freeSnap(type, *j, i == points.begin(), bbox);
             }
-        	snapped_point.setPointerDistance(Geom::L2(pointer - *i));
         }
+        // std::cout << "dist = " << snapped_point.getSnapDistance() << std::endl;
+        snapped_point.setPointerDistance(Geom::L2(pointer - *i));
 
         Geom::Point result;
         Geom::Point scale_metric(NR_HUGE, NR_HUGE);
@@ -509,15 +512,15 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                         }
                     }
                     // Store the metric for this transformation as a virtual distance
-                    snapped_point.setDistance(std::abs(result[dim] - transformation[dim]));
-                    snapped_point.setSecondDistance(NR_HUGE);
+                    snapped_point.setSnapDistance(std::abs(result[dim] - transformation[dim]));
+                    snapped_point.setSecondSnapDistance(NR_HUGE);
                     break;
                 case SKEW:
                     result[0] = (snapped_point.getPoint()[dim] - (*i)[dim]) / ((*i)[1 - dim] - origin[1 - dim]); // skew factor
                     result[1] = transformation[1]; // scale factor
                     // Store the metric for this transformation as a virtual distance
-                    snapped_point.setDistance(std::abs(result[0] - transformation[0])); 
-                    snapped_point.setSecondDistance(NR_HUGE);
+                    snapped_point.setSnapDistance(std::abs(result[0] - transformation[0])); 
+                    snapped_point.setSecondSnapDistance(NR_HUGE);
                     break;
                 default:
                     g_assert_not_reached();
@@ -548,10 +551,10 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                     }
                 }
             } else { // For all transformations other than scaling
-                if (best_snapped_point.isOtherOneBetter(snapped_point)) {
-                    best_transformation = result;
+                if (best_snapped_point.isOtherOneBetter(snapped_point, true)) {
+                	best_transformation = result;
                     best_snapped_point = snapped_point;                    
-                }                
+                }
             }
         }
         
@@ -572,13 +575,13 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
         }
         best_metric = std::min(best_scale_metric[0], best_scale_metric[1]);
     } else { // For all transformations other than scaling
-        best_metric = best_snapped_point.getDistance();        
+        best_metric = best_snapped_point.getSnapDistance();        
     }
     
     best_snapped_point.setTransformation(best_transformation);
     // Using " < 1e6" instead of " < NR_HUGE" for catching some rounding errors
     // These rounding errors might be caused by NRRects, see bug #1584301    
-    best_snapped_point.setDistance(best_metric < 1e6 ? best_metric : NR_HUGE);
+    best_snapped_point.setSnapDistance(best_metric < 1e6 ? best_metric : NR_HUGE);
     return best_snapped_point;
 }
 
@@ -810,9 +813,9 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
     for (std::list<Inkscape::SnappedPoint>::const_iterator i = sp_list.begin(); i != sp_list.end(); i++) {
         // first find out if this snapped point is within snapping range
     	// std::cout << "sp = " << from_2geom((*i).getPoint());
-        if ((*i).getDistance() <= (*i).getTolerance()) {
+        if ((*i).getSnapDistance() <= (*i).getTolerance()) {
             // if it's the first point, or if it is closer than the best snapped point so far
-            if (i == sp_list.begin() || bestSnappedPoint.isOtherOneBetter(*i)) { 
+            if (i == sp_list.begin() || bestSnappedPoint.isOtherOneBetter(*i, false)) { 
                 // then prefer this point over the previous one
                 bestSnappedPoint = *i;
             }
@@ -829,7 +832,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
         }
     }
     
-    // std::cout << "findBestSnap = " << bestSnappedPoint.getPoint() << std::endl;
+    // std::cout << "findBestSnap = " << bestSnappedPoint.getPoint() << " | dist = " << bestSnappedPoint.getSnapDistance() << std::endl;
     return bestSnappedPoint;         
 }
 

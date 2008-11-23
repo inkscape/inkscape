@@ -21,11 +21,11 @@
 Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve)
 {
 	_distance = snapped_distance;
-    _tolerance = snapped_tolerance;
+    _tolerance = std::max(snapped_tolerance, 1.0);
     _always_snap = always_snap;
     _curve = curve;
     _second_distance = NR_HUGE;
-    _second_tolerance = 0;
+    _second_tolerance = 1;
     _second_always_snap = false;
     _point = snapped_point;
     _at_intersection = false;
@@ -35,11 +35,11 @@ Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coo
 Inkscape::SnappedCurve::SnappedCurve() 
 {
     _distance = NR_HUGE;
-    _tolerance = 0;
+    _tolerance = 1;
     _always_snap = false;
     _curve = NULL;
     _second_distance = NR_HUGE;
-    _second_tolerance = 0;
+    _second_tolerance = 1;
     _second_always_snap = false;
     _point = Geom::Point(0,0);
     _at_intersection = false;
@@ -73,7 +73,7 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
         }
         
         // Now we've found the closests intersection, return it as a SnappedPoint
-        bool const use_this_as_primary = _distance < curve.getDistance();
+        bool const use_this_as_primary = _distance < curve.getSnapDistance();
         Inkscape::SnappedCurve const *primaryC = use_this_as_primary ? this : &curve;
         Inkscape::SnappedCurve const *secondaryC = use_this_as_primary ? &curve : this;
         // The intersection should in fact be returned in desktop coordinates, but for this
@@ -83,8 +83,8 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
         // TODO: Investigate whether it is possible to use document coordinates everywhere
         // in the snapper code. Only the mouse position should be in desktop coordinates, I guess.
         // All paths are already in document coords and we are certainly not going to change THAT.
-        return SnappedPoint(from_2geom(best_p), Inkscape::SNAPTARGET_PATH_INTERSECTION, primaryC->getDistance(), primaryC->getTolerance(), primaryC->getAlwaysSnap(), true, true,
-                                          secondaryC->getDistance(), secondaryC->getTolerance(), secondaryC->getAlwaysSnap());
+        return SnappedPoint(from_2geom(best_p), Inkscape::SNAPTARGET_PATH_INTERSECTION, primaryC->getSnapDistance(), primaryC->getTolerance(), primaryC->getAlwaysSnap(), true, true,
+                                          secondaryC->getSnapDistance(), secondaryC->getTolerance(), secondaryC->getAlwaysSnap());
     }
     
     // No intersection
@@ -97,7 +97,7 @@ bool getClosestCurve(std::list<Inkscape::SnappedCurve> const &list, Inkscape::Sn
     bool success = false;
     
     for (std::list<Inkscape::SnappedCurve>::const_iterator i = list.begin(); i != list.end(); i++) {
-        if ((i == list.begin()) || (*i).getDistance() < result.getDistance()) {
+        if ((i == list.begin()) || (*i).getSnapDistance() < result.getSnapDistance()) {
             result = *i;
             success = true;
         }   
@@ -120,10 +120,10 @@ bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geo
                 // if it's the first point
                 bool const c1 = !success;
                 // or, if it's closer             
-                bool const c2 = sp.getDistance() < result.getDistance();
+                bool const c2 = sp.getSnapDistance() < result.getSnapDistance();
                 // or, if it's just then look at the other distance 
                 // (only relevant for snapped points which are at an intersection
-                bool const c3 = (sp.getDistance() == result.getDistance()) && (sp.getSecondDistance() < result.getSecondDistance()); 
+                bool const c3 = (sp.getSnapDistance() == result.getSnapDistance()) && (sp.getSecondSnapDistance() < result.getSecondSnapDistance()); 
                 // then prefer this point over the previous one
                 if (c1 || c2 || c3) {  
                     result = sp;

@@ -1413,10 +1413,9 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
 
         /* Pick one */
         Inkscape::SnappedPoint best_snapped_point;
-        g_assert(best_snapped_point.getDistance() == NR_HUGE);
         for (std::list<Inkscape::SnappedPoint>::const_iterator i = s.begin(); i != s.end(); i++) {
             if (i->getSnapped()) {
-                if (i->getDistance() < best_snapped_point.getDistance()) {
+                if (best_snapped_point.isOtherOneBetter(*i, true)) {
                     best_snapped_point = *i;
                     dxy = i->getTransformation();
                 }

@@ -208,7 +208,12 @@ void InkscapePreferences::initPageSnapping()
 	    
 	_snap_delay.init("/options/snapdelay/value", 0, 1000, 50, 100, 300, 0);
 	_page_snapping.add_line( false, _("Delay (in msec):"), _snap_delay, "",
-                     _("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"), true);
+			_("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"), true);
+	
+	_snap_weight.init("/options/snapweight/value", 0, 1, 0.1, 0.2, 0.5, 1);
+	_page_snapping.add_line( false, _("Weight factor:"), _snap_weight, "",
+			_("When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"), true);
+		
 
 	this->AddPage(_page_snapping, _("Snapping"), PREFS_PAGE_SNAPPING);
 }
