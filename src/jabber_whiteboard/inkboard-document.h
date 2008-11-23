@@ -16,6 +16,7 @@
 
 #include "document.h"
 #include "xml/document.h"
+#include "xml/node.h"
 #include "xml/simple-node.h"
 #include "xml/node-observer.h"
 #include "jabber_whiteboard/defines.h"

@@ -16,6 +16,7 @@
 
 #include "pedro/pedrodom.h"
 
+#include "xml/node.h"
 #include "xml/attribute-record.h"
 #include "xml/element-node.h"
 #include "xml/text-node.h"
