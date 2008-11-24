@@ -271,10 +271,11 @@ enum {
     SP_VERB_UNLOCK_ALL_IN_ALL_LAYERS,
     SP_VERB_UNHIDE_ALL,
     SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS,
-    /* Footer */
-    SP_VERB_LAST,
     /* Color management */
-    SP_VERB_EMBED_COLOR_PROFILE,
+    SP_VERB_EDIT_EMBED_COLOR_PROFILE,
+    SP_VERB_EDIT_REMOVE_COLOR_PROFILE,
+    /* Footer */
+    SP_VERB_LAST
 };
 
 gchar *sp_action_get_title (const SPAction *action);

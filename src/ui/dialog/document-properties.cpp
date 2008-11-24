@@ -19,30 +19,25 @@
 # include <config.h>
 #endif
 
-
-
-#include <gtkmm.h>
-#include "ui/widget/color-picker.h"
-#include "ui/widget/scalar-unit.h"
-
-#include "xml/node-event-vector.h"
-#include "xml/repr.h"
-#include "helper/units.h"
-#include "preferences.h"
-
-#include "inkscape.h"
-#include "io/sys.h"
-#include "verbs.h"
+#include "display/canvas-grid.h"
+#include "document-properties.h"
 #include "document.h"
 #include "desktop-handles.h"
 #include "desktop.h"
+#include <gtkmm.h>
+#include "helper/units.h"
+#include "inkscape.h"
+#include "io/sys.h"
+#include "preferences.h"
 #include "sp-namedview.h"
 #include "sp-object-repr.h"
 #include "sp-root.h"
+#include "ui/widget/color-picker.h"
+#include "ui/widget/scalar-unit.h"
+#include "verbs.h"
 #include "widgets/icon.h"
-#include "document-properties.h"
-
-#include "display/canvas-grid.h"
+#include "xml/node-event-vector.h"
+#include "xml/repr.h"
 
 #if ENABLE_LCMS
 #include <lcms.h>
@@ -391,6 +386,42 @@ DocumentProperties::build_snap_dtls()
     attach_all(_page_snap_dtls.table(), array, G_N_ELEMENTS(array));
 }
 
+// Very simple observer that just emits a signal if anything happens to a node
+DocumentProperties::SignalObserver::SignalObserver()
+    : _oldsel(0)
+{}
+
+// Add this observer to the SPObject and remove it from any previous object
+void
+DocumentProperties::SignalObserver::set(SPObject* o)
+{
+    if(_oldsel && _oldsel->repr)
+        _oldsel->repr->removeObserver(*this);
+    if(o && o->repr)
+        o->repr->addObserver(*this);
+    _oldsel = o;
+}
+
+void DocumentProperties::SignalObserver::notifyChildAdded(XML::Node&, XML::Node&, XML::Node*)
+{ signal_changed()(); }
+
+void DocumentProperties::SignalObserver::notifyChildRemoved(XML::Node&, XML::Node&, XML::Node*)
+{ signal_changed()(); }
+
+void DocumentProperties::SignalObserver::notifyChildOrderChanged(XML::Node&, XML::Node&, XML::Node*, XML::Node*)
+{ signal_changed()(); }
+
+void DocumentProperties::SignalObserver::notifyContentChanged(XML::Node&, Util::ptr_shared<char>, Util::ptr_shared<char>)
+{}
+
+void DocumentProperties::SignalObserver::notifyAttributeChanged(XML::Node&, GQuark, Util::ptr_shared<char>, Util::ptr_shared<char>)
+{ signal_changed()(); }
+
+sigc::signal<void>& DocumentProperties::SignalObserver::signal_changed()
+{
+    return _signal_changed;
+}
+
 #if ENABLE_LCMS
 static void
 lcms_profile_get_name (cmsHPROFILE   profile, const gchar **name)
@@ -414,26 +445,6 @@ lcms_profile_get_name (cmsHPROFILE   profile, const gchar **name)
 void
 DocumentProperties::populate_available_profiles(){
 
-    // add "None"
-/*    Gtk::MenuItem *i = new Gtk::MenuItem();
-    i->show();
-
-    i->set_data("filepath", NULL);
-    i->set_data("name", _("None"));
-
-    Gtk::HBox *hb = new Gtk::HBox(false,  0);
-    hb->show();
-
-    Gtk::Label *l = new Gtk::Label( _("None") );
-    l->show();
-    l->set_alignment(0.0, 0.5);
-
-    hb->pack_start(*l, true, true, 0);
-
-    hb->show();
-    i->add(*hb);
-    _menu.append(*i);
-*/
     std::list<gchar *> sources;
     sources.push_back( profile_path("color/icc") );
     //sources.push_back( g_strdup(INKSCAPE_COLORPROFILESDIR) );
@@ -519,7 +530,7 @@ DocumentProperties::onEmbedProfile()
     Inkscape::GC::release(defsRepr);
 
     // inform the document, so we can undo
-    sp_document_done(desktop->doc(), SP_VERB_EMBED_COLOR_PROFILE, _("Embed Color Profile"));
+    sp_document_done(desktop->doc(), SP_VERB_EDIT_EMBED_COLOR_PROFILE, _("Embed Color Profile"));
 
     populate_embedded_profiles_box();
 }
@@ -529,6 +540,7 @@ DocumentProperties::populate_embedded_profiles_box()
 {
     _EmbeddedProfilesListStore->clear();
     const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "iccprofile" );
+    if (current) _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
@@ -539,6 +551,47 @@ DocumentProperties::populate_embedded_profiles_box()
     }
 }
 
+void DocumentProperties::embedded_profiles_list_button_release(GdkEventButton* event)
+{
+    if((event->type == GDK_BUTTON_RELEASE) && (event->button == 3)) {
+        _EmbProfContextMenu.popup(event->button, event->time);
+    }
+}
+
+void DocumentProperties::create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
+{
+    Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    _EmbProfContextMenu.append(*mi);
+    mi->signal_activate().connect(rem);
+    mi->show();
+    _EmbProfContextMenu.accelerate(parent);
+}
+
+void DocumentProperties::remove_profile(){
+    Glib::ustring name;
+    if(_EmbeddedProfilesList.get_selection()) {
+        Gtk::TreeModel::iterator i = _EmbeddedProfilesList.get_selection()->get_selected();
+
+        if(i){
+            name = (*i)[_EmbeddedProfilesListColumns.nameColumn];
+        } else {
+            return;
+        }
+    }
+
+    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "iccprofile" );
+    while ( current ) {
+        SPObject* obj = SP_OBJECT(current->data);
+        Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
+        if (!name.compare(prof->name)){
+            sp_repr_unparent(obj->repr);
+            sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_COLOR_PROFILE, _("Remove embedded color profile"));
+        }
+        current = g_slist_next(current);
+    }
+
+    populate_embedded_profiles_box();
+}
 
 void
 DocumentProperties::build_cms()
@@ -584,6 +637,13 @@ DocumentProperties::build_cms()
     _EmbeddedProfilesListScroller.set_size_request(-1, 90);
 
     _embed_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onEmbedProfile));
+
+    _EmbeddedProfilesList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::embedded_profiles_list_button_release));
+    create_popup_menu(_EmbeddedProfilesList, sigc::mem_fun(*this, &DocumentProperties::remove_profile));
+
+    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "defs" );
+    if (current) _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
+    _emb_profiles_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_embedded_profiles_box));
 }
 #endif // ENABLE_LCMS
 
@@ -695,12 +755,13 @@ DocumentProperties::update()
     double const doc_h_px = sp_document_height(sp_desktop_document(dt));
     _page_sizer.setDim (doc_w_px, doc_h_px);
 
-    //-----------------------------------------------------------guide
+    //-----------------------------------------------------------guide page
+
     _rcb_sgui.setActive (nv->showguides);
     _rcp_gui.setRgba32 (nv->guidecolor);
     _rcp_hgui.setRgba32 (nv->guidehicolor);
 
-    //-----------------------------------------------------------snap
+    //-----------------------------------------------------------snap page
 
     _rcbsnbb.setActive (nv->snap_manager.snapprefs.getSnapModeBBox());
     _rcbsnn.setActive (nv->snap_manager.snapprefs.getSnapModeNode());
@@ -721,9 +782,15 @@ DocumentProperties::update()
     _rsu_gusn.setValue (nv->guidetolerance);
 
     _rcbs.setActive (nv->snap_manager.snapprefs.getSnapEnabledGlobally());
+
     //-----------------------------------------------------------grids page
 
     update_gridspage();
+
+    //------------------------------------------------Color Management page
+
+    populate_embedded_profiles_box();
+    populate_available_profiles();
 
     _wr.setUpdating (false);
 }

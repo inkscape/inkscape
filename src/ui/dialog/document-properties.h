@@ -26,6 +26,8 @@
 #include "ui/widget/tolerance-slider.h"
 #include "ui/widget/panel.h"
 
+#include "xml/node-observer.h"
+
 using namespace Inkscape::UI::Widget;
 
 namespace Inkscape {
@@ -59,11 +61,34 @@ protected:
     void  populate_embedded_profiles_box();
     virtual void  on_response (int);
     void  onEmbedProfile();
+    void  remove_profile();
+    void  embedded_profiles_list_button_release(GdkEventButton* event);
+    void  create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
 
     void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
     void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
     void _handleDeactivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
 
+    // Very simple observer that just emits a signal if anything happens to a node
+    class SignalObserver : public XML::NodeObserver
+    {
+    public:
+        SignalObserver();
+
+        // Add this observer to the SPObject and remove it from any previous object
+        void set(SPObject* o);
+        void notifyChildAdded(XML::Node&, XML::Node&, XML::Node*);
+        void notifyChildRemoved(XML::Node&, XML::Node&, XML::Node*);
+        void notifyChildOrderChanged(XML::Node&, XML::Node&, XML::Node*, XML::Node*);
+        void notifyContentChanged(XML::Node&, Util::ptr_shared<char>, Util::ptr_shared<char>);
+        void notifyAttributeChanged(XML::Node&, GQuark, Util::ptr_shared<char>, Util::ptr_shared<char>);
+        sigc::signal<void>& signal_changed();
+    private:
+        sigc::signal<void> _signal_changed;
+        SPObject* _oldsel;
+    };
+
+    SignalObserver _emb_profiles_observer;
     Gtk::Tooltips _tt;
     Gtk::Notebook  _notebook;
 
@@ -103,6 +128,7 @@ protected:
     Glib::RefPtr<Gtk::ListStore> _EmbeddedProfilesListStore;
     Gtk::TreeView _EmbeddedProfilesList;
     Gtk::ScrolledWindow _EmbeddedProfilesListScroller;
+    Gtk::Menu _EmbProfContextMenu;
     //---------------------------------------------------------------
     Gtk::Notebook   _grids_notebook;
     Gtk::HBox       _grids_hbox_crea;

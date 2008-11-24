@@ -69,6 +69,7 @@
 #include "path-chemistry.h"
 #include "text-chemistry.h"
 #include "ui/dialog/dialog-manager.h"
+#include "ui/dialog/document-properties.h"
 #include "ui/dialog/inkscape-preferences.h"
 #include "interface.h"
 #include "preferences.h"
@@ -982,6 +983,10 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
         case SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER:
             sp_selection_next_patheffect_param(dt);
+            break;
+        case SP_VERB_EDIT_EMBED_COLOR_PROFILE:
+            break;
+        case SP_VERB_EDIT_REMOVE_COLOR_PROFILE:
             break;
         default:
             break;
@@ -2707,6 +2712,11 @@ Verb *Verb::_base_verbs[] = {
                        N_("Unhide all objects in the current layer"), NULL),
     new LockAndHideVerb(SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS, "UnhideAllInAllLayers", N_("Unhide All in All Layers"),
                        N_("Unhide all objects in all layers"), NULL),
+    /*Color Management*/
+    new EditVerb(SP_VERB_EDIT_EMBED_COLOR_PROFILE, "EmbedColorProfile", N_("Embed Color Profile"),
+                 N_("Embed an ICC color profile"), NULL),
+    new EditVerb(SP_VERB_EDIT_REMOVE_COLOR_PROFILE, "RemoveColorProfile", N_("Remove Color Profile"),
+                 N_("Remove an embedded ICC color profile"), NULL),
     /* Footer */
     new Verb(SP_VERB_LAST, " '\"invalid id", NULL, NULL, NULL)
 };
