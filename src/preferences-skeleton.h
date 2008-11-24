@@ -250,6 +250,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"scrollingacceleration\" value=\"0.4\"/>\n"
 "    <group id=\"snapdelay\" value=\"150\"/>\n"	
 "    <group id=\"snapweight\" value=\"0.5\"/>\n"
+"    <group id=\"snapclosestonly\" value=\"0\"/>\n"
 "    <group id=\"snapindicator\" value=\"1\"/>\n"
 "    <group id=\"autoscrollspeed\" value=\"0.7\"/>\n"
 "    <group id=\"autoscrolldistance\" value=\"-10\"/>\n"

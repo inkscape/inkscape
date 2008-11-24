@@ -17,7 +17,7 @@
 Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained)
     : _point(p), _target(target), _distance(d), _tolerance(std::max(t,1.0)), _always_snap(a)
 {
-	// tolerance should never be smaller than 1 px, as it is used for normalization in isOtherOneBetter. We don't want a division by zero.
+	// tolerance should never be smaller than 1 px, as it is used for normalization in isOtherSnapBetter. We don't want a division by zero.
     _fully_constrained = fully_constrained;
     _second_distance = NR_HUGE;
     _second_tolerance = 1;
@@ -31,7 +31,7 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const 
     _second_distance(d2), _second_tolerance(std::max(t2,1.0)), _second_always_snap(a2)
 {
     // tolerance should never be smaller than 1 px, as it is used for normalization in 
-    // isOtherOneBetter. We don't want a division by zero.
+    // isOtherSnapBetter. We don't want a division by zero.
     _transformation = Geom::Point(1,1);
     _pointer_distance = NR_HUGE;
 }
@@ -79,7 +79,7 @@ bool getClosestSP(std::list<Inkscape::SnappedPoint> &list, Inkscape::SnappedPoin
     return success;
 }
 
-bool Inkscape::SnappedPoint::isOtherOneBetter(Inkscape::SnappedPoint const &other_one, bool weighted) const
+bool Inkscape::SnappedPoint::isOtherSnapBetter(Inkscape::SnappedPoint const &other_one, bool weighted) const
 {
     
 	double dist_other = other_one.getSnapDistance();
@@ -92,7 +92,10 @@ bool Inkscape::SnappedPoint::isOtherOneBetter(Inkscape::SnappedPoint const &othe
 		// weigth factor: controls which node should be preferrerd for snapping, which is either
 		// the node with the closest snap (w = 0), or the node closest to the mousepointer (w = 1)
 		Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-		double const w = prefs->getDoubleLimited("/options/snapweight/value", 0.5, 0, 1);
+		double w = prefs->getDoubleLimited("/options/snapweight/value", 0.5, 0, 1);
+		if (prefs->getBool("/options/snapclosestonly/value", false)) {
+			w = 1;
+		}
 		if (w > 0) {
 			// When accounting for the distance to the mouse pointer, then at least one of the snapped points should
 			// have that distance set. If not, then this is a bug. Either "weighted" must be set to false, or the

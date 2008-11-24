@@ -1360,25 +1360,46 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
         
         SnapManager &m = nodepath->desktop->namedview->snap_manager;
         
-        for (GList *l = nodepath->selected; l != NULL; l = l->next) {
+        // When only the node closest to the mouse pointer is to be snapped 
+        // then we will not even try to snap to other points and discard those immediately
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        bool closest_only = prefs->getBool("/options/snapclosestonly/value", false); 
+        
+        Inkscape::NodePath::Node *closest_node = NULL;
+        Geom::Coord closest_dist = NR_HUGE;
+        
+    	if (closest_only) {
+	        for (GList *l = nodepath->selected; l != NULL; l = l->next) {
+	        	Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
+	        	Geom::Coord dist = Geom::L2(nodepath->drag_origin_mouse - n->origin);
+	        	if (dist < closest_dist) {
+	        		closest_node = n;
+	        		closest_dist = dist;
+	        	}
+	        }	        	
+        }
+        
+    	// Iterate through all selected nodes
+    	m.setup(nodepath->desktop, false, SP_PATH(nodepath->item), &unselected_nodes);
+    	for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
-            m.setup(nodepath->desktop, false, SP_PATH(n->subpath->nodepath->item), &unselected_nodes);
-            Inkscape::SnappedPoint s;
-            
-            if (constrained) {
-                Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
-                dedicated_constraint.setPoint(n->pos);
-                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), dedicated_constraint);
-            } else {
-                s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta));
-            }            
-            
-            if (s.getSnapped()) {
-            	s.setPointerDistance(Geom::L2(nodepath->drag_origin_mouse - n->origin));            	            
-            	if (!s.isOtherOneBetter(best, true)) {
-	                best = s;
-	                best_pt = from_2geom(s.getPoint()) - n->pos;
-            	}
+            if (!closest_only || n == closest_node) { //try to snap either all selected nodes or only the closest one
+	            Inkscape::SnappedPoint s;            
+	            if (constrained) {
+	                Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
+	                dedicated_constraint.setPoint(n->pos);
+	                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), dedicated_constraint);
+	            } else {
+	                s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta));
+	            }            
+	            
+	            if (s.getSnapped()) {
+	            	s.setPointerDistance(Geom::L2(nodepath->drag_origin_mouse - n->origin));            	            
+	            	if (!s.isOtherSnapBetter(best, true)) {
+		                best = s;
+		                best_pt = from_2geom(s.getPoint()) - n->pos;
+	            	}
+	            }
             }
         }
                         

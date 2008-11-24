@@ -128,7 +128,7 @@ protected:
     PrefCheckButton _wheel_zoom;
     
     Gtk::HScale		*_slider_snapping_delay;
-    PrefCheckButton _snap_indicator;
+    PrefCheckButton _snap_indicator, _snap_closest_only;
 
     PrefCombo       _steps_rot_snap;
     PrefCheckButton _steps_compass;

@@ -121,8 +121,8 @@ bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geo
                 bool const c1 = !success;
                 // or, if it's closer             
                 bool const c2 = sp.getSnapDistance() < result.getSnapDistance();
-                // or, if it's just then look at the other distance 
-                // (only relevant for snapped points which are at an intersection
+                // or, if it's just as close then look at the other distance 
+                // (only relevant for snapped points which are at an intersection)
                 bool const c3 = (sp.getSnapDistance() == result.getSnapDistance()) && (sp.getSecondSnapDistance() < result.getSecondSnapDistance()); 
                 // then prefer this point over the previous one
                 if (c1 || c2 || c3) {  

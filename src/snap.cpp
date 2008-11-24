@@ -347,7 +347,6 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     ** Also used to globally disable all snapping 
     */
     if (someSnapperMightSnap() == false) {
-        g_assert(points.size() > 0);
         return Inkscape::SnappedPoint();
     }
     
@@ -551,7 +550,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                     }
                 }
             } else { // For all transformations other than scaling
-                if (best_snapped_point.isOtherOneBetter(snapped_point, true)) {
+                if (best_snapped_point.isOtherSnapBetter(snapped_point, true)) {
                 	best_transformation = result;
                     best_snapped_point = snapped_point;                    
                 }
@@ -815,7 +814,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
     	// std::cout << "sp = " << from_2geom((*i).getPoint());
         if ((*i).getSnapDistance() <= (*i).getTolerance()) {
             // if it's the first point, or if it is closer than the best snapped point so far
-            if (i == sp_list.begin() || bestSnappedPoint.isOtherOneBetter(*i, false)) { 
+            if (i == sp_list.begin() || bestSnappedPoint.isOtherSnapBetter(*i, false)) { 
                 // then prefer this point over the previous one
                 bestSnappedPoint = *i;
             }

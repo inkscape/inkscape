@@ -79,7 +79,7 @@ public:
     void setTarget(SnapTargetType const target) {_target = target;}
     SnapTargetType getTarget() {return _target;}
     
-    bool isOtherOneBetter(SnappedPoint const &other_one, bool weighted) const;
+    bool isOtherSnapBetter(SnappedPoint const &other_one, bool weighted) const;
     
 protected:
     Geom::Point _point; // Location of the snapped point
