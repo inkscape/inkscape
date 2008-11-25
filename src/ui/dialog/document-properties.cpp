@@ -603,7 +603,7 @@ DocumentProperties::build_cms()
     Gtk::Label *label_avail = manage (new Gtk::Label);
     label_avail->set_markup (_("<b>Available Color Profiles:</b>"));
 
-    _embed_btn.set_label("Embed Profile");
+    _embed_btn.set_label(_("Embed Profile"));
 
     Gtk::Widget *const array[] =
     {
