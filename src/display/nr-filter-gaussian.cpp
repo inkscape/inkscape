@@ -19,7 +19,9 @@
 #include <cstdlib>
 #include <glib.h>
 #include <limits>
+#if HAVE_OPENMP
 #include <omp.h>
+#endif //HAVE_OPENMP
 
 #include "2geom/isnan.h"
 
@@ -271,9 +273,15 @@ filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
              int const n1, int const n2, IIRValue const b[N+1], double const M[N*N],
              IIRValue *const tmpdata[], int const num_threads)
 {
+#if HAVE_OPENMP
 #pragma omp parallel for num_threads(num_threads)
+#endif // HAVE_OPENMP
     for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
+#if HAVE_OPENMP
         unsigned int tid = omp_get_thread_num();
+#else
+        unsigned int tid = 0;
+#endif // HAVE_OPENMP
         // corresponding line in the source and output buffer
         PT const * srcimg = src  + c2*sstr2;
         PT       * dstimg = dest + c2*dstr2 + n1*dstr1;
@@ -334,7 +342,9 @@ filter2D_FIR(PT *const dst, int const dstr1, int const dstr2,
     // Past pixels seen (to enable in-place operation)
     PT history[scr_len+1][PC];
 
+#if HAVE_OPENMP
 #pragma omp parallel for num_threads(num_threads) private(history)
+#endif // HAVE_OPENMP
     for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
 
         // corresponding line in the source buffer
@@ -548,7 +558,11 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
     double const deviation_x_org = _deviation_x * NR::expansionX(trans);
     double const deviation_y_org = _deviation_y * NR::expansionY(trans);
     int const PC = NR_PIXBLOCK_BPP(in);
+#if HAVE_OPENMP
     int const NTHREADS = std::max(1,std::min(8,prefs->getInt("/options/threading/numthreads",omp_get_num_procs())));
+#else
+    int const NTHREADS = 1;
+#endif // HAVE_OPENMP
 
     // Subsampling constants
     int const quality = prefs->getInt("/options/blurquality/value");

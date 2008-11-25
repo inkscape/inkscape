@@ -144,10 +144,16 @@ dnl ******************************
 dnl Check for OpenMP 
 dnl ******************************
 
-AX_OPENMP(,AC_MSG_ERROR([Inkscape requires OpenMP support to build]))
-dnl We have it, now set up the flags
-CXXFLAGS="$CXXFLAGS $OPENMP_CXXFLAGS"
-AC_CHECK_HEADER(omp.h)
+AX_OPENMP([openmp_ok=yes],[openmp_ok=no])
+AC_MSG_CHECKING([for OpenMP support])
+dnl a bit odd, but AX_OPENMP does its own check message, so we're not wrapping it at the moment
+AC_MSG_RESULT([$openmp_ok])
+if test "x$openmp_ok" = "xyes"; then
+	dnl We have it, now set up the flags
+	CXXFLAGS="$CXXFLAGS $OPENMP_CXXFLAGS"
+	AC_CHECK_HEADER(omp.h)
+fi
+
 
 dnl ******************************
 dnl Check for libpng 
@@ -672,7 +678,11 @@ if test "x$cairo_pdf" = "xyes"; then
 fi
 
 dnl Shouldn't we test for libpng and libz?
-INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz -lgomp"
+if test "x$openmp_ok" = "xyes"; then
+	INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz -lgomp"
+else
+	INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz"
+fi
 
 AC_CHECK_HEADER(popt.h,
 		[INKSCAPE_LIBS="$INKSCAPE_LIBS -lpopt"],
