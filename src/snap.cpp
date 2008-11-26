@@ -35,6 +35,7 @@
 #include "inkscape.h"
 #include "desktop.h"
 #include "sp-guide.h"
+#include "preferences.h"
 using std::vector;
 
 /**
@@ -356,36 +357,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     for (std::vector<Geom::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
 
         /* Work out the transformed version of this point */
-        Geom::Point transformed;
-        switch (transformation_type) {
-            case TRANSLATION:
-                transformed = *i + transformation;
-                break;
-            case SCALE:
-                transformed = (*i - origin) * Geom::Scale(transformation[Geom::X], transformation[Geom::Y]) + origin;
-                break;
-            case STRETCH:
-            {
-                Geom::Scale s(1, 1);
-                if (uniform)
-                    s[Geom::X] = s[Geom::Y] = transformation[dim];
-                else {
-                    s[dim] = transformation[dim];
-                    s[1 - dim] = 1;
-                }
-                transformed = ((*i - origin) * s) + origin;
-                break;
-            }
-            case SKEW:
-                // Apply the skew factor
-                transformed[dim] = (*i)[dim] + transformation[0] * ((*i)[1 - dim] - origin[1 - dim]);
-                // While skewing, mirroring and scaling (by integer multiples) in the opposite direction is also allowed.
-                // Apply that scale factor here
-                transformed[1-dim] = (*i - origin)[1 - dim] * transformation[1] + origin[1 - dim];
-                break;
-            default:
-                g_assert_not_reached();
-        }
+        Geom::Point transformed = _transformPoint(*i, transformation_type, transformation, origin, dim, uniform);
         
         // add the current transformed point to the box hulling all transformed points
         if (i == points.begin()) {
@@ -600,7 +572,11 @@ Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::SnapPreference
                                                         Geom::Point const &pointer,
                                                         Geom::Point const &tr) const
 {
-    return _snapTransformed(point_type, p, pointer, false, Geom::Point(0,0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
+	if (p.size() == 1) {
+		_displaySnapsource(point_type, _transformPoint(p.at(0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false));		
+	}
+	
+	return _snapTransformed(point_type, p, pointer, false, Geom::Point(0,0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
 }
 
 
@@ -622,7 +598,11 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::SnapPre
                                                                Inkscape::Snapper::ConstraintLine const &constraint,
                                                                Geom::Point const &tr) const
 {
-    return _snapTransformed(point_type, p, pointer, true, constraint, TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
+	if (p.size() == 1) {
+		_displaySnapsource(point_type, _transformPoint(p.at(0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false));		
+	}
+	
+	return _snapTransformed(point_type, p, pointer, true, constraint, TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
 }
 
 
@@ -643,7 +623,11 @@ Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::SnapPreferences::Poi
                                                   Geom::Scale const &s,
                                                   Geom::Point const &o) const
 {
-    return _snapTransformed(point_type, p, pointer, false, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false);
+	if (p.size() == 1) {
+		_displaySnapsource(point_type, _transformPoint(p.at(0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false));		
+	}
+	
+	return _snapTransformed(point_type, p, pointer, false, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false);
 }
 
 
@@ -666,7 +650,11 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::SnapPreferenc
                                                          Geom::Point const &o) const
 {
     // When constrained scaling, only uniform scaling is supported.
-    return _snapTransformed(point_type, p, pointer, true, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true);
+	if (p.size() == 1) {
+		_displaySnapsource(point_type, _transformPoint(p.at(0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true));		
+	}
+	
+	return _snapTransformed(point_type, p, pointer, true, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true);
 }
 
 
@@ -691,7 +679,11 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::SnapPrefere
                                                             Geom::Dim2 d,
                                                             bool u) const
 {
-   return _snapTransformed(point_type, p, pointer, true, Geom::Point(0,0), STRETCH, Geom::Point(s, s), o, d, u);
+	if (p.size() == 1) {
+		_displaySnapsource(point_type, _transformPoint(p.at(0), STRETCH, Geom::Point(s, s), o, d, u));		
+	}
+	   
+	return _snapTransformed(point_type, p, pointer, true, Geom::Point(0,0), STRETCH, Geom::Point(s, s), o, d, u);
 }
 
 
@@ -723,6 +715,11 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(Inkscape::SnapPreference
 	// so it's corners have a different transformation. The snappers cannot handle this, therefore snapping
 	// of bounding boxes is not allowed here.
 	g_assert(!(point_type & Inkscape::SnapPreferences::SNAPPOINT_BBOX));
+	
+	if (p.size() == 1) {
+		_displaySnapsource(point_type, _transformPoint(p.at(0), SKEW, s, o, d, false));		
+	}
+	
 	return _snapTransformed(point_type, p, pointer, true, constraint, SKEW, s, o, d, false);
 }
 
@@ -825,9 +822,9 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
     // Update the snap indicator, if requested
     if (_snapindicator) {
         if (bestSnappedPoint.getSnapped()) {
-            _desktop->snapindicator->set_new_snappoint(bestSnappedPoint);
+            _desktop->snapindicator->set_new_snaptarget(bestSnappedPoint);
         } else {
-            _desktop->snapindicator->remove_snappoint();
+            _desktop->snapindicator->remove_snaptarget();
         }
     }
     
@@ -858,6 +855,62 @@ void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, std::vecto
 SPDocument *SnapManager::getDocument() const
 {
     return _named_view->document;
+}
+
+Geom::Point SnapManager::_transformPoint(Geom::Point const &p, 
+										Transformation const transformation_type, 
+										Geom::Point const &transformation, 
+										Geom::Point const &origin, 
+										Geom::Dim2 const dim, 
+										bool const uniform) const 
+{
+	/* Work out the transformed version of this point */
+    Geom::Point transformed;
+    switch (transformation_type) {
+        case TRANSLATION:
+            transformed = p + transformation;
+            break;
+        case SCALE:
+            transformed = (p - origin) * Geom::Scale(transformation[Geom::X], transformation[Geom::Y]) + origin;
+            break;
+        case STRETCH:
+        {
+            Geom::Scale s(1, 1);
+            if (uniform)
+                s[Geom::X] = s[Geom::Y] = transformation[dim];
+            else {
+                s[dim] = transformation[dim];
+                s[1 - dim] = 1;
+            }
+            transformed = ((p - origin) * s) + origin;
+            break;
+        }
+        case SKEW:
+            // Apply the skew factor
+            transformed[dim] = p[dim] + transformation[0] * (p[1 - dim] - origin[1 - dim]);
+            // While skewing, mirroring and scaling (by integer multiples) in the opposite direction is also allowed.
+            // Apply that scale factor here
+            transformed[1-dim] = (p - origin)[1 - dim] * transformation[1] + origin[1 - dim];
+            break;
+        default:
+            g_assert_not_reached();
+    }
+    
+    return transformed;
+}
+
+void SnapManager::_displaySnapsource(Inkscape::SnapPreferences::PointType point_type, Geom::Point const &p) const {
+
+	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+	if (prefs->getBool("/options/snapclosestonly/value")) {
+		bool p_is_a_node = point_type & Inkscape::SnapPreferences::SNAPPOINT_NODE;
+        bool p_is_a_bbox = point_type & Inkscape::SnapPreferences::SNAPPOINT_BBOX;
+		if ((p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox())) {
+			_desktop->snapindicator->set_new_snapsource(p);
+		} else {
+			_desktop->snapindicator->remove_snapsource();
+		}
+	}
 }
 
 /*

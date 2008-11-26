@@ -23,7 +23,8 @@ namespace Inkscape {
 namespace Display {
 
 SnapIndicator::SnapIndicator(SPDesktop * desktop)
-    :   _tempitem(NULL),
+    :   _snaptarget(NULL),
+    	_snapsource(NULL),
         _desktop(desktop)
 {
 }
@@ -31,13 +32,14 @@ SnapIndicator::SnapIndicator(SPDesktop * desktop)
 SnapIndicator::~SnapIndicator()
 {
     // remove item that might be present
-    remove_snappoint();
+	remove_snaptarget();
+	remove_snapsource();
 }
 
 void
-SnapIndicator::set_new_snappoint(Inkscape::SnappedPoint const p)
+SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
 {
-    remove_snappoint();
+	remove_snaptarget();
     
     g_assert(_desktop != NULL);
     
@@ -66,18 +68,55 @@ SnapIndicator::set_new_snappoint(Inkscape::SnappedPoint const p)
                                                         NULL );        
         
         SP_CTRL(canvasitem)->moveto(p.getPoint());
-        _tempitem = _desktop->add_temporary_canvasitem(canvasitem, 1000); // TODO add preference for snap indicator timeout
+        remove_snapsource(); // Don't set both the source and target indicators, as these will overlap
+        _snaptarget = _desktop->add_temporary_canvasitem(canvasitem, 1000); // TODO add preference for snap indicator timeout
     }
 }
 
 void
-SnapIndicator::remove_snappoint()
+SnapIndicator::remove_snaptarget()
 {
-    if (_tempitem) {
-        _desktop->remove_temporary_canvasitem(_tempitem);
-        _tempitem = NULL;
+    if (_snaptarget) {
+        _desktop->remove_temporary_canvasitem(_snaptarget);
+        _snaptarget = NULL;
     }
 }
+
+void
+SnapIndicator::set_new_snapsource(Geom::Point const p)
+{
+	remove_snapsource();
+    
+    g_assert(_desktop != NULL);
+    
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool value = prefs->getBool("/options/snapindicator/value", true);
+    	
+    if (value) {
+        SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (_desktop),
+                                                        SP_TYPE_CTRL,
+                                                        "anchor", GTK_ANCHOR_CENTER,
+                                                        "size", 10.0,
+                                                        "stroked", TRUE,
+                                                        "stroke_color", 0xf000f0ff,
+                                                        "mode", SP_KNOT_MODE_XOR,
+                                                        "shape", SP_KNOT_SHAPE_DIAMOND,
+                                                        NULL );        
+        
+        SP_CTRL(canvasitem)->moveto(p);
+        _snapsource = _desktop->add_temporary_canvasitem(canvasitem, 1000);
+    }
+}
+
+void
+SnapIndicator::remove_snapsource()
+{
+    if (_snapsource) {
+        _desktop->remove_temporary_canvasitem(_snapsource);
+        _snapsource = NULL;
+    }
+}
+
 
 
 } //namespace Display

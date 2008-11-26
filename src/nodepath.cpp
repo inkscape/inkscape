@@ -1404,9 +1404,9 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
         }
                         
         if (best.getSnapped()) {
-            nodepath->desktop->snapindicator->set_new_snappoint(best);
+            nodepath->desktop->snapindicator->set_new_snaptarget(best);
         } else {
-            nodepath->desktop->snapindicator->remove_snappoint();    
+            nodepath->desktop->snapindicator->remove_snaptarget();    
         }
     }
 
@@ -3649,7 +3649,7 @@ node_request(SPKnot */*knot*/, Geom::Point const &p, guint state, gpointer data)
 
     Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
-    n->subpath->nodepath->desktop->snapindicator->remove_snappoint();
+    n->subpath->nodepath->desktop->snapindicator->remove_snaptarget();
 
     // If either (Shift and some handle retracted), or (we're already dragging out a handle)
     if ( (!n->subpath->nodepath->straight_path) &&
@@ -3936,7 +3936,7 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point const &p, guint st
     if ((state & GDK_SHIFT_MASK) != 0) {
     	// We will not try to snap when the shift-key is pressed
     	// so remove the old snap indicator and don't wait for it to time-out  
-    	desktop->snapindicator->remove_snappoint();
+    	desktop->snapindicator->remove_snaptarget();
     }
 
     Inkscape::NodePath::Node *othernode = opposite->other;

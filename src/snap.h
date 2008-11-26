@@ -42,7 +42,14 @@ class SPNamedView;
 class SnapManager
 {
 public:
-    SnapManager(SPNamedView const *v);
+	enum Transformation {
+        TRANSLATION,
+        SCALE,
+        STRETCH,
+        SKEW
+    };
+	
+	SnapManager(SPNamedView const *v);
 
     typedef std::list<const Inkscape::Snapper*> SnapperList;
 
@@ -119,7 +126,7 @@ public:
                                                Geom::Point const &s, // s[0] = skew factor, s[1] = scale factor
                                                Geom::Point const &o,
                                                Geom::Dim2 d) const;
-                                        
+    
     Inkscape::GuideSnapper guide;      ///< guide snapper
     Inkscape::ObjectSnapper object;    ///< snapper to other objects
     Inkscape::SnapPreferences snapprefs;
@@ -135,14 +142,7 @@ protected:
     SPNamedView const *_named_view;
 
 private:
-	enum Transformation {
-        TRANSLATION,
-        SCALE,
-        STRETCH,
-        SKEW
-    };
-    
-    std::vector<SPItem const *> *_items_to_ignore;
+	std::vector<SPItem const *> *_items_to_ignore;
     SPItem const *_item_to_ignore;
     SPDesktop const *_desktop;
     bool _snapindicator;
@@ -158,7 +158,16 @@ private:
                                             Geom::Point const &origin,
                                             Geom::Dim2 dim,
                                             bool uniform) const;
-                                                
+    
+    Geom::Point _transformPoint(Geom::Point const &p, 
+        							Transformation const transformation_type, 
+        							Geom::Point const &transformation, 
+        							Geom::Point const &origin, 
+        							Geom::Dim2 const dim, 
+        							bool const uniform) const;
+   
+    void _displaySnapsource(Inkscape::SnapPreferences::PointType point_type, Geom::Point const &p) const; 
+    
     Inkscape::SnappedPoint findBestSnap(Geom::Point const &p, SnappedConstraints &sc, bool constrained) const;
 };
 

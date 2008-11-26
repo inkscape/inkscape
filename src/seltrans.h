@@ -103,6 +103,7 @@ private:
     Geom::Point _calcAbsAffineDefault(Geom::Scale const default_scale);
     Geom::Point _calcAbsAffineGeom(Geom::Scale const geom_scale);
     void _keepClosestPointOnly(std::vector<Geom::Point> &points, const Geom::Point &reference);
+    void _display_snapsource();
 
     enum State {
         STATE_SCALE, //scale or stretch

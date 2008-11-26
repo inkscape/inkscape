@@ -26,11 +26,15 @@ public:
     SnapIndicator(SPDesktop *desktop);
     virtual ~SnapIndicator();
 
-    void set_new_snappoint(Inkscape::SnappedPoint const p);
-    void remove_snappoint();
+    void set_new_snaptarget(Inkscape::SnappedPoint const p);
+    void remove_snaptarget();
+    
+    void set_new_snapsource(Geom::Point const p);
+    void remove_snapsource();
     
 protected:
-    TemporaryItem *_tempitem;
+    TemporaryItem *_snaptarget;
+    TemporaryItem *_snapsource;
     SPDesktop *_desktop;
 
 private:

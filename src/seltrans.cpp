@@ -332,8 +332,19 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     // points immediately. 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 	if (prefs->getBool("/options/snapclosestonly/value", false)) {
-    	_keepClosestPointOnly(_snap_points, p);
-    	_keepClosestPointOnly(_bbox_points, p);
+    	if (m.snapprefs.getSnapModeNode()) {
+			_keepClosestPointOnly(_snap_points, p);
+    	} else {
+    		_snap_points.clear(); // don't keep any point
+    	}
+		
+    	if (m.snapprefs.getSnapModeBBox()) {
+			_keepClosestPointOnly(_bbox_points, p);
+		} else {
+			_bbox_points.clear(); // don't keep any point
+		}			
+    	
+    	g_assert(_bbox_points.size() < 2 && _snap_points.size() < 2);
     	if (_snap_points.size() == 1 && _bbox_points.size() == 1) { //both vectors can only have either one or zero elements
     		// So we have exactly one bbox corner and one node left; now find out which is closest and delete the other one
     		if (Geom::L2(_snap_points.at(0) - p) < Geom::L2(_bbox_points.at(0) - p)) {
@@ -342,9 +353,17 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     			_snap_points.clear();
     		}
 		}
+    	
+    	// Now either _bbox_points or _snap_points has a single element, the other one has zero..... or both have zero elements
+    	g_assert((_bbox_points.size() + _snap_points.size()) < 2);
+    	if (_bbox_points.size() == 1) {
+    		_desktop->snapindicator->set_new_snapsource(_bbox_points.at(0));
+    	} else if (_snap_points.size() == 1){
+    		_desktop->snapindicator->set_new_snapsource(_snap_points.at(0));
+    	}
     }
 
-    // The lines below are usefull for debugging any snapping issues, as they'll spit out all points that are considered for snapping
+    // The lines below are useful for debugging any snapping issues, as they'll spit out all points that are considered for snapping
 
     /*std::cout << "Number of snap points:  " << _snap_points.size() << std::endl;
     for (std::vector<Geom::Point>::const_iterator i = _snap_points.begin(); i != _snap_points.end(); i++)
@@ -970,15 +989,15 @@ gboolean Inkscape::SelTrans::scaleRequest(Geom::Point &pt, guint state)
         if (!(bb.getSnapped() || sn.getSnapped())) {
             // We didn't snap at all! Don't update the handle position, just calculate the new transformation
             _calcAbsAffineDefault(default_scale);
-            _desktop->snapindicator->remove_snappoint();
+            _desktop->snapindicator->remove_snaptarget();
         } else if (bd < sd) {
             // We snapped the bbox (which is either visual or geometric)
-            _desktop->snapindicator->set_new_snappoint(bb);
+            _desktop->snapindicator->set_new_snaptarget(bb);
             default_scale = Geom::Scale(bb.getTransformation());
             // Calculate the new transformation and update the handle position
             pt = _calcAbsAffineDefault(default_scale);
         } else {
-            _desktop->snapindicator->set_new_snappoint(sn);
+            _desktop->snapindicator->set_new_snaptarget(sn);
             // We snapped the special points (e.g. nodes), which are not at the visual bbox
             // The handle location however (pt) might however be at the visual bbox, so we
             // will have to calculate pt taking the stroke width into account
@@ -1072,13 +1091,13 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, Geom
         if (!(bb.getSnapped() || sn.getSnapped())) {
             // We didn't snap at all! Don't update the handle position, just calculate the new transformation
             _calcAbsAffineDefault(default_scale);
-            _desktop->snapindicator->remove_snappoint();
+            _desktop->snapindicator->remove_snaptarget();
         } else if (bd < sd) {
-            _desktop->snapindicator->set_new_snappoint(bb);
+            _desktop->snapindicator->set_new_snaptarget(bb);
             // Calculate the new transformation and update the handle position
             pt = _calcAbsAffineDefault(default_scale);
         } else {
-            _desktop->snapindicator->set_new_snappoint(sn);
+            _desktop->snapindicator->set_new_snaptarget(sn);
             // We snapped the special points (e.g. nodes), which are not at the visual bbox
             // The handle location however (pt) might however be at the visual bbox, so we
             // will have to calculate pt taking the stroke width into account
@@ -1171,10 +1190,10 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, Geom::P
         if (sn.getSnapped()) {
             // We snapped something, so change the skew to reflect it
             Geom::Coord const sd = sn.getSnapped() ? sn.getTransformation()[0] : NR_HUGE;
-             _desktop->snapindicator->set_new_snappoint(sn);
+             _desktop->snapindicator->set_new_snaptarget(sn);
             skew[dim_a] = sd;
         } else {
-            _desktop->snapindicator->remove_snappoint();
+            _desktop->snapindicator->remove_snaptarget();
         }
     }
 
@@ -1439,10 +1458,10 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
             }
         }
         if (best_snapped_point.getSnapped()) {
-            _desktop->snapindicator->set_new_snappoint(best_snapped_point);
+            _desktop->snapindicator->set_new_snaptarget(best_snapped_point);
         } else {
             // We didn't snap, so remove any previous snap indicator 
-            _desktop->snapindicator->remove_snappoint();            
+            _desktop->snapindicator->remove_snaptarget();            
             if (control) {
                 // If we didn't snap, then we should still constrain horizontally or vertically
                 // (When we did snap, then this constraint has already been enforced by

@@ -204,7 +204,7 @@ Geom::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item
     }
 
     if (snappoint.getSnapped()) {
-        desktop->snapindicator->set_new_snappoint(snappoint);
+        desktop->snapindicator->set_new_snaptarget(snappoint);
     }
 
     p[0] = sp_desktop_dt2root_xy_point(desktop, p[0]);

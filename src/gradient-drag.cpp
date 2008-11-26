@@ -625,7 +625,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
                 }
             }
             if (was_snapped) {
-                desktop->snapindicator->set_new_snappoint(s);
+                desktop->snapindicator->set_new_snaptarget(s);
             }
         }
     }
