@@ -13,6 +13,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "config.h" // Needed for HAVE_OPENMP
+
 #include <algorithm>
 #include <cmath>
 #include <complex>
