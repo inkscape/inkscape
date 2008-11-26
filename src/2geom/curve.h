@@ -138,7 +138,7 @@ public:
       Coord length = derivs[deriv_n].length();
       if ( ! are_near(length, 0) ) {
          // length of derivative is non-zero, so return unit vector
-    	  derivs[deriv_n] / length;
+    	  return derivs[deriv_n] / length;
       }
     }
     return Point (0,0);
