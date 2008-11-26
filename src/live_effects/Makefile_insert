@@ -27,8 +27,8 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpe-knot.h	\
 	live_effects/lpe-vonkoch.cpp	\
 	live_effects/lpe-vonkoch.h	\
-	live_effects/lpe-hatches.cpp	\
-	live_effects/lpe-hatches.h	\
+	live_effects/lpe-rough-hatches.cpp	\
+	live_effects/lpe-rough-hatches.h	\
 	live_effects/lpe-curvestitch.cpp	\
 	live_effects/lpe-curvestitch.h	\
 	live_effects/lpe-constructgrid.cpp	\
