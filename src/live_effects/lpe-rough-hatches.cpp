@@ -1,4 +1,4 @@
-#define INKSCAPE_LPE_HATCHES_CPP
+#define INKSCAPE_LPE_ROUGH_HATCHES_CPP
 /** \file
  * LPE Curve Stitching implementation, used as an example for a base starting class
  * when implementing new LivePathEffects.
@@ -13,7 +13,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "live_effects/lpe-hatches.h"
+#include "live_effects/lpe-rough-hatches.h"
 
 #include "sp-item.h"
 #include "sp-path.h"
@@ -263,9 +263,9 @@ Piecewise<D2<SBasis> > bend(Piecewise<D2<SBasis> > const &f, Piecewise<SBasis> b
 }
 
 //--------------------------------------------------------
-// The Hatches lpe.
+// The RoughHatches lpe.
 //--------------------------------------------------------
-LPEHatches::LPEHatches(LivePathEffectObject *lpeobject) :
+LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     dist_rdm(_("Dist randomness"), _("Variation of dist between hatches, in %."), "dist_rdm", &wr, this, 75),
     growth(_("Growth"), _("Growth of distance between hatches."), "growth", &wr, this, 0.),
@@ -321,13 +321,13 @@ LPEHatches::LPEHatches(LivePathEffectObject *lpeobject) :
     show_orig_path = true;
 }
 
-LPEHatches::~LPEHatches()
+LPERoughHatches::~LPERoughHatches()
 {
 
 }
 
 Geom::Piecewise<Geom::D2<Geom::SBasis> > 
-LPEHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in){
+LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in){
 
     Piecewise<D2<SBasis> > result;
     
@@ -371,7 +371,7 @@ LPEHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2
 // Generate the levels with random, growth...
 //------------------------------------------------
 std::vector<double>
-LPEHatches::generateLevels(Interval const &domain){
+LPERoughHatches::generateLevels(Interval const &domain){
     std::vector<double> result;
     double x = domain.min() + double(hatch_dist)/2.;
     double step = double(hatch_dist);
@@ -392,7 +392,7 @@ LPEHatches::generateLevels(Interval const &domain){
 // Walk through the intersections to create linear hatches
 //-------------------------------------------------------
 std::vector<std::vector<Point> > 
-LPEHatches::linearSnake(Piecewise<D2<SBasis> > const &f){
+LPERoughHatches::linearSnake(Piecewise<D2<SBasis> > const &f){
 
     std::vector<std::vector<Point> > result;
 
@@ -451,7 +451,7 @@ LPEHatches::linearSnake(Piecewise<D2<SBasis> > const &f){
 // Smooth the linear hatches according to params...
 //-------------------------------------------------------
 Piecewise<D2<SBasis> > 
-LPEHatches::smoothSnake(std::vector<std::vector<Point> > const &linearSnake){
+LPERoughHatches::smoothSnake(std::vector<std::vector<Point> > const &linearSnake){
 
     Piecewise<D2<SBasis> > result;
     for (unsigned comp=0; comp<linearSnake.size(); comp++){
@@ -545,7 +545,7 @@ LPEHatches::smoothSnake(std::vector<std::vector<Point> > const &linearSnake){
 }
 
 void
-LPEHatches::doBeforeEffect (SPLPEItem */*lpeitem*/)
+LPERoughHatches::doBeforeEffect (SPLPEItem */*lpeitem*/)
 {
     using namespace Geom;
     top_edge_variation.resetRandomizer();
@@ -561,7 +561,7 @@ LPEHatches::doBeforeEffect (SPLPEItem */*lpeitem*/)
 
 
 void
-LPEHatches::resetDefaults(SPItem * item)
+LPERoughHatches::resetDefaults(SPItem * item)
 {
     Geom::OptRect bbox = item->getBounds(Geom::identity(), SPItem::GEOMETRIC_BBOX);
     Geom::Point origin(0.,0.);

@@ -21,7 +21,7 @@ enum EffectType {
     PATTERN_ALONG_PATH,
     FREEHAND_SHAPE,
     SKETCH,
-    HATCHES,
+    ROUGH_HATCHES,
     VONKOCH,
     KNOT,
 #ifdef LPE_ENABLE_TEST_EFFECTS

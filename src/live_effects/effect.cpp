@@ -42,7 +42,7 @@
 #include "live_effects/lpe-sketch.h"
 #include "live_effects/lpe-vonkoch.h"
 #include "live_effects/lpe-knot.h"
-#include "live_effects/lpe-hatches.h"
+#include "live_effects/lpe-rough-hatches.h"
 #include "live_effects/lpe-test-doEffect-stack.h"
 #include "live_effects/lpe-gears.h"
 #include "live_effects/lpe-curvestitch.h"
@@ -73,7 +73,7 @@ namespace Inkscape {
 namespace LivePathEffect {
 
 const Util::EnumData<EffectType> LPETypeData[] = {
-    // {constant defined in effect.h, N_("name of your effect"), "name of your effect in SVG"}
+    // {constant defined in effect-enum.h, N_("name of your effect"), "name of your effect in SVG"}
     {ANGLE_BISECTOR,        N_("Angle bisector"),          "angle_bisector"},
     {BEND_PATH,             N_("Bend"),                     "bend_path"},
     {BOOLOPS,               N_("Boolops"),                 "boolops"},
@@ -100,7 +100,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {COPY_ROTATE,           N_("Rotate copies"),           "copy_rotate"},
     {RULER,                 N_("Ruler"),                   "ruler"},
     {SKETCH,                N_("Sketch"),                  "sketch"},
-    {HATCHES,               N_("Hatches"),                 "hatches"},
+    {ROUGH_HATCHES,         N_("Hatches (rough)"),            "rough_hatches"},
     {SPIRO,                 N_("Spiro spline"),            "spiro"},
     {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
@@ -139,8 +139,8 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
         case SKETCH:
             neweffect = static_cast<Effect*> ( new LPESketch(lpeobj) );
             break;
-        case HATCHES:
-            neweffect = static_cast<Effect*> ( new LPEHatches(lpeobj) );
+        case ROUGH_HATCHES:
+            neweffect = static_cast<Effect*> ( new LPERoughHatches(lpeobj) );
             break;
         case VONKOCH:
             neweffect = static_cast<Effect*> ( new LPEVonKoch(lpeobj) );

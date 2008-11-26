@@ -11,7 +11,7 @@ lpe-gears.cpp
 lpegroupbbox.cpp
 lpe-interpolate.cpp
 lpe-knot.cpp
-lpe-hatches.cpp
+lpe-rough-hatches.cpp
 lpe-lattice.cpp
 lpe-mirror_symmetry.cpp
 lpeobject.cpp

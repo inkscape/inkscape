@@ -1,8 +1,8 @@
-#ifndef INKSCAPE_LPE_HATCHES_H
-#define INKSCAPE_LPE_HATCHES_H
+#ifndef INKSCAPE_LPE_ROUGH_HATCHES_H
+#define INKSCAPE_LPE_ROUGH_HATCHES_H
 
 /** \file
- * Implementation of the curve stitch effect, see lpe-hatches.cpp
+ * Fills an area with rough hatches.
  */
 
 /*
@@ -24,10 +24,10 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-class LPEHatches : public Effect {
+class LPERoughHatches : public Effect {
 public:
-    LPEHatches(LivePathEffectObject *lpeobject);
-    virtual ~LPEHatches();
+    LPERoughHatches(LivePathEffectObject *lpeobject);
+    virtual ~LPERoughHatches();
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> >
     doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
@@ -67,8 +67,8 @@ private:
   PointParam  bender;
   VectorParam direction;
 
-  LPEHatches(const LPEHatches&);
-  LPEHatches& operator=(const LPEHatches&);
+  LPERoughHatches(const LPERoughHatches&);
+  LPERoughHatches& operator=(const LPERoughHatches&);
 };
 
 } //namespace LivePathEffect
