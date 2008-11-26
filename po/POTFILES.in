@@ -179,7 +179,6 @@ src/live_effects/lpe-copy_rotate.cpp
 src/live_effects/lpe-curvestitch.cpp
 src/live_effects/lpe-envelope.cpp
 src/live_effects/lpe-gears.cpp
-src/live_effects/lpe-hatches.cpp
 src/live_effects/lpe-interpolate.cpp
 src/live_effects/lpe-knot.cpp
 src/live_effects/lpe-lattice.cpp
@@ -191,6 +190,7 @@ src/live_effects/lpe-path_length.cpp
 src/live_effects/lpe-patternalongpath.cpp
 src/live_effects/lpe-perp_bisector.cpp
 src/live_effects/lpe-perspective_path.cpp
+src/live_effects/lpe-rough-hatches.cpp
 src/live_effects/lpe-ruler.cpp
 src/live_effects/lpe-skeleton.cpp
 src/live_effects/lpe-sketch.cpp
