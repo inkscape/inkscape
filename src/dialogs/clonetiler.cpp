@@ -820,7 +820,7 @@ clonetiler_get_transform (
         break;
     }
 
-    return NR::identity();
+    return Geom::identity();
 }
 
 static bool
@@ -889,7 +889,7 @@ clonetiler_trace_setup (SPDocument *doc, gdouble zoom, SPItem *original)
 }
 
 static guint32
-clonetiler_trace_pick (NR::Rect box)
+clonetiler_trace_pick (Geom::Rect box)
 {
     if (!trace_arena)
         return 0;
@@ -904,10 +904,10 @@ clonetiler_trace_pick (NR::Rect box)
 
     /* Item integer bbox in points */
     NRRectL ibox;
-    ibox.x0 = (int) floor(trace_zoom * box.min()[NR::X] + 0.5);
-    ibox.y0 = (int) floor(trace_zoom * box.min()[NR::Y] + 0.5);
-    ibox.x1 = (int) floor(trace_zoom * box.max()[NR::X] + 0.5);
-    ibox.y1 = (int) floor(trace_zoom * box.max()[NR::Y] + 0.5);
+    ibox.x0 = (int) floor(trace_zoom * box[Geom::X].min() + 0.5);
+    ibox.y0 = (int) floor(trace_zoom * box[Geom::Y].min() + 0.5);
+    ibox.x1 = (int) floor(trace_zoom * box[Geom::X].max() + 0.5);
+    ibox.y1 = (int) floor(trace_zoom * box[Geom::Y].max() + 0.5);
 
     /* Find visible area */
     int width = ibox.x1 - ibox.x0;
@@ -1063,20 +1063,20 @@ clonetiler_remove( GtkWidget */*widget*/, void *, bool do_undo = true )
                           _("Delete tiled clones"));
 }
 
-static NR::Rect
-transform_rect(NR::Rect const &r, NR::Matrix const &m)
+static Geom::Rect
+transform_rect( Geom::Rect const &r, Geom::Matrix const &m)
 {
-    using NR::X;
-    using NR::Y;
-    NR::Point const p1 = r.corner(1) * m;
-    NR::Point const p2 = r.corner(2) * m;
-    NR::Point const p3 = r.corner(3) * m;
-    NR::Point const p4 = r.corner(4) * m;
-    return NR::Rect(
-        NR::Point(
+    using Geom::X;
+    using Geom::Y;
+    Geom::Point const p1 = r.corner(1) * m;
+    Geom::Point const p2 = r.corner(2) * m;
+    Geom::Point const p3 = r.corner(3) * m;
+    Geom::Point const p4 = r.corner(4) * m;
+    return Geom::Rect(
+        Geom::Point(
             std::min(std::min(p1[X], p2[X]), std::min(p3[X], p4[X])),
             std::min(std::min(p1[Y], p2[Y]), std::min(p3[Y], p4[Y]))),
-        NR::Point(
+        Geom::Point(
             std::max(std::max(p1[X], p2[X]), std::max(p3[X], p4[X])),
             std::max(std::max(p1[Y], p2[Y]), std::max(p3[Y], p4[Y]))));
 }
@@ -1266,20 +1266,20 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
         }
     }
 
-    NR::Point cur = NR::Point (0, 0);
-    NR::Rect bbox_original = NR::Rect (NR::Point (x0, y0), NR::Point (x0 + w, y0 + h));
+    Geom::Point cur(0, 0);
+    Geom::Rect bbox_original (Geom::Point (x0, y0), Geom::Point (x0 + w, y0 + h));
     double perimeter_original = (w + h)/4;
 
     // The integers i and j are reserved for tile column and row.
     // The doubles x and y are used for coordinates
     for (int i = 0;
          fillrect?
-             (fabs(cur[NR::X]) < fillwidth && i < 200) // prevent "freezing" with too large fillrect, arbitrarily limit rows
+             (fabs(cur[Geom::X]) < fillwidth && i < 200) // prevent "freezing" with too large fillrect, arbitrarily limit rows
              : (i < imax);
          i ++) {
         for (int j = 0;
              fillrect?
-                 (fabs(cur[NR::Y]) < fillheight && j < 200) // prevent "freezing" with too large fillrect, arbitrarily limit cols
+                 (fabs(cur[Geom::Y]) < fillheight && j < 200) // prevent "freezing" with too large fillrect, arbitrarily limit cols
                  : (j < jmax);
              j ++) {
 
@@ -1308,7 +1308,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
 
             cur = center * t - center;
             if (fillrect) {
-                if ((cur[NR::X] > fillwidth) || (cur[NR::Y] > fillheight)) { // off limits
+                if ((cur[Geom::X] > fillwidth) || (cur[Geom::Y] > fillheight)) { // off limits
                     continue;
                 }
             }
@@ -1357,7 +1357,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
 
             // Trace tab
             if (dotrace) {
-                NR::Rect bbox_t = transform_rect (bbox_original, t);
+                Geom::Rect bbox_t = transform_rect (bbox_original, t);
 
                 guint32 rgba = clonetiler_trace_pick (bbox_t);
                 float r = SP_RGBA32_R_F(rgba);
@@ -1489,7 +1489,7 @@ clonetiler_apply( GtkWidget */*widget*/, void * )
 
             if (blur > 0.0) {
                 SPObject *clone_object = sp_desktop_document(desktop)->getObjectByRepr(clone);
-                double perimeter = perimeter_original * NR::expansion(t);
+                double perimeter = perimeter_original * t.descrim();
                 double radius = blur * perimeter;
                 // this is necessary for all newly added clones to have correct bboxes,
                 // otherwise filters won't work:
