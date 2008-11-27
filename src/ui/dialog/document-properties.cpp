@@ -789,8 +789,10 @@ DocumentProperties::update()
 
     //------------------------------------------------Color Management page
 
+#if ENABLE_LCMS
     populate_embedded_profiles_box();
     populate_available_profiles();
+#endif // ENABLE_LCMS
 
     _wr.setUpdating (false);
 }

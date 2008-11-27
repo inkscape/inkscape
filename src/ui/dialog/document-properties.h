@@ -57,13 +57,15 @@ protected:
 #endif // ENABLE_LCMS
     void  init();
 
+    virtual void  on_response (int);
+#if ENABLE_LCMS
     void  populate_available_profiles();
     void  populate_embedded_profiles_box();
-    virtual void  on_response (int);
     void  onEmbedProfile();
     void  remove_profile();
     void  embedded_profiles_list_button_release(GdkEventButton* event);
     void  create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
+#endif // ENABLE_LCMS
 
     void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
     void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);

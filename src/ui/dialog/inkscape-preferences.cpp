@@ -816,6 +816,7 @@ void InkscapePreferences::initPageCMS()
 
     _page_cms.add_group_header( _("Display adjustment"));
 
+#if ENABLE_LCMS
     Glib::ustring tmpStr;
     std::list<gchar *> sources = ColorProfile::getProfileDirs();
     while (!sources.empty()) {
@@ -832,6 +833,7 @@ void InkscapePreferences::initPageCMS()
                         profileTip, false);
     g_free(profileTip);
     profileTip = 0;
+#endif // ENABLE_LCMS
 
     _cms_from_display.init( _("Retrieve profile from display"), "/options/displayprofile/from_display", false);
     _page_cms.add_line( false, "", _cms_from_display, "",
