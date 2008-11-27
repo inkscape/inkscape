@@ -562,9 +562,8 @@ Glib::ustring Inkscape::get_path_for_profile(Glib::ustring const& name)
     return result;
 }
 
-#if ENABLE_LCMS
-std::list<gchar *> ColorProfile::getProfileDirs() {
-    std::list<gchar *> sources;
+std::list<Glib::ustring> ColorProfile::getProfileDirs() {
+    std::list<Glib::ustring> sources;
 
     gchar* base = profile_path("XXX");
     {
@@ -587,20 +586,18 @@ std::list<gchar *> ColorProfile::getProfileDirs() {
 
     return sources;
 }
-#endif // ENABLE_LCMS
 
 static void findThings() {
-    std::list<gchar *> sources = ColorProfile::getProfileDirs();
+    std::list<Glib::ustring> sources = ColorProfile::getProfileDirs();
 
-    while (!sources.empty()) {
-        gchar *dirname = sources.front();
-        if ( g_file_test( dirname, G_FILE_TEST_EXISTS ) && g_file_test( dirname, G_FILE_TEST_IS_DIR ) ) {
+    for ( std::list<Glib::ustring>::const_iterator it = sources.begin(); it != sources.end(); ++it ) {
+        if ( g_file_test( it->c_str(), G_FILE_TEST_EXISTS ) && g_file_test( it->c_str(), G_FILE_TEST_IS_DIR ) ) {
             GError *err = 0;
-            GDir *dir = g_dir_open(dirname, 0, &err);
+            GDir *dir = g_dir_open(it->c_str(), 0, &err);
 
             if (dir) {
                 for (gchar const *file = g_dir_read_name(dir); file != NULL; file = g_dir_read_name(dir)) {
-                    gchar *filepath = g_build_filename(dirname, file, NULL);
+                    gchar *filepath = g_build_filename(it->c_str(), file, NULL);
 
 
                     if ( g_file_test( filepath, G_FILE_TEST_IS_DIR ) ) {
@@ -654,10 +651,6 @@ static void findThings() {
                 }
             }
         }
-
-        // toss the dirname
-        g_free(dirname);
-        sources.pop_front();
     }
 }
 

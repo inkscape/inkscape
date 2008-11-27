@@ -7,6 +7,7 @@
 
 #include <glib/gtypes.h>
 #include <sp-object.h>
+#include <glibmm/ustring.h>
 #if ENABLE_LCMS
 #include <lcms.h>
 #endif // ENABLE_LCMS
@@ -32,9 +33,9 @@ struct ColorProfile : public SPObject {
     static GType getType();
     static void classInit( ColorProfileClass *klass );
 
+    static std::list<Glib::ustring> getProfileDirs();
 #if ENABLE_LCMS
     static cmsHPROFILE getSRGBProfile();
-    static std::list<gchar *> getProfileDirs();
 
     icColorSpaceSignature getColorSpace() const {return _profileSpace;}
     icProfileClassSignature getProfileClass() const {return _profileClass;}
