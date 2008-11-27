@@ -39,6 +39,7 @@
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-types.h"
 #include "color-profile-fns.h"
+#include "color-profile.h"
 #include "display/canvas-grid.h"
 
 namespace Inkscape {
@@ -815,8 +816,22 @@ void InkscapePreferences::initPageCMS()
 
     _page_cms.add_group_header( _("Display adjustment"));
 
+    Glib::ustring tmpStr;
+    std::list<gchar *> sources = ColorProfile::getProfileDirs();
+    while (!sources.empty()) {
+        gchar* dirname = sources.front();
+        gchar* part = g_strdup_printf("\n%s", dirname);
+        tmpStr += part;
+        g_free(part);
+        g_free(dirname);
+        sources.pop_front();
+    }
+
+    gchar* profileTip = g_strdup_printf(_("The ICC profile to use to calibrate display output.\nSearched directories:%s"), tmpStr.c_str());
     _page_cms.add_line( false, _("Display profile:"), _cms_display_profile, "",
-                        _("The ICC profile to use to calibrate display output."), false);
+                        profileTip, false);
+    g_free(profileTip);
+    profileTip = 0;
 
     _cms_from_display.init( _("Retrieve profile from display"), "/options/displayprofile/from_display", false);
     _page_cms.add_line( false, "", _cms_from_display, "",

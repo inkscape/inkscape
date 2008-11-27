@@ -34,6 +34,7 @@ struct ColorProfile : public SPObject {
 
 #if ENABLE_LCMS
     static cmsHPROFILE getSRGBProfile();
+    static std::list<gchar *> getProfileDirs();
 
     icColorSpaceSignature getColorSpace() const {return _profileSpace;}
     icProfileClassSignature getProfileClass() const {return _profileClass;}

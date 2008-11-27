@@ -562,7 +562,7 @@ Glib::ustring Inkscape::get_path_for_profile(Glib::ustring const& name)
     return result;
 }
 
-static void findThings() {
+std::list<gchar *> ColorProfile::getProfileDirs() {
     std::list<gchar *> sources;
 
     gchar* base = profile_path("XXX");
@@ -583,6 +583,12 @@ static void findThings() {
     for ( int i = 0; dataDirs[i]; i++ ) {
         sources.push_back(g_build_filename(dataDirs[i], "color", "icc", NULL));
     }
+
+    return sources;
+}
+
+static void findThings() {
+    std::list<gchar *> sources = ColorProfile::getProfileDirs();
 
     while (!sources.empty()) {
         gchar *dirname = sources.front();
