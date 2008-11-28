@@ -1797,9 +1797,24 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
     The recursion may involve creating new spans.
     */
     SPObject *common_ancestor = get_common_ancestor(text, start_item, end_item);
+
+    // bug #168370 (consider parent transform and viewBox)
+    // snipplet copied from desktop-style.cpp sp_desktop_apply_css_recursive(...)
+    SPCSSAttr *css_set = sp_repr_css_attr_new();
+    sp_repr_css_merge(css_set, (SPCSSAttr*) css);
+    {
+        Geom::Matrix const local(sp_item_i2doc_affine(SP_ITEM(common_ancestor)));
+        double const ex(local.descrim());
+        if ( ( ex != 0. )
+             && ( ex != 1. ) ) {
+            sp_css_attr_scale(css_set, 1/ex);
+        }
+    }
+
     start_item = ascend_while_first(start_item, start_text_iter, common_ancestor);
     end_item = ascend_while_first(end_item, end_text_iter, common_ancestor);
-    recursively_apply_style(common_ancestor, css, start_item, start_text_iter, end_item, end_text_iter, span_name_for_text_object(text));
+    recursively_apply_style(common_ancestor, css_set, start_item, start_text_iter, end_item, end_text_iter, span_name_for_text_object(text));
+    sp_repr_css_attr_unref(css_set);
 
     /* stage 2: cleanup the xml tree (of which there are multiple passes) */
     /* discussion: this stage requires a certain level of inventiveness because
