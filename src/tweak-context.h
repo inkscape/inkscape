@@ -71,7 +71,7 @@ struct SPTweakContext
 
     bool is_dilating;
     bool has_dilated;
-    NR::Point last_push;
+    Geom::Point last_push;
     SPCanvasItem *dilate_area;
 
     bool do_h;

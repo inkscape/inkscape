@@ -590,7 +590,7 @@ void SPText::rebuildLayout()
         if (tspan->role == SP_TSPAN_ROLE_UNSPECIFIED) continue;
         if (!tspan->attributes.singleXYCoordinates()) continue;
         Inkscape::Text::Layout::iterator iter = layout.sourceToIterator(tspan);
-        NR::Point anchor_point = layout.chunkAnchorPoint(iter);
+        Geom::Point anchor_point = layout.chunkAnchorPoint(iter);
         tspan->attributes.setFirstXY(anchor_point);
     }
 }
@@ -718,17 +718,17 @@ bool TextTagAttributes::anyAttributesSet() const
     return !attributes.x.empty() || !attributes.y.empty() || !attributes.dx.empty() || !attributes.dy.empty() || !attributes.rotate.empty();
 }
 
-NR::Point TextTagAttributes::firstXY() const
+Geom::Point TextTagAttributes::firstXY() const
 {
-    NR::Point point;
-    if (attributes.x.empty()) point[NR::X] = 0.0;
-    else point[NR::X] = attributes.x[0].computed;
-    if (attributes.y.empty()) point[NR::Y] = 0.0;
-    else point[NR::Y] = attributes.y[0].computed;
+    Geom::Point point;
+    if (attributes.x.empty()) point[Geom::X] = 0.0;
+    else point[Geom::X] = attributes.x[0].computed;
+    if (attributes.y.empty()) point[Geom::Y] = 0.0;
+    else point[Geom::Y] = attributes.y[0].computed;
     return point;
 }
 
-void TextTagAttributes::setFirstXY(NR::Point &point)
+void TextTagAttributes::setFirstXY(Geom::Point &point)
 {
     SVGLength zero_length;
     zero_length = 0.0;
@@ -737,8 +737,8 @@ void TextTagAttributes::setFirstXY(NR::Point &point)
         attributes.x.resize(1, zero_length);
     if (attributes.y.empty())
         attributes.y.resize(1, zero_length);
-    attributes.x[0].computed = point[NR::X];
-    attributes.y[0].computed = point[NR::Y];
+    attributes.x[0].computed = point[Geom::X];
+    attributes.y[0].computed = point[Geom::Y];
 }
 
 void TextTagAttributes::mergeInto(Inkscape::Text::Layout::OptionalTextTagAttrs *output, Inkscape::Text::Layout::OptionalTextTagAttrs const &parent_attrs, unsigned parent_attrs_offset, bool copy_xy, bool copy_dxdyrotate) const
@@ -878,7 +878,7 @@ void TextTagAttributes::joinSingleAttribute(std::vector<SVGLength> *dest_vector,
     }
 }
 
-void TextTagAttributes::transform(NR::Matrix const &matrix, double scale_x, double scale_y, bool extend_zero_length)
+void TextTagAttributes::transform(Geom::Matrix const &matrix, double scale_x, double scale_y, bool extend_zero_length)
 {
     SVGLength zero_length;
     zero_length = 0.0;
@@ -892,22 +892,22 @@ void TextTagAttributes::transform(NR::Matrix const &matrix, double scale_x, doub
         points_count = 1;
     for (unsigned i = 0 ; i < points_count ; i++) {
         NR::Point point;
-        if (i < attributes.x.size()) point[NR::X] = attributes.x[i].computed;
+        if (i < attributes.x.size()) point[Geom::X] = attributes.x[i].computed;
         else point[NR::X] = 0.0;
-        if (i < attributes.y.size()) point[NR::Y] = attributes.y[i].computed;
-        else point[NR::Y] = 0.0;
+        if (i < attributes.y.size()) point[Geom::Y] = attributes.y[i].computed;
+        else point[Geom::Y] = 0.0;
         point *= matrix;
         if (i < attributes.x.size())
-            attributes.x[i] = point[NR::X];
-        else if (point[NR::X] != 0.0 && extend_zero_length) {
+            attributes.x[i] = point[Geom::X];
+        else if (point[Geom::X] != 0.0 && extend_zero_length) {
             attributes.x.resize(i + 1, zero_length);
-            attributes.x[i] = point[NR::X];
+            attributes.x[i] = point[Geom::X];
         }
         if (i < attributes.y.size())
-            attributes.y[i] = point[NR::Y];
-        else if (point[NR::Y] != 0.0 && extend_zero_length) {
+            attributes.y[i] = point[Geom::Y];
+        else if (point[Geom::Y] != 0.0 && extend_zero_length) {
             attributes.y.resize(i + 1, zero_length);
-            attributes.y[i] = point[NR::Y];
+            attributes.y[i] = point[Geom::Y];
         }
     }
     for (std::vector<SVGLength>::iterator it = attributes.dx.begin() ; it != attributes.dx.end() ; it++)
@@ -916,18 +916,18 @@ void TextTagAttributes::transform(NR::Matrix const &matrix, double scale_x, doub
         *it = it->computed * scale_y;
 }
 
-void TextTagAttributes::addToDxDy(unsigned index, NR::Point const &adjust)
+void TextTagAttributes::addToDxDy(unsigned index, Geom::Point const &adjust)
 {
     SVGLength zero_length;
     zero_length = 0.0;
 
-    if (adjust[NR::X] != 0.0) {
+    if (adjust[Geom::X] != 0.0) {
         if (attributes.dx.size() < index + 1) attributes.dx.resize(index + 1, zero_length);
-        attributes.dx[index] = attributes.dx[index].computed + adjust[NR::X];
+        attributes.dx[index] = attributes.dx[index].computed + adjust[Geom::X];
     }
-    if (adjust[NR::Y] != 0.0) {
+    if (adjust[Geom::Y] != 0.0) {
         if (attributes.dy.size() < index + 1) attributes.dy.resize(index + 1, zero_length);
-        attributes.dy[index] = attributes.dy[index].computed + adjust[NR::Y];
+        attributes.dy[index] = attributes.dy[index].computed + adjust[Geom::Y];
     }
 }
 

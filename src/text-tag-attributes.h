@@ -88,11 +88,11 @@ public:
     If \a extend_zero_length is true, then if the x or y vectors are empty
     they will be made length 1 in order to store the newly calculated
     position. */
-    void transform(NR::Matrix const &matrix, double scale_x, double scale_y, bool extend_zero_length = false);
+    void transform(Geom::Matrix const &matrix, double scale_x, double scale_y, bool extend_zero_length = false);
 
     /** Adds the given values to the dx and dy vectors at the given
     \a index. The vectors are extended if necessary. */
-    void addToDxDy(unsigned index, NR::Point const &adjust);
+    void addToDxDy(unsigned index, Geom::Point const &adjust);
 
     /** Adds the given value to the rotate vector at the given \a index. The
     vector is extended if necessary. Delta is measured in degrees, clockwise
@@ -101,10 +101,10 @@ public:
 
     /** Returns the first coordinates in the x and y vectors. If either
     is zero length, 0.0 is used for that coordinate. */
-    NR::Point firstXY() const;
+    Geom::Point firstXY() const;
 
     /** Sets the first coordinates in the x and y vectors. */
-    void setFirstXY(NR::Point &point);
+    void setFirstXY(Geom::Point &point);
 
 private:
     /// This holds the actual values.

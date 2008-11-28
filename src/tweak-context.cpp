@@ -782,7 +782,7 @@ tweak_profile (double dist, double radius)
 
 void
 tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
-                          guint32 const rgb_goal, NR::Point p_w, double radius, double force, guint mode,
+                          guint32 const rgb_goal, Geom::Point p_w, double radius, double force, guint mode,
                           bool do_h, bool do_s, bool do_l, bool /*do_o*/)
 {
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
@@ -790,8 +790,8 @@ tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return;
 
-    NR::Matrix i2d (sp_item_i2doc_affine (item));
-    NR::Point p = p_w * i2d.inverse();
+    Geom::Matrix i2d (sp_item_i2doc_affine (item));
+    Geom::Point p = p_w * i2d.inverse();
     p *= (gradient->gradientTransform).inverse();
     // now p is in gradient's original coordinates
 
@@ -800,27 +800,27 @@ tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
     if (SP_IS_LINEARGRADIENT(gradient)) {
         SPLinearGradient *lg = SP_LINEARGRADIENT(gradient);
 
-        NR::Point p1(lg->x1.computed, lg->y1.computed);
-        NR::Point p2(lg->x2.computed, lg->y2.computed);
-        NR::Point pdiff(p2 - p1);
-        double vl = NR::L2(pdiff);
+        Geom::Point p1(lg->x1.computed, lg->y1.computed);
+        Geom::Point p2(lg->x2.computed, lg->y2.computed);
+        Geom::Point pdiff(p2 - p1);
+        double vl = Geom::L2(pdiff);
 
         // This is the matrix which moves and rotates the gradient line
         // so it's oriented along the X axis:
-        NR::Matrix norm = NR::Matrix(Geom::Translate(-p1)) * NR::Matrix(Geom::Rotate(-atan2(pdiff[NR::Y], pdiff[NR::X])));
+        Geom::Matrix norm = Geom::Matrix(Geom::Translate(-p1)) * Geom::Matrix(Geom::Rotate(-atan2(pdiff[Geom::Y], pdiff[Geom::X])));
 
         // Transform the mouse point by it to find out its projection onto the gradient line:
-        NR::Point pnorm = p * norm;
+        Geom::Point pnorm = p * norm;
 
         // Scale its X coordinate to match the length of the gradient line:
-        pos = pnorm[NR::X] / vl;
+        pos = pnorm[Geom::X] / vl;
         // Calculate radius in lenfth-of-gradient-line units
         r = radius / vl;
 
     } else if (SP_IS_RADIALGRADIENT(gradient)) {
         SPRadialGradient *rg = SP_RADIALGRADIENT(gradient);
-        NR::Point c (rg->cx.computed, rg->cy.computed);
-        pos = NR::L2(p - c) / rg->r.computed;
+        Geom::Point c (rg->cx.computed, rg->cy.computed);
+        pos = Geom::L2(p - c) / rg->r.computed;
         r = radius / rg->r.computed;
     }
 
@@ -902,7 +902,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
                           guint32 stroke_goal, bool do_stroke,
                           float opacity_goal, bool do_opacity,
                           bool do_blur, bool reverse,
-                          NR::Point p, double radius, double force,
+                          Geom::Point p, double radius, double force,
                           bool do_h, bool do_s, bool do_l, bool do_o)
 {
     bool did = false;
@@ -933,7 +933,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
 
         Geom::Rect brush(p - Geom::Point(radius, radius), p + Geom::Point(radius, radius));
 
-        NR::Point center = bbox->midpoint();
+        Geom::Point center = bbox->midpoint();
         double this_force;
 
 // if item == item_at_point, use max force
@@ -949,7 +949,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
 // else if object > 0.5 brush: test 4 corners of bbox and center on being in the brush, choose max
 // else if still smaller, then check only the object center:
         } else {
-            this_force = force * tweak_profile (NR::L2 (p - center), radius);
+            this_force = force * tweak_profile (Geom::L2 (p - center), radius);
         }
 
         if (this_force > 0.002) {
@@ -1033,7 +1033,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
 
 
 bool
-sp_tweak_dilate (SPTweakContext *tc, NR::Point event_p, NR::Point p, NR::Point vector, bool reverse)
+sp_tweak_dilate (SPTweakContext *tc, Geom::Point event_p, Geom::Point p, Geom::Point vector, bool reverse)
 {
     Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(tc)->desktop);
     SPDesktop *desktop = SP_EVENT_CONTEXT(tc)->desktop;
@@ -1123,7 +1123,7 @@ void
 sp_tweak_update_area (SPTweakContext *tc)
 {
         double radius = get_dilate_radius(tc);
-        NR::Matrix const sm (Geom::Scale(radius, radius) * Geom::Translate(SP_EVENT_CONTEXT(tc)->desktop->point()));
+        Geom::Matrix const sm (Geom::Scale(radius, radius) * Geom::Translate(SP_EVENT_CONTEXT(tc)->desktop->point()));
         sp_canvas_item_affine_absolute(tc->dilate_area, sm);
         sp_canvas_item_show(tc->dilate_area);
 }
@@ -1174,9 +1174,9 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                     return TRUE;
                 }
 
-                NR::Point const button_w(event->button.x,
+                Geom::Point const button_w(event->button.x,
                                          event->button.y);
-                NR::Point const button_dt(desktop->w2d(button_w));
+                Geom::Point const button_dt(desktop->w2d(button_w));
                 tc->last_push = desktop->dt2doc(button_dt);
 
                 sp_tweak_extinput(tc, event);
@@ -1191,15 +1191,15 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
             break;
         case GDK_MOTION_NOTIFY:
         {
-            NR::Point const motion_w(event->motion.x,
+            Geom::Point const motion_w(event->motion.x,
                                      event->motion.y);
-            NR::Point motion_dt(desktop->w2d(motion_w));
-            NR::Point motion_doc(desktop->dt2doc(motion_dt));
+            Geom::Point motion_dt(desktop->w2d(motion_w));
+            Geom::Point motion_doc(desktop->dt2doc(motion_dt));
             sp_tweak_extinput(tc, event);
 
             // draw the dilating cursor
                 double radius = get_dilate_radius(tc);
-                NR::Matrix const sm (Geom::Scale(radius, radius) * Geom::Translate(desktop->w2d(motion_w)));
+                Geom::Matrix const sm (Geom::Scale(radius, radius) * Geom::Translate(desktop->w2d(motion_w)));
                 sp_canvas_item_affine_absolute(tc->dilate_area, sm);
                 sp_canvas_item_show(tc->dilate_area);
 
@@ -1227,8 +1227,8 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
 
     case GDK_BUTTON_RELEASE:
     {
-        NR::Point const motion_w(event->button.x, event->button.y);
-        NR::Point const motion_dt(desktop->w2d(motion_w));
+        Geom::Point const motion_w(event->button.x, event->button.y);
+        Geom::Point const motion_dt(desktop->w2d(motion_w));
 
         sp_canvas_end_forced_full_redraws(desktop->canvas);
         tc->is_drawing = false;
@@ -1237,7 +1237,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
             if (!tc->has_dilated) {
                 // if we did not rub, do a light tap
                 tc->pressure = 0.03;
-                sp_tweak_dilate (tc, motion_w, desktop->dt2doc(motion_dt), NR::Point(0,0), MOD__SHIFT);
+                sp_tweak_dilate (tc, motion_w, desktop->dt2doc(motion_dt), Geom::Point(0,0), MOD__SHIFT);
             }
             tc->is_dilating = false;
             tc->has_dilated = false;
