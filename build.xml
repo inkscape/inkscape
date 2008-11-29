@@ -53,6 +53,7 @@
   <property name="arch"          value="mingw32-"/>
   <property name="archutil"      value=""/>
   <property name="devlibs"       location="${env.DEVLIBS_PATH}"/>
+  <property name="mingw_bin"     location="${env.MINGW_BIN}"/>
   <property name="cxxtest"       location="cxxtest"/>
   <!-- -->
 
@@ -677,6 +678,8 @@
     <copy todir="${dist}" file="${devlibs}/bin/intl.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/pthreadGC2.dll"/>
     <copy file="${devlibs}/bin/intl.dll" tofile="${dist}/libintl-2.dll"/>
+    <!-- MINGW dll needed, I think for openmp support  -->
+    <copy todir="${dist}" file="${mingw_bin}/mingwm10.dll"/>
 
     <!-- MSGFMT files -->
     <copy todir="${dist}">
