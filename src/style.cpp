@@ -3849,13 +3849,15 @@ sp_style_set_property_url (SPObject *item, gchar const *property, SPObject *link
 
     if (repr == NULL) return;
 
-    g_return_if_fail(linked != NULL);
-
-    gchar *val = g_strdup_printf("url(#%s)", SP_OBJECT_ID(linked));
-
     SPCSSAttr *css = sp_repr_css_attr_new();
-    sp_repr_css_set_property(css, property, val);
-    g_free(val);
+    if (linked) {
+        gchar *val = g_strdup_printf("url(#%s)", SP_OBJECT_ID(linked));
+        sp_repr_css_set_property(css, property, val);
+        g_free(val);
+    } else {
+        sp_repr_css_unset_property(css, "filter");
+    }
+
     if (recursive) {
         sp_repr_css_change_recursive(repr, css, "style");
     } else {
