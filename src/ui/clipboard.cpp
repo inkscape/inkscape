@@ -784,7 +784,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
     // Calculate the relative location of the mouse pointer
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     selection->setReprList(pasted_objects);         // Change the selection to the freshly pasted objects
-    sp_document_ensure_up_to_date(target_document); // What does this do?
+    sp_document_ensure_up_to_date(target_document); // Update (among other things) all curves in paths, for bounds() to work
     
     Geom::OptRect sel_bbox = selection->bounds(); //In desktop coordinates
     // PS: We could also have used the min/max corners calculated above, instead of selection->bounds() because 
