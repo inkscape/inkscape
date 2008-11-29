@@ -149,6 +149,8 @@ ObjectCompositeSettings::_blendBlurValueChanged()
         if (blendmode != "normal") {
             SPFilter *filter = new_filter_simple_from_item(document, item, blendmode.c_str(), radius);
             sp_style_set_property_url(item, "filter", filter, false);
+        } else {
+            sp_style_set_property_url(item, "filter", NULL, false);
         }
 
         if (radius == 0 && item->style->filter.set
