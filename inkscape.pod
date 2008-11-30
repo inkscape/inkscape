@@ -34,6 +34,7 @@ options:
     -A, --export-pdf=FILENAME
 
     -T, --export-text-to-path
+        --export-ignore-filters
 
     -l, --export-plain-svg=FILENAME             
 
@@ -266,7 +267,11 @@ export area is that object's bounding box, but can be set to canvas by --export-
 
 =item B<-T>, B<--export-text-to-path>
 
-Convert text objects to paths on export, where applicable (currently works for PS, EPS, and PDF export).
+Convert text objects to paths on export, where applicable (for PS, EPS, and PDF export).
+
+=item B<--export-ignore-filters>
+
+Export filtered objects (e.g. those with blur) as vectors, ignoring the filters (for PS, EPS, and PDF export). By default, all filtered objects are rasterized, preserving the appearance.
 
 =item B<-I>, B<--query-id>
 

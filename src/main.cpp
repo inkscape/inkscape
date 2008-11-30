@@ -143,6 +143,7 @@ enum {
     SP_ARG_EXPORT_EMF,
 #endif //WIN32
     SP_ARG_EXPORT_TEXT_TO_PATH,
+    SP_ARG_EXPORT_IGNORE_FILTERS,
     SP_ARG_EXTENSIONDIR,
     SP_ARG_QUERY_X,
     SP_ARG_QUERY_Y,
@@ -192,6 +193,7 @@ static gchar *sp_export_pdf = NULL;
 static gchar *sp_export_emf = NULL;
 #endif //WIN32
 static gboolean sp_export_text_to_path = FALSE;
+static gboolean sp_export_ignore_filters = FALSE;
 static gboolean sp_export_font = FALSE;
 static gboolean sp_query_x = FALSE;
 static gboolean sp_query_y = FALSE;
@@ -234,6 +236,7 @@ static void resetCommandlineGlobals() {
         sp_export_emf = NULL;
 #endif //WIN32
         sp_export_text_to_path = FALSE;
+        sp_export_ignore_filters = FALSE;
         sp_export_font = FALSE;
         sp_query_x = FALSE;
         sp_query_y = FALSE;
@@ -374,7 +377,12 @@ struct poptOption options[] = {
 
     {"export-text-to-path", 'T',
      POPT_ARG_NONE, &sp_export_text_to_path, SP_ARG_EXPORT_TEXT_TO_PATH,
-     N_("Convert text object to paths on export (EPS)"),
+     N_("Convert text object to paths on export (PS, EPS, PDF)"),
+     NULL},
+
+    {"export-ignore-filters", 0,
+     POPT_ARG_NONE, &sp_export_ignore_filters, SP_ARG_EXPORT_IGNORE_FILTERS,
+     N_("Render filtered objects without filters, instead of rasterizing (PS, EPS, PDF)"),
      NULL},
 
     {"query-x", 'X',
@@ -1382,6 +1390,12 @@ static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime
         (*i)->set_param_bool("textToPath", TRUE);
     } else {
         (*i)->set_param_bool("textToPath", FALSE);
+    }
+
+    if (sp_export_ignore_filters) {
+        (*i)->set_param_bool("blurToBitmap", FALSE);
+    } else {
+        (*i)->set_param_bool("blurToBitmap", TRUE);
     }
 
     (*i)->save(doc, uri);
