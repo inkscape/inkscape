@@ -33,7 +33,7 @@ def export_MTEXT():
         size = 12                       # default fontsize in px
         if vals[groups['40']]:
             size = scale*vals[groups['40']][0]
-        attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %dpx; stroke: %s' % (size, color)}
+        attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %dpx; fill: %s' % (size, color)}
         angle = 0                       # default angle in degrees
         if vals[groups['50']]:
             angle = vals[groups['50']][0]
@@ -172,14 +172,18 @@ def get_group(group):
 #   define DXF Entities and specify which Group Codes to monitor
 
 entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'ENDSEC': ''}
-groups = {'1': 0, '10': 1, '11': 2, '20': 3, '21': 4, '40': 5, '41': 6, '42': 7, '50': 8, '51': 9, '62': 10, '70': 11, '370': 12}
-colors = {1: '#FF0000', 2: '#FFFF00', 3: '#00FF00', 4: '#00FFFF', 5: '#0000FF', 6: '#FF00FF', 7: '#FFFFFF', 8: '#414141', 9: '#808080'}
+groups = {'1': 0, '8': 1, '10': 2, '11': 3, '20': 4, '21': 5, '40': 6, '41': 7, '42': 8, '50': 9, '51': 10, '62': 11, '70': 12, '370': 13}
+colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '#0000FF',
+            6: '#FF00FF',   8: '#414141',   9: '#808080',  30: '#FF7F00',
+          250: '#333333', 251: '#505050', 252: '#696969', 253: '#828282', 254: '#BEBEBE', 255: '#FFFFFF'}
 
 doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"></svg>'))
 stream = open(inkex.sys.argv[1], 'r')
 xmax = xmin = 0.0
 ymax = 297.0                                        # default A4 height in mm
 line = get_line()
+flag = 0
+layers = {}                                         # store colors by layer
 while line[0] and line[1] != 'ENTITIES':
     line = get_line()
     if line[1] == '$EXTMIN':
@@ -187,6 +191,14 @@ while line[0] and line[1] != 'ENTITIES':
     if line[1] == '$EXTMAX':
         xmax = get_group('10')
         ymax = get_group('20')
+    if line[0] == '2':
+        name = line[1]
+    if line[0] == '2' and line[1] == 'LAYER':
+        flag = 1
+    if flag and line[0] == '62':
+        layers[name] = int(line[1])
+    if line[0] == '0' and line[1] == 'ENDTAB':
+        flag = 0
 
 scale = 90.0/25.4                                   # default convert from mm to pixels
 if xmax > xmin:
@@ -196,7 +208,7 @@ while line[0] and line[1] != 'ENDSEC':
     line = get_line()
     if entity and groups.has_key(line[0]):
         seqs.append(line[0])                        # list of group codes
-        if line[0] == '1':                          # text value
+        if line[0] == '1' or line[0] == '8':        # text value
             val = line[1].replace('\~', ' ')
         elif line[0] == '62' or line[0] == '70':    # unscaled integer value
             val = int(line[1])
@@ -210,6 +222,10 @@ while line[0] and line[1] != 'ENDSEC':
     elif entities.has_key(line[1]):
         if entities.has_key(entity):
             color = '#000000'                       # default color
+            if vals[groups['8']]:                   # Common Layer Name
+                if layers.has_key(vals[groups['8']][0]):
+                    if colors.has_key(layers[vals[groups['8']][0]]):
+                        color = colors[layers[vals[groups['8']][0]]]
             if vals[groups['62']]:                  # Common Color Number
                 if colors.has_key(vals[groups['62']][0]):
                     color = colors[vals[groups['62']][0]]
@@ -221,7 +237,7 @@ while line[0] and line[1] != 'ENDSEC':
                     style = simplestyle.formatStyle({'stroke': '%s' % color, 'fill': 'none', 'stroke-width': '%.1f' % w})
             entities[entity]()
         entity = line[1]
-        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[]]
+        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
         seqs = []
 
 doc.write(inkex.sys.stdout)
