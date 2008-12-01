@@ -38,7 +38,6 @@ extensions = \
 	color_replace.py\
 	cspsubdiv.py \
 	cubicsuperpath.py \
-	cut-marks.pl \
 	dia2svg.sh \
 	dimension.py \
 	dots.py \
@@ -80,6 +79,7 @@ extensions = \
 	perfectboundcover.py \
 	perspective.py \
 	polyhedron_3d.py \
+	printing-marks.py \
 	ps2dxf.sh \
 	ps2epsi.sh \
 	ps2pdf-ext.py \
@@ -150,7 +150,6 @@ modules = \
 	color_removered.inx\
 	color_rgbbarrel.inx\
 	color_replace.inx\
-	cut-marks.inx \
 	dia.inx \
 	dimension.inx \
 	dots.inx \
@@ -196,6 +195,7 @@ modules = \
 	perfectboundcover.inx \
 	perspective.inx	\
 	polyhedron_3d.inx	\
+	printing-marks.inx \
 	ps_input.inx \
 	radiusrand.inx \
 	render_barcode.inx \
