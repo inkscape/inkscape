@@ -23,8 +23,28 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 import sys
 from run_command import run
+from subprocess import Popen, PIPE
 
-run('uniconv "%s" "%%s"' % sys.argv[1].replace("%","%%"), "UniConvertor")
+#sys.stderr.write('aaaaaaa')
 
+try:
+    p = Popen('uniconv', shell=True, stdout=PIPE, stderr=PIPE).wait()
+    if p!=127 : cmd = 'uniconv'
+    p = Popen('uniconvertor', shell=True, stdout=PIPE, stderr=PIPE).wait()
+    if p!=127 : cmd = 'uniconvertor'
+except ImportError:
+    try:
+        from popen2 import Popen3
+        p = Popen3('uniconv', True).wait()
+        if p!=32512 : cmd = 'uniconv'
+        p = Popen3('uniconvertor', True).wait()
+        if p!=32512 : cmd = 'uniconvertor'
+    except ImportError:
+        sys.stderr.write('You need to install the UniConvertor software.\n'+\
+                         'For Linux: install the packge python-uniconvertor.\n'+\
+                         'For Windows: download it from\n'+\
+                         'http://sk1project.org/modules.php?name=Products&product=uniconvertor\n')
+
+run((cmd+' "%s" "%%s"') % sys.argv[1].replace("%","%%"), "UniConvertor")
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

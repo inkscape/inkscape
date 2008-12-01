@@ -2,7 +2,7 @@
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>Corel DRAW Input</_name>
     <id>org.inkscape.input.cdr</id>
-    <dependency type="executable" location="path">uniconv</dependency>
+    <!-- the uniconv or uniconvertor dependency will be tested by uniconv-ext.py -->
     <dependency type="executable" location="extensions">uniconv-ext.py</dependency>
     <input>
         <extension>.cdr</extension>
