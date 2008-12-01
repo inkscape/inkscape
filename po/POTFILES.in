@@ -364,7 +364,6 @@ share/extensions/svg_and_media_zip_output.py
 [type: gettext/xml] share/extensions/color_removered.inx
 [type: gettext/xml] share/extensions/color_replace.inx
 [type: gettext/xml] share/extensions/color_rgbbarrel.inx
-[type: gettext/xml] share/extensions/cut-marks.inx
 [type: gettext/xml] share/extensions/dia.inx
 [type: gettext/xml] share/extensions/dimension.inx
 [type: gettext/xml] share/extensions/dots.inx
@@ -411,6 +410,7 @@ share/extensions/svg_and_media_zip_output.py
 [type: gettext/xml] share/extensions/perfectboundcover.inx
 [type: gettext/xml] share/extensions/perspective.inx
 [type: gettext/xml] share/extensions/polyhedron_3d.inx
+[type: gettext/xml] share/extensions/printing-marks.inx
 [type: gettext/xml] share/extensions/ps_input.inx
 [type: gettext/xml] share/extensions/radiusrand.inx
 [type: gettext/xml] share/extensions/render_alphabetsoup.inx
