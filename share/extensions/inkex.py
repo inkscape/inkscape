@@ -55,6 +55,9 @@ def unittouu(string):
             pass
     return retval
 
+def uutounit(val, unit):
+    return val/uuconv[unit]
+
 try:
     from lxml import etree
 except:
