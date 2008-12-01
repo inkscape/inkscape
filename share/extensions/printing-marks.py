@@ -163,7 +163,7 @@ class Printing_Marks (inkex.Effect):
                 'id':name,
                 'transform':'translate('+str(cx)+','+str(cy)+\
                             ') rotate('+str(rotate)+')' })
-        l = self.mark_size / 3
+        l = min( self.mark_size / 3, max(self.width,self.height) / 45 )
         for bar in [{'c':'*', 'stroke':'#000', 'x':0,        'y':-(l+1)},
                     {'c':'r', 'stroke':'#0FF', 'x':0,        'y':0},
                     {'c':'g', 'stroke':'#F0F', 'x':(l*11)+1, 'y':-(l+1)},
@@ -179,6 +179,7 @@ class Printing_Marks (inkex.Effect):
                 if bar['c'] == 'b' or bar['c'] == '*' : cb = str(255*i)
                 r_att = {'fill':'rgb('+cr+','+cg+','+cb+')',
                          'stroke':bar['stroke'],
+                         'stroke-width':'0.5',
                          'x':str((l*i*10)+bar['x']), 'y':str(bar['y']),
                          'width':str(l), 'height':str(l)}
                 r = inkex.etree.SubElement(g, 'rect', r_att)
@@ -191,8 +192,8 @@ class Printing_Marks (inkex.Effect):
 
         # Get SVG document dimensions
         svg = self.document.getroot()
-        width  = inkex.unittouu(svg.get('width'))
-        height = inkex.unittouu(svg.attrib['height'])
+        self.width  = width  = inkex.unittouu(svg.get('width'))
+        self.height = height = inkex.unittouu(svg.attrib['height'])
 
         # Convert parameters to user unit
         offset = inkex.unittouu(str(self.options.crop_offset) + self.options.unit)
@@ -216,11 +217,17 @@ class Printing_Marks (inkex.Effect):
         top    = - offset
         bottom = height + offset
 
+        # Test if printing-marks layer existis
+        layer = self.document.xpath(
+                     '//*[@id="printing-marks" and @inkscape:groupmode="layer"]',
+                     namespaces=inkex.NSS)
+        if layer: svg.remove(layer[0]) # remove if it existis
         # Create a new layer
         layer = inkex.etree.SubElement(svg, 'g')
         layer.set('id', 'printing-marks')
         layer.set(inkex.addNS('label', 'inkscape'), 'Printing Marks')
         layer.set(inkex.addNS('groupmode', 'inkscape'), 'layer')
+        layer.set(inkex.addNS('insensitive', 'sodipodi'), 'true')
 
         # Crop Mark
         if self.options.crop_marks == True:
