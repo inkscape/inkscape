@@ -515,6 +515,7 @@ sp_text_context_setup_text(SPTextContext *tc)
 
     // bug #168777 (consider root transform and viewBox)
     // TODO: more generic solution desirable
+    // see http://wiki.inkscape.org/wiki/index.php/ViewBoxToDo
     Geom::Matrix root_transform = sp_item_i2doc_affine(SP_ITEM(ec->desktop->currentRoot()));
     if (!root_transform.isIdentity()) {
         text_item->transform = root_transform.inverse() * text_item->transform;
