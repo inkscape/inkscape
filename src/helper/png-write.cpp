@@ -500,8 +500,8 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
         write_status = sp_png_write_rgba_striped(doc, path, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         nr_pixelstore_64K_free(ebp.px);
     } else {
-        ebp.px = g_new(guchar, 4 * 64 * width);
         ebp.sheight = 64;
+        ebp.px = g_new(guchar, 4 * ebp.sheight * width);
         write_status = sp_png_write_rgba_striped(doc, path, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         g_free(ebp.px);
     }
