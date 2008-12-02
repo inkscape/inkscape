@@ -31,6 +31,7 @@
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-units.h"
+#include "libnr/nr-blit.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-matrix-fns.h"
@@ -215,12 +216,6 @@ static void calcFilter(double const sigma, double b[N]) {
         // Compute scaled filter coefficients
         std::complex<double> const d1 = pow(d1_org, 1.0/q);
         double const d3 = pow(d3_org, 1.0/q);
-        double const absd1sqr = std::norm(d1);
-        double const re2d1 = 2*d1.real();
-        double const bscale = 1.0/(absd1sqr*d3);
-        b[2] = -bscale;
-        b[1] =  bscale*(d3+re2d1);
-        b[0] = -bscale*(absd1sqr+d3*re2d1);
         // Compute actual sigma^2
         double const ssqr = 2*(2*(d1/sqr(d1-1.)).real()+d3/sqr(d3-1.));
         if ( ssqr < sigmasqr ) {
@@ -230,6 +225,16 @@ static void calcFilter(double const sigma, double b[N]) {
         }
         s = sqrt(ssqr);
     } while(qend-qbeg>(sigma/(1<<30)));
+    // Compute filter coefficients
+    double const q = (qbeg+qend)/2;
+    std::complex<double> const d1 = pow(d1_org, 1.0/q);
+    double const d3 = pow(d3_org, 1.0/q);
+    double const absd1sqr = std::norm(d1); // d1*d2 = d1*conj(d1) = |d1|^2 = std::norm(d1)
+    double const re2d1 = 2*d1.real(); // d1+d2 = d1+conj(d1) = 2*real(d1)
+    double const bscale = 1.0/(absd1sqr*d3);
+    b[2] = -bscale;
+    b[1] =  bscale*(d3+re2d1);
+    b[0] = -bscale*(absd1sqr+d3*re2d1);
 }
 
 static void calcTriggsSdikaM(double const b[N], double M[N*N]) {
@@ -670,7 +675,7 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         default:
             assert(false);
         };
-    } else { // !use_IIR_x
+    } else if ( scr_len_x > 1 ) { // !use_IIR_x
         // Filter kernel for x direction
         FIRValue kernel[scr_len_x];
         _make_kernel(kernel, deviation_x);
@@ -692,6 +697,8 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         default:
             assert(false);
         };
+    } else if ( out != ssin ) { // out can be equal to ssin if resampling is used
+        nr_blit_pixblock_pixblock(out, ssin);
     }
 
     if (use_IIR_y) {
@@ -729,7 +736,7 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         default:
             assert(false);
         };
-    } else { // !use_IIR_y
+    } else if ( scr_len_y > 1 ) { // !use_IIR_y
         // Filter kernel for y direction
         FIRValue kernel[scr_len_y];
         _make_kernel(kernel, deviation_y);
