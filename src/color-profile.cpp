@@ -561,6 +561,7 @@ Glib::ustring Inkscape::get_path_for_profile(Glib::ustring const& name)
 
     return result;
 }
+#endif // ENABLE_LCMS
 
 std::list<Glib::ustring> ColorProfile::getProfileDirs() {
     std::list<Glib::ustring> sources;
@@ -587,6 +588,7 @@ std::list<Glib::ustring> ColorProfile::getProfileDirs() {
     return sources;
 }
 
+#if ENABLE_LCMS
 static void findThings() {
     std::list<Glib::ustring> sources = ColorProfile::getProfileDirs();
 
