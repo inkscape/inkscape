@@ -1,5 +1,5 @@
-#ifndef __SP_GRADIENT_VECTOR_H__
-#define __SP_GRADIENT_VECTOR_H__
+#ifndef SEEN_GRADIENT_VECTOR_H
+#define SEEN_GRADIENT_VECTOR_H
 
 /*
  * Gradient vector selection widget
@@ -27,25 +27,25 @@
 #define SP_IS_GRADIENT_VECTOR_SELECTOR_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), SP_TYPE_GRADIENT_VECTOR_SELECTOR))
 
 struct SPGradientVectorSelector {
-	GtkVBox vbox;
+    GtkVBox vbox;
 
-	guint idlabel : 1;
+    guint idlabel : 1;
 
-	SPDocument *doc;
-	SPGradient *gr;
+    SPDocument *doc;
+    SPGradient *gr;
 
-	/* Vector menu */
-	GtkWidget *menu;
+    /* Vector menu */
+    GtkWidget *menu;
 
-	sigc::connection gradient_release_connection;
-	sigc::connection defs_release_connection;
-	sigc::connection defs_modified_connection;
+    sigc::connection gradient_release_connection;
+    sigc::connection defs_release_connection;
+    sigc::connection defs_modified_connection;
 };
 
 struct SPGradientVectorSelectorClass {
-	GtkVBoxClass parent_class;
+    GtkVBoxClass parent_class;
 
-	void (* vector_set) (SPGradientVectorSelector *gvs, SPGradient *gr);
+    void (* vector_set) (SPGradientVectorSelector *gvs, SPGradient *gr);
 };
 
 GtkType sp_gradient_vector_selector_get_type (void);
@@ -62,4 +62,15 @@ GtkWidget *sp_gradient_vector_editor_new (SPGradient *gradient, SPStop *stop = N
 
 
 
-#endif
+#endif // SEEN_GRADIENT_VECTOR_H
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
