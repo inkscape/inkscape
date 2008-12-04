@@ -26,20 +26,30 @@
 #define SP_IS_COLOR_PREVIEW_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), SP_TYPE_COLOR_PREVIEW))
 
 struct SPColorPreview {
-	GtkWidget widget;
+    GtkWidget widget;
 
-	guint32 rgba;
+    guint32 rgba;
 };
 
 struct SPColorPreviewClass {
-	GtkWidgetClass parent_class;
+    GtkWidgetClass parent_class;
 };
 
-GtkType sp_color_preview_get_type (void);
+GType sp_color_preview_get_type(void);
 
-GtkWidget *sp_color_preview_new (guint32 rgba);
+GtkWidget *sp_color_preview_new(guint32 rgba);
 
-void sp_color_preview_set_rgba32 (SPColorPreview *cp, guint32 color);
+void sp_color_preview_set_rgba32(SPColorPreview *cp, guint32 color);
 
 
 #endif // SEEN_COLOR_PREVIEW_H
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :

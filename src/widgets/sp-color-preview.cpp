@@ -28,20 +28,27 @@ static void sp_color_preview_paint (SPColorPreview *cp, GdkRectangle *area);
 
 static GtkWidgetClass *parent_class;
 
-GtkType
-sp_color_preview_get_type (void)
+GType sp_color_preview_get_type(void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
-        GtkTypeInfo info = {
-            "SPColorPreview",
-            sizeof (SPColorPreview),
-            sizeof (SPColorPreviewClass),
-            (GtkClassInitFunc) sp_color_preview_class_init,
-            (GtkObjectInitFunc) sp_color_preview_init,
-            NULL, NULL, NULL
+        static const GTypeInfo info = {
+            sizeof(SPColorPreviewClass),
+            NULL, /* base_init */
+            NULL, /* base_finalize */
+            (GClassInitFunc) sp_color_preview_class_init,
+            NULL, /* class_finalize */
+            NULL, /* class_data */
+            sizeof(SPColorPreview),
+            0,    /* n_preallocs */
+            (GInstanceInitFunc) sp_color_preview_init,
+            0,    /* value_table */
         };
-        type = gtk_type_unique (GTK_TYPE_WIDGET, &info);
+
+        type = g_type_register_static( GTK_TYPE_WIDGET,
+                                       "SPColorPreview",
+                                       &info,
+                                       static_cast< GTypeFlags > (0) );
     }
     return type;
 }
@@ -191,3 +198,14 @@ sp_color_preview_paint (SPColorPreview *cp, GdkRectangle *area)
                                   cp->rgba | 0xff);
     }
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
