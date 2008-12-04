@@ -1,5 +1,3 @@
-#define __SP_COLOR_PREVIEW_C__
-
 /*
  * A simple color preview widget
  *
@@ -33,164 +31,163 @@ static GtkWidgetClass *parent_class;
 GtkType
 sp_color_preview_get_type (void)
 {
-	static GtkType type = 0;
-	if (!type) {
-		GtkTypeInfo info = {
-			"SPColorPreview",
-			sizeof (SPColorPreview),
-			sizeof (SPColorPreviewClass),
-			(GtkClassInitFunc) sp_color_preview_class_init,
-			(GtkObjectInitFunc) sp_color_preview_init,
-			NULL, NULL, NULL
-		};
-		type = gtk_type_unique (GTK_TYPE_WIDGET, &info);
-	}
-	return type;
+    static GtkType type = 0;
+    if (!type) {
+        GtkTypeInfo info = {
+            "SPColorPreview",
+            sizeof (SPColorPreview),
+            sizeof (SPColorPreviewClass),
+            (GtkClassInitFunc) sp_color_preview_class_init,
+            (GtkObjectInitFunc) sp_color_preview_init,
+            NULL, NULL, NULL
+        };
+        type = gtk_type_unique (GTK_TYPE_WIDGET, &info);
+    }
+    return type;
 }
 
 static void
 sp_color_preview_class_init (SPColorPreviewClass *klass)
 {
-	GtkObjectClass *object_class;
-	GtkWidgetClass *widget_class;
+    GtkObjectClass *object_class;
+    GtkWidgetClass *widget_class;
 
-	object_class = (GtkObjectClass *) klass;
-	widget_class = (GtkWidgetClass *) klass;
+    object_class = (GtkObjectClass *) klass;
+    widget_class = (GtkWidgetClass *) klass;
 
-	parent_class = (GtkWidgetClass*)gtk_type_class (GTK_TYPE_WIDGET);
+    parent_class = (GtkWidgetClass*)gtk_type_class (GTK_TYPE_WIDGET);
 
-	object_class->destroy = sp_color_preview_destroy;
+    object_class->destroy = sp_color_preview_destroy;
 
-	widget_class->size_request = sp_color_preview_size_request;
-	widget_class->size_allocate = sp_color_preview_size_allocate;
-	widget_class->expose_event = sp_color_preview_expose;
+    widget_class->size_request = sp_color_preview_size_request;
+    widget_class->size_allocate = sp_color_preview_size_allocate;
+    widget_class->expose_event = sp_color_preview_expose;
 }
 
 static void
 sp_color_preview_init (SPColorPreview *image)
 {
-	GTK_WIDGET_SET_FLAGS (image, GTK_NO_WINDOW);
+    GTK_WIDGET_SET_FLAGS (image, GTK_NO_WINDOW);
 
-	image->rgba = 0xffffffff;
+    image->rgba = 0xffffffff;
 }
 
 static void
 sp_color_preview_destroy (GtkObject *object)
 {
-	SPColorPreview *image;
+    SPColorPreview *image;
 
-	image = SP_COLOR_PREVIEW (object);
+    image = SP_COLOR_PREVIEW (object);
 
-	if (((GtkObjectClass *) (parent_class))->destroy)
-		(* ((GtkObjectClass *) (parent_class))->destroy) (object);
+    if (((GtkObjectClass *) (parent_class))->destroy)
+        (* ((GtkObjectClass *) (parent_class))->destroy) (object);
 }
 
 static void
 sp_color_preview_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
-	SPColorPreview *slider;
+    SPColorPreview *slider;
 
-	slider = SP_COLOR_PREVIEW (widget);
+    slider = SP_COLOR_PREVIEW (widget);
 
-	requisition->width = SPCP_DEFAULT_WIDTH;
-	requisition->height = SPCP_DEFAULT_HEIGHT;
+    requisition->width = SPCP_DEFAULT_WIDTH;
+    requisition->height = SPCP_DEFAULT_HEIGHT;
 }
 
 static void
 sp_color_preview_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
-	SPColorPreview *image;
+    SPColorPreview *image;
 
-	image = SP_COLOR_PREVIEW (widget);
+    image = SP_COLOR_PREVIEW (widget);
 
-	widget->allocation = *allocation;
+    widget->allocation = *allocation;
 
-	if (GTK_WIDGET_DRAWABLE (image)) {
-		gtk_widget_queue_draw (GTK_WIDGET (image));
-	}
+    if (GTK_WIDGET_DRAWABLE (image)) {
+        gtk_widget_queue_draw (GTK_WIDGET (image));
+    }
 }
 
 static gint
 sp_color_preview_expose (GtkWidget *widget, GdkEventExpose *event)
 {
-	SPColorPreview *cp;
+    SPColorPreview *cp;
 
-	cp = SP_COLOR_PREVIEW (widget);
+    cp = SP_COLOR_PREVIEW (widget);
 
-	if (GTK_WIDGET_DRAWABLE (widget)) {
-		sp_color_preview_paint (cp, &event->area);
-	}
+    if (GTK_WIDGET_DRAWABLE (widget)) {
+        sp_color_preview_paint (cp, &event->area);
+    }
 
-	return TRUE;
+    return TRUE;
 }
 
 GtkWidget *
 sp_color_preview_new (guint32 rgba)
 {
-	SPColorPreview *image;
+    SPColorPreview *image;
 
-	image = (SPColorPreview*)gtk_type_new (SP_TYPE_COLOR_PREVIEW);
+    image = (SPColorPreview*)gtk_type_new (SP_TYPE_COLOR_PREVIEW);
 
-	sp_color_preview_set_rgba32 (image, rgba);
+    sp_color_preview_set_rgba32 (image, rgba);
 
-	return (GtkWidget *) image;
+    return (GtkWidget *) image;
 }
 
 void
 sp_color_preview_set_rgba32 (SPColorPreview *cp, guint32 rgba)
 {
-	cp->rgba = rgba;
+    cp->rgba = rgba;
 
-	if (GTK_WIDGET_DRAWABLE (cp)) {
-		gtk_widget_queue_draw (GTK_WIDGET (cp));
-	}
+    if (GTK_WIDGET_DRAWABLE (cp)) {
+        gtk_widget_queue_draw (GTK_WIDGET (cp));
+    }
 }
 
 static void
 sp_color_preview_paint (SPColorPreview *cp, GdkRectangle *area)
 {
-	GtkWidget *widget;
-	GdkRectangle warea, carea;
-	GdkRectangle wpaint, cpaint;
-	gint w2;
+    GtkWidget *widget;
+    GdkRectangle warea, carea;
+    GdkRectangle wpaint, cpaint;
+    gint w2;
 
-	widget = GTK_WIDGET (cp);
+    widget = GTK_WIDGET (cp);
 
-	warea.x = widget->allocation.x;
-	warea.y = widget->allocation.y;
-	warea.width = widget->allocation.width;
-	warea.height = widget->allocation.height;
+    warea.x = widget->allocation.x;
+    warea.y = widget->allocation.y;
+    warea.width = widget->allocation.width;
+    warea.height = widget->allocation.height;
 
-	if (!gdk_rectangle_intersect (area, &warea, &wpaint)) return;
+    if (!gdk_rectangle_intersect (area, &warea, &wpaint)) return;
 
-	/* Transparent area */
+    /* Transparent area */
 
-	w2 = warea.width / 2;
+    w2 = warea.width / 2;
 
-	carea.x = warea.x;
-	carea.y = warea.y;
-	carea.width = w2;
-	carea.height = warea.height;
+    carea.x = warea.x;
+    carea.y = warea.y;
+    carea.width = w2;
+    carea.height = warea.height;
 
-	if (gdk_rectangle_intersect (area, &carea, &cpaint)) {
-		nr_gdk_draw_rgba32_solid (widget->window, widget->style->black_gc,
-					  cpaint.x, cpaint.y,
-					  cpaint.width, cpaint.height,
-					  cp->rgba);
-	}
+    if (gdk_rectangle_intersect (area, &carea, &cpaint)) {
+        nr_gdk_draw_rgba32_solid (widget->window, widget->style->black_gc,
+                                  cpaint.x, cpaint.y,
+                                  cpaint.width, cpaint.height,
+                                  cp->rgba);
+    }
 
-	/* Solid area */
+    /* Solid area */
 
-	carea.x = warea.x + w2;
-	carea.y = warea.y;
-	carea.width = warea.width - w2;
-	carea.height = warea.height;
+    carea.x = warea.x + w2;
+    carea.y = warea.y;
+    carea.width = warea.width - w2;
+    carea.height = warea.height;
 
-	if (gdk_rectangle_intersect (area, &carea, &cpaint)) {
-		nr_gdk_draw_rgba32_solid (widget->window, widget->style->black_gc,
-					  cpaint.x, cpaint.y,
-					  cpaint.width, cpaint.height,
-					  cp->rgba | 0xff);
-	}
+    if (gdk_rectangle_intersect (area, &carea, &cpaint)) {
+        nr_gdk_draw_rgba32_solid (widget->window, widget->style->black_gc,
+                                  cpaint.x, cpaint.y,
+                                  cpaint.width, cpaint.height,
+                                  cp->rgba | 0xff);
+    }
 }
-
