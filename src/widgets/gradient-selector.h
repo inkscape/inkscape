@@ -1,5 +1,5 @@
-#ifndef __SP_GRADIENT_SELECTOR_H__
-#define __SP_GRADIENT_SELECTOR_H__
+#ifndef SEEN_GRADIENT_SELECTOR_H
+#define SEEN_GRADIENT_SELECTOR_H
 
 /*
  * Gradient vector and position widget
@@ -30,35 +30,35 @@ class SPGradient;
 #include <sp-gradient.h>
 
 enum {
-	SP_GRADIENT_SELECTOR_MODE_LINEAR,
-	SP_GRADIENT_SELECTOR_MODE_RADIAL
+    SP_GRADIENT_SELECTOR_MODE_LINEAR,
+    SP_GRADIENT_SELECTOR_MODE_RADIAL
 };
 
 struct SPGradientSelector {
-	GtkVBox vbox;
+    GtkVBox vbox;
 
-	guint mode : 1;
+    guint mode : 1;
 
-	SPGradientUnits gradientUnits : 1;
-	SPGradientSpread gradientSpread : 2;
+    SPGradientUnits gradientUnits : 1;
+    SPGradientSpread gradientSpread : 2;
 
-	/* Vector selector */
-	GtkWidget *vectors;
-	/* Editing buttons */
-	GtkWidget *edit, *add;
-	/* Position widget */
-	GtkWidget *position;
-	/* Spread selector */
-	GtkWidget *spread;
+    /* Vector selector */
+    GtkWidget *vectors;
+    /* Editing buttons */
+    GtkWidget *edit, *add;
+    /* Position widget */
+    GtkWidget *position;
+    /* Spread selector */
+    GtkWidget *spread;
 };
 
 struct SPGradientSelectorClass {
-	GtkVBoxClass parent_class;
+    GtkVBoxClass parent_class;
 
-	void (* grabbed) (SPGradientSelector *sel);
-	void (* dragged) (SPGradientSelector *sel);
-	void (* released) (SPGradientSelector *sel);
-	void (* changed) (SPGradientSelector *sel);
+    void (* grabbed) (SPGradientSelector *sel);
+    void (* dragged) (SPGradientSelector *sel);
+    void (* released) (SPGradientSelector *sel);
+    void (* changed) (SPGradientSelector *sel);
 };
 
 GtkType sp_gradient_selector_get_type (void);
@@ -76,4 +76,16 @@ SPGradientSpread sp_gradient_selector_get_spread (SPGradientSelector *sel);
 
 SPGradient *sp_gradient_selector_get_vector (SPGradientSelector *sel);
 
-#endif
+#endif // SEEN_GRADIENT_SELECTOR_H
+
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
