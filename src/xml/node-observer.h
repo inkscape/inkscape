@@ -22,6 +22,9 @@
 #include "util/share.h"
 #include "xml/xml-forward.h"
 
+#ifndef INK_UNUSED
+#define INK_UNUSED(x) ((void)(x))
+#endif // INK_UNUSED
 
 namespace Inkscape {
 namespace XML {
@@ -61,7 +64,11 @@ public:
      * @param child The newly added child node
      * @param prev The node after which the new child was inserted into the sibling order, or NULL
      */
-    virtual void notifyChildAdded(Node &node, Node &child, Node *prev) {}
+    virtual void notifyChildAdded(Node &node, Node &child, Node *prev) {
+        INK_UNUSED(node);
+        INK_UNUSED(child);
+        INK_UNUSED(prev);
+    }
 
     /**
      * @brief Child removal callback
@@ -73,7 +80,11 @@ public:
      * @param child The removed child node
      * @param prev The node that was before the removed node in sibling order, or NULL
      */
-    virtual void notifyChildRemoved(Node &node, Node &child, Node *prev) {}
+    virtual void notifyChildRemoved(Node &node, Node &child, Node *prev) {
+        INK_UNUSED(node);
+        INK_UNUSED(child);
+        INK_UNUSED(prev);
+    }
 
     /**
      * @brief Child order change callback
@@ -89,7 +100,12 @@ public:
      * @param new_prev The node that is before @c child after the order change
      */
     virtual void notifyChildOrderChanged(Node &node, Node &child,
-                                         Node *old_prev, Node *new_prev) {}
+                                         Node *old_prev, Node *new_prev) {
+        INK_UNUSED(node);
+        INK_UNUSED(child);
+        INK_UNUSED(old_prev);
+        INK_UNUSED(new_prev);
+    }
 
     /**
      * @brief Content change callback
@@ -103,7 +119,11 @@ public:
      */
     virtual void notifyContentChanged(Node &node,
                                       Util::ptr_shared<char> old_content,
-                                      Util::ptr_shared<char> new_content) {}
+                                      Util::ptr_shared<char> new_content) {
+        INK_UNUSED(node);
+        INK_UNUSED(old_content);
+        INK_UNUSED(new_content);
+    }
 
     /**
      * @brief Attribute change callback
@@ -117,7 +137,12 @@ public:
      */
     virtual void notifyAttributeChanged(Node &node, GQuark name,
                                         Util::ptr_shared<char> old_value,
-                                        Util::ptr_shared<char> new_value) {}
+                                        Util::ptr_shared<char> new_value) {
+        INK_UNUSED(node);
+        INK_UNUSED(name);
+        INK_UNUSED(old_value);
+        INK_UNUSED(new_value);
+    }
 };
 
 } // namespace XML
