@@ -54,7 +54,7 @@ static void sp_star_context_setup (SPEventContext *ec);
 static void sp_star_context_set (SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_star_context_root_handler (SPEventContext *ec, GdkEvent *event);
 
-static void sp_star_drag (SPStarContext * sc, NR::Point p, guint state);
+static void sp_star_drag (SPStarContext * sc, Geom::Point p, guint state);
 static void sp_star_finish (SPStarContext * sc);
 
 static SPEventContextClass * parent_class;
@@ -308,8 +308,8 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             // motion notify coordinates as given (no snapping back to origin)
             event_context->within_tolerance = false;
 
-            NR::Point const motion_w(event->motion.x, event->motion.y);
-            NR::Point motion_dt(desktop->w2d(motion_w));
+            Geom::Point const motion_w(event->motion.x, event->motion.y);
+            Geom::Point motion_dt(desktop->w2d(motion_w));
             
             sp_star_drag (sc, motion_dt, event->motion.state);
 
@@ -421,7 +421,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
     return ret;
 }
 
-static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
+static void sp_star_drag(SPStarContext *sc, Geom::Point p, guint state)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(sc)->desktop;
 

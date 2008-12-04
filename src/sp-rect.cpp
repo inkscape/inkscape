@@ -176,7 +176,7 @@ sp_rect_update(SPObject *object, SPCtx *ctx, guint flags)
         SPRect *rect = (SPRect *) object;
         SPStyle *style = object->style;
         SPItemCtx const *ictx = (SPItemCtx const *) ctx;
-        double const d = NR::expansion(ictx->i2vp);
+        double const d = ictx->i2vp.descrim();
         double const w = (ictx->vp.x1 - ictx->vp.x0) / d;
         double const h = (ictx->vp.y1 - ictx->vp.y0) / d;
         double const em = style->font_size.computed;
@@ -400,11 +400,11 @@ sp_rect_set_transform(SPItem *item, Geom::Matrix const &xform)
 Returns the ratio in which the vector from p0 to p1 is stretched by transform
  */
 static gdouble
-vector_stretch(NR::Point p0, NR::Point p1, NR::Matrix xform)
+vector_stretch(Geom::Point p0, Geom::Point p1, Geom::Matrix xform)
 {
     if (p0 == p1)
         return 0;
-    return (NR::distance(p0 * xform, p1 * xform) / NR::distance(p0, p1));
+    return (Geom::distance(p0 * xform, p1 * xform) / Geom::distance(p0, p1));
 }
 
 void
@@ -415,8 +415,8 @@ sp_rect_set_visible_rx(SPRect *rect, gdouble rx)
         rect->rx._set = false;
     } else {
         rect->rx.computed = rx / vector_stretch(
-            NR::Point(rect->x.computed + 1, rect->y.computed),
-            NR::Point(rect->x.computed, rect->y.computed),
+            Geom::Point(rect->x.computed + 1, rect->y.computed),
+            Geom::Point(rect->x.computed, rect->y.computed),
             SP_ITEM(rect)->transform);
         rect->rx._set = true;
     }
@@ -431,8 +431,8 @@ sp_rect_set_visible_ry(SPRect *rect, gdouble ry)
         rect->ry._set = false;
     } else {
         rect->ry.computed = ry / vector_stretch(
-            NR::Point(rect->x.computed, rect->y.computed + 1),
-            NR::Point(rect->x.computed, rect->y.computed),
+            Geom::Point(rect->x.computed, rect->y.computed + 1),
+            Geom::Point(rect->x.computed, rect->y.computed),
             SP_ITEM(rect)->transform);
         rect->ry._set = true;
     }
@@ -445,8 +445,8 @@ sp_rect_get_visible_rx(SPRect *rect)
     if (!rect->rx._set)
         return 0;
     return rect->rx.computed * vector_stretch(
-        NR::Point(rect->x.computed + 1, rect->y.computed),
-        NR::Point(rect->x.computed, rect->y.computed),
+        Geom::Point(rect->x.computed + 1, rect->y.computed),
+        Geom::Point(rect->x.computed, rect->y.computed),
         SP_ITEM(rect)->transform);
 }
 
@@ -456,21 +456,21 @@ sp_rect_get_visible_ry(SPRect *rect)
     if (!rect->ry._set)
         return 0;
     return rect->ry.computed * vector_stretch(
-        NR::Point(rect->x.computed, rect->y.computed + 1),
-        NR::Point(rect->x.computed, rect->y.computed),
+        Geom::Point(rect->x.computed, rect->y.computed + 1),
+        Geom::Point(rect->x.computed, rect->y.computed),
         SP_ITEM(rect)->transform);
 }
 
 void
-sp_rect_compensate_rxry(SPRect *rect, NR::Matrix xform)
+sp_rect_compensate_rxry(SPRect *rect, Geom::Matrix xform)
 {
     if (rect->rx.computed == 0 && rect->ry.computed == 0)
         return; // nothing to compensate
 
     // test unit vectors to find out compensation:
-    NR::Point c(rect->x.computed, rect->y.computed);
-    NR::Point cx = c + NR::Point(1, 0);
-    NR::Point cy = c + NR::Point(0, 1);
+    Geom::Point c(rect->x.computed, rect->y.computed);
+    Geom::Point cx = c + Geom::Point(1, 0);
+    Geom::Point cy = c + Geom::Point(0, 1);
 
     // apply previous transform if any
     c *= SP_ITEM(rect)->transform;
@@ -503,8 +503,8 @@ void
 sp_rect_set_visible_width(SPRect *rect, gdouble width)
 {
     rect->width.computed = width / vector_stretch(
-        NR::Point(rect->x.computed + 1, rect->y.computed),
-        NR::Point(rect->x.computed, rect->y.computed),
+        Geom::Point(rect->x.computed + 1, rect->y.computed),
+        Geom::Point(rect->x.computed, rect->y.computed),
         SP_ITEM(rect)->transform);
     rect->width._set = true;
     SP_OBJECT(rect)->updateRepr();
@@ -514,8 +514,8 @@ void
 sp_rect_set_visible_height(SPRect *rect, gdouble height)
 {
     rect->height.computed = height / vector_stretch(
-        NR::Point(rect->x.computed, rect->y.computed + 1),
-        NR::Point(rect->x.computed, rect->y.computed),
+        Geom::Point(rect->x.computed, rect->y.computed + 1),
+        Geom::Point(rect->x.computed, rect->y.computed),
         SP_ITEM(rect)->transform);
     rect->height._set = true;
     SP_OBJECT(rect)->updateRepr();
@@ -527,8 +527,8 @@ sp_rect_get_visible_width(SPRect *rect)
     if (!rect->width._set)
         return 0;
     return rect->width.computed * vector_stretch(
-        NR::Point(rect->x.computed + 1, rect->y.computed),
-        NR::Point(rect->x.computed, rect->y.computed),
+        Geom::Point(rect->x.computed + 1, rect->y.computed),
+        Geom::Point(rect->x.computed, rect->y.computed),
         SP_ITEM(rect)->transform);
 }
 
@@ -538,8 +538,8 @@ sp_rect_get_visible_height(SPRect *rect)
     if (!rect->height._set)
         return 0;
     return rect->height.computed * vector_stretch(
-        NR::Point(rect->x.computed, rect->y.computed + 1),
-        NR::Point(rect->x.computed, rect->y.computed),
+        Geom::Point(rect->x.computed, rect->y.computed + 1),
+        Geom::Point(rect->x.computed, rect->y.computed),
         SP_ITEM(rect)->transform);
 }
 
@@ -560,12 +560,12 @@ static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::S
 
     SPRect *rect = SP_RECT(item);
 
-    NR::Matrix const i2d (sp_item_i2d_affine (item));
+    Geom::Matrix const i2d (sp_item_i2d_affine (item));
 
-    *p = NR::Point(rect->x.computed, rect->y.computed) * i2d;
-    *p = NR::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d;
-    *p = NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d;
-    *p = NR::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d;
+    *p = Geom::Point(rect->x.computed, rect->y.computed) * i2d;
+    *p = Geom::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d;
+    *p = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d;
+    *p = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d;
 }
 
 void
@@ -580,12 +580,12 @@ sp_rect_convert_to_guides(SPItem *item) {
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
-    NR::Matrix const i2d (sp_item_i2d_affine(SP_ITEM(rect)));
+    Geom::Matrix const i2d (sp_item_i2d_affine(SP_ITEM(rect)));
 
-    NR::Point A1(NR::Point(rect->x.computed, rect->y.computed) * i2d);
-    NR::Point A2(NR::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d);
-    NR::Point A3(NR::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d);
-    NR::Point A4(NR::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d);
+    Geom::Point A1(Geom::Point(rect->x.computed, rect->y.computed) * i2d);
+    Geom::Point A2(Geom::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d);
+    Geom::Point A3(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d);
+    Geom::Point A4(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d);
 
     pts.push_back(std::make_pair(A1, A2));
     pts.push_back(std::make_pair(A2, A3));

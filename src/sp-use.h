@@ -59,8 +59,8 @@ GType sp_use_get_type (void);
 
 SPItem *sp_use_unlink (SPUse *use);
 SPItem *sp_use_get_original (SPUse *use);
-NR::Matrix sp_use_get_parent_transform (SPUse *use);
-NR::Matrix sp_use_get_root_transform(SPUse *use);
+Geom::Matrix sp_use_get_parent_transform (SPUse *use);
+Geom::Matrix sp_use_get_root_transform(SPUse *use);
 
 SPItem *sp_use_root(SPUse *use);
 #endif

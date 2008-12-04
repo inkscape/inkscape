@@ -943,7 +943,7 @@ text_tag_attributes_at_position(SPItem *item, Inkscape::Text::Layout::iterator c
 }
 
 void
-sp_te_adjust_kerning_screen (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPDesktop *desktop, NR::Point by)
+sp_te_adjust_kerning_screen (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, SPDesktop *desktop, Geom::Point by)
 {
     // divide increment by zoom
     // divide increment by matrix expansion
@@ -1094,7 +1094,7 @@ sp_te_get_average_linespacing (SPItem *text)
         return 0;
 
     unsigned line_count = layout->lineIndex(layout->end());
-    double all_lines_height = layout->characterAnchorPoint(layout->end())[NR::Y] - layout->characterAnchorPoint(layout->begin())[NR::Y];
+    double all_lines_height = layout->characterAnchorPoint(layout->end())[Geom::Y] - layout->characterAnchorPoint(layout->begin())[Geom::Y];
     double average_line_height = all_lines_height / (line_count == 0 ? 1 : line_count);
     return average_line_height;
 }
@@ -1118,7 +1118,7 @@ sp_te_adjust_linespacing_screen (SPItem *text, Inkscape::Text::Layout::iterator 
     }
 
     unsigned line_count = layout->lineIndex(layout->end());
-    double all_lines_height = layout->characterAnchorPoint(layout->end())[NR::Y] - layout->characterAnchorPoint(layout->begin())[NR::Y];
+    double all_lines_height = layout->characterAnchorPoint(layout->end())[Geom::Y] - layout->characterAnchorPoint(layout->begin())[Geom::Y];
     double average_line_height = all_lines_height / (line_count == 0 ? 1 : line_count);
     if (fabs(average_line_height) < 0.001) average_line_height = 0.001;
 

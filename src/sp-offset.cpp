@@ -513,7 +513,7 @@ sp_offset_set_shape(SPShape *shape)
         Geom::OptRect bbox = sp_item_bbox_desktop (item);
         if ( bbox ) {
             gdouble size = L2(bbox->dimensions());
-            gdouble const exp = NR::expansion(item->transform);
+            gdouble const exp = item->transform.descrim();
             if (exp != 0)
                 size /= exp;
             orig->Coalesce (size * 0.001);
@@ -746,9 +746,9 @@ static void sp_offset_snappoints(SPItem const *item, SnapPointsIter p, Inkscape:
  *    -- njh
  */
 bool
-vectors_are_clockwise (NR::Point A, NR::Point B, NR::Point C)
+vectors_are_clockwise (Geom::Point A, Geom::Point B, Geom::Point C)
 {
-    using NR::rot90;
+    using Geom::rot90;
     double ab_s = dot(A, rot90(B));
     double ab_c = dot(A, B);
     double bc_s = dot(B, rot90(C));
@@ -794,7 +794,7 @@ vectors_are_clockwise (NR::Point A, NR::Point B, NR::Point C)
  * 'px inside source'.
  */
 double
-sp_offset_distance_to_original (SPOffset * offset, NR::Point px)
+sp_offset_distance_to_original (SPOffset * offset, Geom::Point px)
 {
     if (offset == NULL || offset->originalPath == NULL
         || ((Path *) offset->originalPath)->descr_cmd.size() <= 1)
@@ -832,14 +832,14 @@ sp_offset_distance_to_original (SPOffset * offset, NR::Point px)
         {
             if (theRes->getPoint(i).totalDegree() > 0)
 	    {
-                NR::Point nx = theRes->getPoint(i).x;
-                NR::Point nxpx = px-nx;
+                Geom::Point nx = theRes->getPoint(i).x;
+                Geom::Point nxpx = px-nx;
                 double ndist = sqrt (dot(nxpx,nxpx));
                 if (ptSet == false || fabs (ndist) < fabs (ptDist))
                 {
                     // we have a new minimum distance
                     // now we need to wheck if px is inside or outside (for the sign)
-                    nx = px - theRes->getPoint(i).x;
+                    nx = px - to_2geom(theRes->getPoint(i).x);
                     double nlen = sqrt (dot(nx , nx));
                     nx /= nlen;
                     int pb, cb, fb;
@@ -849,7 +849,7 @@ sp_offset_distance_to_original (SPOffset * offset, NR::Point px)
                     do
                     {
                         // one angle
-                        NR::Point prx, nex;
+                        Geom::Point prx, nex;
                         prx = theRes->getEdge(pb).dx;
                         nlen = sqrt (dot(prx, prx));
                         prx /= nlen;
@@ -890,13 +890,13 @@ sp_offset_distance_to_original (SPOffset * offset, NR::Point px)
         // loop over the edges to try to improve the distance
         for (int i = 0; i < theRes->numberOfEdges(); i++)
         {
-            NR::Point sx = theRes->getPoint(theRes->getEdge(i).st).x;
-            NR::Point ex = theRes->getPoint(theRes->getEdge(i).en).x;
-            NR::Point nx = ex - sx;
+            Geom::Point sx = theRes->getPoint(theRes->getEdge(i).st).x;
+            Geom::Point ex = theRes->getPoint(theRes->getEdge(i).en).x;
+            Geom::Point nx = ex - sx;
             double len = sqrt (dot(nx,nx));
             if (len > 0.0001)
             {
-                NR::Point   pxsx=px-sx;
+                Geom::Point   pxsx=px-sx;
                 double ab = dot(nx,pxsx);
                 if (ab > 0 && ab < len * len)
                 {

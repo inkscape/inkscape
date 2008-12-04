@@ -29,7 +29,7 @@ class SPStarContextClass;
 
 struct SPStarContext : public SPEventContext {
 	SPItem *item;
-	NR::Point center;
+	Geom::Point center;
 
 	/* Number of corners */
 	gint magnitude;

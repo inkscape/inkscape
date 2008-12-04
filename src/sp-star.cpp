@@ -101,7 +101,7 @@ static void
 sp_star_init (SPStar * star)
 {
 	star->sides = 5;
-	star->center = NR::Point(0, 0);
+	star->center = Geom::Point(0, 0);
 	star->r[0] = 1.0;
 	star->r[1] = 0.001;
 	star->arg[0] = star->arg[1] = 0.0;
@@ -140,8 +140,8 @@ sp_star_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
 	if (flags & SP_OBJECT_WRITE_EXT) {
 		repr->setAttribute("sodipodi:type", "star");
 		sp_repr_set_int (repr, "sodipodi:sides", star->sides);
-		sp_repr_set_svg_double(repr, "sodipodi:cx", star->center[NR::X]);
-		sp_repr_set_svg_double(repr, "sodipodi:cy", star->center[NR::Y]);
+		sp_repr_set_svg_double(repr, "sodipodi:cx", star->center[Geom::X]);
+		sp_repr_set_svg_double(repr, "sodipodi:cy", star->center[Geom::Y]);
 		sp_repr_set_svg_double(repr, "sodipodi:r1", star->r[0]);
 		sp_repr_set_svg_double(repr, "sodipodi:r2", star->r[1]);
 		sp_repr_set_svg_double(repr, "sodipodi:arg1", star->arg[0]);
@@ -181,20 +181,20 @@ sp_star_set (SPObject *object, unsigned int key, const gchar *value)
 		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 		break;
 	case SP_ATTR_SODIPODI_CX:
-		if (!sp_svg_length_read_ldd (value, &unit, NULL, &star->center[NR::X]) ||
+		if (!sp_svg_length_read_ldd (value, &unit, NULL, &star->center[Geom::X]) ||
 		    (unit == SVGLength::EM) ||
 		    (unit == SVGLength::EX) ||
 		    (unit == SVGLength::PERCENT)) {
-			star->center[NR::X] = 0.0;
+			star->center[Geom::X] = 0.0;
 		}
 		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 		break;
 	case SP_ATTR_SODIPODI_CY:
-		if (!sp_svg_length_read_ldd (value, &unit, NULL, &star->center[NR::Y]) ||
+		if (!sp_svg_length_read_ldd (value, &unit, NULL, &star->center[Geom::Y]) ||
 		    (unit == SVGLength::EM) ||
 		    (unit == SVGLength::EX) ||
 		    (unit == SVGLength::PERCENT)) {
-			star->center[NR::Y] = 0.0;
+			star->center[Geom::Y] = 0.0;
 		}
 		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 		break;
@@ -316,10 +316,10 @@ sp_star_description (SPItem *item)
 /**
 Returns a unit-length vector at 90 degrees to the direction from o to n
  */
-static NR::Point
-rot90_rel (NR::Point o, NR::Point n)
+static Geom::Point
+rot90_rel (Geom::Point o, Geom::Point n)
 {
-	return ((1/NR::L2(n - o)) * NR::Point ((n - o)[NR::Y],  (o - n)[NR::X]));
+	return ((1/Geom::L2(n - o)) * Geom::Point ((n - o)[Geom::Y],  (o - n)[Geom::X]));
 }
 
 /**
@@ -329,13 +329,13 @@ Obvious (but acceptable for my purposes) limits to uniqueness:
 - returned value is unchanged when the point is moved by less than 1/1024 of px
 */
 static guint32
-point_unique_int (NR::Point o)
+point_unique_int (Geom::Point o)
 {
 	return ((guint32)
 	65536 *
-		(((int) floor (o[NR::X] * 64)) % 1024 + ((int) floor (o[NR::X] * 1024)) % 64)
+		(((int) floor (o[Geom::X] * 64)) % 1024 + ((int) floor (o[Geom::X] * 1024)) % 64)
 	+
-     		(((int) floor (o[NR::Y] * 64)) % 1024 + ((int) floor (o[NR::Y] * 1024)) % 64)
+     		(((int) floor (o[Geom::Y] * 64)) % 1024 + ((int) floor (o[Geom::Y] * 1024)) % 64)
 	);
 }
 
@@ -362,11 +362,11 @@ rnd (guint32 const seed, unsigned steps) {
 	return ( lcg / 4294967296. ) - 0.5;
 }
 
-static NR::Point
+static Geom::Point
 sp_star_get_curvepoint (SPStar *star, SPStarPoint point, gint index, bool previ)
 {
 	// the point whose neighboring curve handle we're calculating
-	NR::Point o = sp_star_get_xy (star, point, index);
+	Geom::Point o = sp_star_get_xy (star, point, index);
 
 	// indices of previous and next points
 	gint pi = (index > 0)? (index - 1) : (star->sides - 1);
@@ -376,25 +376,25 @@ sp_star_get_curvepoint (SPStar *star, SPStarPoint point, gint index, bool previ)
 	SPStarPoint other = (point == SP_STAR_POINT_KNOT2? SP_STAR_POINT_KNOT1 : SP_STAR_POINT_KNOT2);
 
 	// the neighbors of o; depending on flatsided, they're either the same type (polygon) or the other type (star)
-	NR::Point prev = (star->flatsided? sp_star_get_xy (star, point, pi) : sp_star_get_xy (star, other, point == SP_STAR_POINT_KNOT2? index : pi));
-	NR::Point next = (star->flatsided? sp_star_get_xy (star, point, ni) : sp_star_get_xy (star, other, point == SP_STAR_POINT_KNOT1? index : ni));
+	Geom::Point prev = (star->flatsided? sp_star_get_xy (star, point, pi) : sp_star_get_xy (star, other, point == SP_STAR_POINT_KNOT2? index : pi));
+	Geom::Point next = (star->flatsided? sp_star_get_xy (star, point, ni) : sp_star_get_xy (star, other, point == SP_STAR_POINT_KNOT1? index : ni));
 
 	// prev-next midpoint
-	NR::Point mid =  0.5 * (prev + next);
+	Geom::Point mid =  0.5 * (prev + next);
 
 	// point to which we direct the bissector of the curve handles;
 	// it's far enough outside the star on the perpendicular to prev-next through mid
-	NR::Point biss =  mid + 100000 * rot90_rel (mid, next);
+	Geom::Point biss =  mid + 100000 * rot90_rel (mid, next);
 
 	// lengths of vectors to prev and next
-	gdouble prev_len = NR::L2 (prev - o);
-	gdouble next_len = NR::L2 (next - o);
+	gdouble prev_len = Geom::L2 (prev - o);
+	gdouble next_len = Geom::L2 (next - o);
 
 	// unit-length vector perpendicular to o-biss
-	NR::Point rot = rot90_rel (o, biss);
+	Geom::Point rot = rot90_rel (o, biss);
 
 	// multiply rot by star->rounded coefficient and the distance to the star point; flip for next
-	NR::Point ret;
+	Geom::Point ret;
 	if (previ) {
 		ret = (star->rounded * prev_len) * rot;
 	} else {
@@ -409,11 +409,11 @@ sp_star_get_curvepoint (SPStar *star, SPStarPoint point, gint index, bool previ)
 		guint32 seed = point_unique_int (o);
 
 		// randomly rotate (by step 3 from the seed) and scale (by step 4) the vector
-		ret = ret * NR::Matrix (Geom::Rotate (star->randomized * M_PI * rnd (seed, 3)));
+		ret = ret * Geom::Matrix (Geom::Rotate (star->randomized * M_PI * rnd (seed, 3)));
 		ret *= ( 1 + star->randomized * rnd (seed, 4));
 
 		// the randomized corner point
-		NR::Point o_randomized = sp_star_get_xy (star, point, index, true);
+		Geom::Point o_randomized = sp_star_get_xy (star, point, index, true);
 
 		return o_randomized + ret;
 	}
@@ -507,7 +507,7 @@ sp_star_set_shape (SPShape *shape)
 }
 
 void
-sp_star_position_set (SPStar *star, gint sides, NR::Point center, gdouble r1, gdouble r2, gdouble arg1, gdouble arg2, bool isflat, double rounded, double randomized)
+sp_star_position_set (SPStar *star, gint sides, Geom::Point center, gdouble r1, gdouble r2, gdouble arg1, gdouble arg2, bool isflat, double rounded, double randomized)
 {
 	g_return_if_fail (star != NULL);
 	g_return_if_fail (SP_IS_STAR (star));
@@ -548,7 +548,7 @@ static void sp_star_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::S
  * Initial item coordinate system is same as document coordinate system.
  */
 
-NR::Point
+Geom::Point
 sp_star_get_xy (SPStar *star, SPStarPoint point, gint index, bool randomized)
 {
 	gdouble darg = 2.0 * M_PI / (double) star->sides;
@@ -556,7 +556,7 @@ sp_star_get_xy (SPStar *star, SPStarPoint point, gint index, bool randomized)
 	double arg = star->arg[point];
 	arg += index * darg;
 
-	NR::Point xy = star->r[point] * NR::Point(cos(arg), sin(arg)) + star->center;
+	Geom::Point xy = star->r[point] * Geom::Point(cos(arg), sin(arg)) + star->center;
 
 	if (!randomized || star->randomized == 0) {
 		// return the exact point
@@ -567,7 +567,7 @@ sp_star_get_xy (SPStar *star, SPStarPoint point, gint index, bool randomized)
 		// the full range (corresponding to star->randomized == 1.0) is equal to the star's diameter
 		double range = 2 * MAX (star->r[0], star->r[1]);
 		// find out the random displacement; x is controlled by step 1 from the seed, y by the step 2
-		NR::Point shift (star->randomized * range * rnd (seed, 1), star->randomized * range * rnd (seed, 2));
+		Geom::Point shift (star->randomized * range * rnd (seed, 1), star->randomized * range * rnd (seed, 2));
 		// add the shift to the exact point
 		return xy + shift;
 	}

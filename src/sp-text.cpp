@@ -249,7 +249,7 @@ sp_text_update (SPObject *object, SPCtx *ctx, guint flags)
         text->rebuildLayout();
 
         NRRect paintbox;
-        sp_item_invoke_bbox(text, &paintbox, NR::identity(), TRUE);
+        sp_item_invoke_bbox(text, &paintbox, Geom::identity(), TRUE);
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
             text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
             nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
@@ -275,7 +275,7 @@ sp_text_modified (SPObject *object, guint flags)
     if (flags & ( SP_OBJECT_STYLE_MODIFIED_FLAG )) {
         SPText *text = SP_TEXT (object);
         NRRect paintbox;
-        sp_item_invoke_bbox(text, &paintbox, NR::identity(), TRUE);
+        sp_item_invoke_bbox(text, &paintbox, Geom::identity(), TRUE);
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
             text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
             nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
@@ -387,7 +387,7 @@ sp_text_show(SPItem *item, NRArena *arena, unsigned /* key*/, unsigned /*flags*/
 
     // pass the bbox of the text object as paintbox (used for paintserver fills)
     NRRect paintbox;
-    sp_item_invoke_bbox(item, &paintbox, NR::identity(), TRUE);
+    sp_item_invoke_bbox(item, &paintbox, Geom::identity(), TRUE);
     group->layout.show(flowed, &paintbox);
 
     return flowed;
@@ -492,13 +492,13 @@ sp_text_print (SPItem *item, SPPrintContext *ctx)
     NRRect     pbox, dbox, bbox;
     SPText *group = SP_TEXT (item);
 
-    sp_item_invoke_bbox(item, &pbox, NR::identity(), TRUE);
+    sp_item_invoke_bbox(item, &pbox, Geom::identity(), TRUE);
     sp_item_bbox_desktop (item, &bbox);
     dbox.x0 = 0.0;
     dbox.y0 = 0.0;
     dbox.x1 = sp_document_width (SP_OBJECT_DOCUMENT (item));
     dbox.y1 = sp_document_height (SP_OBJECT_DOCUMENT (item));
-    NR::Matrix const ctm (sp_item_i2d_affine(item));
+    Geom::Matrix const ctm (sp_item_i2d_affine(item));
 
     group->layout.print(ctx,&pbox,&dbox,&bbox,ctm);
 }
@@ -617,7 +617,7 @@ void SPText::_adjustFontsizeRecursive(SPItem *item, double ex, bool is_root)
     }
 }
 
-void SPText::_adjustCoordsRecursive(SPItem *item, NR::Matrix const &m, double ex, bool is_root)
+void SPText::_adjustCoordsRecursive(SPItem *item, Geom::Matrix const &m, double ex, bool is_root)
 {
     if (SP_IS_TSPAN(item))
         SP_TSPAN(item)->attributes.transform(m, ex, ex, is_root);
@@ -891,9 +891,9 @@ void TextTagAttributes::transform(Geom::Matrix const &matrix, double scale_x, do
     if (extend_zero_length && points_count < 1)
         points_count = 1;
     for (unsigned i = 0 ; i < points_count ; i++) {
-        NR::Point point;
+        Geom::Point point;
         if (i < attributes.x.size()) point[Geom::X] = attributes.x[i].computed;
-        else point[NR::X] = 0.0;
+        else point[Geom::X] = 0.0;
         if (i < attributes.y.size()) point[Geom::Y] = attributes.y[i].computed;
         else point[Geom::Y] = 0.0;
         point *= matrix;

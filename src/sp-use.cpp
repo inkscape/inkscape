@@ -64,7 +64,7 @@ static void sp_use_delete_self(SPObject *deleted, SPUse *self);
 
 static SPItemClass *parent_class;
 
-//void m_print(gchar *say, NR::Matrix m)
+//void m_print(gchar *say, Geom::Matrix m)
 //{ g_print("%s %g %g %g %g %g %g\n", say, m[0], m[1], m[2], m[3], m[4], m[5]); }
 
 GType
@@ -299,7 +299,7 @@ sp_use_print(SPItem *item, SPPrintContext *ctx)
     SPUse *use = SP_USE(item);
 
     if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
-        NR::Matrix tp(Geom::Translate(use->x.computed, use->y.computed));
+        Geom::Matrix tp(Geom::Translate(use->x.computed, use->y.computed));
         sp_print_bind(ctx, tp, 1.0);
         translated = true;
     }
@@ -399,7 +399,7 @@ sp_use_root(SPUse *use)
  * Returns the effective transform that goes from the ultimate original to given SPUse, both ends
  * included.
  */
-NR::Matrix
+Geom::Matrix
 sp_use_get_root_transform(SPUse *use)
 {
     //track the ultimate source of a chain of uses
@@ -414,7 +414,7 @@ sp_use_get_root_transform(SPUse *use)
 
 
     //calculate the accummulated transform, starting from the original
-    NR::Matrix t(NR::identity());
+    Geom::Matrix t(Geom::identity());
     for (GSList *i = chain; i != NULL; i = i->next) {
         SPItem *i_tem = SP_ITEM(i->data);
 
@@ -439,7 +439,7 @@ sp_use_get_root_transform(SPUse *use)
  * Returns the transform that leads to the use from its immediate original.
  * Does not inlcude the original's transform if any.
  */
-NR::Matrix
+Geom::Matrix
 sp_use_get_parent_transform(SPUse *use)
 {
     Geom::Matrix t(Geom::identity());
@@ -605,7 +605,7 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
     cctx.vp.y0 = 0.0;
     cctx.vp.x1 = use->width.computed;
     cctx.vp.y1 = use->height.computed;
-    cctx.i2vp = NR::identity();
+    cctx.i2vp = Geom::identity();
     flags&=~SP_OBJECT_USER_MODIFIED_FLAG_B;
 
     if (use->child) {
@@ -625,7 +625,7 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
 
     /* As last step set additional transform of arena group */
     for (SPItemView *v = item->display; v != NULL; v = v->next) {
-        NR::Matrix t(Geom::Translate(use->x.computed, use->y.computed));
+        Geom::Matrix t(Geom::Translate(use->x.computed, use->y.computed));
         nr_arena_group_set_child_transform(NR_ARENA_GROUP(v->arenaitem), t);
     }
 }

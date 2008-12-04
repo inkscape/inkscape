@@ -35,7 +35,7 @@ typedef enum {
 struct SPStar : public SPPolygon {
 	gint sides;
 
-	NR::Point center;
+	Geom::Point center;
 	double r[2];
 	double arg[2];
 	bool flatsided;
@@ -50,9 +50,9 @@ struct SPStarClass {
 
 GType sp_star_get_type (void);
 
-void sp_star_position_set (SPStar *star, gint sides, NR::Point center, gdouble r1, gdouble r2, gdouble arg1, gdouble arg2, bool isflat, double rounded, double randomized);
+void sp_star_position_set (SPStar *star, gint sides, Geom::Point center, gdouble r1, gdouble r2, gdouble arg1, gdouble arg2, bool isflat, double rounded, double randomized);
 
-NR::Point sp_star_get_xy (SPStar *star, SPStarPoint point, gint index, bool randomized = false);
+Geom::Point sp_star_get_xy (SPStar *star, SPStarPoint point, gint index, bool randomized = false);
 
 
 
