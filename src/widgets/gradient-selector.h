@@ -61,7 +61,7 @@ struct SPGradientSelectorClass {
     void (* changed) (SPGradientSelector *sel);
 };
 
-GtkType sp_gradient_selector_get_type (void);
+GType sp_gradient_selector_get_type(void);
 
 GtkWidget *sp_gradient_selector_new (void);
 

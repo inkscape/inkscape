@@ -53,20 +53,27 @@ static void sp_gradient_selector_spread_activate (GtkWidget *widget, SPGradientS
 static GtkVBoxClass *parent_class;
 static guint signals[LAST_SIGNAL] = {0};
 
-GtkType
-sp_gradient_selector_get_type (void)
+GType sp_gradient_selector_get_type(void)
 {
-    static GtkType type = 0;
+    static GType type = 0;
     if (!type) {
-        GtkTypeInfo info = {
-            "SPGradientSelector",
-            sizeof (SPGradientSelector),
-            sizeof (SPGradientSelectorClass),
-            (GtkClassInitFunc) sp_gradient_selector_class_init,
-            (GtkObjectInitFunc) sp_gradient_selector_init,
-            NULL, NULL, NULL
+        static const GTypeInfo info = {
+            sizeof(SPGradientSelectorClass),
+            NULL, /* base_init */
+            NULL, /* base_finalize */
+            (GClassInitFunc) sp_gradient_selector_class_init,
+            NULL, /* class_finalize */
+            NULL, /* class_data */
+            sizeof(SPGradientSelector),
+            0,    /* n_preallocs */
+            (GInstanceInitFunc) sp_gradient_selector_init,
+            0,    /* value_table */
         };
-        type = gtk_type_unique (GTK_TYPE_VBOX, &info);
+
+        type = g_type_register_static( GTK_TYPE_VBOX,
+                                       "SPGradientSelector",
+                                       &info,
+                                       static_cast< GTypeFlags > (0) );
     }
     return type;
 }

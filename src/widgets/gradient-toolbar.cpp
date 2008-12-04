@@ -384,36 +384,36 @@ gr_tb_selection_changed (Inkscape::Selection *, gpointer data)
 }
 
 static void
-gr_tb_selection_modified (Inkscape::Selection *selection, guint flags, gpointer data)
+gr_tb_selection_modified (Inkscape::Selection *selection, guint /*flags*/, gpointer data)
 {
     gr_tb_selection_changed (selection, data);
 }
 
 static void
-gr_drag_selection_changed (gpointer dragger, gpointer data)
+gr_drag_selection_changed (gpointer /*dragger*/, gpointer data)
 {
     gr_tb_selection_changed (NULL, data);
 }
 
 static void
-gr_defs_release (SPObject *defs, GtkWidget *widget)
+gr_defs_release (SPObject */*defs*/, GtkWidget *widget)
 {
     gr_tb_selection_changed (NULL, (gpointer) widget);
 }
 
 static void
-gr_defs_modified (SPObject *defs, guint flags, GtkWidget *widget)
+gr_defs_modified (SPObject */*defs*/, guint /*flags*/, GtkWidget *widget)
 {
     gr_tb_selection_changed (NULL, (gpointer) widget);
 }
 
-static void gr_disconnect_sigc (GObject *obj, sigc::connection *connection) {
+static void gr_disconnect_sigc (GObject */*obj*/, sigc::connection *connection) {
     connection->disconnect();
     delete connection;
 }
 
 static void
-gr_edit (GtkWidget *button, GtkWidget *widget)
+gr_edit (GtkWidget */*button*/, GtkWidget *widget)
 {
     GtkWidget *om = (GtkWidget *) g_object_get_data (G_OBJECT(widget), "menu");
 
