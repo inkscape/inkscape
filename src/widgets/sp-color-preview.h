@@ -1,5 +1,5 @@
-#ifndef __SP_COLOR_PREVIEW_H__
-#define __SP_COLOR_PREVIEW_H__
+#ifndef SEEN_COLOR_PREVIEW_H
+#define SEEN_COLOR_PREVIEW_H
 
 /*
  * A simple color preview widget
@@ -42,6 +42,4 @@ GtkWidget *sp_color_preview_new (guint32 rgba);
 void sp_color_preview_set_rgba32 (SPColorPreview *cp, guint32 color);
 
 
-
-
-#endif
+#endif // SEEN_COLOR_PREVIEW_H
