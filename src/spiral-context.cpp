@@ -452,7 +452,7 @@ sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state)
     Geom::Point const delta = p1 - p0;
     gdouble const rad = Geom::L2(delta);
 
-    gdouble arg = NR::atan2(delta) - 2.0*M_PI*spiral->revo;
+    gdouble arg = Geom::atan2(delta) - 2.0*M_PI*spiral->revo;
 
     if (state & GDK_CONTROL_MASK) {
         arg = sp_round(arg, M_PI/snaps);

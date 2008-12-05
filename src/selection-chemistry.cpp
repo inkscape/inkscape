@@ -2731,7 +2731,7 @@ sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_to_la
         SPItem *item = reinterpret_cast<SPItem *>(i->data);
         // inverted object transform should be applied to a mask object,
         // as mask is calculated in user space (after applying transform)
-        NR::Matrix maskTransform (item->transform.inverse());
+        Geom::Matrix maskTransform (item->transform.inverse());
 
         GSList *mask_items_dup = NULL;
         for (GSList *mask_item = mask_items; NULL != mask_item; mask_item = mask_item->next) {

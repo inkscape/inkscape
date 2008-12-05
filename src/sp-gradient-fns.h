@@ -7,7 +7,7 @@
 
 #include <glib/gtypes.h>
 #include <glib-object.h>
-#include "libnr/nr-forward.h"
+#include <2geom/forward.h>
 #include "sp-gradient-spread.h"
 #include "sp-gradient-units.h"
 
@@ -54,12 +54,12 @@ void sp_gradient_render_vector_block_rgba(SPGradient *gr, guchar *px, gint w, gi
 void sp_gradient_render_vector_block_rgb(SPGradient *gr, guchar *px, gint w, gint h, gint rs, gint pos, gint span, bool horizontal);
 
 /** Transforms to/from gradient position space in given environment */
-NR::Matrix sp_gradient_get_g2d_matrix(SPGradient const *gr, NR::Matrix const &ctm,
-                                      NR::Rect const &bbox);
-NR::Matrix sp_gradient_get_gs2d_matrix(SPGradient const *gr, NR::Matrix const &ctm,
-                                       NR::Rect const &bbox);
-void sp_gradient_set_gs2d_matrix(SPGradient *gr, NR::Matrix const &ctm, NR::Rect const &bbox,
-                                 NR::Matrix const &gs2d);
+Geom::Matrix sp_gradient_get_g2d_matrix(SPGradient const *gr, Geom::Matrix const &ctm,
+                                      Geom::Rect const &bbox);
+Geom::Matrix sp_gradient_get_gs2d_matrix(SPGradient const *gr, Geom::Matrix const &ctm,
+                                       Geom::Rect const &bbox);
+void sp_gradient_set_gs2d_matrix(SPGradient *gr, Geom::Matrix const &ctm, Geom::Rect const &bbox,
+                                 Geom::Matrix const &gs2d);
 
 
 #endif /* !SEEN_SP_GRADIENT_FNS_H */

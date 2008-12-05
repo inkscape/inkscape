@@ -325,19 +325,19 @@ sp_clippath_set_bbox(SPClipPath *cp, unsigned int key, NRRect *bbox)
 }
 
 void
-sp_clippath_get_bbox(SPClipPath *cp, NRRect *bbox, NR::Matrix const &transform, unsigned const /*flags*/)
+sp_clippath_get_bbox(SPClipPath *cp, NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
 {
     SPObject *i;
     for (i = sp_object_first_child(SP_OBJECT(cp)); i && !SP_IS_ITEM(i); i = SP_OBJECT_NEXT(i));
     if (!i) return;
 
-    sp_item_invoke_bbox_full(SP_ITEM(i), bbox, NR::Matrix(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
+    sp_item_invoke_bbox_full(SP_ITEM(i), bbox, Geom::Matrix(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
     SPObject *i_start = i;
 
     while (i != NULL) {
         if (i != i_start) {
             NRRect i_box;
-            sp_item_invoke_bbox_full(SP_ITEM(i), &i_box, NR::Matrix(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
+            sp_item_invoke_bbox_full(SP_ITEM(i), &i_box, Geom::Matrix(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
             nr_rect_d_union (bbox, bbox, &i_box);
         }
         i = SP_OBJECT_NEXT(i);
@@ -381,7 +381,7 @@ sp_clippath_view_list_remove(SPClipPathView *list, SPClipPathView *view)
 
 // Create a mask element (using passed elements), add it to <defs>
 const gchar *
-sp_clippath_create (GSList *reprs, SPDocument *document, NR::Matrix const* applyTransform)
+sp_clippath_create (GSList *reprs, SPDocument *document, Geom::Matrix const* applyTransform)
 {
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
@@ -398,7 +398,7 @@ sp_clippath_create (GSList *reprs, SPDocument *document, NR::Matrix const* apply
         SPItem *item = SP_ITEM(clip_path_object->appendChildRepr(node));
 
         if (NULL != applyTransform) {
-            NR::Matrix transform (item->transform);
+            Geom::Matrix transform (item->transform);
             transform *= (*applyTransform);
             sp_item_write_transform(item, SP_OBJECT_REPR(item), transform);
         }

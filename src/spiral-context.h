@@ -31,7 +31,7 @@ class SPSpiralContextClass;
 
 struct SPSpiralContext : public SPEventContext {
 	SPItem * item;
-	NR::Point center;
+	Geom::Point center;
 	gdouble revo;
 	gdouble exp;
 	gdouble t0;
