@@ -257,11 +257,11 @@ static void sp_genericellipse_set_shape(SPShape *shape)
     curve->unref();
 }
 
-static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const */*snapprefs*/)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_GENERICELLIPSE(item));
-    
+
     SPGenericEllipse *ellipse = SP_GENERICELLIPSE(item);
     sp_genericellipse_normalize(ellipse);
     NR::Matrix const i2d = sp_item_i2d_affine(item);
@@ -278,10 +278,10 @@ static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, I
     }
 
     double rx = ellipse->rx.computed;
-    double ry = ellipse->ry.computed;    
+    double ry = ellipse->ry.computed;
     double cx = ellipse->cx.computed;
     double cy = ellipse->cy.computed;
-    
+
     // Snap to the 4 quadrant points of the ellipse, but only if the arc
     // spans far enough to include them
     double angle = 0;
@@ -290,19 +290,19 @@ static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, I
             *p = NR::Point(cx + cos(angle)*rx, cy + sin(angle)*ry) * i2d;
         }
     }
-    
-    // And if we have a slice, also snap to the endpoints and the centre point 
+
+    // And if we have a slice, also snap to the endpoints and the centre point
     if (slice) {
         // Add the centre, if we have a closed slice
         if (ellipse->closed) {
             *p = NR::Point(cx, cy) * i2d;
         }
         // Add the start point, if it's not coincident with a quadrant point
-        if (fmod(ellipse->start, M_PI_2) != 0.0 ) {    
+        if (fmod(ellipse->start, M_PI_2) != 0.0 ) {
             *p = NR::Point(cx + cos(ellipse->start)*rx, cy + sin(ellipse->start)*ry) * i2d;
-        } 
+        }
         // Add the end point, if it's not coincident with a quadrant point
-        if (fmod(ellipse->end, M_PI_2) != 0.0 ) {    
+        if (fmod(ellipse->end, M_PI_2) != 0.0 ) {
             *p = NR::Point(cx + cos(ellipse->end)*rx, cy + sin(ellipse->end)*ry) * i2d;
         }
     }

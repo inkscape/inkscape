@@ -375,7 +375,7 @@ lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type) {
  * Checks whether an item has a construction applied as LPE and if so returns the index in
  * lpesubtools of this construction
  */
-int lpetool_item_has_construction(SPLPEToolContext *lc, SPItem *item)
+int lpetool_item_has_construction(SPLPEToolContext */*lc*/, SPItem *item)
 {
     if (!SP_IS_LPE_ITEM(item)) {
         return -1;
@@ -467,7 +467,7 @@ lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc)
 
 static void
 set_pos_and_anchor(SPCanvasText *canvas_text, const Geom::Piecewise<Geom::D2<Geom::SBasis> > &pwd2,
-                   const double t, const double length, bool use_curvature = false)
+                   const double t, const double length, bool /*use_curvature*/ = false)
 {
     using namespace Geom;
 

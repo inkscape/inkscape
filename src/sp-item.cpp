@@ -1,5 +1,3 @@
-#define __SP_ITEM_C__
-
 /** \file
  * Base class for visual SVG elements
  */
@@ -166,13 +164,13 @@ void SPItem::init() {
     this->display = NULL;
 
     this->clip_ref = new SPClipPathReference(this);
-		sigc::signal<void, SPObject *, SPObject *> cs1=this->clip_ref->changedSignal();
-		sigc::slot2<void,SPObject*, SPObject *> sl1=sigc::bind(sigc::ptr_fun(clip_ref_changed), this);
+    sigc::signal<void, SPObject *, SPObject *> cs1=this->clip_ref->changedSignal();
+    sigc::slot2<void,SPObject*, SPObject *> sl1=sigc::bind(sigc::ptr_fun(clip_ref_changed), this);
     _clip_ref_connection = cs1.connect(sl1);
 
     this->mask_ref = new SPMaskReference(this);
-		sigc::signal<void, SPObject *, SPObject *> cs2=this->mask_ref->changedSignal();
-		sigc::slot2<void,SPObject*, SPObject *> sl2=sigc::bind(sigc::ptr_fun(mask_ref_changed), this);
+    sigc::signal<void, SPObject *, SPObject *> cs2=this->mask_ref->changedSignal();
+    sigc::slot2<void,SPObject*, SPObject *> sl2=sigc::bind(sigc::ptr_fun(mask_ref_changed), this);
     _mask_ref_connection = cs2.connect(sl2);
 
     this->avoidRef = new SPAvoidRef(this);
@@ -271,7 +269,7 @@ bool
 SPItem::isExplicitlyHidden() const
 {
     return (this->style->display.set
-	    && this->style->display.value == SP_CSS_DISPLAY_NONE);
+            && this->style->display.value == SP_CSS_DISPLAY_NONE);
 }
 
 /**
@@ -663,7 +661,7 @@ sp_item_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape
     SPObject *child;
     SPItem *item = SP_ITEM(object);
 
-    // in the case of SP_OBJECT_WRITE_BUILD, the item should always be newly created, 
+    // in the case of SP_OBJECT_WRITE_BUILD, the item should always be newly created,
     // so we need to add any children from the underlying object to the new repr
     if (flags & SP_OBJECT_WRITE_BUILD) {
         Inkscape::XML::Node *crepr;
@@ -749,7 +747,7 @@ sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transf
 /** Calls \a item's subclass' bounding box method; clips it by the bbox of clippath, if any; and
  * unions the resulting bbox with \a bbox. If \a clear is true, empties \a bbox first. Passes the
  * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
- * clones), in turn, call this function in their bbox methods. 
+ * clones), in turn, call this function in their bbox methods.
  * \retval bbox  Note that there is no guarantee that bbox will contain a rectangle when the
  *               function returns. If this item does not have a boundingbox, this might well be empty.
  */
@@ -792,7 +790,7 @@ sp_item_invoke_bbox_full(SPItem const *item, Geom::OptRect &bbox, Geom::Matrix c
                     y = SP_FILTER(filter)->y.computed;
                 if (SP_FILTER(filter)->width._set)
                     w = SP_FILTER(filter)->width.computed;
-                if (SP_FILTER(filter)->height._set) 
+                if (SP_FILTER(filter)->height._set)
                     h = SP_FILTER(filter)->height.computed;
 
                 double dx0 = 0;
@@ -800,7 +798,7 @@ sp_item_invoke_bbox_full(SPItem const *item, Geom::OptRect &bbox, Geom::Matrix c
                 double dy0 = 0;
                 double dy1 = 0;
                 if (filter_is_single_gaussian_blur(SP_FILTER(filter))) {
-                    // if this is a single blur, use 2.4*radius 
+                    // if this is a single blur, use 2.4*radius
                     // which may be smaller than the default area;
                     // see set_filter_area for why it's 2.4
                     double r = get_single_gaussian_blur_radius (SP_FILTER(filter));
@@ -838,11 +836,11 @@ sp_item_invoke_bbox_full(SPItem const *item, Geom::OptRect &bbox, Geom::Matrix c
     }
 
     if (temp_bbox.x0 > temp_bbox.x1 || temp_bbox.y0 > temp_bbox.y1) {
-        // Either the bbox hasn't been touched by the SPItemClass' bbox method 
+        // Either the bbox hasn't been touched by the SPItemClass' bbox method
         // (it still has its initial values, see above: x0 = y0 = NR_HUGE and x1 = y1 = -NR_HUGE)
         // or it has explicitely been set to be like this (e.g. in sp_shape_bbox)
-        
-        // When x0 > x1 or y0 > y1, the bbox is considered to be "nothing", although it has not been 
+
+        // When x0 > x1 or y0 > y1, the bbox is considered to be "nothing", although it has not been
         // explicitely defined this way for NRRects (as opposed to Geom::OptRect)
         // So union bbox with nothing = do nothing, just return
         return;
@@ -937,15 +935,15 @@ Geom::OptRect sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
     return rect;
 }
 
-static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const */*snapprefs*/)
 {
-	/* This will only be called if the derived class doesn't override this.
-	 * see for example sp_genericellipse_snappoints in sp-ellipse.cpp	 
-	 * We don't know what shape we could be dealing with here, so we'll just
-	 * return the corners of the bounding box */
+    /* This will only be called if the derived class doesn't override this.
+     * see for example sp_genericellipse_snappoints in sp-ellipse.cpp
+     * We don't know what shape we could be dealing with here, so we'll just
+     * return the corners of the bounding box */
 
-	Geom::OptRect bbox = item->getBounds(sp_item_i2d_affine(item));
-    
+    Geom::OptRect bbox = item->getBounds(sp_item_i2d_affine(item));
+
     if (bbox) {
         Geom::Point p1, p2;
         p1 = bbox->min();
@@ -955,12 +953,12 @@ static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p, Ink
         *p = p2;
         *p = Geom::Point(p1[Geom::Y], p2[Geom::X]);
     }
-      
+
 }
 
 void sp_item_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
-	g_assert (item != NULL);
+    g_assert (item != NULL);
     g_assert (SP_IS_ITEM(item));
 
     // Get the snappoints of the item
@@ -971,32 +969,32 @@ void sp_item_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPref
 
     // Get the snappoints at the item's center
     if (snapprefs != NULL && snapprefs->getIncludeItemCenter()) {
-    	*p = item->getCenter();
-    }    
-    
+        *p = item->getCenter();
+    }
+
     // Get the snappoints of clipping paths and mask, if any
     std::list<SPObject const *> clips_and_masks;
-    
+
     clips_and_masks.push_back(SP_OBJECT(item->clip_ref->getObject()));
     clips_and_masks.push_back(SP_OBJECT(item->mask_ref->getObject()));
-    
+
     for (std::list<SPObject const *>::const_iterator o = clips_and_masks.begin(); o != clips_and_masks.end(); o++) {
-    	if (*o) {
-	    	// obj is a group object, the children are the actual clippers
-	        for (SPObject *child = (*o)->children ; child ; child = child->next) {
-	            if (SP_IS_ITEM(child)) {
-	            	std::vector<Geom::Point> p_clip_or_mask;	            	    
-	            	// Please note the recursive call here!
-	            	sp_item_snappoints(SP_ITEM(child), SnapPointsIter(p_clip_or_mask), snapprefs);
-	            	// Take into account the transformation of the item being clipped or masked
-	            	for (std::vector<Geom::Point>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
-            	    	// All snappoints are in desktop coordinates, but the item's transformation is
-	            		// in document coordinates. Hence the awkward construction below
-	            		*p = (*p_orig) * matrix_to_desktop (matrix_from_desktop (item->transform, item), item);
-            	    }
-	            }
-	    	}
-    	}
+        if (*o) {
+            // obj is a group object, the children are the actual clippers
+            for (SPObject *child = (*o)->children ; child ; child = child->next) {
+                if (SP_IS_ITEM(child)) {
+                    std::vector<Geom::Point> p_clip_or_mask;
+                    // Please note the recursive call here!
+                    sp_item_snappoints(SP_ITEM(child), SnapPointsIter(p_clip_or_mask), snapprefs);
+                    // Take into account the transformation of the item being clipped or masked
+                    for (std::vector<Geom::Point>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
+                        // All snappoints are in desktop coordinates, but the item's transformation is
+                        // in document coordinates. Hence the awkward construction below
+                        *p = (*p_orig) * matrix_to_desktop (matrix_from_desktop (item->transform, item), item);
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -1368,7 +1366,7 @@ sp_item_adjust_livepatheffect (SPItem *item, Geom::Matrix const &postmul, bool s
                 if (new_lpeobj != lpeobj) {
                     sp_lpe_item_replace_path_effect(lpeitem, lpeobj, new_lpeobj);
                 }
-        
+
                 if (lpeobj->get_lpe()) {
                     Inkscape::LivePathEffect::Effect * effect = lpeobj->get_lpe();
                     effect->transform_multiply(postmul, set);
@@ -1735,7 +1733,7 @@ sp_item_convert_to_guides(SPItem *item) {
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int prefs_bbox = prefs->getInt("/tools/bounding_box", 0);
-    SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
+    SPItem::BBoxType bbox_type = (prefs_bbox ==0)?
         SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
 
     Geom::OptRect bbox = sp_item_bbox_desktop(item, bbox_type);

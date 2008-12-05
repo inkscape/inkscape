@@ -407,7 +407,7 @@ sp_text_description(SPItem *item)
     SPStyle *style = SP_OBJECT_STYLE(text);
 
     font_instance *tf = font_factory::Default()->FaceFromStyle(style);
-    
+
     char name_buf[256];
     char *n;
     if (tf) {
@@ -428,7 +428,7 @@ sp_text_description(SPItem *item)
     return ret;
 }
 
-static void sp_text_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_text_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const */*snapprefs*/)
 {
     // the baseline anchor of the first char
     Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);

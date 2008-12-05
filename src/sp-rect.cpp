@@ -1,5 +1,3 @@
-#define __SP_RECT_C__
-
 /*
  * SVG <rect> implementation
  *
@@ -546,15 +544,15 @@ sp_rect_get_visible_height(SPRect *rect)
 /**
  * Sets the snappoint p to the unrounded corners of the rectangle
  */
-static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const */*snapprefs*/)
 {
     /* This method overrides sp_shape_snappoints, which is the default for any shape. The default method
     returns all eight points along the path of a rounded rectangle, but not the real corners. Snapping
-    the startpoint and endpoint of each rounded corner is not very usefull and really confusing. Instead 
+    the startpoint and endpoint of each rounded corner is not very usefull and really confusing. Instead
     we could snap either the real corners, or not snap at all. Bulia Byak opted to snap the real corners,
-    but it should be noted that this might be confusing in some cases with relatively large radii. With 
+    but it should be noted that this might be confusing in some cases with relatively large radii. With
     small radii though the user will easily understand which point is snapping. */
-    
+
     g_assert(item != NULL);
     g_assert(SP_IS_RECT(item));
 

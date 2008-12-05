@@ -38,6 +38,10 @@
 #include "util/fixed_point.h"
 #include "preferences.h"
 
+#ifndef INK_UNUSED
+#define INK_UNUSED(x) ((void)(x))
+#endif
+
 // IIR filtering method based on:
 // L.J. van Vliet, I.T. Young, and P.W. Verbeek, Recursive Gaussian Derivative Filters,
 // in: A.K. Jain, S. Venkatesh, B.C. Lovell (eds.),
@@ -282,6 +286,8 @@ filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
 {
 #if HAVE_OPENMP
 #pragma omp parallel for num_threads(num_threads)
+#else
+    INK_UNUSED(num_threads);
 #endif // HAVE_OPENMP
     for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
 #if HAVE_OPENMP
@@ -351,6 +357,8 @@ filter2D_FIR(PT *const dst, int const dstr1, int const dstr2,
 
 #if HAVE_OPENMP
 #pragma omp parallel for num_threads(num_threads) private(history)
+#else
+    INK_UNUSED(num_threads);
 #endif // HAVE_OPENMP
     for ( int c2 = 0 ; c2 < n2 ; c2++ ) {
 
