@@ -18,7 +18,7 @@
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 #include "libnr/nr-pixblock.h"
-#include "libnr/nr-matrix.h"
+#include <2geom/forward.h>
 #include "libnr/nr-rect-l.h"
 
 enum {
@@ -38,7 +38,7 @@ public:
     virtual ~FilterGaussian();
 
     virtual int render(FilterSlot &slot, FilterUnits const &units);
-    virtual void area_enlarge(NRRectL &area, Matrix const &m);
+    virtual void area_enlarge(NRRectL &area, Geom::Matrix const &m);
     virtual FilterTraits get_input_traits();
 
     /**

@@ -76,10 +76,10 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     int in_w = map->area.x1 - map->area.x0;
     int in_h = map->area.y1 - map->area.y0;
     double coordx, coordy;
-    
-    Matrix trans = units.get_matrix_primitiveunits2pb();
-    double scalex = scale*NR::expansionX(trans);
-    double scaley = scale*NR::expansionY(trans);
+
+    Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
+    double scalex = scale * trans.expansionX();
+    double scaley = scale * trans.expansionY();
     
     for (x=0; x < out_w; x++){
         for (y=0; y < out_h; y++){
