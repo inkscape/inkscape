@@ -1,5 +1,3 @@
-#define __SP_IMAGE_C__
-
 /*
  * SVG <image> implementation
  *
@@ -61,6 +59,10 @@
  * SPImage
  */
 
+// TODO: give these constants better names:
+#define MAGIC_EPSILON 1e-9
+#define MAGIC_EPSILON_TOO 1e-18
+// TODO: also check if it is correct to be using two different epsilon values
 
 static void sp_image_class_init (SPImageClass * klass);
 static void sp_image_init (SPImage * image);
@@ -621,19 +623,20 @@ static void sp_image_init( SPImage *image )
 static void
 sp_image_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-	if (((SPObjectClass *) parent_class)->build)
-		((SPObjectClass *) parent_class)->build (object, document, repr);
+    if (((SPObjectClass *) parent_class)->build) {
+        ((SPObjectClass *) parent_class)->build (object, document, repr);
+    }
 
-	sp_object_read_attr (object, "xlink:href");
-	sp_object_read_attr (object, "x");
-	sp_object_read_attr (object, "y");
-	sp_object_read_attr (object, "width");
-	sp_object_read_attr (object, "height");
-	sp_object_read_attr (object, "preserveAspectRatio");
-	sp_object_read_attr (object, "color-profile");
+    sp_object_read_attr (object, "xlink:href");
+    sp_object_read_attr (object, "x");
+    sp_object_read_attr (object, "y");
+    sp_object_read_attr (object, "width");
+    sp_object_read_attr (object, "height");
+    sp_object_read_attr (object, "preserveAspectRatio");
+    sp_object_read_attr (object, "color-profile");
 
-	/* Register */
-	sp_document_add_resource (document, "image", object);
+    /* Register */
+    sp_document_add_resource (document, "image", object);
 }
 
 static void
@@ -680,126 +683,124 @@ sp_image_release (SPObject *object)
 static void
 sp_image_set (SPObject *object, unsigned int key, const gchar *value)
 {
-	SPImage *image;
+    SPImage *image = SP_IMAGE (object);
 
-	image = SP_IMAGE (object);
-
-	switch (key) {
-	case SP_ATTR_XLINK_HREF:
-		g_free (image->href);
-		image->href = (value) ? g_strdup (value) : NULL;
-		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
-		break;
-	case SP_ATTR_X:
-		if (!image->x.readAbsolute(value)) {
-		    /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
-			image->x.unset();
-		}
-		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-		break;
-	case SP_ATTR_Y:
-		if (!image->y.readAbsolute(value)) {
-		    /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
-			image->y.unset();
-		}
-		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-		break;
-	case SP_ATTR_WIDTH:
-		if (!image->width.readAbsolute(value)) {
-		    /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
-			image->width.unset();
-		}
-		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-		break;
-	case SP_ATTR_HEIGHT:
-		if (!image->height.readAbsolute(value)) {
-		    /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
-			image->height.unset();
-		}
-		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-		break;
-	case SP_ATTR_PRESERVEASPECTRATIO:
-		/* Do setup before, so we can use break to escape */
-		image->aspect_align = SP_ASPECT_NONE;
-		image->aspect_clip = SP_ASPECT_MEET;
-		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
-		if (value) {
-			int len;
-			gchar c[256];
-			const gchar *p, *e;
-			unsigned int align, clip;
-			p = value;
-			while (*p && *p == 32) p += 1;
-			if (!*p) break;
-			e = p;
-			while (*e && *e != 32) e += 1;
-			len = e - p;
-			if (len > 8) break;
-			memcpy (c, value, len);
-			c[len] = 0;
-			/* Now the actual part */
-			if (!strcmp (c, "none")) {
-				align = SP_ASPECT_NONE;
-			} else if (!strcmp (c, "xMinYMin")) {
-				align = SP_ASPECT_XMIN_YMIN;
-			} else if (!strcmp (c, "xMidYMin")) {
-				align = SP_ASPECT_XMID_YMIN;
-			} else if (!strcmp (c, "xMaxYMin")) {
-				align = SP_ASPECT_XMAX_YMIN;
-			} else if (!strcmp (c, "xMinYMid")) {
-				align = SP_ASPECT_XMIN_YMID;
-			} else if (!strcmp (c, "xMidYMid")) {
-				align = SP_ASPECT_XMID_YMID;
-			} else if (!strcmp (c, "xMaxYMid")) {
-				align = SP_ASPECT_XMAX_YMID;
-			} else if (!strcmp (c, "xMinYMax")) {
-				align = SP_ASPECT_XMIN_YMAX;
-			} else if (!strcmp (c, "xMidYMax")) {
-				align = SP_ASPECT_XMID_YMAX;
-			} else if (!strcmp (c, "xMaxYMax")) {
-				align = SP_ASPECT_XMAX_YMAX;
-			} else {
-				break;
-			}
-			clip = SP_ASPECT_MEET;
-			while (*e && *e == 32) e += 1;
-			if (e) {
-				if (!strcmp (e, "meet")) {
-					clip = SP_ASPECT_MEET;
-				} else if (!strcmp (e, "slice")) {
-					clip = SP_ASPECT_SLICE;
-				} else {
-					break;
-				}
-			}
-			image->aspect_align = align;
-			image->aspect_clip = clip;
-		}
-		break;
+    switch (key) {
+        case SP_ATTR_XLINK_HREF:
+            g_free (image->href);
+            image->href = (value) ? g_strdup (value) : NULL;
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_X:
+            if (!image->x.readAbsolute(value)) {
+                /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
+                image->x.unset();
+            }
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_Y:
+            if (!image->y.readAbsolute(value)) {
+                /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
+                image->y.unset();
+            }
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_WIDTH:
+            if (!image->width.readAbsolute(value)) {
+                /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
+                image->width.unset();
+            }
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_HEIGHT:
+            if (!image->height.readAbsolute(value)) {
+                /* fixme: em, ex, % are probably valid, but require special treatment (Lauris) */
+                image->height.unset();
+            }
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_PRESERVEASPECTRATIO:
+            /* Do setup before, so we can use break to escape */
+            image->aspect_align = SP_ASPECT_NONE;
+            image->aspect_clip = SP_ASPECT_MEET;
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
+            if (value) {
+                int len;
+                gchar c[256];
+                const gchar *p, *e;
+                unsigned int align, clip;
+                p = value;
+                while (*p && *p == 32) p += 1;
+                if (!*p) break;
+                e = p;
+                while (*e && *e != 32) e += 1;
+                len = e - p;
+                if (len > 8) break;
+                memcpy (c, value, len);
+                c[len] = 0;
+                /* Now the actual part */
+                if (!strcmp (c, "none")) {
+                    align = SP_ASPECT_NONE;
+                } else if (!strcmp (c, "xMinYMin")) {
+                    align = SP_ASPECT_XMIN_YMIN;
+                } else if (!strcmp (c, "xMidYMin")) {
+                    align = SP_ASPECT_XMID_YMIN;
+                } else if (!strcmp (c, "xMaxYMin")) {
+                    align = SP_ASPECT_XMAX_YMIN;
+                } else if (!strcmp (c, "xMinYMid")) {
+                    align = SP_ASPECT_XMIN_YMID;
+                } else if (!strcmp (c, "xMidYMid")) {
+                    align = SP_ASPECT_XMID_YMID;
+                } else if (!strcmp (c, "xMaxYMid")) {
+                    align = SP_ASPECT_XMAX_YMID;
+                } else if (!strcmp (c, "xMinYMax")) {
+                    align = SP_ASPECT_XMIN_YMAX;
+                } else if (!strcmp (c, "xMidYMax")) {
+                    align = SP_ASPECT_XMID_YMAX;
+                } else if (!strcmp (c, "xMaxYMax")) {
+                    align = SP_ASPECT_XMAX_YMAX;
+                } else {
+                    break;
+                }
+                clip = SP_ASPECT_MEET;
+                while (*e && *e == 32) e += 1;
+                if (e) {
+                    if (!strcmp (e, "meet")) {
+                        clip = SP_ASPECT_MEET;
+                    } else if (!strcmp (e, "slice")) {
+                        clip = SP_ASPECT_SLICE;
+                    } else {
+                        break;
+                    }
+                }
+                image->aspect_align = align;
+                image->aspect_clip = clip;
+            }
+            break;
 #if ENABLE_LCMS
         case SP_PROP_COLOR_PROFILE:
-                if ( image->color_profile ) {
-                    g_free (image->color_profile);
-                }
-                image->color_profile = (value) ? g_strdup (value) : NULL;
+            if ( image->color_profile ) {
+                g_free (image->color_profile);
+            }
+            image->color_profile = (value) ? g_strdup (value) : NULL;
 #ifdef DEBUG_LCMS
-                if ( value ) {
-                    DEBUG_MESSAGE( lcmsFour, "<image> color-profile set to '%s'", value );
-                } else {
-                    DEBUG_MESSAGE( lcmsFour, "<image> color-profile cleared" );
-                }
+            if ( value ) {
+                DEBUG_MESSAGE( lcmsFour, "<image> color-profile set to '%s'", value );
+            } else {
+                DEBUG_MESSAGE( lcmsFour, "<image> color-profile cleared" );
+            }
 #endif // DEBUG_LCMS
-                // TODO check on this HREF_MODIFIED flag
-                object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
-                break;
+            // TODO check on this HREF_MODIFIED flag
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
+            break;
 #endif // ENABLE_LCMS
-	default:
-		if (((SPObjectClass *) (parent_class))->set)
-			((SPObjectClass *) (parent_class))->set (object, key, value);
-		break;
-	}
-	
-	sp_image_set_curve(image); //creates a curve at the image's boundary for snapping
+        default:
+            if (((SPObjectClass *) (parent_class))->set)
+                ((SPObjectClass *) (parent_class))->set (object, key, value);
+            break;
+    }
+
+    sp_image_set_curve(image); //creates a curve at the image's boundary for snapping
 }
 
 static void
@@ -808,8 +809,9 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
     SPImage *image = SP_IMAGE(object);
     SPDocument *doc = SP_OBJECT_DOCUMENT(object);
 
-    if (((SPObjectClass *) (parent_class))->update)
+    if (((SPObjectClass *) (parent_class))->update) {
         ((SPObjectClass *) (parent_class))->update (object, ctx, flags);
+    }
 
     if (flags & SP_IMAGE_HREF_MODIFIED_FLAG) {
         if (image->pixbuf) {
@@ -833,324 +835,326 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
                 pixbuf = sp_image_pixbuf_force_rgba (pixbuf);
 // BLIP
 #if ENABLE_LCMS
-                                if ( image->color_profile )
-                                {
-                                    int imagewidth = gdk_pixbuf_get_width( pixbuf );
-                                    int imageheight = gdk_pixbuf_get_height( pixbuf );
-                                    int rowstride = gdk_pixbuf_get_rowstride( pixbuf );
-                                    guchar* px = gdk_pixbuf_get_pixels( pixbuf );
+                if ( image->color_profile )
+                {
+                    int imagewidth = gdk_pixbuf_get_width( pixbuf );
+                    int imageheight = gdk_pixbuf_get_height( pixbuf );
+                    int rowstride = gdk_pixbuf_get_rowstride( pixbuf );
+                    guchar* px = gdk_pixbuf_get_pixels( pixbuf );
 
-                                    if ( px ) {
+                    if ( px ) {
 #ifdef DEBUG_LCMS
-                                        DEBUG_MESSAGE( lcmsFive, "in <image>'s sp_image_update. About to call colorprofile_get_handle()" );
+                        DEBUG_MESSAGE( lcmsFive, "in <image>'s sp_image_update. About to call colorprofile_get_handle()" );
 #endif // DEBUG_LCMS
-                                        guint profIntent = Inkscape::RENDERING_INTENT_UNKNOWN;
-                                        cmsHPROFILE prof = Inkscape::colorprofile_get_handle( SP_OBJECT_DOCUMENT( object ),
-                                                                                              &profIntent,
-                                                                                              image->color_profile );
-                                        if ( prof ) {
-                                            icProfileClassSignature profileClass = cmsGetDeviceClass( prof );
-                                            if ( profileClass != icSigNamedColorClass ) {
-                                                int intent = INTENT_PERCEPTUAL;
-                                                switch ( profIntent ) {
-                                                    case Inkscape::RENDERING_INTENT_RELATIVE_COLORIMETRIC:
-                                                        intent = INTENT_RELATIVE_COLORIMETRIC;
-                                                        break;
-                                                    case Inkscape::RENDERING_INTENT_SATURATION:
-                                                        intent = INTENT_SATURATION;
-                                                        break;
-                                                    case Inkscape::RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
-                                                        intent = INTENT_ABSOLUTE_COLORIMETRIC;
-                                                        break;
-                                                    case Inkscape::RENDERING_INTENT_PERCEPTUAL:
-                                                    case Inkscape::RENDERING_INTENT_UNKNOWN:
-                                                    case Inkscape::RENDERING_INTENT_AUTO:
-                                                    default:
-                                                        intent = INTENT_PERCEPTUAL;
-                                                }
-                                                cmsHPROFILE destProf = cmsCreate_sRGBProfile();
-                                                cmsHTRANSFORM transf = cmsCreateTransform( prof,
-                                                                                           TYPE_RGBA_8,
-                                                                                           destProf,
-                                                                                           TYPE_RGBA_8,
-                                                                                           intent, 0 );
-                                                if ( transf ) {
-                                                    guchar* currLine = px;
-                                                    for ( int y = 0; y < imageheight; y++ ) {
-                                                        // Since the types are the same size, we can do the transformation in-place
-                                                        cmsDoTransform( transf, currLine, currLine, imagewidth );
-                                                        currLine += rowstride;
-                                                    }
-
-                                                    cmsDeleteTransform( transf );
-                                                }
-#ifdef DEBUG_LCMS
-                                                else
-                                                {
-                                                    DEBUG_MESSAGE( lcmsSix, "in <image>'s sp_image_update. Unable to create LCMS transform." );
-                                                }
-#endif // DEBUG_LCMS
-                                                cmsCloseProfile( destProf );
-                                            }
-#ifdef DEBUG_LCMS
-                                            else
-                                            {
-                                                DEBUG_MESSAGE( lcmsSeven, "in <image>'s sp_image_update. Profile type is named color. Can't transform." );
-                                            }
-#endif // DEBUG_LCMS
-                                        }
-#ifdef DEBUG_LCMS
-                                        else
-                                        {
-                                            DEBUG_MESSAGE( lcmsEight, "in <image>'s sp_image_update. No profile found." );
-                                        }
-#endif // DEBUG_LCMS
-                                    }
+                        guint profIntent = Inkscape::RENDERING_INTENT_UNKNOWN;
+                        cmsHPROFILE prof = Inkscape::colorprofile_get_handle( SP_OBJECT_DOCUMENT( object ),
+                                                                              &profIntent,
+                                                                              image->color_profile );
+                        if ( prof ) {
+                            icProfileClassSignature profileClass = cmsGetDeviceClass( prof );
+                            if ( profileClass != icSigNamedColorClass ) {
+                                int intent = INTENT_PERCEPTUAL;
+                                switch ( profIntent ) {
+                                    case Inkscape::RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+                                        intent = INTENT_RELATIVE_COLORIMETRIC;
+                                        break;
+                                    case Inkscape::RENDERING_INTENT_SATURATION:
+                                        intent = INTENT_SATURATION;
+                                        break;
+                                    case Inkscape::RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+                                        intent = INTENT_ABSOLUTE_COLORIMETRIC;
+                                        break;
+                                    case Inkscape::RENDERING_INTENT_PERCEPTUAL:
+                                    case Inkscape::RENDERING_INTENT_UNKNOWN:
+                                    case Inkscape::RENDERING_INTENT_AUTO:
+                                    default:
+                                        intent = INTENT_PERCEPTUAL;
                                 }
+                                cmsHPROFILE destProf = cmsCreate_sRGBProfile();
+                                cmsHTRANSFORM transf = cmsCreateTransform( prof,
+                                                                           TYPE_RGBA_8,
+                                                                           destProf,
+                                                                           TYPE_RGBA_8,
+                                                                           intent, 0 );
+                                if ( transf ) {
+                                    guchar* currLine = px;
+                                    for ( int y = 0; y < imageheight; y++ ) {
+                                        // Since the types are the same size, we can do the transformation in-place
+                                        cmsDoTransform( transf, currLine, currLine, imagewidth );
+                                        currLine += rowstride;
+                                    }
+
+                                    cmsDeleteTransform( transf );
+                                }
+#ifdef DEBUG_LCMS
+                                else
+                                {
+                                    DEBUG_MESSAGE( lcmsSix, "in <image>'s sp_image_update. Unable to create LCMS transform." );
+                                }
+#endif // DEBUG_LCMS
+                                cmsCloseProfile( destProf );
+                            }
+#ifdef DEBUG_LCMS
+                            else
+                            {
+                                DEBUG_MESSAGE( lcmsSeven, "in <image>'s sp_image_update. Profile type is named color. Can't transform." );
+                            }
+#endif // DEBUG_LCMS
+                        }
+#ifdef DEBUG_LCMS
+                        else
+                        {
+                            DEBUG_MESSAGE( lcmsEight, "in <image>'s sp_image_update. No profile found." );
+                        }
+#endif // DEBUG_LCMS
+                    }
+                }
 #endif // ENABLE_LCMS
-				image->pixbuf = pixbuf;
-			}
-		}
-	}
-	// preserveAspectRatio calculate bounds / clipping rectangle -- EAF
-	if (image->pixbuf && (image->aspect_align != SP_ASPECT_NONE)) {
-		        int imagewidth, imageheight;
-			double x,y;
+                image->pixbuf = pixbuf;
+            }
+        }
+    }
+    // preserveAspectRatio calculate bounds / clipping rectangle -- EAF
+    if (image->pixbuf && (image->aspect_align != SP_ASPECT_NONE)) {
+        int imagewidth, imageheight;
+        double x,y;
 
-		        imagewidth = gdk_pixbuf_get_width (image->pixbuf);
-		        imageheight = gdk_pixbuf_get_height (image->pixbuf);
+        imagewidth = gdk_pixbuf_get_width (image->pixbuf);
+        imageheight = gdk_pixbuf_get_height (image->pixbuf);
 
-			switch (image->aspect_align) {
-			case SP_ASPECT_XMIN_YMIN:
-				x = 0.0;
-				y = 0.0;
-				break;
-			case SP_ASPECT_XMID_YMIN:
-				x = 0.5;
-				y = 0.0;
-				break;
-			case SP_ASPECT_XMAX_YMIN:
-				x = 1.0;
-				y = 0.0;
-				break;
-			case SP_ASPECT_XMIN_YMID:
-				x = 0.0;
-				y = 0.5;
-				break;
-			case SP_ASPECT_XMID_YMID:
-				x = 0.5;
-				y = 0.5;
-				break;
-			case SP_ASPECT_XMAX_YMID:
-				x = 1.0;
-				y = 0.5;
-				break;
-			case SP_ASPECT_XMIN_YMAX:
-				x = 0.0;
-				y = 1.0;
-				break;
-			case SP_ASPECT_XMID_YMAX:
-				x = 0.5;
-				y = 1.0;
-				break;
-			case SP_ASPECT_XMAX_YMAX:
-				x = 1.0;
-				y = 1.0;
-				break;
-			default:
-				x = 0.0;
-				y = 0.0;
-				break;
-			}
+        switch (image->aspect_align) {
+            case SP_ASPECT_XMIN_YMIN:
+                x = 0.0;
+                y = 0.0;
+                break;
+            case SP_ASPECT_XMID_YMIN:
+                x = 0.5;
+                y = 0.0;
+                break;
+            case SP_ASPECT_XMAX_YMIN:
+                x = 1.0;
+                y = 0.0;
+                break;
+            case SP_ASPECT_XMIN_YMID:
+                x = 0.0;
+                y = 0.5;
+                break;
+            case SP_ASPECT_XMID_YMID:
+                x = 0.5;
+                y = 0.5;
+                break;
+            case SP_ASPECT_XMAX_YMID:
+                x = 1.0;
+                y = 0.5;
+                break;
+            case SP_ASPECT_XMIN_YMAX:
+                x = 0.0;
+                y = 1.0;
+                break;
+            case SP_ASPECT_XMID_YMAX:
+                x = 0.5;
+                y = 1.0;
+                break;
+            case SP_ASPECT_XMAX_YMAX:
+                x = 1.0;
+                y = 1.0;
+                break;
+            default:
+                x = 0.0;
+                y = 0.0;
+                break;
+        }
 
-			if (image->aspect_clip == SP_ASPECT_SLICE) {
-				image->viewx = image->x.computed;
-				image->viewy = image->y.computed;
-				image->viewwidth = image->width.computed;
-				image->viewheight = image->height.computed;
-				if ((imagewidth*image->height.computed)>(image->width.computed*imageheight)) {
-					// Pixels aspect is wider than bounding box
-					image->trimheight = imageheight;
-					image->trimwidth = static_cast<int>(static_cast<double>(imageheight) * image->width.computed / image->height.computed);
-					image->trimy = 0;
-					image->trimx = static_cast<int>(static_cast<double>(imagewidth - image->trimwidth) * x);
-				} else {
-					// Pixels aspect is taller than bounding box
-					image->trimwidth = imagewidth;
-					image->trimheight = static_cast<int>(static_cast<double>(imagewidth) * image->height.computed / image->width.computed);
-					image->trimx = 0;
-					image->trimy = static_cast<int>(static_cast<double>(imageheight - image->trimheight) * y);
-				}
-			} else {
-				// Otherwise, assume SP_ASPECT_MEET
-				image->trimx = 0;
-				image->trimy = 0;
-				image->trimwidth = imagewidth;
-				image->trimheight = imageheight;
-				if ((imagewidth*image->height.computed)>(image->width.computed*imageheight)) {
-					// Pixels aspect is wider than bounding boz
-					image->viewwidth = image->width.computed;
-					image->viewheight = image->viewwidth * imageheight / imagewidth;
-					image->viewx=image->x.computed;
-					image->viewy=(image->height.computed - image->viewheight) * y + image->y.computed;
-				} else {
-					// Pixels aspect is taller than bounding box
-					image->viewheight = image->height.computed;
-					image->viewwidth = image->viewheight * imagewidth / imageheight;
-					image->viewy=image->y.computed;
-					image->viewx=(image->width.computed - image->viewwidth) * x + image->x.computed;
-				}
-			}
-	}
-	sp_image_update_canvas_image ((SPImage *) object);
+        if (image->aspect_clip == SP_ASPECT_SLICE) {
+            image->viewx = image->x.computed;
+            image->viewy = image->y.computed;
+            image->viewwidth = image->width.computed;
+            image->viewheight = image->height.computed;
+            if ((imagewidth*image->height.computed)>(image->width.computed*imageheight)) {
+                // Pixels aspect is wider than bounding box
+                image->trimheight = imageheight;
+                image->trimwidth = static_cast<int>(static_cast<double>(imageheight) * image->width.computed / image->height.computed);
+                image->trimy = 0;
+                image->trimx = static_cast<int>(static_cast<double>(imagewidth - image->trimwidth) * x);
+            } else {
+                // Pixels aspect is taller than bounding box
+                image->trimwidth = imagewidth;
+                image->trimheight = static_cast<int>(static_cast<double>(imagewidth) * image->height.computed / image->width.computed);
+                image->trimx = 0;
+                image->trimy = static_cast<int>(static_cast<double>(imageheight - image->trimheight) * y);
+            }
+        } else {
+            // Otherwise, assume SP_ASPECT_MEET
+            image->trimx = 0;
+            image->trimy = 0;
+            image->trimwidth = imagewidth;
+            image->trimheight = imageheight;
+            if ((imagewidth*image->height.computed)>(image->width.computed*imageheight)) {
+                // Pixels aspect is wider than bounding boz
+                image->viewwidth = image->width.computed;
+                image->viewheight = image->viewwidth * imageheight / imagewidth;
+                image->viewx=image->x.computed;
+                image->viewy=(image->height.computed - image->viewheight) * y + image->y.computed;
+            } else {
+                // Pixels aspect is taller than bounding box
+                image->viewheight = image->height.computed;
+                image->viewwidth = image->viewheight * imagewidth / imageheight;
+                image->viewy=image->y.computed;
+                image->viewx=(image->width.computed - image->viewwidth) * x + image->x.computed;
+            }
+        }
+    }
+    sp_image_update_canvas_image ((SPImage *) object);
 }
 
 static Inkscape::XML::Node *
 sp_image_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
-	SPImage *image;
+    SPImage *image = SP_IMAGE (object);
 
-	image = SP_IMAGE (object);
+    if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
+        repr = xml_doc->createElement("svg:image");
+    }
 
-	if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
-		repr = xml_doc->createElement("svg:image");
-	}
-
-	repr->setAttribute("xlink:href", image->href);
-	/* fixme: Reset attribute if needed (Lauris) */
-	if (image->x._set) sp_repr_set_svg_double(repr, "x", image->x.computed);
-	if (image->y._set) sp_repr_set_svg_double(repr, "y", image->y.computed);
-	if (image->width._set) sp_repr_set_svg_double(repr, "width", image->width.computed);
-	if (image->height._set) sp_repr_set_svg_double(repr, "height", image->height.computed);
-	repr->setAttribute("preserveAspectRatio", object->repr->attribute("preserveAspectRatio"));
+    repr->setAttribute("xlink:href", image->href);
+    /* fixme: Reset attribute if needed (Lauris) */
+    if (image->x._set) {
+        sp_repr_set_svg_double(repr, "x", image->x.computed);
+    }
+    if (image->y._set) {
+        sp_repr_set_svg_double(repr, "y", image->y.computed);
+    }
+    if (image->width._set) {
+        sp_repr_set_svg_double(repr, "width", image->width.computed);
+    }
+    if (image->height._set) {
+        sp_repr_set_svg_double(repr, "height", image->height.computed);
+    }
+    repr->setAttribute("preserveAspectRatio", object->repr->attribute("preserveAspectRatio"));
 #if ENABLE_LCMS
-        if (image->color_profile) repr->setAttribute("color-profile", image->color_profile);
+    if (image->color_profile) {
+        repr->setAttribute("color-profile", image->color_profile);
+    }
 #endif // ENABLE_LCMS
 
-	if (((SPObjectClass *) (parent_class))->write)
-		((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (parent_class))->write) {
+        ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
+    }
 
-	return repr;
+    return repr;
 }
 
 static void
 sp_image_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
 {
-	SPImage const &image = *SP_IMAGE(item);
+    SPImage const &image = *SP_IMAGE(item);
 
-	if ((image.width.computed > 0.0) && (image.height.computed > 0.0)) {
-		double const x0 = image.x.computed;
-		double const y0 = image.y.computed;
-		double const x1 = x0 + image.width.computed;
-		double const y1 = y0 + image.height.computed;
+    if ((image.width.computed > 0.0) && (image.height.computed > 0.0)) {
+        double const x0 = image.x.computed;
+        double const y0 = image.y.computed;
+        double const x1 = x0 + image.width.computed;
+        double const y1 = y0 + image.height.computed;
 
-		nr_rect_union_pt(bbox, Geom::Point(x0, y0) * transform);
-		nr_rect_union_pt(bbox, Geom::Point(x1, y0) * transform);
-		nr_rect_union_pt(bbox, Geom::Point(x1, y1) * transform);
-		nr_rect_union_pt(bbox, Geom::Point(x0, y1) * transform);
-	}
+        nr_rect_union_pt(bbox, Geom::Point(x0, y0) * transform);
+        nr_rect_union_pt(bbox, Geom::Point(x1, y0) * transform);
+        nr_rect_union_pt(bbox, Geom::Point(x1, y1) * transform);
+        nr_rect_union_pt(bbox, Geom::Point(x0, y1) * transform);
+    }
 }
 
 static void
 sp_image_print (SPItem *item, SPPrintContext *ctx)
 {
-	SPImage *image;
-	guchar *px;
-	int w, h, rs, pixskip;
+    SPImage *image = SP_IMAGE(item);
 
-	image = SP_IMAGE (item);
+    if (image->pixbuf && (image->width.computed > 0.0) && (image->height.computed > 0.0) ) {
+        guchar *px = gdk_pixbuf_get_pixels(image->pixbuf);
+        int w = gdk_pixbuf_get_width(image->pixbuf);
+        int h = gdk_pixbuf_get_height(image->pixbuf);
+        int rs = gdk_pixbuf_get_rowstride(image->pixbuf);
+        int pixskip = gdk_pixbuf_get_n_channels(image->pixbuf) * gdk_pixbuf_get_bits_per_sample(image->pixbuf) / 8;
 
-	if (!image->pixbuf) return;
-	if ((image->width.computed <= 0.0) || (image->height.computed <= 0.0)) return;
+        Geom::Matrix t;
+        if (image->aspect_align == SP_ASPECT_NONE) {
+            /* fixme: (Lauris) */
+            Geom::Translate tp(image->x.computed, image->y.computed);
+            Geom::Scale s(image->width.computed, -image->height.computed);
+            Geom::Translate ti(0.0, -1.0);
+            t = s * tp;
+            t = ti * t;
+        } else { // preserveAspectRatio
+            Geom::Translate tp(image->viewx, image->viewy);
+            Geom::Scale s(image->viewwidth, -image->viewheight);
+            Geom::Translate ti(0.0, -1.0);
+            t = s * tp;
+            t = ti * t;
+        }
 
-	px = gdk_pixbuf_get_pixels (image->pixbuf);
-	w = gdk_pixbuf_get_width (image->pixbuf);
-	h = gdk_pixbuf_get_height (image->pixbuf);
-	rs = gdk_pixbuf_get_rowstride (image->pixbuf);
-	pixskip = gdk_pixbuf_get_n_channels (image->pixbuf) * gdk_pixbuf_get_bits_per_sample (image->pixbuf) / 8;
-
-    Geom::Matrix t;
-	if (image->aspect_align == SP_ASPECT_NONE) {
-		/* fixme: (Lauris) */
-        Geom::Translate tp (image->x.computed, image->y.computed);
-        Geom::Scale s (image->width.computed, -image->height.computed);
-        Geom::Translate ti (0.0, -1.0);
-	    t = s * tp;
-	    t = ti * t;
-	} else { // preserveAspectRatio
-        Geom::Translate tp (image->viewx, image->viewy);
-        Geom::Scale s (image->viewwidth, -image->viewheight);
-        Geom::Translate ti (0.0, -1.0);
-	    t = s * tp;
-	    t = ti * t;
-	}
-
-	if (image->aspect_align == SP_ASPECT_NONE)
-		sp_print_image_R8G8B8A8_N (ctx, px, w, h, rs, &t, SP_OBJECT_STYLE (item));
-	else // preserveAspectRatio
-		sp_print_image_R8G8B8A8_N (ctx, px + image->trimx*pixskip + image->trimy*rs, image->trimwidth, image->trimheight, rs, &t, SP_OBJECT_STYLE (item));
+        if (image->aspect_align == SP_ASPECT_NONE) {
+            sp_print_image_R8G8B8A8_N(ctx, px, w, h, rs, &t, SP_OBJECT_STYLE (item));
+        } else { // preserveAspectRatio
+            sp_print_image_R8G8B8A8_N(ctx, px + image->trimx*pixskip + image->trimy*rs, image->trimwidth, image->trimheight, rs, &t, SP_OBJECT_STYLE(item));
+        }
+    }
 }
 
 static gchar *
 sp_image_description(SPItem *item)
 {
-	SPImage *image = SP_IMAGE(item);
-	char *href_desc;
-        if (image->href) {
-            href_desc = (strncmp(image->href, "data:", 5) == 0)
-                ? g_strdup(_("embedded"))
-                : xml_quote_strdup(image->href);
-        } else {
-            g_warning("Attempting to call strncmp() with a null pointer.");
-            href_desc = g_strdup("(null_pointer)"); // we call g_free() on href_desc
-        }
+    SPImage *image = SP_IMAGE(item);
+    char *href_desc;
+    if (image->href) {
+        href_desc = (strncmp(image->href, "data:", 5) == 0)
+            ? g_strdup(_("embedded"))
+            : xml_quote_strdup(image->href);
+    } else {
+        g_warning("Attempting to call strncmp() with a null pointer.");
+        href_desc = g_strdup("(null_pointer)"); // we call g_free() on href_desc
+    }
 
-	char *ret = ( image->pixbuf == NULL
-		      ? g_strdup_printf(_("<b>Image with bad reference</b>: %s"), href_desc)
-		      : g_strdup_printf(_("<b>Image</b> %d &#215; %d: %s"),
-					gdk_pixbuf_get_width(image->pixbuf),
-					gdk_pixbuf_get_height(image->pixbuf),
-					href_desc) );
-	g_free(href_desc);
-	return ret;
+    char *ret = ( image->pixbuf == NULL
+                  ? g_strdup_printf(_("<b>Image with bad reference</b>: %s"), href_desc)
+                  : g_strdup_printf(_("<b>Image</b> %d &#215; %d: %s"),
+                                    gdk_pixbuf_get_width(image->pixbuf),
+                                    gdk_pixbuf_get_height(image->pixbuf),
+                                    href_desc) );
+    g_free(href_desc);
+    return ret;
 }
 
 static NRArenaItem *
 sp_image_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int /*flags*/)
 {
-	int pixskip, rs;
-	SPImage * image;
-	NRArenaItem *ai;
+    SPImage * image = SP_IMAGE(item);
+    NRArenaItem *ai = NRArenaImage::create(arena);
 
-	image = (SPImage *) item;
+    if (image->pixbuf) {
+        int pixskip = gdk_pixbuf_get_n_channels(image->pixbuf) * gdk_pixbuf_get_bits_per_sample(image->pixbuf) / 8;
+        int rs = gdk_pixbuf_get_rowstride(image->pixbuf);
+        nr_arena_image_set_style(NR_ARENA_IMAGE(ai), SP_OBJECT_STYLE(SP_OBJECT(item)));
+        if (image->aspect_align == SP_ASPECT_NONE) {
+            nr_arena_image_set_pixels(NR_ARENA_IMAGE(ai),
+                                       gdk_pixbuf_get_pixels(image->pixbuf),
+                                       gdk_pixbuf_get_width(image->pixbuf),
+                                       gdk_pixbuf_get_height(image->pixbuf),
+                                       rs);
+        } else { // preserveAspectRatio
+            nr_arena_image_set_pixels(NR_ARENA_IMAGE(ai),
+                                       gdk_pixbuf_get_pixels(image->pixbuf) + image->trimx*pixskip + image->trimy*rs,
+                                       image->trimwidth,
+                                       image->trimheight,
+                                       rs);
+        }
+    } else {
+        nr_arena_image_set_pixels(NR_ARENA_IMAGE(ai), NULL, 0, 0, 0);
+    }
+    if (image->aspect_align == SP_ASPECT_NONE) {
+        nr_arena_image_set_geometry(NR_ARENA_IMAGE(ai), image->x.computed, image->y.computed, image->width.computed, image->height.computed);
+    } else { // preserveAspectRatio
+        nr_arena_image_set_geometry(NR_ARENA_IMAGE(ai), image->viewx, image->viewy, image->viewwidth, image->viewheight);
+    }
 
-	ai = NRArenaImage::create(arena);
-
-	if (image->pixbuf) {
-	        pixskip = gdk_pixbuf_get_n_channels (image->pixbuf) * gdk_pixbuf_get_bits_per_sample (image->pixbuf) / 8;
-		rs = gdk_pixbuf_get_rowstride (image->pixbuf);
-                nr_arena_image_set_style(NR_ARENA_IMAGE(ai), SP_OBJECT_STYLE(SP_OBJECT(item)));
-	        if (image->aspect_align == SP_ASPECT_NONE)
-			nr_arena_image_set_pixels (NR_ARENA_IMAGE (ai),
-					   gdk_pixbuf_get_pixels (image->pixbuf),
-					   gdk_pixbuf_get_width (image->pixbuf),
-					   gdk_pixbuf_get_height (image->pixbuf),
-					   rs);
-		else // preserveAspectRatio
-			nr_arena_image_set_pixels (NR_ARENA_IMAGE (ai),
-					   gdk_pixbuf_get_pixels (image->pixbuf) + image->trimx*pixskip + image->trimy*rs,
-					   image->trimwidth,
-					   image->trimheight,
-					   rs);
-	} else {
-		nr_arena_image_set_pixels (NR_ARENA_IMAGE (ai), NULL, 0, 0, 0);
-	}
-	if (image->aspect_align == SP_ASPECT_NONE)
-		nr_arena_image_set_geometry (NR_ARENA_IMAGE (ai), image->x.computed, image->y.computed, image->width.computed, image->height.computed);
-	else // preserveAspectRatio
-		nr_arena_image_set_geometry (NR_ARENA_IMAGE (ai), image->viewx, image->viewy, image->viewwidth, image->viewheight);
-
-	return ai;
+    return ai;
 }
 
 /*
@@ -1163,36 +1167,40 @@ sp_image_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int 
 
 GdkPixbuf *sp_image_repr_read_image( time_t& modTime, char*& pixPath, const gchar *href, const gchar *absref, const gchar *base )
 {
-    const gchar *filename, *docbase;
-    gchar *fullname;
-    GdkPixbuf *pixbuf;
+    GdkPixbuf *pixbuf = 0;
     modTime = 0;
     if ( pixPath ) {
         g_free(pixPath);
         pixPath = 0;
     }
 
-    filename = href;
+    const gchar *filename = href;
     if (filename != NULL) {
         if (strncmp (filename,"file:",5) == 0) {
-            fullname = g_filename_from_uri(filename, NULL, NULL);
+            gchar *fullname = g_filename_from_uri(filename, NULL, NULL);
             if (fullname) {
                 // TODO check this. Was doing a UTF-8 to filename conversion here.
                 pixbuf = Inkscape::IO::pixbuf_new_from_file (fullname, modTime, pixPath, NULL);
-                if (pixbuf != NULL) return pixbuf;
+                if (pixbuf != NULL) {
+                    return pixbuf;
+                }
             }
         } else if (strncmp (filename,"data:",5) == 0) {
             /* data URI - embedded image */
             filename += 5;
             pixbuf = sp_image_repr_read_dataURI (filename);
-            if (pixbuf != NULL) return pixbuf;
+            if (pixbuf != NULL) {
+                return pixbuf;
+            }
         } else {
 
             if (!g_path_is_absolute (filename)) {
                 /* try to load from relative pos combined with document base*/
-                docbase = base;
-                if (!docbase) docbase = ".";
-                fullname = g_build_filename(docbase, filename, NULL);
+                const gchar *docbase = base;
+                if (!docbase) {
+                    docbase = ".";
+                }
+                gchar *fullname = g_build_filename(docbase, filename, NULL);
 
                 // document base can be wrong (on the temporary doc when importing bitmap from a
                 // different dir) or unset (when doc is not saved yet), so we check for base+href existence first,
@@ -1200,14 +1208,18 @@ GdkPixbuf *sp_image_repr_read_image( time_t& modTime, char*& pixPath, const gcha
                 if (g_file_test (fullname, G_FILE_TEST_EXISTS) && !g_file_test (fullname, G_FILE_TEST_IS_DIR)) {
                     pixbuf = Inkscape::IO::pixbuf_new_from_file( fullname, modTime, pixPath, NULL );
                     g_free (fullname);
-                    if (pixbuf != NULL) return pixbuf;
+                    if (pixbuf != NULL) {
+                        return pixbuf;
+                    }
                 }
             }
 
             /* try filename as absolute */
             if (g_file_test (filename, G_FILE_TEST_EXISTS) && !g_file_test (filename, G_FILE_TEST_IS_DIR)) {
                 pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, modTime, pixPath, NULL );
-                if (pixbuf != NULL) return pixbuf;
+                if (pixbuf != NULL) {
+                    return pixbuf;
+                }
             }
         }
     }
@@ -1216,13 +1228,16 @@ GdkPixbuf *sp_image_repr_read_image( time_t& modTime, char*& pixPath, const gcha
     filename = absref;
     if (filename != NULL) {
         // using absref is outside of SVG rules, so we must at least warn the user
-        if ( base != NULL && href != NULL )
-        	g_warning ("<image xlink:href=\"%s\"> did not resolve to a valid image file (base dir is %s), now trying sodipodi:absref=\"%s\"", href, base, absref);
-		else
-		    g_warning ("xlink:href did not resolve to a valid image file, now trying sodipodi:absref=\"%s\"", absref);
+        if ( base != NULL && href != NULL ) {
+            g_warning ("<image xlink:href=\"%s\"> did not resolve to a valid image file (base dir is %s), now trying sodipodi:absref=\"%s\"", href, base, absref);
+        } else {
+            g_warning ("xlink:href did not resolve to a valid image file, now trying sodipodi:absref=\"%s\"", absref);
+        }
 
         pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, modTime, pixPath, NULL );
-        if (pixbuf != NULL) return pixbuf;
+        if (pixbuf != NULL) {
+            return pixbuf;
+        }
     }
     /* Nope: We do not find any valid pixmap file :-( */
     pixbuf = gdk_pixbuf_new_from_xpm_data ((const gchar **) brokenimage_xpm);
@@ -1237,14 +1252,14 @@ GdkPixbuf *sp_image_repr_read_image( time_t& modTime, char*& pixPath, const gcha
 static GdkPixbuf *
 sp_image_pixbuf_force_rgba (GdkPixbuf * pixbuf)
 {
-	GdkPixbuf * newbuf;
-
-	if (gdk_pixbuf_get_has_alpha (pixbuf)) return pixbuf;
-
-	newbuf = gdk_pixbuf_add_alpha (pixbuf, FALSE, 0, 0, 0);
-	gdk_pixbuf_unref (pixbuf);
-
-	return newbuf;
+    GdkPixbuf* result;
+    if (gdk_pixbuf_get_has_alpha(pixbuf)) {
+        result = pixbuf;
+    } else {
+        result = gdk_pixbuf_add_alpha(pixbuf, FALSE, 0, 0, 0);
+        gdk_pixbuf_unref(pixbuf);
+    }
+    return result;
 }
 
 /* We assert that realpixbuf is either NULL or identical size to pixbuf */
@@ -1252,71 +1267,67 @@ sp_image_pixbuf_force_rgba (GdkPixbuf * pixbuf)
 static void
 sp_image_update_canvas_image (SPImage *image)
 {
-	int rs, pixskip;
-	SPItem *item;
-	SPItemView *v;
+    SPItem *item = SP_ITEM(image);
 
-	item = SP_ITEM (image);
+    if (image->pixbuf) {
+        /* fixme: We are slightly violating spec here (Lauris) */
+        if (!image->width._set) {
+            image->width.computed = gdk_pixbuf_get_width(image->pixbuf);
+        }
+        if (!image->height._set) {
+            image->height.computed = gdk_pixbuf_get_height(image->pixbuf);
+        }
+    }
 
-	if (image->pixbuf) {
-		/* fixme: We are slightly violating spec here (Lauris) */
-		if (!image->width._set) {
-			image->width.computed = gdk_pixbuf_get_width (image->pixbuf);
-		}
-		if (!image->height._set) {
-			image->height.computed = gdk_pixbuf_get_height (image->pixbuf);
-		}
-	}
-
-	for (v = item->display; v != NULL; v = v->next) {
-	        pixskip = gdk_pixbuf_get_n_channels (image->pixbuf) * gdk_pixbuf_get_bits_per_sample (image->pixbuf) / 8;
-		rs = gdk_pixbuf_get_rowstride (image->pixbuf);
-                nr_arena_image_set_style (NR_ARENA_IMAGE(v->arenaitem), SP_OBJECT_STYLE(SP_OBJECT(image)));
-		if (image->aspect_align == SP_ASPECT_NONE) {
-			nr_arena_image_set_pixels (NR_ARENA_IMAGE (v->arenaitem),
-					   gdk_pixbuf_get_pixels (image->pixbuf),
-					   gdk_pixbuf_get_width (image->pixbuf),
-					   gdk_pixbuf_get_height (image->pixbuf),
-					   rs);
-			nr_arena_image_set_geometry (NR_ARENA_IMAGE (v->arenaitem),
-					     image->x.computed, image->y.computed,
-					     image->width.computed, image->height.computed);
-		} else { // preserveAspectRatio
-			nr_arena_image_set_pixels (NR_ARENA_IMAGE (v->arenaitem),
-					   gdk_pixbuf_get_pixels (image->pixbuf) + image->trimx*pixskip + image->trimy*rs,
-					   image->trimwidth,
-					   image->trimheight,
-					   rs);
-			nr_arena_image_set_geometry (NR_ARENA_IMAGE (v->arenaitem),
-					     image->viewx, image->viewy,
-					     image->viewwidth, image->viewheight);
-		}
-	}
+    for (SPItemView *v = item->display; v != NULL; v = v->next) {
+        int pixskip = gdk_pixbuf_get_n_channels(image->pixbuf) * gdk_pixbuf_get_bits_per_sample(image->pixbuf) / 8;
+        int rs = gdk_pixbuf_get_rowstride(image->pixbuf);
+        nr_arena_image_set_style(NR_ARENA_IMAGE(v->arenaitem), SP_OBJECT_STYLE(SP_OBJECT(image)));
+        if (image->aspect_align == SP_ASPECT_NONE) {
+            nr_arena_image_set_pixels(NR_ARENA_IMAGE(v->arenaitem),
+                                       gdk_pixbuf_get_pixels(image->pixbuf),
+                                       gdk_pixbuf_get_width(image->pixbuf),
+                                       gdk_pixbuf_get_height(image->pixbuf),
+                                       rs);
+            nr_arena_image_set_geometry(NR_ARENA_IMAGE(v->arenaitem),
+                                         image->x.computed, image->y.computed,
+                                         image->width.computed, image->height.computed);
+        } else { // preserveAspectRatio
+            nr_arena_image_set_pixels(NR_ARENA_IMAGE(v->arenaitem),
+                                       gdk_pixbuf_get_pixels(image->pixbuf) + image->trimx*pixskip + image->trimy*rs,
+                                       image->trimwidth,
+                                       image->trimheight,
+                                       rs);
+            nr_arena_image_set_geometry(NR_ARENA_IMAGE(v->arenaitem),
+                                         image->viewx, image->viewy,
+                                         image->viewwidth, image->viewheight);
+        }
+    }
 }
 
-static void sp_image_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_image_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const */*snapprefs*/)
 {
-    /* An image doesn't have any nodes to snap, but still we want to be able snap one image 
+    /* An image doesn't have any nodes to snap, but still we want to be able snap one image
     to another. Therefore we will create some snappoints at the corner, similar to a rect. If
     the image is rotated, then the snappoints will rotate with it. Again, just like a rect.
     */
-     
+
     g_assert(item != NULL);
     g_assert(SP_IS_IMAGE(item));
 
     if (item->clip_ref->getObject()) {
         //We are looking at a clipped image: do not return any snappoints, as these might be
         //far far away from the visible part from the clipped image
-    	//TODO Do return snappoints, but only when within visual bounding box
+        //TODO Do return snappoints, but only when within visual bounding box
     } else {
         // The image has not been clipped: return its corners, which might be rotated for example
         SPImage &image = *SP_IMAGE(item);
         double const x0 = image.x.computed;
-		double const y0 = image.y.computed;
-		double const x1 = x0 + image.width.computed;
-		double const y1 = y0 + image.height.computed;
-		NR::Matrix const i2d (sp_item_i2d_affine (item));
-		*p = NR::Point(x0, y0) * i2d;
+        double const y0 = image.y.computed;
+        double const x1 = x0 + image.width.computed;
+        double const y1 = y0 + image.height.computed;
+        NR::Matrix const i2d (sp_item_i2d_affine (item));
+        *p = NR::Point(x0, y0) * i2d;
         *p = NR::Point(x0, y1) * i2d;
         *p = NR::Point(x1, y1) * i2d;
         *p = NR::Point(x1, y0) * i2d;
@@ -1331,209 +1342,202 @@ static void sp_image_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::
 static Geom::Matrix
 sp_image_set_transform(SPItem *item, Geom::Matrix const &xform)
 {
-	SPImage *image = SP_IMAGE(item);
+    SPImage *image = SP_IMAGE(item);
 
-	/* Calculate position in parent coords. */
-	Geom::Point pos( Geom::Point(image->x.computed, image->y.computed) * xform );
+    /* Calculate position in parent coords. */
+    Geom::Point pos( Geom::Point(image->x.computed, image->y.computed) * xform );
 
-	/* This function takes care of translation and scaling, we return whatever parts we can't
-	   handle. */
-	Geom::Matrix ret(Geom::Matrix(xform).without_translation());
-	Geom::Point const scale(hypot(ret[0], ret[1]),
-			      hypot(ret[2], ret[3]));
-	if ( scale[NR::X] > 1e-9 ) {
-		ret[0] /= scale[Geom::X];
-		ret[1] /= scale[Geom::X];
-	} else {
-		ret[0] = 1.0;
-		ret[1] = 0.0;
-	}
-	if ( scale[NR::Y] > 1e-9 ) {
-		ret[2] /= scale[Geom::Y];
-		ret[3] /= scale[Geom::Y];
-	} else {
-		ret[2] = 0.0;
-		ret[3] = 1.0;
-	}
+    /* This function takes care of translation and scaling, we return whatever parts we can't
+       handle. */
+    Geom::Matrix ret(Geom::Matrix(xform).without_translation());
+    Geom::Point const scale(hypot(ret[0], ret[1]),
+                            hypot(ret[2], ret[3]));
+    if ( scale[NR::X] > MAGIC_EPSILON ) {
+        ret[0] /= scale[Geom::X];
+        ret[1] /= scale[Geom::X];
+    } else {
+        ret[0] = 1.0;
+        ret[1] = 0.0;
+    }
+    if ( scale[NR::Y] > MAGIC_EPSILON ) {
+        ret[2] /= scale[Geom::Y];
+        ret[3] /= scale[Geom::Y];
+    } else {
+        ret[2] = 0.0;
+        ret[3] = 1.0;
+    }
 
-	image->width = image->width.computed * scale[Geom::X];
-	image->height = image->height.computed * scale[Geom::Y];
+    image->width = image->width.computed * scale[Geom::X];
+    image->height = image->height.computed * scale[Geom::Y];
 
-	/* Find position in item coords */
-	pos = pos * ret.inverse();
-	image->x = pos[Geom::X];
-	image->y = pos[Geom::Y];
+    /* Find position in item coords */
+    pos = pos * ret.inverse();
+    image->x = pos[Geom::X];
+    image->y = pos[Geom::Y];
 
-	item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 
-	return ret;
+    return ret;
 }
 
 static GdkPixbuf *
 sp_image_repr_read_dataURI (const gchar * uri_data)
-{	GdkPixbuf * pixbuf = NULL;
+{
+    GdkPixbuf * pixbuf = NULL;
 
-	gint data_is_image = 0;
-	gint data_is_base64 = 0;
+    gint data_is_image = 0;
+    gint data_is_base64 = 0;
 
-	const gchar * data = uri_data;
+    const gchar * data = uri_data;
 
-	while (*data) {
-		if (strncmp (data,"base64",6) == 0) {
-			/* base64-encoding */
-			data_is_base64 = 1;
-			data_is_image = 1; // Illustrator produces embedded images without MIME type, so we assume it's image no matter what
-			data += 6;
-		}
-		else if (strncmp (data,"image/png",9) == 0) {
-			/* PNG image */
-			data_is_image = 1;
-			data += 9;
-		}
-		else if (strncmp (data,"image/jpg",9) == 0) {
-			/* JPEG image */
-			data_is_image = 1;
-			data += 9;
-		}
-		else if (strncmp (data,"image/jpeg",10) == 0) {
-			/* JPEG image */
-			data_is_image = 1;
-			data += 10;
-		}
-		else { /* unrecognized option; skip it */
-			while (*data) {
-				if (((*data) == ';') || ((*data) == ',')) break;
-				data++;
-			}
-		}
-		if ((*data) == ';') {
-			data++;
-			continue;
-		}
-		if ((*data) == ',') {
-			data++;
-			break;
-		}
-	}
+    while (*data) {
+        if (strncmp(data,"base64",6) == 0) {
+            /* base64-encoding */
+            data_is_base64 = 1;
+            data_is_image = 1; // Illustrator produces embedded images without MIME type, so we assume it's image no matter what
+            data += 6;
+        }
+        else if (strncmp(data,"image/png",9) == 0) {
+            /* PNG image */
+            data_is_image = 1;
+            data += 9;
+        }
+        else if (strncmp(data,"image/jpg",9) == 0) {
+            /* JPEG image */
+            data_is_image = 1;
+            data += 9;
+        }
+        else if (strncmp(data,"image/jpeg",10) == 0) {
+            /* JPEG image */
+            data_is_image = 1;
+            data += 10;
+        }
+        else { /* unrecognized option; skip it */
+            while (*data) {
+                if (((*data) == ';') || ((*data) == ',')) {
+                    break;
+                }
+                data++;
+            }
+        }
+        if ((*data) == ';') {
+            data++;
+            continue;
+        }
+        if ((*data) == ',') {
+            data++;
+            break;
+        }
+    }
 
-	if ((*data) && data_is_image && data_is_base64) {
-		pixbuf = sp_image_repr_read_b64 (data);
-	}
+    if ((*data) && data_is_image && data_is_base64) {
+        pixbuf = sp_image_repr_read_b64(data);
+    }
 
-	return pixbuf;
+    return pixbuf;
 }
 
 static GdkPixbuf *
 sp_image_repr_read_b64 (const gchar * uri_data)
-{	GdkPixbuf * pixbuf = NULL;
-	GdkPixbufLoader * loader = NULL;
+{
+    GdkPixbuf * pixbuf = NULL;
 
-	gint j;
-	gint k;
-	gint l;
-	gint b;
-	gint len;
-	gint eos = 0;
-	gint failed = 0;
+    static const gchar B64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-	guint32 bits;
+    GdkPixbufLoader *loader = gdk_pixbuf_loader_new();
+    if (loader) {
+        bool eos = false;
+        bool failed = false;
+        const gchar* btr = uri_data;
+        gchar ud[4];
+        guchar bd[57];
 
-	static const gchar B64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        while (!eos) {
+            gint ell = 0;
+            for (gint j = 0; j < 19; j++) {
+                gint len = 0;
+                for (gint k = 0; k < 4; k++) {
+                    while (isspace ((int) (*btr))) {
+                        if ((*btr) == '\0') break;
+                        btr++;
+                    }
+                    if (eos) {
+                        ud[k] = 0;
+                        continue;
+                    }
+                    if (((*btr) == '\0') || ((*btr) == '=')) {
+                        eos = true;
+                        ud[k] = 0;
+                        continue;
+                    }
+                    ud[k] = 64;
+                    for (gint b = 0; b < 64; b++) { /* There must a faster way to do this... ?? */
+                        if (B64[b] == (*btr)) {
+                            ud[k] = (gchar) b;
+                            break;
+                        }
+                    }
+                    if (ud[k] == 64) { /* data corruption ?? */
+                        eos = true;
+                        ud[k] = 0;
+                        continue;
+                    }
+                    btr++;
+                    len++;
+                }
+                guint32 bits = (guint32) ud[0];
+                bits = (bits << 6) | (guint32) ud[1];
+                bits = (bits << 6) | (guint32) ud[2];
+                bits = (bits << 6) | (guint32) ud[3];
+                bd[ell++] = (guchar) ((bits & 0xff0000) >> 16);
+                if (len > 2) {
+                    bd[ell++] = (guchar) ((bits & 0xff00) >>  8);
+                }
+                if (len > 3) {
+                    bd[ell++] = (guchar)  (bits & 0xff);
+                }
+            }
 
-	const gchar* btr = uri_data;
+            if (!gdk_pixbuf_loader_write (loader, (const guchar *) bd, (size_t) ell, NULL)) {
+                failed = true;
+                break;
+            }
+        }
 
-	gchar ud[4];
+        gdk_pixbuf_loader_close (loader, NULL);
 
-	guchar bd[57];
+        if (!failed) {
+            pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+        }
+    }
 
-	loader = gdk_pixbuf_loader_new ();
-
-	if (loader == NULL) return NULL;
-
-	while (eos == 0) {
-		l = 0;
-		for (j = 0; j < 19; j++) {
-			len = 0;
-			for (k = 0; k < 4; k++) {
-				while (isspace ((int) (*btr))) {
-					if ((*btr) == '\0') break;
-					btr++;
-				}
-				if (eos) {
-					ud[k] = 0;
-					continue;
-				}
-				if (((*btr) == '\0') || ((*btr) == '=')) {
-					eos = 1;
-					ud[k] = 0;
-					continue;
-				}
-				ud[k] = 64;
-				for (b = 0; b < 64; b++) { /* There must a faster way to do this... ?? */
-					if (B64[b] == (*btr)) {
-						ud[k] = (gchar) b;
-						break;
-					}
-				}
-				if (ud[k] == 64) { /* data corruption ?? */
-					eos = 1;
-					ud[k] = 0;
-					continue;
-				}
-				btr++;
-				len++;
-			}
-			bits = (guint32) ud[0];
-			bits = (bits << 6) | (guint32) ud[1];
-			bits = (bits << 6) | (guint32) ud[2];
-			bits = (bits << 6) | (guint32) ud[3];
-			bd[l++] = (guchar) ((bits & 0xff0000) >> 16);
-			if (len > 2) {
-				bd[l++] = (guchar) ((bits & 0xff00) >>  8);
-			}
-			if (len > 3) {
-				bd[l++] = (guchar)  (bits & 0xff);
-			}
-		}
-
-		if (!gdk_pixbuf_loader_write (loader, (const guchar *) bd, (size_t) l, NULL)) {
-			failed = 1;
-			break;
-		}
-	}
-
-	gdk_pixbuf_loader_close (loader, NULL);
-
-	if (!failed) pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
-
-	return pixbuf;
+    return pixbuf;
 }
 
 static void
-sp_image_set_curve(SPImage *image) 
+sp_image_set_curve(SPImage *image)
 {
     //create a curve at the image's boundary for snapping
-    if ((image->height.computed < 1e-18) || (image->width.computed < 1e-18) || (image->clip_ref->getObject())) {
+    if ((image->height.computed < MAGIC_EPSILON_TOO) || (image->width.computed < MAGIC_EPSILON_TOO) || (image->clip_ref->getObject())) {
         if (image->curve) {
             image->curve = image->curve->unref();
         }
-        return;
+    } else {
+        NRRect rect;
+        sp_image_bbox(image, &rect, NR::identity(), 0);
+        Geom::Rect rect2 = to_2geom(*rect.upgrade());
+        SPCurve *c = SPCurve::new_from_rect(rect2);
+
+        if (image->curve) {
+            image->curve = image->curve->unref();
+        }
+
+        if (c) {
+            image->curve = c->ref();
+
+            c->unref();
+        }
     }
-    
-    NRRect rect;
-	sp_image_bbox(image, &rect, NR::identity(), 0);
-    Geom::Rect rect2 = to_2geom(*rect.upgrade());
-    SPCurve *c = SPCurve::new_from_rect(rect2);
-        
-    if (image->curve) {
-        image->curve = image->curve->unref();
-    }
-    
-    if (c) {
-        image->curve = c->ref();
-    }
-    
-    c->unref();    
 }
 
 /**
@@ -1542,10 +1546,11 @@ sp_image_set_curve(SPImage *image)
 SPCurve *
 sp_image_get_curve (SPImage *image)
 {
-	if (image->curve) {
-		return image->curve->copy();
-	}
-	return NULL;
+    SPCurve *result = 0;
+    if (image->curve) {
+        result = image->curve->copy();
+    }
+    return result;
 }
 
 void sp_image_refresh_if_outdated( SPImage* image )
