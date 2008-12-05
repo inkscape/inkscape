@@ -58,26 +58,36 @@ class Project(inkex.Effect):
         #obj is selected second
         obj = self.selected[self.options.ids[0]]
         envelope = self.selected[self.options.ids[1]]
-        if (obj.tag == inkex.addNS('path','svg') or obj.tag == inkex.addNS('g','svg')) and envelope.tag == inkex.addNS('path','svg'):
-            path = cubicsuperpath.parsePath(envelope.get('d'))
-            if len(path) < 1 or len(path[0]) < 4:
-                inkex.errormsg(_("This extension requires that the second selected path be four nodes long."))
-                sys.exit()
-            dp = zeros((4,2), dtype=float64)
-            for i in range(4):
-                dp[i][0] = path[0][i][1][0]
-                dp[i][1] = path[0][i][1][1]
+        if obj.tag == inkex.addNS('path','svg') or obj.tag == inkex.addNS('g','svg'):
+            if envelope.tag == inkex.addNS('path','svg'):
+                path = cubicsuperpath.parsePath(envelope.get('d'))
+                if len(path) < 1 or len(path[0]) < 4:
+                    inkex.errormsg(_("This extension requires that the second selected path be four nodes long."))
+                    sys.exit()
+                dp = zeros((4,2), dtype=float64)
+                for i in range(4):
+                    dp[i][0] = path[0][i][1][0]
+                    dp[i][1] = path[0][i][1][1]
 
-            #query inkscape about the bounding box of obj
-            q = {'x':0,'y':0,'width':0,'height':0}
-            file = self.args[-1]
-            id = self.options.ids[0]
-            for query in q.keys():
-                f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))[1:]
-                q[query] = float(f.read())
-                f.close()
-                err.close()
-            sp = array([[q['x'], q['y']+q['height']],[q['x'], q['y']],[q['x']+q['width'], q['y']],[q['x']+q['width'], q['y']+q['height']]], dtype=float64)
+                #query inkscape about the bounding box of obj
+                q = {'x':0,'y':0,'width':0,'height':0}
+                file = self.args[-1]
+                id = self.options.ids[0]
+                for query in q.keys():
+                    f,err = os.popen3('inkscape --query-%s --query-id=%s "%s"' % (query,id,file))[1:]
+                    q[query] = float(f.read())
+                    f.close()
+                    err.close()
+                sp = array([[q['x'], q['y']+q['height']],[q['x'], q['y']],[q['x']+q['width'], q['y']],[q['x']+q['width'], q['y']+q['height']]], dtype=float64)
+            else:
+                if envelope.tag == inkex.addNS('g','svg'):
+                    inkex.errormsg(_("The second selected object is a group, not a path.\nTry using the procedure Object | Ungroup."))
+                else:
+                    inkex.errormsg(_("The second selected object is not a path.\nTry using the procedure Path | Object to Path."))
+                sys.exit()
+        else:
+            inkex.errormsg(_("The first selected object is not a path.\nTry using the procedure Path | Object to Path."))
+            sys.exit()
 
         solmatrix = zeros((8,8), dtype=float64)
         free_term = zeros((8), dtype=float64)
