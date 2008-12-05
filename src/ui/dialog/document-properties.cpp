@@ -444,30 +444,25 @@ lcms_profile_get_name (cmsHPROFILE   profile, const gchar **name)
 
 void
 DocumentProperties::populate_available_profiles(){
-
-    std::list<gchar *> sources;
-    sources.push_back( profile_path("color/icc") );
-    //sources.push_back( g_strdup(INKSCAPE_COLORPROFILESDIR) );
+    std::list<Glib::ustring> sources = ColorProfile::getProfileDirs();
 
     int index = 1;
 
     // Use this loop to iterate through a list of possible document locations.
-    while (!sources.empty()) {
-        gchar *dirname = sources.front();
-
-        if ( Inkscape::IO::file_test( dirname, G_FILE_TEST_EXISTS )
-            && Inkscape::IO::file_test( dirname, G_FILE_TEST_IS_DIR )) {
+    for ( std::list<Glib::ustring>::const_iterator it = sources.begin(); it != sources.end(); ++it ) {
+        if ( Inkscape::IO::file_test( it->c_str(), G_FILE_TEST_EXISTS )
+            && Inkscape::IO::file_test( it->c_str(), G_FILE_TEST_IS_DIR )) {
             GError *err = 0;
-            GDir *directory = g_dir_open(dirname, 0, &err);
+            GDir *directory = g_dir_open(it->c_str(), 0, &err);
             if (!directory) {
-                gchar *safeDir = Inkscape::IO::sanitizeString(dirname);
+                gchar *safeDir = Inkscape::IO::sanitizeString(it->c_str());
                 g_warning(_("Color profiles directory (%s) is unavailable."), safeDir);
                 g_free(safeDir);
             } else {
                 gchar *filename = 0;
                 while ((filename = (gchar *)g_dir_read_name(directory)) != NULL) {
                     gchar* lower = g_ascii_strdown( filename, -1 );
-                    gchar* full = g_build_filename(dirname, filename, NULL);
+                    gchar* full = g_build_filename(it->c_str(), filename, NULL);
                     if ( !Inkscape::IO::file_test( full, G_FILE_TEST_IS_DIR ) ) {
                         cmsHPROFILE hProfile = cmsOpenProfileFromFile(full, "r");
                         if (hProfile != NULL){
@@ -495,10 +490,6 @@ DocumentProperties::populate_available_profiles(){
                 g_dir_close(directory);
             }
         }
-
-        // toss the dirname
-        g_free(dirname);
-        sources.pop_front();
     }
     _menu.show_all();
 }
