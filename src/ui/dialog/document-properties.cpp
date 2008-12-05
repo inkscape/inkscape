@@ -598,22 +598,32 @@ DocumentProperties::build_cms()
 {
     _page_cms.show();
 
-    Gtk::Label *label_embed= manage (new Gtk::Label);
+    Gtk::Label *label_embed= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
     label_embed->set_markup (_("<b>Embedded Color Profiles:</b>"));
-    Gtk::Label *label_avail = manage (new Gtk::Label);
+    Gtk::Label *label_avail = manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
     label_avail->set_markup (_("<b>Available Color Profiles:</b>"));
 
     _embed_btn.set_label(_("Embed Profile"));
 
-    Gtk::Widget *const array[] =
-    {
-        label_embed,          0,
-        &_EmbeddedProfilesListScroller,      0,
-        label_avail,        0,
-        &_combo_avail,        &_embed_btn,
-    };
+    _page_cms.set_spacing(4);
+    gint row = 0;
 
-    attach_all(_page_cms.table(), array, G_N_ELEMENTS(array));
+    label_embed->set_alignment(0.0);
+    _page_cms.table().attach(*label_embed, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+    _page_cms.table().attach(_EmbeddedProfilesListScroller, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+
+    Gtk::HBox* spacer = Gtk::manage(new Gtk::HBox());
+    spacer->set_size_request(SPACE_SIZE_X, SPACE_SIZE_Y);
+    _page_cms.table().attach(*spacer, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+
+    label_avail->set_alignment(0.0);
+    _page_cms.table().attach(*label_avail, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+    _page_cms.table().attach(_combo_avail, 0, 2, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_cms.table().attach(_embed_btn, 2, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
 
     populate_available_profiles();
 
@@ -627,7 +637,7 @@ DocumentProperties::build_cms()
     _EmbeddedProfilesList.append_column(_("Profile Name"), _EmbeddedProfilesListColumns.nameColumn);
 //    _EmbeddedProfilesList.append_column(_("Color Preview"), _EmbeddedProfilesListColumns.previewColumn);
     _EmbeddedProfilesList.set_headers_visible(false);
-    _EmbeddedProfilesList.set_fixed_height_mode(true);
+// TODO restore?    _EmbeddedProfilesList.set_fixed_height_mode(true);
 
     populate_embedded_profiles_box();
 
@@ -642,7 +652,9 @@ DocumentProperties::build_cms()
     create_popup_menu(_EmbeddedProfilesList, sigc::mem_fun(*this, &DocumentProperties::remove_profile));
 
     const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "defs" );
-    if (current) _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
+    if (current) {
+        _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
+    }
     _emb_profiles_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_embedded_profiles_box));
 }
 #endif // ENABLE_LCMS
