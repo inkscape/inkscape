@@ -367,8 +367,8 @@ modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
     }
 
     // Determine the required standard deviation value
-    NR::Matrix i2d (sp_item_i2d_affine (item));
-    double expansion = NR::expansion(i2d);
+    Geom::Matrix i2d (sp_item_i2d_affine (item));
+    double expansion = i2d.descrim();
     double stdDeviation = radius;
     if (expansion != 0)
         stdDeviation /= expansion;
@@ -386,8 +386,8 @@ modify_filter_gaussian_blur_from_item(SPDocument *document, SPItem *item,
 
     // Set the filter effects area
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(item->style->getFilter());
-    set_filter_area(repr, radius, expansion, NR::expansionX(i2d),
-                    NR::expansionY(i2d), width, height);
+    set_filter_area(repr, radius, expansion, i2d.expansionX(),
+                    i2d.expansionY(), width, height);
 
     // Search for gaussian blur primitives. If found, set the stdDeviation
     // of the first one and return.
