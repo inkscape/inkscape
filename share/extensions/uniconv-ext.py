@@ -41,7 +41,7 @@ except ImportError:
 
 if cmd == 'none' :
     sys.stderr.write('You need to install the UniConvertor software.\n'+\
-                     'For Linux: install the packge python-uniconvertor.\n'+\
+                     'For GNU/Linux: install the packge python-uniconvertor.\n'+\
                      'For Windows: download it from\n'+\
                      'http://sk1project.org/modules.php?name=Products&product=uniconvertor\n')
 else :
