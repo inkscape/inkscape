@@ -330,11 +330,11 @@ sp_eraser_apply(SPEraserContext *dc, Geom::Point p)
     }
 
     // 2. perpendicular to dc->vel (absolutely non-flat nib):
-    gdouble const mag_vel = NR::L2(dc->vel);
+    gdouble const mag_vel = Geom::L2(dc->vel);
     if ( mag_vel < ERASER_EPSILON ) {
         return FALSE;
     }
-    Geom::Point ang2 = NR::rot90(dc->vel) / mag_vel;
+    Geom::Point ang2 = Geom::rot90(dc->vel) / mag_vel;
 
     // 3. Average them using flatness parameter:
     // calculate angles
@@ -356,15 +356,15 @@ sp_eraser_apply(SPEraserContext *dc, Geom::Point p)
 
     // Try to detect a sudden flip when the new angle differs too much from the previous for the
     // current velocity; in that case discard this move
-    double angle_delta = NR::L2(Geom::Point (cos (new_ang), sin (new_ang)) - dc->ang);
-    if ( angle_delta / NR::L2(dc->vel) > 4000 ) {
+    double angle_delta = Geom::L2(Geom::Point (cos (new_ang), sin (new_ang)) - dc->ang);
+    if ( angle_delta / Geom::L2(dc->vel) > 4000 ) {
         return FALSE;
     }
 
     // convert to point
     dc->ang = Geom::Point (cos (new_ang), sin (new_ang));
 
-//    g_print ("force %g  acc %g  vel_max %g  vel %g  a1 %g  a2 %g  new_ang %g\n", NR::L2(force), NR::L2(dc->acc), dc->vel_max, NR::L2(dc->vel), a1, a2, new_ang);
+//    g_print ("force %g  acc %g  vel_max %g  vel %g  a1 %g  a2 %g  new_ang %g\n", Geom::L2(force), Geom::L2(dc->acc), dc->vel_max, Geom::L2(dc->vel), a1, a2, new_ang);
 
     /* Apply drag */
     dc->vel *= 1.0 - drag;
@@ -394,7 +394,7 @@ sp_eraser_brush(SPEraserContext *dc)
 
     double trace_thick = 1;
 
-    double width = (pressure_thick * trace_thick - vel_thin * NR::L2(dc->vel)) * dc->width;
+    double width = (pressure_thick * trace_thick - vel_thin * Geom::L2(dc->vel)) * dc->width;
 
     double tremble_left = 0, tremble_right = 0;
     if (dc->tremor > 0) {
@@ -414,8 +414,8 @@ sp_eraser_brush(SPEraserContext *dc)
         // (2) deflection depends on width, but is upped for small widths for better visual uniformity across widths;
         // (3) deflection somewhat depends on speed, to prevent fast strokes looking
         // comparatively smooth and slow ones excessively jittery
-        tremble_left  = (y1)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*NR::L2(dc->vel));
-        tremble_right = (y2)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*NR::L2(dc->vel));
+        tremble_left  = (y1)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*Geom::L2(dc->vel));
+        tremble_right = (y2)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*Geom::L2(dc->vel));
     }
 
     if ( width < 0.02 * dc->width ) {
@@ -840,11 +840,11 @@ add_cap(SPCurve *curve,
         Geom::Point const &to, Geom::Point const &post,
         double rounding)
 {
-    Geom::Point vel = rounding * NR::rot90( to - from ) / sqrt(2.0);
-    double mag = NR::L2(vel);
+    Geom::Point vel = rounding * Geom::rot90( to - from ) / sqrt(2.0);
+    double mag = Geom::L2(vel);
 
     Geom::Point v_in = from - pre;
-    double mag_in = NR::L2(v_in);
+    double mag_in = Geom::L2(v_in);
     if ( mag_in > ERASER_EPSILON ) {
         v_in = mag * v_in / mag_in;
     } else {
@@ -852,14 +852,14 @@ add_cap(SPCurve *curve,
     }
 
     Geom::Point v_out = to - post;
-    double mag_out = NR::L2(v_out);
+    double mag_out = Geom::L2(v_out);
     if ( mag_out > ERASER_EPSILON ) {
         v_out = mag * v_out / mag_out;
     } else {
         v_out = Geom::Point(0, 0);
     }
 
-    if ( NR::L2(v_in) > ERASER_EPSILON || NR::L2(v_out) > ERASER_EPSILON ) {
+    if ( Geom::L2(v_in) > ERASER_EPSILON || Geom::L2(v_out) > ERASER_EPSILON ) {
         curve->curveto(from + v_in, to + v_out, to);
     }
 }
