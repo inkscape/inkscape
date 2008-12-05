@@ -223,7 +223,7 @@ void Path::DoSimplify(int off, int N, double treshhold)
         curP = lastP;
     }
   
-    if (NR::LInfty(endToPt - moveToPt) < 0.00001) {
+    if (Geom::LInfty(endToPt - moveToPt) < 0.00001) {
         Close();
     }
   

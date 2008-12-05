@@ -1413,7 +1413,7 @@ void        Path::ConvertPositionsToMoveTo(int nbPos,cut_position* poss)
         } else {
         }
       }
-      if ( NR::LInfty(endP-np) < 0.00001 ) {
+      if ( Geom::LInfty(endP-np) < 0.00001 ) {
         doesClose=true;
       }
       if ( ( doesClose || hasClose ) && hasForced >= 0 ) {

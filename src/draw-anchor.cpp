@@ -82,7 +82,7 @@ sp_draw_anchor_test(SPDrawAnchor *anchor, Geom::Point w, gboolean activate)
 {
     SPDesktop *dt = SP_EVENT_CONTEXT_DESKTOP(anchor->dc);
 
-    if ( activate && ( NR::LInfty( w - dt->d2w(anchor->dp) ) <= A_SNAP ) ) {
+    if ( activate && ( Geom::LInfty( w - dt->d2w(anchor->dp) ) <= A_SNAP ) ) {
         if (!anchor->active) {
             sp_canvas_item_set((GtkObject *) anchor->ctrl, "filled", TRUE, NULL);
             anchor->active = TRUE;

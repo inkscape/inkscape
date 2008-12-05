@@ -15,7 +15,7 @@
 inline bool
 in_svg_plane(NR::Point const p)
 {
-    return NR::LInfty(p) < 1e18;
+    return Geom::LInfty(p) < 1e18;
 }
 
 

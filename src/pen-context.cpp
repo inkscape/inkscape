@@ -602,7 +602,7 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
     if (pen_within_tolerance) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         gint const tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
-        if ( NR::LInfty( event_w - pen_drag_origin_w ) < tolerance ) {
+        if ( Geom::LInfty( event_w - pen_drag_origin_w ) < tolerance ) {
             return FALSE;   // Do not drag if we're within tolerance from origin.
         }
     }

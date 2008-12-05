@@ -906,7 +906,7 @@ void Path::ConvertEvenLines(double treshhold)
                 break;
             }
         }
-        if ( NR::LInfty(curX - nextX) > 0.00001 ) {
+        if ( Geom::LInfty(curX - nextX) > 0.00001 ) {
             curX = nextX;
         }
     }
@@ -1604,7 +1604,7 @@ void Path::Fill(Shape* dest, int pathID, bool justAdd, bool closeIfNeeded, bool 
 
                     } else {
 
-                        if ( NR::LInfty(pts[sbp].p - pts[prp].p) >= 0.00001 ) {
+                        if ( Geom::LInfty(pts[sbp].p - pts[prp].p) >= 0.00001 ) {
                             lEdge = dest->AddEdge(first + curP, first + pathEnd);
                             if ( lEdge >= 0 ) {
                                 dest->ebData[lEdge].pathID = pathID;
@@ -1618,7 +1618,7 @@ void Path::Fill(Shape* dest, int pathID, bool justAdd, bool closeIfNeeded, bool 
                                 }
                             }
                             pathEnd = curP;
-                            if ( NR::LInfty(pts[sbp].p - pts[lm].p) < 0.00001 ) {
+                            if ( Geom::LInfty(pts[sbp].p - pts[lm].p) < 0.00001 ) {
                                 closed = true;
                             } else {
                                 closed = false;
@@ -1676,10 +1676,10 @@ void Path::Fill(Shape* dest, int pathID, bool justAdd, bool closeIfNeeded, bool 
                         closed = false;
                         lEdge = -1;
                     } else {
-                        if ( NR::LInfty(pts[sbp].p - pts[prp].p) >= 0.00001 ) {
+                        if ( Geom::LInfty(pts[sbp].p - pts[prp].p) >= 0.00001 ) {
                             lEdge = dest->AddEdge(first+curP, first+pathEnd);
                             pathEnd = curP;
-                            if ( NR::LInfty(pts[sbp].p - pts[lm].p) < 0.00001 ) {
+                            if ( Geom::LInfty(pts[sbp].p - pts[lm].p) < 0.00001 ) {
                                 closed = true;
                             } else {
                                 closed = false;
@@ -1739,7 +1739,7 @@ void Path::Fill(Shape* dest, int pathID, bool justAdd, bool closeIfNeeded, bool 
                         closed = false;
                         lEdge = -1;
                     } else {
-                        if ( NR::LInfty(pts[sbp].p - pts[prp].p) >= 0.00001 ) {
+                        if ( Geom::LInfty(pts[sbp].p - pts[prp].p) >= 0.00001 ) {
                             lEdge = dest->AddEdge(first + pathEnd, first + curP);
                             dest->ebData[lEdge].pathID = pathID;
                             dest->ebData[lEdge].pieceID = pts[sbp].piece;
@@ -1751,7 +1751,7 @@ void Path::Fill(Shape* dest, int pathID, bool justAdd, bool closeIfNeeded, bool 
                                 dest->ebData[lEdge].tEn = pts[sbp].t;
                             }
                             pathEnd = curP;
-                            if ( NR::LInfty(pts[sbp].p - pts[lm].p) < 0.00001 ) {
+                            if ( Geom::LInfty(pts[sbp].p - pts[lm].p) < 0.00001 ) {
                                 closed = true;
                             } else {
                                 closed = false;
@@ -1808,10 +1808,10 @@ void Path::Fill(Shape* dest, int pathID, bool justAdd, bool closeIfNeeded, bool 
                         closed = false;
                         lEdge = -1;
                     } else {
-                        if ( NR::LInfty(pts[sbp].p - pts[prp].p) >= 0.00001 ) {
+                        if ( Geom::LInfty(pts[sbp].p - pts[prp].p) >= 0.00001 ) {
                             lEdge = dest->AddEdge(first+pathEnd, first+curP);
                             pathEnd = curP;
-                            if ( NR::LInfty(pts[sbp].p - pts[lm].p) < 0.00001 ) {
+                            if ( Geom::LInfty(pts[sbp].p - pts[lm].p) < 0.00001 ) {
                                 closed = true;
                             } else {
                                 closed = false;

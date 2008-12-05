@@ -386,7 +386,7 @@ void Path::SubContractOutline(int off, int num_pd,
 			if (doFirst) {
 			} else {
 				if (closeIfNeeded) {
-					if ( NR::LInfty (curX- firstP) < 0.0001 ) {
+					if ( Geom::LInfty (curX- firstP) < 0.0001 ) {
 						OutlineJoin (dest, firstP, curT, firstT, width, join,
 									 miter);
 						dest->Close ();
@@ -427,7 +427,7 @@ void Path::SubContractOutline(int off, int num_pd,
 		{
 			if (doFirst == false)
 			{
-				if (NR::LInfty (curX - firstP) < 0.0001)
+				if (Geom::LInfty (curX - firstP) < 0.0001)
 				{
 					OutlineJoin (dest, firstP, curT, firstT, width, join,
 								 miter);
@@ -828,7 +828,7 @@ Path::IsNulCurve (std::vector<PathDescr*> const &cmd, int curD, NR::Point const 
     case descr_lineto:
     {
 		PathDescrLineTo *nData = dynamic_cast<PathDescrLineTo*>(cmd[curD]);
-		if (NR::LInfty(nData->p - curX) < 0.00001) {
+		if (Geom::LInfty(nData->p - curX) < 0.00001) {
 			return true;
 		}
 		return false;
@@ -839,9 +839,9 @@ Path::IsNulCurve (std::vector<PathDescr*> const &cmd, int curD, NR::Point const 
 		NR::Point A = nData->start + nData->end + 2*(curX - nData->p);
 		NR::Point B = 3*(nData->p - curX) - 2*nData->start - nData->end;
 		NR::Point C = nData->start;
-		if (NR::LInfty(A) < 0.0001
-			&& NR::LInfty(B) < 0.0001
-			&& NR::LInfty (C) < 0.0001) {
+		if (Geom::LInfty(A) < 0.0001
+			&& Geom::LInfty(B) < 0.0001
+			&& Geom::LInfty (C) < 0.0001) {
 			return true;
 		}
 		return false;
@@ -849,7 +849,7 @@ Path::IsNulCurve (std::vector<PathDescr*> const &cmd, int curD, NR::Point const 
     case descr_arcto:
     {
 		PathDescrArcTo* nData = dynamic_cast<PathDescrArcTo*>(cmd[curD]);
-		if ( NR::LInfty(nData->p - curX) < 0.00001) {
+		if ( Geom::LInfty(nData->p - curX) < 0.00001) {
 			if ((nData->large == false)
 				|| (fabs (nData->rx) < 0.00001
 					|| fabs (nData->ry) < 0.00001)) {
@@ -863,26 +863,26 @@ Path::IsNulCurve (std::vector<PathDescr*> const &cmd, int curD, NR::Point const 
 		PathDescrBezierTo* nBData = dynamic_cast<PathDescrBezierTo*>(cmd[curD]);
 		if (nBData->nb <= 0)
 		{
-			if (NR::LInfty(nBData->p - curX) < 0.00001) {
+			if (Geom::LInfty(nBData->p - curX) < 0.00001) {
 				return true;
 			}
 			return false;
 		}
 		else if (nBData->nb == 1)
 		{
-			if (NR::LInfty(nBData->p - curX) < 0.00001) {
+			if (Geom::LInfty(nBData->p - curX) < 0.00001) {
 				int ip = curD + 1;
 				PathDescrIntermBezierTo* nData = dynamic_cast<PathDescrIntermBezierTo*>(cmd[ip]);
-				if (NR::LInfty(nData->p - curX) < 0.00001) {
+				if (Geom::LInfty(nData->p - curX) < 0.00001) {
 					return true;
 				}
 			}
 			return false;
-		} else if (NR::LInfty(nBData->p - curX) < 0.00001) {
+		} else if (Geom::LInfty(nBData->p - curX) < 0.00001) {
 			for (int i = 1; i <= nBData->nb; i++) {
 				int ip = curD + i;
 				PathDescrIntermBezierTo* nData = dynamic_cast<PathDescrIntermBezierTo*>(cmd[ip]);
-				if (NR::LInfty(nData->p - curX) > 0.00001) {
+				if (Geom::LInfty(nData->p - curX) > 0.00001) {
 					return false;
 				}
 			}
