@@ -37,7 +37,7 @@ public:
     void setAttr(unsigned const key, gchar const *const value);
     void writeRepr(Inkscape::XML::Node *const repr) const;
     void getAttachedItems(SPItem *[2]) const;
-    void getEndpoints(NR::Point endPts[]) const;
+    void getEndpoints(Geom::Point endPts[]) const;
     void reroutePath(void);
     void makePathInvalid(void);
     void update(void);

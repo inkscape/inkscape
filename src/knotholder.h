@@ -64,7 +64,7 @@ protected:
 
 /**
 void knot_clicked_handler(SPKnot *knot, guint state, gpointer data);
-void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, gpointer data);
+void knot_moved_handler(SPKnot *knot, Geom::Point const *p, guint state, gpointer data);
 void knot_ungrabbed_handler(SPKnot *knot, unsigned int state, KnotHolder *kh);
 **/
 

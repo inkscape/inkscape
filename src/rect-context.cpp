@@ -54,7 +54,7 @@ static void sp_rect_context_set(SPEventContext *ec, Inkscape::Preferences::Entry
 static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 static gint sp_rect_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
 
-static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state);
+static void sp_rect_drag(SPRectContext &rc, Geom::Point const pt, guint state);
 static void sp_rect_finish(SPRectContext *rc);
 
 static SPEventContextClass *parent_class;
@@ -285,12 +285,12 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
     switch (event->type) {
     case GDK_BUTTON_PRESS:
         if (event->button.button == 1 && !event_context->space_panning) {
-            NR::Point const button_w(event->button.x,
+            Geom::Point const button_w(event->button.x,
                                      event->button.y);
 
             // save drag origin
-            event_context->xp = (gint) button_w[NR::X];
-            event_context->yp = (gint) button_w[NR::Y];
+            event_context->xp = (gint) button_w[Geom::X];
+            event_context->yp = (gint) button_w[Geom::Y];
             event_context->within_tolerance = true;
 
             // remember clicked item, disregarding groups, honoring Alt
@@ -333,8 +333,8 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             // motion notify coordinates as given (no snapping back to origin)
             event_context->within_tolerance = false;
 
-            NR::Point const motion_w(event->motion.x, event->motion.y);
-            NR::Point motion_dt(desktop->w2d(motion_w));
+            Geom::Point const motion_w(event->motion.x, event->motion.y);
+            Geom::Point motion_dt(desktop->w2d(motion_w));
             
             sp_rect_drag(*rc, motion_dt, event->motion.state); // this will also handle the snapping
             gobble_motion_events(GDK_BUTTON1_MASK);
@@ -460,7 +460,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
     return ret;
 }
 
-static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
+static void sp_rect_drag(SPRectContext &rc, Geom::Point const pt, guint state)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
 

@@ -264,7 +264,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, I
 
     SPGenericEllipse *ellipse = SP_GENERICELLIPSE(item);
     sp_genericellipse_normalize(ellipse);
-    NR::Matrix const i2d = sp_item_i2d_affine(item);
+    Geom::Matrix const i2d = sp_item_i2d_affine(item);
 
     // figure out if we have a slice, whilst guarding against rounding errors
     bool slice = false;
@@ -287,7 +287,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, I
     double angle = 0;
     for (angle = 0; angle < SP_2PI; angle += M_PI_2) {
         if (angle >= ellipse->start && angle <= ellipse->end) {
-            *p = NR::Point(cx + cos(angle)*rx, cy + sin(angle)*ry) * i2d;
+            *p = Geom::Point(cx + cos(angle)*rx, cy + sin(angle)*ry) * i2d;
         }
     }
 
@@ -295,15 +295,15 @@ static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, I
     if (slice) {
         // Add the centre, if we have a closed slice
         if (ellipse->closed) {
-            *p = NR::Point(cx, cy) * i2d;
+            *p = Geom::Point(cx, cy) * i2d;
         }
         // Add the start point, if it's not coincident with a quadrant point
         if (fmod(ellipse->start, M_PI_2) != 0.0 ) {
-            *p = NR::Point(cx + cos(ellipse->start)*rx, cy + sin(ellipse->start)*ry) * i2d;
+            *p = Geom::Point(cx + cos(ellipse->start)*rx, cy + sin(ellipse->start)*ry) * i2d;
         }
         // Add the end point, if it's not coincident with a quadrant point
         if (fmod(ellipse->end, M_PI_2) != 0.0 ) {
-            *p = NR::Point(cx + cos(ellipse->end)*rx, cy + sin(ellipse->end)*ry) * i2d;
+            *p = Geom::Point(cx + cos(ellipse->end)*rx, cy + sin(ellipse->end)*ry) * i2d;
         }
     }
 }
@@ -707,8 +707,8 @@ sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr)
 
     Inkscape::SVG::PathString str;
 
-    NR::Point p1 = sp_arc_get_xy(arc, ge->start);
-    NR::Point p2 = sp_arc_get_xy(arc, ge->end);
+    Geom::Point p1 = sp_arc_get_xy(arc, ge->start);
+    Geom::Point p2 = sp_arc_get_xy(arc, ge->end);
     double rx = ge->rx.computed;
     double ry = ge->ry.computed;
 
@@ -716,7 +716,7 @@ sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr)
 
     double dt = fmod(ge->end - ge->start, SP_2PI);
     if (fabs(dt) < 1e-6) {
-        NR::Point ph = sp_arc_get_xy(arc, (ge->start + ge->end) / 2.0);
+        Geom::Point ph = sp_arc_get_xy(arc, (ge->start + ge->end) / 2.0);
         str.arcTo(rx, ry, 0, true, true, ph)
            .arcTo(rx, ry, 0, true, true, p2)
            .closePath();
@@ -725,7 +725,7 @@ sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr)
         bool fs = (dt > 0);
         str.arcTo(rx, ry, 0, fa, fs, p2);
         if (ge->closed) {
-            NR::Point center = NR::Point(ge->cx.computed, ge->cy.computed);
+            Geom::Point center = Geom::Point(ge->cx.computed, ge->cy.computed);
             str.lineTo(center).closePath();
         }
     }
@@ -880,11 +880,11 @@ sp_arc_position_set(SPArc *arc, gdouble x, gdouble y, gdouble rx, gdouble ry)
     ((SPObject *)arc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-NR::Point sp_arc_get_xy(SPArc *arc, gdouble arg)
+Geom::Point sp_arc_get_xy(SPArc *arc, gdouble arg)
 {
     SPGenericEllipse *ge = SP_GENERICELLIPSE(arc);
 
-    return NR::Point(ge->rx.computed * cos(arg) + ge->cx.computed,
+    return Geom::Point(ge->rx.computed * cos(arg) + ge->cx.computed,
                      ge->ry.computed * sin(arg) + ge->cy.computed);
 }
 

@@ -100,6 +100,6 @@ struct SPArcClass {
 
 GType sp_arc_get_type (void);
 void sp_arc_position_set (SPArc * arc, gdouble x, gdouble y, gdouble rx, gdouble ry);
-NR::Point sp_arc_get_xy (SPArc *ge, gdouble arg);
+Geom::Point sp_arc_get_xy (SPArc *ge, gdouble arg);
 
 #endif

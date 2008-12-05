@@ -160,7 +160,7 @@ SPConnEndPair::getAttachedItems(SPItem *h2attItem[2]) const {
 }
 
 void
-SPConnEndPair::getEndpoints(NR::Point endPts[]) const {
+SPConnEndPair::getEndpoints(Geom::Point endPts[]) const {
     SPCurve *curve = _path->curve;
     SPItem *h2attItem[2];
     getAttachedItems(h2attItem);
@@ -172,7 +172,7 @@ SPConnEndPair::getEndpoints(NR::Point endPts[]) const {
                 endPts[h] = bbox->midpoint();
             } else {
                 // FIXME
-                endPts[h] = NR::Point(0, 0);
+                endPts[h] = Geom::Point(0, 0);
             }
         }
         else
@@ -225,11 +225,11 @@ SPConnEndPair::update(void)
     if (_connType != SP_CONNECTOR_NOAVOID) {
         g_assert(_connRef != NULL);
         if (!(_connRef->isInitialised())) {
-            NR::Point endPt[2];
+            Geom::Point endPt[2];
             getEndpoints(endPt);
 
-            Avoid::Point src(endPt[0][NR::X], endPt[0][NR::Y]);
-            Avoid::Point dst(endPt[1][NR::X], endPt[1][NR::Y]);
+            Avoid::Point src(endPt[0][Geom::X], endPt[0][Geom::Y]);
+            Avoid::Point dst(endPt[1][Geom::X], endPt[1][Geom::Y]);
 
             _connRef->lateSetup(src, dst);
             _connRef->setCallback(&emitPathInvalidationNotification, _path);
@@ -288,11 +288,11 @@ SPConnEndPair::reroutePath(void)
 
     SPCurve *curve = _path->curve;
 
-    NR::Point endPt[2];
+    Geom::Point endPt[2];
     getEndpoints(endPt);
 
-    Avoid::Point src(endPt[0][NR::X], endPt[0][NR::Y]);
-    Avoid::Point dst(endPt[1][NR::X], endPt[1][NR::Y]);
+    Avoid::Point src(endPt[0][Geom::X], endPt[0][Geom::Y]);
+    Avoid::Point dst(endPt[1][Geom::X], endPt[1][Geom::Y]);
 
     _connRef->updateEndPoint(Avoid::VertID::src, src);
     _connRef->updateEndPoint(Avoid::VertID::tar, dst);
@@ -306,7 +306,7 @@ SPConnEndPair::reroutePath(void)
     curve->moveto(endPt[0]);
 
     for (int i = 1; i < route.pn; ++i) {
-        NR::Point p(route.ps[i].x, route.ps[i].y);
+        Geom::Point p(route.ps[i].x, route.ps[i].y);
         curve->lineto(p);
     }
 }

@@ -29,7 +29,7 @@ class SPRectContextClass;
 
 struct SPRectContext : public SPEventContext {
 	SPItem *item;
-	NR::Point center;
+	Geom::Point center;
 
   	gdouble rx;	/* roundness radius (x direction) */
   	gdouble ry;	/* roundness radius (y direction) */
