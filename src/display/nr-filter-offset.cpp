@@ -73,7 +73,7 @@ void FilterOffset::set_dy(double amount) {
     dy = amount;
 }
 
-void FilterOffset::area_enlarge(NRRectL &area, Matrix const &trans)
+void FilterOffset::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
 {
     Point offset(dx, dy);
     offset *= trans;

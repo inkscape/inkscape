@@ -69,7 +69,7 @@ void FilterFlood::set_opacity(double o) {
     opacity = o;
 }
 
-void FilterFlood::area_enlarge(NRRectL &/*area*/, Matrix const &/*trans*/)
+void FilterFlood::area_enlarge(NRRectL &/*area*/, Geom::Matrix const &/*trans*/)
 {
 }
 

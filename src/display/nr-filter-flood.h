@@ -27,7 +27,7 @@ public:
     virtual void set_opacity(double o);
     virtual void set_color(guint32 c);
     virtual int render(FilterSlot &slot, FilterUnits const &units);
-    virtual void area_enlarge(NRRectL &area, Matrix const &trans);
+    virtual void area_enlarge(NRRectL &area, Geom::Matrix const &trans);
 private:
     double opacity;
     guint32 color;

@@ -132,7 +132,7 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
     return 0;
 }
 
-void FilterComponentTransfer::area_enlarge(NRRectL &/*area*/, Matrix const &/*trans*/)
+void FilterComponentTransfer::area_enlarge(NRRectL &/*area*/, Geom::Matrix const &/*trans*/)
 {
 }
 

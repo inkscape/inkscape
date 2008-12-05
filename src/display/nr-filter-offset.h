@@ -27,7 +27,7 @@ public:
     virtual ~FilterOffset();
 
     virtual int render(FilterSlot &slot, FilterUnits const &units);
-    virtual void area_enlarge(NRRectL &area, Matrix const &trans);
+    virtual void area_enlarge(NRRectL &area, Geom::Matrix const &trans);
 
     void set_dx(double amount);
     void set_dy(double amount);

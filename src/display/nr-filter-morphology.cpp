@@ -112,7 +112,7 @@ int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
     return 0;
 }
 
-void FilterMorphology::area_enlarge(NRRectL &area, Matrix const &trans)
+void FilterMorphology::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
 {
     int const enlarge_x = (int)round(this->xradius * expansionX(trans));
     int const enlarge_y = (int)round(this->yradius * expansionY(trans));

@@ -44,7 +44,7 @@ public:
     virtual ~FilterPrimitive();
 
     virtual int render(FilterSlot &slot, FilterUnits const &units) = 0;
-    virtual void area_enlarge(NRRectL &area, Matrix const &m);
+    virtual void area_enlarge(NRRectL &area, Geom::Matrix const &m);
 
     /**
      * Sets the input slot number 'slot' to be used as input in rendering

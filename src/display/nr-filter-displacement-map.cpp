@@ -141,7 +141,7 @@ void FilterDisplacementMap::set_channel_selector(int s, FilterDisplacementMapCha
     if (s == 1) Ychannel = channel;
 }
 
-void FilterDisplacementMap::area_enlarge(NRRectL &area, Matrix const &trans)
+void FilterDisplacementMap::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
 {
     //I assume scale is in user coordinates (?!?)
     //FIXME: trans should be multiplied by some primitiveunits2user, shouldn't it?

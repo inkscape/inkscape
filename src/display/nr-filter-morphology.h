@@ -31,7 +31,7 @@ public:
     virtual ~FilterMorphology();
 
     virtual int render(FilterSlot &slot, FilterUnits const &units);
-    virtual void area_enlarge(NRRectL &area, Matrix const &trans);
+    virtual void area_enlarge(NRRectL &area, Geom::Matrix const &trans);
     virtual FilterTraits get_input_traits();
     void set_operator(FilterMorphologyOperator &o);
     void set_xradius(double x);

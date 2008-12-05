@@ -34,7 +34,7 @@ public:
     virtual ~FilterColorMatrix();
 
     virtual int render(FilterSlot &slot, FilterUnits const &units);
-    virtual void area_enlarge(NRRectL &area, Matrix const &trans);
+    virtual void area_enlarge(NRRectL &area, Geom::Matrix const &trans);
     virtual void set_type(FilterColorMatrixType type);
     virtual void set_value(gdouble value);
     virtual void set_values(std::vector<gdouble> &values);
