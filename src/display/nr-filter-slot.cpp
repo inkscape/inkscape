@@ -1,5 +1,3 @@
-#define __NR_FILTER_SLOT_CPP__
-
 /*
  * A container class for filter slots. Allows for simple getting and
  * setting images in filter slots without having to bother with
@@ -65,8 +63,8 @@ inline static int _min2(const double a, const double b) {
 namespace NR {
 
 FilterSlot::FilterSlot(int slots, NRArenaItem const *item)
-    : filterquality(FILTER_QUALITY_BEST),
-      _last_out(-1),
+    : _last_out(-1),
+      filterquality(FILTER_QUALITY_BEST),
       _arena_item(item)
 {
     _slot_count = ((slots > 0) ? slots : 2);
@@ -214,7 +212,7 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
                               trans[1] * x0 + trans[3] * y1 + trans[5],
                               trans[1] * x1 + trans[3] * y0 + trans[5],
                               trans[1] * x1 + trans[3] * y1 + trans[5]);
-            
+
             nr_pixblock_setup_fast(trans_pb, pb->mode,
                                    min_x, min_y,
                                    max_x, max_y, true);
