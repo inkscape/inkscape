@@ -254,10 +254,10 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
                     //# 1.  Get complete URI of document
                     gchar const *docbase = SP_DOCUMENT_URI( doc );
                     if (!docbase)
-                        {
-                        g_warning("null docbase");
+                    {
+                        // Normal for files that have not yet been saved.
                         docbase = "";
-                        }
+                    }
                     //g_message("docbase:%s\n", docbase);
                     org::w3c::dom::URI docUri(docbase);
                     //# 2. Get href of icc file.  we don't care if it's rel or abs
