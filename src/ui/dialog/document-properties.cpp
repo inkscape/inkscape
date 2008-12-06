@@ -67,11 +67,11 @@ static void on_child_removed(Inkscape::XML::Node *repr, Inkscape::XML::Node *chi
 static void on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar const *, gchar const *, bool, gpointer);
 
 static Inkscape::XML::NodeEventVector const _repr_events = {
-    on_child_added, /* child_added */
-    on_child_removed, /* child_removed */
+    on_child_added, // child_added
+    on_child_removed, // child_removed
     on_repr_attr_changed,
-    NULL, /* content_changed */
-    NULL  /* order_changed */
+    NULL, // content_changed
+    NULL  // order_changed
 };
 
 
@@ -444,14 +444,18 @@ lcms_profile_get_name (cmsHPROFILE   profile, const gchar **name)
 
 void
 DocumentProperties::populate_available_profiles(){
-    std::list<Glib::ustring> sources = ColorProfile::getProfileDirs();
+    Glib::ListHandle<Gtk::Widget*> children = _menu.get_children();
+    for ( Glib::ListHandle<Gtk::Widget*>::iterator it2 = children.begin(); it2 != children.end(); ++it2 ) {
+        _menu.remove(**it2);
+        delete(*it2);
+    }
 
-    int index = 1;
+    std::list<Glib::ustring> sources = ColorProfile::getProfileDirs();
 
     // Use this loop to iterate through a list of possible document locations.
     for ( std::list<Glib::ustring>::const_iterator it = sources.begin(); it != sources.end(); ++it ) {
         if ( Inkscape::IO::file_test( it->c_str(), G_FILE_TEST_EXISTS )
-            && Inkscape::IO::file_test( it->c_str(), G_FILE_TEST_IS_DIR )) {
+             && Inkscape::IO::file_test( it->c_str(), G_FILE_TEST_IS_DIR )) {
             GError *err = 0;
             GDir *directory = g_dir_open(it->c_str(), 0, &err);
             if (!directory) {
@@ -461,17 +465,16 @@ DocumentProperties::populate_available_profiles(){
             } else {
                 gchar *filename = 0;
                 while ((filename = (gchar *)g_dir_read_name(directory)) != NULL) {
-                    gchar* lower = g_ascii_strdown( filename, -1 );
                     gchar* full = g_build_filename(it->c_str(), filename, NULL);
                     if ( !Inkscape::IO::file_test( full, G_FILE_TEST_IS_DIR ) ) {
                         cmsHPROFILE hProfile = cmsOpenProfileFromFile(full, "r");
                         if (hProfile != NULL){
                             const gchar* name;
                             lcms_profile_get_name(hProfile, &name);
-                            Gtk::MenuItem* mi = new Gtk::MenuItem();
+                            Gtk::MenuItem* mi = manage(new Gtk::MenuItem());
                             mi->set_data("filepath", g_strdup(full));
                             mi->set_data("name", g_strdup(name));
-                            Gtk::HBox *hbox = new Gtk::HBox();
+                            Gtk::HBox *hbox = manage(new Gtk::HBox());
                             hbox->show();
                             Gtk::Label* lbl = manage(new Gtk::Label(name));
                             lbl->show();
@@ -480,12 +483,10 @@ DocumentProperties::populate_available_profiles(){
                             mi->show_all();
                             _menu.append(*mi);
         //                    g_free((void*)name);
+                            cmsCloseProfile(hProfile);
                         }
-                        cmsCloseProfile(hProfile);
-                        index++;
                     }
                     g_free(full);
-                    g_free(lower);
                 }
                 g_dir_close(directory);
             }
@@ -498,32 +499,34 @@ void
 DocumentProperties::onEmbedProfile()
 {
 //store this profile in the SVG document (create <color-profile> element in the XML)
+    // TODO remove use of 'active' desktop
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop){
         g_warning("No active desktop");
-        return;
+    } else {
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        Inkscape::XML::Node *cprofRepr = xml_doc->createElement("svg:color-profile");
+        cprofRepr->setAttribute("name", (gchar*) _menu.get_active()->get_data("name"));
+        cprofRepr->setAttribute("xlink:href", (gchar*) _menu.get_active()->get_data("filepath"));
+
+        // Checks whether there is a defs element. Creates it when needed
+        Inkscape::XML::Node *defsRepr = sp_repr_lookup_name(xml_doc, "svg:defs");
+        if (!defsRepr){
+            defsRepr = xml_doc->createElement("svg:defs");
+            xml_doc->root()->addChild(defsRepr, NULL);
+        }
+
+        g_assert(SP_ROOT(desktop->doc()->root)->defs);
+        defsRepr->addChild(cprofRepr, NULL);
+
+        // TODO check if this next line was sometimes needed. It being there caused an assertion.
+        //Inkscape::GC::release(defsRepr);
+
+        // inform the document, so we can undo
+        sp_document_done(desktop->doc(), SP_VERB_EDIT_EMBED_COLOR_PROFILE, _("Embed Color Profile"));
+
+        populate_embedded_profiles_box();
     }
-    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
-    Inkscape::XML::Node *cprofRepr = xml_doc->createElement("svg:color-profile");
-    cprofRepr->setAttribute("name", (gchar*) _menu.get_active()->get_data("name"));
-    cprofRepr->setAttribute("xlink:href", (gchar*) _menu.get_active()->get_data("filepath"));
-
-    /* Checks whether there is a defs element. Creates it when needed */
-    Inkscape::XML::Node *defsRepr = sp_repr_lookup_name(xml_doc, "svg:defs");
-    if (!defsRepr){
-        defsRepr = xml_doc->createElement("svg:defs");
-        xml_doc->root()->addChild(defsRepr, NULL);
-    }
-
-    g_assert(SP_ROOT(desktop->doc()->root)->defs);
-    defsRepr->addChild(cprofRepr, NULL);
-
-    Inkscape::GC::release(defsRepr);
-
-    // inform the document, so we can undo
-    sp_document_done(desktop->doc(), SP_VERB_EDIT_EMBED_COLOR_PROFILE, _("Embed Color Profile"));
-
-    populate_embedded_profiles_box();
 }
 
 void
