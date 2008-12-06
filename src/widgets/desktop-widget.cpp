@@ -137,11 +137,11 @@ public:
 
 private:
     static void hook(EgeColorProfTracker *tracker, gint a, gint b, CMSPrefWatcher *watcher);
-    
+
     class DisplayProfileWatcher : public Inkscape::Preferences::Observer {
     public:
         DisplayProfileWatcher(CMSPrefWatcher &pw) : Observer("/options/displayprofile"), _pw(pw) {}
-        virtual void notify(Inkscape::Preferences::Entry const &val) {
+        virtual void notify(Inkscape::Preferences::Entry const &/*val*/) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             _pw._setCmsSensitive(!prefs->getString("/options/displayprofile/uri").empty());
             _pw._refreshAll();
@@ -149,9 +149,9 @@ private:
     private:
         CMSPrefWatcher &_pw;
     };
-    
+
     DisplayProfileWatcher _dpw;
-    
+
     class SoftProofWatcher : public Inkscape::Preferences::Observer {
     public:
         SoftProofWatcher(CMSPrefWatcher &pw) : Observer("/options/softproof"), _pw(pw) {}
@@ -161,15 +161,15 @@ private:
     private:
         CMSPrefWatcher &_pw;
     };
-    
+
     SoftProofWatcher _spw;
-    
+
     void _refreshAll();
     void _setCmsSensitive(bool value);
 
     std::list<SPDesktopWidget*> _widget_list;
     EgeColorProfTracker *_tracker;
-    
+
     friend class DisplayProfileWatcher;
     friend class SoftproofWatcher;
 };
@@ -289,7 +289,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     GtkWidget *hbox;
     GtkWidget *eventbox;
     GtkStyle *style;
-    
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     new (&dtw->modified_connection) sigc::connection();
