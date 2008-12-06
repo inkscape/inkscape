@@ -667,6 +667,7 @@ interpolate(SPPencilContext *pc)
     guint n_points  = pc->ps.size();
     pc->green_curve->reset();
     pc->red_curve->reset();
+    pc->red_curve_is_valid = false;
 
     Geom::Point * b = g_new(Geom::Point, 4*n_points);
     Geom::Point * points = g_new(Geom::Point, 4*n_points);
@@ -683,20 +684,18 @@ interpolate(SPPencilContext *pc)
     if ( n_segs > 0)
     {
         /* Fit and draw and reset state */
-        pc->red_curve->reset();
-        pc->red_curve->moveto(b[0]);
+        pc->green_curve->moveto(b[0]);
         for (int c = 0; c < n_segs; c++) { 
-            pc->red_curve->curveto(b[4*c+1], b[4*c+2], b[4*c+3]);
+            pc->green_curve->curveto(b[4*c+1], b[4*c+2], b[4*c+3]);
         }
-        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
-        pc->red_curve_is_valid = true;
+        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->green_curve);
 
         /* Fit and draw and copy last point */
-        g_assert(!pc->red_curve->is_empty());
+        g_assert(!pc->green_curve->is_empty());
 
         /* Set up direction of next curve. */
         {
-            Geom::CubicBezier const * last_seg = dynamic_cast<Geom::CubicBezier const *>(pc->red_curve->last_segment());
+            Geom::CubicBezier const * last_seg = dynamic_cast<Geom::CubicBezier const *>(pc->green_curve->last_segment());
             g_assert( last_seg );      // Relevance: validity of (*last_seg)[2]
             pc->p[0] = last_seg->finalPoint();
             pc->npoints = 1;
@@ -705,18 +704,6 @@ interpolate(SPPencilContext *pc)
                                 ? Geom::Point(0, 0)
                                 : Geom::unit_vector(req_vec) );
         }
-
-        pc->green_curve->append_continuous(pc->red_curve, 0.0625);
-        SPCurve *curve = pc->red_curve->copy();
-
-        /// \todo fixme:
-        SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(pc->desktop), curve);
-        curve->unref();
-        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), pc->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-
-        pc->green_bpaths = g_slist_prepend(pc->green_bpaths, cshape);
-
-        pc->red_curve_is_valid = false;
     }
     g_free(b);
     g_free(points);
