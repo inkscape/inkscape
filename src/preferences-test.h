@@ -78,7 +78,7 @@ public:
         prefs->addObserver(obs);
         prefs->setInt(path, 10);
         TS_ASSERT_EQUALS(obs.value, 10);
-        prefs->setInt("some/other/random/path", 10);
+        prefs->setInt("/some/other/random/path", 10);
         TS_ASSERT_EQUALS(obs.value, 10); // value should not change
         
         prefs->removeObserver(obs);
