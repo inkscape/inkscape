@@ -65,7 +65,8 @@ Editor::Editor (gint /*argc*/, char **argv)
     sp_object_type_register ("sodipodi:namedview", SP_TYPE_NAMEDVIEW);
     sp_object_type_register ("sodipodi:guide", SP_TYPE_GUIDE);
 
-    Inkscape::Preferences::load();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->load(true, false);
 }
 
 bool

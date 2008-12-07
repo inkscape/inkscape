@@ -54,8 +54,11 @@ Preferences::Preferences() :
     _prefs_basename(PREFERENCES_FILE_NAME),
     _prefs_dir(""),
     _prefs_filename(""),
-    _writable(false),
-    _prefs_doc(NULL)
+    _prefs_doc(NULL),
+    _use_gui(true),
+    _quiet(false),
+    _loaded(false),
+    _writable(false)
 {
     // profile_path essentailly returns the argument prefixed by the profile directory.
     gchar *path = profile_path(NULL);
@@ -66,7 +69,7 @@ Preferences::Preferences() :
     _prefs_filename = path;
     g_free(path);
     
-    _load();
+    _loadDefaults();
 }
 
 Preferences::~Preferences()
@@ -99,12 +102,13 @@ void Preferences::_loadDefaults()
  * Tries to load the user's preferences.xml file. If there is none, creates it.
  * Displays dialog boxes on any errors.
  */
-void Preferences::_load()
-{
-    _loadDefaults();
-    
+void Preferences::load(bool use_gui, bool quiet)
+{   
     Glib::ustring const not_saved = _("Inkscape will run with default settings, "
                                 "and new settings will not be saved. ");
+    _use_gui = use_gui;
+    _quiet = quiet;
+    _loaded = true;
     
     // NOTE: After we upgrade to Glib 2.16, use Glib::ustring::compose
     
@@ -615,7 +619,8 @@ void Preferences::_keySplit(Glib::ustring const &pref_path, Glib::ustring &node_
 
 void Preferences::_errorDialog(Glib::ustring const &msg, Glib::ustring const &secondary)
 {
-    if (Preferences::use_gui) {
+    if (_quiet) return;
+    if (_use_gui) {
         Gtk::MessageDialog err(
             msg, false, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
         err.set_secondary_text(secondary);
@@ -631,7 +636,6 @@ Preferences::Entry const Preferences::_create_pref_value(Glib::ustring const &pa
     return Entry(path, ptr);
 }
 
-bool Preferences::use_gui = true;
 Preferences *Preferences::_instance = NULL;
 
 

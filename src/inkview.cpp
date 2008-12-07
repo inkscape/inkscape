@@ -210,8 +210,8 @@ main (int argc, const char **argv)
     LIBXML_TEST_VERSION
 
     Inkscape::GC::init();
-    Inkscape::Preferences::use_gui = false;
-    Inkscape::Preferences::load();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->load(false, true); // keep quiet about any failures
 
     gtk_init (&argc, (char ***) &argv);
 

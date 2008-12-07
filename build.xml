@@ -213,6 +213,7 @@
             <include name="dir-util-test.h"/>
             <include name="extract-uri-test.h"/>
             <include name="mod360-test.h"/>
+            <include name="preferences-test.h"/>
             <include name="round-test.h"/>
             <include name="sp-gradient-test.h"/>
             <include name="sp-style-elem-test.h"/>

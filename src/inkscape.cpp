@@ -750,9 +750,8 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     inkscape->argv0 = g_strdup(argv0);
 
     /* Load the preferences and menus; Later menu layout should be merged into prefs */
-    Inkscape::Preferences::use_gui = use_gui;
-    Inkscape::Preferences::load();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->load(use_gui, false);
     inkscape_load_menus(inkscape);
     sp_input_load_from_preferences();
 

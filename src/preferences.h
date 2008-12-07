@@ -196,10 +196,24 @@ public:
     // utility methods
     
     /**
-     * @name Save preferences to the disk.
+     * @name Load stored preferences and save them to the disk.
      * @{
      */
     
+    /**
+     * @brief Load the preferences from the default location.
+     *
+     * Loads the stored user preferences and enables saving them. If there's
+     * no preferences file in the expected location, it creates it. Any changes
+     * made to the preferences before loading will be overridden by the stored
+     * prefs. Not calling load() is sometimes useful, e.g. for testing.
+     *
+     * @param use_gui Whether to use dialogs to notify about errors when
+     * loading the preferences. Set to false in console mode.
+     * @param quiet Whether to output any messages about preference loading.
+     * If this is true, the use_gui parameter is ignored.
+     */
+    void load(bool use_gui=true, bool quiet=false);
     /**
      * @brief Save all preferences to the hard disk.
      *
@@ -372,6 +386,7 @@ public:
 
     /**
      * @name Access and manipulate the Preferences object.
+     * @{
      */
      
     /**
@@ -380,15 +395,6 @@ public:
     static Preferences *get() {
         if (!_instance) _instance = new Preferences();
         return _instance;
-    }
-    /**
-     * @brief Load the preferences.
-     *
-     * This method is automatically called from get(). It exists to supress
-     * possible compiler warnings over unused variables.
-     */
-    static void load() {
-        if (!_instance) _instance = new Preferences();
     }
     /**
      * @brief Unload all preferences and store them on the hard disk.
@@ -402,14 +408,6 @@ public:
             _instance = NULL;
         }
     }
-
-    /**
-     * @brief Whether to use GUI error notifications
-     *
-     * Set this to false when running Inkscape in command-line mode.
-     * Preference-related warnings will be printed to the console.
-     */
-    static bool use_gui;
     /*@}*/
     
 protected:
@@ -428,7 +426,6 @@ protected:
 private:
     Preferences();
     ~Preferences();
-    void _load();
     void _loadDefaults();
     void _getRawValue(Glib::ustring const &path, gchar const *&result);
     void _setRawValue(Glib::ustring const &path, gchar const *value);
@@ -444,8 +441,11 @@ private:
     std::string _prefs_basename; ///< Basename of the prefs file
     std::string _prefs_dir; ///< Directory in which to look for the prefs file
     std::string _prefs_filename; ///< Full filename (with directory) of the prefs file
-    bool _writable; ///< Will the preferences be saved at exit?
     XML::Document *_prefs_doc; ///< XML document storing all the preferences
+    bool _use_gui; ///< Use GUI error notifications?
+    bool _quiet; ///< Display any messages about loading?
+    bool _loaded; ///< Was a load attempt made?
+    bool _writable; ///< Will the preferences be saved at exit?
     
     /// Wrapper class for XML node observers
     class PrefNodeObserver;

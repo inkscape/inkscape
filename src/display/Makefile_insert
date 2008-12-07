@@ -129,7 +129,7 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-light-types.h
 
 display_bezier_utils_test_SOURCES = display/bezier-utils-test.cpp
-display_bezier_utils_test_LDADD = libnr/libnr.a -lglib-2.0
+display_bezier_utils_test_LDADD = libnr/libnr.a -lglib-2.0 2geom/lib2geom.a
 
 # Copy/paste from libnr
 display/test-display-main.cpp: display/test-display.cpp

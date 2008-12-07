@@ -12,10 +12,10 @@ static inline unsigned int DIV_ROUND(unsigned int v, unsigned int divisor) { ret
 static inline unsigned char NR_PREMUL_111(unsigned int c, unsigned int a) { return static_cast<unsigned char>(DIV_ROUND(c*a, 255)); }
 
 template<PIXEL_FORMAT format>
-static int IMGCMP(const unsigned char* a, const unsigned char* b, size_t n) { return memcmp(a, b, n); }
+int IMGCMP(const unsigned char* a, const unsigned char* b, size_t n) { return memcmp(a, b, n); }
 
 template<>
-static int IMGCMP<R8G8B8A8N>(const unsigned char* a, const unsigned char* b, size_t n)
+int IMGCMP<R8G8B8A8N>(const unsigned char* a, const unsigned char* b, size_t n)
 {
     // If two pixels each have their alpha channel set to zero they're equivalent
     //   Note that this doesn't work for premultiplied values, as their color values should

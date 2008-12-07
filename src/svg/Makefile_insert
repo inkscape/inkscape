@@ -52,6 +52,8 @@ svg_test_svg_includes = \
 
 svg_libtest_svg_a_SOURCES = \
 	svg/test-svg.cpp	\
+	preferences.cpp		\
+	sp-object.cpp		\
 	$(svg_test_svg_includes)
 
 svg_libtest_stubs_a_SOURCES = \
@@ -62,9 +64,15 @@ svg_test_svg_SOURCES = \
 	$(svg_test_svg_includes)
 
 svg_test_svg_LDADD = \
-	svg/libspsvg.a	\
+	svg/libspsvg.a		\
 	svg/libtest-svg.a 	\
 	svg/libtest-stubs.a 	\
 	2geom/lib2geom.a	\
-	libnr/libnr.a \
+	libnr/libnr.a		\
+	xml/libspxml.a		\
+	util/libinkutil.a	\
+	io/libio.a		\
+	libinkpost.a		\
+	debug/libinkdebug.a	\
+	libcroco/libcroco.a	\
 	$(INKSCAPE_LIBS)

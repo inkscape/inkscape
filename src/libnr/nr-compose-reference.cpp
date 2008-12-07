@@ -19,19 +19,19 @@ static unsigned int pixelSize[] = { 1, 3, 4, 4 };
 template<PIXEL_FORMAT resultFormat, PIXEL_FORMAT backgroundFormat, PIXEL_FORMAT foregroundFormat>
 static void composePixel(unsigned char *d, const unsigned char *s, unsigned int alpha);
 
-template<> static void composePixel<R8G8B8, R8G8B8, R8G8B8A8N>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
+template<> void composePixel<R8G8B8, R8G8B8, R8G8B8A8N>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
 	d[0] = DIV_ROUND((255*255 - alpha*s[3]) * d[0] + alpha*s[3]*s[0], 255*255);
 	d[1] = DIV_ROUND((255*255 - alpha*s[3]) * d[1] + alpha*s[3]*s[1], 255*255);
 	d[2] = DIV_ROUND((255*255 - alpha*s[3]) * d[2] + alpha*s[3]*s[2], 255*255);
 }
 
-template<> static void composePixel<R8G8B8, R8G8B8, R8G8B8A8P>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
+template<> void composePixel<R8G8B8, R8G8B8, R8G8B8A8P>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
 	d[0] = DIV_ROUND((255*255 - alpha*s[3]) * d[0] + 255*alpha*s[0], 255*255);
 	d[1] = DIV_ROUND((255*255 - alpha*s[3]) * d[1] + 255*alpha*s[1], 255*255);
 	d[2] = DIV_ROUND((255*255 - alpha*s[3]) * d[2] + 255*alpha*s[2], 255*255);
 }
 
-template<> static void composePixel<R8G8B8A8N, EMPTY, R8G8B8A8N>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
+template<> void composePixel<R8G8B8A8N, EMPTY, R8G8B8A8N>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
 	unsigned int newa = 255*255 - (255*255 - alpha*s[3]);
 	d[0] = s[0];//newa == 0 ? 0 : DIV_ROUND(alpha*s[3]*s[0], newa);
 	d[1] = s[1];//newa == 0 ? 0 : DIV_ROUND(alpha*s[3]*s[1], newa);
@@ -39,7 +39,7 @@ template<> static void composePixel<R8G8B8A8N, EMPTY, R8G8B8A8N>(unsigned char *
 	d[3] = DIV_ROUND(newa, 255);
 }
 
-template<> static void composePixel<R8G8B8A8N, EMPTY, R8G8B8A8P>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
+template<> void composePixel<R8G8B8A8N, EMPTY, R8G8B8A8P>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
 	unsigned int newa = 255*255 - (255*255 - alpha*s[3]);
 	d[0] = s[3] == 0 ? 0 : DIV_ROUND(255*s[0], s[3]);//newa == 0 ? 0 : DIV_ROUND(255*alpha*s[0], newa);
 	d[1] = s[3] == 0 ? 0 : DIV_ROUND(255*s[1], s[3]);//newa == 0 ? 0 : DIV_ROUND(255*alpha*s[1], newa);
@@ -47,7 +47,7 @@ template<> static void composePixel<R8G8B8A8N, EMPTY, R8G8B8A8P>(unsigned char *
 	d[3] = DIV_ROUND(newa, 255);
 }
 
-template<> static void composePixel<R8G8B8A8N, R8G8B8A8N, R8G8B8A8N>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
+template<> void composePixel<R8G8B8A8N, R8G8B8A8N, R8G8B8A8N>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
 	if ( d[3] == 0 ) {
 		composePixel<R8G8B8A8N, EMPTY, R8G8B8A8N>(d, s, alpha);
 	} else if ( alpha*s[3] == 0 ) {
@@ -61,7 +61,7 @@ template<> static void composePixel<R8G8B8A8N, R8G8B8A8N, R8G8B8A8N>(unsigned ch
 	}
 }
 
-template<> static void composePixel<R8G8B8A8N, R8G8B8A8N, R8G8B8A8P>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
+template<> void composePixel<R8G8B8A8N, R8G8B8A8N, R8G8B8A8P>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
 	if ( d[3] == 0 ) {
 		composePixel<R8G8B8A8N, EMPTY, R8G8B8A8P>(d, s, alpha);
 	} else if ( alpha*s[3] == 0 ) {
@@ -75,28 +75,28 @@ template<> static void composePixel<R8G8B8A8N, R8G8B8A8N, R8G8B8A8P>(unsigned ch
 	}
 }
 
-template<> static void composePixel<R8G8B8A8P, EMPTY, R8G8B8A8N>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
+template<> void composePixel<R8G8B8A8P, EMPTY, R8G8B8A8N>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
 	d[0] = DIV_ROUND(alpha*s[3]*s[0], 255*255);
 	d[1] = DIV_ROUND(alpha*s[3]*s[1], 255*255);
 	d[2] = DIV_ROUND(alpha*s[3]*s[2], 255*255);
 	d[3] = DIV_ROUND(255*255 - (255*255 - alpha*s[3]), 255);
 }
 
-template<> static void composePixel<R8G8B8A8P, EMPTY, R8G8B8A8P>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
+template<> void composePixel<R8G8B8A8P, EMPTY, R8G8B8A8P>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
 	d[0] = DIV_ROUND(alpha*s[0], 255);
 	d[1] = DIV_ROUND(alpha*s[1], 255);
 	d[2] = DIV_ROUND(alpha*s[2], 255);
 	d[3] = DIV_ROUND(255*255 - (255*255 - alpha*s[3]), 255);
 }
 
-template<> static void composePixel<R8G8B8A8P, R8G8B8A8P, R8G8B8A8N>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
+template<> void composePixel<R8G8B8A8P, R8G8B8A8P, R8G8B8A8N>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
 	d[0] = DIV_ROUND((255*255 - alpha*s[3]) * d[0] + alpha*s[3]*s[0], 255*255);
 	d[1] = DIV_ROUND((255*255 - alpha*s[3]) * d[1] + alpha*s[3]*s[1], 255*255);
 	d[2] = DIV_ROUND((255*255 - alpha*s[3]) * d[2] + alpha*s[3]*s[2], 255*255);
 	d[3] = DIV_ROUND(255*255*255 - (255*255 - alpha*s[3]) * (255 - d[3]), 255*255);
 }
 
-template<> static void composePixel<R8G8B8A8P, R8G8B8A8P, R8G8B8A8P>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
+template<> void composePixel<R8G8B8A8P, R8G8B8A8P, R8G8B8A8P>(unsigned char *d, const unsigned char *s, unsigned int alpha) {
 	d[0] = DIV_ROUND((255*255 - alpha*s[3]) * d[0] + 255 * alpha*s[0], 255*255);
 	d[1] = DIV_ROUND((255*255 - alpha*s[3]) * d[1] + 255 * alpha*s[1], 255*255);
 	d[2] = DIV_ROUND((255*255 - alpha*s[3]) * d[2] + 255 * alpha*s[2], 255*255);
