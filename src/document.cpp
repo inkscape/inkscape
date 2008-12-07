@@ -510,6 +510,7 @@ sp_document_set_width (SPDocument *document, gdouble width, const SPUnit *unit)
     if (root->width.unit == SVGLength::PERCENT && root->viewBox_set) { // set to viewBox=
         root->viewBox.x1 = root->viewBox.x0 + sp_units_get_pixels (width, *unit);
     } else { // set to width=
+        gdouble old_computed = root->width.computed;
         root->width.computed = sp_units_get_pixels (width, *unit);
         /* SVG does not support meters as a unit, so we must translate meters to
          * cm when writing */
@@ -520,6 +521,9 @@ sp_document_set_width (SPDocument *document, gdouble width, const SPUnit *unit)
             root->width.value = width;
             root->width.unit = (SVGLength::Unit) sp_unit_get_svg_unit(unit);
         }
+
+        if (root->viewBox_set)
+            root->viewBox.x1 = root->viewBox.x0 + (root->width.computed / old_computed) * (root->viewBox.x1 - root->viewBox.x0);
     }
 
     SP_OBJECT (root)->updateRepr();
@@ -532,6 +536,7 @@ void sp_document_set_height (SPDocument * document, gdouble height, const SPUnit
     if (root->height.unit == SVGLength::PERCENT && root->viewBox_set) { // set to viewBox=
         root->viewBox.y1 = root->viewBox.y0 + sp_units_get_pixels (height, *unit);
     } else { // set to height=
+        gdouble old_computed = root->height.computed;
         root->height.computed = sp_units_get_pixels (height, *unit);
         /* SVG does not support meters as a unit, so we must translate meters to
          * cm when writing */
@@ -542,6 +547,9 @@ void sp_document_set_height (SPDocument * document, gdouble height, const SPUnit
             root->height.value = height;
             root->height.unit = (SVGLength::Unit) sp_unit_get_svg_unit(unit);
         }
+
+        if (root->viewBox_set)
+            root->viewBox.y1 = root->viewBox.y0 + (root->height.computed / old_computed) * (root->viewBox.y1 - root->viewBox.y0);
     }
 
     SP_OBJECT (root)->updateRepr();
