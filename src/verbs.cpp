@@ -984,7 +984,7 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
         case SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER:
             sp_selection_next_patheffect_param(dt);
             break;
-        case SP_VERB_EDIT_EMBED_COLOR_PROFILE:
+        case SP_VERB_EDIT_LINK_COLOR_PROFILE:
             break;
         case SP_VERB_EDIT_REMOVE_COLOR_PROFILE:
             break;
@@ -2713,10 +2713,10 @@ Verb *Verb::_base_verbs[] = {
     new LockAndHideVerb(SP_VERB_UNHIDE_ALL_IN_ALL_LAYERS, "UnhideAllInAllLayers", N_("Unhide All in All Layers"),
                        N_("Unhide all objects in all layers"), NULL),
     /*Color Management*/
-    new EditVerb(SP_VERB_EDIT_EMBED_COLOR_PROFILE, "EmbedColorProfile", N_("Embed Color Profile"),
-                 N_("Embed an ICC color profile"), NULL),
+    new EditVerb(SP_VERB_EDIT_LINK_COLOR_PROFILE, "LinkColorProfile", N_("Link Color Profile"),
+                 N_("Link an ICC color profile"), NULL),
     new EditVerb(SP_VERB_EDIT_REMOVE_COLOR_PROFILE, "RemoveColorProfile", N_("Remove Color Profile"),
-                 N_("Remove an embedded ICC color profile"), NULL),
+                 N_("Remove a linked ICC color profile"), NULL),
     /* Footer */
     new Verb(SP_VERB_LAST, " '\"invalid id", NULL, NULL, NULL)
 };

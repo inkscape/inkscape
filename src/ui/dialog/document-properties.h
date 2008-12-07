@@ -44,7 +44,7 @@ public:
     static void destroy();
 
     void  update_gridspage();
-    
+
 protected:
     void  build_page();
     void  build_grid();
@@ -60,10 +60,10 @@ protected:
     virtual void  on_response (int);
 #if ENABLE_LCMS
     void  populate_available_profiles();
-    void  populate_embedded_profiles_box();
-    void  onEmbedProfile();
-    void  remove_profile();
-    void  embedded_profiles_list_button_release(GdkEventButton* event);
+    void  populate_linked_profiles_box();
+    void  linkSelectedProfile();
+    void  removeSelectedProfile();
+    void  linked_profiles_list_button_release(GdkEventButton* event);
     void  create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
 #endif // ENABLE_LCMS
 
@@ -117,19 +117,19 @@ protected:
     //---------------------------------------------------------------
     Gtk::Menu   _menu;
     Gtk::OptionMenu   _combo_avail;
-    Gtk::Button         _embed_btn;
-    class EmbeddedProfilesColumns : public Gtk::TreeModel::ColumnRecord
+    Gtk::Button         _link_btn;
+    class LinkedProfilesColumns : public Gtk::TreeModel::ColumnRecord
         {
         public:
-            EmbeddedProfilesColumns()
+            LinkedProfilesColumns()
                { add(nameColumn); add(previewColumn);  }
             Gtk::TreeModelColumn<Glib::ustring> nameColumn;
             Gtk::TreeModelColumn<Glib::ustring> previewColumn;
         };
-    EmbeddedProfilesColumns _EmbeddedProfilesListColumns;
-    Glib::RefPtr<Gtk::ListStore> _EmbeddedProfilesListStore;
-    Gtk::TreeView _EmbeddedProfilesList;
-    Gtk::ScrolledWindow _EmbeddedProfilesListScroller;
+    LinkedProfilesColumns _LinkedProfilesListColumns;
+    Glib::RefPtr<Gtk::ListStore> _LinkedProfilesListStore;
+    Gtk::TreeView _LinkedProfilesList;
+    Gtk::ScrolledWindow _LinkedProfilesListScroller;
     Gtk::Menu _EmbProfContextMenu;
     //---------------------------------------------------------------
     Gtk::Notebook   _grids_notebook;
@@ -150,7 +150,7 @@ private:
 
     // callback methods for buttons on grids page.
     void onNewGrid();
-    void onRemoveGrid();    
+    void onRemoveGrid();
 };
 
 } // namespace Dialog

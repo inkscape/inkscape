@@ -496,7 +496,7 @@ DocumentProperties::populate_available_profiles(){
 }
 
 void
-DocumentProperties::onEmbedProfile()
+DocumentProperties::linkSelectedProfile()
 {
 //store this profile in the SVG document (create <color-profile> element in the XML)
     // TODO remove use of 'active' desktop
@@ -523,29 +523,29 @@ DocumentProperties::onEmbedProfile()
         //Inkscape::GC::release(defsRepr);
 
         // inform the document, so we can undo
-        sp_document_done(desktop->doc(), SP_VERB_EDIT_EMBED_COLOR_PROFILE, _("Embed Color Profile"));
+        sp_document_done(desktop->doc(), SP_VERB_EDIT_LINK_COLOR_PROFILE, _("Link Color Profile"));
 
-        populate_embedded_profiles_box();
+        populate_linked_profiles_box();
     }
 }
 
 void
-DocumentProperties::populate_embedded_profiles_box()
+DocumentProperties::populate_linked_profiles_box()
 {
-    _EmbeddedProfilesListStore->clear();
+    _LinkedProfilesListStore->clear();
     const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "iccprofile" );
     if (current) _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
-        Gtk::TreeModel::Row row = *(_EmbeddedProfilesListStore->append());
-        row[_EmbeddedProfilesListColumns.nameColumn] = prof->name;
-//        row[_EmbeddedProfilesListColumns.previewColumn] = "Color Preview";
+        Gtk::TreeModel::Row row = *(_LinkedProfilesListStore->append());
+        row[_LinkedProfilesListColumns.nameColumn] = prof->name;
+//        row[_LinkedProfilesListColumns.previewColumn] = "Color Preview";
         current = g_slist_next(current);
     }
 }
 
-void DocumentProperties::embedded_profiles_list_button_release(GdkEventButton* event)
+void DocumentProperties::linked_profiles_list_button_release(GdkEventButton* event)
 {
     if((event->type == GDK_BUTTON_RELEASE) && (event->button == 3)) {
         _EmbProfContextMenu.popup(event->button, event->time);
@@ -561,13 +561,13 @@ void DocumentProperties::create_popup_menu(Gtk::Widget& parent, sigc::slot<void>
     _EmbProfContextMenu.accelerate(parent);
 }
 
-void DocumentProperties::remove_profile(){
+void DocumentProperties::removeSelectedProfile(){
     Glib::ustring name;
-    if(_EmbeddedProfilesList.get_selection()) {
-        Gtk::TreeModel::iterator i = _EmbeddedProfilesList.get_selection()->get_selected();
+    if(_LinkedProfilesList.get_selection()) {
+        Gtk::TreeModel::iterator i = _LinkedProfilesList.get_selection()->get_selected();
 
         if(i){
-            name = (*i)[_EmbeddedProfilesListColumns.nameColumn];
+            name = (*i)[_LinkedProfilesListColumns.nameColumn];
         } else {
             return;
         }
@@ -579,12 +579,12 @@ void DocumentProperties::remove_profile(){
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
         if (!name.compare(prof->name)){
             sp_repr_unparent(obj->repr);
-            sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_COLOR_PROFILE, _("Remove embedded color profile"));
+            sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_COLOR_PROFILE, _("Remove linked color profile"));
         }
         current = g_slist_next(current);
     }
 
-    populate_embedded_profiles_box();
+    populate_linked_profiles_box();
 }
 
 void
@@ -592,20 +592,20 @@ DocumentProperties::build_cms()
 {
     _page_cms.show();
 
-    Gtk::Label *label_embed= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
-    label_embed->set_markup (_("<b>Embedded Color Profiles:</b>"));
+    Gtk::Label *label_link= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
+    label_link->set_markup (_("<b>Linked Color Profiles:</b>"));
     Gtk::Label *label_avail = manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
     label_avail->set_markup (_("<b>Available Color Profiles:</b>"));
 
-    _embed_btn.set_label(_("Embed Profile"));
+    _link_btn.set_label(_("Link Profile"));
 
     _page_cms.set_spacing(4);
     gint row = 0;
 
-    label_embed->set_alignment(0.0);
-    _page_cms.table().attach(*label_embed, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    label_link->set_alignment(0.0);
+    _page_cms.table().attach(*label_link, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
-    _page_cms.table().attach(_EmbeddedProfilesListScroller, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_cms.table().attach(_LinkedProfilesListScroller, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
 
     Gtk::HBox* spacer = Gtk::manage(new Gtk::HBox());
@@ -617,7 +617,7 @@ DocumentProperties::build_cms()
     _page_cms.table().attach(*label_avail, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
     _page_cms.table().attach(_combo_avail, 0, 2, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
-    _page_cms.table().attach(_embed_btn, 2, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_cms.table().attach(_link_btn, 2, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
 
     populate_available_profiles();
 
@@ -625,31 +625,31 @@ DocumentProperties::build_cms()
     _combo_avail.set_history(0);
     _combo_avail.show_all();
 
-    //# Set up the Embedded Profiles combo box
-    _EmbeddedProfilesListStore = Gtk::ListStore::create(_EmbeddedProfilesListColumns);
-    _EmbeddedProfilesList.set_model(_EmbeddedProfilesListStore);
-    _EmbeddedProfilesList.append_column(_("Profile Name"), _EmbeddedProfilesListColumns.nameColumn);
-//    _EmbeddedProfilesList.append_column(_("Color Preview"), _EmbeddedProfilesListColumns.previewColumn);
-    _EmbeddedProfilesList.set_headers_visible(false);
-// TODO restore?    _EmbeddedProfilesList.set_fixed_height_mode(true);
+    //# Set up the Linked Profiles combo box
+    _LinkedProfilesListStore = Gtk::ListStore::create(_LinkedProfilesListColumns);
+    _LinkedProfilesList.set_model(_LinkedProfilesListStore);
+    _LinkedProfilesList.append_column(_("Profile Name"), _LinkedProfilesListColumns.nameColumn);
+//    _LinkedProfilesList.append_column(_("Color Preview"), _LinkedProfilesListColumns.previewColumn);
+    _LinkedProfilesList.set_headers_visible(false);
+// TODO restore?    _LinkedProfilesList.set_fixed_height_mode(true);
 
-    populate_embedded_profiles_box();
+    populate_linked_profiles_box();
 
-    _EmbeddedProfilesListScroller.add(_EmbeddedProfilesList);
-    _EmbeddedProfilesListScroller.set_shadow_type(Gtk::SHADOW_IN);
-    _EmbeddedProfilesListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
-    _EmbeddedProfilesListScroller.set_size_request(-1, 90);
+    _LinkedProfilesListScroller.add(_LinkedProfilesList);
+    _LinkedProfilesListScroller.set_shadow_type(Gtk::SHADOW_IN);
+    _LinkedProfilesListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
+    _LinkedProfilesListScroller.set_size_request(-1, 90);
 
-    _embed_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onEmbedProfile));
+    _link_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::linkSelectedProfile));
 
-    _EmbeddedProfilesList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::embedded_profiles_list_button_release));
-    create_popup_menu(_EmbeddedProfilesList, sigc::mem_fun(*this, &DocumentProperties::remove_profile));
+    _LinkedProfilesList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::linked_profiles_list_button_release));
+    create_popup_menu(_LinkedProfilesList, sigc::mem_fun(*this, &DocumentProperties::removeSelectedProfile));
 
     const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "defs" );
     if (current) {
         _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
     }
-    _emb_profiles_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_embedded_profiles_box));
+    _emb_profiles_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_linked_profiles_box));
 }
 #endif // ENABLE_LCMS
 
@@ -796,7 +796,7 @@ DocumentProperties::update()
     //------------------------------------------------Color Management page
 
 #if ENABLE_LCMS
-    populate_embedded_profiles_box();
+    populate_linked_profiles_box();
     populate_available_profiles();
 #endif // ENABLE_LCMS
 
