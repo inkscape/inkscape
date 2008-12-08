@@ -115,15 +115,16 @@ public:
 
     void testContainerSize()
     {
+        // max_size() and size() return ListContainer<>::size_type which is unsigned int
         Inkscape::Util::ListContainer<int> empty;
         TS_ASSERT(empty.empty());
-        TS_ASSERT_EQUALS(static_cast<int>(empty.size()), 0);
+        TS_ASSERT_EQUALS(empty.size(), 0u);
         int const a[] = { 1, 2, 3 };
         Inkscape::Util::ListContainer<int> c_a(ARRAY_RANGE(a));
         TS_ASSERT(!c_a.empty());
-        TS_ASSERT_EQUALS(static_cast<int>(c_a.size()), 3);
+        TS_ASSERT_EQUALS(c_a.size(), 3u);
 
-        TS_ASSERT_LESS_THAN(0, static_cast<int>(empty.max_size()));
+        TS_ASSERT_LESS_THAN(0u, empty.max_size());
     }
 
     void testAppending()

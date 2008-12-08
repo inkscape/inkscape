@@ -399,19 +399,33 @@ style_test_LDADD = $(all_libs)
 inkscape_version.h: ../configure.ac
 	echo '#define INKSCAPE_VERSION "$(VERSION)"' > inkscape_version.h
 
-test_src_includes = \
-		$(srcdir)/MultiPrinter.h  \
-		$(srcdir)/TRPIFormatter.h \
-		$(srcdir)/PylogFormatter.h \
+test_src_includes =				\
+		$(srcdir)/MultiPrinter.h	\
+		$(srcdir)/TRPIFormatter.h	\
+		$(srcdir)/PylogFormatter.h	\
 		$(srcdir)/attributes-test.h	\
 		$(srcdir)/color-profile-test.h	\
 		$(srcdir)/dir-util-test.h	\
 		$(srcdir)/extract-uri-test.h	\
-		$(srcdir)/mod360-test.h	\
-		$(srcdir)/round-test.h	\
-		$(srcdir)/preferences-test.h \
+		$(srcdir)/mod360-test.h		\
+		$(srcdir)/round-test.h		\
+		$(srcdir)/preferences-test.h	\
 		$(srcdir)/sp-gradient-test.h	\
 		$(srcdir)/sp-style-elem-test.h	\
-		$(srcdir)/style-test.h	\
-		$(srcdir)/test-helpers.h  \
+		$(srcdir)/style-test.h		\
+		$(srcdir)/test-helpers.h	\
 		$(srcdir)/verbs-test.h
+
+test-src.cpp: \
+		$(test_src_includes)
+		$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh --template=$(srcdir)/selfname.tpl -root -o test-src.cpp	\
+		$(test_src_includes)
+
+test_src_SOURCES =		\
+	test-src.cpp		\
+	$(test_src_includes)
+
+
+test_src_LDADD =	\
+	$(all_libs)	\
+	io/libio.a

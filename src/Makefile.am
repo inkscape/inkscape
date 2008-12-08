@@ -30,6 +30,7 @@ INCLUDES =	\
 	-I$(top_srcdir)/cxxtest \
 	$(WIN32_CFLAGS)
 
+# Include all partial makefiles from subdirectories
 include Makefile_insert
 include application/Makefile_insert
 include bind/Makefile_insert
@@ -74,8 +75,11 @@ include util/Makefile_insert
 include trace/Makefile_insert
 include 2geom/Makefile_insert
 
+# Executables compiled by "make" and installed by "make install"
 bin_PROGRAMS = inkscape inkview
 
+# Libraries which should be compiled by "make" but not installed
+# Currently we use one library per source directory.
 noinst_LIBRARIES =	\
 	libinkpre.a	\
 	application/libinkapp.a	\
@@ -119,19 +123,13 @@ noinst_LIBRARIES =	\
 	2geom/lib2geom.a	\
 	libinkpost.a
 
-check_LIBRARIES =	\
-	display/libtest-display.a	\
-	helper/libtest-helper.a	\
-	libnr/libtest-nr.a	\
-	svg/libtest-svg.a	\
-	util/libtest-util.a	\
-	xml/libtest-xml.a
-
+# Extra files to remove when doing "make distclean"
 DISTCLEANFILES =	\
 	helper/sp-marshal.cpp	\
 	helper/sp-marshal.h	\
 	inkscape_version.h
 
+# Extra files not mentioned as sources to include in the source tarball
 EXTRA_DIST =	\
 	Doxyfile	\
 	sp-skeleton.cpp sp-skeleton.h	\
@@ -196,6 +194,14 @@ EXTRA_PROGRAMS =	\
 	inkview 	\
 	libnr/testnr
 
+
+##################################
+### TESTING STUFF (make check) ###
+##################################
+
+# List of all tests to be run. Should contain one per directory.
+# Automake 1.10 appends EXEEXT automatically, so this should be changed
+# when we move to Automake 1.10.
 TESTS =	\
 	test-src$(EXEEXT)	\
 	style-test$(EXEEXT)	\
@@ -219,18 +225,15 @@ TESTS =	\
 	xml/quote-test$(EXEEXT)	\
 	xml/repr-action-test$(EXEEXT)
 
-# As of 2007-01-13, these are failing...
-#XFAIL_TESTS = \
-#	test-src$(EXEEXT)	\
-#	style-test$(EXEEXT)
-
 # streamtest is unfinished and can't handle the relocations done during
 # "make distcheck".  Not needed for the 0.41 release.
 #	io/streamtest$(EXEEXT)
-
 # automake adds $(EXEEXT) to check_PROGRAMS items but not to TESTS items:
 # TESTS items can be scripts etc.
 
+# List of all programs that should be built before testing. Note that this is
+# not necessarily equal to TESTS, because some tests can be scripts that don't
+# need to be built.
 check_PROGRAMS =	\
 	test-src	\
 	style-test	\
@@ -253,23 +256,16 @@ check_PROGRAMS =	\
 	xml/test-xml	\
 	xml/quote-test	\
 	xml/repr-action-test
-
 #	io/streamtest
 
-
-test-src.cpp: \
-		$(test_src_includes)
-		$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh --template=$(srcdir)/selfname.tpl -root -o test-src.cpp	\
-		$(test_src_includes)
-
-test_src_SOURCES = \
-	test-src.cpp $(test_src_includes)
-
-
-test_src_LDADD =	\
-	$(all_libs)	\
-	io/libio.a	
-
+# Additional libraries needed by the tests - to be removed later.
+check_LIBRARIES =	\
+	display/libtest-display.a	\
+	helper/libtest-helper.a	\
+	libnr/libtest-nr.a	\
+	svg/libtest-svg.a	\
+	util/libtest-util.a	\
+	xml/libtest-xml.a
 
 # ################################################
 #

@@ -45,19 +45,24 @@ svg/test-svg.cpp: $(svg_test_svg_includes) svg/Makefile_insert
 svg_test_svg_includes = \
 	$(srcdir)/svg/css-ostringstream-test.h	\
 	$(srcdir)/svg/stringstream-test.h	\
-	$(srcdir)/svg/svg-affine-test.h \
-	$(srcdir)/svg/svg-color-test.h \
-	$(srcdir)/svg/svg-length-test.h \
+	$(srcdir)/svg/svg-affine-test.h		\
+	$(srcdir)/svg/svg-color-test.h		\
+	$(srcdir)/svg/svg-length-test.h		\
 	$(srcdir)/svg/svg-path-geom-test.h
 
 svg_libtest_svg_a_SOURCES = \
 	svg/test-svg.cpp	\
 	$(svg_test_svg_includes)
 
-svg_test_svg_SOURCES = \
+svg_test_svg_SOURCES =		\
 	svg/test-svg-main.cpp	\
 	$(svg_test_svg_includes)
 
-svg_test_svg_LDADD = \
+svg_test_svg_LDADD =		\
+	svg/libspsvg.a		\
 	svg/libtest-svg.a 	\
-	$(all_libs)
+	test-stubs.o 		\
+	2geom/lib2geom.a	\
+	libnr/libnr.a		\
+	$(INKSCAPE_LIBS)
+

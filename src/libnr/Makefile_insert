@@ -128,16 +128,17 @@ libnr_test_nr_SOURCES =	\
 	libnr/test-nr-main.cpp \
 	$(libnr_test_nr_includes)
 
-libnr_test_nr_LDADD =	\
-	libnr/libnr.a	\
+libnr_test_nr_LDADD =		\
+	libnr/libnr.a		\
 	libnr/libtest-nr.a	\
+	2geom/lib2geom.a	\
 	-lglib-2.0
 
 #	-L/usr/X11R6/lib
 #	-lX11
 
 libnr_in_svg_plane_test_SOURCES = libnr/in-svg-plane-test.cpp
-libnr_in_svg_plane_test_LDADD = libnr/libnr.a -lglib-2.0
+libnr_in_svg_plane_test_LDADD = libnr/libnr.a 2geom/lib2geom.a -lglib-2.0
 
 libnr_nr_types_test_SOURCES = libnr/nr-types-test.cpp
 libnr_nr_types_test_LDADD = libnr/libnr.a -lglib-2.0

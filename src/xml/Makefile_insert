@@ -73,11 +73,11 @@ xml_test_xml_SOURCES =	\
 
 xml_test_xml_LDADD =	\
 	xml/libtest-xml.a	\
-	xml/libspxml.a	\
+	xml/libspxml.a		\
 	util/libinkutil.a	\
-	svg/libspsvg.a	\
-	svg/libtest-stubs.a	\
-	libinkpost.a	\
+	svg/libspsvg.a		\
+	test-stubs.o		\
+	libinkpost.a		\
 	debug/libinkdebug.a	\
 	$(INKSCAPE_LIBS)
 
@@ -87,7 +87,7 @@ xml_repr_action_test_SOURCES = \
 xml_repr_action_test_LDADD = \
 	xml/libspxml.a	\
 	svg/libspsvg.a	\
-	svg/libtest-stubs.a	\
+	libtest-stubs.a	\
 	util/libinkutil.a	\
 	libinkpost.a	\
 	debug/libinkdebug.a	\
