@@ -124,7 +124,6 @@ check_LIBRARIES =	\
 	helper/libtest-helper.a	\
 	libnr/libtest-nr.a	\
 	svg/libtest-svg.a	\
-	svg/libtest-stubs.a	\
 	util/libtest-util.a	\
 	xml/libtest-xml.a
 

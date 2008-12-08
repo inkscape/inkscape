@@ -56,7 +56,7 @@ helper/sp-marshal.cpp: helper/sp-marshal.list helper/sp-marshal.h
 	then rm helper/tmp.sp-marshal.cpp; \
 	else mv helper/tmp.sp-marshal.cpp helper/sp-marshal.cpp; fi
 
-helper/sp-marshal.cpp helper/sp-marshal.h: Makefile
+helper/sp-marshal.cpp helper/sp-marshal.h: helper/sp-marshal.list
 
 helper_units_test_SOURCES = helper/units-test.cpp
 helper_units_test_LDADD = helper/libspchelp.a -lglib-2.0
