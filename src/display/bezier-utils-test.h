@@ -21,9 +21,8 @@ static bool range_approx_equal(double const a[], double const b[], unsigned cons
 
 static inline bool point_approx_equal(Geom::Point const &a, Geom::Point const &b, double const eps)
 {
-    using Geom::X; using Geom::Y;
-    return ( NR_DF_TEST_CLOSE(a[X], b[X], eps) &&
-             NR_DF_TEST_CLOSE(a[Y], b[Y], eps) );
+    return ( NR_DF_TEST_CLOSE(a[Geom::X], b[Geom::X], eps) &&
+             NR_DF_TEST_CLOSE(a[Geom::Y], b[Geom::Y], eps) );
 }
 
 static inline double square(double const x) {

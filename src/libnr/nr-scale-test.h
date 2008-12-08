@@ -2,8 +2,6 @@
 
 #include <libnr/nr-scale.h>
 #include <libnr/nr-scale-ops.h>
-using NR::X;
-using NR::Y;
 
 class NrScaleTest : public CxxTest::TestSuite
 {
@@ -30,8 +28,8 @@ public:
 
     void testXY_CtorArrayOperator(void)
     {
-        TS_ASSERT_EQUALS( sa[X], 1.5 );
-        TS_ASSERT_EQUALS( sa[Y], 2.0 );
+        TS_ASSERT_EQUALS( sa[NR::X], 1.5 );
+        TS_ASSERT_EQUALS( sa[NR::Y], 2.0 );
         TS_ASSERT_EQUALS( sa[0u], 1.5 );
         TS_ASSERT_EQUALS( sa[1u], 2.0 );
     }
@@ -54,8 +52,8 @@ public:
 
     void testPointCtor(void)
     {
-        TS_ASSERT_EQUALS( sb[X], b[X] );
-        TS_ASSERT_EQUALS( sb[Y], b[Y] );
+        TS_ASSERT_EQUALS( sb[NR::X], b[NR::X] );
+        TS_ASSERT_EQUALS( sb[NR::Y], b[NR::Y] );
     }
 
     void testOpStarPointScale(void)

@@ -11,8 +11,6 @@
 #include "color-profile.h"
 #include "color-profile-fns.h"
 
-using Inkscape::ColorProfile;
-
 class ColorProfileTest : public CxxTest::TestSuite
 {
 public:
@@ -33,7 +31,7 @@ public:
 
     static void createSuiteSubclass( ColorProfileTest*& dst )
     {
-        ColorProfile *prof = static_cast<ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
+        Inkscape::ColorProfile *prof = static_cast<Inkscape::ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
         if ( prof ) {
             if ( prof->rendering_intent == (guint)Inkscape::RENDERING_INTENT_UNKNOWN ) {
                 TS_ASSERT_EQUALS( prof->rendering_intent, (guint)Inkscape::RENDERING_INTENT_UNKNOWN );
@@ -76,7 +74,7 @@ public:
             {"auto2", (guint)Inkscape::RENDERING_INTENT_UNKNOWN},
         };
 
-        ColorProfile *prof = static_cast<ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
+        Inkscape::ColorProfile *prof = static_cast<Inkscape::ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
         TS_ASSERT( prof );
         SP_OBJECT(prof)->document = _doc;
 
@@ -96,7 +94,7 @@ public:
             "something",
         };
 
-        ColorProfile *prof = static_cast<ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
+        Inkscape::ColorProfile *prof = static_cast<Inkscape::ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
         TS_ASSERT( prof );
         SP_OBJECT(prof)->document = _doc;
 
@@ -120,7 +118,7 @@ public:
             "something",
         };
 
-        ColorProfile *prof = static_cast<ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
+        Inkscape::ColorProfile *prof = static_cast<Inkscape::ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
         TS_ASSERT( prof );
         SP_OBJECT(prof)->document = _doc;
 

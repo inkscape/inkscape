@@ -509,9 +509,9 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
         }
         TS_ASSERT(!found);
 
-        for ( guint index = 1; index < n_ids; index++ ) {
+        for ( unsigned int index = 1; index < n_ids; index++ ) {
             guchar const* name = sp_attribute_name(index);
-            gint postLookup = sp_attribute_lookup( reinterpret_cast<gchar const*>(name) );
+            unsigned int postLookup = sp_attribute_lookup( reinterpret_cast<gchar const*>(name) );
             TSM_ASSERT_EQUALS( std::string("Enum round-trip through string {") + (char const*)name + "} failed.", index, postLookup );
         }
 

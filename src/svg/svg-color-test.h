@@ -52,9 +52,8 @@ public:
         }
 
         /* And a few completely random ones. */
-        using std::rand;
         for (unsigned i = 500; i--;) {  /* Arbitrary number of iterations. */
-            unsigned const rgb24 = (rand() >> 4) & 0xffffff;
+            unsigned const rgb24 = (std::rand() >> 4) & 0xffffff;
             check_rgb24(rgb24);
         }
     }

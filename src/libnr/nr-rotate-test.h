@@ -8,8 +8,6 @@
 #include <libnr/nr-rotate.h>
 #include <libnr/nr-rotate-fns.h>
 #include <libnr/nr-rotate-ops.h>
-using NR::X;
-using NR::Y;
 
 
 class NrRotateTest : public CxxTest::TestSuite

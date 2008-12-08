@@ -44,7 +44,7 @@ public:
             TSM_ASSERT( descr, verb );
             if ( verb )
             {
-                TSM_ASSERT_EQUALS( descr, verb->get_code(), i );
+                TSM_ASSERT_EQUALS( descr, verb->get_code(), static_cast<unsigned int>(i) );
 
                 if ( i != static_cast<int>(SP_VERB_INVALID) )
                 {
@@ -56,7 +56,7 @@ public:
                     //TSM_ASSERT( descr, bounced );
                     if ( bounced )
                     {
-                        TSM_ASSERT_EQUALS( descr, bounced->get_code(), i );
+                        TSM_ASSERT_EQUALS( descr, bounced->get_code(), static_cast<unsigned int>(i) );
                     }
                     else
                     {

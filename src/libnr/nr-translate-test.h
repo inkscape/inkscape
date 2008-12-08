@@ -7,8 +7,6 @@
 #include <libnr/nr-point-matrix-ops.h>
 #include <libnr/nr-translate.h>
 #include <libnr/nr-translate-ops.h>
-using NR::X;
-using NR::Y;
 
 class NrTranslateTest : public CxxTest::TestSuite
 {
@@ -40,11 +38,11 @@ public:
 
     void testCtorsArrayOperator(void)
     {
-        TS_ASSERT_EQUALS( tc[X], -3.0 );
-        TS_ASSERT_EQUALS( tc[Y], -2.0 );
+        TS_ASSERT_EQUALS( tc[NR::X], -3.0 );
+        TS_ASSERT_EQUALS( tc[NR::Y], -2.0 );
 
-        TS_ASSERT_EQUALS( tb[0], b[X] );
-        TS_ASSERT_EQUALS( tb[1], b[Y] );
+        TS_ASSERT_EQUALS( tb[0], b[NR::X] );
+        TS_ASSERT_EQUALS( tb[1], b[NR::Y] );
     }
 
     void testAssignmentOperator(void)

@@ -4,9 +4,6 @@
 #include "libnr/nr-types.h"
 #include "libnr/nr-point-fns.h"
 #include <cmath>
-using NR::Point;
-using NR::X;
-using NR::Y;
 
 class NrTypesTest : public CxxTest::TestSuite
 {
@@ -30,20 +27,20 @@ public:
     NR::Point const b;
     NR::Point const ab;
     double const small;
-    Point const small_left;
-    Point const smallish_3_neg4;
+    NR::Point const small_left;
+    NR::Point const smallish_3_neg4;
 
 
     void testXYValues( void )
     {
-        TS_ASSERT_EQUALS( X, 0 );
-        TS_ASSERT_EQUALS( Y, 1 );
+        TS_ASSERT_EQUALS( NR::X, 0 );
+        TS_ASSERT_EQUALS( NR::Y, 1 );
     }
 
     void testXYCtorAndArrayConst(void)
     {
-        TS_ASSERT_EQUALS( a[X], 1.5 );
-        TS_ASSERT_EQUALS( a[Y], 2.0 );
+        TS_ASSERT_EQUALS( a[NR::X], 1.5 );
+        TS_ASSERT_EQUALS( a[NR::Y], 2.0 );
     }
 
     void testCopyCtor(void)
@@ -57,10 +54,10 @@ public:
     void testNonConstArrayOperator(void)
     {
         NR::Point a_copy(a);
-        a_copy[X] = -2.0;
+        a_copy[NR::X] = -2.0;
         TS_ASSERT_DIFFERS( a_copy, a );
         TS_ASSERT_DIFFERS( a_copy, b );
-        a_copy[Y] = 3.0;
+        a_copy[NR::Y] = 3.0;
         TS_ASSERT_EQUALS( a_copy, b );
     }
 
@@ -75,7 +72,7 @@ public:
 
     void testUnaryMinus(void)
     {
-        TS_ASSERT_EQUALS( -a, Point(-a[X], -a[Y]) );
+        TS_ASSERT_EQUALS( -a, NR::Point(-a[NR::X], -a[NR::Y]) );
     }
 
     void tetScaleDivide(void)
@@ -87,8 +84,8 @@ public:
 
     void testDot(void)
     {
-        TS_ASSERT_EQUALS( dot(a, b), ( a[X] * b[X]  +
-                                       a[Y] * b[Y] ) );
+        TS_ASSERT_EQUALS( dot(a, b), ( a[NR::X] * b[NR::X]  +
+                                       a[NR::Y] * b[NR::Y] ) );
         TS_ASSERT_EQUALS( dot(a, NR::rot90(a)), 0.0 );
         TS_ASSERT_EQUALS( dot(-a, NR::rot90(a)), 0.0 );
     }
@@ -108,27 +105,27 @@ public:
 
     void testOperatorPlusEquals(void)
     {
-        Point x(a);
+        NR::Point x(a);
         x += b;
         TS_ASSERT_EQUALS( x, ab );
     }
 
     void tetOperatorDivEquals(void)
     {
-        Point x(a);
+        NR::Point x(a);
         x /= .5;
         TS_ASSERT_EQUALS( x, a + a );
     }
 
     void testNormalize(void)
     {
-        Point x(small_left);
+        NR::Point x(small_left);
         x.normalize();
-        TS_ASSERT_EQUALS( x, Point(-1.0, 0.0) );
+        TS_ASSERT_EQUALS( x, NR::Point(-1.0, 0.0) );
 
         x = smallish_3_neg4;
         x.normalize();
-        TS_ASSERT_EQUALS( x, Point(0.6, -0.8) );
+        TS_ASSERT_EQUALS( x, NR::Point(0.6, -0.8) );
     }
 
 };

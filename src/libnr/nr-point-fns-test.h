@@ -9,8 +9,6 @@
 #include "libnr/nr-point-fns.h"
 #include "2geom/isnan.h"
 
-using NR::Point;
-
 class NrPointFnsTest : public CxxTest::TestSuite
 {
 public:
@@ -46,16 +44,16 @@ public:
     }
 
     bool setupValid;
-    Point const p3n4;
-    Point const p0;
+    NR::Point const p3n4;
+    NR::Point const p0;
     double const small;
     double const inf;
     double const nan;
 
-    Point const small_left;
-    Point const small_n3_4;
-    Point const part_nan;
-    Point const inf_left;
+    NR::Point const small_left;
+    NR::Point const small_n3_4;
+    NR::Point const part_nan;
+    NR::Point const inf_left;
 
 
     void testL1(void)
@@ -107,9 +105,9 @@ public:
 
     void testUnitVector(void)
     {
-        TS_ASSERT_EQUALS( NR::unit_vector(p3n4), Point(.6, -0.8) );
-        TS_ASSERT_EQUALS( NR::unit_vector(small_left), Point(-1.0, 0.0) );
-        TS_ASSERT_EQUALS( NR::unit_vector(small_n3_4), Point(-.6, 0.8) );
+        TS_ASSERT_EQUALS( NR::unit_vector(p3n4), NR::Point(.6, -0.8) );
+        TS_ASSERT_EQUALS( NR::unit_vector(small_left), NR::Point(-1.0, 0.0) );
+        TS_ASSERT_EQUALS( NR::unit_vector(small_n3_4), NR::Point(-.6, 0.8) );
     }
 
     void testIsUnitVector(void)
@@ -119,13 +117,13 @@ public:
         TS_ASSERT( !NR::is_unit_vector(small_n3_4) );
         TS_ASSERT( !NR::is_unit_vector(part_nan) );
         TS_ASSERT( !NR::is_unit_vector(inf_left) );
-        TS_ASSERT( !NR::is_unit_vector(Point(.5, 0.5)) );
-        TS_ASSERT( NR::is_unit_vector(Point(.6, -0.8)) );
-        TS_ASSERT( NR::is_unit_vector(Point(-.6, 0.8)) );
-        TS_ASSERT( NR::is_unit_vector(Point(-1.0, 0.0)) );
-        TS_ASSERT( NR::is_unit_vector(Point(1.0, 0.0)) );
-        TS_ASSERT( NR::is_unit_vector(Point(0.0, -1.0)) );
-        TS_ASSERT( NR::is_unit_vector(Point(0.0, 1.0)) );
+        TS_ASSERT( !NR::is_unit_vector(NR::Point(.5, 0.5)) );
+        TS_ASSERT( NR::is_unit_vector(NR::Point(.6, -0.8)) );
+        TS_ASSERT( NR::is_unit_vector(NR::Point(-.6, 0.8)) );
+        TS_ASSERT( NR::is_unit_vector(NR::Point(-1.0, 0.0)) );
+        TS_ASSERT( NR::is_unit_vector(NR::Point(1.0, 0.0)) );
+        TS_ASSERT( NR::is_unit_vector(NR::Point(0.0, -1.0)) );
+        TS_ASSERT( NR::is_unit_vector(NR::Point(0.0, 1.0)) );
     }
 };
 

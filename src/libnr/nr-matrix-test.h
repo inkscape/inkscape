@@ -13,14 +13,11 @@
 #include <libnr/nr-translate.h>
 #include <libnr/nr-translate-ops.h>
 #include <libnr/nr-translate-scale-ops.h>
-using NR::Matrix;
-using NR::X;
-using NR::Y;
 
 inline bool point_equalp(NR::Point const &a, NR::Point const &b)
 {
-    return ( NR_DF_TEST_CLOSE(a[X], b[X], 1e-5) &&
-             NR_DF_TEST_CLOSE(a[Y], b[Y], 1e-5)   );
+    return ( NR_DF_TEST_CLOSE(a[NR::X], b[NR::X], 1e-5) &&
+             NR_DF_TEST_CLOSE(a[NR::Y], b[NR::Y], 1e-5)   );
 }
 
 class NrMatrixTest : public CxxTest::TestSuite
@@ -47,10 +44,10 @@ public:
     static NrMatrixTest *createSuite() { return new NrMatrixTest(); }
     static void destroySuite( NrMatrixTest *suite ) { delete suite; }
 
-    Matrix const m_id;
+    NR::Matrix const m_id;
     NR::rotate const r_id;
     NR::translate const t_id;
-    Matrix const c16;
+    NR::Matrix const c16;
     NR::rotate const r86;
     NR::Matrix const mr86;
     NR::translate const t23;
@@ -61,8 +58,8 @@ public:
 
     void testCtorsAssignmentOp(void)
     {
-        Matrix const c16_copy(c16);
-        Matrix c16_eq(m_id);
+        NR::Matrix const c16_copy(c16);
+        NR::Matrix c16_eq(m_id);
         c16_eq = c16;
         for(unsigned i = 0; i < 6; ++i) {
             TS_ASSERT_EQUALS( c16[i], 1.0 + i );
@@ -89,7 +86,7 @@ public:
         TS_ASSERT_EQUALS( p0 * mr86, NR::Point(.8, .6) );
         TS_ASSERT_EQUALS( p90 * r86, NR::Point(-.6, .8) );
         TS_ASSERT_EQUALS( p90 * mr86, NR::Point(-.6, .8) );
-        TS_ASSERT( matrix_equalp(Matrix( r86 * r86 ),
+        TS_ASSERT( matrix_equalp(NR::Matrix( r86 * r86 ),
                                  mr86 * mr86,
                                  1e-14) );
     }
@@ -104,26 +101,26 @@ public:
     void testIdentity(void)
     {
         TS_ASSERT( m_id.test_identity() );
-        TS_ASSERT( Matrix(t_id).test_identity() );
-        TS_ASSERT( !(Matrix(NR::translate(-2, 3)).test_identity()) );
-        TS_ASSERT( Matrix(r_id).test_identity() );
+        TS_ASSERT( NR::Matrix(t_id).test_identity() );
+        TS_ASSERT( !(NR::Matrix(NR::translate(-2, 3)).test_identity()) );
+        TS_ASSERT( NR::Matrix(r_id).test_identity() );
         NR::rotate const rot180(NR::Point(-1, 0));
-        TS_ASSERT( !(Matrix(rot180).test_identity()) );
-        TS_ASSERT( Matrix(s_id).test_identity() );
-        TS_ASSERT( !(Matrix(NR::scale(1.0, 0.0)).test_identity()) );
-        TS_ASSERT( !(Matrix(NR::scale(0.0, 1.0)).test_identity()) );
-        TS_ASSERT( !(Matrix(NR::scale(1.0, -1.0)).test_identity()) );
-        TS_ASSERT( !(Matrix(NR::scale(-1.0, -1.0)).test_identity()) );
+        TS_ASSERT( !(NR::Matrix(rot180).test_identity()) );
+        TS_ASSERT( NR::Matrix(s_id).test_identity() );
+        TS_ASSERT( !(NR::Matrix(NR::scale(1.0, 0.0)).test_identity()) );
+        TS_ASSERT( !(NR::Matrix(NR::scale(0.0, 1.0)).test_identity()) );
+        TS_ASSERT( !(NR::Matrix(NR::scale(1.0, -1.0)).test_identity()) );
+        TS_ASSERT( !(NR::Matrix(NR::scale(-1.0, -1.0)).test_identity()) );
     }
 
     void testInverse(void)
     {
         TS_ASSERT_EQUALS( m_id.inverse(), m_id );
-        TS_ASSERT_EQUALS( Matrix(t23).inverse(), Matrix(NR::translate(-2.0, -3.0)) );
+        TS_ASSERT_EQUALS( NR::Matrix(t23).inverse(), NR::Matrix(NR::translate(-2.0, -3.0)) );
         NR::scale const s2(-4.0, 2.0);
         NR::scale const sp5(-.25, .5);
-        TS_ASSERT_EQUALS( Matrix(s2).inverse(), Matrix(sp5) );
-        TS_ASSERT_EQUALS( Matrix(sp5).inverse(), Matrix(s2) );
+        TS_ASSERT_EQUALS( NR::Matrix(s2).inverse(), NR::Matrix(sp5) );
+        TS_ASSERT_EQUALS( NR::Matrix(sp5).inverse(), NR::Matrix(s2) );
     }
 
     void testEllipticQuadraticForm(void)
