@@ -351,9 +351,16 @@ PageSizer::setDim (double w, double h, bool changeList)
         sp_document_done (doc, SP_VERB_NONE, _("Set page size"));
     }
 
-    _landscape = ( w > h );
-    _landscapeButton.set_active(_landscape ? true : false);
-    _portraitButton.set_active (_landscape ? false : true);
+    if ( w != h ) {
+        _landscapeButton.set_sensitive(true);
+        _portraitButton.set_sensitive (true);
+        _landscape = ( w > h );
+        _landscapeButton.set_active(_landscape ? true : false);
+        _portraitButton.set_active (_landscape ? false : true);
+    } else {
+        _landscapeButton.set_sensitive(false);
+        _portraitButton.set_sensitive (false);
+    }
 
     if (changeList)
         {
@@ -469,8 +476,8 @@ PageSizer::on_paper_size_list_changed()
         // enforce landscape mode if this is desired for the given page format
         _landscape = true;
     } else {
-        // otherwise we set portrait mode because
-        _landscape = false;
+        // otherwise we keep the current mode
+        _landscape = _landscapeButton.get_active();
     }
 
     SPUnit const &src_unit = sp_unit_get_by_id (paper.unit);
