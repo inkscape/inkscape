@@ -772,6 +772,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
         // Get two bounding box corners of the data in the clipboard (still in it's original position)
         sp_repr_get_point(clipnode, "min", &min); //In desktop coordinates
         sp_repr_get_point(clipnode, "max", &max);        
+#if 0
         // Calculate the upper-left page corner in desktop coordinates (where the pasted objects are located)
         Geom::Point ul_page_corner = desktop->doc2dt(Geom::Point(0,0)); 
         // Calculate the upper-left bbox corner of the original objects
@@ -779,6 +780,8 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
         // Now calculate how far we would have to move the pasted objects to get them
         // at the location of the original
         rel_pos_original = ul_sel_corner - ul_page_corner; // in desktop coordinates
+#endif
+        rel_pos_original = Geom::Point(min[Geom::X], max[Geom::Y]);
     }
     
     // Calculate the relative location of the mouse pointer
@@ -786,6 +789,10 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
     selection->setReprList(pasted_objects);         // Change the selection to the freshly pasted objects
     sp_document_ensure_up_to_date(target_document); // Update (among other things) all curves in paths, for bounds() to work
     
+    // TODO: Text does not get transformed!?
+    Geom::Matrix doc2parent = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
+    sp_selection_apply_affine(selection, doc2parent);
+
     Geom::OptRect sel_bbox = selection->bounds(); //In desktop coordinates
     // PS: We could also have used the min/max corners calculated above, instead of selection->bounds() because 
     // we know that after pasting the upper left corner of the selection will be aligend to the corresponding 
@@ -795,6 +802,9 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
         // Now calculate how far we would have to move the pasted objects to get their
         // midpoint at the location of the mouse pointer
         rel_pos_mouse = pos_mouse - to_2geom(sel_bbox->midpoint());
+        rel_pos_original -= sel_bbox->corner(3);
+    } else {
+        rel_pos_original -= desktop->doc2dt(Geom::Point(0,0));
     }
     
     // Determine which offset we need to apply to the pasted objects
