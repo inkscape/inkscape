@@ -444,7 +444,7 @@ static void sp_star_drag(SPStarContext *sc, Geom::Point p, guint state)
 
         sc->item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
         Inkscape::GC::release(repr);
-        sc->item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
+        sc->item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
         sc->item->updateRepr();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
@@ -456,8 +456,8 @@ static void sp_star_drag(SPStarContext *sc, Geom::Point p, guint state)
     Geom::Point pt2g = to_2geom(p);
     m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);    
     
-    Geom::Point const p0 = to_2geom(sp_desktop_dt2root_xy_point(desktop, sc->center));
-    Geom::Point const p1 = to_2geom(sp_desktop_dt2root_xy_point(desktop, from_2geom(pt2g)));
+    Geom::Point const p0 = to_2geom(sp_desktop_dt2doc_xy_point(desktop, sc->center));
+    Geom::Point const p1 = to_2geom(sp_desktop_dt2doc_xy_point(desktop, from_2geom(pt2g)));
     
     SPStar *star = SP_STAR(sc->item);
 

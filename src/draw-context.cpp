@@ -651,7 +651,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
     /* Now we have to go back to item coordinates at last */
     c->transform( dc->white_item
                             ? sp_item_dt2i_affine(dc->white_item)
-                            : to_2geom(sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(dc))) );
+                            : to_2geom(sp_desktop_dt2doc_affine(SP_EVENT_CONTEXT_DESKTOP(dc))) );
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
     SPDocument *doc = sp_desktop_document(desktop);
@@ -688,7 +688,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
 
             dc->selection->set(repr);
             Inkscape::GC::release(repr);
-            item->transform = i2i_affine(desktop->currentRoot(), desktop->currentLayer());
+            item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
             item->updateRepr();
         }
 

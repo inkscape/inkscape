@@ -429,7 +429,7 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
 
         ac->item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
         Inkscape::GC::release(repr);
-        ac->item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
+        ac->item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
         ac->item->updateRepr();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);

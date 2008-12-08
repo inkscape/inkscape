@@ -909,7 +909,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
     }
 
     /* Now we have to go back to item coordinates at last */
-    c->transform(sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(cc)));
+    c->transform(sp_desktop_dt2doc_affine(SP_EVENT_CONTEXT_DESKTOP(cc)));
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
     SPDocument *doc = sp_desktop_document(desktop);
@@ -931,7 +931,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
         cc->newconn = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
         cc->selection->set(repr);
         Inkscape::GC::release(repr);
-        cc->newconn->transform = i2i_affine(desktop->currentRoot(), desktop->currentLayer());
+        cc->newconn->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
         cc->newconn->updateRepr();
 
         bool connection = false;

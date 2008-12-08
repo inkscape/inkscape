@@ -2106,7 +2106,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT_PARENT (items->data);
 
-    Geom::Matrix parent_transform (sp_item_i2root_affine(SP_ITEM(parent)));
+    Geom::Matrix parent_transform (sp_item_i2doc_affine(SP_ITEM(parent)));
 
     // remember the position of the first item
     gint pos = SP_OBJECT_REPR (items->data)->position();

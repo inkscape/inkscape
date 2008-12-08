@@ -511,18 +511,7 @@ sp_text_context_setup_text(SPTextContext *tc)
     /* yes, it's immediate .. why does it matter? */
     sp_desktop_selection(ec->desktop)->set(text_item);
     Inkscape::GC::release(rtext);
-    text_item->transform = SP_ITEM(ec->desktop->currentRoot())->getRelativeTransform(ec->desktop->currentLayer());
-
-    // bug #168777 (consider root transform and viewBox)
-    // TODO: more generic solution desirable
-    // see http://wiki.inkscape.org/wiki/index.php/ViewBoxToDo
-    Geom::Matrix root_transform = sp_item_i2doc_affine(SP_ITEM(ec->desktop->currentRoot()));
-    if (!root_transform.isIdentity()) {
-        text_item->transform = root_transform.inverse() * text_item->transform;
-        Geom::Point pdoc = tc->pdoc * root_transform;
-        sp_repr_set_svg_double(rtext, "x", pdoc[Geom::X]);
-        sp_repr_set_svg_double(rtext, "y", pdoc[Geom::Y]);
-    }
+    text_item->transform = sp_item_i2doc_affine(SP_ITEM(ec->desktop->currentLayer())).inverse();
 
     text_item->updateRepr();
     sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT,
@@ -697,7 +686,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                     /* Button 1, set X & Y & new item */
                     sp_desktop_selection(desktop)->clear();
                     Geom::Point dtp = desktop->w2d(Geom::Point(event->button.x, event->button.y));
-                    tc->pdoc = sp_desktop_dt2root_xy_point(desktop, dtp);
+                    tc->pdoc = sp_desktop_dt2doc_xy_point(desktop, dtp);
 
                     tc->show = TRUE;
                     tc->phase = 1;

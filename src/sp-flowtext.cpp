@@ -697,8 +697,8 @@ SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p0,
 
     SPObject *rect = doc->getObjectByRepr(rect_repr);
 
-    p0 = sp_desktop_dt2root_xy_point(desktop, p0);
-    p1 = sp_desktop_dt2root_xy_point(desktop, p1);
+    p0 = sp_desktop_dt2doc_xy_point(desktop, p0);
+    p1 = sp_desktop_dt2doc_xy_point(desktop, p1);
     using Geom::X;
     using Geom::Y;
     Geom::Coord const x0 = MIN(p0[X], p1[X]);
@@ -723,6 +723,8 @@ SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p0,
     Inkscape::GC::release(region_repr);
     Inkscape::GC::release(para_repr);
     Inkscape::GC::release(rect_repr);
+
+    ft_item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
 
     return ft_item;
 }

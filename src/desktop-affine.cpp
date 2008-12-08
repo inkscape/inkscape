@@ -13,10 +13,21 @@
  */
 
 #include "desktop.h"
-#include "document.h"
-#include "sp-root.h"
+//#include "document.h"
+//#include "sp-root.h"
 //#include "libnr/nr-matrix-ops.h"
 
+Geom::Matrix const sp_desktop_dt2doc_affine (SPDesktop const *dt)
+{
+    return dt->doc2dt().inverse();
+}
+
+Geom::Point sp_desktop_dt2doc_xy_point(SPDesktop const *dt, Geom::Point const p)
+{
+    return p * sp_desktop_dt2doc_affine(dt);
+}
+
+#if 0
 Geom::Matrix const sp_desktop_root2dt_affine (SPDesktop const *dt)
 {
 	SPRoot const *root = SP_ROOT(SP_DOCUMENT_ROOT(dt->doc()));
@@ -37,4 +48,5 @@ Geom::Point sp_desktop_dt2root_xy_point(SPDesktop const *dt, Geom::Point const p
 {
 	return p * sp_desktop_dt2root_affine(dt);
 }
+#endif
 

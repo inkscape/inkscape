@@ -479,7 +479,7 @@ static void sp_rect_drag(SPRectContext &rc, Geom::Point const pt, guint state)
 
         rc.item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
         Inkscape::GC::release(repr);
-        rc.item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
+        rc.item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
         rc.item->updateRepr();
 
         sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);

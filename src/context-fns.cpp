@@ -207,8 +207,8 @@ Geom::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item
         desktop->snapindicator->set_new_snaptarget(snappoint);
     }
 
-    p[0] = sp_desktop_dt2root_xy_point(desktop, p[0]);
-    p[1] = sp_desktop_dt2root_xy_point(desktop, p[1]);
+    p[0] = sp_desktop_dt2doc_xy_point(desktop, p[0]);
+    p[1] = sp_desktop_dt2doc_xy_point(desktop, p[1]);
     
     return Geom::Rect(Geom::Point(MIN(p[0][Geom::X], p[1][Geom::X]), MIN(p[0][Geom::Y], p[1][Geom::Y])),
                     Geom::Point(MAX(p[0][Geom::X], p[1][Geom::X]), MAX(p[0][Geom::Y], p[1][Geom::Y])));
