@@ -238,7 +238,6 @@ void sp_item_adjust_stroke_width_recursive(SPItem *item, gdouble ex);
 void sp_item_adjust_paint_recursive(SPItem *item, Geom::Matrix advertized_transform, Geom::Matrix t_ancestors, bool is_pattern);
 void sp_item_adjust_livepatheffect(SPItem *item, Geom::Matrix const &postmul, bool set = false);
 
-void sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix const *transform, Geom::Matrix const *adv = NULL);
 void sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix const &transform, Geom::Matrix const *adv = NULL, bool compensate = true);
 
 void sp_item_set_item_transform(SPItem *item, Geom::Matrix const &transform);

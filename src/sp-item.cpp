@@ -1377,19 +1377,6 @@ sp_item_adjust_livepatheffect (SPItem *item, Geom::Matrix const &postmul, bool s
 }
 
 /**
- * A temporary wrapper for the next function accepting the Geom::Matrix
- * instead of Geom::Matrix
- */
-void
-sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, Geom::Matrix const *transform, Geom::Matrix const *adv)
-{
-    if (transform == NULL)
-        sp_item_write_transform(item, repr, Geom::identity(), adv);
-    else
-        sp_item_write_transform(item, repr, *transform, adv);
-}
-
-/**
  * Set a new transform on an object.
  *
  * Compensate for stroke scaling and gradient/pattern fill transform, if
