@@ -30,6 +30,10 @@ INCLUDES =	\
 	-I$(top_srcdir)/cxxtest \
 	$(WIN32_CFLAGS)
 
+CXXTEST_TEMPLATE = $(srcdir)/cxxtest-template.tpl
+CXXTESTGENFLAGS = --root --have-eh --template=$(CXXTEST_TEMPLATE)
+CXXTESTGEN = $(top_srcdir)/cxxtest/cxxtestgen.pl $(CXXTESTGENFLAGS)
+
 # Include all partial makefiles from subdirectories
 include Makefile_insert
 include application/Makefile_insert
@@ -199,73 +203,26 @@ EXTRA_PROGRAMS =	\
 ### TESTING STUFF (make check) ###
 ##################################
 
-# List of all tests to be run. Should contain one per directory.
-# Automake 1.10 appends EXEEXT automatically, so this should be changed
-# when we move to Automake 1.10.
-TESTS =	\
-	test-src$(EXEEXT)	\
-	style-test$(EXEEXT)	\
-	display/bezier-utils-test$(EXEEXT)	\
-	display/test-display$(EXEEXT)	\
-	helper/units-test$(EXEEXT)	\
-	helper/test-helper$(EXEEXT)	\
-	libnr/in-svg-plane-test$(EXEEXT)	\
-	libnr/nr-matrix-test$(EXEEXT)	\
-	libnr/nr-point-fns-test$(EXEEXT)	\
-	libnr/nr-rotate-test$(EXEEXT)	\
-	libnr/nr-rotate-fns-test$(EXEEXT)	\
-	libnr/nr-scale-test$(EXEEXT)	\
-	libnr/nr-translate-test$(EXEEXT)	\
-	libnr/nr-types-test$(EXEEXT)	\
-	libnr/test-nr$(EXEEXT)	\
-	svg/test-svg$(EXEEXT)	\
-	util/list-container-test$(EXEEXT)	\
-	util/test-util$(EXEEXT)	\
-	xml/test-xml$(EXEEXT)	\
-	xml/quote-test$(EXEEXT)	\
-	xml/repr-action-test$(EXEEXT)
-
-# streamtest is unfinished and can't handle the relocations done during
-# "make distcheck".  Not needed for the 0.41 release.
-#	io/streamtest$(EXEEXT)
+# List of all programs that should be built before testing. Note that this is
+# different from TESTS, because some tests can be scripts that don't
+# need to be built. There should be one test program per directory.
 # automake adds $(EXEEXT) to check_PROGRAMS items but not to TESTS items:
 # TESTS items can be scripts etc.
-
-# List of all programs that should be built before testing. Note that this is
-# not necessarily equal to TESTS, because some tests can be scripts that don't
-# need to be built.
 check_PROGRAMS =	\
 	test-src	\
 	style-test	\
-	display/bezier-utils-test	\
 	display/test-display	\
-	helper/units-test	\
 	helper/test-helper	\
-	libnr/in-svg-plane-test	\
-	libnr/nr-matrix-test	\
-	libnr/nr-point-fns-test	\
-	libnr/nr-rotate-test	\
-	libnr/nr-rotate-fns-test	\
-	libnr/nr-scale-test	\
-	libnr/nr-translate-test	\
-	libnr/nr-types-test	\
 	libnr/test-nr	\
 	svg/test-svg	\
-	util/list-container-test	\
 	util/test-util	\
-	xml/test-xml	\
-	xml/quote-test	\
-	xml/repr-action-test
+	xml/test-xml
 #	io/streamtest
+# streamtest is unfinished and can't handle the relocations done during
+# "make distcheck".
 
-# Additional libraries needed by the tests - to be removed later.
-check_LIBRARIES =	\
-	display/libtest-display.a	\
-	helper/libtest-helper.a	\
-	libnr/libtest-nr.a	\
-	svg/libtest-svg.a	\
-	util/libtest-util.a	\
-	xml/libtest-xml.a
+# List of all tests to be run.
+TESTS = $(check_PROGRAMS)
 
 # ################################################
 #

@@ -33,16 +33,10 @@ svg_libspsvg_a_SOURCES =	\
 	svg/svg-path.cpp	\
 	svg/svg.h
 
-
-# This CxxTest stuff is adapted blindly from libnr/Makefile_insert.
-# It would be nice to reduce the amount of boilerplate / copy&paste here.
-svg/test-svg-main.cpp: svg/test-svg.cpp
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o svg/test-svg-main.cpp $(svg_test_svg_includes)
-
-svg/test-svg.cpp: $(svg_test_svg_includes) svg/Makefile_insert
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh -part -o svg/test-svg.cpp $(svg_test_svg_includes)
-
-svg_test_svg_includes = \
+# ######################
+# ### CxxTest stuff ####
+# ######################
+svg_testsuites = \
 	$(srcdir)/svg/css-ostringstream-test.h	\
 	$(srcdir)/svg/stringstream-test.h	\
 	$(srcdir)/svg/svg-affine-test.h		\
@@ -50,13 +44,9 @@ svg_test_svg_includes = \
 	$(srcdir)/svg/svg-length-test.h		\
 	$(srcdir)/svg/svg-path-geom-test.h
 
-svg_libtest_svg_a_SOURCES = \
-	svg/test-svg.cpp	\
-	$(svg_test_svg_includes)
-
 svg_test_svg_SOURCES =		\
-	svg/test-svg-main.cpp	\
-	$(svg_test_svg_includes)
+	svg/test-svg.cpp	\
+	$(svg_testsuites)
 
 svg_test_svg_LDADD =		\
 	svg/libspsvg.a		\
@@ -66,3 +56,5 @@ svg_test_svg_LDADD =		\
 	libnr/libnr.a		\
 	$(INKSCAPE_LIBS)
 
+svg/test-svg.cpp: $(svg_testsuites) svg/Makefile_insert $(CXXTEST_TEMPLATE)
+	$(CXXTESTGEN) -o svg/test-svg.cpp $(svg_testsuites)

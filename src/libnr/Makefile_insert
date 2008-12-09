@@ -93,6 +93,7 @@ libnr_libnr_a_SOURCES =	\
 	libnr/nr-values.h	\
 	$(libnr_mmx_sources)
 
+# Ancient performance test (?)
 libnr_testnr_SOURCES =	\
 	libnr/testnr.cpp
 
@@ -100,63 +101,29 @@ libnr_testnr_LDADD =	\
 	libnr/libnr.a	\
 	-lglib-2.0
 
-
-libnr/test-nr-main.cpp: libnr/test-nr.cpp
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o libnr/test-nr-main.cpp $(libnr_test_nr_includes)
-
-libnr/test-nr.cpp: $(libnr_test_nr_includes)
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh -part -o libnr/test-nr.cpp $(libnr_test_nr_includes)
-
-libnr_test_nr_includes = \
-	$(srcdir)/libnr/nr-compose-test.h	\
-	$(srcdir)/libnr/nr-types-test.h	\
-	$(srcdir)/libnr/nr-translate-test.h	\
-	$(srcdir)/libnr/nr-rotate-test.h	\
-	$(srcdir)/libnr/nr-scale-test.h	\
-	$(srcdir)/libnr/nr-point-fns-test.h	\
-	$(srcdir)/libnr/nr-rotate-fns-test.h	\
+# ######################
+# ### CxxTest stuff ####
+# ######################
+libnr_testsuites = \
 	$(srcdir)/libnr/in-svg-plane-test.h	\
-	$(srcdir)/libnr/nr-matrix-test.h
-
-libnr_libtest_nr_a_SOURCES =	\
-	libnr/test-nr.cpp \
-	libnr/nr-compose-reference.cpp \
-	libnr/nr-compose-reference.h \
-	$(libnr_test_nr_includes)
+	$(srcdir)/libnr/nr-compose-test.h	\
+	$(srcdir)/libnr/nr-matrix-test.h	\
+	$(srcdir)/libnr/nr-point-fns-test.h	\
+	$(srcdir)/libnr/nr-rotate-test.h	\
+	$(srcdir)/libnr/nr-rotate-fns-test.h	\
+	$(srcdir)/libnr/nr-scale-test.h		\
+	$(srcdir)/libnr/nr-translate-test.h	\
+	$(srcdir)/libnr/nr-types-test.h
 
 libnr_test_nr_SOURCES =	\
-	libnr/test-nr-main.cpp \
-	$(libnr_test_nr_includes)
+	libnr/test-nr.cpp \
+	$(libnr_testsuites)
 
-libnr_test_nr_LDADD =		\
-	libnr/libnr.a		\
-	libnr/libtest-nr.a	\
-	2geom/lib2geom.a	\
+libnr_test_nr_LDADD =			\
+	libnr/libnr.a			\
+	libnr/nr-compose-reference.o	\
+	2geom/lib2geom.a		\
 	-lglib-2.0
 
-#	-L/usr/X11R6/lib
-#	-lX11
-
-libnr_in_svg_plane_test_SOURCES = libnr/in-svg-plane-test.cpp
-libnr_in_svg_plane_test_LDADD = libnr/libnr.a 2geom/lib2geom.a -lglib-2.0
-
-libnr_nr_types_test_SOURCES = libnr/nr-types-test.cpp
-libnr_nr_types_test_LDADD = libnr/libnr.a -lglib-2.0
-
-libnr_nr_point_fns_test_SOURCES = libnr/nr-point-fns-test.cpp
-libnr_nr_point_fns_test_LDADD = libnr/libnr.a -lglib-2.0
-
-libnr_nr_matrix_test_SOURCES = libnr/nr-matrix-test.cpp
-libnr_nr_matrix_test_LDADD = libnr/libnr.a -lglib-2.0
-
-libnr_nr_rotate_test_SOURCES = libnr/nr-rotate-test.cpp
-libnr_nr_rotate_test_LDADD = libnr/libnr.a -lglib-2.0
-
-libnr_nr_rotate_fns_test_SOURCES = libnr/nr-rotate-fns-test.cpp
-libnr_nr_rotate_fns_test_LDADD = libnr/libnr.a -lglib-2.0
-
-libnr_nr_scale_test_SOURCES = libnr/nr-scale-test.cpp
-libnr_nr_scale_test_LDADD = libnr/libnr.a -lglib-2.0
-
-libnr_nr_translate_test_SOURCES = libnr/nr-translate-test.cpp
-libnr_nr_translate_test_LDADD = libnr/libnr.a -lglib-2.0
+libnr/test-nr.cpp: $(libnr_testsuites) libnr/Makefile_insert $(CXXTEST_TEMPLATE)
+	$(CXXTESTGEN) -o libnr/test-nr.cpp $(libnr_testsuites)

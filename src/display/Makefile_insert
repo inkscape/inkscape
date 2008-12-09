@@ -128,23 +128,12 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-light.cpp			\
 	display/nr-light-types.h
 
-display_bezier_utils_test_SOURCES = display/bezier-utils-test.cpp
-display_bezier_utils_test_LDADD = libnr/libnr.a -lglib-2.0 2geom/lib2geom.a
-
-# Copy/paste from libnr
-display/test-display-main.cpp: display/test-display.cpp
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o display/test-display-main.cpp $(display_test_display_includes)
-
-display/test-display.cpp: $(display_test_display_includes)
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh -part -o display/test-display.cpp $(display_test_display_includes)
-
-display_test_display_includes = \
+# ######################
+# ### CxxTest stuff ####
+# ######################
+ddislay_testsuites = \
 	$(srcdir)/display/bezier-utils-test.h \
 	$(srcdir)/display/curve-test.h
-
-display_libtest_display_a_SOURCES = \
-	display/test-display.cpp \
-	$(display_test_display_includes)
 
 display_test_display_SOURCES = \
 	display/test-display-main.cpp \
@@ -156,3 +145,5 @@ display_test_display_LDADD = \
 	$(inkscape_private_libs) \
 	$(INKSCAPE_LIBS)
 
+display/test-display.cpp: $(dislay_testsuites) display/Makefile_insert $(CXXTEST_TEMPLATE)
+	$(CXXTESTGEN) -o display/test-display.cpp $(dislay_testsuites)

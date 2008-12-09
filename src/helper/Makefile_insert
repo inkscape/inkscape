@@ -40,7 +40,7 @@ helper_libspchelp_a_SOURCES =	\
 	helper/stock-items.cpp	\
 	helper/stock-items.h	
 
-# cmp exits with status 0 when there are no differences. if executes the commands
+# cmp exits with status 0 when there are no differences. "if" executes the commands
 # after "then" when the exit status of the if command is 0 (this is crazy).
 helper/sp-marshal.h: helper/sp-marshal.list
 	glib-genmarshal --prefix=sp_marshal --header $(srcdir)/helper/sp-marshal.list > helper/tmp.sp-marshal.h
@@ -58,29 +58,19 @@ helper/sp-marshal.cpp: helper/sp-marshal.list helper/sp-marshal.h
 
 helper/sp-marshal.cpp helper/sp-marshal.h: helper/sp-marshal.list
 
-helper_units_test_SOURCES = helper/units-test.cpp
-helper_units_test_LDADD = helper/libspchelp.a -lglib-2.0
-
-# Copy/paste from libnr
-helper/test-helper-main.cpp: helper/test-helper.cpp
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o helper/test-helper-main.cpp $(helper_test_helper_includes)
-
-helper/test-helper.cpp: $(helper_test_helper_includes)
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh -part -o helper/test-helper.cpp $(helper_test_helper_includes)
-
-helper_test_helper_includes = \
+# ######################
+# ### CxxTest stuff ####
+# ######################
+helper_testsuites = \
 	$(srcdir)/helper/units-test.h
 
-helper_libtest_helper_a_SOURCES = \
-	helper/test-helper.cpp \
-	$(helper_test_helper_includes)
-
 helper_test_helper_SOURCES = \
-	helper/test-helper-main.cpp \
-	$(helper_test_helper_includes)
+	helper/test-helper.cpp \
+	$(helper_testsuites)
 
-helper_test_helper_LDADD = \
-	helper/libspchelp.a \
-	helper/libtest-helper.a \
+helper_test_helper_LDADD =	\
+	helper/libspchelp.a	\
 	-lglib-2.0
 
+helper/test-helper.cpp: $(helper_testsuites) helper/Makefile_insert $(CXXTEST_TEMPLATE)
+	$(CXXTESTGEN) -o xml/test-xml.cpp $(helper_testsuites)

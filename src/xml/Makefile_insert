@@ -53,45 +53,26 @@ xml_libspxml_a_SOURCES =	\
 	xml/invalid-operation-exception.h \
 	xml/xml-forward.h
 
-xml/test-xml-main.cpp: xml/test-xml.cpp $(xml_test_xml_includes)
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o xml/test-xml-main.cpp $(xml_test_xml_includes)
-
-xml/test-xml.cpp: $(xml_test_xml_includes)
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --have-eh -part -o xml/test-xml.cpp $(xml_test_xml_includes)
-
-xml_test_xml_includes = \
+# ######################
+# ### CxxTest stuff ####
+# ######################
+xml_testsuites = \
 	$(srcdir)/xml/repr-action-test.h	\
 	$(srcdir)/xml/quote-test.h
 
-xml_libtest_xml_a_SOURCES =	\
-	xml/test-xml.cpp \
-	$(xml_test_xml_includes)
-
 xml_test_xml_SOURCES =	\
-	xml/test-xml-main.cpp \
-	$(xml_test_xml_includes)
+	xml/test-xml.cpp \
+	$(xml_testsuites)
 
 xml_test_xml_LDADD =	\
-	xml/libtest-xml.a	\
 	xml/libspxml.a		\
 	util/libinkutil.a	\
 	svg/libspsvg.a		\
+	helper/libspchelp.a	\
 	test-stubs.o		\
 	libinkpost.a		\
 	debug/libinkdebug.a	\
 	$(INKSCAPE_LIBS)
 
-
-xml_repr_action_test_SOURCES = \
-	xml/repr-action-test.cpp
-xml_repr_action_test_LDADD = \
-	xml/libspxml.a	\
-	svg/libspsvg.a	\
-	libtest-stubs.a	\
-	util/libinkutil.a	\
-	libinkpost.a	\
-	debug/libinkdebug.a	\
-	$(INKSCAPE_LIBS)
-
-xml_quote_test_SOURCES = xml/quote-test.cpp
-xml_quote_test_LDADD = $(INKSCAPE_LIBS)
+xml/test-xml.cpp: $(xml_testsuites) xml/Makefile_insert $(CXXTEST_TEMPLATE)
+	$(CXXTESTGEN) -o xml/test-xml.cpp $(xml_testsuites)
