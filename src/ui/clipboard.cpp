@@ -755,70 +755,44 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
         Inkscape::XML::Node *obj_copy = _copyNode(obj, target_xmldoc, target_parent);
         pasted_objects = g_slist_prepend(pasted_objects, (gpointer) obj_copy);
     }
-    
-    /* The pasted objects are at the origin of the document coordinates (i.e. the upper left corner
-     * of the bounding box of the pasted selection is aligned to the upper left page corner).
-     * Now we will move the pasted objects to where we want them to be, which is either at the
-     * original position ("in place") or at the location of the mouse pointer (optionaly with snapping
-     * to the grid)
-     */ 
-
-    Geom::Point rel_pos_original, rel_pos_mouse;
-    
-    // Calculate the relative location of the original objects
-    Inkscape::XML::Node *clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
-    if (clipnode) {
-        Geom::Point min, max;
-        // Get two bounding box corners of the data in the clipboard (still in it's original position)
-        sp_repr_get_point(clipnode, "min", &min); //In desktop coordinates
-        sp_repr_get_point(clipnode, "max", &max);        
-#if 0
-        // Calculate the upper-left page corner in desktop coordinates (where the pasted objects are located)
-        Geom::Point ul_page_corner = desktop->doc2dt(Geom::Point(0,0)); 
-        // Calculate the upper-left bbox corner of the original objects
-        Geom::Point ul_sel_corner = Geom::Point(min[Geom::X], max[Geom::Y]);
-        // Now calculate how far we would have to move the pasted objects to get them
-        // at the location of the original
-        rel_pos_original = ul_sel_corner - ul_page_corner; // in desktop coordinates
-#endif
-        rel_pos_original = Geom::Point(min[Geom::X], max[Geom::Y]);
-    }
-    
-    // Calculate the relative location of the mouse pointer
+   
+    // Change the selection to the freshly pasted objects
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    selection->setReprList(pasted_objects);         // Change the selection to the freshly pasted objects
-    sp_document_ensure_up_to_date(target_document); // Update (among other things) all curves in paths, for bounds() to work
+    selection->setReprList(pasted_objects);
     
-    // TODO: Text does not get transformed!?
+    // invers apply parent transform
     Geom::Matrix doc2parent = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
     sp_selection_apply_affine(selection, doc2parent);
+    
+    // Update (among other things) all curves in paths, for bounds() to work
+    sp_document_ensure_up_to_date(target_document);
 
-    Geom::OptRect sel_bbox = selection->bounds(); //In desktop coordinates
-    // PS: We could also have used the min/max corners calculated above, instead of selection->bounds() because 
-    // we know that after pasting the upper left corner of the selection will be aligend to the corresponding 
-    // page corner. Using the boundingbox of the selection is more foolproof though
+    // move selection either to original position (in_place) or to mouse pointer
+    Geom::OptRect sel_bbox = selection->bounds();
     if (sel_bbox) {
-        Geom::Point pos_mouse = desktop->point(); //Location of mouse pointer in desktop coordinates
-        // Now calculate how far we would have to move the pasted objects to get their
-        // midpoint at the location of the mouse pointer
-        rel_pos_mouse = pos_mouse - to_2geom(sel_bbox->midpoint());
-        rel_pos_original -= sel_bbox->corner(3);
-    } else {
-        rel_pos_original -= desktop->doc2dt(Geom::Point(0,0));
+        // get offset of selection to original position of copied elements
+        Geom::Point pos_original;
+        Inkscape::XML::Node *clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
+        if (clipnode) {
+            Geom::Point min, max;
+            sp_repr_get_point(clipnode, "min", &min);
+            sp_repr_get_point(clipnode, "max", &max);        
+            pos_original = Geom::Point(min[Geom::X], max[Geom::Y]);
+        }
+        Geom::Point offset = pos_original - sel_bbox->corner(3);
+        
+        if (!in_place) {
+            SnapManager &m = desktop->namedview->snap_manager;
+            m.setup(desktop, false); // Don't display the snapindicator
+            
+            // get offset from mouse pointer to bbox center, snap to grid if enabled
+            Geom::Point mouse_offset = desktop->point() - sel_bbox->midpoint();
+            offset = m.multipleOfGridPitch(mouse_offset - offset) + offset;
+        }
+
+        sp_selection_move_relative(selection, offset);
     }
     
-    // Determine which offset we need to apply to the pasted objects
-    Geom::Point offset;
-    if (in_place) { // Align the pasted objects with their originals
-        offset = rel_pos_original;        
-    } else { // Stick to the grid if snapping is enabled, otherwise paste at mouse position;
-        SnapManager &m = desktop->namedview->snap_manager;
-        m.setup(desktop, false); //Don't display the snapindicator
-        offset = rel_pos_original + m.multipleOfGridPitch(rel_pos_mouse - rel_pos_original); 
-    }
-    
-    // Apply the offset to the pasted objects
-    sp_selection_move_relative(selection, offset);
     g_slist_free(pasted_objects);
 }
 
