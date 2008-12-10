@@ -48,14 +48,14 @@ SnapManager::SnapManager(SPNamedView const *v) :
     guide(this, 0),
     object(this, 0),
     snapprefs(),
-    _named_view(v)    
-{    
+    _named_view(v)
+{
 }
 
 /**
  *  \return List of snappers that we use.
  */
-SnapManager::SnapperList 
+SnapManager::SnapperList
 SnapManager::getSnappers() const
 {
     SnapManager::SnapperList s;
@@ -71,7 +71,7 @@ SnapManager::getSnappers() const
 /**
  *  \return List of gridsnappers that we use.
  */
-SnapManager::SnapperList 
+SnapManager::SnapperList
 SnapManager::getGridSnappers() const
 {
     SnapperList s;
@@ -97,13 +97,13 @@ bool SnapManager::someSnapperMightSnap() const
     if ( !snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally() ) {
         return false;
     }
-    
+
     SnapperList const s = getSnappers();
     SnapperList::const_iterator i = s.begin();
     while (i != s.end() && (*i)->ThisSnapperMightSnap() == false) {
         i++;
     }
-    
+
     return (i != s.end());
 }
 
@@ -112,8 +112,8 @@ bool SnapManager::someSnapperMightSnap() const
  *
  *  \param point_type Type of point.
  *  \param p Point.
- *  \param first_point If true then this point is the first one from a whole bunch of points 
- *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation 
+ *  \param first_point If true then this point is the first one from a whole bunch of points
+ *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation
  *  \param snappers List of snappers to try to snap to
  *  \return Snapped point.
  */
@@ -123,7 +123,7 @@ void SnapManager::freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point
                                              bool first_point,
                                              Geom::OptRect const &bbox_to_snap) const
 {
-    Inkscape::SnappedPoint const s = freeSnap(point_type, p, first_point, bbox_to_snap);                                                            
+    Inkscape::SnappedPoint const s = freeSnap(point_type, p, first_point, bbox_to_snap);
     s.getPoint(p);
 }
 
@@ -132,8 +132,8 @@ void SnapManager::freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point
  *
  *  \param point_type Type of point.
  *  \param p Point.
- *  \param first_point If true then this point is the first one from a whole bunch of points 
- *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation 
+ *  \param first_point If true then this point is the first one from a whole bunch of points
+ *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation
  *  \param snappers List of snappers to try to snap to
  *  \return Snapped point.
  */
@@ -146,28 +146,28 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapPreferences::PointTyp
     if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
-    
+
     std::vector<SPItem const *> *items_to_ignore;
-    if (_item_to_ignore) { // If we have only a single item to ignore 
-        // then build a list containing this single item; 
+    if (_item_to_ignore) { // If we have only a single item to ignore
+        // then build a list containing this single item;
         // This single-item list will prevail over any other _items_to_ignore list, should that exist
         items_to_ignore = new std::vector<SPItem const *>;
         items_to_ignore->push_back(_item_to_ignore);
     } else {
         items_to_ignore = _items_to_ignore;
     }
-    
+
     SnappedConstraints sc;
     SnapperList const snappers = getSnappers();
-    
+
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
         (*i)->freeSnap(sc, point_type, p, first_point, bbox_to_snap, items_to_ignore, _unselected_nodes);
     }
-    
+
     if (_item_to_ignore) {
-        delete items_to_ignore;   
+        delete items_to_ignore;
     }
-    
+
     return findBestSnap(p, sc, false);
 }
 
@@ -179,51 +179,51 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapPreferences::PointTyp
 // PS: Wether we really find a multiple also depends on the snapping range!
 Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
 {
-    if (!snapprefs.getSnapEnabledGlobally()) // No need to check for snapprefs.getSnapPostponedGlobally() here 
+    if (!snapprefs.getSnapEnabledGlobally()) // No need to check for snapprefs.getSnapPostponedGlobally() here
         return t;
-    
+
     //FIXME: this code should actually do this: add new grid snappers that are active for this desktop. now it just adds all gridsnappers
     SPDesktop* desktop = SP_ACTIVE_DESKTOP;
-    
+
     if (desktop && desktop->gridsEnabled()) {
         bool success = false;
-        Geom::Point nearest_multiple; 
+        Geom::Point nearest_multiple;
         Geom::Coord nearest_distance = NR_HUGE;
-        
+
         // It will snap to the grid for which we find the closest snap. This might be a different
-        // grid than to which the objects were initially aligned. I don't see an easy way to fix 
-        // this, so when using multiple grids one can get unexpected results 
-        
+        // grid than to which the objects were initially aligned. I don't see an easy way to fix
+        // this, so when using multiple grids one can get unexpected results
+
         // Cannot use getGridSnappers() because we need both the grids AND their snappers
-        // Therefor we iterate through all grids manually        
+        // Therefor we iterate through all grids manually
         for (GSList const *l = _named_view->grids; l != NULL; l = l->next) {
             Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
-            const Inkscape::Snapper* snapper = grid->snapper; 
+            const Inkscape::Snapper* snapper = grid->snapper;
             if (snapper && snapper->ThisSnapperMightSnap()) {
-                // To find the nearest multiple of the grid pitch for a given translation t, we 
+                // To find the nearest multiple of the grid pitch for a given translation t, we
                 // will use the grid snapper. Simply snapping the value t to the grid will do, but
                 // only if the origin of the grid is at (0,0). If it's not then compensate for this
                 // in the translation t
                 Geom::Point const t_offset = from_2geom(t) + grid->origin;
-                SnappedConstraints sc;    
+                SnappedConstraints sc;
                 // Only the first three parameters are being used for grid snappers
                 snapper->freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_NODE, t_offset, TRUE, Geom::OptRect(), NULL, NULL);
                 // Find the best snap for this grid, including intersections of the grid-lines
                 Inkscape::SnappedPoint s = findBestSnap(t_offset, sc, false);
-                if (s.getSnapped() && (s.getSnapDistance() < nearest_distance)) { 
-                    // use getSnapDistance() instead of getWeightedDistance() here because the pointer's position 
-                	// doesn't tell us anything about which node to snap
-                	success = true;
+                if (s.getSnapped() && (s.getSnapDistance() < nearest_distance)) {
+                    // use getSnapDistance() instead of getWeightedDistance() here because the pointer's position
+                    // doesn't tell us anything about which node to snap
+                    success = true;
                     nearest_multiple = s.getPoint() - to_2geom(grid->origin);
                     nearest_distance = s.getSnapDistance();
                 }
             }
         }
-        
-        if (success) 
+
+        if (success)
             return nearest_multiple;
     }
-    
+
     return t;
 }
 
@@ -233,8 +233,8 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
  *
  *  \param point_type Type of point.
  *  \param p Point.
- *  \param first_point If true then this point is the first one from a whole bunch of points 
- *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation 
+ *  \param first_point If true then this point is the first one from a whole bunch of points
+ *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation
  *  \param constraint Constraint line.
  *  \return Snapped point.
  */
@@ -245,7 +245,7 @@ void SnapManager::constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointTyp
                                                     bool first_point,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
-    Inkscape::SnappedPoint const s = constrainedSnap(point_type, p, constraint, first_point, bbox_to_snap);                                                            
+    Inkscape::SnappedPoint const s = constrainedSnap(point_type, p, constraint, first_point, bbox_to_snap);
     s.getPoint(p);
 }
 
@@ -255,8 +255,8 @@ void SnapManager::constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointTyp
  *
  *  \param point_type Type of point.
  *  \param p Point.
- *  \param first_point If true then this point is the first one from a whole bunch of points 
- *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation 
+ *  \param first_point If true then this point is the first one from a whole bunch of points
+ *  \param points_to_snap The whole bunch of points, all from the same selection and having the same transformation
  *  \param constraint Constraint line.
  *  \return Snapped point.
  */
@@ -270,41 +270,41 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
     if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
-    
+
     std::vector<SPItem const *> *items_to_ignore;
-    if (_item_to_ignore) { // If we have only a single item to ignore 
-        // then build a list containing this single item; 
+    if (_item_to_ignore) { // If we have only a single item to ignore
+        // then build a list containing this single item;
         // This single-item list will prevail over any other _items_to_ignore list, should that exist
         items_to_ignore = new std::vector<SPItem const *>;
         items_to_ignore->push_back(_item_to_ignore);
     } else {
         items_to_ignore = _items_to_ignore;
     }
-    
-    SnappedConstraints sc;    
+
+    SnappedConstraints sc;
     SnapperList const snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
         (*i)->constrainedSnap(sc, point_type, p, first_point, bbox_to_snap, constraint, items_to_ignore);
     }
-    
+
     if (_item_to_ignore) {
-        delete items_to_ignore;   
+        delete items_to_ignore;
     }
-    
+
     return findBestSnap(p, sc, true);
 }
 
 void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) const
 {
     // This method is used to snap a guide to nodes, while dragging the guide around
-    
+
     if ( !(object.GuidesMightSnap() && snapprefs.getSnapEnabledGlobally()) || snapprefs.getSnapPostponedGlobally() ) {
-    	return;
+        return;
     }
-    
+
     SnappedConstraints sc;
     object.guideSnap(sc, p, guide_normal);
-    
+
     Inkscape::SnappedPoint const s = findBestSnap(p, sc, false);
     s.getPoint(p);
 }
@@ -345,30 +345,30 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     */
 
     /* Quick check to see if we have any snappers that are enabled
-    ** Also used to globally disable all snapping 
+    ** Also used to globally disable all snapping
     */
     if (someSnapperMightSnap() == false) {
         return Inkscape::SnappedPoint();
     }
-    
+
     std::vector<Geom::Point> transformed_points;
     Geom::Rect bbox;
-    
+
     for (std::vector<Geom::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
 
         /* Work out the transformed version of this point */
         Geom::Point transformed = _transformPoint(*i, transformation_type, transformation, origin, dim, uniform);
-        
+
         // add the current transformed point to the box hulling all transformed points
         if (i == points.begin()) {
-            bbox = Geom::Rect(transformed, transformed);    
+            bbox = Geom::Rect(transformed, transformed);
         } else {
             bbox.expandTo(transformed);
         }
-        
+
         transformed_points.push_back(transformed);
-    }    
-    
+    }
+
     /* The current best transformation */
     Geom::Point best_transformation = transformation;
 
@@ -384,17 +384,17 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
 
     // std::cout << std::endl;
     for (std::vector<Geom::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
-        
-        /* Snap it */        
+
+        /* Snap it */
         Inkscape::SnappedPoint snapped_point;
         Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
         Geom::Point const b = (*i - origin); // vector to original point
-                
-        if (constrained) {                
+
+        if (constrained) {
             if ((transformation_type == SCALE || transformation_type == STRETCH) && uniform) {
                 // When uniformly scaling, each point will have its own unique constraint line,
                 // running from the scaling origin to the original untransformed point. We will
-                // calculate that line here 
+                // calculate that line here
                 dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, b);
             } else if (transformation_type == STRETCH) { // when non-uniform stretching {
                 dedicated_constraint = Inkscape::Snapper::ConstraintLine((*i), component_vectors[dim]);
@@ -402,24 +402,24 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 // When doing a constrained translation, all points will move in the same direction, i.e.
                 // either horizontally or vertically. The lines along which they move are therefore all
                 // parallel, but might not be colinear. Therefore we will have to set the point through
-                // which the constraint-line runs here, for each point individually. 
+                // which the constraint-line runs here, for each point individually.
                 dedicated_constraint.setPoint(*i);
-            } // else: leave the original constraint, e.g. for skewing 
+            } // else: leave the original constraint, e.g. for skewing
             if (transformation_type == SCALE && !uniform) {
-                g_warning("Non-uniform constrained scaling is not supported!");   
+                g_warning("Non-uniform constrained scaling is not supported!");
             }
             snapped_point = constrainedSnap(type, *j, dedicated_constraint, i == points.begin(), bbox);
         } else {
             bool const c1 = fabs(b[Geom::X]) < 1e-6;
             bool const c2 = fabs(b[Geom::Y]) < 1e-6;
-        	if (transformation_type == SCALE && (c1 || c2) && !(c1 && c2)) {
-            	// When scaling, a point aligned either horizontally or vertically with the origin can only
-        		// move in that specific direction; therefore it should only snap in that direction, otherwise
-        		// we will get snapped points with an invalid transformation 
-        		dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, component_vectors[c1]);
-            	snapped_point = constrainedSnap(type, *j, dedicated_constraint, i == points.begin(), bbox);
+            if (transformation_type == SCALE && (c1 || c2) && !(c1 && c2)) {
+                // When scaling, a point aligned either horizontally or vertically with the origin can only
+                // move in that specific direction; therefore it should only snap in that direction, otherwise
+                // we will get snapped points with an invalid transformation
+                dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, component_vectors[c1]);
+                snapped_point = constrainedSnap(type, *j, dedicated_constraint, i == points.begin(), bbox);
             } else {
-            	snapped_point = freeSnap(type, *j, i == points.begin(), bbox);
+                snapped_point = freeSnap(type, *j, i == points.begin(), bbox);
             }
         }
         // std::cout << "dist = " << snapped_point.getSnapDistance() << std::endl;
@@ -427,25 +427,25 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
 
         Geom::Point result;
         Geom::Point scale_metric(NR_HUGE, NR_HUGE);
-        
+
         if (snapped_point.getSnapped()) {
             /* We snapped.  Find the transformation that describes where the snapped point has
             ** ended up, and also the metric for this transformation.
             */
             Geom::Point const a = (snapped_point.getPoint() - origin); // vector to snapped point
             //Geom::Point const b = (*i - origin); // vector to original point
-            
+
             switch (transformation_type) {
                 case TRANSLATION:
                     result = snapped_point.getPoint() - *i;
-                    /* Consider the case in which a box is almost aligned with a grid in both 
+                    /* Consider the case in which a box is almost aligned with a grid in both
                      * horizontal and vertical directions. The distance to the intersection of
                      * the grid lines will always be larger then the distance to a single grid
-                     * line. If we prefer snapping to an intersection instead of to a single 
+                     * line. If we prefer snapping to an intersection instead of to a single
                      * grid line, then we cannot use "metric = Geom::L2(result)". Therefore the
                      * snapped distance will be used as a metric. Please note that the snapped
                      * distance is defined as the distance to the nearest line of the intersection,
-                     * and not to the intersection itself! 
+                     * and not to the intersection itself!
                      */
                     // Only for translations, the relevant metric will be the real snapped distance,
                     // so we don't have to do anything special here
@@ -454,7 +454,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 {
                     result = Geom::Point(NR_HUGE, NR_HUGE);
                     // If this point *i is horizontally or vertically aligned with
-                    // the origin of the scaling, then it will scale purely in X or Y 
+                    // the origin of the scaling, then it will scale purely in X or Y
                     // We can therefore only calculate the scaling in this direction
                     // and the scaling factor for the other direction should remain
                     // untouched (unless scaling is uniform ofcourse)
@@ -490,13 +490,13 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                     result[0] = (snapped_point.getPoint()[dim] - (*i)[dim]) / ((*i)[1 - dim] - origin[1 - dim]); // skew factor
                     result[1] = transformation[1]; // scale factor
                     // Store the metric for this transformation as a virtual distance
-                    snapped_point.setSnapDistance(std::abs(result[0] - transformation[0])); 
+                    snapped_point.setSnapDistance(std::abs(result[0] - transformation[0]));
                     snapped_point.setSecondSnapDistance(NR_HUGE);
                     break;
                 default:
                     g_assert_not_reached();
             }
-            
+
             // When scaling, we're considering the best transformation in each direction separately. We will have a metric in each
             // direction, whereas for all other transformation we only a single one-dimensional metric. That's why we need to handle
             // the scaling metric differently
@@ -507,7 +507,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                         best_scale_metric[index] = fabs(scale_metric[index]);
                         // When scaling, we're considering the best transformation in each direction separately
                         // Therefore two different snapped points might together make a single best transformation
-                        // We will however return only a single snapped point (e.g. to display the snapping indicator)   
+                        // We will however return only a single snapped point (e.g. to display the snapping indicator)
                         best_snapped_point = snapped_point;
                         // std::cout << "SEL ";
                     } // else { std::cout << "    ";}
@@ -515,7 +515,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 if (uniform) {
                     if (best_scale_metric[0] < best_scale_metric[1]) {
                         best_transformation[1] = best_transformation[0];
-                        best_scale_metric[1] = best_scale_metric[0]; 
+                        best_scale_metric[1] = best_scale_metric[0];
                     } else {
                         best_transformation[0] = best_transformation[1];
                         best_scale_metric[0] = best_scale_metric[1];
@@ -523,15 +523,15 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 }
             } else { // For all transformations other than scaling
                 if (best_snapped_point.isOtherSnapBetter(snapped_point, true)) {
-                	best_transformation = result;
-                    best_snapped_point = snapped_point;                    
+                    best_transformation = result;
+                    best_snapped_point = snapped_point;
                 }
             }
         }
-        
+
         j++;
     }
-    
+
     Geom::Coord best_metric;
     if (transformation_type == SCALE) {
         // When scaling, don't ever exit with one of scaling components set to NR_HUGE
@@ -540,18 +540,18 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 if (uniform && best_transformation[1-index] < NR_HUGE) {
                     best_transformation[index] = best_transformation[1-index];
                 } else {
-                    best_transformation[index] = transformation[index];    
+                    best_transformation[index] = transformation[index];
                 }
             }
         }
         best_metric = std::min(best_scale_metric[0], best_scale_metric[1]);
     } else { // For all transformations other than scaling
-        best_metric = best_snapped_point.getSnapDistance();        
+        best_metric = best_snapped_point.getSnapDistance();
     }
-    
+
     best_snapped_point.setTransformation(best_transformation);
     // Using " < 1e6" instead of " < NR_HUGE" for catching some rounding errors
-    // These rounding errors might be caused by NRRects, see bug #1584301    
+    // These rounding errors might be caused by NRRects, see bug #1584301
     best_snapped_point.setSnapDistance(best_metric < 1e6 ? best_metric : NR_HUGE);
     return best_snapped_point;
 }
@@ -572,11 +572,11 @@ Inkscape::SnappedPoint SnapManager::freeSnapTranslation(Inkscape::SnapPreference
                                                         Geom::Point const &pointer,
                                                         Geom::Point const &tr) const
 {
-	if (p.size() == 1) {
-		_displaySnapsource(point_type, _transformPoint(p.at(0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false));		
-	}
-	
-	return _snapTransformed(point_type, p, pointer, false, Geom::Point(0,0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
+    if (p.size() == 1) {
+        _displaySnapsource(point_type, _transformPoint(p.at(0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false));
+    }
+
+    return _snapTransformed(point_type, p, pointer, false, Geom::Point(0,0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
 }
 
 
@@ -598,11 +598,11 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapTranslation(Inkscape::SnapPre
                                                                Inkscape::Snapper::ConstraintLine const &constraint,
                                                                Geom::Point const &tr) const
 {
-	if (p.size() == 1) {
-		_displaySnapsource(point_type, _transformPoint(p.at(0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false));		
-	}
-	
-	return _snapTransformed(point_type, p, pointer, true, constraint, TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
+    if (p.size() == 1) {
+        _displaySnapsource(point_type, _transformPoint(p.at(0), TRANSLATION, tr, Geom::Point(0,0), Geom::X, false));
+    }
+
+    return _snapTransformed(point_type, p, pointer, true, constraint, TRANSLATION, tr, Geom::Point(0,0), Geom::X, false);
 }
 
 
@@ -623,11 +623,11 @@ Inkscape::SnappedPoint SnapManager::freeSnapScale(Inkscape::SnapPreferences::Poi
                                                   Geom::Scale const &s,
                                                   Geom::Point const &o) const
 {
-	if (p.size() == 1) {
-		_displaySnapsource(point_type, _transformPoint(p.at(0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false));		
-	}
-	
-	return _snapTransformed(point_type, p, pointer, false, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false);
+    if (p.size() == 1) {
+        _displaySnapsource(point_type, _transformPoint(p.at(0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false));
+    }
+
+    return _snapTransformed(point_type, p, pointer, false, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false);
 }
 
 
@@ -650,11 +650,11 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapScale(Inkscape::SnapPreferenc
                                                          Geom::Point const &o) const
 {
     // When constrained scaling, only uniform scaling is supported.
-	if (p.size() == 1) {
-		_displaySnapsource(point_type, _transformPoint(p.at(0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true));		
-	}
-	
-	return _snapTransformed(point_type, p, pointer, true, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true);
+    if (p.size() == 1) {
+        _displaySnapsource(point_type, _transformPoint(p.at(0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true));
+    }
+
+    return _snapTransformed(point_type, p, pointer, true, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true);
 }
 
 
@@ -679,11 +679,11 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(Inkscape::SnapPrefere
                                                             Geom::Dim2 d,
                                                             bool u) const
 {
-	if (p.size() == 1) {
-		_displaySnapsource(point_type, _transformPoint(p.at(0), STRETCH, Geom::Point(s, s), o, d, u));		
-	}
-	   
-	return _snapTransformed(point_type, p, pointer, true, Geom::Point(0,0), STRETCH, Geom::Point(s, s), o, d, u);
+    if (p.size() == 1) {
+        _displaySnapsource(point_type, _transformPoint(p.at(0), STRETCH, Geom::Point(s, s), o, d, u));
+    }
+
+    return _snapTransformed(point_type, p, pointer, true, Geom::Point(0,0), STRETCH, Geom::Point(s, s), o, d, u);
 }
 
 
@@ -703,29 +703,29 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(Inkscape::SnapPreference
                                                  std::vector<Geom::Point> const &p,
                                                  Geom::Point const &pointer,
                                                  Inkscape::Snapper::ConstraintLine const &constraint,
-                                                 Geom::Point const &s,  
+                                                 Geom::Point const &s,
                                                  Geom::Point const &o,
                                                  Geom::Dim2 d) const
 {
-	// "s" contains skew factor in s[0], and scale factor in s[1]
-	
-	// Snapping the nodes of the boundingbox of a selection that is being transformed, will only work if
-	// the transformation of the bounding box is equal to the transformation of the individual nodes. This is
-	// NOT the case for example when rotating or skewing. The bounding box itself cannot possibly rotate or skew,
-	// so it's corners have a different transformation. The snappers cannot handle this, therefore snapping
-	// of bounding boxes is not allowed here.
-	g_assert(!(point_type & Inkscape::SnapPreferences::SNAPPOINT_BBOX));
-	
-	if (p.size() == 1) {
-		_displaySnapsource(point_type, _transformPoint(p.at(0), SKEW, s, o, d, false));		
-	}
-	
-	return _snapTransformed(point_type, p, pointer, true, constraint, SKEW, s, o, d, false);
+    // "s" contains skew factor in s[0], and scale factor in s[1]
+
+    // Snapping the nodes of the boundingbox of a selection that is being transformed, will only work if
+    // the transformation of the bounding box is equal to the transformation of the individual nodes. This is
+    // NOT the case for example when rotating or skewing. The bounding box itself cannot possibly rotate or skew,
+    // so it's corners have a different transformation. The snappers cannot handle this, therefore snapping
+    // of bounding boxes is not allowed here.
+    g_assert(!(point_type & Inkscape::SnapPreferences::SNAPPOINT_BBOX));
+
+    if (p.size() == 1) {
+        _displaySnapsource(point_type, _transformPoint(p.at(0), SKEW, s, o, d, false));
+    }
+
+    return _snapTransformed(point_type, p, pointer, true, constraint, SKEW, s, o, d, false);
 }
 
 Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedConstraints &sc, bool constrained) const
 {
-    
+
     /*
     std::cout << "Type and number of snapped constraints: " << std::endl;
     std::cout << "  Points      : " << sc.points.size() << std::endl;
@@ -734,47 +734,47 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
     std::cout << "  Guide lines : " << sc.guide_lines.size()<< std::endl;
     std::cout << "  Curves      : " << sc.curves.size()<< std::endl;
     */
-    
+
     // Store all snappoints
     std::list<Inkscape::SnappedPoint> sp_list;
-    
+
     // search for the closest snapped point
     Inkscape::SnappedPoint closestPoint;
     if (getClosestSP(sc.points, closestPoint)) {
         sp_list.push_back(closestPoint);
-    } 
-    
+    }
+
     // search for the closest snapped curve
     Inkscape::SnappedCurve closestCurve;
-    if (getClosestCurve(sc.curves, closestCurve)) {    
+    if (getClosestCurve(sc.curves, closestCurve)) {
         sp_list.push_back(Inkscape::SnappedPoint(closestCurve));
     }
-    
+
     if (snapprefs.getSnapIntersectionCS()) {
         // search for the closest snapped intersection of curves
         Inkscape::SnappedPoint closestCurvesIntersection;
         if (getClosestIntersectionCS(sc.curves, p, closestCurvesIntersection)) {
             sp_list.push_back(closestCurvesIntersection);
         }
-    }    
+    }
 
     // search for the closest snapped grid line
     Inkscape::SnappedLine closestGridLine;
-    if (getClosestSL(sc.grid_lines, closestGridLine)) {    
+    if (getClosestSL(sc.grid_lines, closestGridLine)) {
         closestGridLine.setTarget(Inkscape::SNAPTARGET_GRID);
         sp_list.push_back(Inkscape::SnappedPoint(closestGridLine));
     }
-    
+
     // search for the closest snapped guide line
     Inkscape::SnappedLine closestGuideLine;
     if (getClosestSL(sc.guide_lines, closestGuideLine)) {
         closestGuideLine.setTarget(Inkscape::SNAPTARGET_GUIDE);
         sp_list.push_back(Inkscape::SnappedPoint(closestGuideLine));
     }
-    
+
     // When freely snapping to a grid/guide/path, only one degree of freedom is eliminated
-    // Therefore we will try get fully constrained by finding an intersection with another grid/guide/path 
-    
+    // Therefore we will try get fully constrained by finding an intersection with another grid/guide/path
+
     // When doing a constrained snap however, we're already at an intersection of the constrained line and
     // the grid/guide/path we're snapping to. This snappoint is therefore fully constrained, so there's
     // no need to look for additional intersections
@@ -785,14 +785,14 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
             closestGridPoint.setTarget(Inkscape::SNAPTARGET_GRID_INTERSECTION);
             sp_list.push_back(closestGridPoint);
         }
-        
+
         // search for the closest snapped intersection of guide lines
         Inkscape::SnappedPoint closestGuidePoint;
         if (getClosestIntersectionSL(sc.guide_lines, closestGuidePoint)) {
             closestGuidePoint.setTarget(Inkscape::SNAPTARGET_GUIDE_INTERSECTION);
             sp_list.push_back(closestGuidePoint);
         }
-        
+
         // search for the closest snapped intersection of grid with guide lines
         if (snapprefs.getSnapIntersectionGG()) {
             Inkscape::SnappedPoint closestGridGuidePoint;
@@ -802,23 +802,23 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
             }
         }
     }
-    
+
     // now let's see which snapped point gets a thumbs up
     Inkscape::SnappedPoint bestSnappedPoint = Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     // std::cout << "Finding the best snap..." << std::endl;
     for (std::list<Inkscape::SnappedPoint>::const_iterator i = sp_list.begin(); i != sp_list.end(); i++) {
         // first find out if this snapped point is within snapping range
-    	// std::cout << "sp = " << from_2geom((*i).getPoint());
+        // std::cout << "sp = " << from_2geom((*i).getPoint());
         if ((*i).getSnapDistance() <= (*i).getTolerance()) {
             // if it's the first point, or if it is closer than the best snapped point so far
-            if (i == sp_list.begin() || bestSnappedPoint.isOtherSnapBetter(*i, false)) { 
+            if (i == sp_list.begin() || bestSnappedPoint.isOtherSnapBetter(*i, false)) {
                 // then prefer this point over the previous one
                 bestSnappedPoint = *i;
             }
         }
         // std::cout << std::endl;
-    }    
-    
+    }
+
     // Update the snap indicator, if requested
     if (_snapindicator) {
         if (bestSnappedPoint.getSnapped()) {
@@ -827,9 +827,9 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
             _desktop->snapindicator->remove_snaptarget();
         }
     }
-    
+
     // std::cout << "findBestSnap = " << bestSnappedPoint.getPoint() << " | dist = " << bestSnappedPoint.getSnapDistance() << std::endl;
-    return bestSnappedPoint;         
+    return bestSnappedPoint;
 }
 
 void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, SPItem const *item_to_ignore, std::vector<Geom::Point> *unselected_nodes)
@@ -849,7 +849,7 @@ void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, std::vecto
     _items_to_ignore = &items_to_ignore;
     _desktop = desktop;
     _snapindicator = snapindicator;
-    _unselected_nodes = unselected_nodes;   
+    _unselected_nodes = unselected_nodes;
 }
 
 SPDocument *SnapManager::getDocument() const
@@ -857,14 +857,14 @@ SPDocument *SnapManager::getDocument() const
     return _named_view->document;
 }
 
-Geom::Point SnapManager::_transformPoint(Geom::Point const &p, 
-										Transformation const transformation_type, 
-										Geom::Point const &transformation, 
-										Geom::Point const &origin, 
-										Geom::Dim2 const dim, 
-										bool const uniform) const 
+Geom::Point SnapManager::_transformPoint(Geom::Point const &p,
+                                        Transformation const transformation_type,
+                                        Geom::Point const &transformation,
+                                        Geom::Point const &origin,
+                                        Geom::Dim2 const dim,
+                                        bool const uniform) const
 {
-	/* Work out the transformed version of this point */
+    /* Work out the transformed version of this point */
     Geom::Point transformed;
     switch (transformation_type) {
         case TRANSLATION:
@@ -895,22 +895,22 @@ Geom::Point SnapManager::_transformPoint(Geom::Point const &p,
         default:
             g_assert_not_reached();
     }
-    
+
     return transformed;
 }
 
 void SnapManager::_displaySnapsource(Inkscape::SnapPreferences::PointType point_type, Geom::Point const &p) const {
 
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-	if (prefs->getBool("/options/snapclosestonly/value")) {
-		bool p_is_a_node = point_type & Inkscape::SnapPreferences::SNAPPOINT_NODE;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/options/snapclosestonly/value")) {
+        bool p_is_a_node = point_type & Inkscape::SnapPreferences::SNAPPOINT_NODE;
         bool p_is_a_bbox = point_type & Inkscape::SnapPreferences::SNAPPOINT_BBOX;
-		if ((p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox())) {
-			_desktop->snapindicator->set_new_snapsource(p);
-		} else {
-			_desktop->snapindicator->remove_snapsource();
-		}
-	}
+        if ((p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox())) {
+            _desktop->snapindicator->set_new_snapsource(p);
+        } else {
+            _desktop->snapindicator->remove_snapsource();
+        }
+    }
 }
 
 /*

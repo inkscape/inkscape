@@ -20,7 +20,7 @@
 
 Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve)
 {
-	_distance = snapped_distance;
+    _distance = snapped_distance;
     _tolerance = std::max(snapped_tolerance, 1.0);
     _always_snap = always_snap;
     _curve = curve;
@@ -32,7 +32,7 @@ Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coo
     _fully_constrained = fully_constrained;
 }
 
-Inkscape::SnappedCurve::SnappedCurve() 
+Inkscape::SnappedCurve::SnappedCurve()
 {
     _distance = NR_HUGE;
     _tolerance = 1;
@@ -50,7 +50,7 @@ Inkscape::SnappedCurve::~SnappedCurve()
 {
 }
 
-Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &curve, Geom::Point const &p) const 
+Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &curve, Geom::Point const &p) const
 {
     // Calculate the intersections of two curves, which are both within snapping range, and
     // return only the closest intersection
@@ -58,7 +58,7 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
     // PS: We need p (the location of the mouse pointer) for find out which intersection is the
     // closest, as there might be multiple intersections of two curves
     Geom::Crossings cs = crossings(*(this->_curve), *(curve._curve));
-     
+
     if (cs.size() > 0) {
         // There might be multiple intersections: find the closest
         Geom::Coord best_dist = NR_HUGE;
@@ -71,8 +71,8 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
                 best_p = p_ix;
             }
         }
-        
-        // Now we've found the closests intersection, return it as a SnappedPoint
+
+        // Now we've found the closest intersection, return it as a SnappedPoint
         bool const use_this_as_primary = _distance < curve.getSnapDistance();
         Inkscape::SnappedCurve const *primaryC = use_this_as_primary ? this : &curve;
         Inkscape::SnappedCurve const *secondaryC = use_this_as_primary ? &curve : this;
@@ -80,37 +80,40 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
         // we need a desktop: this is a dirty hack
         SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
         best_p = desktop->dt2doc(best_p);
+
+        Geom::Coord primaryDist = use_this_as_primary ? Geom::L2(best_p - this->getPoint()) : Geom::L2(best_p - curve.getPoint());
+        Geom::Coord secondaryDist = use_this_as_primary ? Geom::L2(best_p - curve.getPoint()) : Geom::L2(best_p - this->getPoint());
         // TODO: Investigate whether it is possible to use document coordinates everywhere
         // in the snapper code. Only the mouse position should be in desktop coordinates, I guess.
         // All paths are already in document coords and we are certainly not going to change THAT.
-        return SnappedPoint(from_2geom(best_p), Inkscape::SNAPTARGET_PATH_INTERSECTION, primaryC->getSnapDistance(), primaryC->getTolerance(), primaryC->getAlwaysSnap(), true, true,
-                                          secondaryC->getSnapDistance(), secondaryC->getTolerance(), secondaryC->getAlwaysSnap());
+        return SnappedPoint(from_2geom(best_p), Inkscape::SNAPTARGET_PATH_INTERSECTION, primaryDist, primaryC->getTolerance(), primaryC->getAlwaysSnap(), true, true,
+                secondaryDist, secondaryC->getTolerance(), secondaryC->getAlwaysSnap());
     }
-    
+
     // No intersection
     return SnappedPoint(Geom::Point(NR_HUGE, NR_HUGE), SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false, false, NR_HUGE, 0, false);
 }
 
 // search for the closest snapped line
-bool getClosestCurve(std::list<Inkscape::SnappedCurve> const &list, Inkscape::SnappedCurve &result) 
+bool getClosestCurve(std::list<Inkscape::SnappedCurve> const &list, Inkscape::SnappedCurve &result)
 {
     bool success = false;
-    
+
     for (std::list<Inkscape::SnappedCurve>::const_iterator i = list.begin(); i != list.end(); i++) {
         if ((i == list.begin()) || (*i).getSnapDistance() < result.getSnapDistance()) {
             result = *i;
             success = true;
-        }   
+        }
     }
-    
-    return success; 
+
+    return success;
 }
 
 // search for the closest intersection of two snapped curves, which are both member of the same collection
 bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geom::Point const &p, Inkscape::SnappedPoint &result)
 {
     bool success = false;
-    
+
     for (std::list<Inkscape::SnappedCurve>::const_iterator i = list.begin(); i != list.end(); i++) {
         std::list<Inkscape::SnappedCurve>::const_iterator j = i;
         j++;
@@ -119,21 +122,21 @@ bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geo
             if (sp.getAtIntersection()) {
                 // if it's the first point
                 bool const c1 = !success;
-                // or, if it's closer             
+                // or, if it's closer
                 bool const c2 = sp.getSnapDistance() < result.getSnapDistance();
-                // or, if it's just as close then look at the other distance 
+                // or, if it's just as close then look at the other distance
                 // (only relevant for snapped points which are at an intersection)
-                bool const c3 = (sp.getSnapDistance() == result.getSnapDistance()) && (sp.getSecondSnapDistance() < result.getSecondSnapDistance()); 
+                bool const c3 = (sp.getSnapDistance() == result.getSnapDistance()) && (sp.getSecondSnapDistance() < result.getSecondSnapDistance());
                 // then prefer this point over the previous one
-                if (c1 || c2 || c3) {  
+                if (c1 || c2 || c3) {
                     result = sp;
                     success = true;
                 }
-            }               
+            }
         }
     }
-    
-    return success; 
+
+    return success;
 }
 /*
   Local Variables:
