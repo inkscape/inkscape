@@ -135,14 +135,13 @@ DISTCLEANFILES =	\
 
 # Extra files not mentioned as sources to include in the source tarball
 EXTRA_DIST =	\
-	Doxyfile	\
+	$(top_srcdir)/Doxyfile	\
 	sp-skeleton.cpp sp-skeleton.h	\
 	algorithms/makefile.in	\
 	application/makefile.in	\
 	bind/makefile.in	\
 	debug/makefile.in	\
 	dialogs/makefile.in	\
-	dialogs/filedialog-win32.cpp	\
 	display/makefile.in	\
 	dom/makefile.in		\
 	extension/implementation/makefile.in	\

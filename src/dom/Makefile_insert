@@ -10,13 +10,12 @@ dom_libdom_a_SOURCES =       \
 	dom/cssreader.cpp        \
 	dom/cssreader.h          \
 	dom/dom.h                \
-    dom/domconfig.h          \
 	dom/domimpl.cpp          \
 	dom/domimpl.h            \
     dom/domptr.cpp           \
+    dom/domptr.h             \
     dom/domstring.cpp        \
     dom/domstring.h          \
-    dom/domstringimpl.h      \
     dom/events.h             \
     dom/ls.h                 \
     dom/lsimpl.cpp           \
@@ -28,6 +27,7 @@ dom_libdom_a_SOURCES =       \
     dom/smilimpl.cpp         \
     dom/smilimpl.h           \
 	dom/stylesheets.h        \
+	dom/svg2.h               \
 	dom/svg.h                \
 	dom/svgimpl.cpp          \
 	dom/svgimpl.h            \
@@ -40,6 +40,7 @@ dom_libdom_a_SOURCES =       \
 	dom/uri.cpp              \
 	dom/uri.h                \
 	dom/views.h              \
+	dom/views-level3.h       \
 	dom/xmlreader.cpp        \
 	dom/xmlreader.h          \
 	dom/xpath.h              \

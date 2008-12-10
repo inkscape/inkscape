@@ -36,3 +36,4 @@ share/templates/Makefile.in
 share/tutorials/Makefile.in
 share/ui/Makefile.in
 src/Makefile.in
+share/filters/filters.svg.h

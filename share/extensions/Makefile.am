@@ -236,7 +236,6 @@ module_DATA = \
 	$(modules)
 
 EXTRA_DIST = \
-	radiobutton_example.inx	\
 	$(extension_SCRIPTS) $(otherstuff_DATA) $(module_DATA)
 
 

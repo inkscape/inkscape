@@ -135,12 +135,13 @@ Effect::merge_menu (Inkscape::XML::Node * base,
 
     if (start != NULL) {
         Inkscape::XML::Node * menupass;
-        for (menupass = start->next(); menupass != NULL; menupass = menupass->next()) {
+        for (menupass = start; menupass != NULL; menupass = menupass->next()) {
             gchar const * compare_char = NULL;
             if (!strcmp(menupass->name(), "verb")) {
                 gchar const * verbid = menupass->attribute("verb-id");
                 Inkscape::Verb * verb = Inkscape::Verb::getbyid(verbid);
                 if (verb == NULL) {
+					g_warning("Unable to find verb '%s' which is referred to in the menus.", verbid);
                     continue;
                 }
                 compare_char = verb->get_name();

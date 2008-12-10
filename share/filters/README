@@ -8,5 +8,7 @@ inkscape:label is the name in the menu
 inkscape:menu  is the submenu under Effects > Filters
 inkscape:menu-tooltip is the menu command's tooltip in the statusbar
 
-
+These are then put into filters.svg.h in order to make them translatable.
+They should appear as a normal translation to translaters through the
+gettext system.
 
