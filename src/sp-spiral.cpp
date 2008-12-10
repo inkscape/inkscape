@@ -19,7 +19,7 @@
 
 #include "svg/svg.h"
 #include "attributes.h"
-#include "display/bezier-utils.h"
+#include <2geom/bezier-utils.h>
 #include "display/curve.h"
 #include <glibmm/i18n.h>
 #include "xml/repr.h"
@@ -388,7 +388,7 @@ sp_spiral_fit_and_draw (SPSpiral const *spiral,
 	/** \todo
          * We should use better algorithm to specify maximum error.
          */
-	depth = sp_bezier_fit_cubic_full (bezier, NULL, darray, SAMPLE_SIZE,
+	depth = Geom::bezier_fit_cubic_full (bezier, NULL, darray, SAMPLE_SIZE,
 					  hat1, hat2,
 					  SPIRAL_TOLERANCE*SPIRAL_TOLERANCE,
 					  FITTING_MAX_BEZIERS);

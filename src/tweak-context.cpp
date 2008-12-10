@@ -21,7 +21,6 @@
 
 #include "svg/svg.h"
 #include "display/canvas-bpath.h"
-#include "display/bezier-utils.h"
 
 #include <glib/gmem.h>
 #include "macros.h"

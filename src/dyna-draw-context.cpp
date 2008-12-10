@@ -34,7 +34,7 @@
 
 #include "svg/svg.h"
 #include "display/canvas-bpath.h"
-#include "display/bezier-utils.h"
+#include <2geom/bezier-utils.h>
 #include "display/curve.h"
 #include <glib/gmem.h>
 #include "macros.h"
@@ -1127,12 +1127,12 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
         }
 
         Geom::Point b1[BEZIER_MAX_LENGTH];
-        gint const nb1 = sp_bezier_fit_cubic_r(b1, dc->point1, dc->npoints,
+        gint const nb1 = Geom::bezier_fit_cubic_r(b1, dc->point1, dc->npoints,
                                                tolerance_sq, BEZIER_MAX_BEZIERS);
         g_assert( nb1 * BEZIER_SIZE <= gint(G_N_ELEMENTS(b1)) );
 
         Geom::Point b2[BEZIER_MAX_LENGTH];
-        gint const nb2 = sp_bezier_fit_cubic_r(b2, dc->point2, dc->npoints,
+        gint const nb2 = Geom::bezier_fit_cubic_r(b2, dc->point2, dc->npoints,
                                                tolerance_sq, BEZIER_MAX_BEZIERS);
         g_assert( nb2 * BEZIER_SIZE <= gint(G_N_ELEMENTS(b2)) );
 
