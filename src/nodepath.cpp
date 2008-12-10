@@ -48,7 +48,7 @@
 #include "libnr/nr-matrix-ops.h"
 #include "svg/svg.h"
 #include "verbs.h"
-#include "display/bezier-utils.h"
+#include <2geom/bezier-utils.h>
 #include <vector>
 #include <algorithm>
 #include <cstring>
@@ -2529,7 +2529,7 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
             //would decreasing error create a better fitting approximation?
             gdouble error = 1.0;
             gint ret;
-            ret = sp_bezier_fit_cubic (bez, adata, data.size(), error);
+            ret = Geom::bezier_fit_cubic (bez, adata, data.size(), error);
 
             //if these nodes are smooth or symmetrical, the endpoints will be thrown out of sync.
             //make sure these nodes are changed to cusp nodes so that, once the endpoints are moved,
