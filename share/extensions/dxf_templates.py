@@ -10,6 +10,10 @@ AC1014
 $HANDSEED
   5
 FFFF
+  9
+$MEASUREMENT
+ 70
+     1
   0
 ENDSEC
   0
