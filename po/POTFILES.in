@@ -142,7 +142,6 @@ src/flood-context.cpp
 src/gradient-context.cpp
 src/gradient-drag.cpp
 src/helper/units.cpp
-src/helper/units-test.cpp
 src/helper/units-test.h
 src/inkscape.cpp
 src/interface.cpp
