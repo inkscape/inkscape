@@ -132,7 +132,7 @@ static gboolean node_request(SPKnot *knot, Geom::Point const &p, guint state, gp
 static void node_handle_clicked(SPKnot *knot, guint state, gpointer data);
 static void node_handle_grabbed(SPKnot *knot, guint state, gpointer data);
 static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data);
-static gboolean node_handle_request(SPKnot *knot, Geom::Point const &p, guint state, gpointer data);
+static gboolean node_handle_request(SPKnot *knot, Geom::Point &p, guint state, gpointer data);
 static void node_handle_moved(SPKnot *knot, Geom::Point const &p, guint state, gpointer data);
 static gboolean node_handle_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::Node *n);
 
@@ -3908,7 +3908,7 @@ static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data)
 /**
  * Node handle "request" signal callback.
  */
-static gboolean node_handle_request(SPKnot *knot, Geom::Point const &p, guint state, gpointer data)
+static gboolean node_handle_request(SPKnot *knot, Geom::Point &p, guint state, gpointer data)
 {
     Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
@@ -3948,13 +3948,12 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point const &p, guint st
             Inkscape::NodePath::Node *othernode = opposite->other;
             Geom::Point const ndelta = n->pos - othernode->pos;
             Geom::Coord const linelen = Geom::L2(ndelta);
-            Geom::Point ptemp = p;
             if (len > NR_EPSILON && linelen > NR_EPSILON) {
                 Geom::Coord const scal = dot(delta, ndelta) / linelen;
-                ptemp = n->pos + (scal / linelen) * ndelta;
+                p = n->pos + (scal / linelen) * ndelta;
             }
             if ((state & GDK_SHIFT_MASK) == 0) {
-                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, ptemp, Inkscape::Snapper::ConstraintLine(ptemp, ndelta));
+                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::Snapper::ConstraintLine(p, ndelta));
             }
         } else {
             if ((state & GDK_SHIFT_MASK) == 0) {
@@ -3967,6 +3966,8 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point const &p, guint st
         }
     }
     
+    s.getPoint(p);
+
     sp_node_adjust_handle(n, -which);
 
     return FALSE;
