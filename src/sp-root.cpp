@@ -322,7 +322,7 @@ sp_root_set(SPObject *object, unsigned int key, gchar const *value)
                 }
                 clip = SP_ASPECT_MEET;
                 while (*e && *e == 32) e += 1;
-                if (e) {
+                if (*e) {
                     if (!strcmp(e, "meet")) {
                         clip = SP_ASPECT_MEET;
                     } else if (!strcmp(e, "slice")) {
