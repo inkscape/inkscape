@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2008-12-10 03:49+0300\n"
-"PO-Revision-Date: 2008-12-10 03:54+0300\n"
+"POT-Creation-Date: 2008-12-12 15:28+0300\n"
+"PO-Revision-Date: 2008-12-12 23:26+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,6 +30,444 @@ msgstr "Создание и редактирование масштабируе�
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape Vector Graphics Editor"
 msgstr "Редактор векторной графики Inkscape"
+
+#: ../share/filters/filters.svg.h:2
+msgid "Jelly Bean"
+msgstr "Желе"
+
+#: ../share/filters/filters.svg.h:2
+#: ../share/filters/filters.svg.h:3
+#: ../share/filters/filters.svg.h:9
+#: ../share/filters/filters.svg.h:14
+#: ../share/filters/filters.svg.h:15
+#: ../share/filters/filters.svg.h:40
+msgid "Bevels"
+msgstr "Фаска"
+
+#: ../share/filters/filters.svg.h:2
+msgid "Bulging, slightly glossy jelly bean"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:3
+msgid "Metal casting"
+msgstr "Металлическое литьё"
+
+#: ../share/filters/filters.svg.h:3
+msgid "Smooth drop-like bevel with metallic finish"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:4
+msgid "Motion Blur Horizontal"
+msgstr "Размывание движением по горизонтали"
+
+#: ../share/filters/filters.svg.h:4
+#: ../share/filters/filters.svg.h:5
+#: ../share/filters/filters.svg.h:23
+#: ../share/filters/filters.svg.h:24
+msgid "Blur and Sharpen"
+msgstr "Размывание и резкость"
+
+#: ../share/filters/filters.svg.h:4
+msgid "Blur as if the object flies horizontally"
+msgstr "Размыть объект, как если бы он двигался по горизонтали"
+
+#: ../share/filters/filters.svg.h:5
+msgid "Motion Blur Vertical"
+msgstr "Размывание движением по вертикали"
+
+#: ../share/filters/filters.svg.h:5
+msgid "Blur as if the object flies vertically"
+msgstr "Размыть объект, как если бы он двигался по вертикали"
+
+#: ../share/filters/filters.svg.h:6
+msgid "Apparition"
+msgstr "Видение"
+
+#: ../share/filters/filters.svg.h:6
+#: ../share/filters/filters.svg.h:7
+#: ../share/filters/filters.svg.h:8
+#: ../share/filters/filters.svg.h:12
+#: ../share/filters/filters.svg.h:13
+#: ../share/filters/filters.svg.h:41
+msgid "Shadows and Glows"
+msgstr "Свет и тень"
+
+#: ../share/filters/filters.svg.h:6
+msgid "Edges are partly feathered out"
+msgstr "Края частично растушёваны"
+
+#: ../share/filters/filters.svg.h:7
+msgid "Feathered edges"
+msgstr "Растушеванные края"
+
+#: ../share/filters/filters.svg.h:7
+msgid "Edges are feathered out"
+msgstr "Края растушёваны"
+
+#: ../share/filters/filters.svg.h:8
+#, fuzzy
+msgid "Cutout"
+msgstr "оттянута"
+
+#: ../share/filters/filters.svg.h:8
+msgid "Drop shadow under the cut-out of the shape"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:9
+msgid "Jigsaw Piece"
+msgstr "Элемент паззла"
+
+#: ../share/filters/filters.svg.h:9
+msgid "Low, sharp bevel"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:10
+msgid "Roughen"
+msgstr "Шероховатые края"
+
+#: ../share/filters/filters.svg.h:10
+#: ../share/filters/filters.svg.h:16
+#: ../share/filters/filters.svg.h:44
+msgid "Distort Edges"
+msgstr "Искажение краёв"
+
+#: ../share/filters/filters.svg.h:10
+#, fuzzy
+msgid "Small-scale roughened edges"
+msgstr "Менять радиус закругленных углов"
+
+#: ../share/filters/filters.svg.h:11
+msgid "Rubber Stamp"
+msgstr "Штемпель"
+
+#: ../share/filters/filters.svg.h:11
+#: ../share/filters/filters.svg.h:17
+#: ../share/filters/filters.svg.h:18
+#: ../share/filters/filters.svg.h:19
+#: ../share/filters/filters.svg.h:20
+#: ../share/filters/filters.svg.h:21
+#: ../share/filters/filters.svg.h:22
+#: ../share/filters/filters.svg.h:36
+#: ../share/filters/filters.svg.h:37
+#: ../share/filters/filters.svg.h:38
+#: ../share/filters/filters.svg.h:39
+msgid "Textures"
+msgstr "Текстуры"
+
+#: ../share/filters/filters.svg.h:11
+#, fuzzy
+msgid "Random whiteouts inside"
+msgstr "Случайное расположение объектов"
+
+#: ../share/filters/filters.svg.h:12
+msgid "Ink Bleed"
+msgstr "Чернила протекли"
+
+#: ../share/filters/filters.svg.h:12
+msgid "Inky splotches underneath the object"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:13
+msgid "Fire"
+msgstr "Огонь"
+
+#: ../share/filters/filters.svg.h:13
+msgid "Edges of object are on fire"
+msgstr "Края объекта охвачены огнем"
+
+#: ../share/filters/filters.svg.h:14
+msgid "Bloom"
+msgstr "Расцвет"
+
+#: ../share/filters/filters.svg.h:14
+msgid "Soft, cushion-like bevel with matte highlights"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:15
+#, fuzzy
+msgid "Ridged border"
+msgstr "Край с кромкой"
+
+#: ../share/filters/filters.svg.h:15
+msgid "Ridged border with inner bevel"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:16
+msgid "Ripple"
+msgstr "Рябь"
+
+#: ../share/filters/filters.svg.h:16
+#, fuzzy
+msgid "Horizontal rippling of edges"
+msgstr "Горизонтальный радиус закругленных углов"
+
+#: ../share/filters/filters.svg.h:17
+msgid "Speckle"
+msgstr "Пятно"
+
+#: ../share/filters/filters.svg.h:17
+msgid "Fill object with sparse translucent specks"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:18
+#, fuzzy
+msgid "Oil Slick"
+msgstr "Резерв"
+
+#: ../share/filters/filters.svg.h:18
+msgid "Rainbow-colored semitransparent oily splotches"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:19
+msgid "Frost"
+msgstr "Мороз"
+
+#: ../share/filters/filters.svg.h:19
+msgid "Flake-like white splotches"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:20
+msgid "Leopard Fur"
+msgstr "Шкура леопарда"
+
+#: ../share/filters/filters.svg.h:20
+msgid "Leopard spots (loses object's natural color)"
+msgstr "Пятна леопарда (исходный цвет объекта теряется)"
+
+#: ../share/filters/filters.svg.h:21
+msgid "Zebra"
+msgstr "Зебра"
+
+#: ../share/filters/filters.svg.h:21
+msgid "Irregular vertical dark stripes (loses object's natural color)"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:22
+msgid "Clouds"
+msgstr "Облака"
+
+#: ../share/filters/filters.svg.h:22
+msgid "Airy, fluffy, sparse white clouds"
+msgstr "Воздушные, пушистые, редкие облака"
+
+#: ../share/filters/filters.svg.h:23
+#: ../src/extension/internal/bitmap/contrast.cpp:38
+#: ../src/extension/internal/bitmap/sharpen.cpp:37
+msgid "Sharpen"
+msgstr "Повысить резкость"
+
+#: ../share/filters/filters.svg.h:24
+#, fuzzy
+msgid "Sharpen More"
+msgstr "Повысить резкость"
+
+#: ../share/filters/filters.svg.h:25
+#: ../src/extension/internal/bitmap/emboss.cpp:37
+msgid "Emboss"
+msgstr "Рельеф"
+
+#: ../share/filters/filters.svg.h:25
+#: ../share/filters/filters.svg.h:26
+msgid "Image effects"
+msgstr "Эффекты для растра"
+
+#: ../share/filters/filters.svg.h:26
+msgid "Oil Painting"
+msgstr "Масляная краска"
+
+#: ../share/filters/filters.svg.h:26
+msgid "Simulates oil painting style"
+msgstr "Имитирует живопись маслом"
+
+#: ../share/filters/filters.svg.h:27
+msgid "Edge Detect"
+msgstr "Определение краёв"
+
+#: ../share/filters/filters.svg.h:27
+#: ../share/filters/filters.svg.h:28
+#: ../share/filters/filters.svg.h:29
+#: ../share/filters/filters.svg.h:30
+#: ../share/filters/filters.svg.h:31
+msgid "Emphasize Edges"
+msgstr "Подчеркнуть края"
+
+#: ../share/filters/filters.svg.h:27
+msgid "Detect color edges in object"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:28
+msgid "Horizontal Edge Detect"
+msgstr "Определение горизонтальных краёв"
+
+#: ../share/filters/filters.svg.h:28
+msgid "Detect horizontal color edges in object"
+msgstr "Найти в объекте горизонтальные края"
+
+#: ../share/filters/filters.svg.h:29
+msgid "Vertical Edge Detect"
+msgstr "Определение вертикальных краёв"
+
+#: ../share/filters/filters.svg.h:29
+msgid "Detect vertical color edges in object"
+msgstr ""
+
+#. Pencil
+#: ../share/filters/filters.svg.h:30
+#: ../src/ui/dialog/inkscape-preferences.cpp:468
+#: ../src/verbs.cpp:2497
+msgid "Pencil"
+msgstr "Карандаш"
+
+#: ../share/filters/filters.svg.h:30
+msgid "Detect color edges and retrace them in grayscale"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:31
+msgid "Blueprint"
+msgstr "Светокопия"
+
+#: ../share/filters/filters.svg.h:31
+msgid "Detect color edges and retrace them in blue"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:32
+#: ../share/extensions/color_desaturate.inx.h:2
+msgid "Desaturate"
+msgstr "Обесцветить"
+
+#: ../share/filters/filters.svg.h:32
+#: ../share/filters/filters.svg.h:33
+#: ../share/filters/filters.svg.h:34
+#: ../share/filters/filters.svg.h:35
+#: ../src/dialogs/clonetiler.cpp:2619
+#: ../src/dialogs/clonetiler.cpp:2766
+#: ../src/extension/internal/bitmap/colorize.cpp:51
+#: ../share/extensions/color_brighter.inx.h:2
+#: ../share/extensions/color_custom.inx.h:2
+#: ../share/extensions/color_darker.inx.h:1
+#: ../share/extensions/color_desaturate.inx.h:1
+#: ../share/extensions/color_grayscale.inx.h:1
+#: ../share/extensions/color_lesshue.inx.h:1
+#: ../share/extensions/color_lesslight.inx.h:1
+#: ../share/extensions/color_lesssaturation.inx.h:1
+#: ../share/extensions/color_morehue.inx.h:1
+#: ../share/extensions/color_morelight.inx.h:1
+#: ../share/extensions/color_moresaturation.inx.h:1
+#: ../share/extensions/color_negative.inx.h:1
+#: ../share/extensions/color_randomize.inx.h:1
+#: ../share/extensions/color_removeblue.inx.h:1
+#: ../share/extensions/color_removegreen.inx.h:1
+#: ../share/extensions/color_removered.inx.h:1
+#: ../share/extensions/color_replace.inx.h:2
+#: ../share/extensions/color_rgbbarrel.inx.h:1
+msgid "Color"
+msgstr "Цвет"
+
+#: ../share/filters/filters.svg.h:32
+msgid "Render object in black and white"
+msgstr "Изобразить объект черно-белым"
+
+#: ../share/filters/filters.svg.h:33
+#: ../src/ui/widget/selected-style.cpp:222
+msgid "Invert"
+msgstr "Инвертировать"
+
+#: ../share/filters/filters.svg.h:33
+msgid "Invert colors of object"
+msgstr "Инвертировать цвета объекта"
+
+#: ../share/filters/filters.svg.h:34
+msgid "Sepia"
+msgstr "Сепия"
+
+#: ../share/filters/filters.svg.h:34
+msgid "Render object in warm sepia tones"
+msgstr "Изобразить объект в теплых тонах сепии"
+
+#: ../share/filters/filters.svg.h:35
+msgid "Age"
+msgstr "Состаривание"
+
+#: ../share/filters/filters.svg.h:35
+msgid "Imitate aged photograph"
+msgstr "Имитация старой фотографии"
+
+#: ../share/filters/filters.svg.h:36
+#, fuzzy
+msgid "Organic"
+msgstr "Точка отсчета"
+
+#: ../share/filters/filters.svg.h:36
+msgid "Bulging, knotty, slick 3D surface"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:37
+msgid "Barbed Wire"
+msgstr "Колючая проволока"
+
+#: ../share/filters/filters.svg.h:37
+msgid "Gray bevelled wires with drop shadows"
+msgstr "Серые выступающие провода, отбрасывающие тень"
+
+#: ../share/filters/filters.svg.h:38
+msgid "Swiss Cheese"
+msgstr "Швейцарский сыр"
+
+#: ../share/filters/filters.svg.h:38
+msgid "Random inner-bevel holes"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:39
+msgid "Blue Cheese"
+msgstr "Голубой сыр"
+
+#: ../share/filters/filters.svg.h:39
+msgid "Marble-like bluish speckles"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:40
+#, fuzzy
+msgid "Button"
+msgstr "Внизу"
+
+#: ../share/filters/filters.svg.h:40
+msgid "Soft bevel, slightly depressed middle"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:41
+#, fuzzy
+msgid "Inset"
+msgstr "Втян_уть"
+
+#: ../share/filters/filters.svg.h:41
+msgid "Shadowy outer bevel"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:43
+msgid "Dripping"
+msgstr "Протекание"
+
+#: ../share/filters/filters.svg.h:42
+msgid "Random paint streaks downwards"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:43
+msgid "Wetworks"
+msgstr "Мокрое дело"
+
+#: ../share/filters/filters.svg.h:43
+msgid "Random paint streaks and splotches with 3D relief"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:44
+msgid "Electric Arc"
+msgstr "Электрическая дуга"
+
+#: ../share/filters/filters.svg.h:44
+#, fuzzy
+msgid "Roughened edge stroke with a glow"
+msgstr "Смена толщины обводки"
 
 #: ../src/arc-context.cpp:341
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -701,30 +1139,6 @@ msgstr "Для каждого клона в узоре взять значени
 #: ../src/dialogs/clonetiler.cpp:2608
 msgid "1. Pick from the drawing:"
 msgstr "1. Взять значение:"
-
-#: ../src/dialogs/clonetiler.cpp:2619
-#: ../src/dialogs/clonetiler.cpp:2766
-#: ../src/extension/internal/bitmap/colorize.cpp:51
-#: ../share/extensions/color_brighter.inx.h:2
-#: ../share/extensions/color_custom.inx.h:2
-#: ../share/extensions/color_darker.inx.h:1
-#: ../share/extensions/color_desaturate.inx.h:1
-#: ../share/extensions/color_grayscale.inx.h:1
-#: ../share/extensions/color_lesshue.inx.h:1
-#: ../share/extensions/color_lesslight.inx.h:1
-#: ../share/extensions/color_lesssaturation.inx.h:1
-#: ../share/extensions/color_morehue.inx.h:1
-#: ../share/extensions/color_morelight.inx.h:1
-#: ../share/extensions/color_moresaturation.inx.h:1
-#: ../share/extensions/color_negative.inx.h:1
-#: ../share/extensions/color_randomize.inx.h:1
-#: ../share/extensions/color_removeblue.inx.h:1
-#: ../share/extensions/color_removegreen.inx.h:1
-#: ../share/extensions/color_removered.inx.h:1
-#: ../share/extensions/color_replace.inx.h:2
-#: ../share/extensions/color_rgbbarrel.inx.h:1
-msgid "Color"
-msgstr "Цвет"
 
 #: ../src/dialogs/clonetiler.cpp:2620
 msgid "Pick the visible color and opacity"
@@ -2267,8 +2681,6 @@ msgid "New element node..."
 msgstr "Создать ветвь элемента..."
 
 #: ../src/dialogs/xml-tree.cpp:1338
-#: ../src/ui/dialog/whiteboard-connect.cpp:119
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:104
 msgid "Cancel"
 msgstr "Отменить"
 
@@ -2730,7 +3142,6 @@ msgstr "Смещение"
 #: ../src/extension/internal/bitmap/charcoal.cpp:44
 #: ../src/extension/internal/bitmap/colorize.cpp:55
 #: ../src/extension/internal/bitmap/contrast.cpp:42
-#: ../src/extension/internal/bitmap/convolve.cpp:57
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:42
 #: ../src/extension/internal/bitmap/despeckle.cpp:40
 #: ../src/extension/internal/bitmap/edge.cpp:42
@@ -2904,33 +3315,9 @@ msgstr "Тонировать выделенные растровые изобр�
 msgid "Contrast"
 msgstr "Контраст"
 
-#: ../src/extension/internal/bitmap/contrast.cpp:38
-#: ../src/extension/internal/bitmap/sharpen.cpp:37
-msgid "Sharpen"
-msgstr "Повысить резкость"
-
 #: ../src/extension/internal/bitmap/contrast.cpp:44
 msgid "Enhance intensity differences in selected bitmap(s)."
 msgstr "Усилить разницу интенсивности в выделенном изображении"
-
-#. TRANSLATORS: see http://docs.gimp.org/en/gimp-tool-convolve.html
-#: ../src/extension/internal/bitmap/convolve.cpp:50
-msgid "Convolve"
-msgstr "Свёртка"
-
-#: ../src/extension/internal/bitmap/convolve.cpp:52
-#: ../src/extension/internal/bitmap/reduceNoise.cpp:41
-#: ../share/extensions/lindenmayer.inx.h:6
-msgid "Order"
-msgstr "Порядок"
-
-#: ../src/extension/internal/bitmap/convolve.cpp:53
-msgid "Kernel Array"
-msgstr "Ядерный массив"
-
-#: ../src/extension/internal/bitmap/convolve.cpp:59
-msgid "Apply Convolve Effect"
-msgstr "Применить эффект свёртки"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
@@ -2961,12 +3348,6 @@ msgstr "Выделение краёв"
 #: ../src/extension/internal/bitmap/edge.cpp:44
 msgid "Hilight edges of selected bitmap(s)."
 msgstr "Высветить края в выбранном изображении"
-
-#. ID -- should be unique
-#: ../src/extension/internal/bitmap/emboss.cpp:37
-#: ../src/extension/internal/filter/emboss.h:21
-msgid "Emboss"
-msgstr "Рельеф"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
 msgid "Emboss selected bitmap(s) -- hilight edges with 3D effect."
@@ -3128,6 +3509,11 @@ msgstr "Изменить яркость краев в выбранных изо�
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:39
 msgid "Reduce Noise"
 msgstr "Снижение шума"
+
+#: ../src/extension/internal/bitmap/reduceNoise.cpp:41
+#: ../share/extensions/lindenmayer.inx.h:6
+msgid "Order"
+msgstr "Порядок"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:47
 msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter."
@@ -3386,60 +3772,6 @@ msgstr "Файлы Enhanced Metafile (*.emf)"
 msgid "Enhanced Metafile"
 msgstr "Enhanced Metafile"
 
-#. ID -- should be unique
-#: ../src/extension/internal/filter/apparition.h:24
-msgid "Apparition"
-msgstr "Видение"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/apparition.h:25
-msgid "I'm not sure what this word means"
-msgstr "Без понятия, что это означает"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/bloom.h:24
-msgid "Bloom"
-msgstr "Расцвет"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/bloom.h:25
-msgid "Not sure, nobody tell me these things"
-msgstr "А кто его знает, что это такое"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/clouds.h:24
-msgid "Clouds"
-msgstr "Облака"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/clouds.h:25
-msgid "Yes, more descriptions"
-msgstr "Да уж, добавьте сюда описание"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/crystal.h:24
-msgid "Crystal"
-msgstr "Кристалл"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/crystal.h:25
-msgid "Artist, insert data here"
-msgstr "Вставьте же описание этого фильтра!"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/cutout.h:24
-#, fuzzy
-msgid "Cutout"
-msgstr "оттянута"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/cutout.h:25
-#: ../src/extension/internal/filter/etched-glass.h:25
-#: ../src/extension/internal/filter/frost.h:25
-#: ../src/extension/internal/filter/ridged-border.h:25
-msgid "Artist text"
-msgstr ""
-
 #: ../src/extension/internal/filter/drop-shadow.h:35
 msgid "Drop Shadow"
 msgstr "Отбрасываемая тень"
@@ -3489,16 +3821,6 @@ msgstr "Свечение тени"
 msgid "White, blurred drop glow"
 msgstr "Отбрасываемая размытая тень"
 
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/emboss.h:22
-msgid "Emboss effect"
-msgstr "Рельеф"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/etched-glass.h:24
-msgid "Etched Glass"
-msgstr ""
-
 #: ../src/extension/internal/filter/filter-file.cpp:32
 #, fuzzy
 msgid "Bundled"
@@ -3513,158 +3835,6 @@ msgstr "Личное"
 msgid "Null external module directory name.  Filters will not be loaded."
 msgstr "Нулевое имя каталога с внешними модулями.  Модули не будут загружены."
 
-#. ID -- should be unique
-#: ../src/extension/internal/filter/fire.h:24
-msgid "Fire"
-msgstr "Огонь"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/fire.h:25
-msgid "Artist on fire"
-msgstr "Художник в огне"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/frost.h:24
-msgid "Frost"
-msgstr "Мороз"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/ink-bleed.h:24
-msgid "InkBleed"
-msgstr "Чернила протекли"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/ink-bleed.h:25
-msgid "Artist Text"
-msgstr ""
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/jelly-bean.h:24
-msgid "Jelly Bean"
-msgstr "Желе"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/jelly-bean.h:25
-msgid "Mmmm, yummy."
-msgstr "Ммм, вкуснятина!"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/jigsaw-piece.h:24
-msgid "JigsawPiece"
-msgstr "Элемент паззла"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/jigsaw-piece.h:25
-msgid "It's a puzzle, no hints"
-msgstr "Это загадка, никаких подсказок"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/leopard-fur.h:24
-msgid "Leopard Fur"
-msgstr "Шкура леопарда"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/leopard-fur.h:25
-msgid "Purrrr, quiet the kitty is sleeping"
-msgstr "Муррррр, тише — киска спит"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/melt.h:22
-msgid "Melt"
-msgstr "Таяние"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/melt.h:23
-msgid "Melt effect"
-msgstr "Эффект таяния"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/metal.h:24
-msgid "Metal"
-msgstr "Металл"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/metal.h:25
-msgid "Iron Man vector objects"
-msgstr "Контуры Железного Человека"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/motion-blur.h:24
-msgid "Motion Blur"
-msgstr "Размывание движением"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/motion-blur.h:25
-msgid "Hmm, fast vectors"
-msgstr "Мнэээ, быстрые векторА"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/oil-slick.h:24
-#, fuzzy
-msgid "OilSlick"
-msgstr "Резерв"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/oil-slick.h:25
-msgid "Ooops!  Slippery!"
-msgstr "Ой! Скользкий!"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/patterned-glass.h:24
-#, fuzzy
-msgid "PatternedGlass"
-msgstr "Текстура"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/patterned-glass.h:25
-msgid "Doesn't work, bug"
-msgstr "Не работает из-за ошибки"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/ridged-border.h:24
-msgid "Ridged Border"
-msgstr "Край с кромкой"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/ripple.h:24
-msgid "Ripple"
-msgstr "Рябь"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/ripple.h:25
-msgid "You're 80% water"
-msgstr "Человек на 80% состоит из воды"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/roughen.h:24
-msgid "Roughen"
-msgstr "Шероховатые края"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/roughen.h:25
-msgid "Like Brad Pitt's stubble"
-msgstr "Как щетина Брэда Питта"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/rubber-stamp.h:24
-msgid "RubberStamp"
-msgstr "Резиновый штамп"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/rubber-stamp.h:25
-msgid "Use this to forge your passport"
-msgstr "Шлепните по своему паспорту"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/sepia.h:24
-msgid "Sepia"
-msgstr "Сепия"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/sepia.h:25
-msgid "Turn all the colors to be sepia tones"
-msgstr "Превратить все цвета в оттенки сепии"
-
 #: ../src/extension/internal/filter/snow.h:32
 msgid "Snow"
 msgstr "Снег"
@@ -3677,26 +3847,6 @@ msgstr "Размер сугроба"
 #, fuzzy
 msgid "Snow has fallen on object"
 msgstr "Установка стиля объекта"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/speckle.h:24
-msgid "Speckle"
-msgstr "Пятно"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/speckle.h:25
-msgid "You look cute with speckles"
-msgstr "Тебе к лицу эти пятнышки"
-
-#. ID -- should be unique
-#: ../src/extension/internal/filter/zebra.h:24
-msgid "Zebra Stripes"
-msgstr "Полоски зебры"
-
-#. Name in the menus, should have a N_() around it for translation
-#: ../src/extension/internal/filter/zebra.h:25
-msgid "Paint your object with zebra stripes"
-msgstr "Раскрасить объект под зебру"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:113
 #, c-format
@@ -6479,16 +6629,6 @@ msgid "Choose whether to draw marks at the beginning and end of the path"
 msgstr ""
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-skeleton.cpp:32
-#, fuzzy
-msgid "Float parameter"
-msgstr "Параметры эффекта"
-
-#: ../src/live_effects/lpe-skeleton.cpp:32
-msgid "just a real number like 1.4!"
-msgstr "Просто реальное число вроде 1,4!"
-
-#. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
 #: ../src/live_effects/lpe-sketch.cpp:34
 msgid "Strokes"
@@ -7204,81 +7344,81 @@ msgstr "Втяжка узла"
 msgid "Move node handle"
 msgstr "Смещение рычага узла"
 
-#: ../src/nodepath.cpp:4088
+#: ../src/nodepath.cpp:4089
 #, c-format
 msgid "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
 msgstr "<b>Рычаг узла</b> под углом %0.2f&#176;, длина %s; перетаскивание с <b>Ctrl</b> ограничивает угол; с <b>Alt</b> фиксирует длину; с <b>Shift</b> синхронно вращает противоположный рычаг"
 
-#: ../src/nodepath.cpp:4282
+#: ../src/nodepath.cpp:4283
 msgid "Rotate nodes"
 msgstr "Вращение узлов"
 
-#: ../src/nodepath.cpp:4397
+#: ../src/nodepath.cpp:4398
 msgid "Cannot scale nodes when all are at the same location."
 msgstr ""
 
-#: ../src/nodepath.cpp:4423
+#: ../src/nodepath.cpp:4424
 msgid "Scale nodes"
 msgstr "Масштабирование узлов"
 
-#: ../src/nodepath.cpp:4467
+#: ../src/nodepath.cpp:4468
 msgid "Flip nodes"
 msgstr "Зеркалирование узлов"
 
-#: ../src/nodepath.cpp:4636
+#: ../src/nodepath.cpp:4637
 msgid "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
 msgstr "<b>Узел</b>: перетаскивание при нажатой клавише <b>Ctrl</b> — с прилипанием по горизонтали/вертикали; с <b>Ctrl+Alt</b> — вдоль рычагов"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4869
+#: ../src/nodepath.cpp:4870
 msgid "end node"
 msgstr "оконечный узел"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4874
+#: ../src/nodepath.cpp:4875
 msgid "cusp"
 msgstr "острый"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4877
+#: ../src/nodepath.cpp:4878
 msgid "smooth"
 msgstr "гладкий"
 
-#: ../src/nodepath.cpp:4879
+#: ../src/nodepath.cpp:4880
 msgid "auto"
 msgstr "автоматический"
 
-#: ../src/nodepath.cpp:4881
+#: ../src/nodepath.cpp:4882
 msgid "symmetric"
 msgstr "симметричный"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4887
+#: ../src/nodepath.cpp:4888
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "оконечный узел, рычаг втянут (вытаскивается с <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4889
+#: ../src/nodepath.cpp:4890
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "один рычаг втянут (вытаскивается с <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4892
+#: ../src/nodepath.cpp:4893
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "оба рычага втянуты (вытаскиваются с <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4904
+#: ../src/nodepath.cpp:4905
 msgid "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; <b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to rotate"
 msgstr "<b>Перетаскивайте</b> узлы или рычаги; <b>Alt+перетаскивание</b> узлов для лепки; клавиши <b>со стрелками</b> для смещения узлов, <b>&lt; &gt;</b> для масштабирования, <b>[ ]</b> для вращения"
 
-#: ../src/nodepath.cpp:4905
+#: ../src/nodepath.cpp:4906
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr "Перетаскивайте узел или его рычаги; клавиши-стрелки двигают узел"
 
-#: ../src/nodepath.cpp:4931
-#: ../src/nodepath.cpp:4943
+#: ../src/nodepath.cpp:4932
+#: ../src/nodepath.cpp:4944
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Выберите один объект для изменения его узлов или рычагов."
 
-#: ../src/nodepath.cpp:4935
+#: ../src/nodepath.cpp:4936
 #, c-format
 msgid "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select."
 msgid_plural "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select."
@@ -7286,11 +7426,11 @@ msgstr[0] "Выделен <b>0</b> из <b>%i</b> узлов. Для выдел�
 msgstr[1] "Выделено <b>0</b> из <b>%i</b> узлов.  Для выделения узлов используйте щелчок, Shift+щелчок, либо обведение рамкой."
 msgstr[2] "Выделено <b>0</b> из <b>%i</b> узлов.  Для выделения узлов используйте щелчок, Shift+щелчок, либо обведение рамкой."
 
-#: ../src/nodepath.cpp:4941
+#: ../src/nodepath.cpp:4942
 msgid "Drag the handles of the object to modify it."
 msgstr "Двигайте ручки фигуры, чтобы изменить ее."
 
-#: ../src/nodepath.cpp:4949
+#: ../src/nodepath.cpp:4950
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
@@ -7298,7 +7438,7 @@ msgstr[0] "<b>%i</b> из <b>%i</b> узла выделен; %s. %s."
 msgstr[1] "<b>%i</b> из <b>%i</b> узлов выделено; %s. %s."
 msgstr[2] "<b>%i</b> из <b>%i</b> узлов выделено; %s. %s."
 
-#: ../src/nodepath.cpp:4956
+#: ../src/nodepath.cpp:4957
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -7306,7 +7446,7 @@ msgstr[0] "<b>%i</b> из <b>%i</b> узла выделен в <b>%i</b> из <b
 msgstr[1] "<b>%i</b> из <b>%i</b> узлов выделено в <b>%i</b> из <b>%i</b> субконтуров. %s."
 msgstr[2] "<b>%i</b> из <b>%i</b> узлов выделено в <b>%i</b> из <b>%i</b> субконтуров. %s."
 
-#: ../src/nodepath.cpp:4962
+#: ../src/nodepath.cpp:4963
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -8151,7 +8291,7 @@ msgstr "<b>Shift+D</b> выделяет блок"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:198
-#: ../src/tweak-context.cpp:204
+#: ../src/tweak-context.cpp:203
 #, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
@@ -8994,129 +9134,129 @@ msgstr "Векторизация растра"
 msgid "Trace: Done. %ld nodes created"
 msgstr "Векторизация: Готово. Создано узлов: %ld"
 
-#: ../src/tweak-context.cpp:206
+#: ../src/tweak-context.cpp:205
 #, c-format
 msgid "<b>Nothing</b> selected"
 msgstr "<b>Ничего</b> не выделено"
 
-#: ../src/tweak-context.cpp:212
+#: ../src/tweak-context.cpp:211
 #, c-format
 msgid "%s. Drag to <b>move</b>."
 msgstr "%s. Перетащите курсор для их <b>перемещения</b>."
 
-#: ../src/tweak-context.cpp:217
+#: ../src/tweak-context.cpp:216
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr "%s. Перетащите курсор или щелкните для <b>притягивания</b>, с Shift — для <b>отталкивания</b> объектов."
 
-#: ../src/tweak-context.cpp:220
+#: ../src/tweak-context.cpp:219
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
 msgstr "%s. Перетащите курсор или щелкните для <b>случайного перемещения</b> объектов."
 
-#: ../src/tweak-context.cpp:223
+#: ../src/tweak-context.cpp:222
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
 msgstr "%s. Перетащите курсор или щелкните для <b>уменьшения</b>, с Shift — для <b>увеличения</b> размера объектов."
 
-#: ../src/tweak-context.cpp:226
+#: ../src/tweak-context.cpp:225
 #, c-format
 msgid "%s. Drag or click to <b>rotate clockwise</b>; with Shift, <b>counterclockwise</b>."
 msgstr "%s. Перетащите курсор или щелкните для <b>вращения объектов по часовой стрелке</b>, с Shift — <b>против часовой стрелки</b>."
 
-#: ../src/tweak-context.cpp:229
+#: ../src/tweak-context.cpp:228
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr "%s. Перетащите курсор или щелкните для <b>дублирования</b>, с Shift — для <b>удаления</b> объектов."
 
-#: ../src/tweak-context.cpp:232
+#: ../src/tweak-context.cpp:231
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
 msgstr "%s. Перетащите курсор для <b>выталкивания контуров</b>."
 
-#: ../src/tweak-context.cpp:236
+#: ../src/tweak-context.cpp:235
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
 msgstr "%s. Перетащите курсор или щелкните для <b>втягивания</b>, с Shift — для <b>растягивания</b> контуров."
 
-#: ../src/tweak-context.cpp:244
+#: ../src/tweak-context.cpp:243
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr "%s. Перетащите курсор или щелкните для <b>притягивания</b>, с Shift — для <b>отталкивания</b> контуров."
 
-#: ../src/tweak-context.cpp:252
+#: ../src/tweak-context.cpp:251
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
 msgstr "%s. Перетащите курсор или щелкните для <b>огрубления контуров</b>."
 
-#: ../src/tweak-context.cpp:256
+#: ../src/tweak-context.cpp:255
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
 msgstr "%s. Перетащите курсор или щелкните для <b>раскрашивания объектов</b>."
 
-#: ../src/tweak-context.cpp:259
+#: ../src/tweak-context.cpp:258
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
 msgstr "%s. Перетащите курсор или щелкните для <b>перебора цветов</b> заливки объектов."
 
-#: ../src/tweak-context.cpp:263
+#: ../src/tweak-context.cpp:262
 #, c-format
 msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr "%s. Перетащите курсор или щелкните для <b>увеличения размывания</b>, с Shift — для <b>уменьшения</b>."
 
-#: ../src/tweak-context.cpp:1211
+#: ../src/tweak-context.cpp:1210
 msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr "<b>Ничего не выделено!</b> Выделите объект(ы) для коррекции."
 
-#: ../src/tweak-context.cpp:1247
+#: ../src/tweak-context.cpp:1246
 msgid "Move tweak"
 msgstr "Перемещение корректором"
 
-#: ../src/tweak-context.cpp:1251
+#: ../src/tweak-context.cpp:1250
 msgid "Move in/out tweak"
 msgstr "Притягивание/отталкивание объектов"
 
-#: ../src/tweak-context.cpp:1255
+#: ../src/tweak-context.cpp:1254
 msgid "Move jitter tweak"
 msgstr "Случайное перемещение корректором"
 
-#: ../src/tweak-context.cpp:1259
+#: ../src/tweak-context.cpp:1258
 msgid "Scale tweak"
 msgstr "Масштабирование корректором"
 
-#: ../src/tweak-context.cpp:1263
+#: ../src/tweak-context.cpp:1262
 msgid "Rotate tweak"
 msgstr "Вращение корректором"
 
-#: ../src/tweak-context.cpp:1267
+#: ../src/tweak-context.cpp:1266
 msgid "Duplicate/delete tweak"
 msgstr "Дубликация/удаление корректором"
 
-#: ../src/tweak-context.cpp:1271
+#: ../src/tweak-context.cpp:1270
 msgid "Push path tweak"
 msgstr "Толкание контуров корректором"
 
-#: ../src/tweak-context.cpp:1275
+#: ../src/tweak-context.cpp:1274
 msgid "Shrink/grow path tweak"
 msgstr "Коррекция объема контуров"
 
-#: ../src/tweak-context.cpp:1279
+#: ../src/tweak-context.cpp:1278
 msgid "Attract/repel path tweak"
 msgstr "Притяжение и отталкивание контуров"
 
-#: ../src/tweak-context.cpp:1283
+#: ../src/tweak-context.cpp:1282
 msgid "Roughen path tweak"
 msgstr "Огрубление контуров корректором"
 
-#: ../src/tweak-context.cpp:1287
+#: ../src/tweak-context.cpp:1286
 msgid "Color paint tweak"
 msgstr "Коррекция заливки цветом"
 
-#: ../src/tweak-context.cpp:1291
+#: ../src/tweak-context.cpp:1290
 msgid "Color jitter tweak"
 msgstr "Коррекция перебором цветов"
 
-#: ../src/tweak-context.cpp:1295
+#: ../src/tweak-context.cpp:1294
 msgid "Blur tweak"
 msgstr "Коррекция размывания"
 
@@ -11038,12 +11178,6 @@ msgstr "Лупа"
 msgid "Shapes"
 msgstr "Фигуры"
 
-#. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:468
-#: ../src/verbs.cpp:2497
-msgid "Pencil"
-msgstr "Карандаш"
-
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:474
 #: ../src/verbs.cpp:2499
@@ -12169,67 +12303,6 @@ msgstr "Вывод"
 msgid "Errors"
 msgstr "Ошибки"
 
-#. Dialog organization
-#: ../src/ui/dialog/session-player.cpp:72
-msgid "Session file"
-msgstr "Файл сеанса"
-
-#: ../src/ui/dialog/session-player.cpp:73
-msgid "Playback controls"
-msgstr "Управление воспроизведением"
-
-#: ../src/ui/dialog/session-player.cpp:74
-msgid "Message information"
-msgstr "Информация о сеансе"
-
-#. Active session file display
-#. fixme: Does this mean the active file for the session, or the file for the active session?
-#. Please indicate which with a TRANSLATORS comment.
-#: ../src/ui/dialog/session-player.cpp:84
-msgid "Active session file:"
-msgstr "Файл активного сеанса:"
-
-#: ../src/ui/dialog/session-player.cpp:85
-msgid "Delay (milliseconds):"
-msgstr "Задержка (мс):"
-
-#. Unload/load buttons
-#: ../src/ui/dialog/session-player.cpp:93
-msgid "Close file"
-msgstr "Закрыть файл"
-
-#: ../src/ui/dialog/session-player.cpp:94
-msgid "Open new file"
-msgstr "Открыть новый файл"
-
-#: ../src/ui/dialog/session-player.cpp:95
-msgid "Set delay"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:137
-msgid "Rewind"
-msgstr "Перемотать назад"
-
-#: ../src/ui/dialog/session-player.cpp:138
-msgid "Go back one change"
-msgstr "На изменение вперед"
-
-#: ../src/ui/dialog/session-player.cpp:139
-msgid "Pause"
-msgstr "Пауза"
-
-#: ../src/ui/dialog/session-player.cpp:140
-msgid "Go forward one change"
-msgstr "На изменение назад"
-
-#: ../src/ui/dialog/session-player.cpp:141
-msgid "Play"
-msgstr "Воспроизвести"
-
-#: ../src/ui/dialog/session-player.cpp:176
-msgid "Open session file"
-msgstr "Открыть файл сеанса"
-
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:110
 msgid "Set SVG Font attribute"
 msgstr "Установить атрибут SVG Font"
@@ -12731,116 +12804,6 @@ msgstr "Применить эти изменения к выбранному"
 #: ../src/ui/dialog/transformation.cpp:846
 msgid "Edit transformation matrix"
 msgstr "Правка матрицы преобразования"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:47
-msgid "_Use SSL"
-msgstr "Ис_пользовать SSL"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:47
-msgid "_Register"
-msgstr "За_регистрироваться"
-
-#. Construct dialog interface
-#: ../src/ui/dialog/whiteboard-connect.cpp:78
-msgid "_Server:"
-msgstr "_Сервер:"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:79
-msgid "_Username:"
-msgstr "_Имя пользователя:"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:80
-msgid "_Password:"
-msgstr "_Пароль:"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:81
-msgid "P_ort:"
-msgstr "П_орт:"
-
-#. Buttons
-#: ../src/ui/dialog/whiteboard-connect.cpp:118
-msgid "Connect"
-msgstr "Соединиться"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:149
-msgid "Establishing connection to Jabber server <b>%1</b>"
-msgstr "Устанавливается соединение с Jabber-сервером <b>%1</b>"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:176
-#: ../src/ui/dialog/whiteboard-connect.cpp:222
-#: ../src/ui/dialog/whiteboard-connect.cpp:260
-msgid "Failed to establish connection to Jabber server <b>%1</b>"
-msgstr "Не удалось установить соединение с сервером Jabber <b>%1</b>"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:215
-msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
-msgstr "Устанавливается соединение с сервером Jabber <b>%1</b> по именем <b>%2</b>"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:227
-msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:232
-#: ../src/ui/dialog/whiteboard-connect.cpp:270
-msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:238
-#: ../src/ui/dialog/whiteboard-connect.cpp:276
-msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:265
-msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#. Construct labels
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
-msgid "Chatroom _name:"
-msgstr "_Название комнаты:"
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:77
-msgid "Chatroom _server:"
-msgstr "_Сервер комнаты:"
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:78
-msgid "Chatroom _password:"
-msgstr "_Пароль комнаты:"
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:79
-msgid "Chatroom _handle:"
-msgstr ""
-
-#. Button setup and callback registration
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
-msgid "Connect to chatroom"
-msgstr "Соединиться с комнатой"
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:138
-msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
-msgstr ""
-
-#. Construct dialog interface
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:76
-msgid "_User's Jabber ID:"
-msgstr "Jabber ID по_льзователя:"
-
-#. Buttons
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:80
-msgid "_Invite user"
-msgstr "_Пригласить пользователя"
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:81
-msgid "_Cancel"
-msgstr "О_тменить"
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:92
-msgid "Buddy List"
-msgstr "Список собеседников"
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:181
-msgid "Sending whiteboard invitation to <b>%1</b>"
-msgstr ""
 
 #. FIXME: strings are replaced by placeholders, NOT to be translated until the code is enabled
 #. See http://sourceforge.net/mailarchive/message.php?msg_id=11746016 for details
@@ -13454,10 +13417,6 @@ msgstr "Последним использованным цветом"
 #: ../src/ui/widget/selected-style.cpp:218
 msgid "Last selected color"
 msgstr "Последним выбранным цветом"
-
-#: ../src/ui/widget/selected-style.cpp:222
-msgid "Invert"
-msgstr "Инвертировать"
 
 #: ../src/ui/widget/selected-style.cpp:226
 msgid "White"
@@ -17460,6 +17419,11 @@ msgstr "Сбросить параметры заливки к значениям
 msgid "Unable to process this object.  Try changing it into a path first."
 msgstr "Невозможно обработать этот объект. Попробуйте сначала оконтурить его."
 
+#: ../share/extensions/dxf_outlines.py:32
+#, fuzzy
+msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again."
+msgstr "Не удалось импортировать модуль numpy, необходимый для этого расширения. Установите его и попробуйте еще раз. В системах наподобие Debian это можно сделать командой sudo apt-get install python-numpy."
+
 #: ../share/extensions/embedimage.py:74
 msgid "No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image."
 msgstr ""
@@ -17723,10 +17687,6 @@ msgstr "Функция красного"
 #: ../share/extensions/color_darker.inx.h:2
 msgid "Darker"
 msgstr "Темнее"
-
-#: ../share/extensions/color_desaturate.inx.h:2
-msgid "Desaturate"
-msgstr "Обесцветить"
 
 #: ../share/extensions/color_grayscale.inx.h:2
 msgid "Grayscale"
@@ -18453,7 +18413,7 @@ msgstr "Предустановка:"
 
 #: ../share/extensions/guides_creator.inx.h:18
 msgid "Rule-of-third"
-msgstr ""
+msgstr "Правило третей"
 
 #: ../share/extensions/guides_creator.inx.h:19
 msgid "Start from edges"
@@ -19428,6 +19388,133 @@ msgstr "Импорт файлов Windows Metafile"
 msgid "XAML Input"
 msgstr "Импорт XAML"
 
+#~ msgid "Convolve"
+#~ msgstr "Свёртка"
+#~ msgid "Kernel Array"
+#~ msgstr "Ядерный массив"
+#~ msgid "Apply Convolve Effect"
+#~ msgstr "Применить эффект свёртки"
+#~ msgid "I'm not sure what this word means"
+#~ msgstr "Без понятия, что это означает"
+#~ msgid "Not sure, nobody tell me these things"
+#~ msgstr "А кто его знает, что это такое"
+#~ msgid "Yes, more descriptions"
+#~ msgstr "Да уж, добавьте сюда описание"
+#~ msgid "Crystal"
+#~ msgstr "Кристалл"
+#~ msgid "Artist, insert data here"
+#~ msgstr "Вставьте же описание этого фильтра!"
+#~ msgid "Emboss effect"
+#~ msgstr "Рельеф"
+#~ msgid "Artist on fire"
+#~ msgstr "Художник в огне"
+#~ msgid "Mmmm, yummy."
+#~ msgstr "Ммм, вкуснятина!"
+#~ msgid "It's a puzzle, no hints"
+#~ msgstr "Это загадка, никаких подсказок"
+#~ msgid "Purrrr, quiet the kitty is sleeping"
+#~ msgstr "Муррррр, тише — киска спит"
+#~ msgid "Melt"
+#~ msgstr "Таяние"
+#~ msgid "Melt effect"
+#~ msgstr "Эффект таяния"
+#~ msgid "Metal"
+#~ msgstr "Металл"
+#~ msgid "Iron Man vector objects"
+#~ msgstr "Контуры Железного Человека"
+#~ msgid "Hmm, fast vectors"
+#~ msgstr "Мнэээ, быстрые векторА"
+#~ msgid "Ooops!  Slippery!"
+#~ msgstr "Ой! Скользкий!"
+
+#, fuzzy
+#~ msgid "PatternedGlass"
+#~ msgstr "Текстура"
+#~ msgid "Doesn't work, bug"
+#~ msgstr "Не работает из-за ошибки"
+#~ msgid "You're 80% water"
+#~ msgstr "Человек на 80% состоит из воды"
+#~ msgid "Like Brad Pitt's stubble"
+#~ msgstr "Как щетина Брэда Питта"
+#~ msgid "Use this to forge your passport"
+#~ msgstr "Шлепните по своему паспорту"
+#~ msgid "Turn all the colors to be sepia tones"
+#~ msgstr "Превратить все цвета в оттенки сепии"
+#~ msgid "You look cute with speckles"
+#~ msgstr "Тебе к лицу эти пятнышки"
+#~ msgid "Zebra Stripes"
+#~ msgstr "Полоски зебры"
+#~ msgid "Paint your object with zebra stripes"
+#~ msgstr "Раскрасить объект под зебру"
+
+#, fuzzy
+#~ msgid "Float parameter"
+#~ msgstr "Параметры эффекта"
+#~ msgid "just a real number like 1.4!"
+#~ msgstr "Просто реальное число вроде 1,4!"
+#~ msgid "Session file"
+#~ msgstr "Файл сеанса"
+#~ msgid "Playback controls"
+#~ msgstr "Управление воспроизведением"
+#~ msgid "Message information"
+#~ msgstr "Информация о сеансе"
+#~ msgid "Active session file:"
+#~ msgstr "Файл активного сеанса:"
+#~ msgid "Delay (milliseconds):"
+#~ msgstr "Задержка (мс):"
+#~ msgid "Close file"
+#~ msgstr "Закрыть файл"
+#~ msgid "Open new file"
+#~ msgstr "Открыть новый файл"
+#~ msgid "Rewind"
+#~ msgstr "Перемотать назад"
+#~ msgid "Go back one change"
+#~ msgstr "На изменение вперед"
+#~ msgid "Pause"
+#~ msgstr "Пауза"
+#~ msgid "Go forward one change"
+#~ msgstr "На изменение назад"
+#~ msgid "Play"
+#~ msgstr "Воспроизвести"
+#~ msgid "Open session file"
+#~ msgstr "Открыть файл сеанса"
+#~ msgid "_Use SSL"
+#~ msgstr "Ис_пользовать SSL"
+#~ msgid "_Register"
+#~ msgstr "За_регистрироваться"
+#~ msgid "_Server:"
+#~ msgstr "_Сервер:"
+#~ msgid "_Username:"
+#~ msgstr "_Имя пользователя:"
+#~ msgid "_Password:"
+#~ msgstr "_Пароль:"
+#~ msgid "P_ort:"
+#~ msgstr "П_орт:"
+#~ msgid "Connect"
+#~ msgstr "Соединиться"
+#~ msgid "Establishing connection to Jabber server <b>%1</b>"
+#~ msgstr "Устанавливается соединение с Jabber-сервером <b>%1</b>"
+#~ msgid "Failed to establish connection to Jabber server <b>%1</b>"
+#~ msgstr "Не удалось установить соединение с сервером Jabber <b>%1</b>"
+#~ msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
+#~ msgstr ""
+#~ "Устанавливается соединение с сервером Jabber <b>%1</b> по именем <b>%2</b>"
+#~ msgid "Chatroom _name:"
+#~ msgstr "_Название комнаты:"
+#~ msgid "Chatroom _server:"
+#~ msgstr "_Сервер комнаты:"
+#~ msgid "Chatroom _password:"
+#~ msgstr "_Пароль комнаты:"
+#~ msgid "Connect to chatroom"
+#~ msgstr "Соединиться с комнатой"
+#~ msgid "_User's Jabber ID:"
+#~ msgstr "Jabber ID по_льзователя:"
+#~ msgid "_Invite user"
+#~ msgstr "_Пригласить пользователя"
+#~ msgid "_Cancel"
+#~ msgstr "О_тменить"
+#~ msgid "Buddy List"
+#~ msgstr "Список собеседников"
 #~ msgid "Embed Profile"
 #~ msgstr "Встроить профиль"
 #~ msgid "Convert blur effects to bitmaps"
