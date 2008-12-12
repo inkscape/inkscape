@@ -310,7 +310,7 @@ sp_marker_set (SPObject *object, unsigned int key, const gchar *value)
 				align = SP_ASPECT_XMIN_YMID;
 			} else if (!strcmp (c, "xMidYMid")) {
 				align = SP_ASPECT_XMID_YMID;
-			} else if (!strcmp (c, "xMaxYMin")) {
+			} else if (!strcmp (c, "xMaxYMid")) {
 				align = SP_ASPECT_XMAX_YMID;
 			} else if (!strcmp (c, "xMinYMax")) {
 				align = SP_ASPECT_XMIN_YMAX;
