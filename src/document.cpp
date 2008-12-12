@@ -325,7 +325,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
         if (!pagecolor.empty()) {
             rnew->setAttribute("pagecolor", pagecolor.data());
         }
-        Glib::ustring bordercolor = prefs->getString("/template/base/pagecolor");
+        Glib::ustring bordercolor = prefs->getString("/template/base/bordercolor");
         if (!bordercolor.empty()) {
             rnew->setAttribute("bordercolor", bordercolor.data());
         }
