@@ -210,6 +210,7 @@ while line[0] and line[1] != 'ENDSEC':
         seqs.append(line[0])                        # list of group codes
         if line[0] == '1' or line[0] == '8':        # text value
             val = line[1].replace('\~', ' ')
+            val = unicode(val, "iso-8859-1")
         elif line[0] == '62' or line[0] == '70':    # unscaled integer value
             val = int(line[1])
         elif line[0] == '10':                       # scaled float x value
