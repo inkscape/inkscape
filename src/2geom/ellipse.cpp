@@ -264,6 +264,12 @@ Ellipse Ellipse::transformed(Matrix const& m) const
     return e;
 }
 
+Ellipse::Ellipse(Geom::Circle const &c)
+{
+    m_centre = c.center();
+    m_ray[X] = m_ray[Y] = c.ray();
+}
+
 }  // end namespace Geom
 
 

@@ -52,36 +52,12 @@ inline double lerp(double t, double a, double b) { return a*(1-t) + b*t; }
 
 class SBasis;
 
-class Hat{
-public:
-    Hat () {}
-    Hat(double d) :d(d) {}
-    operator double() const { return d; }
-    double d;
-};
-
-class Tri{
-public:
-    Tri () {}
-    Tri(double d) :d(d) {}
-    operator double() const { return d; }
-    double d;
-};
-
 class Linear{
 public:
     double a[2];
     Linear() {}
     Linear(double aa, double b) {a[0] = aa; a[1] = b;}
-    Linear(Hat h, Tri t) {
-        a[0] = double(h) - double(t)/2; 
-        a[1] = double(h) + double(t)/2;
-    }
-
-    Linear(Hat h) {
-        a[0] = double(h); 
-        a[1] = double(h);
-    }
+    Linear(double aa) {a[0] = aa; a[1] = aa;}
 
     double operator[](const int i) const {
         assert(i >= 0);
@@ -113,10 +89,10 @@ public:
     inline OptInterval bounds_fast() const { return bounds_exact(); }
     inline OptInterval bounds_local(double u, double v) const { return Interval(valueAt(u), valueAt(v)); }
 
-    operator Tri() const {
+    double tri() const {
         return a[1] - a[0];
     }
-    operator Hat() const {
+    double hat() const {
         return (a[1] + a[0])/2;
     }
 };

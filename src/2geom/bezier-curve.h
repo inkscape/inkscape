@@ -121,6 +121,10 @@ public:
   int winding(Point p) const {
     return SBasisCurve(toSBasis()).winding(p);
   }
+  
+  virtual int degreesOfFreedom() const {
+    return 2*order;
+  }
 
   std::vector<double>
   roots(double v, Dim2 d) const {

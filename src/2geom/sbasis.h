@@ -43,24 +43,62 @@
 #include <2geom/utils.h>
 #include <2geom/exception.h>
 
+//#define USE_SBASISN 1
 
-#ifdef USE_SBASIS_OF
+
+#if defined(USE_SBASIS_OF)
 
 #include "sbasis-of.h"
 
+#elif defined(USE_SBASISN)
+
+#include "sbasisN.h"
+namespace Geom{
+
+/*** An empty SBasis is identically 0. */
+class SBasis : public SBasisN<1>;
+
+};
 #else
 
 namespace Geom{
 
 /*** An empty SBasis is identically 0. */
-class SBasis : public std::vector<Linear>{
+class SBasis{
+    std::vector<Linear> d;
+    void push_back(Linear const&l) { d.push_back(l); }
+
 public:
+    size_t size() const {return d.size();}
+    Linear operator[](unsigned i) const {
+        assert(i < size());
+        return d[i];
+    }
+    Linear& operator[](unsigned i) { return d.at(i); }
+    Linear const* begin() const { return (Linear const*)&*d.begin();}
+    Linear const* end() const { return (Linear const*)&*d.end();}
+    Linear* begin() { return (Linear*)&*d.begin();}
+    Linear* end() { return (Linear*)&*d.end();}
+    bool empty() const {return d.empty();}
+    Linear &back() {return d.back();}
+    Linear const &back() const {return d.back();}
+    void pop_back() { d.pop_back();}
+    void resize(unsigned n) { d.resize(n);}
+    void resize(unsigned n, Linear const& l) { d.resize(n, l);}
+    void reserve(unsigned n) { d.reserve(n);}
+    void clear() {d.clear();}
+    void insert(Linear* before, const Linear* src_begin, const Linear* src_end) { d.insert(std::vector<Linear>::iterator(before), src_begin, src_end);}
+    //void insert(Linear* aa, Linear* bb, Linear* cc} { d.insert(aa, bb, cc);}
+    Linear& at(unsigned i) { return d.at(i);}
+    //void insert(Linear* before, int& n, Linear const &l) { d.insert(std::vector<Linear>::iterator(before), n, l);}
+
+    
     SBasis() {}
     explicit SBasis(double a) {
         push_back(Linear(a,a));
     }
     SBasis(SBasis const & a) :
-        std::vector<Linear>(a)
+        d(a.d)
     {}
     SBasis(Linear const & bo) {
         push_back(bo);
@@ -68,6 +106,7 @@ public:
     SBasis(Linear* bo) {
         push_back(*bo);
     }
+    explicit SBasis(size_t n, Linear const&l) : d(n, l) {}
 
     //IMPL: FragmentConcept
     typedef double output_type;
@@ -93,6 +132,8 @@ public:
     inline double at1() const{
         if(empty()) return 0; else return (*this)[0][1];
     }
+    
+    int degreesOfFreedom() const { return size()*2;}
 
     double valueAt(double t) const {
         double s = t*(1-t);
@@ -119,14 +160,7 @@ public:
 // compute f(g)
     SBasis operator()(SBasis const & g) const;
 
-    Linear operator[](unsigned i) const {
-        assert(i < size());
-        return std::vector<Linear>::operator[](i);
-    }
-
 //MUTATOR PRISON
-    Linear& operator[](unsigned i) { return this->at(i); }
-
     //remove extra zeros
     void normalize() {
         while(!empty() && 0 == back()[0] && 0 == back()[1])
@@ -152,21 +186,20 @@ OptInterval bounds_local(SBasis const &a, const OptInterval &t, int order = 0);
 useful for reversing a parameteric curve.
 */
 inline SBasis reverse(SBasis const &a) {
-    SBasis result;
-    result.reserve(a.size());
+    SBasis result(a.size(), Linear());
+    
     for(unsigned k = 0; k < a.size(); k++)
-       result.push_back(reverse(a[k]));
+        result[k] = reverse(a[k]);
     return result;
 }
 
 //IMPL: ScalableConcept
 inline SBasis operator-(const SBasis& p) {
     if(p.isZero()) return SBasis();
-    SBasis result;
-    result.reserve(p.size());
+    SBasis result(p.size(), Linear());
         
     for(unsigned i = 0; i < p.size(); i++) {
-        result.push_back(-p[i]);
+        result[i] = -p[i];
     }
     return result;
 }
@@ -183,7 +216,7 @@ SBasis& operator+=(SBasis& a, const SBasis& b);
 SBasis& operator-=(SBasis& a, const SBasis& b);
 
 //TODO: remove?
-inline SBasis operator+(const SBasis & a, Linear const & b) {
+/*inline SBasis operator+(const SBasis & a, Linear const & b) {
     if(b.isZero()) return a;
     if(a.isZero()) return b;
     SBasis result(a);
@@ -209,7 +242,7 @@ inline SBasis& operator-=(SBasis& a, const Linear& b) {
     else
         a[0] -= b;
     return a;
-}
+    }*/
 
 //IMPL: OffsetableConcept
 inline SBasis operator+(const SBasis & a, double b) {
@@ -226,14 +259,14 @@ inline SBasis operator-(const SBasis & a, double b) {
 }
 inline SBasis& operator+=(SBasis& a, double b) {
     if(a.isZero())
-        a.push_back(Linear(b,b));
+        a = SBasis(Linear(b,b));
     else
         a[0] += b;
     return a;
 }
 inline SBasis& operator-=(SBasis& a, double b) {
     if(a.isZero())
-        a.push_back(Linear(-b,-b));
+        a = SBasis(Linear(-b,-b));
     else
         a[0] -= b;
     return a;
@@ -300,6 +333,7 @@ SBasis compose_inverse(SBasis const &f, SBasis const &g, unsigned order=2, doubl
 
 */
 inline SBasis portion(const SBasis &t, double from, double to) { return compose(t, Linear(from, to)); }
+inline SBasis portion(const SBasis &t, Interval ivl) { return compose(t, Linear(ivl[0], ivl[1])); }
 
 // compute f(g)
 inline SBasis

@@ -105,7 +105,6 @@ class Circle
   private:
     Point m_centre;
     Coord m_ray;
-    Coord m_angle;
 };
 
 

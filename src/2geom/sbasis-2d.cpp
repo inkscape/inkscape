@@ -4,7 +4,7 @@
 namespace Geom{
 
 SBasis extract_u(SBasis2d const &a, double u) {
-    SBasis sb;
+    SBasis sb(a.vs, Linear());
     double s = u*(1-u);
     
     for(unsigned vi = 0; vi < a.vs; vi++) {
@@ -14,14 +14,14 @@ SBasis extract_u(SBasis2d const &a, double u) {
             bo += (extract_u(a.index(ui, vi), u))*sk;
             sk *= s;
         }
-        sb.push_back(bo);
+        sb[vi] = bo;
     }
     
     return sb;
 }
 
 SBasis extract_v(SBasis2d const &a, double v) {
-    SBasis sb;
+    SBasis sb(a.us, Linear());
     double s = v*(1-v);
     
     for(unsigned ui = 0; ui < a.us; ui++) {
@@ -31,7 +31,7 @@ SBasis extract_v(SBasis2d const &a, double v) {
             bo += (extract_v(a.index(ui, vi), v))*sk;
             sk *= s;
         }
-        sb.push_back(bo);
+        sb[ui] = bo;
     }
     
     return sb;
@@ -105,7 +105,6 @@ SBasis2d partial_derivative(SBasis2d const &f, int dim) {
  */
 D2<SBasis>
 sb2dsolve(SBasis2d const &f, Geom::Point const &A, Geom::Point const &B, unsigned degmax){
-    D2<SBasis>result(Linear(A[X],B[X]),Linear(A[Y],B[Y]));
     //g_warning("check f(A)= %f = f(B) = %f =0!", f.apply(A[X],A[Y]), f.apply(B[X],B[Y]));
 
     SBasis2d dfdu = partial_derivative(f, 0);
@@ -115,8 +114,11 @@ sb2dsolve(SBasis2d const &f, Geom::Point const &A, Geom::Point const &B, unsigne
     Geom::Point nA = dfA/(dfA[X]*dfA[X]+dfA[Y]*dfA[Y]);
     Geom::Point nB = dfB/(dfB[X]*dfB[X]+dfB[Y]*dfB[Y]);
 
+    D2<SBasis>result(SBasis(degmax, Linear()), SBasis(degmax, Linear()));
     double fact_k=1;
     double sign = 1.;
+    for(int dim = 0; dim < 2; dim++)
+        result[dim][0] = Linear(A[dim],B[dim]);
     for(unsigned k=1; k<degmax; k++){
         // these two lines make the solutions worse!
         //fact_k *= k;
@@ -128,8 +130,8 @@ sb2dsolve(SBasis2d const &f, Geom::Point const &A, Geom::Point const &B, unsigne
         double bx = -sign*reste[1]/fact_k*nB[X];
         double by = -sign*reste[1]/fact_k*nB[Y];
 
-        result[X].push_back(Linear(ax,bx));
-        result[Y].push_back(Linear(ay,by));
+        result[X][k] = Linear(ax,bx);
+        result[Y][k] = Linear(ay,by);
         //sign *= 3;
     }    
     return result;

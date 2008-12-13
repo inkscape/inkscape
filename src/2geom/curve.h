@@ -83,6 +83,8 @@ public:
 
   virtual int winding(Point p) const { return root_winding(*this, p); }
 
+  virtual int degreesOfFreedom() const { return 0;}
+
   //mental: review these
   virtual Curve *portion(double f, double t) const = 0;
   virtual Curve *reverse() const { return portion(1, 0); }
@@ -133,8 +135,8 @@ public:
    */
   virtual Point unitTangentAt(Coord t, unsigned n = 3) const
   {
-	std::vector<Point> derivs = pointAndDerivatives(t, n);
-	for (unsigned deriv_n = 1; deriv_n < derivs.size(); deriv_n++) {
+    std::vector<Point> derivs = pointAndDerivatives(t, n);
+    for (unsigned deriv_n = 1; deriv_n < derivs.size(); deriv_n++) {
       Coord length = derivs[deriv_n].length();
       if ( ! are_near(length, 0) ) {
          // length of derivative is non-zero, so return unit vector

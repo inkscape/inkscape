@@ -113,12 +113,12 @@ Piecewise<D2<SBasis> > force_continuity(Piecewise<D2<SBasis> > const &f, double 
                 SBasis &cur_sb =result.segs[cur][dim];
                 Coord const c=pt0[dim];
                 if (prev_sb.empty()) {
-                  prev_sb.push_back(Linear(0.0, c));
+                  prev_sb = SBasis(Linear(0.0, c));
                 } else {
                   prev_sb[0][1] = c;
                 }
                 if (cur_sb.empty()) {
-                  cur_sb.push_back(Linear(c, 0.0));
+                  cur_sb = SBasis(Linear(c, 0.0));
                 } else {
                   cur_sb[0][0] = c;
                 }
@@ -157,7 +157,7 @@ static void set_first_point(Piecewise<D2<SBasis> > &f, Point a){
     }
     for (unsigned dim=0; dim<2; dim++){
         if (f.segs.front()[dim].size() == 0){
-            f.segs.front()[dim].push_back(Linear(a[dim],0));
+            f.segs.front()[dim] = SBasis(Linear(a[dim],0));
         }else{
             f.segs.front()[dim][0][0] = a[dim];
         }
@@ -170,7 +170,7 @@ static void set_last_point(Piecewise<D2<SBasis> > &f, Point a){
     }
     for (unsigned dim=0; dim<2; dim++){
         if (f.segs.back()[dim].size() == 0){
-            f.segs.back()[dim].push_back(Linear(0,a[dim]));
+            f.segs.back()[dim] = SBasis(Linear(0,a[dim]));
         }else{
             f.segs.back()[dim][0][1] = a[dim];
         }

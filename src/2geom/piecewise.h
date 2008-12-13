@@ -754,8 +754,21 @@ Piecewise<T> reverse(Piecewise<T> const &f) {
 }
 
 
+/**
+ *  Interpolates between a and b.
+ *  \return a if t = 0, b if t = 1, or an interpolation between a and b for t in [0,1]
+ */
+template<typename T>
+Piecewise<T> lerp(Piecewise<T> const &a, Piecewise<T> b, double t) {
+    // Make sure both paths have the same number of segments and cuts at the same locations
+    b.setDomain(a.domain());
+    Piecewise<T> pA = partition(a, b.cuts);
+    Piecewise<T> pB = partition(b, a.cuts);
+
+    return (pA*(1-t)  +  pB*t);
 }
 
+}
 #endif //SEEN_GEOM_PW_SB_H
 /*
   Local Variables:

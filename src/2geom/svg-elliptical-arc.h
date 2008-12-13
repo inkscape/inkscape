@@ -248,6 +248,8 @@ class SVGEllipticalArc : public Curve
         else
             return SBasisCurve(toSBasis()).winding(p);
     }
+    
+    int degreesOfFreedom() const { return 5;}
 
     Curve *derivative() const;
 

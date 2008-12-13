@@ -258,9 +258,17 @@ inline OptInterval intersect(const Interval & a, const Interval & b) {
     Coord u = std::max(a.min(), b.min()),
           v = std::min(a.max(), b.max());
     //technically >= might be incorrect, but singulars suck
-    return u >= v ? OptInterval()
+    return u > v ? OptInterval()
                   : OptInterval(Interval(u, v));
 }
+
+#ifdef _GLIBCXX_IOSTREAM
+inline std::ostream &operator<< (std::ostream &os, 
+                                 const Geom::Interval &I) {
+    os << "Interval("<<I[0] << ", "<<I[1] << ")";
+    return os;
+}
+#endif
 
 }
 #endif //SEEN_INTERVAL_H

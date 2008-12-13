@@ -38,7 +38,6 @@
 
 #include <2geom/forward.h>
 #include <2geom/path.h>
-#include <2geom/rect.h>
 #include <2geom/transforms.h>
 
 namespace Geom {

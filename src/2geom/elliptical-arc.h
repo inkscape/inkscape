@@ -200,6 +200,8 @@ class EllipticalArc : public Curve
     {
     	return SBasisCurve(toSBasis()).winding(p);
     }
+
+    int degreesOfFreedom() const { return 7;}
     
     Curve *derivative() const;
     

@@ -136,6 +136,8 @@ class HLineSegment : public Curve
         return m_line_seg.winding(p);
     }
 
+    int degreesOfFreedom() const { return 3;}
+
     std::vector<double>
     roots(double v, Dim2 d) const
     {
@@ -375,6 +377,8 @@ class VLineSegment : public Curve
         return m_line_seg.winding(p);
     }
 
+    int degreesOfFreedom() const { return 3;}
+    
     std::vector<double>
     roots(double v, Dim2 d) const
     {

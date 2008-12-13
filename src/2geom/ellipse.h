@@ -44,6 +44,7 @@ namespace Geom
 {
 
 class SVGEllipticalArc;
+class Circle;
 
 class Ellipse
 {
@@ -67,6 +68,8 @@ class Ellipse
     {
         set(points);
     }
+    
+    Ellipse(Geom::Circle const &c);
 
     void set(double cx, double cy, double rx, double ry, double a)
     {

@@ -179,6 +179,13 @@ int mod(int i, int l) {
  * Tests if a point is left (outside) of a particular segment, n. */
 bool
 ConvexHull::is_left(Point p, int n) {
+    return SignedTriangleArea((*this)[n], (*this)[n+1], p) >= 0;
+}
+
+/*** ConvexHull::strict_left
+ * Tests if a point is left (outside) of a particular segment, n. */
+bool
+ConvexHull::is_strict_left(Point p, int n) {
     return SignedTriangleArea((*this)[n], (*this)[n+1], p) > 0;
 }
 
@@ -193,6 +200,20 @@ ConvexHull::find_left(Point p) {
     }
     return -1;
 }
+
+
+/*** ConvexHull::find_positive
+ * May return any number n where the segment n -> n + 1 (possibly looped around) in the hull such
+ * that the point is on the wrong side to be within the hull.  Returns -1 if it is within the hull.*/
+int
+ConvexHull::find_strict_left(Point p) {
+    int l = boundary.size(); //Who knows if C++ is smart enough to optimize this?
+    for(int i = 0; i < l; i++) {
+        if(is_strict_left(p, i)) return i;
+    }
+    return -1;
+}
+
 //OPT: do a spread iteration - quasi-random with no repeats and full coverage.
 
 /*** ConvexHull::contains_point
@@ -201,6 +222,14 @@ ConvexHull::find_left(Point p) {
 bool
 ConvexHull::contains_point(Point p) {
     return find_left(p) == -1;
+}
+
+/*** ConvexHull::strict_contains_point
+ * In order to test whether a point is strictly inside (not on the boundary) a convex hull we can travel once around the outside making
+ * sure that each triangle made from an edge and the point has positive area. */
+bool
+ConvexHull::strict_contains_point(Point p) {
+    return find_strict_left(p) == -1;
 }
 
 /*** ConvexHull::add_point
@@ -219,9 +248,9 @@ ConvexHull::merge(Point p) {
 
     bool pushed = false;
 
-    bool pre = is_left(p, -1);
+    bool pre = is_strict_left(p, -1);
     for(int i = 0; i < l; i++) {
-        bool cur = is_left(p, i);
+        bool cur = is_strict_left(p, i);
         if(pre) {
             if(cur) {
                 if(!pushed) {

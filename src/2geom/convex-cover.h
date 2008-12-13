@@ -65,6 +65,7 @@ public:
 
     void merge(Point p);
     bool contains_point(Point p);
+    bool strict_contains_point(Point p);
 
     inline Point operator[](int i) const {
 
@@ -122,7 +123,9 @@ public:
     Point const * furthest(Point direction) const;
 
     bool is_left(Point p, int n);
+    bool is_strict_left(Point p, int n);
     int find_left(Point p);
+    int find_strict_left(Point p);
     double narrowest_diameter(Point &a, Point &b, Point &c);
 
 };

@@ -4,6 +4,15 @@
 
 namespace Geom {
 
+/**
+ * \brief Make a list of pairs of self intersections in a list of Rects.
+ * 
+ * \param rs: vector of Rect.
+ *
+ * [(A = rs[i], B = rs[j]) for i,J in enumerate(pairs) for j in J]
+ * then A.left <= B.left
+ */
+
 std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> rs) {
     std::vector<Event> events; events.reserve(rs.size()*2);
     std::vector<std::vector<unsigned> > pairs(rs.size());
@@ -34,6 +43,15 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> rs) {
     return pairs;
 }
 
+/**
+ * \brief Make a list of pairs of red-blue intersections between two lists of Rects.
+ * 
+ * \param a: vector of Rect.
+ * \param b: vector of Rect.
+ *
+ * [(A = rs[i], B = rs[j]) for i,J in enumerate(pairs) for j in J]
+ * then A.left <= B.left, A in a, B in b
+ */
 std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> a, std::vector<Rect> b) {
     std::vector<std::vector<unsigned> > pairs(a.size());
     if(a.empty() || b.empty()) return pairs;

@@ -124,6 +124,12 @@ inline D2<T> portion(const D2<T> &a, Coord f, Coord t) {
     return D2<T>(portion(a[X], f, t), portion(a[Y], f, t));
 }
 
+template <typename T>
+inline D2<T> portion(const D2<T> &a, Interval i) {
+    boost::function_requires<FragmentConcept<T> >();
+    return D2<T>(portion(a[X], i), portion(a[Y], i));
+}
+
 //IMPL: boost::EqualityComparableConcept
 template <typename T>
 inline bool

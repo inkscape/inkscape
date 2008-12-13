@@ -99,6 +99,8 @@ public:
 
   D2<SBasis> toSBasis() const { return inner; }
 
+  virtual int degreesOfFreedom() const { return inner[0].degreesOfFreedom() + inner[1].degreesOfFreedom();
+  }
 };
 
 

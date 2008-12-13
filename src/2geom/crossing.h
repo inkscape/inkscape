@@ -3,9 +3,10 @@
  * \brief  \todo brief description
  *
  * Authors:
- *      ? <?@?.?>
+ *      Michael Sloane <?@?.?>
+ *      Marco <?@?.?>
  * 
- * Copyright ?-?  authors
+ * Copyright 2006-2008  authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -38,6 +39,7 @@
 #include <vector>
 #include <2geom/rect.h>
 #include <2geom/sweep.h>
+#include <boost/optional/optional.hpp>
 
 namespace Geom {
 
@@ -57,6 +59,8 @@ struct Crossing {
     double getOtherTime(unsigned cur) const { return a == cur ? tb : ta; }
     bool onIx(unsigned ix) const { return a == ix || b == ix; }
 };
+
+typedef boost::optional<Crossing> OptCrossing;
 
 
 /*

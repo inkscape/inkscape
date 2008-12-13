@@ -42,24 +42,39 @@
 #include <vector>
 #include <utility>
 
+#define USE_RECURSIVE_INTERSECTOR 0
 
 namespace Geom {
 
-std::vector<std::pair<double, double> >
-find_intersections( D2<SBasis> const & A,
+#ifdef USE_RECURSIVE_INTERSECTOR
+void
+find_intersections( std::vector<std::pair<double, double> > &xs,
+                    D2<SBasis> const & A,
                     D2<SBasis> const & B);
 
-std::vector<std::pair<double, double> >
-find_self_intersections(D2<SBasis> const & A);
+void
+find_self_intersections(std::vector<std::pair<double, double> > &xs,
+                        D2<SBasis> const & A);
 
 // Bezier form
-std::vector<std::pair<double, double> >
-find_intersections( std::vector<Point> const & A,
-                    std::vector<Point> const & B);
+void
+find_intersections( std::vector<std::pair<double, double> > &xs,
+                    std::vector<Point> const & A,
+                    std::vector<Point> const & B,
+                    double precision = 1e-5);
 
-std::vector<std::pair<double, double> >
-find_self_intersections(std::vector<Point> const & A);
+// Bezier form
+void
+find_intersections_bezier_clipping( std::vector<std::pair<double, double> > &xs,
+                                    std::vector<Point> const & A,
+                                    std::vector<Point> const & B,
+                                    double precision = 1e-5);
 
+void
+find_self_intersections(std::vector<std::pair<double, double> > &xs,
+                        std::vector<Point> const & A);
+
+#else
 
 /*
  * find_intersection
@@ -72,11 +87,11 @@ find_self_intersections(std::vector<Point> const & A);
  *  This routine is based on the Bezier Clipping Algorithm,
  *  see: Sederberg, Nishita, 1990 - Curve intersection using Bezier clipping
  */
-void find_intersections (std::vector< std::pair<double, double> > & xs,
+void find_intersections_clipping (std::vector< std::pair<double, double> > & xs,
                          std::vector<Point> const& A,
                          std::vector<Point> const& B,
                          double precision = 1e-5);
-
+#endif
 /*
  * find_collinear_normal
  *
@@ -92,6 +107,23 @@ void find_collinear_normal (std::vector< std::pair<double, double> >& xs,
                             std::vector<Point> const& A,
                             std::vector<Point> const& B,
                             double precision = 1e-5);
+
+void polish_intersections(std::vector<std::pair<double, double> > &xs, 
+                          D2<SBasis> const &A,
+                          D2<SBasis> const &B);
+
+void find_intersections(std::vector<std::pair<double, double> >& xs,
+                        D2<SBasis> const & A,
+                        D2<SBasis> const & B);
+
+void find_self_intersections(std::vector<std::pair<double, double> >& xs,
+                             D2<SBasis> const & A);
+
+
+void find_self_intersections(std::vector<std::pair<double, double> >& xs,
+                             std::vector<Point> const & A);
+
+
 
 /**
  * Compute the Hausdorf distance from A to B only.

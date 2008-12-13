@@ -1,5 +1,4 @@
 /**
- *  \file geom.cpp
  *  \brief Various geometrical calculations.
  */
 
@@ -82,7 +81,6 @@ line_intersection(Geom::Point const &n0, double const d0,
 
     return intersects;
 }
-
 
 
 
@@ -314,13 +312,35 @@ rect_line_intersect(Geom::Point const &c0, Geom::Point const &c1,
     return results;
 }
 
-std::vector<Geom::Point>
+/** Determine whether \& where an (infinite) line intersects a rectangle.
+ *
+ * \a c0, \a c1 are diagonal corners of the rectangle and
+ * \a p1, \a p1 are distinct points on the line
+ *
+ * \return A list (possibly empty) of points of intersection.  If two such points (say \a r0 and \a
+ * r1) then it is guaranteed that the order of \a r0, \a r1 along the line is the same as the that
+ * of \a c0, \a c1 (i.e., the vectors \a r1 - \a r0 and \a p1 - \a p0 point into the same
+ * direction).
+ */
+boost::optional<LineSegment>
 rect_line_intersect(Geom::Rect &r,
-                    Geom::Point const &p0, Geom::Point const &p1)
+                    Geom::LineSegment ls)
 {
-    return rect_line_intersect(r.min(), r.max(), p0, p1);
+    std::vector<Point> results;
+    
+    results =  rect_line_intersect(r.min(), r.max(), ls[0], ls[1]);
+    if(results.size() == 2) {
+        return LineSegment(results[0], results[1]);
+    } 
+    return boost::optional<LineSegment>();
 }
 
+boost::optional<LineSegment>
+rect_line_intersect(Geom::Rect &r,
+                    Geom::Line l)
+{
+    return rect_line_intersect(r, l.segment(0, 1));
+}
 
 /**
  * polyCentroid: Calculates the centroid (xCentroid, yCentroid) and area of a polygon, given its
@@ -336,7 +356,7 @@ rect_line_intersect(Geom::Rect &r,
     * for now we require the path to be a polyline and assume it is closed.
 **/
 
-int centroid(std::vector<Geom::Point> p, Geom::Point& centroid, double &area) {
+int centroid(std::vector<Geom::Point> const &p, Geom::Point& centroid, double &area) {
     const unsigned n = p.size();
     if (n < 3)
         return 1;
