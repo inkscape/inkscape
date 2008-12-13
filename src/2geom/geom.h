@@ -57,7 +57,7 @@ intersector_ccw(const Geom::Point& p0, const Geom::Point& p1,
 
 /* intersectors */
 
-#if 0
+#if 1
 // Use the new routines provided in line.h
 
 IntersectorKind

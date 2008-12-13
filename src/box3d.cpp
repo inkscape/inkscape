@@ -32,7 +32,7 @@
 #include "line-geometry.h"
 #include "persp3d-reference.h"
 #include "uri.h"
-#include "2geom/geom.h"
+#include <2geom/geom.h>
 #include "sp-guide.h"
 #include "sp-namedview.h"
 #include "preferences.h"
