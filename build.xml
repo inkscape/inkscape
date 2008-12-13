@@ -274,7 +274,7 @@
     </cxxtestpart>
     <cxxtestroot command="python ${cxxtest}/cxxtestgen.py" 
                  out="${src}/test-main.cpp"
-                 template="${src}/selfname.tpl">
+                 template="${src}/cxxtest-template.tpl">
         <fileset dir="${src}">
             <include name="MultiPrinter.h"/>
             <include name="PylogFormatter.h"/>
