@@ -149,6 +149,8 @@ protected:
 	PrefSpinButton _win_trans_blur;  /**< The dialog transparency setting for when the dialog is out of focus. */
 	PrefSpinButton _win_trans_time;  /**< How much time to go from one transparency setting to another */
 
+    PrefCheckButton _pencil_average_all_sketches;
+
     PrefCheckButton _calligrapy_use_abs_size;
     PrefCheckButton _calligrapy_keep_selected;
 

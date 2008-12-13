@@ -17,7 +17,8 @@
 enum PencilState {
     SP_PENCIL_CONTEXT_IDLE,
     SP_PENCIL_CONTEXT_ADDLINE,
-    SP_PENCIL_CONTEXT_FREEHAND
+    SP_PENCIL_CONTEXT_FREEHAND,
+    SP_PENCIL_CONTEXT_SKETCH
 };
 
 /**
@@ -31,8 +32,11 @@ struct SPPencilContext : public SPDrawContext {
 
     bool is_drawing;
     bool prev_snap_was_succesful;
-    
+
     std::vector<Geom::Point> ps;
+
+    Geom::Path sketch_interpolation; // the current proposal from the sketched paths
+    unsigned sketch_n; // number of sketches done
 };
 
 /// The SPPencilContext vtable (empty).

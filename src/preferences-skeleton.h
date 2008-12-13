@@ -76,7 +76,7 @@ static char const preferences_skeleton[] =
 "    </group>\n"
 "    <group id=\"freehand\"\n"
 "         style=\"fill:none;fill-rule:evenodd;stroke:black;stroke-opacity:1;stroke-linejoin:miter;stroke-linecap:butt;\">\n"
-"      <eventcontext id=\"pencil\" tolerance=\"4.0\" selcue=\"1\" style=\"stroke-width:1px;\" usecurrent=\"0\"/>\n"
+"      <eventcontext id=\"pencil\" tolerance=\"4.0\" selcue=\"1\" style=\"stroke-width:1px;\" usecurrent=\"0\" average_all_sketches=\"1\"/>\n"
 "      <eventcontext id=\"pen\" mode=\"drag\" selcue=\"1\" style=\"stroke-width:1px;\" usecurrent=\"0\"/>\n"
 "    </group>\n"
 "    <eventcontext id=\"calligraphic\" style=\"fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none;\"\n"

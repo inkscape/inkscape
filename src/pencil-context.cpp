@@ -30,7 +30,7 @@
 #include "preferences.h"
 #include "snap.h"
 #include "pixmaps/cursor-pencil.xpm"
-#include "display/bezier-utils.h"
+#include <2geom/bezier-utils.h>
 #include "display/canvas-bpath.h"
 #include <glibmm/i18n.h>
 #include "libnr/in-svg-plane.h"
@@ -52,6 +52,7 @@ static gint pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton
 static gint pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mevent);
 static gint pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &revent);
 static gint pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint const state);
+static gint pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint const state);
 
 static void spdc_set_startpoint(SPPencilContext *pc, Geom::Point const p);
 static void spdc_set_endpoint(SPPencilContext *pc, Geom::Point const p);
@@ -59,6 +60,7 @@ static void spdc_finish_endpoint(SPPencilContext *pc);
 static void spdc_add_freehand_point(SPPencilContext *pc, Geom::Point p, guint state);
 static void fit_and_split(SPPencilContext *pc);
 static void interpolate(SPPencilContext *pc);
+static void sketch_interpolate(SPPencilContext *pc);
 
 static SPDrawContextClass *pencil_parent_class;
 static Geom::Point pencil_drag_origin_w(0, 0);
@@ -122,6 +124,10 @@ sp_pencil_context_init(SPPencilContext *pc)
     pc->npoints = 0;
     pc->state = SP_PENCIL_CONTEXT_IDLE;
     pc->req_tangent = Geom::Point(0, 0);
+
+    // since SPPencilContext is not properly constructed...
+    pc->sketch_interpolation = Geom::Path();
+    pc->sketch_n = 0;
 }
 
 /**
@@ -191,6 +197,10 @@ sp_pencil_context_root_handler(SPEventContext *const ec, GdkEvent *event)
 
         case GDK_KEY_PRESS:
             ret = pencil_handle_key_press(pc, get_group0_keyval (&event->key), event->key.state);
+            break;
+
+        case GDK_KEY_RELEASE:
+            ret = pencil_handle_key_release(pc, get_group0_keyval (&event->key), event->key.state);
             break;
 
         default:
@@ -442,26 +452,41 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                 ret = TRUE;
                 break;
             case SP_PENCIL_CONTEXT_FREEHAND:
-                /* Finish segment now */
-                /// \todo fixme: Clean up what follows (Lauris)
-                if (anchor) {
-                    p = anchor->dp;
-                }
-                pc->ea = anchor;
-                /* Write curves to object */
+                if (revent.state & GDK_MOD1_MASK) {
+                    /* sketch mode: interpolate the sketched path and improve the current output path with the new interpolation. don't finish sketch */
+                    if (anchor) {
+                        p = anchor->dp;
+                    }
+                    pc->ea = anchor;
 
-                dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Finishing freehand"));
+                    dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Sketching: release <b>Alt</b> to finalize current curve"));
 
-                interpolate(pc);
-                spdc_concat_colors_and_flush(pc, FALSE);
-                pc->sa = NULL;
-                pc->ea = NULL;
-                if (pc->green_anchor) {
-                    pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
+                    sketch_interpolate(pc);
+
+                    pc->state = SP_PENCIL_CONTEXT_SKETCH;
+                } else {
+                    /* Finish segment now */
+                    /// \todo fixme: Clean up what follows (Lauris)
+                    if (anchor) {
+                        p = anchor->dp;
+                    }
+                    pc->ea = anchor;
+                    /* Write curves to object */
+
+                    dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Finishing freehand"));
+
+                    interpolate(pc);
+                    spdc_concat_colors_and_flush(pc, FALSE);
+                    pc->sa = NULL;
+                    pc->ea = NULL;
+                    if (pc->green_anchor) {
+                        pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
+                    }
+                    pc->state = SP_PENCIL_CONTEXT_IDLE;
                 }
-                pc->state = SP_PENCIL_CONTEXT_IDLE;
                 ret = TRUE;
                 break;
+            case SP_PENCIL_CONTEXT_SKETCH:
             default:
                 break;
         }
@@ -545,6 +570,34 @@ pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint con
             if (mod_shift_only(state)) {
                 sp_selection_to_guides(SP_EVENT_CONTEXT(pc)->desktop);
                 ret = true;
+            }
+            break;
+        default:
+            break;
+    }
+    return ret;
+}
+
+static gint
+pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint const /*state*/)
+{
+    gint ret = FALSE;
+    switch (keyval) {
+        case GDK_Alt_L:
+        case GDK_Alt_R:
+        case GDK_Meta_L:
+        case GDK_Meta_R:
+            if (pc->state == SP_PENCIL_CONTEXT_SKETCH) {
+                spdc_concat_colors_and_flush(pc, FALSE);
+                pc->sketch_interpolation = Geom::Path();
+                pc->sketch_n = 0;
+                pc->sa = NULL;
+                pc->ea = NULL;
+                if (pc->green_anchor) {
+                    pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
+                }
+                pc->state = SP_PENCIL_CONTEXT_IDLE;
+                ret = TRUE;
             }
             break;
         default:
@@ -678,7 +731,7 @@ interpolate(SPPencilContext *pc)
     // worst case gives us a segment per point
     int max_segs = 4*n_points;
 
-    int const n_segs = sp_bezier_fit_cubic_r(b, points, n_points,
+    int const n_segs = Geom::bezier_fit_cubic_r(b, points, n_points,
                                              tolerance_sq, max_segs);
 
     if ( n_segs > 0)
@@ -711,6 +764,94 @@ interpolate(SPPencilContext *pc)
 }
 
 
+/* interpolates the sketched curve and tweaks the current sketch interpolation*/
+static void
+sketch_interpolate(SPPencilContext *pc)
+{
+    g_assert( pc->ps.size() > 1 );
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    double const tol = 100.0 * 0.4; //prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
+    double const tolerance_sq = 0.02 * square( pc->desktop->w2d().descrim() * 
+                                               tol) * exp(0.2*tol - 2);
+
+    bool average_all_sketches = prefs->getBool("/tools/freehand/pencil/average_all_sketches", true);
+
+    g_assert(is_zero(pc->req_tangent)
+             || is_unit_vector(pc->req_tangent));
+    Geom::Point const tHatEnd(0, 0);
+
+    guint n_points  = pc->ps.size();
+    pc->red_curve->reset();
+    pc->red_curve_is_valid = false;
+
+    Geom::Point * b = g_new(Geom::Point, 4*n_points);
+    Geom::Point * points = g_new(Geom::Point, 4*n_points);
+    for (unsigned i = 0; i < pc->ps.size(); i++) { 
+        points[i] = pc->ps[i];
+    }
+
+    // worst case gives us a segment per point
+    int max_segs = 4*n_points;
+
+    int const n_segs = Geom::bezier_fit_cubic_r(b, points, n_points,
+                                             tolerance_sq, max_segs);
+
+    if ( n_segs > 0)
+    {
+        // only take first cubic and average its coefficients with the old ones
+
+        Geom::Point coeffs[4];
+        if ( pc->sketch_n > 0 ) {
+            Geom::CubicBezier const * oldcubic = dynamic_cast<Geom::CubicBezier const *>( &pc->sketch_interpolation.front() );
+            g_assert(oldcubic);
+            for (unsigned i = 0; i < 4; i++){
+                if (average_all_sketches) {
+                    // Average = (sum of all) / n
+                    //         = (sum of all + new one) / n+1
+                    //         = ((old average)*n + new one) / n+1
+                    coeffs[i] = ((*oldcubic)[i] * pc->sketch_n  +  b[i]) / (pc->sketch_n + 1);
+                } else {
+                    coeffs[i] = 0.5 * (b[i] + (*oldcubic)[i]);
+                }
+            }
+        } else {
+            for (unsigned i = 0; i < 4; i++){
+                coeffs[i] = b[i];
+            }
+        }
+        pc->sketch_n++;
+
+        pc->sketch_interpolation.start(coeffs[0]);
+        pc->sketch_interpolation.appendNew<Geom::CubicBezier>(coeffs[1], coeffs[2], coeffs[3]);
+        
+        Geom::PathVector temp;
+        temp.push_back(pc->sketch_interpolation);
+
+        pc->green_curve->reset();
+        pc->green_curve->set_pathvector(temp);
+        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->green_curve);
+
+        /* Fit and draw and copy last point */
+        g_assert(!pc->green_curve->is_empty());
+
+        /* Set up direction of next curve. */
+        {
+            Geom::CubicBezier const * last_seg = dynamic_cast<Geom::CubicBezier const *>(pc->green_curve->last_segment());
+            g_assert( last_seg );      // Relevance: validity of (*last_seg)[2]
+            pc->p[0] = last_seg->finalPoint();
+            pc->npoints = 1;
+            Geom::Point const req_vec( pc->p[0] - (*last_seg)[2] );
+            pc->req_tangent = ( ( Geom::is_zero(req_vec) || !in_svg_plane(req_vec) )
+                                ? Geom::Point(0, 0)
+                                : Geom::unit_vector(req_vec) );
+        }
+    }
+    g_free(b);
+    g_free(points);
+    pc->ps.clear();
+}
+
 static void
 fit_and_split(SPPencilContext *pc)
 {
@@ -722,7 +863,7 @@ fit_and_split(SPPencilContext *pc)
     g_assert(is_zero(pc->req_tangent)
              || is_unit_vector(pc->req_tangent));
     Geom::Point const tHatEnd(0, 0);
-    int const n_segs = sp_bezier_fit_cubic_full(b, NULL, pc->p, pc->npoints,
+    int const n_segs = Geom::bezier_fit_cubic_full(b, NULL, pc->p, pc->npoints,
                                                 pc->req_tangent, tHatEnd, 
                                                 tolerance_sq, 1);
     if ( n_segs > 0

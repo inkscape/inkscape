@@ -387,6 +387,7 @@ void InkscapePreferences::initPageTools()
     _page_tools.add_line( true, "", _t_cvg_convert_whole_groups, "",
                             _("Treat groups as a single object during conversion to guides rather than converting each child separately."));
 
+    _pencil_average_all_sketches.init ( _("Average all sketches"), "/tools/freehand/pencil/average_all_sketches", false);
     _calligrapy_use_abs_size.init ( _("Width is in absolute units"), "/tools/calligraphic/abs_width", false);
     _calligrapy_keep_selected.init ( _("Select new path"), "/tools/calligraphic/keep_selected", true);
     _connector_ignore_text.init( _("Don't attach connectors to text objects"), "/tools/connector/ignoretext", true);
@@ -469,6 +470,9 @@ void InkscapePreferences::initPageTools()
     this->AddSelcueCheckbox(_page_pencil, "/tools/freehand/pencil", true);
     this->AddNewObjectsStyle(_page_pencil, "/tools/freehand/pencil");
     this->AddDotSizeSpinbutton(_page_pencil, "/tools/freehand/pencil", 3.0);
+    _page_pencil.add_group_header( _("Sketch mode"));
+    _page_pencil.add_line( true, "", _pencil_average_all_sketches, "",
+                            _("If on, the sketch result will be the normal average of all sketches made, instead of averaging the old result with the new sketch."));
 
     //Pen
     this->AddPage(_page_pen, _("Pen"), iter_tools, PREFS_PAGE_TOOLS_PEN);
