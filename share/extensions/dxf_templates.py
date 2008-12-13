@@ -55,9 +55,9 @@ AcDbViewportTableRecord
  21
 1.0
  12
-4.25
+105.0
  22
-5.5
+148.5
  13
 0.0
  23
@@ -83,7 +83,7 @@ AcDbViewportTableRecord
  37
 0.0
  40
-11
+297
  41
 1.24
  42
