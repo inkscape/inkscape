@@ -1,6 +1,4 @@
 SET(display_SRC
-bezier-utils.cpp
-#bezier-utils-test.cpp
 canvas-arena.cpp
 canvas-axonomgrid.cpp
 canvas-bpath.cpp

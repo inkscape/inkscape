@@ -32,8 +32,6 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-arena-glyphs.h	\
 	display/canvas-arena.cpp	\
 	display/canvas-arena.h	\
-	display/bezier-utils.cpp	\
-	display/bezier-utils.h	\
 	display/canvas-bpath.cpp	\
 	display/canvas-bpath.h	\
 	display/canvas-grid.cpp	\
@@ -132,7 +130,6 @@ display_libspdisplay_a_SOURCES = \
 # ### CxxTest stuff ####
 # ######################
 ddislay_testsuites = \
-	$(srcdir)/display/bezier-utils-test.h \
 	$(srcdir)/display/curve-test.h
 
 display_test_display_SOURCES = \
