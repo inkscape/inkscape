@@ -30,6 +30,7 @@
 #include "preferences.h"
 #include "snap.h"
 #include "pixmaps/cursor-pencil.xpm"
+#include <2geom/sbasis-to-bezier.h>
 #include <2geom/bezier-utils.h>
 #include "display/canvas-bpath.h"
 #include <glibmm/i18n.h>
@@ -126,7 +127,7 @@ sp_pencil_context_init(SPPencilContext *pc)
     pc->req_tangent = Geom::Point(0, 0);
 
     // since SPPencilContext is not properly constructed...
-    pc->sketch_interpolation = Geom::Path();
+    pc->sketch_interpolation = Geom::Piecewise<Geom::D2<Geom::SBasis> >();
     pc->sketch_n = 0;
 }
 
@@ -589,7 +590,6 @@ pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint c
         case GDK_Meta_R:
             if (pc->state == SP_PENCIL_CONTEXT_SKETCH) {
                 spdc_concat_colors_and_flush(pc, FALSE);
-                pc->sketch_interpolation = Geom::Path();
                 pc->sketch_n = 0;
                 pc->sa = NULL;
                 pc->ea = NULL;
@@ -724,7 +724,7 @@ interpolate(SPPencilContext *pc)
 
     Geom::Point * b = g_new(Geom::Point, 4*n_points);
     Geom::Point * points = g_new(Geom::Point, 4*n_points);
-    for (int i = 0; i < pc->ps.size(); i++) { 
+    for (unsigned int i = 0; i < pc->ps.size(); i++) { 
         points[i] = pc->ps[i];
     }
 
@@ -771,7 +771,7 @@ sketch_interpolate(SPPencilContext *pc)
     g_assert( pc->ps.size() > 1 );
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    double const tol = 100.0 * 0.4; //prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
+    double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
     double const tolerance_sq = 0.02 * square( pc->desktop->w2d().descrim() * 
                                                tol) * exp(0.2*tol - 2);
 
@@ -799,37 +799,28 @@ sketch_interpolate(SPPencilContext *pc)
 
     if ( n_segs > 0)
     {
-        // only take first cubic and average its coefficients with the old ones
+        Geom::Path fit(b[0]);
+        for (int c = 0; c < n_segs; c++) { 
+            fit.appendNew<Geom::CubicBezier>(b[4*c+1], b[4*c+2], b[4*c+3]);
+        }
+        Geom::Piecewise<Geom::D2<Geom::SBasis> > fit_pwd2 = fit.toPwSb();
 
-        Geom::Point coeffs[4];
+        double t =0.;
         if ( pc->sketch_n > 0 ) {
-            Geom::CubicBezier const * oldcubic = dynamic_cast<Geom::CubicBezier const *>( &pc->sketch_interpolation.front() );
-            g_assert(oldcubic);
-            for (unsigned i = 0; i < 4; i++){
-                if (average_all_sketches) {
-                    // Average = (sum of all) / n
-                    //         = (sum of all + new one) / n+1
-                    //         = ((old average)*n + new one) / n+1
-                    coeffs[i] = ((*oldcubic)[i] * pc->sketch_n  +  b[i]) / (pc->sketch_n + 1);
-                } else {
-                    coeffs[i] = 0.5 * (b[i] + (*oldcubic)[i]);
-                }
-            }
-        } else {
-            for (unsigned i = 0; i < 4; i++){
-                coeffs[i] = b[i];
+            if (average_all_sketches) {
+                // Average = (sum of all) / n
+                //         = (sum of all + new one) / n+1
+                //         = ((old average)*n + new one) / n+1
+                t = pc->sketch_n / (pc->sketch_n + 1.);
+            } else {
+                t = 0.5;
             }
         }
+        pc->sketch_interpolation = Geom::lerp(fit_pwd2, pc->sketch_interpolation, t);
         pc->sketch_n++;
 
-        pc->sketch_interpolation.start(coeffs[0]);
-        pc->sketch_interpolation.appendNew<Geom::CubicBezier>(coeffs[1], coeffs[2], coeffs[3]);
-        
-        Geom::PathVector temp;
-        temp.push_back(pc->sketch_interpolation);
-
         pc->green_curve->reset();
-        pc->green_curve->set_pathvector(temp);
+        pc->green_curve->set_pathvector(Geom::path_from_piecewise(pc->sketch_interpolation, 0.01));
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->green_curve);
 
         /* Fit and draw and copy last point */

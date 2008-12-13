@@ -35,7 +35,7 @@ struct SPPencilContext : public SPDrawContext {
 
     std::vector<Geom::Point> ps;
 
-    Geom::Path sketch_interpolation; // the current proposal from the sketched paths
+    Geom::Piecewise<Geom::D2<Geom::SBasis> > sketch_interpolation; // the current proposal from the sketched paths
     unsigned sketch_n; // number of sketches done
 };
 
