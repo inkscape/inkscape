@@ -253,12 +253,12 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
             default:
                 /* Set first point of sequence */
                 if (bevent.state & GDK_CONTROL_MASK) {
-                    spdc_create_single_dot(event_context, from_2geom(p), "/tools/freehand/pencil", bevent.state);
+                    spdc_create_single_dot(event_context, p, "/tools/freehand/pencil", bevent.state);
                     ret = true;
                     break;
                 }
                 if (anchor) {
-                    p = to_2geom(anchor->dp);
+                    p = anchor->dp;
                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Continuing selected path"));
                 } else {
 
@@ -283,7 +283,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                     }
                 }
                 pc->sa = anchor;
-                spdc_set_startpoint(pc, from_2geom(p));
+                spdc_set_startpoint(pc, p);
                 ret = TRUE;
                 break;
         }
@@ -321,7 +321,7 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
     }
 
     /* Find desktop coordinates */
-    Geom::Point p = to_2geom(dt->w2d(Geom::Point(mevent.x, mevent.y)));
+    Geom::Point p = dt->w2d(Geom::Point(mevent.x, mevent.y));
 
     /* Test whether we hit any anchor. */
     SPDrawAnchor *anchor = spdc_test_inside(pc, Geom::Point(mevent.x, mevent.y));
@@ -343,13 +343,13 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
         case SP_PENCIL_CONTEXT_ADDLINE:
             /* Set red endpoint */
             if (anchor) {
-                p = to_2geom(anchor->dp);
+                p = anchor->dp;
             } else {
-                Geom::Point ptnr = from_2geom(p);
+                Geom::Point ptnr(p);
                 spdc_endpoint_snap(pc, ptnr, mevent.state);
-                p = to_2geom(ptnr);
+                p = ptnr;
             }
-            spdc_set_endpoint(pc, from_2geom(p));
+            spdc_set_endpoint(pc, p);
             ret = TRUE;
             break;
         default:
@@ -367,7 +367,7 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                 SnapManager &m = dt->namedview->snap_manager;
                 
                 if (anchor) {
-                    p = to_2geom(anchor->dp);
+                    p = anchor->dp;
                 } else if ((mevent.state & GDK_SHIFT_MASK) == 0) {
                     m.setup(dt);
                     Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
@@ -381,8 +381,8 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                 if ( pc->npoints != 0) { // buttonpress may have happened before we entered draw context!
                 	if (!(pc->prev_snap_was_succesful && m.snapprefs.getSnapPostponedGlobally())) {
 	                    // When snapping is enabled but temporarily on hold because the mouse is moving 
-                		// fast, then we don't want to add nodes off-grid
-                		spdc_add_freehand_point(pc, from_2geom(p), mevent.state);
+                        // fast, then we don't want to add nodes off-grid
+                        spdc_add_freehand_point(pc, p, mevent.state);
 	                    ret = TRUE;
                 	}
                 }
@@ -460,7 +460,9 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                     }
                     pc->ea = anchor;
 
-                    dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Sketching: release <b>Alt</b> to finalize current curve"));
+                    if (pc->green_anchor) {
+                        pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
+                    }
 
                     sketch_interpolate(pc);
 
@@ -573,6 +575,14 @@ pencil_handle_key_press(SPPencilContext *const pc, guint const keyval, guint con
                 ret = true;
             }
             break;
+        case GDK_Alt_L:
+        case GDK_Alt_R:
+        case GDK_Meta_L:
+        case GDK_Meta_R:
+            if (pc->state == SP_PENCIL_CONTEXT_IDLE) {
+                pc->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. Release <b>Alt</b> to finalize."));
+            }
+            break;
         default:
             break;
     }
@@ -597,6 +607,7 @@ pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint c
                     pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
                 }
                 pc->state = SP_PENCIL_CONTEXT_IDLE;
+                pc->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Finishing freehand sketch"));
                 ret = TRUE;
             }
             break;
