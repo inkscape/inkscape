@@ -225,7 +225,6 @@
     <cxxtestpart command="python ${cxxtest}/cxxtestgen.py --have-eh"
                  out="${src}/display/test-display.cpp">
         <fileset dir="${src}/display">
-            <include name="bezier-utils-test.h"/>
             <include name="curve-test.h"/>
         </fileset>
     </cxxtestpart>
@@ -308,7 +307,6 @@
             <!--<exclude name="test-src.cpp"/>-->
             <exclude name="display/test-display.cpp"/>
             <exclude name="display/testnr.cpp"/>
-            <exclude name="display/bezier-utils-test.cpp"/>
             <exclude name="dom/work/.*"/>
             <exclude name="dom/odf/SvgOdg.cpp"/>
             <exclude name="extension/api.cpp"/>
