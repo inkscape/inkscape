@@ -323,7 +323,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
     if (nr_rect_l_test_empty(carea))
         return item->state | NR_ARENA_ITEM_STATE_RENDER;
     if (item->filter && filter) {
-        item->filter->area_enlarge (carea, item->ctm);
+        item->filter->area_enlarge (carea, item);
         nr_rect_l_intersect (&carea, &carea, &item->bbox);
     }
 
@@ -426,7 +426,7 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
 
         ipb.visible_area = pb->visible_area;
         if (item->filter && filter) {
-              item->filter->area_enlarge (ipb.visible_area, item->ctm);
+              item->filter->area_enlarge (ipb.visible_area, item);
         }
 
         unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (ct, item, &carea, &ipb, flags);

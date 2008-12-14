@@ -144,7 +144,7 @@ public:
      * to be rendered so that after filtering, the original area is
      * drawn correctly.
      */
-    void area_enlarge(NRRectL &area, Geom::Matrix const &m);
+    void area_enlarge(NRRectL &area, NRArenaItem const *item) const;
     /**
      * Given an object bounding box, this function enlarges it so that
      * it contains the filter effect area.
@@ -198,7 +198,10 @@ private:
     void _create_constructor_table();
     void _enlarge_primitive_table();
     void _common_init();
-    double _resolution_divisor(FilterQuality const quality) const;
+    int _resolution_limit(FilterQuality const quality) const;
+    std::pair<double,double> _filter_resolution(Geom::Rect const &area,
+                                                Geom::Matrix const &trans,
+                                                FilterQuality const q) const;
 };
 
 

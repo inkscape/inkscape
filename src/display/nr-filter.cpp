@@ -6,7 +6,7 @@
  * Author:
  *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006,2007 Niko Kiirala
+ * Copyright (C) 2006-2008 Niko Kiirala
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -44,6 +44,7 @@
 #include "libnr/nr-blit.h"
 #include "libnr/nr-matrix.h"
 #include "libnr/nr-scale.h"
+#include "2geom/rect.h"
 #include "svg/svg-length.h"
 #include "sp-filter-units.h"
 #include "preferences.h"
@@ -54,6 +55,24 @@ using Inkscape::round;
 #endif 
 
 namespace NR {
+
+static Geom::OptRect get_item_bbox(NRArenaItem const *item) {
+    Geom::Rect item_bbox;
+    if (item->item_bbox) {
+        item_bbox = *(item->item_bbox);
+    } else {
+        // Bounding box might not exist, so create a dummy one.
+        Geom::Point zero(0, 0);
+        item_bbox = Geom::Rect(zero, zero);
+    }
+    if (item_bbox.min()[X] > item_bbox.max()[X]
+        || item_bbox.min()[Y] > item_bbox.max()[Y])
+    {
+        // In case of negative-size bbox, return an empty OptRect
+        return Geom::OptRect();
+    }
+    return Geom::OptRect(item_bbox);
+}
 
 Filter::Filter()
 {
@@ -121,18 +140,13 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     slot.set_quality(filterquality);
 
     Geom::Rect item_bbox;
-    if (item->item_bbox) {
-        item_bbox = *(item->item_bbox);
-    } else {
-        // Bounding box might not exist, so create a dummy one.
-        Geom::Point zero(0, 0);
-        item_bbox = Geom::Rect(zero, zero);
-    }
-    if (item_bbox.min()[X] > item_bbox.max()[X]
-        || item_bbox.min()[Y] > item_bbox.max()[Y])
     {
-        // Code below assumes non-negative size.
-        return 1;
+        Geom::OptRect maybe_bbox = get_item_bbox(item);
+        if (maybe_bbox.isEmpty()) {
+            // Code below needs a bounding box
+            return 1;
+        }
+        item_bbox = *maybe_bbox;
     }
 
     Geom::Rect filter_area = filter_effect_area(item_bbox);
@@ -147,30 +161,14 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     units.set_filter_area(from_2geom(filter_area));
 
     // TODO: with filterRes of 0x0 should return an empty image
+    std::pair<double,double> resolution
+        = _filter_resolution(filter_area, trans, filterquality);
+    units.set_resolution(resolution.first, resolution.second);
     if (_x_pixels > 0) {
-        double y_len;
-        if (_y_pixels > 0) {
-            y_len = _y_pixels;
-        } else {
-            y_len = (_x_pixels * (filter_area.max()[Y] - filter_area.min()[Y]))
-                / (filter_area.max()[X] - filter_area.min()[X]);
-        }
         units.set_automatic_resolution(false);
-        units.set_resolution(_x_pixels, y_len);
-    } else {
-        Geom::Point origo = filter_area.min();
-        origo *= trans;
-        Geom::Point max_i(filter_area.max()[X], filter_area.min()[Y]);
-        max_i *= trans;
-        Geom::Point max_j(filter_area.min()[X], filter_area.max()[Y]);
-        max_j *= trans;
-        double i_len = sqrt((origo[X] - max_i[X]) * (origo[X] - max_i[X])
-                            + (origo[Y] - max_i[Y]) * (origo[Y] - max_i[Y]));
-        double j_len = sqrt((origo[X] - max_j[X]) * (origo[X] - max_j[X])
-                            + (origo[Y] - max_j[Y]) * (origo[Y] - max_j[Y]));
+    }
+    else {
         units.set_automatic_resolution(true);
-        double const divisor = _resolution_divisor(filterquality);
-        units.set_resolution(i_len / divisor, j_len / divisor);
     }
 
     units.set_paraller(false);
@@ -218,10 +216,41 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     return 0;
 }
 
-void Filter::area_enlarge(NRRectL &bbox, Geom::Matrix const &m) {
+void Filter::area_enlarge(NRRectL &bbox, NRArenaItem const *item) const {
     for (int i = 0 ; i < _primitive_count ; i++) {
-        if (_primitive[i]) _primitive[i]->area_enlarge(bbox, m);
+        if (_primitive[i]) _primitive[i]->area_enlarge(bbox, item->ctm);
     }
+/*
+  TODO: something. See images at the bottom of filters.svg with medium-low
+  filtering quality.
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    FilterQuality const filterquality = (FilterQuality)prefs->getInt("/options/filterquality/value");
+
+    if (_x_pixels <= 0 && (filterquality == FILTER_QUALITY_BEST ||
+                           filterquality == FILTER_QUALITY_BETTER)) {
+        return;
+    }
+
+    Geom::Rect item_bbox;
+    Geom::OptRect maybe_bbox = get_item_bbox(item);
+    if (maybe_bbox.isEmpty()) {
+        // Code below needs a bounding box
+        return;
+    }
+    item_bbox = *maybe_bbox;
+
+    std::pair<double,double> res_low
+        = _filter_resolution(item_bbox, item->ctm, filterquality);
+    //std::pair<double,double> res_full
+    //    = _filter_resolution(item_bbox, item->ctm, FILTER_QUALITY_BEST);
+    double pixels_per_block = fmax(item_bbox.width() / res_low.first,
+                                   item_bbox.height() / res_low.second);
+    bbox.x0 -= (int)pixels_per_block;
+    bbox.x1 += (int)pixels_per_block;
+    bbox.y0 -= (int)pixels_per_block;
+    bbox.y1 += (int)pixels_per_block;
+*/
 }
 
 void Filter::bbox_enlarge(NRRectL &bbox) {
@@ -439,24 +468,68 @@ void Filter::reset_resolution() {
     _y_pixels = -1;
 }
 
-double Filter::_resolution_divisor(FilterQuality const quality) const {
-    double divisor = 1;
+int Filter::_resolution_limit(FilterQuality const quality) const {
+    int limit = -1;
     switch (quality) {
         case FILTER_QUALITY_WORST:
-            divisor = 8;
+            limit = 32;
             break;
         case FILTER_QUALITY_WORSE:
-            divisor = 4;
+            limit = 64;
             break;
         case FILTER_QUALITY_NORMAL:
-            divisor = 2;
+            limit = 256;
             break;
         case FILTER_QUALITY_BETTER:
         case FILTER_QUALITY_BEST:
         default:
             break;
     }
-    return divisor;
+    return limit;
+}
+
+std::pair<double,double> Filter::_filter_resolution(
+    Geom::Rect const &area, Geom::Matrix const &trans,
+    FilterQuality const filterquality) const
+{
+    std::pair<double,double> resolution;
+    if (_x_pixels > 0) {
+        double y_len;
+        if (_y_pixels > 0) {
+            y_len = _y_pixels;
+        } else {
+            y_len = (_x_pixels * (area.max()[Y] - area.min()[Y]))
+                / (area.max()[X] - area.min()[X]);
+        }
+        resolution.first = _x_pixels;
+        resolution.second = y_len;
+    } else {
+        Geom::Point origo = area.min();
+        origo *= trans;
+        Geom::Point max_i(area.max()[X], area.min()[Y]);
+        max_i *= trans;
+        Geom::Point max_j(area.min()[X], area.max()[Y]);
+        max_j *= trans;
+        double i_len = sqrt((origo[X] - max_i[X]) * (origo[X] - max_i[X])
+                            + (origo[Y] - max_i[Y]) * (origo[Y] - max_i[Y]));
+        double j_len = sqrt((origo[X] - max_j[X]) * (origo[X] - max_j[X])
+                            + (origo[Y] - max_j[Y]) * (origo[Y] - max_j[Y]));
+        int limit = _resolution_limit(filterquality);
+        if (limit > 0 && (i_len > limit || j_len > limit)) {
+            double aspect_ratio = i_len / j_len;
+            if (i_len > j_len) {
+                i_len = limit;
+                j_len = i_len / aspect_ratio;
+            }
+            else {
+                j_len = limit;
+                i_len = j_len * aspect_ratio;
+            }
+        }
+        resolution.first = i_len;
+        resolution.second = j_len;
+    }
+    return resolution;
 }
 
 } /* namespace NR */
