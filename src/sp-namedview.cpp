@@ -111,7 +111,7 @@ static void sp_namedview_init(SPNamedView *nv)
     nv->guides = NULL;
     nv->viewcount = 0;
     nv->grids = NULL;
-    
+
     nv->default_layer_id = 0;
 
     nv->connector_spacing = defaultConnSpacing;
@@ -248,6 +248,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:snap-guide");
     sp_object_read_attr(object, "inkscape:snap-center");
     sp_object_read_attr(object, "inkscape:snap-smooth-nodes");
+    sp_object_read_attr(object, "inkscape:snap-midpoints");
     sp_object_read_attr(object, "inkscape:snap-intersection-grid-guide");
     sp_object_read_attr(object, "inkscape:snap-intersection-paths");
     sp_object_read_attr(object, "inkscape:object-paths");
@@ -469,7 +470,11 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
     case SP_ATTR_INKSCAPE_SNAP_SMOOTH_NODES:
             nv->snap_manager.snapprefs.setSnapSmoothNodes(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;           
+            break;
+    case SP_ATTR_INKSCAPE_SNAP_MIDPOINTS:
+            nv->snap_manager.snapprefs.setSnapMidpoints(value ? sp_str_to_bool(value) : FALSE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
     case SP_ATTR_INKSCAPE_SNAP_GUIDE:
             nv->snap_manager.snapprefs.setSnapModeGuide(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -501,7 +506,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
     case SP_ATTR_INKSCAPE_SNAP_PAGE:
             nv->snap_manager.object.setSnapToPageBorder(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;    
+            break;
     case SP_ATTR_INKSCAPE_CURRENT_LAYER:
             nv->default_layer_id = value ? g_quark_from_string(value) : 0;
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);

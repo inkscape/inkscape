@@ -90,9 +90,9 @@ public:
     guint32 color;        /**< Color for normal lines */
     guint32 empcolor;     /**< Color for emphasis lines */
     gint empspacing;      /**< Spacing between emphasis lines */
-    
+
     SPUnit const* gridunit;
-    
+
     Inkscape::XML::Node * repr;
     SPDocument *doc;
 
@@ -158,7 +158,7 @@ private:
 class CanvasXYGridSnapper : public LineSnapper
 {
 public:
-    CanvasXYGridSnapper(CanvasXYGrid *grid, SnapManager const *sm, Geom::Coord const d);
+    CanvasXYGridSnapper(CanvasXYGrid *grid, SnapManager *sm, Geom::Coord const d);
     bool ThisSnapperMightSnap() const;
 
 private:

@@ -36,7 +36,7 @@ public:
 
     void Update (Geom::Matrix const &affine, unsigned int flags);
     void Render (SPCanvasBuf *buf);
-    
+
     void readRepr();
     void onReprAttrChanged (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive);
 
@@ -44,15 +44,15 @@ public:
     double angle_deg[3];  /**< Angle of each axis (note that angle[2] == 0) */
     double angle_rad[3];  /**< Angle of each axis (note that angle[2] == 0) */
     double tan_angle[3];  /**< tan(angle[.]) */
-    
+
     bool scaled;          /**< Whether the grid is in scaled mode */
-    
+
     Geom::Point ow;         /**< Transformed origin by the affine for the zoom */
     double lyw;           /**< Transformed length y by the affine for the zoom */
     double lxw_x;
     double lxw_z;
     double spacing_ylines;
-                          
+
     Geom::Point sw;          /**< the scaling factors of the affine transform */
 
 protected:
@@ -61,7 +61,7 @@ protected:
 private:
     CanvasAxonomGrid(const CanvasAxonomGrid&);
     CanvasAxonomGrid& operator=(const CanvasAxonomGrid&);
-    
+
     void updateWidgets();
 };
 
@@ -70,20 +70,20 @@ private:
 class CanvasAxonomGridSnapper : public LineSnapper
 {
 public:
-    CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SnapManager const *sm, Geom::Coord const d);
+    CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SnapManager *sm, Geom::Coord const d);
 
-private:    
+private:
     LineList _getSnapLines(Geom::Point const &p) const;
     void _addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, const Geom::Point point_on_line) const;
 
     CanvasAxonomGrid *grid;
-}; 
+};
 
 
 }; //namespace Inkscape
 
 
 
-#endif    
+#endif
 
 

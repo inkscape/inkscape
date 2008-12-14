@@ -112,7 +112,7 @@ protected:
     RegisteredCheckButton _rcbsnon, _rcbsnbbp, _rcbsnbbn, _rcbsnpb;
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbic, _rcbsm;
+    RegisteredCheckButton _rcbic, _rcbsm, _rcbmp;
     RegisteredCheckButton _rcbsigg, _rcbsils;
     //---------------------------------------------------------------
     Gtk::Menu   _menu;

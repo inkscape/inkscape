@@ -14,7 +14,7 @@
 #define INKSCAPE_CANVAS_GRID_C
 
 #include "sp-canvas-util.h"
-#include "util/mathfns.h" 
+#include "util/mathfns.h"
 #include "display-forward.h"
 #include <libnr/nr-pixops.h>
 #include "desktop-handles.h"
@@ -357,13 +357,13 @@ CanvasGrid::on_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gc
     ((CanvasGrid*) data)->onReprAttrChanged(repr, key, oldval, newval, is_interactive);
 }
 
-bool CanvasGrid::isEnabled() 
-{ 
+bool CanvasGrid::isEnabled()
+{
     if (snapper == NULL) {
        return false;
-    } 
-    
-    return snapper->getEnabled();    
+    }
+
+    return snapper->getEnabled();
 }
 
 // ##########################################################
@@ -619,7 +619,7 @@ CanvasXYGrid::readRepr()
     if ( (value = repr->attribute("visible")) ) {
         visible = (strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
     }
-    
+
     if ( (value = repr->attribute("enabled")) ) {
         g_assert(snapper != NULL);
         snapper->setEnabled(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
@@ -665,15 +665,15 @@ CanvasXYGrid::newSpecificWidget()
 
     Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gcol = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredColorPicker(
-            _("Grid line _color:"), _("Grid line color"), _("Color of grid lines"), 
+            _("Grid line _color:"), _("Grid line color"), _("Color of grid lines"),
             "color", "opacity", _wr, repr, doc));
 
     Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gmcol = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredColorPicker(
-            _("Ma_jor grid line color:"), _("Major grid line color"), 
-            _("Color of the major (highlighted) grid lines"), "empcolor", "empopacity", 
+            _("Ma_jor grid line color:"), _("Major grid line color"),
+            _("Color of the major (highlighted) grid lines"), "empcolor", "empopacity",
             _wr, repr, doc));
-    
+
     Inkscape::UI::Widget::RegisteredSuffixedInteger *_rsi = Gtk::manage( new Inkscape::UI::Widget::RegisteredSuffixedInteger(
             _("_Major grid line every:"), "", _("lines"), "empspacing", _wr, repr, doc) );
 
@@ -948,7 +948,7 @@ CanvasXYGrid::Render (SPCanvasBuf *buf)
     }
 }
 
-CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SnapManager const *sm, Geom::Coord const d) : LineSnapper(sm, d)
+CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SnapManager *sm, Geom::Coord const d) : LineSnapper(sm, d)
 {
     this->grid = grid;
 }
@@ -973,13 +973,13 @@ CanvasXYGridSnapper::_getSnapLines(Geom::Point const &p) const
             scaled_spacing /= SP_ACTIVE_DESKTOP->current_zoom();
         }
 
-        Geom::Coord rounded;        
+        Geom::Coord rounded;
         Geom::Point point_on_line;
-        
+
         rounded = Inkscape::Util::round_to_upper_multiple_plus(p[i], scaled_spacing, grid->origin[i]);
         point_on_line = i ? Geom::Point(0, rounded) : Geom::Point(rounded, 0);
         s.push_back(std::make_pair(component_vectors[i], point_on_line));
-        
+
         rounded = Inkscape::Util::round_to_lower_multiple_plus(p[i], scaled_spacing, grid->origin[i]);
         point_on_line = i ? Geom::Point(0, rounded) : Geom::Point(rounded, 0);
         s.push_back(std::make_pair(component_vectors[i], point_on_line));
@@ -988,7 +988,7 @@ CanvasXYGridSnapper::_getSnapLines(Geom::Point const &p) const
     return s;
 }
 
-void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, Geom::Point const point_on_line) const 
+void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, Geom::Point const point_on_line) const
 {
     SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
     sc.grid_lines.push_back(dummy);

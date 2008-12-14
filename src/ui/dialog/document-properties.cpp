@@ -119,6 +119,7 @@ DocumentProperties::DocumentProperties()
        //Applies to both nodes and guides, but not to bboxes, that's why its located here
       _rcbic( _("Rotation _center"), _("Consider the rotation center of an object when snapping"), "inkscape:snap-center", _wr),
       _rcbsm( _("_Smooth nodes"), _("Snap to smooth nodes too, instead of only snapping to cusp nodes"), "inkscape:snap-smooth-nodes", _wr),
+      _rcbmp( _("_Midpoints"), _("Snap midpoints of straight line segments"), "inkscape:snap-midpoints", _wr),
       _rcbsigg(_("_Grid with guides"), _("Snap to grid-guide intersections"), "inkscape:snap-intersection-grid-guide", _wr),
       _rcbsils(_("_Paths"), _("Snap to intersections of paths ('snap to paths' must be enabled, see the previous tab)"),
                 "inkscape:snap-intersection-paths", _wr),
@@ -368,7 +369,7 @@ DocumentProperties::build_snap_dtls()
     //Other options to locate here: e.g. visual snapping indicators on/off
 
     Gtk::Label *label_i= manage (new Gtk::Label);
-    label_i->set_markup (_("<b>Snapping to intersections of</b>"));
+    label_i->set_markup (_("<b>Snapping intersections of</b>"));
     Gtk::Label *label_m = manage (new Gtk::Label);
     label_m->set_markup (_("<b>Special points to consider</b>"));
 
@@ -380,7 +381,8 @@ DocumentProperties::build_snap_dtls()
         0,                  0,
         label_m,            0,
         0,                  &_rcbic,
-        0,                  &_rcbsm
+        0,                  &_rcbsm,
+        0,                  &_rcbmp
     };
 
     attach_all(_page_snap_dtls.table(), array, G_N_ELEMENTS(array));
@@ -774,6 +776,7 @@ DocumentProperties::update()
     _rcbsng.setActive (nv->snap_manager.snapprefs.getSnapModeGuide());
     _rcbic.setActive (nv->snap_manager.snapprefs.getIncludeItemCenter());
     _rcbsm.setActive (nv->snap_manager.snapprefs.getSnapSmoothNodes());
+    _rcbmp.setActive (nv->snap_manager.snapprefs.getSnapMidpoints());
     _rcbsigg.setActive (nv->snap_manager.snapprefs.getSnapIntersectionGG());
     _rcbsils.setActive (nv->snap_manager.snapprefs.getSnapIntersectionCS());
     _rcbsnop.setActive(nv->snap_manager.object.getSnapToItemPath());

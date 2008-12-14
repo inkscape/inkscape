@@ -42,9 +42,9 @@ class Snapper
 {
 public:
 	Snapper() {}
-	Snapper(SnapManager const *sm, ::Geom::Coord const t);
+	Snapper(SnapManager *sm, ::Geom::Coord const t);
 	virtual ~Snapper() {}
-	
+
     void setSnapperTolerance(Geom::Coord t);
     Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
     bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
@@ -83,10 +83,10 @@ public:
         Geom::Point getDirection() const {
             return _direction;
         }
-        
+
         void setPoint(Geom::Point const &p) {
             _point = p;
-            _has_point = true;        
+            _has_point = true;
         }
 
     private:
@@ -105,8 +105,8 @@ public:
                                  std::vector<SPItem const *> const */*it*/) const {};
 
 protected:
-	SnapManager const *_snapmanager;
-	
+	SnapManager *_snapmanager;
+
 	bool _snap_enabled; ///< true if this snapper is enabled, otherwise false
 
 private:

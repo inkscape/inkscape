@@ -19,8 +19,8 @@
  *  \param nv Named view.
  *  \param d Snap tolerance.
  */
-Inkscape::Snapper::Snapper(SnapManager const *sm, Geom::Coord const t) : 
-	_snapmanager(sm), 
+Inkscape::Snapper::Snapper(SnapManager *sm, Geom::Coord const t) :
+	_snapmanager(sm),
 	_snap_enabled(true),
 	_snapper_tolerance(std::max(t, 1.0))
 {

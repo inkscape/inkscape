@@ -23,6 +23,7 @@
 #include <2geom/rect.h>
 #include <2geom/transforms.h>
 #include <2geom/pathvector.h>
+#include <2geom/path-intersection.h>
 #include "helper/geom.h"
 #include "helper/geom-nodetype.h"
 
@@ -79,21 +80,21 @@ static SPLPEItemClass *parent_class;
 GType
 sp_shape_get_type (void)
 {
-	static GType type = 0;
-	if (!type) {
-		GTypeInfo info = {
-			sizeof (SPShapeClass),
-			NULL, NULL,
-			(GClassInitFunc) sp_shape_class_init,
-			NULL, NULL,
-			sizeof (SPShape),
-			16,
-			(GInstanceInitFunc) sp_shape_init,
-			NULL,	/* value_table */
-		};
-		type = g_type_register_static (SP_TYPE_LPE_ITEM, "SPShape", &info, (GTypeFlags)0);
-	}
-	return type;
+    static GType type = 0;
+    if (!type) {
+        GTypeInfo info = {
+            sizeof (SPShapeClass),
+            NULL, NULL,
+            (GClassInitFunc) sp_shape_class_init,
+            NULL, NULL,
+            sizeof (SPShape),
+            16,
+            (GInstanceInitFunc) sp_shape_init,
+            NULL,    /* value_table */
+        };
+        type = g_type_register_static (SP_TYPE_LPE_ITEM, "SPShape", &info, (GTypeFlags)0);
+    }
+    return type;
 }
 
 /**
@@ -112,17 +113,17 @@ sp_shape_class_init (SPShapeClass *klass)
 
     gobject_class->finalize = sp_shape_finalize;
 
-	sp_object_class->build = sp_shape_build;
-	sp_object_class->release = sp_shape_release;
+    sp_object_class->build = sp_shape_build;
+    sp_object_class->release = sp_shape_release;
     sp_object_class->set = sp_shape_set;
-	sp_object_class->update = sp_shape_update;
-	sp_object_class->modified = sp_shape_modified;
+    sp_object_class->update = sp_shape_update;
+    sp_object_class->modified = sp_shape_modified;
     sp_object_class->write = sp_shape_write;
 
-	item_class->bbox = sp_shape_bbox;
-	item_class->print = sp_shape_print;
-	item_class->show = sp_shape_show;
-	item_class->hide = sp_shape_hide;
+    item_class->bbox = sp_shape_bbox;
+    item_class->print = sp_shape_print;
+    item_class->show = sp_shape_show;
+    item_class->hide = sp_shape_hide;
     item_class->snappoints = sp_shape_snappoints;
     lpe_item_class->update_patheffect = NULL;
 
@@ -174,7 +175,7 @@ sp_shape_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
 
     for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
         sp_shape_set_marker (object, i, object->style->marker[i].value);
-	  }
+      }
 }
 
 /**
@@ -190,31 +191,31 @@ sp_shape_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
 static void
 sp_shape_release (SPObject *object)
 {
-	SPItem *item;
-	SPShape *shape;
-	SPItemView *v;
-	int i;
+    SPItem *item;
+    SPShape *shape;
+    SPItemView *v;
+    int i;
 
-	item = (SPItem *) object;
-	shape = (SPShape *) object;
+    item = (SPItem *) object;
+    shape = (SPShape *) object;
 
-	for (i=SP_MARKER_LOC_START; i<SP_MARKER_LOC_QTY; i++) {
-	  if (shape->marker[i]) {
-	    for (v = item->display; v != NULL; v = v->next) {
-	      sp_marker_hide ((SPMarker *) shape->marker[i], NR_ARENA_ITEM_GET_KEY (v->arenaitem) + i);
-	    }
+    for (i=SP_MARKER_LOC_START; i<SP_MARKER_LOC_QTY; i++) {
+      if (shape->marker[i]) {
+        for (v = item->display; v != NULL; v = v->next) {
+          sp_marker_hide ((SPMarker *) shape->marker[i], NR_ARENA_ITEM_GET_KEY (v->arenaitem) + i);
+        }
       shape->release_connect[i].disconnect();
       shape->modified_connect[i].disconnect();
-	    shape->marker[i] = sp_object_hunref (shape->marker[i], object);
-	  }
-	}
-	if (shape->curve) {
-		shape->curve = shape->curve->unref();
-	}
-    
-	if (((SPObjectClass *) parent_class)->release) {
-	  ((SPObjectClass *) parent_class)->release (object);
-	}
+        shape->marker[i] = sp_object_hunref (shape->marker[i], object);
+      }
+    }
+    if (shape->curve) {
+        shape->curve = shape->curve->unref();
+    }
+
+    if (((SPObjectClass *) parent_class)->release) {
+      ((SPObjectClass *) parent_class)->release (object);
+    }
 }
 
 
@@ -237,9 +238,9 @@ sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::No
     return repr;
 }
 
-/** 
+/**
  * Updates the shape when its attributes have changed.  Also establishes
- * marker objects to match the style settings.  
+ * marker objects to match the style settings.
  */
 static void
 sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
@@ -258,7 +259,7 @@ sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
      */
     for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
         sp_shape_set_marker (object, i, object->style->marker[i].value);
-	  }
+      }
 
     if (flags & (SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
         SPStyle *style;
@@ -463,17 +464,17 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
 static void
 sp_shape_modified (SPObject *object, unsigned int flags)
 {
-	SPShape *shape = SP_SHAPE (object);
+    SPShape *shape = SP_SHAPE (object);
 
-	if (((SPObjectClass *) (parent_class))->modified) {
-	  (* ((SPObjectClass *) (parent_class))->modified) (object, flags);
-	}
+    if (((SPObjectClass *) (parent_class))->modified) {
+      (* ((SPObjectClass *) (parent_class))->modified) (object, flags);
+    }
 
-	if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-		for (SPItemView *v = SP_ITEM (shape)->display; v != NULL; v = v->next) {
-			nr_arena_shape_set_style (NR_ARENA_SHAPE (v->arenaitem), object->style);
-		}
-	}
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+        for (SPItemView *v = SP_ITEM (shape)->display; v != NULL; v = v->next) {
+            nr_arena_shape_set_style (NR_ARENA_SHAPE (v->arenaitem), object->style);
+        }
+    }
 }
 
 /**
@@ -493,7 +494,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
             cbbox.y1 = (*geombbox)[1][1];
 
             if ((SPItem::BBoxType) flags != SPItem::GEOMETRIC_BBOX) {
-                
+
                 SPStyle* style=SP_OBJECT_STYLE (item);
                 if (!style->stroke.isNone()) {
                     double const scale = transform.descrim();
@@ -611,11 +612,11 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &
 void
 sp_shape_print (SPItem *item, SPPrintContext *ctx)
 {
-	NRRect pbox, dbox, bbox;
+    NRRect pbox, dbox, bbox;
 
-	SPShape *shape = SP_SHAPE(item);
+    SPShape *shape = SP_SHAPE(item);
 
-	if (!shape->curve) return;
+    if (!shape->curve) return;
 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         gint add_comments = prefs->getBool("/printing/debug/add-label-comments");
@@ -756,7 +757,7 @@ sp_shape_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int 
      */
     for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
         sp_shape_set_marker (object, i, object->style->marker[i].value);
-	  }
+      }
 
     if (sp_shape_has_markers (shape)) {
 
@@ -786,26 +787,26 @@ sp_shape_show (SPItem *item, NRArena *arena, unsigned int /*key*/, unsigned int 
 static void
 sp_shape_hide (SPItem *item, unsigned int key)
 {
-	SPShape *shape;
-	SPItemView *v;
-	int i;
+    SPShape *shape;
+    SPItemView *v;
+    int i;
 
-	shape = (SPShape *) item;
+    shape = (SPShape *) item;
 
-	for (i=0; i<SP_MARKER_LOC_QTY; i++) {
-	  if (shape->marker[i]) {
-	    for (v = item->display; v != NULL; v = v->next) {
+    for (i=0; i<SP_MARKER_LOC_QTY; i++) {
+      if (shape->marker[i]) {
+        for (v = item->display; v != NULL; v = v->next) {
                 if (key == v->key) {
-	      sp_marker_hide ((SPMarker *) shape->marker[i],
+          sp_marker_hide ((SPMarker *) shape->marker[i],
                                     NR_ARENA_ITEM_GET_KEY (v->arenaitem) + i);
                 }
-	    }
-	  }
-	}
+        }
+      }
+    }
 
-	if (((SPItemClass *) parent_class)->hide) {
-	  ((SPItemClass *) parent_class)->hide (item, key);
-	}
+    if (((SPItemClass *) parent_class)->hide) {
+      ((SPItemClass *) parent_class)->hide (item, key);
+    }
 }
 
 /**
@@ -884,26 +885,26 @@ sp_shape_number_of_markers (SPShape *shape, int type)
 static void
 sp_shape_marker_release (SPObject *marker, SPShape *shape)
 {
-	SPItem *item;
-	int i;
+    SPItem *item;
+    int i;
 
-	item = (SPItem *) shape;
+    item = (SPItem *) shape;
 
-	for (i = SP_MARKER_LOC_START; i < SP_MARKER_LOC_QTY; i++) {
-	  if (marker == shape->marker[i]) {
-	    SPItemView *v;
-	    /* Hide marker */
-	    for (v = item->display; v != NULL; v = v->next) {
-	      sp_marker_hide ((SPMarker *) (shape->marker[i]), NR_ARENA_ITEM_GET_KEY (v->arenaitem) + i);
-	      /* fixme: Do we need explicit remove here? (Lauris) */
-	      /* nr_arena_item_set_mask (v->arenaitem, NULL); */
-	    }
-	    /* Detach marker */
+    for (i = SP_MARKER_LOC_START; i < SP_MARKER_LOC_QTY; i++) {
+      if (marker == shape->marker[i]) {
+        SPItemView *v;
+        /* Hide marker */
+        for (v = item->display; v != NULL; v = v->next) {
+          sp_marker_hide ((SPMarker *) (shape->marker[i]), NR_ARENA_ITEM_GET_KEY (v->arenaitem) + i);
+          /* fixme: Do we need explicit remove here? (Lauris) */
+          /* nr_arena_item_set_mask (v->arenaitem, NULL); */
+        }
+        /* Detach marker */
       shape->release_connect[i].disconnect();
       shape->modified_connect[i].disconnect();
-	    shape->marker[i] = sp_object_hunref (shape->marker[i], item);
-	  }
-	}
+        shape->marker[i] = sp_object_hunref (shape->marker[i], item);
+      }
+    }
 }
 
 /**
@@ -912,12 +913,12 @@ sp_shape_marker_release (SPObject *marker, SPShape *shape)
 static void
 sp_shape_marker_modified (SPObject */*marker*/, guint /*flags*/, SPItem */*item*/)
 {
-	/* I think mask does update automagically */
-	/* g_warning ("Item %s mask %s modified", SP_OBJECT_ID (item), SP_OBJECT_ID (mask)); */
+    /* I think mask does update automagically */
+    /* g_warning ("Item %s mask %s modified", SP_OBJECT_ID (item), SP_OBJECT_ID (mask)); */
 }
 
 /**
- * Adds a new marker to shape object at the location indicated by key.  value 
+ * Adds a new marker to shape object at the location indicated by key.  value
  * must be a valid URI reference resolvable from the shape object (i.e., present
  * in the document <defs>).  If the shape object already has a marker
  * registered at the given position, it is removed first.  Then the
@@ -971,12 +972,12 @@ sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value)
 void
 sp_shape_set_shape (SPShape *shape)
 {
-	g_return_if_fail (shape != NULL);
-	g_return_if_fail (SP_IS_SHAPE (shape));
+    g_return_if_fail (shape != NULL);
+    g_return_if_fail (SP_IS_SHAPE (shape));
 
-	if (SP_SHAPE_CLASS (G_OBJECT_GET_CLASS (shape))->set_shape) {
-	  SP_SHAPE_CLASS (G_OBJECT_GET_CLASS (shape))->set_shape (shape);
-	}
+    if (SP_SHAPE_CLASS (G_OBJECT_GET_CLASS (shape))->set_shape) {
+      SP_SHAPE_CLASS (G_OBJECT_GET_CLASS (shape))->set_shape (shape);
+    }
 }
 
 /**
@@ -988,16 +989,16 @@ sp_shape_set_shape (SPShape *shape)
 void
 sp_shape_set_curve (SPShape *shape, SPCurve *curve, unsigned int owner)
 {
-	if (shape->curve) {
-		shape->curve = shape->curve->unref();
-	}
-	if (curve) {
-		if (owner) {
-			shape->curve = curve->ref();
-		} else {
-			shape->curve = curve->copy();
-		}
-	}
+    if (shape->curve) {
+        shape->curve = shape->curve->unref();
+    }
+    if (curve) {
+        if (owner) {
+            shape->curve = curve->ref();
+        } else {
+            shape->curve = curve->copy();
+        }
+    }
         SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -1007,10 +1008,10 @@ sp_shape_set_curve (SPShape *shape, SPCurve *curve, unsigned int owner)
 SPCurve *
 sp_shape_get_curve (SPShape *shape)
 {
-	if (shape->curve) {
-		return shape->curve->copy();
-	}
-	return NULL;
+    if (shape->curve) {
+        return shape->curve->copy();
+    }
+    return NULL;
 }
 
 /**
@@ -1019,16 +1020,16 @@ sp_shape_get_curve (SPShape *shape)
 void
 sp_shape_set_curve_insync (SPShape *shape, SPCurve *curve, unsigned int owner)
 {
-	if (shape->curve) {
-		shape->curve = shape->curve->unref();
-	}
-	if (curve) {
-		if (owner) {
-			shape->curve = curve->ref();
-		} else {
-			shape->curve = curve->copy();
-		}
-	}
+    if (shape->curve) {
+        shape->curve = shape->curve->unref();
+    }
+    if (curve) {
+        if (owner) {
+            shape->curve = curve->ref();
+        } else {
+            shape->curve = curve->copy();
+        }
+    }
 }
 
 /**
@@ -1058,22 +1059,44 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::
         while (curve_it2 != path_it->end_closed())
         {
             /* Test whether to add the node between curve_it1 and curve_it2.
-             * Loop to end_closed (so always including closing segment), the last node to be added
-             * is the node between the closing segment and the segment before that one. Regardless
-             * of the path being closed. If the path is closed, the final point was already added by
+             * Loop to end_closed (so always including closing segment); the last node to be added
+             * is the node between the closing segment and the segment before that, regardless
+             * of the path being closed or not. If the path is closed, the final point was already added by
              * adding the initial point. */
 
             Geom::NodeType nodetype = Geom::get_nodetype(*curve_it1, *curve_it2);
 
-            // Depending on the snapping preferences, either add only cusp nodes, or add add both cusp and smooths nodes
+            // Depending on the snapping preferences, either add only cusp nodes, or add add both cusp and smooth nodes
             if (snapprefs->getSnapSmoothNodes() || nodetype == Geom::NODE_NONE || nodetype == Geom::NODE_CUSP) {
                 *p = from_2geom(curve_it1->finalPoint() * i2d);
             }
-            
+
+            // Consider midpoints of line segments for snapping
+            if (snapprefs->getSnapMidpoints()) {
+                if (Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&(*curve_it1))) {
+                    *p = from_2geom(Geom::middle_point(*line_segment) * i2d);
+                }
+            }
+
             ++curve_it1;
             ++curve_it2;
         }
+
+        // Find the internal intersections of each path and consider these for snapping (using "Method 1" as desciribed in Inkscape::ObjectSnapper::_collectNodes())
+        if (snapprefs->getSnapIntersectionCS()) {
+            Geom::Crossings cs;
+            cs = self_crossings(*path_it);
+            if (cs.size() > 0) { // There might be multiple intersections...
+                for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); i++) {
+                    Geom::Point p_ix = (*path_it).pointAt((*i).ta);
+                    *p = from_2geom(p_ix * i2d);
+                }
+            }
+        }
     }
+
+
+
 }
 
 /*

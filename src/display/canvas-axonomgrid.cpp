@@ -19,7 +19,7 @@
 
 #include "sp-canvas-util.h"
 #include "canvas-axonomgrid.h"
-#include "util/mathfns.h" 
+#include "util/mathfns.h"
 #include "2geom/geom.h"
 #include "display-forward.h"
 #include <libnr/nr-pixops.h>
@@ -402,12 +402,12 @@ _wr.setUpdating (true);
 
     Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gcol = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredColorPicker(
-            _("Grid line _color:"), _("Grid line color"), _("Color of grid lines"), 
+            _("Grid line _color:"), _("Grid line color"), _("Color of grid lines"),
             "color", "opacity", _wr, repr, doc));
 
     Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gmcol = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredColorPicker(
-            _("Ma_jor grid line color:"), _("Major grid line color"), 
+            _("Ma_jor grid line color:"), _("Major grid line color"),
             _("Color of the major (highlighted) grid lines"),
             "empcolor", "empopacity", _wr, repr, doc));
 
@@ -656,7 +656,7 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     }
 }
 
-CanvasAxonomGridSnapper::CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SnapManager const *sm, Geom::Coord const d) : LineSnapper(sm, d)
+CanvasAxonomGridSnapper::CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SnapManager *sm, Geom::Coord const d) : LineSnapper(sm, d)
 {
     this->grid = grid;
 }
@@ -685,64 +685,64 @@ CanvasAxonomGridSnapper::_getSnapLines(Geom::Point const &p) const
     // - 2 vertical grid lines, one left and one right from the point
     // - 2 angled z grid lines, one above and one below the point
     // - 2 angled x grid lines, one above and one below the point
-    
+
     // Calculate the x coordinate of the vertical grid lines
     Geom::Coord x_max = Inkscape::Util::round_to_upper_multiple_plus(p[Geom::X], scaled_spacing_h, grid->origin[Geom::X]);
     Geom::Coord x_min = Inkscape::Util::round_to_lower_multiple_plus(p[Geom::X], scaled_spacing_h, grid->origin[Geom::X]);
-    
+
     // Calculate the y coordinate of the intersection of the angled grid lines with the y-axis
-    double y_proj_along_z = p[Geom::Y] - grid->tan_angle[Z]*(p[Geom::X] - grid->origin[Geom::X]);  
-    double y_proj_along_x = p[Geom::Y] + grid->tan_angle[X]*(p[Geom::X] - grid->origin[Geom::X]);    
+    double y_proj_along_z = p[Geom::Y] - grid->tan_angle[Z]*(p[Geom::X] - grid->origin[Geom::X]);
+    double y_proj_along_x = p[Geom::Y] + grid->tan_angle[X]*(p[Geom::X] - grid->origin[Geom::X]);
     double y_proj_along_z_max = Inkscape::Util::round_to_upper_multiple_plus(y_proj_along_z, scaled_spacing_v, grid->origin[Geom::Y]);
-    double y_proj_along_z_min = Inkscape::Util::round_to_lower_multiple_plus(y_proj_along_z, scaled_spacing_v, grid->origin[Geom::Y]);    
+    double y_proj_along_z_min = Inkscape::Util::round_to_lower_multiple_plus(y_proj_along_z, scaled_spacing_v, grid->origin[Geom::Y]);
     double y_proj_along_x_max = Inkscape::Util::round_to_upper_multiple_plus(y_proj_along_x, scaled_spacing_v, grid->origin[Geom::Y]);
     double y_proj_along_x_min = Inkscape::Util::round_to_lower_multiple_plus(y_proj_along_x, scaled_spacing_v, grid->origin[Geom::Y]);
-    
+
     // Calculate the normal for the angled grid lines
     Geom::Point norm_x = Geom::rot90(Geom::Point(1, -grid->tan_angle[X]));
     Geom::Point norm_z = Geom::rot90(Geom::Point(1, grid->tan_angle[Z]));
-    
+
     // The four angled grid lines form a parallellogram, enclosing the point
     // One of the two vertical grid lines divides this parallellogram in two triangles
-    // We will now try to find out in which half (i.e. triangle) our point is, and return 
-    // only the three grid lines defining that triangle 
-    
-    // The vertical grid line is at the intersection of two angled grid lines. 
+    // We will now try to find out in which half (i.e. triangle) our point is, and return
+    // only the three grid lines defining that triangle
+
+    // The vertical grid line is at the intersection of two angled grid lines.
     // Now go find that intersection!
     Geom::Point result;
     Geom::IntersectorKind is = Geom::line_intersection(norm_x, norm_x[Geom::Y]*y_proj_along_x_max,
                                            norm_z, norm_z[Geom::Y]*y_proj_along_z_max,
                                            result);
-                         
-    // Determine which half of the parallellogram to use 
+
+    // Determine which half of the parallellogram to use
     bool use_left_half = true;
     bool use_right_half = true;
-    
+
     if (is == Geom::intersects) {
         use_left_half = (p[Geom::X] - grid->origin[Geom::X]) < result[Geom::X];
-        use_right_half = !use_left_half; 
+        use_right_half = !use_left_half;
     }
-    
+
     //std::cout << "intersection at " << result << " leads to use_left_half = " << use_left_half << " and use_right_half = " << use_right_half << std::endl;
-       
+
     // Return the three grid lines which define the triangle that encloses our point
     // If we didn't find an intersection above, all 6 grid lines will be returned
     if (use_left_half) {
         s.push_back(std::make_pair(norm_z, Geom::Point(grid->origin[Geom::X], y_proj_along_z_max)));
         s.push_back(std::make_pair(norm_x, Geom::Point(grid->origin[Geom::X], y_proj_along_x_min)));
-        s.push_back(std::make_pair(component_vectors[Geom::X], Geom::Point(x_max, 0)));            
+        s.push_back(std::make_pair(component_vectors[Geom::X], Geom::Point(x_max, 0)));
     }
-    
+
     if (use_right_half) {
         s.push_back(std::make_pair(norm_z, Geom::Point(grid->origin[Geom::X], y_proj_along_z_min)));
         s.push_back(std::make_pair(norm_x, Geom::Point(grid->origin[Geom::X], y_proj_along_x_max)));
-        s.push_back(std::make_pair(component_vectors[Geom::X], Geom::Point(x_min, 0)));        
-    } 
-    
+        s.push_back(std::make_pair(component_vectors[Geom::X], Geom::Point(x_min, 0)));
+    }
+
     return s;
 }
 
-void CanvasAxonomGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, Geom::Point const point_on_line) const 
+void CanvasAxonomGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, Geom::Point const point_on_line) const
 {
     SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
     sc.grid_lines.push_back(dummy);

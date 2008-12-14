@@ -48,44 +48,44 @@ public:
         STRETCH,
         SKEW
     };
-	
+
 	SnapManager(SPNamedView const *v);
 
     typedef std::list<const Inkscape::Snapper*> SnapperList;
 
     bool someSnapperMightSnap() const;
-    
+
     void setup(SPDesktop const *desktop, bool snapindicator = true, SPItem const *item_to_ignore = NULL, std::vector<Geom::Point> *unselected_nodes = NULL);
     void setup(SPDesktop const *desktop, bool snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<Geom::Point> *unselected_nodes = NULL);
 
-    // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a 
-    // point if snapping has occured (by overwriting p); otherwise p is untouched    
+    // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a
+    // point if snapping has occured (by overwriting p); otherwise p is untouched
     void freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
                       Geom::Point &p,
                       bool first_point = true,
                       Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
-    
+
     Inkscape::SnappedPoint freeSnap(Inkscape::SnapPreferences::PointType point_type,
                                     Geom::Point const &p,
                                     bool first_point = true,
                                     Geom::OptRect const &bbox_to_snap = Geom::OptRect() ) const;
-    
+
     Geom::Point multipleOfGridPitch(Geom::Point const &t) const;
-    
-    // constrainedSnapReturnByRef() is preferred over constrainedSnap(), because it only returns a 
+
+    // constrainedSnapReturnByRef() is preferred over constrainedSnap(), because it only returns a
     // point, by overwriting p, if snapping has occured; otherwise p is untouched
     void constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
                              Geom::Point &p,
                              Inkscape::Snapper::ConstraintLine const &constraint,
                              bool first_point = true,
                              Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
-    
+
     Inkscape::SnappedPoint constrainedSnap(Inkscape::SnapPreferences::PointType point_type,
                                            Geom::Point const &p,
                                            Inkscape::Snapper::ConstraintLine const &constraint,
                                            bool first_point = true,
                                            Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
-                                           
+
     void guideSnap(Geom::Point &p, Geom::Point const &guide_normal) const;
 
     Inkscape::SnappedPoint freeSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
@@ -126,28 +126,28 @@ public:
                                                Geom::Point const &s, // s[0] = skew factor, s[1] = scale factor
                                                Geom::Point const &o,
                                                Geom::Dim2 d) const;
-    
+
     Inkscape::GuideSnapper guide;      ///< guide snapper
     Inkscape::ObjectSnapper object;    ///< snapper to other objects
     Inkscape::SnapPreferences snapprefs;
 
     SnapperList getSnappers() const;
     SnapperList getGridSnappers() const;
-    
+
     SPDesktop const *getDesktop() const {return _desktop;}
     SPNamedView const *getNamedView() const {return _named_view;}
     SPDocument *getDocument() const;
-    
+
 protected:
     SPNamedView const *_named_view;
 
 private:
-	std::vector<SPItem const *> *_items_to_ignore;
+    std::vector<SPItem const *> *_items_to_ignore;
     SPItem const *_item_to_ignore;
     SPDesktop const *_desktop;
     bool _snapindicator;
-    std::vector<Geom::Point> *_unselected_nodes;                                    
-    
+    std::vector<Geom::Point> *_unselected_nodes;
+
     Inkscape::SnappedPoint _snapTransformed(Inkscape::SnapPreferences::PointType type,
                                             std::vector<Geom::Point> const &points,
                                             Geom::Point const &pointer,
@@ -158,16 +158,16 @@ private:
                                             Geom::Point const &origin,
                                             Geom::Dim2 dim,
                                             bool uniform) const;
-    
-    Geom::Point _transformPoint(Geom::Point const &p, 
-        							Transformation const transformation_type, 
-        							Geom::Point const &transformation, 
-        							Geom::Point const &origin, 
-        							Geom::Dim2 const dim, 
-        							bool const uniform) const;
-   
-    void _displaySnapsource(Inkscape::SnapPreferences::PointType point_type, Geom::Point const &p) const; 
-    
+
+    Geom::Point _transformPoint(Geom::Point const &p,
+                                            Transformation const transformation_type,
+                                            Geom::Point const &transformation,
+                                            Geom::Point const &origin,
+                                            Geom::Dim2 const dim,
+                                            bool const uniform) const;
+
+    void _displaySnapsource(Inkscape::SnapPreferences::PointType point_type, Geom::Point const &p) const;
+
     Inkscape::SnappedPoint findBestSnap(Geom::Point const &p, SnappedConstraints &sc, bool constrained) const;
 };
 

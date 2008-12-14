@@ -17,7 +17,7 @@
 #include "sp-namedview.h"
 #include "sp-guide.h"
 
-Inkscape::GuideSnapper::GuideSnapper(SnapManager const *sm, Geom::Coord const d) : LineSnapper(sm, d)
+Inkscape::GuideSnapper::GuideSnapper(SnapManager *sm, Geom::Coord const d) : LineSnapper(sm, d)
 {
 
 }
@@ -32,7 +32,7 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(Geom::Poi
 
     for (GSList const *l = _snapmanager->getNamedView()->guides; l != NULL; l = l->next) {
         SPGuide const *g = SP_GUIDE(l->data);
-        s.push_back(std::make_pair(g->normal_to_line, g->point_on_line)); 
+        s.push_back(std::make_pair(g->normal_to_line, g->point_on_line));
     }
 
     return s;

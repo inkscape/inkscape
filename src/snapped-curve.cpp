@@ -63,7 +63,7 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
         // There might be multiple intersections: find the closest
         Geom::Coord best_dist = NR_HUGE;
         Geom::Point best_p = Geom::Point(NR_HUGE, NR_HUGE);
-        for (std::vector<Geom::Crossing>::const_iterator i = cs.begin(); i != cs.end(); i++) {
+        for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); i++) {
             Geom::Point p_ix = this->_curve->pointAt((*i).ta);
             Geom::Coord dist = Geom::distance(p_ix, p);
             if (dist < best_dist) {

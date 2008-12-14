@@ -10,7 +10,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   Carl Hetherington <inkscape@carlh.net>
  *
- * Copyright (C) 1999-2002 Authors 
+ * Copyright (C) 1999-2002 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -28,11 +28,11 @@ namespace Inkscape
 class GuideSnapper : public LineSnapper
 {
 public:
-    GuideSnapper(SnapManager const *sm, Geom::Coord const d);    
+    GuideSnapper(SnapManager *sm, Geom::Coord const d);
     bool ThisSnapperMightSnap() const;
 
 private:
-    LineList _getSnapLines(Geom::Point const &p) const;    
+    LineList _getSnapLines(Geom::Point const &p) const;
     void _addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, Geom::Point const point_on_line) const;
 };
 
