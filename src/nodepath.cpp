@@ -1065,6 +1065,9 @@ static void sp_nodepath_set_line_type(Inkscape::NodePath::Node *end, NRPathcode 
             if (end->type == Inkscape::NodePath::NODE_AUTO)
                 end->type = Inkscape::NodePath::NODE_SMOOTH;
     
+            start->n.pos = start->pos;
+            end->p.pos = end->pos;
+
             sp_node_adjust_handle(start, -1);
             sp_node_adjust_handle(end, 1);
 
