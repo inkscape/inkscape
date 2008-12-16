@@ -71,6 +71,7 @@ public:
     void on_glyphs_changed();
     void on_kerning_changed();
     void on_setwidth_changed();
+	void add_font();
 
     class AttrEntry : public Gtk::HBox
 	{
@@ -106,6 +107,7 @@ private:
     };
     Glib::RefPtr<Gtk::ListStore> _model;
     Columns _columns;
+    Gtk::Button _add;
     Gtk::TreeView _font_list;
     Gtk::VBox _font_settings;
     Gtk::Entry _preview_entry;

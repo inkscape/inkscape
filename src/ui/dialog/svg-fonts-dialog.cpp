@@ -18,7 +18,9 @@
 #include "svg-fonts-dialog.h"
 #include <glibmm/i18n.h>
 #include <string.h>
+#include "document-private.h"
 #include "xml/node.h"
+#include "xml/repr.h"
 
 SvgFontDrawingArea::SvgFontDrawingArea(){
 	this->text = "";
@@ -251,12 +253,12 @@ Gtk::VBox* SvgFontsDialog::global_settings_tab(){
     familyname = new AttrEntry(this, (gchar*) _("Family Name:"), SP_PROP_FONT_FAMILY);
 
     global_vbox->add(*familyname);
-    global_vbox->add(*AttrCombo((gchar*) _("Style:"), SP_PROP_FONT_STYLE));
+/*    global_vbox->add(*AttrCombo((gchar*) _("Style:"), SP_PROP_FONT_STYLE));
     global_vbox->add(*AttrCombo((gchar*) _("Variant:"), SP_PROP_FONT_VARIANT));
     global_vbox->add(*AttrCombo((gchar*) _("Weight:"), SP_PROP_FONT_WEIGHT));
-
+*/
 //Set Width (horiz_adv_x):
-    Gtk::HBox* setwidth_hbox = Gtk::manage(new Gtk::HBox());
+/*    Gtk::HBox* setwidth_hbox = Gtk::manage(new Gtk::HBox());
     setwidth_hbox->add(*Gtk::manage(new Gtk::Label(_("Set width:"))));
     setwidth_hbox->add(setwidth_spin);
 
@@ -264,7 +266,7 @@ Gtk::VBox* SvgFontsDialog::global_settings_tab(){
     setwidth_spin.set_range(0, 4096);
     setwidth_spin.set_increments(10, 100);
     global_vbox->add(*setwidth_hbox);
-
+*/
     return global_vbox;
 }
 
@@ -307,11 +309,59 @@ Gtk::VBox* SvgFontsDialog::kerning_tab(){
     return kernvbox;
 }
 
-SvgFontsDialog::SvgFontsDialog()
- : UI::Widget::Panel("", "/dialogs/svgfonts", SP_VERB_DIALOG_SVG_FONTS)
+SPFont *new_font(SPDocument *document)
 {
+    g_return_val_if_fail(document != NULL, NULL);
+
+    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+
+    Inkscape::XML::Document *xml_doc = sp_document_repr_doc(document);
+
+    // create a new font
+    Inkscape::XML::Node *repr;
+    repr = xml_doc->createElement("svg:font");
+
+    // Append the new font node to defs
+    SP_OBJECT_REPR(defs)->appendChild(repr);
+    Inkscape::GC::release(repr);
+
+    // get corresponding object
+    SPFont *f = SP_FONT( document->getObjectByRepr(repr) );
+    
+    g_assert(f != NULL);
+    g_assert(SP_IS_FONT(f));
+
+    return f;
+}
+
+
+void SvgFontsDialog::add_font(){
+    SPDocument* doc = sp_desktop_document(this->getDesktop());
+    SPFont* font = new_font(doc);
+
+    const int count = _model->children().size();
+    std::ostringstream os;
+    os << "font" << count;
+    font->setLabel(os.str().c_str());
+
+    update_fonts();
+//    select_font(font);
+//	on_font_selection_changed();
+
+    sp_document_done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Add font"));
+}
+
+SvgFontsDialog::SvgFontsDialog()
+ : UI::Widget::Panel("", "/dialogs/svgfonts", SP_VERB_DIALOG_SVG_FONTS), _add(Gtk::Stock::NEW)
+{
+    _add.signal_clicked().connect(sigc::mem_fun(*this, &SvgFontsDialog::add_font));
+
     Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
-    hbox->add(_font_list);
+    Gtk::VBox* vbox = Gtk::manage(new Gtk::VBox());
+
+    vbox->pack_start(_font_list);
+    vbox->pack_start(_add, false, false);
+    hbox->add(*vbox);
     hbox->add(_font_settings);
     _getContents()->add(*hbox);
 
