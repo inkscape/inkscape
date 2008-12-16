@@ -1099,7 +1099,7 @@ sp_export_export_clicked (GtkButton */*button*/, GtkObject *base)
             }
 
             Geom::OptRect area;
-            sp_item_invoke_bbox(item, area, sp_item_i2r_affine((SPItem *) item), TRUE);
+            sp_item_invoke_bbox(item, area, sp_item_i2d_affine((SPItem *) item), TRUE);
             if (area) {
                 gint width = (gint) (area->width() * dpi / PX_PER_IN + 0.5);
                 gint height = (gint) (area->height() * dpi / PX_PER_IN + 0.5);

@@ -1515,8 +1515,9 @@ i2anc_affine(SPObject const *object, SPObject const *const ancestor) {
     while ( object != ancestor && SP_IS_ITEM(object) ) {
         if (SP_IS_ROOT(object)) {
             ret *= SP_ROOT(object)->c2p;
+        } else {
+            ret *= SP_ITEM(object)->transform;
         }
-        ret *= SP_ITEM(object)->transform;
         object = SP_OBJECT_PARENT(object);
     }
     return ret;
@@ -1543,48 +1544,14 @@ Geom::Matrix sp_item_i2doc_affine(SPItem const *item)
 }
 
 /**
- * Returns the accumulated transformation of the item and all its ancestors, but excluding root's viewport.
- * Used in path operations mostly.
- * \pre (item != NULL) and SP_IS_ITEM(item).
+ * Returns the transformation from item to desktop coords
  */
-Geom::Matrix sp_item_i2root_affine(SPItem const *item)
-{
-    g_assert(item != NULL);
-    g_assert(SP_IS_ITEM(item));
-
-    Geom::Matrix ret(Geom::identity());
-    g_assert(ret.isIdentity());
-    while ( NULL != SP_OBJECT_PARENT(item) ) {
-        ret *= item->transform;
-        item = SP_ITEM(SP_OBJECT_PARENT(item));
-    }
-    g_assert(SP_IS_ROOT(item));
-
-    ret *= item->transform;
-
-    return ret;
-}
-
-/* fixme: This is EVIL!!! */
-// fix this note: why/what evil? :)
 Geom::Matrix sp_item_i2d_affine(SPItem const *item)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
 
     Geom::Matrix const ret( sp_item_i2doc_affine(item)
-                          * Geom::Scale(1, -1)
-                          * Geom::Translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item))) );
-    return ret;
-}
-
-// same as i2d but with i2root instead of i2doc
-Geom::Matrix sp_item_i2r_affine(SPItem const *item)
-{
-    g_assert(item != NULL);
-    g_assert(SP_IS_ITEM(item));
-
-    Geom::Matrix const ret( sp_item_i2root_affine(item)
                           * Geom::Scale(1, -1)
                           * Geom::Translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item))) );
     return ret;
@@ -1632,6 +1599,9 @@ void sp_item_set_i2d_affine(SPItem *item, Geom::Matrix const &i2dt)
 }
 
 
+/**
+ * should rather be named "sp_item_d2i_affine" to match "sp_item_i2d_affine" (or vice versa)
+ */
 Geom::Matrix
 sp_item_dt2i_affine(SPItem const *item)
 {

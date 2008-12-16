@@ -55,7 +55,7 @@ static gchar * sp_flowregionexclude_description (SPItem * item);
 static SPItemClass * flowregionexclude_parent_class;
 
 
-static void         GetDest(SPObject* child,Shape **computed,NR::Matrix itr_mat);
+static void         GetDest(SPObject* child,Shape **computed);
 
 GType
 sp_flowregion_get_type (void)
@@ -190,16 +190,13 @@ void             SPFlowregion::UpdateComputed(void)
 {
 	SPObject* object=SP_OBJECT(this);
 
-    NR::Matrix itr_mat (sp_item_i2root_affine (SP_ITEM(object)));
-    itr_mat = itr_mat.inverse();
-
     for (std::vector<Shape*>::iterator it = computed.begin() ; it != computed.end() ; it++)
         delete *it;
     computed.clear();
 
 	for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
         Shape *shape = NULL;
-		GetDest(child,&shape,itr_mat);
+		GetDest(child,&shape);
         computed.push_back(shape);
 	}
 }
@@ -414,11 +411,9 @@ void             SPFlowregionExclude::UpdateComputed(void)
         delete computed;
         computed = NULL;
     }
-    NR::Matrix itr_mat (sp_item_i2root_affine (SP_ITEM(object)));
-    itr_mat = itr_mat.inverse();
 
 	for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-		GetDest(child,&computed,itr_mat);
+		GetDest(child,&computed);
 	}
 }
 
@@ -510,15 +505,19 @@ static void         UnionShape(Shape **base_shape, Shape const *add_shape)
 	}
 }
 
-static void         GetDest(SPObject* child,Shape **computed,NR::Matrix itr_mat)
+static void         GetDest(SPObject* child,Shape **computed)
 {
 	if ( child == NULL ) return;
 
 	SPCurve *curve=NULL;
+	Geom::Matrix tr_mat;
 
 	SPObject* u_child=child;
 	if ( SP_IS_USE(u_child) ) {
 		u_child=SP_USE(u_child)->child;
+		tr_mat = SP_ITEM(u_child)->getRelativeTransform(SP_OBJECT_PARENT(child));
+	} else {
+		tr_mat = SP_ITEM(u_child)->transform;
 	}
 	if ( SP_IS_SHAPE (u_child) ) {
 		curve = sp_shape_get_curve (SP_SHAPE (u_child));
@@ -528,8 +527,6 @@ static void         GetDest(SPObject* child,Shape **computed,NR::Matrix itr_mat)
 
 	if ( curve ) {
 		Path*   temp=new Path;
-        Geom::Matrix tr_mat = sp_item_i2root_affine (SP_ITEM(u_child));
-        tr_mat = (Geom::Matrix)itr_mat * tr_mat;
         temp->LoadPathVector(curve->get_pathvector(), tr_mat, true);
 		Shape*  n_shp=new Shape;
 		temp->Convert(0.25);

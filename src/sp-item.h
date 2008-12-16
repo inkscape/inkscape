@@ -257,7 +257,6 @@ Geom::Matrix i2anc_affine(SPObject const *item, SPObject const *ancestor);
 Geom::Matrix i2i_affine(SPObject const *src, SPObject const *dest);
 
 Geom::Matrix sp_item_i2doc_affine(SPItem const *item);
-Geom::Matrix sp_item_i2root_affine(SPItem const *item);
 
 Geom::Matrix matrix_to_desktop (Geom::Matrix m, SPItem const *item);
 Geom::Matrix matrix_from_desktop (Geom::Matrix m, SPItem const *item);
@@ -271,7 +270,6 @@ Geom::Matrix matrix_from_desktop (Geom::Matrix m, SPItem const *item);
  * \return TRANSFORM.
  */
 Geom::Matrix sp_item_i2d_affine(SPItem const *item);
-Geom::Matrix sp_item_i2r_affine(SPItem const *item);
 void sp_item_set_i2d_affine(SPItem *item, Geom::Matrix const &transform);
 Geom::Matrix sp_item_dt2i_affine(SPItem const *item);
 int sp_item_repr_compare_position(SPItem *first, SPItem *second);

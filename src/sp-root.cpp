@@ -51,7 +51,6 @@ static void sp_root_modified(SPObject *object, guint flags);
 static Inkscape::XML::Node *sp_root_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static NRArenaItem *sp_root_show(SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
-static void sp_root_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
 static void sp_root_print(SPItem *item, SPPrintContext *ctx);
 
 static SPGroupClass *parent_class;
@@ -106,7 +105,6 @@ sp_root_class_init(SPRootClass *klass)
     sp_object_class->write = sp_root_write;
 
     sp_item_class->show = sp_root_show;
-    sp_item_class->bbox = sp_root_bbox;
     sp_item_class->print = sp_root_print;
 }
 
@@ -638,22 +636,6 @@ sp_root_show(SPItem *item, NRArena *arena, unsigned int key, unsigned int flags)
     }
 
     return ai;
-}
-
-/**
- * Virtual bbox callback.
- */
-static void
-sp_root_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags)
-{
-    SPRoot const *root = SP_ROOT(item);
-
-    if (((SPItemClass *) (parent_class))->bbox) {
-        Geom::Matrix const product( to_2geom(root->c2p) * transform );
-        ((SPItemClass *) (parent_class))->bbox(item, bbox,
-                                               product,
-                                               flags);
-    }
 }
 
 /**

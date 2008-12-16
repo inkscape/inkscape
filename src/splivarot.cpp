@@ -452,11 +452,11 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
     // adjust style properties that depend on a possible transform in the source object in order
     // to get a correct style attribute for the new path
     SPItem* item_source = SP_ITEM(source);
-    NR::Matrix i2root(sp_item_i2root_affine(item_source));
-    sp_item_adjust_stroke(item_source, i2root.descrim());
-    sp_item_adjust_pattern(item_source, i2root);
-    sp_item_adjust_gradient(item_source, i2root);
-    sp_item_adjust_livepatheffect(item_source, i2root);
+    NR::Matrix i2doc(sp_item_i2doc_affine(item_source));
+    sp_item_adjust_stroke(item_source, i2doc.descrim());
+    sp_item_adjust_pattern(item_source, i2doc);
+    sp_item_adjust_gradient(item_source, i2doc);
+    sp_item_adjust_livepatheffect(item_source, i2doc);
 
     Inkscape::XML::Node *repr_source = SP_OBJECT_REPR(source);
 

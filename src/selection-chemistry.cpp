@@ -1216,7 +1216,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
             sp_object_read_attr (SP_OBJECT (item), "transform");
 
             // calculate the matrix we need to apply to the clone to cancel its induced transform from its original
-            Geom::Matrix parent_transform = sp_item_i2root_affine(SP_ITEM(SP_OBJECT_PARENT (item)));
+            Geom::Matrix parent_transform = sp_item_i2doc_affine(SP_ITEM(SP_OBJECT_PARENT (item)));
             Geom::Matrix t = parent_transform * matrix_to_desktop (matrix_from_desktop (affine, item), item) * parent_transform.inverse();
             Geom::Matrix t_inv =parent_transform * matrix_to_desktop (matrix_from_desktop (affine.inverse(), item), item) * parent_transform.inverse();
             Geom::Matrix result = t_inv * item->transform * t;
@@ -2229,7 +2229,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT_PARENT (items->data);
 
-    Geom::Matrix parent_transform (sp_item_i2root_affine(SP_ITEM(parent)));
+    Geom::Matrix parent_transform (sp_item_i2doc_affine(SP_ITEM(parent)));
 
     // remember the position of the first item
     gint pos = SP_OBJECT_REPR (items->data)->position();
@@ -2899,7 +2899,7 @@ fit_canvas_to_drawing(SPDocument *doc)
 
     sp_document_ensure_up_to_date(doc);
     SPItem const *const root = SP_ITEM(doc->root);
-    Geom::OptRect const bbox(root->getBounds(sp_item_i2r_affine(root)));
+    Geom::OptRect const bbox(root->getBounds(sp_item_i2d_affine(root)));
     if (bbox) {
         doc->fitToRect(*bbox);
         return true;
