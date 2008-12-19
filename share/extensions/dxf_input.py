@@ -235,6 +235,8 @@ while line[0] and line[1] != 'ENDSEC':
             if vals[groups['370']]:                 # Common Lineweight
                 if vals[groups['370']][0] > 0:
                     w = scale*vals[groups['370']][0]/100.0
+                    if w < 0.5:
+                        w = 0.5
                     style = simplestyle.formatStyle({'stroke': '%s' % color, 'fill': 'none', 'stroke-width': '%.1f' % w})
             entities[entity]()
         entity = line[1]
