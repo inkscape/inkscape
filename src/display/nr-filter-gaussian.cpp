@@ -59,7 +59,7 @@
 static size_t const N = 3;
 
 template<typename InIt, typename OutIt, typename Size>
-void copy_n(InIt beg_in, Size N, OutIt beg_out) {
+inline void copy_n(InIt beg_in, Size N, OutIt beg_out) {
     std::copy(beg_in, beg_in+N, beg_out);
 }
 
