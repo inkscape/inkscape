@@ -1516,6 +1516,9 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
             return false;
     }
 
+    // correct virtual size by full transform (bug #166937)
+    size /= sp_item_i2doc_affine(item).descrim();
+
     // save the transform, to re-apply it after simplification
     NR::Matrix const transform(item->transform);
 
