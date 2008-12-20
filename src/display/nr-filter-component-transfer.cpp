@@ -118,7 +118,10 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
                 break;
             case COMPONENTTRANSFER_TYPE_ERROR:
                 //TODO: report an error here
+                g_warning("Component tranfer type \"error\".");
                 break;
+            default:
+                g_warning("Invalid tranfer type %d.", type[color]);
         }
     }
 

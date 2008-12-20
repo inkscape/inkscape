@@ -25,7 +25,7 @@
 #include "componenttransfer.h"
 #include "componenttransfer-funcnode.h"
 #include "xml/repr.h"
-//#include "display/nr-filter-component-transfer.h"
+#include "display/nr-filter-component-transfer.h"
 
 /* FeComponentTransfer base class */
 
@@ -106,6 +106,7 @@ sp_feComponentTransfer_build(SPObject *object, SPDocument *document, Inkscape::X
 static void sp_feComponentTransfer_children_modified(SPFeComponentTransfer *sp_componenttransfer)
 {
     if (sp_componenttransfer->renderer) {
+        bool set[4] = {false, false, false, false};
         SPObject* node = sp_componenttransfer->children;
         for(;node;node=node->next){
             int i=4;
@@ -113,7 +114,10 @@ static void sp_feComponentTransfer_children_modified(SPFeComponentTransfer *sp_c
             if (SP_IS_FEFUNCG(node)) i=1;
             if (SP_IS_FEFUNCB(node)) i=2;
             if (SP_IS_FEFUNCA(node)) i=3;
-            if (i==4) break;
+            if (i==4) {
+                g_warning("Unrecognized channel for component transfer.");
+                break;
+            }
             sp_componenttransfer->renderer->type[i] = ((SPFeFuncNode *) node)->type;
             sp_componenttransfer->renderer->tableValues[i] = ((SPFeFuncNode *) node)->tableValues;
             sp_componenttransfer->renderer->slope[i] = ((SPFeFuncNode *) node)->slope;
@@ -121,6 +125,13 @@ static void sp_feComponentTransfer_children_modified(SPFeComponentTransfer *sp_c
             sp_componenttransfer->renderer->amplitude[i] = ((SPFeFuncNode *) node)->amplitude;
             sp_componenttransfer->renderer->exponent[i] = ((SPFeFuncNode *) node)->exponent;
             sp_componenttransfer->renderer->offset[i] = ((SPFeFuncNode *) node)->offset;
+            set[i] = true;
+        }
+        // Set any types not explicitly set to the identity transform
+        for(int i=0;i<4;i++) {
+            if (!set[i]) {
+                sp_componenttransfer->renderer->type[i] = NR::COMPONENTTRANSFER_TYPE_IDENTITY;
+            }
         }
     }
 }
