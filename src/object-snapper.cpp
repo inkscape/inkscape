@@ -112,25 +112,19 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
 
             if (it == NULL || i == it->end()) {
                 SPItem *item = SP_ITEM(o);
-                Geom::Matrix transform = Geom::identity();
                 if (item) {
                     SPObject *obj = NULL;
-                    if (clip_or_mask) { // If the current item is a clipping path or a mask
-                        // then store the transformation of the clipped path or mask itself
-                        // but also take into account the additional affine of the object
-                        // being clipped / masked
-                        transform = to_2geom(item->transform) * additional_affine;
-                    } else { // cannot clip or mask more than once
+                    if (!clip_or_mask) { // cannot clip or mask more than once
                         // The current item is not a clipping path or a mask, but might
                         // still be the subject of clipping or masking itself ; if so, then
                         // we should also consider that path or mask for snapping to
                         obj = SP_OBJECT(item->clip_ref->getObject());
                         if (obj) {
-                            _findCandidates(obj, it, false, bbox_to_snap, snap_dim, true, item->transform);
+                            _findCandidates(obj, it, false, bbox_to_snap, snap_dim, true, sp_item_i2doc_affine(item));
                         }
                         obj = SP_OBJECT(item->mask_ref->getObject());
                         if (obj) {
-                            _findCandidates(obj, it, false, bbox_to_snap, snap_dim, true, item->transform);
+                            _findCandidates(obj, it, false, bbox_to_snap, snap_dim, true, sp_item_i2doc_affine(item));
                         }
                     }
                 }
@@ -144,7 +138,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                         // insert an additional transformation in document coordinates (code copied from sp_item_i2d_affine)
                         sp_item_invoke_bbox(item,
                             bbox_of_item,
-                            sp_item_i2doc_affine(item) * matrix_to_desktop(additional_affine, item),
+                            sp_item_i2doc_affine(item) * additional_affine * _snapmanager->getDesktop()->doc2dt(),
                             true);
                     } else {
                         sp_item_invoke_bbox(item, bbox_of_item, sp_item_i2d_affine(item), true);

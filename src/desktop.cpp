@@ -1806,6 +1806,12 @@ Geom::Matrix SPDesktop::doc2dt() const
     return _doc2dt;
 }
 
+Geom::Matrix SPDesktop::dt2doc() const
+{
+    // doc2dt is its own inverse
+    return _doc2dt;
+}
+
 Geom::Point SPDesktop::doc2dt(Geom::Point const &p) const
 {
     return p * _doc2dt;
@@ -1813,7 +1819,7 @@ Geom::Point SPDesktop::doc2dt(Geom::Point const &p) const
 
 Geom::Point SPDesktop::dt2doc(Geom::Point const &p) const
 {
-    return p * _doc2dt.inverse();
+    return p * dt2doc();
 }
 
 

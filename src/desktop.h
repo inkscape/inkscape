@@ -310,6 +310,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     Geom::Point w2d(Geom::Point const &p) const;
     Geom::Point d2w(Geom::Point const &p) const;
     Geom::Matrix doc2dt() const;
+    Geom::Matrix dt2doc() const;
     Geom::Point doc2dt(Geom::Point const &p) const;
     Geom::Point dt2doc(Geom::Point const &p) const;
 

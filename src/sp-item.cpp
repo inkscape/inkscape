@@ -33,6 +33,7 @@
 #include "document.h"
 #include "uri.h"
 #include "inkscape.h"
+#include "desktop.h"
 #include "desktop-handles.h"
 
 #include "style.h"
@@ -978,6 +979,7 @@ void sp_item_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPref
     clips_and_masks.push_back(SP_OBJECT(item->clip_ref->getObject()));
     clips_and_masks.push_back(SP_OBJECT(item->mask_ref->getObject()));
 
+    SPDesktop *desktop = inkscape_active_desktop();
     for (std::list<SPObject const *>::const_iterator o = clips_and_masks.begin(); o != clips_and_masks.end(); o++) {
         if (*o) {
             // obj is a group object, the children are the actual clippers
@@ -990,7 +992,7 @@ void sp_item_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPref
                     for (std::vector<Geom::Point>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
                         // All snappoints are in desktop coordinates, but the item's transformation is
                         // in document coordinates. Hence the awkward construction below
-                        *p = (*p_orig) * matrix_to_desktop (matrix_from_desktop (item->transform, item), item);
+                        *p = desktop->dt2doc(*p_orig) * sp_item_i2d_affine(item);
                     }
                 }
             }
@@ -1551,34 +1553,8 @@ Geom::Matrix sp_item_i2d_affine(SPItem const *item)
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
 
-    Geom::Matrix const ret( sp_item_i2doc_affine(item)
-                          * Geom::Scale(1, -1)
-                          * Geom::Translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item))) );
-    return ret;
-}
-
-/**
- * Converts a matrix \a m into the desktop coords of the \a item.
- * Will become a noop when we eliminate the coordinate flipping.
- */
-Geom::Matrix matrix_to_desktop(Geom::Matrix const m, SPItem const *item)
-{
-    Geom::Matrix const ret(m
-                         * Geom::Translate(0, -sp_document_height(SP_OBJECT_DOCUMENT(item)))
-                         * Geom::Scale(1, -1));
-    return ret;
-}
-
-/**
- * Converts a matrix \a m from the desktop coords of the \a item.
- * Will become a noop when we eliminate the coordinate flipping.
- */
-Geom::Matrix matrix_from_desktop(Geom::Matrix const m, SPItem const *item)
-{
-    Geom::Matrix const ret(Geom::Scale(1, -1)
-                         * Geom::Translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item)))
-                         * m);
-    return ret;
+    SPDesktop *desktop = inkscape_active_desktop();
+    return sp_item_i2doc_affine(item) * desktop->doc2dt();
 }
 
 void sp_item_set_i2d_affine(SPItem *item, Geom::Matrix const &i2dt)

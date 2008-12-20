@@ -1216,9 +1216,9 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
             sp_object_read_attr (SP_OBJECT (item), "transform");
 
             // calculate the matrix we need to apply to the clone to cancel its induced transform from its original
-            Geom::Matrix parent_transform = sp_item_i2doc_affine(SP_ITEM(SP_OBJECT_PARENT (item)));
-            Geom::Matrix t = parent_transform * matrix_to_desktop (matrix_from_desktop (affine, item), item) * parent_transform.inverse();
-            Geom::Matrix t_inv =parent_transform * matrix_to_desktop (matrix_from_desktop (affine.inverse(), item), item) * parent_transform.inverse();
+            Geom::Matrix parent2dt = sp_item_i2d_affine(SP_ITEM(SP_OBJECT_PARENT (item)));
+            Geom::Matrix t = parent2dt * affine * parent2dt.inverse();
+            Geom::Matrix t_inv = t.inverse();
             Geom::Matrix result = t_inv * item->transform * t;
 
             if ((prefs_parallel || prefs_unmoved) && affine.isTranslation()) {

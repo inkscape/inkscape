@@ -258,9 +258,6 @@ Geom::Matrix i2i_affine(SPObject const *src, SPObject const *dest);
 
 Geom::Matrix sp_item_i2doc_affine(SPItem const *item);
 
-Geom::Matrix matrix_to_desktop (Geom::Matrix m, SPItem const *item);
-Geom::Matrix matrix_from_desktop (Geom::Matrix m, SPItem const *item);
-
 /* fixme: - these are evil, but OK */
 
 /* Fill *TRANSFORM with the item-to-desktop transform.  See doc/coordinates.txt
