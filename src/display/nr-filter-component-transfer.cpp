@@ -14,6 +14,7 @@
 #include "display/nr-filter-utils.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-blit.h"
+#include "libnr/nr-pixops.h"
 #include <math.h>
 
 namespace NR {
@@ -70,12 +71,11 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
 
     for (int color=0;color<4;color++){
         int _vsize = tableValues[color].size();
-        std::vector<gdouble> _tableValues = tableValues[color];
         double _intercept = intercept[color];
         double _slope = slope[color];
         double _amplitude = amplitude[color];
         double _exponent = exponent[color];
-        double _offset = offset[color];        
+        double _offset = offset[color];
         switch(type[color]){
             case COMPONENTTRANSFER_TYPE_IDENTITY:
                 for(i=color;i<size;i+=4){
@@ -83,15 +83,23 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
                 }
                 break;
             case COMPONENTTRANSFER_TYPE_TABLE:
-                if (_vsize==0){
+                if (_vsize<=1){
+                    if (_vsize==1) {
+                        g_warning("A component transfer table has to have at least two values.");
+                    }
                     for(i=color;i<size;i+=4){
                         out_data[i]=in_data[i];
                     }
                 } else {
+                    std::vector<gdouble> _tableValues(tableValues[color]);
+                    // Scale by 255 and add .5 to avoid having to add it later for rounding purposes
+                    for(i=0;i<_vsize;i++) {
+                        _tableValues[i] = std::max(0.,std::min(255.,255*_tableValues[i])) + .5;
+                    }
                     for(i=color;i<size;i+=4){
-                        int k = (int)(((_vsize-1) * (double)in_data[i])/256);
-                        double dx = ((_vsize-1) * (double)in_data[i])/256 - k;
-                        out_data[i] = CLAMP_D_TO_U8(256 * (_tableValues[k] + dx * (_tableValues[k+1] - _tableValues[k]) ));
+                        int k = FAST_DIVIDE<255>((_vsize-1) * in_data[i]);
+                        double dx = ((_vsize-1) * in_data[i])/255.0 - k;
+                        out_data[i] = static_cast<unsigned char>(_tableValues[k] + dx * (_tableValues[k+1] - _tableValues[k]));
                     }
                 }
                 break;
@@ -101,19 +109,28 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
                         out_data[i] = in_data[i];
                     }
                 } else {
+                    std::vector<unsigned char> _tableValues(_vsize);
+                    // Convert to unsigned char
+                    for(i=0;i<_vsize;i++) {
+                        _tableValues[i] = static_cast<unsigned char>(std::max(0.,std::min(255.,255*tableValues[color][i])) + .5);
+                    }
                     for(i=color;i<size;i+=4){
-                        out_data[i] = CLAMP_D_TO_U8(256 * _tableValues[(int)((_vsize-1)*(double)in_data[i]/256)] );
+                        int k = FAST_DIVIDE<255>((_vsize-1) * in_data[i]);
+                        out_data[i] =  _tableValues[k];
                     }
                 }
                 break;
             case COMPONENTTRANSFER_TYPE_LINEAR:
+                _intercept = 255*_intercept + .5;
                 for(i=color;i<size;i+=4){
-                    out_data[i] = CLAMP_D_TO_U8(256 * (_slope * (double)in_data[i]/256 + _intercept));
+                    out_data[i] = CLAMP_D_TO_U8(_slope * in_data[i] + _intercept);
                 }
                 break;
             case COMPONENTTRANSFER_TYPE_GAMMA:
+                _amplitude *= pow(255.0, -_exponent+1);
+                _offset = 255*_offset + .5;
                 for(i=color;i<size;i+=4){
-                    out_data[i] = CLAMP_D_TO_U8(256 * (_amplitude * pow((double)in_data[i]/256, _exponent) + _offset));
+                    out_data[i] = CLAMP_D_TO_U8(_amplitude * pow((double)in_data[i], _exponent) + _offset);
                 }
                 break;
             case COMPONENTTRANSFER_TYPE_ERROR:
