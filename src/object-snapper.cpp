@@ -130,7 +130,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                 }
 
                 if (SP_IS_GROUP(o)) {
-                    _findCandidates(o, it, false, bbox_to_snap, snap_dim, false, Geom::identity());
+                    _findCandidates(o, it, false, bbox_to_snap, snap_dim, clip_or_mask, additional_affine);
                 } else {
                     Geom::OptRect bbox_of_item = Geom::Rect();
                     if (clip_or_mask) {
