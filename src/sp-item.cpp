@@ -1553,8 +1553,10 @@ Geom::Matrix sp_item_i2d_affine(SPItem const *item)
     g_assert(item != NULL);
     g_assert(SP_IS_ITEM(item));
 
-    SPDesktop *desktop = inkscape_active_desktop();
-    return sp_item_i2doc_affine(item) * desktop->doc2dt();
+    Geom::Matrix const ret( sp_item_i2doc_affine(item)
+                          * Geom::Scale(1, -1)
+                          * Geom::Translate(0, sp_document_height(SP_OBJECT_DOCUMENT(item))) );
+    return ret;
 }
 
 void sp_item_set_i2d_affine(SPItem *item, Geom::Matrix const &i2dt)
