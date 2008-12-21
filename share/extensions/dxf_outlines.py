@@ -4,8 +4,9 @@ Copyright (C) 2005,2007,2008 Aaron Spike, aaron@ekips.org
 Copyright (C) 2008 Alvin Penner, penner@vaxxine.com
 
 - template dxf_outlines.dxf added Feb 2008 by Alvin Penner
-- ROBO-Master output option added Aug 2008 by Alvin Penner
-- ROBO-Master multispline output added Sept 2008 by Alvin Penner
+- ROBO-Master output option added Aug 2008
+- ROBO-Master multispline output added Sept 2008
+- LWPOLYLINE output modification added Dec 2008
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -56,16 +57,28 @@ class MyEffect(inkex.Effect):
         self.handle = 255                       # handle for DXF ENTITY
         self.csp_old = [[0.0,0.0]]*4            # previous spline
         self.d = array([0], float)              # knot vector
+        self.poly = [[0.0,0.0]]                 # LWPOLYLINE data
     def output(self):
         print ''.join(self.dxf)
     def dxf_add(self, str):
         self.dxf.append(str)
     def dxf_line(self,csp):
-        self.dxf_add("  0\nLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbLine\n" % self.handle)
-        self.dxf_add(" 10\n%f\n 20\n%f\n 30\n0.0\n 11\n%f\n 21\n%f\n 31\n0.0\n" % (csp[0][0],csp[0][1],csp[1][0],csp[1][1]))
+        if (abs(csp[0][0] - self.poly[-1][0]) > .0001
+            or abs(csp[0][1] - self.poly[-1][1]) > .0001):
+            self.LWPOLY_output()                            # terminate current polyline
+            self.poly = [csp[0]]                            # initiallize new polyline
+        self.poly.append(csp[1])
+    def LWPOLY_output(self):
+        if len(self.poly) == 1:
+            return
+        self.handle += 1
+        self.dxf_add("  0\nLWPOLYLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbPolyline\n 90\n%d\n" % (self.handle, len(self.poly)))
+        for i in range(len(self.poly)):
+            self.dxf_add(" 10\n%f\n 20\n%f\n 30\n0.0\n" % (self.poly[i][0],self.poly[i][1]))
     def dxf_spline(self,csp):
         knots = 8
         ctrls = 4
+        self.handle += 1
         self.dxf_add("  0\nSPLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbSpline\n" % self.handle)
         self.dxf_add(" 70\n8\n 71\n3\n 72\n%d\n 73\n%d\n 74\n0\n" % (knots, ctrls))
         for i in range(2):
@@ -114,6 +127,7 @@ class MyEffect(inkex.Effect):
         solmatrix[fits+1, fits+1] = (self.d[fits-1] - self.d[fits-3])/self.d[fits-1]
         xctrl = solve(solmatrix, self.xfit)
         yctrl = solve(solmatrix, self.yfit)
+        self.handle += 1
         self.dxf_add("  0\nSPLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbSpline\n" % self.handle)
         self.dxf_add(" 70\n0\n 71\n3\n 72\n%d\n 73\n%d\n 74\n%d\n" % (knots, ctrls, fits))
         for i in range(knots):
@@ -142,8 +156,6 @@ class MyEffect(inkex.Effect):
                 p = cubicsuperpath.CubicSuperPath(sim)
                 for sub in p:
                     for i in range(len(sub)-1):
-                        # generate unique handle for DXF ENTITY
-                        self.handle += 1
                         s = sub[i]
                         e = sub[i+1]
                         if s[1] == s[2] and e[0] == e[1]:
@@ -153,8 +165,8 @@ class MyEffect(inkex.Effect):
                         else:
                             self.dxf_spline([s[1],s[2],e[0],e[1]])
         if self.options.ROBO == 'true':
-            self.handle += 1
             self.ROBO_output()
+        self.LWPOLY_output()
         self.dxf_add(dxf_templates.r14_footer)
 
 if __name__ == '__main__':
