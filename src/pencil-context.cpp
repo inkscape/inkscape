@@ -455,16 +455,12 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
             case SP_PENCIL_CONTEXT_FREEHAND:
                 if (revent.state & GDK_MOD1_MASK) {
                     /* sketch mode: interpolate the sketched path and improve the current output path with the new interpolation. don't finish sketch */
-                    if (anchor) {
-                        p = anchor->dp;
-                    }
-                    pc->ea = anchor;
+
+                    sketch_interpolate(pc);
 
                     if (pc->green_anchor) {
                         pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
                     }
-
-                    sketch_interpolate(pc);
 
                     pc->state = SP_PENCIL_CONTEXT_SKETCH;
                 } else {
@@ -486,6 +482,8 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                         pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
                     }
                     pc->state = SP_PENCIL_CONTEXT_IDLE;
+                    // reset sketch mode too
+                    pc->sketch_n = 0;
                 }
                 ret = TRUE;
                 break;
@@ -826,8 +824,10 @@ sketch_interpolate(SPPencilContext *pc)
             } else {
                 t = 0.5;
             }
+            pc->sketch_interpolation = Geom::lerp(fit_pwd2, pc->sketch_interpolation, t);
+        } else {
+            pc->sketch_interpolation = fit_pwd2;
         }
-        pc->sketch_interpolation = Geom::lerp(fit_pwd2, pc->sketch_interpolation, t);
         pc->sketch_n++;
 
         pc->green_curve->reset();
