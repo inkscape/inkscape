@@ -3,6 +3,7 @@
  *
  * Authors:
  *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
+ *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *
  * Copyright (C) 2007 authors
  *
