@@ -65,8 +65,12 @@ def export_LINE():
 def export_SPLINE():
     # mandatory group codes : (10, 20, 70) (x, y, flags)
     if vals[groups['10']] and vals[groups['20']] and vals[groups['70']]:
-        if vals[groups['70']][0] == 8 and len(vals[groups['10']]) == 4 and len(vals[groups['20']]) == 4:
+        if not (vals[groups['70']][0] & 3) and len(vals[groups['10']]) == 4 and len(vals[groups['20']]) == 4:
             path = 'M %f,%f C %f,%f %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], vals[groups['10']][1], vals[groups['20']][1], vals[groups['10']][2], vals[groups['20']][2], vals[groups['10']][3], vals[groups['20']][3])
+            attribs = {'d': path, 'style': style}
+            inkex.etree.SubElement(doc.getroot(), 'path', attribs)
+        if not (vals[groups['70']][0] & 3) and len(vals[groups['10']]) == 3 and len(vals[groups['20']]) == 3:
+            path = 'M %f,%f Q %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], vals[groups['10']][1], vals[groups['20']][1], vals[groups['10']][2], vals[groups['20']][2])
             attribs = {'d': path, 'style': style}
             inkex.etree.SubElement(doc.getroot(), 'path', attribs)
 
