@@ -27,7 +27,7 @@ try:
     from numpy.linalg import *
 except:
     inkex.errormsg(_("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."))
-    sys.exit()
+    exit()
 
 uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
 def unittouu(string):
@@ -53,17 +53,20 @@ class Project(inkex.Effect):
     def effect(self):
         if len(self.options.ids) < 2:
             inkex.errormsg(_("This extension requires two selected paths."))
-            sys.exit()            
+            exit()            
             
         #obj is selected second
         obj = self.selected[self.options.ids[0]]
         envelope = self.selected[self.options.ids[1]]
+        if obj.get(inkex.addNS('type','sodipodi')):
+            inkex.errormsg(_("The first selected object is of type '%s'.\nTry using the procedure Path | Object to Path." % obj.get(inkex.addNS('type','sodipodi'))))
+            exit()
         if obj.tag == inkex.addNS('path','svg') or obj.tag == inkex.addNS('g','svg'):
             if envelope.tag == inkex.addNS('path','svg'):
                 path = cubicsuperpath.parsePath(envelope.get('d'))
                 if len(path) < 1 or len(path[0]) < 4:
                     inkex.errormsg(_("This extension requires that the second selected path be four nodes long."))
-                    sys.exit()
+                    exit()
                 dp = zeros((4,2), dtype=float64)
                 for i in range(4):
                     dp[i][0] = path[0][i][1][0]
@@ -84,10 +87,10 @@ class Project(inkex.Effect):
                     inkex.errormsg(_("The second selected object is a group, not a path.\nTry using the procedure Object | Ungroup."))
                 else:
                     inkex.errormsg(_("The second selected object is not a path.\nTry using the procedure Path | Object to Path."))
-                sys.exit()
+                exit()
         else:
             inkex.errormsg(_("The first selected object is not a path.\nTry using the procedure Path | Object to Path."))
-            sys.exit()
+            exit()
 
         solmatrix = zeros((8,8), dtype=float64)
         free_term = zeros((8), dtype=float64)
