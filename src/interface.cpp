@@ -1146,9 +1146,9 @@ sp_ui_drag_data_received(GtkWidget *widget,
             int destX = 0;
             int destY = 0;
             gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
-            NR::Point where( sp_canvas_window_to_world( desktop->canvas, NR::Point( destX, destY ) ) );
-            NR::Point const button_dt(desktop->w2d(where));
-            NR::Point const button_doc(desktop->dt2doc(button_dt));
+            Geom::Point where( sp_canvas_window_to_world( desktop->canvas, Geom::Point( destX, destY ) ) );
+            Geom::Point const button_dt(desktop->w2d(where));
+            Geom::Point const button_doc(desktop->dt2doc(button_dt));
 
             if ( data->length == 8 ) {
                 gchar c[64] = {0};
@@ -1190,8 +1190,8 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
                         boost::optional<Path::cut_position> position = get_nearest_position_on_Path(livarot_path, button_doc);
                         if (position) {
-                            NR::Point nearest = get_point_on_Path(livarot_path, position->piece, position->t);
-                            NR::Point delta = nearest - button_doc;
+                            Geom::Point nearest = get_point_on_Path(livarot_path, position->piece, position->t);
+                            Geom::Point delta = nearest - button_doc;
                             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                             delta = desktop->d2w(delta);
                             double stroke_tolerance =
@@ -1202,7 +1202,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                                   : 0.0)
                                 + prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100); 
 
-                            if (NR::L2 (delta) < stroke_tolerance) {
+                            if (Geom::L2 (delta) < stroke_tolerance) {
                                 fillnotstroke = false;
                             }
                         }

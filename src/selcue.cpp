@@ -102,7 +102,7 @@ void Inkscape::SelCue::_updateItemBboxes()
                                          "stroke_color", 0x000000ff,
                                          NULL);
                 sp_canvas_item_show(box);
-                SP_CTRL(box)->moveto(NR::Point(b->min()[NR::X], b->max()[NR::Y]));
+                SP_CTRL(box)->moveto(Geom::Point(b->min()[Geom::X], b->max()[Geom::Y]));
 
                 sp_canvas_item_move_to_z(box, 0); // just low enough to not get in the way of other draggable knots
 

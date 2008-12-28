@@ -14,7 +14,7 @@ class SweepEvent
 public:
     SweepTree *sweep[2];   ///< Sweep element associated with the left and right edge of the intersection.
 
-    NR::Point posx;         ///< Coordinates of the intersection.
+    Geom::Point posx;         ///< Coordinates of the intersection.
     double tl, tr;          ///< Coordinates of the intersection on the left edge (tl) and on the right edge (tr).
 
     int ind;                ///< Index in the binary heap.
@@ -23,7 +23,7 @@ public:
     virtual ~SweepEvent();  // not used.
 
     /// Initialize a SweepEvent structure.
-    void MakeNew (SweepTree * iLeft, SweepTree * iRight, NR::Point const &iPt,
+    void MakeNew (SweepTree * iLeft, SweepTree * iRight, Geom::Point const &iPt,
                   double itl, double itr);
 
     /// Void a SweepEvent structure.

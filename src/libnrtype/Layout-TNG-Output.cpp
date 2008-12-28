@@ -436,8 +436,8 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
         int unused = 0;
         Path::cut_position *point_otp = const_cast<Path&>(path).CurvilignToPosition(1, &offset, unused);
         if (offset >= 0.0 && point_otp != NULL && point_otp[0].piece >= 0) {
-            NR::Point point;
-            NR::Point tangent;
+            Geom::Point point;
+            Geom::Point tangent;
             const_cast<Path&>(path).PointAndTangentAt(point_otp[0].piece, point_otp[0].t, point, tangent);
             _empty_cursor_shape.position = point;
             _empty_cursor_shape.rotation = atan2(tangent[Geom::Y], tangent[Geom::X]);
@@ -477,8 +477,8 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
         // as far as I know these functions are const, they're just not marked as such
         Path::cut_position *midpoint_otp = const_cast<Path&>(path).CurvilignToPosition(1, &midpoint_offset, unused);
         if (midpoint_offset >= 0.0 && midpoint_otp != NULL && midpoint_otp[0].piece >= 0) {
-            NR::Point midpoint;
-            NR::Point tangent;
+            Geom::Point midpoint;
+            Geom::Point tangent;
             const_cast<Path&>(path).PointAndTangentAt(midpoint_otp[0].piece, midpoint_otp[0].t, midpoint, tangent);
 
             if (start_offset >= 0.0 && end_offset >= 0.0) {
@@ -497,7 +497,7 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
                         }
                         if (on_same_subpath) {
                             // both points were on the same subpath (without this test the angle is very weird)
-                            NR::Point startpoint, endpoint;
+                            Geom::Point startpoint, endpoint;
                             const_cast<Path&>(path).PointAt(start_otp[0].piece, start_otp[0].t, startpoint);
                             const_cast<Path&>(path).PointAt(end_otp[0].piece, end_otp[0].t, endpoint);
                             if (endpoint != startpoint) {

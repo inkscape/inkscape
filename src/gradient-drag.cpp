@@ -298,7 +298,7 @@ GrDrag::addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance)
             Geom::Point end     = sp_item_gradient_get_coords(item, POINT_LG_END, 0, fill_or_stroke);
 
             Geom::Point nearest = snap_vector_midpoint (mouse_p, begin, end, 0);
-            double dist_screen = NR::L2 (mouse_p - nearest);
+            double dist_screen = Geom::L2 (mouse_p - nearest);
             if ( dist_screen < tolerance ) {
                 // add the knot
                 offset = get_offset_between_points(nearest, begin, end);
@@ -309,7 +309,7 @@ GrDrag::addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance)
             Geom::Point begin = sp_item_gradient_get_coords(item, POINT_RG_CENTER, 0, fill_or_stroke);
             Geom::Point end   = sp_item_gradient_get_coords(item, POINT_RG_R1, 0, fill_or_stroke);
             Geom::Point nearest = snap_vector_midpoint (mouse_p, begin, end, 0);
-            double dist_screen = NR::L2 (mouse_p - nearest);
+            double dist_screen = Geom::L2 (mouse_p - nearest);
             if ( dist_screen < tolerance ) {
                 offset = get_offset_between_points(nearest, begin, end);
                 addknot = true;
@@ -319,7 +319,7 @@ GrDrag::addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance)
 
             end    = sp_item_gradient_get_coords(item, POINT_RG_R2, 0, fill_or_stroke);
             nearest = snap_vector_midpoint (mouse_p, begin, end, 0);
-            dist_screen = NR::L2 (mouse_p - nearest);
+            dist_screen = Geom::L2 (mouse_p - nearest);
             if ( dist_screen < tolerance ) {
                 offset = get_offset_between_points(nearest, begin, end);
                 addknot = true;
@@ -364,7 +364,7 @@ GrDrag::dropColor(SPItem */*item*/, gchar *c, Geom::Point p)
     for (GList *i = draggers; i != NULL; i = i->next) { // for all draggables of dragger
         GrDragger *d = (GrDragger *) i->data;
 
-        if (NR::L2(p - d->point)*desktop->current_zoom() < 5) {
+        if (Geom::L2(p - d->point)*desktop->current_zoom() < 5) {
            SPCSSAttr *stop = sp_repr_css_attr_new ();
            sp_repr_css_set_property (stop, "stop-color", c);
            sp_repr_css_set_property (stop, "stop-opacity", "1");
@@ -385,7 +385,7 @@ GrDrag::dropColor(SPItem */*item*/, gchar *c, Geom::Point p)
         for (GSList *l = lines; (l != NULL) && (!over_line); l = l->next) {
             line = (SPCtrlLine*) l->data;
             Geom::Point nearest = snap_vector_midpoint (p, line->s, line->e, 0);
-            double dist_screen = NR::L2 (p - nearest) * desktop->current_zoom();
+            double dist_screen = Geom::L2 (p - nearest) * desktop->current_zoom();
             if (line->item && dist_screen < 5) {
                 SPStop *stop = addStopNearPoint (line->item, p, 5/desktop->current_zoom());
                 if (stop) {
@@ -565,7 +565,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
         // without Shift or Ctrl; see if we need to snap to another dragger
         for (GList *di = dragger->parent->draggers; di != NULL; di = di->next) {
             GrDragger *d_new = (GrDragger *) di->data;
-            if (dragger->mayMerge(d_new) && NR::L2 (d_new->point - p) < snap_dist) {
+            if (dragger->mayMerge(d_new) && Geom::L2 (d_new->point - p) < snap_dist) {
 
                 // Merge draggers:
                 for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
@@ -683,7 +683,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
             if (dr_snap.isFinite()) {
                 if (state & GDK_MOD1_MASK) {
                     // with Alt, snap to the original angle and its perpendiculars
-                    snap_vector = get_snap_vector (p, dr_snap, M_PI/2, NR::atan2 (dragger->point_original - dr_snap));
+                    snap_vector = get_snap_vector (p, dr_snap, M_PI/2, Geom::atan2 (dragger->point_original - dr_snap));
                 } else {
                     // with Ctrl, snap to M_PI/snaps
                     snap_vector = get_snap_vector (p, dr_snap, M_PI/snaps, 0);
@@ -698,7 +698,7 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
         Geom::Point move(9999, 9999);
         for (GSList const *i = snap_vectors; i != NULL; i = i->next) {
             Geom::Point *snap_vector = (Geom::Point *) i->data;
-            if (NR::L2(*snap_vector) < NR::L2(move))
+            if (Geom::L2(*snap_vector) < Geom::L2(move))
                 move = *snap_vector;
         }
         if (move[Geom::X] < 9999) {
@@ -846,11 +846,11 @@ gr_knot_moved_midpoint_handler(SPKnot */*knot*/, Geom::Point const &ppointer, gu
         if (state & GDK_MOD1_MASK) {
             // FIXME: unify all these profiles (here, in nodepath, in tweak) in one place
             double alpha = 1.0;
-            if (NR::L2(drg->point - dragger->point) + NR::L2(drg->point - begin) - 1e-3 > NR::L2(dragger->point - begin)) { // drg is on the end side from dragger
-                double x = NR::L2(drg->point - dragger->point)/NR::L2(end - dragger->point);
+            if (Geom::L2(drg->point - dragger->point) + Geom::L2(drg->point - begin) - 1e-3 > Geom::L2(dragger->point - begin)) { // drg is on the end side from dragger
+                double x = Geom::L2(drg->point - dragger->point)/Geom::L2(end - dragger->point);
                 this_move = (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5) * this_move;
             } else { // drg is on the begin side from dragger
-                double x = NR::L2(drg->point - dragger->point)/NR::L2(begin - dragger->point);
+                double x = Geom::L2(drg->point - dragger->point)/Geom::L2(begin - dragger->point);
                 this_move = (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5) * this_move;
             }
         }
@@ -1452,7 +1452,7 @@ GrDrag::selectByCoords(std::vector<Geom::Point> coords)
     for (GList *l = this->draggers; l != NULL; l = l->next) {
         GrDragger *d = ((GrDragger *) l->data);
         for (guint k = 0; k < coords.size(); k++) {
-            if (NR::L2 (d->point - coords[k]) < 1e-4) {
+            if (Geom::L2 (d->point - coords[k]) < 1e-4) {
                 setSelected (d, true, true);
             }
         }
@@ -1563,7 +1563,7 @@ GrDrag::addDragger (GrDraggable *draggable)
 
     for (GList *i = this->draggers; i != NULL; i = i->next) {
         GrDragger *dragger = (GrDragger *) i->data;
-        if (dragger->mayMerge (draggable) && NR::L2 (dragger->point - p) < MERGE_DIST) {
+        if (dragger->mayMerge (draggable) && Geom::L2 (dragger->point - p) < MERGE_DIST) {
             // distance is small, merge this draggable into dragger, no need to create new dragger
             dragger->addDraggable (draggable);
             dragger->updateKnotShape();

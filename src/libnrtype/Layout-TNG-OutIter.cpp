@@ -260,8 +260,8 @@ Geom::Rect Layout::characterBoundingBox(iterator const &it, double *rotation) co
         int unused = 0;
         Path::cut_position *midpoint_otp = const_cast<Path*>(_path_fitted)->CurvilignToPosition(1, &midpoint_offset, unused);
         if (midpoint_offset >= 0.0 && midpoint_otp != NULL && midpoint_otp[0].piece >= 0) {
-            NR::Point midpoint;
-            NR::Point tangent;
+            Geom::Point midpoint;
+            Geom::Point tangent;
             Span const &span = _characters[char_index].span(this);
 
             const_cast<Path*>(_path_fitted)->PointAndTangentAt(midpoint_otp[0].piece, midpoint_otp[0].t, midpoint, tangent);
@@ -415,8 +415,8 @@ void Layout::queryCursorShape(iterator const &it, Geom::Point &position, double 
             }
             g_free(path_parameter_list);
 
-            NR::Point point;
-            NR::Point tangent;
+            Geom::Point point;
+            Geom::Point tangent;
             const_cast<Path*>(_path_fitted)->PointAndTangentAt(path_parameter.piece, path_parameter.t, point, tangent);
             if (x < 0.0)
                 point += x * tangent;

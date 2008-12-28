@@ -210,7 +210,7 @@ Shape::ConvertToShape (Shape * a, FillRule directed, bool invert)
     int curAPt = 0;
 
     while (curAPt < a->numberOfPoints() || sEvts->size() > 0) {
-	NR::Point ptX;
+	Geom::Point ptX;
       double ptL, ptR;
       SweepTree *intersL = NULL;
       SweepTree *intersR = NULL;
@@ -250,7 +250,7 @@ Shape::ConvertToShape (Shape * a, FillRule directed, bool invert)
 	    continue;
 	}
 
-      NR::Point rPtX;
+      Geom::Point rPtX;
       rPtX[0]= Round (ptX[0]);
       rPtX[1]= Round (ptX[1]);
       int lastPointNo = -1;
@@ -916,7 +916,7 @@ Shape::Booleen (Shape * a, Shape * b, BooleanOp mod,int cutPathID)
 		}
 		printf("\n");*/
 
-    NR::Point ptX;
+    Geom::Point ptX;
       double ptL, ptR;
       SweepTree *intersL = NULL;
       SweepTree *intersR = NULL;
@@ -1051,7 +1051,7 @@ Shape::Booleen (Shape * a, Shape * b, BooleanOp mod,int cutPathID)
 	    continue;
 	}
 
-      NR::Point rPtX;
+      Geom::Point rPtX;
       rPtX[0]= Round (ptX[0]);
       rPtX[1]= Round (ptX[1]);
       int lastPointNo = -1;
@@ -1666,7 +1666,7 @@ void Shape::TesteIntersection(SweepTree *t, Side s, bool onlyDiff)
     SweepTree *a = (s == LEFT) ? tt : t;
     SweepTree *b = (s == LEFT) ? t : tt;
 
-    NR::Point atx;
+    Geom::Point atx;
     double atl;
     double atr;
     if (TesteIntersection(a, b, atx, atl, atr, onlyDiff)) {
@@ -1676,11 +1676,11 @@ void Shape::TesteIntersection(SweepTree *t, Side s, bool onlyDiff)
 
 // a crucial piece of code: computing intersections between segments
 bool
-Shape::TesteIntersection (SweepTree * iL, SweepTree * iR, NR::Point &atx, double &atL, double &atR, bool onlyDiff)
+Shape::TesteIntersection (SweepTree * iL, SweepTree * iR, Geom::Point &atx, double &atL, double &atR, bool onlyDiff)
 {
   int lSt = iL->src->getEdge(iL->bord).st, lEn = iL->src->getEdge(iL->bord).en;
   int rSt = iR->src->getEdge(iR->bord).st, rEn = iR->src->getEdge(iR->bord).en;
-  NR::Point ldir, rdir;
+  Geom::Point ldir, rdir;
   ldir = iL->src->eData[iL->bord].rdx;
   rdir = iR->src->eData[iR->bord].rdx;
   // first, a round of checks to quickly dismiss edge which obviously dont intersect,
@@ -1774,7 +1774,7 @@ Shape::TesteIntersection (SweepTree * iL, SweepTree * iR, NR::Point &atx, double
   // Boissonat anr Preparata said in one paper that double precision floats were sufficient for get single precision
   // coordinates for the intersection, if the endpoints are single precision. i hope they're right...
   {
-    NR::Point sDiff, eDiff;
+    Geom::Point sDiff, eDiff;
     double slDot, elDot;
     double srDot, erDot;
     sDiff = iL->src->pData[lSt].rx - iR->src->pData[rSt].rx;
@@ -2001,7 +2001,7 @@ Shape::PushIncidence (Shape * a, int cb, int pt, double theta)
 int
 Shape::CreateIncidence (Shape * a, int no, int nPt)
 {
-  NR::Point adir, diff;
+  Geom::Point adir, diff;
   adir = a->eData[no].rdx;
   diff = getPoint(nPt).x - a->pData[a->getEdge(no).st].rx;
   double t = dot (diff, adir);
@@ -2027,13 +2027,13 @@ Shape::Winding (int nPt) const
 }
 
 int
-Shape::Winding (const NR::Point px) const 
+Shape::Winding (const Geom::Point px) const 
 {
   int lr = 0, ll = 0, rr = 0;
 
   for (int i = 0; i < numberOfEdges(); i++)
     {
-      NR::Point adir, diff, ast, aen;
+      Geom::Point adir, diff, ast, aen;
       adir = eData[i].rdx;
 
       ast = pData[getEdge(i).st].rx;
@@ -2509,7 +2509,7 @@ Shape::GetWindings (Shape * /*a*/, Shape * /*b*/, BooleanOp /*mod*/, bool brutal
 
 bool
 Shape::TesteIntersection (Shape * ils, Shape * irs, int ilb, int irb,
-                          NR::Point &atx, double &atL, double &atR,
+                          Geom::Point &atx, double &atL, double &atR,
 			  bool /*onlyDiff*/)
 {
   int lSt = ils->getEdge(ilb).st, lEn = ils->getEdge(ilb).en;
@@ -2523,7 +2523,7 @@ Shape::TesteIntersection (Shape * ils, Shape * irs, int ilb, int irb,
       return false;
     }
 
-  NR::Point ldir, rdir;
+  Geom::Point ldir, rdir;
   ldir = ils->eData[ilb].rdx;
   rdir = irs->eData[irb].rdx;
 
@@ -2561,7 +2561,7 @@ Shape::TesteIntersection (Shape * ils, Shape * irs, int ilb, int irb,
 
   // pre-test
   {
-    NR::Point sDiff, eDiff;
+    Geom::Point sDiff, eDiff;
     double slDot, elDot;
     double srDot, erDot;
     sDiff = ils->pData[lSt].rx - irs->pData[rSt].rx;
@@ -2601,11 +2601,11 @@ Shape::TesteIntersection (Shape * ils, Shape * irs, int ilb, int irb,
   }
 
   // a mettre en double precision pour des resultats exacts
-  NR::Point usvs;
+  Geom::Point usvs;
   usvs = irs->pData[rSt].rx - ils->pData[lSt].rx;
 
   // pas sur de l'ordre des coefs de m
-  NR::Matrix m(ldir[0], ldir[1],
+  Geom::Matrix m(ldir[0], ldir[1],
 	       rdir[0], rdir[1],
 	       0, 0);
   double det = m.det();
@@ -2614,7 +2614,7 @@ Shape::TesteIntersection (Shape * ils, Shape * irs, int ilb, int irb,
 
   if (tdet > -0.0001 && tdet < 0.0001)
     {				// ces couillons de vecteurs sont colineaires
-      NR::Point sDiff, eDiff;
+      Geom::Point sDiff, eDiff;
       double sDot, eDot;
       sDiff = ils->pData[lSt].rx - irs->pData[rSt].rx;
       eDiff = ils->pData[lEn].rx - irs->pData[rSt].rx;
@@ -2654,13 +2654,13 @@ Shape::TesteIntersection (Shape * ils, Shape * irs, int ilb, int irb,
 }
 
 bool
-Shape::TesteAdjacency (Shape * a, int no, const NR::Point atx, int nPt,
+Shape::TesteAdjacency (Shape * a, int no, const Geom::Point atx, int nPt,
 		       bool push)
 {
   if (nPt == a->swsData[no].stPt || nPt == a->swsData[no].enPt)
     return false;
 
-  NR::Point adir, diff, ast, aen, diff1, diff2, diff3, diff4;
+  Geom::Point adir, diff, ast, aen, diff1, diff2, diff3, diff4;
 
   ast = a->pData[a->getEdge(no).st].rx;
   aen = a->pData[a->getEdge(no).en].rx;
@@ -3026,7 +3026,7 @@ Shape::Validate (void)
     {
       for (int j = i + 1; j < numberOfEdges(); j++)
 	{
-        NR::Point atx;
+        Geom::Point atx;
         double   atL, atR;
 	  if (TesteIntersection (this, this, i, j, atx, atL, atR, false))
 	    {
@@ -3289,12 +3289,12 @@ Shape::DoEdgeTo (Shape * iS, int iB, int iTo, bool direct, bool sens)
       else
 	{
 	  double bdl = iS->eData[iB].ilength;
-    NR::Point bpx = iS->pData[iS->getEdge(iB).st].rx;
-	  NR::Point bdx = iS->eData[iB].rdx;
-	  NR::Point psx = getPoint(getEdge(ne).st).x;
-	  NR::Point pex = getPoint(getEdge(ne).en).x;
-        NR::Point psbx=psx-bpx;
-        NR::Point pebx=pex-bpx;
+    Geom::Point bpx = iS->pData[iS->getEdge(iB).st].rx;
+	  Geom::Point bdx = iS->eData[iB].rdx;
+	  Geom::Point psx = getPoint(getEdge(ne).st).x;
+	  Geom::Point pex = getPoint(getEdge(ne).en).x;
+        Geom::Point psbx=psx-bpx;
+        Geom::Point pebx=pex-bpx;
 	  double pst = dot(psbx,bdx) * bdl;
 	  double pet = dot(pebx,bdx) * bdl;
 	  pst = iS->ebData[iB].tSt * (1 - pst) + iS->ebData[iB].tEn * pst;

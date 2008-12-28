@@ -167,7 +167,7 @@ static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const *mime
 #ifdef WIN32
 static void do_export_emf(SPDocument* doc, gchar const* uri, char const *mime);
 #endif //WIN32
-static void do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gchar *id);
+static void do_query_dimension (SPDocument *doc, bool extent, Geom::Dim2 const axis, const gchar *id);
 static void do_query_all (SPDocument *doc);
 static void do_query_all_recurse (SPObject *o);
 
@@ -922,9 +922,9 @@ void sp_process_file_list(GSList *fl)
             if (sp_query_all) {
                 do_query_all (doc);
             } else if (sp_query_width || sp_query_height) {
-                do_query_dimension (doc, true, sp_query_width? NR::X : NR::Y, sp_query_id);
+                do_query_dimension (doc, true, sp_query_width? Geom::X : Geom::Y, sp_query_id);
             } else if (sp_query_x || sp_query_y) {
-                do_query_dimension (doc, false, sp_query_x? NR::X : NR::Y, sp_query_id);
+                do_query_dimension (doc, false, sp_query_x? Geom::X : Geom::Y, sp_query_id);
             }
 
             delete doc;
@@ -1041,7 +1041,7 @@ int sp_main_console(int argc, char const **argv)
 }
 
 static void
-do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gchar *id)
+do_query_dimension (SPDocument *doc, bool extent, Geom::Dim2 const axis, const gchar *id)
 {
     SPObject *o = NULL;
 

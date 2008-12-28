@@ -128,16 +128,16 @@ PatternKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &ori
     Geom::Point p_snapped = snap_knot_position(p);
 
     if ( state & GDK_CONTROL_MASK ) {
-        if (fabs((p - origin)[NR::X]) > fabs((p - origin)[NR::Y])) {
-            p_snapped[NR::Y] = origin[NR::Y];
+        if (fabs((p - origin)[Geom::X]) > fabs((p - origin)[Geom::Y])) {
+            p_snapped[Geom::Y] = origin[Geom::Y];
         } else {
-            p_snapped[NR::X] = origin[NR::X];
+            p_snapped[Geom::X] = origin[Geom::X];
         }
     }
 
     if (state)  {
         Geom::Point const q = p_snapped - sp_pattern_extract_trans(pat);
-        sp_item_adjust_pattern(item, NR::Matrix(Geom::Translate(q)));
+        sp_item_adjust_pattern(item, Geom::Matrix(Geom::Translate(q)));
     }
 
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
@@ -183,10 +183,10 @@ PatternKnotHolderEntityAngle::knot_set(Geom::Point const &p, Geom::Point const &
 
     // get the scale from the current transform so we can keep it.
     Geom::Point scl = sp_pattern_extract_scale(pat);
-    NR::Matrix rot = NR::Matrix(Geom::Scale(scl)) * NR::Matrix(Geom::Rotate(theta));
+    Geom::Matrix rot = Geom::Matrix(Geom::Scale(scl)) * Geom::Matrix(Geom::Rotate(theta));
     Geom::Point const t = sp_pattern_extract_trans(pat);
-    rot[4] = t[NR::X];
-    rot[5] = t[NR::Y];
+    rot[4] = t[Geom::X];
+    rot[5] = t[Geom::Y];
     sp_item_adjust_pattern(item, rot, true);
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
@@ -213,14 +213,14 @@ PatternKnotHolderEntityScale::knot_set(Geom::Point const &p, Geom::Point const &
         scl = Geom::Scale(d.length() / pat_h);
     } else {
         d *= Geom::Rotate(-theta);
-        scl = Geom::Scale(d[NR::X] / pat_x, d[NR::Y] / pat_y);
+        scl = Geom::Scale(d[Geom::X] / pat_x, d[Geom::Y] / pat_y);
     }
 
     Geom::Matrix rot = (Geom::Matrix)scl * Geom::Rotate(theta);
 
     Geom::Point const t = sp_pattern_extract_trans(pat);
-    rot[4] = t[NR::X];
-    rot[5] = t[NR::Y];
+    rot[4] = t[Geom::X];
+    rot[5] = t[Geom::Y];
     sp_item_adjust_pattern(item, rot, true);
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }

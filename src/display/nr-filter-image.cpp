@@ -65,10 +65,10 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         Geom::OptRect area = SVGElem->getBounds(identity);
         
         NRRectL rect;
-        rect.x0=area->min()[NR::X];
-        rect.x1=area->max()[NR::X];
-        rect.y0=area->min()[NR::Y];
-        rect.y1=area->max()[NR::Y];
+        rect.x0=area->min()[Geom::X];
+        rect.x1=area->max()[Geom::X];
+        rect.y0=area->min()[Geom::Y];
+        rect.y1=area->max()[Geom::Y];
 
         width = (int)(rect.x1-rect.x0);
         height = (int)(rect.y1-rect.y0);

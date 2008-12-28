@@ -19,7 +19,7 @@ SweepEventQueue::~SweepEventQueue()
     delete []inds;
 }
 
-SweepEvent *SweepEventQueue::add(SweepTree *iLeft, SweepTree *iRight, NR::Point &px, double itl, double itr)
+SweepEvent *SweepEventQueue::add(SweepTree *iLeft, SweepTree *iRight, Geom::Point &px, double itl, double itr)
 {
     if (nbEvt > maxEvt) {
 	return NULL;
@@ -62,7 +62,7 @@ SweepEvent *SweepEventQueue::add(SweepTree *iLeft, SweepTree *iRight, NR::Point 
 
 
 
-bool SweepEventQueue::peek(SweepTree * &iLeft, SweepTree * &iRight, NR::Point &px, double &itl, double &itr)
+bool SweepEventQueue::peek(SweepTree * &iLeft, SweepTree * &iRight, Geom::Point &px, double &itl, double &itr)
 {
     if (nbEvt <= 0) {
 	return false;
@@ -79,7 +79,7 @@ bool SweepEventQueue::peek(SweepTree * &iLeft, SweepTree * &iRight, NR::Point &p
     return true;
 }
 
-bool SweepEventQueue::extract(SweepTree * &iLeft, SweepTree * &iRight, NR::Point &px, double &itl, double &itr)
+bool SweepEventQueue::extract(SweepTree * &iLeft, SweepTree * &iRight, Geom::Point &px, double &itl, double &itr)
 {
     if (nbEvt <= 0) {
 	return false;
@@ -122,7 +122,7 @@ void SweepEventQueue::remove(SweepEvent *e)
     inds[n] = to;
 
     int curInd = n;
-    NR::Point const px = events[to].posx;
+    Geom::Point const px = events[to].posx;
     bool didClimb = false;
     while (curInd > 0) {
 	int const half = (curInd - 1) / 2;
@@ -227,7 +227,7 @@ void SweepEventQueue::relocate(SweepEvent *e, int to)
  */
 SweepEvent::SweepEvent()
 {
-    MakeNew (NULL, NULL, NR::Point(0, 0), 0, 0);
+    MakeNew (NULL, NULL, Geom::Point(0, 0), 0, 0);
 }
 
 SweepEvent::~SweepEvent()
@@ -235,7 +235,7 @@ SweepEvent::~SweepEvent()
     MakeDelete();
 }
 
-void SweepEvent::MakeNew(SweepTree *iLeft, SweepTree *iRight, NR::Point const &px, double itl, double itr)
+void SweepEvent::MakeNew(SweepTree *iLeft, SweepTree *iRight, Geom::Point const &px, double itl, double itr)
 {
     ind = -1;
     posx = px;

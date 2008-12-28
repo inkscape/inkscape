@@ -1211,8 +1211,8 @@ spdc_pen_set_angle_distance_status_message(SPPenContext *const pc, Geom::Point c
 
     SPDesktop *desktop = SP_EVENT_CONTEXT(pc)->desktop;
     Geom::Point rel = p - pc->p[pc_point_to_compare];
-    GString *dist = SP_PX_TO_METRIC_STRING(NR::L2(rel), desktop->namedview->getDefaultMetric());
-    double angle = atan2(rel[NR::Y], rel[NR::X]) * 180 / M_PI;
+    GString *dist = SP_PX_TO_METRIC_STRING(Geom::L2(rel), desktop->namedview->getDefaultMetric());
+    double angle = atan2(rel[Geom::Y], rel[Geom::X]) * 180 / M_PI;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/options/compassangledisplay/value", 0) != 0)
         angle = angle_to_compass (angle);
@@ -1413,8 +1413,8 @@ static int pen_next_paraxial_direction(const SPPenContext *const pc,
      */
     if (pc->num_clicks == 0) {
         // first mouse click
-        double dist_h = fabs(pt[NR::X] - origin[NR::X]);
-        double dist_v = fabs(pt[NR::Y] - origin[NR::Y]);
+        double dist_h = fabs(pt[Geom::X] - origin[Geom::X]);
+        double dist_v = fabs(pt[Geom::Y] - origin[Geom::Y]);
         int ret = (dist_h < dist_v) ? 1 : 0; // 0 = horizontal, 1 = vertical
         pen_last_paraxial_dir = (state & GDK_SHIFT_MASK) ? 1 - ret : ret;
         return pen_last_paraxial_dir;
@@ -1432,10 +1432,10 @@ void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt
 
     if (next_dir == 0) {
         // line is forced to be horizontal
-        pt[NR::Y] = origin[NR::Y];
+        pt[Geom::Y] = origin[Geom::Y];
     } else {
         // line is forced to be vertical
-        pt[NR::X] = origin[NR::X];
+        pt[Geom::X] = origin[Geom::X];
     }
 }
 
@@ -1444,9 +1444,9 @@ Geom::Point pen_get_intermediate_horiz_vert(const SPPenContext *const pc, Geom::
     Geom::Point const &origin = pc->p[0];
 
     if (pen_last_paraxial_dir == 0) {
-        return Geom::Point (origin[NR::X], pt[NR::Y]);
+        return Geom::Point (origin[Geom::X], pt[Geom::Y]);
     } else {
-        return Geom::Point (pt[NR::X], origin[NR::Y]);
+        return Geom::Point (pt[Geom::X], origin[Geom::Y]);
     }
 }
 

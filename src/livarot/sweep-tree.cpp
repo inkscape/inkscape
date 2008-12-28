@@ -77,12 +77,12 @@ void SweepTree::MakeDelete()
 // lying at y=px[1].
 // px is the upper endpoint of newOne
 int
-SweepTree::Find(NR::Point const &px, SweepTree *newOne, SweepTree *&insertL,
+SweepTree::Find(Geom::Point const &px, SweepTree *newOne, SweepTree *&insertL,
                 SweepTree *&insertR, bool sweepSens)
 {
     // get the edge associated with this node: one point+one direction
     // since we're dealing with line, the direction (bNorm) is taken downwards
-    NR::Point bOrig, bNorm;
+    Geom::Point bOrig, bNorm;
     bOrig = src->pData[src->getEdge(bord).st].rx;
     bNorm = src->eData[bord].rdx;
     if (src->getEdge(bord).st > src->getEdge(bord).en) {
@@ -91,7 +91,7 @@ SweepTree::Find(NR::Point const &px, SweepTree *newOne, SweepTree *&insertL,
     // rotate to get the normal to the edge
     bNorm=bNorm.ccw();
 
-    NR::Point diff;
+    Geom::Point diff;
     diff = px - bOrig;
 
     // compute (px-orig)^dir to know on which side of this edge the point px lies
@@ -108,7 +108,7 @@ SweepTree::Find(NR::Point const &px, SweepTree *newOne, SweepTree *&insertL,
         // sweepSens is needed (actually only used by the Scan() functions) because if the sweepline goes upward,
         // signs change
         // prendre en compte les directions
-        NR::Point nNorm;
+        Geom::Point nNorm;
         nNorm = newOne->src->eData[newOne->bord].rdx;
         if (newOne->src->getEdge(newOne->bord).st >
             newOne->src->getEdge(newOne->bord).en)
@@ -165,10 +165,10 @@ SweepTree::Find(NR::Point const &px, SweepTree *newOne, SweepTree *&insertL,
 
 // only find a point's position
 int
-SweepTree::Find(NR::Point const &px, SweepTree * &insertL,
+SweepTree::Find(Geom::Point const &px, SweepTree * &insertL,
 		 SweepTree * &insertR)
 {
-  NR::Point bOrig, bNorm;
+  Geom::Point bOrig, bNorm;
   bOrig = src->pData[src->getEdge(bord).st].rx;
   bNorm = src->eData[bord].rdx;
   if (src->getEdge(bord).st > src->getEdge(bord).en)
@@ -177,7 +177,7 @@ SweepTree::Find(NR::Point const &px, SweepTree * &insertL,
     }
  bNorm=bNorm.ccw();
 
-  NR::Point diff;
+  Geom::Point diff;
   diff = px - bOrig;
 
   double y = 0;
@@ -323,9 +323,9 @@ SweepTree::InsertAt(SweepTreeList &list, SweepEventQueue &queue,
       return avl_no_err;
     }
 
-  NR::Point fromP;
+  Geom::Point fromP;
   fromP = src->pData[fromPt].rx;
-  NR::Point nNorm;
+  Geom::Point nNorm;
   nNorm = src->getEdge(bord).dx;
   if (src->getEdge(bord).st > src->getEdge(bord).en)
     {
@@ -336,7 +336,7 @@ SweepTree::InsertAt(SweepTreeList &list, SweepEventQueue &queue,
       nNorm = -nNorm;
     }
 
-  NR::Point bNorm;
+  Geom::Point bNorm;
   bNorm = insNode->src->getEdge(insNode->bord).dx;
   if (insNode->src->getEdge(insNode->bord).st >
       insNode->src->getEdge(insNode->bord).en)

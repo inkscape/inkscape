@@ -333,7 +333,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                         sc->item = NULL;
                     }
                     sc->item = sp_event_context_find_item (desktop,
-                                              NR::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, FALSE);
+                                              Geom::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, FALSE);
                     sp_object_ref(sc->item, NULL);
 
                     rb_escaped = drag_escaped = 0;
@@ -443,8 +443,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 yp = (gint) event->button.y;
                 within_tolerance = true;
 
-                NR::Point const button_pt(event->button.x, event->button.y);
-                NR::Point const p(desktop->w2d(button_pt));
+                Geom::Point const button_pt(event->button.x, event->button.y);
+                Geom::Point const p(desktop->w2d(button_pt));
                 if (event->button.state & GDK_MOD1_MASK)
                     Inkscape::Rubberband::get(desktop)->setMode(RUBBERBAND_MODE_TOUCHPATH);
                 Inkscape::Rubberband::get(desktop)->start(desktop, p);
@@ -475,8 +475,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_MOTION_NOTIFY:
             if (event->motion.state & GDK_BUTTON1_MASK && !event_context->space_panning) {
-                NR::Point const motion_pt(event->motion.x, event->motion.y);
-                NR::Point const p(desktop->w2d(motion_pt));
+                Geom::Point const motion_pt(event->motion.x, event->motion.y);
+                Geom::Point const p(desktop->w2d(motion_pt));
 
                 if ( within_tolerance
                      && ( abs( (gint) event->motion.x - xp ) < tolerance )
@@ -502,14 +502,14 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     // and also when we started within tolerance, but trespassed tolerance outside of item
                     Inkscape::Rubberband::get(desktop)->stop();
                     SP_EVENT_CONTEXT(sc)->defaultMessageContext()->clear();
-                    item_at_point = desktop->item_at_point(NR::Point(event->button.x, event->button.y), FALSE);
+                    item_at_point = desktop->item_at_point(Geom::Point(event->button.x, event->button.y), FALSE);
                     if (!item_at_point) // if no item at this point, try at the click point (bug 1012200)
-                        item_at_point = desktop->item_at_point(NR::Point(xp, yp), FALSE);
+                        item_at_point = desktop->item_at_point(Geom::Point(xp, yp), FALSE);
                     if (item_at_point || sc->moved || sc->button_press_alt) {
                         // drag only if starting from an item, or if something is already grabbed, or if alt-dragging
                         if (!sc->moved) {
-                            item_in_group = desktop->item_at_point(NR::Point(event->button.x, event->button.y), TRUE);
-                            group_at_point = desktop->group_at_point(NR::Point(event->button.x, event->button.y));
+                            item_in_group = desktop->item_at_point(Geom::Point(event->button.x, event->button.y), TRUE);
+                            group_at_point = desktop->group_at_point(Geom::Point(event->button.x, event->button.y));
 
                             // group-at-point is meant to be topmost item if it's a group, 
                             // not topmost group of all items at point
@@ -627,12 +627,12 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                             if (sc->button_press_ctrl) {
                                 // go into groups, honoring Alt
                                 item = sp_event_context_find_item (desktop,
-                                                   NR::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, TRUE);
+                                                   Geom::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, TRUE);
                                 sc->button_press_ctrl = FALSE;
                             } else {
                                 // don't go into groups, honoring Alt
                                 item = sp_event_context_find_item (desktop,
-                                                   NR::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, FALSE);
+                                                   Geom::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, FALSE);
                             }
 
                             if (item) {
@@ -643,7 +643,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         } else if ((sc->button_press_ctrl || sc->button_press_alt) && !rb_escaped && !drag_escaped) { // ctrl+click, alt+click
 
                             item = sp_event_context_find_item (desktop,
-                                         NR::Point(event->button.x, event->button.y), sc->button_press_alt, sc->button_press_ctrl);
+                                         Geom::Point(event->button.x, event->button.y), sc->button_press_alt, sc->button_press_ctrl);
 
                             sc->button_press_ctrl = FALSE;
                             sc->button_press_alt = FALSE;

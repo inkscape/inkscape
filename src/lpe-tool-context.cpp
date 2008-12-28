@@ -286,7 +286,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 int mode = prefs->getInt("/tools/lpetool/mode");
                 EffectType type = lpesubtools[mode];
 
-                //bool over_stroke = lc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), true);
+                //bool over_stroke = lc->shape_editor->is_over_stroke(Geom::Point(event->button.x, event->button.y), true);
 
                 sp_pen_context_wait_for_LPE_mouse_clicks(lc, type, Inkscape::LivePathEffect::Effect::acceptsNumClicks(type));
 
@@ -301,7 +301,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             }
 
             bool over_stroke = false;
-            over_stroke = lc->shape_editor->is_over_stroke(NR::Point(event->motion.x, event->motion.y), false);
+            over_stroke = lc->shape_editor->is_over_stroke(Geom::Point(event->motion.x, event->motion.y), false);
 
             if (over_stroke) {
                 event_context->cursor_shape = cursor_node_xpm;
@@ -454,7 +454,7 @@ lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc)
 
     Geom::Point A, B;
     lpetool_get_limiting_bbox_corners(document, A, B);
-    NR::Matrix doc2dt(lc->desktop->doc2dt());
+    Geom::Matrix doc2dt(lc->desktop->doc2dt());
     A *= doc2dt;
     B *= doc2dt;
 

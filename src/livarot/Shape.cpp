@@ -309,7 +309,7 @@ Shape::Reset (int pointCount, int edgeCount)
 }
 
 int
-Shape::AddPoint (const NR::Point x)
+Shape::AddPoint (const Geom::Point x)
 {
   if (numberOfPoints() >= maxPt)
     {
@@ -1134,7 +1134,7 @@ Shape::AddEdge (int st, int en)
     }
 
   dg_arete a;
-  a.dx = NR::Point(0, 0);
+  a.dx = Geom::Point(0, 0);
   a.st = a.en = -1;
   a.prevS = a.nextS = -1;
   a.prevE = a.nextE = -1;
@@ -1209,7 +1209,7 @@ Shape::AddEdge (int st, int en, int leF, int riF)
     }
 
   dg_arete a;
-  a.dx = NR::Point(0, 0);
+  a.dx = Geom::Point(0, 0);
   a.st = a.en = -1;
   a.prevS = a.nextS = -1;
   a.prevE = a.nextE = -1;
@@ -1552,7 +1552,7 @@ Shape::SortEdges (void)
 }
 
 int
-Shape::CmpToVert (NR::Point ax, NR::Point bx,bool as,bool bs)
+Shape::CmpToVert (Geom::Point ax, Geom::Point bx,bool as,bool bs)
 {
   int tstAX = 0;
   int tstAY = 0;
@@ -1671,7 +1671,7 @@ Shape::CmpToVert (NR::Point ax, NR::Point bx,bool as,bool bs)
   if (quadA > quadB)
     return -1;
 
-  NR::Point av, bv;
+  Geom::Point av, bv;
   av = ax;
   bv = bx;
   double si = cross (bv, av);
@@ -1702,7 +1702,7 @@ Shape::SortEdgesList (edge_list * list, int s, int e)
 
   int ppos = (s + e) / 2;
   int plast = ppos;
-  NR::Point pvalx = list[ppos].x;
+  Geom::Point pvalx = list[ppos].x;
   bool      pvals = list[ppos].starting;
   
   int le = s, ri = e;
@@ -2054,16 +2054,16 @@ Shape::CalcBBox (bool strict_degree)
 // other=depends on your fill rule
 // if the polygon is uncrossed, it's all the same, usually
 int
-Shape::PtWinding (const NR::Point px) const 
+Shape::PtWinding (const Geom::Point px) const 
 {
   int lr = 0, ll = 0, rr = 0;
   
   for (int i = 0; i < numberOfEdges(); i++)
   {
-    NR::Point const adir = getEdge(i).dx;
+    Geom::Point const adir = getEdge(i).dx;
 
-    NR::Point const ast = getPoint(getEdge(i).st).x;
-    NR::Point const aen = getPoint(getEdge(i).en).x;
+    Geom::Point const ast = getPoint(getEdge(i).st).x;
+    Geom::Point const aen = getPoint(getEdge(i).en).x;
     
     //int const nWeight = eData[i].weight;
     int const nWeight = 1;
@@ -2094,7 +2094,7 @@ Shape::PtWinding (const NR::Point px) const
       if (aen[1] >= px[1]) continue;
     }
 
-    NR::Point const diff = px - ast;
+    Geom::Point const diff = px - ast;
     double const cote = cross(diff, adir);
     if (cote == 0) continue;
     if (cote < 0) {
@@ -2190,7 +2190,7 @@ bool directedEulerian(Shape const *s)
  *    \return Minimum distance from p to any of the points or edges of s.
  */
 
-double distance(Shape const *s, NR::Point const &p)
+double distance(Shape const *s, Geom::Point const &p)
 {
     if ( s->hasPoints() == false) {
         return 0.0;
@@ -2201,11 +2201,11 @@ double distance(Shape const *s, NR::Point const &p)
     ** us the distance squared; we can leave the square root
     ** until the end.
     */
-    double bdot = NR::dot(p - s->getPoint(0).x, p - s->getPoint(0).x);
+    double bdot = Geom::dot(p - s->getPoint(0).x, p - s->getPoint(0).x);
 
     for (int i = 0; i < s->numberOfPoints(); i++) {
-        NR::Point const offset( p - s->getPoint(i).x );
-        double ndot = NR::dot(offset, offset);
+        Geom::Point const offset( p - s->getPoint(i).x );
+        double ndot = Geom::dot(offset, offset);
         if ( ndot < bdot ) {
             bdot = ndot;
         }
@@ -2214,16 +2214,16 @@ double distance(Shape const *s, NR::Point const &p)
     for (int i = 0; i < s->numberOfEdges(); i++) {
         if ( s->getEdge(i).st >= 0 && s->getEdge(i).en >= 0 ) {
             /* The edge has start and end points */
-            NR::Point const st(s->getPoint(s->getEdge(i).st).x); // edge start
-            NR::Point const en(s->getPoint(s->getEdge(i).en).x); // edge end
+            Geom::Point const st(s->getPoint(s->getEdge(i).st).x); // edge start
+            Geom::Point const en(s->getPoint(s->getEdge(i).en).x); // edge end
 
-            NR::Point const d(p - st);       // vector between p and edge start
-            NR::Point const e(en - st);      // vector of the edge
-            double const el = NR::dot(e, e); // edge length
+            Geom::Point const d(p - st);       // vector between p and edge start
+            Geom::Point const e(en - st);      // vector of the edge
+            double const el = Geom::dot(e, e); // edge length
 
             /* Update bdot if appropriate */
             if ( el > 0.001 ) {
-                double const npr = NR::dot(d, e);
+                double const npr = Geom::dot(d, e);
                 if ( npr > 0 && npr < el ) {
                     double const nl = fabs( NR::cross(d, e) );
                     double ndot = nl * nl / el;
@@ -2252,7 +2252,7 @@ double distance(Shape const *s, NR::Point const &p)
  *    \param max_l2 L2 distance.
  */
 
-bool distanceLessThanOrEqual(Shape const *s, NR::Point const &p, double const max_l2)
+bool distanceLessThanOrEqual(Shape const *s, Geom::Point const &p, double const max_l2)
 {
     if ( s->hasPoints() == false ) {
         return false;
@@ -2270,23 +2270,23 @@ bool distanceLessThanOrEqual(Shape const *s, NR::Point const &p, double const ma
   
     double const max_l1 = max_l2 * M_SQRT2;
     for (int i = 0; i < s->numberOfPoints(); i++) {
-        NR::Point const offset( p - s->getPoint(i).x );
+        Geom::Point const offset( p - s->getPoint(i).x );
         double const l1 = NR::L1(offset);
-        if ( (l1 <= max_l2) || ((l1 <= max_l1) && (NR::L2(offset) <= max_l2)) ) {
+        if ( (l1 <= max_l2) || ((l1 <= max_l1) && (Geom::L2(offset) <= max_l2)) ) {
             return true;
         }
     }
     
     for (int i = 0; i < s->numberOfEdges(); i++) {
         if ( s->getEdge(i).st >= 0 && s->getEdge(i).en >= 0 ) {
-            NR::Point const st(s->getPoint(s->getEdge(i).st).x);
-            NR::Point const en(s->getPoint(s->getEdge(i).en).x);
-            NR::Point const d(p - st);
-            NR::Point const e(en - st);
-            double const el = NR::L2(e);
+            Geom::Point const st(s->getPoint(s->getEdge(i).st).x);
+            Geom::Point const en(s->getPoint(s->getEdge(i).en).x);
+            Geom::Point const d(p - st);
+            Geom::Point const e(en - st);
+            double const el = Geom::L2(e);
             if ( el > 0.001 ) {
-                NR::Point const e_unit(e / el);
-                double const npr = NR::dot(d, e_unit);
+                Geom::Point const e_unit(e / el);
+                double const npr = Geom::dot(d, e_unit);
                 if ( npr > 0 && npr < el ) {
                     double const nl = fabs(NR::cross(d, e_unit));
                     if ( nl <= max_l2 ) {

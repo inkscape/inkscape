@@ -91,8 +91,8 @@
 
 #include "ui/clipboard.h"
 
-using NR::X;
-using NR::Y;
+using Geom::X;
+using Geom::Y;
 
 /* The clipboard handling is in ui/clipboard.cpp now. There are some legacy functions left here,
 because the layer manipulation code uses them. It should be rewritten specifically
@@ -102,7 +102,7 @@ for that purpose. */
  * Copies repr and its inherited css style elements, along with the accumulated transform 'full_t',
  * then prepends the copy to 'clip'.
  */
-void sp_selection_copy_one (Inkscape::XML::Node *repr, NR::Matrix full_t, GSList **clip, Inkscape::XML::Document* xml_doc)
+void sp_selection_copy_one (Inkscape::XML::Node *repr, Geom::Matrix full_t, GSList **clip, Inkscape::XML::Document* xml_doc)
 {
     Inkscape::XML::Node *copy = repr->duplicate(xml_doc);
 
@@ -147,8 +147,8 @@ GSList *sp_selection_paste_impl (SPDocument *doc, SPObject *parent, GSList **cli
         Inkscape::XML::Node *copy = repr->duplicate(xml_doc);
 
         // premultiply the item transform by the accumulated parent transform in the paste layer
-        NR::Matrix local (sp_item_i2doc_affine(SP_ITEM(parent)));
-        if (!local.test_identity()) {
+        Geom::Matrix local (sp_item_i2doc_affine(SP_ITEM(parent)));
+        if (!local.isIdentity()) {
             gchar const *t_str = copy->attribute("transform");
             Geom::Matrix item_t (Geom::identity());
             if (t_str)
@@ -1234,7 +1234,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
 
                 } else if (prefs_unmoved) {
                     //if (SP_IS_USE(sp_use_get_original(SP_USE(item))))
-                    //    clone_move = NR::identity();
+                    //    clone_move = Geom::identity();
                     Geom::Matrix move = result * clone_move;
                     sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &t);
                 }
@@ -1296,7 +1296,7 @@ sp_selection_scale_absolute(Inkscape::Selection *selection,
                             y1 - y0);
     Geom::Scale const scale( newSize * Geom::Scale(bbox->dimensions()).inverse() );
     Geom::Translate const o2n(x0, y0);
-    NR::Matrix const final( p2o * scale * o2n );
+    Geom::Matrix const final( p2o * scale * o2n );
 
     sp_selection_apply_affine(selection, final);
 }
@@ -1314,8 +1314,8 @@ void sp_selection_scale_relative(Inkscape::Selection *selection, Geom::Point con
     }
 
     // FIXME: ARBITRARY LIMIT: don't try to scale above 1 Mpx, it won't display properly and will crash sooner or later anyway
-    if ( bbox->dimensions()[NR::X] * scale[Geom::X] > 1e6  ||
-         bbox->dimensions()[NR::Y] * scale[Geom::Y] > 1e6 )
+    if ( bbox->dimensions()[Geom::X] * scale[Geom::X] > 1e6  ||
+         bbox->dimensions()[Geom::Y] * scale[Geom::Y] > 1e6 )
     {
         return;
     }
@@ -1350,12 +1350,12 @@ sp_selection_skew_relative(Inkscape::Selection *selection, Geom::Point const &al
 
 void sp_selection_move_relative(Inkscape::Selection *selection, Geom::Point const &move)
 {
-    sp_selection_apply_affine(selection, NR::Matrix(Geom::Translate(move)));
+    sp_selection_apply_affine(selection, Geom::Matrix(Geom::Translate(move)));
 }
 
 void sp_selection_move_relative(Inkscape::Selection *selection, double dx, double dy)
 {
-    sp_selection_apply_affine(selection, NR::Matrix(Geom::Translate(dx, dy)));
+    sp_selection_apply_affine(selection, Geom::Matrix(Geom::Translate(dx, dy)));
 }
 
 /**
@@ -1369,7 +1369,7 @@ void sp_selection_rotate_90(SPDesktop *desktop, bool ccw)
         return;
 
     GSList const *l = selection->itemList();
-    Geom::Rotate const rot_90(NR::Point(0, ccw ? 1 : -1)); // pos. or neg. rotation, depending on the value of ccw
+    Geom::Rotate const rot_90(Geom::Point(0, ccw ? 1 : -1)); // pos. or neg. rotation, depending on the value of ccw
     for (GSList const *l2 = l ; l2 != NULL ; l2 = l2->next) {
         SPItem *item = SP_ITEM(l2->data);
         sp_item_rotate_rel(item, rot_90);
@@ -2218,7 +2218,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     }
 
     // calculate the transform to be applied to objects to move them to 0,0
-    Geom::Point move_p = Geom::Point(0, sp_document_height(doc)) - (r->min() + Geom::Point (0, r->dimensions()[NR::Y]));
+    Geom::Point move_p = Geom::Point(0, sp_document_height(doc)) - (r->min() + Geom::Point (0, r->dimensions()[Geom::Y]));
     move_p[Geom::Y] = -move_p[Geom::Y];
     Geom::Matrix move = Geom::Matrix (Geom::Translate (move_p));
 
@@ -2841,7 +2841,7 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
             selection->add(repr);
 
             // transform mask, so it is moved the same spot where mask was applied
-            NR::Matrix transform (mask_item->transform);
+            Geom::Matrix transform (mask_item->transform);
             transform *= (*it).second->transform;
             sp_item_write_transform(mask_item, SP_OBJECT_REPR(mask_item), transform);
         }

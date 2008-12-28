@@ -4,7 +4,7 @@
  * A container of intersection events.
  */
 
-#include <libnr/nr-forward.h>
+#include <2geom/forward.h>
 class SweepEvent;
 class SweepTree;
 
@@ -24,11 +24,11 @@ public:
     int size() const { return nbEvt; }
 
     /// Look for the topmost intersection in the heap
-    bool peek(SweepTree * &iLeft, SweepTree * &iRight, NR::Point &oPt, double &itl, double &itr);
+    bool peek(SweepTree * &iLeft, SweepTree * &iRight, Geom::Point &oPt, double &itl, double &itr);
     /// Extract the topmost intersection from the heap
-    bool extract(SweepTree * &iLeft, SweepTree * &iRight, NR::Point &oPt, double &itl, double &itr);
+    bool extract(SweepTree * &iLeft, SweepTree * &iRight, Geom::Point &oPt, double &itl, double &itr);
     /// Add one intersection in the binary heap
-    SweepEvent *add(SweepTree *iLeft, SweepTree *iRight, NR::Point &iPt, double itl, double itr);
+    SweepEvent *add(SweepTree *iLeft, SweepTree *iRight, Geom::Point &iPt, double itl, double itr);
 
     void remove(SweepEvent *e);
     void relocate(SweepEvent *e, int to);

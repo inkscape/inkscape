@@ -66,9 +66,9 @@ struct CheckProgress : TestConvergence {
             SPItem *u=*it;
             if(!isConnector(u)) {
                 Rectangle* r=rs[nodelookup[u->id]];
-                NR::Rect const item_box(sp_item_bbox_desktop(u));
-                NR::Point const curr(item_box.midpoint());
-                NR::Point const dest(r->getCentreX(),r->getCentreY());
+                Geom::Rect const item_box(sp_item_bbox_desktop(u));
+                Geom::Point const curr(item_box.midpoint());
+                Geom::Point const dest(r->getCentreX(),r->getCentreY());
                 sp_item_move_rel(u, Geom::Translate(dest - curr));
             }
         }

@@ -20,19 +20,19 @@
  */
 
 // until i find something better
-NR::Point StrokeNormalize(const NR::Point value) {
+Geom::Point StrokeNormalize(const Geom::Point value) {
     double length = L2(value); 
     if ( length < 0.0000001 ) { 
-        return NR::Point(0, 0);
+        return Geom::Point(0, 0);
     } else { 
         return value/length; 
     }
 }
 
 // faster version if length is known
-NR::Point StrokeNormalize(const NR::Point value, double length) {
+Geom::Point StrokeNormalize(const Geom::Point value, double length) {
     if ( length < 0.0000001 ) { 
-        return NR::Point(0, 0);
+        return Geom::Point(0, 0);
     } else { 
         return value/length; 
     }
@@ -63,8 +63,8 @@ void Path::Stroke(Shape *dest, bool doClose, double width, JoinType join,
         }
 
         if ( lastP > lastM+1 ) {
-            NR::Point sbStart = pts[lastM].p;
-            NR::Point sbEnd = pts[lastP - 1].p;
+            Geom::Point sbStart = pts[lastM].p;
+            Geom::Point sbEnd = pts[lastP - 1].p;
             if ( Geom::LInfty(sbEnd-sbStart) < 0.00001 ) {       // why close lines that shouldn't be closed?
                 // ah I see, because close is defined here for
                 // a whole path and should be defined per subpath.
@@ -75,10 +75,10 @@ void Path::Stroke(Shape *dest, bool doClose, double width, JoinType join,
             }
         } else if (butt == butt_round) {       // special case: zero length round butt is a circle
             int last[2] = { -1, -1 };
-            NR::Point dir;
+            Geom::Point dir;
             dir[0] = 1;
             dir[1] = 0;
-            NR::Point pos = pts[lastM].p;
+            Geom::Point pos = pts[lastM].p;
             DoButt(dest, width, butt, pos, dir, last[RIGHT], last[LEFT]);
             int end[2];
             dir = -dir;
@@ -97,19 +97,19 @@ void Path::DoStroke(int off, int N, Shape *dest, bool doClose, double width, Joi
         return;
     }
 
-    NR::Point prevP, nextP;
+    Geom::Point prevP, nextP;
     int prevI, nextI;
     int upTo;
 
     int curI = 0;
-    NR::Point curP = pts[off].p;
+    Geom::Point curP = pts[off].p;
 
     if (doClose) {
 
         prevI = N - 1;
         while (prevI > 0) {
             prevP = pts[off + prevI].p;
-            NR::Point diff = curP - prevP;
+            Geom::Point diff = curP - prevP;
             double dist = dot(diff, diff);
             if (dist > 0.001) {
                 break;
@@ -132,7 +132,7 @@ void Path::DoStroke(int off, int N, Shape *dest, bool doClose, double width, Joi
         nextI = 1;
         while (nextI <= upTo) {
             nextP = pts[off + nextI].p;
-            NR::Point diff = curP - nextP;
+            Geom::Point diff = curP - nextP;
             double dist = dot(diff, diff);
             if (dist > 0.0) { // more tolerance for the first distance, to give the cap the right direction
                 break;
@@ -142,7 +142,7 @@ void Path::DoStroke(int off, int N, Shape *dest, bool doClose, double width, Joi
         if (nextI > upTo) {
             if (butt == butt_round) {  // special case: zero length round butt is a circle
                 int last[2] = { -1, -1 };
-                NR::Point dir;
+                Geom::Point dir;
                 dir[0] = 1;
                 dir[1] = 0;
                 DoButt(dest, width, butt, curP, dir, last[RIGHT], last[LEFT]);
@@ -158,10 +158,10 @@ void Path::DoStroke(int off, int N, Shape *dest, bool doClose, double width, Joi
 
     int start[2] = { -1, -1 };
     int last[2] = { -1, -1 };
-    NR::Point prevD = curP - prevP;
-    NR::Point nextD = nextP - curP;
-    double prevLe = NR::L2(prevD);
-    double nextLe = NR::L2(nextD);
+    Geom::Point prevD = curP - prevP;
+    Geom::Point nextD = nextP - curP;
+    double prevLe = Geom::L2(prevD);
+    double nextLe = Geom::L2(nextD);
     prevD = StrokeNormalize(prevD, prevLe);
     nextD = StrokeNormalize(nextD, nextLe);
 
@@ -183,7 +183,7 @@ void Path::DoStroke(int off, int N, Shape *dest, bool doClose, double width, Joi
         nextI++;
         while (nextI <= upTo) {
             nextP = pts[off + nextI].p;
-            NR::Point diff = curP - nextP;
+            Geom::Point diff = curP - nextP;
             double dist = dot(diff, diff);
             if (dist > 0.001 || (nextI == upTo && dist > 0.0)) { // more tolerance for the last distance too, for the right cap direction
                 break;
@@ -195,7 +195,7 @@ void Path::DoStroke(int off, int N, Shape *dest, bool doClose, double width, Joi
         }
 
         nextD = nextP - curP;
-        nextLe = NR::L2(nextD);
+        nextLe = Geom::L2(nextD);
         nextD = StrokeNormalize(nextD, nextLe);
         int nSt[2] = { -1, -1 };
         int nEn[2] = { -1, -1 };
@@ -215,7 +215,7 @@ void Path::DoStroke(int off, int N, Shape *dest, bool doClose, double width, Joi
         nextP = pts[off].p;
 
         nextD = nextP - curP;
-        nextLe = NR::L2(nextD);
+        nextLe = Geom::L2(nextD);
         nextD = StrokeNormalize(nextD, nextLe);
         int nSt[2] = { -1, -1 };
         int nEn[2] = { -1, -1 };
@@ -238,15 +238,15 @@ void Path::DoStroke(int off, int N, Shape *dest, bool doClose, double width, Joi
 }
 
 
-void Path::DoButt(Shape *dest, double width, ButtType butt, NR::Point pos, NR::Point dir,
+void Path::DoButt(Shape *dest, double width, ButtType butt, Geom::Point pos, Geom::Point dir,
         int &leftNo, int &rightNo)
 {
-    NR::Point nor;
+    Geom::Point nor;
     nor = dir.ccw();
 
     if (butt == butt_square)
     {
-        NR::Point x;
+        Geom::Point x;
         x = pos + width * dir + width * nor;
         int bleftNo = dest->AddPoint (x);
         x = pos + width * dir - width * nor;
@@ -269,8 +269,8 @@ void Path::DoButt(Shape *dest, double width, ButtType butt, NR::Point pos, NR::P
     }
     else if (butt == butt_round)
     {
-        const NR::Point sx = pos + width * nor;
-        const NR::Point ex = pos - width * nor;
+        const Geom::Point sx = pos + width * nor;
+        const Geom::Point ex = pos - width * nor;
         leftNo = dest->AddPoint (sx);
         rightNo = dest->AddPoint (ex);
 
@@ -285,12 +285,12 @@ void Path::DoButt(Shape *dest, double width, ButtType butt, NR::Point pos, NR::P
 }
 
 
-void Path::DoJoin (Shape *dest, double width, JoinType join, NR::Point pos, NR::Point prev,
-        NR::Point next, double miter, double /*prevL*/, double /*nextL*/,
+void Path::DoJoin (Shape *dest, double width, JoinType join, Geom::Point pos, Geom::Point prev,
+        Geom::Point next, double miter, double /*prevL*/, double /*nextL*/,
         int *stNo, int *enNo)
 {
-    NR::Point pnor = prev.ccw();
-    NR::Point nnor = next.ccw();
+    Geom::Point pnor = prev.ccw();
+    Geom::Point nnor = next.ccw();
     double angSi = cross(next, prev);
 
     /* FIXED: this special case caused bug 1028953 */
@@ -302,8 +302,8 @@ void Path::DoJoin (Shape *dest, double width, JoinType join, NR::Point pos, NR::
             stNo[RIGHT] = enNo[RIGHT] = dest->AddPoint(pos - width * pnor);
         } else {
             // demi-tour
-            const NR::Point sx = pos + width * pnor;
-            const NR::Point ex = pos - width * pnor;
+            const Geom::Point sx = pos + width * pnor;
+            const Geom::Point ex = pos - width * pnor;
             stNo[LEFT] = enNo[RIGHT] = dest->AddPoint (sx);
             stNo[RIGHT] = enNo[LEFT] = dest->AddPoint (ex);
             if (join == join_round) {
@@ -329,7 +329,7 @@ void Path::DoJoin (Shape *dest, double width, JoinType join, NR::Point pos, NR::
             stNo[RIGHT] = dest->AddPoint(pos - width * pnor);
             enNo[RIGHT] = dest->AddPoint(pos - width * nnor);
 
-            const NR::Point biss = StrokeNormalize(prev - next);
+            const Geom::Point biss = StrokeNormalize(prev - next);
             double c2 = dot(biss, nnor);
             double l = width / c2;
             double emiter = width * c2;
@@ -346,9 +346,9 @@ void Path::DoJoin (Shape *dest, double width, JoinType join, NR::Point pos, NR::
             }
 
         } else if (join == join_round) {
-            NR::Point sx = pos - width * pnor;
+            Geom::Point sx = pos - width * pnor;
             stNo[RIGHT] = dest->AddPoint(sx);
-            NR::Point ex = pos - width * nnor;
+            Geom::Point ex = pos - width * nnor;
             enNo[RIGHT] = dest->AddPoint(ex);
 
             RecRound(dest, stNo[RIGHT], enNo[RIGHT], 
@@ -373,7 +373,7 @@ void Path::DoJoin (Shape *dest, double width, JoinType join, NR::Point pos, NR::
             stNo[LEFT] = dest->AddPoint(pos + width * pnor);
             enNo[LEFT] = dest->AddPoint(pos + width * nnor);
 
-            const NR::Point biss = StrokeNormalize(next - prev);
+            const Geom::Point biss = StrokeNormalize(next - prev);
             double c2 = dot(biss, nnor);
             double l = width / c2;
             double emiter = width * c2;
@@ -392,9 +392,9 @@ void Path::DoJoin (Shape *dest, double width, JoinType join, NR::Point pos, NR::
 
         } else if (join == join_round) {
 
-            NR::Point sx = pos + width * pnor;
+            Geom::Point sx = pos + width * pnor;
             stNo[LEFT] = dest->AddPoint(sx);
-            NR::Point ex = pos + width * nnor;
+            Geom::Point ex = pos + width * nnor;
             enNo[LEFT] = dest->AddPoint(ex);
 
             RecRound(dest, enNo[LEFT], stNo[LEFT], 
@@ -409,12 +409,12 @@ void Path::DoJoin (Shape *dest, double width, JoinType join, NR::Point pos, NR::
 }
 
     void
-Path::DoLeftJoin (Shape * dest, double width, JoinType join, NR::Point pos,
-        NR::Point prev, NR::Point next, double miter, double /*prevL*/, double /*nextL*/,
+Path::DoLeftJoin (Shape * dest, double width, JoinType join, Geom::Point pos,
+        Geom::Point prev, Geom::Point next, double miter, double /*prevL*/, double /*nextL*/,
         int &leftStNo, int &leftEnNo,int pathID,int pieceID,double tID)
 {
-    NR::Point pnor=prev.ccw();
-    NR::Point nnor=next.ccw();
+    Geom::Point pnor=prev.ccw();
+    Geom::Point nnor=next.ccw();
     double angSi = cross (next, prev);
     if (angSi > -0.0001 && angSi < 0.0001)
     {
@@ -440,7 +440,7 @@ Path::DoLeftJoin (Shape * dest, double width, JoinType join, NR::Point pos,
     }
     if (angSi < 0)
     {
-        /*		NR::Point     biss;
+        /*		Geom::Point     biss;
                         biss.x=next.x-prev.x;
                         biss.y=next.y-prev.y;
                         double   c2=cross(biss,next);
@@ -477,7 +477,7 @@ Path::DoLeftJoin (Shape * dest, double width, JoinType join, NR::Point pos,
             leftStNo = dest->AddPoint (pos + width * pnor);
             leftEnNo = dest->AddPoint (pos + width * nnor);
 
-            const NR::Point biss = StrokeNormalize (pnor + nnor);
+            const Geom::Point biss = StrokeNormalize (pnor + nnor);
             double c2 = dot (biss, nnor);
             double l = width / c2;
             double emiter = width * c2;
@@ -503,7 +503,7 @@ Path::DoLeftJoin (Shape * dest, double width, JoinType join, NR::Point pos,
             {
                 double s2 = cross (biss, nnor);
                 double dec = (l - emiter) * c2 / s2;
-                const NR::Point tbiss=biss.ccw();
+                const Geom::Point tbiss=biss.ccw();
 
                 int nleftStNo = dest->AddPoint (pos + emiter * biss + dec * tbiss);
                 int nleftEnNo = dest->AddPoint (pos + emiter * biss - dec * tbiss);
@@ -529,9 +529,9 @@ Path::DoLeftJoin (Shape * dest, double width, JoinType join, NR::Point pos,
         }
         else if (join == join_round)
         {
-            const NR::Point sx = pos + width * pnor;
+            const Geom::Point sx = pos + width * pnor;
             leftStNo = dest->AddPoint (sx);
-            const NR::Point ex = pos + width * nnor;
+            const Geom::Point ex = pos + width * nnor;
             leftEnNo = dest->AddPoint (ex);
 
             RecRound(dest, leftEnNo, leftStNo, 
@@ -552,12 +552,12 @@ Path::DoLeftJoin (Shape * dest, double width, JoinType join, NR::Point pos,
     }
 }
     void
-Path::DoRightJoin (Shape * dest, double width, JoinType join, NR::Point pos,
-        NR::Point prev, NR::Point next, double miter, double /*prevL*/,
+Path::DoRightJoin (Shape * dest, double width, JoinType join, Geom::Point pos,
+        Geom::Point prev, Geom::Point next, double miter, double /*prevL*/,
         double /*nextL*/, int &rightStNo, int &rightEnNo,int pathID,int pieceID,double tID)
 {
-    const NR::Point pnor=prev.ccw();
-    const NR::Point nnor=next.ccw();
+    const Geom::Point pnor=prev.ccw();
+    const Geom::Point nnor=next.ccw();
     double angSi = cross (next,prev);
     if (angSi > -0.0001 && angSi < 0.0001)
     {
@@ -588,7 +588,7 @@ Path::DoRightJoin (Shape * dest, double width, JoinType join, NR::Point pos,
             rightStNo = dest->AddPoint (pos - width*pnor);
             rightEnNo = dest->AddPoint (pos - width*nnor);
 
-            const NR::Point biss = StrokeNormalize (pnor + nnor);
+            const Geom::Point biss = StrokeNormalize (pnor + nnor);
             double c2 = dot (biss, nnor);
             double l = width / c2;
             double emiter = width * c2;
@@ -614,7 +614,7 @@ Path::DoRightJoin (Shape * dest, double width, JoinType join, NR::Point pos,
             {
                 double s2 = cross (biss, nnor);
                 double dec = (l - emiter) * c2 / s2;
-                const NR::Point tbiss=biss.ccw();
+                const Geom::Point tbiss=biss.ccw();
 
                 int nrightStNo = dest->AddPoint (pos - emiter*biss - dec*tbiss);
                 int nrightEnNo = dest->AddPoint (pos - emiter*biss + dec*tbiss);
@@ -640,9 +640,9 @@ Path::DoRightJoin (Shape * dest, double width, JoinType join, NR::Point pos,
         }
         else if (join == join_round)
         {
-            const NR::Point sx = pos - width * pnor;
+            const Geom::Point sx = pos - width * pnor;
             rightStNo = dest->AddPoint (sx);
-            const NR::Point ex = pos - width * nnor;
+            const Geom::Point ex = pos - width * nnor;
             rightEnNo = dest->AddPoint (ex);
 
             RecRound(dest, rightStNo, rightEnNo, 
@@ -662,7 +662,7 @@ Path::DoRightJoin (Shape * dest, double width, JoinType join, NR::Point pos,
     }
     else
     {
-        /*		NR::Point     biss;
+        /*		Geom::Point     biss;
                         biss=next.x-prev.x;
                         biss.y=next.y-prev.y;
                         double   c2=cross(next,biss);
@@ -700,11 +700,11 @@ Path::DoRightJoin (Shape * dest, double width, JoinType join, NR::Point pos,
 
 // a very nice way to produce round joins, caps or dots
 void Path::RecRound(Shape *dest, int sNo, int eNo, // start and end index
-        NR::Point const &iS, NR::Point const &iE, // start and end point
-        NR::Point const &nS, NR::Point const &nE, // start and end normal vector
-        NR::Point &origine, float width) // center and radius of round
+        Geom::Point const &iS, Geom::Point const &iE, // start and end point
+        Geom::Point const &nS, Geom::Point const &nE, // start and end normal vector
+        Geom::Point &origine, float width) // center and radius of round
 {
-    //NR::Point diff = iS - iE;
+    //Geom::Point diff = iS - iE;
     //double dist = dot(diff, diff);
     if (width < 0.5 || dot(iS - iE, iS - iE)/width < 2.0) {
         dest->AddEdge(sNo, eNo);
@@ -730,13 +730,13 @@ void Path::RecRound(Shape *dest, int sNo, int eNo, // start and end index
 
     int nbS = (int) floor(ang);
     Geom::Rotate omega(((sia > 0) ? -lod : lod));
-    NR::Point cur = iS - origine;
+    Geom::Point cur = iS - origine;
     //  StrokeNormalize(cur);
     //  cur*=width;
     int lastNo = sNo;
     for (int i = 0; i < nbS; i++) {
         cur = cur * omega;
-        NR::Point m = origine + cur;
+        Geom::Point m = origine + cur;
         int mNo = dest->AddPoint(m);
         dest->AddEdge(lastNo, mNo);
         lastNo = mNo;

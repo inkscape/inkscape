@@ -452,7 +452,7 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
     // adjust style properties that depend on a possible transform in the source object in order
     // to get a correct style attribute for the new path
     SPItem* item_source = SP_ITEM(source);
-    NR::Matrix i2doc(sp_item_i2doc_affine(item_source));
+    Geom::Matrix i2doc(sp_item_i2doc_affine(item_source));
     sp_item_adjust_stroke(item_source, i2doc.descrim());
     sp_item_adjust_pattern(item_source, i2doc);
     sp_item_adjust_gradient(item_source, i2doc);
@@ -485,7 +485,7 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
 
     // premultiply by the inverse of parent's repr
     SPItem *parent_item = SP_ITEM(sp_desktop_document(desktop)->getObjectByRepr(parent));
-    NR::Matrix local (sp_item_i2doc_affine(parent_item));
+    Geom::Matrix local (sp_item_i2doc_affine(parent_item));
     gchar *transform = sp_svg_transform_write(local.inverse());
 
     // now that we have the result, add it on the canvas
@@ -685,7 +685,7 @@ sp_selected_path_outline(SPDesktop *desktop)
             sp_repr_css_unset_property(ncss, "marker-end");
         }
 
-        NR::Matrix const transform(item->transform);
+        Geom::Matrix const transform(item->transform);
         float const scale = transform.descrim();
         gchar const *mask = SP_OBJECT_REPR(item)->attribute("mask");
         gchar const *clip_path = SP_OBJECT_REPR(item)->attribute("clip-path");
@@ -1048,7 +1048,7 @@ sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updat
             return;
     }
 
-    NR::Matrix const transform(item->transform);
+    Geom::Matrix const transform(item->transform);
 
     sp_item_write_transform(item, SP_OBJECT_REPR(item), Geom::identity());
 
@@ -1273,7 +1273,7 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
                 continue;
         }
 
-        NR::Matrix const transform(item->transform);
+        Geom::Matrix const transform(item->transform);
 
         sp_item_write_transform(item, SP_OBJECT_REPR(item), Geom::identity());
 
@@ -1520,7 +1520,7 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
     size /= sp_item_i2doc_affine(item).descrim();
 
     // save the transform, to re-apply it after simplification
-    NR::Matrix const transform(item->transform);
+    Geom::Matrix const transform(item->transform);
 
     /*
        reset the transform, effectively transforming the item by transform.inverse();
@@ -1853,16 +1853,16 @@ SPCurve* curve_for_item(SPItem *item)
     return curve; // do not forget to unref the curve at some point!
 }
 
-boost::optional<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p, unsigned seg)
+boost::optional<Path::cut_position> get_nearest_position_on_Path(Path *path, Geom::Point p, unsigned seg)
 {
     //get nearest position on path
     Path::cut_position pos = path->PointToCurvilignPosition(p, seg);
     return pos;
 }
 
-NR::Point get_point_on_Path(Path *path, int piece, double t)
+Geom::Point get_point_on_Path(Path *path, int piece, double t)
 {
-    NR::Point p;
+    Geom::Point p;
     path->PointAt(piece, t, p);
     return p;
 }

@@ -174,7 +174,7 @@ sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
     }
 
     // clear transform, if any was read in - SVG does not allow transform= on <svg>
-    SP_ITEM(object)->transform = NR::identity();
+    SP_ITEM(object)->transform = Geom::identity();
 }
 
 /**
@@ -544,7 +544,7 @@ sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
         rctx.vp.y1 = root->height.computed;
     }
 
-    rctx.i2vp = NR::identity();
+    rctx.i2vp = Geom::identity();
 
     /* And invoke parent method */
     if (((SPObjectClass *) (parent_class))->update)

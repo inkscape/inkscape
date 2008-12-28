@@ -579,7 +579,7 @@ sp_textpath_to_text(SPObject *tp)
 
     NRRect bbox;
     sp_item_invoke_bbox(SP_ITEM(text), &bbox, sp_item_i2doc_affine(SP_ITEM(text)), TRUE);
-    NR::Point xy(bbox.x0, bbox.y0);
+    Geom::Point xy(bbox.x0, bbox.y0);
 
     // make a list of textpath children
     GSList *tp_reprs = NULL;
@@ -602,9 +602,9 @@ sp_textpath_to_text(SPObject *tp)
 
     // set x/y on text
     /* fixme: Yuck, is this really the right test? */
-    if (xy[NR::X] != 1e18 && xy[NR::Y] != 1e18) {
-        sp_repr_set_svg_double(SP_OBJECT_REPR(text), "x", xy[NR::X]);
-        sp_repr_set_svg_double(SP_OBJECT_REPR(text), "y", xy[NR::Y]);
+    if (xy[Geom::X] != 1e18 && xy[Geom::Y] != 1e18) {
+        sp_repr_set_svg_double(SP_OBJECT_REPR(text), "x", xy[Geom::X]);
+        sp_repr_set_svg_double(SP_OBJECT_REPR(text), "y", xy[Geom::Y]);
     }
 }
 

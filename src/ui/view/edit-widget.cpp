@@ -1664,6 +1664,7 @@ EditWidget::onWindowSizeAllocate (Gtk::Allocation &newall)
 void
 EditWidget::onWindowRealize()
 {
+
     if ( (sp_document_width(_desktop->doc()) < 1.0) || (sp_document_height(_desktop->doc()) < 1.0) ) {
         return;
     }

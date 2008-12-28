@@ -367,7 +367,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
     g_return_if_fail (!strcmp (grepr->name(), "svg:g") || !strcmp (grepr->name(), "svg:a") || !strcmp (grepr->name(), "svg:switch"));
 
       // this converts the gradient/pattern fill/stroke on the group, if any, to userSpaceOnUse
-      sp_item_adjust_paint_recursive (gitem, NR::identity(), NR::identity(), false);
+      sp_item_adjust_paint_recursive (gitem, Geom::identity(), Geom::identity(), false);
 
     SPItem *pitem = SP_ITEM (SP_OBJECT_PARENT (gitem));
     Inkscape::XML::Node *prepr = SP_OBJECT_REPR (pitem);
@@ -391,7 +391,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
             /* Merging of style */
             // this converts the gradient/pattern fill/stroke, if any, to userSpaceOnUse; we need to do
             // it here _before_ the new transform is set, so as to use the pre-transform bbox
-            sp_item_adjust_paint_recursive (citem, NR::identity(), NR::identity(), false);
+            sp_item_adjust_paint_recursive (citem, Geom::identity(), Geom::identity(), false);
 
             sp_style_merge_from_dying_parent(SP_OBJECT_STYLE(child), SP_OBJECT_STYLE(gitem));
             /*

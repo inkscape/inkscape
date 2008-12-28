@@ -1622,7 +1622,7 @@ void Shape::QuickScan(float &pos, int &curP, float to, AlphaLigne* line, float s
 void Shape::CreateEdge(int no, float to, float step)
 {
     int cPt;
-    NR::Point dir;
+    Geom::Point dir;
     if ( getEdge(no).st < getEdge(no).en ) {
         cPt = getEdge(no).st;
         swrData[no].sens = true;
@@ -1656,8 +1656,8 @@ void Shape::CreateEdge(int no, float to, float step)
 void Shape::AvanceEdge(int no, float to, bool exact, float step)
 {
     if ( exact ) {
-        NR::Point dir;
-        NR::Point stp;
+        Geom::Point dir;
+        Geom::Point stp;
         if ( swrData[no].sens ) {
             stp = getPoint(getEdge(no).st).x;
             dir = getEdge(no).dx;

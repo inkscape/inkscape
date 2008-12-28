@@ -356,7 +356,7 @@ sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
         }
         Geom::Translate t(use->x.computed,
                         use->y.computed);
-        nr_arena_group_set_child_transform(NR_ARENA_GROUP(ai), NR::Matrix(t));
+        nr_arena_group_set_child_transform(NR_ARENA_GROUP(ai), Geom::Matrix(t));
     }
 
     return ai;

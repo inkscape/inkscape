@@ -718,7 +718,7 @@ Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter,
 // you gotta be very careful with the join, as anything but the right one will fuck everything up
 // see PathStroke.cpp for the "right" joins
 int
-Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_profile, double cx, double cy, double radius, NR::Matrix *i2doc)
+Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_profile, double cx, double cy, double radius, Geom::Matrix *i2doc)
 {
   Reset (0, 0);
   MakeBackData(a->_has_back_data);
@@ -778,7 +778,7 @@ Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_p
       enB = a->CycleNextAt (a->getEdge(i).en, i);
     }
     
-    NR::Point stD, seD, enD;
+    Geom::Point stD, seD, enD;
     double stL, seL, enL;
     stD = a->getEdge(stB).dx;
     seD = a->getEdge(i).dx;
@@ -791,14 +791,14 @@ Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_p
     MiscNormalize (enD);
     MiscNormalize (seD);
     
-    NR::Point ptP;
+    Geom::Point ptP;
     int stNo, enNo;
     ptP = a->getPoint(a->getEdge(i).st).x;
 
 		double this_dec;
 		if (do_profile && i2doc) {
 			double alpha = 1;
-			double x = (NR::L2(ptP * (*i2doc) - NR::Point(cx,cy))/radius);
+			double x = (Geom::L2(ptP * (*i2doc) - Geom::Point(cx,cy))/radius);
 			if (x > 1) {
 				this_dec = 0;
 			} else if (x <= 0) {
@@ -987,7 +987,7 @@ Shape::ReFormeLineTo (int bord, int /*curBord*/, Path * dest, Path * /*orig*/)
   int nPiece = ebData[bord].pieceID;
   int nPath = ebData[bord].pathID;
   double /*ts=ebData[bord].tSt, */ te = ebData[bord].tEn;
-  NR::Point nx = getPoint(getEdge(bord).en).x;
+  Geom::Point nx = getPoint(getEdge(bord).en).x;
   bord = swdData[bord].suivParc;
   while (bord >= 0)
   {
@@ -1022,7 +1022,7 @@ Shape::ReFormeArcTo (int bord, int /*curBord*/, Path * dest, Path * from)
   int nPath = ebData[bord].pathID;
   double ts = ebData[bord].tSt, te = ebData[bord].tEn;
   //      double  px=pts[getEdge(bord).st].x,py=pts[getEdge(bord).st].y;
-  NR::Point nx = getPoint(getEdge(bord).en).x;
+  Geom::Point nx = getPoint(getEdge(bord).en).x;
   bord = swdData[bord].suivParc;
   while (bord >= 0)
   {
@@ -1099,7 +1099,7 @@ Shape::ReFormeCubicTo (int bord, int /*curBord*/, Path * dest, Path * from)
   int nPiece = ebData[bord].pieceID;
   int nPath = ebData[bord].pathID;
   double ts = ebData[bord].tSt, te = ebData[bord].tEn;
-  NR::Point nx = getPoint(getEdge(bord).en).x;
+  Geom::Point nx = getPoint(getEdge(bord).en).x;
   bord = swdData[bord].suivParc;
   while (bord >= 0)
   {
@@ -1123,9 +1123,9 @@ Shape::ReFormeCubicTo (int bord, int /*curBord*/, Path * dest, Path * from)
     }
     bord = swdData[bord].suivParc;
   }
-  NR::Point prevx = from->PrevPoint (nPiece - 1);
+  Geom::Point prevx = from->PrevPoint (nPiece - 1);
   
-  NR::Point sDx, eDx;
+  Geom::Point sDx, eDx;
   {
     PathDescrCubicTo *nData = dynamic_cast<PathDescrCubicTo *>(from->descr_cmd[nPiece]);
     Path::CubicTangent (ts, sDx, prevx,nData->start,nData->p,nData->end);
@@ -1146,8 +1146,8 @@ Shape::ReFormeBezierTo (int bord, int /*curBord*/, Path * dest, Path * from)
   int nPath = ebData[bord].pathID;
   double ts = ebData[bord].tSt, te = ebData[bord].tEn;
   int ps = nPiece, pe = nPiece;
-  NR::Point px = getPoint(getEdge(bord).st).x;
-  NR::Point nx = getPoint(getEdge(bord).en).x;
+  Geom::Point px = getPoint(getEdge(bord).st).x;
+  Geom::Point nx = getPoint(getEdge(bord).en).x;
   int inBezier = -1, nbInterm = -1;
   int typ;
   typ = from->descr_cmd[nPiece]->getType();
@@ -1235,7 +1235,7 @@ Shape::ReFormeBezierTo (int bord, int /*curBord*/, Path * dest, Path * from)
       }
       else
       {
-        NR::Point tx;
+        Geom::Point tx;
         {
           PathDescrIntermBezierTo* psData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[pe]);
           PathDescrIntermBezierTo* pnData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[pe+1]);
@@ -1256,7 +1256,7 @@ Shape::ReFormeBezierTo (int bord, int /*curBord*/, Path * dest, Path * from)
     {
       if (te > 0.9999)
       {
-        NR::Point tx;
+        Geom::Point tx;
         {
           PathDescrIntermBezierTo* psData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[ps+1]);
           PathDescrIntermBezierTo* pnData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[ps+2]);
@@ -1274,7 +1274,7 @@ Shape::ReFormeBezierTo (int bord, int /*curBord*/, Path * dest, Path * from)
       }
       else
       {
-        NR::Point tx;
+        Geom::Point tx;
         {
           PathDescrIntermBezierTo* psData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[ps+1]);
           PathDescrIntermBezierTo* pnData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[ps+2]);
@@ -1315,7 +1315,7 @@ Shape::ReFormeBezierTo (int bord, int /*curBord*/, Path * dest, Path * from)
       }
       else
       {
-        NR::Point tx;
+        Geom::Point tx;
         {
           PathDescrIntermBezierTo* psData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[pe+1]);
           PathDescrIntermBezierTo* pnData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[pe+2]);
@@ -1336,7 +1336,7 @@ Shape::ReFormeBezierTo (int bord, int /*curBord*/, Path * dest, Path * from)
     {
       if (te < 0.0001)
       {
-        NR::Point tx;
+        Geom::Point tx;
         {
           PathDescrIntermBezierTo* psData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[ps]);
           PathDescrIntermBezierTo* pnData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[ps+1]);
@@ -1354,7 +1354,7 @@ Shape::ReFormeBezierTo (int bord, int /*curBord*/, Path * dest, Path * from)
       }
       else
       {
-        NR::Point tx;
+        Geom::Point tx;
         {
           PathDescrIntermBezierTo* psData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[ps]);
           PathDescrIntermBezierTo* pnData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[ps+1]);
@@ -1383,15 +1383,15 @@ Shape::ReFormeBezierTo (int bord, int /*curBord*/, Path * dest, Path * from)
 }
 
 void
-Shape::ReFormeBezierChunk (NR::Point px, NR::Point nx,
+Shape::ReFormeBezierChunk (Geom::Point px, Geom::Point nx,
                            Path * dest, int inBezier, int nbInterm,
                            Path * from, int p, double ts, double te)
 {
   PathDescrBezierTo* nBData = dynamic_cast<PathDescrBezierTo*>(from->descr_cmd[inBezier]);
-  NR::Point bstx = from->PrevPoint (inBezier - 1);
-  NR::Point benx = nBData->p;
+  Geom::Point bstx = from->PrevPoint (inBezier - 1);
+  Geom::Point benx = nBData->p;
   
-  NR::Point mx;
+  Geom::Point mx;
   if (p == inBezier)
   {
     // premier bout
@@ -1430,7 +1430,7 @@ Shape::ReFormeBezierChunk (NR::Point px, NR::Point nx,
     nData = dynamic_cast<PathDescrIntermBezierTo*>(from->descr_cmd[p+2]);
     benx = (nData->p + mx) / 2;
   }
-  NR::Point cx;
+  Geom::Point cx;
   {
     Path::QuadraticPoint ((ts + te) / 2, cx, bstx, mx, benx);
   }

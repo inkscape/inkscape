@@ -35,7 +35,7 @@ void Path::ConvertWithBackData(double treshhold)
         return;
     }
 
-    NR::Point curX;
+    Geom::Point curX;
     int curP = 1;
     int lastMoveTo = -1;
 
@@ -46,7 +46,7 @@ void Path::ConvertWithBackData(double treshhold)
             curX = dynamic_cast<PathDescrMoveTo *>(descr_cmd[0])->p;
         } else {
             curP = 0;
-            curX[NR::X] = curX[NR::Y] = 0;
+            curX[Geom::X] = curX[Geom::Y] = 0;
         }
         lastMoveTo = AddPoint(curX, 0, 0.0, true);
     }
@@ -55,7 +55,7 @@ void Path::ConvertWithBackData(double treshhold)
     while ( curP < int(descr_cmd.size()) ) {
 
         int const nType = descr_cmd[curP]->getType();
-        NR::Point nextX;
+        Geom::Point nextX;
 
         switch (nType) {
             case descr_forced: {
@@ -118,9 +118,9 @@ void Path::ConvertWithBackData(double treshhold)
                 PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[ip]);
 
                 if ( nbInterm >= 1 ) {
-                    NR::Point bx = curX;
-                    NR::Point cx = curX;
-                    NR::Point dx = curX;
+                    Geom::Point bx = curX;
+                    Geom::Point cx = curX;
+                    Geom::Point dx = curX;
 
                     dx = nData->p;
                     ip++;
@@ -136,14 +136,14 @@ void Path::ConvertWithBackData(double treshhold)
                         ip++;
                         nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[ip]);
 
-                        NR::Point stx;
+                        Geom::Point stx;
                         stx = (bx + cx) / 2;
                         if ( k > 0 ) {
                             AddPoint(stx,curP - 1+k,1.0,false);
                         }
 
                         {
-                            NR::Point mx;
+                            Geom::Point mx;
                             mx = (cx + dx) / 2;
                             RecBezierTo(cx, stx, mx, treshhold, 8, 0.0, 1.0, curP + k);
                         }
@@ -155,7 +155,7 @@ void Path::ConvertWithBackData(double treshhold)
                         dx = nextX;
                         dx = 2 * dx - cx;
 
-                        NR::Point stx;
+                        Geom::Point stx;
                         stx = (bx + cx) / 2;
 
                         if ( nbInterm > 1 ) {
@@ -163,7 +163,7 @@ void Path::ConvertWithBackData(double treshhold)
                         }
 
                         {
-                            NR::Point mx;
+                            Geom::Point mx;
                             mx = (cx + dx) / 2;
                             RecBezierTo(cx, stx, mx, treshhold, 8, 0.0, 1.0, curP + nbInterm - 1);
                         }
@@ -200,7 +200,7 @@ void Path::Convert(double treshhold)
         return;
     }
 
-    NR::Point curX;
+    Geom::Point curX;
     int curP = 1;
     int lastMoveTo = 0;
 
@@ -221,7 +221,7 @@ void Path::Convert(double treshhold)
     while ( curP < int(descr_cmd.size()) ) {
 
         int const nType = descr_cmd[curP]->getType();
-        NR::Point nextX;
+        Geom::Point nextX;
 
         switch (nType) {
             case descr_forced: {
@@ -316,12 +316,12 @@ void Path::Convert(double treshhold)
                 PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[ip]);
 
                 if ( nbInterm == 1 ) {
-                    NR::Point const midX = nData->p;
+                    Geom::Point const midX = nData->p;
                     RecBezierTo(midX, curX, nextX, treshhold, 8);
                 } else if ( nbInterm > 1 ) {
-                    NR::Point bx = curX;
-                    NR::Point cx = curX;
-                    NR::Point dx = curX;
+                    Geom::Point bx = curX;
+                    Geom::Point cx = curX;
+                    Geom::Point dx = curX;
 
                     dx = nData->p;
                     ip++;
@@ -337,7 +337,7 @@ void Path::Convert(double treshhold)
                         ip++;
                         nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[ip]);
 
-                        NR::Point stx = (bx + cx) / 2;
+                        Geom::Point stx = (bx + cx) / 2;
                         if ( k > 0 ) {
                             descr_cmd[ip - 2]->associated = AddPoint(stx, false);
                             if ( descr_cmd[ip - 2]->associated < 0 ) {
@@ -350,7 +350,7 @@ void Path::Convert(double treshhold)
                         }
 
                         {
-                            NR::Point const mx = (cx + dx) / 2;
+                            Geom::Point const mx = (cx + dx) / 2;
                             RecBezierTo(cx, stx, mx, treshhold, 8);
                         }
                     }
@@ -362,7 +362,7 @@ void Path::Convert(double treshhold)
                         dx = nextX;
                         dx = 2 * dx - cx;
 
-                        NR::Point stx = (bx + cx) / 2;
+                        Geom::Point stx = (bx + cx) / 2;
 
                         descr_cmd[ip - 1]->associated = AddPoint(stx, false);
                         if ( descr_cmd[ip - 1]->associated < 0 ) {
@@ -374,7 +374,7 @@ void Path::Convert(double treshhold)
                         }
 
                         {
-                            NR::Point mx = (cx + dx) / 2;
+                            Geom::Point mx = (cx + dx) / 2;
                             RecBezierTo(cx, stx, mx, treshhold, 8);
                         }
                     }
@@ -417,7 +417,7 @@ void Path::Convert(NRRectL *area, double treshhold)
         return;
     }
 
-    NR::Point curX;
+    Geom::Point curX;
     int curP = 1;
     int lastMoveTo = 0;
     short last_point_relation = 0;
@@ -445,7 +445,7 @@ void Path::Convert(NRRectL *area, double treshhold)
     while ( curP < int(descr_cmd.size()) ) {
 
         int const nType = descr_cmd[curP]->getType();
-        NR::Point nextX;
+        Geom::Point nextX;
 
         switch (nType) {
             case descr_forced: {
@@ -586,12 +586,12 @@ void Path::Convert(NRRectL *area, double treshhold)
                 PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[ip]);
 
                 if ( nbInterm == 1 ) {
-                    NR::Point const midX = nData->p;
+                    Geom::Point const midX = nData->p;
                     RecBezierTo(midX, curX, nextX, treshhold, 8);
                 } else if ( nbInterm > 1 ) {
-                    NR::Point bx = curX;
-                    NR::Point cx = curX;
-                    NR::Point dx = curX;
+                    Geom::Point bx = curX;
+                    Geom::Point cx = curX;
+                    Geom::Point dx = curX;
 
                     dx = nData->p;
                     ip++;
@@ -607,7 +607,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                         ip++;
                         nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[ip]);
 
-                        NR::Point stx = (bx + cx) / 2;
+                        Geom::Point stx = (bx + cx) / 2;
                         if ( k > 0 ) {
                             descr_cmd[ip - 2]->associated = AddPoint(stx, false);
                             if ( descr_cmd[ip - 2]->associated < 0 ) {
@@ -620,7 +620,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                         }
 
                         {
-                            NR::Point const mx = (cx + dx) / 2;
+                            Geom::Point const mx = (cx + dx) / 2;
                             RecBezierTo(cx, stx, mx, treshhold, 8);
                         }
                     }
@@ -632,7 +632,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                         dx = nextX;
                         dx = 2 * dx - cx;
 
-                        NR::Point stx = (bx + cx) / 2;
+                        Geom::Point stx = (bx + cx) / 2;
 
                         descr_cmd[ip - 1]->associated = AddPoint(stx, false);
                         if ( descr_cmd[ip - 1]->associated < 0 ) {
@@ -644,7 +644,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                         }
 
                         {
-                            NR::Point mx = (cx + dx) / 2;
+                            Geom::Point mx = (cx + dx) / 2;
                             RecBezierTo(cx, stx, mx, treshhold, 8);
                         }
                     }
@@ -687,7 +687,7 @@ void Path::ConvertEvenLines(double treshhold)
         return;
     }
 
-    NR::Point curX;
+    Geom::Point curX;
     int curP = 1;
     int lastMoveTo = 0;
 
@@ -708,7 +708,7 @@ void Path::ConvertEvenLines(double treshhold)
     while ( curP < int(descr_cmd.size()) ) {
 
         int const nType = descr_cmd[curP]->getType();
-        NR::Point nextX;
+        Geom::Point nextX;
 
         switch (nType) {
             case descr_forced: {
@@ -731,12 +731,12 @@ void Path::ConvertEvenLines(double treshhold)
             case descr_close: {
                 nextX = pts[lastMoveTo].p;
                 {
-                    NR::Point nexcur;
+                    Geom::Point nexcur;
                     nexcur = nextX - curX;
-                    const double segL = NR::L2(nexcur);
+                    const double segL = Geom::L2(nexcur);
                     if ( segL > treshhold ) {
                         for (double i = treshhold; i < segL; i += treshhold) {
-                            NR::Point nX;
+                            Geom::Point nX;
                             nX = (segL - i) * curX + i * nextX;
                             nX /= segL;
                             AddPoint(nX);
@@ -760,11 +760,11 @@ void Path::ConvertEvenLines(double treshhold)
             case descr_lineto: {
                 PathDescrLineTo* nData = dynamic_cast<PathDescrLineTo *>(descr_cmd[curP]);
                 nextX = nData->p;
-                NR::Point nexcur = nextX - curX;
+                Geom::Point nexcur = nextX - curX;
                 const double segL = L2(nexcur);
                 if ( segL > treshhold ) {
                     for (double i = treshhold; i < segL; i += treshhold) {
-                        NR::Point nX = ((segL - i) * curX + i * nextX) / segL;
+                        Geom::Point nX = ((segL - i) * curX + i * nextX) / segL;
                         AddPoint(nX);
                     }
                 }
@@ -828,12 +828,12 @@ void Path::ConvertEvenLines(double treshhold)
                 PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[ip]);
 
                 if ( nbInterm == 1 ) {
-                    NR::Point const midX = nData->p;
+                    Geom::Point const midX = nData->p;
                     RecBezierTo(midX, curX, nextX, treshhold, 8, 4 * treshhold);
                 } else if ( nbInterm > 1 ) {
-                    NR::Point bx = curX;
-                    NR::Point cx = curX;
-                    NR::Point dx = curX;
+                    Geom::Point bx = curX;
+                    Geom::Point cx = curX;
+                    Geom::Point dx = curX;
 
                     dx = nData->p;
                     ip++;
@@ -849,7 +849,7 @@ void Path::ConvertEvenLines(double treshhold)
                         ip++;
                         nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[ip]);
 
-                        NR::Point stx = (bx+cx) / 2;
+                        Geom::Point stx = (bx+cx) / 2;
                         if ( k > 0 ) {
                             descr_cmd[ip - 2]->associated = AddPoint(stx, false);
                             if ( descr_cmd[ip - 2]->associated < 0 ) {
@@ -862,7 +862,7 @@ void Path::ConvertEvenLines(double treshhold)
                         }
 
                         {
-                            NR::Point const mx = (cx + dx) / 2;
+                            Geom::Point const mx = (cx + dx) / 2;
                             RecBezierTo(cx, stx, mx, treshhold, 8, 4 * treshhold);
                         }
                     }
@@ -874,7 +874,7 @@ void Path::ConvertEvenLines(double treshhold)
                         dx = nextX;
                         dx = 2 * dx - cx;
 
-                        NR::Point const stx = (bx + cx) / 2;
+                        Geom::Point const stx = (bx + cx) / 2;
 
                         descr_cmd[ip - 1]->associated = AddPoint(stx, false);
                         if ( descr_cmd[ip - 1]->associated < 0 ) {
@@ -886,7 +886,7 @@ void Path::ConvertEvenLines(double treshhold)
                         }
 
                         {
-                            NR::Point const mx = (cx + dx) / 2;
+                            Geom::Point const mx = (cx + dx) / 2;
                             RecBezierTo(cx, stx, mx, treshhold, 8, 4 * treshhold);
                         }
                     }
@@ -912,7 +912,7 @@ void Path::ConvertEvenLines(double treshhold)
     }
 }
 
-const NR::Point Path::PrevPoint(int i) const
+const Geom::Point Path::PrevPoint(int i) const
 {
     /* TODO: I suspect this should assert `(unsigned) i < descr_nb'.  We can probably change
        the argument to unsigned.  descr_nb should probably be changed to unsigned too. */
@@ -944,64 +944,64 @@ const NR::Point Path::PrevPoint(int i) const
             return PrevPoint(i - 1);
         default:
             g_assert_not_reached();
-            return NR::Point(0, 0);
+            return Geom::Point(0, 0);
     }
 }
 
 // utilitaries: given a quadratic bezier curve (start point, control point, end point, ie that's a clamped curve),
 // and an abcissis on it, get the point with that abcissis.
 // warning: it's NOT a curvilign abcissis (or whatever you call that in english), so "t" is NOT the length of "start point"->"result point"
-void Path::QuadraticPoint(double t, NR::Point &oPt,
-                          const NR::Point &iS, const NR::Point &iM, const NR::Point &iE)
+void Path::QuadraticPoint(double t, Geom::Point &oPt,
+                          const Geom::Point &iS, const Geom::Point &iM, const Geom::Point &iE)
 {
-    NR::Point const ax = iE - 2 * iM + iS;
-    NR::Point const bx = 2 * iM - 2 * iS;
-    NR::Point const cx = iS;
+    Geom::Point const ax = iE - 2 * iM + iS;
+    Geom::Point const bx = 2 * iM - 2 * iS;
+    Geom::Point const cx = iS;
 
     oPt = t * t * ax + t * bx + cx;
 }
 // idem for cubic bezier patch
-void Path::CubicTangent(double t, NR::Point &oPt, const NR::Point &iS, const NR::Point &isD,
-                        const NR::Point &iE, const NR::Point &ieD)
+void Path::CubicTangent(double t, Geom::Point &oPt, const Geom::Point &iS, const Geom::Point &isD,
+                        const Geom::Point &iE, const Geom::Point &ieD)
 {
-    NR::Point const ax = ieD - 2 * iE + 2 * iS + isD;
-    NR::Point const bx = 3 * iE - ieD - 2 * isD - 3 * iS;
-    NR::Point const cx = isD;
+    Geom::Point const ax = ieD - 2 * iE + 2 * iS + isD;
+    Geom::Point const bx = 3 * iE - ieD - 2 * isD - 3 * iS;
+    Geom::Point const cx = isD;
 
     oPt = 3 * t * t * ax + 2 * t * bx + cx;
 }
 
 // extract interesting info of a SVG arc description
-static void ArcAnglesAndCenter(NR::Point const &iS, NR::Point const &iE,
+static void ArcAnglesAndCenter(Geom::Point const &iS, Geom::Point const &iE,
 			       double rx, double ry, double angle,
 			       bool large, bool wise,
-			       double &sang, double &eang, NR::Point &dr);
+			       double &sang, double &eang, Geom::Point &dr);
 
-void Path::ArcAngles(const NR::Point &iS, const NR::Point &iE,
+void Path::ArcAngles(const Geom::Point &iS, const Geom::Point &iE,
                      double rx, double ry, double angle, bool large, bool wise, double &sang, double &eang)
 {
-    NR::Point dr;
+    Geom::Point dr;
     ArcAnglesAndCenter(iS, iE, rx, ry, angle, large, wise, sang, eang, dr);
 }
 
 /* N.B. If iS == iE then sang,eang,dr each become NaN.  Probably a bug. */
-static void ArcAnglesAndCenter(NR::Point const &iS, NR::Point const &iE,
+static void ArcAnglesAndCenter(Geom::Point const &iS, Geom::Point const &iE,
                                double rx, double ry, double angle,
                                bool large, bool wise,
-                               double &sang, double &eang, NR::Point &dr)
+                               double &sang, double &eang, Geom::Point &dr)
 {
-    NR::Point se = iE - iS;
-    NR::Point ca(cos(angle), sin(angle));
-    NR::Point cse(dot(se, ca), cross(se, ca));
+    Geom::Point se = iE - iS;
+    Geom::Point ca(cos(angle), sin(angle));
+    Geom::Point cse(dot(se, ca), cross(se, ca));
     cse[0] /= rx;
     cse[1] /= ry;
     double const lensq = dot(cse,cse);
-    NR::Point csd = ( ( lensq < 4
+    Geom::Point csd = ( ( lensq < 4
                         ? sqrt( 1/lensq - .25 )
                         : 0.0 )
                       * cse.ccw() );
 
-    NR::Point ra = -csd - 0.5 * cse;
+    Geom::Point ra = -csd - 0.5 * cse;
     if ( ra[0] <= -1 ) {
         sang = M_PI;
     } else if ( ra[0] >= 1 ) {
@@ -1073,7 +1073,7 @@ static void ArcAnglesAndCenter(NR::Point const &iS, NR::Point const &iE,
 
 
 
-void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
+void Path::DoArc(Geom::Point const &iS, Geom::Point const &iE,
                  double const rx, double const ry, double const angle,
                  bool const large, bool const wise, double const /*tresh*/)
 {
@@ -1088,7 +1088,7 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
 
     double sang;
     double eang;
-    NR::Point dr_temp;
+    Geom::Point dr_temp;
     ArcAnglesAndCenter(iS, iE, rx, ry, angle, large, wise, sang, eang, dr_temp);
     Geom::Point dr = dr_temp;
     /* TODO: This isn't as good numerically as treating iS and iE as primary.  E.g. consider
@@ -1123,12 +1123,12 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
 }
 
 
-void Path::RecCubicTo( NR::Point const &iS, NR::Point const &isD,
-                       NR::Point const &iE, NR::Point const &ieD,
+void Path::RecCubicTo( Geom::Point const &iS, Geom::Point const &isD,
+                       Geom::Point const &iE, Geom::Point const &ieD,
                        double tresh, int lev, double maxL)
 {
-    NR::Point se = iE - iS;
-    const double dC = NR::L2(se);
+    Geom::Point se = iE - iS;
+    const double dC = Geom::L2(se);
     if ( dC < 0.01 ) {
 
         const double sC = dot(isD,isD);
@@ -1146,11 +1146,11 @@ void Path::RecCubicTo( NR::Point const &iS, NR::Point const &isD,
                 if ( lev <= 0 ) {
                     return;
                 }
-                NR::Point m = 0.5 * (iS + iE) + 0.125 * (isD - ieD);
-                NR::Point md = 0.75 * (iE - iS) - 0.125 * (isD + ieD);
+                Geom::Point m = 0.5 * (iS + iE) + 0.125 * (isD - ieD);
+                Geom::Point md = 0.75 * (iE - iS) - 0.125 * (isD + ieD);
 
-                NR::Point hisD = 0.5 * isD;
-                NR::Point hieD = 0.5 * ieD;
+                Geom::Point hisD = 0.5 * isD;
+                Geom::Point hieD = 0.5 * ieD;
 
                 RecCubicTo(iS, hisD, m, md, tresh, lev - 1, maxL);
                 AddPoint(m);
@@ -1165,11 +1165,11 @@ void Path::RecCubicTo( NR::Point const &iS, NR::Point const &isD,
     }
 
     {
-        NR::Point m = 0.5 * (iS + iE) + 0.125 * (isD - ieD);
-        NR::Point md = 0.75 * (iE - iS) - 0.125 * (isD + ieD);
+        Geom::Point m = 0.5 * (iS + iE) + 0.125 * (isD - ieD);
+        Geom::Point md = 0.75 * (iE - iS) - 0.125 * (isD + ieD);
 
-        NR::Point hisD = 0.5 * isD;
-        NR::Point hieD = 0.5 * ieD;
+        Geom::Point hisD = 0.5 * isD;
+        Geom::Point hieD = 0.5 * ieD;
 
         RecCubicTo(iS, hisD, m, md, tresh, lev - 1, maxL);
         AddPoint(m);
@@ -1179,24 +1179,24 @@ void Path::RecCubicTo( NR::Point const &iS, NR::Point const &isD,
 
 
 
-void Path::RecBezierTo(const NR::Point &iP,
-                       const NR::Point &iS,
-                       const NR::Point &iE,
+void Path::RecBezierTo(const Geom::Point &iP,
+                       const Geom::Point &iS,
+                       const Geom::Point &iE,
                        double tresh, int lev, double maxL)
 {
     if ( lev <= 0 ) {
         return;
     }
 
-    NR::Point ps = iS - iP;
-    NR::Point pe = iE - iP;
-    NR::Point se = iE - iS;
+    Geom::Point ps = iS - iP;
+    Geom::Point pe = iE - iP;
+    Geom::Point se = iE - iS;
     double s = fabs(cross(pe, ps));
     if ( s < tresh ) {
         const double l = L2(se);
         if ( maxL > 0 && l > maxL ) {
-            const NR::Point m = 0.25 * (iS + iE + 2 * iP);
-            NR::Point md = 0.5 * (iS + iP);
+            const Geom::Point m = 0.25 * (iS + iE + 2 * iP);
+            Geom::Point md = 0.5 * (iS + iP);
             RecBezierTo(md, iS, m, tresh, lev - 1, maxL);
             AddPoint(m);
             md = 0.5 * (iP + iE);
@@ -1206,8 +1206,8 @@ void Path::RecBezierTo(const NR::Point &iP,
     }
 
     {
-        const NR::Point m = 0.25 * (iS + iE + 2 * iP);
-        NR::Point md = 0.5 * (iS + iP);
+        const Geom::Point m = 0.25 * (iS + iE + 2 * iP);
+        Geom::Point md = 0.5 * (iS + iP);
         RecBezierTo(md, iS, m, tresh, lev - 1, maxL);
         AddPoint(m);
         md = 0.5 * (iP + iE);
@@ -1216,7 +1216,7 @@ void Path::RecBezierTo(const NR::Point &iP,
 }
 
 
-void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
+void Path::DoArc(Geom::Point const &iS, Geom::Point const &iE,
                  double const rx, double const ry, double const angle,
                  bool const large, bool const wise, double const /*tresh*/, int const piece)
 {
@@ -1231,7 +1231,7 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
 
     double sang;
     double eang;
-    NR::Point dr_temp;
+    Geom::Point dr_temp;
     ArcAnglesAndCenter(iS, iE, rx, ry, angle, large, wise, sang, eang, dr_temp);
     Geom::Point dr = dr_temp;
     /* TODO: This isn't as good numerically as treating iS and iE as primary.  E.g. consider
@@ -1265,12 +1265,12 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
     }
 }
 
-void Path::RecCubicTo(NR::Point const &iS, NR::Point const &isD,
-                      NR::Point const &iE, NR::Point const &ieD,
+void Path::RecCubicTo(Geom::Point const &iS, Geom::Point const &isD,
+                      Geom::Point const &iE, Geom::Point const &ieD,
                       double tresh, int lev, double st, double et, int piece)
 {
-    const NR::Point se = iE - iS;
-    const double dC = NR::L2(se);
+    const Geom::Point se = iE - iS;
+    const double dC = Geom::L2(se);
     if ( dC < 0.01 ) {
         const double sC = dot(isD, isD);
         const double eC = dot(ieD, ieD);
@@ -1289,12 +1289,12 @@ void Path::RecCubicTo(NR::Point const &iS, NR::Point const &isD,
         return;
     }
 
-    NR::Point m = 0.5 * (iS + iE) + 0.125 * (isD - ieD);
-    NR::Point md = 0.75 * (iE - iS) - 0.125 * (isD + ieD);
+    Geom::Point m = 0.5 * (iS + iE) + 0.125 * (isD - ieD);
+    Geom::Point md = 0.75 * (iE - iS) - 0.125 * (isD + ieD);
     double mt = (st + et) / 2;
 
-    NR::Point hisD = 0.5 * isD;
-    NR::Point hieD = 0.5 * ieD;
+    Geom::Point hisD = 0.5 * isD;
+    Geom::Point hieD = 0.5 * ieD;
 
     RecCubicTo(iS, hisD, m, md, tresh, lev - 1, st, mt, piece);
     AddPoint(m, piece, mt);
@@ -1304,17 +1304,17 @@ void Path::RecCubicTo(NR::Point const &iS, NR::Point const &isD,
 
 
 
-void Path::RecBezierTo(NR::Point const &iP,
-                       NR::Point const &iS,
-                       NR::Point const &iE,
+void Path::RecBezierTo(Geom::Point const &iP,
+                       Geom::Point const &iS,
+                       Geom::Point const &iE,
                        double tresh, int lev, double st, double et, int piece)
 {
     if ( lev <= 0 ) {
         return;
     }
 
-    NR::Point ps = iS - iP;
-    NR::Point pe = iE - iP;
+    Geom::Point ps = iS - iP;
+    Geom::Point pe = iE - iP;
     const double s = fabs(cross(pe, ps));
     if ( s < tresh ) {
         return;
@@ -1322,7 +1322,7 @@ void Path::RecBezierTo(NR::Point const &iP,
 
     {
         const double mt = (st + et) / 2;
-        const NR::Point m = 0.25 * (iS + iE + 2 * iP);
+        const Geom::Point m = 0.25 * (iS + iE + 2 * iP);
         RecBezierTo(0.5 * (iS + iP), iS, m, tresh, lev - 1, st, mt, piece);
         AddPoint(m, piece, mt);
         RecBezierTo(0.5 * (iP + iE), m, iE, tresh, lev - 1, mt, et, piece);
@@ -1331,7 +1331,7 @@ void Path::RecBezierTo(NR::Point const &iP,
 
 
 
-void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
+void Path::DoArc(Geom::Point const &iS, Geom::Point const &iE,
                  double const rx, double const ry, double const angle,
                  bool const large, bool const wise, double const /*tresh*/,
                  int const piece, offset_orig &/*orig*/)
@@ -1349,7 +1349,7 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
 
     double sang;
     double eang;
-    NR::Point dr_temp;
+    Geom::Point dr_temp;
     ArcAnglesAndCenter(iS, iE, rx, ry, angle, large, wise, sang, eang, dr_temp);
     Geom::Point dr = dr_temp;
     /* TODO: This isn't as good numerically as treating iS and iE as primary.  E.g. consider
@@ -1383,13 +1383,13 @@ void Path::DoArc(NR::Point const &iS, NR::Point const &iE,
 }
 
 
-void Path::RecCubicTo(NR::Point const &iS, NR::Point const &isD,
-                      NR::Point const &iE, NR::Point const &ieD,
+void Path::RecCubicTo(Geom::Point const &iS, Geom::Point const &isD,
+                      Geom::Point const &iE, Geom::Point const &ieD,
                       double tresh, int lev, double st, double et,
                       int piece, offset_orig &orig)
 {
-    const NR::Point se = iE - iS;
-    const double dC = NR::L2(se);
+    const Geom::Point se = iE - iS;
+    const double dC = Geom::L2(se);
     bool doneSub = false;
     if ( dC < 0.01 ) {
         const double sC = dot(isD, isD);
@@ -1413,16 +1413,16 @@ void Path::RecCubicTo(NR::Point const &iS, NR::Point const &isD,
     bool stInv = false;
     bool enInv = false;
     {
-        NR::Point os_pos;
-        NR::Point os_tgt;
-        NR::Point oe_pos;
-        NR::Point oe_tgt;
+        Geom::Point os_pos;
+        Geom::Point os_tgt;
+        Geom::Point oe_pos;
+        Geom::Point oe_tgt;
 
         orig.orig->PointAndTangentAt(orig.piece, orig.tSt * (1 - st) + orig.tEn * st, os_pos, os_tgt);
         orig.orig->PointAndTangentAt(orig.piece, orig.tSt * (1 - et) + orig.tEn * et, oe_pos, oe_tgt);
 
 
-        NR::Point n_tgt = isD;
+        Geom::Point n_tgt = isD;
         double si = dot(n_tgt, os_tgt);
         if ( si < 0 ) {
             stInv = true;
@@ -1451,11 +1451,11 @@ void Path::RecCubicTo(NR::Point const &iS, NR::Point const &isD,
     }
 
     {
-        const NR::Point m = 0.5 * (iS+iE) + 0.125 * (isD - ieD);
-        const NR::Point md = 0.75 * (iE - iS) - 0.125 * (isD + ieD);
+        const Geom::Point m = 0.5 * (iS+iE) + 0.125 * (isD - ieD);
+        const Geom::Point md = 0.75 * (iE - iS) - 0.125 * (isD + ieD);
         const double mt = (st + et) / 2;
-        const NR::Point hisD = 0.5 * isD;
-        const NR::Point hieD = 0.5 * ieD;
+        const Geom::Point hisD = 0.5 * isD;
+        const Geom::Point hieD = 0.5 * ieD;
 
         RecCubicTo(iS, hisD, m, md, tresh, lev - 1, st, mt, piece, orig);
         AddPoint(m, piece, mt);
@@ -1465,7 +1465,7 @@ void Path::RecCubicTo(NR::Point const &iS, NR::Point const &isD,
 
 
 
-void Path::RecBezierTo(NR::Point const &iP, NR::Point const &iS,NR::Point const &iE,
+void Path::RecBezierTo(Geom::Point const &iP, Geom::Point const &iS,Geom::Point const &iE,
                        double tresh, int lev, double st, double et,
                        int piece, offset_orig& orig)
 {
@@ -1474,8 +1474,8 @@ void Path::RecBezierTo(NR::Point const &iP, NR::Point const &iS,NR::Point const 
         return;
     }
 
-    const NR::Point ps = iS - iP;
-    const NR::Point pe = iE - iP;
+    const Geom::Point ps = iS - iP;
+    const Geom::Point pe = iE - iP;
     const double s = fabs(cross(pe, ps));
     if ( s < tresh ) {
         doneSub = true ;
@@ -1485,12 +1485,12 @@ void Path::RecBezierTo(NR::Point const &iP, NR::Point const &iS,NR::Point const 
     bool stInv = false;
     bool enInv = false;
     {
-        NR::Point os_pos;
-        NR::Point os_tgt;
-        NR::Point oe_pos;
-        NR::Point oe_tgt;
-        NR::Point n_tgt;
-        NR::Point n_pos;
+        Geom::Point os_pos;
+        Geom::Point os_tgt;
+        Geom::Point oe_pos;
+        Geom::Point oe_tgt;
+        Geom::Point n_tgt;
+        Geom::Point n_pos;
 
         double n_len;
         double n_rad;
@@ -1526,8 +1526,8 @@ void Path::RecBezierTo(NR::Point const &iP, NR::Point const &iS,NR::Point const 
 
     {
         double mt = (st + et) / 2;
-        NR::Point m = 0.25 * (iS + iE + 2 * iP);
-        NR::Point md = 0.5 * (iS + iP);
+        Geom::Point m = 0.25 * (iS + iE + 2 * iP);
+        Geom::Point md = 0.5 * (iS + iP);
         RecBezierTo(md, iS, m, tresh, lev - 1, st, mt, piece, orig);
         AddPoint(m, piece, mt);
         md = 0.5 * (iP + iE);

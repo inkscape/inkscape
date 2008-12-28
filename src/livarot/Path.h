@@ -76,11 +76,11 @@ public:
   // t=0 means it's at the start of the command's chunk, t=1 it's at the end
   struct path_lineto
   {
-    path_lineto(bool m, NR::Point pp) : isMoveTo(m), p(pp), piece(-1), t(0) {}
-    path_lineto(bool m, NR::Point pp, int pie, double tt) : isMoveTo(m), p(pp), piece(pie), t(tt) {}
+    path_lineto(bool m, Geom::Point pp) : isMoveTo(m), p(pp), piece(-1), t(0) {}
+    path_lineto(bool m, Geom::Point pp, int pie, double tt) : isMoveTo(m), p(pp), piece(pie), t(tt) {}
     
     int isMoveTo;
-    NR::Point  p;
+    Geom::Point  p;
     int piece;
     double t;
   };
@@ -99,15 +99,15 @@ public:
   // the commands...
   int ForcePoint();
   int Close();
-  int MoveTo ( NR::Point const &ip);
-  int LineTo ( NR::Point const &ip);
-  int CubicTo ( NR::Point const &ip,  NR::Point const &iStD,  NR::Point const &iEnD);
-  int ArcTo ( NR::Point const &ip, double iRx, double iRy, double angle, bool iLargeArc, bool iClockwise);
-  int IntermBezierTo ( NR::Point const &ip);	// add a quadratic bezier spline control point
-  int BezierTo ( NR::Point const &ip);	// quadratic bezier spline to this point (control points can be added after this)
+  int MoveTo ( Geom::Point const &ip);
+  int LineTo ( Geom::Point const &ip);
+  int CubicTo ( Geom::Point const &ip,  Geom::Point const &iStD,  Geom::Point const &iEnD);
+  int ArcTo ( Geom::Point const &ip, double iRx, double iRy, double angle, bool iLargeArc, bool iClockwise);
+  int IntermBezierTo ( Geom::Point const &ip);	// add a quadratic bezier spline control point
+  int BezierTo ( Geom::Point const &ip);	// quadratic bezier spline to this point (control points can be added after this)
   int TempBezierTo();	// start a quadratic bezier spline (control points can be added after this)
   int EndBezierTo();
-  int EndBezierTo ( NR::Point const &ip);	// ends a quadratic bezier spline (for curves started with TempBezierTo)
+  int EndBezierTo ( Geom::Point const &ip);	// ends a quadratic bezier spline (for curves started with TempBezierTo)
 
   // transforms a description in a polyline (for stroking and filling)
   // treshhold is the max length^2 (sort of)
@@ -120,11 +120,11 @@ public:
   // creation of the polyline (you can tinker with these function if you want)
   void SetBackData (bool nVal);	// has back data?
   void ResetPoints(); // resets to the empty polyline
-  int AddPoint ( NR::Point const &iPt, bool mvto = false);	// add point
-  int AddPoint ( NR::Point const &iPt, int ip, double it, bool mvto = false);
-  int AddForcedPoint ( NR::Point const &iPt);	// add point
-  int AddForcedPoint ( NR::Point const &iPt, int ip, double it);
-  int ReplacePoint(NR::Point const &iPt);  // replace point
+  int AddPoint ( Geom::Point const &iPt, bool mvto = false);	// add point
+  int AddPoint ( Geom::Point const &iPt, int ip, double it, bool mvto = false);
+  int AddForcedPoint ( Geom::Point const &iPt);	// add point
+  int AddForcedPoint ( Geom::Point const &iPt, int ip, double it);
+  int ReplacePoint(Geom::Point const &iPt);  // replace point
 
   // transform in a polygon (in a graph, in fact; a subsequent call to ConvertToShape is needed)
   //  - fills the polyline; justAdd=true doesn't reset the Shape dest, but simply adds the polyline into it
@@ -163,12 +163,12 @@ public:
   // piece is a command no in the command list
   // "at" is an abcissis on the path portion associated with this command
   // 0=beginning of portion, 1=end of portion.
-  void PointAt (int piece, double at, NR::Point & pos);
-  void PointAndTangentAt (int piece, double at, NR::Point & pos, NR::Point & tgt);
+  void PointAt (int piece, double at, Geom::Point & pos);
+  void PointAndTangentAt (int piece, double at, Geom::Point & pos, Geom::Point & tgt);
 
   // last control point before the command i (i included)
   // used when dealing with quadratic bezier spline, cause these can contain arbitrarily many commands
-  const NR::Point PrevPoint (const int i) const;
+  const Geom::Point PrevPoint (const int i) const;
   
   // dash the polyline
   // the result is stored in the polyline, so you lose the original. make a copy before if needed
@@ -182,7 +182,7 @@ public:
   void  LoadPathVector(Geom::PathVector const &pv);
   Geom::PathVector* MakePathVector();
 
-  void  Transform(const NR::Matrix &trans);
+  void  Transform(const Geom::Matrix &trans);
 
   // decompose le chemin en ses sous-chemin
   // killNoSurf=true -> oublie les chemins de surface nulle
@@ -206,7 +206,7 @@ public:
     double        t;
   };
   cut_position*    CurvilignToPosition(int nbCv,double* cvAbs,int &nbCut);
-  cut_position    PointToCurvilignPosition(NR::Point const &pos, unsigned seg = 0) const;
+  cut_position    PointToCurvilignPosition(Geom::Point const &pos, unsigned seg = 0) const;
   //Should this take a cut_position as a param?
   double           PositionToLength(int piece, double t);
   
@@ -223,13 +223,13 @@ public:
   // utilitary functions for the path contruction
   void CancelBezier ();
   void CloseSubpath();
-  void InsertMoveTo (NR::Point const &iPt,int at);
+  void InsertMoveTo (Geom::Point const &iPt,int at);
   void InsertForcePoint (int at);
-  void InsertLineTo (NR::Point const &iPt,int at);
-  void InsertArcTo (NR::Point const &ip, double iRx, double iRy, double angle, bool iLargeArc, bool iClockwise,int at);
-  void InsertCubicTo (NR::Point const &ip,  NR::Point const &iStD,  NR::Point const &iEnD,int at);
-  void InsertBezierTo (NR::Point const &iPt,int iNb,int at);
-  void InsertIntermBezierTo (NR::Point const &iPt,int at);
+  void InsertLineTo (Geom::Point const &iPt,int at);
+  void InsertArcTo (Geom::Point const &ip, double iRx, double iRy, double angle, bool iLargeArc, bool iClockwise,int at);
+  void InsertCubicTo (Geom::Point const &ip,  Geom::Point const &iStD,  Geom::Point const &iEnD,int at);
+  void InsertBezierTo (Geom::Point const &iPt,int iNb,int at);
+  void InsertIntermBezierTo (Geom::Point const &iPt,int at);
   
   // creation of dashes: take the polyline given by spP (length spL) and dash it according to head, body, etc. put the result in
   // the polyline of this instance
@@ -237,17 +237,17 @@ public:
 
   // Functions used by the conversion.
   // they append points to the polyline
-  void DoArc ( NR::Point const &iS,  NR::Point const &iE, double rx, double ry,
+  void DoArc ( Geom::Point const &iS,  Geom::Point const &iE, double rx, double ry,
 	      double angle, bool large, bool wise, double tresh);
-  void RecCubicTo ( NR::Point const &iS,  NR::Point const &iSd,  NR::Point const &iE,  NR::Point const &iEd, double tresh, int lev,
+  void RecCubicTo ( Geom::Point const &iS,  Geom::Point const &iSd,  Geom::Point const &iE,  Geom::Point const &iEd, double tresh, int lev,
 		   double maxL = -1.0);
-  void RecBezierTo ( NR::Point const &iPt,  NR::Point const &iS,  NR::Point const &iE, double treshhold, int lev, double maxL = -1.0);
+  void RecBezierTo ( Geom::Point const &iPt,  Geom::Point const &iS,  Geom::Point const &iE, double treshhold, int lev, double maxL = -1.0);
 
-  void DoArc ( NR::Point const &iS,  NR::Point const &iE, double rx, double ry,
+  void DoArc ( Geom::Point const &iS,  Geom::Point const &iE, double rx, double ry,
 	      double angle, bool large, bool wise, double tresh, int piece);
-  void RecCubicTo ( NR::Point const &iS,  NR::Point const &iSd,  NR::Point const &iE,  NR::Point const &iEd, double tresh, int lev,
+  void RecCubicTo ( Geom::Point const &iS,  Geom::Point const &iSd,  Geom::Point const &iE,  Geom::Point const &iEd, double tresh, int lev,
 		   double st, double et, int piece);
-  void RecBezierTo ( NR::Point const &iPt,  NR::Point const &iS, const  NR::Point &iE, double treshhold, int lev, double st, double et,
+  void RecBezierTo ( Geom::Point const &iPt,  Geom::Point const &iS, const  Geom::Point &iE, double treshhold, int lev, double st, double et,
 		    int piece);
 
   // don't pay attention
@@ -258,21 +258,21 @@ public:
     double tSt, tEn;
     double off_dec;
   };
-  void DoArc ( NR::Point const &iS,  NR::Point const &iE, double rx, double ry,
+  void DoArc ( Geom::Point const &iS,  Geom::Point const &iE, double rx, double ry,
 	      double angle, bool large, bool wise, double tresh, int piece,
 	      offset_orig & orig);
-  void RecCubicTo ( NR::Point const &iS,  NR::Point const &iSd,  NR::Point const &iE,  NR::Point const &iEd, double tresh, int lev,
+  void RecCubicTo ( Geom::Point const &iS,  Geom::Point const &iSd,  Geom::Point const &iE,  Geom::Point const &iEd, double tresh, int lev,
 		   double st, double et, int piece, offset_orig & orig);
-  void RecBezierTo ( NR::Point const &iPt,  NR::Point const &iS,  NR::Point const &iE, double treshhold, int lev, double st, double et,
+  void RecBezierTo ( Geom::Point const &iPt,  Geom::Point const &iS,  Geom::Point const &iE, double treshhold, int lev, double st, double et,
 		    int piece, offset_orig & orig);
 
-  static void ArcAngles ( NR::Point const &iS,  NR::Point const &iE, double rx,
+  static void ArcAngles ( Geom::Point const &iS,  Geom::Point const &iE, double rx,
                          double ry, double angle, bool large, bool wise,
                          double &sang, double &eang);
-  static void QuadraticPoint (double t,  NR::Point &oPt,   NR::Point const &iS,   NR::Point const &iM,   NR::Point const &iE);
-  static void CubicTangent (double t,  NR::Point &oPt,  NR::Point const &iS,
-			     NR::Point const &iSd,  NR::Point const &iE,
-			     NR::Point const &iEd);
+  static void QuadraticPoint (double t,  Geom::Point &oPt,   Geom::Point const &iS,   Geom::Point const &iM,   Geom::Point const &iE);
+  static void CubicTangent (double t,  Geom::Point &oPt,  Geom::Point const &iS,
+			     Geom::Point const &iSd,  Geom::Point const &iE,
+			     Geom::Point const &iEd);
 
   struct outline_callback_data
   {
@@ -316,24 +316,24 @@ public:
 			   Path * dest, outline_callbacks & calls,
 			   double tolerance, double width, JoinType join,
 			   ButtType butt, double miter, bool closeIfNeeded,
-			   bool skipMoveto, NR::Point & lastP, NR::Point & lastT);
+			   bool skipMoveto, Geom::Point & lastP, Geom::Point & lastT);
   void DoStroke(int off, int N, Shape *dest, bool doClose, double width, JoinType join,
 		ButtType butt, double miter, bool justAdd = false);
 
-  static void TangentOnSegAt(double at, NR::Point const &iS, PathDescrLineTo const &fin,
-			     NR::Point &pos, NR::Point &tgt, double &len);
-  static void TangentOnArcAt(double at, NR::Point const &iS, PathDescrArcTo const &fin,
-			     NR::Point &pos, NR::Point &tgt, double &len, double &rad);
-  static void TangentOnCubAt (double at, NR::Point const &iS, PathDescrCubicTo const &fin, bool before,
-			      NR::Point &pos, NR::Point &tgt, double &len, double &rad);
-  static void TangentOnBezAt (double at, NR::Point const &iS,
+  static void TangentOnSegAt(double at, Geom::Point const &iS, PathDescrLineTo const &fin,
+			     Geom::Point &pos, Geom::Point &tgt, double &len);
+  static void TangentOnArcAt(double at, Geom::Point const &iS, PathDescrArcTo const &fin,
+			     Geom::Point &pos, Geom::Point &tgt, double &len, double &rad);
+  static void TangentOnCubAt (double at, Geom::Point const &iS, PathDescrCubicTo const &fin, bool before,
+			      Geom::Point &pos, Geom::Point &tgt, double &len, double &rad);
+  static void TangentOnBezAt (double at, Geom::Point const &iS,
 			      PathDescrIntermBezierTo & mid,
 			      PathDescrBezierTo & fin, bool before,
-			      NR::Point & pos, NR::Point & tgt, double &len, double &rad);
-  static void OutlineJoin (Path * dest, NR::Point pos, NR::Point stNor, NR::Point enNor,
+			      Geom::Point & pos, Geom::Point & tgt, double &len, double &rad);
+  static void OutlineJoin (Path * dest, Geom::Point pos, Geom::Point stNor, Geom::Point enNor,
 			   double width, JoinType join, double miter);
 
-  static bool IsNulCurve (std::vector<PathDescr*> const &cmd, int curD, NR::Point const &curX);
+  static bool IsNulCurve (std::vector<PathDescr*> const &cmd, int curD, Geom::Point const &curX);
 
   static void RecStdCubicTo (outline_callback_data * data, double tol,
 			     double width, int lev);
@@ -347,26 +347,26 @@ public:
 
 
   // fonctions annexes pour le stroke
-  static void DoButt (Shape * dest, double width, ButtType butt, NR::Point pos,
-		      NR::Point dir, int &leftNo, int &rightNo);
-  static void DoJoin (Shape * dest, double width, JoinType join, NR::Point pos,
-		      NR::Point prev, NR::Point next, double miter, double prevL,
+  static void DoButt (Shape * dest, double width, ButtType butt, Geom::Point pos,
+		      Geom::Point dir, int &leftNo, int &rightNo);
+  static void DoJoin (Shape * dest, double width, JoinType join, Geom::Point pos,
+		      Geom::Point prev, Geom::Point next, double miter, double prevL,
 		      double nextL, int *stNo, int *enNo);
-  static void DoLeftJoin (Shape * dest, double width, JoinType join, NR::Point pos,
-			  NR::Point prev, NR::Point next, double miter, double prevL,
+  static void DoLeftJoin (Shape * dest, double width, JoinType join, Geom::Point pos,
+			  Geom::Point prev, Geom::Point next, double miter, double prevL,
 			  double nextL, int &leftStNo, int &leftEnNo,int pathID=-1,int pieceID=0,double tID=0.0);
-  static void DoRightJoin (Shape * dest, double width, JoinType join, NR::Point pos,
-			   NR::Point prev, NR::Point next, double miter, double prevL,
+  static void DoRightJoin (Shape * dest, double width, JoinType join, Geom::Point pos,
+			   Geom::Point prev, Geom::Point next, double miter, double prevL,
 			   double nextL, int &rightStNo, int &rightEnNo,int pathID=-1,int pieceID=0,double tID=0.0);
     static void RecRound (Shape * dest, int sNo, int eNo,
-            NR::Point const &iS, NR::Point const &iE,
-            NR::Point const &nS, NR::Point const &nE,
-            NR::Point &origine,float width);
+            Geom::Point const &iS, Geom::Point const &iE,
+            Geom::Point const &nS, Geom::Point const &nE,
+            Geom::Point &origine,float width);
 
 
   void DoSimplify(int off, int N, double treshhold);
   bool AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &res, int &worstP);
-  static bool FitCubic(NR::Point const &start,
+  static bool FitCubic(Geom::Point const &start,
 		       PathDescrCubicTo &res,
 		       double *Xk, double *Yk, double *Qk, double *tk, int nbPt);
   
@@ -382,7 +382,7 @@ public:
   };
   bool   AttemptSimplify (fitting_tables &data,double treshhold, PathDescrCubicTo & res,int &worstP);
   bool   ExtendFit(int off, int N, fitting_tables &data,double treshhold, PathDescrCubicTo & res,int &worstP);
-  double RaffineTk (NR::Point pt, NR::Point p0, NR::Point p1, NR::Point p2, NR::Point p3, double it);
+  double RaffineTk (Geom::Point pt, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3, double it);
   void   FlushPendingAddition(Path* dest,PathDescr *lastAddition,PathDescrCubicTo &lastCubic,int lastAD);
 
 private:

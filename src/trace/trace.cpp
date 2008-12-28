@@ -282,7 +282,7 @@ Tracer::sioxProcessImage(SPImage *img,
             {
             //Get absolute X,Y position
             double xpos = ((double)aImg->bbox.x0) + iwscale * (double)col;
-            NR::Point point(xpos, ypos);
+            Geom::Point point(xpos, ypos);
             point *= *aImg->transform;
             //point *= imgMat;
             //point = desktop->doc2dt(point);
@@ -511,7 +511,7 @@ void Tracer::traceThread()
     Geom::Scale scal(iwscale, ihscale);
 
     //# Convolve scale, translation, and the original transform
-    NR::Matrix tf(scal * trans);
+    Geom::Matrix tf(scal * trans);
     tf *= img->transform;
 
 

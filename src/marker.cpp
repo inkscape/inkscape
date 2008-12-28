@@ -366,8 +366,8 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	/* Copy parent context */
 	rctx.ctx = *ctx;
 	/* Initialize tranformations */
-	rctx.i2doc = NR::identity();
-	rctx.i2vp = NR::identity();
+	rctx.i2doc = Geom::identity();
+	rctx.i2vp = Geom::identity();
 	/* Set up viewport */
 	rctx.vp.x0 = 0.0;
 	rctx.vp.y0 = 0.0;

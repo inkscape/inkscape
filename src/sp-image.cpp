@@ -1326,11 +1326,11 @@ static void sp_image_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::
         double const y0 = image.y.computed;
         double const x1 = x0 + image.width.computed;
         double const y1 = y0 + image.height.computed;
-        NR::Matrix const i2d (sp_item_i2d_affine (item));
-        *p = NR::Point(x0, y0) * i2d;
-        *p = NR::Point(x0, y1) * i2d;
-        *p = NR::Point(x1, y1) * i2d;
-        *p = NR::Point(x1, y0) * i2d;
+        Geom::Matrix const i2d (sp_item_i2d_affine (item));
+        *p = Geom::Point(x0, y0) * i2d;
+        *p = Geom::Point(x0, y1) * i2d;
+        *p = Geom::Point(x1, y1) * i2d;
+        *p = Geom::Point(x1, y0) * i2d;
     }
 }
 
@@ -1352,14 +1352,14 @@ sp_image_set_transform(SPItem *item, Geom::Matrix const &xform)
     Geom::Matrix ret(Geom::Matrix(xform).without_translation());
     Geom::Point const scale(hypot(ret[0], ret[1]),
                             hypot(ret[2], ret[3]));
-    if ( scale[NR::X] > MAGIC_EPSILON ) {
+    if ( scale[Geom::X] > MAGIC_EPSILON ) {
         ret[0] /= scale[Geom::X];
         ret[1] /= scale[Geom::X];
     } else {
         ret[0] = 1.0;
         ret[1] = 0.0;
     }
-    if ( scale[NR::Y] > MAGIC_EPSILON ) {
+    if ( scale[Geom::Y] > MAGIC_EPSILON ) {
         ret[2] /= scale[Geom::Y];
         ret[3] /= scale[Geom::Y];
     } else {
@@ -1524,7 +1524,7 @@ sp_image_set_curve(SPImage *image)
         }
     } else {
         NRRect rect;
-        sp_image_bbox(image, &rect, NR::identity(), 0);
+        sp_image_bbox(image, &rect, Geom::identity(), 0);
         Geom::Rect rect2 = to_2geom(*rect.upgrade());
         SPCurve *c = SPCurve::new_from_rect(rect2);
 

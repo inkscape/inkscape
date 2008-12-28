@@ -403,7 +403,7 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, Geom::Point p)
     // convert to point
     dc->ang = Geom::Point (cos (new_ang), sin (new_ang));
 
-//    g_print ("force %g  acc %g  vel_max %g  vel %g  a1 %g  a2 %g  new_ang %g\n", NR::L2(force), NR::L2(dc->acc), dc->vel_max, NR::L2(dc->vel), a1, a2, new_ang);
+//    g_print ("force %g  acc %g  vel_max %g  vel %g  a1 %g  a2 %g  new_ang %g\n", Geom::L2(force), Geom::L2(dc->acc), dc->vel_max, Geom::L2(dc->vel), a1, a2, new_ang);
 
     /* Apply drag */
     dc->vel *= 1.0 - drag;
@@ -672,7 +672,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                         ) {
                         // We are NOT attracted to the guide!
 
-                        //g_print ("\nlast_nearest %g %g   nearest %g %g  pointer %g %g  pos %d %g\n", dc->last_nearest[NR::X], dc->last_nearest[NR::Y], nearest[NR::X], nearest[NR::Y], pointer[NR::X], pointer[NR::Y], position->piece, position->t);
+                        //g_print ("\nlast_nearest %g %g   nearest %g %g  pointer %g %g  pos %d %g\n", dc->last_nearest[Geom::X], dc->last_nearest[Geom::Y], nearest[Geom::X], nearest[Geom::Y], pointer[Geom::X], pointer[Geom::Y], position->piece, position->t);
 
                         // Remember hatch_escaped so we don't get
                         // attracted again until the end of this stroke

@@ -96,12 +96,12 @@ void Path::DashSubPath(int spL, int spP, std::vector<path_lineto> const &orig_pt
   if ( spL <= 0 || spP == -1 ) return;
   
   double      totLength=0;
-  NR::Point   lastP;
+  Geom::Point   lastP;
   lastP = orig_pts[spP].p;
   for (int i=1;i<spL;i++) {
-    NR::Point const n = orig_pts[spP + i].p;
-    NR::Point d=n-lastP;
-    double    nl=NR::L2(d);
+    Geom::Point const n = orig_pts[spP + i].p;
+    Geom::Point d=n-lastP;
+    double    nl=Geom::L2(d);
     if ( nl > 0.0001 ) {
       totLength+=nl;
       lastP=n;
@@ -118,7 +118,7 @@ void Path::DashSubPath(int spL, int spP, std::vector<path_lineto> const &orig_pt
   int       lastPiece=-1;
   lastP = orig_pts[spP].p;
   for (int i=1;i<spL;i++) {
-    NR::Point   n;
+    Geom::Point   n;
     int         nPiece=-1;
     double      nT=0;
     if ( back ) {
@@ -128,8 +128,8 @@ void Path::DashSubPath(int spL, int spP, std::vector<path_lineto> const &orig_pt
     } else {
       n = orig_pts[spP + i].p;
     }
-    NR::Point d=n-lastP;
-    double    nl=NR::L2(d);
+    Geom::Point d=n-lastP;
+    double    nl=Geom::L2(d);
     if ( nl > 0.0001 ) {
       double   stLength=curLength;
       double   enLength=curLength+nl;
@@ -150,7 +150,7 @@ void Path::DashSubPath(int spL, int spP, std::vector<path_lineto> const &orig_pt
           }
         }
         if ( nPlain == true && dashPlain == false ) {
-          NR::Point  p=(enLength-curLength)*lastP+(curLength-stLength)*n;
+          Geom::Point  p=(enLength-curLength)*lastP+(curLength-stLength)*n;
           p/=(enLength-stLength);
           if ( back ) {
             double pT=0;
@@ -188,7 +188,7 @@ void Path::DashSubPath(int spL, int spP, std::vector<path_lineto> const &orig_pt
               nPlain=dashPlain;
             }
             if ( nPlain == true && dashPlain == false ) {
-              NR::Point  p=(enLength-curLength-leftInDash)*lastP+(curLength+leftInDash-stLength)*n;
+              Geom::Point  p=(enLength-curLength-leftInDash)*lastP+(curLength+leftInDash-stLength)*n;
               p/=(enLength-stLength);
               if ( back ) {
                 double pT=0;
@@ -202,7 +202,7 @@ void Path::DashSubPath(int spL, int spP, std::vector<path_lineto> const &orig_pt
                 AddPoint(p,true);
               }
             } else if ( nPlain == false && dashPlain == true ) {
-              NR::Point  p=(enLength-curLength-leftInDash)*lastP+(curLength+leftInDash-stLength)*n;
+              Geom::Point  p=(enLength-curLength-leftInDash)*lastP+(curLength+leftInDash-stLength)*n;
               p/=(enLength-stLength);
               if ( back ) {
                 double pT=0;
@@ -242,7 +242,7 @@ void Path::DashSubPath(int spL, int spP, std::vector<path_lineto> const &orig_pt
         bool nPlain=false;
         if ( nPlain == true && dashPlain == false ) {
         } else if ( nPlain == false && dashPlain == true ) {
-          NR::Point  p=(enLength-curLength)*lastP+(curLength-stLength)*n;
+          Geom::Point  p=(enLength-curLength)*lastP+(curLength-stLength)*n;
           p/=(enLength-stLength);
           if ( back ) {
             double pT=0;
@@ -273,7 +273,7 @@ Path::MakePathVector()
     Geom::PathVector *pv = new Geom::PathVector();
     Geom::Path * currentpath = NULL;
 
-    NR::Point   lastP,bezSt,bezEn;
+    Geom::Point   lastP,bezSt,bezEn;
     int         bezNb=0;
     for (int i=0;i<int(descr_cmd.size());i++) {
         int const typ = descr_cmd[i]->getType();
@@ -354,7 +354,7 @@ Path::MakePathVector()
             {
                 if ( bezNb > 0 ) {
                     PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[i]);
-                    NR::Point p_m=nData->p,p_s=0.5*(bezSt+p_m),p_e;
+                    Geom::Point p_m=nData->p,p_s=0.5*(bezSt+p_m),p_e;
                     if ( bezNb > 1 ) {
                         PathDescrIntermBezierTo *iData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[i+1]);
                         p_e=0.5*(p_m+iData->p);
@@ -362,7 +362,7 @@ Path::MakePathVector()
                         p_e=bezEn;
                     }
 
-                    NR::Point  cp1=0.333333*(p_s+2*p_m),cp2=0.333333*(2*p_m+p_e);
+                    Geom::Point  cp1=0.333333*(p_s+2*p_m),cp2=0.333333*(2*p_m+p_e);
                     gdouble x1=cp1[0];
                     gdouble y1=cp1[1];
                     gdouble x2=cp2[0];
@@ -482,13 +482,13 @@ double Path::Length()
         return 0;
     }
 
-    NR::Point lastP = pts[0].p;
+    Geom::Point lastP = pts[0].p;
 
     double len = 0;
     for (std::vector<path_lineto>::const_iterator i = pts.begin(); i != pts.end(); i++) {
 
         if ( i->isMoveTo != polyline_moveto ) {
-            len += NR::L2(i->p - lastP);
+            len += Geom::L2(i->p - lastP);
         }
 
         lastP = i->p;
@@ -504,8 +504,8 @@ double Path::Surface()
         return 0;
     }
     
-    NR::Point lastM = pts[0].p;
-    NR::Point lastP = lastM;
+    Geom::Point lastM = pts[0].p;
+    Geom::Point lastP = lastM;
 
     double surf = 0;
     for (std::vector<path_lineto>::const_iterator i = pts.begin(); i != pts.end(); i++) {
@@ -743,11 +743,11 @@ void Path::ConvertForcedToVoid()
 
 void Path::ConvertForcedToMoveTo()
 {  
-    NR::Point lastSeen(0, 0);
-    NR::Point lastMove(0, 0);
+    Geom::Point lastSeen(0, 0);
+    Geom::Point lastMove(0, 0);
     
     {
-        NR::Point lastPos(0, 0);
+        Geom::Point lastPos(0, 0);
         for (int i = int(descr_cmd.size()) - 1; i >= 0; i--) {
             int const typ = descr_cmd[i]->getType();
             switch ( typ ) {
@@ -900,8 +900,8 @@ Path::cut_position* Path::CurvilignToPosition(int nbCv, double *cvAbs, int &nbCu
     double lastT = 0;
     int lastPiece = -1;
 
-    NR::Point lastM = pts[0].p;
-    NR::Point lastP = lastM;
+    Geom::Point lastM = pts[0].p;
+    Geom::Point lastP = lastM;
 
     for (std::vector<path_lineto>::const_iterator i = pts.begin(); i != pts.end(); i++) {
 
@@ -913,7 +913,7 @@ Path::cut_position* Path::CurvilignToPosition(int nbCv, double *cvAbs, int &nbCu
 
         } else {
             
-            double const add = NR::L2(i->p - lastP);
+            double const add = Geom::L2(i->p - lastP);
             double curPos = len;
             double curAdd = add;
             
@@ -948,7 +948,7 @@ hence the Path-esque coding style"
 
 */
 template<typename T> inline static T square(T x) {return x*x;}
-Path::cut_position Path::PointToCurvilignPosition(NR::Point const &pos, unsigned seg) const
+Path::cut_position Path::PointToCurvilignPosition(Geom::Point const &pos, unsigned seg) const
 {
     // if the parameter "seg" == 0, then all segments will be considered
     // In however e.g. "seg" == 6 , then only the 6th segment will be considered 
@@ -959,16 +959,16 @@ Path::cut_position Path::PointToCurvilignPosition(NR::Point const &pos, unsigned
 
     for (unsigned i = 1 ; i < pts.size() ; i++) {
         if (pts[i].isMoveTo == polyline_moveto || (seg > 0 && i != seg)) continue;
-        NR::Point p1, p2, localPos;
+        Geom::Point p1, p2, localPos;
         double thisRangeSquared;
         double t;
 
         if (pts[i - 1].p == pts[i].p) {
-            thisRangeSquared = square(pts[i].p[NR::X] - pos[NR::X]) + square(pts[i].p[NR::Y] - pos[NR::Y]);
+            thisRangeSquared = square(pts[i].p[Geom::X] - pos[Geom::X]) + square(pts[i].p[Geom::Y] - pos[Geom::Y]);
             t = 0.0;
         } else {
             // we rotate all our coordinates so we're always looking at a mostly vertical line.
-            if (fabs(pts[i - 1].p[NR::X] - pts[i].p[NR::X]) < fabs(pts[i - 1].p[NR::Y] - pts[i].p[NR::Y])) {
+            if (fabs(pts[i - 1].p[Geom::X] - pts[i].p[Geom::X]) < fabs(pts[i - 1].p[Geom::Y] - pts[i].p[Geom::Y])) {
                 p1 = pts[i - 1].p;
                 p2 = pts[i].p;
                 localPos = pos;
@@ -977,32 +977,32 @@ Path::cut_position Path::PointToCurvilignPosition(NR::Point const &pos, unsigned
                 p2 = pts[i].p.cw();
                 localPos = pos.cw();
             }
-            double gradient = (p2[NR::X] - p1[NR::X]) / (p2[NR::Y] - p1[NR::Y]);
-            double intersection = p1[NR::X] - gradient * p1[NR::Y];
+            double gradient = (p2[Geom::X] - p1[Geom::X]) / (p2[Geom::Y] - p1[Geom::Y]);
+            double intersection = p1[Geom::X] - gradient * p1[Geom::Y];
             /*
               orthogonalGradient = -1.0 / gradient; // you are going to have numerical problems here.
-              orthogonalIntersection = localPos[NR::X] - orthogonalGradient * localPos[NR::Y];
+              orthogonalIntersection = localPos[Geom::X] - orthogonalGradient * localPos[Geom::Y];
               nearestY = (orthogonalIntersection - intersection) / (gradient - orthogonalGradient);
 
               expand out nearestY fully :
-              nearestY = (localPos[NR::X] - (-1.0 / gradient) * localPos[NR::Y] - intersection) / (gradient - (-1.0 / gradient));
+              nearestY = (localPos[Geom::X] - (-1.0 / gradient) * localPos[Geom::Y] - intersection) / (gradient - (-1.0 / gradient));
 
               multiply top and bottom by gradient:
-              nearestY = (localPos[NR::X] * gradient - (-1.0) * localPos[NR::Y] - intersection * gradient) / (gradient * gradient - (-1.0));
+              nearestY = (localPos[Geom::X] * gradient - (-1.0) * localPos[Geom::Y] - intersection * gradient) / (gradient * gradient - (-1.0));
 
               and simplify to get:
             */
-            double nearestY =  (localPos[NR::X] * gradient + localPos[NR::Y] - intersection * gradient)
+            double nearestY =  (localPos[Geom::X] * gradient + localPos[Geom::Y] - intersection * gradient)
                              / (gradient * gradient + 1.0);
-            t = (nearestY - p1[NR::Y]) / (p2[NR::Y] - p1[NR::Y]);
+            t = (nearestY - p1[Geom::Y]) / (p2[Geom::Y] - p1[Geom::Y]);
             if (t <= 0.0) {
-                thisRangeSquared = square(p1[NR::X] - localPos[NR::X]) + square(p1[NR::Y] - localPos[NR::Y]);
+                thisRangeSquared = square(p1[Geom::X] - localPos[Geom::X]) + square(p1[Geom::Y] - localPos[Geom::Y]);
                 t = 0.0;
             } else if (t >= 1.0) {
-                thisRangeSquared = square(p2[NR::X] - localPos[NR::X]) + square(p2[NR::Y] - localPos[NR::Y]);
+                thisRangeSquared = square(p2[Geom::X] - localPos[Geom::X]) + square(p2[Geom::Y] - localPos[Geom::Y]);
                 t = 1.0;
             } else {
-                thisRangeSquared = square(nearestY * gradient + intersection - localPos[NR::X]) + square(nearestY - localPos[NR::Y]);
+                thisRangeSquared = square(nearestY * gradient + intersection - localPos[Geom::X]) + square(nearestY - localPos[Geom::Y]);
             }
         }
 
@@ -1040,10 +1040,10 @@ double Path::PositionToLength(int piece, double t)
     for (unsigned i = 1 ; i < pts.size() ; i++) {
         if (pts[i].isMoveTo == polyline_moveto) continue;
         if (pts[i].piece == piece && t < pts[i].t) {
-            length += NR::L2((t - pts[i - 1].t) / (pts[i].t - pts[i - 1].t) * (pts[i].p - pts[i - 1].p));
+            length += Geom::L2((t - pts[i - 1].t) / (pts[i].t - pts[i - 1].t) * (pts[i].p - pts[i - 1].p));
             break;
         }
-        length += NR::L2(pts[i].p - pts[i - 1].p);
+        length += Geom::L2(pts[i].p - pts[i - 1].p);
     }
     return length;
 }
@@ -1055,7 +1055,7 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
     }
     
     {
-        NR::Point lastPos(0, 0);
+        Geom::Point lastPos(0, 0);
         for (int i = int(descr_cmd.size()) - 1; i >= 0; i--) {
             int const typ = descr_cmd[i]->getType();
             switch ( typ ) {
@@ -1070,7 +1070,7 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
             case descr_close:
             {
                 delete descr_cmd[i];
-                descr_cmd[i] = new PathDescrLineTo(NR::Point(0, 0));
+                descr_cmd[i] = new PathDescrLineTo(Geom::Point(0, 0));
 
                 int fp = i - 1;
                 while ( fp >= 0 && (descr_cmd[fp]->getType()) != descr_moveto ) {
@@ -1087,7 +1087,7 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
             case descr_bezierto:
             {
                 PathDescrBezierTo *nData = dynamic_cast<PathDescrBezierTo *>(descr_cmd[i]);
-                NR::Point theP = nData->p;
+                Geom::Point theP = nData->p;
                 if ( nData->nb == 0 ) {
                     lastPos = theP;
                 }
@@ -1144,13 +1144,13 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
       // ponctuel= rien a faire
     } else if ( typ == descr_lineto || typ == descr_arcto || typ == descr_cubicto ) {
       // facile: creation d'un morceau et d'un forced -> 2 commandes
-      NR::Point        theP;
-      NR::Point        theT;
-      NR::Point        startP;
+      Geom::Point        theP;
+      Geom::Point        theT;
+      Geom::Point        startP;
       startP=PrevPoint(cp-1);
       if ( typ == descr_cubicto ) {
         double           len,rad;
-        NR::Point        stD,enD,endP;
+        Geom::Point        stD,enD,endP;
         {
           PathDescrCubicTo *oData = dynamic_cast<PathDescrCubicTo *>(descr_cmd[cp]);
           stD=oData->start;
@@ -1179,7 +1179,7 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
           }
         }
       } else if ( typ == descr_lineto ) {
-        NR::Point        endP;
+        Geom::Point        endP;
         {
           PathDescrLineTo *oData = dynamic_cast<PathDescrLineTo *>(descr_cmd[cp]);
           endP=oData->p;
@@ -1203,7 +1203,7 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
           }
         }
       } else if ( typ == descr_arcto ) {
-        NR::Point        endP;
+        Geom::Point        endP;
         double           rx,ry,angle;
         bool             clockw,large;
         double   delta=0;
@@ -1265,17 +1265,17 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
         PathDescrBezierTo theBD=*(dynamic_cast<PathDescrBezierTo *>(descr_cmd[theBDI]));
         if ( cp >= theBDI && cp < theBDI+theBD.nb ) {
           if ( theBD.nb == 1 ) {
-            NR::Point        endP=theBD.p;
-            NR::Point        midP;
-            NR::Point        startP;
+            Geom::Point        endP=theBD.p;
+            Geom::Point        midP;
+            Geom::Point        startP;
             startP=PrevPoint(theBDI-1);
             {
               PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[theBDI+1]);
               midP=nData->p;
             }
-            NR::Point       aP=ct*midP+(1-ct)*startP;
-            NR::Point       bP=ct*endP+(1-ct)*midP;
-            NR::Point       knotP=ct*bP+(1-ct)*aP;
+            Geom::Point       aP=ct*midP+(1-ct)*startP;
+            Geom::Point       bP=ct*endP+(1-ct)*midP;
+            Geom::Point       knotP=ct*bP+(1-ct)*aP;
                         
             InsertIntermBezierTo(bP,theBDI+2);
             InsertBezierTo(knotP,1,theBDI+2);
@@ -1301,7 +1301,7 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
           } else {
             // decouper puis repasser
             if ( cp > theBDI ) {
-              NR::Point   pcP,ncP;
+              Geom::Point   pcP,ncP;
               {
                 PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[cp]);
                 pcP=nData->p;
@@ -1310,7 +1310,7 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
                 PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[cp+1]);
                 ncP=nData->p;
               }
-              NR::Point knotP=0.5*(pcP+ncP);
+              Geom::Point knotP=0.5*(pcP+ncP);
               
               InsertBezierTo(knotP,theBD.nb-(cp-theBDI),cp+1);
               {
@@ -1328,7 +1328,7 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
               }
               curP--;
             } else {
-              NR::Point   pcP,ncP;
+              Geom::Point   pcP,ncP;
               {
                 PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[cp+1]);
                 pcP=nData->p;
@@ -1337,7 +1337,7 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
                 PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[cp+2]);
                 ncP=nData->p;
               }
-              NR::Point knotP=0.5*(pcP+ncP);
+              Geom::Point knotP=0.5*(pcP+ncP);
               
               InsertBezierTo(knotP,theBD.nb-1,cp+2);
               {
@@ -1374,16 +1374,16 @@ void        Path::ConvertPositionsToMoveTo(int nbPos,cut_position* poss)
 
   Path*  res=new Path;
   
-  NR::Point    lastP(0,0);
+  Geom::Point    lastP(0,0);
   for (int i=0;i<int(descr_cmd.size());i++) {
     int const typ = descr_cmd[i]->getType();
     if ( typ == descr_moveto ) {
-      NR::Point  np;
+      Geom::Point  np;
       {
         PathDescrMoveTo *nData = dynamic_cast<PathDescrMoveTo *>(descr_cmd[i]);
         np=nData->p;
       }
-      NR::Point  endP;
+      Geom::Point  endP;
       bool       hasClose=false;
       int        hasForced=-1;
       bool       doesClose=false;
@@ -1419,9 +1419,9 @@ void        Path::ConvertPositionsToMoveTo(int nbPos,cut_position* poss)
       if ( ( doesClose || hasClose ) && hasForced >= 0 ) {
  //       printf("nasty i=%i j=%i frc=%i\n",i,j,hasForced);
         // aghhh.
-        NR::Point   nMvtP=PrevPoint(hasForced);
+        Geom::Point   nMvtP=PrevPoint(hasForced);
         res->MoveTo(nMvtP);
-        NR::Point   nLastP=nMvtP;
+        Geom::Point   nLastP=nMvtP;
         for (int k = hasForced + 1; k < j; k++) {
           int ntyp=descr_cmd[k]->getType();
           if ( ntyp == descr_moveto ) {

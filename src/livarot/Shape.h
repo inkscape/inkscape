@@ -124,7 +124,7 @@ public:
     // -reset the graph, and ensure there's room for n points and m edges
     void Reset(int n = 0, int m = 0);
     //  -points:
-    int AddPoint(const NR::Point x);	// as the function name says
+    int AddPoint(const Geom::Point x);	// as the function name says
     // returns the index at which the point has been added in the array
     void SubPoint(int p);	// removes the point at index p
     // nota: this function relocates the last point to the index p
@@ -288,12 +288,12 @@ public:
     // create a graph that is an offseted version of the graph "of"
     // the offset is dec, with joins between edges of type "join" (see LivarotDefs.h)
     // the result is NOT a polygon; you need a subsequent call to ConvertToShape to get a real polygon
-    int MakeOffset(Shape *of, double dec, JoinType join, double miter, bool do_profile=false, double cx = 0, double cy = 0, double radius = 0, NR::Matrix *i2doc = NULL);
+    int MakeOffset(Shape *of, double dec, JoinType join, double miter, bool do_profile=false, double cx = 0, double cy = 0, double radius = 0, Geom::Matrix *i2doc = NULL);
 
     int MakeTweak (int mode, Shape *a, double dec, JoinType join, double miter, bool do_profile, Geom::Point c, Geom::Point vector, double radius, Geom::Matrix *i2doc);
   
-    int PtWinding(const NR::Point px) const; // plus rapide
-    int Winding(const NR::Point px) const;
+    int PtWinding(const Geom::Point px) const; // plus rapide
+    int Winding(const Geom::Point px) const;
   
     // rasterization
     void BeginRaster(float &pos, int &curPt);
@@ -314,7 +314,7 @@ public:
     void QuickScan(float &pos, int &curP, float to, FillRule directed, BitLigne* line, float step);
     void QuickScan(float &pos, int &curP, float to, AlphaLigne* line, float step);
 
-    void Transform(NR::Matrix const &tr)
+    void Transform(Geom::Matrix const &tr)
         {for(std::vector<dg_point>::iterator it=_pts.begin();it!=_pts.end();it++) it->x*=tr;}
 
     std::vector<back_data> ebData;
@@ -341,7 +341,7 @@ public:
     // topological information: who links who?
     struct dg_point
     {
-	NR::Point x;		// position
+	Geom::Point x;		// position
 	int dI, dO;		// indegree and outdegree
         int incidentEdge[2];    // first and last incident edge
 	int oldDegree;
@@ -351,7 +351,7 @@ public:
     
     struct dg_arete
     {
-	NR::Point dx;		// edge vector
+	Geom::Point dx;		// edge vector
 	int st, en;		// start and end points of the edge
 	int nextS, prevS;	// next and previous edge in the double-linked list at the start point
 	int nextE, prevE;	// next and previous edge in the double-linked list at the end point
@@ -387,7 +387,7 @@ private:
     struct edge_data
     {
 	int weight;			// weight of the edge (to handle multiple edges)
-	NR::Point rdx;		// rounded edge vector
+	Geom::Point rdx;		// rounded edge vector
 	double length, sqlength, ilength, isqlength;	// length^2, length, 1/length^2, 1/length
 	double siEd, coEd;		// siEd=abs(rdy/length) and coEd=rdx/length
 	edge_data() : weight(0), length(0.0), sqlength(0.0), ilength(0.0), isqlength(0.0), siEd(0.0), coEd(0.0) {}
@@ -439,7 +439,7 @@ private:
 	int nextLinkedPoint;	// not used
 	Shape *askForWindingS;
 	int askForWindingB;
-	NR::Point  rx;		// rounded coordinates of the point
+	Geom::Point  rx;		// rounded coordinates of the point
     };
     
     
@@ -447,7 +447,7 @@ private:
     {				// temporary array of edges for easier sorting
 	int no;
 	bool starting;
-	NR::Point x;
+	Geom::Point x;
     };
 
     void initialisePointData();
@@ -477,11 +477,11 @@ private:
     void SortEdgesList(edge_list *edges, int s, int e);
   
     void TesteIntersection(SweepTree *t, Side s, bool onlyDiff);	// test if there is an intersection
-    bool TesteIntersection(SweepTree *iL, SweepTree *iR, NR::Point &atx, double &atL, double &atR, bool onlyDiff);
+    bool TesteIntersection(SweepTree *iL, SweepTree *iR, Geom::Point &atx, double &atL, double &atR, bool onlyDiff);
     bool TesteIntersection(Shape *iL, Shape *iR, int ilb, int irb,
-			   NR::Point &atx, double &atL, double &atR,
+			   Geom::Point &atx, double &atL, double &atR,
 			   bool onlyDiff);
-    bool TesteAdjacency(Shape *iL, int ilb, const NR::Point atx, int nPt,
+    bool TesteAdjacency(Shape *iL, int ilb, const Geom::Point atx, int nPt,
 			bool push);
     int PushIncidence(Shape *a, int cb, int pt, double theta);
     int CreateIncidence(Shape *a, int cb, int pt);
@@ -518,7 +518,7 @@ private:
     int ReFormeArcTo(int bord, int curBord, Path *dest, Path *orig);
     int ReFormeCubicTo(int bord, int curBord, Path *dest, Path *orig);
     int ReFormeBezierTo(int bord, int curBord, Path *dest, Path *orig);
-    void ReFormeBezierChunk(const NR::Point px, const NR::Point nx,
+    void ReFormeBezierChunk(const Geom::Point px, const Geom::Point nx,
 			    Path *dest, int inBezier, int nbInterm,
 			    Path *from, int p, double ts, double te);
 
@@ -562,11 +562,11 @@ private:
     };
 
     // edge direction comparison function    
-    static int CmpToVert(const NR::Point ax, const NR::Point bx, bool as, bool bs);
+    static int CmpToVert(const Geom::Point ax, const Geom::Point bx, bool as, bool bs);
 };
 
 bool directedEulerian(Shape const *s);
-double distance(Shape const *s, NR::Point const &p);
-bool distanceLessThanOrEqual(Shape const *s, NR::Point const &p, double const max_l2);
+double distance(Shape const *s, Geom::Point const &p);
+bool distanceLessThanOrEqual(Shape const *s, Geom::Point const &p, double const max_l2);
 
 #endif

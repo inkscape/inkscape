@@ -70,23 +70,23 @@ void Path::Simplify(double treshhold)
 // dichomtomic method to get distance to curve approximation
 // a real polynomial solver would get the minimum more efficiently, but since the polynom
 // would likely be of degree >= 5, that would imply using some generic solver, liek using the sturm metod
-double RecDistanceToCubic(NR::Point const &iS, NR::Point const &isD, 
-                          NR::Point const &iE, NR::Point const &ieD,
-                          NR::Point &pt, double current, int lev, double st, double et)
+double RecDistanceToCubic(Geom::Point const &iS, Geom::Point const &isD, 
+                          Geom::Point const &iE, Geom::Point const &ieD,
+                          Geom::Point &pt, double current, int lev, double st, double et)
 {	
     if ( lev <= 0 ) {
         return current;
     }
 	
-    NR::Point const m = 0.5 * (iS + iE) + 0.125 * (isD - ieD);
-    NR::Point const md = 0.75 * (iE - iS) - 0.125 * (isD + ieD);
+    Geom::Point const m = 0.5 * (iS + iE) + 0.125 * (isD - ieD);
+    Geom::Point const md = 0.75 * (iE - iS) - 0.125 * (isD + ieD);
     double const mt = (st + et) / 2;
 	
-    NR::Point const hisD = 0.5 * isD;
-    NR::Point const hieD = 0.5 * ieD;
+    Geom::Point const hisD = 0.5 * isD;
+    Geom::Point const hieD = 0.5 * ieD;
 	
-    NR::Point const mp = pt - m;
-    double nle = NR::dot(mp, mp);
+    Geom::Point const mp = pt - m;
+    double nle = Geom::dot(mp, mp);
     
     if ( nle < current ) {
 
@@ -116,24 +116,24 @@ double RecDistanceToCubic(NR::Point const &iS, NR::Point const &isD,
 }
 
 
-double DistanceToCubic(NR::Point const &start, PathDescrCubicTo res, NR::Point &pt)
+double DistanceToCubic(Geom::Point const &start, PathDescrCubicTo res, Geom::Point &pt)
 {
-    NR::Point const sp = pt - start;
-    NR::Point const ep = pt - res.p;
-    double nle = NR::dot(sp, sp);
-    double nnle = NR::dot(ep, ep);
+    Geom::Point const sp = pt - start;
+    Geom::Point const ep = pt - res.p;
+    double nle = Geom::dot(sp, sp);
+    double nnle = Geom::dot(ep, ep);
     if ( nnle < nle ) {
         nle = nnle;
     }
     
-    NR::Point seg = res.p - start;
+    Geom::Point seg = res.p - start;
     nnle = NR::cross(seg, sp);
     nnle *= nnle;
-    nnle /= NR::dot(seg, seg);
+    nnle /= Geom::dot(seg, seg);
     if ( nnle < nle ) {
-        if ( NR::dot(sp,seg) >= 0 ) {
+        if ( Geom::dot(sp,seg) >= 0 ) {
             seg = start - res.p;
-            if ( NR::dot(ep,seg) >= 0 ) {
+            if ( Geom::dot(ep,seg) >= 0 ) {
                 nle = nnle;
             }
         }
@@ -163,9 +163,9 @@ void Path::DoSimplify(int off, int N, double treshhold)
     data.totLen = 0;
     data.nbPt = data.maxPt = data.inPt = 0;
   
-    NR::Point const moveToPt = pts[off].p;
+    Geom::Point const moveToPt = pts[off].p;
     MoveTo(moveToPt);
-    NR::Point endToPt = moveToPt;
+    Geom::Point endToPt = moveToPt;
   
     while (curP < N - 1) {
 
@@ -175,7 +175,7 @@ void Path::DoSimplify(int off, int N, double treshhold)
         // remettre a zero
         data.inPt = data.nbPt = 0;
 
-        PathDescrCubicTo res(NR::Point(0, 0), NR::Point(0, 0), NR::Point(0, 0));
+        PathDescrCubicTo res(Geom::Point(0, 0), Geom::Point(0, 0), Geom::Point(0, 0));
         bool contains_forced = false;
         int step = 64;
         
@@ -246,13 +246,13 @@ void Path::DoSimplify(int off, int N, double treshhold)
 // primitive= calc the cubic bezier patche that fits Xk and Yk best
 // Qk est deja alloue
 // retourne false si probleme (matrice non-inversible)
-bool Path::FitCubic(NR::Point const &start, PathDescrCubicTo &res,
+bool Path::FitCubic(Geom::Point const &start, PathDescrCubicTo &res,
                     double *Xk, double *Yk, double *Qk, double *tk, int nbPt)
 {
-    NR::Point const end = res.p;
+    Geom::Point const end = res.p;
     
     // la matrice tNN
-    NR::Matrix M(0, 0, 0, 0, 0, 0);
+    Geom::Matrix M(0, 0, 0, 0, 0, 0);
     for (int i = 1; i < nbPt - 1; i++) {
         M[0] += N13(tk[i]) * N13(tk[i]);
         M[1] += N23(tk[i]) * N13(tk[i]);
@@ -267,7 +267,7 @@ bool Path::FitCubic(NR::Point const &start, PathDescrCubicTo &res,
         return false;
     }
     
-    NR::Matrix const iM = M.inverse();
+    Geom::Matrix const iM = M.inverse();
     M = iM;
   
     // phase 1: abcisses
@@ -282,17 +282,17 @@ bool Path::FitCubic(NR::Point const &start, PathDescrCubicTo &res,
     }
   
     // le vecteur Q
-    NR::Point Q(0, 0);
+    Geom::Point Q(0, 0);
     for (int i = 1; i < nbPt - 1; i++) {
         Q[0] += N13 (tk[i]) * Qk[i];
         Q[1] += N23 (tk[i]) * Qk[i];
     }
   
-    NR::Point P = Q * M;
-    NR::Point cp1;
-    NR::Point cp2;
-    cp1[NR::X] = P[NR::X];
-    cp2[NR::X] = P[NR::Y];
+    Geom::Point P = Q * M;
+    Geom::Point cp1;
+    Geom::Point cp2;
+    cp1[Geom::X] = P[Geom::X];
+    cp2[Geom::X] = P[Geom::Y];
   
     // phase 2: les ordonnees
     for (int i = 1; i < nbPt - 1; i++) {
@@ -300,15 +300,15 @@ bool Path::FitCubic(NR::Point const &start, PathDescrCubicTo &res,
     }
   
     // le vecteur Q
-    Q = NR::Point(0, 0);
+    Q = Geom::Point(0, 0);
     for (int i = 1; i < nbPt - 1; i++) {
         Q[0] += N13 (tk[i]) * Qk[i];
         Q[1] += N23 (tk[i]) * Qk[i];
     }
   
     P = Q * M;
-    cp1[NR::Y] = P[NR::X];
-    cp2[NR::Y] = P[NR::Y];
+    cp1[Geom::Y] = P[Geom::X];
+    cp2[Geom::Y] = P[Geom::Y];
   
     res.start = 3.0 * (cp1 - start);
     res.end = 3.0 * (end - cp2 );
@@ -331,8 +331,8 @@ bool Path::ExtendFit(int off, int N, fitting_tables &data, double treshhold, Pat
     
     if ( N > data.inPt ) {
         for (int i = data.inPt; i < N; i++) {
-            data.Xk[i] = pts[off + i].p[NR::X];
-            data.Yk[i] = pts[off + i].p[NR::Y];
+            data.Xk[i] = pts[off + i].p[Geom::X];
+            data.Yk[i] = pts[off + i].p[Geom::Y];
             data.fk[i] = ( pts[off + i].isMoveTo == polyline_forced ) ? 0x01 : 0x00;        
         }
         data.lk[0] = 0;
@@ -345,10 +345,10 @@ bool Path::ExtendFit(int off, int N, fitting_tables &data, double treshhold, Pat
         data.totLen = prevLen;
         
         for (int i = ( (data.inPt > 0) ? data.inPt : 1); i < N; i++) {
-            NR::Point diff;
-            diff[NR::X] = data.Xk[i] - data.Xk[i - 1];
-            diff[NR::Y] = data.Yk[i] - data.Yk[i - 1];
-            data.lk[i] = NR::L2(diff);
+            Geom::Point diff;
+            diff[Geom::X] = data.Xk[i] - data.Xk[i - 1];
+            diff[Geom::Y] = data.Yk[i] - data.Yk[i - 1];
+            data.lk[i] = Geom::L2(diff);
             data.totLen += data.lk[i];
             data.tk[i] = data.totLen;
         }
@@ -396,12 +396,12 @@ bool Path::ExtendFit(int off, int N, fitting_tables &data, double treshhold, Pat
   
     if ( data.totLen < 0.0001 ) {
         double worstD = 0;
-        NR::Point start;
+        Geom::Point start;
         worstP = -1;
         start[0] = data.Xk[0];
         start[1] = data.Yk[0];
         for (int i = 1; i < N; i++) {
-            NR::Point nPt;
+            Geom::Point nPt;
             bool isForced = data.fk[i];
             nPt[0] = data.Xk[i];
             nPt[1] = data.Yk[i];
@@ -432,9 +432,9 @@ bool Path::ExtendFit(int off, int N, fitting_tables &data, double treshhold, Pat
 // version that uses tables from the previous iteration, to minimize amount of work done
 bool Path::AttemptSimplify (fitting_tables &data,double treshhold, PathDescrCubicTo & res,int &worstP)
 {
-    NR::Point start,end;
+    Geom::Point start,end;
     // pour une coordonnee
-    NR::Point cp1, cp2;
+    Geom::Point cp1, cp2;
   
     worstP = 1;
     if (pts.size() == 2) {
@@ -465,9 +465,9 @@ bool Path::AttemptSimplify (fitting_tables &data,double treshhold, PathDescrCubi
         double worstD = 0;
         worstP = -1;
         for (int i = 1; i < data.nbPt; i++) {
-            NR::Point nPt;
-            nPt[NR::X] = data.Xk[i];
-            nPt[NR::Y] = data.Yk[i];
+            Geom::Point nPt;
+            nPt[Geom::X] = data.Xk[i];
+            nPt[Geom::Y] = data.Yk[i];
             double nle = DistanceToCubic(start, res, nPt);
             if ( data.fk[i] ) {
                 // forced points are favored for splitting the recursion; we do this by increasing their distance
@@ -490,50 +490,50 @@ bool Path::AttemptSimplify (fitting_tables &data,double treshhold, PathDescrCubi
     {
         double worstD = 0;
         worstP = -1;
-        NR::Point prevAppP;
-        NR::Point prevP;
+        Geom::Point prevAppP;
+        Geom::Point prevP;
         double prevDist;
-        prevP[NR::X] = data.Xk[0];
-        prevP[NR::Y] = data.Yk[0];
+        prevP[Geom::X] = data.Xk[0];
+        prevP[Geom::Y] = data.Yk[0];
         prevAppP = prevP; // le premier seulement
         prevDist = 0;
 #ifdef with_splotch_killer
         if ( data.nbPt <= 20 ) {
             for (int i = 1; i < data.nbPt - 1; i++) {
-                NR::Point curAppP;
-                NR::Point curP;
+                Geom::Point curAppP;
+                Geom::Point curP;
                 double curDist;
-                NR::Point midAppP;
-                NR::Point midP;
+                Geom::Point midAppP;
+                Geom::Point midP;
                 double midDist;
                 
-                curAppP[NR::X] = N13(data.tk[i]) * cp1[NR::X] +
-                    N23(data.tk[i]) * cp2[NR::X] +
+                curAppP[Geom::X] = N13(data.tk[i]) * cp1[Geom::X] +
+                    N23(data.tk[i]) * cp2[Geom::X] +
                     N03(data.tk[i]) * data.Xk[0] +
                     N33(data.tk[i]) * data.Xk[data.nbPt - 1];
                 
-                curAppP[NR::Y] = N13(data.tk[i]) * cp1[NR::Y] +
-                    N23(data.tk[i]) * cp2[NR::Y] +
+                curAppP[Geom::Y] = N13(data.tk[i]) * cp1[Geom::Y] +
+                    N23(data.tk[i]) * cp2[Geom::Y] +
                     N03(data.tk[i]) * data.Yk[0] +
                     N33(data.tk[i]) * data.Yk[data.nbPt - 1];
                 
-                curP[NR::X] = data.Xk[i];
-                curP[NR::Y] = data.Yk[i];
+                curP[Geom::X] = data.Xk[i];
+                curP[Geom::Y] = data.Yk[i];
                 double mtk = 0.5 * (data.tk[i] + data.tk[i - 1]);
                 
-                midAppP[NR::X] = N13(mtk) * cp1[NR::X] +
-                    N23(mtk) * cp2[NR::X] +
+                midAppP[Geom::X] = N13(mtk) * cp1[Geom::X] +
+                    N23(mtk) * cp2[Geom::X] +
                     N03(mtk) * data.Xk[0] +
                     N33(mtk) * data.Xk[data.nbPt - 1];
                 
-                midAppP[NR::Y] = N13(mtk) * cp1[NR::Y] +
-                    N23(mtk) * cp2[NR::Y] +
+                midAppP[Geom::Y] = N13(mtk) * cp1[Geom::Y] +
+                    N23(mtk) * cp2[Geom::Y] +
                     N03(mtk) * data.Yk[0] +
                     N33(mtk) * data.Yk[data.nbPt - 1];
                 
                 midP = 0.5 * (curP + prevP);
         
-                NR::Point diff = curAppP - curP;
+                Geom::Point diff = curAppP - curP;
                 curDist = dot(diff, diff);
                 diff = midAppP - midP;
                 midDist = dot(diff, diff);
@@ -555,24 +555,24 @@ bool Path::AttemptSimplify (fitting_tables &data,double treshhold, PathDescrCubi
         } else {
 #endif
             for (int i = 1; i < data.nbPt - 1; i++) {
-                NR::Point curAppP;
-                NR::Point curP;
+                Geom::Point curAppP;
+                Geom::Point curP;
                 double    curDist;
         
-                curAppP[NR::X] = N13(data.tk[i]) * cp1[NR::X] +
-                    N23(data.tk[i]) * cp2[NR::X] +
+                curAppP[Geom::X] = N13(data.tk[i]) * cp1[Geom::X] +
+                    N23(data.tk[i]) * cp2[Geom::X] +
                     N03(data.tk[i]) * data.Xk[0] +
                     N33(data.tk[i]) * data.Xk[data.nbPt - 1];
                 
-                curAppP[NR::Y] = N13(data.tk[i]) * cp1[NR::Y] +
-                    N23(data.tk[i]) * cp2[NR::Y] +
+                curAppP[Geom::Y] = N13(data.tk[i]) * cp1[Geom::Y] +
+                    N23(data.tk[i]) * cp2[Geom::Y] +
                     N03(data.tk[i]) * data.Yk[0] +
                     N33(data.tk[i]) * data.Yk[data.nbPt - 1];
                 
-                curP[NR::X] = data.Xk[i];
-                curP[NR::Y] = data.Yk[i];
+                curP[Geom::X] = data.Xk[i];
+                curP[Geom::Y] = data.Yk[i];
       
-                NR::Point diff = curAppP-curP;
+                Geom::Point diff = curAppP-curP;
                 curDist = dot(diff, diff);
                 delta += curDist;
         
@@ -597,7 +597,7 @@ bool Path::AttemptSimplify (fitting_tables &data,double treshhold, PathDescrCubi
     
         // Refine a little.
         for (int i = 1; i < data.nbPt - 1; i++) {
-            NR::Point pt(data.Xk[i], data.Yk[i]);
+            Geom::Point pt(data.Xk[i], data.Yk[i]);
             data.tk[i] = RaffineTk(pt, start, cp1, cp2, end, data.tk[i]);
             if (data.tk[i] < data.tk[i - 1]) {
                 // Force tk to be monotonic non-decreasing.
@@ -616,47 +616,47 @@ bool Path::AttemptSimplify (fitting_tables &data,double treshhold, PathDescrCubi
         {
             double worstD = 0;
             worstP = -1;
-            NR::Point prevAppP;
-            NR::Point prevP(data.Xk[0], data.Yk[0]);
+            Geom::Point prevAppP;
+            Geom::Point prevP(data.Xk[0], data.Yk[0]);
             double prevDist = 0;
             prevAppP = prevP; // le premier seulement
 #ifdef with_splotch_killer
             if ( data.nbPt <= 20 ) {
                 for (int i = 1; i < data.nbPt - 1; i++) {
-                    NR::Point curAppP;
-                    NR::Point curP;
+                    Geom::Point curAppP;
+                    Geom::Point curP;
                     double  curDist;
-                    NR::Point midAppP;
-                    NR::Point midP;
+                    Geom::Point midAppP;
+                    Geom::Point midP;
                     double  midDist;
           
-                    curAppP[NR::X] = N13(data.tk[i]) * cp1[NR::X] +
-                        N23(data.tk[i]) * cp2[NR::X] +
+                    curAppP[Geom::X] = N13(data.tk[i]) * cp1[Geom::X] +
+                        N23(data.tk[i]) * cp2[Geom::X] +
                         N03(data.tk[i]) * data.Xk[0] +
                         N33(data.tk[i]) * data.Xk[data.nbPt - 1];
                     
-                    curAppP[NR::Y] = N13(data.tk[i]) * cp1[NR::Y] +
-                        N23(data.tk[i]) * cp2[NR::Y] +
+                    curAppP[Geom::Y] = N13(data.tk[i]) * cp1[Geom::Y] +
+                        N23(data.tk[i]) * cp2[Geom::Y] +
                         N03(data.tk[i]) * data.Yk[0] +
                         N33(data.tk[i]) * data.Yk[data.nbPt - 1];
                     
-                    curP[NR::X] = data.Xk[i];
-                    curP[NR::Y] = data.Yk[i];
+                    curP[Geom::X] = data.Xk[i];
+                    curP[Geom::Y] = data.Yk[i];
                     double mtk = 0.5 * (data.tk[i] + data.tk[i - 1]);
                     
-                    midAppP[NR::X] = N13(mtk) * cp1[NR::X] +
-                        N23(mtk) * cp2[NR::X] +
+                    midAppP[Geom::X] = N13(mtk) * cp1[Geom::X] +
+                        N23(mtk) * cp2[Geom::X] +
                         N03(mtk) * data.Xk[0] +
                         N33(mtk) * data.Xk[data.nbPt - 1];
                     
-                    midAppP[NR::Y] = N13(mtk) * cp1[NR::Y] +
-                        N23(mtk) * cp2[NR::Y] +
+                    midAppP[Geom::Y] = N13(mtk) * cp1[Geom::Y] +
+                        N23(mtk) * cp2[Geom::Y] +
                         N03(mtk) * data.Yk[0] +
                         N33(mtk) * data.Yk[data.nbPt - 1];
                     
                     midP = 0.5 * (curP + prevP);
           
-                    NR::Point diff = curAppP - curP;
+                    Geom::Point diff = curAppP - curP;
                     curDist = dot(diff, diff);
           
                     diff = midAppP - midP;
@@ -680,24 +680,24 @@ bool Path::AttemptSimplify (fitting_tables &data,double treshhold, PathDescrCubi
             } else {
 #endif
                 for (int i = 1; i < data.nbPt - 1; i++) {
-                    NR::Point curAppP;
-                    NR::Point curP;
+                    Geom::Point curAppP;
+                    Geom::Point curP;
                     double    curDist;
                     
-                    curAppP[NR::X] = N13(data.tk[i]) * cp1[NR::X] +
-                        N23(data.tk[i]) * cp2[NR::X] +
+                    curAppP[Geom::X] = N13(data.tk[i]) * cp1[Geom::X] +
+                        N23(data.tk[i]) * cp2[Geom::X] +
                         N03(data.tk[i]) * data.Xk[0] +
                         N33(data.tk[i]) * data.Xk[data.nbPt - 1];
                     
-                    curAppP[NR::Y] = N13(data.tk[i]) * cp1[NR::Y] +
+                    curAppP[Geom::Y] = N13(data.tk[i]) * cp1[Geom::Y] +
                         N23(data.tk[i]) * cp2[1] +
                         N03(data.tk[i]) * data.Yk[0] +
                         N33(data.tk[i]) * data.Yk[data.nbPt - 1];
                     
-                    curP[NR::X] = data.Xk[i];
-                    curP[NR::Y] = data.Yk[i];
+                    curP[Geom::X] = data.Xk[i];
+                    curP[Geom::Y] = data.Yk[i];
         
-                    NR::Point diff = curAppP - curP;
+                    Geom::Point diff = curAppP - curP;
                     curDist = dot(diff, diff);
 
                     ndelta += curDist;
@@ -735,8 +735,8 @@ bool Path::AttemptSimplify (fitting_tables &data,double treshhold, PathDescrCubi
 
 bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &res,int &worstP)
 {
-    NR::Point start;
-    NR::Point end;
+    Geom::Point start;
+    Geom::Point end;
     
     // pour une coordonnee
     double *Xk;				// la coordonnee traitee (x puis y)
@@ -746,8 +746,8 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
     double *Qk;				// les Qk
     char *fk;       // si point force
   
-    NR::Point cp1;
-    NR::Point cp2;
+    Geom::Point cp1;
+    Geom::Point cp2;
   
     if (N == 2) {
         worstP = 1;
@@ -781,10 +781,10 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
     tk[0] = 0.0;
     lk[0] = 0.0;
     {
-        NR::Point prevP = start;
+        Geom::Point prevP = start;
         for (int i = 1; i < N; i++) {
-            Xk[i] = pts[off + i].p[NR::X];
-            Yk[i] = pts[off + i].p[NR::Y];
+            Xk[i] = pts[off + i].p[Geom::X];
+            Yk[i] = pts[off + i].p[Geom::Y];
             
             if ( pts[off + i].isMoveTo == polyline_forced ) {
                 fk[i] = 0x01;
@@ -792,10 +792,10 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
                 fk[i] = 0;
             }
             
-            NR::Point diff(Xk[i] - prevP[NR::X], Yk[i] - prevP[1]);
+            Geom::Point diff(Xk[i] - prevP[Geom::X], Yk[i] - prevP[1]);
             prevP[0] = Xk[i];
             prevP[1] = Yk[i];
-            lk[i] = NR::L2(diff);
+            lk[i] = Geom::L2(diff);
             tk[i] = tk[i - 1] + lk[i];
         }
     }
@@ -807,7 +807,7 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
         double worstD = 0;
         worstP = -1;
         for (int i = 1; i < N; i++) {
-            NR::Point nPt;
+            Geom::Point nPt;
             bool isForced = fk[i];
             nPt[0] = Xk[i];
             nPt[1] = Yk[i];
@@ -853,7 +853,7 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
         double worstD = 0;
         worstP = -1;
         for (int i = 1; i < N; i++) {
-            NR::Point nPt(Xk[i], Yk[i]);
+            Geom::Point nPt(Xk[i], Yk[i]);
             bool isForced = fk[i];
             double nle = DistanceToCubic(start, res, nPt);
             if ( isForced ) {
@@ -884,8 +884,8 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
     {
         double worstD = 0;
         worstP = -1;
-        NR::Point prevAppP;
-    NR::Point   prevP;
+        Geom::Point prevAppP;
+    Geom::Point   prevP;
     double      prevDist;
     prevP[0] = Xk[0];
     prevP[1] = Yk[0];
@@ -895,11 +895,11 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
     if ( N <= 20 ) {
       for (int i = 1; i < N - 1; i++)
       {
-        NR::Point curAppP;
-        NR::Point curP;
+        Geom::Point curAppP;
+        Geom::Point curP;
         double    curDist;
-        NR::Point midAppP;
-        NR::Point midP;
+        Geom::Point midAppP;
+        Geom::Point midP;
         double    midDist;
         
         curAppP[0] = N13 (tk[i]) * cp1[0] + N23 (tk[i]) * cp2[0] + N03 (tk[i]) * Xk[0] + N33 (tk[i]) * Xk[N - 1];
@@ -910,7 +910,7 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
         midAppP[1] = N13 (0.5*(tk[i]+tk[i-1])) * cp1[1] + N23 (0.5*(tk[i]+tk[i-1])) * cp2[1] + N03 (0.5*(tk[i]+tk[i-1])) * Yk[0] + N33 (0.5*(tk[i]+tk[i-1])) * Yk[N - 1];
         midP=0.5*(curP+prevP);
         
-        NR::Point diff;
+        Geom::Point diff;
         diff = curAppP-curP;
         curDist = dot(diff,diff);
 
@@ -935,8 +935,8 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
 #endif
       for (int i = 1; i < N - 1; i++)
       {
-        NR::Point curAppP;
-        NR::Point curP;
+        Geom::Point curAppP;
+        Geom::Point curP;
         double    curDist;
         
         curAppP[0] = N13 (tk[i]) * cp1[0] + N23 (tk[i]) * cp2[0] + N03 (tk[i]) * Xk[0] + N33 (tk[i]) * Xk[N - 1];
@@ -944,7 +944,7 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
         curP[0] = Xk[i];
         curP[1] = Yk[i];
         
-        NR::Point diff;
+        Geom::Point diff;
         diff = curAppP-curP;
         curDist = dot(diff,diff);
         delta += curDist;
@@ -974,7 +974,7 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
     // Refine a little.
     for (int i = 1; i < N - 1; i++)
     {
-      NR::Point
+      Geom::Point
 	    pt;
       pt[0] = Xk[i];
       pt[1] = Yk[i];
@@ -1003,8 +1003,8 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
     {
       double worstD = 0;
       worstP = -1;
-      NR::Point   prevAppP;
-      NR::Point   prevP;
+      Geom::Point   prevAppP;
+      Geom::Point   prevP;
       double      prevDist;
       prevP[0] = Xk[0];
       prevP[1] = Yk[0];
@@ -1014,11 +1014,11 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
       if ( N <= 20 ) {
         for (int i = 1; i < N - 1; i++)
         {
-          NR::Point curAppP;
-          NR::Point curP;
+          Geom::Point curAppP;
+          Geom::Point curP;
           double    curDist;
-          NR::Point midAppP;
-          NR::Point midP;
+          Geom::Point midAppP;
+          Geom::Point midP;
           double    midDist;
           
           curAppP[0] = N13 (tk[i]) * cp1[0] + N23 (tk[i]) * cp2[0] + N03 (tk[i]) * Xk[0] + N33 (tk[i]) * Xk[N - 1];
@@ -1029,7 +1029,7 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
           midAppP[1] = N13 (0.5*(tk[i]+tk[i-1])) * cp1[1] + N23 (0.5*(tk[i]+tk[i-1])) * cp2[1] + N03 (0.5*(tk[i]+tk[i-1])) * Yk[0] + N33 (0.5*(tk[i]+tk[i-1])) * Yk[N - 1];
           midP = 0.5*(curP+prevP);
           
-          NR::Point diff;
+          Geom::Point diff;
           diff = curAppP-curP;
           curDist = dot(diff,diff);
           diff = midAppP-midP;
@@ -1053,8 +1053,8 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
 #endif
         for (int i = 1; i < N - 1; i++)
         {
-          NR::Point curAppP;
-          NR::Point curP;
+          Geom::Point curAppP;
+          Geom::Point curP;
           double    curDist;
           
           curAppP[0] = N13 (tk[i]) * cp1[0] + N23 (tk[i]) * cp2[0] + N03 (tk[i]) * Xk[0] + N33 (tk[i]) * Xk[N - 1];
@@ -1062,7 +1062,7 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
           curP[0]=Xk[i];
           curP[1]=Yk[i];
           
-          NR::Point diff;
+          Geom::Point diff;
           diff=curAppP-curP;
           curDist=dot(diff,diff);
           ndelta+=curDist;
@@ -1112,36 +1112,36 @@ bool Path::AttemptSimplify(int off, int N, double treshhold, PathDescrCubicTo &r
   return false;
 }
 
-double Path::RaffineTk (NR::Point pt, NR::Point p0, NR::Point p1, NR::Point p2, NR::Point p3, double it)
+double Path::RaffineTk (Geom::Point pt, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3, double it)
 {
     // Refinement of the tk values. 
     // Just one iteration of Newtow Raphson, given that we're approaching the curve anyway.
     // [fr: vu que de toute facon la courbe est approchC)e]
-    double const Ax = pt[NR::X] -
-        p0[NR::X] * N03(it) -
-        p1[NR::X] * N13(it) -
-        p2[NR::X] * N23(it) -
-        p3[NR::X] * N33(it);
+    double const Ax = pt[Geom::X] -
+        p0[Geom::X] * N03(it) -
+        p1[Geom::X] * N13(it) -
+        p2[Geom::X] * N23(it) -
+        p3[Geom::X] * N33(it);
     
-    double const Bx = (p1[NR::X] - p0[NR::X]) * N02(it) +
-        (p2[NR::X] - p1[NR::X]) * N12(it) +
-        (p3[NR::X] - p2[NR::X]) * N22(it);
+    double const Bx = (p1[Geom::X] - p0[Geom::X]) * N02(it) +
+        (p2[Geom::X] - p1[Geom::X]) * N12(it) +
+        (p3[Geom::X] - p2[Geom::X]) * N22(it);
   
-    double const Cx = (p0[NR::X] - 2 * p1[NR::X] + p2[NR::X]) * N01(it) +
-        (p3[NR::X] - 2 * p2[NR::X] + p1[NR::X]) * N11(it);
+    double const Cx = (p0[Geom::X] - 2 * p1[Geom::X] + p2[Geom::X]) * N01(it) +
+        (p3[Geom::X] - 2 * p2[Geom::X] + p1[Geom::X]) * N11(it);
     
-    double const Ay =  pt[NR::Y] -
-        p0[NR::Y] * N03(it) -
-        p1[NR::Y] * N13(it) -
-        p2[NR::Y] * N23(it) -
-        p3[NR::Y] * N33(it);
+    double const Ay =  pt[Geom::Y] -
+        p0[Geom::Y] * N03(it) -
+        p1[Geom::Y] * N13(it) -
+        p2[Geom::Y] * N23(it) -
+        p3[Geom::Y] * N33(it);
     
-    double const By = (p1[NR::Y] - p0[NR::Y]) * N02(it) +
-        (p2[NR::Y] - p1[NR::Y]) * N12(it) +
-        (p3[NR::Y] - p2[NR::Y]) * N22(it);
+    double const By = (p1[Geom::Y] - p0[Geom::Y]) * N02(it) +
+        (p2[Geom::Y] - p1[Geom::Y]) * N12(it) +
+        (p3[Geom::Y] - p2[Geom::Y]) * N22(it);
     
-    double const Cy = (p0[NR::Y] - 2 * p1[NR::Y] + p2[NR::Y]) * N01(it) +
-        (p3[NR::Y] - 2 * p2[NR::Y] + p1[NR::Y]) * N11(it);
+    double const Cy = (p0[Geom::Y] - 2 * p1[Geom::Y] + p2[Geom::Y]) * N01(it) +
+        (p3[Geom::Y] - 2 * p2[Geom::Y] + p1[Geom::Y]) * N11(it);
     
     double const dF = -6 * (Ax * Bx + Ay * By);
     double const ddF = 18 * (Bx * Bx + By * By) - 12 * (Ax * Cx + Ay * Cy);
@@ -1184,15 +1184,15 @@ void Path::Coalesce(double tresh)
     
     int lastA = descr_cmd[0]->associated;
     int prevA = lastA;
-    NR::Point firstP;
+    Geom::Point firstP;
 
     /* FIXME: the use of this variable probably causes a leak or two.
     ** It's a hack anyway, and probably only needs to be a type rather than
     ** a full PathDescr.
     */
-    PathDescr *lastAddition = new PathDescrMoveTo(NR::Point(0, 0));
+    PathDescr *lastAddition = new PathDescrMoveTo(Geom::Point(0, 0));
     bool containsForced = false;
-    PathDescrCubicTo pending_cubic(NR::Point(0, 0), NR::Point(0, 0), NR::Point(0, 0));
+    PathDescrCubicTo pending_cubic(Geom::Point(0, 0), Geom::Point(0, 0), Geom::Point(0, 0));
   
     for (int curP = 0; curP < int(descr_cmd.size()); curP++) {
         int typ = descr_cmd[curP]->getType();
@@ -1220,12 +1220,12 @@ void Path::Coalesce(double tresh)
             nextA = descr_cmd[curP]->associated;
             if (lastAddition->flags != descr_moveto) {
         
-                PathDescrCubicTo res(NR::Point(0, 0), NR::Point(0, 0), NR::Point(0, 0));
+                PathDescrCubicTo res(Geom::Point(0, 0), Geom::Point(0, 0), Geom::Point(0, 0));
                 int worstP = -1;
                 if (AttemptSimplify(lastA, nextA - lastA + 1, (containsForced) ? 0.05 * tresh : tresh, res, worstP)) {
-                    lastAddition = new PathDescrCubicTo(NR::Point(0, 0),
-                                                          NR::Point(0, 0),
-                                                          NR::Point(0, 0));
+                    lastAddition = new PathDescrCubicTo(Geom::Point(0, 0),
+                                                          Geom::Point(0, 0),
+                                                          Geom::Point(0, 0));
                     pending_cubic = res;
                     lastAP = -1;
                 }
@@ -1238,7 +1238,7 @@ void Path::Coalesce(double tresh)
 	    }
             
             containsForced = false;
-            lastAddition = new PathDescrMoveTo(NR::Point(0, 0));
+            lastAddition = new PathDescrMoveTo(Geom::Point(0, 0));
             prevA = lastA = nextA;
             lastP = curP;
             lastAP = curP;
@@ -1248,7 +1248,7 @@ void Path::Coalesce(double tresh)
             nextA = descr_cmd[curP]->associated;
             if (lastAddition->flags != descr_moveto) {
                 
-                PathDescrCubicTo res(NR::Point(0, 0), NR::Point(0, 0), NR::Point(0, 0));
+                PathDescrCubicTo res(Geom::Point(0, 0), Geom::Point(0, 0), Geom::Point(0, 0));
                 int worstP = -1;
                 if (AttemptSimplify(lastA, nextA - lastA + 1, 0.05 * tresh, res, worstP)) {
                     // plus sensible parce que point force
@@ -1258,7 +1258,7 @@ void Path::Coalesce(double tresh)
                 } else  {
                     // Force the addition.
                     FlushPendingAddition(tempDest, lastAddition, pending_cubic, lastAP);
-                    lastAddition = new PathDescrMoveTo(NR::Point(0, 0));
+                    lastAddition = new PathDescrMoveTo(Geom::Point(0, 0));
                     prevA = lastA = nextA;
                     lastP = curP;
                     lastAP = curP;
@@ -1271,12 +1271,12 @@ void Path::Coalesce(double tresh)
             nextA = descr_cmd[curP]->associated;
             if (lastAddition->flags != descr_moveto) {
                 
-                PathDescrCubicTo res(NR::Point(0, 0), NR::Point(0, 0), NR::Point(0, 0));
+                PathDescrCubicTo res(Geom::Point(0, 0), Geom::Point(0, 0), Geom::Point(0, 0));
                 int worstP = -1;
                 if (AttemptSimplify(lastA, nextA - lastA + 1, tresh, res, worstP)) {
-                    lastAddition = new PathDescrCubicTo(NR::Point(0, 0),
-                                                          NR::Point(0, 0),
-                                                          NR::Point(0, 0));
+                    lastAddition = new PathDescrCubicTo(Geom::Point(0, 0),
+                                                          Geom::Point(0, 0),
+                                                          Geom::Point(0, 0));
                     pending_cubic = res;
                     lastAddition->associated = lastA;
                     lastP = curP;
@@ -1308,7 +1308,7 @@ void Path::Coalesce(double tresh)
 
             if (lastAddition->flags != descr_moveto) {
                 FlushPendingAddition(tempDest, lastAddition, pending_cubic, lastAP);
-                lastAddition = new PathDescrMoveTo(NR::Point(0, 0));
+                lastAddition = new PathDescrMoveTo(Geom::Point(0, 0));
 	    }
             lastAP = -1;
             lastA = descr_cmd[curP]->associated;

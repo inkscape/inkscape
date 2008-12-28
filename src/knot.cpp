@@ -379,7 +379,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                                      TRUE);
                 }
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
-                NR::Point const motion_dt = knot->desktop->w2d(motion_w);
+                Geom::Point const motion_dt = knot->desktop->w2d(motion_w);
                 Geom::Point p = motion_dt - knot->grabbed_rel_pos;
                 sp_knot_request_position (knot, p, event->motion.state);
                 knot->desktop->scroll_to_point (motion_dt);

@@ -135,7 +135,7 @@ int Path::Close()
     return descr_cmd.size() - 1;
 }
 
-int Path::MoveTo(NR::Point const &iPt)
+int Path::MoveTo(Geom::Point const &iPt)
 {
     if ( descr_flags & descr_adding_bezier ) {
 	EndBezierTo(iPt);
@@ -151,7 +151,7 @@ int Path::MoveTo(NR::Point const &iPt)
     return descr_cmd.size() - 1;
 }
 
-void Path::InsertMoveTo(NR::Point const &iPt, int at)
+void Path::InsertMoveTo(Geom::Point const &iPt, int at)
 {
     if ( at < 0 || at > int(descr_cmd.size()) ) {
         return;
@@ -165,7 +165,7 @@ void Path::InsertMoveTo(NR::Point const &iPt, int at)
   descr_cmd.insert(descr_cmd.begin() + at, new PathDescrMoveTo(iPt));
 }
 
-int Path::LineTo(NR::Point const &iPt)
+int Path::LineTo(Geom::Point const &iPt)
 {
     if (descr_flags & descr_adding_bezier) {
 	EndBezierTo (iPt);
@@ -178,7 +178,7 @@ int Path::LineTo(NR::Point const &iPt)
     return descr_cmd.size() - 1;
 }
 
-void Path::InsertLineTo(NR::Point const &iPt, int at)
+void Path::InsertLineTo(Geom::Point const &iPt, int at)
 {
     if ( at < 0 || at > int(descr_cmd.size()) ) {
         return;
@@ -192,7 +192,7 @@ void Path::InsertLineTo(NR::Point const &iPt, int at)
     descr_cmd.insert(descr_cmd.begin() + at, new PathDescrLineTo(iPt));
 }
 
-int Path::CubicTo(NR::Point const &iPt, NR::Point const &iStD, NR::Point const &iEnD)
+int Path::CubicTo(Geom::Point const &iPt, Geom::Point const &iStD, Geom::Point const &iEnD)
 {
     if (descr_flags & descr_adding_bezier) {
 	EndBezierTo(iPt);
@@ -206,7 +206,7 @@ int Path::CubicTo(NR::Point const &iPt, NR::Point const &iStD, NR::Point const &
 }
 
 
-void Path::InsertCubicTo(NR::Point const &iPt, NR::Point const &iStD, NR::Point const &iEnD, int at)
+void Path::InsertCubicTo(Geom::Point const &iPt, Geom::Point const &iStD, Geom::Point const &iEnD, int at)
 {
     if ( at < 0 || at > int(descr_cmd.size()) ) {
 	return;
@@ -220,7 +220,7 @@ void Path::InsertCubicTo(NR::Point const &iPt, NR::Point const &iStD, NR::Point 
     descr_cmd.insert(descr_cmd.begin() + at, new PathDescrCubicTo(iPt, iStD, iEnD));
 }
 
-int Path::ArcTo(NR::Point const &iPt, double iRx, double iRy, double angle,
+int Path::ArcTo(Geom::Point const &iPt, double iRx, double iRy, double angle,
 		bool iLargeArc, bool iClockwise)
 {
     if (descr_flags & descr_adding_bezier) {
@@ -235,7 +235,7 @@ int Path::ArcTo(NR::Point const &iPt, double iRx, double iRy, double angle,
 }
 
 
-void Path::InsertArcTo(NR::Point const &iPt, double iRx, double iRy, double angle,
+void Path::InsertArcTo(Geom::Point const &iPt, double iRx, double iRy, double angle,
 		       bool iLargeArc, bool iClockwise, int at)
 {
     if ( at < 0 || at > int(descr_cmd.size()) ) {
@@ -262,7 +262,7 @@ int Path::TempBezierTo()
     }
     pending_bezier_cmd = descr_cmd.size();
     
-    descr_cmd.push_back(new PathDescrBezierTo(NR::Point(0, 0), 0));
+    descr_cmd.push_back(new PathDescrBezierTo(Geom::Point(0, 0), 0));
     descr_flags |= descr_adding_bezier;
     descr_flags |= descr_delayed_bezier;
     return descr_cmd.size() - 1;
@@ -293,7 +293,7 @@ int Path::EndBezierTo()
     return -1;
 }
 
-int Path::EndBezierTo(NR::Point const &iPt)
+int Path::EndBezierTo(Geom::Point const &iPt)
 {
     if ( (descr_flags & descr_adding_bezier) == 0 ) {
 	return LineTo(iPt);
@@ -313,7 +313,7 @@ int Path::EndBezierTo(NR::Point const &iPt)
 }
 
 
-int Path::IntermBezierTo(NR::Point const &iPt)
+int Path::IntermBezierTo(Geom::Point const &iPt)
 {
     if ( (descr_flags & descr_adding_bezier) == 0 ) {
 	return LineTo (iPt);
@@ -331,7 +331,7 @@ int Path::IntermBezierTo(NR::Point const &iPt)
 }
 
 
-void Path::InsertIntermBezierTo(NR::Point const &iPt, int at)
+void Path::InsertIntermBezierTo(Geom::Point const &iPt, int at)
 {
     if ( at < 0 || at > int(descr_cmd.size()) ) {
         return;
@@ -346,7 +346,7 @@ void Path::InsertIntermBezierTo(NR::Point const &iPt, int at)
 }
 
 
-int Path::BezierTo(NR::Point const &iPt)
+int Path::BezierTo(Geom::Point const &iPt)
 {
     if ( descr_flags & descr_adding_bezier ) {
 	EndBezierTo(iPt);
@@ -365,7 +365,7 @@ int Path::BezierTo(NR::Point const &iPt)
 }
 
 
-void Path::InsertBezierTo(NR::Point const &iPt, int iNb, int at)
+void Path::InsertBezierTo(Geom::Point const &iPt, int iNb, int at)
 {
     if ( at < 0 || at > int(descr_cmd.size()) ) {
 	return;
@@ -412,7 +412,7 @@ void Path::ResetPoints()
 }
 
 
-int Path::AddPoint(NR::Point const &iPt, bool mvto)
+int Path::AddPoint(Geom::Point const &iPt, bool mvto)
 {
     if (back) {
         return AddPoint (iPt, -1, 0.0, mvto);
@@ -428,7 +428,7 @@ int Path::AddPoint(NR::Point const &iPt, bool mvto)
 }
 
 
-int Path::ReplacePoint(NR::Point const &iPt)
+int Path::ReplacePoint(Geom::Point const &iPt)
 {
     if (pts.empty()) {
         return -1;
@@ -440,7 +440,7 @@ int Path::ReplacePoint(NR::Point const &iPt)
 }
 
 
-int Path::AddPoint(NR::Point const &iPt, int ip, double it, bool mvto)
+int Path::AddPoint(Geom::Point const &iPt, int ip, double it, bool mvto)
 {
     if (back == false) {
         return AddPoint (iPt, mvto);
@@ -455,7 +455,7 @@ int Path::AddPoint(NR::Point const &iPt, int ip, double it, bool mvto)
     return n;
 }
 
-int Path::AddForcedPoint(NR::Point const &iPt)
+int Path::AddForcedPoint(Geom::Point const &iPt)
 {
     if (back) {
         return AddForcedPoint (iPt, -1, 0.0);
@@ -471,7 +471,7 @@ int Path::AddForcedPoint(NR::Point const &iPt)
 }
 
 
-int Path::AddForcedPoint(NR::Point const &iPt, int /*ip*/, double /*it*/)
+int Path::AddForcedPoint(Geom::Point const &iPt, int /*ip*/, double /*it*/)
 {
     /* FIXME: ip & it aren't used.  Is this deliberate? */
     if (!back) {
@@ -495,15 +495,15 @@ void Path::PolylineBoundingBox(double &l, double &t, double &r, double &b)
   }
 
   std::vector<path_lineto>::const_iterator i = pts.begin();
-  l = r = i->p[NR::X];
-  t = b = i->p[NR::Y];
+  l = r = i->p[Geom::X];
+  t = b = i->p[Geom::Y];
   i++;
 
   for (; i != pts.end(); i++) {
-      r = std::max(r, i->p[NR::X]);
-      l = std::min(l, i->p[NR::X]);
-      b = std::max(b, i->p[NR::Y]);
-      t = std::min(t, i->p[NR::Y]);
+      r = std::max(r, i->p[Geom::X]);
+      l = std::min(l, i->p[Geom::X]);
+      b = std::max(b, i->p[Geom::Y]);
+      t = std::min(t, i->p[Geom::Y]);
   }
 }
 
@@ -514,18 +514,18 @@ void Path::PolylineBoundingBox(double &l, double &t, double &r, double &b)
  *    \param pos Filled in with the point at `at' on `piece'.
  */
 
-void Path::PointAt(int piece, double at, NR::Point &pos)
+void Path::PointAt(int piece, double at, Geom::Point &pos)
 {
     if (piece < 0 || piece >= int(descr_cmd.size())) {
 	// this shouldn't happen: the piece we are asked for doesn't
 	// exist in the path
-	pos = NR::Point(0,0);
+	pos = Geom::Point(0,0);
 	return;
     }
     
     PathDescr const *theD = descr_cmd[piece];
     int const typ = theD->getType();
-    NR::Point tgt;
+    Geom::Point tgt;
     double len;
     double rad;
     
@@ -575,7 +575,7 @@ void Path::PointAt(int piece, double at, NR::Point &pos)
 	}
 	
 	int k = piece - bez_st;
-	NR::Point const bStPt = PrevPoint(bez_st - 1);
+	Geom::Point const bStPt = PrevPoint(bez_st - 1);
 	if (stB->nb == 1 || k <= 0) {
 	    PathDescrIntermBezierTo *nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + 1]);
 	    TangentOnBezAt(at, bStPt, *nData, *stB, false, pos, tgt, len, rad);
@@ -589,13 +589,13 @@ void Path::PointAt(int piece, double at, NR::Point &pos)
 	    } else if (k == stB->nb) {
 		PathDescrIntermBezierTo *nextI = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + k]);
 		PathDescrIntermBezierTo *prevI = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + k - 1]);
-		NR::Point stP = 0.5 * ( prevI->p + nextI->p );
+		Geom::Point stP = 0.5 * ( prevI->p + nextI->p );
 		TangentOnBezAt(at, stP, *nextI, *stB, false, pos, tgt, len, rad);
 	    } else {
 		PathDescrIntermBezierTo *nextI = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + k]);
 		PathDescrIntermBezierTo *prevI = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + k - 1]);
 		PathDescrIntermBezierTo *nnextI = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + k + 1]);
-		NR::Point stP = 0.5 * ( prevI->p + nextI->p );
+		Geom::Point stP = 0.5 * ( prevI->p + nextI->p );
 		PathDescrBezierTo fin(0.5 * (nextI->p + nnextI->p), 1);
 		TangentOnBezAt(at, stP, *nextI, fin, false, pos, tgt, len, rad);
 	    }
@@ -604,11 +604,11 @@ void Path::PointAt(int piece, double at, NR::Point &pos)
 }
 
 
-void Path::PointAndTangentAt(int piece, double at, NR::Point &pos, NR::Point &tgt)
+void Path::PointAndTangentAt(int piece, double at, Geom::Point &pos, Geom::Point &tgt)
 {
     if (piece < 0 || piece >= int(descr_cmd.size())) {
 	// this shouldn't happen: the piece we are asked for doesn't exist in the path
-	pos = NR::Point(0, 0);
+	pos = Geom::Point(0, 0);
 	return;
     }
     
@@ -672,7 +672,7 @@ void Path::PointAndTangentAt(int piece, double at, NR::Point &pos, NR::Point &tg
 	}
 	
 	int k = piece - bez_st;
-	NR::Point const bStPt(PrevPoint( bez_st - 1 ));
+	Geom::Point const bStPt(PrevPoint( bez_st - 1 ));
 	if (stB->nb == 1 || k <= 0) {
 	    PathDescrIntermBezierTo* nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + 1]);
 	    TangentOnBezAt (at, bStPt, *nData, *stB, false, pos, tgt, len, rad);
@@ -686,13 +686,13 @@ void Path::PointAndTangentAt(int piece, double at, NR::Point &pos, NR::Point &tg
 	    } else if (k == stB->nb) {
 		PathDescrIntermBezierTo *prevI = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + k - 1]);
 		PathDescrIntermBezierTo *nextI = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + k]);
-		NR::Point stP = 0.5 * ( prevI->p + nextI->p );
+		Geom::Point stP = 0.5 * ( prevI->p + nextI->p );
 		TangentOnBezAt(at, stP, *nextI, *stB, false, pos, tgt, len, rad);
 	    } else {
 		PathDescrIntermBezierTo *prevI = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + k - 1]);
 		PathDescrIntermBezierTo *nextI = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + k]);
 		PathDescrIntermBezierTo *nnextI = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[bez_st + k + 1]);
-		NR::Point stP = 0.5 * ( prevI->p + nextI->p );
+		Geom::Point stP = 0.5 * ( prevI->p + nextI->p );
 		PathDescrBezierTo fin(0.5 * (nnextI->p + nnextI->p), 1);
 		TangentOnBezAt(at, stP, *nextI, fin, false, pos, tgt, len, rad);
 	    }
@@ -700,7 +700,7 @@ void Path::PointAndTangentAt(int piece, double at, NR::Point &pos, NR::Point &tg
     }
 }
 
-void Path::Transform(const NR::Matrix &trans)
+void Path::Transform(const Geom::Matrix &trans)
 {
     for (std::vector<PathDescr*>::iterator i = descr_cmd.begin(); i != descr_cmd.end(); i++) {
         (*i)->transform(trans);
@@ -711,7 +711,7 @@ void Path::FastBBox(double &l,double &t,double &r,double &b)
 {
     l = t = r = b = 0;
     bool empty = true;
-    NR::Point lastP(0, 0);
+    Geom::Point lastP(0, 0);
     
     for (int i = 0; i < int(descr_cmd.size()); i++) {
 	int const typ = descr_cmd[i]->getType();
@@ -720,21 +720,21 @@ void Path::FastBBox(double &l,double &t,double &r,double &b)
 	{
 	    PathDescrLineTo *nData = dynamic_cast<PathDescrLineTo *>(descr_cmd[i]);
 	    if ( empty ) {
-		l = r = nData->p[NR::X];
-		t = b = nData->p[NR::Y];
+		l = r = nData->p[Geom::X];
+		t = b = nData->p[Geom::Y];
 		empty = false;
 	    } else {
-		if ( nData->p[NR::X] < l ) {
-		    l = nData->p[NR::X];
+		if ( nData->p[Geom::X] < l ) {
+		    l = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::X] > r ) {
-		    r = nData->p[NR::X];
+		if ( nData->p[Geom::X] > r ) {
+		    r = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::Y] < t ) {
-		    t = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] < t ) {
+		    t = nData->p[Geom::Y];
 		}
-		if ( nData->p[NR::Y] > b ) {
-		    b = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] > b ) {
+		    b = nData->p[Geom::Y];
 		}
 	    }
 	    lastP = nData->p;
@@ -745,21 +745,21 @@ void Path::FastBBox(double &l,double &t,double &r,double &b)
 	{
 	    PathDescrMoveTo *nData = dynamic_cast<PathDescrMoveTo *>(descr_cmd[i]);
 	    if ( empty ) {
-		l = r = nData->p[NR::X];
-		t = b = nData->p[NR::Y];
+		l = r = nData->p[Geom::X];
+		t = b = nData->p[Geom::Y];
 		empty = false;
 	    } else {
-		if ( nData->p[NR::X] < l ) {
-		    l = nData->p[NR::X];
+		if ( nData->p[Geom::X] < l ) {
+		    l = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::X] > r ) {
-		    r = nData->p[NR::X];
+		if ( nData->p[Geom::X] > r ) {
+		    r = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::Y] < t ) {
-		    t = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] < t ) {
+		    t = nData->p[Geom::Y];
 		}
-		if ( nData->p[NR::Y] > b ) {
-		    b = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] > b ) {
+		    b = nData->p[Geom::Y];
 		}
 	    }
 	    lastP = nData->p;
@@ -770,21 +770,21 @@ void Path::FastBBox(double &l,double &t,double &r,double &b)
 	{
 	    PathDescrArcTo *nData  =  dynamic_cast<PathDescrArcTo *>(descr_cmd[i]);
 	    if ( empty ) {
-		l = r = nData->p[NR::X];
-		t = b = nData->p[NR::Y];
+		l = r = nData->p[Geom::X];
+		t = b = nData->p[Geom::Y];
 		empty = false;
 	    } else {
-		if ( nData->p[NR::X] < l ) {
-		    l = nData->p[NR::X];
+		if ( nData->p[Geom::X] < l ) {
+		    l = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::X] > r ) {
-		    r = nData->p[NR::X];
+		if ( nData->p[Geom::X] > r ) {
+		    r = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::Y] < t ) {
-		    t = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] < t ) {
+		    t = nData->p[Geom::Y];
 		}
-		if ( nData->p[NR::Y] > b ) {
-		    b = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] > b ) {
+		    b = nData->p[Geom::Y];
 		}
 	    }
 	    lastP = nData->p;
@@ -795,21 +795,21 @@ void Path::FastBBox(double &l,double &t,double &r,double &b)
 	{
 	    PathDescrCubicTo *nData  =  dynamic_cast<PathDescrCubicTo *>(descr_cmd[i]);
 	    if ( empty ) {
-		l = r = nData->p[NR::X];
-		t = b = nData->p[NR::Y];
+		l = r = nData->p[Geom::X];
+		t = b = nData->p[Geom::Y];
 		empty = false;
 	    } else {
-		if ( nData->p[NR::X] < l ) {
-		    l = nData->p[NR::X];
+		if ( nData->p[Geom::X] < l ) {
+		    l = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::X] > r ) {
-		    r = nData->p[NR::X];
+		if ( nData->p[Geom::X] > r ) {
+		    r = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::Y] < t ) {
-		    t = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] < t ) {
+		    t = nData->p[Geom::Y];
 		}
-		if ( nData->p[NR::Y] > b ) {
-		    b = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] > b ) {
+		    b = nData->p[Geom::Y];
 		}
 	    }
 	    
@@ -821,32 +821,32 @@ bezier-paths used by True-Type fonts."
 */
 
 #ifdef WIN32
-	    NR::Point np = nData->p - nData->end;
-	    if ( np[NR::X] < l ) {
-		l = np[NR::X];
+	    Geom::Point np = nData->p - nData->end;
+	    if ( np[Geom::X] < l ) {
+		l = np[Geom::X];
 	    }
-	    if ( np[NR::X] > r ) {
-		r = np[NR::X];
+	    if ( np[Geom::X] > r ) {
+		r = np[Geom::X];
 	    }
-	    if ( np[NR::Y] < t ) {
-		t = np[NR::Y];
+	    if ( np[Geom::Y] < t ) {
+		t = np[Geom::Y];
 	    }
-	    if ( np[NR::Y] > b ) {
-		b = np[NR::Y];
+	    if ( np[Geom::Y] > b ) {
+		b = np[Geom::Y];
 	    }
 	    
 	    np = lastP + nData->start;
-	    if ( np[NR::X] < l ) {
-		l = np[NR::X];
+	    if ( np[Geom::X] < l ) {
+		l = np[Geom::X];
 	    }
-	    if ( np[NR::X] > r ) {
-		r = np[NR::X];
+	    if ( np[Geom::X] > r ) {
+		r = np[Geom::X];
 	    }
-	    if ( np[NR::Y] < t ) {
-		t = np[NR::Y];
+	    if ( np[Geom::Y] < t ) {
+		t = np[Geom::Y];
 	    }
-	    if ( np[NR::Y] > b ) {
-		b = np[NR::Y];
+	    if ( np[Geom::Y] > b ) {
+		b = np[Geom::Y];
 	    }
 #endif
 
@@ -858,21 +858,21 @@ bezier-paths used by True-Type fonts."
 	{
 	    PathDescrBezierTo *nData  =  dynamic_cast<PathDescrBezierTo *>(descr_cmd[i]);
 	    if ( empty ) {
-		l = r = nData->p[NR::X];
-		t = b = nData->p[NR::Y];
+		l = r = nData->p[Geom::X];
+		t = b = nData->p[Geom::Y];
 		empty = false;
 	    } else {
-		if ( nData->p[NR::X] < l ) {
-		    l = nData->p[NR::X];
+		if ( nData->p[Geom::X] < l ) {
+		    l = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::X] > r ) {
-		    r = nData->p[NR::X];
+		if ( nData->p[Geom::X] > r ) {
+		    r = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::Y] < t ) {
-		    t = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] < t ) {
+		    t = nData->p[Geom::Y];
 		}
-		if ( nData->p[NR::Y] > b ) {
-		    b = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] > b ) {
+		    b = nData->p[Geom::Y];
 		}
 	    }
 	    lastP = nData->p;
@@ -883,21 +883,21 @@ bezier-paths used by True-Type fonts."
 	{
 	    PathDescrIntermBezierTo *nData  =  dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[i]);
 	    if ( empty ) {
-		l = r = nData->p[NR::X];
-		t = b = nData->p[NR::Y];
+		l = r = nData->p[Geom::X];
+		t = b = nData->p[Geom::Y];
 		empty = false;
 	    } else {
-		if ( nData->p[NR::X] < l ) {
-		    l = nData->p[NR::X];
+		if ( nData->p[Geom::X] < l ) {
+		    l = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::X] > r ) {
-		    r = nData->p[NR::X];
+		if ( nData->p[Geom::X] > r ) {
+		    r = nData->p[Geom::X];
 		}
-		if ( nData->p[NR::Y] < t ) {
-		    t = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] < t ) {
+		    t = nData->p[Geom::Y];
 		}
-		if ( nData->p[NR::Y] > b ) {
-		    b = nData->p[NR::Y];
+		if ( nData->p[Geom::Y] > b ) {
+		    b = nData->p[Geom::Y];
 		}
 	    }
 	}
@@ -911,7 +911,7 @@ char *Path::svg_dump_path() const
     Inkscape::SVGOStringStream os;
 
     for (int i = 0; i < int(descr_cmd.size()); i++) {
-        NR::Point const p = (i == 0) ? NR::Point(0, 0) : PrevPoint(i - 1);
+        Geom::Point const p = (i == 0) ? Geom::Point(0, 0) : PrevPoint(i - 1);
         descr_cmd[i]->dumpSVG(os, p);
     }
   

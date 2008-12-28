@@ -628,7 +628,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
         }
 
     /* fixme: Think (Lauris) */
-    sp_item_invoke_bbox(item, &pbox, NR::identity(), TRUE);
+    sp_item_invoke_bbox(item, &pbox, Geom::identity(), TRUE);
     dbox.x0 = 0.0;
     dbox.y0 = 0.0;
     dbox.x1 = sp_document_width (SP_OBJECT_DOCUMENT (item));
@@ -661,7 +661,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 
             tr = marker_item->transform * marker->c2p * tr;
 
-            NR::Matrix old_tr = marker_item->transform;
+            Geom::Matrix old_tr = marker_item->transform;
             marker_item->transform = tr;
             sp_item_invoke_print (marker_item, ctx);
             marker_item->transform = old_tr;
@@ -687,7 +687,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 
                 tr = marker_item->transform * marker->c2p * tr;
 
-                NR::Matrix old_tr = marker_item->transform;
+                Geom::Matrix old_tr = marker_item->transform;
                 marker_item->transform = tr;
                 sp_item_invoke_print (marker_item, ctx);
                 marker_item->transform = old_tr;
@@ -717,7 +717,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 
             tr = marker_item->transform * marker->c2p * tr;
 
-            NR::Matrix old_tr = marker_item->transform;
+            Geom::Matrix old_tr = marker_item->transform;
             marker_item->transform = tr;
             sp_item_invoke_print (marker_item, ctx);
             marker_item->transform = old_tr;

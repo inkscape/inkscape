@@ -430,10 +430,10 @@ text_unflow ()
 
         NRRect bbox;
         sp_item_invoke_bbox(SP_ITEM(flowtext), &bbox, sp_item_i2doc_affine(SP_ITEM(flowtext)), TRUE);
-        NR::Point xy(bbox.x0, bbox.y0);
-        if (xy[NR::X] != 1e18 && xy[NR::Y] != 1e18) {
-            sp_repr_set_svg_double(rtext, "x", xy[NR::X]);
-            sp_repr_set_svg_double(rtext, "y", xy[NR::Y]);
+        Geom::Point xy(bbox.x0, bbox.y0);
+        if (xy[Geom::X] != 1e18 && xy[Geom::Y] != 1e18) {
+            sp_repr_set_svg_double(rtext, "x", xy[Geom::X]);
+            sp_repr_set_svg_double(rtext, "y", xy[Geom::Y]);
         }
 
         /* Create <tspan> */

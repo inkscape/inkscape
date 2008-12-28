@@ -270,7 +270,7 @@ sp_symbol_update (SPObject *object, SPCtx *ctx, guint flags)
 
         /* Calculate child to parent transformation */
         /* Apply parent <use> translation (set up as vewport) */
-        symbol->c2p = NR::Matrix(Geom::Translate(rctx.vp.x0, rctx.vp.y0));
+        symbol->c2p = Geom::Matrix(Geom::Translate(rctx.vp.x0, rctx.vp.y0));
 
         if (symbol->viewBox_set) {
             double x, y, width, height;
@@ -353,7 +353,7 @@ sp_symbol_update (SPObject *object, SPCtx *ctx, guint flags)
             rctx.vp.y0 = symbol->viewBox.y0;
             rctx.vp.x1 = symbol->viewBox.x1;
             rctx.vp.y1 = symbol->viewBox.y1;
-            rctx.i2vp = NR::identity();
+            rctx.i2vp = Geom::identity();
         }
 
         /* And invoke parent method */

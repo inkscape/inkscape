@@ -291,7 +291,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     if (!nc->drag) {
                         if (nc->shape_editor->has_nodepath() && selection->single() /* && item_over */) {
                             // save drag origin
-                            bool over_stroke = nc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), true);
+                            bool over_stroke = nc->shape_editor->is_over_stroke(Geom::Point(event->button.x, event->button.y), true);
                             //only dragging curves
                             if (over_stroke) {
                                 ret = TRUE;
@@ -300,9 +300,9 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         }
                     }
                 }
-                NR::Point const button_w(event->button.x,
+                Geom::Point const button_w(event->button.x,
                                          event->button.y);
-                NR::Point const button_dt(desktop->w2d(button_w));
+                Geom::Point const button_dt(desktop->w2d(button_w));
                 Inkscape::Rubberband::get(desktop)->start(desktop, button_dt);
                 nc->current_state = SP_NODE_CONTEXT_INACTIVE;
                 desktop->updateNow();
@@ -351,9 +351,9 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         }
                     case SP_NODE_CONTEXT_RUBBERBAND_DRAGGING:
                         if (Inkscape::Rubberband::get(desktop)->is_started()) {
-                            NR::Point const motion_w(event->motion.x,
+                            Geom::Point const motion_w(event->motion.x,
                                                 event->motion.y);
-                            NR::Point const motion_dt(desktop->w2d(motion_w));
+                            Geom::Point const motion_dt(desktop->w2d(motion_w));
                             Inkscape::Rubberband::get(desktop)->move(motion_dt);
                         }
                         break;
@@ -367,7 +367,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 }
 
                 bool over_stroke = false;
-                over_stroke = nc->shape_editor->is_over_stroke(NR::Point(event->motion.x, event->motion.y), false);
+                over_stroke = nc->shape_editor->is_over_stroke(Geom::Point(event->motion.x, event->motion.y), false);
 
                 if (nc->cursor_drag && !over_stroke) {
                     event_context->cursor_shape = cursor_node_xpm;
@@ -390,14 +390,14 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if ( (event->button.button == 1) && (!nc->drag) && !event_context->space_panning) {
                 // find out clicked item, disregarding groups, honoring Alt
                 SPItem *item_clicked = sp_event_context_find_item (desktop,
-                        NR::Point(event->button.x, event->button.y),
+                        Geom::Point(event->button.x, event->button.y),
                         (event->button.state & GDK_MOD1_MASK) && !(event->button.state & GDK_CONTROL_MASK), TRUE);
 
                 event_context->xp = event_context->yp = 0;
 
                 bool over_stroke = false;
                 if (nc->shape_editor->has_nodepath()) {
-                    over_stroke = nc->shape_editor->is_over_stroke(NR::Point(event->button.x, event->button.y), false);
+                    over_stroke = nc->shape_editor->is_over_stroke(Geom::Point(event->button.x, event->button.y), false);
                 }
 
                 if (item_clicked || over_stroke) {

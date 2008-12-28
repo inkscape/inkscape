@@ -145,11 +145,11 @@ RectKnotHolderEntityRX::knot_set(Geom::Point const &p, Geom::Point const &/*orig
 
     if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - p[NR::X], 0.0, temp);
+        rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - p[Geom::X], 0.0, temp);
         rect->rx._set = rect->ry._set = true;
 
     } else {
-        rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - p[NR::X], 0.0, rect->width.computed / 2.0);
+        rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - p[Geom::X], 0.0, rect->width.computed / 2.0);
         rect->rx._set = true;
     }
 
@@ -194,15 +194,15 @@ RectKnotHolderEntityRY::knot_set(Geom::Point const &p, Geom::Point const &/*orig
 
     if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed, 0.0, temp);
+        rect->rx.computed = rect->ry.computed = CLAMP(p[Geom::Y] - rect->y.computed, 0.0, temp);
         rect->ry._set = rect->rx._set = true;
     } else {
         if (!rect->rx._set || rect->rx.computed == 0) {
-            rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed,
+            rect->ry.computed = CLAMP(p[Geom::Y] - rect->y.computed,
                                       0.0,
                                       MIN(rect->height.computed / 2.0, rect->width.computed / 2.0));
         } else {
-            rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed,
+            rect->ry.computed = CLAMP(p[Geom::Y] - rect->y.computed,
                                       0.0,
                                       rect->height.computed / 2.0);
         }
@@ -261,15 +261,15 @@ RectKnotHolderEntityWH::set_internal(Geom::Point const &p, Geom::Point const &or
 
     if (state & GDK_CONTROL_MASK) {
         // original width/height when drag started
-        gdouble const w_orig = (origin[NR::X] - rect->x.computed);
-        gdouble const h_orig = (origin[NR::Y] - rect->y.computed);
+        gdouble const w_orig = (origin[Geom::X] - rect->x.computed);
+        gdouble const h_orig = (origin[Geom::Y] - rect->y.computed);
 
         //original ratio
         gdouble const ratio = (w_orig / h_orig);
 
         // mouse displacement since drag started
-        gdouble const minx = s[NR::X] - origin[NR::X];
-        gdouble const miny = s[NR::Y] - origin[NR::Y];
+        gdouble const minx = s[Geom::X] - origin[Geom::X];
+        gdouble const miny = s[Geom::Y] - origin[Geom::Y];
 
         if (fabs(minx) > fabs(miny)) {
 
@@ -299,8 +299,8 @@ RectKnotHolderEntityWH::set_internal(Geom::Point const &p, Geom::Point const &or
 
     } else {
         // move freely
-        rect->width.computed = MAX(s[NR::X] - rect->x.computed, 0);
-        rect->height.computed = MAX(s[NR::Y] - rect->y.computed, 0);
+        rect->width.computed = MAX(s[Geom::X] - rect->x.computed, 0);
+        rect->height.computed = MAX(s[Geom::Y] - rect->y.computed, 0);
         rect->width._set = rect->height._set = true;
     }
 
@@ -334,14 +334,14 @@ RectKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &origin
     gdouble opposite_y = (rect->y.computed + rect->height.computed);
 
     // original width/height when drag started
-    gdouble w_orig = opposite_x - origin[NR::X];
-    gdouble h_orig = opposite_y - origin[NR::Y];
+    gdouble w_orig = opposite_x - origin[Geom::X];
+    gdouble h_orig = opposite_y - origin[Geom::Y];
 
     Geom::Point const s = snap_knot_position(p);
 
     // mouse displacement since drag started
-    gdouble minx = s[NR::X] - origin[NR::X];
-    gdouble miny = s[NR::Y] - origin[NR::Y];
+    gdouble minx = s[Geom::X] - origin[Geom::X];
+    gdouble miny = s[Geom::Y] - origin[Geom::Y];
 
     if (state & GDK_CONTROL_MASK) {
         //original ratio
@@ -350,30 +350,30 @@ RectKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &origin
         if (fabs(minx) > fabs(miny)) {
 
             // snap to horizontal or diagonal
-            rect->x.computed = MIN(s[NR::X], opposite_x);
+            rect->x.computed = MIN(s[Geom::X], opposite_x);
             rect->width.computed = MAX(w_orig - minx, 0);
             if (minx != 0 && fabs(miny/minx) > 0.5 * 1/ratio && (SGN(minx) == SGN(miny))) {
                 // closer to the diagonal and in same-sign quarters, change both using ratio
-                rect->y.computed = MIN(origin[NR::Y] + minx / ratio, opposite_y);
+                rect->y.computed = MIN(origin[Geom::Y] + minx / ratio, opposite_y);
                 rect->height.computed = MAX(h_orig - minx / ratio, 0);
             } else {
                 // closer to the horizontal, change only width, height is h_orig
-                rect->y.computed = MIN(origin[NR::Y], opposite_y);
+                rect->y.computed = MIN(origin[Geom::Y], opposite_y);
                 rect->height.computed = MAX(h_orig, 0);
             }
 
         } else {
 
             // snap to vertical or diagonal
-            rect->y.computed = MIN(s[NR::Y], opposite_y);
+            rect->y.computed = MIN(s[Geom::Y], opposite_y);
             rect->height.computed = MAX(h_orig - miny, 0);
             if (miny != 0 && fabs(minx/miny) > 0.5 *ratio && (SGN(minx) == SGN(miny))) {
                 // closer to the diagonal and in same-sign quarters, change both using ratio
-                rect->x.computed = MIN(origin[NR::X] + miny * ratio, opposite_x);
+                rect->x.computed = MIN(origin[Geom::X] + miny * ratio, opposite_x);
                 rect->width.computed = MAX(w_orig - miny * ratio, 0);
             } else {
                 // closer to the vertical, change only height, width is w_orig
-                rect->x.computed = MIN(origin[NR::X], opposite_x);
+                rect->x.computed = MIN(origin[Geom::X], opposite_x);
                 rect->width.computed = MAX(w_orig, 0);
             }
 
@@ -383,9 +383,9 @@ RectKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &origin
 
     } else {
         // move freely
-        rect->x.computed = MIN(s[NR::X], opposite_x);
+        rect->x.computed = MIN(s[Geom::X], opposite_x);
         rect->width.computed = MAX(w_orig - minx, 0);
-        rect->y.computed = MIN(s[NR::Y], opposite_y);
+        rect->y.computed = MIN(s[Geom::Y], opposite_y);
         rect->height.computed = MAX(h_orig - miny, 0);
         rect->width._set = rect->height._set = rect->x._set = rect->y._set = true;
     }
@@ -729,8 +729,8 @@ public:
 static gint
 sp_genericellipse_side(SPGenericEllipse *ellipse, Geom::Point const &p)
 {
-    gdouble dx = (p[NR::X] - ellipse->cx.computed) / ellipse->rx.computed;
-    gdouble dy = (p[NR::Y] - ellipse->cy.computed) / ellipse->ry.computed;
+    gdouble dx = (p[Geom::X] - ellipse->cx.computed) / ellipse->rx.computed;
+    gdouble dy = (p[Geom::Y] - ellipse->cy.computed) / ellipse->ry.computed;
 
     gdouble s = dx * dx + dy * dy;
     if (s < 1.0) return 1;
@@ -822,7 +822,7 @@ ArcKnotHolderEntityRX::knot_set(Geom::Point const &p, Geom::Point const &/*origi
 
     Geom::Point const s = snap_knot_position(p);
 
-    ge->rx.computed = fabs( ge->cx.computed - s[NR::X] );
+    ge->rx.computed = fabs( ge->cx.computed - s[Geom::X] );
 
     if ( state & GDK_CONTROL_MASK ) {
         ge->ry.computed = ge->rx.computed;
@@ -857,7 +857,7 @@ ArcKnotHolderEntityRY::knot_set(Geom::Point const &p, Geom::Point const &/*origi
 
     Geom::Point const s = snap_knot_position(p);
 
-    ge->ry.computed = fabs( ge->cy.computed - s[NR::Y] );
+    ge->ry.computed = fabs( ge->cy.computed - s[Geom::Y] );
 
     if ( state & GDK_CONTROL_MASK ) {
         ge->rx.computed = ge->ry.computed;
@@ -1087,8 +1087,8 @@ SpiralKnotHolderEntityInner::knot_set(Geom::Point const &p, Geom::Point const &/
 
     SPSpiral *spiral = SP_SPIRAL(item);
 
-    gdouble   dx = p[NR::X] - spiral->cx;
-    gdouble   dy = p[NR::Y] - spiral->cy;
+    gdouble   dx = p[Geom::X] - spiral->cx;
+    gdouble   dy = p[Geom::Y] - spiral->cy;
 
     if (state & GDK_MOD1_MASK) {
         // adjust divergence by vertical drag, relative to rad
@@ -1130,8 +1130,8 @@ SpiralKnotHolderEntityOuter::knot_set(Geom::Point const &p, Geom::Point const &/
 
     SPSpiral *spiral = SP_SPIRAL(item);
 
-    gdouble  dx = p[NR::X] - spiral->cx;
-    gdouble  dy = p[NR::Y] - spiral->cy;
+    gdouble  dx = p[Geom::X] - spiral->cx;
+    gdouble  dy = p[Geom::Y] - spiral->cy;
 
     if (state & GDK_SHIFT_MASK) { // rotate without roll/unroll
         spiral->arg = atan2(dy, dx) - 2.0*M_PI*spiral->revo;

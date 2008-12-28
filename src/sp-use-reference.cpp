@@ -150,15 +150,15 @@ sp_usepath_move_compensate(Geom::Matrix const *mp, SPItem *original, SPUsePath *
 
 // TODO kill naughty naughty #if 0
 #if 0
-    NR::Matrix m(*mp);
+    Geom::Matrix m(*mp);
     if (!(m.is_translation())) {
         return;
     }
-    NR::Matrix const t(item->transform);
-    NR::Matrix clone_move = t.inverse() * m * t;
+    Geom::Matrix const t(item->transform);
+    Geom::Matrix clone_move = t.inverse() * m * t;
 
     // Calculate the compensation matrix and the advertized movement matrix.
-    NR::Matrix advertized_move;
+    Geom::Matrix advertized_move;
     if (mode == SP_CLONE_COMPENSATION_PARALLEL) {
         //clone_move = clone_move.inverse();
         advertized_move.set_identity();
