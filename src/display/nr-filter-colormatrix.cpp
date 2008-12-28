@@ -37,19 +37,15 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     }
 
     NRPixBlock *out = new NRPixBlock;
-
-    bool premultiplied;
     if ((type==COLORMATRIX_SATURATE || type==COLORMATRIX_HUEROTATE) && in->mode != NR_PIXBLOCK_MODE_R8G8B8A8N) {
         // saturate and hueRotate do not touch the alpha channel and are linear (per-pixel) operations, so no premultiplied -> non-premultiplied operation is necessary
         nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8P,
                                in->area.x0, in->area.y0, in->area.x1, in->area.y1,
                                true);
-        premultiplied = true;
     } else {
         nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8N,
                                in->area.x0, in->area.y0, in->area.x1, in->area.y1,
                                true);
-        premultiplied = false;
     }
 
     // this primitive is defined for non-premultiplied RGBA values,
@@ -136,7 +132,7 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
                 double a20 = 0.213 + coshue*(-0.213) + sinhue*(-0.787);
                 double a21 = 0.715 + coshue*(-0.715) + sinhue*( 0.715);
                 double a22 = 0.072 + coshue*( 0.928) + sinhue*( 0.072);
-                if (premultiplied) {
+                if (in->mode==NR_PIXBLOCK_MODE_R8G8B8A8P) {
                     // Although it does not change the alpha channel, it can give "out-of-bound" results, and in this case the bound is determined by the alpha channel
                     for (x=x0;x<x1;x++){
                         for (y=y0;y<y1;y++){
