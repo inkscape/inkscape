@@ -39,8 +39,8 @@ enum glyphOrientation {
 };
 
 struct SPGlyph : public SPObject {
-    char* unicode;
-    char* glyph_name;
+    Glib::ustring unicode;
+    Glib::ustring glyph_name;
     char* d;
     glyphOrientation orientation;
     glyphArabicForm arabic_form;

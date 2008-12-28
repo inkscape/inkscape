@@ -98,3 +98,29 @@ bool UnicodeRange::contains(gchar unicode){
 	}
 	return false;
 }
+
+Glib::ustring UnicodeRange::attribute_string(){
+	Glib::ustring result;
+	unsigned int i;
+	for(i=0; i<this->unichars.size(); i++){
+		result += this->unichars[i];
+		if (i!=this->unichars.size()-1) result += ",";
+	}
+
+	for(i=0; i<this->range.size(); i++){
+		result += "U+" + Glib::ustring(this->range[i].start) + "-" + Glib::ustring(this->range[i].end);
+		if (i!=this->range.size()-1) result += ",";
+	}
+
+	return result;
+}
+
+gunichar UnicodeRange::sample_glyph(){
+	//This could be better
+	if (unichars.size())
+		return unichars[0];
+	if (range.size())
+		return hex2int(range[0].start);
+	return (gunichar) ' ';
+}
+

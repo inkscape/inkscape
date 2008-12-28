@@ -91,48 +91,6 @@ int input_count(const SPFilterPrimitive* prim)
         return 1;
 }
 
-// Very simple observer that just emits a signal if anything happens to a node
-class FilterEffectsDialog::SignalObserver : public XML::NodeObserver
-{
-public:
-    SignalObserver()
-        : _oldsel(0)
-    {}
-
-    // Add this observer to the SPObject and remove it from any previous object
-    void set(SPObject* o)
-    {
-        if(_oldsel && _oldsel->repr)
-            _oldsel->repr->removeObserver(*this);
-        if(o && o->repr)
-            o->repr->addObserver(*this);
-        _oldsel = o;
-    }
-
-    void notifyChildAdded(XML::Node&, XML::Node&, XML::Node*)
-    { signal_changed()(); }
-
-    void notifyChildRemoved(XML::Node&, XML::Node&, XML::Node*)
-    { signal_changed()(); }
-
-    void notifyChildOrderChanged(XML::Node&, XML::Node&, XML::Node*, XML::Node*)
-    { signal_changed()(); }
-
-    void notifyContentChanged(XML::Node&, Util::ptr_shared<char>, Util::ptr_shared<char>)
-    {}
-
-    void notifyAttributeChanged(XML::Node&, GQuark, Util::ptr_shared<char>, Util::ptr_shared<char>)
-    { signal_changed()(); }
-
-    sigc::signal<void>& signal_changed()
-    {
-        return _signal_changed;
-    }
-private:
-    sigc::signal<void> _signal_changed;
-    SPObject* _oldsel;
-};
-
 class CheckButtonAttr : public Gtk::CheckButton, public AttrWidget
 {
 public:
@@ -1119,7 +1077,7 @@ Glib::RefPtr<Gtk::Menu> create_popup_menu(Gtk::Widget& parent, sigc::slot<void> 
 
 /*** FilterModifier ***/
 FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
-    : _dialog(d), _add(Gtk::Stock::NEW), _observer(new SignalObserver)
+    : _dialog(d), _add(Gtk::Stock::NEW), _observer(new Inkscape::XML::SignalObserver)
 {
     Gtk::ScrolledWindow* sw = Gtk::manage(new Gtk::ScrolledWindow);
     pack_start(*sw);
@@ -1443,7 +1401,7 @@ void FilterEffectsDialog::CellRendererConnection::get_size_vfunc(
 FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
     : _dialog(d),
       _in_drag(0),
-      _observer(new SignalObserver)
+      _observer(new Inkscape::XML::SignalObserver)
 {
     d.signal_expose_event().connect(sigc::mem_fun(*this, &PrimitiveList::on_expose_signal));
 

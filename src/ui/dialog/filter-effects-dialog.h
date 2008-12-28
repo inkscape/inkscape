@@ -33,6 +33,7 @@
 #include "sp-filter.h"
 #include "ui/widget/combo-enums.h"
 #include "ui/widget/spin-slider.h"
+#include "xml/helper-observer.h"
 
 using namespace Inkscape::UI::Widget;
 
@@ -55,7 +56,6 @@ public:
 protected:
     virtual void show_all_vfunc();
 private:
-    class SignalObserver;
 
     class FilterModifier : public Gtk::VBox
     {
@@ -119,7 +119,7 @@ private:
         Gtk::Button _add;
         Glib::RefPtr<Gtk::Menu> _menu;
         sigc::signal<void> _signal_filter_changed;
-        std::auto_ptr<SignalObserver> _observer;
+        std::auto_ptr<Inkscape::XML::SignalObserver> _observer;
     };
 
     class PrimitiveColumns : public Gtk::TreeModel::ColumnRecord
@@ -203,7 +203,7 @@ private:
         sigc::signal<void> _signal_primitive_changed;
         sigc::connection _scroll_connection;
         int _autoscroll;
-        std::auto_ptr<SignalObserver> _observer;
+        std::auto_ptr<Inkscape::XML::SignalObserver> _observer;
     };
 
     void init_settings_widgets();

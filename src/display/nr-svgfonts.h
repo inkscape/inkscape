@@ -32,6 +32,7 @@ cairo_font_face_t* face;
 class SvgFont{
 public:
 SvgFont(SPFont* spfont);
+void refresh();
 cairo_font_face_t* get_font_face();
 cairo_status_t scaled_font_init (cairo_scaled_font_t *scaled_font, cairo_font_extents_t *metrics);
 cairo_status_t scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font, const char	*utf8, int utf8_len, cairo_glyph_t **glyphs, int *num_glyphs, cairo_text_cluster_t **clusters, int *num_clusters, cairo_text_cluster_flags_t *flags);

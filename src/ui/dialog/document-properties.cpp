@@ -388,42 +388,6 @@ DocumentProperties::build_snap_dtls()
     attach_all(_page_snap_dtls.table(), array, G_N_ELEMENTS(array));
 }
 
-// Very simple observer that just emits a signal if anything happens to a node
-DocumentProperties::SignalObserver::SignalObserver()
-    : _oldsel(0)
-{}
-
-// Add this observer to the SPObject and remove it from any previous object
-void
-DocumentProperties::SignalObserver::set(SPObject* o)
-{
-    if(_oldsel && _oldsel->repr)
-        _oldsel->repr->removeObserver(*this);
-    if(o && o->repr)
-        o->repr->addObserver(*this);
-    _oldsel = o;
-}
-
-void DocumentProperties::SignalObserver::notifyChildAdded(XML::Node&, XML::Node&, XML::Node*)
-{ signal_changed()(); }
-
-void DocumentProperties::SignalObserver::notifyChildRemoved(XML::Node&, XML::Node&, XML::Node*)
-{ signal_changed()(); }
-
-void DocumentProperties::SignalObserver::notifyChildOrderChanged(XML::Node&, XML::Node&, XML::Node*, XML::Node*)
-{ signal_changed()(); }
-
-void DocumentProperties::SignalObserver::notifyContentChanged(XML::Node&, Util::ptr_shared<char>, Util::ptr_shared<char>)
-{}
-
-void DocumentProperties::SignalObserver::notifyAttributeChanged(XML::Node&, GQuark, Util::ptr_shared<char>, Util::ptr_shared<char>)
-{ signal_changed()(); }
-
-sigc::signal<void>& DocumentProperties::SignalObserver::signal_changed()
-{
-    return _signal_changed;
-}
-
 #if ENABLE_LCMS
 static void
 lcms_profile_get_name (cmsHPROFILE   profile, const gchar **name)

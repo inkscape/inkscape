@@ -135,7 +135,7 @@ GlyphNames::~GlyphNames(){
     if (this->names) g_free(this->names);
 }
 
-bool GlyphNames::contains(gchar* name){
+bool GlyphNames::contains(const char* name){
     if (!(this->names) || !name) return false;
     std::istringstream is(this->names);
     std::string str;

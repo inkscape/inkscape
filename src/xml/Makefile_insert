@@ -18,6 +18,8 @@ xml_libspxml_a_SOURCES =	\
 	xml/comment-node.h \
 	xml/composite-node-observer.cpp xml/composite-node-observer.h \
 	xml/element-node.h \
+	xml/helper-observer.cpp	\
+	xml/helper-observer.h	\
 	xml/node-observer.h \
 	xml/quote.cpp	\
 	xml/quote.h	\

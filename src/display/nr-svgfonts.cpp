@@ -91,7 +91,7 @@ SvgFont::scaled_font_init (cairo_scaled_font_t  *scaled_font,
   return CAIRO_STATUS_SUCCESS;
 }
 
-unsigned int size_of_substring(gchar* substring, gchar* str){
+unsigned int size_of_substring(const char* substring, gchar* str){
 	const gchar* original_substring = substring;
 
 	while((g_utf8_get_char(substring)==g_utf8_get_char(str)) && g_utf8_get_char(substring) != 0 && g_utf8_get_char(str) != 0){
@@ -129,7 +129,7 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
     while(g_utf8_get_char(_utf8) != 0){
 	missing = true;
 	for (i=0; i < (unsigned long) this->glyphs.size(); i++){
-            if ( (len = size_of_substring(this->glyphs[i]->unicode, _utf8)) ){
+            if ( (len = size_of_substring(this->glyphs[i]->unicode.c_str(), _utf8)) ){
 		//TODO: store this cluster
 		_utf8+=len;
 		count++;
@@ -144,7 +144,6 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 	}
     }
 
-//g_warning("count is %d", count);
 
     //We use that info to allocate memory for the glyphs
     *glyphs = (cairo_glyph_t*) malloc(count*sizeof(cairo_glyph_t));
@@ -159,7 +158,7 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
     while(g_utf8_get_char(_utf8) != 0){
 	len = 0;
         for (i=0; i < (unsigned long) this->glyphs.size(); i++){
-            if ( (len = size_of_substring(this->glyphs[i]->unicode, _utf8)) ){
+            if ( (len = size_of_substring(this->glyphs[i]->unicode.c_str(), _utf8)) ){
 		//check whether is there a glyph declared on the SVG document
 		// that matches with the text string in its current position
 	        for(SPObject* node = this->font->children;previous_unicode && node;node=node->next){
@@ -168,7 +167,7 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 	                if ( 	(((SPHkern*)node)->u1->contains(previous_unicode[0])
 				 || ((SPHkern*)node)->g1->contains(previous_glyph_name)) &&
 				(((SPHkern*)node)->u2->contains(this->glyphs[i]->unicode[0])
-				 || ((SPHkern*)node)->g2->contains(this->glyphs[i]->glyph_name))
+				 || ((SPHkern*)node)->g2->contains(this->glyphs[i]->glyph_name.c_str()))
 			)//TODO: verify what happens when using unicode strings.
 				x -= (((SPHkern*)node)->k / this->font->horiz_adv_x);
 	            }
@@ -176,13 +175,13 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 	                if (	(((SPVkern*)node)->u1->contains(previous_unicode[0])
 				 || ((SPVkern*)node)->g1->contains(previous_glyph_name)) &&
 				(((SPVkern*)node)->u2->contains(this->glyphs[i]->unicode[0])
-				 || ((SPVkern*)node)->g2->contains(this->glyphs[i]->glyph_name))
+				 || ((SPVkern*)node)->g2->contains(this->glyphs[i]->glyph_name.c_str()))
 			)//TODO: idem
 				y -= (((SPVkern*)node)->k / this->font->vert_adv_y);
 	            }
 		}
-		previous_unicode = this->glyphs[i]->unicode;//used for kerning checking
-		previous_glyph_name = this->glyphs[i]->glyph_name;//used for kerning checking
+		previous_unicode = (char*) this->glyphs[i]->unicode.c_str();//used for kerning checking
+		previous_glyph_name = (char*) this->glyphs[i]->glyph_name.c_str();//used for kerning checking
                 (*glyphs)[count].index = i;
                 (*glyphs)[count].x = x;
                 (*glyphs)[count++].y = y;
@@ -227,10 +226,8 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
     if (glyph == this->glyphs.size()){
         if (!this->missingglyph) return CAIRO_STATUS_SUCCESS;
         node = (SPObject*) this->missingglyph;
-        g_warning("RENDER MISSING-GLYPH");
     } else {
         node = (SPObject*) this->glyphs[glyph];
-        g_warning("RENDER %s", this->glyphs[glyph]->unicode);
     }
 
     //glyphs can be described by arbitrary SVG declared in the childnodes of a glyph node
@@ -248,9 +245,16 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
     if (!pathv.empty()){
         //This glyph has a path description on its d attribute, so we render it:
         cairo_new_path(cr);
+		//adjust scale of the glyph
         Geom::Scale s(1.0/((SPFont*) node->parent)->horiz_adv_x);
+		//This matrix flips the glyph vertically
+        Geom::Matrix m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
+		//then we offset it
+		pathv += Geom::Point(Geom::Coord(0),Geom::Coord(-((SPFont*) node->parent)->horiz_adv_x));
+
         Geom::Rect area( Geom::Point(0,0), Geom::Point(1,1) ); //I need help here!    (reaction: note that the 'area' parameter is an *optional* rect, so you can pass an empty Geom::OptRect() )
-        feed_pathvector_to_cairo (cr, pathv, s, area, false, 0);
+
+        feed_pathvector_to_cairo (cr, pathv, s*m, area, false, 0);
         cairo_fill(cr);
     }
 
@@ -263,11 +267,9 @@ SvgFont::get_font_face(){
     if (!this->userfont) {
         for(SPObject* node = this->font->children;node;node=node->next){
             if (SP_IS_GLYPH(node)){
-	        g_warning("glyphs.push_back((SPGlyph*)node); (node->unicode='%s')", ((SPGlyph*)node)->unicode);
                 this->glyphs.push_back((SPGlyph*)node);
             }
             if (SP_IS_MISSING_GLYPH(node)){
-	        g_warning("missingglyph=(SPMissingGlyph*)node;");
                 this->missingglyph=(SPMissingGlyph*)node;
             }
         }
@@ -275,4 +277,11 @@ SvgFont::get_font_face(){
     }
     return this->userfont->face;
 }
+
+void SvgFont::refresh(){
+	this->glyphs.clear();
+	delete this->userfont;
+	this->userfont = NULL;
+}
+
 #endif //#ifdef ENABLE_SVG_FONTS

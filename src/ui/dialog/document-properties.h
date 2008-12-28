@@ -15,7 +15,7 @@
 #define INKSCAPE_UI_DIALOG_DOCUMENT_PREFERENCES_H
 
 #include <list>
-#include <sigc++/sigc++.h>
+#include <sigc++/sigc++.h>//
 #include <gtkmm/notebook.h>
 #include <glibmm/i18n.h>
 
@@ -26,14 +26,11 @@
 #include "ui/widget/tolerance-slider.h"
 #include "ui/widget/panel.h"
 
-#include "xml/node-observer.h"
+#include "xml/helper-observer.h"
 
 using namespace Inkscape::UI::Widget;
 
 namespace Inkscape {
-    namespace XML {
-        class Node;
-    }
     namespace UI {
         namespace Dialog {
 
@@ -71,26 +68,7 @@ protected:
     void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
     void _handleDeactivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
 
-    // Very simple observer that just emits a signal if anything happens to a node
-    class SignalObserver : public XML::NodeObserver
-    {
-    public:
-        SignalObserver();
-
-        // Add this observer to the SPObject and remove it from any previous object
-        void set(SPObject* o);
-        void notifyChildAdded(XML::Node&, XML::Node&, XML::Node*);
-        void notifyChildRemoved(XML::Node&, XML::Node&, XML::Node*);
-        void notifyChildOrderChanged(XML::Node&, XML::Node&, XML::Node*, XML::Node*);
-        void notifyContentChanged(XML::Node&, Util::ptr_shared<char>, Util::ptr_shared<char>);
-        void notifyAttributeChanged(XML::Node&, GQuark, Util::ptr_shared<char>, Util::ptr_shared<char>);
-        sigc::signal<void>& signal_changed();
-    private:
-        sigc::signal<void> _signal_changed;
-        SPObject* _oldsel;
-    };
-
-    SignalObserver _emb_profiles_observer;
+    Inkscape::XML::SignalObserver _emb_profiles_observer;
     Gtk::Tooltips _tt;
     Gtk::Notebook  _notebook;
 

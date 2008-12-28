@@ -72,8 +72,9 @@ static void sp_glyph_class_init(SPGlyphClass *gc)
 static void sp_glyph_init(SPGlyph *glyph)
 {
 //TODO: correct these values:
-    glyph->unicode = NULL;
-    glyph->glyph_name = NULL;
+
+    new (&glyph->unicode) Glib::ustring();
+    new (&glyph->glyph_name) Glib::ustring();
     glyph->d = NULL;
     glyph->orientation = GLYPH_ORIENTATION_BOTH;
     glyph->arabic_form = GLYPH_ARABIC_FORM_INITIAL;
@@ -151,13 +152,13 @@ static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value)
 
     switch (key) {
         case SP_ATTR_UNICODE:
-            if (glyph->unicode) g_free(glyph->unicode);
-            glyph->unicode = g_strdup(value);
+            glyph->unicode.clear();
+            if (value) glyph->unicode.append(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_GLYPH_NAME:
-            if (glyph->glyph_name) g_free(glyph->glyph_name);
-            glyph->glyph_name = g_strdup(value);
+            glyph->glyph_name.clear();
+            if (value) glyph->glyph_name.append(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_D:

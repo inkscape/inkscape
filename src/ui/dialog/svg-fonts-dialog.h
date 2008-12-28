@@ -27,7 +27,7 @@
 
 #include "display/nr-svgfonts.h"
 #include "attributes.h"
-
+#include "xml/helper-observer.h"
 
 class SvgFontDrawingArea : Gtk::DrawingArea{
 public:
@@ -66,17 +66,24 @@ public:
     void update_fonts();
     SvgFont* get_selected_svgfont();
     SPFont* get_selected_spfont();
+	SPGlyph* get_selected_glyph();
+	SPGlyphKerning* get_selected_kerning_pair();
+
+	//TODO: these methods should be private, right?!
     void on_font_selection_changed();
+	void on_kerning_pair_selection_changed();
     void on_preview_text_changed();
-    void on_glyphs_changed();
-    void on_kerning_changed();
+    void on_kerning_pair_changed();
+    void on_kerning_value_changed();
     void on_setwidth_changed();
 	void add_font();
 
+	//TODO: AttrEntry is currently unused. Should we remove it?
     class AttrEntry : public Gtk::HBox
 	{
 	public:
 	    AttrEntry(SvgFontsDialog* d, gchar* lbl, const SPAttributeEnum attr);
+		void set_text(char*);
 	private:
 	    SvgFontsDialog* dialog;
 	    void on_attr_changed();
@@ -85,11 +92,41 @@ public:
     };
 
 private:
+	void update_glyphs();
+	void update_sensitiveness();
+	void update_global_settings_tab();
+	void populate_glyphs_box();
+    void populate_kerning_pairs_box();
+	void set_glyph_description_from_selected_path();
+	void missing_glyph_description_from_selected_path();
+	void add_glyph();
+	void glyph_unicode_edit(const Glib::ustring&, const Glib::ustring&);
+	void glyph_name_edit(const Glib::ustring&, const Glib::ustring&);
+	void remove_selected_glyph();
+	void remove_selected_font();
+
+	void add_kerning_pair();
+
+	void create_glyphs_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
+	void glyphs_list_button_release(GdkEventButton* event);
+
+	void create_fonts_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
+	void fonts_list_button_release(GdkEventButton* event);
+
+    Inkscape::XML::SignalObserver _defs_observer; //in order to update fonts
+    Inkscape::XML::SignalObserver _glyphs_observer;
+
     Gtk::HBox* AttrCombo(gchar* lbl, const SPAttributeEnum attr);
 //    Gtk::HBox* AttrSpin(gchar* lbl, const SPAttributeEnum attr);
     Gtk::VBox* global_settings_tab();
+	AttrEntry* _familyname_entry;
+
     Gtk::VBox* kerning_tab();
     Gtk::VBox* glyphs_tab();
+    Gtk::Button _add;
+    Gtk::Button add_glyph_button;
+	Gtk::Button glyph_from_path_button;
+	Gtk::Button missing_glyph_button;
 
     class Columns : public Gtk::TreeModel::ColumnRecord
         {
@@ -107,14 +144,63 @@ private:
     };
     Glib::RefPtr<Gtk::ListStore> _model;
     Columns _columns;
-    Gtk::Button _add;
-    Gtk::TreeView _font_list;
+    Gtk::TreeView _FontsList;
+
+    class GlyphsColumns : public Gtk::TreeModel::ColumnRecord
+        {
+        public:
+            GlyphsColumns()
+            {
+				add(glyph_node);
+				add(glyph_name);
+				add(unicode);
+			}
+
+            Gtk::TreeModelColumn<SPGlyph*> glyph_node;
+            Gtk::TreeModelColumn<Glib::ustring> glyph_name;
+            Gtk::TreeModelColumn<Glib::ustring> unicode;
+    };
+    GlyphsColumns _GlyphsListColumns;
+    Glib::RefPtr<Gtk::ListStore> _GlyphsListStore;
+    Gtk::TreeView _GlyphsList;
+    Gtk::ScrolledWindow _GlyphsListScroller;
+
+    class KerningPairColumns : public Gtk::TreeModel::ColumnRecord
+        {
+        public:
+            KerningPairColumns()
+            {
+				add(first_glyph);
+				add(second_glyph);
+				add(kerning_value);
+				add(spnode);
+			}
+
+            Gtk::TreeModelColumn<Glib::ustring> first_glyph;
+            Gtk::TreeModelColumn<Glib::ustring> second_glyph;
+            Gtk::TreeModelColumn<double> kerning_value;
+            Gtk::TreeModelColumn<SPGlyphKerning*> spnode;
+    };
+    KerningPairColumns _KerningPairsListColumns;
+    Glib::RefPtr<Gtk::ListStore> _KerningPairsListStore;
+    Gtk::TreeView _KerningPairsList;
+    Gtk::ScrolledWindow _KerningPairsListScroller;
+	Gtk::Button add_kernpair_button;
+
     Gtk::VBox _font_settings;
+	Gtk::VBox global_vbox;
+	Gtk::VBox glyphs_vbox;
+    Gtk::VBox kerning_vbox;
     Gtk::Entry _preview_entry;
+
+    Gtk::Menu _FontsContextMenu;
+    Gtk::Menu _GlyphsContextMenu;
+
     SvgFontDrawingArea _font_da, kerning_preview;
     GlyphComboBox first_glyph, second_glyph;
     SPGlyphKerning* kerning_pair;
-    Gtk::SpinButton kerning_spin, setwidth_spin;
+    Gtk::SpinButton setwidth_spin;
+    Gtk::HScale kerning_slider;
 
     class EntryWidget : public Gtk::HBox
         {

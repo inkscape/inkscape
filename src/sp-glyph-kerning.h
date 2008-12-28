@@ -36,7 +36,7 @@ class GlyphNames{
 public: 
 GlyphNames(const gchar* value);
 ~GlyphNames();
-bool contains(gchar* name);
+bool contains(const char* name);
 private:
 gchar* names;
 };

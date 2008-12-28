@@ -26,6 +26,7 @@
 #include "document.h"
 #include "helper-fns.h"
 
+//TODO: apparently unused. Maybe should be removed.
 class ObjectContainer
 {
 
@@ -360,8 +361,8 @@ static void sp_fontface_init(SPFontFace *face)
     std::vector<FontFaceStretchType> stretch;
     stretch.push_back(SP_FONTFACE_STRETCH_NORMAL);
     face->font_stretch = stretch;
-/*
     face->font_family = NULL;
+    /*
     //face->font_style = ;
     //face->font_variant = ;
     //face->font_weight = ;
@@ -492,6 +493,11 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
     std::vector<FontFaceStretchType> stretch;
 
     switch (key) {
+	case SP_PROP_FONT_FAMILY:
+            if (face->font_family) g_free(face->font_family);
+            face->font_family = g_strdup(value);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break; 
 	case SP_PROP_FONT_STYLE:
             style = sp_read_fontFaceStyleType(value);
             if (face->font_style.size() != style.size()){
