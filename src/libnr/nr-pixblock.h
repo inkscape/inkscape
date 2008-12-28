@@ -70,6 +70,7 @@ void nr_pixblock_setup_extern (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, in
 void nr_pixblock_release (NRPixBlock *pb);
 
 NRPixBlock *nr_pixblock_new (NR_PIXBLOCK_MODE mode, int x0, int y0, int x1, int y1, bool clear);
+NRPixBlock *nr_pixblock_new_fast (NR_PIXBLOCK_MODE mode, int x0, int y0, int x1, int y1, bool clear);
 NRPixBlock *nr_pixblock_free (NRPixBlock *pb);
 
 unsigned char *nr_pixelstore_4K_new (bool clear, unsigned char val);

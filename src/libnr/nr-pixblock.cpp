@@ -5,6 +5,7 @@
  *
  * Authors:
  *   (C) 1999-2002 Lauris Kaplinski <lauris@kaplinski.com>
+ *   2008, Jasper van de Gronde <th.v.d.gonde@hccnet.nl>
  *
  * This code is in the Public Domain
  */
@@ -213,7 +214,7 @@ nr_pixblock_release (NRPixBlock *pb)
  *
  * \return Pointer to fresh pixblock.
  * Calls g_new() and nr_pixblock_setup().
-FIXME: currently unused, delete?
+FIXME: currently unused, delete? JG: Should be used more often! (To simplify memory management.)
  */
 NRPixBlock *
 nr_pixblock_new (NR_PIXBLOCK_MODE mode, int x0, int y0, int x1, int y1, bool clear)
@@ -221,10 +222,38 @@ nr_pixblock_new (NR_PIXBLOCK_MODE mode, int x0, int y0, int x1, int y1, bool cle
 	NRPixBlock *pb;
 
 	pb = g_new (NRPixBlock, 1);
+    if (!pb) return 0;
 
 	nr_pixblock_setup (pb, mode, x0, y0, x1, y1, clear);
+    if (pb->size!=NR_PIXBLOCK_SIZE_TINY && !pb->data.px) {
+        g_free(pb);
+        return 0;
+    }
 
 	return pb;
+}
+
+/**
+ * Allocates NRPixBlock and sets it up.
+ *
+ * \return Pointer to fresh pixblock.
+ * Calls g_new() and nr_pixblock_setup().
+ */
+NRPixBlock *
+nr_pixblock_new_fast (NR_PIXBLOCK_MODE mode, int x0, int y0, int x1, int y1, bool clear)
+{
+    NRPixBlock *pb;
+
+    pb = g_new (NRPixBlock, 1);
+    if (!pb) return 0;
+
+    nr_pixblock_setup_fast (pb, mode, x0, y0, x1, y1, clear);
+    if (pb->size!=NR_PIXBLOCK_SIZE_TINY && !pb->data.px) {
+        g_free(pb);
+        return 0;
+    }
+
+    return pb;
 }
 
 /**

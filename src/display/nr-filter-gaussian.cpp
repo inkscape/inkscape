@@ -8,7 +8,7 @@
  *   bulia byak
  *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *
- * Copyright (C) 2006 authors
+ * Copyright (C) 2006-2008 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -538,33 +538,50 @@ upsample(PT *const dst, int const dstr1, int const dstr2, unsigned int const dn1
 
 int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
 {
-    /* in holds the input pixblock */
-    NRPixBlock *in = slot.get(_input);
-    if (!in) {
-        g_warning("Missing source image for feGaussianBlur (in=%d)", _input);
-        return 1;
-    }
+    // TODO: Meaningful return values? (If they're checked at all.)
 
-    Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
+    /* in holds the input pixblock */
+    NRPixBlock *original_in = slot.get(_input);
 
     /* If to either direction, the standard deviation is zero or
      * input image is not defined,
      * a transparent black image should be returned. */
-    if (_deviation_x <= 0 || _deviation_y <= 0 || in == NULL) {
-        NRPixBlock *out = new NRPixBlock;
-        if (in == NULL) {
+    if (_deviation_x <= 0 || _deviation_y <= 0 || original_in == NULL) {
+        NRPixBlock *src = original_in;
+        if (src == NULL) {
+            g_warning("Missing source image for feGaussianBlur (in=%d)", _input);
             // A bit guessing here, but source graphic is likely to be of
             // right size
-            in = slot.get(NR_FILTER_SOURCEGRAPHIC);
+            src = slot.get(NR_FILTER_SOURCEGRAPHIC);
         }
-        nr_pixblock_setup_fast(out, in->mode, in->area.x0, in->area.y0,
-                               in->area.x1, in->area.y1, true);
-        if (out->data.px != NULL) {
+        NRPixBlock *out = new NRPixBlock;
+        nr_pixblock_setup_fast(out, src->mode, src->area.x0, src->area.y0,
+                               src->area.x1, src->area.y1, true);
+        if (out->size != NR_PIXBLOCK_SIZE_TINY && out->data.px != NULL) {
             out->empty = false;
             slot.set(_output, out);
         }
         return 0;
     }
+
+    // Gaussian blur is defined to operate on non-premultiplied color values.
+    //   So, convert the input first it uses non-premultiplied color values.
+    //   And please note that this should not be done AFTER resampling, as resampling a non-premultiplied image
+    //   does not simply yield a non-premultiplied version of the resampled premultiplied image!!!
+    NRPixBlock *in = original_in;
+    if (in->mode == NR_PIXBLOCK_MODE_R8G8B8A8N) {
+        in = nr_pixblock_new_fast(NR_PIXBLOCK_MODE_R8G8B8A8P,
+                                  original_in->area.x0, original_in->area.y0,
+                                  original_in->area.x1, original_in->area.y1,
+                                  false);
+        if (!in) {
+            // ran out of memory
+            return 0;
+        }
+        nr_blit_pixblock_pixblock(in, original_in);
+    }
+
+    Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
 
     // Some common constants
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -606,6 +623,8 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
                                           in->area.x0/x_step+width, in->area.y0/y_step+height, true);
     if (out->size != NR_PIXBLOCK_SIZE_TINY && out->data.px == NULL) {
         // alas, we've accomplished a lot, but ran out of memory - so abort
+        if (in != original_in) nr_pixblock_free(in);
+        delete out;
         return 0;
     }
     // Temporary storage for IIR filter
@@ -616,6 +635,7 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         for(int i=0; i<NTHREADS; i++) {
             tmpdata[i] = new IIRValue[std::max(width,height)*PC];
             if (tmpdata[i] == NULL) {
+                if (in != original_in) nr_pixblock_free(in);
                 nr_pixblock_release(out);
                 while(i-->0) {
                     delete[] tmpdata[i];
@@ -636,10 +656,10 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
             downsample<unsigned char,3>(NR_PIXBLOCK_PX(out), 3, out->rs, width, height, NR_PIXBLOCK_PX(in), 3, in->rs, width_org, height_org, x_step_l2, y_step_l2);
             break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            downsample<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, width, height, NR_PIXBLOCK_PX(in), 4, in->rs, width_org, height_org, x_step_l2, y_step_l2);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+        //    downsample<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, width, height, NR_PIXBLOCK_PX(in), 4, in->rs, width_org, height_org, x_step_l2, y_step_l2);
+        //    break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
             downsample<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, width, height, NR_PIXBLOCK_PX(in), 4, in->rs, width_org, height_org, x_step_l2, y_step_l2);
             break;
         default:
@@ -673,10 +693,10 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
             filter2D_IIR<unsigned char,3,false>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
             break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+        //    filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
+        //    break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
             filter2D_IIR<unsigned char,4,true >(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, b, M, tmpdata, NTHREADS);
             break;
         default:
@@ -695,10 +715,10 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
             filter2D_FIR<unsigned char,3>(NR_PIXBLOCK_PX(out), 3, out->rs, NR_PIXBLOCK_PX(ssin), 3, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
             break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+        //    filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
+        //    break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
             filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), 4, out->rs, NR_PIXBLOCK_PX(ssin), 4, ssin->rs, width, height, kernel, scr_len_x, NTHREADS);
             break;
         default:
@@ -734,10 +754,10 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
             filter2D_IIR<unsigned char,3,false>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, b, M, tmpdata, NTHREADS);
             break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata, NTHREADS);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+        //    filter2D_IIR<unsigned char,4,false>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata, NTHREADS);
+        //    break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
             filter2D_IIR<unsigned char,4,true >(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, b, M, tmpdata, NTHREADS);
             break;
         default:
@@ -756,10 +776,10 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
             filter2D_FIR<unsigned char,3>(NR_PIXBLOCK_PX(out), out->rs, 3, NR_PIXBLOCK_PX(out), out->rs, 3, height, width, kernel, scr_len_y, NTHREADS);
             break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, kernel, scr_len_y, NTHREADS);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+        //    filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, kernel, scr_len_y, NTHREADS);
+        //    break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
             filter2D_FIR<unsigned char,4>(NR_PIXBLOCK_PX(out), out->rs, 4, NR_PIXBLOCK_PX(out), out->rs, 4, height, width, kernel, scr_len_y, NTHREADS);
             break;
         default:
@@ -782,6 +802,7 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
                                                    in->area.x1, in->area.y1, true);
         if (finalout->size != NR_PIXBLOCK_SIZE_TINY && finalout->data.px == NULL) {
             // alas, we've accomplished a lot, but ran out of memory - so abort
+            if (in != original_in) nr_pixblock_free(in);
             nr_pixblock_release(out);
             delete out;
             return 0;
@@ -795,10 +816,10 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         case NR_PIXBLOCK_MODE_R8G8B8:    ///< 8 bit RGB
             upsample<unsigned char,3>(NR_PIXBLOCK_PX(finalout), 3, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 3, out->rs, width, height, x_step_l2, y_step_l2);
             break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
-            upsample<unsigned char,4>(NR_PIXBLOCK_PX(finalout), 4, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 4, out->rs, width, height, x_step_l2, y_step_l2);
-            break;
-        case NR_PIXBLOCK_MODE_R8G8B8A8P:  ///< Premultiplied 8 bit RGBA
+        //case NR_PIXBLOCK_MODE_R8G8B8A8N: ///< Normal 8 bit RGBA
+        //    upsample<unsigned char,4>(NR_PIXBLOCK_PX(finalout), 4, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 4, out->rs, width, height, x_step_l2, y_step_l2);
+        //    break;
+        case NR_PIXBLOCK_MODE_R8G8B8A8P: ///< Premultiplied 8 bit RGBA
             upsample<unsigned char,4>(NR_PIXBLOCK_PX(finalout), 4, finalout->rs, width_org, height_org, NR_PIXBLOCK_PX(out), 4, out->rs, width, height, x_step_l2, y_step_l2);
             break;
         default:
@@ -813,6 +834,8 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
         finalout->empty = FALSE;
         slot.set(_output, finalout);
     }
+
+    if (in != original_in) nr_pixblock_free(in);
 
     return 0;
 }
