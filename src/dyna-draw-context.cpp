@@ -34,6 +34,8 @@
 
 #include "svg/svg.h"
 #include "display/canvas-bpath.h"
+#include <2geom/isnan.h>
+#include <2geom/pathvector.h>
 #include <2geom/bezier-utils.h>
 #include "display/curve.h"
 #include <glib/gmem.h>
@@ -48,9 +50,6 @@
 #include "message-context.h"
 #include "preferences.h"
 #include "pixmaps/cursor-calligraphy.xpm"
-#include "libnr/nr-matrix-ops.h"
-#include "libnr/nr-scale-translate-ops.h"
-#include "libnr/nr-convert2geom.h"
 #include "xml/repr.h"
 #include "context-fns.h"
 #include "sp-item.h"
@@ -64,8 +63,6 @@
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "livarot/Shape.h"
-#include <2geom/isnan.h>
-#include <2geom/pathvector.h>
 
 #include "dyna-draw-context.h"
 
@@ -613,7 +610,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
 
                     // distance from pointer to nearest
-                    hatch_dist = NR::L2(pointer - nearest);
+                    hatch_dist = Geom::L2(pointer - nearest);
                     // unit-length vector
                     hatch_unit_vector = (pointer - nearest)/hatch_dist;
 
@@ -686,7 +683,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                         // Calculate angle cosine of this vector-to-guide and all past vectors
                         // summed, to detect if we accidentally flipped to the other side of the
                         // guide
-                        double dot = NR::dot (pointer - nearest, dc->hatch_vector_accumulated);
+                        double dot = Geom::dot (pointer - nearest, dc->hatch_vector_accumulated);
                         dot /= Geom::L2(pointer - nearest) * Geom::L2(dc->hatch_vector_accumulated);
 
                         if (dc->hatch_spacing != 0) { // spacing was already set
@@ -748,21 +745,21 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 if (dc->hatch_spacing == 0 && hatch_dist != 0) { 
                     // Haven't set spacing yet: gray, center free, update radius live
                     Geom::Point c = desktop->w2d(motion_w);
-                    NR::Matrix const sm (Geom::Scale(hatch_dist, hatch_dist) * Geom::Translate(c));
+                    Geom::Matrix const sm (Geom::Scale(hatch_dist, hatch_dist) * Geom::Translate(c));
                     sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                     sp_canvas_item_show(dc->hatch_area);
                 } else if (dc->dragging && !dc->hatch_escaped) {
                     // Tracking: green, center snapped, fixed radius
                     Geom::Point c = motion_dt;
-                    NR::Matrix const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
+                    Geom::Matrix const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
                     sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x00FF00ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                     sp_canvas_item_show(dc->hatch_area);
                 } else if (dc->dragging && dc->hatch_escaped) {
                     // Tracking escaped: red, center free, fixed radius
                     Geom::Point c = desktop->w2d(motion_w);
-                    NR::Matrix const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
+                    Geom::Matrix const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
 
                     sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0xFF0000ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
@@ -771,7 +768,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     // Not drawing but spacing set: gray, center snapped, fixed radius
                     Geom::Point c = (nearest + dc->hatch_spacing * hatch_unit_vector) * motion_to_curve.inverse();
                     if (!IS_NAN(c[Geom::X]) && !IS_NAN(c[Geom::Y])) {
-                        NR::Matrix const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
+                        Geom::Matrix const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
                         sp_canvas_item_affine_absolute(dc->hatch_area, sm);
                         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->hatch_area), 0x7f7f7fff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
                         sp_canvas_item_show(dc->hatch_area);
@@ -1016,10 +1013,10 @@ add_cap(SPCurve *curve,
         double rounding)
 {
     if (Geom::L2( to - from ) > DYNA_EPSILON) {
-        Geom::Point vel = rounding * NR::rot90( to - from ) / sqrt(2.0);
+        Geom::Point vel = rounding * Geom::rot90( to - from ) / sqrt(2.0);
         double mag = Geom::L2(vel);
 
-        Geom::Point v = mag * NR::rot90( to - from ) / Geom::L2( to - from );
+        Geom::Point v = mag * Geom::rot90( to - from ) / Geom::L2( to - from );
         curve->curveto(from + v, to + v, to);
     }
 }
