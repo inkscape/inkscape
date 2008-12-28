@@ -1664,12 +1664,12 @@ EditWidget::onWindowSizeAllocate (Gtk::Allocation &newall)
 void
 EditWidget::onWindowRealize()
 {
-    NR::Rect d( Geom::Point(0, 0),
-                  Geom::Point(sp_document_width(_desktop->doc()), sp_document_height(_desktop->doc())) );
-
-    if (d.isEmpty(1.0)) {
+    if ( (sp_document_width(_desktop->doc()) < 1.0) || (sp_document_height(_desktop->doc()) < 1.0) ) {
         return;
     }
+
+    Geom::Rect d( Geom::Point(0, 0),
+                  Geom::Point(sp_document_width(_desktop->doc()), sp_document_height(_desktop->doc())) );
 
     _desktop->set_display_area(d.min()[Geom::X], d.min()[Geom::Y], d.max()[Geom::X], d.max()[Geom::Y], 10);
     _namedview_modified(_desktop->namedview, SP_OBJECT_MODIFIED_FLAG);
