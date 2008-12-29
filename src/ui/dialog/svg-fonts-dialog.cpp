@@ -453,8 +453,10 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
     if (sel->isEmpty()) return;
     Inkscape::XML::Node* node = (Inkscape::XML::Node*) g_slist_nth_data((GSList *)sel->reprList(), 0);
     if (!node || !node->matchAttributeName("d")) return;
+	if (!node->attribute("d")) return; //TODO: give a message to the user
 
 	Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
+
 	//This matrix flips the glyph vertically
     Geom::Matrix m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
 	pathv*=m;
@@ -473,11 +475,20 @@ void SvgFontsDialog::missing_glyph_description_from_selected_path(){
     if (sel->isEmpty()) return;
     Inkscape::XML::Node* node = (Inkscape::XML::Node*) g_slist_nth_data((GSList *)sel->reprList(), 0);
     if (!node || !node->matchAttributeName("d")) return;
+	if (!node->attribute("d")) return; //TODO: give a message to the user
+
+	Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
+
+	//This matrix flips the glyph vertically
+    Geom::Matrix m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
+	pathv*=m;
+	//then we offset it
+	pathv+=Geom::Point(Geom::Coord(0),Geom::Coord(get_selected_spfont()->horiz_adv_x));
 
 	SPObject* obj;
 	for (obj = get_selected_spfont()->children; obj; obj=obj->next){
 		if (SP_IS_MISSING_GLYPH(obj)){
-			obj->repr->setAttribute("d", (char*) node->attribute("d"));
+			obj->repr->setAttribute("d", (char*) sp_svg_write_path (pathv));
 			sp_document_done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Set glyph curves"));
 		}
 	}
