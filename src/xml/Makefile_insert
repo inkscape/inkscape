@@ -58,23 +58,6 @@ xml_libspxml_a_SOURCES =	\
 # ######################
 # ### CxxTest stuff ####
 # ######################
-xml_testsuites = \
+CXXTEST_TESTSUITES += \
 	$(srcdir)/xml/repr-action-test.h	\
 	$(srcdir)/xml/quote-test.h
-
-xml_test_xml_SOURCES =	\
-	xml/test-xml.cpp \
-	$(xml_testsuites)
-
-xml_test_xml_LDADD =	\
-	xml/libspxml.a		\
-	util/libinkutil.a	\
-	svg/libspsvg.a		\
-	helper/libspchelp.a	\
-	test-stubs.o		\
-	libinkpost.a		\
-	debug/libinkdebug.a	\
-	$(INKSCAPE_LIBS)
-
-xml/test-xml.cpp: $(xml_testsuites) xml/Makefile_insert $(CXXTEST_TEMPLATE)
-	$(CXXTESTGEN) -o xml/test-xml.cpp $(xml_testsuites)

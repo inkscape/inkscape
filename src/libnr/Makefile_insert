@@ -104,7 +104,7 @@ libnr_testnr_LDADD =	\
 # ######################
 # ### CxxTest stuff ####
 # ######################
-libnr_testsuites = \
+CXXTEST_TESTSUITES += \
 	$(srcdir)/libnr/in-svg-plane-test.h	\
 	$(srcdir)/libnr/nr-compose-test.h	\
 	$(srcdir)/libnr/nr-matrix-test.h	\
@@ -114,16 +114,3 @@ libnr_testsuites = \
 	$(srcdir)/libnr/nr-scale-test.h		\
 	$(srcdir)/libnr/nr-translate-test.h	\
 	$(srcdir)/libnr/nr-types-test.h
-
-libnr_test_nr_SOURCES =	\
-	libnr/test-nr.cpp \
-	$(libnr_testsuites)
-
-libnr_test_nr_LDADD =			\
-	libnr/libnr.a			\
-	libnr/nr-compose-reference.o	\
-	2geom/lib2geom.a		\
-	-lglib-2.0
-
-libnr/test-nr.cpp: $(libnr_testsuites) libnr/Makefile_insert $(CXXTEST_TEMPLATE)
-	$(CXXTESTGEN) -o libnr/test-nr.cpp $(libnr_testsuites)

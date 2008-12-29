@@ -3,23 +3,6 @@
 
 # ################################################
 #
-#  E X T R A 
-#
-# ################################################
-
-if PLATFORM_WIN32
-win32_sources = winmain.cpp registrytool.cpp registrytool.h
-win32ldflags = -lcomdlg32
-endif 
-
-if INKJAR
-inkjar_dir = inkjar
-inkjar_libs = inkjar/libinkjar.a
-endif
-
-
-# ################################################
-#
 #  I N K S C A P E
 #
 # ################################################
@@ -262,10 +245,6 @@ libinkpre_a_SOURCES =	\
 	version.cpp version.h	\
 	zoom-context.cpp zoom-context.h
 
-
-# Force libinkpost.a to be rebuilt if we add files to libinkpost_a_SOURCES.
-libinkpost_a_DEPENDENCIES = Makefile_insert
-
 # libinkpost.a: Any object file that needs to be near the end of the link line.
 # gradient-chemistry.o is called by some things in display/.
 libinkpost_a_SOURCES =	\
@@ -307,63 +286,7 @@ libinkpost_a_SOURCES =	\
 	helper/pixbuf-ops.cpp	\
 	helper/pixbuf-ops.h
 
-inkscape_private_libs =	\
-	libinkpre.a		\
-	application/libinkapp.a	\
-	ui/dialog/libuidialog.a	\
-	dialogs/libspdialogs.a	\
-	ui/cache/libuicache.a	\
-	jabber_whiteboard/libjabber_whiteboard.a \
-	pedro/libpedro.a	\
-	trace/libtrace.a	\
-	svg/libspsvg.a		\
-	filters/libfilters.a	\
-	widgets/libspwidgets.a	\
-	display/libspdisplay.a	\
-	helper/libspchelp.a	\
-	libcroco/libcroco.a	\
-	libnrtype/libnrtype.a	\
-	libavoid/libavoid.a	\
-	livarot/libvarot.a	\
-	live_effects/liblive_effects.a	\
-	live_effects/parameter/liblpeparam.a	\
-	ui/view/libuiview.a	\
-	ui/libui.a		\
-	ui/widget/libuiwidget.a	\
-	libgdl/libgdl.a		\
-	graphlayout/libgraphlayout.a	\
-	removeoverlap/libremoveoverlap.a		\
-	libcola/libcola.a	\
-	libvpsc/libvpsc.a	\
-	extension/libextension.a	\
-	extension/implementation/libimplementation.a	\
-	extension/internal/libinternal.a	\
-	libnr/libnr.a		\
-	extension/script/libscript.a	\
-	bind/libbind.a	\
-	dom/libdom.a            \
-	xml/libspxml.a		\
-	2geom/lib2geom.a	\
-	util/libinkutil.a	\
-	io/libio.a	        \
-	$(inkjar_libs)		\
-	libinkpost.a		\
-	debug/libinkdebug.a
-
-all_libs =			\
-	$(inkscape_private_libs)	\
-	$(INKSCAPE_LIBS)	\
-	$(GNOME_VFS_LIBS)	\
-	$(XFT_LIBS)		\
-	$(FREETYPE_LIBS)	\
-	$(kdeldadd)		\
-	$(win32ldflags)		\
-	$(CARBON_LDFLAGS)	\
-	$(PERL_LIBS)		\
-	$(PYTHON_LIBS)	\
-	$(INKBOARD_LIBS) \
-	$(LIBWPG_LIBS) \
-	$(IMAGEMAGICK_LIBS)
+# Additional dependencies
 
 desktop.$(OBJEXT): helper/sp-marshal.h
 document.$(OBJEXT): helper/sp-marshal.h inkscape_version.h
@@ -403,7 +326,7 @@ inkscape_version.h: ../configure.ac
 # ######################
 # ### CxxTest stuff ####
 # ######################
-inkscape_testsuites =			\
+CXXTEST_TESTSUITES +=			\
 	$(srcdir)/MultiPrinter.h	\
 	$(srcdir)/TRPIFormatter.h	\
 	$(srcdir)/PylogFormatter.h	\
@@ -419,14 +342,3 @@ inkscape_testsuites =			\
 	$(srcdir)/style-test.h		\
 	$(srcdir)/test-helpers.h	\
 	$(srcdir)/verbs-test.h
-
-test_src_SOURCES =		\
-	test-src.cpp		\
-	$(inkscape_testsuites)
-
-test_src_LDADD =	\
-	$(all_libs)	\
-	io/libio.a
-
-test-src.cpp: $(inkscape_testsuites) Makefile_insert $(CXXTEST_TEMPLATE)
-	$(CXXTESTGEN) -o test-src.cpp $(inkscape_testsuites)

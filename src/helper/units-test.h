@@ -4,30 +4,6 @@
 #include <glibmm/i18n.h>
 #include <math.h>
 
-
-/* N.B. Wrongly returns false if both near 0.  (Not a problem for current users.) */
-static bool
-approx_equal(double const x, double const y)
-{
-    return fabs(x / y - 1) < 1e-15;
-}
-
-static double
-sp_units_get_points(double const x, SPUnit const &unit)
-{
-    SPUnit const &pt_unit = sp_unit_get_by_id(SP_UNIT_PT);
-    double const px = sp_units_get_pixels(x, unit);
-    return sp_pixels_get_units(px, pt_unit);
-}
-
-static double
-sp_points_get_units(double const pts, SPUnit const &unit)
-{
-    SPUnit const &pt_unit = sp_unit_get_by_id(SP_UNIT_PT);
-    double const px = sp_units_get_pixels(pts, pt_unit);
-    return sp_pixels_get_units(px, unit);
-}
-
 class UnitsTest : public CxxTest::TestSuite {
 public:
 
@@ -78,6 +54,27 @@ public:
     void testUnitTable()
     {
         TS_ASSERT(sp_units_table_sane());
+    }
+
+private:
+    /* N.B. Wrongly returns false if both near 0.  (Not a problem for current users.) */
+    bool approx_equal(double const x, double const y)
+    {
+        return fabs(x / y - 1) < 1e-15;
+    }
+    
+    double sp_units_get_points(double const x, SPUnit const &unit)
+    {
+        SPUnit const &pt_unit = sp_unit_get_by_id(SP_UNIT_PT);
+        double const px = sp_units_get_pixels(x, unit);
+        return sp_pixels_get_units(px, pt_unit);
+    }
+
+    double sp_points_get_units(double const pts, SPUnit const &unit)
+    {
+        SPUnit const &pt_unit = sp_unit_get_by_id(SP_UNIT_PT);
+        double const px = sp_units_get_pixels(pts, pt_unit);
+        return sp_pixels_get_units(px, unit);
     }
 };
 

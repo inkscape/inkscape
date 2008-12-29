@@ -28,17 +28,5 @@ util_libinkutil_a_SOURCES = \
 # ### CxxTest stuff ####
 # ######################
 
-util_testsuites = \
+CXXTEST_TESTSUITES += \
 	$(srcdir)/util/list-container-test.h
-
-util_test_util_SOURCES = \
-	util/test-util.cpp \
-	$(util_testsuites)
-
-util_test_util_LDADD = \
-	util/libtest-util.a	\
-	gc.o 			\
-	$(INKSCAPE_LIBS)
-
-util/test-util.cpp: $(util_testsuites) util/Makefile_insert $(CXXTEST_TEMPLATE)
-	$(CXXTESTGEN) -o util/test-util.cpp $(util_testsuites)

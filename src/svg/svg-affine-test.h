@@ -9,23 +9,22 @@
 #include <math.h>
 #include <utility>
 
-struct approx_equal {
-    bool operator()(Geom::Matrix const &ref, Geom::Matrix const &cm) const
-    {
-        double maxabsdiff = 0;
-        for(size_t i=0; i<6; i++) {
-            maxabsdiff = std::max(std::abs(ref[i]-cm[i]), maxabsdiff);
-        }
-        return maxabsdiff < 1e-14;
-    }
-};
-
 class SvgAffineTest : public CxxTest::TestSuite
 {
 private:
     struct test_t {
         char const * str;
         Geom::Matrix matrix;
+    };
+    struct approx_equal_pred {
+        bool operator()(Geom::Matrix const &ref, Geom::Matrix const &cm) const
+        {
+            double maxabsdiff = 0;
+            for(size_t i=0; i<6; i++) {
+                maxabsdiff = std::max(std::abs(ref[i]-cm[i]), maxabsdiff);
+            }
+            return maxabsdiff < 1e-14;
+        }
     };
     static test_t const read_matrix_tests[3];
     static test_t const read_translate_tests[3];
@@ -76,7 +75,7 @@ public:
         for(size_t i=0; i<G_N_ELEMENTS(read_matrix_tests); i++) {
             Geom::Matrix cm;
             TSM_ASSERT(read_matrix_tests[i].str , sp_svg_transform_read(read_matrix_tests[i].str, &cm));
-            TSM_ASSERT_RELATION(read_matrix_tests[i].str , approx_equal , read_matrix_tests[i].matrix , cm);
+            TSM_ASSERT_RELATION(read_matrix_tests[i].str , approx_equal_pred , read_matrix_tests[i].matrix , cm);
         }
     }
 
@@ -85,7 +84,7 @@ public:
         for(size_t i=0; i<G_N_ELEMENTS(read_translate_tests); i++) {
             Geom::Matrix cm;
             TSM_ASSERT(read_translate_tests[i].str , sp_svg_transform_read(read_translate_tests[i].str, &cm));
-            TSM_ASSERT_RELATION(read_translate_tests[i].str , approx_equal , read_translate_tests[i].matrix , cm);
+            TSM_ASSERT_RELATION(read_translate_tests[i].str , approx_equal_pred , read_translate_tests[i].matrix , cm);
         }
     }
 
@@ -94,7 +93,7 @@ public:
         for(size_t i=0; i<G_N_ELEMENTS(read_scale_tests); i++) {
             Geom::Matrix cm;
             TSM_ASSERT(read_scale_tests[i].str , sp_svg_transform_read(read_scale_tests[i].str, &cm));
-            TSM_ASSERT_RELATION(read_scale_tests[i].str , approx_equal , read_scale_tests[i].matrix , cm);
+            TSM_ASSERT_RELATION(read_scale_tests[i].str , approx_equal_pred , read_scale_tests[i].matrix , cm);
         }
     }
 
@@ -103,7 +102,7 @@ public:
         for(size_t i=0; i<G_N_ELEMENTS(read_rotate_tests); i++) {
             Geom::Matrix cm;
             TSM_ASSERT(read_rotate_tests[i].str , sp_svg_transform_read(read_rotate_tests[i].str, &cm));
-            TSM_ASSERT_RELATION(read_rotate_tests[i].str , approx_equal , read_rotate_tests[i].matrix , cm);
+            TSM_ASSERT_RELATION(read_rotate_tests[i].str , approx_equal_pred , read_rotate_tests[i].matrix , cm);
         }
     }
 
@@ -112,7 +111,7 @@ public:
         for(size_t i=0; i<G_N_ELEMENTS(read_skew_tests); i++) {
             Geom::Matrix cm;
             TSM_ASSERT(read_skew_tests[i].str , sp_svg_transform_read(read_skew_tests[i].str, &cm));
-            TSM_ASSERT_RELATION(read_skew_tests[i].str , approx_equal , read_skew_tests[i].matrix , cm);
+            TSM_ASSERT_RELATION(read_skew_tests[i].str , approx_equal_pred , read_skew_tests[i].matrix , cm);
         }
     }
 
@@ -170,7 +169,7 @@ public:
         Geom::Matrix ref(2.0199976232558053, 1.0674773585906016, -0.14125199392774669, 1.9055550612095459, 14.412730624347654, 28.499820929377454); // Precomputed using Mathematica
         Geom::Matrix cm;
         TS_ASSERT(sp_svg_transform_read(str, &cm));
-        TS_ASSERT_RELATION(approx_equal , ref , cm);
+        TS_ASSERT_RELATION(approx_equal_pred , ref , cm);
     }
 
     void testReadFailures()

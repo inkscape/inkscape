@@ -129,18 +129,5 @@ display_libspdisplay_a_SOURCES = \
 # ######################
 # ### CxxTest stuff ####
 # ######################
-ddislay_testsuites = \
+CXXTEST_TESTSUITES += \
 	$(srcdir)/display/curve-test.h
-
-display_test_display_SOURCES = \
-	display/test-display-main.cpp \
-	$(display_test_display_includes)
-
-display_test_display_LDADD = \
-	libnr/libnr.a \
-	display/libtest-display.a \
-	$(inkscape_private_libs) \
-	$(INKSCAPE_LIBS)
-
-display/test-display.cpp: $(dislay_testsuites) display/Makefile_insert $(CXXTEST_TEMPLATE)
-	$(CXXTESTGEN) -o display/test-display.cpp $(dislay_testsuites)

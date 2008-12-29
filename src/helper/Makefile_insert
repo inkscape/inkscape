@@ -62,16 +62,5 @@ helper/sp-marshal.cpp helper/sp-marshal.h: helper/sp-marshal.list
 # ######################
 # ### CxxTest stuff ####
 # ######################
-helper_testsuites = \
+CXXTEST_TESTSUITES += \
 	$(srcdir)/helper/units-test.h
-
-helper_test_helper_SOURCES = \
-	helper/test-helper.cpp \
-	$(helper_testsuites)
-
-helper_test_helper_LDADD =	\
-	helper/libspchelp.a	\
-	-lglib-2.0
-
-helper/test-helper.cpp: $(helper_testsuites) helper/Makefile_insert $(CXXTEST_TEMPLATE)
-	$(CXXTESTGEN) -o xml/test-xml.cpp $(helper_testsuites)

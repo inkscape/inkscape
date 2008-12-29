@@ -33,6 +33,82 @@ INCLUDES =	\
 CXXTEST_TEMPLATE = $(srcdir)/cxxtest-template.tpl
 CXXTESTGENFLAGS = --root --have-eh --template=$(CXXTEST_TEMPLATE)
 CXXTESTGEN = $(top_srcdir)/cxxtest/cxxtestgen.pl $(CXXTESTGENFLAGS)
+# Add test cases to this variable
+CXXTEST_TESTSUITES =
+
+# ################################################
+#
+#  E X T R A 
+#
+# ################################################
+
+if PLATFORM_WIN32
+win32_sources = winmain.cpp registrytool.cpp registrytool.h
+win32ldflags = -lcomdlg32
+endif 
+
+if INKJAR
+inkjar_dir = inkjar
+inkjar_libs = inkjar/libinkjar.a
+endif
+
+inkscape_private_libs =	\
+	libinkpre.a		\
+	application/libinkapp.a	\
+	ui/dialog/libuidialog.a	\
+	dialogs/libspdialogs.a	\
+	ui/cache/libuicache.a	\
+	jabber_whiteboard/libjabber_whiteboard.a \
+	pedro/libpedro.a	\
+	trace/libtrace.a	\
+	svg/libspsvg.a		\
+	filters/libfilters.a	\
+	widgets/libspwidgets.a	\
+	display/libspdisplay.a	\
+	helper/libspchelp.a	\
+	libcroco/libcroco.a	\
+	libnrtype/libnrtype.a	\
+	libavoid/libavoid.a	\
+	livarot/libvarot.a	\
+	live_effects/liblive_effects.a	\
+	live_effects/parameter/liblpeparam.a	\
+	ui/view/libuiview.a	\
+	ui/libui.a		\
+	ui/widget/libuiwidget.a	\
+	libgdl/libgdl.a		\
+	graphlayout/libgraphlayout.a	\
+	removeoverlap/libremoveoverlap.a		\
+	libcola/libcola.a	\
+	libvpsc/libvpsc.a	\
+	extension/libextension.a	\
+	extension/implementation/libimplementation.a	\
+	extension/internal/libinternal.a	\
+	libnr/libnr.a		\
+	extension/script/libscript.a	\
+	bind/libbind.a	\
+	dom/libdom.a            \
+	xml/libspxml.a		\
+	2geom/lib2geom.a	\
+	util/libinkutil.a	\
+	io/libio.a	        \
+	$(inkjar_libs)		\
+	libinkpost.a		\
+	debug/libinkdebug.a
+
+all_libs =			\
+	$(inkscape_private_libs)	\
+	$(INKSCAPE_LIBS)	\
+	$(GNOME_VFS_LIBS)	\
+	$(XFT_LIBS)		\
+	$(FREETYPE_LIBS)	\
+	$(kdeldadd)		\
+	$(win32ldflags)		\
+	$(CARBON_LDFLAGS)	\
+	$(PERL_LIBS)		\
+	$(PYTHON_LIBS)		\
+	$(INKBOARD_LIBS)	\
+	$(LIBWPG_LIBS)		\
+	$(IMAGEMAGICK_LIBS)
 
 # Include all partial makefiles from subdirectories
 include Makefile_insert
@@ -84,48 +160,7 @@ bin_PROGRAMS = inkscape inkview
 
 # Libraries which should be compiled by "make" but not installed
 # Currently we use one library per source directory.
-noinst_LIBRARIES =	\
-	libinkpre.a	\
-	application/libinkapp.a	\
-	dialogs/libspdialogs.a	\
-	pedro/libpedro.a \
-	jabber_whiteboard/libjabber_whiteboard.a \
-	display/libspdisplay.a	\
-	dom/libdom.a	\
-	extension/implementation/libimplementation.a	\
-	extension/internal/libinternal.a	\
-	extension/libextension.a	\
-	extension/script/libscript.a	\
-	filters/libfilters.a	\
-	bind/libbind.a	\
-	helper/libspchelp.a	\
-	io/libio.a	\
-	libcroco/libcroco.a	\
-	libgdl/libgdl.a		\
-	live_effects/liblive_effects.a \
-	live_effects/parameter/liblpeparam.a \
-	ui/libui.a	\
-	ui/cache/libuicache.a	\
-	ui/dialog/libuidialog.a	\
-	ui/view/libuiview.a 	\
-	ui/widget/libuiwidget.a	\
-	util/libinkutil.a \
-	debug/libinkdebug.a \
-	$(inkjar_libs)	\
-	libnr/libnr.a	\
-	libnrtype/libnrtype.a	\
-	libavoid/libavoid.a	\
-	libvpsc/libvpsc.a	\
-	libcola/libcola.a	\
-	livarot/libvarot.a	\
-	removeoverlap/libremoveoverlap.a	\
-	graphlayout/libgraphlayout.a	\
-	svg/libspsvg.a	\
-	widgets/libspwidgets.a	\
-	trace/libtrace.a  \
-	xml/libspxml.a	\
-	2geom/lib2geom.a	\
-	libinkpost.a
+noinst_LIBRARIES = $(inkscape_private_libs)
 
 # Extra files to remove when doing "make distclean"
 DISTCLEANFILES =	\
@@ -198,9 +233,9 @@ EXTRA_PROGRAMS =	\
 	libnr/testnr
 
 
-##################################
-### TESTING STUFF (make check) ###
-##################################
+# #################################
+# ## TESTING STUFF (make check) ###
+# #################################
 
 # List of all programs that should be built before testing. Note that this is
 # different from TESTS, because some tests can be scripts that don't
@@ -208,25 +243,23 @@ EXTRA_PROGRAMS =	\
 # automake adds $(EXEEXT) to check_PROGRAMS items but not to TESTS items:
 # TESTS items can be scripts etc.
 check_PROGRAMS =	\
-	test-src	\
-	style-test	\
-	display/test-display	\
-	helper/test-helper	\
-	libnr/test-nr	\
-	svg/test-svg	\
-	util/test-util	\
-	xml/test-xml
-#	io/streamtest
+	cxxtests	\
+	style-test
 # streamtest is unfinished and can't handle the relocations done during
 # "make distcheck".
 
 # List of all tests to be run.
 TESTS = $(check_PROGRAMS)
 
+# including the the testsuites here ensures that they get distributed
+cxxtests_SOURCES = cxxtests.cpp $(CXXTEST_TESTSUITES)
+cxxtests_LDADD = libnr/nr-compose-reference.o $(all_libs)
+
+cxxtests.cpp: $(CXXTEST_TESTSUITES) $(CXXTEST_TEMPLATE)
+	$(CXXTESTGEN) -o cxxtests.cpp $(CXXTEST_TESTSUITES)
+
 # ################################################
-#
 #  D I S T
-#
 # ################################################
 
 dist-hook:
@@ -234,4 +267,4 @@ dist-hook:
 	cp $(srcdir)/pixmaps/*xpm $(distdir)/pixmaps
 
 distclean-local:
-	rm -f display/test-display.xml display/test-display.log helper/test-helper.xml helper/test-helper.log libnr/test-nr.xml libnr/test-nr.log svg/test-svg.xml svg/test-svg.log util/test-util.xml util/test-util.log xml/test-xml.xml xml/test-xml.log test-src.xml test-src.log
+	rm -f cxxtests.xml cxxtests.log

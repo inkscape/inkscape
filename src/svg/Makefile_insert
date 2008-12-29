@@ -36,25 +36,10 @@ svg_libspsvg_a_SOURCES =	\
 # ######################
 # ### CxxTest stuff ####
 # ######################
-svg_testsuites = \
+CXXTEST_TESTSUITES += \
 	$(srcdir)/svg/css-ostringstream-test.h	\
 	$(srcdir)/svg/stringstream-test.h	\
 	$(srcdir)/svg/svg-affine-test.h		\
 	$(srcdir)/svg/svg-color-test.h		\
 	$(srcdir)/svg/svg-length-test.h		\
 	$(srcdir)/svg/svg-path-geom-test.h
-
-svg_test_svg_SOURCES =		\
-	svg/test-svg.cpp	\
-	$(svg_testsuites)
-
-svg_test_svg_LDADD =		\
-	svg/libspsvg.a		\
-	svg/libtest-svg.a 	\
-	test-stubs.o 		\
-	2geom/lib2geom.a	\
-	libnr/libnr.a		\
-	$(INKSCAPE_LIBS)
-
-svg/test-svg.cpp: $(svg_testsuites) svg/Makefile_insert $(CXXTEST_TEMPLATE)
-	$(CXXTESTGEN) -o svg/test-svg.cpp $(svg_testsuites)
