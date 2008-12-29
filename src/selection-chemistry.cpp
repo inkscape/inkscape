@@ -593,6 +593,36 @@ void sp_selection_ungroup(SPDesktop *desktop)
                      _("Ungroup"));
 }
 
+/** Replace all groups in the list with their member objects, recursively; returns a new list, frees old */
+GSList *
+sp_degroup_list (GSList *items)
+{
+    GSList *out = NULL;
+    bool has_groups = false;
+    for (GSList *item = items; item; item = item->next) {
+        if (!SP_IS_GROUP(item->data)) {
+            out = g_slist_prepend(out, item->data);
+        } else {
+            has_groups = true;
+            GSList *members = sp_item_group_item_list (SP_GROUP(item->data));
+            for (GSList *member = members; member; member = member->next) {
+                out = g_slist_prepend(out, member->data);
+            }
+            g_slist_free (members);
+        }
+    }
+    out = g_slist_reverse (out);
+    g_slist_free (items);
+
+    if (has_groups) { // recurse if we unwrapped a group - it may have contained others
+        out = sp_degroup_list (out);
+    }
+
+    return out;
+}
+ 
+
+/** If items in the list have a common parent, return it, otherwise return NULL */
 static SPGroup *
 sp_item_list_common_parent_group(GSList const *items)
 {

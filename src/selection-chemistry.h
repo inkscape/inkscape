@@ -126,8 +126,9 @@ void unlock_all_in_all_layers(SPDesktop *dt);
 void unhide_all(SPDesktop *dt);
 void unhide_all_in_all_layers(SPDesktop *dt);
 
-/* selection cycling */
+GSList *sp_degroup_list (GSList *items);
 
+/* selection cycling */
 typedef enum
 {
 	SP_CYCLE_SIMPLE,
