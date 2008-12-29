@@ -18,6 +18,7 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const 
     : _point(p), _target(target), _distance(d), _tolerance(std::max(t,1.0)), _always_snap(a)
 {
     // tolerance should never be smaller than 1 px, as it is used for normalization in isOtherSnapBetter. We don't want a division by zero.
+    _at_intersection = false;
     _fully_constrained = fully_constrained;
     _second_distance = NR_HUGE;
     _second_tolerance = 1;
@@ -40,10 +41,11 @@ Inkscape::SnappedPoint::SnappedPoint()
 {
     _point = Geom::Point(0,0);
     _target = SNAPTARGET_UNDEFINED,
+    _at_intersection = false;
+    _fully_constrained = false;
     _distance = NR_HUGE;
     _tolerance = 1;
     _always_snap = false;
-    _at_intersection = false;
     _second_distance = NR_HUGE;
     _second_tolerance = 1;
     _second_always_snap = false;
@@ -89,7 +91,7 @@ bool Inkscape::SnappedPoint::isOtherSnapBetter(Inkscape::SnappedPoint const &oth
     // there's more than one). It is not useful when trying to find the best snapped target point.
     // (both the snap distance and the pointer distance are measured in document pixels, not in screen pixels)
     if (weighted) {
-        // weigth factor: controls which node should be preferrerd for snapping, which is either
+        // Weight factor: controls which node should be preferred for snapping, which is either
         // the node with the closest snap (w = 0), or the node closest to the mousepointer (w = 1)
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         double w = prefs->getDoubleLimited("/options/snapweight/value", 0.5, 0, 1);
@@ -114,7 +116,7 @@ bool Inkscape::SnappedPoint::isOtherSnapBetter(Inkscape::SnappedPoint const &oth
     }
 
     // If it's closer
-    bool c1 =  dist_other < dist_this;
+    bool c1 = dist_other < dist_this;
     // or, if it's for a snapper with "always snap" turned on, and the previous wasn't
     bool c2 = other_one.getAlwaysSnap() && !getAlwaysSnap();
     // But in no case fall back from a snapper with "always snap" on to one with "always snap" off
@@ -127,6 +129,7 @@ bool Inkscape::SnappedPoint::isOtherSnapBetter(Inkscape::SnappedPoint const &oth
     bool c4a = (dist_other == dist_this);
     bool c4b = other_one.getSecondSnapDistance() < getSecondSnapDistance();
 
+    // std::cout << other_one.getPoint() << " (Other one) vs. " << getPoint() << " (this one) ---> ";
     // std::cout << "c1 = " << c1 << " | c2 = " << c2 << " | c2n = " << c2n << " | c3 = " << c3 << " | c3n = " << c3n << " | c4a = " << c4a << " | c4b = " << c4b << std::endl;
     return (c1 || c2 || c3 || (c4a && c4b)) && !c2n && (!c3n || c2);
 }
