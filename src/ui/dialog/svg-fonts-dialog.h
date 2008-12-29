@@ -104,6 +104,7 @@ private:
 	void glyph_name_edit(const Glib::ustring&, const Glib::ustring&);
 	void remove_selected_glyph();
 	void remove_selected_font();
+	void remove_selected_kerning_pair();
 
 	void add_kerning_pair();
 
@@ -112,6 +113,9 @@ private:
 
 	void create_fonts_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
 	void fonts_list_button_release(GdkEventButton* event);
+
+	void create_kerning_pairs_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
+	void kerning_pairs_list_button_release(GdkEventButton* event);
 
     Inkscape::XML::SignalObserver _defs_observer; //in order to update fonts
     Inkscape::XML::SignalObserver _glyphs_observer;
@@ -195,6 +199,7 @@ private:
 
     Gtk::Menu _FontsContextMenu;
     Gtk::Menu _GlyphsContextMenu;
+    Gtk::Menu _KerningPairsContextMenu;
 
     SvgFontDrawingArea _font_da, kerning_preview;
     GlyphComboBox first_glyph, second_glyph;

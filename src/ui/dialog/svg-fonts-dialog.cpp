@@ -184,6 +184,20 @@ void SvgFontsDialog::glyphs_list_button_release(GdkEventButton* event)
     }
 }
 
+void SvgFontsDialog::kerning_pairs_list_button_release(GdkEventButton* event)
+{
+    if((event->type == GDK_BUTTON_RELEASE) && (event->button == 3)) {
+        _KerningPairsContextMenu.popup(event->button, event->time);
+    }
+}
+
+void SvgFontsDialog::fonts_list_button_release(GdkEventButton* event)
+{
+    if((event->type == GDK_BUTTON_RELEASE) && (event->button == 3)) {
+        _FontsContextMenu.popup(event->button, event->time);
+    }
+}
+
 void SvgFontsDialog::create_glyphs_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
 {
     Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
@@ -193,12 +207,13 @@ void SvgFontsDialog::create_glyphs_popup_menu(Gtk::Widget& parent, sigc::slot<vo
     _GlyphsContextMenu.accelerate(parent);
 }
 
-
-void SvgFontsDialog::fonts_list_button_release(GdkEventButton* event)
+void SvgFontsDialog::create_kerning_pairs_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
 {
-    if((event->type == GDK_BUTTON_RELEASE) && (event->button == 3)) {
-        _FontsContextMenu.popup(event->button, event->time);
-    }
+    Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    _KerningPairsContextMenu.append(*mi);
+    mi->signal_activate().connect(rem);
+    mi->show();
+    _KerningPairsContextMenu.accelerate(parent);
 }
 
 void SvgFontsDialog::create_fonts_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
@@ -547,6 +562,21 @@ void SvgFontsDialog::remove_selected_glyph(){
     update_glyphs();
 }
 
+void SvgFontsDialog::remove_selected_kerning_pair(){
+    if(!_KerningPairsList.get_selection()) return;
+
+    Gtk::TreeModel::iterator i = _KerningPairsList.get_selection()->get_selected();
+    if(!i) return;
+
+	SPGlyphKerning* pair = (*i)[_KerningPairsListColumns.spnode];
+    sp_repr_unparent(pair->repr);
+
+    SPDocument* doc = sp_desktop_document(this->getDesktop());
+    sp_document_done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Remove kerning pair"));
+
+    update_glyphs();
+}
+
 Gtk::VBox* SvgFontsDialog::glyphs_tab(){
     _GlyphsList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &SvgFontsDialog::glyphs_list_button_release));
     create_glyphs_popup_menu(_GlyphsList, sigc::mem_fun(*this, &SvgFontsDialog::remove_selected_glyph));
@@ -630,6 +660,9 @@ void SvgFontsDialog::add_kerning_pair(){
 }
 
 Gtk::VBox* SvgFontsDialog::kerning_tab(){
+    _KerningPairsList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &SvgFontsDialog::kerning_pairs_list_button_release));
+    create_kerning_pairs_popup_menu(_KerningPairsList, sigc::mem_fun(*this, &SvgFontsDialog::remove_selected_kerning_pair));
+
 //Kerning Setup:
     kerning_vbox.add(*Gtk::manage(new Gtk::Label(_("Kerning Setup:"))));
     Gtk::HBox* kerning_selector = Gtk::manage(new Gtk::HBox());
