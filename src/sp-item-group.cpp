@@ -504,15 +504,12 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 GSList *
 sp_item_group_item_list (SPGroup * group)
 {
-        GSList *s;
-    SPObject *o;
-
     g_return_val_if_fail (group != NULL, NULL);
     g_return_val_if_fail (SP_IS_GROUP (group), NULL);
 
-    s = NULL;
+    GSList *s = NULL;
 
-    for ( o = sp_object_first_child(SP_OBJECT(group)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
+    for (SPObject *o = sp_object_first_child(SP_OBJECT(group)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
         if (SP_IS_ITEM (o)) {
             s = g_slist_prepend (s, o);
         }
