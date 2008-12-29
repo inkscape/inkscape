@@ -36,6 +36,7 @@
 #include "desktop-handles.h"
 #include "box3d.h"
 #include <2geom/pathvector.h>
+#include "selection-chemistry.h"
 #include "path-chemistry.h"
 
 void
@@ -44,8 +45,8 @@ sp_selected_path_combine(SPDesktop *desktop)
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     SPDocument *doc = sp_desktop_document(desktop);
     
-    if (g_slist_length((GSList *) selection->itemList()) < 2) {
-        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>at least two objects</b> to combine."));
+    if (g_slist_length((GSList *) selection->itemList()) < 1) {
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to combine."));
         return;
     }
 
@@ -54,10 +55,13 @@ sp_selected_path_combine(SPDesktop *desktop)
     desktop->setWaitingCursor();
 
     GSList *items = g_slist_copy((GSList *) selection->itemList());
+
+    items = sp_degroup_list (items); // descend into any groups in selection
+
     GSList *to_paths = NULL;
     for (GSList *i = items; i != NULL; i = i->next) {
         SPItem *item = (SPItem *) i->data;
-        if (!SP_IS_PATH(item))
+        if (!SP_IS_PATH(item) && !SP_IS_GROUP(item))
             to_paths = g_slist_prepend(to_paths, item);
     }
     GSList *converted = NULL;
@@ -65,6 +69,8 @@ sp_selected_path_combine(SPDesktop *desktop)
     g_slist_free(to_paths);
     for (GSList *i = converted; i != NULL; i = i->next)
         items = g_slist_prepend(items, doc->getObjectByRepr((Inkscape::XML::Node*)(i->data)));
+
+    items = sp_degroup_list (items); // converting to path may have added more groups, descend again
 
     items = g_slist_sort(items, (GCompareFunc) sp_item_repr_compare_position);
     items = g_slist_reverse(items);
