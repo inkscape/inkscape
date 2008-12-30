@@ -976,7 +976,6 @@ src/ui/dialog/makefile
 src/ui/makefile
 src/ui/view/makefile
 src/ui/widget/makefile
-src/utest/makefile
 src/util/makefile
 src/widgets/makefile
 src/xml/makefile

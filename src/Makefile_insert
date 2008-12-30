@@ -316,10 +316,6 @@ inkscape_LDFLAGS = --export-dynamic $(kdeldflags)
 inkview_SOURCES = inkview.cpp $(win32_sources)
 inkview_LDADD = $(all_libs)
 
-# old utest-based test - convert to cxxtest and remove
-style_test_SOURCES = style-test.cpp
-style_test_LDADD = $(all_libs)
-
 inkscape_version.h: ../configure.ac
 	echo '#define INKSCAPE_VERSION "$(VERSION)"' > inkscape_version.h
 

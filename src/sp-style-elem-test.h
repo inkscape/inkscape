@@ -31,9 +31,9 @@ public:
     {
         SPStyleElem *style_elem = static_cast<SPStyleElem *>(g_object_new(SP_TYPE_STYLE_ELEM, NULL));
         if ( style_elem ) {
-            UTEST_ASSERT(!style_elem->is_css);
-            UTEST_ASSERT(style_elem->media.print);
-            UTEST_ASSERT(style_elem->media.screen);
+            TS_ASSERT(!style_elem->is_css);
+            TS_ASSERT(style_elem->media.print);
+            TS_ASSERT(style_elem->media.screen);
             g_object_unref(style_elem);
 
             dst = new SPStyleElemTest();

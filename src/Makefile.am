@@ -140,7 +140,6 @@ include libcola/Makefile_insert
 include removeoverlap/Makefile_insert
 include graphlayout/Makefile_insert
 include svg/Makefile_insert
-include utest/Makefile_insert
 include widgets/Makefile_insert
 include debug/Makefile_insert
 include xml/Makefile_insert
@@ -203,7 +202,6 @@ EXTRA_DIST =	\
 	svg/makefile.in		\
 	trace/makefile.in	\
 	traits/makefile.in	\
-	utest/makefile.in	\
 	ui/makefile.in		\
 	ui/cache/makefile.in	\
 	ui/dialog/makefile.in	\
@@ -220,8 +218,6 @@ EXTRA_DIST =	\
 	extension/internal/emf-win32-print.cpp	\
 	extension/internal/emf-win32-print.h	\
 	helper/sp-marshal.list	\
-	utest/utest.h	\
-	utest/test-1ary-cases.h	\
 	traits/copy.h	\
 	traits/function.h	\
 	traits/list-copy.h	\
@@ -242,9 +238,8 @@ EXTRA_PROGRAMS =	\
 # need to be built. There should be one test program per directory.
 # automake adds $(EXEEXT) to check_PROGRAMS items but not to TESTS items:
 # TESTS items can be scripts etc.
-check_PROGRAMS =	\
-	cxxtests	\
-	style-test
+check_PROGRAMS = cxxtests
+
 # streamtest is unfinished and can't handle the relocations done during
 # "make distcheck".
 

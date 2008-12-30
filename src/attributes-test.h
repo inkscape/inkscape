@@ -7,7 +7,6 @@
 #include <vector>
 #include <glib.h>
 #include <glib/gprintf.h>
-#include "utest/utest.h"
 #include "attributes.h"
 #include "streq.h"
 
