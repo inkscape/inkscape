@@ -21,7 +21,6 @@
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-pixops.h"
-#include "libnr/nr-matrix.h"
 
 inline void
 composite_over(unsigned char *r, unsigned char const *a, unsigned char const *b)

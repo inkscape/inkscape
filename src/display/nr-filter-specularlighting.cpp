@@ -23,7 +23,6 @@
 #include "display/nr-light.h"
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixblock.h"
-#include "libnr/nr-matrix.h"
 #include "libnr/nr-rect-l.h"
 #include "color.h"
 

@@ -19,8 +19,6 @@
 #include <display/nr-arena-shape.h>
 #include "display/curve.h"
 #include <libnr/nr-pixops.h>
-#include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-blit.h>
 #include <libnr/nr-convert2geom.h>
 #include <2geom/pathvector.h>

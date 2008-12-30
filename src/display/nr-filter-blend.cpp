@@ -21,7 +21,6 @@
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-units.h"
 #include "libnr/nr-pixblock.h"
-#include "libnr/nr-matrix.h"
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixops.h"
 

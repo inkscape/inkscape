@@ -14,7 +14,6 @@
 
 #include "display/nr-filter-slot.h"
 #include "libnr/nr-pixblock.h"
-#include "libnr/nr-matrix.h"
 #include "libnr/nr-rect-l.h"
 #include "svg/svg-length.h"
 

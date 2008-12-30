@@ -18,7 +18,6 @@
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
-#include "libnr/nr-matrix.h"
 
 namespace NR {
 

@@ -47,7 +47,6 @@
 #endif
 #include <color.h>
 
-#include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-pixops.h>
 **/
 

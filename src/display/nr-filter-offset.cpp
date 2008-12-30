@@ -13,10 +13,7 @@
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 #include "libnr/nr-blit.h"
-#include "libnr/nr-matrix.h"
 #include "libnr/nr-pixblock.h"
-#include "libnr/nr-point.h"
-#include "libnr/nr-point-matrix-ops.h"
 #include "libnr/nr-rect-l.h"
 
 namespace NR {

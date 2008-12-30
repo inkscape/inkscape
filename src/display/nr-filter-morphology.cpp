@@ -12,8 +12,6 @@
 #include "display/nr-filter-morphology.h"
 #include "display/nr-filter-units.h"
 #include "libnr/nr-blit.h"
-#include "libnr/nr-matrix.h"
-#include "libnr/nr-matrix-fns.h"
 
 namespace NR {
 
@@ -51,9 +49,9 @@ int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
         free_in_on_exit = true;
     }
 
-    Matrix p2pb = units.get_matrix_primitiveunits2pb();
-    int const xradius = (int)round(this->xradius * expansionX(p2pb));
-    int const yradius = (int)round(this->yradius * expansionY(p2pb));
+    Geom::Matrix p2pb = units.get_matrix_primitiveunits2pb();
+    int const xradius = (int)round(this->xradius * p2pb.expansionX());
+    int const yradius = (int)round(this->yradius * p2pb.expansionY());
 
     int x0=in->area.x0;
     int y0=in->area.y0;
@@ -114,8 +112,8 @@ int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
 
 void FilterMorphology::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
 {
-    int const enlarge_x = (int)round(this->xradius * expansionX(trans));
-    int const enlarge_y = (int)round(this->yradius * expansionY(trans));
+    int const enlarge_x = (int)round(this->xradius * trans.expansionX());
+    int const enlarge_y = (int)round(this->yradius * trans.expansionY());
 
     area.x0 -= enlarge_x;
     area.x1 += enlarge_x;

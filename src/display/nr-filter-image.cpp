@@ -16,7 +16,6 @@
 #include "display/nr-filter.h"
 #include "display/nr-filter-image.h"
 #include "display/nr-filter-units.h"
-#include "libnr/nr-matrix.h"
 #include "libnr/nr-rect-l.h"
 
 namespace NR {
