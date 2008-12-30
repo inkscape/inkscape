@@ -19,7 +19,6 @@
 #include "attributes.h"
 #include "xml/document.h"
 #include "xml/repr.h"
-#include "libnr/nr-matrix-fns.h"
 
 #include "box3d.h"
 #include "box3d-side.h"

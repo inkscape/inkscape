@@ -22,8 +22,6 @@
 #include "sp-gaussian-blur.h"
 #include "filters/blend.h"
 #include "display/nr-filter-blend.h"
-#include "libnr/nr-matrix-fns.h"
-#include "libnr/nr-matrix-ops.h"
 #include "helper/geom.h"
 
 static void nr_arena_group_class_init (NRArenaGroupClass *klass);

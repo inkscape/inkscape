@@ -17,8 +17,6 @@
 # include <config.h>
 #endif
 #include <libnr/nr-blit.h>
-#include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-convert2geom.h>
 #include <2geom/matrix.h>
 #include "../style.h"
@@ -146,7 +144,7 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
 
     if (!glyphs->style->fill.isNone()) {
         Geom::Matrix t;
-        t = to_2geom(glyphs->g_transform) * gc->transform;
+        t = glyphs->g_transform * gc->transform;
         glyphs->x = t[4];
         glyphs->y = t[5];
         t[4]=0;
@@ -168,7 +166,7 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
     if (!glyphs->style->stroke.isNone()) {
         /* Build state data */
         Geom::Matrix t;
-        t = to_2geom(glyphs->g_transform) * gc->transform;
+        t = glyphs->g_transform * gc->transform;
         glyphs->x = t[4];
         glyphs->y = t[5];
         t[4]=0;
@@ -465,7 +463,7 @@ nr_arena_glyphs_group_render(cairo_t *ct, NRArenaItem *item, NRRectL *area, NRPi
             Geom::PathVector const * pathv = g->font->PathVector(g->glyph);
 
             cairo_new_path(ct);
-            Geom::Matrix transform = to_2geom(g->g_transform) * group->ctm;
+            Geom::Matrix transform = g->g_transform * group->ctm;
             feed_pathvector_to_cairo (ct, *pathv, transform, to_2geom((pb->area).upgrade()), false, 0);
             cairo_fill(ct);
             pb->empty = FALSE;

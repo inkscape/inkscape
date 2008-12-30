@@ -52,7 +52,7 @@
 
 #define NR_ARENA_ITEM_RENDER_NO_CACHE (1 << 0)
 
-#include <libnr/nr-matrix.h>
+#include <2geom/matrix.h>
 #include <libnr/nr-rect-l.h>
 #include <libnr/nr-pixblock.h>
 #include <libnr/nr-object.h>
@@ -60,7 +60,6 @@
 #include "nr-arena-forward.h"
 #include "display/nr-filter.h"
 #include <cairo.h>
-#include <libnr/nr-convert2geom.h>
 
 struct NRGC {
     NRGC(NRGC const *p) : parent(p) {}

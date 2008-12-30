@@ -25,7 +25,6 @@
 #endif
 #include <color.h>
 
-#include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-pixops.h>
 
 static void sp_canvastext_class_init (SPCanvasTextClass *klass);

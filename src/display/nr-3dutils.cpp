@@ -12,7 +12,6 @@
 #include <glib/gmessages.h>
 
 #include "libnr/nr-pixblock.h"
-#include "libnr/nr-matrix.h"
 #include "display/nr-3dutils.h"
 #include <cmath>
 

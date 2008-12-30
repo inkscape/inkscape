@@ -149,7 +149,7 @@ nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned 
         image->c10 = (Geom::Point(bbox.x1, bbox.y0) * gc->transform);
         image->c11 = (Geom::Point(bbox.x1, bbox.y1) * gc->transform);
 
-        nr_rect_d_matrix_transform (&bbox, &bbox, from_2geom(gc->transform));
+        nr_rect_d_matrix_transform (&bbox, &bbox, gc->transform);
 
         item->bbox.x0 = (int) floor (bbox.x0);
         item->bbox.y0 = (int) floor (bbox.y0);

@@ -17,7 +17,6 @@
 #define NR_ARENA_IMAGE(o) (NR_CHECK_INSTANCE_CAST ((o), NR_TYPE_ARENA_IMAGE, NRArenaImage))
 #define NR_IS_ARENA_IMAGE(o) (NR_CHECK_INSTANCE_TYPE ((o), NR_TYPE_ARENA_IMAGE))
 
-#include <libnr/nr-matrix.h>
 #include "nr-arena-item.h"
 #include "style.h"
 

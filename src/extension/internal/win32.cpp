@@ -15,7 +15,7 @@
 
 #include <glib/gmem.h>
 #include <libnr/nr-macros.h>
-#include <libnr/nr-matrix.h>
+#include <2geom/transforms.h>
 
 #include "display/nr-arena-item.h"
 #include "display/nr-arena.h"

@@ -20,15 +20,12 @@
 
 #include <libnr/nr-blit.h>
 #include <libnr/nr-pixops.h>
-#include <libnr/nr-matrix-ops.h>
-#include <libnr/nr-matrix-fns.h>
 #include "nr-arena.h"
 #include "nr-arena-item.h"
 #include "gc-core.h"
 #include "helper/geom.h"
 
 #include "nr-filter.h"
-#include "libnr/nr-rect.h"
 #include "nr-arena-group.h"
 #include "preferences.h"
 

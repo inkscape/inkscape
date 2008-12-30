@@ -22,9 +22,7 @@
 #include "display/display-forward.h"
 #include "display/curve.h"
 #include "display/inkscape-cairo.h"
-#include "libnr/nr-matrix-fns.h"
 #include <libnr/nr-pixops.h>
-#include <libnr/nr-convert2geom.h>
 #include "helper/geom.h"
 
 /*

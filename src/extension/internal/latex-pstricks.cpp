@@ -19,14 +19,6 @@
 #include <signal.h>
 #include <errno.h>
 
-
-#include "libnr/nr-matrix.h" 
-#include "libnr/nr-matrix-ops.h" 
-#include "libnr/nr-matrix-scale-ops.h"
-#include "libnr/nr-matrix-translate-ops.h"
-#include "libnr/nr-scale-translate-ops.h"
-#include "libnr/nr-translate-scale-ops.h"
-#include <libnr/nr-matrix-fns.h>
 #include <2geom/pathvector.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/bezier-curve.h>

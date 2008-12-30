@@ -20,8 +20,6 @@
 #include "extension/implementation/implementation.h"
 //#include "extension/extension.h"
 
-//#include "libnr/nr-matrix.h"
-//#include "libnr/nr-rect.h"
 #include <2geom/pathvector.h>
 
 #include <stack>

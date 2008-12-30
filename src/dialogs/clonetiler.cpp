@@ -43,14 +43,6 @@
 #include "svg/svg.h"
 #include "svg/svg-color.h"
 
-#include "libnr/nr-matrix-fns.h"
-#include "libnr/nr-matrix-ops.h"
-
-#include "libnr/nr-matrix-translate-ops.h"
-#include "libnr/nr-translate-ops.h"
-#include "libnr/nr-translate-rotate-ops.h"
-#include "libnr/nr-translate-scale-ops.h"
-
 #include "display/nr-arena.h"
 #include "display/nr-arena-item.h"
 

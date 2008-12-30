@@ -26,8 +26,8 @@ namespace Inkscape {
     }
 }
 
-#include "libnr/nr-point.h"
-#include "libnr/nr-matrix.h"
+#include <2geom/point.h>
+#include <2geom/matrix.h>
 
 #include "CharTypes.h"
 class GooString;
