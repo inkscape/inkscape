@@ -204,7 +204,7 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
                 // will use the grid snapper. Simply snapping the value t to the grid will do, but
                 // only if the origin of the grid is at (0,0). If it's not then compensate for this
                 // in the translation t
-                Geom::Point const t_offset = from_2geom(t) + grid->origin;
+                Geom::Point const t_offset = t + grid->origin;
                 SnappedConstraints sc;
                 // Only the first three parameters are being used for grid snappers
                 snapper->freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_NODE, t_offset, TRUE, Geom::OptRect(), NULL, NULL);

@@ -86,7 +86,7 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
         // TODO: Investigate whether it is possible to use document coordinates everywhere
         // in the snapper code. Only the mouse position should be in desktop coordinates, I guess.
         // All paths are already in document coords and we are certainly not going to change THAT.
-        return SnappedPoint(from_2geom(best_p), Inkscape::SNAPTARGET_PATH_INTERSECTION, primaryDist, primaryC->getTolerance(), primaryC->getAlwaysSnap(), true, true,
+        return SnappedPoint(best_p, Inkscape::SNAPTARGET_PATH_INTERSECTION, primaryDist, primaryC->getTolerance(), primaryC->getAlwaysSnap(), true, true,
                 secondaryDist, secondaryC->getTolerance(), secondaryC->getAlwaysSnap());
     }
 
