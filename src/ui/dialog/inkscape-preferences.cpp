@@ -119,6 +119,7 @@ InkscapePreferences::InkscapePreferences()
     initPageSteps();
     initPageWindows();
     initPageMisc();
+    initPageI18n();
 
     signalPresent().connect(sigc::mem_fun(*this, &InkscapePreferences::_presentPages));
 
@@ -1150,6 +1151,35 @@ void InkscapePreferences::initPageMisc()
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
+
+void InkscapePreferences::initPageI18n()
+{
+    Glib::ustring languages[] = {_("System default"), _("am Amharic"), _("ar Arabic"), _("az Azerbaijani"), _("be Belarusian"), 
+        _("bg Bulgarian"), _("bn Bengali"), _("br Breton"), _("ca Catalan"), _("ca@valencia Valencian Catalan"), _("cs Czech"), 
+        _("da Danish"), _("de German"), _("dz Dzongkha"), _("el Greek"), _("en English"), _("en_AU English, as spoken in Australia"), 
+        _("en_CA English, as spoken in Canada"), _("en_GB English, as spoken in Great Britain"), _("en_US@piglatin Pig Latin"), 
+        _("eo Esperanto"),  _("es Spanish"), _("es_MX Spanish, as spoken in Mexico"),_("et Estonian"), _("eu Basque"), _("fi Finnish"), 
+        _("fr French"), _("ga Irish"), _("gl Galician"), _("he Hebrew"), _("hr Croatian"), _("hu Hungarian"), _("hy Armenian"), 
+        _("id Indonesian"), _("it Italian"), _("ja Japanese"), _("km Khmer"), _("ko Korean"), _("lt Lithuanian"), _("mk Macedonian"), 
+        _("mn Mongolian"), _("nb Norwegian Bokmål"), _("ne Nepali"), _("nl Dutch"), _("nn Norwegian Nynorsk"), _("pa Panjabi"),
+        _("pl Polish"), _("pt Portuguese"), _("pt_BR Portuguese, as spoken in Brazil"), _("ro Romanian"), _("ru Russian"), 
+        _("rw Kinyarwanda"), _("sk Slovak"), _("sl Slovenian"), _("sq Albanian"), _("sr Serbian"), _("sr@latin Serbian in Latin script"), 
+        _("sv Swedish"), _("th Thai"), _("tr Turkish"), _("uk Ukrainian"), _("vi Vietnamese"), _("zh_CN Chinese, as spoken in China"), 
+        _("zh_TW Chinese, as spoken in Taiwan")};
+    Glib::ustring langValues[] = {"", "am", "ar", "az", "be", "bg", "bn", "br", "ca", "ca@valencia", "cs", "da", "de",
+        "dz", "el", "en", "en_AU", "en_CA", "en_GB", "en_US@piglatin", "eo", "es_MX", "es", "et", "eu", "fi", "fr", "ga",
+        "gl", "he", "hr", "hu", "hy", "id", "it", "ja", "km", "ko", "lt", "mk", "mn", "nb", "ne", "nl", "nn", "pa",
+        "pl", "pt_BR", "pt", "ro", "ru", "rw", "sk", "sl", "sq", "sr@latin", "sr", "sv", "th", "tr", "uk", "vi",
+        "zh_CN", "zh_TW"};
+
+    _i18n_languages.init( "/i18n/language", languages, langValues, G_N_ELEMENTS(languages), _("System"));
+    _page_i18n.add_line( false, _("Language for user interface"), _i18n_languages, "",
+                              _("Set the language for menues and number-formats (requires restart)"), false);
+
+    this->AddPage(_page_i18n, _("Internationalisation"), PREFS_PAGE_I18N);
+}
+
+
 
 bool InkscapePreferences::SetMaxDialogSize(const Gtk::TreeModel::iterator& iter)
 {

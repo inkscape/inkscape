@@ -539,12 +539,45 @@ void PrefCombo::init(Glib::ustring const &prefs_path,
     this->set_active(row);
 }
 
+/**
+    initialize a combo box
+    second form uses strings as key values 
+*/
+void PrefCombo::init(Glib::ustring const &prefs_path,
+                     Glib::ustring labels[], Glib::ustring values[], int num_items, Glib::ustring default_value)
+{
+    _prefs_path = prefs_path;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int row = 0;
+    Glib::ustring value = prefs->getString(_prefs_path);
+    if(value.empty())
+    {
+        value = default_value;
+    }
+
+    for (int i = 0 ; i < num_items; ++i)
+    {
+        this->append_text(labels[i]);
+        _ustr_values.push_back(values[i]);
+        if (value == values[i])
+            row = i;
+    }
+    this->set_active(row);
+}
+
 void PrefCombo::on_changed()
 {
     if (this->is_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setInt(_prefs_path, _values[this->get_active_row_number()]);
+        if(_values.size() > 0)
+        {
+            prefs->setInt(_prefs_path, _values[this->get_active_row_number()]);
+        }
+        else
+        {
+            prefs->setString(_prefs_path, _ustr_values[this->get_active_row_number()]);
+        }
     }
 }
 

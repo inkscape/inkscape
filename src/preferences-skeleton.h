@@ -424,6 +424,8 @@ static char const preferences_skeleton[] =
 "  <group id=\"debug\">\n"
 "    <group id=\"latency\" skew=\"1\"/>\n"
 "  </group>\n"
+"  <group id=\"i18n\"\n"
+"    language=\"\"/>\n"
 "\n"
 "</inkscape>\n";
 

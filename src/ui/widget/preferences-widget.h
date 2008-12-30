@@ -144,9 +144,12 @@ class PrefCombo : public Gtk::ComboBoxText
 public:
     void init(Glib::ustring const &prefs_path,
               Glib::ustring labels[], int values[], int num_items, int default_value);
+    void init(Glib::ustring const &prefs_path,
+              Glib::ustring labels[], Glib::ustring values[], int num_items, Glib::ustring default_value);
 protected:
     Glib::ustring _prefs_path;
     std::vector<int> _values;
+    std::vector<Glib::ustring> _ustr_values;    ///< string key values used optionally instead of numeric _values
     void on_changed();
 };
 
