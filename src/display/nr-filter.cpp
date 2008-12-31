@@ -157,8 +157,8 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
         
     FilterUnits units(_filter_units, _primitive_units);
     units.set_ctm(trans);
-    units.set_item_bbox(from_2geom(item_bbox));
-    units.set_filter_area(from_2geom(filter_area));
+    units.set_item_bbox(item_bbox);
+    units.set_filter_area(filter_area);
 
     // TODO: with filterRes of 0x0 should return an empty image
     std::pair<double,double> resolution

@@ -14,9 +14,9 @@
 
 #include "sp-filter-units.h"
 #include "libnr/nr-matrix.h"
-#include <2geom/matrix.h>
 #include "libnr/nr-rect.h"
 #include "libnr/nr-rect-l.h"
+#include <2geom/matrix.h>
 #include <2geom/rect.h>
 
 namespace NR {
@@ -30,7 +30,7 @@ public:
      * Sets the current transformation matrix, i.e. transformation matrix
      * from object's user coordinates to screen coordinates
      */
-    void set_ctm(Matrix const &ctm);
+    void set_ctm(Geom::Matrix const &ctm);
 
     /**
      * Sets the resolution, the filter should be rendered with.
@@ -40,12 +40,12 @@ public:
     /**
      * Sets the item bounding box in user coordinates
      */
-    void set_item_bbox(Rect const &bbox);
+    void set_item_bbox(Geom::OptRect const &bbox);
 
     /**
      * Sets the filter effects area in user coordinates
      */
-    void set_filter_area(Rect const &area);
+    void set_filter_area(Geom::OptRect const &area);
 
     /**
      * Sets, if x and y axis in pixblock coordinates should be paraller
@@ -63,39 +63,39 @@ public:
     /**
      * Gets the user coordinates to pixblock coordinates transformation matrix.
      */
-    Matrix get_matrix_user2pb() const;
+    Geom::Matrix get_matrix_user2pb() const;
 
     /**
      * Gets the filterUnits to pixblock coordinates transformation matrix.
      */
-    Matrix get_matrix_filterunits2pb() const;
+    Geom::Matrix get_matrix_filterunits2pb() const;
 
     /**
      * Gets the primitiveUnits to pixblock coordinates transformation matrix.
      */
-    Matrix get_matrix_primitiveunits2pb() const;
+    Geom::Matrix get_matrix_primitiveunits2pb() const;
 
     /**
      * Gets the display coordinates to pixblock coordinates transformation
      * matrix.
      */
-    Matrix get_matrix_display2pb() const;
+    Geom::Matrix get_matrix_display2pb() const;
 
     /**
      * Gets the pixblock coordinates to display coordinates transformation
      * matrix
      */
-    Matrix get_matrix_pb2display() const;
+    Geom::Matrix get_matrix_pb2display() const;
 
     /**
      * Gets the user coordinates to filterUnits transformation matrix.
      */
-    Matrix get_matrix_user2filterunits() const;
+    Geom::Matrix get_matrix_user2filterunits() const;
 
     /**
      * Gets the user coordinates to primitiveUnits transformation matrix.
      */
-    Matrix get_matrix_user2primitiveunits() const;
+    Geom::Matrix get_matrix_user2primitiveunits() const;
 
     /**
      * Returns the filter area in pixblock coordinates.
@@ -107,16 +107,16 @@ public:
     FilterUnits& operator=(FilterUnits const &other);
 
 private:
-    Matrix get_matrix_units2pb(SPFilterUnits units) const;
-    Matrix get_matrix_user2units(SPFilterUnits units) const;
+    Geom::Matrix get_matrix_units2pb(SPFilterUnits units) const;
+    Geom::Matrix get_matrix_user2units(SPFilterUnits units) const;
 
     SPFilterUnits filterUnits, primitiveUnits;
     double resolution_x, resolution_y;
     bool paraller_axis;
     bool automatic_resolution;
-    Matrix ctm;
-    Rect item_bbox;
-    Rect filter_area;
+    Geom::Matrix ctm;
+    Geom::OptRect item_bbox;
+    Geom::OptRect filter_area;
 
 };
 
