@@ -860,9 +860,9 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_transform()
                 dwFlags |= cmsFLAGS_PRESERVEBLACK;
             }
 #endif // defined(cmsFLAGS_PRESERVEBLACK)
-            transf = cmsCreateProofingTransform( ColorProfile::getSRGBProfile(), TYPE_RGB_8, hprof, TYPE_RGB_8, proofProf, intent, proofIntent, dwFlags );
+            transf = cmsCreateProofingTransform( ColorProfile::getSRGBProfile(), TYPE_ARGB_8, hprof, TYPE_ARGB_8, proofProf, intent, proofIntent, dwFlags );
         } else if ( hprof ) {
-            transf = cmsCreateTransform( ColorProfile::getSRGBProfile(), TYPE_RGB_8, hprof, TYPE_RGB_8, intent, 0 );
+            transf = cmsCreateTransform( ColorProfile::getSRGBProfile(), TYPE_ARGB_8, hprof, TYPE_ARGB_8, intent, 0 );
         }
     }
 
@@ -1020,9 +1020,9 @@ cmsHTRANSFORM Inkscape::colorprofile_get_display_per( Glib::ustring const& id )
                             dwFlags |= cmsFLAGS_PRESERVEBLACK;
                         }
 #endif // defined(cmsFLAGS_PRESERVEBLACK)
-                        item.transf = cmsCreateProofingTransform( ColorProfile::getSRGBProfile(), TYPE_RGB_8, item.hprof, TYPE_RGB_8, proofProf, intent, proofIntent, dwFlags );
+                        item.transf = cmsCreateProofingTransform( ColorProfile::getSRGBProfile(), TYPE_ARGB_8, item.hprof, TYPE_ARGB_8, proofProf, intent, proofIntent, dwFlags );
                     } else if ( item.hprof ) {
-                        item.transf = cmsCreateTransform( ColorProfile::getSRGBProfile(), TYPE_RGB_8, item.hprof, TYPE_RGB_8, intent, 0 );
+                        item.transf = cmsCreateTransform( ColorProfile::getSRGBProfile(), TYPE_ARGB_8, item.hprof, TYPE_ARGB_8, intent, 0 );
                     }
                 }
 

@@ -1781,7 +1781,7 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
 #if ENABLE_LCMS
         if ( transf && canvas->enable_cms_display_adj ) {
             for ( gint yy = 0; yy < (y1 - y0); yy++ ) {
-                guchar* p = buf.buf + (sw * 3) * yy;
+                guchar* p = buf.buf + (buf.buf_rowstride * yy);
                 cmsDoTransform( transf, p, p, (x1 - x0) );
             }
         }
