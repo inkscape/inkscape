@@ -39,7 +39,7 @@ Preferences::~Preferences()
 {
 }
 
-void Preferences::load(bool use_gui, bool quiet) {}
+void Preferences::load(bool /*use_gui*/, bool /*quiet*/) {}
 void Preferences::save() {}
 
 // getter methods
