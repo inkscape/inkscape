@@ -117,6 +117,11 @@ Filter::merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Ink
 void
 Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
 {
+	Inkscape::XML::Document *filterdoc = get_filter(module);
+	if (filterdoc == NULL) {
+		return; // could not parse the XML source of the filter; typically parser will stderr a warning
+	}
+
 	//printf("Calling filter effect\n");
     Inkscape::Selection * selection = ((SPDesktop *)document)->selection;
 
@@ -143,7 +148,7 @@ Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *d
 
 			Glib::ustring url = "url(#"; url += newfilterroot->attribute("id"); url += ")";
 
-			merge_filters(newfilterroot, get_filter(module)->root(), xmldoc);
+			merge_filters(newfilterroot, filterdoc->root(), xmldoc);
   
       Inkscape::GC::release(newfilterroot);
 
@@ -177,7 +182,7 @@ Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *d
 			alpha->setAttribute("values", "0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0");
 			filternode->appendChild(alpha);
 
-			merge_filters(filternode, get_filter(module)->root(), xmldoc, FILTER_SRC_GRAPHIC, FILTER_SRC_GRAPHIC_ALPHA);
+			merge_filters(filternode, filterdoc->root(), xmldoc, FILTER_SRC_GRAPHIC, FILTER_SRC_GRAPHIC_ALPHA);
 
       Inkscape::GC::release(alpha);
 		}
