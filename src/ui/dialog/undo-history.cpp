@@ -19,7 +19,6 @@
 
 #include "document.h"
 #include "inkscape.h"
-#include "ui/icons.h"
 #include "verbs.h"
 #include "desktop-handles.h"
 
