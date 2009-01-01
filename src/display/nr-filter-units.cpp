@@ -12,13 +12,7 @@
 #include <glib.h>
 
 #include "display/nr-filter-units.h"
-#include "libnr/nr-matrix.h"
-#include "libnr/nr-matrix-fns.h"
-#include "libnr/nr-matrix-ops.h"
-#include "libnr/nr-matrix-scale-ops.h"
-#include "libnr/nr-rect.h"
 #include "libnr/nr-rect-l.h"
-#include "libnr/nr-scale.h"
 #include "sp-filter-units.h"
 #include <2geom/transforms.h>
 

@@ -23,7 +23,7 @@ using std::floor;
 
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixblock.h"
-#include "libnr/nr-matrix.h"
+#include <2geom/matrix.h>
 
 namespace NR {
 
@@ -45,7 +45,7 @@ inline void _check_index(NRPixBlock const * const pb, int const location, int co
     }
 }
 
-void transform_nearest(NRPixBlock *to, NRPixBlock *from, Matrix &trans)
+void transform_nearest(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &trans)
 {
     if (NR_PIXBLOCK_BPP(from) != 4 || NR_PIXBLOCK_BPP(to) != 4) {
         g_warning("A non-32-bpp image passed to transform_nearest: scaling aborted.");
@@ -67,7 +67,7 @@ void transform_nearest(NRPixBlock *to, NRPixBlock *from, Matrix &trans)
     int to_width = to->area.x1 - to->area.x0;
     int to_height = to->area.y1 - to->area.y0;
 
-    Matrix itrans = trans.inverse();
+    Geom::Matrix itrans = trans.inverse();
 
     // Loop through every pixel of destination image, a line at a time
     for (int to_y = 0 ; to_y < to_height ; to_y++) {
@@ -155,7 +155,7 @@ inline static int samplex(const int a, const int b, const int c, const int d, co
     return sum / 256;
 }
 
-void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Matrix &trans)
+void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &trans)
 {
     if (NR_PIXBLOCK_BPP(from) != 4 || NR_PIXBLOCK_BPP(to) != 4) {
         g_warning("A non-32-bpp image passed to transform_bicubic: scaling aborted.");
@@ -177,7 +177,7 @@ void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Matrix &trans)
     int to_width = to->area.x1 - to->area.x0;
     int to_height = to->area.y1 - to->area.y0;
 
-    Matrix itrans = trans.inverse();
+    Geom::Matrix itrans = trans.inverse();
 
     // Loop through every pixel of destination image, a line at a time
     for (int to_y = 0 ; to_y < to_height ; to_y++) {

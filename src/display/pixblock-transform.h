@@ -13,12 +13,12 @@
  */
 
 #include "libnr/nr-pixblock.h"
-#include "libnr/nr-matrix.h"
+#include <2geom/forward.h>
 
 namespace NR {
 
-void transform_nearest(NRPixBlock *to, NRPixBlock *from, Matrix &trans);
-void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Matrix &trans);
+void transform_nearest(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &trans);
+void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &trans);
 
 } /* namespace NR */
 

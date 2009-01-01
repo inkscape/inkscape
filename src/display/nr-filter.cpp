@@ -42,9 +42,8 @@
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-blit.h"
-#include "libnr/nr-matrix.h"
-#include "libnr/nr-scale.h"
-#include "2geom/rect.h"
+#include <2geom/matrix.h>
+#include <2geom/rect.h>
 #include "svg/svg-length.h"
 #include "sp-filter-units.h"
 #include "preferences.h"
