@@ -52,7 +52,6 @@
 #include "edit-widget.h"
 #include "ui/stock.h"
 #include "ui/stock-items.h"
-#include "ui/icons.h"
 
 #include "display/sodipodi-ctrlrect.h"
 #include "helper/units.h"
@@ -86,7 +85,6 @@ EditWidget::EditWidget (SPDocument *doc)
     g_warning("Creating new EditWidget");
 
     _desktop = 0;
-    Icons::init();
     Stock::init();
     initActions();
     initAccelMap();

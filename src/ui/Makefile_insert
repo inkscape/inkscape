@@ -8,8 +8,6 @@ ui/clean: ui/widget/clean ui/dialog/clean ui/cache/clean
 ui_libui_a_SOURCES =		\
 	ui/clipboard.cpp \
 	ui/clipboard.h \
-	ui/icons.cpp		\
-	ui/icons.h		\
 	ui/previewable.h	\
 	ui/previewfillable.h	\
 	ui/previewholder.cpp	\
