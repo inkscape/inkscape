@@ -2197,7 +2197,7 @@ sp_style_merge_ifilter(SPStyle *style, SPIFilter const *parent)
             style->filter.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
     }
 
-    if (style->filter.href && parent->href) {
+    if (style->filter.href && parent->href && parent->href->getObject()) {
         try {
             style->filter.href->attach(*parent->href->getURI());
         } catch (Inkscape::BadURIException &e) {
