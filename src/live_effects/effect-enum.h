@@ -11,7 +11,7 @@
 
 #include "util/enums.h"
 
-#define LPE_ENABLE_TEST_EFFECTS
+//#define LPE_ENABLE_TEST_EFFECTS
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -24,9 +24,6 @@ enum EffectType {
     ROUGH_HATCHES,
     VONKOCH,
     KNOT,
-#ifdef LPE_ENABLE_TEST_EFFECTS
-    DOEFFECTSTACK_TEST,
-#endif
     GEARS,
     CURVE_STITCH,
     CIRCLE_WITH_RADIUS,
@@ -49,6 +46,9 @@ enum EffectType {
     TEXT_LABEL,
     PATH_LENGTH,
     LINE_SEGMENT,
+#ifdef LPE_ENABLE_TEST_EFFECTS
+    DOEFFECTSTACK_TEST,
+#endif
     INVALID_LPE // This must be last
 };
 

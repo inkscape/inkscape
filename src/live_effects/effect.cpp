@@ -74,18 +74,19 @@ namespace LivePathEffect {
 
 const Util::EnumData<EffectType> LPETypeData[] = {
     // {constant defined in effect-enum.h, N_("name of your effect"), "name of your effect in SVG"}
+#ifdef LPE_ENABLE_TEST_EFFECTS
+    {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),     "doeffectstacktest"},
+#endif
     {ANGLE_BISECTOR,        N_("Angle bisector"),          "angle_bisector"},
     {BEND_PATH,             N_("Bend"),                     "bend_path"},
     {BOOLOPS,               N_("Boolops"),                 "boolops"},
     {CIRCLE_WITH_RADIUS,    N_("Circle (by center and radius)"),   "circle_with_radius"},
     {CIRCLE_3PTS,           N_("Circle by 3 points"), "circle_3pts"},
     {CONSTRUCT_GRID,        N_("Construct grid"),          "construct_grid"},
-#ifdef LPE_ENABLE_TEST_EFFECTS
-    {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),     "doeffectstacktest"},
-#endif
     {ENVELOPE,              N_("Envelope Deformation"),    "envelope"},
     {FREEHAND_SHAPE,        N_("Freehand Shape"),          "freehand_shape"}, // this is actually a special type of PatternAlongPath, used to paste shapes in pen/pencil tool
     {GEARS,                 N_("Gears"),                   "gears"},
+    {ROUGH_HATCHES,         N_("Hatches (rough)"),            "rough_hatches"},
     {INTERPOLATE,           N_("Interpolate Sub-Paths"),   "interpolate"},
     {KNOT,                  N_("Knot"),                    "knot"},
     {LATTICE,               N_("Lattice Deformation"),     "lattice"},
@@ -100,7 +101,6 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {COPY_ROTATE,           N_("Rotate copies"),           "copy_rotate"},
     {RULER,                 N_("Ruler"),                   "ruler"},
     {SKETCH,                N_("Sketch"),                  "sketch"},
-    {ROUGH_HATCHES,         N_("Hatches (rough)"),            "rough_hatches"},
     {SPIRO,                 N_("Spiro spline"),            "spiro"},
     {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
@@ -148,11 +148,6 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
         case KNOT:
             neweffect = static_cast<Effect*> ( new LPEKnot(lpeobj) );
             break;
-#ifdef LPE_ENABLE_TEST_EFFECTS
-        case DOEFFECTSTACK_TEST:
-            neweffect = static_cast<Effect*> ( new LPEdoEffectStackTest(lpeobj) );
-            break;
-#endif
         case GEARS:
             neweffect = static_cast<Effect*> ( new LPEGears(lpeobj) );
             break;
@@ -219,6 +214,11 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
         case LINE_SEGMENT:
             neweffect = static_cast<Effect*> ( new LPELineSegment(lpeobj) );
             break;
+#ifdef LPE_ENABLE_TEST_EFFECTS
+        case DOEFFECTSTACK_TEST:
+            neweffect = static_cast<Effect*> ( new LPEdoEffectStackTest(lpeobj) );
+            break;
+#endif
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
             neweffect = NULL;
