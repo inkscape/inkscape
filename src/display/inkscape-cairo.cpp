@@ -157,14 +157,7 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path)
     }
 
     if (path.closed()) {
-        cairo_line_to(ct, path.initialPoint()[0], path.initialPoint()[1]);
-//        cairo_close_path(ct);
-        /* I think we should use cairo_close_path(ct) here but it doesn't work. (the closing line is not rendered completely)
-           According to cairo documentation:
-           The behavior of cairo_close_path() is distinct from simply calling cairo_line_to() with the equivalent coordinate
-           in the case of stroking. When a closed sub-path is stroked, there are no caps on the ends of the sub-path. Instead,
-           there is a line join connecting the final and initial segments of the sub-path. 
-        */
+        cairo_close_path(ct);
     }
 }
 
@@ -193,21 +186,25 @@ feed_path_to_cairo (cairo_t *ct, Geom::Path const &path, Geom::Matrix trans, Geo
     }
 
     if (path.closed()) {
-        cairo_line_to(ct, initial[0], initial[1]);
-        /* We cannot use cairo_close_path(ct) here because some parts of the path may have been
-           clipped and not drawn (maybe the before last segment was outside view area), which 
-           would result in closing the "subpath" after the last interruption, not the entire path.
+        if (!optimize_stroke) {
+            cairo_close_path(ct);
+        } else {
+            cairo_line_to(ct, initial[0], initial[1]);
+            /* We cannot use cairo_close_path(ct) here because some parts of the path may have been
+               clipped and not drawn (maybe the before last segment was outside view area), which 
+               would result in closing the "subpath" after the last interruption, not the entire path.
 
-           However, according to cairo documentation:
-           The behavior of cairo_close_path() is distinct from simply calling cairo_line_to() with the equivalent coordinate
-           in the case of stroking. When a closed sub-path is stroked, there are no caps on the ends of the sub-path. Instead,
-           there is a line join connecting the final and initial segments of the sub-path. 
+               However, according to cairo documentation:
+               The behavior of cairo_close_path() is distinct from simply calling cairo_line_to() with the equivalent coordinate
+               in the case of stroking. When a closed sub-path is stroked, there are no caps on the ends of the sub-path. Instead,
+               there is a line join connecting the final and initial segments of the sub-path. 
 
-           The correct fix will be possible when cairo introduces methods for moving without
-           ending/starting subpaths, which we will use for skipping invisible segments; then we
-           will be able to use cairo_close_path here. This issue also affects ps/eps/pdf export,
-           see bug 168129
-        */
+               The correct fix will be possible when cairo introduces methods for moving without
+               ending/starting subpaths, which we will use for skipping invisible segments; then we
+               will be able to use cairo_close_path here. This issue also affects ps/eps/pdf export,
+               see bug 168129
+            */
+        }
     }
 }
 
