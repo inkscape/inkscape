@@ -32,8 +32,7 @@
 #include <helper/recthull.h>
 #include <display/sp-canvas.h>
 #include "display-forward.h"
-#include <libnr/nr-matrix-fns.h>
-#include <libnr/nr-matrix-ops.h>
+#include <2geom/matrix.h>
 #include <libnr/nr-convex-hull.h>
 #include "preferences.h"
 #include "inkscape.h"

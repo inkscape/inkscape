@@ -13,7 +13,7 @@
  */
 
 
-#include "libnr/nr-matrix-ops.h"
+#include <2geom/matrix.h>
 #include "libnr/nr-pixops.h"
 #include "sp-canvas-util.h"
 #include <string.h>  /* for memset */
