@@ -75,7 +75,8 @@ void Path::ConvertWithBackData(double treshhold)
 
             case descr_close: {
                 nextX = pts[lastMoveTo].p;
-                AddPoint(nextX, curP, 1.0, false);
+                int n = AddPoint(nextX, curP, 1.0, false);
+                if (n > 0) pts[n].closed = true;
                 curP++;
                 break;
             }
@@ -251,6 +252,7 @@ void Path::Convert(double treshhold)
                         descr_cmd[curP]->associated = descr_cmd[curP - 1]->associated;
                     }
                 }
+                pts[descr_cmd[curP]->associated].closed = true;
                 curP++;
                 break;
             }
@@ -460,6 +462,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                 nextX = nData->p;
                 lastMoveTo = AddPoint(nextX, true);
                 descr_cmd[curP]->associated = lastMoveTo;
+                
                 last_point_relation = POINT_RELATION_TO_AREA(nextX, area);
                 start_elimination = false;
 
@@ -477,6 +480,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                         descr_cmd[curP]->associated = descr_cmd[curP - 1]->associated;
                     }
                 }
+                pts[descr_cmd[curP]->associated].closed = true;
                 last_point_relation = 0;
                 curP++;
                 break;
@@ -752,7 +756,7 @@ void Path::ConvertEvenLines(double treshhold)
                         descr_cmd[curP]->associated = descr_cmd[curP - 1]->associated;
                     }
                 }
-
+                pts[descr_cmd[curP]->associated].closed = true;
                 curP++;
                 break;
             }

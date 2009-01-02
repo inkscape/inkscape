@@ -76,13 +76,14 @@ public:
   // t=0 means it's at the start of the command's chunk, t=1 it's at the end
   struct path_lineto
   {
-    path_lineto(bool m, Geom::Point pp) : isMoveTo(m), p(pp), piece(-1), t(0) {}
-    path_lineto(bool m, Geom::Point pp, int pie, double tt) : isMoveTo(m), p(pp), piece(pie), t(tt) {}
+    path_lineto(bool m, Geom::Point pp) : isMoveTo(m), p(pp), piece(-1), t(0), closed(false) {}
+    path_lineto(bool m, Geom::Point pp, int pie, double tt) : isMoveTo(m), p(pp), piece(pie), t(tt), closed(false) {}
     
     int isMoveTo;
     Geom::Point  p;
     int piece;
     double t;
+    bool closed; // true if subpath is closed (this point is the last point of a closed subpath)
   };
   
   std::vector<path_lineto> pts;
