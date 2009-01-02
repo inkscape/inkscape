@@ -155,6 +155,27 @@ static void sp_image_render(SPItem *item, CairoRenderContext *ctx);
 static void sp_symbol_render(SPItem *item, CairoRenderContext *ctx);
 static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx);
 
+static void sp_shape_render_invoke_marker_rendering(SPMarker* marker, Geom::Matrix tr, SPStyle* style, CairoRenderContext *ctx)
+{
+    bool render = true;
+    if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+        if (style->stroke_width.computed > 1e-9) {
+            tr = Geom::Scale(style->stroke_width.computed) * tr;
+        } else {
+            render = false; // stroke width zero and marker is thus scaled down to zero, skip
+        }
+    }
+
+    if (render) {
+        SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (marker));
+        tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
+        Geom::Matrix old_tr = marker_item->transform;
+        marker_item->transform = tr;
+        ctx->getRenderer()->renderItem (ctx, marker_item);
+        marker_item->transform = old_tr;
+    }
+}
+
 static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 {
     NRRect pbox;
@@ -166,118 +187,75 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     sp_item_invoke_bbox(item, &pbox, Geom::identity(), TRUE);
 
     SPStyle* style = SP_OBJECT_STYLE (item);
-    CairoRenderer *renderer = ctx->getRenderer();
 
     Geom::PathVector const & pathv = shape->curve->get_pathvector();
 
     ctx->renderPathVector(pathv, style, &pbox);
 
-    /* TODO: make code prettier: lots of variables can be taken out of the loop! */
     for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
-        if ( shape->marker[SP_MARKER_LOC_START] ) {
-            SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_START]);
-            SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_START]));
-
-            Geom::Matrix tr;
-            if (marker->orient_auto) {
-                tr = sp_shape_marker_get_transform_at_start(path_it->front());
-            } else {
-                tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(path_it->front().pointAt(0));
-            }
-
-            bool render = true;
-            if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                if (style->stroke_width.computed > 1e-9) {
-                    tr = Geom::Scale(style->stroke_width.computed) * tr;
+      // START position
+        for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
+            if ( shape->marker[i] ) {
+                SPMarker* marker = SP_MARKER (shape->marker[i]);
+                Geom::Matrix tr;
+                if (marker->orient_auto) {
+                    tr = sp_shape_marker_get_transform_at_start(path_it->front());
                 } else {
-                    render = false; // stroke width zero and marker is thus scaled down to zero, skip
+                    tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(path_it->front().pointAt(0));
                 }
-            }
-
-            if (render) {
-                tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
-                Geom::Matrix old_tr = marker_item->transform;
-                marker_item->transform = tr;
-                renderer->renderItem (ctx, marker_item);
-                marker_item->transform = old_tr;
+                sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
             }
         }
 
-        if ( shape->marker[SP_MARKER_LOC_MID] && (path_it->size_default() > 1) ) {
-            Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
-            Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
-            while (curve_it2 != path_it->end_default())
-            {
-                /* Put marker between curve_it1 and curve_it2.
-                 * Loop to end_default (so including closing segment), because when a path is closed,
-                 * there should be a midpoint marker between last segment and closing straight line segment */
+      // MID position
+        for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
+            if ( shape->marker[i] && (path_it->size_default() > 1) ) {
+                Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
+                Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
+                while (curve_it2 != path_it->end_default())
+                {
+                    /* Put marker between curve_it1 and curve_it2.
+                     * Loop to end_default (so including closing segment), because when a path is closed,
+                     * there should be a midpoint marker between last segment and closing straight line segment */
 
-                SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_MID]);
-                SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_MID]));
+                    SPMarker* marker = SP_MARKER (shape->marker[i]);
+
+                    Geom::Matrix tr;
+                    if (marker->orient_auto) {
+                        tr = sp_shape_marker_get_transform(*curve_it1, *curve_it2);
+                    } else {
+                        tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(curve_it1->pointAt(1));
+                    }
+
+                    sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
+
+                    ++curve_it1;
+                    ++curve_it2;
+                }
+            }
+        }
+
+      // END position
+        for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
+            if ( shape->marker[i] ) {
+                SPMarker* marker = SP_MARKER (shape->marker[i]);
+
+                /* Get reference to last curve in the path.
+                 * For moveto-only path, this returns the "closing line segment". */
+                unsigned int index = path_it->size_default();
+                if (index > 0) {
+                    index--;
+                }
+                Geom::Curve const &lastcurve = (*path_it)[index];
 
                 Geom::Matrix tr;
                 if (marker->orient_auto) {
-                    tr = sp_shape_marker_get_transform(*curve_it1, *curve_it2);
+                    tr = sp_shape_marker_get_transform_at_end(lastcurve);
                 } else {
-                    tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(curve_it1->pointAt(1));
+                    tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));
                 }
 
-                bool render = true;
-                if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                    if (style->stroke_width.computed > 1e-9) {
-                        tr = Geom::Scale(style->stroke_width.computed) * tr;
-                    } else {
-                        render = false; // stroke width zero and marker is thus scaled down to zero, skip
-                    }
-                }
-
-                if (render) {
-                    tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
-                    Geom::Matrix old_tr = marker_item->transform;
-                    marker_item->transform = tr;
-                    renderer->renderItem (ctx, marker_item);
-                    marker_item->transform = old_tr;
-                }
-
-                ++curve_it1;
-                ++curve_it2;
-            }
-        }
-
-        if ( shape->marker[SP_MARKER_LOC_END] ) {
-            SPMarker* marker = SP_MARKER (shape->marker[SP_MARKER_LOC_END]);
-            SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[SP_MARKER_LOC_END]));
-
-            /* Get reference to last curve in the path.
-             * For moveto-only path, this returns the "closing line segment". */
-            unsigned int index = path_it->size_default();
-            if (index > 0) {
-                index--;
-            }
-            Geom::Curve const &lastcurve = (*path_it)[index];
-
-            Geom::Matrix tr;
-            if (marker->orient_auto) {
-                tr = sp_shape_marker_get_transform_at_end(lastcurve);
-            } else {
-                tr = Geom::Rotate::from_degrees(marker->orient) * Geom::Translate(lastcurve.pointAt(1));
-            }
-
-            bool render = true;
-            if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
-                if (style->stroke_width.computed > 1e-9) {
-                    tr = Geom::Scale(style->stroke_width.computed) * tr;
-                } else {
-                    render = false; // stroke width zero and marker is thus scaled down to zero, skip
-                }
-            }
-
-            if (render) {
-                tr = (Geom::Matrix)marker_item->transform * (Geom::Matrix)marker->c2p * tr;
-                Geom::Matrix old_tr = marker_item->transform;
-                marker_item->transform = tr;
-                renderer->renderItem (ctx, marker_item);
-                marker_item->transform = old_tr;
+                sp_shape_render_invoke_marker_rendering(marker, tr, style, ctx);
             }
         }
     }

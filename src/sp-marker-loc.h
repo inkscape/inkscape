@@ -7,11 +7,11 @@
  * to do a process across all of the markers, instead of separate code stanzas for each.
  */
 enum SPMarkerLoc {
-    SP_MARKER_LOC,
-    SP_MARKER_LOC_START,
-    SP_MARKER_LOC_MID,
-    SP_MARKER_LOC_END,
-    SP_MARKER_LOC_QTY
+    SP_MARKER_LOC = 0,
+    SP_MARKER_LOC_START = 1,
+    SP_MARKER_LOC_MID = 2,
+    SP_MARKER_LOC_END = 3,
+    SP_MARKER_LOC_QTY = 4
 };
 
 

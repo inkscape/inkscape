@@ -858,46 +858,52 @@ sp_selected_path_outline(SPDesktop *desktop)
 
                 Geom::PathVector const & pathv = curve->get_pathvector();
                 for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
-                    if ( SPObject *marker_obj = shape->marker[SP_MARKER_LOC_START] ) {
-                        Geom::Matrix const m (sp_shape_marker_get_transform_at_start(path_it->front()));
-                        sp_selected_path_outline_add_marker( marker_obj, m,
-                                                             Geom::Scale(i_style->stroke_width.computed), transform,
-                                                             g_repr, xml_doc, doc );
-                    }
-
-                    SPObject *midmarker_obj = shape->marker[SP_MARKER_LOC_MID];
-                    if ( midmarker_obj && (path_it->size_default() > 1) ) {
-                        Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
-                        Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
-                        while (curve_it2 != path_it->end_default())
-                        {
-                            /* Put marker between curve_it1 and curve_it2.
-                             * Loop to end_default (so including closing segment), because when a path is closed,
-                             * there should be a midpoint marker between last segment and closing straight line segment
-                             */
-                            Geom::Matrix const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
-                            sp_selected_path_outline_add_marker(midmarker_obj, m,
-                                                                Geom::Scale(i_style->stroke_width.computed), transform,
-                                                                g_repr, xml_doc, doc);
-
-                            ++curve_it1;
-                            ++curve_it2;
+                    for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
+                        if ( SPObject *marker_obj = shape->marker[i] ) {
+                            Geom::Matrix const m (sp_shape_marker_get_transform_at_start(path_it->front()));
+                            sp_selected_path_outline_add_marker( marker_obj, m,
+                                                                 Geom::Scale(i_style->stroke_width.computed), transform,
+                                                                 g_repr, xml_doc, doc );
                         }
                     }
 
-                    if ( SPObject *marker_obj = shape->marker[SP_MARKER_LOC_END] ) {
-                        /* Get reference to last curve in the path.
-                         * For moveto-only path, this returns the "closing line segment". */
-                        unsigned int index = path_it->size_default();
-                        if (index > 0) {
-                            index--;
-                        }
-                        Geom::Curve const &lastcurve = (*path_it)[index];
+                    for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
+                        SPObject *midmarker_obj = shape->marker[i];
+                        if ( midmarker_obj && (path_it->size_default() > 1) ) {
+                            Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
+                            Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
+                            while (curve_it2 != path_it->end_default())
+                            {
+                                /* Put marker between curve_it1 and curve_it2.
+                                 * Loop to end_default (so including closing segment), because when a path is closed,
+                                 * there should be a midpoint marker between last segment and closing straight line segment
+                                 */
+                                Geom::Matrix const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
+                                sp_selected_path_outline_add_marker(midmarker_obj, m,
+                                                                    Geom::Scale(i_style->stroke_width.computed), transform,
+                                                                    g_repr, xml_doc, doc);
 
-                        Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
-                        sp_selected_path_outline_add_marker( marker_obj, m,
-                                                             Geom::Scale(i_style->stroke_width.computed), transform,
-                                                             g_repr, xml_doc, doc );
+                                ++curve_it1;
+                                ++curve_it2;
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
+                        if ( SPObject *marker_obj = shape->marker[i] ) {
+                            /* Get reference to last curve in the path.
+                             * For moveto-only path, this returns the "closing line segment". */
+                            unsigned int index = path_it->size_default();
+                            if (index > 0) {
+                                index--;
+                            }
+                            Geom::Curve const &lastcurve = (*path_it)[index];
+
+                            Geom::Matrix const m = sp_shape_marker_get_transform_at_end(lastcurve);
+                            sp_selected_path_outline_add_marker( marker_obj, m,
+                                                                 Geom::Scale(i_style->stroke_width.computed), transform,
+                                                                 g_repr, xml_doc, doc );
+                        }
                     }
                 }
 
