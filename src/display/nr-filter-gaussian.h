@@ -29,7 +29,8 @@ enum {
     BLUR_QUALITY_WORST = -2
 };
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 class FilterGaussian : public FilterPrimitive {
 public:
@@ -64,7 +65,8 @@ private:
 };
 
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 
 

@@ -14,11 +14,13 @@
 
 #include "libnr/nr-pixblock.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 NRPixBlock *filter_get_alpha(NRPixBlock *src);
 
-}
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_GETALPHA_H__ */
 /*

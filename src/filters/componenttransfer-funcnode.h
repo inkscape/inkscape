@@ -40,7 +40,7 @@ class SPFeFuncNode;
 class SPFeFuncNodeClass;
 
 struct SPFeFuncNode : public SPObject {
-    NR::FilterComponentTransferType type;
+    Inkscape::Filters::FilterComponentTransferType type;
     std::vector<double> tableValues;
     double slope;
     double intercept;

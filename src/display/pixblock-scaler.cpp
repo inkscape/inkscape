@@ -181,6 +181,8 @@ static void scale_bicubic_rgba(NRPixBlock *to, NRPixBlock *from)
 
             _check_index(to, to_y * to->rs + to_x * 4, __LINE__);
 
+            using Inkscape::Filters::clamp;
+            using Inkscape::Filters::clamp_alpha;
             if (to->mode == NR_PIXBLOCK_MODE_R8G8B8A8P) {
                 /* Clamp the colour channels to range from 0 to result.a to
                  * make sure, we don't exceed 100% per colour channel with
@@ -268,7 +270,7 @@ void scale_bicubic_alpha(NRPixBlock *to, NRPixBlock *from)
 
             _check_index(to, to_y * to->rs + to_x, __LINE__);
 
-            NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x] = clamp(result);
+            NR_PIXBLOCK_PX(to)[to_y * to->rs + to_x] = Inkscape::Filters::clamp(result);
         }
     }
 }

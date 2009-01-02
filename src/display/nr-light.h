@@ -11,14 +11,14 @@
 #include <gdk/gdktypes.h>
 #include "display/nr-3dutils.h"
 #include "display/nr-light-types.h"
+#include <2geom/forward.h>
 
 struct SPFeDistantLight;
 struct SPFePointLight;
 struct SPFeSpotLight;
 
-namespace NR {
-
-struct Matrix;
+namespace Inkscape {
+namespace Filters {
 
 enum LightComponent {
     LIGHT_RED = 0,
@@ -42,14 +42,14 @@ class DistantLight {
          *
          * \param v a Fvector referece where we store the result
          */
-        void light_vector(Fvector &v);
+        void light_vector(NR::Fvector &v);
         
         /**
          * Computes the light components of the distant light
          *
          * \param lc a Fvector referece where we store the result, X=R, Y=G, Z=B
          */
-        void light_components(Fvector &lc);
+        void light_components(NR::Fvector &lc);
 
     private:
         guint32 color;
@@ -68,7 +68,7 @@ class PointLight {
          * employed in the sp light object) and current coordinate (those
          * employed in the rendering)
          */
-        PointLight(SPFePointLight *light, guint32 lighting_color, const Matrix &trans);
+        PointLight(SPFePointLight *light, guint32 lighting_color, const Geom::Matrix &trans);
         virtual ~PointLight();
         /**
          * Computes the light vector of the distant light at point (x,y,z).
@@ -80,14 +80,14 @@ class PointLight {
          * \param y y coordinate of the current point
          * \param z z coordinate of the current point
          */
-        void light_vector(Fvector &v, gdouble x, gdouble y, gdouble z);
+        void light_vector(NR::Fvector &v, gdouble x, gdouble y, gdouble z);
         
         /**
          * Computes the light components of the distant light
          *
          * \param lc a Fvector referece where we store the result, X=R, Y=G, Z=B
          */
-        void light_components(Fvector &lc);
+        void light_components(NR::Fvector &lc);
 
     private:
         guint32 color;
@@ -108,7 +108,7 @@ class SpotLight {
          * employed in the sp light object) and current coordinate (those
          * employed in the rendering)
          */
-        SpotLight(SPFeSpotLight *light, guint32 lighting_color, const Matrix &trans);
+        SpotLight(SPFeSpotLight *light, guint32 lighting_color, const Geom::Matrix &trans);
         virtual ~SpotLight();
 
         /**
@@ -121,7 +121,7 @@ class SpotLight {
          * \param y y coordinate of the current point
          * \param z z coordinate of the current point
          */
-        void light_vector(Fvector &v, gdouble x, gdouble y, gdouble z);
+        void light_vector(NR::Fvector &v, gdouble x, gdouble y, gdouble z);
 
         /**
          * Computes the light components of the distant light at the current
@@ -130,7 +130,7 @@ class SpotLight {
          * \param lc a Fvector referece where we store the result, X=R, Y=G, Z=B
          * \param L the light vector of the current point
          */
-        void light_components(Fvector &lc, const Fvector &L);
+        void light_components(NR::Fvector &lc, const NR::Fvector &L);
 
     private:
         guint32 color;
@@ -140,12 +140,13 @@ class SpotLight {
         gdouble l_z;
         gdouble cos_lca; //cos of the limiting cone angle
         gdouble speExp; //specular exponent;
-        Fvector S; //unit vector from light position in the direction
+        NR::Fvector S; //unit vector from light position in the direction
                    //the spot point at
 };
 
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif // __NR_LIGHT_H__
 /*

@@ -26,7 +26,8 @@
 #include "libnr/nr-blit.h"
 #include <math.h>
 
-namespace NR {
+namespace Inkscape {
+namespace Filters{
 
 FilterTurbulence::FilterTurbulence()
 : XbaseFrequency(0),
@@ -34,7 +35,7 @@ FilterTurbulence::FilterTurbulence()
   numOctaves(1),
   seed(0),
   updated(false),
-  updated_area(IPoint(), IPoint()),
+  updated_area(NR::IPoint(), NR::IPoint()),
   pix(NULL),
   fTileWidth(10), //guessed
   fTileHeight(10), //guessed
@@ -80,13 +81,13 @@ void FilterTurbulence::set_updated(bool u){
     updated=u;
 }
 
-void FilterTurbulence::render_area(NRPixBlock *pix, IRect &full_area, FilterUnits const &units) {
-    const int bbox_x0 = full_area.min()[X];
-    const int bbox_y0 = full_area.min()[Y];
-    const int bbox_x1 = full_area.max()[X];
-    const int bbox_y1 = full_area.max()[Y];
+void FilterTurbulence::render_area(NRPixBlock *pix, NR::IRect &full_area, FilterUnits const &units) {
+    const int bbox_x0 = full_area.min()[NR::X];
+    const int bbox_y0 = full_area.min()[NR::Y];
+    const int bbox_x1 = full_area.max()[NR::X];
+    const int bbox_y1 = full_area.max()[NR::Y];
 
-    Matrix unit_trans = units.get_matrix_primitiveunits2pb().inverse();
+    Geom::Matrix unit_trans = units.get_matrix_primitiveunits2pb().inverse();
 
     double point[2];
 
@@ -123,11 +124,11 @@ void FilterTurbulence::render_area(NRPixBlock *pix, IRect &full_area, FilterUnit
     pix->empty = FALSE;
 }
 
-void FilterTurbulence::update_pixbuffer(IRect &area, FilterUnits const &units) {
-    int bbox_x0 = area.min()[X];
-    int bbox_y0 = area.min()[Y];
-    int bbox_x1 = area.max()[X];
-    int bbox_y1 = area.max()[Y];
+void FilterTurbulence::update_pixbuffer(NR::IRect &area, FilterUnits const &units) {
+    int bbox_x0 = area.min()[NR::X];
+    int bbox_y0 = area.min()[NR::Y];
+    int bbox_x1 = area.max()[NR::X];
+    int bbox_y1 = area.max()[NR::Y];
 
     TurbulenceInit((long)seed);
 
@@ -162,7 +163,7 @@ void FilterTurbulence::update_pixbuffer(IRect &area, FilterUnits const &units) {
 }
 
 int FilterTurbulence::render(FilterSlot &slot, FilterUnits const &units) {
-    IRect area = units.get_pixblock_filterarea_paraller();
+    NR::IRect area = units.get_pixblock_filterarea_paraller();
     // TODO: could be faster - updated_area only has to be same size as area
     if (!updated || updated_area != area) update_pixbuffer(area, units);
 
@@ -350,7 +351,8 @@ FilterTraits FilterTurbulence::get_input_traits() {
     return TRAIT_PARALLER;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

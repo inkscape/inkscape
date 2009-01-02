@@ -15,7 +15,8 @@
 #include "round.h"
 
 /* Shouldn't these be inlined? */
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 /**
  * Clamps an integer value to a value between 0 and 255. Needed by filters where
@@ -49,7 +50,8 @@ int clamp3(int const val);
  */
 int clamp_alpha(int const val, int const alpha);
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_UTILS_H__ */
 /*

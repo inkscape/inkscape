@@ -115,7 +115,7 @@ SPFilter *new_filter(SPDocument *document)
 }
 
 SPFilterPrimitive *
-filter_add_primitive(SPFilter *filter, const NR::FilterPrimitiveType type)
+filter_add_primitive(SPFilter *filter, const Inkscape::Filters::FilterPrimitiveType type)
 {
     Inkscape::XML::Document *xml_doc = sp_document_repr_doc(filter->document);
 
@@ -125,43 +125,43 @@ filter_add_primitive(SPFilter *filter, const NR::FilterPrimitiveType type)
 
     // set default values
     switch(type) {
-        case NR::NR_FILTER_BLEND:
+        case Inkscape::Filters::NR_FILTER_BLEND:
             repr->setAttribute("blend", "normal");
             break;
-        case NR::NR_FILTER_COLORMATRIX:
+        case Inkscape::Filters::NR_FILTER_COLORMATRIX:
             break;
-        case NR::NR_FILTER_COMPONENTTRANSFER:
+        case Inkscape::Filters::NR_FILTER_COMPONENTTRANSFER:
             break;
-        case NR::NR_FILTER_COMPOSITE:
+        case Inkscape::Filters::NR_FILTER_COMPOSITE:
             break;
-        case NR::NR_FILTER_CONVOLVEMATRIX:
+        case Inkscape::Filters::NR_FILTER_CONVOLVEMATRIX:
             repr->setAttribute("order", "3 3");
             repr->setAttribute("kernelMatrix", "0 0 0 0 0 0 0 0 0");
             break;
-        case NR::NR_FILTER_DIFFUSELIGHTING:
+        case Inkscape::Filters::NR_FILTER_DIFFUSELIGHTING:
             break;
-        case NR::NR_FILTER_DISPLACEMENTMAP:
+        case Inkscape::Filters::NR_FILTER_DISPLACEMENTMAP:
             break;
-        case NR::NR_FILTER_FLOOD:
+        case Inkscape::Filters::NR_FILTER_FLOOD:
             break;
-        case NR::NR_FILTER_GAUSSIANBLUR:
+        case Inkscape::Filters::NR_FILTER_GAUSSIANBLUR:
             repr->setAttribute("stdDeviation", "1");
             break;
-        case NR::NR_FILTER_IMAGE:
+        case Inkscape::Filters::NR_FILTER_IMAGE:
             break;
-        case NR::NR_FILTER_MERGE:
+        case Inkscape::Filters::NR_FILTER_MERGE:
             break;
-        case NR::NR_FILTER_MORPHOLOGY:
+        case Inkscape::Filters::NR_FILTER_MORPHOLOGY:
             break;
-        case NR::NR_FILTER_OFFSET:
+        case Inkscape::Filters::NR_FILTER_OFFSET:
             repr->setAttribute("dx", "0");
             repr->setAttribute("dy", "0");
             break;
-        case NR::NR_FILTER_SPECULARLIGHTING:
+        case Inkscape::Filters::NR_FILTER_SPECULARLIGHTING:
             break;
-        case NR::NR_FILTER_TILE:
+        case Inkscape::Filters::NR_FILTER_TILE:
             break;
-        case NR::NR_FILTER_TURBULENCE:
+        case Inkscape::Filters::NR_FILTER_TURBULENCE:
             break;
         default:
             break;

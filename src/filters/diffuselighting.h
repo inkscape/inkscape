@@ -18,8 +18,10 @@
 #include "sp-filter.h"
 #include "diffuselighting-fns.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 class FilterDiffuseLighting;
+}
 }
 
 /* FeDiffuseLighting base class */
@@ -39,7 +41,7 @@ struct SPFeDiffuseLighting : public SPFilterPrimitive {
     guint32 lighting_color;
     guint lighting_color_set : 1;
     /** pointer to the associated renderer */
-    NR::FilterDiffuseLighting *renderer;
+    Inkscape::Filters::FilterDiffuseLighting *renderer;
 };
 
 struct SPFeDiffuseLightingClass {

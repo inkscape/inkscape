@@ -46,7 +46,7 @@ static void sp_feDiffuseLighting_child_added(SPObject *object,
 static void sp_feDiffuseLighting_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static void sp_feDiffuseLighting_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
 static Inkscape::XML::Node *sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feDiffuseLighting_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feDiffuseLighting_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 static void sp_feDiffuseLighting_children_modified(SPFeDiffuseLighting *sp_diffuselighting);
 
 static SPFilterPrimitiveClass *feDiffuseLighting_parent_class;
@@ -321,31 +321,31 @@ sp_feDiffuseLighting_order_changed (SPObject *object, Inkscape::XML::Node *child
 static void sp_feDiffuseLighting_children_modified(SPFeDiffuseLighting *sp_diffuselighting)
 {
    if (sp_diffuselighting->renderer) {
-        sp_diffuselighting->renderer->light_type = NR::NO_LIGHT;
+        sp_diffuselighting->renderer->light_type = Inkscape::Filters::NO_LIGHT;
         if (SP_IS_FEDISTANTLIGHT(sp_diffuselighting->children)) {
-            sp_diffuselighting->renderer->light_type = NR::DISTANT_LIGHT;
+            sp_diffuselighting->renderer->light_type = Inkscape::Filters::DISTANT_LIGHT;
             sp_diffuselighting->renderer->light.distant = SP_FEDISTANTLIGHT(sp_diffuselighting->children);
         }
         if (SP_IS_FEPOINTLIGHT(sp_diffuselighting->children)) {
-            sp_diffuselighting->renderer->light_type = NR::POINT_LIGHT;
+            sp_diffuselighting->renderer->light_type = Inkscape::Filters::POINT_LIGHT;
             sp_diffuselighting->renderer->light.point = SP_FEPOINTLIGHT(sp_diffuselighting->children);
         }
         if (SP_IS_FESPOTLIGHT(sp_diffuselighting->children)) {
-            sp_diffuselighting->renderer->light_type = NR::SPOT_LIGHT;
+            sp_diffuselighting->renderer->light_type = Inkscape::Filters::SPOT_LIGHT;
             sp_diffuselighting->renderer->light.spot = SP_FESPOTLIGHT(sp_diffuselighting->children);
         }
    }
 }
 
-static void sp_feDiffuseLighting_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feDiffuseLighting_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeDiffuseLighting *sp_diffuselighting = SP_FEDIFFUSELIGHTING(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_DIFFUSELIGHTING);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterDiffuseLighting *nr_diffuselighting = dynamic_cast<NR::FilterDiffuseLighting*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_DIFFUSELIGHTING);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterDiffuseLighting *nr_diffuselighting = dynamic_cast<Inkscape::Filters::FilterDiffuseLighting*>(nr_primitive);
     g_assert(nr_diffuselighting != NULL);
 
     sp_diffuselighting->renderer = nr_diffuselighting;
@@ -355,17 +355,17 @@ static void sp_feDiffuseLighting_build_renderer(SPFilterPrimitive *primitive, NR
     nr_diffuselighting->surfaceScale = sp_diffuselighting->surfaceScale;
     nr_diffuselighting->lighting_color = sp_diffuselighting->lighting_color;
     //We assume there is at most one child
-    nr_diffuselighting->light_type = NR::NO_LIGHT;
+    nr_diffuselighting->light_type = Inkscape::Filters::NO_LIGHT;
     if (SP_IS_FEDISTANTLIGHT(primitive->children)) {
-        nr_diffuselighting->light_type = NR::DISTANT_LIGHT;
+        nr_diffuselighting->light_type = Inkscape::Filters::DISTANT_LIGHT;
         nr_diffuselighting->light.distant = SP_FEDISTANTLIGHT(primitive->children);
     }
     if (SP_IS_FEPOINTLIGHT(primitive->children)) {
-        nr_diffuselighting->light_type = NR::POINT_LIGHT;
+        nr_diffuselighting->light_type = Inkscape::Filters::POINT_LIGHT;
         nr_diffuselighting->light.point = SP_FEPOINTLIGHT(primitive->children);
     }
     if (SP_IS_FESPOTLIGHT(primitive->children)) {
-        nr_diffuselighting->light_type = NR::SPOT_LIGHT;
+        nr_diffuselighting->light_type = Inkscape::Filters::SPOT_LIGHT;
         nr_diffuselighting->light.spot = SP_FESPOTLIGHT(primitive->children);
     }
         

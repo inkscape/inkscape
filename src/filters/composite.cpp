@@ -34,7 +34,7 @@ static void sp_feComposite_release(SPObject *object);
 static void sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feComposite_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feComposite_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feComposite_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feComposite_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
 static SPFilterPrimitiveClass *feComposite_parent_class;
 
@@ -84,7 +84,7 @@ sp_feComposite_init(SPFeComposite *feComposite)
     feComposite->k2 = 0;
     feComposite->k3 = 0;
     feComposite->k4 = 0;
-    feComposite->in2 = NR::NR_FILTER_SLOT_NOT_SET;
+    feComposite->in2 = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
 }
 
 /**
@@ -249,15 +249,15 @@ sp_feComposite_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::X
     return repr;
 }
 
-static void sp_feComposite_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feComposite_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeComposite *sp_composite = SP_FECOMPOSITE(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_COMPOSITE);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterComposite *nr_composite = dynamic_cast<NR::FilterComposite*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_COMPOSITE);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterComposite *nr_composite = dynamic_cast<Inkscape::Filters::FilterComposite*>(nr_primitive);
     g_assert(nr_composite != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);

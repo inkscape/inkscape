@@ -24,7 +24,7 @@ class SPFeComponentTransferClass;
 struct SPFeComponentTransfer : public SPFilterPrimitive {
     /** COMPONENTTRANSFER ATTRIBUTES HERE */
 
-    NR::FilterComponentTransfer *renderer;
+    Inkscape::Filters::FilterComponentTransfer *renderer;
 };
 
 struct SPFeComponentTransferClass {

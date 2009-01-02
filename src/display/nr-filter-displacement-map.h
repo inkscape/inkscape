@@ -18,7 +18,8 @@
 #include "display/nr-filter-units.h"
 #include "libnr/nr-rect-l.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 class FilterDisplacementMap : public FilterPrimitive {
 public:
@@ -42,7 +43,8 @@ private:
     int out_x0, out_y0, out_w, out_h;
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_DISPLACEMENT_MAP_H__ */
 /*

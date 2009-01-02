@@ -249,6 +249,8 @@ void transform_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &tra
             result.a = samplex(line[0].a, line[1].a, line[2].a, line[3].a,
                                from_x);
 
+            using Inkscape::Filters::clamp;
+            using Inkscape::Filters::clamp_alpha;
             _check_index(to, to_y * to->rs + to_x * 4, __LINE__);
             if (to->mode == NR_PIXBLOCK_MODE_R8G8B8A8P) {
                 /* Make sure, none of the RGB channels exceeds 100% intensity

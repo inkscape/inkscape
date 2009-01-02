@@ -35,7 +35,7 @@ static void sp_feMerge_release(SPObject *object);
 static void sp_feMerge_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feMerge_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feMerge_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feMerge_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feMerge_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
 static SPFilterPrimitiveClass *feMerge_parent_class;
 
@@ -164,16 +164,16 @@ sp_feMerge_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::
     return repr;
 }
 
-static void sp_feMerge_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feMerge_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeMerge *sp_merge = SP_FEMERGE(primitive);
     (void)sp_merge;
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_MERGE);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterMerge *nr_merge = dynamic_cast<NR::FilterMerge*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_MERGE);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterMerge *nr_merge = dynamic_cast<Inkscape::Filters::FilterMerge*>(nr_primitive);
     g_assert(nr_merge != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);

@@ -35,7 +35,7 @@ static void sp_feOffset_release(SPObject *object);
 static void sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feOffset_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feOffset_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feOffset_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feOffset_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
 static SPFilterPrimitiveClass *feOffset_parent_class;
 
@@ -184,15 +184,15 @@ sp_feOffset_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML:
     return repr;
 }
 
-static void sp_feOffset_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feOffset_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeOffset *sp_offset = SP_FEOFFSET(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_OFFSET);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterOffset *nr_offset = dynamic_cast<NR::FilterOffset*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_OFFSET);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterOffset *nr_offset = dynamic_cast<Inkscape::Filters::FilterOffset*>(nr_primitive);
     g_assert(nr_offset != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);

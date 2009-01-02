@@ -1,7 +1,8 @@
 #ifndef __NR_FILTER_TYPES_H__
 #define __NR_FILTER_TYPES_H__
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 enum FilterPrimitiveType {
     NR_FILTER_BLEND,
@@ -34,8 +35,8 @@ enum FilterSlotType {
     NR_FILTER_STROKEPAINT = -7,
     NR_FILTER_UNNAMED_SLOT = -8
 };
-/* Unnamed slot is for NR::FilterSlot internal use. Passing it as
- * parameter to NR::FilterSlot accessors may have unforeseen consequences. */
+/* Unnamed slot is for Inkscape::Filters::FilterSlot internal use. Passing it as
+ * parameter to Inkscape::Filters::FilterSlot accessors may have unforeseen consequences. */
 
 enum FilterQuality {
     FILTER_QUALITY_BEST = 2,
@@ -45,7 +46,8 @@ enum FilterQuality {
     FILTER_QUALITY_WORST = -2
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif // __NR_FILTER_TYPES_H__
 /*

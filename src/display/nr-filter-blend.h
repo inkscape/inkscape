@@ -21,7 +21,8 @@
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 enum FilterBlendMode {
     BLEND_NORMAL,
@@ -50,7 +51,8 @@ private:
 };
 
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 
 

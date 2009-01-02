@@ -12,7 +12,8 @@
 #include "display/nr-filter-flood.h"
 #include "display/nr-filter-utils.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterFlood::FilterFlood()
 {}
@@ -73,7 +74,8 @@ void FilterFlood::area_enlarge(NRRectL &/*area*/, Geom::Matrix const &/*trans*/)
 {
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

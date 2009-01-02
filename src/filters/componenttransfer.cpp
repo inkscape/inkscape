@@ -36,7 +36,7 @@ static void sp_feComponentTransfer_build(SPObject *object, SPDocument *document,
 static void sp_feComponentTransfer_release(SPObject *object);
 static void sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feComponentTransfer_update(SPObject *object, SPCtx *ctx, guint flags);
-static void sp_feComponentTransfer_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feComponentTransfer_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 static void sp_feComponentTransfer_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static void sp_feComponentTransfer_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
 static Inkscape::XML::Node *sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
@@ -130,7 +130,7 @@ static void sp_feComponentTransfer_children_modified(SPFeComponentTransfer *sp_c
         // Set any types not explicitly set to the identity transform
         for(int i=0;i<4;i++) {
             if (!set[i]) {
-                sp_componenttransfer->renderer->type[i] = NR::COMPONENTTRANSFER_TYPE_IDENTITY;
+                sp_componenttransfer->renderer->type[i] = Inkscape::Filters::COMPONENTTRANSFER_TYPE_IDENTITY;
             }
         }
     }
@@ -238,15 +238,15 @@ sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Document *doc, Ink
     return repr;
 }
 
-static void sp_feComponentTransfer_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feComponentTransfer_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeComponentTransfer *sp_componenttransfer = SP_FECOMPONENTTRANSFER(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_COMPONENTTRANSFER);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterComponentTransfer *nr_componenttransfer = dynamic_cast<NR::FilterComponentTransfer*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_COMPONENTTRANSFER);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterComponentTransfer *nr_componenttransfer = dynamic_cast<Inkscape::Filters::FilterComponentTransfer*>(nr_primitive);
     g_assert(nr_componenttransfer != NULL);
 
     sp_componenttransfer->renderer = nr_componenttransfer;

@@ -134,7 +134,7 @@ private:
         }
 
         Gtk::TreeModelColumn<SPFilterPrimitive*> primitive;
-        Gtk::TreeModelColumn<NR::FilterPrimitiveType> type_id;
+        Gtk::TreeModelColumn<Inkscape::Filters::FilterPrimitiveType> type_id;
         Gtk::TreeModelColumn<Glib::ustring> type;
         Gtk::TreeModelColumn<Glib::ustring> id;
     };
@@ -230,7 +230,7 @@ private:
 
     // View/add primitives
     Gtk::VBox _primitive_box;
-    UI::Widget::ComboBoxEnum<NR::FilterPrimitiveType> _add_primitive_type;
+    UI::Widget::ComboBoxEnum<Inkscape::Filters::FilterPrimitiveType> _add_primitive_type;
     Gtk::Button _add_primitive;
 
     // Bottom pane (filter effect primitive settings)

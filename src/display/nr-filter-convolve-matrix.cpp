@@ -14,7 +14,8 @@
 #include "display/nr-filter-utils.h"
 #include <vector>
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterConvolveMatrix::FilterConvolveMatrix()
 {}
@@ -144,7 +145,8 @@ FilterTraits FilterConvolveMatrix::get_input_traits() {
     return TRAIT_PARALLER;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

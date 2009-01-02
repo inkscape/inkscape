@@ -16,7 +16,8 @@
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 enum FilterMorphologyOperator {
     MORPHOLOGY_OPERATOR_ERODE,
@@ -43,7 +44,8 @@ private:
     double yradius;
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_MORPHOLOGY_H__ */
 /*

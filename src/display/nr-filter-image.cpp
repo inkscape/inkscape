@@ -18,7 +18,8 @@
 #include "display/nr-filter-units.h"
 #include "libnr/nr-rect-l.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterImage::FilterImage()
 {
@@ -57,11 +58,8 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         }
         pb = new NRPixBlock;
         free_pb_on_exit = true;
-        
-        Matrix identity(1.0, 0.0,
-                   0.0, 1.0,
-                   0.0, 0.0);
-        Geom::OptRect area = SVGElem->getBounds(identity);
+
+        Geom::OptRect area = SVGElem->getBounds(Geom::identity());
         
         NRRectL rect;
         rect.x0=area->min()[Geom::X];
@@ -148,7 +146,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
 
     // Get the object bounding box. Image is placed with respect to box.
     // Array values:  0: width; 3: height; 4: -x; 5: -y.
-    Matrix object_bbox = units.get_matrix_user2filterunits().inverse();
+    Geom::Matrix object_bbox = units.get_matrix_user2filterunits().inverse();
 
     // feImage is suppose to use the same parameters as a normal SVG image.
     // If a width or height is set to zero, the image is not suppose to be displayed.
@@ -163,7 +161,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
 
     int coordx,coordy;
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
-    Matrix unit_trans = units.get_matrix_primitiveunits2pb().inverse();
+    Geom::Matrix unit_trans = units.get_matrix_primitiveunits2pb().inverse();
     for (x=x0; x < x1; x++){
         for (y=y0; y < y1; y++){
             //TODO: use interpolation
@@ -217,7 +215,8 @@ FilterTraits FilterImage::get_input_traits() {
     return TRAIT_PARALLER;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

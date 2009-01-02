@@ -39,7 +39,7 @@ static void sp_feConvolveMatrix_release(SPObject *object);
 static void sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feConvolveMatrix_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feConvolveMatrix_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feConvolveMatrix_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feConvolveMatrix_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
 static SPFilterPrimitiveClass *feConvolveMatrix_parent_class;
 
@@ -88,7 +88,7 @@ sp_feConvolveMatrix_init(SPFeConvolveMatrix *feConvolveMatrix)
     feConvolveMatrix->order.set("3 3");
     feConvolveMatrix->targetX = 1;
     feConvolveMatrix->targetY = 1;
-    feConvolveMatrix->edgeMode = NR::CONVOLVEMATRIX_EDGEMODE_DUPLICATE;
+    feConvolveMatrix->edgeMode = Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_DUPLICATE;
     feConvolveMatrix->preserveAlpha = false;
 
     //some helper variables:
@@ -131,20 +131,20 @@ sp_feConvolveMatrix_release(SPObject *object)
         ((SPObjectClass *) feConvolveMatrix_parent_class)->release(object);
 }
 
-static NR::FilterConvolveMatrixEdgeMode sp_feConvolveMatrix_read_edgeMode(gchar const *value){
-    if (!value) return NR::CONVOLVEMATRIX_EDGEMODE_DUPLICATE; //duplicate is default
+static Inkscape::Filters::FilterConvolveMatrixEdgeMode sp_feConvolveMatrix_read_edgeMode(gchar const *value){
+    if (!value) return Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_DUPLICATE; //duplicate is default
     switch(value[0]){
         case 'd':
-            if (strncmp(value, "duplicate", 9) == 0) return NR::CONVOLVEMATRIX_EDGEMODE_DUPLICATE;
+            if (strncmp(value, "duplicate", 9) == 0) return Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_DUPLICATE;
             break;
         case 'w':
-            if (strncmp(value, "wrap", 4) == 0) return NR::CONVOLVEMATRIX_EDGEMODE_WRAP;
+            if (strncmp(value, "wrap", 4) == 0) return Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_WRAP;
             break;
         case 'n':
-            if (strncmp(value, "none", 4) == 0) return NR::CONVOLVEMATRIX_EDGEMODE_NONE;
+            if (strncmp(value, "none", 4) == 0) return Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_NONE;
             break;
     }
-    return NR::CONVOLVEMATRIX_EDGEMODE_DUPLICATE; //duplicate is default
+    return Inkscape::Filters::CONVOLVEMATRIX_EDGEMODE_DUPLICATE; //duplicate is default
 }
 
 /**
@@ -158,7 +158,7 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
     double read_num;
     int read_int;
     bool read_bool;
-    NR::FilterConvolveMatrixEdgeMode read_mode;
+    Inkscape::Filters::FilterConvolveMatrixEdgeMode read_mode;
    
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
@@ -303,15 +303,15 @@ sp_feConvolveMatrix_write(SPObject *object, Inkscape::XML::Document *doc, Inksca
     return repr;
 }
 
-static void sp_feConvolveMatrix_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feConvolveMatrix_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeConvolveMatrix *sp_convolve = SP_FECONVOLVEMATRIX(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_CONVOLVEMATRIX);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterConvolveMatrix *nr_convolve = dynamic_cast<NR::FilterConvolveMatrix*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_CONVOLVEMATRIX);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterConvolveMatrix *nr_convolve = dynamic_cast<Inkscape::Filters::FilterConvolveMatrix*>(nr_primitive);
     g_assert(nr_convolve != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);

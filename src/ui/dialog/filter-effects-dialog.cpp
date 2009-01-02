@@ -68,7 +68,7 @@
 #include "io/sys.h"
 #include <iostream>
 
-using namespace NR;
+using namespace Inkscape::Filters;
 
 namespace Inkscape {
 namespace UI {
@@ -2272,67 +2272,67 @@ void FilterEffectsDialog::update_primitive_infobox()
         _infobox_desc.hide();
     }
     switch(_add_primitive_type.get_active_data()->id){
-        case(NR::NR_FILTER_BLEND):
+        case(NR_FILTER_BLEND):
             _infobox_icon.set(g_strdup_printf("%s/feBlend-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, multiply, darken and lighten."));
             break;
-        case(NR::NR_FILTER_COLORMATRIX):
+        case(NR_FILTER_COLORMATRIX):
             _infobox_icon.set(g_strdup_printf("%s/feColorMatrix-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feColorMatrix</b> filter primitive applies a matrix transformation to colour of each rendered pixel. This allows for effects like turning object to grayscale, modifying colour saturation and changing colour hue."));
             break;
-        case(NR::NR_FILTER_COMPONENTTRANSFER):
+        case(NR_FILTER_COMPONENTTRANSFER):
             _infobox_icon.set(g_strdup_printf("%s/feComponentTransfer-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feComponentTransfer</b> filter primitive manipulates the input's color components (red, green, blue, and alpha) according to particular transfer functions, allowing operations like brightness and contrast adjustment, color balance, and thresholding."));
             break;
-        case(NR::NR_FILTER_COMPOSITE):
+        case(NR_FILTER_COMPOSITE):
             _infobox_icon.set(g_strdup_printf("%s/feComposite-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the aritmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."));
             break;
-        case(NR::NR_FILTER_CONVOLVEMATRIX):
+        case(NR_FILTER_CONVOLVEMATRIX):
             _infobox_icon.set(g_strdup_printf("%s/feConvolveMatrix-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on the image. Common effects created using convolution matrices are blur, sharpening, embossing and edge detection. Note that while gaussian blur can be created using this filter primitive, the special gaussian blur primitive is faster and resolution-independent."));
             break;
-        case(NR::NR_FILTER_DIFFUSELIGHTING):
+        case(NR_FILTER_DIFFUSELIGHTING):
             _infobox_icon.set(g_strdup_printf("%s/feDiffuseLighting-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."));
             break;
-        case(NR::NR_FILTER_DISPLACEMENTMAP):
+        case(NR_FILTER_DISPLACEMENTMAP):
             _infobox_icon.set(g_strdup_printf("%s/feDisplacementMap-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feDisplacementMap</b> filter primitive displaces the pixels in the first input using the second input as a displacement map, that shows from how far the pixel should come from. Classical examples are whirl and pinch effects."));
             break;
-        case(NR::NR_FILTER_FLOOD):
+        case(NR_FILTER_FLOOD):
             _infobox_icon.set(g_strdup_printf("%s/feFlood-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feFlood</b> filter primitive fills the region with a given color and opacity.  It is usually used as an input to other filters to apply color to a graphic."));
             break;
-        case(NR::NR_FILTER_GAUSSIANBLUR):
+        case(NR_FILTER_GAUSSIANBLUR):
             _infobox_icon.set(g_strdup_printf("%s/feGaussianBlur-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is commonly used together with feOffset to create a drop shadow effect."));
             break;
-        case(NR::NR_FILTER_IMAGE):
+        case(NR_FILTER_IMAGE):
             _infobox_icon.set(g_strdup_printf("%s/feImage-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feImage</b> filter primitive fills the region with an external image or another part of the document."));
             break;
-        case(NR::NR_FILTER_MERGE):
+        case(NR_FILTER_MERGE):
             _infobox_icon.set(g_strdup_printf("%s/feMerge-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feMerge</b> filter primitive composites several temporary images inside the filter primitive to a single image. It uses normal alpha compositing for this. This is equivalent to using several feBlend primitives in 'normal' mode or several feComposite primitives in 'over' mode."));
             break;
-        case(NR::NR_FILTER_MORPHOLOGY):
+        case(NR_FILTER_MORPHOLOGY):
             _infobox_icon.set(g_strdup_printf("%s/feMorphology-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feMorphology</b> filter primitive provides erode and dilate effects. For single-colour objects erode makes the object thinner and dilate makes it thicker."));
             break;
-        case(NR::NR_FILTER_OFFSET):
+        case(NR_FILTER_OFFSET):
             _infobox_icon.set(g_strdup_printf("%s/feOffset-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feOffset</b> filter primitive offsets the image by an user-defined amount. For example, this is useful for drop shadows, where the shadow is in a slightly different position than the actual object."));
             break;
-        case(NR::NR_FILTER_SPECULARLIGHTING):
+        case(NR_FILTER_SPECULARLIGHTING):
             _infobox_icon.set(g_strdup_printf("%s/feSpecularLighting-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."));
             break;
-        case(NR::NR_FILTER_TILE):
+        case(NR_FILTER_TILE):
             _infobox_icon.set(g_strdup_printf("%s/feTile-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feTile</b> filter primitive tiles a region with its input graphic"));
             break;
-        case(NR::NR_FILTER_TURBULENCE):
+        case(NR_FILTER_TURBULENCE):
             _infobox_icon.set(g_strdup_printf("%s/feTurbulence-icon.png", INKSCAPE_PIXMAPDIR));
             _infobox_desc.set_markup(_("The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of noise is useful in simulating several nature phenomena like clouds, fire and smoke and in generating complex textures like marble or granite."));
             break;

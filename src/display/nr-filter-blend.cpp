@@ -24,7 +24,8 @@
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixops.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 /*
  * From http://www.w3.org/TR/SVG11/filters.html#feBlend
@@ -218,7 +219,8 @@ void FilterBlend::set_mode(FilterBlendMode mode) {
     }
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

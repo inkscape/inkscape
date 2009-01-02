@@ -20,7 +20,8 @@
 
 struct NRArenaItem;
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 class FilterSlot {
 public:
@@ -95,7 +96,8 @@ private:
     int _get_index(int slot);
 };
 
-}
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif // __NR_FILTER_SLOT_H__
 /*

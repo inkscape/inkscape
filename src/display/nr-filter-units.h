@@ -19,7 +19,8 @@
 #include <2geom/matrix.h>
 #include <2geom/rect.h>
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 class FilterUnits {
 public:
@@ -102,7 +103,7 @@ public:
      * NOTE: use only in filters, that define TRAIT_PARALLER in
      * get_input_traits. The filter effects area may not be representable
      * by simple rectangle otherwise. */
-    IRect get_pixblock_filterarea_paraller() const;
+    NR::IRect get_pixblock_filterarea_paraller() const;
 
     FilterUnits& operator=(FilterUnits const &other);
 
@@ -121,7 +122,8 @@ private:
 };
 
 
-} // namespace NR
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 
 #endif /* __NR_FILTER_UNITS_H__ */

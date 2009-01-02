@@ -39,7 +39,7 @@ static void sp_feColorMatrix_release(SPObject *object);
 static void sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feColorMatrix_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feColorMatrix_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feColorMatrix_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feColorMatrix_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
 static SPFilterPrimitiveClass *feColorMatrix_parent_class;
 
@@ -112,23 +112,23 @@ sp_feColorMatrix_release(SPObject *object)
         ((SPObjectClass *) feColorMatrix_parent_class)->release(object);
 }
 
-static NR::FilterColorMatrixType sp_feColorMatrix_read_type(gchar const *value){
-    if (!value) return NR::COLORMATRIX_MATRIX; //matrix is default
+static Inkscape::Filters::FilterColorMatrixType sp_feColorMatrix_read_type(gchar const *value){
+    if (!value) return Inkscape::Filters::COLORMATRIX_MATRIX; //matrix is default
     switch(value[0]){
         case 'm':
-            if (strcmp(value, "matrix") == 0) return NR::COLORMATRIX_MATRIX;
+            if (strcmp(value, "matrix") == 0) return Inkscape::Filters::COLORMATRIX_MATRIX;
             break;
         case 's':
-            if (strcmp(value, "saturate") == 0) return NR::COLORMATRIX_SATURATE;
+            if (strcmp(value, "saturate") == 0) return Inkscape::Filters::COLORMATRIX_SATURATE;
             break;
         case 'h':
-            if (strcmp(value, "hueRotate") == 0) return NR::COLORMATRIX_HUEROTATE;
+            if (strcmp(value, "hueRotate") == 0) return Inkscape::Filters::COLORMATRIX_HUEROTATE;
             break;
         case 'l':
-            if (strcmp(value, "luminanceToAlpha") == 0) return NR::COLORMATRIX_LUMINANCETOALPHA;
+            if (strcmp(value, "luminanceToAlpha") == 0) return Inkscape::Filters::COLORMATRIX_LUMINANCETOALPHA;
             break;
     }
-    return NR::COLORMATRIX_MATRIX; //matrix is default
+    return Inkscape::Filters::COLORMATRIX_MATRIX; //matrix is default
 }
 
 /**
@@ -140,7 +140,7 @@ sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *str)
     SPFeColorMatrix *feColorMatrix = SP_FECOLORMATRIX(object);
     (void)feColorMatrix;
 
-    NR::FilterColorMatrixType read_type;
+    Inkscape::Filters::FilterColorMatrixType read_type;
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
     switch(key) {
         case SP_ATTR_TYPE:
@@ -205,15 +205,15 @@ sp_feColorMatrix_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape:
     return repr;
 }
 
-static void sp_feColorMatrix_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feColorMatrix_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeColorMatrix *sp_colormatrix = SP_FECOLORMATRIX(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_COLORMATRIX);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterColorMatrix *nr_colormatrix = dynamic_cast<NR::FilterColorMatrix*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_COLORMATRIX);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterColorMatrix *nr_colormatrix = dynamic_cast<Inkscape::Filters::FilterColorMatrix*>(nr_primitive);
     g_assert(nr_colormatrix != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);

@@ -73,7 +73,7 @@ sp_feMergeNode_class_init(SPFeMergeNodeClass *klass)
 static void
 sp_feMergeNode_init(SPFeMergeNode *feMergeNode)
 {
-    feMergeNode->input = NR::NR_FILTER_SLOT_NOT_SET;
+    feMergeNode->input = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
 }
 
 /**

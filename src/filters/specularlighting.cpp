@@ -46,7 +46,7 @@ static void sp_feSpecularLighting_child_added(SPObject *object,
 static void sp_feSpecularLighting_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static void sp_feSpecularLighting_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
 static Inkscape::XML::Node *sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feSpecularLighting_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feSpecularLighting_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 static void sp_feSpecularLighting_children_modified(SPFeSpecularLighting *sp_specularlighting);
 
 static SPFilterPrimitiveClass *feSpecularLighting_parent_class;
@@ -343,31 +343,31 @@ sp_feSpecularLighting_order_changed (SPObject *object, Inkscape::XML::Node *chil
 static void sp_feSpecularLighting_children_modified(SPFeSpecularLighting *sp_specularlighting)
 {
    if (sp_specularlighting->renderer) {
-        sp_specularlighting->renderer->light_type = NR::NO_LIGHT;
+        sp_specularlighting->renderer->light_type = Inkscape::Filters::NO_LIGHT;
         if (SP_IS_FEDISTANTLIGHT(sp_specularlighting->children)) {
-            sp_specularlighting->renderer->light_type = NR::DISTANT_LIGHT;
+            sp_specularlighting->renderer->light_type = Inkscape::Filters::DISTANT_LIGHT;
             sp_specularlighting->renderer->light.distant = SP_FEDISTANTLIGHT(sp_specularlighting->children);
         }
         if (SP_IS_FEPOINTLIGHT(sp_specularlighting->children)) {
-            sp_specularlighting->renderer->light_type = NR::POINT_LIGHT;
+            sp_specularlighting->renderer->light_type = Inkscape::Filters::POINT_LIGHT;
             sp_specularlighting->renderer->light.point = SP_FEPOINTLIGHT(sp_specularlighting->children);
         }
         if (SP_IS_FESPOTLIGHT(sp_specularlighting->children)) {
-            sp_specularlighting->renderer->light_type = NR::SPOT_LIGHT;
+            sp_specularlighting->renderer->light_type = Inkscape::Filters::SPOT_LIGHT;
             sp_specularlighting->renderer->light.spot = SP_FESPOTLIGHT(sp_specularlighting->children);
         }
    }
 }
 
-static void sp_feSpecularLighting_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feSpecularLighting_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeSpecularLighting *sp_specularlighting = SP_FESPECULARLIGHTING(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_SPECULARLIGHTING);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterSpecularLighting *nr_specularlighting = dynamic_cast<NR::FilterSpecularLighting*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_SPECULARLIGHTING);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterSpecularLighting *nr_specularlighting = dynamic_cast<Inkscape::Filters::FilterSpecularLighting*>(nr_primitive);
     g_assert(nr_specularlighting != NULL);
 
     sp_specularlighting->renderer = nr_specularlighting;
@@ -378,17 +378,17 @@ static void sp_feSpecularLighting_build_renderer(SPFilterPrimitive *primitive, N
     nr_specularlighting->surfaceScale = sp_specularlighting->surfaceScale;
     nr_specularlighting->lighting_color = sp_specularlighting->lighting_color;
     //We assume there is at most one child
-    nr_specularlighting->light_type = NR::NO_LIGHT;
+    nr_specularlighting->light_type = Inkscape::Filters::NO_LIGHT;
     if (SP_IS_FEDISTANTLIGHT(primitive->children)) {
-        nr_specularlighting->light_type = NR::DISTANT_LIGHT;
+        nr_specularlighting->light_type = Inkscape::Filters::DISTANT_LIGHT;
         nr_specularlighting->light.distant = SP_FEDISTANTLIGHT(primitive->children);
     }
     if (SP_IS_FEPOINTLIGHT(primitive->children)) {
-        nr_specularlighting->light_type = NR::POINT_LIGHT;
+        nr_specularlighting->light_type = Inkscape::Filters::POINT_LIGHT;
         nr_specularlighting->light.point = SP_FEPOINTLIGHT(primitive->children);
     }
     if (SP_IS_FESPOTLIGHT(primitive->children)) {
-        nr_specularlighting->light_type = NR::SPOT_LIGHT;
+        nr_specularlighting->light_type = Inkscape::Filters::SPOT_LIGHT;
         nr_specularlighting->light.spot = SP_FESPOTLIGHT(primitive->children);
     }
         

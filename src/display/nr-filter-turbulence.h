@@ -26,7 +26,8 @@
 #include "display/nr-filter-units.h"
 #include "libnr/nr-rect-l.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 enum FilterTurbulenceType {
     TURBULENCE_FRACTALNOISE,
@@ -68,8 +69,8 @@ public:
     virtual ~FilterTurbulence();
 
     virtual int render(FilterSlot &slot, FilterUnits const &units);
-    void update_pixbuffer(IRect &area, FilterUnits const &units);
-    void render_area(NRPixBlock *pix, IRect &full_area, FilterUnits const &units);
+    void update_pixbuffer(NR::IRect &area, FilterUnits const &units);
+    void render_area(NRPixBlock *pix, NR::IRect &full_area, FilterUnits const &units);
 
     void set_baseFrequency(int axis, double freq);
     void set_numOctaves(int num);
@@ -92,7 +93,7 @@ private:
     bool stitchTiles;
     FilterTurbulenceType type;
     bool updated;
-    IRect updated_area;
+    NR::IRect updated_area;
     NRPixBlock *pix;
     unsigned char *pix_data;
 
@@ -106,7 +107,8 @@ private:
     double fTileY;
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_TURBULENCE_H__ */
 /*

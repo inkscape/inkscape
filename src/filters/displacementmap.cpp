@@ -33,7 +33,7 @@ static void sp_feDisplacementMap_build(SPObject *object, SPDocument *document, I
 static void sp_feDisplacementMap_release(SPObject *object);
 static void sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feDisplacementMap_update(SPObject *object, SPCtx *ctx, guint flags);
-static void sp_feDisplacementMap_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feDisplacementMap_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 static Inkscape::XML::Node *sp_feDisplacementMap_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPFilterPrimitiveClass *feDisplacementMap_parent_class;
@@ -81,7 +81,7 @@ sp_feDisplacementMap_init(SPFeDisplacementMap *feDisplacementMap)
     feDisplacementMap->scale=0;
     feDisplacementMap->xChannelSelector = DISPLACEMENTMAP_CHANNEL_ALPHA;
     feDisplacementMap->yChannelSelector = DISPLACEMENTMAP_CHANNEL_ALPHA;
-    feDisplacementMap->in2 = NR::NR_FILTER_SLOT_NOT_SET;
+    feDisplacementMap->in2 = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
 }
 
 /**
@@ -227,15 +227,15 @@ sp_feDisplacementMap_write(SPObject *object, Inkscape::XML::Document *doc, Inksc
     return repr;
 }
 
-static void sp_feDisplacementMap_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feDisplacementMap_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeDisplacementMap *sp_displacement_map = SP_FEDISPLACEMENTMAP(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_DISPLACEMENTMAP);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterDisplacementMap *nr_displacement_map = dynamic_cast<NR::FilterDisplacementMap*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_DISPLACEMENTMAP);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterDisplacementMap *nr_displacement_map = dynamic_cast<Inkscape::Filters::FilterDisplacementMap*>(nr_primitive);
     g_assert(nr_displacement_map != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);

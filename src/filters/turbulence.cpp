@@ -39,7 +39,7 @@ static void sp_feTurbulence_release(SPObject *object);
 static void sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feTurbulence_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feTurbulence_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feTurbulence_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feTurbulence_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
 static SPFilterPrimitiveClass *feTurbulence_parent_class;
 
@@ -130,17 +130,17 @@ static bool sp_feTurbulence_read_stitchTiles(gchar const *value){
     return false; // 'noStitch' is default
 }
 
-static NR::FilterTurbulenceType sp_feTurbulence_read_type(gchar const *value){
-    if (!value) return NR::TURBULENCE_TURBULENCE; // 'turbulence' is default
+static Inkscape::Filters::FilterTurbulenceType sp_feTurbulence_read_type(gchar const *value){
+    if (!value) return Inkscape::Filters::TURBULENCE_TURBULENCE; // 'turbulence' is default
     switch(value[0]){
         case 'f':
-            if (strncmp(value, "fractalNoise", 12) == 0) return NR::TURBULENCE_FRACTALNOISE;
+            if (strncmp(value, "fractalNoise", 12) == 0) return Inkscape::Filters::TURBULENCE_FRACTALNOISE;
             break;
         case 't':
-            if (strncmp(value, "turbulence", 10) == 0) return NR::TURBULENCE_TURBULENCE;
+            if (strncmp(value, "turbulence", 10) == 0) return Inkscape::Filters::TURBULENCE_TURBULENCE;
             break;
     }
-    return NR::TURBULENCE_TURBULENCE; // 'turbulence' is default
+    return Inkscape::Filters::TURBULENCE_TURBULENCE; // 'turbulence' is default
 }
 
 /**
@@ -155,7 +155,7 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
     int read_int;
     double read_num;
     bool read_bool;
-    NR::FilterTurbulenceType read_type;
+    Inkscape::Filters::FilterTurbulenceType read_type;
 
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
@@ -249,15 +249,15 @@ sp_feTurbulence_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::
     return repr;
 }
 
-static void sp_feTurbulence_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feTurbulence_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeTurbulence *sp_turbulence = SP_FETURBULENCE(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_TURBULENCE);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterTurbulence *nr_turbulence = dynamic_cast<NR::FilterTurbulence*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_TURBULENCE);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterTurbulence *nr_turbulence = dynamic_cast<Inkscape::Filters::FilterTurbulence*>(nr_primitive);
     g_assert(nr_turbulence != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);

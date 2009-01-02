@@ -16,7 +16,8 @@
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 class FilterFlood : public FilterPrimitive {
 public:
@@ -33,7 +34,8 @@ private:
     guint32 color;
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_FLOOD_H__ */
 /*

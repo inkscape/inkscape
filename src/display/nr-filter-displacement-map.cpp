@@ -15,7 +15,8 @@
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixops.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterDisplacementMap::FilterDisplacementMap()
 {}
@@ -159,7 +160,8 @@ FilterTraits FilterDisplacementMap::get_input_traits() {
     return TRAIT_PARALLER;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

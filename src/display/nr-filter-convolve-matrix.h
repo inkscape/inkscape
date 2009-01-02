@@ -18,7 +18,8 @@
 #include "libnr/nr-rect-l.h"
 #include <vector>
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 enum FilterConvolveMatrixEdgeMode {
     CONVOLVEMATRIX_EDGEMODE_DUPLICATE,
@@ -57,7 +58,8 @@ private:
     bool preserveAlpha;
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_CONVOLVE_MATRIX_H__ */
 /*

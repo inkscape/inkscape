@@ -16,7 +16,11 @@
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-rect-l.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
+
+using Geom::X;
+using Geom::Y;
 
 FilterOffset::FilterOffset() :
     dx(0), dy(0)
@@ -39,8 +43,8 @@ int FilterOffset::render(FilterSlot &slot, FilterUnits const &units) {
 
     NRPixBlock *out = new NRPixBlock;
 
-    Matrix trans = units.get_matrix_primitiveunits2pb();
-    Point offset(dx, dy);
+    Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
+    Geom::Point offset(dx, dy);
     offset *= trans;
     offset[X] -= trans[4];
     offset[Y] -= trans[5];
@@ -72,7 +76,7 @@ void FilterOffset::set_dy(double amount) {
 
 void FilterOffset::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
 {
-    Point offset(dx, dy);
+    Geom::Point offset(dx, dy);
     offset *= trans;
     offset[X] -= trans[4];
     offset[Y] -= trans[5];
@@ -90,7 +94,8 @@ void FilterOffset::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
     }
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

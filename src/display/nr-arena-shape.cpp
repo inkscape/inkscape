@@ -1336,7 +1336,7 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
     if (style->filter.set && style->getFilter()) {
         if (!shape->filter) {
             int primitives = sp_filter_primitive_count(SP_FILTER(style->getFilter()));
-            shape->filter = new NR::Filter(primitives);
+            shape->filter = new Inkscape::Filters::Filter(primitives);
         }
         sp_filter_build_renderer(SP_FILTER(style->getFilter()), shape->filter);
     } else {

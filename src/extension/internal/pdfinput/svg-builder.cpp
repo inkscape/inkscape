@@ -214,12 +214,13 @@ Inkscape::XML::Node *SvgBuilder::getContainer() {
 }
 
 static gchar *svgConvertRGBToText(double r, double g, double b) {
+    using Inkscape::Filters::clamp;
     static gchar tmp[1023] = {0};
     snprintf(tmp, 1023,
              "#%02x%02x%02x",
-             NR::clamp(SP_COLOR_F_TO_U(r)),
-             NR::clamp(SP_COLOR_F_TO_U(g)),
-             NR::clamp(SP_COLOR_F_TO_U(b)));
+             clamp(SP_COLOR_F_TO_U(r)),
+             clamp(SP_COLOR_F_TO_U(g)),
+             clamp(SP_COLOR_F_TO_U(b)));
     return (gchar *)&tmp;
 }
 

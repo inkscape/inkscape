@@ -369,7 +369,7 @@ void nr_arena_image_set_style (NRArenaImage *image, SPStyle *style)
     if (style->filter.set && style->getFilter()) {
         if (!image->filter) {
             int primitives = sp_filter_primitive_count(SP_FILTER(style->getFilter()));
-            image->filter = new NR::Filter(primitives);
+            image->filter = new Inkscape::Filters::Filter(primitives);
         }
         sp_filter_build_renderer(SP_FILTER(style->getFilter()), image->filter);
     } else {

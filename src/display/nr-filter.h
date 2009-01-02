@@ -24,7 +24,8 @@
 
 struct NRArenaItem;
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 class Filter : public Inkscape::GC::Managed<> {
 public:
@@ -205,9 +206,8 @@ private:
 };
 
 
-} /* namespace NR */
-
-
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 
 #endif /* __NR_FILTER_H__ */

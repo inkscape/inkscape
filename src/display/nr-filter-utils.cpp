@@ -1,6 +1,7 @@
 #include "nr-filter-utils.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 int clamp(int const val) {
     if (val < 0) return 0;
@@ -20,7 +21,8 @@ int clamp_alpha(int const val, int const alpha) {
     return val;
 }
 
-} //namespace NR
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

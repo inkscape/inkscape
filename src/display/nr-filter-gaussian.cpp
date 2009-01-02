@@ -90,7 +90,8 @@ static inline Tt clip_round_cast(Ts const& v, Tt const minval=std::numeric_limit
     return round_cast<Tt>(v);
 }
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterGaussian::FilterGaussian()
 {
@@ -872,7 +873,8 @@ void FilterGaussian::set_deviation(double x, double y)
     }
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

@@ -18,7 +18,8 @@
 #include "libnr/nr-pixops.h"
 #include <math.h>
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterComponentTransfer::FilterComponentTransfer()
 {
@@ -157,7 +158,8 @@ void FilterComponentTransfer::area_enlarge(NRRectL &/*area*/, Geom::Matrix const
 {
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

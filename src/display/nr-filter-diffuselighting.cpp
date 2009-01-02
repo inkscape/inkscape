@@ -25,7 +25,8 @@
 #include "libnr/nr-rect-l.h"
 #include "color.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterDiffuseLighting::FilterDiffuseLighting() 
 {
@@ -44,7 +45,7 @@ FilterDiffuseLighting::~FilterDiffuseLighting()
 
 #define COMPUTE_INTER(inter, N, L, kd) \
 do {\
-    (inter) = (kd) * scalar_product((N), (L)); \
+    (inter) = (kd) * NR::scalar_product((N), (L)); \
     if ((inter) < 0) (inter) = 0; \
 }while(0)
 
@@ -68,11 +69,11 @@ int FilterDiffuseLighting::render(FilterSlot &slot, FilterUnits const &units) {
     int dx = 1; //TODO setup
     int dy = 1; //TODO setup
     //surface scale
-    Matrix trans = units.get_matrix_primitiveunits2pb();
+    Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
     gdouble ss = surfaceScale * trans[0];
     gdouble kd = diffuseConstant; //diffuse lighting constant
 
-    Fvector L, N, LC;
+    NR::Fvector L, N, LC;
     gdouble inter;
 
     nr_pixblock_setup_fast(out, in->mode,
@@ -90,7 +91,7 @@ int FilterDiffuseLighting::render(FilterSlot &slot, FilterUnits const &units) {
             dl->light_components(LC);
             //finish the work
             for (i = 0, j = 0; i < w*h; i++) {
-                compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
+                NR::compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
                 COMPUTE_INTER(inter, N, L, kd);
 
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
@@ -112,7 +113,7 @@ int FilterDiffuseLighting::render(FilterSlot &slot, FilterUnits const &units) {
         // pixblock coordinates
             //finish the work
             for (i = 0, j = 0; i < w*h; i++) {
-                compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
+                NR::compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
                 pl->light_vector(L,
                         i % w + x0,
                         i / w + y0,
@@ -137,7 +138,7 @@ int FilterDiffuseLighting::render(FilterSlot &slot, FilterUnits const &units) {
         // pixblock coordinates
             //finish the work
             for (i = 0, j = 0; i < w*h; i++) {
-                compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
+                NR::compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
                 sl->light_vector(L,
                     i % w + x0,
                     i / w + y0,
@@ -178,7 +179,8 @@ FilterTraits FilterDiffuseLighting::get_input_traits() {
     return TRAIT_PARALLER;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

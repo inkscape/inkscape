@@ -1,7 +1,8 @@
 #ifndef __NR_LIGHT_TYPES_H__
 #define __NR_LIGHT_TYPES_H__
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 enum LightType{
     NO_LIGHT = 0,
@@ -10,7 +11,8 @@ enum LightType{
     SPOT_LIGHT
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif // __NR_LIGHT_TYPES_H__
 /*

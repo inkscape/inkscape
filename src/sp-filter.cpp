@@ -410,7 +410,7 @@ sp_filter_remove_child(SPObject *object, Inkscape::XML::Node *child)
     object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
-void sp_filter_build_renderer(SPFilter *sp_filter, NR::Filter *nr_filter)
+void sp_filter_build_renderer(SPFilter *sp_filter, Inkscape::Filters::Filter *nr_filter)
 {
     g_assert(sp_filter != NULL);
     g_assert(nr_filter != NULL);

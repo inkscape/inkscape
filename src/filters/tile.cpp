@@ -33,7 +33,7 @@ static void sp_feTile_release(SPObject *object);
 static void sp_feTile_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feTile_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feTile_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feTile_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feTile_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
 static SPFilterPrimitiveClass *feTile_parent_class;
 
@@ -164,16 +164,16 @@ sp_feTile_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::N
     return repr;
 }
 
-static void sp_feTile_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feTile_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeTile *sp_tile = SP_FETILE(primitive);
     (void)sp_tile;
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_TILE);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterTile *nr_tile = dynamic_cast<NR::FilterTile*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_TILE);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterTile *nr_tile = dynamic_cast<Inkscape::Filters::FilterTile*>(nr_primitive);
     g_assert(nr_tile != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);

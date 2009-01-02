@@ -17,7 +17,8 @@
 #include "libnr/nr-rect-l.h"
 #include "svg/svg-length.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 /*
  * Different filter effects need different types of inputs. This is what
@@ -118,7 +119,8 @@ protected:
 };
 
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 
 

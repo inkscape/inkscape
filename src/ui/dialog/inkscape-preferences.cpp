@@ -687,15 +687,15 @@ void InkscapePreferences::initPageFilters()
 
     /* filter quality */
     _filter_quality_best.init ( _("Best quality (slowest)"), "/options/filterquality/value",
-                                  NR::FILTER_QUALITY_BEST, false, 0);
+                                  Inkscape::Filters::FILTER_QUALITY_BEST, false, 0);
     _filter_quality_better.init ( _("Better quality (slower)"), "/options/filterquality/value",
-                                  NR::FILTER_QUALITY_BETTER, false, &_filter_quality_best);
+                                  Inkscape::Filters::FILTER_QUALITY_BETTER, false, &_filter_quality_best);
     _filter_quality_normal.init ( _("Average quality"), "/options/filterquality/value",
-                                  NR::FILTER_QUALITY_NORMAL, true, &_filter_quality_best);
+                                  Inkscape::Filters::FILTER_QUALITY_NORMAL, true, &_filter_quality_best);
     _filter_quality_worse.init ( _("Lower quality (faster)"), "/options/filterquality/value",
-                                  NR::FILTER_QUALITY_WORSE, false, &_filter_quality_best);
+                                  Inkscape::Filters::FILTER_QUALITY_WORSE, false, &_filter_quality_best);
     _filter_quality_worst.init ( _("Lowest quality (fastest)"), "/options/filterquality/value",
-                                  NR::FILTER_QUALITY_WORST, false, &_filter_quality_best);
+                                  Inkscape::Filters::FILTER_QUALITY_WORST, false, &_filter_quality_best);
 
     _page_filters.add_group_header( _("Filter effects quality for display:"));
     _page_filters.add_line( true, "", _filter_quality_best, "",

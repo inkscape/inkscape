@@ -146,7 +146,7 @@ sp_fefuncnode_class_init(SPFeFuncNodeClass *klass)
 static void
 sp_fefuncnode_init(SPFeFuncNode *fefuncnode)
 {
-    fefuncnode->type = NR::COMPONENTTRANSFER_TYPE_IDENTITY;
+    fefuncnode->type = Inkscape::Filters::COMPONENTTRANSFER_TYPE_IDENTITY;
     //fefuncnode->tableValues = NULL;
     fefuncnode->slope = 1;
     fefuncnode->intercept = 0;
@@ -197,26 +197,26 @@ sp_fefuncnode_release(SPObject *object)
 //TODO: release resources here
 }
 
-static NR::FilterComponentTransferType sp_feComponenttransfer_read_type(gchar const *value){
-    if (!value) return NR::COMPONENTTRANSFER_TYPE_ERROR; //type attribute is REQUIRED.
+static Inkscape::Filters::FilterComponentTransferType sp_feComponenttransfer_read_type(gchar const *value){
+    if (!value) return Inkscape::Filters::COMPONENTTRANSFER_TYPE_ERROR; //type attribute is REQUIRED.
     switch(value[0]){
         case 'i':
-            if (strncmp(value, "identity", 8) == 0) return NR::COMPONENTTRANSFER_TYPE_IDENTITY;
+            if (strncmp(value, "identity", 8) == 0) return Inkscape::Filters::COMPONENTTRANSFER_TYPE_IDENTITY;
             break;
         case 't':
-            if (strncmp(value, "table", 5) == 0) return NR::COMPONENTTRANSFER_TYPE_TABLE;
+            if (strncmp(value, "table", 5) == 0) return Inkscape::Filters::COMPONENTTRANSFER_TYPE_TABLE;
             break;
         case 'd':
-            if (strncmp(value, "discrete", 8) == 0) return NR::COMPONENTTRANSFER_TYPE_DISCRETE;
+            if (strncmp(value, "discrete", 8) == 0) return Inkscape::Filters::COMPONENTTRANSFER_TYPE_DISCRETE;
             break;
         case 'l':
-            if (strncmp(value, "linear", 6) == 0) return NR::COMPONENTTRANSFER_TYPE_LINEAR;
+            if (strncmp(value, "linear", 6) == 0) return Inkscape::Filters::COMPONENTTRANSFER_TYPE_LINEAR;
             break;
         case 'g':
-            if (strncmp(value, "gamma", 5) == 0) return NR::COMPONENTTRANSFER_TYPE_GAMMA;
+            if (strncmp(value, "gamma", 5) == 0) return Inkscape::Filters::COMPONENTTRANSFER_TYPE_GAMMA;
             break;
     }
-    return NR::COMPONENTTRANSFER_TYPE_ERROR; //type attribute is REQUIRED.
+    return Inkscape::Filters::COMPONENTTRANSFER_TYPE_ERROR; //type attribute is REQUIRED.
 }
 
 /**
@@ -226,7 +226,7 @@ static void
 sp_fefuncnode_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeFuncNode *feFuncNode = SP_FEFUNCNODE(object);
-    NR::FilterComponentTransferType type;
+    Inkscape::Filters::FilterComponentTransferType type;
     double read_num;
     switch(key) {
         case SP_ATTR_TYPE:

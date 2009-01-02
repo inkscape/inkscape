@@ -18,7 +18,8 @@
 #include <gtkmm.h>
 #include "sp-item.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 class FilterImage : public FilterPrimitive {
 public:
@@ -43,7 +44,8 @@ private:
     float feImageX,feImageY,feImageWidth,feImageHeight;
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_IMAGE_H__ */
 /*

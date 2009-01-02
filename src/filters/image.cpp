@@ -39,7 +39,7 @@ static void sp_feImage_release(SPObject *object);
 static void sp_feImage_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feImage_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
 static SPFilterPrimitiveClass *feImage_parent_class;
 
@@ -232,15 +232,15 @@ sp_feImage_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::
     return repr;
 }
 
-static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeImage *sp_image = SP_FEIMAGE(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_IMAGE);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterImage *nr_image = dynamic_cast<NR::FilterImage*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_IMAGE);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterImage *nr_image = dynamic_cast<Inkscape::Filters::FilterImage*>(nr_primitive);
     g_assert(nr_image != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);

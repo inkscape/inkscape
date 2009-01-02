@@ -4,6 +4,7 @@
 /*
  * 3D utils. Definition of gdouble vectors of dimension 3 and of some basic
  * functions.
+ *   This looks redundant, why not just use Geom::Point for this?
  *
  * Authors:
  *   Jean-Rene Reinhard <jr@komite.net>
@@ -14,12 +15,11 @@
  */
 
 #include <gdk/gdktypes.h>
+#include <2geom/forward.h>
 
 struct NRPixBlock;
 
 namespace NR {
-
-struct Matrix;
 
 #define X_3D 0
 #define Y_3D 1
@@ -94,7 +94,7 @@ void compute_surface_normal(Fvector &N, gdouble ss, NRPixBlock *in, int i, int j
  * \param z a reference to a z coordinate
  * \param z a reference to a transformation matrix
  */
-void convert_coord(gdouble &x, gdouble &y, gdouble &z, Matrix const &trans);
+void convert_coord(gdouble &x, gdouble &y, gdouble &z, Geom::Matrix const &trans);
 
 } /* namespace NR */
 

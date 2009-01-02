@@ -26,7 +26,8 @@
 #include "libnr/nr-rect-l.h"
 #include "color.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterSpecularLighting::FilterSpecularLighting()
 {
@@ -51,7 +52,7 @@ FilterSpecularLighting::~FilterSpecularLighting()
 //to get the expected formula
 #define COMPUTE_INTER(inter, H, N, ks, speculaExponent) \
 do {\
-    gdouble scal = scalar_product((N), (H)); \
+    gdouble scal = NR::scalar_product((N), (H)); \
     if (scal <= 0)\
         (inter) = 0;\
     else\
@@ -79,10 +80,10 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
     int dx = 1; //TODO setup
     int dy = 1; //TODO setup
     //surface scale
-    Matrix trans = units.get_matrix_primitiveunits2pb();
+    Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
     gdouble ss = surfaceScale * trans[0];
     gdouble ks = specularConstant; //diffuse lighting constant
-    Fvector L, N, LC, H;
+    NR::Fvector L, N, LC, H;
     gdouble inter;
 
     nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8N,
@@ -98,10 +99,10 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
             DistantLight *dl = new DistantLight(light.distant, lighting_color);
             dl->light_vector(L);
             dl->light_components(LC);
-            normalized_sum(H, L, EYE_VECTOR);
+            NR::normalized_sum(H, L, NR::EYE_VECTOR);
             //finish the work
             for (i = 0, j = 0; i < w*h; i++) {
-                compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
+                NR::compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
                 COMPUTE_INTER(inter, N, H, ks, specularExponent);
 
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
@@ -124,12 +125,12 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
         // pixblock coordinates
             //finish the work
             for (i = 0, j = 0; i < w*h; i++) {
-                compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
+                NR::compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
                 pl->light_vector(L,
                         i % w + x0,
                         i / w + y0,
                         ss * (double) data_i[4*i+3]/ 255);
-                normalized_sum(H, L, EYE_VECTOR);
+                NR::normalized_sum(H, L, NR::EYE_VECTOR);
                 COMPUTE_INTER(inter, N, H, ks, specularExponent);
 
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
@@ -151,13 +152,13 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
         // pixblock coordinates
             //finish the work
             for (i = 0, j = 0; i < w*h; i++) {
-                compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
+                NR::compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
                 sl->light_vector(L,
                     i % w + x0,
                     i / w + y0,
                     ss * (double) data_i[4*i+3]/ 255);
                 sl->light_components(LC, L);
-                normalized_sum(H, L, EYE_VECTOR);
+                NR::normalized_sum(H, L, NR::EYE_VECTOR);
                 COMPUTE_INTER(inter, N, H, ks, specularExponent);
 
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
@@ -191,7 +192,8 @@ FilterTraits FilterSpecularLighting::get_input_traits() {
     return TRAIT_PARALLER;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

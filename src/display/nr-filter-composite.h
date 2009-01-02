@@ -17,7 +17,8 @@
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 class FilterComposite : public FilterPrimitive {
 public:
@@ -39,7 +40,8 @@ private:
     int _input2;
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_COMPOSITE_H__ */
 /*

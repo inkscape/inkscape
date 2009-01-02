@@ -17,7 +17,8 @@
 #include "display/nr-filter-units.h"
 #include<vector>
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 enum FilterColorMatrixType {
     COLORMATRIX_MATRIX,
@@ -44,7 +45,8 @@ private:
     FilterColorMatrixType type;
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_COLOR_MATRIX_H__ */
 /*

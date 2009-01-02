@@ -41,7 +41,7 @@ static void sp_gaussianBlur_release(SPObject *object);
 static void sp_gaussianBlur_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_gaussianBlur_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_gaussianBlur_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_gaussianBlur_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_gaussianBlur_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
 static SPFilterPrimitiveClass *gaussianBlur_parent_class;
 
@@ -186,12 +186,12 @@ void  sp_gaussianBlur_setDeviation(SPGaussianBlur *blur, float num, float optnum
     blur->stdDeviation.setOptNumber(optnum);
 }
 
-static void sp_gaussianBlur_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_gaussianBlur_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     SPGaussianBlur *sp_blur = SP_GAUSSIANBLUR(primitive);
 
-    int handle = filter->add_primitive(NR::NR_FILTER_GAUSSIANBLUR);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(handle);
-    NR::FilterGaussian *nr_blur = dynamic_cast<NR::FilterGaussian*>(nr_primitive);
+    int handle = filter->add_primitive(Inkscape::Filters::NR_FILTER_GAUSSIANBLUR);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(handle);
+    Inkscape::Filters::FilterGaussian *nr_blur = dynamic_cast<Inkscape::Filters::FilterGaussian*>(nr_primitive);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);
 

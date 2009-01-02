@@ -17,7 +17,8 @@
 #include "display/nr-filter-units.h"
 #include <vector>
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 enum FilterComponentTransferType {
     COMPONENTTRANSFER_TYPE_IDENTITY,
@@ -46,7 +47,8 @@ public:
     double offset[4];
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_COMPONENT_TRANSFER_H__ */
 /*

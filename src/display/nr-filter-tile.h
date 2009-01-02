@@ -17,7 +17,8 @@
 #include "display/nr-filter-units.h"
 #include "libnr/nr-rect-l.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 class FilterTile : public FilterPrimitive {
 public:
@@ -30,7 +31,8 @@ public:
     virtual FilterTraits get_input_traits();
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_TILE_H__ */
 /*

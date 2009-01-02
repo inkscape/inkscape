@@ -23,7 +23,8 @@
 #include "filters/spotlight.h"
 #include "color.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
     
 class FilterDiffuseLighting : public FilterPrimitive {
 public:
@@ -46,7 +47,8 @@ public:
 private:
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_DIFFUSELIGHTING_H__ */
 /*

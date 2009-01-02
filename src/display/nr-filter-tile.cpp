@@ -12,7 +12,8 @@
 #include "display/nr-filter-tile.h"
 #include "display/nr-filter-units.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterTile::FilterTile()
 {
@@ -60,7 +61,8 @@ FilterTraits FilterTile::get_input_traits() {
     return TRAIT_PARALLER;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

@@ -40,7 +40,7 @@ static void sp_feBlend_release(SPObject *object);
 static void sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feBlend_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feBlend_build_renderer(SPFilterPrimitive *sp_prim, NR::Filter *filter);
+static void sp_feBlend_build_renderer(SPFilterPrimitive *sp_prim, Inkscape::Filters::Filter *filter);
 
 static SPFilterPrimitiveClass *feBlend_parent_class;
 
@@ -85,7 +85,7 @@ sp_feBlend_class_init(SPFeBlendClass *klass)
 static void
 sp_feBlend_init(SPFeBlend *feBlend)
 {
-    feBlend->in2 = NR::NR_FILTER_SLOT_NOT_SET;
+    feBlend->in2 = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
 }
 
 /**
@@ -115,35 +115,35 @@ sp_feBlend_release(SPObject *object)
         ((SPObjectClass *) feBlend_parent_class)->release(object);
 }
 
-static NR::FilterBlendMode sp_feBlend_readmode(gchar const *value)
+static Inkscape::Filters::FilterBlendMode sp_feBlend_readmode(gchar const *value)
 {
-    if (!value) return NR::BLEND_NORMAL;
+    if (!value) return Inkscape::Filters::BLEND_NORMAL;
     switch (value[0]) {
         case 'n':
             if (strncmp(value, "normal", 6) == 0)
-                return NR::BLEND_NORMAL;
+                return Inkscape::Filters::BLEND_NORMAL;
             break;
         case 'm':
             if (strncmp(value, "multiply", 8) == 0)
-                return NR::BLEND_MULTIPLY;
+                return Inkscape::Filters::BLEND_MULTIPLY;
             break;
         case 's':
             if (strncmp(value, "screen", 6) == 0)
-                return NR::BLEND_SCREEN;
+                return Inkscape::Filters::BLEND_SCREEN;
             break;
         case 'd':
             if (strncmp(value, "darken", 6) == 0)
-                return NR::BLEND_DARKEN;
+                return Inkscape::Filters::BLEND_DARKEN;
             break;
         case 'l':
             if (strncmp(value, "lighten", 7) == 0)
-                return NR::BLEND_LIGHTEN;
+                return Inkscape::Filters::BLEND_LIGHTEN;
             break;
         default:
             // do nothing by default
             break;
     }
-    return NR::BLEND_NORMAL;
+    return Inkscape::Filters::BLEND_NORMAL;
 }
 
 /**
@@ -155,7 +155,7 @@ sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value)
     SPFeBlend *feBlend = SP_FEBLEND(object);
     (void)feBlend;
 
-    NR::FilterBlendMode mode;
+    Inkscape::Filters::FilterBlendMode mode;
     int input;
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
@@ -220,15 +220,15 @@ sp_feBlend_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::
     return repr;
 }
 
-static void sp_feBlend_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feBlend_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeBlend *sp_blend = SP_FEBLEND(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_BLEND);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterBlend *nr_blend = dynamic_cast<NR::FilterBlend*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_BLEND);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterBlend *nr_blend = dynamic_cast<Inkscape::Filters::FilterBlend*>(nr_primitive);
     g_assert(nr_blend != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive);

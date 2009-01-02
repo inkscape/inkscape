@@ -19,7 +19,8 @@
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 class FilterMerge : public FilterPrimitive {
 public:
@@ -36,7 +37,8 @@ private:
     std::vector<int> _input_image;
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_MERGE_H__ */
 /*

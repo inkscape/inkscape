@@ -60,7 +60,7 @@ struct SPFilter : public SPObject {
     SPFilterReference *href;
     sigc::connection modified_connection;
 
-    NR::Filter *_renderer;
+    Inkscape::Filters::Filter *_renderer;
 
     std::map<gchar *, int, ltstr>* _image_name;
     int _image_number_next;
@@ -71,10 +71,10 @@ struct SPFilterClass {
 };
 
 /*
- * Initializes the given NR::Filter object as a renderer for this
+ * Initializes the given Inkscape::Filters::Filter object as a renderer for this
  * SPFilter object.
  */
-void sp_filter_build_renderer(SPFilter *sp_filter, NR::Filter *nr_filter);
+void sp_filter_build_renderer(SPFilter *sp_filter, Inkscape::Filters::Filter *nr_filter);
 
 /*
  * Returns the number of filter primitives in this SPFilter object.

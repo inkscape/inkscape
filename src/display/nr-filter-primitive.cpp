@@ -16,7 +16,8 @@
 #include "libnr/nr-pixblock.h"
 #include "svg/svg-length.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterPrimitive::FilterPrimitive()
 {
@@ -57,7 +58,8 @@ FilterTraits FilterPrimitive::get_input_traits() {
     return TRAIT_ANYTHING;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

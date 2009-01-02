@@ -32,7 +32,8 @@ composite_over(unsigned char *r, unsigned char const *a, unsigned char const *b)
     r[3] = a[3] + NR_NORMALIZE_21(b[3] * (255 - a[3]));
 }
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterMerge::FilterMerge() :
     _input_image(1, NR_FILTER_SLOT_NOT_SET)
@@ -128,7 +129,8 @@ void FilterMerge::set_input(int input, int slot) {
     }
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

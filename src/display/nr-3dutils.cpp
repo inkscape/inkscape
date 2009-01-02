@@ -136,11 +136,11 @@ void compute_surface_normal(Fvector &N, gdouble ss, NRPixBlock *in, int i, int j
     //std::cout << "(" << N[X_3D] << ", " << N[Y_3D] << ", " << N[Z_3D] << ")" << std::endl;
 }
 
-void convert_coord(gdouble &x, gdouble &y, gdouble &z, Matrix const &trans) {
+void convert_coord(gdouble &x, gdouble &y, gdouble &z, Geom::Matrix const &trans) {
     Point p = Point(x, y);
     p *= trans;
-    x = p[X];
-    y = p[Y];
+    x = p[Geom::X];
+    y = p[Geom::Y];
     z *= trans[0];
 }
 

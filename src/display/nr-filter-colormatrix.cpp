@@ -16,7 +16,8 @@
 #include "libnr/nr-blit.h"
 #include <math.h>
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterColorMatrix::FilterColorMatrix()
 {
@@ -210,7 +211,8 @@ void FilterColorMatrix::set_values(std::vector<gdouble> &v){
         values = v;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

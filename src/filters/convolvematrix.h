@@ -29,7 +29,7 @@ struct SPFeConvolveMatrix : public SPFilterPrimitive {
     std::vector<gdouble> kernelMatrix;
     double divisor, bias;
     int targetX, targetY;
-    NR::FilterConvolveMatrixEdgeMode edgeMode;
+    Inkscape::Filters::FilterConvolveMatrixEdgeMode edgeMode;
     NumberOptNumber kernelUnitLength;
     bool preserveAlpha;
     //some helper variables:

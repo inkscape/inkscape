@@ -13,7 +13,8 @@
 #include "display/nr-filter-units.h"
 #include "libnr/nr-blit.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterMorphology::FilterMorphology()
 {
@@ -137,7 +138,8 @@ FilterTraits FilterMorphology::get_input_traits() {
     return TRAIT_PARALLER;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

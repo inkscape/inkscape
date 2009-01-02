@@ -60,7 +60,8 @@ inline static int _min2(const double a, const double b) {
         return (int)round(a);
 }
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterSlot::FilterSlot(int slots, NRArenaItem const *item)
     : _last_out(-1),
@@ -152,7 +153,7 @@ NRPixBlock *FilterSlot::get(int slot_nr)
 
 void FilterSlot::get_final(int slot_nr, NRPixBlock *result) {
     NRPixBlock *final_usr = get(slot_nr);
-    Matrix trans = units.get_matrix_pb2display();
+    Geom::Matrix trans = units.get_matrix_pb2display();
 
     int size = (result->area.x1 - result->area.x0)
         * (result->area.y1 - result->area.y0)
@@ -161,12 +162,12 @@ void FilterSlot::get_final(int slot_nr, NRPixBlock *result) {
 
     if (fabs(trans[1]) > 1e-6 || fabs(trans[2]) > 1e-6) {
         if (filterquality == FILTER_QUALITY_BEST) {
-            transform_bicubic(result, final_usr, trans);
+            NR::transform_bicubic(result, final_usr, trans);
         } else {
-            transform_nearest(result, final_usr, trans);
+            NR::transform_nearest(result, final_usr, trans);
         }
     } else if (fabs(trans[0] - 1) > 1e-6 || fabs(trans[3] - 1) > 1e-6) {
-        scale_bicubic(result, final_usr);
+        NR::scale_bicubic(result, final_usr);
     } else {
         nr_blit_pixblock_pixblock(result, final_usr);
     }
@@ -184,12 +185,12 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
                  ? _get_index(slot_nr)
                  : _get_index(NR_FILTER_UNNAMED_SLOT));
     assert(index >= 0);
-    // Unnamed slot is only for NR::FilterSlot internal use.
+    // Unnamed slot is only for Inkscape::Filters::FilterSlot internal use.
     assert(slot_nr != NR_FILTER_UNNAMED_SLOT);
     assert(slot_nr == NR_FILTER_SLOT_NOT_SET ||_slot_number[index] == slot_nr);
 
     if (slot_nr == NR_FILTER_SOURCEGRAPHIC || slot_nr == NR_FILTER_BACKGROUNDIMAGE) {
-        Matrix trans = units.get_matrix_display2pb();
+        Geom::Matrix trans = units.get_matrix_display2pb();
         if (fabs(trans[1]) > 1e-6 || fabs(trans[2]) > 1e-6) {
             NRPixBlock *trans_pb = new NRPixBlock;
             int x0 = pb->area.x0;
@@ -221,13 +222,13 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
                  * images are exported in horizontal stripes. One stripe
                  * is not too high, but can get thousands of pixels wide.
                  * Rotate this 45 degrees -> _huge_ image */
-                g_warning("Memory allocation failed in NR::FilterSlot::set (transform)");
+                g_warning("Memory allocation failed in Inkscape::Filters::FilterSlot::set (transform)");
                 return;
             }
             if (filterquality == FILTER_QUALITY_BEST) {
-                transform_bicubic(trans_pb, pb, trans);
+                NR::transform_bicubic(trans_pb, pb, trans);
             } else {
-                transform_nearest(trans_pb, pb, trans);
+                NR::transform_nearest(trans_pb, pb, trans);
             }
             nr_pixblock_release(pb);
             delete pb;
@@ -251,10 +252,10 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
             nr_pixblock_setup_fast(trans_pb, pb->mode,
                                    min_x, min_y, max_x, max_y, true);
             if (trans_pb->size != NR_PIXBLOCK_SIZE_TINY && trans_pb->data.px == NULL) {
-                g_warning("Memory allocation failed in NR::FilterSlot::set (scaling)");
+                g_warning("Memory allocation failed in Inkscape::Filters::FilterSlot::set (scaling)");
                 return;
             }
-            scale_bicubic(trans_pb, pb);
+            NR::scale_bicubic(trans_pb, pb);
             nr_pixblock_release(pb);
             delete pb;
             pb = trans_pb;
@@ -347,7 +348,8 @@ void FilterSlot::set_quality(FilterQuality const q) {
     filterquality = q;
 }
 
-}
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

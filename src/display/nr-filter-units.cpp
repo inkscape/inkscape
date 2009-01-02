@@ -16,7 +16,11 @@
 #include "sp-filter-units.h"
 #include <2geom/transforms.h>
 
-namespace NR {
+using Geom::X;
+using Geom::Y;
+
+namespace Inkscape {
+namespace Filters {
 
 FilterUnits::FilterUnits() :
     filterUnits(SP_FILTER_UNITS_OBJECTBOUNDINGBOX),
@@ -101,7 +105,7 @@ Geom::Matrix FilterUnits::get_matrix_units2pb(SPFilterUnits units) const {
     } else if (units == SP_FILTER_UNITS_USERSPACEONUSE) {
         return get_matrix_user2pb();
     } else {
-        g_warning("Error in NR::FilterUnits::get_matrix_units2pb: unrecognized unit type (%d)", units);
+        g_warning("Error in Inkscape::Filters::FilterUnits::get_matrix_units2pb: unrecognized unit type (%d)", units);
         return Geom::Matrix();
     }
 }
@@ -130,8 +134,8 @@ Geom::Matrix FilterUnits::get_matrix_user2units(SPFilterUnits units) const {
     if (item_bbox && units == SP_FILTER_UNITS_OBJECTBOUNDINGBOX) {
         /* No need to worry about rotations: bounding box coordinates
          * always have base vectors paraller with userspace coordinates */
-        Point min(item_bbox->min());
-        Point max(item_bbox->max());
+        Geom::Point min(item_bbox->min());
+        Geom::Point max(item_bbox->max());
         double scale_x = 1.0 / (max[X] - min[X]);
         double scale_y = 1.0 / (max[Y] - min[Y]);
         //return Geom::Translate(min) * Geom::Scale(scale_x,scale_y); ?
@@ -141,7 +145,7 @@ Geom::Matrix FilterUnits::get_matrix_user2units(SPFilterUnits units) const {
     } else if (units == SP_FILTER_UNITS_USERSPACEONUSE) {
         return Geom::identity();
     } else {
-        g_warning("Error in NR::FilterUnits::get_matrix_user2units: unrecognized unit type (%d)", units);
+        g_warning("Error in Inkscape::Filters::FilterUnits::get_matrix_user2units: unrecognized unit type (%d)", units);
         return Geom::Matrix();
     }
 }
@@ -154,7 +158,7 @@ Geom::Matrix FilterUnits::get_matrix_user2primitiveunits() const {
     return get_matrix_user2units(primitiveUnits);
 }
 
-IRect FilterUnits::get_pixblock_filterarea_paraller() const {
+NR::IRect FilterUnits::get_pixblock_filterarea_paraller() const {
     g_assert(filter_area);
 
     int min_x = INT_MAX, min_y = INT_MAX, max_x = INT_MIN, max_y = INT_MIN;
@@ -168,7 +172,7 @@ IRect FilterUnits::get_pixblock_filterarea_paraller() const {
         if (p[Y] < min_y) min_y = (int)std::floor(p[Y]);
         if (p[Y] > max_y) max_y = (int)std::ceil(p[Y]);
     }
-    IRect ret(IPoint(min_x, min_y), IPoint(max_x, max_y));
+    NR::IRect ret(NR::IPoint(min_x, min_y), NR::IPoint(max_x, max_y));
     return ret;
 }
 
@@ -185,7 +189,8 @@ FilterUnits& FilterUnits::operator=(FilterUnits const &other) {
     return *this;
 }
 
-} // namespace NR
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 
 /*

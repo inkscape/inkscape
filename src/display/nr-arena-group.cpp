@@ -201,7 +201,7 @@ void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
     if (style->filter.set && style->getFilter()) {
         if (!group->filter) {
             int primitives = sp_filter_primitive_count(SP_FILTER(style->getFilter()));
-            group->filter = new NR::Filter(primitives);
+            group->filter = new Inkscape::Filters::Filter(primitives);
         }
         sp_filter_build_renderer(SP_FILTER(style->getFilter()), group->filter);
     } else {

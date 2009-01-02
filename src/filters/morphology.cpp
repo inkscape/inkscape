@@ -36,7 +36,7 @@ static void sp_feMorphology_release(SPObject *object);
 static void sp_feMorphology_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feMorphology_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feMorphology_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static void sp_feMorphology_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter);
+static void sp_feMorphology_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
 static SPFilterPrimitiveClass *feMorphology_parent_class;
 
@@ -111,17 +111,17 @@ sp_feMorphology_release(SPObject *object)
         ((SPObjectClass *) feMorphology_parent_class)->release(object);
 }
 
-static NR::FilterMorphologyOperator sp_feMorphology_read_operator(gchar const *value){
-    if (!value) return NR::MORPHOLOGY_OPERATOR_ERODE; //erode is default
+static Inkscape::Filters::FilterMorphologyOperator sp_feMorphology_read_operator(gchar const *value){
+    if (!value) return Inkscape::Filters::MORPHOLOGY_OPERATOR_ERODE; //erode is default
     switch(value[0]){
         case 'e':
-            if (strncmp(value, "erode", 5) == 0) return NR::MORPHOLOGY_OPERATOR_ERODE;
+            if (strncmp(value, "erode", 5) == 0) return Inkscape::Filters::MORPHOLOGY_OPERATOR_ERODE;
             break;
         case 'd':
-            if (strncmp(value, "dilate", 6) == 0) return NR::MORPHOLOGY_OPERATOR_DILATE;
+            if (strncmp(value, "dilate", 6) == 0) return Inkscape::Filters::MORPHOLOGY_OPERATOR_DILATE;
             break;
     }
-    return NR::MORPHOLOGY_OPERATOR_ERODE; //erode is default
+    return Inkscape::Filters::MORPHOLOGY_OPERATOR_ERODE; //erode is default
 }
 
 /**
@@ -133,7 +133,7 @@ sp_feMorphology_set(SPObject *object, unsigned int key, gchar const *value)
     SPFeMorphology *feMorphology = SP_FEMORPHOLOGY(object);
     (void)feMorphology;
     
-    NR::FilterMorphologyOperator read_operator;
+    Inkscape::Filters::FilterMorphologyOperator read_operator;
     switch(key) {
     /*DEAL WITH SETTING ATTRIBUTES HERE*/
         case SP_ATTR_OPERATOR:
@@ -199,15 +199,15 @@ sp_feMorphology_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::
     return repr;
 }
 
-static void sp_feMorphology_build_renderer(SPFilterPrimitive *primitive, NR::Filter *filter) {
+static void sp_feMorphology_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter) {
     g_assert(primitive != NULL);
     g_assert(filter != NULL);
 
     SPFeMorphology *sp_morphology = SP_FEMORPHOLOGY(primitive);
 
-    int primitive_n = filter->add_primitive(NR::NR_FILTER_MORPHOLOGY);
-    NR::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
-    NR::FilterMorphology *nr_morphology = dynamic_cast<NR::FilterMorphology*>(nr_primitive);
+    int primitive_n = filter->add_primitive(Inkscape::Filters::NR_FILTER_MORPHOLOGY);
+    Inkscape::Filters::FilterPrimitive *nr_primitive = filter->get_primitive(primitive_n);
+    Inkscape::Filters::FilterMorphology *nr_morphology = dynamic_cast<Inkscape::Filters::FilterMorphology*>(nr_primitive);
     g_assert(nr_morphology != NULL);
 
     sp_filter_primitive_renderer_common(primitive, nr_primitive); 

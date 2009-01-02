@@ -26,7 +26,8 @@
 #include "display/nr-filter-units.h"
 #include "libnr/nr-pixblock.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterSkeleton::FilterSkeleton() 
 {}
@@ -51,7 +52,8 @@ int FilterSkeleton::render(FilterSlot &slot,
     return 0;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

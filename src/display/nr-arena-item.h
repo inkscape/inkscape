@@ -99,7 +99,7 @@ struct NRArenaItem : public NRObject {
     /* Mask item */
     NRArenaItem *mask;
     /* Filter to be applied after rendering this object, NULL if none */
-    NR::Filter *filter;
+    Inkscape::Filters::Filter *filter;
     /* Rendered buffer */
     unsigned char *px;
 

@@ -23,7 +23,7 @@ class SPFeColorMatrixClass;
 
 struct SPFeColorMatrix : public SPFilterPrimitive {
     /** COLORMATRIX ATTRIBUTES HERE */
-    NR::FilterColorMatrixType type;
+    Inkscape::Filters::FilterColorMatrixType type;
     gdouble value;
     std::vector<gdouble> values;
 };

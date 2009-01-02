@@ -73,21 +73,23 @@ static int arith_k1, arith_k2, arith_k3, arith_k4;
 inline void
 composite_arithmetic(unsigned char *r, unsigned char const *a, unsigned char const *b)
 {
-    r[0] = NR_NORMALIZE_31(NR::clamp3(arith_k1 * a[0] * b[0]
+    using Inkscape::Filters::clamp3;
+    r[0] = NR_NORMALIZE_31(clamp3(arith_k1 * a[0] * b[0]
                  + arith_k2 * a[0] + arith_k3 * b[0] + arith_k4));
-    r[1] = NR_NORMALIZE_31(NR::clamp3(arith_k1 * a[1] * b[1]
+    r[1] = NR_NORMALIZE_31(clamp3(arith_k1 * a[1] * b[1]
                  + arith_k2 * a[1] + arith_k3 * b[1] + arith_k4));
-    r[2] = NR_NORMALIZE_31(NR::clamp3(arith_k1 * a[2] * b[2]
+    r[2] = NR_NORMALIZE_31(clamp3(arith_k1 * a[2] * b[2]
                  + arith_k2 * a[2] + arith_k3 * b[2] + arith_k4));
-    r[3] = NR_NORMALIZE_31(NR::clamp3(arith_k1 * a[3] * b[3]
+    r[3] = NR_NORMALIZE_31(clamp3(arith_k1 * a[3] * b[3]
                  + arith_k2 * a[3] + arith_k3 * b[3] + arith_k4));
 }
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 FilterComposite::FilterComposite() :
     op(COMPOSITE_DEFAULT), k1(0), k2(0), k3(0), k4(0),
-    _input2(NR::NR_FILTER_SLOT_NOT_SET)
+    _input2(Inkscape::Filters::NR_FILTER_SLOT_NOT_SET)
 {}
 
 FilterPrimitive * FilterComposite::create() {
@@ -216,7 +218,8 @@ void FilterComposite::set_arithmetic(double k1, double k2, double k3, double k4)
     this->k4 = k4;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

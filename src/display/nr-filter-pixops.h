@@ -16,7 +16,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 /**
  * Mixes the two input images using the function given as template.
@@ -135,7 +136,8 @@ void pixops_mix(NRPixBlock &out, NRPixBlock &in1, NRPixBlock &in2) {
     }
 }
 
-} // namespace NR
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif // __NR_FILTER_PIXOPS_H_
 /*

@@ -18,8 +18,10 @@
 #include "sp-filter.h"
 #include "specularlighting-fns.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 class FilterSpecularLighting;
+}
 }
 
 /* FeSpecularLighting base class */
@@ -42,7 +44,7 @@ struct SPFeSpecularLighting : public SPFilterPrimitive {
     guint32 lighting_color;
     guint lighting_color_set : 1;
 
-    NR::FilterSpecularLighting *renderer;
+    Inkscape::Filters::FilterSpecularLighting *renderer;
 };
 
 struct SPFeSpecularLightingClass {

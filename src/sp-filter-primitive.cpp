@@ -83,8 +83,8 @@ sp_filter_primitive_class_init(SPFilterPrimitiveClass *klass)
 static void
 sp_filter_primitive_init(SPFilterPrimitive *filter_primitive)
 {
-    filter_primitive->image_in = NR::NR_FILTER_SLOT_NOT_SET;
-    filter_primitive->image_out = NR::NR_FILTER_SLOT_NOT_SET;
+    filter_primitive->image_in = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
+    filter_primitive->image_out = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
 }
 
 /**
@@ -129,7 +129,7 @@ sp_filter_primitive_set(SPObject *object, unsigned int key, gchar const *value)
             if (value) {
                 image_nr = sp_filter_primitive_read_in(filter_primitive, value);
             } else {
-                image_nr = NR::NR_FILTER_SLOT_NOT_SET;
+                image_nr = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
             }
             if (image_nr != filter_primitive->image_in) {
                 filter_primitive->image_in = image_nr;
@@ -140,7 +140,7 @@ sp_filter_primitive_set(SPObject *object, unsigned int key, gchar const *value)
             if (value) {
                 image_nr = sp_filter_primitive_read_result(filter_primitive, value);
             } else {
-                image_nr = NR::NR_FILTER_SLOT_NOT_SET;
+                image_nr = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
             }
             if (image_nr != filter_primitive->image_out) {
                 filter_primitive->image_out = image_nr;
@@ -200,26 +200,26 @@ sp_filter_primitive_write(SPObject *object, Inkscape::XML::Document *doc, Inksca
 
 int sp_filter_primitive_read_in(SPFilterPrimitive *prim, gchar const *name)
 {
-    if (!name) return NR::NR_FILTER_SLOT_NOT_SET;
+    if (!name) return Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
     // TODO: are these case sensitive or not? (assumed yes)
     switch (name[0]) {
         case 'S':
             if (strcmp(name, "SourceGraphic") == 0)
-                return NR::NR_FILTER_SOURCEGRAPHIC;
+                return Inkscape::Filters::NR_FILTER_SOURCEGRAPHIC;
             if (strcmp(name, "SourceAlpha") == 0)
-                return NR::NR_FILTER_SOURCEALPHA;
+                return Inkscape::Filters::NR_FILTER_SOURCEALPHA;
             if (strcmp(name, "StrokePaint") == 0)
-                return NR::NR_FILTER_STROKEPAINT;
+                return Inkscape::Filters::NR_FILTER_STROKEPAINT;
             break;
         case 'B':
             if (strcmp(name, "BackgroundImage") == 0)
-                return NR::NR_FILTER_BACKGROUNDIMAGE;
+                return Inkscape::Filters::NR_FILTER_BACKGROUNDIMAGE;
             if (strcmp(name, "BackgroundAlpha") == 0)
-                return NR::NR_FILTER_BACKGROUNDALPHA;
+                return Inkscape::Filters::NR_FILTER_BACKGROUNDALPHA;
             break;
         case 'F':
             if (strcmp(name, "FillPaint") == 0)
-                return NR::NR_FILTER_FILLPAINT;
+                return Inkscape::Filters::NR_FILTER_FILLPAINT;
             break;
     }
 
@@ -227,7 +227,7 @@ int sp_filter_primitive_read_in(SPFilterPrimitive *prim, gchar const *name)
     int ret = sp_filter_get_image_name(parent, name);
     if (ret >= 0) return ret;
 
-    return NR::NR_FILTER_SLOT_NOT_SET;
+    return Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
 }
 
 int sp_filter_primitive_read_result(SPFilterPrimitive *prim, gchar const *name)
@@ -239,11 +239,11 @@ int sp_filter_primitive_read_result(SPFilterPrimitive *prim, gchar const *name)
     ret = sp_filter_set_image_name(parent, name);
     if (ret >= 0) return ret;
 
-    return NR::NR_FILTER_SLOT_NOT_SET;
+    return Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
 }
 
 /* Common initialization for filter primitives */
-void sp_filter_primitive_renderer_common(SPFilterPrimitive *sp_prim, NR::FilterPrimitive *nr_prim)
+void sp_filter_primitive_renderer_common(SPFilterPrimitive *sp_prim, Inkscape::Filters::FilterPrimitive *nr_prim)
 {
     g_assert(sp_prim != NULL);
     g_assert(nr_prim != NULL);

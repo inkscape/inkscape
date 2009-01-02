@@ -13,7 +13,8 @@
 #include "libnr/nr-blit.h"
 #include "libnr/nr-pixblock.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 NRPixBlock *filter_get_alpha(NRPixBlock *src)
 {
@@ -40,7 +41,8 @@ NRPixBlock *filter_get_alpha(NRPixBlock *src)
     return dst;
 }
 
-} // namespace NR
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

@@ -17,7 +17,8 @@
 #include "display/nr-filter-units.h"
 #include "libnr/nr-rect-l.h"
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
 
 class FilterOffset : public FilterPrimitive {
 public:
@@ -35,7 +36,8 @@ private:
     double dx, dy;
 };
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 #endif /* __NR_FILTER_OFFSET_H__ */
 /*

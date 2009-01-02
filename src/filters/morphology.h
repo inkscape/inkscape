@@ -25,7 +25,7 @@ class SPFeMorphologyClass;
 
 struct SPFeMorphology : public SPFilterPrimitive {
     /** MORPHOLOGY ATTRIBUTES HERE */
-    NR::FilterMorphologyOperator Operator;
+    Inkscape::Filters::FilterMorphologyOperator Operator;
     NumberOptNumber radius;
 };
 

@@ -53,7 +53,11 @@
 using Inkscape::round;
 #endif 
 
-namespace NR {
+namespace Inkscape {
+namespace Filters {
+
+using Geom::X;
+using Geom::Y;
 
 static Geom::OptRect get_item_bbox(NRArenaItem const *item) {
     Geom::Rect item_bbox;
@@ -184,7 +188,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     nr_pixblock_setup_fast(in, pb->mode, pb->area.x0, pb->area.y0,
                            pb->area.x1, pb->area.y1, true);
     if (in->size != NR_PIXBLOCK_SIZE_TINY && in->data.px == NULL) {
-        g_warning("NR::Filter::render: failed to reserve temporary buffer");
+        g_warning("Inkscape::Filters::Filter::render: failed to reserve temporary buffer");
         return 0;
     }
     nr_blit_pixblock_pixblock(in, pb);
@@ -195,7 +199,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     in = slot.get(NR_FILTER_SOURCEGRAPHIC);
     if (in->area.x1 - in->area.x0 <= 0 || in->area.y1 - in->area.y0 <= 0) {
         if (in->area.x1 - in->area.x0 < 0 || in->area.y1 - in->area.y0 < 0) {
-            g_warning("NR::Filter::render: negative area! (%d, %d) (%d, %d)",
+            g_warning("Inkscape::Filters::Filter::render: negative area! (%d, %d) (%d, %d)",
                       in->area.x0, in->area.y0, in->area.x1, in->area.y1);
         }
         return 0;
@@ -265,10 +269,10 @@ void Filter::bbox_enlarge(NRRectL &bbox) {
 
     Geom::Rect enlarged = filter_effect_area(tmp_bbox);
 
-    bbox.x0 = (ICoord)enlarged.min()[X];
-    bbox.y0 = (ICoord)enlarged.min()[Y];
-    bbox.x1 = (ICoord)enlarged.max()[X];
-    bbox.y1 = (ICoord)enlarged.max()[Y];
+    bbox.x0 = (NR::ICoord)enlarged.min()[X];
+    bbox.y0 = (NR::ICoord)enlarged.min()[Y];
+    bbox.x1 = (NR::ICoord)enlarged.max()[X];
+    bbox.y1 = (NR::ICoord)enlarged.max()[Y];
 }
 
 Geom::Rect Filter::filter_effect_area(Geom::Rect const &bbox)
@@ -310,7 +314,7 @@ Geom::Rect Filter::filter_effect_area(Geom::Rect const &bbox)
         minp[Y] = _region_y.computed;
         maxp[Y] = minp[Y] + _region_height.computed;
     } else {
-        g_warning("Error in NR::Filter::bbox_enlarge: unrecognized value of _filter_units");
+        g_warning("Error in Inkscape::Filters::Filter::bbox_enlarge: unrecognized value of _filter_units");
     }
     Geom::Rect area(minp, maxp);
     return area;
@@ -319,7 +323,7 @@ Geom::Rect Filter::filter_effect_area(Geom::Rect const &bbox)
 /* Constructor table holds pointers to static methods returning filter
  * primitives. This table is indexed with FilterPrimitiveType, so that
  * for example method in _constructor[NR_FILTER_GAUSSIANBLUR]
- * returns a filter object of type NR::FilterGaussian.
+ * returns a filter object of type Inkscape::Filters::FilterGaussian.
  */
 typedef FilterPrimitive*(*FilterConstructor)();
 static FilterConstructor _constructor[NR_FILTER_ENDPRIMITIVETYPE];
@@ -531,7 +535,8 @@ std::pair<double,double> Filter::_filter_resolution(
     return resolution;
 }
 
-} /* namespace NR */
+} /* namespace Filters */
+} /* namespace Inkscape */
 
 /*
   Local Variables:

@@ -59,7 +59,7 @@ const Glib::ustring SimpleFilterModifier::get_blend_mode()
     if (_blend.get_active_row_number() == 5) {
         return "filter";
     } else {
-        const Util::EnumData<NR::FilterBlendMode> *d = _blend.get_active_data();
+        const Util::EnumData<Inkscape::Filters::FilterBlendMode> *d = _blend.get_active_data();
         if (d)
             return _blend.get_active_data()->key;
         else

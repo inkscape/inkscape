@@ -28,7 +28,7 @@ struct SPFeTurbulence : public SPFilterPrimitive {
     int numOctaves;
     double seed;
     bool stitchTiles;
-    NR::FilterTurbulenceType type;
+    Inkscape::Filters::FilterTurbulenceType type;
     SVGLength x, y, height, width;
     bool updated;
 };
