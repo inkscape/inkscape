@@ -29,14 +29,14 @@ public:
 	static void init (void) {
 		Inkscape::Extension::build_from_mem(
 			"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-				"<name>" N_("Snow") "</name>\n"
+				"<name>" N_("Snow crest") "</name>\n"
 				"<id>org.inkscape.effect.filter.snow</id>\n"
 				"<param name=\"drift\" gui-text=\"" N_("Drift Size") "\" type=\"float\" min=\"0.0\" max=\"20.0\">3.5</param>\n"
 				"<effect>\n"
 					"<object-type>all</object-type>\n"
 					"<effects-menu>\n"
 						"<submenu name=\"" N_("Filters") "\">\n"
-   						"<submenu name=\"Shadows and Glows\"/>\n"
+   						"<submenu name=\"Imitations\"/>\n"
 			      "</submenu>\n"
 					"</effects-menu>\n"
 					"<menu-tip>" N_("Snow has fallen on object") "</menu-tip>\n"
@@ -54,7 +54,7 @@ Snow::get_filter_text (Inkscape::Extension::Extension * ext)
 	float drift = ext->get_param_float("drift");
 
 	_filter = g_strdup_printf(
-				"<filter>\n"
+				"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Snow\">\n"
 					"<feConvolveMatrix order=\"3 3\" kernelMatrix=\"1 1 1 0 0 0 -1 -1 -1\" preserveAlpha=\"false\" divisor=\"3\"/>\n"
 					"<feMorphology operator=\"dilate\" radius=\"1 %f\"/>\n"
 					"<feGaussianBlur stdDeviation=\"1.6270889487870621\" result=\"result0\"/>\n"

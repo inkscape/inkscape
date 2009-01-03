@@ -63,7 +63,7 @@ DropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
 	float y = ext->get_param_float("yoffset");
 
 	_filter = g_strdup_printf(
-		"<filter width=\"1.5\" height=\"1.5\" x=\"-.25\" y=\"-.25\">\n"
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Drop shadow\" width=\"1.5\" height=\"1.5\" x=\"-.25\" y=\"-.25\">\n"
 			"<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%f\" result=\"blur\"/>\n"
                         "<feColorMatrix result=\"bluralpha\" type=\"matrix\" values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 %f 0 \" />\n"
 			"<feOffset in=\"bluralpha\" dx=\"%f\" dy=\"%f\" result=\"offsetBlur\"/>\n"
@@ -118,7 +118,7 @@ DropGlow::get_filter_text (Inkscape::Extension::Extension * ext)
 	float y = ext->get_param_float("yoffset");
 
 	_filter = g_strdup_printf(
-		"<filter width=\"1.5\" height=\"1.5\" x=\"-.25\" y=\"-.25\">\n"
+		"<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" inkscape:label=\"Drop shadow\" width=\"1.5\" height=\"1.5\" x=\"-.25\" y=\"-.25\">\n"
 			"<feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"%f\" result=\"blur\"/>\n"
                         "<feColorMatrix result=\"bluralpha\" type=\"matrix\" values=\"-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 %f 0 \" />\n"
 			"<feOffset in=\"bluralpha\" dx=\"%f\" dy=\"%f\" result=\"offsetBlur\"/>\n"
