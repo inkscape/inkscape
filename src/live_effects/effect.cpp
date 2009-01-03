@@ -8,6 +8,10 @@
 
 #include "live_effects/effect.h"
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include "xml/node-event-vector.h"
 #include "sp-object.h"
 #include "attributes.h"
@@ -67,8 +71,6 @@
 #include "live_effects/lpe-text_label.h"
 #include "live_effects/lpe-path_length.h"
 #include "live_effects/lpe-line_segment.h"
-
-//#define LPE_ENABLE_TEST_EFFECTS
 
 namespace Inkscape {
 
