@@ -50,8 +50,12 @@ vect_intersect(vector<double> const &a, vector<double> const &b, double tol=0.){
     return inter;
 }
 
+//------------------------------------------------------------------------------
 static SBasis divide_by_sk(SBasis const &a, int k) {
-    assert( k<(int)a.size());
+    if ( k>=(int)a.size()){
+        //make sure a is 0?
+        return SBasis();
+    }
     if(k < 0) return shift(a,-k);
     SBasis c;
     c.insert(c.begin(), a.begin()+k, a.end());
@@ -77,24 +81,41 @@ static SBasis divide_by_t0k(SBasis const &a, int k) {
 }
 
 static SBasis divide_by_t1k(SBasis const &a, int k) {
-    return divide_by_t0k(a, -k);
+    if(k < 0) {
+        SBasis c = Linear(1,0);
+        for (int i=2; i<=-k; i++){
+            c*=c;
+        }
+        c*=a;
+        return(c);
+    }else{
+        SBasis c = Linear(0,1);
+        for (int i=2; i<=k; i++){
+            c*=c;
+        }
+        c*=a;
+        return(divide_by_sk(c,k));
+    }
 }
 
 static D2<SBasis> RescaleForNonVanishingEnds(D2<SBasis> const &MM, double ZERO=1.e-4){
     D2<SBasis> M = MM;
     //TODO: divide by all the s at once!!!
-    while (fabs(M[0].at0())<ZERO && 
+    while ((M[0].size()>0||M[1].size()>0) &&
+           fabs(M[0].at0())<ZERO && 
            fabs(M[1].at0())<ZERO &&
            fabs(M[0].at1())<ZERO && 
            fabs(M[1].at1())<ZERO){
         M[0] = divide_by_sk(M[0],1);
         M[1] = divide_by_sk(M[1],1);
     }
-    while (fabs(M[0].at0())<ZERO && fabs(M[1].at0())<ZERO){
+    while ((M[0].size()>0||M[1].size()>0) &&
+           fabs(M[0].at0())<ZERO && fabs(M[1].at0())<ZERO){
         M[0] = divide_by_t0k(M[0],1);
         M[1] = divide_by_t0k(M[1],1);
     }
-    while (fabs(M[0].at1())<ZERO && fabs(M[1].at1())<ZERO){
+    while ((M[0].size()>0||M[1].size()>0) && 
+           fabs(M[0].at1())<ZERO && fabs(M[1].at1())<ZERO){
         M[0] = divide_by_t1k(M[0],1);
         M[1] = divide_by_t1k(M[1],1);
     }
@@ -135,7 +156,7 @@ Geom::cutAtRoots(Piecewise<D2<SBasis> > const &M, double ZERO){
 Piecewise<SBasis>
 Geom::atan2(Piecewise<D2<SBasis> > const &vect, double tol, unsigned order){
     Piecewise<SBasis> result;
-    Piecewise<D2<SBasis> > v = cutAtRoots(vect);
+    Piecewise<D2<SBasis> > v = cutAtRoots(vect,tol);
     result.cuts.push_back(v.cuts.front());
     for (unsigned i=0; i<v.size(); i++){
 
@@ -200,7 +221,11 @@ unitVector(x,y) is computed as (b,-a) where a and b are solutions of:
 */
 Piecewise<D2<SBasis> >
 Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
+    //TODO: Handle vanishing vectors...
+    // -This approach is numerically bad. Find a stable way to rescale V_in to have non vanishing ends.
+    // -This done, unitVector will have jumps at zeros: fill the gaps with arcs of circles.
     D2<SBasis> V = RescaleForNonVanishingEnds(V_in);
+
     if (V[0].empty() && V[1].empty())
         return Piecewise<D2<SBasis> >(D2<SBasis>(Linear(1),SBasis()));
     SBasis x = V[0], y = V[1];
@@ -208,9 +233,9 @@ Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
 
     Point v0 = unit_vector(V.at0());
     Point v1 = unit_vector(V.at1());
-    SBasis a(order+1, Linear());
+    SBasis a = SBasis(order+1, Linear(0.));
     a[0] = Linear(-v0[1],-v1[1]);
-    SBasis b(order+1, Linear());
+    SBasis b = SBasis(order+1, Linear(0.));
     b[0] = Linear( v0[0], v1[0]);
 
     r_eqn1 = -(a*x+b*y);
@@ -227,13 +252,14 @@ Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
         // a0*x(0)+b0*y(0)=r0 & 2*a0*a(0)+2*b0*b(0)=rr0
         //and
         // a1*x(1)+b1*y(1)=r1 & 2*a1*a(1)+2*b1*b(1)=rr1
-        a0 = r0/dot(v0,V(0))*v0[0]-rr0/2*v0[1];
-        b0 = r0/dot(v0,V(0))*v0[1]+rr0/2*v0[0];
-        a1 = r1/dot(v1,V(1))*v1[0]-rr1/2*v1[1];
-        b1 = r1/dot(v1,V(1))*v1[1]+rr1/2*v1[0];
+        a0 = r0/dot(v0,V.at0())*v0[0]-rr0/2*v0[1];
+        b0 = r0/dot(v0,V.at0())*v0[1]+rr0/2*v0[0];
+        a1 = r1/dot(v1,V.at1())*v1[0]-rr1/2*v1[1];
+        b1 = r1/dot(v1,V.at1())*v1[1]+rr1/2*v1[0];
 
         a[k] = Linear(a0,a1);
         b[k] = Linear(b0,b1);
+
         //TODO: use "incremental" rather than explicit formulas.
         r_eqn1 = -(a*x+b*y);
         r_eqn2 = Linear(1)-(a*a+b*b);
@@ -246,7 +272,6 @@ Geom::unitVector(D2<SBasis> const &V_in, double tol, unsigned order){
 
     //is it good?
     double rel_tol = std::max(1.,std::max(V_in[0].tailError(0),V_in[1].tailError(0)))*tol;
-
     if (r_eqn1.tailError(order)>rel_tol || r_eqn2.tailError(order)>tol){
         //if not: subdivide and concat results.
         Piecewise<D2<SBasis> > unitV0, unitV1;
