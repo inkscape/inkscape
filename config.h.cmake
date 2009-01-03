@@ -287,6 +287,9 @@
    first (like Motorola and SPARC, unlike Intel and VAX). */
 #cmakedefine WORDS_BIGENDIAN 1
 
+/* Do we want experimental, unsupported, unguaranteed, etc., LivePathEffects enabled? */
+#cmakedefine LPE_ENABLE_TEST_EFFECTS 1
+
 /* Define to `int' if <sys/types.h> does not define. */
 #cmakedefine mode_t
 

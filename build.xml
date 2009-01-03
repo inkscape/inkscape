@@ -176,6 +176,9 @@
         /* Do we support SVG Fonts? */
         #define ENABLE_SVG_FONTS              1
 
+        /* Do we want experimental, unsupported, unguaranteed, etc., LivePathEffects enabled? */
+        // #define LPE_ENABLE_TEST_EFFECTS    1
+
         #endif /* _CONFIG_H_ */
     </makefile>
   </target>
