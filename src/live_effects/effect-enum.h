@@ -48,6 +48,7 @@ enum EffectType {
     LINE_SEGMENT,
 #ifdef LPE_ENABLE_TEST_EFFECTS
     DOEFFECTSTACK_TEST,
+    DYNASTROKE,
 #endif
     INVALID_LPE // This must be last
 };

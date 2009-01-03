@@ -25,5 +25,6 @@ lpe-spiro.cpp
 lpe-tangent_to_curve.cpp
 lpe-test-doEffect-stack.cpp
 lpe-vonkoch.cpp
+lpe-dynastroke.cpp
 spiro.cpp
 )

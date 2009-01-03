@@ -43,6 +43,7 @@
 #include "live_effects/lpe-vonkoch.h"
 #include "live_effects/lpe-knot.h"
 #include "live_effects/lpe-rough-hatches.h"
+#include "live_effects/lpe-dynastroke.h"
 #include "live_effects/lpe-test-doEffect-stack.h"
 #include "live_effects/lpe-gears.h"
 #include "live_effects/lpe-curvestitch.h"
@@ -66,6 +67,7 @@
 #include "live_effects/lpe-text_label.h"
 #include "live_effects/lpe-path_length.h"
 #include "live_effects/lpe-line_segment.h"
+
 // end of includes
 
 namespace Inkscape {
@@ -76,6 +78,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     // {constant defined in effect-enum.h, N_("name of your effect"), "name of your effect in SVG"}
 #ifdef LPE_ENABLE_TEST_EFFECTS
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),     "doeffectstacktest"},
+    {DYNASTROKE,            N_("Dynamic stroke"),          "dynastroke"},
 #endif
     {ANGLE_BISECTOR,        N_("Angle bisector"),          "angle_bisector"},
     {BEND_PATH,             N_("Bend"),                     "bend_path"},
@@ -217,6 +220,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
 #ifdef LPE_ENABLE_TEST_EFFECTS
         case DOEFFECTSTACK_TEST:
             neweffect = static_cast<Effect*> ( new LPEdoEffectStackTest(lpeobj) );
+            break;
+        case DYNASTROKE:
+            neweffect = static_cast<Effect*> ( new LPEDynastroke(lpeobj) );
             break;
 #endif
         default:
