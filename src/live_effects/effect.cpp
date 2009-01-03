@@ -68,7 +68,7 @@
 #include "live_effects/lpe-path_length.h"
 #include "live_effects/lpe-line_segment.h"
 
-// end of includes
+//#define LPE_ENABLE_TEST_EFFECTS
 
 namespace Inkscape {
 
@@ -217,14 +217,12 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
         case LINE_SEGMENT:
             neweffect = static_cast<Effect*> ( new LPELineSegment(lpeobj) );
             break;
-#ifdef LPE_ENABLE_TEST_EFFECTS
         case DOEFFECTSTACK_TEST:
             neweffect = static_cast<Effect*> ( new LPEdoEffectStackTest(lpeobj) );
             break;
         case DYNASTROKE:
             neweffect = static_cast<Effect*> ( new LPEDynastroke(lpeobj) );
             break;
-#endif
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
             neweffect = NULL;

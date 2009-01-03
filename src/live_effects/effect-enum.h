@@ -11,8 +11,6 @@
 
 #include "util/enums.h"
 
-//#define LPE_ENABLE_TEST_EFFECTS
-
 namespace Inkscape {
 namespace LivePathEffect {
 
@@ -46,11 +44,9 @@ enum EffectType {
     TEXT_LABEL,
     PATH_LENGTH,
     LINE_SEGMENT,
-#ifdef LPE_ENABLE_TEST_EFFECTS
     DOEFFECTSTACK_TEST,
     DYNASTROKE,
-#endif
-    INVALID_LPE // This must be last
+    INVALID_LPE // This must be last (I made it such that it is not needed anymore I think..., Don't trust on it being last. - johan)
 };
 
 extern const Util::EnumData<EffectType> LPETypeData[];  /// defined in effect.cpp
