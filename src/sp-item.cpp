@@ -1047,8 +1047,14 @@ sp_item_description(SPItem *item)
             g_free (s);
             s = snew;
         }
-        if (SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->filter.href) {
-            gchar *snew = g_strdup_printf (_("%s; <i>filtered</i>"), s);
+        if (SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->filter.href && SP_OBJECT_STYLE(item)->filter.href->getObject()) {
+            const gchar *label = SP_OBJECT_STYLE(item)->filter.href->getObject()->label();
+            gchar *snew;
+            if (label) {
+                snew = g_strdup_printf (_("%s; <i>filtered (%s)</i>"), s, label);
+            } else {
+                snew = g_strdup_printf (_("%s; <i>filtered</i>"), s);
+            }
             g_free (s);
             s = snew;
         }
