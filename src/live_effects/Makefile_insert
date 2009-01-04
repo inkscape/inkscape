@@ -21,6 +21,8 @@ live_effects_liblive_effects_a_SOURCES = \
 	live_effects/lpe-bendpath.h	\
 	live_effects/lpe-boolops.cpp	\
 	live_effects/lpe-boolops.h	\
+	live_effects/lpe-dynastroke.cpp	\
+	live_effects/lpe-dynastroke.h	\
 	live_effects/lpe-sketch.cpp	\
 	live_effects/lpe-sketch.h	\
 	live_effects/lpe-knot.cpp	\
