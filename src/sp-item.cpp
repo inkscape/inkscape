@@ -47,6 +47,7 @@
 #include "sp-item-rm-unsatisfied-cns.h"
 #include "sp-pattern.h"
 #include "sp-switch.h"
+#include "sp-guide-constraint.h"
 #include "gradient-chemistry.h"
 #include "preferences.h"
 #include "conn-avoid-ref.h"
@@ -175,6 +176,8 @@ void SPItem::init() {
     _mask_ref_connection = cs2.connect(sl2);
 
     this->avoidRef = new SPAvoidRef(this);
+
+    new (&this->constraints) std::vector<SPGuideConstraint>();
 
     new (&this->_transformed_signal) sigc::signal<void, Geom::Matrix const *, SPItem *>();
 }
