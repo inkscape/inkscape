@@ -602,30 +602,29 @@ sp_marker_print (SPItem */*item*/, SPPrintContext */*ctx*/)
 void
 sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
 {
-	SPMarkerView *view;
-	unsigned int i;
+    SPMarkerView *view;
+    unsigned int i;
 
-	for (view = marker->views; view != NULL; view = view->next) {
-		if (view->key == key) break;
-	}
-	if (view && (view->items.size() != size)) {
-		/* Free old view and allocate new */
-		/* Parent class ::hide method */
-		((SPItemClass *) parent_class)->hide ((SPItem *) marker, key);
-		sp_marker_view_remove (marker, view, TRUE);
-		view = NULL;
-	}
-	if (!view) {
-    view = (SPMarkerView *) g_new (SPMarkerView, 1);
-    new (&view->items) std::vector<NRArenaItem *>;
-    view->items.clear();
-		for (i = 0; i < size; i++) {
-        view->items.push_back(NULL);
+    for (view = marker->views; view != NULL; view = view->next) {
+        if (view->key == key) break;
     }
-		view->next = marker->views;
-		marker->views = view;
-		view->key = key;
-	}
+    if (view && (view->items.size() != size)) {
+        /* Free old view and allocate new */
+        /* Parent class ::hide method */
+        ((SPItemClass *) parent_class)->hide ((SPItem *) marker, key);
+        sp_marker_view_remove (marker, view, TRUE);
+        view = NULL;
+    }
+    if (!view) {
+        view = new SPMarkerView();
+        view->items.clear();
+        for (i = 0; i < size; i++) {
+            view->items.push_back(NULL);
+        }
+        view->next = marker->views;
+        marker->views = view;
+        view->key = key;
+    }
 }
 
 /**
@@ -661,8 +660,8 @@ sp_marker_show_instance ( SPMarker *marker, NRArenaItem *parent,
                     m = base;
                 } else {
                     /* fixme: Orient units (Lauris) */
-                    m = Geom::Matrix(Geom::Rotate::from_degrees(marker->orient));
-                    m *= Geom::Translate(base[4], base[5]); // TODO: this was NR::get_translation() originally; should it be extracted into a new 2geom function?
+                    m = Geom::Rotate::from_degrees(marker->orient);
+                    m *= Geom::Translate(base.translation());
                 }
                 if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
                     m = Geom::Scale(linewidth) * m;
