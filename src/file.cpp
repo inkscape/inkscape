@@ -97,7 +97,9 @@ static void sp_file_add_recent(gchar const *uri)
     GtkRecentManager *recent = gtk_recent_manager_get_default();
     gchar *fn = g_filename_from_utf8(uri, -1, NULL, NULL, NULL);
     gchar *uri_to_add = g_filename_to_uri(fn, NULL, NULL);
-    gtk_recent_manager_add_item(recent, uri_to_add);
+    if (uri_to_add) {
+        gtk_recent_manager_add_item(recent, uri_to_add);
+    }
     g_free(uri_to_add);
     g_free(fn);
 }
