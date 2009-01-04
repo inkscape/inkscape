@@ -83,7 +83,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         nr_arena_item_invoke_update( ai, NULL, &gc,
                                              NR_ARENA_ITEM_STATE_ALL,
                                              NR_ARENA_ITEM_STATE_NONE );
-        nr_pixblock_setup_extern(pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
+        nr_pixblock_setup_extern(pb, NR_PIXBLOCK_MODE_R8G8B8A8P,
                               (int)rect.x0, (int)rect.y0, (int)rect.x1, (int)rect.y1,
                               image_pixbuf, 4 * width, FALSE, FALSE );
 
@@ -141,7 +141,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
     int x0 = in->area.x0, y0 = in->area.y0;
     int x1 = in->area.x1, y1 = in->area.y1;
     NRPixBlock *out = new NRPixBlock;
-    nr_pixblock_setup_fast(out, in->mode, x0, y0, x1, y1, true);
+    nr_pixblock_setup_fast(out, from_element?NR_PIXBLOCK_MODE_R8G8B8A8P:NR_PIXBLOCK_MODE_R8G8B8A8N, x0, y0, x1, y1, true);
     w = x1 - x0;
 
     // Get the object bounding box. Image is placed with respect to box.

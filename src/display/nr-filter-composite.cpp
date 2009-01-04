@@ -25,10 +25,10 @@
 inline void
 composite_over(unsigned char *r, unsigned char const *a, unsigned char const *b)
 {
-    r[0] = a[0] + NR_NORMALIZE_21(b[0] * (255 - a[3]));
-    r[1] = a[1] + NR_NORMALIZE_21(b[1] * (255 - a[3]));
-    r[2] = a[2] + NR_NORMALIZE_21(b[2] * (255 - a[3]));
-    r[3] = a[3] + NR_NORMALIZE_21(b[3] * (255 - a[3]));
+    r[0] = NR_COMPOSEPPP_1111(a[0],a[3],b[0]);
+    r[1] = NR_COMPOSEPPP_1111(a[1],a[3],b[1]);
+    r[2] = NR_COMPOSEPPP_1111(a[2],a[3],b[2]);
+    r[3] = NR_COMPOSEPPP_1111(a[3],a[3],b[3]);
 }
 
 inline void
@@ -122,19 +122,19 @@ int FilterComposite::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     // Blending modes are defined for premultiplied RGBA values,
     // thus convert them to that format before blending
     if (in1->mode != NR_PIXBLOCK_MODE_R8G8B8A8P) {
-        in1 = new NRPixBlock;
-        nr_pixblock_setup_fast(in1, NR_PIXBLOCK_MODE_R8G8B8A8P,
-                               original_in1->area.x0, original_in1->area.y0,
-                               original_in1->area.x1, original_in1->area.y1,
-                               false);
+        g_warning("in1 conversion");
+        in1 = nr_pixblock_new_fast(NR_PIXBLOCK_MODE_R8G8B8A8P,
+                                   original_in1->area.x0, original_in1->area.y0,
+                                   original_in1->area.x1, original_in1->area.y1,
+                                   false);
         nr_blit_pixblock_pixblock(in1, original_in1);
     }
     if (in2->mode != NR_PIXBLOCK_MODE_R8G8B8A8P) {
-        in2 = new NRPixBlock;
-        nr_pixblock_setup_fast(in2, NR_PIXBLOCK_MODE_R8G8B8A8P,
-                               original_in2->area.x0, original_in2->area.y0,
-                               original_in2->area.x1, original_in2->area.y1,
-                               false);
+        g_warning("in2 conversion");
+        in2 = nr_pixblock_new_fast(NR_PIXBLOCK_MODE_R8G8B8A8P,
+                                   original_in2->area.x0, original_in2->area.y0,
+                                   original_in2->area.x1, original_in2->area.y1,
+                                   false);
         nr_blit_pixblock_pixblock(in2, original_in2);
     }
 
@@ -170,12 +170,10 @@ int FilterComposite::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     }
 
     if (in1 != original_in1) {
-        nr_pixblock_release(in1);
-        delete in1;
+        nr_pixblock_free(in1);
     }
     if (in2 != original_in2) {
-        nr_pixblock_release(in2);
-        delete in2;
+        nr_pixblock_free(in2);
     }
 
     out->empty = FALSE;

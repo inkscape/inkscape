@@ -8,8 +8,9 @@
  *
  * Authors:
  *   Niko Kiirala <niko@kiirala.com>
+ *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *
- * Copyright (C) 2007 authors
+ * Copyright (C) 2007-2008 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -57,9 +58,9 @@ namespace Filters {
 inline void
 blend_normal(unsigned char *r, unsigned char const *a, unsigned char const *b)
 {
-    r[0] = NR_NORMALIZE_21((255 - a[3]) * b[0]) + a[0];
-    r[1] = NR_NORMALIZE_21((255 - a[3]) * b[1]) + a[1];
-    r[2] = NR_NORMALIZE_21((255 - a[3]) * b[2]) + a[2];
+    r[0] = NR_COMPOSEPPP_1111(a[0],a[3],b[0]);
+    r[1] = NR_COMPOSEPPP_1111(a[1],a[3],b[1]);
+    r[2] = NR_COMPOSEPPP_1111(a[2],a[3],b[2]);
     SET_ALPHA;
 }
 
@@ -80,9 +81,9 @@ blend_multiply(unsigned char *r, unsigned char const *a, unsigned char const *b)
 inline void
 blend_screen(unsigned char *r, unsigned char const *a, unsigned char const *b)
 {
-    r[0] = NR_NORMALIZE_21(b[0] * 255 + a[0] * 255 - a[0] * b[0]);
-    r[1] = NR_NORMALIZE_21(b[1] * 255 + a[1] * 255 - a[1] * b[1]);
-    r[2] = NR_NORMALIZE_21(b[2] * 255 + a[2] * 255 - a[2] * b[2]);
+    r[0] = NR_NORMALIZE_21((b[0] + a[0]) * 255 - a[0] * b[0]);
+    r[1] = NR_NORMALIZE_21((b[1] + a[1]) * 255 - a[1] * b[1]);
+    r[2] = NR_NORMALIZE_21((b[2] + a[2]) * 255 - a[2] * b[2]);
     SET_ALPHA;
 }
 
@@ -90,12 +91,12 @@ blend_screen(unsigned char *r, unsigned char const *a, unsigned char const *b)
 inline void
 blend_darken(unsigned char *r, unsigned char const *a, unsigned char const *b)
 {
-    r[0] = std::min(NR_NORMALIZE_21((255 - a[3]) * b[0]) + a[0],
-                    NR_NORMALIZE_21((255 - b[3]) * a[0]) + b[0]);
-    r[1] = std::min(NR_NORMALIZE_21((255 - a[3]) * b[1]) + a[1],
-                    NR_NORMALIZE_21((255 - b[3]) * a[1]) + b[1]);
-    r[2] = std::min(NR_NORMALIZE_21((255 - a[3]) * b[2]) + a[2],
-                    NR_NORMALIZE_21((255 - b[3]) * a[2]) + b[2]);
+    r[0] = NR_NORMALIZE_21(std::min(NR_COMPOSEPPP_1112(a[0],a[3],b[0]),
+                                    NR_COMPOSEPPP_1112(b[0],b[3],a[0])));
+    r[1] = NR_NORMALIZE_21(std::min(NR_COMPOSEPPP_1112(a[1],a[3],b[1]),
+                                    NR_COMPOSEPPP_1112(b[1],b[3],a[1])));
+    r[2] = NR_NORMALIZE_21(std::min(NR_COMPOSEPPP_1112(a[2],a[3],b[2]),
+                                    NR_COMPOSEPPP_1112(b[2],b[3],a[2])));
     SET_ALPHA;
 }
 
@@ -103,12 +104,12 @@ blend_darken(unsigned char *r, unsigned char const *a, unsigned char const *b)
 inline void
 blend_lighten(unsigned char *r, unsigned char const *a, unsigned char const *b)
 {
-    r[0] = std::max(NR_NORMALIZE_21((255 - a[3]) * b[0]) + a[0],
-                    NR_NORMALIZE_21((255 - b[3]) * a[0]) + b[0]);
-    r[1] = std::max(NR_NORMALIZE_21((255 - a[3]) * b[1]) + a[1],
-                    NR_NORMALIZE_21((255 - b[3]) * a[1]) + b[1]);
-    r[2] = std::max(NR_NORMALIZE_21((255 - a[3]) * b[2]) + a[2],
-                    NR_NORMALIZE_21((255 - b[3]) * a[2]) + b[2]);
+    r[0] = NR_NORMALIZE_21(std::max(NR_COMPOSEPPP_1112(a[0],a[3],b[0]),
+                                    NR_COMPOSEPPP_1112(b[0],b[3],a[0])));
+    r[1] = NR_NORMALIZE_21(std::max(NR_COMPOSEPPP_1112(a[1],a[3],b[1]),
+                                    NR_COMPOSEPPP_1112(b[1],b[3],a[1])));
+    r[2] = NR_NORMALIZE_21(std::max(NR_COMPOSEPPP_1112(a[2],a[3],b[2]),
+                                    NR_COMPOSEPPP_1112(b[2],b[3],a[2])));
     SET_ALPHA;
 }
 
