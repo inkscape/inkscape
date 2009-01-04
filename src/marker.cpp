@@ -120,6 +120,8 @@ sp_marker_init (SPMarker *marker)
 	marker->viewBox_set = FALSE;
 
 	marker->c2p.setIdentity();
+
+    marker->views = NULL;
 }
 
 /**
@@ -721,8 +723,8 @@ sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destro
 			if (view->items[i]) nr_arena_item_unref (view->items[i]);
 		}
 	}
-  view->items.clear();
-	g_free (view);
+    view->items.clear();
+    delete view;
 }
 
 const gchar *
