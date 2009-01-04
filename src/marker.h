@@ -26,8 +26,8 @@ class SPMarker;
 class SPMarkerClass;
 class SPMarkerView;
 
-#include <libnr/nr-rect.h>
-#include <2geom/forward.h>
+#include <2geom/rect.h>
+#include <2geom/matrix.h>
 #include "svg/svg-length.h"
 #include "enums.h"
 #include "sp-item-group.h"
@@ -52,9 +52,8 @@ struct SPMarker : public SPGroup {
 	unsigned int orient_auto : 1;
 	float orient;
 
-	/* viewBox; */
-	unsigned int viewBox_set : 1;
-	NRRect viewBox;
+    /* viewBox; */
+    Geom::OptRect viewBox;
 
 	/* preserveAspectRatio */
 	unsigned int aspect_set : 1;

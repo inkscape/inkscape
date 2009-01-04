@@ -117,10 +117,8 @@ sp_marker_class_init (SPMarkerClass *klass)
 static void
 sp_marker_init (SPMarker *marker)
 {
-	marker->viewBox_set = FALSE;
-
-	marker->c2p.setIdentity();
-
+    marker->viewBox = Geom::OptRect();
+    marker->c2p.setIdentity();
     marker->views = NULL;
 }
 
@@ -253,7 +251,7 @@ sp_marker_set (SPObject *object, unsigned int key, const gchar *value)
 		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 		break;
 	case SP_ATTR_VIEWBOX:
-		marker->viewBox_set = FALSE;
+        marker->viewBox = Geom::OptRect();
 		if (value) {
 			double x, y, width, height;
 			char *eptr;
@@ -270,11 +268,8 @@ sp_marker_set (SPObject *object, unsigned int key, const gchar *value)
 			while (*eptr && ((*eptr == ',') || (*eptr == ' '))) eptr++;
 			if ((width > 0) && (height > 0)) {
 				/* Set viewbox */
-				marker->viewBox.x0 = x;
-				marker->viewBox.y0 = y;
-				marker->viewBox.x1 = x + width;
-				marker->viewBox.y1 = y + height;
-				marker->viewBox_set = TRUE;
+                marker->viewBox = Geom::Rect( Geom::Point(x,y),
+                                              Geom::Point(x + width, y + height) );
 			}
 		}
 		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG);
@@ -356,7 +351,7 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	SPItem *item;
 	SPMarker *marker;
 	SPItemCtx rctx;
-	NRRect *vb;
+    Geom::Rect vb;
 	double x, y, width, height;
 	SPMarkerView *v;
 
@@ -380,10 +375,10 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	marker->c2p.setIdentity();
 
 	/* Viewbox is always present, either implicitly or explicitly */
-	if (marker->viewBox_set) {
-		vb = &marker->viewBox;
+    if (marker->viewBox) {
+        vb = *marker->viewBox;
 	} else {
-		vb = &rctx.vp;
+        vb = *(rctx.vp.upgrade_2geom());
 	}
 	/* Now set up viewbox transformation */
 	/* Determine actual viewbox in viewport coordinates */
@@ -395,11 +390,11 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	} else {
 		double scalex, scaley, scale;
 		/* Things are getting interesting */
-		scalex = (rctx.vp.x1 - rctx.vp.x0) / (vb->x1 - vb->x0);
-		scaley = (rctx.vp.y1 - rctx.vp.y0) / (vb->y1 - vb->y0);
+        scalex = (rctx.vp.x1 - rctx.vp.x0) / (vb.width());
+        scaley = (rctx.vp.y1 - rctx.vp.y0) / (vb.height());
 		scale = (marker->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
-		width = (vb->x1 - vb->x0) * scale;
-		height = (vb->y1 - vb->y0) * scale;
+        width = (vb.width()) * scale;
+        height = (vb.height()) * scale;
 		/* Now place viewbox to requested position */
 		switch (marker->aspect_align) {
 		case SP_ASPECT_XMIN_YMIN:
@@ -448,12 +443,12 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
     {
         Geom::Matrix q;
 	    /* Compose additional transformation from scale and position */
-	    q[0] = width / (vb->x1 - vb->x0);
-	    q[1] = 0.0;
-	    q[2] = 0.0;
-	    q[3] = height / (vb->y1 - vb->y0);
-	    q[4] = -vb->x0 * q[0] + x;
-	    q[5] = -vb->y0 * q[3] + y;
+        q[0] = width / vb.width();
+        q[1] = 0.0;
+        q[2] = 0.0;
+        q[3] = height / vb.height();
+        q[4] = -vb.min()[Geom::X] * q[0] + x;
+        q[5] = -vb.min()[Geom::Y] * q[3] + y;
 	    /* Append viewbox transformation */
 	    marker->c2p = q * marker->c2p;
     }
@@ -466,11 +461,11 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 
 	/* If viewBox is set reinitialize child viewport */
 	/* Otherwise it already correct */
-	if (marker->viewBox_set) {
-            rctx.vp.x0 = marker->viewBox.x0;
-            rctx.vp.y0 = marker->viewBox.y0;
-            rctx.vp.x1 = marker->viewBox.x1;
-            rctx.vp.y1 = marker->viewBox.y1;
+	if (marker->viewBox) {
+            rctx.vp.x0 = marker->viewBox->min()[Geom::X];
+            rctx.vp.y0 = marker->viewBox->min()[Geom::Y];
+            rctx.vp.x1 = marker->viewBox->max()[Geom::X];
+            rctx.vp.y1 = marker->viewBox->max()[Geom::Y];
             rctx.i2vp = Geom::identity();
 	}
 
