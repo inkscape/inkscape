@@ -75,8 +75,7 @@ enum {
     PREFS_PAGE_SNAPPING,
     PREFS_PAGE_STEPS,
     PREFS_PAGE_WINDOWS,
-    PREFS_PAGE_MISC,
-    PREFS_PAGE_I18N
+    PREFS_PAGE_MISC
 };
 
 using namespace Inkscape::UI::Widget;
@@ -115,7 +114,7 @@ protected:
     DialogPage _page_mouse, _page_scrolling, _page_snapping, _page_steps, _page_tools, _page_windows,
         _page_clones, _page_mask, _page_transforms, _page_filters, _page_select,
         _page_importexport, _page_cms, _page_grids, _page_svgoutput, _page_misc,
-        _page_ui, _page_autosave, _page_bitmaps, _page_i18n;
+        _page_ui, _page_autosave, _page_bitmaps;
     DialogPage _page_selector, _page_node, _page_tweak, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper, _page_lpetool;
     DialogPage _page_rectangle, _page_3dbox, _page_ellipse, _page_star, _page_spiral, _page_paintbucket, _page_eraser;
@@ -177,14 +176,19 @@ protected:
     PrefCheckButton _sel_hidden, _sel_locked;
     PrefCheckButton _sel_layer_deselects;
 
-    PrefSpinButton  _importexport_export, _misc_recent, _misc_simpl;
-    ZoomCorrRulerSlider _ui_zoom_correction;
+    PrefSpinButton  _importexport_export, _misc_simpl;
     PrefSlider		_snap_delay, _snap_weight;
     PrefSpinButton  _misc_latency_skew;
     PrefCheckButton _misc_comment, _misc_forkvectors, _misc_scripts, _misc_namedicon_delay;
+
+    // UI page
+    PrefCombo       _ui_languages;
     PrefCombo       _misc_small_toolbar;
     PrefCombo       _misc_small_secondary;
     PrefCombo       _misc_small_tools;
+    PrefSpinButton  _misc_recent;
+    ZoomCorrRulerSlider _ui_zoom_correction;
+    
     PrefCombo       _misc_overs_bitmap;
     PrefCombo       _misc_bitmap_editor;
     PrefCheckButton _misc_bitmap_autoreload;
@@ -230,9 +234,6 @@ protected:
         PrefColorPicker     _grids_axonom_color;
         PrefColorPicker     _grids_axonom_empcolor;
         PrefSpinButton      _grids_axonom_empspacing;
-
-    // i18n page
-    PrefCombo       _i18n_languages;
 
     // SVG Output page:
     PrefCheckButton   _svgoutput_usenamedcolors;

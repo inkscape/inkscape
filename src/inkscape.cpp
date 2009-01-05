@@ -756,10 +756,10 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     sp_input_load_from_preferences();
     
     /* set language for user interface according setting in preferences */
-    Glib::ustring i18n = prefs->getString("/i18n/language");
-    if(!i18n.empty())
+    Glib::ustring ui_language = prefs->getString("/ui/language");
+    if(!ui_language.empty())
     {
-        setenv("LANGUAGE", i18n, 1);
+        setenv("LANGUAGE", ui_language, 1);
     }
 
     /* DebugDialog redirection.  On Linux, default to OFF, on Win32, default to ON.
