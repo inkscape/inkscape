@@ -15,26 +15,26 @@ sp-conn-end-pair.cpp
 sp-cursor.cpp
 sp-defs.cpp
 sp-ellipse.cpp
-sp-feblend.cpp
-sp-fecolormatrix.cpp
-sp-fecomponenttransfer.cpp
-sp-fecomponenttransfer-funcnode.cpp
-sp-fecomposite.cpp
-sp-feconvolvematrix.cpp
-sp-fediffuselighting.cpp
-sp-fedisplacementmap.cpp
-sp-fedistantlight.cpp
-sp-feflood.cpp
-sp-feimage.cpp
-sp-femerge.cpp
-sp-femergenode.cpp
-sp-femorphology.cpp
-sp-feoffset.cpp
-sp-fepointlight.cpp
-sp-fespecularlighting.cpp
-sp-fespotlight.cpp
-sp-fetile.cpp
-sp-feturbulence.cpp
+# sp-feblend.cpp
+# sp-fecolormatrix.cpp
+# sp-fecomponenttransfer.cpp
+# sp-fecomponenttransfer-funcnode.cpp
+# sp-fecomposite.cpp
+# sp-feconvolvematrix.cpp
+# sp-fediffuselighting.cpp
+# sp-fedisplacementmap.cpp
+# sp-fedistantlight.cpp
+# sp-feflood.cpp
+# sp-feimage.cpp
+# sp-femerge.cpp
+# sp-femergenode.cpp
+# sp-femorphology.cpp
+# sp-feoffset.cpp
+# sp-fepointlight.cpp
+# sp-fespecularlighting.cpp
+# sp-fespotlight.cpp
+# sp-fetile.cpp
+# sp-feturbulence.cpp
 sp-filter.cpp
 sp-filter-primitive.cpp
 sp-filter-reference.cpp
@@ -138,7 +138,6 @@ filter-chemistry.cpp
 filter-enums.cpp
 fixes.cpp
 flood-context.cpp
-fontsize-expansion.cpp
 gc-anchored.cpp
 gc.cpp
 gc-finalized.cpp
@@ -182,7 +181,6 @@ perspective-line.cpp
 plugin.def
 preferences.cpp
 prefix.cpp
-prefs-utils.cpp
 print.cpp
 profile-manager.cpp
 proj_pt.cpp

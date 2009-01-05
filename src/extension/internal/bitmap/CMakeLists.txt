@@ -6,7 +6,6 @@ channel.cpp
 charcoal.cpp
 colorize.cpp
 contrast.cpp
-convolve.cpp
 cycleColormap.cpp
 despeckle.cpp
 edge.cpp

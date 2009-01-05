@@ -1,6 +1,5 @@
 SET(libnr_SRC
 #in-svg-plane-test.cpp
-n-art-bpath-2geom.cpp
 nr-blit.cpp
 nr-compose.cpp
 nr-compose-transform.cpp
@@ -9,9 +8,7 @@ nr-matrix.cpp
 nr-matrix-div.cpp
 nr-matrix-fns.cpp
 nr-matrix-rotate-ops.cpp
-nr-matrix-test.cpp
 nr-object.cpp
-nr-path.cpp
 nr-pixblock.cpp
 nr-pixblock-line.cpp
 nr-pixblock-pattern.cpp
@@ -23,9 +20,7 @@ nr-rect-l.cpp
 nr-rotate-fns.cpp
 #nr-rotate-fns-test.cpp
 nr-rotate-matrix-ops.cpp
-nr-rotate-test.cpp
 nr-scale-matrix-ops.cpp
-nr-scale-test.cpp
 nr-scale-translate-ops.cpp
 nr-translate-matrix-ops.cpp
 nr-translate-rotate-ops.cpp

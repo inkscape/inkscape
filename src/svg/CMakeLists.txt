@@ -1,7 +1,6 @@
 SET(svg_SRC
 css-ostringstream.cpp
 #ftos.cpp
-gnome-canvas-bpath-util.cpp
 itos.cpp
 path-string.cpp
 round.cpp

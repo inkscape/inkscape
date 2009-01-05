@@ -6,7 +6,6 @@ ENDIF(WIN32)
 
 SET(extension_internal_SRC
 bluredge.cpp
-cairo-pdf-out.cpp
 cairo-png-out.cpp
 cairo-ps-out.cpp
 cairo-render-context.cpp
@@ -14,20 +13,16 @@ cairo-renderer.cpp
 cairo-renderer-pdf-out.cpp
 emf-win32-inout.cpp
 emf-win32-print.cpp
-eps-out.cpp
 gdkpixbuf-input.cpp
 gimpgrad.cpp
 grid.cpp
 latex-pstricks.cpp
 latex-pstricks-out.cpp
 odf.cpp
-pdf-cairo.cpp
 pdfinput
 pdf-input-cairo.cpp
 pov-out.cpp
 javafx-out.cpp
-ps.cpp
-ps-out.cpp
 svg.cpp
 svgz.cpp
 wpg-input.cpp

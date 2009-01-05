@@ -15,7 +15,6 @@ dialog-manager.cpp
 dock-behavior.cpp
 document-metadata.cpp
 document-properties.cpp
-export.cpp
 extension-editor.cpp
 filedialog.cpp
 filedialogimpl-gtkmm.cpp
@@ -25,7 +24,6 @@ find.cpp
 floating-behavior.cpp
 inkscape-preferences.cpp
 input.cpp
-layer-editor.cpp
 livepatheffect-editor.cpp
 memory.cpp
 messages.cpp
@@ -33,15 +31,12 @@ ocaldialogs.cpp
 print.cpp
 scriptdialog.cpp
 #session-player.cpp
-text-properties.cpp
 tile.cpp
 tracedialog.cpp
 transformation.cpp
-tree-editor.cpp
 undo-history.cpp
 #whiteboard-connect.cpp
 #whiteboard-sharewithchat.cpp
 #whiteboard-sharewithuser.cpp
-xml-editor.cpp
 ${ui_dialog_WIN32_SRC}
 )
