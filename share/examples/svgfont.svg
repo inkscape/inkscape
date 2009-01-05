@@ -10,16 +10,16 @@
        <font-face font-family="Super Sans" font-style="oblique" font-stretch="ultra-expanded" />
 
        <!-- This font has 2 glyphs (one for "@" and one for "!"): -->
-       <glyph unicode="!" d="M0,0h500v500h-500z"> <!--  Currently we only render the path description declared in the d attribute  -->
+       <glyph unicode="!" glyph-name="Exclamation" d="M0,0h500v500h-500z"> <!--  Currently we only render the path description declared in the d attribute  -->
           <circle r='500' cx='500' cy='500' style="fill:none;stroke:green;"/> <!-- So... this part of the glyph wont render yet. -->
        </glyph>
 
-       <glyph unicode="@" d="M500,500h500v500h-500z">
+       <glyph unicode="@" glyph-name="At Sign" d="M500,500h500v500h-500z">
           <circle r='250' cx='500' cy='500' style="fill:blue;"/> <!-- This circle wont render yet -->
        </glyph>
 
        <!-- and also a missing-glyph, which is used for every other character on the string that do not have a specific glyph -->
-       <missing-glyph d="M0,0h1000v1000h-1000z"></missing-glyph>
+       <missing-glyph glyph-name="Missing..." d="M0,0h1000v1000h-1000z"></missing-glyph>
 
        <!-- And every pair of "!" followed by "@" has a kerning of 500 units -->
        <hkern u1="!" u2="@" k="500" />
@@ -30,10 +30,10 @@
 
     <font id="AnotherSVGFont" horiz-adv-x="1100">
        <font-face font-family="Super Sans2" font-style="oblique" font-stretch="ultra-expanded" />
-       <glyph unicode="!" d="M0,0h500v500h-500v-300h100v200h300v-300h-400z" />
-       <glyph unicode="@!" d="M0,0h200L1000,800v200h-200L0,200z" />
-       <glyph unicode="@" d="M500,500h250v250h-250z" />
-       <missing-glyph d="M0,0h1000v1000z"></missing-glyph>
+       <glyph unicode="!" glyph-name="exclamation" d="M0,0h500v500h-500v-300h100v200h300v-300h-400z" />
+       <glyph unicode="@!" glyph-name="A ligature glyph" d="M0,0h200L1000,800v200h-200L0,200z" />
+       <glyph unicode="@" glyph-name="At sign" d="M500,500h250v250h-250z" />
+       <missing-glyph glyph-name="The Missing Glyph" d="M0,0h1000v1000z"></missing-glyph>
        <hkern u1="!" u2="@" k="1000" />
     </font>
 

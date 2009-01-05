@@ -9,8 +9,9 @@ static unsigned int hex2int(char* s){
 	while(s[i+1]!='\0') i++;
 
 	while(i>=0){
-		if (s[i] > '9') res += mul * (s[i]-'A'+10);
-		else res += mul * (s[i]-'0');
+		if (s[i] >= 'A' && s[i] <= 'F') res += mul * (s[i]-'A'+10);
+		if (s[i] >= 'a' && s[i] <= 'f') res += mul * (s[i]-'a'+10);
+		if (s[i] >= '0' && s[i] <= '9') res += mul * (s[i]-'0');
 		i--;
 		mul*=16;
 	}
@@ -22,9 +23,8 @@ UnicodeRange::UnicodeRange(const gchar* value){
 	gchar* val = (gchar*) value;
 	while(val[0] != '\0'){
 		if (val[0]=='U' && val[1]=='+'){
-			val += add_range(val);
+			val += add_range(val+2);
 		} else {
-//			g_warning("adding unichar. unichar=%c", g_utf8_get_char(&val[0]));
 			this->unichars.push_back(g_utf8_get_char(&val[0]));
 			val++;
 		}
@@ -36,9 +36,7 @@ UnicodeRange::UnicodeRange(const gchar* value){
 int
 UnicodeRange::add_range(gchar* val){
 		Urange r;
-		//U+
-		val+=2;
-		int i=0, count=2;
+		int i=0, count=0;
 		while(val[i]!='\0' && val[i]!='-' && val[i]!=' ' && val[i]!=',') i++;
 		r.start = (gchar*) malloc((i+1)*sizeof(gchar*));
 		strncpy(r.start, val, i);
@@ -57,7 +55,6 @@ UnicodeRange::add_range(gchar* val){
 		} else {
 			r.end=NULL;
 		}
-//		g_warning("adding range. from %s to %s", r.start, r.end);
 		this->range.push_back(r);
 		return count+1;
 }
@@ -69,7 +66,6 @@ bool UnicodeRange::contains(gchar unicode){
 
 	unsigned int unival;
 	unival = g_utf8_get_char (&unicode);
-//	g_warning("unival=%d", unival);
 	char uni[9] = "00000000";
 	uni[8]= '\0';
 	unsigned char val;
@@ -79,19 +75,21 @@ bool UnicodeRange::contains(gchar unicode){
 		if (val < 10) uni[i] = '0' + val;
 		else uni[i] = 'A'+ val - 10;
 	}
-//	g_warning("uni=%s", uni);
 
 	bool found;
 	for(unsigned int i=0;i<this->range.size();i++){
 		Urange r = this->range[i];
 		if (r.end){
-//			g_warning("hex2int: start=%d", hex2int(r.start));
-//			g_warning("hex2int: end=%d", hex2int(r.end));
 			if (unival >= hex2int(r.start) && unival <= hex2int(r.end)) return true;
 		} else {
 			found = true;
-			for (int pos=0;pos<8;pos++){
-				if (uni[pos]!='?' && uni[pos]!=r.start[pos]) found = false;
+
+			int p=0;
+			while (r.start[p]!='\0') p++;
+			p--;
+
+			for (int pos=8;p>=0;pos--,p--){
+				if (uni[pos]!='?' && uni[pos]!=r.start[p]) found = false;
 			}
 			if (found) return true;
 		}
@@ -108,8 +106,9 @@ Glib::ustring UnicodeRange::attribute_string(){
 	}
 
 	for(i=0; i<this->range.size(); i++){
-		result += "U+" + Glib::ustring(this->range[i].start) + "-" + Glib::ustring(this->range[i].end);
-		if (i!=this->range.size()-1) result += ",";
+		result += "U+" + Glib::ustring(this->range[i].start);
+		if (this->range[i].end) result += "-" + Glib::ustring(this->range[i].end);
+		if (i!=this->range.size()-1) result += ", ";
 	}
 
 	return result;

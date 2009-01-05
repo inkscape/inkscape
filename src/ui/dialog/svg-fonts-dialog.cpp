@@ -321,6 +321,9 @@ void SvgFontsDialog::on_setwidth_changed(){
     if (spfont){
         spfont->horiz_adv_x = setwidth_spin.get_value();
         //TODO: tell cairo that the glyphs cache has to be invalidated
+		//		The current solution is to recreate the whole cairo svgfont.
+		//		This is not a good solution to the issue because big fonts will result in poor performance.
+        update_glyphs();
     }
 }
 
@@ -364,16 +367,17 @@ Gtk::VBox* SvgFontsDialog::global_settings_tab(){
     global_vbox->add(*AttrCombo((gchar*) _("Variant:"), SP_PROP_FONT_VARIANT));
     global_vbox->add(*AttrCombo((gchar*) _("Weight:"), SP_PROP_FONT_WEIGHT));
 */
+
 //Set Width (horiz_adv_x):
-/*    Gtk::HBox* setwidth_hbox = Gtk::manage(new Gtk::HBox());
+    Gtk::HBox* setwidth_hbox = Gtk::manage(new Gtk::HBox());
     setwidth_hbox->add(*Gtk::manage(new Gtk::Label(_("Set width:"))));
     setwidth_hbox->add(setwidth_spin);
 
     setwidth_spin.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_setwidth_changed));
     setwidth_spin.set_range(0, 4096);
     setwidth_spin.set_increments(10, 100);
-    global_vbox->add(*setwidth_hbox);
-*/
+    global_vbox.pack_start(*setwidth_hbox, false, false);
+
     return &global_vbox;
 }
 
@@ -498,7 +502,8 @@ void SvgFontsDialog::missing_glyph_description_from_selected_path(){
     Geom::Matrix m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
 	pathv*=m;
 	//then we offset it
-	pathv+=Geom::Point(Geom::Coord(0),Geom::Coord(get_selected_spfont()->horiz_adv_x));
+//	pathv+=Geom::Point(Geom::Coord(0),Geom::Coord(get_selected_spfont()->horiz_adv_x));
+	pathv+=Geom::Point(Geom::Coord(0),Geom::Coord(1000));//TODO: use here the units-per-em attribute?
 
 	SPObject* obj;
 	for (obj = get_selected_spfont()->children; obj; obj=obj->next){

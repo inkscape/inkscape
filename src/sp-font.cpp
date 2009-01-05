@@ -144,7 +144,7 @@ sp_font_remove_child(SPObject *object, Inkscape::XML::Node *child)
 
 static void sp_font_release(SPObject *object)
 {
-    SPFont *font = SP_FONT(object);
+    //SPFont *font = SP_FONT(object);
     sp_document_remove_resource(SP_OBJECT_DOCUMENT(object), "font", object);
 
     if (((SPObjectClass *) parent_class)->release) {

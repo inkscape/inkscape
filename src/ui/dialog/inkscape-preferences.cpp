@@ -1044,14 +1044,14 @@ void InkscapePreferences::initPageUI()
         _("sv Swedish"), _("th Thai"), _("tr Turkish"), _("uk Ukrainian"), _("vi Vietnamese"), _("zh_CN Chinese, as spoken in China"), 
         _("zh_TW Chinese, as spoken in Taiwan")};
     Glib::ustring langValues[] = {"", "am", "ar", "az", "be", "bg", "bn", "br", "ca", "ca@valencia", "cs", "da", "de",
-        "dz", "el", "en", "en_AU", "en_CA", "en_GB", "en_US@piglatin", "eo", "es_MX", "es", "et", "eu", "fi", "fr", "ga",
+        "dz", "el", "en", "en_AU", "en_CA", "en_GB", "en_US@piglatin", "eo", "es", "es_MX", "et", "eu", "fi", "fr", "ga",
         "gl", "he", "hr", "hu", "hy", "id", "it", "ja", "km", "ko", "lt", "mk", "mn", "nb", "ne", "nl", "nn", "pa",
-        "pl", "pt_BR", "pt", "ro", "ru", "rw", "sk", "sl", "sq", "sr@latin", "sr", "sv", "th", "tr", "uk", "vi",
+        "pl", "pt", "pt_BR", "ro", "ru", "rw", "sk", "sl", "sq", "sr", "sr@latin", "sv", "th", "tr", "uk", "vi",
         "zh_CN", "zh_TW"};
 
-    _ui_languages.init( "/ui/language", languages, langValues, G_N_ELEMENTS(languages), languages[0]);   
+    _ui_languages.init( "/ui/language", languages, langValues, G_N_ELEMENTS(languages), languages[0]);
     _page_ui.add_line( false, _("Language (requires restart):"), _ui_languages, "",
-                              _("Set the language for menues and number-formats"), false);
+                              _("Set the language for menus and number-formats"), false);
 
      Glib::ustring sizeLabels[] = {_("Normal"), _("Medium"), _("Small")};
     int sizeValues[] = {0, 1, 2};

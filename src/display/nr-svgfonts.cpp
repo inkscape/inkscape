@@ -104,6 +104,17 @@ unsigned int size_of_substring(const char* substring, gchar* str){
 		return 0;
 }
 
+//TODO: in these macros, verify what happens when using unicode strings.
+#define Match_VKerning_Rule (((SPVkern*)node)->u1->contains(previous_unicode[0])\
+		|| ((SPVkern*)node)->g1->contains(previous_glyph_name)) &&\
+		(((SPVkern*)node)->u2->contains(this->glyphs[i]->unicode[0])\
+		|| ((SPVkern*)node)->g2->contains(this->glyphs[i]->glyph_name.c_str()))
+
+#define Match_HKerning_Rule (((SPHkern*)node)->u1->contains(previous_unicode[0])\
+		|| ((SPHkern*)node)->g1->contains(previous_glyph_name)) &&\
+		(((SPHkern*)node)->u2->contains(this->glyphs[i]->unicode[0])\
+		|| ((SPHkern*)node)->g2->contains(this->glyphs[i]->glyph_name.c_str()))
+
 cairo_status_t
 SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 				const char	*utf8,
@@ -126,22 +137,22 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
 
     bool missing;
     //First we findout whats the number of glyphs needed.
-    while(g_utf8_get_char(_utf8) != 0){
-	missing = true;
-	for (i=0; i < (unsigned long) this->glyphs.size(); i++){
-            if ( (len = size_of_substring(this->glyphs[i]->unicode.c_str(), _utf8)) ){
-		//TODO: store this cluster
-		_utf8+=len;
-		count++;
-		missing=false;
-		break;
-	    }
-	}
-	if (missing){
-		//TODO: store this cluster
-		_utf8++;
-		count++;
-	}
+    while(g_utf8_get_char(_utf8)){
+		missing = true;
+		for (i=0; i < (unsigned long) this->glyphs.size(); i++){
+			if ( (len = size_of_substring(this->glyphs[i]->unicode.c_str(), _utf8)) ){
+				//TODO: store this cluster
+				_utf8+=len;
+				count++;
+				missing=false;
+				break;
+			}
+		}
+		if (missing){
+			//TODO: store this cluster
+			_utf8++;
+			count++;
+		}
     }
 
 
@@ -155,54 +166,48 @@ SvgFont::scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
     double x=0, y=0;//These vars store the position of the glyph within the rendered string
     bool is_horizontal_text = true; //TODO
     _utf8 = (char*) utf8;
-    while(g_utf8_get_char(_utf8) != 0){
-	len = 0;
+
+    while(g_utf8_get_char(_utf8)){
+		len = 0;
         for (i=0; i < (unsigned long) this->glyphs.size(); i++){
-            if ( (len = size_of_substring(this->glyphs[i]->unicode.c_str(), _utf8)) ){
-		//check whether is there a glyph declared on the SVG document
-		// that matches with the text string in its current position
-	        for(SPObject* node = this->font->children;previous_unicode && node;node=node->next){
-		    //apply glyph kerning if appropriate
-	            if (SP_IS_HKERN(node) && is_horizontal_text){
-	                if ( 	(((SPHkern*)node)->u1->contains(previous_unicode[0])
-				 || ((SPHkern*)node)->g1->contains(previous_glyph_name)) &&
-				(((SPHkern*)node)->u2->contains(this->glyphs[i]->unicode[0])
-				 || ((SPHkern*)node)->g2->contains(this->glyphs[i]->glyph_name.c_str()))
-			)//TODO: verify what happens when using unicode strings.
-				x -= (((SPHkern*)node)->k / this->font->horiz_adv_x);
-	            }
-		    if (SP_IS_VKERN(node) && !is_horizontal_text){
-	                if (	(((SPVkern*)node)->u1->contains(previous_unicode[0])
-				 || ((SPVkern*)node)->g1->contains(previous_glyph_name)) &&
-				(((SPVkern*)node)->u2->contains(this->glyphs[i]->unicode[0])
-				 || ((SPVkern*)node)->g2->contains(this->glyphs[i]->glyph_name.c_str()))
-			)//TODO: idem
-				y -= (((SPVkern*)node)->k / this->font->vert_adv_y);
-	            }
-		}
-		previous_unicode = (char*) this->glyphs[i]->unicode.c_str();//used for kerning checking
-		previous_glyph_name = (char*) this->glyphs[i]->glyph_name.c_str();//used for kerning checking
-                (*glyphs)[count].index = i;
-                (*glyphs)[count].x = x;
-                (*glyphs)[count++].y = y;
-		//advance glyph coordinates:
-		if (is_horizontal_text) x++;
-		else y++;
-                _utf8+=len; //advance 'len' bytes in our string pointer
-		//continue;
-		goto dirty;
+			//check whether is there a glyph declared on the SVG document
+			// that matches with the text string in its current position
+			if ( (len = size_of_substring(this->glyphs[i]->unicode.c_str(), _utf8)) ){
+				for(SPObject* node = this->font->children;previous_unicode && node;node=node->next){
+					//apply glyph kerning if appropriate
+					if (SP_IS_HKERN(node) && is_horizontal_text && Match_HKerning_Rule ){
+						x -= (((SPHkern*)node)->k / 1000.0);//TODO: use here the height of the font
+					}
+					if (SP_IS_VKERN(node) && !is_horizontal_text && Match_VKerning_Rule ){
+						y -= (((SPVkern*)node)->k / 1000.0);//TODO: use here the "height" of the font
+					}
+				}
+				previous_unicode = (char*) this->glyphs[i]->unicode.c_str();//used for kerning checking
+				previous_glyph_name = (char*) this->glyphs[i]->glyph_name.c_str();//used for kerning checking
+				(*glyphs)[count].index = i;
+				(*glyphs)[count].x = x;
+				(*glyphs)[count++].y = y;
+
+				//advance glyph coordinates:
+				if (is_horizontal_text) x+=(this->font->horiz_adv_x/1000.0);//TODO: use here the height of the font
+				else y+=(this->font->vert_adv_y/1000.0);//TODO: use here the "height" of the font
+				_utf8+=len; //advance 'len' bytes in our string pointer
+				//continue;
+				goto raptorz;
             }
         }
-dirty:
-	if (!len){
-        	(*glyphs)[count].index = i;
-        	(*glyphs)[count].x = x;
-        	(*glyphs)[count++].y = y;
-		//advance glyph coordinates:
-		if (is_horizontal_text) x++;
-		else y++;
-		_utf8 = g_utf8_next_char(_utf8); //advance 1 char in our string pointer
-	}
+raptorz:
+		if (len==0){
+			(*glyphs)[count].index = i;
+			(*glyphs)[count].x = x;
+			(*glyphs)[count++].y = y;
+
+			//advance glyph coordinates:
+			if (is_horizontal_text) x+=(this->font->horiz_adv_x/1000.0);//TODO: use here the height of the font
+			else y+=(this->font->vert_adv_y/1000.0);//TODO: use here the "height" of the font
+
+			_utf8 = g_utf8_next_char(_utf8); //advance 1 char in our string pointer
+		}
     }
     *num_glyphs = count;
     return CAIRO_STATUS_SUCCESS;
@@ -246,11 +251,13 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  *scaled_font,
         //This glyph has a path description on its d attribute, so we render it:
         cairo_new_path(cr);
 		//adjust scale of the glyph
-        Geom::Scale s(1.0/((SPFont*) node->parent)->horiz_adv_x);
+//        Geom::Scale s(1.0/((SPFont*) node->parent)->horiz_adv_x);
+        Geom::Scale s(1.0/1000);//TODO: use here the units-per-em attribute?
 		//This matrix flips the glyph vertically
         Geom::Matrix m(Geom::Coord(1),Geom::Coord(0),Geom::Coord(0),Geom::Coord(-1),Geom::Coord(0),Geom::Coord(0));
 		//then we offset it
-		pathv += Geom::Point(Geom::Coord(0),Geom::Coord(-((SPFont*) node->parent)->horiz_adv_x));
+//		pathv += Geom::Point(Geom::Coord(0),Geom::Coord(-((SPFont*) node->parent)->horiz_adv_x));
+		pathv += Geom::Point(Geom::Coord(0),Geom::Coord(-1000));//TODO: use here the units-per-em attribute?
 
         Geom::Rect area( Geom::Point(0,0), Geom::Point(1,1) ); //I need help here!    (reaction: note that the 'area' parameter is an *optional* rect, so you can pass an empty Geom::OptRect() )
 

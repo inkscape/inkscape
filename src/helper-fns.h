@@ -57,7 +57,7 @@ inline bool helperfns_read_bool(gchar const *value, bool default_value){
 inline std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
         std::vector<gdouble> v(size, (gdouble) 0);
         std::istringstream is(value);
-        for(int i = 0; i < size && (is >> v[i]); i++);
+        for(int i = 0; i < size && (is >> v[i]); i++){};
         return v;
 }
 
