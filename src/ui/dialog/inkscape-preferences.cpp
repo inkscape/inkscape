@@ -1049,7 +1049,7 @@ void InkscapePreferences::initPageUI()
         "pl", "pt_BR", "pt", "ro", "ru", "rw", "sk", "sl", "sq", "sr@latin", "sr", "sv", "th", "tr", "uk", "vi",
         "zh_CN", "zh_TW"};
 
-    _ui_languages.init( "/ui/language", languages, langValues, G_N_ELEMENTS(languages), _("System"));
+    _ui_languages.init( "/ui/language", languages, langValues, G_N_ELEMENTS(languages), languages[0]);   
     _page_ui.add_line( false, _("Language (requires restart):"), _ui_languages, "",
                               _("Set the language for menues and number-formats"), false);
 
