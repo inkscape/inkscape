@@ -122,7 +122,6 @@ int FilterComposite::render(FilterSlot &slot, FilterUnits const &/*units*/) {
     // Blending modes are defined for premultiplied RGBA values,
     // thus convert them to that format before blending
     if (in1->mode != NR_PIXBLOCK_MODE_R8G8B8A8P) {
-        g_warning("in1 conversion");
         in1 = nr_pixblock_new_fast(NR_PIXBLOCK_MODE_R8G8B8A8P,
                                    original_in1->area.x0, original_in1->area.y0,
                                    original_in1->area.x1, original_in1->area.y1,
@@ -130,7 +129,6 @@ int FilterComposite::render(FilterSlot &slot, FilterUnits const &/*units*/) {
         nr_blit_pixblock_pixblock(in1, original_in1);
     }
     if (in2->mode != NR_PIXBLOCK_MODE_R8G8B8A8P) {
-        g_warning("in2 conversion");
         in2 = nr_pixblock_new_fast(NR_PIXBLOCK_MODE_R8G8B8A8P,
                                    original_in2->area.x0, original_in2->area.y0,
                                    original_in2->area.x1, original_in2->area.y1,
