@@ -247,7 +247,6 @@
             <exclude name="svg/ftos.cpp"/>
             <exclude name="svg/test-svg.cpp"/>
             <exclude name="svg/test-svg-main.cpp"/>
-            <exclude name="utest/.*"/>
             <exclude name="widgets/test-widgets.cpp"/>
             <exclude name="xml/quote-test.cpp"/>
             <exclude name="xml/repr-action-test.cpp"/>
