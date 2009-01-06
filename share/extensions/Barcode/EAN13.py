@@ -84,7 +84,7 @@ class Object(Barcode):
 		return str(z)
 
 	def varifyChecksum(self, number):
-		new = self.computeChecksum(number[:12])
+		new = self.getChecksum(number[:12])
 		existing = number[12]
 		return new == existing
 
