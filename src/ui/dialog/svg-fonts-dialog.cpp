@@ -473,6 +473,8 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
     Inkscape::XML::Node* node = (Inkscape::XML::Node*) g_slist_nth_data((GSList *)sel->reprList(), 0);
     if (!node || !node->matchAttributeName("d")) return;
     if (!node->attribute("d")) return; //TODO: give a message to the user
+                                        //"This object does not have a path description."
+                                        //How should we tell it to the user?
 
     Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
 
@@ -482,7 +484,9 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
     //then we offset it
     pathv+=Geom::Point(Geom::Coord(0),Geom::Coord(get_selected_spfont()->horiz_adv_x));
 
-    get_selected_glyph()->repr->setAttribute("d", (char*) sp_svg_write_path (pathv));
+    SPGlyph* glyph = get_selected_glyph();
+    if (!glyph) return; //TODO: give a message: "No glyph selected"
+    glyph->repr->setAttribute("d", (char*) sp_svg_write_path (pathv));
     sp_document_done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Set glyph curves"));
 
     update_glyphs();
