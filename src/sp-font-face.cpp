@@ -9,7 +9,7 @@
  * SVG <font-face> element implementation
  *
  * Section 20.8.3 of the W3C SVG 1.1 spec
- * available at: 
+ * available at:
  * http://www.w3.org/TR/SVG/fonts.html#FontFaceElement
  *
  * Author:
@@ -65,7 +65,7 @@ static std::vector<FontFaceStyleType> sp_read_fontFaceStyleType(gchar const *val
         v.push_back(SP_FONTFACE_STYLE_ALL);
         return v;
     }
-    
+
     if (strncmp(value, "all", 3) == 0){
         value += 3;
         while(value[0]==',' || value[0]==' ')
@@ -137,7 +137,7 @@ static std::vector<FontFaceWeightType> sp_read_fontFaceWeightType(gchar const *v
         v.push_back(SP_FONTFACE_WEIGHT_ALL);
         return v;
     }
-    
+
     if (strncmp(value, "all", 3) == 0){
         value += 3;
         while(value[0]==',' || value[0]==' ')
@@ -228,7 +228,7 @@ static std::vector<FontFaceStretchType> sp_read_fontFaceStretchType(gchar const 
         v.push_back(SP_FONTFACE_STRETCH_NORMAL);
         return v;
     }
-    
+
     if (strncmp(value, "all", 3) == 0){
         value += 3;
         while(value[0]==',' || value[0]==' ')
@@ -313,15 +313,15 @@ GType sp_fontface_get_type(void)
     if (!type) {
         GTypeInfo info = {
             sizeof(SPFontFaceClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
+            NULL,       /* base_init */
+            NULL,       /* base_finalize */
             (GClassInitFunc) sp_fontface_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
+            NULL,       /* class_finalize */
+            NULL,       /* class_data */
             sizeof(SPFontFace),
-            16,	/* n_preallocs */
+            16, /* n_preallocs */
             (GInstanceInitFunc) sp_fontface_init,
-            NULL,	/* value_table */
+            NULL,       /* value_table */
         };
         type = g_type_register_static(SP_TYPE_OBJECT, "SPFontFace", &info, (GTypeFlags) 0);
     }
@@ -439,7 +439,7 @@ static void sp_fontface_build(SPObject *object, SPDocument *document, Inkscape::
     sp_object_read_attr(object, "overline-thickness");
 }
 
-static void sp_fontface_children_modified(SPFontFace *sp_fontface)
+static void sp_fontface_children_modified(SPFontFace */*sp_fontface*/)
 {
 }
 
@@ -493,12 +493,12 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
     std::vector<FontFaceStretchType> stretch;
 
     switch (key) {
-	case SP_PROP_FONT_FAMILY:
+        case SP_PROP_FONT_FAMILY:
             if (face->font_family) g_free(face->font_family);
             face->font_family = g_strdup(value);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break; 
-	case SP_PROP_FONT_STYLE:
+            break;
+        case SP_PROP_FONT_STYLE:
             style = sp_read_fontFaceStyleType(value);
             if (face->font_style.size() != style.size()){
                 face->font_style = style;
@@ -513,7 +513,7 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
                 }
             }
             break;
-	case SP_PROP_FONT_VARIANT:
+        case SP_PROP_FONT_VARIANT:
             variant = sp_read_fontFaceVariantType(value);
             if (face->font_variant.size() != variant.size()){
                 face->font_variant = variant;
@@ -528,7 +528,7 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
                 }
             }
             break;
-	case SP_PROP_FONT_WEIGHT:
+        case SP_PROP_FONT_WEIGHT:
             weight = sp_read_fontFaceWeightType(value);
             if (face->font_weight.size() != weight.size()){
                 face->font_weight = weight;
@@ -543,7 +543,7 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
                 }
             }
             break;
-	case SP_PROP_FONT_STRETCH:
+        case SP_PROP_FONT_STRETCH:
             stretch = sp_read_fontFaceStretchType(value);
             if (face->font_stretch.size() != stretch.size()){
                 face->font_stretch = stretch;
@@ -558,168 +558,168 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
                 }
             }
             break;
-	case SP_ATTR_UNITS_PER_EM:
+        case SP_ATTR_UNITS_PER_EM:
             number = helperfns_read_number(value);
             if (number != face->units_per_em){
                 face->units_per_em = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_STEMV:
+        case SP_ATTR_STEMV:
             number = helperfns_read_number(value);
             if (number != face->stemv){
                 face->stemv = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_STEMH:
+        case SP_ATTR_STEMH:
             number = helperfns_read_number(value);
             if (number != face->stemh){
                 face->stemh = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_SLOPE:
+        case SP_ATTR_SLOPE:
             number = helperfns_read_number(value);
             if (number != face->slope){
                 face->slope = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_CAP_HEIGHT:
+        case SP_ATTR_CAP_HEIGHT:
             number = helperfns_read_number(value);
             if (number != face->cap_height){
                 face->cap_height = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_X_HEIGHT:
+        case SP_ATTR_X_HEIGHT:
             number = helperfns_read_number(value);
             if (number != face->x_height){
                 face->x_height = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_ACCENT_HEIGHT:
+        case SP_ATTR_ACCENT_HEIGHT:
             number = helperfns_read_number(value);
             if (number != face->accent_height){
                 face->accent_height = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_ASCENT:
+        case SP_ATTR_ASCENT:
             number = helperfns_read_number(value);
             if (number != face->ascent){
                 face->ascent = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_DESCENT:
+        case SP_ATTR_DESCENT:
             number = helperfns_read_number(value);
             if (number != face->descent){
                 face->descent = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_IDEOGRAPHIC:
+        case SP_ATTR_IDEOGRAPHIC:
             number = helperfns_read_number(value);
             if (number != face->ideographic){
                 face->ideographic = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_ALPHABETIC:
+        case SP_ATTR_ALPHABETIC:
             number = helperfns_read_number(value);
             if (number != face->alphabetic){
                 face->alphabetic = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_MATHEMATICAL:
+        case SP_ATTR_MATHEMATICAL:
             number = helperfns_read_number(value);
             if (number != face->mathematical){
                 face->mathematical = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_HANGING:
+        case SP_ATTR_HANGING:
             number = helperfns_read_number(value);
             if (number != face->hanging){
                 face->hanging = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_V_IDEOGRAPHIC:
+        case SP_ATTR_V_IDEOGRAPHIC:
             number = helperfns_read_number(value);
             if (number != face->v_ideographic){
                 face->v_ideographic = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_V_ALPHABETIC:
+        case SP_ATTR_V_ALPHABETIC:
             number = helperfns_read_number(value);
             if (number != face->v_alphabetic){
                 face->v_alphabetic = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_V_MATHEMATICAL:
+        case SP_ATTR_V_MATHEMATICAL:
             number = helperfns_read_number(value);
             if (number != face->v_mathematical){
                 face->v_mathematical = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_V_HANGING:
+        case SP_ATTR_V_HANGING:
             number = helperfns_read_number(value);
             if (number != face->v_hanging){
                 face->v_hanging = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_UNDERLINE_POSITION:
+        case SP_ATTR_UNDERLINE_POSITION:
             number = helperfns_read_number(value);
             if (number != face->underline_position){
                 face->underline_position = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_UNDERLINE_THICKNESS:
+        case SP_ATTR_UNDERLINE_THICKNESS:
             number = helperfns_read_number(value);
             if (number != face->underline_thickness){
                 face->underline_thickness = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_STRIKETHROUGH_POSITION:
+        case SP_ATTR_STRIKETHROUGH_POSITION:
             number = helperfns_read_number(value);
             if (number != face->strikethrough_position){
                 face->strikethrough_position = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_STRIKETHROUGH_THICKNESS:
+        case SP_ATTR_STRIKETHROUGH_THICKNESS:
             number = helperfns_read_number(value);
             if (number != face->strikethrough_thickness){
                 face->strikethrough_thickness = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_OVERLINE_POSITION:
+        case SP_ATTR_OVERLINE_POSITION:
             number = helperfns_read_number(value);
             if (number != face->overline_position){
                 face->overline_position = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_OVERLINE_THICKNESS:
+        case SP_ATTR_OVERLINE_THICKNESS:
             number = helperfns_read_number(value);
             if (number != face->overline_thickness){
                 face->overline_thickness = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	default:
+        default:
             if (((SPObjectClass *) (parent_class))->set) {
                 ((SPObjectClass *) (parent_class))->set(object, key, value);
             }

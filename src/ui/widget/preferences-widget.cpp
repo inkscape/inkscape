@@ -189,7 +189,7 @@ void PrefRadioButton::on_toggled()
 {
     this->changed_signal.emit(this->get_active());
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    
+
     if (this->is_visible() && this->get_active() ) //only take action if toggled by user (to active)
     {
         if ( _value_type == VAL_STRING )
@@ -489,11 +489,11 @@ PrefSlider::on_spinbutton_value_changed()
 
 void
 PrefSlider::init(Glib::ustring const &prefs_path,
-		double lower, double upper, double step_increment, double page_increment, double default_value, int digits)
+                 double lower, double upper, double step_increment, double page_increment, double default_value, int digits)
 {
-	_prefs_path = prefs_path;
-	
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    _prefs_path = prefs_path;
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double value = prefs->getDoubleLimited(prefs_path, default_value, lower, upper);
 
     freeze = false;
@@ -512,12 +512,11 @@ PrefSlider::init(Glib::ustring const &prefs_path,
 
     Gtk::Table *table = Gtk::manage(new Gtk::Table());
     Gtk::Alignment *alignment1 = Gtk::manage(new Gtk::Alignment(0.5,1,0,0));
-    Gtk::Alignment *alignment2 = Gtk::manage(new Gtk::Alignment(0.5,1,0,0));
     alignment1->add(_sb);
-    
+
     table->attach(_slider,     0, 1, 0, 1);
     table->attach(*alignment1, 1, 2, 0, 1, static_cast<Gtk::AttachOptions>(0));
-    
+
     this->pack_start(*table, Gtk::PACK_EXPAND_WIDGET);
 }
 
@@ -541,7 +540,7 @@ void PrefCombo::init(Glib::ustring const &prefs_path,
 
 /**
     initialize a combo box
-    second form uses strings as key values 
+    second form uses strings as key values
 */
 void PrefCombo::init(Glib::ustring const &prefs_path,
                      Glib::ustring labels[], Glib::ustring values[], int num_items, Glib::ustring default_value)

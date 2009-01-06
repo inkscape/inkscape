@@ -55,7 +55,7 @@ sp_compare_x_position(SPItem *first, SPItem *second)
 
     double const a_height = a->dimensions()[Y];
     double const b_height = b->dimensions()[Y];
-    
+
     bool a_in_b_vert = false;
     if ((a->min()[Y] < b->min()[Y] + 0.1) && (a->min()[Y] > b->min()[Y] - b_height)) {
         a_in_b_vert = true;
@@ -99,7 +99,7 @@ sp_compare_y_position(SPItem *first, SPItem *second)
     if (a->min()[Geom::Y] < b->min()[Geom::Y]) {
         return -1;
     }
-    
+
     return 0;
 }
 
@@ -342,7 +342,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
              g_slist_free (current_row);
     }
 
-    sp_document_done (sp_desktop_document (desktop), SP_VERB_SELECTION_GRIDTILE, 
+    sp_document_done (sp_desktop_document (desktop), SP_VERB_SELECTION_GRIDTILE,
                       _("Arrange in a grid"));
 
 }
@@ -355,7 +355,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
 
 void TileDialog::_apply()
 {
-	Grid_Arrange();
+    Grid_Arrange();
 }
 
 
@@ -557,8 +557,6 @@ void TileDialog::updateSelection()
     }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    double col_width = 0;
-    double row_height = 0;
     // in turn, prevent listener from responding
     updating = true;
     SPDesktop *desktop = getDesktop();

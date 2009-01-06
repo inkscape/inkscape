@@ -48,15 +48,15 @@ GType sp_font_get_type(void)
     if (!type) {
         GTypeInfo info = {
             sizeof(SPFontClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
+            NULL,       /* base_init */
+            NULL,       /* base_finalize */
             (GClassInitFunc) sp_font_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
+            NULL,       /* class_finalize */
+            NULL,       /* class_data */
             sizeof(SPFont),
-            16,	/* n_preallocs */
+            16, /* n_preallocs */
             (GInstanceInitFunc) sp_font_init,
-            NULL,	/* value_table */
+            NULL,       /* value_table */
         };
         type = g_type_register_static(SP_TYPE_OBJECT, "SPFont", &info, (GTypeFlags) 0);
     }
@@ -107,7 +107,7 @@ static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML:
 }
 
 
-static void sp_font_children_modified(SPFont *sp_font)
+static void sp_font_children_modified(SPFont */*sp_font*/)
 {
 }
 
@@ -158,49 +158,49 @@ static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
     double number;
 
     switch (key) {
-	case SP_ATTR_HORIZ_ORIGIN_X:
+        case SP_ATTR_HORIZ_ORIGIN_X:
             number = helperfns_read_number(value);
             if (number != font->horiz_origin_x){
                 font->horiz_origin_x = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_HORIZ_ORIGIN_Y:
+        case SP_ATTR_HORIZ_ORIGIN_Y:
             number = helperfns_read_number(value);
             if (number != font->horiz_origin_y){
                 font->horiz_origin_y = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_HORIZ_ADV_X:
+        case SP_ATTR_HORIZ_ADV_X:
             number = helperfns_read_number(value);
             if (number != font->horiz_adv_x){
                 font->horiz_adv_x = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_VERT_ORIGIN_X:
+        case SP_ATTR_VERT_ORIGIN_X:
             number = helperfns_read_number(value);
             if (number != font->vert_origin_x){
                 font->vert_origin_x = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_VERT_ORIGIN_Y:
+        case SP_ATTR_VERT_ORIGIN_Y:
             number = helperfns_read_number(value);
             if (number != font->vert_origin_y){
                 font->vert_origin_y = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	case SP_ATTR_VERT_ADV_Y:
+        case SP_ATTR_VERT_ADV_Y:
             number = helperfns_read_number(value);
             if (number != font->vert_adv_y){
                 font->vert_adv_y = number;
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
-	default:
+        default:
             if (((SPObjectClass *) (parent_class))->set) {
                 ((SPObjectClass *) (parent_class))->set(object, key, value);
             }
