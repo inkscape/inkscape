@@ -37,6 +37,7 @@ else (GDKMM_LIBRARIES AND GDKMM_INCLUDE_DIRS)
       /usr/include
       /usr/local/include
       /opt/local/include
+      /opt/local/include/gdkmm-2.4
       /sw/include
     PATH_SUFFIXES
       gdkmm-2.4
@@ -50,6 +51,7 @@ else (GDKMM_LIBRARIES AND GDKMM_INCLUDE_DIRS)
       /usr/include
       /usr/local/include
       /opt/local/include
+      /opt/local/lib/gdkmm-2.4/include
       /sw/include
       /usr/lib/gdkmm-2.4/include
       /usr/lib64/gdkmm-2.4/include

@@ -50,6 +50,7 @@ else (GTKMM_LIBRARIES AND GTKMM_INCLUDE_DIRS)
       /usr/include
       /usr/local/include
       /opt/local/include
+      /opt/local/lib/gtkmm-2.4/include
       /sw/include
       /usr/lib/gtkmm-2.4/include
       /usr/lib64/gtkmm-2.4/include
@@ -101,7 +102,7 @@ find_package(CAIROMM REQUIRED)
       ${ATKMM_LIBRARIES}
       ${GDKMM_LIBRARIES}
       ${GIOMM_LIBRARIES}
-      ${GLIBKMM_LIBRARIES}
+      ${GLIBMM_LIBRARIES}
       ${PANGOMM_LIBRARIES}
       ${CAIROMM_LIBRARIES}
     )

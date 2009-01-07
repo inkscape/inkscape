@@ -37,6 +37,7 @@ else (GIOMM_LIBRARIES AND GIOMM_INCLUDE_DIRS)
       /usr/include
       /usr/local/include
       /opt/local/include
+      /opt/local/include/giomm-2.4/
       /sw/include
     PATH_SUFFIXES
       giomm-2.4

@@ -96,6 +96,7 @@ ELSE (GTK2_LIBRARIES AND GTK2_INCLUDE_DIRS)
       /usr/include/gtk-2.0
       /usr/local/include/gtk-2.0
       /opt/gnome/include/gtk-2.0
+      /opt/local/include/gtk-2.0
       $ENV{DEVLIBS_PATH}//include//
     )
 
@@ -120,6 +121,7 @@ ELSE (GTK2_LIBRARIES AND GTK2_INCLUDE_DIRS)
       /opt/gnome/lib/glib-2.0/include
       /usr/lib64/glib-2.0/include
       /usr/lib/glib-2.0/include
+      /opt/local/lib/glib-2.0/include
       $ENV{DEVLIBS_PATH}//include//
     )
     #MESSAGE(STATUS "DEBUG: GTK2_GLIBCONFIG_INCLUDE_PATH = ${GTK2_GLIBCONFIG_INCLUDE_PATH}")
@@ -128,6 +130,7 @@ ELSE (GTK2_LIBRARIES AND GTK2_INCLUDE_DIRS)
       ${_GLIB2_INCLUDEDIR}
       /opt/gnome/include/glib-2.0
       /usr/include/glib-2.0
+      /opt/local/include/glib-2.0
       $ENV{DEVLIBS_PATH}//include//
     )
     #MESSAGE(STATUS "DEBUG: GTK2_GLIBCONFIG_INCLUDE_PATH = ${GTK2_GLIBCONFIG_INCLUDE_PATH}")
@@ -138,6 +141,7 @@ ELSE (GTK2_LIBRARIES AND GTK2_INCLUDE_DIRS)
       /usr/local/include
       /usr/openwin/share/include
       /opt/gnome/include
+      /opt/local/include
       $ENV{DEVLIBS_PATH}//include//
     )
 
@@ -153,6 +157,7 @@ ELSE (GTK2_LIBRARIES AND GTK2_INCLUDE_DIRS)
       ${_PANGO_INCLUDEDIR}
       /opt/gnome/include/pango-1.0
       /usr/include/pango-1.0
+      /opt/local/include/pango-1.0
       $ENV{DEVLIBS_PATH}//include//
     )
 
@@ -170,6 +175,7 @@ ELSE (GTK2_LIBRARIES AND GTK2_INCLUDE_DIRS)
       /opt/gnome/lib64/gtk-2.0/include
       /usr/lib/gtk-2.0/include
       /usr/lib64/gtk-2.0/include
+      /opt/local/lib/gtk-2.0/include
       $ENV{DEVLIBS_PATH}//include//
     )
 
@@ -186,6 +192,7 @@ ELSE (GTK2_LIBRARIES AND GTK2_INCLUDE_DIRS)
       /opt/gnome/include/cairo
       /usr/include
       /usr/include/cairo
+      /opt/local/include/cairo
       $ENV{DEVLIBS_PATH}//include//
     )
     #MESSAGE(STATUS "DEBUG: GTK2_CAIRO_INCLUDE_PATH = ${GTK2_CAIRO_INCLUDE_PATH}")
@@ -202,6 +209,7 @@ ELSE (GTK2_LIBRARIES AND GTK2_INCLUDE_DIRS)
       ${_ATK_INCLUDEDIR}
       /opt/gnome/include/atk-1.0
       /usr/include/atk-1.0
+      /opt/local/include/atk-1.0
       $ENV{DEVLIBS_PATH}//include//
     )
     #MESSAGE(STATUS "DEBUG: GTK2_ATK_INCLUDE_PATH = ${GTK2_ATK_INCLUDE_PATH}")

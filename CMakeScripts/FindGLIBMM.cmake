@@ -37,6 +37,7 @@ else (GLIBMM_LIBRARIES AND GLIBMM_INCLUDE_DIRS)
       /usr/include
       /usr/local/include
       /opt/local/include
+      /opt/local/lib/glibmm-2.4/include
       /sw/include
     PATH_SUFFIXES
       glibmm-2.4
@@ -50,6 +51,7 @@ else (GLIBMM_LIBRARIES AND GLIBMM_INCLUDE_DIRS)
       /usr/include
       /usr/local/include
       /opt/local/include
+      /opt/local/lib/glibmm-2.4/include
       /sw/include
       /usr/lib/glibmm-2.4/include
       /usr/lib64/glibmm-2.4/include

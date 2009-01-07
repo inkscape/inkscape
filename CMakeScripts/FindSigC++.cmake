@@ -51,6 +51,7 @@ else (SIGC++_LIBRARIES AND SIGC++_INCLUDE_DIRS)
       /usr/include
       /usr/local/include
       /opt/local/include
+      /opt/local/lib/sigc++-2.0/include
       /sw/include
       /usr/lib/sigc++-2.0/include
       /usr/lib64/sigc++-2.0/include
