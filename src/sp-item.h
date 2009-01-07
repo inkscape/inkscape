@@ -21,7 +21,7 @@
 
 #include "display/nr-arena-forward.h"
 #include "sp-object.h"
-#include <libnr/nr-matrix.h>
+#include <2geom/matrix.h>
 #include <libnr/nr-rect.h>
 #include <2geom/forward.h>
 #include <libnr/nr-convert2geom.h>
@@ -57,8 +57,6 @@ struct SPEvent {
     gpointer data;
 };
 
-class SPItemView;
-
 /// SPItemView
 struct SPItemView {
     SPItemView *next;
@@ -78,8 +76,6 @@ struct SPItemView {
    currently unused, does the same as DISPLAY
  */
 #define SP_ITEM_REFERENCE_FLAGS (1 << 1)
-
-class SPItemCtx;
 
 /// Contains transformations to document/viewport and the viewport size.
 struct SPItemCtx {
