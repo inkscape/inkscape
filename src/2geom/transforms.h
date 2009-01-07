@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief  \todo brief description
+ * \brief  Transforms should be applied left to right. scale * translate means: first scale, then translate.
  *
  * Authors:
  *      ? <?@?.?>

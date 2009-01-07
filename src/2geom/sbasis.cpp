@@ -70,7 +70,7 @@ std::vector<double> SBasis::valueAndDerivatives(double t, unsigned n) const {
     SBasis tmp = *this;
     for(unsigned i = 1; i < n+1; i++) {
         tmp.derive();
-        ret[i+1] = tmp.valueAt(t);
+        ret[i] = tmp.valueAt(t);
     }
     return ret;
 }

@@ -69,9 +69,9 @@ class SBasis{
     void push_back(Linear const&l) { d.push_back(l); }
 
 public:
+    // As part of our migration away from SBasis isa vector we provide this minimal set of vector interface methods.
     size_t size() const {return d.size();}
     Linear operator[](unsigned i) const {
-        assert(i < size());
         return d[i];
     }
     Linear& operator[](unsigned i) { return d.at(i); }
@@ -91,6 +91,8 @@ public:
     //void insert(Linear* aa, Linear* bb, Linear* cc} { d.insert(aa, bb, cc);}
     Linear& at(unsigned i) { return d.at(i);}
     //void insert(Linear* before, int& n, Linear const &l) { d.insert(std::vector<Linear>::iterator(before), n, l);}
+    bool operator==(SBasis const&B) { return d == B.d;}
+    operator std::vector<Linear>() { return d;}
 
     
     SBasis() {}

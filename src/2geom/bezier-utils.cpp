@@ -48,7 +48,7 @@
 #define noBEZIER_DEBUG
 
 #ifdef HAVE_IEEEFP_H
-# include <ieefp.h>
+# include <ieeefp.h>
 #endif
 
 #include <2geom/bezier-utils.h>
@@ -171,6 +171,7 @@ copy_without_nans_or_adjacent_duplicates(Point const src[], unsigned src_len, Po
             ++si;
             break;
         }
+        si++;
     }
     unsigned di = 0;
     for (; si < src_len; ++si) {

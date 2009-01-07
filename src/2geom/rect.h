@@ -215,7 +215,7 @@ public:
     /**
      * Check whether this OptRect is empty or not.
      */
-    inline bool isEmpty() { return (*this == false); };
+    inline bool isEmpty() const { return (*this == false); };
 
     /**
      * If \c this is empty, copy argument \c b. Otherwise, union with it (and do nothing when \c b is empty)

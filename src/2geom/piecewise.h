@@ -90,6 +90,8 @@ class Piecewise {
         push_cut(1.);
     }
 
+    inline void reserve(unsigned i) { segs.reserve(i); cuts.reserve(i + 1); }
+
     inline T operator[](unsigned i) const { return segs[i]; }
     inline T &operator[](unsigned i) { return segs[i]; }
     inline output_type operator()(double t) const { return valueAt(t); }
@@ -225,6 +227,7 @@ class Piecewise {
 
         segs.insert(segs.end(), other.segs.begin(), other.segs.end());
         double t = cuts.back() - other.cuts.front();
+        cuts.reserve(cuts.size() + other.size());
         for(unsigned i = 0; i < other.size(); i++)
             push_cut(other.cuts[i + 1] + t);
     }
@@ -234,15 +237,11 @@ class Piecewise {
         boost::function_requires<AddableConcept<typename T::output_type> >();
         if(other.empty()) return;
 
-        if(empty()) {
-            for(unsigned i = 0; i < other.size(); i++)
-                push_seg(other[i]);
-            cuts = other.cuts;
-            return;
-        }
+        if(empty()) { segs = other.segs; cuts = other.cuts; return; }
 
         typename T::output_type y = segs.back().at1() - other.segs.front().at0();
         double t = cuts.back() - other.cuts.front();
+        reserve(size() + other.size());
         for(unsigned i = 0; i < other.size(); i++)
             push(other[i] + y, other.cuts[i + 1] + t);
     }
@@ -327,8 +326,7 @@ Piecewise<T> partition(const Piecewise<T> &pw, std::vector<double> const &c) {
     if(c.empty()) return Piecewise<T>(pw);
 
     Piecewise<T> ret = Piecewise<T>();
-    ret.cuts.reserve(c.size() + pw.cuts.size());
-    ret.segs.reserve(c.size() + pw.cuts.size() - 1);
+    ret.reserve(c.size() + pw.cuts.size() - 1);
 
     if(pw.empty()) {
         ret.cuts = c;
@@ -408,6 +406,7 @@ Piecewise<T> portion(const Piecewise<T> &pw, double from, double to) {
     ret.push_seg(portion( pw[i], pw.segT(from, i), 1.0 ));
     i++;
     unsigned fi = pw.segN(to, i);
+    ret.reserve(fi - i + 1);
     if (to == pw.cuts[fi]) fi-=1;
 
     ret.segs.insert(ret.segs.end(), pw.segs.begin() + i, pw.segs.begin() + fi);  //copy segs
@@ -419,10 +418,12 @@ Piecewise<T> portion(const Piecewise<T> &pw, double from, double to) {
     return ret;
 }
 
+//TODO: seems like these should be mutating
 template<typename T>
 Piecewise<T> remove_short_cuts(Piecewise<T> const &f, double tol) {
     if(f.empty()) return f;
     Piecewise<T> ret;
+    ret.reserve(f.size());
     ret.push_cut(f.cuts[0]);
     for(unsigned i=0; i<f.size(); i++){
         if (f.cuts[i+1]-f.cuts[i] >= tol || i==f.size()-1) {
@@ -432,10 +433,12 @@ Piecewise<T> remove_short_cuts(Piecewise<T> const &f, double tol) {
     return ret;
 }
 
+//TODO: seems like these should be mutating
 template<typename T>
 Piecewise<T> remove_short_cuts_extending(Piecewise<T> const &f, double tol) {
     if(f.empty()) return f;
     Piecewise<T> ret;
+    ret.reserve(f.size());
     ret.push_cut(f.cuts[0]);
     double last = f.cuts[0]; // last cut included
     for(unsigned i=0; i<f.size(); i++){
@@ -463,7 +466,8 @@ template<typename T>
 Piecewise<T> operator+(Piecewise<T> const &a, typename T::output_type b) {
     boost::function_requires<OffsetableConcept<T> >();
 //TODO:empty
-    Piecewise<T> ret = Piecewise<T>();
+    Piecewise<T> ret;
+    ret.segs.reserve(a.size());
     ret.cuts = a.cuts;
     for(unsigned i = 0; i < a.size();i++)
         ret.push_seg(a[i] + b);
@@ -473,14 +477,15 @@ template<typename T>
 Piecewise<T> operator-(Piecewise<T> const &a, typename T::output_type b) {
     boost::function_requires<OffsetableConcept<T> >();
 //TODO: empty
-    Piecewise<T> ret = Piecewise<T>();
+    Piecewise<T> ret;
+    ret.segs.reserve(a.size());
     ret.cuts = a.cuts;
     for(unsigned i = 0; i < a.size();i++)
         ret.push_seg(a[i] - b);
     return ret;
 }
 template<typename T>
-Piecewise<T> operator+=(Piecewise<T>& a, typename T::output_type b) {
+Piecewise<T>& operator+=(Piecewise<T>& a, typename T::output_type b) {
     boost::function_requires<OffsetableConcept<T> >();
 
     if(a.empty()) { a.push_cut(0.); a.push(T(b), 1.); return a; }
@@ -490,10 +495,10 @@ Piecewise<T> operator+=(Piecewise<T>& a, typename T::output_type b) {
     return a;
 }
 template<typename T>
-Piecewise<T> operator-=(Piecewise<T>& a, typename T::output_type b) {
+Piecewise<T>& operator-=(Piecewise<T>& a, typename T::output_type b) {
     boost::function_requires<OffsetableConcept<T> >();
 
-    if(a.empty()) { a.push_cut(0.); a.push(T(b), 1.); return a; }
+    if(a.empty()) { a.push_cut(0.); a.push(T(-b), 1.); return a; }
 
     for(unsigned i = 0;i < a.size();i++)
         a[i] -= b;
@@ -506,6 +511,7 @@ Piecewise<T> operator-(Piecewise<T> const &a) {
     boost::function_requires<ScalableConcept<T> >();
 
     Piecewise<T> ret;
+    ret.segs.reserve(a.size());
     ret.cuts = a.cuts;
     for(unsigned i = 0; i < a.size();i++)
         ret.push_seg(- a[i]);
@@ -518,6 +524,7 @@ Piecewise<T> operator*(Piecewise<T> const &a, double b) {
     if(a.empty()) return Piecewise<T>();
 
     Piecewise<T> ret;
+    ret.segs.reserve(a.size());
     ret.cuts = a.cuts;
     for(unsigned i = 0; i < a.size();i++)
         ret.push_seg(a[i] * b);
@@ -531,27 +538,25 @@ Piecewise<T> operator/(Piecewise<T> const &a, double b) {
     if(a.empty()) return Piecewise<T>();
 
     Piecewise<T> ret;
+    ret.segs.reserve(a.size());
     ret.cuts = a.cuts;
     for(unsigned i = 0; i < a.size();i++)
         ret.push_seg(a[i] / b);
     return ret;
 }
 template<typename T>
-Piecewise<T> operator*=(Piecewise<T>& a, double b) {
+Piecewise<T>& operator*=(Piecewise<T>& a, double b) {
     boost::function_requires<ScalableConcept<T> >();
-
-    if(a.empty()) return Piecewise<T>();
 
     for(unsigned i = 0; i < a.size();i++)
         a[i] *= b;
     return a;
 }
 template<typename T>
-Piecewise<T> operator/=(Piecewise<T>& a, double b) {
+Piecewise<T>& operator/=(Piecewise<T>& a, double b) {
     boost::function_requires<ScalableConcept<T> >();
 
     //FIXME: b == 0?
-    if(a.empty()) return Piecewise<T>();
 
     for(unsigned i = 0; i < a.size();i++)
         a[i] /= b;
@@ -564,8 +569,9 @@ Piecewise<T> operator+(Piecewise<T> const &a, Piecewise<T> const &b) {
     boost::function_requires<AddableConcept<T> >();
 
     Piecewise<T> pa = partition(a, b.cuts), pb = partition(b, a.cuts);
-    Piecewise<T> ret = Piecewise<T>();
+    Piecewise<T> ret;
     assert(pa.size() == pb.size());
+    ret.segs.reserve(pa.size());
     ret.cuts = pa.cuts;
     for (unsigned i = 0; i < pa.size(); i++)
         ret.push_seg(pa[i] + pb[i]);
@@ -578,18 +584,19 @@ Piecewise<T> operator-(Piecewise<T> const &a, Piecewise<T> const &b) {
     Piecewise<T> pa = partition(a, b.cuts), pb = partition(b, a.cuts);
     Piecewise<T> ret = Piecewise<T>();
     assert(pa.size() == pb.size());
+    ret.segs.reserve(pa.size());
     ret.cuts = pa.cuts;
     for (unsigned i = 0; i < pa.size(); i++)
         ret.push_seg(pa[i] - pb[i]);
     return ret;
 }
 template<typename T>
-inline Piecewise<T> operator+=(Piecewise<T> &a, Piecewise<T> const &b) {
+inline Piecewise<T>& operator+=(Piecewise<T> &a, Piecewise<T> const &b) {
     a = a+b;
     return a;
 }
 template<typename T>
-inline Piecewise<T> operator-=(Piecewise<T> &a, Piecewise<T> const &b) {
+inline Piecewise<T>& operator-=(Piecewise<T> &a, Piecewise<T> const &b) {
     a = a-b;
     return a;
 }
@@ -603,6 +610,7 @@ Piecewise<T2> operator*(Piecewise<T1> const &a, Piecewise<T2> const &b) {
     Piecewise<T2> pb = partition(b, a.cuts);
     Piecewise<T2> ret = Piecewise<T2>();
     assert(pa.size() == pb.size());
+    ret.segs.reserve(pa.size());
     ret.cuts = pa.cuts;
     for (unsigned i = 0; i < pa.size(); i++)
         ret.push_seg(pa[i] * pb[i]);
@@ -610,7 +618,7 @@ Piecewise<T2> operator*(Piecewise<T1> const &a, Piecewise<T2> const &b) {
 }
 
 template<typename T>
-inline Piecewise<T> operator*=(Piecewise<T> &a, Piecewise<T> const &b) {
+inline Piecewise<T>& operator*=(Piecewise<T> &a, Piecewise<T> const &b) {
     a = a * b;
     return a;
 }
@@ -740,8 +748,7 @@ std::vector<std::vector<double> >multi_roots(Piecewise<SBasis> const &f, std::ve
 template<typename T>
 Piecewise<T> reverse(Piecewise<T> const &f) {
     Piecewise<T> ret = Piecewise<T>();
-    ret.cuts.resize(f.cuts.size());
-    ret.segs.resize(f.segs.size());
+    ret.reserve(f.size());
     double start = f.cuts[0];
     double end = f.cuts.back();
     for (unsigned i = 0; i < f.cuts.size(); i++) {
@@ -759,7 +766,7 @@ Piecewise<T> reverse(Piecewise<T> const &f) {
  *  \return a if t = 0, b if t = 1, or an interpolation between a and b for t in [0,1]
  */
 template<typename T>
-Piecewise<T> lerp(Piecewise<T> const &a, Piecewise<T> b, double t) {
+Piecewise<T> lerp(double t, Piecewise<T> const &a, Piecewise<T> b) {
     // Make sure both paths have the same number of segments and cuts at the same locations
     b.setDomain(a.domain());
     Piecewise<T> pA = partition(a, b.cuts);
