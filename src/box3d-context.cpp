@@ -47,6 +47,7 @@
 #include "box3d-side.h"
 #include "document-private.h"
 #include "line-geometry.h"
+#include "shape-editor.h"
 
 static void sp_box3d_context_class_init(Box3DContextClass *klass);
 static void sp_box3d_context_init(Box3DContext *box3d_context);
@@ -108,9 +109,6 @@ static void sp_box3d_context_init(Box3DContext *box3d_context)
     event_context->within_tolerance = false;
     event_context->item_to_select = NULL;
 
-    event_context->shape_repr = NULL;
-    event_context->shape_knot_holder = NULL;
-
     box3d_context->item = NULL;
 
     box3d_context->ctrl_dragged = false;
@@ -134,20 +132,12 @@ static void sp_box3d_context_dispose(GObject *object)
     bc->sel_changed_connection.disconnect();
     bc->sel_changed_connection.~connection();
 
+    delete ec->shape_editor;
+    ec->shape_editor = NULL;
+
     /* fixme: This is necessary because we do not grab */
     if (bc->item) {
         sp_box3d_finish(bc);
-    }
-
-    if (ec->shape_knot_holder) {
-        delete ec->shape_knot_holder;
-        ec->shape_knot_holder = NULL;
-    }
-
-    if (ec->shape_repr) { // remove old listener
-        sp_repr_remove_listener_by_data(ec->shape_repr, ec);
-        Inkscape::GC::release(ec->shape_repr);
-        ec->shape_repr = 0;
     }
 
     if (bc->_message_context) {
@@ -156,14 +146,6 @@ static void sp_box3d_context_dispose(GObject *object)
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
-
-static Inkscape::XML::NodeEventVector ec_shape_repr_events = {
-    NULL, /* child_added */
-    NULL, /* child_removed */
-    ec_shape_event_attr_changed,
-    NULL, /* content_changed */
-    NULL  /* order_changed */
-};
 
 /**
 \brief  Callback that processes the "changed" signal on the selection;
@@ -174,27 +156,9 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
     Box3DContext *bc = SP_BOX3D_CONTEXT(data);
     SPEventContext *ec = SP_EVENT_CONTEXT(bc);
 
-    if (ec->shape_knot_holder) { // destroy knotholder
-        delete ec->shape_knot_holder;
-        ec->shape_knot_holder = NULL;
-    }
-
-    if (ec->shape_repr) { // remove old listener
-        sp_repr_remove_listener_by_data(ec->shape_repr, ec);
-        Inkscape::GC::release(ec->shape_repr);
-        ec->shape_repr = 0;
-    }
-
-    SPItem *item = selection->singleItem();
-    if (item) {
-        ec->shape_knot_holder = sp_item_knot_holder(item, ec->desktop);
-        Inkscape::XML::Node *shape_repr = SP_OBJECT_REPR(item);
-        if (shape_repr) {
-            ec->shape_repr = shape_repr;
-            Inkscape::GC::anchor(shape_repr);
-            sp_repr_add_listener(shape_repr, &ec_shape_repr_events, ec);
-        }
-    }
+    ec->shape_editor->unset_item(SH_KNOTHOLDER);
+    SPItem *item = selection->singleItem(); 
+    ec->shape_editor->set_item(item, SH_KNOTHOLDER);
 
     if (selection->perspList().size() == 1) {
         // selecting a single box changes the current perspective
@@ -230,15 +194,11 @@ static void sp_box3d_context_setup(SPEventContext *ec)
 
     sp_box3d_context_check_for_persp_in_defs(sp_desktop_document (ec->desktop));
 
+    ec->shape_editor = new ShapeEditor(ec->desktop);
+
     SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
     if (item) {
-        ec->shape_knot_holder = sp_item_knot_holder(item, ec->desktop);
-        Inkscape::XML::Node *shape_repr = SP_OBJECT_REPR(item);
-        if (shape_repr) {
-            ec->shape_repr = shape_repr;
-            Inkscape::GC::anchor(shape_repr);
-            sp_repr_add_listener(shape_repr, &ec_shape_repr_events, ec);
-        }
+        ec->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
     bc->sel_changed_connection.disconnect();

@@ -21,6 +21,7 @@
 #include "event-context.h"
 #include "xml/repr.h"
 #include "perspective-line.h"
+#include "shape-editor.h"
 
 #include "knotholder.h" // FIXME: can we avoid direct access to KnotHolder::update_knots?
 
@@ -614,8 +615,8 @@ VPDrag::updateBoxHandles ()
 
     SPEventContext *ec = inkscape_active_event_context();
     g_assert (ec != NULL);
-    if (ec->shape_knot_holder != NULL) {
-        ec->shape_knot_holder->update_knots();
+    if (ec->shape_editor != NULL) {
+        ec->shape_editor->update_knotholder();
     }
 }
 

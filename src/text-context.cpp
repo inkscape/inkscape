@@ -49,6 +49,7 @@
 #include "sp-metrics.h"
 #include "context-fns.h"
 #include "verbs.h"
+#include "shape-editor.h"
 
 #include "text-editing.h"
 
@@ -131,9 +132,6 @@ sp_text_context_init(SPTextContext *tc)
     event_context->tolerance = 0;
     event_context->within_tolerance = false;
 
-    event_context->shape_repr = NULL;
-    event_context->shape_knot_holder = NULL;
-
     tc->imc = NULL;
 
     tc->text = NULL;
@@ -171,6 +169,10 @@ sp_text_context_dispose(GObject *obj)
     tc->style_set_connection.~connection();
     tc->sel_changed_connection.~connection();
     tc->sel_modified_connection.~connection();
+
+    delete ec->shape_editor;
+    ec->shape_editor = NULL;
+
     tc->text_sel_end.~iterator();
     tc->text_sel_start.~iterator();
     tc->text_selection_quads.~vector();
@@ -183,25 +185,7 @@ sp_text_context_dispose(GObject *obj)
     }
 
     Inkscape::Rubberband::get(ec->desktop)->stop();
-
-    if (ec->shape_knot_holder) {
-        delete ec->shape_knot_holder;
-        ec->shape_knot_holder = NULL;
-    }
-    if (ec->shape_repr) { // remove old listener
-        sp_repr_remove_listener_by_data(ec->shape_repr, ec);
-        Inkscape::GC::release(ec->shape_repr);
-        ec->shape_repr = 0;
-    }
 }
-
-static Inkscape::XML::NodeEventVector ec_shape_repr_events = {
-    NULL, /* child_added */
-    NULL, /* child_removed */
-    ec_shape_event_attr_changed,
-    NULL, /* content_changed */
-    NULL  /* order_changed */
-};
 
 static void
 sp_text_context_setup(SPEventContext *ec)
@@ -259,15 +243,11 @@ sp_text_context_setup(SPEventContext *ec)
     if (((SPEventContextClass *) parent_class)->setup)
         ((SPEventContextClass *) parent_class)->setup(ec);
 
+    ec->shape_editor = new ShapeEditor(ec->desktop);
+
     SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
     if (item && SP_IS_FLOWTEXT (item) && SP_FLOWTEXT(item)->has_internal_frame()) {
-        ec->shape_knot_holder = sp_item_knot_holder(item, ec->desktop);
-        Inkscape::XML::Node *shape_repr = SP_OBJECT_REPR(SP_FLOWTEXT(item)->get_frame(NULL));
-        if (shape_repr) {
-            ec->shape_repr = shape_repr;
-            Inkscape::GC::anchor(shape_repr);
-            sp_repr_add_listener(shape_repr, &ec_shape_repr_events, ec);
-        }
+        ec->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
     tc->sel_changed_connection = sp_desktop_selection(desktop)->connectChanged(
@@ -1449,26 +1429,10 @@ sp_text_context_selection_changed(Inkscape::Selection *selection, SPTextContext 
 
     SPEventContext *ec = SP_EVENT_CONTEXT(tc);
 
-    if (ec->shape_knot_holder) { // destroy knotholder
-        delete ec->shape_knot_holder;
-        ec->shape_knot_holder = NULL;
-    }
-
-    if (ec->shape_repr) { // remove old listener
-        sp_repr_remove_listener_by_data(ec->shape_repr, ec);
-        Inkscape::GC::release(ec->shape_repr);
-        ec->shape_repr = 0;
-    }
-
-    SPItem *item = selection->singleItem();
+    ec->shape_editor->unset_item(SH_KNOTHOLDER);
+    SPItem *item = selection->singleItem(); 
     if (item && SP_IS_FLOWTEXT (item) && SP_FLOWTEXT(item)->has_internal_frame()) {
-        ec->shape_knot_holder = sp_item_knot_holder(item, ec->desktop);
-        Inkscape::XML::Node *shape_repr = SP_OBJECT_REPR(SP_FLOWTEXT(item)->get_frame(NULL));
-        if (shape_repr) {
-            ec->shape_repr = shape_repr;
-            Inkscape::GC::anchor(shape_repr);
-            sp_repr_add_listener(shape_repr, &ec_shape_repr_events, ec);
-        }
+        ec->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
     if (tc->text && (item != tc->text)) {

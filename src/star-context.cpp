@@ -43,6 +43,7 @@
 #include "xml/node-event-vector.h"
 #include "object-edit.h"
 #include "context-fns.h"
+#include "shape-editor.h"
 
 #include "star-context.h"
 
@@ -108,9 +109,6 @@ sp_star_context_init (SPStarContext * star_context)
     event_context->within_tolerance = false;
     event_context->item_to_select = NULL;
 
-    event_context->shape_repr = NULL;
-    event_context->shape_knot_holder = NULL;
-
     star_context->item = NULL;
 
     star_context->magnitude = 5;
@@ -131,16 +129,8 @@ sp_star_context_dispose (GObject *object)
     sc->sel_changed_connection.disconnect();
     sc->sel_changed_connection.~connection();
 
-    if (ec->shape_knot_holder) {
-        delete ec->shape_knot_holder;
-        ec->shape_knot_holder = NULL;
-    }
-
-    if (ec->shape_repr) { // remove old listener
-        sp_repr_remove_listener_by_data (ec->shape_repr, ec);
-        Inkscape::GC::release(ec->shape_repr);
-        ec->shape_repr = 0;
-    }
+    delete ec->shape_editor;
+    ec->shape_editor = NULL;
 
     /* fixme: This is necessary because we do not grab */
     if (sc->item) sp_star_finish (sc);
@@ -151,14 +141,6 @@ sp_star_context_dispose (GObject *object)
 
     G_OBJECT_CLASS (parent_class)->dispose (object);
 }
-
-static Inkscape::XML::NodeEventVector ec_shape_repr_events = {
-    NULL, /* child_added */
-    NULL, /* child_removed */
-    ec_shape_event_attr_changed,
-    NULL, /* content_changed */
-    NULL  /* order_changed */
-};
 
 /**
 \brief  Callback that processes the "changed" signal on the selection;
@@ -173,27 +155,9 @@ sp_star_context_selection_changed (Inkscape::Selection * selection, gpointer dat
     SPStarContext *sc = SP_STAR_CONTEXT (data);
     SPEventContext *ec = SP_EVENT_CONTEXT (sc);
 
-    if (ec->shape_knot_holder) { // desktroy knotholder
-        delete ec->shape_knot_holder;
-        ec->shape_knot_holder = NULL;
-    }
-
-    if (ec->shape_repr) { // remove old listener
-        sp_repr_remove_listener_by_data (ec->shape_repr, ec);
-        Inkscape::GC::release(ec->shape_repr);
-        ec->shape_repr = 0;
-    }
-
-    SPItem *item = selection->singleItem();
-    if (item) {
-        ec->shape_knot_holder = sp_item_knot_holder (item, ec->desktop);
-        Inkscape::XML::Node *shape_repr = SP_OBJECT_REPR (item);
-        if (shape_repr) {
-            ec->shape_repr = shape_repr;
-            Inkscape::GC::anchor(shape_repr);
-            sp_repr_add_listener (shape_repr, &ec_shape_repr_events, ec);
-        }
-    }
+    ec->shape_editor->unset_item(SH_KNOTHOLDER);
+    SPItem *item = selection->singleItem(); 
+    ec->shape_editor->set_item(item, SH_KNOTHOLDER);
 }
 
 static void
@@ -210,19 +174,14 @@ sp_star_context_setup (SPEventContext *ec)
     sp_event_context_read (ec, "rounded");
     sp_event_context_read (ec, "randomized");
 
+    ec->shape_editor = new ShapeEditor(ec->desktop);
+
+    SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
+    if (item) {
+        ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+    }
+
     Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
-
-    SPItem *item = selection->singleItem();
-        if (item) {
-            ec->shape_knot_holder = sp_item_knot_holder (item, ec->desktop);
-            Inkscape::XML::Node *shape_repr = SP_OBJECT_REPR (item);
-            if (shape_repr) {
-                ec->shape_repr = shape_repr;
-                Inkscape::GC::anchor(shape_repr);
-                sp_repr_add_listener (shape_repr, &ec_shape_repr_events, ec);
-            }
-        }
-
     sc->sel_changed_connection.disconnect();
     sc->sel_changed_connection = selection->connectChanged(sigc::bind(sigc::ptr_fun(&sp_star_context_selection_changed), (gpointer)sc));
 
