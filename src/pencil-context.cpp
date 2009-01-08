@@ -824,7 +824,7 @@ sketch_interpolate(SPPencilContext *pc)
             } else {
                 t = 0.5;
             }
-            pc->sketch_interpolation = Geom::lerp(fit_pwd2, pc->sketch_interpolation, t);
+            pc->sketch_interpolation = Geom::lerp(t, fit_pwd2, pc->sketch_interpolation);
         } else {
             pc->sketch_interpolation = fit_pwd2;
         }
