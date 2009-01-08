@@ -921,28 +921,28 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         case SP_VERB_EDIT_SELECT_ALL:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                SP_NODE_CONTEXT(ec)->shape_editor->select_all_from_subpath(false);
+                ec->shape_editor->select_all_from_subpath(false);
             } else {
                 sp_edit_select_all(dt);
             }
             break;
         case SP_VERB_EDIT_INVERT:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                SP_NODE_CONTEXT(ec)->shape_editor->select_all_from_subpath(true);
+                ec->shape_editor->select_all_from_subpath(true);
             } else {
                 sp_edit_invert(dt);
             }
             break;
         case SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                SP_NODE_CONTEXT(ec)->shape_editor->select_all(false);
+                ec->shape_editor->select_all(false);
             } else {
                 sp_edit_select_all_in_all_layers(dt);
             }
             break;
         case SP_VERB_EDIT_INVERT_IN_ALL_LAYERS:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                SP_NODE_CONTEXT(ec)->shape_editor->select_all(true);
+                ec->shape_editor->select_all(true);
             } else {
                 sp_edit_invert_in_all_layers(dt);
             }
@@ -950,7 +950,7 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
         case SP_VERB_EDIT_SELECT_NEXT:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                SP_NODE_CONTEXT(ec)->shape_editor->select_next();
+                ec->shape_editor->select_next();
             } else if (tools_isactive(dt, TOOLS_GRADIENT)
                        && ec->_grdrag->isNonEmpty()) {
                 sp_gradient_context_select_next (ec);
@@ -960,7 +960,7 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
             break;
         case SP_VERB_EDIT_SELECT_PREV:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                SP_NODE_CONTEXT(ec)->shape_editor->select_prev();
+                ec->shape_editor->select_prev();
             } else if (tools_isactive(dt, TOOLS_GRADIENT)
                        && ec->_grdrag->isNonEmpty()) {
                 sp_gradient_context_select_prev (ec);
@@ -971,7 +971,7 @@ EditVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
         case SP_VERB_EDIT_DESELECT:
             if (tools_isactive(dt, TOOLS_NODES)) {
-                SP_NODE_CONTEXT(ec)->shape_editor->deselect();
+                ec->shape_editor->deselect();
             } else {
                 sp_desktop_selection(dt)->clear();
             }
@@ -1356,11 +1356,11 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
                 if (active_node) {
 
                     // ... flip the selected nodes about that node
-                    SP_NODE_CONTEXT(ec)->shape_editor->flip(Geom::X, active_node->pos);
+                    ec->shape_editor->flip(Geom::X, active_node->pos);
                 } else {
 
                     // ... or else about the center of their bounding box.
-                    SP_NODE_CONTEXT(ec)->shape_editor->flip(Geom::X);
+                    ec->shape_editor->flip(Geom::X);
                 }
 
             // When working with the selector tool, flip the selection about its rotation center
@@ -1376,9 +1376,9 @@ ObjectVerb::perform( SPAction *action, void *data, void */*pdata*/ )
             if (tools_isactive(dt, TOOLS_NODES)) {
                 Inkscape::NodePath::Node *active_node = Inkscape::NodePath::Path::active_node;
                 if (active_node) {
-                    SP_NODE_CONTEXT(ec)->shape_editor->flip(Geom::Y, active_node->pos);
+                    ec->shape_editor->flip(Geom::Y, active_node->pos);
                 } else {
-                    SP_NODE_CONTEXT(ec)->shape_editor->flip(Geom::Y);
+                    ec->shape_editor->flip(Geom::Y);
                 }
             } else {
                 sp_selection_scale_relative(sel, center, Geom::Scale(1.0, -1.0));

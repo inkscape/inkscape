@@ -252,8 +252,7 @@ sp_lpe_item_update(SPObject *object, SPCtx *ctx, guint flags)
     // FIXME: ditch inkscape_active_event_context()
     SPEventContext *ec = inkscape_active_event_context();
     if (!SP_IS_NODE_CONTEXT(ec)) return;
-    SPNodeContext *nc = SP_NODE_CONTEXT(ec);
-    ShapeEditor *sh = nc->shape_editor;
+    ShapeEditor *sh = ec->shape_editor;
     g_assert(sh);
     if (!sh->has_nodepath()) return;
 

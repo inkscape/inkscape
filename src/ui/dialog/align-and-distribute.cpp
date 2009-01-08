@@ -441,9 +441,9 @@ private :
         if (!SP_IS_NODE_CONTEXT (event_context)) return ;
 
         if (_distribute)
-            SP_NODE_CONTEXT (event_context)->shape_editor->distribute((Geom::Dim2)_orientation);
+            event_context->shape_editor->distribute((Geom::Dim2)_orientation);
         else
-            SP_NODE_CONTEXT (event_context)->shape_editor->align((Geom::Dim2)_orientation);
+            event_context->shape_editor->align((Geom::Dim2)_orientation);
 
     }
 };

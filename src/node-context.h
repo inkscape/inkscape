@@ -38,8 +38,6 @@ struct SPNodeContext {
 
 	guint drag : 1;
 
-	ShapeEditor* shape_editor;
-
 	gboolean leftalt;
 	gboolean rightalt;
 	gboolean leftctrl;

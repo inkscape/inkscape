@@ -121,7 +121,7 @@ sp_node_context_dispose(GObject *object)
     nc->sel_changed_connection.disconnect();
     nc->sel_changed_connection.~connection();
 
-    delete nc->shape_editor;
+    delete ec->shape_editor;
 
     if (nc->_node_message_context) {
         delete nc->_node_message_context;
@@ -145,7 +145,7 @@ sp_node_context_setup(SPEventContext *ec)
 
     SPItem *item = selection->singleItem();
 
-    nc->shape_editor = new ShapeEditor(ec->desktop);
+    ec->shape_editor = new ShapeEditor(ec->desktop);
 
     nc->rb_escaped = false;
 
@@ -156,8 +156,8 @@ sp_node_context_setup(SPEventContext *ec)
     nc->current_state = SP_NODE_CONTEXT_INACTIVE;
 
     if (item) {
-        nc->shape_editor->set_item(item, SH_NODEPATH);
-        nc->shape_editor->set_item(item, SH_KNOTHOLDER);
+        ec->shape_editor->set_item(item, SH_NODEPATH);
+        ec->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -172,7 +172,7 @@ sp_node_context_setup(SPEventContext *ec)
 
     nc->_node_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 
-    nc->shape_editor->update_statusbar();
+    ec->shape_editor->update_statusbar();
 }
 
 static void
@@ -209,15 +209,15 @@ destroys old and creates new nodepath and reassigns listeners to the new selecte
 void
 sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
 {
-    SPNodeContext *nc = SP_NODE_CONTEXT(data);
+    SPEventContext *ec = SP_EVENT_CONTEXT(data);
 
     // TODO: update ShapeEditorsCollective instead
-    nc->shape_editor->unset_item(SH_NODEPATH);
-    nc->shape_editor->unset_item(SH_KNOTHOLDER);
+    ec->shape_editor->unset_item(SH_NODEPATH);
+    ec->shape_editor->unset_item(SH_KNOTHOLDER);
     SPItem *item = selection->singleItem(); 
-    nc->shape_editor->set_item(item, SH_NODEPATH);
-    nc->shape_editor->set_item(item, SH_KNOTHOLDER);
-    nc->shape_editor->update_statusbar();
+    ec->shape_editor->set_item(item, SH_NODEPATH);
+    ec->shape_editor->set_item(item, SH_KNOTHOLDER);
+    ec->shape_editor->update_statusbar();
 }
 
 void
@@ -260,6 +260,7 @@ static gint
 sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
     SPDesktop *desktop = event_context->desktop;
+    ShapeEditor* se = event_context->shape_editor;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
@@ -285,13 +286,13 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 event_context->xp = (gint) event->button.x;
                 event_context->yp = (gint) event->button.y;
                 event_context->within_tolerance = true;
-                nc->shape_editor->cancel_hit();
+                se->cancel_hit();
 
                 if (!(event->button.state & GDK_SHIFT_MASK)) {
                     if (!nc->drag) {
-                        if (nc->shape_editor->has_nodepath() && selection->single() /* && item_over */) {
+                        if (se->has_nodepath() && selection->single() /* && item_over */) {
                             // save drag origin
-                            bool over_stroke = nc->shape_editor->is_over_stroke(Geom::Point(event->button.x, event->button.y), true);
+                            bool over_stroke = se->is_over_stroke(Geom::Point(event->button.x, event->button.y), true);
                             //only dragging curves
                             if (over_stroke) {
                                 ret = TRUE;
@@ -321,7 +322,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 // The path went away while dragging; throw away any further motion
                 // events until the mouse pointer is released.
                 
-                if (nc->shape_editor->hits_curve() && !nc->shape_editor->has_nodepath()) {
+                if (se->hits_curve() && !se->has_nodepath()) {
                   break;
                 }
 
@@ -334,7 +335,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 // selection rubberband), make sure we continue to perform that operation
                 // until the mouse pointer is lifted.
                 if (nc->current_state == SP_NODE_CONTEXT_INACTIVE) {
-                    if (nc->shape_editor->hits_curve() && nc->shape_editor->has_nodepath()) {
+                    if (se->hits_curve() && se->has_nodepath()) {
                         nc->current_state = SP_NODE_CONTEXT_NODE_DRAGGING;
                     } else {
                         nc->current_state = SP_NODE_CONTEXT_RUBBERBAND_DRAGGING;
@@ -344,7 +345,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 switch (nc->current_state) {
                     case SP_NODE_CONTEXT_NODE_DRAGGING:
                         {
-                            nc->shape_editor->curve_drag (event->motion.x, event->motion.y);
+                            se->curve_drag (event->motion.x, event->motion.y);
 
                             gobble_motion_events(GDK_BUTTON1_MASK);
                             break;
@@ -362,12 +363,12 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 nc->drag = TRUE;
                 ret = TRUE;
             } else {
-                if (!nc->shape_editor->has_nodepath() || selection->singleItem() == NULL) {
+                if (!se->has_nodepath() || selection->singleItem() == NULL) {
                     break;
                 }
 
                 bool over_stroke = false;
-                over_stroke = nc->shape_editor->is_over_stroke(Geom::Point(event->motion.x, event->motion.y), false);
+                over_stroke = se->is_over_stroke(Geom::Point(event->motion.x, event->motion.y), false);
 
                 if (nc->cursor_drag && !over_stroke) {
                     event_context->cursor_shape = cursor_node_xpm;
@@ -396,8 +397,8 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 event_context->xp = event_context->yp = 0;
 
                 bool over_stroke = false;
-                if (nc->shape_editor->has_nodepath()) {
-                    over_stroke = nc->shape_editor->is_over_stroke(Geom::Point(event->button.x, event->button.y), false);
+                if (se->has_nodepath()) {
+                    over_stroke = se->is_over_stroke(Geom::Point(event->button.x, event->button.y), false);
                 }
 
                 if (item_clicked || over_stroke) {
@@ -406,7 +407,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                             case GDK_BUTTON_RELEASE:
                                 if (event->button.state & GDK_CONTROL_MASK && event->button.state & GDK_MOD1_MASK) {
                                     //add a node
-                                    nc->shape_editor->add_node_near_point();
+                                    se->add_node_near_point();
                                 } else {
                                     if (nc->added_node) { // we just received double click, ignore release
                                         nc->added_node = false;
@@ -414,16 +415,16 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                     }
                                     //select the segment
                                     if (event->button.state & GDK_SHIFT_MASK) {
-                                        nc->shape_editor->select_segment_near_point(true);
+                                        se->select_segment_near_point(true);
                                     } else {
-                                        nc->shape_editor->select_segment_near_point(false);
+                                        se->select_segment_near_point(false);
                                     }
                                     desktop->updateNow();
                                 }
                                 break;
                             case GDK_2BUTTON_PRESS:
                                 //add a node
-                                nc->shape_editor->add_node_near_point();
+                                se->add_node_near_point();
                                 nc->added_node = true;
                                 break;
                             default:
@@ -446,14 +447,14 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (event->button.button == 1) {
                     Geom::OptRect b = Inkscape::Rubberband::get(desktop)->getRectangle();
 
-                    if (nc->shape_editor->hits_curve() && !event_context->within_tolerance) { //drag curve
-                        nc->shape_editor->finish_drag();
+                    if (se->hits_curve() && !event_context->within_tolerance) { //drag curve
+                        se->finish_drag();
                     } else if (b && !event_context->within_tolerance) { // drag to select
-                        nc->shape_editor->select_rect(*b, event->button.state & GDK_SHIFT_MASK);
+                        se->select_rect(*b, event->button.state & GDK_SHIFT_MASK);
                     } else {
                         if (!(nc->rb_escaped)) { // unless something was cancelled
-                            if (nc->shape_editor->has_selection())
-                                nc->shape_editor->deselect();
+                            if (se->has_selection())
+                                se->deselect();
                             else
                                 sp_desktop_selection(desktop)->clear();
                         }
@@ -463,7 +464,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     desktop->updateNow();
                     nc->rb_escaped = false;
                     nc->drag = FALSE;
-                    nc->shape_editor->cancel_hit();
+                    se->cancel_hit();
                     nc->current_state = SP_NODE_CONTEXT_INACTIVE;
                 }
             }
@@ -473,79 +474,79 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_Insert:
                 case GDK_KP_Insert:
                     // with any modifiers
-                    nc->shape_editor->add_node();
+                    se->add_node();
                     ret = TRUE;
                     break;
                 case GDK_Delete:
                 case GDK_KP_Delete:
                 case GDK_BackSpace:
                     if (MOD__CTRL_ONLY) {
-                        nc->shape_editor->delete_nodes();
+                        se->delete_nodes();
                     } else {
-                        nc->shape_editor->delete_nodes_preserving_shape();
+                        se->delete_nodes_preserving_shape();
                     }
                     ret = TRUE;
                     break;
                 case GDK_C:
                 case GDK_c:
                     if (MOD__SHIFT_ONLY) {
-                        nc->shape_editor->set_node_type(Inkscape::NodePath::NODE_CUSP);
+                        se->set_node_type(Inkscape::NodePath::NODE_CUSP);
                         ret = TRUE;
                     }
                     break;
                 case GDK_S:
                 case GDK_s:
                     if (MOD__SHIFT_ONLY) {
-                        nc->shape_editor->set_node_type(Inkscape::NodePath::NODE_SMOOTH);
+                        se->set_node_type(Inkscape::NodePath::NODE_SMOOTH);
                         ret = TRUE;
                     }
                     break;
                 case GDK_A:
                 case GDK_a:
                     if (MOD__SHIFT_ONLY) {
-                        nc->shape_editor->set_node_type(Inkscape::NodePath::NODE_AUTO);
+                        se->set_node_type(Inkscape::NodePath::NODE_AUTO);
                         ret = TRUE;
                     }
                     break;
                 case GDK_Y:
                 case GDK_y:
                     if (MOD__SHIFT_ONLY) {
-                        nc->shape_editor->set_node_type(Inkscape::NodePath::NODE_SYMM);
+                        se->set_node_type(Inkscape::NodePath::NODE_SYMM);
                         ret = TRUE;
                     }
                     break;
                 case GDK_B:
                 case GDK_b:
                     if (MOD__SHIFT_ONLY) {
-                        nc->shape_editor->break_at_nodes();
+                        se->break_at_nodes();
                         ret = TRUE;
                     }
                     break;
                 case GDK_J:
                 case GDK_j:
                     if (MOD__SHIFT_ONLY) {
-                        nc->shape_editor->join_nodes();
+                        se->join_nodes();
                         ret = TRUE;
                     }
                     break;
                 case GDK_D:
                 case GDK_d:
                     if (MOD__SHIFT_ONLY) {
-                        nc->shape_editor->duplicate_nodes();
+                        se->duplicate_nodes();
                         ret = TRUE;
                     }
                     break;
                 case GDK_L:
                 case GDK_l:
                     if (MOD__SHIFT_ONLY) {
-                        nc->shape_editor->set_type_of_segments(NR_LINETO);
+                        se->set_type_of_segments(NR_LINETO);
                         ret = TRUE;
                     }
                     break;
                 case GDK_U:
                 case GDK_u:
                     if (MOD__SHIFT_ONLY) {
-                        nc->shape_editor->set_type_of_segments(NR_CURVETO);
+                        se->set_type_of_segments(NR_CURVETO);
                         ret = TRUE;
                     }
                     break;
@@ -571,12 +572,12 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(desktop, mul*-10, 0); // shift
-                            else nc->shape_editor->move_nodes_screen(desktop, mul*-1, 0); // no shift
+                            if (MOD__SHIFT) se->move_nodes_screen(desktop, mul*-10, 0); // shift
+                            else se->move_nodes_screen(desktop, mul*-1, 0); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes(mul*-10*nudge, 0); // shift
-                            else nc->shape_editor->move_nodes(mul*-nudge, 0); // no shift
+                            if (MOD__SHIFT) se->move_nodes(mul*-10*nudge, 0); // shift
+                            else se->move_nodes(mul*-nudge, 0); // no shift
                         }
                         ret = TRUE;
                     }
@@ -588,12 +589,12 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(desktop, 0, mul*10); // shift
-                            else nc->shape_editor->move_nodes_screen(desktop, 0, mul*1); // no shift
+                            if (MOD__SHIFT) se->move_nodes_screen(desktop, 0, mul*10); // shift
+                            else se->move_nodes_screen(desktop, 0, mul*1); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes(0, mul*10*nudge); // shift
-                            else nc->shape_editor->move_nodes(0, mul*nudge); // no shift
+                            if (MOD__SHIFT) se->move_nodes(0, mul*10*nudge); // shift
+                            else se->move_nodes(0, mul*nudge); // no shift
                         }
                         ret = TRUE;
                     }
@@ -605,12 +606,12 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(desktop, mul*10, 0); // shift
-                            else nc->shape_editor->move_nodes_screen(desktop, mul*1, 0); // no shift
+                            if (MOD__SHIFT) se->move_nodes_screen(desktop, mul*10, 0); // shift
+                            else se->move_nodes_screen(desktop, mul*1, 0); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes(mul*10*nudge, 0); // shift
-                            else nc->shape_editor->move_nodes(mul*nudge, 0); // no shift
+                            if (MOD__SHIFT) se->move_nodes(mul*10*nudge, 0); // shift
+                            else se->move_nodes(mul*nudge, 0); // no shift
                         }
                         ret = TRUE;
                     }
@@ -622,12 +623,12 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT) { // alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes_screen(desktop, 0, mul*-10); // shift
-                            else nc->shape_editor->move_nodes_screen(desktop, 0, mul*-1); // no shift
+                            if (MOD__SHIFT) se->move_nodes_screen(desktop, 0, mul*-10); // shift
+                            else se->move_nodes_screen(desktop, 0, mul*-1); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT) nc->shape_editor->move_nodes(0, mul*-10*nudge); // shift
-                            else nc->shape_editor->move_nodes(0, mul*-nudge); // no shift
+                            if (MOD__SHIFT) se->move_nodes(0, mul*-10*nudge); // shift
+                            else se->move_nodes(0, mul*-nudge); // no shift
                         }
                         ret = TRUE;
                     }
@@ -640,8 +641,8 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         nc->current_state = SP_NODE_CONTEXT_INACTIVE;
                         nc->rb_escaped = true;
                     } else {
-                        if (nc->shape_editor->has_selection()) {
-                            nc->shape_editor->deselect();
+                        if (se->has_selection()) {
+                            se->deselect();
                         } else {
                             sp_desktop_selection(desktop)->clear();
                         }
@@ -653,40 +654,40 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_bracketleft:
                     if ( MOD__CTRL && !MOD__ALT && ( snaps != 0 ) ) {
                         if (nc->leftctrl)
-                            nc->shape_editor->rotate_nodes (M_PI/snaps, -1, false);
+                            se->rotate_nodes (M_PI/snaps, -1, false);
                         if (nc->rightctrl)
-                            nc->shape_editor->rotate_nodes (M_PI/snaps, 1, false);
+                            se->rotate_nodes (M_PI/snaps, 1, false);
                     } else if ( MOD__ALT && !MOD__CTRL ) {
                         if (nc->leftalt && nc->rightalt)
-                            nc->shape_editor->rotate_nodes (1, 0, true);
+                            se->rotate_nodes (1, 0, true);
                         else {
                             if (nc->leftalt)
-                                nc->shape_editor->rotate_nodes (1, -1, true);
+                                se->rotate_nodes (1, -1, true);
                             if (nc->rightalt)
-                                nc->shape_editor->rotate_nodes (1, 1, true);
+                                se->rotate_nodes (1, 1, true);
                         }
                     } else if ( snaps != 0 ) {
-                        nc->shape_editor->rotate_nodes (M_PI/snaps, 0, false);
+                        se->rotate_nodes (M_PI/snaps, 0, false);
                     }
                     ret = TRUE;
                     break;
                 case GDK_bracketright:
                     if ( MOD__CTRL && !MOD__ALT && ( snaps != 0 ) ) {
                         if (nc->leftctrl)
-                            nc->shape_editor->rotate_nodes (-M_PI/snaps, -1, false);
+                            se->rotate_nodes (-M_PI/snaps, -1, false);
                         if (nc->rightctrl)
-                            nc->shape_editor->rotate_nodes (-M_PI/snaps, 1, false);
+                            se->rotate_nodes (-M_PI/snaps, 1, false);
                     } else if ( MOD__ALT && !MOD__CTRL ) {
                         if (nc->leftalt && nc->rightalt)
-                            nc->shape_editor->rotate_nodes (-1, 0, true);
+                            se->rotate_nodes (-1, 0, true);
                         else {
                             if (nc->leftalt)
-                                nc->shape_editor->rotate_nodes (-1, -1, true);
+                                se->rotate_nodes (-1, -1, true);
                             if (nc->rightalt)
-                                nc->shape_editor->rotate_nodes (-1, 1, true);
+                                se->rotate_nodes (-1, 1, true);
                         }
                     } else if ( snaps != 0 ) {
-                        nc->shape_editor->rotate_nodes (-M_PI/snaps, 0, false);
+                        se->rotate_nodes (-M_PI/snaps, 0, false);
                     }
                     ret = TRUE;
                     break;
@@ -694,20 +695,20 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_comma:
                     if (MOD__CTRL) {
                         if (nc->leftctrl)
-                            nc->shape_editor->scale_nodes(-offset, -1);
+                            se->scale_nodes(-offset, -1);
                         if (nc->rightctrl)
-                            nc->shape_editor->scale_nodes(-offset, 1);
+                            se->scale_nodes(-offset, 1);
                     } else if (MOD__ALT) {
                         if (nc->leftalt && nc->rightalt)
-                            nc->shape_editor->scale_nodes_screen (-1, 0);
+                            se->scale_nodes_screen (-1, 0);
                         else {
                             if (nc->leftalt)
-                                nc->shape_editor->scale_nodes_screen (-1, -1);
+                                se->scale_nodes_screen (-1, -1);
                             if (nc->rightalt)
-                                nc->shape_editor->scale_nodes_screen (-1, 1);
+                                se->scale_nodes_screen (-1, 1);
                         }
                     } else {
-                        nc->shape_editor->scale_nodes (-offset, 0);
+                        se->scale_nodes (-offset, 0);
                     }
                     ret = TRUE;
                     break;
@@ -715,20 +716,20 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_period:
                     if (MOD__CTRL) {
                         if (nc->leftctrl)
-                            nc->shape_editor->scale_nodes (offset, -1);
+                            se->scale_nodes (offset, -1);
                         if (nc->rightctrl)
-                            nc->shape_editor->scale_nodes (offset, 1);
+                            se->scale_nodes (offset, 1);
                     } else if (MOD__ALT) {
                         if (nc->leftalt && nc->rightalt)
-                            nc->shape_editor->scale_nodes_screen (1, 0);
+                            se->scale_nodes_screen (1, 0);
                         else {
                             if (nc->leftalt)
-                                nc->shape_editor->scale_nodes_screen (1, -1);
+                                se->scale_nodes_screen (1, -1);
                             if (nc->rightalt)
-                                nc->shape_editor->scale_nodes_screen (1, 1);
+                                se->scale_nodes_screen (1, 1);
                         }
                     } else {
-                        nc->shape_editor->scale_nodes (offset, 0);
+                        se->scale_nodes (offset, 0);
                     }
                     ret = TRUE;
                     break;

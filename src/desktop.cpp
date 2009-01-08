@@ -883,9 +883,8 @@ SPDesktop::zoom_quick (bool enable)
         if (!zoomed) {
             SPItem * singleItem = selection->singleItem();
             if (singleItem != NULL && tools_isactive(this, TOOLS_NODES)) {
-                SPNodeContext * ncontext = SP_NODE_CONTEXT(event_context);
 
-                Inkscape::NodePath::Path * nodepath = ncontext->shape_editor->get_nodepath();
+                Inkscape::NodePath::Path * nodepath = event_context->shape_editor->get_nodepath();
                 // printf("I've got a nodepath, crazy\n");
 
                 Geom::Rect nodes;

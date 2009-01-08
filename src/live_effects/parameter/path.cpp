@@ -200,7 +200,7 @@ PathParam::param_editOncanvas(SPItem * item, SPDesktop * dt)
         tools_switch(dt, TOOLS_NODES);
     }
 
-    ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
+    ShapeEditor * shape_editor = dt->event_context->shape_editor;
     if (!href) {
         shape_editor->set_item_lpe_path_parameter(item, SP_OBJECT(param_effect->getLPEObj()), param_key.c_str());
     } else {

@@ -72,8 +72,7 @@ struct SPEventContext : public GObject {
     GrDrag *_grdrag;
     GrDrag *get_drag () {return _grdrag;}
 
-    KnotHolder *shape_knot_holder;
-    Inkscape::XML::Node *shape_repr;
+    ShapeEditor* shape_editor;
 
     bool space_panning;
 };

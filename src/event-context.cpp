@@ -141,6 +141,7 @@ sp_event_context_init(SPEventContext *event_context)
     event_context->_selcue = NULL;
     event_context->_grdrag = NULL;
     event_context->space_panning = false;
+    event_context->shape_editor = NULL;
 }
 
 /**
@@ -1058,47 +1059,8 @@ sp_event_context_over_item (SPDesktop *desktop, SPItem *item, Geom::Point const 
 ShapeEditor *
 sp_event_context_get_shape_editor (SPEventContext *ec)
 {
-    if (SP_IS_NODE_CONTEXT(ec)) {
-        return SP_NODE_CONTEXT(ec)->shape_editor;
-    } else if (SP_IS_LPETOOL_CONTEXT(ec)) {
-        return SP_LPETOOL_CONTEXT(ec)->shape_editor;
-    } else {
-        g_warning("ShapeEditor only exists in Node and Geometric Tool.");
-        return NULL;
-    }
+    return ec->shape_editor;
 }
-
-/**
- * Called when SPEventContext subclass node attribute changed.
- */
-void
-ec_shape_event_attr_changed(Inkscape::XML::Node */*shape_repr*/, gchar const *name,
-                            gchar const */*old_value*/, gchar const */*new_value*/,
-                            bool const /*is_interactive*/, gpointer const data)
-{
-    if (!name
-            || !strcmp(name, "style")
-            || SP_ATTRIBUTE_IS_CSS(sp_attribute_lookup(name))) {
-        // no need to regenrate knotholder if only style changed
-        return;
-    }
-
-    SPEventContext *ec = SP_EVENT_CONTEXT(data);
-
-    if (ec->shape_knot_holder) {
-        delete ec->shape_knot_holder;
-    }
-    ec->shape_knot_holder = NULL;
-
-    SPDesktop *desktop = ec->desktop;
-
-    SPItem *item = sp_desktop_selection(desktop)->singleItem();
-
-    if (item) {
-        ec->shape_knot_holder = sp_item_knot_holder(item, desktop);
-    }
-}
-
 
 void
 event_context_print_event_info(GdkEvent *event, bool print_return) {

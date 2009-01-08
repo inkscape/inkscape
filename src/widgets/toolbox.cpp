@@ -968,7 +968,7 @@ static ShapeEditor *get_current_shape_editor()
         return NULL;
     }
 
-    return SP_NODE_CONTEXT(event_context)->shape_editor;
+    return event_context->shape_editor;
 }
 
 

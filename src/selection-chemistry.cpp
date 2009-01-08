@@ -1731,7 +1731,7 @@ void sp_selection_edit_clip_or_mask(SPDesktop * dt, bool clip)
                             tools_switch(dt, TOOLS_NODES);
                         }
 
-                        ShapeEditor * shape_editor = SP_NODE_CONTEXT( dt->event_context )->shape_editor;
+                        ShapeEditor * shape_editor = dt->event_context->shape_editor;
                         // TODO: should we set the item for nodepath or knotholder or both? seems to work with both.
                         shape_editor->set_item(SP_ITEM(child), SH_NODEPATH);
                         shape_editor->set_item(SP_ITEM(child), SH_KNOTHOLDER);
