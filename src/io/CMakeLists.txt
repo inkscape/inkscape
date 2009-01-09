@@ -11,3 +11,4 @@ sys.cpp
 uristream.cpp
 xsltstream.cpp
 )
+ADD_LIBRARY(io STATIC ${io_SRC})

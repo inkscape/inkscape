@@ -6,6 +6,7 @@ IF(WIN32)
 ELSEIF(WIN32)
     SET(ONLY_WIN)
 ENDIF(WIN32)
+
 SET(SP_SRC
 sp-anchor.cpp
 sp-animation.cpp
@@ -15,26 +16,6 @@ sp-conn-end-pair.cpp
 sp-cursor.cpp
 sp-defs.cpp
 sp-ellipse.cpp
-# sp-feblend.cpp
-# sp-fecolormatrix.cpp
-# sp-fecomponenttransfer.cpp
-# sp-fecomponenttransfer-funcnode.cpp
-# sp-fecomposite.cpp
-# sp-feconvolvematrix.cpp
-# sp-fediffuselighting.cpp
-# sp-fedisplacementmap.cpp
-# sp-fedistantlight.cpp
-# sp-feflood.cpp
-# sp-feimage.cpp
-# sp-femerge.cpp
-# sp-femergenode.cpp
-# sp-femorphology.cpp
-# sp-feoffset.cpp
-# sp-fepointlight.cpp
-# sp-fespecularlighting.cpp
-# sp-fespotlight.cpp
-# sp-fetile.cpp
-# sp-feturbulence.cpp
 sp-filter.cpp
 sp-filter-primitive.cpp
 sp-filter-reference.cpp
@@ -220,8 +201,8 @@ version.cpp
 zoom-context.cpp
 ${ONLY_WIN}
 )
-# All folder with CMakeLists.txt files (excluding internal libraries)
-SET(srcfolders
+# All folders for internal inkscape
+SET(internalfolders
 algorithms
 api
 application
@@ -230,56 +211,28 @@ debug
 dialogs
 display
 dom
-dom/io
-dom/odf
-dom/util
-#dom/work
 extension
-#extension/dxf2svg
-extension/implementation
-extension/internal
-extension/internal/bitmap
-extension/internal/filter
-extension/internal/pdfinput
-extension/param
-extension/script
+filters
 graphlayout
 helper
 inkjar
 io
 jabber_whiteboard
-jabber_whiteboard/dialog
 live_effects
-live_effects/parameter
 pedro
 removeoverlap
 svg
 trace
-trace/potrace
 traits
-ui/cache
 ui
-ui/dialog
-ui/view
-ui/widget
-#utest
 util
 widgets
 xml
 )
 
-# 1) include each list file
-# 2) grab the variable inside 
-# 3) prepend the full relative path to each file in list
-# 4) append the list to INKSCAPE_SRC
-FOREACH(dirlist ${srcfolders})
-  SET(_temp_dirlist "${dirlist}")
-  MESSAGE(STATUS "Processing ${CMAKE_CURRENT_SOURCE_DIR}/${dirlist}/CMakeLists.txt")
-  INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/${dirlist}/CMakeLists.txt)
-  SANITIZE_PATH(dirlist)
-  PREPEND(${dirlist}_SRC "${_temp_dirlist}/")
-  SET(INKSCAPE_SRC ${INKSCAPE_SRC} ${${dirlist}_SRC})
-ENDFOREACH(dirlist)
+FOREACH(srclistsrc ${internalfolders})
+  ADD_SUBDIRECTORY(${srclistsrc})
+ENDFOREACH(srclistsrc)
 
 SET(INKSCAPE_SRC ${INKSCAPE_SRC} ${GlibOutput})
 # All directories containing lists files that describe building internal libraries
@@ -307,12 +260,12 @@ TARGET_LINK_LIBRARIES(sp
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
 TARGET_LINK_LIBRARIES(inkscape
-	 2geom avoid cola croco gdl nr nrtype vpsc livarot sp
+	 2geom avoid cola croco gdl nr nrtype vpsc livarot sp ${internalfolders}
 )
 
 # make executable for INKVIEW
 #ADD_EXECUTABLE(inkview inkview.cpp)
 #TARGET_LINK_LIBRARIES(inkview
-#	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot sp
+#	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot sp ${internalfolders}
 #)
 

@@ -1,3 +1,14 @@
+SET(domfolders
+io
+odf
+util
+#work
+)
+
+FOREACH(domlistsrc ${domfolders})
+  ADD_SUBDIRECTORY(${domlistsrc})
+ENDFOREACH(domlistsrc)
+
 SET(dom_SRC
 cssreader.cpp
 domimpl.cpp
@@ -17,4 +28,9 @@ xmlwriter.cpp
 xpathimpl.cpp
 xpathparser.cpp
 xpathtoken.cpp
+${dom_io_SRC}
+${dom_odf_SRC}
+${dom_util_SRC}
+#${dom_work_SRC}
 )
+ADD_LIBRARY(dom STATIC ${dom_SRC})

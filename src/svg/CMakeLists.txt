@@ -13,3 +13,4 @@ svg-length.cpp
 svg-path.cpp
 #test-stubs.cpp
 )
+ADD_LIBRARY(svg STATIC ${svg_SRC})

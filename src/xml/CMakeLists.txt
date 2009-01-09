@@ -16,3 +16,4 @@ simple-document.cpp
 simple-node.cpp
 subtree.cpp
 )
+ADD_LIBRARY(xml STATIC ${xml_SRC})

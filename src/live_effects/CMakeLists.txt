@@ -1,3 +1,5 @@
+ADD_SUBDIRECTORY(parameter)
+
 SET(live_effects_SRC
 bezctx.cpp
 effect.cpp
@@ -27,4 +29,6 @@ lpe-test-doEffect-stack.cpp
 lpe-vonkoch.cpp
 lpe-dynastroke.cpp
 spiro.cpp
+${live_effects_parameter_SRC}
 )
+ADD_LIBRARY(live_effects STATIC ${live_effects_SRC})

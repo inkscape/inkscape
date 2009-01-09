@@ -1,3 +1,5 @@
+ADD_SUBDIRECTORY(dialog)
+
 SET(jabber_whiteboard_SRC
 defines.cpp
 empty.cpp
@@ -14,4 +16,6 @@ message-utilities.cpp
 pedrogui.cpp
 session-file-selector.cpp
 session-manager.cpp
+${jabber_whiteboard_dialog_SRC}
 )
+ADD_LIBRARY(jabber_whiteboard STATIC ${jabber_whiteboard_SRC})

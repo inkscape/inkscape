@@ -31,3 +31,4 @@ sp-xmlview-content.cpp
 sp-xmlview-tree.cpp
 toolbox.cpp
 )
+ADD_LIBRARY(widgets STATIC ${widgets_SRC})

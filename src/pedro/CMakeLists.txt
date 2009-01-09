@@ -8,3 +8,4 @@ pedrodom.cpp
 pedroutil.cpp
 pedroxmpp.cpp
 )
+ADD_LIBRARY(pedro STATIC ${pedro_SRC})

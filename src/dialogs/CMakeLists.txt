@@ -23,3 +23,4 @@ text-edit.cpp
 unclump.cpp
 xml-tree.cpp
 )
+ADD_LIBRARY(dialogs STATIC ${dialogs_SRC})
