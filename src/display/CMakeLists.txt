@@ -54,3 +54,4 @@ sp-ctrlline.cpp
 sp-ctrlquadr.cpp
 #testnr.cpp
 )
+ADD_LIBRARY(display STATIC ${display_SRC})

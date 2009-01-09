@@ -203,8 +203,8 @@ ${ONLY_WIN}
 )
 # All folders for internal inkscape
 SET(internalfolders
-algorithms
-api
+#algorithms
+#api
 application
 bind
 debug
@@ -223,7 +223,7 @@ pedro
 removeoverlap
 svg
 trace
-traits
+#traits
 ui
 util
 widgets
