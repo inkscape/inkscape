@@ -228,16 +228,10 @@ ui
 util
 widgets
 xml
-)
-
-FOREACH(srclistsrc ${internalfolders})
-  ADD_SUBDIRECTORY(${srclistsrc})
-ENDFOREACH(srclistsrc)
-
-SET(INKSCAPE_SRC ${INKSCAPE_SRC} ${GlibOutput})
-# All directories containing lists files that describe building internal libraries
-SET(libfolders
 2geom
+)
+SET(libfolders
+# Directories containing lists files that describe building internal libraries
 libavoid
 libcola
 libcroco
@@ -248,19 +242,22 @@ libvpsc
 livarot
 )
 
-FOREACH(dirlistsrc ${libfolders})
-  ADD_SUBDIRECTORY(${dirlistsrc})
-ENDFOREACH(dirlistsrc)
-
-message(status "${INKSCAPE_LIBS}")
-ADD_LIBRARY(sp STATIC ${SP_SRC})
-TARGET_LINK_LIBRARIES(sp 
-	 2geom avoid cola croco gdl nr nrtype vpsc livarot
+SET(dirs ${internalfolders} ${libfolders}
 )
+
+FOREACH(srclistsrc ${dirs})
+  ADD_SUBDIRECTORY(${srclistsrc})
+ENDFOREACH(srclistsrc)
+
+SET(INKSCAPE_SRC ${INKSCAPE_SRC} ${GlibOutput})
+
+#message(status "${INKSCAPE_LIBS}")
+ADD_LIBRARY(sp STATIC ${SP_SRC})
+
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
 TARGET_LINK_LIBRARIES(inkscape
-	 2geom avoid cola croco gdl nr nrtype vpsc livarot sp ${internalfolders}
+    ${internalfolders} sp avoid cola croco gdl nr nrtype vpsc livarot ${INKSCAPE_LIBS}
 )
 
 # make executable for INKVIEW
