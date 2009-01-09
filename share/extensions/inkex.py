@@ -165,15 +165,15 @@ class Effect:
     def output(self):
         """Serialize document into XML on stdout"""
         self.document.write(sys.stdout)
-    def affect(self):
+    def affect(self, args=sys.argv[1:], output=True):
         """Affect an SVG document with a callback effect"""
-        self.getoptions()
+        self.getoptions(args)
         self.parse()
         self.getposinlayer()
         self.getselected()
         self.getdocids()
         self.effect()
-        self.output()
+        if output: self.output()
         
     def uniqueId(self, old_id, make_new_id = True):
         new_id = old_id
