@@ -38,7 +38,7 @@ enum {
     SP_VERB_FILE_REVERT,           /**< Revert this file to its original state. */
     SP_VERB_FILE_SAVE,             /**< Save the current file with its saved filename */
     SP_VERB_FILE_SAVE_AS,          /**< Save the current file with a new filename */
-    SP_VERB_FILE_SAVE_A_COPY,      /**< Save a copy of the current file */ 
+    SP_VERB_FILE_SAVE_A_COPY,      /**< Save a copy of the current file */
     SP_VERB_FILE_PRINT,
     SP_VERB_FILE_VACUUM,
     SP_VERB_FILE_PRINT_PREVIEW,

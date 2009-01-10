@@ -48,6 +48,7 @@
 #include "widgets/spw-utilities.h"
 #include "widgets/spinbutton-events.h"
 #include "widgets/layer-selector.h"
+#include "widgets/toolbox.h"
 #include "ui/dialog/dialog-manager.h"
 #include "ui/widget/dock.h"
 #include "ui/widget/selected-style.h"
@@ -324,6 +325,9 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
 
     dtw->aux_toolbox = sp_aux_toolbox_new ();
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->aux_toolbox, FALSE, TRUE, 0);
+
+    dtw->snap_toolbox = sp_snap_toolbox_new ();
+    gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->snap_toolbox, FALSE, TRUE, 0);
 
     dtw->commands_toolbox = sp_commands_toolbox_new ();
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->commands_toolbox, FALSE, TRUE, 0);
@@ -1210,6 +1214,12 @@ sp_desktop_widget_layout (SPDesktopWidget *dtw)
         gtk_widget_show_all (dtw->commands_toolbox);
     }
 
+    if (!prefs->getBool(pref_root + "snaptoolbox/state", true)) {
+		gtk_widget_hide_all (dtw->snap_toolbox);
+	} else {
+		gtk_widget_show_all (dtw->snap_toolbox);
+	}
+
     if (!prefs->getBool(pref_root + "toppanel/state", true)) {
         gtk_widget_hide_all (dtw->aux_toolbox);
     } else {
@@ -1345,6 +1355,7 @@ sp_desktop_widget_new (SPNamedView *namedview)
     sp_tool_toolbox_set_desktop (dtw->tool_toolbox, dtw->desktop);
     sp_aux_toolbox_set_desktop (dtw->aux_toolbox, dtw->desktop);
     sp_commands_toolbox_set_desktop (dtw->commands_toolbox, dtw->desktop);
+    sp_snap_toolbox_set_desktop (dtw->snap_toolbox, dtw->desktop);
 
     return SP_VIEW_WIDGET (dtw);
 }
@@ -1406,7 +1417,7 @@ sp_desktop_widget_namedview_modified (SPObject *obj, guint flags, SPDesktopWidge
 {
     SPNamedView *nv=SP_NAMEDVIEW(obj);
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
-        dtw->dt2r = 1.0 / nv->doc_units->unittobase;
+    	dtw->dt2r = 1.0 / nv->doc_units->unittobase;
         dtw->ruler_origin = Geom::Point(0,0); //nv->gridorigin;   Why was the grid origin used here?
 
         sp_ruler_set_metric (GTK_RULER (dtw->vruler), nv->getDefaultMetric());
@@ -1416,6 +1427,7 @@ sp_desktop_widget_namedview_modified (SPObject *obj, guint flags, SPDesktopWidge
         gtk_tooltips_set_tip (dtw->tt, dtw->vruler_box, gettext(sp_unit_get_plural (nv->doc_units)), NULL);
 
         sp_desktop_widget_update_rulers (dtw);
+        update_snap_toolbox(dtw->desktop, NULL, dtw->snap_toolbox);
     }
 }
 

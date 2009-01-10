@@ -8,6 +8,7 @@
 #include <gtk/gtkradioaction.h>
 #include <glib-object.h>
 #include "icon-size.h"
+#include "attributes.h"
 
 /* Equivalent to GTK Actions of the same type, but can support Inkscape SVG icons */
 
@@ -78,7 +79,8 @@ InkToggleAction* ink_toggle_action_new( const gchar *name,
                                         const gchar *label,
                                         const gchar *tooltip,
                                         const gchar *inkId,
-                                        Inkscape::IconSize size );
+                                        Inkscape::IconSize size,
+                                        SPAttributeEnum attr = SP_ATTR_INVALID);
 
 
 /* --------------------------------------------------------------- */

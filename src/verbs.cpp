@@ -629,11 +629,11 @@ Verb::sensitive(SPDocument *in_doc, bool in_sensitive)
     return;
 }
 
-/** \brief Accessor to get the tooltip for verb as localised string */ 
+/** \brief Accessor to get the tooltip for verb as localised string */
 gchar const *
-Verb::get_tip (void) 
+Verb::get_tip (void)
 {
-	return _(_tip); 
+	return _(_tip);
 }
 
 void
@@ -1244,7 +1244,7 @@ LayerVerb::perform(SPAction *action, void *data, void */*pdata*/)
 
                 sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_DUPLICATE,
                                  _("Duplicate layer"));
-                
+
                 // TRANSLATORS: this means "The layer has been duplicated."
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Duplicated layer."));
             } else {
@@ -1697,8 +1697,8 @@ ZoomVerb::perform(SPAction *action, void *data, void */*pdata*/)
             sp_namedview_toggle_guides(doc, repr);
             break;
         case SP_VERB_TOGGLE_SNAPPING:
-            dt->toggleSnapping();
-            break;        
+            dt->toggleSnapGlobal();
+            break;
         case SP_VERB_TOGGLE_GRID:
             dt->toggleGrids();
             break;
@@ -2565,7 +2565,7 @@ Verb *Verb::_base_verbs[] = {
     new ZoomVerb(SP_VERB_TOGGLE_SCROLLBARS, "ToggleScrollbars", N_("Scroll_bars"), N_("Show or hide the canvas scrollbars"), "scrollbars"),
     new ZoomVerb(SP_VERB_TOGGLE_GRID, "ToggleGrid", N_("_Grid"), N_("Show or hide the grid"), "grid"),
     new ZoomVerb(SP_VERB_TOGGLE_GUIDES, "ToggleGuides", N_("G_uides"), N_("Show or hide guides (drag from a ruler to create a guide)"), "guides"),
-    new ZoomVerb(SP_VERB_TOGGLE_SNAPPING, "ToggleSnapping", N_("Snap"), N_("Toggle snapping on or off"), NULL),
+    new ZoomVerb(SP_VERB_TOGGLE_SNAPPING, "ToggleSnapGlobal", N_("Snap"), N_("Toggle snapping on or off"), NULL),
     new ZoomVerb(SP_VERB_ZOOM_NEXT, "ZoomNext", N_("Nex_t Zoom"), N_("Next zoom (from the history of zooms)"),
                  "zoom_next"),
     new ZoomVerb(SP_VERB_ZOOM_PREV, "ZoomPrev", N_("Pre_vious Zoom"), N_("Previous zoom (from the history of zooms)"),

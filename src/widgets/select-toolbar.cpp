@@ -66,7 +66,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
     using Geom::Y;
     if ( sel && !sel->isEmpty() ) {
         int prefs_bbox = prefs->getInt("/tools/bounding_box", 0);
-        SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
+        SPItem::BBoxType bbox_type = (prefs_bbox ==0)?
             SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
         Geom::OptRect const bbox(sel->bounds(bbox_type));
         if ( bbox ) {
@@ -157,7 +157,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     sp_document_ensure_up_to_date (document);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int prefs_bbox = prefs->getInt("/tools/bounding_box");
-    SPItem::BBoxType bbox_type = (prefs_bbox ==0)? 
+    SPItem::BBoxType bbox_type = (prefs_bbox ==0)?
         SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
     Geom::OptRect bbox = selection->bounds(bbox_type);
 

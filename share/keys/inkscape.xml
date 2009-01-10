@@ -235,8 +235,8 @@ override) the bindings in the main default.xml.
   <bind key="numbersign" modifiers="Shift" action="ToggleGrid" /> <!-- # -->
   <bind key="numbersign" action="ToggleGrid" display="true"/>
   
-  <bind key="percent" action="ToggleSnapping" display="true"/> <!-- # -->
-  <bind key="percent" modifiers="Shift" action="ToggleSnapping" />
+  <bind key="percent" action="ToggleSnapGlobal" display="true"/> <!-- # -->
+  <bind key="percent" modifiers="Shift" action="ToggleSnapGlobal" />
 
   <bind action="ViewNew"/>
   <bind action="ViewNewPreview"/>

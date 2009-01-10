@@ -130,7 +130,7 @@ static void sp_ui_drag_leave( GtkWidget *widget,
 static void sp_ui_menu_item_set_sensitive(SPAction *action,
                                           unsigned int sensitive,
                                           void *data);
-static void sp_ui_menu_item_set_name(SPAction *action, 
+static void sp_ui_menu_item_set_name(SPAction *action,
                                      Glib::ustring name,
                                      void *data);
 static void sp_recent_open(GtkRecentChooser *, gpointer);
@@ -159,21 +159,21 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
 
     if (editable) {
 		g_object_set_data(G_OBJECT(vw), "window", win);
-		
+
 		SPDesktopWidget *desktop_widget = reinterpret_cast<SPDesktopWidget*>(vw);
 		SPDesktop* desktop = desktop_widget->desktop;
-		
+
 		desktop_widget->window = win;
 
         win->set_data("desktop", desktop);
         win->set_data("desktopwidget", desktop_widget);
-		
+
         win->signal_delete_event().connect(sigc::mem_fun(*(SPDesktop*)vw->view, &SPDesktop::onDeleteUI));
 		win->signal_window_state_event().connect(sigc::mem_fun(*desktop, &SPDesktop::onWindowStateEvent));
 		win->signal_focus_in_event().connect(sigc::mem_fun(*desktop_widget, &SPDesktopWidget::onFocusInEvent));
-	
+
 	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        gint prefs_geometry = 
+        gint prefs_geometry =
             (2==prefs->getInt("/options/savewindowgeometry/value", 0));
         if (prefs_geometry) {
             gint pw = prefs->getInt("/desktop/geometry/width", -1);
@@ -827,6 +827,8 @@ sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
     //                                       checkitem_toggled, checkitem_update, 0);
     sp_ui_menu_append_check_item_from_verb(m, view, _("Commands Bar"), _("Show or hide the Commands bar (under the menu)"), "commands",
                                            checkitem_toggled, checkitem_update, 0);
+    sp_ui_menu_append_check_item_from_verb(m, view, _("Snap controls Bar"), _("Show or hide the snapping controls"), "snaptoolbox",
+										   checkitem_toggled, checkitem_update, 0);
     sp_ui_menu_append_check_item_from_verb(m, view, _("Tool Controls Bar"), _("Show or hide the Tool Controls bar"), "toppanel",
                                            checkitem_toggled, checkitem_update, 0);
     sp_ui_menu_append_check_item_from_verb(m, view, _("_Toolbox"), _("Show or hide the main toolbox (on the left)"), "toolbox",
@@ -924,7 +926,7 @@ sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI:
             // sort most recently used documents first to preserve previous behavior
             gtk_recent_chooser_set_sort_type(GTK_RECENT_CHOOSER(recent_menu), GTK_RECENT_SORT_MRU);
             g_signal_connect(G_OBJECT(recent_menu), "item-activated", G_CALLBACK(sp_recent_open), (gpointer) NULL);
-            
+
             // add filter to only open files added by Inkscape
             GtkRecentFilter *inkscape_only_filter = gtk_recent_filter_new();
             gtk_recent_filter_add_application(inkscape_only_filter, g_get_prgname());
@@ -932,7 +934,7 @@ sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI:
 
             GtkWidget *recent_item = gtk_menu_item_new_with_mnemonic(_("Open _Recent"));
             gtk_menu_item_set_submenu(GTK_MENU_ITEM(recent_item), recent_menu);
-            
+
             gtk_menu_append(GTK_MENU(menu), GTK_WIDGET(recent_item));
             continue;
         }
@@ -1129,7 +1131,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     sp_desktop_apply_css_recursive( item, css, true );
                     item->updateRepr();
 
-                    sp_document_done( doc , SP_VERB_NONE, 
+                    sp_document_done( doc , SP_VERB_NONE,
                                       _("Drop color"));
 
                     if ( srgbProf ) {
@@ -1183,7 +1185,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
                 if (!consumed && item) {
                     bool fillnotstroke = (drag_context->action != GDK_ACTION_MOVE);
-                    if (fillnotstroke && 
+                    if (fillnotstroke &&
                         (SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))) {
                         Path *livarot_path = Path_for_item(item, true, true);
                         livarot_path->ConvertWithBackData(0.04);
@@ -1200,7 +1202,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                                   SP_OBJECT_STYLE (item)->stroke_width.computed *
                                   to_2geom(sp_item_i2d_affine(item)).descrim() * 0.5
                                   : 0.0)
-                                + prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100); 
+                                + prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
                             if (Geom::L2 (delta) < stroke_tolerance) {
                                 fillnotstroke = false;
@@ -1215,7 +1217,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     sp_desktop_apply_css_recursive( item, css, true );
                     item->updateRepr();
 
-                    sp_document_done( doc , SP_VERB_NONE, 
+                    sp_document_done( doc , SP_VERB_NONE,
                                       _("Drop color"));
                 }
             }
@@ -1271,7 +1273,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
             }
 
             Inkscape::GC::release(newgroup);
-            sp_document_done(doc, SP_VERB_NONE, 
+            sp_document_done(doc, SP_VERB_NONE,
                              _("Drop SVG"));
             break;
         }
@@ -1329,7 +1331,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
             desktop->currentLayer()->appendChildRepr(newImage);
 
             Inkscape::GC::release(newImage);
-            sp_document_done( doc , SP_VERB_NONE, 
+            sp_document_done( doc , SP_VERB_NONE,
                               _("Drop bitmap image"));
             break;
         }
@@ -1466,7 +1468,7 @@ sp_ui_menu_item_set_name(SPAction */*action*/, Glib::ustring name, void *data)
         gtk_label_set_markup_with_mnemonic(GTK_LABEL (child), name.c_str());
     } else if (GTK_IS_HBOX(child)) {
         gtk_label_set_markup_with_mnemonic(
-        GTK_LABEL (gtk_container_get_children(GTK_CONTAINER (child))->data), 
+        GTK_LABEL (gtk_container_get_children(GTK_CONTAINER (child))->data),
         name.c_str());
     }//else sp_ui_menu_append_item_from_verb has been modified and can set
     //a menu item in yet another way...

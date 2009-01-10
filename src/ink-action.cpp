@@ -15,8 +15,6 @@
 #include "widgets/button.h"
 #include "widgets/icon.h"
 
-
-
 static void ink_action_class_init( InkActionClass* klass );
 static void ink_action_init( InkAction* action );
 static void ink_action_finalize( GObject* obj );
@@ -354,7 +352,8 @@ InkToggleAction* ink_toggle_action_new( const gchar *name,
                            const gchar *label,
                            const gchar *tooltip,
                            const gchar *inkId,
-                           Inkscape::IconSize size )
+                           Inkscape::IconSize size,
+                           SPAttributeEnum attr)
 {
     GObject* obj = (GObject*)g_object_new( INK_TOGGLE_ACTION_TYPE,
                                            "name", name,
@@ -362,8 +361,10 @@ InkToggleAction* ink_toggle_action_new( const gchar *name,
                                            "tooltip", tooltip,
                                            "iconId", inkId,
                                            "iconSize", Inkscape::getRegisteredIconSize(size),
+                                           //"SP_ATTR_INKSCAPE", attr, // Why doesn't this work and do I need to use g_object_set_data below?
                                            NULL );
 
+    g_object_set_data(obj, "SP_ATTR_INKSCAPE", GINT_TO_POINTER(attr));
     InkToggleAction* action = INK_TOGGLE_ACTION( obj );
 
     return action;

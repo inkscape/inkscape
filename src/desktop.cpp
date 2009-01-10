@@ -869,7 +869,7 @@ SPDesktop::next_zoom()
     \param  enable  Whether we're going in or out of quick zoom
 
 */
-void 
+void
 SPDesktop::zoom_quick (bool enable)
 {
     if (enable == _quick_zoom_enabled) {
@@ -940,7 +940,7 @@ SPDesktop::zoom_quick (bool enable)
             if (d && d->area() * 2.0 < _quick_zoom_stored_area.area()) {
                 set_display_area(*d, 10);
                 zoomed = true;
-            } 
+            }
         }
 
         if (!zoomed) {
@@ -1325,7 +1325,7 @@ SPDesktop::shutdown()
 
 bool SPDesktop::onDeleteUI (GdkEventAny*)
 {
-    if(shutdown()) 
+    if(shutdown())
         return true;
 
     destroyWidget();
@@ -1448,7 +1448,7 @@ void SPDesktop::showGrids(bool show, bool dirty_document)
     }
 }
 
-void SPDesktop::toggleSnapping()
+void SPDesktop::toggleSnapGlobal()
 {
     bool v = namedview->snap_manager.snapprefs.getSnapEnabledGlobally();
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(namedview);

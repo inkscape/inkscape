@@ -1074,7 +1074,7 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::
     Geom::Matrix const i2d (sp_item_i2d_affine (item));
 
     for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
-        *p = from_2geom(path_it->initialPoint() * i2d);
+        *p = path_it->initialPoint() * i2d;
 
         Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
         Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
@@ -1090,13 +1090,13 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::
 
             // Depending on the snapping preferences, either add only cusp nodes, or add add both cusp and smooth nodes
             if (snapprefs->getSnapSmoothNodes() || nodetype == Geom::NODE_NONE || nodetype == Geom::NODE_CUSP) {
-                *p = from_2geom(curve_it1->finalPoint() * i2d);
+                *p = curve_it1->finalPoint() * i2d;
             }
 
             // Consider midpoints of line segments for snapping
             if (snapprefs->getSnapMidpoints()) {
-                if (Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&(*curve_it1))) {
-                    *p = from_2geom(Geom::middle_point(*line_segment) * i2d);
+            	if (Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&(*curve_it1))) {
+                    *p = Geom::middle_point(*line_segment) * i2d;
                 }
             }
 
@@ -1111,7 +1111,7 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::
             if (cs.size() > 0) { // There might be multiple intersections...
                 for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); i++) {
                     Geom::Point p_ix = (*path_it).pointAt((*i).ta);
-                    *p = from_2geom(p_ix * i2d);
+                    *p = p_ix * i2d;
                 }
             }
         }
