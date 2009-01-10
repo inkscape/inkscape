@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-26 23:32+0100\n"
-"PO-Revision-Date: 2009-01-09 15:03+0800\n"
+"PO-Revision-Date: 2009-01-09 21:24+0800\n"
 "Last-Translator: 吳東俊 <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -1202,9 +1202,8 @@ msgstr "搜尋複本"
 
 #. TRANSLATORS: Translate the word "Clones" only. A noun indicating type of object to find
 #: ../src/dialogs/find.cpp:620 ../src/ui/dialog/find.cpp:81
-#, fuzzy
 msgid "find|Clones"
-msgstr "複本"
+msgstr "find|複本"
 
 #: ../src/dialogs/find.cpp:625 ../src/ui/dialog/find.cpp:82
 msgid "Search images"
@@ -4013,7 +4012,7 @@ msgstr "膨脹"
 
 #: ../src/filter-enums.cpp:117
 msgid "Fractal Noise"
-msgstr "不規則形雜訊"
+msgstr "碎形雜訊"
 
 #: ../src/filter-enums.cpp:124
 msgid "Distant Light"
@@ -5097,17 +5096,16 @@ msgid "Pattern Along Path"
 msgstr "圖樣沿置路徑"
 
 #: ../src/live_effects/effect.cpp:56
-#, fuzzy
 msgid "Sketch"
-msgstr "設定"
+msgstr "素描"
 
 #: ../src/live_effects/effect.cpp:57
 msgid "VonKoch"
-msgstr ""
+msgstr "科赫雪花"
 
 #: ../src/live_effects/effect.cpp:58
 msgid "Knot"
-msgstr ""
+msgstr "紐結"
 
 #: ../src/live_effects/effect.cpp:60
 msgid "Slant"
@@ -6533,14 +6531,12 @@ msgid "The selection has no applied path effect."
 msgstr "沒有套用路徑特效"
 
 #: ../src/selection-chemistry.cpp:2174
-#, fuzzy
 msgid "The selection has no applied clip path."
-msgstr "沒有套用路徑特效"
+msgstr "此選取區沒有套用裁剪路徑。"
 
 #: ../src/selection-chemistry.cpp:2176
-#, fuzzy
 msgid "The selection has no applied mask."
-msgstr "沒有套用路徑特效"
+msgstr "此選取區沒有套用遮罩。"
 
 #: ../src/selection-chemistry.cpp:2334
 msgid "action|Clone"
@@ -8573,19 +8569,16 @@ msgid "Destination"
 msgstr "指定範圍"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:194
-#, fuzzy
 msgid "All Image Files"
-msgstr "所有圖像"
+msgstr "所有圖像檔"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:427
-#, fuzzy
 msgid "Show Preview"
-msgstr "預覽"
+msgstr "顯示預覽"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:566
-#, fuzzy
 msgid "No file selected"
-msgstr "未選取濾鏡"
+msgstr "未選取檔案"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:53
 msgid "Fill"
@@ -9287,14 +9280,13 @@ msgstr ""
 "設備當成滑鼠使用)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:158
-#, fuzzy
 msgid "Switch tool based on tablet device (requires restart)"
-msgstr "對話視窗行為(需要重新啟動):"
+msgstr "依畫板設備來轉換工具(需要重新啟動)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:160
 msgid ""
 "Change tool as different devices are used on the tablet (pen, eraser, mouse)"
-msgstr ""
+msgstr "當在畫板上使用不同設備時(筆、擦子、滑鼠)改變工具"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:165
 msgid "Scrolling"
@@ -12668,9 +12660,8 @@ msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr "套用遮罩到選取區(使用最頂層物件做為遮罩)"
 
 #: ../src/verbs.cpp:2373
-#, fuzzy
 msgid "Edit mask"
-msgstr "設定遮罩"
+msgstr "編輯遮罩"
 
 #: ../src/verbs.cpp:2374 ../src/verbs.cpp:2380
 msgid "_Release"
@@ -12686,9 +12677,8 @@ msgid ""
 msgstr "套用剪裁路徑到選取區(使用最頂層物件做為剪裁路徑)"
 
 #: ../src/verbs.cpp:2379
-#, fuzzy
 msgid "Edit clipping path"
-msgstr "設定裁剪路徑"
+msgstr "編輯裁剪路徑"
 
 #: ../src/verbs.cpp:2381
 msgid "Remove clipping path from selection"
@@ -14104,14 +14094,12 @@ msgid "Show the Bezier handles of selected nodes"
 msgstr "顯示已選節點的貝茲控柄"
 
 #: ../src/widgets/toolbox.cpp:1108
-#, fuzzy
 msgid "Show Outline"
-msgstr "輪廓(_O)"
+msgstr "顯示輪廓"
 
 #: ../src/widgets/toolbox.cpp:1109
-#, fuzzy
 msgid "Show the outline of the path"
-msgstr "路徑的寬度"
+msgstr "顯示路徑的輪廓"
 
 #: ../src/widgets/toolbox.cpp:1133
 msgid "X coordinate:"
@@ -14301,7 +14289,7 @@ msgstr "隨機:"
 
 #: ../src/widgets/toolbox.cpp:1988
 msgid "Scatter randomly the corners and angles"
-msgstr "隨機散播尖角與角度"
+msgstr "隨機散布尖角與角度"
 
 #: ../src/widgets/toolbox.cpp:2003 ../src/widgets/toolbox.cpp:2938
 #: ../src/widgets/toolbox.cpp:3517 ../src/widgets/toolbox.cpp:5379
@@ -15113,11 +15101,11 @@ msgstr "不允許重疊的形狀"
 
 #: ../src/widgets/toolbox.cpp:5303
 msgid "Fill by"
-msgstr "填充方式"
+msgstr "填充"
 
 #: ../src/widgets/toolbox.cpp:5304
 msgid "Fill by:"
-msgstr "填充方式:"
+msgstr "填充:"
 
 #: ../src/widgets/toolbox.cpp:5316
 msgid "Fill Threshold"
@@ -15131,11 +15119,11 @@ msgstr "在填塗中能允許所點的像素與附近像素之間可被計算差
 
 #: ../src/widgets/toolbox.cpp:5341
 msgid "Grow/shrink by"
-msgstr "擴張/收縮方式"
+msgstr "擴張/收縮"
 
 #: ../src/widgets/toolbox.cpp:5341
 msgid "Grow/shrink by:"
-msgstr "擴張/收縮 方式:"
+msgstr "擴張/收縮:"
 
 #: ../src/widgets/toolbox.cpp:5342
 msgid ""
@@ -15223,65 +15211,63 @@ msgstr "開啟之前清除 Adobe 插圖中 SVG 的東西"
 
 #: ../share/extensions/ccx_input.inx.h:1
 msgid "Corel DRAW Compressed Exchange files (.ccx)"
-msgstr ""
+msgstr "Corel DRAW 壓縮的交換格式檔 (.ccx)"
 
 #: ../share/extensions/ccx_input.inx.h:2
 msgid "Corel DRAW Compressed Exchange files input"
-msgstr ""
+msgstr "Corel DRAW 壓縮的交換格式檔輸入"
 
 #: ../share/extensions/ccx_input.inx.h:3
 msgid "Open compressed exchange files saved in Corel DRAW"
-msgstr ""
+msgstr "開啟用 Corel DRAW 儲存的壓縮交換格式檔"
 
 #: ../share/extensions/cdr_input.inx.h:1
 msgid "Corel DRAW 7-X4 files (*.cdr)"
-msgstr ""
+msgstr "Corel DRAW 7-X4 檔 (*.cdr)"
 
 #: ../share/extensions/cdr_input.inx.h:2
 msgid "Corel DRAW Input"
-msgstr ""
+msgstr "Corel DRAW 輸入"
 
 #: ../share/extensions/cdr_input.inx.h:3
-#, fuzzy
 msgid "Open files saved in Corel DRAW 7-X4"
-msgstr "開啟用 XFIG 儲存的檔案"
+msgstr "開啟用 Corel DRAW 7-X4 儲存的檔案"
 
 #: ../share/extensions/cdt_input.inx.h:1
 msgid "Corel DRAW 7-13 template files (.cdt)"
-msgstr ""
+msgstr "Corel DRAW 7-13 範本檔 (.cdt)"
 
 #: ../share/extensions/cdt_input.inx.h:2
 msgid "Corel DRAW templates input"
-msgstr ""
+msgstr "Corel DRAW 範本輸入"
 
 #: ../share/extensions/cdt_input.inx.h:3
-#, fuzzy
 msgid "Open files saved in Corel DRAW 7-13"
-msgstr "開啟用 XFIG 儲存的檔案"
+msgstr "開啟用 Corel DRAW 7-13 儲存的檔案"
 
 #: ../share/extensions/cgm_input.inx.h:1
 msgid "Computer Graphics Metafile files (.cgm)"
-msgstr ""
+msgstr "電腦繪圖前設檔 (.cgm)"
 
 #: ../share/extensions/cgm_input.inx.h:2
 msgid "Computer Graphics Metafile files input"
-msgstr ""
+msgstr "電腦繪圖前設檔輸入"
 
 #: ../share/extensions/cgm_input.inx.h:3
 msgid "Open Computer Graphics Metafile files"
-msgstr ""
+msgstr "電腦繪圖前設檔"
 
 #: ../share/extensions/cmx_input.inx.h:1
 msgid "Corel DRAW Presentation Exchange files (.cmx)"
-msgstr ""
+msgstr "Corel DRAW 簡報交換格式檔 (.cmx)"
 
 #: ../share/extensions/cmx_input.inx.h:2
 msgid "Corel DRAW Presentation Exchange files input"
-msgstr ""
+msgstr "Corel DRAW 簡報交換格式檔輸入"
 
 #: ../share/extensions/cmx_input.inx.h:3
 msgid "Open presentation exchange files saved in Corel DRAW"
-msgstr ""
+msgstr "開啟用 Corel DRAW 儲存的簡報交換格式檔"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
@@ -15550,9 +15536,8 @@ msgid "Extract One Image"
 msgstr "提取一幅圖像"
 
 #: ../share/extensions/extractimage.inx.h:3
-#, fuzzy
 msgid "Note: The file extension is appended automatically."
-msgstr "自動添加副檔名"
+msgstr "注意：自動添加副檔名"
 
 #: ../share/extensions/extractimage.inx.h:4
 msgid "Path to save image"
@@ -15580,7 +15565,7 @@ msgstr "平滑貝茲曲線"
 
 #: ../share/extensions/fractalize.inx.h:1
 msgid "Fractalize"
-msgstr "灰階"
+msgstr "碎片"
 
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness"
@@ -15885,15 +15870,15 @@ msgstr "數量"
 
 #: ../share/extensions/outline2svg.inx.h:1
 msgid "ASCII Text with outline markup"
-msgstr "具有描邊標記的 ASCII 文字"
+msgstr "具有邊框標記的 ASCII 文字"
 
 #: ../share/extensions/outline2svg.inx.h:2
 msgid "Text Outline File (*.outline)"
-msgstr "文字描邊檔案 (*.outline)"
+msgstr "文字輪廓檔案 (*.outline)"
 
 #: ../share/extensions/outline2svg.inx.h:3
 msgid "Text Outline Input"
-msgstr "文字描邊輸入"
+msgstr "文字輪廓輸入"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Copies of the pattern:"
@@ -15901,7 +15886,7 @@ msgstr "圖樣的複本："
 
 #: ../share/extensions/pathalongpath.inx.h:2
 msgid "Deformation type:"
-msgstr "去格式化型態："
+msgstr "去格式化類型："
 
 #: ../share/extensions/pathalongpath.inx.h:3
 #: ../share/extensions/pathscatter.inx.h:3
@@ -15927,47 +15912,40 @@ msgstr ""
 "是 路徑/形狀/複本的群組...)"
 
 #: ../share/extensions/pathscatter.inx.h:1
-#, fuzzy
 msgid "Cloned"
 msgstr "複本"
 
 #: ../share/extensions/pathscatter.inx.h:2
-#, fuzzy
 msgid "Copied"
-msgstr "結合"
+msgstr "複製"
 
 #: ../share/extensions/pathscatter.inx.h:4
-#, fuzzy
 msgid "Follow path orientation."
-msgstr "頁面方向："
+msgstr "沿著路徑方向。"
 
 #: ../share/extensions/pathscatter.inx.h:6
-#, fuzzy
 msgid "Moved"
 msgstr "移動"
 
 #: ../share/extensions/pathscatter.inx.h:8
-#, fuzzy
 msgid "Original pattern will be:"
-msgstr "原路徑為垂直"
+msgstr "原本圖樣:"
 
 #: ../share/extensions/pathscatter.inx.h:10
-#, fuzzy
 msgid "Scatter"
-msgstr "圖樣"
+msgstr "散布"
 
 #: ../share/extensions/pathscatter.inx.h:12
 msgid "Stretch spaces to fit skeleton length"
-msgstr ""
+msgstr "伸展間距來符合骨幹長度"
 
 #: ../share/extensions/pathscatter.inx.h:14
-#, fuzzy
 msgid ""
 "This effect scatters a pattern along arbitrary \"skeleton\" paths. The "
 "pattern is the top most object in the selection. (groups of paths/shapes/"
 "clones... allowed)"
 msgstr ""
-"這個特效會沿著 \"骨幹\" 路徑彎曲一個圖樣物件。圖樣必須在選取區的最上層。(可以"
+"這個特效會沿著 \"骨幹\" 路徑散布一個圖樣物件。圖樣必須在選取區的最上層。(可以"
 "是 路徑/形狀/複本的群組...)"
 
 #: ../share/extensions/perfectboundcover.inx.h:1
@@ -16159,17 +16137,16 @@ msgid "Sketch Input"
 msgstr "Sketch 輸入"
 
 #: ../share/extensions/sk1_input.inx.h:1
-#, fuzzy
 msgid "Open files saved in sK1 vector graphics editor"
-msgstr "Inkscape 向量繪圖"
+msgstr "開啟用 sK1 向量繪圖軟體儲存的檔案"
 
 #: ../share/extensions/sk1_input.inx.h:2
 msgid "sK1 vector graphics files (.sk1)"
-msgstr ""
+msgstr "sK1 向量圖形檔 (.sk1)"
 
 #: ../share/extensions/sk1_input.inx.h:3
 msgid "sK1 vector graphics files input"
-msgstr ""
+msgstr "sK1 向量圖形檔輸入"
 
 #: ../share/extensions/spirograph.inx.h:1
 msgid "Gear Placement"
@@ -16262,18 +16239,16 @@ msgid "rANdOm CasE"
 msgstr "隨機大小寫"
 
 #: ../share/extensions/text_replace.inx.h:1
-#, fuzzy
 msgid "By:"
-msgstr "Ry:"
+msgstr "方式:"
 
 #: ../share/extensions/text_replace.inx.h:2
 msgid "Replace text..."
 msgstr "取代文字"
 
 #: ../share/extensions/text_replace.inx.h:3
-#, fuzzy
 msgid "Replace:"
-msgstr "取代"
+msgstr "取代:"
 
 #: ../share/extensions/text_titlecase.inx.h:2
 msgid "Title Case"
@@ -16281,7 +16256,7 @@ msgstr "標題"
 
 #: ../share/extensions/text_sentencecase.inx.h:1
 msgid "Sentence case"
-msgstr "判定情況大小寫"
+msgstr "句首大寫"
 
 #: ../share/extensions/txt2svg.inx.h:1
 msgid "ASCII Text"
