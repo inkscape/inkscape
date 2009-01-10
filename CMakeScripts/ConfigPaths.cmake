@@ -7,8 +7,8 @@ ELSEIF(WIN32)
     SET(PACKAGE_LOCALE_DIR "locale")
 ENDIF(WIN32)
 
-SET(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-SET(CMAKE_SKIP_RPATH:BOOL OFF)
+#SET(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
+#SET(CMAKE_SKIP_RPATH:BOOL OFF)
 
 # Include base dir, so other files can refer to the generated files.
 # CMAKE_INCLUDE_CURRENT_DIR is not enough as it only includes the current dir and not the basedir with config.h in it
