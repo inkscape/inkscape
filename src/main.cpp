@@ -562,6 +562,9 @@ main(int argc, char **argv)
     rt.setPathInfo();
 #endif
 
+    // Prevents errors like "Unable to wrap GdkPixbuf..." (in nr-filter-image.cpp for example)
+    Gtk::Main::init_gtkmm_internals();
+
     // Bug #197475
     set_extensions_env();
 

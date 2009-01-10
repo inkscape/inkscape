@@ -178,6 +178,9 @@ main (int argc, const char **argv)
 	usage();
     }
 
+    // Prevents errors like "Unable to wrap GdkPixbuf..." (in nr-filter-image.cpp for example)
+    Gtk::Main::init_gtkmm_internals();
+
     Gtk::Main main_instance (&argc, const_cast<char ***>(&argv));
 
     struct SPSlideShow ss;
