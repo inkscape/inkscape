@@ -544,11 +544,11 @@ sp_rect_get_visible_height(SPRect *rect)
 /**
  * Sets the snappoint p to the unrounded corners of the rectangle
  */
-static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const */*snapprefs*/)
+static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
     /* This method overrides sp_shape_snappoints, which is the default for any shape. The default method
     returns all eight points along the path of a rounded rectangle, but not the real corners. Snapping
-    the startpoint and endpoint of each rounded corner is not very usefull and really confusing. Instead
+    the startpoint and endpoint of each rounded corner is not very useful and really confusing. Instead
     we could snap either the real corners, or not snap at all. Bulia Byak opted to snap the real corners,
     but it should be noted that this might be confusing in some cases with relatively large radii. With
     small radii though the user will easily understand which point is snapping. */
@@ -560,10 +560,22 @@ static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::S
 
     Geom::Matrix const i2d (sp_item_i2d_affine (item));
 
-    *p = Geom::Point(rect->x.computed, rect->y.computed) * i2d;
-    *p = Geom::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d;
-    *p = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d;
-    *p = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d;
+    Geom::Point p0 = Geom::Point(rect->x.computed, rect->y.computed) * i2d;
+    Geom::Point p1 = Geom::Point(rect->x.computed, rect->y.computed + rect->height.computed) * i2d;
+    Geom::Point p2 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d;
+    Geom::Point p3 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d;
+
+    *p = p0;
+    *p = p1;
+    *p = p2;
+    *p = p3;
+
+    if (snapprefs->getSnapMidpoints()) {
+    	*p = (p0 + p1)/2;
+    	*p = (p1 + p2)/2;
+    	*p = (p2 + p3)/2;
+    	*p = (p3 + p0)/2;
+    }
 }
 
 void
