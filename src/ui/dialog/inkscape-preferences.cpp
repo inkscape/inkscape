@@ -1071,13 +1071,13 @@ void InkscapePreferences::initPageUI()
     _misc_recent.init("/options/maxrecentdocuments/value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
 
     Gtk::HBox* recent_hbox = Gtk::manage(new Gtk::HBox());
-    Gtk::Button* reset_recent = Gtk::manage(new Gtk::Button(_("Reset list of recently opened files")));
+    Gtk::Button* reset_recent = Gtk::manage(new Gtk::Button(_("Clear list")));
     reset_recent->signal_clicked().connect(sigc::mem_fun(*this, &InkscapePreferences::on_reset_open_recent_clicked));
     recent_hbox->pack_start(_misc_recent, false, false);
     recent_hbox->pack_start(*reset_recent, false, false);
 
     _page_ui.add_line( false, _("Maximum documents in Open Recent:"), *recent_hbox, "",
-                              _("The maximum length of the Open Recent list in the File menu"), false);
+                              _("Set the maximum length of the Open Recent list in the File menu, or clear the list"), false);
 
     _ui_zoom_correction.init(300, 30, 1.00, 200.0, 1.0, 10.0, 1.0);
     _page_ui.add_line( false, _("Zoom correction factor (in %):"), _ui_zoom_correction, "",
