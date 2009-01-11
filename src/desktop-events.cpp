@@ -303,8 +303,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
     return ret;
 }
 
-static std::map<GdkInputSource, std::string> switchMap;
-static std::map<GdkInputSource, int> toolToUse;
+//static std::map<GdkInputSource, std::string> switchMap;
+static std::map<std::string, int> toolToUse;
 static std::string lastName;
 static GdkInputSource lastType = GDK_SOURCE_MOUSE;
 
@@ -317,27 +317,25 @@ static void init_extended()
             GdkDevice* dev = reinterpret_cast<GdkDevice*>(curr->data);
             if ( dev->name
                  && (avoidName != dev->name)
-                 && (switchMap.find(dev->source) == switchMap.end())
                  && (dev->source != GDK_SOURCE_MOUSE) ) {
-                switchMap[dev->source] = dev->name;
 //                 g_message("Adding '%s' as [%d]", dev->name, dev->source);
 
                 // Set the initial tool for the device
                 switch ( dev->source ) {
                     case GDK_SOURCE_PEN:
-                        toolToUse[GDK_SOURCE_PEN] = TOOLS_CALLIGRAPHIC;
+                        toolToUse[dev->name] = TOOLS_CALLIGRAPHIC;
                         break;
                     case GDK_SOURCE_ERASER:
-                        toolToUse[GDK_SOURCE_ERASER] = TOOLS_ERASER;
+                        toolToUse[dev->name] = TOOLS_ERASER;
                         break;
                     case GDK_SOURCE_CURSOR:
-                        toolToUse[GDK_SOURCE_CURSOR] = TOOLS_SELECT;
+                        toolToUse[dev->name] = TOOLS_SELECT;
                         break;
                     default:
                         ; // do not add
                 }
-//             } else {
-//                 g_message("Skippn '%s' as [%s]", dev->name, namefor(dev->source));
+//            } else if (dev->name) {
+//                 g_message("Skippn '%s' as [%s]", dev->name, dev->source);
             }
         }
     }
@@ -399,22 +397,23 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
     }
 
     if (!name.empty()) {
-        if ( lastName != name || lastType != source ) {
+        if ( lastType != source || lastName != name ) {
             // The device switched. See if it is one we 'count'
-            std::map<GdkInputSource, std::string>::iterator it = switchMap.find(source);
-            if ( (it != switchMap.end()) && (name == it->second) ) {
-                std::map<GdkInputSource, int>::iterator it2 = toolToUse.find(source);
-                if (it2 != toolToUse.end() ) {
-                    // Save the tool currently selected for next time the input device shows up.
-                    if ( (switchMap.find(lastType) != switchMap.end())
-                         && (lastName == switchMap.find(lastType)->second)) {
-                        toolToUse[lastType] = tools_active(desktop);
-                    }
-                    tools_switch(desktop, it2->second);
-                }
-                lastName = name;
-                lastType = source;
+            //g_message("Changed device %s -> %s", lastName.c_str(), name.c_str());
+            std::map<std::string, int>::iterator it = toolToUse.find(lastName);
+            if (it != toolToUse.end()) {
+                // Save the tool currently selected for next time the input
+                // device shows up.
+                it->second = tools_active(desktop);
             }
+            
+            it = toolToUse.find(name);
+            if (it != toolToUse.end() ) {
+                tools_switch(desktop, it->second);
+            }
+
+            lastName = name;
+            lastType = source;
         }
     }
 }
