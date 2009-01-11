@@ -29,6 +29,8 @@
 #include "io/stringstream.h"
 #include "io/gzipstream.h"
 
+#include "extension/extension.h"
+
 #include "preferences.h"
 
 using Inkscape::IO::Writer;
@@ -362,16 +364,16 @@ Glib::QueryQuark qname_prefix(Glib::QueryQuark qname) {
 
 namespace {
 
-void promote_to_svg_namespace(Node *repr) {
+void promote_to_namespace(Node *repr, const gchar *prefix) {
     if ( repr->type() == Inkscape::XML::ELEMENT_NODE ) {
         GQuark code = repr->code();
         if (!qname_prefix(code).id()) {
-            gchar *svg_name = g_strconcat("svg:", g_quark_to_string(code), NULL);
+            gchar *svg_name = g_strconcat(prefix, ":", g_quark_to_string(code), NULL);
             repr->setCodeUnsafe(g_quark_from_string(svg_name));
             g_free(svg_name);
         }
         for ( Node *child = sp_repr_children(repr) ; child ; child = sp_repr_next(child) ) {
-            promote_to_svg_namespace(child);
+            promote_to_namespace(child, prefix);
         }
     }
 }
@@ -414,12 +416,13 @@ sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
     }
 
     if (root != NULL) {
-        /* promote elements of SVG documents that don't use namespaces
-         * into the SVG namespace */
-        if ( default_ns && !strcmp(default_ns, SP_SVG_NS_URI)
-             && !strcmp(root->name(), "svg") )
-        {
-            promote_to_svg_namespace(root);
+        /* promote elements of some XML documents that don't use namespaces
+         * into their default namespace */
+        if ( default_ns && !strchr(root->name(), ':') ) {
+            if ( !strcmp(default_ns, SP_SVG_NS_URI) )
+                promote_to_namespace(root, "svg");
+            if ( !strcmp(default_ns, INKSCAPE_EXTENSION_URI) )
+                promote_to_namespace(root, INKSCAPE_EXTENSION_NS_NC);
         }
     }
 
