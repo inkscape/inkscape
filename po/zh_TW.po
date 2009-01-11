@@ -2,15 +2,16 @@
 # Copyright (C) 2004, 06, 07 Free Software Foundation, Inc.
 # This file is distributed under the same license as the inkscape package.
 # tad <tad@mail.tnc.edu.tw>, 2004.
-# Wei-Lun Chao <william.chao@ossii.com.tw>, 2006, 2007, 2008, 2009.
+# Wei-Lun Chao <william.chao@ossii.com.tw>, 2006, 2007.
+# Dong-Jun Wu <ziyawu@gmail.com>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-02-26 23:32+0100\n"
-"PO-Revision-Date: 2009-01-09 21:24+0800\n"
-"Last-Translator: 吳東俊 <ziyawu@gmail.com>\n"
+"PO-Revision-Date: 2009-01-12 01:41+0800\n"
+"Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -270,11 +271,11 @@ msgstr "<b>P4</b>：90&#176; 旋轉"
 
 #: ../src/dialogs/clonetiler.cpp:1903
 msgid "<b>P4M</b>: 90&#176; rotation + 45&#176; reflection"
-msgstr "<b>P4M</b>：90&#176; 旋轉 + 45&#176；反射"
+msgstr "<b>P4M</b>：90&#176; 旋轉 + 45&#176; 反射"
 
 #: ../src/dialogs/clonetiler.cpp:1904
 msgid "<b>P4G</b>: 90&#176; rotation + 90&#176; reflection"
-msgstr "<b>P4G</b>：90&#176; 旋轉 + 90&#176；反射"
+msgstr "<b>P4G</b>：90&#176; 旋轉 + 90&#176; 反射"
 
 #: ../src/dialogs/clonetiler.cpp:1905
 msgid "<b>P3</b>: 120&#176; rotation"
@@ -4233,7 +4234,7 @@ msgid ""
 "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
 "+Alt</b> to delete stop"
 msgstr ""
-"%s %d 用於：%s%s；按著 <b>Ctrl</b> 拖曳來抓取偏移量，按著 <b>Ctrl+Alt</b> 並"
+"%s %d 用於：%s%s; 按著 <b>Ctrl</b> 拖曳來抓取偏移量；按著 <b>Ctrl+Alt</b> 並"
 "點擊來刪除停止點"
 
 #: ../src/gradient-drag.cpp:1127 ../src/gradient-drag.cpp:1134
@@ -4246,7 +4247,7 @@ msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
 "preserve angle, with <b>Ctrl+Shift</b> to scale around center"
 msgstr ""
-"%s 用於：%s%s；以 <b>Ctrl</b> 拖曳來抓取角度，以 <b>Ctrl+Alt</b> 來保留角度，"
+"%s 用於：%s%s; 以 <b>Ctrl</b> 拖曳來抓取角度，以 <b>Ctrl+Alt</b> 來保留角度，"
 "以 <b>Ctrl+Shift</b> 在中心周圍伸縮"
 
 #: ../src/gradient-drag.cpp:1139
@@ -5834,7 +5835,7 @@ msgid ""
 "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both "
 "handles"
 msgstr ""
-"<b>節點控柄</b>：角度 %0.2f&#176;﹑長度 %s；以 <b>Ctrl</b> 來抓取角度；以 "
+"<b>節點控柄</b>：角度 %0.2f&#176;﹑長度 %s; 以 <b>Ctrl</b> 來抓取角度；以 "
 "<b>Alt</b> 來鎖定長度；以 <b>Shift</b> 來旋轉兩個控柄"
 
 #: ../src/nodepath.cpp:3828
@@ -5947,8 +5948,8 @@ msgstr[1] ""
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
-msgstr[0] "從 <b>%i</b> 個節點中選取了 <b>%i</b> 個；%s。"
-msgstr[1] "從 <b>%i</b> 個節點中選取了 <b>%i</b> 個；%s。"
+msgstr[0] "從 <b>%i</b> 個節點中選取了 <b>%i</b> 個。%s."
+msgstr[1] "從 <b>%i</b> 個節點中選取了 <b>%i</b> 個。%s."
 
 #: ../src/object-edit.cpp:501
 msgid ""
@@ -6171,7 +6172,7 @@ msgid ""
 "<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, "
 "<b>Enter</b> to finish the path"
 msgstr ""
-"<b>%s</b>：角度 %3.2f&#176;、距離 %s；以 <b>Ctrl</b> 來抓取角度，<b>Enter</"
+"<b>%s</b>：角度 %3.2f&#176;、距離 %s; 以 <b>Ctrl</b> 來抓取角度，<b>Enter</"
 "b> 來結束路徑"
 
 #: ../src/pen-context.cpp:1142
@@ -6179,7 +6180,7 @@ msgstr ""
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
-msgstr "<b>曲線控柄</b>：角度 %3.2f&#176;、長度 %s；以 <b>Ctrl</b> 來抓取角度"
+msgstr "<b>曲線控柄</b>：角度 %3.2f&#176;、長度 %s; 以 <b>Ctrl</b> 來抓取角度"
 
 #: ../src/pen-context.cpp:1172
 #, c-format
@@ -6187,7 +6188,7 @@ msgid ""
 "<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, "
 "with <b>Shift</b> to move this handle only"
 msgstr ""
-"<b>%s</b>：角度 %3.2f&#176;、長度 %s；以 <b>Ctrl</b> 來抓取角度， 以 "
+"<b>%s</b>：角度 %3.2f&#176;、長度 %s; 以 <b>Ctrl</b> 來抓取角度， 以 "
 "<b>Shift</b> 來只移動這個控柄"
 
 #: ../src/pen-context.cpp:1208
@@ -6257,8 +6258,8 @@ msgid ""
 "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with "
 "<b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>矩形</b>: %s &#215; %s; (限制成黃金比列 1 : 1.618 )；按著 <b>Shift</b> 在"
-"起點周圍繪製"
+"<b>矩形</b>: %s &#215; %s (限制成黃金比列 1 : 1.618 )；按著 <b>Shift</b> 在起"
+"點周圍繪製"
 
 #: ../src/rect-context.cpp:543
 #, c-format
@@ -6888,7 +6889,7 @@ msgstr "重置中心點"
 #: ../src/seltrans.cpp:966 ../src/seltrans.cpp:1096
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr "<b>伸縮</b>：%0.2f%% x %0.2f%%；以 <b>Ctrl</b> 來鎖定長寬比"
+msgstr "<b>伸縮</b>：%0.2f%% x %0.2f%%; 以 <b>Ctrl</b> 來鎖定長寬比"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
@@ -6915,7 +6916,7 @@ msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
 "with <b>Shift</b> to disable snapping"
 msgstr ""
-"<b>移動</b>透過 %s﹑%s；以 <b>Ctrl</b> 來限制為水平/垂直；以 <b>Shift</b> 來"
+"<b>移動</b>透過 %s﹑%s; 以 <b>Ctrl</b> 來限制為水平/垂直；以 <b>Shift</b> 來"
 "停用抓取"
 
 #: ../src/shape-editor.cpp:371
@@ -7019,12 +7020,12 @@ msgstr "物件"
 #: ../src/sp-item.cpp:922
 #, c-format
 msgid "%s; <i>clipped</i>"
-msgstr "%s；<i>已裁剪</i>"
+msgstr "%s; <i>已裁剪</i>"
 
 #: ../src/sp-item.cpp:927
 #, c-format
 msgid "%s; <i>masked</i>"
-msgstr "%s；<i>已遮罩</i>"
+msgstr "%s; <i>已遮罩</i>"
 
 #: ../src/sp-line.cpp:189
 msgid "<b>Line</b>"
@@ -7689,7 +7690,7 @@ msgstr "勾描：已完成。%ld 個節點已建立"
 
 #: ../src/tweak-context.cpp:959
 msgid "<b>Nothing selected!</b> Select objects to tweak."
-msgstr "<b>沒有東西被選擇!</b> 選擇物件來進行揉壓。"
+msgstr "<b>沒有東西被選擇!</b> 選擇物件來進行擰轉。"
 
 #: ../src/tweak-context.cpp:964
 #, c-format
@@ -7730,8 +7731,8 @@ msgstr[1] "<b>排斥 %d</b> 所選的物件"
 #, c-format
 msgid "<b>Roughening %d</b> selected object"
 msgid_plural "<b>Roughening %d</b> selected objects"
-msgstr[0] "<b>蜿蜒 %d</b> 所選的物件"
-msgstr[1] "<b>蜿蜒 %d</b> 所選的物件"
+msgstr[0] "<b>粗糙 %d</b> 所選的物件"
+msgstr[1] "<b>粗糙 %d</b> 所選的物件"
 
 #: ../src/tweak-context.cpp:993
 #, c-format
@@ -7749,35 +7750,35 @@ msgstr[1] "<b>抖動 %d</b> 所選物件的<b>顏色</b>"
 
 #: ../src/tweak-context.cpp:1038
 msgid "Push tweak"
-msgstr "推擠揉壓"
+msgstr "推擠擰轉"
 
 #: ../src/tweak-context.cpp:1042
 msgid "Shrink tweak"
-msgstr "收縮揉壓"
+msgstr "收縮擰轉"
 
 #: ../src/tweak-context.cpp:1046
 msgid "Grow tweak"
-msgstr "擴張揉壓"
+msgstr "擴張擰轉"
 
 #: ../src/tweak-context.cpp:1050
 msgid "Attract tweak"
-msgstr "吸引揉壓"
+msgstr "吸引擰轉"
 
 #: ../src/tweak-context.cpp:1054
 msgid "Repel tweak"
-msgstr "排斥揉壓"
+msgstr "排斥擰轉"
 
 #: ../src/tweak-context.cpp:1058
 msgid "Roughen tweak"
-msgstr "變粗造揉壓"
+msgstr "粗糙擰轉"
 
 #: ../src/tweak-context.cpp:1062
 msgid "Color paint tweak"
-msgstr "顏色填塗揉壓"
+msgstr "顏色塗抹擰轉"
 
 #: ../src/tweak-context.cpp:1065
 msgid "Color jitter tweak"
-msgstr "顏色抖動揉壓"
+msgstr "顏色抖動擰轉"
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:98
@@ -7870,7 +7871,9 @@ msgstr "about.svg"
 #. one per line in the form of: name surname (email). Use \n for newline.
 #: ../src/ui/dialog/aboutbox.cpp:337
 msgid "translator-credits"
-msgstr "趙惟倫 (william.chao@ossii.com.tw)"
+msgstr ""
+"趙惟倫 (william.chao@ossii.com.tw)\n"
+"吳東俊 (ziyawu@gmail.com)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:234
 #: ../src/ui/dialog/align-and-distribute.cpp:780
@@ -14587,7 +14590,7 @@ msgstr "粗糙模式"
 
 #: ../src/widgets/toolbox.cpp:3114
 msgid "Roughen parts of paths"
-msgstr "路徑的一部份使用蜿蜒效果"
+msgstr "路徑的一部份使用粗糙效果"
 
 #: ../src/widgets/toolbox.cpp:3120
 msgid "Color paint mode"
