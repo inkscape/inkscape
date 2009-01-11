@@ -1069,7 +1069,14 @@ void InkscapePreferences::initPageUI()
                               _("Set the size for the main tools to use (requires restart)"), false);
 
     _misc_recent.init("/options/maxrecentdocuments/value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
-    _page_ui.add_line( false, _("Maximum documents in Open Recent:"), _misc_recent, "",
+
+    Gtk::HBox* recent_hbox = Gtk::manage(new Gtk::HBox());
+    Gtk::Button* reset_recent = Gtk::manage(new Gtk::Button(_("Reset list of recently opened files")));
+    reset_recent->signal_clicked().connect(sigc::mem_fun(*this, &InkscapePreferences::on_reset_open_recent_clicked));
+    recent_hbox->pack_start(_misc_recent, false, false);
+    recent_hbox->pack_start(*reset_recent, false, false);
+
+    _page_ui.add_line( false, _("Maximum documents in Open Recent:"), *recent_hbox, "",
                               _("The maximum length of the Open Recent list in the File menu"), false);
 
     _ui_zoom_correction.init(300, 30, 1.00, 200.0, 1.0, 10.0, 1.0);
@@ -1202,6 +1209,25 @@ bool InkscapePreferences::PresentPage(const Gtk::TreeModel::iterator& iter)
         return true;
     }
     return false;
+}
+
+void InkscapePreferences::on_reset_open_recent_clicked()
+{
+    GtkRecentManager* manager = gtk_recent_manager_get_default();
+    GList* recent_list = gtk_recent_manager_get_items(manager);
+    GList* element;
+    GError* error;
+
+    //Remove only elements that were added by Inkscape
+    for (element = g_list_first(recent_list); element; element = g_list_next(element)){
+        error = NULL;
+        GtkRecentInfo* info = (GtkRecentInfo*) element->data;
+        if (gtk_recent_info_has_application(info, g_get_prgname())){
+            gtk_recent_manager_remove_item(manager, gtk_recent_info_get_uri(info), &error);
+        }
+        gtk_recent_info_unref (info);
+    }
+    g_list_free(recent_list);
 }
 
 void InkscapePreferences::on_pagelist_selection_changed()

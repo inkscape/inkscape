@@ -265,6 +265,7 @@ protected:
     static void AddNewObjectsStyle(DialogPage& p, Glib::ustring const &prefs_path, const gchar* banner = NULL);
 
     void on_pagelist_selection_changed();
+    void on_reset_open_recent_clicked();
     void initPageMouse();
     void initPageScrolling();
     void initPageSnapping();
