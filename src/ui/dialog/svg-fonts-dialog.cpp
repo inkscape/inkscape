@@ -14,16 +14,17 @@
 
 #ifdef ENABLE_SVG_FONTS
 
+#include <2geom/pathvector.h>
 #include "document-private.h"
 #include <gtkmm/notebook.h>
 #include <glibmm/i18n.h>
+#include <message-stack.h>
 #include "selection.h"
 #include <string.h>
+#include "svg/svg.h"
 #include "svg-fonts-dialog.h"
 #include "xml/node.h"
 #include "xml/repr.h"
-#include "svg/svg.h"
-#include <2geom/pathvector.h>
 
 SvgFontDrawingArea::SvgFontDrawingArea(){
     this->text = "";
@@ -467,14 +468,28 @@ void SvgFontsDialog::add_glyph(){
 }
 
 void SvgFontsDialog::set_glyph_description_from_selected_path(){
-    SPDocument* doc = sp_desktop_document(this->getDesktop());
-    Inkscape::Selection* sel = sp_desktop_selection(this->getDesktop());
-    if (sel->isEmpty()) return;
+    SPDesktop* desktop = this->getDesktop();
+    if (!desktop) {
+        g_warning("SvgFontsDialog: No active desktop");
+        return;
+    }
+
+    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
+    SPDocument* doc = sp_desktop_document(desktop);
+    Inkscape::Selection* sel = sp_desktop_selection(desktop);
+    if (sel->isEmpty()){
+        char *msg = _("Select a <b>path</b> to define the curves of a glyph");
+        msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
+        return;
+    }
+
     Inkscape::XML::Node* node = (Inkscape::XML::Node*) g_slist_nth_data((GSList *)sel->reprList(), 0);
-    if (!node || !node->matchAttributeName("d")) return;
-    if (!node->attribute("d")) return; //TODO: give a message to the user
-                                        //"This object does not have a path description."
-                                        //How should we tell it to the user?
+    if (!node) return;//TODO: should this be an assert?
+    if (!node->matchAttributeName("d") || !node->attribute("d")){
+        char *msg = _("The selected object does not have a <b>path</b> description.");
+        msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
+        return;
+    } //TODO: //Is there a better way to tell it to to the user?
 
     Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
 
@@ -485,7 +500,11 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
     pathv+=Geom::Point(Geom::Coord(0),Geom::Coord(get_selected_spfont()->horiz_adv_x));
 
     SPGlyph* glyph = get_selected_glyph();
-    if (!glyph) return; //TODO: give a message: "No glyph selected"
+    if (!glyph){
+        char *msg = _("No glyph selected in the SVGFonts dialog.");
+        msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
+        return;
+    }
     glyph->repr->setAttribute("d", (char*) sp_svg_write_path (pathv));
     sp_document_done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Set glyph curves"));
 
@@ -493,12 +512,28 @@ void SvgFontsDialog::set_glyph_description_from_selected_path(){
 }
 
 void SvgFontsDialog::missing_glyph_description_from_selected_path(){
-    SPDocument* doc = sp_desktop_document(this->getDesktop());
-    Inkscape::Selection* sel = sp_desktop_selection(this->getDesktop());
-    if (sel->isEmpty()) return;
+    SPDesktop* desktop = this->getDesktop();
+    if (!desktop) {
+        g_warning("SvgFontsDialog: No active desktop");
+        return;
+    }
+
+    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
+    SPDocument* doc = sp_desktop_document(desktop);
+    Inkscape::Selection* sel = sp_desktop_selection(desktop);
+    if (sel->isEmpty()){
+        char *msg = _("Select a <b>path</b> to define the curves of a glyph");
+        msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
+        return;
+    }
+
     Inkscape::XML::Node* node = (Inkscape::XML::Node*) g_slist_nth_data((GSList *)sel->reprList(), 0);
-    if (!node || !node->matchAttributeName("d")) return;
-    if (!node->attribute("d")) return; //TODO: give a message to the user
+    if (!node) return;//TODO: should this be an assert?
+    if (!node->matchAttributeName("d") || !node->attribute("d")){
+        char *msg = _("The selected object does not have a <b>path</b> description.");
+        msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
+        return;
+    } //TODO: //Is there a better way to tell it to to the user?
 
     Geom::PathVector pathv = sp_svg_read_pathv(node->attribute("d"));
 
