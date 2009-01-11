@@ -238,11 +238,7 @@ void Inkscape::ObjectSnapper::_collectNodes(Inkscape::SnapPreferences::PointType
                     // of the item AND the bbox of the clipping path at the same time
                     if (!(*i).clip_or_mask) {
                         Geom::OptRect b = sp_item_bbox_desktop(root_item, bbox_type);
-                        if (b) {
-                            for ( unsigned k = 0 ; k < 4 ; k++ ) {
-                                _points_to_snap_to->push_back(b->corner(k));
-                            }
-                        }
+                        getBBoxPoints(b, _points_to_snap_to, _snapmanager->snapprefs.getSnapMidpoints());
                     }
                 }
             }
@@ -734,6 +730,20 @@ void Inkscape::ObjectSnapper::_getBorderNodes(std::vector<Geom::Point> *points) 
     points->push_back(Geom::Point(0,h));
     points->push_back(Geom::Point(w,h));
     points->push_back(Geom::Point(w,0));
+}
+
+void Inkscape::getBBoxPoints(Geom::OptRect const bbox, std::vector<Geom::Point> *points, bool const includeMidpoints)
+{
+	if (bbox) {
+		// collect the corners of the bounding box
+		for ( unsigned k = 0 ; k < 4 ; k++ ) {
+			points->push_back(bbox->corner(k));
+			// optionally, collect the midpoints of the bounding box's edges too
+			if (includeMidpoints) {
+				points->push_back((bbox->corner(k) + bbox->corner((k+1) % 4))/2);
+			}
+		}
+	}
 }
 
 /*

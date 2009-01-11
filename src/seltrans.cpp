@@ -295,7 +295,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
         _snap_points = snap_points_hull;
         // Unfortunately, by now we will have lost the font-baseline snappoints :-(
     }
-    
+
     // Find bbox hulling all special points, which excludes stroke width. Here we need to include the
     // path nodes, for example because a rectangle which has been converted to a path doesn't have
     // any other special points
@@ -312,11 +312,8 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 
     _bbox_points.clear();
     if (_bbox) {
-        // ... and add the bbox corners to _bbox_points
-        for ( unsigned i = 0 ; i < 4 ; i++ ) {
-            _bbox_points.push_back(_bbox->corner(i));
-        }
-        // There are two separate "opposites" (i.e. opposite w.r.t. the handle being dragged):
+    	getBBoxPoints(_bbox, &_bbox_points, m.snapprefs.getSnapMidpoints());
+    	// There are two separate "opposites" (i.e. opposite w.r.t. the handle being dragged):
         //  - one for snapping the boundingbox, which can be either visual or geometric
         //  - one for snapping the special points
         // The "opposite" in case of a geometric boundingbox always coincides with the "opposite" for the special points
@@ -326,10 +323,10 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
         _opposite_for_specpoints = snap_points_bbox.min() + snap_points_bbox.dimensions() * Geom::Scale(1-x, 1-y);
         _opposite = _opposite_for_bboxpoints;
     }
-    
-    // When snapping the node closest to the mouse pointer is absolutely preferred over the closest snap 
+
+    // When snapping the node closest to the mouse pointer is absolutely preferred over the closest snap
     // (i.e. when weight == 1), then we will not even try to snap to other points and discard those other
-    // points immediately. 
+    // points immediately.
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 	if (prefs->getBool("/options/snapclosestonly/value", false)) {
     	if (m.snapprefs.getSnapModeNode()) {
@@ -337,13 +334,13 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     	} else {
     		_snap_points.clear(); // don't keep any point
     	}
-		
+
     	if (m.snapprefs.getSnapModeBBox()) {
 			_keepClosestPointOnly(_bbox_points, p);
 		} else {
 			_bbox_points.clear(); // don't keep any point
-		}			
-    	
+		}
+
     	g_assert(_bbox_points.size() < 2 && _snap_points.size() < 2);
     	if (_snap_points.size() == 1 && _bbox_points.size() == 1) { //both vectors can only have either one or zero elements
     		// So we have exactly one bbox corner and one node left; now find out which is closest and delete the other one
@@ -353,7 +350,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     			_snap_points.clear();
     		}
 		}
-    	
+
     	// Now either _bbox_points or _snap_points has a single element, the other one has zero..... or both have zero elements
     	g_assert((_bbox_points.size() + _snap_points.size()) < 2);
     	if (_bbox_points.size() == 1) {
@@ -1420,13 +1417,13 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
                 // individually for each point to be snapped; this will be handled however by _snapTransformed()
                 s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_BBOX,
                                                          _bbox_points,
-                                                         _point, 
+                                                         _point,
                                                          Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
                                                          dxy));
 
                 s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_NODE,
                                                          _snap_points,
-                                                         _point, 
+                                                         _point,
                                                          Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
                                                          dxy));
             }
@@ -1460,8 +1457,8 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
         if (best_snapped_point.getSnapped()) {
             _desktop->snapindicator->set_new_snaptarget(best_snapped_point);
         } else {
-            // We didn't snap, so remove any previous snap indicator 
-            _desktop->snapindicator->remove_snaptarget();            
+            // We didn't snap, so remove any previous snap indicator
+            _desktop->snapindicator->remove_snaptarget();
             if (control) {
                 // If we didn't snap, then we should still constrain horizontally or vertically
                 // (When we did snap, then this constraint has already been enforced by
@@ -1474,7 +1471,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
             }
         }
     }
-    
+
     Geom::Matrix const move((Geom::Translate(dxy)));
     Geom::Point const norm(0, 0);
     transform(move, norm);
@@ -1583,20 +1580,20 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
 void Inkscape::SelTrans::_keepClosestPointOnly(std::vector<Geom::Point> &points, const Geom::Point &reference)
 {
 	if (points.size() < 2) return;
-	
+
 	Geom::Point closest_point = Geom::Point(NR_HUGE, NR_HUGE);
 	Geom::Coord closest_dist = NR_HUGE;
-	
+
 	for(std::vector<Geom::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
 		Geom::Coord dist = Geom::L2(*i - reference);
 		if (i == points.begin() || dist < closest_dist) {
 			closest_point = *i;
-			closest_dist = dist;			
+			closest_dist = dist;
 		}
     }
-	
+
 	points.clear();
-	points.push_back(closest_point);	
+	points.push_back(closest_point);
 }
 
 /*

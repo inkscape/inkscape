@@ -151,8 +151,10 @@ private:
     //snap bbox corners to nodes, or nodes to bboxes.
     //(snapping to grids and guides is not affected by this)
     bool _strict_snapping;
-};
+}; // end of ObjectSnapper class
 
-}
+void getBBoxPoints(Geom::OptRect const bbox, std::vector<Geom::Point> *points, bool const includeMidpoints);
+
+} // end of namespace Inkscape
 
 #endif
