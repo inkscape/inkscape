@@ -2,14 +2,17 @@
 # Copyright (C) 2002-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Inkscape package.
 # Zdenko Podobný <zdpo@mailbox.sk>, 2003, 2004.
-# Ivan Masár <helix84@centrum.sk>, 2007, 2008.
+# Ivan Masár <helix84@centrum.sk>, 2007, 2008, 2009.
+#
+# Slovak terminology used in Inkscape:
+# http://wiki.inkscape.org/wiki/index.php/InkscapeTerminology/sk
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2008-06-12 21:31+0100\n"
-"PO-Revision-Date: 2008-07-28 17:21+0100\n"
+"PO-Revision-Date: 2009-01-08 10:44+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -4993,11 +4996,11 @@ msgstr ""
 #. checkitem_toggled, checkitem_update, 0);
 #: ../src/interface.cpp:838
 msgid "Commands Bar"
-msgstr "Príkazový panel"
+msgstr "Panel príkazov"
 
 #: ../src/interface.cpp:838
 msgid "Show or hide the Commands bar (under the menu)"
-msgstr "Zobrazí alebo skryje Príkazový panel (pod ponukou)"
+msgstr "Zobrazí alebo skryje Panel príkazov (pod ponukou)"
 
 #: ../src/interface.cpp:840
 msgid "Tool Controls Bar"
@@ -5009,7 +5012,7 @@ msgstr "Zobrazí alebo skryje panel pre ovládanie nástrojov"
 
 #: ../src/interface.cpp:842
 msgid "_Toolbox"
-msgstr "_Nástrojový panel"
+msgstr "_Panel nástrojov"
 
 #: ../src/interface.cpp:842
 msgid "Show or hide the main toolbox (on the left)"
@@ -11168,7 +11171,7 @@ msgstr "Prevzorkovanie bitmáp:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:972
 msgid "Commands bar icon size"
-msgstr "Veľkosť ikon príkazového panelu"
+msgstr "Veľkosť ikon panelu príkazov"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:973
 msgid "Set the size for the commands toolbar to use (requires restart)"
@@ -11184,7 +11187,7 @@ msgstr "Nastaviť veľkosť sekundárneho panelu nástrojov (vyžaduje reštart)
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:980
 msgid "Main toolbar icon size"
-msgstr "Veľkosť ikon hlavného panela nástrojov"
+msgstr "Veľkosť ikon hlavného panelu nástrojov"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:981
 msgid "Set the size for the main tools to use (requires restart)"
