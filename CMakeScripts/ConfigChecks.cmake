@@ -1,7 +1,7 @@
 #---------------
 # From here on:
 # Set all HAVE_XXX variables, to correctly set all defines in config.h
-SET(CMAKE_REQUIRED_INCLUDES ${INK_INCLUDES})
+#SET(CMAKE_REQUIRED_INCLUDES ${INK_INCLUDES})
 INCLUDE (CheckIncludeFiles)
 INCLUDE (CheckFunctionExists)
 INCLUDE (CheckStructMember)

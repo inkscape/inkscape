@@ -25,3 +25,5 @@ ${CMAKE_CURRENT_BINARY_DIR}/sp-marshal.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/sp-marshal.h
 )
 ADD_LIBRARY(helper STATIC ${helper_SRC})
+TARGET_LINK_LIBRARIES(helper
+2geom ${INKSCAPE_LIBS})

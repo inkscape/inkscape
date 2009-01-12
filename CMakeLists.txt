@@ -5,17 +5,17 @@ SET(PROJECT_NAME inkscape)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.4.6)
 SET(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
-if(COMMAND cmake_policy)
-  cmake_policy(SET CMP0003 NEW)
-endif(COMMAND cmake_policy)
+IF(COMMAND cmake_policy)
+  CMAKE_POLICY(SET CMP0003 NEW)
+ENDIF(COMMAND cmake_policy)
 
 LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeScripts")
-INCLUDE(ConfigPaths)
-INCLUDE(DefineDependsandFlags)
-INCLUDE(HelperMacros)
 
-# Set to true if compiler/linker should enable profiling:
-#SET(ENABLE_PROFILING TRUE)
+INCLUDE(ConfigPaths) #Installation Paths
+INCLUDE(DefineDependsandFlags) #Includes, Compiler Flags, and Link Libraries
+INCLUDE(HelperMacros) #Misc Utility Macros
+
+OPTION(ENABLE_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker should enable profiling
 
 #make dist target
 SET(INKSCAPE_DIST_PREFIX "${PROJECT_NAME}-${INKSCAPE_VERSION}")

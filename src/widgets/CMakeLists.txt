@@ -32,3 +32,5 @@ sp-xmlview-tree.cpp
 toolbox.cpp
 )
 ADD_LIBRARY(widgets STATIC ${widgets_SRC})
+TARGET_LINK_LIBRARIES(widgets
+2geom ${INKSCAPE_LIBS})

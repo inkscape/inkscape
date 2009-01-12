@@ -19,3 +19,5 @@ session-manager.cpp
 ${jabber_whiteboard_dialog_SRC}
 )
 ADD_LIBRARY(jabber_whiteboard STATIC ${jabber_whiteboard_SRC})
+TARGET_LINK_LIBRARIES(jabber_whiteboard
+2geom ${INKSCAPE_LIBS})

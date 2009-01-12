@@ -20,3 +20,5 @@ ${ui_view_SRC}
 ${ui_widget_SRC}
 )
 ADD_LIBRARY(ui STATIC ${ui_SRC})
+TARGET_LINK_LIBRARIES(ui
+2geom ${INKSCAPE_LIBS})

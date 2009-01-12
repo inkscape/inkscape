@@ -24,3 +24,5 @@ unclump.cpp
 xml-tree.cpp
 )
 ADD_LIBRARY(dialogs STATIC ${dialogs_SRC})
+TARGET_LINK_LIBRARIES(dialogs
+2geom ${INKSCAPE_LIBS})

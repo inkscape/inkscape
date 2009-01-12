@@ -33,4 +33,4 @@ testnr.cpp
 )
 ADD_LIBRARY(nr STATIC ${libnr_SRC})
 TARGET_LINK_LIBRARIES(nr
-	"${INKSCAPE_LINK_FLAGS}" 2geom )
+2geom ${INKSCAPE_LIBS})

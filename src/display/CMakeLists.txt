@@ -55,3 +55,5 @@ sp-ctrlquadr.cpp
 #testnr.cpp
 )
 ADD_LIBRARY(display STATIC ${display_SRC})
+TARGET_LINK_LIBRARIES(display
+2geom ${INKSCAPE_LIBS})

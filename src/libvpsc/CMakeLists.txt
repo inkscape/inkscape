@@ -9,3 +9,5 @@ solve_VPSC.cpp
 variable.cpp
 )
 ADD_LIBRARY(vpsc STATIC ${libvpsc_SRC})
+TARGET_LINK_LIBRARIES(vpsc
+${INKSCAPE_LIBS})

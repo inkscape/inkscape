@@ -9,3 +9,5 @@ trace.cpp
 ${trace_potrace_SRC}
 )
 ADD_LIBRARY(trace STATIC ${trace_SRC})
+TARGET_LINK_LIBRARIES(trace
+2geom ${INKSCAPE_LIBS})

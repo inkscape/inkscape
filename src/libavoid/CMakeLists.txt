@@ -13,3 +13,5 @@ vertices.cpp
 visibility.cpp
 )
 ADD_LIBRARY(avoid STATIC ${libavoid_SRC})
+TARGET_LINK_LIBRARIES(avoid
+${INKSCAPE_LIBS})

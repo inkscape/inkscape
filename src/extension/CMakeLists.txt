@@ -37,3 +37,5 @@ ${extension_param_SRC}
 ${extension_script_SRC}
 )
 ADD_LIBRARY(extension STATIC ${extension_SRC})
+TARGET_LINK_LIBRARIES(extension
+2geom ${INKSCAPE_LIBS})

@@ -17,3 +17,5 @@ simple-node.cpp
 subtree.cpp
 )
 ADD_LIBRARY(xml STATIC ${xml_SRC})
+TARGET_LINK_LIBRARIES(xml
+2geom ${INKSCAPE_LIBS})

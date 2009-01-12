@@ -8,3 +8,5 @@ shortest_paths.cpp
 straightener.cpp
 )
 ADD_LIBRARY(cola STATIC ${libcola_SRC})
+TARGET_LINK_LIBRARIES(cola
+${INKSCAPE_LIBS})

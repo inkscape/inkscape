@@ -14,3 +14,5 @@ svg-path.cpp
 #test-stubs.cpp
 )
 ADD_LIBRARY(svg STATIC ${svg_SRC})
+TARGET_LINK_LIBRARIES(svg
+2geom ${INKSCAPE_LIBS})

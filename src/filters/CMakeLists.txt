@@ -21,3 +21,5 @@ tile.cpp
 turbulence.cpp
 )
 ADD_LIBRARY(filters STATIC ${filters_SRC})
+TARGET_LINK_LIBRARIES(filters
+2geom ${INKSCAPE_LIBS})

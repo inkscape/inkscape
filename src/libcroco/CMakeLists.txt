@@ -28,3 +28,5 @@ cr-token.c
 cr-utils.c
 )
 ADD_LIBRARY(croco STATIC ${libcroco_SRC})
+TARGET_LINK_LIBRARIES(croco
+${INKSCAPE_LIBS})

@@ -32,3 +32,5 @@ spiro.cpp
 ${live_effects_parameter_SRC}
 )
 ADD_LIBRARY(live_effects STATIC ${live_effects_SRC})
+TARGET_LINK_LIBRARIES(live_effects
+2geom ${INKSCAPE_LIBS})

@@ -251,18 +251,19 @@ ENDFOREACH(srclistsrc)
 
 SET(INKSCAPE_SRC ${INKSCAPE_SRC} ${GlibOutput})
 
-#message(status "${INKSCAPE_LIBS}")
 ADD_LIBRARY(sp STATIC ${SP_SRC})
-
+TARGET_LINK_LIBRARIES(sp
+nr nrtype avoid cola croco gdl vpsc livarot ${internalfolders} ${INKSCAPE_LIBS}
+)
 # make executable for INKSCAPE
 ADD_EXECUTABLE(inkscape ${INKSCAPE_SRC})
 TARGET_LINK_LIBRARIES(inkscape
-    ${internalfolders} sp avoid cola croco gdl nr nrtype vpsc livarot ${INKSCAPE_LIBS}
+nr nrtype sp avoid cola croco gdl vpsc livarot ${internalfolders} ${INKSCAPE_LIBS}
 )
 
 # make executable for INKVIEW
 #ADD_EXECUTABLE(inkview inkview.cpp)
 #TARGET_LINK_LIBRARIES(inkview
-#	"${INKSCAPE_LINK_FLAGS}" 2geom avoid cola croco gdl nr nrtype vpsc livarot sp ${internalfolders}
+#	2geom avoid cola croco gdl nr nrtype vpsc livarot sp ${internalfolders}
 #)
 

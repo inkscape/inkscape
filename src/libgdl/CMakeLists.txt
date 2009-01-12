@@ -18,8 +18,11 @@ gdl-dock-tablabel.c
 gdl-i18n.c
 gdl-stock.c
 gdl-switcher.c
-gdl-tools.hlibgdlmarshal.c
+gdl-tools.h
+libgdlmarshal.c
 libgdltypebuiltins.c
 ${GDL_WIN}
 )
 ADD_LIBRARY(gdl STATIC ${libgdl_SRC})
+TARGET_LINK_LIBRARIES(gdl
+${INKSCAPE_LIBS})

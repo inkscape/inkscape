@@ -12,3 +12,5 @@ uristream.cpp
 xsltstream.cpp
 )
 ADD_LIBRARY(io STATIC ${io_SRC})
+TARGET_LINK_LIBRARIES(io
+2geom ${INKSCAPE_LIBS})
