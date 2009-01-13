@@ -1,7 +1,7 @@
 #ifndef SEEN_MENUS_SKELETON_H
 #define SEEN_MENUS_SKELETON_H
 
-#include <inkscape_version.h>
+#include <inkscape-version.h>
 
 #ifdef __cplusplus
 #undef N_
