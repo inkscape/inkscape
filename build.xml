@@ -97,10 +97,10 @@
     <copy file="${src}/helper/sp-marshal.cpp.mingw"
           tofile="${src}/helper/sp-marshal.cpp"/>
           
-    <makefile file="inkscape-version.cpp">
+    <makefile file="${src}/inkscape-version.cpp">
         namespace Inkscape {
-	     gchar const *version_string = "${version} r${svn.revision}"
-	}
+            char const *version_string = "${version} r${svn.revision}";
+        }
     </makefile>
     <makefile file="config.h">
         #ifndef _CONFIG_H_
@@ -367,7 +367,7 @@
             -fopenmp
         </flags>
         <defines>
-            -DVERSION=\"${version}\"
+            -DINKSCAPE_VERSION=\"${version}\"
             -DHAVE_CONFIG_H
             -D_INTL_REDIRECT_INLINE
             -DHAVE_SSL
@@ -885,7 +885,7 @@
     <delete dir="${dist}"/>
     <delete file="build.dep"/>
     <delete file="config.h"/>
-    <delete file="inkscape-version.cpp"/>
+    <delete file="${src}/inkscape-version.cpp"/>
 
     <delete file="${src}/test-main.cpp"/>
     <delete file="${src}/test-src.cpp"/>
