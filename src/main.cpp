@@ -69,7 +69,7 @@
 
 #include "inkscape-private.h"
 #include "inkscape-stock.h"
-#include "inkscape_version.h"
+#include "inkscape-version.h"
 
 #include "sp-namedview.h"
 #include "sp-guide.h"
@@ -951,7 +951,7 @@ int sp_main_shell(char const* command_name)
     gsize sizeLeft = buffer_size - offset;
     gchar *useme = command_line + offset;
 
-    fprintf(stdout, "Inkscape %s interactive shell mode. Type 'quit' to quit.\n", INKSCAPE_VERSION);
+    fprintf(stdout, "Inkscape %s interactive shell mode. Type 'quit' to quit.\n", Inkscape::version_string);
     fflush(stdout);
     char* linedata = 0;
     do {
@@ -1724,7 +1724,7 @@ sp_process_args(poptContext ctx)
                 break;
             }
             case SP_ARG_VERSION: {
-                printf("Inkscape %s (%s)\n", INKSCAPE_VERSION, __DATE__);
+                printf("Inkscape %s (%s)\n", Inkscape::version_string, __DATE__);
                 exit(0);
                 break;
             }

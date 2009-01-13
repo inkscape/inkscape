@@ -28,7 +28,7 @@
 
 #include <gtkmm.h>
 
-#include "../helper/sp-marshal.h"
+#include "helper/sp-marshal.h"
 #include <helper/recthull.h>
 #include <display/sp-canvas.h>
 #include "display-forward.h"

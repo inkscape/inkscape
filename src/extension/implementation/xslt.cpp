@@ -22,6 +22,8 @@
 #include "io/sys.h"
 #include "file.h"
 #include <unistd.h>
+#include <cstring>
+#include "document.h"
 
 #include <libxml/parser.h>
 #include <libxslt/transform.h>

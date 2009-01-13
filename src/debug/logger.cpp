@@ -12,7 +12,7 @@
 #include <fstream>
 #include <vector>
 #include <glib/gmessages.h>
-#include "inkscape_version.h"
+#include "inkscape-version.h"
 #include "debug/logger.h"
 #include "debug/simple-event.h"
 #include "gc-alloc.h"
@@ -133,7 +133,7 @@ typedef SimpleEvent<Event::CORE> CoreEvent;
 class SessionEvent : public CoreEvent {
 public:
     SessionEvent() : CoreEvent(Util::share_static_string("session")) {
-        _addProperty("inkscape-version", INKSCAPE_VERSION);
+        _addProperty("inkscape-version", Inkscape::version_string);
     }
 };
 

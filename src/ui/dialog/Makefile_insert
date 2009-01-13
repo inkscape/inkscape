@@ -67,5 +67,3 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/undo-history.cpp		\
 	ui/dialog/undo-history.h		\
 	$(inkboard_dialogs)
-
-ui/dialog/aboutbox.$(OBJEXT): inkscape_version.h

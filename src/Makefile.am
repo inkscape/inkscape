@@ -52,6 +52,12 @@ inkjar_dir = inkjar
 inkjar_libs = inkjar/libinkjar.a
 endif
 
+# Extra files to remove when doing "make distclean"
+DISTCLEANFILES =	\
+	helper/sp-marshal.cpp	\
+	helper/sp-marshal.h	\
+	inkscape-version.cpp
+
 inkscape_private_libs =	\
 	libinkpre.a		\
 	application/libinkapp.a	\
@@ -93,7 +99,8 @@ inkscape_private_libs =	\
 	io/libio.a	        \
 	$(inkjar_libs)		\
 	libinkpost.a		\
-	debug/libinkdebug.a
+	debug/libinkdebug.a     \
+	libinkversion.a
 
 all_libs =			\
 	$(inkscape_private_libs)	\
@@ -160,12 +167,6 @@ bin_PROGRAMS = inkscape inkview
 # Libraries which should be compiled by "make" but not installed
 # Currently we use one library per source directory.
 noinst_LIBRARIES = $(inkscape_private_libs)
-
-# Extra files to remove when doing "make distclean"
-DISTCLEANFILES =	\
-	helper/sp-marshal.cpp	\
-	helper/sp-marshal.h	\
-	inkscape_version.h
 
 # Extra files not mentioned as sources to include in the source tarball
 EXTRA_DIST =	\

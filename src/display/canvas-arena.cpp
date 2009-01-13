@@ -17,7 +17,7 @@
 
 #include <display/display-forward.h>
 #include <display/sp-canvas-util.h>
-#include "../helper/sp-marshal.h"
+#include "helper/sp-marshal.h"
 #include <display/nr-arena.h>
 #include <display/nr-arena-group.h>
 #include <display/canvas-arena.h>

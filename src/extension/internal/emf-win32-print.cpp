@@ -49,7 +49,7 @@
 //#include "document.h"
 #include "style.h"
 //#include "sp-paint-server.h"
-#include "inkscape_version.h"
+#include "inkscape-version.h"
 
 //#include "libnrtype/FontFactory.h"
 //#include "libnrtype/font-instance.h"
@@ -172,7 +172,7 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
 
     CHAR buff[1024];
     ZeroMemory(buff, sizeof(buff));
-    snprintf(buff, sizeof(buff)-1, "Inkscape %s (%s)", INKSCAPE_VERSION, __DATE__);
+    snprintf(buff, sizeof(buff)-1, "Inkscape %s (%s)", Inkscape::version_string, __DATE__);
     INT len = strlen(buff);
     CHAR *p1 = strrchr(ansi_uri, '\\');
     CHAR *p2 = strrchr(ansi_uri, '/');

@@ -33,7 +33,7 @@
 #include "text-editing.h"
 #include "ui/dialog/aboutbox.h"
 
-#include "inkscape_version.h"
+#include "inkscape-version.h"
 
 
 
@@ -104,7 +104,7 @@ AboutBox::AboutBox() : Gtk::Dialog(_("About Inkscape")) {
     Gtk::Label *label=new Gtk::Label();
     gchar *label_text = 
         g_strdup_printf("<small><i>Inkscape %s, built %s</i></small>",
-              INKSCAPE_VERSION, __DATE__);
+              Inkscape::version_string, __DATE__);
     label->set_markup(label_text);
     label->set_alignment(Gtk::ALIGN_RIGHT, Gtk::ALIGN_CENTER);
     g_free(label_text);
@@ -153,7 +153,7 @@ Gtk::Widget *build_splash_widget() {
 
     SPObject *version = doc->getObjectById("version");
     if ( version && SP_IS_TEXT(version) ) {
-        sp_te_set_repr_text_multiline (SP_TEXT (version), INKSCAPE_VERSION);
+        sp_te_set_repr_text_multiline (SP_TEXT (version), Inkscape::version_string);
     }
     sp_document_ensure_up_to_date(doc);
 

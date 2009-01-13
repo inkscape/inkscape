@@ -45,7 +45,7 @@
 #include "xml/repr.h"
 #include "helper/units.h"
 #include "inkscape-private.h"
-#include "inkscape_version.h"
+#include "inkscape-version.h"
 #include "sp-object-repr.h"
 #include "sp-namedview.h"
 #include "desktop.h"
@@ -291,7 +291,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
 
     /* fixme: Not sure about this, but lets assume ::build updates */
     rroot->setAttribute("sodipodi:version", SODIPODI_VERSION);
-    rroot->setAttribute("inkscape:version", INKSCAPE_VERSION);
+    rroot->setAttribute("inkscape:version", Inkscape::version_string);
     /* fixme: Again, I moved these here to allow version determining in ::build (Lauris) */
 
     /* Quick hack 2 - get default image size into document */

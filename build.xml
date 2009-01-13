@@ -97,8 +97,10 @@
     <copy file="${src}/helper/sp-marshal.cpp.mingw"
           tofile="${src}/helper/sp-marshal.cpp"/>
           
-    <makefile file="inkscape_version.h">
-        #define INKSCAPE_VERSION "${version}, revision ${svn.revision}"
+    <makefile file="inkscape-version.cpp">
+        namespace Inkscape {
+	     gchar const *version_string = "${version} r${svn.revision}"
+	}
     </makefile>
     <makefile file="config.h">
         #ifndef _CONFIG_H_
@@ -182,22 +184,6 @@
         #endif /* _CONFIG_H_ */
     </makefile>
   </target>
-
-
-
-  <!--
-  ########################################################################
-  ## T A R G E T    :    T O U C H A B O U T
-  ########################################################################
-  -->
-  <target name="touchabout"
-      description="update the modification time of aboutbox.cpp">
-    <!-- not good <touch file="${src}/ui/dialog/aboutbox.cpp"/> -->
-    <!-- better -->
-    <delete file="${build}/obj/ui/dialog/aboutbox.o"/>
-    <delete file="inkscape_version.h"/>
-  </target>
-
 
   <!--
   ########################################################################
@@ -899,7 +885,7 @@
     <delete dir="${dist}"/>
     <delete file="build.dep"/>
     <delete file="config.h"/>
-    <delete file="inkscape_version.h"/>
+    <delete file="inkscape-version.cpp"/>
 
     <delete file="${src}/test-main.cpp"/>
     <delete file="${src}/test-src.cpp"/>

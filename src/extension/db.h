@@ -17,6 +17,7 @@
 
 #include <map>
 #include <list>
+#include <cstring>
 
 #include "extension/extension.h"
 

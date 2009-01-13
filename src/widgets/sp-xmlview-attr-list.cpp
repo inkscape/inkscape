@@ -16,7 +16,7 @@
 #include <cstring>
 #include <glibmm/i18n.h>
 
-#include "../helper/sp-marshal.h"
+#include "helper/sp-marshal.h"
 #include "../xml/node-event-vector.h"
 #include "sp-xmlview-attr-list.h"
 

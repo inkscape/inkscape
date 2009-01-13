@@ -21,6 +21,7 @@
 #include "extension/internal/cairo-render-context.h"
 #include "extension/internal/cairo-renderer.h"
 #include "ui/widget/rendering-options.h"
+#include "document.h"
 
 #include "unit-constants.h"
 #include "helper/png-write.h"

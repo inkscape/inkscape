@@ -22,7 +22,6 @@
 #include <gtkmm/table.h>
 #include <glibmm/ustring.h>
 #include "xml/repr.h"
-#include "document.h"
 #include "extension/extension-forward.h"
 
 /** The key that is used to identify that the I/O should be autodetected */
@@ -72,6 +71,8 @@
 #define INKSCAPE_EXTENSION_URI   "http://www.inkscape.org/namespace/inkscape/extension"
 #define INKSCAPE_EXTENSION_NS_NC "extension"
 #define INKSCAPE_EXTENSION_NS    "extension:"
+
+struct SPDocument;
 
 namespace Inkscape {
 namespace Extension {

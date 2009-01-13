@@ -50,8 +50,10 @@ namespace XML {
  * no dangling references.
  */
 class NodeObserver {
-public:
+protected:
+    /* the constructor is protected to prevent instantiation */
     NodeObserver() {}
+public:
     virtual ~NodeObserver() {}
     
     /**

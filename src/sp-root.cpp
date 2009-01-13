@@ -34,7 +34,7 @@
 #include <libnr/nr-translate-scale-ops.h>
 #include <xml/repr.h>
 #include "svg/stringstream.h"
-#include "inkscape_version.h"
+#include "inkscape-version.h"
 
 class SPDesktop;
 
@@ -589,7 +589,7 @@ sp_root_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
 
     if (flags & SP_OBJECT_WRITE_EXT) {
         repr->setAttribute("sodipodi:version", SODIPODI_VERSION);
-        repr->setAttribute("inkscape:version", INKSCAPE_VERSION);
+        repr->setAttribute("inkscape:version", Inkscape::version_string);
     }
 
     repr->setAttribute("version", SVG_VERSION);

@@ -1,10 +1,14 @@
 #ifndef SEEN_PREFERENCES_SKELETON_H
 #define SEEN_PREFERENCES_SKELETON_H
 
-#include <inkscape_version.h>
+#include <inkscape-version.h>
 
+/* The root's "version" attribute describes the preferences file format version.
+ * It should only increase when a backwards-incompatible change is made, 
+ * and special handling has to be added to the preferences class to update
+ * obsolete versions the user might have. */
 static char const preferences_skeleton[] =
-"<inkscape version=\"" INKSCAPE_VERSION "\"\n"
+"<inkscape version=\"1\"\n"
 "  xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n"
 "  xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\">\n"
 "  <group id=\"window\">\n"

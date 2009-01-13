@@ -289,17 +289,12 @@ libinkpost_a_SOURCES =	\
 # Additional dependencies
 
 desktop.$(OBJEXT): helper/sp-marshal.h
-document.$(OBJEXT): helper/sp-marshal.h inkscape_version.h
-extension/internal/latex-pstricks.$(OBJEXT): inkscape_version.h
-extension/internal/ps.$(OBJEXT): inkscape_version.h
-inkscape.$(OBJEXT): helper/sp-marshal.h inkscape_version.h
+document.$(OBJEXT): helper/sp-marshal.h
+inkscape.$(OBJEXT): helper/sp-marshal.h
 knot.$(OBJEXT): helper/sp-marshal.h
-main.$(OBJEXT): inkscape_version.h
 selection.$(OBJEXT): helper/sp-marshal.h
 sp-object.$(OBJEXT): helper/sp-marshal.h
-sp-root.$(OBJEXT): inkscape_version.h
 view.$(OBJEXT): helper/sp-marshal.h
-help.$(OBJEXT): inkscape_version.h
 
 
 # ################################################
@@ -316,8 +311,30 @@ inkscape_LDFLAGS = --export-dynamic $(kdeldflags)
 inkview_SOURCES = inkview.cpp $(win32_sources)
 inkview_LDADD = $(all_libs)
 
-inkscape_version.h: ../configure.ac
-	echo '#define INKSCAPE_VERSION "$(VERSION)"' > inkscape_version.h
+libinkversion_a_SOURCES = inkscape-version.cpp
+
+# Hack: make inkscape-version.cpp a phony target.
+# Create the version file every time "make" is invoked. Overwrite it only
+# if it changes. Watch the backslashes!
+inkscape-version.cpp:
+	VER_PREFIX="$(VERSION)"; \
+	if test -x "$(srcdir)/.svn"; then \
+	    VER_SVNREV=" r`svn info $(srcdir) | sed -n -e '/^Revision:/s/Revision: \(.*\)/\1/p'`"; \
+	    if test ! -z "`svn status -q $(srcdir)`"; then \
+	         VER_CUSTOM=" custom"; \
+	    fi; \
+	fi; \
+	VERSION="$$VER_PREFIX$$VER_SVNREV$$VER_CUSTOM"; \
+	echo "namespace Inkscape { " \
+	     "char const *version_string = \"$$VERSION\"; " \
+	     "}" > inkscape-version.new.cpp; \
+	if cmp -s inkscape-version.new.cpp inkscape-version.cpp; then \
+	     rm inkscape-version.new.cpp; \
+	else \
+	     mv inkscape-version.new.cpp inkscape-version.cpp; \
+	fi; \
+	echo $$VERSION
+.PHONY: inkscape-version.cpp
 
 # ######################
 # ### CxxTest stuff ####
