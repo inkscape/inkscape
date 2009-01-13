@@ -2066,7 +2066,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToItemNode",	// "name"
 												 _("To nodes"),					// "label"
-												 _("Toggle snapping to nodes"),	// "tooltip"
+												 _("Toggle snapping to cusp nodes"), // "tooltip"
 												 "toggle_snap_to_nodes",		// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_OBJECT_NODES);
@@ -2078,7 +2078,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToSmoothNodes",	// "name"
 												 _("Smooth nodes"),				// "label"
-												 _("Toggle snapping to smooth nodes"),	// "tooltip"
+												 _("Consider smooth nodes too, not just cusp nodes"),// "tooltip"
 												 "toggle_snap_to_smooth_nodes",	// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_SNAP_SMOOTH_NODES);
@@ -2230,10 +2230,11 @@ void update_snap_toolbox(SPDesktop *desktop, SPEventContext */*eventcontext*/, G
 
 	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act6->gobj()), nv->snap_manager.object.getSnapToItemPath());
 	gtk_action_set_sensitive(GTK_ACTION(act6->gobj()), c1 && c3);
-	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act7->gobj()), nv->snap_manager.object.getSnapToItemNode());
+	bool const c4 = nv->snap_manager.object.getSnapToItemNode();
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act7->gobj()), c4);
 	gtk_action_set_sensitive(GTK_ACTION(act7->gobj()), c1 && c3);
 	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act8->gobj()), nv->snap_manager.snapprefs.getSnapSmoothNodes());
-	gtk_action_set_sensitive(GTK_ACTION(act8->gobj()), c1 && c3);
+	gtk_action_set_sensitive(GTK_ACTION(act8->gobj()), c1 && c3 && c4);
 	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act10->gobj()), nv->snap_manager.snapprefs.getSnapIntersectionCS());
 	gtk_action_set_sensitive(GTK_ACTION(act10->gobj()), c1 && c3);
 	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act11->gobj()), nv->snap_manager.snapprefs.getIncludeItemCenter());
