@@ -318,7 +318,7 @@ libinkversion_a_SOURCES = inkscape-version.cpp
 # if it changes. Watch the backslashes!
 inkscape-version.cpp:
 	VER_PREFIX="$(VERSION)"; \
-	if test -x "$(srcdir)/.svn"; then \
+	if test -x "$(srcdir)/.svn" -a ! -z `which svn`; then \
 	    VER_SVNREV=" r`svn info $(srcdir) | sed -n -e '/^Revision:/s/Revision: \(.*\)/\1/p'`"; \
 	    if test ! -z "`svn status -q $(srcdir)`"; then \
 	         VER_CUSTOM=" custom"; \
