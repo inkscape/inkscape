@@ -311,7 +311,7 @@ inkscape_LDFLAGS = --export-dynamic $(kdeldflags)
 inkview_SOURCES = inkview.cpp $(win32_sources)
 inkview_LDADD = $(all_libs)
 
-libinkversion_a_SOURCES = inkscape-version.cpp
+libinkversion_a_SOURCES = inkscape-version.cpp inkscape-version.h
 
 # Hack: make inkscape-version.cpp a phony target.
 # Create the version file every time "make" is invoked. Overwrite it only
