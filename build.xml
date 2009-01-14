@@ -131,7 +131,7 @@
 
         #define GETTEXT_PACKAGE "inkscape"
 
-        #define PACKAGE_STRING                VERSION
+        #define PACKAGE_STRING                INKSCAPE_VERSION
 
         #define HAVE_GETOPT_H                 1
         #define HAVE_STRING_H                 1
