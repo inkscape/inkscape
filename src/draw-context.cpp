@@ -373,7 +373,12 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
         if (shape_applied) {
             // apply original stroke color as fill and unset stroke; then return
             SPCSSAttr *css = sp_repr_css_attr_new();
-            sp_repr_css_set_property (css, "fill", cstroke);
+
+            if (!strcmp(cstroke, "none")){
+                sp_repr_css_set_property (css, "fill", "black");
+            } else {
+                sp_repr_css_set_property (css, "fill", cstroke);
+            }
             sp_repr_css_set_property (css, "stroke", "none");
             sp_desktop_apply_css_recursive(SP_OBJECT(item), css, true);
             sp_repr_css_attr_unref(css);
