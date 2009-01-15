@@ -36,6 +36,7 @@
 #include "../macros.h"
 #include "../verbs.h"
 #include "../interface.h"
+#include "sp-attribute-widget.h"
 
 #include "dialog-events.h"
 #include "../preferences.h"
@@ -91,7 +92,7 @@ GtkWidget *
 sp_item_widget_new (void)
 {
 
-    GtkWidget *spw, *vb, *t, *cb, *l, *f, *tf, *pb;
+    GtkWidget *spw, *vb, *t, *cb, *l, *f, *tf, *pb, *int_expander, *int_label;
     GtkTextBuffer *desc_buffer;
 
     GtkTooltips *tt = gtk_tooltips_new();
@@ -238,6 +239,14 @@ sp_item_widget_new (void)
                          spw );
     gtk_object_set_data (GTK_OBJECT (spw), "sensitive", cb);
 
+    /* Create the frame for interactivity options */
+    int_label = gtk_label_new_with_mnemonic (_("_Interactivity"));
+    int_expander = gtk_expander_new (NULL);
+    gtk_expander_set_label_widget (GTK_EXPANDER (int_expander),int_label);
+    gtk_object_set_data (GTK_OBJECT (spw), "interactivity", int_expander);
+
+    gtk_box_pack_start (GTK_BOX (vb), int_expander, FALSE, FALSE, 0);
+
     gtk_widget_show_all (spw);
 
     sp_item_widget_setup (SP_WIDGET (spw), sp_desktop_selection (SP_ACTIVE_DESKTOP));
@@ -351,6 +360,22 @@ sp_item_widget_setup ( SPWidget *spw, Inkscape::Selection *selection )
         }
         w = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "desc_frame"));
         gtk_widget_set_sensitive(w, TRUE);
+
+        w = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "interactivity"));
+
+        GtkWidget* int_table = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(spw), "interactivity_table"));
+        if (int_table){
+            gtk_container_remove(GTK_CONTAINER(w), int_table);
+        }
+
+        const gchar* int_labels[10] = {"onclick", "onmouseover", "onmouseout", "onmousedown", "onmouseup", "onmousemove","onfocusin", "onfocusout", "onactivate", "onload"};
+
+        int_table = sp_attribute_table_new (obj, 10, int_labels, int_labels);
+        gtk_widget_show_all (int_table);
+        gtk_object_set_data(GTK_OBJECT(spw), "interactivity_table", int_table);
+
+        gtk_container_add (GTK_CONTAINER (w), int_table);
+
     }
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
