@@ -23,6 +23,7 @@
 /* SPScript */
 
 struct SPScript : public SPObject {
+	gchar *xlinkhref;
 };
 
 struct SPScriptClass {

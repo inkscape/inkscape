@@ -274,6 +274,9 @@ enum {
     /* Color management */
     SP_VERB_EDIT_LINK_COLOR_PROFILE,
     SP_VERB_EDIT_REMOVE_COLOR_PROFILE,
+    /*Scripting*/
+    SP_VERB_EDIT_ADD_EXTERNAL_SCRIPT,
+    SP_VERB_EDIT_REMOVE_EXTERNAL_SCRIPT,
     /* Footer */
     SP_VERB_LAST
 };

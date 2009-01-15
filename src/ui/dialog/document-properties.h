@@ -52,6 +52,7 @@ protected:
 #if ENABLE_LCMS
     void  build_cms();
 #endif // ENABLE_LCMS
+    void  build_scripting();
     void  init();
 
     virtual void  on_response (int);
@@ -61,19 +62,25 @@ protected:
     void  linkSelectedProfile();
     void  removeSelectedProfile();
     void  linked_profiles_list_button_release(GdkEventButton* event);
-    void  create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
+    void  cms_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
 #endif // ENABLE_LCMS
+
+    void  external_scripts_list_button_release(GdkEventButton* event);
+    void  populate_external_scripts_box();
+    void  addExternalScript();
+    void  removeExternalScript();
+    void  scripting_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
 
     void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
     void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
     void _handleDeactivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
 
-    Inkscape::XML::SignalObserver _emb_profiles_observer;
+    Inkscape::XML::SignalObserver _emb_profiles_observer, _ext_scripts_observer;
     Gtk::Tooltips _tt;
     Gtk::Notebook  _notebook;
 
     NotebookPage   _page_page, _page_guides;
-    NotebookPage   _page_snap, _page_snap_dtls, _page_cms;
+    NotebookPage   _page_snap, _page_snap_dtls, _page_cms, _page_scripting;
     Gtk::VBox      _grids_vbox;
 
     Registry _wr;
@@ -109,7 +116,24 @@ protected:
     Gtk::TreeView _LinkedProfilesList;
     Gtk::ScrolledWindow _LinkedProfilesListScroller;
     Gtk::Menu _EmbProfContextMenu;
+
     //---------------------------------------------------------------
+    Gtk::Button         _add_btn;
+    class ExternalScriptsColumns : public Gtk::TreeModel::ColumnRecord
+        {
+        public:
+            ExternalScriptsColumns()
+               { add(filenameColumn); }
+            Gtk::TreeModelColumn<Glib::ustring> filenameColumn;
+        };
+    ExternalScriptsColumns _ExternalScriptsListColumns;
+    Glib::RefPtr<Gtk::ListStore> _ExternalScriptsListStore;
+    Gtk::TreeView _ExternalScriptsList;
+    Gtk::ScrolledWindow _ExternalScriptsListScroller;
+    Gtk::Menu _ExternalScriptsContextMenu;
+    Gtk::Entry _script_entry;
+    //---------------------------------------------------------------
+
     Gtk::Notebook   _grids_notebook;
     Gtk::HBox       _grids_hbox_crea;
     Gtk::Label      _grids_label_crea;

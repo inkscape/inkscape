@@ -12,6 +12,9 @@
  */
 
 #include "sp-script.h"
+#include "attributes.h"
+#include <cstring>
+#include "document.h"
 
 static void sp_script_class_init(SPScriptClass *sc);
 static void sp_script_init(SPScript *script);
@@ -19,6 +22,8 @@ static void sp_script_init(SPScript *script);
 static void sp_script_release(SPObject *object);
 static void sp_script_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_script_modified(SPObject *object, guint flags);
+static void sp_script_set(SPObject *object, unsigned int key, gchar const *value);
+static void sp_script_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *sp_script_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPObjectClass *parent_class;
@@ -51,10 +56,12 @@ static void sp_script_class_init(SPScriptClass *sc)
     parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
     SPObjectClass *sp_object_class = (SPObjectClass *) sc;
 
+    sp_object_class->build = sp_script_build;
     sp_object_class->release = sp_script_release;
     sp_object_class->update = sp_script_update;
     sp_object_class->modified = sp_script_modified;
     sp_object_class->write = sp_script_write;
+    sp_object_class->set = sp_script_set;
 }
 
 static void sp_script_init(SPScript */*script*/)
@@ -62,11 +69,34 @@ static void sp_script_init(SPScript */*script*/)
 
 }
 
+
+/**
+ * Reads the Inkscape::XML::Node, and initializes SPScript variables.  For this to get called,
+ * our name must be associated with a repr via "sp_object_type_register".  Best done through
+ * sp-object-repr.cpp's repr_name_entries array.
+ */
+static void
+sp_script_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+{
+    if (((SPObjectClass *) parent_class)->build) {
+        ((SPObjectClass *) parent_class)->build(object, document, repr);
+    }
+
+    //Read values of key attributes from XML nodes into object.
+    sp_object_read_attr(object, "xlink:href");
+
+    sp_document_add_resource(document, "script", object);
+}
+
 static void sp_script_release(SPObject *object)
 {
-    if (((SPObjectClass *) (parent_class))->release) {
-        ((SPObjectClass *) (parent_class))->release(object);
+    if (SP_OBJECT_DOCUMENT(object)) {
+        /* Unregister ourselves */
+        sp_document_remove_resource(SP_OBJECT_DOCUMENT(object), "script", SP_OBJECT(object));
     }
+
+    if (((SPObjectClass *) parent_class)->release)
+        ((SPObjectClass *) parent_class)->release(object);
 }
 
 static void sp_script_update(SPObject */*object*/, SPCtx */*ctx*/, guint /*flags*/)
@@ -75,6 +105,24 @@ static void sp_script_update(SPObject */*object*/, SPCtx */*ctx*/, guint /*flags
 
 static void sp_script_modified(SPObject */*object*/, guint /*flags*/)
 {
+}
+
+static void
+sp_script_set(SPObject *object, unsigned int key, gchar const *value)
+{
+    SPScript *scr = SP_SCRIPT(object);
+
+    switch (key) {
+	case SP_ATTR_XLINK_HREF:
+            if (scr->xlinkhref) g_free(scr->xlinkhref);
+            scr->xlinkhref = g_strdup(value);
+            object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            break;
+	default:
+            if (((SPObjectClass *) parent_class)->set)
+                ((SPObjectClass *) parent_class)->set(object, key, value);
+            break;
+    }
 }
 
 static Inkscape::XML::Node *sp_script_write(SPObject */*object*/, Inkscape::XML::Document */*xml_doc*/, Inkscape::XML::Node *repr, guint /*flags*/)

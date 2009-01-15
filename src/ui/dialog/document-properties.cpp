@@ -32,6 +32,7 @@
 #include "sp-namedview.h"
 #include "sp-object-repr.h"
 #include "sp-root.h"
+#include "sp-script.h"
 #include "ui/widget/color-picker.h"
 #include "ui/widget/scalar-unit.h"
 #include "verbs.h"
@@ -87,7 +88,7 @@ DocumentProperties::getInstance()
 DocumentProperties::DocumentProperties()
     : UI::Widget::Panel ("", "/dialogs/documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
       _page_page(1, 1, true, true), _page_guides(1, 1),
-      _page_snap(1, 1), _page_snap_dtls(1, 1), _page_cms(1, 1),
+      _page_snap(1, 1), _page_snap_dtls(1, 1), _page_cms(1, 1), _page_scripting(1, 1),
     //---------------------------------------------------------------
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
       _rcb_bord(_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false),
@@ -141,6 +142,7 @@ DocumentProperties::DocumentProperties()
     _notebook.append_page(_page_snap,      _("Snap"));
     _notebook.append_page(_page_snap_dtls, _("Snap points"));
     _notebook.append_page(_page_cms, _("Color Management"));
+    _notebook.append_page(_page_scripting, _("Scripting"));
 
     build_page();
     build_guides();
@@ -150,6 +152,7 @@ DocumentProperties::DocumentProperties()
 #if ENABLE_LCMS
     build_cms();
 #endif // ENABLE_LCMS
+    build_scripting();
 
     _grids_button_new.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onNewGrid));
     _grids_button_remove.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onRemoveGrid));
@@ -511,6 +514,13 @@ DocumentProperties::populate_linked_profiles_box()
     }
 }
 
+void DocumentProperties::external_scripts_list_button_release(GdkEventButton* event)
+{
+    if((event->type == GDK_BUTTON_RELEASE) && (event->button == 3)) {
+        _ExternalScriptsContextMenu.popup(event->button, event->time);
+    }
+}
+
 void DocumentProperties::linked_profiles_list_button_release(GdkEventButton* event)
 {
     if((event->type == GDK_BUTTON_RELEASE) && (event->button == 3)) {
@@ -518,13 +528,23 @@ void DocumentProperties::linked_profiles_list_button_release(GdkEventButton* eve
     }
 }
 
-void DocumentProperties::create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
+void DocumentProperties::cms_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
 {
     Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
     _EmbProfContextMenu.append(*mi);
     mi->signal_activate().connect(rem);
     mi->show();
     _EmbProfContextMenu.accelerate(parent);
+}
+
+
+void DocumentProperties::scripting_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem)
+{
+    Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    _ExternalScriptsContextMenu.append(*mi);
+    mi->signal_activate().connect(rem);
+    mi->show();
+    _ExternalScriptsContextMenu.accelerate(parent);
 }
 
 void DocumentProperties::removeSelectedProfile(){
@@ -609,7 +629,7 @@ DocumentProperties::build_cms()
     _link_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::linkSelectedProfile));
 
     _LinkedProfilesList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::linked_profiles_list_button_release));
-    create_popup_menu(_LinkedProfilesList, sigc::mem_fun(*this, &DocumentProperties::removeSelectedProfile));
+    cms_create_popup_menu(_LinkedProfilesList, sigc::mem_fun(*this, &DocumentProperties::removeSelectedProfile));
 
     const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "defs" );
     if (current) {
@@ -618,6 +638,121 @@ DocumentProperties::build_cms()
     _emb_profiles_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_linked_profiles_box));
 }
 #endif // ENABLE_LCMS
+
+void
+DocumentProperties::build_scripting()
+{
+    _page_scripting.show();
+
+    Gtk::Label *label_script= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
+    label_script->set_markup (_("<b>External script files:</b>"));
+
+    _add_btn.set_label(_("Add"));
+
+    _page_scripting.set_spacing(4);
+    gint row = 0;
+
+    label_script->set_alignment(0.0);
+    _page_scripting.table().attach(*label_script, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+    _page_scripting.table().attach(_ExternalScriptsListScroller, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+
+    Gtk::HBox* spacer = Gtk::manage(new Gtk::HBox());
+    spacer->set_size_request(SPACE_SIZE_X, SPACE_SIZE_Y);
+    _page_scripting.table().attach(*spacer, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+
+    _page_scripting.table().attach(_script_entry, 0, 2, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_scripting.table().attach(_add_btn, 2, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+
+    //# Set up the External Scripts box
+    _ExternalScriptsListStore = Gtk::ListStore::create(_ExternalScriptsListColumns);
+    _ExternalScriptsList.set_model(_ExternalScriptsListStore);
+    _ExternalScriptsList.append_column(_("Filename"), _ExternalScriptsListColumns.filenameColumn);
+    _ExternalScriptsList.set_headers_visible(true);
+// TODO restore?    _ExternalScriptsList.set_fixed_height_mode(true);
+
+    populate_external_scripts_box();
+
+    _ExternalScriptsListScroller.add(_ExternalScriptsList);
+    _ExternalScriptsListScroller.set_shadow_type(Gtk::SHADOW_IN);
+    _ExternalScriptsListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
+    _ExternalScriptsListScroller.set_size_request(-1, 90);
+
+    _add_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::addExternalScript));
+
+    _ExternalScriptsList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::external_scripts_list_button_release));
+    scripting_create_popup_menu(_ExternalScriptsList, sigc::mem_fun(*this, &DocumentProperties::removeExternalScript));
+
+//TODO: review this observers code:
+    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "script" );
+    if (current) {
+        _ext_scripts_observer.set(SP_OBJECT(current->data)->parent);
+    }
+    _ext_scripts_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_external_scripts_box));
+}
+
+
+void DocumentProperties::addExternalScript(){
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (!desktop){
+        g_warning("No active desktop");
+    } else {
+        Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
+        Inkscape::XML::Node *scriptRepr = xml_doc->createElement("svg:script");
+        scriptRepr->setAttribute("xlink:href", (gchar*) _script_entry.get_text().c_str());
+        _script_entry.set_text("");
+
+        xml_doc->root()->addChild(scriptRepr, NULL);
+
+        // inform the document, so we can undo
+        sp_document_done(desktop->doc(), SP_VERB_EDIT_ADD_EXTERNAL_SCRIPT, _("Add external script..."));
+
+        populate_external_scripts_box();
+    }
+}
+
+void DocumentProperties::removeExternalScript(){
+    Glib::ustring name;
+    if(_ExternalScriptsList.get_selection()) {
+        Gtk::TreeModel::iterator i = _ExternalScriptsList.get_selection()->get_selected();
+
+        if(i){
+            name = (*i)[_ExternalScriptsListColumns.filenameColumn];
+        } else {
+            return;
+        }
+    }
+
+    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "script" );
+    while ( current ) {
+        SPObject* obj = SP_OBJECT(current->data);
+        SPScript* script = (SPScript*) obj;
+        if (!name.compare(script->xlinkhref)){
+            sp_repr_unparent(obj->repr);
+            sp_document_done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EXTERNAL_SCRIPT, _("Remove external script"));
+        }
+        current = g_slist_next(current);
+    }
+
+    populate_external_scripts_box();
+
+}
+
+void DocumentProperties::populate_external_scripts_box(){
+    _ExternalScriptsListStore->clear();
+    const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "script" );
+    if (current) _ext_scripts_observer.set(SP_OBJECT(current->data)->parent);
+    while ( current ) {
+        SPObject* obj = SP_OBJECT(current->data);
+        SPScript* script = (SPScript*) obj;
+        Gtk::TreeModel::Row row = *(_ExternalScriptsListStore->append());
+        row[_ExternalScriptsListColumns.filenameColumn] = script->xlinkhref;
+        current = g_slist_next(current);
+    }
+}
 
 /**
 * Called for _updating_ the dialog (e.g. when a new grid was manually added in XML)
