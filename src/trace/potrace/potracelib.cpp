@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <glib/gprintf.h>
+#include <glib/gstrfuncs.h>
 
 #include "potracelib.h"
 #include "inkscape-version.h"
