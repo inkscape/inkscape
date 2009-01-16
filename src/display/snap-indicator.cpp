@@ -51,22 +51,36 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
     
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool value = prefs->getBool("/options/snapindicator/value", true);
-    	
+
     if (value) {
-        // TODO add many different kinds of snap indicator :-)
-        // For this we should use p->getTarget() to find out what has snapped 
-        // and adjust the shape of the snapindicator accordingly, e.g. a cross
-        // when snapping to an intersection, a circle when snapping to a node, etc. 
-        SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (_desktop),
-                                                        SP_TYPE_CTRL,
-                                                        "anchor", GTK_ANCHOR_CENTER,
-                                                        "size", 10.0,
-                                                        "stroked", TRUE,
-                                                        "stroke_color", 0xf000f0ff,
-                                                        "mode", SP_KNOT_MODE_XOR,
-                                                        "shape", SP_KNOT_SHAPE_CROSS,
-                                                        NULL );        
-        
+        SPCanvasItem * canvasitem = NULL;
+        switch (p.getTarget()) {
+            /// @todo  add the different kinds of snapindicator visuals
+            case SNAPTARGET_GRID:
+            case SNAPTARGET_GRID_INTERSECTION:
+            case SNAPTARGET_GUIDE:
+            case SNAPTARGET_GUIDE_INTERSECTION:
+            case SNAPTARGET_GRID_GUIDE_INTERSECTION:
+            case SNAPTARGET_NODE:
+            case SNAPTARGET_PATH:
+            case SNAPTARGET_PATH_INTERSECTION:
+            case SNAPTARGET_BBOX_CORNER:
+            case SNAPTARGET_BBOX_EDGE:
+            case SNAPTARGET_GRADIENT:
+            case SNAPTARGET_UNDEFINED:
+            default:
+                canvasitem = sp_canvas_item_new(sp_desktop_tempgroup (_desktop),
+                                                SP_TYPE_CTRL,
+                                                "anchor", GTK_ANCHOR_CENTER,
+                                                "size", 10.0,
+                                                "stroked", TRUE,
+                                                "stroke_color", 0xf000f0ff,
+                                                "mode", SP_KNOT_MODE_XOR,
+                                                "shape", SP_KNOT_SHAPE_CROSS,
+                                                NULL );
+                break;
+        }
+
         SP_CTRL(canvasitem)->moveto(p.getPoint());
         remove_snapsource(); // Don't set both the source and target indicators, as these will overlap
         _snaptarget = _desktop->add_temporary_canvasitem(canvasitem, 1000); // TODO add preference for snap indicator timeout

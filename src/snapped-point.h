@@ -77,7 +77,7 @@ public:
     Geom::Point getTransformation() const {return _transformation;}
     void setTransformation(Geom::Point const t) {_transformation = t;}
     void setTarget(SnapTargetType const target) {_target = target;}
-    SnapTargetType getTarget() {return _target;}
+    SnapTargetType getTarget() const {return _target;}
 
     bool isOtherSnapBetter(SnappedPoint const &other_one, bool weighted) const;
 
