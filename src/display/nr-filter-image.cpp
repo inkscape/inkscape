@@ -16,7 +16,9 @@
 #include "display/nr-filter.h"
 #include "display/nr-filter-image.h"
 #include "display/nr-filter-units.h"
+#include "libnr/nr-compose-transform.h"
 #include "libnr/nr-rect-l.h"
+#include "preferences.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -69,6 +71,8 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
 
         width = (int)(rect.x1-rect.x0);
         height = (int)(rect.y1-rect.y0);
+        rowstride = 4*width;
+        has_alpha = true;
 
         if (image_pixbuf) g_free(image_pixbuf);
         image_pixbuf = g_new(unsigned char, 4 * width * height);
@@ -83,7 +87,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         nr_arena_item_invoke_update( ai, NULL, &gc,
                                              NR_ARENA_ITEM_STATE_ALL,
                                              NR_ARENA_ITEM_STATE_NONE );
-        nr_pixblock_setup_extern(pb, NR_PIXBLOCK_MODE_R8G8B8A8P,
+        nr_pixblock_setup_extern(pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
                               (int)rect.x0, (int)rect.y0, (int)rect.x1, (int)rect.y1,
                               image_pixbuf, 4 * width, FALSE, FALSE );
 
@@ -127,6 +131,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         height = image->get_height();
         rowstride = image->get_rowstride();
         image_pixbuf = image->get_pixels();
+        has_alpha = image->get_has_alpha();
     }
     int w,x,y;
     NRPixBlock *in = slot.get(_input);
@@ -141,7 +146,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
     int x0 = in->area.x0, y0 = in->area.y0;
     int x1 = in->area.x1, y1 = in->area.y1;
     NRPixBlock *out = new NRPixBlock;
-    nr_pixblock_setup_fast(out, from_element?NR_PIXBLOCK_MODE_R8G8B8A8P:NR_PIXBLOCK_MODE_R8G8B8A8N, x0, y0, x1, y1, true);
+    nr_pixblock_setup_fast(out, NR_PIXBLOCK_MODE_R8G8B8A8P, x0, y0, x1, y1, true);
     w = x1 - x0;
 
     // Get the object bounding box. Image is placed with respect to box.
@@ -162,25 +167,28 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
     int coordx,coordy;
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
     Geom::Matrix unit_trans = units.get_matrix_primitiveunits2pb().inverse();
-    for (x=x0; x < x1; x++){
-        for (y=y0; y < y1; y++){
-            //TODO: use interpolation
-            // Temporarily add 0.5 so we sample center of "cell"
-            double indexX = scaleX * (((x+0.5) * unit_trans[0] + unit_trans[4]) - feImageX + object_bbox[4]);
-            double indexY = scaleY * (((y+0.5) * unit_trans[3] + unit_trans[5]) - feImageY + object_bbox[5]);
+    Geom::Matrix d2s = Geom::Translate(x0, y0) * unit_trans * Geom::Translate(object_bbox[4]-feImageX, object_bbox[5]-feImageY) * Geom::Scale(scaleX, scaleY);
 
-            // coordx == 0 and coordy == 0 must be included, but we protect
-            // against negative numbers which round up to 0 with (int).
-            coordx = ( indexX >= 0 ? int( indexX ) : -1 );
-            coordy = ( indexY >= 0 ? int( indexY ) : -1 );
-            if (coordx >= 0 && coordx < width && coordy >= 0 && coordy < height){
-                if (from_element){
-                    out_data[4*((x - x0)+w*(y - y0))] = (unsigned char) image_pixbuf[4*(coordx + width*coordy)]; //Red
-                    out_data[4*((x - x0)+w*(y - y0)) + 1] = (unsigned char) image_pixbuf[4*(coordx + width*coordy) + 1]; //Green
-                    out_data[4*((x - x0)+w*(y - y0)) + 2] = (unsigned char) image_pixbuf[4*(coordx + width*coordy) + 2]; //Blue
-                    out_data[4*((x - x0)+w*(y - y0)) + 3] = (unsigned char) image_pixbuf[4*(coordx + width*coordy) + 3]; //Alpha
-                } else {
-                    out_data[4*((x - x0)+w*(y - y0))] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy]; //Red
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int nr_arena_image_x_sample = prefs->getInt("/options/bitmapoversample/value", 1);
+    int nr_arena_image_y_sample = nr_arena_image_x_sample;
+
+    if (has_alpha) {
+        nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM(out_data, x1-x0, y1-y0, 4*w, image_pixbuf, width, height, rowstride, d2s, 255, nr_arena_image_x_sample, nr_arena_image_y_sample);
+    } else {
+        for (x=x0; x < x1; x++){
+            for (y=y0; y < y1; y++){
+                //TODO: use interpolation
+                // Temporarily add 0.5 so we sample center of "cell"
+                double indexX = scaleX * (((x+0.5) * unit_trans[0] + unit_trans[4]) - feImageX + object_bbox[4]);
+                double indexY = scaleY * (((y+0.5) * unit_trans[3] + unit_trans[5]) - feImageY + object_bbox[5]);
+
+                // coordx == 0 and coordy == 0 must be included, but we protect
+                // against negative numbers which round up to 0 with (int).
+                coordx = ( indexX >= 0 ? int( indexX ) : -1 );
+                coordy = ( indexY >= 0 ? int( indexY ) : -1 );
+                if (coordx >= 0 && coordx < width && coordy >= 0 && coordy < height){
+                    out_data[4*((x - x0)+w*(y - y0))    ] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy    ]; //Red
                     out_data[4*((x - x0)+w*(y - y0)) + 1] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy + 1]; //Green
                     out_data[4*((x - x0)+w*(y - y0)) + 2] = (unsigned char) image_pixbuf[3*coordx + rowstride*coordy + 2]; //Blue
                     out_data[4*((x - x0)+w*(y - y0)) + 3] = 255; //Alpha

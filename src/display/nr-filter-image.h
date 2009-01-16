@@ -42,6 +42,7 @@ private:
     Glib::RefPtr<Gdk::Pixbuf> image;
     int width, height, rowstride;
     float feImageX,feImageY,feImageWidth,feImageHeight;
+    bool has_alpha;
 };
 
 } /* namespace Filters */
