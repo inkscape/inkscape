@@ -22,6 +22,7 @@
 #include <gtk/gtkspinbutton.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkframe.h>
+#include <gtk/gtkexpander.h>
 #include <gtk/gtktextview.h>
 #include <gtk/gtktooltips.h>
 
