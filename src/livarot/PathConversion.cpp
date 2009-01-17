@@ -252,7 +252,9 @@ void Path::Convert(double treshhold)
                         descr_cmd[curP]->associated = descr_cmd[curP - 1]->associated;
                     }
                 }
-                pts[descr_cmd[curP]->associated].closed = true;
+                if ( descr_cmd[curP]->associated > 0 ) {
+                    pts[descr_cmd[curP]->associated].closed = true;
+                }
                 curP++;
                 break;
             }
@@ -480,7 +482,9 @@ void Path::Convert(NRRectL *area, double treshhold)
                         descr_cmd[curP]->associated = descr_cmd[curP - 1]->associated;
                     }
                 }
-                pts[descr_cmd[curP]->associated].closed = true;
+                if ( descr_cmd[curP]->associated > 0 ) {
+                    pts[descr_cmd[curP]->associated].closed = true;
+                }
                 last_point_relation = 0;
                 curP++;
                 break;
@@ -756,7 +760,9 @@ void Path::ConvertEvenLines(double treshhold)
                         descr_cmd[curP]->associated = descr_cmd[curP - 1]->associated;
                     }
                 }
-                pts[descr_cmd[curP]->associated].closed = true;
+                if ( descr_cmd[curP]->associated > 0 ) {
+                    pts[descr_cmd[curP]->associated].closed = true;
+                }
                 curP++;
                 break;
             }

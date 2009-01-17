@@ -63,12 +63,7 @@ void Path::Stroke(Shape *dest, bool doClose, double width, JoinType join,
         }
 
         if ( lastP > lastM+1 ) {
-            Geom::Point sbStart = pts[lastM].p;
-            Geom::Point sbEnd = pts[lastP - 1].p;
-            if ( pts[lastP - 1].closed /*Geom::LInfty(sbEnd-sbStart) < 0.00001 */ ) {       // why close lines that shouldn't be closed?
-                // ah I see, because close is defined here for
-                // a whole path and should be defined per subpath.
-                // debut==fin => ferme (on devrait garder un element pour les close(), mais tant pis)
+            if ( pts[lastP - 1].closed ) {
                 DoStroke(lastM, lastP - lastM, dest, true, width, join, butt, miter, true);
             } else {
                 DoStroke(lastM, lastP - lastM, dest, doClose, width, join, butt, miter, true);
