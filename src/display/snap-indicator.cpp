@@ -56,12 +56,22 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
         SPCanvasItem * canvasitem = NULL;
         switch (p.getTarget()) {
             /// @todo  add the different kinds of snapindicator visuals
+            case SNAPTARGET_NODE:
+                canvasitem = sp_canvas_item_new(sp_desktop_tempgroup (_desktop),
+                                                SP_TYPE_CTRL,
+                                                "anchor", GTK_ANCHOR_CENTER,
+                                                "size", 10.0,
+                                                "stroked", TRUE,
+                                                "stroke_color", 0xf000f0ff,
+                                                "mode", SP_KNOT_MODE_XOR,
+                                                "shape", SP_KNOT_SHAPE_DIAMOND,
+                                                NULL );
+                break;
             case SNAPTARGET_GRID:
             case SNAPTARGET_GRID_INTERSECTION:
             case SNAPTARGET_GUIDE:
             case SNAPTARGET_GUIDE_INTERSECTION:
             case SNAPTARGET_GRID_GUIDE_INTERSECTION:
-            case SNAPTARGET_NODE:
             case SNAPTARGET_PATH:
             case SNAPTARGET_PATH_INTERSECTION:
             case SNAPTARGET_BBOX_CORNER:
