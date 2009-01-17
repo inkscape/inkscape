@@ -131,7 +131,7 @@
 
         #define GETTEXT_PACKAGE "inkscape"
 
-        #define PACKAGE_STRING                INKSCAPE_VERSION
+        #define PACKAGE_STRING                VERSION
 
         #define HAVE_GETOPT_H                 1
         #define HAVE_STRING_H                 1
@@ -367,7 +367,7 @@
             -fopenmp
         </flags>
         <defines>
-            -DINKSCAPE_VERSION=\"${version}\"
+            -DVERSION=\"${version}\"
             -DHAVE_CONFIG_H
             -D_INTL_REDIRECT_INLINE
             -DHAVE_SSL

@@ -1,7 +1,7 @@
 #ifndef SEEN_MENUS_SKELETON_H
 #define SEEN_MENUS_SKELETON_H
 
-#include <inkscape-version.h>
+#include "config.h"
 
 #ifdef __cplusplus
 #undef N_
@@ -9,7 +9,7 @@
 #endif
 
 static char const menus_skeleton[] =
-"<inkscape version=\"1\"\n"
+"<inkscape version=\"" VERSION "\"\n"
 "  xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n"
 "  xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\">\n"
 "\n"
