@@ -973,7 +973,7 @@ void sp_item_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPref
 
     // Get the snappoints at the item's center
     if (snapprefs != NULL && snapprefs->getIncludeItemCenter()) {
-        *p = item->getCenter();
+    	*p = item->getCenter();
     }
 
     // Get the snappoints of clipping paths and mask, if any

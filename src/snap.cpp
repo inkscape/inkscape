@@ -108,6 +108,25 @@ bool SnapManager::someSnapperMightSnap() const
 }
 
 /**
+ * \return true if one of the snappers will try to snap something.
+ */
+
+bool SnapManager::gridSnapperMightSnap() const
+{
+    if ( !snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally() ) {
+        return false;
+    }
+
+    SnapperList const s = getGridSnappers();
+    SnapperList::const_iterator i = s.begin();
+    while (i != s.end() && (*i)->ThisSnapperMightSnap() == false) {
+        i++;
+    }
+
+    return (i != s.end());
+}
+
+/**
  *  Try to snap a point to any of the specified snappers.
  *
  *  \param point_type Type of point.

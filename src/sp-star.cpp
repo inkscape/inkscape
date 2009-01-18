@@ -429,7 +429,7 @@ sp_star_set_shape (SPShape *shape)
 	SPStar *star = SP_STAR (shape);
 
 	SPCurve *c = new SPCurve ();
-	
+
 	gint sides = star->sides;
 	bool not_rounded = (fabs (star->rounded) < 1e-4);
 
@@ -474,7 +474,7 @@ sp_star_set_shape (SPShape *shape)
 			}
 		}
 	}
-	
+
 	// draw last segment
 		if (not_rounded) {
 			c->lineto(sp_star_get_xy (star, SP_STAR_POINT_KNOT1, 0, true));
@@ -511,7 +511,7 @@ sp_star_position_set (SPStar *star, gint sides, Geom::Point center, gdouble r1, 
 {
 	g_return_if_fail (star != NULL);
 	g_return_if_fail (SP_IS_STAR (star));
-	
+
 	star->sides = CLAMP (sides, 3, 1024);
 	star->center = center;
 	star->r[0] = MAX (r1, 0.001);
@@ -528,12 +528,25 @@ sp_star_position_set (SPStar *star, gint sides, Geom::Point center, gdouble r1, 
 	SP_OBJECT(star)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-/* fixme: We should use all corners of star (Lauris) */
-
 static void sp_star_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
+	// We will determine the star's midpoint ourselves, instead of trusting on the base class
+	// Therefore setSnapObjectMidpoints() is set to false temporarily
+	Inkscape::SnapPreferences local_snapprefs = *snapprefs;
+	local_snapprefs.setSnapObjectMidpoints(false);
+
 	if (((SPItemClass *) parent_class)->snappoints) {
-		((SPItemClass *) parent_class)->snappoints (item, p, snapprefs);
+		((SPItemClass *) parent_class)->snappoints (item, p, &local_snapprefs);
+	}
+
+	// Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
+	if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide())) {
+		return;
+	}
+
+	if (snapprefs->getSnapObjectMidpoints()) {
+		Geom::Matrix const i2d (sp_item_i2d_affine (item));
+		*p = SP_STAR(item)->center * i2d;
 	}
 }
 

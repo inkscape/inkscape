@@ -1067,14 +1067,28 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::
         return;
     }
 
+    // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
+    if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide())) {
+    	return;
+    }
+
     Geom::PathVector const &pathv = shape->curve->get_pathvector();
     if (pathv.empty())
         return;
 
     Geom::Matrix const i2d (sp_item_i2d_affine (item));
 
+	if (snapprefs->getSnapObjectMidpoints()) {
+		Geom::OptRect bbox = item->getBounds(sp_item_i2d_affine(item));
+		if (bbox) {
+			*p = bbox->midpoint();
+		}
+	}
+
     for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
-        *p = path_it->initialPoint() * i2d;
+        if (snapprefs->getSnapToItemNode()) {
+        	*p = path_it->initialPoint() * i2d;
+        }
 
         Geom::Path::const_iterator curve_it1 = path_it->begin();      // incoming curve
         Geom::Path::const_iterator curve_it2 = ++(path_it->begin());  // outgoing curve
@@ -1088,23 +1102,26 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::
 
             Geom::NodeType nodetype = Geom::get_nodetype(*curve_it1, *curve_it2);
 
-            // Depending on the snapping preferences, either add only cusp nodes, or add add both cusp and smooth nodes
-            if (snapprefs->getSnapSmoothNodes() || nodetype == Geom::NODE_NONE || nodetype == Geom::NODE_CUSP) {
-                *p = curve_it1->finalPoint() * i2d;
+            bool c1 = snapprefs->getSnapToItemNode() && (nodetype == Geom::NODE_CUSP || nodetype == Geom::NODE_NONE);
+            bool c2 = snapprefs->getSnapSmoothNodes() && (nodetype == Geom::NODE_SMOOTH || nodetype == Geom::NODE_SYMM);
+
+            if (c1 || c2) {
+				*p = curve_it1->finalPoint() * i2d;
             }
 
-            // Consider midpoints of line segments for snapping
-            if (snapprefs->getSnapMidpoints()) {
-            	if (Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&(*curve_it1))) {
-                    *p = Geom::middle_point(*line_segment) * i2d;
-                }
-            }
+			// Consider midpoints of line segments for snapping
+			if (snapprefs->getSnapLineMidpoints()) { // only do this when we're snapping nodes (enforce strict snapping)
+				if (Geom::LineSegment const* line_segment = dynamic_cast<Geom::LineSegment const*>(&(*curve_it1))) {
+					*p = Geom::middle_point(*line_segment) * i2d;
+				}
+			}
 
             ++curve_it1;
             ++curve_it2;
         }
 
-        // Find the internal intersections of each path and consider these for snapping (using "Method 1" as desciribed in Inkscape::ObjectSnapper::_collectNodes())
+        // Find the internal intersections of each path and consider these for snapping
+        // (using "Method 1" as described in Inkscape::ObjectSnapper::_collectNodes())
         if (snapprefs->getSnapIntersectionCS()) {
             Geom::Crossings cs;
             cs = self_crossings(*path_it);
@@ -1116,8 +1133,6 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::
             }
         }
     }
-
-
 
 }
 

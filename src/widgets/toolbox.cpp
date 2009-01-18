@@ -1909,11 +1909,11 @@ void toggle_snap_callback (GtkToggleAction *act, gpointer data) { //data points 
 		sp_repr_set_boolean(repr, "inkscape:snap-bbox", !v);
 		break;
 	case SP_ATTR_INKSCAPE_BBOX_PATHS:
-		v = nv->snap_manager.object.getSnapToBBoxPath();
+		v = nv->snap_manager.snapprefs.getSnapToBBoxPath();
 		sp_repr_set_boolean(repr, "inkscape:bbox-paths", !v);
 		break;
 	case SP_ATTR_INKSCAPE_BBOX_NODES:
-		v = nv->snap_manager.object.getSnapToBBoxNode();
+		v = nv->snap_manager.snapprefs.getSnapToBBoxNode();
 		sp_repr_set_boolean(repr, "inkscape:bbox-nodes", !v);
 		break;
 	case SP_ATTR_INKSCAPE_SNAP_NODES:
@@ -1921,20 +1921,16 @@ void toggle_snap_callback (GtkToggleAction *act, gpointer data) { //data points 
 		sp_repr_set_boolean(repr, "inkscape:snap-nodes", !v);
 		break;
 	case SP_ATTR_INKSCAPE_OBJECT_PATHS:
-		v = nv->snap_manager.object.getSnapToItemPath();
+		v = nv->snap_manager.snapprefs.getSnapToItemPath();
 		sp_repr_set_boolean(repr, "inkscape:object-paths", !v);
 		break;
 	case SP_ATTR_INKSCAPE_OBJECT_NODES:
-		v = nv->snap_manager.object.getSnapToItemNode();
+		v = nv->snap_manager.snapprefs.getSnapToItemNode();
 		sp_repr_set_boolean(repr, "inkscape:object-nodes", !v);
 		break;
 	case SP_ATTR_INKSCAPE_SNAP_SMOOTH_NODES:
 		v = nv->snap_manager.snapprefs.getSnapSmoothNodes();
 		sp_repr_set_boolean(repr, "inkscape:snap-smooth-nodes", !v);
-		break;
-	case SP_ATTR_INKSCAPE_SNAP_MIDPOINTS:
-		v = nv->snap_manager.snapprefs.getSnapMidpoints();
-		sp_repr_set_boolean(repr, "inkscape:snap-midpoints", !v);
 		break;
 	case SP_ATTR_INKSCAPE_SNAP_INTERS_PATHS:
 		v = nv->snap_manager.snapprefs.getSnapIntersectionCS();
@@ -1945,12 +1941,28 @@ void toggle_snap_callback (GtkToggleAction *act, gpointer data) { //data points 
 		sp_repr_set_boolean(repr, "inkscape:snap-center", !v);
 		break;
 	case SP_ATTR_INKSCAPE_SNAP_PAGE:
-		v = nv->snap_manager.object.getSnapToPageBorder();
+		v = nv->snap_manager.snapprefs.getSnapToPageBorder();
 		sp_repr_set_boolean(repr, "inkscape:snap-page", !v);
 		break;
 	case SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE:
 		v = nv->snap_manager.snapprefs.getSnapIntersectionGG();
 		sp_repr_set_boolean(repr, "inkscape:snap-intersection-grid-guide", !v);
+		break;
+	case SP_ATTR_INKSCAPE_SNAP_LINE_MIDPOINTS:
+		v = nv->snap_manager.snapprefs.getSnapLineMidpoints();
+		sp_repr_set_boolean(repr, "inkscape:snap-midpoints", !v);
+		break;
+	case SP_ATTR_INKSCAPE_SNAP_OBJECT_MIDPOINTS:
+		v = nv->snap_manager.snapprefs.getSnapObjectMidpoints();
+		sp_repr_set_boolean(repr, "inkscape:snap-object-midpoints", !v);
+		break;
+	case SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE_MIDPOINTS:
+		v = nv->snap_manager.snapprefs.getSnapBBoxEdgeMidpoints();
+		sp_repr_set_boolean(repr, "inkscape:snap-bbox-edge-midpoints", !v);
+		break;
+	case SP_ATTR_INKSCAPE_SNAP_BBOX_MIDPOINTS:
+		v = nv->snap_manager.snapprefs.getSnapBBoxMidpoints();
+		sp_repr_set_boolean(repr, "inkscape:snap-bbox-midpoints", !v);
 		break;
 	default:
 		g_warning("toggle_snap_callback has been called with an ID for which no action has been defined");
@@ -1975,17 +1987,20 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 			"    <toolitem action='ToggleSnapFromBBoxCorner' />"
 			"    <toolitem action='ToggleSnapToBBoxPath' />"
 			"    <toolitem action='ToggleSnapToBBoxNode' />"
+			"    <toolitem action='ToggleSnapToFromBBoxEdgeMidpoints' />"
+			"    <toolitem action='ToggleSnapToFromBBoxMidpoints' />"
 			"    <separator />"
 			"    <toolitem action='ToggleSnapFromNode' />"
 			"    <toolitem action='ToggleSnapToItemPath' />"
+			"    <toolitem action='ToggleSnapToPathIntersections' />"
 			"    <toolitem action='ToggleSnapToItemNode' />"
 			"    <toolitem action='ToggleSnapToSmoothNodes' />"
-			"    <toolitem action='ToggleSnapToPathIntersections' />"
+			"    <toolitem action='ToggleSnapToFromLineMidpoints' />"
+			"    <toolitem action='ToggleSnapToFromObjectMidpoints' />"
 			"    <toolitem action='ToggleSnapToFromCenter' />"
 			"    <separator />"
 			"    <toolitem action='ToggleSnapToPageBorder' />"
 			"    <toolitem action='ToggleSnapToGridGuideIntersections' />"
-			"    <toolitem action='ToggleSnapToFromMidpoints' />"
 			"  </toolbar>"
 	        "</ui>";
 
@@ -1994,7 +2009,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapGlobal",		// "name"
 												 _("Snap"),						// "label"
-												 _("Toggle all snapping"),		// "tooltip"
+												 _("Enable snapping"),		// "tooltip"
 												 "toggle_snap_global",			// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_SNAP_GLOBAL);
@@ -2006,7 +2021,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapFromBBoxCorner",// "name"
 												 _("Bounding box"),				// "label"
-												 _("Toggle snapping of bounding box corners"),	// "tooltip"
+												 _("Snap bounding box corners"),	// "tooltip"
 												 "toggle_snap_bbox",			// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_SNAP_BBOX);
@@ -2018,7 +2033,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToBBoxPath",	// "name"
 												 _("Bounding box edges"),		// "label"
-												 _("Toggle snapping to edges of a bounding box"),	// "tooltip"
+												 _("Snap to edges of a bounding box"),	// "tooltip"
 												 "toggle_snap_to_bbox_path",	// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_BBOX_PATHS);
@@ -2030,7 +2045,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToBBoxNode",	// "name"
 												 _("Bounding box corners"),		// "label"
-												 _("Toggle snapping to bounding box corners"),	// "tooltip"
+												 _("Snap to bounding box corners"),	// "tooltip"
 												 "toggle_snap_to_bbox_node",	// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_BBOX_NODES);
@@ -2040,9 +2055,33 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	}
 
 	{
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromBBoxEdgeMidpoints",	// "name"
+												 _("BBox Edge Midpoints"),				// "label"
+												 _("Snap from and to midpoints of bounding box edges"),	// "tooltip"
+												 "toggle_snap_to_bbox_edge_midpoints",	// "iconId"
+												 secondarySize,
+												 SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE_MIDPOINTS);
+
+		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
+		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
+	}
+
+	{
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromBBoxMidpoints",	// "name"
+												 _("BBox Midpoints"),				// "label"
+												 _("Snapping from and to midpoints of bounding boxes"),	// "tooltip"
+												 "toggle_snap_to_bbox_midpoints",	// "iconId"
+												 secondarySize,
+												 SP_ATTR_INKSCAPE_SNAP_BBOX_MIDPOINTS);
+
+		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
+		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
+	}
+
+	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapFromNode",		// "name"
 												 _("Nodes"),					// "label"
-												 _("Toggle snapping of nodes"),	// "tooltip"
+												 _("Snap nodes"),	// "tooltip"
 												 "toggle_snap_nodes",			// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_SNAP_NODES);
@@ -2054,7 +2093,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToItemPath",	// "name"
 												 _("Paths"),					// "label"
-												 _("Toggle snapping to paths"),	// "tooltip"
+												 _("Snap to paths"),	// "tooltip"
 												 "toggle_snap_to_paths",		// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_OBJECT_PATHS);
@@ -2064,9 +2103,21 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	}
 
 	{
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToPathIntersections",			// "name"
+												 _("Path intersections"),						// "label"
+												 _("Snap to path intersections"),	// "tooltip"
+												 "toggle_snap_to_path_intersections",			// "iconId"
+												 secondarySize,
+												 SP_ATTR_INKSCAPE_SNAP_INTERS_PATHS);
+
+		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
+		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
+	}
+
+	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToItemNode",	// "name"
 												 _("To nodes"),					// "label"
-												 _("Toggle snapping to cusp nodes"), // "tooltip"
+												 _("Snap to cusp nodes"), // "tooltip"
 												 "toggle_snap_to_nodes",		// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_OBJECT_NODES);
@@ -2078,7 +2129,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToSmoothNodes",	// "name"
 												 _("Smooth nodes"),				// "label"
-												 _("Consider smooth nodes too, not just cusp nodes"),// "tooltip"
+												 _("Snap to smooth nodes"),// "tooltip"
 												 "toggle_snap_to_smooth_nodes",	// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_SNAP_SMOOTH_NODES);
@@ -2088,24 +2139,24 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromMidpoints",	// "name"
-												 _("Midpoints"),				// "label"
-												 _("Toggle snapping from and to midpoints of line segments and bounding boxes"),	// "tooltip"
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromLineMidpoints",	// "name"
+												 _("Line Midpoints"),				// "label"
+												 _("Snap from and to midpoints of line segments"),	// "tooltip"
 												 "toggle_snap_to_midpoints",	// "iconId"
 												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_MIDPOINTS);
+												 SP_ATTR_INKSCAPE_SNAP_LINE_MIDPOINTS);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToPathIntersections",			// "name"
-												 _("Path intersections"),						// "label"
-												 _("Toggle snapping to path intersections"),	// "tooltip"
-												 "toggle_snap_to_path_intersections",			// "iconId"
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromObjectMidpoints",	// "name"
+												 _("Object Midpoints"),				// "label"
+												 _("Snap from and to midpoints of objects"),	// "tooltip"
+												 "toggle_snap_to_object_midpoints",	// "iconId"
 												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_INTERS_PATHS);
+												 SP_ATTR_INKSCAPE_SNAP_OBJECT_MIDPOINTS);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
@@ -2114,7 +2165,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromCenter",// "name"
 												 _("Center"),					// "label"
-												 _("Toggle snapping from and to an item's rotation center"),	// "tooltip"
+												 _("Snap from and to an item's rotation center"),	// "tooltip"
 												 "toggle_snap_center",			// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_SNAP_CENTER);
@@ -2126,7 +2177,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToPageBorder",	// "name"
 												 _("Page border"),				// "label"
-												 _("Toggle snapping to the page border"),	// "tooltip"
+												 _("Snap to the page border"),	// "tooltip"
 												 "toggle_snap_page_border",		// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_SNAP_PAGE);
@@ -2138,7 +2189,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToGridGuideIntersections",	// "name"
 												 _("Grid/guide intersections"),				// "label"
-												 _("Toggle snapping to intersections of a grid with a guide"),	// "tooltip"
+												 _("Snap to intersections of a grid with a guide"),	// "tooltip"
 												 "toggle_snap_grid_guide_intersections",	// "iconId"
 												 secondarySize,
 												 SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE);
@@ -2192,15 +2243,18 @@ void update_snap_toolbox(SPDesktop *desktop, SPEventContext */*eventcontext*/, G
 	Glib::RefPtr<Gtk::Action> act2 = mainActions->get_action("ToggleSnapFromBBoxCorner");
 	Glib::RefPtr<Gtk::Action> act3 = mainActions->get_action("ToggleSnapToBBoxPath");
 	Glib::RefPtr<Gtk::Action> act4 = mainActions->get_action("ToggleSnapToBBoxNode");
+	Glib::RefPtr<Gtk::Action> act4b = mainActions->get_action("ToggleSnapToFromBBoxEdgeMidpoints");
+	Glib::RefPtr<Gtk::Action> act4c = mainActions->get_action("ToggleSnapToFromBBoxMidpoints");
 	Glib::RefPtr<Gtk::Action> act5 = mainActions->get_action("ToggleSnapFromNode");
 	Glib::RefPtr<Gtk::Action> act6 = mainActions->get_action("ToggleSnapToItemPath");
+	Glib::RefPtr<Gtk::Action> act6b = mainActions->get_action("ToggleSnapToPathIntersections");
 	Glib::RefPtr<Gtk::Action> act7 = mainActions->get_action("ToggleSnapToItemNode");
 	Glib::RefPtr<Gtk::Action> act8 = mainActions->get_action("ToggleSnapToSmoothNodes");
-	Glib::RefPtr<Gtk::Action> act10 = mainActions->get_action("ToggleSnapToPathIntersections");
+	Glib::RefPtr<Gtk::Action> act9 = mainActions->get_action("ToggleSnapToFromLineMidpoints");
+	Glib::RefPtr<Gtk::Action> act10 = mainActions->get_action("ToggleSnapToFromObjectMidpoints");
 	Glib::RefPtr<Gtk::Action> act11 = mainActions->get_action("ToggleSnapToFromCenter");
 	Glib::RefPtr<Gtk::Action> act12 = mainActions->get_action("ToggleSnapToPageBorder");
 	Glib::RefPtr<Gtk::Action> act13 = mainActions->get_action("ToggleSnapToGridGuideIntersections");
-	Glib::RefPtr<Gtk::Action> act14 = mainActions->get_action("ToggleSnapToFromMidpoints");
 
 
 	if (!act1) {
@@ -2219,34 +2273,39 @@ void update_snap_toolbox(SPDesktop *desktop, SPEventContext */*eventcontext*/, G
 	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act2->gobj()), c2);
 	gtk_action_set_sensitive(GTK_ACTION(act2->gobj()), c1);
 
-	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act3->gobj()), nv->snap_manager.object.getSnapToBBoxPath());
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act3->gobj()), nv->snap_manager.snapprefs.getSnapToBBoxPath());
 	gtk_action_set_sensitive(GTK_ACTION(act3->gobj()), c1 && c2);
-	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act4->gobj()), nv->snap_manager.object.getSnapToBBoxNode());
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act4->gobj()), nv->snap_manager.snapprefs.getSnapToBBoxNode());
 	gtk_action_set_sensitive(GTK_ACTION(act4->gobj()), c1 && c2);
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act4b->gobj()), nv->snap_manager.snapprefs.getSnapBBoxEdgeMidpoints());
+	gtk_action_set_sensitive(GTK_ACTION(act4b->gobj()), c1 && c2);
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act4c->gobj()), nv->snap_manager.snapprefs.getSnapBBoxMidpoints());
+	gtk_action_set_sensitive(GTK_ACTION(act4c->gobj()), c1 && c2);
 
 	bool const c3 = nv->snap_manager.snapprefs.getSnapModeNode();
 	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act5->gobj()), c3);
 	gtk_action_set_sensitive(GTK_ACTION(act5->gobj()), c1);
 
-	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act6->gobj()), nv->snap_manager.object.getSnapToItemPath());
+	bool const c4 = nv->snap_manager.snapprefs.getSnapToItemPath();
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act6->gobj()), c4);
 	gtk_action_set_sensitive(GTK_ACTION(act6->gobj()), c1 && c3);
-	bool const c4 = nv->snap_manager.object.getSnapToItemNode();
-	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act7->gobj()), c4);
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act6b->gobj()), nv->snap_manager.snapprefs.getSnapIntersectionCS());
+	gtk_action_set_sensitive(GTK_ACTION(act6b->gobj()), c1 && c3 && c4);
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act7->gobj()), nv->snap_manager.snapprefs.getSnapToItemNode());
 	gtk_action_set_sensitive(GTK_ACTION(act7->gobj()), c1 && c3);
 	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act8->gobj()), nv->snap_manager.snapprefs.getSnapSmoothNodes());
-	gtk_action_set_sensitive(GTK_ACTION(act8->gobj()), c1 && c3 && c4);
-	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act10->gobj()), nv->snap_manager.snapprefs.getSnapIntersectionCS());
+	gtk_action_set_sensitive(GTK_ACTION(act8->gobj()), c1 && c3);
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act9->gobj()), nv->snap_manager.snapprefs.getSnapLineMidpoints());
+	gtk_action_set_sensitive(GTK_ACTION(act9->gobj()), c1 && c3);
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act10->gobj()), nv->snap_manager.snapprefs.getSnapObjectMidpoints());
 	gtk_action_set_sensitive(GTK_ACTION(act10->gobj()), c1 && c3);
 	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act11->gobj()), nv->snap_manager.snapprefs.getIncludeItemCenter());
 	gtk_action_set_sensitive(GTK_ACTION(act11->gobj()), c1 && c3);
 
-	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act12->gobj()), nv->snap_manager.object.getSnapToPageBorder());
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act12->gobj()), nv->snap_manager.snapprefs.getSnapToPageBorder());
 	gtk_action_set_sensitive(GTK_ACTION(act12->gobj()), c1);
 	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act13->gobj()), nv->snap_manager.snapprefs.getSnapIntersectionGG());
 	gtk_action_set_sensitive(GTK_ACTION(act13->gobj()), c1);
-	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act14->gobj()), nv->snap_manager.snapprefs.getSnapMidpoints());
-	gtk_action_set_sensitive(GTK_ACTION(act14->gobj()), c1);
-
 
 	g_object_set_data(G_OBJECT(toolbox), "freeze", GINT_TO_POINTER(FALSE)); // unfreeze (see above)
 }

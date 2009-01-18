@@ -257,16 +257,21 @@ static void sp_genericellipse_set_shape(SPShape *shape)
     curve->unref();
 }
 
-static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const */*snapprefs*/)
+static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_GENERICELLIPSE(item));
+
+    // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
+	if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide())) {
+		return;
+	}
 
     SPGenericEllipse *ellipse = SP_GENERICELLIPSE(item);
     sp_genericellipse_normalize(ellipse);
     Geom::Matrix const i2d = sp_item_i2d_affine(item);
 
-    // figure out if we have a slice, whilst guarding against rounding errors
+    // figure out if we have a slice, while guarding against rounding errors
     bool slice = false;
     double len = fmod(ellipse->end - ellipse->start, SP_2PI);
     if (len < 0.0) len += SP_2PI;
@@ -284,19 +289,22 @@ static void sp_genericellipse_snappoints(SPItem const *item, SnapPointsIter p, I
 
     // Snap to the 4 quadrant points of the ellipse, but only if the arc
     // spans far enough to include them
-    double angle = 0;
-    for (angle = 0; angle < SP_2PI; angle += M_PI_2) {
-        if (angle >= ellipse->start && angle <= ellipse->end) {
-            *p = Geom::Point(cx + cos(angle)*rx, cy + sin(angle)*ry) * i2d;
-        }
+    if (snapprefs->getSnapToItemNode()) { //TODO: Make a separate snap option toggle for this?
+		double angle = 0;
+		for (angle = 0; angle < SP_2PI; angle += M_PI_2) {
+			if (angle >= ellipse->start && angle <= ellipse->end) {
+				*p = Geom::Point(cx + cos(angle)*rx, cy + sin(angle)*ry) * i2d;
+			}
+		}
     }
 
-    // And if we have a slice, also snap to the endpoints and the centre point
-    if (slice) {
-        // Add the centre, if we have a closed slice
-        if (ellipse->closed) {
-            *p = Geom::Point(cx, cy) * i2d;
-        }
+    // Add the centre, if we have a closed slice or when explicitly asked for
+    if ((snapprefs->getSnapToItemNode() && slice && ellipse->closed) || snapprefs->getSnapObjectMidpoints()) {
+    	*p = Geom::Point(cx, cy) * i2d;
+    }
+
+    // And if we have a slice, also snap to the endpoints
+    if (snapprefs->getSnapToItemNode() && slice) {
         // Add the start point, if it's not coincident with a quadrant point
         if (fmod(ellipse->start, M_PI_2) != 0.0 ) {
             *p = Geom::Point(cx + cos(ellipse->start)*rx, cy + sin(ellipse->start)*ry) * i2d;

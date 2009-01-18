@@ -31,7 +31,7 @@ void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
                                                     std::vector<SPItem const *> const */*it*/,
                                                     std::vector<Geom::Point> */*unselected_nodes*/) const
 {
-	if (_snap_enabled == false || _snapmanager->snapprefs.getSnapFrom(t) == false) {
+	if (!(_snap_enabled && _snapmanager->snapprefs.getSnapFrom(t)) ) {
         return;
     }
 

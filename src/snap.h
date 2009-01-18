@@ -54,6 +54,7 @@ public:
     typedef std::list<const Inkscape::Snapper*> SnapperList;
 
     bool someSnapperMightSnap() const;
+    bool gridSnapperMightSnap() const;
 
     void setup(SPDesktop const *desktop, bool snapindicator = true, SPItem const *item_to_ignore = NULL, std::vector<Geom::Point> *unselected_nodes = NULL);
     void setup(SPDesktop const *desktop, bool snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<Geom::Point> *unselected_nodes = NULL);

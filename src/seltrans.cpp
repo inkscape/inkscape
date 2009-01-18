@@ -285,16 +285,20 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 
     // Next, get all points to consider for snapping
     SnapManager const &m = _desktop->namedview->snap_manager;
+	Inkscape::SnapPreferences local_snapprefs = m.snapprefs;
+	local_snapprefs.setSnapToItemNode(true); // We should get at least the cusp nodes here. This might
+	// have been turned off because (for example) the user only want paths as a snap target, not nodes
+	// but as a snap source we still need some nodes though!
     _snap_points.clear();
-    _snap_points = selection->getSnapPoints(&m.snapprefs);
-    std::vector<Geom::Point> snap_points_hull = selection->getSnapPointsConvexHull(&m.snapprefs);
-    if (_snap_points.size() > 100) {
-        /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
-        An average user would rarely ever try to snap such a large number of nodes anyway, because
-        (s)he could hardly discern which node would be snapping */
-        _snap_points = snap_points_hull;
-        // Unfortunately, by now we will have lost the font-baseline snappoints :-(
-    }
+	_snap_points = selection->getSnapPoints(&local_snapprefs);
+	std::vector<Geom::Point> snap_points_hull = selection->getSnapPointsConvexHull(&local_snapprefs);
+	if (_snap_points.size() > 100) {
+		/* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
+		An average user would rarely ever try to snap such a large number of nodes anyway, because
+		(s)he could hardly discern which node would be snapping */
+		_snap_points = snap_points_hull;
+		// Unfortunately, by now we will have lost the font-baseline snappoints :-(
+	}
 
     // Find bbox hulling all special points, which excludes stroke width. Here we need to include the
     // path nodes, for example because a rectangle which has been converted to a path doesn't have
@@ -312,7 +316,9 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 
     _bbox_points.clear();
     if (_bbox) {
-    	getBBoxPoints(_bbox, &_bbox_points, m.snapprefs.getSnapMidpoints());
+    	if (m.snapprefs.getSnapModeBBox()) {
+    		getBBoxPoints(_bbox, &_bbox_points, true, m.snapprefs.getSnapBBoxEdgeMidpoints(), m.snapprefs.getSnapBBoxMidpoints());
+    	}
     	// There are two separate "opposites" (i.e. opposite w.r.t. the handle being dragged):
         //  - one for snapping the boundingbox, which can be either visual or geometric
         //  - one for snapping the special points

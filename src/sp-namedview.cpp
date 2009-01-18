@@ -249,7 +249,10 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:snap-center");
     sp_object_read_attr(object, "inkscape:snap-smooth-nodes");
     sp_object_read_attr(object, "inkscape:snap-midpoints");
-    sp_object_read_attr(object, "inkscape:snap-intersection-grid-guide");
+    sp_object_read_attr(object, "inkscape:snap-object-midpoints");
+    sp_object_read_attr(object, "inkscape:snap-bbox-edge-midpoints");
+    sp_object_read_attr(object, "inkscape:snap-bbox-midpoints");
+	sp_object_read_attr(object, "inkscape:snap-intersection-grid-guide");
     sp_object_read_attr(object, "inkscape:snap-intersection-paths");
     sp_object_read_attr(object, "inkscape:object-paths");
     sp_object_read_attr(object, "inkscape:object-nodes");
@@ -471,11 +474,23 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->snap_manager.snapprefs.setSnapSmoothNodes(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    case SP_ATTR_INKSCAPE_SNAP_MIDPOINTS:
-            nv->snap_manager.snapprefs.setSnapMidpoints(value ? sp_str_to_bool(value) : FALSE);
+    case SP_ATTR_INKSCAPE_SNAP_LINE_MIDPOINTS:
+            nv->snap_manager.snapprefs.setSnapLineMidpoints(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    case SP_ATTR_INKSCAPE_SNAP_GUIDE:
+    case SP_ATTR_INKSCAPE_SNAP_OBJECT_MIDPOINTS:
+			nv->snap_manager.snapprefs.setSnapObjectMidpoints(value ? sp_str_to_bool(value) : FALSE);
+			object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+			break;
+    case SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE_MIDPOINTS:
+			nv->snap_manager.snapprefs.setSnapBBoxEdgeMidpoints(value ? sp_str_to_bool(value) : FALSE);
+			object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+			break;
+	case SP_ATTR_INKSCAPE_SNAP_BBOX_MIDPOINTS:
+			nv->snap_manager.snapprefs.setSnapBBoxMidpoints(value ? sp_str_to_bool(value) : FALSE);
+			object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+			break;
+	case SP_ATTR_INKSCAPE_SNAP_GUIDE:
             nv->snap_manager.snapprefs.setSnapModeGuide(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
@@ -488,23 +503,23 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_OBJECT_PATHS:
-            nv->snap_manager.object.setSnapToItemPath(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.snapprefs.setSnapToItemPath(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_OBJECT_NODES:
-            nv->snap_manager.object.setSnapToItemNode(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.snapprefs.setSnapToItemNode(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_BBOX_PATHS:
-            nv->snap_manager.object.setSnapToBBoxPath(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.snapprefs.setSnapToBBoxPath(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_BBOX_NODES:
-            nv->snap_manager.object.setSnapToBBoxNode(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.snapprefs.setSnapToBBoxNode(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_PAGE:
-            nv->snap_manager.object.setSnapToPageBorder(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.snapprefs.setSnapToPageBorder(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_CURRENT_LAYER:

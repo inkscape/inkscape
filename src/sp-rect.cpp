@@ -556,6 +556,11 @@ static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::S
     g_assert(item != NULL);
     g_assert(SP_IS_RECT(item));
 
+    // Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
+	if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide())) {
+		return;
+	}
+
     SPRect *rect = SP_RECT(item);
 
     Geom::Matrix const i2d (sp_item_i2d_affine (item));
@@ -565,17 +570,24 @@ static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::S
     Geom::Point p2 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d;
     Geom::Point p3 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d;
 
-    *p = p0;
-    *p = p1;
-    *p = p2;
-    *p = p3;
-
-    if (snapprefs->getSnapMidpoints()) {
-    	*p = (p0 + p1)/2;
-    	*p = (p1 + p2)/2;
-    	*p = (p2 + p3)/2;
-    	*p = (p3 + p0)/2;
+    if (snapprefs->getSnapToItemNode()) {
+		*p = p0;
+		*p = p1;
+		*p = p2;
+		*p = p3;
     }
+
+	if (snapprefs->getSnapLineMidpoints()) { // only do this when we're snapping nodes (enforce strict snapping)
+		*p = (p0 + p1)/2;
+		*p = (p1 + p2)/2;
+		*p = (p2 + p3)/2;
+		*p = (p3 + p0)/2;
+	}
+
+	if (snapprefs->getSnapObjectMidpoints()) { // only do this when we're snapping nodes (enforce strict snapping)
+		*p = (p0 + p2)/2;
+	}
+
 }
 
 void

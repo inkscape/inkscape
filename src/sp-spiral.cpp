@@ -426,7 +426,7 @@ sp_spiral_set_shape (SPShape *shape)
 	SP_OBJECT (spiral)->requestModified(SP_OBJECT_MODIFIED_FLAG);
 
 	SPCurve *c = new SPCurve ();
-	
+
 #ifdef SPIRAL_VERBOSE
 	g_print ("cx=%g, cy=%g, exp=%g, revo=%g, rad=%g, arg=%g, t0=%g\n",
 		 spiral->cx,
@@ -496,7 +496,7 @@ sp_spiral_position_set       (SPSpiral          *spiral,
 	spiral->rad        = MAX (rad, 0.001);
 	spiral->arg        = arg;
 	spiral->t0         = CLAMP(t0, 0.0, 0.999);
-	
+
 	((SPObject *)spiral)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -505,8 +505,26 @@ sp_spiral_position_set       (SPSpiral          *spiral,
  */
 static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
 {
+	// We will determine the spiral's midpoint ourselves, instead of trusting on the base class
+	// Therefore setSnapObjectMidpoints() is set to false temporarily
+	Inkscape::SnapPreferences local_snapprefs = *snapprefs;
+	local_snapprefs.setSnapObjectMidpoints(false);
+
 	if (((SPItemClass *) parent_class)->snappoints) {
-		((SPItemClass *) parent_class)->snappoints (item, p, snapprefs);
+		((SPItemClass *) parent_class)->snappoints (item, p, &local_snapprefs);
+	}
+
+	// Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
+	if (!(snapprefs->getSnapModeNode() || snapprefs->getSnapModeGuide())) {
+		return;
+	}
+
+	if (snapprefs->getSnapObjectMidpoints()) {
+		Geom::Matrix const i2d (sp_item_i2d_affine (item));
+		SPSpiral *spiral = SP_SPIRAL(item);
+		*p = Geom::Point(spiral->cx, spiral->cy) * i2d;
+		// This point is the start-point of the spiral, which is also returned when _snap_to_itemnode has been set
+		// in the object snapper. In that case we will get a duplicate!
 	}
 }
 

@@ -875,14 +875,14 @@ DocumentProperties::update()
     _rcbsng.setActive (nv->snap_manager.snapprefs.getSnapModeGuide());
     _rcbic.setActive (nv->snap_manager.snapprefs.getIncludeItemCenter());
     _rcbsm.setActive (nv->snap_manager.snapprefs.getSnapSmoothNodes());
-    _rcbmp.setActive (nv->snap_manager.snapprefs.getSnapMidpoints());
+    _rcbmp.setActive (nv->snap_manager.snapprefs.getSnapLineMidpoints());
     _rcbsigg.setActive (nv->snap_manager.snapprefs.getSnapIntersectionGG());
     _rcbsils.setActive (nv->snap_manager.snapprefs.getSnapIntersectionCS());
-    _rcbsnop.setActive(nv->snap_manager.object.getSnapToItemPath());
-    _rcbsnon.setActive(nv->snap_manager.object.getSnapToItemNode());
-    _rcbsnbbp.setActive(nv->snap_manager.object.getSnapToBBoxPath());
-    _rcbsnbbn.setActive(nv->snap_manager.object.getSnapToBBoxNode());
-    _rcbsnpb.setActive(nv->snap_manager.object.getSnapToPageBorder());
+    _rcbsnop.setActive(nv->snap_manager.snapprefs.getSnapToItemPath());
+    _rcbsnon.setActive(nv->snap_manager.snapprefs.getSnapToItemNode());
+    _rcbsnbbp.setActive(nv->snap_manager.snapprefs.getSnapToBBoxPath());
+    _rcbsnbbn.setActive(nv->snap_manager.snapprefs.getSnapToBBoxNode());
+    _rcbsnpb.setActive(nv->snap_manager.snapprefs.getSnapToPageBorder());
     _rsu_sno.setValue (nv->objecttolerance);
 
     _rsu_sn.setValue (nv->gridtolerance);

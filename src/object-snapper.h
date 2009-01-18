@@ -56,16 +56,6 @@ public:
           ANGLED_GUIDE_ROT_SNAP, // For snapping an angled guide, while rotating it around some pivot point
           TRANSL_SNAP_XY}; // All other cases; for snapping to objects, other than guides
 
-    void setSnapToItemNode(bool s) {_snap_to_itemnode = s;}
-      bool getSnapToItemNode() const {return _snap_to_itemnode;}
-      void setSnapToItemPath(bool s) {_snap_to_itempath = s;}
-      bool getSnapToItemPath() const {return _snap_to_itempath;}
-      void setSnapToBBoxNode(bool s) {_snap_to_bboxnode = s;}
-      bool getSnapToBBoxNode() const {return _snap_to_bboxnode;}
-      void setSnapToBBoxPath(bool s) {_snap_to_bboxpath = s;}
-      bool getSnapToBBoxPath() const {return _snap_to_bboxpath;}
-      void setSnapToPageBorder(bool s) {_snap_to_page_border = s;}
-      bool getSnapToPageBorder() const {return _snap_to_page_border;}
       void guideSnap(SnappedConstraints &sc,
                    Geom::Point const &p,
                  Geom::Point const &guide_normal) const;
@@ -140,20 +130,9 @@ private:
     Geom::PathVector* _getPathvFromRect(Geom::Rect const rect) const;
     void _getBorderNodes(std::vector<Geom::Point> *points) const;
 
-    bool _snap_to_itemnode;
-    bool _snap_to_itempath;
-    bool _snap_to_bboxnode;
-    bool _snap_to_bboxpath;
-    bool _snap_to_page_border;
-
-    //If enabled, then bbox corners will only snap to bboxes,
-    //and nodes will only snap to nodes and paths. We will not
-    //snap bbox corners to nodes, or nodes to bboxes.
-    //(snapping to grids and guides is not affected by this)
-    bool _strict_snapping;
 }; // end of ObjectSnapper class
 
-void getBBoxPoints(Geom::OptRect const bbox, std::vector<Geom::Point> *points, bool const includeMidpoints);
+void getBBoxPoints(Geom::OptRect const bbox, std::vector<Geom::Point> *points, bool const includeCorners, bool const includeLineMidpoints, bool const includeObjectMidpoints);
 
 } // end of namespace Inkscape
 

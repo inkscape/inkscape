@@ -23,18 +23,22 @@ Inkscape::SnapPreferences::PointType const Inkscape::SnapPreferences::SNAPPOINT_
 Inkscape::SnapPreferences::SnapPreferences() :
 	_include_item_center(false),
     _snap_enabled_globally(true),
-    _snap_postponed_globally(false)
+    _snap_postponed_globally(false),
+    _snap_to_itemnode(true), _snap_to_itempath(true),
+	_snap_to_bboxnode(true), _snap_to_bboxpath(true),
+	_snap_to_page_border(false),
+	_strict_snapping(true)
 {
 	setSnapFrom(SNAPPOINT_BBOX | SNAPPOINT_NODE, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
 }
 
 /*
  *  The snappers have too many parameters to adjust individually. Therefore only
- *  two snapping modes are presented to the user: snapping bounding box corners (to 
+ *  two snapping modes are presented to the user: snapping bounding box corners (to
  *  other bounding boxes, grids or guides), and/or snapping nodes (to other nodes,
- *  paths, grids or guides). To select either of these modes (or both), use the 
+ *  paths, grids or guides). To select either of these modes (or both), use the
  *  methods defined below: setSnapModeBBox() and setSnapModeNode().
- * 
+ *
  * */
 
 
