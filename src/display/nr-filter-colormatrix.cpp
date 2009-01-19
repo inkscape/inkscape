@@ -80,10 +80,10 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
                     g_warning("ColorMatrix: values parameter error. Wrong size: %i.", static_cast<int>(values.size()));
                     return -1;
                 }
-                double a04 = 255*values[4] + .5;
-                double a14 = 255*values[9] + .5;
-                double a24 = 255*values[14] + .5;
-                double a34 = 255*values[19] + .5;
+                double a04 = 255*values[4];
+                double a14 = 255*values[9];
+                double a24 = 255*values[14];
+                double a34 = 255*values[19];
                 for (x=x0;x<x1;x++){
                     for (y=y0;y<y1;y++){
                         i = ((x-x0) + (x1-x0)*(y-y0))*4;
@@ -158,9 +158,9 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
                             b = in_data[i+2];
                             a = in_data[i+3];
 
-                            out_data[i]   = CLAMP_D_TO_U8( r*a00 + g*a01 + b*a02 + .5 );
-                            out_data[i+1] = CLAMP_D_TO_U8( r*a10 + g*a11 + b*a12 + .5 );
-                            out_data[i+2] = CLAMP_D_TO_U8( r*a20 + g*a21 + b*a22 + .5 );
+                            out_data[i]   = CLAMP_D_TO_U8( r*a00 + g*a01 + b*a02);
+                            out_data[i+1] = CLAMP_D_TO_U8( r*a10 + g*a11 + b*a12);
+                            out_data[i+2] = CLAMP_D_TO_U8( r*a20 + g*a21 + b*a22);
                             out_data[i+3] = a;
                         }
                     }
