@@ -153,15 +153,17 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     ddc->hatch_spacing_step = 0;
     new (&ddc->hatch_pointer_past) std::list<double>();
     new (&ddc->hatch_nearest_past) std::list<double>();
+    new (&ddc->inertia_vectors) std::list<Geom::Point>();
+    new (&ddc->hatch_vectors) std::list<Geom::Point>();
     ddc->hatch_last_nearest = Geom::Point(0,0);
     ddc->hatch_last_pointer = Geom::Point(0,0);
-    ddc->hatch_vector_accumulated = Geom::Point(0,0);
     ddc->hatch_escaped = false;
     ddc->hatch_area = NULL;
     ddc->hatch_item = NULL;
     ddc->hatch_livarot_path = NULL;
 
     ddc->trace_bg = false;
+    ddc->just_started_drawing = false;
 }
 
 static void
@@ -179,6 +181,8 @@ sp_dyna_draw_context_dispose(GObject *object)
 
     ddc->hatch_pointer_past.~list();
     ddc->hatch_nearest_past.~list();
+    ddc->inertia_vectors.~list();
+    ddc->hatch_vectors.~list();
 }
 
 static void
@@ -541,12 +545,6 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     return TRUE;
                 }
 
-                Geom::Point const button_w(event->button.x,
-                                         event->button.y);
-                Geom::Point const button_dt(desktop->w2d(button_w));
-                sp_dyna_draw_reset(dc, button_dt);
-                sp_dyna_draw_extinput(dc, event);
-                sp_dyna_draw_apply(dc, button_dt);
                 dc->accumulated->reset();
                 if (dc->repr) {
                     dc->repr = NULL;
@@ -567,6 +565,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
                 sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
                 dc->is_drawing = true;
+                dc->just_started_drawing = true;
             }
             break;
         case GDK_MOTION_NOTIFY:
@@ -625,9 +624,11 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
                 if (event->motion.state & GDK_CONTROL_MASK && dc->hatch_item) { // hatching
 
+#define HATCH_VECTOR_ELEMENTS 12
+#define INERTIA_ELEMENTS 36
 #define SPEED_ELEMENTS 12
-#define SPEED_MIN 0.12
-#define SPEED_NORMAL 0.65
+#define SPEED_MIN 0.3
+#define SPEED_NORMAL 0.3
 
                     // speed is the movement of the nearest point along the guide path, divided by
                     // the movement of the pointer at the same period; it is averaged for the last
@@ -678,13 +679,30 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                         // attracted again until the end of this stroke
                         dc->hatch_escaped = true;
 
+                        if (dc->inertia_vectors.size() >= INERTIA_ELEMENTS/2) { // move by inertia
+                            Geom::Point moved_past_escape = motion_dt - dc->inertia_vectors.front();
+                            Geom::Point inertia = 
+                                dc->inertia_vectors.front() - dc->inertia_vectors.back();
+
+                            double dot = Geom::dot (moved_past_escape, inertia);
+                            dot /= Geom::L2(moved_past_escape) * Geom::L2(inertia);
+
+                            if (dot > 0) { // mouse is still moving in approx the same direction
+                                Geom::Point should_have_moved = 
+                                    (inertia) * (1/Geom::L2(inertia)) * Geom::L2(moved_past_escape);
+                                motion_dt = dc->inertia_vectors.front() + should_have_moved;
+                            }
+                        }
+
                     } else {
 
                         // Calculate angle cosine of this vector-to-guide and all past vectors
                         // summed, to detect if we accidentally flipped to the other side of the
                         // guide
-                        double dot = Geom::dot (pointer - nearest, dc->hatch_vector_accumulated);
-                        dot /= Geom::L2(pointer - nearest) * Geom::L2(dc->hatch_vector_accumulated);
+                        Geom::Point hatch_vector_accumulated = std::accumulate 
+                            (dc->hatch_vectors.begin(), dc->hatch_vectors.end(), Geom::Point(0,0));
+                        double dot = Geom::dot (pointer - nearest, hatch_vector_accumulated);
+                        dot /= Geom::L2(pointer - nearest) * Geom::L2(hatch_vector_accumulated);
 
                         if (dc->hatch_spacing != 0) { // spacing was already set
                             double target;
@@ -710,6 +728,12 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                             // return it to the desktop coords
                             motion_dt = new_pointer * motion_to_curve.inverse();
 
+                            if (speed >= SPEED_NORMAL) {
+                                dc->inertia_vectors.push_front(motion_dt);
+                                if (dc->inertia_vectors.size() > INERTIA_ELEMENTS)
+                                    dc->inertia_vectors.pop_back();
+                            }
+
                         } else {
                             // this is the first motion event, set the dist 
                             dc->hatch_spacing = hatch_dist;
@@ -718,13 +742,21 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                         // remember last points
                         dc->hatch_last_pointer = pointer;
                         dc->hatch_last_nearest = nearest;
-                        dc->hatch_vector_accumulated += (pointer - nearest);
+
+                        dc->hatch_vectors.push_front(pointer - nearest);
+                        if (dc->hatch_vectors.size() > HATCH_VECTOR_ELEMENTS)
+                            dc->hatch_vectors.pop_back();
                     }
 
                     dc->_message_context->set(Inkscape::NORMAL_MESSAGE, dc->hatch_escaped? _("Tracking: <b>connection to guide path lost!</b>") : _("<b>Tracking</b> a guide path"));
 
                 } else {
                     dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Drawing</b> a calligraphic stroke"));
+                }
+
+                if (dc->just_started_drawing) {
+                    dc->just_started_drawing = false;
+                    sp_dyna_draw_reset(dc, motion_dt);
                 }
 
                 if (!sp_dyna_draw_apply(dc, motion_dt)) {
@@ -758,7 +790,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                     sp_canvas_item_show(dc->hatch_area);
                 } else if (dc->dragging && dc->hatch_escaped) {
                     // Tracking escaped: red, center free, fixed radius
-                    Geom::Point c = desktop->w2d(motion_w);
+                    Geom::Point c = motion_dt;
                     Geom::Matrix const sm (Geom::Scale(dc->hatch_spacing, dc->hatch_spacing) * Geom::Translate(c));
 
                     sp_canvas_item_affine_absolute(dc->hatch_area, sm);
@@ -818,12 +850,14 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
             if (!dc->hatch_pointer_past.empty()) dc->hatch_pointer_past.clear();
             if (!dc->hatch_nearest_past.empty()) dc->hatch_nearest_past.clear();
+            if (!dc->inertia_vectors.empty()) dc->inertia_vectors.clear();
+            if (!dc->hatch_vectors.empty()) dc->hatch_vectors.clear();
             dc->hatch_last_nearest = Geom::Point(0,0);
             dc->hatch_last_pointer = Geom::Point(0,0);
-            dc->hatch_vector_accumulated = Geom::Point(0,0);
             dc->hatch_escaped = false;
             dc->hatch_item = NULL;
             dc->hatch_livarot_path = NULL;
+            dc->just_started_drawing = false;
 
             if (dc->hatch_spacing != 0 && !dc->keep_selected) { 
                 // we do not select the newly drawn path, so increase spacing by step
