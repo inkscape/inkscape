@@ -32,6 +32,7 @@ sp_item_rotate_rel(SPItem *item, Geom::Rotate const &rotation)
     // Restore the center position (it's changed because the bbox center changed)
     if (item->isCenterSet()) {
         item->setCenter(center * affine);
+        item->updateRepr();
     }
 }
 
@@ -61,6 +62,7 @@ sp_item_skew_rel (SPItem *item, double skewX, double skewY)
     // Restore the center position (it's changed because the bbox center changed)
     if (item->isCenterSet()) {
         item->setCenter(center * affine);
+        item->updateRepr();
     }
 }
 
