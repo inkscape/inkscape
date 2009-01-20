@@ -19,7 +19,6 @@
 #include <2geom/d2.h>
 #include <2geom/d2-sbasis.h>
 #include <2geom/piecewise.h>
-#include <2geom/piecewise.h>
 #include <2geom/path.h>
 #include <2geom/d2.h>
 #include <2geom/crossing.h>
@@ -34,6 +33,8 @@ namespace LivePathEffect {
 class KnotHolderEntityCrossingSwitcher : public LPEKnotHolderEntity
 {
 public:
+    virtual ~KnotHolderEntityCrossingSwitcher() {}
+
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
     virtual Geom::Point knot_get();
     virtual void knot_click(guint state);
