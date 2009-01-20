@@ -1144,7 +1144,7 @@ void FilterEffectsDialog::FilterModifier::on_activate_desktop(Application*, SPDe
     me->update_filters();
 }
 
-void FilterEffectsDialog::FilterModifier::on_deactivate_desktop(Application*, SPDesktop* desktop, FilterModifier* me)
+void FilterEffectsDialog::FilterModifier::on_deactivate_desktop(Application*, SPDesktop* /*desktop*/, FilterModifier* me)
 {
     me->_doc_replaced.disconnect();
     me->_resource_changed.disconnect();
