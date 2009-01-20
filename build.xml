@@ -194,7 +194,7 @@
         description="generate test files" >
 
     <!-- Generate CxxTest files -->
-    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py --have-eh"
+    <cxxtestpart command="${devlibs}/python/python.exe ${cxxtest}/cxxtestgen.py --have-eh"
                  out="${src}/test-src.cpp">
         <fileset dir="${src}">
             <include name="attributes-test.h"/>
@@ -211,19 +211,19 @@
             <include name="verbs-test.h"/>
         </fileset>
     </cxxtestpart>
-    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py --have-eh"
+    <cxxtestpart command="${devlibs}/python/python.exe ${cxxtest}/cxxtestgen.py --have-eh"
                  out="${src}/display/test-display.cpp">
         <fileset dir="${src}/display">
             <include name="curve-test.h"/>
         </fileset>
     </cxxtestpart>
-    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py --have-eh"
+    <cxxtestpart command="${devlibs}/python/python.exe ${cxxtest}/cxxtestgen.py --have-eh"
                  out="${src}/helper/test-helper.cpp">
         <fileset dir="${src}/helper">
             <include name="units-test.h"/>
         </fileset>
     </cxxtestpart>
-    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py --have-eh"
+    <cxxtestpart command="${devlibs}/python/python.exe ${cxxtest}/cxxtestgen.py --have-eh"
                  out="${src}/libnr/test-nr.cpp">
         <fileset dir="${src}/libnr">
             <include name="nr-compose-test.h"/>
@@ -237,7 +237,7 @@
             <include name="nr-matrix-test.h"/>
         </fileset>
     </cxxtestpart>
-    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py --have-eh"
+    <cxxtestpart command="${devlibs}/python/python.exe ${cxxtest}/cxxtestgen.py --have-eh"
                  out="${src}/svg/test-svg.cpp">
         <fileset dir="${src}/svg">
             <include name="css-ostringstream-test.h"/>
@@ -248,20 +248,20 @@
             <include name="svg-path-geom-test.h"/>
         </fileset>
     </cxxtestpart>
-    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py --have-eh"
+    <cxxtestpart command="${devlibs}/python/python.exe ${cxxtest}/cxxtestgen.py --have-eh"
                  out="${src}/util/test-util.cpp">
         <fileset dir="${src}/util">
             <include name="list-container-test.h"/>
         </fileset>
     </cxxtestpart>
-    <cxxtestpart command="python ${cxxtest}/cxxtestgen.py --have-eh"
+    <cxxtestpart command="${devlibs}/python/python.exe ${cxxtest}/cxxtestgen.py --have-eh"
                  out="${src}/xml/test-xml.cpp">
         <fileset dir="${src}/xml">
             <include name="repr-action-test.h"/>
             <include name="quote-test.h"/>
         </fileset>
     </cxxtestpart>
-    <cxxtestroot command="python ${cxxtest}/cxxtestgen.py" 
+    <cxxtestroot command="${devlibs}/python/python.exe ${cxxtest}/cxxtestgen.py" 
                  out="${src}/test-main.cpp"
                  template="${src}/cxxtest-template.tpl">
         <fileset dir="${src}">
