@@ -110,6 +110,8 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 
     GSList *_collection_queue;
 
+    bool oldSignalsConnected;
+
     void add_persp3d (Persp3D * const persp);
     void remove_persp3d (Persp3D * const persp);
 

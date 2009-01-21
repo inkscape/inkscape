@@ -93,7 +93,8 @@ SPDocument::SPDocument() :
     router(new Avoid::Router()),
     perspectives(0),
     current_persp3d(0),
-    _collection_queue(0)
+    _collection_queue(0),
+    oldSignalsConnected(false)
 {
     // Don't use the Consolidate moves optimisation.
     router->ConsolidateMoves = false;
@@ -181,8 +182,14 @@ SPDocument::~SPDocument() {
         modified_id = 0;
     }
 
-    _selection_changed_connection.disconnect();
-    _desktop_activated_connection.disconnect();
+    if (oldSignalsConnected) {
+        g_signal_handlers_disconnect_by_func(G_OBJECT(INKSCAPE),
+                                             reinterpret_cast<gpointer>(sp_document_reset_key),
+                                             static_cast<gpointer>(this));
+    } else {
+        _selection_changed_connection.disconnect();
+        _desktop_activated_connection.disconnect();
+    }
 
     if (keepalive) {
         inkscape_unref();
@@ -385,9 +392,11 @@ sp_document_create(Inkscape::XML::Document *rdoc,
                          G_CALLBACK(sp_document_reset_key), document);
         g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
                          G_CALLBACK(sp_document_reset_key), document);
+        document->oldSignalsConnected = true;
     } else {
         document->_selection_changed_connection = Inkscape::NSApplication::Editor::connectSelectionChanged (sigc::mem_fun (*document, &SPDocument::reset_key));
         document->_desktop_activated_connection = Inkscape::NSApplication::Editor::connectDesktopActivated (sigc::mem_fun (*document, &SPDocument::reset_key));
+        document->oldSignalsConnected = false;
     }
 
     return document;
