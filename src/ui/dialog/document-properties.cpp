@@ -683,8 +683,10 @@ DocumentProperties::build_scripting()
 
     _add_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::addExternalScript));
 
+#if ENABLE_LCMS
     _ExternalScriptsList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::external_scripts_list_button_release));
     scripting_create_popup_menu(_ExternalScriptsList, sigc::mem_fun(*this, &DocumentProperties::removeExternalScript));
+#endif // ENABLE_LCMS
 
 //TODO: review this observers code:
     const GSList *current = sp_document_get_resource_list( SP_ACTIVE_DOCUMENT, "script" );

@@ -275,9 +275,8 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
 #ifdef DEBUG_LCMS
                     DEBUG_MESSAGE( lcmsOne, "cmsOpenProfileFromFile( '%s'...) = %p", fullname, (void*)cprof->profHandle );
 #endif // DEBUG_LCMS
-
-#endif // ENABLE_LCMS
                     g_free(fullname);
+#endif // ENABLE_LCMS
                 }
             }
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
