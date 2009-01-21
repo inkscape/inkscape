@@ -265,7 +265,7 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
                     //# 3.  Resolve the href according the docBase.  This follows
                     //      the w3c specs.  All absolute and relative issues are considered
                     org::w3c::dom::URI cprofUri = docUri.resolve(hrefUri);
-                    gchar* fullname = (gchar *)cprofUri.getNativePath().c_str();
+                    gchar* fullname = g_strdup((gchar *)cprofUri.getNativePath().c_str());
                     cprof->_clearProfile();
                     cprof->profHandle = cmsOpenProfileFromFile( fullname, "r" );
                     if ( cprof->profHandle ) {
@@ -277,6 +277,7 @@ void ColorProfile::set( SPObject *object, unsigned key, gchar const *value )
 #endif // DEBUG_LCMS
 
 #endif // ENABLE_LCMS
+                    g_free(fullname);
                 }
             }
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
