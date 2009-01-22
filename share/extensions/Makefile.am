@@ -100,9 +100,9 @@ extensions = \
 	sk2svg.sh \
 	SpSVG.pm \
 	spirograph.py\
-	spirograph.inx\
 	straightseg.py \
 	summersnight.py \
+	svgcalendar.py \
 	svg_and_media_zip_output.py \
 	text_uppercase.py \
 	text_lowercase.py \
@@ -207,10 +207,12 @@ modules = \
 	rtree.inx \
 	sk_input.inx \
 	sk1_input.inx \
+	spirograph.inx \
 	straightseg.inx \
 	summersnight.inx \
 	svg2xaml.inx \
 	svg_and_media_zip_output.inx \
+	svgcalendar.inx \
 	svgz_input.inx \
 	svgz_output.inx \
 	text_uppercase.inx\
