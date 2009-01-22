@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Calendar Generator</_name>
+  <id>org.inkscape.calendar</id>
+
+  <dependency type="executable" location="extensions">svgcalendar.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+
+  <param name="tab" type="notebook">
+    <page name="tab" _gui-text="Configuration">
+      <param name="month" type="int" min="0" max="12" _gui-text="Month (0 for all)">0</param>
+      <param name="year" type="int" min="0" max="3000" _gui-text="Ano (0 for current)">0</param>
+      <param name="fill-empty-day-boxes" type="boolean" _gui-text="Fill empty day boxes with next month days">true</param>
+      <param name="start-day" type="enum" _gui-text="Week start day">
+        <_item value="sun">Sunday</_item>
+        <_item value="mon">Monday</_item>
+      </param>
+      <param name="weekend" type="enum" _gui-text="Weekend">
+        <_item value="sat+sun">Saturday and Sunday</_item>
+        <_item value="sat">Saturday</_item>
+        <_item value="sun">Sunday</_item>
+      </param>
+    </page>
+    <page name="tab" _gui-text="Colors">
+      <param name="color-year"     type="string" _gui-text="Year color">#808080</param>
+      <param name="color-month"    type="string" _gui-text="Month color">#686868</param>
+      <param name="color-day-name" type="string" _gui-text="Week day name color ">#909090</param>
+      <param name="color-day"      type="string" _gui-text="Day color">#000000</param>
+      <param name="color-weekend"  type="string" _gui-text="Weekend day color">#787878</param>
+      <param name="color-nmd"      type="string" _gui-text="Next month day color">#B0B0B0</param>
+    </page>
+    <page name="tab" _gui-text="Localization">
+      <_param name="l10n-help" type="description">You may change the names for other languages:</_param>
+      <_param name="month-names"  type="string" _gui-text="Month names">January February March April May June July August September October November December</_param>
+      <_param name="day-names"  type="string" _gui-text="Day names">Sun Mon Tue Wed Thu Fri Sat</_param>
+      <_param name="day-names-help" type="description">(The day name list must start in sunday)</_param>
+    </page>
+  </param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Misc"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">svgcalendar.py</command>
+  </script>
+</inkscape-extension>
