@@ -374,7 +374,7 @@ private:
     /**
      * Error logging
      */
-    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void error(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
 };
 
@@ -562,12 +562,12 @@ private:
     /**
      * Error logging
      */
-    void error(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void error(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     /**
      * Trace logging
      */
-    void trace(char *fmt, ...) G_GNUC_PRINTF(2,3);
+    void trace(const char *fmt, ...) G_GNUC_PRINTF(2,3);
 
     /**
      *  Stage 1 of the color signature work.  'dims' will be either

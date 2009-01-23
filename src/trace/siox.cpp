@@ -119,7 +119,7 @@ void CieLab::init()
         _clab_inited_ = true;
         }
 }
-	
+
 
 
 /**
@@ -380,7 +380,7 @@ SioxImage::~SioxImage()
 /**
  * Error logging
  */
-void SioxImage::error(char *fmt, ...)
+void SioxImage::error(const char *fmt, ...)
 {
     char msgbuf[256];
     va_list args;
@@ -430,7 +430,7 @@ void SioxImage::setPixel(unsigned int x,
         return;
         }
     unsigned long offset = width * y + x;
-    pixdata[offset] = pixval; 
+    pixdata[offset] = pixval;
 }
 
 /**
@@ -438,8 +438,8 @@ void SioxImage::setPixel(unsigned int x,
  * If the coordinates are out of range, do nothing.
  */
 void SioxImage::setPixel(unsigned int x, unsigned int y,
-                         unsigned int a, 
-                         unsigned int r, 
+                         unsigned int a,
+                         unsigned int r,
                          unsigned int g,
                          unsigned int b)
 {
@@ -472,7 +472,7 @@ unsigned int SioxImage::getPixel(unsigned int x, unsigned int y)
         return 0L;
         }
     unsigned long offset = width * y + x;
-    return pixdata[offset]; 
+    return pixdata[offset];
 }
 
 /**
@@ -498,7 +498,7 @@ void SioxImage::setConfidence(unsigned int x,
         return;
         }
     unsigned long offset = width * y + x;
-    cmdata[offset] = confval; 
+    cmdata[offset] = confval;
 }
 
 /**
@@ -514,7 +514,7 @@ float SioxImage::getConfidence(unsigned int x, unsigned int y)
         return 0.0;
         }
     unsigned long offset = width * y + x;
-    return cmdata[offset]; 
+    return cmdata[offset];
 }
 
 /**
@@ -718,7 +718,7 @@ const float Siox::CERTAIN_FOREGROUND_CONFIDENCE=1.0f;
  */
 const float Siox::FOREGROUND_CONFIDENCE=0.8f;
 
-/** 
+/**
  * Confidence for foreground or background type being equally likely.
  */
 const float Siox::UNKNOWN_REGION_CONFIDENCE=0.5f;
@@ -764,7 +764,7 @@ Siox::~Siox()
 /**
  * Error logging
  */
-void Siox::error(char *fmt, ...)
+void Siox::error(const char *fmt, ...)
 {
     char msgbuf[256];
     va_list args;
@@ -781,7 +781,7 @@ void Siox::error(char *fmt, ...)
 /**
  * Trace logging
  */
-void Siox::trace(char *fmt, ...)
+void Siox::trace(const char *fmt, ...)
 {
     char msgbuf[256];
     va_list args;
@@ -944,14 +944,14 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
     trace("### Analyzing image");
 
     std::map<unsigned int, Tupel> hs;
-    
+
     unsigned int progressResolution = pixelCount / 10;
 
     for (unsigned int i=0; i<pixelCount; i++)
         {
         if (i % progressResolution == 0)
             {
-            float progress = 
+            float progress =
                 30.0 + 60.0 * (float)i / (float)pixelCount;
             //trace("### progress:%f", progress);
             if (!progressReport(progress))
@@ -1223,8 +1223,6 @@ void Siox::colorSignatureStage2(CieLab         *points,
                                 const float  threshold,
                                 const unsigned int dims)
 {
-
-  
     unsigned int currentDim = recursionDepth % dims;
     CieLab point = points[leftBase];
     float min = point(currentDim);
@@ -1324,7 +1322,7 @@ bool Siox::colorSignature(const std::vector<CieLab> &inputVec,
         {
         error("Could not allocate buffer for signature");
         return false;
-        }        
+        }
     for (unsigned int i=0 ; i < length ; i++)
         input[i] = inputVec[i];
 
@@ -1643,7 +1641,7 @@ void Siox::normalizeMatrix(float *cm, int cmSize)
     float max= -1000000.0f;
     for (int i=0; i<cmSize; i++)
         if (cm[i] > max) max=cm[i];
-        
+
     //good to use STL, but max() is not iterative
     //float max = *std::max(cm, cm + cmSize);
 
