@@ -252,7 +252,9 @@ class SVGCalendar (inkex.Effect):
             txt_atts = {'style': simplestyle.formatStyle(style),
                         'x': str( self.day_w * week_x ),
                         'y': str( self.day_h * (week_y+2) ) }
-            if day==0:
+            if day==0 and not self.options.fill_edb:
+	      pass # draw nothing
+	    elif day==0:
               if before:
                 inkex.etree.SubElement(gdays, 'text', txt_atts).text = str( before_month[-bmd] )
                 bmd -= 1
