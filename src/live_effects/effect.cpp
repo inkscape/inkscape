@@ -80,18 +80,14 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     // {constant defined in effect-enum.h, N_("name of your effect"), "name of your effect in SVG"}
 #ifdef LPE_ENABLE_TEST_EFFECTS
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),     "doeffectstacktest"},
-    {DYNASTROKE,            N_("Dynamic stroke"),          "dynastroke"},
-#endif
     {ANGLE_BISECTOR,        N_("Angle bisector"),          "angle_bisector"},
-    {BEND_PATH,             N_("Bend"),                     "bend_path"},
     {BOOLOPS,               N_("Boolops"),                 "boolops"},
     {CIRCLE_WITH_RADIUS,    N_("Circle (by center and radius)"),   "circle_with_radius"},
-    {CIRCLE_3PTS,           N_("Circle by 3 points"), "circle_3pts"},
-    {CONSTRUCT_GRID,        N_("Construct grid"),          "construct_grid"},
+    {CIRCLE_3PTS,           N_("Circle by 3 points"),      "circle_3pts"},
+    {DYNASTROKE,            N_("Dynamic stroke"),          "dynastroke"},
     {ENVELOPE,              N_("Envelope Deformation"),    "envelope"},
     {FREEHAND_SHAPE,        N_("Freehand Shape"),          "freehand_shape"}, // this is actually a special type of PatternAlongPath, used to paste shapes in pen/pencil tool
-    {GEARS,                 N_("Gears"),                   "gears"},
-    {ROUGH_HATCHES,         N_("Hatches (rough)"),            "rough_hatches"},
+    {ROUGH_HATCHES,         N_("Hatches (rough)"),         "rough_hatches"},
     {INTERPOLATE,           N_("Interpolate Sub-Paths"),   "interpolate"},
     {KNOT,                  N_("Knot"),                    "knot"},
     {LATTICE,               N_("Lattice Deformation"),     "lattice"},
@@ -100,17 +96,23 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {OFFSET,                N_("Offset"),                  "offset"},
     {PARALLEL,              N_("Parallel"),                "parallel"},
     {PATH_LENGTH,           N_("Path length"),             "path_length"},
-    {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),      "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
     {PERP_BISECTOR,         N_("Perpendicular bisector"),  "perp_bisector"},
     {PERSPECTIVE_PATH,      N_("Perspective path"),        "perspective_path"},
     {COPY_ROTATE,           N_("Rotate copies"),           "copy_rotate"},
     {RULER,                 N_("Ruler"),                   "ruler"},
     {SKETCH,                N_("Sketch"),                  "sketch"},
     {SPIRO,                 N_("Spiro spline"),            "spiro"},
-    {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
     {TEXT_LABEL,            N_("Text label"),              "text_label"},
     {VONKOCH,               N_("VonKoch"),                 "vonkoch"},
+#endif
+/* 0.46 */
+    {BEND_PATH,             N_("Bend"),                     "bend_path"},
+    {GEARS,                 N_("Gears"),                   "gears"},
+    {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),      "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
+    {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
+/* 0.47 */
+    {CONSTRUCT_GRID,        N_("Construct grid"),          "construct_grid"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
