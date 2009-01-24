@@ -25,6 +25,15 @@ namespace Widget {
 
 template<typename E> class ComboBoxEnum : public Gtk::ComboBox, public AttrWidget
 {
+private:
+    int on_sort_compare( const Gtk::TreeModel::iterator & a, const Gtk::TreeModel::iterator & b)
+    {
+        Glib::ustring an=(*a)[_columns.label];
+        Glib::ustring bn=(*b)[_columns.label];
+        g_message("%s - %s", an.c_str(), bn.c_str());
+        return an.compare(bn);
+    }
+
 public:
     ComboBoxEnum(E default_value, const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID)
         : AttrWidget(a, (unsigned int)default_value), setProgrammatically(false), _converter(c)
@@ -44,6 +53,10 @@ public:
             row[_columns.label] = _( _converter.get_label(data->id).c_str() );
         }
         set_active_by_id(default_value);
+
+        // Sort the list
+        _model->set_default_sort_func(sigc::mem_fun(*this, &ComboBoxEnum<E>::on_sort_compare));
+        _model->set_sort_column(_columns.label, Gtk::SORT_ASCENDING);
     }
 
     ComboBoxEnum(const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID)
@@ -64,6 +77,10 @@ public:
             row[_columns.label] = _( _converter.get_label(data->id).c_str() );
         }
         set_active(0);
+
+        // Sort the list
+        _model->set_default_sort_func(sigc::mem_fun(*this, &ComboBoxEnum<E>::on_sort_compare));
+        _model->set_sort_column(_columns.label, Gtk::SORT_ASCENDING);
     }
 
     virtual Glib::ustring get_as_attribute() const
