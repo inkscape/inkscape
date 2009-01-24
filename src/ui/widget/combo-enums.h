@@ -30,7 +30,6 @@ private:
     {
         Glib::ustring an=(*a)[_columns.label];
         Glib::ustring bn=(*b)[_columns.label];
-        g_message("%s - %s", an.c_str(), bn.c_str());
         return an.compare(bn);
     }
 
