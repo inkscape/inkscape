@@ -42,9 +42,10 @@ namespace Inkscape {
 namespace UI {
 namespace Dialogs {
 
-
+ColorItem::ColorItem() : _isRemove(true){};
 ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustring& name ) :
     def( r, g, b, name ),
+    _isRemove(false),
     _isLive(false),
     _linkIsTone(false),
     _linkPercent(0),
@@ -532,7 +533,7 @@ void ColorItem::_colorDefChanged(void* data)
 Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewSize size, guint ratio)
 {
     Gtk::Widget* widget = 0;
-    if ( style == PREVIEW_STYLE_BLURB ) {
+    if ( style == PREVIEW_STYLE_BLURB) {
         Gtk::Label *lbl = new Gtk::Label(def.descr);
         lbl->set_alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER);
         widget = lbl;
@@ -547,6 +548,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
         Gtk::Widget* newBlot = Glib::wrap(eekWidget);
 
         eek_preview_set_color( preview, (def.getR() << 8) | def.getR(), (def.getG() << 8) | def.getG(), (def.getB() << 8) | def.getB());
+        preview->_isRemove = _isRemove;
 
         eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::PreviewSize)size, ratio );
         eek_preview_set_linked( preview, (LinkType)((_linkSrc ? PREVIEW_LINK_IN:0)
@@ -658,24 +660,28 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
 void ColorItem::buttonClicked(bool secondary)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop) {
-        char const * attrName = secondary ? "stroke" : "fill";
+    if (!desktop) return;
+    char const * attrName = secondary ? "stroke" : "fill";
+
+    gchar c[64];
+    if (!_isRemove){
         guint32 rgba = (def.getR() << 24) | (def.getG() << 16) | (def.getB() << 8) | 0xff;
-        gchar c[64];
         sp_svg_write_color(c, sizeof(c), rgba);
+    }
 
-        SPCSSAttr *css = sp_repr_css_attr_new();
-        sp_repr_css_set_property( css, attrName, c );
-        sp_desktop_set_style(desktop, css);
+    SPCSSAttr *css = sp_repr_css_attr_new();
+    sp_repr_css_set_property( css, attrName, _isRemove ? "none" : c );
+    sp_desktop_set_style(desktop, css);
+    sp_repr_css_attr_unref(css);
 
-        sp_repr_css_attr_unref(css);
+    if (_isRemove){
         sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_SWATCHES, 
-                          secondary? _("Set stroke color from swatch") : _("Set fill color from swatch"));
+                      secondary? _("Remove stroke color") : _("Remove fill color"));
+    } else {
+        sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_SWATCHES, 
+                      secondary? _("Set stroke color from swatch") : _("Set fill color from swatch"));
     }
 }
-
-
-
 
 static char* trim( char* str ) {
     char* ret = str;
@@ -1039,8 +1045,8 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
 {
     Gtk::RadioMenuItem* hotItem = 0;
     _holder = new PreviewHolder();
+    _remove = new ColorItem();
     loadEmUp();
-
     if ( !possible.empty() ) {
         JustForNow* first = 0;
         Glib::ustring targetName;
@@ -1065,12 +1071,14 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
             _holder->setColumnPref( first->_prefWidth );
         }
         _holder->freezeUpdates();
+        _holder->addPreview(_remove);
         for ( std::vector<ColorItem*>::iterator it = first->_colors.begin(); it != first->_colors.end(); it++ ) {
             _holder->addPreview(*it);
         }
         _holder->thawUpdates();
 
         Gtk::RadioMenuItem::Group groupOne;
+
         int i = 0;
         for ( std::vector<JustForNow*>::iterator it = possible.begin(); it != possible.end(); it++ ) {
             JustForNow* curr = *it;
@@ -1081,7 +1089,6 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
             _regItem( single, 3, i );
             i++;
         }
-
     }
 
 
@@ -1098,6 +1105,8 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
 
 SwatchesPanel::~SwatchesPanel()
 {
+    if (_remove) delete _remove;
+    if (_holder) delete _holder;
 }
 
 void SwatchesPanel::setOrientation( Gtk::AnchorType how )
@@ -1129,6 +1138,7 @@ void SwatchesPanel::_handleAction( int setId, int itemId )
                     _holder->setColumnPref( curr->_prefWidth );
                 }
                 _holder->freezeUpdates();
+                _holder->addPreview(_remove);
                 for ( std::vector<ColorItem*>::iterator it = curr->_colors.begin(); it != curr->_colors.end(); it++ ) {
                     _holder->addPreview(*it);
                 }

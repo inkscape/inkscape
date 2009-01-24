@@ -100,6 +100,7 @@ struct _EekPreview
     gboolean _hot;
     gboolean _within;
     gboolean _takesFocus;
+    gboolean _isRemove;
 
     PreviewStyle _prevstyle;
     ViewType _view;

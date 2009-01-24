@@ -26,7 +26,6 @@ namespace Dialogs {
 
 void _loadPaletteFile( gchar const *filename );
 
-
 /**
  * The color swatch you see on screen as a clickable box.
  */
@@ -34,6 +33,7 @@ class ColorItem : public Inkscape::UI::Previewable
 {
     friend void _loadPaletteFile( gchar const *filename );
 public:
+    ColorItem();
     ColorItem( unsigned int r, unsigned int g, unsigned int b,
                Glib::ustring& name );
     virtual ~ColorItem();
@@ -72,6 +72,7 @@ private:
     Gtk::Tooltips tips;
     std::vector<Gtk::Widget*> _previews;
 
+    bool _isRemove;
     bool _isLive;
     bool _linkIsTone;
     int _linkPercent;
@@ -79,8 +80,8 @@ private:
     ColorItem* _linkSrc;
     std::vector<ColorItem*> _listeners;
 };
-
 	
+class RemoveColorItem;
 
 /**
  * A panel that displays color swatches.
@@ -104,6 +105,7 @@ private:
     static SwatchesPanel* instance;
 
     PreviewHolder* _holder;
+    ColorItem* _remove;
 };
 
 } //namespace Dialogs
