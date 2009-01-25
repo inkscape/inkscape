@@ -1295,8 +1295,20 @@ SPObject::updateDisplay(SPCtx *ctx, unsigned int flags)
         }
     }
 
-    if (((SPObjectClass *) G_OBJECT_GET_CLASS(this))->update)
-        ((SPObjectClass *) G_OBJECT_GET_CLASS(this))->update(this, ctx, flags);
+    try
+    {
+        if (((SPObjectClass *) G_OBJECT_GET_CLASS(this))->update)
+            ((SPObjectClass *) G_OBJECT_GET_CLASS(this))->update(this, ctx, flags);
+    }
+    catch(...)
+    {
+        /** \todo 
+        * in case of catching an exception we need to inform the user somehow that the document is corrupted
+        * maybe by implementing an document flag documentOk
+        * or by a modal error dialog
+        */
+        g_warning("SPObject::updateDisplay(SPCtx *ctx, unsigned int flags) : throw in ((SPObjectClass *) G_OBJECT_GET_CLASS(this))->update(this, ctx, flags);");
+    }
 
     update_in_progress --;
 }
