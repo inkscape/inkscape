@@ -113,7 +113,7 @@ static void sp_box3d_context_init(Box3DContext *box3d_context)
 
     box3d_context->ctrl_dragged = false;
     box3d_context->extruded = false;
-    
+
     box3d_context->_vpdrag = NULL;
 
     new (&box3d_context->sel_changed_connection) sigc::connection();
@@ -157,7 +157,7 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
     SPEventContext *ec = SP_EVENT_CONTEXT(bc);
 
     ec->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem(); 
+    SPItem *item = selection->singleItem();
     ec->shape_editor->set_item(item, SH_KNOTHOLDER);
 
     if (selection->perspList().size() == 1) {
@@ -167,7 +167,7 @@ static void sp_box3d_context_selection_changed(Inkscape::Selection *selection, g
 }
 
 /* create a default perspective in document defs if none is present
-   (can happen after 'vacuum defs' or when a pre-0.46 file is opened) */   
+   (can happen after 'vacuum defs' or when a pre-0.46 file is opened) */
 static void sp_box3d_context_check_for_persp_in_defs(SPDocument *document) {
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
@@ -271,12 +271,13 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             event_context->xp = (gint) button_w[Geom::X];
             event_context->yp = (gint) button_w[Geom::Y];
             event_context->within_tolerance = true;
-            
+
             // remember clicked item, *not* disregarding groups (since a 3D box is a group), honoring Alt
             event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, event->button.state & GDK_CONTROL_MASK);
 
             dragging = true;
-            
+            sp_canvas_set_snap_delay_active(desktop->canvas, true);
+
             /*  */
             Geom::Point button_dt(desktop->w2d(button_w));
             bc->drag_origin = from_2geom(button_dt);
@@ -372,6 +373,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
         event_context->xp = event_context->yp = 0;
         if ( event->button.button == 1  && !event_context->space_panning) {
             dragging = false;
+            sp_canvas_set_snap_delay_active(desktop->canvas, false);
 
             if (!event_context->within_tolerance) {
                 // we've been dragging, finish the box
@@ -504,6 +506,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
                 dragging = false;
+                sp_canvas_set_snap_delay_active(desktop->canvas, false);
                 if (!event_context->within_tolerance) {
                     // we've been dragging, finish the box
                     sp_box3d_finish(bc);

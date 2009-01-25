@@ -60,6 +60,8 @@ protected:
     SPKnotHolderReleasedFunc released;
 
     gboolean local_change; ///< if true, no need to recreate knotholder if repr was changed.
+
+    bool dragging;
 };
 
 /**

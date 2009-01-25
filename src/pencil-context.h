@@ -31,7 +31,6 @@ struct SPPencilContext : public SPDrawContext {
     Geom::Point req_tangent;
 
     bool is_drawing;
-    bool prev_snap_was_succesful;
 
     std::vector<Geom::Point> ps;
 

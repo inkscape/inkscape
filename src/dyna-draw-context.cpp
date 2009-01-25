@@ -335,7 +335,7 @@ sp_dyna_draw_apply(SPDynaDrawContext *dc, Geom::Point p)
     // If force is below the absolute threshold DYNA_EPSILON,
     // or we haven't yet reached DYNA_VEL_START (i.e. at the beginning of stroke)
     // _and_ the force is below the (higher) DYNA_EPSILON_START threshold,
-    // discard this move. 
+    // discard this move.
     // This prevents flips, blobs, and jerks caused by microscopic tremor of the tablet pen,
     // especially bothersome at the start of the stroke where we don't yet have the inertia to
     // smooth them out.
@@ -433,7 +433,7 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
     // get the real brush point, not the same as pointer (affected by hatch tracking and/or mass
     // drag)
     Geom::Point brush = sp_dyna_draw_get_vpoint(dc, dc->cur);
-    Geom::Point brush_w = SP_EVENT_CONTEXT(dc)->desktop->d2w(brush); 
+    Geom::Point brush_w = SP_EVENT_CONTEXT(dc)->desktop->d2w(brush);
 
     double trace_thick = 1;
     if (dc->trace_bg) {
@@ -617,7 +617,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 } else {
                     dc->_message_context->set(Inkscape::NORMAL_MESSAGE, _("<b>Select a guide path</b> to track with <b>Ctrl</b>"));
                 }
-            } 
+            }
 
             if ( dc->is_drawing && (event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning) {
                 dc->dragging = TRUE;
@@ -712,7 +712,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                             } else {
                                 // looks like we're starting to lose speed,
                                 // so _gradually_ let go attraction to prevent jerks
-                                target = (dc->hatch_spacing * speed + hatch_dist * (SPEED_NORMAL - speed))/SPEED_NORMAL;                            
+                                target = (dc->hatch_spacing * speed + hatch_dist * (SPEED_NORMAL - speed))/SPEED_NORMAL;
                             }
                             if (!IS_NAN(dot) && dot < -0.5) {// flip
                                 target = -target;
@@ -735,7 +735,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                             }
 
                         } else {
-                            // this is the first motion event, set the dist 
+                            // this is the first motion event, set the dist
                             dc->hatch_spacing = hatch_dist;
                         }
 
@@ -773,8 +773,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             }
 
             // Draw the hatching circle if necessary
-            if (event->motion.state & GDK_CONTROL_MASK) { 
-                if (dc->hatch_spacing == 0 && hatch_dist != 0) { 
+            if (event->motion.state & GDK_CONTROL_MASK) {
+                if (dc->hatch_spacing == 0 && hatch_dist != 0) {
                     // Haven't set spacing yet: gray, center free, update radius live
                     Geom::Point c = desktop->w2d(motion_w);
                     Geom::Matrix const sm (Geom::Scale(hatch_dist, hatch_dist) * Geom::Translate(c));
@@ -859,7 +859,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             dc->hatch_livarot_path = NULL;
             dc->just_started_drawing = false;
 
-            if (dc->hatch_spacing != 0 && !dc->keep_selected) { 
+            if (dc->hatch_spacing != 0 && !dc->keep_selected) {
                 // we do not select the newly drawn path, so increase spacing by step
                 if (dc->hatch_spacing_step == 0) {
                     dc->hatch_spacing_step = dc->hatch_spacing;
@@ -1026,7 +1026,7 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
         } else {
             if (dc->keep_selected) {
                 sp_desktop_selection(desktop)->set(dc->repr);
-            } 
+            }
         }
 
     } else {
@@ -1036,14 +1036,14 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
         dc->repr = NULL;
     }
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_CALLIGRAPHIC, 
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_CALLIGRAPHIC,
                      _("Draw calligraphic stroke"));
 }
 
 static void
 add_cap(SPCurve *curve,
         Geom::Point const &from,
-        Geom::Point const &to, 
+        Geom::Point const &to,
         double rounding)
 {
     if (Geom::L2( to - from ) > DYNA_EPSILON) {
@@ -1062,7 +1062,7 @@ accumulate_calligraphic(SPDynaDrawContext *dc)
             dc->cal1->is_empty() ||
             dc->cal2->is_empty() ||
             (dc->cal1->get_segment_count() <= 0) ||
-            dc->cal1->first_path()->closed() 
+            dc->cal1->first_path()->closed()
             ) {
             dc->cal1->reset();
             dc->cal2->reset();
@@ -1072,7 +1072,7 @@ accumulate_calligraphic(SPDynaDrawContext *dc)
         SPCurve *rev_cal2 = dc->cal2->create_reverse();
         if (
             (rev_cal2->get_segment_count() <= 0) ||
-            rev_cal2->first_path()->closed() 
+            rev_cal2->first_path()->closed()
             ) {
             rev_cal2->unref();
             dc->cal1->reset();
@@ -1089,7 +1089,7 @@ accumulate_calligraphic(SPDynaDrawContext *dc)
             !dc_cal1_firstseg ||
             !rev_cal2_firstseg ||
             !dc_cal1_lastseg ||
-            !rev_cal2_lastseg 
+            !rev_cal2_lastseg
             ) {
             rev_cal2->unref();
             dc->cal1->reset();

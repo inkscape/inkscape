@@ -252,9 +252,17 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                 break;
             default:
                 /* Set first point of sequence */
+            	SnapManager &m = desktop->namedview->snap_manager;
+				m.setup(desktop);
+				sp_canvas_set_snap_delay_active(desktop->canvas, true);
+
                 if (bevent.state & GDK_CONTROL_MASK) {
-                    spdc_create_single_dot(event_context, p, "/tools/freehand/pencil", bevent.state);
-                    ret = true;
+                	if (!(bevent.state & GDK_SHIFT_MASK)) {
+                		m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+                	}
+					spdc_create_single_dot(event_context, p, "/tools/freehand/pencil", bevent.state);
+					sp_canvas_set_snap_delay_active(desktop->canvas, false);
+					ret = true;
                     break;
                 }
                 if (anchor) {
@@ -263,23 +271,15 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                 } else {
 
                     if (!(bevent.state & GDK_SHIFT_MASK)) {
-
-                        // This is the first click of a new curve; deselect item so that
+						// This is the first click of a new curve; deselect item so that
                         // this curve is not combined with it (unless it is drawn from its
                         // anchor, which is handled by the sibling branch above)
                         selection->clear();
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating new path"));
-                        SnapManager &m = desktop->namedview->snap_manager;
-                        m.setup(desktop);
-                        Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
-                        if (s.getSnapped()) {
-                        	s.getPoint(p);
-                        	pc->prev_snap_was_succesful = true;
-                        } else {
-                        	pc->prev_snap_was_succesful = false;
-                        }
+                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
                     } else if (selection->singleItem() && SP_IS_PATH(selection->singleItem())) {
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Appending to selected path"));
+                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
                     }
                 }
                 pc->sa = anchor;
@@ -296,14 +296,15 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
 static gint
 pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mevent)
 {
-    if ((mevent.state & GDK_CONTROL_MASK) && (mevent.state & GDK_BUTTON1_MASK)) {
+   	SPDesktop *const dt = pc->desktop;
+
+	if ((mevent.state & GDK_CONTROL_MASK) && (mevent.state & GDK_BUTTON1_MASK)) {
         // mouse was accidentally moved during Ctrl+click;
         // ignore the motion and create a single point
         pc->is_drawing = false;
         return TRUE;
     }
     gint ret = FALSE;
-    SPDesktop *const dt = pc->desktop;
 
     SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
     if (event_context->space_panning || mevent.state & GDK_BUTTON2_MASK || mevent.state & GDK_BUTTON3_MASK) {
@@ -355,7 +356,11 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
         default:
             /* We may be idle or already freehand */
             if ( mevent.state & GDK_BUTTON1_MASK && pc->is_drawing ) {
-                pc->state = SP_PENCIL_CONTEXT_FREEHAND;
+                if (pc->state == SP_PENCIL_CONTEXT_IDLE) {
+                	sp_canvas_set_snap_delay_active(dt->canvas, false);
+                }
+            	pc->state = SP_PENCIL_CONTEXT_FREEHAND;
+
                 if ( !pc->sa && !pc->green_anchor ) {
                     /* Create green anchor */
                     pc->green_anchor = sp_draw_anchor_new(pc, pc->green_curve, TRUE, pc->p[0]);
@@ -364,27 +369,13 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                  * fixme: I am not sure whether we want to snap to anchors
                  * in middle of freehand (Lauris)
                  */
-                SnapManager &m = dt->namedview->snap_manager;
-                
                 if (anchor) {
                     p = anchor->dp;
-                } else if ((mevent.state & GDK_SHIFT_MASK) == 0) {
-                    m.setup(dt);
-                    Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
-                    if (s.getSnapped()) {
-                    	s.getPoint(p);
-                    	pc->prev_snap_was_succesful = true;
-                    } else {
-                    	pc->prev_snap_was_succesful = false;
-                    }
                 }
+
                 if ( pc->npoints != 0) { // buttonpress may have happened before we entered draw context!
-                	if (!(pc->prev_snap_was_succesful && m.snapprefs.getSnapPostponedGlobally())) {
-	                    // When snapping is enabled but temporarily on hold because the mouse is moving 
-                        // fast, then we don't want to add nodes off-grid
-                        spdc_add_freehand_point(pc, p, mevent.state);
-	                    ret = TRUE;
-                	}
+					spdc_add_freehand_point(pc, p, mevent.state);
+					ret = TRUE;
                 }
 
                 if (anchor && !pc->anchor_statusbar) {
@@ -436,6 +427,7 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                 if (!(revent.state & GDK_CONTROL_MASK)) {
                     // Ctrl+click creates a single point so only set context in ADDLINE mode when Ctrl isn't pressed
                     pc->state = SP_PENCIL_CONTEXT_ADDLINE;
+                    //sp_canvas_set_snap_delay_active(dt->canvas, true);
                 }
                 ret = TRUE;
                 break;
@@ -450,6 +442,7 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                 spdc_set_endpoint(pc, p);
                 spdc_finish_endpoint(pc);
                 pc->state = SP_PENCIL_CONTEXT_IDLE;
+                sp_canvas_set_snap_delay_active(dt->canvas, false);
                 ret = TRUE;
                 break;
             case SP_PENCIL_CONTEXT_FREEHAND:
@@ -463,6 +456,7 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                     }
 
                     pc->state = SP_PENCIL_CONTEXT_SKETCH;
+                    //sp_canvas_set_snap_delay_active(dt->canvas, true);
                 } else {
                     /* Finish segment now */
                     /// \todo fixme: Clean up what follows (Lauris)
@@ -482,6 +476,7 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                         pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
                     }
                     pc->state = SP_PENCIL_CONTEXT_IDLE;
+                    // sp_canvas_set_snap_delay_active(dt->canvas, false);
                     // reset sketch mode too
                     pc->sketch_n = 0;
                 }
@@ -504,7 +499,7 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
 }
 
 static void
-pencil_cancel (SPPencilContext *const pc) 
+pencil_cancel (SPPencilContext *const pc)
 {
     if (pc->grab) {
         /* Release grab now */
@@ -513,8 +508,8 @@ pencil_cancel (SPPencilContext *const pc)
     }
 
     pc->is_drawing = false;
-
     pc->state = SP_PENCIL_CONTEXT_IDLE;
+    sp_canvas_set_snap_delay_active(pc->desktop->canvas, false);
 
     pc->red_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), NULL);
@@ -605,6 +600,7 @@ pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint c
                     pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
                 }
                 pc->state = SP_PENCIL_CONTEXT_IDLE;
+                sp_canvas_set_snap_delay_active(pc->desktop->canvas, false);
                 pc->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Finishing freehand sketch"));
                 ret = TRUE;
             }
@@ -715,11 +711,13 @@ static void
 interpolate(SPPencilContext *pc)
 {
 
-    g_assert( pc->ps.size() > 1 );
+    if ( pc->ps.size() <= 1 ) {
+    	return;
+    }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
-    double const tolerance_sq = 0.02 * square( pc->desktop->w2d().descrim() * 
+    double const tolerance_sq = 0.02 * square( pc->desktop->w2d().descrim() *
                                                tol) * exp(0.2*tol - 2);
 
     g_assert(is_zero(pc->req_tangent)
@@ -733,7 +731,7 @@ interpolate(SPPencilContext *pc)
 
     Geom::Point * b = g_new(Geom::Point, 4*n_points);
     Geom::Point * points = g_new(Geom::Point, 4*n_points);
-    for (unsigned int i = 0; i < pc->ps.size(); i++) { 
+    for (unsigned int i = 0; i < pc->ps.size(); i++) {
         points[i] = pc->ps[i];
     }
 
@@ -747,7 +745,7 @@ interpolate(SPPencilContext *pc)
     {
         /* Fit and draw and reset state */
         pc->green_curve->moveto(b[0]);
-        for (int c = 0; c < n_segs; c++) { 
+        for (int c = 0; c < n_segs; c++) {
             pc->green_curve->curveto(b[4*c+1], b[4*c+2], b[4*c+3]);
         }
         sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->green_curve);
@@ -781,7 +779,7 @@ sketch_interpolate(SPPencilContext *pc)
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
-    double const tolerance_sq = 0.02 * square( pc->desktop->w2d().descrim() * 
+    double const tolerance_sq = 0.02 * square( pc->desktop->w2d().descrim() *
                                                tol) * exp(0.2*tol - 2);
 
     bool average_all_sketches = prefs->getBool("/tools/freehand/pencil/average_all_sketches", true);
@@ -796,7 +794,7 @@ sketch_interpolate(SPPencilContext *pc)
 
     Geom::Point * b = g_new(Geom::Point, 4*n_points);
     Geom::Point * points = g_new(Geom::Point, 4*n_points);
-    for (unsigned i = 0; i < pc->ps.size(); i++) { 
+    for (unsigned i = 0; i < pc->ps.size(); i++) {
         points[i] = pc->ps[i];
     }
 
@@ -809,7 +807,7 @@ sketch_interpolate(SPPencilContext *pc)
     if ( n_segs > 0)
     {
         Geom::Path fit(b[0]);
-        for (int c = 0; c < n_segs; c++) { 
+        for (int c = 0; c < n_segs; c++) {
             fit.appendNew<Geom::CubicBezier>(b[4*c+1], b[4*c+2], b[4*c+3]);
         }
         Geom::Piecewise<Geom::D2<Geom::SBasis> > fit_pwd2 = fit.toPwSb();
@@ -866,7 +864,7 @@ fit_and_split(SPPencilContext *pc)
              || is_unit_vector(pc->req_tangent));
     Geom::Point const tHatEnd(0, 0);
     int const n_segs = Geom::bezier_fit_cubic_full(b, NULL, pc->p, pc->npoints,
-                                                pc->req_tangent, tHatEnd, 
+                                                pc->req_tangent, tHatEnd,
                                                 tolerance_sq, 1);
     if ( n_segs > 0
          && unsigned(pc->npoints) < G_N_ELEMENTS(pc->p) )

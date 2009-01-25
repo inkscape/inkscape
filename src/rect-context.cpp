@@ -151,7 +151,7 @@ void sp_rect_context_selection_changed(Inkscape::Selection *selection, gpointer 
     SPEventContext *ec = SP_EVENT_CONTEXT(rc);
 
     ec->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem(); 
+    SPItem *item = selection->singleItem();
     ec->shape_editor->set_item(item, SH_KNOTHOLDER);
 }
 
@@ -257,17 +257,18 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
 
             dragging = true;
+            sp_canvas_set_snap_delay_active(desktop->canvas, true);
 
             /* Position center */
             Geom::Point button_dt(desktop->w2d(button_w));
             rc->center = from_2geom(button_dt);
-            
+
             /* Snap center */
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
             m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, button_dt);
             rc->center = from_2geom(button_dt);
-            
+
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                 ( GDK_KEY_PRESS_MASK |
                                   GDK_BUTTON_RELEASE_MASK       |
@@ -275,7 +276,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
                                   GDK_POINTER_MOTION_HINT_MASK       |
                                   GDK_BUTTON_PRESS_MASK ),
                                 NULL, event->button.time);
-                                
+
             ret = TRUE;
         }
         break;
@@ -295,7 +296,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
 
             Geom::Point const motion_w(event->motion.x, event->motion.y);
             Geom::Point motion_dt(desktop->w2d(motion_w));
-            
+
             sp_rect_drag(*rc, motion_dt, event->motion.state); // this will also handle the snapping
             gobble_motion_events(GDK_BUTTON1_MASK);
             ret = TRUE;
@@ -305,6 +306,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         event_context->xp = event_context->yp = 0;
         if (event->button.button == 1 && !event_context->space_panning) {
             dragging = false;
+            sp_canvas_set_snap_delay_active(desktop->canvas, false);
 
             if (!event_context->within_tolerance) {
                 // we've been dragging, finish the rect
@@ -379,6 +381,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
                 dragging = false;
+                sp_canvas_set_snap_delay_active(desktop->canvas, false);
                 if (!event_context->within_tolerance) {
                     // we've been dragging, finish the rect
                     sp_rect_finish(rc);

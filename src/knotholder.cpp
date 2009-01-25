@@ -30,6 +30,8 @@
 #include "sp-pattern.h"
 #include "style.h"
 #include "live_effects/lpeobject.h"
+#include "desktop.h"
+#include "display/sp-canvas.h"
 
 #include "xml/repr.h" // for debugging only
 
@@ -53,6 +55,8 @@ KnotHolder::KnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFun
 
     this->repr = repr;
     this->local_change = FALSE;
+
+    this->dragging = false;
 }
 
 KnotHolder::~KnotHolder() {
@@ -89,7 +93,7 @@ KnotHolder::update_knots()
 void
 KnotHolder::knot_clicked_handler(SPKnot *knot, guint state)
 {
-    KnotHolder *knot_holder = this;
+	KnotHolder *knot_holder = this;
 
     for(std::list<KnotHolderEntity *>::iterator i = knot_holder->entity.begin(); i != knot_holder->entity.end(); ++i) {
         KnotHolderEntity *e = *i;
@@ -133,7 +137,12 @@ KnotHolder::knot_clicked_handler(SPKnot *knot, guint state)
 void
 KnotHolder::knot_moved_handler(SPKnot *knot, Geom::Point const &p, guint state)
 {
-    // this was a local change and the knotholder does not need to be recreated:
+    if (this->dragging == false) {
+    	this->dragging = true;
+    	sp_canvas_set_snap_delay_active(desktop->canvas, true);
+    }
+
+	// this was a local change and the knotholder does not need to be recreated:
     this->local_change = TRUE;
 
     for(std::list<KnotHolderEntity *>::iterator i = this->entity.begin(); i != this->entity.end(); ++i) {
@@ -155,7 +164,10 @@ KnotHolder::knot_moved_handler(SPKnot *knot, Geom::Point const &p, guint state)
 void
 KnotHolder::knot_ungrabbed_handler(SPKnot */*knot*/)
 {
-    if (this->released) {
+	this->dragging = false;
+	sp_canvas_set_snap_delay_active(desktop->canvas, false);
+
+	if (this->released) {
         this->released(this->item);
     } else {
         SPObject *object = (SPObject *) this->item;

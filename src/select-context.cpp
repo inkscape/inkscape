@@ -326,7 +326,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                     sc->moved = FALSE;
 
                     sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
-                    
+
                     // remember the clicked item in sc->item:
                     if (sc->item) {
                         sp_object_unref(sc->item, NULL);
@@ -511,10 +511,10 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                             item_in_group = desktop->item_at_point(Geom::Point(event->button.x, event->button.y), TRUE);
                             group_at_point = desktop->group_at_point(Geom::Point(event->button.x, event->button.y));
 
-                            // group-at-point is meant to be topmost item if it's a group, 
+                            // group-at-point is meant to be topmost item if it's a group,
                             // not topmost group of all items at point
-                            if (group_at_point != item_in_group && 
-                                !(group_at_point && item_at_point && 
+                            if (group_at_point != item_in_group &&
+                                !(group_at_point && item_at_point &&
                                   group_at_point->isAncestorOf(item_at_point)))
                                 group_at_point = NULL;
 
@@ -673,7 +673,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     sp_canvas_item_ungrab(sc->grabbed, event->button.time);
                     sc->grabbed = NULL;
                 }
-                
+
                 desktop->updateNow();
             }
             if (event->button.button == 1) {
@@ -902,7 +902,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         }
                         ret = TRUE;
                     }
-                    break;                  
+                    break;
                 case GDK_g:
                 case GDK_G:
                     if (MOD__SHIFT_ONLY) {

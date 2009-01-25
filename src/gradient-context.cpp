@@ -114,6 +114,8 @@ static void sp_gradient_context_dispose(GObject *object)
     SPGradientContext *rc = SP_GRADIENT_CONTEXT(object);
     SPEventContext *ec = SP_EVENT_CONTEXT(object);
 
+    sp_canvas_set_snap_delay_active(ec->desktop->canvas, false);
+
     ec->enableGrDrag(false);
 
     if (rc->_message_context) {
@@ -140,7 +142,7 @@ const gchar *gr_handle_descr [] = {
     N_("Radial gradient <b>mid stop</b>")
 };
 
-static void 
+static void
 gradient_selection_changed (Inkscape::Selection *, gpointer data)
 {
     SPGradientContext *rc = (SPGradientContext *) data;
@@ -216,6 +218,8 @@ static void sp_gradient_context_setup(SPEventContext *ec)
     rc->selcon = new sigc::connection (selection->connectChanged( sigc::bind (sigc::ptr_fun(&gradient_selection_changed), rc)));
     rc->subselcon = new sigc::connection (ec->desktop->connectToolSubselectionChanged(sigc::bind (sigc::ptr_fun(&gradient_subselection_changed), rc)));
     gradient_selection_changed(selection, rc);
+
+    sp_canvas_set_snap_delay_active(ec->desktop->canvas, true);
 }
 
 void
@@ -271,7 +275,7 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
         // remember the coord of the dragger to reselect it later
         coords.push_back(dragger->point);
         // for all draggables of dragger
-        for (GSList const* j = dragger->draggables; j != NULL; j = j->next) { 
+        for (GSList const* j = dragger->draggables; j != NULL; j = j->next) {
             GrDraggable *d = (GrDraggable *) j->data;
 
             // find the gradient
@@ -279,9 +283,9 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
             SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
 
             // these draggable types cannot have a next draggabe to insert a stop between them
-            if (d->point_type == POINT_LG_END || 
-                d->point_type == POINT_RG_FOCUS || 
-                d->point_type == POINT_RG_R1 || 
+            if (d->point_type == POINT_LG_END ||
+                d->point_type == POINT_RG_FOCUS ||
+                d->point_type == POINT_RG_R1 ||
                 d->point_type == POINT_RG_R2) {
                 continue;
             }
@@ -299,7 +303,7 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
             // if there's a next stop,
             if (next_stop) {
                 GrDragger *dnext = NULL;
-                // find its dragger 
+                // find its dragger
                 // (complex because it may have different types, and because in radial,
                 // more than one dragger may correspond to a stop, so we must distinguish)
                 if (type == POINT_LG_BEGIN || type == POINT_LG_MID) {
@@ -311,14 +315,14 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
                     if (type == POINT_RG_CENTER || type == POINT_RG_MID1) {
                         if (next_stop == last_stop)
                             dnext = drag->getDraggerFor (item, POINT_RG_R1, p_i+1, fs);
-                        else 
+                        else
                             dnext = drag->getDraggerFor (item, POINT_RG_MID1, p_i+1, fs);
-                    } 
-                    if ((type == POINT_RG_MID2) || 
+                    }
+                    if ((type == POINT_RG_MID2) ||
                         (type == POINT_RG_CENTER && dnext && !dnext->isSelected())) {
                         if (next_stop == last_stop)
                             dnext = drag->getDraggerFor (item, POINT_RG_R2, p_i+1, fs);
-                        else 
+                        else
                             dnext = drag->getDraggerFor (item, POINT_RG_MID2, p_i+1, fs);
                     }
                 }
@@ -354,7 +358,7 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
     if (g_slist_length(these_stops) == 0 && drag->numSelected() == 1) {
         // if a single stop is selected, add between that stop and the next one
         GrDragger *dragger = (GrDragger *) drag->selected->data;
-        for (GSList const* j = dragger->draggables; j != NULL; j = j->next) { 
+        for (GSList const* j = dragger->draggables; j != NULL; j = j->next) {
             GrDraggable *d = (GrDraggable *) j->data;
             SPGradient *gradient = sp_item_gradient (d->item, d->fill_or_stroke);
             SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
@@ -428,10 +432,10 @@ sp_gradient_simplify(SPGradientContext *rc, double tolerance)
                 guint32 const c0 = sp_stop_get_rgba32(stop0);
                 guint32 const c2 = sp_stop_get_rgba32(stop2);
                 guint32 const c1r = sp_stop_get_rgba32(stop1);
-                guint32 c1 = average_color (c0, c2, 
+                guint32 c1 = average_color (c0, c2,
                        (stop1->offset - stop0->offset) / (stop2->offset - stop0->offset));
 
-                double diff = 
+                double diff =
                     sqr(SP_RGBA32_R_F(c1) - SP_RGBA32_R_F(c1r)) +
                     sqr(SP_RGBA32_G_F(c1) - SP_RGBA32_G_F(c1r)) +
                     sqr(SP_RGBA32_B_F(c1) - SP_RGBA32_B_F(c1r)) +
@@ -630,7 +634,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             } else {
                 dragging = false;
 
-                // unless clicked with Ctrl (to enable Ctrl+doubleclick).  
+                // unless clicked with Ctrl (to enable Ctrl+doubleclick).
                 if (event->button.state & GDK_CONTROL_MASK) {
                     ret = TRUE;
                     break;
@@ -667,7 +671,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 event_context->item_to_select = NULL;
                 ret = TRUE;
             }
-            Inkscape::Rubberband::get(desktop)->stop(); 
+            Inkscape::Rubberband::get(desktop)->stop();
         }
         break;
     case GDK_KEY_PRESS:

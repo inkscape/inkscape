@@ -366,6 +366,8 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     	}
     }
 
+	sp_canvas_set_snap_delay_active(_desktop->canvas, true);
+
     // The lines below are useful for debugging any snapping issues, as they'll spit out all points that are considered for snapping
 
     /*std::cout << "Number of snap points:  " << _snap_points.size() << std::endl;
@@ -431,6 +433,8 @@ void Inkscape::SelTrans::ungrab()
     g_return_if_fail(_grabbed);
     _grabbed = false;
     _show_handles = true;
+
+    sp_canvas_set_snap_delay_active(_desktop->canvas, false);
 
     Inkscape::Selection *selection = sp_desktop_selection(_desktop);
     _updateVolatileState();

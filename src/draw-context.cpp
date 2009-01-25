@@ -697,7 +697,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
             item->updateRepr();
         }
 
-        sp_document_done(doc, SP_IS_PEN_CONTEXT(dc)? SP_VERB_CONTEXT_PEN : SP_VERB_CONTEXT_PENCIL, 
+        sp_document_done(doc, SP_IS_PEN_CONTEXT(dc)? SP_VERB_CONTEXT_PEN : SP_VERB_CONTEXT_PENCIL,
                          _("Draw path"));
 
         // When quickly drawing several subpaths with Shift, the next subpath may be finished and
@@ -834,7 +834,7 @@ void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char cons
     /* put the circle where the mouse click occurred and set the diameter to the
        current stroke width, multiplied by the amount specified in the preferences */
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    
+
     Geom::Matrix const i2d (sp_item_i2d_affine (item));
     Geom::Point pp = pt * i2d;
     double rad = 0.5 * prefs->getDouble(tool_path + "/dot-size", 3.0);

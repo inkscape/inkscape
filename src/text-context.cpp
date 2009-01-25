@@ -353,6 +353,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                         sp_text_context_update_cursor(tc);
                         sp_text_context_update_text_selection(tc);
                         tc->dragging = 1;
+                        sp_canvas_set_snap_delay_active(desktop->canvas, true);
                     }
                     ret = TRUE;
                 }
@@ -369,6 +370,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                     sp_text_context_update_cursor(tc);
                     sp_text_context_update_text_selection(tc);
                     tc->dragging = 2;
+                    sp_canvas_set_snap_delay_active(desktop->canvas, true);
                     ret = TRUE;
                 }
             }
@@ -380,12 +382,14 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                 sp_text_context_update_cursor(tc);
                 sp_text_context_update_text_selection(tc);
                 tc->dragging = 3;
+                sp_canvas_set_snap_delay_active(desktop->canvas, true);
                 ret = TRUE;
             }
             break;
         case GDK_BUTTON_RELEASE:
             if (event->button.button == 1 && tc->dragging && !event_context->space_panning) {
                 tc->dragging = 0;
+                sp_canvas_set_snap_delay_active(desktop->canvas, false);
                 ret = TRUE;
             }
             break;
@@ -1011,7 +1015,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                                         sp_document_maybe_done(sp_desktop_document(desktop), "kern:left", SP_VERB_CONTEXT_TEXT,
                                                                _("Kern to the left"));
                                     } else {
-                                        if (MOD__CTRL) 
+                                        if (MOD__CTRL)
                                             tc->text_sel_end.cursorLeftWithControl();
                                         else
                                             tc->text_sel_end.cursorLeft();
@@ -1314,7 +1318,7 @@ sp_text_paste_inline(SPEventContext *ec)
 
         Glib::RefPtr<Gtk::Clipboard> refClipboard = Gtk::Clipboard::get();
         Glib::ustring const clip_text = refClipboard->wait_for_text();
-        
+
         if (!clip_text.empty()) {
         	// Fix for 244940
         	// The XML standard defines the following as valid characters
@@ -1342,7 +1346,7 @@ sp_text_paste_inline(SPEventContext *ec)
         	        itr = text.erase(itr);
         	    }
         	}
-        	
+
             if (!tc->text) { // create text if none (i.e. if nascent_object)
                 sp_text_context_setup_text(tc);
                 tc->nascent_object = 0; // we don't need it anymore, having created a real <text>
@@ -1430,7 +1434,7 @@ sp_text_context_selection_changed(Inkscape::Selection *selection, SPTextContext 
     SPEventContext *ec = SP_EVENT_CONTEXT(tc);
 
     ec->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem(); 
+    SPItem *item = selection->singleItem();
     if (item && SP_IS_FLOWTEXT (item) && SP_FLOWTEXT(item)->has_internal_frame()) {
         ec->shape_editor->set_item(item, SH_KNOTHOLDER);
     }

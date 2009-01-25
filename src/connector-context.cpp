@@ -291,6 +291,8 @@ sp_connector_context_setup(SPEventContext *ec)
     // Make sure we see all enter events for canvas items,
     // even if a mouse button is depressed.
     dt->canvas->gen_all_enter_events = true;
+
+    sp_canvas_set_snap_delay_active(dt->canvas, true);
 }
 
 
@@ -314,6 +316,8 @@ sp_connector_context_finish(SPEventContext *ec)
     // Restore the default event generating behaviour.
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(ec);
     desktop->canvas->gen_all_enter_events = false;
+
+    sp_canvas_set_snap_delay_active(desktop->canvas, false);
 }
 
 
@@ -525,7 +529,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
 
                     // Test whether we clicked on a connection point
                     cc->sid = conn_pt_handle_test(cc, p);
-                    
+
                     Geom::Point pt2g = to_2geom(p);
 
                     if (!cc->sid) {
@@ -568,12 +572,12 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
         }
     } else if (bevent.button == 3) {
         if (cc->state == SP_CONNECTOR_CONTEXT_REROUTING) {
-            // A context menu is going to be triggered here, 
+            // A context menu is going to be triggered here,
             // so end the rerouting operation.
             cc_connector_rerouting_finish(cc, &p);
-                
+
             cc->state = SP_CONNECTOR_CONTEXT_IDLE;
-            
+
             // Don't set ret to TRUE, so we drop through to the
             // parent handler which will open the context menu.
         }
@@ -705,7 +709,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
             case SP_CONNECTOR_CONTEXT_REROUTING:
             {
                 cc_connector_rerouting_finish(cc, &p);
-                
+
                 sp_document_ensure_up_to_date(doc);
                 cc->state = SP_CONNECTOR_CONTEXT_IDLE;
                 return TRUE;
@@ -739,14 +743,14 @@ connector_handle_key_press(SPConnectorContext *const cc, guint const keyval)
             break;
         case GDK_Escape:
             if (cc->state == SP_CONNECTOR_CONTEXT_REROUTING) {
-                
+
                 SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
                 SPDocument *doc = sp_desktop_document(desktop);
 
                 cc_connector_rerouting_finish(cc, NULL);
-                
+
                 sp_document_undo(doc);
-                
+
                 cc->state = SP_CONNECTOR_CONTEXT_IDLE;
                 desktop->messageStack()->flash( Inkscape::NORMAL_MESSAGE,
                         _("Connector endpoint drag cancelled."));
@@ -771,7 +775,7 @@ cc_connector_rerouting_finish(SPConnectorContext *const cc, Geom::Point *const p
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
     SPDocument *doc = sp_desktop_document(desktop);
-    
+
     // Clear the temporary path:
     cc->red_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), NULL);
@@ -796,7 +800,7 @@ cc_connector_rerouting_finish(SPConnectorContext *const cc, Geom::Point *const p
     cc->clickeditem->setHidden(false);
     sp_conn_adjust_path(SP_PATH(cc->clickeditem));
     cc->clickeditem->updateRepr();
-    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, 
+    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR,
                      _("Reroute connector"));
     cc_set_active_conn(cc, cc->clickeditem);
 }
@@ -1005,7 +1009,7 @@ static gboolean
 cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
 {
     g_assert (knot != NULL);
-    
+
     g_object_ref(knot);
 
     SPConnectorContext *cc = SP_CONNECTOR_CONTEXT(
@@ -1016,7 +1020,7 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
     switch (event->type) {
         case GDK_ENTER_NOTIFY:
             sp_knot_set_flag(knot, SP_KNOT_MOUSEOVER, TRUE);
-            
+
             cc->active_handle = knot;
 
             if (knot->tip)
@@ -1024,24 +1028,24 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
                 knot->desktop->event_context->defaultMessageContext()->set(
                         Inkscape::NORMAL_MESSAGE, knot->tip);
             }
-            
+
             consumed = TRUE;
             break;
         case GDK_LEAVE_NOTIFY:
             sp_knot_set_flag(knot, SP_KNOT_MOUSEOVER, FALSE);
 
             cc->active_handle = NULL;
-            
+
             if (knot->tip) {
                 knot->desktop->event_context->defaultMessageContext()->clear();
             }
-            
+
             consumed = TRUE;
             break;
         default:
             break;
     }
-    
+
     g_object_unref(knot);
 
     return consumed;
@@ -1127,7 +1131,7 @@ static void cc_set_active_shape(SPConnectorContext *cc, SPItem *item)
 
     // Set center connection point.
     if ( cc->connpthandle == NULL ) {
-        SPKnot *knot = sp_knot_new(cc->desktop, 
+        SPKnot *knot = sp_knot_new(cc->desktop,
                 _("<b>Connection point</b>: click or drag to create a new connector"));
 
         knot->setShape(SP_KNOT_SHAPE_SQUARE);
@@ -1200,7 +1204,7 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
 
         // Create the handle if it doesn't exist
         if ( cc->endpt_handle[i] == NULL ) {
-            SPKnot *knot = sp_knot_new(cc->desktop, 
+            SPKnot *knot = sp_knot_new(cc->desktop,
                     _("<b>Connector endpoint</b>: drag to reroute or connect to new shapes"));
 
             knot->setShape(SP_KNOT_SHAPE_SQUARE);

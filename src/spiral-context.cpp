@@ -149,7 +149,7 @@ sp_spiral_context_selection_changed(Inkscape::Selection *selection, gpointer dat
     SPEventContext *ec = SP_EVENT_CONTEXT(sc);
 
     ec->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem(); 
+    SPItem *item = selection->singleItem();
     ec->shape_editor->set_item(item, SH_KNOTHOLDER);
 }
 
@@ -221,6 +221,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if (event->button.button == 1 && !event_context->space_panning) {
 
                 dragging = TRUE;
+                sp_canvas_set_snap_delay_active(desktop->canvas, true);
                 sc->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
 
                 SnapManager &m = desktop->namedview->snap_manager;
@@ -254,7 +255,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
                 Geom::Point motion_dt(event_context->desktop->w2d(motion_w));
-                
+
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop, true, sc->item);
                 m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, motion_dt);
@@ -269,6 +270,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             event_context->xp = event_context->yp = 0;
             if (event->button.button == 1 && !event_context->space_panning) {
                 dragging = FALSE;
+                sp_canvas_set_snap_delay_active(desktop->canvas, false);
                 if (!event_context->within_tolerance) {
                     // we've been dragging, finish the spiral
                     sp_spiral_finish(sc);
@@ -328,6 +330,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                               event->button.time);
                         dragging = false;
+                        sp_canvas_set_snap_delay_active(desktop->canvas, false);
                         if (!event_context->within_tolerance) {
                             // we've been dragging, finish the rect
                             sp_spiral_finish(sc);
@@ -404,8 +407,8 @@ sp_spiral_drag(SPSpiralContext *sc, Geom::Point p, guint state)
     m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
 
     Geom::Point const p0 = to_2geom(sp_desktop_dt2doc_xy_point(desktop, sc->center));
-    Geom::Point const p1 = to_2geom(sp_desktop_dt2doc_xy_point(desktop, from_2geom(pt2g)));        
-    
+    Geom::Point const p1 = to_2geom(sp_desktop_dt2doc_xy_point(desktop, from_2geom(pt2g)));
+
     SPSpiral *spiral = SP_SPIRAL(sc->item);
 
     Geom::Point const delta = p1 - p0;
@@ -447,7 +450,7 @@ sp_spiral_finish(SPSpiralContext *sc)
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 
         sp_desktop_selection(desktop)->set(sc->item);
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL, 
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL,
                          _("Create spiral"));
 
         sc->item = NULL;

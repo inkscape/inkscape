@@ -142,7 +142,7 @@ void sp_arc_context_selection_changed(Inkscape::Selection * selection, gpointer 
     SPEventContext *ec = SP_EVENT_CONTEXT(ac);
 
     ec->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem(); 
+    SPItem *item = selection->singleItem();
     ec->shape_editor->set_item(item, SH_KNOTHOLDER);
 }
 
@@ -221,8 +221,9 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
             if (event->button.button == 1 && !event_context->space_panning) {
 
                 dragging = true;
+                sp_canvas_set_snap_delay_active(desktop->canvas, true);
                 ac->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
-                
+
                 /* Snap center */
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
@@ -252,7 +253,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
 
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
                 Geom::Point motion_dt(desktop->w2d(motion_w));
-                
+
                 sp_arc_drag(ac, motion_dt, event->motion.state);
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
@@ -264,6 +265,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
             event_context->xp = event_context->yp = 0;
             if (event->button.button == 1 && !event_context->space_panning) {
                 dragging = false;
+                sp_canvas_set_snap_delay_active(desktop->canvas, false);
                 if (!event_context->within_tolerance) {
                     // we've been dragging, finish the arc
                     sp_arc_finish(ac);
@@ -327,6 +329,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                               event->button.time);
                         dragging = false;
+                        sp_canvas_set_snap_delay_active(desktop->canvas, false);
                         if (!event_context->within_tolerance) {
                             // we've been dragging, finish the rect
                             sp_arc_finish(ac);
@@ -462,9 +465,9 @@ static void sp_arc_finish(SPArcContext *ac)
         SP_OBJECT(ac->item)->updateRepr();
 
         sp_canvas_end_forced_full_redraws(desktop->canvas);
-        
+
         sp_desktop_selection(desktop)->set(ac->item);
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC, 
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC,
                          _("Create ellipse"));
 
         ac->item = NULL;

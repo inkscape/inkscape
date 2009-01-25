@@ -148,7 +148,7 @@ sp_pen_context_init(SPPenContext *pc)
     pc->c1 = NULL;
     pc->cl0 = NULL;
     pc->cl1 = NULL;
-    
+
     pc->events_disabled = 0;
 
     pc->num_clicks = 0;
@@ -209,6 +209,8 @@ sp_pen_context_setup(SPEventContext *ec)
 
     pc = SP_PEN_CONTEXT(ec);
 
+    sp_canvas_set_snap_delay_active(pc->desktop->canvas, true);
+
     if (((SPEventContextClass *) pen_parent_class)->setup) {
         ((SPEventContextClass *) pen_parent_class)->setup(ec);
     }
@@ -241,7 +243,7 @@ sp_pen_context_setup(SPEventContext *ec)
 }
 
 static void
-pen_cancel (SPPenContext *const pc) 
+pen_cancel (SPPenContext *const pc)
 {
     pc->num_clicks = 0;
     pc->state = SP_PEN_CONTEXT_STOP;
@@ -263,6 +265,8 @@ static void
 sp_pen_context_finish(SPEventContext *ec)
 {
     SPPenContext *pc = SP_PEN_CONTEXT(ec);
+
+    sp_canvas_set_snap_delay_active(pc->desktop->canvas, false);
 
     if (pc->npoints != 0) {
         pen_cancel (pc);
@@ -332,7 +336,7 @@ spdc_endpoint_snap_handle(SPPenContext const *const pc, Geom::Point &p, guint co
     }
 }
 
-static gint 
+static gint
 sp_pen_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
 {
     SPPenContext *const pc = SP_PEN_CONTEXT(ec);
@@ -417,7 +421,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
     SPDrawContext * const dc = SP_DRAW_CONTEXT(pc);
     SPDesktop * const desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
     Geom::Point const event_w(bevent.x, bevent.y);
-    Geom::Point const event_dt(desktop->w2d(event_w));
+    Geom::Point event_dt(desktop->w2d(event_w));
     SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
 
     gint ret = FALSE;
@@ -453,7 +457,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                     case SP_PEN_CONTEXT_CLOSE:
                         break;
                     case SP_PEN_CONTEXT_STOP:
-                        /* This is allowed, if we just cancelled curve */
+                        /* This is allowed, if we just canceled curve */
                         pc->state = SP_PEN_CONTEXT_POINT;
                         break;
                     default:
@@ -463,13 +467,20 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
             case SP_PEN_CONTEXT_MODE_DRAG:
                 switch (pc->state) {
                     case SP_PEN_CONTEXT_STOP:
-                        /* This is allowed, if we just cancelled curve */
+                        /* This is allowed, if we just canceled curve */
                     case SP_PEN_CONTEXT_POINT:
                         if (pc->npoints == 0) {
 
+                        	Geom::Point p;
                             if (bevent.state & GDK_CONTROL_MASK) {
-                                spdc_create_single_dot(event_context, event_dt, "/tools/freehand/pen", bevent.state);
-                                ret = TRUE;
+                            	p = event_dt;
+                            	if (!(bevent.state & GDK_SHIFT_MASK)) {
+                            		SnapManager &m = desktop->namedview->snap_manager;
+                            		m.setup(desktop);
+									m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+                            	}
+								spdc_create_single_dot(event_context, p, "/tools/freehand/pen", bevent.state);
+								ret = TRUE;
                                 break;
                             }
 
@@ -478,7 +489,6 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
 
                             /* Set start anchor */
                             pc->sa = anchor;
-                            Geom::Point p;
                             if (anchor && !sp_pen_context_has_waiting_LPE(pc)) {
                                 /* Adjust point to anchor if needed; if we have a waiting LPE, we need
                                    a fresh path to be created so don't continue an existing one */
@@ -591,7 +601,7 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
         // allow scrolling
         return FALSE;
     }
-   
+
     if (pc->events_disabled) {
         // skip motion events if pen events are disabled
         return FALSE;
@@ -765,7 +775,7 @@ pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
                         ret = TRUE;
                         break;
                     case SP_PEN_CONTEXT_STOP:
-                        /* This is allowed, if we just cancelled curve */
+                        /* This is allowed, if we just canceled curve */
                         pc->state = SP_PEN_CONTEXT_POINT;
                         ret = TRUE;
                         break;
@@ -964,7 +974,8 @@ pen_lastpoint_toline (SPPenContext *const pc)
 static gint
 pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
 {
-    gint ret = FALSE;
+
+	gint ret = FALSE;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000); // in px
 
@@ -1201,7 +1212,7 @@ spdc_pen_set_initial_point(SPPenContext *const pc, Geom::Point const p)
  * Show the status message for the current line/curve segment.
  * This type of message always shows angle/distance as the last
  * two parameters ("angle %3.2f&#176;, distance %s").
- */ 
+ */
 static void
 spdc_pen_set_angle_distance_status_message(SPPenContext *const pc, Geom::Point const p, int pc_point_to_compare, gchar const *message)
 {
@@ -1343,7 +1354,7 @@ spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
     pc->num_clicks = 0;
 
     pen_disable_events(pc);
-    
+
     SPDesktop *const desktop = pc->desktop;
     pc->_message_context->clear();
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Drawing finished"));
@@ -1379,7 +1390,7 @@ pen_disable_events(SPPenContext *const pc) {
 static void
 pen_enable_events(SPPenContext *const pc) {
   g_return_if_fail(pc->events_disabled != 0);
-  
+
   pc->events_disabled--;
 }
 

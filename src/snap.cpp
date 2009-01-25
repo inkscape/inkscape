@@ -13,7 +13,7 @@
  *
  * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
  * Copyrigth (C) 2004      Nathan Hurst
- * Copyright (C) 1999-2008 Authors
+ * Copyright (C) 1999-2009 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -162,7 +162,12 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapPreferences::PointTyp
                                              bool first_point,
                                              Geom::OptRect const &bbox_to_snap) const
 {
-    if (!someSnapperMightSnap()) {
+	if (_desktop->canvas->context_snap_delay_active == false) {
+		g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
+		// When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
+	}
+
+	if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
 
@@ -286,7 +291,12 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
                                                     bool first_point,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
-    if (!someSnapperMightSnap()) {
+	if (_desktop->canvas->context_snap_delay_active == false) {
+		g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
+		// When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
+	}
+
+	if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
 
@@ -316,6 +326,11 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
 void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) const
 {
     // This method is used to snap a guide to nodes, while dragging the guide around
+
+	if (_desktop->canvas->context_snap_delay_active == false) {
+		g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
+		// When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
+	}
 
     if ( !(object.GuidesMightSnap() && snapprefs.getSnapEnabledGlobally()) || snapprefs.getSnapPostponedGlobally() ) {
         return;

@@ -156,7 +156,7 @@ sp_star_context_selection_changed (Inkscape::Selection * selection, gpointer dat
     SPEventContext *ec = SP_EVENT_CONTEXT (sc);
 
     ec->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem(); 
+    SPItem *item = selection->singleItem();
     ec->shape_editor->set_item(item, SH_KNOTHOLDER);
 }
 
@@ -202,7 +202,7 @@ sp_star_context_set (SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     SPStarContext *sc = SP_STAR_CONTEXT (ec);
     Glib::ustring path = val->getEntryName();
-    
+
     if (path == "magnitude") {
         sc->magnitude = CLAMP (val->getInt(5), 3, 1024);
     } else if (path == "proportion") {
@@ -235,9 +235,10 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
         if (event->button.button == 1 && !event_context->space_panning) {
 
             dragging = TRUE;
+            sp_canvas_set_snap_delay_active(desktop->canvas, true);
 
             sc->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
-            
+
             /* Snap center */
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, true);
@@ -269,7 +270,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
 
             Geom::Point const motion_w(event->motion.x, event->motion.y);
             Geom::Point motion_dt(desktop->w2d(motion_w));
-            
+
             sp_star_drag (sc, motion_dt, event->motion.state);
 
             gobble_motion_events(GDK_BUTTON1_MASK);
@@ -281,6 +282,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
         event_context->xp = event_context->yp = 0;
         if (event->button.button == 1 && !event_context->space_panning) {
             dragging = FALSE;
+            sp_canvas_set_snap_delay_active(desktop->canvas, false);
             if (!event_context->within_tolerance) {
                 // we've been dragging, finish the star
                 sp_star_finish (sc);
@@ -340,6 +342,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
                 dragging = false;
+                sp_canvas_set_snap_delay_active(desktop->canvas, false);
                 if (!event_context->within_tolerance) {
                     // we've been dragging, finish the rect
                     sp_star_finish(sc);
@@ -413,11 +416,11 @@ static void sp_star_drag(SPStarContext *sc, Geom::Point p, guint state)
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, sc->item);
     Geom::Point pt2g = to_2geom(p);
-    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);    
-    
+    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
+
     Geom::Point const p0 = to_2geom(sp_desktop_dt2doc_xy_point(desktop, sc->center));
     Geom::Point const p1 = to_2geom(sp_desktop_dt2doc_xy_point(desktop, from_2geom(pt2g)));
-    
+
     SPStar *star = SP_STAR(sc->item);
 
     double const sides = (gdouble) sc->magnitude;
@@ -460,7 +463,7 @@ sp_star_finish (SPStarContext * sc)
         sp_canvas_end_forced_full_redraws(desktop->canvas);
 
         sp_desktop_selection(desktop)->set(sc->item);
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR, 
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
                          _("Create star"));
 
         sc->item = NULL;

@@ -144,11 +144,11 @@ guint32 sp_dropper_context_get_color(SPEventContext *ec)
 {
     SPDropperContext *dc = SP_DROPPER_CONTEXT(ec);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    
+
     int pick = prefs->getInt("/tools/dropper/pick",
                                        SP_DROPPER_PICK_VISIBLE);
     bool setalpha = prefs->getBool("/tools/dropper/setalpha", true);
-    
+
     return SP_RGBA32_F_COMPOSE(dc->R, dc->G, dc->B,
         (pick == SP_DROPPER_PICK_ACTUAL && setalpha) ? dc->alpha : 1.0);
 }
@@ -324,7 +324,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
 
 
                 if (!(sp_desktop_selection(desktop)->isEmpty())) {
-                    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_DROPPER, 
+                    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_DROPPER,
                                      _("Set picked color"));
                 }
 
