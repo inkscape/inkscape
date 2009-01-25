@@ -142,13 +142,15 @@ sp_line_update (SPObject *object, SPCtx *ctx, guint flags)
 		SPLine *line = SP_LINE (object);
 
  		SPStyle const *style = object->style;
- 		double const d = 1.0 / NR::expansion(((SPItemCtx const *) ctx)->i2vp);
+        SPItemCtx const *ictx = (SPItemCtx const *) ctx;
+        double const w = (ictx->vp.x1 - ictx->vp.x0);
+        double const h = (ictx->vp.y1 - ictx->vp.y0);
 		double const em = style->font_size.computed;
 		double const ex = em * 0.5;  // fixme: get from pango or libnrtype.
- 		line->x1.update(em, ex, d);
- 		line->x2.update(em, ex, d);
- 		line->y1.update(em, ex, d);
- 		line->y2.update(em, ex, d);
+ 		line->x1.update(em, ex, w);
+ 		line->x2.update(em, ex, w);
+ 		line->y1.update(em, ex, h);
+ 		line->y2.update(em, ex, h);
 
 		sp_shape_set_shape ((SPShape *) object);
 	}

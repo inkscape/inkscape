@@ -174,9 +174,8 @@ sp_rect_update(SPObject *object, SPCtx *ctx, guint flags)
         SPRect *rect = (SPRect *) object;
         SPStyle *style = object->style;
         SPItemCtx const *ictx = (SPItemCtx const *) ctx;
-        double const d = ictx->i2vp.descrim();
-        double const w = (ictx->vp.x1 - ictx->vp.x0) / d;
-        double const h = (ictx->vp.y1 - ictx->vp.y0) / d;
+        double const w = (ictx->vp.x1 - ictx->vp.x0);
+        double const h = (ictx->vp.y1 - ictx->vp.y0);
         double const em = style->font_size.computed;
         double const ex = 0.5 * em;  // fixme: get x height from pango or libnrtype.
         rect->x.update(em, ex, w);
