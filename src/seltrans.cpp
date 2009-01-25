@@ -359,10 +359,12 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 
     	// Now either _bbox_points or _snap_points has a single element, the other one has zero..... or both have zero elements
     	g_assert((_bbox_points.size() + _snap_points.size()) < 2);
-    	if (_bbox_points.size() == 1) {
-    		_desktop->snapindicator->set_new_snapsource(_bbox_points.at(0));
-    	} else if (_snap_points.size() == 1){
-    		_desktop->snapindicator->set_new_snapsource(_snap_points.at(0));
+    	if (m.snapprefs.getSnapEnabledGlobally()) {
+			if (_bbox_points.size() == 1) {
+				_desktop->snapindicator->set_new_snapsource(_bbox_points.at(0));
+			} else if (_snap_points.size() == 1){
+				_desktop->snapindicator->set_new_snapsource(_snap_points.at(0));
+			}
     	}
     }
 

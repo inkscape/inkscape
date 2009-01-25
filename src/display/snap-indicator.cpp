@@ -40,15 +40,15 @@ void
 SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
 {
 	remove_snaptarget();
-    
+
     g_assert(_desktop != NULL);
-    
+
     /* Commented out for now, because this might hide any snapping bug!
     if (!p.getSnapped()) {
        return; // If we haven't snapped, then it is of no use to draw a snapindicator
     }
     */
-    
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool value = prefs->getBool("/options/snapindicator/value", true);
 
@@ -110,12 +110,12 @@ void
 SnapIndicator::set_new_snapsource(Geom::Point const p)
 {
 	remove_snapsource();
-    
+
     g_assert(_desktop != NULL);
-    
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool value = prefs->getBool("/options/snapindicator/value", true);
-    	
+
     if (value) {
         SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (_desktop),
                                                         SP_TYPE_CTRL,
@@ -124,9 +124,9 @@ SnapIndicator::set_new_snapsource(Geom::Point const p)
                                                         "stroked", TRUE,
                                                         "stroke_color", 0xf000f0ff,
                                                         "mode", SP_KNOT_MODE_XOR,
-                                                        "shape", SP_KNOT_SHAPE_DIAMOND,
-                                                        NULL );        
-        
+                                                        "shape", SP_KNOT_SHAPE_CIRCLE,
+                                                        NULL );
+
         SP_CTRL(canvasitem)->moveto(p);
         _snapsource = _desktop->add_temporary_canvasitem(canvasitem, 1000);
     }

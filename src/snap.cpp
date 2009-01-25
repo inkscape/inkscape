@@ -939,7 +939,7 @@ void SnapManager::_displaySnapsource(Inkscape::SnapPreferences::PointType point_
     if (prefs->getBool("/options/snapclosestonly/value")) {
         bool p_is_a_node = point_type & Inkscape::SnapPreferences::SNAPPOINT_NODE;
         bool p_is_a_bbox = point_type & Inkscape::SnapPreferences::SNAPPOINT_BBOX;
-        if ((p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox())) {
+        if (snapprefs.getSnapEnabledGlobally() && ((p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox()))) {
             _desktop->snapindicator->set_new_snapsource(p);
         } else {
             _desktop->snapindicator->remove_snapsource();
