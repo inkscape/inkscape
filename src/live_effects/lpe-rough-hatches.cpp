@@ -141,22 +141,6 @@ public:
                 (*this)[next.first][next.second].prev_on_curve = std::pair<unsigned,unsigned>(i,j);
             }
         }
-#if 0
-        std::cout<<"\n";
-        for (unsigned i=0; i<temp.size()-1; i++){
-            std::cout<<temp[i].level<<","<<temp[i].idx<<" -> ";
-        }
-        std::cout<<"\n";
-        for (unsigned i=0; i<size(); i++){
-            for (unsigned j=0; j<(*this)[i].size(); j++){
-                std::cout<<"level:"<<i<<", idx:"<<j<<" -  ";
-                std::cout<<"next:"<<(*this)[i][j].next_on_curve.first<<",";
-                std::cout<<(*this)[i][j].next_on_curve.second<<" - ";
-                std::cout<<"prev:"<<(*this)[i][j].prev_on_curve.first<<",";
-                std::cout<<(*this)[i][j].prev_on_curve.second<<"\n";
-            }
-        }
-#endif
     }
 
     void findFirstUnused(unsigned &level, unsigned &idx){
@@ -267,32 +251,37 @@ Piecewise<D2<SBasis> > bend(Piecewise<D2<SBasis> > const &f, Piecewise<SBasis> b
 //--------------------------------------------------------
 LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    dist_rdm(_("Dist randomness"), _("Variation of dist between hatches, in %."), "dist_rdm", &wr, this, 75),
+    direction(_("Hatches width and dir"), _("Defines hatches frequency and direction"), "direction", &wr, this, Geom::Point(50,0)),
+    dist_rdm(_("Frequency randomness"), _("Variation of dist between hatches, in %."), "dist_rdm", &wr, this, 75),
     growth(_("Growth"), _("Growth of distance between hatches."), "growth", &wr, this, 0.),
-    scale_tf(_("Start smothness (front side)"), _("MISSING DESCRIPTION"), "scale_tf", &wr, this, 1.),
-    scale_tb(_("Start smothness (back side)"), _("MISSING DESCRIPTION"), "scale_tb", &wr, this, 1.),
-    scale_bf(_("End smothness (front side)"), _("MISSING DESCRIPTION"), "scale_bf", &wr, this, 1.),
-    scale_bb(_("End smothness (back side)"), _("MISSING DESCRIPTION"), "scale_bb", &wr, this, 1.),
-    top_edge_variation(_("Start edge variance"), _("The amount of random jitter to move the hatches start"), "top_edge_variation", &wr, this, 0),
-    bot_edge_variation(_("End edge variance"), _("The amount of random jitter to move the hatches end"), "bot_edge_variation", &wr, this, 0),
-    top_tgt_variation(_("Start tangential variance"), _("The amount of random jitter to move the hatches start along the boundary"), "top_tgt_variation", &wr, this, 0),
-    bot_tgt_variation(_("End tangential variance"), _("The amount of random jitter to move the hatches end along the boundary"), "bot_tgt_variation", &wr, this, 0),
-    top_smth_variation(_("Start smoothness variance"), _("Randomness of the smoothness of the U turn at hatches start"), "top_smth_variation", &wr, this, 0),
-    bot_smth_variation(_("End spacing variance"), _("Randomness of the smoothness of the U turn at hatches end"), "bot_smth_variation", &wr, this, 0),
-    fat_output(_("Generate thick/thin path"), _("Simulate a stroke of varrying width"), "fat_output", &wr, this, true),
+//FIXME: top/bottom names are inverted in the UI/svg and in the code!!
+    scale_tf(_("Half turns smoothness: 1st side, in"), _("Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, 1=default"), "scale_bf", &wr, this, 1.),
+    scale_tb(_("1st side, out"), _("Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, 1=default"), "scale_bb", &wr, this, 1.),
+    scale_bf(_("2nd side, in "), _("Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, 1=default"), "scale_tf", &wr, this, 1.),
+    scale_bb(_("2nd side, out"), _("Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, 1=default"), "scale_tb", &wr, this, 1.),
+    top_smth_variation(_("variance: 1st side"), _("Randomness of 'bottom' halfturns smoothness"), "bottom_smth_variation", &wr, this, 0),
+    bot_smth_variation(_("2nd side"), _("Randomness of 'top' halfturns smoothness"), "bottom_smth_variation", &wr, this, 0),
+//
+    top_edge_variation(_("Magnitude jitter: 1st side"), _("Randomly moves 'bottom' halfsturns to produce magnitude variations."), "bottom_edge_variation", &wr, this, 0),
+    bot_edge_variation(_("2nd side"), _("Randomly moves 'top' halfsturns to produce magnitude variations."), "top_edge_variation", &wr, this, 0),
+    top_tgt_variation(_("Parallelism jitter: 1st side"), _("Add direction randomness by moving 'bottom' halfsturns tangentially to the boundary."), "bottom_tgt_variation", &wr, this, 0),
+    bot_tgt_variation(_("2nd side"), _("Add direction randomness by randomly moving 'top' halfsturns tangentially to the boundary."), "top_tgt_variation", &wr, this, 0),
+//
     do_bend(_("Bend hatches"), _("Add a global bend to the hatches (slower)"), "do_bend", &wr, this, true),
-    stroke_width_top(_("Stroke width (start side)"), _("Width at hatches 'start'"), "stroke_width_top", &wr, this, 1.),
-    stroke_width_bot(_("Stroke width (end side)"), _("Width at hatches 'end'"), "stroke_width_bot", &wr, this, 1.),
-    front_thickness(_("Front thickness (%)"), _("MISSING DESCRIPTION"), "front_thickness", &wr, this, 1.),
-    back_thickness(_("Back thickness (%)"), _("MISSING DESCRIPTION"), "back_thickness", &wr, this, .25),
-    bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
-    direction(_("Hatches width and dir"), _("Defines hatches frequency and direction"), "direction", &wr, this, Geom::Point(50,0))
+    //bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
+    bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, Geom::Point(-5,0)),
+//
+    fat_output(_("Generate thick/thin path"), _("Simulate a stroke of varrying width"), "fat_output", &wr, this, true),
+    stroke_width_top(_("Thikness: at 1st side"), _("Width at 'bottom' half turns"), "stroke_width_bottom", &wr, this, 1.),
+    stroke_width_bot(_("at 2nd side"), _("Width at 'top' halfturns"), "stroke_width_bottom", &wr, this, 1.),
+    front_thickness(_("from 2nd to 1st side"), _("Width of paths from 'top' to 'bottom' halfturns"), "front_thickness", &wr, this, 1.),
+    back_thickness(_("from 1st to 2nd side"), _("Width of paths from 'top' to 'bottom' halfturns"), "back_thickness", &wr, this, .25)
 {
     registerParameter( dynamic_cast<Parameter *>(&direction) );
-    registerParameter( dynamic_cast<Parameter *>(&do_bend) );
-    registerParameter( dynamic_cast<Parameter *>(&bender) );
     registerParameter( dynamic_cast<Parameter *>(&dist_rdm) );
     registerParameter( dynamic_cast<Parameter *>(&growth) );
+    registerParameter( dynamic_cast<Parameter *>(&do_bend) );
+    registerParameter( dynamic_cast<Parameter *>(&bender) );
     registerParameter( dynamic_cast<Parameter *>(&top_edge_variation) );
     registerParameter( dynamic_cast<Parameter *>(&bot_edge_variation) );
     registerParameter( dynamic_cast<Parameter *>(&top_tgt_variation) );
@@ -332,12 +321,15 @@ LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
     Piecewise<D2<SBasis> > result;
     
     Piecewise<D2<SBasis> > transformed_pwd2_in = pwd2_in;
+    Point transformed_org = direction.getOrigin();
     Piecewise<SBasis> tilter;//used to bend the hatches
     Matrix bend_mat;//used to bend the hatches
 
     if (do_bend.get_value()){
-        Point bend_dir = -rot90(unit_vector(direction.getOrigin() - bender));
-        double bend_amount = L2(direction.getOrigin() - bender);
+        //Point bend_dir = -rot90(unit_vector(direction.getOrigin() - bender));
+        //double bend_amount = L2(direction.getOrigin() - bender);
+        Point bend_dir = -rot90(unit_vector(direction.getVector()));
+        double bend_amount = L2(direction.getVector());
         bend_mat = Matrix(-bend_dir[Y], bend_dir[X], bend_dir[X], bend_dir[Y],0,0);
         transformed_pwd2_in = pwd2_in * bend_mat;
         tilter = Piecewise<SBasis>(shift(Linear(bend_amount),1));
@@ -351,9 +343,10 @@ LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
     Point hatches_dir = rot90(unit_vector(direction.getVector()));
     Matrix mat(-hatches_dir[Y], hatches_dir[X], hatches_dir[X], hatches_dir[Y],0,0);
     transformed_pwd2_in = transformed_pwd2_in * mat;
+    transformed_org *= mat;
         
     std::vector<std::vector<Point> > snakePoints;
-    snakePoints = linearSnake(transformed_pwd2_in);
+    snakePoints = linearSnake(transformed_pwd2_in, transformed_org);
     if ( snakePoints.size() > 0 ){
         Piecewise<D2<SBasis> >smthSnake = smoothSnake(snakePoints); 
         smthSnake = smthSnake*mat.inverse();
@@ -371,9 +364,11 @@ LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
 // Generate the levels with random, growth...
 //------------------------------------------------
 std::vector<double>
-LPERoughHatches::generateLevels(Interval const &domain){
+LPERoughHatches::generateLevels(Interval const &domain, double x_org){
     std::vector<double> result;
-    double x = domain.min() + double(hatch_dist)/2.;
+    int n = int((domain.min()-x_org)/hatch_dist);
+    double x = x_org +  n * hatch_dist;
+    //double x = domain.min() + double(hatch_dist)/2.;
     double step = double(hatch_dist);
     double scale = 1+(hatch_dist*growth/domain.extent());
     while (x < domain.max()){
@@ -392,17 +387,17 @@ LPERoughHatches::generateLevels(Interval const &domain){
 // Walk through the intersections to create linear hatches
 //-------------------------------------------------------
 std::vector<std::vector<Point> > 
-LPERoughHatches::linearSnake(Piecewise<D2<SBasis> > const &f){
+LPERoughHatches::linearSnake(Piecewise<D2<SBasis> > const &f, Point const &org){
 
     std::vector<std::vector<Point> > result;
 
     Piecewise<SBasis> x = make_cuts_independent(f)[X];
-    //Rque: derivative is computed twice in the 2 lines below!!
+    //Remark: derivative is computed twice in the 2 lines below!!
     Piecewise<SBasis> dx = derivative(x);
     OptInterval range = bounds_exact(x);
 
     if (not range) return result;
-    std::vector<double> levels = generateLevels(*range);
+    std::vector<double> levels = generateLevels(*range, org[X]);
     std::vector<std::vector<double> > times;
     times = multi_roots(x,levels);
 
@@ -432,9 +427,16 @@ LPERoughHatches::linearSnake(Piecewise<D2<SBasis> > const &f){
     LevelsCrossings lscs(times,f,dx);
     unsigned i,j;
     lscs.findFirstUnused(i,j);
+    
     std::vector<Point> result_component;
+    int n = int((range->min()-org[X])/hatch_dist);
     while ( i < lscs.size() ){ 
         int dir = 0;
+        //switch orientation of first segment according to org position.
+        if (n % 2 == 0){
+            j = lscs[i].size()-1;
+            dir = 2;
+        }
         while ( i < lscs.size() ){
             result_component.push_back(lscs[i][j].pt);
             lscs[i][j].used = true;
@@ -572,9 +574,11 @@ LPERoughHatches::resetDefaults(SPItem * item)
         top_edge_variation.param_set_value( (*bbox)[Y].extent()/10, 0 );
         bot_edge_variation.param_set_value( (*bbox)[Y].extent()/10, 0 );
     }
-    direction.set_and_write_new_values(origin, vector);
-    bender.param_set_and_write_new_value( origin + Geom::Point(5,0) );
-    hatch_dist = Geom::L2(vector)/5;
+    //direction.set_and_write_new_values(origin, vector);
+    //bender.param_set_and_write_new_value( origin + Geom::Point(5,0) );
+    direction.set_and_write_new_values(origin + Geom::Point(0,-5), vector);
+    bender.set_and_write_new_values( origin, Geom::Point(5,0) );
+    hatch_dist = Geom::L2(vector)/2;
 }
 
 

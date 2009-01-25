@@ -13,6 +13,7 @@
 #include "display/curve.h"
 #include "live_effects/lpe-knot.h"
 #include "svg/svg.h"
+#include "style.h"
 
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/sbasis.h>
@@ -354,12 +355,14 @@ CrossingPoints::inherit_signs(CrossingPoints const &other, int default_value)
 LPEKnot::LPEKnot(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     // initialise your parameters here:
-    interruption_width(_("Gap width"), _("The width of the gap in the path where it self-intersects"), "interruption_width", &wr, this, 10),
+    interruption_width(_("Interruption width"), _("Size of hidden region of lower string"), "interruption_width", &wr, this, 3),
+    prop_to_stroke_width(_("unit of stroke width"), _("Consider 'Gap width' as a ratio of stroke width."), "prop_to_stroke_width", &wr, this, true),
     switcher_size(_("Switcher size"), _("Orientation indicator/switcher size"), "switcher_size", &wr, this, 15),
     crossing_points_vector(_("Crossing Signs"), _("Crossings signs"), "crossing_points_vector", &wr, this)
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter( dynamic_cast<Parameter *>(&interruption_width) );
+    registerParameter( dynamic_cast<Parameter *>(&prop_to_stroke_width) );
     registerParameter( dynamic_cast<Parameter *>(&switcher_size) );
     registerParameter( dynamic_cast<Parameter *>(&crossing_points_vector) );
 
@@ -404,7 +407,11 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &input_path)
 {
     using namespace Geom;
     std::vector<Geom::Path> path_out;
+    //double width = interruption_width;
     double width = interruption_width;
+    if ( prop_to_stroke_width.get_value() ) {
+        width *= stroke_width;
+    }
 
     LPEKnotNS::CrossingPoints old_crdata(crossing_points_vector.data());
 
@@ -456,6 +463,16 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &input_path)
         }
     }
     return path_out;
+}
+
+
+
+void
+LPEKnot::doBeforeEffect (SPLPEItem *lpeitem)
+{
+    using namespace Geom;
+    //FIXME: do we have to be more carefull to access stroke width?
+    stroke_width = lpeitem->style->stroke_width.computed;
 }
 
 

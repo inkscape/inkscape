@@ -16,7 +16,8 @@
 #include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
 #include "live_effects/parameter/array.h"
-#include "live_effects/parameter/path.h"
+//#include "live_effects/parameter/path.h"
+#include "live_effects/parameter/bool.h"
 #include "2geom/crossing.h"
 
 namespace Inkscape {
@@ -56,6 +57,7 @@ public:
   virtual ~LPEKnot();
   
   virtual void doOnApply (SPLPEItem *lpeitem);
+  virtual void doBeforeEffect (SPLPEItem *lpeitem);
   virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & input_path);
   
   /* the knotholder entity classes must be declared friends */
@@ -68,7 +70,9 @@ private:
   void updateSwitcher();
   // add the parameters for your effect here:
   ScalarParam interruption_width;
+  BoolParam  prop_to_stroke_width;
   ScalarParam switcher_size;
+  double stroke_width;
   ArrayParam<double> crossing_points_vector;
   LPEKnotNS::CrossingPoints crossing_points;
   

@@ -37,10 +37,10 @@ public:
     virtual void doBeforeEffect(SPLPEItem * item);
 
   std::vector<double>
-  generateLevels(Geom::Interval const &domain);
+    generateLevels(Geom::Interval const &domain, double x_org);
 
   std::vector<std::vector<Geom::Point> >
-  linearSnake(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &f);
+    linearSnake(Geom::Piecewise<Geom::D2<Geom::SBasis> > const &f, Geom::Point const &org);
 
   Geom::Piecewise<Geom::D2<Geom::SBasis> > 
   smoothSnake(std::vector<std::vector<Geom::Point> > const &linearSnake);
@@ -64,8 +64,9 @@ private:
   ScalarParam stroke_width_bot;
   ScalarParam front_thickness, back_thickness;
 
-  PointParam  bender;
+  //PointParam  bender;
   VectorParam direction;
+  VectorParam bender;
 
   LPERoughHatches(const LPERoughHatches&);
   LPERoughHatches& operator=(const LPERoughHatches&);
