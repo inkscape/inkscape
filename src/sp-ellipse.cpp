@@ -143,13 +143,16 @@ sp_genericellipse_update(SPObject *object, SPCtx *ctx, guint flags)
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
         SPGenericEllipse *ellipse = (SPGenericEllipse *) object;
         SPStyle const *style = object->style;
-        double const d = 1.0 / NR::expansion(((SPItemCtx const *) ctx)->i2vp);
+        Geom::OptRect viewbox = ((SPItemCtx const *) ctx)->vp;
+        double const dx = viewbox->width();
+        double const dy = viewbox->height();
+        double const dr = sqrt(dx*dx + dy*dy)/sqrt(2);
         double const em = style->font_size.computed;
         double const ex = em * 0.5; // fixme: get from pango or libnrtype
-        ellipse->cx.update(em, ex, d);
-        ellipse->cy.update(em, ex, d);
-        ellipse->rx.update(em, ex, d);
-        ellipse->ry.update(em, ex, d);
+        ellipse->cx.update(em, ex, dx);
+        ellipse->cy.update(em, ex, dy);
+        ellipse->rx.update(em, ex, dr);
+        ellipse->ry.update(em, ex, dr);
         sp_shape_set_shape((SPShape *) object);
     }
 
