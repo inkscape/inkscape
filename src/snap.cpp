@@ -77,8 +77,7 @@ SnapManager::getGridSnappers() const
     SnapperList s;
 
     //FIXME: this code should actually do this: add new grid snappers that are active for this desktop. now it just adds all gridsnappers
-    SPDesktop* desktop = SP_ACTIVE_DESKTOP;
-    if (desktop && desktop->gridsEnabled()) {
+    if (_desktop && _desktop->gridsEnabled()) {
         for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
             Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
             s.push_back(grid->snapper);
@@ -207,9 +206,8 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
         return t;
 
     //FIXME: this code should actually do this: add new grid snappers that are active for this desktop. now it just adds all gridsnappers
-    SPDesktop* desktop = SP_ACTIVE_DESKTOP;
 
-    if (desktop && desktop->gridsEnabled()) {
+    if (_desktop && _desktop->gridsEnabled()) {
         bool success = false;
         Geom::Point nearest_multiple;
         Geom::Coord nearest_distance = NR_HUGE;
@@ -219,7 +217,7 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
         // this, so when using multiple grids one can get unexpected results
 
         // Cannot use getGridSnappers() because we need both the grids AND their snappers
-        // Therefor we iterate through all grids manually
+        // Therefore we iterate through all grids manually
         for (GSList const *l = _named_view->grids; l != NULL; l = l->next) {
             Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
             const Inkscape::Snapper* snapper = grid->snapper;
@@ -787,7 +785,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, SnappedCo
     if (snapprefs.getSnapIntersectionCS()) {
         // search for the closest snapped intersection of curves
         Inkscape::SnappedPoint closestCurvesIntersection;
-        if (getClosestIntersectionCS(sc.curves, p, closestCurvesIntersection)) {
+        if (getClosestIntersectionCS(sc.curves, p, closestCurvesIntersection, _desktop->dt2doc())) {
             sp_list.push_back(closestCurvesIntersection);
         }
     }

@@ -14,10 +14,6 @@
 #include <2geom/path-intersection.h>
 #include <libnr/nr-convert2geom.h>
 
-// These two are needed for SP_ACTIVE_DESKTOP; this is a dirty hack
-#include "desktop.h"
-#include "inkscape.h"
-
 Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve)
 {
     _distance = snapped_distance;
@@ -50,7 +46,7 @@ Inkscape::SnappedCurve::~SnappedCurve()
 {
 }
 
-Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &curve, Geom::Point const &p) const
+Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &curve, Geom::Point const &p, Geom::Matrix dt2doc) const
 {
     // Calculate the intersections of two curves, which are both within snapping range, and
     // return only the closest intersection
@@ -76,10 +72,9 @@ Inkscape::SnappedPoint Inkscape::SnappedCurve::intersect(SnappedCurve const &cur
         bool const use_this_as_primary = _distance < curve.getSnapDistance();
         Inkscape::SnappedCurve const *primaryC = use_this_as_primary ? this : &curve;
         Inkscape::SnappedCurve const *secondaryC = use_this_as_primary ? &curve : this;
-        // The intersection should in fact be returned in desktop coordinates, but for this
-        // we need a desktop: this is a dirty hack
-        SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
-        best_p = desktop->dt2doc(best_p);
+
+        // The intersection should in fact be returned in desktop coordinates
+        best_p = best_p * dt2doc;
 
         Geom::Coord primaryDist = use_this_as_primary ? Geom::L2(best_p - this->getPoint()) : Geom::L2(best_p - curve.getPoint());
         Geom::Coord secondaryDist = use_this_as_primary ? Geom::L2(best_p - curve.getPoint()) : Geom::L2(best_p - this->getPoint());
@@ -110,7 +105,7 @@ bool getClosestCurve(std::list<Inkscape::SnappedCurve> const &list, Inkscape::Sn
 }
 
 // search for the closest intersection of two snapped curves, which are both member of the same collection
-bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geom::Point const &p, Inkscape::SnappedPoint &result)
+bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geom::Point const &p, Inkscape::SnappedPoint &result, Geom::Matrix dt2doc)
 {
     bool success = false;
 
@@ -118,7 +113,7 @@ bool getClosestIntersectionCS(std::list<Inkscape::SnappedCurve> const &list, Geo
         std::list<Inkscape::SnappedCurve>::const_iterator j = i;
         j++;
         for (; j != list.end(); j++) {
-            Inkscape::SnappedPoint sp = (*i).intersect(*j, p);
+            Inkscape::SnappedPoint sp = (*i).intersect(*j, p, dt2doc);
             if (sp.getAtIntersection()) {
                 // if it's the first point
                 bool const c1 = !success;
