@@ -14,14 +14,5 @@ ui_view_libuiview_a_SOURCES =		\
 	ui/view/view.h			\
 	ui/view/view.cpp		\
 	ui/view/view-widget.cpp \
-	ui/view/view-widget.h \
-	ui/view/desktop.h		\
-	ui/view/desktop.cpp		\
-	ui/view/desktop-affine.h	\
-	ui/view/desktop-affine.cpp	\
-	ui/view/desktop-events.h	\
-	ui/view/desktop-events.cpp	\
-	ui/view/desktop-handles.h	\
-	ui/view/desktop-handles.cpp	\
-	ui/view/desktop-style.h		\
-	ui/view/desktop-style.cpp	
+	ui/view/view-widget.h
+
