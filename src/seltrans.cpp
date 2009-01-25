@@ -438,6 +438,8 @@ void Inkscape::SelTrans::ungrab()
 
     sp_canvas_set_snap_delay_active(_desktop->canvas, false);
 
+    _desktop->snapindicator->remove_snapsource();
+
     Inkscape::Selection *selection = sp_desktop_selection(_desktop);
     _updateVolatileState();
 
