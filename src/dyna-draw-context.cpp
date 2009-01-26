@@ -85,7 +85,7 @@ static void sp_dyna_draw_context_set(SPEventContext *ec, Inkscape::Preferences::
 static gint sp_dyna_draw_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
 static void clear_current(SPDynaDrawContext *dc);
-static void set_to_accumulated(SPDynaDrawContext *dc, bool unionize);
+static void set_to_accumulated(SPDynaDrawContext *dc, bool unionize, bool subtract);
 static void add_cap(SPCurve *curve, Geom::Point const &from, Geom::Point const &to, double rounding);
 static bool accumulate_calligraphic(SPDynaDrawContext *dc);
 
@@ -625,10 +625,11 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 if (event->motion.state & GDK_CONTROL_MASK && dc->hatch_item) { // hatching
 
 #define HATCH_VECTOR_ELEMENTS 12
-#define INERTIA_ELEMENTS 36
+#define INERTIA_ELEMENTS 24
 #define SPEED_ELEMENTS 12
 #define SPEED_MIN 0.3
-#define SPEED_NORMAL 0.3
+#define SPEED_NORMAL 0.35
+#define INERTIA_FORCE 0.5
 
                     // speed is the movement of the nearest point along the guide path, divided by
                     // the movement of the pointer at the same period; it is averaged for the last
@@ -690,7 +691,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                             if (dot > 0) { // mouse is still moving in approx the same direction
                                 Geom::Point should_have_moved = 
                                     (inertia) * (1/Geom::L2(inertia)) * Geom::L2(moved_past_escape);
-                                motion_dt = dc->inertia_vectors.front() + should_have_moved;
+                                motion_dt = dc->inertia_vectors.front() + 
+                                    (INERTIA_FORCE * should_have_moved + (1 - INERTIA_FORCE) * moved_past_escape);
                             }
                         }
 
@@ -836,7 +838,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             /* Create object */
             fit_and_split(dc, TRUE);
             if (accumulate_calligraphic(dc))
-                set_to_accumulated(dc, event->button.state & GDK_SHIFT_MASK); // performs document_done
+                set_to_accumulated(dc, event->button.state & GDK_SHIFT_MASK, event->button.state & GDK_MOD1_MASK); // performs document_done
             else
                 g_warning ("Failed to create path: invalid data in dc->cal1 or dc->cal2");
 
@@ -994,7 +996,7 @@ clear_current(SPDynaDrawContext *dc)
 }
 
 static void
-set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
+set_to_accumulated(SPDynaDrawContext *dc, bool unionize, bool subtract)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
 
@@ -1023,6 +1025,9 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize)
         if (unionize) {
             sp_desktop_selection(desktop)->add(dc->repr);
             sp_selected_path_union_skip_undo(desktop);
+        } else if (subtract) {
+            sp_desktop_selection(desktop)->add(dc->repr);
+            sp_selected_path_diff_skip_undo(desktop);
         } else {
             if (dc->keep_selected) {
                 sp_desktop_selection(desktop)->set(dc->repr);
