@@ -21,8 +21,11 @@
 #define SP_GUIDELINE(o) (GTK_CHECK_CAST((o), SP_TYPE_GUIDELINE, SPGuideLine))
 #define SP_IS_GUIDELINE(o) (GTK_CHECK_TYPE((o), SP_TYPE_GUIDELINE))
 
+class SPCtrlQuadr;
+
 struct SPGuideLine {
     SPCanvasItem item;
+    SPCtrlQuadr *origin; // unlike 'item', this is only held locally
 
     guint32 rgba;
 
@@ -48,6 +51,7 @@ void sp_guideline_set_position(SPGuideLine *gl, Geom::Point point_on_line);
 void sp_guideline_set_normal(SPGuideLine *gl, Geom::Point normal_to_line);
 void sp_guideline_set_color(SPGuideLine *gl, unsigned int rgba);
 void sp_guideline_set_sensitive(SPGuideLine *gl, int sensitive);
+void sp_guideline_delete(SPGuideLine *gl);
 
 #endif
 

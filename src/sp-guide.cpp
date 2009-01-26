@@ -167,7 +167,7 @@ static void sp_guide_release(SPObject *object)
     SPGuide *guide = (SPGuide *) object;
 
     while (guide->views) {
-        gtk_object_destroy(GTK_OBJECT(guide->views->data));
+        sp_guideline_delete(SP_GUIDELINE(guide->views->data));
         guide->views = g_slist_remove(guide->views, guide->views->data);
     }
 
@@ -306,7 +306,7 @@ void sp_guide_hide(SPGuide *guide, SPCanvas *canvas)
 
     for (GSList *l = guide->views; l != NULL; l = l->next) {
         if (canvas == SP_CANVAS_ITEM(l->data)->canvas) {
-            gtk_object_destroy(GTK_OBJECT(l->data));
+            sp_guideline_delete(SP_GUIDELINE(l->data));
             guide->views = g_slist_remove(guide->views, l->data);
             return;
         }
