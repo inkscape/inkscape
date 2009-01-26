@@ -47,7 +47,6 @@ protected:
     void  build_grid();
     void  build_guides();
     void  build_snap();
-    void  build_snap_dtls();
     void  build_gridspage();
 #if ENABLE_LCMS
     void  build_cms();
@@ -80,7 +79,7 @@ protected:
     Gtk::Notebook  _notebook;
 
     NotebookPage   _page_page, _page_guides;
-    NotebookPage   _page_snap, _page_snap_dtls, _page_cms, _page_scripting;
+    NotebookPage   _page_snap, _page_cms, _page_scripting;
     Gtk::VBox      _grids_vbox;
 
     Registry _wr;
@@ -93,12 +92,7 @@ protected:
     RegisteredCheckButton _rcb_sgui, _rcbsng;
     RegisteredColorPicker _rcp_gui, _rcp_hgui;
     //---------------------------------------------------------------
-    RegisteredCheckButton _rcbs, _rcbsnbb, _rcbsnn, _rcbsnop;
-    RegisteredCheckButton _rcbsnon, _rcbsnbbp, _rcbsnbbn, _rcbsnpb;
     ToleranceSlider       _rsu_sno, _rsu_sn, _rsu_gusn;
-    //---------------------------------------------------------------
-    RegisteredCheckButton _rcbic, _rcbsm, _rcbmp;
-    RegisteredCheckButton _rcbsigg, _rcbsils;
     //---------------------------------------------------------------
     Gtk::Menu   _menu;
     Gtk::OptionMenu   _combo_avail;

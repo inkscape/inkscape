@@ -58,7 +58,7 @@ public:
     void setPointerDistance(Geom::Coord const d) {_pointer_distance = d;}
 
     /* This is the preferred method to find out which point we have snapped
-     * to, because it only returns a point if snapping has actually occured
+     * to, because it only returns a point if snapping has actually occurred
      * (by overwriting p)
      */
     void getPoint(Geom::Point &p) const;

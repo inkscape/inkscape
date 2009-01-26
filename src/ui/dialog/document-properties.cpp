@@ -88,7 +88,7 @@ DocumentProperties::getInstance()
 DocumentProperties::DocumentProperties()
     : UI::Widget::Panel ("", "/dialogs/documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
       _page_page(1, 1, true, true), _page_guides(1, 1),
-      _page_snap(1, 1), _page_snap_dtls(1, 1), _page_cms(1, 1), _page_scripting(1, 1),
+      _page_snap(1, 1), _page_cms(1, 1), _page_scripting(1, 1),
     //---------------------------------------------------------------
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
       _rcb_bord(_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false),
@@ -105,26 +105,6 @@ DocumentProperties::DocumentProperties()
       _rcp_gui(_("Guide co_lor:"), _("Guideline color"), _("Color of guidelines"), "guidecolor", "guideopacity", _wr),
       _rcp_hgui(_("_Highlight color:"), _("Highlighted guideline color"), _("Color of a guideline when it is under mouse"), "guidehicolor", "guidehiopacity", _wr),
     //---------------------------------------------------------------
-      _rcbs(_("_Enable snapping"), _("Toggle snapping on or off"), "inkscape:snap-global", _wr),
-      _rcbsnbb(_("_Bounding box corners"), _("Only available in the selector tool: snap bounding box corners to guides, to grids, and to other bounding boxes (but not to nodes or paths)"),
-                  "inkscape:snap-bbox", _wr),
-      _rcbsnn(_("_Nodes"), _("Snap nodes (e.g. path nodes, special points in shapes, gradient handles, text base points, transformation origins, etc.) to guides, to grids, to paths and to other nodes"),
-                "inkscape:snap-nodes", _wr),
-      //Options for snapping to objects
-      _rcbsnop(_("Snap to path_s"), _("Snap nodes to object paths"), "inkscape:object-paths", _wr),
-      _rcbsnon(_("Snap to n_odes"), _("Snap nodes and guides to object nodes"), "inkscape:object-nodes", _wr),
-      _rcbsnbbp(_("Snap to bounding bo_x edges"), _("Snap bounding box corners and guides to bounding box edges"), "inkscape:bbox-paths", _wr),
-      _rcbsnbbn(_("Snap to bounding box co_rners"), _("Snap bounding box corners to other bounding box corners"), "inkscape:bbox-nodes", _wr),
-      _rcbsnpb(_("Snap to page border"), _("Snap bounding box corners and nodes to the page border"), "inkscape:snap-page", _wr),
-    //---------------------------------------------------------------
-       //Applies to both nodes and guides, but not to bboxes, that's why its located here
-      _rcbic( _("Rotation _center"), _("Consider the rotation center of an object when snapping"), "inkscape:snap-center", _wr),
-      _rcbsm( _("_Smooth nodes"), _("Snap to smooth nodes too, instead of only snapping to cusp nodes"), "inkscape:snap-smooth-nodes", _wr),
-      _rcbmp( _("_Midpoints"), _("Snap midpoints of straight line segments"), "inkscape:snap-midpoints", _wr),
-      _rcbsigg(_("_Grid with guides"), _("Snap to grid-guide intersections"), "inkscape:snap-intersection-grid-guide", _wr),
-      _rcbsils(_("_Paths"), _("Snap to intersections of paths ('snap to paths' must be enabled, see the previous tab)"),
-                "inkscape:snap-intersection-paths", _wr),
-    //---------------------------------------------------------------
       _grids_label_crea("", Gtk::ALIGN_LEFT),
       //TRANSLATORS: In Grid|_New translate only the word _New. It ref to grid
       _grids_button_new(Q_("Grid|_New"), _("Create new grid.")),
@@ -140,7 +120,6 @@ DocumentProperties::DocumentProperties()
     _notebook.append_page(_page_guides,    _("Guides"));
     _notebook.append_page(_grids_vbox,     _("Grids"));
     _notebook.append_page(_page_snap,      _("Snap"));
-    _notebook.append_page(_page_snap_dtls, _("Snap points"));
     _notebook.append_page(_page_cms, _("Color Management"));
     _notebook.append_page(_page_scripting, _("Scripting"));
 
@@ -148,7 +127,6 @@ DocumentProperties::DocumentProperties()
     build_guides();
     build_gridspage();
     build_snap();
-    build_snap_dtls();
 #if ENABLE_LCMS
     build_cms();
 #endif // ENABLE_LCMS
@@ -309,27 +287,6 @@ DocumentProperties::build_snap()
                 _("If set, objects only snap to a guide when it's within the range specified below"),
                 "guidetolerance", _wr);
 
-    //Other options to locate here: e.g. visual snapping indicators on/off
-
-    std::list<Gtk::Widget*> slaves;
-    slaves.push_back(&_rcbsnop);
-    slaves.push_back(&_rcbsnon);
-    _rcbsnn.setSlaveWidgets(slaves);
-
-    slaves.clear();
-    slaves.push_back(&_rcbsnbbp);
-    slaves.push_back(&_rcbsnbbn);
-    _rcbsnbb.setSlaveWidgets(slaves);
-
-    slaves.clear();
-    slaves.push_back(&_rcbsnn);
-    slaves.push_back(&_rcbsnbb);
-    _rcbs.setSlaveWidgets(slaves);
-
-    Gtk::Label *label_g = manage (new Gtk::Label);
-    label_g->set_markup (_("<b>Snapping</b>"));
-    Gtk::Label *label_w = manage (new Gtk::Label);
-    label_w->set_markup (_("<b>What snaps</b>"));
     Gtk::Label *label_o = manage (new Gtk::Label);
     label_o->set_markup (_("<b>Snap to objects</b>"));
     Gtk::Label *label_gr = manage (new Gtk::Label);
@@ -339,19 +296,7 @@ DocumentProperties::build_snap()
 
     Gtk::Widget *const array[] =
     {
-        label_g,            0,
-        0,                  &_rcbs,
-        0,                  0,
-        label_w,            0,
-        0,                  &_rcbsnn,
-        0,                  &_rcbsnbb,
-        0,                  0,
         label_o,            0,
-        0,                  &_rcbsnop,
-        0,                  &_rcbsnon,
-        0,                  &_rcbsnbbp,
-        0,                  &_rcbsnbbn,
-        0,                  &_rcbsnpb,
         0,                  _rsu_sno._vbox,
         0,                  0,
         label_gr,           0,
@@ -363,33 +308,6 @@ DocumentProperties::build_snap()
 
     attach_all(_page_snap.table(), array, G_N_ELEMENTS(array));
  }
-
-void
-DocumentProperties::build_snap_dtls()
-{
-    _page_snap_dtls.show();
-
-    //Other options to locate here: e.g. visual snapping indicators on/off
-
-    Gtk::Label *label_i= manage (new Gtk::Label);
-    label_i->set_markup (_("<b>Snapping intersections of</b>"));
-    Gtk::Label *label_m = manage (new Gtk::Label);
-    label_m->set_markup (_("<b>Special points to consider</b>"));
-
-    Gtk::Widget *const array[] =
-    {
-        label_i,            0,
-        0,                  &_rcbsigg,
-        0,                  &_rcbsils,
-        0,                  0,
-        label_m,            0,
-        0,                  &_rcbic,
-        0,                  &_rcbsm,
-        0,                  &_rcbmp
-    };
-
-    attach_all(_page_snap_dtls.table(), array, G_N_ELEMENTS(array));
-}
 
 #if ENABLE_LCMS
 static void
@@ -872,26 +790,10 @@ DocumentProperties::update()
 
     //-----------------------------------------------------------snap page
 
-    _rcbsnbb.setActive (nv->snap_manager.snapprefs.getSnapModeBBox());
-    _rcbsnn.setActive (nv->snap_manager.snapprefs.getSnapModeNode());
-    _rcbsng.setActive (nv->snap_manager.snapprefs.getSnapModeGuide());
-    _rcbic.setActive (nv->snap_manager.snapprefs.getIncludeItemCenter());
-    _rcbsm.setActive (nv->snap_manager.snapprefs.getSnapSmoothNodes());
-    _rcbmp.setActive (nv->snap_manager.snapprefs.getSnapLineMidpoints());
-    _rcbsigg.setActive (nv->snap_manager.snapprefs.getSnapIntersectionGG());
-    _rcbsils.setActive (nv->snap_manager.snapprefs.getSnapIntersectionCS());
-    _rcbsnop.setActive(nv->snap_manager.snapprefs.getSnapToItemPath());
-    _rcbsnon.setActive(nv->snap_manager.snapprefs.getSnapToItemNode());
-    _rcbsnbbp.setActive(nv->snap_manager.snapprefs.getSnapToBBoxPath());
-    _rcbsnbbn.setActive(nv->snap_manager.snapprefs.getSnapToBBoxNode());
-    _rcbsnpb.setActive(nv->snap_manager.snapprefs.getSnapToPageBorder());
     _rsu_sno.setValue (nv->objecttolerance);
-
     _rsu_sn.setValue (nv->gridtolerance);
-
     _rsu_gusn.setValue (nv->guidetolerance);
 
-    _rcbs.setActive (nv->snap_manager.snapprefs.getSnapEnabledGlobally());
 
     //-----------------------------------------------------------grids page
 
