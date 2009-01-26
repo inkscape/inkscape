@@ -189,7 +189,7 @@ class SVGCalendar (inkex.Effect):
         txt_atts = {'style': simplestyle.formatStyle(self.style_month),
                     'x': str( (self.month_w - self.day_w) / 2 ),
                     'y': str( self.day_h / 5 ) }
-        inkex.etree.SubElement(g, 'text', txt_atts).text = self.options.month_names[m-1]
+        inkex.etree.SubElement(g, 'text', txt_atts).text = unicode(self.options.month_names[m-1], "iso-8859-1")
         gw = inkex.etree.SubElement(g, 'g')
         week_x = 0
         if self.options.start_day=='sun':
@@ -197,7 +197,7 @@ class SVGCalendar (inkex.Effect):
             txt_atts = {'style': simplestyle.formatStyle(self.style_day_name),
                         'x': str( self.day_w * week_x ),
                         'y': str( self.day_h ) }
-            inkex.etree.SubElement(gw, 'text', txt_atts).text = wday
+            inkex.etree.SubElement(gw, 'text', txt_atts).text = unicode(wday, "iso-8859-1")
             week_x += 1
         else:
           w2 = self.options.day_names[1:]
@@ -206,7 +206,7 @@ class SVGCalendar (inkex.Effect):
             txt_atts = {'style': simplestyle.formatStyle(self.style_day_name),
                         'x': str( self.day_w * week_x ),
                         'y': str( self.day_h ) }
-            inkex.etree.SubElement(gw, 'text', txt_atts).text = wday
+            inkex.etree.SubElement(gw, 'text', txt_atts).text = unicode(wday, "iso-8859-1")
             week_x += 1
 
     def create_month(self, m):
