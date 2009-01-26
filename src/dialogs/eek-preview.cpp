@@ -314,7 +314,6 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
             gdk_drawable_get_size(drawable, &w, &h);
             GError *error = NULL;
             gchar *filepath = (gchar *) g_strdup_printf("%s/remove-color.png", INKSCAPE_PIXMAPDIR);
-            g_warning("filepath: %s", filepath);
             gsize bytesRead = 0;
             gsize bytesWritten = 0;
             gchar *localFilename = g_filename_from_utf8( filepath,
