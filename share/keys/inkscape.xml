@@ -144,6 +144,8 @@ override) the bindings in the main default.xml.
 
   <bind action="PenPrefs" />
 
+  <bind key="F6" modifiers="Shift,Ctrl" action="ToolLPETool" display="true"/>
+
   <bind key="F6" modifiers="Ctrl" action="ToolCalligraphic" display="true"/>
   <bind key="c" action="ToolCalligraphic" />
   <bind key="C" action="ToolCalligraphic" />
@@ -217,6 +219,7 @@ override) the bindings in the main default.xml.
 <!-- View -->
 
   <bind key="F11" action="FullScreen" display="true"/> 
+  <bind key="F11" action="FocusToggle" modifiers="Shift" display="true"/> 
 
   <bind key="Tab" modifiers="Ctrl" action="NextWindow" display="true"/>
   <bind key="ISO_Left_Tab" modifiers="Ctrl" action="NextWindow" />
@@ -235,7 +238,7 @@ override) the bindings in the main default.xml.
   <bind key="numbersign" modifiers="Shift" action="ToggleGrid" /> <!-- # -->
   <bind key="numbersign" action="ToggleGrid" display="true"/>
   
-  <bind key="percent" action="ToggleSnapGlobal" display="true"/> <!-- # -->
+  <bind key="percent" action="ToggleSnapGlobal" display="true"/> <!-- % -->
   <bind key="percent" modifiers="Shift" action="ToggleSnapGlobal" />
 
   <bind action="ViewNew"/>
@@ -366,6 +369,9 @@ override) the bindings in the main default.xml.
   <bind key="i" modifiers="Alt,Shift" action="ObjectsFromPattern" display="true"/>
   <bind key="I" modifiers="Alt,Shift" action="ObjectsFromPattern" />
   
+  <bind key="g" modifiers="Shift" action="ObjectsToGuides" display="true"/>
+  <bind key="G" modifiers="Shift" action="ObjectsToGuides" />
+
   <bind action="ObjectSetMask" />
   <bind action="ObjectUnSetMask" />
 
