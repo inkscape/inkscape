@@ -87,7 +87,7 @@ static char const preferences_skeleton[] =
 "      <eventcontext id=\"pen\" mode=\"drag\" selcue=\"1\" style=\"stroke-width:1px;\" usecurrent=\"0\"/>\n"
 "    </group>\n"
 "    <eventcontext id=\"calligraphic\" style=\"fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none;\"\n"
-"                       mass=\"0.02\" drag=\"1\" angle=\"30\" width=\"0.15\" thinning=\"0.1\" flatness=\"0.9\" cap_rounding=\"0.0\" usecurrent=\"1\"\n"
+"                       mass=\"2\" drag=\"1\" angle=\"30\" width=\"15\" thinning=\"10\" flatness=\"90\" cap_rounding=\"0.0\" usecurrent=\"1\"\n"
 "                       tracebackground=\"0\" usepressure=\"1\" usetilt=\"0\" keep_selected=\"1\">\n"
 "    <group id=\"preset\">\n"
 "    <group id=\"cp0\" name=\"Dip pen\" mass=\"2\" wiggle=\"0.0\" angle=\"30.0\" thinning=\"10\" tremor=\"0.0\" flatness=\"90\" cap_rounding=\"0.0\" tracebackground=\"0\" usepressure=\"1\" usetilt=\"1\" />\n"
