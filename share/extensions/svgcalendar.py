@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
-__version__ = "0.1"
+__version__ = "0.2"
 
 import inkex, simplestyle, re, calendar
 from datetime import *
@@ -87,8 +87,13 @@ class SVGCalendar (inkex.Effect):
           action="store", type="string",
           dest="day_names", default='Sun Mon Tue Wed Thu Fri Sat',
           help='The week day names for localization.')
+        self.OptionParser.add_option("--encoding",
+          action="store", type="string",
+          dest="input_encode", default='utf-8',
+          help='The input encoding of the names.')
 
     def validate_options(self):
+        #inkex.errormsg( self.options.input_encode )
         # Convert string names lists in real lists:
         m = re.match( '\s*(.*[^\s])\s*', self.options.month_names )
         self.options.month_names = re.split( '\s+', m.group(1) )
@@ -189,7 +194,11 @@ class SVGCalendar (inkex.Effect):
         txt_atts = {'style': simplestyle.formatStyle(self.style_month),
                     'x': str( (self.month_w - self.day_w) / 2 ),
                     'y': str( self.day_h / 5 ) }
-        inkex.etree.SubElement(g, 'text', txt_atts).text = unicode(self.options.month_names[m-1], "iso-8859-1")
+        try:
+          inkex.etree.SubElement(g, 'text', txt_atts).text = unicode(self.options.month_names[m-1], self.options.input_encode)
+        except:
+          inkex.errormsg('You must select your correct system encode.')
+          exit(1)
         gw = inkex.etree.SubElement(g, 'g')
         week_x = 0
         if self.options.start_day=='sun':
@@ -197,7 +206,11 @@ class SVGCalendar (inkex.Effect):
             txt_atts = {'style': simplestyle.formatStyle(self.style_day_name),
                         'x': str( self.day_w * week_x ),
                         'y': str( self.day_h ) }
-            inkex.etree.SubElement(gw, 'text', txt_atts).text = unicode(wday, "iso-8859-1")
+            try:
+              inkex.etree.SubElement(gw, 'text', txt_atts).text = unicode(wday, self.options.input_encode)
+            except:
+              inkex.errormsg('You must select your correct system encode.')
+              exit(1)
             week_x += 1
         else:
           w2 = self.options.day_names[1:]
@@ -206,7 +219,11 @@ class SVGCalendar (inkex.Effect):
             txt_atts = {'style': simplestyle.formatStyle(self.style_day_name),
                         'x': str( self.day_w * week_x ),
                         'y': str( self.day_h ) }
-            inkex.etree.SubElement(gw, 'text', txt_atts).text = unicode(wday, "iso-8859-1")
+            try:
+              inkex.etree.SubElement(gw, 'text', txt_atts).text = unicode(wday, self.options.input_encode)
+            except:
+              inkex.errormsg('You must select your correct system encode.')
+              exit(1)
             week_x += 1
 
     def create_month(self, m):

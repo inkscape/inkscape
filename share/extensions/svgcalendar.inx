@@ -34,6 +34,90 @@
       <_param name="month-names"  type="string" _gui-text="Month names">January February March April May June July August September October November December</_param>
       <_param name="day-names"  type="string" _gui-text="Day names">Sun Mon Tue Wed Thu Fri Sat</_param>
       <_param name="day-names-help" type="description">(The day name list must start in sunday)</_param>
+      <param name="encoding" type="enum" _gui-text="Char Encoding">
+        <item>arabic</item>
+        <item>big5-tw</item>
+        <item>big5-hkscs</item>
+        <item>chinese</item>
+        <item>cp737</item>
+        <item>cp856</item>
+        <item>cp874</item>
+        <item>cp875</item>
+        <item>cp1006</item>
+        <item>cyrillic</item>
+        <item>cyrillic-asian</item>
+        <item>eucjis2004</item>
+        <item>eucjisx0213</item>
+        <item>gbk</item>
+        <item>gb18030-2000</item>
+        <item>greek</item>
+        <item>hebrew</item>
+        <item>hz-gb</item>
+        <item>IBM037</item>
+        <item>IBM424</item>
+        <item>IBM437</item>
+        <item>IBM500</item>
+        <item>IBM775</item>
+        <item>IBM850</item>
+        <item>IBM852</item>
+        <item>IBM855</item>
+        <item>IBM857</item>
+        <item>IBM860</item>
+        <item>IBM861</item>
+        <item>IBM862</item>
+        <item>IBM863</item>
+        <item>IBM864</item>
+        <item>IBM865</item>
+        <item>IBM866</item>
+        <item>IBM869</item>
+        <item>IBM1026</item>
+        <item>IBM1140</item>
+        <item>iso-2022-jp</item>
+        <item>iso-2022-jp-1</item>
+        <item>iso-2022-jp-2</item>
+        <item>iso-2022-jp-2004</item>
+        <item>iso-2022-jp-3</item>
+        <item>iso-2022-jp-ext</item>
+        <item>iso-2022-kr</item>
+        <item>johab</item>
+        <item>korean</item>
+        <item>koi8_r</item>
+        <item>koi8_u</item>
+        <item>latin1</item>
+        <item>latin2</item>
+        <item>latin3</item>
+        <item>latin4</item>
+        <item>latin5</item>
+        <item>latin6</item>
+        <item>latin8</item>
+        <item value="iso-8859-15">Latin - iso-8859-15 - Western Europe</item>
+        <item>macgreek</item>
+        <item>maciceland</item>
+        <item>maccentraleurope</item>
+        <item>macroman</item>
+        <item>macturkish</item>
+        <item>ms932</item>
+        <item>ms949</item>
+        <item>ms950</item>
+        <item>sjis</item>
+        <item>sjis2004</item>
+        <item>sjisx0213</item>
+        <item>u-jis</item>
+        <item>us-ascii</item>
+        <item value="windows-1250">Windows - Central and Eastern Europe</item>
+        <item value="windows-1251">Windows - Russian and more</item>
+        <item value="windows-1252">Windows - Western Europe</item>
+        <item value="windows-1253">Windows - Greek</item>
+        <item value="windows-1254">Windows - Turkish</item>
+        <item value="windows-1255">Windows - Hebrew</item>
+        <item value="windows-1256">Windows - Arabic</item>
+        <item value="windows-1257">Windows - Baltic languages</item>
+        <item value="windows-1258">Windows - Vietnamese</item>
+        <item value="utf_32">UTF-32 - All languages</item>
+        <item value="utf_16">UTF-16 - All languages</item>
+        <item value="utf_8">UTF-8 - All languages</item>
+      </param>
+      <_param name="encoding-help" type="description">(Select your system encoding. More information at http://docs.python.org/library/codecs.html#standard-encodings)</_param>
     </page>
   </param>
   <effect>
