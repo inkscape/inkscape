@@ -21,11 +21,11 @@
 #define SP_GUIDELINE(o) (GTK_CHECK_CAST((o), SP_TYPE_GUIDELINE, SPGuideLine))
 #define SP_IS_GUIDELINE(o) (GTK_CHECK_TYPE((o), SP_TYPE_GUIDELINE))
 
-class SPCtrlQuadr;
+class SPCtrlPoint;
 
 struct SPGuideLine {
     SPCanvasItem item;
-    SPCtrlQuadr *origin; // unlike 'item', this is only held locally
+    SPCtrlPoint *origin; // unlike 'item', this is only held locally
 
     guint32 rgba;
 

@@ -20,7 +20,7 @@
 #include <2geom/transforms.h>
 #include "display-forward.h"
 #include "sp-canvas-util.h"
-#include "sp-ctrlquadr.h"
+#include "sp-ctrlpoint.h"
 #include "guideline.h"
 
 static void sp_guideline_class_init(SPGuideLineClass *c);
@@ -35,7 +35,6 @@ static double sp_guideline_point(SPCanvasItem *item, Geom::Point p, SPCanvasItem
 static void sp_guideline_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, guint32 rgba);
 
 static SPCanvasItemClass *parent_class;
-static const double radius = 7.0;
 
 GType sp_guideline_get_type()
 {
@@ -89,13 +88,13 @@ static void sp_guideline_destroy(GtkObject *object)
     g_return_if_fail (object != NULL);
     g_return_if_fail (SP_IS_GUIDELINE (object));
     //g_return_if_fail (SP_GUIDELINE(object)->origin != NULL);
-    //g_return_if_fail (SP_IS_CTRLQUADR(SP_GUIDELINE(object)->origin));
+    //g_return_if_fail (SP_IS_CTRLPOINT(SP_GUIDELINE(object)->origin));
     
-    if (SP_GUIDELINE(object)->origin != NULL && SP_IS_CTRLQUADR(SP_GUIDELINE(object)->origin)) {
+    if (SP_GUIDELINE(object)->origin != NULL && SP_IS_CTRLPOINT(SP_GUIDELINE(object)->origin)) {
         gtk_object_destroy(GTK_OBJECT(SP_GUIDELINE(object)->origin));
     } else {
         // FIXME: This branch shouldn't be reached (although it seems to be harmless).
-        //g_error("Why can it be that gl->origin is not a valid SPCtrlQuadr?\n");
+        //g_error("Why can it be that gl->origin is not a valid SPCtrlPoint?\n");
     }
 
     GTK_OBJECT_CLASS(parent_class)->destroy(object);
@@ -187,16 +186,6 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     }
 }
 
-static void set_origin_coords(SPCtrlQuadr *quadr, Geom::Point const &center, double const r)
-{
-    sp_ctrlquadr_set_coords(quadr,
-                            center + Geom::Point(-r,-r),
-                            center + Geom::Point(-r, r),
-                            center + Geom::Point( r, r),
-                            center + Geom::Point( r,-r));
-    
-}
-
 static void sp_guideline_update(SPCanvasItem *item, Geom::Matrix const &affine, unsigned int flags)
 {
     SPGuideLine *gl = SP_GUIDELINE(item);
@@ -208,7 +197,7 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Matrix const &affine, 
     gl->point_on_line[Geom::X] = affine[4];
     gl->point_on_line[Geom::Y] = affine[5];
 
-    set_origin_coords(gl->origin, gl->point_on_line * affine.inverse(), radius);
+    sp_ctrlpoint_set_coords(gl->origin, gl->point_on_line * affine.inverse());
     sp_canvas_item_request_update(SP_CANVAS_ITEM (gl->origin));
 
     if (gl->is_horizontal()) {
@@ -239,10 +228,10 @@ static double sp_guideline_point(SPCanvasItem *item, Geom::Point p, SPCanvasItem
 SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, Geom::Point point_on_line, Geom::Point normal)
 {
     SPCanvasItem *item = sp_canvas_item_new(parent, SP_TYPE_GUIDELINE, NULL);
-    SPCanvasItem *origin = sp_canvas_item_new(parent, SP_TYPE_CTRLQUADR, NULL);
+    SPCanvasItem *origin = sp_canvas_item_new(parent, SP_TYPE_CTRLPOINT, NULL);
 
     SPGuideLine *gl = SP_GUIDELINE(item);
-    SPCtrlQuadr *cp = SP_CTRLQUADR(origin);
+    SPCtrlPoint *cp = SP_CTRLPOINT(origin);
     gl->origin = cp;
 
     normal.normalize();
@@ -250,7 +239,7 @@ SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, Geom::Point point_on_line,
     gl->angle = tan( -gl->normal_to_line[Geom::X] / gl->normal_to_line[Geom::Y]);
     sp_guideline_set_position(gl, point_on_line);
 
-    set_origin_coords(cp, point_on_line, radius);
+    sp_ctrlpoint_set_coords(cp, point_on_line);
 
     return item;
 }
@@ -272,7 +261,7 @@ void sp_guideline_set_normal(SPGuideLine *gl, Geom::Point normal_to_line)
 void sp_guideline_set_color(SPGuideLine *gl, unsigned int rgba)
 {
     gl->rgba = rgba;
-    sp_ctrlquadr_set_rgba32(gl->origin, rgba);
+    sp_ctrlpoint_set_color(gl->origin, rgba);
 
     sp_canvas_item_request_update(SP_CANVAS_ITEM(gl));
 }

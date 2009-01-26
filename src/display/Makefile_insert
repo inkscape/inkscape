@@ -68,6 +68,8 @@ display_libspdisplay_a_SOURCES = \
 	display/sp-canvas.h	\
 	display/sp-ctrlline.cpp	\
 	display/sp-ctrlline.h \
+	display/sp-ctrlpoint.cpp	\
+	display/sp-ctrlpoint.h \
 	display/sp-ctrlquadr.cpp \
 	display/sp-ctrlquadr.h \
 	display/nr-filter.cpp           \
