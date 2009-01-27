@@ -247,7 +247,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     // the click was on the guide 'anchor'
                     drag_type = (event->button.state & GDK_SHIFT_MASK) ? SP_DRAG_MOVE_ORIGIN : SP_DRAG_TRANSLATE;
                 } else {
-                    drag_type = (event->button.state & GDK_SHIFT_MASK) ? SP_DRAG_TRANSLATE : SP_DRAG_ROTATE;
+                    drag_type = (event->button.state & GDK_SHIFT_MASK) ? SP_DRAG_ROTATE : SP_DRAG_TRANSLATE;
                     sp_canvas_item_grab(item,
                                         ( GDK_BUTTON_RELEASE_MASK  |
                                           GDK_BUTTON_PRESS_MASK    |
