@@ -198,6 +198,23 @@ static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
     ColorItem* item = reinterpret_cast<ColorItem*>(data);
     if ( item )
     {
+        if (item->isRemove()){
+            GError *error = NULL;
+            gchar *filepath = (gchar *) g_strdup_printf("%s/remove-color.png", INKSCAPE_PIXMAPDIR);
+            gsize bytesRead = 0;
+            gsize bytesWritten = 0;
+            gchar *localFilename = g_filename_from_utf8( filepath,
+                                                 -1,
+                                                 &bytesRead,
+                                                 &bytesWritten,
+                                                 &error);
+            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file_at_scale(localFilename, 32, 24, FALSE, &error);
+            g_free(localFilename);
+            g_free(filepath);
+            gtk_drag_set_icon_pixbuf( dc, pixbuf, 0, 0 );
+            return;
+        }
+
         Glib::RefPtr<Gdk::Pixbuf> thumb = Gdk::Pixbuf::create( Gdk::COLORSPACE_RGB, false, 8, 32, 24 );
         guint32 fillWith = (0xff000000 & (item->def.getR() << 24))
                          | (0x00ff0000 & (item->def.getG() << 16))

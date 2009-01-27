@@ -44,7 +44,7 @@ public:
                                     ::PreviewSize size,
                                     guint ratio);
     void buttonClicked(bool secondary = false);
-
+    bool isRemove(){ return _isRemove; }
     ColorDef def;
 
 private:
