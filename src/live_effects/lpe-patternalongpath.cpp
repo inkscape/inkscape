@@ -67,7 +67,7 @@ LPEPatternAlongPath::LPEPatternAlongPath(LivePathEffectObject *lpeobject) :
     tang_offset(_("Tangential offset"), "", "tang_offset", &wr, this, 0),
     prop_units(_("Offsets in unit of pattern size"), _("Spacing, tangential and normal offset are expressed as a ratio of width/height"), "prop_units", &wr, this, false),
     vertical_pattern(_("Pattern is vertical"), _("Rotate pattern 90 deg before applying"), "vertical_pattern", &wr, this, false),
-    fuse_tolerance(_("Fuse nearby ends"), "Fuse ends closer than this number. 0 means don't fuse.", "fuse_tolerance", &wr, this, 0)
+    fuse_tolerance(_("Fuse nearby ends"), _("Fuse ends closer than this number. 0 means don't fuse."), "fuse_tolerance", &wr, this, 0)
 {
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
     registerParameter( dynamic_cast<Parameter *>(&copytype) );
