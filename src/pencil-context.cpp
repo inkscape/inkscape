@@ -710,9 +710,8 @@ square(double const x)
 static void
 interpolate(SPPencilContext *pc)
 {
-
     if ( pc->ps.size() <= 1 ) {
-    	return;
+        return;
     }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -775,7 +774,9 @@ interpolate(SPPencilContext *pc)
 static void
 sketch_interpolate(SPPencilContext *pc)
 {
-    g_assert( pc->ps.size() > 1 );
+    if ( pc->ps.size() <= 1 ) {
+        return;
+    }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     double const tol = prefs->getDoubleLimited("/tools/freehand/pencil/tolerance", 10.0, 1.0, 100.0) * 0.4;
