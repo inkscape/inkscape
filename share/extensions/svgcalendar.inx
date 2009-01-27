@@ -9,8 +9,8 @@
   <param name="tab" type="notebook">
     <page name="tab" _gui-text="Configuration">
       <param name="month" type="int" min="0" max="12" _gui-text="Month (0 for all)">0</param>
-      <param name="year" type="int" min="0" max="3000" _gui-text="Ano (0 for current)">0</param>
-      <param name="fill-empty-day-boxes" type="boolean" _gui-text="Fill empty day boxes with next month days">true</param>
+      <param name="year" type="int" min="0" max="3000" _gui-text="Year (0 for current)">0</param>
+      <param name="fill-empty-day-boxes" type="boolean" _gui-text="Fill empty day boxes with next month's days">true</param>
       <param name="start-day" type="enum" _gui-text="Week start day">
         <_item value="sun">Sunday</_item>
         <_item value="mon">Monday</_item>
@@ -24,7 +24,7 @@
     <page name="tab" _gui-text="Colors">
       <param name="color-year"     type="string" _gui-text="Year color">#808080</param>
       <param name="color-month"    type="string" _gui-text="Month color">#686868</param>
-      <param name="color-day-name" type="string" _gui-text="Week day name color ">#909090</param>
+      <param name="color-day-name" type="string" _gui-text="Weekday name color ">#909090</param>
       <param name="color-day"      type="string" _gui-text="Day color">#000000</param>
       <param name="color-weekend"  type="string" _gui-text="Weekend day color">#787878</param>
       <param name="color-nmd"      type="string" _gui-text="Next month day color">#B0B0B0</param>
@@ -33,7 +33,7 @@
       <_param name="l10n-help" type="description">You may change the names for other languages:</_param>
       <_param name="month-names"  type="string" _gui-text="Month names">January February March April May June July August September October November December</_param>
       <_param name="day-names"  type="string" _gui-text="Day names">Sun Mon Tue Wed Thu Fri Sat</_param>
-      <_param name="day-names-help" type="description">(The day name list must start in sunday)</_param>
+      <_param name="day-names-help" type="description">(The day names list must start from Sunday)</_param>
       <param name="encoding" type="enum" _gui-text="Char Encoding">
         <item>arabic</item>
         <item>big5-tw</item>
