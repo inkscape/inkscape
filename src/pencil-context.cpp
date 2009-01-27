@@ -42,6 +42,7 @@
 #include "desktop-style.h"
 #include "macros.h"
 #include "display/curve.h"
+#include "livarot/Path.h"
 
 static void sp_pencil_context_class_init(SPPencilContextClass *klass);
 static void sp_pencil_context_init(SPPencilContext *pc);
@@ -824,6 +825,14 @@ sketch_interpolate(SPPencilContext *pc)
                 t = 0.5;
             }
             pc->sketch_interpolation = Geom::lerp(t, fit_pwd2, pc->sketch_interpolation);
+            // simplify path, to eliminate small segments
+            Path *path = new Path;
+            path->LoadPathVector(Geom::path_from_piecewise(pc->sketch_interpolation, 0.01));
+            path->Simplify(0.5);
+            Geom::PathVector *pathv = path->MakePathVector();
+            pc->sketch_interpolation = (*pathv)[0].toPwSb();
+            delete path;
+            delete pathv;
         } else {
             pc->sketch_interpolation = fit_pwd2;
         }
