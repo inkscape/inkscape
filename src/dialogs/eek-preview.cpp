@@ -321,7 +321,7 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                                                  &bytesRead,
                                                  &bytesWritten,
                                                  &error);
-            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file_at_size(localFilename, w, h, &error);
+            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file_at_scale(localFilename, w, h, FALSE, &error);
             gdk_draw_pixbuf(drawable, 0, pixbuf, 0, 0, 0, 0, w, h, GDK_RGB_DITHER_NONE, 0, 0);
             g_free(localFilename);
             g_free(filepath);
