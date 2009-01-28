@@ -198,9 +198,9 @@ ImageMagick::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::Vi
 			printf("Caught exception: %s \n", error_.what());
 		}
 
-		while(Gtk::Main::events_pending()) {
-			Gtk::Main::iteration();
-		}
+		//while(Gtk::Main::events_pending()) {
+		//	Gtk::Main::iteration();
+		//}
 	}
 }
 
