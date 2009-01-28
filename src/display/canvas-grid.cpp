@@ -999,7 +999,7 @@ void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point co
  */
 bool CanvasXYGridSnapper::ThisSnapperMightSnap() const
 {
-    return _snapmanager->snapprefs.getSnapModeBBoxOrNodes();
+    return _snap_enabled && _snapmanager->snapprefs.getSnapToGrids() && _snapmanager->snapprefs.getSnapModeBBoxOrNodes();
 }
 
 } // namespace Inkscape

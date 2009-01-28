@@ -1940,14 +1940,22 @@ void toggle_snap_callback (GtkToggleAction *act, gpointer data) { //data points 
 		v = nv->snap_manager.snapprefs.getIncludeItemCenter();
 		sp_repr_set_boolean(repr, "inkscape:snap-center", !v);
 		break;
+	case SP_ATTR_INKSCAPE_SNAP_GRIDS:
+		v = nv->snap_manager.snapprefs.getSnapToGrids();
+		sp_repr_set_boolean(repr, "inkscape:snap-grids", !v);
+		break;
+	case SP_ATTR_INKSCAPE_SNAP_TO_GUIDES:
+		v = nv->snap_manager.snapprefs.getSnapToGuides();
+		sp_repr_set_boolean(repr, "inkscape:snap-to-guides", !v);
+		break;
 	case SP_ATTR_INKSCAPE_SNAP_PAGE:
 		v = nv->snap_manager.snapprefs.getSnapToPageBorder();
 		sp_repr_set_boolean(repr, "inkscape:snap-page", !v);
 		break;
-	case SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE:
+	/*case SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE:
 		v = nv->snap_manager.snapprefs.getSnapIntersectionGG();
 		sp_repr_set_boolean(repr, "inkscape:snap-intersection-grid-guide", !v);
-		break;
+		break;*/
 	case SP_ATTR_INKSCAPE_SNAP_LINE_MIDPOINTS:
 		v = nv->snap_manager.snapprefs.getSnapLineMidpoints();
 		sp_repr_set_boolean(repr, "inkscape:snap-midpoints", !v);
@@ -2000,7 +2008,9 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 			"    <toolitem action='ToggleSnapToFromCenter' />"
 			"    <separator />"
 			"    <toolitem action='ToggleSnapToPageBorder' />"
-			"    <toolitem action='ToggleSnapToGridGuideIntersections' />"
+			"    <toolitem action='ToggleSnapToGrids' />"
+			"    <toolitem action='ToggleSnapToGuides' />"
+		  //"    <toolitem action='ToggleSnapToGridGuideIntersections' />"
 			"  </toolbar>"
 	        "</ui>";
 
@@ -2187,6 +2197,30 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	}
 
 	{
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToGrids",	// "name"
+												 _("Grids"),				// "label"
+												 _("Snap to grids"),	// "tooltip"
+												 "grid_xy",	// "iconId"
+												 secondarySize,
+												 SP_ATTR_INKSCAPE_SNAP_GRIDS);
+
+		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
+		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
+	}
+
+	{
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToGuides",	// "name"
+												 _("Guides"),				// "label"
+												 _("Snap to guides"),	// "tooltip"
+												 "guide",	// "iconId"
+												 secondarySize,
+												 SP_ATTR_INKSCAPE_SNAP_TO_GUIDES);
+
+		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
+		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
+	}
+
+	/*{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToGridGuideIntersections",	// "name"
 												 _("Grid/guide intersections"),				// "label"
 												 _("Snap to intersections of a grid with a guide"),	// "tooltip"
@@ -2196,7 +2230,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
-	}
+	}*/
 
     GtkUIManager* mgr = gtk_ui_manager_new();
     GError* errVal = 0;
@@ -2254,7 +2288,9 @@ void update_snap_toolbox(SPDesktop *desktop, SPEventContext */*eventcontext*/, G
 	Glib::RefPtr<Gtk::Action> act10 = mainActions->get_action("ToggleSnapToFromObjectMidpoints");
 	Glib::RefPtr<Gtk::Action> act11 = mainActions->get_action("ToggleSnapToFromCenter");
 	Glib::RefPtr<Gtk::Action> act12 = mainActions->get_action("ToggleSnapToPageBorder");
-	Glib::RefPtr<Gtk::Action> act13 = mainActions->get_action("ToggleSnapToGridGuideIntersections");
+	//Glib::RefPtr<Gtk::Action> act13 = mainActions->get_action("ToggleSnapToGridGuideIntersections");
+	Glib::RefPtr<Gtk::Action> act14 = mainActions->get_action("ToggleSnapToGrids");
+	Glib::RefPtr<Gtk::Action> act15 = mainActions->get_action("ToggleSnapToGuides");
 
 
 	if (!act1) {
@@ -2304,8 +2340,14 @@ void update_snap_toolbox(SPDesktop *desktop, SPEventContext */*eventcontext*/, G
 
 	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act12->gobj()), nv->snap_manager.snapprefs.getSnapToPageBorder());
 	gtk_action_set_sensitive(GTK_ACTION(act12->gobj()), c1);
-	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act13->gobj()), nv->snap_manager.snapprefs.getSnapIntersectionGG());
-	gtk_action_set_sensitive(GTK_ACTION(act13->gobj()), c1);
+	//gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act13->gobj()), nv->snap_manager.snapprefs.getSnapIntersectionGG());
+	//gtk_action_set_sensitive(GTK_ACTION(act13->gobj()), c1);
+
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act14->gobj()), nv->snap_manager.snapprefs.getSnapToGrids());
+	gtk_action_set_sensitive(GTK_ACTION(act14->gobj()), c1);
+	gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act15->gobj()), nv->snap_manager.snapprefs.getSnapToGuides());
+	gtk_action_set_sensitive(GTK_ACTION(act15->gobj()), c1);
+
 
 	g_object_set_data(G_OBJECT(toolbox), "freeze", GINT_TO_POINTER(FALSE)); // unfreeze (see above)
 }

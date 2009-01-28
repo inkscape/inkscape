@@ -51,6 +51,12 @@ public:
     bool getSnapBBoxEdgeMidpoints() const {return _bbox_edge_midpoints;}
 	bool getSnapBBoxMidpoints() const {return _bbox_midpoints;}
 
+	void setSnapToGrids(bool enabled) {_snap_to_grids = enabled;}
+    bool getSnapToGrids() const {return _snap_to_grids;}
+
+    void setSnapToGuides(bool enabled) {_snap_to_guides = enabled;}
+	bool getSnapToGuides() const {return _snap_to_guides;}
+
     void setIncludeItemCenter(bool enabled) {_include_item_center = enabled;}
     bool getIncludeItemCenter() const {return _include_item_center;}
 
@@ -85,6 +91,8 @@ private:
     bool _object_midpoints; // the midpoint of shapes (e.g. a circle, rect, polygon) or of any other shape (at [h/2, w/2])
     bool _bbox_edge_midpoints;
 	bool _bbox_midpoints;
+	bool _snap_to_grids;
+	bool _snap_to_guides;
     bool _snap_enabled_globally; // Toggles ALL snapping
     bool _snap_postponed_globally; // Hold all snapping temporarily when the mouse is moving fast
     PointType _snap_from; ///< bitmap of point types that we will snap from

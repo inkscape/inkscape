@@ -22,6 +22,9 @@ Inkscape::SnapPreferences::PointType const Inkscape::SnapPreferences::SNAPPOINT_
 
 Inkscape::SnapPreferences::SnapPreferences() :
 	_include_item_center(false),
+	_intersectionGG(true),
+	_snap_to_grids(true),
+	_snap_to_guides(true),
     _snap_enabled_globally(true),
     _snap_postponed_globally(false),
     _snap_to_itemnode(true), _snap_to_itempath(true),

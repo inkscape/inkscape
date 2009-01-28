@@ -748,6 +748,10 @@ void CanvasAxonomGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Poin
     sc.grid_lines.push_back(dummy);
 }
 
+bool CanvasAxonomGridSnapper::ThisSnapperMightSnap() const
+{
+    return _snap_enabled && _snapmanager->snapprefs.getSnapToGrids() && _snapmanager->snapprefs.getSnapModeBBoxOrNodes();
+}
 
 
 }; // namespace Inkscape

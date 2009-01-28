@@ -245,14 +245,16 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:snap-global");
     sp_object_read_attr(object, "inkscape:snap-bbox");
     sp_object_read_attr(object, "inkscape:snap-nodes");
-    sp_object_read_attr(object, "inkscape:snap-guide");
+    sp_object_read_attr(object, "inkscape:snap-from-guide");
     sp_object_read_attr(object, "inkscape:snap-center");
     sp_object_read_attr(object, "inkscape:snap-smooth-nodes");
     sp_object_read_attr(object, "inkscape:snap-midpoints");
     sp_object_read_attr(object, "inkscape:snap-object-midpoints");
     sp_object_read_attr(object, "inkscape:snap-bbox-edge-midpoints");
     sp_object_read_attr(object, "inkscape:snap-bbox-midpoints");
-	sp_object_read_attr(object, "inkscape:snap-intersection-grid-guide");
+	//sp_object_read_attr(object, "inkscape:snap-intersection-grid-guide");
+	sp_object_read_attr(object, "inkscape:snap-to-guides");
+	sp_object_read_attr(object, "inkscape:snap-grids");
     sp_object_read_attr(object, "inkscape:snap-intersection-paths");
     sp_object_read_attr(object, "inkscape:object-paths");
     sp_object_read_attr(object, "inkscape:object-nodes");
@@ -470,7 +472,15 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->snap_manager.snapprefs.setIncludeItemCenter(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    case SP_ATTR_INKSCAPE_SNAP_SMOOTH_NODES:
+    case SP_ATTR_INKSCAPE_SNAP_GRIDS:
+			nv->snap_manager.snapprefs.setSnapToGrids(value ? sp_str_to_bool(value) : TRUE);
+			object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+			break;
+    case SP_ATTR_INKSCAPE_SNAP_TO_GUIDES:
+			nv->snap_manager.snapprefs.setSnapToGuides(value ? sp_str_to_bool(value) : TRUE);
+			object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+			break;
+	case SP_ATTR_INKSCAPE_SNAP_SMOOTH_NODES:
             nv->snap_manager.snapprefs.setSnapSmoothNodes(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
@@ -490,14 +500,14 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
 			nv->snap_manager.snapprefs.setSnapBBoxMidpoints(value ? sp_str_to_bool(value) : FALSE);
 			object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 			break;
-	case SP_ATTR_INKSCAPE_SNAP_GUIDE:
+	case SP_ATTR_INKSCAPE_SNAP_FROM_GUIDE:
             nv->snap_manager.snapprefs.setSnapModeGuide(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    case SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE:
+    /*case SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE:
             nv->snap_manager.snapprefs.setSnapIntersectionGG(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
+            break;*/
     case SP_ATTR_INKSCAPE_SNAP_INTERS_PATHS:
             nv->snap_manager.snapprefs.setSnapIntersectionCS(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);

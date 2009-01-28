@@ -55,7 +55,7 @@ public:
     //virtual bool ThisSnapperMightSnap() const;
     virtual bool ThisSnapperMightSnap() const {return _snap_enabled;} // will likely be overridden by derived classes
 
-    void setEnabled(bool s);
+    void setEnabled(bool s); // This is only used for grids, for which snapping can be enabled individually
     bool getEnabled() const {return _snap_enabled;}
 
     virtual void freeSnap(SnappedConstraints &/*sc*/,
@@ -108,6 +108,7 @@ protected:
 	SnapManager *_snapmanager;
 
 	bool _snap_enabled; ///< true if this snapper is enabled, otherwise false
+						// This is only used for grids, for which snapping can be enabled individually
 
 private:
 	Geom::Coord _snapper_tolerance;   ///< snap tolerance in desktop coordinates

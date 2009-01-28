@@ -71,6 +71,7 @@ class CanvasAxonomGridSnapper : public LineSnapper
 {
 public:
     CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SnapManager *sm, Geom::Coord const d);
+    bool ThisSnapperMightSnap() const;
 
 private:
     LineList _getSnapLines(Geom::Point const &p) const;

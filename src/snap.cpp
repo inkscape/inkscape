@@ -77,7 +77,7 @@ SnapManager::getGridSnappers() const
     SnapperList s;
 
     //FIXME: this code should actually do this: add new grid snappers that are active for this desktop. now it just adds all gridsnappers
-    if (_desktop && _desktop->gridsEnabled()) {
+    if (_desktop && _desktop->gridsEnabled() && snapprefs.getSnapToGrids()) {
         for ( GSList const *l = _named_view->grids; l != NULL; l = l->next) {
             Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
             s.push_back(grid->snapper);
