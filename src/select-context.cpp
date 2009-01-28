@@ -360,14 +360,17 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
 
         case GDK_ENTER_NOTIFY:
         {
-            GdkCursor *cursor = gdk_cursor_new(GDK_FLEUR);
-            gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, cursor);
-            gdk_cursor_destroy(cursor);
+            if (!desktop->isWaitingCursor()) {
+                GdkCursor *cursor = gdk_cursor_new(GDK_FLEUR);
+                gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, cursor);
+                gdk_cursor_destroy(cursor);
+            }
             break;
         }
 
         case GDK_LEAVE_NOTIFY:
-            gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
+            if (!desktop->isWaitingCursor())
+                gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
             break;
 
         case GDK_KEY_PRESS:
@@ -713,7 +716,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                                 _("<b>Shift</b>: click to toggle select; drag for rubberband selection"),
                                                 _("<b>Alt</b>: click to select under; drag to move selected or select by touch"));
                     // if Alt and nonempty selection, show moving cursor ("move selected"):
-                    if (alt && !selection->isEmpty()) {
+                    if (alt && !selection->isEmpty() && !desktop->isWaitingCursor()) {
                         GdkCursor *cursor = gdk_cursor_new(GDK_FLEUR);
                         gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, cursor);
                         gdk_cursor_destroy(cursor);
@@ -935,7 +938,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             }
             }
             // set cursor to default.
-            gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
+            if (!desktop->isWaitingCursor())
+                gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
             break;
         default:
             break;
