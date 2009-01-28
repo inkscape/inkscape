@@ -285,6 +285,7 @@ struct SPDesktop : public Inkscape::UI::View::View
 
     void setWaitingCursor();
     void clearWaitingCursor();
+    bool isWaitingCursor() const { return waiting_cursor; };
 
     void toggleColorProfAdjust();
 
