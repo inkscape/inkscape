@@ -154,6 +154,8 @@ ExecutionEnv::workingCanceled( const int /*resp*/) {
 
 void
 ExecutionEnv::cancel (void) {
+    SPDesktop *desktop = (SPDesktop *)_doc;
+    desktop->clearWaitingCursor();
     _effect->get_imp()->cancelProcessing();
     return;
 }
@@ -203,7 +205,10 @@ ExecutionEnv::run (void) {
     if (_show_working) {
         createWorkingDialog();
     }
+    SPDesktop *desktop = (SPDesktop *)_doc;
+    desktop->setWaitingCursor();
     _effect->get_imp()->effect(_effect, _doc, _docCache);
+    desktop->clearWaitingCursor();
     _state = ExecutionEnv::COMPLETE;
     // _runComplete.signal();
     return;
