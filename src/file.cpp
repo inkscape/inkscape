@@ -198,6 +198,10 @@ sp_file_open(const Glib::ustring &uri,
              Inkscape::Extension::Extension *key,
              bool add_to_recent, bool replace_empty)
 {
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop)
+        desktop->setWaitingCursor();
+
     SPDocument *doc = NULL;
     try {
         doc = Inkscape::Extension::open(key, uri.c_str());
@@ -207,8 +211,10 @@ sp_file_open(const Glib::ustring &uri,
         doc = NULL;
     }
 
+    if (desktop)
+        desktop->clearWaitingCursor();
+
     if (doc) {
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         SPDocument *existing = desktop ? sp_desktop_document(desktop) : NULL;
 
         if (existing && existing->virgin && replace_empty) {
