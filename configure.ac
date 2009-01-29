@@ -207,7 +207,7 @@ AC_CHECK_HEADERS([gc.h gc/gc.h],
 				  break], [gc_ok=no], [$gc_libs])
 		    break],
                  [gc_ok=no])
-if test "x$gc_ok" = "xyes" && "x$cross_compiling" = "xno" ; then 
+if test "x$gc_ok" = "xyes" && test "x$cross_compiling" = "xno" ; then 
 	AC_MSG_CHECKING([libgc version 6.4+])
 	AC_RUN_IFELSE(
 		[AC_LANG_SOURCE([[
