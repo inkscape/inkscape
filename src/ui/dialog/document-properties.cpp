@@ -391,6 +391,10 @@ DocumentProperties::linkSelectedProfile()
     if (!desktop){
         g_warning("No active desktop");
     } else {
+        if (!_menu.get_active()){
+            g_warning("No color profile available.");
+            return;
+        }
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(desktop->doc());
         Inkscape::XML::Node *cprofRepr = xml_doc->createElement("svg:color-profile");
         cprofRepr->setAttribute("name", (gchar*) _menu.get_active()->get_data("name"));
