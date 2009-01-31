@@ -51,17 +51,8 @@ struct SPNamedView : public SPObjectGroup {
     SnapManager snap_manager;
     GSList * grids;
     bool grids_visible;
-    
+
     SPUnit const *doc_units;
-
-    SPUnit const *gridtoleranceunit;
-    gdouble gridtolerance;
-
-    SPUnit const *guidetoleranceunit;
-    gdouble guidetolerance;
-
-    SPUnit const *objecttoleranceunit;
-    gdouble objecttolerance;
 
     GQuark default_layer_id;
 

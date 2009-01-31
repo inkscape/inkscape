@@ -45,14 +45,12 @@ public:
 	Snapper(SnapManager *sm, ::Geom::Coord const t);
 	virtual ~Snapper() {}
 
-    void setSnapperTolerance(Geom::Coord t);
-    Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
-    bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
+    virtual Geom::Coord getSnapperTolerance() const {}; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
+    virtual bool getSnapperAlwaysSnap() const {}; //if true, then the snapper will always snap, regardless of its tolerance
 
     /**
     *  \return true if this Snapper will snap at least one kind of point.
     */
-    //virtual bool ThisSnapperMightSnap() const;
     virtual bool ThisSnapperMightSnap() const {return _snap_enabled;} // will likely be overridden by derived classes
 
     void setEnabled(bool s); // This is only used for grids, for which snapping can be enabled individually
@@ -109,11 +107,6 @@ protected:
 
 	bool _snap_enabled; ///< true if this snapper is enabled, otherwise false
 						// This is only used for grids, for which snapping can be enabled individually
-
-private:
-	Geom::Coord _snapper_tolerance;   ///< snap tolerance in desktop coordinates
-                                    // must be private to enforce the usage of getTolerance(), which retrieves
-                                    // the tolerance in screen pixels (making it zoom independent)
 };
 
 }

@@ -73,6 +73,9 @@ public:
     CanvasAxonomGridSnapper(CanvasAxonomGrid *grid, SnapManager *sm, Geom::Coord const d);
     bool ThisSnapperMightSnap() const;
 
+    Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
+	bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
+
 private:
     LineList _getSnapLines(Geom::Point const &p) const;
     void _addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, const Geom::Point point_on_line) const;

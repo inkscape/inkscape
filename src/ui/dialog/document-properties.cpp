@@ -794,9 +794,9 @@ DocumentProperties::update()
 
     //-----------------------------------------------------------snap page
 
-    _rsu_sno.setValue (nv->objecttolerance);
-    _rsu_sn.setValue (nv->gridtolerance);
-    _rsu_gusn.setValue (nv->guidetolerance);
+    _rsu_sno.setValue (nv->snap_manager.snapprefs.getObjectTolerance());
+    _rsu_sn.setValue (nv->snap_manager.snapprefs.getGridTolerance());
+    _rsu_gusn.setValue (nv->snap_manager.snapprefs.getGuideTolerance());
 
 
     //-----------------------------------------------------------grids page

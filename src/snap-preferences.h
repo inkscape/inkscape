@@ -13,6 +13,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "helper/units.h"
+
 namespace Inkscape
 {
 
@@ -82,6 +84,15 @@ public:
 	bool getSnapToPageBorder() const {return _snap_to_page_border;}
 	bool getStrictSnapping() const {return _strict_snapping;}
 
+	gdouble getGridTolerance() const {return _grid_tolerance;}
+	gdouble getGuideTolerance() const {return _guide_tolerance;}
+	gdouble getObjectTolerance() const {return _object_tolerance;}
+
+	void setGridTolerance(gdouble val) {_grid_tolerance = val;}
+	void setGuideTolerance(gdouble val) {_guide_tolerance = val;}
+	void setObjectTolerance(gdouble val) {_object_tolerance = val;}
+
+
 private:
     bool _include_item_center; //If true, snapping nodes will also snap the item's center
     bool _intersectionGG; //Consider snapping to intersections of grid and guides
@@ -108,6 +119,10 @@ private:
 	//snap bbox corners to nodes, or nodes to bboxes.
 	//(snapping to grids and guides is not affected by this)
 	bool _strict_snapping;
+
+	gdouble _grid_tolerance;
+	gdouble _guide_tolerance;
+	gdouble _object_tolerance;
 };
 
 }

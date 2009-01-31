@@ -328,27 +328,15 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_GRIDTOLERANCE:
-            nv->gridtoleranceunit = &px;
-            nv->gridtolerance = 10000;
-            if (value) {
-                sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &nv->gridtolerance, &nv->gridtoleranceunit);
-            }
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;
+			nv->snap_manager.snapprefs.setGridTolerance(value ? g_ascii_strtod(value, NULL) : 10000);
+			object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+			break;
     case SP_ATTR_GUIDETOLERANCE:
-            nv->guidetoleranceunit = &px;
-            nv->guidetolerance = 20;
-            if (value) {
-                sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &nv->guidetolerance, &nv->guidetoleranceunit);
-            }
+			nv->snap_manager.snapprefs.setGuideTolerance(value ? g_ascii_strtod(value, NULL) : 20);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_OBJECTTOLERANCE:
-            nv->objecttoleranceunit = &px;
-            nv->objecttolerance = 20;
-            if (value) {
-                sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &nv->objecttolerance, &nv->objecttoleranceunit);
-            }
+			nv->snap_manager.snapprefs.setObjectTolerance(value ? g_ascii_strtod(value, NULL) : 20);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_GUIDECOLOR:

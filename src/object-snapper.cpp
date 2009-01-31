@@ -64,6 +64,21 @@ Inkscape::ObjectSnapper::~ObjectSnapper()
 }
 
 /**
+ *  \return Snap tolerance (desktop coordinates); depends on current zoom so that it's always the same in screen pixels
+ */
+Geom::Coord Inkscape::ObjectSnapper::getSnapperTolerance() const
+{
+	SPDesktop const *dt = _snapmanager->getDesktop();
+	double const zoom =  dt ? dt->current_zoom() : 1;
+	return _snapmanager->snapprefs.getObjectTolerance() / zoom;
+}
+
+bool Inkscape::ObjectSnapper::getSnapperAlwaysSnap() const
+{
+    return _snapmanager->snapprefs.getObjectTolerance() == 10000; //TODO: Replace this threshold of 10000 by a constant; see also tolerance-slider.cpp
+}
+
+/**
  *  Find all items within snapping range.
  *  \param parent Pointer to the document's root, or to a clipped path or mask object
  *  \param it List of items to ignore

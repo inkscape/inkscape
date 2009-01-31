@@ -953,6 +953,21 @@ CanvasXYGridSnapper::CanvasXYGridSnapper(CanvasXYGrid *grid, SnapManager *sm, Ge
     this->grid = grid;
 }
 
+/**
+ *  \return Snap tolerance (desktop coordinates); depends on current zoom so that it's always the same in screen pixels
+ */
+Geom::Coord CanvasXYGridSnapper::getSnapperTolerance() const
+{
+	SPDesktop const *dt = _snapmanager->getDesktop();
+	double const zoom =  dt ? dt->current_zoom() : 1;
+	return _snapmanager->snapprefs.getGridTolerance() / zoom;
+}
+
+bool CanvasXYGridSnapper::getSnapperAlwaysSnap() const
+{
+    return _snapmanager->snapprefs.getGridTolerance() == 10000; //TODO: Replace this threshold of 10000 by a constant; see also tolerance-slider.cpp
+}
+
 LineSnapper::LineList
 CanvasXYGridSnapper::_getSnapLines(Geom::Point const &p) const
 {

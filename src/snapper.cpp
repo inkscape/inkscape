@@ -21,34 +21,9 @@
  */
 Inkscape::Snapper::Snapper(SnapManager *sm, Geom::Coord const t) :
 	_snapmanager(sm),
-	_snap_enabled(true),
-	_snapper_tolerance(std::max(t, 1.0))
+	_snap_enabled(true)
 {
     g_assert(_snapmanager != NULL);
-}
-
-/**
- *  Set snap tolerance.
- *  \param d New snap tolerance (desktop coordinates)
- */
-void Inkscape::Snapper::setSnapperTolerance(Geom::Coord const d)
-{
-    _snapper_tolerance = std::max(d, 1.0);
-}
-
-/**
- *  \return Snap tolerance (desktop coordinates); depends on current zoom so that it's always the same in screen pixels
- */
-Geom::Coord Inkscape::Snapper::getSnapperTolerance() const
-{
-	SPDesktop const *dt = _snapmanager->getDesktop();
-	double const zoom =  dt ? dt->current_zoom() : 1;
-	return _snapper_tolerance / zoom;
-}
-
-bool Inkscape::Snapper::getSnapperAlwaysSnap() const
-{
-    return _snapper_tolerance == 10000; //TODO: Replace this threshold of 10000 by a constant; see also tolerance-slider.cpp
 }
 
 /**

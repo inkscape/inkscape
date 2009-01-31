@@ -104,7 +104,6 @@ static void _layer_hierarchy_changed(SPObject *top, SPObject *bottom, SPDesktop 
 static void _reconstruction_start(SPDesktop * desktop);
 static void _reconstruction_finish(SPDesktop * desktop);
 static void _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop);
-static void _update_snap_distances (SPDesktop *desktop);
 
 /**
  * Return new desktop object.
@@ -1698,12 +1697,6 @@ _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
 
-        /* Recalculate snap distances */
-        /* FIXME: why is the desktop getting involved in setting up something
-        ** that is entirely to do with the namedview?
-        */
-        _update_snap_distances (desktop);
-
         /* Show/hide page background */
         if (nv->pagecolor & 0xff) {
             sp_canvas_item_show (desktop->table);
@@ -1757,33 +1750,6 @@ _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
         }
     }
 }
-
-/**
- * Callback to reset snapper's distances.
- */
-static void
-_update_snap_distances (SPDesktop *desktop)
-{
-    SPUnit const &px = sp_unit_get_by_id(SP_UNIT_PX);
-
-    SPNamedView &nv = *desktop->namedview;
-
-    //tell all grid snappers
-    for ( GSList const *l = nv.grids; l != NULL; l = l->next) {
-        Inkscape::CanvasGrid *grid = (Inkscape::CanvasGrid*) l->data;
-        grid->snapper->setSnapperTolerance(sp_convert_distance_full(nv.gridtolerance,
-                                                                      *nv.gridtoleranceunit,
-                                                                      px));
-    }
-
-    nv.snap_manager.guide.setSnapperTolerance(sp_convert_distance_full(nv.guidetolerance,
-                                                                       *nv.guidetoleranceunit,
-                                                                       px));
-    nv.snap_manager.object.setSnapperTolerance(sp_convert_distance_full(nv.objecttolerance,
-                                                                        *nv.objecttoleranceunit,
-                                                                        px));
-}
-
 
 Geom::Matrix SPDesktop::w2d() const
 {

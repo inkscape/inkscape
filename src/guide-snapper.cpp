@@ -15,11 +15,27 @@
 #include "libnr/nr-values.h"
 #include "libnr/nr-point-fns.h"
 #include "sp-namedview.h"
+#include "desktop.h"
 #include "sp-guide.h"
 
 Inkscape::GuideSnapper::GuideSnapper(SnapManager *sm, Geom::Coord const d) : LineSnapper(sm, d)
 {
 
+}
+
+/**
+ *  \return Snap tolerance (desktop coordinates); depends on current zoom so that it's always the same in screen pixels
+ */
+Geom::Coord Inkscape::GuideSnapper::getSnapperTolerance() const
+{
+	SPDesktop const *dt = _snapmanager->getDesktop();
+	double const zoom =  dt ? dt->current_zoom() : 1;
+	return _snapmanager->snapprefs.getGuideTolerance() / zoom;
+}
+
+bool Inkscape::GuideSnapper::getSnapperAlwaysSnap() const
+{
+    return _snapmanager->snapprefs.getGuideTolerance() == 10000; //TODO: Replace this threshold of 10000 by a constant; see also tolerance-slider.cpp
 }
 
 Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(Geom::Point const &/*p*/) const
