@@ -58,10 +58,10 @@ std::vector<Geom::Interval> complementOf(Geom::Interval I, std::vector<Geom::Int
 
     for (unsigned i = 0; i<domain.size(); i++){
         boost::optional<Geom::Interval> I1i = intersect(domain.at(i),I1);
-        if (I1i) ret.push_back(I1i.get());
+        if (I1i && !I1i->isSingular()) ret.push_back(I1i.get());
         boost::optional<Geom::Interval> I2i = intersect(domain.at(i),I2);
-        if (I2i) ret.push_back(I2i.get());
-    }
+        if (I2i && !I2i->isSingular()) ret.push_back(I2i.get());
+    }    
     return ret;
 }
 
