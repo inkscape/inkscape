@@ -39,7 +39,7 @@ def export_MTEXT():
             angle = vals[groups['50']][0]
             attribs.update({'transform': 'rotate (%f %f %f)' % (-angle, x, y)})
         attribs.update({'sodipodi:linespacing': '125%'})
-        node = inkex.etree.SubElement(doc.getroot(), 'text', attribs)
+        node = inkex.etree.SubElement(layer, 'text', attribs)
         text = vals[groups['1']][0]
         found = text.find('\P')         # new line
         while found > -1:
@@ -60,7 +60,7 @@ def export_LINE():
     if vals[groups['10']] and vals[groups['11']] and vals[groups['20']] and vals[groups['21']]:
         path = 'M %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], scale*(vals[groups['11']][0] - xmin), - scale*(vals[groups['21']][0] - ymax))
         attribs = {'d': path, 'style': style}
-        inkex.etree.SubElement(doc.getroot(), 'path', attribs)
+        inkex.etree.SubElement(layer, 'path', attribs)
 
 def export_SPLINE():
     # mandatory group codes : (10, 20, 70) (x, y, flags)
@@ -68,11 +68,11 @@ def export_SPLINE():
         if not (vals[groups['70']][0] & 3) and len(vals[groups['10']]) == 4 and len(vals[groups['20']]) == 4:
             path = 'M %f,%f C %f,%f %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], vals[groups['10']][1], vals[groups['20']][1], vals[groups['10']][2], vals[groups['20']][2], vals[groups['10']][3], vals[groups['20']][3])
             attribs = {'d': path, 'style': style}
-            inkex.etree.SubElement(doc.getroot(), 'path', attribs)
+            inkex.etree.SubElement(layer, 'path', attribs)
         if not (vals[groups['70']][0] & 3) and len(vals[groups['10']]) == 3 and len(vals[groups['20']]) == 3:
             path = 'M %f,%f Q %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], vals[groups['10']][1], vals[groups['20']][1], vals[groups['10']][2], vals[groups['20']][2])
             attribs = {'d': path, 'style': style}
-            inkex.etree.SubElement(doc.getroot(), 'path', attribs)
+            inkex.etree.SubElement(layer, 'path', attribs)
 
 def export_CIRCLE():
     # mandatory group codes : (10, 20, 40) (x, y, radius)
@@ -97,7 +97,7 @@ def export_LEADER():
             for i in range (1, len(vals[groups['10']])):
                 path += ' %f,%f' % (vals[groups['10']][i], vals[groups['20']][i])
             attribs = {'d': path, 'style': style}
-            inkex.etree.SubElement(doc.getroot(), 'path', attribs)
+            inkex.etree.SubElement(layer, 'path', attribs)
 
 def export_LWPOLYLINE():
     # mandatory group codes : (10, 20, 70) (x, y, flags)
@@ -137,7 +137,7 @@ def export_LWPOLYLINE():
             if vals[groups['70']][0] == 1:      # closed path
                 path += ' z'
             attribs = {'d': path, 'style': style}
-            inkex.etree.SubElement(doc.getroot(), 'path', attribs)
+            inkex.etree.SubElement(layer, 'path', attribs)
 
 def generate_ellipse(xc, yc, xm, ym, w, a1, a2):
     rm = math.sqrt(xm*xm + ym*ym)
@@ -161,7 +161,7 @@ def generate_ellipse(xc, yc, xm, ym, w, a1, a2):
     else:                           # closed arc
         path = 'M %f,%f A %f,%f %f 1 0 %f,%f %f,%f %f 1 0 %f,%f z' % (xc+xm, yc-ym, rm, w*rm, -180.0*a/math.pi, xc-xm, yc+ym, rm, w*rm, -180.0*a/math.pi, xc+xm, yc-ym)
     attribs = {'d': path, 'style': style}
-    inkex.etree.SubElement(doc.getroot(), 'path', attribs)
+    inkex.etree.SubElement(layer, 'path', attribs)
 
 def get_line():
     return (stream.readline().strip(), stream.readline().strip())
@@ -187,7 +187,8 @@ xmax = xmin = 0.0
 ymax = 297.0                                        # default A4 height in mm
 line = get_line()
 flag = 0
-layers = {}                                         # store colors by layer
+layer_colors = {}                                   # store colors by layer
+layer_nodes = {}                                    # store nodes by layer
 while line[0] and line[1] != 'ENTITIES':
     line = get_line()
     if line[1] == '$EXTMIN':
@@ -195,12 +196,14 @@ while line[0] and line[1] != 'ENTITIES':
     if line[1] == '$EXTMAX':
         xmax = get_group('10')
         ymax = get_group('20')
-    if line[0] == '2':
+    if flag and line[0] == '2':
         name = line[1]
+        attribs = {inkex.addNS('groupmode','inkscape'): 'layer', inkex.addNS('label','inkscape'): '%s' % name}
+        layer_nodes[name] = inkex.etree.SubElement(doc.getroot(), 'g', attribs)
     if line[0] == '2' and line[1] == 'LAYER':
         flag = 1
     if flag and line[0] == '62':
-        layers[name] = int(line[1])
+        layer_colors[name] = int(line[1])
     if line[0] == '0' and line[1] == 'ENDTAB':
         flag = 0
 
@@ -228,9 +231,10 @@ while line[0] and line[1] != 'ENDSEC':
         if entities.has_key(entity):
             color = '#000000'                       # default color
             if vals[groups['8']]:                   # Common Layer Name
-                if layers.has_key(vals[groups['8']][0]):
-                    if colors.has_key(layers[vals[groups['8']][0]]):
-                        color = colors[layers[vals[groups['8']][0]]]
+                layer = layer_nodes[vals[groups['8']][0]]
+                if layer_colors.has_key(vals[groups['8']][0]):
+                    if colors.has_key(layer_colors[vals[groups['8']][0]]):
+                        color = colors[layer_colors[vals[groups['8']][0]]]
             if vals[groups['62']]:                  # Common Color Number
                 if colors.has_key(vals[groups['62']][0]):
                     color = colors[vals[groups['62']][0]]
