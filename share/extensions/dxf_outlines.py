@@ -72,7 +72,7 @@ class MyEffect(inkex.Effect):
         if len(self.poly) == 1:
             return
         self.handle += 1
-        self.dxf_add("  0\nLWPOLYLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbPolyline\n 90\n%d\n" % (self.handle, len(self.poly)))
+        self.dxf_add("  0\nLWPOLYLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbPolyline\n 90\n%d\n 70\n0\n" % (self.handle, len(self.poly)))
         for i in range(len(self.poly)):
             self.dxf_add(" 10\n%f\n 20\n%f\n 30\n0.0\n" % (self.poly[i][0],self.poly[i][1]))
     def dxf_spline(self,csp):
