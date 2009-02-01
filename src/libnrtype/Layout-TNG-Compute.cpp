@@ -1345,10 +1345,16 @@ bool Layout::Calculator::calculate()
 {
     if (_flow._input_stream.empty())
         return false;
-    g_assert(_flow._input_stream.front()->Type() == TEXT_SOURCE);
+    /**
+    * hm, why do we want assert (crash) the application, now do simply return false
+    * \todo check if this is the correct behaviour
+    * g_assert(_flow._input_stream.front()->Type() == TEXT_SOURCE);
+    */
     if (_flow._input_stream.front()->Type() != TEXT_SOURCE)
+    {
+        g_warning("flow text is not of type TEXT_SOURCE. Abort.");
         return false;
-
+    }
     TRACE(("begin calculateFlow()\n"));
 
     _flow._clearOutputObjects();
