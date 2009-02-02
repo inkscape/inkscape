@@ -82,6 +82,7 @@
 #include "libnr/nr-convert2geom.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
+#include "inkscape-private.h"
 
 // For clippath editing
 #include "tools-switch.h"
@@ -2516,8 +2517,16 @@ sp_selection_create_bitmap_copy (SPDesktop *desktop)
     // Imagemagick is known not to handle spaces in filenames, so we replace anything but letters,
     // digits, and a few other chars, with "_"
     filename = g_strcanon (filename, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.=+~$#@^&!?", '_');
-    // Build the complete path by adding document->base if set
-    gchar *filepath = g_build_filename (document->base?document->base:"", filename, NULL);
+
+    // Build the complete path by adding document base dir, if set, otherwise home dir
+    gchar * directory = NULL;
+    if (SP_DOCUMENT_URI(document)) {
+        directory = g_dirname(SP_DOCUMENT_URI(document));
+    }
+    if (directory == NULL) {
+        directory = homedir_path(NULL);
+    }
+    gchar *filepath = g_build_filename (directory, filename, NULL);
 
     //g_print ("%s\n", filepath);
 
