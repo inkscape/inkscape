@@ -622,7 +622,7 @@ sp_export_dialog (void)
 
         {
             Gtk::HBox* hide_box = new Gtk::HBox(FALSE, 5);
-            GtkWidget *he = gtk_check_button_new_with_label(_("Hide _all except selected"));
+            GtkWidget *he = gtk_check_button_new_with_label(_("Hide all except selected"));
             gtk_widget_set_sensitive(GTK_WIDGET(he), TRUE);
             gtk_object_set_data(GTK_OBJECT(dlg), "hide_checkbox", he);
             hide_box->pack_start(*Glib::wrap(he), false, false);
