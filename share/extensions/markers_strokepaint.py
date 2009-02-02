@@ -30,7 +30,7 @@ class MyEffect(inkex.Effect):
         
     def effect(self):
         defs = self.xpathSingle('/svg:svg//svg:defs')
-        if not defs:
+        if defs == None:
             defs = inkex.etree.SubElement(self.document.getroot(),inkex.addNS('defs','svg'))
         
         for id, node in self.selected.iteritems():

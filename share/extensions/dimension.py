@@ -51,7 +51,7 @@ class Dimension(pathmodifier.PathModifier):
 
     def addMarker(self, name, rotate):
         defs = self.xpathSingle('/svg:svg//svg:defs')
-        if not defs:
+        if defs == None:
             defs = inkex.etree.SubElement(self.document.getroot(),inkex.addNS('defs','svg'))
         marker = inkex.etree.SubElement(defs ,inkex.addNS('marker','svg'))
         marker.set('id', name)
