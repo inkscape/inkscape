@@ -18,7 +18,10 @@ namespace Bitmap {
 	
 void
 Contrast::applyEffect(Magick::Image *image) {
-	image->contrast(_sharpen);
+	// the contrast method's argument seems to be binary, so we perform it multiple times
+	// to get the desired level of effect
+	for (unsigned int i = 0; i < _sharpen; i ++)
+    	image->contrast(1);
 }
 
 void
@@ -35,13 +38,13 @@ Contrast::init(void)
 		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
 			"<name>" N_("Contrast") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.contrast</id>\n"
-			"<param name=\"sharpen\" gui-text=\"" N_("Sharpen") "\" type=\"int\" min=\"0\" max=\"100\">1</param>\n"
+			"<param name=\"sharpen\" gui-text=\"" N_("Adjust") "\" type=\"int\" min=\"0\" max=\"10\">0</param>\n"
 			"<effect>\n"
 				"<object-type>all</object-type>\n"
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Enhance intensity differences in selected bitmap(s).") "</menu-tip>\n"
+				"<menu-tip>" N_("Increase or decrease contrast in bitmap(s)") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Contrast());
 }
