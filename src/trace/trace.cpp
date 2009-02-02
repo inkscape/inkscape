@@ -283,7 +283,8 @@ Tracer::sioxProcessImage(SPImage *img,
             //Get absolute X,Y position
             double xpos = ((double)aImg->bbox.x0) + iwscale * (double)col;
             Geom::Point point(xpos, ypos);
-            point *= *aImg->transform;
+            if (aImg->transform)
+                point *= *aImg->transform;
             //point *= imgMat;
             //point = desktop->doc2dt(point);
             //g_message("x:%f    y:%f\n", point[0], point[1]);
