@@ -103,7 +103,6 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {COPY_ROTATE,           N_("Rotate copies"),           "copy_rotate"},
     {RULER,                 N_("Ruler"),                   "ruler"},
     {SKETCH,                N_("Sketch"),                  "sketch"},
-    {SPIRO,                 N_("Spiro spline"),            "spiro"},
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
     {TEXT_LABEL,            N_("Text label"),              "text_label"},
     {VONKOCH,               N_("VonKoch"),                 "vonkoch"},
@@ -111,11 +110,12 @@ const Util::EnumData<EffectType> LPETypeData[] = {
 /* 0.46 */
     {BEND_PATH,             N_("Bend"),                     "bend_path"},
     {GEARS,                 N_("Gears"),                   "gears"},
-    {KNOT,                  N_("Knot"),                    "knot"},
     {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),      "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
     {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
 /* 0.47 */
+    {KNOT,                  N_("Knot"),                    "knot"},
     {CONSTRUCT_GRID,        N_("Construct grid"),          "construct_grid"},
+    {SPIRO,                 N_("Spiro spline"),            "spiro"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
