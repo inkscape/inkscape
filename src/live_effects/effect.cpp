@@ -89,7 +89,6 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {CIRCLE_3PTS,           N_("Circle by 3 points"),      "circle_3pts"},
     {DYNASTROKE,            N_("Dynamic stroke"),          "dynastroke"},
     {ENVELOPE,              N_("Envelope Deformation"),    "envelope"},
-    {FREEHAND_SHAPE,        N_("Freehand Shape"),          "freehand_shape"}, // this is actually a special type of PatternAlongPath, used to paste shapes in pen/pencil tool
     {ROUGH_HATCHES,         N_("Hatches (rough)"),         "rough_hatches"},
     {INTERPOLATE,           N_("Interpolate Sub-Paths"),   "interpolate"},
     {LATTICE,               N_("Lattice Deformation"),     "lattice"},
@@ -113,6 +112,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),      "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
     {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
 /* 0.47 */
+    {FREEHAND_SHAPE,        N_("Freehand Shape"),          "freehand_shape"}, // this is actually a special type of PatternAlongPath, used to paste shapes in pen/pencil tool
     {KNOT,                  N_("Knot"),                    "knot"},
     {CONSTRUCT_GRID,        N_("Construct grid"),          "construct_grid"},
     {SPIRO,                 N_("Spiro spline"),            "spiro"},
