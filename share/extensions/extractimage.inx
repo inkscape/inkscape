@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
-    <_name>Extract One Image</_name>
+    <_name>Extract Image</_name>
     <id>org.ekips.filter.extractimage</id>
 	<dependency type="executable" location="extensions">extractimage.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name="filepath" type="string" _gui-text="Path to save image">none</param>
 	<_param name="desc" type="description">Note: The file extension is appended automatically.</_param>
-    <effect>
+    <effect needs-live-preview="false">
 		<object-type>all</object-type>
                 <effects-menu>
                         <submenu _name="Images"/>
