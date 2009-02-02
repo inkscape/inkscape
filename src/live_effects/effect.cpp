@@ -72,6 +72,9 @@
 #include "live_effects/lpe-path_length.h"
 #include "live_effects/lpe-line_segment.h"
 
+//#define LPE_ENABLE_TEST_EFFECTS
+
+
 namespace Inkscape {
 
 namespace LivePathEffect {
@@ -89,7 +92,6 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {FREEHAND_SHAPE,        N_("Freehand Shape"),          "freehand_shape"}, // this is actually a special type of PatternAlongPath, used to paste shapes in pen/pencil tool
     {ROUGH_HATCHES,         N_("Hatches (rough)"),         "rough_hatches"},
     {INTERPOLATE,           N_("Interpolate Sub-Paths"),   "interpolate"},
-    {KNOT,                  N_("Knot"),                    "knot"},
     {LATTICE,               N_("Lattice Deformation"),     "lattice"},
     {LINE_SEGMENT,          N_("Line Segment"),            "line_segment"},
     {MIRROR_SYMMETRY,       N_("Mirror symmetry"),         "mirror_symmetry"},
@@ -109,6 +111,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
 /* 0.46 */
     {BEND_PATH,             N_("Bend"),                     "bend_path"},
     {GEARS,                 N_("Gears"),                   "gears"},
+    {KNOT,                  N_("Knot"),                    "knot"},
     {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),      "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
     {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
 /* 0.47 */
