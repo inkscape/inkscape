@@ -22,7 +22,7 @@
 #include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 
-
+#include "desktop.h"
 
 #include "tracedialog.h"
 #include "trace/potrace/inkscape-potrace.h"
@@ -175,7 +175,6 @@ class TraceDialogImpl : public TraceDialog
 
     //#### Credits
 
-    Gtk::Frame            potraceCreditsFrame;
     Gtk::VBox             potraceCreditsVBox;
     Gtk::Label            potraceCreditsLabel;
 
@@ -209,6 +208,10 @@ class TraceDialogImpl : public TraceDialog
  */
 void TraceDialogImpl::potraceProcess(bool do_i_trace)
 {
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop)
+        desktop->setWaitingCursor();
+
     //##### Get the tracer and engine
     Inkscape::Trace::Potrace::PotraceTracingEngine pte;
 
@@ -316,6 +319,8 @@ void TraceDialogImpl::potraceProcess(bool do_i_trace)
             mainOkButton->set_sensitive(true);
         }
 
+    if (desktop)
+        desktop->clearWaitingCursor();
 }
 
 
@@ -324,11 +329,17 @@ void TraceDialogImpl::potraceProcess(bool do_i_trace)
  */
 void TraceDialogImpl::abort()
 {
-    //### Do some GUI thing
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop)
+        desktop->setWaitingCursor();
+
+    if (mainCancelButton)
+        mainCancelButton->set_sensitive(false);
+    if (mainOkButton)
+        mainOkButton->set_sensitive(true);
 
     //### Make the abort() call to the tracer
     tracer.abort();
-
 }
 
 
@@ -611,19 +622,16 @@ TraceDialogImpl::TraceDialogImpl() :
 
     notebook.append_page(optionsPageBox, _("Options"));
 
+    //### credits
+
+    potraceCreditsLabel.set_text(_("Inkscape bitmap tracing\nis based on Potrace,\ncreated by Peter Selinger\n\nhttp://potrace.sourceforge.net"));
+    potraceCreditsVBox.pack_start(potraceCreditsLabel, false, false, MARGIN);
+
+    notebook.append_page(potraceCreditsVBox, _("Credits"));
+
     //### end notebook
 
     leftVBox.pack_start(notebook, true, true, MARGIN);
-
-    //### credits
-
-    potraceCreditsLabel.set_text(_("Thanks to Peter Selinger, http://potrace.sourceforge.net"));
-    potraceCreditsVBox.pack_start(potraceCreditsLabel, false, false, MARGIN);
-    potraceCreditsFrame.set_label(_("Credits"));
-    potraceCreditsFrame.set_shadow_type(Gtk::SHADOW_NONE);
-    potraceCreditsFrame.add(potraceCreditsVBox);
-
-    leftVBox.pack_start(potraceCreditsFrame, false, false, 0);
 
     //#### end left panel
 
