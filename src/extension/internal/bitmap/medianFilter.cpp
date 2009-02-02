@@ -33,7 +33,7 @@ MedianFilter::init(void)
 {
 	Inkscape::Extension::build_from_mem(
 		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-			"<name>" N_("Median Filter") "</name>\n"
+			"<name>" N_("Median") "</name>\n"
 			"<id>org.inkscape.effect.bitmap.medianFilter</id>\n"
 			"<param name=\"radius\" gui-text=\"" N_("Radius") "\" type=\"float\" min=\"0\" max=\"100\">0</param>\n"			
 			"<effect>\n"
@@ -41,7 +41,7 @@ MedianFilter::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Filter selected bitmap(s) by replacing each pixel component with the median color in a circular neighborhood.") "</menu-tip>\n"
+				"<menu-tip>" N_("Replace each pixel component with the median color in a circular neighborhood.") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new MedianFilter());
 }
