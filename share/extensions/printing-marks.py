@@ -93,14 +93,16 @@ class Printing_Marks (inkex.Effect):
 
 
     def draw_crop_line(self, x1, y1, x2, y2, name, parent):
-        style = { 'stroke': '#000000', 'stroke-width': str(self.stroke_width), 'fill': 'none'}
+        style = { 'stroke': '#000000', 'stroke-width': str(self.stroke_width),
+                  'fill': 'none'}
         line_attribs = {'style': simplestyle.formatStyle(style),
                         'id': name,
                         'd': 'M '+str(x1)+','+str(y1)+' L '+str(x2)+','+str(y2)}
         inkex.etree.SubElement(parent, 'path', line_attribs)
 
     def draw_bleed_line(self, x1, y1, x2, y2, name, parent):
-        style = { 'stroke': '#000000', 'stroke-width': str(self.stroke_width), 'fill': 'none',
+        style = { 'stroke': '#000000', 'stroke-width': str(self.stroke_width),
+                  'fill': 'none',
                   'stroke-miterlimit': '4', 'stroke-dasharray': '4, 2, 1, 2',
                   'stroke-dashoffset': '0' }
         line_attribs = {'style': simplestyle.formatStyle(style),
@@ -156,7 +158,8 @@ class Printing_Marks (inkex.Effect):
                           inkex.addNS('label','inkscape'):name,
                           'transform':'translate('+str(cx)+','+str(cy)+')',
                           'd':d}
-        inkex.etree.SubElement(parent, inkex.addNS('path','svg'), regmark_attribs)
+        inkex.etree.SubElement(parent, inkex.addNS('path','svg'),
+                               regmark_attribs)
 
     def draw_coluor_bars(self, cx, cy, rotate, name, parent):
         g = inkex.etree.SubElement(parent, 'g', {
@@ -196,7 +199,8 @@ class Printing_Marks (inkex.Effect):
         self.height = height = inkex.unittouu(svg.attrib['height'])
 
         # Convert parameters to user unit
-        offset = inkex.unittouu(str(self.options.crop_offset) + self.options.unit)
+        offset = inkex.unittouu(str(self.options.crop_offset) + \
+                                self.options.unit)
         bt = inkex.unittouu(str(self.options.bleed_top)    + self.options.unit)
         bb = inkex.unittouu(str(self.options.bleed_bottom) + self.options.unit)
         bl = inkex.unittouu(str(self.options.bleed_left)   + self.options.unit)
@@ -328,13 +332,13 @@ class Printing_Marks (inkex.Effect):
 
             # Top Mark
             cy = max( bmt + offset, self.min_mark_margin )
-            self.draw_reg_marks((width/2) - self.mark_size*1.5,
+            self.draw_reg_marks((width/2),
                                 -cy - (self.mark_size/2),
                                 '90', 'regMarkT', g_center)
 
             # Bottom Mark
             cy = max( bmb + offset, self.min_mark_margin )
-            self.draw_reg_marks((width/2) - self.mark_size*1.5,
+            self.draw_reg_marks((width/2),
                                 height + cy + (self.mark_size/2),
                                 '-90', 'regMarkB', g_center)
 
@@ -359,12 +363,12 @@ class Printing_Marks (inkex.Effect):
             else :
                 # Top Star
                 cy = max( bmt + offset, self.min_mark_margin )
-                self.draw_star_target((width/2),
+                self.draw_star_target((width/2) - self.mark_size*1.5,
                                       -cy - (self.mark_size/2),
                                       'starTargetT', g_center)
                 # Bottom Star
                 cy = max( bmb + offset, self.min_mark_margin )
-                self.draw_star_target((width/2),
+                self.draw_star_target((width/2) - self.mark_size*1.5,
                                       height + cy + (self.mark_size/2),
                                       'starTargetB', g_center)
 

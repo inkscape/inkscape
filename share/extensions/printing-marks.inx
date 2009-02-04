@@ -16,8 +16,8 @@
     </page>
     <page name="tab" _gui-text="Positioning">
       <param name="where" type="enum" _gui-text="Set crop marks to">
-        <item>selection</item>
-        <item>canvas</item>
+        <_item value="selection">Selection</_item>
+        <_item value="canvas">Canvas</_item>
       </param>
       <param name="unit" type="enum" _gui-text="Unit">
         <item>px</item>
