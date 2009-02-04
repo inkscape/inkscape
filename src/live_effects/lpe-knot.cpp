@@ -378,7 +378,7 @@ LPEKnot::~LPEKnot()
 }
 
 void
-LPEKnot::doOnApply(SPLPEItem *lpeitem)
+LPEKnot::doOnApply(SPLPEItem */*lpeitem*/)
 {
     //SPCurve *curve = SP_SHAPE(lpeitem)->curve;
     // //TODO: where should the switcher be initialized? (it shows up here if there is no crossing at all)
@@ -511,7 +511,7 @@ LPEKnot::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVecto
 }
 
 void
-KnotHolderEntityCrossingSwitcher::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
+KnotHolderEntityCrossingSwitcher::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
     LPEKnot* lpe = get_effect(item);
 
