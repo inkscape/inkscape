@@ -83,9 +83,10 @@ ParamRadioButton::ParamRadioButton (const gchar * name,
                 Glib::ustring * newguitext = NULL;
                 Glib::ustring * newvalue = NULL;
                 const char * contents = sp_repr_children(child_repr)->content();
+
                 if (contents != NULL)
                     // don't translate when 'option' but do translate when '_option'
-                     newguitext = new Glib::ustring( !strcmp(chname, "_option") ? _(contents) : contents );
+                     newguitext = new Glib::ustring( !strcmp(chname, INKSCAPE_EXTENSION_NS "_option") ? _(contents) : contents );
                 else
                     continue;
 

@@ -64,15 +64,15 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
-            if (!strcmp(chname, "extension:item") || !strcmp(chname, "extension:_item")) {
+            if (!strcmp(chname, INKSCAPE_EXTENSION_NS "item") || !strcmp(chname, INKSCAPE_EXTENSION_NS "_item")) {
                 Glib::ustring * newguitext = NULL;
                 Glib::ustring * newvalue = NULL;
                 const char * contents = sp_repr_children(child_repr)->content();
                 if (contents != NULL)
                     // don't translate when 'item' but do translate when '_item'
-                	// NOTE: internal extensions use build_from_mem and don't need _item but 
-                	//       still need to include if are to be localized                	
-                     newguitext = new Glib::ustring( !strcmp(chname, "extension:_item") ? _(contents) : contents );
+                	// NOTE: internal extensions use build_from_mem and don't need _item but
+                	//       still need to include if are to be localized
+                     newguitext = new Glib::ustring( !strcmp(chname, INKSCAPE_EXTENSION_NS "_item") ? _(contents): contents );
                 else
                     continue;
 
@@ -161,7 +161,7 @@ ParamComboBox::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node 
 
 void
 ParamComboBox::changed (void) {
-    
+
 }
 
 
