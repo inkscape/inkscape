@@ -723,6 +723,16 @@ void FileOpenDialogImplGtk::createFilterMenu()
     extensionMap[Glib::ustring(_("All Images"))]=NULL;
     add_filter(allImageFilter);
 
+    Gtk::FileFilter allVectorFilter;
+    allVectorFilter.set_name(_("All Vectors"));
+    extensionMap[Glib::ustring(_("All Vectors"))]=NULL;
+    add_filter(allVectorFilter);
+
+    Gtk::FileFilter allBitmapFilter;
+    allBitmapFilter.set_name(_("All Bitmaps"));
+    extensionMap[Glib::ustring(_("All Bitmaps"))]=NULL;
+    add_filter(allBitmapFilter);
+
     //patterns added dynamically below
     Inkscape::Extension::DB::InputList extension_list;
     Inkscape::Extension::db.get_input_list(extension_list);
@@ -750,6 +760,29 @@ void FileOpenDialogImplGtk::createFilterMenu()
         allInkscapeFilter.add_pattern(upattern);
         if ( strncmp("image", imod->get_mimetype(), 5)==0 )
             allImageFilter.add_pattern(upattern);
+
+        // uncomment this to find out all mime types supported by Inkscape import/open
+        // g_print ("%s\n", imod->get_mimetype());
+
+        // I don't know of any other way to define "bitmap" formats other than by listing them
+        if ( 
+            strncmp("image/png", imod->get_mimetype(), 9)==0 ||
+            strncmp("image/jpeg", imod->get_mimetype(), 10)==0 ||
+            strncmp("image/gif", imod->get_mimetype(), 9)==0 ||
+            strncmp("image/x-icon", imod->get_mimetype(), 12)==0 ||
+            strncmp("image/x-navi-animation", imod->get_mimetype(), 22)==0 ||
+            strncmp("image/x-cmu-raster", imod->get_mimetype(), 18)==0 ||
+            strncmp("image/x-xpixmap", imod->get_mimetype(), 15)==0 ||
+            strncmp("image/bmp", imod->get_mimetype(), 9)==0 ||
+            strncmp("image/vnd.wap.wbmp", imod->get_mimetype(), 18)==0 ||
+            strncmp("image/tiff", imod->get_mimetype(), 10)==0 ||
+            strncmp("image/x-xbitmap", imod->get_mimetype(), 15)==0 ||
+            strncmp("image/x-tga", imod->get_mimetype(), 11)==0 ||
+            strncmp("image/x-pcx", imod->get_mimetype(), 11)==0 
+           )
+            allBitmapFilter.add_pattern(upattern);
+        else 
+            allVectorFilter.add_pattern(upattern);
     }
 
     return;
