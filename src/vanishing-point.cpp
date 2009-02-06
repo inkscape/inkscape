@@ -23,8 +23,6 @@
 #include "perspective-line.h"
 #include "shape-editor.h"
 
-#include "knotholder.h" // FIXME: can we avoid direct access to KnotHolder::update_knots?
-
 namespace Box3D {
 
 #define VP_KNOT_COLOR_NORMAL 0xffffff00

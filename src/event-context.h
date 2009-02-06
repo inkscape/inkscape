@@ -27,7 +27,6 @@
 struct GrDrag;
 struct SPDesktop;
 struct SPItem;
-class KnotHolder;
 class ShapeEditor;
 
 namespace Inkscape {
