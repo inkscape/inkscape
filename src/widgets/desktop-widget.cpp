@@ -1202,11 +1202,13 @@ sp_desktop_widget_layout (SPDesktopWidget *dtw)
 	    pref_root = "/window/";
     }
 
+#ifndef GDK_WINDOWING_QUARTZ
     if (!prefs->getBool(pref_root + "menu/state", true)) {
         gtk_widget_hide_all (dtw->menubar);
     } else {
         gtk_widget_show_all (dtw->menubar);
     }
+#endif
 
     if (!prefs->getBool(pref_root + "commands/state", true)) {
         gtk_widget_hide_all (dtw->commands_toolbox);
@@ -1318,7 +1320,7 @@ SPDesktopWidget::isToolboxButtonActive (const gchar* id)
 SPViewWidget *
 sp_desktop_widget_new (SPNamedView *namedview)
 {
-    SPDesktopWidget *dtw = (SPDesktopWidget*)gtk_type_new (SP_TYPE_DESKTOP_WIDGET);
+    SPDesktopWidget *dtw = (SPDesktopWidget*)g_object_new(SP_TYPE_DESKTOP_WIDGET, NULL);
 
     dtw->dt2r = 1.0 / namedview->doc_units->unittobase;
 
@@ -1347,8 +1349,10 @@ sp_desktop_widget_new (SPNamedView *namedview)
     dtw->layer_selector->setDesktop(dtw->desktop);
 
     dtw->menubar = sp_ui_main_menubar (dtw->desktop);
+#ifndef GDK_WINDOWING_QUARTZ
     gtk_widget_show_all (dtw->menubar);
     gtk_box_pack_start (GTK_BOX (dtw->vbox), dtw->menubar, FALSE, FALSE, 0);
+#endif
 
     sp_desktop_widget_layout (dtw);
 
