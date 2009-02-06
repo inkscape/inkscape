@@ -16,24 +16,49 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, simplestyle, simplepath
+import inkex, simplestyle, simplepath, math
 
 class Dots(inkex.Effect):
+
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-d", "--dotsize",
-                        action="store", type="string", 
+                        action="store", type="string",
                         dest="dotsize", default="10px",
                         help="Size of the dots placed at path nodes")
         self.OptionParser.add_option("-f", "--fontsize",
-                        action="store", type="string", 
+                        action="store", type="string",
                         dest="fontsize", default="20",
-                        help="Size of node label numbers")    
+                        help="Size of node label numbers")
+
+
+    def separateLastAndFirst(self, p):
+        # Separate the last and first dot if they are togheter
+        lastDot = -1
+        if p[lastDot][1] == []: lastDot = -2
+        if round(p[lastDot][1][-2]) == round(p[0][1][-2]) and \
+                round(p[lastDot][1][-1]) == round(p[0][1][-1]):
+                x1 = p[lastDot][1][-2]
+                y1 = p[lastDot][1][-1]
+                x2 = p[lastDot-1][1][-2]
+                y2 = p[lastDot-1][1][-1]
+                dx = abs( max(x1,x2) - min(x1,x2) )
+                dy = abs( max(y1,y2) - min(y1,y2) )
+                dist = math.sqrt( dx**2 + dy**2 )
+                x = dx/dist
+                y = dy/dist
+                if x1 > x2: x *= -1
+                if y1 > y2: y *= -1
+                p[lastDot][1][-2] += x * inkex.unittouu(self.options.dotsize)
+                p[lastDot][1][-1] += y * inkex.unittouu(self.options.dotsize)
+
+
     def effect(self):
         for id, node in self.selected.iteritems():
             if node.tag == inkex.addNS('path','svg'):
-                self.group = inkex.etree.SubElement(node.getparent(),inkex.addNS('g','svg'))
-                new = inkex.etree.SubElement(self.group,inkex.addNS('path','svg'))
+                self.group = inkex.etree.SubElement( node.getparent(), inkex.addNS('g','svg') )
+                self.dotGroup = inkex.etree.SubElement( self.group, inkex.addNS('g','svg') )
+                self.numGroup = inkex.etree.SubElement( self.group, inkex.addNS('g','svg') )
                 
                 try:
                     t = node.get('transform')
@@ -41,28 +66,38 @@ class Dots(inkex.Effect):
                 except:
                     pass
 
-                s = simplestyle.parseStyle(node.get('style'))
-                s['stroke-linecap']='round'
-                s['stroke-width']=self.options.dotsize
-                new.set('style', simplestyle.formatStyle(s))
-
-                a =[]
+                style = simplestyle.formatStyle({ 'stroke': 'none', 'fill': '#000' })
+                a = []
                 p = simplepath.parsePath(node.get('d'))
+
+                self.separateLastAndFirst(p)
+
                 num = 1
                 for cmd,params in p:
-                    if cmd != 'Z':
-                        a.append(['M',params[-2:]])
-                        a.append(['L',params[-2:]])
-                        self.addText(self.group,params[-2],params[-1],num)
+                    if cmd != 'Z' and cmd != 'z':
+                        dot_att = {
+                          'style': style,
+                          'r':  str( inkex.unittouu(self.options.dotsize) / 2 ),
+                          'cx': str( params[-2] ),
+                          'cy': str( params[-1] )
+                        }
+                        inkex.etree.SubElement(
+                          self.dotGroup,
+                          inkex.addNS('circle','svg'),
+                          dot_att )
+                        self.addText(
+                          self.numGroup,
+                          params[-2] + ( inkex.unittouu(self.options.dotsize) / 2 ),
+                          params[-1] - ( inkex.unittouu(self.options.dotsize) / 2 ),
+                          num )
                         num += 1
-                new.set('d', simplepath.formatPath(a))
-                node.clear()
+                node.getparent().remove( node )
 
-                
+
     def addText(self,node,x,y,text):
                 new = inkex.etree.SubElement(node,inkex.addNS('text','svg'))
                 s = {'font-size': self.options.fontsize, 'fill-opacity': '1.0', 'stroke': 'none',
-                    'font-weight': 'normal', 'font-style': 'normal', 'fill': '#000000'}
+                    'font-weight': 'normal', 'font-style': 'normal', 'fill': '#999'}
                 new.set('style', simplestyle.formatStyle(s))
                 new.set('x', str(x))
                 new.set('y', str(y))
