@@ -41,15 +41,10 @@ public:
 
     void set_item (SPItem *item, SubType type, bool keep_knotholder = false);
     void set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject, const char * key);
-    void set_knotholder(KnotHolder * knot_holder);
-    void reset_item (SubType type, bool keep_knotholder = true);
     void unset_item (SubType type, bool keep_knotholder = false);
 
-    const SPItem *get_item (SubType type);
-
-    bool has_nodepath ();
-    bool has_knotholder ();
-    void update_knotholder ();
+    bool has_nodepath (); //((deprecated))
+    void update_knotholder (); //((deprecated))
 
     bool has_local_change (SubType type);
     void decrement_local_change (SubType type);
@@ -122,10 +117,19 @@ public:
 
     bool nodepath_edits_repr_key(gchar const *name);
 
+    // this one is only public because it's called from non-C++ repr changed callback
+    void shapeeditor_event_attr_changed(gchar const *name);
+
 private:
+    bool has_knotholder ();
+    void reset_item (SubType type, bool keep_knotholder = true);
+    const SPItem *get_item (SubType type);
+
     SPDesktop *desktop;
 
     Inkscape::NodePath::Path *nodepath;
+
+    // TODO: std::list<KnotHolder *> knotholders;
     KnotHolder *knotholder;
 
     ShapeEditorsCollective *container;

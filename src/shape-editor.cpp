@@ -174,50 +174,55 @@ bool ShapeEditor::nodepath_edits_repr_key(gchar const *name) {
     return false;
 }
 
-static void shapeeditor_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar const *name,
-                                           gchar const */*old_value*/, gchar const */*new_value*/,
-                                           bool /*is_interactive*/, gpointer data)
+
+void ShapeEditor::shapeeditor_event_attr_changed(gchar const *name)
 {
     gboolean changed_np = FALSE;
     gboolean changed_kh = FALSE;
 
-    g_assert(data);
-    ShapeEditor *sh = ((ShapeEditor *) data);
-
-    if (sh->has_nodepath() && sh->nodepath_edits_repr_key(name))
+    if (has_nodepath() && nodepath_edits_repr_key(name))
     {
-        changed_np = !sh->has_local_change(SH_NODEPATH);
-        sh->decrement_local_change(SH_NODEPATH);
-
+        changed_np = !has_local_change(SH_NODEPATH);
+        decrement_local_change(SH_NODEPATH);
     }
 
     if (changed_np) {
         GList *saved = NULL;
-        if (sh->has_nodepath()) {
-            saved = sh->save_nodepath_selection();
+        if (has_nodepath()) {
+            saved = save_nodepath_selection();
         }
 
-        sh->reset_item(SH_NODEPATH);
+        reset_item(SH_NODEPATH);
 
-        if (sh->has_nodepath() && saved) {
-            sh->restore_nodepath_selection(saved);
+        if (has_nodepath() && saved) {
+            restore_nodepath_selection(saved);
             g_list_free (saved);
         }
     }
 
-
-    if (sh->has_knotholder())
+    if (has_knotholder())
     {
-        changed_kh = !sh->has_local_change(SH_KNOTHOLDER);
-        sh->decrement_local_change(SH_KNOTHOLDER);
+        changed_kh = !has_local_change(SH_KNOTHOLDER);
+        decrement_local_change(SH_KNOTHOLDER);
         if (changed_kh) {
             // this can happen if an LPEItem's knotholder handle was dragged, in which case we want
             // to keep the knotholder; in all other cases (e.g., if the LPE itself changes) we delete it
-            sh->reset_item(SH_KNOTHOLDER, !strcmp(name, "d"));
+            reset_item(SH_KNOTHOLDER, !strcmp(name, "d"));
         }
     }
 
-    sh->update_statusbar(); //TODO: sh->get_container()->update_statusbar();
+    update_statusbar(); //TODO: get_container()->update_statusbar();
+}
+
+
+static void shapeeditor_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar const *name,
+                                           gchar const */*old_value*/, gchar const */*new_value*/,
+                                           bool /*is_interactive*/, gpointer data)
+{
+    g_assert(data);
+    ShapeEditor *sh = ((ShapeEditor *) data);
+
+    sh->shapeeditor_event_attr_changed(name);
 }
 
 static Inkscape::XML::NodeEventVector shapeeditor_repr_events = {
@@ -230,8 +235,9 @@ static Inkscape::XML::NodeEventVector shapeeditor_repr_events = {
 
 
 void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
-    // this happens (and should only happen) when for an LPEItem having both knotholder and nodepath the knotholder
-    // is adapted; in this case we don't want to delete the knotholder since this freezes the handles
+    // this happens (and should only happen) when for an LPEItem having both knotholder and
+    // nodepath the knotholder is adapted; in this case we don't want to delete the knotholder
+    // since this freezes the handles
     unset_item(type, keep_knotholder);
 
     this->grab_node = -1;
@@ -305,23 +311,8 @@ void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject,
     }
 }
 
-/** 
-*  pass a new knotholder to ShapeEditor to manage (and delete)
-*/
-void
-ShapeEditor::set_knotholder(KnotHolder * knot_holder)
-{
-    unset_item(SH_KNOTHOLDER);
 
-    this->grab_node = -1;
-
-    if (knot_holder) {
-        this->knotholder = knot_holder;
-    }
-}
-
-
-/** FIXME: think about this. Is this thing only called when the item needs to be updated?
+/** FIXME: This thing is only called when the item needs to be updated in response to repr change.
    Why not make a reload function in NodePath and in KnotHolder? */
 void ShapeEditor::reset_item (SubType type, bool keep_knotholder)
 {
