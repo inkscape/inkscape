@@ -25,7 +25,7 @@ u'dc'       :u'http://purl.org/dc/elements/1.1/',
 u'rdf'      :u'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
 u'inkscape' :u'http://www.inkscape.org/namespaces/inkscape',
 u'xlink'    :u'http://www.w3.org/1999/xlink',
-u'xml'      :u'http://www.w3.org/XML/1998/namespace',
+u'xml'      :u'http://www.w3.org/XML/1998/namespace'
 }
 
 # helper function to add namespace URI to a name
@@ -37,6 +37,7 @@ def addNS(tag, ns=None):
 
 # attributes and elements we will use, prepared with their namespace
 a_href = addNS('href', 'xlink')
+a_menu = addNS('menu', 'inkscape')
 a_label = addNS('label', 'inkscape')
 e_text = addNS('text', 'svg')
 e_tspan = addNS('tspan', 'svg')
@@ -46,6 +47,7 @@ e_flowSpan = addNS('flowSpan', 'svg')
 e_g = addNS('g', 'svg')
 e_use = addNS('use', 'svg')
 e_defs = addNS('defs', 'svg')
+e_filter = addNS('filter', 'svg')
 e_rect = addNS('rect', 'svg')
 e_svg = addNS('svg', 'svg')
 e_switch = addNS('switch', 'svg')
@@ -61,8 +63,8 @@ menus = []
 
 for defs in fdoc.getroot().getchildren():
     for fi in defs.getchildren():
-        if fi.attrib[addNS('menu', 'inkscape')] not in menus:
-            menus.append(fi.attrib[addNS('menu', 'inkscape')])
+        if fi.tag == e_filter and fi.attrib[a_menu] not in menus:
+            menus.append(fi.attrib[a_menu])
 
 menu_shifts = {}
 for m in menus:
@@ -118,16 +120,18 @@ for ch in root.getchildren():
             newroot.append(text)
         for defs in fdoc.getroot().getchildren():
             for fi in defs.getchildren():
+                if fi.tag != e_filter:
+                    continue
                 clone = etree.Element(e_use, nsmap=NSS)
                 clone.attrib[a_href]='#original'
                 clone.attrib["style"]='filter:url(#'+fi.attrib["id"]+')'
-                menu = fi.attrib[addNS('menu', 'inkscape')]
+                menu = fi.attrib[a_menu]
                 clone.attrib["transform"] = 'translate('+str( q['width'] * menu_shifts[menu] )+', '+str( q['height'] * (menus.index(menu) + 1) )+')'
                 newroot.append(clone)
                 text = etree.Element(e_text, nsmap=NSS)
                 text.attrib['x']=str( q['x'] + q['width'] * (menu_shifts[menu] + 0.5) )
                 text.attrib['y']=str( q['y'] + q['height'] * (menus.index(menu) + 1.8) )
-                text.attrib['style']="font-size:%d;text-anchor:middle;" % (q['height']*0.05)
+                text.attrib['style']="font-size:%d;text-anchor:middle;" % (q['height']*0.08)
                 text.text = fi.attrib[a_label]
                 newroot.append(text)
 
