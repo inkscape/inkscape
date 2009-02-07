@@ -68,7 +68,7 @@ pathdefs = {
     'S':['S', 4, [float, float, float, float], ['x','y','x','y']], 
     'Q':['Q', 4, [float, float, float, float], ['x','y','x','y']], 
     'T':['T', 2, [float, float], ['x','y']], 
-    'A':['A', 7, [float, float, float, int, int, float, float], [0,0,0,0,0,'x','y']], 
+    'A':['A', 7, [float, float, float, int, int, float, float], ['r','r',0,0,'s','x','y']], 
     'Z':['L', 0, [], []]
     }
 def parsePath(d):
@@ -184,6 +184,11 @@ def scalePath(p, x, y):
                 params[i] *= x
             elif defs[3][i] == 'y':
                 params[i] *= y
+            elif defs[3][i] == 'r':         # radius parameter
+                params[i] *= x
+            elif defs[3][i] == 's':         # sweep-flag parameter
+                if x*y < 0:
+                    params[i] = 1 - params[i]
 
 def rotatePath(p, a, cx = 0, cy = 0):
     if a == 0:
