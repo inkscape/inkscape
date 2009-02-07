@@ -36,7 +36,7 @@ public:
 					"<object-type>all</object-type>\n"
 					"<effects-menu>\n"
 						"<submenu name=\"" N_("Filters") "\">\n"
-   						"<submenu name=\"Imitations\"/>\n"
+   						"<submenu name=\"Protrusions\"/>\n"
 			      "</submenu>\n"
 					"</effects-menu>\n"
 					"<menu-tip>" N_("Snow has fallen on object") "</menu-tip>\n"
