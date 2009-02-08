@@ -44,6 +44,7 @@ def norm(pt):
 def ArcToPath(p1,params):
     A=p1[:]
     rx,ry,teta,longflag,sweepflag,x2,y2=params[:]
+    teta = teta*pi/180.0
     B=[x2,y2]
     if rx==0 or ry==0:
         return([[A,A,A],[B,B,B]])
