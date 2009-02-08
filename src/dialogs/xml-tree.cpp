@@ -641,7 +641,7 @@ static void sp_xmltree_desktop_activate(Inkscape::Application */*inkscape*/,
 }
 
 static void sp_xmltree_desktop_deactivate(Inkscape::Application */*inkscape*/,
-                                      SPDesktop *desktop,
+                                      SPDesktop */*desktop*/,
                                       GtkWidget */*dialog*/ )
 {
     set_tree_desktop(NULL);
