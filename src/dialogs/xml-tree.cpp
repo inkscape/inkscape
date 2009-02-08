@@ -1146,7 +1146,7 @@ void on_tree_select_row_enable_if_indentable(GtkCTree *tree, GtkCTreeNode *node,
             // skip to the child just before the current repr
             for ( prev = parent->firstChild() ;
                   prev && prev->next() != repr ;
-                  prev = prev->next() );
+                  prev = prev->next() ){};
 
             if (prev && prev->type() == Inkscape::XML::ELEMENT_NODE) {
                 indentable = TRUE;
@@ -1545,7 +1545,7 @@ void cmd_indent_node(GtkObject */*object*/, gpointer /*data*/)
 
     Inkscape::XML::Node* ref = NULL;
     if (prev->firstChild()) {
-        for( ref = prev->firstChild() ; ref->next() ; ref = ref->next() );
+        for( ref = prev->firstChild() ; ref->next() ; ref = ref->next() ){};
     }
 
     parent->removeChild(repr);

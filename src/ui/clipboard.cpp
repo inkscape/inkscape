@@ -1020,7 +1020,7 @@ SPDocument *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_targ
     Inkscape::Extension::DB::InputList inlist;
     Inkscape::Extension::db.get_input_list(inlist);
     Inkscape::Extension::DB::InputList::const_iterator in = inlist.begin();
-    for (; in != inlist.end() && target != (*in)->get_mimetype() ; ++in);
+    for (; in != inlist.end() && target != (*in)->get_mimetype() ; ++in){};
     if ( in == inlist.end() )
         return NULL; // this shouldn't happen unless _getBestTarget returns something bogus
 
@@ -1056,7 +1056,7 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
     Inkscape::Extension::DB::OutputList outlist;
     Inkscape::Extension::db.get_output_list(outlist);
     Inkscape::Extension::DB::OutputList::const_iterator out = outlist.begin();
-    for ( ; out != outlist.end() && target != (*out)->get_mimetype() ; ++out);
+    for ( ; out != outlist.end() && target != (*out)->get_mimetype() ; ++out){};
     if ( out == outlist.end() && target != "image/png") return; // this also shouldn't happen
 
     // FIXME: Temporary hack until we add support for memory output.

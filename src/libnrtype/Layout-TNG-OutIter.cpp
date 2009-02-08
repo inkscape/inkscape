@@ -55,7 +55,7 @@ double Layout::_getChunkWidth(unsigned chunk_index) const
     unsigned span_index;
     if (chunk_index) {
         span_index = _lineToSpan(_chunks[chunk_index].in_line);
-        for ( ; span_index < _spans.size() && _spans[span_index].in_chunk < chunk_index ; span_index++);
+        for ( ; span_index < _spans.size() && _spans[span_index].in_chunk < chunk_index ; span_index++){};
     } else
         span_index = 0;
     for ( ; span_index < _spans.size() && _spans[span_index].in_chunk == chunk_index ; span_index++)
@@ -518,7 +518,7 @@ void Layout::simulateLayoutUsingKerning(iterator const &from, iterator const &to
         unsigned prev_cluster_char_index;
         for (prev_cluster_char_index = char_index - 1 ;
              prev_cluster_char_index != 0 && !_characters[prev_cluster_char_index].char_attributes.is_cursor_position ;
-             prev_cluster_char_index--);
+             prev_cluster_char_index--){};
         if (_characters[char_index].span(this).in_chunk == _characters[char_index - 1].span(this).in_chunk) {
             // dx is zero for the first char in a chunk
             // this algorithm works by comparing the summed widths of the glyphs with the observed
@@ -908,7 +908,7 @@ bool Layout::iterator::_cursorLeftOrRightLocalXByWord(Direction direction)
 {
     bool r;
     while ((r = _cursorLeftOrRightLocalX(direction))
-           && !_parent_layout->_characters[_char_index].char_attributes.is_word_start);
+           && !_parent_layout->_characters[_char_index].char_attributes.is_word_start){};
     return r;
 }
 

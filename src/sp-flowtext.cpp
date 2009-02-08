@@ -416,7 +416,7 @@ void SPFlowtext::_buildLayoutInput(SPObject *root, Shape const *exclusion_shape,
     if (SP_IS_FLOWPARA(root)) {
         // emulate par-indent with the first char's kern
         SPObject *t = root;
-        for ( ; t != NULL && !SP_IS_FLOWTEXT(t); t = SP_OBJECT_PARENT(t));
+        for ( ; t != NULL && !SP_IS_FLOWTEXT(t); t = SP_OBJECT_PARENT(t)){};
         if (SP_IS_FLOWTEXT(t)) {
             double indent = SP_FLOWTEXT(t)->par_indent;
             if (indent != 0) {

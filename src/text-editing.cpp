@@ -779,7 +779,7 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
         }
     }
 
-    while (tidy_xml_tree_recursively(common_ancestor));
+    while (tidy_xml_tree_recursively(common_ancestor)){};
     te_update_layout_now(item);
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     layout->validateIterator(&iter_pair.first);
@@ -1828,7 +1828,7 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
     and neither option can be made to work, a fallback could be to reduce
     everything to a single level of nesting and drop all pretence of
     roundtrippability. */
-    while (tidy_xml_tree_recursively(common_ancestor));
+    while (tidy_xml_tree_recursively(common_ancestor)){};
 
     // if we only modified subobjects this won't have been automatically sent
     text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);

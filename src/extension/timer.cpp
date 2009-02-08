@@ -72,7 +72,7 @@ ExpirationTimer::~ExpirationTimer(void)
         ExpirationTimer * prev;
         for (prev = timer_list;
                 prev->next != this;
-                prev = prev->next);
+                prev = prev->next){};
         prev->next = next;
 
         if (idle_start == this)

@@ -328,7 +328,7 @@ void
 sp_clippath_get_bbox(SPClipPath *cp, NRRect *bbox, Geom::Matrix const &transform, unsigned const /*flags*/)
 {
     SPObject *i;
-    for (i = sp_object_first_child(SP_OBJECT(cp)); i && !SP_IS_ITEM(i); i = SP_OBJECT_NEXT(i));
+    for (i = sp_object_first_child(SP_OBJECT(cp)); i && !SP_IS_ITEM(i); i = SP_OBJECT_NEXT(i)){};
     if (!i) return;
 
     sp_item_invoke_bbox_full(SP_ITEM(i), bbox, Geom::Matrix(SP_ITEM(i)->transform) * transform, SPItem::GEOMETRIC_BBOX, FALSE);
@@ -341,7 +341,7 @@ sp_clippath_get_bbox(SPClipPath *cp, NRRect *bbox, Geom::Matrix const &transform
             nr_rect_d_union (bbox, bbox, &i_box);
         }
         i = SP_OBJECT_NEXT(i);
-        for (; i && !SP_IS_ITEM(i); i = SP_OBJECT_NEXT(i));
+        for (; i && !SP_IS_ITEM(i); i = SP_OBJECT_NEXT(i)){};
     }
 }
 

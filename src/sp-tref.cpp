@@ -324,7 +324,7 @@ sp_tref_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, un
 {
     // find out the ancestor text which holds our layout
     SPObject *parent_text = SP_OBJECT(item);
-    for (; parent_text != NULL && !SP_IS_TEXT(parent_text); parent_text = SP_OBJECT_PARENT (parent_text));
+    for (; parent_text != NULL && !SP_IS_TEXT(parent_text); parent_text = SP_OBJECT_PARENT (parent_text)){};
     if (parent_text == NULL) return;
 
     // get the bbox of our portion of the layout
