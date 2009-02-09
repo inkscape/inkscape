@@ -841,7 +841,7 @@ sp_arc_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_arc_modified(SPObject *object, guint flags)
 {
-    if (flags & SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG) {
+    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
         sp_shape_set_shape((SPShape *) object);
     }
 

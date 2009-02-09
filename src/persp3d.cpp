@@ -190,7 +190,7 @@ persp3d_set(SPObject *object, unsigned key, gchar const *value)
 static void
 persp3d_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    if (flags & SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG) {
+    if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
         /* TODO: Should we update anything here? */
 

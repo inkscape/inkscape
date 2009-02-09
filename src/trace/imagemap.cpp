@@ -109,9 +109,9 @@ GrayMap *GrayMapCreate(int width, int height)
 static void ppSetPixel(PackedPixelMap *me, int x, int y, int r, int g, int b)
 {
     unsigned long *pix = me->rows[y] + x;
-    *pix = ((unsigned long)r)<<16 & 0xff0000L |
-           ((unsigned long)g)<< 8 & 0x00ff00L |
-           ((unsigned long)b)     & 0x0000ffL;
+    *pix = (((unsigned long)r)<<16 & 0xff0000L) |
+           (((unsigned long)g)<< 8 & 0x00ff00L) |
+           (((unsigned long)b)     & 0x0000ffL);
 }
 
 static void ppSetPixelLong(PackedPixelMap *me, int x, int y, unsigned long rgb)

@@ -710,7 +710,7 @@ static char* trim( char* str ) {
         str++;
     }
     str--;
-    while ( str > ret && ( *str == ' ' || *str == '\t' ) || *str == '\r' || *str == '\n' ) {
+    while ( str > ret && (( *str == ' ' || *str == '\t' ) || *str == '\r' || *str == '\n') ) {
         *str-- = 0;
     }
     return ret;
