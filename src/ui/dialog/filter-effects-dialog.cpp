@@ -136,7 +136,7 @@ public:
     {
         if (tip_text) _tt.set_tip(*this, tip_text);
         set_range(lower, upper);
-        set_increments(step_inc, step_inc * 5);
+        set_increments(step_inc, 0);
 
         signal_value_changed().connect(signal_attr_changed().make_slot());
     }
@@ -231,8 +231,8 @@ public:
         if (tt2) _tt.set_tip(_s2, tt2);
         _s1.set_range(lower, upper);
         _s2.set_range(lower, upper);
-        _s1.set_increments(step_inc, step_inc * 5);
-        _s2.set_increments(step_inc, step_inc * 5);
+        _s1.set_increments(step_inc, 0);
+        _s2.set_increments(step_inc, 0);
 
         _s1.signal_value_changed().connect(signal_attr_changed().make_slot());
         _s2.signal_value_changed().connect(signal_attr_changed().make_slot());

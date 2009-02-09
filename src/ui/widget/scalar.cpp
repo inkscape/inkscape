@@ -162,12 +162,14 @@ Scalar::setDigits(unsigned digits)
     static_cast<Gtk::SpinButton*>(_widget)->set_digits(digits);
 }
 
-/** Sets the step and page increments for the spin button */
+/** Sets the step and page increments for the spin button
+ * @todo Remove the second parameter - deprecated
+ */
 void
-Scalar::setIncrements(double step, double page)
+Scalar::setIncrements(double step, double /*page*/)
 {
     g_assert(_widget != NULL);
-    static_cast<Gtk::SpinButton*>(_widget)->set_increments(step, page);
+    static_cast<Gtk::SpinButton*>(_widget)->set_increments(step, 0);
 }
 
 /** Sets the minimum and maximum range allowed for the spin button */

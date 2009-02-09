@@ -410,7 +410,7 @@ TraceDialogImpl::TraceDialogImpl() :
                  _("Trace by a given brightness level"));
 
     modeBrightnessSpinner.set_digits(3);
-    modeBrightnessSpinner.set_increments(0.01, 0.1);
+    modeBrightnessSpinner.set_increments(0.01, 0);
     modeBrightnessSpinner.set_range(0.0, 1.0);
     modeBrightnessSpinner.set_value(0.45);
     modeBrightnessBox.pack_end(modeBrightnessSpinner, false, false, MARGIN);
@@ -437,13 +437,13 @@ TraceDialogImpl::TraceDialogImpl() :
     modeCannyLoSpinnerLabel.set_label(_("Low"));
     modeCannyBox.pack_start(modeCannyLoSpinnerLabel);
     modeCannyLoSpinner.set_digits(5);
-    modeCannyLoSpinner.set_increments(0.01, 0.1);
+    modeCannyLoSpinner.set_increments(0.01, 0);
     modeCannyLoSpinner.set_range(0.0, 1.0);
     modeCannyLoSpinner.set_value(0.1);
     modeCannyBox.pack_start(modeCannyLoSpinner);
     */
     modeCannyHiSpinner.set_digits(3);
-    modeCannyHiSpinner.set_increments(0.01, 0.1);
+    modeCannyHiSpinner.set_increments(0.01, 0);
     modeCannyHiSpinner.set_range(0.0, 1.0);
     modeCannyHiSpinner.set_value(0.65);
     modeCannyBox.pack_end(modeCannyHiSpinner, false, false, MARGIN);
@@ -467,7 +467,7 @@ TraceDialogImpl::TraceDialogImpl() :
                  _("Trace along the boundaries of reduced colors"));
 
     modeQuantNrColorSpinner.set_digits(0);
-    modeQuantNrColorSpinner.set_increments(1.0, 4.0);
+    modeQuantNrColorSpinner.set_increments(1.0, 0);
     modeQuantNrColorSpinner.set_range(2.0, 64.0);
     modeQuantNrColorSpinner.set_value(8.0);
     modeQuantBox.pack_end(modeQuantNrColorSpinner, false, false, MARGIN);
@@ -501,7 +501,7 @@ TraceDialogImpl::TraceDialogImpl() :
                  _("Trace the given number of brightness levels"));
 
     modeMultiScanNrColorSpinner.set_digits(0);
-    modeMultiScanNrColorSpinner.set_increments(1.0, 4.0);
+    modeMultiScanNrColorSpinner.set_increments(1.0, 0);
     modeMultiScanNrColorSpinner.set_range(2.0, 256.0);
     modeMultiScanNrColorSpinner.set_value(8.0);
     modeMultiScanHBox1.pack_end(modeMultiScanNrColorSpinner, false, false, MARGIN);
@@ -572,7 +572,7 @@ TraceDialogImpl::TraceDialogImpl() :
     optionsSpecklesButton.set_active(true);
     optionsSpecklesBox.pack_start(optionsSpecklesButton, false, false, MARGIN);
     optionsSpecklesSizeSpinner.set_digits(0);
-    optionsSpecklesSizeSpinner.set_increments(1, 10);
+    optionsSpecklesSizeSpinner.set_increments(1, 0);
     optionsSpecklesSizeSpinner.set_range(0, 1000);
     optionsSpecklesSizeSpinner.set_value(2);
     tips.set_tip(optionsSpecklesSizeSpinner,
@@ -587,7 +587,7 @@ TraceDialogImpl::TraceDialogImpl() :
     optionsCornersButton.set_active(true);
     optionsCornersBox.pack_start(optionsCornersButton, false, false, MARGIN);
     optionsCornersThresholdSpinner.set_digits(2);
-    optionsCornersThresholdSpinner.set_increments(0.01, 0.1);
+    optionsCornersThresholdSpinner.set_increments(0.01, 0);
     optionsCornersThresholdSpinner.set_range(0.0, 1.34);
     optionsCornersThresholdSpinner.set_value(1.0);
     optionsCornersBox.pack_end(optionsCornersThresholdSpinner, false, false, MARGIN);
@@ -602,7 +602,7 @@ TraceDialogImpl::TraceDialogImpl() :
                  _("Try to optimize paths by joining adjacent Bezier curve segments"));
     optionsOptimBox.pack_start(optionsOptimButton, false, false, MARGIN);
     optionsOptimToleranceSpinner.set_digits(2);
-    optionsOptimToleranceSpinner.set_increments(0.05, 0.25);
+    optionsOptimToleranceSpinner.set_increments(0.05, 0);
     optionsOptimToleranceSpinner.set_range(0.0, 5.0);
     optionsOptimToleranceSpinner.set_value(0.2);
     optionsOptimBox.pack_end(optionsOptimToleranceSpinner, false, false, MARGIN);

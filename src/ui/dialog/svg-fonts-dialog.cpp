@@ -376,7 +376,7 @@ Gtk::VBox* SvgFontsDialog::global_settings_tab(){
 
     setwidth_spin.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_setwidth_changed));
     setwidth_spin.set_range(0, 4096);
-    setwidth_spin.set_increments(10, 100);
+    setwidth_spin.set_increments(10, 0);
     global_vbox.pack_start(*setwidth_hbox, false, false);
 
     return &global_vbox;

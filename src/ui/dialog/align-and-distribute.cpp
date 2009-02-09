@@ -468,7 +468,7 @@ public:
 
         removeOverlapXGap.set_digits(1);
         removeOverlapXGap.set_size_request(60, -1);
-        removeOverlapXGap.set_increments(1.0, 5.0);
+        removeOverlapXGap.set_increments(1.0, 0);
         removeOverlapXGap.set_range(-1000.0, 1000.0);
         removeOverlapXGap.set_value(0);
         dialog.tooltips().set_tip(removeOverlapXGap,
@@ -478,7 +478,7 @@ public:
 
         removeOverlapYGap.set_digits(1);
         removeOverlapYGap.set_size_request(60, -1);
-        removeOverlapYGap.set_increments(1.0, 5.0);
+        removeOverlapYGap.set_increments(1.0, 0);
         removeOverlapYGap.set_range(-1000.0, 1000.0);
         removeOverlapYGap.set_value(0);
         dialog.tooltips().set_tip(removeOverlapYGap,

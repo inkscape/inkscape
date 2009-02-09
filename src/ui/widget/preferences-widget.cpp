@@ -200,7 +200,7 @@ void PrefRadioButton::on_toggled()
 }
 
 void PrefSpinButton::init(Glib::ustring const &prefs_path,
-              double lower, double upper, double step_increment, double page_increment,
+              double lower, double upper, double step_increment, double /*page_increment*/,
               double default_value, bool is_int, bool is_percent)
 {
     _prefs_path = prefs_path;
@@ -219,7 +219,7 @@ void PrefSpinButton::init(Glib::ustring const &prefs_path,
     }
 
     this->set_range (lower, upper);
-    this->set_increments (step_increment, page_increment);
+    this->set_increments (step_increment, 0);
     this->set_numeric();
     this->set_value (value);
     this->set_width_chars(6);
@@ -438,7 +438,7 @@ ZoomCorrRulerSlider::init(int ruler_width, int ruler_height, double lower, doubl
     _unit.signal_changed().connect(sigc::mem_fun(*this, &ZoomCorrRulerSlider::on_unit_changed));
 
     _sb.set_range (lower, upper);
-    _sb.set_increments (step_increment, page_increment);
+    _sb.set_increments (step_increment, 0);
     _sb.set_value (value);
     _sb.set_digits(2);
 
@@ -506,7 +506,7 @@ PrefSlider::init(Glib::ustring const &prefs_path,
 
     _sb.signal_value_changed().connect(sigc::mem_fun(*this, &PrefSlider::on_spinbutton_value_changed));
     _sb.set_range (lower, upper);
-    _sb.set_increments (step_increment, page_increment);
+    _sb.set_increments (step_increment, 0);
     _sb.set_value (value);
     _sb.set_digits(digits);
 

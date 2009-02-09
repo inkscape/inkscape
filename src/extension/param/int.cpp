@@ -95,7 +95,7 @@ public:
     /** \brief  Make the adjustment using an extension and the string
                 describing the parameter. */
     ParamIntAdjustment (ParamInt * param, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
-            Gtk::Adjustment(0.0, param->min(), param->max(), 1.0), _pref(param), _doc(doc), _node(node), _changeSignal(changeSignal) {
+            Gtk::Adjustment(0.0, param->min(), param->max(), 1.0, 0), _pref(param), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->set_value(_pref->get(NULL, NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamIntAdjustment::val_changed));
         return;
