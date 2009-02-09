@@ -41,6 +41,10 @@ static GtkWidgetClass *hruler_parent_class;
 GtkType
 sp_hruler_get_type (void)
 {
+    //TODO: switch to GObject
+    // GtkType and such calls were deprecated a while back with the
+    // introduction of GObject as a separate layer, with GType instead. --JonCruz
+
   static GtkType hruler_type = 0;
 
   if (!hruler_type)
@@ -378,6 +382,10 @@ static GtkWidgetClass *vruler_parent_class;
 GtkType
 sp_vruler_get_type (void)
 {
+    //TODO: switch to GObject
+    // GtkType and such calls were deprecated a while back with the
+    // introduction of GObject as a separate layer, with GType instead. --JonCruz
+
   static GtkType vruler_type = 0;
 
   if (!vruler_type)
@@ -703,19 +711,25 @@ sp_vruler_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
     } while (parent != NULL);
 }
 
+//TODO: warning: deprecated conversion from string constant to ‘gchar*’
+//
+//Turn out to be warnings that we should probably leave in place. The
+// pointers/types used need to be read-only. So until we correct the using
+// code, those warnings are actually desired. They say "Hey! Fix this". We
+// definitely don't want to hide/ignore them. --JonCruz
 
 /// Ruler metrics.
 static GtkRulerMetric const sp_ruler_metrics[] = {
   // NOTE: the order of records in this struct must correspond to the SPMetric enum.
-  {(gchar*) "NONE",  (gchar*) "", 1, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {(gchar*) "millimeters", (gchar*) "mm", PX_PER_MM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {(gchar*) "centimeters", (gchar*) "cm", PX_PER_CM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {(gchar*) "inches",      (gchar*) "in", PX_PER_IN, { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 }, { 1, 2, 4, 8, 16 }},
-  {(gchar*) "feet",        (gchar*) "ft", PX_PER_FT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {(gchar*) "points",      (gchar*) "pt", PX_PER_PT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {(gchar*) "picas",       (gchar*) "pc", PX_PER_PC, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {(gchar*) "pixels",      (gchar*) "px", PX_PER_PX, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {(gchar*) "meters",      (gchar*) "m",  PX_PER_M,  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {"NONE",			"", 1, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {"millimeters",	"mm", PX_PER_MM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {"centimeters",	"cm", PX_PER_CM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {"inches",		"in", PX_PER_IN, { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 }, { 1, 2, 4, 8, 16 }},
+  {"feet",			"ft", PX_PER_FT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {"points",		"pt", PX_PER_PT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {"picas",			"pc", PX_PER_PC, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {"pixels",		"px", PX_PER_PX, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {"meters",		"m",  PX_PER_M,  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
 };
 
 void

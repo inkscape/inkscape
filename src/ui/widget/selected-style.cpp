@@ -86,8 +86,14 @@ typedef enum {
     APP_X_COLOR
 } ui_drop_target_info;
 
+//TODO: warning: deprecated conversion from string constant to ‘gchar*’
+//
+//Turn out to be warnings that we should probably leave in place. The
+// pointers/types used need to be read-only. So until we correct the using
+// code, those warnings are actually desired. They say "Hey! Fix this". We
+// definitely don't want to hide/ignore them. --JonCruz
 static GtkTargetEntry ui_drop_target_entries [] = {
-    {(gchar*) "application/x-color", 0, APP_X_COLOR}
+    {"application/x-color", 0, APP_X_COLOR}
 };
 
 #define ENTRIES_SIZE(n) sizeof(n)/sizeof(n[0])

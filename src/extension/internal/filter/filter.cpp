@@ -111,8 +111,8 @@ Filter::merge_filters (Inkscape::XML::Node * to, Inkscape::XML::Node * from, Ink
 	}
 }
 
-#define FILTER_SRC_GRAPHIC       (gchar*) "fbSourceGraphic"
-#define FILTER_SRC_GRAPHIC_ALPHA (gchar*) "fbSourceGraphicAlpha"
+#define FILTER_SRC_GRAPHIC       "fbSourceGraphic"
+#define FILTER_SRC_GRAPHIC_ALPHA "fbSourceGraphicAlpha"
 
 void
 Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)

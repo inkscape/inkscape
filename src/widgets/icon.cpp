@@ -99,6 +99,10 @@ static std::map<Glib::ustring, std::vector<IconCacheItem> > iconSetCache;
 GtkType
 sp_icon_get_type()
 {
+    //TODO: switch to GObject
+    // GtkType and such calls were deprecated a while back with the
+    // introduction of GObject as a separate layer, with GType instead. --JonCruz
+
     static GtkType type = 0;
     if (!type) {
         GtkTypeInfo info = {

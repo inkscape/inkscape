@@ -46,6 +46,10 @@ static guint signals[LAST_SIGNAL] = {0};
 GtkType
 sp_widget_get_type (void)
 {
+    //TODO: switch to GObject
+    // GtkType and such calls were deprecated a while back with the
+    // introduction of GObject as a separate layer, with GType instead. --JonCruz
+
 	static GtkType type = 0;
 	if (!type) {
 		static const GtkTypeInfo info = {

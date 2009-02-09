@@ -30,7 +30,9 @@ static GtkEventBoxClass *widget_parent_class;
 GtkType sp_view_widget_get_type(void)
 {
     static GtkType type = 0;
-    
+    //TODO: switch to GObject
+    // GtkType and such calls were deprecated a while back with the
+    // introduction of GObject as a separate layer, with GType instead. --JonCruz
     if (!type) {
         GtkTypeInfo info = {
             (gchar*) "SPViewWidget",

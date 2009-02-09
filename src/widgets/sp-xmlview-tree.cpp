@@ -128,6 +128,10 @@ sp_xmlview_tree_set_repr (SPXMLViewTree * tree, Inkscape::XML::Node * repr)
 GtkType
 sp_xmlview_tree_get_type (void)
 {
+    //TODO: switch to GObject
+    // GtkType and such calls were deprecated a while back with the
+    // introduction of GObject as a separate layer, with GType instead. --JonCruz
+
 	static GtkType type = 0;
 
 	if (!type) {

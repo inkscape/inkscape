@@ -44,6 +44,10 @@ static GtkWidgetClass *parent_class;
 GtkType
 sp_gradient_image_get_type (void)
 {
+    //TODO: switch to GObject
+    // GtkType and such calls were deprecated a while back with the
+    // introduction of GObject as a separate layer, with GType instead. --JonCruz
+
 	static GtkType type = 0;
 	if (!type) {
 		GtkTypeInfo info = {
