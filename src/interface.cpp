@@ -843,6 +843,25 @@ sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
                                            checkitem_toggled, checkitem_update, 0);
 }
 
+/** @brief Observer that updates the recent list's max document count */
+class MaxRecentObserver : public Inkscape::Preferences::Observer {
+public:
+    MaxRecentObserver(GtkWidget *recent_menu) :
+        Observer("/options/maxrecentdocuments/value"),
+        _rm(recent_menu)
+    {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->addObserver(*this);
+    }
+    virtual void notify(Inkscape::Preferences::Entry const &e) {
+        gtk_recent_chooser_set_limit(GTK_RECENT_CHOOSER(_rm), e.getInt());
+        // hack: the recent menu doesn't repopulate after changing the limit, so we force it
+        g_signal_emit_by_name((gpointer) gtk_recent_manager_get_default(), "changed");
+    }
+private:
+    GtkWidget *_rm;
+};
+
 /** \brief  This function turns XML into a menu
     \param  menus  This is the XML that defines the menu
     \param  menu   Menu to be added to
@@ -936,6 +955,8 @@ sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI:
             gtk_menu_item_set_submenu(GTK_MENU_ITEM(recent_item), recent_menu);
 
             gtk_menu_append(GTK_MENU(menu), GTK_WIDGET(recent_item));
+            // this will just sit and update the list's item count
+            static MaxRecentObserver *mro = new MaxRecentObserver(recent_menu);
             continue;
         }
         if (!strcmp(menu_pntr->name(), "objects-checkboxes")) {
