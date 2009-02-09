@@ -132,7 +132,7 @@ sp_xmlview_tree_get_type (void)
 
 	if (!type) {
 		static const GtkTypeInfo info = {
-			"SPXMLViewTree",
+			(gchar*) "SPXMLViewTree",
 			sizeof (SPXMLViewTree),
 			sizeof (SPXMLViewTreeClass),
 			(GtkClassInitFunc) sp_xmlview_tree_class_init,

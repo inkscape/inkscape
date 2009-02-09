@@ -47,7 +47,7 @@ sp_hruler_get_type (void)
     {
       static const GtkTypeInfo hruler_info =
       {
-        "SPHRuler",
+        (gchar*) "SPHRuler",
         sizeof (SPHRuler),
         sizeof (SPHRulerClass),
         (GtkClassInitFunc) sp_hruler_class_init,
@@ -384,7 +384,7 @@ sp_vruler_get_type (void)
     {
       static const GtkTypeInfo vruler_info =
       {
-	"SPVRuler",
+	(gchar*) "SPVRuler",
 	sizeof (SPVRuler),
 	sizeof (SPVRulerClass),
 	(GtkClassInitFunc) sp_vruler_class_init,
@@ -707,15 +707,15 @@ sp_vruler_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 /// Ruler metrics.
 static GtkRulerMetric const sp_ruler_metrics[] = {
   // NOTE: the order of records in this struct must correspond to the SPMetric enum.
-  {"NONE",  "", 1, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {"millimeters",  "mm", PX_PER_MM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {"centimeters", "cm", PX_PER_CM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {"inches",      "in", PX_PER_IN, { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 }, { 1, 2, 4, 8, 16 }},
-  {"feet",        "ft", PX_PER_FT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {"points",      "pt", PX_PER_PT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {"picas",       "pc", PX_PER_PC, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {"pixels",      "px", PX_PER_PX, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {"meters",      "m",  PX_PER_M,  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {(gchar*) "NONE",  (gchar*) "", 1, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {(gchar*) "millimeters", (gchar*) "mm", PX_PER_MM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {(gchar*) "centimeters", (gchar*) "cm", PX_PER_CM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {(gchar*) "inches",      (gchar*) "in", PX_PER_IN, { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 }, { 1, 2, 4, 8, 16 }},
+  {(gchar*) "feet",        (gchar*) "ft", PX_PER_FT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {(gchar*) "points",      (gchar*) "pt", PX_PER_PT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {(gchar*) "picas",       (gchar*) "pc", PX_PER_PC, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {(gchar*) "pixels",      (gchar*) "px", PX_PER_PX, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {(gchar*) "meters",      (gchar*) "m",  PX_PER_M,  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
 };
 
 void

@@ -33,7 +33,7 @@ GtkType sp_view_widget_get_type(void)
     
     if (!type) {
         GtkTypeInfo info = {
-            "SPViewWidget",
+            (gchar*) "SPViewWidget",
             sizeof(SPViewWidget),
             sizeof(SPViewWidgetClass),
             (GtkClassInitFunc) sp_view_widget_class_init,

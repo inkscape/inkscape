@@ -49,7 +49,7 @@ sp_widget_get_type (void)
 	static GtkType type = 0;
 	if (!type) {
 		static const GtkTypeInfo info = {
-			"SPWidget",
+			(gchar*) "SPWidget",
 			sizeof (SPWidget),
 			sizeof (SPWidgetClass),
 			(GtkClassInitFunc) sp_widget_class_init,

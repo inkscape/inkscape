@@ -47,7 +47,7 @@ sp_gradient_image_get_type (void)
 	static GtkType type = 0;
 	if (!type) {
 		GtkTypeInfo info = {
-			"SPGradientImage",
+			(gchar*) "SPGradientImage",
 			sizeof (SPGradientImage),
 			sizeof (SPGradientImageClass),
 			(GtkClassInitFunc) sp_gradient_image_class_init,

@@ -87,7 +87,7 @@ typedef enum {
 } ui_drop_target_info;
 
 static GtkTargetEntry ui_drop_target_entries [] = {
-    {"application/x-color", 0, APP_X_COLOR}
+    {(gchar*) "application/x-color", 0, APP_X_COLOR}
 };
 
 #define ENTRIES_SIZE(n) sizeof(n)/sizeof(n[0])

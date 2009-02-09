@@ -102,7 +102,7 @@ sp_icon_get_type()
     static GtkType type = 0;
     if (!type) {
         GtkTypeInfo info = {
-            "SPIcon",
+            (gchar*) "SPIcon",
             sizeof(SPIcon),
             sizeof(SPIconClass),
             (GtkClassInitFunc) sp_icon_class_init,

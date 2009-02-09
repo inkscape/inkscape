@@ -102,11 +102,11 @@ typedef enum {
 
 static const GtkTargetEntry sourceColorEntries[] = {
 #if ENABLE_MAGIC_COLORS
-//    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
-    {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
+//    {(gchar*) "application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
+    {(gchar*) "application/x-inkscape-color", 0, APP_X_INKY_COLOR},
 #endif // ENABLE_MAGIC_COLORS
-    {"application/x-color", 0, APP_X_COLOR},
-    {"text/plain", 0, TEXT_DATA},
+    {(gchar*) "application/x-color", 0, APP_X_COLOR},
+    {(gchar*) "text/plain", 0, TEXT_DATA},
 };
 
 void ColorItem::_dragGetColorData( GtkWidget *widget,
@@ -349,10 +349,10 @@ static void dieDieDie( GtkObject *obj, gpointer user_data )
 
 static const GtkTargetEntry destColorTargets[] = {
 #if ENABLE_MAGIC_COLORS
-//    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
-    {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
+//    {(gchar*) "application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
+    {(gchar*) "application/x-inkscape-color", 0, APP_X_INKY_COLOR},
 #endif // ENABLE_MAGIC_COLORS
-    {"application/x-color", 0, APP_X_COLOR},
+    {(gchar*) "application/x-color", 0, APP_X_COLOR},
 };
 
 #include "color.h" // for SP_RGBA32_U_COMPOSE

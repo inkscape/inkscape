@@ -62,7 +62,7 @@ sp_color_slider_get_type (void)
 	static GtkType type = 0;
 	if (!type) {
 		GtkTypeInfo info = {
-			"SPColorSlider",
+			(gchar*) "SPColorSlider",
 			sizeof (SPColorSlider),
 			sizeof (SPColorSliderClass),
 			(GtkClassInitFunc) sp_color_slider_class_init,
