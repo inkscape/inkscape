@@ -8,26 +8,57 @@ iconsdir = $(themedir)/$(size)/$(context)
 # find . -name '*.svg' -and -not -name '*.svn*' -printf '\t%P \\\n' | sort | zenity --text-info
 # and paste the contents of the dialog box here
 
-icons_DATA = \
+icons_DATA = 
+	align-bottom.svg \
+	align-bottom-to-anchor.svg \
+	align-center-horizontal.svg \
+	align-center-vertical.svg \
+	align-left.svg \
+	align-left-to-anchor.svg \
+	align-right.svg \
+	align-right-to-anchor.svg \
+	align-top.svg \
+	align-top-to-anchor.svg \
 	bitmap-trace.svg \
-	dialog-align-and-distribute.svg \
-	dialog-fill-and-stroke.svg \
-	dialog-icon-preview.svg \
-	dialog-layers.svg \
-	dialog-memory.svg \
-	dialog-messages.svg \
-	dialog-object-properties.svg \
-	dialog-rows-and-columns.svg \
-	dialog-scripts.svg \
-	dialog-text-and-font.svg \
-	dialog-tile-clones.svg \
-	dialog-xml-editor.svg \
+	color-fill.svg \
+	color-gradient.svg \
+	color-picker.svg \
+	color-remove.svg \
+	distribute-graph-directed.svg \
+	distribute-graph.svg \
+	distribute-horizontal-center.svg \
+	distribute-horizontal-gaps.svg \
+	distribute-horizontal-left.svg \
+	distribute-horizontal-right.svg \
+	distribute-randomize.svg \
+	distribute-remove-overlaps.svg \
+	distribute-unclump.svg \
+	distribute-vertical-bottom.svg \
+	distribute-vertical-center.svg \
+	distribute-vertical-gaps.svg \
+	distribute-vertical-top.svg \
+	document-cleanup.svg \
 	document-export-ocal.svg \
 	document-export.svg \
 	document-import-ocal.svg \
 	document-import.svg \
 	document-metadata.svg \
 	document-open-recent.svg \
+	draw-calligraphic.svg \
+	draw-connector.svg \
+	draw-cuboid.svg \
+	draw-ellipse-arc.svg \
+	draw-ellipse-segment.svg \
+	draw-ellipse.svg \
+	draw-ellipse-whole.svg \
+	draw-eraser.svg \
+	draw-freehand.svg \
+	draw-path.svg \
+	draw-polygon-star.svg \
+	draw-polygon.svg \
+	draw-rectangle.svg \
+	draw-spiral.svg \
+	draw-star.svg \
 	edit-clone.svg \
 	edit-clone-unlink.svg \
 	edit-duplicate.svg \
@@ -41,6 +72,15 @@ icons_DATA = \
 	edit-undo-history.svg \
 	help-keyboard-shortcuts.svg \
 	help-manual.svg \
+	image-filter-blend.svg \
+	image-filter-color-matrix.svg \
+	image-filter-diffuse-lighting.svg \
+	image-filter-displacement-map.svg \
+	image-filter-flood.svg \
+	image-filter-gaussian-blur.svg \
+	image-filter-morphology.svg \
+	image-filter-offset.svg \
+	image-filter-turbulence.svg \
 	layer-bottom.svg \
 	layer-delete.svg \
 	layer-lower.svg \
@@ -50,6 +90,16 @@ icons_DATA = \
 	layer-raise.svg \
 	layer-rename.svg \
 	layer-top.svg \
+	node-add.svg \
+	node-align-horizontal.svg \
+	node-align-vertical.svg \
+	node-break.svg \
+	node-delete-segment.svg \
+	node-delete.svg \
+	node-distribute-horizontal.svg \
+	node-distribute-vertical.svg \
+	node-join-segment.svg \
+	node-join.svg \
 	object-flip-horizontal.svg \
 	object-flip-vertical.svg \
 	object-group.svg \
@@ -57,21 +107,41 @@ icons_DATA = \
 	object-rotate-right.svg \
 	object-to-path.svg \
 	object-transform.svg \
+	object-tweak-attract.svg \
+	object-tweak-blur.svg \
+	object-tweak-duplicate.svg \
+	object-tweak-jitter-color.svg \
+	object-tweak-paint.svg \
+	object-tweak-push.svg \
+	object-tweak-randomize.svg \
+	object-tweak-rotate.svg \
+	object-tweak-shrink.svg \
 	object-ungroup.svg \
 	path-break-apart.svg \
+	path-clip-edit.svg \
 	path-combine.svg \
 	path-cut.svg \
 	path-difference.svg \
 	path-division.svg \
 	path-dynamic-offset.svg \
+	path-effect-parameter-next.svg \
 	path-exclusion.svg \
 	path-inset.svg \
 	path-intersection.svg \
 	path-linked-offset.svg \
+	path-mask-edit.svg \
+	path-offset-dynamic.svg \
+	path-offset-linked.svg \
 	path-outset.svg \
 	path-reverse.svg \
 	path-simplify.svg \
+	path-tweak-attract.svg \
+	path-tweak-grow.svg \
+	path-tweak-push.svg \
+	path-tweak-roughen.svg \
+	path-tweak-shrink.svg \
 	path-union.svg \
+	rectangle-make-corners-sharp.svg \
 	selection-bottom.svg \
 	selection-lower.svg \
 	selection-make-bitmap-copy.svg \
@@ -83,16 +153,35 @@ icons_DATA = \
 	show-grid.svg \
 	show-guides.svg \
 	stroke-to-path.svg \
+	text-align-baseline-horizontal.svg \
+	text-align-baseline-vertical.svg \
 	text-convert-to-regular.svg \
+	text-distribute-baseline-horizontal.svg \
+	text-distribute-baseline-vertical.svg \
 	text-flow-into-frame.svg \
 	text-put-on-path.svg \
 	text-remove-from-path.svg \
 	text-unflow.svg \
 	text-unkern.svg \
+	tool-node-editor.svg \
+	tool-pointer.svg \
+	tool-tweak.svg \
+	transform-move-horizontal.svg \
+	transform-move-vertical.svg \
+	transform-rotate.svg \
+	transform-scale-horizontal.svg \
+	transform-scale-vertical.svg \
+	transform-skew-horizontal.svg \
+	transform-skew-vertical.svg \
 	vacuum-defs.svg \
 	view-manage-colors.svg \
 	window-next.svg \
 	window-previous.svg \
+	xml-attribute-delete.svg \
+	xml-element-new.svg \
+	xml-node-delete.svg \
+	xml-node-duplicate.svg \
+	xml-text-new.svg \
 	zoom-double-size.svg \
 	zoom-fit-drawing.svg \
 	zoom-fit-page.svg \
@@ -103,6 +192,7 @@ icons_DATA = \
 	zoom-next.svg \
 	zoom-original.svg \
 	zoom-out.svg \
-	zoom-previous.svg
+	zoom-previous.svg \
+	zoom.svg
 
 EXTRA_DIST = $(icons_DATA)

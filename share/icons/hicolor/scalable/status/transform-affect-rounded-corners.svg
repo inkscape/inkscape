@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48px"
+   height="48px"
+   id="svg17007"
+   sodipodi:version="0.32"
+   inkscape:version="0.46+devel r20659"
+   sodipodi:docname="transform-affect-rounded-corners.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs17009" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.75"
+     inkscape:cx="32.502803"
+     inkscape:cy="26.015369"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="947"
+     inkscape:window-height="491"
+     inkscape:window-x="34"
+     inkscape:window-y="146" />
+  <metadata
+     id="metadata17012">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       y="-18.360001"
+       x="36.005005"
+       height="48"
+       width="48"
+       id="rect4991"
+       style="fill:none;stroke:none;stroke-width:1;marker:none;display:inline" />
+    <g
+       transform="matrix(3,0,0,3,-1115.6418,-409.30755)"
+       style="fill:#000000"
+       id="g7655" />
+    <g
+       style="display:inline"
+       id="transform_corners"
+       transform="matrix(3.9999999,0,0,3.9999999,-2691.9999,-980)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         d="m 673.5,248.5 4,0 c 2.5,0 3.5,1 3.5,3.3"
+         id="path4434"
+         sodipodi:nodetypes="ccc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.00000036px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         d="m 673.5,245.5 5.5,0 c 3.5,0 5.5,2 5.5,5"
+         id="path4436"
+         sodipodi:nodetypes="ccc" />
+      <g
+         id="use4586"
+         transform="matrix(0.695835,0,0,0.741921,207.1801,63.71)">
+        <path
+           sodipodi:nodetypes="cccccccc"
+           id="path20623"
+           d="m 682.3742,253.7871 0,2.6957 -2.8742,0 0,1.3479 2.8742,0 0,2.6957 4.3114,-3.36965 -4.3114,-3.36965 z"
+           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+        <path
+           sodipodi:nodetypes="cc"
+           style="fill:none;stroke:#000000;stroke-width:1.39177203px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 505.9072,37.19576 1.4371,0"
+           id="path20625"
+           transform="translate(170,219.961)" />
+        <path
+           sodipodi:nodetypes="cc"
+           style="fill:none;stroke:#000000;stroke-width:1.39177203px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 672.3144,257.1568 1.4371,0"
+           id="path20627" />
+      </g>
+    </g>
+  </g>
+</svg>

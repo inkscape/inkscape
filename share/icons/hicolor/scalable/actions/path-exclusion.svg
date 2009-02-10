@@ -12,19 +12,11 @@
    height="48px"
    id="svg5668"
    sodipodi:version="0.32"
-   inkscape:version="0.46+devel r20653"
+   inkscape:version="0.46+devel r20659"
    sodipodi:docname="path-exclusion.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
-     id="defs5670">
-    <inkscape:perspective
-       id="perspective20428"
-       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-  </defs>
+     id="defs5670" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -60,7 +52,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

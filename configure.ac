@@ -998,6 +998,8 @@ share/icons/hicolor/Makefile
 share/icons/hicolor/scalable/Makefile
 share/icons/hicolor/scalable/actions/Makefile
 share/icons/hicolor/scalable/devices/Makefile
+share/icons/hicolor/scalable/places/Makefile
+share/icons/hicolor/scalable/status/Makefile
 share/keys/Makefile
 share/markers/Makefile
 share/palettes/Makefile

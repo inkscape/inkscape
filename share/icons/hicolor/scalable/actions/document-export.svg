@@ -13,63 +13,11 @@
    height="48px"
    id="svg5668"
    sodipodi:version="0.32"
-   inkscape:version="0.46+devel r20653"
+   inkscape:version="0.46+devel r20659"
    sodipodi:docname="document-export.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs5670">
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient1887-6"
-       id="linearGradient5795"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.102855,0,0,1.148517,-167.5042,-41.73143)"
-       x1="163.85936"
-       y1="209.14064"
-       x2="173.72397"
-       y2="218.54164" />
-    <linearGradient
-       id="linearGradient1887-6">
-      <stop
-         id="stop1888-7"
-         offset="0.0000000"
-         style="stop-color:#fffdf8;stop-opacity:1.0000000;" />
-      <stop
-         id="stop1889-8"
-         offset="1.0000000"
-         style="stop-color:#cdccc7;stop-opacity:1.0000000;" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3480-7"
-       id="linearGradient5797"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.102855,0,0,1.148517,-168.0557,-42.30568)"
-       x1="161.28645"
-       y1="207.75523"
-       x2="173.03127"
-       y2="217.25519" />
-    <linearGradient
-       id="linearGradient3480-7">
-      <stop
-         id="stop3482-5"
-         offset="0.0000000"
-         style="stop-color:#646464;stop-opacity:1.0000000;" />
-      <stop
-         id="stop3484-2"
-         offset="1.0000000"
-         style="stop-color:#000000;stop-opacity:1.0000000;" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3480-7"
-       id="linearGradient5799-6"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(-150.459,-11.45)"
-       x1="160"
-       y1="213"
-       x2="176"
-       y2="213" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient1887"
@@ -150,7 +98,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

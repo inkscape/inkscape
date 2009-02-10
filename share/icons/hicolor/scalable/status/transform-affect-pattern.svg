@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48px"
+   height="48px"
+   id="svg17007"
+   sodipodi:version="0.32"
+   inkscape:version="0.46+devel r20659"
+   sodipodi:docname="transform-affect-pattern.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs17009" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.75"
+     inkscape:cx="32.502803"
+     inkscape:cy="26.015369"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="947"
+     inkscape:window-height="491"
+     inkscape:window-x="34"
+     inkscape:window-y="146" />
+  <metadata
+     id="metadata17012">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       y="-18.360001"
+       x="36.005005"
+       height="48"
+       width="48"
+       id="rect4991"
+       style="fill:none;stroke:none;stroke-width:1;marker:none;display:inline" />
+    <g
+       transform="matrix(3,0,0,3,-1115.6418,-409.30755)"
+       style="fill:#000000"
+       id="g7655" />
+    <g
+       style="display:inline"
+       id="transform_pattern"
+       transform="matrix(3.9998333,0,0,3.9998333,-2699.8855,-979.80119)">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         id="rect4538"
+         width="11.00024"
+         height="4.999897"
+         x="674.99969"
+         y="245.9612" />
+      <path
+         style="opacity:0.9;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1"
+         d="m 683.8361,245.8988 -2.2263,1.6932 -2.1805,-1.6583 -2.2264,1.6933 2.2034,1.6758 -2.1804,1.6584 4.4068,0 -2.1804,-1.6584 2.2034,-1.6758 2.1804,1.6583 2.2264,-1.6933 -2.2264,-1.6932 z m 0,3.3865 -2.2034,1.6759 4.4068,0 -2.2034,-1.6759 z m -8.8366,-3.3691 0,3.3517 2.2034,-1.6759 -2.2034,-1.6758 z m 0,3.3866 0,1.6584 2.1805,0 -2.1805,-1.6584 z"
+         id="rect4540" />
+      <path
+         sodipodi:nodetypes="ccc"
+         id="use5102"
+         d="m 675.5,245.461 11,0 0,5"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1" />
+      <g
+         id="use4592"
+         transform="matrix(0.695835,0,0,0.741921,209.1801,63.671)">
+        <path
+           sodipodi:nodetypes="cccccccc"
+           id="path20631"
+           d="m 682.3742,253.7871 0,2.6957 -2.8742,0 0,1.3479 2.8742,0 0,2.6957 4.3114,-3.36965 -4.3114,-3.36965 z"
+           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+        <path
+           sodipodi:nodetypes="cc"
+           style="fill:none;stroke:#000000;stroke-width:1.39177203px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 505.9072,37.19576 1.4371,0"
+           id="path20633"
+           transform="translate(170,219.961)" />
+        <path
+           sodipodi:nodetypes="cc"
+           style="fill:none;stroke:#000000;stroke-width:1.39177203px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 672.3144,257.1568 1.4371,0"
+           id="path20635" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -13,33 +13,11 @@
    height="48px"
    id="svg5668"
    sodipodi:version="0.32"
-   inkscape:version="0.46+devel r20653"
+   inkscape:version="0.46+devel r20659"
    sodipodi:docname="zoom-half-size.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs5670">
-    <linearGradient
-       id="linearGradient2888">
-      <stop
-         id="stop2889"
-         offset="0.0000000"
-         style="stop-color:#ffffff;stop-opacity:1.0000000;" />
-      <stop
-         id="stop2894"
-         offset="1"
-         style="stop-color:#8ab3de;stop-opacity:1;" />
-    </linearGradient>
-    <radialGradient
-       r="7.4696794"
-       fy="153.06299"
-       fx="171.77553"
-       cy="153.06299"
-       cx="171.77553"
-       gradientTransform="matrix(1.122233,1.252981,-2.05495,1.830229,297.3402,-339.2527)"
-       gradientUnits="userSpaceOnUse"
-       id="radialGradient11018"
-       xlink:href="#linearGradient2888"
-       inkscape:collect="always" />
     <linearGradient
        id="linearGradient2888-6">
       <stop
@@ -97,7 +75,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

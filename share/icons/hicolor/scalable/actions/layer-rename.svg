@@ -13,90 +13,11 @@
    height="48px"
    id="svg5668"
    sodipodi:version="0.32"
-   inkscape:version="0.46+devel r20653"
+   inkscape:version="0.46+devel r20659"
    sodipodi:docname="layer-rename.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs5670">
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient2485-8"
-       id="linearGradient5693"
-       gradientUnits="userSpaceOnUse"
-       x1="974.19751"
-       y1="182.46863"
-       x2="979.80444"
-       y2="184.8026" />
-    <linearGradient
-       id="linearGradient2485-8">
-      <stop
-         id="stop2486-8"
-         offset="0.0000000"
-         style="stop-color:#ffffff;stop-opacity:1.0000000" />
-      <stop
-         id="stop2487-8"
-         offset="1.0000000"
-         style="stop-color:#aaaaaa;stop-opacity:1.0000000;" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3480"
-       id="linearGradient5695"
-       gradientUnits="userSpaceOnUse"
-       x1="967.73901"
-       y1="178.93727"
-       x2="974.57471"
-       y2="184.71498" />
-    <linearGradient
-       id="linearGradient3480">
-      <stop
-         id="stop3482"
-         offset="0.0000000"
-         style="stop-color:#646464;stop-opacity:1.0000000;" />
-      <stop
-         id="stop3484"
-         offset="1.0000000"
-         style="stop-color:#000000;stop-opacity:1.0000000;" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient2485-8"
-       id="linearGradient5787"
-       gradientUnits="userSpaceOnUse"
-       x1="974.19751"
-       y1="182.46863"
-       x2="979.80444"
-       y2="184.8026" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5704"
-       id="linearGradient5789"
-       gradientUnits="userSpaceOnUse"
-       x1="968.88806"
-       y1="178.31856"
-       x2="977.93347"
-       y2="181.70978" />
-    <linearGradient
-       id="linearGradient5704">
-      <stop
-         style="stop-color:#5a5a5a;stop-opacity:1;"
-         offset="0"
-         id="stop5706" />
-      <stop
-         style="stop-color:#000000;stop-opacity:1.0000000;"
-         offset="1.0000000"
-         id="stop5708" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient800"
-       id="linearGradient5644"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.7,0,0,1,311.2,8.5)"
-       x1="974.43518"
-       y1="172.44194"
-       x2="974.43518"
-       y2="174.93935" />
     <linearGradient
        id="linearGradient800">
       <stop
@@ -109,15 +30,6 @@
          style="stop-color:#ffa01e;stop-opacity:1;" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5704-9"
-       id="linearGradient5658"
-       x1="994.15332"
-       y1="181.5609"
-       x2="992.73621"
-       y2="185"
-       gradientUnits="userSpaceOnUse" />
-    <linearGradient
        id="linearGradient5704-9">
       <stop
          style="stop-color:#5a5a5a;stop-opacity:1;"
@@ -128,16 +40,6 @@
          offset="1.0000000"
          id="stop5708-8" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5663"
-       id="linearGradient5669"
-       x1="989.87738"
-       y1="185.18915"
-       x2="990.57349"
-       y2="179.19316"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(0.0706497,-0.23015)" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient5663">
@@ -246,7 +148,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

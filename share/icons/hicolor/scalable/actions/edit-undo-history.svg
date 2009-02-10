@@ -13,20 +13,11 @@
    height="48px"
    id="svg5668"
    sodipodi:version="0.32"
-   inkscape:version="0.46+devel r20653"
+   inkscape:version="0.46+devel r20659"
    sodipodi:docname="edit-undo-history.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs5670">
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5734"
-       id="linearGradient5391"
-       gradientUnits="userSpaceOnUse"
-       x1="283.98041"
-       y1="25.257681"
-       x2="279.47864"
-       y2="21.160408" />
     <linearGradient
        id="linearGradient5734">
       <stop
@@ -38,15 +29,6 @@
          offset="1"
          style="stop-color:#ffffff" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5704"
-       id="linearGradient5393"
-       gradientUnits="userSpaceOnUse"
-       x1="279.64499"
-       y1="22.038395"
-       x2="283.10538"
-       y2="25.592152" />
     <linearGradient
        id="linearGradient5704">
       <stop

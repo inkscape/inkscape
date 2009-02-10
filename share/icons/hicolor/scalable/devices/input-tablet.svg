@@ -13,123 +13,11 @@
    height="48px"
    id="svg5668"
    sodipodi:version="0.32"
-   inkscape:version="0.46+devel r20653"
+   inkscape:version="0.46+devel r20659"
    sodipodi:docname="input-tablet.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs5670">
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5704"
-       id="linearGradient4736"
-       gradientUnits="userSpaceOnUse"
-       x1="330.38608"
-       y1="34.560329"
-       x2="333.01724"
-       y2="38.280788"
-       gradientTransform="translate(209.9854,0.409827)" />
-    <linearGradient
-       id="linearGradient5704">
-      <stop
-         style="stop-color:#5a5a5a;stop-opacity:1;"
-         offset="0"
-         id="stop5706" />
-      <stop
-         style="stop-color:#000000;stop-opacity:1.0000000;"
-         offset="1.0000000"
-         id="stop5708" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5704"
-       id="linearGradient4738"
-       gradientUnits="userSpaceOnUse"
-       x1="335.45627"
-       y1="33.542469"
-       x2="339.54184"
-       y2="39.123158"
-       gradientTransform="translate(209.9854,0.409827)" />
-    <linearGradient
-       id="linearGradient2485">
-      <stop
-         id="stop2486"
-         offset="0.0000000"
-         style="stop-color:#ffffff;stop-opacity:1.0000000" />
-      <stop
-         id="stop2487"
-         offset="1.0000000"
-         style="stop-color:#aaaaaa;stop-opacity:1.0000000;" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient2485"
-       id="linearGradient4740"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.81842,0,0,0.200075,254.0602,-14.15959)"
-       x1="368.91229"
-       y1="269.26901"
-       x2="359.69348"
-       y2="254.23909" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient2485"
-       id="linearGradient4742"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.181871,0,0,0.200075,474.8909,-14.15959)"
-       x1="366.48358"
-       y1="265.38815"
-       x2="360.57736"
-       y2="259.75748" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5704"
-       id="linearGradient4748"
-       gradientUnits="userSpaceOnUse"
-       x1="344"
-       y1="29.139771"
-       x2="346"
-       y2="31.666874"
-       gradientTransform="translate(209.9854,0.409827)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient2485"
-       id="linearGradient22119"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.455219,0,0,0.501233,377.5466,-100.7998)"
-       x1="365.23157"
-       y1="264.55298"
-       x2="361.73392"
-       y2="260.24765" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5704"
-       id="linearGradient22121"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.997993,0,0,0.99958,1.061475,-0.0495296)"
-       x1="542.19043"
-       y1="27.955364"
-       x2="544.94995"
-       y2="32.713181" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient2485"
-       id="linearGradient22152"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.455219,0,0,0.501233,377.5466,-100.7998)"
-       x1="365.23157"
-       y1="264.55298"
-       x2="361.73392"
-       y2="260.24765" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5704"
-       id="linearGradient22154"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.997993,0,0,0.99958,1.061475,-0.0495296)"
-       x1="542.19043"
-       y1="27.955364"
-       x2="544.94995"
-       y2="32.713181" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient1887-7"
@@ -238,7 +126,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

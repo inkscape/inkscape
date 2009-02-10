@@ -13,53 +13,11 @@
    height="48px"
    id="svg5668"
    sodipodi:version="0.32"
-   inkscape:version="0.46+devel r20653"
+   inkscape:version="0.46+devel r20659"
    sodipodi:docname="zoom-in.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs5670">
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#WhiteTransparent"
-       id="linearGradient3731"
-       gradientUnits="userSpaceOnUse"
-       x1="0"
-       y1="128"
-       x2="0"
-       y2="76" />
-    <linearGradient
-       id="WhiteTransparent"
-       gradientUnits="userSpaceOnUse">
-      <stop
-         style="stop-color:white;stop-opacity:1"
-         offset="0"
-         id="stop7" />
-      <stop
-         style="stop-color:white;stop-opacity:0"
-         offset="1"
-         id="stop9" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient3391"
-       id="linearGradient3733"
-       gradientUnits="userSpaceOnUse"
-       x1="80"
-       y1="20"
-       x2="60"
-       y2="40" />
-    <linearGradient
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient3391">
-      <stop
-         id="stop3393"
-         offset="0"
-         style="stop-color:white;stop-opacity:1" />
-      <stop
-         id="stop3395"
-         offset="1"
-         style="stop-color:white;stop-opacity:0" />
-    </linearGradient>
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient2888-3"
@@ -139,7 +97,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
