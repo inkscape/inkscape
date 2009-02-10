@@ -24,9 +24,11 @@ namespace Widget {
 SimpleFilterModifier::SimpleFilterModifier(int flags)
     : _lb_blend(_("_Blend mode:")),
       _lb_blur(_("B_lur:"), Gtk::ALIGN_LEFT),
-      _blend(BlendModeConverter),
+      _blend(BlendModeConverter, SP_ATTR_INVALID, false),
       _blur(0, 0, 100, 1, 0.01, 1)
 {
+    _flags = flags;
+
     if (flags & BLEND) {
         add(_hb_blend);
         _hb_blend.pack_start(_lb_blend, false, false);
@@ -56,14 +58,17 @@ sigc::signal<void>& SimpleFilterModifier::signal_blend_blur_changed()
 
 const Glib::ustring SimpleFilterModifier::get_blend_mode()
 {
+    if (!(_flags & BLEND)) {
+        return "normal";
+    }
     if (_blend.get_active_row_number() == 5) {
-        return "filter";
+        return "normal";
     } else {
         const Util::EnumData<Inkscape::Filters::FilterBlendMode> *d = _blend.get_active_data();
-        if (d)
+        if (d) {
             return _blend.get_active_data()->key;
-        else
-            return "filter";
+        } else
+            return "normal";
     }
 }
 

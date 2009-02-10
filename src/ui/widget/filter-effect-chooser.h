@@ -51,6 +51,7 @@ public:
     void set_blur_sensitive(const bool);
 
 private:
+    int _flags;
     Gtk::HBox _hb_blend;
     Gtk::VBox _vb_blur;
     Gtk::Label _lb_blend, _lb_blur;
