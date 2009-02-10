@@ -1,3 +1,4 @@
+SUBDIRS = hicolor
 
 iconsdir = $(datadir)/inkscape/icons
 
