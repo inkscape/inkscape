@@ -33,10 +33,14 @@ private:
         return an.compare(bn);
     }
 
+    bool _sort;
+
 public:
-    ComboBoxEnum(E default_value, const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID)
+    ComboBoxEnum(E default_value, const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID, bool sort = true)
         : AttrWidget(a, (unsigned int)default_value), setProgrammatically(false), _converter(c)
     {
+        _sort = sort;
+
         signal_changed().connect(signal_attr_changed().make_slot());
 
         _model = Gtk::ListStore::create(_columns);
@@ -54,13 +58,17 @@ public:
         set_active_by_id(default_value);
 
         // Sort the list
-        _model->set_default_sort_func(sigc::mem_fun(*this, &ComboBoxEnum<E>::on_sort_compare));
-        _model->set_sort_column(_columns.label, Gtk::SORT_ASCENDING);
+        if (sort) {
+            _model->set_default_sort_func(sigc::mem_fun(*this, &ComboBoxEnum<E>::on_sort_compare));
+            _model->set_sort_column(_columns.label, Gtk::SORT_ASCENDING);
+        }
     }
 
-    ComboBoxEnum(const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID)
+    ComboBoxEnum(const Util::EnumDataConverter<E>& c, const SPAttributeEnum a = SP_ATTR_INVALID, bool sort = true)
         : AttrWidget(a, (unsigned int) 0), setProgrammatically(false), _converter(c)
     {
+        _sort = sort;
+
         signal_changed().connect(signal_attr_changed().make_slot());
 
         _model = Gtk::ListStore::create(_columns);
@@ -78,8 +86,10 @@ public:
         set_active(0);
 
         // Sort the list
-        _model->set_default_sort_func(sigc::mem_fun(*this, &ComboBoxEnum<E>::on_sort_compare));
-        _model->set_sort_column(_columns.label, Gtk::SORT_ASCENDING);
+        if (_sort) {
+            _model->set_default_sort_func(sigc::mem_fun(*this, &ComboBoxEnum<E>::on_sort_compare));
+            _model->set_sort_column(_columns.label, Gtk::SORT_ASCENDING);
+        }
     }
 
     virtual Glib::ustring get_as_attribute() const
