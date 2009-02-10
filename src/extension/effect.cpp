@@ -28,6 +28,10 @@ namespace Extension {
 
 Effect * Effect::_last_effect = NULL;
 Inkscape::XML::Node * Effect::_effects_list = NULL;
+Inkscape::XML::Node * Effect::_filters_list = NULL;
+
+#define  EFFECTS_LIST  "effects-list"
+#define  FILTERS_LIST  "filters-list"
 
 Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp)
     : Extension(in_repr, in_imp),
@@ -83,18 +87,29 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
         } // children of "inkscape-extension"
     } // if we have an XML file
 
-    if (_effects_list == NULL && INKSCAPE != NULL) {
-        find_effects_list(inkscape_get_menus(INKSCAPE));
+    if (INKSCAPE != NULL) {
+        if (_effects_list == NULL)
+            _effects_list = find_menu(inkscape_get_menus(INKSCAPE), EFFECTS_LIST);
+        if (_filters_list == NULL)
+            _filters_list = find_menu(inkscape_get_menus(INKSCAPE), FILTERS_LIST);
     }
 
-    if (_effects_list != NULL) {
+    if ((_effects_list != NULL || _filters_list != NULL)) {
         Inkscape::XML::Document *xml_doc;
         xml_doc = _effects_list->document();
         _menu_node = xml_doc->createElement("verb");
         _menu_node->setAttribute("verb-id", this->get_id(), false);
 
-        if (!hidden)
-            merge_menu(_effects_list->parent(), _effects_list, local_effects_menu, _menu_node);
+        if (!hidden) {
+            if (_filters_list &&
+                local_effects_menu && 
+                local_effects_menu->attribute("name") && 
+                !strcmp(local_effects_menu->attribute("name"), _("Filters"))) {
+                merge_menu(_filters_list->parent(), _filters_list, sp_repr_children(local_effects_menu), _menu_node);
+            } else if (_effects_list) {
+                merge_menu(_effects_list->parent(), _effects_list, local_effects_menu, _menu_node);
+            }
+        }
     }
 
     return;
@@ -135,7 +150,7 @@ Effect::merge_menu (Inkscape::XML::Node * base,
 
     if (start != NULL) {
         Inkscape::XML::Node * menupass;
-        for (menupass = start; menupass != NULL; menupass = menupass->next()) {
+        for (menupass = start; menupass != NULL && strcmp(menupass->name(), "separator"); menupass = menupass->next()) {
             gchar const * compare_char = NULL;
             if (!strcmp(menupass->name(), "verb")) {
                 gchar const * verbid = menupass->attribute("verb-id");
@@ -150,6 +165,8 @@ Effect::merge_menu (Inkscape::XML::Node * base,
                 if (compare_char == NULL)
                     compare_char = menupass->attribute("_name");
             }
+
+            position = menupass->position() + 1;
 
             /* This will cause us to skip tags we don't understand */
             if (compare_char == NULL) {
@@ -290,26 +307,26 @@ Effect::set_last_effect (Effect * in_effect)
     return;
 }
 
-#define  EFFECTS_LIST  "effects-list"
-
-bool
-Effect::find_effects_list (Inkscape::XML::Node * menustruct)
+Inkscape::XML::Node *
+Effect::find_menu (Inkscape::XML::Node * menustruct, const gchar *name)
 {
     if (menustruct == NULL) return false;
     for (Inkscape::XML::Node * child = menustruct;
             child != NULL;
             child = child->next()) {
-        if (!strcmp(child->name(), EFFECTS_LIST)) {
-            _effects_list = child;
-            return true;
+        if (!strcmp(child->name(), name)) {
+            return child;
         }
         Inkscape::XML::Node * firstchild = child->firstChild();
-        if (firstchild != NULL)
-            if (find_effects_list(firstchild))
-                return true;
+        if (firstchild != NULL) {
+            Inkscape::XML::Node *found = find_menu (firstchild, name);
+            if (found)
+                return found;
+        }
     }
-    return false;
+    return NULL;
 }
+
 
 Gtk::VBox *
 Effect::get_info_widget(void)

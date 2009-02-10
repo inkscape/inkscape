@@ -40,11 +40,12 @@ class Effect : public Extension {
     /** \brief  This is the last effect that was used.  This is used in
                 a menu item to rapidly recall the same effect. */
     static Effect * _last_effect;
-    /** \brief  The location of the effects menu on the menu structure
+    /** \brief  The location of the Extensions and Filters menus on the menu structure
                 XML file.  This is saved so it only has to be discovered
                 once. */
     static Inkscape::XML::Node * _effects_list;
-    bool find_effects_list (Inkscape::XML::Node * menustruct);
+    static Inkscape::XML::Node * _filters_list;
+    Inkscape::XML::Node *find_menu (Inkscape::XML::Node * menustruct, const gchar *name);
     void merge_menu (Inkscape::XML::Node * base, Inkscape::XML::Node * start, Inkscape::XML::Node * patern, Inkscape::XML::Node * mergee);
 
     /** \brief  This is the verb type that is used for all effect's verbs.
