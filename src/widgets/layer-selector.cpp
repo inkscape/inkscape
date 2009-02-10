@@ -539,7 +539,7 @@ void LayerSelector::_prepareLabelRenderer(
         SPObject *layer=( _desktop ? _desktop->currentLayer() : NULL );
         SPObject *root=( _desktop ? _desktop->currentRoot() : NULL );
 
-        bool isancestor = !( layer && SP_OBJECT_PARENT(object) == SP_OBJECT_PARENT(layer) || layer == root && SP_OBJECT_PARENT(object) == root);
+        bool isancestor = !( (layer && (SP_OBJECT_PARENT(object) == SP_OBJECT_PARENT(layer))) || ((layer == root) && (SP_OBJECT_PARENT(object) == root)));
 
         bool iscurrent = ( object == layer && object != root );
 

@@ -416,8 +416,8 @@ sp_repr_lookup_child(Inkscape::XML::Node *repr,
     g_return_val_if_fail(repr != NULL, NULL);
     for ( Inkscape::XML::Node *child = repr->firstChild() ; child ; child = child->next() ) {
         gchar const *child_value = child->attribute(key);
-        if ( child_value == value ||
-             value && child_value && !strcmp(child_value, value) )
+        if ( (child_value == value) ||
+             (value && child_value && !strcmp(child_value, value)) )
         {
             return child;
         }
