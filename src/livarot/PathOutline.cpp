@@ -1167,78 +1167,88 @@ void
 Path::OutlineJoin (Path * dest, Geom::Point pos, Geom::Point stNor, Geom::Point enNor, double width,
                    JoinType join, double miter)
 {
+    /* 
+        Arbitrarily decide if we're on the inside or outside of a half turn.
+        A turn of 180 degrees (line path leaves the node in the same direction as it arrived)
+        is symmetric and has no real inside and outside. However when outlining we shall handle
+        one path as inside and the reverse path as outside. Handling both as inside joins (as
+        was done previously) will cut off round joins. Handling both as outside joins could
+        ideally work because both should fall together, but it seems that this causes many
+        extra nodes (due to rounding errors). Solution: for the 'half turn'-case toggle 
+        inside/outside each time the same node is processed 2 consecutive times.
+    */
+    static bool TurnInside = true;
+    static Geom::Point PrevPos(0, 0);
+    TurnInside ^= PrevPos == pos;
+    PrevPos = pos;
+
 	const double angSi = cross (enNor,stNor);
 	const double angCo = dot (stNor, enNor);
-	// 1/1000 is very big/ugly, but otherwise it stuffs things up a little...
-	// 1/1000 est tres grossier, mais sinon ca merde tout azimut
-	if ((width >= 0 && angSi > -0.001)
-	    || (width < 0 && angSi < 0.001)) {
-		if (angCo > 0.999) {
-			// straight ahead
-			// tout droit
-		} else if (angCo < -0.999) {
-			// half turn
-			// demit-tour
-			dest->LineTo (pos + width*enNor);
-		} else {
-			dest->LineTo (pos);
-			dest->LineTo (pos + width*enNor);
-		}
-	} else {
-		if (join == join_round) {
-			// Use the ends of the cubic: approximate the arc at the
-			// point where .., and support better the rounding of
-			// coordinates of the end points.
 
-			// utiliser des bouts de cubique: approximation de l'arc (au point ou on en est...), et supporte mieux
-			// l'arrondi des coordonnees des extremites
-			/* double   angle=acos(angCo);
-			   if ( angCo >= 0 ) {
-			   Geom::Point   stTgt,enTgt;
-			   RotCCWTo(stNor,stTgt);
-			   RotCCWTo(enNor,enTgt);
-			   dest->CubicTo(pos.x+width*enNor.x,pos.y+width*enNor.y,
-			   angle*width*stTgt.x,angle*width*stTgt.y,
-			   angle*width*enTgt.x,angle*width*enTgt.y);
-			   } else {
-			   Geom::Point   biNor;
-			   Geom::Point   stTgt,enTgt,biTgt;
-			   biNor.x=stNor.x+enNor.x;
-			   biNor.y=stNor.y+enNor.y;
-			   double  biL=sqrt(biNor.x*biNor.x+biNor.y*biNor.y);
-			   biNor.x/=biL;
-			   biNor.y/=biL;
-			   RotCCWTo(stNor,stTgt);
-			   RotCCWTo(enNor,enTgt);
-			   RotCCWTo(biNor,biTgt);
-			   dest->CubicTo(pos.x+width*biNor.x,pos.y+width*biNor.y,
-			   angle*width*stTgt.x,angle*width*stTgt.y,
-			   angle*width*biTgt.x,angle*width*biTgt.y);
-			   dest->CubicTo(pos.x+width*enNor.x,pos.y+width*enNor.y,
-			   angle*width*biTgt.x,angle*width*biTgt.y,
-			   angle*width*enTgt.x,angle*width*enTgt.y);
-			   }*/
-			if (width > 0) {
-				dest->ArcTo (pos + width*enNor,
-							 1.0001 * width, 1.0001 * width, 0.0, false, true);
-			} else {
-				dest->ArcTo (pos + width*enNor,
-							 -1.0001 * width, -1.0001 * width, 0.0, false,
-							 false);
-			}
-		} else if (join == join_pointy) {
-			Geom::Point const biss = unit_vector(Geom::rot90( stNor - enNor ));
-			double c2 = Geom::dot (biss, enNor);
-			double l = width / c2;
-			if ( fabs(l) > miter) {
-				dest->LineTo (pos + width*enNor);
-			} else {
-				dest->LineTo (pos+l*biss);
-				dest->LineTo (pos+width*enNor);
-			}
-		} else {
-			dest->LineTo (pos + width*enNor);
-		}
+    if (angSi == 0 && angCo > 0) { // The join is straight -> nothing to do.
+    } else {
+        if ((angSi > 0 && width >= 0) 
+            || (angSi < 0 && width < 0)) { // This is an inside join -> join is independent of chosen JoinType.
+            dest->LineTo (pos);
+            dest->LineTo (pos + width*enNor);
+        } else if (angSi == 0 && TurnInside) { // Half turn (180 degrees) ... inside (see above).
+            dest->LineTo (pos + width*enNor);
+        } else { // This is an outside join -> chosen JoinType should be applied.
+            if (join == join_round) {
+                // Use the ends of the cubic: approximate the arc at the
+                // point where .., and support better the rounding of
+                // coordinates of the end points.
+
+                // utiliser des bouts de cubique: approximation de l'arc (au point ou on en est...), et supporte mieux
+                // l'arrondi des coordonnees des extremites
+                /* double   angle=acos(angCo);
+                   if ( angCo >= 0 ) {
+                   Geom::Point   stTgt,enTgt;
+                   RotCCWTo(stNor,stTgt);
+                   RotCCWTo(enNor,enTgt);
+                   dest->CubicTo(pos.x+width*enNor.x,pos.y+width*enNor.y,
+                   angle*width*stTgt.x,angle*width*stTgt.y,
+                   angle*width*enTgt.x,angle*width*enTgt.y);
+                   } else {
+                   Geom::Point   biNor;
+                   Geom::Point   stTgt,enTgt,biTgt;
+                   biNor.x=stNor.x+enNor.x;
+                   biNor.y=stNor.y+enNor.y;
+                   double  biL=sqrt(biNor.x*biNor.x+biNor.y*biNor.y);
+                   biNor.x/=biL;
+                   biNor.y/=biL;
+                   RotCCWTo(stNor,stTgt);
+                   RotCCWTo(enNor,enTgt);
+                   RotCCWTo(biNor,biTgt);
+                   dest->CubicTo(pos.x+width*biNor.x,pos.y+width*biNor.y,
+                   angle*width*stTgt.x,angle*width*stTgt.y,
+                   angle*width*biTgt.x,angle*width*biTgt.y);
+                   dest->CubicTo(pos.x+width*enNor.x,pos.y+width*enNor.y,
+                   angle*width*biTgt.x,angle*width*biTgt.y,
+                   angle*width*enTgt.x,angle*width*enTgt.y);
+                   }*/
+                if (width > 0) {
+                    dest->ArcTo (pos + width*enNor,
+                                 1.0001 * width, 1.0001 * width, 0.0, false, true);
+                } else {
+                    dest->ArcTo (pos + width*enNor,
+                                 -1.0001 * width, -1.0001 * width, 0.0, false,
+                                 false);
+                }
+            } else if (join == join_pointy) {
+                Geom::Point const biss = unit_vector(Geom::rot90( stNor - enNor ));
+                double c2 = Geom::dot (biss, enNor);
+                double l = width / c2;
+                if ( fabs(l) > miter) {
+                    dest->LineTo (pos + width*enNor);
+                } else {
+                    dest->LineTo (pos+l*biss);
+                    dest->LineTo (pos+width*enNor);
+                }
+            } else { // Bevel join
+                dest->LineTo (pos + width*enNor);
+            }
+        }
 	}
 }
 
