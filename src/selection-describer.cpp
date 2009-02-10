@@ -100,13 +100,23 @@ SelectionDescriber::SelectionDescriber(Inkscape::Selection *selection, MessageSt
     _selection_changed_connection = new sigc::connection (
              selection->connectChanged(
                  sigc::mem_fun(*this, &SelectionDescriber::_updateMessageFromSelection)));
+    _selection_modified_connection = new sigc::connection (
+             selection->connectModified(
+                 sigc::mem_fun(*this, &SelectionDescriber::_selectionModified)));
     _updateMessageFromSelection(selection);
 }
 
 SelectionDescriber::~SelectionDescriber()
 {
     _selection_changed_connection->disconnect();
+    _selection_modified_connection->disconnect();
     delete _selection_changed_connection;
+    delete _selection_modified_connection;
+}
+
+void SelectionDescriber::_selectionModified(Inkscape::Selection *selection, guint /*flags*/)
+{
+    _updateMessageFromSelection(selection);
 }
 
 void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *selection) {
