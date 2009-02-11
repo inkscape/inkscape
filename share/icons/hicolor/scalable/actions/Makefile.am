@@ -174,7 +174,6 @@ icons_DATA = \
 	transform-scale-vertical.svg \
 	transform-skew-horizontal.svg \
 	transform-skew-vertical.svg \
-	vacuum-defs.svg \
 	view-manage-colors.svg \
 	window-next.svg \
 	window-previous.svg \
