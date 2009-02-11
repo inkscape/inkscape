@@ -39,7 +39,7 @@ libinkpre_a_SOURCES =	\
 	connection-pool.h \
 	console-output-undo-observer.h console-output-undo-observer.cpp \
 	context-fns.cpp context-fns.h \
-	desktop-affine.cpp desktop-affine.h	\
+	desktop-affine.h	\
 	desktop-events.cpp desktop-events.h	\
 	desktop-handles.cpp desktop-handles.h	\
 	desktop-style.cpp desktop-style.h	\
