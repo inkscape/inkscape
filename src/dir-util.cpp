@@ -208,8 +208,8 @@ inkscape_abs2rel (const char *path, const char *base, char *result, const size_t
   for (pp = path, bp = base; *pp && *bp && *pp == *bp; pp++, bp++)
     if (*pp == G_DIR_SEPARATOR)
       branch = pp;
-  if ((*pp == 0 || *pp == G_DIR_SEPARATOR && *(pp + 1) == 0) &&
-      (*bp == 0 || *bp == G_DIR_SEPARATOR && *(bp + 1) == 0))
+  if (((*pp == 0) || ((*pp == G_DIR_SEPARATOR) && (*(pp + 1) == 0))) &&
+      ((*bp == 0) || ((*bp == G_DIR_SEPARATOR) && (*(bp + 1) == 0))))
     {
       rp = result;
       *rp++ = '.';
@@ -220,7 +220,7 @@ inkscape_abs2rel (const char *path, const char *base, char *result, const size_t
       *rp = 0;
       goto finish;
     }
-  if (*pp == 0 && *bp == G_DIR_SEPARATOR || *pp == G_DIR_SEPARATOR && *bp == 0)
+  if (((*pp == 0) && (*bp == G_DIR_SEPARATOR)) || ((*pp == G_DIR_SEPARATOR) && (*bp == 0)))
     branch = pp;
   /* up to root. */
   rp = result;

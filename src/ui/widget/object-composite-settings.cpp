@@ -45,7 +45,7 @@ void ObjectCompositeSettings::_on_desktop_activate(
 
 void ObjectCompositeSettings::_on_desktop_deactivate(
     Inkscape::Application */*application*/,
-    SPDesktop *desktop,
+    SPDesktop */*desktop*/,
     ObjectCompositeSettings *w
 ) {
     if (w->_subject) {
