@@ -90,7 +90,6 @@ connector-context.cpp
 console-output-undo-observer.cpp
 context-fns.cpp
 #deptool.cpp
-desktop-affine.cpp
 desktop.cpp
 desktop-events.cpp
 desktop-handles.cpp
