@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48px"
+   height="48px"
+   id="svg5662"
+   sodipodi:version="0.32"
+   inkscape:version="0.46+devel r20666"
+   sodipodi:docname="draw-use-pressure.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs5664">
+    <linearGradient
+       id="linearGradient5704">
+      <stop
+         style="stop-color:#5a5a5a;stop-opacity:1;"
+         offset="0"
+         id="stop5706" />
+      <stop
+         style="stop-color:#000000;stop-opacity:1.0000000;"
+         offset="1.0000000"
+         id="stop5708" />
+    </linearGradient>
+    <linearGradient
+       y2="309.73383"
+       x2="698.72687"
+       y1="304.22421"
+       x1="695.0141"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6335"
+       xlink:href="#linearGradient5704"
+       inkscape:collect="always" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.5"
+     inkscape:cx="23.732855"
+     inkscape:cy="5.5346736"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="722"
+     inkscape:window-height="541"
+     inkscape:window-x="0"
+     inkscape:window-y="30" />
+  <metadata
+     id="metadata5667">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <g
+       style="display:inline"
+       id="guse_pressure"
+       transform="matrix(4.1079665,0,0,4.3752203,-2840.7574,-1329.1006)">
+      <rect
+         style="fill:none;stroke:none"
+         id="use_pressure"
+         width="11.684"
+         height="10.9571"
+         x="691.52399"
+         y="303.7634" />
+      <path
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         d="m 691.5241,314.2513 0.006,0.4987 11.6782,-0.0161 3e-4,-3.9732 c -2.8312,1.7762 -6.9043,3.4906 -11.6842,3.4906 z"
+         id="path7145"
+         sodipodi:nodetypes="ccccc" />
+      <path
+         style="fill:url(#linearGradient6335);fill-opacity:1;fill-rule:evenodd;stroke:none"
+         d="m 696.8349,303.7635 0,4.9865 -3.1866,0 3.7177,3.9893 3.7177,-3.9893 -3.1866,0 0,-4.9865 -1.0622,0 z"
+         id="path4622"
+         sodipodi:nodetypes="cccccccc" />
+    </g>
+  </g>
+</svg>

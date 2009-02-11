@@ -12,6 +12,12 @@ iconsdir = $(themedir)/$(size)/$(context)
 # inkscape --vacuum-defs *
 
 icons_DATA = \
+	connector-avoid.svg \
+	connector-ignore.svg \
+	draw-eraser-delete-objects.svg \
+	draw-trace-background.svg \
+	draw-use-pressure.svg \
+	draw-use-tilt.svg \
 	fill-flat.svg \
 	fill-gradient-linear.svg \
 	fill-gradient-radial.svg \

@@ -8,7 +8,7 @@ iconsdir = $(themedir)/$(size)/$(context)
 # find . -name '*.svg' -and -not -name '*.svn*' -printf '\t%P \\\n' | sort | zenity --text-info
 # and paste the contents of the dialog box here
 
-icons_DATA = 
+icons_DATA = \
 	align-bottom.svg \
 	align-bottom-to-anchor.svg \
 	align-center-horizontal.svg \
@@ -59,6 +59,7 @@ icons_DATA =
 	draw-rectangle.svg \
 	draw-spiral.svg \
 	draw-star.svg \
+	draw-text.svg \
 	edit-clone.svg \
 	edit-clone-unlink.svg \
 	edit-duplicate.svg \

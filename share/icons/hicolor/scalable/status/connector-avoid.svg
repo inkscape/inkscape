@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48px"
+   height="48px"
+   id="svg5662"
+   sodipodi:version="0.32"
+   inkscape:version="0.46+devel r20666"
+   sodipodi:docname="connector-avoid.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs5664">
+    <linearGradient
+       id="linearGradient10585">
+      <stop
+         style="stop-color:#d7d7d7;stop-opacity:1.0000000;"
+         offset="0.0000000"
+         id="stop10587" />
+      <stop
+         style="stop-color:#000000;stop-opacity:1.0000000;"
+         offset="1.0000000"
+         id="stop10595" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient10585"
+       id="linearGradient5957"
+       gradientUnits="userSpaceOnUse"
+       x1="5.6449146"
+       y1="209.98189"
+       x2="13.522233"
+       y2="214.77893" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient10585"
+       id="linearGradient5959"
+       gradientUnits="userSpaceOnUse"
+       x1="5.6449146"
+       y1="209.98189"
+       x2="13.522233"
+       y2="214.77893" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.5"
+     inkscape:cx="23.732855"
+     inkscape:cy="5.5346736"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="722"
+     inkscape:window-height="541"
+     inkscape:window-x="0"
+     inkscape:window-y="30" />
+  <metadata
+     id="metadata5667">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <path
+       sodipodi:nodetypes="ccc"
+       id="path12164"
+       d="m 15.192836,6.7521306 21.704047,13.0224294 0,21.704048"
+       style="fill:none;stroke:#3c3c3c;stroke-width:4.34081078px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:0.83060111" />
+    <g
+       transform="matrix(2.9932313,0,0,2.2012159,-32.272649,-450.04602)"
+       id="use5787"
+       style="stroke:#000000;stroke-opacity:1">
+      <rect
+         style="color:#000000;fill:none;stroke:#000000;stroke-width:1.69109905;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline"
+         id="rect5939"
+         width="4.5088892"
+         height="2.0118859"
+         x="11.50698"
+         y="205.5087" />
+    </g>
+    <g
+       transform="matrix(2.9932313,0,0,2.2012159,-2.1096039,-410.96801)"
+       id="use5790"
+       style="stroke:#000000;stroke-opacity:1">
+      <rect
+         style="color:#000000;fill:none;stroke:#000000;stroke-width:1.69109905;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline"
+         id="rect5943"
+         width="4.5088892"
+         height="2.0118859"
+         x="11.50698"
+         y="205.5087" />
+    </g>
+    <g
+       id="use5814"
+       style="stroke:url(#linearGradient5959);stroke-opacity:1"
+       transform="matrix(2.7169301,0,0,2.917202,-20.946015,-593.01931)">
+      <rect
+         style="color:#000000;fill:none;stroke:url(#linearGradient5957);stroke-width:1.54186893;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline"
+         id="rect5931"
+         width="7.9986801"
+         height="2.959625"
+         x="8.5082998"
+         y="211.5502" />
+    </g>
+  </g>
+</svg>
