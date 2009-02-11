@@ -596,7 +596,8 @@ gchar *SvgBuilder::_createPattern(GfxPattern *pattern, GfxState *state, bool is_
         if ( pattern->getType() == 2 ) {  // Shading pattern
             GfxShadingPattern *shading_pattern = (GfxShadingPattern*)pattern;
             id = _createGradient(shading_pattern->getShading(),
-                                 shading_pattern->getMatrix());
+                                 shading_pattern->getMatrix(),
+                                 !is_stroke);
         } else if ( pattern->getType() == 1 ) {   // Tiling pattern
             id = _createTilingPattern((GfxTilingPattern*)pattern, state, is_stroke);
         }
