@@ -1303,5 +1303,10 @@
 <feComposite id="feComposite1260" operator="in" result="result2" in="result1" in2="SourceAlpha" />
 <feComposite id="feComposite1262" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="SourceGraphic" />
 </filter>
+<filter id="filter3869b" inkscape:label="Roughen inside" inkscape:menu="Distort" inkscape:menu-tooltip="Roughen all inside shapes" height="1" width="1" y="0" x="0">
+<feTurbulence id="feTurbulence3871" numOctaves="5" seed="0" type="fractalNoise" in="SourceAlpha" baseFrequency="0.080000000000000002" />
+<feDisplacementMap id="feDisplacementMap3873" numOctaves="2" scale="20" yChannelSelector="G" xChannelSelector="R" in="SourceGraphic" result="result1" />
+<feComposite id="feComposite3875" in="result1" in2="SourceGraphic" operator="atop" />
+</filter>
 </defs>
 </svg>
