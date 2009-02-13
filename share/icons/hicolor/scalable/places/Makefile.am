@@ -24,6 +24,7 @@ icons_DATA = \
 	dialog-scripts.svg \
 	dialog-text-and-font.svg \
 	dialog-tile-clones.svg \
+	dialog-transform.svg \
 	dialog-xml-editor.svg \
 	grid-axonometric.svg \
 	grid-rectangular.svg \

@@ -107,7 +107,6 @@ icons_DATA = \
 	object-rotate-left.svg \
 	object-rotate-right.svg \
 	object-to-path.svg \
-	object-transform.svg \
 	object-tweak-attract.svg \
 	object-tweak-blur.svg \
 	object-tweak-duplicate.svg \
