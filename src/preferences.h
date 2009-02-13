@@ -19,6 +19,7 @@
 #include <climits>
 #include <cfloat>
 #include "xml/xml-forward.h"
+#include "xml/repr.h"
 
 class SPCSSAttr;
 
