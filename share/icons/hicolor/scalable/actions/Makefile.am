@@ -71,8 +71,8 @@ icons_DATA = \
 	edit-select-none.svg \
 	edit-select-original.svg \
 	edit-undo-history.svg \
+	help-contents.svg \
 	help-keyboard-shortcuts.svg \
-	help-manual.svg \
 	image-filter-blend.svg \
 	image-filter-color-matrix.svg \
 	image-filter-diffuse-lighting.svg \
@@ -123,12 +123,10 @@ icons_DATA = \
 	path-cut.svg \
 	path-difference.svg \
 	path-division.svg \
-	path-dynamic-offset.svg \
 	path-effect-parameter-next.svg \
 	path-exclusion.svg \
 	path-inset.svg \
 	path-intersection.svg \
-	path-linked-offset.svg \
 	path-mask-edit.svg \
 	path-offset-dynamic.svg \
 	path-offset-linked.svg \
