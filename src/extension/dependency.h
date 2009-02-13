@@ -32,7 +32,6 @@ class Dependency {
         TYPE_EXECUTABLE, /**< Look for an executable */
         TYPE_FILE,       /**< Look to make sure a file exists */
         TYPE_EXTENSION,  /**< Make sure a specific extension is loaded and functional */
-        TYPE_PLUGIN,     /**< Look for a library to be loaded as a plugin */
         TYPE_CNT         /**< Number of types */
     };
     /** \brief  Storing the type of this particular dependency. */

@@ -32,7 +32,6 @@ enum Type {
     MARKERS,
     PALETTES,
     PATTERNS,
-    PLUGINS,
     SCREENS,
     TEMPLATES,
     TUTORIALS,

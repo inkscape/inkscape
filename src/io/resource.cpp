@@ -45,7 +45,6 @@ Util::ptr_shared<char> get_path(Domain domain, Type type, char const *filename)
                 case MARKERS: temp = INKSCAPE_MARKERSDIR; break;
                 case PALETTES: temp = INKSCAPE_PALETTESDIR; break;
                 case PATTERNS: temp = INKSCAPE_PATTERNSDIR; break;
-                case PLUGINS: temp = INKSCAPE_PLUGINDIR; break;
                 case SCREENS: temp = INKSCAPE_SCREENSDIR; break;
                 case TEMPLATES: temp = INKSCAPE_TEMPLATESDIR; break;
                 case TUTORIALS: temp = INKSCAPE_TUTORIALSDIR; break;
@@ -74,7 +73,6 @@ Util::ptr_shared<char> get_path(Domain domain, Type type, char const *filename)
                 case MARKERS: name = "markers"; break;
                 case PALETTES: name = "palettes"; break;
                 case PATTERNS: name = "patterns"; break;
-                case PLUGINS: name = "plugins"; break;
                 case TEMPLATES: name = "templates"; break;
                 default: return get_path(SYSTEM, type, filename);
             }

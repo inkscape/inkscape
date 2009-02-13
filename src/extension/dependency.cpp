@@ -26,7 +26,6 @@ gchar const * Dependency::_type_str[] = {
     "executable",
     "file",
     "extension",
-    "plugin",
 };
 
 // These strings are for XML attribute comparisons and should not be translated
@@ -101,10 +100,6 @@ Dependency::~Dependency (void)
     looked up in the database.  If the extension is found, and it is
     not deactivated, the dependency passes.
 
-    If the type is \c TYPE_PLUGIN then the path for the plugin is found
-    using the Glib::Module routines.  When the path is found, then there
-    is a check to see if the file exists using the \c file_test function.
-
     If the type is \c TYPE_EXECUTABLE or \c TYPE_FILE things are getting
     even more interesting because now the \c _location variable is also
     taken into account.  First, the difference between the two is that
@@ -136,16 +131,6 @@ Dependency::check (void) const
             Extension * myext = db.get(_string);
             if (myext == NULL) return FALSE;
             if (myext->deactivated()) return FALSE;
-            break;
-        }
-        case TYPE_PLUGIN: {
-            if (!Glib::Module::get_supported()) {
-                return FALSE;
-            }
-
-            std::string path = Glib::Module::build_path(INKSCAPE_PLUGINDIR, _string);
-            if (!Glib::file_test(path, Glib::FILE_TEST_EXISTS))
-                return FALSE;
             break;
         }
         case TYPE_EXECUTABLE:

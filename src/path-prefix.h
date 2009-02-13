@@ -34,7 +34,6 @@ extern "C" {
 #  define INKSCAPE_PATTERNSDIR    BR_DATADIR( "/inkscape/patterns" )
 #  define INKSCAPE_SCREENSDIR     BR_DATADIR( "/inkscape/screens" )
 #  define INKSCAPE_TUTORIALSDIR   BR_DATADIR( "/inkscape/tutorials" )
-#  define INKSCAPE_PLUGINDIR      BR_LIBDIR(  "/inkscape/plugins" )
 #  define INKSCAPE_TEMPLATESDIR   BR_DATADIR( "/inkscape/templates" )
 #  define INKSCAPE_UIDIR          BR_DATADIR( "/inkscape/ui" )
 //CREATE V0.1 support
@@ -56,7 +55,6 @@ extern "C" {
 #    define INKSCAPE_PATTERNSDIR  WIN32_DATADIR("share\\patterns")
 #    define INKSCAPE_SCREENSDIR   WIN32_DATADIR("share\\screens")
 #    define INKSCAPE_TUTORIALSDIR WIN32_DATADIR("share\\tutorials")
-#    define INKSCAPE_PLUGINDIR    WIN32_DATADIR("plugins")
 #    define INKSCAPE_TEMPLATESDIR WIN32_DATADIR("share\\templates")
 #    define INKSCAPE_UIDIR        WIN32_DATADIR("share\\ui")
 //CREATE V0.1  WIN32 support
@@ -77,7 +75,6 @@ extern "C" {
 #    define INKSCAPE_PATTERNSDIR  "Contents/Resources/patterns"
 #    define INKSCAPE_SCREENSDIR   "Contents/Resources/screens"
 #    define INKSCAPE_TUTORIALSDIR "Contents/Resources/tutorials"
-#    define INKSCAPE_PLUGINDIR    "Contents/Resources/plugins"
 #    define INKSCAPE_TEMPLATESDIR "Contents/Resources/templates"
 #    define INKSCAPE_UIDIR        "Contents/Resources/ui"
 //CREATE V0.1 support
@@ -98,7 +95,6 @@ extern "C" {
 #    define INKSCAPE_PATTERNSDIR  INKSCAPE_DATADIR "/inkscape/patterns"
 #    define INKSCAPE_SCREENSDIR   INKSCAPE_DATADIR "/inkscape/screens"
 #    define INKSCAPE_TUTORIALSDIR INKSCAPE_DATADIR "/inkscape/tutorials"
-#    define INKSCAPE_PLUGINDIR    INKSCAPE_LIBDIR  "/inkscape/plugins"
 #    define INKSCAPE_TEMPLATESDIR INKSCAPE_DATADIR "/inkscape/templates"
 #    define INKSCAPE_UIDIR        INKSCAPE_DATADIR "/inkscape/ui"
 //CREATE V0.1 support

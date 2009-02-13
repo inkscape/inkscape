@@ -910,33 +910,9 @@ fi
 
 AM_CONDITIONAL(USE_MMX, test x$use_mmx_asm = xyes)
 
-dnl Figure out where the datadir actually is
-dnl http://autoconf-archive.cryp.to/ac_define_dir.html
-prefix_NONE=
-exec_prefix_NONE=
-test "x$prefix" = xNONE && prefix_NONE=yes && prefix=$ac_default_prefix
-test "x$exec_prefix" = xNONE && exec_prefix_NONE=yes && exec_prefix=$prefix
-dnl In Autoconf 2.60, ${datadir} refers to ${datarootdir}, which in turn
-dnl refers to ${prefix}.  Thus we have to use `eval' twice.
-eval runtime_datadir="${datadir}"
-eval runtime_datadir="${runtime_datadir}"
-test "$prefix_NONE" && prefix=NONE
-test "$exec_prefix_NONE" && exec_prefix=NONE
-
-inkscape_sharedir="${runtime_datadir}/${PACKAGE_NAME}"
-
 dnl Define our data paths for config.h
-AC_SUBST(INKSCAPE_DATADIR)
-AC_DEFINE_UNQUOTED([INKSCAPE_DATADIR], "${runtime_datadir}",
-					[Base data directory -- only path-prefix.h should use it!])
-AC_SUBST(PACKAGE_LOCALE_DIR)
-AC_DEFINE_UNQUOTED([PACKAGE_LOCALE_DIR], "${runtime_datadir}/locale",
-					[Localization directory])
-AC_SUBST(INKSCAPE_LIBDIR)
-AC_DEFINE_UNQUOTED([INKSCAPE_LIBDIR], "${prefix}/lib",
-					[Base library directory -- only path-prefix.h should use it!])
-
-dnl Have to add module makefiles (lauris)
+AC_DEFINE_DIR([INKSCAPE_DATADIR], [datadir], [Base data directory])
+AC_DEFINE_DIR([PACKAGE_LOCALE_DIR], [localedir], [Locatization directory])
 
 AC_CONFIG_FILES([
 Makefile

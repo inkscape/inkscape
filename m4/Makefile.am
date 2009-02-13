@@ -1,3 +1,12 @@
-EXTRA_DIST=codeset.m4 glibc21.m4 isc-posix.m4 progtest.m4 gettext.m4 \
-           iconv.m4 lcmessage.m4 relaytool.m4
+EXTRA_DIST = \
+	ac_define_dir.m4 \
+	ax_openmp.m4 \
+	codeset.m4 \
+	gettext.m4 \
+	glibc21.m4 \
+	iconv.m4 \
+	isc-posix.m4 \
+	lcmessage.m4 \
+	progtest.m4 \
+	relaytool.m4
 
