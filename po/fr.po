@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-02-09 21:16+0100\n"
-"PO-Revision-Date: 2009-02-10 13:54+0100\n"
+"POT-Creation-Date: 2009-02-13 13:56+0100\n"
+"PO-Revision-Date: 2009-02-13 15:56+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -159,6 +159,7 @@ msgstr "Rendre rugueux"
 #: ../share/filters/filters.svg.h:45
 #: ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:114
 msgid "Distort"
 msgstr "Déformation"
 
@@ -521,9 +522,8 @@ msgid "Glossy clumpy jam spread"
 msgstr "Étalage de confiture compact et brillant"
 
 #: ../share/filters/filters.svg.h:45
-#, fuzzy
 msgid "Pixel smear"
-msgstr "Pixels"
+msgstr "Barbouillage de pixels"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Vangogh paintings effect for bitmaps"
@@ -569,9 +569,8 @@ msgstr "Bulles TSL"
 
 #: ../share/filters/filters.svg.h:49
 #: ../share/filters/filters.svg.h:108
-#, fuzzy
 msgid "HSL-sensitive Bubbles effect for bitmaps"
-msgstr "Convertir les effets de fondu en bitmaps"
+msgstr "Effet de bulles sensibles aux valeurs TSL, pour bitmaps"
 
 #: ../share/filters/filters.svg.h:50
 msgid "Glowing bubble"
@@ -600,14 +599,12 @@ msgid "Neon light effect with glow"
 msgstr "Effet de lumière néon avec lueur"
 
 #: ../share/filters/filters.svg.h:52
-#, fuzzy
 msgid "Melt and glow"
-msgstr "Rotation à gauche"
+msgstr "Fondu éclatant"
 
 #: ../share/filters/filters.svg.h:52
-#, fuzzy
 msgid "Melting texture with a glow"
-msgstr "Rends les contours des bords rugueux et rayonnants "
+msgstr "Texture fondante, avec un éclat"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Badge"
@@ -678,9 +675,8 @@ msgid "Crossmooth"
 msgstr "doux"
 
 #: ../share/filters/filters.svg.h:60
-#, fuzzy
 msgid "Blur inner borders and intersections"
-msgstr "Aimanter aux intersections des chemins"
+msgstr "Rend flou les bordures intérieures et les intersections"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Iridescent Beeswax"
@@ -912,11 +908,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:88
 msgid "In and out"
-msgstr ""
+msgstr "Dedans et dehors"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Inner colorized shadow, outer black shadow"
-msgstr ""
+msgstr "Ombre colorisée à l'intérieur, noire à l'extérieur"
 
 #: ../share/filters/filters.svg.h:89
 msgid "Air spray"
@@ -932,7 +928,7 @@ msgstr "Chaud dedans"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Blurred colorized contour, filled inside"
-msgstr ""
+msgstr "Contour flou colorisé, rempli à l'intérieur"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Cool outline"
@@ -940,7 +936,7 @@ msgstr "Contour frais"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Blurred colorized contour, empty inside"
-msgstr ""
+msgstr "Contour flou colorisé, vide à l'intérieur"
 
 #: ../share/filters/filters.svg.h:92
 msgid "Electronic microscopy"
@@ -948,7 +944,7 @@ msgstr "Microscopie électronique"
 
 #: ../share/filters/filters.svg.h:92
 msgid "A bevel with the crude light of electronic microscopy"
-msgstr ""
+msgstr "Un biseau avec la lumière brute d'un microscope électronique"
 
 #: ../share/filters/filters.svg.h:93
 msgid "Kilt"
@@ -979,6 +975,7 @@ msgid "Outline, double"
 msgstr "Contour double"
 
 #: ../share/filters/filters.svg.h:96
+#, fuzzy
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr ""
 
@@ -1033,23 +1030,20 @@ msgid "Moonarise"
 msgstr "Lunariser"
 
 #: ../share/filters/filters.svg.h:104
-#, fuzzy
 msgid "Poster glow"
-msgstr "Coller la couleur"
+msgstr "Poster éclatant"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Glowing content, posterized edges"
 msgstr "Contenu lumineux et contour postérisé"
 
 #: ../share/filters/filters.svg.h:105
-#, fuzzy
 msgid "Stained glass"
-msgstr "Verre gravé"
+msgstr "Vitraux"
 
 #: ../share/filters/filters.svg.h:105
-#, fuzzy
 msgid "Illuminated stained glass effect"
-msgstr "Angle d'illumination"
+msgstr "Effet de vitraux lumineux"
 
 #: ../share/filters/filters.svg.h:106
 msgid "Dark glass"
@@ -1068,18 +1062,16 @@ msgid "HSL bubbles, alpha"
 msgstr "Bulles TSL, avec transparence"
 
 #: ../share/filters/filters.svg.h:109
-#, fuzzy
 msgid "Smooth edges"
-msgstr "Nœuds doux"
+msgstr "Bords doux"
 
 #: ../share/filters/filters.svg.h:109
 msgid "Smooth the outside of whapes and pictures without alterating their contents"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:110
-#, fuzzy
 msgid "Torn edges"
-msgstr "Aux nœuds"
+msgstr "Bords déchirés"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Displace the outside of shapes and pictures without alterating their content"
@@ -1091,16 +1083,15 @@ msgstr "Plume"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Blurred mask on the edge without altering the contents"
-msgstr ""
+msgstr "Masque flou sur les bords sans altération du contenu"
 
 #: ../share/filters/filters.svg.h:112
-#, fuzzy
 msgid "Blur content"
-msgstr "Mode flou"
+msgstr "Contenu flou"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Blur the contents of objects, preserving the outline"
-msgstr ""
+msgstr "Rend flou le contenu des objets, mais préserve le contour"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Basic specular"
@@ -1109,6 +1100,14 @@ msgstr "Spéculaire de base"
 #: ../share/filters/filters.svg.h:113
 msgid "Basic specular bevel to use for building textures"
 msgstr "Biseau spéculaire de base pour les textures de construction"
+
+#: ../share/filters/filters.svg.h:114
+msgid "Roughen inside"
+msgstr "Rugosité intérieure"
+
+#: ../share/filters/filters.svg.h:114
+msgid "Roughen all inside shapes"
+msgstr "Rend rugueuse toutes les formes intérieures"
 
 #: ../src/arc-context.cpp:302
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -3585,29 +3584,39 @@ msgstr "Ann_uler"
 msgid "_Redo"
 msgstr "Réta_blir"
 
-#: ../src/extension/dependency.cpp:261
+#: ../src/extension/dependency.cpp:246
 msgid "Dependency:"
 msgstr "Dépendance :"
 
-#: ../src/extension/dependency.cpp:262
+#: ../src/extension/dependency.cpp:247
 msgid "  type: "
 msgstr "  type : "
 
-#: ../src/extension/dependency.cpp:263
+#: ../src/extension/dependency.cpp:248
 msgid "  location: "
 msgstr "  emplacement : "
 
-#: ../src/extension/dependency.cpp:264
+#: ../src/extension/dependency.cpp:249
 msgid "  string: "
 msgstr "  chaîne : "
 
-#: ../src/extension/dependency.cpp:267
+#: ../src/extension/dependency.cpp:252
 msgid "  description: "
 msgstr "  description : "
 
-#: ../src/extension/effect.cpp:35
+#: ../src/extension/effect.cpp:39
 msgid " (No preferences)"
 msgstr " (Pas de préférences)"
+
+#: ../src/extension/effect.cpp:107
+#: ../src/extension/internal/filter/drop-shadow.h:44
+#: ../src/extension/internal/filter/drop-shadow.h:99
+#: ../src/extension/internal/filter/filter.cpp:206
+#: ../src/extension/internal/filter/filter-file.cpp:148
+#: ../src/extension/internal/filter/snow.h:38
+#: ../src/ui/dialog/inkscape-preferences.cpp:716
+msgid "Filters"
+msgstr "Filtres"
 
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:53
@@ -4036,14 +4045,12 @@ msgid "Level selected bitmap(s) by scaling values falling between the given rang
 msgstr "Niveler les bitmaps sélectionnés en mettant à l'échelle les valeurs se situant dans l'intervalle donné pour les élargir à la gamme complète de couleur."
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
-#, fuzzy
 msgid "Median"
-msgstr "Moyenne"
+msgstr "Médiane"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
-#, fuzzy
 msgid "Replace each pixel component with the median color in a circular neighborhood."
-msgstr "Transforme les bitmaps sélectionnés en remplaçant chaque pixel par la couleur médiane dans un voisinage circulaire."
+msgstr "Remplace chaque composante des pixels de l'image par la couleur médiane dans un voisinage circulaire."
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
 msgid "HSB Adjust"
@@ -4177,9 +4184,8 @@ msgid "Dither"
 msgstr "Autre"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
-#, fuzzy
 msgid "Randomly scatter pixels in selected bitmap(s), within the given radius of the original position"
-msgstr "Disperser au hasard les pixels des bitmaps sélectionnés, dans un rayon donné"
+msgstr "Disperser au hasard les pixels des bitmaps sélectionnés, dans le rayon donné de la position originale"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
 msgid "Swirl"
@@ -4410,15 +4416,6 @@ msgstr "Décalage horizontal (px)"
 #: ../src/extension/internal/filter/drop-shadow.h:95
 msgid "Vertical offset, px"
 msgstr "Décalage vertical (px)"
-
-#: ../src/extension/internal/filter/drop-shadow.h:44
-#: ../src/extension/internal/filter/drop-shadow.h:99
-#: ../src/extension/internal/filter/filter.cpp:206
-#: ../src/extension/internal/filter/filter-file.cpp:148
-#: ../src/extension/internal/filter/snow.h:38
-#: ../src/ui/dialog/inkscape-preferences.cpp:716
-msgid "Filters"
-msgstr "Filtres"
 
 #: ../src/extension/internal/filter/drop-shadow.h:48
 msgid "Black, blurred drop shadow"
@@ -5664,48 +5661,48 @@ msgstr "Barre d'_état"
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Afficher ou non la barre d'état (en bas de la fenêtre)"
 
-#: ../src/interface.cpp:896
+#: ../src/interface.cpp:915
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Verbe « %s » inconnu"
 
-#: ../src/interface.cpp:935
+#: ../src/interface.cpp:954
 msgid "Open _Recent"
 msgstr "Documents _récents"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1033
+#: ../src/interface.cpp:1054
 #, c-format
 msgid "Enter group #%s"
 msgstr "Entrer dans le groupe #%s"
 
-#: ../src/interface.cpp:1044
+#: ../src/interface.cpp:1065
 msgid "Go to parent"
 msgstr "Sélectionner le parent"
 
-#: ../src/interface.cpp:1135
-#: ../src/interface.cpp:1221
+#: ../src/interface.cpp:1156
+#: ../src/interface.cpp:1242
 #: ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr "Déposer la couleur"
 
-#: ../src/interface.cpp:1174
+#: ../src/interface.cpp:1195
 msgid "Drop color on gradient"
 msgstr "Déposer la couleur dans le dégradé"
 
-#: ../src/interface.cpp:1234
+#: ../src/interface.cpp:1255
 msgid "Could not parse SVG data"
 msgstr "Impossible de parcourir les données SVG"
 
-#: ../src/interface.cpp:1277
+#: ../src/interface.cpp:1298
 msgid "Drop SVG"
 msgstr "Déposer un SVG"
 
-#: ../src/interface.cpp:1335
+#: ../src/interface.cpp:1356
 msgid "Drop bitmap image"
 msgstr "Déposer une image bitmap"
 
-#: ../src/interface.cpp:1427
+#: ../src/interface.cpp:1448
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do you want to replace it?</span>\n"
@@ -5717,7 +5714,7 @@ msgstr ""
 "\n"
 "Le fichier existe déjà dans « %s ». Le remplacer écrase son contenu."
 
-#: ../src/interface.cpp:1434
+#: ../src/interface.cpp:1455
 msgid "Replace"
 msgstr "Remplacer"
 
@@ -6274,9 +6271,8 @@ msgid "Perspective path"
 msgstr "Perspective"
 
 #: ../src/live_effects/effect.cpp:102
-#, fuzzy
 msgid "Rotate copies"
-msgstr "Tourner les nœuds"
+msgstr "Tourner les copies"
 
 #: ../src/live_effects/effect.cpp:103
 msgid "Ruler"
@@ -6343,9 +6339,8 @@ msgid "If unchecked, the effect remains applied to the object but is temporarily
 msgstr "Si décochée, l'effet est appliqué à l'objet mais est temporairement désactivé sur le canevas"
 
 #: ../src/live_effects/effect.cpp:272
-#, fuzzy
 msgid "Deactivate knotholder?"
-msgstr "Désactivée"
+msgstr "Désactiver le « knotholder » ?"
 
 #: ../src/live_effects/effect.cpp:272
 msgid "Check this to deactivate knotholder handles (useful if they interfere with node handles during editing)"
@@ -6617,12 +6612,10 @@ msgid "Thick-Thin strokes (slow)"
 msgstr ""
 
 #: ../src/live_effects/lpe-dynastroke.cpp:67
-#, fuzzy
 msgid "Sharp"
-msgstr "Netteté"
+msgstr "Pointu"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:68
-#, fuzzy
 msgid "Round"
 msgstr "Arrondi"
 
@@ -6783,14 +6776,12 @@ msgid "Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in co
 msgstr "Angle de contact des dents (en général de 20 à 25 degrés). Représente la fraction des dents qui ne sont pas en contact."
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Trajectory"
-msgstr "Facteur"
+msgstr "Trajectoire"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
-#, fuzzy
 msgid "Path along which intermediate steps are created."
-msgstr "Chemin le long duquel le chemin original sera courbé"
+msgstr "Chemin le long duquel les étapes intermédiaires seront créées."
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
@@ -6802,9 +6793,8 @@ msgid "Determines the number of steps from start to end path."
 msgstr ""
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
-#, fuzzy
 msgid "Equidistant spacing"
-msgstr "Augmenter l'espacement entre les lignes"
+msgstr "Espacement équidistant"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid "If true, the spacing between intermediates is constant along the length of the path. If false, the distance depends on the location of the nodes of the trajectory path."
@@ -6812,27 +6802,24 @@ msgstr ""
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:358
-#, fuzzy
 msgid "Interruption width"
-msgstr "Méthode d'interpolation"
+msgstr "Largeur de l'interruption"
 
 #: ../src/live_effects/lpe-knot.cpp:358
 msgid "Size of hidden region of lower string"
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:359
-#, fuzzy
 msgid "unit of stroke width"
-msgstr "Ajustement de l'épaisseur du contour"
+msgstr "Unité de la largeur du trait"
 
 #: ../src/live_effects/lpe-knot.cpp:359
 msgid "Consider 'Gap width' as a ratio of stroke width."
 msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:360
-#, fuzzy
 msgid "Switcher size"
-msgstr "Style de commutation"
+msgstr "Taille de l'entrecroisement"
 
 #: ../src/live_effects/lpe-knot.cpp:360
 msgid "Orientation indicator/switcher size"
@@ -6970,24 +6957,20 @@ msgid "Adjust the offset"
 msgstr "Ajuster le décalage"
 
 #: ../src/live_effects/lpe-parallel.cpp:47
-#, fuzzy
 msgid "Specifies the left end of the parallel"
-msgstr "Définit l'extrémité gauche de la tangente"
+msgstr "Définit l'extrémité gauche de la parallèle"
 
 #: ../src/live_effects/lpe-parallel.cpp:48
-#, fuzzy
 msgid "Specifies the right end of the parallel"
-msgstr "Définit l'extrémité droite de la tangente"
+msgstr "Définit l'extrémité droite de la parallèle"
 
 #: ../src/live_effects/lpe-parallel.cpp:56
-#, fuzzy
 msgid "Adjust the \"left\" end of the parallel"
-msgstr "Ajuster l'extrémité gauche de la tangente"
+msgstr "Ajuster l'extrémité gauche de la parallèle"
 
 #: ../src/live_effects/lpe-parallel.cpp:57
-#, fuzzy
 msgid "Adjust the \"right\" end of the parallel"
-msgstr "Ajuste l'extrémité  \"droite\" de la tangente"
+msgstr "Ajuste l'extrémité droite de la parallèle"
 
 #: ../src/live_effects/lpe-path_length.cpp:25
 #: ../src/live_effects/lpe-sketch.cpp:53
@@ -6999,7 +6982,6 @@ msgid "Scale"
 msgstr "Redimensionner"
 
 #: ../src/live_effects/lpe-path_length.cpp:25
-#, fuzzy
 msgid "Scaling factor"
 msgstr "Facteur d'échelle"
 
@@ -7009,9 +6991,8 @@ msgid "Display unit"
 msgstr "Ajustement de l'affichage"
 
 #: ../src/live_effects/lpe-path_length.cpp:28
-#, fuzzy
 msgid "Print unit after path length"
-msgstr "Épaisseur en unités de longueur"
+msgstr "Imprime l'unité à la suite de la longueur du chemin"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -7062,7 +7043,6 @@ msgid "Spacing"
 msgstr "Espacement"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
-#, fuzzy, c-format
 msgid "Space between copies of the pattern. Negative values allowed, but are limited to -90% of pattern width."
 msgstr "Espace entre les exemplaires du motif. Les valeurs négatives sont autorisées, mais limitées à -90 % de la largeur du motif."
 
@@ -7167,9 +7147,8 @@ msgid "Defines hatches frequency and direction"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:255
-#, fuzzy
 msgid "Frequency randomness"
-msgstr "sensiblement aléatoire"
+msgstr "Caractère aléatoire de la fréquence"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:255
 msgid "Variation of dist between hatches, in %."
@@ -7471,19 +7450,16 @@ msgid "Average distance from approximating path to original path"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:47
-#, fuzzy
 msgid "Max. tremble"
 msgstr "Tremblement maximum"
 
 #: ../src/live_effects/lpe-sketch.cpp:48
-#, fuzzy
 msgid "Maximum tremble magnitude"
 msgstr "Ampleur maximale du tremblement"
 
 #: ../src/live_effects/lpe-sketch.cpp:49
-#, fuzzy
 msgid "Tremble frequency"
-msgstr "Fréquence de base"
+msgstr "Fréquence de tremblement"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
 msgid "Average number of tremble periods in an approximating stroke"
@@ -7575,7 +7551,7 @@ msgstr "Étiquette"
 
 #: ../src/live_effects/lpe-text_label.cpp:22
 msgid "Text label attached to the path"
-msgstr ""
+msgstr "Étiquette texte attachée au chemin"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 #, fuzzy
@@ -7589,9 +7565,8 @@ msgstr ""
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
 #: ../src/live_effects/lpe-vonkoch.cpp:50
-#, fuzzy
 msgid "Generating path"
-msgstr "Création d'un nouveau chemin"
+msgstr "Création d'un chemin"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:50
 #, fuzzy
@@ -7607,9 +7582,8 @@ msgid "2 consecutive segments are used to reverse/preserve orientation only (oth
 msgstr ""
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-#, fuzzy
 msgid "Nb of generations"
-msgstr "Nombre de révolutions"
+msgstr "Nombre d'itérations"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "Depth of the recursion --- keep low!!"
@@ -7665,9 +7639,8 @@ msgid "Paste path parameter"
 msgstr "Coller le paramètre du chemin"
 
 #: ../src/live_effects/parameter/path.cpp:441
-#, fuzzy
 msgid "Link path parameter to path"
-msgstr "Coller le paramètre du chemin"
+msgstr "Lier les paramètres de chemin au chemin"
 
 #: ../src/live_effects/parameter/point.cpp:90
 msgid "Change point parameter"
@@ -7678,14 +7651,12 @@ msgid "Change random parameter"
 msgstr "Modifier le paramètre aléatoire"
 
 #: ../src/live_effects/parameter/text.cpp:100
-#, fuzzy
 msgid "Change text parameter"
-msgstr "Modifier le point paramètre"
+msgstr "Modifier le paramètre de texte"
 
 #: ../src/live_effects/parameter/unit.cpp:77
-#, fuzzy
 msgid "Change unit parameter"
-msgstr "Modifier le point paramètre"
+msgstr "Modifier le paramètre d'unité"
 
 #: ../src/lpe-tool-context.cpp:272
 msgid "Choose a construction tool from the toolbar."
@@ -7837,9 +7808,8 @@ msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr "Exporter le document en fichier EMF (Métafichier amélioré)"
 
 #: ../src/main.cpp:380
-#, fuzzy
 msgid "Convert text object to paths on export (PS, EPS, PDF)"
-msgstr "Convertir les objets texte en chemins lors de l'export (EPS)"
+msgstr "Convertir les objets texte en chemins lors de l'export (PS, EPS, PDF)"
 
 #: ../src/main.cpp:385
 msgid "Render filtered objects without filters, instead of rasterizing (PS, EPS, PDF)"
@@ -7972,43 +7942,47 @@ msgstr "Ca_lque"
 msgid "_Object"
 msgstr "_Objet"
 
-#: ../src/menus-skeleton.h:169
+#: ../src/menus-skeleton.h:166
 msgid "Cli_p"
 msgstr "D_écoupe"
 
-#: ../src/menus-skeleton.h:173
+#: ../src/menus-skeleton.h:170
 msgid "Mas_k"
 msgstr "Mas_que"
 
-#: ../src/menus-skeleton.h:177
+#: ../src/menus-skeleton.h:174
 msgid "Patter_n"
 msgstr "Moti_f"
 
-#: ../src/menus-skeleton.h:201
+#: ../src/menus-skeleton.h:198
 msgid "_Path"
 msgstr "_Chemin"
 
-#: ../src/menus-skeleton.h:224
+#: ../src/menus-skeleton.h:221
 msgid "Path Effects"
 msgstr "Effets de chemin..."
 
-#: ../src/menus-skeleton.h:230
+#: ../src/menus-skeleton.h:227
 msgid "_Text"
 msgstr "_Texte"
 
-#: ../src/menus-skeleton.h:245
-msgid "Effe_cts"
-msgstr "Effet_s"
+#: ../src/menus-skeleton.h:242
+msgid "Filter_s"
+msgstr "Filtre_s"
 
-#: ../src/menus-skeleton.h:252
+#: ../src/menus-skeleton.h:248
+msgid "Exte_nsions"
+msgstr "Exte_nsions"
+
+#: ../src/menus-skeleton.h:255
 msgid "Whiteboa_rd"
 msgstr "Tableau _blanc"
 
-#: ../src/menus-skeleton.h:256
+#: ../src/menus-skeleton.h:259
 msgid "_Help"
 msgstr "Aid_e"
 
-#: ../src/menus-skeleton.h:260
+#: ../src/menus-skeleton.h:263
 msgid "Tutorials"
 msgstr "Didacticiels"
 
@@ -8469,7 +8443,6 @@ msgid "Toggle multiple vanishing points"
 msgstr "Alterner entre des points de fuite multiples"
 
 #: ../src/preferences.cpp:107
-#, fuzzy
 msgid "Inkscape will run with default settings, and new settings will not be saved. "
 msgstr ""
 "Inkscape va démarrer avec les préférences par défaut.\n"
@@ -8479,45 +8452,39 @@ msgstr ""
 #. _errorDialog(Glib::ustring::compose(_("Cannot create profile directory %1."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
 #: ../src/preferences.cpp:125
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create profile directory %s."
-msgstr ""
-"Impossible de créer le répertoire %s.\n"
-"%s"
+msgstr "Impossible de créer le répertoire de profil %s."
 
 #. The profile dir is not actually a directory
 #. _errorDialog(Glib::ustring::compose(_("%1 is not a valid directory."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
 #: ../src/preferences.cpp:143
-#, fuzzy, c-format
+#, c-format
 msgid "%s is not a valid directory."
-msgstr ""
-"%s n'est pas un répertoire valide.\n"
-"%s"
+msgstr "%s n'est pas un répertoire valide."
 
 #. The write failed.
 #. _errorDialog(Glib::ustring::compose(_("Failed to create the preferences file %1."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:154
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create the preferences file %s."
-msgstr "Échec du chargement du fichier %s"
+msgstr "Échec lors de la création du fichier du fichier de préférences %s."
 
 #. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:172
-#, fuzzy, c-format
+#, c-format
 msgid "The preferences file %s is not a regular file."
-msgstr ""
-"%s n'est pas un fichier normal.\n"
-"%s"
+msgstr "%s n'est pas un fichier de préférences normal."
 
 #. _errorDialog(Glib::ustring::compose(_("The preferences file %1 could not be read."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:184
-#, fuzzy, c-format
+#, c-format
 msgid "The preferences file %s could not be read."
-msgstr "Le fichier %s n'a pas pu être enregistré."
+msgstr "Le fichier de préférences %s n'a pas pu être lu."
 
 #. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
@@ -8529,11 +8496,9 @@ msgstr "Le fichier de préférences %s n'est pas un document XML valide."
 #. _errorDialog(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
 #: ../src/preferences.cpp:206
-#, fuzzy, c-format
+#, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
-msgstr ""
-"%s n'est pas un fichier de préférences valide.\n"
-"%s"
+msgstr "%s n'est pas un fichier de préférences valide."
 
 #: ../src/rect-context.cpp:344
 msgid "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"
@@ -8701,9 +8666,8 @@ msgid "Paste live path effect"
 msgstr "Coller l'effet de chemin"
 
 #: ../src/selection-chemistry.cpp:984
-#, fuzzy
 msgid "Select <b>object(s)</b> to remove live path effects from."
-msgstr "Sélectionner un ou des <b>objet(s)</b> sur lesquels coller un effet de chemin."
+msgstr "Sélectionner un ou des <b>objet(s)</b> sur lesquels supprimer des effets de chemin."
 
 #: ../src/selection-chemistry.cpp:996
 msgid "Remove live path effect"
@@ -9027,72 +8991,72 @@ msgstr "Spirale"
 msgid "Star"
 msgstr "Étoile"
 
-#: ../src/selection-describer.cpp:115
+#: ../src/selection-describer.cpp:125
 msgid "Click selection to toggle scale/rotation handles"
 msgstr "Cliquer sur la sélection pour alterner l'affichage des poignées de redimensionnement/rotation"
 
 #. no items
-#: ../src/selection-describer.cpp:117
+#: ../src/selection-describer.cpp:127
 msgid "No objects selected. Click, Shift+click, or drag around objects to select."
 msgstr "Aucun objet sélectionné. Sélectionnez des objets par Clic, Maj+Clic ou cliquer-déplacer."
 
-#: ../src/selection-describer.cpp:126
+#: ../src/selection-describer.cpp:136
 msgid "root"
 msgstr "racine"
 
-#: ../src/selection-describer.cpp:138
+#: ../src/selection-describer.cpp:148
 #, c-format
 msgid "layer <b>%s</b>"
 msgstr "calque <b>%s</b>"
 
-#: ../src/selection-describer.cpp:140
+#: ../src/selection-describer.cpp:150
 #, c-format
 msgid "layer <b><i>%s</i></b>"
 msgstr "calque <b><i>%s</i></b>"
 
-#: ../src/selection-describer.cpp:149
+#: ../src/selection-describer.cpp:159
 #, c-format
 msgid "<i>%s</i>"
 msgstr "<i>%s</i>"
 
-#: ../src/selection-describer.cpp:158
+#: ../src/selection-describer.cpp:168
 #, c-format
 msgid " in %s"
 msgstr " dans %s"
 
-#: ../src/selection-describer.cpp:160
+#: ../src/selection-describer.cpp:170
 #, c-format
 msgid " in group %s (%s)"
 msgstr " dans le groupe %s (%s)"
 
-#: ../src/selection-describer.cpp:162
+#: ../src/selection-describer.cpp:172
 #, c-format
 msgid " in <b>%i</b> parents (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
 msgstr[0] " dans <b>%i</b> parent (%s)"
 msgstr[1] " dans <b>%i</b> parents (%s)"
 
-#: ../src/selection-describer.cpp:165
+#: ../src/selection-describer.cpp:175
 #, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
 msgstr[0] "dans <b>%i</b> calque"
 msgstr[1] "dans <b>%i</b> calques"
 
-#: ../src/selection-describer.cpp:175
+#: ../src/selection-describer.cpp:185
 msgid "Use <b>Shift+D</b> to look up original"
 msgstr "Utilisez <b>Maj+D</b> pour sélectionner l'original"
 
-#: ../src/selection-describer.cpp:179
+#: ../src/selection-describer.cpp:189
 msgid "Use <b>Shift+D</b> to look up path"
 msgstr "Utilisez <b>Maj+D</b> pour sélectionner le chemin"
 
-#: ../src/selection-describer.cpp:183
+#: ../src/selection-describer.cpp:193
 msgid "Use <b>Shift+D</b> to look up frame"
 msgstr "Utilisez <b>Maj+D</b> pour sélectionner le cadre"
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:198
+#: ../src/selection-describer.cpp:208
 #: ../src/tweak-context.cpp:203
 #, c-format
 msgid "<b>%i</b> object selected"
@@ -9101,7 +9065,7 @@ msgstr[0] "<b>%i</b> objet sélectionné"
 msgstr[1] "<b>%i</b> objets sélectionnés"
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:203
+#: ../src/selection-describer.cpp:213
 #, c-format
 msgid "<b>%i</b> object of type <b>%s</b>"
 msgid_plural "<b>%i</b> objects of type <b>%s</b>"
@@ -9109,7 +9073,7 @@ msgstr[0] "<b>%i</b> objet de type <b>%s</b>"
 msgstr[1] "<b>%i</b> objets de type <b>%s</b>"
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:208
+#: ../src/selection-describer.cpp:218
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"
@@ -9117,7 +9081,7 @@ msgstr[0] "<b>%i</b> objets de types <b>%s</b>, <b>%s</b>"
 msgstr[1] "<b>%i</b> objets de types <b>%s</b>, <b>%s</b>"
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:213
+#: ../src/selection-describer.cpp:223
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
@@ -9125,14 +9089,14 @@ msgstr[0] "<b>%i</b> objet de types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgstr[1] "<b>%i</b> objets de types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:218
+#: ../src/selection-describer.cpp:228
 #, c-format
 msgid "<b>%i</b> object of <b>%i</b> types"
 msgid_plural "<b>%i</b> objects of <b>%i</b> types"
 msgstr[0] "<b>%i</b> objet de <b>%i</b> types"
 msgstr[1] "<b>%i</b> objets de <b>%i</b> types"
 
-#: ../src/selection-describer.cpp:223
+#: ../src/selection-describer.cpp:233
 #, c-format
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
@@ -10821,15 +10785,13 @@ msgstr "Incorporer toutes les images"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:727
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:728
-#, fuzzy
 msgid "All Vectors"
-msgstr "Vectoriel"
+msgstr "Tous les vecteurs"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:732
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:733
-#, fuzzy
 msgid "All Bitmaps"
-msgstr "Bitmaps"
+msgstr "Toutes les images bitmap"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
@@ -18662,9 +18624,8 @@ msgid "Set limiting bounding box (used to cut infinite lines) to the bounding bo
 msgstr "Aimanter les coins des boîtes englobantes aux coins des autres boîtes englobantes"
 
 #: ../src/widgets/toolbox.cpp:5677
-#, fuzzy
 msgid "Choose a line segment type"
-msgstr "Modifier le type de segment"
+msgstr "Sélectionner un type de segment"
 
 #: ../src/widgets/toolbox.cpp:5693
 #, fuzzy
@@ -18841,19 +18802,16 @@ msgstr "Traitement de l'objet impossible. Essayer tout d'abord de le transformer
 
 #. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:175
-#, fuzzy
 msgid "Side Length 'a'/px: "
-msgstr "Longueur du côté a (px)"
+msgstr "Longueur du côté a (px) :"
 
 #: ../share/extensions/draw_from_triangle.py:176
-#, fuzzy
 msgid "Side Length 'b'/px: "
-msgstr "Longueur du côté b (px)"
+msgstr "Longueur du côté b (px) :"
 
 #: ../share/extensions/draw_from_triangle.py:177
-#, fuzzy
 msgid "Side Length 'c'/px: "
-msgstr "Longueur du côté c (px)"
+msgstr "Longueur du côté c (px) :"
 
 #: ../share/extensions/draw_from_triangle.py:178
 msgid "Angle 'A'/radians:"
@@ -19093,7 +19051,7 @@ msgstr "Fichiers Corel DRAW 7-X4 (*.cdr)"
 
 #: ../share/extensions/cdr_input.inx.h:2
 msgid "Corel DRAW Input"
-msgstr ""
+msgstr "Entrée Corel DRAW"
 
 #: ../share/extensions/cdr_input.inx.h:3
 msgid "Open files saved in Corel DRAW 7-X4"
@@ -19410,9 +19368,8 @@ msgid "Triangle Function"
 msgstr "Fonction triangle"
 
 #: ../share/extensions/draw_from_triangle.inx.h:36
-#, fuzzy
 msgid "Trilinear Coordinates"
-msgstr "Coordonnées"
+msgstr "Coordonnées trilinéaires"
 
 #: ../share/extensions/dxf_input.inx.h:1
 #: ../share/extensions/dxf_output.inx.h:1
@@ -19916,9 +19873,8 @@ msgid "Export to an HP Graphics Language file"
 msgstr "Exporter vers un fichier HP Graphics Language"
 
 #: ../share/extensions/hpgl_output.inx.h:2
-#, fuzzy
 msgid "HP Graphics Language file (*.hpgl)"
-msgstr "Fichier graphique XFIG (*.fig)"
+msgstr "Fichier HP Graphics Language (*.hpgl)"
 
 #: ../share/extensions/hpgl_output.inx.h:3
 msgid "HPGL Output"
@@ -20497,7 +20453,6 @@ msgid "Top:"
 msgstr "Haut :"
 
 #: ../share/extensions/ps_input.inx.h:3
-#, fuzzy
 msgid "PostScript Input"
 msgstr "Entrée PostScript"
 
@@ -20967,6 +20922,8 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Effe_cts"
+#~ msgstr "Effet_s"
 #~ msgid "Blur and Sharpen"
 #~ msgstr "Flou et netteté"
 #~ msgid "Shadows and Glows"
