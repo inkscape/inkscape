@@ -15,7 +15,7 @@ icons_DATA = \
 	dialog-align-and-distribute.svg \
 	dialog-fill-and-stroke.svg \
 	dialog-icon-preview.svg \
-	dialog-input.svg \
+	dialog-input-devices.svg \
 	dialog-layers.svg \
 	dialog-memory.svg \
 	dialog-messages.svg \
