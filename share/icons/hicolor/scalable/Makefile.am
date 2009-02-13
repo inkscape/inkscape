@@ -1,4 +1,4 @@
-SUBDIRS = actions devices places status
+SUBDIRS = actions places status
 
 hicolorthemedir = $(datadir)/icons/hicolor
 inkscapeicondir = $(hicolorthemedir)/scalable/apps
