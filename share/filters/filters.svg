@@ -1290,7 +1290,7 @@
 <feComposite id="feComposite2955" operator="in" />
 </filter>
 <filter id="filter2889" inkscape:label="Blur content" inkscape:menu="Blurs" inkscape:menu-tooltip="Blur the contents of objects, preserving the outline">
-<feColorMatrix id="feColorMatrix2899" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result7" />
+<feColorMatrix id="feColorMatrix2899" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result7" />
 <feGaussianBlur id="feGaussianBlur2891" result="result6" stdDeviation="5" />
 <feComposite id="feComposite2893" in2="result7" operator="atop" in="result6" />
 <feComposite id="feComposite2895" operator="in" />
@@ -1307,6 +1307,12 @@
 <feTurbulence id="feTurbulence3871" numOctaves="5" seed="0" type="fractalNoise" in="SourceAlpha" baseFrequency="0.080000000000000002" />
 <feDisplacementMap id="feDisplacementMap3873" numOctaves="2" scale="20" yChannelSelector="G" xChannelSelector="R" in="SourceGraphic" result="result1" />
 <feComposite id="feComposite3875" in="result1" in2="SourceGraphic" operator="atop" />
+</filter>
+<filter id="filter2846b" inkscape:label="Evanescent" inkscape:menu="Blurs" inkscape:menu-tooltip="Blur the contents of objects, preserving the outline and adding progressive transparency at edges">
+<feGaussianBlur id="feGaussianBlur2850" result="result6" stdDeviation="3" in="SourceGraphic" />
+<feColorMatrix id="feColorMatrix2848" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result7" in="SourceGraphic" />
+<feComposite id="feComposite2852" in2="result7" operator="atop" in="result7" />
+<feComposite id="feComposite2854" operator="in" in="result6" />
 </filter>
 </defs>
 </svg>
