@@ -163,7 +163,7 @@ public:
         inline Glib::ustring getString() const;
         /**
          * @brief Interpret the preference as a CSS style.
-         * @return A CSS style that has to be unrefed when no longer necessary.
+         * @return A CSS style that has to be unrefed when no longer necessary. Never NULL.
          */
         inline SPCSSAttr *getStyle() const;
         /**
@@ -173,7 +173,7 @@ public:
          * This function will look up the preferences with the same entry name
          * in ancestor directories and return the inherited CSS style.
          *
-         * @return Inherited CSS style that has to be unrefed after use.
+         * @return Inherited CSS style that has to be unrefed after use. Never NULL.
          */
         inline SPCSSAttr *getInheritedStyle() const;
         
@@ -511,13 +511,13 @@ inline Glib::ustring Preferences::Entry::getString() const
 
 inline SPCSSAttr *Preferences::Entry::getStyle() const
 {
-    if (!this->isValid()) return NULL;
+    if (!this->isValid()) return sp_repr_css_attr_new();
     return Inkscape::Preferences::get()->_extractStyle(*this);
 }
 
 inline SPCSSAttr *Preferences::Entry::getInheritedStyle() const
 {
-    if (!this->isValid()) return NULL;
+    if (!this->isValid()) return sp_repr_css_attr_new();
     return Inkscape::Preferences::get()->_extractInheritedStyle(*this);
 }
 
