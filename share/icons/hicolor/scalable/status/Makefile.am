@@ -14,14 +14,10 @@ icons_DATA = \
 	draw-trace-background.svg \
 	draw-use-pressure.svg \
 	draw-use-tilt.svg \
-	fill-flat.svg \
-	fill-gradient-linear.svg \
-	fill-gradient-radial.svg \
-	fill-none.svg \
-	fill-pattern.svg \
 	fill-rule-even-odd.svg \
 	fill-rule-nonzero.svg \
-	fill-unknown.svg \
+	format-text-direction-horizontal.svg \
+	format-text-direction-vertical.svg \
 	node-segment-curve.svg \
 	node-segment-line.svg \
 	node-type-auto-smooth.svg \
@@ -35,6 +31,12 @@ icons_DATA = \
 	object-stroke.svg \
 	object-unlocked.svg \
 	object-visible.svg \
+	paint-gradient-linear.svg \
+	paint-gradient-radial.svg \
+	paint-none.svg \
+	paint-pattern.svg \
+	paint-solid.svg \
+	paint-unknown.svg \
 	path-mode-bezier.svg \
 	path-mode-polyline-paraxial.svg \
 	path-mode-polyline.svg \
@@ -62,8 +64,6 @@ icons_DATA = \
 	stroke-join-bevel.svg \
 	stroke-join-miter.svg \
 	stroke-join-round.svg \
-	text-direction-horizontal.svg \
-	text-direction-vertical.svg \
 	transform-affect-gradient.svg \
 	transform-affect-pattern.svg \
 	transform-affect-rounded-corners.svg \
