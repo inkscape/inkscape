@@ -263,7 +263,7 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
                                                        gchar const *tooltip,
                                                        gboolean altx )
 {
-    GtkAdjustment* adj = GTK_ADJUSTMENT( gtk_adjustment_new( 0.0, lower, 1e6, SPIN_STEP, SPIN_PAGE_STEP, SPIN_PAGE_STEP ) );
+    GtkAdjustment* adj = GTK_ADJUSTMENT( gtk_adjustment_new( 0.0, lower, 1e6, SPIN_STEP, SPIN_PAGE_STEP, 0 ) );
     if (tracker) {
         tracker->addAdjustment(adj);
     }

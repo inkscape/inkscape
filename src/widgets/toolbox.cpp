@@ -939,7 +939,7 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     GtkAdjustment* adj = GTK_ADJUSTMENT( gtk_adjustment_new( prefs->getDouble(path, def) * factor,
-                                                             lower, upper, step, page, page ) );
+                                                             lower, upper, step, page, 0 ) );
     if (us) {
         sp_unit_selector_add_adjustment( SP_UNIT_SELECTOR(us), adj );
     }
