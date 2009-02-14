@@ -1069,9 +1069,10 @@ SPDesktopWidget::setWindowSize (gint w, gint h)
 void
 SPDesktopWidget::setWindowTransient (void *p, int transient_policy)
 {
-    GtkWindow *w =GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(this)));
-    if (w)
+    Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
+    if (window)
     {
+        GtkWindow *w = (GtkWindow *) window->gobj();
         gtk_window_set_transient_for (GTK_WINDOW(p), w);
 
         /*
@@ -1082,7 +1083,6 @@ SPDesktopWidget::setWindowTransient (void *p, int transient_policy)
          * (so that its transients also could raise)
          */
         if (transient_policy == 2)
-
             // without this, a transient window not always emerges on top
             gtk_window_present (w);
     }
