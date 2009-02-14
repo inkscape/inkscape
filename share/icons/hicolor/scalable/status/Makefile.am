@@ -40,8 +40,8 @@ icons_DATA = \
 	object-unlocked.svg \
 	object-visible.svg \
 	path-mode-bezier.svg \
-	path-mode-paraxial-segments.svg \
-	path-mode-segments.svg \
+	path-mode-polyline.svg \
+	path-mode-polyline-paraxial.svg \
 	path-mode-spiro.svg \
 	perspective-parallel.svg \
 	snap-bounding-box-center.svg \
