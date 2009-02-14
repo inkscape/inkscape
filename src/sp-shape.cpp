@@ -952,7 +952,7 @@ sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value)
     SPItem *item = (SPItem *) object;
     SPShape *shape = (SPShape *) object;
 
-    if (key < 0 || key > SP_MARKER_LOC_END) {
+    if (key > SP_MARKER_LOC_END) {
         return;
     }
 
