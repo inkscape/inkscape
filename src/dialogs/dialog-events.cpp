@@ -28,18 +28,6 @@
 #include <gtkmm/entry.h>
 
 
-/**
- * \brief  This function is called to zero the transientize semaphore by a
- *         timeout.
- */
-gboolean
-sp_allow_again (gpointer *wd)
-{
-    ((win_data *) wd)->stop = 0;
-    return FALSE; // so that it is only called once
-}
-
-
 
 /**
  * \brief  Remove focus from window to whoever it is transient for...
@@ -216,24 +204,10 @@ sp_transientize_callback ( Inkscape::Application * /*inkscape*/,
     if (!transient_policy)
         return;
 
-    if (wd->stop) {
-        /*
-         * if retransientizing of this dialog is still forbidden after
-         * previous call warning turned off because it was confusingly fired
-         * when loading many files from command line
-         */
-         // g_warning("Retranzientize aborted! You're switching windows too fast!");
-        return;
-    }
-
     if (wd->win)
     {
-        wd->stop = 1; // disallow other attempts to retranzientize this dialog
         desktop->setWindowTransient (wd->win, transient_policy);
     }
-
-    // we're done, allow next retransientizing not sooner than after 6 msec
-    gtk_timeout_add (6, (GtkFunction) sp_allow_again, (gpointer) wd);
 }
 
 void on_dialog_hide (GtkWidget *w)
