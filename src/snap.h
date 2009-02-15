@@ -139,6 +139,8 @@ public:
     SPNamedView const *getNamedView() const {return _named_view;}
     SPDocument *getDocument() const;
 
+    bool getSnapIndicator() const {return _snapindicator;}
+
 protected:
     SPNamedView const *_named_view;
 

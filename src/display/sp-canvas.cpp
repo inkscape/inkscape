@@ -938,6 +938,7 @@ static gint sp_canvas_key (GtkWidget *widget, GdkEventKey *event);
 static gint sp_canvas_crossing (GtkWidget *widget, GdkEventCrossing *event);
 static gint sp_canvas_focus_in (GtkWidget *widget, GdkEventFocus *event);
 static gint sp_canvas_focus_out (GtkWidget *widget, GdkEventFocus *event);
+static gboolean sp_canvas_query_tooltip (GtkWidget *widget, gint x, gint y, gboolean keyboard_mode, GtkTooltip *tooltip);
 
 static GtkWidgetClass *canvas_parent_class;
 
@@ -1050,6 +1051,8 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->watchdog_id = 0;
     canvas->watchdog_event = NULL;
     canvas->context_snap_delay_active = false;
+
+    g_signal_connect(&(canvas->widget), "query-tooltip", G_CALLBACK (sp_canvas_query_tooltip), NULL);
 }
 
 /**
@@ -1609,20 +1612,19 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
 
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
 
-    // Snap when speed drops below e.g. 0.02 px/msec, or when no motion events have occured for some period.
-	// i.e. snap when we're at stand still. A speed threshold enforces snapping for tablets, which might never
-	// be fully at stand still and might keep spitting out motion events.
-	if (canvas->context_snap_delay_active && dt && dt->namedview->snap_manager.snapprefs.getSnapEnabledGlobally()) {
-		Geom::Point event_pos(event->x, event->y);
-		guint32 event_t = gdk_event_get_time ( (GdkEvent *) event );
-
+    if (canvas->context_snap_delay_active && dt && dt->namedview->snap_manager.snapprefs.getSnapEnabledGlobally()) {
+    	// Snap when speed drops below e.g. 0.02 px/msec, or when no motion events have occurred for some period.
+		// i.e. snap when we're at stand still. A speed threshold enforces snapping for tablets, which might never
+		// be fully at stand still and might keep spitting out motion events.
 		dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(true); // put snapping on hold
+
+    	Geom::Point event_pos(event->x, event->y);
+		guint32 event_t = gdk_event_get_time ( (GdkEvent *) event );
 
 		if (prev_pos) {
 			Geom::Coord dist = Geom::L2(event_pos - *prev_pos);
 			guint32 delta_t = event_t - prev_time;
 			gdouble speed = delta_t > 0 ? dist/delta_t : 1000;
-			// std::cout << "speed = " << speed << " px/msec " << "| time passed = " << delta_t << " msec" << std::endl;
 			if (speed > 0.02) { // Jitter threshold, might be needed for tablets
 				// We're moving fast, so postpone any snapping until the next GDK_MOTION_NOTIFY event. We
 				// will keep on postponing the snapping as long as the speed is high.
@@ -1654,13 +1656,11 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
 	}
 
     canvas->state = event->state;
-    pick_current_item (canvas, (GdkEvent *) event);
-
-    status = emit_event (canvas, (GdkEvent *) event);
-
-    if (event->is_hint) {
-        request_motions(widget->window, event);
-    }
+	pick_current_item (canvas, (GdkEvent *) event);
+	status = emit_event (canvas, (GdkEvent *) event);
+	if (event->is_hint) {
+		request_motions(widget->window, event);
+	}
 
     return status;
 }
@@ -1670,6 +1670,7 @@ gboolean sp_canvas_snap_watchdog_callback(gpointer data)
 	// Snap NOW! For this the "postponed" flag will be reset and an the last motion event will be repeated
 	SPCanvas *canvas = reinterpret_cast<SPCanvas *>(data);
 	if (!canvas->watchdog_event) {
+		// This might occur when this method is called directly, i.e. not through the timer
 		return FALSE;
 	}
 
@@ -2163,6 +2164,26 @@ sp_canvas_focus_out (GtkWidget *widget, GdkEventFocus *event)
     else
         return FALSE;
 }
+
+
+static gboolean sp_canvas_query_tooltip (GtkWidget  *widget,
+		  gint        x,
+		  gint        y,
+		  gboolean	  keyboard_mode,
+		  GtkTooltip *tooltip)
+{
+	// We're not really doing anything special here, so we might just as well remove sp_canvas_query_tooltip
+	// all together (and stop listening to the query_tooltip signal. We might make a custom tooltip however
+	// someday, for example to display icons instead of just plain text. In that case we will need this call
+	// so that's why I'm leaving it here for the time being.
+
+	if (canvas_parent_class->query_tooltip) {
+		return canvas_parent_class->query_tooltip (widget, x, y, keyboard_mode, tooltip);
+	}
+
+	return false;
+}
+
 
 /**
  * Helper that repaints the areas in the canvas that need it.

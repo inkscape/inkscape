@@ -86,7 +86,7 @@ private:
     //store some lists of candidates, points and paths, so we don't have to rebuild them for each point we want to snap
     std::vector<SnapCandidate> *_candidates;
     std::vector<Geom::Point> *_points_to_snap_to;
-    std::vector<Geom::PathVector*> *_paths_to_snap_to;
+    std::vector<std::pair<Geom::PathVector*, SnapTargetType> > *_paths_to_snap_to;
 
     void _findCandidates(SPObject* parent,
                        std::vector<SPItem const *> const *it,

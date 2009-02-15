@@ -28,10 +28,10 @@ public:
 
     void set_new_snaptarget(Inkscape::SnappedPoint const p);
     void remove_snaptarget();
-    
+
     void set_new_snapsource(Geom::Point const p);
     void remove_snapsource();
-    
+
 protected:
     TemporaryItem *_snaptarget;
     TemporaryItem *_snapsource;
@@ -40,6 +40,8 @@ protected:
 private:
     SnapIndicator(const SnapIndicator&);
     SnapIndicator& operator=(const SnapIndicator&);
+    void update_tooltip() const;
+    bool remove_tooltip() const;
 };
 
 } //namespace Display

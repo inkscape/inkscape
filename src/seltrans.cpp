@@ -1392,7 +1392,6 @@ void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &,
 void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
 {
     SnapManager &m = _desktop->namedview->snap_manager;
-    m.setup(_desktop, true, _items_const);
 
     /* The amount that we've moved by during this drag */
     Geom::Point dxy = xy - _point;
@@ -1407,7 +1406,8 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
         ** FIXME: this will snap to more than just the grid, nowadays.
         */
 
-        m.freeSnapReturnByRef(SnapPreferences::SNAPPOINT_NODE, dxy);
+    	m.setup(_desktop, true, _items_const);
+    	m.freeSnapReturnByRef(SnapPreferences::SNAPPOINT_NODE, dxy);
 
     } else if (!shift) {
 
@@ -1416,7 +1416,9 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
         ** pick the smallest.
         */
 
-        /* This will be our list of possible translations */
+    	m.setup(_desktop, false, _items_const);
+
+    	/* This will be our list of possible translations */
         std::list<Inkscape::SnappedPoint> s;
 
         if (control) {

@@ -33,7 +33,8 @@ enum SnapTargetType {
     SNAPTARGET_PATH_INTERSECTION,
     SNAPTARGET_BBOX_CORNER,
     SNAPTARGET_BBOX_EDGE,
-    SNAPTARGET_GRADIENT
+    SNAPTARGET_GRADIENT,
+    SNAPTARGET_PAGE_BORDER
 };
 
 /// Class describing the result of an attempt to snap.

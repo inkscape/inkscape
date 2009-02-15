@@ -48,7 +48,7 @@ Inkscape::ObjectSnapper::ObjectSnapper(SnapManager *sm, Geom::Coord const d)
 {
     _candidates = new std::vector<SnapCandidate>;
     _points_to_snap_to = new std::vector<Geom::Point>;
-    _paths_to_snap_to = new std::vector<Geom::PathVector*>;
+    _paths_to_snap_to = new std::vector<std::pair<Geom::PathVector*, SnapTargetType> >;
 }
 
 Inkscape::ObjectSnapper::~ObjectSnapper()
@@ -344,7 +344,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
         if (_snapmanager->snapprefs.getSnapToPageBorder()) {
             Geom::PathVector *border_path = _getBorderPathv();
             if (border_path != NULL) {
-                _paths_to_snap_to->push_back(border_path);
+                _paths_to_snap_to->push_back(std::make_pair<Geom::PathVector*, SnapTargetType>(border_path, SNAPTARGET_PAGE_BORDER));
             }
         }
 
@@ -392,7 +392,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
                         if (curve) {
                             // We will get our own copy of the path, which must be freed at some point
                             Geom::PathVector *borderpathv = pathvector_for_curve(root_item, curve, true, true, Geom::identity(), (*i).additional_affine);
-                            _paths_to_snap_to->push_back(borderpathv); // Perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it.
+                            _paths_to_snap_to->push_back(std::make_pair<Geom::PathVector*, SnapTargetType>(borderpathv, SNAPTARGET_PATH)); // Perhaps for speed, get a reference to the Geom::pathvector, and store the transformation besides it.
                             curve->unref();
                         }
                     }
@@ -409,7 +409,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
                         sp_item_invoke_bbox(root_item, rect, i2doc, TRUE, bbox_type);
                         if (rect) {
                             Geom::PathVector *path = _getPathvFromRect(*rect);
-                            _paths_to_snap_to->push_back(path);
+                            _paths_to_snap_to->push_back(std::make_pair<Geom::PathVector*, SnapTargetType>(path, SNAPTARGET_BBOX_EDGE));
                         }
                     }
                 }
@@ -446,20 +446,20 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
             SPCurve *curve = curve_for_item(SP_ITEM(selected_path));
             if (curve) {
                 Geom::PathVector *pathv = pathvector_for_curve(SP_ITEM(selected_path), curve, true, true, Geom::identity(), Geom::identity()); // We will get our own copy of the path, which must be freed at some point
-                _paths_to_snap_to->push_back(pathv);
+                _paths_to_snap_to->push_back(std::make_pair<Geom::PathVector*, SnapTargetType>(pathv, SNAPTARGET_PATH));
                 curve->unref();
             }
         }
     }
 
-    for (std::vector<Geom::PathVector*>::const_iterator it_p = _paths_to_snap_to->begin(); it_p != _paths_to_snap_to->end(); it_p++) {
+    for (std::vector<std::pair<Geom::PathVector*, SnapTargetType> >::const_iterator it_p = _paths_to_snap_to->begin(); it_p != _paths_to_snap_to->end(); it_p++) {
         bool const being_edited = (node_tool_active && (*it_p) == _paths_to_snap_to->back());
         //if true then this pathvector it_pv is currently being edited in the node tool
 
-        // char * svgd = sp_svg_write_path(**it_p);
+        // char * svgd = sp_svg_write_path(**it_p->first);
         // std::cout << "Dumping the pathvector: " << svgd << std::endl;
 
-        for(Geom::PathVector::iterator it_pv = (*it_p)->begin(); it_pv != (*it_p)->end(); ++it_pv) {
+        for(Geom::PathVector::iterator it_pv = (it_p->first)->begin(); it_pv != (it_p->first)->end(); ++it_pv) {
             // Find a nearest point for each curve within this path
             // n curves will return n time values with 0 <= t <= 1
             std::vector<double> anp = (*it_pv).nearestPointPerCurve(p_doc);
@@ -496,7 +496,7 @@ void Inkscape::ObjectSnapper::_snapPaths(SnappedConstraints &sc,
                 if (!being_edited || (c1 && c2)) {
                     Geom::Coord const dist = Geom::distance(sp_doc, p_doc);
                     if (dist < getSnapperTolerance()) {
-                        sc.curves.push_back(Inkscape::SnappedCurve(sp_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve));
+                        sc.curves.push_back(Inkscape::SnappedCurve(sp_dt, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, it_p->second));
                     }
                 }
             }
@@ -559,12 +559,12 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     cl.appendNew<Geom::LineSegment>(p_max_on_cl);
     clv.push_back(cl);
 
-    for (std::vector<Geom::PathVector*>::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
-        if (*k) {
-            Geom::CrossingSet cs = Geom::crossings(clv, *(*k));
+    for (std::vector<std::pair<Geom::PathVector*, SnapTargetType> >::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
+        if (k->first) {
+            Geom::CrossingSet cs = Geom::crossings(clv, *(k->first));
             if (cs.size() > 0) {
                 // We need only the first element of cs, because cl is only a single straight linesegment
-                // This first element contains a vector filled with crossings of cl with *k
+                // This first element contains a vector filled with crossings of cl with k->first
                 for (std::vector<Geom::Crossing>::const_iterator m = cs[0].begin(); m != cs[0].end(); m++) {
                     if ((*m).ta >= 0 && (*m).ta <= 1 ) {
                         // Reconstruct the point of intersection
@@ -572,7 +572,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
                         // When it's within snapping range, then return it
                         // (within snapping range == between p_min_on_cl and p_max_on_cl == 0 < ta < 1)
                         Geom::Coord dist = Geom::L2(_snapmanager->getDesktop()->dt2doc(p_proj_on_cl) - p_inters);
-                        SnappedPoint s(_snapmanager->getDesktop()->doc2dt(p_inters), SNAPTARGET_PATH, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
+                        SnappedPoint s(_snapmanager->getDesktop()->doc2dt(p_inters), k->second, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true);
                         sc.points.push_back(s);
                     }
                 }
@@ -720,8 +720,8 @@ bool Inkscape::ObjectSnapper::GuidesMightSnap() const
 
 void Inkscape::ObjectSnapper::_clear_paths() const
 {
-    for (std::vector<Geom::PathVector*>::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
-        g_free(*k);
+    for (std::vector<std::pair<Geom::PathVector*, SnapTargetType> >::const_iterator k = _paths_to_snap_to->begin(); k != _paths_to_snap_to->end(); k++) {
+        g_free(k->first);
     }
     _paths_to_snap_to->clear();
 }

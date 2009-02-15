@@ -14,7 +14,7 @@
 #include <2geom/path-intersection.h>
 #include <libnr/nr-convert2geom.h>
 
-Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve)
+Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapTargetType target)
 {
     _distance = snapped_distance;
     _tolerance = std::max(snapped_tolerance, 1.0);
@@ -26,6 +26,7 @@ Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Coo
     _point = snapped_point;
     _at_intersection = false;
     _fully_constrained = fully_constrained;
+    _target = target;
 }
 
 Inkscape::SnappedCurve::SnappedCurve()
@@ -40,6 +41,7 @@ Inkscape::SnappedCurve::SnappedCurve()
     _point = Geom::Point(0,0);
     _at_intersection = false;
     _fully_constrained = false;
+    _target = SNAPTARGET_UNDEFINED;
 }
 
 Inkscape::SnappedCurve::~SnappedCurve()
