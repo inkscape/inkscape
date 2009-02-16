@@ -76,7 +76,8 @@ def ArcToPath(p1,params):
     NbSectors=int(abs(start-end)*2/pi)+1
     dTeta=(end-start)/NbSectors
     #v=dTeta*2/pi*0.552
-    v=dTeta*2/pi*4*(sqrt(2)-1)/3
+    #v=dTeta*2/pi*4*(sqrt(2)-1)/3
+    v = 4*tan(dTeta/4)/3
     #if not sweepflag:
     #    v*=-1
     p=[]
