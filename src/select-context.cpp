@@ -430,7 +430,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                         sp_canvas_end_forced_full_redraws(desktop->canvas);
                     } else { // switch tool
-                        tools_switch_by_item (desktop, clicked_item);
+                        Geom::Point const button_pt(event->button.x, event->button.y);
+                        Geom::Point const p(desktop->w2d(button_pt));
+                        tools_switch_by_item (desktop, clicked_item, p);
                     }
                 } else {
                     sp_select_context_up_one_layer(desktop);

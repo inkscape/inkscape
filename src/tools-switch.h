@@ -40,7 +40,7 @@ enum {
 int tools_isactive(SPDesktop *dt, unsigned num);
 int tools_active(SPDesktop *dt);
 void tools_switch(SPDesktop *dt, int num);
-void tools_switch_by_item (SPDesktop *dt, SPItem *item);
+void tools_switch_by_item (SPDesktop *dt, SPItem *item, Geom::Point const p);
 
 #endif /* !SEEN_TOOLS_SWITCH_H */
 

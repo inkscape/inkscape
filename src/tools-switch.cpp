@@ -234,7 +234,7 @@ tools_switch(SPDesktop *dt, int num)
     }
 }
 
-void tools_switch_by_item(SPDesktop *dt, SPItem *item)
+void tools_switch_by_item(SPDesktop *dt, SPItem *item, Geom::Point const p)
 {
     if (SP_IS_RECT(item)) {
         tools_switch(dt, TOOLS_SHAPES_RECT);
@@ -255,6 +255,7 @@ void tools_switch_by_item(SPDesktop *dt, SPItem *item)
         }
     } else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))  {
         tools_switch(dt, TOOLS_TEXT);
+        sp_text_context_place_cursor_at (SP_TEXT_CONTEXT(dt->event_context), SP_OBJECT(item), p);
     } else if (SP_IS_OFFSET(item))  {
         tools_switch(dt, TOOLS_NODES);
     }
