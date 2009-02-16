@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Foldable Box</_name>
+  <id>org.inkscape.render.foldable-box</id>
+  <dependency type="executable" location="extensions">foldable-box.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <param name="width"  type="float" min="0.1" max="1000.0" _gui-text="Width">10.0</param>
+  <param name="height" type="float" min="0.1" max="1000.0" _gui-text="Height">15.0</param>
+  <param name="depth"  type="float" min="0.1" max="1000.0" _gui-text="Depth">3.0</param>
+  <param name="paper-spessure" type="float" min="0.0" max="100.0" _gui-text="Paper Spessure">0.01</param>
+  <param name="tab-proportion" type="float" min="0.1" max="1.0" _gui-text="Tab Proportion">0.6</param>
+  <param name="unit"   type="enum" _gui-text="Unit">
+    <item>px</item>
+    <item>pt</item>
+    <item>in</item>
+    <item>cm</item>
+    <item>mm</item>
+  </param>
+  <param name="guide-line" type="boolean" _gui-text="Add Guide Lines">true</param>
+  <effect>
+	  <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Render"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">foldable-box.py</command>
+  </script>
+</inkscape-extension>
