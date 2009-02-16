@@ -155,6 +155,10 @@ private:
     Inkscape::XML::Node *_clipnode; ///< The node that holds extra information
     Inkscape::XML::Document *_doc; ///< Reference to the clipboard's Inkscape::XML::Document
 
+    // we need a way to copy plain text AND remember its style; 
+    // the standard _clipnode is only available in an SVG tree, hence this special storage
+    SPCSSAttr *_text_style; ///< Style copied along with plain text fragment
+
     Glib::RefPtr<Gtk::Clipboard> _clipboard; ///< Handle to the system wide clipboard - for convenience
     std::list<Glib::ustring> _preferred_targets; ///< List of supported clipboard targets
 };
@@ -166,6 +170,7 @@ ClipboardManagerImpl::ClipboardManagerImpl()
       _root(NULL),
       _clipnode(NULL),
       _doc(NULL),
+      _text_style(NULL),
       _clipboard( Gtk::Clipboard::get() )
 {
     // push supported clipboard targets, in order of preference
@@ -210,14 +215,19 @@ void ClipboardManagerImpl::copy()
     }
 
     // Special case for when the text tool is active - if some text is selected, copy plain text,
-    // not the object that holds it
+    // not the object that holds it; also copy the style at cursor into 
     if (tools_isactive(desktop, TOOLS_TEXT)) {
+        _discardInternalClipboard();
         Glib::ustring selected_text = sp_text_get_selected_text(desktop->event_context);
         if (!selected_text.empty()) {
             _clipboard->set_text(selected_text);
-            _discardInternalClipboard();
-            return;
         }
+        if (_text_style) {
+            sp_repr_css_attr_unref(_text_style);
+            _text_style = NULL;
+        }
+        _text_style = sp_text_get_style_at_cursor(desktop->event_context);
+        return;
     }
 
     if (selection->isEmpty()) {  // check whether something is selected
@@ -343,9 +353,15 @@ bool ClipboardManagerImpl::pasteStyle()
     }
 
     SPDocument *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
-    if ( tempdoc == NULL ) {
-        _userWarn(desktop, _("No style on the clipboard."));
-        return false;
+    if ( tempdoc == NULL ) { 
+        // no document, but we can try _text_style
+        if (_text_style) {
+            sp_desktop_set_style(desktop, _text_style);
+            return true;
+        } else {
+            _userWarn(desktop, _("No style on the clipboard."));
+            return false;
+        }
     }
 
     Inkscape::XML::Node
@@ -1132,6 +1148,12 @@ void ClipboardManagerImpl::_createInternalClipboard()
         _clipnode = _doc->createElement("inkscape:clipboard");
         _root->appendChild(_clipnode);
         Inkscape::GC::release(_clipnode);
+
+        // once we create a SVG document, style will be stored in it, so flush _text_style
+        if (_text_style) {
+            sp_repr_css_attr_unref(_text_style);
+            _text_style = NULL;
+        }
     }
 }
 
