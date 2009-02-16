@@ -40,6 +40,7 @@
 #ifndef SEEN_EEK_PREVIEW_H
 #define SEEN_EEK_PREVIEW_H
 
+#include <gdk/gdkpixbuf.h>
 #include <gtk/gtkdrawingarea.h>
 
 G_BEGIN_DECLS
@@ -100,13 +101,13 @@ struct _EekPreview
     gboolean _hot;
     gboolean _within;
     gboolean _takesFocus;
-    gboolean _isRemove;
 
     PreviewStyle _prevstyle;
     ViewType _view;
     PreviewSize _size;
     guint _ratio;
     guint _linked;
+    GdkPixbuf* _previewPixbuf;
 };
 
 struct _EekPreviewClass
@@ -122,6 +123,7 @@ GtkWidget* eek_preview_new(void);
 
 void eek_preview_set_details( EekPreview* splat, PreviewStyle prevstyle, ViewType view, PreviewSize size, guint ratio );
 void eek_preview_set_color( EekPreview* splat, int r, int g, int b );
+void eek_preview_set_pixbuf( EekPreview* splat, GdkPixbuf* pixbuf );
 
 void eek_preview_set_linked( EekPreview* splat, LinkType link );
 LinkType eek_preview_get_linked( EekPreview* splat );

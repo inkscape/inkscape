@@ -577,7 +577,25 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
         Gtk::Widget* newBlot = Glib::wrap(eekWidget);
 
         eek_preview_set_color( preview, (def.getR() << 8) | def.getR(), (def.getG() << 8) | def.getG(), (def.getB() << 8) | def.getB());
-        preview->_isRemove = _isRemove;
+        if ( _isRemove ) {
+            GError *error = NULL;
+            gchar *filepath = (gchar *) g_strdup_printf("%s/remove-color.png", INKSCAPE_PIXMAPDIR);
+            gsize bytesRead = 0;
+            gsize bytesWritten = 0;
+            gchar *localFilename = g_filename_from_utf8( filepath,
+                                                 -1,
+                                                 &bytesRead,
+                                                 &bytesWritten,
+                                                 &error);
+            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(localFilename, &error);
+            if (!pixbuf) {
+                g_warning("Null pixbuf for %p [%s]", localFilename, localFilename );
+            }
+            g_free(localFilename);
+            g_free(filepath);
+
+            eek_preview_set_pixbuf( preview, pixbuf );
+        }
 
         eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::PreviewSize)size, ratio );
         eek_preview_set_linked( preview, (LinkType)((_linkSrc ? PREVIEW_LINK_IN:0)

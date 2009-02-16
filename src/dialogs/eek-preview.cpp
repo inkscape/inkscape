@@ -42,7 +42,6 @@
 
 #include <gtk/gtk.h>
 #include "eek-preview.h"
-#include "path-prefix.h"
 
 #define PRIME_BUTTON_MAGIC_NUMBER 1
 
@@ -64,6 +63,14 @@ void eek_preview_set_color( EekPreview* preview, int r, int g, int b )
     preview->_r = r;
     preview->_g = g;
     preview->_b = b;
+
+    gtk_widget_queue_draw(GTK_WIDGET(preview));
+}
+
+
+void eek_preview_set_pixbuf( EekPreview* preview, GdkPixbuf* pixbuf )
+{
+    preview->_previewPixbuf = pixbuf;
 
     gtk_widget_queue_draw(GTK_WIDGET(preview));
 }
@@ -307,24 +314,13 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
             }
         }
 
-        if (preview->_isRemove){
+        if ( preview->_previewPixbuf ) {
             GtkDrawingArea* da = &(preview->drawing);
             GdkDrawable* drawable = (GdkDrawable*) (((GtkWidget*)da)->window);
-            gint w,h;
+            gint w = 0;
+            gint h = 0;
             gdk_drawable_get_size(drawable, &w, &h);
-            GError *error = NULL;
-            gchar *filepath = (gchar *) g_strdup_printf("%s/remove-color.png", INKSCAPE_PIXMAPDIR);
-            gsize bytesRead = 0;
-            gsize bytesWritten = 0;
-            gchar *localFilename = g_filename_from_utf8( filepath,
-                                                 -1,
-                                                 &bytesRead,
-                                                 &bytesWritten,
-                                                 &error);
-            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file_at_scale(localFilename, w, h, FALSE, &error);
-            gdk_draw_pixbuf(drawable, 0, pixbuf, 0, 0, 0, 0, w, h, GDK_RGB_DITHER_NONE, 0, 0);
-            g_free(localFilename);
-            g_free(filepath);
+            gdk_draw_pixbuf( drawable, 0, preview->_previewPixbuf, 0, 0, 0, 0, w, h, GDK_RGB_DITHER_NONE, 0, 0 );
         }
 
 
@@ -655,12 +651,13 @@ static void eek_preview_init( EekPreview *preview )
     preview->_hot = FALSE;
     preview->_within = FALSE;
     preview->_takesFocus = FALSE;
-    preview->_isRemove = FALSE;
 
     preview->_prevstyle = PREVIEW_STYLE_ICON;
     preview->_view = VIEW_TYPE_LIST;
     preview->_size = PREVIEW_SIZE_SMALL;
     preview->_ratio = 100;
+
+    preview->_previewPixbuf = 0;
 
 /*
     GdkColor color = {0};
