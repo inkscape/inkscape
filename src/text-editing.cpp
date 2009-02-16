@@ -110,6 +110,14 @@ sp_te_get_cursor_coords (SPItem const *item, Inkscape::Text::Layout::iterator co
 
 SPStyle const * sp_te_style_at_position(SPItem const *text, Inkscape::Text::Layout::iterator const &position)
 {
+    SPObject const *pos_obj = sp_te_object_at_position(text, position);
+    if (pos_obj)
+        return SP_OBJECT_STYLE(pos_obj);
+    return NULL;
+}
+
+SPObject const * sp_te_object_at_position(SPItem const *text, Inkscape::Text::Layout::iterator const &position)
+{
     Inkscape::Text::Layout const *layout = te_get_layout(text);
     if (layout == NULL)
         return NULL;
@@ -119,8 +127,8 @@ SPStyle const * sp_te_style_at_position(SPItem const *text, Inkscape::Text::Layo
     pos_obj = SP_OBJECT(rawptr);
     if (pos_obj == 0) pos_obj = text;
     while (SP_OBJECT_STYLE(pos_obj) == NULL)
-        pos_obj = SP_OBJECT_PARENT(pos_obj);   // SPStrings don't have style
-    return SP_OBJECT_STYLE(pos_obj);
+        pos_obj = SP_OBJECT_PARENT(pos_obj);   // not interested in SPStrings 
+    return pos_obj;
 }
 
 /*

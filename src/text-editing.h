@@ -38,8 +38,8 @@ Inkscape::Text::Layout::iterator sp_te_get_position_by_coords (SPItem const *ite
 void sp_te_get_cursor_coords (SPItem const *item, Inkscape::Text::Layout::iterator const &position, Geom::Point &p0, Geom::Point &p1);
 double sp_te_get_average_linespacing (SPItem *text);
 
-
 SPStyle const * sp_te_style_at_position(SPItem const *text, Inkscape::Text::Layout::iterator const &position);
+SPObject const * sp_te_object_at_position(SPItem const *text, Inkscape::Text::Layout::iterator const &position);
 
 Inkscape::Text::Layout::iterator sp_te_insert(SPItem *item, Inkscape::Text::Layout::iterator const &position, gchar const *utf8);
 Inkscape::Text::Layout::iterator sp_te_replace(SPItem *item, Inkscape::Text::Layout::iterator const &start, Inkscape::Text::Layout::iterator const &end, gchar const *utf8);

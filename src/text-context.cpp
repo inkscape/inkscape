@@ -50,7 +50,7 @@
 #include "context-fns.h"
 #include "verbs.h"
 #include "shape-editor.h"
-
+#include "selection-chemistry.h"
 #include "text-editing.h"
 
 #include "text-context.h"
@@ -1391,6 +1391,21 @@ sp_text_get_selected_text(SPEventContext const *ec)
     return sp_te_get_string_multiline(tc->text, tc->text_sel_start, tc->text_sel_end);
 }
 
+SPCSSAttr *
+sp_text_get_style_at_cursor(SPEventContext const *ec)
+{ 
+    if (!SP_IS_TEXT_CONTEXT(ec))
+        return NULL;
+    SPTextContext const *tc = SP_TEXT_CONTEXT(ec);
+    if (tc->text == NULL)
+        return NULL;
+
+    SPObject const *obj = sp_te_object_at_position(tc->text, tc->text_sel_end);
+    if (obj)
+        return take_style_from_item((SPItem *) obj);
+    return NULL;
+}
+
 /**
  Deletes the currently selected characters. Returns false if there is no
  text selection currently.
@@ -1574,6 +1589,8 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
         tc->show = TRUE;
         tc->phase = 1;
 
+        Inkscape::Text::Layout const *layout = te_get_layout(tc->text);
+        int const nChars = layout->iteratorToCharIndex(layout->end());
         if (SP_IS_FLOWTEXT(tc->text)) {
             SPItem *frame = SP_FLOWTEXT(tc->text)->get_frame (NULL); // first frame only
             if (frame) {
@@ -1583,9 +1600,9 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
                     SP_CTRLRECT(tc->frame)->setRectangle(*frame_bbox);
                 }
             }
-            SP_EVENT_CONTEXT(tc)->_message_context->set(Inkscape::NORMAL_MESSAGE, _("Type flowed text; <b>Enter</b> to start new paragraph."));
+            SP_EVENT_CONTEXT(tc)->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit flowed text (%d characters); <b>Enter</b> to start new paragraph."), nChars);
         } else {
-            SP_EVENT_CONTEXT(tc)->_message_context->set(Inkscape::NORMAL_MESSAGE, _("Type text; <b>Enter</b> to start new line."));
+            SP_EVENT_CONTEXT(tc)->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("Type or edit text (%d characters); <b>Enter</b> to start new line."), nChars);
         }
 
     } else {
@@ -1704,6 +1721,29 @@ sptc_commit(GtkIMContext */*imc*/, gchar *string, SPTextContext *tc)
 
     sp_document_done(SP_OBJECT_DOCUMENT(tc->text), SP_VERB_CONTEXT_TEXT,
                      _("Type text"));
+}
+
+void
+sp_text_context_place_cursor (SPTextContext *tc, SPObject *text, Inkscape::Text::Layout::iterator where)
+{
+    SP_EVENT_CONTEXT_DESKTOP (tc)->selection->set (text);
+    tc->text_sel_start = tc->text_sel_end = where;
+    sp_text_context_update_cursor(tc);
+    sp_text_context_update_text_selection(tc);
+}
+
+void
+sp_text_context_place_cursor_at (SPTextContext *tc, SPObject *text, Geom::Point const p)
+{
+    SP_EVENT_CONTEXT_DESKTOP (tc)->selection->set (text);
+    sp_text_context_place_cursor (tc, text, sp_te_get_position_by_coords(tc->text, p));
+}
+
+Inkscape::Text::Layout::iterator *sp_text_context_get_cursor_position(SPTextContext *tc, SPObject *text)
+{
+    if (text != tc->text)
+        return NULL;
+    return &(tc->text_sel_end);
 }
 
 

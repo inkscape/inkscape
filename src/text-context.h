@@ -84,6 +84,10 @@ GtkType sp_text_context_get_type (void);
 
 bool sp_text_paste_inline(SPEventContext *ec);
 Glib::ustring sp_text_get_selected_text(SPEventContext const *ec);
+SPCSSAttr *sp_text_get_style_at_cursor(SPEventContext const *ec);
 bool sp_text_delete_selection(SPEventContext *ec);
+void sp_text_context_place_cursor (SPTextContext *tc, SPObject *text, Inkscape::Text::Layout::iterator where);
+void sp_text_context_place_cursor_at (SPTextContext *tc, SPObject *text, Geom::Point const p);
+Inkscape::Text::Layout::iterator *sp_text_context_get_cursor_position(SPTextContext *tc, SPObject *text);
 
 #endif
