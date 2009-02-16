@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 """
 import sys, copy, optparse, random, re
 import gettext
+from math import *
 _ = gettext.gettext
 
 #a dictionary of all of the xmlns prefixes in a standard inkscape doc
@@ -104,6 +105,7 @@ class InkOption(optparse.Option):
 
 class Effect:
     """A class for creating Inkscape SVG Effects"""
+
     def __init__(self, *args, **kwargs):
         self.id_characters = '0123456789abcdefghijklmnopqrstuvwkyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         self.document=None
@@ -116,11 +118,14 @@ class Effect:
         self.OptionParser.add_option("--id",
                         action="append", type="string", dest="ids", default=[], 
                         help="id attribute of object to manipulate")
+
     def effect(self):
         pass
+
     def getoptions(self,args=sys.argv[1:]):
         """Collect command line arguments"""
         self.options, self.args = self.OptionParser.parse_args(args)
+
     def parse(self,file=None):
         """Parse document in specified file or on stdin"""
         try:
@@ -132,6 +137,7 @@ class Effect:
             stream = sys.stdin
         self.document = etree.parse(stream)
         stream.close()
+
     def getposinlayer(self):
         #defaults
         self.current_layer = self.document.getroot()
@@ -152,19 +158,36 @@ class Effect:
             y = yattr[0]
             if x and y:
                 self.view_center = (float(x), doc_height - float(y)) # FIXME: y-coordinate flip, eliminate it when it's gone in Inkscape
+
     def getselected(self):
         """Collect selected nodes"""
         for id in self.options.ids:
             path = '//*[@id="%s"]' % id
             for node in self.document.xpath(path, namespaces=NSS):
                 self.selected[id] = node
+
     def getdocids(self):
         docIdNodes = self.document.xpath('//@id', namespaces=NSS)
         for m in docIdNodes:
             self.doc_ids[m] = 1
+
+    def getNamedView(self):
+        return self.document.xpath('//sodipodi:namedview', namespaces=NSS)[0]
+
+    def createGuide(self, posX, posY, angle):
+        atts = {
+          'position': str(posX)+','+str(posY),
+          'orientation': str(sin(radians(angle)))+','+str(-cos(radians(angle)))
+          }
+        guide = etree.SubElement(
+                  self.getNamedView(),
+                  addNS('guide','sodipodi'), atts )
+        return guide
+
     def output(self):
         """Serialize document into XML on stdout"""
         self.document.write(sys.stdout)
+
     def affect(self, args=sys.argv[1:], output=True):
         """Affect an SVG document with a callback effect"""
         self.getoptions(args)
@@ -182,6 +205,7 @@ class Effect:
                 new_id = "%s%s" % (new_id,random.choice(self.id_characters))
             self.doc_ids[new_id] = 1
         return new_id
+
     def xpathSingle(self, path):
         try:
             retval = self.document.xpath(path, namespaces=NSS)[0]
