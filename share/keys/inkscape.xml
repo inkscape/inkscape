@@ -468,6 +468,9 @@ override) the bindings in the main default.xml.
   <bind action="ObjectFlowtextToText" />
   <bind action="SelectionTextRemoveKerns" />
 
+  <bind key="k" modifiers="Ctrl,Alt" action="DialogSpellcheck" display="true"/>
+  <bind key="K" modifiers="Ctrl,Alt" action="DialogSpellcheck" />
+
 <!-- Layers -->
 
   <bind key="N" modifiers="Ctrl,Shift" action="LayerNew" display="true"/>
