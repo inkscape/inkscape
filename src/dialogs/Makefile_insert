@@ -50,6 +50,8 @@ dialogs_libspdialogs_a_SOURCES =	\
 	dialogs/rdf.h			\
 	dialogs/sp-attribute-widget.cpp	\
 	dialogs/sp-attribute-widget.h	\
+	dialogs/spellcheck.cpp		\
+	dialogs/spellcheck.h			\
 	dialogs/stroke-style.cpp	\
 	dialogs/stroke-style.h		\
 	dialogs/swatches.cpp		\

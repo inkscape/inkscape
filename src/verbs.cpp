@@ -42,6 +42,7 @@
 #include "dialogs/xml-tree.h"
 #include "dialogs/item-properties.h"
 #include "dialogs/find.h"
+#include "dialogs/spellcheck.h"
 #include "dialogs/layer-properties.h"
 #include "dialogs/clonetiler.h"
 #include "dialogs/iconpreview.h"
@@ -1791,6 +1792,12 @@ DialogVerb::perform(SPAction *action, void *data, void */*pdata*/)
 //              Please test the new find dialog if you have time:
 //            dt->_dlg_mgr->showDialog("Find");
             break;
+        case SP_VERB_DIALOG_FINDREPLACE:
+            // not implemented yet
+            break;
+        case SP_VERB_DIALOG_SPELLCHECK:
+            sp_spellcheck_dialog();
+            break;
         case SP_VERB_DIALOG_DEBUG:
             dt->_dlg_mgr->showDialog("Messages");
             break;
@@ -2634,6 +2641,10 @@ Verb *Verb::_base_verbs[] = {
                    N_("View and edit the XML tree of the document"), "xml_editor"),
     new DialogVerb(SP_VERB_DIALOG_FIND, "DialogFind", N_("_Find..."),
                    N_("Find objects in document"), GTK_STOCK_FIND ),
+    new DialogVerb(SP_VERB_DIALOG_FINDREPLACE, "DialogFindReplace", N_("Find and _Replace Text..."),
+                   N_("Find and replace text in document"), GTK_STOCK_FIND_AND_REPLACE ),
+    new DialogVerb(SP_VERB_DIALOG_SPELLCHECK, "DialogSpellcheck", N_("Check Spellin_g..."),
+                   N_("Check spelling of text in document"), GTK_STOCK_SPELL_CHECK ),
     new DialogVerb(SP_VERB_DIALOG_DEBUG, "DialogDebug", N_("_Messages..."),
                    N_("View debug messages"), "messages"),
     new DialogVerb(SP_VERB_DIALOG_SCRIPT, "DialogScript", N_("S_cripts..."),

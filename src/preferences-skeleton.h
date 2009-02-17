@@ -174,6 +174,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"align\"/>\n"
 "    <group id=\"xml\"/>\n"
 "    <group id=\"find\"/>\n"
+"    <group id=\"spellcheck\" w=\"200\" h=\"250\" lang=\"en_US\"/>\n"
 "    <group id=\"documentoptions\" state=\"1\"/>\n"
 "    <group id=\"preferences\" state=\"1\"/>\n"
 "    <group id=\"gradienteditor\"/>\n"
