@@ -695,7 +695,7 @@
     <copy todir="${dist}" file="${devlibs}/bin/gdb.exe"/>
 
     <!-- Aspell dictionaries -->
-    <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/aspell-0.60"/> </copy>
+    <copy todir="${dist}/lib"> <fileset dir="${devlibs}/lib/aspell-0.60"/> </copy>
 
     <!-- Necessary to run extensions on windows if it is not in the path -->
     <copy todir="${dist}" file="${devlibs}/bin/gspawn-win32-helper.exe"/>
