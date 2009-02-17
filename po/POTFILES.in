@@ -359,6 +359,7 @@ share/extensions/svg_and_media_zip_output.py
 [type: gettext/xml] share/extensions/extrude.inx
 [type: gettext/xml] share/extensions/fig_input.inx
 [type: gettext/xml] share/extensions/flatten.inx
+[type: gettext/xml] share/extensions/foldable-box.inx
 [type: gettext/xml] share/extensions/fractalize.inx
 [type: gettext/xml] share/extensions/funcplot.inx
 [type: gettext/xml] share/extensions/gears.inx
