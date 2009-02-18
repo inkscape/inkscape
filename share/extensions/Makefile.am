@@ -54,6 +54,7 @@ extensions = \
 	ffgeom.py\
 	fig2dev-ext.py \
 	flatten.py \
+        foldable-box.py \
 	fractalize.py \
 	funcplot.py \
 	gears.py\
@@ -168,6 +169,7 @@ modules = \
 	extrude.inx \
 	fig_input.inx \
 	flatten.inx \
+        foldable-box.inx \
 	fractalize.inx \
 	funcplot.inx \
 	gears.inx\
