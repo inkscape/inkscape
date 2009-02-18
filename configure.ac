@@ -688,6 +688,15 @@ AC_CHECK_HEADER(popt.h,
 		[INKSCAPE_LIBS="$INKSCAPE_LIBS -lpopt"],
 		AC_MSG_ERROR([libpopt is required]))
 
+dnl **************************
+dnl Check for aspell 
+dnl ******************************
+AC_CHECK_LIB(aspell, new_aspell_config, [AC_CHECK_HEADER(aspell.h, aspell_ok=yes, aspell_ok=no)], aspell_ok=no, -lz -lm)
+if test "x$aspell_ok" != "xyes"; then
+	AC_MSG_ERROR([aspell is needed to compile inkscape])
+fi
+INKSCAPE_LIBS="$INKSCAPE_LIBS -laspell"
+
 dnl Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
 sp_save_LIBS=$LIBS
 LIBS="$LIBS $INKSCAPE_LIBS"
