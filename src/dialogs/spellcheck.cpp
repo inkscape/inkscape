@@ -522,8 +522,10 @@ spellcheck_next_word()
         }
         _desktop->scroll_to_point (scrollto, 1.0);
 
-        // if in Text tool, position cursor to the beginnign of word
+        // select text; if in Text tool, position cursor to the beginning of word
         // unless it is already in the word
+        if (_desktop->selection->singleItem() != _text)
+            _desktop->selection->set (_text);
         if (tools_isactive(_desktop, TOOLS_TEXT)) {
             Inkscape::Text::Layout::iterator *cursor =
                 sp_text_context_get_cursor_position(SP_TEXT_CONTEXT(_desktop->event_context), _text);
@@ -531,9 +533,7 @@ spellcheck_next_word()
                 _desktop->selection->set (_text);
             else if (*cursor <= _begin_w || *cursor >= _end_w)
                 sp_text_context_place_cursor (SP_TEXT_CONTEXT(_desktop->event_context), _text, _begin_w);
-        } else { // just select the object
-            _desktop->selection->set (_text);
-        }
+        } 
 
         // get suggestions
         {
