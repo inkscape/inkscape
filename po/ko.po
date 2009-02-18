@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
+"PO-Revision-Date: 2009-02-16 14:29+0900\n"
 "Last-Translator: Jin-Hwan Jeong <yongdoria@gmail.com>\n"
 "Language-Team:  <Dockdo@korea.land>\n"
 "MIME-Version: 1.0\n"
@@ -3918,7 +3918,7 @@ msgstr "병합"
 
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
-msgstr "지형학"
+msgstr "형태"
 
 #: ../src/filter-enums.cpp:33
 msgid "Specular Lighting"
@@ -7057,7 +7057,7 @@ msgstr "양 핸들 축소(Shift: 확장)"
 
 #: ../src/nodepath.cpp:4910
 msgid "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; <b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to rotate"
-msgstr "노드 또는 노드 핸들 끌기; <b>Alt+끌기</b>: 조각하기; <b>화살표</b> 키: 노드 이동; <b>&lt; &gt;</b> 키: 비율 변경, <b>[ ]</b>키: 회전"
+msgstr "<b>끌기</b> 노드 또는 노드 핸들 ; <b>Alt+끌기</b> 조각하기; <b>화살표</b> 노드 이동; <b>&lt; &gt;</b> 비율 변경, <b>[ ]</b> 회전"
 
 #: ../src/nodepath.cpp:4911
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
@@ -7066,7 +7066,7 @@ msgstr "노드나 핸들 <b>끌기</b> ; 노드를 움직이기 위하여 <b>화
 #: ../src/nodepath.cpp:4937
 #: ../src/nodepath.cpp:4949
 msgid "Select a single object to edit its nodes or handles."
-msgstr "노드 또는 핸들을 편집하기 위하여 단일 객ㅊ를 선택"
+msgstr "노드 또는 핸들을 편집하기 위하여 단일 객체를 선택"
 
 #: ../src/nodepath.cpp:4941
 msgid "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select."
@@ -7086,7 +7086,7 @@ msgstr "<b>%i</b>개/총<b>%i</b>개 노드 선택 <b>%i</b> <b>%i</b> 하위경
 
 #: ../src/nodepath.cpp:4968
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
-msgstr "<b>%i</b>개/총 <b>%i</b>"
+msgstr "<b>%i</b>개/총 <b>%i</b> 노드 선택 %s."
 
 #: ../src/object-edit.cpp:408
 msgid "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the vertical radius the same"
@@ -19797,7 +19797,7 @@ msgid "Texture overlays"
 msgstr "조직 중첩"
 
 msgid "Barbed wire"
-msgstr "가시있는 망"
+msgstr "가시 망사"
 
 msgid "Blue cheese"
 msgstr "청색 치즈"
@@ -19843,4 +19843,262 @@ msgstr "얼룩무늬"
 
 msgid "Leopard fur"
 msgstr "표범 표피"
+
+msgid "Dither..."
+msgstr "떨림..."
+
+msgid "Median..."
+msgstr "메디안..."
+
+msgid "Embed Images..."
+msgstr "중첩 이미지..."
+
+msgid "Extract Image..."
+msgstr "이미지 추출..."
+
+msgid "Blurs"
+msgstr "흐림"
+
+msgid "Bumps"
+msgstr "융기"
+
+msgid "Distort"
+msgstr "왜곡"
+
+msgid "Materials"
+msgstr "재질"
+
+msgid "Overlays"
+msgstr "중첩"
+
+msgid "Protrusions"
+msgstr "돌출"
+
+msgid "Ridges"
+msgstr "가장자리"
+
+msgid "Shadows"
+msgstr "음영"
+
+msgid "Badge"
+msgstr "휘장"
+
+msgid "Basic specular"
+msgstr "기본 반사"
+
+msgid "Dark glass"
+msgstr "어두운 유리"
+
+msgid "Electronic microscopy"
+msgstr "전자 현미경"
+
+msgid "Fat oil"
+msgstr "지방 기름"
+
+msgid "Glowing Metal"
+msgstr "작열 금속"
+
+msgid "Melt and glow"
+msgstr "용해 및 백열"
+
+msgid "Neon"
+msgstr "네온"
+
+msgid "Pastel Bevel"
+msgstr "파스텔 경사"
+
+msgid "Raised border"
+msgstr "융기된 경계"
+
+msgid "Soft metal"
+msgstr "부드러운 금속"
+
+msgid "Stained glass"
+msgstr "스테인글라스"
+
+msgid "Translucent"
+msgstr "반투명"
+
+msgid "Invert hue"
+msgstr "색조 거꾸로"
+
+msgid "Moonarise"
+msgstr "달떠오름"
+
+msgid "Poster glow"
+msgstr "포스터 작열"
+
+msgid "Soft bump"
+msgstr "부드러운 융기"
+
+msgid "Bark"
+msgstr "나무껍질"
+
+msgid "Cracked glass"
+msgstr "깨진 유리"
+
+msgid "Rough and glossy"
+msgstr "거침과 광택"
+
+msgid "Rough paper"
+msgstr "거친 종이"
+
+msgid "Silk carpet"
+msgstr "실크 카펫"
+
+msgid "Stone wall"
+msgstr "돌담"
+
+msgid "Black hole"
+msgstr "검은 구멍"
+
+msgid "Cool outline"
+msgstr "쿨 윤곽선"
+
+msgid "Ghost outline"
+msgstr "고스트 윤곽선"
+
+msgid "Hole"
+msgstr "구멍"
+
+msgid "Outline"
+msgstr "윤곽선"
+
+msgid "Outline, double"
+msgstr "윤곽선, 이중"
+
+msgid "Parallel hollow"
+msgstr "평행 동공"
+
+msgid "Smooth edges"
+msgstr "부드러운 가장자리"
+
+msgid "Smooth outline"
+msgstr "부드러운 윤곽선"
+
+msgid "Warm inside"
+msgstr "부드러운 안쪽"
+
+msgid "Air spray"
+msgstr "에어스프레이"
+
+msgid "Cubes"
+msgstr "6면체"
+
+msgid "Leaves"
+msgstr "이파리"
+
+msgid "Blur content"
+msgstr "흐림 내용"
+
+msgid "Crossmooth"
+msgstr "교차부드럽게"
+
+msgid "Fancy blur"
+msgstr "팬시 흐림"
+
+msgid "Feather"
+msgstr "부드럽게"
+
+msgid "Glow"
+msgstr "백열"
+
+msgid "Motion blur, horizontal"
+msgstr "모션 블러, 수평"
+
+msgid "Motion blur, vertical"
+msgstr "모션 블러, 수직"
+
+msgid "HSL bubbles"
+msgstr "HSL 거품"
+
+msgid "HSL bubbles, alpha"
+msgstr "HSL 거품, 알파효과"
+
+msgid "HSL bumps"
+msgstr "HSL 융기"
+
+msgid "HSL bumps, alpha"
+msgstr "HSL 융기, 알파효과"
+
+msgid "Pixel smear"
+msgstr "흘림무늬"
+
+msgid "Pixel smear, glossy"
+msgstr "흘림무늬, 광택"
+
+msgid "Torn edges"
+msgstr "찢긴 가장자리"
+
+msgid "Cracked Lava"
+msgstr "균열있는 용암"
+
+msgid "Enamel jewelry"
+msgstr "에나멜 젤리"
+
+msgid "Eroded Metal"
+msgstr "부식 금속"
+
+msgid "Gold paste"
+msgstr "황금 붙이기"
+
+msgid "Iridescent Beeswax"
+msgstr "무지개빛 밀랍"
+
+msgid "Kilt"
+msgstr "킬트 무늬"
+
+msgid "Lizard skin"
+msgstr "도마뱀 피부"
+
+msgid "Peel off"
+msgstr "나무 껍질"
+
+msgid "Dragee"
+msgstr "작은 알갱이"
+
+msgid "Glowing bubble"
+msgstr "작열 거품"
+
+msgid "Metallized ridge"
+msgstr "금속 융기"
+
+msgid "Refractive gel A"
+msgstr "굴절 겔 A"
+
+msgid "Refractive gel B"
+msgstr "굴절 겔 B"
+
+msgid "Soft ridge"
+msgstr "부드러운 융기"
+
+msgid "Thin Membrane"
+msgstr "얇은 막"
+
+msgid "In and out"
+msgstr "안과 밖"
+
+msgid "SVG Font Editor..."
+msgstr "SVG 글꼴 편집기..."
+
+msgid "Path Effect Editor..."
+msgstr "경로 효과 편집기..."
+
+msgid "Filter Editor..."
+msgstr "필터 편집기..."
+
+msgid "Remove Filters"
+msgstr "필터 제거"
+
+msgid "Filter_s"
+msgstr "필터(_S)"
+
+msgid "Exte_nsions"
+msgstr "확장기능(_N)"
+
+msgid "Roughen inside"
+msgstr "거침 안쪽"
+
+msgid "Evanescent"
+msgstr "소실"
 
