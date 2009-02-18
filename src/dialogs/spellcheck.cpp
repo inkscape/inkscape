@@ -188,7 +188,7 @@ all_text_items (SPObject *r, GSList *l, bool hidden, bool locked)
     return l;
 }
 
-bool 
+bool
 spellcheck_text_is_valid (SPObject *root, SPItem *text)
 {
     GSList *l = NULL;
@@ -216,14 +216,14 @@ gint compare_text_bboxes (gconstpointer a, gconstpointer b)
     }
 
     // vector between top left corners
-    Geom::Point diff = Geom::Point(bbox2->min()[Geom::X], bbox2->max()[Geom::Y]) - 
+    Geom::Point diff = Geom::Point(bbox2->min()[Geom::X], bbox2->max()[Geom::Y]) -
                        Geom::Point(bbox1->min()[Geom::X], bbox1->max()[Geom::Y]);
 
     // sort top to bottom, left to right, but:
     // if i2 is higher only 0.2 or less times it is righter than i1, put i1 first
-    if (diff[Geom::Y] > 0.2 * diff[Geom::X]) 
+    if (diff[Geom::Y] > 0.2 * diff[Geom::X])
         return 1;
-    else 
+    else
         return -1;
 
     return 0;
@@ -257,8 +257,8 @@ spellcheck_sensitive (const gchar *cookie, gboolean gray)
    gtk_widget_set_sensitive(l, gray);
 }
 
-static void spellcheck_enable_accept(GtkTreeSelection *selection,
-                                               void *)
+static void spellcheck_enable_accept(GtkTreeSelection */*selection*/,
+                                     void */*??*/)
 {
     spellcheck_sensitive ("b_accept", TRUE);
 }
@@ -281,7 +281,7 @@ spellcheck_next_text()
 
         _layout = te_get_layout (_text);
         _begin_w = _layout->begin();
-    } 
+    }
     _end_w = _begin_w;
     _word.clear();
 }
@@ -374,7 +374,7 @@ spellcheck_finished ()
         gchar *label;
         if (_stops)
             label = g_strdup_printf(_("<b>Finished</b>, <b>%d</b> words added to dictionary"), _adds);
-        else 
+        else
             label = g_strdup_printf(_("<b>Finished</b>, nothing suspicious found"));
         gtk_label_set_markup (GTK_LABEL(l), label);
         g_free(label);
@@ -447,7 +447,7 @@ spellcheck_next_word()
             digits = true;
         }
     }
-    if (digits) { 
+    if (digits) {
         return false;
     }
 
@@ -473,7 +473,7 @@ spellcheck_next_word()
         spellcheck_sensitive("b_stop", TRUE);
 
         // draw rect
-        std::vector<Geom::Point> points = 
+        std::vector<Geom::Point> points =
             _layout->createSelectionShape(_begin_w, _end_w, sp_item_i2d_affine(_text));
         Geom::Point tl, br;
         tl = br = points.front();
@@ -513,7 +513,7 @@ spellcheck_next_word()
         Geom::Point const center = _desktop->get_display_area().midpoint();
         area.expandBy(0.5 * mindim);
         Geom::Point scrollto;
-        double dist = 0; 
+        double dist = 0;
         for (unsigned corner = 0; corner < 4; corner ++) {
             if (Geom::L2(area.corner(corner) - center) > dist) {
                 dist = Geom::L2(area.corner(corner) - center);
@@ -525,11 +525,11 @@ spellcheck_next_word()
         // if in Text tool, position cursor to the beginnign of word
         // unless it is already in the word
         if (tools_isactive(_desktop, TOOLS_TEXT)) {
-            Inkscape::Text::Layout::iterator *cursor = 
+            Inkscape::Text::Layout::iterator *cursor =
                 sp_text_context_get_cursor_position(SP_TEXT_CONTEXT(_desktop->event_context), _text);
             if (!cursor) // some other text is selected there
                 _desktop->selection->set (_text);
-            else if (*cursor <= _begin_w || *cursor >= _end_w) 
+            else if (*cursor <= _begin_w || *cursor >= _end_w)
                 sp_text_context_place_cursor (SP_TEXT_CONTEXT(_desktop->event_context), _text, _begin_w);
         } else { // just select the object
             _desktop->selection->set (_text);
@@ -540,14 +540,14 @@ spellcheck_next_word()
             const AspellWordList *wl = aspell_speller_suggest(_speller, _word.c_str(), -1);
             AspellStringEnumeration * els = aspell_word_list_elements(wl);
             const char *sugg;
-            GtkTreeView *tree_view = 
+            GtkTreeView *tree_view =
                 GTK_TREE_VIEW(gtk_object_get_data (GTK_OBJECT (dlg), "suggestions"));
             GtkListStore *model = gtk_list_store_new (1, G_TYPE_STRING);
             gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (model));
             GtkTreeIter iter;
             while ((sugg = aspell_string_enumeration_next(els)) != 0) {
                 gtk_list_store_append (GTK_LIST_STORE (model), &iter);
-                gtk_list_store_set (GTK_LIST_STORE (model), 
+                gtk_list_store_set (GTK_LIST_STORE (model),
                                     &iter,
                                     0, sugg,
                                     -1);
@@ -571,7 +571,7 @@ spellcheck_delete_last_rect ()
         sp_canvas_item_hide(SP_CANVAS_ITEM(_rects->data));
         gtk_object_destroy(GTK_OBJECT(_rects->data));
         _rects = _rects->next; // pop latest-prepended rect
-    } 
+    }
 }
 
 void
@@ -590,14 +590,14 @@ do_spellcheck ()
 }
 
 static void
-spellcheck_obj_modified (SPObject *obj, guint /*flags*/, gpointer /*data*/)
+spellcheck_obj_modified (SPObject */*obj*/, guint /*flags*/, gpointer /*data*/)
 {
     if (_local_change) { // this was a change by this dialog, i.e. an Accept, skip it
         _local_change = false;
         return;
     }
 
-    if (_working && _root) { 
+    if (_working && _root) {
         // user may have edited the text we're checking; try to do the most sensible thing in this
         // situation
 
@@ -618,9 +618,9 @@ spellcheck_obj_modified (SPObject *obj, guint /*flags*/, gpointer /*data*/)
 }
 
 static void
-spellcheck_obj_released (SPObject *obj, gpointer /*data*/)
+spellcheck_obj_released (SPObject */*obj*/, gpointer /*data*/)
 {
-    if (_working && _root) { 
+    if (_working && _root) {
         // the text object was deleted
         spellcheck_delete_last_rect ();
         spellcheck_next_text();
@@ -632,7 +632,7 @@ void
 sp_spellcheck_accept (GObject *, GObject *dlg)
 {
     // insert chosen suggestion
-    GtkTreeView *tv = 
+    GtkTreeView *tv =
         GTK_TREE_VIEW(gtk_object_get_data (GTK_OBJECT (dlg), "suggestions"));
     GtkTreeSelection *ts = gtk_tree_view_get_selection(tv);
     GtkTreeModel *model = 0;
@@ -658,7 +658,7 @@ sp_spellcheck_accept (GObject *, GObject *dlg)
 }
 
 void
-sp_spellcheck_ignore (GObject *, GObject *dlg)
+sp_spellcheck_ignore (GObject */*obj*/, GObject */*dlg*/)
 {
     aspell_speller_add_to_session(_speller, _word.c_str(), -1);
     spellcheck_delete_last_rect ();
@@ -667,7 +667,7 @@ sp_spellcheck_ignore (GObject *, GObject *dlg)
 }
 
 void
-sp_spellcheck_add (GObject *, GObject *dlg)
+sp_spellcheck_add (GObject */*obj*/, GObject */*dlg*/)
 {
     _adds++;
     aspell_speller_add_to_personal(_speller, _word.c_str(), -1);
@@ -677,7 +677,7 @@ sp_spellcheck_add (GObject *, GObject *dlg)
 }
 
 void
-sp_spellcheck_stop (GObject *, GObject *dlg)
+sp_spellcheck_stop (GObject */*obj*/, GObject */*dlg*/)
 {
     spellcheck_finished();
 }
@@ -689,7 +689,7 @@ sp_spellcheck_start (GObject *, GObject *)
         do_spellcheck(); // next word or end
 }
 
-static gboolean spellcheck_desktop_deactivated(Inkscape::Application *application, SPDesktop *desktop, void *data)
+static gboolean spellcheck_desktop_deactivated(Inkscape::Application */*application*/, SPDesktop *desktop, void */*data*/)
 {
     if (_working) {
         if (_desktop == desktop) {
@@ -718,7 +718,7 @@ sp_spellcheck_dialog (void)
             w = prefs->getInt(prefs_path + "w", 0);
             h = prefs->getInt(prefs_path + "h", 0);
         }
-        
+
         if (w && h)
             gtk_window_resize ((GtkWindow *) dlg, w, h);
         if (x >= 0 && y >= 0 && (x < (gdk_screen_width()-MIN_ONSCREEN_DISTANCE)) && (y < (gdk_screen_height()-MIN_ONSCREEN_DISTANCE))) {
@@ -763,17 +763,17 @@ sp_spellcheck_dialog (void)
         {
             GtkWidget *scrolled_window = gtk_scrolled_window_new (NULL, NULL);
             gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                            GTK_POLICY_AUTOMATIC, 
+                                            GTK_POLICY_AUTOMATIC,
                                             GTK_POLICY_AUTOMATIC);
-   
+
             GtkListStore *model = gtk_list_store_new (1, G_TYPE_STRING);
             GtkWidget *tree_view = gtk_tree_view_new ();
             gtk_object_set_data (GTK_OBJECT (dlg), "suggestions", tree_view);
-            gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window), 
+            gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
                                                    tree_view);
             gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (model));
             GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(tree_view));
-            g_signal_connect (G_OBJECT(selection), "changed", 
+            g_signal_connect (G_OBJECT(selection), "changed",
                               G_CALLBACK (spellcheck_enable_accept), NULL);
             gtk_widget_show (tree_view);
             GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
@@ -789,11 +789,11 @@ sp_spellcheck_dialog (void)
 
         {
             GtkWidget *hb = gtk_hbox_new (FALSE, 0);
-            sp_spellcheck_new_button (dlg, hb, _("_Accept"), tt, _("Accept the chosen suggestion"), 
+            sp_spellcheck_new_button (dlg, hb, _("_Accept"), tt, _("Accept the chosen suggestion"),
                                       sp_spellcheck_accept, "b_accept");
-            sp_spellcheck_new_button (dlg, hb, _("_Ignore"), tt, _("Ignore this word in this session"), 
+            sp_spellcheck_new_button (dlg, hb, _("_Ignore"), tt, _("Ignore this word in this session"),
                                       sp_spellcheck_ignore, "b_ignore");
-            sp_spellcheck_new_button (dlg, hb, _("A_dd"), tt, _("Add this word to the dictionary"), 
+            sp_spellcheck_new_button (dlg, hb, _("A_dd"), tt, _("Add this word to the dictionary"),
                                       sp_spellcheck_add, "b_add");
             gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
         }
@@ -805,9 +805,9 @@ sp_spellcheck_dialog (void)
 
         {
             GtkWidget *hb = gtk_hbox_new (FALSE, 0);
-            sp_spellcheck_new_button (dlg, hb, _("_Stop"), tt, _("Stop the check"), 
+            sp_spellcheck_new_button (dlg, hb, _("_Stop"), tt, _("Stop the check"),
                                       sp_spellcheck_stop, "b_stop");
-            sp_spellcheck_new_button (dlg, hb, _("_Start"), tt, _("Start the check"), 
+            sp_spellcheck_new_button (dlg, hb, _("_Start"), tt, _("Start the check"),
                                       sp_spellcheck_start, "b_start");
             gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
         }
