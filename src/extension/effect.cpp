@@ -104,7 +104,7 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
             if (_filters_list &&
                 local_effects_menu && 
                 local_effects_menu->attribute("name") && 
-                !strcmp(local_effects_menu->attribute("name"), _("Filters"))) {
+                !strcmp(local_effects_menu->attribute("name"), ("Filters"))) {
                 merge_menu(_filters_list->parent(), _filters_list, sp_repr_children(local_effects_menu), _menu_node);
             } else if (_effects_list) {
                 merge_menu(_effects_list->parent(), _effects_list, local_effects_menu, _menu_node);
