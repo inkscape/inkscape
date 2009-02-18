@@ -1434,5 +1434,23 @@
 <feComposite id="feComposite3683" k3="1" k2="1" operator="arithmetic" result="result4" in="result2" in2="SourceGraphic" />
 <feBlend id="feBlend3685" blend="normal" mode="darken" />
 </filter>
+<filter id="filter2872b" inkscape:menu-tooltip="3D warped shell texture based on blur and displacement map" inkscape:menu="Materials" inkscape:label="Mother of pearl" width="1.5" x="-0.25" height="1.5" y="-0.25">
+<feGaussianBlur id="feGaussianBlur2874" result="result8" stdDeviation="2" />
+<feTurbulence id="feTurbulence2876" baseFrequency="0.029999999999999999 0.029999999999999999" numOctaves="8" type="fractalNoise" result="result7" seed="77" />
+<feColorMatrix id="feColorMatrix2878" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.6 -0.6 " result="result5" />
+<feComposite id="feComposite2880" in2="result8" operator="in" in="result7" result="result6" />
+<feDisplacementMap id="feDisplacementMap2882" in2="result6" result="result4" scale="60" yChannelSelector="A" xChannelSelector="A" in="result5" />
+<feConvolveMatrix order="3 3" kernelMatrix="2 0 0 0 4 0 0 0 -2.5 " id="feConvolveMatrix2904" targetX="1" targetY="1" divisor="2" result="result9" />
+<feComposite id="feComposite2886" in2="result10" operator="atop" result="result2" />
+<feComposite id="feComposite2888" in2="SourceGraphic" operator="atop" in="result9" />
+<feBlend id="feBlend2890" blend="normal" in2="result8" mode="lighten" result="fbSourceGraphic" />
+<feColorMatrix id="feColorMatrix2892" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0" />
+<feGaussianBlur id="feGaussianBlur2894" result="result0" in="fbSourceGraphicAlpha" stdDeviation="5" />
+<feSpecularLighting id="feSpecularLighting2896" specularExponent="35" specularConstant="1" surfaceScale="3" lighting-color="rgb(242,215,108)" result="result1" in="result0">
+<feDistantLight id="feDistantLight2898" azimuth="235" elevation="60" />
+</feSpecularLighting>
+<feComposite id="feComposite2900" operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
+<feComposite id="feComposite2902" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+</filter>
 </defs>
 </svg>
