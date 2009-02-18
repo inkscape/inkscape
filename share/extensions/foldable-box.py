@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
-__version__ = "0.1"
+__version__ = "0.2"
 
 import inkex, simplestyle
 from math import *
@@ -76,12 +76,12 @@ class FoldableBox(inkex.Effect):
 
         # Inner Close Tab
         line_path = [
-                      [ 'M', [ boxW-(boxD/4), 0 ] ],
-                      [ 'C', [ boxW-(boxD/4), 0, boxW, tabH/3, boxW, tabH/1.3 ] ],
+                      [ 'M', [ boxW-(tabH*0.7),  0 ] ],
+                      [ 'C', [ boxW-(tabH*0.25), 0, boxW, tabH*0.3, boxW, tabH*0.9 ] ],
                       [ 'L', [ boxW, tabH     ] ],
                       [ 'L', [ 0,    tabH     ] ],
-                      [ 'L', [ 0,    tabH/1.3 ] ],
-                      [ 'C', [ 0,    tabH/3, boxD/4, 0, boxD/4, 0 ] ],
+                      [ 'L', [ 0,    tabH*0.9 ] ],
+                      [ 'C', [ 0,    tabH*0.3, tabH*0.25, 0, tabH*0.7, 0 ] ],
                       [ 'Z', [] ]
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-inner-close-tab', 'd':formatPath(line_path) }
@@ -102,34 +102,51 @@ class FoldableBox(inkex.Effect):
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-upper-close-tab', 'd':formatPath(line_path) }
         inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
+
         left_pos += boxW
 
         # Upper Right Tab
-        tabH = lower_pos - (boxW/3)
+        sideTabH = lower_pos - (boxW/2)
+        if sideTabH < tabH: sideTabH = tabH
         line_path = [
-                      [ 'M', [ left_pos,        tabH      ] ],
-                      [ 'L', [ left_pos + boxD, tabH      ] ],
+                      [ 'M', [ left_pos,        sideTabH  ] ],
+                      [ 'L', [ left_pos + (boxD*0.8), sideTabH  ] ],
+                      [ 'L', [ left_pos + boxD, ((lower_pos*3)-sideTabH)/3 ] ],
                       [ 'L', [ left_pos + boxD, lower_pos ] ],
                       [ 'L', [ left_pos + 0,    lower_pos ] ],
                       [ 'Z', [] ]
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-upper-right-tab', 'd':formatPath(line_path) }
         inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
+
         left_pos += boxW + boxD
 
         # Upper Left Tab
         line_path = [
-                      [ 'M', [ left_pos,        tabH      ] ],
-                      [ 'L', [ left_pos + boxD, tabH      ] ],
-                      [ 'L', [ left_pos + boxD, lower_pos ] ],
-                      [ 'L', [ left_pos + 0,    lower_pos ] ],
+                      [ 'M', [ left_pos + boxD,       sideTabH  ] ],
+                      [ 'L', [ left_pos + (boxD*0.2), sideTabH  ] ],
+                      [ 'L', [ left_pos, ((lower_pos*3)-sideTabH)/3 ] ],
+                      [ 'L', [ left_pos,              lower_pos ] ],
+                      [ 'L', [ left_pos + boxD,       lower_pos ] ],
                       [ 'Z', [] ]
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-upper-left-tab', 'd':formatPath(line_path) }
         inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
+
         left_pos = 0
 
         #self.createGuide( 0, docH-tabH-boxD, 0 );
+
+        # Right Tab
+        line_path = [
+                      [ 'M', [ left_pos,            lower_pos                   ] ],
+                      [ 'L', [ left_pos - (boxD/2), lower_pos + (boxD/4)        ] ],
+                      [ 'L', [ left_pos - (boxD/2), lower_pos + boxH - (boxD/4) ] ],
+                      [ 'L', [ left_pos,            lower_pos + boxH            ] ],
+                      [ 'Z', [] ]
+                    ]
+        line_atts = { 'style':line_style, 'id':box_id+'-left-tab', 'd':formatPath(line_path) }
+        inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
 
         # Front
         line_path = [
@@ -141,6 +158,7 @@ class FoldableBox(inkex.Effect):
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-front', 'd':formatPath(line_path) }
         inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
+
         left_pos += boxW
 
         # Right
@@ -153,6 +171,7 @@ class FoldableBox(inkex.Effect):
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-right', 'd':formatPath(line_path) }
         inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
+
         left_pos += boxD
 
         # Back
@@ -165,6 +184,7 @@ class FoldableBox(inkex.Effect):
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-back', 'd':formatPath(line_path) }
         inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
+
         left_pos += boxW
 
         # Left
@@ -177,69 +197,66 @@ class FoldableBox(inkex.Effect):
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-left', 'd':formatPath(line_path) }
         inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
-        left_pos += boxD
 
-        # Left Tab
-        line_path = [
-                      [ 'M', [ left_pos,            lower_pos        ] ],
-                      [ 'L', [ left_pos + (boxD/2), lower_pos        ] ],
-                      [ 'L', [ left_pos + (boxD/2), lower_pos + boxH ] ],
-                      [ 'L', [ left_pos,            lower_pos + boxH ] ],
-                      [ 'Z', [] ]
-                    ]
-        line_atts = { 'style':line_style, 'id':box_id+'-left-tab', 'd':formatPath(line_path) }
-        inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
         lower_pos += boxH
         left_pos = 0
+        bTab = lower_pos + boxD
+        if bTab > boxW / 2.5: bTab = boxW / 2.5
 
         # Bottom Front Tab
         line_path = [
-                      [ 'M', [ left_pos,        lower_pos              ] ],
-                      [ 'L', [ left_pos,        lower_pos + (boxD/1.5) ] ],
-                      [ 'L', [ left_pos + boxW, lower_pos + (boxD/1.5) ] ],
-                      [ 'L', [ left_pos + boxW, lower_pos              ] ],
+                      [ 'M', [ left_pos,        lower_pos            ] ],
+                      [ 'L', [ left_pos,        lower_pos + (boxD/2) ] ],
+                      [ 'L', [ left_pos + boxW, lower_pos + (boxD/2) ] ],
+                      [ 'L', [ left_pos + boxW, lower_pos            ] ],
                       [ 'Z', [] ]
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-bottom-front-tab', 'd':formatPath(line_path) }
         inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
+
         left_pos += boxW
 
         # Bottom Right Tab
         line_path = [
-                      [ 'M', [ left_pos,        lower_pos              ] ],
-                      [ 'L', [ left_pos,        lower_pos + (boxD/1.5) ] ],
-                      [ 'L', [ left_pos + boxD, lower_pos + (boxD/1.5) ] ],
-                      [ 'L', [ left_pos + boxD, lower_pos              ] ],
+                      [ 'M', [ left_pos,        lower_pos        ] ],
+                      [ 'L', [ left_pos,        lower_pos + bTab ] ],
+                      [ 'L', [ left_pos + boxD, lower_pos + bTab ] ],
+                      [ 'L', [ left_pos + boxD, lower_pos        ] ],
                       [ 'Z', [] ]
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-bottom-right-tab', 'd':formatPath(line_path) }
         inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
+
         left_pos += boxD
 
         # Bottom Back Tab
         line_path = [
-                      [ 'M', [ left_pos,        lower_pos              ] ],
-                      [ 'L', [ left_pos,        lower_pos + (boxD/1.5) ] ],
-                      [ 'L', [ left_pos + boxW, lower_pos + (boxD/1.5) ] ],
-                      [ 'L', [ left_pos + boxW, lower_pos              ] ],
+                      [ 'M', [ left_pos,        lower_pos            ] ],
+                      [ 'L', [ left_pos,        lower_pos + (boxD/2) ] ],
+                      [ 'L', [ left_pos + boxW, lower_pos + (boxD/2) ] ],
+                      [ 'L', [ left_pos + boxW, lower_pos            ] ],
                       [ 'Z', [] ]
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-bottom-back-tab', 'd':formatPath(line_path) }
         inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
+
         left_pos += boxW
 
         # Bottom Left Tab
         line_path = [
-                      [ 'M', [ left_pos,        lower_pos              ] ],
-                      [ 'L', [ left_pos,        lower_pos + (boxD/1.5) ] ],
-                      [ 'L', [ left_pos + boxD, lower_pos + (boxD/1.5) ] ],
-                      [ 'L', [ left_pos + boxD, lower_pos              ] ],
+                      [ 'M', [ left_pos,        lower_pos        ] ],
+                      [ 'L', [ left_pos,        lower_pos + bTab ] ],
+                      [ 'L', [ left_pos + boxD, lower_pos + bTab ] ],
+                      [ 'L', [ left_pos + boxD, lower_pos        ] ],
                       [ 'Z', [] ]
                     ]
         line_atts = { 'style':line_style, 'id':box_id+'-bottom-left-tab', 'd':formatPath(line_path) }
         inkex.etree.SubElement(g, inkex.addNS('path','svg'), line_atts )
-        left_pos += boxD
 
+        left_pos += boxD
+        lower_pos += bTab
+
+        g.set( 'transform', 'translate(%f,%f)' % ( (docW-left_pos)/2, (docH-lower_pos)/2 ) )
 
 if __name__ == '__main__':
     e = FoldableBox()
