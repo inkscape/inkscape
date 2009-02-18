@@ -73,6 +73,13 @@ void eek_preview_set_pixbuf( EekPreview* preview, GdkPixbuf* pixbuf )
     preview->_previewPixbuf = pixbuf;
 
     gtk_widget_queue_draw(GTK_WIDGET(preview));
+
+    if (preview->_scaled) {
+        g_object_unref(preview->_scaled);
+        preview->_scaled = 0;
+    }
+    preview->_scaledW = gdk_pixbuf_get_width(preview->_previewPixbuf);
+    preview->_scaledH = gdk_pixbuf_get_height(preview->_previewPixbuf);
 }
 
 
@@ -320,7 +327,17 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
             gint w = 0;
             gint h = 0;
             gdk_drawable_get_size(drawable, &w, &h);
-            gdk_draw_pixbuf( drawable, 0, preview->_previewPixbuf, 0, 0, 0, 0, w, h, GDK_RGB_DITHER_NONE, 0, 0 );
+            if ((w != preview->_scaledW) || (h != preview->_scaledH)) {
+                if (preview->_scaled) {
+                    g_object_unref(preview->_scaled);
+                }
+                preview->_scaled = gdk_pixbuf_scale_simple(preview->_previewPixbuf, w, h, GDK_INTERP_BILINEAR);
+                preview->_scaledW = w;
+                preview->_scaledH = h;
+            }
+
+            GdkPixbuf* pix = (preview->_scaled) ? preview->_scaled : preview->_previewPixbuf;
+            gdk_draw_pixbuf( drawable, 0, pix, 0, 0, 0, 0, w, h, GDK_RGB_DITHER_NONE, 0, 0 );
         }
 
 
@@ -647,6 +664,8 @@ static void eek_preview_init( EekPreview *preview )
     preview->_r = 0x80;
     preview->_g = 0x80;
     preview->_b = 0xcc;
+    preview->_scaledW = 0;
+    preview->_scaledH = 0;
 
     preview->_hot = FALSE;
     preview->_within = FALSE;
@@ -658,6 +677,7 @@ static void eek_preview_init( EekPreview *preview )
     preview->_ratio = 100;
 
     preview->_previewPixbuf = 0;
+    preview->_scaled = 0;
 
 /*
     GdkColor color = {0};

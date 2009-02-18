@@ -97,6 +97,8 @@ struct _EekPreview
     int _r;
     int _g;
     int _b;
+    int _scaledW;
+    int _scaledH;
 
     gboolean _hot;
     gboolean _within;
@@ -108,6 +110,7 @@ struct _EekPreview
     guint _ratio;
     guint _linked;
     GdkPixbuf* _previewPixbuf;
+    GdkPixbuf* _scaled;
 };
 
 struct _EekPreviewClass
