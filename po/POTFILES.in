@@ -24,6 +24,7 @@ src/dialogs/layers-panel.cpp
 src/dialogs/object-attributes.cpp
 src/dialogs/rdf.cpp
 src/dialogs/sp-attribute-widget.cpp
+src/dialogs/spellcheck.cpp
 src/dialogs/stroke-style.cpp
 src/dialogs/swatches.cpp
 src/dialogs/text-edit.cpp
