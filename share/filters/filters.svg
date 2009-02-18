@@ -1159,12 +1159,14 @@
 <feGaussianBlur stdDeviation="5" id="feGaussianBlur3944" />
 <feComposite id="feComposite3946" operator="arithmetic" in="SourceGraphic" k2="-1" k1="0" k3="1" k4="0" />
 </filter>
-<filter id="filter2685" inkscape:label="Emboss" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Classic emboss effect: grayscale and 3D relief">
-<feColorMatrix id="feColorMatrix2687" type="luminanceToAlpha" />
-<feDiffuseLighting id="feDiffuseLighting2689" surfaceScale="1.5">
-<feDistantLight id="feDistantLight2691" azimuth="225" elevation="25" />
+<filter id="filter3007" inkscape:label="Emboss" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Classic or colorized emboss effect: grayscale, color and 3D relief">
+<feColorMatrix id="feColorMatrix3009" type="luminanceToAlpha" result="result2" />
+<feDiffuseLighting id="feDiffuseLighting3011" surfaceScale="10" result="result1" diffuseConstant="0.5">
+<feDistantLight id="feDistantLight3013" azimuth="225" elevation="25" />
 </feDiffuseLighting>
-<feComposite id="feComposite2693" in2="SourceAlpha" operator="in" />
+<feFlood flood-opacity="0.5" result="result3" flood-color="rgb(255,0,0)" id="feFlood3015" in="SourceGraphic" />
+<feComposite result="result4" id="feComposite3017" in2="result1" operator="arithmetic" in="result3" k1="1" k2="1" k3="1" k4="0" />
+<feBlend mode="screen" in2="result4" blend="normal" id="feBlend3019" in="result2" />
 </filter>
 <filter id="filter2910x" inkscape:label="Soft bump" inkscape:menu="Image effects" inkscape:menu-tooltip="Convolution bump with a blur it can give nice embossing effects" height="1" width="1" y="0" x="0">
 <feGaussianBlur id="feGaussianBlur2912" stdDeviation="0.5" result="result3" />
@@ -1451,6 +1453,14 @@
 </feSpecularLighting>
 <feComposite id="feComposite2900" operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
 <feComposite id="feComposite2902" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+</filter>
+<filter id="filter2914" inkscape:label="Black Emboss" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Emboss effect : 3D relief where white is replaced by black">
+<feColorMatrix id="feColorMatrix2916" type="luminanceToAlpha" result="result2" />
+<feDiffuseLighting id="feDiffuseLighting2918" surfaceScale="10" result="result1" diffuseConstant="0.5">
+<feDistantLight id="feDistantLight2920" azimuth="225" elevation="25" />
+</feDiffuseLighting>
+<feComposite id="feComposite2922" in2="SourceGraphic" operator="arithmetic" in="result1" k1="1" k2="1" k3="1" />
+<feBlend blend="normal" id="feBlend2962" in="result2" mode="multiply" />
 </filter>
 </defs>
 </svg>
