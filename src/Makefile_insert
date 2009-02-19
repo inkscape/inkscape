@@ -72,7 +72,6 @@ libinkpre_a_SOURCES =	\
 	icon-size.h \
 	id-clash.cpp id-clash.h	\
 	ige-mac-menu.h ige-mac-menu.c \
-	inkscape-stock.cpp inkscape-stock.h\
 	inkscape.cpp inkscape.h inkscape-private.h	\
 	interface.cpp interface.h	\
 	isinf.h \
@@ -313,10 +312,13 @@ inkview_LDADD = $(all_libs)
 
 libinkversion_a_SOURCES = inkscape-version.cpp inkscape-version.h
 
-# Hack: make inkscape-version.cpp a phony target.
-# Create the version file every time "make" is invoked. Overwrite it only
-# if it changes. Watch the backslashes!
-inkscape-version.cpp:
+if USE_SVN_VERSION
+inkscape_version_deps = $(top_srcdir)/.svn/entries
+endif
+
+# If this is an SVN snapshot build, regenerate this file every time
+# someone updates the SVN working directory.
+inkscape-version.cpp: $(inkscape_version_deps)
 	VER_PREFIX="$(VERSION)"; \
 	if test -x "$(srcdir)/.svn" -a ! -z `which svn`; then \
 	    VER_SVNREV=" r`svn info $(srcdir) | sed -n -e '/^Revision:/s/Revision: \(.*\)/\1/p'`"; \
@@ -334,7 +336,6 @@ inkscape-version.cpp:
 	     mv inkscape-version.new.cpp inkscape-version.cpp; \
 	fi; \
 	echo $$VERSION
-.PHONY: inkscape-version.cpp
 
 # ######################
 # ### CxxTest stuff ####

@@ -8,7 +8,7 @@ dnl `dpkg --compare-versions'.  (ii) We don't always know what the next
 dnl version is going to be called until about the time we release it
 dnl (whereas we always know what the previous version was called).
 AC_CANONICAL_HOST
-AC_CONFIG_SRCDIR(src/main.cpp)
+AC_CONFIG_SRCDIR([src/main.cpp])
 AM_INIT_AUTOMAKE([dist-zip dist-bzip2 tar-pax])
 
 AC_ARG_ENABLE([lsb], AS_HELP_STRING([--enable-lsb], [LSB-compatible build configuration]), [
@@ -28,7 +28,9 @@ AC_ISC_POSIX
 AC_PROG_CXX
 AM_PROG_CC_STDC
 AM_PROG_AS
+AC_PROG_RANLIB
 AC_HEADER_STDC
+INK_SVN_SNAPSHOT_BUILD
 
 dnl These next few lines are needed only while libcroco is in our source tree.
 AC_PROG_CC
@@ -94,8 +96,6 @@ fi
 dnl Honor aclocal flags
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 
-AC_PROG_RANLIB
-
 dnl Verify our GCC version
 if test "x$GXX" = "xyes"; then
 	AC_MSG_CHECKING([GNU compiler version])
@@ -142,18 +142,14 @@ AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
 
 dnl ******************************
 dnl Check for OpenMP 
+dnl Replace this with AC_OPENMP once it's possible to use Autoconf 2.62
 dnl ******************************
-
 AX_OPENMP([openmp_ok=yes],[openmp_ok=no])
-AC_MSG_CHECKING([for OpenMP support])
-dnl a bit odd, but AX_OPENMP does its own check message, so we're not wrapping it at the moment
-AC_MSG_RESULT([$openmp_ok])
 if test "x$openmp_ok" = "xyes"; then
 	dnl We have it, now set up the flags
 	CXXFLAGS="$CXXFLAGS $OPENMP_CXXFLAGS"
 	AC_CHECK_HEADER(omp.h)
 fi
-
 
 dnl ******************************
 dnl Check for libpng 
