@@ -222,11 +222,16 @@ void sp_icon_fetch_pixbuf( SPIcon *icon )
         if ( !icon->pb ) {
             icon->psize = sp_icon_get_phys_size(icon->lsize);
 
-            GdkPixbuf *pb = sp_icon_image_load_svg( icon->name, Inkscape::getRegisteredIconSize(icon->lsize), icon->psize );
+            GdkPixbuf *pb;
+            
+            pb = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon->name, icon->psize,
+                (GtkIconLookupFlags) 0, NULL);
+            if (!pb) {
+                pb = sp_icon_image_load_svg( icon->name, Inkscape::getRegisteredIconSize(icon->lsize), icon->psize );
+            }
             if (!pb) {
                 pb = sp_icon_image_load_pixmap( icon->name, icon->lsize, icon->psize );
             }
-
             if ( pb ) {
                 icon->pb = pb;
                 icon->pb_faded = gdk_pixbuf_copy(icon->pb);
@@ -288,73 +293,71 @@ sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
     static bool dump = prefs->getBool( "/debug/icons/dumpGtk");
 
     GtkWidget *widget = 0;
-        gint trySize = CLAMP( static_cast<gint>(lsize), 0, static_cast<gint>(G_N_ELEMENTS(iconSizeLookup) - 1) );
-        if ( !sizeMapDone ) {
-            injectCustomSize();
+    gint trySize = CLAMP( static_cast<gint>(lsize), 0, static_cast<gint>(G_N_ELEMENTS(iconSizeLookup) - 1) );
+    if ( !sizeMapDone ) {
+        injectCustomSize();
+    }
+    GtkIconSize mappedSize = iconSizeLookup[trySize];
+
+    GtkStockItem stock;
+    gboolean stockFound = gtk_stock_lookup( name, &stock );
+
+    GtkWidget *img = 0;
+    if ( legacyNames.empty() ) {
+        setupLegacyNaming();
+    }
+
+    if ( legacyNames.find(name) != legacyNames.end() ) {
+        img = gtk_image_new_from_icon_name( name, mappedSize );
+        if ( dump ) {
+            g_message("gtk_image_new_from_icon_name( '%s', %d ) = %p", name, mappedSize, img);
+            GtkImageType thing = gtk_image_get_storage_type(GTK_IMAGE(img));
+            g_message("      Type is %d  %s", (int)thing, (thing == GTK_IMAGE_EMPTY ? "Empty" : "ok"));
         }
-        GtkIconSize mappedSize = iconSizeLookup[trySize];
+    } else {
+        img = gtk_image_new_from_stock( name, mappedSize );
+    }
 
-        GtkStockItem stock;
-        gboolean stockFound = gtk_stock_lookup( name, &stock );
-
-        GtkWidget *img = 0;
-        if ( legacyNames.empty() ) {
-            setupLegacyNaming();
-        }
-
-        bool flagMe = false;
-        if ( legacyNames.find(name) != legacyNames.end() ) {
-            img = gtk_image_new_from_icon_name( name, mappedSize );
-            flagMe = true;
-            if ( dump ) {
-                g_message("gtk_image_new_from_icon_name( '%s', %d ) = %p", name, mappedSize, img);
-                GtkImageType thing = gtk_image_get_storage_type(GTK_IMAGE(img));
-                g_message("      Type is %d  %s", (int)thing, (thing == GTK_IMAGE_EMPTY ? "Empty" : "ok"));
-            }
-        } else {
-            img = gtk_image_new_from_stock( name, mappedSize );
-        }
-
-        if ( img ) {
-            GtkImageType type = gtk_image_get_storage_type( GTK_IMAGE(img) );
-            if ( type == GTK_IMAGE_STOCK ) {
-                if ( !stockFound ) {
-                    // It's not showing as a stock ID, so assume it will be present internally
-                    populate_placeholder_icon( name, mappedSize );
-                    addPreRender( mappedSize, name );
-
-                    // Add a hook to render if set visible before prerender is done.
-                    g_signal_connect( G_OBJECT(img), "map", G_CALLBACK(imageMapCB), GINT_TO_POINTER(static_cast<int>(mappedSize)) );
-                    if ( dump ) {
-                        g_message("      connecting %p for imageMapCB for [%s] %d", img, name, (int)mappedSize);
-                    }
-                }
-                widget = GTK_WIDGET(img);
-                img = 0;
-                if ( dump ) {
-                    g_message( "loaded gtk  '%s' %d  (GTK_IMAGE_STOCK) %s  on %p", name, mappedSize, (stockFound ? "STOCK" : "local"), widget );
-                }
-            } else if ( type == GTK_IMAGE_ICON_NAME ) {
-                widget = GTK_WIDGET(img);
-                img = 0;
+    if ( img ) {
+        GtkImageType type = gtk_image_get_storage_type( GTK_IMAGE(img) );
+        if ( type == GTK_IMAGE_STOCK ) {
+            if ( !stockFound ) {
+                // It's not showing as a stock ID, so assume it will be present internally
+                populate_placeholder_icon( name, mappedSize );
+                addPreRender( mappedSize, name );
 
                 // Add a hook to render if set visible before prerender is done.
-                g_signal_connect( G_OBJECT(widget), "map", G_CALLBACK(imageMapNamedCB), GINT_TO_POINTER(0) );
-
-                if ( prefs->getBool("/options/iconrender/named_nodelay") ) {
-                    int psize = sp_icon_get_phys_size(lsize);
-                    prerender_icon(name, mappedSize, psize);
-                } else {
-                    addPreRender( mappedSize, name );
-                }
-            } else {
+                g_signal_connect( G_OBJECT(img), "map", G_CALLBACK(imageMapCB), GINT_TO_POINTER(static_cast<int>(mappedSize)) );
                 if ( dump ) {
-                    g_message( "skipped gtk '%s' %d  (not GTK_IMAGE_STOCK)", name, lsize );
+                    g_message("      connecting %p for imageMapCB for [%s] %d", img, name, (int)mappedSize);
                 }
-                //g_object_unref( (GObject *)img );
-                img = 0;
             }
+            widget = GTK_WIDGET(img);
+            img = 0;
+            if ( dump ) {
+                g_message( "loaded gtk  '%s' %d  (GTK_IMAGE_STOCK) %s  on %p", name, mappedSize, (stockFound ? "STOCK" : "local"), widget );
+            }
+        } else if ( type == GTK_IMAGE_ICON_NAME ) {
+            widget = GTK_WIDGET(img);
+            img = 0;
+
+            // Add a hook to render if set visible before prerender is done.
+            g_signal_connect( G_OBJECT(widget), "map", G_CALLBACK(imageMapNamedCB), GINT_TO_POINTER(0) );
+
+            if ( prefs->getBool("/options/iconrender/named_nodelay") ) {
+                int psize = sp_icon_get_phys_size(lsize);
+                prerender_icon(name, mappedSize, psize);
+            } else {
+                addPreRender( mappedSize, name );
+            }
+        } else {
+            if ( dump ) {
+                g_message( "skipped gtk '%s' %d  (not GTK_IMAGE_STOCK)", name, lsize );
+            }
+            //g_object_unref( (GObject *)img );
+            img = 0;
         }
+    }
 
     if ( !widget ) {
         //g_message("Creating an SPIcon instance for %s:%d", name, (int)lsize);
@@ -940,25 +943,31 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
     if (pb) {
         return false;
     } else {
-        guchar* px = load_svg_pixels(name, lsize, psize);
-        if ( !px ) {
-            // check for a fallback name
-            if ( legacyNames.find(name) != legacyNames.end() ) {
-                if ( dump ) {
-                    g_message("load_svg_pixels([%s]=%s, %d, %d)", name, legacyNames[name].c_str(), lsize, psize);
+        pb = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), name, psize,
+            (GtkIconLookupFlags) 0, NULL);
+        if (!pb) {
+            guchar* px = load_svg_pixels(name, lsize, psize);
+            if ( !px ) {
+                // check for a fallback name
+                if ( legacyNames.find(name) != legacyNames.end() ) {
+                    if ( dump ) {
+                        g_message("load_svg_pixels([%s]=%s, %d, %d)", name, legacyNames[name].c_str(), lsize, psize);
+                    }
+                    px = load_svg_pixels(legacyNames[name].c_str(), lsize, psize);
                 }
-                px = load_svg_pixels(legacyNames[name].c_str(), lsize, psize);
+            }
+            if (px) {
+                pb = gdk_pixbuf_new_from_data(px, GDK_COLORSPACE_RGB, TRUE, 8,
+                                              psize, psize, psize * 4,
+                                              (GdkPixbufDestroyNotify)g_free, NULL);
+            } else if (dump) {
+                g_message("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX  error!!! pixels not found for '%s'", name);
             }
         }
 
-        if (px) {
-            pb = gdk_pixbuf_new_from_data(px, GDK_COLORSPACE_RGB, TRUE, 8,
-                                          psize, psize, psize * 4,
-                                          (GdkPixbufDestroyNotify)g_free, NULL);
+        if (pb) {
             pb_cache[key] = pb;
             addToIconSet(pb, name, lsize, psize);
-        } else if (dump) {
-            g_message("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX  error!!! pixels not found for '%s'", name);
         }
         return true;
     }

@@ -31,19 +31,14 @@ ImageToggler::ImageToggler( char const* on, char const* off) :
 {
     property_mode() = Gtk::CELL_RENDERER_MODE_ACTIVATABLE;
     int phys = sp_icon_get_phys_size((int)Inkscape::ICON_SIZE_DECORATION);
+    Glib::RefPtr<Gtk::IconTheme> icon_theme = Gtk::IconTheme::get_default();
 
-    Glib::RefPtr<Gdk::Pixbuf> pbmm = Gtk::IconTheme::get_default()->load_icon(_pixOnName, phys, (Gtk::IconLookupFlags)0);
-    if ( pbmm ) {
-        GdkPixbuf* pb = gdk_pixbuf_copy(pbmm->gobj());
-        _property_pixbuf_on = Glib::wrap( pb );
-        pbmm->unreference();
+    if (icon_theme->has_icon(_pixOnName)) {
+        _property_pixbuf_on = icon_theme->load_icon(_pixOnName, phys, (Gtk::IconLookupFlags)0);
     }
 
-    pbmm = Gtk::IconTheme::get_default()->load_icon(_pixOffName, phys, (Gtk::IconLookupFlags)0);
-    if ( pbmm ) {
-        GdkPixbuf* pb = gdk_pixbuf_copy(pbmm->gobj());
-        _property_pixbuf_off = Glib::wrap( pb );
-        pbmm->unreference();
+    if (icon_theme->has_icon(_pixOffName)) {
+        _property_pixbuf_off = icon_theme->load_icon(_pixOffName, phys, (Gtk::IconLookupFlags)0);
     }
 
     property_pixbuf() = _property_pixbuf_off.get_value();

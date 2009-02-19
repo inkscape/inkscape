@@ -803,7 +803,7 @@ TileDialog::TileDialog()
     {
         /*#### Y Padding ####*/
 
-        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_MENU, "clonetiler_per_row");
+        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_MENU, "object-rows");
         YPadBox.pack_start (*(Glib::wrap(i)), false, false, MARGIN);
 
         YPadSpinner.set_digits(1);
@@ -828,7 +828,7 @@ TileDialog::TileDialog()
     {
         /*#### X padding ####*/
 
-        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_MENU, "clonetiler_per_column");
+        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_MENU, "object-columns");
         XPadBox.pack_start (*(Glib::wrap(i)), false, false, MARGIN);
 
         XPadSpinner.set_digits(1);

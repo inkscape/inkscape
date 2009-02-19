@@ -68,7 +68,6 @@
 #include "svg/stringstream.h"
 
 #include "inkscape-private.h"
-#include "inkscape-stock.h"
 #include "inkscape-version.h"
 
 #include "sp-namedview.h"
@@ -110,8 +109,10 @@ using Inkscape::Extension::Internal::PrintWin32;
 #endif
 
 #include "application/application.h"
-
 #include "main-cmdlineact.h"
+#include "widgets/icon.h"
+#include "ui/widget/panel.h"
+
 
 #include <png.h>
 #include <errno.h>
@@ -833,19 +834,17 @@ sp_main_gui(int argc, char const **argv)
     int retVal = sp_common_main( argc, argv, &fl );
     g_return_val_if_fail(retVal == 0, 1);
 
-    inkscape_gtk_stock_init();
+    // Add our icon directory to the search path for icon theme lookups.
+    gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(), INKSCAPE_PIXMAPDIR);
 
     gdk_event_handler_set((GdkEventFunc)snooper, NULL, NULL);
-
     Inkscape::Debug::log_display_config();
 
-    /* Set default icon */
-    gchar *filename = (gchar *) g_build_filename (INKSCAPE_APPICONDIR, "inkscape.png", NULL);
-    if (Inkscape::IO::file_test(filename, (GFileTest)(G_FILE_TEST_IS_REGULAR | G_FILE_TEST_IS_SYMLINK))) {
-        gtk_window_set_default_icon_from_file(filename, NULL);
-    }
-    g_free (filename);
-    filename = 0;
+    // Set default window icon. Obeys the theme.
+    gtk_window_set_default_icon_name("inkscape");
+    // Do things that were previously in inkscape_gtk_stock_init().
+    sp_icon_get_phys_size(GTK_ICON_SIZE_MENU);
+    Inkscape::UI::Widget::Panel::prep();
 
     gboolean create_new = TRUE;
 

@@ -18,22 +18,24 @@
 # include "config.h"
 #endif
 
+#include <glibmm/i18n.h>
 
-#include "widgets/sp-widget.h"
+#include "desktop-handles.h"
+#include "desktop-style.h"
+#include "display/sp-canvas.h"
+#include "document-private.h"
+#include "gradient-chemistry.h"
+#include "inkscape.h"
+#include "selection.h"
 #include "sp-linear-gradient.h"
 #include "sp-pattern.h"
 #include "sp-radial-gradient.h"
-#include "widgets/paint-selector.h"
 #include "style.h"
-#include "gradient-chemistry.h"
-#include "desktop-style.h"
-#include "desktop-handles.h"
-#include "selection.h"
-#include "inkscape.h"
-#include "document-private.h"
+#include "widgets/paint-selector.h"
+#include "widgets/sp-widget.h"
 #include "xml/repr.h"
-#include <glibmm/i18n.h>
-#include "display/sp-canvas.h"
+
+#include "dialogs/fill-style.h"
 
 
 // These can be deleted once we sort out the libart dependence.

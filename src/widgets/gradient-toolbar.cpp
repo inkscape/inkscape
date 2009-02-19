@@ -38,6 +38,7 @@
 #include "sp-radial-gradient.h"
 #include "gradient-chemistry.h"
 #include "selection.h"
+#include "ui/icon-names.h"
 
 #include "toolbox.h"
 
@@ -535,7 +536,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
-                                              "fill_gradient",
+                                              INKSCAPE_ICON_PAINT_GRADIENT_LINEAR,
                                               _("Create linear gradient"),
                                               tt);
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_type), tbl);
@@ -549,7 +550,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
-                                              "fill_radial",
+                                              INKSCAPE_ICON_PAINT_GRADIENT_RADIAL,
                                               _("Create radial (elliptic or circular) gradient"),
                                               tt);
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_type), tbl);
@@ -577,7 +578,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
-                                              "controls_fill",
+                                              INKSCAPE_ICON_OBJECT_FILL,
                                               _("Create gradient in the fill"),
                                               tt);
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_fillstroke), tbl);
@@ -591,7 +592,7 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
-                                              "controls_stroke",
+                                              INKSCAPE_ICON_OBJECT_STROKE,
                                               _("Create gradient in the stroke"),
                                               tt);
     g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (gr_toggle_fillstroke), tbl);

@@ -12,39 +12,34 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
-#include "helper/window.h"
-#include "macros.h"
-#include "../inkscape.h"
-#include "../document.h"
-#include "../desktop-handles.h"
+#include <gtk/gtk.h>
+
 #include "desktop.h"
+#include "../desktop-handles.h"
+#include "dialog-events.h"
+#include "../document.h"
+#include "../event-context.h"
+#include "helper/window.h"
+#include "in-dt-coordsys.h"
+#include "../inkscape.h"
+#include "../interface.h"
+#include "macros.h"
+#include "message-context.h"
+#include "message-stack.h"
+#include "../preferences.h"
 #include "../selection.h"
+#include "shortcuts.h"
+#include "../sp-root.h"
 #include "../sp-string.h"
 #include "../sp-tspan.h"
-#include "../sp-root.h"
-#include "../event-context.h"
-#include "in-dt-coordsys.h"
-
-
-#include "../widgets/sp-xmlview-tree.h"
-#include "../widgets/sp-xmlview-content.h"
-#include "../widgets/sp-xmlview-attr-list.h"
-
-#include "../inkscape-stock.h"
-#include "widgets/icon.h"
-
-#include "dialog-events.h"
-#include "../preferences.h"
+#include "ui/icon-names.h"
 #include "../verbs.h"
-#include "../interface.h"
-
-#include "shortcuts.h"
-#include <gdk/gdkkeysyms.h>
-
-#include "message-stack.h"
-#include "message-context.h"
+#include "widgets/icon.h"
+#include "../widgets/sp-xmlview-attr-list.h"
+#include "../widgets/sp-xmlview-content.h"
+#include "../widgets/sp-xmlview-tree.h"
 
 #define MIN_ONSCREEN_DISTANCE 50
 
@@ -288,7 +283,7 @@ void sp_xml_tree_dialog()
                 _("New element node"),
                 NULL,
                 sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
-                                    INKSCAPE_STOCK_ADD_XML_ELEMENT_NODE ),
+                                    INKSCAPE_ICON_XML_ELEMENT_NEW ),
                 G_CALLBACK(cmd_new_element_node),
                 NULL);
 
@@ -309,7 +304,7 @@ void sp_xml_tree_dialog()
         button = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
                 NULL, _("New text node"), NULL,
                 sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
-                             INKSCAPE_STOCK_ADD_XML_TEXT_NODE ),
+                             INKSCAPE_ICON_XML_TEXT_NEW ),
                 G_CALLBACK(cmd_new_text_node),
                 NULL);
 
@@ -330,7 +325,7 @@ void sp_xml_tree_dialog()
         button = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
                 NULL, _("Duplicate node"), NULL,
                 sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
-                             INKSCAPE_STOCK_DUPLICATE_XML_NODE ),
+                             INKSCAPE_ICON_XML_NODE_DUPLICATE ),
                 G_CALLBACK(cmd_duplicate_node),
                 NULL);
 
@@ -351,7 +346,7 @@ void sp_xml_tree_dialog()
         button = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
                 NULL, _("Delete node"), NULL,
                 sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
-                             INKSCAPE_STOCK_DELETE_XML_NODE ),
+                             INKSCAPE_ICON_XML_NODE_DELETE ),
                                            G_CALLBACK(cmd_delete_node), NULL );
 
         gtk_signal_connect_while_alive(GTK_OBJECT(tree), "tree_select_row",
@@ -451,7 +446,7 @@ void sp_xml_tree_dialog()
         button = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
                 NULL, _("Delete attribute"), NULL,
                 sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
-                             INKSCAPE_STOCK_DELETE_XML_ATTRIBUTE ),
+                             INKSCAPE_ICON_XML_ATTRIBUTE_DELETE ),
                (GCallback) cmd_delete_attr, NULL);
 
         gtk_signal_connect_while_alive(GTK_OBJECT(attributes), "select_row",

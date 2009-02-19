@@ -18,38 +18,34 @@
 
 #include "application/application.h"
 #include "application/editor.h"
-#include "helper/window.h"
-#include "helper/unit-menu.h"
-#include "helper/units.h"
-#include "widgets/icon.h"
-#include "../inkscape.h"
-#include "preferences.h"
-#include "dialog-events.h"
-#include "../macros.h"
-#include "../verbs.h"
-#include "../interface.h"
-#include "../selection.h"
-#include "../style.h"
 #include "../desktop.h"
 #include "../desktop-handles.h"
-#include "../sp-namedview.h"
-#include "../document.h"
-#include "../message-stack.h"
-#include "../sp-use.h"
-#include "unclump.h"
-
-#include "xml/repr.h"
-
-#include "svg/svg.h"
-#include "svg/svg-color.h"
-
+#include "dialog-events.h"
 #include "display/nr-arena.h"
 #include "display/nr-arena-item.h"
-
-#include "ui/widget/color-picker.h"
-
-#include "../sp-filter.h"
+#include "../document.h"
 #include "../filter-chemistry.h"
+#include "helper/unit-menu.h"
+#include "helper/units.h"
+#include "helper/window.h"
+#include "../inkscape.h"
+#include "../interface.h"
+#include "../macros.h"
+#include "../message-stack.h"
+#include "preferences.h"
+#include "../selection.h"
+#include "../sp-filter.h"
+#include "../sp-namedview.h"
+#include "../sp-use.h"
+#include "../style.h"
+#include "svg/svg-color.h"
+#include "svg/svg.h"
+#include "ui/icon-names.h"
+#include "ui/widget/color-picker.h"
+#include "unclump.h"
+#include "../verbs.h"
+#include "widgets/icon.h"
+#include "xml/repr.h"
 
 #define MIN_ONSCREEN_DISTANCE 50
 
@@ -1703,7 +1699,7 @@ clonetiler_table_x_y_rand (int values)
     {
         GtkWidget *hb = gtk_hbox_new (FALSE, 0);
 
-        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, "clonetiler_per_row");
+        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_OBJECT_ROWS);
         gtk_box_pack_start (GTK_BOX (hb), i, FALSE, FALSE, 2);
 
         GtkWidget *l = gtk_label_new ("");
@@ -1716,7 +1712,7 @@ clonetiler_table_x_y_rand (int values)
     {
         GtkWidget *hb = gtk_hbox_new (FALSE, 0);
 
-        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, "clonetiler_per_column");
+        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_OBJECT_COLUMNS);
         gtk_box_pack_start (GTK_BOX (hb), i, FALSE, FALSE, 2);
 
         GtkWidget *l = gtk_label_new ("");

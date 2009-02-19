@@ -18,7 +18,6 @@
 #include "document.h"
 #include "filter-chemistry.h"
 #include "inkscape.h"
-#include "inkscape-stock.h"
 #include "selection.h"
 #include "style.h"
 #include "sp-item.h"
@@ -26,6 +25,7 @@
 #include "verbs.h"
 #include "xml/repr.h"
 #include "widgets/icon.h"
+#include "ui/icon-names.h"
 #include "ui/widget/object-composite-settings.h"
 #include "display/sp-canvas.h"
 

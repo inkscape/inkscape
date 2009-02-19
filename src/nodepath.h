@@ -1,25 +1,21 @@
-#ifndef __SP_NODEPATH_H__
-#define __SP_NODEPATH_H__
-
-/** \file
- * Path handler in node edit mode
+/** @file
+ * @brief Path handler in node edit mode
  */
-
-/*
- * Authors:
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
  * This code is in public domain
  */
 
-//#include "knot.h"
-//#include "sp-path.h"
-//#include "desktop-handles.h"
+#ifndef SEEN_SP_NODEPATH_H
+#define SEEN_SP_NODEPATH_H
+
 #include "libnr/nr-path-code.h"
 #include <glibmm/ustring.h>
 #include <gdk/gdkevents.h>
 #include <list>
-#include <2geom/forward.h>
+#include <2geom/point.h>
+#include <2geom/matrix.h>
 #include <boost/optional.hpp>
 
 

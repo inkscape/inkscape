@@ -18,13 +18,13 @@
 #include "fill-and-stroke.h"
 #include "filter-chemistry.h"
 #include "inkscape.h"
-#include "inkscape-stock.h"
 #include "selection.h"
 #include "style.h"
 #include "svg/css-ostringstream.h"
 #include "verbs.h"
 #include "xml/repr.h"
 #include "widgets/icon.h"
+#include "ui/icon-names.h"
 
 #include "dialogs/fill-style.h"
 #include "dialogs/stroke-style.h"
@@ -47,9 +47,9 @@ FillAndStroke::FillAndStroke()
 
     contents->pack_start(_notebook, true, true);
 
-    _notebook.append_page(_page_fill, _createPageTabLabel(_("Fill"), INKSCAPE_STOCK_PROPERTIES_FILL_PAGE));
-    _notebook.append_page(_page_stroke_paint, _createPageTabLabel(_("Stroke _paint"), INKSCAPE_STOCK_PROPERTIES_STROKE_PAINT_PAGE));
-    _notebook.append_page(_page_stroke_style, _createPageTabLabel(_("Stroke st_yle"), INKSCAPE_STOCK_PROPERTIES_STROKE_PAGE));
+    _notebook.append_page(_page_fill, _createPageTabLabel(_("Fill"), INKSCAPE_ICON_OBJECT_FILL));
+    _notebook.append_page(_page_stroke_paint, _createPageTabLabel(_("Stroke _paint"), INKSCAPE_ICON_OBJECT_STROKE));
+    _notebook.append_page(_page_stroke_style, _createPageTabLabel(_("Stroke st_yle"), INKSCAPE_ICON_OBJECT_STROKE_STYLE));
 
     _layoutPageFill();
     _layoutPageStrokePaint();

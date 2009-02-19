@@ -58,7 +58,6 @@
 #include "icon.h"
 #include "../ink-action.h"
 #include "../inkscape.h"
-#include "../inkscape-stock.h"
 #include "../interface.h"
 #include "../libnrtype/font-instance.h"
 #include "../libnrtype/font-lister.h"
@@ -88,6 +87,7 @@
 #include "../svg/css-ostringstream.h"
 #include "../tools-switch.h"
 #include "../tweak-context.h"
+#include "../ui/icon-names.h"
 #include "../ui/widget/style-swatch.h"
 #include "../verbs.h"
 #include "../widgets/button.h"
@@ -1287,7 +1287,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeInsertAction",
                                           _("Insert node"),
                                           _("Insert new nodes into selected segments"),
-                                          "node_insert",
+                                          INKSCAPE_ICON_NODE_ADD,
                                           secondarySize );
         g_object_set( inky, "short_label", _("Insert"), NULL );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_add), 0 );
@@ -1298,7 +1298,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeDeleteAction",
                                           _("Delete node"),
                                           _("Delete selected nodes"),
-                                          "node_delete",
+                                          INKSCAPE_ICON_NODE_DELETE,
                                           secondarySize );
         g_object_set( inky, "short_label", _("Delete"), NULL );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_delete), 0 );
@@ -1309,7 +1309,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeJoinAction",
                                           _("Join endnodes"),
                                           _("Join selected endnodes"),
-                                          "node_join",
+                                          INKSCAPE_ICON_NODE_JOIN,
                                           secondarySize );
         g_object_set( inky, "short_label", _("Join"), NULL );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_join), 0 );
@@ -1320,7 +1320,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeBreakAction",
                                           _("Break nodes"),
                                           _("Break path at selected nodes"),
-                                          "node_break",
+                                          INKSCAPE_ICON_NODE_BREAK,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_break), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1331,7 +1331,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeJoinSegmentAction",
                                           _("Join with segment"),
                                           _("Join selected endnodes with a new segment"),
-                                          "node_join_segment",
+                                          INKSCAPE_ICON_NODE_JOIN_SEGMENT,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_join_segment), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1341,7 +1341,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeDeleteSegmentAction",
                                           _("Delete segment"),
                                           _("Delete segment between two non-endpoint nodes"),
-                                          "node_delete_segment",
+                                          INKSCAPE_ICON_NODE_DELETE_SEGMENT,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_delete_segment), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1351,7 +1351,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeCuspAction",
                                           _("Node Cusp"),
                                           _("Make selected nodes corner"),
-                                          "node_cusp",
+                                          INKSCAPE_ICON_NODE_TYPE_CUSP,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_cusp), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1361,7 +1361,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeSmoothAction",
                                           _("Node Smooth"),
                                           _("Make selected nodes smooth"),
-                                          "node_smooth",
+                                          INKSCAPE_ICON_NODE_TYPE_SMOOTH,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_smooth), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1371,7 +1371,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeSymmetricAction",
                                           _("Node Symmetric"),
                                           _("Make selected nodes symmetric"),
-                                          "node_symmetric",
+                                          INKSCAPE_ICON_NODE_TYPE_SYMMETRIC,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_symmetrical), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1381,7 +1381,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeAutoAction",
                                           _("Node Auto"),
                                           _("Make selected nodes auto-smooth"),
-                                          "node_auto",
+                                          INKSCAPE_ICON_NODE_TYPE_AUTO_SMOOTH,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_auto), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1391,7 +1391,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeLineAction",
                                           _("Node Line"),
                                           _("Make selected segments lines"),
-                                          "node_line",
+                                          INKSCAPE_ICON_NODE_SEGMENT_LINE,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_toline), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1401,7 +1401,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "NodeCurveAction",
                                           _("Node Curve"),
                                           _("Make selected segments curves"),
-                                          "node_curve",
+                                          INKSCAPE_ICON_NODE_SEGMENT_CURVE,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_tocurve), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1411,7 +1411,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkToggleAction* act = ink_toggle_action_new( "NodesShowHandlesAction",
                                                       _("Show Handles"),
                                                       _("Show the Bezier handles of selected nodes"),
-                                                      "nodes_show_handles",
+                                                      INKSCAPE_ICON_SHOW_NODE_HANDLES,
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_show_handles), desktop );
@@ -1422,7 +1422,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkToggleAction* act = ink_toggle_action_new( "NodesShowHelperpath",
                                                       _("Show Outline"),
                                                       _("Show the outline of the path"),
-                                                      "nodes_show_helperpath",
+                                                      INKSCAPE_ICON_SHOW_PATH_OUTLINE,
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_show_helperpath), desktop );
@@ -1433,7 +1433,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "EditNextLPEParameterAction",
                                           _("Next path effect parameter"),
                                           _("Show next path effect parameter for editing"),
-                                          "edit_next_parameter",
+                                          INKSCAPE_ICON_PATH_EFFECT_PARAMETER_NEXT,
                                           Inkscape::ICON_SIZE_DECORATION );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_nextLPEparam), desktop );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1444,7 +1444,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "ObjectEditClipPathAction",
                                           _("Edit clipping path"),
                                           _("Edit the clipping path of the object"),
-                                          "nodeedit-clippath",
+                                          INKSCAPE_ICON_PATH_CLIP_EDIT,
                                           Inkscape::ICON_SIZE_DECORATION );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_clippath), desktop );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1455,7 +1455,7 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "ObjectEditMaskPathAction",
                                           _("Edit mask path"),
                                           _("Edit the mask of the object"),
-                                          "nodeedit-mask",
+                                          INKSCAPE_ICON_PATH_MASK_EDIT,
                                           Inkscape::ICON_SIZE_DECORATION );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_maskpath), desktop );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -1996,7 +1996,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 			"    <toolitem action='ToggleSnapToBBoxPath' />"
 			"    <toolitem action='ToggleSnapToBBoxNode' />"
 			"    <toolitem action='ToggleSnapToFromBBoxEdgeMidpoints' />"
-			"    <toolitem action='ToggleSnapToFromBBoxMidpoints' />"
+			"    <toolitem action='ToggleSnapToFromBBoxCenters' />"
 			"    <separator />"
 			"    <toolitem action='ToggleSnapFromNode' />"
 			"    <toolitem action='ToggleSnapToItemPath' />"
@@ -2004,8 +2004,8 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 			"    <toolitem action='ToggleSnapToItemNode' />"
 			"    <toolitem action='ToggleSnapToSmoothNodes' />"
 			"    <toolitem action='ToggleSnapToFromLineMidpoints' />"
-			"    <toolitem action='ToggleSnapToFromObjectMidpoints' />"
-			"    <toolitem action='ToggleSnapToFromCenter' />"
+			"    <toolitem action='ToggleSnapToFromObjectCenters' />"
+			"    <toolitem action='ToggleSnapToFromRotationCenter' />"
 			"    <separator />"
 			"    <toolitem action='ToggleSnapToPageBorder' />"
 			"    <toolitem action='ToggleSnapToGrids' />"
@@ -2017,216 +2017,163 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapGlobal",		// "name"
-												 _("Snap"),						// "label"
-												 _("Enable snapping"),		// "tooltip"
-												 "toggle_snap_global",			// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_GLOBAL);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapGlobal", 
+		    _("Snap"), _("Enable snapping"), INKSCAPE_ICON_SNAP, secondarySize,
+		    SP_ATTR_INKSCAPE_SNAP_GLOBAL);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapFromBBoxCorner",// "name"
-												 _("Bounding box"),				// "label"
-												 _("Snap bounding box corners"),	// "tooltip"
-												 "toggle_snap_bbox",			// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_BBOX);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapFromBBoxCorner",
+		    _("Bounding box"), _("Snap bounding box corners"), INKSCAPE_ICON_SNAP_BOUNDING_BOX,
+		    secondarySize, SP_ATTR_INKSCAPE_SNAP_BBOX);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToBBoxPath",	// "name"
-												 _("Bounding box edges"),		// "label"
-												 _("Snap to edges of a bounding box"),	// "tooltip"
-												 "toggle_snap_to_bbox_path",	// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_BBOX_PATHS);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToBBoxPath",
+		    _("Bounding box edges"), _("Snap to edges of a bounding box"),
+		    INKSCAPE_ICON_SNAP_BOUNDING_BOX_EDGES, secondarySize, SP_ATTR_INKSCAPE_BBOX_PATHS);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToBBoxNode",	// "name"
-												 _("Bounding box corners"),		// "label"
-												 _("Snap to bounding box corners"),	// "tooltip"
-												 "toggle_snap_to_bbox_node",	// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_BBOX_NODES);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToBBoxNode",
+		    _("Bounding box corners"), _("Snap to bounding box corners"),
+		    INKSCAPE_ICON_SNAP_BOUNDING_BOX_CORNERS, secondarySize, SP_ATTR_INKSCAPE_BBOX_NODES);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromBBoxEdgeMidpoints",	// "name"
-												 _("BBox Edge Midpoints"),				// "label"
-												 _("Snap from and to midpoints of bounding box edges"),	// "tooltip"
-												 "toggle_snap_to_bbox_edge_midpoints",	// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE_MIDPOINTS);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromBBoxEdgeMidpoints",
+		    _("BBox Edge Midpoints"), _("Snap from and to midpoints of bounding box edges"),
+		    INKSCAPE_ICON_SNAP_BOUNDING_BOX_MIDPOINTS, secondarySize,
+		    SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE_MIDPOINTS);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromBBoxMidpoints",	// "name"
-												 _("BBox Midpoints"),				// "label"
-												 _("Snapping from and to midpoints of bounding boxes"),	// "tooltip"
-												 "toggle_snap_to_bbox_midpoints",	// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_BBOX_MIDPOINTS);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromBBoxCenters",
+		    _("BBox Centers"), _("Snapping from and to centers of bounding boxes"),
+		    INKSCAPE_ICON_SNAP_BOUNDING_BOX_CENTER, secondarySize, SP_ATTR_INKSCAPE_SNAP_BBOX_MIDPOINTS);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapFromNode",		// "name"
-												 _("Nodes"),					// "label"
-												 _("Snap nodes"),	// "tooltip"
-												 "toggle_snap_nodes",			// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_NODES);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapFromNode",
+		    _("Nodes"), _("Snap nodes"), INKSCAPE_ICON_SNAP_NODES, secondarySize, SP_ATTR_INKSCAPE_SNAP_NODES);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToItemPath",	// "name"
-												 _("Paths"),					// "label"
-												 _("Snap to paths"),	// "tooltip"
-												 "toggle_snap_to_paths",		// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_OBJECT_PATHS);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToItemPath",
+		    _("Paths"), _("Snap to paths"), INKSCAPE_ICON_SNAP_NODES_PATH, secondarySize,
+		    SP_ATTR_INKSCAPE_OBJECT_PATHS);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToPathIntersections",			// "name"
-												 _("Path intersections"),						// "label"
-												 _("Snap to path intersections"),	// "tooltip"
-												 "toggle_snap_to_path_intersections",			// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_INTERS_PATHS);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToPathIntersections",
+		    _("Path intersections"), _("Snap to path intersections"),
+		    INKSCAPE_ICON_SNAP_NODES_INTERSECTION, secondarySize, SP_ATTR_INKSCAPE_SNAP_INTERS_PATHS);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToItemNode",	// "name"
-												 _("To nodes"),					// "label"
-												 _("Snap to cusp nodes"), // "tooltip"
-												 "toggle_snap_to_nodes",		// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_OBJECT_NODES);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToItemNode",
+		    _("To nodes"), _("Snap to cusp nodes"), INKSCAPE_ICON_SNAP_NODES_CUSP, secondarySize,
+		    SP_ATTR_INKSCAPE_OBJECT_NODES);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToSmoothNodes",	// "name"
-												 _("Smooth nodes"),				// "label"
-												 _("Snap to smooth nodes"),// "tooltip"
-												 "toggle_snap_to_smooth_nodes",	// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_SMOOTH_NODES);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToSmoothNodes",
+		    _("Smooth nodes"), _("Snap to smooth nodes"), INKSCAPE_ICON_SNAP_NODES_SMOOTH,
+		    secondarySize, SP_ATTR_INKSCAPE_SNAP_SMOOTH_NODES);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromLineMidpoints",	// "name"
-												 _("Line Midpoints"),				// "label"
-												 _("Snap from and to midpoints of line segments"),	// "tooltip"
-												 "toggle_snap_to_midpoints",	// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_LINE_MIDPOINTS);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromLineMidpoints",
+		    _("Line Midpoints"), _("Snap from and to midpoints of line segments"),
+		    INKSCAPE_ICON_SNAP_NODES_MIDPOINT, secondarySize, SP_ATTR_INKSCAPE_SNAP_LINE_MIDPOINTS);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromObjectMidpoints",	// "name"
-												 _("Object Midpoints"),				// "label"
-												 _("Snap from and to midpoints of objects"),	// "tooltip"
-												 "toggle_snap_to_object_midpoints",	// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_OBJECT_MIDPOINTS);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromObjectCenters",
+		    _("Object Centers"), _("Snap from and to centers of objects"),
+		    INKSCAPE_ICON_SNAP_NODES_CENTER, secondarySize, SP_ATTR_INKSCAPE_SNAP_OBJECT_MIDPOINTS);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromCenter",// "name"
-												 _("Center"),					// "label"
-												 _("Snap from and to an item's rotation center"),	// "tooltip"
-												 "toggle_snap_center",			// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_CENTER);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToFromRotationCenter",
+		    _("Rotation Centers"), _("Snap from and to an item's rotation center"),
+		    INKSCAPE_ICON_SNAP_NODES_ROTATION_CENTER, secondarySize, SP_ATTR_INKSCAPE_SNAP_CENTER);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToPageBorder",	// "name"
-												 _("Page border"),				// "label"
-												 _("Snap to the page border"),	// "tooltip"
-												 "toggle_snap_page_border",		// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_PAGE);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToPageBorder",
+		    _("Page border"), _("Snap to the page border"), INKSCAPE_ICON_SNAP_PAGE,
+		    secondarySize, SP_ATTR_INKSCAPE_SNAP_PAGE);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToGrids",	// "name"
-												 _("Grids"),				// "label"
-												 _("Snap to grids"),	// "tooltip"
-												 "grid_xy",	// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_GRIDS);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToGrids",
+		    _("Grids"), _("Snap to grids"), INKSCAPE_ICON_GRID_RECTANGULAR, secondarySize,
+		    SP_ATTR_INKSCAPE_SNAP_GRIDS);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToGuides",	// "name"
-												 _("Guides"),				// "label"
-												 _("Snap to guides"),	// "tooltip"
-												 "guide",	// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_TO_GUIDES);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToGuides",
+		    _("Guides"), _("Snap to guides"), INKSCAPE_ICON_GUIDES, secondarySize,
+		    SP_ATTR_INKSCAPE_SNAP_TO_GUIDES);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
 	}
 
 	/*{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToGridGuideIntersections",	// "name"
-												 _("Grid/guide intersections"),				// "label"
-												 _("Snap to intersections of a grid with a guide"),	// "tooltip"
-												 "toggle_snap_grid_guide_intersections",	// "iconId"
-												 secondarySize,
-												 SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE);
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapToGridGuideIntersections",
+		    _("Grid/guide intersections"), _("Snap to intersections of a grid with a guide"),
+		    INKSCAPE_ICON_SNAP_GRID_GUIDE_INTERSECTIONS, secondarySize,
+		    SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );
@@ -2278,15 +2225,15 @@ void update_snap_toolbox(SPDesktop *desktop, SPEventContext */*eventcontext*/, G
 	Glib::RefPtr<Gtk::Action> act3 = mainActions->get_action("ToggleSnapToBBoxPath");
 	Glib::RefPtr<Gtk::Action> act4 = mainActions->get_action("ToggleSnapToBBoxNode");
 	Glib::RefPtr<Gtk::Action> act4b = mainActions->get_action("ToggleSnapToFromBBoxEdgeMidpoints");
-	Glib::RefPtr<Gtk::Action> act4c = mainActions->get_action("ToggleSnapToFromBBoxMidpoints");
+	Glib::RefPtr<Gtk::Action> act4c = mainActions->get_action("ToggleSnapToFromBBoxCenters");
 	Glib::RefPtr<Gtk::Action> act5 = mainActions->get_action("ToggleSnapFromNode");
 	Glib::RefPtr<Gtk::Action> act6 = mainActions->get_action("ToggleSnapToItemPath");
 	Glib::RefPtr<Gtk::Action> act6b = mainActions->get_action("ToggleSnapToPathIntersections");
 	Glib::RefPtr<Gtk::Action> act7 = mainActions->get_action("ToggleSnapToItemNode");
 	Glib::RefPtr<Gtk::Action> act8 = mainActions->get_action("ToggleSnapToSmoothNodes");
 	Glib::RefPtr<Gtk::Action> act9 = mainActions->get_action("ToggleSnapToFromLineMidpoints");
-	Glib::RefPtr<Gtk::Action> act10 = mainActions->get_action("ToggleSnapToFromObjectMidpoints");
-	Glib::RefPtr<Gtk::Action> act11 = mainActions->get_action("ToggleSnapToFromCenter");
+	Glib::RefPtr<Gtk::Action> act10 = mainActions->get_action("ToggleSnapToFromObjectCenters");
+	Glib::RefPtr<Gtk::Action> act11 = mainActions->get_action("ToggleSnapToFromRotationCenter");
 	Glib::RefPtr<Gtk::Action> act12 = mainActions->get_action("ToggleSnapToPageBorder");
 	//Glib::RefPtr<Gtk::Action> act13 = mainActions->get_action("ToggleSnapToGridGuideIntersections");
 	Glib::RefPtr<Gtk::Action> act14 = mainActions->get_action("ToggleSnapToGrids");
@@ -2769,14 +2716,14 @@ static void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
             gtk_list_store_set( model, &iter,
                                 0, _("Polygon"),
                                 1, _("Regular polygon (with one handle) instead of a star"),
-                                2, "star_flat",
+                                2, INKSCAPE_ICON_DRAW_POLYGON,
                                 -1 );
 
             gtk_list_store_append( model, &iter );
             gtk_list_store_set( model, &iter,
                                 0, _("Star"),
                                 1, _("Star instead of a regular polygon (with one handle)"),
-                                2, "star_angled",
+                                2, INKSCAPE_ICON_DRAW_STAR,
                                 -1 );
 
             EgeSelectOneAction* act = ege_select_one_action_new( "FlatAction", (""), (""), NULL, GTK_TREE_MODEL(model) );
@@ -3206,7 +3153,7 @@ static void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
         InkAction* inky = ink_action_new( "RectResetAction",
                                           _("Not rounded"),
                                           _("Make corners sharp"),
-                                          "squared_corner",
+                                          INKSCAPE_ICON_RECTANGLE_MAKE_CORNERS_SHARP,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_rtb_defaults), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -3489,7 +3436,7 @@ static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, 
                                                       // Translators: VP is short for 'vanishing point'
                                                       _("State of VP in X direction"),
                                                       _("Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"),
-                                                      "toggle_vp_x",
+                                                      INKSCAPE_ICON_PERSPECTIVE_PARALLEL,
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_object_set_data( holder, "box3d_vp_x_state_action", act );
@@ -3528,7 +3475,7 @@ static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, 
                                                       // Translators: VP is short for 'vanishing point'
                                                       _("State of VP in Y direction"),
                                                       _("Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"),
-                                                      "toggle_vp_y",
+                                                      INKSCAPE_ICON_PERSPECTIVE_PARALLEL,
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_object_set_data( holder, "box3d_vp_y_state_action", act );
@@ -3567,7 +3514,7 @@ static void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, 
                                                       // Translators: VP is short for 'vanishing point'
                                                       _("State of VP in Z direction"),
                                                       _("Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"),
-                                                      "toggle_vp_z",
+                                                      INKSCAPE_ICON_PERSPECTIVE_PARALLEL,
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_object_set_data( holder, "box3d_vp_z_state_action", act );
@@ -3871,14 +3818,14 @@ static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* ho
             gtk_list_store_set( model, &iter,
                                 0, _("Bezier"),
                                 1, _("Create regular Bezier path"),
-                                2, "bezier_mode",
+                                2, INKSCAPE_ICON_PATH_MODE_BEZIER,
                                 -1 );
 
             gtk_list_store_append( model, &iter );
             gtk_list_store_set( model, &iter,
                                 0, _("Spiro"),
                                 1, _("Create Spiro path"),
-                                2, "spiro_splines_mode",
+                                2, INKSCAPE_ICON_PATH_MODE_SPIRO,
                                 -1 );
 
             if (!tool_is_pencil) {
@@ -3886,14 +3833,14 @@ static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* ho
                 gtk_list_store_set( model, &iter,
                                     0, _("Zigzag"),
                                     1, _("Create a sequence of straight line segments"),
-                                    2, "polylines_mode",
+                                    2, INKSCAPE_ICON_PATH_MODE_POLYLINE,
                                     -1 );
 
                 gtk_list_store_append( model, &iter );
                 gtk_list_store_set( model, &iter,
                                     0, _("Paraxial"),
                                     1, _("Create a sequence of paraxial line segments"),
-                                    2, "paraxial_lines_mode",
+                                    2, INKSCAPE_ICON_PATH_MODE_POLYLINE_PARAXIAL,
                                     -1 );
             }
 
@@ -4202,91 +4149,91 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         gtk_list_store_set( model, &iter,
                             0, _("Move mode"),
                             1, _("Move objects in any direction"),
-                            2, "tweak_move_mode",
+                            2, INKSCAPE_ICON_OBJECT_TWEAK_PUSH,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Move in/out mode"),
                             1, _("Move objects towards cursor; with Shift from cursor"),
-                            2, "tweak_move_mode_inout",
+                            2, INKSCAPE_ICON_OBJECT_TWEAK_ATTRACT,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Move jitter mode"),
                             1, _("Move objects in random directions"),
-                            2, "tweak_move_mode_jitter",
+                            2, INKSCAPE_ICON_OBJECT_TWEAK_RANDOMIZE,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Scale mode"),
-                            1, _("Scale objects, with Shift scale up"),
-                            2, "tweak_scale_mode",
+                            1, _("Shrink objects, with Shift enlarge"),
+                            2, INKSCAPE_ICON_OBJECT_TWEAK_SHRINK,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Rotate mode"),
                             1, _("Rotate objects, with Shift counterclockwise"),
-                            2, "tweak_rotate_mode",
+                            2, INKSCAPE_ICON_OBJECT_TWEAK_ROTATE,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Duplicate/delete mode"),
                             1, _("Duplicate objects, with Shift delete"),
-                            2, "tweak_moreless_mode",
+                            2, INKSCAPE_ICON_OBJECT_TWEAK_DUPLICATE,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Push mode"),
                             1, _("Push parts of paths in any direction"),
-                            2, "tweak_push_mode",
+                            2, INKSCAPE_ICON_PATH_TWEAK_PUSH,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Shrink/grow mode"),
                             1, _("Shrink (inset) parts of paths; with Shift grow (outset)"),
-                            2, "tweak_shrink_mode",
+                            2, INKSCAPE_ICON_PATH_TWEAK_SHRINK,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Attract/repel mode"),
                             1, _("Attract parts of paths towards cursor; with Shift from cursor"),
-                            2, "tweak_attract_mode",
+                            2, INKSCAPE_ICON_PATH_TWEAK_ATTRACT,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Roughen mode"),
                             1, _("Roughen parts of paths"),
-                            2, "tweak_roughen_mode",
+                            2, INKSCAPE_ICON_PATH_TWEAK_ROUGHEN,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Color paint mode"),
                             1, _("Paint the tool's color upon selected objects"),
-                            2, "tweak_colorpaint_mode",
+                            2, INKSCAPE_ICON_OBJECT_TWEAK_PAINT,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Color jitter mode"),
                             1, _("Jitter the colors of selected objects"),
-                            2, "tweak_colorjitter_mode",
+                            2, INKSCAPE_ICON_OBJECT_TWEAK_JITTER_COLOR,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Blur mode"),
                             1, _("Blur selected objects more; with Shift, blur less"),
-                            2, "tweak_blur_mode",
+                            2, INKSCAPE_ICON_OBJECT_TWEAK_BLUR,
                             -1 );
 
 
@@ -4893,7 +4840,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             InkToggleAction* act = ink_toggle_action_new( "TraceAction",
                                                           _("Trace Background"),
                                                           _("Trace the lightness of the background by the width of the pen (white - minimum width, black - maximum width)"),
-                                                          "trace_background",
+                                                          INKSCAPE_ICON_DRAW_TRACE_BACKGROUND,
                                                           Inkscape::ICON_SIZE_DECORATION );
             gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
             g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_trace_background_changed), holder);
@@ -4906,7 +4853,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             InkToggleAction* act = ink_toggle_action_new( "PressureAction",
                                                           _("Pressure"),
                                                           _("Use the pressure of the input device to alter the width of the pen"),
-                                                          "use_pressure",
+                                                          INKSCAPE_ICON_DRAW_USE_PRESSURE,
                                                           Inkscape::ICON_SIZE_DECORATION );
             gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
             g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_pressure_state_changed), holder);
@@ -4919,7 +4866,7 @@ static void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* main
             InkToggleAction* act = ink_toggle_action_new( "TiltAction",
                                                           _("Tilt"),
                                                           _("Use the tilt of the input device to alter the angle of the pen's nib"),
-                                                          "use_tilt",
+                                                          INKSCAPE_ICON_DRAW_USE_TILT,
                                                           Inkscape::ICON_SIZE_DECORATION );
             gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
             g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_tilt_state_changed), holder );
@@ -5241,14 +5188,14 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
         gtk_list_store_set( model, &iter,
                             0, _("Closed arc"),
                             1, _("Switch to segment (closed shape with two radii)"),
-                            2, "circle_closed_arc",
+                            2, INKSCAPE_ICON_DRAW_ELLIPSE_SEGMENT,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Open Arc"),
                             1, _("Switch to arc (unclosed shape)"),
-                            2, "circle_open_arc",
+                            2, INKSCAPE_ICON_DRAW_ELLIPSE_ARC,
                             -1 );
 
         EgeSelectOneAction* act = ege_select_one_action_new( "ArcOpenAction", (""), (""), NULL, GTK_TREE_MODEL(model) );
@@ -5272,7 +5219,7 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
         InkAction* inky = ink_action_new( "ArcResetAction",
                                           _("Make whole"),
                                           _("Make the shape a whole ellipse, not arc or segment"),
-                                          "reset_circle",
+                                          INKSCAPE_ICON_DRAW_ELLIPSE_WHOLE,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_arctb_defaults), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -5795,14 +5742,14 @@ static void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
         gtk_list_store_set( model, &iter,
                             0, _("Delete"),
                             1, _("Delete objects touched by the eraser"),
-                            2, "delete_object",
+                            2, INKSCAPE_ICON_DRAW_ERASER_DELETE_OBJECTS,
                             -1 );
 
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter,
                             0, _("Cut"),
                             1, _("Cut out from objects"),
-                            2, "difference",
+                            2, INKSCAPE_ICON_PATH_DIFFERENCE,
                             -1 );
 
         EgeSelectOneAction* act = ege_select_one_action_new( "EraserModeAction", (""), (""), NULL, GTK_TREE_MODEL(model) );
@@ -6802,7 +6749,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     //spacer
     gtk_toolbar_append_widget( tbl, gtk_vseparator_new(), "", "" );
 
-    ////////////Text orientation
+    // Text orientation
     group   = gtk_radio_button_new (NULL);
     row     = gtk_hbox_new (FALSE, 4);
     g_object_set_data (G_OBJECT (tbl), "orientation-group", group);
@@ -6811,7 +6758,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     rbutton = group;
     gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
     gtk_container_add           (GTK_CONTAINER (rbutton),
-                                 sp_icon_new (static_cast<Inkscape::IconSize>(secondarySize), INKSCAPE_STOCK_WRITING_MODE_LR));
+                                 sp_icon_new (static_cast<Inkscape::IconSize>(secondarySize), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL));
     gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
     gtk_tooltips_set_tip(tt, rbutton, _("Horizontal text"), NULL);
 
@@ -6823,7 +6770,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
     gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
     gtk_container_add           (GTK_CONTAINER (rbutton),
-                                 sp_icon_new (static_cast<Inkscape::IconSize>(secondarySize), INKSCAPE_STOCK_WRITING_MODE_TB));
+                                 sp_icon_new (static_cast<Inkscape::IconSize>(secondarySize), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_VERTICAL));
     gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
     gtk_tooltips_set_tip(tt, rbutton, _("Vertical text"), NULL);
 
@@ -7009,7 +6956,7 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
         InkAction* inky = ink_action_new( "ConnectorAvoidAction",
                                           _("Avoid"),
                                           _("Make connectors avoid selected objects"),
-                                          "connector_avoid",
+                                          INKSCAPE_ICON_CONNECTOR_AVOID,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_path_set_avoid), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -7019,7 +6966,7 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
         InkAction* inky = ink_action_new( "ConnectorIgnoreAction",
                                           _("Ignore"),
                                           _("Make connectors ignore selected objects"),
-                                          "connector_ignore",
+                                          INKSCAPE_ICON_CONNECTOR_IGNORE,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_path_set_ignore), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -7043,7 +6990,7 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
         InkAction* inky = ink_action_new( "ConnectorGraphAction",
                                           _("Graph"),
                                           _("Nicely arrange selected connector network"),
-                                          "graph_layout",
+                                          INKSCAPE_ICON_DISTRIBUTE_GRAPH,
                                           secondarySize );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_connector_graph_layout), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
@@ -7066,7 +7013,7 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
         InkToggleAction* act = ink_toggle_action_new( "ConnectorDirectedAction",
                                                       _("Downwards"),
                                                       _("Make connectors with end-markers (arrows) point downwards"),
-                                                      "directed_graph",
+                                                      INKSCAPE_ICON_DISTRIBUTE_GRAPH_DIRECTED,
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
 
@@ -7081,7 +7028,7 @@ static void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainA
         InkToggleAction* act = ink_toggle_action_new( "ConnectorOverlapAction",
                                                       _("Remove overlaps"),
                                                       _("Do not allow overlapping shapes"),
-                                                      "remove_overlaps",
+                                                      INKSCAPE_ICON_DISTRIBUTE_REMOVE_OVERLAPS,
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
 

@@ -49,6 +49,7 @@
 #include "ege-output-action.h"
 #include "ink-action.h"
 #include <2geom/rect.h>
+#include "ui/icon-names.h"
 
 using Inkscape::UnitTracker;
 
@@ -348,9 +349,9 @@ static void toggle_pattern( GtkToggleAction* act, gpointer data )
 static void toggle_lock( GtkToggleAction *act, gpointer /*data*/ ) {
     gboolean active = gtk_toggle_action_get_active( act );
     if ( active ) {
-        g_object_set( G_OBJECT(act), "iconId", "width_height_lock", NULL );
+        g_object_set( G_OBJECT(act), "iconId", INKSCAPE_ICON_OBJECT_LOCKED, NULL );
     } else {
-        g_object_set( G_OBJECT(act), "iconId", "lock_unlocked", NULL );
+        g_object_set( G_OBJECT(act), "iconId", INKSCAPE_ICON_OBJECT_UNLOCKED, NULL );
     }
 }
 
@@ -481,7 +482,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     InkToggleAction* itact = ink_toggle_action_new( "LockAction",
                                                     _("Lock width and height"),
                                                     _("When locked, change both width and height by the same proportion"),
-                                                    "lock_unlocked",
+                                                    INKSCAPE_ICON_OBJECT_UNLOCKED,
                                                     Inkscape::ICON_SIZE_DECORATION );
     g_object_set( itact, "short_label", "Lock", NULL );
     g_object_set_data( G_OBJECT(spw), "lock", itact );
@@ -540,7 +541,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     InkToggleAction* itact = ink_toggle_action_new( "transform_stroke",
                                                     _("Scale stroke width"),
                                                     _("When scaling objects, scale the stroke width by the same proportion"),
-                                                    "transform_stroke",
+                                                    INKSCAPE_ICON_TRANSFORM_AFFECT_STROKE,
                                                     Inkscape::ICON_SIZE_DECORATION );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs->getBool("/options/transform/stroke", true) );
     g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_stroke), desktop) ;
@@ -551,7 +552,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     InkToggleAction* itact = ink_toggle_action_new( "transform_corners",
                                                     _("Scale rounded corners"),
                                                     _("When scaling rectangles, scale the radii of rounded corners"),
-                                                    "transform_corners",
+                                                    INKSCAPE_ICON_TRANSFORM_AFFECT_ROUNDED_CORNERS,
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs->getBool("/options/transform/rectcorners", true) );
     g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_corners), desktop) ;
@@ -562,7 +563,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     InkToggleAction* itact = ink_toggle_action_new( "transform_gradient",
                                                     _("Move gradients"),
                                                     _("Move gradients (in fill or stroke) along with the objects"),
-                                                    "transform_gradient",
+                                                    INKSCAPE_ICON_TRANSFORM_AFFECT_GRADIENT,
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs->getBool("/options/transform/gradient", true) );
     g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_gradient), desktop) ;
@@ -573,7 +574,7 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     InkToggleAction* itact = ink_toggle_action_new( "transform_pattern",
                                                     _("Move patterns"),
                                                     _("Move patterns (in fill or stroke) along with the objects"),
-                                                    "transform_pattern",
+                                                    INKSCAPE_ICON_TRANSFORM_AFFECT_PATTERN,
                                                   Inkscape::ICON_SIZE_DECORATION );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), prefs->getBool("/options/transform/pattern", true) );
     g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(toggle_pattern), desktop) ;

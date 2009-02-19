@@ -24,7 +24,6 @@
 #include "sp-namedview.h"
 #include "selection.h"
 #include "inkscape.h"
-#include "inkscape-stock.h"
 #include "sp-rect.h"
 #include "document-private.h"
 #include "display/nr-arena.h"

@@ -31,7 +31,6 @@
 #include "../sp-pattern.h"
 #include <glibmm/i18n.h>
 #include "../widgets/icon.h"
-#include "../inkscape-stock.h"
 #include "widgets/widget-sizes.h"
 #include "xml/repr.h"
 
@@ -49,6 +48,7 @@
 #include "path-prefix.h"
 #include "io/sys.h"
 #include "helper/stock-items.h"
+#include "ui/icon-names.h"
 
 #include "paint-selector.h"
 
@@ -177,17 +177,17 @@ sp_paint_selector_init(SPPaintSelector *psel)
     gtk_box_pack_start(GTK_BOX(psel), psel->style, FALSE, FALSE, 0);
 
     /* Buttons */
-    psel->none = sp_paint_selector_style_button_add(psel, INKSCAPE_STOCK_FILL_NONE,
+    psel->none = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_NONE,
                                                     SP_PAINT_SELECTOR_MODE_NONE, tt, _("No paint"));
-    psel->solid = sp_paint_selector_style_button_add(psel, INKSCAPE_STOCK_FILL_SOLID,
+    psel->solid = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_SOLID,
                                                      SP_PAINT_SELECTOR_MODE_COLOR_RGB, tt, _("Flat color"));
-    psel->gradient = sp_paint_selector_style_button_add(psel, INKSCAPE_STOCK_FILL_GRADIENT,
+    psel->gradient = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_GRADIENT_LINEAR,
                                                         SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR, tt, _("Linear gradient"));
-    psel->radial = sp_paint_selector_style_button_add(psel, INKSCAPE_STOCK_FILL_RADIAL,
+    psel->radial = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_GRADIENT_RADIAL,
                                                       SP_PAINT_SELECTOR_MODE_GRADIENT_RADIAL, tt, _("Radial gradient"));
-    psel->pattern = sp_paint_selector_style_button_add(psel, INKSCAPE_STOCK_FILL_PATTERN,
+    psel->pattern = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_PATTERN,
                                                        SP_PAINT_SELECTOR_MODE_PATTERN, tt, _("Pattern"));
-    psel->unset = sp_paint_selector_style_button_add(psel, INKSCAPE_STOCK_FILL_UNSET,
+    psel->unset = sp_paint_selector_style_button_add(psel, INKSCAPE_ICON_PAINT_UNKNOWN,
                                                      SP_PAINT_SELECTOR_MODE_UNSET, tt, _("Unset paint (make it undefined so it can be inherited)"));
 
     /* Fillrule */
@@ -202,7 +202,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
         gtk_tooltips_set_tip(tt, psel->evenodd, _("Any path self-intersections or subpaths create holes in the fill (fill-rule: evenodd)"), NULL);
         gtk_object_set_data(GTK_OBJECT(psel->evenodd), "mode", GUINT_TO_POINTER(SP_PAINT_SELECTOR_FILLRULE_EVENODD));
-        w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, "fillrule_evenodd");
+        w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_FILL_RULE_EVEN_ODD);
         gtk_container_add(GTK_CONTAINER(psel->evenodd), w);
         gtk_box_pack_start(GTK_BOX(psel->fillrulebox), psel->evenodd, FALSE, FALSE, 0);
         gtk_signal_connect(GTK_OBJECT(psel->evenodd), "toggled", GTK_SIGNAL_FUNC(sp_paint_selector_fillrule_toggled), psel);
@@ -213,7 +213,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
         gtk_tooltips_set_tip(tt, psel->nonzero, _("Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"), NULL);
         gtk_object_set_data(GTK_OBJECT(psel->nonzero), "mode", GUINT_TO_POINTER(SP_PAINT_SELECTOR_FILLRULE_NONZERO));
-        w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, "fillrule_nonzero");
+        w = sp_icon_new(Inkscape::ICON_SIZE_DECORATION, INKSCAPE_ICON_FILL_RULE_NONZERO);
         gtk_container_add(GTK_CONTAINER(psel->nonzero), w);
         gtk_box_pack_start(GTK_BOX(psel->fillrulebox), psel->nonzero, FALSE, FALSE, 0);
         gtk_signal_connect(GTK_OBJECT(psel->nonzero), "toggled", GTK_SIGNAL_FUNC(sp_paint_selector_fillrule_toggled), psel);

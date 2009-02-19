@@ -50,8 +50,6 @@
 #include "file.h"
 #include "application/editor.h"
 #include "edit-widget.h"
-#include "ui/stock.h"
-#include "ui/stock-items.h"
 
 #include "display/sodipodi-ctrlrect.h"
 #include "helper/units.h"
@@ -85,7 +83,6 @@ EditWidget::EditWidget (SPDocument *doc)
     g_warning("Creating new EditWidget");
 
     _desktop = 0;
-    Stock::init();
     initActions();
     initAccelMap();
     initUIManager();
@@ -315,16 +312,8 @@ EditWidget::onUriChanged()
 void
 EditWidget::initMenuActions()
 {
-//    _act_grp->add(Gtk::Action::create("MenuFile",   _("PLACEHOLDER, do not translate")));
-//    _act_grp->add(Gtk::Action::create("MenuEdit",   _("PLACEHOLDER, do not translate")));
-//    _act_grp->add(Gtk::Action::create("MenuView",   _("PLACEHOLDER, do not translate")));
-//    _act_grp->add(Gtk::Action::create("MenuLayer",  _("PLACEHOLDER, do not translate")));
-//    _act_grp->add(Gtk::Action::create("MenuObject", _("PLACEHOLDER, do not translate")));
-//    _act_grp->add(Gtk::Action::create("MenuPath",   _("PLACEHOLDER, do not translate")));
-//    _act_grp->add(Gtk::Action::create("MenuText",   _("PLACEHOLDER, do not translate")));
-//    _act_grp->add(Gtk::Action::create("MenuHelp",   _("PLACEHOLDER, do not translate")));
-// temporarily replaced with non-gettext version to have a well-sized menu
-// for testing:
+// This has no chance of working right now.
+// Has to be converted to Gtk::Action::create_with_icon_name.
 
     _act_grp->add(Gtk::Action::create("MenuFile",   "File"));
     _act_grp->add(Gtk::Action::create("MenuEdit",   "Edit"));
@@ -345,9 +334,9 @@ EditWidget::initMenuActions()
                                       Gtk::Stock::OPEN, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")),
                   sigc::mem_fun(*this, &EditWidget::onActionFileOpen));
-
+/*
     _act_grp->add(Gtk::Action::create("OpenRecent",
-                                      Stock::OPEN_RECENT));
+                                      Stock::OPEN_RECENT));*/
 
     _act_grp->add(Gtk::Action::create("Revert",
                                       Gtk::Stock::REVERT_TO_SAVED, Glib::ustring(),
@@ -363,7 +352,7 @@ EditWidget::initMenuActions()
                                       Gtk::Stock::SAVE_AS, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")),
                   sigc::mem_fun(*this, &EditWidget::onActionFileOpen));
-
+/*
     _act_grp->add(Gtk::Action::create("Import",
                                       Stock::IMPORT, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")),
@@ -372,7 +361,7 @@ EditWidget::initMenuActions()
     _act_grp->add(Gtk::Action::create("Export",
                                       Stock::EXPORT, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")),
-                  sigc::mem_fun(*this, &EditWidget::onDialogExport));
+                  sigc::mem_fun(*this, &EditWidget::onDialogExport));*/
 
     _act_grp->add(Gtk::Action::create("Print",
                                       Gtk::Stock::PRINT, Glib::ustring(),
@@ -382,10 +371,10 @@ EditWidget::initMenuActions()
     _act_grp->add(Gtk::Action::create("PrintPreview",
                                       Gtk::Stock::PRINT_PREVIEW),
                   sigc::mem_fun(*this, &EditWidget::onActionFileOpen));
-
+/*
     _act_grp->add(Gtk::Action::create("VacuumDefs",
                                       Stock::VACUUM_DEFS),
-                  sigc::mem_fun(*this, &EditWidget::onActionFileOpen));
+                  sigc::mem_fun(*this, &EditWidget::onActionFileOpen));*/
 
     _act_grp->add(Gtk::Action::create("DocumentProperties",
                                       Gtk::Stock::PROPERTIES, Glib::ustring(),
@@ -413,10 +402,10 @@ EditWidget::initMenuActions()
     _act_grp->add(Gtk::Action::create("Redo",
                                       Gtk::Stock::REDO, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")));
-
+/*
     _act_grp->add(Gtk::Action::create("UndoHistory",
                                       Stock::UNDO_HISTORY, Glib::ustring(),
-                                      _("PLACEHOLDER, do not translate")));
+                                      _("PLACEHOLDER, do not translate")));*/
 
     _act_grp->add(Gtk::Action::create("Cut",
                                       Gtk::Stock::CUT, Glib::ustring(),
@@ -429,17 +418,17 @@ EditWidget::initMenuActions()
     _act_grp->add(Gtk::Action::create("Paste",
                                       Gtk::Stock::PASTE, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")));
-
+/*
     _act_grp->add(Gtk::Action::create("PasteInPlace",
                                       Stock::PASTE_IN_PLACE));
 
     _act_grp->add(Gtk::Action::create("PasteStyle",
-                                      Stock::PASTE_STYLE));
+                                      Stock::PASTE_STYLE));*/
 
     _act_grp->add(Gtk::Action::create("Find",
                                       Gtk::Stock::FIND),
                   sigc::mem_fun(*this, &EditWidget::onDialogFind));
-
+/*
     _act_grp->add(Gtk::Action::create("Duplicate",
                                       Stock::DUPLICATE, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")));
@@ -760,7 +749,7 @@ EditWidget::initMenuActions()
                                       Stock::SIMPLIFY));
 
     _act_grp->add(Gtk::Action::create("Reverse",
-                                      Stock::REVERSE));
+                                      Stock::REVERSE));*/
 
     _act_grp->add(Gtk::Action::create("Cleanup",
                                       Gtk::Stock::CLEAR,
@@ -771,7 +760,7 @@ EditWidget::initMenuActions()
                                       Gtk::Stock::SELECT_FONT, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")),
                   sigc::mem_fun(*this, &EditWidget::onDialogTextProperties));
-
+/*
     _act_grp->add(Gtk::Action::create("PutOnPath",
                                       Stock::PUT_ON_PATH));
 
@@ -779,13 +768,14 @@ EditWidget::initMenuActions()
                                       Stock::REMOVE_FROM_PATH));
 
     _act_grp->add(Gtk::Action::create("RemoveManualKerns",
-                                      Stock::REMOVE_MANUAL_KERNS));
+                                      Stock::REMOVE_MANUAL_KERNS));*/
 
 	// Whiteboard menu
 #ifdef WITH_INKBOARD
 #endif
 
     // About menu
+/*
     _act_grp->add(Gtk::Action::create("KeysAndMouse",
                                       Stock::KEYS_MOUSE));
 
@@ -794,15 +784,16 @@ EditWidget::initMenuActions()
 
     _act_grp->add(Gtk::Action::create("About",
                                       Stock::ABOUT),
-                  sigc::mem_fun(*this, &EditWidget::onDialogAbout));
+                  sigc::mem_fun(*this, &EditWidget::onDialogAbout));*/
 }
 
 void
 EditWidget::initToolbarActions()
 {
     // Tools bar
+    // This has zero chance to work, and has to be converted to create_with_icon_name
     Gtk::RadioAction::Group tools;
-
+/*
     _act_grp->add(Gtk::RadioAction::create(tools, "ToolSelect",
                                            Stock::TOOL_SELECT, Glib::ustring(),
                                            _("PLACEHOLDER, do not translate")),
@@ -868,7 +859,7 @@ EditWidget::initToolbarActions()
 
     _act_grp->add(Gtk::ToggleAction::create("TransformPattern",
                                             Stock::TRANSFORM_PATTERN, Glib::ustring(),
-                                            _("PLACEHOLDER, do not translate")));
+                                            _("PLACEHOLDER, do not translate")));*/
 
     // Node Controls bar
     _act_grp->add(Gtk::Action::create("NodeInsert",
@@ -878,7 +869,7 @@ EditWidget::initToolbarActions()
     _act_grp->add(Gtk::Action::create("NodeDelete",
                                       Gtk::Stock::REMOVE, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")));
-
+/*
     _act_grp->add(Gtk::Action::create("NodeJoin",
                                       Stock::NODE_JOIN, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")));
@@ -913,7 +904,7 @@ EditWidget::initToolbarActions()
 
     _act_grp->add(Gtk::Action::create("NodeCurve",
                                       Stock::NODE_CURVE, Glib::ustring(),
-                                      _("PLACEHOLDER, do not translate")));
+                                      _("PLACEHOLDER, do not translate")));*/
 }
 
 void

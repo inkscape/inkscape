@@ -40,6 +40,7 @@
 #include "xml/repr.h"
 #include "svg/css-ostringstream.h"
 #include "desktop-style.h"
+#include "ui/icon-names.h"
 
 //#define DUMP_LAYERS 1
 
@@ -601,7 +602,8 @@ LayersPanel::LayersPanel() :
     _tree.set_model( _store );
     _tree.set_headers_visible(false);
 
-    Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler("visible", "hidden") );
+    Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler(
+        INKSCAPE_ICON_OBJECT_VISIBLE, INKSCAPE_ICON_OBJECT_HIDDEN) );
     int visibleColNum = _tree.append_column("vis", *eyeRenderer) - 1;
     eyeRenderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
     eyeRenderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_VISIBLE) );
@@ -611,7 +613,8 @@ LayersPanel::LayersPanel() :
         col->add_attribute( eyeRenderer->property_active(), _model->_colVisible );
     }
 
-    Inkscape::UI::Widget::ImageToggler * renderer = manage( new Inkscape::UI::Widget::ImageToggler("width_height_lock", "lock_unlocked") );
+    Inkscape::UI::Widget::ImageToggler * renderer = manage( new Inkscape::UI::Widget::ImageToggler(
+        INKSCAPE_ICON_OBJECT_LOCKED, INKSCAPE_ICON_OBJECT_UNLOCKED) );
     int lockedColNum = _tree.append_column("lock", *renderer) - 1;
     renderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
     renderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_LOCKED) );

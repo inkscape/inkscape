@@ -15,30 +15,31 @@
 #endif
 
 #include <glibmm/i18n.h>
-#include "livepatheffect-editor.h"
-#include "ui/widget/imagetoggler.h"
-#include "verbs.h"
-#include "selection.h"
-#include "sp-shape.h"
-#include "sp-item-group.h"
-#include "sp-path.h"
-#include "sp-rect.h"
-#include "sp-lpe-item.h"
-#include "path-chemistry.h"
+#include <gtkmm/stock.h>
+#include <gtkmm/toolbar.h>
+#include <vector>
+
+#include "desktop.h"
+#include "desktop-handles.h"
+#include "document.h"
+#include "gtkmm/widget.h"
+#include "inkscape.h"
 #include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
-#include "gtkmm/widget.h"
-#include <vector>
-#include "inkscape.h"
-#include "desktop-handles.h"
-#include "desktop.h"
-#include "document.h"
+#include "path-chemistry.h"
+#include "selection.h"
+#include "sp-item-group.h"
+#include "sp-lpe-item.h"
+#include "sp-path.h"
+#include "sp-rect.h"
+#include "sp-shape.h"
+#include "ui/icon-names.h"
+#include "ui/widget/imagetoggler.h"
+#include "verbs.h"
 #include "xml/node.h"
-#include <gtkmm/stock.h>
-#include <gtkmm/toolbar.h>
 
-#include "live_effects/lpeobject-reference.h"
+#include "livepatheffect-editor.h"
 
 namespace Inkscape {
 class Application;
@@ -133,7 +134,8 @@ LivePathEffectEditor::LivePathEffectEditor()
     effectlist_selection->signal_changed().connect( sigc::mem_fun(*this, &LivePathEffectEditor::on_effect_selection_changed) );
 
     //Add the visibility icon column:
-    Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler("visible", "hidden") );
+    Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler(
+        INKSCAPE_ICON_OBJECT_VISIBLE, INKSCAPE_ICON_OBJECT_HIDDEN) );
     int visibleColNum = effectlist_view.append_column("is_visible", *eyeRenderer) - 1;
     eyeRenderer->signal_toggled().connect( sigc::mem_fun(*this, &LivePathEffectEditor::on_visibility_toggled) );
     eyeRenderer->property_activatable() = true;

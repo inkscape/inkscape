@@ -11,8 +11,4 @@ ui_libui_a_SOURCES =		\
 	ui/previewable.h	\
 	ui/previewfillable.h	\
 	ui/previewholder.cpp	\
-	ui/previewholder.h	\
-	ui/stock-items.cpp	\
-	ui/stock-items.h	\
-	ui/stock.cpp		\
-	ui/stock.h
+	ui/previewholder.h

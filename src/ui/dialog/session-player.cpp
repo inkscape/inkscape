@@ -24,8 +24,6 @@
 #include "desktop-handles.h"
 #include "document.h"
 
-#include "ui/stock.h"
-
 #include "jabber_whiteboard/node-tracker.h"
 #include "jabber_whiteboard/session-manager.h"
 #include "jabber_whiteboard/session-file-player.h"
@@ -119,14 +117,6 @@ SessionPlaybackDialogImpl::_construct()
 
 	// Playback controls
 	this->_playbackcontrols.set_show_arrow(false);
-
-	/* these are waiting for the Gtkmm conversion
-	this->_controls[0].set_stock_id(Stock::SESSION_PLAYBACK_REW);
-	this->_controls[1].set_stock_id(Stock::SESSION_PLAYBACK_STEPBACK);
-	this->_controls[2].set_stock_id(Stock::SESSION_PLAYBACK_PAUSE);
-	this->_controls[3].set_stock_id(Stock::SESSION_PLAYBACK_STEPFORWARD);
-	this->_controls[4].set_stock_id(Stock::SESSION_PLAYBACK_PLAY);
-	*/
 
 	this->_controls[0].set_label("Rewind");
 	this->_controls[1].set_label("Go back one");

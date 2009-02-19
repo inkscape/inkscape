@@ -18,38 +18,29 @@
 # include <config.h>
 #endif
 
-#include "verbs.h"
-
-#include "dialogs/unclump.h"
-#include "removeoverlap/removeoverlap.h"
-#include "graphlayout/graphlayout.h"
-
 #include <gtkmm/spinbutton.h>
 
-
-
-
-#include "util/glib-list-iterators.h"
-
-#include "widgets/icon.h"
-
-#include "inkscape.h"
-#include "document.h"
-#include "selection.h"
 #include "desktop-handles.h"
-#include "macros.h"
-#include "sp-item-transform.h"
-#include "preferences.h"
+#include "dialogs/unclump.h"
+#include "document.h"
 #include "enums.h"
-
-#include "sp-text.h"
-#include "sp-flowtext.h"
-#include "text-editing.h"
-
+#include "graphlayout/graphlayout.h"
+#include "inkscape.h"
+#include "macros.h"
 #include "node-context.h"  //For access to ShapeEditor
+#include "preferences.h"
+#include "removeoverlap/removeoverlap.h"
+#include "selection.h"
 #include "shape-editor.h" //For node align/distribute methods
-
+#include "sp-flowtext.h"
+#include "sp-item-transform.h"
+#include "sp-text.h"
+#include "text-editing.h"
 #include "tools-switch.h"
+#include "ui/icon-names.h"
+#include "util/glib-list-iterators.h"
+#include "verbs.h"
+#include "widgets/icon.h"
 
 #include "align-and-distribute.h"
 
@@ -807,110 +798,110 @@ AlignAndDistribute::AlignAndDistribute()
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     //Instanciate the align buttons
-    addAlignButton("al_left_out",
-                   _("Align right sides of objects to left side of anchor"),
+    addAlignButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_RIGHT_TO_ANCHOR,
+                   _("Align right edges of objects to the left edge of the anchor"),
                    0, 0);
-    addAlignButton("al_left_in",
-                   _("Align left sides"),
+    addAlignButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_LEFT,
+                   _("Align left edges"),
                    0, 1);
-    addAlignButton("al_center_hor",
-                   _("Center on vertical axis"),
+    addAlignButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_CENTER,
+                   _("Center objects horizontally"),
                    0, 2);
-    addAlignButton("al_right_in",
+    addAlignButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_RIGHT,
                    _("Align right sides"),
                    0, 3);
-    addAlignButton("al_right_out",
-                   _("Align left sides of objects to right side of anchor"),
+    addAlignButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_LEFT_TO_ANCHOR,
+                   _("Align left edges of objects to the right edge of the anchor"),
                    0, 4);
-    addAlignButton("al_top_out",
-                   _("Align bottoms of objects to top of anchor"),
+    addAlignButton(INKSCAPE_ICON_ALIGN_VERTICAL_BOTTOM_TO_ANCHOR,
+                   _("Align bottom edges of objects to the top edge of the anchor"),
                    1, 0);
-    addAlignButton("al_top_in",
-                   _("Align tops"),
+    addAlignButton(INKSCAPE_ICON_ALIGN_VERTICAL_TOP,
+                   _("Align top edges"),
                    1, 1);
-    addAlignButton("al_center_ver",
+    addAlignButton(INKSCAPE_ICON_ALIGN_VERTICAL_CENTER,
                    _("Center on horizontal axis"),
                    1, 2);
-    addAlignButton("al_bottom_in",
-                   _("Align bottoms"),
+    addAlignButton(INKSCAPE_ICON_ALIGN_VERTICAL_BOTTOM,
+                   _("Align bottom edges"),
                    1, 3);
-    addAlignButton("al_bottom_out",
-                   _("Align tops of objects to bottom of anchor"),
+    addAlignButton(INKSCAPE_ICON_ALIGN_VERTICAL_TOP_TO_ANCHOR,
+                   _("Align top edges of objects to the bottom edge of the anchor"),
                    1, 4);
 
     //Baseline aligns
-    addBaselineButton("al_baselines_vert",
-                   _("Align baseline anchors of texts vertically"),
-                      0, 5, this->align_table(), Geom::X, false);
-    addBaselineButton("al_baselines_hor",
+    addBaselineButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_BASELINE,
                    _("Align baseline anchors of texts horizontally"),
+                      0, 5, this->align_table(), Geom::X, false);
+    addBaselineButton(INKSCAPE_ICON_ALIGN_VERTICAL_BASELINE,
+                   _("Align baselines of texts"),
                      1, 5, this->align_table(), Geom::Y, false);
 
     //The distribute buttons
-    addDistributeButton("distribute_hdist",
+    addDistributeButton(INKSCAPE_ICON_DISTRIBUTE_HORIZONTAL_GAPS,
                         _("Make horizontal gaps between objects equal"),
                         0, 4, true, Geom::X, .5, .5);
 
-    addDistributeButton("distribute_left",
-                        _("Distribute left sides equidistantly"),
+    addDistributeButton(INKSCAPE_ICON_DISTRIBUTE_HORIZONTAL_LEFT,
+                        _("Distribute left edges equidistantly"),
                         0, 1, false, Geom::X, 1., 0.);
-    addDistributeButton("distribute_hcentre",
+    addDistributeButton(INKSCAPE_ICON_DISTRIBUTE_HORIZONTAL_CENTER,
                         _("Distribute centers equidistantly horizontally"),
                         0, 2, false, Geom::X, .5, .5);
-    addDistributeButton("distribute_right",
-                        _("Distribute right sides equidistantly"),
+    addDistributeButton(INKSCAPE_ICON_DISTRIBUTE_HORIZONTAL_RIGHT,
+                        _("Distribute right edges equidistantly"),
                         0, 3, false, Geom::X, 0., 1.);
 
-    addDistributeButton("distribute_vdist",
+    addDistributeButton(INKSCAPE_ICON_DISTRIBUTE_VERTICAL_GAPS,
                         _("Make vertical gaps between objects equal"),
                         1, 4, true, Geom::Y, .5, .5);
 
-    addDistributeButton("distribute_top",
-                        _("Distribute tops equidistantly"),
+    addDistributeButton(INKSCAPE_ICON_DISTRIBUTE_VERTICAL_TOP,
+                        _("Distribute top edges equidistantly"),
                         1, 1, false, Geom::Y, 0, 1);
-    addDistributeButton("distribute_vcentre",
+    addDistributeButton(INKSCAPE_ICON_DISTRIBUTE_VERTICAL_CENTER,
                         _("Distribute centers equidistantly vertically"),
                         1, 2, false, Geom::Y, .5, .5);
-    addDistributeButton("distribute_bottom",
-                        _("Distribute bottoms equidistantly"),
+    addDistributeButton(INKSCAPE_ICON_DISTRIBUTE_VERTICAL_BOTTOM,
+                        _("Distribute bottom edges equidistantly"),
                         1, 3, false, Geom::Y, 1., 0.);
 
     //Baseline distribs
-    addBaselineButton("distribute_baselines_hor",
+    addBaselineButton(INKSCAPE_ICON_DISTRIBUTE_HORIZONTAL_BASELINE,
                    _("Distribute baseline anchors of texts horizontally"),
                       0, 5, this->distribute_table(), Geom::X, true);
-    addBaselineButton("distribute_baselines_vert",
-                   _("Distribute baseline anchors of texts vertically"),
+    addBaselineButton(INKSCAPE_ICON_DISTRIBUTE_VERTICAL_BASELINE,
+                   _("Distribute baselines of texts vertically"),
                      1, 5, this->distribute_table(), Geom::Y, true);
 
     //Randomize & Unclump
-    addRandomizeButton("distribute_randomize",
+    addRandomizeButton(INKSCAPE_ICON_DISTRIBUTE_RANDOMIZE,
                         _("Randomize centers in both dimensions"),
                         2, 2);
-    addUnclumpButton("unclump",
+    addUnclumpButton(INKSCAPE_ICON_DISTRIBUTE_UNCLUMP,
                         _("Unclump objects: try to equalize edge-to-edge distances"),
                         2, 4);
 
     //Remove overlaps
-    addRemoveOverlapsButton("remove_overlaps",
+    addRemoveOverlapsButton(INKSCAPE_ICON_DISTRIBUTE_REMOVE_OVERLAPS,
                             _("Move objects as little as possible so that their bounding boxes do not overlap"),
                             0, 0);
     //Graph Layout
-    addGraphLayoutButton("graph_layout",
+    addGraphLayoutButton(INKSCAPE_ICON_DISTRIBUTE_GRAPH,
                             _("Nicely arrange selected connector network"),
                             0, 0);
 
     //Node Mode buttons
-    addNodeButton("node_halign",
+    addNodeButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_NODES,
                   _("Align selected nodes horizontally"),
                   0, Geom::X, false);
-    addNodeButton("node_valign",
+    addNodeButton(INKSCAPE_ICON_ALIGN_VERTICAL_NODES,
                   _("Align selected nodes vertically"),
                   1, Geom::Y, false);
-    addNodeButton("node_hdistribute",
+    addNodeButton(INKSCAPE_ICON_DISTRIBUTE_HORIZONTAL_NODE,
                   _("Distribute selected nodes horizontally"),
                   2, Geom::X, true);
-    addNodeButton("node_vdistribute",
+    addNodeButton(INKSCAPE_ICON_DISTRIBUTE_VERTICAL_NODE,
                   _("Distribute selected nodes vertically"),
                   3, Geom::Y, true);
 

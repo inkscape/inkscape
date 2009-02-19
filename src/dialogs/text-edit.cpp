@@ -38,7 +38,7 @@ extern "C" {
 #include "../sp-text.h"
 #include "../sp-flowtext.h"
 #include "../text-editing.h"
-#include "../inkscape-stock.h"
+#include "../ui/icon-names.h"
 #include <libnrtype/font-style-to-pos.h>
 
 #include "dialog-events.h"
@@ -295,7 +295,7 @@ sp_text_edit_dialog (void)
                     // horizontal
                     {
                         GtkWidget *px = sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
-                                                      INKSCAPE_STOCK_WRITING_MODE_LR );
+                                                      INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL );
                         GtkWidget *b = group = gtk_radio_button_new (NULL);
                         gtk_tooltips_set_tip (tt, b, _("Horizontal text"), NULL);
                         gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
@@ -303,13 +303,13 @@ sp_text_edit_dialog (void)
                         gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (b), FALSE);
                         gtk_container_add (GTK_CONTAINER (b), px);
                         gtk_box_pack_start (GTK_BOX (row), b, FALSE, FALSE, 0);
-                        g_object_set_data (G_OBJECT (dlg), INKSCAPE_STOCK_WRITING_MODE_LR, b);
+                        g_object_set_data (G_OBJECT (dlg), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL, b);
                     }
 
                     // vertical
                     {
                         GtkWidget *px = sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
-                                                      INKSCAPE_STOCK_WRITING_MODE_TB );
+                                                      INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_VERTICAL );
                         GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
                         gtk_tooltips_set_tip (tt, b, _("Vertical text"), NULL);
                         gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
@@ -317,7 +317,7 @@ sp_text_edit_dialog (void)
                         gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (b), FALSE);
                         gtk_container_add (GTK_CONTAINER (b), px);
                         gtk_box_pack_start (GTK_BOX (row), b, FALSE, FALSE, 0);
-                        g_object_set_data (G_OBJECT (dlg), INKSCAPE_STOCK_WRITING_MODE_TB, b);
+                        g_object_set_data (G_OBJECT (dlg), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_VERTICAL, b);
                     }
 
                     gtk_box_pack_start (GTK_BOX (l_vb), row, FALSE, FALSE, 0);
@@ -582,7 +582,7 @@ sp_get_text_dialog_style ()
             }
         }
 
-        b = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), INKSCAPE_STOCK_WRITING_MODE_LR );
+        b = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL );
 
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (b))) {
             sp_repr_css_set_property (css, "writing-mode", "lr");
@@ -781,9 +781,9 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (b), TRUE);
 
         if (query->writing_mode.computed == SP_CSS_WRITING_MODE_LR_TB) {
-            b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), INKSCAPE_STOCK_WRITING_MODE_LR );
+            b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_HORIZONTAL );
         } else {
-            b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), INKSCAPE_STOCK_WRITING_MODE_TB );
+            b = (GtkWidget*)g_object_get_data ( G_OBJECT (dlg), INKSCAPE_ICON_FORMAT_TEXT_DIRECTION_VERTICAL );
         }
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (b), TRUE);
 
