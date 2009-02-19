@@ -278,7 +278,7 @@ spdc_paste_curve_as_freehand_shape(const SPCurve *c, SPDrawContext *dc, SPItem *
 
     // TODO: Don't paste path if nothing is on the clipboard
 
-    Effect::createAndApply(Inkscape::LivePathEffect::FREEHAND_SHAPE, dc->desktop->doc(), item);
+    Effect::createAndApply(PATTERN_ALONG_PATH, dc->desktop->doc(), item);
     Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
     gchar *svgd = sp_svg_write_path(c->get_pathvector());
     static_cast<LPEPatternAlongPath*>(lpe)->pattern.paste_param_path(svgd);
@@ -391,7 +391,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
 
             if (SP_IS_LPETOOL_CONTEXT(dc)) {
                 // since a geometric LPE was applied, we switch back to "inactive" mode
-                lpetool_context_switch_mode(SP_LPETOOL_CONTEXT(dc), Inkscape::LivePathEffect::INVALID_LPE);
+                lpetool_context_switch_mode(SP_LPETOOL_CONTEXT(dc), INVALID_LPE);
             }
         }
         if (SP_IS_PEN_CONTEXT(dc)) {

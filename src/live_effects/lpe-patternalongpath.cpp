@@ -214,10 +214,6 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
     }
 }
 
-LPEFreehandShape::LPEFreehandShape(LivePathEffectObject *lpeobject) : LPEPatternAlongPath(lpeobject)
-{
-}
-
 } // namespace LivePathEffect
 } /* namespace Inkscape */
 

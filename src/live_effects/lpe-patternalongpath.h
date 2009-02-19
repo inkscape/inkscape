@@ -50,12 +50,6 @@ private:
     LPEPatternAlongPath& operator=(const LPEPatternAlongPath&);
 };
 
-class LPEFreehandShape : public LPEPatternAlongPath {
-public:
-  LPEFreehandShape(LivePathEffectObject *lpeobject);
-  virtual ~LPEFreehandShape() {}
-};
-
 }; //namespace LivePathEffect
 }; //namespace Inkscape
 
