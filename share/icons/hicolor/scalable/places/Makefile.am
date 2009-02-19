@@ -24,6 +24,8 @@ icons_DATA = \
 	dialog-xml-editor.svg \
 	grid-axonometric.svg \
 	grid-rectangular.svg \
-	guides.svg 
+	guides.svg \
+	object-columns.svg \
+	object-rows.svg 
 
 EXTRA_DIST = $(icons_DATA)

@@ -25,20 +25,25 @@ icons_DATA = \
 	bitmap-trace.svg \
 	color-fill.svg \
 	color-gradient.svg \
+	color-management.svg \
 	color-picker.svg \
 	color-remove.svg \
 	distribute-graph-directed.svg \
 	distribute-graph.svg \
+	distribute-horizontal-baseline.svg \
 	distribute-horizontal-center.svg \
 	distribute-horizontal-gaps.svg \
 	distribute-horizontal-left.svg \
+	distribute-horizontal-node.svg \
 	distribute-horizontal-right.svg \
 	distribute-randomize.svg \
 	distribute-remove-overlaps.svg \
 	distribute-unclump.svg \
+	distribute-vertical-baseline.svg \
 	distribute-vertical-bottom.svg \
 	distribute-vertical-center.svg \
 	distribute-vertical-gaps.svg \
+	distribute-vertical-node.svg \
 	distribute-vertical-top.svg \
 	document-cleanup.svg \
 	document-export-ocal.svg \
@@ -98,8 +103,6 @@ icons_DATA = \
 	node-break.svg \
 	node-delete-segment.svg \
 	node-delete.svg \
-	node-distribute-horizontal.svg \
-	node-distribute-vertical.svg \
 	node-join-segment.svg \
 	node-join.svg \
 	object-flip-horizontal.svg \
@@ -155,8 +158,6 @@ icons_DATA = \
 	show-path-outline.svg \
 	stroke-to-path.svg \
 	text-convert-to-regular.svg \
-	text-distribute-baseline-horizontal.svg \
-	text-distribute-baseline-vertical.svg \
 	text-flow-into-frame.svg \
 	text-put-on-path.svg \
 	text-remove-from-path.svg \
@@ -172,7 +173,6 @@ icons_DATA = \
 	transform-scale-vertical.svg \
 	transform-skew-horizontal.svg \
 	transform-skew-vertical.svg \
-	view-manage-colors.svg \
 	window-next.svg \
 	window-previous.svg \
 	xml-attribute-delete.svg \
