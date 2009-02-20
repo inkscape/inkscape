@@ -266,7 +266,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             /* Snap center */
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop);
-            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, button_dt);
+            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, button_dt, Inkscape::SNAPSOURCE_HANDLE);
             rc->center = from_2geom(button_dt);
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),

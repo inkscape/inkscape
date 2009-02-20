@@ -14,8 +14,8 @@
 #include "preferences.h"
 
 // overloaded constructor
-Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained)
-    : _point(p), _target(target), _distance(d), _tolerance(std::max(t,1.0)), _always_snap(a)
+Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const &source, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained)
+    : _point(p), _source(source), _target(target), _distance(d), _tolerance(std::max(t,1.0)), _always_snap(a)
 {
     // tolerance should never be smaller than 1 px, as it is used for normalization in isOtherSnapBetter. We don't want a division by zero.
     _at_intersection = false;
@@ -27,8 +27,8 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const 
     _pointer_distance = NR_HUGE;
 }
 
-Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2)
-    : _point(p), _target(target), _at_intersection(at_intersection), _fully_constrained(fully_constrained), _distance(d), _tolerance(std::max(t,1.0)), _always_snap(a),
+Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const &source, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2)
+    : _point(p), _source(source), _target(target), _at_intersection(at_intersection), _fully_constrained(fully_constrained), _distance(d), _tolerance(std::max(t,1.0)), _always_snap(a),
     _second_distance(d2), _second_tolerance(std::max(t2,1.0)), _second_always_snap(a2)
 {
     // tolerance should never be smaller than 1 px, as it is used for normalization in
@@ -40,6 +40,7 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapTargetType const 
 Inkscape::SnappedPoint::SnappedPoint()
 {
     _point = Geom::Point(0,0);
+    _source = SNAPSOURCE_UNDEFINED,
     _target = SNAPTARGET_UNDEFINED,
     _at_intersection = false;
     _fully_constrained = false;

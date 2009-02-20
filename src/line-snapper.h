@@ -27,14 +27,16 @@ public:
   void freeSnap(SnappedConstraints &sc,
                    Inkscape::SnapPreferences::PointType const &t,
                    Geom::Point const &p,
+                   SnapSourceType const &source_type,
                    bool const &first_point,
                    Geom::OptRect const &bbox_to_snap,
                    std::vector<SPItem const *> const *it,
-                   std::vector<Geom::Point> *unselected_nodes) const;
+                   std::vector<std::pair<Geom::Point, int> > *unselected_nodes) const;
 
   void constrainedSnap(SnappedConstraints &sc,
                           Inkscape::SnapPreferences::PointType const &t,
                           Geom::Point const &p,
+                          SnapSourceType const &source_type,
                           bool const &first_point,
                           Geom::OptRect const &bbox_to_snap,
                           ConstraintLine const &c,
@@ -52,7 +54,7 @@ private:
    */
   virtual LineList _getSnapLines(Geom::Point const &p) const = 0;
 
-  virtual void _addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, Geom::Point const point_on_line) const = 0;
+  virtual void _addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, SnapTargetType const &target, Geom::Point const normal_to_line, Geom::Point const point_on_line) const = 0;
 };
 
 }

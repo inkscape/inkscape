@@ -477,7 +477,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                             	if (!(bevent.state & GDK_SHIFT_MASK)) {
                             		SnapManager &m = desktop->namedview->snap_manager;
                             		m.setup(desktop);
-									m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+									m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
                             	}
 								spdc_create_single_dot(event_context, p, "/tools/freehand/pen", bevent.state);
 								ret = TRUE;

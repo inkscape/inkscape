@@ -75,8 +75,11 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
             case SNAPTARGET_GRID_GUIDE_INTERSECTION:
             	target_name = _("grid-guide intersection");
             	break;
-            case SNAPTARGET_NODE:
-				target_name = _("node");
+            case SNAPTARGET_NODE_CUSP:
+				target_name = _("cusp node");
+				break;
+            case SNAPTARGET_NODE_SMOOTH:
+				target_name = _("smooth node");
 				break;
 			case SNAPTARGET_PATH:
             	target_name = _("path");
@@ -96,15 +99,91 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
             case SNAPTARGET_PAGE_BORDER:
             	target_name = _("page border");
 				break;
+            case SNAPTARGET_LINE_MIDPOINT:
+            	target_name = _("line midpoint");
+            	break;
+            case SNAPTARGET_OBJECT_MIDPOINT:
+            	target_name = _("object midpoint");
+            	break;
+            case SNAPTARGET_ROTATION_CENTER:
+            	target_name = _("object rotation center");
+            	break;
+            case SNAPTARGET_HANDLE:
+            	target_name = _("handle");
+            	break;
+            case SNAPTARGET_BBOX_EDGE_MIDPOINT:
+            	target_name = _("bounding box side midpoint");
+            	break;
+            case SNAPTARGET_BBOX_MIDPOINT:
+            	target_name = _("bounding box midpoint");
+            	break;
+            case SNAPTARGET_PAGE_CORNER:
+            	target_name = _("page corner");
+            	break;
+            case SNAPTARGET_CONVEX_HULL_CORNER:
+            	target_name = _("convex hull corner");
+            	break;
+            case SNAPTARGET_ELLIPSE_QUADRANT_POINT:
+            	target_name = _("quadrant point");
+            	break;
             default:
             	g_warning("Snap target has not yet been defined!");
                 break;
         }
-        // std::cout << "Snapped to: " << target_name << std::endl;
+
+        gchar *source_name = _("UNDEFINED");
+		switch (p.getSource()) {
+			case SNAPSOURCE_UNDEFINED:
+				source_name = _("UNDEFINED");
+				break;
+			case SNAPSOURCE_BBOX_CORNER:
+				source_name = _("Bounding box corner");
+				break;
+			case SNAPSOURCE_BBOX_MIDPOINT:
+				source_name = _("Bounding box midpoint");
+				break;
+			case SNAPSOURCE_BBOX_EDGE_MIDPOINT:
+				source_name = _("Bounding box side midpoint");
+				break;
+			case SNAPSOURCE_NODE_SMOOTH:
+				source_name = _("Smooth node");
+				break;
+			case SNAPSOURCE_NODE_CUSP:
+				source_name = _("Cusp node");
+				break;
+			case SNAPSOURCE_LINE_MIDPOINT:
+				source_name = _("Line midpoint");
+				break;
+			case SNAPSOURCE_OBJECT_MIDPOINT:
+				source_name = _("Object midpoint");
+				break;
+			case SNAPSOURCE_ROTATION_CENTER:
+				source_name = _("Object rotation center");
+				break;
+			case SNAPSOURCE_HANDLE:
+				source_name = _("Handle");
+				break;
+			case SNAPSOURCE_PATH_INTERSECTION:
+				source_name = _("Path intersection");
+				break;
+			case SNAPSOURCE_GUIDE:
+				source_name = _("Guide");
+				break;
+			case SNAPSOURCE_CONVEX_HULL_CORNER:
+				source_name = _("Convex hull corner");
+				break;
+			case SNAPSOURCE_ELLIPSE_QUADRANT_POINT:
+				source_name = _("Quadrant point");
+				break;
+			default:
+				g_warning("Snap source has not yet been defined!");
+				break;
+		}
+        //std::cout << "Snapped " << source_name << " to " << target_name << std::endl;
 
         // Display the snap indicator (i.e. the cross)
         SPCanvasItem * canvasitem = NULL;
-		if (p.getTarget() == SNAPTARGET_NODE) {
+		if (p.getTarget() == SNAPTARGET_NODE_SMOOTH || p.getTarget() == SNAPTARGET_NODE_CUSP) {
 			canvasitem = sp_canvas_item_new(sp_desktop_tempgroup (_desktop),
 											SP_TYPE_CTRL,
 											"anchor", GTK_ANCHOR_CENTER,
@@ -136,7 +215,8 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
 		GtkSettings *settings = gtk_widget_get_settings (&(_desktop->canvas->widget));
 		// If we set the timeout too short, then the tooltip might not show at all (most noticeable when a long snap delay is active)
 		g_object_set(settings, "gtk-tooltip-timeout", 200, NULL); // tooltip will be shown after x msec.
-        gtk_widget_set_tooltip_text(&(_desktop->canvas->widget), target_name);
+        gchar *tooltip_text = g_strconcat(source_name, _(" to "), target_name, NULL);
+		gtk_widget_set_tooltip_text(&(_desktop->canvas->widget), tooltip_text);
         // has_tooltip will be true by now because gtk_widget_set_has_tooltip() has been called implicitly
         update_tooltip();
         // The snap indicator will be removed automatically because it's a temporary canvas item; the tooltip
@@ -157,7 +237,7 @@ SnapIndicator::remove_snaptarget()
 }
 
 void
-SnapIndicator::set_new_snapsource(Geom::Point const p)
+SnapIndicator::set_new_snapsource(std::pair<Geom::Point, int> const p)
 {
 	remove_snapsource();
 
@@ -177,7 +257,7 @@ SnapIndicator::set_new_snapsource(Geom::Point const p)
                                                         "shape", SP_KNOT_SHAPE_CIRCLE,
                                                         NULL );
 
-        SP_CTRL(canvasitem)->moveto(p);
+        SP_CTRL(canvasitem)->moveto(p.first);
         _snapsource = _desktop->add_temporary_canvasitem(canvasitem, 1000);
     }
 }

@@ -26,6 +26,7 @@
 #include <2geom/forward.h>
 #include <libnr/nr-convert2geom.h>
 #include <snap-preferences.h>
+#include <snapped-point.h>
 
 class SPGuideConstraint;
 struct SPClipPathReference;
@@ -33,7 +34,7 @@ struct SPMaskReference;
 struct SPAvoidRef;
 struct SPPrintContext;
 namespace Inkscape { class URIReference; }
- 
+
 enum {
     SP_EVENT_INVALID,
     SP_EVENT_NONE,
@@ -72,7 +73,7 @@ struct SPItemView {
 #define SP_ITEM_SHOW_DISPLAY (1 << 0)
 
 /**
- * Flag for referenced views (i.e. markers, clippaths, masks and patterns); 
+ * Flag for referenced views (i.e. markers, clippaths, masks and patterns);
    currently unused, does the same as DISPLAY
  */
 #define SP_ITEM_REFERENCE_FLAGS (1 << 1)
@@ -92,7 +93,7 @@ struct SPItemCtx {
 struct SPItem : public SPObject {
     enum BBoxType {
         // legacy behavior: includes crude stroke, markers; excludes long miters, blur margin; is known to be wrong for caps
-        APPROXIMATE_BBOX, 
+        APPROXIMATE_BBOX,
         // includes only the bare path bbox, no stroke, no nothing
         GEOMETRIC_BBOX,
         // includes everything: correctly done stroke (with proper miters and caps), markers, filter margins (e.g. blur)
@@ -105,34 +106,34 @@ struct SPItem : public SPObject {
     double transform_center_y;
 
     Geom::Matrix transform;
-    
+
     SPClipPathReference *clip_ref;
     SPMaskReference *mask_ref;
-    
+
     // Used for object-avoiding connectors
     SPAvoidRef *avoidRef;
-    
+
     SPItemView *display;
-    
+
     std::vector<SPGuideConstraint> constraints;
-    
+
     sigc::signal<void, Geom::Matrix const *, SPItem *> _transformed_signal;
 
-    void init();    
+    void init();
     bool isLocked() const;
     void setLocked(bool lock);
-    
+
     bool isHidden() const;
     void setHidden(bool hidden);
 
     bool isEvaluated() const;
     void setEvaluated(bool visible);
     void resetEvaluated();
-    
+
     bool isHidden(unsigned display_key) const;
-    
+
     bool isExplicitlyHidden() const;
-    
+
     void setExplicitlyHidden(bool val);
 
     void setCenter(Geom::Point object_centre);
@@ -141,11 +142,11 @@ struct SPItem : public SPObject {
     Geom::Point getCenter() const;
 
     bool isVisibleAndUnlocked() const;
-    
+
     bool isVisibleAndUnlocked(unsigned display_key) const;
-    
+
     Geom::Matrix getRelativeTransform(SPObject const *obj) const;
-    
+
     void raiseOne();
     void lowerOne();
     void raiseToTop();
@@ -170,7 +171,7 @@ private:
     mutable EvaluatedStatus _evaluated_status;
 };
 
-typedef std::back_insert_iterator<std::vector<Geom::Point> > SnapPointsIter;
+typedef std::vector<std::pair<Geom::Point, int> > SnapPointsWithType; // int is either of these enums: Inkscape::SnapTargetType or Inkscape::SnapSourceType
 
 /// The SPItem vtable.
 struct SPItemClass {
@@ -178,28 +179,28 @@ struct SPItemClass {
 
     /** BBox union in given coordinate system */
     void (* bbox) (SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
-    
+
     /** Printing method. Assumes ctm is set to item affine matrix */
     /* \todo Think about it, and maybe implement generic export method instead (Lauris) */
     void (* print) (SPItem *item, SPPrintContext *ctx);
-    
+
     /** Give short description of item (for status display) */
     gchar * (* description) (SPItem * item);
-    
+
     NRArenaItem * (* show) (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
     void (* hide) (SPItem *item, unsigned int key);
-    
+
     /** Write to an iterator the points that should be considered for snapping
      * as the item's `nodes'.
      */
-    void (* snappoints) (SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
-    
+    void (* snappoints) (SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
+
     /** Apply the transform optimally, and return any residual transformation */
     Geom::Matrix (* set_transform)(SPItem *item, Geom::Matrix const &transform);
 
     /** Convert the item to guidelines */
     void (* convert_to_guides)(SPItem *item);
-    
+
     /** Emit event, if applicable */
     gint (* event) (SPItem *item, SPEvent *event);
 };
@@ -225,7 +226,7 @@ unsigned int sp_item_display_key_new(unsigned int numkeys);
 NRArenaItem *sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned int key, unsigned int flags);
 void sp_item_invoke_hide(SPItem *item, unsigned int key);
 
-void sp_item_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
+void sp_item_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
 
 void sp_item_adjust_pattern(SPItem *item, /* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);
 void sp_item_adjust_gradient(SPItem *item, /* Geom::Matrix const &premul, */ Geom::Matrix const &postmul, bool set = false);

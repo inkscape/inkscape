@@ -291,7 +291,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 	// but as a snap source we still need some nodes though!
     _snap_points.clear();
 	_snap_points = selection->getSnapPoints(&local_snapprefs);
-	std::vector<Geom::Point> snap_points_hull = selection->getSnapPointsConvexHull(&local_snapprefs);
+	std::vector<std::pair<Geom::Point, int> > snap_points_hull = selection->getSnapPointsConvexHull(&local_snapprefs);
 	if (_snap_points.size() > 100) {
 		/* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
 		An average user would rarely ever try to snap such a large number of nodes anyway, because
@@ -305,11 +305,11 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     // any other special points
     Geom::Rect snap_points_bbox;
     if ( snap_points_hull.empty() == false ) {
-        std::vector<Geom::Point>::iterator i = snap_points_hull.begin();
-        snap_points_bbox = Geom::Rect(*i, *i);
+    	std::vector<std::pair<Geom::Point, int> >::iterator i = snap_points_hull.begin();
+        snap_points_bbox = Geom::Rect((*i).first, (*i).first);
         i++;
         while (i != snap_points_hull.end()) {
-            snap_points_bbox.expandTo(*i);
+            snap_points_bbox.expandTo((*i).first);
             i++;
         }
     }
@@ -317,7 +317,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     _bbox_points.clear();
     if (_bbox) {
     	if (m.snapprefs.getSnapModeBBox()) {
-    		getBBoxPoints(_bbox, &_bbox_points, true, m.snapprefs.getSnapBBoxEdgeMidpoints(), m.snapprefs.getSnapBBoxMidpoints());
+    		getBBoxPoints(_bbox, &_bbox_points, false, true, m.snapprefs.getSnapBBoxEdgeMidpoints(), m.snapprefs.getSnapBBoxMidpoints());
     	}
     	// There are two separate "opposites" (i.e. opposite w.r.t. the handle being dragged):
         //  - one for snapping the boundingbox, which can be either visual or geometric
@@ -350,7 +350,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     	g_assert(_bbox_points.size() < 2 && _snap_points.size() < 2);
     	if (_snap_points.size() == 1 && _bbox_points.size() == 1) { //both vectors can only have either one or zero elements
     		// So we have exactly one bbox corner and one node left; now find out which is closest and delete the other one
-    		if (Geom::L2(_snap_points.at(0) - p) < Geom::L2(_bbox_points.at(0) - p)) {
+    		if (Geom::L2((_snap_points.at(0)).first - p) < Geom::L2((_bbox_points.at(0)).first - p)) {
     			_bbox_points.clear();
     		} else {
     			_snap_points.clear();
@@ -369,20 +369,6 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     }
 
 	sp_canvas_set_snap_delay_active(_desktop->canvas, true);
-
-    // The lines below are useful for debugging any snapping issues, as they'll spit out all points that are considered for snapping
-
-    /*std::cout << "Number of snap points:  " << _snap_points.size() << std::endl;
-    for (std::vector<Geom::Point>::const_iterator i = _snap_points.begin(); i != _snap_points.end(); i++)
-    {
-        std::cout << "    " << *i << std::endl;
-    }
-
-    std::cout << "Number of bbox points:  " << _bbox_points.size() << std::endl;
-    for (std::vector<Geom::Point>::const_iterator i = _bbox_points.begin(); i != _bbox_points.end(); i++)
-    {
-        std::cout << "    " << *i << std::endl;
-    }*/
 
     if ((x != -1) && (y != -1)) {
         sp_canvas_item_show(_norm);
@@ -1295,11 +1281,12 @@ gboolean Inkscape::SelTrans::rotateRequest(Geom::Point &pt, guint state)
     return TRUE;
 }
 
+// Move the item's transformation center
 gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
 {
     SnapManager &m = _desktop->namedview->snap_manager;
     m.setup(_desktop);
-    m.freeSnapReturnByRef(SnapPreferences::SNAPPOINT_NODE, pt);
+    m.freeSnapReturnByRef(SnapPreferences::SNAPPOINT_NODE, pt, Inkscape::SNAPSOURCE_HANDLE);
 
     if (state & GDK_CONTROL_MASK) {
         if ( fabs(_point[Geom::X] - pt[Geom::X]) > fabs(_point[Geom::Y] - pt[Geom::Y]) ) {
@@ -1407,7 +1394,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
         */
 
     	m.setup(_desktop, true, _items_const);
-    	m.freeSnapReturnByRef(SnapPreferences::SNAPPOINT_NODE, dxy);
+    	m.freeSnapReturnByRef(SnapPreferences::SNAPPOINT_NODE, dxy, Inkscape::SNAPSOURCE_UNDEFINED);
 
     } else if (!shift) {
 
@@ -1593,15 +1580,15 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
     return visual_bbox.min() + visual_bbox.dimensions() * Geom::Scale(_handle_x, _handle_y);
 }
 
-void Inkscape::SelTrans::_keepClosestPointOnly(std::vector<Geom::Point> &points, const Geom::Point &reference)
+void Inkscape::SelTrans::_keepClosestPointOnly(std::vector<std::pair<Geom::Point, int> > &points, const Geom::Point &reference)
 {
 	if (points.size() < 2) return;
 
-	Geom::Point closest_point = Geom::Point(NR_HUGE, NR_HUGE);
+	std::pair<Geom::Point, int> closest_point = std::make_pair(Geom::Point(NR_HUGE, NR_HUGE), SNAPSOURCE_UNDEFINED);
 	Geom::Coord closest_dist = NR_HUGE;
 
-	for(std::vector<Geom::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
-		Geom::Coord dist = Geom::L2(*i - reference);
+	for(std::vector<std::pair<Geom::Point, int> >::const_iterator i = points.begin(); i != points.end(); i++) {
+		Geom::Coord dist = Geom::L2((*i).first - reference);
 		if (i == points.begin() || dist < closest_dist) {
 			closest_point = *i;
 			closest_dist = dist;

@@ -45,7 +45,7 @@ static Geom::Matrix sp_rect_set_transform(SPItem *item, Geom::Matrix const &xfor
 static void sp_rect_convert_to_guides(SPItem *item);
 
 static void sp_rect_set_shape(SPShape *shape);
-static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_rect_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
 
 static SPShapeClass *parent_class;
 
@@ -543,7 +543,7 @@ sp_rect_get_visible_height(SPRect *rect)
 /**
  * Sets the snappoint p to the unrounded corners of the rectangle
  */
-static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_rect_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs)
 {
     /* This method overrides sp_shape_snappoints, which is the default for any shape. The default method
     returns all eight points along the path of a rounded rectangle, but not the real corners. Snapping
@@ -569,22 +569,27 @@ static void sp_rect_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::S
     Geom::Point p2 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed) * i2d;
     Geom::Point p3 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed) * i2d;
 
+    int type;
+
     if (snapprefs->getSnapToItemNode()) {
-		*p = p0;
-		*p = p1;
-		*p = p2;
-		*p = p3;
+    	type = target ? int(Inkscape::SNAPTARGET_HANDLE) : int(Inkscape::SNAPSOURCE_HANDLE);
+    	p.push_back(std::make_pair(p0, type));
+    	p.push_back(std::make_pair(p1, type));
+    	p.push_back(std::make_pair(p2, type));
+    	p.push_back(std::make_pair(p3, type));
     }
 
 	if (snapprefs->getSnapLineMidpoints()) { // only do this when we're snapping nodes (enforce strict snapping)
-		*p = (p0 + p1)/2;
-		*p = (p1 + p2)/2;
-		*p = (p2 + p3)/2;
-		*p = (p3 + p0)/2;
+		type = target ? int(Inkscape::SNAPTARGET_LINE_MIDPOINT) : int(Inkscape::SNAPSOURCE_LINE_MIDPOINT);
+		p.push_back(std::make_pair((p0 + p1)/2, type));
+		p.push_back(std::make_pair((p1 + p2)/2, type));
+		p.push_back(std::make_pair((p2 + p3)/2, type));
+		p.push_back(std::make_pair((p3 + p0)/2, type));
 	}
 
 	if (snapprefs->getSnapObjectMidpoints()) { // only do this when we're snapping nodes (enforce strict snapping)
-		*p = (p0 + p2)/2;
+		type = target ? int(Inkscape::SNAPTARGET_OBJECT_MIDPOINT) : int(Inkscape::SNAPSOURCE_OBJECT_MIDPOINT);
+		p.push_back(std::make_pair((p0 + p2)/2, type));
 	}
 
 }

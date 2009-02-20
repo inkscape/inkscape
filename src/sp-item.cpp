@@ -90,7 +90,7 @@ static void sp_item_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_item_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *sp_item_private_description(SPItem *item);
-static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_item_private_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
 
 static SPItemView *sp_item_view_new_prepend(SPItemView *list, SPItem *item, unsigned flags, unsigned key, NRArenaItem *arenaitem);
 static SPItemView *sp_item_view_list_remove(SPItemView *list, SPItemView *view);
@@ -939,7 +939,7 @@ Geom::OptRect sp_item_bbox_desktop(SPItem *item, SPItem::BBoxType type)
     return rect;
 }
 
-static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const */*snapprefs*/)
+static void sp_item_private_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const */*snapprefs*/)
 {
     /* This will only be called if the derived class doesn't override this.
      * see for example sp_genericellipse_snappoints in sp-ellipse.cpp
@@ -952,15 +952,16 @@ static void sp_item_private_snappoints(SPItem const *item, SnapPointsIter p, Ink
         Geom::Point p1, p2;
         p1 = bbox->min();
         p2 = bbox->max();
-        *p = p1;
-        *p = Geom::Point(p1[Geom::X], p2[Geom::Y]);
-        *p = p2;
-        *p = Geom::Point(p1[Geom::Y], p2[Geom::X]);
+        int type = target ? int(Inkscape::SNAPSOURCE_CONVEX_HULL_CORNER) : int(Inkscape::SNAPSOURCE_CONVEX_HULL_CORNER);
+        p.push_back(std::make_pair(p1, type));
+        p.push_back(std::make_pair(Geom::Point(p1[Geom::X], p2[Geom::Y]), type));
+        p.push_back(std::make_pair(p2, type));
+        p.push_back(std::make_pair(Geom::Point(p1[Geom::Y], p2[Geom::X]), type));
     }
 
 }
 
-void sp_item_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
+void sp_item_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs)
 {
     g_assert (item != NULL);
     g_assert (SP_IS_ITEM(item));
@@ -968,12 +969,12 @@ void sp_item_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPref
     // Get the snappoints of the item
     SPItemClass const &item_class = *(SPItemClass const *) G_OBJECT_GET_CLASS(item);
     if (item_class.snappoints) {
-        item_class.snappoints(item, p, snapprefs);
+        item_class.snappoints(item, target, p, snapprefs);
     }
 
     // Get the snappoints at the item's center
     if (snapprefs != NULL && snapprefs->getIncludeItemCenter()) {
-    	*p = item->getCenter();
+    	p.push_back(std::make_pair(item->getCenter(), target ? int(Inkscape::SNAPTARGET_OBJECT_MIDPOINT) : int(Inkscape::SNAPSOURCE_OBJECT_MIDPOINT)));
     }
 
     // Get the snappoints of clipping paths and mask, if any
@@ -988,14 +989,15 @@ void sp_item_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPref
             // obj is a group object, the children are the actual clippers
             for (SPObject *child = (*o)->children ; child ; child = child->next) {
                 if (SP_IS_ITEM(child)) {
-                    std::vector<Geom::Point> p_clip_or_mask;
+                	SnapPointsWithType p_clip_or_mask;
                     // Please note the recursive call here!
-                    sp_item_snappoints(SP_ITEM(child), SnapPointsIter(p_clip_or_mask), snapprefs);
+                    sp_item_snappoints(SP_ITEM(child), target, p_clip_or_mask, snapprefs);
                     // Take into account the transformation of the item being clipped or masked
-                    for (std::vector<Geom::Point>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
+                    for (SnapPointsWithType::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
                         // All snappoints are in desktop coordinates, but the item's transformation is
                         // in document coordinates. Hence the awkward construction below
-                        *p = desktop->dt2doc(*p_orig) * sp_item_i2d_affine(item);
+                        Geom::Point pt = desktop->dt2doc((*p_orig).first) * sp_item_i2d_affine(item);
+                        p.push_back(std::make_pair(pt, (*p_orig).second));
                     }
                 }
             }

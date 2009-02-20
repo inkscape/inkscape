@@ -1350,13 +1350,13 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
          * must provide that information. */
 
         // Build a list of the unselected nodes to which the snapper should snap
-        std::vector<Geom::Point> unselected_nodes;
+    	std::vector<std::pair<Geom::Point, int> > unselected_nodes;
         for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
             Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
             for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
                 Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
                 if (!node->selected) {
-                    unselected_nodes.push_back(to_2geom(node->pos));
+                    unselected_nodes.push_back(std::make_pair(to_2geom(node->pos), node->type == Inkscape::NodePath::NODE_SMOOTH ? Inkscape::SNAPTARGET_NODE_SMOOTH : Inkscape::SNAPTARGET_NODE_CUSP));
                 }
             }
         }
@@ -1388,12 +1388,13 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             if (!closest_only || n == closest_node) { //try to snap either all selected nodes or only the closest one
 	            Inkscape::SnappedPoint s;
+	            Inkscape::SnapSourceType source_type = (n->type == Inkscape::NodePath::NODE_SMOOTH ? Inkscape::SNAPSOURCE_NODE_SMOOTH : Inkscape::SNAPSOURCE_NODE_CUSP);
 	            if (constrained) {
 	                Inkscape::Snapper::ConstraintLine dedicated_constraint = constraint;
 	                dedicated_constraint.setPoint(n->pos);
-	                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), dedicated_constraint);
+	                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), source_type, dedicated_constraint);
 	            } else {
-	                s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta));
+	                s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(n->pos + delta), source_type);
 	            }
 
 	            if (s.getSnapped()) {
@@ -3945,6 +3946,7 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point &p, guint state, g
     }
 
     Inkscape::NodePath::Node *othernode = opposite->other;
+    Inkscape::SnapSourceType source_type = (n->type == Inkscape::NodePath::NODE_SMOOTH ? Inkscape::SNAPSOURCE_NODE_SMOOTH : Inkscape::SNAPSOURCE_NODE_CUSP);
     if (othernode) {
         if ((n->type != Inkscape::NodePath::NODE_CUSP) && sp_node_side_is_line(n, opposite)) {
             /* We are smooth node adjacent with line */
@@ -3958,16 +3960,16 @@ static gboolean node_handle_request(SPKnot *knot, Geom::Point &p, guint state, g
                 p = n->pos + (scal / linelen) * ndelta;
             }
             if ((state & GDK_SHIFT_MASK) == 0) {
-                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::Snapper::ConstraintLine(p, ndelta));
+                s = m.constrainedSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, source_type, Inkscape::Snapper::ConstraintLine(p, ndelta));
             }
         } else {
             if ((state & GDK_SHIFT_MASK) == 0) {
-                s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+                s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, source_type);
             }
         }
     } else {
         if ((state & GDK_SHIFT_MASK) == 0) {
-            s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+            s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, source_type);
         }
     }
 

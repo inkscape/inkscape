@@ -243,7 +243,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, true);
             Geom::Point pt2g = to_2geom(sc->center);
-            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
+            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::SNAPSOURCE_HANDLE);
             sc->center = from_2geom(pt2g);
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -416,7 +416,7 @@ static void sp_star_drag(SPStarContext *sc, Geom::Point p, guint state)
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, sc->item);
     Geom::Point pt2g = to_2geom(p);
-    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
+    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::SNAPSOURCE_HANDLE);
 
     Geom::Point const p0 = to_2geom(sp_desktop_dt2doc_xy_point(desktop, sc->center));
     Geom::Point const p1 = to_2geom(sp_desktop_dt2doc_xy_point(desktop, from_2geom(pt2g)));

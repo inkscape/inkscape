@@ -24,11 +24,11 @@ void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoin
     double const dir_lensq(dot(dir, dir));
     g_return_if_fail( dir_lensq != 0 );
 
-    std::vector<Geom::Point> snappoints;
-    sp_item_snappoints(&item, SnapPointsIter(snappoints), NULL);
+    SnapPointsWithType snappoints;
+    sp_item_snappoints(&item, false, snappoints, NULL);
     g_return_if_fail( snappoint_ix < int(snappoints.size()) );
 
-    double const pos0 = dot(dir, snappoints[snappoint_ix]);
+    double const pos0 = dot(dir, snappoints[snappoint_ix].first);
     /// \todo effic: skip if mv_g is already satisfied.
 
     /* Translate along dir to make dot(dir, snappoints(item)[snappoint_ix]) == position. */

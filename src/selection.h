@@ -30,6 +30,7 @@
 #include "gc-soft-ptr.h"
 #include "util/list.h"
 #include "sp-item.h"
+#include "snapped-point.h"
 
 class SPItem;
 class SPBox3D;
@@ -57,7 +58,7 @@ namespace Inkscape {
  * at the given desktop. Both SPItem and SPRepr lists can be retrieved
  * from the selection. Many actions operate on the selection, so it is
  * widely used throughout the code.
- * It also implements its own asynchronous notification signals that 
+ * It also implements its own asynchronous notification signals that
  * UI elements can listen to.
  */
 class Selection : public Inkscape::GC::Managed<>,
@@ -249,7 +250,7 @@ public:
      * @brief Returns the bounding rectangle of the selection
      *
      * \todo how is this different from bounds()?
-     */ 
+     */
     NRRect *boundsInDocument(NRRect *dest, SPItem::BBoxType type = SPItem::APPROXIMATE_BBOX) const;
 
     /**
@@ -268,13 +269,13 @@ public:
      * @brief Gets the selection's snap points.
      * @return Selection's snap points
      */
-    std::vector<Geom::Point> getSnapPoints(SnapPreferences const *snapprefs) const;
+    std::vector<std::pair<Geom::Point, int> > getSnapPoints(SnapPreferences const *snapprefs) const;
 
     /**
      * @brief Gets the snap points of a selection that form a convex hull.
      * @return Selection's convex hull points
      */
-    std::vector<Geom::Point> getSnapPointsConvexHull(SnapPreferences const *snapprefs) const;
+    std::vector<std::pair<Geom::Point, int> > getSnapPointsConvexHull(SnapPreferences const *snapprefs) const;
 
     /**
      * @brief Connects a slot to be notified of selection changes
@@ -291,8 +292,8 @@ public:
     }
 
     /**
-     * @brief Connects a slot to be notified of selected 
-     *        object modifications 
+     * @brief Connects a slot to be notified of selected
+     *        object modifications
      *
      * This method connects the given slot such that it will
      * receive notifications whenever any selected item is

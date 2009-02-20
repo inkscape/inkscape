@@ -513,7 +513,7 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p,
             SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
             m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
             Geom::Point pt2g = to_2geom(p);
-            m.constrainedSnapReturnByRef( Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::Snapper::ConstraintLine(best));
+            m.constrainedSnapReturnByRef( Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::SNAPSOURCE_HANDLE, Inkscape::Snapper::ConstraintLine(best));
             p = from_2geom(pt2g);
         }
     }
@@ -525,7 +525,7 @@ void spdc_endpoint_snap_free(SPEventContext const * const ec, Geom::Point& p, gu
     SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
     m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
     Geom::Point pt2g = to_2geom(p);
-    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
+    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::SNAPSOURCE_HANDLE);
     p = from_2geom(pt2g);
 }
 

@@ -69,14 +69,16 @@ public:
 	void freeSnap(SnappedConstraints &sc,
 				  Inkscape::SnapPreferences::PointType const &t,
 				  Geom::Point const &p,
+				  SnapSourceType const &source_type,
 				  bool const &first_point,
 				  Geom::OptRect const &bbox_to_snap,
 				  std::vector<SPItem const *> const *it,
-				  std::vector<Geom::Point> *unselected_nodes) const;
+				  std::vector<std::pair<Geom::Point, int> > *unselected_nodes) const;
 
 	void constrainedSnap(SnappedConstraints &sc,
 				  Inkscape::SnapPreferences::PointType const &t,
 				  Geom::Point const &p,
+				  SnapSourceType const &source_type,
 				  bool const &first_point,
 				  Geom::OptRect const &bbox_to_snap,
 				  ConstraintLine const &c,
@@ -85,7 +87,7 @@ public:
 private:
     //store some lists of candidates, points and paths, so we don't have to rebuild them for each point we want to snap
     std::vector<SnapCandidate> *_candidates;
-    std::vector<Geom::Point> *_points_to_snap_to;
+    std::vector<std::pair<Geom::Point, int> > *_points_to_snap_to;
     std::vector<std::pair<Geom::PathVector*, SnapTargetType> > *_paths_to_snap_to;
 
     void _findCandidates(SPObject* parent,
@@ -99,8 +101,9 @@ private:
     void _snapNodes(SnappedConstraints &sc,
                       Inkscape::SnapPreferences::PointType const &t,
                       Geom::Point const &p, // in desktop coordinates
+                      SnapSourceType const &source_type,
                       bool const &first_point,
-                      std::vector<Geom::Point> *unselected_nodes) const; // in desktop coordinates
+                      std::vector<std::pair<Geom::Point, int> > *unselected_nodes) const; // in desktop coordinates
 
     void _snapTranslatingGuideToNodes(SnappedConstraints &sc,
                      Inkscape::SnapPreferences::PointType const &t,
@@ -113,17 +116,19 @@ private:
     void _snapPaths(SnappedConstraints &sc,
                       Inkscape::SnapPreferences::PointType const &t,
                       Geom::Point const &p,	// in desktop coordinates
+                      SnapSourceType const &source_type,
                       bool const &first_point,
-                      std::vector<Geom::Point> *unselected_nodes, // in desktop coordinates
+                      std::vector<std::pair<Geom::Point, int> > *unselected_nodes, // in desktop coordinates
                       SPPath const *selected_path) const;
 
     void _snapPathsConstrained(SnappedConstraints &sc,
                  Inkscape::SnapPreferences::PointType const &t,
                  Geom::Point const &p, // in desktop coordinates
-                 bool const &first_point,
+                 SnapSourceType const source_type,
+				 bool const &first_point,
                  ConstraintLine const &c) const;
 
-    bool isUnselectedNode(Geom::Point const &point, std::vector<Geom::Point> const *unselected_nodes) const;
+    bool isUnselectedNode(Geom::Point const &point, std::vector<std::pair<Geom::Point, int> > const *unselected_nodes) const;
 
     void _collectPaths(Inkscape::SnapPreferences::PointType const &t,
                   bool const &first_point) const;
@@ -131,11 +136,11 @@ private:
     void _clear_paths() const;
     Geom::PathVector* _getBorderPathv() const;
     Geom::PathVector* _getPathvFromRect(Geom::Rect const rect) const;
-    void _getBorderNodes(std::vector<Geom::Point> *points) const;
+    void _getBorderNodes(std::vector<std::pair<Geom::Point, int> > *points) const;
 
 }; // end of ObjectSnapper class
 
-void getBBoxPoints(Geom::OptRect const bbox, std::vector<Geom::Point> *points, bool const includeCorners, bool const includeLineMidpoints, bool const includeObjectMidpoints);
+void getBBoxPoints(Geom::OptRect const bbox, std::vector<std::pair<Geom::Point, int> > *points, bool const isTarget, bool const includeCorners, bool const includeLineMidpoints, bool const includeObjectMidpoints);
 
 } // end of namespace Inkscape
 

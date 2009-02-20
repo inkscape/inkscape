@@ -83,7 +83,7 @@ static void sp_offset_update (SPObject * object, SPCtx * ctx, guint flags);
 static void sp_offset_release (SPObject * object);
 
 static gchar *sp_offset_description (SPItem * item);
-static void sp_offset_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_offset_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
 static void sp_offset_set_shape (SPShape * shape);
 
 static void refresh_offset_source(SPOffset* offset);
@@ -718,10 +718,10 @@ sp_offset_set_shape(SPShape *shape)
 /**
  * Virtual snappoints function.
  */
-static void sp_offset_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_offset_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs)
 {
     if (((SPItemClass *) parent_class)->snappoints) {
-        ((SPItemClass *) parent_class)->snappoints (item, p, snapprefs);
+        ((SPItemClass *) parent_class)->snappoints (item, target, p, snapprefs);
     }
 }
 

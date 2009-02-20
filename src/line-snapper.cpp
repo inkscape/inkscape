@@ -26,10 +26,11 @@ Inkscape::LineSnapper::LineSnapper(SnapManager *sm, Geom::Coord const d) : Snapp
 void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
                                                     Inkscape::SnapPreferences::PointType const &t,
                                                     Geom::Point const &p,
+                                                    SnapSourceType const &source_type,
                                                     bool const &/*f*/,
                                                     Geom::OptRect const &/*bbox_to_snap*/,
                                                     std::vector<SPItem const *> const */*it*/,
-                                                    std::vector<Geom::Point> */*unselected_nodes*/) const
+                                                    std::vector<std::pair<Geom::Point, int> > */*unselected_nodes*/) const
 {
 	if (!(_snap_enabled && _snapmanager->snapprefs.getSnapFrom(t)) ) {
         return;
@@ -50,7 +51,8 @@ void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
         Geom::Coord const dist = Geom::L2(p_proj - p);
         //Store any line that's within snapping range
         if (dist < getSnapperTolerance()) {
-            _addSnappedLine(sc, p_proj, dist, i->first, i->second);
+            _addSnappedLine(sc, p_proj, dist, source_type, Inkscape::SNAPTARGET_UNDEFINED, i->first, i->second);
+            // We don't know if we're snapping to grids or guides here; therefore the snap target type will be set in findBestSnap()
             // std::cout << " -> distance = " << dist;
         }
         // std::cout << std::endl;
@@ -60,6 +62,7 @@ void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
 void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
                                                Inkscape::SnapPreferences::PointType const &t,
                                                Geom::Point const &p,
+                                               SnapSourceType const &source_type,
                                                bool const &/*f*/,
                                                Geom::OptRect const &/*bbox_to_snap*/,
                                                ConstraintLine const &c,
@@ -97,9 +100,7 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
                     // This snappoint is therefore fully constrained, so there's no need
                     // to look for additional intersections; just return the snapped point
                     // and forget about the line
-                    sc.points.push_back(SnappedPoint(t, Inkscape::SNAPTARGET_UNDEFINED, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true));
-                    // The type of the snap target is yet undefined, as we cannot tell whether
-                    // we're snapping to grid or the guide lines; must be set by on a higher level
+                    sc.points.push_back(SnappedPoint(t, source_type, Inkscape::SNAPTARGET_UNDEFINED, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true));
                 }
             }
         }

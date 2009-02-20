@@ -59,10 +59,11 @@ public:
     virtual void freeSnap(SnappedConstraints &/*sc*/,
                           SnapPreferences::PointType const &/*t*/,
                           Geom::Point const &/*p*/,
+                          SnapSourceType const &/*source_type*/,
                           bool const &/*first_point*/,
                           Geom::OptRect const &/*bbox_to_snap*/,
                           std::vector<SPItem const *> const */*it*/,
-                          std::vector<Geom::Point> */*unselected_nodes*/) const {};
+                          std::vector<std::pair<Geom::Point, int> > */*unselected_nodes*/) const {};
 
     class ConstraintLine
     {
@@ -97,6 +98,7 @@ public:
     virtual void constrainedSnap(SnappedConstraints &/*sc*/,
     							 SnapPreferences::PointType const &/*t*/,
                                  Geom::Point const &/*p*/,
+                                 SnapSourceType const &/*source_type*/,
                                  bool const &/*first_point*/,
                                  Geom::OptRect const &/*bbox_to_snap*/,
                                  ConstraintLine const &/*c*/,

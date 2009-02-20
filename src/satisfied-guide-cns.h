@@ -4,10 +4,12 @@
 #include <forward.h>
 #include <2geom/forward.h>
 #include <vector>
+#include <sp-item.h>
+
 class SPGuideConstraint;
 
 void satisfied_guide_cns(SPDesktop const &desktop,
-                         std::vector<Geom::Point> const &snappoints,
+                         SnapPointsWithType const &snappoints,
                          std::vector<SPGuideConstraint> &cns);
 
 

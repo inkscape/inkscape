@@ -86,7 +86,7 @@ public:
         return _empty;
     }
     bool isGrabbed() {
-        return _grabbed;    
+        return _grabbed;
     }
 	bool centerIsVisible() {
 		return ( _chandle && SP_KNOT_IS_VISIBLE (_chandle) );
@@ -102,24 +102,24 @@ private:
     Geom::Point _getGeomHandlePos(Geom::Point const &visual_handle_pos);
     Geom::Point _calcAbsAffineDefault(Geom::Scale const default_scale);
     Geom::Point _calcAbsAffineGeom(Geom::Scale const geom_scale);
-    void _keepClosestPointOnly(std::vector<Geom::Point> &points, const Geom::Point &reference);
+    void _keepClosestPointOnly(std::vector<std::pair<Geom::Point, int> > &points, const Geom::Point &reference);
     void _display_snapsource();
 
     enum State {
         STATE_SCALE, //scale or stretch
         STATE_ROTATE //rotate or skew
     };
-    
+
     SPDesktop *_desktop;
 
     std::vector<SPItem *> _items;
     std::vector<SPItem const *> _items_const;
     std::vector<Geom::Matrix> _items_affines;
     std::vector<Geom::Point> _items_centers;
-    
-    std::vector<Geom::Point> _snap_points;
-    std::vector<Geom::Point> _bbox_points;
-    
+
+    std::vector<std::pair<Geom::Point, int> > _snap_points;
+    std::vector<std::pair<Geom::Point, int> > _bbox_points;
+
     Inkscape::SelCue _selcue;
 
     Inkscape::Selection *_selection;
@@ -132,12 +132,12 @@ private:
     bool _changed;
 
     SPItem::BBoxType _snap_bbox_type;
-    
+
     Geom::OptRect _bbox;
     Geom::OptRect _approximate_bbox;
     Geom::OptRect _geometric_bbox;
     gdouble _strokewidth;
-    
+
     Geom::Matrix _current_relative_affine;
     Geom::Matrix _absolute_affine;
     Geom::Matrix _relative_affine;
@@ -146,8 +146,8 @@ private:
      * lines into straight lines and parallel lines into parallel lines but may alter distance between points
      * and angles between lines <affine geometry>
      */
-    
-    Geom::Point _opposite; ///< opposite point to where a scale is taking place    
+
+    Geom::Point _opposite; ///< opposite point to where a scale is taking place
     Geom::Point _opposite_for_specpoints;
     Geom::Point _opposite_for_bboxpoints;
     Geom::Point _origin_for_specpoints;

@@ -78,7 +78,7 @@ public:
 
 private:
     LineList _getSnapLines(Geom::Point const &p) const;
-    void _addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, const Geom::Point point_on_line) const;
+    void _addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, SnapTargetType const &target, Geom::Point const normal_to_line, const Geom::Point point_on_line) const;
 
     CanvasAxonomGrid *grid;
 };

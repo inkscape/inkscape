@@ -29,7 +29,7 @@ public:
     void set_new_snaptarget(Inkscape::SnappedPoint const p);
     void remove_snaptarget();
 
-    void set_new_snapsource(Geom::Point const p);
+    void set_new_snapsource(std::pair<Geom::Point, int> const p);
     void remove_snapsource();
 
 protected:

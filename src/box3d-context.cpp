@@ -294,7 +294,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             /* Snap center */
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, true, bc->item);
-            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, button_dt);
+            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, button_dt, Inkscape::SNAPSOURCE_HANDLE);
             bc->center = from_2geom(button_dt);
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -326,7 +326,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
 
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, true, bc->item);
-            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, motion_dt);
+            m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, motion_dt, Inkscape::SNAPSOURCE_HANDLE);
 
             bc->ctrl_dragged  = event->motion.state & GDK_CONTROL_MASK;
 
@@ -360,7 +360,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
                     bc->drag_ptC_proj = cur_persp->tmat.preimage (from_2geom(motion_dt), bc->drag_ptB_proj[Proj::X], Proj::X);
                 }
                 Geom::Point pt2g = to_2geom(bc->drag_ptC);
-                m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
+                m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::SNAPSOURCE_HANDLE);
                 bc->drag_ptC = from_2geom(pt2g);
             }
 

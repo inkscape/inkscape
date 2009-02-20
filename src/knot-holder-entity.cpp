@@ -1,8 +1,8 @@
 #define __KNOT_HOLDER_ENTITY_C__
 
-/** \file 
- * KnotHolderEntity definition. 
- * 
+/** \file
+ * KnotHolderEntity definition.
+ *
  * Authors:
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Maximilian Albert <maximilian.albert@gmail.com>
@@ -82,7 +82,7 @@ KnotHolderEntity::update_knot()
     Geom::Point dp(knot_get() * i2d);
 
     _moved_connection.block();
-    sp_knot_set_position(knot, dp, SP_KNOT_STATE_NORMAL); 
+    sp_knot_set_position(knot, dp, SP_KNOT_STATE_NORMAL);
     _moved_connection.unblock();
 }
 
@@ -93,7 +93,7 @@ KnotHolderEntity::snap_knot_position(Geom::Point const &p)
     Geom::Point s = p * i2d;
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, item);
-    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, s);
+    m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, s, Inkscape::SNAPSOURCE_HANDLE);
     return s * i2d.inverse();
 }
 

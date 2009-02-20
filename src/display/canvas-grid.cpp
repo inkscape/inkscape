@@ -1003,9 +1003,9 @@ CanvasXYGridSnapper::_getSnapLines(Geom::Point const &p) const
     return s;
 }
 
-void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, Geom::Point const normal_to_line, Geom::Point const point_on_line) const
+void CanvasXYGridSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance,  SnapSourceType const &source, SnapTargetType const &target, Geom::Point const normal_to_line, Geom::Point const point_on_line) const
 {
-    SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
+    SnappedLine dummy = SnappedLine(snapped_point, snapped_distance, source, target, getSnapperTolerance(), getSnapperAlwaysSnap(), normal_to_line, point_on_line);
     sc.grid_lines.push_back(dummy);
 }
 

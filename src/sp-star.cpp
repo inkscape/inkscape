@@ -39,7 +39,7 @@ static void sp_star_set (SPObject *object, unsigned int key, const gchar *value)
 static void sp_star_update (SPObject *object, SPCtx *ctx, guint flags);
 
 static gchar * sp_star_description (SPItem * item);
-static void sp_star_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_star_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
 
 static void sp_star_set_shape (SPShape *shape);
 static void sp_star_update_patheffect (SPLPEItem *lpeitem, bool write);
@@ -528,7 +528,7 @@ sp_star_position_set (SPStar *star, gint sides, Geom::Point center, gdouble r1, 
 	SP_OBJECT(star)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-static void sp_star_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_star_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs)
 {
 	// We will determine the star's midpoint ourselves, instead of trusting on the base class
 	// Therefore setSnapObjectMidpoints() is set to false temporarily
@@ -536,7 +536,7 @@ static void sp_star_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::S
 	local_snapprefs.setSnapObjectMidpoints(false);
 
 	if (((SPItemClass *) parent_class)->snappoints) {
-		((SPItemClass *) parent_class)->snappoints (item, p, &local_snapprefs);
+		((SPItemClass *) parent_class)->snappoints (item, target, p, &local_snapprefs);
 	}
 
 	// Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
@@ -546,7 +546,8 @@ static void sp_star_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::S
 
 	if (snapprefs->getSnapObjectMidpoints()) {
 		Geom::Matrix const i2d (sp_item_i2d_affine (item));
-		*p = SP_STAR(item)->center * i2d;
+		int type = target ? int(Inkscape::SNAPTARGET_OBJECT_MIDPOINT) : int(Inkscape::SNAPSOURCE_OBJECT_MIDPOINT);
+		p.push_back(std::make_pair(SP_STAR(item)->center * i2d, type));
 	}
 }
 

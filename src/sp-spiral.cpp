@@ -36,7 +36,7 @@ static void sp_spiral_set (SPObject *object, unsigned int key, const gchar *valu
 static void sp_spiral_update (SPObject *object, SPCtx *ctx, guint flags);
 
 static gchar * sp_spiral_description (SPItem * item);
-static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_spiral_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs);
 
 static void sp_spiral_set_shape (SPShape *shape);
 static void sp_spiral_update_patheffect (SPLPEItem *lpeitem, bool write);
@@ -503,7 +503,7 @@ sp_spiral_position_set       (SPSpiral          *spiral,
 /**
  * Virtual snappoints callback.
  */
-static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p, Inkscape::SnapPreferences const *snapprefs)
+static void sp_spiral_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, Inkscape::SnapPreferences const *snapprefs)
 {
 	// We will determine the spiral's midpoint ourselves, instead of trusting on the base class
 	// Therefore setSnapObjectMidpoints() is set to false temporarily
@@ -511,7 +511,7 @@ static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p, Inkscape:
 	local_snapprefs.setSnapObjectMidpoints(false);
 
 	if (((SPItemClass *) parent_class)->snappoints) {
-		((SPItemClass *) parent_class)->snappoints (item, p, &local_snapprefs);
+		((SPItemClass *) parent_class)->snappoints (item, target, p, &local_snapprefs);
 	}
 
 	// Help enforcing strict snapping, i.e. only return nodes when we're snapping nodes to nodes or a guide to nodes
@@ -522,7 +522,8 @@ static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p, Inkscape:
 	if (snapprefs->getSnapObjectMidpoints()) {
 		Geom::Matrix const i2d (sp_item_i2d_affine (item));
 		SPSpiral *spiral = SP_SPIRAL(item);
-		*p = Geom::Point(spiral->cx, spiral->cy) * i2d;
+		int type = target ? int(Inkscape::SNAPTARGET_OBJECT_MIDPOINT) : int(Inkscape::SNAPSOURCE_OBJECT_MIDPOINT);
+		p.push_back(std::make_pair(Geom::Point(spiral->cx, spiral->cy) * i2d, type));
 		// This point is the start-point of the spiral, which is also returned when _snap_to_itemnode has been set
 		// in the object snapper. In that case we will get a duplicate!
 	}

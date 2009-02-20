@@ -259,7 +259,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
 
                 if (bevent.state & GDK_CONTROL_MASK) {
                 	if (!(bevent.state & GDK_SHIFT_MASK)) {
-                		m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+                		m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
                 	}
 					spdc_create_single_dot(event_context, p, "/tools/freehand/pencil", bevent.state);
 					sp_canvas_set_snap_delay_active(desktop->canvas, false);
@@ -277,10 +277,10 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                         // anchor, which is handled by the sibling branch above)
                         selection->clear();
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating new path"));
-                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
                     } else if (selection->singleItem() && SP_IS_PATH(selection->singleItem())) {
                         desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Appending to selected path"));
-                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p);
+                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
                     }
                 }
                 pc->sa = anchor;

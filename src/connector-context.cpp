@@ -537,7 +537,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                         // as there's no other points to go off.
                         SnapManager &m = cc->desktop->namedview->snap_manager;
                         m.setup(cc->desktop);
-                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g);
+                        m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::SNAPSOURCE_HANDLE);
                     }
                     spcc_connector_set_initial_point(cc, from_2geom(pt2g));
 

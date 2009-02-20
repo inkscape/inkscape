@@ -22,20 +22,48 @@ namespace Inkscape
 {
 
 enum SnapTargetType {
-    SNAPTARGET_UNDEFINED,
+    SNAPTARGET_UNDEFINED = 0,
     SNAPTARGET_GRID,
     SNAPTARGET_GRID_INTERSECTION,
     SNAPTARGET_GUIDE,
     SNAPTARGET_GUIDE_INTERSECTION,
     SNAPTARGET_GRID_GUIDE_INTERSECTION,
-    SNAPTARGET_NODE,
+    SNAPTARGET_NODE_SMOOTH,
+    SNAPTARGET_NODE_CUSP,
+    SNAPTARGET_LINE_MIDPOINT,
+    SNAPTARGET_OBJECT_MIDPOINT,
+    SNAPTARGET_ROTATION_CENTER,
+    SNAPTARGET_HANDLE, //e.g. center of ellipse, corner of rectangle
     SNAPTARGET_PATH,
     SNAPTARGET_PATH_INTERSECTION,
     SNAPTARGET_BBOX_CORNER,
     SNAPTARGET_BBOX_EDGE,
+    SNAPTARGET_BBOX_EDGE_MIDPOINT,
+    SNAPTARGET_BBOX_MIDPOINT,
     SNAPTARGET_GRADIENT,
-    SNAPTARGET_PAGE_BORDER
+    SNAPTARGET_PAGE_BORDER,
+    SNAPTARGET_PAGE_CORNER,
+    SNAPTARGET_CONVEX_HULL_CORNER,
+    SNAPTARGET_ELLIPSE_QUADRANT_POINT,
 };
+
+enum SnapSourceType {
+    SNAPSOURCE_UNDEFINED = 0,
+    SNAPSOURCE_BBOX_CORNER,
+    SNAPSOURCE_BBOX_MIDPOINT,
+    SNAPSOURCE_BBOX_EDGE_MIDPOINT,
+    SNAPSOURCE_NODE_SMOOTH,
+    SNAPSOURCE_NODE_CUSP,
+    SNAPSOURCE_LINE_MIDPOINT,
+    SNAPSOURCE_OBJECT_MIDPOINT,
+    SNAPSOURCE_ROTATION_CENTER,
+    SNAPSOURCE_HANDLE,
+    SNAPSOURCE_PATH_INTERSECTION,
+    SNAPSOURCE_GUIDE,
+    SNAPSOURCE_CONVEX_HULL_CORNER,
+    SNAPSOURCE_ELLIPSE_QUADRANT_POINT
+};
+
 
 /// Class describing the result of an attempt to snap.
 class SnappedPoint
@@ -43,8 +71,8 @@ class SnappedPoint
 
 public:
     SnappedPoint();
-    SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2);
-    SnappedPoint(Geom::Point const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
+    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2);
+    SnappedPoint(Geom::Point const &p, SnapSourceType const &source, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &fully_constrained);
     ~SnappedPoint();
 
     Geom::Coord getSnapDistance() const {return _distance;}
@@ -79,11 +107,14 @@ public:
     void setTransformation(Geom::Point const t) {_transformation = t;}
     void setTarget(SnapTargetType const target) {_target = target;}
     SnapTargetType getTarget() const {return _target;}
+    void setSource(SnapSourceType const source) {_source = source;}
+	SnapSourceType getSource() const {return _source;}
 
     bool isOtherSnapBetter(SnappedPoint const &other_one, bool weighted) const;
 
     /*void dump() const {
         std::cout << "_point              = " << _point << std::endl;
+        std::cout << "_source             = " << _source << std::endl;
         std::cout << "_target             = " << _target << std::endl;
         std::cout << "_at_intersection    = " << _at_intersection << std::endl;
         std::cout << "_fully_constrained  = " << _fully_constrained << std::endl;
@@ -99,6 +130,7 @@ public:
 
 protected:
     Geom::Point _point; // Location of the snapped point
+    SnapSourceType _source; // Describes what snapped
     SnapTargetType _target; // Describes to what we've snapped to
     bool _at_intersection; // If true, the snapped point is at an intersection
     bool _fully_constrained; // When snapping for example to a node, then the snap will be "fully constrained".

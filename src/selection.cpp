@@ -441,48 +441,48 @@ boost::optional<Geom::Point> Selection::center() const {
 /**
  * Compute the list of points in the selection that are to be considered for snapping.
  */
-std::vector<Geom::Point> Selection::getSnapPoints(SnapPreferences const *snapprefs) const {
+std::vector<std::pair<Geom::Point, int> > Selection::getSnapPoints(SnapPreferences const *snapprefs) const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
-    
+
     SnapPreferences snapprefs_dummy = *snapprefs; // create a local copy of the snapping prefs
     snapprefs_dummy.setIncludeItemCenter(false); // locally disable snapping to the item center
-    
-    std::vector<Geom::Point> p;
+
+    std::vector<std::pair<Geom::Point, int> > p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
         SPItem *this_item = SP_ITEM(iter->data);
-        sp_item_snappoints(this_item, SnapPointsIter(p), &snapprefs_dummy);
-       
+        sp_item_snappoints(this_item, false, p, &snapprefs_dummy);
+
         //Include the transformation origin for snapping
         //For a selection or group only the overall origin is considered
         if (snapprefs != NULL && snapprefs->getIncludeItemCenter()) {
-        	p.push_back(this_item->getCenter());
-        }  
+        	p.push_back(std::make_pair(this_item->getCenter(), SNAPSOURCE_ROTATION_CENTER));
+        }
     }
 
     return p;
 }
 
-std::vector<Geom::Point> Selection::getSnapPointsConvexHull(SnapPreferences const *snapprefs) const {
+std::vector<std::pair<Geom::Point, int> > Selection::getSnapPointsConvexHull(SnapPreferences const *snapprefs) const {
     GSList const *items = const_cast<Selection *>(this)->itemList();
 
-    std::vector<Geom::Point> p;
+    std::vector<std::pair<Geom::Point, int> > p;
     for (GSList const *iter = items; iter != NULL; iter = iter->next) {
-		sp_item_snappoints(SP_ITEM(iter->data), SnapPointsIter(p), snapprefs);
+		sp_item_snappoints(SP_ITEM(iter->data), false, p, snapprefs);
     }
 
-    std::vector<Geom::Point> pHull;
+    std::vector<std::pair<Geom::Point, int> > pHull;
     if (!p.empty()) {
-        std::vector<Geom::Point>::iterator i;
-        Geom::RectHull cvh(p.front());
+    	std::vector<std::pair<Geom::Point, int> >::iterator i;
+        Geom::RectHull cvh((p.front()).first);
         for (i = p.begin(); i != p.end(); i++) {
             // these are the points we get back
-            cvh.add(*i);
+            cvh.add((*i).first);
         }
 
         Geom::OptRect rHull = cvh.bounds();
         if (rHull) {
             for ( unsigned i = 0 ; i < 4 ; ++i ) {
-                pHull.push_back(rHull->corner(i));
+                pHull.push_back(std::make_pair(rHull->corner(i), SNAPSOURCE_CONVEX_HULL_CORNER));
             }
         }
     }
