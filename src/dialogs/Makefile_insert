@@ -1,19 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
-#
-# Several object property dialogs
-# Author: Lauris Kaplinski <lauris@ximian.com>
-#
-# Here should be things, that use only xml interface, not objects themselves
-# Currently we still have selection_changed functions, but these will be
-# replaced by selection 'changed' signal handlers
-#
 
-dialogs/all: dialogs/libspdialogs.a
-
-dialogs/clean:
-	rm -f dialogs/libspdialogs.a $(dialogs_libspdialogs_a_OBJECTS)
-
-dialogs_libspdialogs_a_SOURCES =	\
+ink_common_sources +=	\
 	dialogs/clonetiler.cpp		\
 	dialogs/clonetiler.h		\
 	dialogs/dialog-events.cpp	\
@@ -51,7 +38,7 @@ dialogs_libspdialogs_a_SOURCES =	\
 	dialogs/sp-attribute-widget.cpp	\
 	dialogs/sp-attribute-widget.h	\
 	dialogs/spellcheck.cpp		\
-	dialogs/spellcheck.h			\
+	dialogs/spellcheck.h		\
 	dialogs/stroke-style.cpp	\
 	dialogs/stroke-style.h		\
 	dialogs/swatches.cpp		\
@@ -62,11 +49,3 @@ dialogs_libspdialogs_a_SOURCES =	\
 	dialogs/unclump.h		\
 	dialogs/xml-tree.cpp		\
 	dialogs/xml-tree.h
-
-#	dialogs/sp-widget.c	\
-#	dialogs/sp-widget.h	\
-#	dialogs/gradient-vector.c	\
-#	dialogs/gradient-vector.h	\
-#	dialogs/gradient-selector.c	\
-#	dialogs/gradient-selector.h
-

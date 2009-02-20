@@ -1,19 +1,8 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-#
-# Miscellaneous unsystematized and temporary helper utilities
-#
-# libspchelp - canvas utilities, specific canvas items
-#
-
-helper/all: helper/libspchelp.a
-
-helper/clean:
-	rm -f helper/libspchelp.a $(helper_libspchelp_a_OBJECTS)
-
 helper/unit-menu.$(OBJEXT): helper/sp-marshal.h
 
-helper_libspchelp_a_SOURCES =	\
+ink_common_sources +=	\
 	helper/action.cpp	\
 	helper/action.h	\
 	helper/geom.cpp	\

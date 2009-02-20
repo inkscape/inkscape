@@ -1,11 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-libnrtype/all: libnrtype/libnrtype.a
-
-libnrtype/clean:
-	rm -f libnrtype/libnrtype.a $(libnrtype_libnrtype_a_OBJECTS)
-
-libnrtype_libnrtype_a_SOURCES =	\
+ink_common_sources +=	\
 	libnrtype/boundary-type.h	\
 	libnrtype/font-style-to-pos.cpp	\
 	libnrtype/font-style-to-pos.h	\
@@ -40,5 +35,3 @@ libnrtype_libnrtype_a_SOURCES =	\
 	libnrtype/Layout-TNG-Scanline-Makers.cpp \
 	libnrtype/Layout-TNG.cpp \
 	libnrtype/Layout-TNG.h
-	
-

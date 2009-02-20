@@ -1,19 +1,14 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-extension/internal/all: extension/internal/libinternal.a
-
-extension/internal/clean:
-	rm -f extension/internal/libinternal.a $(extension_internal_libinternal_OBJECTS)
-
 if WITH_LIBWPG
-extension_internal_libwpg = \
+ink_common_sources += \
 	extension/internal/wpg-input.cpp	\
 	extension/internal/wpg-input.h
 
 endif
 
 if USE_IMAGE_MAGICK
-extension_internal_image_magick_sources =			\
+ink_common_sources +=			\
 	extension/internal/bitmap/imagemagick.cpp		\
 	extension/internal/bitmap/imagemagick.h			\
 	extension/internal/bitmap/adaptiveThreshold.cpp		\
@@ -86,7 +81,7 @@ extension_internal_image_magick_sources =			\
 	extension/internal/bitmap/wave.h
 endif
 
-extension_internal_libinternal_a_SOURCES =	\
+ink_common_sources +=	\
 	extension/internal/bluredge.h	\
 	extension/internal/bluredge.cpp	\
 	extension/internal/clear-n_.h   \
@@ -128,8 +123,6 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/latex-pstricks.h	\
 	extension/internal/latex-pstricks-out.cpp	\
 	extension/internal/latex-pstricks-out.h	\
-	$(extension_internal_libwpg) \
-	$(extension_internal_image_magick_sources) \
 	extension/internal/filter/filter-all.cpp \
 	extension/internal/filter/filter-file.cpp \
 	extension/internal/filter/filter.cpp \
@@ -142,4 +135,3 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/emf-win32-print.cpp \
 	extension/internal/emf-win32-inout.h \
 	extension/internal/emf-win32-inout.cpp 
-

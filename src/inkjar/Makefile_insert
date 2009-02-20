@@ -1,10 +1,5 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-inkjar/all: inkjar/libinkjar.a
-
-inkjar/clean:
-	rm -f inkjar/libinkjar.a $(inkjar_libinkjar_OBJECTS)
-
-inkjar_libinkjar_a_SOURCES =	\
+ink_common_sources +=	\
 	inkjar/jar.cpp	\
 	inkjar/jar.h

@@ -1,11 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-io/all: io/libio.a
-
-io/clean:
-	rm -f io/libio.a $(io_libio_a_OBJECTS)
-
-io_libio_a_SOURCES = \
+ink_common_sources += \
 	io/base64stream.h \
 	io/base64stream.cpp \
 	io/ftos.cpp \

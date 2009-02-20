@@ -1,11 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-ui/view/all: ui/view/libuiview.a
-
-ui/view/clean:
-	rm -f ui/view/libuiview.a $(ui_libuiview_a_OBJECTS)
-
-ui_view_libuiview_a_SOURCES =		\
+ink_common_sources +=		\
 	ui/view/edit.h			\
 	ui/view/edit.cpp		\
 	ui/view/edit-widget.h		\

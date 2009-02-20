@@ -1,11 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-extension/all: extension/libextension.a extension/implementation/all extension/internal/all
-
-extension/clean: extension/implementation/clean extension/internal/clean
-	rm -f extension/libextension.a $(extension_libextension_a_OBJECTS)
-
-extension_libextension_a_SOURCES =	\
+ink_common_sources +=	\
 	extension/extension.cpp	\
 	extension/extension.h	\
 	extension/extension-forward.h	\
@@ -45,7 +40,6 @@ extension_libextension_a_SOURCES =	\
 	extension/system.h \
 	extension/timer.cpp \
 	extension/timer.h \
-	\
 	extension/input.h \
 	extension/input.cpp \
 	extension/output.h \

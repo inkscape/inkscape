@@ -12,20 +12,20 @@ dom_libdom_a_SOURCES =       \
 	dom/dom.h                \
 	dom/domimpl.cpp          \
 	dom/domimpl.h            \
-    dom/domptr.cpp           \
-    dom/domptr.h             \
-    dom/domstring.cpp        \
-    dom/domstring.h          \
-    dom/events.h             \
-    dom/ls.h                 \
-    dom/lsimpl.cpp           \
-    dom/lsimpl.h             \
-    dom/prop-css2.cpp        \
-    dom/prop-css.cpp         \
-    dom/prop-svg.cpp         \
-    dom/smil.h               \
-    dom/smilimpl.cpp         \
-    dom/smilimpl.h           \
+	dom/domptr.cpp           \
+	dom/domptr.h             \
+	dom/domstring.cpp        \
+	dom/domstring.h          \
+	dom/events.h             \
+	dom/ls.h                 \
+	dom/lsimpl.cpp           \
+	dom/lsimpl.h             \
+	dom/prop-css2.cpp        \
+	dom/prop-css.cpp         \
+	dom/prop-svg.cpp         \
+	dom/smil.h               \
+	dom/smilimpl.cpp         \
+	dom/smilimpl.h           \
 	dom/stylesheets.h        \
 	dom/svg2.h               \
 	dom/svg.h                \
@@ -48,31 +48,31 @@ dom_libdom_a_SOURCES =       \
 	dom/xpathimpl.h          \
 	dom/xpathparser.cpp      \
 	dom/xpathparser.h        \
-    dom/xpathtoken.h         \
-    dom/xpathtoken.cpp       \
+	dom/xpathtoken.h         \
+	dom/xpathtoken.cpp       \
 	dom/io/base64stream.cpp  \
 	dom/io/base64stream.h    \
 	dom/io/bufferstream.cpp  \
 	dom/io/bufferstream.h    \
-    dom/io/domstream.cpp     \
-    dom/io/domstream.h       \
-    dom/io/httpclient.h      \
-    dom/io/gzipstream.cpp    \
-    dom/io/gzipstream.h      \
-    dom/io/socket.cpp        \
-    dom/io/socket.h          \
-    dom/io/gzipstream.cpp    \
-    dom/io/gzipstream.h      \
-    dom/io/stringstream.cpp  \
+	dom/io/domstream.cpp     \
+	dom/io/domstream.h       \
+	dom/io/httpclient.h      \
+	dom/io/gzipstream.cpp    \
+	dom/io/gzipstream.h      \
+	dom/io/socket.cpp        \
+	dom/io/socket.h          \
+	dom/io/gzipstream.cpp    \
+	dom/io/gzipstream.h      \
+	dom/io/stringstream.cpp  \
 	dom/io/stringstream.h    \
 	dom/io/uristream.cpp     \
 	dom/io/uristream.h       \
-    dom/odf/odfdocument.cpp  \
-    dom/odf/odfdocument.h    \
-    dom/util/digest.h        \
-    dom/util/digest.cpp      \
-    dom/util/thread.h        \
-    dom/util/thread.cpp      \
-    dom/util/ziptool.h       \
-    dom/util/ziptool.cpp
+	dom/odf/odfdocument.cpp  \
+	dom/odf/odfdocument.h    \
+	dom/util/digest.h        \
+	dom/util/digest.cpp      \
+	dom/util/thread.h        \
+	dom/util/thread.cpp      \
+	dom/util/ziptool.h       \
+	dom/util/ziptool.cpp
 

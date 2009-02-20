@@ -1,13 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-extension/script/all: extension/script/libscript.a
-
-extension/script/clean:
-	rm -f extension/script/libscript.a
-	rm -f $(extension_script_libscript_a_OBJECTS)
-
-
-extension_script_libscript_a_SOURCES =	\
+ink_common_sources +=	\
 	extension/script/InkscapeScript.h \
 	extension/script/InkscapeScript.cpp
 

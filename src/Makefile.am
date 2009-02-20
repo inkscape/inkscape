@@ -13,6 +13,21 @@
 # so perhaps 1.6 will work.
 AUTOMAKE_OPTIONS = 1.7 subdir-objects
 
+# Executables compiled by "make" and installed by "make install"
+bin_PROGRAMS = inkscape inkview
+
+# Add sources common for Inkscape and Inkview to this variable.
+ink_common_sources =
+# Add Inkscape-only sources here.
+inkscape_SOURCES =
+# Add Inkview-only sources here.
+inkview_SOURCES =
+
+# Libraries which should be compiled by "make" but not installed.
+# Use this only for libraries that are really standalone, rather than for
+# source tree subdirectories.
+noinst_LIBRARIES = $(inkscape_private_libs)
+
 INCLUDES =	\
 	$(PERL_CFLAGS) $(PYTHON_CFLAGS)	\
 	$(FREETYPE_CFLAGS)	\
@@ -28,7 +43,10 @@ INCLUDES =	\
 	-DPOTRACE=\"potrace\"	\
 	$(INKSCAPE_CFLAGS) \
 	-I$(top_srcdir)/cxxtest \
-	$(WIN32_CFLAGS)
+	$(WIN32_CFLAGS) \
+	-I$(srcdir)/bind/javainc \
+	-I$(srcdir)/bind/javainc/linux \
+	$(AM_CPPFLAGS)
 
 CXXTEST_TEMPLATE = $(srcdir)/cxxtest-template.tpl
 CXXTESTGENFLAGS = --root --have-eh --template=$(CXXTEST_TEMPLATE)
@@ -58,48 +76,20 @@ DISTCLEANFILES =	\
 	helper/sp-marshal.h	\
 	inkscape-version.cpp
 
+if WITH_INKBOARD
+libpedro = pedro/libpedro.a
+endif
+
 inkscape_private_libs =	\
-	libinkpre.a		\
-	application/libinkapp.a	\
-	ui/dialog/libuidialog.a	\
-	dialogs/libspdialogs.a	\
-	ui/cache/libuicache.a	\
-	jabber_whiteboard/libjabber_whiteboard.a \
-	pedro/libpedro.a	\
-	trace/libtrace.a	\
-	svg/libspsvg.a		\
-	filters/libfilters.a	\
-	widgets/libspwidgets.a	\
-	display/libspdisplay.a	\
-	helper/libspchelp.a	\
+	dom/libdom.a		\
 	libcroco/libcroco.a	\
-	libnrtype/libnrtype.a	\
 	libavoid/libavoid.a	\
-	livarot/libvarot.a	\
-	live_effects/liblive_effects.a	\
-	live_effects/parameter/liblpeparam.a	\
-	ui/view/libuiview.a	\
-	ui/libui.a		\
-	ui/widget/libuiwidget.a	\
 	libgdl/libgdl.a		\
-	graphlayout/libgraphlayout.a	\
-	removeoverlap/libremoveoverlap.a		\
 	libcola/libcola.a	\
 	libvpsc/libvpsc.a	\
-	extension/libextension.a	\
-	extension/implementation/libimplementation.a	\
-	extension/internal/libinternal.a	\
-	libnr/libnr.a		\
-	extension/script/libscript.a	\
-	bind/libbind.a	\
-	dom/libdom.a            \
-	xml/libspxml.a		\
+	livarot/libvarot.a	\
 	2geom/lib2geom.a	\
-	util/libinkutil.a	\
-	io/libio.a	        \
-	$(inkjar_libs)		\
-	libinkpost.a		\
-	debug/libinkdebug.a     \
+	$(libpedro)		\
 	libinkversion.a
 
 all_libs =			\
@@ -161,13 +151,6 @@ include util/Makefile_insert
 include trace/Makefile_insert
 include 2geom/Makefile_insert
 
-# Executables compiled by "make" and installed by "make install"
-bin_PROGRAMS = inkscape inkview
-
-# Libraries which should be compiled by "make" but not installed
-# Currently we use one library per source directory.
-noinst_LIBRARIES = $(inkscape_private_libs)
-
 # Extra files not mentioned as sources to include in the source tarball
 EXTRA_DIST =	\
 	$(top_srcdir)/Doxyfile	\
@@ -225,10 +208,18 @@ EXTRA_DIST =	\
 	traits/reference.h \
 	$(jabber_whiteboard_SOURCES)
 
-EXTRA_PROGRAMS =	\
-	inkview 	\
-	libnr/testnr
+# ################################################
+#
+#  B I N A R I E S
+#
+# ################################################
 
+inkscape_SOURCES += main.cpp $(ink_common_sources) $(win32_sources)
+inkscape_LDADD = $(all_libs)
+inkscape_LDFLAGS = --export-dynamic $(kdeldflags)
+
+inkview_SOURCES += inkview.cpp $(ink_common_sources) $(win32_sources)
+inkview_LDADD = $(all_libs)
 
 # #################################
 # ## TESTING STUFF (make check) ###
@@ -249,7 +240,7 @@ TESTS = $(check_PROGRAMS)
 
 # including the the testsuites here ensures that they get distributed
 cxxtests_SOURCES = cxxtests.cpp $(CXXTEST_TESTSUITES)
-cxxtests_LDADD = libnr/nr-compose-reference.o $(all_libs)
+cxxtests_LDADD = libnr/nr-compose-reference.o $(ink_common_sources)
 
 cxxtests.cpp: $(CXXTEST_TESTSUITES) $(CXXTEST_TEMPLATE)
 	$(CXXTESTGEN) -o cxxtests.cpp $(CXXTEST_TESTSUITES)

@@ -1,13 +1,9 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-ui/all: ui/libui.a ui/view/all ui/widget/all ui/dialog/all ui/cache/all
-
-ui/clean: ui/widget/clean ui/dialog/clean ui/cache/clean
-	rm -f ui/libui.a $(ui_libui_a_OBJECTS)
-
-ui_libui_a_SOURCES =		\
+ink_common_sources +=		\
 	ui/clipboard.cpp \
 	ui/clipboard.h \
+	ui/icon-names.h \
 	ui/previewable.h	\
 	ui/previewfillable.h	\
 	ui/previewholder.cpp	\

@@ -1,19 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-#
-# Sodipodi svg wrapper
-# Author: Lauris Kaplinski <lauris@ariman.ee>
-# Most code is actually written by Raph Levien
-#
-# Implements svg interpretation of xml tree
-#
-
-svg/all: svg/libspsvg.a
-
-svg/clean:
-	rm -f svg/libspsvg.a $(svg_libspsvg_a_OBJECTS)
-
-svg_libspsvg_a_SOURCES =	\
+ink_common_sources +=	\
 	svg/css-ostringstream.h	\
 	svg/css-ostringstream.cpp	\
 	svg/itos.cpp	\

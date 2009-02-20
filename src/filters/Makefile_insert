@@ -1,11 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-filters/all: filters/libfilters.a
-
-filters/clean: 
-	rm -f extension/libfilters.a $(extension_libextension_a_OBJECTS)
-
-filters_libfilters_a_SOURCES =	\
+ink_common_sources +=	\
 	filters/blend.cpp							\
 	filters/blend-fns.h						\
 	filters/blend.h							\

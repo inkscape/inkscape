@@ -1,11 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-live_effects/all: live_effects/liblive_effects.a live_effects/parameter/all
-
-live_effects/clean:
-	rm -f live_effects/liblive_effects.a $(live_effects_liblive_effects_a_OBJECTS)
-
-live_effects_liblive_effects_a_SOURCES = \
+ink_common_sources += \
 	live_effects/effect.cpp	\
 	live_effects/effect.h	\
 	live_effects/effect-enum.h	\

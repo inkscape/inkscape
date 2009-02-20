@@ -3,12 +3,8 @@
 # Jabber whiteboard communication and Inkscape listener components
 # Author: David Yip <yipdw@rose-hulman.edu>
 
-jabber_whiteboard/all: jabber_whiteboard/libjabber_whiteboard.a
-
-jabber_whiteboard/clean:
-	rm -f jabber_whiteboard/libjabber_whiteboard.a $(jabber_whiteboard_libjabber_whiteboard_a_OBJECTS)
-
-jabber_whiteboard_SOURCES = \
+if WITH_INKBOARD
+temp_whiteboard_files = \
 	jabber_whiteboard/defines.cpp \
 	jabber_whiteboard/defines.h \
 	jabber_whiteboard/empty.cpp \
@@ -39,13 +35,9 @@ jabber_whiteboard_SOURCES = \
 	jabber_whiteboard/session-manager.h \
 	jabber_whiteboard/tracker-node.h \
 	jabber_whiteboard/pedrogui.cpp \
-	jabber_whiteboard/pedrogui.h 
-
-
-if WITH_INKBOARD
-temp_whiteboard_files = $(jabber_whiteboard_SOURCES)
+	jabber_whiteboard/pedrogui.h
 endif
 
-jabber_whiteboard_libjabber_whiteboard_a_SOURCES = \
+ink_common_sources += \
 	jabber_whiteboard/empty.cpp \
 	$(temp_whiteboard_files)

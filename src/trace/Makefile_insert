@@ -1,11 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-trace/all: trace/libtrace.a
-
-trace/clean:
-	rm -f trace/libtrace.a $(trace_libtrace_a_OBJECTS)
-
-trace_libtrace_a_SOURCES =	            \
+ink_common_sources +=	            \
 	trace/pool.h                        \
 	trace/trace.h                       \
 	trace/trace.cpp                     \

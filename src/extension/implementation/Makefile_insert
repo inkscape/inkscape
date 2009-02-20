@@ -1,12 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-extension/implementation/all: extension/implementation/libimplementation.a
-
-extension/implementation/clean:
-	rm -f extension/implementation/libimplementation.a	\
-		$(extension_implementation_libimplementation_a_OBJECTS)
-
-extension_implementation_libimplementation_a_SOURCES =	\
+ink_common_sources +=	\
 	extension/implementation/implementation.cpp	\
 	extension/implementation/implementation.h \
 	extension/implementation/script.cpp	\

@@ -1,20 +1,9 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
-#
-# Sodipodi GnomeCanvas objects
-# Author: Lauris Kaplinski <lauris@ariman.ee>
-#
-# Here are major objects, used for displaying things
-#
-
-display/all: display/libspdisplay.a
-
-display/clean:
-	rm -f display/libspdisplay.a $(display_libspdisplay_a_OBJECTS)
 
 display/canvas-arena.$(OBJEXT): helper/sp-marshal.h
 display/sp-canvas.$(OBJEXT): helper/sp-marshal.h
 
-display_libspdisplay_a_SOURCES = \
+ink_common_sources += \
 	display/nr-3dutils.h \
 	display/nr-3dutils.cpp \
 	display/nr-arena-forward.h	\
@@ -86,16 +75,16 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-convolve-matrix.h	\
 	display/nr-filter-diffuselighting.cpp     \
 	display/nr-filter-diffuselighting.h       \
-    display/nr-filter-displacement-map.cpp      \
-    display/nr-filter-displacement-map.h        \
+	display/nr-filter-displacement-map.cpp      \
+	display/nr-filter-displacement-map.h        \
 	display/nr-filter-flood.cpp  \
 	display/nr-filter-flood.h    \
 	display/nr-filter-gaussian.cpp  \
 	display/nr-filter-gaussian.h    \
 	display/nr-filter-getalpha.cpp	\
 	display/nr-filter-getalpha.h	\
-    display/nr-filter-image.cpp	\
-    display/nr-filter-image.h	\
+	display/nr-filter-image.cpp	\
+	display/nr-filter-image.h	\
 	display/nr-filter-merge.cpp	\
 	display/nr-filter-merge.h	\
 	display/nr-filter-morphology.cpp	\

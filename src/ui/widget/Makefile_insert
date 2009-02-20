@@ -1,11 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-ui/widget/all: ui/widget/libuiwidget.a
-
-ui/widget/clean:
-	rm -f ui/widget/libuiwidget.a $(ui_libuiwidget_a_OBJECTS)
-
-ui_widget_libuiwidget_a_SOURCES =	\
+ink_common_sources +=	\
 	ui/widget/attr-widget.h	\
 	ui/widget/button.h	\
 	ui/widget/button.cpp	\

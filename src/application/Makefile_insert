@@ -1,11 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
-application/all: application/libinkapp.a
-
-application/clean:
-	rm -f application/libinkapp.a $(application_libinkapp_a_OBJECTS)
-
-application_libinkapp_a_SOURCES = \
+ink_common_sources += \
 	application/editor.cpp		\
 	application/editor.h		\
 	application/application.cpp	\
