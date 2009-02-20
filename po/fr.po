@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-02-19 18:33+0100\n"
-"PO-Revision-Date: 2009-02-19 22:20+0100\n"
+"PO-Revision-Date: 2009-02-20 12:58+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -152,18 +152,16 @@ msgid "Low, sharp bevel"
 msgstr "Biseau bas et net"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Basic Roughen"
-msgstr "Rendre rugueux"
+msgstr "Rugosité de base"
 
 #: ../share/filters/filters.svg.h:11
 #: ../share/filters/filters.svg.h:113
 #: ../share/filters/filters.svg.h:120
 #: ../share/filters/filters.svg.h:121
 #: ../share/filters/filters.svg.h:123
-#, fuzzy
 msgid "Basics"
-msgstr "Essentiel"
+msgstr "Élémentaires"
 
 #: ../share/filters/filters.svg.h:11
 msgid "Small-scale roughened edges"
@@ -837,7 +835,7 @@ msgstr "Morphologie"
 
 #: ../share/filters/filters.svg.h:76
 msgid "A blurry hollow going parallel to the edge on the inside"
-msgstr ""
+msgstr "Sillon flou parallèle au bord à l'intérieur de l'objet"
 
 #: ../share/filters/filters.svg.h:77
 msgid "Hole"
@@ -914,7 +912,7 @@ msgstr "Papier rêche"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Aquarel paper effect which can be used for pictures as for objects"
-msgstr ""
+msgstr "Effet de papier à aquarelle, utilisable autant pour les images que pour les objets"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Rough and glossy"
@@ -922,7 +920,7 @@ msgstr "Rèche et luisant"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
-msgstr ""
+msgstr "Effet de papier brillant froissé, utilisable autant pour les images que pour les objets"
 
 #: ../share/filters/filters.svg.h:88
 msgid "In and out"
@@ -1173,22 +1171,20 @@ msgid "Colorized mountains tops out of the fog"
 msgstr "Sommets colorisés émergeant du brouillard"
 
 #: ../share/filters/filters.svg.h:120
-#, fuzzy
 msgid "Basic noise transparency"
-msgstr "Transparence des boîtes de dialogue"
+msgstr "Transparence bruitée de base"
 
 #: ../share/filters/filters.svg.h:120
 msgid "Basic noise transparency texture"
-msgstr ""
+msgstr "Texture en  transparence bruitée de base"
 
 #: ../share/filters/filters.svg.h:121
-#, fuzzy
 msgid "Basic noise fill"
-msgstr "Ne pas définir le remplissage"
+msgstr "Remplissage bruité de base"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Basic noise fill texture"
-msgstr ""
+msgstr "Texture de remplissage de bruit de base"
 
 #: ../share/filters/filters.svg.h:122
 msgid "Garden of Delights"
@@ -1200,7 +1196,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:123
 msgid "Basic diffuse"
-msgstr ""
+msgstr "Diffusion de base"
 
 #: ../share/filters/filters.svg.h:123
 #, fuzzy
@@ -3131,11 +3127,11 @@ msgstr "Arrêter la vérification"
 
 #: ../src/dialogs/spellcheck.cpp:810
 msgid "_Start"
-msgstr "_Commencer"
+msgstr "_Démarrer"
 
 #: ../src/dialogs/spellcheck.cpp:810
 msgid "Start the check"
-msgstr "Commencer la vérification"
+msgstr "Démarrer la vérification"
 
 #: ../src/dialogs/stroke-style.cpp:286
 #: ../src/dialogs/stroke-style.cpp:345
@@ -16639,7 +16635,7 @@ msgstr "Rechercher des objets dans le document"
 
 #: ../src/verbs.cpp:2644
 msgid "Find and _Replace Text..."
-msgstr ""
+msgstr "Trouver et _remplacer le texte..."
 
 #: ../src/verbs.cpp:2645
 #, fuzzy
