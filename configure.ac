@@ -1,12 +1,14 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.50)
+AC_PREREQ(2.53)
+
+# Always use 0.xx+devel instead of 0.xxdevel for the version, e.g. 0.46+devel.
+# Rationale: (i) placate simple version comparison software such as
+# `dpkg --compare-versions'.  (ii) We don't always know what the next
+# version is going to be called until about the time we release it
+# (whereas we always know what the previous version was called).
 AC_INIT(inkscape, 0.46+devel)
-dnl N.B. After 0.40, please change to `0.40+cvs' instead of `0.41cvs'.
-dnl Rationale: (i) placate simple version comparison software such as
-dnl `dpkg --compare-versions'.  (ii) We don't always know what the next
-dnl version is going to be called until about the time we release it
-dnl (whereas we always know what the previous version was called).
+
 AC_CANONICAL_HOST
 AC_CONFIG_SRCDIR([src/main.cpp])
 AM_INIT_AUTOMAKE([dist-zip dist-bzip2 tar-pax])
@@ -21,14 +23,13 @@ AC_ARG_ENABLE([lsb], AS_HELP_STRING([--enable-lsb], [LSB-compatible build config
 
 AM_CONFIG_HEADER(config.h)
 
-AC_PROG_INTLTOOL(0.22)
-
 AC_LANG(C++)
 AC_ISC_POSIX
 AC_PROG_CXX
 AM_PROG_CC_STDC
 AM_PROG_AS
 AC_PROG_RANLIB
+AC_PROG_INTLTOOL(0.22)
 AC_HEADER_STDC
 INK_SVN_SNAPSHOT_BUILD
 
@@ -142,7 +143,7 @@ AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
 
 dnl ******************************
 dnl Check for OpenMP 
-dnl Replace this with AC_OPENMP once it's possible to use Autoconf 2.62
+dnl Replace this with AC_OPENMP once Autoconf 2.62 is widespread
 dnl ******************************
 AX_OPENMP([openmp_ok=yes],[openmp_ok=no])
 if test "x$openmp_ok" = "xyes"; then
@@ -845,8 +846,6 @@ if test "$GXX" = "yes"; then
       ;;
   esac
 fi
-
-AC_DEFINE(WITH_MODULES, 1, [Use experimental module support])
 
 dnl ******************************
 dnl   libinkscape
