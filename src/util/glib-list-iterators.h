@@ -1,11 +1,14 @@
-/*
- * Inkscape::Util::GSListIterator - STL iterator for GSList
+/** @file
+ * @brief STL iterators for Glib list types
+ */
+/* Inkscape::Util::GSListIterator - STL iterator for GSList
  * Inkscape::Util::GSListConstIterator - STL iterator for GSList
  * Inkscape::Util::GListIterator - STL iterator for GList
  * Inkscape::Util::GListConstIterator - STL iterator for GList
  *
  * Authors:
  *   MenTaLguY <mental@rydia.net>
+ *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  *
  * Copyright (C) 2005 MenTaLguY
  *
@@ -21,7 +24,6 @@
 #include "glib/glist.h"
 
 namespace Inkscape {
-
 namespace Util {
 
 template <typename T> class GSListConstIterator;
@@ -44,7 +46,9 @@ public:
     GSList const *list() const { return _list; }
     
     reference operator*() const {
-        return *reinterpret_cast<pointer>(&_list->data);
+        _ref_union u;
+        u._gp = _list->data;
+        return *u._p;
     }
 
     bool operator==(GSListConstIterator const &other) {
@@ -65,6 +69,7 @@ public:
     }
 
 private:
+    union _ref_union {gpointer _gp; pointer _p;};
     GSList const *_list;
 };
 
@@ -86,10 +91,12 @@ public:
     GSList *list() { return _list; }
     
     const_reference operator*() const {
-        return *reinterpret_cast<pointer>(&_list->data);
+        return const_cast<GSListIterator<T *> *>(this)->operator*();
     }
     reference operator*() {
-        return *reinterpret_cast<pointer>(&_list->data);
+        _ref_union u;
+        u._gp = _list->data;
+        return *u._p;
     }
 
     bool operator==(GSListIterator const &other) {
@@ -110,6 +117,7 @@ public:
     }
 
 private:
+    union _ref_union {gpointer _gp; pointer _p;};
     GSList *_list;
 };
  
@@ -128,7 +136,9 @@ public:
     GList const *list() const { return _list; }
     
     reference operator*() const {
-        return *reinterpret_cast<pointer>(&_list->data);
+        _ref_union u;
+        u._gp = _list->data;
+        return *u._p;
     }
 
     bool operator==(GListConstIterator const &other) {
@@ -159,6 +169,7 @@ public:
     }
 
 private:
+    union _ref_union {gpointer _gp; pointer _p;};
     GList const *_list;
 };
 
@@ -186,9 +197,13 @@ public:
     GList *list() { return _list; }
     
     const_reference operator*() const {
-        return *reinterpret_cast<pointer>(&_list->data);
+        return const_cast<GListIterator<T *> *>(this)->operator*();
     }
-    reference operator*() { return *reinterpret_cast<pointer>(&_list->data); }
+    reference operator*() {
+        _ref_union u;
+        u._gp = _list->data;
+        return *u._p;
+    }
 
     bool operator==(GListIterator const &other) {
         return other._list == _list;
@@ -218,12 +233,12 @@ public:
     }
 
 private:
+    union _ref_union {gpointer _gp; pointer _p;};
     GList *_list;
 };
  
-}
-
-}
+} // namespace Util
+} // Namespace Inkscape
 
 #endif
 /*
