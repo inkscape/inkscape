@@ -356,7 +356,7 @@ void AboutBox::initStrings() {
         "Michael Wybrow\n"
         "Daniel Yacob\n"
         "Masatake Yamato\n"
-        "David Yip"
+        "David Yip";
 
     //##############################
     //# T R A N S L A T O R S
