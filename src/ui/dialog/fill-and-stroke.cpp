@@ -21,15 +21,13 @@
 #include "selection.h"
 #include "style.h"
 #include "svg/css-ostringstream.h"
-#include "verbs.h"
-#include "xml/repr.h"
-#include "widgets/icon.h"
 #include "ui/icon-names.h"
-
-#include "dialogs/fill-style.h"
-#include "dialogs/stroke-style.h"
-
-#include <widgets/paint-selector.h>
+#include "verbs.h"
+#include "widgets/fill-style.h"
+#include "widgets/icon.h"
+#include "widgets/paint-selector.h"
+#include "widgets/stroke-style.h"
+#include "xml/repr.h"
 
 namespace Inkscape {
 namespace UI {

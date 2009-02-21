@@ -1,9 +1,11 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
 ink_common_sources +=		\
-	ui/clipboard.cpp \
-	ui/clipboard.h \
-	ui/icon-names.h \
+	ui/context-menu.cpp	\
+	ui/context-menu.h	\
+	ui/clipboard.cpp	\
+	ui/clipboard.h		\
+	ui/icon-names.h		\
 	ui/previewable.h	\
 	ui/previewfillable.h	\
 	ui/previewholder.cpp	\

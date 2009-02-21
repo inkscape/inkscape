@@ -40,29 +40,27 @@
 #include <gtk/gtkmain.h>
 #include <string>
 #include <cstring>
+
 #include "application/application.h"
 #include "application/editor.h"
-#include "xml/repr.h"
+#include "desktop.h"
+#include "dir-util.h"
+#include "display/nr-arena-item.h"
+#include "document-private.h"
 #include "helper/units.h"
 #include "inkscape-private.h"
 #include "inkscape-version.h"
-#include "sp-object-repr.h"
-#include "sp-namedview.h"
-#include "desktop.h"
-#include "document-private.h"
-#include "dir-util.h"
-#include "unit-constants.h"
-#include "preferences.h"
 #include "libavoid/router.h"
-#include "sp-item-group.h"
-#include "profile-manager.h"
 #include "persp3d.h"
-
-#include "display/nr-arena-item.h"
-
-#include "dialogs/rdf.h"
-
+#include "preferences.h"
+#include "profile-manager.h"
+#include "rdf.h"
+#include "sp-item-group.h"
+#include "sp-namedview.h"
+#include "sp-object-repr.h"
 #include "transf_mat_3x4.h"
+#include "unit-constants.h"
+#include "xml/repr.h"
 
 #define SP_DOCUMENT_UPDATE_PRIORITY (G_PRIORITY_HIGH_IDLE - 1)
 

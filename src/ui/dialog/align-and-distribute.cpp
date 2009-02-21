@@ -21,7 +21,7 @@
 #include <gtkmm/spinbutton.h>
 
 #include "desktop-handles.h"
-#include "dialogs/unclump.h"
+#include "unclump.h"
 #include "document.h"
 #include "enums.h"
 #include "graphlayout/graphlayout.h"

@@ -18,25 +18,24 @@
 #include <gtk/gtkmenu.h>
 #include <gtk/gtkmenuitem.h>
 #include <gtk/gtkseparatormenuitem.h>
-
 #include <glibmm/i18n.h>
 #include <gdkmm/pixbuf.h>
-#include "inkscape.h"
+
 #include "desktop.h"
-#include "message-context.h"
-#include "document.h"
 #include "desktop-handles.h"
+#include "desktop-style.h"
+#include "document.h"
 #include "extension/db.h"
 #include "inkscape.h"
-#include "svg/svg-color.h"
-#include "desktop-style.h"
+#include "inkscape.h"
 #include "io/sys.h"
+#include "message-context.h"
 #include "path-prefix.h"
-#include "swatches.h"
-#include "sp-item.h"
 #include "preferences.h"
-
-#include "eek-preview.h"
+#include "sp-item.h"
+#include "svg/svg-color.h"
+#include "swatches.h"
+#include "widgets/eek-preview.h"
 
 namespace Inkscape {
 namespace UI {

@@ -14,7 +14,7 @@
 
 
 #include <gtkmm/widget.h>
-#include "../dialogs/eek-preview.h"
+#include "../widgets/eek-preview.h"
 
 namespace Inkscape {
 namespace UI {

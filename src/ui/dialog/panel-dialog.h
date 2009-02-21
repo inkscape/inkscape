@@ -19,7 +19,7 @@
 
 #include "verbs.h"
 #include "dialog.h"
-#include "dialogs/swatches.h"
+#include "ui/dialog/swatches.h"
 #include "ui/dialog/floating-behavior.h"
 #include "ui/dialog/dock-behavior.h"
 #include "preferences.h"

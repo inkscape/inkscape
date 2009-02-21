@@ -19,11 +19,9 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/entry.h>
 
-#include "ui/widget/registry.h"
-
-#include "dialogs/rdf.h"
-
 #include "inkscape.h"
+#include "rdf.h"
+#include "ui/widget/registry.h"
 
 #include "entity-entry.h"
 

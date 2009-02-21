@@ -1,10 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-
 # ################################################
-#
 #  G L O B A L
-#
 # ################################################
 
 # Should work in either automake1.7 or 1.8, but 1.6 doesn't
@@ -16,17 +13,46 @@ AUTOMAKE_OPTIONS = 1.7 subdir-objects
 # Executables compiled by "make" and installed by "make install"
 bin_PROGRAMS = inkscape inkview
 
+# Libraries which should be compiled by "make" but not installed.
+# Use this only for libraries that are really standalone, rather than for
+# source tree subdirectories.
+if WITH_INKBOARD
+libpedro = pedro/libpedro.a
+endif
+noinst_LIBRARIES =	\
+	libinkscape.a		\
+	dom/libdom.a		\
+	libcroco/libcroco.a	\
+	libavoid/libavoid.a	\
+	libgdl/libgdl.a		\
+	libcola/libcola.a	\
+	libvpsc/libvpsc.a	\
+	livarot/libvarot.a	\
+	2geom/lib2geom.a	\
+	$(libpedro)		\
+	libinkversion.a
+
+all_libs =			\
+	$(noinst_LIBRARIES)	\
+	$(INKSCAPE_LIBS)	\
+	$(GNOME_VFS_LIBS)	\
+	$(XFT_LIBS)		\
+	$(FREETYPE_LIBS)	\
+	$(kdeldadd)		\
+	$(win32ldflags)		\
+	$(CARBON_LDFLAGS)	\
+	$(PERL_LIBS)		\
+	$(PYTHON_LIBS)		\
+	$(INKBOARD_LIBS)	\
+	$(LIBWPG_LIBS)		\
+	$(IMAGEMAGICK_LIBS)
+
 # Add sources common for Inkscape and Inkview to this variable.
 ink_common_sources =
 # Add Inkscape-only sources here.
 inkscape_SOURCES =
 # Add Inkview-only sources here.
 inkview_SOURCES =
-
-# Libraries which should be compiled by "make" but not installed.
-# Use this only for libraries that are really standalone, rather than for
-# source tree subdirectories.
-noinst_LIBRARIES = $(inkscape_private_libs)
 
 INCLUDES =	\
 	$(PERL_CFLAGS) $(PYTHON_CFLAGS)	\
@@ -69,43 +95,6 @@ if INKJAR
 inkjar_dir = inkjar
 inkjar_libs = inkjar/libinkjar.a
 endif
-
-# Extra files to remove when doing "make distclean"
-DISTCLEANFILES =	\
-	helper/sp-marshal.cpp	\
-	helper/sp-marshal.h	\
-	inkscape-version.cpp
-
-if WITH_INKBOARD
-libpedro = pedro/libpedro.a
-endif
-
-inkscape_private_libs =	\
-	dom/libdom.a		\
-	libcroco/libcroco.a	\
-	libavoid/libavoid.a	\
-	libgdl/libgdl.a		\
-	libcola/libcola.a	\
-	libvpsc/libvpsc.a	\
-	livarot/libvarot.a	\
-	2geom/lib2geom.a	\
-	$(libpedro)		\
-	libinkversion.a
-
-all_libs =			\
-	$(inkscape_private_libs)	\
-	$(INKSCAPE_LIBS)	\
-	$(GNOME_VFS_LIBS)	\
-	$(XFT_LIBS)		\
-	$(FREETYPE_LIBS)	\
-	$(kdeldadd)		\
-	$(win32ldflags)		\
-	$(CARBON_LDFLAGS)	\
-	$(PERL_LIBS)		\
-	$(PYTHON_LIBS)		\
-	$(INKBOARD_LIBS)	\
-	$(LIBWPG_LIBS)		\
-	$(IMAGEMAGICK_LIBS)
 
 # Include all partial makefiles from subdirectories
 include Makefile_insert
@@ -208,18 +197,56 @@ EXTRA_DIST =	\
 	traits/reference.h \
 	$(jabber_whiteboard_SOURCES)
 
+# Extra files to remove when doing "make distclean"
+DISTCLEANFILES =	\
+	helper/sp-marshal.cpp	\
+	helper/sp-marshal.h	\
+	inkscape-version.cpp
+
 # ################################################
-#
 #  B I N A R I E S
-#
 # ################################################
 
-inkscape_SOURCES += main.cpp $(ink_common_sources) $(win32_sources)
+# this should speed up the build
+libinkscape_a_SOURCES = $(ink_common_sources)
+
+inkscape_SOURCES += main.cpp $(win32_sources)
 inkscape_LDADD = $(all_libs)
 inkscape_LDFLAGS = --export-dynamic $(kdeldflags)
 
-inkview_SOURCES += inkview.cpp $(ink_common_sources) $(win32_sources)
+inkview_SOURCES += inkview.cpp $(win32_sources)
 inkview_LDADD = $(all_libs)
+
+# ################################################
+#  VERSION REPORTING
+# ################################################
+
+libinkversion_a_SOURCES = inkscape-version.cpp inkscape-version.h
+
+if USE_SVN_VERSION
+inkscape_version_deps = $(top_srcdir)/.svn/entries
+endif
+
+# If this is an SVN snapshot build, regenerate this file every time
+# someone updates the SVN working directory.
+inkscape-version.cpp: $(inkscape_version_deps)
+	VER_PREFIX="$(VERSION)"; \
+	if test -x "$(srcdir)/.svn" -a ! -z `which svn`; then \
+	    VER_SVNREV=" r`svn info $(srcdir) | sed -n -e '/^Revision:/s/Revision: \(.*\)/\1/p'`"; \
+	    if test ! -z "`svn status -q $(srcdir)`"; then \
+	         VER_CUSTOM=" custom"; \
+	    fi; \
+	fi; \
+	VERSION="$$VER_PREFIX$$VER_SVNREV$$VER_CUSTOM"; \
+	echo "namespace Inkscape { " \
+	     "char const *version_string = \"$$VERSION\"; " \
+	     "}" > inkscape-version.new.cpp; \
+	if cmp -s inkscape-version.new.cpp inkscape-version.cpp; then \
+	     rm inkscape-version.new.cpp; \
+	else \
+	     mv inkscape-version.new.cpp inkscape-version.cpp; \
+	fi; \
+	echo $$VERSION
 
 # #################################
 # ## TESTING STUFF (make check) ###

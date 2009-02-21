@@ -1,9 +1,7 @@
-#define __SP_FILE_C__
-
-/*
- * File/Print operations
- *
- * Authors:
+/** @file
+ * @brief File/Print operations
+ */
+/* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Chema Celorio <chema@celorio.com>
  *   bulia byak <buliabyak@users.sf.net>
@@ -30,45 +28,41 @@
 
 #include <gtk/gtk.h>
 #include <glib/gmem.h>
+#include <glibmm/i18n.h>
 #include <libnr/nr-pixops.h>
 
-#include "document-private.h"
-#include "selection-chemistry.h"
-#include "ui/view/view-widget.h"
-#include "dir-util.h"
-#include "helper/png-write.h"
-#include "dialogs/export.h"
-#include <glibmm/i18n.h>
-#include "inkscape.h"
+#include "application/application.h"
+#include "application/editor.h"
 #include "desktop.h"
-#include "selection.h"
-#include "interface.h"
-#include "style.h"
-#include "print.h"
-#include "file.h"
-#include "message.h"
-#include "message-stack.h"
-#include "ui/dialog/filedialog.h"
-#include "ui/dialog/ocaldialogs.h"
-#include "preferences.h"
-#include "path-prefix.h"
-
-#include "sp-namedview.h"
 #include "desktop-handles.h"
-
+#include "dialogs/export.h"
+#include "dir-util.h"
+#include "document-private.h"
 #include "extension/db.h"
 #include "extension/input.h"
 #include "extension/output.h"
-/* #include "extension/menu.h"  */
 #include "extension/system.h"
-
-#include "io/sys.h"
-#include "application/application.h"
-#include "application/editor.h"
-#include "inkscape.h"
-#include "uri.h"
+#include "file.h"
+#include "helper/png-write.h"
 #include "id-clash.h"
-#include "dialogs/rdf.h"
+#include "inkscape.h"
+#include "inkscape.h"
+#include "interface.h"
+#include "io/sys.h"
+#include "message.h"
+#include "message-stack.h"
+#include "path-prefix.h"
+#include "preferences.h"
+#include "print.h"
+#include "rdf.h"
+#include "selection-chemistry.h"
+#include "selection.h"
+#include "sp-namedview.h"
+#include "style.h"
+#include "ui/dialog/filedialog.h"
+#include "ui/dialog/ocaldialogs.h"
+#include "ui/view/view-widget.h"
+#include "uri.h"
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs.h>

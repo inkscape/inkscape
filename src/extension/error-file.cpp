@@ -17,7 +17,7 @@
 
 #include "inkscape.h"
 #include "preferences.h"
-#include "dialogs/extensions.h"
+#include "ui/dialog/extensions.h"
 #include "extension/extension.h"
 
 #include "error-file.h"

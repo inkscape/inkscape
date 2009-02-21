@@ -1,9 +1,7 @@
-#define __SP_DESKTOP_EVENTS_C__
-
-/*
- * Event handlers for SPDesktop
- *
- * Author:
+/** @file
+ * @brief Event handlers for SPDesktop
+ */
+/* Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
@@ -16,30 +14,31 @@
 #endif
 #include <map>
 #include <string>
+#include <2geom/line.h>
+#include <glibmm/i18n.h>
+
+#include "desktop.h"
+#include "desktop-handles.h"
+#include "dialogs/dialog-events.h"
+#include "display/canvas-axonomgrid.h"
+#include "display/canvas-grid.h"
 #include "display/guideline.h"
 #include "display/snap-indicator.h"
+#include "document.h"
+#include "event-context.h"
+#include "helper/action.h"
 #include "helper/unit-menu.h"
 #include "helper/units.h"
-#include "desktop.h"
-#include "document.h"
-#include "sp-guide.h"
-#include "sp-namedview.h"
-#include "desktop-handles.h"
-#include "event-context.h"
-#include "widgets/desktop-widget.h"
-#include "sp-metrics.h"
-#include <glibmm/i18n.h>
-#include "dialogs/dialog-events.h"
 #include "message-context.h"
-#include "xml/repr.h"
-#include "dialogs/guidelinedialog.h"
-#include "snap.h"
-#include "display/canvas-grid.h"
-#include "display/canvas-axonomgrid.h"
 #include "preferences.h"
-#include "helper/action.h"
+#include "snap.h"
+#include "sp-guide.h"
+#include "sp-metrics.h"
+#include "sp-namedview.h"
 #include "tools-switch.h"
-#include <2geom/line.h>
+#include "ui/dialog/guides.h"
+#include "widgets/desktop-widget.h"
+#include "xml/repr.h"
 
 static void snoop_extended(GdkEvent* event, SPDesktop *desktop);
 static void init_extended();

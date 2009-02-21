@@ -35,7 +35,7 @@
 #include "widgets/sp-widget.h"
 #include "xml/repr.h"
 
-#include "dialogs/fill-style.h"
+#include "widgets/fill-style.h"
 
 
 // These can be deleted once we sort out the libart dependence.

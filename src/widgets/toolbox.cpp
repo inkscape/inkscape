@@ -36,7 +36,6 @@
 
 #include "../box3d-context.h"
 #include "../box3d.h"
-#include "calligraphic-profile-rename.h"
 #include "../conn-avoid-ref.h"
 #include "../connection-pool.h"
 #include "../connector-context.h"
@@ -87,6 +86,7 @@
 #include "../svg/css-ostringstream.h"
 #include "../tools-switch.h"
 #include "../tweak-context.h"
+#include "../ui/dialog/calligraphic-profile-rename.h"
 #include "../ui/icon-names.h"
 #include "../ui/widget/style-swatch.h"
 #include "../verbs.h"

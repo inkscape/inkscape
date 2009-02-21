@@ -1,22 +1,5 @@
 ## Makefile.am fragment, included by src/Makefile.am.
 
-
-# ################################################
-#
-#  I N K S C A P E
-#
-# ################################################
-
-# libinkpre.a: any object that's sharable between inkscape & inkview,
-# and isn't needed by object files in subdirectories (i.e. libinkpre.a
-# comes before subdirectory libraries on the link line).
-#
-# Excludes winmain.cpp (a gui wrapper around main): I'm guessing that
-# it needs to be explicitly listed as a source of each graphical
-# binary: it isn't (to my knowledge) called by main (whether directly
-# or indirectly), so I don't think that putting it in a library will
-# suffice to get it linked in.  Windows devel please confirm.  -- pjrm.
-
 ink_common_sources +=	\
 	algorithms/find-last-if.h					\
 	algorithms/longest-common-suffix.h				\
@@ -137,6 +120,7 @@ ink_common_sources +=	\
 	print.cpp print.h						\
 	profile-manager.cpp profile-manager.h				\
 	proj_pt.cpp proj_pt.h						\
+	rdf.cpp rdf.h							\
 	rect-context.cpp rect-context.h					\
 	require-config.h						\
 	round.h								\
@@ -254,8 +238,7 @@ ink_common_sources +=	\
 	tools-switch.cpp tools-switch.h		\
 	transf_mat_3x4.cpp transf_mat_3x4.h	\
 	tweak-context.h tweak-context.cpp	\
-	ui/context-menu.cpp			\
-	ui/context-menu.h			\
+	unclump.cpp unclump.h			\
 	undo-stack-observer.h			\
 	unicoderange.cpp unicoderange.h		\
 	unit-constants.h			\
@@ -275,33 +258,6 @@ knot.$(OBJEXT): helper/sp-marshal.h
 selection.$(OBJEXT): helper/sp-marshal.h
 sp-object.$(OBJEXT): helper/sp-marshal.h
 view.$(OBJEXT): helper/sp-marshal.h
-
-libinkversion_a_SOURCES = inkscape-version.cpp inkscape-version.h
-
-if USE_SVN_VERSION
-inkscape_version_deps = $(top_srcdir)/.svn/entries
-endif
-
-# If this is an SVN snapshot build, regenerate this file every time
-# someone updates the SVN working directory.
-inkscape-version.cpp: $(inkscape_version_deps)
-	VER_PREFIX="$(VERSION)"; \
-	if test -x "$(srcdir)/.svn" -a ! -z `which svn`; then \
-	    VER_SVNREV=" r`svn info $(srcdir) | sed -n -e '/^Revision:/s/Revision: \(.*\)/\1/p'`"; \
-	    if test ! -z "`svn status -q $(srcdir)`"; then \
-	         VER_CUSTOM=" custom"; \
-	    fi; \
-	fi; \
-	VERSION="$$VER_PREFIX$$VER_SVNREV$$VER_CUSTOM"; \
-	echo "namespace Inkscape { " \
-	     "char const *version_string = \"$$VERSION\"; " \
-	     "}" > inkscape-version.new.cpp; \
-	if cmp -s inkscape-version.new.cpp inkscape-version.cpp; then \
-	     rm inkscape-version.new.cpp; \
-	else \
-	     mv inkscape-version.new.cpp inkscape-version.cpp; \
-	fi; \
-	echo $$VERSION
 
 # ######################
 # ### CxxTest stuff ####

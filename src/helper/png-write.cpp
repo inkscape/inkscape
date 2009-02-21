@@ -31,7 +31,7 @@
 #include <sp-root.h>
 #include <sp-defs.h>
 #include "preferences.h"
-#include "dialogs/rdf.h"
+#include "rdf.h"
 
 /* This is an example of how to use libpng to read and write PNG files.
  * The file libpng.txt is much more verbose then this.  If you have not

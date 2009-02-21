@@ -15,7 +15,7 @@
 
 #include "ui/widget/panel.h"
 #include "ui/previewholder.h"
-#include "dialogs/eek-color-def.h"
+#include "widgets/eek-color-def.h"
 
 using eek::ColorDef;
 

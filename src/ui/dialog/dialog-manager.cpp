@@ -31,21 +31,20 @@
 #include "ui/dialog/memory.h"
 #include "ui/dialog/messages.h"
 #include "ui/dialog/scriptdialog.h"
-#ifdef ENABLE_SVG_FONTS
-#include "ui/dialog/svg-fonts-dialog.h"
-#endif // ENABLE_SVG_FONTS
 #include "ui/dialog/tile.h"
 #include "ui/dialog/tracedialog.h"
 #include "ui/dialog/transformation.h"
 #include "ui/dialog/undo-history.h"
 #include "ui/dialog/panel-dialog.h"
-
-#include "dialogs/layers-panel.h"
-#include "dialogs/iconpreview.h"
-
+#include "ui/dialog/layers.h"
+#include "ui/dialog/icon-preview.h"
 #include "ui/dialog/floating-behavior.h"
 #include "ui/dialog/dock-behavior.h"
 #include "preferences.h"
+
+#ifdef ENABLE_SVG_FONTS
+#include "ui/dialog/svg-fonts-dialog.h"
+#endif // ENABLE_SVG_FONTS
 
 namespace Inkscape {
 namespace UI {

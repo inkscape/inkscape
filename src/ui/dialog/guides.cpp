@@ -31,7 +31,7 @@
 #include "xml/repr.h"
 #include <2geom/point.h>
 #include <2geom/angle.h>
-#include "guidelinedialog.h"
+#include "guides.h"
 
 namespace Inkscape {
 namespace UI {

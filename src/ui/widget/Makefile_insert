@@ -31,6 +31,8 @@ ink_common_sources +=	\
 	ui/widget/imagetoggler.h		\
 	ui/widget/labelled.cpp		\
 	ui/widget/labelled.h		\
+	ui/widget/layer-selector.cpp	\
+	ui/widget/layer-selector.h	\
 	ui/widget/licensor.cpp          \
 	ui/widget/licensor.h		\
 	ui/widget/notebook-page.cpp	\

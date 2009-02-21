@@ -17,18 +17,14 @@
 # include <config.h>
 #endif
 
-
-
-#include "ui/widget/entity-entry.h"
-
-#include "xml/node-event-vector.h"
-#include "dialogs/rdf.h"
-
-#include "inkscape.h"
-#include "verbs.h"
-#include "desktop-handles.h"
 #include "desktop.h"
+#include "desktop-handles.h"
+#include "inkscape.h"
+#include "rdf.h"
 #include "sp-namedview.h"
+#include "ui/widget/entity-entry.h"
+#include "verbs.h"
+#include "xml/node-event-vector.h"
 
 #include "document-metadata.h"
 

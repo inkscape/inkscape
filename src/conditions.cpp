@@ -19,7 +19,7 @@
 #include <glibmm/ustring.h>
 #include "conditions.h"
 #include "xml/repr.h"
-#include "dialogs/rdf.h"
+#include "rdf.h"
 
 typedef bool (* condition_evaluator)(SPItem const *item, gchar const *value);
 

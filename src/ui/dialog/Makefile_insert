@@ -1,11 +1,23 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
+if WITH_INKBOARD
+inkboard_dialogs = \
+	whiteboard-connect.cpp			\
+	whiteboard-connect.h			\
+	whiteboard-sharewithchat.cpp		\
+	whiteboard-sharewithchat.h		\
+	whiteboard-sharewithuser.cpp		\
+	whiteboard-sharewithuser.h
+endif
+
 ink_common_sources +=		\
 	ui/dialog/aboutbox.cpp			\
 	ui/dialog/aboutbox.h			\
 	ui/dialog/align-and-distribute.cpp	\
 	ui/dialog/align-and-distribute.h	\
 	ui/dialog/behavior.h			\
+	ui/dialog/calligraphic-profile-rename.h	\
+	ui/dialog/calligraphic-profile-rename.cpp	\
 	ui/dialog/debug.cpp			\
 	ui/dialog/debug.h			\
 	ui/dialog/dialog.cpp			\
@@ -20,6 +32,8 @@ ink_common_sources +=		\
 	ui/dialog/document-properties.h		\
 	ui/dialog/extension-editor.cpp		\
 	ui/dialog/extension-editor.h		\
+	ui/dialog/extensions.cpp		\
+	ui/dialog/extensions.h			\
 	ui/dialog/filedialog.cpp		\
 	ui/dialog/filedialog.h			\
 	ui/dialog/filedialogimpl-gtkmm.cpp      \
@@ -34,10 +48,18 @@ ink_common_sources +=		\
 	ui/dialog/find.h			\
 	ui/dialog/floating-behavior.cpp		\
 	ui/dialog/floating-behavior.h		\
+	ui/dialog/guides.cpp			\
+	ui/dialog/guides.h			\
+	ui/dialog/icon-preview.cpp		\
+	ui/dialog/icon-preview.h		\
 	ui/dialog/inkscape-preferences.cpp	\
 	ui/dialog/inkscape-preferences.h	\
 	ui/dialog/input.cpp			\
 	ui/dialog/input.h			\
+	ui/dialog/layer-properties.cpp		\
+	ui/dialog/layer-properties.h		\
+	ui/dialog/layers.cpp			\
+	ui/dialog/layers.h			\
 	ui/dialog/livepatheffect-editor.cpp	\
 	ui/dialog/livepatheffect-editor.h	\
 	ui/dialog/memory.cpp			\
@@ -53,6 +75,8 @@ ink_common_sources +=		\
 	ui/dialog/scriptdialog.h		\
 	ui/dialog/svg-fonts-dialog.cpp		\
 	ui/dialog/svg-fonts-dialog.h		\
+	ui/dialog/swatches.cpp			\
+	ui/dialog/swatches.h			\
 	ui/dialog/tile.cpp			\
 	ui/dialog/tile.h			\
 	ui/dialog/tracedialog.cpp		\

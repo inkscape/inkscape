@@ -20,7 +20,7 @@
 
 #include "ui/widget/entity-entry.h"
 #include "ui/widget/registry.h"
-#include "dialogs/rdf.h"
+#include "rdf.h"
 #include "inkscape.h"
 
 #include "licensor.h"

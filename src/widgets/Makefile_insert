@@ -3,12 +3,16 @@
 ink_common_sources +=	\
 	widgets/button.cpp		\
 	widgets/button.h		\
-	widgets/calligraphic-profile-rename.cpp	\
-	widgets/calligraphic-profile-rename.h	\
 	widgets/dash-selector.cpp	\
 	widgets/dash-selector.h		\
 	widgets/desktop-widget.cpp	\
 	widgets/desktop-widget.h	\
+	widgets/eek-color-def.cpp	\
+	widgets/eek-color-def.h		\
+	widgets/eek-preview.cpp		\
+	widgets/eek-preview.h		\
+	widgets/fill-style.cpp		\
+	widgets/fill-style.h		\
 	widgets/font-selector.cpp	\
 	widgets/font-selector.h		\
 	widgets/gradient-image.cpp	\
@@ -21,8 +25,6 @@ ink_common_sources +=	\
 	widgets/gradient-vector.h	\
 	widgets/icon.cpp		\
 	widgets/icon.h			\
-	widgets/layer-selector.cpp	\
-	widgets/layer-selector.h	\
 	widgets/paint-selector.cpp	\
 	widgets/paint-selector.h	\
 	widgets/ruler.cpp		\
@@ -31,6 +33,8 @@ ink_common_sources +=	\
 	widgets/select-toolbar.h	\
 	widgets/shrink-wrap-button.cpp	\
 	widgets/shrink-wrap-button.h	\
+	widgets/sp-attribute-widget.cpp	\
+	widgets/sp-attribute-widget.h	\
 	widgets/sp-color-gtkselector.cpp	\
 	widgets/sp-color-gtkselector.h	\
 	widgets/sp-color-icc-selector.cpp	\
@@ -61,6 +65,8 @@ ink_common_sources +=	\
 	widgets/sp-xmlview-content.h	\
 	widgets/sp-xmlview-tree.cpp	\
 	widgets/sp-xmlview-tree.h	\
+	widgets/stroke-style.cpp	\
+	widgets/stroke-style.h		\
 	widgets/toolbox.cpp		\
 	widgets/toolbox.h		\
 	widgets/widget-sizes.h

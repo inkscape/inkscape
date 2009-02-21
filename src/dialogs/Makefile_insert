@@ -5,47 +5,19 @@ ink_common_sources +=	\
 	dialogs/clonetiler.h		\
 	dialogs/dialog-events.cpp	\
 	dialogs/dialog-events.h		\
-	dialogs/eek-color-def.cpp	\
-	dialogs/eek-color-def.h		\
-	dialogs/eek-preview.cpp		\
-	dialogs/eek-preview.h		\
 	dialogs/export.cpp		\
 	dialogs/export.h		\
-	dialogs/extensions.cpp		\
-	dialogs/extensions.h		\
-	dialogs/fill-style.cpp		\
-	dialogs/fill-style.h		\
 	dialogs/find.cpp		\
 	dialogs/find.h			\
-	dialogs/guidelinedialog.cpp	\
-	dialogs/guidelinedialog.h	\
-	dialogs/iconpreview.cpp		\
-	dialogs/iconpreview.h		\
-	dialogs/in-dt-coordsys.cpp	\
-	dialogs/in-dt-coordsys.h	\
 	dialogs/input.cpp		\
 	dialogs/input.h			\
 	dialogs/item-properties.cpp	\
 	dialogs/item-properties.h	\
-	dialogs/layer-properties.cpp	\
-	dialogs/layer-properties.h	\
-	dialogs/layers-panel.cpp	\
-	dialogs/layers-panel.h		\
 	dialogs/object-attributes.cpp	\
 	dialogs/object-attributes.h	\
-	dialogs/rdf.cpp			\
-	dialogs/rdf.h			\
-	dialogs/sp-attribute-widget.cpp	\
-	dialogs/sp-attribute-widget.h	\
 	dialogs/spellcheck.cpp		\
 	dialogs/spellcheck.h		\
-	dialogs/stroke-style.cpp	\
-	dialogs/stroke-style.h		\
-	dialogs/swatches.cpp		\
-	dialogs/swatches.h		\
 	dialogs/text-edit.cpp		\
 	dialogs/text-edit.h		\
-	dialogs/unclump.cpp		\
-	dialogs/unclump.h		\
 	dialogs/xml-tree.cpp		\
 	dialogs/xml-tree.h

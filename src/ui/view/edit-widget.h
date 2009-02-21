@@ -28,12 +28,12 @@
 #include "ui/dialog/dialog-manager.h"
 #include "ui/view/edit-widget-interface.h"
 #include "ui/widget/dock.h"
-#include "ui/widget/selected-style.h"
+#include "ui/widget/layer-selector.h"
 #include "ui/widget/ruler.h"
-#include "ui/widget/toolbox.h"
+#include "ui/widget/selected-style.h"
 #include "ui/widget/svg-canvas.h"
+#include "ui/widget/toolbox.h"
 #include "ui/widget/zoom-status.h"
-#include "widgets/layer-selector.h"
 
 struct SPDesktop;
 struct SPDocument;

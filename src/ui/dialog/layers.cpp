@@ -12,35 +12,30 @@
 # include <config.h>
 #endif
 
-#include <glibmm/i18n.h>
-
 #include <gtk/gtkstock.h>
 #include <gtk/gtkmain.h>
-
-#include <gtkmm/icontheme.h>
-
-#include "inkscape.h"
-
-#include "layers-panel.h"
-
-#include "layer-manager.h"
-#include "layer-fns.h"
-
-#include "verbs.h"
-#include "helper/action.h"
-
-#include "document.h"
-#include "desktop.h"
-#include "sp-object.h"
-#include "sp-item.h"
-#include "widgets/icon.h"
-#include "ui/widget/imagetoggler.h"
 #include <gtkmm/widget.h>
-#include "preferences.h"
-#include "xml/repr.h"
-#include "svg/css-ostringstream.h"
+#include <gtkmm/icontheme.h>
+#include <glibmm/i18n.h>
+
+#include "desktop.h"
 #include "desktop-style.h"
+#include "document.h"
+#include "helper/action.h"
+#include "inkscape.h"
+#include "layer-fns.h"
+#include "layer-manager.h"
+#include "preferences.h"
+#include "sp-item.h"
+#include "sp-object.h"
+#include "svg/css-ostringstream.h"
 #include "ui/icon-names.h"
+#include "ui/widget/imagetoggler.h"
+#include "verbs.h"
+#include "widgets/icon.h"
+#include "xml/repr.h"
+
+#include "layers.h"
 
 //#define DUMP_LAYERS 1
 

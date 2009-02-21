@@ -26,21 +26,20 @@
 #include <gtk/gtktextview.h>
 #include <gtk/gtktooltips.h>
 
-#include <glibmm/i18n.h>
-#include "helper/window.h"
-#include "../widgets/sp-widget.h"
-#include "../inkscape.h"
-#include "../document.h"
 #include "../desktop-handles.h"
+#include "dialog-events.h"
+#include "../document.h"
+#include <glibmm/i18n.h>
+#include "../helper/window.h"
+#include "../inkscape.h"
+#include "../interface.h"
+#include "../macros.h"
+#include "../preferences.h"
 #include "../selection.h"
 #include "../sp-item.h"
-#include "../macros.h"
 #include "../verbs.h"
-#include "../interface.h"
-#include "sp-attribute-widget.h"
-
-#include "dialog-events.h"
-#include "../preferences.h"
+#include "../widgets/sp-attribute-widget.h"
+#include "../widgets/sp-widget.h"
 
 #define MIN_ONSCREEN_DISTANCE 50
 

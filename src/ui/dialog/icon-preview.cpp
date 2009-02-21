@@ -15,25 +15,23 @@
 # include <config.h>
 #endif
 
-#include "iconpreview.h"
-
 #include <gtk/gtk.h>
-
 #include <glib/gmem.h>
-#include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/stock.h>
 
-#include "preferences.h"
-#include "inkscape.h"
-#include "document.h"
-#include "desktop-handles.h"
-#include "selection.h"
 #include "desktop.h"
+#include "desktop-handles.h"
 #include "display/nr-arena.h"
+#include "document.h"
+#include "inkscape.h"
+#include "preferences.h"
+#include "selection.h"
 #include "sp-root.h"
 #include "xml/repr.h"
+
+#include "icon-preview.h"
 
 extern "C" {
 // takes doc, root, icon, and icon name to produce pixels

@@ -17,22 +17,19 @@
 #include <string>
 #include <glibmm/i18n.h>
 
-#include "desktop-handles.h"
-
-#include "widgets/layer-selector.h"
-#include "widgets/shrink-wrap-button.h"
-#include "widgets/icon.h"
-
-#include "util/reverse-list.h"
-#include "util/filter-list.h"
-
-#include "sp-item.h"
 #include "desktop.h"
+#include "desktop-handles.h"
 #include "document.h"
-#include "dialogs/layer-properties.h"
 #include "layer-manager.h"
-#include "xml/node-event-vector.h"
+#include "sp-item.h"
+#include "ui/dialog/layer-properties.h"
+#include "ui/widget/layer-selector.h"
+#include "util/filter-list.h"
+#include "util/reverse-list.h"
 #include "verbs.h"
+#include "widgets/icon.h"
+#include "widgets/shrink-wrap-button.h"
+#include "xml/node-event-vector.h"
 
 namespace Inkscape {
 namespace Widgets {

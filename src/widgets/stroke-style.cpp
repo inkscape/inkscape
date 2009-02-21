@@ -54,7 +54,7 @@
 #include "widgets/spw-utilities.h"
 #include "xml/repr.h"
 
-#include "dialogs/stroke-style.h"
+#include "widgets/stroke-style.h"
 
 
 /* Paint */
