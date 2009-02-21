@@ -455,6 +455,7 @@ void AboutBox::initStrings() {
     "Mitsuru Oka <oka326@parkcity.ne.jp>, 2002.\n"
     "Morphix User <pchitrakar@gmail.com>, 2006.\n"
     "Mufit Eribol <meribol@ere.com.tr>, 2000.\n"
+    "Nicolas Dufour <nicoduf@yahoo.fr>, 2008-2009.\n"
     "Pawan Chitrakar <pchitrakar@gmail.com>, 2006.\n"
     "Przemysław Loesch <p_loesch@poczta.onet.pl>, 2005.\n"
     "Quico Llach <quico@softcatala.org>, 2000. Traducció sodipodi.\n"
