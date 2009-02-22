@@ -77,7 +77,6 @@ static SPDrawContextClass *pen_parent_class;
 
 static int pen_next_paraxial_direction(const SPPenContext *const pc, Geom::Point const &pt, Geom::Point const &origin, guint state);
 static void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt, guint const state);
-static Geom::Point pen_get_intermediate_horiz_vert(const SPPenContext *const pc, Geom::Point const &pt, guint const state);
 
 static int pen_last_paraxial_dir = 0; // last used direction in horizontal/vertical mode; 0 = horizontal, 1 = vertical
 
@@ -1447,17 +1446,6 @@ void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt
     } else {
         // line is forced to be vertical
         pt[Geom::X] = origin[Geom::X];
-    }
-}
-
-Geom::Point pen_get_intermediate_horiz_vert(const SPPenContext *const pc, Geom::Point const &pt)
-{
-    Geom::Point const &origin = pc->p[0];
-
-    if (pen_last_paraxial_dir == 0) {
-        return Geom::Point (origin[Geom::X], pt[Geom::Y]);
-    } else {
-        return Geom::Point (pt[Geom::X], origin[Geom::Y]);
     }
 }
 
