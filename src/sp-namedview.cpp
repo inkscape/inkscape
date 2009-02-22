@@ -252,7 +252,6 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:snap-object-midpoints");
     sp_object_read_attr(object, "inkscape:snap-bbox-edge-midpoints");
     sp_object_read_attr(object, "inkscape:snap-bbox-midpoints");
-	//sp_object_read_attr(object, "inkscape:snap-intersection-grid-guide");
 	sp_object_read_attr(object, "inkscape:snap-to-guides");
 	sp_object_read_attr(object, "inkscape:snap-grids");
     sp_object_read_attr(object, "inkscape:snap-intersection-paths");
@@ -489,13 +488,9 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
 			object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 			break;
 	case SP_ATTR_INKSCAPE_SNAP_FROM_GUIDE:
-            nv->snap_manager.snapprefs.setSnapModeGuide(value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.snapprefs.setSnapModeGuide(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    /*case SP_ATTR_INKSCAPE_SNAP_INTERS_GRIDGUIDE:
-            nv->snap_manager.snapprefs.setSnapIntersectionGG(value ? sp_str_to_bool(value) : TRUE);
-            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-            break;*/
     case SP_ATTR_INKSCAPE_SNAP_INTERS_PATHS:
             nv->snap_manager.snapprefs.setSnapIntersectionCS(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);

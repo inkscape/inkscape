@@ -100,7 +100,7 @@ DocumentProperties::DocumentProperties()
     //---------------------------------------------------------------
       //General snap options
       _rcb_sgui(_("Show _guides"), _("Show or hide guides"), "showguides", _wr),
-      _rcbsng(_("_Snap guides while dragging"), _("While dragging a guide, snap to object nodes or bounding box corners ('Snap to nodes' or 'snap to bounding box corners' must be enabled in the 'Snap' tab; only a small part of the guide near the cursor will snap)"),
+      _rcbsng(_("_Snap guides while dragging"), _("While dragging a guide, snap to object nodes or bounding box corners ('Snap to nodes' or 'snap to bounding box corners' must be enabled; only a small part of the guide near the cursor will snap)"),
                   "inkscape:snap-from-guide", _wr),
       _rcp_gui(_("Guide co_lor:"), _("Guideline color"), _("Color of guidelines"), "guidecolor", "guideopacity", _wr),
       _rcp_hgui(_("_Highlight color:"), _("Highlighted guideline color"), _("Color of a guideline when it is under mouse"), "guidehicolor", "guidehiopacity", _wr),
@@ -791,6 +791,7 @@ DocumentProperties::update()
     _rcb_sgui.setActive (nv->showguides);
     _rcp_gui.setRgba32 (nv->guidecolor);
     _rcp_hgui.setRgba32 (nv->guidehicolor);
+    _rcbsng.setActive(nv->snap_manager.snapprefs.getSnapModeGuide());
 
     //-----------------------------------------------------------snap page
 

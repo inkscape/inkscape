@@ -95,7 +95,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
             	target_name = _("bounding box side");
             	break;
             case SNAPTARGET_GRADIENT:
-            	target_name = _("gradient");
+            	target_name = _("gradient level");
             	break;
             case SNAPTARGET_PAGE_BORDER:
             	target_name = _("page border");

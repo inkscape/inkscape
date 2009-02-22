@@ -32,7 +32,7 @@ Inkscape::SnapPreferences::SnapPreferences() :
 	_snap_to_page_border(false),
 	_strict_snapping(true)
 {
-	setSnapFrom(SNAPPOINT_BBOX | SNAPPOINT_NODE, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
+	setSnapFrom(SNAPPOINT_BBOX | SNAPPOINT_NODE | SNAPPOINT_GUIDE, true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
 }
 
 /*
