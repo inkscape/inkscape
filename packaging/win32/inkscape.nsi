@@ -564,11 +564,6 @@ Section $(lng_Core) SecCore
   File /a "..\..\inkscape\share\clipart\inkscape.logo.svg"
   ;File /a "..\..\inkscape\share\clipart\inkscape.logo.classic.svg"  
   !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-  SetOutPath $INSTDIR\share\extensions
-  !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-  File /a "..\..\inkscape\share\extensions\pdf_output.inx.txt"
-  File /a "..\..\inkscape\share\extensions\pdf_output_via_gs_on_win32.inx.txt"
-  !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
   SetOutPath $INSTDIR\share\icons
   !insertmacro UNINSTALL.LOG_OPEN_INSTALL
   File /a "..\..\inkscape\share\icons\inkscape.file.png"
