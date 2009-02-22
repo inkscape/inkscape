@@ -16,16 +16,17 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "display/sodipodi-ctrl.h"
+#include "display/canvas-bpath.h"
 #include "knot.h"
 #include "preferences.h"
 #include <glibmm/i18n.h>
-#include <gtk/gtk.h>
 
 namespace Inkscape {
 namespace Display {
 
 SnapIndicator::SnapIndicator(SPDesktop * desktop)
     :   _snaptarget(NULL),
+		_snaptarget_tooltip(NULL),
     	_snapsource(NULL),
         _desktop(desktop)
 {
@@ -181,6 +182,8 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
 		}
         //std::cout << "Snapped " << source_name << " to " << target_name << std::endl;
 
+		remove_snapsource(); // Don't set both the source and target indicators, as these will overlap
+
         // Display the snap indicator (i.e. the cross)
         SPCanvasItem * canvasitem = NULL;
 		if (p.getTarget() == SNAPTARGET_NODE_SMOOTH || p.getTarget() == SNAPTARGET_NODE_CUSP) {
@@ -205,23 +208,18 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
 											NULL );
 		}
 
-		const int timeout_val = 1000; // TODO add preference for snap indicator timeout?
+		const int timeout_val = 1200; // TODO add preference for snap indicator timeout?
 
 		SP_CTRL(canvasitem)->moveto(p.getPoint());
-		remove_snapsource(); // Don't set both the source and target indicators, as these will overlap
 		_snaptarget = _desktop->add_temporary_canvasitem(canvasitem, timeout_val);
 
-        // Display the tooltip
-		GtkSettings *settings = gtk_widget_get_settings (&(_desktop->canvas->widget));
-		// If we set the timeout too short, then the tooltip might not show at all (most noticeable when a long snap delay is active)
-		g_object_set(settings, "gtk-tooltip-timeout", 200, NULL); // tooltip will be shown after x msec.
-        gchar *tooltip_text = g_strconcat(source_name, _(" to "), target_name, NULL);
-		gtk_widget_set_tooltip_text(&(_desktop->canvas->widget), tooltip_text);
-        // has_tooltip will be true by now because gtk_widget_set_has_tooltip() has been called implicitly
-        update_tooltip();
-        // The snap indicator will be removed automatically because it's a temporary canvas item; the tooltip
-        // however must be removed manually, so we'll create a timer to that end
-        Glib::signal_timeout().connect(sigc::mem_fun(*this, &SnapIndicator::remove_tooltip), timeout_val);
+		gchar *tooltip_str = g_strconcat(source_name, _(" to "), target_name, NULL);
+
+		SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(_desktop), _desktop, p.getPoint() + Geom::Point(15, -15), tooltip_str);
+		g_free(tooltip_str);
+
+		sp_canvastext_set_anchor((SPCanvasText* )canvas_tooltip, -1, 1);
+		_snaptarget_tooltip = _desktop->add_temporary_canvasitem(canvas_tooltip, timeout_val);
 	}
 }
 
@@ -233,7 +231,11 @@ SnapIndicator::remove_snaptarget()
         _snaptarget = NULL;
     }
 
-    remove_tooltip();
+    if (_snaptarget_tooltip) {
+		_desktop->remove_temporary_canvasitem(_snaptarget_tooltip);
+		_snaptarget_tooltip = NULL;
+	}
+
 }
 
 void
@@ -259,7 +261,7 @@ SnapIndicator::set_new_snapsource(std::pair<Geom::Point, int> const p)
 
         SP_CTRL(canvasitem)->moveto(p.first);
         _snapsource = _desktop->add_temporary_canvasitem(canvasitem, 1000);
-    }
+	}
 }
 
 void
@@ -270,42 +272,6 @@ SnapIndicator::remove_snapsource()
         _snapsource = NULL;
     }
 }
-
-// Shows or hides the tooltip
-void SnapIndicator::update_tooltip() const
-{
-	// When using gtk_widget_trigger_tooltip_query, the tooltip will for some reason always popup
-	// in the upper-left corner of the screen (probably at (0,0)). As a workaround we'll create
-	// a motion event instead, which will also trigger the tooltip
-	gint x, y;
-	GdkWindow *window;
-
-	GdkDisplay *display = gdk_display_get_default();
-	window = gdk_display_get_window_at_pointer(display, &x, &y);
-	if (window) {
-		GdkEvent *event = gdk_event_new(GDK_MOTION_NOTIFY);
-		event->motion.window = window;
-		event->motion.x = x;
-		event->motion.y = y;
-		event->motion.is_hint = FALSE;
-
-		gdk_window_get_origin(window, &x, &y);
-		event->motion.x_root = event->motion.x + x;
-		event->motion.y_root = event->motion.y + y;
-
-		gtk_main_do_event(event);
-	}
-}
-
-// Can be called either directly or through a timer
-bool
-SnapIndicator::remove_tooltip() const
-{
-    gtk_widget_set_has_tooltip (&(_desktop->canvas->widget), false);
-    gtk_widget_trigger_tooltip_query(&(_desktop->canvas->widget));
-    return false;
-}
-
 
 } //namespace Display
 } /* namespace Inkscape */

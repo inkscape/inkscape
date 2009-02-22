@@ -34,14 +34,13 @@ public:
 
 protected:
     TemporaryItem *_snaptarget;
+    TemporaryItem *_snaptarget_tooltip;
     TemporaryItem *_snapsource;
     SPDesktop *_desktop;
 
 private:
     SnapIndicator(const SnapIndicator&);
     SnapIndicator& operator=(const SnapIndicator&);
-    void update_tooltip() const;
-    bool remove_tooltip() const;
 };
 
 } //namespace Display

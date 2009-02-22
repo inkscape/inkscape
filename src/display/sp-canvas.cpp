@@ -938,7 +938,6 @@ static gint sp_canvas_key (GtkWidget *widget, GdkEventKey *event);
 static gint sp_canvas_crossing (GtkWidget *widget, GdkEventCrossing *event);
 static gint sp_canvas_focus_in (GtkWidget *widget, GdkEventFocus *event);
 static gint sp_canvas_focus_out (GtkWidget *widget, GdkEventFocus *event);
-static gboolean sp_canvas_query_tooltip (GtkWidget *widget, gint x, gint y, gboolean keyboard_mode, GtkTooltip *tooltip);
 
 static GtkWidgetClass *canvas_parent_class;
 
@@ -1051,8 +1050,6 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->watchdog_id = 0;
     canvas->watchdog_event = NULL;
     canvas->context_snap_delay_active = false;
-
-    g_signal_connect(&(canvas->widget), "query-tooltip", G_CALLBACK (sp_canvas_query_tooltip), NULL);
 }
 
 /**
@@ -2164,26 +2161,6 @@ sp_canvas_focus_out (GtkWidget *widget, GdkEventFocus *event)
     else
         return FALSE;
 }
-
-
-static gboolean sp_canvas_query_tooltip (GtkWidget  *widget,
-		  gint        x,
-		  gint        y,
-		  gboolean	  keyboard_mode,
-		  GtkTooltip *tooltip)
-{
-	// We're not really doing anything special here, so we might just as well remove sp_canvas_query_tooltip
-	// all together (and stop listening to the query_tooltip signal. We might make a custom tooltip however
-	// someday, for example to display icons instead of just plain text. In that case we will need this call
-	// so that's why I'm leaving it here for the time being.
-
-	if (canvas_parent_class->query_tooltip) {
-		return canvas_parent_class->query_tooltip (widget, x, y, keyboard_mode, tooltip);
-	}
-
-	return false;
-}
-
 
 /**
  * Helper that repaints the areas in the canvas that need it.
