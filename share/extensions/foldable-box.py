@@ -43,10 +43,10 @@ class FoldableBox(inkex.Effect):
                         action="store", type="string",
                         dest="unit", default="cm",
                         help="The unit of the box dimensions")
-        self.OptionParser.add_option("-p", "--paper-spessure",
+        self.OptionParser.add_option("-p", "--paper-thickness",
                         action="store", type="float",
-                        dest="spessure", default=0.01,
-                        help="Paper Spessure - sometimes that is important")
+                        dest="thickness", default=0.01,
+                        help="Paper Thickness - sometimes that is important")
         self.OptionParser.add_option("-t", "--tab-proportion",
                         action="store", type="float",
                         dest="tabProportion", default=0.6,
