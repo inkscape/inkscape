@@ -267,7 +267,7 @@ TESTS = $(check_PROGRAMS)
 
 # including the the testsuites here ensures that they get distributed
 cxxtests_SOURCES = cxxtests.cpp $(CXXTEST_TESTSUITES)
-cxxtests_LDADD = libnr/nr-compose-reference.o $(ink_common_sources)
+cxxtests_LDADD = libnr/nr-compose-reference.o $(all_libs)
 
 cxxtests.cpp: $(CXXTEST_TESTSUITES) $(CXXTEST_TEMPLATE)
 	$(CXXTESTGEN) -o cxxtests.cpp $(CXXTEST_TESTSUITES)

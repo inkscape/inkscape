@@ -21,14 +21,13 @@
 
 #include <gtk/gtk.h>
 #include <glib.h>
+
 #include "inkscape-private.h"
 #include "extension/effect.h"
 #include "widgets/icon.h"
 #include "preferences.h"
 #include "path-prefix.h"
-
 #include "shortcuts.h"
-
 #include "document.h"
 #include "desktop-handles.h"
 #include "file.h"
@@ -44,17 +43,11 @@
 #include "sp-flowtext.h"
 #include "sp-namedview.h"
 #include "ui/view/view.h"
-
 #include "helper/action.h"
 #include "helper/gnome-utils.h"
 #include "helper/window.h"
-
 #include "io/sys.h"
-#include "io/stringstream.h"
-#include "io/base64stream.h"
-
 #include "dialogs/dialog-events.h"
-
 #include "message-context.h"
 
 // Added for color drag-n-drop
@@ -73,9 +66,6 @@
 #ifdef GDK_WINDOWING_QUARTZ
 #include "ige-mac-menu.h"
 #endif
-
-using Inkscape::IO::StringOutputStream;
-using Inkscape::IO::Base64OutputStream;
 
 /* Drag and Drop */
 typedef enum {
@@ -849,10 +839,7 @@ public:
     MaxRecentObserver(GtkWidget *recent_menu) :
         Observer("/options/maxrecentdocuments/value"),
         _rm(recent_menu)
-    {
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->addObserver(*this);
-    }
+    {}
     virtual void notify(Inkscape::Preferences::Entry const &e) {
         gtk_recent_chooser_set_limit(GTK_RECENT_CHOOSER(_rm), e.getInt());
         // hack: the recent menu doesn't repopulate after changing the limit, so we force it
@@ -957,6 +944,7 @@ sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI:
             gtk_menu_append(GTK_MENU(menu), GTK_WIDGET(recent_item));
             // this will just sit and update the list's item count
             static MaxRecentObserver *mro = new MaxRecentObserver(recent_menu);
+            prefs->addObserver(*mro);
             continue;
         }
         if (!strcmp(menu_pntr->name(), "objects-checkboxes")) {
@@ -1308,27 +1296,23 @@ sp_ui_drag_data_received(GtkWidget *widget,
         case PNG_DATA:
         case JPEG_DATA:
         case IMAGE_DATA: {
-            char tmp[1024];
-
-            StringOutputStream outs;
-            Base64OutputStream b64out(outs);
-            b64out.setColumnWidth(0);
-
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
-
             Inkscape::XML::Node *newImage = xml_doc->createElement("svg:image");
+            gchar *atom_name = gdk_atom_name(data->type);
+            
+            // this formula taken from Glib docs
+            guint needed_size = data->length * 4 / 3 + data->length * 4 / (3 * 72) + 7;
+            needed_size += 5 + 8 + strlen(atom_name); // 5 bytes for data:, 8 for ;base64,
+            
+            gchar *buffer = (gchar *) g_malloc(needed_size), *buf_work = buffer;
+            buf_work += g_sprintf(buffer, "data:%s;base64,", atom_name);
+            
+            gint state = 0, save = 0;
+            g_base64_encode_step(data->data, data->length, TRUE, buf_work, &state, &save);
+            g_base64_encode_close(TRUE, buf_work, &state, &save);
 
-            for ( int i = 0; i < data->length; i++ ) {
-                b64out.put( data->data[i] );
-            }
-            b64out.close();
-
-
-            Glib::ustring str = outs.getString();
-
-            snprintf( tmp, sizeof(tmp), "data:%s;base64,", gdk_atom_name(data->type) );
-            str.insert( 0, tmp );
-            newImage->setAttribute("xlink:href", str.c_str());
+            newImage->setAttribute("xlink:href", buffer);
+            g_free(buffer);
 
             GError *error = NULL;
             GdkPixbufLoader *loader = gdk_pixbuf_loader_new_with_mime_type( gdk_atom_name(data->type), &error );
@@ -1337,6 +1321,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 if ( gdk_pixbuf_loader_write( loader, data->data, data->length, &error) ) {
                     GdkPixbuf *pbuf = gdk_pixbuf_loader_get_pixbuf(loader);
                     if ( pbuf ) {
+                        char tmp[1024];
                         int width = gdk_pixbuf_get_width(pbuf);
                         int height = gdk_pixbuf_get_height(pbuf);
                         snprintf( tmp, sizeof(tmp), "%d", width );
@@ -1347,6 +1332,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     }
                 }
             }
+            g_free(atom_name);
 
             // Add it to the current layer
             desktop->currentLayer()->appendChildRepr(newImage);
