@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Rubber Stretch</_name>
+    <id>math.univ-lille1.barraud.spherify</id>
+	<dependency type="executable" location="extensions">pathmodifier.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="ratio" type="float" _gui-text="Strength (%):"  min="-400" max="400">25</param>
+	<param name="curve" type="float" _gui-text="Curve (%):"     min="-400" max="400">25</param>
+    <effect>
+		<object-type>path</object-type>
+		<effects-menu>
+			<submenu _name="Modify Path"/>
+		</effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">rubberstretch.py</command>
+    </script>
+</inkscape-extension>

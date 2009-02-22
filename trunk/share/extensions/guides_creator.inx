@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>Guides creator</_name>
+	<id>org.inkscape.effect.guidescreator</id>
+	<dependency type="executable" location="extensions">guides_creator.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="preset" type="optiongroup" appearance="minimal" _gui-text="Preset">
+		<_option value="custom">Custom...</_option>
+                <_option value="golden">Golden ratio</_option>
+                <_option value="3;3">Rule-of-third</_option>
+        </param>
+        <param name="vertical_guides" type="optiongroup" appearance="minimal" _gui-text="Vertical guide each">
+		<_option value="0">None</_option>
+		<_option value="2">1/2</_option>
+		<_option value="3">1/3</_option>
+                <_option value="4">1/4</_option>
+		<_option value="5">1/5</_option>
+		<_option value="6">1/6</_option>
+		<_option value="7">1/7</_option>
+		<_option value="8">1/8</_option>
+                <_option value="9">1/9</_option>
+		<_option value="10">1/10</_option>
+	</param>
+	<param name="horizontal_guides" type="optiongroup" appearance="minimal" _gui-text="Horizontal guide each">
+		<_option value="0">None</_option>
+		<_option value="2">1/2</_option>
+		<_option value="3">1/3</_option>
+                <_option value="4">1/4</_option>
+		<_option value="5">1/5</_option>
+		<_option value="6">1/6</_option>
+		<_option value="7">1/7</_option>
+		<_option value="8">1/8</_option>
+                <_option value="9">1/9</_option>
+		<_option value="10">1/10</_option>
+	</param>
+        <param name="start_from_edges" type="boolean" _gui-text="Start from edges">false</param>
+	<param name="delete_existing_guides" type="boolean" _gui-text="Delete existing guides">false</param>
+	<effect>
+		<object-type>all</object-type>
+		<effects-menu>
+			 <submenu _name="Render"/>
+		</effects-menu>
+	</effect>
+	<script>
+		<command reldir="extensions" interpreter="python">guides_creator.py</command>
+	</script>
+</inkscape-extension>
+

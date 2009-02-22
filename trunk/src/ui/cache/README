@@ -1,0 +1,3 @@
+This directory is for utility code for maintaining caches of UI things,
+such as symbol previews, thumbnails, font lists, brushes, dashes, etc.
+

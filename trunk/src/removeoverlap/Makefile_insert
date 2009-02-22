@@ -1,0 +1,10 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+removeoverlap/all: removeoverlap/libremoveoverlap.a
+
+removeoverlap/clean:
+	rm -f removeoverlap/libremoveoverlap.a $(removeoverlap_libremoveoverlap_a_OBJECTS)
+
+removeoverlap_libremoveoverlap_a_SOURCES =	\
+	removeoverlap/removeoverlap.cpp	\
+	removeoverlap/removeoverlap.h

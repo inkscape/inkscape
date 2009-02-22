@@ -1,0 +1,29 @@
+CHANGING ICON THEMES
+--------------------
+The Inkscape icons are read from the file 'icons.svg' that resides in the same
+directory as this README.
+
+If you want to try a new theme, create a folder named 'icons' in your personal
+Inkscape folder (under Linux/Unix: $HOME/.inkscape), copy the file containing
+the alternative theme in that folder and rename it to icons.svg. The next time
+Inkscape is run the alternative icons will be loaded.
+
+
+CREATING A NEW ICON THEME
+-------------------------
+To create a new theme or simply modify some icons you need to make sure each
+icon is assigned the correct ID (its name). Opening 'icons.svg' in Inkscape and
+selecting an icon will display its ID in the XML editor (Shift+Ctrl+X).
+
+The simplest way to proceed is to work on a copy of the icons.svg file and
+modify each icon one after the other, using the XML editor to adapt its ID.
+
+For example, if you've drawn a new pen icon, select it on the canvas, then open
+the XML editor. The node corresponding to the pen icon will be highlighted.
+Click on its ID in the upper right panel of the XML editor. The bottom right
+panel will display something like 'g2570'. Change that value to 'draw_pen' and
+click the 'Set' button.
+
+
+For any questions relating to icon themes, please contact:
+Jean-François Lemaire (jflemaire@skynet.be).

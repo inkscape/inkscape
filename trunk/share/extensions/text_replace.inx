@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>Replace text</_name>
+	<id>org.inkscape.text.replacetext</id>
+	<dependency type="executable" location="extensions">chardataeffect.py</dependency>
+	<dependency type="executable" location="extensions">text_replace.py</dependency>
+	<param name="from_text" type="string" _gui-text="Replace:"></param>
+	<param name="to_text" type="string" _gui-text="By:"></param>
+	<effect>
+		<object-type>all</object-type>
+		<effects-menu>
+			<submenu _name="Text"/>
+		</effects-menu>
+	</effect>
+	<script>
+		<command reldir="extensions" interpreter="python">text_replace.py</command>
+	</script>
+</inkscape-extension>

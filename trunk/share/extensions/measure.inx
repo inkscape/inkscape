@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Measure Path</_name>
+  <id>com.njhurst.filter.measure_length</id>
+  <dependency type="executable" location="extensions">measure.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <param name="tab" type="notebook">
+    <page name="measure" _gui-text="Measure">
+      <param name="fontsize" type="int" min="1" max="1000" _gui-text="Font size [px]">12</param>
+      <param name="offset" type="float" min="-10000" max="10000" _gui-text="Offset [px]">-6</param>
+      <param name="precision" type="int" min="0" max="25" _gui-text="Precision">2</param>
+      <param name="scale" type="float" min="1e-8" max="1e10" _gui-text="Scale Factor (Drawing:Real Length) = 1:">1</param>
+      <!--<param name="orient" type="boolean" _gui-text="Keep text orientation upright">true</param>-->
+      <!--<param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>-->
+      <param name="unit" type="enum" _gui-text="Length Unit: ">
+        <item value="px">px</item>
+        <item value="pt">pt</item>
+        <item value="in">in</item>
+        <item value="ft">ft</item>
+        <item value="yd">yd</item>
+        <item value="mm">mm</item>
+        <item value="cm">cm</item>
+        <item value="m">m</item>
+        <item value="km">km</item>
+      </param>
+    </page>
+    <page name="desc" _gui-text="Help">
+      <_param name="measurehelp" type="description">This effect measures the length of the selected path and adds it as a text-on-path object with the selected unit. The number of significant digits can be controlled by the Precision field. The Offset field controls the distance from the text to the path. The Scale factor can be used to make measurements in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the real world, Scale must be set to 250.</_param>
+    </page>
+  </param>
+  <effect>
+    <object-type>path</object-type>
+    <effects-menu>
+      <submenu _name="Visualize Path"/>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">measure.py</command>
+  </script>
+</inkscape-extension>

@@ -1,0 +1,45 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+#
+# Sodipodi svg wrapper
+# Author: Lauris Kaplinski <lauris@ariman.ee>
+# Most code is actually written by Raph Levien
+#
+# Implements svg interpretation of xml tree
+#
+
+svg/all: svg/libspsvg.a
+
+svg/clean:
+	rm -f svg/libspsvg.a $(svg_libspsvg_a_OBJECTS)
+
+svg_libspsvg_a_SOURCES =	\
+	svg/css-ostringstream.h	\
+	svg/css-ostringstream.cpp	\
+	svg/itos.cpp	\
+	svg/path-string.h	\
+	svg/path-string.cpp \
+	svg/round.cpp	\
+	svg/stringstream.h	\
+	svg/stringstream.cpp	\
+	svg/strip-trailing-zeros.h	\
+	svg/strip-trailing-zeros.cpp	\
+	svg/svg-affine.cpp	\
+	svg/svg-color.cpp	\
+	svg/svg-color.h 	\
+        svg/svg-icc-color.h \
+	svg/svg-length.cpp	\
+	svg/svg-length.h	\
+	svg/svg-path.cpp	\
+	svg/svg.h
+
+# ######################
+# ### CxxTest stuff ####
+# ######################
+CXXTEST_TESTSUITES += \
+	$(srcdir)/svg/css-ostringstream-test.h	\
+	$(srcdir)/svg/stringstream-test.h	\
+	$(srcdir)/svg/svg-affine-test.h		\
+	$(srcdir)/svg/svg-color-test.h		\
+	$(srcdir)/svg/svg-length-test.h		\
+	$(srcdir)/svg/svg-path-geom-test.h

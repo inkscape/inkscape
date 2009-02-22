@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48px"
+   height="48px"
+   id="svg17007"
+   sodipodi:version="0.32"
+   inkscape:version="0.46+devel r20659"
+   sodipodi:docname="stroke-join-bevel.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs17009" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.2374369"
+     inkscape:cx="-66.897916"
+     inkscape:cy="-26.217947"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="947"
+     inkscape:window-height="491"
+     inkscape:window-x="34"
+     inkscape:window-y="146"
+     inkscape:snap-global="true"
+     inkscape:snap-bbox="false" />
+  <metadata
+     id="metadata17012">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       y="-18.360001"
+       x="36.005005"
+       height="48"
+       width="48"
+       id="rect4991"
+       style="fill:none;stroke:none;stroke-width:1;marker:none;display:inline" />
+    <g
+       transform="matrix(3,0,0,3,-1115.6418,-409.30755)"
+       style="fill:#000000"
+       id="g7655" />
+    <g
+       transform="matrix(2,0,0,2,-1799,-316.5)"
+       id="join_bevel">
+      <path
+         style="fill:#99b6d4;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         d="m 900.04,181.75 -0.04,-10.5 12,-12.5 11,0 0,17.5 -6,0 0,5.5"
+         id="path3939"
+         sodipodi:nodetypes="ccccccc" />
+      <rect
+         style="color:#000000;fill:none;stroke:none;stroke-width:9;marker:none;display:inline"
+         id="rect3918"
+         width="24"
+         height="24"
+         x="899.5"
+         y="158.25" />
+      <path
+         id="path3920"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 900.04,181.75 -0.04,-10.5 12,-12.5 11,0 m -6,23 0,-6 6,0" />
+      <rect
+         y="167.2491"
+         x="920.5246"
+         height="2"
+         width="2"
+         id="use5703"
+         style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:9;marker:none;display:inline" />
+      <rect
+         y="167.2491"
+         x="916.5246"
+         height="2"
+         width="2"
+         id="use5705"
+         style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:9;marker:none;display:inline" />
+      <rect
+         y="167.2491"
+         x="912.5246"
+         height="2"
+         width="2"
+         id="use5707"
+         style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:9;marker:none;display:inline" />
+      <rect
+         y="167.2491"
+         x="908.5246"
+         height="2"
+         width="2"
+         id="use5709"
+         style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:9;marker:none;display:inline" />
+      <rect
+         y="171.2491"
+         x="908.5246"
+         height="2"
+         width="2"
+         id="use5711"
+         style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:9;marker:none;display:inline" />
+      <rect
+         y="175.2491"
+         x="908.5246"
+         height="2"
+         width="2"
+         id="use5713"
+         style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:9;marker:none;display:inline" />
+      <rect
+         y="179.2491"
+         x="908.5246"
+         height="2"
+         width="2"
+         id="use5715"
+         style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:9;marker:none;display:inline" />
+    </g>
+  </g>
+</svg>

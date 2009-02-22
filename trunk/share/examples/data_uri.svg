@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   width="210mm"
+   height="297mm"
+   id="svg1"
+   sodipodi:version="0.32"
+   inkscape:version="0.40cvs"
+   sodipodi:docbase="/home/joncruz/inkscape/share/examples"
+   sodipodi:docname="data_uri.svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:xml="http://www.w3.org/XML/1998/namespace"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.2"
+     inkscape:cx="155"
+     inkscape:cy="923"
+     inkscape:window-width="476"
+     inkscape:window-height="535"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:current-layer="svg1" />
+  <metadata
+     id="metadata4">
+    <rdf:RDF
+       id="RDF5">
+      <cc:Work
+         rdf:about=""
+         id="Work6">
+        <dc:format
+           id="format7">image/svg+xml</dc:format>
+        <dc:type
+           id="type9"
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title
+           id="title1006">data uri test</dc:title>
+        <dc:date
+           id="date1008">Nov 3, 2004</dc:date>
+        <dc:creator
+           id="creator1010">
+          <cc:Agent
+             id="Agent1011">
+            <dc:title
+               id="title1012">Jon A. cruz</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           id="license1014"
+           rdf:resource="http://creativecommons.org/licenses/by/2.0/" />
+        <dc:description
+           id="description1021">A simple test file with image data embedded directly in an xlink:href using the &quot;data:&quot; URI scheme</dc:description>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/2.0/"
+         id="License1015">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction"
+           id="permits1016" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution"
+           id="permits1017" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice"
+           id="requires1018" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Attribution"
+           id="requires1019" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks"
+           id="permits1020" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <image
+     xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAD1BMVEUAAAAAAP//AAAA/wD///8t3N1MAAAACXBIWXMAAA9hAAAPYQGoP6dpAAAAgklEQVRIx+3R2w2AIBBE0SE0sLRgBSa0YP81OQsiccPDf7goBjlRE3FMwgZLgThpgy8A85FHPPXkygI1BZzwLcAtvU2A1it+An2+16/oAowA0rAg5HgVcBanI9RewHQlyACwoMwPCF0gcGkxBm4AdJcIQ0ABZ0C3DepvTl0m2DZYAdwuNgKZZVfyiAAAAABJRU5ErkJggg=="
+     width="64.000000"
+     height="64.000000"
+     id="image1028"
+     x="116.63875"
+     y="57.123096" />
+  <text
+     xml:space="preserve"
+     style="font-size:12.000000;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:Bitstream Vera Sans;font-stretch:normal;font-variant:normal;text-anchor:start;writing-mode:lr;"
+     x="37.38102"
+     y="31.93993"
+     id="text1683"
+     transform="translate(-31.49389,-13.49738)"
+     sodipodi:linespacing="100%"><tspan
+       x="37.381020"
+       y="31.939930"
+       sodipodi:role="line"
+       id="tspan1026">A simple test file with image data embedded directly</tspan><tspan
+       x="37.381020"
+       y="43.939930"
+       sodipodi:role="line"
+       id="tspan1028">in an xlink:href using the &quot;data:&quot; URI scheme</tspan></text>
+</svg>

@@ -1,0 +1,78 @@
+#!/bin/sh
+#
+# Author: Aaron Voisine <aaron@voisine.org>
+# Inkscape Modifications:
+#	Michael Wybrow <mjwybrow@users.sourceforge.net>
+#	Jean-Olivier Irisson <jo.irisson@gmail.com>
+#
+
+CWD="`(cd \"\`dirname \\\"$0\\\"\`\"; echo $PWD)`"
+# e.g. /Applications/Inkscape.app/Contents/Resources/bin
+TOP="`dirname \"$CWD\"`"
+# e.g. /Applications/Inkscape.app/Contents/Resources
+
+
+# Brutally add many things to the PATH. If the directories do not exist, they won't be used anyway. 
+# People should really use ~/.macosx/environment.plist to set environment variables as explained by Apple:
+#	http://developer.apple.com/qa/qa2001/qa1067.html
+# but since no one does, we correct this by making the 'classic' PATH additions here:
+#	/usr/local/bin which, though standard, doesn't seem to be in the PATH
+# 	newer python as recommended by MacPython http://www.python.org/download/mac/
+#	Fink
+#	MacPorts (former DarwinPorts)
+export PATH="/opt/local/bin:/sw/bin/:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/bin:$CWD:$PATH"
+
+# Setup PYTHONPATH to use python modules shipped with Inkscape
+ARCH=`arch`
+PYTHON_VERS=`python -V 2>&1 | cut -c 8-10`
+export PYTHONPATH="$TOP/python/site-packages/$ARCH/$PYTHON_VERS"
+# NB: we are only preprending some stuff to the default python path so if the directory does not exist it should not harm the rest
+
+export DYLD_LIBRARY_PATH="$TOP/lib"
+
+export FONTCONFIG_PATH="$TOP/etc/fonts"
+export PANGO_RC_FILE="$HOME/.inkscape-etc/pangorc"
+export GTK_IM_MODULE_FILE="$HOME/.inkscape-etc/gtk.immodules"
+export GDK_PIXBUF_MODULE_FILE="$HOME/.inkscape-etc/gdk-pixbuf.loaders"
+export GTK_DATA_PREFIX="$TOP"
+export GTK_EXE_PREFIX="$TOP"
+export GNOME_VFS_MODULE_CONFIG_PATH="$TOP/etc/gnome-vfs-2.0/modules"
+export GNOME_VFS_MODULE_PATH="$TOP/lib/gnome-vfs-2.0/modules"
+
+export INKSCAPE_SHAREDIR="$TOP"
+# TODO: move the share directory to a its own folder to make things a bit cleaner in the app bundle
+export INKSCAPE_PLUGINDIR="$TOP/lib/inkscape"
+export INKSCAPE_LOCALEDIR="$TOP/locale"
+
+# Set GTK theme (only if there is no .gtkrc-2.0 in the user's home)
+if [[ ! -e $HOME/.gtkrc-2.0 ]]; then
+	# prepare the theme depending on OS X appearance settings
+	(
+		cd "$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/"
+		./sync_osx_look.sh
+		# TODO: make this more robust, probably by integrating this script directly inline here
+	)
+	export GTK2_RC_FILES="$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/gtkrc"
+fi
+
+# TODO: Have to add ".UTF-8" to the LANG since ommiting causes Inkscape
+#       to crash on startup in locale_from_utf8().
+export LANG="`grep \"\`defaults read .GlobalPreferences AppleCollationOrder \
+	2>&1\`_\" /usr/share/locale/locale.alias | tail -n1 | sed 's/\./ /' | \
+	awk '{print $2}'`.UTF-8"
+
+# Handle the case where the directory storing Inkscape has a '#' in the name.
+# This '#' needs to be escaped in pango.modules for Pango to work properly.
+ESCAPEDTOP=`echo $TOP | sed 's/#/\\\\\\\\#/'`
+
+mkdir -p ${HOME}/.inkscape-etc
+sed 's|${HOME}|'"$HOME|g" "$TOP/etc/pango/pangorc" > ${HOME}/.inkscape-etc/pangorc
+sed 's|${CWD}|'"$ESCAPEDTOP|g" "$TOP/etc/pango/pango.modules" \
+    > ${HOME}/.inkscape-etc/pango.modules
+cp -f "$TOP/etc/pango/pangox.aliases" ${HOME}/.inkscape-etc/
+sed 's|${CWD}|'"$TOP|g" "$TOP/etc/gtk-2.0/gtk.immodules" \
+    > ${HOME}/.inkscape-etc/gtk.immodules
+sed 's|${CWD}|'"$TOP|g" "$TOP/etc/gtk-2.0/gdk-pixbuf.loaders" \
+    > ${HOME}/.inkscape-etc/gdk-pixbuf.loaders
+
+exec "$CWD/inkscape-bin" "$@"

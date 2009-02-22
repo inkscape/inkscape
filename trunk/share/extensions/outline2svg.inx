@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Text Outline Input</_name>
+    <id>org.inkscape.input.outline</id>
+    <dependency type="executable" location="extensions">outline2svg.pl</dependency>
+    <dependency type="executable" location="path">perl</dependency>
+    <input>
+        <extension>.outline</extension>
+        <mimetype>text/html</mimetype>
+        <_filetypename>Text Outline File (*.outline)</_filetypename>
+        <_filetypetooltip>ASCII Text with outline markup</_filetypetooltip>
+    </input>
+    <script>
+        <command reldir="extensions" interpreter="perl">outline2svg.pl</command>
+        <check reldir="extensions">outline2svg.pl</check>
+    </script>
+</inkscape-extension>

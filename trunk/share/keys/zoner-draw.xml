@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<keys name="Zoner Draw">
+
+<!--  
+This file contains a profile of keyboard shortcuts for Inkscape 
+in the style of Zoner Draw 5.   
+
+See default.xml for more information.  
+-->
+
+<!-- Tools -->
+
+<!-- Shape tool - does what our Selector does -->
+
+  <bind key="2" action="ToolSelector" display="true"/>
+
+<!-- Nodes tool - not in Zoner?
+
+  <bind key="A" action="ToolNode" display="true"/>
+  <bind key="a" action="ToolNode" /> -->
+
+<!-- Pen
+
+  <bind key="F12" action="ToolPen" display="true"/> -->
+
+<!-- Text tool is most closer to our text tool -->
+
+  <bind key="t" modifiers="Ctrl" action="ToolText" display="true"/>
+  <bind key="T" modifiers="Ctrl" action="ToolText" />
+
+<!-- Freehand - not in Zoner?
+
+  <bind key="F5" action="ToolPencil" display="true"/> -->
+
+<!-- Zoom -->
+
+  <bind key="Space" modifiers="Ctrl" action="ToolZoom" display="true"/>
+
+
+<!-- File actions -->
+
+  <bind key="n" modifiers="Ctrl" action="FileNew" display="true"/>
+  <bind key="N" modifiers="Ctrl" action="FileNew" />
+  
+<!--  New from Template... (Shift l+Ctrl+N) does not exist in Inkscape -->
+
+  <bind key="o" modifiers="Ctrl" action="FileOpen" display="true"/>
+  <bind key="O" modifiers="Ctrl" action="FileOpen" />
+
+  <bind key="s" modifiers="Ctrl" action="FileSave" display="true"/>
+  <bind key="S" modifiers="Ctrl" action="FileSave" />
+
+<!--  <bind key="s" modifiers="Ctrl,Shift" action="FileSaveAs" display="true"/>
+  <bind key="S" modifiers="Ctrl,Shift" action="FileSaveAs" /> -->
+
+  <bind key="i" modifiers="Ctrl,Shift" action="FileImport" display="true"/>
+  <bind key="I" modifiers="Ctrl,Shift" action="FileImport" />
+
+<!--  <bind key="e" modifiers="Ctrl" action="FileExport" display="true"/>
+  <bind key="E" modifiers="Ctrl" action="FileExport" /> -->
+
+  <bind key="p" modifiers="Ctrl" action="FilePrint" display="true"/>
+  <bind key="P" modifiers="Ctrl" action="FilePrint" />
+  
+<!-- Export to PDF (CTRL+SHIFT+P) - doesn't not exist in Inkscape directly -->
+
+<!-- Options dialog - make sure it's correct one -->
+
+  <bind key="m" modifiers="Ctrl" action="DialogPreferences" display="true"/>
+  <bind key="M" modifiers="Ctrl" action="DialogPreferences" />
+
+<!-- Options dialog - make sure it's correct one 
+
+  <bind key="Enter" modifiers="Alt" action="DialogDocumentProperties" display="true"/> -->
+
+<!-- Edit actions -->
+
+  <bind key="z" modifiers="Ctrl" action="EditUndo" display="true"/>
+  <bind key="Z" modifiers="Ctrl" action="EditUndo" />
+  <bind key="Backspace" modifiers="Alt" action="EditUndo" />
+
+  <bind key="y" modifiers="Ctrl" action="EditRedo" display="true"/>
+  <bind key="Y" modifiers="Ctrl" action="EditRedo" />
+
+  <bind key="x" modifiers="Ctrl" action="EditCut" display="true"/>
+  <bind key="X" modifiers="Ctrl" action="EditCut" />
+<!--  <bind key="Delete" modifiers="Shift" action="EditCut" /> -->
+
+  <bind key="c" modifiers="Ctrl" action="EditCopy" display="true"/>
+  <bind key="C" modifiers="Ctrl" action="EditCopy" />
+  <bind key="Insert" modifiers="Ctrl" action="EditCopy" />
+
+  <bind key="v" modifiers="Ctrl" action="EditPaste" display="true"/>
+  <bind key="V" modifiers="Ctrl" action="EditPaste" />
+  <bind key="Insert" modifiers="Shift" action="EditPaste" />
+
+<!--  <bind key="Delete" action="EditDelete" display="true"/> -->
+
+  <bind key="d" modifiers="Ctrl" action="EditDuplicate" display="true"/>
+  <bind key="D" modifiers="Ctrl" action="EditDuplicate" />
+
+
+  <bind key="a" modifiers="Ctrl" action="EditSelectAll" display="true"/>
+  <bind key="A" modifiers="Ctrl" action="EditSelectAll" />
+
+<!-- View actions -->
+
+<!-- Zoom in or 1:1 ? !!!!!!!!!!!!
+F2	Zoom One-Shot
+Zoom1:0: Zoom to 1:1
+ZoomIn: Zoom in 
+
+  <bind key="plus" action="ZoomIn" display="true"/>
+  <bind key="plus" modifiers="Shift" action="ZoomIn" />
+  <bind key="equal" action="ZoomIn" />
+  <bind key="equal" modifiers="Shift" action="ZoomIn" />
+  <bind key="KP_Add" action="ZoomIn" />
+  
+  <bind key="1" action="Zoom1:0" display="true"/>
+
+-->
+
+<!--  <bind key="F3" action="ZoomOut" display="true"/> -->
+
+<!-- Zoom to Object - in Zoner's terminology -->
+  <bind key="a" action="ZoomDrawing" display="true"/>
+  <bind key="A" action="ZoomDrawing" display="true"/>
+  
+  <bind key="e" action="ZoomPage" display="true"/>
+  <bind key="E" action="ZoomPage" display="true"/>
+
+  <bind key="s" action="ZoomSelection" display="true"/>
+  <bind key="S" action="ZoomSelection" />
+
+<!-- Implemented in Zoner Draw, but does it have hotkeys?
+
+ZoomNext: Next zoom (from the history of zooms)
+ZoomPrev: Previous zoom (from the history of zooms)
+ZoomPageWidth: Zoom to fit page width in window
+
+-->
+
+  <bind key="l" action="ToggleGuides" display="true"/>
+  <bind key="L" action="ToggleGuides" />
+
+  <bind key="g" action="ToggleGrid" display="true"/>
+  <bind key="G" action="ToggleGrid" />
+  
+<!-- Not implemented in Zoner Draw? !!!!!!!!!!!!
+
+  <bind key="r" modifiers="Ctrl" action="ToggleRulers" display="true"/>
+  <bind key="R" modifiers="Ctrl" action="ToggleRulers" />
+
+  <bind key="b" modifiers="Ctrl" action="ToggleScrollbars" display="true"/>
+  <bind key="B" modifiers="Ctrl" action="ToggleScrollbars" />
+  
+-->
+  
+  <bind key="F9" action="FullScreen" display="true"/>
+
+<!-- Path actions -->
+
+  <bind key="k" modifiers="Ctrl" action="SelectionCombine" display="true"/>
+  <bind key="K" modifiers="Ctrl" action="SelectionCombine" />
+
+  <bind key="k" modifiers="Ctrl,Shift" action="SelectionBreakApart" display="true"/>
+  <bind key="K" modifiers="Ctrl,SHift" action="SelectionBreakApart" /> -->
+
+<!-- Object actions -->
+
+  <bind key="g" modifiers="Ctrl" action="SelectionGroup" display="true"/>
+  <bind key="G" modifiers="Ctrl" action="SelectionGroup" />
+
+  <bind key="u" modifiers="Ctrl" action="SelectionUnGroup" display="true"/>
+  <bind key="U" modifiers="Ctrl" action="SelectionUnGroup" />
+
+<!-- Blend is our Interpolate extension's advanced equivalent, so using it -->
+
+  <bind key="b" modifiers="Ctrl,Shift" action="org.ekips.filter.interp.noprefs" display="true"/>
+  <bind key="B" modifiers="Ctrl,Shift" action="org.ekips.filter.interp.noprefs" />
+
+<!-- 'Tools -> Rasterize...' is our Create Bitmap's advanced equivalent, so using it --> 
+
+  <bind key="r" modifiers="Ctrl,Shift" action="SelectionCreateBitmap" display="true"/>
+  <bind key="R" modifiers="Ctrl,Shift" action="SelectionCreateBitmap" />
+
+  <bind key="Page_Up" modifiers="Ctrl" action="SelectionToFront" display="true"/>
+  <bind key="KP_Page_Up" modifiers="Ctrl" action="SelectionToFront" />
+
+  <bind key="Page_Down" modifiers="Ctrl" action="SelectionToBack" display="true"/>
+  <bind key="KP_Page_Down" modifiers="Ctrl" action="SelectionToBack" />
+
+  <bind key="Page_Up" action="SelectionRaise" display="true"/>
+  <bind key="KP_Page_Up" action="SelectionRaise" />
+
+  <bind key="Page_Down" action="SelectionLower" display="true"/>
+  <bind key="KP_Page_Down" action="SelectionLower" />
+
+<!-- Transformations gallery -->
+
+  <bind key="6" modifiers="Ctrl" action="DialogTransform" display="true"/>
+
+<!-- Align Objects gallery. Distribute Objects gallery is a separate tab of same dialog there :)  -->
+
+  <bind key="7" modifiers="Ctrl" action="DialogAlignDistribute" display="true"/>
+  <bind key="8" modifiers="Ctrl" action="DialogAlignDistribute" display="true"/>
+
+<!-- Unify Objects gallery - Scale tab?! -->
+
+  <bind key="9" modifiers="Ctrl" action="DialogTransform" display="true"/>
+
+<!-- Colors gallery is way closer to Swatches than to Fill'n'Stroke-->
+
+  <bind key="5" modifiers="Ctrl" action="DialogSwatches" display="true"/>
+
+<!-- Pen gallery - 'Stroke style' tab analog -->
+
+  <bind key="2" modifiers="Ctrl" action="DialogFillStroke" display="true"/>
+
+<!-- Fill Style gallery -->
+
+  <bind key="1" modifiers="Ctrl" action="DialogFillStroke" display="true"/>
+
+<!-- Transparency gallery -->
+
+  <bind key="3" modifiers="Ctrl" action="DialogFillStroke" display="true"/>
+
+<!-- Styles gallery (Shift+Ctrl+6) does not have an analog in Inkscape -->
+
+<!-- Clip Art gallery (Shift+Ctrl+7) does not have an analog in Inkscape -->
+
+</keys>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Corel DRAW Presentation Exchange files input</_name>
+    <id>org.inkscape.input.cmx</id>
+    <dependency type="executable" location="path">uniconv</dependency>
+    <dependency type="executable" location="extensions">uniconv-ext.py</dependency>
+    <input>
+        <extension>.cmx</extension>
+        <mimetype>application/x-xcmx</mimetype>
+        <_filetypename>Corel DRAW Presentation Exchange files (.cmx)</_filetypename>
+        <_filetypetooltip>Open presentation exchange files saved in Corel DRAW</_filetypetooltip>
+    </input>
+    <script>
+        <command reldir="extensions" interpreter="python">uniconv-ext.py</command>
+    </script>
+</inkscape-extension>

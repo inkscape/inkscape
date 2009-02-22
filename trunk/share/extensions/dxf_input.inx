@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>DXF Input</_name>
+	<id>org.inkscape.input.dxf</id>
+	<dependency type="executable" location="extensions">dxf_input.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<input>
+		<extension>.dxf</extension>
+		<mimetype>image/x-svgz</mimetype>
+		<_filetypename>AutoCAD DXF (*.dxf)</_filetypename>
+		<_filetypetooltip>Import AutoCAD's Document Exchange Format</_filetypetooltip>
+	</input>
+	<script>
+		<command reldir="extensions" interpreter="python">dxf_input.py</command>
+	</script>
+</inkscape-extension>

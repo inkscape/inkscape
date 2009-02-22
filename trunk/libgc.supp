@@ -1,0 +1,15 @@
+{
+   boehm collector uninitialized pointer test
+   Memcheck:Cond
+   obj:/usr/lib/libgc.so.*
+   obj:/usr/lib/libgc.so.*
+   obj:/usr/lib/libgc.so.*
+}
+{
+   boehm collector uninitialized pointer read
+   Memcheck:Value4
+   obj:/usr/lib/libgc.so.*
+   obj:/usr/lib/libgc.so.*
+   obj:/usr/lib/libgc.so.*
+}
+

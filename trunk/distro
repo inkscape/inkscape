@@ -1,0 +1,289 @@
+#! /bin/sh
+# distro.in: print distribution information
+# $Id$
+
+# Copyright (C) 2001-2002 Matthew R. MacIntyre <matt@pipfield.ca>
+#  
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#  
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#  
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+#  
+
+PN=`basename $0`
+VER="0.8.1+inkscape"
+
+#
+# Fatal($msg,$retval)
+# 
+# Display an error message to stderr and exit
+#
+Fatal () {
+    echo -e "${PN}: $1\nTerminating...." 1>&2
+    test -n "$2" && exit $2
+    exit 1
+}
+
+
+#
+# Help()
+#
+# Display help information and exit
+#
+Help () {
+    cat <<EOF
+Usage: ${PN} [OPTION]...
+Print certain distribution information.  With no OPTION, same as -f.
+
+Options:
+  -a, --all        print all information
+  -c, --codename   print the distribution code name
+  -f, --ftp-name   print the ftp name of the distribution
+  -n, --name       print the distribution name
+  -r, --release    print the distribution release
+  -h, --help       display this help and exit
+  -v, --version    output version information and exit
+
+Report bugs to <matt@pipfield.ca>.
+EOF
+    exit 0
+}
+
+#
+# Version()
+#
+# Display version information and exit
+#
+Version () {
+    cat <<EOF
+${PN} v${VER}
+
+Written by Matthew R. MacIntyre.
+
+Copyright (c) 2001-2002 Matthew R. MacIntyre.
+This is free software; see the source for copying conditions. There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+EOF
+    exit 0
+}
+
+
+#######################
+# Program starts here #
+#######################
+
+#
+# Set initial values for our configuration variables
+#
+ALL=0
+CODENAME=0
+FTPNAME=0
+NAME=0
+RELEASE=0
+
+
+# 
+# Parse the command-line arguments
+#
+
+OPTERR=0
+while getopts "\-:acfhnrv" opt; do
+    case $opt in
+        h) Help; shift ;;
+        v) Version; shift ;;
+        a) ALL=1 ; shift; break;;
+        c) CODENAME=1; shift; break;;
+        f) FTPNAME=1; shift; break;;
+        n) NAME=1; shift; break;;
+        r) RELEASE=1; shift; break;;
+        -) # long options
+           case "$OPTARG" in
+                help) Help; shift ;;
+                version) Version; shift ;;
+                all) ALL=1 ; shift ; break ;;
+                codename) CODENAME=1 ; shift ; break ;;
+                ftp-name) FTPNAME=1 ; shift ; break ;;
+                name) NAME=1; shift ; break ;;
+                release) RELEASE=1; shift ; break ;;
+                *) Fatal "Illegal option -- \"--$OPTARG\"\nTry ${PN} --help for more information." 1 ;;
+           esac ;;
+        *) Fatal "Illegal option -- \"-$OPTARG\"\nTry ${PN} --help for more information." 1 ;;
+    esac
+done
+
+#
+# Find the contents from the appropriate file, and store it in
+# $contents.  Store the filename in $filename.
+#
+contents=""
+filename=""
+
+case "`uname`" in
+    OpenBSD|FreeBSD|NetBSD|CYGWIN*) contents="`uname -a`" ;;
+    Linux)
+        files="/etc/mandrake-release /etc/SuSE-release \
+                /usr/share/doc/ubuntu-base/changelog.gz \
+                /etc/redhat-release /etc/debian_version \
+                /etc/slackware-version /etc/.issue \
+                /etc/ROCK-LINUX /etc/gentoo-release"
+        for file in $files; do
+            if test -f "$file"; then
+                filename="$file"
+                if test -n "`echo $filename | grep ubuntu`"; then
+                    contents="`cat /etc/issue`"
+		else
+                    contents="`cat $file`"
+                fi
+                break
+            fi
+        done
+        if test -z "$filename"; then
+            Fatal "Cannot find distribution information"
+        fi
+        ;; 
+    SunOS)
+        contents="`cat /etc/release`"
+        filename='/etc/release'
+        ;;
+    *) Fatal "Cannot find distribution information" ;;
+esac
+
+
+#
+# Output the appropriate information
+#
+sum="`expr $ALL + $CODENAME + $FTPNAME + $NAME + $RELEASE`"
+if test $sum -eq 0 || test $FTPNAME -eq 1; then
+    # FIXME: incorporate this bit into the case statement
+    if ! test -n "`echo $filename | grep ubuntu`"; then
+      name="`echo $filename | sed -e 's|/etc/||' -e 's|-*release$||' -e 's|[-_]version$||' -e 's|\.issue||' |  tr '[A-Z]' '[a-z]' | tr -d '-'`"
+    fi
+    # If that didn't work, then we likely have Solaris, Debian,
+    # FreeBSD, or maybe even ROCK LINUX
+    
+    if test -z "$name"; then
+        case "`uname`" in
+            CYGWIN*) name="cygwin" ;;
+            OpenBSD|FreeBSD|NetBSD) name="`uname | tr '[A-Z]' '[a-z]'`" ;;
+            Linux)
+                if test -n "`grep debian $filename`"; then
+                    name="debian"
+                elif test -n "`echo $filename | grep ubuntu`"; then
+                    name="ubuntu"
+                elif test -n "`grep -i caldera $filename`"; then
+                     name="openlinux"
+                fi   
+                ;;
+            SunOS) name="solaris" ;;
+            *)  Fatal "Cannot determine ftp-name for this system: `uname`" 1 ;;
+        esac
+    fi    
+
+    # Get the version number
+    case $name in
+        cygwin) version="`uname -r | sed -e 's!\.!!g' -e 's!^\([0-9][0-9]*\).*$!\1!'`" ;;
+        debian) version="`sed -e 's!\.!!'g -e 's!^testing/!-!' $filename`" ;;
+        ubuntu) version="`echo $contents | awk '{print $2}'`" ;;
+        freebsd) version="`uname -r | sed -e 's!\([0-9][0-9]*\)\.\([0-9][0-9]*\).*!\1\2!'`" ;;
+        openbsd|netbsd) version="`uname -r | sed -e 's!\.!!g'`" ;;
+        rocklinux)  version="`sed -e 's!^.*Linux \([0-9]\.[0-9]\.*[0-9]*\).*$!\1!' $filename | tr -d '.' | sed -e 's!0$!!'`" ;;
+        slackware) version="`sed -e 's!\.!!g' -e 's!\([0-9]*\).*$!\1!' -e 's!\([0-9][0-9]*\)0$!\1!' $filename`" ;;
+        solaris) version="`echo $contents | sed -e 's!^European !!' -e 's!^Solaris \([0-9]\.*[0-9]*\) .*$!\1!' -e 's!\.!!g'`" ;;
+        *)
+          # This is just a reasonable guess
+          version="`echo $contents | sed -n '1,1'p | sed -e 's!.*\([0-9][0-9]*\.[0-9][0-9]*[a-z]*\).*!\1!' -e 's!\([0-9][0-9]*\)\.\([0-9][0-9]*[a-z]*\)!\1\2!'`" ;;
+    esac
+    echo "$name$version"
+elif test $CODENAME -eq 1 ; then
+    # Certain systems (Solaris) don't have codenames.  This checks to see 
+    # if there is one before figuring out what it is
+    codename=""
+    # check for a codename, but strip out the *BSD stuff, a misleading entry in ROCK-Linux,
+    # and an ix86 bit in the various SuSE releases.
+    if test -n "`echo $contents | sed -e 's!(GENERIC)!!' -e 's!(native, .*)!!' -e 's!(i[3456]86)!!' | egrep "^.* \(.*\).*$"`"; then
+        codename="`echo $contents | sed -e 's!.*(\(.*\)).*$!\1!'`"
+    elif test -n "`echo $filename | grep ubuntu`"; then
+        # For ubuntu, steal it out of the contents report
+        codename="`echo $contents | awk -F\\\" '{print $2}'`"
+    elif test -n "`echo $filename | grep debian`"; then
+        # For debian, we have to determine them manually
+        case "`cat $filename`" in
+                    testing/unstable) codename='etch/sid' ;;
+                    3.1) codename='sarge' ;;
+                    3.0) codename='woody' ;;
+                    2.2) codename='potato' ;;
+                    2.1) codename='slink' ;;
+                    2.0) codename='hamm' ;;
+                    1.3*) codename='bo' ;;
+                    1.2) codename='rex' ;;
+                    1.1) codename='buzz' ;;
+        esac
+    fi
+    if test -n "$codename"; then
+        echo "$codename"
+    fi
+elif test $ALL -eq 1 ; then
+    # Call the script recursively to get the desired string, since the
+    # Solaris format isn't the same.  It is done through sh as a hack
+    # to help when developing the script, and it isn't executable
+    string=`sh "$0" --name`
+    if test x"`uname`" = x"Linux"; then
+        # We only want to add the word "release" for Linux
+        # distributions.  It's  not a convention to use the word
+        # "release" for any other type of system.
+
+        # Don't add the word 'release' if we're on debian testing
+        if test x"`sh $0 --release`" != x"testing/unstable"; then
+            string="$string release"
+        fi
+    fi
+    string="$string `sh $0 --release`"
+    codename=`sh "$0" --codename`
+    if test -n "$codename"; then
+        string="$string ($codename)"
+    fi
+    # Strip out instances of too many spaces
+    string="`echo $string | tr -s ' '`"
+    echo "$string"
+elif test $NAME -eq 1 ; then
+    case "`uname`" in
+        Linux|SunOS)
+            # It is done this way because the string for Solaris is a
+            # little different than the various versions of Linux
+            name="`echo $contents | sed -e 's![0-9].*$!!' -e 's![\ ]*release[\ ]*!!' -e 's![\ ][\ ]*$!!g'`" 
+            # Hmmmm .... some are a little different
+            if test -n "`echo $filename | grep debian`"; then
+                name="Debian GNU/Linux"
+            elif test -n "`echo $filename | grep ubuntu`"; then
+                name="Ubuntu Linux"
+            elif test -n "`echo $filename | grep slackware`"; then
+                name="Slackware Linux"
+            fi
+            ;;
+        CYGWIN*) name="Cygwin" ;; # FIXME: not sure if we have to differentiate between NT and others
+        *) name="`uname`" ;;
+    esac
+    echo "$name"
+elif test $RELEASE -eq 1 ; then
+    case "`uname`" in
+        OpenBSD|FreeBSD|NetBSD|CYGWIN*) release="`uname -r | sed -e 's!(.*$!!'`" ;;
+        *)
+            # Cut letters and spaces out up to the first number
+            release="`echo $contents | sed -e 's!^[A-Za-z\ ]*\([0-9]\.*[0-9]*\.*[0-9]*[a-z]*\).*$!\1!'`"
+            ;;
+    esac
+    echo "$release"
+else
+    Fatal "Something unexpected has happened!"
+fi
+
+# All done.

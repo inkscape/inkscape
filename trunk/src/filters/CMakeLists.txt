@@ -1,0 +1,25 @@
+SET(filters_SRC
+blend.cpp
+colormatrix.cpp
+componenttransfer.cpp
+componenttransfer-funcnode.cpp
+composite.cpp
+convolvematrix.cpp
+diffuselighting.cpp
+displacementmap.cpp
+distantlight.cpp
+flood.cpp
+image.cpp
+merge.cpp
+mergenode.cpp
+morphology.cpp
+offset.cpp
+pointlight.cpp
+specularlighting.cpp
+spotlight.cpp
+tile.cpp
+turbulence.cpp
+)
+ADD_LIBRARY(filters STATIC ${filters_SRC})
+TARGET_LINK_LIBRARIES(filters
+2geom ${INKSCAPE_LIBS})

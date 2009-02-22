@@ -1,0 +1,17 @@
+# Convenience stub makefile to call the real Makefile.
+
+@SET_MAKE@
+
+OBJEXT = @OBJEXT@
+
+# Explicit so that it's the default rule.
+all:
+	cd .. && $(MAKE) trace/all
+
+clean %.a %.$(OBJEXT):
+	cd .. && $(MAKE) trace/$@
+
+.PHONY: all clean
+
+.SUFFIXES:
+.SUFFIXES: .a .$(OBJEXT)

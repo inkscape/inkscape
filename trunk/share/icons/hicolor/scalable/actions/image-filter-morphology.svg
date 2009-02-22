@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46+devel r20659"
+   version="1.0"
+   sodipodi:docname="image-filter-morphology.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/felipe/devel/inkscape/inkscape/share/icons/feBlend-icon.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <filter
+       inkscape:label="filter2"
+       id="filter3214">
+      <feMorphology
+         radius="3.0888030888030888"
+         operator="dilate"
+         id="feMorphology3216" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.8080646"
+     inkscape:cx="22.101915"
+     inkscape:cy="29.326213"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="964"
+     inkscape:window-height="717"
+     inkscape:window-x="50"
+     inkscape:window-y="16" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <dc:date>2007-07-03</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Felipe Corrêa da Silva Sanches</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:identifier />
+        <dc:source />
+        <dc:relation />
+        <dc:language />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>feBlend Example</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:coverage />
+        <dc:description>this is an image originaly intended to be used in Inkscape</dc:description>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title />
+          </cc:Agent>
+        </dc:contributor>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-155.36416,-264.88732)">
+    <g
+       transform="matrix(0.5,0,0,0.5,78.092496,132.75122)"
+       id="layer1-7"
+       inkscape:label="Camada 1">
+      <g
+         transform="matrix(0.9521111,-0.143244,0.143244,0.9521111,-32.233426,70.803148)"
+         id="g3205">
+        <path
+           sodipodi:type="arc"
+           style="fill:none;stroke:#0000ff;stroke-width:5.2269907;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+           id="path3199"
+           sodipodi:cx="25.462366"
+           sodipodi:cy="40.946236"
+           sodipodi:rx="17.204302"
+           sodipodi:ry="17.204302"
+           d="m 42.666668,40.946236 c 0,9.496774 -7.707527,17.204301 -17.204302,17.204301 -9.496775,0 -17.2043017,-7.707527 -17.2043017,-17.204301 0,-9.496775 7.7075267,-17.204302 17.2043017,-17.204302 9.496775,0 17.204302,7.707527 17.204302,17.204302 z"
+           transform="translate(159.66949,266.98056)" />
+        <path
+           sodipodi:type="arc"
+           style="fill:none;stroke:#ff0000;stroke-width:4.18159246;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+           id="path3201"
+           sodipodi:cx="28.043011"
+           sodipodi:cy="21.161291"
+           sodipodi:rx="12.215054"
+           sodipodi:ry="12.215054"
+           d="m 40.258064,21.161291 c 0,6.74271 -5.472344,12.215054 -12.215053,12.215054 -6.74271,0 -12.215054,-5.472344 -12.215054,-12.215054 0,-6.742709 5.472344,-12.2150534 12.215054,-12.2150534 6.742709,0 12.215053,5.4723444 12.215053,12.2150534 z"
+           transform="translate(160.51114,267.80861)" />
+        <path
+           sodipodi:type="arc"
+           style="fill:none;stroke:#00ff00;stroke-width:3.13619447;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+           id="path3203"
+           sodipodi:cx="16.516129"
+           sodipodi:cy="20.989246"
+           sodipodi:rx="13.419354"
+           sodipodi:ry="13.419354"
+           d="m 29.935483,20.989246 c 0,7.407484 -6.011871,13.419355 -13.419354,13.419355 -7.4074841,0 -13.4193549,-6.011871 -13.4193549,-13.419355 0,-7.407483 6.0118708,-13.4193541 13.4193549,-13.4193541 7.407483,0 13.419354,6.0118711 13.419354,13.4193541 z"
+           transform="translate(156.85329,262.69283)" />
+      </g>
+      <use
+         style="filter:url(#filter3214)"
+         height="96"
+         width="96"
+         transform="translate(36.743942,-30.88376)"
+         id="use3212"
+         xlink:href="#g3205"
+         y="0"
+         x="0" />
+    </g>
+  </g>
+</svg>

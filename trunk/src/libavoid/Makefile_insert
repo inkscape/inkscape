@@ -1,0 +1,34 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+libavoid/all: libavoid/libavoid.a
+
+libavoid/clean:
+	rm -f libavoid/libavoid.a $(libavoid_libavoid_a_OBJECTS)
+
+libavoid_libavoid_a_SOURCES =	\
+	libavoid/connector.cpp	\
+	libavoid/connector.h	\
+	libavoid/debug.h	\
+	libavoid/geometry.cpp	\
+	libavoid/geometry.h	\
+	libavoid/geomtypes.h	\
+	libavoid/graph.cpp	\
+	libavoid/graph.h	\
+	libavoid/makepath.cpp	\
+	libavoid/makepath.h	\
+	libavoid/polyutil.cpp	\
+	libavoid/polyutil.h	\
+	libavoid/router.cpp	\
+	libavoid/router.h	\
+	libavoid/shape.cpp	\
+	libavoid/shape.h	\
+	libavoid/static.cpp	\
+	libavoid/static.h	\
+	libavoid/timer.cpp	\
+	libavoid/timer.h	\
+	libavoid/vertices.cpp	\
+	libavoid/vertices.h	\
+	libavoid/visibility.cpp	\
+	libavoid/visibility.h	\
+	libavoid/libavoid.h	\
+	libavoid/region.h

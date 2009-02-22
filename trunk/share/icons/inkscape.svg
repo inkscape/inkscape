@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="128"
+   height="128"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   sodipodi:docname="inkscape.svg"
+   sodipodi:docbase="/home/valessio/Desenvolvimento/inkscape/inkscape"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/valessio/Desenvolvimento/inkscape/inkscape/inkscape.png"
+   inkscape:export-xdpi="45"
+   inkscape:export-ydpi="45">
+  <sodipodi:namedview
+     bordercohor="#666666"
+     inkscape:window-height="584"
+     inkscape:window-width="778"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="1"
+     inkscape:cx="64"
+     inkscape:cy="64"
+     inkscape:window-x="192"
+     inkscape:window-y="122"
+     inkscape:current-layer="svg2" />
+  <defs
+     id="defs4">
+    <linearGradient
+       id="WhiteTransparent"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         style="stop-color:white;stop-opacity:1"
+         offset="0"
+         id="stop7" />
+      <stop
+         style="stop-color:white;stop-opacity:0"
+         offset="1"
+         id="stop9" />
+    </linearGradient>
+    <linearGradient
+       id="BlackTransparent"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         style="stop-color:black;stop-opacity:1"
+         offset="0"
+         id="stop12" />
+      <stop
+         style="stop-color:black;stop-opacity:0"
+         offset="1"
+         id="stop14" />
+    </linearGradient>
+    <linearGradient
+       id="liquidShade"
+       xlink:href="#BlackTransparent"
+       x1="0"
+       y1="128"
+       x2="0"
+       y2="64"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="liquidSpecular"
+       xlink:href="#WhiteTransparent"
+       x1="0"
+       y1="128"
+       x2="0"
+       y2="76"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="sideSpecular"
+       xlink:href="#WhiteTransparent"
+       x1="80"
+       y1="20"
+       x2="60"
+       y2="40"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="IcecapTip"
+       xlink:href="#WhiteTransparent"
+       x1="60"
+       y1="20"
+       x2="90"
+       y2="50"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="shinySpecular"
+       xlink:href="#WhiteTransparent"
+       x1="33"
+       y1="35"
+       x2="58"
+       y2="60"
+       gradientUnits="userSpaceOnUse" />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipoutline1">
+      <path
+         id="outline1"
+         d="M 54.1,12.5 L 12.9,54.7 C -2.7,70.3 23,69 32.3,74.9 C 36.6,77.7 18.5,81.3 22.2,85 C 25.8,88.7 43.9,92.1 47.5,95.7 C 51.1,99.4 40.2,103.3 43.8,107 C 47.3,110.7 55.7,107.2 57.2,115.6 C 58.3,121.8 72.6,118.7 79,113.4 C 83,110 72.1,110 75.7,106.3 C 84.7,97.2 92.7,102.2 96,93.8 C 97.8,89.3 82.4,86.1 86.5,83.2 C 96.3,76.3 132.3,72.8 115.7,56.2 L 73,12.5 C 67.7,7.5 59,7.5 54.1,12.5 z M 44.2,77.2 C 45.1,77.2 75,81.2 63.5,84.3 C 59.1,85.5 38.9,77.2 44.2,77.2 z M 101.4,93.8 C 101.4,95.9 117.7,97.1 116.8,93.3 C 115.5,86.9 103.2,87.4 101.4,93.8 z M 31.9,104.9 C 35.6,108.1 41.2,104.2 43,99.7 C 39.4,95 26.1,100 31.9,104.9 z M 99.4,98.2 C 94.8,102.4 100.2,106.8 104.7,103.9 C 105.9,103.1 104.6,99.2 99.4,98.2 z " />
+    </clipPath>
+    <filter
+       id="ShadowBlur"
+       filterUnits="userSpaceOnUse"
+       x="0"
+       y="0">
+      <feGaussianBlur
+         in="SourceAlpha"
+         stdDeviation="3"
+         result="blur"
+         id="feGaussianBlur24" />
+    </filter>
+  </defs>
+  <style
+     type="text/css"
+     id="style26">
+	.specularity {opacity:0.5;}
+	.low-specularity {opacity:0.25;}
+	.full-specularity {opacity:1;}
+	.black {fill:#000000;}
+	.white {fill:#ffffff;}
+	.outline-big {stroke-width:16;stroke:none;opacity:0.1;fill:none;}
+	.outline-small {stroke-width:8;stroke:none;opacity:0.2;fill:none;}
+	.stroke-highlight {fill:none;stroke:none;opacity:0.2;}
+       	.base-shadow 	{fill:black;opacity:75;}
+	</style>
+  <g
+     id="g28">
+    <path
+       filter="url(#ShadowBlur)"
+       class="base-shadow"
+       d="M 8,62.9 C 5.5,72.3 23.4,74 32.3,77.6 C 34.5,78.6 33.5,74.4 32.4,73.4 C 25.2,69.8 10.2,69 8,62.9 z M 119.6,63.9 C 116.9,72.8 94.6,77 86.6,81.7 C 84.5,82.9 83.4,88 87,86 C 96.6,80.7 122.8,75.3 119.6,63.9 z M 44.3,75.7 C 41,75.7 39,77.3 44.9,79.4 C 52.6,80 63.7,83 66,84 C 69.8,77.5 45,75.7 44.3,75.7 z M 23.2,84.2 C 21.8,83 20.3,85.2 22.3,87 C 25.8,90.8 44.9,94.9 48.6,98.5 C 50.4,99.4 49.8,96 48.7,94.9 C 45.3,91.5 28.2,87.6 23.2,84.2 z M 101.7,93.9 C 101.9,97.4 117.5,101.5 116.9,94 C 116.7,91.4 101.5,91.3 101.7,93.9 z M 95.6,93.7 C 92.2,100.8 84.3,96.2 75.8,104.8 C 73.5,106.5 74.5,111 76.8,108.6 C 85.5,100.4 93.2,104.9 96.2,96 C 96.4,95 96.2,94.4 95.6,93.7 z M 31.5,106 C 36,111 41.3,107.8 43,100.3 C 42.6,98.6 26.2,100.4 31.5,106 z M 98.7,100.2 C 93.3,104.6 102,109.6 104.7,106 C 108.3,101.3 101.3,102.6 98.7,100.2 z M 43.5,105 C 42.6,106.2 42.7,108 43.8,109.2 C 47.4,112.8 55.8,109.3 57.3,117.8 C 58.4,123.9 72.5,121.3 79.3,116.4 C 80.8,114.8 80.9,111 79,112 C 49.2,125.4 68.2,108.2 43.5,105 z "
+       id="path30" />
+    <use
+       class="outline-big"
+       xlink:href="#outline1"
+       id="use32" />
+    <use
+       class="outline-small"
+       xlink:href="#outline1"
+       id="use34" />
+    <use
+       class="black;"
+       xlink:href="#outline1"
+       id="use36" />
+    <use
+       clip-path="url(#clipoutline1)"
+       xlink:href="#outline1"
+       class="stroke-highlight"
+       id="use38" />
+    <use
+       style="fill:url(#liquidSpecular)"
+       class="specularity"
+       xlink:href="#outline1"
+       id="use40" />
+    <use
+       style="fill:url(#sideSpecular)"
+       class="low-specularity"
+       xlink:href="#outline1"
+       id="use42" />
+    <path
+       class="specularity"
+       style="fill:url(#shinySpecular);"
+       d="M 16.8,56.9 C 5.7,67.9 25.2,64.8 40.2,70.7 L 71.2,16.2 C 66.5,11.4 60.5,11.8 56.2,16.2 L 16.8,56.9 z "
+       id="path44" />
+    <path
+       style="fill:url(#liquidShade)"
+       class="shade"
+       d="M 8.9,61.7 C 6.3,71.1 22.3,70.9 31.2,74.4 C 32.7,73.5 33.5,72.4 32.4,71.4 C 25.2,67.8 11,67.8 8.9,61.7 z M 120,62.7 C 117.3,71.6 94.5,75 86.6,79.7 C 85.5,80.8 86.2,81.8 87.5,82.8 C 97.3,77.9 123.2,74.1 120,62.7 z M 44.3,73.7 C 41.1,73.7 39.1,75.3 44.9,77.4 C 52.6,78 63.7,81.1 66.1,82.1 C 69.8,75.5 45.1,73.7 44.3,73.7 z M 23.2,82.2 C 21.9,83.1 21.2,84.1 22.3,85.1 C 25.8,88.8 43.8,92.2 47.5,95.8 C 48.4,94.6 48.7,93.4 47.6,92.2 C 44.2,88.8 28.2,85.6 23.2,82.2 z M 103,91.3 C 102.3,92.1 101.7,93 101.5,94 C 101.5,96.1 116.9,97.4 116.9,93.4 C 116.6,92.7 116.3,92 115.7,91.3 C 112.9,92.9 106,92.5 103,91.3 z M 95.6,91.7 C 92.2,98.8 84.3,94.2 75.8,102.8 C 74.4,104.3 75.2,105.1 76.5,105.8 C 85.2,97.6 93.2,102.9 96.2,94 C 96.4,93.1 96.2,92.4 95.6,91.7 z M 41.6,98.7 C 39.2,101.9 35,104 32,101.4 C 31.7,101.2 31.5,100.9 31.3,100.6 C 30.2,102 30.2,103.5 32,105.1 C 35.6,108.2 41.3,104.3 43,99.9 C 42.7,99.4 42.1,99 41.6,98.7 z M 98.3,99.7 C 96,103.4 100.6,106.4 104.7,104.1 C 105.3,103.4 105.2,102 104.1,100.6 C 101.7,101.8 99.4,101.1 98.3,99.7 z M 43.9,103.6 C 43,104.7 42.7,106 43.8,107.2 C 47.4,110.8 55.8,107.3 57.3,115.8 C 58.4,121.9 72,118.7 78.8,113.8 C 80.3,112.16 79.6,111.1 78.3,110.3 C 71.2,115.1 58.3,118 57.3,112.2 C 55.8,103.7 47.5,107.1 43.9,103.6 z "
+       id="path46" />
+    <path
+       id="icecap"
+       class="full-specularity"
+       style="fill:url(#IcecapTip)"
+       d="M 70.5,15.5 L 86.8,32.1 C 88.3,33.6 88.3,36.7 87.4,37.6 L 79.3,31 L 77.7,40.7 L 71,37.1 L 60.1,44 L 56.5,29.5 L 50.7,42.1 L 36.2,42 C 33.4,42 33.8,39.1 36.7,36.2 C 42.4,29.9 53.5,19.2 57,15.5 C 60.6,11.8 66.9,11.9 70.5,15.5 z " />
+  </g>
+<!-- Copyright License -->  <metadata
+     id="metadata49">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="etiquette-icon">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Andy Fitzsimon</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Andrew Michael Fitzsimon</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Fitzsimon IT Consulting Pty Ltd</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:identifier>http://andy.fitzsimon.com.au</dc:identifier>
+        <dc:date>2006</dc:date>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/2/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/2/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Attribution" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

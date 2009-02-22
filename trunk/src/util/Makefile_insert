@@ -1,0 +1,32 @@
+
+util/all: util/libinkutil.a
+
+util/clean:
+	rm -f util/libinkutil.a $(util_libinkutil_a_OBJECTS)
+
+util_libinkutil_a_SOURCES = \
+	util/compose.hpp	\
+	util/ucompose.hpp	\
+	util/enums.h \
+	util/filter-list.h \
+	util/fixed_point.h \
+	util/format.h	\
+	util/forward-pointer-iterator.h \
+	util/glib-list-iterators.h \
+	util/list.h \
+	util/list-container.h \
+	util/map-list.h \
+	util/mathfns.h \
+	util/reverse-list.h \
+	util/share.h \
+	util/share.cpp \
+	util/tuple.h \
+	util/units.cpp \
+	util/units.h
+
+# ######################
+# ### CxxTest stuff ####
+# ######################
+
+CXXTEST_TESTSUITES += \
+	$(srcdir)/util/list-container-test.h

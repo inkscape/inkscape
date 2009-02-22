@@ -1,0 +1,18 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+libcola/all: libcola.a
+
+libcola/clean:
+	rm -f libcola/libcola.a $(libcola_libcola_a_OBJECTS)
+
+libcola_libcola_a_SOURCES = libcola/cola.h\
+	libcola/cola.cpp\
+	libcola/conjugate_gradient.cpp\
+	libcola/conjugate_gradient.h\
+	libcola/gradient_projection.cpp\
+	libcola/gradient_projection.h\
+	libcola/shortest_paths.cpp\
+	libcola/shortest_paths.h\
+	libcola/straightener.h\
+	libcola/straightener.cpp\
+	libcola/connected_components.cpp

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>SVGZ Input</_name>
+    <id>org.inkscape.input.svgz</id>
+    <dependency type="executable">gzip</dependency>
+    <dependency type="extension">org.inkscape.input.svg</dependency>
+    <input>
+        <extension>.svgz</extension>
+        <mimetype>image/x-svgz</mimetype>
+        <_filetypename>Compressed Inkscape SVG (*.svgz)</_filetypename>
+        <_filetypetooltip>Inkscape's native file format compressed with GZip</_filetypetooltip>
+        <output_extension>org.inkscape.output.svgz</output_extension>
+    </input>
+    <script>
+        <command reldir="path">gzip -cd</command>
+        <check reldir="path">gzip</check>
+    </script>
+</inkscape-extension>

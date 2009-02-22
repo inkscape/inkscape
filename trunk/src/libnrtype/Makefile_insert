@@ -1,0 +1,44 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+libnrtype/all: libnrtype/libnrtype.a
+
+libnrtype/clean:
+	rm -f libnrtype/libnrtype.a $(libnrtype_libnrtype_a_OBJECTS)
+
+libnrtype_libnrtype_a_SOURCES =	\
+	libnrtype/boundary-type.h	\
+	libnrtype/font-style-to-pos.cpp	\
+	libnrtype/font-style-to-pos.h	\
+	libnrtype/font-glyph.h	\
+	libnrtype/font-instance.h	\
+	libnrtype/font-style.h	\
+	libnrtype/nr-type-pos-def.cpp	\
+	libnrtype/nr-type-pos-def.h	\
+	libnrtype/nr-type-primitives.cpp	\
+	libnrtype/nr-type-primitives.h	\
+	libnrtype/nrtype-forward.h	\
+	libnrtype/FontFactory.cpp \
+	libnrtype/FontFactory.h \
+	libnrtype/FontInstance.cpp \
+	libnrtype/font-lister.h \
+	libnrtype/font-lister.cpp \
+	libnrtype/one-box.h	\
+	libnrtype/one-glyph.h	\
+	libnrtype/one-para.h	\
+	libnrtype/RasterFont.cpp \
+	libnrtype/RasterFont.h \
+	libnrtype/raster-glyph.h	\
+	libnrtype/raster-position.h	\
+	libnrtype/text-boundary.h	\
+	libnrtype/TextWrapper.cpp \
+	libnrtype/TextWrapper.h \
+	libnrtype/Layout-TNG-Compute.cpp \
+	libnrtype/Layout-TNG-Input.cpp \
+	libnrtype/Layout-TNG-OutIter.cpp \
+	libnrtype/Layout-TNG-Output.cpp \
+	libnrtype/Layout-TNG-Scanline-Maker.h \
+	libnrtype/Layout-TNG-Scanline-Makers.cpp \
+	libnrtype/Layout-TNG.cpp \
+	libnrtype/Layout-TNG.h
+	
+

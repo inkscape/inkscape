@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="768"
+   height="256"
+   id="svg1901"
+   sodipodi:version="0.32"
+   inkscape:version="0.45+devel"
+   sodipodi:docname="lighting_effects.svg"
+   sodipodi:docbase="/home/tsoots/ohj/translations/po"
+   version="1.0"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/niko/inkscape/complex-lighting.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs1903">
+    <filter
+       id="metallic-lighting"
+       filterRes="256">
+      <feGaussianBlur
+         stdDeviation="10.0437"
+         id="feGaussianBlur2792"
+         in="SourceGraphic"
+         result="result0" />
+      <feDiffuseLighting
+         id="feDiffuseLighting2794"
+         in="result0"
+         result="result1"
+         diffuseConstant="1"
+         surfaceScale="10"
+         lighting-color="#ffffff">
+        <feDistantLight
+           id="feDistantLight1"
+           azimuth="205"
+           elevation="45" />
+      </feDiffuseLighting>
+      <feSpecularLighting
+         id="feSpecularLighting2796"
+         in="result0"
+         result="result3"
+         specularConstant="0.5"
+         surfaceScale="20"
+         specularExponent="20"
+         lighting-color="#ffffff">
+        <feDistantLight
+           id="feDistantLight2"
+           azimuth="205"
+           elevation="45" />
+      </feSpecularLighting>
+      <feComposite
+         id="feComposite2798"
+         in="result1"
+         in2="SourceGraphic"
+         operator="arithmetic"
+         k1="1"
+         result="result2"
+         k4="0"
+         k2="0"
+         k3="0" />
+      <feComposite
+         id="feComposite2800"
+         in="result2"
+         in2="result3"
+         operator="arithmetic"
+         k2="1"
+         k3="1"
+         k4="0"
+         k1="0"
+         result="result4" />
+      <feComposite
+         inkscape:collect="always"
+         id="feComposite2799"
+         in="result4"
+         in2="SourceAlpha"
+         operator="in" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.0371094"
+     inkscape:cx="552.25612"
+     inkscape:cy="112.56562"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     gridtolerance="10000"
+     inkscape:window-width="1278"
+     inkscape:window-height="751"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     width="768px"
+     height="256px" />
+  <metadata
+     id="metadata1906">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/2.5/" />
+        <dc:title>Lighting effects example</dc:title>
+        <dc:date>25 July 2007</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Niko Kiirala</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright 2007 Niko Kiirala, licensed under Creatice Commons by-sa 2.5</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>feDiffuseLighting</rdf:li>
+            <rdf:li>feSpecularLighting</rdf:li>
+            <rdf:li>light</rdf:li>
+            <rdf:li>lighting effects</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:description>An example, how to make metallic-looking objects with SVG lighting effects</dc:description>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/3.0/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Attribution" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Taso 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="opacity:1">
+    <path
+       style="opacity:1;color:#000000;fill:#dad645;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:14;stroke-linecap:round;stroke-linejoin:miter;marker:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;filter:url(#metallic-lighting);enable-background:accumulate"
+       d="M 121.53125,18.281251 L 115.65625,30.625001 L 87.5625,89.812501 L 23.1875,102.125 L 9.75,104.6875 L 19.6875,114.09375 L 67.3125,159.125 L 59.125,224.125 L 57.40625,237.71875 L 69.40625,231.15625 L 126.9375,199.75 L 186.25,227.65625 L 198.625,233.46875 L 196.125,220.03125 L 184.03125,155.65625 L 228.90625,107.84375 L 238.25,97.875002 L 224.6875,96.093752 L 159.6875,87.687502 L 128.09375,30.250001 L 121.53125,18.281251 z M 122.4375,49.000002 L 149.15625,97.531251 L 150.84375,100.65625 L 154.375,101.09375 L 209.3125,108.25 L 171.40625,148.625 L 168.96875,151.21875 L 169.625,154.71875 L 179.8125,209.15625 L 129.6875,185.59375 L 126.46875,184.09375 L 123.34375,185.78125 L 74.71875,212.34375 L 81.65625,157.34375 L 82.09375,153.8125 L 79.5,151.375 L 39.25,113.3125 L 93.65625,102.90625 L 97.15625,102.25 L 98.6875,99.031251 L 122.4375,49.000002 z"
+       id="path2803" />
+    <path
+       id="path2799"
+       d="M 381.53125,18.281251 L 375.65625,30.625001 L 347.5625,89.812501 L 283.1875,102.125 L 269.75,104.6875 L 279.6875,114.09375 L 327.3125,159.125 L 319.125,224.125 L 317.40625,237.71875 L 329.40625,231.15625 L 386.9375,199.75 L 446.25,227.65625 L 458.625,233.46875 L 456.125,220.03125 L 444.03125,155.65625 L 488.90625,107.84375 L 498.25,97.875002 L 484.6875,96.093752 L 419.6875,87.687502 L 388.09375,30.250001 L 381.53125,18.281251 z M 382.4375,49.000002 L 409.15625,97.531251 L 410.84375,100.65625 L 414.375,101.09375 L 469.3125,108.25 L 431.40625,148.625 L 428.96875,151.21875 L 429.625,154.71875 L 439.8125,209.15625 L 389.6875,185.59375 L 386.46875,184.09375 L 383.34375,185.78125 L 334.71875,212.34375 L 341.65625,157.34375 L 342.09375,153.8125 L 339.5,151.375 L 299.25,113.3125 L 353.65625,102.90625 L 357.15625,102.25 L 358.6875,99.031251 L 382.4375,49.000002 z"
+       style="opacity:1;color:#000000;fill:#c7e1e2;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:14;stroke-linecap:round;stroke-linejoin:miter;marker:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;filter:url(#metallic-lighting);enable-background:accumulate" />
+    <path
+       style="opacity:1;color:#000000;fill:#f4a430;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:14;stroke-linecap:round;stroke-linejoin:miter;marker:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;filter:url(#metallic-lighting);enable-background:accumulate"
+       d="M 641.53125,18.281251 L 635.65625,30.625001 L 607.5625,89.812501 L 543.1875,102.125 L 529.75,104.6875 L 539.6875,114.09375 L 587.3125,159.125 L 579.125,224.125 L 577.40625,237.71875 L 589.40625,231.15625 L 646.9375,199.75 L 706.25,227.65625 L 718.625,233.46875 L 716.125,220.03125 L 704.03125,155.65625 L 748.90625,107.84375 L 758.25,97.875002 L 744.6875,96.093752 L 679.6875,87.687502 L 648.09375,30.250001 L 641.53125,18.281251 z M 642.4375,49.000002 L 669.15625,97.531251 L 670.84375,100.65625 L 674.375,101.09375 L 729.3125,108.25 L 691.40625,148.625 L 688.96875,151.21875 L 689.625,154.71875 L 699.8125,209.15625 L 649.6875,185.59375 L 646.46875,184.09375 L 643.34375,185.78125 L 594.71875,212.34375 L 601.65625,157.34375 L 602.09375,153.8125 L 599.5,151.375 L 559.25,113.3125 L 613.65625,102.90625 L 617.15625,102.25 L 618.6875,99.031251 L 642.4375,49.000002 z"
+       id="path2805" />
+  </g>
+</svg>

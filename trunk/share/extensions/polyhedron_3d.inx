@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>3D Polyhedron</_name>
+    <id>math.polyhedron.3d</id>
+    <dependency type="executable" location="extensions">polyhedron_3d.py</dependency>
+    <dependency type="executable" location="extensions">inkex.py</dependency>
+    <param name="tab" type="notebook">
+        <page name="common" _gui-text="Model File">
+            <param name="obj" type="optiongroup" appearance="minimal" _gui-text="Object:">
+                <_option value="cube">Cube</_option>
+                <_option value="trunc_cube">Truncated Cube</_option>
+                <_option value="snub_cube">Snub Cube</_option>
+                <_option value="cuboct">Cuboctohedron</_option>
+                <_option value="tet">Tetrahedron</_option>
+                <_option value="trunc_tet">Truncated Tetrahedron</_option>
+                <_option value="oct">Octahedron</_option>
+                <_option value="trunc_oct">Truncated Octahedron</_option>
+                <_option value="icos">Icosahedron</_option>
+                <_option value="trunc_icos">Truncated Icosahedron</_option>
+                <_option value="small_triam_icos">Small Triambic Icosahedron</_option>
+                <_option value="dodec">Dodecahedron</_option>
+                <_option value="trunc_dodec">Truncated Dodecahedron</_option>
+                <_option value="snub_dodec">Snub Dodecahedron</_option>
+                <_option value="great_dodec">Great Dodecahedron</_option>
+                <_option value="great_stel_dodec">Great Stellated Dodecahedron</_option>
+                <_option value="from_file">Load From File</_option>
+                </param>
+            <param name="spec_file" type="string"  _gui-text="Filename:">great_rhombicuboct.obj</param>
+            <param name="type" type="optiongroup" appearance="minimal" _gui-text="Object Type">
+                <_option value="face">Face-Specified</_option>
+                <_option value="edge">Edge-Specified</_option></param>
+            <param name="cw_wound"  type="boolean" _gui-text="Clockwise Wound Object">0</param>
+         </page>
+         <page name="view" _gui-text="View">
+            <param name="r1_ax" type="optiongroup" appearance="minimal" _gui-text="Rotate Around:">
+                <_option value="x">X-Axis</_option>
+                <_option value="y">Y-Axis</_option>
+                <_option value="z">Z-Axis</_option></param>
+            <param name="r1_ang"  type="float"   min="-360" max="360"   _gui-text="Rotation / Degrees">0</param>
+            <param name="r2_ax" type="optiongroup" appearance="minimal" _gui-text="Then Rotate Around:">
+                <_option value="x">X-Axis</_option>
+                <_option value="y">Y-Axis</_option>
+                <_option value="z">Z-Axis</_option></param>
+            <param name="r2_ang"  type="float"   min="-360" max="360"   _gui-text="Rotation / Degrees">0</param>
+            <param name="r3_ax" type="optiongroup" appearance="minimal" _gui-text="Then Rotate Around:">
+                <_option value="x">X-Axis</_option>
+                <_option value="y">Y-Axis</_option>
+                <_option value="z">Z-Axis</_option></param>
+            <param name="r3_ang"  type="float"   min="-360" max="360"   _gui-text="Rotation / Degrees">0</param>
+            <param name="r4_ax" type="optiongroup" appearance="minimal" _gui-text="Rotate Around:">
+                <_option value="x">X-Axis</_option>
+                <_option value="y">Y-Axis</_option>
+                <_option value="z">Z-Axis</_option></param>
+            <param name="r4_ang"  type="float"   min="-360" max="360"   _gui-text="Rotation / Degrees">0</param>
+            <param name="r5_ax" type="optiongroup" appearance="minimal" _gui-text="Then Rotate Around:">
+                <_option value="x">X-Axis</_option>
+                <_option value="y">Y-Axis</_option>
+                <_option value="z">Z-Axis</_option></param>
+            <param name="r5_ang"  type="float"   min="-360" max="360"   _gui-text="Rotation / Degrees">0</param>
+            <param name="r6_ax" type="optiongroup" appearance="minimal" _gui-text="Then Rotate Around:">
+                <_option value="x">X-Axis</_option>
+                <_option value="y">Y-Axis</_option>
+                <_option value="z">Z-Axis</_option></param>
+            <param name="r6_ang"  type="float"   min="-360" max="360"   _gui-text="Rotation / Degrees">0</param>
+        </page>
+        <page name="style" _gui-text="Style">
+            <param name="scl"    type="float"   min="0"    max="10000" _gui-text="Scaling Factor">100</param>
+            <param name="f_r"  type="int"   min="0" max="255" _gui-text="Fill Colour (Red)">255</param>
+            <param name="f_g"  type="int"   min="0" max="255" _gui-text="Fill Colour (Green)">0</param>
+            <param name="f_b"  type="int"   min="0" max="255" _gui-text="Fill Colour (Blue)">0</param>
+            <param name="f_opac" type="int" min="0" max="100" _gui-text="Fill Opacity/ %">100</param>
+            <param name="s_opac" type="int" min="0" max="100" _gui-text="Stroke Opacity/ %">100</param>
+            <param name="th"   type="float" min="0" max="100" _gui-text="Line Thickness / px">2</param>
+            <param name="shade"  type="boolean" _gui-text="Shading">0</param>
+            <param name="lv_x" type="float" min="-100" max="100" _gui-text="Light x-Position">1</param>
+            <param name="lv_y" type="float" min="-100" max="100" _gui-text="Light y-Position">1</param>
+            <param name="lv_z" type="float" min="-100" max="100" _gui-text="Light z-Position">-2</param>
+            <param name="show" type="optiongroup" appearance="minimal" _gui-text="Show:">
+                <_option value="vtx">Vertices</_option>
+                <_option value="edg">Edges</_option>
+                <_option value="fce">Faces</_option></param>
+            <param name="back"  type="boolean" _gui-text="Draw Back-Facing Polygons">0</param>
+            <param name="z_sort" type="optiongroup" appearance="minimal" _gui-text="Z-Sort Faces By:">
+                <_option value="max">Maximum</_option>
+                <_option value="min">Minimum</_option>
+                <_option value="mean">Mean</_option></param>
+        </page>
+    </param>
+    <effect>
+        <object-type>all</object-type>
+                <effects-menu>
+                    <submenu _name="Render"/>
+                </effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">polyhedron_3d.py</command>
+    </script>
+</inkscape-extension>

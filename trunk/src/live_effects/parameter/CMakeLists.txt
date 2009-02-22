@@ -1,0 +1,12 @@
+SET(live_effects_parameter_SRC
+array.cpp
+bool.cpp
+parameter.cpp
+path.cpp
+path-reference.cpp
+point.cpp
+random.cpp
+text.cpp
+unit.cpp
+vector.cpp
+)

@@ -1,0 +1,74 @@
+bad.po.test: Mismatched quotes:
+msgid "bad1: odd number of quotes"
+msgstr """
+
+bad.po.test: Mismatched quotes:
+msgid "bad2: unclosed"
+msgstr "
+
+bad.po.test: Not in msg format:
+msgid "bad3: no msgstr line"
+
+bad.po.test: Mismatched quotes:
+msgid "bad4: no msgstr value"
+msgstr 
+
+bad.po.test: Mismatched quotes:
+msgid "bad5: escaped backslash doesn't escape quote"
+msgstr "\\""
+
+bad.po.test: unclosed <b>:
+msgid "bad6"
+msgstr "<b>x"
+
+bad.po.test: unclosed <b>:
+msgid "bad7"
+msgstr "<b>>"
+
+bad.po.test: unclosed <b>:
+msgid "bad8"
+msgstr "<b>a>"
+
+bad.po.test: unclosed <i>:
+msgid "bad9"
+msgstr "<i>a"
+
+bad.po.test: unclosed <u>:
+msgid "bad10"
+msgstr "<u><"
+
+bad.po.test: unclosed <sub>:
+msgid "bad11"
+msgstr "<sub>a<"
+
+bad.po.test: unclosed <b>:
+msgid "bad12"
+msgstr "<b>a<b></b>"
+
+bad.po.test: unclosed <b>:
+msgid "bad13"
+msgstr "<b>a<>"
+
+bad.po.test: unclosed <b>:
+msgid "bad14"
+msgstr "<b>a<b>"
+
+bad.po.test: unclosed <b>:
+msgid "bad15"
+msgstr "<b>a</B>"
+
+bad.po.test: unclosed <b>:
+msgid "bad16"
+msgstr "<b>a</b"
+
+bad.po.test: <b> can't have attributes in Pango:
+msgid "bad17"
+msgstr "<b face=\"bold\">hi</b>"
+
+bad.po.test: Unexpected <span> attributes `fdsa="bold"':
+msgid "bad18"
+msgstr "<span fdsa=\"bold\">hi</span>"
+
+bad.po.test: Trailing whitespace:
+msgid "bad19: trailing whitespace"
+msgstr "tabs etc. after string." 	 

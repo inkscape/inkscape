@@ -1,0 +1,9 @@
+SET(trace_potrace_SRC
+curve.cpp
+decompose.cpp
+greymap.cpp
+inkscape-potrace.cpp
+potracelib.cpp
+render.cpp
+trace.cpp
+)

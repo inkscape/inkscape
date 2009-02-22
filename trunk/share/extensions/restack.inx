@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Restack</_name>
+    <id>org.inkscape.filter.restack</id>
+	<dependency type="executable" location="extensions">restack.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+    <param name="direction" type="optiongroup"  appearance="minimal" _gui-text="Restack Direction:">
+        <_option value="lr">Left to Right (0)</_option>
+        <_option value="bt">Bottom to Top (90)</_option>
+        <_option value="rl">Right to Left (180)</_option>
+        <_option value="tb">Top to Bottom (270)</_option>
+        <_option value="ro">Radial Outward</_option>
+        <_option value="ri">Radial Inward</_option>
+	<_option value="aa">Arbitrary Angle:</_option>
+    </param>
+	<param name="angle" type="float" min="0.0" max="360.0" _gui-text="Angle">0.00</param>
+    <param name="xanchor" type="optiongroup"  appearance="minimal" _gui-text="Horizontal Point:">
+        <_option value="l">Left</_option>
+        <_option value="m">Middle</_option>
+        <_option value="r">Right</_option>
+    </param>
+    <param name="yanchor" type="optiongroup"  appearance="minimal" _gui-text="Vertical Point:">
+        <_option value="t">Top</_option>
+        <_option value="m">Middle</_option>
+        <_option value="b">Bottom</_option>
+    </param>
+    <effect>
+	<object-type>path</object-type>
+	<effects-menu>
+		<submenu _name="Arrange"/>
+	</effects-menu>
+	</effect>
+    <script>
+        <command reldir="extensions" interpreter="python">restack.py</command>
+    </script>
+</inkscape-extension>

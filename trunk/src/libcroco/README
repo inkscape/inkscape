@@ -1,0 +1,11 @@
+This code is derived from libcroco-0.6.  We hope that the changes will find
+their way into libcroco-0.7 (in some form).
+
+The main changed file is cr-sel-eng.{c,h}.  The cr-sel-eng in libcroco-0.6 is
+somewhat experimental: it has a few bugs, and the interface requires that the
+XML node storage be libxml2.  The version in this directory has a modification
+of allowing passing in a "vtable" of operations so that we can use our
+preferred representation Inkscape::XML::Node.
+
+Once libcroco-0.7 is widely available (with the vtable interface or a
+functional equivalent), this directory should be removed.

@@ -1,0 +1,20 @@
+[Settings]
+NumFields=2
+
+[Field 1]
+Type=label
+Text=Display a Message
+Left=0
+Right=-1
+Top=10
+Bottom=20
+State=1
+
+[Field 2]
+Type=checkbox
+Text=Display a MessageBox
+Left=10
+Right=-1
+Top=25
+Bottom=35
+State=1

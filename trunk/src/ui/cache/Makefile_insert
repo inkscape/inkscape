@@ -1,0 +1,11 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+ui/cache/all: ui/cache/libuicache.a
+
+ui/cache/clean:
+	rm -f ui/cache/libuicache.a $(ui_libuicache_a_OBJECTS)
+
+ui_cache_libuicache_a_SOURCES =	\
+	ui/cache/svg_preview_cache.h	\
+	ui/cache/svg_preview_cache.cpp
+

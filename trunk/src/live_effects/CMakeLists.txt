@@ -1,0 +1,36 @@
+ADD_SUBDIRECTORY(parameter)
+
+SET(live_effects_SRC
+bezctx.cpp
+effect.cpp
+lpe-bendpath.cpp
+lpe-boolops.cpp
+lpe-circle_with_radius.cpp
+lpe-constructgrid.cpp
+lpe-curvestitch.cpp
+lpe-envelope.cpp
+lpe-gears.cpp
+lpegroupbbox.cpp
+lpe-interpolate.cpp
+lpe-knot.cpp
+lpe-rough-hatches.cpp
+lpe-lattice.cpp
+lpe-mirror_symmetry.cpp
+lpeobject.cpp
+lpeobject-reference.cpp
+lpe-patternalongpath.cpp
+lpe-perp_bisector.cpp
+lpe-perspective_path.cpp
+lpe-skeleton.cpp
+lpe-sketch.cpp
+lpe-spiro.cpp
+lpe-tangent_to_curve.cpp
+lpe-test-doEffect-stack.cpp
+lpe-vonkoch.cpp
+lpe-dynastroke.cpp
+spiro.cpp
+${live_effects_parameter_SRC}
+)
+ADD_LIBRARY(live_effects STATIC ${live_effects_SRC})
+TARGET_LINK_LIBRARIES(live_effects
+2geom ${INKSCAPE_LIBS})

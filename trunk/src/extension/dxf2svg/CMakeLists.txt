@@ -1,0 +1,11 @@
+SET(extension_dxf2svg_SRC
+#aci2rgb.cpp
+#entities2elements.cpp
+#tables2svg_info.cpp
+#blocks.cpp
+#entities.cpp
+#tables.cpp
+#dxf2svg.cpp
+#read_dxf.cpp
+#test_dxf.cpp
+)

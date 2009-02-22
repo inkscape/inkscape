@@ -1,0 +1,181 @@
+@import url(skel.css);
+
+/* generics */
+
+* {font-size: 100%; padding: 0; margin: 0;}
+body {font: 0.84em/1.333 Arial, sans-serif; margin: 0; padding: 0;
+  color: #202020; background: #FFF;
+  min-width: 40em; margin: 0 auto;}
+a:link {color: #339;}
+a:visited {color: #848;}
+a img {border: none;}
+h1 {font-size: 2em; margin: 2em 0 0.5em; padding: 0.25em 0;}
+h2 {font-size: 1.5em; margin: 2em 0 0.33em; padding: 0.25em 0;}
+h3 {font-size: 1.33em; margin: 2em 0 0.25em; padding: 0.125em 0;}
+h4 {font-size: 1.1em; margin: 0.5em 0 0;}
+h5 {font-size: 1em; margin: 0.5em 0 0;}
+h6 {font-size: 0.85em; margin: 0.5em 0 0;}
+p {margin: 0.33em 0 1em 0;}
+ul, ol {margin: 1em 0; padding-left: 2.5em;}
+dt {margin: 0.5em 0 0;}
+dd {margin: 0.25em 0 0.5em 2.5em;}
+pre, code, tt {font: 110% "Andale Mono", Courier, "Courier New", monospace;}
+small {font-size: 85%;}
+big {font-size: 115%;}
+sup {font-size: smaller; vertical-align: 0.5em; line-height: 1px;}
+img.pic {float: right; position: relative; margin: 0.25em 0 0.66em 1.5em;}
+img.border {border: 3px double;}
+img.standalone {display: block; margin: 0.5em auto; width: auto; max-width: 100%;}
+p.standalone {text-align: center;}
+p.standalone img {display: inline;}
+.warning {background: #FF8; color: red; border: 2px solid; padding: 1em;}
+.highlight {background: #B4D5FF; font-weight: bold;}
+
+table.chart {margin: 1em auto;}
+table.chart caption {font-weight: bold; font-style: italic; font-size: 90%;}
+table.chart th {text-align: left;}
+table.chart thead th {border-bottom: 1px solid #CCC;}
+table.chart th, table.chart td {border-bottom: 1px dotted #DDD;}
+table.chart tbody th {padding-right: 1em;}
+
+/* masthead */
+
+#sitemast {padding: 0; margin: 0; overflow: hidden; border-bottom: 1px solid #000;
+  height: 128px; width: 100%; position: relative; z-index: 1;}
+#sitemast h1 {font-size: 2em; line-height: 1em; letter-spacing: 0.13em; 
+  padding: 0; margin: 0;
+  position: absolute; left: 0; top: 100px;
+  /* hide-from-IE5/Mac hack \*/
+  top: auto; bottom: 0;
+  /* end hack */}
+#sitemast h1 a {padding: 0 0.25em;}
+#sitemast h1 a, .panel a {text-decoration: none;}
+
+/* main content */
+
+#main {margin: 2.25em 20em 0 12em; padding: 3.5em 0;
+  min-height: 30em;}
+#main h2 {border-bottom: 1px solid #888; margin: 0; padding: 0;
+  font-size: 1.75em; line-height: 1;}
+#main p.contact {margin: 0 1em; text-align: right; font-size: 90%;}
+
+#main p {line-height: 1.4;}
+#main li {line-height: 1.33; margin-bottom: 0.33em;}
+#main .compact li {line-height: normal; margin-bottom: 0;}
+#main ul li {list-style: square;}
+#main ol li {list-style: decimal;}
+
+#main blockquote {font-style: normal; margin: 1em 1em 1em 2em;}
+#main blockquote em {font-style: italic; font-weight: inherit;}
+#main blockquote p {margin: 0.33em 2.5% 0.33em 0 !important;
+  line-height: 1.2; text-indent: 2em;}
+#main blockquote.book p {margin: 0 2.5% 0 0 !important;}
+#main blockquote.lyric {font-style: italic; white-space: pre;
+  border: none; margin-left: 1em;}
+#main blockquote.lyric p {text-indent: 0;}
+.quoteattrib {margin: -0.75em 3em 0.66em; font-size: 87.5%;}
+.quoteattrib cite {font-style: italic;}
+
+/* search bits */
+
+#search {position: absolute; top: 129px; right: 0;
+  z-index: 10; 
+  text-align: right; padding: 0.25em 0 1.25em 5px;
+  background: url(pix/logoogle2.gif) no-repeat 0% 100%;}
+#search h4 {display: none;}
+#search form {margin: 0; padding: 2px 1em 0;}
+#search input[type="text"] {width: 14em; border: 2px inset #999;}
+#search small {display: block; margin: 0 1.25em; padding: 0;
+  text-align: right; line-height: 1;}
+#search small a {background: #FFF; color: #668; font-style: italic;}
+
+/* navbar */
+
+#navigate {position: absolute; top: 129px; left: 0; right: 0;
+  padding: 0.25em 0 0.25em 1em;
+  z-index: 1; overflow: hidden;
+  height: auto; width: 85%; line-height: 2;}
+#navigate h4 {display: none;}
+#navigate ul, #navigate li {margin: 0; padding: 0;}
+#navigate ul {padding-left: 0.5em;}
+
+#navlinks {float: left; width: 100%;}
+#navlinks a {text-decoration: none;}
+#navlinks li {float: left; list-style: none; margin-left: 1px;}
+#navlinks li a {padding: 0.25em 1em; margin-right: 0.125em;
+  border-top: 0.75em solid #AAC; border-bottom: 1px dotted #FFF;
+  font-weight: bold; color: #668;}
+#navlinks li ul {display: none; border: none;}
+#navlinks li li a {font-weight: normal;}
+#navlinks a:hover {border-top-color: #88A;}
+#navlinks #otherLink {margin-left: 1.75em;}
+
+.arch #archLink a,
+.css #cssLink a,
+.tools #toolsLink a,
+.write #writeLink a,
+.speak #speakLink a,
+.other #otherLink a
+{border-color: #226 #FFF #FFF; background: #CCE; color: #226; font-style: italic;}
+
+/* 'sidebar' */
+
+#extra {position: absolute; top: 129px; right: 0; z-index: 100; width: 18em; 
+  font-size: 1em; line-height: 1.2;
+  padding: 1.75em 0 0; margin: 3em 0 0;
+  color: #5A5A5F;}
+#extra a:link {color: #66A;}
+#extra a:visited {color: #858;}
+
+#extra .panel {margin: 1em 0 0; padding: 1em 1em 0 3em; border: 1px dotted #FFF;}
+#extra .panel h4, #extra .panel h5 {margin: 0 0 0.25em; padding: 0 0.5em 0 0;
+  font-size: 90%; line-height: 1;
+  border-bottom: 1px solid #AAA;}
+#extra .panel ul {list-style: none; margin: 0 1em 0 0; padding: 0; font-size: 90%;}
+#extra .panel li {margin-left: 1em; text-indent: -1em;}
+#extra .panel .more {float: right; margin: -1.5em 1px 0 0.5em;
+  font-style: italic; text-align: right; font-size: smaller;}
+#extra .panel .more a {padding-left: 15px; background: url(pix/morearr.gif) 0 66% no-repeat;}
+
+#extra #blogroll h5 {padding-right: 95px;}
+#extra #blogroll ul {margin: 0.5em 1em 0 0;}
+#extra #xfn-btn {float: right; margin: -20px 1px 0 5px;}
+
+#extra #excuse {text-align: center; padding: 0 0.25em 0.66em; margin:  2em 1em -2em 3em;
+  border: 1px solid #CCC;}
+#extra #excuse h4 {display: inline; position: relative; top: -0.6em;
+  border: 0; padding: 0 0.25em; margin: 0;
+  background: #FFF; color: #666;
+  text-transform: capitalize; font-size: 1em; font-weight: normal;}
+#extra #excuse p {margin: 0; padding: 0; color: #444;}
+
+#extra #extras {padding: 1em 0.5em 1em; margin: 2em 1em 0 3em; width: 13em;
+  color: #666; border: 1px solid #AAA; border-width: 1px 0;}
+#extra #extras h4 {display: none;}
+#extra #extras ul {margin: 0; text-align: center; list-style: none;}
+#extra #extras li {margin-left: 0.25em; display: inline;}
+#extra #extras a {margin-right: 0.25em;}
+
+/* miscellaneous */
+
+#footer {margin: 3em 18em 0 12em; padding: 0.5em 0 3.5em;
+  border-top: 1px solid gray;
+  text-align: center;
+  color: gray; background: #FFF;}
+#footer a {color: #558;}
+#footer a:visited {color: #858;}
+#footer p {line-height: 1; margin: 0; padding: 0.5em 0.25em 0; font-size: 0.85em; }
+
+#reading img {border: 1px solid silver;}
+#extra #reading img {margin: 0.5em;}
+
+.book #main img.cover {float: right; margin: 1em 0 1em 2em;
+  border: 1px solid; border-color: #AAA #444 #444 #AAA;}
+
+/* Hack-o-rama! */
+
+* html #navigate {padding-top: 0;}
+
+/*\*//*/
+body #search {width: 20em;}
+/**/

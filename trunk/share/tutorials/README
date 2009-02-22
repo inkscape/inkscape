@@ -1,0 +1,11 @@
+This folder contains the Inkscape tutorials in SVG format. You can access them
+from within Inkscape via the Help > Tutorials submenu. 
+
+DO NOT EDIT THESE FILES DIRECTLY. They are generated from DocBook sources that
+are stored in the doc-docbook module in Inkscape SVN. If you want to edit, 
+translate, or create a new tutorial, obtain that module and follow the 
+instructions in its README to edit a tutorial and regenerate the SVG format for 
+the tutorial you changed. Then place the new SVG file here.
+
+This folder contains all tutorials in all languages for which translations were 
+provided. Later we may separate tutorials into language-packs.

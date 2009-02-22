@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>HPGL Output</_name>
+  <id>org.ekips.output.hpgl</id>
+  <dependency type="extension">org.inkscape.output.svg.inkscape</dependency>
+  <dependency type="executable" location="extensions">hpgl_output.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <output>
+    <extension>.hpgl</extension>
+    <mimetype>image/hpgl</mimetype>
+    <_filetypename>HP Graphics Language file (*.hpgl)</_filetypename>
+    <_filetypetooltip>Export to an HP Graphics Language file</_filetypetooltip>
+    <dataloss>true</dataloss>
+  </output>
+  <script>
+    <command reldir="extensions" interpreter="python">hpgl_output.py</command>
+    <helper_extension>org.inkscape.output.svg.inkscape</helper_extension>
+  </script>
+</inkscape-extension>

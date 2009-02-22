@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.43+devel"
+   sodipodi:docbase="/home/trythil/src/inkscape-integrate/src/jabber_whiteboard/protocol"
+   sodipodi:docname="session-invite-u2c-01.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path2982"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
+         transform="scale(0.8) rotate(180)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.86180109"
+     inkscape:cx="449.41398"
+     inkscape:cy="612.40036"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1392"
+     inkscape:window-height="995"
+     inkscape:window-x="0"
+     inkscape:window-y="3"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:1;color:black;fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       id="rect1925"
+       width="16.409977"
+       height="833.62683"
+       x="96.818855"
+       y="90.737564"
+       ry="1.7290077" />
+    <rect
+       style="opacity:1;color:black;fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       id="rect1927"
+       width="16.409977"
+       height="190.78708"
+       x="635.0661"
+       y="90.737564"
+       ry="0.39570743" />
+    <text
+       xml:space="preserve"
+       style="font-size:28.80731773px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="68.790588"
+       y="77.251221"
+       id="text1929"><tspan
+         sodipodi:role="line"
+         id="tspan1931"
+         x="68.790588"
+         y="77.251221">Romeo</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:28.80731773px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="608.67877"
+       y="77.251221"
+       id="text1933"><tspan
+         sodipodi:role="line"
+         id="tspan1935"
+         x="608.67877"
+         y="77.251221">Chat</tspan></text>
+    <path
+       style="opacity:1;color:black;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:1.02934766px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:url(#Arrow1Lend);stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       d="M 103.39752,133.41817 L 624.59663,181.72315"
+       id="path1937" />
+    <text
+       xml:space="preserve"
+       style="font-size:12.00000858px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="289.61508"
+       y="120.14616"
+       id="text2992"
+       transform="matrix(0.996475,8.38928e-2,-8.38928e-2,0.996475,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan2994"
+         x="289.61508"
+         y="120.14616">CHATROOM_SYNCHRONIZE_REQUEST</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:13.0673542px;font-style:normal;font-weight:normal;line-height:125%;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="5.7987185"
+       y="23.14624"
+       id="text2996"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2998"
+         x="5.7987185"
+         y="23.14624"
+         style="font-size:18.44846344px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Bitstream Vera Sans">Inkboard session invitation (user-to-chatroom): Inkboard users already in chat</tspan></text>
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:1.02934766px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 638.32615,196.29025 L 122.38422,284.52748"
+       id="path3000" />
+    <text
+       xml:space="preserve"
+       style="font-size:11.9999876px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="236.16333"
+       y="285.77191"
+       id="text3002"
+       transform="matrix(0.989185,-0.146672,0.146672,0.989185,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3004"
+         x="236.16333"
+         y="285.77191">CHATROOM_SYNCHRONIZE_RESPONSE</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="653.08478"
+       y="194.535"
+       id="text3054"><tspan
+         sodipodi:role="line"
+         x="653.08478"
+         y="194.535"
+         id="tspan3078">(from Romeo)</tspan><tspan
+         sodipodi:role="line"
+         x="653.08478"
+         y="209.535"
+         id="tspan3144" /><tspan
+         sodipodi:role="line"
+         x="653.08478"
+         y="224.535"
+         id="tspan3080">(future synch</tspan><tspan
+         sodipodi:role="line"
+         x="653.08478"
+         y="239.535"
+         id="tspan3082">responses</tspan><tspan
+         sodipodi:role="line"
+         x="653.08478"
+         y="254.535"
+         id="tspan3086">ignored by</tspan><tspan
+         sodipodi:role="line"
+         x="653.08478"
+         y="269.535"
+         id="tspan3120">Romeo)</tspan></text>
+    <path
+       style="opacity:1;color:black;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:1.02934766px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:url(#Arrow1Lend);stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       d="M 103.39752,299.41817 L 624.59663,347.72315"
+       id="path3060" />
+    <text
+       xml:space="preserve"
+       style="font-size:12.00015259px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="303.54501"
+       y="285.5632"
+       id="text3062"
+       transform="matrix(0.996475,8.389188e-2,-8.389188e-2,0.996475,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3064"
+         x="303.54501"
+         y="285.5632">DOCUMENT_SENDER_REQUEST</tspan></text>
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:1.02934766px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 638.32615,236.29025 L 122.38422,324.52748"
+       id="path3072" />
+    <text
+       xml:space="preserve"
+       style="font-size:11.99997234px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="230.29608"
+       y="325.33881"
+       id="text3074"
+       transform="matrix(0.989185,-0.146672,0.146672,0.989185,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3076"
+         x="230.29608"
+         y="325.33881">CHATROOM_SYNCHRONIZE_RESPONSE</tspan></text>
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:1.02934766px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 638.32615,364.29025 L 122.38422,452.52748"
+       id="path3100" />
+    <text
+       xml:space="preserve"
+       style="font-size:11.99979305px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="261.85782"
+       y="453.34647"
+       id="text3102"
+       transform="matrix(0.989185,-0.146672,0.146672,0.989185,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3104"
+         x="261.85782"
+         y="453.34647">DOCUMENT_BEGIN</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:28.80731773px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="616.67877"
+       y="326.65308"
+       id="text3148"><tspan
+         sodipodi:role="line"
+         id="tspan3150"
+         x="616.67877"
+         y="326.65308">Juliet</tspan></text>
+    <rect
+       style="opacity:1;color:black;fill:black;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       id="rect3152"
+       width="16.409977"
+       height="588.79077"
+       x="635.0661"
+       y="340.73755"
+       ry="1.2211984" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:1.02934766px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 638.32615,400.29025 L 122.38422,488.52748"
+       id="path3173" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:1.02934766px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 638.32615,436.29025 L 122.38422,524.52748"
+       id="path3179" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:1.02934766px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 638.32615,476.29025 L 122.38422,564.52748"
+       id="path3181" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="345.78745"
+       y="478.50262"
+       id="text3183"><tspan
+         sodipodi:role="line"
+         id="tspan3185"
+         x="345.78745"
+         y="478.50262">(...data...)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="654.76404"
+       y="370.90982"
+       id="text2157"><tspan
+         sodipodi:role="line"
+         x="654.76404"
+         y="370.90982"
+         id="tspan2161">Juliet sends</tspan><tspan
+         sodipodi:role="line"
+         x="654.76404"
+         y="385.90982"
+         id="tspan2165">contents of </tspan><tspan
+         sodipodi:role="line"
+         x="654.76404"
+         y="400.90982"
+         id="tspan2167">document </tspan><tspan
+         sodipodi:role="line"
+         x="654.76404"
+         y="415.90982"
+         id="tspan2169">at the time of</tspan><tspan
+         sodipodi:role="line"
+         x="654.76404"
+         y="430.90982"
+         id="tspan2171">receipt of </tspan><tspan
+         sodipodi:role="line"
+         x="654.76404"
+         y="445.90982"
+         id="tspan2173">Romeo's request.</tspan></text>
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:red;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 719.42355,350.34404 C 720.25008,347.03792 694.75869,345.7026 689.25418,345.7026 C 682.14416,345.7026 669.99443,350.69103 663.72624,353.82512 C 652.81295,359.28177 650.74673,370.28572 642.83975,378.19269 C 637.49763,383.53482 633.55687,397.57227 633.55687,404.88099 C 633.55687,419.56123 635.04648,426.70301 642.83975,439.6918 C 648.6135,449.31472 662.25364,455.57988 671.84877,459.41793 C 682.98476,463.87233 688.02403,469.84722 699.69742,472.1819 C 711.66047,474.57451 726.46764,468.63937 735.6686,461.73865 C 748.30073,452.26455 755.62864,443.55661 763.51725,430.40892 C 771.10777,417.75805 763.53779,402.66295 761.19653,390.95666 C 759.09409,380.44448 755.97902,374.27956 747.2722,367.74945 C 729.53409,354.44586 715.27964,346.43651 698.53706,360.78729 C 697.29112,361.85523 696.21634,363.10801 695.05598,364.26837"
+       id="path2177" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:red;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 697.3767,469.86118 C 662.45581,499.79337 655.11743,532.76379 599.90641,560.3693 C 557.38172,581.63165 498.23082,592.20519 469.94603,634.63238 C 462.94102,645.13989 448.0551,651.25817 445.57846,663.64139"
+       id="path2179" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="362.0325"
+       y="677.56573"
+       id="text3055"><tspan
+         sodipodi:role="line"
+         id="tspan3057"
+         x="362.0325"
+         y="677.56573">PROBLEM: There is not yet any way to store</tspan><tspan
+         sodipodi:role="line"
+         x="362.0325"
+         y="692.56573"
+         id="tspan3059">multiple revisions of a node in an SVG</tspan><tspan
+         sodipodi:role="line"
+         x="362.0325"
+         y="707.56573"
+         id="tspan3061">document.  This needs to be worked out</tspan><tspan
+         sodipodi:role="line"
+         x="362.0325"
+         y="722.56573"
+         id="tspan3063">before the circled criteria can actually</tspan><tspan
+         sodipodi:role="line"
+         x="362.0325"
+         y="737.56573"
+         id="tspan3065">be implemented.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="116.03606"
+       y="223.86473"
+       id="text3067"><tspan
+         sodipodi:role="line"
+         id="tspan3069"
+         x="116.03606"
+         y="223.86473">Romeo</tspan><tspan
+         sodipodi:role="line"
+         x="116.03606"
+         y="238.86473"
+         id="tspan3071">receives</tspan><tspan
+         sodipodi:role="line"
+         x="116.03606"
+         y="253.86473"
+         id="tspan3073">acknowledgement</tspan><tspan
+         sodipodi:role="line"
+         x="116.03606"
+         y="268.86473"
+         id="tspan3075">from Juliet</tspan></text>
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:1.02934766px;stroke-linecap:butt;stroke-linejoin:miter;marker-start:none;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 638.32615,514.58215 L 122.38422,602.81938"
+       id="path1976" />
+    <text
+       xml:space="preserve"
+       style="font-size:11.99978924px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="257.46045"
+       y="601.67126"
+       id="text1980"
+       transform="matrix(0.989185,-0.146672,0.146672,0.989185,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan1982"
+         x="257.46045"
+         y="601.67126">CHANGE_COMMIT</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="116.03606"
+       y="625.34955"
+       id="text1984"><tspan
+         sodipodi:role="line"
+         id="tspan1986"
+         x="116.03606"
+         y="625.34955">Romeo commits changes</tspan><tspan
+         sodipodi:role="line"
+         x="116.03606"
+         y="640.34955"
+         id="tspan1988">sent by Juliet</tspan></text>
+  </g>
+</svg>

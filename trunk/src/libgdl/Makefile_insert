@@ -1,0 +1,43 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+libgdl/all: libgdl/libgdl.a
+
+libgdl/clean:
+	rm -f libgdl/libgdl.a $(libgdl_gdl_a_OBJECTS)
+
+libgdl_libgdl_a_SOURCES =	\
+	libgdl/gdl-tools.h		\
+	libgdl/gdl-dock-object.h	\
+	libgdl/gdl-dock-master.h	\
+	libgdl/gdl-dock.h		\
+	libgdl/gdl-dock-item.h		\
+	libgdl/gdl-dock-notebook.h	\
+	libgdl/gdl-dock-paned.h	        \
+	libgdl/gdl-dock-tablabel.h	\
+	libgdl/gdl-dock-placeholder.h	\
+	libgdl/gdl-dock-bar.h		\
+	libgdl/gdl-stock.h		\
+	libgdl/gdl-stock-icons.h	\
+	libgdl/gdl-i18n.h		\
+	libgdl/gdl-i18n.c		\
+	libgdl/gdl-dock-object.c	\
+	libgdl/gdl-dock-master.c	\
+	libgdl/gdl-dock.c		\
+	libgdl/gdl-dock-item.c		\
+	libgdl/gdl-dock-item-grip.h	\
+	libgdl/gdl-dock-item-grip.c	\
+	libgdl/gdl-dock-notebook.c	\
+	libgdl/gdl-dock-paned.c		\
+	libgdl/gdl-dock-tablabel.c	\
+	libgdl/gdl-dock-placeholder.c	\
+	libgdl/gdl-dock-bar.c		\
+	libgdl/gdl-stock.c		\
+	libgdl/gdl-switcher.h		\
+	libgdl/gdl-switcher.c		\
+	libgdl/gdl-win32.h		\
+	libgdl/gdl-win32.c		\
+	libgdl/libgdltypebuiltins.h	\
+	libgdl/libgdltypebuiltins.c	\
+	libgdl/libgdlmarshal.h		\
+	libgdl/libgdlmarshal.c		\
+	libgdl/libgdl.h		

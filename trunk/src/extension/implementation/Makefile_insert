@@ -1,0 +1,15 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+extension/implementation/all: extension/implementation/libimplementation.a
+
+extension/implementation/clean:
+	rm -f extension/implementation/libimplementation.a	\
+		$(extension_implementation_libimplementation_a_OBJECTS)
+
+extension_implementation_libimplementation_a_SOURCES =	\
+	extension/implementation/implementation.cpp	\
+	extension/implementation/implementation.h \
+	extension/implementation/script.cpp	\
+	extension/implementation/script.h \
+	extension/implementation/xslt.cpp \
+	extension/implementation/xslt.h

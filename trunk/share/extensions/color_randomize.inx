@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>Randomize</_name>
+	<id>org.inkscape.color.randomize</id>
+	<dependency type="executable" location="extensions">coloreffect.py</dependency>
+	<dependency type="executable" location="extensions">color_randomize.py</dependency>
+	<dependency type="executable" location="extensions">simplestyle.py</dependency>
+	<param name="hue" type="boolean" _gui-text="Hue">true</param>
+	<param name="saturation" type="boolean" _gui-text="Saturation">true</param>
+	<param name="lightness" type="boolean" _gui-text="Lightness">true</param>
+	<effect>
+		<object-type>all</object-type>
+		<effects-menu>
+			<submenu _name="Color"/>
+		</effects-menu>
+	</effect>
+	<script>
+		<command reldir="extensions" interpreter="python">color_randomize.py</command>
+	</script>
+</inkscape-extension>
