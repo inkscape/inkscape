@@ -1,7 +1,0 @@
-;########################################################
-;## File: plugin.def
-;## Purpose: Used by dllwrap to make an inkscape plugin
-;########################################################
-
-EXPORTS
-	inkscape_plugin_table

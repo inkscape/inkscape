@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-02-19 18:33+0100\n"
-"PO-Revision-Date: 2009-02-20 12:58+0100\n"
+"PO-Revision-Date: 2009-02-22 21:51+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1192,7 +1192,7 @@ msgstr "Jardin des délices"
 
 #: ../share/filters/filters.svg.h:122
 msgid "Fantasmagoric turbulences evocating Hieronymus Bosch Garden of Delights"
-msgstr ""
+msgstr "Turbulences fantasmagoriques évoquant  <i>Le Jardin des délices</i> de Jérôme Bosch"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Basic diffuse"
@@ -1235,7 +1235,7 @@ msgstr "Nacre"
 
 #: ../share/filters/filters.svg.h:127
 msgid "3D warped shell texture based on blur and displacement map"
-msgstr ""
+msgstr "Texture de coquillage tordu en 3D, basé sur les primitives flou et displacement map"
 
 #: ../share/filters/filters.svg.h:128
 msgid "Black Emboss"
@@ -1243,7 +1243,7 @@ msgstr "Embossage noir"
 
 #: ../share/filters/filters.svg.h:128
 msgid "Emboss effect : 3D relief where white is replaced by black"
-msgstr ""
+msgstr "Effet d'embossage : relief 3D avec lequel le blanc est remplacé par du noir"
 
 #: ../src/arc-context.cpp:302
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -7454,16 +7454,16 @@ msgstr "Chemin de courbure"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:270
 msgid "Add a global bend to the hatches (slower)"
-msgstr ""
+msgstr "Ajoute une flexion globale aux hachures (plus lent)"
 
 #. bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
 #: ../src/live_effects/lpe-rough-hatches.cpp:272
 msgid "Global bending"
-msgstr ""
+msgstr "Flexion globale"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:272
 msgid "Relative position to ref point defines global bending direction and amount"
-msgstr ""
+msgstr "La position relative au point de référence définit la direction et la quantité de flexion globale"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:274
@@ -7760,9 +7760,8 @@ msgid "Text label attached to the path"
 msgstr "Étiquette texte attachée au chemin"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
-#, fuzzy
 msgid "Reference segment"
-msgstr "Supprimer le segment"
+msgstr "Segment de référence"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "The reference segment. Defaults to bbox diameter."
@@ -7775,7 +7774,6 @@ msgid "Generating path"
 msgstr "Création d'un chemin"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:50
-#, fuzzy
 msgid "Path whose segments define the iterated transforms"
 msgstr "Chemin dont les segments définissent la fractale"
 
@@ -8354,9 +8352,8 @@ msgid "smooth"
 msgstr "doux"
 
 #: ../src/nodepath.cpp:4885
-#, fuzzy
 msgid "auto"
-msgstr "Disposition"
+msgstr "automatique"
 
 #: ../src/nodepath.cpp:4887
 msgid "symmetric"
@@ -8430,9 +8427,8 @@ msgstr "Ajuster le rayon <b>d'arrondi vertical</b>; <b>Ctrl</b> pour que le rayo
 
 #: ../src/object-edit.cpp:416
 #: ../src/object-edit.cpp:420
-#, fuzzy
 msgid "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b>to lock ratio or stretch in one dimension only"
-msgstr "Ajuster la <b>hauteur</b> et la <b>largeur</b> du rectangle; <b>Ctrl</b> verrouiller le rapport des dimensions ou incliner dans une seule dimension"
+msgstr "Ajuster la <b>hauteur</b> et la <b>largeur</b> du rectangle; <b>Ctrl</b> pour verrouiller le rapport des dimensions ou incliner dans une seule dimension"
 
 #: ../src/object-edit.cpp:654
 #: ../src/object-edit.cpp:657
@@ -8461,9 +8457,8 @@ msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "Ajuster la <b>hauteur</b> de l'ellipse; <b>Ctrl</b> pour en faire un cercle"
 
 #: ../src/object-edit.cpp:902
-#, fuzzy
 msgid "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr "Positionner le <b>point de départ</b> de l'arc ou du camembert; <b>Ctrl</b> pour touner par incréments; déplacer <b>vers l'intérieur</b> de l'ellipse pour un arc, <b>vers l'extérieur</b> pour un camembert"
+msgstr "Positionner le <b>point de départ</b> de l'arc ou du camembert ; <b>Ctrl</b> pour tourner par incréments ; déplacer <b>vers l'intérieur</b> de l'ellipse pour un arc, <b>vers l'extérieur</b> pour un camembert"
 
 #: ../src/object-edit.cpp:906
 msgid "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
@@ -8494,9 +8489,8 @@ msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "Cliquer-déplacer pour redimensionner le <b>cadre du texte</b>"
 
 #: ../src/path-chemistry.cpp:49
-#, fuzzy
 msgid "Select <b>object(s)</b> to combine."
-msgstr "Sélectionner un ou des <b>objet(s)</b> à monter."
+msgstr "Sélectionner un ou des <b>objet(s)</b> à combiner."
 
 #: ../src/path-chemistry.cpp:53
 msgid "Combining paths..."
@@ -8612,14 +8606,14 @@ msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this poin
 msgstr "<b>Cliquer</b> ou <b>cliquer-déplacer</b> pour prolonger le chemin à partir de ce point."
 
 #: ../src/pen-context.cpp:1271
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr "<b>%s</b>: angle %3.2f&#176;, distance %s; <b>Ctrl</b> pour tourner par incréments, <b>Entrée</b> pour terminer le chemin"
+msgstr "<b>Segment de courbe</b> : angle %3.2f&#176 ; distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
 
 #: ../src/pen-context.cpp:1272
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr "<b>%s</b>: angle %3.2f&#176;, distance %s; <b>Ctrl</b> pour tourner par incréments, <b>Entrée</b> pour terminer le chemin"
+msgstr "<b>Segment de droite</b> : angle %3.2f&#176 ; distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
 
 #: ../src/pen-context.cpp:1290
 #, c-format
@@ -8627,14 +8621,14 @@ msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to sn
 msgstr "<b>Poignée de contrôle</b>: angle %3.2f&#176;, longueur %s; <b>Ctrl</b> pour tourner par incréments"
 
 #: ../src/pen-context.cpp:1312
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>%s</b>: angle %3.2f&#176;, longueur %s; with <b>Ctrl</b> pour tourner par incréments; <b>Maj</b> pour ne déplacer que cette poignée"
+msgstr "<b>Poignée de la courbe, symétrique</b> : angle %3.2f&#176 ; longueur %s ; avec  <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
 
 #: ../src/pen-context.cpp:1313
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>%s</b>: angle %3.2f&#176;, longueur %s; with <b>Ctrl</b> pour tourner par incréments; <b>Maj</b> pour ne déplacer que cette poignée"
+msgstr "<b>Poignée de la courbe</b> : angle %3.2f&#176 ; longueur %s ; avec <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
 
 #: ../src/pen-context.cpp:1360
 msgid "Drawing finished"
@@ -9966,14 +9960,14 @@ msgid "Paste text"
 msgstr "Coller le texte"
 
 #: ../src/text-context.cpp:1603
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit flowed text (%d characters); <b>Enter</b> to start new paragraph."
-msgstr "Taper le texte encadré; <b>Entrée</b> pour commencer un nouveau paragraphe."
+msgstr "Taper ou modifier le texte encadré (%d caractères); <b>Entrée</b> pour commencer un nouveau paragraphe."
 
 #: ../src/text-context.cpp:1605
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
-msgstr "Taper le texte; <b>Entrée</b> pour commencer une nouvelle ligne."
+msgstr "Taper ou modifier le texte (%d caractères) ; <b>Entrée</b> pour commencer une nouvelle ligne."
 
 #: ../src/text-context.cpp:1613
 #: ../src/tools-switch.cpp:190
@@ -11086,7 +11080,6 @@ msgid "All Image Files"
 msgstr "Tous les formats d'image"
 
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:427
-#, fuzzy
 msgid "Show Preview"
 msgstr "Aperçu"
 
@@ -12043,9 +12036,8 @@ msgid "Tweak"
 msgstr "Ajuster"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:431
-#, fuzzy
 msgid "Paint objects with:"
-msgstr "Créer de nouveaux objets avec :"
+msgstr "Peindre les objets avec :"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:436
@@ -15991,9 +15983,8 @@ msgid "_Show/hide other layers"
 msgstr "Afficher ou masquer les autres calques"
 
 #: ../src/verbs.cpp:2447
-#, fuzzy
 msgid "Solo the current layer"
-msgstr "Descendre le calque courant"
+msgstr "Afficher le calque courant uniquement"
 
 #. Object
 #: ../src/verbs.cpp:2450
@@ -17583,9 +17574,8 @@ msgid "Make selected nodes symmetric"
 msgstr "Rendre symétriques les nœuds sélectionnés"
 
 #: ../src/widgets/toolbox.cpp:1382
-#, fuzzy
 msgid "Node Auto"
-msgstr "Éditer les nœuds"
+msgstr "Nœud automatique"
 
 #: ../src/widgets/toolbox.cpp:1383
 msgid "Make selected nodes auto-smooth"
@@ -17835,7 +17825,7 @@ msgstr "Polygone régulier (avec une poignée) au lieu d'une étoile"
 
 #: ../src/widgets/toolbox.cpp:2778
 msgid "Star instead of a regular polygon (with one handle)"
-msgstr "Étoire au lieu d'un polygone régulier (avec une poignée)"
+msgstr "Étoile au lieu d'un polygone régulier (avec une poignée)"
 
 #: ../src/widgets/toolbox.cpp:2799
 msgid "triangle/tri-star"
@@ -18062,16 +18052,16 @@ msgstr "Angle dans la direction X"
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:3468
 msgid "Angle of PLs in X direction"
-msgstr "Angle des LP dans la direction X"
+msgstr "Angle des lignes parallèles dans la direction X"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:3490
 msgid "State of VP in X direction"
-msgstr "État des PF dans la direction X"
+msgstr "État du point de fuite dans la direction X"
 
 #: ../src/widgets/toolbox.cpp:3491
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Alterner les PF dans la direction X entre 'finis' et 'infinis' (=parallèles)"
+msgstr "Alterner le point de fuite dans la direction X entre « fini » et « infini » (=parallèles)"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Angle in Y direction"
@@ -18084,16 +18074,16 @@ msgstr "Angle Y :"
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:3508
 msgid "Angle of PLs in Y direction"
-msgstr "Angle des LP dans la direction Y"
+msgstr "Angle des lignes parallèles dans la direction Y"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:3529
 msgid "State of VP in Y direction"
-msgstr "État des PF dans la direction Y"
+msgstr "État du point de fuite dans la direction Y"
 
 #: ../src/widgets/toolbox.cpp:3530
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Alterner les PF dans la direction Y entre 'finis' et 'infinis' (=parallèles)"
+msgstr "Alterner le point de fuite dans la direction Y entre « fini » et « infini » (=parallèles)"
 
 #: ../src/widgets/toolbox.cpp:3545
 msgid "Angle in Z direction"
@@ -18102,16 +18092,16 @@ msgstr "Angle dans la direction Z"
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/toolbox.cpp:3547
 msgid "Angle of PLs in Z direction"
-msgstr "Angle des LP dans la direction Z"
+msgstr "Angle des lignes parallèles dans la direction Z"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/toolbox.cpp:3568
 msgid "State of VP in Z direction"
-msgstr "État des PF dans la direction Y"
+msgstr "État du point de fuite dans la direction Z"
 
 #: ../src/widgets/toolbox.cpp:3569
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Alterner les PF dans la direction Z entre 'finis' et 'infinis' (=parallèles)"
+msgstr "Alterner le point de fuite dans la direction Z entre « fini » et « infini » (=parallèles)"
 
 #: ../src/widgets/toolbox.cpp:3627
 msgid "Change spiral"
@@ -18833,23 +18823,20 @@ msgid "all_inactive"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5652
-#, fuzzy
 msgid "Show limiting bounding box"
-msgstr "Boîte englobante géométrique"
+msgstr "Montrer la boîte englobante limite"
 
 #: ../src/widgets/toolbox.cpp:5653
 msgid "Show bounding box (used to cut infinite lines)"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5664
-#, fuzzy
 msgid "Get limiting bounding box from selection"
-msgstr "Retirer le chemin de découpe de la sélection"
+msgstr "Obtenir la boîte englobante limite à partir de la sélection"
 
 #: ../src/widgets/toolbox.cpp:5665
-#, fuzzy
 msgid "Set limiting bounding box (used to cut infinite lines) to the bounding box of current selection"
-msgstr "Aimanter les coins des boîtes englobantes aux coins des autres boîtes englobantes"
+msgstr "Définir la boîte englobante limite (utilisée pour couper les lignes infinies) à la boîte englobante de la sélection"
 
 #: ../src/widgets/toolbox.cpp:5677
 msgid "Choose a line segment type"
@@ -19063,7 +19050,7 @@ msgstr ""
 
 #: ../share/extensions/dxf_outlines.py:33
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again."
-msgstr ""
+msgstr "Échec lors de l'import des modules numpy.linalg. Ces modules sont nécessaires à cette extension. Veuillez les installer et réessayer."
 
 #: ../share/extensions/embedimage.py:74
 msgid "No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image."
@@ -19089,7 +19076,7 @@ msgstr "Problème pour trouver les données de l'image"
 
 #: ../share/extensions/inkex.py:65
 msgid "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore this extension. Please download and install the latest version from http://cheeseshop.python.org/pypi/lxml/, or install it through your package manager by a command like: sudo apt-get install python-lxml"
-msgstr ""
+msgstr "La fantastique classe lxml pour libxml2 est nécessaire à inkex.py et par conséquent à cette extension. Veuillez en télécharger et installer la dernière version à partir du site http://cheeseshop.python.org/pypi/lxml/, ou l'installer directement avec votre gestionnaire de paquet avec une commande du type : sudo apt-get install python-lxml"
 
 #: ../share/extensions/inkex.py:213
 #, python-format
@@ -19120,7 +19107,7 @@ msgstr "Veuillez d'abord convertir les objets en chemins ! (Obtenu [%s].)"
 
 #: ../share/extensions/perspective.py:29
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
-msgstr ""
+msgstr "Échec lors de l'import des modules numpy.linalg. Ces modules sont nécessaires à cette extension. Veuillez les installer et réessayer. Sur un système de type Debian, cette installation peut être réalisée avec la commande : sudo apt-get install python-numpy."
 
 #: ../share/extensions/perspective.py:62
 #: ../share/extensions/summersnight.py:39
@@ -19129,6 +19116,8 @@ msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"Le premier objet sélectionné est de type '%s'.\n"
+"Essayez la commande Objet | Dégrouper."
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:46
@@ -19141,6 +19130,8 @@ msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object | Ungroup."
 msgstr ""
+"Le second objet sélectionné n'est pas un chemin mais un groupe.\n"
+"Essayez la commande Objet | Dégrouper."
 
 #: ../share/extensions/perspective.py:89
 #: ../share/extensions/summersnight.py:74
@@ -19148,6 +19139,8 @@ msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"Le second objet sélectionné n'est pas un chemin.\n"
+"Essayez la commande Chemin | Objet en chemin."
 
 #: ../share/extensions/perspective.py:92
 #: ../share/extensions/summersnight.py:77
@@ -19155,10 +19148,12 @@ msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"Le premier objet sélectionné n'est pas un chemin.\n"
+"Essayez la commande Chemin | Objet en chemin."
 
 #: ../share/extensions/polyhedron_3d.py:58
 msgid "Failed to import the numpy module. This module is required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
-msgstr ""
+msgstr "Échec lors de l'import du module numpy. Ce module est nécessaire à cette extension. Veuillez l'installer et réessayer. Sur un système de type Debian, cette installation peut être réalisée avec la commande : sudo apt-get install python-numpy."
 
 #: ../share/extensions/polyhedron_3d.py:329
 msgid "No face data found in specified file\n"
@@ -19466,18 +19461,16 @@ msgid "Centroid"
 msgstr "Barycentre"
 
 #: ../share/extensions/draw_from_triangle.inx.h:4
-#, fuzzy
 msgid "Circumcentre"
-msgstr "Document"
+msgstr "Centre du cercle circonscrit "
 
 #: ../share/extensions/draw_from_triangle.inx.h:5
 msgid "Circumcircle"
 msgstr "Cercle circonscrit"
 
 #: ../share/extensions/draw_from_triangle.inx.h:6
-#, fuzzy
 msgid "Common Objects"
-msgstr "Objets"
+msgstr "Objets communs"
 
 #: ../share/extensions/draw_from_triangle.inx.h:7
 #, fuzzy
@@ -19536,9 +19529,8 @@ msgid "Gergonne Point"
 msgstr "Point de Gergonne"
 
 #: ../share/extensions/draw_from_triangle.inx.h:21
-#, fuzzy
 msgid "Incentre"
-msgstr "Indenter le nœud"
+msgstr "Centre du cercle inscrit"
 
 #: ../share/extensions/draw_from_triangle.inx.h:22
 msgid "Incircle"
@@ -19745,28 +19737,24 @@ msgid "Flatten Beziers"
 msgstr "Aplatir les courbes de Bézier"
 
 #: ../share/extensions/foldable-box.inx.h:1
-#, fuzzy
 msgid "Add Guide Lines"
-msgstr "Ligne de guide"
+msgstr "Ajouter des guides"
 
 #: ../share/extensions/foldable-box.inx.h:2
-#, fuzzy
 msgid "Depth"
-msgstr "Dents"
+msgstr "Profondeur"
 
 #: ../share/extensions/foldable-box.inx.h:3
 msgid "Foldable Box"
-msgstr ""
+msgstr "Boîte à plier"
 
 #: ../share/extensions/foldable-box.inx.h:5
-#, fuzzy
 msgid "Paper Spessure"
-msgstr "Pression"
+msgstr "Épaisseur du papier"
 
 #: ../share/extensions/foldable-box.inx.h:7
-#, fuzzy
 msgid "Tab Proportion"
-msgstr "Redimensionner proportionnellement"
+msgstr "Proportion de la patte"
 
 #: ../share/extensions/fractalize.inx.h:1
 msgid "Fractalize"
@@ -20812,9 +20800,8 @@ msgid "Top to Bottom (270)"
 msgstr "De haut en bas (270)"
 
 #: ../share/extensions/restack.inx.h:18
-#, fuzzy
 msgid "Vertical Point:"
-msgstr "Texte vertical"
+msgstr "Point vertical :"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
