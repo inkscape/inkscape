@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-02-19 18:33+0100\n"
-"PO-Revision-Date: 2009-02-22 21:51+0100\n"
+"PO-Revision-Date: 2009-02-23 06:41+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -8608,12 +8608,12 @@ msgstr "<b>Cliquer</b> ou <b>cliquer-déplacer</b> pour prolonger le chemin à p
 #: ../src/pen-context.cpp:1271
 #, c-format
 msgid "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr "<b>Segment de courbe</b> : angle %3.2f&#176 ; distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
+msgstr "<b>Segment de courbe</b> : angle %3.2f&#176;, distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
 
 #: ../src/pen-context.cpp:1272
 #, c-format
 msgid "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr "<b>Segment de droite</b> : angle %3.2f&#176 ; distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
+msgstr "<b>Segment de droite</b> : angle %3.2f&#176;, distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
 
 #: ../src/pen-context.cpp:1290
 #, c-format
@@ -8623,12 +8623,12 @@ msgstr "<b>Poignée de contrôle</b>: angle %3.2f&#176;, longueur %s; <b>Ctrl</b
 #: ../src/pen-context.cpp:1312
 #, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>Poignée de la courbe, symétrique</b> : angle %3.2f&#176 ; longueur %s ; avec  <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
+msgstr "<b>Poignée de la courbe, symétrique</b> : angle %3.2f&#176;, longueur %s ; avec  <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
 
 #: ../src/pen-context.cpp:1313
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>Poignée de la courbe</b> : angle %3.2f&#176 ; longueur %s ; avec <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
+msgstr "<b>Poignée de la courbe</b> : angle %3.2f&#176;, longueur %s ; avec <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
 
 #: ../src/pen-context.cpp:1360
 msgid "Drawing finished"
