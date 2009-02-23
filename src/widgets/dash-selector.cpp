@@ -119,6 +119,7 @@ SPDashSelector::init_dashes() {
                 }
                 pos += 1;
             }
+            dashes[pos] = NULL;
         } else {
             dashes = builtin_dashes;
         }
