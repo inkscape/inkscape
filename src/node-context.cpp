@@ -102,7 +102,7 @@ sp_node_context_init(SPNodeContext *node_context)
     node_context->rightalt = FALSE;
     node_context->leftctrl = FALSE;
     node_context->rightctrl = FALSE;
-    
+
     new (&node_context->sel_changed_connection) sigc::connection();
 
     node_context->flash_tempitem = NULL;
@@ -113,8 +113,10 @@ sp_node_context_init(SPNodeContext *node_context)
 static void
 sp_node_context_dispose(GObject *object)
 {
-    SPNodeContext *nc = SP_NODE_CONTEXT(object);
+	SPNodeContext *nc = SP_NODE_CONTEXT(object);
     SPEventContext *ec = SP_EVENT_CONTEXT(object);
+
+    sp_canvas_set_snap_delay_active(ec->desktop->canvas, false);
 
     ec->enableGrDrag(false);
 
@@ -173,6 +175,8 @@ sp_node_context_setup(SPEventContext *ec)
     nc->_node_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 
     ec->shape_editor->update_statusbar();
+
+    sp_canvas_set_snap_delay_active(ec->desktop->canvas, true);
 }
 
 static void
@@ -195,7 +199,7 @@ sp_node_context_flash_path(SPEventContext *event_context, SPItem *item, guint ti
         } else {
             g_print ("-----> sp_node_context_flash_path(): TODO: generate the helper path!!\n");
         }
-        
+
         if (canvasitem) {
             nc->flash_tempitem = desktop->add_temporary_canvasitem (canvasitem, timeout);
         }
@@ -214,7 +218,7 @@ sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
     // TODO: update ShapeEditorsCollective instead
     ec->shape_editor->unset_item(SH_NODEPATH);
     ec->shape_editor->unset_item(SH_KNOTHOLDER);
-    SPItem *item = selection->singleItem(); 
+    SPItem *item = selection->singleItem();
     ec->shape_editor->set_item(item, SH_NODEPATH);
     ec->shape_editor->set_item(item, SH_KNOTHOLDER);
     ec->shape_editor->update_statusbar();
@@ -321,7 +325,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 // The path went away while dragging; throw away any further motion
                 // events until the mouse pointer is released.
-                
+
                 if (se->hits_curve() && !se->has_nodepath()) {
                   break;
                 }
@@ -441,7 +445,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     ret = TRUE;
                     break;
                 }
-            } 
+            }
             if (event->type == GDK_BUTTON_RELEASE) {
                 event_context->xp = event_context->yp = 0;
                 if (event->button.button == 1) {

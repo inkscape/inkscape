@@ -2017,7 +2017,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 	Inkscape::IconSize secondarySize = prefToSize("/toolbox/secondary", 1);
 
 	{
-		InkToggleAction* act = ink_toggle_action_new("ToggleSnapGlobal", 
+		InkToggleAction* act = ink_toggle_action_new("ToggleSnapGlobal",
 		    _("Snap"), _("Enable snapping"), INKSCAPE_ICON_SNAP, secondarySize,
 		    SP_ATTR_INKSCAPE_SNAP_GLOBAL);
 
@@ -2073,7 +2073,7 @@ void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
 	{
 		InkToggleAction* act = ink_toggle_action_new("ToggleSnapFromNode",
-		    _("Nodes"), _("Snap nodes"), INKSCAPE_ICON_SNAP_NODES, secondarySize, SP_ATTR_INKSCAPE_SNAP_NODES);
+		    _("Nodes"), _("Snap nodes or handles"), INKSCAPE_ICON_SNAP_NODES, secondarySize, SP_ATTR_INKSCAPE_SNAP_NODES);
 
 		gtk_action_group_add_action( mainActions->gobj(), GTK_ACTION( act ) );
 		g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(toggle_snap_callback), toolbox );

@@ -541,8 +541,9 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
 
     Geom::Point p = ppointer;
 
-    // FIXME: take from prefs
-    double snap_dist = SNAP_DIST / dragger->parent->desktop->current_zoom();
+    SPDesktop *desktop = dragger->parent->desktop;
+	SnapManager &m = desktop->namedview->snap_manager;
+	double snap_dist = m.snapprefs.getObjectTolerance() / dragger->parent->desktop->current_zoom();
 
     if (state & GDK_SHIFT_MASK) {
         // with Shift; unsnap if we carry more than one draggable
@@ -595,14 +596,12 @@ gr_knot_moved_handler(SPKnot *knot, Geom::Point const &ppointer, guint state, gp
 
     if (!((state & GDK_SHIFT_MASK) || ((state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK)))) {
         // Try snapping to the grid or guides
-        SPDesktop *desktop = dragger->parent->desktop;
-        SnapManager &m = desktop->namedview->snap_manager;
         m.setup(desktop);
         Inkscape::SnappedPoint s = m.freeSnap(Inkscape::SnapPreferences::SNAPPOINT_NODE, to_2geom(p), Inkscape::SNAPSOURCE_HANDLE);
         if (s.getSnapped()) {
             p = s.getPoint();
             sp_knot_moveto (knot, p);
-        } else {
+        } else if (m.snapprefs.getSnapEnabledGlobally() && m.snapprefs.getSnapModeNode() && !(m.snapprefs.getSnapPostponedGlobally())) {
             bool was_snapped = false;
             double dist = NR_HUGE;
             // No snapping so far, let's see if we need to snap to any of the levels
