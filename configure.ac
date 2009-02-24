@@ -689,10 +689,12 @@ dnl **************************
 dnl Check for aspell 
 dnl ******************************
 AC_CHECK_LIB(aspell, new_aspell_config, [AC_CHECK_HEADER(aspell.h, aspell_ok=yes, aspell_ok=no)], aspell_ok=no, -lz -lm)
-if test "x$aspell_ok" != "xyes"; then
-	AC_MSG_ERROR([aspell is needed to compile inkscape])
+if test "x$aspell_ok" = "xyes"; then
+	AC_DEFINE(HAVE_ASPELL, 1, [Use aspell for built-in spellchecker])
+  INKSCAPE_LIBS="$INKSCAPE_LIBS -laspell"
+else
+	AC_MSG_CHECKING([Aspell not found, spell checker will be disabled])
 fi
-INKSCAPE_LIBS="$INKSCAPE_LIBS -laspell"
 
 dnl Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
 sp_save_LIBS=$LIBS

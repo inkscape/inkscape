@@ -181,6 +181,8 @@
         /* Do we want experimental, unsupported, unguaranteed, etc., LivePathEffects enabled? */
         // #define LPE_ENABLE_TEST_EFFECTS    1
 
+        #define HAVE_ASPELL                   1
+
         #endif /* _CONFIG_H_ */
     </makefile>
   </target>

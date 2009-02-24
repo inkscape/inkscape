@@ -238,8 +238,10 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"ObjectFlowtextToText\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"SelectionTextRemoveKerns\" />\n"
+#ifdef HAVE_ASPELL
 "       <separator/>\n"
 "       <verb verb-id=\"DialogSpellcheck\" />\n"
+#endif
 "   </submenu>\n"
 "   <submenu name=\"" N_("Filter_s") "\">\n"
 "       <filters-list/>\n"
