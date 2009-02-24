@@ -471,17 +471,17 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                         if (pc->npoints == 0) {
 
                         	Geom::Point p;
-                            if (bevent.state & GDK_CONTROL_MASK) {
+                          if ((bevent.state & GDK_CONTROL_MASK) && (pc->polylines_only || pc->polylines_paraxial)) {
                             	p = event_dt;
                             	if (!(bevent.state & GDK_SHIFT_MASK)) {
                             		SnapManager &m = desktop->namedview->snap_manager;
                             		m.setup(desktop);
-									m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
+              									m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, p, Inkscape::SNAPSOURCE_HANDLE);
                             	}
-								spdc_create_single_dot(event_context, p, "/tools/freehand/pen", bevent.state);
-								ret = TRUE;
-                                break;
-                            }
+                              spdc_create_single_dot(event_context, p, "/tools/freehand/pen", bevent.state);
+                              ret = TRUE;
+                              break;
+                          }
 
                             // TODO: Perhaps it would be nicer to rearrange the following case
                             // distinction so that the case of a waiting LPE is treated separately
