@@ -180,9 +180,6 @@ sp_genericellipse_update_patheffect(SPLPEItem *lpeitem, bool write)
     ((SPObject *)shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-
-#define C1 0.552
-
 /* fixme: Think (Lauris) */
 /* Can't we use arcto in this method? */
 static void sp_genericellipse_set_shape(SPShape *shape)
@@ -220,7 +217,7 @@ static void sp_genericellipse_set_shape(SPShape *shape)
         e = s + M_PI_2;
         if (e > ellipse->end)
             e = ellipse->end;
-        len = C1 * (e - s) / M_PI_2;
+        len = 4*tan((e - s)/4)/3;
         x0 = cos(s);
         y0 = sin(s);
         x1 = x0 + len * cos(s + M_PI_2);
