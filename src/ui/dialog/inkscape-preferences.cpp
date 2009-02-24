@@ -42,6 +42,10 @@
 #include "color-profile.h"
 #include "display/canvas-grid.h"
 
+#ifdef HAVE_ASPELL
+#include <aspell.h>
+#endif
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
@@ -112,12 +116,13 @@ InkscapePreferences::InkscapePreferences()
     initPageSVGOutput();
     initPageAutosave();
     initPageImportExport();
-    initPageUI();
     initPageMouse();
     initPageScrolling();
     initPageSnapping();
     initPageSteps();
+    initPageUI();
     initPageWindows();
+    initPageSpellcheck();
     initPageMisc();
     
     signalPresent().connect(sigc::mem_fun(*this, &InkscapePreferences::_presentPages));
@@ -1031,42 +1036,41 @@ void InkscapePreferences::initPageSVGOutput()
 
 void InkscapePreferences::initPageUI()
 {
-    Glib::ustring languages[] = {_("System default"), _("am Amharic"), _("ar Arabic"), _("az Azerbaijani"), _("be Belarusian"), 
-        _("bg Bulgarian"), _("bn Bengali"), _("br Breton"), _("ca Catalan"), _("ca@valencia Valencian Catalan"), _("cs Czech"), 
-        _("da Danish"), _("de German"), _("dz Dzongkha"), _("el Greek"), _("en English"), _("en_AU English, as spoken in Australia"), 
-        _("en_CA English, as spoken in Canada"), _("en_GB English, as spoken in Great Britain"), _("en_US@piglatin Pig Latin"), 
-        _("eo Esperanto"),  _("es Spanish"), _("es_MX Spanish, as spoken in Mexico"),_("et Estonian"), _("eu Basque"), _("fi Finnish"), 
-        _("fr French"), _("ga Irish"), _("gl Galician"), _("he Hebrew"), _("hr Croatian"), _("hu Hungarian"), _("hy Armenian"), 
-        _("id Indonesian"), _("it Italian"), _("ja Japanese"), _("km Khmer"), _("ko Korean"), _("lt Lithuanian"), _("mk Macedonian"), 
-        _("mn Mongolian"), _("nb Norwegian Bokmål"), _("ne Nepali"), _("nl Dutch"), _("nn Norwegian Nynorsk"), _("pa Panjabi"),
-        _("pl Polish"), _("pt Portuguese"), _("pt_BR Portuguese, as spoken in Brazil"), _("ro Romanian"), _("ru Russian"), 
-        _("rw Kinyarwanda"), _("sk Slovak"), _("sl Slovenian"), _("sq Albanian"), _("sr Serbian"), _("sr@latin Serbian in Latin script"), 
-        _("sv Swedish"), _("th Thai"), _("tr Turkish"), _("uk Ukrainian"), _("vi Vietnamese"), _("zh_CN Chinese, as spoken in China"), 
-        _("zh_TW Chinese, as spoken in Taiwan")};
-    Glib::ustring langValues[] = {"", "am", "ar", "az", "be", "bg", "bn", "br", "ca", "ca@valencia", "cs", "da", "de",
-        "dz", "el", "en", "en_AU", "en_CA", "en_GB", "en_US@piglatin", "eo", "es", "es_MX", "et", "eu", "fi", "fr", "ga",
-        "gl", "he", "hr", "hu", "hy", "id", "it", "ja", "km", "ko", "lt", "mk", "mn", "nb", "ne", "nl", "nn", "pa",
-        "pl", "pt", "pt_BR", "ro", "ru", "rw", "sk", "sl", "sq", "sr", "sr@latin", "sv", "th", "tr", "uk", "vi",
-        "zh_CN", "zh_TW"};
+    Glib::ustring languages[] = {_("System default"), _("Albanian (sq)"), _("Amharic (am)"), _("Arabic (ar)"), _("Armenian (hy)"),_("Azerbaijani (az)"), _("Basque (eu)"), _("Belarusian (be)"), 
+        _("Bulgarian (bg)"), _("Bengali (bn)"), _("Breton (br)"), _("Catalan (ca)"), _("Valencian Catalan (ca@valencia)"), _("Chinese/China (zh_CN)"), 
+                                 _("Chinese/Taiwan (zh_TW)"), _("Croatian (hr)"), _("Czech (cs)"), 
+        _("Danish (da)"), _("Dutch (nl)"), _("Dzongkha (dz)"), _("German (de)"), _("Greek (el)"), _("English (en)"), _("English/Australia (en_AU)"), 
+        _("English/Canada (en_CA)"), _("English/Great Britain (en_GB)"), _("Pig Latin (en_US@piglatin)"), 
+        _("Esperanto (eo)"), _("Estonian (et)"), _("Finnish (fi)"), 
+        _("French (fr)"), _("Irish (ga)"), _("Galician (gl)"), _("Hebrew (he)"), _("Hungarian (hu)"),  
+        _("Indonesian (id)"), _("Italian (it)"), _("Japanese (ja)"), _("Khmer (km)"), _("Kinyarwanda (rw)"), _("Korean (ko)"), _("Lithuanian (lt)"), _("Macedonian (mk)"), 
+        _("Mongolian (mn)"), _("Nepali (ne)"), _("Norwegian Bokmål (nb)"), _("Norwegian Nynorsk (nn)"), _("Panjabi (pa)"),
+        _("Polish (pl)"), _("Portuguese (pt)"), _("Portuguese/Brazil (pt_BR)"), _("Romanian (ro)"), _("Russian (ru)"), 
+        _("Serbian (sr)"), _("Serbian in Latin script (sr@latin)"), _("Slovak (sk)"), _("Slovenian (sl)"),  _("Spanish (es)"), _("Spanish/Mexico (es_MX)"),   
+        _("Swedish (sv)"), _("Thai (th)"), _("Turkish (tr)"), _("Ukrainian (uk)"), _("Vietnamese (vi)")};
+    Glib::ustring langValues[] = {"", "sq", "am", "ar", "hy", "az", "eu", "be", "bg", "bn", "br", "ca", "ca@valencia", "zh_CN", "zh_TW", "hr", "cs", "da", "nl", 
+        "dz", "de", "el", "en", "en_AU", "en_CA", "en_GB", "en_US@piglatin", "eo", "et", "fi", "fr", "ga",
+        "gl", "he", "hu", "id", "it", "ja", "km", "rw", "ko", "lt", "mk", "mn", "ne", "nb", "nn", "pa",
+        "pl", "pt", "pt_BR", "ro", "ru", "sr", "sr@latin", "sk", "sl", "es", "es_MX", "sv", "th", "tr", "uk", "vi" };
 
     _ui_languages.init( "/ui/language", languages, langValues, G_N_ELEMENTS(languages), languages[0]);
     _page_ui.add_line( false, _("Language (requires restart):"), _ui_languages, "",
-                              _("Set the language for menus and number-formats"), false);
+                              _("Set the language for menus and number formats"), false);
 
      Glib::ustring sizeLabels[] = {_("Normal"), _("Medium"), _("Small")};
     int sizeValues[] = {0, 1, 2};
 
+    _misc_small_tools.init( "/toolbox/tools/small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
+    _page_ui.add_line( false, _("Toolbox icon size"), _misc_small_tools, "",
+                              _("Set the size for the tool icons (requires restart)"), false);
+
     _misc_small_toolbar.init( "/toolbox/small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
-    _page_ui.add_line( false, _("Commands bar icon size"), _misc_small_toolbar, "",
-                              _("Set the size for the commands toolbar to use (requires restart)"), false);
+    _page_ui.add_line( false, _("Control bar icon size"), _misc_small_toolbar, "",
+                              _("Set the size for the icons in tools' control bars to use (requires restart)"), false);
 
     _misc_small_secondary.init( "/toolbox/secondary", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 1 );
-    _page_ui.add_line( false, _("Tool controls bar icon size"), _misc_small_secondary, "",
-                              _("Set the size for the secondary toolbar to use (requires restart)"), false);
-
-    _misc_small_tools.init( "/toolbox/tools/small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
-    _page_ui.add_line( false, _("Main toolbar icon size"), _misc_small_tools, "",
-                              _("Set the size for the main tools to use (requires restart)"), false);
+    _page_ui.add_line( false, _("Secondary toolbar icon size"), _misc_small_secondary, "",
+                              _("Set the size for the icons in secondary toolbars to use (requires restart)"), false);
 
     _misc_recent.init("/options/maxrecentdocuments/value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
 
@@ -1153,6 +1157,79 @@ void InkscapePreferences::initPageBitmaps()
 
     this->AddPage(_page_bitmaps, _("Bitmaps"), PREFS_PAGE_BITMAPS);
 }
+
+
+void InkscapePreferences::initPageSpellcheck()
+{
+#ifdef HAVE_ASPELL
+
+    std::vector<Glib::ustring> languages;
+    std::vector<Glib::ustring> langValues;
+
+  AspellConfig *config = new_aspell_config();
+
+#ifdef WIN32
+    // on windows, dictionaries are in a lib/aspell-0.60 subdir off inkscape's executable dir;
+    // this is some black magick to find out the executable path to give it to aspell
+    char exeName[MAX_PATH+1];
+    GetModuleFileName(NULL, exeName, MAX_PATH);
+    char *slashPos = strrchr(exeName, '\\');
+    if (slashPos)
+        *slashPos = '\0';
+    g_print ("%s\n", exeName);
+    aspell_config_replace(config, "prefix", exeName);
+#endif
+
+  /* the returned pointer should _not_ need to be deleted */
+  AspellDictInfoList *dlist = get_aspell_dict_info_list(config);
+
+  /* config is no longer needed */
+  delete_aspell_config(config);
+
+  AspellDictInfoEnumeration *dels = aspell_dict_info_list_elements(dlist);
+
+  languages.push_back(Glib::ustring(_("None")));
+  langValues.push_back(Glib::ustring(""));
+
+  const AspellDictInfo *entry;
+  int en_index = 0;
+  int i = 0;
+  while ( (entry = aspell_dict_info_enumeration_next(dels)) != 0) 
+  {
+      languages.push_back(Glib::ustring(entry->name));
+      langValues.push_back(Glib::ustring(entry->name));
+      if (!strcmp (entry->name, "en"))
+          en_index = i;
+      i ++;
+  }
+
+  delete_aspell_dict_info_enumeration(dels);
+
+
+  _spell_language.init( "/dialogs/spellcheck/lang", &languages[0], &langValues[0], languages.size(), languages[en_index]);
+    _page_spellcheck.add_line( false, _("Language:"), _spell_language, "",
+                              _("Set the main spell check language"), false);
+
+    _spell_language2.init( "/dialogs/spellcheck/lang2", &languages[0], &langValues[0], languages.size(), languages[0]);
+    _page_spellcheck.add_line( false, _("Second language:"), _spell_language2, "",
+                              _("Set the second spell check language; checking will only stop on words unknown in ALL chosen languages"), false);
+
+    _spell_language3.init( "/dialogs/spellcheck/lang3", &languages[0], &langValues[0], languages.size(), languages[0]);
+    _page_spellcheck.add_line( false, _("Third language:"), _spell_language3, "",
+                              _("Set the third spell check language; checking will only stop on words unknown in ALL chosen languages"), false);
+
+    _spell_ignorenumbers.init( _("Ignore words with digits"), "/dialogs/spellcheck/ignorenumbers", true);
+    _page_spellcheck.add_line( false, "", _spell_ignorenumbers, "",
+                           _("Ignore words containing digits, such as \"R2D2\""), true);
+
+    _spell_ignoreallcaps.init( _("Ignore words in ALL CAPITALS"), "/dialogs/spellcheck/ignoreallcaps", false);
+    _page_spellcheck.add_line( false, "", _spell_ignoreallcaps, "",
+                           _("Ignore words in all capitals, such as \"IUPAC\""), true);
+
+    this->AddPage(_page_spellcheck, _("Spellcheck"), PREFS_PAGE_SPELLCHECK);
+#endif
+}
+
 
 
 void InkscapePreferences::initPageMisc()

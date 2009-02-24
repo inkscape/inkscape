@@ -69,12 +69,13 @@ enum {
     PREFS_PAGE_SVGOUTPUT,
     PREFS_PAGE_AUTOSAVE,
     PREFS_PAGE_IMPORTEXPORT,
-    PREFS_PAGE_UI,
     PREFS_PAGE_MOUSE,
     PREFS_PAGE_SCROLLING,
     PREFS_PAGE_SNAPPING,
     PREFS_PAGE_STEPS,
+    PREFS_PAGE_UI,
     PREFS_PAGE_WINDOWS,
+    PREFS_PAGE_SPELLCHECK,
     PREFS_PAGE_MISC
 };
 
@@ -114,7 +115,7 @@ protected:
     DialogPage _page_mouse, _page_scrolling, _page_snapping, _page_steps, _page_tools, _page_windows,
         _page_clones, _page_mask, _page_transforms, _page_filters, _page_select,
         _page_importexport, _page_cms, _page_grids, _page_svgoutput, _page_misc,
-        _page_ui, _page_autosave, _page_bitmaps;
+        _page_ui, _page_autosave, _page_bitmaps, _page_spellcheck;
     DialogPage _page_selector, _page_node, _page_tweak, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper, _page_lpetool;
     DialogPage _page_rectangle, _page_3dbox, _page_ellipse, _page_star, _page_spiral, _page_paintbucket, _page_eraser;
@@ -188,6 +189,13 @@ protected:
     PrefCombo       _misc_small_tools;
     PrefSpinButton  _misc_recent;
     ZoomCorrRulerSlider _ui_zoom_correction;
+
+    //Spellcheck
+    PrefCombo       _spell_language;
+    PrefCombo       _spell_language2;
+    PrefCombo       _spell_language3;
+    PrefCheckButton _spell_ignorenumbers;
+    PrefCheckButton _spell_ignoreallcaps;
     
     PrefCombo       _misc_overs_bitmap;
     PrefCombo       _misc_bitmap_editor;
@@ -282,6 +290,7 @@ protected:
     void initPageGrids();
     void initPageSVGOutput();
     void initPageUI();
+    void initPageSpellcheck();
     void initPageAutosave();
     void initPageBitmaps();
     void initPageMisc();
