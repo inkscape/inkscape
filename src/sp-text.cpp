@@ -604,8 +604,8 @@ void SPText::_adjustFontsizeRecursive(SPItem *item, double ex, bool is_root)
     if (style && !NR_DF_TEST_CLOSE (ex, 1.0, NR_EPSILON)) {
         if (!style->font_size.set && is_root) {
             style->font_size.set = 1;
-            style->font_size.type = SP_FONT_SIZE_LENGTH;
         }
+        style->font_size.type = SP_FONT_SIZE_LENGTH;
         style->font_size.computed *= ex;
         style->letter_spacing.computed *= ex;
         style->word_spacing.computed *= ex;
