@@ -43,7 +43,10 @@
 #include "display/canvas-grid.h"
 
 #ifdef HAVE_ASPELL
-#include <aspell.h>
+# include <aspell.h>
+# ifdef WIN32
+#  include <windows.h>
+# endif
 #endif
 
 namespace Inkscape {
