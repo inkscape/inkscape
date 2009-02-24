@@ -417,6 +417,10 @@ text_unflow ()
 
         SPItem *flowtext = SP_ITEM(items->data);
 
+        // we discard transform when unflowing, but we must preserve expansion which is visible as
+        // font size multiplier
+        double ex = (flowtext->transform).descrim();
+
         if (sp_te_get_string_multiline(flowtext) == NULL) { // flowtext is empty
             continue;
         }
@@ -448,6 +452,9 @@ text_unflow ()
 
         SP_OBJECT_REPR(SP_OBJECT_PARENT(flowtext))->appendChild(rtext);
         SPObject *text_object = doc->getObjectByRepr(rtext);
+
+        // restore the font size multiplier from the flowtext's transform
+        SP_TEXT(text_object)->_adjustFontsizeRecursive(SP_ITEM(text_object), ex);
 
         new_objs = g_slist_prepend (new_objs, text_object);
         old_objs = g_slist_prepend (old_objs, flowtext);
