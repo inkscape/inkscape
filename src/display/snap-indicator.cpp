@@ -214,8 +214,9 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
 		_snaptarget = _desktop->add_temporary_canvasitem(canvasitem, timeout_val);
 
 		gchar *tooltip_str = g_strconcat(source_name, _(" to "), target_name, NULL);
+		Geom::Point tooltip_pos = p.getPoint() + _desktop->w2d(Geom::Point(15, -15));
 
-		SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(_desktop), _desktop, p.getPoint() + Geom::Point(15, -15), tooltip_str);
+		SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(_desktop), _desktop, tooltip_pos, tooltip_str);
 		g_free(tooltip_str);
 
 		sp_canvastext_set_anchor((SPCanvasText* )canvas_tooltip, -1, 1);
@@ -286,4 +287,4 @@ SnapIndicator::remove_snapsource()
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=4:softtabstop=4 :
