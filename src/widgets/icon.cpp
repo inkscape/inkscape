@@ -17,14 +17,8 @@
 
 #include <cstring>
 #include <glib/gmem.h>
-#include <gtk/gtkiconfactory.h>
-#include <gtk/gtkstock.h>
-#include <gtk/gtkimage.h>
-#include <gtkmm/iconfactory.h>
-#include <gtkmm/iconset.h>
-#include <gtkmm/iconsource.h>
-#include <gtkmm/icontheme.h>
-#include <gtkmm/image.h>
+#include <gtk/gtk.h>
+#include <gtkmm.h>
 
 #include "path-prefix.h"
 #include "preferences.h"
