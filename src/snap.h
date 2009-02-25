@@ -56,8 +56,17 @@ public:
     bool someSnapperMightSnap() const;
     bool gridSnapperMightSnap() const;
 
-    void setup(SPDesktop const *desktop, bool snapindicator = true, SPItem const *item_to_ignore = NULL, std::vector<std::pair<Geom::Point, int> > *unselected_nodes = NULL);
-    void setup(SPDesktop const *desktop, bool snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<std::pair<Geom::Point, int> > *unselected_nodes = NULL);
+    void setup(SPDesktop const *desktop,
+			bool snapindicator = true,
+			SPItem const *item_to_ignore = NULL,
+			std::vector<std::pair<Geom::Point, int> > *unselected_nodes = NULL,
+			SPGuide *guide_to_ignore = NULL);
+
+    void setup(SPDesktop const *desktop,
+    		bool snapindicator,
+    		std::vector<SPItem const *> &items_to_ignore,
+    		std::vector<std::pair<Geom::Point, int> > *unselected_nodes = NULL,
+    		SPGuide *guide_to_ignore = NULL);
 
     // freeSnapReturnByRef() is preferred over freeSnap(), because it only returns a
     // point if snapping has occurred (by overwriting p); otherwise p is untouched
@@ -143,6 +152,7 @@ public:
     SPDesktop const *getDesktop() const {return _desktop;}
     SPNamedView const *getNamedView() const {return _named_view;}
     SPDocument *getDocument() const;
+    SPGuide const *getGuideToIgnore() const {return _guide_to_ignore;}
 
     bool getSnapIndicator() const {return _snapindicator;}
 
@@ -152,6 +162,7 @@ protected:
 private:
     std::vector<SPItem const *> *_items_to_ignore;
     SPItem const *_item_to_ignore;
+    SPGuide *_guide_to_ignore;
     SPDesktop const *_desktop;
     bool _snapindicator;
     std::vector<std::pair<Geom::Point, int> > *_unselected_nodes;

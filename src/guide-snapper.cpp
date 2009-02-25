@@ -46,9 +46,13 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(Geom::Poi
         return s;
     }
 
+    SPGuide const *guide_to_ignore = _snapmanager->getGuideToIgnore();
+
     for (GSList const *l = _snapmanager->getNamedView()->guides; l != NULL; l = l->next) {
         SPGuide const *g = SP_GUIDE(l->data);
-        s.push_back(std::make_pair(g->normal_to_line, g->point_on_line));
+        if (g != guide_to_ignore) {
+        	s.push_back(std::make_pair(g->normal_to_line, g->point_on_line));
+        }
     }
 
     return s;
@@ -63,7 +67,7 @@ bool Inkscape::GuideSnapper::ThisSnapperMightSnap() const
 		return false;
 	}
 
-	return (_snap_enabled && _snapmanager->snapprefs.getSnapToGuides() && _snapmanager->snapprefs.getSnapModeBBoxOrNodes() && _snapmanager->getNamedView()->showguides);
+	return (_snap_enabled && _snapmanager->snapprefs.getSnapToGuides() && _snapmanager->getNamedView()->showguides);
 }
 
 void Inkscape::GuideSnapper::_addSnappedLine(SnappedConstraints &sc, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, SnapTargetType const &target, Geom::Point const normal_to_line, Geom::Point const point_on_line) const

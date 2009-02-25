@@ -329,19 +329,33 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
 
 void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) const
 {
-    // This method is used to snap a guide to nodes, while dragging the guide around
+    // This method is used to snap a guide to nodes or to other guides, while dragging the guide around. Will not snap to grids!
 
 	if (_desktop->canvas->context_snap_delay_active == false) {
 		g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
 		// When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
 	}
 
-    if ( !(object.GuidesMightSnap() && snapprefs.getSnapEnabledGlobally()) || snapprefs.getSnapPostponedGlobally() ) {
+    if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally()) {
+    	return;
+    }
+
+    if (!(object.GuidesMightSnap() || snapprefs.getSnapToGuides())) {
         return;
     }
 
+    // Snap to nodes
     SnappedConstraints sc;
-    object.guideSnap(sc, p, guide_normal);
+    if (object.GuidesMightSnap()) {
+    	object.guideSnap(sc, p, guide_normal);
+    }
+
+    // Snap to guides
+    if (snapprefs.getSnapToGuides()) {
+    	guide.freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, Inkscape::SNAPSOURCE_GUIDE, true, Geom::OptRect(), NULL, NULL);
+    }
+
+    // We won't snap to grids, what's the use?
 
     Inkscape::SnappedPoint const s = findBestSnap(p, Inkscape::SNAPSOURCE_GUIDE, sc, false);
     s.getPoint(p);
@@ -874,7 +888,11 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, Inkscape:
     return bestSnappedPoint;
 }
 
-void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, SPItem const *item_to_ignore, std::vector<std::pair<Geom::Point, int> > *unselected_nodes)
+void SnapManager::setup(SPDesktop const *desktop,
+		bool snapindicator,
+		SPItem const *item_to_ignore,
+		std::vector<std::pair<Geom::Point, int> > *unselected_nodes,
+		SPGuide *guide_to_ignore)
 {
     g_assert(desktop != NULL);
     _item_to_ignore = item_to_ignore;
@@ -882,9 +900,14 @@ void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, SPItem con
     _desktop = desktop;
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
+    _guide_to_ignore = guide_to_ignore;
 }
 
-void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, std::vector<SPItem const *> &items_to_ignore, std::vector<std::pair<Geom::Point, int> > *unselected_nodes)
+void SnapManager::setup(SPDesktop const *desktop,
+		bool snapindicator,
+		std::vector<SPItem const *> &items_to_ignore,
+		std::vector<std::pair<Geom::Point, int> > *unselected_nodes,
+		SPGuide *guide_to_ignore)
 {
     g_assert(desktop != NULL);
     _item_to_ignore = NULL;
@@ -892,6 +915,7 @@ void SnapManager::setup(SPDesktop const *desktop, bool snapindicator, std::vecto
     _desktop = desktop;
     _snapindicator = snapindicator;
     _unselected_nodes = unselected_nodes;
+    _guide_to_ignore = guide_to_ignore;
 }
 
 SPDocument *SnapManager::getDocument() const

@@ -88,6 +88,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
             if (event->button.button == 1) {
                 dragging = true;
                 sp_canvas_set_snap_delay_active(desktop->canvas, true);
+                // FIXME: The snap delay mechanism won't work here, because it has been implemented for the canvas. Dragging
+                // guides off the ruler will send event to the ruler and not to the canvas, which bypasses sp_canvas_motion
                 Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point const event_dt(desktop->w2d(event_w));
 
@@ -145,6 +147,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
+                // We only have a temporary guide which is not stored in our document yet. Because the guide snapper only looks
+                // in the document for guides to snap to, we don't have to worry about a guide snapping to itself here
                 m.guideSnap(event_dt, normal);
 
                 sp_guideline_set_position(SP_GUIDELINE(guide), from_2geom(event_dt));
@@ -160,6 +164,8 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
 
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
+                // We only have a temporary guide which is not stored in our document yet. Because the guide snapper only looks
+				// in the document for guides to snap to, we don't have to worry about a guide snapping to itself here
                 m.guideSnap(event_dt, normal);
 
                 dragging = false;
@@ -263,10 +269,10 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                            event->motion.y);
                 Geom::Point motion_dt(desktop->w2d(motion_w));
 
-                // This is for snapping while dragging existing guidelines. New guidelines, 
+                // This is for snapping while dragging existing guidelines. New guidelines,
                 // which are dragged off the ruler, are being snapped in sp_dt_ruler_event
                 SnapManager &m = desktop->namedview->snap_manager;
-                m.setup(desktop);
+                m.setup(desktop, true, NULL, NULL, guide);
                 m.guideSnap(motion_dt, to_2geom(guide->normal_to_line));
 
                 switch (drag_type) {
@@ -313,8 +319,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     Geom::Point event_dt(desktop->w2d(event_w));
 
                     SnapManager &m = desktop->namedview->snap_manager;
-                    m.setup(desktop);
-                    m.guideSnap(event_dt, guide->normal_to_line);
+                    m.setup(desktop, true, NULL, NULL, guide);
+					m.guideSnap(event_dt, guide->normal_to_line);
 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
                         switch (drag_type) {
