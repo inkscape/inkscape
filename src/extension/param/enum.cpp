@@ -38,17 +38,13 @@ namespace Extension {
      Note that value and guitext MUST be non-NULL. This is ensured by newing only at one location in the code where non-NULL checks are made. */
 class enumentry {
 public:
-    enumentry (Glib::ustring * val, Glib::ustring * text) {
-        value = val;
-        guitext = text;
-    }
-    ~enumentry() {
-        delete value;
-        delete guitext;
-    }
+    enumentry (Glib::ustring &val, Glib::ustring &text) :
+    	value(val),
+    	guitext(text)
+    {}
 
-    Glib::ustring * value;
-    Glib::ustring * guitext;
+    Glib::ustring value;
+    Glib::ustring guitext;
 };
 
 
@@ -61,40 +57,38 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
     // Read XML tree to add enumeration items:
     // printf("Extension Constructor: ");
     if (xml != NULL) {
-        Inkscape::XML::Node *child_repr = sp_repr_children(xml);
-        while (child_repr != NULL) {
-            char const * chname = child_repr->name();
+    	for (Inkscape::XML::Node *node = xml->firstChild(); node; node = node->next()) {
+            char const * chname = node->name();
             if (!strcmp(chname, INKSCAPE_EXTENSION_NS "item") || !strcmp(chname, INKSCAPE_EXTENSION_NS "_item")) {
-                Glib::ustring * newguitext = NULL;
-                Glib::ustring * newvalue = NULL;
-                const char * contents = sp_repr_children(child_repr)->content();
+                Glib::ustring newguitext, newvalue;
+                const char * contents = NULL;
+                if (node->firstChild()) contents = node->firstChild()->content();
                 if (contents != NULL)
                     // don't translate when 'item' but do translate when '_item'
                 	// NOTE: internal extensions use build_from_mem and don't need _item but
                 	//       still need to include if are to be localized
-                     newguitext = new Glib::ustring( !strcmp(chname, INKSCAPE_EXTENSION_NS "_item") ? _(contents): contents );
+                     newguitext = !strcmp(chname, INKSCAPE_EXTENSION_NS "_item") ? _(contents) : contents;
                 else
                     continue;
 
-                const char * val = child_repr->attribute("value");
+                const char * val = node->attribute("value");
                 if (val != NULL)
-                    newvalue = new Glib::ustring(val);
+                    newvalue = val;
                 else
-                    newvalue = new Glib::ustring(contents);
+                    newvalue = contents;
 
-                if ( (newguitext) && (newvalue) ) {   // logical error if this is not true here
+                if ( (!newguitext.empty()) && (!newvalue.empty()) ) {   // logical error if this is not true here
                     choices = g_slist_append( choices, new enumentry(newvalue, newguitext) );
                 }
             }
-            child_repr = sp_repr_next(child_repr);
         }
     }
 
     // Initialize _value with the default value from xml
     // for simplicity : default to the contents of the first xml-child
     const char * defaultval = NULL;
-    if (sp_repr_children(sp_repr_children(xml)) != NULL)
-        defaultval = sp_repr_children(xml)->attribute("value");
+    if (xml->firstChild() && xml->firstChild()->firstChild())
+        defaultval = xml->firstChild()->attribute("value");
 
     gchar * pref_name = this->pref_name();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -139,17 +133,17 @@ ParamComboBox::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node 
 {
     if (in == NULL) return NULL; /* Can't have NULL string */
 
-    Glib::ustring * settext = NULL;
+    Glib::ustring settext;
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
         enumentry * entr = reinterpret_cast<enumentry *>(list->data);
-        if ( !entr->guitext->compare(in) ) {
+        if ( !entr->guitext.compare(in) ) {
             settext = entr->value;
             break;  // break out of for loop
         }
     }
-    if (settext) {
+    if (!settext.empty()) {
         if (_value != NULL) g_free(_value);
-        _value = g_strdup(settext->c_str());
+        _value = g_strdup(settext.data());
         gchar * prefname = this->pref_name();
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setString(extension_pref_root + prefname, _value);
@@ -229,16 +223,16 @@ ParamComboBox::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::s
 
     ParamComboBoxEntry * combo = Gtk::manage(new ParamComboBoxEntry(this, doc, node, changeSignal));
     // add choice strings:
-    Glib::ustring * settext = 0;
+    Glib::ustring settext;
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
         enumentry * entr = reinterpret_cast<enumentry *>(list->data);
-        Glib::ustring * text = entr->guitext;
-        combo->append_text(*text);
-        if ( !entr->value->compare(_value) ) {
+        Glib::ustring text = entr->guitext;
+        combo->append_text(text);
+        if ( _value && !entr->value.compare(_value) ) {
             settext = entr->guitext;
         }
     }
-    if (settext) combo->set_active_text(*settext);
+    if (!settext.empty()) combo->set_active_text(settext);
 
     combo->show();
     hbox->pack_start(*combo, true, true);
