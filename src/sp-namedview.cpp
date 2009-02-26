@@ -55,7 +55,6 @@ static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::
 static void sp_namedview_setup_guides(SPNamedView * nv);
 
 static gboolean sp_str_to_bool(const gchar *str);
-static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, const SPUnit **unit);
 static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color);
 
 static SPObjectGroupClass * parent_class;
@@ -942,58 +941,6 @@ static gboolean sp_str_to_bool(const gchar *str)
             (atoi(str) != 0)) {
             return TRUE;
         }
-    }
-
-    return FALSE;
-}
-
-/* fixme: Collect all these length parsing methods and think common sane API */
-
-static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, const SPUnit **unit)
-{
-    if (!str) {
-        return FALSE;
-    }
-
-    gchar *u;
-    gdouble v = g_ascii_strtod(str, &u);
-    if (!u) {
-        return FALSE;
-    }
-    while (isspace(*u)) {
-        u += 1;
-    }
-
-    if (!*u) {
-        /* No unit specified - keep default */
-        *val = v;
-        return TRUE;
-    }
-
-    if (base & SP_UNIT_DEVICE) {
-        if (u[0] && u[1] && !isalnum(u[2]) && !strncmp(u, "px", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_PX);
-            *val = v;
-            return TRUE;
-        }
-    }
-
-    if (base & SP_UNIT_ABSOLUTE) {
-        if (!strncmp(u, "pt", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_PT);
-        } else if (!strncmp(u, "mm", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_MM);
-        } else if (!strncmp(u, "cm", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_CM);
-        } else if (!strncmp(u, "m", 1)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_M);
-        } else if (!strncmp(u, "in", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_IN);
-        } else {
-            return FALSE;
-        }
-        *val = v;
-        return TRUE;
     }
 
     return FALSE;
