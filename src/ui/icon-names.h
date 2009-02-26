@@ -513,7 +513,7 @@
 #define INKSCAPE_ICON_VIEW_FULLSCREEN \
     "view-fullscreen"
 #define INKSCAPE_ICON_WINDOW_NEW \
-    "window-neW"
+    "window-new"
 #define INKSCAPE_ICON_WINDOW_NEXT \
     "window-next"
 #define INKSCAPE_ICON_WINDOW_PREVIOUS \

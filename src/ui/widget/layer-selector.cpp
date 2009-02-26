@@ -23,6 +23,7 @@
 #include "layer-manager.h"
 #include "sp-item.h"
 #include "ui/dialog/layer-properties.h"
+#include "ui/icon-names.h"
 #include "ui/widget/layer-selector.h"
 #include "util/filter-list.h"
 #include "util/reverse-list.h"
@@ -92,7 +93,8 @@ LayerSelector::LayerSelector(SPDesktop *desktop)
 {
     AlternateIcons *label;
 
-    label = Gtk::manage(new AlternateIcons(Inkscape::ICON_SIZE_DECORATION, "visible", "hidden"));
+    label = Gtk::manage(new AlternateIcons(Inkscape::ICON_SIZE_DECORATION,
+        INKSCAPE_ICON_OBJECT_VISIBLE, INKSCAPE_ICON_OBJECT_HIDDEN));
     _visibility_toggle.add(*label);
     _visibility_toggle.signal_toggled().connect(
         sigc::compose(
@@ -112,7 +114,8 @@ LayerSelector::LayerSelector(SPDesktop *desktop)
     _tooltips.set_tip(_visibility_toggle, _("Toggle current layer visibility"));
     pack_start(_visibility_toggle, Gtk::PACK_EXPAND_PADDING);
 
-    label = Gtk::manage(new AlternateIcons(Inkscape::ICON_SIZE_DECORATION, "lock_unlocked", "width_height_lock"));
+    label = Gtk::manage(new AlternateIcons(Inkscape::ICON_SIZE_DECORATION,
+        INKSCAPE_ICON_OBJECT_UNLOCKED, INKSCAPE_ICON_OBJECT_LOCKED));
     _lock_toggle.add(*label);
     _lock_toggle.signal_toggled().connect(
         sigc::compose(

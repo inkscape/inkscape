@@ -13,14 +13,14 @@ if test -d $dir_size; then
 
 for dir in $dir_size/*; do
 if test -d $dir; then
-	ICONS_DATA=$(find $dir -name '*.svg' -and -not -name '*.svn*' -printf '\t%f \\\n' \
+	ICONS_DATA=$(find $dir \( -name '*.svg' -o -name '*.png' \) -printf '\t%f \\\n' \
 		| sort \
 		| sed -e '$s|\\||')
-SIZE=$(echo $dir_size | sed -e 's|x.*||')
+#SIZE=$(echo $dir_size | sed -e 's|x.*||')
 CONTEXT=$(echo $dir | sed -e 's|^.*/||')
 echo \
 'themedir = $(pkgdatadir)/icons/hicolor
-size = '$SIZE'
+size = '$dir_size'
 context = '$CONTEXT'
 
 iconsdir = $(themedir)/$(size)/$(context)
@@ -32,7 +32,7 @@ icons_DATA = \
 '$ICONS_DATA'
 
 EXTRA_DIST = $(icons_DATA)' > $dir/Makefile.am
-	fi
+fi
 done
 
 fi

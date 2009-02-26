@@ -51,6 +51,7 @@
 #include "toolbox.h"
 #include "ui/dialog/dialog-manager.h"
 #include "ui/dialog/swatches.h"
+#include "ui/icon-names.h"
 #include "ui/widget/dock.h"
 #include "ui/widget/layer-selector.h"
 #include "ui/widget/selected-style.h"
@@ -374,7 +375,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     dtw->sticky_zoom = sp_button_new_from_data ( Inkscape::ICON_SIZE_DECORATION,
                                                  SP_BUTTON_TYPE_TOGGLE,
                                                  NULL,
-                                                 "sticky_zoom",
+                                                 INKSCAPE_ICON_ZOOM,
                                                  _("Zoom drawing if window size changes"),
                                                  dtw->tt);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dtw->sticky_zoom), prefs->getBool("/options/stickyzoom/value"));
@@ -396,7 +397,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     dtw->cms_adjust = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                                SP_BUTTON_TYPE_TOGGLE,
                                                NULL,
-                                               "color_management",
+                                               INKSCAPE_ICON_COLOR_MANAGEMENT,
                                                tip,
                                                dtw->tt );
 #if ENABLE_LCMS

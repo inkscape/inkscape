@@ -4352,7 +4352,7 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
         InkToggleAction* act = ink_toggle_action_new( "TweakPressureAction",
                                                       _("Pressure"),
                                                       _("Use the pressure of the input device to alter the force of tweak action"),
-                                                      "use_pressure",
+                                                      INKSCAPE_ICON_DRAW_USE_PRESSURE,
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_tweak_pressure_state_changed), NULL);

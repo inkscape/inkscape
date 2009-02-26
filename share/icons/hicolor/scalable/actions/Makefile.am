@@ -173,6 +173,7 @@ icons_DATA = \
 	transform-scale-vertical.svg \
 	transform-skew-horizontal.svg \
 	transform-skew-vertical.svg \
+	window-new.svg \
 	window-next.svg \
 	window-previous.svg \
 	xml-attribute-delete.svg \
