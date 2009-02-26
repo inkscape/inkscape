@@ -73,10 +73,7 @@ Preferences::Preferences() :
 }
 
 Preferences::~Preferences()
-{
-    // when the preferences are unloaded, save them
-    save();
-    
+{   
     // delete all PrefNodeObservers
     for (_ObsMap::iterator i = _observer_map.begin(); i != _observer_map.end(); ) {
         delete (*i++).second; // avoids reference to a deleted key
@@ -635,6 +632,16 @@ void Preferences::_errorDialog(Glib::ustring const &msg, Glib::ustring const &se
 Preferences::Entry const Preferences::_create_pref_value(Glib::ustring const &path, void const *ptr)
 {
     return Entry(path, ptr);
+}
+
+void Preferences::unload(bool save)
+{
+    if(_instance)
+    {
+        if (save) _instance->save();
+        delete _instance;
+        _instance = NULL;
+    }
 }
 
 Preferences *Preferences::_instance = NULL;

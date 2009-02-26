@@ -399,17 +399,14 @@ public:
         return _instance;
     }
     /**
-     * @brief Unload all preferences and store them on the hard disk.
+     * @brief Unload all preferences
+     * @param save Whether to save the preferences; defaults to true
      *
-     * This deletes the singleton object. Calling get() after this function is
+     * This deletes the singleton object. Calling get() after this function
+     * will reinstate it, so you shouldn't. Pass false as the parameter
+     * to suppress automatic saving.
      */
-    static void unload() {
-        if(_instance)
-        {
-            delete _instance;
-            _instance = NULL;
-        }
-    }
+    static void unload(bool save=true);
     /*@}*/
     
 protected:

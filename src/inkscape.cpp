@@ -460,11 +460,8 @@ inkscape_init (SPObject * object)
     new (&inkscape->document_set) std::map<SPDocument *, int>();
 
     inkscape->menus = sp_repr_read_mem (_(menus_skeleton), MENUS_SKELETON_SIZE, NULL);
-
     inkscape->desktops = NULL;
-
     inkscape->dialogs_toggle = TRUE;
-
     inkscape->mapalt=GDK_MOD1_MASK;
 }
 
@@ -658,7 +655,8 @@ inkscape_crash_handler (int /*signum*/)
         }
     }
 
-    Inkscape::Preferences::unload();
+    // do not save the preferences since they can be in a corrupted state
+    Inkscape::Preferences::unload(false);
 
     fprintf (stderr, "Emergency save completed. Inkscape will close now.\n");
     fprintf (stderr, "If you can reproduce this crash, please file a bug at www.inkscape.org\n");
@@ -749,7 +747,7 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     inkscape->use_gui = use_gui;
     inkscape->argv0 = g_strdup(argv0);
 
-    /* Load the preferences and menus; Later menu layout should be merged into prefs */
+    /* Load the preferences and menus */
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->load(use_gui, false);
     inkscape_load_menus(inkscape);
@@ -1413,8 +1411,6 @@ inkscape_get_all_desktops(std::list< SPDesktop* >& listbuf)
         listbuf.push_back(static_cast< SPDesktop* >(l->data));
     }
 }
-
-
 
 /*
   Local Variables:
