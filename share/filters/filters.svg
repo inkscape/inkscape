@@ -1159,15 +1159,15 @@
 <feGaussianBlur stdDeviation="5" id="feGaussianBlur3944" />
 <feComposite id="feComposite3946" operator="arithmetic" in="SourceGraphic" k2="-1" k1="0" k3="1" k4="0" />
 </filter>
-<filter id="filter2968" inkscape:label="Color emboss" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Classic or colorized emboss effect: grayscale, color and 3D relief">
-<feColorMatrix id="feColorMatrix2970" type="luminanceToAlpha" result="result2" />
-<feDiffuseLighting id="feDiffuseLighting2972" surfaceScale="10" result="result1" diffuseConstant="0.5">
-<feDistantLight id="feDistantLight2974" azimuth="225" elevation="25" />
+<filter id="filter3018b" inkscape:label="Color emboss" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Classic or colorized emboss effect: grayscale, color and 3D relief">
+<feColorMatrix id="feColorMatrix3020" type="luminanceToAlpha" result="result2" />
+<feDiffuseLighting id="feDiffuseLighting3022" surfaceScale="10" result="result1" diffuseConstant="1" lighting-color="rgb(255,255,255)">
+<feDistantLight id="feDistantLight3024" azimuth="225" elevation="25" />
 </feDiffuseLighting>
-<feFlood id="feFlood2976" flood-opacity="0.5" result="result3" flood-color="rgb(102,102,102)" in="SourceGraphic" />
-<feComposite id="feComposite2978" result="result4" in2="result1" operator="arithmetic" in="result3" k1="1" k2="1" k3="1" k4="0" />
-<feBlend id="feBlend2980" mode="screen" in2="result4" blend="normal" in="result2" />
-<feComposite id="feComposite2982" operator="in" in2="SourceGraphic" />
+<feFlood id="feFlood3026" flood-opacity="0.5" result="result3" flood-color="rgb(86,172,140)" in="SourceGraphic" />
+<feComposite id="feComposite3028" result="result4" in2="result3" operator="arithmetic" in="result1" k1="0.5" k2="0.5" k3="1" k4="0" />
+<feBlend id="feBlend3030" mode="normal" in2="SourceGraphic" blend="normal" in="result4" />
+<feComposite id="feComposite3032" operator="in" in2="SourceGraphic" />
 </filter>
 <filter id="filter2910x" inkscape:label="Soft bump" inkscape:menu="Image effects" inkscape:menu-tooltip="Convolution bump with a blur it can give nice embossing effects" height="1" width="1" y="0" x="0">
 <feGaussianBlur id="feGaussianBlur2912" stdDeviation="0.5" result="result3" />
