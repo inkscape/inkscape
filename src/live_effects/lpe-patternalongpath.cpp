@@ -59,15 +59,25 @@ static const Util::EnumDataConverter<PAPCopyType> PAPCopyTypeConverter(PAPCopyTy
 LPEPatternAlongPath::LPEPatternAlongPath(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     pattern(_("Pattern source"), _("Path to put along the skeleton path"), "pattern", &wr, this, "M0,0 L1,0"),
-    copytype(_("Pattern copies"), _("How many pattern copies to place along the skeleton path"), "copytype", PAPCopyTypeConverter, &wr, this, PAPCT_SINGLE_STRETCHED),
+    copytype(_("Pattern copies"), _("How many pattern copies to place along the skeleton path"),
+        "copytype", PAPCopyTypeConverter, &wr, this, PAPCT_SINGLE_STRETCHED),
     prop_scale(_("Width"), _("Width of the pattern"), "prop_scale", &wr, this, 1),
-    scale_y_rel(_("Width in units of length"), _("Scale the width of the pattern in units of its length"), "scale_y_rel", &wr, this, false),
-    spacing(_("Spacing"), _("Space between copies of the pattern. Negative values allowed, but are limited to -90% of pattern width."), "spacing", &wr, this, 0),
+    scale_y_rel(_("Width in units of length"),
+        _("Scale the width of the pattern in units of its length"),
+        "scale_y_rel", &wr, this, false),
+    spacing(_("Spacing"),
+        // xgettext:no-c-format
+        _("Space between copies of the pattern. Negative values allowed, but are limited to -90% of pattern width."),
+        "spacing", &wr, this, 0),
     normal_offset(_("Normal offset"), "", "normal_offset", &wr, this, 0),
     tang_offset(_("Tangential offset"), "", "tang_offset", &wr, this, 0),
-    prop_units(_("Offsets in unit of pattern size"), _("Spacing, tangential and normal offset are expressed as a ratio of width/height"), "prop_units", &wr, this, false),
-    vertical_pattern(_("Pattern is vertical"), _("Rotate pattern 90 deg before applying"), "vertical_pattern", &wr, this, false),
-    fuse_tolerance(_("Fuse nearby ends"), _("Fuse ends closer than this number. 0 means don't fuse."), "fuse_tolerance", &wr, this, 0)
+    prop_units(_("Offsets in unit of pattern size"),
+        _("Spacing, tangential and normal offset are expressed as a ratio of width/height"),
+        "prop_units", &wr, this, false),
+    vertical_pattern(_("Pattern is vertical"), _("Rotate pattern 90 deg before applying"),
+        "vertical_pattern", &wr, this, false),
+    fuse_tolerance(_("Fuse nearby ends"), _("Fuse ends closer than this number. 0 means don't fuse."),
+        "fuse_tolerance", &wr, this, 0)
 {
     registerParameter( dynamic_cast<Parameter *>(&pattern) );
     registerParameter( dynamic_cast<Parameter *>(&copytype) );
