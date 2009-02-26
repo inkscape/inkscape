@@ -127,8 +127,8 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
     }
 
     if (g_slist_length(il) > 2) {
-        if (bop == bool_op_diff || bop == bool_op_symdiff || bop == bool_op_cut || bop == bool_op_slice ) {
-            desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path cut."));
+        if (bop == bool_op_diff || bop == bool_op_cut || bop == bool_op_slice ) {
+            desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Select <b>exactly 2 paths</b> to perform difference, division, or path cut."));
             return;
         }
     }
@@ -138,8 +138,7 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
     // topmost object (differences, cuts)
     bool reverseOrderForOp = false;
 
-    // mettre les elements de la liste dans l'ordre pour ces operations
-    if (bop == bool_op_diff || bop == bool_op_symdiff || bop == bool_op_cut || bop == bool_op_slice) {
+    if (bop == bool_op_diff || bop == bool_op_cut || bop == bool_op_slice) {
         // check in the tree to find which element of the selection list is topmost (for 2-operand commands only)
         Inkscape::XML::Node *a = SP_OBJECT_REPR(il->data);
         Inkscape::XML::Node *b = SP_OBJECT_REPR(il->next->data);
@@ -431,7 +430,7 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
 
     // get the source path object
     SPObject *source;
-    if ( bop == bool_op_diff || bop == bool_op_symdiff || bop == bool_op_cut || bop == bool_op_slice ) {
+    if ( bop == bool_op_diff || bop == bool_op_cut || bop == bool_op_slice ) {
         if (reverseOrderForOp) {
              source = SP_OBJECT(il->data);
         } else {
