@@ -1,4 +1,5 @@
 #include <libnr/nr-matrix-fns.h>
+#include <cstdio>
 
 namespace NR {
 

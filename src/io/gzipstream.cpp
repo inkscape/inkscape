@@ -14,6 +14,7 @@
  */
 
 #include "gzipstream.h"
+#include <cstdio>
 #include <cstring>
 #include <string>
 

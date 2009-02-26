@@ -12,6 +12,7 @@
  */
 
 
+#include <cstdio>
 #include <glibmm.h>
 
 namespace Inkscape

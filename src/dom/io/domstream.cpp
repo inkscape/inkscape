@@ -34,6 +34,7 @@
  *
  */
 
+#include <cstdio>
 #include <math.h>
 #include <stdarg.h>
 

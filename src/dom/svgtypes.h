@@ -57,6 +57,7 @@
 #include "dom/smil.h"
 
 
+#include <cstdio>
 #include <math.h>
 
 

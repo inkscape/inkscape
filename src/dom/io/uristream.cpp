@@ -30,6 +30,7 @@
 
 
 #include "uristream.h"
+#include <cstdio>
 #include <string.h>
 
 

@@ -33,6 +33,7 @@
 #include "lsimpl.h"
 
 #include <stdarg.h>
+#include <cstdio>
 
 namespace org
 {

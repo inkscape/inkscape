@@ -30,7 +30,7 @@
  */
 
 
-
+#include <cstdio>
 #include <dom/dom.h>
 
 namespace org

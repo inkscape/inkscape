@@ -800,7 +800,7 @@ Glib::ustring SPDocument::getLanguage() {
         }
 
         if ( NULL != document_language ) {
-            gchar *pos = strchr(document_language, '_');
+            const char *pos = strchr(document_language, '_');
             if ( NULL != pos ) {
                 return Glib::ustring(document_language, pos - document_language);
             }

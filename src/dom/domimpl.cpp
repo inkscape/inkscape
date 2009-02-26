@@ -28,6 +28,7 @@
  */
 
 
+#include <cstdio>
 #include "domimpl.h"
 
 namespace org

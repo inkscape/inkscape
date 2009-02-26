@@ -35,6 +35,7 @@
 #include <sys/filio.h>   // needed on Solaris 8
 #endif
 
+#include <cstdio>
 #include "socket.h"
 #include "dom/util/thread.h"
 

@@ -14,6 +14,7 @@
  */
 
 #include <glib.h> // g_assert()
+#include <cstdio>
 
 #include "event.h"
 #include "event-fns.h"

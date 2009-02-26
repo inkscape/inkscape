@@ -28,6 +28,9 @@
 #endif
 #include "path-prefix.h"
 
+// This has to be included prior to anything that includes setjmp.h, it croaks otherwise
+#include <png.h>
+
 #include <gtk/gtkmessagedialog.h>
 
 #ifdef HAVE_IEEEFP_H
@@ -114,8 +117,6 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include "widgets/icon.h"
 #include "ui/widget/panel.h"
 
-
-#include <png.h>
 #include <errno.h>
 
 enum {

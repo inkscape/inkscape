@@ -15,6 +15,9 @@
 # include "config.h"
 #endif
 
+// This has to be included prior to anything that includes setjmp.h, it croaks otherwise
+#include <png.h>
+
 #include <cstring>
 #include <string>
 #include <libnr/nr-matrix-fns.h>
@@ -45,7 +48,6 @@
 #include "libnr/nr-matrix-fns.h"
 
 #include "io/sys.h"
-#include <png.h>
 #if ENABLE_LCMS
 #include "color-profile-fns.h"
 #include "color-profile.h"

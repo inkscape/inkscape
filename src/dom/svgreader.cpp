@@ -38,6 +38,7 @@
 #include "dom/ucd.h"
 #include "xmlreader.h"
 
+#include <cstdio>
 #include <stdarg.h>
 
 

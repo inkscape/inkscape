@@ -37,13 +37,12 @@
 #include <2geom/sbasis-math.h>
 //#define ZERO 1e-3
 
+#include <stdio.h>
+#include <math.h>
 
 namespace Geom {
 
-
 #include <2geom/d2-sbasis.h>
-#include <stdio.h>
-#include <math.h>
 
 //-|x|-----------------------------------------------------------------------
 /** Return the absolute value of a function pointwise.

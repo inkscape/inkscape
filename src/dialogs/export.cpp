@@ -16,6 +16,9 @@
 # include "config.h"
 #endif
 
+// This has to be included prior to anything that includes setjmp.h, it croaks otherwise
+#include <png.h>
+
 #include <gtk/gtk.h>
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
@@ -56,7 +59,6 @@
 #include "io/sys.h"
 
 #include "helper/png-write.h"
-#include <png.h>
 
 
 #define SP_EXPORT_MIN_SIZE 1.0
@@ -1034,7 +1036,7 @@ create_progress_dialog (GtkObject *base, gchar *progress_text) {
 static gchar *
 filename_add_extension (const gchar *filename, const gchar *extension)
 {
-  gchar *dot;
+  const gchar *dot;
 
   dot = strrchr (filename, '.');
   if ( !dot )
