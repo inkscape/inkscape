@@ -45,6 +45,7 @@
 
 #include <libxml/tree.h>
 #include <glib-object.h>
+#include <gtk/gtk.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtkwindow.h>
