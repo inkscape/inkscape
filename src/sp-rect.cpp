@@ -572,7 +572,7 @@ static void sp_rect_snappoints(SPItem const *item, bool const target, SnapPoints
     int type;
 
     if (snapprefs->getSnapToItemNode()) {
-    	type = target ? int(Inkscape::SNAPTARGET_HANDLE) : int(Inkscape::SNAPSOURCE_HANDLE);
+    	type = target ? int(Inkscape::SNAPTARGET_CORNER) : int(Inkscape::SNAPSOURCE_CORNER);
     	p.push_back(std::make_pair(p0, type));
     	p.push_back(std::make_pair(p1, type));
     	p.push_back(std::make_pair(p2, type));

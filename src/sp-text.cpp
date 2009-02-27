@@ -433,7 +433,7 @@ static void sp_text_snappoints(SPItem const *item, bool const target, SnapPoints
     // the baseline anchor of the first char
     Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);
     if(layout != NULL) {
-        int type = target ? int(Inkscape::SNAPTARGET_HANDLE) : int(Inkscape::SNAPSOURCE_HANDLE);
+        int type = target ? int(Inkscape::SNAPTARGET_TEXT_BASELINE) : int(Inkscape::SNAPSOURCE_TEXT_BASELINE);
     	p.push_back(std::make_pair(layout->characterAnchorPoint(layout->begin()) * sp_item_i2d_affine(item), type));
     }
 }

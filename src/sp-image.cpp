@@ -1330,7 +1330,7 @@ static void sp_image_snappoints(SPItem const *item, bool const target, SnapPoint
         double const y1 = y0 + image.height.computed;
         Geom::Matrix const i2d (sp_item_i2d_affine (item));
         Geom::Point pt;
-        int type = target ? int(Inkscape::SNAPTARGET_HANDLE) : int(Inkscape::SNAPSOURCE_HANDLE);
+        int type = target ? int(Inkscape::SNAPTARGET_CORNER) : int(Inkscape::SNAPSOURCE_CORNER);
         p.push_back(std::make_pair(Geom::Point(x0, y0) * i2d, type));
         p.push_back(std::make_pair(Geom::Point(x0, y1) * i2d, type));
         p.push_back(std::make_pair(Geom::Point(x1, y1) * i2d, type));

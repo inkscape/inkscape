@@ -127,6 +127,15 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
             case SNAPTARGET_ELLIPSE_QUADRANT_POINT:
             	target_name = _("quadrant point");
             	break;
+            case SNAPTARGET_CENTER:
+            	target_name = _("center");
+				break;
+            case SNAPTARGET_CORNER:
+            	target_name = _("corner");
+				break;
+            case SNAPTARGET_TEXT_BASELINE:
+            	target_name = _("text baseline");
+				break;
             default:
             	g_warning("Snap target has not yet been defined!");
                 break;
@@ -175,6 +184,15 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
 				break;
 			case SNAPSOURCE_ELLIPSE_QUADRANT_POINT:
 				source_name = _("Quadrant point");
+				break;
+			case SNAPSOURCE_CENTER:
+				source_name = _("Center");
+				break;
+			case SNAPSOURCE_CORNER:
+				source_name = _("Corner");
+				break;
+			case SNAPSOURCE_TEXT_BASELINE:
+				source_name = _("Text baseline");
 				break;
 			default:
 				g_warning("Snap source has not yet been defined!");

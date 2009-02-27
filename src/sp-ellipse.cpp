@@ -304,7 +304,7 @@ static void sp_genericellipse_snappoints(SPItem const *item, bool const target, 
     // Add the centre, if we have a closed slice or when explicitly asked for
     if ((snapprefs->getSnapToItemNode() && slice && ellipse->closed) || snapprefs->getSnapObjectMidpoints()) {
     	pt = Geom::Point(cx, cy) * i2d;
-    	p.push_back(std::make_pair(pt, target ? int(Inkscape::SNAPTARGET_HANDLE) : int(Inkscape::SNAPSOURCE_HANDLE)));
+    	p.push_back(std::make_pair(pt, target ? int(Inkscape::SNAPTARGET_CENTER) : int(Inkscape::SNAPSOURCE_CENTER)));
     }
 
     // And if we have a slice, also snap to the endpoints
