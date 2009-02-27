@@ -111,9 +111,9 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
 
     for (SPObject* o = sp_object_first_child(parent); o != NULL; o = SP_OBJECT_NEXT(o)) {
         g_assert(_snapmanager->getDesktop() != NULL);
-        if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !(_snapmanager->getDesktop()->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
-            // Don't snap to locked items, and
-            // don't snap to hidden objects, unless they're a clipped path or a mask
+        if (SP_IS_ITEM(o) && !(_snapmanager->getDesktop()->itemIsHidden(SP_ITEM(o)) && !clip_or_mask)) {
+            // Snapping to items in a locked layer is allowed
+            // Don't snap to hidden objects, unless they're a clipped path or a mask
             /* See if this item is on the ignore list */
             std::vector<SPItem const *>::const_iterator i;
             if (it != NULL) {
