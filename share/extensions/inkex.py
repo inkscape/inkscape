@@ -90,7 +90,7 @@ def check_inkbool(option, opt, value):
     elif str(value).capitalize() == 'False':
         return False
     else:
-        raise OptionValueError("option %s: invalid inkbool value: %s" % (opt, value))
+        raise optparse.OptionValueError("option %s: invalid inkbool value: %s" % (opt, value))
 
 def addNS(tag, ns=None):
     val = tag
@@ -161,10 +161,10 @@ class Effect:
 
     def getselected(self):
         """Collect selected nodes"""
-        for id in self.options.ids:
-            path = '//*[@id="%s"]' % id
+        for i in self.options.ids:
+            path = '//*[@id="%s"]' % i
             for node in self.document.xpath(path, namespaces=NSS):
-                self.selected[id] = node
+                self.selected[i] = node
 
     def getdocids(self):
         docIdNodes = self.document.xpath('//@id', namespaces=NSS)
