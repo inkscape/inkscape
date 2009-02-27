@@ -15,6 +15,7 @@
 #include <gtk/gtkversion.h>
 #include <gtk/gtksignal.h>
 #include "sp-color-scales.h"
+#include "preferences.h"
 
 #define SLIDER_WIDTH 96
 #define SLIDER_HEIGHT 8
@@ -460,6 +461,7 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 	GdkRectangle wpaint, cpaint, apaint;
 	const guchar *b;
 	gint w, x, y1, y2;
+	gboolean colorsOnTop = Inkscape::Preferences::get()->getBool("/options/workarounds/colorsontop", false);
 
 	widget = GTK_WIDGET (slider);
 
@@ -482,9 +484,20 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 	aarea.height = carea.height;
 
 	/* Actual paintable area */
-	if (!gdk_rectangle_intersect (area, &warea, &wpaint)) return;
+	if (!gdk_rectangle_intersect (area, &warea, &wpaint)) {
+	  return;
+	}
 
 	b = NULL;
+
+        // Draw shadow
+        if (colorsOnTop) {
+            gtk_paint_shadow( widget->style, widget->window,
+                              (GtkStateType)widget->state, GTK_SHADOW_IN,
+                              area, widget, "colorslider",
+                              0, 0,
+                              warea.width, warea.height);
+        }
 
 	/* Paintable part of color gradient area */
 	if (gdk_rectangle_intersect (area, &carea, &cpaint)) {
@@ -556,12 +569,14 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 		}
 	}
 
-	/* Draw shadow */
-	gtk_paint_shadow (widget->style, widget->window,
-			  (GtkStateType)widget->state, GTK_SHADOW_IN,
-			  area, widget, "colorslider",
-			  0, 0,
-			  warea.width, warea.height);
+        /* Draw shadow */
+        if (!colorsOnTop) {
+            gtk_paint_shadow( widget->style, widget->window,
+                              (GtkStateType)widget->state, GTK_SHADOW_IN,
+                              area, widget, "colorslider",
+                              0, 0,
+                              warea.width, warea.height);
+        }
 
 
 	if (gdk_rectangle_intersect (area, &aarea, &apaint)) {

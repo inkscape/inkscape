@@ -328,6 +328,8 @@ static char const preferences_skeleton[] =
 "             empcolor=\"65344\"\n" // 0x0000FF40
 "             empspacing=\"5\"/>\n"
 "    </group>\n"
+"    <group id=\"workarounds\"\n"
+"           colorsontop=\"0\"/>\n"
 "  </group>\n"
 "\n"
 "  <group id=\"extensions\">"

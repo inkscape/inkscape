@@ -1075,6 +1075,12 @@ void InkscapePreferences::initPageUI()
     _page_ui.add_line( false, _("Secondary toolbar icon size"), _misc_small_secondary, "",
                               _("Set the size for the icons in secondary toolbars to use (requires restart)"), false);
 
+
+    _ui_colorsliders_top.init( _("Work-around color sliders not drawing."), "/options/workarounds/colorsontop", false);
+    _page_ui.add_line( false, "", _ui_colorsliders_top, "",
+                       _("When on, will attempt to work around bugs in certain GTK themes drawing color sliders."), true);
+
+
     _misc_recent.init("/options/maxrecentdocuments/value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
 
     Gtk::HBox* recent_hbox = Gtk::manage(new Gtk::HBox());

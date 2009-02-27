@@ -187,6 +187,7 @@ protected:
     PrefCombo       _misc_small_toolbar;
     PrefCombo       _misc_small_secondary;
     PrefCombo       _misc_small_tools;
+    PrefCheckButton _ui_colorsliders_top;
     PrefSpinButton  _misc_recent;
     ZoomCorrRulerSlider _ui_zoom_correction;
 

@@ -45,6 +45,8 @@ static SPColorSelectorClass *parent_class;
 #define XPAD 4
 #define YPAD 1
 
+#define noDUMP_CHANGE_INFO 1
+
 GType
 sp_color_scales_get_type (void)
 {
@@ -272,7 +274,7 @@ void ColorScales::_setRangeLimit( gdouble upper )
 void ColorScales::_colorChanged()
 {
 #ifdef DUMP_CHANGE_INFO
-    g_message("ColorScales::_colorChanged( this=%p, %f, %f, %f,   %f)", this, color.v.c[0], color.v.c[1], color.v.c[2], alpha );
+    g_message("ColorScales::_colorChanged( this=%p, %f, %f, %f,   %f)", this, _color.v.c[0], _color.v.c[1], _color.v.c[2], _alpha );
 #endif
     gfloat tmp[3];
     gfloat c[5] = {0.0, 0.0, 0.0, 0.0};
