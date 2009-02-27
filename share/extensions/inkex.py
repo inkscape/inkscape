@@ -107,7 +107,6 @@ class Effect:
     """A class for creating Inkscape SVG Effects"""
 
     def __init__(self, *args, **kwargs):
-        self.id_characters = '0123456789abcdefghijklmnopqrstuvwkyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         self.document=None
         self.ctx=None
         self.selected={}
@@ -197,12 +196,12 @@ class Effect:
         self.getdocids()
         self.effect()
         if output: self.output()
-        
+
     def uniqueId(self, old_id, make_new_id = True):
         new_id = old_id
         if make_new_id:
             while new_id in self.doc_ids:
-                new_id = "%s%s" % (new_id,random.choice(self.id_characters))
+                new_id += random.choice('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
             self.doc_ids[new_id] = 1
         return new_id
 
