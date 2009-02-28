@@ -87,9 +87,19 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     case GDK_BUTTON_PRESS:
             if (event->button.button == 1) {
                 dragging = true;
-                sp_canvas_set_snap_delay_active(desktop->canvas, true);
+
                 // FIXME: The snap delay mechanism won't work here, because it has been implemented for the canvas. Dragging
                 // guides off the ruler will send event to the ruler and not to the canvas, which bypasses sp_canvas_motion
+                // The snap manager will not notice the difference, so it'll check if the snap delay has been activated (This check
+                // is only needed for catching coding errors, i.e. to warn if the snap delay has not been implemented properly
+                // in some context)
+                if (desktop->canvas->context_snap_delay_active == false) {
+					// A dt_ruler_event might be emitted when dragging a guide of the rulers while drawing a Bezier curve
+                	// In such a situation, we're already in that specific context and the snap delay is already active. We should
+                	// not set the snap delay to active again, because that will trigger a similar warning to the one above
+                	sp_canvas_set_snap_delay_active(desktop->canvas, true);
+                }
+
                 Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point const event_dt(desktop->w2d(event_w));
 
@@ -169,7 +179,6 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 m.guideSnap(event_dt, normal);
 
                 dragging = false;
-                sp_canvas_set_snap_delay_active(desktop->canvas, false);
                 gtk_object_destroy(GTK_OBJECT(guide));
                 guide = NULL;
                 if ((horiz ? wy : wx) >= 0) {
@@ -183,6 +192,12 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                                      _("Create guide"));
                 }
                 desktop->set_coordinate_status(from_2geom(event_dt));
+
+                // A dt_ruler_event might be emitted when dragging a guide of the rulers while drawing a Bezier curve
+				// In such a situation, we're already in that specific context and the snap delay is already active. We should
+                // interfere with that context and we should therefore leave the snap delay status as it is. So although it might
+                // have been set to active above on GDK_BUTTON_PRESS, we should not set it back to inactive here. That must be
+                // done by the context
             }
 	default:
             break;
