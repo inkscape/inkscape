@@ -678,7 +678,7 @@ PovOutput::init()
             "<output>\n"
                 "<extension>.pov</extension>\n"
                 "<mimetype>text/x-povray-script</mimetype>\n"
-                "<filetypename>" N_("PovRay (*.pov) (export splines)") "</filetypename>\n"
+                "<filetypename>" N_("PovRay (*.pov) (paths and shapes only)") "</filetypename>\n"
                 "<filetypetooltip>" N_("PovRay Raytracer File") "</filetypetooltip>\n"
             "</output>\n"
         "</inkscape-extension>",
