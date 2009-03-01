@@ -1361,10 +1361,12 @@
 <feTurbulence type="fractalNoise" numOctaves="5" baseFrequency="0.02" id="feTurbulence2850" result="result1" />
 <feComposite in="SourceGraphic" operator="in" id="feComposite2852" in2="result1" result="result2" />
 </filter>
-<filter id="filter2856" inkscape:label="Noise fill" inkscape:menu="ABCs" inkscape:menu-tooltip="Basic noise fill texture">
-<feTurbulence result="result1" id="feTurbulence2858" baseFrequency="0.02" numOctaves="5" type="fractalNoise" in="SourceAlpha" />
-<feColorMatrix id="feColorMatrix3468" result="result3" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 " />
-<feComposite result="result2" in2="SourceGraphic" id="feComposite2860" operator="atop" in="result3" />
+<filter id="filter2876c" inkscape:label="Noise fill" inkscape:menu="ABCs" inkscape:menu-tooltip="Basic noise fill texture">
+<feTurbulence id="feTurbulence2878" numOctaves="5" baseFrequency="0.02" type="fractalNoise" />
+<feColorMatrix id="feColorMatrix2880" result="result0" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " />
+<feFlood id="feFlood2882" flood-opacity="1" flood-color="rgb(255,255,255)" />
+<feComposite id="feComposite2884" operator="out" in2="result0" />
+<feComposite id="feComposite2886" operator="atop" in2="SourceGraphic" />
 </filter>
 <filter id="filter2840c" inkscape:label="Garden of Delights" inkscape:menu="Overlays" inkscape:menu-tooltip="Fantasmagoric turbulences evocating Hieronymus Bosch Garden of Delights" x="-0.15000001" width="1.3" y="-0.15000001" height="1.3">
 <feTurbulence id="feTurbulence2842" result="result1" baseFrequency="0.01 0.02" numOctaves="8" type="fractalNoise" in="SourceAlpha" seed="135" />
