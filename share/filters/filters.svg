@@ -1357,9 +1357,10 @@
 <feComposite in2="result2" operator="over" in="result2" id="feComposite2924" />
 <feBlend blend="normal" id="feBlend3357" mode="multiply" />
 </filter>
-<filter id="filter2848" inkscape:label="Noise transparency" inkscape:menu="ABCs" inkscape:menu-tooltip="Basic noise transparency texture">
-<feTurbulence type="fractalNoise" numOctaves="5" baseFrequency="0.02" id="feTurbulence2850" result="result1" />
-<feComposite in="SourceGraphic" operator="in" id="feComposite2852" in2="result1" result="result2" />
+<filter id="filter2855b" inkscape:label="Noise transparency" inkscape:menu="ABCs" inkscape:menu-tooltip="Basic noise transparency texture">
+<feTurbulence id="feTurbulence2857" type="fractalNoise" numOctaves="5" baseFrequency="0.02" result="result1" />
+<feComposite id="feComposite2859" operator="in" in2="result1" result="result2" in="SourceGraphic" />
+<feColorMatrix id="feColorMatrix2867" result="result3" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " in="result2" />
 </filter>
 <filter id="filter2876c" inkscape:label="Noise fill" inkscape:menu="ABCs" inkscape:menu-tooltip="Basic noise fill texture">
 <feTurbulence id="feTurbulence2878" numOctaves="5" baseFrequency="0.02" type="fractalNoise" />
