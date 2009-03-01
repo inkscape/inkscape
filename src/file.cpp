@@ -1101,8 +1101,6 @@ sp_file_import(Gtk::Window &parentWindow)
 
 #ifdef NEW_EXPORT_DIALOG
 
-static Inkscape::UI::Dialog::FileExportDialog *exportDialogInstance = NULL;
-
 /**
  *  Display an Export dialog, export as the selected type if OK pressed
  */
@@ -1171,24 +1169,27 @@ sp_file_export_dialog(void *widget)
         export_path = export_path_local;
 
     //# Show the SaveAs dialog
-    if (!exportDialogInstance)
-        exportDialogInstance =
-             Inkscape::UI::Dialog::FileExportDialog::create(
-                 export_path,
-                 Inkscape::UI::Dialog::EXPORT_TYPES,
-                 (char const *) _("Select file to export to"),
-                 default_extension
-            );
+    Inkscape::UI::Dialog::FileExportDialog *exportDialogInstance = 
+        Inkscape::UI::Dialog::FileExportDialog::create(
+            export_path,
+            Inkscape::UI::Dialog::EXPORT_TYPES,
+            (char const *) _("Select file to export to"),
+            default_extension
+        );
 
     bool success = exportDialogInstance->show();
-    if (!success)
+    if (!success) {
+        delete exportDialogInstance;
         return success;
+    }
 
     Glib::ustring fileName = exportDialogInstance->getFilename();
 
     Inkscape::Extension::Extension *selectionType =
         exportDialogInstance->getSelectionType();
 
+    delete exportDialogInstance;
+    exportDialogInstance = NULL;
 
     if (fileName.size() > 0) {
         Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
@@ -1252,8 +1253,6 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
 
     bool success = false;
 
-    static Inkscape::UI::Dialog::FileExportToOCALDialog *exportDialogInstance = NULL;
-    static Inkscape::UI::Dialog::FileExportToOCALPasswordDialog *exportPasswordDialogInstance = NULL;
     static bool gotSuccess = false;
 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
@@ -1284,18 +1283,23 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
         export_path = export_path_local;
 
     // Show the Export To OCAL dialog
-    if (!exportDialogInstance)
-        exportDialogInstance = new Inkscape::UI::Dialog::FileExportToOCALDialog(
+    Inkscape::UI::Dialog::FileExportToOCALDialog *exportDialogInstance =
+        new Inkscape::UI::Dialog::FileExportToOCALDialog(
                 parentWindow,
                 Inkscape::UI::Dialog::EXPORT_TYPES,
                 (char const *) _("Select file to export to")
                 );
 
     success = exportDialogInstance->show();
-    if (!success)
+    if (!success) {
+        delete exportDialogInstance;
         return success;
+    }
 
     fileName = exportDialogInstance->getFilename();
+
+    delete exportDialogInstance;
+    exportDialogInstance = NULL;;
 
     fileName.append(filename_extension.c_str());
     if (fileName.size() > 0) {
@@ -1330,18 +1334,23 @@ sp_file_export_to_ocal_dialog(Gtk::Window &parentWindow)
     Glib::ustring password = prefs->getString("/options/ocalpassword/str");
     if (username.empty() || password.empty())
     {
+        Inkscape::UI::Dialog::FileExportToOCALPasswordDialog *exportPasswordDialogInstance = NULL;
         if(!gotSuccess)
         {
-            if (!exportPasswordDialogInstance)
-                exportPasswordDialogInstance = new Inkscape::UI::Dialog::FileExportToOCALPasswordDialog(
+            exportPasswordDialogInstance = new Inkscape::UI::Dialog::FileExportToOCALPasswordDialog(
                     parentWindow,
                     (char const *) _("Open Clip Art Login"));
             success = exportPasswordDialogInstance->show();
-            if (!success)
+            if (!success) {
+                delete exportPasswordDialogInstance;
                 return success;
+            }
         }
         username = exportPasswordDialogInstance->getUsername();
         password = exportPasswordDialogInstance->getPassword();
+
+        delete exportPasswordDialogInstance;
+        exportPasswordDialogInstance = NULL;
     }
     uri.append(username);
     uri.append(":");
@@ -1397,7 +1406,7 @@ sp_file_import_from_ocal(Gtk::Window &parentWindow)
     if (!doc)
         return;
 
-    static Inkscape::UI::Dialog::FileImportFromOCALDialog *importDialogInstance = NULL;
+    Inkscape::UI::Dialog::FileImportFromOCALDialog *importDialogInstance = NULL;
 
     if (!importDialogInstance) {
         importDialogInstance = new
@@ -1409,13 +1418,17 @@ sp_file_import_from_ocal(Gtk::Window &parentWindow)
     }
 
     bool success = importDialogInstance->show();
-    if (!success)
+    if (!success) {
+        delete importDialogInstance;
         return;
+    }
 
     // Get file name and extension type
     Glib::ustring fileName = importDialogInstance->getFilename();
-    Inkscape::Extension::Extension *selection =
-        importDialogInstance->getSelectionType();
+    Inkscape::Extension::Extension *selection = importDialogInstance->getSelectionType();
+
+    delete importDialogInstance;
+    importDialogInstance = NULL;
 
     if (fileName.size() > 0) {
 
