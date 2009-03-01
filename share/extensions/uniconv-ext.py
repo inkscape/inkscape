@@ -23,15 +23,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 import sys
 from run_command import run
-from subprocess import Popen, PIPE
 
-cmd = 'none'
+cmd = None
 
 try:
+    from subprocess import Popen, PIPE
     p = Popen('uniconv', shell=True, stdout=PIPE, stderr=PIPE).wait()
-    if p!=127 : cmd = 'uniconv'
-    p = Popen('uniconvertor', shell=True, stdout=PIPE, stderr=PIPE).wait()
-    if p!=127 : cmd = 'uniconvertor'
+    if p==0 :
+        cmd = 'uniconv'
+    else:
+        p = Popen('uniconvertor', shell=True, stdout=PIPE, stderr=PIPE).wait()
+        if p==0 :
+            cmd = 'uniconvertor'
 except ImportError:
     from popen2 import Popen3
     p = Popen3('uniconv', True).wait()
@@ -39,12 +42,21 @@ except ImportError:
     p = Popen3('uniconvertor', True).wait()
     if p!=32512 : cmd = 'uniconvertor'
 
-if cmd == 'none' :
-    sys.stderr.write('You need to install the UniConvertor software.\n'+\
+if cmd == None:
+    # there's no succeffully-returning uniconv command; try to get the module directly (on Windows)
+    try:
+        # cannot simply import uniconvertor, it aborts if you import it without parameters
+        import imp
+        imp.find_module("uniconvertor")
+    except ImportError:
+        sys.stderr.write('You need to install the UniConvertor software.\n'+\
                      'For GNU/Linux: install the package python-uniconvertor.\n'+\
                      'For Windows: download it from\n'+\
-                     'http://sk1project.org/modules.php?name=Products&product=uniconvertor\n')
-else :
-    run((cmd+' "%s" "%%s"') % sys.argv[1].replace("%","%%"), "UniConvertor")
+                     'http://sk1project.org/modules.php?name=Products&product=uniconvertor\n'+\
+                     'and install into your Inkscape\'s Python location\n')
+        sys.exit(1)
+    cmd = 'python -c "import uniconvertor"'
+
+run((cmd+' "%s" "%%s"') % sys.argv[1].replace("%","%%"), "UniConvertor")
 
 # vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
