@@ -448,7 +448,7 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
         open_path.append(G_DIR_SEPARATOR_S);
     }
 
-    //# Create a dialog if we don't already have one
+    //# Create a dialog
     Inkscape::UI::Dialog::FileOpenDialog *openDialogInstance =
               Inkscape::UI::Dialog::FileOpenDialog::create(
                  parentWindow, open_path,
@@ -955,8 +955,11 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
         //        a document:: method to return the current layer.
         //        For now, we just use the root in this case.
         SPObject *place_to_insert;
-        if (desktop) place_to_insert = desktop->currentLayer();
-        else         place_to_insert = SP_DOCUMENT_ROOT(in_doc);
+        if (desktop) {
+            place_to_insert = desktop->currentLayer();
+        } else {
+            place_to_insert = SP_DOCUMENT_ROOT(in_doc);
+        }
 
         // Construct a new object representing the imported image,
         // and insert it into the current document.
@@ -1033,8 +1036,6 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
 }
 
 
-static Inkscape::UI::Dialog::FileOpenDialog *importDialogInstance = NULL;
-
 /**
  *  Display an Open dialog, import a resource if OK pressed.
  */
@@ -1047,24 +1048,26 @@ sp_file_import(Gtk::Window &parentWindow)
     if (!doc)
         return;
 
-    if (!importDialogInstance) {
-        importDialogInstance =
+    // Create new dialog (don't use an old one, because parentWindow has probably changed)
+    Inkscape::UI::Dialog::FileOpenDialog *importDialogInstance =
              Inkscape::UI::Dialog::FileOpenDialog::create(
                  parentWindow,
                  import_path,
                  Inkscape::UI::Dialog::IMPORT_TYPES,
                  (char const *)_("Select file to import"));
-    }
 
     bool success = importDialogInstance->show();
-    if (!success)
+    if (!success) {
+        delete importDialogInstance;
         return;
+    }
 
     //# Get file name and extension type
     Glib::ustring fileName = importDialogInstance->getFilename();
-    Inkscape::Extension::Extension *selection =
-        importDialogInstance->getSelectionType();
+    Inkscape::Extension::Extension *selection = importDialogInstance->getSelectionType();
 
+    delete importDialogInstance;
+    importDialogInstance = NULL;
 
     if (fileName.size() > 0) {
 
