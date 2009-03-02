@@ -2,7 +2,6 @@
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>Corel DRAW templates input</_name>
     <id>org.inkscape.input.cdt</id>
-    <dependency type="executable" location="path">uniconv</dependency>
     <dependency type="executable" location="extensions">uniconv-ext.py</dependency>
     <input>
         <extension>.cdt</extension>

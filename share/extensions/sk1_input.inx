@@ -2,7 +2,6 @@
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>sK1 vector graphics files input</_name>
     <id>org.inkscape.input.sk1</id>
-    <dependency type="executable" location="path">uniconv</dependency>
     <dependency type="executable" location="extensions">uniconv-ext.py</dependency>
     <input>
         <extension>.sk1</extension>
