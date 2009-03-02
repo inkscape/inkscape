@@ -4,7 +4,7 @@
 /* Authors:
  *   Ulf Erikson <ulferikson@users.sf.net>
  *
- * Copyright (C) 2006-2008 Authors
+ * Copyright (C) 2006-2009 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -674,7 +674,6 @@ PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Mat
     bool done = false;
     bool closed = (lpPoints[0].x == lpPoints[i-1].x) && (lpPoints[0].y == lpPoints[i-1].y);
     bool polygon = false;
-    bool polyline = false;
     bool rectangle = false;
     bool ellipse = false;
     
@@ -688,9 +687,6 @@ PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Mat
             }
         }
     }
-    else if (moves == 1 && moves+lines == nodes) {
-        polyline = true;
-    }
     else if (moves == 1 && nodes == 5 && moves+curves == nodes && closed) {
         if (lpPoints[0].x == lpPoints[1].x && lpPoints[1].x == lpPoints[11].x &&
             lpPoints[5].x == lpPoints[6].x && lpPoints[6].x == lpPoints[7].x &&
@@ -703,7 +699,7 @@ PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Mat
         }
     }
 
-    if (polygon || polyline || ellipse) {
+    if (polygon || ellipse) {
         HPEN hpenTmp = NULL;
         HPEN hpenOld = NULL;
         HBRUSH hbrushTmp = NULL;
@@ -725,9 +721,6 @@ PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Mat
                 Rectangle( hdc, lpPoints[0].x, lpPoints[0].y, lpPoints[2].x, lpPoints[2].y );
             else
                 Polygon( hdc, lpPoints, nodes );
-        }
-        else if (polyline) {
-            Polyline( hdc, lpPoints, nodes );
         }
         else if (ellipse) {
             Ellipse( hdc, lpPoints[6].x, lpPoints[3].y, lpPoints[0].x, lpPoints[9].y);
