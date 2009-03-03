@@ -140,12 +140,14 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeImage *feImage = SP_FEIMAGE(object);
     (void)feImage;
-    Inkscape::URI* SVGElem_uri;
+    Inkscape::URI *SVGElem_uri = NULL;
     switch(key) {
-	/*DEAL WITH SETTING ATTRIBUTES HERE*/
-	case SP_ATTR_XLINK_HREF:
-	    if (feImage->href) g_free(feImage->href);
-	    feImage->href = (value) ? g_strdup (value) : NULL;
+    /*DEAL WITH SETTING ATTRIBUTES HERE*/
+        case SP_ATTR_XLINK_HREF:
+            if (feImage->href) {
+                g_free(feImage->href);
+            }
+            feImage->href = (value) ? g_strdup (value) : NULL;
             if (!feImage->href) return;
             try{
                 SVGElem_uri = new Inkscape::URI(feImage->href);
@@ -153,8 +155,8 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
                 feImage->from_element = true;
                 feImage->SVGElemRef->attach(*SVGElem_uri);
                 feImage->SVGElem = SP_ITEM(feImage->SVGElemRef->getObject());
-                
-                g_free(SVGElem_uri);
+
+                delete SVGElem_uri;
                 feImage->_modified_connection = ((SPObject*) feImage->SVGElem)->connectModified(sigc::bind(sigc::ptr_fun(&sp_feImage_elem_modified), object));
                 object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                 break;
