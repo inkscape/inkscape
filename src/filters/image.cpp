@@ -140,7 +140,6 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPFeImage *feImage = SP_FEIMAGE(object);
     (void)feImage;
-    Inkscape::URI *SVGElem_uri = NULL;
     switch(key) {
     /*DEAL WITH SETTING ATTRIBUTES HERE*/
         case SP_ATTR_XLINK_HREF:
@@ -150,16 +149,19 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
             feImage->href = (value) ? g_strdup (value) : NULL;
             if (!feImage->href) return;
             try{
-                SVGElem_uri = new Inkscape::URI(feImage->href);
+                Inkscape::URI SVGElem_uri(feImage->href);
                 feImage->SVGElemRef = new Inkscape::URIReference(feImage->document);
                 feImage->from_element = true;
-                feImage->SVGElemRef->attach(*SVGElem_uri);
-                feImage->SVGElem = SP_ITEM(feImage->SVGElemRef->getObject());
+                feImage->SVGElemRef->attach(SVGElem_uri);
+                if (SPObject *elemref = feImage->SVGElemRef->getObject()) {
+                    feImage->SVGElem = SP_ITEM(elemref);
 
-                delete SVGElem_uri;
-                feImage->_modified_connection = ((SPObject*) feImage->SVGElem)->connectModified(sigc::bind(sigc::ptr_fun(&sp_feImage_elem_modified), object));
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
-                break;
+                    feImage->_modified_connection = ((SPObject*) feImage->SVGElem)->connectModified(sigc::bind(sigc::ptr_fun(&sp_feImage_elem_modified), object));
+                    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                    break;
+                } else {
+                    g_warning("SVG element URI was not found in the document while loading feImage");
+                }
             }
             catch(const Inkscape::UnsupportedURIException & e)
             {
