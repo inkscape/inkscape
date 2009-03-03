@@ -193,12 +193,7 @@ sp_node_context_flash_path(SPEventContext *event_context, SPItem *item, guint ti
             nc->flash_tempitem = NULL;
         }
 
-        SPCanvasItem *canvasitem = NULL;
-        if (SP_IS_PATH(item)) {
-            canvasitem = sp_nodepath_helperpath_from_path(desktop, SP_PATH(item));
-        } else {
-            g_print ("-----> sp_node_context_flash_path(): TODO: generate the helper path!!\n");
-        }
+        SPCanvasItem *canvasitem = sp_nodepath_generate_helperpath(desktop, item);
 
         if (canvasitem) {
             nc->flash_tempitem = desktop->add_temporary_canvasitem (canvasitem, timeout);

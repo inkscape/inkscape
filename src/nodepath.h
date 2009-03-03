@@ -329,9 +329,8 @@ Geom::Rect sp_node_selected_bbox (Inkscape::NodePath::Path *nodepath);
 boost::optional<Geom::Coord> sp_node_selected_common_coord (Inkscape::NodePath::Path *nodepath, Geom::Dim2 axis);
 
 void sp_nodepath_show_handles(Inkscape::NodePath::Path *nodepath, bool show);
-//SPCanvasItem *sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem *item, guint32 color);
-//SPCanvasItem *sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path);
-SPCanvasItem *sp_nodepath_helperpath_from_path(SPDesktop *desktop, SPPath *path);
+SPCanvasItem *sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const Geom::Matrix & i2d, guint32 color);
+SPCanvasItem *sp_nodepath_generate_helperpath(SPDesktop *desktop, SPItem *item);
 void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *nodepath, bool show);
 void sp_nodepath_update_helperpaths(Inkscape::NodePath::Path *np);
 void sp_nodepath_make_straight_path(Inkscape::NodePath::Path *np);

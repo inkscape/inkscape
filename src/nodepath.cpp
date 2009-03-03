@@ -5029,11 +5029,11 @@ sp_nodepath_path_to_canvasitem(Inkscape::NodePath::Path *np, SPPath *path) {
 }
 */
 
-/*
+
+/// \todo this code to generate a helper canvasitem from an spcurve should be moved to different file
 SPCanvasItem *
-sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem *item, guint32 color = 0xff0000ff) {
+sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const Geom::Matrix & i2d, guint32 color = 0xff0000ff) {
     SPCurve *flash_curve = curve->copy();
-    Geom::Matrix i2d = item ? sp_item_i2d_affine(item) : Geom::identity();
     flash_curve->transform(i2d);
     SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
     // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
@@ -5046,29 +5046,31 @@ sp_nodepath_generate_helperpath(SPDesktop *desktop, SPCurve *curve, const SPItem
 }
 
 SPCanvasItem *
-sp_nodepath_generate_helperpath(SPDesktop *desktop, SPPath *path) {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    return sp_nodepath_generate_helperpath(desktop, sp_path_get_curve_for_edit(path), SP_ITEM(path),
-                                           prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff));
-}
-*/
+sp_nodepath_generate_helperpath(SPDesktop *desktop, SPItem *item) {
+    if (!item || !desktop) {
+        return NULL;
+    }
 
-SPCanvasItem *
-sp_nodepath_helperpath_from_path(SPDesktop *desktop, SPPath *path) {
-    SPCurve *flash_curve = sp_path_get_curve_for_edit(path)->copy();
-    Geom::Matrix i2d = sp_item_i2d_affine(SP_ITEM(path));
-    flash_curve->transform(i2d);
-    SPCanvasItem * canvasitem = sp_canvas_bpath_new(sp_desktop_tempgroup(desktop), flash_curve);
-    // would be nice if its color could be XORed or something, now it is invisible for red stroked objects...
-    // unless we also flash the nodes...
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     guint32 color = prefs->getInt("/tools/nodes/highlight_color", 0xff0000ff);
-    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(canvasitem), color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-    sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(canvasitem), 0, SP_WIND_RULE_NONZERO);
-    sp_canvas_item_show(canvasitem);
-    flash_curve->unref();
-    return canvasitem;
+
+    Geom::Matrix i2d = sp_item_i2d_affine(item);
+
+    SPCurve *curve = NULL;
+    if (SP_IS_PATH(item)) {
+        curve = sp_path_get_curve_for_edit(SP_PATH(item));
+    } else {
+        g_warning ("-----> sp_nodepath_generate_helperpath(SPDesktop *desktop, SPItem *item): TODO: generate the helper path for this item type!\n");
+        return NULL;
+    }
+
+    SPCanvasItem * helperpath = sp_nodepath_generate_helperpath(desktop, curve, i2d, color);
+
+    curve->unref();
+
+    return helperpath;
 }
+
 
 // TODO: Merge this with sp_nodepath_make_helper_item()!
 void sp_nodepath_show_helperpath(Inkscape::NodePath::Path *np, bool show) {
