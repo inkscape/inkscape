@@ -96,6 +96,7 @@ typedef enum {
     APP_X_INKY_COLOR_ID = 0,
     APP_X_INKY_COLOR = 0,
     APP_X_COLOR,
+    APP_X_NOCOLOR,
     TEXT_DATA
 } colorFlavorType;
 
@@ -110,6 +111,12 @@ static const GtkTargetEntry sourceColorEntries[] = {
 //    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
     {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
 #endif // ENABLE_MAGIC_COLORS
+    {"application/x-color", 0, APP_X_COLOR},
+    {"text/plain", 0, TEXT_DATA},
+};
+
+static const GtkTargetEntry sourceNoColorEntries[] = {
+    {"application/x-inkscape-nocolor", 0, APP_X_NOCOLOR},
     {"application/x-color", 0, APP_X_COLOR},
     {"text/plain", 0, TEXT_DATA},
 };
@@ -139,6 +146,51 @@ void ColorItem::_dragGetColorData( GtkWidget *widget,
         g_free(tmp);
         tmp = 0;
     } else if ( info == APP_X_INKY_COLOR ) {
+        Glib::ustring paletteName;
+
+        // Find where this thing came from
+        bool found = false;
+        int index = 0;
+        for ( std::vector<JustForNow*>::iterator it = possible.begin(); it != possible.end() && !found; ++it ) {
+            JustForNow* curr = *it;
+            index = 0;
+            for ( std::vector<ColorItem*>::iterator zz = curr->_colors.begin(); zz != curr->_colors.end(); ++zz ) {
+                if ( item == *zz ) {
+                    found = true;
+                    paletteName = curr->_name;
+                    break;
+                } else {
+                    index++;
+                }
+            }
+        }
+
+//         if ( found ) {
+//             g_message("Found the color at entry %d in palette '%s'", index, paletteName.c_str() );
+//         } else {
+//             g_message("Unable to find the color");
+//         }
+        int itemCount = 4 + 2 + 1 + paletteName.length();
+
+        guint16* tmp = new guint16[itemCount];
+        tmp[0] = (item->def.getR() << 8) | item->def.getR();
+        tmp[1] = (item->def.getG() << 8) | item->def.getG();
+        tmp[2] = (item->def.getB() << 8) | item->def.getB();
+        tmp[3] = 0xffff;
+        tmp[4] = (item->_isLive || !item->_listeners.empty() || (item->_linkSrc != 0) ) ? 1 : 0;
+
+        tmp[5] = index;
+        tmp[6] = paletteName.length();
+        for ( unsigned int i = 0; i < paletteName.length(); i++ ) {
+            tmp[7 + i] = paletteName[i];
+        }
+        gtk_selection_data_set( data,
+                                typeXColor,
+                                16, // format
+                                reinterpret_cast<const guchar*>(tmp),
+                                itemCount * 2);
+        delete[] tmp;
+    } else if ( info == APP_X_NOCOLOR ) {
         Glib::ustring paletteName;
 
         // Find where this thing came from
@@ -398,6 +450,10 @@ void ColorItem::_dropDataIn( GtkWidget *widget,
              }
              break;
          }
+         case APP_X_NOCOLOR:
+         {
+//              g_message("APP_X_NOCOLOR dropping through to x-color");
+         }
          case APP_X_COLOR:
          {
              if ( data->length == 8 ) {
@@ -643,11 +699,19 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
                           G_CALLBACK(handleButtonPress),
                           this);
 
-        gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
-                             GDK_BUTTON1_MASK,
-                             sourceColorEntries,
-                             G_N_ELEMENTS(sourceColorEntries),
-                             GdkDragAction(GDK_ACTION_MOVE | GDK_ACTION_COPY) );
+        if ( isRemove() ) {
+            gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
+                                 GDK_BUTTON1_MASK,
+                                 sourceNoColorEntries,
+                                 G_N_ELEMENTS(sourceNoColorEntries),
+                                 GdkDragAction(GDK_ACTION_MOVE | GDK_ACTION_COPY) );
+        } else {
+            gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
+                                 GDK_BUTTON1_MASK,
+                                 sourceColorEntries,
+                                 G_N_ELEMENTS(sourceColorEntries),
+                                 GdkDragAction(GDK_ACTION_MOVE | GDK_ACTION_COPY) );
+        }
 
         g_signal_connect( G_OBJECT(newBlot->gobj()),
                           "drag-data-get",
