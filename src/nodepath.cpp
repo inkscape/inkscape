@@ -45,6 +45,7 @@
 #include "preferences.h"
 #include "sp-metrics.h"
 #include "sp-path.h"
+#include "sp-rect.h"
 #include "libnr/nr-matrix-ops.h"
 #include "svg/svg.h"
 #include "verbs.h"
@@ -5059,6 +5060,9 @@ sp_nodepath_generate_helperpath(SPDesktop *desktop, SPItem *item) {
     SPCurve *curve = NULL;
     if (SP_IS_PATH(item)) {
         curve = sp_path_get_curve_for_edit(SP_PATH(item));
+    } else if (SP_IS_RECT(item)) {
+        Geom::Rect rect = sp_rect_get_rect(SP_RECT(item));
+        curve = SPCurve::new_from_rect(rect);
     } else {
         g_warning ("-----> sp_nodepath_generate_helperpath(SPDesktop *desktop, SPItem *item): TODO: generate the helper path for this item type!\n");
         return NULL;

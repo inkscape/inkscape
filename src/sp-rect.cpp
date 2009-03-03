@@ -19,6 +19,7 @@
 #include <display/curve.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-matrix-fns.h>
+#include <2geom/rect.h>
 
 #include "inkscape.h"
 #include "document.h"
@@ -456,6 +457,14 @@ sp_rect_get_visible_ry(SPRect *rect)
         Geom::Point(rect->x.computed, rect->y.computed + 1),
         Geom::Point(rect->x.computed, rect->y.computed),
         SP_ITEM(rect)->transform);
+}
+
+Geom::Rect
+sp_rect_get_rect (SPRect *rect)
+{
+    Geom::Point p0 = Geom::Point(rect->x.computed, rect->y.computed);
+    Geom::Point p2 = Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed);
+    return Geom::Rect(p0, p2);
 }
 
 void

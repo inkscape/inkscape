@@ -15,6 +15,7 @@
 
 #include "svg/svg-length.h"
 #include "sp-shape.h"
+#include <2geom/forward.h>
 
 
 
@@ -54,6 +55,7 @@ void sp_rect_set_visible_rx (SPRect *rect, gdouble rx);
 void sp_rect_set_visible_ry (SPRect *rect, gdouble ry);
 gdouble sp_rect_get_visible_rx (SPRect *rect);
 gdouble sp_rect_get_visible_ry (SPRect *rect);
+Geom::Rect sp_rect_get_rect (SPRect *rect);
 
 void sp_rect_set_visible_width (SPRect *rect, gdouble rx);
 void sp_rect_set_visible_height (SPRect *rect, gdouble ry);
