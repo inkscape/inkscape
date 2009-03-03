@@ -1609,7 +1609,12 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
 
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
 
-    if (canvas->context_snap_delay_active && dt && dt->namedview->snap_manager.snapprefs.getSnapEnabledGlobally()) {
+    // Snapping occurs when dragging with the left mouse button down, or when hovering e.g. in the pen tool with left mouse button up
+    bool const c1 = event->state & GDK_BUTTON2_MASK; // We shouldn't hold back any events when other mouse buttons have been
+    bool const c2 = event->state & GDK_BUTTON3_MASK; // pressed, e.g. when scrolling with the middle mouse button; if we do then
+												     // Inkscape will get stuck in an unresponsive state
+
+    if (canvas->context_snap_delay_active && !c1 && !c2 && dt && dt->namedview->snap_manager.snapprefs.getSnapEnabledGlobally()) {
     	// Snap when speed drops below e.g. 0.02 px/msec, or when no motion events have occurred for some period.
 		// i.e. snap when we're at stand still. A speed threshold enforces snapping for tablets, which might never
 		// be fully at stand still and might keep spitting out motion events.
