@@ -72,6 +72,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     static bool dragging = false;
     static SPCanvasItem *guide = NULL;
     static Geom::Point normal;
+    static bool snap_delay_temporarily_active = false;
     int wx, wy;
 
     SPDesktop *desktop = dtw->desktop;
@@ -98,6 +99,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 	// In such a situation, we're already in that specific context and the snap delay is already active. We should
                 	// not set the snap delay to active again, because that will trigger a similar warning to the one above
                 	sp_canvas_set_snap_delay_active(desktop->canvas, true);
+                	snap_delay_temporarily_active = true;
                 }
 
                 Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
@@ -179,6 +181,13 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 m.guideSnap(event_dt, normal);
 
                 dragging = false;
+
+                // See the comments in GDK_BUTTON_PRESS
+                if (snap_delay_temporarily_active) {
+                	sp_canvas_set_snap_delay_active(desktop->canvas, false);
+                	snap_delay_temporarily_active = false;
+                }
+
                 gtk_object_destroy(GTK_OBJECT(guide));
                 guide = NULL;
                 if ((horiz ? wy : wx) >= 0) {
