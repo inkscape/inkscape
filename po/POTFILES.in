@@ -21,6 +21,7 @@ src/dialogs/text-edit.cpp
 src/dialogs/xml-tree.cpp
 src/display/canvas-axonomgrid.cpp
 src/display/canvas-grid.cpp
+src/display/snap-indicator.cpp
 src/document.cpp
 src/draw-context.cpp
 src/dropper-context.cpp
