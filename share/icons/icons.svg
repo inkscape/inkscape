@@ -8,7 +8,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:version="0.46+devel r20780 custom"
+   inkscape:version="0.46+devel r20820 custom"
    sodipodi:docname="icons.svg"
    height="1000.0000pt"
    width="1000.0000pt"
@@ -17,13 +17,6 @@
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs3">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 625 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="1250 : 625 : 1"
-       inkscape:persp3d-origin="625 : 416.66667 : 1"
-       id="perspective2745" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient7836">
@@ -3186,15 +3179,6 @@
        r="0.75" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient10585"
-       id="linearGradient5607"
-       gradientUnits="userSpaceOnUse"
-       x1="5.6449146"
-       y1="209.98189"
-       x2="13.522233"
-       y2="214.77893" />
-    <linearGradient
-       inkscape:collect="always"
        xlink:href="#linearGradient5704"
        id="linearGradient5609"
        gradientUnits="userSpaceOnUse"
@@ -4778,8 +4762,8 @@
      inkscape:window-x="0"
      inkscape:window-height="736"
      inkscape:window-width="1024"
-     inkscape:cy="567.76508"
-     inkscape:cx="156.21714"
+     inkscape:cy="800.79113"
+     inkscape:cx="185.3454"
      inkscape:zoom="1.373237"
      gridtolerance="6"
      snaptogrid="false"
@@ -4977,7 +4961,7 @@ http://www.inkscape.org/</dc:description>
        d="M 486.953,205.5 501.953,205.5 M 501.953,201.4255 C 495.453,205.9255 493.453,194.4542 486.953,200.4255 M 486.953,193.6678 C 488.953,198.6678 489.0896,191.5995 490.953,190.6678 492.953,189.6678 493.2942,193.6914 493.953,195.6678 494.953,198.6678 495.953,192.6678 497.953,191.6678 500.7814,190.2536 497.953,198.6678 501.953,194.6678" />
   </g>
   <g
-     id="fill-none"
+     id="paint-none"
      transform="matrix(0.79999,0,0,0.799999,-609.0966,525.7987)"
      inkscape:label="#fill_none">
     <rect
