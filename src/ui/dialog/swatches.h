@@ -42,7 +42,6 @@ public:
                                     ::PreviewSize size,
                                     guint ratio);
     void buttonClicked(bool secondary = false);
-    bool isRemove(){ return _isRemove; }
     eek::ColorDef def;
 
 private:
@@ -70,7 +69,6 @@ private:
     Gtk::Tooltips tips;
     std::vector<Gtk::Widget*> _previews;
 
-    bool _isRemove;
     bool _isLive;
     bool _linkIsTone;
     int _linkPercent;

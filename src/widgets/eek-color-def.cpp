@@ -54,20 +54,20 @@ namespace eek
 
 ColorDef::ColorDef() :
     descr(_("none")),
+    type(NONE),
     r(0),
     g(0),
     b(0),
-    none(true),
     editable(false)
 {
 }
 
 ColorDef::ColorDef( unsigned int r, unsigned int g, unsigned int b, const std::string& description ) :
     descr(description),
+    type(RGB),
     r(r),
     g(g),
     b(b),
-    none(false),
     editable(false)
 {
 }
@@ -87,11 +87,11 @@ ColorDef& ColorDef::operator=( ColorDef const &other )
 {
     if ( this != & other )
     {
+        type = other.type;
         r = other.r;
         g = other.g;
         b = other.b;
         descr = other.descr;
-        none = other.none;
         editable = other.editable;
     }
     return *this;

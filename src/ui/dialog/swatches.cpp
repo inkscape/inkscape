@@ -41,10 +41,19 @@ namespace Inkscape {
 namespace UI {
 namespace Dialogs {
 
-ColorItem::ColorItem() : _isRemove(true){};
+// create a None color swatch
+ColorItem::ColorItem() :
+    def(),
+    _isLive(false),
+    _linkIsTone(false),
+    _linkPercent(0),
+    _linkGray(0),
+    _linkSrc(0)
+{
+}
+
 ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustring& name ) :
     def( r, g, b, name ),
-    _isRemove(false),
     _isLive(false),
     _linkIsTone(false),
     _linkPercent(0),
@@ -251,7 +260,7 @@ static void dragBegin( GtkWidget */*widget*/, GdkDragContext* dc, gpointer data 
     ColorItem* item = reinterpret_cast<ColorItem*>(data);
     if ( item )
     {
-        if (item->isRemove()){
+        if (item->def.getType() != eek::ColorDef::RGB){
             GError *error = NULL;
             gchar *filepath = (gchar *) g_strdup_printf("%s/remove-color.png", INKSCAPE_PIXMAPDIR);
             gsize bytesRead = 0;
@@ -588,7 +597,7 @@ void ColorItem::_colorDefChanged(void* data)
                         str = 0;
 
                         if ( bruteForce( document, rroot, paletteName, item->def.getR(), item->def.getG(), item->def.getB() ) ) {
-                            sp_document_done( document , SP_VERB_DIALOG_SWATCHES, 
+                            sp_document_done( document , SP_VERB_DIALOG_SWATCHES,
                                               _("Change color definition"));
                         }
                     }
@@ -617,7 +626,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
         Gtk::Widget* newBlot = Glib::wrap(eekWidget);
 
         eek_preview_set_color( preview, (def.getR() << 8) | def.getR(), (def.getG() << 8) | def.getG(), (def.getB() << 8) | def.getB());
-        if ( _isRemove ) {
+        if ( def.getType() != eek::ColorDef::RGB ) {
             GError *error = NULL;
             gchar *filepath = (gchar *) g_strdup_printf("%s/remove-color.png", INKSCAPE_PIXMAPDIR);
             gsize bytesRead = 0;
@@ -686,8 +695,10 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
 
         gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
                              GDK_BUTTON1_MASK,
-                             isRemove() ? sourceNoColorEntries : sourceColorEntries,
-                             isRemove() ? G_N_ELEMENTS(sourceNoColorEntries) : G_N_ELEMENTS(sourceColorEntries),
+                             (def.getType() != eek::ColorDef::RGB) ? sourceNoColorEntries :
+                             sourceColorEntries,
+                             (def.getType() != eek::ColorDef::RGB) ? G_N_ELEMENTS(sourceNoColorEntries) :
+                             G_N_ELEMENTS(sourceColorEntries),
                              GdkDragAction(GDK_ACTION_MOVE | GDK_ACTION_COPY) );
 
         g_signal_connect( G_OBJECT(newBlot->gobj()),
@@ -747,26 +758,37 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
 void ColorItem::buttonClicked(bool secondary)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (!desktop) return;
-    char const * attrName = secondary ? "stroke" : "fill";
+    if (desktop) {
+        char const * attrName = secondary ? "stroke" : "fill";
 
-    gchar c[64];
-    if (!_isRemove){
-        guint32 rgba = (def.getR() << 24) | (def.getG() << 16) | (def.getB() << 8) | 0xff;
-        sp_svg_write_color(c, sizeof(c), rgba);
-    }
+        SPCSSAttr *css = sp_repr_css_attr_new();
+        Glib::ustring descr;
+        switch (def.getType()) {
+            case eek::ColorDef::CLEAR: {
+                // TODO actually make this clear
+                sp_repr_css_set_property( css, attrName, "none" );
+                descr = secondary? _("Remove stroke color") : _("Remove fill color");
+                break;
+            }
+            case eek::ColorDef::NONE: {
+                sp_repr_css_set_property( css, attrName, "none" );
+                descr = secondary? _("Set stroke color to none") : _("Set fill color to none");
+                break;
+            }
+            case eek::ColorDef::RGB: {
+                gchar c[64];
+                guint32 rgba = (def.getR() << 24) | (def.getG() << 16) | (def.getB() << 8) | 0xff;
+                sp_svg_write_color(c, sizeof(c), rgba);
 
-    SPCSSAttr *css = sp_repr_css_attr_new();
-    sp_repr_css_set_property( css, attrName, _isRemove ? "none" : c );
-    sp_desktop_set_style(desktop, css);
-    sp_repr_css_attr_unref(css);
+                sp_repr_css_set_property( css, attrName, c );
+                descr = secondary? _("Set stroke color from swatch") : _("Set fill color from swatch");
+                break;
+            }
+        }
+        sp_desktop_set_style(desktop, css);
+        sp_repr_css_attr_unref(css);
 
-    if (_isRemove){
-        sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_SWATCHES, 
-                      secondary? _("Remove stroke color") : _("Remove fill color"));
-    } else {
-        sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_SWATCHES, 
-                      secondary? _("Set stroke color from swatch") : _("Set fill color from swatch"));
+        sp_document_done( sp_desktop_document(desktop), SP_VERB_DIALOG_SWATCHES, descr.c_str() );
     }
 }
 

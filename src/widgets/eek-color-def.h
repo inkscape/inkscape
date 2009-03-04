@@ -52,12 +52,16 @@ typedef void (*ColorCallback)( void* data );
 class ColorDef
 {
 public:
+    enum ColorType{CLEAR, NONE, RGB};
+
     ColorDef();
     ColorDef( unsigned int r, unsigned int g, unsigned int b, const std::string& description );
     virtual ~ColorDef();
 
     ColorDef( ColorDef const &other );
     virtual ColorDef& operator=( ColorDef const &other );
+
+    ColorType getType() const { return type; }
 
     void setRGB( unsigned int r, unsigned int g, unsigned int b );
     unsigned int getR() const { return r; }
@@ -73,10 +77,10 @@ public:
     std::string descr;
 
 protected:
+    ColorType type;
     unsigned int r;
     unsigned int g;
     unsigned int b;
-    bool none;
     bool editable;
 
 private:
