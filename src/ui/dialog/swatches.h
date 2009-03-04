@@ -17,8 +17,6 @@
 #include "ui/previewholder.h"
 #include "widgets/eek-color-def.h"
 
-using eek::ColorDef;
-
 namespace Inkscape {
 namespace UI {
 namespace Dialogs {
@@ -45,7 +43,7 @@ public:
                                     guint ratio);
     void buttonClicked(bool secondary = false);
     bool isRemove(){ return _isRemove; }
-    ColorDef def;
+    eek::ColorDef def;
 
 private:
     static void _dropDataIn( GtkWidget *widget,

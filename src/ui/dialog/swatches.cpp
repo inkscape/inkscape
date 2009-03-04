@@ -121,16 +121,13 @@ static const GtkTargetEntry sourceNoColorEntries[] = {
     {"text/plain", 0, TEXT_DATA},
 };
 
-void ColorItem::_dragGetColorData( GtkWidget *widget,
-                                   GdkDragContext *drag_context,
+void ColorItem::_dragGetColorData( GtkWidget */*widget*/,
+                                   GdkDragContext */*drag_context*/,
                                    GtkSelectionData *data,
                                    guint info,
-                                   guint time,
+                                   guint /*time*/,
                                    gpointer user_data)
 {
-    (void)widget;
-    (void)drag_context;
-    (void)time;
     static GdkAtom typeXColor = gdk_atom_intern("application/x-color", FALSE);
     static GdkAtom typeText = gdk_atom_intern("text/plain", FALSE);
 
@@ -249,9 +246,8 @@ void ColorItem::_dragGetColorData( GtkWidget *widget,
     }
 }
 
-static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
+static void dragBegin( GtkWidget */*widget*/, GdkDragContext* dc, gpointer data )
 {
-    (void)widget;
     ColorItem* item = reinterpret_cast<ColorItem*>(data);
     if ( item )
     {
@@ -295,17 +291,14 @@ static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
 //     return TRUE;
 // }
 
-static void handleClick( GtkWidget* widget, gpointer callback_data ) {
-    (void)widget;
+static void handleClick( GtkWidget* /*widget*/, gpointer callback_data ) {
     ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
     if ( item ) {
         item->buttonClicked(false);
     }
 }
 
-static void handleSecondaryClick( GtkWidget* widget, gint arg1, gpointer callback_data ) {
-    (void)widget;
-    (void)arg1;
+static void handleSecondaryClick( GtkWidget* /*widget*/, gint /*arg1*/, gpointer callback_data ) {
     ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
     if ( item ) {
         item->buttonClicked(true);
@@ -340,25 +333,22 @@ static gboolean handleLeaveNotify( GtkWidget* /*widget*/, GdkEventCrossing* /*ev
 static GtkWidget* popupMenu = 0;
 static ColorItem* bounceTarget = 0;
 
-static void redirClick( GtkMenuItem *menuitem, gpointer user_data )
+static void redirClick( GtkMenuItem *menuitem, gpointer /*user_data*/ )
 {
-    (void)user_data;
     if ( bounceTarget ) {
         handleClick( GTK_WIDGET(menuitem), bounceTarget );
     }
 }
 
-static void redirSecondaryClick( GtkMenuItem *menuitem, gpointer user_data )
+static void redirSecondaryClick( GtkMenuItem *menuitem, gpointer /*user_data*/ )
 {
-    (void)user_data;
     if ( bounceTarget ) {
         handleSecondaryClick( GTK_WIDGET(menuitem), 0, bounceTarget );
     }
 }
 
-static gboolean handleButtonPress( GtkWidget* widget, GdkEventButton* event, gpointer user_data)
+static gboolean handleButtonPress( GtkWidget* /*widget*/, GdkEventButton* event, gpointer user_data)
 {
-    (void)widget;
     gboolean handled = FALSE;
 
     if ( (event->button == 3) && (event->type == GDK_BUTTON_PRESS) ) {
@@ -420,19 +410,14 @@ static const GtkTargetEntry destColorTargets[] = {
 
 #include "color.h" // for SP_RGBA32_U_COMPOSE
 
-void ColorItem::_dropDataIn( GtkWidget *widget,
-                             GdkDragContext *drag_context,
-                             gint x, gint y,
+void ColorItem::_dropDataIn( GtkWidget */*widget*/,
+                             GdkDragContext */*drag_context*/,
+                             gint /*x*/, gint /*y*/,
                              GtkSelectionData *data,
                              guint info,
-                             guint event_time,
+                             guint /*event_time*/,
                              gpointer user_data)
 {
-    (void)widget;
-    (void)drag_context;
-    (void)x;
-    (void)y;
-    (void)event_time;
 //     g_message("    droppy droppy   %d", info);
      switch (info) {
          case APP_X_INKY_COLOR:
@@ -699,19 +684,11 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
                           G_CALLBACK(handleButtonPress),
                           this);
 
-        if ( isRemove() ) {
-            gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
-                                 GDK_BUTTON1_MASK,
-                                 sourceNoColorEntries,
-                                 G_N_ELEMENTS(sourceNoColorEntries),
-                                 GdkDragAction(GDK_ACTION_MOVE | GDK_ACTION_COPY) );
-        } else {
-            gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
-                                 GDK_BUTTON1_MASK,
-                                 sourceColorEntries,
-                                 G_N_ELEMENTS(sourceColorEntries),
-                                 GdkDragAction(GDK_ACTION_MOVE | GDK_ACTION_COPY) );
-        }
+        gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
+                             GDK_BUTTON1_MASK,
+                             isRemove() ? sourceNoColorEntries : sourceColorEntries,
+                             isRemove() ? G_N_ELEMENTS(sourceNoColorEntries) : G_N_ELEMENTS(sourceColorEntries),
+                             GdkDragAction(GDK_ACTION_MOVE | GDK_ACTION_COPY) );
 
         g_signal_connect( G_OBJECT(newBlot->gobj()),
                           "drag-data-get",
