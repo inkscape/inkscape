@@ -1264,7 +1264,7 @@ void SwatchesPanel::_handleAction( int setId, int itemId )
                     _holder->setColumnPref( curr->_prefWidth );
                 }
                 _holder->freezeUpdates();
-                _holder->addPreview(_clear);
+                // TODO restore once 'clear' works _holder->addPreview(_clear);
                 _holder->addPreview(_remove);
                 for ( std::vector<ColorItem*>::iterator it = curr->_colors.begin(); it != curr->_colors.end(); it++ ) {
                     _holder->addPreview(*it);
