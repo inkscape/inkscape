@@ -4055,8 +4055,8 @@ static void node_handle_moved(SPKnot *knot, Geom::Point const &p, guint state, g
         rnew.r = me->origin_radial.r;
     }
 
-    if (( n->type !=Inkscape::NodePath::NODE_CUSP || (state & GDK_SHIFT_MASK))
-        && rme.a != HUGE_VAL && rnew.a != HUGE_VAL && (fabs(rme.a - rnew.a) > 0.001 || n->type ==Inkscape::NodePath::NODE_SYMM)) {
+    if (( n->type !=Inkscape::NodePath::NODE_CUSP || (!n->dragging_out && (state & GDK_SHIFT_MASK)))
+        && (rme.a != HUGE_VAL) && (rnew.a != HUGE_VAL) && ((fabs(rme.a - rnew.a) > 0.001) || (n->type ==Inkscape::NodePath::NODE_SYMM))) {
         // rotate the other handle correspondingly, if both old and new angles exist and are not the same
         rother.a += rnew.a - rme.a;
         other->pos = Geom::Point(rother) + n->pos;
