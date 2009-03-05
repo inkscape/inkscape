@@ -20,7 +20,8 @@ TOP="`dirname \"$CWD\"`"
 # 	newer python as recommended by MacPython http://www.python.org/download/mac/
 #	Fink
 #	MacPorts (former DarwinPorts)
-export PATH="/opt/local/bin:/sw/bin/:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/bin:$CWD:$PATH"
+#  LaTeX distribution for Mac OS X
+export PATH=/usr/texbin:/opt/local/bin:/sw/bin/:/Library/Frameworks/Python.framework/Versions/Current/bin:/usr/local/bin:$CWD:$PATH"
 
 # Setup PYTHONPATH to use python modules shipped with Inkscape
 ARCH=`arch`
