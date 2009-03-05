@@ -55,6 +55,7 @@ public:
     enum ColorType{CLEAR, NONE, RGB};
 
     ColorDef();
+    ColorDef(ColorType type);
     ColorDef( unsigned int r, unsigned int g, unsigned int b, const std::string& description );
     virtual ~ColorDef();
 

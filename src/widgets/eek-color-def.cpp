@@ -62,6 +62,27 @@ ColorDef::ColorDef() :
 {
 }
 
+ColorDef::ColorDef( ColorType type ) :
+    descr(),
+    type(type),
+    r(0),
+    g(0),
+    b(0),
+    editable(false)
+{
+    switch (type) {
+        case CLEAR:
+            descr = _("remove");
+            break;
+        case NONE:
+            descr = _("none");
+            break;
+        case RGB:
+            descr = "";
+            break;
+    }
+}
+
 ColorDef::ColorDef( unsigned int r, unsigned int g, unsigned int b, const std::string& description ) :
     descr(description),
     type(RGB),

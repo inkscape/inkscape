@@ -31,7 +31,7 @@ class ColorItem : public Inkscape::UI::Previewable
 {
     friend void _loadPaletteFile( gchar const *filename );
 public:
-    ColorItem();
+    ColorItem( eek::ColorDef::ColorType type );
     ColorItem( unsigned int r, unsigned int g, unsigned int b,
                Glib::ustring& name );
     virtual ~ColorItem();
@@ -101,6 +101,7 @@ private:
     static SwatchesPanel* instance;
 
     PreviewHolder* _holder;
+    ColorItem* _clear;
     ColorItem* _remove;
 };
 

@@ -77,7 +77,8 @@ typedef enum {
     IMAGE_DATA,
     APP_X_INKY_COLOR,
     APP_X_COLOR,
-    APP_X_NOCOLOR
+    APP_X_NOCOLOR,
+    APP_X_XCOLOR
 } ui_drop_target_info;
 
 static GtkTargetEntry ui_drop_target_entries [] = {
@@ -90,6 +91,7 @@ static GtkTargetEntry ui_drop_target_entries [] = {
     {(gchar *)"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
 #endif // ENABLE_MAGIC_COLORS
     {(gchar *)"application/x-inkscape-nocolor",          0, APP_X_NOCOLOR     },
+    {(gchar *)"application/x-inkscape-xcolor",          0, APP_X_XCOLOR     },
     {(gchar *)"application/x-color",          0, APP_X_COLOR     }
 };
 
@@ -1236,6 +1238,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
         break;
 
         case APP_X_NOCOLOR:
+        case APP_X_XCOLOR:
         {
             gchar* c = g_strdup("none"); // temp
             int destX = 0;

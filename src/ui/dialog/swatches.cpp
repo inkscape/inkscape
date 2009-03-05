@@ -41,9 +41,8 @@ namespace Inkscape {
 namespace UI {
 namespace Dialogs {
 
-// create a None color swatch
-ColorItem::ColorItem() :
-    def(),
+ColorItem::ColorItem(eek::ColorDef::ColorType type) :
+    def(type),
     _isLive(false),
     _linkIsTone(false),
     _linkPercent(0),
@@ -106,6 +105,7 @@ typedef enum {
     APP_X_INKY_COLOR = 0,
     APP_X_COLOR,
     APP_X_NOCOLOR,
+    APP_X_XCOLOR,
     TEXT_DATA
 } colorFlavorType;
 
@@ -126,6 +126,12 @@ static const GtkTargetEntry sourceColorEntries[] = {
 
 static const GtkTargetEntry sourceNoColorEntries[] = {
     {"application/x-inkscape-nocolor", 0, APP_X_NOCOLOR},
+    {"application/x-color", 0, APP_X_COLOR},
+    {"text/plain", 0, TEXT_DATA},
+};
+
+static const GtkTargetEntry sourceClearColorEntries[] = {
+    {"application/x-inkscape-xcolor", 0, APP_X_XCOLOR},
     {"application/x-color", 0, APP_X_COLOR},
     {"text/plain", 0, TEXT_DATA},
 };
@@ -196,7 +202,7 @@ void ColorItem::_dragGetColorData( GtkWidget */*widget*/,
                                 reinterpret_cast<const guchar*>(tmp),
                                 itemCount * 2);
         delete[] tmp;
-    } else if ( info == APP_X_NOCOLOR ) {
+    } else if ( (info == APP_X_NOCOLOR) || (info == APP_X_XCOLOR) ) {
         Glib::ustring paletteName;
 
         // Find where this thing came from
@@ -445,6 +451,7 @@ void ColorItem::_dropDataIn( GtkWidget */*widget*/,
              break;
          }
          case APP_X_NOCOLOR:
+         case APP_X_XCOLOR:
          {
 //              g_message("APP_X_NOCOLOR dropping through to x-color");
          }
@@ -695,9 +702,10 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
 
         gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
                              GDK_BUTTON1_MASK,
-                             (def.getType() != eek::ColorDef::RGB) ? sourceNoColorEntries :
-                             sourceColorEntries,
-                             (def.getType() != eek::ColorDef::RGB) ? G_N_ELEMENTS(sourceNoColorEntries) :
+                             (def.getType() == eek::ColorDef::CLEAR) ? sourceClearColorEntries :
+                             (def.getType() == eek::ColorDef::NONE) ? sourceNoColorEntries : sourceColorEntries,
+                             (def.getType() == eek::ColorDef::CLEAR) ? G_N_ELEMENTS(sourceClearColorEntries) :
+                             (def.getType() == eek::ColorDef::NONE) ? G_N_ELEMENTS(sourceNoColorEntries) :
                              G_N_ELEMENTS(sourceColorEntries),
                              GdkDragAction(GDK_ACTION_MOVE | GDK_ACTION_COPY) );
 
@@ -1154,7 +1162,8 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
 {
     Gtk::RadioMenuItem* hotItem = 0;
     _holder = new PreviewHolder();
-    _remove = new ColorItem();
+    _clear = new ColorItem( eek::ColorDef::CLEAR );
+    _remove = new ColorItem( eek::ColorDef::NONE );
     loadEmUp();
     if ( !possible.empty() ) {
         JustForNow* first = 0;
@@ -1180,6 +1189,7 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
             _holder->setColumnPref( first->_prefWidth );
         }
         _holder->freezeUpdates();
+        // TODO restore once 'clear' works _holder->addPreview(_clear);
         _holder->addPreview(_remove);
         for ( std::vector<ColorItem*>::iterator it = first->_colors.begin(); it != first->_colors.end(); it++ ) {
             _holder->addPreview(*it);
@@ -1214,8 +1224,15 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
 
 SwatchesPanel::~SwatchesPanel()
 {
-    if (_remove) delete _remove;
-    if (_holder) delete _holder;
+    if ( _clear ) {
+        delete _clear;
+    }
+    if ( _remove ) {
+        delete _remove;
+    }
+    if ( _holder ) {
+        delete _holder;
+    }
 }
 
 void SwatchesPanel::setOrientation( Gtk::AnchorType how )
@@ -1247,6 +1264,7 @@ void SwatchesPanel::_handleAction( int setId, int itemId )
                     _holder->setColumnPref( curr->_prefWidth );
                 }
                 _holder->freezeUpdates();
+                _holder->addPreview(_clear);
                 _holder->addPreview(_remove);
                 for ( std::vector<ColorItem*>::iterator it = curr->_colors.begin(); it != curr->_colors.end(); it++ ) {
                     _holder->addPreview(*it);
