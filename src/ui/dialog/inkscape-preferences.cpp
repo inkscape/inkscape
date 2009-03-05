@@ -431,6 +431,8 @@ void InkscapePreferences::initPageTools()
     _page_node.add_line( false, _("Path outline color"), _t_node_pathoutline_color, "", _("Selects the color used for showing the path outline."), false);
     _t_node_pathflash_enabled.init ( _("Path outline flash on mouse-over"), "/tools/nodes/pathflash_enabled", false);
     _page_node.add_line( true, "", _t_node_pathflash_enabled, "", _("When hovering over a path, briefly flash its outline."));
+    _t_node_pathflash_unselected.init ( _("Suppress path outline flash when one path selected"), "/tools/nodes/pathflash_unselected", false);
+    _page_node.add_line( true, "", _t_node_pathflash_unselected, "", _("If a path is selected, do not continue flashing path outlines."));
     _t_node_pathflash_timeout.init("/tools/nodes/pathflash_timeout", 0, 10000.0, 100.0, 100.0, 1000.0, true, false);
     _page_node.add_line( false, _("Flash time"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds). Specify 0 to have the outline shown until mouse leaves the path."), false);
 

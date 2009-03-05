@@ -236,7 +236,14 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     if (prefs->getBool("/tools/nodes/pathflash_enabled")) {
-        guint timeout = prefs->getInt("/tools/nodes/pathflash_timeout", 500);
+        if (prefs->getBool("/tools/nodes/pathflash_unselected")) {
+            SPDesktop *desktop = event_context->desktop;
+            ShapeEditor* se = event_context->shape_editor;
+            Inkscape::Selection *selection = sp_desktop_selection (desktop);
+            if (se->has_nodepath() && selection->singleItem()) {
+                return ret;
+            }
+        }
         if (SP_IS_LPE_ITEM(item)) {
             Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
             if (lpe && (lpe->providesOwnFlashPaths() ||
@@ -246,6 +253,7 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                 return ret;
             }
         }
+        guint timeout = prefs->getInt("/tools/nodes/pathflash_timeout", 500);
         sp_node_context_flash_path(event_context, item, timeout);
     }
 
