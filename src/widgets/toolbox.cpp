@@ -723,6 +723,7 @@ Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
         SP_VERB_DIALOG_NAMEDVIEW,
         SP_VERB_DIALOG_TEXT,
         SP_VERB_DIALOG_XML_EDITOR,
+        SP_VERB_DIALOG_LAYERS,
         SP_VERB_EDIT_CLONE,
         SP_VERB_EDIT_COPY,
         SP_VERB_EDIT_CUT,
@@ -1830,6 +1831,7 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <separator />"
         "    <toolitem action='DialogFillStroke' />"
         "    <toolitem action='DialogText' />"
+        "    <toolitem action='DialogLayers' />"
         "    <toolitem action='DialogXMLEditor' />"
         "    <toolitem action='DialogAlignDistribute' />"
         "    <separator />"
