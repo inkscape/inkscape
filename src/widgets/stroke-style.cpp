@@ -1085,7 +1085,7 @@ sp_stroke_style_line_widget_new(void)
 // with it, the two remaining calls of stroke_average_width, allowing us to get rid of that
 // function in desktop-style.
 
-    a = new Gtk::Adjustment(1.0, 0.0, 1000.0, 0.1, 10.0, 10.0);
+    a = new Gtk::Adjustment(1.0, 0.0, 1000.0, 0.1, 10.0, 0.0);
     spw->set_data("width", a);
     sb = new Gtk::SpinButton(*a, 0.1, 3);
     tt->set_tip(*sb, _("Stroke width"));
@@ -1155,7 +1155,7 @@ sp_stroke_style_line_widget_new(void)
 
     hb = spw_hbox(t, 3, 1, i);
 
-    a = new Gtk::Adjustment(4.0, 0.0, 100.0, 0.1, 10.0, 10.0);
+    a = new Gtk::Adjustment(4.0, 0.0, 100.0, 0.1, 10.0, 0.0);
     spw->set_data("miterlimit", a);
 
     sb = new Gtk::SpinButton(*a, 0.1, 2);

@@ -72,7 +72,7 @@ SPDashSelector::SPDashSelector() {
     }
     dash->set_menu(*m);
 
-    offset = new Gtk::Adjustment(0.0, 0.0, 10.0, 0.1, 1.0, 1.0);
+    offset = new Gtk::Adjustment(0.0, 0.0, 10.0, 0.1, 1.0, 0.0);
     Gtk::SpinButton *sb = new Gtk::SpinButton(*offset, 0.1, 2);
     tt->set_tip(*sb, _("Pattern offset"));
 
