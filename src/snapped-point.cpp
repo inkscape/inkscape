@@ -126,13 +126,20 @@ bool Inkscape::SnappedPoint::isOtherSnapBetter(Inkscape::SnappedPoint const &oth
     bool c3 = other_one.getFullyConstrained() && !getFullyConstrained();
     // But in no case fall back; (has less priority than c3n, so it is allowed to fall back when c3 is true, see below)
     bool c3n = !other_one.getFullyConstrained() && getFullyConstrained();
-    // or, if it's just as close then consider the second distance
-    bool c4a = (dist_other == dist_this);
-    bool c4b = other_one.getSecondSnapDistance() < getSecondSnapDistance();
 
-    // std::cout << other_one.getPoint() << " (Other one) vs. " << getPoint() << " (this one) ---> ";
-    // std::cout << "c1 = " << c1 << " | c2 = " << c2 << " | c2n = " << c2n << " | c3 = " << c3 << " | c3n = " << c3n << " | c4a = " << c4a << " | c4b = " << c4b << std::endl;
-    return (c1 || c2 || c3 || (c4a && c4b)) && !c2n && (!c3n || c2);
+    // When both are fully constrained AND coincident, then prefer nodes over intersections
+    bool d = other_one.getFullyConstrained() && getFullyConstrained() && (Geom::L2(other_one.getPoint() - getPoint()) < 1e-9);
+    bool c4 = d && !other_one.getAtIntersection() && getAtIntersection();
+    // But don't fall back...
+    bool c4n = d && other_one.getAtIntersection() && !getAtIntersection();
+
+    // or, if it's just as close then consider the second distance
+    bool c5a = (dist_other == dist_this);
+    bool c5b = other_one.getSecondSnapDistance() < getSecondSnapDistance();
+
+    // std::cout << other_one.getPoint() << " (Other one, dist = " << dist_other << ") vs. " << getPoint() << " (this one, dist = " << dist_this << ") ---> ";
+    // std::cout << "c1 = " << c1 << " | c2 = " << c2 << " | c2n = " << c2n << " | c3 = " << c3 << " | c3n = " << c3n << " | c4 = " << c4 << " | c4n = " << c4n << " | c5a = " << c5a << " | c5b = " << c5b << std::endl;
+    return (c1 || c2 || c3 || c4 || (c5a && c5b)) && !c2n && (!c3n || c2) && !c4n;
 }
 
 /*

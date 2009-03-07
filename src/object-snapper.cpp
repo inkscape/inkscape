@@ -161,6 +161,9 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                         if (bbox_to_snap_incl.intersects(*bbox_of_item)) {
                             // This item is within snapping range, so record it as a candidate
                             _candidates->push_back(SnapCandidate(item, clip_or_mask, additional_affine));
+                            // For debugging: print the id of the candidate to the console
+                            // SPObject *obj = (SPObject*)item;
+                            // std::cout << "Snap candidate added: " << obj->id << std::endl;
                         }
                     }
                 }

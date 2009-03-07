@@ -507,7 +507,7 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p,
         p = o + bdot * best;
 
         if (!(state & GDK_SHIFT_MASK)) { //SHIFT disables all snapping, except the angular snapping above
-                                         //After all, the user explicitely asked for angular snapping by
+                                         //After all, the user explicitly asked for angular snapping by
                                          //pressing CTRL
             /* Snap it along best vector */
             SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
@@ -522,8 +522,14 @@ void spdc_endpoint_snap_rotation(SPEventContext const *const ec, Geom::Point &p,
 
 void spdc_endpoint_snap_free(SPEventContext const * const ec, Geom::Point& p, guint const /*state*/)
 {
-    SnapManager &m = SP_EVENT_CONTEXT_DESKTOP(ec)->namedview->snap_manager;
-    m.setup(SP_EVENT_CONTEXT_DESKTOP(ec));
+    SPDesktop *dt = SP_EVENT_CONTEXT_DESKTOP(ec);
+	SnapManager &m = dt->namedview->snap_manager;
+	Inkscape::Selection *selection = sp_desktop_selection (dt);
+
+	// selection->singleItem() is the item that is currently being drawn. This item will not be snapped to (to avoid self-snapping)
+	// TODO: Allow snapping to the stationary parts of the item, and only ignore the last segment
+
+	m.setup(dt, true, selection->singleItem());
     Geom::Point pt2g = to_2geom(p);
     m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::SNAPSOURCE_HANDLE);
     p = from_2geom(pt2g);
