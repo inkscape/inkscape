@@ -484,6 +484,14 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     se->add_node();
                     ret = TRUE;
                     break;
+                case GDK_I:
+                case GDK_i:
+                    // apple keyboards have no Insert
+                    if (MOD__SHIFT_ONLY) {
+                        se->add_node();
+                        ret = TRUE;
+                    }
+                    break;
                 case GDK_Delete:
                 case GDK_KP_Delete:
                 case GDK_BackSpace:
