@@ -90,8 +90,7 @@ static GtkTargetEntry ui_drop_target_entries [] = {
 #if ENABLE_MAGIC_COLORS
     {(gchar *)"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
 #endif // ENABLE_MAGIC_COLORS
-    {(gchar *)"application/x-inkscape-nocolor",          0, APP_X_NOCOLOR     },
-    {(gchar *)"application/x-inkscape-xcolor",          0, APP_X_XCOLOR     },
+    {(gchar *)"application/x-oswb-nocolor",   0, APP_X_NOCOLOR     },
     {(gchar *)"application/x-color",          0, APP_X_COLOR     }
 };
 

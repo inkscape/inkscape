@@ -64,6 +64,9 @@ public:
 
     ColorType getType() const { return type; }
 
+    std::vector<std::string> getMIMETypes();
+    void getMIMEData(std::string const & type, char*& dest, int& len, int& format);
+
     void setRGB( unsigned int r, unsigned int g, unsigned int b );
     unsigned int getR() const { return r; }
     unsigned int getG() const { return g; }

@@ -43,6 +43,8 @@
 #include <libintl.h>
 #endif
 
+#include <stdint.h>
+
 #if !defined(_)
 #define _(s) gettext(s)
 #endif // !defined(_)
@@ -124,6 +126,42 @@ public:
     ColorCallback _cb;
     void* _data;
 };
+
+
+std::vector<std::string> ColorDef::getMIMETypes()
+{
+    std::vector<std::string> listing;
+    if ( getType() != eek::ColorDef::RGB ) {
+        listing.push_back("application/x-oswb-nocolor");
+    }
+    listing.push_back("application/x-color");
+    listing.push_back("text/plain");
+    return listing;
+}
+
+void ColorDef::getMIMEData(std::string const & type, char*& dest, int& len, int& format)
+{
+    if ( type == "text/plain" ) {
+        dest = new char[8];
+        snprintf( dest, 8, "#%02x%02x%02x", getR(), getG(), getB() );
+        dest[7] = 0;
+        len = 8;
+        format = 8;
+    } else if ( (type == "application/x-color") || (type == "application/x-oswb-nocolor") ) {
+        uint16_t* tmp = new uint16_t[4];
+        tmp[0] = (getR() << 8) | getR();
+        tmp[1] = (getG() << 8) | getG();
+        tmp[2] = (getB() << 8) | getB();
+        tmp[3] = 0xffff;
+        dest = reinterpret_cast<char*>(tmp);
+        len = 8;
+        format = 16;
+    } else {
+        // nothing
+        dest = 0;
+        len = 0;
+    }
+}
 
 void ColorDef::setRGB( unsigned int r, unsigned int g, unsigned int b )
 {

@@ -12,6 +12,7 @@
  */
 
 #include <errno.h>
+#include <map>
 
 #include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
 #include <gtk/gtkdnd.h>
@@ -109,32 +110,14 @@ typedef enum {
     TEXT_DATA
 } colorFlavorType;
 
-//TODO: warning: deprecated conversion from string constant to ‘gchar*’
-//
-//Turn out to be warnings that we should probably leave in place. The
-// pointers/types used need to be read-only. So until we correct the using
-// code, those warnings are actually desired. They say "Hey! Fix this". We
-// definitely don't want to hide/ignore them. --JonCruz
-static const GtkTargetEntry sourceColorEntries[] = {
+std::map<std::string, guint> mimeToInt;
+std::map<guint, std::string> intToMime;
+
 #if ENABLE_MAGIC_COLORS
 //    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
-    {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
+//    {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
 #endif // ENABLE_MAGIC_COLORS
-    {"application/x-color", 0, APP_X_COLOR},
-    {"text/plain", 0, TEXT_DATA},
-};
 
-static const GtkTargetEntry sourceNoColorEntries[] = {
-    {"application/x-inkscape-nocolor", 0, APP_X_NOCOLOR},
-    {"application/x-color", 0, APP_X_COLOR},
-    {"text/plain", 0, TEXT_DATA},
-};
-
-static const GtkTargetEntry sourceClearColorEntries[] = {
-    {"application/x-inkscape-xcolor", 0, APP_X_XCOLOR},
-    {"application/x-color", 0, APP_X_COLOR},
-    {"text/plain", 0, TEXT_DATA},
-};
 
 void ColorItem::_dragGetColorData( GtkWidget */*widget*/,
                                    GdkDragContext */*drag_context*/,
@@ -143,121 +126,26 @@ void ColorItem::_dragGetColorData( GtkWidget */*widget*/,
                                    guint /*time*/,
                                    gpointer user_data)
 {
-    static GdkAtom typeXColor = gdk_atom_intern("application/x-color", FALSE);
-    static GdkAtom typeText = gdk_atom_intern("text/plain", FALSE);
-
     ColorItem* item = reinterpret_cast<ColorItem*>(user_data);
+    std::string key;
     if ( info == TEXT_DATA ) {
-        gchar* tmp = g_strdup_printf("#%02x%02x%02x", item->def.getR(), item->def.getG(), item->def.getB() );
-
-        gtk_selection_data_set( data,
-                                typeText,
-                                8, // format
-                                (guchar*)tmp,
-                                strlen((const char*)tmp) + 1);
-        g_free(tmp);
-        tmp = 0;
-    } else if ( info == APP_X_INKY_COLOR ) {
-        Glib::ustring paletteName;
-
-        // Find where this thing came from
-        bool found = false;
-        int index = 0;
-        for ( std::vector<JustForNow*>::iterator it = possible.begin(); it != possible.end() && !found; ++it ) {
-            JustForNow* curr = *it;
-            index = 0;
-            for ( std::vector<ColorItem*>::iterator zz = curr->_colors.begin(); zz != curr->_colors.end(); ++zz ) {
-                if ( item == *zz ) {
-                    found = true;
-                    paletteName = curr->_name;
-                    break;
-                } else {
-                    index++;
-                }
-            }
-        }
-
-//         if ( found ) {
-//             g_message("Found the color at entry %d in palette '%s'", index, paletteName.c_str() );
-//         } else {
-//             g_message("Unable to find the color");
-//         }
-        int itemCount = 4 + 2 + 1 + paletteName.length();
-
-        guint16* tmp = new guint16[itemCount];
-        tmp[0] = (item->def.getR() << 8) | item->def.getR();
-        tmp[1] = (item->def.getG() << 8) | item->def.getG();
-        tmp[2] = (item->def.getB() << 8) | item->def.getB();
-        tmp[3] = 0xffff;
-        tmp[4] = (item->_isLive || !item->_listeners.empty() || (item->_linkSrc != 0) ) ? 1 : 0;
-
-        tmp[5] = index;
-        tmp[6] = paletteName.length();
-        for ( unsigned int i = 0; i < paletteName.length(); i++ ) {
-            tmp[7 + i] = paletteName[i];
-        }
-        gtk_selection_data_set( data,
-                                typeXColor,
-                                16, // format
-                                reinterpret_cast<const guchar*>(tmp),
-                                itemCount * 2);
-        delete[] tmp;
+        key = "text/plain";
     } else if ( (info == APP_X_NOCOLOR) || (info == APP_X_XCOLOR) ) {
-        Glib::ustring paletteName;
-
-        // Find where this thing came from
-        bool found = false;
-        int index = 0;
-        for ( std::vector<JustForNow*>::iterator it = possible.begin(); it != possible.end() && !found; ++it ) {
-            JustForNow* curr = *it;
-            index = 0;
-            for ( std::vector<ColorItem*>::iterator zz = curr->_colors.begin(); zz != curr->_colors.end(); ++zz ) {
-                if ( item == *zz ) {
-                    found = true;
-                    paletteName = curr->_name;
-                    break;
-                } else {
-                    index++;
-                }
-            }
-        }
-
-//         if ( found ) {
-//             g_message("Found the color at entry %d in palette '%s'", index, paletteName.c_str() );
-//         } else {
-//             g_message("Unable to find the color");
-//         }
-        int itemCount = 4 + 2 + 1 + paletteName.length();
-
-        guint16* tmp = new guint16[itemCount];
-        tmp[0] = (item->def.getR() << 8) | item->def.getR();
-        tmp[1] = (item->def.getG() << 8) | item->def.getG();
-        tmp[2] = (item->def.getB() << 8) | item->def.getB();
-        tmp[3] = 0xffff;
-        tmp[4] = (item->_isLive || !item->_listeners.empty() || (item->_linkSrc != 0) ) ? 1 : 0;
-
-        tmp[5] = index;
-        tmp[6] = paletteName.length();
-        for ( unsigned int i = 0; i < paletteName.length(); i++ ) {
-            tmp[7 + i] = paletteName[i];
-        }
-        gtk_selection_data_set( data,
-                                typeXColor,
-                                16, // format
-                                reinterpret_cast<const guchar*>(tmp),
-                                itemCount * 2);
-        delete[] tmp;
+        key = "application/x-oswb-nocolor";
     } else {
-        guint16 tmp[4];
-        tmp[0] = (item->def.getR() << 8) | item->def.getR();
-        tmp[1] = (item->def.getG() << 8) | item->def.getG();
-        tmp[2] = (item->def.getB() << 8) | item->def.getB();
-        tmp[3] = 0xffff;
-        gtk_selection_data_set( data,
-                                typeXColor,
-                                16, // format
-                                reinterpret_cast<const guchar*>(tmp),
-                                (3+1) * 2);
+        key = "application/x-color";
+    }
+
+    if ( !key.empty() ) {
+        char* tmp = 0;
+        int len = 0;
+        int format = 0;
+        item->def.getMIMEData(key, tmp, len, format);
+        if ( tmp ) {
+            GdkAtom dataAtom = gdk_atom_intern( key.c_str(), FALSE );
+            gtk_selection_data_set( data, dataAtom, format, (guchar*)tmp, len );
+            delete[] tmp;
+        }
     }
 }
 
@@ -617,6 +505,17 @@ void ColorItem::_colorDefChanged(void* data)
 
 Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewSize size, guint ratio)
 {
+    if (mimeToInt.empty()) {
+        mimeToInt["application/x-inkscape-nocolor"] = APP_X_NOCOLOR;
+        intToMime[APP_X_NOCOLOR] = "application/x-inkscape-nocolor";
+
+        mimeToInt["application/x-color"] = APP_X_COLOR;
+        intToMime[APP_X_COLOR] = "application/x-color";
+
+        mimeToInt["text/plain"] = TEXT_DATA;
+        intToMime[TEXT_DATA] = "text/plain";
+    }
+
     Gtk::Widget* widget = 0;
     if ( style == PREVIEW_STYLE_BLURB) {
         Gtk::Label *lbl = new Gtk::Label(def.descr);
@@ -700,14 +599,26 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
                           G_CALLBACK(handleButtonPress),
                           this);
 
-        gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
-                             GDK_BUTTON1_MASK,
-                             (def.getType() == eek::ColorDef::CLEAR) ? sourceClearColorEntries :
-                             (def.getType() == eek::ColorDef::NONE) ? sourceNoColorEntries : sourceColorEntries,
-                             (def.getType() == eek::ColorDef::CLEAR) ? G_N_ELEMENTS(sourceClearColorEntries) :
-                             (def.getType() == eek::ColorDef::NONE) ? G_N_ELEMENTS(sourceNoColorEntries) :
-                             G_N_ELEMENTS(sourceColorEntries),
-                             GdkDragAction(GDK_ACTION_MOVE | GDK_ACTION_COPY) );
+        {
+            std::vector<std::string> listing = def.getMIMETypes();
+            int entryCount = listing.size();
+            GtkTargetEntry* entries = new GtkTargetEntry[entryCount];
+            GtkTargetEntry* curr = entries;
+            for ( std::vector<std::string>::iterator it = listing.begin(); it != listing.end(); ++it ) {
+                curr->target = g_strdup(it->c_str());
+                curr->flags = 0;
+                curr->info = mimeToInt[curr->target];
+                curr++;
+            }
+            gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
+                                 GDK_BUTTON1_MASK,
+                                 entries, entryCount,
+                                 GdkDragAction(GDK_ACTION_MOVE | GDK_ACTION_COPY) );
+            for ( int i = 0; i < entryCount; i++ ) {
+                g_free(entries[i].target);
+            }
+            delete[] entries;
+        }
 
         g_signal_connect( G_OBJECT(newBlot->gobj()),
                           "drag-data-get",
