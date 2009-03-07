@@ -22,15 +22,18 @@
 # directory - map
 # gradient  -  kleurverloop
 # filter primitive - filtereffect (i.v.m. opvullingsfilters)
+# freehand - uit de losse hand
 # grid - raster
 # hue  -  tint
 # lightness  -  helderheid
 # master  -  meester  (i.v.m. docking)
 # node  -  knooppunt  (soms kortweg: knoop)
 # opacity  -  ondoorzichtigheid
+# ruler - liniaal
 # saturation  -  verzadiging
 # stroke  -  lijn, omlijning
 # tile  -  tegel
+# to tweak / tweak context - retoucheren
 # (toevoegingen welkom)
 
 msgid ""
@@ -38,7 +41,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.46\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-01-28 13:45+0100\n"
-"PO-Revision-Date: 2009-02-01 18:41+0100\n"
+"PO-Revision-Date: 2009-03-01 18:43+0100\n"
 "Last-Translator: Kris De Gussem <kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -2544,7 +2547,7 @@ msgstr "  bestandstype: "
 
 #: ../src/extension/dependency.cpp:263
 msgid "  location: "
-msgstr "  lokatie: "
+msgstr "  locatie: "
 
 #: ../src/extension/dependency.cpp:264
 msgid "  string: "
@@ -3190,7 +3193,7 @@ msgstr "Geselecteerde bitmap(s) vervormen met een sinusgolf."
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Inset/Outset Halo"
-msgstr "Halo"
+msgstr "Halo vernauwen/verwijden"
 
 #: ../src/extension/internal/bluredge.cpp:136
 msgid "Width in px of the halo"
@@ -3735,11 +3738,11 @@ msgstr "Vectorafbeeldingenformaat gebruikt door Corel WordPerfect"
 
 #: ../src/extension/prefdialog.cpp:236
 msgid "Live preview"
-msgstr ""
+msgstr "Live voorvertonen"
 
 #: ../src/extension/prefdialog.cpp:236
 msgid "Is the effect previewed live on canvas?"
-msgstr ""
+msgstr "Het effect live voorvertonen op het canvas?"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -4568,7 +4571,7 @@ msgstr "Er is een interne fout opgetreden in Inkscape.  Het programma wordt afge
 
 #: ../src/inkscape.cpp:670
 msgid "Automatic backups of unsaved documents were done to the following locations:\n"
-msgstr "Automatische reservekopieën van niet-opgeslagen documenten werden gemaakt op de volgende lokaties:\n"
+msgstr "Automatische reservekopieën van niet-opgeslagen documenten werden gemaakt op de volgende locaties:\n"
 
 #: ../src/inkscape.cpp:671
 msgid "Automatic backup of the following documents failed:\n"
@@ -4665,9 +4668,9 @@ msgid ""
 "\n"
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Een bestand genaamd \"%s\" bestaat al. Wilt u deze vervangen?</span>\n"
+"<span weight=\"bold\" size=\"larger\">Een bestand met de naam \"%s\" bestaat al. Wilt u dit vervangen?</span>\n"
 "\n"
-"Het bestand bestaat al in \"%s\". Door deze te vervangen wordt de oude inhoud overschreven."
+"Het bestand bestaat al in \"%s\". Door dit te vervangen, wordt de oude inhoud overschreven."
 
 #: ../src/interface.cpp:1432
 msgid "Replace"
@@ -4728,9 +4731,8 @@ msgid "_Write session file:"
 msgstr "_Sessiebestand opslaan:"
 
 #: ../src/jabber_whiteboard/pedrogui.cpp:2630
-#, fuzzy
 msgid "Shared SVG whiteboard tool."
-msgstr "SVG-whiteboard-gereedschap om samen te werken"
+msgstr "SVG-chatgereedschap om samen te werken"
 
 #: ../src/jabber_whiteboard/pedrogui.cpp:2631
 msgid "Based on the Pedro XMPP client"
@@ -4745,14 +4747,12 @@ msgid "Set filename"
 msgstr "Bestandsnaam instellen"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:308
-#, fuzzy
 msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b>%1</b> heeft u uitgenodigd voor een whiteboard-sessie."
+msgstr "<b>%1</b> heeft u uitgenodigd voor een chatsessie."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:310
-#, fuzzy
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "Wilt u de uitnodiging van <b>%1</b> voor een whiteboard-sessie accepteren?"
+msgstr "Wilt u de uitnodiging van <b>%1</b> voor een chatsessie accepteren?"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:314
 msgid "Accept invitation"
@@ -5170,35 +5170,39 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:85
 msgid "Angle bisector"
-msgstr ""
+msgstr "Deellijn hoek"
 
 #: ../src/live_effects/effect.cpp:86
 msgid "Bend"
-msgstr "Buigen"
+msgstr "Buigen langs pad"
 
 #: ../src/live_effects/effect.cpp:87
 msgid "Boolops"
-msgstr "Gereedschappen"
+msgstr "Booleaanse operator"
 
 #: ../src/live_effects/effect.cpp:88
 msgid "Circle (by center and radius)"
-msgstr ""
+msgstr "Cirkel (middelpunt en straal)"
 
 #: ../src/live_effects/effect.cpp:89
 msgid "Circle by 3 points"
-msgstr ""
+msgstr "Cirkel door 3 punten"
 
 #: ../src/live_effects/effect.cpp:90
 msgid "Construct grid"
 msgstr "Axonometrisch raster"
 
+#Vertaling is hier min of meer letterlijk.
+#Het gaat hier om een vervorming van een object door een verplaatsing van de 4 paden van het kader van de omhullende
+#Zie menu "Paden" > "Padeffecten"
+#Alternatieven: "Vervorming kader", "Vervorming omhullende"
 #: ../src/live_effects/effect.cpp:91
 msgid "Envelope Deformation"
-msgstr "Informatie"
+msgstr "Omslagvervorming"
 
 #: ../src/live_effects/effect.cpp:92
 msgid "Freehand Shape"
-msgstr ""
+msgstr "Vorm uit de losse hand"
 
 #. this is actually a special type of PatternAlongPath, used to paste shapes in pen/pencil tool
 #: ../src/live_effects/effect.cpp:93
@@ -5219,15 +5223,15 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:97
 msgid "Lattice Deformation"
-msgstr ""
+msgstr "Roostervervorming"
 
 #: ../src/live_effects/effect.cpp:98
 msgid "Line Segment"
-msgstr "_Lijnsegment"
+msgstr "Lijnsegment"
 
 #: ../src/live_effects/effect.cpp:99
 msgid "Mirror symmetry"
-msgstr ""
+msgstr "Spiegelsymmetrie"
 
 #: ../src/live_effects/effect.cpp:101
 msgid "Parallel"
@@ -5241,42 +5245,43 @@ msgstr "Padlengte"
 msgid "Pattern Along Path"
 msgstr "Patroon langs pad"
 
+#Gaat dit over de buitenbissectrice? anders Loodrechte deellijn?
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
 #: ../src/live_effects/effect.cpp:104
 msgid "Perpendicular bisector"
-msgstr ""
+msgstr "Loodrechte deellijn"
 
 #: ../src/live_effects/effect.cpp:105
 msgid "Perspective path"
-msgstr ""
+msgstr "Perspectief"
 
 #: ../src/live_effects/effect.cpp:106
 msgid "Rotate copies"
-msgstr ""
+msgstr "Kopieën draaien"
 
 #: ../src/live_effects/effect.cpp:107
 msgid "Ruler"
-msgstr ""
+msgstr "Liniaal"
 
 #: ../src/live_effects/effect.cpp:108
 msgid "Sketch"
-msgstr ""
+msgstr "Schets"
 
 #: ../src/live_effects/effect.cpp:109
 msgid "Spiro spline"
-msgstr ""
+msgstr "Spirografische spline"
 
 #: ../src/live_effects/effect.cpp:110
 msgid "Stitch Sub-Paths"
-msgstr "Subpaden aan elkaar zetten"
+msgstr "Subpaden aan elkaar naaien"
 
 #: ../src/live_effects/effect.cpp:111
 msgid "Tangent to curve"
-msgstr ""
+msgstr "Raaklijn aan curve"
 
 #: ../src/live_effects/effect.cpp:112
 msgid "Text label"
-msgstr "Tekst label"
+msgstr "Label"
 
 #: ../src/live_effects/effect.cpp:113
 msgid "VonKoch"
@@ -5284,19 +5289,19 @@ msgstr "VonKoch"
 
 #: ../src/live_effects/effect.cpp:266
 msgid "Is visible?"
-msgstr ""
+msgstr "Zichtbaar?"
 
 #: ../src/live_effects/effect.cpp:266
 msgid "If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"
-msgstr ""
+msgstr "Indien uitgevinkt, blijft het effect op het object toegepast, maar is het tijdelijk niet zichtbaar op het canvas"
 
 #: ../src/live_effects/effect.cpp:267
 msgid "Deactivate knotholder?"
-msgstr ""
+msgstr "Knoophouder deactiveren?"
 
 #: ../src/live_effects/effect.cpp:267
 msgid "Check this to deactivate knotholder handles (useful if they interfere with node handles during editing)"
-msgstr ""
+msgstr "Vink dit aan om de handvaten van de knopen te deactiveren (handig indien deze interfereren met de handvaten van knooppuntten tijdens het bewerken)"
 
 #: ../src/live_effects/effect.cpp:288
 msgid "No effect"
@@ -5321,32 +5326,32 @@ msgstr "Geen van de toegepaste padeffectparameters kunnen op het canvas bewerkt 
 #: ../src/live_effects/lpe-perp_bisector.cpp:103
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:58
 msgid "Length left"
-msgstr ""
+msgstr "Lengte links"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:51
 #: ../src/live_effects/lpe-perp_bisector.cpp:103
 msgid "Specifies the left end of the bisector"
-msgstr ""
+msgstr "Specifieert de lengte van het linkse uiteinde van de deellijn"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:52
 #: ../src/live_effects/lpe-parallel.cpp:48
 #: ../src/live_effects/lpe-perp_bisector.cpp:104
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:59
 msgid "Length right"
-msgstr ""
+msgstr "Lengte rechts"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:52
 #: ../src/live_effects/lpe-perp_bisector.cpp:104
 msgid "Specifies the right end of the bisector"
-msgstr ""
+msgstr "Specifieert de lengte van het rechtse uiteinde van de deellijn"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:59
 msgid "Adjust the \"left\" end of the bisector"
-msgstr ""
+msgstr "Het \"linkse\" einde van de deellijn aanpassen"
 
 #: ../src/live_effects/lpe-angle_bisector.cpp:60
 msgid "Adjust the \"right\" of the bisector"
-msgstr ""
+msgstr "Het \"rechtse\" einde van de deellijn aanpassen"
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Bend path"
@@ -5363,7 +5368,7 @@ msgstr "Breedte van het pad"
 #: ../src/live_effects/lpe-bendpath.cpp:57
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
 msgid "Width in units of length"
-msgstr "Breedte in eenheden van lengte"
+msgstr "Breedte uitgedrukt in eenheden van lengte"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "Scale the width of the path in units of its length"
@@ -5379,11 +5384,11 @@ msgstr "Draait het origineel 90 graden alvorens het langs het buigingspad te bui
 
 #: ../src/live_effects/lpe-boolops.cpp:23
 msgid "Null"
-msgstr ""
+msgstr "Niets"
 
 #: ../src/live_effects/lpe-boolops.cpp:24
 msgid "Intersect"
-msgstr ""
+msgstr "Doorsnede"
 
 #: ../src/live_effects/lpe-boolops.cpp:25
 msgid "Subtract A-B"
@@ -5434,7 +5439,7 @@ msgstr "X-grootte"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:28
 msgid "The size of the grid in X direction."
-msgstr ""
+msgstr "Rastergrootte in X-richting"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:29
 msgid "Size Y"
@@ -5442,15 +5447,15 @@ msgstr "Y-grootte"
 
 #: ../src/live_effects/lpe-constructgrid.cpp:29
 msgid "The size of the grid in Y direction."
-msgstr "Toestand van verdwijnpunt in Y-richting"
+msgstr "Rastergrootte in Y-richting"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:47
 msgid "Starting"
-msgstr ""
+msgstr "Begin"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:47
 msgid "Angle of the first copy"
-msgstr ""
+msgstr "Hoek van de eerste kopie"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:48
 msgid "Rotation angle"
@@ -5458,7 +5463,7 @@ msgstr "Rotatiehoek"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:48
 msgid "Angle between two successive copies"
-msgstr ""
+msgstr "Hoek tussen twee opeenvolgende kopieën"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:49
 msgid "Number of copies"
@@ -5474,19 +5479,19 @@ msgstr "Oorsprong"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:50
 msgid "Origin of the rotation"
-msgstr ""
+msgstr "Oorsprong van de rotatie"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:61
 msgid "Adjust the starting angle"
-msgstr ""
+msgstr "De beginhoek aanpassen"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:62
 msgid "Adjust the rotation angle"
-msgstr "Draaihoek aanpassen"
+msgstr "De draaihoek aanpassen"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
-msgstr ""
+msgstr "Naaipad"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
@@ -5503,37 +5508,37 @@ msgstr "Het aantal paden dat gegenereerd wordt."
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 #: ../src/live_effects/lpe-rough-hatches.cpp:276
 msgid "Start edge variance"
-msgstr "Beginpunt-randvariantie"
+msgstr "Randvariatie begin"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "The amount of random jitter to move the start points of the stitches inside & outside the guide path"
-msgstr "De hoeveelheid willekeurigheid waarmee de beginpunten van de steken binnen en buiten het hulplijnpad verplaatst mogen worden"
+msgstr "De mate van variatie waarmee de beginpunten van de steken binnen en buiten het hulplijnpad verplaatst mogen worden"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "Start spacing variance"
-msgstr "Beginpunt-afstandsvariantie"
+msgstr "Afstandsvariatie begin"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "The amount of random shifting to move the start points of the stitches back & forth along the guide path"
-msgstr "De hoeveelheid willekeurigheid waarmee de beginpunten van de steken langs het hulplijnpad verplaatst mogen worden"
+msgstr "De mate van variatie waarmee de beginpunten van de steken langs het hulplijnpad verplaatst mogen worden"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 #: ../src/live_effects/lpe-rough-hatches.cpp:277
 msgid "End edge variance"
-msgstr "Eindpunt-randvariantie"
+msgstr "Randvariatie einde"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "The amount of randomness that moves the end points of the stitches inside & outside the guide path"
-msgstr "De hoeveelheid willekeurigheid waarmee de eindpunten van de steken binnen en buiten het hulplijnpad verplaatst mogen worden"
+msgstr "De mate van variatie waarmee de eindpunten van de steken binnen en buiten het hulplijnpad verplaatst mogen worden"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 #: ../src/live_effects/lpe-rough-hatches.cpp:281
 msgid "End spacing variance"
-msgstr "Eindpunt-afstandsvariantie"
+msgstr "Afstandsvariantie einde"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "The amount of random shifting to move the end points of the stitches back & forth along the guide path"
-msgstr "De hoeveelheid willekeurigheid waarmee de eindpunten van de steken langs het hulplijnpad verplaatst mogen worden"
+msgstr "De hoeveelheid variatie waarmee de eindpunten van de steken langs het hulplijnpad verplaatst mogen worden"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
 msgid "Scale width"
@@ -5541,7 +5546,7 @@ msgstr "Breedte schalen"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
 msgid "Scale the width of the stitch path"
-msgstr ""
+msgstr "Schaal de breedte van het naaipad"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale width relative to length"
@@ -5549,7 +5554,7 @@ msgstr "Breedte relatief aan lengte schalen"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale the width of the stitch path relative to its length"
-msgstr ""
+msgstr "Schaal de breedte van het naaipad relatief ten opzichte van zijn lengte"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
 msgid "Ellipitic Pen"
@@ -5659,51 +5664,51 @@ msgstr ""
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top bend path"
-msgstr ""
+msgstr "Pad bovenzijde vervormen"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top path along which to bend the original path"
-msgstr ""
+msgstr "Pad bovenzijde langswaar het origineel pad gebogen wordt"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
 msgid "Right bend path"
-msgstr ""
+msgstr "Pad rechterzijde vervormen"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
 msgid "Right path along which to bend the original path"
-msgstr ""
+msgstr "Pad rechterzijde langswaar het origineel pad gebogen wordt"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
 msgid "Bottom bend path"
-msgstr ""
+msgstr "Pad onderzijde vervormen"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
 msgid "Bottom path along which to bend the original path"
-msgstr ""
+msgstr "Pad onderzijde langswaar het origineel pad gebogen wordt"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
 msgid "Left bend path"
-msgstr ""
+msgstr "Pad linkerzijde vervormen"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
 msgid "Left path along which to bend the original path"
-msgstr ""
+msgstr "Pad linkerzijde langswaar het origineel pad gebogen wordt"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable left & right paths"
-msgstr ""
+msgstr "Pad linker- en rechterzijde inschakelen"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable the left and right deformation paths"
-msgstr ""
+msgstr "Het vervormingspad aan de linker- en rechterzijde inschakelen"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
 msgid "Enable top & bottom paths"
-msgstr ""
+msgstr "Pad boven- en onderzijde inschakelen"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
 msgid "Enable the top and bottom deformation paths"
-msgstr ""
+msgstr "Het vervormingspad aan de boven- en onderzijde inschakelen"
 
 #: ../src/live_effects/lpe-gears.cpp:212
 msgid "Teeth"
@@ -5723,11 +5728,11 @@ msgstr "Tanddrukhoek (gewoonlijk 20-25 graden).  De ratio van tanden die geen co
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
 msgid "Trajectory"
-msgstr ""
+msgstr "Traject"
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
 msgid "Path along which intermediate steps are created."
-msgstr ""
+msgstr "Pad waarlangs de tussenliggende stappen gemaakt worden."
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 #: ../src/ui/dialog/inkscape-preferences.cpp:227
@@ -5736,15 +5741,15 @@ msgstr "Stappen"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 msgid "Determines the number of steps from start to end path."
-msgstr ""
+msgstr "Bepaalt het aantal stappen van het beginpad tot het eindpad."
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid "Equidistant spacing"
-msgstr ""
+msgstr "Equidistant"
 
 #: ../src/live_effects/lpe-interpolate.cpp:32
 msgid "If true, the spacing between intermediates is constant along the length of the path. If false, the distance depends on the location of the nodes of the trajectory path."
-msgstr ""
+msgstr "Indien aangevinkt is de ruimte tussen de intermediairen constant over de lengte van het pad. Indien niet aangevinkt is de afstand afhankelijk van de positie van de knooppunten op het traject."
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-knot.cpp:356
@@ -5778,67 +5783,67 @@ msgstr ""
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-lattice.cpp:47
 msgid "Control handle 0"
-msgstr ""
+msgstr "Controlepunt 0"
 
 #: ../src/live_effects/lpe-lattice.cpp:48
 msgid "Control handle 1"
-msgstr ""
+msgstr "Controlepunt 1"
 
 #: ../src/live_effects/lpe-lattice.cpp:49
 msgid "Control handle 2"
-msgstr ""
+msgstr "Controlepunt 2"
 
 #: ../src/live_effects/lpe-lattice.cpp:50
 msgid "Control handle 3"
-msgstr ""
+msgstr "Controlepunt 3"
 
 #: ../src/live_effects/lpe-lattice.cpp:51
 msgid "Control handle 4"
-msgstr ""
+msgstr "Controlepunt 4"
 
 #: ../src/live_effects/lpe-lattice.cpp:52
 msgid "Control handle 5"
-msgstr ""
+msgstr "Controlepunt 5"
 
 #: ../src/live_effects/lpe-lattice.cpp:53
 msgid "Control handle 6"
-msgstr ""
+msgstr "Controlepunt 6"
 
 #: ../src/live_effects/lpe-lattice.cpp:54
 msgid "Control handle 7"
-msgstr ""
+msgstr "Controlepunt 7"
 
 #: ../src/live_effects/lpe-lattice.cpp:55
 msgid "Control handle 8"
-msgstr ""
+msgstr "Controlepunt 8"
 
 #: ../src/live_effects/lpe-lattice.cpp:56
 msgid "Control handle 9"
-msgstr ""
+msgstr "Controlepunt 9"
 
 #: ../src/live_effects/lpe-lattice.cpp:57
 msgid "Control handle 10"
-msgstr ""
+msgstr "Controlepunt 10"
 
 #: ../src/live_effects/lpe-lattice.cpp:58
 msgid "Control handle 11"
-msgstr ""
+msgstr "Controlepunt 11"
 
 #: ../src/live_effects/lpe-lattice.cpp:59
 msgid "Control handle 12"
-msgstr ""
+msgstr "Controlepunt 12"
 
 #: ../src/live_effects/lpe-lattice.cpp:60
 msgid "Control handle 13"
-msgstr ""
+msgstr "Controlepunt 13"
 
 #: ../src/live_effects/lpe-lattice.cpp:61
 msgid "Control handle 14"
-msgstr ""
+msgstr "Controlepunt 14"
 
 #: ../src/live_effects/lpe-lattice.cpp:62
 msgid "Control handle 15"
-msgstr ""
+msgstr "Controlepunt 15"
 
 #: ../src/live_effects/lpe-line_segment.cpp:27
 #: ../src/widgets/toolbox.cpp:5035
@@ -5870,19 +5875,19 @@ msgstr ""
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:30
 msgid "Discard original path?"
-msgstr ""
+msgstr "Origineel pad verwijderen?"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:30
 msgid "Check this to only keep the mirrored part of the path"
-msgstr ""
+msgstr "Vink dit aan om enkel het spiegelbeeld van het pad te behouden"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:31
 msgid "Reflection line"
-msgstr ""
+msgstr "Symmetrie-as"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:31
 msgid "Line which serves as 'mirror' for the reflection"
-msgstr ""
+msgstr "Lijn waarrond de 'spiegeling' plaatsvindt"
 
 #: ../src/live_effects/lpe-offset.cpp:30
 msgid "Handle to control the distance of the offset from the curve"
@@ -5923,11 +5928,11 @@ msgstr "Schalingsfactor"
 
 #: ../src/live_effects/lpe-path_length.cpp:28
 msgid "Display unit"
-msgstr ""
+msgstr "Eenheid weergeven"
 
 #: ../src/live_effects/lpe-path_length.cpp:28
 msgid "Print unit after path length"
-msgstr ""
+msgstr "Eenheid tonen na de padlengte"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -5997,11 +6002,11 @@ msgstr "Tangentiële verplaatsing"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
 msgid "Offsets in unit of pattern size"
-msgstr ""
+msgstr "Verplaatsingen uitgedrukt in patroongrootte"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
 msgid "Spacing, tangential and normal offset are expressed as a ratio of width/height"
-msgstr ""
+msgstr "Tussenafstand, tangentiële en normale verplaatsing zijn uitgedrukt als breedte/hoogte verhouding"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:69
 #: ../share/extensions/pathalongpath.inx.h:7
@@ -6011,11 +6016,11 @@ msgstr "Het patroon is verticaal"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:69
 msgid "Rotate pattern 90 deg before applying"
-msgstr ""
+msgstr "Patroon 90 graden draaien voor toepassen"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 msgid "Fuse nearby ends"
-msgstr ""
+msgstr "Dichtbijzijnde uiteinden aaneensmelten"
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:113
 msgid "Adjust the bisector's \"left\" end"
@@ -6028,7 +6033,7 @@ msgstr ""
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-perspective_path.cpp:41
 msgid "Scale x"
-msgstr "X schalen"
+msgstr "X-schaal"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:41
 msgid "Scale factor in x direction"
@@ -6036,7 +6041,7 @@ msgstr "Schaal factor in x-richting"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:42
 msgid "Scale y"
-msgstr "Y schalen"
+msgstr "Y-schaal"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:42
 msgid "Scale factor in y direction"
@@ -6044,27 +6049,27 @@ msgstr "Schaal factor in y-richting"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:43
 msgid "Offset x"
-msgstr "Offset x"
+msgstr "Verplaatsing x"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:43
 msgid "Offset in x direction"
-msgstr "Offset in x-richting"
+msgstr "Verplaatsing in x-richting"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:44
 msgid "Offset y"
-msgstr "Offset y"
+msgstr "Verplaatsing y"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:44
 msgid "Offset in y direction"
-msgstr "Offset in y-richting"
+msgstr "Verplaatsing in y-richting"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:45
 msgid "Uses XY plane?"
-msgstr ""
+msgstr "XY-vlak gebruiken?"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:45
 msgid "If true, put the path on the left side of an imaginary box, otherwise on the right side"
-msgstr ""
+msgstr "Indien aangevinkt, het pad aan de linkerkant van een denkbeeldige rechthoek plaatsen, anders aan de rechterkant"
 
 #: ../src/live_effects/lpe-perspective_path.cpp:54
 msgid "Adjust the origin"
@@ -6220,63 +6225,63 @@ msgstr "Beide"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
 msgid "Mark distance"
-msgstr ""
+msgstr "Interval markeringen"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
 msgid "Distance between successive ruler marks"
-msgstr ""
+msgstr "Afstand tussen opeenvolgende markeringen"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
 msgid "Major length"
-msgstr ""
+msgstr "Lengte hoofdmarkering"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
 msgid "Length of major ruler marks"
-msgstr ""
+msgstr "Lengte van de hoofdmarkeringen"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
 msgid "Minor length"
-msgstr ""
+msgstr "Lengte hulpmarkering"
 
 #: ../src/live_effects/lpe-ruler.cpp:45
 msgid "Length of minor ruler marks"
-msgstr ""
+msgstr "Lengte van de hulpmarkeringen"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
 msgid "Major steps"
-msgstr ""
+msgstr "Onderverdelingen"
 
 #: ../src/live_effects/lpe-ruler.cpp:46
 msgid "Draw a major mark every ... steps"
-msgstr ""
+msgstr "Een hoofdmarkering tekenen elke ... stappen"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
 msgid "Shift marks by"
-msgstr ""
+msgstr "Markeringen verplaatsen met"
 
 #: ../src/live_effects/lpe-ruler.cpp:47
 msgid "Shift marks by this many steps"
-msgstr ""
+msgstr "Markeringen verplaatsen met dit aantal stappen"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
 msgid "Mark direction"
-msgstr ""
+msgstr "Oriëntatie markering"
 
 #: ../src/live_effects/lpe-ruler.cpp:48
 msgid "Direction of marks (when viewing along the path from start to end)"
-msgstr ""
+msgstr "Oriëntatie van de markeringen (ten opzichte van het pad van begin tot einde)"
 
 #: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Offset of first mark"
-msgstr ""
+msgstr "Positie van eerste markering"
 
 #: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Border marks"
-msgstr ""
+msgstr "Markering uiteinden"
 
 #: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Choose whether to draw marks at the beginning and end of the path"
-msgstr ""
+msgstr "Kies of er markeringen getekend worden op het begin en het einde van het pad."
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-skeleton.cpp:32
@@ -6397,23 +6402,23 @@ msgstr "Hoek"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:56
 msgid "Additional angle between tangent and curve"
-msgstr ""
+msgstr "Additionele hoek tussen raaklijn en curve"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:57
 msgid "Location along curve"
-msgstr ""
+msgstr "Plaats langs curve"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:57
 msgid "Location of the point of attachment along the curve (between 0.0 and number-of-segments)"
-msgstr ""
+msgstr "Plaats van het raakpunt langs de curve (tussen 0.0 en het aantal segmenten)"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:58
 msgid "Specifies the left end of the tangent"
-msgstr ""
+msgstr "Specifiëert de lengte van de linkerkant van de raaklijn"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:59
 msgid "Specifies the right end of the tangent"
-msgstr ""
+msgstr "Specifiëert de lengte van de rechterkant van de raaklijn"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:68
 msgid "Adjust the point of attachment of the tangent"
@@ -6445,21 +6450,21 @@ msgstr "Label"
 
 #: ../src/live_effects/lpe-text_label.cpp:22
 msgid "Text label attached to the path"
-msgstr ""
+msgstr "Aan het pad toegekend label"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Reference segment"
-msgstr ""
+msgstr "Referentiesegment"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "The reference segment. Defaults to bbox diameter."
-msgstr ""
+msgstr "Het referentiesegment. Standaard is dit de diameter van de omhullende."
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
 #: ../src/live_effects/lpe-vonkoch.cpp:50
 msgid "Generating path"
-msgstr "Maken pad"
+msgstr "Pad genereren"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:50
 msgid "Path whose segments define the iterated transforms"
@@ -6496,7 +6501,7 @@ msgstr "Max complexiteit"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:55
 msgid "Disable effect if the output is too complex"
-msgstr "Effect uitschalen wanneer de uitvoer te complex is"
+msgstr "Effect uitschakelen wanneer de uitvoer te complex is"
 
 #: ../src/live_effects/parameter/bool.cpp:69
 msgid "Change bool parameter"
@@ -6862,7 +6867,7 @@ msgstr "Effe_cten"
 
 #: ../src/menus-skeleton.h:251
 msgid "Whiteboa_rd"
-msgstr "Whiteboa_rd"
+msgstr "_Chatten"
 
 #: ../src/menus-skeleton.h:255
 msgid "_Help"
@@ -7543,15 +7548,15 @@ msgstr "Stijl plakken"
 
 #: ../src/selection-chemistry.cpp:964
 msgid "Paste live path effect"
-msgstr "Live padeffect plakken"
+msgstr "Padeffect plakken"
 
 #: ../src/selection-chemistry.cpp:983
 msgid "Select <b>object(s)</b> to remove live path effects from."
-msgstr "Selecteer <b>object(en)</b> om live padeffect van te verwijderen."
+msgstr "Selecteer <b>object(en)</b> om padeffect van te verwijderen."
 
 #: ../src/selection-chemistry.cpp:995
 msgid "Remove live path effect"
-msgstr "Live padeffect verwijderen"
+msgstr "Padeffect verwijderen"
 
 #: ../src/selection-chemistry.cpp:1006
 msgid "Select <b>object(s)</b> to remove filters from."
@@ -8663,7 +8668,7 @@ msgstr "<b>Klik</b>, <b>Shift+klik</b>, of <b>sleep er omheen</b> om knooppunten
 
 #: ../src/tools-switch.cpp:136
 msgid "To tweak a path by pushing, select it and drag over it."
-msgstr "Regel een pad bij door duwen: selecteer het en sleep eroverheen."
+msgstr "Een pad retoucheren door te duwen: selecteer het en sleep eroverheen."
 
 #: ../src/tools-switch.cpp:142
 msgid "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and resize. <b>Click</b> to select."
@@ -8785,114 +8790,116 @@ msgstr "%s. Sleep om te <b>verplaatsen</b>."
 #: ../src/tweak-context.cpp:216
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
-msgstr ""
+msgstr "%s. Sleep of klik om te <b>verplaatsen naar de cursor toe</b>; met Shift om te <b>verplaatsen van de cursor weg</b>."
 
 #: ../src/tweak-context.cpp:219
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
-msgstr ""
+msgstr "%s. Sleep of klik om <b>ad random te verplaatsen</b>."
 
 #: ../src/tweak-context.cpp:222
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
-msgstr ""
+msgstr "%s. Sleep of klik om te <b>verkleinen</b>; met Shift om te <b>vergroten</b>."
 
 #: ../src/tweak-context.cpp:225
 #, c-format
 msgid "%s. Drag or click to <b>rotate clockwise</b>; with Shift, <b>counterclockwise</b>."
-msgstr ""
+msgstr "%s. Sleep of klik om in te <b>draaien in wijzerszin</b>; met Shift om te <b>draaien in tegenwijzerszin</b>."
 
 #: ../src/tweak-context.cpp:228
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
-msgstr ""
+msgstr "%s. Sleep of klik om te <b>dupliceren</b>; met Shift, <b>verwijderen</b>."
 
 #: ../src/tweak-context.cpp:231
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
-msgstr ""
+msgstr "%s. Sleep om <b>paden te duwen</b>."
 
 #: ../src/tweak-context.cpp:235
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
-msgstr ""
+msgstr "%s. Sleep of klik om <b>paden te verdunnen</b>; met Shift om te <b>verdikken</b>."
 
 #: ../src/tweak-context.cpp:243
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
-msgstr ""
+msgstr "%s. Sleep of klik om <b>paden aan te trekken</b>; met Shift om <b>af te stoten</b>."
 
 #: ../src/tweak-context.cpp:251
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
-msgstr ""
+msgstr "%s. Sleep of klik om <b>paden ruwer te maken</b>."
 
 #: ../src/tweak-context.cpp:255
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
-msgstr ""
+msgstr "%s. Sleep of klik om <b>objecten te verven</b> in kleur."
 
 #: ../src/tweak-context.cpp:258
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
-msgstr ""
+msgstr "%s. Sleep of klik om <b>kleuren te randomiseren</b>."
 
 #: ../src/tweak-context.cpp:262
 #, c-format
 msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
-msgstr ""
+msgstr "%s. Sleep of klik om <b>vervaging te verhogen</b>; met Shift om te <b>verlagen</b>."
 
 #: ../src/tweak-context.cpp:1210
 msgid "<b>Nothing selected!</b> Select objects to tweak."
-msgstr "<b>Niets geselecteerd</b>.  Selecteer objecten om bij te regelen."
+msgstr "<b>Niets geselecteerd!</b> Selecteer objecten om te retoucheren."
 
+#deze en onderstaande boodschappen staan in de bewerkingsgeschiedenis (menu "bewerken" > "Geschiedenis")
+#tweak wordt retoucheren genoemd
 #: ../src/tweak-context.cpp:1246
 msgid "Move tweak"
-msgstr ""
+msgstr "Verplaatsing"
 
 #: ../src/tweak-context.cpp:1250
 msgid "Move in/out tweak"
-msgstr ""
+msgstr "Verplaatsing (naar/van cursor)"
 
 #: ../src/tweak-context.cpp:1254
 msgid "Move jitter tweak"
-msgstr ""
+msgstr "Verplaatsing (random)"
 
 #: ../src/tweak-context.cpp:1258
 msgid "Scale tweak"
-msgstr ""
+msgstr "Vergroten/verkleinen"
 
 #: ../src/tweak-context.cpp:1262
 msgid "Rotate tweak"
-msgstr ""
+msgstr "Roteren"
 
 #: ../src/tweak-context.cpp:1266
 msgid "Duplicate/delete tweak"
-msgstr ""
+msgstr "Dupliceren/verwijderen"
 
 #: ../src/tweak-context.cpp:1270
 msgid "Push path tweak"
-msgstr ""
+msgstr "Pad duwen"
 
 #: ../src/tweak-context.cpp:1274
 msgid "Shrink/grow path tweak"
-msgstr ""
+msgstr "Pad verdunnen/verdikken"
 
 #: ../src/tweak-context.cpp:1278
 msgid "Attract/repel path tweak"
-msgstr ""
+msgstr "Pad aantrekken/afstoten"
 
 #: ../src/tweak-context.cpp:1282
 msgid "Roughen path tweak"
-msgstr ""
+msgstr "Pad verruwen"
 
 #: ../src/tweak-context.cpp:1290
 msgid "Color jitter tweak"
-msgstr "Verkleurer"
+msgstr "Verkleuren"
 
 #: ../src/tweak-context.cpp:1294
 msgid "Blur tweak"
-msgstr ""
+msgstr "Vervagen"
 
 #. check whether something is selected
 #: ../src/ui/clipboard.cpp:224
@@ -8924,7 +8931,7 @@ msgstr "Geen grootte op het klembord."
 
 #: ../src/ui/clipboard.cpp:444
 msgid "Select <b>object(s)</b> to paste live path effect to."
-msgstr "Selecteer <b>object(en)</b> om live padeffect op toe te passen."
+msgstr "Selecteer <b>object(en)</b> om padeffect op toe te passen."
 
 #. no_effect:
 #: ../src/ui/clipboard.cpp:468
@@ -9056,11 +9063,11 @@ msgstr "about.svg"
 msgid "translator-credits"
 msgstr ""
 "Foppe Benedictus (foppe.benedictus@gmail.com), 2007, 2008, 2009.\n"
-"Kris De Gussem (Kris.DeGussem@gmail.com), 2008, 2009\n"
+"Kris De Gussem (Kris.DeGussem@gmail.com), 2008, 2009.\n"
 "Myckel Habets (myckel@sdf.lonestar.org), 2008.\n"
 "\n"
 "Vorige vertalers:\n"
-"Benno Schulenberg (benno@vertaalt.nl), 2008\n"
+"Benno Schulenberg (benno@vertaalt.nl), 2008.\n"
 "Ruud Steltenpool (svg@steltenpower.com), 2006.\n"
 "Vincent van Adrighem (V.vanAdrighem@dirck.mine.nu), 2003.\n"
 "Jeroen van der Vegt (jvdvegt@gmail.com), 2003, 2005, 2008."
@@ -9495,7 +9502,7 @@ msgstr "_Middelpunten"
 
 #: ../src/ui/dialog/document-properties.cpp:122
 msgid "Snap midpoints of straight line segments"
-msgstr "Aan middelpunten van rechte lijnsegmenten kleven"
+msgstr "Aan het midden van rechte lijnsegmenten kleven"
 
 #: ../src/ui/dialog/document-properties.cpp:123
 msgid "_Grid with guides"
@@ -9849,7 +9856,7 @@ msgstr "Geen bestand geselecteerd"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:50
 msgid "Fill"
-msgstr "Vullen"
+msgstr "_Vullen"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:51
 msgid "Stroke _paint"
@@ -10489,27 +10496,27 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:211
 msgid "Delay (in msec):"
-msgstr ""
+msgstr "Vertraging (in msec):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:212
 msgid "Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"
-msgstr ""
+msgstr "Het kleven uitstellen zolang de muis beweegt en wacht een bepaalde fractie van een seconde. Deze extra vertraging wordt hier opgegeven. Indien ingesteld op nul of een zeer klein getal, vindt het kleven onmiddellijk plaats"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:214
 msgid "Only snap the node closest to the pointer"
-msgstr ""
+msgstr "Enkel het knooppunt dichtst bij de cursor kleven"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:216
 msgid "Only try to snap the node that is initialy closest to the mouse pointer"
-msgstr ""
+msgstr "Enkel het knooppunt dat initieel het dichtst bij de muiscursor is, proberen kleven"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:219
 msgid "Weight factor:"
-msgstr ""
+msgstr "Wegingsfactor:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:220
 msgid "When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"
-msgstr ""
+msgstr "Wanneer er meerdere mogelijkheden voor kleven zijn, dan kan Inkscape kiezen tussen de meest nabije transformatie (indien ingesteld op 0) of het knooppunt dat initeel het dichtst bij de muiscursor was (indien ingesteld op 1)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:222
 msgid "Snapping"
@@ -10587,7 +10594,7 @@ msgstr "Of voor geselecteerde objecten kleurverloop-gereedschappen getoond worde
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:271
 msgid "Conversion to guides uses edges instead of bounding box"
-msgstr "Omzetting naar hulplijnen gebruikt de randen in plaats van de omhullende"
+msgstr "Omzetting naar hulplijnen gebruikt randen in plaats van omhullende"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:272
 msgid "Converting an object to guides places these along the object's true edges (imitating the object's shape), not along the bounding box."
@@ -11048,15 +11055,15 @@ msgstr "Verweesde klonen worden verwijderd samen met hun origineel"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:614
 msgid "When duplicating original+clones:"
-msgstr ""
+msgstr "Dupliceren van origineel+klonen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:616
 msgid "Relink duplicated clones"
-msgstr ""
+msgstr "Herlink gedupliceerde klonen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:618
 msgid "When duplicating a selection containing both a clone and its original (possibly in groups), relink the duplicated clone to the duplicated original instead of the old original"
-msgstr ""
+msgstr "De gedupliceerde kloon herlinken naar het gedupliceerde origineel in plaats van het oude origineel bij het dupliceren van een selectie met zowel een kloon en zijn origineel (mogelijk voorkomend in groepen)."
 
 #. TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
 #: ../src/ui/dialog/inkscape-preferences.cpp:621
@@ -11879,20 +11886,20 @@ msgstr "Het maximum aantal bestandsnamen in 'Recente bestanden' in het 'Bestand'
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1076
 msgid "Zoom correction factor (in %):"
-msgstr ""
+msgstr "Correctiefactor zoomen (in %):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1077
 msgid "Adjust the slider until the length of the ruler on your screen matches its real length. This information is used when zooming to 1:1, 1:2, etc., to display objects in their true sizes"
-msgstr ""
+msgstr "Pas de schuifbalk aan tot de lengte van de meetlat op het scherm overeenkomt met de werkelijke lengte. Deze informatie wordt gebruikt bij het 1:1, 1:2, etc. zoomen om objecten op ware grootte te tonen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1079
 msgid "Interface"
-msgstr ""
+msgstr "Interface"
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1086
 msgid "Enable autosave (requires restart)"
-msgstr "Autobewaren inschakelen (vereist herstart):"
+msgstr "Auto-opslaan inschakelen (vereist herstart):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1087
 msgid "Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"
@@ -11912,15 +11919,15 @@ msgstr "Pad:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1091
 msgid "The directory where autosaves will be written"
-msgstr ""
+msgstr "De map waar automatisch opgeslagen documenten bewaard worden"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1093
 msgid "Maximum number of autosaves:"
-msgstr ""
+msgstr "Maximum aantal auto-bewaringen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1093
 msgid "Maximum number of autosaved files; use this to limit the storage space used"
-msgstr ""
+msgstr "Maximum aantal automatisch opgeslagen bestanden; gebruik deze instelling om de ingenomen opslagruimte te beperken"
 
 #. When changing the interval or enabling/disabling the autosave function,
 #. * update our running configuration
@@ -11936,7 +11943,7 @@ msgstr ""
 #. -----------
 #: ../src/ui/dialog/inkscape-preferences.cpp:1109
 msgid "Autosave"
-msgstr ""
+msgstr "Auto-opslaan"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1115
 msgid "2x2"
@@ -11960,23 +11967,23 @@ msgstr "Bitmaps oversampelen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1122
 msgid "Automatically reload bitmaps"
-msgstr ""
+msgstr "Bitmaps automatisch herladen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1124
 msgid "Automatically reload linked images when file is changed on disk"
-msgstr ""
+msgstr "Gelinkte afbeeldingen automatisch herladen wanneer het bestand op de schijf gewijzigd is "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1138
 msgid "Bitmap editor:"
-msgstr ""
+msgstr "Bitmap editor:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1144
 msgid "Resolution for Create Bitmap Copy:"
-msgstr ""
+msgstr "Resolutie voor het maken van een bitmap-kopie:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1145
 msgid "Resolution used by the Create Bitmap Copy command"
-msgstr ""
+msgstr "Resolutie gebruikt voor het commando Bitmap-kopie Aanmaken:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1147
 msgid "Bitmaps"
@@ -13227,7 +13234,7 @@ msgid ""
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">De wijzigingen in document \"%s\" opslaan alvorens af te sluiten?</span>\n"
 "\n"
-"Als u afsluit zonder op te slaan, gaan de wijzigingen verloren."
+"Als u afsluit zonder opslaan, gaan de wijzigingen verloren."
 
 #: ../src/ui/view/edit-widget.cpp:1220
 #: ../src/ui/view/edit-widget.cpp:1267
@@ -16773,15 +16780,15 @@ msgstr "Zigzag"
 
 #: ../src/widgets/toolbox.cpp:3370
 msgid "Create a sequence of straight line segments"
-msgstr "Een sequentie van rechte lijnsegmenten maken"
+msgstr "Een sequentie van rechte lijnstukken maken"
 
 #: ../src/widgets/toolbox.cpp:3376
 msgid "Paraxial"
-msgstr ""
+msgstr "Loodrecht"
 
 #: ../src/widgets/toolbox.cpp:3377
 msgid "Create a sequence of paraxial line segments"
-msgstr ""
+msgstr "Een sequentie van onderling loodrechte lijnstukken maken"
 
 #: ../src/widgets/toolbox.cpp:3385
 #: ../src/widgets/toolbox.cpp:3776
@@ -16791,11 +16798,11 @@ msgstr "Modus:"
 
 #: ../src/widgets/toolbox.cpp:3414
 msgid "Triangle in"
-msgstr ""
+msgstr "Aflopende driehoek"
 
 #: ../src/widgets/toolbox.cpp:3415
 msgid "Triangle out"
-msgstr ""
+msgstr "Oplopende driehoek"
 
 #: ../src/widgets/toolbox.cpp:3417
 msgid "From clipboard"
@@ -16808,7 +16815,7 @@ msgstr "Vorm:"
 
 #: ../src/widgets/toolbox.cpp:3527
 msgid "(many nodes, rough)"
-msgstr ""
+msgstr "(veel knooppunten, ruw)"
 
 #: ../src/widgets/toolbox.cpp:3527
 #: ../src/widgets/toolbox.cpp:3647
@@ -16826,15 +16833,15 @@ msgstr "(weinig knooppunten, glad)"
 
 #: ../src/widgets/toolbox.cpp:3530
 msgid "Smoothing:"
-msgstr ""
+msgstr "Afvlakking:"
 
 #: ../src/widgets/toolbox.cpp:3531
 msgid "How much smoothing (simplifying) is applied to the line"
-msgstr ""
+msgstr "Hoeveel afvlakking (vereenvoudiging) er toegepast wordt op de lijn"
 
 #: ../src/widgets/toolbox.cpp:3554
 msgid "Reset pencil parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
-msgstr ""
+msgstr "Instellingen potlood terugzetten naar de standaardwaarden (gebruik Inkscape-voorkeuren > Gereedschappen om de standaardwaarden te veranderen)"
 
 #. Width
 #: ../src/widgets/toolbox.cpp:3647
@@ -16872,7 +16879,7 @@ msgstr "De kracht van de boetseeracties"
 
 #: ../src/widgets/toolbox.cpp:3685
 msgid "Move mode"
-msgstr ""
+msgstr "Modus verplaatsen"
 
 #: ../src/widgets/toolbox.cpp:3686
 msgid "Move objects in any direction"
@@ -16880,15 +16887,15 @@ msgstr "Objecten in elke richting verplaatsen"
 
 #: ../src/widgets/toolbox.cpp:3692
 msgid "Move in/out mode"
-msgstr ""
+msgstr "Modus naar/van cursor verplaatsen"
 
 #: ../src/widgets/toolbox.cpp:3693
 msgid "Move objects towards cursor; with Shift from cursor"
-msgstr ""
+msgstr "Objecten naar cursor verplaatsen; met Shift van de cursor weg"
 
 #: ../src/widgets/toolbox.cpp:3699
 msgid "Move jitter mode"
-msgstr ""
+msgstr "Modus random verplaatsen"
 
 #: ../src/widgets/toolbox.cpp:3700
 msgid "Move objects in random directions"
@@ -16896,31 +16903,31 @@ msgstr "Objecten in random richting verplaatsen"
 
 #: ../src/widgets/toolbox.cpp:3706
 msgid "Scale mode"
-msgstr ""
+msgstr "Modus schalen"
 
 #: ../src/widgets/toolbox.cpp:3707
 msgid "Scale objects, with Shift scale up"
-msgstr ""
+msgstr "Objecten schalen, met Shift vergroten"
 
 #: ../src/widgets/toolbox.cpp:3713
 msgid "Rotate mode"
-msgstr ""
+msgstr "Modus roteren"
 
 #: ../src/widgets/toolbox.cpp:3714
 msgid "Rotate objects, with Shift counterclockwise"
-msgstr ""
+msgstr "Objecten roteren, met Shift in tegenwijzerszin"
 
 #: ../src/widgets/toolbox.cpp:3720
 msgid "Duplicate/delete mode"
-msgstr ""
+msgstr "Modus dupliceren/verwijderen"
 
 #: ../src/widgets/toolbox.cpp:3721
 msgid "Duplicate objects, with Shift delete"
-msgstr ""
+msgstr "Objecten dupliceren, met Shift verwijderen"
 
 #: ../src/widgets/toolbox.cpp:3727
 msgid "Push mode"
-msgstr "Duwmodus"
+msgstr "Modus duwen"
 
 #: ../src/widgets/toolbox.cpp:3728
 msgid "Push parts of paths in any direction"
@@ -16928,19 +16935,19 @@ msgstr "Delen van paden in gewenste richting duwen"
 
 #: ../src/widgets/toolbox.cpp:3734
 msgid "Shrink/grow mode"
-msgstr ""
+msgstr "Modus verdunnen/verdikken"
 
 #: ../src/widgets/toolbox.cpp:3735
 msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
-msgstr ""
+msgstr "Delen van paden verdunnen; met Shift verdikken"
 
 #: ../src/widgets/toolbox.cpp:3741
 msgid "Attract/repel mode"
-msgstr ""
+msgstr "Modus aantrekken/afstoten"
 
 #: ../src/widgets/toolbox.cpp:3742
 msgid "Attract parts of paths towards cursor; with Shift from cursor"
-msgstr ""
+msgstr "Delen van paden naar de cursor toe aantrekken; met Shift om van de cursor af te stoten"
 
 #: ../src/widgets/toolbox.cpp:3748
 msgid "Roughen mode"
@@ -16956,7 +16963,7 @@ msgstr "Verfmodus"
 
 #: ../src/widgets/toolbox.cpp:3756
 msgid "Paint the tool's color upon selected objects"
-msgstr "Gekozen kleur over aangewezen object verven"
+msgstr "Gekozen kleur over aangewezen objecten verven"
 
 #: ../src/widgets/toolbox.cpp:3762
 msgid "Color jitter mode"
@@ -16964,7 +16971,7 @@ msgstr "Verkleuringsmodus"
 
 #: ../src/widgets/toolbox.cpp:3763
 msgid "Jitter the colors of selected objects"
-msgstr "Kleur van aangewezen object veranderen door slepen"
+msgstr "Kleur van de aangewezen objecten veranderen door slepen"
 
 #: ../src/widgets/toolbox.cpp:3769
 msgid "Blur mode"
@@ -16972,7 +16979,7 @@ msgstr "_Mengmodus:"
 
 #: ../src/widgets/toolbox.cpp:3770
 msgid "Blur selected objects more; with Shift, blur less"
-msgstr ""
+msgstr "Geselecteerde objecten meer vervagen; met Shift, minder vervagen"
 
 #: ../src/widgets/toolbox.cpp:3797
 msgid "Channels:"
@@ -17187,7 +17194,7 @@ msgstr "Verhoog dit om kapjes aan het einde van lijnen meer uitgesproken te make
 #. Tremor
 #: ../src/widgets/toolbox.cpp:4322
 msgid "(smooth line)"
-msgstr "(gladde lijn)"
+msgstr "(afgevlakte lijn)"
 
 #: ../src/widgets/toolbox.cpp:4322
 msgid "(slight tremor)"
@@ -18600,31 +18607,31 @@ msgstr "Bestaande hulplijnen verwijderen"
 
 #: ../share/extensions/guides_creator.inx.h:12
 msgid "Golden ratio"
-msgstr ""
+msgstr "Gulden snede"
 
 #: ../share/extensions/guides_creator.inx.h:13
 msgid "Guides creator"
-msgstr ""
+msgstr "Hulplijnengenerator"
 
 #: ../share/extensions/guides_creator.inx.h:14
 msgid "Horizontal guide each"
-msgstr ""
+msgstr "Horizontale hulplijn elke"
 
 #: ../share/extensions/guides_creator.inx.h:16
 msgid "Preset"
-msgstr ""
+msgstr "Methode"
 
 #: ../share/extensions/guides_creator.inx.h:18
 msgid "Rule-of-third"
-msgstr ""
+msgstr "Rgel van derden"
 
 #: ../share/extensions/guides_creator.inx.h:19
 msgid "Start from edges"
-msgstr "Van randen beginnen"
+msgstr "Aan randen beginnen"
 
 #: ../share/extensions/guides_creator.inx.h:20
 msgid "Vertical guide each"
-msgstr ""
+msgstr "Verticale hulplijn elke"
 
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
@@ -18632,7 +18639,7 @@ msgstr "Handvatten tonen"
 
 #: ../share/extensions/hpgl_output.inx.h:1
 msgid "Export to an HP Graphics Language file"
-msgstr ""
+msgstr "Naar een HP Graphics Language bestand exporteren"
 
 #: ../share/extensions/hpgl_output.inx.h:2
 msgid "HP Graphics Language file (*.hpgl)"
@@ -18644,15 +18651,15 @@ msgstr "HPGL-uitvoer"
 
 #: ../share/extensions/inkscape_help_askaquestion.inx.h:1
 msgid "Ask Us a Question"
-msgstr "Stel ons een vraag"
+msgstr "_Stel ons een vraag"
 
 #: ../share/extensions/inkscape_help_commandline.inx.h:1
 msgid "Command Line Options"
-msgstr "Opdrachtregelopties"
+msgstr "_Opdrachtregelopties"
 
 #: ../share/extensions/inkscape_help_faq.inx.h:1
 msgid "FAQ"
-msgstr "FAQ"
+msgstr "_FAQ"
 
 #: ../share/extensions/inkscape_help_keys.inx.h:1
 msgid "Keys and Mouse Reference"
@@ -18660,11 +18667,11 @@ msgstr "_Bedieningsoverzicht"
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
 msgid "Inkscape Manual"
-msgstr "Inkscape-handleiding"
+msgstr "_Inkscape-handleiding"
 
 #: ../share/extensions/inkscape_help_relnotes.inx.h:1
 msgid "New in This Version"
-msgstr "Nieuw in deze versie"
+msgstr "_Nieuw in deze versie"
 
 #: ../share/extensions/inkscape_help_reportabug.inx.h:1
 msgid "Report a Bug"
@@ -19255,11 +19262,11 @@ msgstr "De normaaldistributie gebruiken"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:1
 msgid "Alphabet Soup"
-msgstr ""
+msgstr "Lettersoep"
 
 #: ../share/extensions/render_alphabetsoup.inx.h:2
 msgid "Random Seed"
-msgstr ""
+msgstr "Randomisatiewaarde"
 
 #: ../share/extensions/render_barcode.inx.h:1
 msgid "Bar Height:"
@@ -19584,7 +19591,7 @@ msgstr "XAML-invoer"
 #. Create the frame for interactivity options
 #: ../src/dialogs/item-properties.cpp:244
 msgid "_Interactivity"
-msgstr ""
+msgstr "I_nteractiviteit"
 
 #: ../src/dialogs/swatches.cpp:696
 msgid "Remove stroke color"
@@ -19639,7 +19646,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:70
 msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr ""
+msgstr "Uiteinden dichter dan dit getal aaneensmelten. 0 betekent geen versmelting."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:255
 msgid "Frequency randomness"
@@ -19840,27 +19847,27 @@ msgstr "Aan hoeken van omhullende kleven"
 #. "name"
 #: ../src/widgets/toolbox.cpp:2059
 msgid "BBox Edge Midpoints"
-msgstr ""
+msgstr "Midden randen omhullende"
 
 #. "label"
 #: ../src/widgets/toolbox.cpp:2060
 msgid "Snap from and to midpoints of bounding box edges"
-msgstr ""
+msgstr "Aan het midden van de randen van de omhullende kleven"
 
 #. "name"
 #: ../src/widgets/toolbox.cpp:2071
 msgid "BBox Midpoints"
-msgstr ""
+msgstr "Middelpunt omhullende"
 
 #. "label"
 #: ../src/widgets/toolbox.cpp:2072
 msgid "Snapping from and to midpoints of bounding boxes"
-msgstr ""
+msgstr "Aan het middelpunt van omhullenden kleven"
 
 #. "label"
 #: ../src/widgets/toolbox.cpp:2084
 msgid "Snap nodes"
-msgstr "Knooppunten kleven"
+msgstr "Aan knooppunten kleven"
 
 #. "label"
 #: ../src/widgets/toolbox.cpp:2096
@@ -19890,12 +19897,12 @@ msgstr "Aan hoekige knooppunten kleven"
 #. "name"
 #: ../src/widgets/toolbox.cpp:2131
 msgid "Smooth nodes"
-msgstr "Gladde knooppunten"
+msgstr "Afgevlakte knooppunten"
 
 #. "label"
 #: ../src/widgets/toolbox.cpp:2132
 msgid "Snap to smooth nodes"
-msgstr "Aan gladde knooppunten kleven"
+msgstr "Aan afgevlakte knooppunten kleven"
 
 #. "name"
 #: ../src/widgets/toolbox.cpp:2143
@@ -19915,7 +19922,7 @@ msgstr "Middelpunt object"
 #. "label"
 #: ../src/widgets/toolbox.cpp:2156
 msgid "Snap from and to midpoints of objects"
-msgstr "Aan midden van objecten kleven"
+msgstr "Aan het middelpunt van objecten kleven"
 
 #. "label"
 #: ../src/widgets/toolbox.cpp:2168
@@ -19944,7 +19951,7 @@ msgstr "Aan kruispunten van het raster met een hulplijn kleven"
 
 #: ../src/widgets/toolbox.cpp:4006
 msgid "Smoothing: "
-msgstr ""
+msgstr "Afvlakking: "
 
 #: ../share/extensions/perfectboundcover.inx.h:14
 msgid "Perfect-Bound Cover Template"
@@ -20225,7 +20232,7 @@ msgstr ""
 #~ msgstr "Er staat niets op het stijlklembord."
 
 #~ msgid "Clipboard does not contain a live path effect."
-#~ msgstr "Klembord bevat geen live padeffect."
+#~ msgstr "Klembord bevat geen padeffect."
 
 #~ msgid "Fit page to selection"
 #~ msgstr "Paginagrootte aanpassen aan selectie"
@@ -20280,7 +20287,7 @@ msgstr ""
 #~ msgstr "Exporteren"
 
 #~ msgid "This value affects the amount of smoothing applied to freehand lines; lower values produce more uneven paths with more nodes"
-#~ msgstr "Dit beinvloed de manier waarop lijnen uit de vrije hand worden afgerond; lagere waarden leveren hoekerige lijnen op"
+#~ msgstr "Dit beïnvloed de manier waarop lijnen uit de vrije hand worden afgevlakt; lagere waarden leveren hoekerige lijnen op"
 
 #~ msgid "Dialogs stay on top (experimental!)"
 #~ msgstr "Dialogen blijven altijd boven (experimenteel!)"
