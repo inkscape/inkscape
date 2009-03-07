@@ -25,7 +25,7 @@
 #define INKSCAPE_ICON_ALIGN_HORIZONTAL_LEFT_TO_ANCHOR \
     "align-horizontal-left-to-anchor"
 #define INKSCAPE_ICON_ALIGN_HORIZONTAL_NODES \
-    "align-horizontal-nodes"
+    "align-horizontal-node"
 #define INKSCAPE_ICON_ALIGN_HORIZONTAL_RIGHT \
     "align-horizontal-right"
 #define INKSCAPE_ICON_ALIGN_HORIZONTAL_RIGHT_TO_ANCHOR \
@@ -39,7 +39,7 @@
 #define INKSCAPE_ICON_ALIGN_VERTICAL_CENTER \
     "align-vertical-center"
 #define INKSCAPE_ICON_ALIGN_VERTICAL_NODES \
-    "align-vertical-nodes"
+    "align-vertical-node"
 #define INKSCAPE_ICON_ALIGN_VERTICAL_TOP \
     "align-vertical-top"
 #define INKSCAPE_ICON_ALIGN_VERTICAL_TOP_TO_ANCHOR \
@@ -263,9 +263,9 @@
 #define INKSCAPE_ICON_NODE_DELETE_SEGMENT \
     "node-delete-segment"
 #define INKSCAPE_ICON_NODE_DISTRIBUTE_HORIZONTAL \
-    "node-distribute-horizontal"
+    "distribute-horizontal-node"
 #define INKSCAPE_ICON_NODE_DISTRIBUTE_VERTICAL \
-    "node-distribute-vertical"
+    "distribute-vertical-node"
 #define INKSCAPE_ICON_NODE_JOIN \
     "node-join"
 #define INKSCAPE_ICON_NODE_JOIN_SEGMENT \
