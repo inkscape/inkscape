@@ -260,6 +260,7 @@ bool LayersPanel::_executeAction()
             {
                 _fireAction( SP_VERB_LAYER_DELETE );
             }
+            break;
             case BUTTON_SOLO:
             {
                 _fireAction( SP_VERB_LAYER_SOLO );
