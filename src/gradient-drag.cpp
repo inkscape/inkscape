@@ -358,7 +358,7 @@ GrDrag::addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance)
 
 
 bool
-GrDrag::dropColor(SPItem */*item*/, gchar *c, Geom::Point p)
+GrDrag::dropColor(SPItem */*item*/, gchar const *c, Geom::Point p)
 {
     // first, see if we can drop onto one of the existing draggers
     for (GList *i = draggers; i != NULL; i = i->next) { // for all draggables of dragger

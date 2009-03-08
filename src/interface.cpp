@@ -61,6 +61,7 @@
 #include "style.h"
 #include "event-context.h"
 #include "gradient-drag.h"
+#include "widgets/eek-color-def.h"
 
 // Include Mac OS X menu synchronization on native OSX build
 #ifdef GDK_WINDOWING_QUARTZ
@@ -77,8 +78,7 @@ typedef enum {
     IMAGE_DATA,
     APP_X_INKY_COLOR,
     APP_X_COLOR,
-    APP_X_NOCOLOR,
-    APP_X_XCOLOR
+    APP_OSWB_COLOR,
 } ui_drop_target_info;
 
 static GtkTargetEntry ui_drop_target_entries [] = {
@@ -90,7 +90,7 @@ static GtkTargetEntry ui_drop_target_entries [] = {
 #if ENABLE_MAGIC_COLORS
     {(gchar *)"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
 #endif // ENABLE_MAGIC_COLORS
-    {(gchar *)"application/x-oswb-nocolor",   0, APP_X_NOCOLOR     },
+    {(gchar *)"application/x-oswb-color",     0, APP_OSWB_COLOR  },
     {(gchar *)"application/x-color",          0, APP_X_COLOR     }
 };
 
@@ -1165,10 +1165,10 @@ sp_ui_drag_data_received(GtkWidget *widget,
             Geom::Point const button_doc(desktop->dt2doc(button_dt));
 
             if ( data->length == 8 ) {
-                gchar c[64] = {0};
+                gchar colorspec[64] = {0};
                 // Careful about endian issues.
                 guint16* dataVals = (guint16*)data->data;
-                sp_svg_write_color( c, 64,
+                sp_svg_write_color( colorspec, sizeof(colorspec),
                                     SP_RGBA32_U_COMPOSE(
                                         0x0ff & (dataVals[0] >> 8),
                                         0x0ff & (dataVals[1] >> 8),
@@ -1181,7 +1181,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
                 bool consumed = false;
                 if (desktop->event_context && desktop->event_context->get_drag()) {
-                    consumed = desktop->event_context->get_drag()->dropColor(item, c, button_dt);
+                    consumed = desktop->event_context->get_drag()->dropColor(item, colorspec, button_dt);
                     if (consumed) {
                         sp_document_done( doc , SP_VERB_NONE, _("Drop color on gradient"));
                         desktop->event_context->get_drag()->updateDraggers();
@@ -1224,7 +1224,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     }
 
                     SPCSSAttr *css = sp_repr_css_attr_new();
-                    sp_repr_css_set_property( css, fillnotstroke ? "fill":"stroke", c );
+                    sp_repr_css_set_property( css, fillnotstroke ? "fill":"stroke", colorspec );
 
                     sp_desktop_apply_css_recursive( item, css, true );
                     item->updateRepr();
@@ -1236,66 +1236,85 @@ sp_ui_drag_data_received(GtkWidget *widget,
         }
         break;
 
-        case APP_X_NOCOLOR:
-        case APP_X_XCOLOR:
+        case APP_OSWB_COLOR:
         {
-            gchar* c = g_strdup("none"); // temp
-            int destX = 0;
-            int destY = 0;
-            gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
-            Geom::Point where( sp_canvas_window_to_world( desktop->canvas, Geom::Point( destX, destY ) ) );
-            Geom::Point const button_dt(desktop->w2d(where));
-            Geom::Point const button_doc(desktop->dt2doc(button_dt));
-
-            SPItem *item = desktop->item_at_point( where, true );
-
-            bool consumed = false;
-            if (desktop->event_context && desktop->event_context->get_drag()) {
-                consumed = desktop->event_context->get_drag()->dropColor(item, c, button_dt);
-                if (consumed) {
-                    sp_document_done( doc , SP_VERB_NONE, _("Drop color on gradient"));
-                    desktop->event_context->get_drag()->updateDraggers();
-                }
-            }
-
-            if (!consumed && item) {
-                bool fillnotstroke = (drag_context->action != GDK_ACTION_MOVE);
-                if (fillnotstroke &&
-                    (SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))) {
-                    Path *livarot_path = Path_for_item(item, true, true);
-                    livarot_path->ConvertWithBackData(0.04);
-
-                    boost::optional<Path::cut_position> position = get_nearest_position_on_Path(livarot_path, button_doc);
-                    if (position) {
-                        Geom::Point nearest = get_point_on_Path(livarot_path, position->piece, position->t);
-                        Geom::Point delta = nearest - button_doc;
-                        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-                        delta = desktop->d2w(delta);
-                        double stroke_tolerance =
-                            ( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
-                              desktop->current_zoom() *
-                              SP_OBJECT_STYLE (item)->stroke_width.computed *
-                              to_2geom(sp_item_i2d_affine(item)).descrim() * 0.5
-                              : 0.0)
-                            + prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
-
-                        if (Geom::L2 (delta) < stroke_tolerance) {
-                            fillnotstroke = false;
-                        }
+            bool worked = false;
+            Glib::ustring colorspec;
+            if ( data->format == 8 ) {
+                eek::ColorDef color;
+                worked = color.fromMIMEData("application/x-oswb-color",
+                                            reinterpret_cast<char*>(data->data),
+                                            data->length,
+                                            data->format);
+                if ( worked ) {
+                    if ( color.getType() == eek::ColorDef::CLEAR ) {
+                        colorspec = ""; // TODO check if this is sufficient
+                    } else if ( color.getType() == eek::ColorDef::NONE ) {
+                        colorspec = "none";
+                    } else {                        
+                        gchar* tmp = g_strdup_printf("#%02x%02x%02x", color.getR(), color.getG(), color.getB());
+                        colorspec = tmp;
+                        g_free(tmp);
                     }
-                    delete livarot_path;
+                }
+            }
+            if ( worked ) {
+                int destX = 0;
+                int destY = 0;
+                gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
+                Geom::Point where( sp_canvas_window_to_world( desktop->canvas, Geom::Point( destX, destY ) ) );
+                Geom::Point const button_dt(desktop->w2d(where));
+                Geom::Point const button_doc(desktop->dt2doc(button_dt));
+
+                SPItem *item = desktop->item_at_point( where, true );
+
+                bool consumed = false;
+                if (desktop->event_context && desktop->event_context->get_drag()) {
+                    consumed = desktop->event_context->get_drag()->dropColor(item, colorspec.c_str(), button_dt);
+                    if (consumed) {
+                        sp_document_done( doc , SP_VERB_NONE, _("Drop color on gradient"));
+                        desktop->event_context->get_drag()->updateDraggers();
+                    }
                 }
 
-                SPCSSAttr *css = sp_repr_css_attr_new();
-                sp_repr_css_set_property( css, fillnotstroke ? "fill":"stroke", c );
+                if (!consumed && item) {
+                    bool fillnotstroke = (drag_context->action != GDK_ACTION_MOVE);
+                    if (fillnotstroke &&
+                        (SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))) {
+                        Path *livarot_path = Path_for_item(item, true, true);
+                        livarot_path->ConvertWithBackData(0.04);
 
-                sp_desktop_apply_css_recursive( item, css, true );
-                item->updateRepr();
+                        boost::optional<Path::cut_position> position = get_nearest_position_on_Path(livarot_path, button_doc);
+                        if (position) {
+                            Geom::Point nearest = get_point_on_Path(livarot_path, position->piece, position->t);
+                            Geom::Point delta = nearest - button_doc;
+                            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                            delta = desktop->d2w(delta);
+                            double stroke_tolerance =
+                                ( !SP_OBJECT_STYLE(item)->stroke.isNone() ?
+                                  desktop->current_zoom() *
+                                  SP_OBJECT_STYLE (item)->stroke_width.computed *
+                                  to_2geom(sp_item_i2d_affine(item)).descrim() * 0.5
+                                  : 0.0)
+                                + prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
-                sp_document_done( doc , SP_VERB_NONE,
-                                  _("Drop color"));
+                            if (Geom::L2 (delta) < stroke_tolerance) {
+                                fillnotstroke = false;
+                            }
+                        }
+                        delete livarot_path;
+                    }
+
+                    SPCSSAttr *css = sp_repr_css_attr_new();
+                    sp_repr_css_set_property( css, fillnotstroke ? "fill":"stroke", colorspec.c_str() );
+
+                    sp_desktop_apply_css_recursive( item, css, true );
+                    item->updateRepr();
+
+                    sp_document_done( doc , SP_VERB_NONE,
+                                      _("Drop color"));
+                }
             }
-            g_free(c);
         }
         break;
 

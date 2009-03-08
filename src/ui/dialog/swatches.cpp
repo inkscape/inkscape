@@ -100,24 +100,8 @@ public:
 static std::vector<JustForNow*> possible;
 
 
-
-typedef enum {
-    APP_X_INKY_COLOR_ID = 0,
-    APP_X_INKY_COLOR = 0,
-    APP_X_COLOR,
-    APP_X_NOCOLOR,
-    APP_X_XCOLOR,
-    TEXT_DATA
-} colorFlavorType;
-
-std::map<std::string, guint> mimeToInt;
-std::map<guint, std::string> intToMime;
-
-#if ENABLE_MAGIC_COLORS
-//    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
-//    {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
-#endif // ENABLE_MAGIC_COLORS
-
+static std::vector<std::string> mimeStrings;
+static std::map<std::string, guint> mimeToInt;
 
 void ColorItem::_dragGetColorData( GtkWidget */*widget*/,
                                    GdkDragContext */*drag_context*/,
@@ -128,12 +112,10 @@ void ColorItem::_dragGetColorData( GtkWidget */*widget*/,
 {
     ColorItem* item = reinterpret_cast<ColorItem*>(user_data);
     std::string key;
-    if ( info == TEXT_DATA ) {
-        key = "text/plain";
-    } else if ( (info == APP_X_NOCOLOR) || (info == APP_X_XCOLOR) ) {
-        key = "application/x-oswb-nocolor";
+    if ( info < mimeStrings.size() ) {
+        key = mimeStrings[info];
     } else {
-        key = "application/x-color";
+        g_warning("ERROR: unknown value (%d)", info);
     }
 
     if ( !key.empty() ) {
@@ -297,20 +279,6 @@ static void dieDieDie( GtkObject *obj, gpointer user_data )
     g_message("die die die %p  %p", obj, user_data );
 }
 
-//TODO: warning: deprecated conversion from string constant to ‘gchar*’
-//
-//Turn out to be warnings that we should probably leave in place. The
-// pointers/types used need to be read-only. So until we correct the using
-// code, those warnings are actually desired. They say "Hey! Fix this". We
-// definitely don't want to hide/ignore them. --JonCruz
-static const GtkTargetEntry destColorTargets[] = {
-#if ENABLE_MAGIC_COLORS
-//    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
-    {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
-#endif // ENABLE_MAGIC_COLORS
-    {"application/x-color", 0, APP_X_COLOR},
-};
-
 #include "color.h" // for SP_RGBA32_U_COMPOSE
 
 void ColorItem::_dropDataIn( GtkWidget */*widget*/,
@@ -321,58 +289,6 @@ void ColorItem::_dropDataIn( GtkWidget */*widget*/,
                              guint /*event_time*/,
                              gpointer user_data)
 {
-//     g_message("    droppy droppy   %d", info);
-     switch (info) {
-         case APP_X_INKY_COLOR:
-         {
-             if ( data->length >= 8 ) {
-                 // Careful about endian issues.
-                 guint16* dataVals = (guint16*)data->data;
-                 if ( user_data ) {
-                     ColorItem* item = reinterpret_cast<ColorItem*>(user_data);
-                     if ( item->def.isEditable() ) {
-                         // Shove on in the new value
-                         item->def.setRGB( 0x0ff & (dataVals[0] >> 8), 0x0ff & (dataVals[1] >> 8), 0x0ff & (dataVals[2] >> 8) );
-                     }
-                 }
-             }
-             break;
-         }
-         case APP_X_NOCOLOR:
-         case APP_X_XCOLOR:
-         {
-//              g_message("APP_X_NOCOLOR dropping through to x-color");
-         }
-         case APP_X_COLOR:
-         {
-             if ( data->length == 8 ) {
-                 // Careful about endian issues.
-                 guint16* dataVals = (guint16*)data->data;
-//                  {
-//                      gchar c[64] = {0};
-//                      sp_svg_write_color( c, 64,
-//                                          SP_RGBA32_U_COMPOSE(
-//                                              0x0ff & (dataVals[0] >> 8),
-//                                              0x0ff & (dataVals[1] >> 8),
-//                                              0x0ff & (dataVals[2] >> 8),
-//                                              0xff // can't have transparency in the color itself
-//                                              //0x0ff & (data->data[3] >> 8),
-//                                              ));
-//                  }
-                 if ( user_data ) {
-                     ColorItem* item = reinterpret_cast<ColorItem*>(user_data);
-                     if ( item->def.isEditable() ) {
-                         // Shove on in the new value
-                         item->def.setRGB( 0x0ff & (dataVals[0] >> 8), 0x0ff & (dataVals[1] >> 8), 0x0ff & (dataVals[2] >> 8) );
-                     }
-                 }
-             }
-             break;
-         }
-         default:
-             g_message("unknown drop type");
-     }
-
 }
 
 static bool bruteForce( SPDocument* document, Inkscape::XML::Node* node, Glib::ustring const& match, int r, int g, int b )
@@ -505,17 +421,6 @@ void ColorItem::_colorDefChanged(void* data)
 
 Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewSize size, guint ratio)
 {
-    if (mimeToInt.empty()) {
-        mimeToInt["application/x-inkscape-nocolor"] = APP_X_NOCOLOR;
-        intToMime[APP_X_NOCOLOR] = "application/x-inkscape-nocolor";
-
-        mimeToInt["application/x-color"] = APP_X_COLOR;
-        intToMime[APP_X_COLOR] = "application/x-color";
-
-        mimeToInt["text/plain"] = TEXT_DATA;
-        intToMime[TEXT_DATA] = "text/plain";
-    }
-
     Gtk::Widget* widget = 0;
     if ( style == PREVIEW_STYLE_BLURB) {
         Gtk::Label *lbl = new Gtk::Label(def.descr);
@@ -607,6 +512,11 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
             for ( std::vector<std::string>::iterator it = listing.begin(); it != listing.end(); ++it ) {
                 curr->target = g_strdup(it->c_str());
                 curr->flags = 0;
+                if ( mimeToInt.find(*it) == mimeToInt.end() ){
+                    // these next lines are order-dependent:
+                    mimeToInt[*it] = mimeStrings.size();
+                    mimeStrings.push_back(*it);
+                }
                 curr->info = mimeToInt[curr->target];
                 curr++;
             }
@@ -647,17 +557,17 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
 
         if ( def.isEditable() )
         {
-            gtk_drag_dest_set( GTK_WIDGET(newBlot->gobj()),
-                               GTK_DEST_DEFAULT_ALL,
-                               destColorTargets,
-                               G_N_ELEMENTS(destColorTargets),
-                               GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE) );
+//             gtk_drag_dest_set( GTK_WIDGET(newBlot->gobj()),
+//                                GTK_DEST_DEFAULT_ALL,
+//                                destColorTargets,
+//                                G_N_ELEMENTS(destColorTargets),
+//                                GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE) );
 
 
-            g_signal_connect( G_OBJECT(newBlot->gobj()),
-                              "drag-data-received",
-                              G_CALLBACK(_dropDataIn),
-                              this );
+//             g_signal_connect( G_OBJECT(newBlot->gobj()),
+//                               "drag-data-received",
+//                               G_CALLBACK(_dropDataIn),
+//                               this );
         }
 
         g_signal_connect( G_OBJECT(newBlot->gobj()),

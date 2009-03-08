@@ -124,7 +124,7 @@ public: // FIXME: make more of this private!
     void selectByCoords(std::vector<Geom::Point> coords);
     void selectRect(Geom::Rect const &r);
 
-    bool dropColor(SPItem *item, gchar *c, Geom::Point p);
+    bool dropColor(SPItem *item, gchar const *c, Geom::Point p);
 
     SPStop *addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance);
 

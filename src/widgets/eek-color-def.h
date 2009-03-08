@@ -66,6 +66,7 @@ public:
 
     std::vector<std::string> getMIMETypes();
     void getMIMEData(std::string const & type, char*& dest, int& len, int& format);
+    bool fromMIMEData(std::string const & type, char const * data, int len, int format);
 
     void setRGB( unsigned int r, unsigned int g, unsigned int b );
     unsigned int getR() const { return r; }
