@@ -3,7 +3,7 @@
     <_name>New in This Version</_name>
     <id>org.inkscape.help.relnotes</id>
 	<dependency type="executable" location="extensions">launch_webbrowser.py</dependency>
-	<param name="url" gui-hidden="true" type="string">http://wiki.inkscape.org/wiki/index.php/ReleaseNotes046</param>
+	<param name="url" gui-hidden="true" type="string">http://wiki.inkscape.org/wiki/index.php/ReleaseNotes047</param>
     <effect needs-document="false">
 		<object-type>all</object-type>
 		<effects-menu hidden="true"/>
