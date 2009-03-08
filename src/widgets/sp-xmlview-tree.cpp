@@ -268,14 +268,21 @@ element_attr_changed (Inkscape::XML::Node * repr, const gchar * key, const gchar
 {
 	NodeData * data;
 	gchar *label;
+	const gchar *layer;
 
 	data = (NodeData *) ptr;
 
 	if (data->tree->blocked) return;
 
-	if (strcmp (key, "id")) return;
+	if (0 != strcmp (key, "id") && 0 != strcmp (key, "inkscape:label"))
+		return;
 
-	if (new_value) {
+	new_value = repr->attribute("id");
+	layer = repr->attribute("inkscape:label");
+
+	if (new_value && layer) {
+		label = g_strdup_printf ("<%s id=\"%s\" inkscape:label=\"%s\">", repr->name(), new_value, layer);
+	} else if (new_value) {
 		label = g_strdup_printf ("<%s id=\"%s\">", repr->name(), new_value);
 	} else {
 		label = g_strdup_printf ("<%s>", repr->name());
