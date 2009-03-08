@@ -539,7 +539,7 @@ void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& /*path*/, Gtk::T
             gchar const* oldLabel = obj->label();
             Glib::ustring tmp = row[_model->_colLabel];
             if ( oldLabel && oldLabel[0] && !tmp.empty() && (tmp != oldLabel) ) {
-                _mgr->renameLayer( obj, tmp.c_str() );
+                _mgr->renameLayer( obj, tmp.c_str(), FALSE );
                 row[_model->_colLabel] = obj->label();
             }
         }

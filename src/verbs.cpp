@@ -1230,7 +1230,7 @@ LayerVerb::perform(SPAction *action, void *data, void */*pdata*/)
                 SPObject *new_layer = Inkscape::create_layer(dt->currentRoot(), dt->currentLayer(), LPOS_BELOW);
                 if ( dt->currentLayer()->label() ) {
                     gchar* name = g_strdup_printf(_("%s copy"), dt->currentLayer()->label());
-                    dt->layer_manager->renameLayer( new_layer, name );
+                    dt->layer_manager->renameLayer( new_layer, name, TRUE );
                     g_free(name);
                 }
 

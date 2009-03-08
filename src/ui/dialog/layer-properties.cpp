@@ -183,7 +183,8 @@ void LayerPropertiesDialog::Rename::perform(LayerPropertiesDialog &dialog) {
     SPDesktop *desktop=dialog._desktop;
     Glib::ustring name(dialog._layer_name_entry.get_text());
     desktop->layer_manager->renameLayer( desktop->currentLayer(),
-                                         ( name.empty() ? NULL : (gchar *)name.c_str() )
+                                         ( name.empty() ? NULL : (gchar *)name.c_str() ),
+                                         FALSE
     );
     sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
                      _("Rename layer"));
@@ -212,7 +213,7 @@ void LayerPropertiesDialog::Create::perform(LayerPropertiesDialog &dialog) {
     
     Glib::ustring name(dialog._layer_name_entry.get_text());
     if (!name.empty()) {
-        desktop->layer_manager->renameLayer( new_layer, (gchar *)name.c_str() );
+        desktop->layer_manager->renameLayer( new_layer, (gchar *)name.c_str(), TRUE );
     }
     sp_desktop_selection(desktop)->clear();
     desktop->setCurrentLayer(new_layer);
