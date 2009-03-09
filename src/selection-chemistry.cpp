@@ -291,6 +291,8 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
             SPObject *old_clone = doc->getObjectById(id);
             if (SP_IS_USE(old_clone)) {
                 SPItem *orig = sp_use_get_original(SP_USE(old_clone));
+                if (!orig) // orphaned
+                    continue;
                 for(unsigned int j = 0; j < old_ids.size(); j++) {
                     if (!strcmp(SP_OBJECT_ID(orig), old_ids[j])) {
                         // we have both orig and clone in selection, relink
