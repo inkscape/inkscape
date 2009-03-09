@@ -57,6 +57,8 @@ struct SPPatPainter {
 	Geom::Matrix     pa2ca;
 	NRRectL      cached_bbox;
 	NRPixBlock   cached_tile;
+
+  std::map<SPObject *, sigc::connection> *_release_connections;
 };
 
 static void sp_pattern_class_init (SPPatternClass *klass);
@@ -632,6 +634,19 @@ bool pattern_hasItemChildren (SPPattern *pat)
 
 static void sp_pat_fill (SPPainter *painter, NRPixBlock *pb);
 
+// item in this pattern is about to be deleted, hide it on our arena and disconnect
+void
+sp_pattern_painter_release (SPObject *obj, SPPatPainter *painter)
+{
+	std::map<SPObject *, sigc::connection>::iterator iter = painter->_release_connections->find(obj);
+	if (iter != painter->_release_connections->end()) {
+		iter->second.disconnect();
+    painter->_release_connections->erase(obj);
+	}
+
+	sp_item_invoke_hide(SP_ITEM(obj), painter->dkey);
+}
+
 /**
 Creates a painter (i.e. the thing that does actual filling at the given zoom).
 See (*) below for why the parent_transform may be necessary.
@@ -717,13 +732,19 @@ sp_pattern_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, G
 	pp->root = NRArenaGroup::create(pp->arena);
 
 	/* Show items */
+	pp->_release_connections = new std::map<SPObject *, sigc::connection>;
 	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
 		if (pat_i && SP_IS_OBJECT (pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
 			for (SPObject *child = sp_object_first_child(SP_OBJECT(pat_i)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
 				if (SP_IS_ITEM (child)) {
+					// for each item in pattern,
 					NRArenaItem *cai;
+					// show it on our arena,
 					cai = sp_item_invoke_show (SP_ITEM (child), pp->arena, pp->dkey, SP_ITEM_REFERENCE_FLAGS);
+					// add to the group,
 					nr_arena_item_append_child (pp->root, cai);
+					// and connect to the release signal in case the item gets deleted
+					pp->_release_connections->insert(std::make_pair(child, child->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_pattern_painter_release), pp))));
 				}
 			}
 			break; // do not go further up the chain if children are found
@@ -787,22 +808,25 @@ sp_pattern_painter_new (SPPaintServer *ps, Geom::Matrix const &full_transform, G
 	return (SPPainter *) pp;
 }
 
+
 static void
 sp_pattern_painter_free (SPPaintServer */*ps*/, SPPainter *painter)
 {
 	SPPatPainter *pp = (SPPatPainter *) painter;
-	SPPattern *pat = pp->pat;
+	// free our arena
+  if (pp->arena) {
+      ((NRObject *) pp->arena)->unreference();
+      pp->arena = NULL;
+  }
 
-	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-		if (pat_i && SP_IS_OBJECT (pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
-			for (SPObject *child = sp_object_first_child(SP_OBJECT(pat_i)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-				if (SP_IS_ITEM (child)) {
-						sp_item_invoke_hide (SP_ITEM (child), pp->dkey);
-				}
-			}
-			break; // do not go further up the chain if children are found
-		}
+	// disconnect all connections
+  std::map<SPObject *, sigc::connection>::iterator iter;
+  for (iter = pp->_release_connections->begin() ; iter!=pp->_release_connections->end() ; iter++) {
+	  iter->second.disconnect();
 	}
+	pp->_release_connections->clear();
+  delete pp->_release_connections;
+
 	if ( pp->use_cached_tile ) nr_pixblock_release(&pp->cached_tile);
 	g_free (pp);
 }
@@ -988,6 +1012,6 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
     				nr_pixblock_release (&ppb);
     			}
     		}
-        } 
+     } 
 	}
 }
