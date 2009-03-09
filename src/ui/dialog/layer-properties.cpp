@@ -175,15 +175,17 @@ void LayerPropertiesDialog::Rename::setup(LayerPropertiesDialog &dialog) {
     SPDesktop *desktop=dialog._desktop;
     dialog.set_title(_("Rename Layer"));
     gchar const *name = desktop->currentLayer()->label();
-    dialog._layer_name_entry.set_text(( name ? name : "" ));
+    dialog._layer_name_entry.set_text(( name ? name : _("Layer") ));
     dialog._apply_button.set_label(_("_Rename"));
 }
 
 void LayerPropertiesDialog::Rename::perform(LayerPropertiesDialog &dialog) {
     SPDesktop *desktop=dialog._desktop;
     Glib::ustring name(dialog._layer_name_entry.get_text());
+    if (name.empty())
+        return;
     desktop->layer_manager->renameLayer( desktop->currentLayer(),
-                                         ( name.empty() ? NULL : (gchar *)name.c_str() ),
+                                         (gchar *)name.c_str(),
                                          FALSE
     );
     sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
@@ -194,7 +196,8 @@ void LayerPropertiesDialog::Rename::perform(LayerPropertiesDialog &dialog) {
 
 void LayerPropertiesDialog::Create::setup(LayerPropertiesDialog &dialog) {
     dialog.set_title(_("Add Layer"));
-    dialog._layer_name_entry.set_text("");
+    //TODO: find an unused layer number, forming name from _("Layer ") + "%d"
+    dialog._layer_name_entry.set_text(_("Layer"));
     dialog._apply_button.set_label(_("_Add"));
     dialog._setup_position_controls();
 }
@@ -208,10 +211,12 @@ void LayerPropertiesDialog::Create::perform(LayerPropertiesDialog &dialog) {
         Gtk::ListStore::iterator activeRow(dialog._layer_position_combo.get_active());
         position = activeRow->get_value(dialog._dropdown_columns.position);
     }
+    Glib::ustring name(dialog._layer_name_entry.get_text());
+    if (name.empty())
+        return;
 
     SPObject *new_layer=Inkscape::create_layer(desktop->currentRoot(), dialog._layer, position);
     
-    Glib::ustring name(dialog._layer_name_entry.get_text());
     if (!name.empty()) {
         desktop->layer_manager->renameLayer( new_layer, (gchar *)name.c_str(), TRUE );
     }
