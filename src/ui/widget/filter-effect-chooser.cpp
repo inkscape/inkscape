@@ -48,6 +48,7 @@ SimpleFilterModifier::SimpleFilterModifier(int flags)
     _lb_blur.set_use_underline();
     _lb_blur.set_mnemonic_widget(_blur.get_scale());
     _blend.signal_changed().connect(signal_blend_blur_changed());
+    _blur.set_update_policy(Gtk::UPDATE_DELAYED);
     _blur.signal_value_changed().connect(signal_blend_blur_changed());
 }
 
