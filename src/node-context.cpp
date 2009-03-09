@@ -116,8 +116,6 @@ sp_node_context_dispose(GObject *object)
 	SPNodeContext *nc = SP_NODE_CONTEXT(object);
     SPEventContext *ec = SP_EVENT_CONTEXT(object);
 
-    sp_canvas_set_snap_delay_active(ec->desktop->canvas, false);
-
     ec->enableGrDrag(false);
 
     nc->sel_changed_connection.disconnect();
@@ -175,8 +173,6 @@ sp_node_context_setup(SPEventContext *ec)
     nc->_node_message_context = new Inkscape::MessageContext((ec->desktop)->messageStack());
 
     ec->shape_editor->update_statusbar();
-
-    sp_canvas_set_snap_delay_active(ec->desktop->canvas, true);
 }
 
 static void
@@ -298,7 +294,8 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (!(event->button.state & GDK_SHIFT_MASK)) {
                     if (!nc->drag) {
                         if (se->has_nodepath() && selection->single() /* && item_over */) {
-                            // save drag origin
+                        	sp_canvas_set_snap_delay_active(desktop->canvas, true);
+                        	// save drag origin
                             bool over_stroke = se->is_over_stroke(Geom::Point(event->button.x, event->button.y), true);
                             //only dragging curves
                             if (over_stroke) {
@@ -412,7 +409,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     if (over_stroke || nc->added_node) {
                         switch (event->type) {
                             case GDK_BUTTON_RELEASE:
-                                if (event->button.state & GDK_CONTROL_MASK && event->button.state & GDK_MOD1_MASK) {
+                            	if (event->button.state & GDK_CONTROL_MASK && event->button.state & GDK_MOD1_MASK) {
                                     //add a node
                                     se->add_node_near_point();
                                 } else {
@@ -428,11 +425,13 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                     }
                                     desktop->updateNow();
                                 }
+                            	sp_canvas_set_snap_delay_active(desktop->canvas, false);
                                 break;
                             case GDK_2BUTTON_PRESS:
                                 //add a node
                                 se->add_node_near_point();
                                 nc->added_node = true;
+                                sp_canvas_set_snap_delay_active(desktop->canvas, false);
                                 break;
                             default:
                                 break;
@@ -450,16 +449,16 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 }
             }
             if (event->type == GDK_BUTTON_RELEASE) {
-                event_context->xp = event_context->yp = 0;
+            	event_context->xp = event_context->yp = 0;
                 if (event->button.button == 1) {
-                    Geom::OptRect b = Inkscape::Rubberband::get(desktop)->getRectangle();
+                	Geom::OptRect b = Inkscape::Rubberband::get(desktop)->getRectangle();
 
                     if (se->hits_curve() && !event_context->within_tolerance) { //drag curve
                         se->finish_drag();
                     } else if (b && !event_context->within_tolerance) { // drag to select
                         se->select_rect(*b, event->button.state & GDK_SHIFT_MASK);
                     } else {
-                        if (!(nc->rb_escaped)) { // unless something was cancelled
+                        if (!(nc->rb_escaped)) { // unless something was canceled
                             if (se->has_selection())
                                 se->deselect();
                             else

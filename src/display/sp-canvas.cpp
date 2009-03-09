@@ -1681,6 +1681,7 @@ gboolean sp_canvas_snap_watchdog_callback(gpointer data)
 		dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
 	}
 
+	((GdkEventMotion *)canvas->watchdog_event)->time = GDK_CURRENT_TIME;
 	emit_event(canvas, canvas->watchdog_event);
 	gdk_event_free(canvas->watchdog_event);
 	canvas->watchdog_event = NULL;

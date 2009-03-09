@@ -285,7 +285,9 @@ void sp_knot_start_dragging(SPKnot *knot, Geom::Point const &p, gint x, gint y, 
  */
 static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot)
 {
-    g_assert(knot != NULL);
+	static bool snap_delay_temporarily_active = false;
+
+	g_assert(knot != NULL);
     g_assert(SP_IS_KNOT(knot));
 
     /* Run client universal event handler, if present */
@@ -316,6 +318,10 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             if (event->button.button == 1 && !knot->desktop->event_context->space_panning) {
                 Geom::Point const p = knot->desktop->w2d(Geom::Point(event->button.x, event->button.y));
                 sp_knot_start_dragging(knot, p, (gint) event->button.x, (gint) event->button.y, event->button.time);
+                if (knot->desktop->canvas->context_snap_delay_active == false) {
+					sp_canvas_set_snap_delay_active(knot->desktop->canvas, true);
+					snap_delay_temporarily_active = true;
+				}
                 consumed = TRUE;
             }
             break;
@@ -347,6 +353,13 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                     grabbed = FALSE;
                     moved = FALSE;
                     consumed = TRUE;
+
+                    if (snap_delay_temporarily_active) {
+                    	if (knot->desktop->canvas->context_snap_delay_active == true) {
+                    		sp_canvas_set_snap_delay_active(knot->desktop->canvas, false);
+                    	}
+						snap_delay_temporarily_active = false;
+					}
                 }
             }
             break;
@@ -411,7 +424,6 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
 
             grabbed = FALSE;
             moved = FALSE;
-
             consumed = TRUE;
             break;
 	case GDK_KEY_PRESS: // keybindings for knot
@@ -435,6 +447,10 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                     }
                     grabbed = FALSE;
                     moved = FALSE;
+                    if (snap_delay_temporarily_active) {
+						sp_canvas_set_snap_delay_active(knot->desktop->canvas, false);
+						snap_delay_temporarily_active = false;
+					}
                     break;
 		default:
                     consumed = FALSE;
@@ -568,7 +584,7 @@ void sp_knot_set_position(SPKnot *knot, Geom::Point const &p, guint state)
 }
 
 /**
- * Move knot to new position, without emitting a MOVED signal. 
+ * Move knot to new position, without emitting a MOVED signal.
  */
 void sp_knot_moveto(SPKnot *knot, Geom::Point const &p)
 {
