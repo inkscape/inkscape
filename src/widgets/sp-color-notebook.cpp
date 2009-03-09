@@ -448,18 +448,36 @@ void ColorNotebook::_rgbaEntryChanged(GtkEntry* entry)
     const gchar *t = gtk_entry_get_text( entry );
 
     if (t) {
-        gchar *e = 0;
-        guint rgba = strtoul (t, &e, 16);
-        if ( e != t ) {
-            ptrdiff_t len=e-t;
+        Glib::ustring text = t;
+        bool changed = false;
+        if (!text.empty() && text[0] == '#') {
+            changed = true;
+            text.erase(0,1);
+            if (text.size() == 6) {
+                // it was a standard RGB hex
+                unsigned int alph = SP_COLOR_F_TO_U(_alpha);
+                gchar* tmp = g_strdup_printf("%02x", alph);
+                text += tmp;
+                g_free(tmp);
+            }
+        }
+        gchar* str = g_strdup(text.c_str());
+        gchar* end = 0;
+        guint64 rgba = g_ascii_strtoull( str, &end, 16 );
+        if ( end != str ) {
+            ptrdiff_t len = end - str;
             if ( len < 8 ) {
                 rgba = rgba << ( 4 * ( 8 - len ) );
             }
             _updatingrgba = TRUE;
+            if ( changed ) {
+                gtk_entry_set_text( entry, str );
+            }
             SPColor color( rgba );
             setColorAlpha( color, SP_RGBA32_A_F(rgba), true );
             _updatingrgba = FALSE;
         }
+        g_free(str);
     }
 }
 
