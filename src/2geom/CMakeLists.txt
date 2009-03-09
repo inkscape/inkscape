@@ -90,6 +90,7 @@ bezier-to-sbasis.h
 
 basic-intersection.h
 basic-intersection.cpp
+recursive-bezier-intersection.cpp
 
 geom.cpp
 geom.h

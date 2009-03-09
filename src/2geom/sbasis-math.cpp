@@ -35,14 +35,15 @@
 //TODO: in all these functions, compute 'order' according to 'tol'.
 
 #include <2geom/sbasis-math.h>
-//#define ZERO 1e-3
 
+#include <2geom/d2-sbasis.h>
 #include <stdio.h>
 #include <math.h>
+//#define ZERO 1e-3
+
 
 namespace Geom {
 
-#include <2geom/d2-sbasis.h>
 
 //-|x|-----------------------------------------------------------------------
 /** Return the absolute value of a function pointwise.

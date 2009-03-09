@@ -99,6 +99,9 @@ cubics_with_prescribed_curvature(Point const &M0,   Point const &M1,
                                  int insist_on_speed_signs = 1,
                                  double error = 1e-5);
 
+
+std::vector<double> find_tangents(Point P, D2<SBasis> const &A);
+
 };
 
 #endif

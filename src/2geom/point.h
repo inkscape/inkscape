@@ -229,8 +229,10 @@ Point operator*(Point const &v, Matrix const &m);
 
 Point operator/(Point const &p, Matrix const &m);
 
-/** Constrains the angle between a and b to a multiple of pi/n with respect to dir. */
-Point constrain_angle(Point const &ref, Point const &pt, unsigned int n = 4, Geom::Point const &dir = Geom::Point(1,0));
+/** Constrains the angle (with respect to dir) of the line
+ *  joining A and B to a multiple of pi/n.
+ */
+Point constrain_angle(Point const &A, Point const &B, unsigned int n = 4, Geom::Point const &dir = Geom::Point(1,0));
 
 } /* namespace Geom */
 

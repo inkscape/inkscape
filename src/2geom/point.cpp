@@ -150,19 +150,19 @@ Point &Point::operator*=(Matrix const &m)
     return *this;
 }
 
-Point constrain_angle(Point const &ref, Point const &pt, unsigned int n, Point const &dir)
+Point constrain_angle(Point const &A, Point const &B, unsigned int n, Point const &dir)
 {
-    // for special cases we could perhaps use faster routines
+    // for special cases we could perhaps use explicit testing (which might be faster)
     if (n == 0.0) {
-        return pt;
+        return B;
     }
-    Point diff(pt - ref);
+    Point diff(B - A);
     double angle = -angle_between(diff, dir);
     double k = round(angle * (double)n / (2.0*M_PI));
-    return ref + dir * Rotate(k * 2.0 * M_PI / (double)n) * L2(diff);
+    return A + dir * Rotate(k * 2.0 * M_PI / (double)n) * L2(diff);
 }
 
-}  //Namespace Geom
+}  //namespace Geom
 
 /*
   Local Variables:

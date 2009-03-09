@@ -198,7 +198,7 @@ SBasis shift(SBasis const &a, int sh) {
     
     for(int i = 0; i < sh; i++)
         c[i] = Linear(0,0);
-    for(size_t i = m, j = 0; i < n; i++, j++)
+    for(size_t i = m, j = std::max(0,-sh); i < n; i++, j++)
         c[i] = a[j];
     return c;
 }

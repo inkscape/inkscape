@@ -1,9 +1,8 @@
 #include <2geom/poly.h>
 
-#define HAVE_GSL
-#ifdef HAVE_GSL
+//#ifdef HAVE_GSL
 #include <gsl/gsl_poly.h>
-#endif
+//#endif
 
 namespace Geom {
 
@@ -39,7 +38,7 @@ void Poly::monicify() {
 }
 
 
-#ifdef HAVE_GSL
+//#ifdef HAVE_GSL
 std::vector<std::complex<double> > solve(Poly const & pp) {
     Poly p(pp);
     p.normalize();
@@ -76,7 +75,7 @@ std::vector<double > solve_reals(Poly const & p) {
     }
     return real_roots;
 }
-#endif
+//#endif
 
 double polish_root(Poly const & p, double guess, double tol) {
     Poly dp = derivative(p);

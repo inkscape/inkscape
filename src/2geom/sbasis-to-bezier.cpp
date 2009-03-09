@@ -95,6 +95,7 @@ int sgn(unsigned int j, unsigned int k)
  if the degree is even q is the order in the symmetrical power basis,
  if the degree is odd q is the order + 1
  n is always the polynomial degree, i. e. the Bezier order
+ sz is the number of bezier handles.
 */
 void sbasis_to_bezier (Bezier & bz, SBasis const& sb, size_t sz)
 {
@@ -117,8 +118,8 @@ void sbasis_to_bezier (Bezier & bz, SBasis const& sb, size_t sz)
     }
     else
     {
-        q = (sz > sb.size()) ?  sb.size() : sz;
-        n = 2*sz-1;
+        q = (sz > 2*sb.size()-1) ?  sb.size() : (sz+1)/2;
+        n = sz-1;
         even = false;
     }
     bz.clear();
@@ -151,15 +152,17 @@ void sbasis_to_bezier (Bezier & bz, SBasis const& sb, size_t sz)
  \param p the D2 Symmetric basis polynomial
  \returns the D2 Bernstein basis polynomial
 
- if the degree is even q is the order in the symmetrical power basis,
- if the degree is odd q is the order + 1
- n is always the polynomial degree, i. e. the Bezier order
+ sz is always the polynomial degree, i. e. the Bezier order
 */
 void sbasis_to_bezier (std::vector<Point> & bz, D2<SBasis> const& sb, size_t sz)
 {
     Bezier bzx, bzy;
+    if(sz == 0) {
+        sz = std::max(sb[X].size(), sb[Y].size())*2;
+    }
     sbasis_to_bezier(bzx, sb[X], sz);
     sbasis_to_bezier(bzy, sb[Y], sz);
+    assert(bzx.size() == bzy.size());
     size_t n = (bzx.size() >= bzy.size()) ? bzx.size() : bzy.size();
 
     bz.resize(n, Point(0,0));
@@ -345,7 +348,7 @@ void build_from_sbasis(Geom::PathBuilder &pb, D2<SBasis> const &B, double tol, b
             pb.lineTo(B.at1());
         } else {
             std::vector<Geom::Point> bez;
-            sbasis_to_bezier(bez, B, 2);
+            sbasis_to_bezier(bez, B, 4);
             pb.curveTo(bez[1], bez[2], bez[3]);
         }
     } else {

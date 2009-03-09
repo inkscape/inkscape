@@ -10,6 +10,28 @@
 using std::vector;
 namespace Geom {
 
+//#ifdef USE_RECURSIVE_INTERSECTOR
+
+// void find_intersections(std::vector<std::pair<double, double> > &xs,
+//                         D2<SBasis> const & A,
+//                         D2<SBasis> const & B) {
+//     vector<Point> BezA, BezB;
+//     sbasis_to_bezier(BezA, A);
+//     sbasis_to_bezier(BezB, B);
+    
+//     xs.clear();
+    
+//     find_intersections_bezier_recursive(xs, BezA, BezB);
+// }
+// void find_intersections(std::vector< std::pair<double, double> > & xs,
+//                          std::vector<Point> const& A,
+//                          std::vector<Point> const& B,
+//                         double precision){
+//     find_intersections_bezier_recursive(xs, A, B, precision);
+// }
+
+//#else
+
 namespace detail{ namespace bezier_clipping {
 void portion (std::vector<Point> & B, Interval const& I);
 }; };
@@ -20,11 +42,19 @@ void find_intersections(std::vector<std::pair<double, double> > &xs,
     vector<Point> BezA, BezB;
     sbasis_to_bezier(BezA, A);
     sbasis_to_bezier(BezB, B);
-    
+
     xs.clear();
     
-    find_intersections(xs, BezA, BezB);
+    find_intersections_bezier_clipping(xs, BezA, BezB);
 }
+void find_intersections(std::vector< std::pair<double, double> > & xs,
+                         std::vector<Point> const& A,
+                         std::vector<Point> const& B,
+                        double precision){
+    find_intersections_bezier_clipping(xs, A, B, precision);
+}
+
+//#endif
 
 /*
  * split the curve at the midpoint, returning an array with the two parts
@@ -79,6 +109,7 @@ find_self_intersections(std::vector<std::pair<double, double> > &xs,
             in = r;
         }
     }
+
     for(unsigned i = 0; i < dr.size()-1; i++) {
         for(unsigned j = i+1; j < dr.size()-1; j++) {
             std::vector<std::pair<double, double> > section;
@@ -89,7 +120,8 @@ find_self_intersections(std::vector<std::pair<double, double> > &xs,
                 double r = section[k].second;
 // XXX: This condition will prune out false positives, but it might create some false negatives.  Todo: Confirm it is correct.
                 if(j == i+1)
-                    if((l == 1) && (r == 0))
+                    //if((l == 1) && (r == 0))
+                    if( ( l > 1-1e-4 ) && (r < 1e-4) )//FIXME: what precision should be used here???
                         continue;
                 xs.push_back(std::make_pair((1-l)*dr[i] + l*dr[i+1],
                                                 (1-r)*dr[j] + r*dr[j+1]));
