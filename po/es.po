@@ -7,13 +7,13 @@
 # Agradecimientos: zert, softcatala, 2002-2003.
 # Jose Antonio Salgueiro Aquino <developer@telefonica.net>, 2003.
 # Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
-# Lucas Vieites Fariña <lucas@codexion.com>, 2003-2007, 2008, 2009.
+# Lucas Vieites Fariña <lucas@codexion.com>, 2003-2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-01-28 13:45+0100\n"
-"PO-Revision-Date: 2009-02-18 18:05+0100\n"
+"PO-Revision-Date: 2009-03-09 17:17+0100\n"
 "Last-Translator: Lucas Vieites <lucas@codexion.com>\n"
 "Language-Team: Español <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1118,7 +1118,7 @@ msgstr "Cambiar regla de relleno"
 
 #: ../src/dialogs/fill-style.cpp:321 ../src/dialogs/fill-style.cpp:395
 msgid "Set fill color"
-msgstr "Fijar el color de relleno"
+msgstr "Aplicar color de relleno"
 
 #: ../src/dialogs/fill-style.cpp:383 ../src/ui/widget/selected-style.cpp:255
 #: ../src/ui/widget/selected-style.cpp:475
@@ -1127,11 +1127,11 @@ msgstr "Eliminar relleno"
 
 #: ../src/dialogs/fill-style.cpp:464
 msgid "Set gradient on fill"
-msgstr "Fijar el gradiente al rellenar"
+msgstr "Asignar gradiente al relleno"
 
 #: ../src/dialogs/fill-style.cpp:511
 msgid "Set pattern on fill"
-msgstr "Fijar el patrón al rellenear"
+msgstr "Asignar patrón al relleno"
 
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/dialogs/fill-style.cpp:526 ../src/ui/widget/selected-style.cpp:193
@@ -1139,7 +1139,7 @@ msgstr "Fijar el patrón al rellenear"
 #: ../src/ui/widget/selected-style.cpp:493
 #: ../src/ui/widget/style-swatch.cpp:303
 msgid "Unset fill"
-msgstr "Eliminar relleno"
+msgstr "Retirar relleno"
 
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
 #: ../src/dialogs/find.cpp:362 ../src/ui/dialog/find.cpp:435
