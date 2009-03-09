@@ -365,7 +365,6 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     item->bbox.y0 = (gint32)((*boundingbox)[1][0] - 1.0F);
     item->bbox.x1 = (gint32)((*boundingbox)[0][1] + 1.0F);
     item->bbox.y1 = (gint32)((*boundingbox)[1][1] + 1.0F);
-    nr_arena_request_render_rect(item->arena, &item->bbox);
 
     item->render_opacity = TRUE;
     if ( shape->_fill.paint.type() == NRArenaShape::Paint::SERVER ) {

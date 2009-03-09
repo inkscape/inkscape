@@ -215,7 +215,6 @@ nr_arena_glyphs_update(NRArenaItem *item, NRRectL */*area*/, NRGC *gc, guint /*s
     item->bbox.y0 = (gint32)(bbox.y0 - 1.0);
     item->bbox.x1 = (gint32)(bbox.x1 + 1.0);
     item->bbox.y1 = (gint32)(bbox.y1 + 1.0);
-    nr_arena_request_render_rect(item->arena, &item->bbox);
 
     return NR_ARENA_ITEM_STATE_ALL;
 }

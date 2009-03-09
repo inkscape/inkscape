@@ -111,9 +111,6 @@ nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned 
 
     NRArenaImage *image = NR_ARENA_IMAGE (item);
 
-    /* Request render old */
-    nr_arena_item_request_render (item);
-
     /* Copy affine */
     grid2px = gc->transform.inverse();
     double hscale, vscale; // todo: replace with Geom::Scale
@@ -161,8 +158,6 @@ nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned 
         item->bbox.x1 = item->bbox.x0 - 1;
         item->bbox.y1 = item->bbox.y0 - 1;
     }
-
-    nr_arena_item_request_render (item);
 
     return NR_ARENA_ITEM_STATE_ALL;
 }

@@ -81,6 +81,7 @@ nr_arena_item_init (NRArenaItem *item)
     item->visible = TRUE;
 
     memset (&item->bbox, 0, sizeof (item->bbox));
+    memset (&item->drawbox, 0, sizeof (item->drawbox));
     item->transform = NULL;
     item->opacity = 255;
     item->render_opacity = FALSE;
@@ -234,7 +235,7 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
         return item->state;
     /* Test whether to return immediately */
     if (area && (item->state & NR_ARENA_ITEM_STATE_BBOX)) {
-        if (!nr_rect_l_test_intersect_ptr(area, &item->bbox))
+        if (!nr_rect_l_test_intersect_ptr(area, &item->drawbox))
             return item->state;
     }
 
@@ -252,12 +253,17 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
     item->ctm = childgc.transform;
 
     /* Invoke the real method */
+    // that will update bbox
     item->state = NR_ARENA_ITEM_VIRTUAL (item, update) (item, area, &childgc, state, reset);
     if (item->state & NR_ARENA_ITEM_STATE_INVALID)
         return item->state;
-    /* Enlarge the bounding box to contain filter effects */
+
+    // get a copy of bbox
+    memcpy(&item->drawbox, &item->bbox, sizeof(item->bbox));
+
+    /* Enlarge the drawbox to contain filter effects */
     if (item->filter && filter) {
-        item->filter->bbox_enlarge (item->bbox);
+        item->filter->bbox_enlarge (item->drawbox);
     }
     // fixme: to fix the display glitches, in outline mode bbox must be a combination of 
     // full item bbox and its clip and mask (after we have the API to get these)
@@ -272,7 +278,8 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
             item->state |= NR_ARENA_ITEM_STATE_INVALID;
             return item->state;
         }
-        nr_rect_l_intersect (&item->bbox, &item->bbox, &item->clip->bbox);
+        // for clipping, we need geometric bbox
+        nr_rect_l_intersect (&item->drawbox, &item->drawbox, &item->clip->bbox);
     }
     /* Masking */
     if (item->mask) {
@@ -281,7 +288,14 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc,
             item->state |= NR_ARENA_ITEM_STATE_INVALID;
             return item->state;
         }
-        nr_rect_l_intersect (&item->bbox, &item->bbox, &item->mask->bbox);
+        // for masking, we need full drawbox of mask
+        nr_rect_l_intersect (&item->drawbox, &item->drawbox, &item->mask->drawbox);
+    }
+
+    // now that we know drawbox, dirty the corresponding rect on canvas:
+    if (!NR_IS_ARENA_GROUP(item) || (item->filter && filter)) {
+        // unless filtered, groups do not need to render by themselves, only their members
+        nr_arena_item_request_render (item);
     }
 
     return item->state;
@@ -311,17 +325,17 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
             area->x1, area->y1);
 #endif
 
-    /* If we are outside bbox just return successfully */
+    /* If we are invisible, just return successfully */
     if (!item->visible)
         return item->state | NR_ARENA_ITEM_STATE_RENDER;
 
     NRRectL carea;
-    nr_rect_l_intersect (&carea, area, &item->bbox);
+    nr_rect_l_intersect (&carea, area, &item->drawbox);
     if (nr_rect_l_test_empty(carea))
         return item->state | NR_ARENA_ITEM_STATE_RENDER;
     if (item->filter && filter) {
         item->filter->area_enlarge (carea, item);
-        nr_rect_l_intersect (&carea, &carea, &item->bbox);
+        nr_rect_l_intersect (&carea, &carea, &item->drawbox);
     }
 
     if (outline) {
@@ -360,10 +374,10 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
                                   /* fixme: This probably cannot overflow, because we render only if visible */
                                   /* fixme: and pixel cache is there only for small items */
                                   /* fixme: But this still needs extra check (Lauris) */
-                                  item->bbox.x0, item->bbox.y0,
-                                  item->bbox.x1, item->bbox.y1,
+                                  item->drawbox.x0, item->drawbox.y0,
+                                  item->drawbox.x1, item->drawbox.y1,
                                   item->px,
-                                  4 * (item->bbox.x1 - item->bbox.x0), FALSE,
+                                  4 * (item->drawbox.x1 - item->drawbox.x0), FALSE,
                                   FALSE);
         nr_blit_pixblock_pixblock (pb, &cpb);
         nr_pixblock_release (&cpb);
@@ -375,15 +389,15 @@ nr_arena_item_invoke_render (cairo_t *ct, NRArenaItem *item, NRRectL const *area
 
     /* Setup cache if we can */
     if ((!(flags & NR_ARENA_ITEM_RENDER_NO_CACHE)) &&
-        (carea.x0 <= item->bbox.x0) && (carea.y0 <= item->bbox.y0) &&
-        (carea.x1 >= item->bbox.x1) && (carea.y1 >= item->bbox.y1) &&
-        (((item->bbox.x1 - item->bbox.x0) * (item->bbox.y1 -
-                                             item->bbox.y0)) <= 4096)) {
-        // Item bbox is fully in renderable area and size is acceptable
-        carea.x0 = item->bbox.x0;
-        carea.y0 = item->bbox.y0;
-        carea.x1 = item->bbox.x1;
-        carea.y1 = item->bbox.y1;
+        (carea.x0 <= item->drawbox.x0) && (carea.y0 <= item->drawbox.y0) &&
+        (carea.x1 >= item->drawbox.x1) && (carea.y1 >= item->drawbox.y1) &&
+        (((item->drawbox.x1 - item->drawbox.x0) * (item->drawbox.y1 -
+                                             item->drawbox.y0)) <= 4096)) {
+        // Item drawbox is fully in renderable area and size is acceptable
+        carea.x0 = item->drawbox.x0;
+        carea.y0 = item->drawbox.y0;
+        carea.x1 = item->drawbox.x1;
+        carea.y1 = item->drawbox.y1;
         item->px =
             new (GC::ATOMIC) unsigned char[4 * (carea.x1 - carea.x0) *
                                            (carea.y1 - carea.y0)];
@@ -672,7 +686,7 @@ nr_arena_item_request_render (NRArenaItem *item)
     nr_return_if_fail (item != NULL);
     nr_return_if_fail (NR_IS_ARENA_ITEM (item));
 
-    nr_arena_request_render_rect (item->arena, &item->bbox);
+    nr_arena_request_render_rect (item->arena, &item->drawbox);
 }
 
 /* Public */

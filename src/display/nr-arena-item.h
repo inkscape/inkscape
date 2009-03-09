@@ -89,6 +89,8 @@ struct NRArenaItem : public NRObject {
 
     /* BBox in grid coordinates */
     NRRectL bbox;
+    /* Redraw area in grid coordinates = bbox filter-enlarged and clipped/masked */
+    NRRectL drawbox;
     /* BBox in item coordinates - this should be a bounding box as
      * specified in SVG standard. Required by filters. */
     Geom::OptRect item_bbox;
