@@ -229,31 +229,11 @@ void CtrlRect::update(Geom::Matrix const &affine, unsigned int flags)
 
     sp_canvas_item_reset_bounds(this);
 
-    if (_area.x0 != 0 || _area.x1 != 0 || _area.y0 != 0 || _area.y1 != 0) {
-        /* Request redraw old */
-        if (!_has_fill) {
-            /* Top */
-            sp_canvas_request_redraw(canvas,
-                                     _area.x0 - 1, _area.y0 - 1,
-                                     _area.x1 + 1, _area.y0 + 1);
-            /* Left */
-            sp_canvas_request_redraw(canvas,
-                                     _area.x0 - 1, _area.y0 - 1,
-                                     _area.x0 + 1, _area.y1 + 1);
-            /* Right */
-            sp_canvas_request_redraw(canvas,
-                                     _area.x1 - 1, _area.y0 - 1,
-                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
-            /* Bottom */
-            sp_canvas_request_redraw(canvas,
-                                     _area.x0 - 1, _area.y1 - 1,
-                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
-        } else {
-            sp_canvas_request_redraw(canvas,
-                                     _area.x0 - 1, _area.y0 - 1,
-                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
-        }
-    }
+    NRRectL _area_old;
+    _area_old.x0 = _area.x0;
+    _area_old.x1 = _area.x1;
+    _area_old.y0 = _area.y0;
+    _area_old.y1 = _area.y1;
 
     Geom::Rect bbox(_rect.min() * affine, _rect.max() * affine);
 
@@ -262,33 +242,122 @@ void CtrlRect::update(Geom::Matrix const &affine, unsigned int flags)
     _area.x1 = (int) floor(bbox.max()[Geom::X] + 0.5);
     _area.y1 = (int) floor(bbox.max()[Geom::Y] + 0.5);
 
+    gint _shadow_size_old = _shadow_size;
     _shadow_size = _shadow;
 
-    if (_area.x0 != 0 || _area.x1 != 0 || _area.y0 != 0 || _area.y1 != 0) {
-        /* Request redraw new */
-        if (!_has_fill) {
-            /* Top */
+    // FIXME: we don't process a possible change in _has_fill
+    if (_has_fill) {
+        if (_area_old.x0 != 0 || _area_old.x1 != 0 || _area_old.y0 != 0 || _area_old.y1 != 0) {
             sp_canvas_request_redraw(canvas,
-                                     _area.x0 - 1, _area.y0 - 1,
-                                     _area.x1 + 1, _area.y0 + 1);
-            /* Left */
+                                 _area_old.x0 - 1, _area_old.y0 - 1,
+                                 _area_old.x1 + _shadow_size + 1, _area_old.y1 + _shadow_size + 1);
+        }
+        if (_area.x0 != 0 || _area.x1 != 0 || _area.y0 != 0 || _area.y1 != 0) {
             sp_canvas_request_redraw(canvas,
-                                     _area.x0 - 1, _area.y0 - 1,
-                                     _area.x0 + 1, _area.y1 + 1);
-            /* Right */
-            sp_canvas_request_redraw(canvas,
-                                     _area.x1 - 1, _area.y0 - 1,
-                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
-            /* Bottom */
-            sp_canvas_request_redraw(canvas,
-                                     _area.x0 - 1, _area.y1 - 1,
-                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
-        } else {
-            sp_canvas_request_redraw(canvas,
-                                     _area.x0 - 1, _area.y0 - 1,
-                                     _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+                                 _area.x0 - 1, _area.y0 - 1,
+                                 _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+        }
+    } else { // clear box, be smart about what part of the frame to redraw
+
+        /* Top */
+        if (_area.y0 != _area_old.y0) { // different level, redraw fully old and new
+            if (_area_old.x0 != _area_old.x1)
+                sp_canvas_request_redraw(canvas,
+                                         _area_old.x0 - 1, _area_old.y0 - 1,
+                                         _area_old.x1 + 1, _area_old.y0 + 1);
+
+            if (_area.x0 != _area.x1)
+                sp_canvas_request_redraw(canvas,
+                                         _area.x0 - 1, _area.y0 - 1,
+                                         _area.x1 + 1, _area.y0 + 1);
+        } else { // same level, redraw only the ends
+            if (_area.x0 != _area_old.x0) {
+                sp_canvas_request_redraw(canvas,
+                                         MIN(_area_old.x0,_area.x0) - 1, _area.y0 - 1,
+                                         MAX(_area_old.x0,_area.x0) + 1, _area.y0 + 1);
+            }
+            if (_area.x1 != _area_old.x1) {
+                sp_canvas_request_redraw(canvas,
+                                         MIN(_area_old.x1,_area.x1) - 1, _area.y0 - 1,
+                                         MAX(_area_old.x1,_area.x1) + 1, _area.y0 + 1);
+            }
         }
 
+        /* Left */
+        if (_area.x0 != _area_old.x0) { // different level, redraw fully old and new
+            if (_area_old.y0 != _area_old.y1)
+                sp_canvas_request_redraw(canvas,
+                                         _area_old.x0 - 1, _area_old.y0 - 1,
+                                         _area_old.x0 + 1, _area_old.y1 + 1);
+
+            if (_area.y0 != _area.y1)
+                sp_canvas_request_redraw(canvas,
+                                         _area.x0 - 1, _area.y0 - 1,
+                                         _area.x0 + 1, _area.y1 + 1);
+        } else { // same level, redraw only the ends
+            if (_area.y0 != _area_old.y0) {
+                sp_canvas_request_redraw(canvas,
+                                         _area.x0 - 1, MIN(_area_old.y0,_area.y0) - 1, 
+                                         _area.x0 + 1, MAX(_area_old.y0,_area.y0) + 1);
+            }
+            if (_area.y1 != _area_old.y1) {
+                sp_canvas_request_redraw(canvas,
+                                         _area.x0 - 1, MIN(_area_old.y1,_area.y1) - 1, 
+                                         _area.x0 + 1, MAX(_area_old.y1,_area.y1) + 1);
+            }
+        }
+
+        /* Right */
+        if (_area.x1 != _area_old.x1 || _shadow_size_old != _shadow_size) { 
+            if (_area_old.y0 != _area_old.y1)
+                sp_canvas_request_redraw(canvas,
+                                         _area_old.x1 - 1, _area_old.y0 - 1,
+                                         _area_old.x1 + _shadow_size + 1, _area_old.y1 + _shadow_size + 1);
+
+            if (_area.y0 != _area.y1)
+                sp_canvas_request_redraw(canvas,
+                                         _area.x1 - 1, _area.y0 - 1,
+                                         _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+        } else { // same level, redraw only the ends
+            if (_area.y0 != _area_old.y0) {
+                sp_canvas_request_redraw(canvas,
+                                         _area.x1 - 1, MIN(_area_old.y0,_area.y0) - 1, 
+                                         _area.x1 + _shadow_size + 1, MAX(_area_old.y0,_area.y0) + _shadow_size + 1);
+            }
+            if (_area.y1 != _area_old.y1) {
+                sp_canvas_request_redraw(canvas,
+                                         _area.x1 - 1, MIN(_area_old.y1,_area.y1) - 1, 
+                                         _area.x1 + _shadow_size + 1, MAX(_area_old.y1,_area.y1) + _shadow_size + 1);
+            }
+        }
+
+        /* Bottom */
+        if (_area.y1 != _area_old.y1 || _shadow_size_old != _shadow_size) { 
+            if (_area_old.x0 != _area_old.x1)
+                sp_canvas_request_redraw(canvas,
+                                         _area_old.x0 - 1, _area_old.y1 - 1,
+                                         _area_old.x1 + _shadow_size + 1, _area_old.y1 + _shadow_size + 1);
+
+            if (_area.x0 != _area.x1)
+                sp_canvas_request_redraw(canvas,
+                                         _area.x0 - 1, _area.y1 - 1,
+                                         _area.x1 + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+        } else { // same level, redraw only the ends
+            if (_area.x0 != _area_old.x0) {
+                sp_canvas_request_redraw(canvas,
+                                         MIN(_area_old.x0,_area.x0) - 1, _area.y1 - 1,
+                                         MAX(_area_old.x0,_area.x0) + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+            }
+            if (_area.x1 != _area_old.x1) {
+                sp_canvas_request_redraw(canvas,
+                                         MIN(_area_old.x1,_area.x1) - 1, _area.y1 - 1,
+                                         MAX(_area_old.x1,_area.x1) + _shadow_size + 1, _area.y1 + _shadow_size + 1);
+            }
+        }
+    }
+
+    // update SPCanvasItem box
+    if (_area.x0 != 0 || _area.x1 != 0 || _area.y0 != 0 || _area.y1 != 0) {
         x1 = _area.x0 - 1;
         y1 = _area.y0 - 1;
         x2 = _area.x1 + _shadow_size + 1;
