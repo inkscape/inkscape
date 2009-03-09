@@ -32,7 +32,7 @@ Inkscape::SelCue::SelCue(SPDesktop *desktop)
     _selection = sp_desktop_selection(_desktop);
 
     _sel_changed_connection = _selection->connectChanged(
-        sigc::hide(sigc::mem_fun(*this, &Inkscape::SelCue::_updateItemBboxes))
+        sigc::hide(sigc::mem_fun(*this, &Inkscape::SelCue::_newItemBboxes))
         );
 
     _sel_modified_connection = _selection->connectModified(
@@ -47,12 +47,12 @@ Inkscape::SelCue::~SelCue()
     _sel_changed_connection.disconnect();
     _sel_modified_connection.disconnect();
 
-    for (std::list<SPCanvasItem*>::iterator i = _item_bboxes.begin(); i != _item_bboxes.end(); i++) {
+    for (std::vector<SPCanvasItem*>::iterator i = _item_bboxes.begin(); i != _item_bboxes.end(); i++) {
         gtk_object_destroy(*i);
     }
     _item_bboxes.clear();
 
-    for (std::list<SPCanvasItem*>::iterator i = _text_baselines.begin(); i != _text_baselines.end(); i++) {
+    for (std::vector<SPCanvasItem*>::iterator i = _text_baselines.begin(); i != _text_baselines.end(); i++) {
         gtk_object_destroy(*i);
     }
     _text_baselines.clear();
@@ -60,15 +60,55 @@ Inkscape::SelCue::~SelCue()
 
 void Inkscape::SelCue::_updateItemBboxes()
 {
-    for (std::list<SPCanvasItem*>::iterator i = _item_bboxes.begin(); i != _item_bboxes.end(); i++) {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gint mode = prefs->getInt("/options/selcue/value", MARK);
+    if (mode == NONE) {
+        return;
+    }
+
+    g_return_if_fail(_selection != NULL);
+
+    int prefs_bbox = prefs->getBool("/tools/bounding_box");
+    SPItem::BBoxType bbox_type = !prefs_bbox ? 
+        SPItem::APPROXIMATE_BBOX : SPItem::GEOMETRIC_BBOX;
+
+    GSList const *items = _selection->itemList();
+    if (_item_bboxes.size() != g_slist_length((GSList *) items)) {
+        _newItemBboxes();
+        return;
+    }
+
+    int bcount = 0;
+    for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
+        SPItem *item = (SPItem *) l->data;
+        SPCanvasItem* box = _item_bboxes[bcount ++];
+
+        if (box) {
+            Geom::OptRect const b = sp_item_bbox_desktop(item, bbox_type);
+
+            if (b) {
+                sp_canvas_item_show(box);
+                if (mode == MARK) {
+                    SP_CTRL(box)->moveto(Geom::Point(b->min()[Geom::X], b->max()[Geom::Y]));
+                } else if (mode == BBOX) {
+                    SP_CTRLRECT(box)->setRectangle(*b);
+                }
+            } else { // no bbox
+                sp_canvas_item_hide(box);
+            }
+        }
+    }
+
+    _newTextBaselines();
+}
+
+
+void Inkscape::SelCue::_newItemBboxes()
+{
+    for (std::vector<SPCanvasItem*>::iterator i = _item_bboxes.begin(); i != _item_bboxes.end(); i++) {
         gtk_object_destroy(*i);
     }
     _item_bboxes.clear();
-
-    for (std::list<SPCanvasItem*>::iterator i = _text_baselines.begin(); i != _text_baselines.end(); i++) {
-        gtk_object_destroy(*i);
-    }
-    _text_baselines.clear();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gint mode = prefs->getInt("/options/selcue/value", MARK);
@@ -122,11 +162,25 @@ void Inkscape::SelCue::_updateItemBboxes()
         if (box) {
             _item_bboxes.push_back(box);
         }
+    }
+
+    _newTextBaselines();
+}
+
+void Inkscape::SelCue::_newTextBaselines()
+{
+    for (std::vector<SPCanvasItem*>::iterator i = _text_baselines.begin(); i != _text_baselines.end(); i++) {
+        gtk_object_destroy(*i);
+    }
+    _text_baselines.clear();
+
+    for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
+        SPItem *item = (SPItem *) l->data;
 
         SPCanvasItem* baseline_point = NULL;
         if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) { // visualize baseline
             Inkscape::Text::Layout const *layout = te_get_layout(item);
-            if (layout != NULL) {
+            if (layout != NULL && layout->outputExists()) {
                 Geom::Point a = layout->characterAnchorPoint(layout->begin()) * sp_item_i2d_affine(item);
                 baseline_point = sp_canvas_item_new(sp_desktop_controls(_desktop), SP_TYPE_CTRL,
                                                     "mode", SP_CTRL_MODE_XOR,
@@ -147,6 +201,7 @@ void Inkscape::SelCue::_updateItemBboxes()
         }
     }
 }
+
 
 /*
   Local Variables:

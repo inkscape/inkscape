@@ -38,13 +38,15 @@ public:
 private:
 
     void _updateItemBboxes();
+    void _newItemBboxes();
+    void _newTextBaselines();
 
     SPDesktop *_desktop;
     Selection *_selection;
     sigc::connection _sel_changed_connection;
     sigc::connection _sel_modified_connection;
-    std::list<SPCanvasItem*> _item_bboxes;
-    std::list<SPCanvasItem*> _text_baselines;
+    std::vector<SPCanvasItem*> _item_bboxes;
+    std::vector<SPCanvasItem*> _text_baselines;
 };
 
 }
