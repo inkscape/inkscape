@@ -388,10 +388,11 @@ SPItem *
 sp_use_root(SPUse *use)
 {
     SPObject *orig = use->child;
-    while (SP_IS_USE(orig)) {
+    while (orig && SP_IS_USE(orig)) {
         orig = SP_USE(orig)->child;
     }
-    g_return_val_if_fail(SP_IS_ITEM(orig), NULL);
+    if (!orig || !SP_IS_ITEM(orig))
+        return NULL;
     return SP_ITEM(orig);
 }
 
@@ -749,7 +750,8 @@ sp_use_snappoints(SPItem const *item, bool const target, SnapPointsWithType &p, 
 
     SPUse *use = SP_USE(item);
     SPItem *root = sp_use_root(use);
-    g_return_if_fail(root);
+    if (!root)
+        return;
 
     SPItemClass const &item_class = *(SPItemClass const *) G_OBJECT_GET_CLASS(root);
     if (item_class.snappoints) {
