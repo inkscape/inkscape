@@ -97,7 +97,8 @@ find_self_intersections(std::vector<std::pair<double, double> > &xs,
     dr.push_back(1);
     // We want to be sure that we have no empty segments
     sort(dr.begin(), dr.end());
-    unique(dr.begin(), dr.end());
+    vector<double>::iterator new_end = unique(dr.begin(), dr.end());
+    dr.resize( new_end - dr.begin() );
 
     vector<vector<Point> > pieces;
     {
