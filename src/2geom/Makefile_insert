@@ -8,8 +8,6 @@
 2geom_lib2geom_a_SOURCES = \
 	2geom/basic-intersection.cpp	\
 	2geom/bezier-clipping.cpp	\
-	2geom/chebyshev.cpp	\
-	2geom/chebyshev.h	\
 	2geom/utils.cpp	\
 	2geom/bezier-utils.cpp	\
 	2geom/circle-circle.cpp	\
