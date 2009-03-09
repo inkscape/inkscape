@@ -103,6 +103,9 @@ sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf)
     if (!buf->ct)
         return;
 
+    if (cl->s == cl->e)
+        return;
+
     sp_canvas_prepare_buffer (buf);
 
     guint32 rgba = cl->rgba;
@@ -134,15 +137,21 @@ sp_ctrlline_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned int
 
     cl->affine = affine;
 
-    Geom::Point s = cl->s * affine;
-    Geom::Point e = cl->e * affine;
+    if (cl->s == cl->e) {
+        item->x1 = item->x2 = item->y1 = item->y2 = 0;
+    } else {
 
-    item->x1 = round(MIN(s[Geom::X], e[Geom::X]) - 1);
-    item->y1 = round(MIN(s[Geom::Y], e[Geom::Y]) - 1);
-    item->x2 = round(MAX(s[Geom::X], e[Geom::X]) + 1);
-    item->y2 = round(MAX(s[Geom::Y], e[Geom::Y]) + 1);
+        Geom::Point s = cl->s * affine;
+        Geom::Point e = cl->e * affine;
 
-    sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+        item->x1 = round(MIN(s[Geom::X], e[Geom::X]) - 1);
+        item->y1 = round(MIN(s[Geom::Y], e[Geom::Y]) - 1);
+        item->x2 = round(MAX(s[Geom::X], e[Geom::X]) + 1);
+        item->y2 = round(MAX(s[Geom::Y], e[Geom::Y]) + 1);
+
+        sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+
+    }
 }
 
 void
