@@ -54,6 +54,7 @@ struct SPCtrl : public SPCanvasItem{
     GdkPixbuf * pixbuf;
 
     void moveto(Geom::Point const p);
+    Geom::Point _point;
 };
 
 struct SPCtrlClass : public SPCanvasItemClass{

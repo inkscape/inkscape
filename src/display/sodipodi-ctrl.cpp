@@ -111,6 +111,8 @@ sp_ctrl_init (SPCtrl *ctrl)
     ctrl->box.x0 = ctrl->box.y0 = ctrl->box.x1 = ctrl->box.y1 = 0;
     ctrl->cache = NULL;
     ctrl->pixbuf = NULL;
+
+    ctrl->_point = Geom::Point(0,0);
 }
 
 static void
@@ -550,8 +552,11 @@ sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf)
 }
 
 void SPCtrl::moveto (Geom::Point const p) {
-    sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (this), Geom::Matrix(Geom::Translate (p)));
-    _moved = true;
+    if (p != _point) {
+        sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (this), Geom::Matrix(Geom::Translate (p)));
+        _moved = true;
+    }
+    _point = p;
 }
 
 
