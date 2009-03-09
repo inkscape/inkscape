@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-03-07 00:47+0300\n"
-"PO-Revision-Date: 2009-03-07 04:57+0300\n"
+"POT-Creation-Date: 2009-03-09 18:01+0300\n"
+"PO-Revision-Date: 2009-03-09 22:22+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1517,7 +1517,7 @@ msgid "Delete tiled clones"
 msgstr "Удаление узора из клонов"
 
 #: ../src/dialogs/clonetiler.cpp:1097
-#: ../src/selection-chemistry.cpp:1876
+#: ../src/selection-chemistry.cpp:1878
 msgid "Select an <b>object</b> to clone."
 msgstr "Выделите <b>объект</b> для клонирования."
 
@@ -3407,7 +3407,7 @@ msgstr "Опустить текущий слой"
 
 #: ../src/display/snap-indicator.cpp:186
 msgid "Quadrant point"
-msgstr ""
+msgstr "Точка квадранта"
 
 #: ../src/display/snap-indicator.cpp:189
 #: ../src/widgets/toolbox.cpp:6695
@@ -3443,24 +3443,24 @@ msgid "Unnamed document %d"
 msgstr "Безымянный документ %d"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/draw-context.cpp:576
+#: ../src/draw-context.cpp:582
 msgid "Path is closed."
 msgstr "Контур закрыт."
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/draw-context.cpp:591
+#: ../src/draw-context.cpp:597
 msgid "Closing path."
 msgstr "Закрываем контур"
 
-#: ../src/draw-context.cpp:701
+#: ../src/draw-context.cpp:707
 msgid "Draw path"
 msgstr "Создание контура"
 
-#: ../src/draw-context.cpp:861
+#: ../src/draw-context.cpp:867
 msgid "Creating single dot"
 msgstr "Рисуется точка"
 
-#: ../src/draw-context.cpp:862
+#: ../src/draw-context.cpp:868
 msgid "Create single dot"
 msgstr "Рисование точки"
 
@@ -3828,7 +3828,10 @@ msgstr "Размыть выделенные растровые объекты"
 msgid "Channel"
 msgstr "Извлечение канала"
 
+#. TODO: find an unused layer number, forming name from _("Layer ") + "%d"
 #: ../src/extension/internal/bitmap/channel.cpp:49
+#: ../src/ui/dialog/layer-properties.cpp:178
+#: ../src/ui/dialog/layer-properties.cpp:200
 msgid "Layer"
 msgstr "Слой"
 
@@ -5075,7 +5078,7 @@ msgid "Gamma"
 msgstr "Гамма"
 
 #: ../src/filter-enums.cpp:93
-#: ../src/selection-chemistry.cpp:312
+#: ../src/selection-chemistry.cpp:314
 #: ../src/widgets/gradient-selector.cpp:139
 msgid "Duplicate"
 msgstr "Продублировать"
@@ -5626,99 +5629,99 @@ msgstr "Не получилось сохранить резервную копи
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:822
+#: ../src/interface.cpp:821
 msgid "Commands Bar"
 msgstr "Панель команд"
 
-#: ../src/interface.cpp:822
+#: ../src/interface.cpp:821
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Показать/скрыть панель команд (под меню)"
 
-#: ../src/interface.cpp:824
+#: ../src/interface.cpp:823
 msgid "Snap controls Bar"
 msgstr "Панель параметров прилипания"
 
-#: ../src/interface.cpp:824
+#: ../src/interface.cpp:823
 #, fuzzy
 msgid "Show or hide the snapping controls"
 msgstr "Показать/скрыть панель с параметрами инструментов"
 
-#: ../src/interface.cpp:826
+#: ../src/interface.cpp:825
 msgid "Tool Controls Bar"
 msgstr "Панель параметров инструментов"
 
-#: ../src/interface.cpp:826
+#: ../src/interface.cpp:825
 msgid "Show or hide the Tool Controls bar"
 msgstr "Показать/скрыть панель с параметрами инструментов"
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:827
 msgid "_Toolbox"
 msgstr "_Панель инструментов"
 
-#: ../src/interface.cpp:828
+#: ../src/interface.cpp:827
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "Показать/скрыть главную панель инструментов (слева)"
 
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:833
 msgid "_Palette"
 msgstr "О_бразцы цветов"
 
-#: ../src/interface.cpp:834
+#: ../src/interface.cpp:833
 msgid "Show or hide the color palette"
 msgstr "Показать/скрыть панель с палитрой цветов"
 
-#: ../src/interface.cpp:836
+#: ../src/interface.cpp:835
 msgid "_Statusbar"
 msgstr "_Строка состояния"
 
-#: ../src/interface.cpp:836
+#: ../src/interface.cpp:835
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Показать/скрыть строку состояния (внизу окна)"
 
-#: ../src/interface.cpp:906
+#: ../src/interface.cpp:905
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Глагол \"%s\" неизвестен"
 
-#: ../src/interface.cpp:945
+#: ../src/interface.cpp:944
 msgid "Open _Recent"
 msgstr "Открыть н_едавние"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1046
+#: ../src/interface.cpp:1045
 #, c-format
 msgid "Enter group #%s"
 msgstr "Войти в группу #%s"
 
-#: ../src/interface.cpp:1057
+#: ../src/interface.cpp:1056
 msgid "Go to parent"
 msgstr "На уровень выше"
 
-#: ../src/interface.cpp:1148
-#: ../src/interface.cpp:1234
-#: ../src/interface.cpp:1297
+#: ../src/interface.cpp:1147
+#: ../src/interface.cpp:1233
+#: ../src/interface.cpp:1315
 #: ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr "Перенос цвета"
 
-#: ../src/interface.cpp:1187
-#: ../src/interface.cpp:1257
+#: ../src/interface.cpp:1186
+#: ../src/interface.cpp:1275
 msgid "Drop color on gradient"
 msgstr "Перенос цвета на градиент"
 
-#: ../src/interface.cpp:1310
+#: ../src/interface.cpp:1328
 msgid "Could not parse SVG data"
 msgstr "Невозможно разобрать данные SVG"
 
-#: ../src/interface.cpp:1353
+#: ../src/interface.cpp:1371
 msgid "Drop SVG"
 msgstr "Drop SVG"
 
-#: ../src/interface.cpp:1409
+#: ../src/interface.cpp:1427
 msgid "Drop bitmap image"
 msgstr "Импорт растра"
 
-#: ../src/interface.cpp:1501
+#: ../src/interface.cpp:1519
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do you want to replace it?</span>\n"
@@ -5729,7 +5732,7 @@ msgstr ""
 "\n"
 "Этот файл уже есть в каталоге \"%s\". Замена перезапишет его содержание."
 
-#: ../src/interface.cpp:1508
+#: ../src/interface.cpp:1526
 msgid "Replace"
 msgstr "Заменить"
 
@@ -6806,41 +6809,58 @@ msgid "If true, the spacing between intermediates is constant along the length o
 msgstr "Если включено, интервал между промежуточными фигурами не меняется на протяжении всего контура. Если выключено, расстояние меняется в зависимости от положения узлов на контуре траектории."
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:358
+#: ../src/live_effects/lpe-knot.cpp:320
 #, fuzzy
 msgid "Interruption width"
 msgstr "Способ интерполяции"
 
-#: ../src/live_effects/lpe-knot.cpp:358
+#: ../src/live_effects/lpe-knot.cpp:320
 msgid "Size of hidden region of lower string"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:359
+#: ../src/live_effects/lpe-knot.cpp:321
 #, fuzzy
 msgid "unit of stroke width"
 msgstr "Изменить толщину обводки"
 
-#: ../src/live_effects/lpe-knot.cpp:359
-msgid "Consider 'Gap width' as a ratio of stroke width."
+#: ../src/live_effects/lpe-knot.cpp:321
+msgid "Consider 'Interruption width' as a ratio of stroke width."
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:360
+#: ../src/live_effects/lpe-knot.cpp:322
+#, fuzzy
+msgid "add stroke width to interruption size"
+msgstr "Толщина штриха в начале:"
+
+#: ../src/live_effects/lpe-knot.cpp:322
+msgid "Add the stroke width to the interruption size."
+msgstr ""
+
+#: ../src/live_effects/lpe-knot.cpp:323
+msgid "add other's stroke width to interruption size"
+msgstr ""
+
+#: ../src/live_effects/lpe-knot.cpp:323
+msgid "Add crossed stroke width to the interruption size."
+msgstr ""
+
+#: ../src/live_effects/lpe-knot.cpp:324
 msgid "Switcher size"
 msgstr "Размер переключателя:"
 
-#: ../src/live_effects/lpe-knot.cpp:360
+#: ../src/live_effects/lpe-knot.cpp:324
 msgid "Orientation indicator/switcher size"
 msgstr "Размер индикатора-переключателя направления"
 
-#: ../src/live_effects/lpe-knot.cpp:361
+#: ../src/live_effects/lpe-knot.cpp:325
 msgid "Crossing Signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:361
+#: ../src/live_effects/lpe-knot.cpp:325
 msgid "Crossings signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:369
+#: ../src/live_effects/lpe-knot.cpp:336
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
 
@@ -6979,7 +6999,7 @@ msgstr "Изменить правый конец параллели"
 
 #: ../src/live_effects/lpe-path_length.cpp:25
 #: ../src/live_effects/lpe-sketch.cpp:53
-#: ../src/selection-chemistry.cpp:1509
+#: ../src/selection-chemistry.cpp:1511
 #: ../src/seltrans.cpp:481
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2207
 #: ../src/ui/dialog/transformation.cpp:738
@@ -7818,7 +7838,7 @@ msgstr "Перевести текст в контуры при экспорте 
 
 #: ../src/main.cpp:388
 msgid "Render filtered objects without filters, instead of rasterizing (PS, EPS, PDF)"
-msgstr ""
+msgstr "Отрисовать объекты с фильтрами без оных вместо растеризации (PS, EPS, PDF)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
 #: ../src/main.cpp:394
@@ -8761,338 +8781,338 @@ msgstr "Удаление"
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Выделите <b>объекты</b> для дублирования."
 
-#: ../src/selection-chemistry.cpp:337
+#: ../src/selection-chemistry.cpp:339
 msgid "Delete all"
 msgstr "Удалить всё"
 
-#: ../src/selection-chemistry.cpp:460
+#: ../src/selection-chemistry.cpp:462
 msgid "Select <b>some objects</b> to group."
 msgstr "Выделите <b>несколько объектов</b> для группировки."
 
-#: ../src/selection-chemistry.cpp:533
+#: ../src/selection-chemistry.cpp:535
 #: ../src/selection-describer.cpp:51
 msgid "Group"
 msgstr "Группа"
 
-#: ../src/selection-chemistry.cpp:547
+#: ../src/selection-chemistry.cpp:549
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Выделите <b>группу</b> для разгруппирования."
 
-#: ../src/selection-chemistry.cpp:588
+#: ../src/selection-chemistry.cpp:590
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "В выделении <b>нет групп</b> для разгруппирования."
 
-#: ../src/selection-chemistry.cpp:594
+#: ../src/selection-chemistry.cpp:596
 #: ../src/sp-item-group.cpp:497
 msgid "Ungroup"
 msgstr "Разгруппировать"
 
-#: ../src/selection-chemistry.cpp:684
+#: ../src/selection-chemistry.cpp:686
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Выделите <b>объект(ы)</b> для поднятия."
 
-#: ../src/selection-chemistry.cpp:690
-#: ../src/selection-chemistry.cpp:750
-#: ../src/selection-chemistry.cpp:784
-#: ../src/selection-chemistry.cpp:848
+#: ../src/selection-chemistry.cpp:692
+#: ../src/selection-chemistry.cpp:752
+#: ../src/selection-chemistry.cpp:786
+#: ../src/selection-chemistry.cpp:850
 msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr "Нельзя поднять или опустить объекты из <b>разных групп</b> или <b>слоев</b>."
 
 #. TRANSLATORS: Only put the word "Raise" in the translation. Means "to raise an object" in the undo history
-#: ../src/selection-chemistry.cpp:730
+#: ../src/selection-chemistry.cpp:732
 msgid "undo_action|Raise"
 msgstr "Поднятие"
 
-#: ../src/selection-chemistry.cpp:742
+#: ../src/selection-chemistry.cpp:744
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Выделите <b>объект(ы)</b> для поднятия на самый верх."
 
-#: ../src/selection-chemistry.cpp:765
+#: ../src/selection-chemistry.cpp:767
 msgid "Raise to top"
 msgstr "Поднять на передний план"
 
-#: ../src/selection-chemistry.cpp:778
+#: ../src/selection-chemistry.cpp:780
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Выделите <b>объект(ы)</b> для опускания."
 
-#: ../src/selection-chemistry.cpp:828
+#: ../src/selection-chemistry.cpp:830
 msgid "Lower"
 msgstr "Опустить"
 
-#: ../src/selection-chemistry.cpp:840
+#: ../src/selection-chemistry.cpp:842
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Выделите <b>объект(ы)</b> для опускания на самый низ."
 
-#: ../src/selection-chemistry.cpp:875
+#: ../src/selection-chemistry.cpp:877
 msgid "Lower to bottom"
 msgstr "Опустить на задний план"
 
-#: ../src/selection-chemistry.cpp:882
+#: ../src/selection-chemistry.cpp:884
 msgid "Nothing to undo."
 msgstr "Нет отменяемых операций."
 
-#: ../src/selection-chemistry.cpp:889
+#: ../src/selection-chemistry.cpp:891
 msgid "Nothing to redo."
 msgstr "Нет повторяемых операций."
 
-#: ../src/selection-chemistry.cpp:949
+#: ../src/selection-chemistry.cpp:951
 msgid "Paste"
 msgstr "Вставка"
 
-#: ../src/selection-chemistry.cpp:956
+#: ../src/selection-chemistry.cpp:958
 msgid "Paste style"
 msgstr "Вставка стиля"
 
-#: ../src/selection-chemistry.cpp:965
+#: ../src/selection-chemistry.cpp:967
 msgid "Paste live path effect"
 msgstr "Вставить динамический контурный эффект"
 
-#: ../src/selection-chemistry.cpp:984
+#: ../src/selection-chemistry.cpp:986
 msgid "Select <b>object(s)</b> to remove live path effects from."
 msgstr "Выделите <b>объект(ы)</b> для удаления динамического контурного эффекта."
 
-#: ../src/selection-chemistry.cpp:996
+#: ../src/selection-chemistry.cpp:998
 msgid "Remove live path effect"
 msgstr "Удаление контурного эффекта"
 
-#: ../src/selection-chemistry.cpp:1007
+#: ../src/selection-chemistry.cpp:1009
 msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "Выделите <b>объект(ы)</b> для удаления фильтров."
 
-#: ../src/selection-chemistry.cpp:1017
+#: ../src/selection-chemistry.cpp:1019
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1334
 msgid "Remove filter"
 msgstr "Удаление фильтра"
 
-#: ../src/selection-chemistry.cpp:1026
+#: ../src/selection-chemistry.cpp:1028
 msgid "Paste size"
 msgstr "Вставить размер"
 
-#: ../src/selection-chemistry.cpp:1034
+#: ../src/selection-chemistry.cpp:1036
 msgid "Paste size separately"
 msgstr "Вставить размер раздельно"
 
-#: ../src/selection-chemistry.cpp:1043
+#: ../src/selection-chemistry.cpp:1045
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Выделите <b>объект(ы)</b> для перемещения на слой выше."
 
-#: ../src/selection-chemistry.cpp:1069
+#: ../src/selection-chemistry.cpp:1071
 msgid "Raise to next layer"
 msgstr "Поднятие на следующий слой"
 
-#: ../src/selection-chemistry.cpp:1076
+#: ../src/selection-chemistry.cpp:1078
 msgid "No more layers above."
 msgstr "Выше слоёв нет."
 
-#: ../src/selection-chemistry.cpp:1088
+#: ../src/selection-chemistry.cpp:1090
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Выделите <b>объект(ы)</b> для перемещения на слой ниже."
 
-#: ../src/selection-chemistry.cpp:1114
+#: ../src/selection-chemistry.cpp:1116
 msgid "Lower to previous layer"
 msgstr "Опускание на предыдущий слой"
 
-#: ../src/selection-chemistry.cpp:1121
+#: ../src/selection-chemistry.cpp:1123
 msgid "No more layers below."
 msgstr "Ниже слоёв нет."
 
-#: ../src/selection-chemistry.cpp:1308
+#: ../src/selection-chemistry.cpp:1310
 msgid "Remove transform"
 msgstr "Убрать трансформацию"
 
-#: ../src/selection-chemistry.cpp:1411
+#: ../src/selection-chemistry.cpp:1413
 msgid "Rotate 90&#176; CCW"
 msgstr "Повернуть на 90° против часовой стрелки"
 
-#: ../src/selection-chemistry.cpp:1411
+#: ../src/selection-chemistry.cpp:1413
 msgid "Rotate 90&#176; CW"
 msgstr "Повернуть на 90° по часовой стрелке"
 
-#: ../src/selection-chemistry.cpp:1432
+#: ../src/selection-chemistry.cpp:1434
 #: ../src/seltrans.cpp:484
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Вращение"
 
-#: ../src/selection-chemistry.cpp:1479
+#: ../src/selection-chemistry.cpp:1481
 msgid "Rotate by pixels"
 msgstr "Вращение по пикселам"
 
-#: ../src/selection-chemistry.cpp:1534
+#: ../src/selection-chemistry.cpp:1536
 msgid "Scale by whole factor"
 msgstr "Масштабирование по целым числам"
 
-#: ../src/selection-chemistry.cpp:1549
+#: ../src/selection-chemistry.cpp:1551
 msgid "Move vertically"
 msgstr "Смещение по вертикали"
 
-#: ../src/selection-chemistry.cpp:1552
+#: ../src/selection-chemistry.cpp:1554
 msgid "Move horizontally"
 msgstr "Смещение по горизонтали"
 
-#: ../src/selection-chemistry.cpp:1555
-#: ../src/selection-chemistry.cpp:1581
+#: ../src/selection-chemistry.cpp:1557
+#: ../src/selection-chemistry.cpp:1583
 #: ../src/seltrans.cpp:478
 #: ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Смещение"
 
-#: ../src/selection-chemistry.cpp:1575
+#: ../src/selection-chemistry.cpp:1577
 msgid "Move vertically by pixels"
 msgstr "Попиксельное смещение по вертикали"
 
-#: ../src/selection-chemistry.cpp:1578
+#: ../src/selection-chemistry.cpp:1580
 msgid "Move horizontally by pixels"
 msgstr "Попиксельное смещение по горизонтали"
 
-#: ../src/selection-chemistry.cpp:1706
+#: ../src/selection-chemistry.cpp:1708
 msgid "The selection has no applied path effect."
 msgstr "В выделении нет примененного контурного эффекта."
 
-#: ../src/selection-chemistry.cpp:1753
+#: ../src/selection-chemistry.cpp:1755
 msgid "The selection has no applied clip path."
 msgstr "В выделении нет примененного обтравочного контура."
 
-#: ../src/selection-chemistry.cpp:1755
+#: ../src/selection-chemistry.cpp:1757
 msgid "The selection has no applied mask."
 msgstr "В выделении нет примененной маски."
 
-#: ../src/selection-chemistry.cpp:1912
+#: ../src/selection-chemistry.cpp:1914
 msgid "action|Clone"
 msgstr "Склонировать"
 
-#: ../src/selection-chemistry.cpp:1928
+#: ../src/selection-chemistry.cpp:1930
 msgid "Select <b>clones</b> to relink."
 msgstr "Выделите <b>клоны</b> для пересоединения"
 
-#: ../src/selection-chemistry.cpp:1935
+#: ../src/selection-chemistry.cpp:1937
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr "Скопируйте <b>объект</b> в буфер обмена, чтобы затем повторно присоединить к нему клоны."
 
-#: ../src/selection-chemistry.cpp:1959
+#: ../src/selection-chemistry.cpp:1961
 msgid "<b>No clones to relink</b> in the selection."
 msgstr "В текущем выделении <b>нет клонов для повторного связывания</b>."
 
-#: ../src/selection-chemistry.cpp:1962
+#: ../src/selection-chemistry.cpp:1964
 msgid "Relink clone"
 msgstr "Повторно связать клон"
 
-#: ../src/selection-chemistry.cpp:1976
+#: ../src/selection-chemistry.cpp:1978
 msgid "Select <b>clones</b> to unlink."
 msgstr "Выделите <b>клоны</b> для отсоединения."
 
-#: ../src/selection-chemistry.cpp:2025
+#: ../src/selection-chemistry.cpp:2027
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "В выделении нет <b>клонов</b>."
 
-#: ../src/selection-chemistry.cpp:2029
+#: ../src/selection-chemistry.cpp:2031
 msgid "Unlink clone"
 msgstr "Отсоединение клона"
 
-#: ../src/selection-chemistry.cpp:2042
+#: ../src/selection-chemistry.cpp:2044
 msgid "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> to go to its source. Select a <b>text on path</b> to go to the path. Select a <b>flowed text</b> to go to its frame."
 msgstr "Выделите <b>клон</b>, чтобы перейти к его оригиналу. Выделите <b>связанную втяжку</b>, чтобы перейти к исходному контуру. Выделите <b>текст по контуру</b>, чтобы перейти к его контуру. Выделите <b>текст в рамке</b>, чтобы перейти к рамке."
 
-#: ../src/selection-chemistry.cpp:2065
+#: ../src/selection-chemistry.cpp:2067
 msgid "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, flowed text?)"
 msgstr "<b>Невозможно найти</b> выбираемый объект (orphaned clone, offset, текст по контуру, завёрстанный текст?)"
 
-#: ../src/selection-chemistry.cpp:2071
+#: ../src/selection-chemistry.cpp:2073
 msgid "The object you're trying to select is <b>not visible</b> (it is in &lt;defs&gt;)"
 msgstr "Объект, который вы пытаетесь выделить, <b>невидим</b> (находится в &lt;defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2117
+#: ../src/selection-chemistry.cpp:2119
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr "Выделите <b>объект</b> для преобразования в маркер."
 
-#: ../src/selection-chemistry.cpp:2185
+#: ../src/selection-chemistry.cpp:2187
 msgid "Objects to marker"
 msgstr "Объекты в маркер"
 
-#: ../src/selection-chemistry.cpp:2213
+#: ../src/selection-chemistry.cpp:2215
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "Выделите <b>объект</b> для преобразования в направляющие."
 
-#: ../src/selection-chemistry.cpp:2225
+#: ../src/selection-chemistry.cpp:2227
 msgid "Objects to guides"
 msgstr "Объекты в направляющие"
 
-#: ../src/selection-chemistry.cpp:2241
+#: ../src/selection-chemistry.cpp:2243
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Выделите <b>объект(ы)</b> для преобразования в текстуру."
 
-#: ../src/selection-chemistry.cpp:2329
+#: ../src/selection-chemistry.cpp:2331
 msgid "Objects to pattern"
 msgstr "Объекты в текстуру"
 
-#: ../src/selection-chemistry.cpp:2345
+#: ../src/selection-chemistry.cpp:2347
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "Выделите <b>объект с текстурной заливкой</b> для извлечения из него объектов."
 
-#: ../src/selection-chemistry.cpp:2398
+#: ../src/selection-chemistry.cpp:2400
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "В выделении <b>нет текстурной заливки</b>."
 
-#: ../src/selection-chemistry.cpp:2401
+#: ../src/selection-chemistry.cpp:2403
 msgid "Pattern to objects"
 msgstr "Текстура в объекты"
 
-#: ../src/selection-chemistry.cpp:2486
+#: ../src/selection-chemistry.cpp:2488
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Выделите <b>объект(ы)</b> для создания растровой копии."
 
-#: ../src/selection-chemistry.cpp:2490
+#: ../src/selection-chemistry.cpp:2492
 msgid "Rendering bitmap..."
 msgstr "Создается растровая копия..."
 
-#: ../src/selection-chemistry.cpp:2662
+#: ../src/selection-chemistry.cpp:2664
 msgid "Create bitmap"
 msgstr "Создание растровой копии"
 
-#: ../src/selection-chemistry.cpp:2694
+#: ../src/selection-chemistry.cpp:2696
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Выделите <b>объект(ы)</b>, из которых будет создан обтравочный контур или маска."
 
-#: ../src/selection-chemistry.cpp:2697
+#: ../src/selection-chemistry.cpp:2699
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Выделите объект-маску и <b>объект(ы)</b>, к которым применить обтравочный контур или маску."
 
-#: ../src/selection-chemistry.cpp:2804
+#: ../src/selection-chemistry.cpp:2806
 msgid "Set clipping path"
 msgstr "Установлен обтравочный контур"
 
-#: ../src/selection-chemistry.cpp:2806
+#: ../src/selection-chemistry.cpp:2808
 msgid "Set mask"
 msgstr "Установлена маска"
 
-#: ../src/selection-chemistry.cpp:2819
+#: ../src/selection-chemistry.cpp:2821
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Выделите <b>объект(ы)</b>, с которых нужно снять обтравочный контур или маску."
 
-#: ../src/selection-chemistry.cpp:2892
+#: ../src/selection-chemistry.cpp:2894
 msgid "Release clipping path"
 msgstr "Обтравочный контур снят"
 
-#: ../src/selection-chemistry.cpp:2894
+#: ../src/selection-chemistry.cpp:2896
 msgid "Release mask"
 msgstr "Маска снята"
 
-#: ../src/selection-chemistry.cpp:2910
+#: ../src/selection-chemistry.cpp:2912
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "Выделите <b>объект</b>, по  размеру которого подогнать холст."
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:2930
+#: ../src/selection-chemistry.cpp:2932
 #: ../src/verbs.cpp:2704
 msgid "Fit Page to Selection"
 msgstr "Cтраница до выделения"
 
-#: ../src/selection-chemistry.cpp:2955
+#: ../src/selection-chemistry.cpp:2957
 #: ../src/verbs.cpp:2706
 msgid "Fit Page to Drawing"
 msgstr "Откадрировать холст до рисунка"
 
-#: ../src/selection-chemistry.cpp:2971
+#: ../src/selection-chemistry.cpp:2973
 #: ../src/verbs.cpp:2708
 msgid "Fit Page to Selection or Drawing"
 msgstr "Откадрировать холст до выделения или рисунка"
@@ -10464,63 +10484,54 @@ msgid "Align right edges of objects to the left edge of the anchor"
 msgstr "Правые края объектов к левому краю якоря"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:805
-#, fuzzy
 msgid "Align left edges"
-msgstr "Выровнять по левым краям"
+msgstr "Выровнять левые края объектов"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:808
-#, fuzzy
 msgid "Center objects horizontally"
-msgstr "Горизонтально отразить выбранные объекты"
+msgstr "Центрировать объекты по горизонтали"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:811
 msgid "Align right sides"
-msgstr "Выровнять по правым краям"
+msgstr "Выровнять правые края объектов"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:814
-#, fuzzy
 msgid "Align left edges of objects to the right edge of the anchor"
-msgstr "Левые края объектов к правому краю якоря"
+msgstr "Выровнять левые края объектов по правому краю якоря"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:817
-#, fuzzy
 msgid "Align bottom edges of objects to the top edge of the anchor"
-msgstr "Нижние края объектов к верхнему краю якоря"
+msgstr "Выровнять нижние края объектов по верхнему краю якоря"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:820
-#, fuzzy
 msgid "Align top edges"
-msgstr "Выровнять по верхним краям"
+msgstr "Выровнять верхние края  объектов"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:823
 msgid "Center on horizontal axis"
 msgstr "Центрировать на горизонтальной оси"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:826
-#, fuzzy
 msgid "Align bottom edges"
-msgstr "Выровнять по нижним краям"
+msgstr "Выровнять нижние края объектов"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:829
-#, fuzzy
 msgid "Align top edges of objects to the bottom edge of the anchor"
-msgstr "Верхние края объектов к нижнему краю якоря"
+msgstr "Выровнять верхние края объектов по нижнему краю якоря"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:834
 msgid "Align baseline anchors of texts horizontally"
 msgstr "Выровнять текстовые опорные точки по горизонтали"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:837
-#, fuzzy
 msgid "Align baselines of texts"
-msgstr "Выровнять текстовые опорные точки по вертикали"
+msgstr "Выровнять линии шрифта текстовых блоков"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:842
 msgid "Make horizontal gaps between objects equal"
 msgstr "Выровнять интервалы между объектами по горизонтали"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:846
-#, fuzzy
 msgid "Distribute left edges equidistantly"
 msgstr "Равноудаленно расставить левые края объектов"
 
@@ -10529,25 +10540,22 @@ msgid "Distribute centers equidistantly horizontally"
 msgstr "Равноудаленно расставить центры объектов по горизонтали"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:852
-#, fuzzy
 msgid "Distribute right edges equidistantly"
-msgstr "Равноудаленно расставить правые края объектов"
+msgstr "Равноудаленно расставить правые края объектов объектов"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:856
 msgid "Make vertical gaps between objects equal"
 msgstr "Выравнять интервалы между объектами по вертикали"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:860
-#, fuzzy
 msgid "Distribute top edges equidistantly"
-msgstr "Равноудаленно расставить верхние края"
+msgstr "Равноудаленно расставить верхние края объектов"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:863
 msgid "Distribute centers equidistantly vertically"
 msgstr "Равноудаленно расставить центры объектов по вертикали"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:866
-#, fuzzy
 msgid "Distribute bottom edges equidistantly"
 msgstr "Равноудаленно расставить нижние края объектов"
 
@@ -10556,9 +10564,8 @@ msgid "Distribute baseline anchors of texts horizontally"
 msgstr "Распределить текстовые опорные точки по горизонтали"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:874
-#, fuzzy
 msgid "Distribute baselines of texts vertically"
-msgstr "Распределить текстовые опорные точки по вертикали"
+msgstr "Расставить линии шрифта текстовых блоков по вертикали"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:879
 msgid "Randomize centers in both dimensions"
@@ -11755,7 +11762,7 @@ msgstr "Включить индикатор прилипания"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:216
 msgid "After snapping, a symbol is drawn at the point that has snapped"
-msgstr ""
+msgstr "В предполагаемой точке прилипания рисуется символ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:219
 msgid "Delay (in msec):"
@@ -11763,7 +11770,7 @@ msgstr "Задержка (мс):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:220
 msgid "Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"
-msgstr ""
+msgstr "Не прилипать, пока курсор мыши движется, а затем подождать указанное здесь время. Если значение очень мало или равно нулю, прилипание будет выполняться немедленно."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:222
 msgid "Only snap the node closest to the pointer"
@@ -11779,7 +11786,7 @@ msgstr "Коэффициент взвешивания:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:228
 msgid "When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"
-msgstr ""
+msgstr "Когда найдено несколько вариантов прилипания, Inkscape может предпочесть либо ближайшую трансформацию (0), либо узел, изначально более близкий к курсору мыши (1)."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:230
 msgid "Snapping"
@@ -12059,11 +12066,11 @@ msgstr "Мерцать скелетом контура, когда курсор 
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:434
 msgid "Suppress path outline flash when one path selected"
-msgstr ""
+msgstr "Не мерцать, если в выделении уже есть контур"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:435
 msgid "If a path is selected, do not continue flashing path outlines."
-msgstr ""
+msgstr "Если выделен контур, не мерцать ни этим, ни другими контурами при прохождении курсора инструмента над ними"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:437
 msgid "Flash time"
@@ -12071,7 +12078,7 @@ msgstr "Длительность мерцания"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:437
 msgid "Specifies how long the path outline will be visible after a mouse-over (in milliseconds). Specify 0 to have the outline shown until mouse leaves the path."
-msgstr ""
+msgstr "Как долго (мс) должен подсвечиваться контур при прохождении курсора инструмента над ним. Ноль означает постоянную подсветку."
 
 #. Tweak
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
@@ -12333,7 +12340,7 @@ msgstr "Повторно связывать продублированные к�
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:628
 msgid "When duplicating a selection containing both a clone and its original (possibly in groups), relink the duplicated clone to the duplicated original instead of the old original"
-msgstr ""
+msgstr "При дублировании выделения, содержащего как клон, так и оригинал (например, в группе), повторно связывать продублированный клон с продублированным оригиналом вместо первого оригинала."
 
 #. TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
 #: ../src/ui/dialog/inkscape-preferences.cpp:631
@@ -12800,7 +12807,7 @@ msgstr "Внутристрочные атрибуты"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1018
 msgid "Put attributes on the same line as the element tag"
-msgstr ""
+msgstr "Атрибуты пишутся в той же строке, что и тэги элемента"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1021
 msgid "Indent, spaces:"
@@ -13395,24 +13402,24 @@ msgstr "Переименование слоя"
 msgid "_Rename"
 msgstr "Пере_именовать"
 
-#: ../src/ui/dialog/layer-properties.cpp:189
+#: ../src/ui/dialog/layer-properties.cpp:192
 msgid "Rename layer"
 msgstr "Переименование слоя"
 
 #. TRANSLATORS: This means "The layer has been renamed"
-#: ../src/ui/dialog/layer-properties.cpp:191
+#: ../src/ui/dialog/layer-properties.cpp:194
 msgid "Renamed layer"
 msgstr "Переименованный слой"
 
-#: ../src/ui/dialog/layer-properties.cpp:195
+#: ../src/ui/dialog/layer-properties.cpp:198
 msgid "Add Layer"
 msgstr "Добавка слоя"
 
-#: ../src/ui/dialog/layer-properties.cpp:197
+#: ../src/ui/dialog/layer-properties.cpp:201
 msgid "_Add"
 msgstr "_Добавить"
 
-#: ../src/ui/dialog/layer-properties.cpp:219
+#: ../src/ui/dialog/layer-properties.cpp:225
 msgid "New layer created."
 msgstr "Создание нового слоя."
 
@@ -13823,54 +13830,54 @@ msgstr "_Кернинг"
 msgid "Preview Text:"
 msgstr "Текст:"
 
-#: ../src/ui/dialog/swatches.cpp:328
+#: ../src/ui/dialog/swatches.cpp:198
 #, c-format
 msgid "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
 msgstr "Цвет: <b>%s</b>; <b>щелчок</b> применяет к заливке, <b>Shift+щелчок</b> — к обводке"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:375
+#: ../src/ui/dialog/swatches.cpp:245
 msgid "Set fill"
 msgstr "Установить заливку"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:383
+#: ../src/ui/dialog/swatches.cpp:253
 msgid "Set stroke"
 msgstr "Установить обводку"
 
-#: ../src/ui/dialog/swatches.cpp:608
+#: ../src/ui/dialog/swatches.cpp:412
 msgid "Change color definition"
 msgstr "Смена определения цвета"
 
-#: ../src/ui/dialog/swatches.cpp:778
+#: ../src/ui/dialog/swatches.cpp:599
 #, fuzzy
 msgid "Remove stroke color"
 msgstr "Удалить обводку"
 
-#: ../src/ui/dialog/swatches.cpp:778
+#: ../src/ui/dialog/swatches.cpp:599
 #, fuzzy
 msgid "Remove fill color"
 msgstr "Полностью удалить заливку"
 
-#: ../src/ui/dialog/swatches.cpp:783
+#: ../src/ui/dialog/swatches.cpp:604
 #, fuzzy
 msgid "Set stroke color to none"
 msgstr "Установка цвета обводки"
 
-#: ../src/ui/dialog/swatches.cpp:783
+#: ../src/ui/dialog/swatches.cpp:604
 #, fuzzy
 msgid "Set fill color to none"
 msgstr "Установить цвет заливки"
 
-#: ../src/ui/dialog/swatches.cpp:792
+#: ../src/ui/dialog/swatches.cpp:613
 msgid "Set stroke color from swatch"
 msgstr "Обводка из палитры образцов"
 
-#: ../src/ui/dialog/swatches.cpp:792
+#: ../src/ui/dialog/swatches.cpp:613
 msgid "Set fill color from swatch"
 msgstr "Заливка из палитры образцов"
 
-#: ../src/ui/dialog/swatches.cpp:1116
+#: ../src/ui/dialog/swatches.cpp:937
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "Каталог с палитрами (%s) недоступен."
@@ -14551,11 +14558,11 @@ msgstr "Проприетарная"
 msgid "Other"
 msgstr "Другая"
 
-#: ../src/ui/widget/object-composite-settings.cpp:171
+#: ../src/ui/widget/object-composite-settings.cpp:172
 msgid "Change blur"
 msgstr "Смена размывания"
 
-#: ../src/ui/widget/object-composite-settings.cpp:211
+#: ../src/ui/widget/object-composite-settings.cpp:212
 #: ../src/ui/widget/selected-style.cpp:857
 #: ../src/ui/widget/selected-style.cpp:1151
 msgid "Change opacity"
@@ -15027,7 +15034,7 @@ msgstr "Изменить толщину обводки"
 #: ../src/ui/widget/selected-style.cpp:1401
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
-msgstr ""
+msgstr "Меняется <b>толщина обводки</b>: была %.3g, стала <b>%.3g</b> (разница %.3g)"
 
 #. TRANSLATORS: Only translate the word "Link" - means to _link_ two sliders together
 #: ../src/ui/widget/spin-slider.cpp:118
@@ -16964,13 +16971,13 @@ msgstr "%s (каркас) — Inkscape"
 msgid "%s - Inkscape"
 msgstr "%s — Inkscape"
 
-#: ../src/widgets/eek-color-def.cpp:56
-#: ../src/widgets/eek-color-def.cpp:78
+#: ../src/widgets/eek-color-def.cpp:69
+#: ../src/widgets/eek-color-def.cpp:91
 #: ../src/widgets/gradient-selector.cpp:167
 msgid "none"
 msgstr "нет"
 
-#: ../src/widgets/eek-color-def.cpp:75
+#: ../src/widgets/eek-color-def.cpp:88
 #, fuzzy
 msgid "remove"
 msgstr "Удалить"
@@ -17847,18 +17854,16 @@ msgid "Snap to bounding box corners"
 msgstr "Прилипать к углам площадки"
 
 #: ../src/widgets/toolbox.cpp:2059
-#, fuzzy
 msgid "BBox Edge Midpoints"
-msgstr "Средние точки"
+msgstr "Средние точки сторон площадок"
 
 #: ../src/widgets/toolbox.cpp:2059
 msgid "Snap from and to midpoints of bounding box edges"
 msgstr "Прилипать центром краев площадки и к нему"
 
 #: ../src/widgets/toolbox.cpp:2069
-#, fuzzy
 msgid "BBox Centers"
-msgstr "Выключка по центру"
+msgstr "Центры площадок"
 
 #: ../src/widgets/toolbox.cpp:2069
 #, fuzzy
@@ -19875,23 +19880,20 @@ msgid "Flatten Beziers"
 msgstr "Сглаживание кривой Безье"
 
 #: ../share/extensions/foldable-box.inx.h:1
-#, fuzzy
 msgid "Add Guide Lines"
-msgstr "Направляющая"
+msgstr "Добавить направляющие"
 
 #: ../share/extensions/foldable-box.inx.h:2
-#, fuzzy
 msgid "Depth"
-msgstr "Зубцов:"
+msgstr "Глубина:"
 
 #: ../share/extensions/foldable-box.inx.h:3
 msgid "Foldable Box"
-msgstr ""
+msgstr "Макет коробки"
 
 #: ../share/extensions/foldable-box.inx.h:5
-#, fuzzy
 msgid "Paper Thickness"
-msgstr "Измерение толщины бумаги"
+msgstr "Толщина бумаги:"
 
 #: ../share/extensions/foldable-box.inx.h:7
 #, fuzzy
@@ -20542,9 +20544,8 @@ msgid "Paper Thickness Measurement"
 msgstr "Измерение толщины бумаги"
 
 #: ../share/extensions/perfectboundcover.inx.h:14
-#, fuzzy
 msgid "Perfect-Bound Cover Template"
-msgstr "Идеальная сшитая обложка"
+msgstr "Идеально сшитая обложка"
 
 #: ../share/extensions/perfectboundcover.inx.h:16
 msgid "Remove existing guides"
@@ -20783,9 +20784,8 @@ msgid "Bottom:"
 msgstr "Нижнее:"
 
 #: ../share/extensions/printing-marks.inx.h:4
-#, fuzzy
 msgid "Canvas"
-msgstr "Голубой"
+msgstr "Холст"
 
 #: ../share/extensions/printing-marks.inx.h:5
 msgid "Colour Bars"
@@ -20812,9 +20812,8 @@ msgid "Positioning"
 msgstr "Размещение"
 
 #: ../share/extensions/printing-marks.inx.h:12
-#, fuzzy
 msgid "Printing Marks"
-msgstr "Добавить метки для печати"
+msgstr "Метки для печати"
 
 #: ../share/extensions/printing-marks.inx.h:13
 msgid "Registration Marks"
@@ -20825,9 +20824,8 @@ msgid "Right:"
 msgstr "Правое:"
 
 #: ../share/extensions/printing-marks.inx.h:17
-#, fuzzy
 msgid "Set crop marks to"
-msgstr "Установка маркеров"
+msgstr "Ориентир для обрезных меток:"
 
 #: ../share/extensions/printing-marks.inx.h:18
 #, fuzzy
@@ -21078,25 +21076,23 @@ msgstr "Экспорт в ZIP"
 
 #: ../share/extensions/svgcalendar.inx.h:1
 msgid "(Select your system encoding. More information at http://docs.python.org/library/codecs.html#standard-encodings)"
-msgstr ""
+msgstr "(Выберите системную кодировку. Подробнее см. http://docs.python.org/library/codecs.html#standard-encodings)"
 
 #: ../share/extensions/svgcalendar.inx.h:2
 msgid "(The day names list must start from Sunday)"
-msgstr ""
+msgstr "(Названия должны начинаться с воскресенья)"
 
 #: ../share/extensions/svgcalendar.inx.h:3
 msgid "Calendar"
 msgstr "Календарь"
 
 #: ../share/extensions/svgcalendar.inx.h:4
-#, fuzzy
 msgid "Char Encoding"
-msgstr "Закругление концов"
+msgstr "Кодировка символов:"
 
 #: ../share/extensions/svgcalendar.inx.h:6
-#, fuzzy
 msgid "Configuration"
-msgstr "Параметры печати"
+msgstr "Основные параметры"
 
 #: ../share/extensions/svgcalendar.inx.h:7
 msgid "Day color"
@@ -21108,7 +21104,7 @@ msgstr "Названия дней"
 
 #: ../share/extensions/svgcalendar.inx.h:9
 msgid "Fill empty day boxes with next month's days"
-msgstr ""
+msgstr "Вставлять дни следующего месяца в пустые клетки"
 
 #: ../share/extensions/svgcalendar.inx.h:10
 msgid "January February March April May June July August September October November December"
@@ -21171,9 +21167,8 @@ msgid "Weekend day color"
 msgstr "Цвет названия выходного дня"
 
 #: ../share/extensions/svgcalendar.inx.h:26
-#, fuzzy
 msgid "Year (0 for current)"
-msgstr "Под текущим слоем"
+msgstr "Год (0 — текущий)"
 
 #: ../share/extensions/svgcalendar.inx.h:27
 msgid "Year color"
@@ -21181,7 +21176,7 @@ msgstr "Цвет года"
 
 #: ../share/extensions/svgcalendar.inx.h:28
 msgid "You may change the names for other languages:"
-msgstr ""
+msgstr "Вы можете вставить названия на своем языке:"
 
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"
@@ -21563,8 +21558,6 @@ msgstr "Импорт XAML"
 #~ msgstr ""
 #~ "Случайное колебание при смещении начальных точек швов внутри и снаружи "
 #~ "направляющего контура"
-#~ msgid "Stroke width (start side)"
-#~ msgstr "Толщина штриха в начале:"
 #~ msgid "Width at hatches 'start'"
 #~ msgstr "Толщина, с которой начинается штриховка"
 #~ msgid "Stroke width (end side)"
