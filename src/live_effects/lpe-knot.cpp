@@ -19,12 +19,12 @@
 #include <2geom/sbasis.h>
 #include <2geom/d2.h>
 #include <2geom/d2-sbasis.h>
-#include <2geom/piecewise.h>
 #include <2geom/path.h>
-#include <2geom/d2.h>
 #include <2geom/crossing.h>
-#include <2geom/path-intersection.h>
-#include <2geom/elliptical-arc.h>
+#include <2geom/bezier-to-sbasis.h>
+#include <2geom/basic-intersection.h>
+#include <2geom/exception.h>
+//#include "2geom/recursive-bezier-intersection.cpp"
 
 #include <exception>
 
@@ -69,184 +69,141 @@ std::vector<Geom::Interval> complementOf(Geom::Interval I, std::vector<Geom::Int
 // Warning: not accurate!
 static
 Geom::Interval
-findShadowedTime(Geom::Path const &patha,
-                 Geom::Path const &pathb,
-                 Geom::Crossing const &crossing,
-                 unsigned idx, double width){
+findShadowedTime(Geom::Path const &patha, std::vector<Geom::Point> const &pt_and_dir,
+                 double const ta, double const width){
     using namespace Geom;
-    double curveidx, timeoncurve = modf(crossing.getOtherTime(idx),&curveidx);
-    if(curveidx == pathb.size() ) { curveidx--; timeoncurve = 1.;}//FIXME: 0.99999; needed?
-    assert(curveidx >= 0 && curveidx < pathb.size());
-
-    std::vector<Point> MV = pathb[unsigned(curveidx)].pointAndDerivatives(timeoncurve,1);
-    Point T = unit_vector(MV.at(1));
+    Point T = unit_vector(pt_and_dir[1]);
     Point N = T.cw();
-    Point A = MV.at(0)-3*width*T, B = MV.at(0)+3*width*T;
+    Point A = pt_and_dir[0]-3*width*T, B = A+6*width*T;
 
-    std::vector<Geom::Path> cutter;
-    Geom::Path cutterPath(A-width*N);
-    cutterPath.appendNew<LineSegment> (B-width*N);
-    cutterPath.appendNew<LineSegment> (B+width*N);
-    cutterPath.appendNew<LineSegment> (A+width*N);
-    cutterPath.close();
-    //cutterPath.appendNew<LineSegment> (A-width*N);
-    cutter.push_back(cutterPath);
+    Matrix mat = from_basis( T, N, pt_and_dir[0] );
+    mat = mat.inverse();
+    Path p = patha * mat;
+    std::vector<double> times;
+    for (unsigned i = 0; i<patha.size(); i++){
+        D2<SBasis> f = p[i].toSBasis();
+        std::vector<double> times_i, temptimes;
+        //TODO: explore the path fwd/backward from ta to avoid all those useless computations.
+        temptimes = roots(f[Y]-width);
+        times_i.insert(times_i.end(), temptimes.begin(), temptimes.end() ); 
+        temptimes = roots(f[Y]+width);
+        times_i.insert(times_i.end(), temptimes.begin(), temptimes.end() ); 
+        temptimes = roots(f[X]-3*width);
+        times_i.insert(times_i.end(), temptimes.begin(), temptimes.end() ); 
+        temptimes = roots(f[X]+3*width);
+        times_i.insert(times_i.end(), temptimes.begin(), temptimes.end() );
+        for (unsigned k=0; k<times_i.size(); k++){
+            times_i[k]+=i;
+        }
+        times.insert(times.end(), times_i.begin(), times_i.end() );
+    }
+    std::sort( times.begin(),  times.end() );
+    std::unique( times.begin(),  times.end() );
+    double tmin = 0, tmax = patha.size();
+    double period = patha.size();//hm... Should this be patha.size()+1? 
+    if (times.size()>0){
+        unsigned rk = upper_bound( times.begin(),  times.end(), ta ) - times.begin();
+        if ( rk < times.size() ) 
+            tmax = times[rk];
+        else if ( patha.closed() ) 
+            tmax = times[0]+period;
 
-    std::vector<Geom::Path> patha_as_vect = std::vector<Geom::Path>(1,patha);
-
-    CrossingSet crossingTable = crossings (patha_as_vect, cutter);
-    double t0 = crossing.getTime(idx);
-    double tmin = 0,tmax = patha.size();//-0.00001;FIXME: FIXED?
-    assert(crossingTable.size()>=1);
-    for (unsigned c=0; c<crossingTable.front().size(); c++){
-        double t = crossingTable.front().at(c).ta;
-        assert(crossingTable.front().at(c).a==0);
-        if (t>tmin and t<t0) tmin = t;
-        if (t<tmax and t>t0) tmax = t;
+        if ( rk > 0 ) 
+            tmin = times[rk-1];
+        else if ( patha.closed() ) 
+            tmin = times.back()-period;
     }
     return Interval(tmin,tmax);
-}
-
-// TODO: Fix all this in 2geom!!!!
-//---------------------------------------------------------------------------
-// some 2Geom work around.
-//---------------------------------------------------------------------------
-
-//Cubic Bezier curves might self intersect; the 2geom code used to miss them.
-//This is a quick work around; maybe not needed anymore? -- TODO: check!
-//TODO/TOCHECK/TOFIX: I think the BUG is in path-intersection.cpp -> curve_mono_split(...):
-//the derivative of the curve should be used instead of the curve itself.
-std::vector<Geom::Path>
-split_at_horiz_vert_tgt (std::vector<Geom::Path> const & path_in){
-    std::vector<Geom::Path> ret;
-    
-    using namespace Geom;
-
-    Piecewise<D2<SBasis> > f = paths_to_pw(path_in);
-    D2<Piecewise<SBasis> > df = make_cuts_independent(derivative(f));
-    std::vector<double> xyroots = roots(df[X]);
-    std::vector<double> yroots = roots(df[Y]);
-    xyroots.insert(xyroots.end(), yroots.begin(), yroots.end());
-    std::sort(xyroots.begin(),xyroots.end());
-    Piecewise<D2<SBasis> > newf = partition(f,xyroots);
-    ret = path_from_piecewise(newf,LPE_CONVERSION_TOLERANCE);
-
-    return ret;
-}
-
-//TODO: Fix this in 2Geom; I think CrossingSets should not contain duplicates.
-Geom::CrossingSet crossingSet_remove_double(Geom::CrossingSet const &input){
-    Geom::CrossingSet result(input.size());
-    //Yeah, I know, there is a "unique" algorithm for that...
-    //Note: I'm not sure the duplicates are always consecutive!! (can be first and last, I think)
-    //Note: I also found crossings c with c.a==c.b and c.ta==c.tb . Is it normal?
-    //Note: I also found crossings c with c.ta or c.tb not in path[a] or path[b] domain. This is definitely not normal.
-    Geom::Crossing last;
-    for( unsigned i=0; i<input.size(); i++){
-        for( unsigned j=0; j<input[i].size(); j++){
-            bool dup = false;
-            for ( unsigned k=0; k<result[i].size(); k++){
-                if ( input[i][j]==result[i][k] ){
-                    dup = true;
-                    g_warning("Duplicate found in a Geom::CrossingSet!");
-                    break;
-                }
-            }
-            if (!dup) {
-                result[i].push_back( input[i][j] );
-            }
-        }
-    }
-    return result;
 }
 
 //---------------------------------------------------------------------------
 //LPEKnot specific Crossing Data manipulation.
 //---------------------------------------------------------------------------
 
-//TODO: evaluate how usefull/lpeknot specific that is. Worth being moved to 2geom? (I doubt it)
-namespace LPEKnotNS {
+//Yet another crossing data representation.
+// an CrossingPoint stores
+//    -an intersection point
+//    -the involved path components
+//    -for each component, the time at which this crossing occurs + the order of this crossing along the component (when starting from 0).
 
-//Yet another crossing data representation. Not sure at all it is usefull!
-// +: >Given a point, you immediately know which strings are meeting there,
-//    and the index of the crossing along each string. This makes it easy to check 
-//    topology change. In a CrossingSet, you have to do some search to know the index
-//    of the crossing along "the second" string (i.e. find the symetric crossing)... 
-//    >Each point is stored only once.    
-//    However, we don't have so many crossing points in general, so none of these points might be relevant.
-//    
-// -: one more clumsy data representation, and "parallelism" failures to expect...
-//    (in particular, duplicates are hateful with this respect...)
+namespace LPEKnotNS {//just in case...
+CrossingPoints::CrossingPoints(std::vector<Geom::Path> const &paths) : std::vector<CrossingPoint>(){
+    //std::cout<<"\nCrossingPoints creation from path vector\n";
+    for( unsigned i=0; i<paths.size(); i++){
+        for( unsigned ii=0; ii<paths[i].size(); ii++){
+            for( unsigned j=i; j<paths.size(); j++){
+                for( unsigned jj=(i==j?ii:0); jj<paths[j].size(); jj++){
+                    std::vector<std::pair<double,double> > times;
+                    if ( i==j && ii==jj){
 
-CrossingPoints::CrossingPoints(Geom::CrossingSet const &input, std::vector<Geom::Path> const &path) : std::vector<CrossingPoint>()
-{
-    using namespace Geom;
-    //g_print("DBG>\nCrossing set content:\n");
-    for( unsigned i=0; i<input.size(); i++){
-        Crossings i_crossings = input[i];
-        for( unsigned n=0; n<i_crossings.size(); n++ ){
-            Crossing c = i_crossings[n];
-            //g_print("DBG> [%u,%u]:(%u,%u) at times (%f,%f) ----->",i,n,c.a,c.b,c.ta,c.tb);
-            unsigned j = c.getOther(i);
-            if (i<j || (i==j && c.ta<=c.tb) ){//FIXME: equality should not happen, but does happen.
-                CrossingPoint cp;
-                double ti = c.getTime(i);
-                //FIXME: times in crossing are sometimes out of range!!
-                //if (0<ti || ti > 1)g_print("oops! -->");
-                if (ti > 1) ti=1;
-                if (ti < 0) ti=0;
+//                         std::cout<<"--(self int)\n";
+//                         std::cout << paths[i][ii].toSBasis()[Geom::X] <<"\n";
+//                         std::cout << paths[i][ii].toSBasis()[Geom::Y] <<"\n";
 
-                cp.pt = path[i].pointAt(c.getTime(i));
-                cp.i = i;
-                cp.j = j;
-                cp.ni = n;
-                Crossing c_bar = c;
-                if (i==j){
-                    c_bar.a  = c.b;
-                    c_bar.b  = c.a; 
-                    c_bar.ta = c.tb;
-                    c_bar.tb = c.ta;
-                    c_bar.dir = !c.dir;
-                }
-                cp.nj = std::find(input[j].begin(),input[j].end(),c_bar)-input[j].begin();
-                cp.sign = 1;
-                push_back(cp);
-                //g_print("i=%u, ni=%u, j=%u, nj=%u\n",cp.i,cp.ni,cp.j,cp.nj);
-            }/*
-               else{
-                //debug purpose only: 
-                //This crossing is already registered in output. Just make sure it has a "mirror".
-                g_print("deja trouve?");
-                get(i,n);
-                bool found = false;
-                for( unsigned ii=0; ii<input.size(); ii++){
-                    Crossings ii_crossings = input[ii];
-                    for( unsigned nn=0; nn<ii_crossings.size(); nn++ ){
-                        Crossing cc = ii_crossings[nn];
-                        if (cc.b==c.a && cc.a==c.b && cc.ta==c.tb && cc.tb==c.ta) found = true;
-                        if ( (ii!=i || nn!=n) && 
-                             ( (cc.b==c.a && cc.a==c.b && cc.ta==c.tb && cc.tb==c.ta) ||
-                               (cc.a==c.a && cc.b==c.b && cc.ta==c.ta && cc.tb==c.tb) 
-                                 ) ) found = true;
+                        find_self_intersections( times, paths[i][ii].toSBasis() );
+                    }else{
+//                         std::cout<<"--(pair int)\n";
+//                         std::cout << paths[i][ii].toSBasis()[Geom::X] <<"\n";
+//                         std::cout << paths[i][ii].toSBasis()[Geom::Y] <<"\n";
+//                         std::cout<<"with\n";
+//                         std::cout << paths[j][jj].toSBasis()[Geom::X] <<"\n";
+//                         std::cout << paths[j][jj].toSBasis()[Geom::Y] <<"\n";
+
+                        find_intersections( times, paths[i][ii].toSBasis(), paths[j][jj].toSBasis() );
+                    }
+                    for (unsigned k=0; k<times.size(); k++){
+                        //std::cout<<"intersection "<<i<<"["<<ii<<"]("<<times[k].first<<")= "<<j<<"["<<jj<<"]("<<times[k].second<<")\n";
+                        if (times[k].first == times[k].first && times[k].second == times[k].second ){//is this the way to test NaN?
+                            double zero = 1e-4;
+                            if ( i==j && fabs(times[k].first+ii - times[k].second-jj)<=zero ){//this is just end=start of successive curves in a path.
+                                continue;
+                            }
+                            if ( i==j && ii == 0 && jj==paths[i].size()-1 &&
+                                 paths[i].closed() &&
+                                 fabs(times[k].first) <= zero && 
+                                 fabs(times[k].second - 1) <= zero ){//this is just end=start of a closed path.
+                                continue;
+                            }
+                            CrossingPoint cp;
+                            cp.pt = paths[i][ii].pointAt(times[k].first);
+                            cp.sign = 1;
+                            cp.i = i;
+                            cp.j = j;
+                            cp.ni = 0; cp.nj=0;//not set yet
+                            cp.ti = times[k].first + ii;
+                            cp.tj = times[k].second + jj;
+                            push_back(cp);
+                        }else{
+                            std::cout<<"ooops: find_(self)_intersections returned NaN:";
+                            //std::cout<<"intersection "<<i<<"["<<ii<<"](NaN)= "<<j<<"["<<jj<<"](NaN)\n";
+                        }
                     }
                 }
-                assert( found );
-                g_print("  oui!\n");
             }
-             */
         }
     }
-
-    //g_print("CrossingPoints reslut:\n");
-    //for (unsigned k=0; k<size(); k++){
-    //    g_print("cpts[%u]: i=%u, ni=%u, j=%u, nj=%u\n",k,(*this)[k].i,(*this)[k].ni,(*this)[k].j,(*this)[k].nj);
-    //}
-
+    for( unsigned i=0; i<paths.size(); i++){
+        std::map < double, unsigned > cuts;
+        for( unsigned k=0; k<size(); k++){
+            CrossingPoint cp = (*this)[k];
+            if (cp.i == i) cuts[cp.ti] = k;
+            if (cp.j == i) cuts[cp.tj] = k;
+        }
+        unsigned count = 0;
+        for ( std::map < double, unsigned >::iterator m=cuts.begin(); m!=cuts.end(); m++ ){
+            if ( (*this)[m->second].i == i && (*this)[m->second].ti == m->first ){
+                (*this)[m->second].ni = count;
+            }else{
+                (*this)[m->second].nj = count;
+            }
+            count++;
+        }
+    }
 }
 
 CrossingPoints::CrossingPoints(std::vector<double> const &input) : std::vector<CrossingPoint>()
 {
-    if (input.size()>0 && input.size()%7 ==0){
+    if (input.size()>0 && input.size()%9 ==0){
         using namespace Geom;
         for( unsigned n=0; n<input.size();  ){
             CrossingPoint cp;
@@ -256,6 +213,8 @@ CrossingPoints::CrossingPoints(std::vector<double> const &input) : std::vector<C
             cp.j = input[n++];
             cp.ni = input[n++];
             cp.nj = input[n++];
+            cp.ti = input[n++];
+            cp.tj = input[n++];
             cp.sign = input[n++];
             push_back(cp);
         }
@@ -275,6 +234,8 @@ CrossingPoints::to_vector()
         result.push_back(double(cp.j));
         result.push_back(double(cp.ni));
         result.push_back(double(cp.nj));
+        result.push_back(double(cp.ti));
+        result.push_back(double(cp.tj));
         result.push_back(double(cp.sign));
     }
     return result;
@@ -331,6 +292,7 @@ CrossingPoints::inherit_signs(CrossingPoints const &other, int default_value)
     }
     if (topo_changed){
         //TODO: Find a way to warn the user!!
+        std::cout<<"knot topolgy changed!\n";
         for (unsigned n=0; n<size(); n++){
             Geom::Point p = (*this)[n].pt;
             unsigned idx = idx_of_nearest(other,p);
@@ -356,13 +318,18 @@ LPEKnot::LPEKnot(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     // initialise your parameters here:
     interruption_width(_("Interruption width"), _("Size of hidden region of lower string"), "interruption_width", &wr, this, 3),
-    prop_to_stroke_width(_("unit of stroke width"), _("Consider 'Gap width' as a ratio of stroke width."), "prop_to_stroke_width", &wr, this, true),
+    prop_to_stroke_width(_("unit of stroke width"), _("Consider 'Interruption width' as a ratio of stroke width."), "prop_to_stroke_width", &wr, this, true),
+    add_stroke_width(_("add stroke width to interruption size"), _("Add the stroke width to the interruption size."), "add_stroke_width", &wr, this, true),
+    add_other_stroke_width(_("add other's stroke width to interruption size"), _("Add crossed stroke width to the interruption size."), "add_other_stroke_width", &wr, this, true),
     switcher_size(_("Switcher size"), _("Orientation indicator/switcher size"), "switcher_size", &wr, this, 15),
-    crossing_points_vector(_("Crossing Signs"), _("Crossings signs"), "crossing_points_vector", &wr, this)
+    crossing_points_vector(_("Crossing Signs"), _("Crossings signs"), "crossing_points_vector", &wr, this),
+    gpaths(),gstroke_widths()
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter( dynamic_cast<Parameter *>(&interruption_width) );
     registerParameter( dynamic_cast<Parameter *>(&prop_to_stroke_width) );
+    registerParameter( dynamic_cast<Parameter *>(&add_stroke_width) );
+    registerParameter( dynamic_cast<Parameter *>(&add_other_stroke_width) );
     registerParameter( dynamic_cast<Parameter *>(&switcher_size) );
     registerParameter( dynamic_cast<Parameter *>(&crossing_points_vector) );
 
@@ -378,24 +345,16 @@ LPEKnot::~LPEKnot()
 }
 
 void
-LPEKnot::doOnApply(SPLPEItem */*lpeitem*/)
-{
-    //SPCurve *curve = SP_SHAPE(lpeitem)->curve;
-    // //TODO: where should the switcher be initialized? (it shows up here if there is no crossing at all)
-    // //The best would be able to hide it when there is no crossing!
-    //Geom::Point A = *(curve->first_point());
-    //Geom::Point B = *(curve->last_point());
-    //switcher = (A+B)*.5;
-}
-
-void
 LPEKnot::updateSwitcher(){
     if (selectedCrossing < crossing_points.size()){
         switcher = crossing_points[selectedCrossing].pt;
+        //std::cout<<"placing switcher at "<<switcher<<" \n";
     }else if (crossing_points.size()>0){
         selectedCrossing = 0;
         switcher = crossing_points[selectedCrossing].pt;
+        //std::cout<<"placing switcher at "<<switcher<<" \n";
     }else{
+        std::cout<<"hiding switcher!\n";
         //TODO: is there a way to properly hide the helper.
         //switcher = Geom::Point(Geom::infinity(),Geom::infinity());
         switcher = Geom::Point(1e10,1e10);
@@ -403,63 +362,95 @@ LPEKnot::updateSwitcher(){
 }
 
 std::vector<Geom::Path>
-LPEKnot::doEffect_path (std::vector<Geom::Path> const &input_path)
+LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
 {
     using namespace Geom;
     std::vector<Geom::Path> path_out;
-    //double width = interruption_width;
-    double width = interruption_width;
-    if ( prop_to_stroke_width.get_value() ) {
-        width *= stroke_width;
+
+    if (gpaths.size()==0){
+        return path_in;
     }
 
-    LPEKnotNS::CrossingPoints old_crdata(crossing_points_vector.data());
+    for (unsigned comp=0; comp<path_in.size(); comp++){
 
-    std::vector<Geom::Path> path_in = split_at_horiz_vert_tgt(input_path);
+        //find the relevant path component in gpaths (required to allow groups!)
+        //Q: do we always recieve the group members in the same order? can we rest on that?
+        unsigned i0 = 0;
+        for (i0=0; i0<gpaths.size(); i0++){
+            if (path_in[comp]==gpaths[i0]) break;
+        }
+        if (i0 == gpaths.size() ) {THROW_EXCEPTION("lpe-knot error: group member not recognized");}// this should not happen...
 
-    CrossingSet crossingTable = crossings_among(path_in);
-
-    crossingTable = crossingSet_remove_double(crossingTable);
-
-    crossing_points = LPEKnotNS::CrossingPoints(crossingTable, path_in);
-    crossing_points.inherit_signs(old_crdata);
-    crossing_points_vector.param_set_and_write_new_value(crossing_points.to_vector());
-    updateSwitcher();
-
-    if (crossingTable.size()==0){
-        return input_path;
-    }
-
-    for (unsigned i = 0; i < crossingTable.size(); i++){
         std::vector<Interval> dom;
-        dom.push_back(Interval(0.,path_in.at(i).size()));//-0.00001));FIX ME: this should not be needed anymore.
-        for (unsigned n = 0; n < crossingTable.at(i).size(); n++){
-            Crossing crossing = crossingTable.at(i).at(n);
-            unsigned j = crossing.getOther(i);
+        dom.push_back(Interval(0.,gpaths[i0].size()));
+        for (unsigned p = 0; p < crossing_points.size(); p++){
+            if (crossing_points[p].i == i0 || crossing_points[p].j == i0){
+                unsigned i = crossing_points[p].i;
+                unsigned j = crossing_points[p].j;
+                double ti = crossing_points[p].ti;
+                double tj = crossing_points[p].tj;
+                
+                double curveidx, t;
+                
+                t = modf(ti, &curveidx);
+                if(curveidx == gpaths[i].size() ) { curveidx--; t = 1.;}
+                assert(curveidx >= 0 && curveidx < gpaths[i].size());
+                std::vector<Point> flag_i = gpaths[i][curveidx].pointAndDerivatives(t,1);
 
-            //FIXME: check success...
-            LPEKnotNS::CrossingPoint crpt;
-            crpt = crossing_points.get(i,n);
-            int sign_code = crpt.sign;
+                t = modf(tj, &curveidx);
+                if(curveidx == gpaths[j].size() ) { curveidx--; t = 1.;}
+                assert(curveidx >= 0 && curveidx < gpaths[j].size());
+                std::vector<Point> flag_j = gpaths[j][curveidx].pointAndDerivatives(t,1);
 
-            if (sign_code!=0){
-                bool sign = (sign_code>0 ? true : false);
-                Interval hidden;
-                if (((crossing.dir==sign) and crossing.a==i) or ((crossing.dir!=sign) and crossing.b==i)){
-                    if (i==j and (crossing.dir!=sign)) {
-                    double temp = crossing.ta;
-                    crossing.ta = crossing.tb;
-                    crossing.tb = temp;
-                    crossing.dir = not crossing.dir;
+
+                int geom_sign = ( cross(flag_i[1],flag_j[1]) > 0 ? 1 : -1);
+
+                bool i0_is_under = false;
+                if ( crossing_points[p].sign * geom_sign > 0 ){
+                    i0_is_under = ( i == i0 );
+                }else if ( crossing_points[p].sign * geom_sign < 0 ){
+                    if (j == i0){
+                        std::swap( i, j);
+                        std::swap(ti, tj);
+                        std::swap(flag_i,flag_j);
+                        i0_is_under = true;
                     }
-                    hidden = findShadowedTime(path_in.at(i),path_in.at(j),crossing,i,width);
                 }
-                dom = complementOf(hidden,dom);
+                if (i0_is_under){
+                    double width = interruption_width;
+                    if ( prop_to_stroke_width.get_value() ) {
+                        width *= gstroke_widths[i];
+                    }
+                    if ( add_stroke_width.get_value() ) {
+                        width += gstroke_widths[i];
+                    }
+                    if ( add_other_stroke_width.get_value() ) {
+                        width += gstroke_widths[j];
+                    }
+                    Interval hidden = findShadowedTime(gpaths[i0], flag_j, ti, width/2);
+                    double period  = gpaths[i0].size();//hm... Should this be gpaths[i0].size()+1?
+                    if (hidden.max() > period ) hidden -= period;
+                    if (hidden.min()<0){
+                        dom = complementOf( Interval(0,hidden.max()) ,dom);
+                        dom = complementOf( Interval(hidden.min()+period, period) ,dom);
+                    }else{
+                        dom = complementOf(hidden,dom);
+                    }
+                }
             }
         }
-        for (unsigned comp = 0; comp < dom.size(); comp++){
-            assert(dom.at(comp).min() >=0 and dom.at(comp).max() <= path_in.at(i).size());
-            path_out.push_back(path_in.at(i).portion(dom.at(comp)));
+        //If the current path is closed and the last/first point is still there, glue first and last piece.
+        unsigned beg_comp = 0, end_comp = dom.size();
+        if ( gpaths[i0].closed() && dom.size() > 1 && dom.front().min() == 0 && dom.back().max() ==  gpaths[i0].size() ){
+            beg_comp++;
+            end_comp--;
+            Path first = gpaths[i0].portion(dom.back());
+            first.append(gpaths[i0].portion(dom.front()), Path::STITCH_DISCONTINUOUS);//FIXME: STITCH_DISCONTINUOUS should not be necessary.
+            path_out.push_back(first);
+        }
+        for (unsigned comp = beg_comp; comp < end_comp; comp++){
+            assert(dom.at(comp).min() >=0 and dom.at(comp).max() <= gpaths.at(i0).size());
+            path_out.push_back(gpaths[i0].portion(dom.at(comp)));
         }
     }
     return path_out;
@@ -467,12 +458,74 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &input_path)
 
 
 
+//recursively collect gpaths and stroke widths (stolen from "sp-lpe_item.cpp").
+void collectPathsAndWidths (SPLPEItem const *lpeitem, std::vector<Geom::Path> &paths, std::vector<double> &stroke_widths){
+    if (SP_IS_GROUP(lpeitem)) {
+        GSList const *item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
+        for ( GSList const *iter = item_list; iter; iter = iter->next ) {
+            SPObject *subitem = static_cast<SPObject *>(iter->data);
+            if (SP_IS_LPE_ITEM(subitem)) {
+                collectPathsAndWidths(SP_LPE_ITEM(subitem), paths, stroke_widths);
+            }
+        }
+    }
+    else if (SP_IS_SHAPE(lpeitem)) {
+        SPCurve * c = sp_shape_get_curve(SP_SHAPE(lpeitem));
+        if (c) {
+            Geom::PathVector subpaths = c->get_pathvector();
+            for (unsigned i=0; i<subpaths.size(); i++){
+                paths.push_back(subpaths[i]);
+                //FIXME: do we have to be more carefull when trying to access stroke width?
+                stroke_widths.push_back(SP_ITEM(lpeitem)->style->stroke_width.computed);
+            }
+        }
+    }
+}
+
+
 void
 LPEKnot::doBeforeEffect (SPLPEItem *lpeitem)
 {
     using namespace Geom;
-    //FIXME: do we have to be more carefull to access stroke width?
-    stroke_width = lpeitem->style->stroke_width.computed;
+    original_bbox(lpeitem);
+
+    gpaths = std::vector<Geom::Path>();
+    gstroke_widths = std::vector<double>();
+    collectPathsAndWidths(lpeitem, gpaths, gstroke_widths);
+
+    LPEKnotNS::CrossingPoints old_crdata(crossing_points_vector.data());
+
+    std::cout<<"\nVectorParam size:"<<crossing_points_vector.data().size()<<"\n";
+
+    std::cout<<"\nOld crdata ("<<old_crdata.size()<<"): \n";
+    for (unsigned toto=0; toto<old_crdata.size(); toto++){
+        std::cout<<"(";
+        std::cout<<old_crdata[toto].i<<",";
+        std::cout<<old_crdata[toto].j<<",";
+        std::cout<<old_crdata[toto].ni<<",";
+        std::cout<<old_crdata[toto].nj<<",";
+        std::cout<<old_crdata[toto].ti<<",";
+        std::cout<<old_crdata[toto].tj<<",";
+        std::cout<<old_crdata[toto].sign<<"),";
+    }
+    std::cout<<"\nNew crdata ("<<crossing_points.size()<<"): \n";
+    for (unsigned toto=0; toto<crossing_points.size(); toto++){
+        std::cout<<"(";
+        std::cout<<crossing_points[toto].i<<",";
+        std::cout<<crossing_points[toto].j<<",";
+        std::cout<<crossing_points[toto].ni<<",";
+        std::cout<<crossing_points[toto].nj<<",";
+        std::cout<<crossing_points[toto].ti<<",";
+        std::cout<<crossing_points[toto].tj<<",";
+        std::cout<<crossing_points[toto].sign<<"),";
+    }
+
+    //if ( old_crdata.size() > 0 ) std::cout<<"first crossing sign = "<<old_crdata[0].sign<<".\n";
+    //else std::cout<<"old data is empty!!\n";
+    crossing_points = LPEKnotNS::CrossingPoints(gpaths);
+    crossing_points.inherit_signs(old_crdata);
+    crossing_points_vector.param_set_and_write_new_value(crossing_points.to_vector());
+    updateSwitcher();
 }
 
 
@@ -491,7 +544,7 @@ void
 LPEKnot::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec)
 {
     using namespace Geom;
-     double r = switcher_size*.1;
+    double r = switcher_size*.1;
     char const * svgd;
     //TODO: use a nice path!
     if (selectedCrossing >= crossing_points.size()||crossing_points[selectedCrossing].sign > 0){
@@ -517,10 +570,6 @@ KnotHolderEntityCrossingSwitcher::knot_set(Geom::Point const &p, Geom::Point con
 
     lpe->selectedCrossing = idx_of_nearest(lpe->crossing_points,p);
     lpe->updateSwitcher();
-//    if(lpe->selectedCrossing < lpe->crossing_points.size())
-//        lpe->switcher = lpe->crossing_points[lpe->selectedCrossing].pt;
-//    else
-//        lpe->switcher = p;
     // FIXME: this should not directly ask for updating the item. It should write to SVG, which triggers updating.
     sp_lpe_item_update_patheffect (SP_LPE_ITEM(item), false, true);
 }
@@ -543,6 +592,7 @@ KnotHolderEntityCrossingSwitcher::knot_click(guint state)
         }else{
             int sign = lpe->crossing_points[s].sign;
             lpe->crossing_points[s].sign = ((sign+2)%3)-1;
+            //std::cout<<"crossing set to"<<lpe->crossing_points[s].sign<<".\n";
         }
         lpe->crossing_points_vector.param_set_and_write_new_value(lpe->crossing_points.to_vector());
 

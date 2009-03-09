@@ -13,7 +13,9 @@
 #ifndef INKSCAPE_LPE_KNOT_H
 #define INKSCAPE_LPE_KNOT_H
 
+#include "sp-item-group.h"
 #include "live_effects/effect.h"
+#include "live_effects/lpegroupbbox.h"
 #include "live_effects/parameter/parameter.h"
 #include "live_effects/parameter/array.h"
 //#include "live_effects/parameter/path.h"
@@ -25,38 +27,35 @@ namespace LivePathEffect {
 
 class KnotHolderEntityCrossingSwitcher;
 
-// CrossingPoint, CrossingData:
+// CrossingPoint, CrossingPoints:
 //   "point oriented" storage of crossing data (needed to find crossing nearest to a click, etc...)
 //TODO: evaluate how lpeknot-specific that is? Should something like this exist in 2geom?
-
 namespace LPEKnotNS {//just in case...
 struct CrossingPoint {
   Geom::Point pt;
   int sign; //+/-1 = positive or neg crossing, 0 = flat.
   unsigned i, j;  //paths components meeting in this point.
   unsigned ni, nj;  //this crossing is the ni-th along i, nj-th along j.
+  double ti, tj;  //time along paths.
 };
 
 class CrossingPoints : public  std::vector<CrossingPoint>{
 public:
   CrossingPoints() : std::vector<CrossingPoint>() {}
   CrossingPoints(Geom::CrossingSet const &cs, std::vector<Geom::Path> const &path);//for self crossings only!
-  //TODO: define a constructor for intersections of 2 different paths.
+  CrossingPoints(std::vector<Geom::Path> const &paths);
   CrossingPoints(std::vector<double> const &input);
   std::vector<double> to_vector();
   CrossingPoint get(unsigned const i, unsigned const ni);
   void inherit_signs(CrossingPoints const &from_other, int default_value = 1);
 };
+} 
 
-}
-
- 
-class LPEKnot : public Effect {
+class LPEKnot : public Effect, GroupBBoxEffect {
 public:
   LPEKnot(LivePathEffectObject *lpeobject);
   virtual ~LPEKnot();
   
-  virtual void doOnApply (SPLPEItem *lpeitem);
   virtual void doBeforeEffect (SPLPEItem *lpeitem);
   virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & input_path);
   
@@ -68,19 +67,26 @@ protected:
   
 private:
   void updateSwitcher();
-  // add the parameters for your effect here:
+ 
   ScalarParam interruption_width;
   BoolParam  prop_to_stroke_width;
+  BoolParam  add_stroke_width;
+  BoolParam  add_other_stroke_width;
   ScalarParam switcher_size;
   double stroke_width;
-  ArrayParam<double> crossing_points_vector;
-  LPEKnotNS::CrossingPoints crossing_points;
+  ArrayParam<double> crossing_points_vector;//svg storage of crossing_points
   
+  LPEKnotNS::CrossingPoints crossing_points;//topology representation of the knot.
+  
+  std::vector<Geom::Path> gpaths;//the collection of all the paths in the object or group.
+  std::vector<double> gstroke_widths;//the collection of all the stroke widths in the object or group.
+
+  //UI: please, someone, help me to improve this!!
+  unsigned selectedCrossing;//the selected crossing
+  Geom::Point switcher;//where to put the "switcher" helper
   
   LPEKnot(const LPEKnot&);
   LPEKnot& operator=(const LPEKnot&);
-  unsigned selectedCrossing;
-  Geom::Point switcher;
   
 };
   
