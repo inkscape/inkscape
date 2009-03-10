@@ -232,7 +232,7 @@ endif
 inkscape-version.cpp: $(inkscape_version_deps)
 	VER_PREFIX="$(VERSION)"; \
 	if test -x "$(srcdir)/.svn" -a ! -z `which svn`; then \
-	    VER_SVNREV=" r`svn info $(srcdir) | sed -n -e '/^Revision:/s/Revision: \(.*\)/\1/p'`"; \
+	    VER_SVNREV=" r`LANG=en svn info $(srcdir) | sed -n -e '/^Revision:/s/Revision: \(.*\)/\1/p'`"; \
 	    if test ! -z "`svn status -q $(srcdir)`"; then \
 	         VER_CUSTOM=" custom"; \
 	    fi; \
