@@ -20,6 +20,7 @@
 #include "live_effects/lpeobject.h"
 #include "selection.h"
 #include "desktop.h"
+#include "document.h"
 #include "desktop-handles.h"
 #include "knotholder.h"
 #include "live_effects/parameter/point.h"
@@ -316,23 +317,22 @@ void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject,
    Why not make a reload function in NodePath and in KnotHolder? */
 void ShapeEditor::reset_item (SubType type, bool keep_knotholder)
 {
+    SPObject *item = sp_desktop_document(desktop)->getObjectByRepr(listener_attached_for);
+
     switch (type) {
         case SH_NODEPATH:
             if ( (this->nodepath) && (IS_LIVEPATHEFFECT(this->nodepath->object)) ) {
-                SPItem * item = this->nodepath->item;
                 SPObject *obj = this->nodepath->object;
                 char * key = g_strdup(this->nodepath->repr_key);
-                set_item_lpe_path_parameter(item, obj, key); // the above checks for nodepath, so it is indeed a path that we are editing
+                set_item_lpe_path_parameter(SP_ITEM(item), obj, key); // the above checks for nodepath, so it is indeed a path that we are editing
                 g_free(key);
             } else {
-                SPItem * item = (SPItem *) get_item(SH_NODEPATH);
-                set_item(item, SH_NODEPATH);
+                set_item(SP_ITEM(item), SH_NODEPATH);
             }                
             break;
         case SH_KNOTHOLDER:
             if (this->knotholder) {
-                SPItem * item = (SPItem *) get_item(SH_KNOTHOLDER);
-                set_item(item, SH_KNOTHOLDER, keep_knotholder);
+                set_item(SP_ITEM(item), SH_KNOTHOLDER, keep_knotholder);
             }
             break;
     }
