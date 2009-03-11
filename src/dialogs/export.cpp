@@ -206,13 +206,13 @@ sp_export_spinbutton_new ( gchar const *key, float val, float min, float max,
                            int digits, unsigned int sensitive,
                            GCallback cb, GtkWidget *dlg )
 {
-    GtkObject *a = gtk_adjustment_new (val, min, max, step, page, page);
-    gtk_object_set_data (a, "key", const_cast<gchar *>(key));
-    gtk_object_set_data (GTK_OBJECT (dlg), (const gchar *)key, a);
+    GtkObject *adj = gtk_adjustment_new( val, min, max, step, page, 0 );
+    gtk_object_set_data( adj, "key", const_cast<gchar *>(key) );
+    gtk_object_set_data( GTK_OBJECT (dlg), (const gchar *)key, adj );
 
     if (us) {
         sp_unit_selector_add_adjustment ( SP_UNIT_SELECTOR (us),
-                                          GTK_ADJUSTMENT (a) );
+                                          GTK_ADJUSTMENT (adj) );
     }
 
     int pos = 0;
@@ -230,7 +230,7 @@ sp_export_spinbutton_new ( gchar const *key, float val, float min, float max,
 
     }
 
-    GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, digits);
+    GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 1.0, digits);
     gtk_table_attach ( GTK_TABLE (t), sb, x + pos, x + pos + 1, y, y + 1,
                        (GtkAttachOptions)0, (GtkAttachOptions)0, 0, 0 );
     gtk_widget_set_size_request (sb, 80, -1);
@@ -252,7 +252,7 @@ sp_export_spinbutton_new ( gchar const *key, float val, float min, float max,
     }
 
     if (cb)
-        gtk_signal_connect (a, "value_changed", cb, dlg);
+        gtk_signal_connect (adj, "value_changed", cb, dlg);
 
     return;
 } // end of sp_export_spinbutton_new()
