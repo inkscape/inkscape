@@ -19,6 +19,7 @@
 #include "display/inkscape-cairo.h"
 #include <sstream>
 #include <string.h>
+#include "desktop.h"
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -72,11 +73,13 @@ sp_canvastext_class_init (SPCanvasTextClass *klass)
 static void
 sp_canvastext_init (SPCanvasText *canvastext)
 {
-    canvastext->rgba = 0x0000ff7f;
+    canvastext->rgba = 0x33337fff;
+    canvastext->rgba_stroke = 0xffffffff;
     canvastext->s[Geom::X] = canvastext->s[Geom::Y] = 0.0;
     canvastext->affine = Geom::identity();
     canvastext->fontsize = 10.0;
     canvastext->item = NULL;
+    canvastext->desktop = NULL;
     canvastext->text = NULL;
 }
 
@@ -95,7 +98,7 @@ sp_canvastext_destroy (GtkObject *object)
 }
 
 // FIXME: remove this as soon as we know how to correctly determine the text extent
-static const double arbitrary_factor = 0.7;
+static const double arbitrary_factor = 0.8;
 
 // these are set in sp_canvastext_update() and then re-used in sp_canvastext_render(), which is called afterwards
 static double anchor_offset_x = 0;
@@ -109,9 +112,6 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
     if (!buf->ct)
         return;
 
-    guint32 rgba = cl->rgba;
-    cairo_set_source_rgba(buf->ct, SP_RGBA32_B_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_R_F(rgba), SP_RGBA32_A_F(rgba));
-
     Geom::Point s = cl->s * cl->affine;
     double offsetx = s[Geom::X] - buf->rect.x0;
     double offsety = s[Geom::Y] - buf->rect.y0;
@@ -120,8 +120,13 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
 
     cairo_move_to(buf->ct, offsetx, offsety);
     cairo_set_font_size(buf->ct, cl->fontsize);
-    cairo_show_text(buf->ct, cl->text);
-    cairo_stroke(buf->ct);
+    cairo_text_path(buf->ct, cl->text);
+
+    cairo_set_source_rgba(buf->ct, SP_RGBA32_B_F(cl->rgba_stroke), SP_RGBA32_G_F(cl->rgba_stroke), SP_RGBA32_R_F(cl->rgba_stroke), SP_RGBA32_A_F(cl->rgba_stroke));
+    cairo_set_line_width (buf->ct, 2.0);
+    cairo_stroke_preserve(buf->ct);
+    cairo_set_source_rgba(buf->ct, SP_RGBA32_B_F(cl->rgba), SP_RGBA32_G_F(cl->rgba), SP_RGBA32_R_F(cl->rgba), SP_RGBA32_A_F(cl->rgba));
+    cairo_fill(buf->ct);
 
     cairo_new_path(buf->ct);
 }
@@ -167,11 +172,13 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Matrix const &affine, unsigned i
 }
 
 SPCanvasItem *
-sp_canvastext_new(SPCanvasGroup *parent, Geom::Point pos, gchar const *new_text)
+sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, gchar const *new_text)
 {
     SPCanvasItem *item = sp_canvas_item_new(parent, SP_TYPE_CANVASTEXT, NULL);
 
     SPCanvasText *ct = SP_CANVASTEXT(item);
+
+    ct->desktop = desktop;
 
     ct->s = pos;
     g_free(ct->text);
@@ -184,18 +191,17 @@ sp_canvastext_new(SPCanvasGroup *parent, Geom::Point pos, gchar const *new_text)
 
 
 void
-sp_canvastext_set_rgba32 (SPCanvasText *ct, guint32 rgba)
+sp_canvastext_set_rgba32 (SPCanvasText *ct, guint32 rgba, guint32 rgba_stroke)
 {
     g_return_if_fail (ct != NULL);
     g_return_if_fail (SP_IS_CANVASTEXT (ct));
 
-    if (rgba != ct->rgba) {
-        SPCanvasItem *item;
+    if (rgba != ct->rgba || rgba_stroke != ct->rgba_stroke) {
         ct->rgba = rgba;
-        item = SP_CANVAS_ITEM (ct);
-        sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+        ct->rgba_stroke = rgba_stroke;
+        SPCanvasItem *item = SP_CANVAS_ITEM (ct);
+        sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
     }
-    sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
 }
 
 #define EPSILON 1e-6
@@ -204,25 +210,26 @@ sp_canvastext_set_rgba32 (SPCanvasText *ct, guint32 rgba)
 void
 sp_canvastext_set_coords (SPCanvasText *ct, gdouble x0, gdouble y0)
 {
-    g_return_if_fail (ct != NULL);
-    g_return_if_fail (SP_IS_CANVASTEXT (ct));
-
-    if (DIFFER (x0, ct->s[Geom::X]) || DIFFER (y0, ct->s[Geom::Y])) {
-        ct->s[Geom::X] = x0;
-        ct->s[Geom::Y] = y0;
-        sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
-    }
-    sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
+    sp_canvastext_set_coords(ct, Geom::Point(x0, y0));
 }
 
 void
 sp_canvastext_set_coords (SPCanvasText *ct, const Geom::Point start)
 {
-    sp_canvastext_set_coords(ct, start[0], start[1]);
+    Geom::Point pos = ct->desktop->doc2dt(start);
+
+    g_return_if_fail (ct != NULL);
+    g_return_if_fail (SP_IS_CANVASTEXT (ct));
+
+    if (DIFFER (pos[0], ct->s[Geom::X]) || DIFFER (pos[1], ct->s[Geom::Y])) {
+        ct->s[Geom::X] = pos[0];
+        ct->s[Geom::Y] = pos[1];
+        sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
+    }
 }
 
 void
-sp_canvastext_set_text (SPCanvasText *ct, gchar const* new_text)
+sp_canvastext_set_text (SPCanvasText *ct, gchar const * new_text)
 {
     g_free (ct->text);
     ct->text = g_strdup(new_text);
@@ -249,6 +256,7 @@ sp_canvastext_set_anchor (SPCanvasText *ct, double anchor_x, double anchor_y)
     ct->anchor_x = anchor_x;
     ct->anchor_y = anchor_y;
 }
+
 
 /*
   Local Variables:

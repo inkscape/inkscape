@@ -15,9 +15,10 @@
 
 #include <glib/gtypes.h>
 
-//#include "display/canvas-text.h"
 #include "display/canvas-bpath.h"
 #include "live_effects/parameter/parameter.h"
+
+struct SPCanvasText;
 
 namespace Inkscape {
 

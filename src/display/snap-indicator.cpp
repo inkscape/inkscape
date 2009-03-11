@@ -16,7 +16,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "display/sodipodi-ctrl.h"
-#include "display/canvas-bpath.h"
+#include "display/canvas-text.h"
 #include "knot.h"
 #include "preferences.h"
 #include <glibmm/i18n.h>

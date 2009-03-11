@@ -31,6 +31,8 @@ ink_common_sources += \
 	display/canvas-temporary-item.h	\
 	display/canvas-temporary-item-list.cpp	\
 	display/canvas-temporary-item-list.h	\
+	display/canvas-text.h	\	
+	display/canvas-text.cpp	\
 	display/curve.cpp	\
 	display/curve.h	\
 	display/display-forward.h	\

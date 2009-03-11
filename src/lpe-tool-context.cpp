@@ -34,6 +34,7 @@
 #include "document.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
+#include "display/canvas-text.h"
 #include "message-stack.h"
 #include "sp-path.h"
 #include "helper/units.h"
