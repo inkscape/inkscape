@@ -189,20 +189,20 @@ main (int argc, const char **argv)
         num_parsed_options = 0;
 
     // the list of arguments is in the net line
-    while ((option = getopt(argc, (char* const* )argv, "t:")) != -1) 
+    while ((option = getopt(argc, (char* const* )argv, "t:")) != -1)
     {
         switch(option) {
 	    case 't': // for timer
                 // fprintf(stderr, "set timer arg %s\n", optarg );
-	        ss.timer = atoi(optarg);	
+	        ss.timer = atoi(optarg);
 	        num_parsed_options += 2; // 2 because of flag + option
                 break;
             case '?':
             default:
 		usage();
-        }	
+        }
     }
-   
+
     GtkWidget *w;
     int i;
 
@@ -238,7 +238,7 @@ main (int argc, const char **argv)
     ss.fullscreen = false;
 
     inkscape = (Inkscape::Application *)g_object_new (SP_TYPE_INKSCAPE, NULL);
-    
+
     // starting at where the commandline options stopped parsing because
     // we want all the files to be in the list
     for (i = num_parsed_options + 1 ; i < argc; i++) {
@@ -327,7 +327,7 @@ main (int argc, const char **argv)
     sp_document_ensure_up_to_date (ss.doc);
     ss.view = sp_svg_view_widget_new (ss.doc);
     sp_document_unref (ss.doc);
-    sp_svg_view_widget_set_resize (SP_SVG_VIEW_WIDGET (ss.view), FALSE, 
+    sp_svg_view_widget_set_resize (SP_SVG_VIEW_WIDGET (ss.view), FALSE,
                                    sp_document_width (ss.doc), sp_document_height (ss.doc));
     gtk_widget_show (ss.view);
     gtk_container_add (GTK_CONTAINER (w), ss.view);
@@ -469,7 +469,7 @@ sp_svgview_show_next (struct SPSlideShow *ss)
     sp_svgview_set_document(ss, doc, current);
 
     sp_svgview_normal_cursor(ss);
-} 
+}
 
 static void
 sp_svgview_show_prev (struct SPSlideShow *ss)
@@ -495,7 +495,7 @@ sp_svgview_goto_first (struct SPSlideShow *ss)
     SPDocument *doc = NULL;
     int current = 0;
     while ( !doc && (current < ss->length - 1)) {
-        if (current == ss->current) 
+        if (current == ss->current)
             break;
         doc = sp_document_new (ss->slides[current++], TRUE, false);
     }
@@ -513,7 +513,7 @@ sp_svgview_goto_last (struct SPSlideShow *ss)
     SPDocument *doc = NULL;
     int current = ss->length - 1;
     while (!doc && (current >= 0)) {
-        if (current == ss->current) 
+        if (current == ss->current)
             break;
         doc = sp_document_new (ss->slides[current--], TRUE, false);
     }
