@@ -109,6 +109,9 @@ nr_arena_image_update( NRArenaItem *item, NRRectL */*area*/, NRGC *gc, unsigned 
 {
     Geom::Matrix grid2px;
 
+    // clear old bbox
+    nr_arena_item_request_render(item);
+
     NRArenaImage *image = NR_ARENA_IMAGE (item);
 
     /* Copy affine */
