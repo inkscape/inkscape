@@ -413,11 +413,11 @@ RectKnotHolder::RectKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderRel
                         "to make the horizontal radius the same"),
                       SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR);
     entity_wh->create(desktop, item, this,
-                      _("Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b>"
+                      _("Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> "
                         "to lock ratio or stretch in one dimension only"),
                       SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
     entity_xy->create(desktop, item, this,
-                      _("Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b>"
+                      _("Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> "
                         "to lock ratio or stretch in one dimension only"),
                       SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
     entity.push_back(entity_rx);
