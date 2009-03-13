@@ -477,8 +477,10 @@ override) the bindings in the main default.xml.
   <bind key="n" modifiers="Ctrl,Shift" action="LayerNew" />
 
   <bind action="LayerRename" />
-  <bind action="LayerNext" />
-  <bind action="LayerPrev" />
+  <bind key="Page_Up" modifiers="Ctrl" action="LayerNext" display="true"/>
+  <bind key="KP_Page_Up" modifiers="Ctrl" action="LayerNext"/>
+  <bind key="Page_Down" modifiers="Ctrl" action="LayerPrev" display="true"/>
+  <bind key="KP_Page_Down" modifiers="Ctrl" action="LayerPrev"/>
   <bind action="LayerDelete" />
 
   <bind key="Page_Up" modifiers="Ctrl,Shift" action="LayerRaise" display="true"/>
