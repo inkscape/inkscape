@@ -1552,5 +1552,24 @@
 <feComposite id="feComposite2920" result="result9" operator="in" in="result2" in2="result2" />
 <feBlend id="feBlend2922" blend="normal" mode="normal" in="result6" in2="result9" />
 </filter>
+<filter inkscape:label="Liquid" inkscape:menu="Textures" inkscape:menu-tooltip="Colorizable filling with liquid transparency" id="Liquid0" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<feGaussianBlur stdDeviation="5" result="result8" id="feGaussianBlur3723" />
+<feTurbulence seed="0" result="result7" type="turbulence" numOctaves="1" baseFrequency="0.014999999999999999" id="feTurbulence3725" />
+<feColorMatrix result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 2.5 0 " id="feColorMatrix3727" />
+<feComposite in2="result8" result="result6" operator="in" in="result8" id="feComposite3729" />
+<feDisplacementMap in="result5" in2="result6" xChannelSelector="B" yChannelSelector="A" scale="120" result="result4" id="feDisplacementMap3731" />
+<feComposite in2="result4" result="result2" operator="in" id="feComposite3733" in="result8" />
+<feComposite result="fbSourceGraphic" in="SourceGraphic" operator="in" in2="result2" id="feComposite3735" />
+</filter>
+<filter x="-0.25" width="1.5" y="-0.25" height="1.5" id="Watercol0" inkscape:menu-tooltip="Cloudy watercolor effect" inkscape:label="Watercolor" inkscape:menu="Textures">
+<feGaussianBlur id="feGaussianBlur5998" result="result8" stdDeviation="10" />
+<feTurbulence id="feTurbulence6000" baseFrequency="0.01" numOctaves="2" type="fractalNoise" result="result7" seed="2" />
+<feColorMatrix id="feColorMatrix6002" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result5" type="matrix" />
+<feComposite id="feComposite6004" in="result8" operator="over" result="result6" in2="result8" />
+<feDisplacementMap id="feDisplacementMap6006" result="result4" scale="120" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result5" />
+<feComposite in="result8" id="feComposite6008" operator="out" result="result2" in2="result4" />
+<feComposite id="feComposite6010" in2="result8" operator="in" in="result2" result="fbSourceGraphic" />
+<feBlend blend="normal" id="feBlend4942" mode="multiply" />
+</filter>
 </defs>
 </svg>
