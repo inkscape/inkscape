@@ -271,7 +271,14 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 double tol = 40.0;
                 Geom::Point const event_w(event->button.x, event->button.y);
                 Geom::Point const event_dt(desktop->w2d(event_w));
-                drag_origin = event_dt;
+
+                // Due to the tolerance allowed when grabbing a guide, event_dt will generally
+                // be close to the guide but not just exactly on it. The drag origin calculated
+                // here must be exactly on the guide line though, otherwise
+                // small errors will occur once we snap, see
+                // https://bugs.launchpad.net/inkscape/+bug/333762
+                drag_origin = Geom::projection(event_dt, Geom::Line(guide->point_on_line, guide->angle()));
+
                 if (Geom::L2(guide->point_on_line - event_dt) < tol) {
                     // the click was on the guide 'anchor'
                     drag_type = (event->button.state & GDK_SHIFT_MASK) ? SP_DRAG_MOVE_ORIGIN : SP_DRAG_TRANSLATE;
