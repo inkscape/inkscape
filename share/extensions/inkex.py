@@ -27,7 +27,8 @@ _ = gettext.gettext
 #a dictionary of all of the xmlns prefixes in a standard inkscape doc
 NSS = {
 u'sodipodi' :u'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd',
-u'cc'       :u'http://web.resource.org/cc/',
+u'cc'       :u'http://creativecommons.org/ns#',
+u'ccOLD'    :u'http://web.resource.org/cc/',
 u'svg'      :u'http://www.w3.org/2000/svg',
 u'dc'       :u'http://purl.org/dc/elements/1.1/',
 u'rdf'      :u'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
