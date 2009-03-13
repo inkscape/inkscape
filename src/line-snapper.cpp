@@ -51,8 +51,7 @@ void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
         Geom::Coord const dist = Geom::L2(p_proj - p);
         //Store any line that's within snapping range
         if (dist < getSnapperTolerance()) {
-            _addSnappedLine(sc, p_proj, dist, source_type, Inkscape::SNAPTARGET_UNDEFINED, i->first, i->second);
-            // We don't know if we're snapping to grids or guides here; therefore the snap target type will be set in findBestSnap()
+            _addSnappedLine(sc, p_proj, dist, source_type, i->first, i->second);
             // std::cout << " -> distance = " << dist;
         }
         // std::cout << std::endl;
@@ -100,7 +99,7 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
                     // This snappoint is therefore fully constrained, so there's no need
                     // to look for additional intersections; just return the snapped point
                     // and forget about the line
-                    sc.points.push_back(SnappedPoint(t, source_type, Inkscape::SNAPTARGET_UNDEFINED, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), true));
+                    _addSnappedPoint(sc, t, dist, source_type);
                 }
             }
         }

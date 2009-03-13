@@ -99,7 +99,7 @@ public:
     void getPoint(Geom::Point &p) const;
 
     /* This method however always returns a point, even if no snapping
-     * has occured; A check should be implemented in the calling code
+     * has occurred; A check should be implemented in the calling code
      * to check for snapping. Use this method only when really needed, e.g.
      * when the calling code is trying to snap multiple points and must
      * determine itself which point is most appropriate

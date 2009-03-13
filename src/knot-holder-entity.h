@@ -1,9 +1,9 @@
 #ifndef SEEN_KNOT_HOLDER_ENTITY_H
 #define SEEN_KNOT_HOLDER_ENTITY_H
 
-/** \file 
- * KnotHolderEntity definition. 
- * 
+/** \file
+ * KnotHolderEntity definition.
+ *
  * Authors:
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Maximilian Albert <maximilian.albert@gmail.com>
@@ -20,6 +20,7 @@
 #include <glib/gtypes.h>
 #include "knot.h"
 #include <2geom/forward.h>
+#include "snapper.h"
 
 struct SPItem;
 struct SPKnot;
@@ -36,7 +37,7 @@ class KnotHolderEntity {
 public:
     KnotHolderEntity() {}
     virtual ~KnotHolderEntity();
-    virtual void create(SPDesktop *desktop, SPItem *item, KnotHolder *parent, const gchar *tip = "", 
+    virtual void create(SPDesktop *desktop, SPItem *item, KnotHolder *parent, const gchar *tip = "",
                         SPKnotShapeType shape = SP_KNOT_SHAPE_DIAMOND,
                         SPKnotModeType mode = SP_KNOT_MODE_XOR,
                         guint32 color = 0xffffff00);
@@ -57,6 +58,7 @@ public:
 
 //private:
     Geom::Point snap_knot_position(Geom::Point const &p);
+    Geom::Point snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::ConstraintLine const &constraint);
 
     SPKnot *knot;
     SPItem *item;

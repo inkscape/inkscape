@@ -141,14 +141,15 @@ RectKnotHolderEntityRX::knot_set(Geom::Point const &p, Geom::Point const &/*orig
     //In general we cannot just snap this radius to an arbitrary point, as we have only a single
     //degree of freedom. For snapping to an arbitrary point we need two DOF. If we're going to snap
     //the radius then we should have a constrained snap. snap_knot_position() is unconstrained
+    Geom::Point const s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed), Geom::Point(-1, 0)));
 
     if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - p[Geom::X], 0.0, temp);
+        rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - s[Geom::X], 0.0, temp);
         rect->rx._set = rect->ry._set = true;
 
     } else {
-        rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - p[Geom::X], 0.0, rect->width.computed / 2.0);
+        rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - s[Geom::X], 0.0, rect->width.computed / 2.0);
         rect->rx._set = true;
     }
 
@@ -190,18 +191,20 @@ RectKnotHolderEntityRY::knot_set(Geom::Point const &p, Geom::Point const &/*orig
     //In general we cannot just snap this radius to an arbitrary point, as we have only a single
     //degree of freedom. For snapping to an arbitrary point we need two DOF. If we're going to snap
     //the radius then we should have a constrained snap. snap_knot_position() is unconstrained
+    Geom::Point const s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed), Geom::Point(0, 1)));
 
-    if (state & GDK_CONTROL_MASK) {
+    if (state & GDK_CONTROL_MASK) { // When holding control then rx will be kept equal to ry,
+    	                            // resulting in a perfect circle (and not an ellipse)
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
-        rect->rx.computed = rect->ry.computed = CLAMP(p[Geom::Y] - rect->y.computed, 0.0, temp);
+        rect->rx.computed = rect->ry.computed = CLAMP(s[Geom::Y] - rect->y.computed, 0.0, temp);
         rect->ry._set = rect->rx._set = true;
     } else {
         if (!rect->rx._set || rect->rx.computed == 0) {
-            rect->ry.computed = CLAMP(p[Geom::Y] - rect->y.computed,
+            rect->ry.computed = CLAMP(s[Geom::Y] - rect->y.computed,
                                       0.0,
                                       MIN(rect->height.computed / 2.0, rect->width.computed / 2.0));
         } else {
-            rect->ry.computed = CLAMP(p[Geom::Y] - rect->y.computed,
+            rect->ry.computed = CLAMP(s[Geom::Y] - rect->y.computed,
                                       0.0,
                                       rect->height.computed / 2.0);
         }

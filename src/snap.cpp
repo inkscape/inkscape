@@ -814,14 +814,12 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, Inkscape:
     // search for the closest snapped grid line
     Inkscape::SnappedLine closestGridLine;
     if (getClosestSL(sc.grid_lines, closestGridLine)) {
-        closestGridLine.setTarget(Inkscape::SNAPTARGET_GRID);
         sp_list.push_back(Inkscape::SnappedPoint(closestGridLine));
     }
 
     // search for the closest snapped guide line
     Inkscape::SnappedLine closestGuideLine;
     if (getClosestSL(sc.guide_lines, closestGuideLine)) {
-        closestGuideLine.setTarget(Inkscape::SNAPTARGET_GUIDE);
         sp_list.push_back(Inkscape::SnappedPoint(closestGuideLine));
     }
 
