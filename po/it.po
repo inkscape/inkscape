@@ -18576,7 +18576,7 @@ msgstr "Elimina il passaggio corrente dal gradiente"
 #: ../src/widgets/gradient-vector.cpp:831
 #: ../share/extensions/printing-marks.inx.h:9
 msgid "Offset:"
-msgstr "Opacità:"
+msgstr "Posizione:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
 #: ../src/widgets/gradient-vector.cpp:876
