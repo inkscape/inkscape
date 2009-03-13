@@ -6,6 +6,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+//#define LPE_ENABLE_TEST_EFFECTS
+
 #include "live_effects/effect.h"
 
 #ifdef HAVE_CONFIG_H
@@ -72,8 +74,6 @@
 #include "live_effects/lpe-path_length.h"
 #include "live_effects/lpe-line_segment.h"
 
-//#define LPE_ENABLE_TEST_EFFECTS
-
 
 namespace Inkscape {
 
@@ -104,7 +104,6 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {SKETCH,                N_("Sketch"),                  "sketch"},
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
     {TEXT_LABEL,            N_("Text label"),              "text_label"},
-    {VONKOCH,               N_("VonKoch"),                 "vonkoch"},
 #endif
 /* 0.46 */
     {BEND_PATH,             N_("Bend"),                     "bend_path"},
@@ -112,6 +111,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {PATTERN_ALONG_PATH,    N_("Pattern Along Path"),      "skeletal"},   // for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
     {CURVE_STITCH,          N_("Stitch Sub-Paths"),        "curvestitching"},
 /* 0.47 */
+    {VONKOCH,               N_("VonKoch"),                 "vonkoch"},
     {KNOT,                  N_("Knot"),                    "knot"},
     {CONSTRUCT_GRID,        N_("Construct grid"),          "construct_grid"},
     {SPIRO,                 N_("Spiro spline"),            "spiro"},
