@@ -9,7 +9,6 @@
 #include "message-stack.h"
 #include "context-fns.h"
 #include "snap.h"
-#include "desktop-affine.h"
 #include "event-context.h"
 #include "sp-namedview.h"
 #include "display/snap-indicator.h"
@@ -207,8 +206,8 @@ Geom::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item
         desktop->snapindicator->set_new_snaptarget(snappoint);
     }
 
-    p[0] = sp_desktop_dt2doc_xy_point(desktop, p[0]);
-    p[1] = sp_desktop_dt2doc_xy_point(desktop, p[1]);
+    p[0] *= desktop->dt2doc();
+    p[1] *= desktop->dt2doc();
 
     return Geom::Rect(Geom::Point(MIN(p[0][Geom::X], p[1][Geom::X]), MIN(p[0][Geom::Y], p[1][Geom::Y])),
                     Geom::Point(MAX(p[0][Geom::X], p[1][Geom::X]), MAX(p[0][Geom::Y], p[1][Geom::Y])));

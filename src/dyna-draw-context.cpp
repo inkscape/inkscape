@@ -45,7 +45,6 @@
 #include "desktop.h"
 #include "desktop-events.h"
 #include "desktop-handles.h"
-#include "desktop-affine.h"
 #include "desktop-style.h"
 #include "message-context.h"
 #include "preferences.h"
@@ -1016,7 +1015,7 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize, bool subtract)
             item->transform = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
             item->updateRepr();
         }
-        Geom::PathVector pathv = dc->accumulated->get_pathvector() * sp_desktop_dt2doc_affine(desktop);
+        Geom::PathVector pathv = dc->accumulated->get_pathvector() * desktop->dt2doc();
         gchar *str = sp_svg_write_path(pathv);
         g_assert( str != NULL );
         dc->repr->setAttribute("d", str);

@@ -29,7 +29,6 @@
 #include "desktop.h"
 #include "desktop-events.h"
 #include "desktop-handles.h"
-#include "desktop-affine.h"
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-tweak-move.xpm"

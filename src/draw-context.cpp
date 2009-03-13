@@ -26,7 +26,6 @@
 #include <glibmm/i18n.h>
 #include "display/curve.h"
 #include "desktop.h"
-#include "desktop-affine.h"
 #include "desktop-handles.h"
 #include "desktop-style.h"
 #include "document.h"
@@ -662,7 +661,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
     /* Now we have to go back to item coordinates at last */
     c->transform( dc->white_item
                             ? sp_item_dt2i_affine(dc->white_item)
-                            : to_2geom(sp_desktop_dt2doc_affine(SP_EVENT_CONTEXT_DESKTOP(dc))) );
+                            : SP_EVENT_CONTEXT_DESKTOP(dc)->dt2doc() );
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
     SPDocument *doc = sp_desktop_document(desktop);

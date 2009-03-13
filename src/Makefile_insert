@@ -26,7 +26,6 @@ ink_common_sources +=	\
 	console-output-undo-observer.h console-output-undo-observer.cpp \
 	context-fns.cpp context-fns.h					\
 	decimal-round.h							\
-	desktop-affine.h						\
 	desktop.cpp desktop.h						\
 	desktop-events.cpp desktop-events.h				\
 	desktop-handles.cpp desktop-handles.h				\

@@ -30,7 +30,6 @@
 #include "sp-namedview.h"
 #include "selection.h"
 #include "desktop-handles.h"
-#include "desktop-affine.h"
 #include "snap.h"
 #include "desktop.h"
 #include "desktop-style.h"
@@ -418,8 +417,8 @@ static void sp_star_drag(SPStarContext *sc, Geom::Point p, guint state)
     Geom::Point pt2g = to_2geom(p);
     m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, pt2g, Inkscape::SNAPSOURCE_HANDLE);
 
-    Geom::Point const p0 = to_2geom(sp_desktop_dt2doc_xy_point(desktop, sc->center));
-    Geom::Point const p1 = to_2geom(sp_desktop_dt2doc_xy_point(desktop, from_2geom(pt2g)));
+    Geom::Point const p0 = desktop->dt2doc(sc->center);
+    Geom::Point const p1 = desktop->dt2doc(pt2g);
 
     SPStar *star = SP_STAR(sc->item);
 

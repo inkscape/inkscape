@@ -52,7 +52,6 @@
 #include "svg/svg.h"
 #include "desktop.h"
 #include "desktop-style.h"
-#include "desktop-affine.h"
 #include "desktop-handles.h"
 #include "document.h"
 #include "message-context.h"
@@ -913,7 +912,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
     }
 
     /* Now we have to go back to item coordinates at last */
-    c->transform(sp_desktop_dt2doc_affine(SP_EVENT_CONTEXT_DESKTOP(cc)));
+    c->transform(SP_EVENT_CONTEXT_DESKTOP(cc)->dt2doc());
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
     SPDocument *doc = sp_desktop_document(desktop);

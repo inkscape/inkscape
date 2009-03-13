@@ -16,7 +16,6 @@
 #include "selection.h"
 #include "desktop-handles.h"
 #include "desktop.h"
-#include "desktop-affine.h"
 
 #include "xml/repr.h"
 
@@ -697,8 +696,8 @@ SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, Geom::Point p0,
 
     SPObject *rect = doc->getObjectByRepr(rect_repr);
 
-    p0 = sp_desktop_dt2doc_xy_point(desktop, p0);
-    p1 = sp_desktop_dt2doc_xy_point(desktop, p1);
+    p0 *= desktop->dt2doc();
+    p1 *= desktop->dt2doc();
     using Geom::X;
     using Geom::Y;
     Geom::Coord const x0 = MIN(p0[X], p1[X]);

@@ -35,7 +35,6 @@
 #include "desktop.h"
 #include "desktop-style.h"
 #include "desktop-handles.h"
-#include "desktop-affine.h"
 #include "message-stack.h"
 #include "message-context.h"
 #include "pixmaps/cursor-text.xpm"
@@ -670,7 +669,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                     /* Button 1, set X & Y & new item */
                     sp_desktop_selection(desktop)->clear();
                     Geom::Point dtp = desktop->w2d(Geom::Point(event->button.x, event->button.y));
-                    tc->pdoc = sp_desktop_dt2doc_xy_point(desktop, dtp);
+                    tc->pdoc = desktop->dt2doc(dtp);
 
                     tc->show = TRUE;
                     tc->phase = 1;

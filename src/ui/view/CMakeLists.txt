@@ -1,6 +1,5 @@
 SET(ui_view_SRC
 desktop.cpp
-desktop-affine.cpp
 desktop-events.cpp
 desktop-handles.cpp
 desktop-style.cpp

@@ -26,7 +26,6 @@
 #include "sp-offset.h"
 #include "sp-flowtext.h"
 #include "preferences.h"
-#include "desktop-affine.h"
 #include "style.h"
 #include "desktop.h"
 #include "desktop-handles.h"
