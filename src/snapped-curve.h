@@ -13,9 +13,6 @@
 
 #include <vector>
 #include <list>
-#include "libnr/nr-coord.h"
-#include "libnr/nr-point.h"
-#include <libnr/nr-point-fns.h>
 #include "snapped-point.h"
 #include <2geom/forward.h>
 

@@ -14,9 +14,8 @@
 
 #include <vector>
 #include <list>
-#include "libnr/nr-coord.h"
-#include "libnr/nr-point.h"
-#include <libnr/nr-values.h>
+#include <libnr/nr-values.h> //Because of NR_HUGE
+#include <2geom/geom.h>
 
 namespace Inkscape
 {

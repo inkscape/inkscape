@@ -12,8 +12,6 @@
  */
 
 #include "svg/svg.h"
-#include "libnr/nr-rect-ops.h"
-#include "libnr/nr-point-fns.h"
 #include <2geom/path-intersection.h>
 #include <2geom/point.h>
 #include <2geom/rect.h>

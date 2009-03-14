@@ -20,11 +20,6 @@
 
 #include <vector>
 
-#include <libnr/nr-coord.h>
-#include <libnr/nr-dim2.h>
-#include <libnr/nr-forward.h>
-#include <libnr/nr-scale.h>
-
 #include "guide-snapper.h"
 #include "object-snapper.h"
 #include "snap-preferences.h"

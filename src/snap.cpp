@@ -25,10 +25,6 @@
 #include "snapped-line.h"
 #include "snapped-curve.h"
 
-#include <libnr/nr-point-fns.h>
-#include <libnr/nr-scale-ops.h>
-#include <libnr/nr-values.h>
-
 #include "display/canvas-grid.h"
 #include "display/snap-indicator.h"
 

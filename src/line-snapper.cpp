@@ -11,8 +11,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "libnr/nr-values.h"
-#include "libnr/nr-point-fns.h"
 #include <2geom/geom.h>
 #include "line-snapper.h"
 #include "snapped-line.h"

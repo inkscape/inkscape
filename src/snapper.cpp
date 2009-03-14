@@ -9,7 +9,6 @@
  *  Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
-#include "libnr/nr-values.h"
 #include "sp-namedview.h"
 #include "inkscape.h"
 #include "desktop.h"

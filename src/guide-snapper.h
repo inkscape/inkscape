@@ -15,8 +15,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "libnr/nr-forward.h"
-#include "libnr/nr-coord.h"
 #include "line-snapper.h"
 
 struct SPNamedView;

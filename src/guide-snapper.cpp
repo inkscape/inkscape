@@ -12,8 +12,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "libnr/nr-values.h"
-#include "libnr/nr-point-fns.h"
 #include "sp-namedview.h"
 #include "desktop.h"
 #include "sp-guide.h"

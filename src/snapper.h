@@ -14,8 +14,6 @@
 
 #include <map>
 #include <list>
-#include "libnr/nr-coord.h"
-#include "libnr/nr-point.h"
 #include <boost/optional.hpp>
 
 #include "snapped-point.h"
