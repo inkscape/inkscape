@@ -515,6 +515,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         if (!sc->moved) {
                             item_in_group = desktop->item_at_point(Geom::Point(event->button.x, event->button.y), TRUE);
                             group_at_point = desktop->group_at_point(Geom::Point(event->button.x, event->button.y));
+                            if (SP_IS_LAYER(selection->single()))
+                                group_at_point = SP_GROUP(selection->single());
 
                             // group-at-point is meant to be topmost item if it's a group,
                             // not topmost group of all items at point
@@ -577,8 +579,11 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                 seltrans->resetState();
                                 selection->toggle(sc->item);
                             } else {
+                                SPObject* single = selection->single();
                                 // without shift, increase state (i.e. toggle scale/rotation handles)
                                 if (selection->includes(sc->item)) {
+                                    seltrans->increaseState();
+                                } else if (SP_IS_LAYER(single) && single->isAncestorOf(sc->item)) {
                                     seltrans->increaseState();
                                 } else {
                                     seltrans->resetState();
