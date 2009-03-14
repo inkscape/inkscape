@@ -17,6 +17,7 @@
 #include <2geom/path-intersection.h>
 #include <2geom/point.h>
 #include <2geom/rect.h>
+#include <2geom/line.h>
 #include "document.h"
 #include "sp-namedview.h"
 #include "sp-image.h"
@@ -304,7 +305,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
 
     for (std::vector<std::pair<Geom::Point, int> >::const_iterator k = _points_to_snap_to->begin(); k != _points_to_snap_to->end(); k++) {
         // Project each node (*k) on the guide line (running through point p)
-        Geom::Point p_proj = project_on_linesegment((*k).first, p, p + Geom::rot90(guide_normal));
+        Geom::Point p_proj = Geom::projection((*k).first, Geom::Line(p, p + Geom::rot90(guide_normal)));
         Geom::Coord dist = Geom::L2((*k).first - p_proj); // distance from node to the guide
         Geom::Coord dist2 = Geom::L2(p - p_proj); // distance from projection of node on the guide, to the mouse location
         if ((dist < tol && dist2 < tol) || (getSnapperAlwaysSnap() && dist < s.getSnapDistance())) {
@@ -555,7 +556,7 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
     // The intersection point of the constraint line with any path,
     // must lie within two points on the constraintline: p_min_on_cl and p_max_on_cl
     // The distance between those points is twice the snapping tolerance
-    Geom::Point const p_proj_on_cl = project_on_linesegment(p, p1_on_cl, p2_on_cl);
+    Geom::Point const p_proj_on_cl = Geom::projection(p, Geom::Line(p1_on_cl, p2_on_cl));
     Geom::Point const p_min_on_cl = _snapmanager->getDesktop()->dt2doc(p_proj_on_cl - getSnapperTolerance() * direction_vector);
     Geom::Point const p_max_on_cl = _snapmanager->getDesktop()->dt2doc(p_proj_on_cl + getSnapperTolerance() * direction_vector);
 

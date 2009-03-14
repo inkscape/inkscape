@@ -47,7 +47,7 @@ void Inkscape::LineSnapper::freeSnap(SnappedConstraints &sc,
         // std::cout << "  line through " << i->second << " with normal " << i->first;
         g_assert(i->first != Geom::Point(0,0)); // we cannot project on an linesegment of zero length
 
-        Geom::Point const p_proj = project_on_linesegment(p, p1, p2);
+        Geom::Point const p_proj = Geom::projection(p, Geom::Line(p1, p2));
         Geom::Coord const dist = Geom::L2(p_proj - p);
         //Store any line that's within snapping range
         if (dist < getSnapperTolerance()) {
