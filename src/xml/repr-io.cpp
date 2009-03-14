@@ -662,6 +662,35 @@ repr_quote_write (Writer &out, const gchar * val)
     }
 }
 
+static void repr_write_comment( Writer &out, const gchar * val, bool addWhitespace, gint indentLevel, int indent )
+{
+    if ( indentLevel > 16 ) {
+        indentLevel = 16;
+    }
+    if (addWhitespace && indent) {
+        for (gint i = 0; i < indentLevel; i++) {
+            for (gint j = 0; j < indent; j++) {
+                out.writeString(" ");
+            }
+        }
+    }
+
+    out.writeString("<!--");
+    // WARNING out.printf() and out.writeString() are *NOT* non-ASCII friendly.
+    if (val) {
+        for (const gchar* cur = val; *cur; cur++ ) {
+            out.writeChar(*cur);
+        }
+    } else {
+        out.writeString(" ");
+    }
+    out.writeString("-->");
+
+    if (addWhitespace) {
+        out.writeString("\n");
+    }
+}
+
 namespace {
 
 typedef std::map<Glib::QueryQuark, gchar const *, Inkscape::compare_quark_ids> LocalNameMap;
@@ -777,7 +806,7 @@ void sp_repr_write_stream( Node *repr, Writer &out, gint indent_level,
             break;
         }
         case Inkscape::XML::COMMENT_NODE: {
-            out.printf( "<!--%s-->", repr->content() );
+            repr_write_comment( out, repr->content(), add_whitespace, indent_level, indent );
             break;
         }
         case Inkscape::XML::PI_NODE: {
