@@ -200,7 +200,7 @@ sp_canvastext_set_rgba32 (SPCanvasText *ct, guint32 rgba, guint32 rgba_stroke)
         ct->rgba = rgba;
         ct->rgba_stroke = rgba_stroke;
         SPCanvasItem *item = SP_CANVAS_ITEM (ct);
-        sp_canvas_item_request_update (SP_CANVAS_ITEM (ct));
+        sp_canvas_item_request_update( item );
     }
 }
 
