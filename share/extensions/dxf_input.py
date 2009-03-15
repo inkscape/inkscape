@@ -38,16 +38,16 @@ def export_MTEXT():
         if vals[groups['50']]:
             angle = vals[groups['50']][0]
             attribs.update({'transform': 'rotate (%f %f %f)' % (-angle, x, y)})
-        attribs.update({'sodipodi:linespacing': '125%'})
+        attribs.update({inkex.addNS('linespacing','sodipodi'): '125%'})
         node = inkex.etree.SubElement(layer, 'text', attribs)
         text = vals[groups['1']][0]
         found = text.find('\P')         # new line
         while found > -1:
-            tspan = inkex.etree.SubElement(node , 'tspan', {'sodipodi:role': 'line'})
+            tspan = inkex.etree.SubElement(node , 'tspan', {inkex.addNS('role','sodipodi'): 'line'})
             tspan.text = text[:found]
             text = text[(found+2):]
             found = text.find('\P')
-        tspan = inkex.etree.SubElement(node , 'tspan', {'sodipodi:role': 'line'})
+        tspan = inkex.etree.SubElement(node , 'tspan', {inkex.addNS('role','sodipodi'): 'line'})
         tspan.text = text
 
 def export_POINT():
@@ -139,6 +139,57 @@ def export_LWPOLYLINE():
             attribs = {'d': path, 'style': style}
             inkex.etree.SubElement(layer, 'path', attribs)
 
+def export_HATCH():
+    # mandatory group codes : (10, 20, 72, 93) (x, y, Edge Type, Number of edges)
+    if vals[groups['10']] and vals[groups['20']] and vals[groups['72']] and vals[groups['93']]:
+        if len(vals[groups['10']]) > 1 and len(vals[groups['20']]) == len(vals[groups['10']]):
+            # optional group codes : (11, 21, 40, 50, 51, 73) (x, y, r, angle1, angle2, CCW)
+            i10 = 1    # count start points
+            i11 = 0    # count line end points
+            i40 = 0    # count circles
+            i72 = 0    # count edge type flags
+            path = ''
+            for i in range (0, len(vals[groups['93']])):
+                xc = vals[groups['10']][i10]
+                yc = vals[groups['20']][i10]
+                if vals[groups['72']][i72] == 2:            # arc
+                    rm = scale*vals[groups['40']][i40]
+                    a1 = vals[groups['50']][i40]
+                    path += 'M %f,%f ' % (xc + rm*math.cos(a1*math.pi/180.0), yc + rm*math.sin(a1*math.pi/180.0))
+                else:
+                    a1 = 0
+                    path += 'M %f,%f ' % (xc, yc)
+                for j in range(0, vals[groups['93']][i]):
+                    if vals[groups['72']][i72] == 2:        # arc
+                        xc = vals[groups['10']][i10]
+                        yc = vals[groups['20']][i10]
+                        rm = scale*vals[groups['40']][i40]
+                        a2 = vals[groups['51']][i40]
+                        diff = (a2 - a1 + 360) % (360)
+                        sweep = 1 - vals[groups['73']][i40] # sweep CCW
+                        large = 0                           # large-arc-flag
+                        if diff:
+                            path += 'A %f,%f 0.0 %d %d %f,%f ' % (rm, rm, large, sweep, xc + rm*math.cos(a2*math.pi/180.0), yc + rm*math.sin(a2*math.pi/180.0))
+                        else:
+                            path += 'A %f,%f 0.0 %d %d %f,%f ' % (rm, rm, large, sweep, xc + rm*math.cos((a1+180.0)*math.pi/180.0), yc + rm*math.sin((a1+180.0)*math.pi/180.0))
+                            path += 'A %f,%f 0.0 %d %d %f,%f ' % (rm, rm, large, sweep, xc + rm*math.cos(a1*math.pi/180.0), yc + rm*math.sin(a1*math.pi/180.0))
+                        i40 += 1
+                        i72 += 1
+                    elif vals[groups['72']][i72] == 1:      # line
+                        path += 'L %f,%f ' % (scale*(vals[groups['11']][i11] - xmin), -scale*(vals[groups['21']][i11] - ymax))
+                        i11 += 1
+                        i72 += 1
+                    elif vals[groups['72']][i72] == 0:      # polyline
+                        if j > 0:
+                            path += 'L %f,%f ' % (vals[groups['10']][i10], vals[groups['20']][i10])
+                        if j == vals[groups['93']][i] - 1:
+                            i72 += 1
+                    i10 += 1
+                path += "z "
+            style = simplestyle.formatStyle({'fill': '%s' % color})
+            attribs = {'d': path, 'style': style}
+            inkex.etree.SubElement(layer, 'path', attribs)
+
 def generate_ellipse(xc, yc, xm, ym, w, a1, a2):
     rm = math.sqrt(xm*xm + ym*ym)
     a = math.atan(ym/xm)
@@ -175,8 +226,8 @@ def get_group(group):
 
 #   define DXF Entities and specify which Group Codes to monitor
 
-entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'ENDSEC': ''}
-groups = {'1': 0, '8': 1, '10': 2, '11': 3, '20': 4, '21': 5, '40': 6, '41': 7, '42': 8, '50': 9, '51': 10, '62': 11, '70': 12, '370': 13}
+entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'ENDSEC': ''}
+groups = {'1': 0, '8': 1, '10': 2, '11': 3, '20': 4, '21': 5, '40': 6, '41': 7, '42': 8, '50': 9, '51': 10, '62': 11, '70': 12, '72': 13, '73': 14, '93': 15, '370': 16}
 colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '#0000FF',
             6: '#FF00FF',   8: '#414141',   9: '#808080',  30: '#FF7F00',
           250: '#333333', 251: '#505050', 252: '#696969', 253: '#828282', 254: '#BEBEBE', 255: '#FFFFFF'}
@@ -217,8 +268,12 @@ while line[0] and line[1] != 'ENDSEC':
         seqs.append(line[0])                        # list of group codes
         if line[0] == '1' or line[0] == '8':        # text value
             val = line[1].replace('\~', ' ')
+            val = inkex.re.sub( '\\\\A.*;', '', val)
+            val = inkex.re.sub( '\\\\H.*;', '', val)
+            val = inkex.re.sub( '\\\\S.*;', '', val)
+            val = inkex.re.sub( '\\\\W.*;', '', val)
             val = unicode(val, "iso-8859-1")
-        elif line[0] == '62' or line[0] == '70':    # unscaled integer value
+        elif line[0] == '62' or line[0] == '70' or line[0] == '93':
             val = int(line[1])
         elif line[0] == '10':                       # scaled float x value
             val = scale*(float(line[1]) - xmin)
@@ -242,13 +297,13 @@ while line[0] and line[1] != 'ENDSEC':
             w = 0.5                                 # default lineweight for POINT
             if vals[groups['370']]:                 # Common Lineweight
                 if vals[groups['370']][0] > 0:
-                    w = scale*vals[groups['370']][0]/100.0
+                    w = 90.0/25.4*vals[groups['370']][0]/100.0
                     if w < 0.5:
                         w = 0.5
                     style = simplestyle.formatStyle({'stroke': '%s' % color, 'fill': 'none', 'stroke-width': '%.1f' % w})
             entities[entity]()
         entity = line[1]
-        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
         seqs = []
 
 doc.write(inkex.sys.stdout)
