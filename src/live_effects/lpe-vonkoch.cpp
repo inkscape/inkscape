@@ -271,6 +271,8 @@ LPEVonKoch::doBeforeEffect (SPLPEItem *lpeitem)
 void
 LPEVonKoch::resetDefaults(SPItem * item)
 {
+    Effect::resetDefaults(item);
+
     using namespace Geom;
     original_bbox(SP_LPE_ITEM(item));
 

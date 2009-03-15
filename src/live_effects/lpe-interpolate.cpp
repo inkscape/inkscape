@@ -95,6 +95,8 @@ LPEInterpolate::doEffect_path (Geom::PathVector const & path_in)
 void
 LPEInterpolate::resetDefaults(SPItem * item)
 {
+    Effect::resetDefaults(item);
+
     if (!SP_IS_PATH(item))
         return;
 

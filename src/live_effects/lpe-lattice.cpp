@@ -183,6 +183,8 @@ LPELattice::doBeforeEffect (SPLPEItem *lpeitem)
 void
 LPELattice::resetDefaults(SPItem * item)
 {
+    Effect::resetDefaults(item);
+
     original_bbox(SP_LPE_ITEM(item), false);
     
     // place the 16 control points

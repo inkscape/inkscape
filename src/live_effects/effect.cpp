@@ -647,7 +647,11 @@ Effect::editNextParamOncanvas(SPItem * item, SPDesktop * desktop)
 void
 Effect::resetDefaults(SPItem * /*item*/)
 {
-    // do nothing for simple effects
+    std::vector<Inkscape::LivePathEffect::Parameter *>::iterator p;
+    for (p = param_vector.begin(); p != param_vector.end(); ++p) {
+        (*p)->param_set_default();
+        (*p)->write_to_SVG();
+    }
 }
 
 void

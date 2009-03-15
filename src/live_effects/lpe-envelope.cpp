@@ -220,6 +220,8 @@ LPEEnvelope::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
 void
 LPEEnvelope::resetDefaults(SPItem * item)
 {
+    Effect::resetDefaults(item);
+
     original_bbox(SP_LPE_ITEM(item));
 
     Geom::Point Up_Left(boundingbox_X.min(), boundingbox_Y.min());

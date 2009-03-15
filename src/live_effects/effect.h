@@ -85,6 +85,9 @@ public:
 
     virtual Gtk::Widget * newWidget(Gtk::Tooltips * tooltips);
 
+    /**
+     * Sets all parameters to their default values and writes them to SVG.
+     */
     virtual void resetDefaults(SPItem * item);
 
     virtual void setup_nodepath(Inkscape::NodePath::Path *np);

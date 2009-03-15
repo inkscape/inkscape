@@ -124,6 +124,8 @@ LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
 void
 LPEBendPath::resetDefaults(SPItem * item)
 {
+    Effect::resetDefaults(item);
+
     original_bbox(SP_LPE_ITEM(item));
 
     Geom::Point start(boundingbox_X.min(), (boundingbox_Y.max()+boundingbox_Y.min())/2);

@@ -153,6 +153,8 @@ LPECurveStitch::doEffect_path (std::vector<Geom::Path> const & path_in)
 void
 LPECurveStitch::resetDefaults(SPItem * item)
 {
+    Effect::resetDefaults(item);
+
     if (!SP_IS_PATH(item)) return;
 
     using namespace Geom;
