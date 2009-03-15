@@ -98,14 +98,14 @@ KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 }
 
 Geom::Point
-KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::ConstraintLine const &constraint)
+KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::ConstraintLine const &constraint, bool const snap_projection)
 {
     Geom::Matrix const i2d (sp_item_i2d_affine(item));
     Geom::Point s = p * i2d;
     Inkscape::Snapper::ConstraintLine transformed_constraint = Inkscape::Snapper::ConstraintLine(constraint.getPoint() * i2d, (constraint.getPoint() + constraint.getDirection()) * i2d - constraint.getPoint() * i2d);
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop, true, item);
-    m.constrainedSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, s, Inkscape::SNAPSOURCE_HANDLE, transformed_constraint);
+    m.constrainedSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, s, Inkscape::SNAPSOURCE_HANDLE, transformed_constraint, snap_projection);
     return s * i2d.inverse();
 }
 

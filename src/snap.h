@@ -86,6 +86,7 @@ public:
 									Geom::Point &p,
 									Inkscape::SnapSourceType const source_type,
 									Inkscape::Snapper::ConstraintLine const &constraint,
+									bool snap_projection, //try snapping the projection of p onto the constraint line, not p itself
 									bool first_point = true,
 									Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
@@ -93,6 +94,7 @@ public:
 										   Geom::Point const &p,
 										   Inkscape::SnapSourceType const &source_type,
 										   Inkscape::Snapper::ConstraintLine const &constraint,
+										   bool const snap_projection,
                                            bool first_point = true,
                                            Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 

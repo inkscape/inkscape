@@ -86,6 +86,12 @@ public:
             _has_point = true;
         }
 
+        Geom::Point projection(Geom::Point const &p) const { // returns the projection of p on this constraintline
+        	Geom::Point const p1_on_cl = _has_point ? _point : p;
+			Geom::Point const p2_on_cl = p1_on_cl + _direction;
+        	return Geom::projection(p, Geom::Line(p1_on_cl, p2_on_cl));
+        }
+
     private:
 
         bool _has_point;

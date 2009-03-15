@@ -141,7 +141,7 @@ RectKnotHolderEntityRX::knot_set(Geom::Point const &p, Geom::Point const &/*orig
     //In general we cannot just snap this radius to an arbitrary point, as we have only a single
     //degree of freedom. For snapping to an arbitrary point we need two DOF. If we're going to snap
     //the radius then we should have a constrained snap. snap_knot_position() is unconstrained
-    Geom::Point const s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed), Geom::Point(-1, 0)));
+    Geom::Point const s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed), Geom::Point(-1, 0)), false);
 
     if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
@@ -191,7 +191,7 @@ RectKnotHolderEntityRY::knot_set(Geom::Point const &p, Geom::Point const &/*orig
     //In general we cannot just snap this radius to an arbitrary point, as we have only a single
     //degree of freedom. For snapping to an arbitrary point we need two DOF. If we're going to snap
     //the radius then we should have a constrained snap. snap_knot_position() is unconstrained
-    Geom::Point const s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed), Geom::Point(0, 1)));
+    Geom::Point const s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(Geom::Point(rect->x.computed + rect->width.computed, rect->y.computed), Geom::Point(0, 1)), false);
 
     if (state & GDK_CONTROL_MASK) { // When holding control then rx will be kept equal to ry,
     	                            // resulting in a perfect circle (and not an ellipse)
@@ -259,7 +259,8 @@ void
 RectKnotHolderEntityWH::set_internal(Geom::Point const &p, Geom::Point const &origin, guint state)
 {
     SPRect *rect = SP_RECT(item);
-    Geom::Point const s = snap_knot_position(p);
+
+    Geom::Point s = p;
 
     if (state & GDK_CONTROL_MASK) {
         // original width/height when drag started
@@ -267,41 +268,56 @@ RectKnotHolderEntityWH::set_internal(Geom::Point const &p, Geom::Point const &or
         gdouble const h_orig = (origin[Geom::Y] - rect->y.computed);
 
         //original ratio
-        gdouble const ratio = (w_orig / h_orig);
+        gdouble ratio = (w_orig / h_orig);
 
         // mouse displacement since drag started
-        gdouble const minx = s[Geom::X] - origin[Geom::X];
-        gdouble const miny = s[Geom::Y] - origin[Geom::Y];
+        gdouble minx = p[Geom::X] - origin[Geom::X];
+        gdouble miny = p[Geom::Y] - origin[Geom::Y];
+
+        Geom::Point p_handle(rect->x.computed + rect->width.computed, rect->y.computed + rect->height.computed);
 
         if (fabs(minx) > fabs(miny)) {
-
-            // snap to horizontal or diagonal
-            rect->width.computed = MAX(w_orig + minx, 0);
+        	// snap to horizontal or diagonal
             if (minx != 0 && fabs(miny/minx) > 0.5 * 1/ratio && (SGN(minx) == SGN(miny))) {
                 // closer to the diagonal and in same-sign quarters, change both using ratio
-                rect->height.computed = MAX(h_orig + minx / ratio, 0);
+            	s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(p_handle, Geom::Point(-ratio, -1)), true);
+				minx = s[Geom::X] - origin[Geom::X];
+				miny = s[Geom::Y] - origin[Geom::Y];
+				rect->height.computed = MAX(h_orig + minx / ratio, 0);
             } else {
                 // closer to the horizontal, change only width, height is h_orig
-                rect->height.computed = MAX(h_orig, 0);
+            	s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(p_handle, Geom::Point(-1, 0)), true);
+				minx = s[Geom::X] - origin[Geom::X];
+				miny = s[Geom::Y] - origin[Geom::Y];
+				rect->height.computed = MAX(h_orig, 0);
             }
+            rect->width.computed = MAX(w_orig + minx, 0);
 
         } else {
             // snap to vertical or diagonal
-            rect->height.computed = MAX(h_orig + miny, 0);
             if (miny != 0 && fabs(minx/miny) > 0.5 * ratio && (SGN(minx) == SGN(miny))) {
                 // closer to the diagonal and in same-sign quarters, change both using ratio
-                rect->width.computed = MAX(w_orig + miny * ratio, 0);
+            	s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(p_handle, Geom::Point(-ratio, -1)), true);
+				minx = s[Geom::X] - origin[Geom::X];
+				miny = s[Geom::Y] - origin[Geom::Y];
+		    	rect->width.computed = MAX(w_orig + miny * ratio, 0);
             } else {
                 // closer to the vertical, change only height, width is w_orig
-                rect->width.computed = MAX(w_orig, 0);
+            	s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(p_handle, Geom::Point(0, -1)), true);
+				minx = s[Geom::X] - origin[Geom::X];
+				miny = s[Geom::Y] - origin[Geom::Y];
+				rect->width.computed = MAX(w_orig, 0);
             }
+            rect->height.computed = MAX(h_orig + miny, 0);
+
         }
 
         rect->width._set = rect->height._set = true;
 
     } else {
         // move freely
-        rect->width.computed = MAX(s[Geom::X] - rect->x.computed, 0);
+    	s = snap_knot_position(p);
+    	rect->width.computed = MAX(s[Geom::X] - rect->x.computed, 0);
         rect->height.computed = MAX(s[Geom::Y] - rect->y.computed, 0);
         rect->width._set = rect->height._set = true;
     }
@@ -339,53 +355,66 @@ RectKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &origin
     gdouble w_orig = opposite_x - origin[Geom::X];
     gdouble h_orig = opposite_y - origin[Geom::Y];
 
-    Geom::Point const s = snap_knot_position(p);
+    Geom::Point s = p;
+    Geom::Point p_handle(rect->x.computed, rect->y.computed);
 
     // mouse displacement since drag started
-    gdouble minx = s[Geom::X] - origin[Geom::X];
-    gdouble miny = s[Geom::Y] - origin[Geom::Y];
+    gdouble minx = p[Geom::X] - origin[Geom::X];
+    gdouble miny = p[Geom::Y] - origin[Geom::Y];
 
     if (state & GDK_CONTROL_MASK) {
         //original ratio
         gdouble ratio = (w_orig / h_orig);
 
         if (fabs(minx) > fabs(miny)) {
-
-            // snap to horizontal or diagonal
-            rect->x.computed = MIN(s[Geom::X], opposite_x);
-            rect->width.computed = MAX(w_orig - minx, 0);
+        	// snap to horizontal or diagonal
             if (minx != 0 && fabs(miny/minx) > 0.5 * 1/ratio && (SGN(minx) == SGN(miny))) {
                 // closer to the diagonal and in same-sign quarters, change both using ratio
-                rect->y.computed = MIN(origin[Geom::Y] + minx / ratio, opposite_y);
+            	s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(p_handle, Geom::Point(-ratio, -1)), true);
+				minx = s[Geom::X] - origin[Geom::X];
+				miny = s[Geom::Y] - origin[Geom::Y];
+            	rect->y.computed = MIN(origin[Geom::Y] + minx / ratio, opposite_y);
                 rect->height.computed = MAX(h_orig - minx / ratio, 0);
             } else {
                 // closer to the horizontal, change only width, height is h_orig
-                rect->y.computed = MIN(origin[Geom::Y], opposite_y);
+            	s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(p_handle, Geom::Point(-1, 0)), true);
+				minx = s[Geom::X] - origin[Geom::X];
+				miny = s[Geom::Y] - origin[Geom::Y];
+            	rect->y.computed = MIN(origin[Geom::Y], opposite_y);
                 rect->height.computed = MAX(h_orig, 0);
             }
-
+            rect->x.computed = MIN(s[Geom::X], opposite_x);
+            rect->width.computed = MAX(w_orig - minx, 0);
         } else {
-
             // snap to vertical or diagonal
-            rect->y.computed = MIN(s[Geom::Y], opposite_y);
-            rect->height.computed = MAX(h_orig - miny, 0);
-            if (miny != 0 && fabs(minx/miny) > 0.5 *ratio && (SGN(minx) == SGN(miny))) {
+        	if (miny != 0 && fabs(minx/miny) > 0.5 *ratio && (SGN(minx) == SGN(miny))) {
                 // closer to the diagonal and in same-sign quarters, change both using ratio
-                rect->x.computed = MIN(origin[Geom::X] + miny * ratio, opposite_x);
+            	s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(p_handle, Geom::Point(-ratio, -1)), true);
+				minx = s[Geom::X] - origin[Geom::X];
+				miny = s[Geom::Y] - origin[Geom::Y];
+				rect->x.computed = MIN(origin[Geom::X] + miny * ratio, opposite_x);
                 rect->width.computed = MAX(w_orig - miny * ratio, 0);
             } else {
                 // closer to the vertical, change only height, width is w_orig
-                rect->x.computed = MIN(origin[Geom::X], opposite_x);
+            	s = snap_knot_position_constrained(p, Inkscape::Snapper::ConstraintLine(p_handle, Geom::Point(0, -1)), true);
+				minx = s[Geom::X] - origin[Geom::X];
+				miny = s[Geom::Y] - origin[Geom::Y];
+				rect->x.computed = MIN(origin[Geom::X], opposite_x);
                 rect->width.computed = MAX(w_orig, 0);
             }
-
+            rect->y.computed = MIN(s[Geom::Y], opposite_y);
+			rect->height.computed = MAX(h_orig - miny, 0);
         }
 
         rect->width._set = rect->height._set = rect->x._set = rect->y._set = true;
 
     } else {
         // move freely
-        rect->x.computed = MIN(s[Geom::X], opposite_x);
+    	s = snap_knot_position(p);
+    	minx = s[Geom::X] - origin[Geom::X];
+		miny = s[Geom::Y] - origin[Geom::Y];
+
+    	rect->x.computed = MIN(s[Geom::X], opposite_x);
         rect->width.computed = MAX(w_orig - minx, 0);
         rect->y.computed = MIN(s[Geom::Y], opposite_y);
         rect->height.computed = MAX(h_orig - miny, 0);

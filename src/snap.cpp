@@ -264,10 +264,11 @@ void SnapManager::constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointTyp
 													Geom::Point &p,
 													Inkscape::SnapSourceType const source_type,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
+                                                    bool const snap_projection,
                                                     bool first_point,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
-    Inkscape::SnappedPoint const s = constrainedSnap(point_type, p, source_type, constraint, first_point, bbox_to_snap);
+    Inkscape::SnappedPoint const s = constrainedSnap(point_type, p, source_type, constraint, snap_projection, first_point, bbox_to_snap);
     s.getPoint(p);
 }
 
@@ -288,6 +289,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
 													Geom::Point const &p,
 													Inkscape::SnapSourceType const &source_type,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
+                                                    bool snap_projection,
                                                     bool first_point,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
@@ -310,10 +312,12 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
         items_to_ignore = _items_to_ignore;
     }
 
+    Geom::Point pp = constraint.projection(p);
+
     SnappedConstraints sc;
     SnapperList const snappers = getSnappers();
     for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        (*i)->constrainedSnap(sc, point_type, p, source_type, first_point, bbox_to_snap, constraint, items_to_ignore);
+        (*i)->constrainedSnap(sc, point_type, pp, source_type, first_point, bbox_to_snap, constraint, items_to_ignore);
     }
 
     if (_item_to_ignore) {
@@ -456,7 +460,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             if (transformation_type == SCALE && !uniform) {
                 g_warning("Non-uniform constrained scaling is not supported!");
             }
-            snapped_point = constrainedSnap(type, (*j).first, static_cast<Inkscape::SnapSourceType>((*j).second), dedicated_constraint, i == points.begin(), bbox);
+            snapped_point = constrainedSnap(type, (*j).first, static_cast<Inkscape::SnapSourceType>((*j).second), dedicated_constraint, false, i == points.begin(), bbox);
         } else {
             bool const c1 = fabs(b[Geom::X]) < 1e-6;
             bool const c2 = fabs(b[Geom::Y]) < 1e-6;
@@ -465,7 +469,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
                 // move in that specific direction; therefore it should only snap in that direction, otherwise
                 // we will get snapped points with an invalid transformation
                 dedicated_constraint = Inkscape::Snapper::ConstraintLine(origin, component_vectors[c1]);
-                snapped_point = constrainedSnap(type, (*j).first, static_cast<Inkscape::SnapSourceType>((*j).second), dedicated_constraint, i == points.begin(), bbox);
+                snapped_point = constrainedSnap(type, (*j).first, static_cast<Inkscape::SnapSourceType>((*j).second), dedicated_constraint, false, i == points.begin(), bbox);
             } else {
                 snapped_point = freeSnap(type, (*j).first, static_cast<Inkscape::SnapSourceType>((*j).second), i == points.begin(), bbox);
             }

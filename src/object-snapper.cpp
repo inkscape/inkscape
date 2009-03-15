@@ -548,13 +548,10 @@ void Inkscape::ObjectSnapper::_snapPathsConstrained(SnappedConstraints &sc,
         direction_vector = Geom::unit_vector(direction_vector);
     }
 
-    Geom::Point const p1_on_cl = c.hasPoint() ? c.getPoint() : p;
-    Geom::Point const p2_on_cl = p1_on_cl + direction_vector;
-
     // The intersection point of the constraint line with any path,
     // must lie within two points on the constraintline: p_min_on_cl and p_max_on_cl
     // The distance between those points is twice the snapping tolerance
-    Geom::Point const p_proj_on_cl = Geom::projection(p, Geom::Line(p1_on_cl, p2_on_cl));
+    Geom::Point const p_proj_on_cl = c.projection(p);
     Geom::Point const p_min_on_cl = _snapmanager->getDesktop()->dt2doc(p_proj_on_cl - getSnapperTolerance() * direction_vector);
     Geom::Point const p_max_on_cl = _snapmanager->getDesktop()->dt2doc(p_proj_on_cl + getSnapperTolerance() * direction_vector);
 
