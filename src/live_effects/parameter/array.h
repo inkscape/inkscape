@@ -33,7 +33,7 @@ public:
                 Inkscape::UI::Widget::Registry* wr,
                 Effect* effect,
                 size_t n = 0 )
-        : Parameter(label, tip, key, wr, effect), _vector(n)
+        : Parameter(label, tip, key, wr, effect), _vector(n), _default_size(n)
     {
 
     }
@@ -74,7 +74,7 @@ public:
     }
 
     void param_set_default() {
-        param_setValue( std::vector<StorageType>() );
+        param_setValue( std::vector<StorageType>(_default_size) );
     }
 
     void param_set_and_write_new_value(std::vector<StorageType> const &new_vector) {
@@ -90,6 +90,7 @@ private:
     ArrayParam& operator=(const ArrayParam&);
 
     std::vector<StorageType> _vector;
+    size_t _default_size;
 
     void writesvg(SVGOStringStream &str, std::vector<StorageType> const &vector) const {
         for (unsigned int i = 0; i < vector.size(); ++i) {
