@@ -88,7 +88,6 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {CIRCLE_WITH_RADIUS,    N_("Circle (by center and radius)"),   "circle_with_radius"},
     {CIRCLE_3PTS,           N_("Circle by 3 points"),      "circle_3pts"},
     {DYNASTROKE,            N_("Dynamic stroke"),          "dynastroke"},
-    {ENVELOPE,              N_("Envelope Deformation"),    "envelope"},
     {ROUGH_HATCHES,         N_("Hatches (rough)"),         "rough_hatches"},
     {INTERPOLATE,           N_("Interpolate Sub-Paths"),   "interpolate"},
     {LATTICE,               N_("Lattice Deformation"),     "lattice"},
@@ -115,6 +114,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {KNOT,                  N_("Knot"),                    "knot"},
     {CONSTRUCT_GRID,        N_("Construct grid"),          "construct_grid"},
     {SPIRO,                 N_("Spiro spline"),            "spiro"},
+    {ENVELOPE,              N_("Envelope Deformation"),    "envelope"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
