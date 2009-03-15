@@ -1612,5 +1612,22 @@
 <feGaussianBlur id="feGaussianBlur3022" stdDeviation="1" result="result1" />
 <feComposite id="feComposite3024" in="SourceGraphic" operator="arithmetic" result="result2" k1="0.40000000000000002" k3="0.80000000000000004" k2="0" />
 </filter>
+<filter x="-0.25" width="1.5" y="-0.25" height="1.5" id="Cartoon0" inkscape:menu="Imitations" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:label="Cartoon">
+<feGaussianBlur id="feGaussianBlur3821" result="result8" stdDeviation="7" />
+<feComposite k3="0" k1="0" k2="0" id="feComposite3827" in="result8" operator="xor" result="result6" in2="result8" />
+<feDisplacementMap id="feDisplacementMap3829" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in2="result6" in="SourceGraphic" />
+<feComposite k2="0" k3="0" k1="1" in="result4" id="feComposite3831" operator="arithmetic" result="result2" in2="SourceGraphic" />
+<feComposite id="feComposite3833" in2="SourceGraphic" operator="in" in="result2" result="fbSourceGraphic" />
+</filter>
+<filter inkscape:label="Flex metal" inkscape:menu="Materials" inkscape:menu-tooltip="Bright flexible and colorizable metal material" id="Flexmet0" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<feGaussianBlur stdDeviation="5" result="result8" id="feGaussianBlur6016" />
+<feTurbulence seed="25" result="result7" type="turbulence" numOctaves="1" baseFrequency="0.025000000000000001" id="feTurbulence6018" />
+<feColorMatrix result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 1 0 0 1 0 " id="feColorMatrix6020" />
+<feComposite in2="result8" result="result6" operator="xor" in="result8" id="feComposite6022" k2="0" k1="0" k3="0" />
+<feDisplacementMap in="result5" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="120" result="result4" id="feDisplacementMap6024" />
+<feComposite in2="result4" result="result2" operator="arithmetic" id="feComposite6026" in="SourceGraphic" k1="1" k3="1" k2="0.69999999999999996" />
+<feComposite result="fbSourceGraphic" in="result2" operator="in" in2="SourceGraphic" id="feComposite6028" />
+<feBlend blend="normal" id="feBlend6146" mode="multiply" />
+</filter>
 </defs>
 </svg>
