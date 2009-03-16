@@ -185,7 +185,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
 
 
         /* Style frame */
-        f = gtk_frame_new(_("Style"));
+        f = gtk_frame_new(Q_("fontselector|Style"));
         gtk_widget_show(f);
         gtk_box_pack_start(GTK_BOX (fsel), f, TRUE, TRUE, 0);
 
