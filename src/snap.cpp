@@ -133,10 +133,10 @@ bool SnapManager::gridSnapperMightSnap() const
  */
 
 void SnapManager::freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
-											 Geom::Point &p,
-											 Inkscape::SnapSourceType const source_type,
-											 bool first_point,
-                                             Geom::OptRect const &bbox_to_snap) const
+                                      Geom::Point &p,
+                                      Inkscape::SnapSourceType const source_type,
+                                      bool first_point,
+                                      Geom::OptRect const &bbox_to_snap) const
 {
     Inkscape::SnappedPoint const s = freeSnap(point_type, p, source_type, first_point, bbox_to_snap);
     s.getPoint(p);
@@ -155,17 +155,17 @@ void SnapManager::freeSnapReturnByRef(Inkscape::SnapPreferences::PointType point
  */
 
 Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapPreferences::PointType point_type,
-											 Geom::Point const &p,
-											 Inkscape::SnapSourceType const &source_type,
-											 bool first_point,
+                                             Geom::Point const &p,
+                                             Inkscape::SnapSourceType const &source_type,
+                                             bool first_point,
                                              Geom::OptRect const &bbox_to_snap) const
 {
-	if (_desktop->canvas->context_snap_delay_active == false) {
-		g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
-		// When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
-	}
+    if (_desktop->canvas->context_snap_delay_active == false) {
+        g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
+        // When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
+    }
 
-	if (!someSnapperMightSnap()) {
+    if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, source_type, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
 
@@ -261,12 +261,12 @@ Geom::Point SnapManager::multipleOfGridPitch(Geom::Point const &t) const
  */
 
 void SnapManager::constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointType point_type,
-													Geom::Point &p,
-													Inkscape::SnapSourceType const source_type,
-                                                    Inkscape::Snapper::ConstraintLine const &constraint,
-                                                    bool const snap_projection,
-                                                    bool first_point,
-                                                    Geom::OptRect const &bbox_to_snap) const
+                                             Geom::Point &p,
+                                             Inkscape::SnapSourceType const source_type,
+                                             Inkscape::Snapper::ConstraintLine const &constraint,
+                                             bool const snap_projection,
+                                             bool first_point,
+                                             Geom::OptRect const &bbox_to_snap) const
 {
     Inkscape::SnappedPoint const s = constrainedSnap(point_type, p, source_type, constraint, snap_projection, first_point, bbox_to_snap);
     s.getPoint(p);
@@ -286,19 +286,19 @@ void SnapManager::constrainedSnapReturnByRef(Inkscape::SnapPreferences::PointTyp
  */
 
 Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::PointType point_type,
-													Geom::Point const &p,
-													Inkscape::SnapSourceType const &source_type,
+                                                    Geom::Point const &p,
+                                                    Inkscape::SnapSourceType const &source_type,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
                                                     bool snap_projection,
                                                     bool first_point,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
-	if (_desktop->canvas->context_snap_delay_active == false) {
-		g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
-		// When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
-	}
+    if (_desktop->canvas->context_snap_delay_active == false) {
+        g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
+        // When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
+    }
 
-	if (!someSnapperMightSnap()) {
+    if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, source_type, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
 
@@ -331,13 +331,13 @@ void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) con
 {
     // This method is used to snap a guide to nodes or to other guides, while dragging the guide around. Will not snap to grids!
 
-	if (_desktop->canvas->context_snap_delay_active == false) {
-		g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
-		// When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
-	}
+    if (_desktop->canvas->context_snap_delay_active == false) {
+        g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
+        // When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
+    }
 
     if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally()) {
-    	return;
+        return;
     }
 
     if (!(object.GuidesMightSnap() || snapprefs.getSnapToGuides())) {
@@ -347,12 +347,12 @@ void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) con
     // Snap to nodes
     SnappedConstraints sc;
     if (object.GuidesMightSnap()) {
-    	object.guideSnap(sc, p, guide_normal);
+        object.guideSnap(sc, p, guide_normal);
     }
 
     // Snap to guides
     if (snapprefs.getSnapToGuides()) {
-    	guide.freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, Inkscape::SNAPSOURCE_GUIDE, true, Geom::OptRect(), NULL, NULL);
+        guide.freeSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, Inkscape::SNAPSOURCE_GUIDE, true, Geom::OptRect(), NULL, NULL);
     }
 
     // We won't snap to grids, what's the use?
@@ -806,8 +806,8 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, Inkscape:
         // search for the closest snapped intersection of curves
         Inkscape::SnappedPoint closestCurvesIntersection;
         if (getClosestIntersectionCS(sc.curves, p, closestCurvesIntersection, _desktop->dt2doc())) {
-        	closestCurvesIntersection.setSource(source_type);
-        	sp_list.push_back(closestCurvesIntersection);
+            closestCurvesIntersection.setSource(source_type);
+            sp_list.push_back(closestCurvesIntersection);
         }
     }
 
@@ -833,16 +833,16 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, Inkscape:
         // search for the closest snapped intersection of grid lines
         Inkscape::SnappedPoint closestGridPoint;
         if (getClosestIntersectionSL(sc.grid_lines, closestGridPoint)) {
-        	closestGridPoint.setSource(source_type);
-        	closestGridPoint.setTarget(Inkscape::SNAPTARGET_GRID_INTERSECTION);
+            closestGridPoint.setSource(source_type);
+            closestGridPoint.setTarget(Inkscape::SNAPTARGET_GRID_INTERSECTION);
             sp_list.push_back(closestGridPoint);
         }
 
         // search for the closest snapped intersection of guide lines
         Inkscape::SnappedPoint closestGuidePoint;
         if (getClosestIntersectionSL(sc.guide_lines, closestGuidePoint)) {
-        	closestGuidePoint.setSource(source_type);
-        	closestGuidePoint.setTarget(Inkscape::SNAPTARGET_GUIDE_INTERSECTION);
+            closestGuidePoint.setSource(source_type);
+            closestGuidePoint.setTarget(Inkscape::SNAPTARGET_GUIDE_INTERSECTION);
             sp_list.push_back(closestGuidePoint);
         }
 
@@ -850,8 +850,8 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, Inkscape:
         if (snapprefs.getSnapIntersectionGG()) {
             Inkscape::SnappedPoint closestGridGuidePoint;
             if (getClosestIntersectionSL(sc.grid_lines, sc.guide_lines, closestGridGuidePoint)) {
-            	closestGridGuidePoint.setSource(source_type);
-            	closestGridGuidePoint.setTarget(Inkscape::SNAPTARGET_GRID_GUIDE_INTERSECTION);
+                closestGridGuidePoint.setSource(source_type);
+                closestGridGuidePoint.setTarget(Inkscape::SNAPTARGET_GRID_GUIDE_INTERSECTION);
                 sp_list.push_back(closestGridGuidePoint);
             }
         }
@@ -887,10 +887,10 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Geom::Point const &p, Inkscape:
 }
 
 void SnapManager::setup(SPDesktop const *desktop,
-		bool snapindicator,
-		SPItem const *item_to_ignore,
-		std::vector<std::pair<Geom::Point, int> > *unselected_nodes,
-		SPGuide *guide_to_ignore)
+                        bool snapindicator,
+                        SPItem const *item_to_ignore,
+                        std::vector<std::pair<Geom::Point, int> > *unselected_nodes,
+                        SPGuide *guide_to_ignore)
 {
     g_assert(desktop != NULL);
     _item_to_ignore = item_to_ignore;
@@ -902,10 +902,10 @@ void SnapManager::setup(SPDesktop const *desktop,
 }
 
 void SnapManager::setup(SPDesktop const *desktop,
-		bool snapindicator,
-		std::vector<SPItem const *> &items_to_ignore,
-		std::vector<std::pair<Geom::Point, int> > *unselected_nodes,
-		SPGuide *guide_to_ignore)
+                        bool snapindicator,
+                        std::vector<SPItem const *> &items_to_ignore,
+                        std::vector<std::pair<Geom::Point, int> > *unselected_nodes,
+                        SPGuide *guide_to_ignore)
 {
     g_assert(desktop != NULL);
     _item_to_ignore = NULL;
