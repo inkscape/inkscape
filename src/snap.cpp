@@ -289,7 +289,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
                                                     Geom::Point const &p,
                                                     Inkscape::SnapSourceType const &source_type,
                                                     Inkscape::Snapper::ConstraintLine const &constraint,
-                                                    bool snap_projection,
+                                                    bool /*snap_projection*/,
                                                     bool first_point,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
