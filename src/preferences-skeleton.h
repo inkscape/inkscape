@@ -223,6 +223,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"highlightoriginal\" value=\"1\" />"
 "    <group id=\"relinkclonesonduplicate\" value=\"0\" />"
 "    <group id=\"mapalt\" value=\"1\" />"
+"    <group id=\"trackalt\" value=\"0\" />"
 "    <group id=\"switchonextinput\" value=\"0\" />"
 "    <group id=\"useextinput\" value=\"1\" />"
 "    <group id=\"nudgedistance\" value=\"2\"/>\n"
