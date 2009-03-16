@@ -32,6 +32,9 @@ void inkscape_unref (void);
 guint inkscape_mapalt();
 void inkscape_mapalt(guint);
 
+guint inkscape_trackalt();
+void inkscape_trackalt(guint);
+
 /*
  * These are meant solely for desktop, document etc. implementations
  */

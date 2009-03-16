@@ -801,7 +801,7 @@ int sp_common_main( int argc, char const **argv, GSList **flDest )
 
 static void
 snooper(GdkEvent *event, gpointer /*data*/) {
-    if(inkscape_mapalt())  /* returns the map of the keyboard modifier to map to Alt, zero if no mapping */
+    if (inkscape_mapalt())  /* returns the map of the keyboard modifier to map to Alt, zero if no mapping */
     {
         GdkModifierType mapping=(GdkModifierType)inkscape_mapalt();
         switch (event->type) {
@@ -824,6 +824,56 @@ snooper(GdkEvent *event, gpointer /*data*/) {
             break;
         }
     }
+
+    if (inkscape_trackalt()) {
+        // MacOS X with X11 has some problem with the default
+        // xmodmapping.  A ~/.xmodmap solution does not work reliably due
+        // to the way we package our executable in a .app that can launch
+        // X11 or use an already-running X11.  The same problem has been
+        // reported on Linux but there is no .app/X11 to get in the way
+        // of ~/.xmodmap fixes.  So we make this a preference.
+        //
+        // For some reason, Gdk senses changes in Alt (Mod1) state for
+        // many message types, but not for keystrokes!  So this ugly hack
+        // tracks what the state of Alt-pressing is, and ensures
+        // GDK_MOD1_MASK is in the event->key.state as appropriate.
+        //
+        static gboolean altL_pressed = FALSE;
+        static gboolean altR_pressed = FALSE;
+        static gboolean alt_pressed = FALSE;
+        guint get_group0_keyval(GdkEventKey* event);
+        guint keyval = 0;
+        switch (event->type) {
+        case GDK_MOTION_NOTIFY:
+            alt_pressed = TRUE && (event->motion.state & GDK_MOD1_MASK);
+            break;
+        case GDK_BUTTON_PRESS:
+            alt_pressed = TRUE && (event->button.state & GDK_MOD1_MASK);
+            break;
+        case GDK_KEY_PRESS:
+            keyval = get_group0_keyval(&event->key);
+            if (keyval == GDK_Alt_L) altL_pressed = TRUE;
+            if (keyval == GDK_Alt_R) altR_pressed = TRUE;
+            alt_pressed = alt_pressed || altL_pressed || altR_pressed;
+            alt_pressed = alt_pressed || (event->button.state & GDK_MOD1_MASK);
+            if (alt_pressed)
+                event->key.state |= GDK_MOD1_MASK;
+            else
+                event->key.state &= ~GDK_MOD1_MASK;
+            break;
+        case GDK_KEY_RELEASE:
+            keyval = get_group0_keyval(&event->key);
+            if (keyval == GDK_Alt_L) altL_pressed = FALSE;
+            if (keyval == GDK_Alt_R) altR_pressed = FALSE;
+            if (!altL_pressed && !altR_pressed)
+                alt_pressed = FALSE;
+            break;
+        default:
+            break;
+        }
+        //printf("alt_pressed: %s\n", alt_pressed? "+" : "-");
+    }
+
     gtk_main_do_event (event);
 }
 

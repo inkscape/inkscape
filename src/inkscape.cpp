@@ -110,6 +110,7 @@ struct Inkscape::Application {
     gboolean use_gui;         // may want to consider a virtual function
                               // for overriding things like the warning dlg's
     guint mapalt;
+    guint trackalt;
 };
 
 struct Inkscape::ApplicationClass {
@@ -462,7 +463,8 @@ inkscape_init (SPObject * object)
     inkscape->menus = sp_repr_read_mem (_(menus_skeleton), MENUS_SKELETON_SIZE, NULL);
     inkscape->desktops = NULL;
     inkscape->dialogs_toggle = TRUE;
-    inkscape->mapalt=GDK_MOD1_MASK;
+    inkscape->mapalt = GDK_MOD1_MASK;
+    inkscape->trackalt = FALSE;
 }
 
 static void
@@ -519,6 +521,17 @@ void inkscape_mapalt(guint maskvalue)
         inkscape->mapalt=(GDK_MOD1_MASK << (maskvalue-1));
     }
 }
+
+guint
+inkscape_trackalt() {
+    return inkscape->trackalt;
+}
+
+void inkscape_trackalt(guint trackvalue)
+{
+	inkscape->trackalt = trackvalue;
+}
+
 
 static void
 inkscape_activate_desktop_private (Inkscape::Application */*inkscape*/, SPDesktop *desktop)
@@ -775,9 +788,10 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     }
 
     /* Check for global remapping of Alt key */
-    if(use_gui)
+    if (use_gui)
     {
         inkscape_mapalt(guint(prefs->getInt("/options/mapalt/value", 0)));
+        inkscape_trackalt(guint(prefs->getInt("/options/trackalt/value", 0)));
     }
 
     /* Initialize the extensions */
