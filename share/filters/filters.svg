@@ -1629,26 +1629,12 @@
 <feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" k3="0" k2="0" id="feComposite2862" />
 <feComposite result="fbSourceGraphic" in="result6" operator="in" in2="result2" id="feComposite2864" />
 </filter>
-<filter id="Simplcom0" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Comics" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:label="Simple comics">
-<feGaussianBlur id="feGaussianBlur2842" result="result8" stdDeviation="7" />
-<feComposite id="feComposite2844" k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" />
-<feDisplacementMap id="feDisplacementMap2846" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in2="result6" in="SourceGraphic" />
-<feComposite id="feComposite2848" k2="0" k3="0" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" />
-<feComposite id="feComposite2850" in2="result2" operator="in" in="SourceGraphic" result="fbSourceGraphic" />
-</filter>
 <filter inkscape:label="Bright comics" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:menu="Comics" height="1.5" y="-0.25" width="1.5" x="-0.25" id="Brightcom0">
 <feGaussianBlur stdDeviation="7" result="result8" id="feGaussianBlur2856-5" />
 <feComposite in2="result8" result="result6" operator="xor" in="result8" k2="0" k1="0" k3="0" id="feComposite2858-6" />
 <feDisplacementMap in="SourceGraphic" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" id="feDisplacementMap2860-1" />
 <feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" k3="0" k2="0" id="feComposite2862-1" />
 <feComposite result="fbSourceGraphic" in="result8" operator="in" in2="result2" id="feComposite2864-5" />
-</filter>
-<filter inkscape:label="Round comics" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:menu="Comics" height="1.5" y="-0.25" width="1.5" x="-0.25" id="Roundcom0">
-<feGaussianBlur stdDeviation="7" result="result8" id="feGaussianBlur2856-8" />
-<feComposite in2="SourceGraphic" result="result6" operator="xor" in="result8" k2="0" k1="0" k3="0" id="feComposite2858-5" />
-<feDisplacementMap in="SourceGraphic" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" id="feDisplacementMap2860-0" />
-<feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" k3="0" k2="0" id="feComposite2862-9" />
-<feComposite result="fbSourceGraphic" in="result8" operator="in" in2="result2" id="feComposite2864-6" />
 </filter>
 <filter inkscape:label="Smooth comics" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:menu="Comics" height="1.5" y="-0.25" width="1.5" x="-0.25" id="Smoothcom0">
 <feGaussianBlur stdDeviation="7" result="result8" id="feGaussianBlur2856-8-6" />
@@ -1663,6 +1649,46 @@
 <feDisplacementMap id="feDisplacementMap4492" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result8" />
 <feComposite id="feComposite4494" k2="0" k3="0" k1="1" in="result4" operator="arithmetic" result="result2" in2="result4" />
 <feComposite id="feComposite4496" in2="result8" operator="in" in="result2" result="fbSourceGraphic" />
+</filter>
+<filter id="Smoothcomb0" inkscape:label="Smooth comics B" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:menu="Comics" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<feGaussianBlur id="feGaussianBlur3192" stdDeviation="7" result="result8" />
+<feComposite id="feComposite3194" in2="result8" result="result6" operator="xor" in="result8" k2="0" k1="0" k3="0" />
+<feDisplacementMap id="feDisplacementMap3196" in="result8" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="75" result="result4" />
+<feComposite id="feComposite3198" in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" k3="0" k2="0" />
+</filter>
+<filter id="Simplcom0" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Comics" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:label="Simple comics">
+<feGaussianBlur id="feGaussianBlur3216" result="result8" stdDeviation="7" />
+<feComposite id="feComposite3218" k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" />
+<feDisplacementMap id="feDisplacementMap3220" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in2="result6" in="SourceGraphic" />
+<feComposite id="feComposite3222" k2="0" k3="0" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" />
+<feComposite id="feComposite3224" in2="result2" operator="in" in="SourceGraphic" result="fbSourceGraphic" />
+</filter>
+<filter x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Comics" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:label="Silk comics" id="Silkcom0">
+<feGaussianBlur result="result8" stdDeviation="7" id="feGaussianBlur2925" />
+<feComposite k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" id="feComposite2927" />
+<feDisplacementMap result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" id="feDisplacementMap2929" />
+<feComposite k2="0" k3="0" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" id="feComposite2931" />
+<feComposite in2="result2" operator="in" in="result8" result="fbSourceGraphic" id="feComposite2933" />
+</filter>
+<filter x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Comics" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:label="Silk comics B" id="Silkcomb0">
+<feGaussianBlur result="result8" stdDeviation="7" id="feGaussianBlur3072" />
+<feComposite k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" id="feComposite3074" />
+<feDisplacementMap result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" id="feDisplacementMap3076" />
+<feComposite k2="0" k3="0" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" id="feComposite3078" />
+<feComposite in2="result2" operator="in" in="result6" result="fbSourceGraphic" id="feComposite3080" />
+</filter>
+<filter id="Silhcom0" inkscape:label="Silhouette comics" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:menu="Comics" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<feGaussianBlur id="feGaussianBlur2956" stdDeviation="7" result="result8" />
+<feComposite id="feComposite2958" in2="result8" result="result6" operator="xor" in="result8" k2="0" k1="0" k3="0" />
+<feDisplacementMap id="feDisplacementMap2960" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="75" result="result4" in="result8" />
+<feComposite id="feComposite2962" in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" k3="0" k2="0" />
+<feComposite id="feComposite2964" result="fbSourceGraphic" in="result6" operator="in" in2="result2" />
+</filter>
+<filter x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Comics" inkscape:menu-tooltip="Imitation of black and white cartoon shading" inkscape:label="Round comics" id="Roundcom0">
+<feGaussianBlur result="result8" stdDeviation="7" id="feGaussianBlur3853" />
+<feComposite k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" id="feComposite3855" />
+<feDisplacementMap result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="SourceGraphic" id="feDisplacementMap3857" />
+<feComposite k2="0" k3="0" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" id="feComposite3859" />
 </filter>
 </defs>
 </svg>
