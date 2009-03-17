@@ -23,7 +23,7 @@ attribute easier.
 import inkex, cubicsuperpath, bezmisc, simplestyle
 import copy, math, re
 
-def parseTransform(transf,mat=[[1.0,0.0,0.0],[0.0,1.0,0.0]]):
+def parseTransform(transf,mat=[[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]):
     if transf=="" or transf==None:
         return(mat)
     stransf = transf.strip()
@@ -66,25 +66,25 @@ def parseTransform(transf,mat=[[1.0,0.0,0.0],[0.0,1.0,0.0]]):
 #-- matrix --
     if result.group(1)=="matrix":
         a11,a21,a12,a22,v1,v2=result.group(2).replace(',',' ').split()
-        matrix=[[float(a11),float(a12),float(v1)],[float(a21),float(a22),float(v2)]]
+        matrix=[[float(a11),float(a12),float(v1)], [float(a21),float(a22),float(v2)]]
 
     matrix=composeTransform(mat,matrix)
-    if result.end()<len(stransf):
-        return(parseTransform(stransf[result.end():],matrix))
+    if result.end() < len(stransf):
+        return(parseTransform(stransf[result.end():], matrix))
     else:
         return matrix
 
 def formatTransform(mat):
-    return("matrix(%f,%f,%f,%f,%f,%f)"%(mat[0][0],mat[1][0],mat[0][1],mat[1][1],mat[0][2],mat[1][2]))
+    return ("matrix(%f,%f,%f,%f,%f,%f)" % (mat[0][0], mat[1][0], mat[0][1], mat[1][1], mat[0][2], mat[1][2]))
 
 def composeTransform(M1,M2):
-    a11=M1[0][0]*M2[0][0]+M1[0][1]*M2[1][0]
-    a12=M1[0][0]*M2[0][1]+M1[0][1]*M2[1][1]
-    a21=M1[1][0]*M2[0][0]+M1[1][1]*M2[1][0]
-    a22=M1[1][0]*M2[0][1]+M1[1][1]*M2[1][1]
+    a11 = M1[0][0]*M2[0][0] + M1[0][1]*M2[1][0]
+    a12 = M1[0][0]*M2[0][1] + M1[0][1]*M2[1][1]
+    a21 = M1[1][0]*M2[0][0] + M1[1][1]*M2[1][0]
+    a22 = M1[1][0]*M2[0][1] + M1[1][1]*M2[1][1]
 
-    v1=M1[0][0]*M2[0][2]+M1[0][1]*M2[1][2]+M1[0][2]
-    v2=M1[1][0]*M2[0][2]+M1[1][1]*M2[1][2]+M1[1][2]
+    v1 = M1[0][0]*M2[0][2] + M1[0][1]*M2[1][2] + M1[0][2]
+    v2 = M1[1][0]*M2[0][2] + M1[1][1]*M2[1][2] + M1[1][2]
     return [[a11,a12,v1],[a21,a22,v2]]
 
 def applyTransformToNode(mat,node):
@@ -93,8 +93,8 @@ def applyTransformToNode(mat,node):
     node.set("transform", newtransf)
 
 def applyTransformToPoint(mat,pt):
-    x=mat[0][0]*pt[0]+mat[0][1]*pt[1]+mat[0][2]
-    y=mat[1][0]*pt[0]+mat[1][1]*pt[1]+mat[1][2]
+    x = mat[0][0]*pt[0] + mat[0][1]*pt[1] + mat[0][2]
+    y = mat[1][0]*pt[0] + mat[1][1]*pt[1] + mat[1][2]
     pt[0]=x
     pt[1]=y
 
@@ -106,7 +106,7 @@ def applyTransformToPath(mat,path):
 
 def fuseTransform(node):
     if node.get('d')==None:
-        #FIX ME: how do you raise errors?
+        #FIXME: how do you raise errors?
         raise AssertionError, 'can not fuse "transform" of elements that have no "d" attribute'
     t = node.get("transform")
     if t == None:
@@ -128,7 +128,7 @@ def boxunion(b1,b2):
     elif b2 is None:
         return b1    
     else:
-        return((min(b1[0],b2[0]),max(b1[1],b2[1]),min(b1[2],b2[2]),max(b1[3],b2[3])))
+        return((min(b1[0],b2[0]), max(b1[1],b2[1]), min(b1[2],b2[2]), max(b1[3],b2[3])))
 
 def roughBBox(path):
     xmin,xMax,ymin,yMax = path[0][0][0][0],path[0][0][0][0],path[0][0][0][1],path[0][0][0][1]
