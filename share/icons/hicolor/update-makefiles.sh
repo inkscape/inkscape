@@ -11,6 +11,8 @@ IFS=$'\0'
 for dir_size in *; do
 if test -d $dir_size; then
 
+SUBDIRS=''
+
 for dir in $dir_size/*; do
 if test -d $dir; then
 	ICONS_DATA=$(find $dir \( -name '*.svg' -o -name '*.png' \) -printf '\t%f \\\n' \
@@ -32,8 +34,21 @@ icons_DATA = \
 '$ICONS_DATA'
 
 EXTRA_DIST = $(icons_DATA)' > $dir/Makefile.am
+SUBDIRS="$SUBDIRS $CONTEXT"
 fi
 done
+
+if test $dir_size = 'scalable'; then EXTENSION='svg'; else EXTENSION='png'; fi
+
+echo \
+'SUBDIRS = '$SUBDIRS'
+
+size = '$dir_size'
+hicolorthemedir = $(datadir)/icons/hicolor
+inkscapeicondir = $(hicolorthemedir)/$(size)/apps
+
+inkscapeicon_DATA = inkscape.'$EXTENSION'
+EXTRA_DIST = $(inkscapeicon_DATA)' > $dir_size/Makefile.am
 
 fi
 done

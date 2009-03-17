@@ -1,4 +1,4 @@
-SUBDIRS = actions places status
+SUBDIRS =  actions places status
 
 size = scalable
 hicolorthemedir = $(datadir)/icons/hicolor

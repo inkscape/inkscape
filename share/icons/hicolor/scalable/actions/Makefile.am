@@ -12,14 +12,14 @@ icons_DATA = \
 	align-horizontal-center.svg \
 	align-horizontal-left.svg \
 	align-horizontal-left-to-anchor.svg \
-	align-horizontal-nodes.svg \
+	align-horizontal-node.svg \
 	align-horizontal-right.svg \
 	align-horizontal-right-to-anchor.svg \
 	align-vertical-baseline.svg \
 	align-vertical-bottom.svg \
 	align-vertical-bottom-to-anchor.svg \
 	align-vertical-center.svg \
-	align-vertical-nodes.svg \
+	align-vertical-node.svg \
 	align-vertical-top.svg \
 	align-vertical-top-to-anchor.svg \
 	bitmap-trace.svg \
@@ -27,7 +27,6 @@ icons_DATA = \
 	color-gradient.svg \
 	color-management.svg \
 	color-picker.svg \
-	color-remove.svg \
 	distribute-graph-directed.svg \
 	distribute-graph.svg \
 	distribute-horizontal-baseline.svg \
