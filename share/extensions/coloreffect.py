@@ -2,6 +2,7 @@
 '''
 Copyright (C) 2006 Jos Hirth, kaioa.com
 Copyright (C) 2007 Aaron C. Spike
+Copyright (C) 2009 Monash University
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,12 +18,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import sys, copy, optparse, simplestyle, inkex, copy
-
+import sys, copy, simplestyle, inkex
 import random
 
-color_props_fill=('fill:','stop-color:','flood-color:','lighting-color:')
-color_props_stroke=('stroke:',)
+color_props_fill = ('fill', 'stop-color', 'flood-color', 'lighting-color')
+color_props_stroke = ('stroke',)
 color_props = color_props_fill + color_props_stroke
 
 
@@ -42,19 +42,46 @@ class ColorEffect(inkex.Effect):
     self.changeStyle(node)
     for child in node:
       self.getAttribs(child)
-  
+
   def changeStyle(self,node):
+    for attr in color_props:
+        val = node.get(attr)
+        if val:
+            new_val = self.process_prop(val)
+            if new_val != val:
+                node.set(attr, new_val)
+
     if node.attrib.has_key('style'):
-      style=node.get('style') # fixme: this will break for presentation attributes!
-      if style!='':
-        #inkex.debug('old style:'+style)
-        styles=style.split(';')
-        for i in range(len(styles)):
-          for c in range(len(color_props)):
-            if styles[i].startswith(color_props[c]):
-              styles[i]=color_props[c]+self.process_prop(styles[i][len(color_props[c]):])
-        #inkex.debug('new style:'+';'.join(styles))
-        node.set('style',';'.join(styles))
+        # References for style attribute:
+        # http://www.w3.org/TR/SVG11/styling.html#StyleAttribute,
+        # http://www.w3.org/TR/CSS21/syndata.html
+        #
+        # The SVG spec is ambiguous as to how style attributes should be parsed.
+        # For example, it isn't clear whether semicolons are allowed to appear
+        # within strings or comments, or indeed whether comments are allowed to
+        # appear at all.
+        #
+        # The processing here is just something simple that should usually work,
+        # without trying too hard to get everything right.
+        # (Won't work for the pathalogical case that someone escapes a property
+        # name, probably does the wrong thing if colon or semicolon is used inside
+        # a comment or string value.)
+        style = node.get('style') # fixme: this will break for presentation attributes!
+        if style:
+            #inkex.debug('old style:'+style)
+            declarations = style.split(';')
+            for i,decl in enumerate(declarations):
+                parts = decl.split(':', 2)
+                if len(parts) == 2:
+                    (prop, val) = parts
+                    prop = prop.strip().lower()
+                    if prop in color_props:
+                        val = val.strip()
+                        new_val = self.process_prop(val)
+                        if new_val != val:
+                            declarations[i] = prop + ':' + new_val
+            #inkex.debug('new style:'+';'.join(declarations))
+            node.set('style', ';'.join(declarations))
 
   def process_prop(self,col):
     #debug('got:'+col)
@@ -160,3 +187,5 @@ class ColorEffect(inkex.Effect):
         rgb[1] = self.hue_2_rgb (v1, v2, h*6)
         rgb[2] = self.hue_2_rgb (v1, v2, h*6 - 2.0)
     return rgb
+
+# vi: set autoindent shiftwidth=2 tabstop=8 expandtab softtabstop=2 :

@@ -170,6 +170,7 @@ svgcolors={
     'yellow':'#ffff00',
     'yellowgreen':'#9acd32'
 }
+
 def parseStyle(s):
     """Create a dictionary from the value of an inline style attribute"""
     return dict([i.split(":") for i in s.split(";") if len(i)])
@@ -180,16 +181,18 @@ def isColor(c):
     """Determine if its a color we can use. If not, leave it unchanged."""
     if c.startswith('#') and (len(c)==4 or len(c)==7):
         return True
-    if c in svgcolors.keys():
+    if c.lower() in svgcolors.keys():
         return True
     #might be "none" or some undefined color constant or rgb()
     #however, rgb() shouldnt occur at this point
     return False
+
 def parseColor(c):
     """Creates a rgb int array"""
-    if c in svgcolors.keys():
-        c=svgcolors[c]
-    if c.startswith('#') and len(c)==4:
+    tmp = svgcolors.get(c.lower())
+    if tmp is not None:
+        c = tmp
+    elif c.startswith('#') and len(c)==4:
         c='#'+c[1:2]+c[1:2]+c[2:3]+c[2:3]+c[3:]+c[3:]
     elif c.startswith('rgb('):
         # remove the rgb(...) stuff
@@ -210,6 +213,7 @@ def parseColor(c):
     g=int(c[3:5],16)
     b=int(c[5:],16)
     return (r,g,b)
+
 def formatColoria(a):
     """int array to #rrggbb"""
     return '#%02x%02x%02x' % (a[0],a[1],a[2])
