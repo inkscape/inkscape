@@ -91,8 +91,13 @@ public:
     static SwatchesPanel& getInstance();
     virtual void setOrientation( Gtk::AnchorType how );
 
+    virtual void setDesktop( SPDesktop* desktop );
+
 protected:
     virtual void _handleAction( int setId, int itemId );
+    virtual void _handleGradientsChange();
+    virtual void _setDocument( SPDocument *document );
+    virtual void _rebuild();
 
 private:
     SwatchesPanel(SwatchesPanel const &); // no copy
@@ -103,6 +108,13 @@ private:
     PreviewHolder* _holder;
     ColorItem* _clear;
     ColorItem* _remove;
+    int _currentIndex;
+    SPDesktop*  _currentDesktop;
+    SPDocument* _currentDocument;
+    void* _ptr;
+
+    sigc::connection _documentConnection;
+    sigc::connection _resourceConnection;
 };
 
 } //namespace Dialogs

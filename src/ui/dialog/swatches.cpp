@@ -35,12 +35,16 @@
 #include "preferences.h"
 #include "sp-item.h"
 #include "svg/svg-color.h"
+#include "sp-gradient-fns.h"
+#include "sp-gradient.h"
+#include "sp-gradient-vector.h"
 #include "swatches.h"
 #include "widgets/eek-preview.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Dialogs {
+
 
 ColorItem::ColorItem(eek::ColorDef::ColorType type) :
     def(type),
@@ -284,10 +288,10 @@ static void dieDieDie( GtkObject *obj, gpointer user_data )
 void ColorItem::_dropDataIn( GtkWidget */*widget*/,
                              GdkDragContext */*drag_context*/,
                              gint /*x*/, gint /*y*/,
-                             GtkSelectionData *data,
-                             guint info,
+                             GtkSelectionData */*data*/,
+                             guint /*info*/,
                              guint /*event_time*/,
-                             gpointer user_data)
+                             gpointer /*user_data*/)
 {
 }
 
@@ -979,15 +983,30 @@ SwatchesPanel& SwatchesPanel::getInstance()
  */
 SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
     Inkscape::UI::Widget::Panel("", prefsPath, SP_VERB_DIALOG_SWATCHES, "", true),
-    _holder(0)
+    _holder(0),
+    _clear(0),
+    _remove(0),
+    _currentIndex(0),
+    _currentDesktop(0),
+    _currentDocument(0),
+    _ptr(0)
 {
     Gtk::RadioMenuItem* hotItem = 0;
     _holder = new PreviewHolder();
     _clear = new ColorItem( eek::ColorDef::CLEAR );
     _remove = new ColorItem( eek::ColorDef::NONE );
+    {
+        JustForNow *docPalette = new JustForNow();
+
+        docPalette->_name = "Auto";
+        possible.push_back(docPalette);
+
+        _ptr = docPalette;
+    }
     loadEmUp();
     if ( !possible.empty() ) {
         JustForNow* first = 0;
+        int index = 0;
         Glib::ustring targetName;
         if ( !_prefs_path.empty() ) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -998,24 +1017,19 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
                         first = *iter;
                         break;
                     }
+                    index++;
                 }
             }
         }
 
         if ( !first ) {
             first = possible.front();
+            _currentIndex = 0;
+        } else {
+            _currentIndex = index;
         }
 
-        if ( first->_prefWidth > 0 ) {
-            _holder->setColumnPref( first->_prefWidth );
-        }
-        _holder->freezeUpdates();
-        // TODO restore once 'clear' works _holder->addPreview(_clear);
-        _holder->addPreview(_remove);
-        for ( std::vector<ColorItem*>::iterator it = first->_colors.begin(); it != first->_colors.end(); it++ ) {
-            _holder->addPreview(*it);
-        }
-        _holder->thawUpdates();
+        _rebuild();
 
         Gtk::RadioMenuItem::Group groupOne;
 
@@ -1045,6 +1059,9 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
 
 SwatchesPanel::~SwatchesPanel()
 {
+    _documentConnection.disconnect();
+    _resourceConnection.disconnect();
+
     if ( _clear ) {
         delete _clear;
     }
@@ -1067,35 +1084,128 @@ void SwatchesPanel::setOrientation( Gtk::AnchorType how )
     }
 }
 
+void SwatchesPanel::setDesktop( SPDesktop* desktop )
+{
+    if ( desktop != _currentDesktop ) {
+        if ( _currentDesktop ) {
+            _documentConnection.disconnect();
+        }
+
+        _currentDesktop = desktop;
+
+        if ( desktop ) {
+            sigc::bound_mem_functor1<void, Inkscape::UI::Dialogs::SwatchesPanel, SPDocument*> first = sigc::mem_fun(*this, &SwatchesPanel::_setDocument);
+
+            sigc::slot<void, SPDocument*> base2 = first;
+
+            sigc::slot<void,SPDesktop*, SPDocument*> slot2 = sigc::hide<0>( base2 );
+            _documentConnection = desktop->connectDocumentReplaced( slot2 );
+
+            _setDocument( desktop->doc() );
+        } else {
+            _setDocument(0);
+        }
+    }
+}
+
+void SwatchesPanel::_setDocument( SPDocument *document )
+{
+    if ( document != _currentDocument ) {
+        if ( _currentDocument ) {
+            _resourceConnection.disconnect();
+        }
+        _currentDocument = document;
+        if ( _currentDocument ) {
+            _resourceConnection = sp_document_resources_changed_connect(document,
+                                                                        "gradient",
+                                                                        sigc::mem_fun(*this, &SwatchesPanel::_handleGradientsChange));
+        }
+
+        _handleGradientsChange();
+    }
+}
+
+void SwatchesPanel::_handleGradientsChange()
+{
+    std::vector<SPGradient*> newList;
+
+    const GSList *gradients = sp_document_get_resource_list(_currentDocument, "gradient");
+    for (const GSList *item = gradients; item; item = item->next) {
+        SPGradient* grad = SP_GRADIENT(item->data);
+        if ( grad->has_stops ) {
+            newList.push_back(SP_GRADIENT(item->data));
+        }
+    }
+
+    if ( _ptr ) {
+        JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
+        // TODO delete pointed to objects
+        docPalette->_colors.clear();
+        if ( !newList.empty() ) {
+            for ( std::vector<SPGradient*>::iterator it = newList.begin(); it != newList.end(); ++it )
+            {
+                if ( (*it)->vector.stops.size() == 2 ) {
+                    SPGradientStop first = (*it)->vector.stops[0];
+                    SPGradientStop second = (*it)->vector.stops[1];
+                    if ((first.offset <0.0001) && (static_cast<int>(second.offset * 100.0f) == 100)) {
+                        SPColor color = first.color;
+                        guint32 together = color.toRGBA32(0);
+                        Glib::ustring name((*it)->id);
+                        unsigned int r = SP_RGBA32_R_U(together);
+                        unsigned int g = SP_RGBA32_G_U(together);
+                        unsigned int b = SP_RGBA32_B_U(together);
+                        ColorItem* item = new ColorItem( r, g, b, name );
+                        docPalette->_colors.push_back(item);
+                    }
+                }
+            }
+        }
+        JustForNow* curr = possible[_currentIndex];
+        if (curr == docPalette) {
+            _rebuild();
+        }
+    }
+}
+
 void SwatchesPanel::_handleAction( int setId, int itemId )
 {
     switch( setId ) {
         case 3:
         {
             if ( itemId >= 0 && itemId < static_cast<int>(possible.size()) ) {
-                _holder->clear();
-                JustForNow* curr = possible[itemId];
+                _currentIndex = itemId;
 
                 if ( !_prefs_path.empty() ) {
                     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-                    prefs->setString(_prefs_path + "/palette", curr->_name);
+                    prefs->setString(_prefs_path + "/palette", possible[_currentIndex]->_name);
                 }
 
-                if ( curr->_prefWidth > 0 ) {
-                    _holder->setColumnPref( curr->_prefWidth );
-                }
-                _holder->freezeUpdates();
-                // TODO restore once 'clear' works _holder->addPreview(_clear);
-                _holder->addPreview(_remove);
-                for ( std::vector<ColorItem*>::iterator it = curr->_colors.begin(); it != curr->_colors.end(); it++ ) {
-                    _holder->addPreview(*it);
-                }
-                _holder->thawUpdates();
+                _rebuild();
             }
         }
         break;
     }
 }
+
+void SwatchesPanel::_rebuild()
+{
+    JustForNow* curr = possible[_currentIndex];
+    _holder->clear();
+
+    if ( curr->_prefWidth > 0 ) {
+        _holder->setColumnPref( curr->_prefWidth );
+    }
+    _holder->freezeUpdates();
+    // TODO restore once 'clear' works _holder->addPreview(_clear);
+    _holder->addPreview(_remove);
+    for ( std::vector<ColorItem*>::iterator it = curr->_colors.begin(); it != curr->_colors.end(); it++ ) {
+        _holder->addPreview(*it);
+    }
+    _holder->thawUpdates();
+}
+
+
+
 
 } //namespace Dialogs
 } //namespace UI

@@ -61,6 +61,8 @@ namespace Inkscape { namespace Widgets { class LayerSelector; } }
 
 namespace Inkscape { namespace UI { namespace Widget { class SelectedStyle; } } }
 
+namespace Inkscape { namespace UI { namespace Dialogs { class SwatchesPanel; } } }
+
 /// A GtkEventBox on an SPDesktop.
 struct SPDesktopWidget {
     SPViewWidget viewwidget;
@@ -80,7 +82,7 @@ struct SPDesktopWidget {
 
     GtkWidget *menubar, *statusbar;
 
-    GtkWidget *panels;
+    Inkscape::UI::Dialogs::SwatchesPanel *panels;
 
     GtkWidget *hscrollbar, *vscrollbar, *vscrollbar_box;
 

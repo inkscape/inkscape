@@ -314,10 +314,9 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     {
         using Inkscape::UI::Dialogs::SwatchesPanel;
 
-        SwatchesPanel* swatches = new SwatchesPanel("/embedded/swatches");
-        swatches->setOrientation( Gtk::ANCHOR_SOUTH );
-        dtw->panels = GTK_WIDGET(swatches->gobj());
-        gtk_box_pack_end( GTK_BOX( dtw->vbox ), dtw->panels, FALSE, TRUE, 0 );
+        dtw->panels = new SwatchesPanel("/embedded/swatches");
+        dtw->panels->setOrientation( Gtk::ANCHOR_SOUTH );
+        gtk_box_pack_end( GTK_BOX( dtw->vbox ), GTK_WIDGET(dtw->panels->gobj()), FALSE, TRUE, 0 );
     }
 
     hbox = gtk_hbox_new (FALSE, 0);
@@ -1244,9 +1243,9 @@ sp_desktop_widget_layout (SPDesktopWidget *dtw)
     }
 
     if (!prefs->getBool(pref_root + "panels/state", true)) {
-        gtk_widget_hide_all( dtw->panels );
+        gtk_widget_hide_all( GTK_WIDGET(dtw->panels->gobj()) );
     } else {
-        gtk_widget_show_all( dtw->panels );
+        gtk_widget_show_all( GTK_WIDGET(dtw->panels->gobj()) );
     }
 
     if (!prefs->getBool(pref_root + "scrollbars/state", true)) {
@@ -1361,6 +1360,8 @@ sp_desktop_widget_new (SPNamedView *namedview)
     sp_aux_toolbox_set_desktop (dtw->aux_toolbox, dtw->desktop);
     sp_commands_toolbox_set_desktop (dtw->commands_toolbox, dtw->desktop);
     sp_snap_toolbox_set_desktop (dtw->snap_toolbox, dtw->desktop);
+
+    dtw->panels->setDesktop( dtw->desktop );
 
     return SP_VIEW_WIDGET (dtw);
 }
