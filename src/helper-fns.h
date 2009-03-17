@@ -1,12 +1,12 @@
 #ifndef SEEN_HELPER_FNS_H
 #define SEEN_HELPER_FNS_H
 /** \file
- * 
+ *
  * Some helper functions
- * 
+ *
  * Authors:
  *   Felipe Corrêa da Silva Sanches <felipe.sanches@gmail.com>
- * 
+ *
  *
  * Copyright (C) 2006 Hugo Rodrigues
  *
@@ -22,17 +22,22 @@
 // can be more clear.
 #define HELPERFNS_NO_WARNING false
 
-/* Setting warning to false disables conversion error warnings from
+/* convert localized ascii representation to double
+ * the function can only be used to convert numbers as given by gui elements that use localized representation
+ * @param value ascii representation of the number
+ * @return the converted number
+ *
+ * Setting warning to false disables conversion error warnings from
  * this function. This can be useful in places, where the input type
  * is not known beforehand. For example, see sp_feColorMatrix_set in
  * sp-fecolormatrix.cpp */
 inline double helperfns_read_number(gchar const *value, bool warning = true) {
     if (!value) return 0;
     char *end;
-    double ret = g_ascii_strtod(value, &end);
+    double ret = g_strtod(value, &end);
     if (*end) {
         if (warning) {
-            g_warning("Unable to convert \"%s\" to number", value);
+            g_warning("helper-fns::helperfns_read_number() Unable to convert \"%s\" to number", value);
         }
         // We could leave this out, too. If strtod can't convert
         // anything, it will return zero.
@@ -54,19 +59,59 @@ inline bool helperfns_read_bool(gchar const *value, bool default_value){
     return default_value;
 }
 
+/* convert localized ascii representation to double
+ * the function can only be used to convert numbers as given by gui elements that use localized representation
+ * numbers are delimeted by space
+ * @param value ascii representation of the number
+ * @param size number of elements in string
+ * @return the vector of the converted numbers
+ */
 inline std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
         std::vector<gdouble> v(size, (gdouble) 0);
         std::istringstream is(value);
-        for(int i = 0; i < size && (is >> v[i]); i++){};
+        for(int i = 0; i < size; i++){
+        	std::string str;
+            is >> str;
+            char *end;
+
+            double ret = g_strtod(str.c_str(), &end);
+            if (*end) {
+                g_warning("helper-fns::helperfns_read_vector() Unable to convert \"%s\" to number", str.c_str());
+                // We could leave this out, too. If strtod can't convert
+                // anything, it will return zero.
+                ret = 0;
+            }
+            v[i] = ret;
+        };
         return v;
 }
 
+/* convert localized ascii representation to double
+ * the function can only be used to convert numbers as given by gui elements that use localized representation
+ * numbers are delimeted by space
+ * @param value ascii representation of the number
+ * @return the vector of the converted numbers
+ */
 inline std::vector<gdouble> helperfns_read_vector(const gchar* value){
         std::vector<gdouble> v;
         std::istringstream is(value);
         gdouble d;
-        while (is >> d){
+        std::string str;
+
+        is >> str;
+        while(str.size())
+        {
+            char *end;
+            double ret = g_strtod(str.c_str(), &end);
+            if (*end){
+                g_warning("helper-fns::helperfns_read_vector() Unable to convert \"%s\" to number", str.c_str());
+                // We could leave this out, too. If strtod can't convert
+                // anything, it will return zero.
+                ret = 0;
+            }
             v.push_back(d);
+
+            is >> str;
         }
         return v;
 }
