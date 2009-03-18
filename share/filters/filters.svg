@@ -204,13 +204,13 @@
 <feComposite operator="in" in2="result0" id="feComposite2695" />
 <feComposite operator="atop" in2="SourceGraphic" id="feComposite2697" />
 </filter>
-<filter id="filter2665" inkscape:label="Sharpen" x="0" y="0" width="1" height="1" inkscape:menu="Image effects">
+<filter id="filter2665" inkscape:label="Sharpen" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Sharpen edges and boundaries within the object, force=0.15">
 <feConvolveMatrix order="3 3" kernelMatrix="0 -0.15 0 -0.15 1.6 -0.15 0 -0.15 0" id="feConvolveMatrix2667" divisor="1" in="SourceGraphic" targetX="1" targetY="1" />
 </filter>
-<filter inkscape:label="Sharpen more" id="filter2679" x="0" y="0" width="1" height="1" inkscape:menu="Image effects">
+<filter inkscape:label="Sharpen more" id="filter2679" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Sharpen edges and boundaries within the object, force=0.3">
 <feConvolveMatrix targetY="1" targetX="1" in="SourceGraphic" divisor="1" id="feConvolveMatrix2681" kernelMatrix="0 -0.3 0 -0.3 2.2 -0.3 0 -0.3 0" order="3 3" />
 </filter>
-<filter id="filter2701" inkscape:label="Oil painting" inkscape:menu="Image effects" inkscape:menu-tooltip="Simulates oil painting style">
+<filter id="filter2701" inkscape:label="Oil painting" inkscape:menu="Image effects" inkscape:menu-tooltip="Simulate oil painting style">
 <feMorphology id="feMorphology2703" radius="2" in="SourceGraphic" result="result0" />
 <feTurbulence id="feTurbulence2705" numOctaves="1" baseFrequency="0.077828054298642535" />
 <feDisplacementMap id="feDisplacementMap2707" in="result0" scale="6.2745098039215685" xChannelSelector="R" yChannelSelector="G" />
@@ -388,7 +388,7 @@
 <feComposite id="feComposite2585" operator="atop" in="result4" in2="result2" />
 <feBlend blend="normal" id="feBlend2589" mode="multiply" />
 </filter>
-<filter id="filter3707-6-6-0" inkscape:label="Pixel smear" inkscape:menu="Distort" inkscape:menu-tooltip="Vangogh paintings effect for bitmaps" x="-0.15" y="-0.15" width="1.3" height="1.3">
+<filter id="filter3707-6-6-0" inkscape:label="Pixel smear" inkscape:menu="Distort" inkscape:menu-tooltip="Van Gogh painting effect for bitmaps" x="-0.15" y="-0.15" width="1.3" height="1.3">
 <feTurbulence seed="5" id="feTurbulence3709-0-0-6" baseFrequency="0.25 0.40000000000000002" numOctaves="10" type="turbulence" />
 <feColorMatrix id="feColorMatrix3711-6-6-6" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.5 0" result="result5" />
 <feComposite id="feComposite3713-6-6-1" in2="result5" operator="in" in="SourceGraphic" />
@@ -475,7 +475,7 @@
 <feComposite in="fbSourceGraphic" result="result4" operator="arithmetic" k2="1" k3="1.5" id="feComposite2927" />
 <feBlend mode="multiply" id="feBlend2929" blend="normal" />
 </filter>
-<filter id="filter3470" inkscape:label="Glowing bubble" inkscape:menu="Ridges" inkscape:menu-tooltip="Bubble effect with refration and glow" x="-0.25" y="-0.25" width="1.5" height="1.5">
+<filter id="filter3470" inkscape:label="Glowing bubble" inkscape:menu="Ridges" inkscape:menu-tooltip="Bubble effect with refraction and glow" x="-0.25" y="-0.25" width="1.5" height="1.5">
 <feGaussianBlur stdDeviation="1" id="feGaussianBlur3472" result="result1" />
 <feColorMatrix id="feColorMatrix3476" values="1" in="result1" type="saturate" result="result3" />
 <feBlend blend="normal" id="feBlend3609" in="result3" mode="screen" result="result5" />
@@ -653,7 +653,7 @@
 <feComposite id="feComposite3241" operator="atop" in="result5" />
 <feBlend id="feBlend3243" blend="normal" mode="screen" />
 </filter>
-<filter id="filter3565" inkscape:label="Crossmooth" inkscape:menu="Blurs" inkscape:menu-tooltip="Blur inner borders and intersections">
+<filter id="filter3565" inkscape:label="Cross-smooth" inkscape:menu="Blurs" inkscape:menu-tooltip="Blur inner borders and intersections">
 <feGaussianBlur id="feGaussianBlur3567" stdDeviation="3" />
 <feColorMatrix result="fbSourceGraphic" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -1 0 0 5 -2 " id="feColorMatrix3569" />
 </filter>
@@ -773,7 +773,7 @@
 <feBlend blend="normal" id="feBlend690" mode="darken" />
 <feConvolveMatrix edgeMode="duplicate" bias="0" divisor="2" targetY="1" targetX="1" id="feConvolveMatrix692" kernelMatrix="2 0 0 0 1 0 0 0 -1" order="3 3" />
 </filter>
-<filter id="filter3570" inkscape:label="Refractive gel A" inkscape:menu="Ridges" inkscape:menu-tooltip="Gel effect with light refration" height="1.4" width="1.4" y="-0.2" x="-0.2">
+<filter id="filter3570" inkscape:label="Refractive gel A" inkscape:menu="Ridges" inkscape:menu-tooltip="Gel effect with light refraction" height="1.4" width="1.4" y="-0.2" x="-0.2">
 <feOffset dx="7" dy="7" id="feOffset3597" in="SourceAlpha" result="result3" />
 <feGaussianBlur stdDeviation="8" id="feGaussianBlur3572" in="result3" result="result1" />
 <feComposite id="feComposite3574" operator="in" in2="result1" in="SourceGraphic" result="result2" />
@@ -787,7 +787,7 @@
 <feComposite id="feComposite704" in="fbSourceGraphic" operator="arithmetic" k2="2" k3="2" />
 <feBlend blend="normal" id="feBlend2927" mode="multiply" />
 </filter>
-<filter id="filter3571" inkscape:label="Refractive gel B" inkscape:menu="Ridges" inkscape:menu-tooltip="Gel effect with strong refration" height="1.4" width="1.4" y="-0.2" x="-0.2">
+<filter id="filter3571" inkscape:label="Refractive gel B" inkscape:menu="Ridges" inkscape:menu-tooltip="Gel effect with strong refraction" height="1.4" width="1.4" y="-0.2" x="-0.2">
 <feOffset dx="3" dy="3" id="feOffset708" in="SourceAlpha" result="result3" />
 <feGaussianBlur stdDeviation="8" id="feGaussianBlur3573" in="result3" result="result1" />
 <feComposite id="feComposite3575" operator="in" in2="result1" in="SourceGraphic" result="result2" />
@@ -940,7 +940,7 @@
 <feBlend id="feBlend2854" blend="normal" mode="darken" />
 <feConvolveMatrix id="feConvolveMatrix2856" order="3 3" kernelMatrix="2 0 0 0 1 0 0 0 -1 " targetX="1" targetY="1" divisor="2" edgeMode="duplicate" />
 </filter>
-<filter id="filter5424" inkscape:label="Peel off" inkscape:menu="Materials" inkscape:menu-tooltip="Alterated Painting on a wall easy to change with Turbulence" height="1.5" width="1.5" y="-0.25" x="-0.25">
+<filter id="filter5424" inkscape:label="Peel off" inkscape:menu="Materials" inkscape:menu-tooltip="Peeling painting on a wall; adjust Turbulence" height="1.5" width="1.5" y="-0.25" x="-0.25">
 <feTurbulence id="feTurbulence5426" type="fractalNoise" numOctaves="3" baseFrequency="0.050000000000000003" in="SourceGraphic" result="result1" />
 <feGaussianBlur id="feGaussianBlur5428" stdDeviation="4" in="SourceAlpha" />
 <feComposite id="feComposite5432" in2="result1" operator="in" />
@@ -1033,7 +1033,7 @@
 <feComposite in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.5" k3="2" id="feComposite4380" />
 <feBlend mode="multiply" id="feBlend4382" blend="normal" />
 </filter>
-<filter id="filter2988b" inkscape:label="Rough paper" inkscape:menu="Textures" inkscape:menu-tooltip="Aquarel paper effect which can be used for pictures as for objects">
+<filter id="filter2988b" inkscape:label="Rough paper" inkscape:menu="Textures" inkscape:menu-tooltip="Aquarelle paper effect which can be used for pictures as for objects">
 <feTurbulence result="result4" seed="20" numOctaves="10" baseFrequency="0.040000000000000001" type="fractalNoise" id="feTurbulence2990" />
 <feDisplacementMap result="result3" scale="10" xChannelSelector="R" yChannelSelector="G" id="feDisplacementMap2992" in2="result4" in="SourceGraphic" />
 <feDiffuseLighting in="result4" result="result1" id="feDiffuseLighting2994" surfaceScale="5" diffuseConstant="1" lighting-color="rgb(255,255,255)">
@@ -1145,7 +1145,7 @@
 <feBlend result="result6" blend="normal" mode="multiply" in="result5" id="feBlend4148" />
 <feBlend in="result6" in2="result6" mode="multiply" blend="normal" id="feBlend4150" />
 </filter>
-<filter id="filter2838c" inkscape:label="Fancy blur" inkscape:menu="Blurs" inkscape:menu-tooltip="Smooth colorized contour wich allows desaturation and hue rotation">
+<filter id="filter2838c" inkscape:label="Fancy blur" inkscape:menu="Blurs" inkscape:menu-tooltip="Smooth colorized contour which allows desaturation and hue rotation">
 <feColorMatrix id="feColorMatrix2840" type="saturate" values="1" result="result2" />
 <feGaussianBlur stdDeviation="5" id="feGaussianBlur1117" result="result1" />
 <feComposite id="feComposite1119" operator="arithmetic" k2="2" k1="0" k3="0" />
@@ -1183,7 +1183,7 @@
 <feBlend id="feBlend3496" blend="normal" mode="darken" in="fbSourceGraphic" />
 <feBlend id="feBlend3498" blend="normal" mode="screen" />
 </filter>
-<filter id="filter2910u" inkscape:label="Moonarise" inkscape:menu="Color" inkscape:menu-tooltip="Invert colors of object" y="0" x="0" height="1" width="1">
+<filter id="filter2910u" inkscape:label="Moonarize" inkscape:menu="Color" inkscape:menu-tooltip="Invert colors of object" y="0" x="0" height="1" width="1">
 <feColorMatrix id="feColorMatrix3504" type="hueRotate" values="264.74708171206225" result="fbSourceGraphic" />
 <feColorMatrix id="feColorMatrix3506" in="fbSourceGraphic" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " />
 <feBlend id="feBlend3508" blend="normal" mode="screen" in="fbSourceGraphic" />
@@ -1270,14 +1270,14 @@
 <feBlend id="feBlend2868" mode="screen" blend="normal" result="result7" />
 <feComposite id="feComposite1229" in="SourceGraphic" in2="result7" operator="in" />
 </filter>
-<filter id="filter2930b" inkscape:label="Smooth edges" inkscape:menu="Morphology" inkscape:menu-tooltip="Smooth the outside of whapes and pictures without alterating their contents">
+<filter id="filter2930b" inkscape:label="Smooth edges" inkscape:menu="Morphology" inkscape:menu-tooltip="Smooth the outside of shapes and pictures without altering their contents">
 <feGaussianBlur id="feGaussianBlur1232" stdDeviation="2.5" result="result1" />
 <feDisplacementMap id="feDisplacementMap2922" scale="0" result="result5" in="SourceGraphic" />
 <feComposite id="feComposite1235" operator="arithmetic" k2="2" k3="0" k1="0" k4="-1" in="result1" result="result2" in2="SourceGraphic" />
 <feColorMatrix id="feColorMatrix1237" values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -6 " result="result3" />
 <feComposite id="feComposite2918" in="SourceGraphic" operator="in" in2="result3" />
 </filter>
-<filter id="filter2853" inkscape:label="Torn edges" inkscape:menu="Distort" inkscape:menu-tooltip="Displace the outside of shapes and pictures without alterating their content" height="1.4" y="-0.2" width="1.4" x="-0.2">
+<filter id="filter2853" inkscape:label="Torn edges" inkscape:menu="Distort" inkscape:menu-tooltip="Displace the outside of shapes and pictures without altering their content" height="1.4" y="-0.2" width="1.4" x="-0.2">
 <feTurbulence id="feTurbulence2865" baseFrequency="0.050000000000000003" numOctaves="5" type="fractalNoise" />
 <feDisplacementMap id="feDisplacementMap2857" scale="25" result="result5" xChannelSelector="R" in="SourceGraphic" />
 <feComposite id="feComposite1243" in="SourceGraphic" operator="atop" />
@@ -1337,7 +1337,7 @@
 <feComposite id="feComposite4377" operator="in" result="result2" in="result1" in2="fbSourceGraphicAlpha" />
 <feComposite id="feComposite4379" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
 </filter>
-<filter id="filter3152b" inkscape:label="People" inkscape:menu="Overlays" inkscape:menu-tooltip="Colorized blotches evocating people walking on a wide place">
+<filter id="filter3152b" inkscape:label="People" inkscape:menu="Overlays" inkscape:menu-tooltip="Colorized blotches, like a crowd of people">
 <feTurbulence result="result7" id="feTurbulence3154" type="fractalNoise" numOctaves="3" baseFrequency="0.20000000000000001 0.089999999999999997" />
 <feColorMatrix result="result5" id="feColorMatrix3156" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5.5 -2 " />
 <feComposite result="result6" in="SourceGraphic" id="feComposite3158" operator="in" in2="result7" />
@@ -1369,7 +1369,7 @@
 <feComposite id="feComposite2884" operator="out" in2="result0" />
 <feComposite id="feComposite2886" operator="atop" in2="SourceGraphic" />
 </filter>
-<filter id="filter2840c" inkscape:label="Garden of Delights" inkscape:menu="Overlays" inkscape:menu-tooltip="Fantasmagoric turbulences evocating Hieronymus Bosch Garden of Delights" x="-0.15000001" width="1.3" y="-0.15000001" height="1.3">
+<filter id="filter2840c" inkscape:label="Garden of Delights" inkscape:menu="Overlays" inkscape:menu-tooltip="Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights" x="-0.15000001" width="1.3" y="-0.15000001" height="1.3">
 <feTurbulence id="feTurbulence2842" result="result1" baseFrequency="0.01 0.02" numOctaves="8" type="fractalNoise" in="SourceAlpha" seed="135" />
 <feColorMatrix id="feColorMatrix2844" result="result3" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 -0.4 " />
 <feConvolveMatrix order="3 3" kernelMatrix="3 0 0 0 2 0 0 0 -1 " id="feConvolveMatrix2932" targetX="1" targetY="1" divisor="2" result="result8" />
@@ -1561,7 +1561,7 @@
 <feComposite id="feComposite6010" in2="result8" operator="in" in="result2" result="fbSourceGraphic" />
 <feBlend blend="normal" id="feBlend4942" mode="multiply" />
 </filter>
-<filter x="-0.15" width="1.3" y="-0.15" height="1.3" inkscape:menu-tooltip="Felt like texture with color tubulence and slightly darker at the edges" inkscape:menu="Textures" inkscape:label="Felt" id="Felt0">
+<filter x="-0.15" width="1.3" y="-0.15" height="1.3" inkscape:menu-tooltip="Felt like texture with color turbulence and slightly darker at the edges" inkscape:menu="Textures" inkscape:label="Felt" id="Felt0">
 <feGaussianBlur result="result1" in="SourceGraphic" stdDeviation="2" id="feGaussianBlur3770" />
 <feTurbulence result="result0" numOctaves="5" baseFrequency="0.050000000000000003" type="fractalNoise" id="feTurbulence3772" />
 <feDisplacementMap result="result2" scale="20" yChannelSelector="G" xChannelSelector="R" in="result1" in2="result0" id="feDisplacementMap3774" />
@@ -1724,7 +1724,7 @@
 <feComposite in2="result4" result="result2" operator="arithmetic" in="result8" k1="3" k3="0" k2="0.20000000000000001" id="feComposite3106" />
 <feComposite result="fbSourceGraphic" in="result2" operator="in" in2="result2" id="feComposite3108" />
 </filter>
-<filter id="Stretchk0" inkscape:label="Stretching kilt" inkscape:menu="Materials" inkscape:menu-tooltip="Kilt texture which stretches around the nodesand moves with transparency" x="-0.25" width="1.5" y="-0.25" height="1.5">
+<filter id="Stretchk0" inkscape:label="Stretching kilt" inkscape:menu="Materials" inkscape:menu-tooltip="Kilt texture which stretches around the nodes and moves with transparency" x="-0.25" width="1.5" y="-0.25" height="1.5">
 <feTurbulence id="feTurbulence4079" type="turbulence" result="result0" seed="5" numOctaves="1" baseFrequency="0 0.20000000000000001" />
 <feTurbulence id="feTurbulence4081" result="result3" type="turbulence" seed="57" numOctaves="1" baseFrequency="0.20000000000000001 0" in="SourceAlpha" />
 <feComposite id="feComposite4083" result="result1" operator="over" in2="result0" />
