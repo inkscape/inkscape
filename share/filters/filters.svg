@@ -1724,5 +1724,33 @@
 <feComposite in2="result4" result="result2" operator="arithmetic" in="result8" k1="3" k3="0" k2="0.20000000000000001" id="feComposite3106" />
 <feComposite result="fbSourceGraphic" in="result2" operator="in" in2="result2" id="feComposite3108" />
 </filter>
+<filter id="Stretchk0" inkscape:label="Stretching kilt" inkscape:menu="Materials" inkscape:menu-tooltip="Kilt texture which stretches around the nodesand moves with transparency" x="-0.25" width="1.5" y="-0.25" height="1.5">
+<feTurbulence id="feTurbulence4079" type="turbulence" result="result0" seed="5" numOctaves="1" baseFrequency="0 0.20000000000000001" />
+<feTurbulence id="feTurbulence4081" result="result3" type="turbulence" seed="57" numOctaves="1" baseFrequency="0.20000000000000001 0" in="SourceAlpha" />
+<feComposite id="feComposite4083" result="result1" operator="over" in2="result0" />
+<feMerge id="feMerge4085" result="result2">
+<feMergeNode id="feMergeNode4087" in="result1" />
+<feMergeNode id="feMergeNode4089" in="result0" />
+</feMerge>
+<feComposite id="feComposite4091" result="fbSourceGraphic" in="SourceGraphic" operator="out" />
+<feGaussianBlur id="feGaussianBlur4107" result="result8" stdDeviation="10" in="fbSourceGraphic" />
+<feComposite id="feComposite4109" k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" />
+<feDisplacementMap id="feDisplacementMap4111" result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="fbSourceGraphic" />
+<feComposite id="feComposite4113" k2="0" k3="0" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" />
+</filter>
+<filter id="Flyingk0" inkscape:label="Flying kilt" inkscape:menu="Materials" inkscape:menu-tooltip="Kilt texture which flights in the wind and moves with transparency" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<feTurbulence id="feTurbulence4372" type="turbulence" result="result0" seed="5" numOctaves="1" baseFrequency="0 0.18436213991769548" />
+<feTurbulence id="feTurbulence4374" result="result3" type="turbulence" seed="57" numOctaves="1" baseFrequency="0.28477366255144032 0" in="SourceAlpha" />
+<feComposite id="feComposite4376" result="result1" operator="over" in2="result0" />
+<feMerge id="feMerge4378" result="result2">
+<feMergeNode id="feMergeNode4380" in="result1" />
+<feMergeNode id="feMergeNode4382" in="result0" />
+</feMerge>
+<feComposite id="feComposite4384" result="fbSourceGraphic" in="SourceGraphic" operator="in" in2="result2" />
+<feGaussianBlur id="feGaussianBlur4388" stdDeviation="5" result="result8" in="fbSourceGraphic" />
+<feComposite id="feComposite4390" in2="result8" result="result6" operator="xor" in="result8" k2="0" k1="0" k3="0" />
+<feDisplacementMap id="feDisplacementMap4392" xChannelSelector="A" yChannelSelector="A" scale="50" result="result4" in="fbSourceGraphic" in2="result6" />
+<feComposite id="feComposite4394" in2="result8" result="result2" operator="arithmetic" k1="3" k3="0" k2="0" />
+</filter>
 </defs>
 </svg>
