@@ -1154,12 +1154,18 @@ void SwatchesPanel::_handleGradientsChange()
                     if ((first.offset <0.0001) && (static_cast<int>(second.offset * 100.0f) == 100)) {
                         SPColor color = first.color;
                         guint32 together = color.toRGBA32(0);
-                        Glib::ustring name((*it)->id);
-                        unsigned int r = SP_RGBA32_R_U(together);
-                        unsigned int g = SP_RGBA32_G_U(together);
-                        unsigned int b = SP_RGBA32_B_U(together);
-                        ColorItem* item = new ColorItem( r, g, b, name );
-                        docPalette->_colors.push_back(item);
+
+                        // Pick only single-color gradients for now
+                        SPColor color2 = second.color;
+                        guint32 together2 = color2.toRGBA32(0);
+                        if ( together == together2 ) {
+                            Glib::ustring name((*it)->id);
+                            unsigned int r = SP_RGBA32_R_U(together);
+                            unsigned int g = SP_RGBA32_G_U(together);
+                            unsigned int b = SP_RGBA32_B_U(together);
+                            ColorItem* item = new ColorItem( r, g, b, name );
+                            docPalette->_colors.push_back(item);
+                        }
                     }
                 }
             }
