@@ -1,4 +1,40 @@
+/**
+ * \brief  Shapes are special paths on which boolops can be performed
+ *
+ * Authors:
+ *      Michael G. Sloan <mgsloan@gmail.com>
+ *      Nathan Hurst <njh@mail.csse.monash.edu.au>
+ *      MenTaLguY <mental@rydia.net>
+ *
+ * Copyright 2007-2009  Authors
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it either under the terms of the GNU Lesser General Public
+ * License version 2.1 as published by the Free Software Foundation
+ * (the "LGPL") or, at your option, under the terms of the Mozilla
+ * Public License Version 1.1 (the "MPL"). If you do not alter this
+ * notice, a recipient may use your version of this file under either
+ * the MPL or the LGPL.
+ *
+ * You should have received a copy of the LGPL along with this library
+ * in the file COPYING-LGPL-2.1; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the MPL along with this library
+ * in the file COPYING-MPL-1.1
+ *
+ * The contents of this file are subject to the Mozilla Public License
+ * Version 1.1 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY
+ * OF ANY KIND, either express or implied. See the LGPL or the MPL for
+ * the specific language governing rights and limitations.
+ *
+ */
+
 #include <2geom/shape.h>
+
 #include <2geom/utils.h>
 #include <2geom/sweep.h>
 #include <2geom/ord.h>
@@ -6,6 +42,8 @@
 #include <iostream>
 #include <algorithm>
 #include <cstdlib>
+
+//#define SHAPE_DEBUG  // turns on debug outputting to cout.
 
 namespace Geom {
 
@@ -340,7 +378,9 @@ unsigned crossing_along(double t, unsigned ix, unsigned jx, bool dir, Crossings 
 void crossing_dual(unsigned &i, unsigned &j, CrossingSet const & crs) {
     Crossing cur = crs[i][j];
     i = cur.getOther(i);
+#ifdef SHAPE_DEBUG
     std::cout << i << "\n";
+#endif
     if(crs[i].empty())
         j = 0;
     else
@@ -429,18 +469,24 @@ std::vector<Path> inner_sanitize(std::vector<Path> const & ps) {
                      to = crs[ix][jx];
             if(dir) {
                 // backwards
+#ifdef SHAPE_DEBUG
                 std::cout << "r" << ix << "[" << from.getTime(ix)  << ", " << to.getTime(ix) << "]\n";
+#endif
                 Path p = ps[ix].portion(from.getTime(ix), to.getTime(ix)).reverse();
                 for(unsigned i = 0; i < p.size(); i++)
                     res.append(p[i], Path::STITCH_DISCONTINUOUS);
             } else {
                 // forwards
+#ifdef SHAPE_DEBUG
                 std::cout << "f" << ix << "[" << from.getTime(ix) << ", " << to.getTime(ix) << "]\n";
+#endif
                 ps[ix].appendPortionTo(res, from.getTime(ix), to.getTime(ix));
             }
             dir = new_dir;
         } while(!visited[ix][jx]);
+#ifdef SHAPE_DEBUG
         std::cout << "added " << res.size() << "\n";
+#endif
         result_paths.push_back(res);
     }
     for(unsigned i = 0; i < crs.size(); i++) {

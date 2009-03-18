@@ -1,11 +1,12 @@
 /**
- * \file
- * \brief  \todo brief description
+ * \brief  Shapes are special paths on which boolops can be performed
  *
  * Authors:
- *      ? <?@?.?>
- * 
- * Copyright ?-?  authors
+ *      Michael G. Sloan <mgsloan@gmail.com>
+ *      Nathan Hurst <njh@mail.csse.monash.edu.au>
+ *      MenTaLguY <mental@rydia.net>
+ *
+ * Copyright 2007-2009  Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
