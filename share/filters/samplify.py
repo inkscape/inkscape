@@ -38,6 +38,7 @@ def addNS(tag, ns=None):
 # attributes and elements we will use, prepared with their namespace
 a_href = addNS('href', 'xlink')
 a_menu = addNS('menu', 'inkscape')
+a_tooltip = addNS('menu-tooltip', 'inkscape')
 a_label = addNS('label', 'inkscape')
 e_text = addNS('text', 'svg')
 e_tspan = addNS('tspan', 'svg')
@@ -128,11 +129,23 @@ for ch in root.getchildren():
                 menu = fi.attrib[a_menu]
                 clone.attrib["transform"] = 'translate('+str( q['width'] * menu_shifts[menu] )+', '+str( q['height'] * (menus.index(menu) + 1) )+')'
                 newroot.append(clone)
+
                 text = etree.Element(e_text, nsmap=NSS)
                 text.attrib['x']=str( q['x'] + q['width'] * (menu_shifts[menu] + 0.5) )
                 text.attrib['y']=str( q['y'] + q['height'] * (menus.index(menu) + 1.8) )
                 text.attrib['style']="font-size:%d;text-anchor:middle;" % (q['height']*0.08)
                 text.text = fi.attrib[a_label]
+                newroot.append(text)
+
+                if a_tooltip not in fi.keys():
+                    print "no menu-tooltip for", fi.attrib["id"]
+                    sys.exit()
+
+                text = etree.Element(e_text, nsmap=NSS)
+                text.attrib['x']=str( q['x'] + q['width'] * (menu_shifts[menu] + 0.5) )
+                text.attrib['y']=str( q['y'] + q['height'] * (menus.index(menu) + 1.9) )
+                text.attrib['style']="font-size:%d;text-anchor:middle;" % (q['height']*0.04)
+                text.text = fi.attrib[a_tooltip]
                 newroot.append(text)
 
                 menu_shifts[menu] = menu_shifts[menu] + 1
