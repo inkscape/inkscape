@@ -248,6 +248,19 @@ bool ColorDef::fromMIMEData(std::string const & type, char const * data, int len
                     double dbl = strtod(srgb.c_str() + numPos + 3, &endPtr);
                     this->b = static_cast<int>(255 * dbl);
                 }
+
+                size_t pos = xml.find("<color ");
+                if ( pos != std::string::npos ) {
+                    size_t endPos = xml.find(">", pos);
+                    std::string colorTag = xml.substr(pos, endPos);
+
+                    size_t namePos = colorTag.find("name=");
+                    if (namePos != std::string::npos) {
+                        char quote = colorTag[namePos + 5];
+                        endPos = colorTag.find(quote, namePos + 6);
+                        descr = colorTag.substr(namePos + 6, endPos - (namePos + 6));
+                    }
+                }
                 changed = true;
                 worked = true;
             }

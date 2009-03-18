@@ -40,6 +40,8 @@
 #include "widgets/desktop-widget.h"
 #include "sp-item-group.h"
 #include "sp-text.h"
+#include "sp-gradient-fns.h"
+#include "sp-gradient.h"
 #include "sp-flowtext.h"
 #include "sp-namedview.h"
 #include "ui/view/view.h"
@@ -1252,9 +1254,30 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     } else if ( color.getType() == eek::ColorDef::NONE ) {
                         colorspec = "none";
                     } else {
-                        gchar* tmp = g_strdup_printf("#%02x%02x%02x", color.getR(), color.getG(), color.getB());
-                        colorspec = tmp;
-                        g_free(tmp);
+                        unsigned int r = color.getR();
+                        unsigned int g = color.getG();
+                        unsigned int b = color.getB();
+
+                        SPGradient* matches = 0;
+                        const GSList *gradients = sp_document_get_resource_list(doc, "gradient");
+                        for (const GSList *item = gradients; item; item = item->next) {
+                            SPGradient* grad = SP_GRADIENT(item->data);
+                            if ( color.descr == grad->id ) {
+                                if ( grad->has_stops ) {
+                                    matches = grad;
+                                    break;
+                                }
+                            }
+                        }
+                        if (matches) {
+                            colorspec = "url(#";
+                            colorspec += matches->id;
+                            colorspec += ")";
+                        } else {
+                            gchar* tmp = g_strdup_printf("#%02x%02x%02x", r, g, b);
+                            colorspec = tmp;
+                            g_free(tmp);
+                        }
                     }
                 }
             }
