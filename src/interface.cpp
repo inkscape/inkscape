@@ -151,21 +151,21 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
     gtk_widget_show(GTK_WIDGET(vw));
 
     if (editable) {
-		g_object_set_data(G_OBJECT(vw), "window", win);
+        g_object_set_data(G_OBJECT(vw), "window", win);
 
-		SPDesktopWidget *desktop_widget = reinterpret_cast<SPDesktopWidget*>(vw);
-		SPDesktop* desktop = desktop_widget->desktop;
+        SPDesktopWidget *desktop_widget = reinterpret_cast<SPDesktopWidget*>(vw);
+        SPDesktop* desktop = desktop_widget->desktop;
 
-		desktop_widget->window = win;
+        desktop_widget->window = win;
 
         win->set_data("desktop", desktop);
         win->set_data("desktopwidget", desktop_widget);
 
         win->signal_delete_event().connect(sigc::mem_fun(*(SPDesktop*)vw->view, &SPDesktop::onDeleteUI));
-		win->signal_window_state_event().connect(sigc::mem_fun(*desktop, &SPDesktop::onWindowStateEvent));
-		win->signal_focus_in_event().connect(sigc::mem_fun(*desktop_widget, &SPDesktopWidget::onFocusInEvent));
+        win->signal_window_state_event().connect(sigc::mem_fun(*desktop, &SPDesktop::onWindowStateEvent));
+        win->signal_focus_in_event().connect(sigc::mem_fun(*desktop_widget, &SPDesktopWidget::onFocusInEvent));
 
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         gint prefs_geometry =
             (2==prefs->getInt("/options/savewindowgeometry/value", 0));
         if (prefs_geometry) {
@@ -821,7 +821,7 @@ sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
     sp_ui_menu_append_check_item_from_verb(m, view, _("Commands Bar"), _("Show or hide the Commands bar (under the menu)"), "commands",
                                            checkitem_toggled, checkitem_update, 0);
     sp_ui_menu_append_check_item_from_verb(m, view, _("Snap controls Bar"), _("Show or hide the snapping controls"), "snaptoolbox",
-										   checkitem_toggled, checkitem_update, 0);
+                                           checkitem_toggled, checkitem_update, 0);
     sp_ui_menu_append_check_item_from_verb(m, view, _("Tool Controls Bar"), _("Show or hide the Tool Controls bar"), "toppanel",
                                            checkitem_toggled, checkitem_update, 0);
     sp_ui_menu_append_check_item_from_verb(m, view, _("_Toolbox"), _("Show or hide the main toolbox (on the left)"), "toolbox",
@@ -970,13 +970,13 @@ sp_ui_main_menubar(Inkscape::UI::View::View *view)
     GtkWidget *mbar = gtk_menu_bar_new();
 
 #ifdef GDK_WINDOWING_QUARTZ
-	ige_mac_menu_set_menu_bar(GTK_MENU_SHELL(mbar));
+    ige_mac_menu_set_menu_bar(GTK_MENU_SHELL(mbar));
 #endif
 
     sp_ui_build_dyn_menus(inkscape_get_menus(INKSCAPE), mbar, view);
 
 #ifdef GDK_WINDOWING_QUARTZ
-	return NULL;
+    return NULL;
 #else
     return mbar;
 #endif
@@ -1251,7 +1251,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                         colorspec = ""; // TODO check if this is sufficient
                     } else if ( color.getType() == eek::ColorDef::NONE ) {
                         colorspec = "none";
-                    } else {                        
+                    } else {
                         gchar* tmp = g_strdup_printf("#%02x%02x%02x", color.getR(), color.getG(), color.getB());
                         colorspec = tmp;
                         g_free(tmp);
@@ -1384,14 +1384,14 @@ sp_ui_drag_data_received(GtkWidget *widget,
             Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
             Inkscape::XML::Node *newImage = xml_doc->createElement("svg:image");
             gchar *atom_name = gdk_atom_name(data->type);
-            
+
             // this formula taken from Glib docs
             guint needed_size = data->length * 4 / 3 + data->length * 4 / (3 * 72) + 7;
             needed_size += 5 + 8 + strlen(atom_name); // 5 bytes for data:, 8 for ;base64,
-            
+
             gchar *buffer = (gchar *) g_malloc(needed_size), *buf_work = buffer;
             buf_work += g_sprintf(buffer, "data:%s;base64,", atom_name);
-            
+
             gint state = 0, save = 0;
             g_base64_encode_step(data->data, data->length, TRUE, buf_work, &state, &save);
             g_base64_encode_close(TRUE, buf_work, &state, &save);
