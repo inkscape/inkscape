@@ -30,6 +30,7 @@
 #include "inkscape.h"
 #include "inkscape.h"
 #include "io/sys.h"
+#include "io/resource.h"
 #include "message-context.h"
 #include "path-prefix.h"
 #include "preferences.h"
@@ -140,19 +141,21 @@ static void dragBegin( GtkWidget */*widget*/, GdkDragContext* dc, gpointer data 
     ColorItem* item = reinterpret_cast<ColorItem*>(data);
     if ( item )
     {
+        using Inkscape::IO::Resource::get_path;
+        using Inkscape::IO::Resource::ICONS;
+        using Inkscape::IO::Resource::SYSTEM;
+
         if (item->def.getType() != eek::ColorDef::RGB){
             GError *error = NULL;
-            gchar *filepath = (gchar *) g_strdup_printf("%s/remove-color.png", INKSCAPE_PIXMAPDIR);
             gsize bytesRead = 0;
             gsize bytesWritten = 0;
-            gchar *localFilename = g_filename_from_utf8( filepath,
+            gchar *localFilename = g_filename_from_utf8( get_path(SYSTEM, ICONS, "remove-color.png"),
                                                  -1,
                                                  &bytesRead,
                                                  &bytesWritten,
                                                  &error);
             GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file_at_scale(localFilename, 32, 24, FALSE, &error);
             g_free(localFilename);
-            g_free(filepath);
             gtk_drag_set_icon_pixbuf( dc, pixbuf, 0, 0 );
             return;
         }
@@ -442,11 +445,13 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
 
         eek_preview_set_color( preview, (def.getR() << 8) | def.getR(), (def.getG() << 8) | def.getG(), (def.getB() << 8) | def.getB());
         if ( def.getType() != eek::ColorDef::RGB ) {
+            using Inkscape::IO::Resource::get_path;
+            using Inkscape::IO::Resource::ICONS;
+            using Inkscape::IO::Resource::SYSTEM;
             GError *error = NULL;
-            gchar *filepath = (gchar *) g_strdup_printf("%s/remove-color.png", INKSCAPE_PIXMAPDIR);
             gsize bytesRead = 0;
             gsize bytesWritten = 0;
-            gchar *localFilename = g_filename_from_utf8( filepath,
+            gchar *localFilename = g_filename_from_utf8( get_path(SYSTEM, ICONS, "remove-color.png"),
                                                  -1,
                                                  &bytesRead,
                                                  &bytesWritten,
@@ -456,7 +461,6 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
                 g_warning("Null pixbuf for %p [%s]", localFilename, localFilename );
             }
             g_free(localFilename);
-            g_free(filepath);
 
             eek_preview_set_pixbuf( preview, pixbuf );
         }
