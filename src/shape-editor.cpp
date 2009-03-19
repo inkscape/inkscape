@@ -287,7 +287,7 @@ void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
 /** Please note that this function only works for path parameters.
 *  All other parameters probably will crash Inkscape!
 */
-void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject, const char * key)
+void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, LivePathEffectObject *lpeobject, const char * key)
 {
     unset_item(SH_NODEPATH);
 
@@ -324,7 +324,7 @@ void ShapeEditor::reset_item (SubType type, bool keep_knotholder)
         case SH_NODEPATH:
             if ( (nodepath) && (IS_LIVEPATHEFFECT(nodepath->object)) ) {
                 char * key = g_strdup(nodepath->repr_key);
-                set_item_lpe_path_parameter(nodepath->item, nodepath->object, key); // the above checks for nodepath, so it is indeed a path that we are editing
+                set_item_lpe_path_parameter(nodepath->item, LIVEPATHEFFECT(nodepath->object), key); // the above checks for nodepath, so it is indeed a path that we are editing
                 g_free(key);
             } else {
                 set_item(SP_ITEM(obj), SH_NODEPATH);

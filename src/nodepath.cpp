@@ -248,10 +248,16 @@ sp_nodepath_destroy_helperpaths(Inkscape::NodePath::Path *np) {
 /**
  * \brief Creates new nodepath from item
  *
+ * If repr_key_in is not NULL, object *has* to be a LivePathEffectObject !
+ *
  * \todo create proper constructor for nodepath::path, this method returns null a constructor cannot so this cannot be simply converted to constructor.
  */
 Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, bool show_handles, const char * repr_key_in, SPItem *item)
 {
+    if (repr_key_in) {
+        g_assert(IS_LIVEPATHEFFECT(object));
+    }
+
     Inkscape::XML::Node *repr = object->repr;
 
     /** \todo
@@ -328,7 +334,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
     np->d2i  = np->i2d.inverse();
 
     np->repr = repr;
-    if (repr_key_in) { // apparently the object is an LPEObject (this is a dirty check, hopefully nobody tries feeding non-lpeobjects into this method with non-null repr_key_in)
+    if (repr_key_in) { // apparently the object is an LPEObject
         np->repr_key = g_strdup(repr_key_in);
         np->repr_nodetypes_key = g_strconcat(np->repr_key, "-nodetypes", NULL);
         Inkscape::LivePathEffect::Effect * lpe = LIVEPATHEFFECT(object)->get_lpe();

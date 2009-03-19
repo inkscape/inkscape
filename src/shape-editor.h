@@ -13,20 +13,21 @@
  */
 
 #include <forward.h>
-#include <libnr/nr-forward.h>
+#include <2geom/forward.h>
 
 namespace Inkscape { namespace NodePath { class Path; } }
 namespace Inkscape { namespace XML { class Node; } }
-
-#include "libnr/nr-path-code.h"
-#include "libnr/nr-point.h"
-#include <boost/optional.hpp>
-#include <vector>
 
 class KnotHolder;
 class SPDesktop;
 class SPNodeContext;
 class ShapeEditorsCollective;
+class LivePathEffectObject;
+
+#include "libnr/nr-path-code.h"
+#include <2geom/point.h>
+#include <boost/optional.hpp>
+#include <vector>
 
 enum SubType{
     SH_NODEPATH,
@@ -40,7 +41,7 @@ public:
     ~ShapeEditor();
 
     void set_item (SPItem *item, SubType type, bool keep_knotholder = false);
-    void set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject, const char * key);
+    void set_item_lpe_path_parameter(SPItem *item, LivePathEffectObject *lpeobject, const char * key);
     void unset_item (SubType type, bool keep_knotholder = false);
 
     bool has_nodepath (); //((deprecated))
