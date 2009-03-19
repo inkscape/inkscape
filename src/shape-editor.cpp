@@ -317,22 +317,22 @@ void ShapeEditor::set_item_lpe_path_parameter(SPItem *item, SPObject *lpeobject,
    Why not make a reload function in NodePath and in KnotHolder? */
 void ShapeEditor::reset_item (SubType type, bool keep_knotholder)
 {
-    SPObject *item = sp_desktop_document(desktop)->getObjectByRepr(listener_attached_for);
+    /// note that it is not certain that this is an SPItem; it could be a LivePathEffectObject.
+    SPObject *obj = sp_desktop_document(desktop)->getObjectByRepr(listener_attached_for);
 
     switch (type) {
         case SH_NODEPATH:
-            if ( (this->nodepath) && (IS_LIVEPATHEFFECT(this->nodepath->object)) ) {
-                SPObject *obj = this->nodepath->object;
-                char * key = g_strdup(this->nodepath->repr_key);
-                set_item_lpe_path_parameter(SP_ITEM(item), obj, key); // the above checks for nodepath, so it is indeed a path that we are editing
+            if ( (nodepath) && (IS_LIVEPATHEFFECT(nodepath->object)) ) {
+                char * key = g_strdup(nodepath->repr_key);
+                set_item_lpe_path_parameter(nodepath->item, nodepath->object, key); // the above checks for nodepath, so it is indeed a path that we are editing
                 g_free(key);
             } else {
-                set_item(SP_ITEM(item), SH_NODEPATH);
-            }                
+                set_item(SP_ITEM(obj), SH_NODEPATH);
+            }
             break;
         case SH_KNOTHOLDER:
             if (this->knotholder) {
-                set_item(SP_ITEM(item), SH_KNOTHOLDER, keep_knotholder);
+                set_item(SP_ITEM(obj), SH_KNOTHOLDER, keep_knotholder);
             }
             break;
     }
