@@ -161,11 +161,11 @@ static void sp_nodepath_set_curve (Inkscape::NodePath::Path *np, SPCurve *curve)
 Inkscape::NodePath::Node * Inkscape::NodePath::Path::active_node = NULL;
 
 static SPCanvasItem *
-sp_nodepath_make_helper_item(Inkscape::NodePath::Path *np, /*SPDesktop *desktop, */const SPCurve *curve, bool show = false) {
+sp_nodepath_make_helper_item(Inkscape::NodePath::Path *np, /*SPDesktop *desktop, */const SPCurve *curve, bool show = false, guint32 color = 0xff0000ff) {
     SPCurve *helper_curve = curve->copy();
     helper_curve->transform(np->i2d);
     SPCanvasItem *helper_path = sp_canvas_bpath_new(sp_desktop_controls(np->desktop), helper_curve);
-    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helper_path), np->helperpath_rgba, np->helperpath_width, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(helper_path), color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(helper_path), 0, SP_WIND_RULE_NONZERO);
     sp_canvas_item_move_to_z(helper_path, 0);
     if (show) {
@@ -173,12 +173,6 @@ sp_nodepath_make_helper_item(Inkscape::NodePath::Path *np, /*SPDesktop *desktop,
     }
     helper_curve->unref();
     return helper_path;
-}
-
-static SPCanvasItem *
-canvasitem_from_pathvec(Inkscape::NodePath::Path *np, Geom::PathVector const &pathv, bool show) {
-    SPCurve *helper_curve = new SPCurve(pathv);
-    return sp_nodepath_make_helper_item(np, helper_curve, show);
 }
 
 static void
@@ -198,7 +192,10 @@ sp_nodepath_create_helperpaths(Inkscape::NodePath::Path *np) {
             // create new canvas items from the effect's helper paths
             std::vector<Geom::PathVector> hpaths = lpe->getHelperPaths(lpeitem);
             for (std::vector<Geom::PathVector>::iterator j = hpaths.begin(); j != hpaths.end(); ++j) {
-                np->helper_path_vec[lpe].push_back(canvasitem_from_pathvec(np, *j, true));
+                SPCurve *helper_curve = new SPCurve(*j);
+                SPCanvasItem * canvasitem = sp_nodepath_make_helper_item(np, helper_curve, true, 0x509050dd);
+                np->helper_path_vec[lpe].push_back(canvasitem);
+                helper_curve->unref();
             }
         }
     }
@@ -384,7 +381,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPObject *object, 
 
     // Draw helper curve
     if (np->show_helperpath) {
-        np->helper_path = sp_nodepath_make_helper_item(np, /*desktop, */np->curve, true);
+        np->helper_path = sp_nodepath_make_helper_item(np, /*desktop, */np->curve, true, np->helperpath_rgba);
     }
 
     sp_nodepath_create_helperpaths(np);
