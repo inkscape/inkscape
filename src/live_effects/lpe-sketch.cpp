@@ -151,16 +151,17 @@ LPESketch::computePerturbation (double s0, double s1){
     //compute howmany deg 3 sbasis to concat according to frequency.
     unsigned count = unsigned((s1-s0)/strokelength*tremble_frequency)+1; 
     for (unsigned i=0; i<count; i++){
-        D2<SBasis> perturb = D2<SBasis>(SBasis(2*count, Linear()), SBasis(2*count, Linear()));
+        D2<SBasis> perturb = D2<SBasis>(SBasis(2, Linear()), SBasis(2, Linear()));
         for (unsigned dim=0; dim<2; dim++){
             B[dim] = offset[dim] + 2*tremble_size-tremble_size.get_value();
-            perturb[dim][2*i] = Linear(A[dim],B[dim]);
+            perturb[dim][0] = Linear(A[dim],B[dim]);
             dA[dim] = dA[dim]-B[dim]+A[dim];
-            dB[dim] = 2*tremble_size-tremble_size.get_value();
-            perturb[dim][2*i+1] = Linear(dA[dim],dB[dim]);
+            dB[dim] = -(2*tremble_size-tremble_size.get_value())-B[dim]+A[dim];
+            perturb[dim][1] = Linear(dA[dim],dB[dim]);
         }
-        A = B;
         dA = B-A-dB;
+        A = B;
+        //dA = B-A-dB;
         res.concat(Piecewise<D2<SBasis> >(perturb));
     }
     res.setDomain(Interval(s0,s0+count*strokelength/tremble_frequency));
