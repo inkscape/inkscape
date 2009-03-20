@@ -63,7 +63,7 @@
 #include "style.h"
 #include "event-context.h"
 #include "gradient-drag.h"
-#include "widgets/eek-color-def.h"
+#include "widgets/ege-paint-def.h"
 
 // Include Mac OS X menu synchronization on native OSX build
 #ifdef GDK_WINDOWING_QUARTZ
@@ -1243,15 +1243,15 @@ sp_ui_drag_data_received(GtkWidget *widget,
             bool worked = false;
             Glib::ustring colorspec;
             if ( data->format == 8 ) {
-                eek::ColorDef color;
+                ege::PaintDef color;
                 worked = color.fromMIMEData("application/x-oswb-color",
                                             reinterpret_cast<char*>(data->data),
                                             data->length,
                                             data->format);
                 if ( worked ) {
-                    if ( color.getType() == eek::ColorDef::CLEAR ) {
+                    if ( color.getType() == ege::PaintDef::CLEAR ) {
                         colorspec = ""; // TODO check if this is sufficient
-                    } else if ( color.getType() == eek::ColorDef::NONE ) {
+                    } else if ( color.getType() == ege::PaintDef::NONE ) {
                         colorspec = "none";
                     } else {
                         unsigned int r = color.getR();

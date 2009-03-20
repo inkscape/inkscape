@@ -7,10 +7,10 @@ ink_common_sources +=	\
 	widgets/dash-selector.h		\
 	widgets/desktop-widget.cpp	\
 	widgets/desktop-widget.h	\
-	widgets/eek-color-def.cpp	\
-	widgets/eek-color-def.h		\
 	widgets/eek-preview.cpp		\
 	widgets/eek-preview.h		\
+	widgets/ege-paint-def.cpp	\
+	widgets/ege-paint-def.h		\
 	widgets/fill-style.cpp		\
 	widgets/fill-style.h		\
 	widgets/font-selector.cpp	\

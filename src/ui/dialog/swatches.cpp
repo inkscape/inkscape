@@ -47,7 +47,7 @@ namespace UI {
 namespace Dialogs {
 
 
-ColorItem::ColorItem(eek::ColorDef::ColorType type) :
+ColorItem::ColorItem(ege::PaintDef::ColorType type) :
     def(type),
     _isLive(false),
     _linkIsTone(false),
@@ -145,7 +145,7 @@ static void dragBegin( GtkWidget */*widget*/, GdkDragContext* dc, gpointer data 
         using Inkscape::IO::Resource::ICONS;
         using Inkscape::IO::Resource::SYSTEM;
 
-        if (item->def.getType() != eek::ColorDef::RGB){
+        if (item->def.getType() != ege::PaintDef::RGB){
             GError *error = NULL;
             gsize bytesRead = 0;
             gsize bytesWritten = 0;
@@ -444,7 +444,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
         Gtk::Widget* newBlot = Glib::wrap(eekWidget);
 
         eek_preview_set_color( preview, (def.getR() << 8) | def.getR(), (def.getG() << 8) | def.getG(), (def.getB() << 8) | def.getB());
-        if ( def.getType() != eek::ColorDef::RGB ) {
+        if ( def.getType() != ege::PaintDef::RGB ) {
             using Inkscape::IO::Resource::get_path;
             using Inkscape::IO::Resource::ICONS;
             using Inkscape::IO::Resource::SYSTEM;
@@ -601,18 +601,18 @@ void ColorItem::buttonClicked(bool secondary)
         SPCSSAttr *css = sp_repr_css_attr_new();
         Glib::ustring descr;
         switch (def.getType()) {
-            case eek::ColorDef::CLEAR: {
+            case ege::PaintDef::CLEAR: {
                 // TODO actually make this clear
                 sp_repr_css_set_property( css, attrName, "none" );
                 descr = secondary? _("Remove stroke color") : _("Remove fill color");
                 break;
             }
-            case eek::ColorDef::NONE: {
+            case ege::PaintDef::NONE: {
                 sp_repr_css_set_property( css, attrName, "none" );
                 descr = secondary? _("Set stroke color to none") : _("Set fill color to none");
                 break;
             }
-            case eek::ColorDef::RGB: {
+            case ege::PaintDef::RGB: {
                 gchar c[64];
                 guint32 rgba = (def.getR() << 24) | (def.getG() << 16) | (def.getB() << 8) | 0xff;
                 sp_svg_write_color(c, sizeof(c), rgba);
@@ -997,8 +997,8 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
 {
     Gtk::RadioMenuItem* hotItem = 0;
     _holder = new PreviewHolder();
-    _clear = new ColorItem( eek::ColorDef::CLEAR );
-    _remove = new ColorItem( eek::ColorDef::NONE );
+    _clear = new ColorItem( ege::PaintDef::CLEAR );
+    _remove = new ColorItem( ege::PaintDef::NONE );
     {
         JustForNow *docPalette = new JustForNow();
 

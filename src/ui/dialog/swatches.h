@@ -15,7 +15,7 @@
 
 #include "ui/widget/panel.h"
 #include "ui/previewholder.h"
-#include "widgets/eek-color-def.h"
+#include "widgets/ege-paint-def.h"
 
 namespace Inkscape {
 namespace UI {
@@ -31,7 +31,7 @@ class ColorItem : public Inkscape::UI::Previewable
 {
     friend void _loadPaletteFile( gchar const *filename );
 public:
-    ColorItem( eek::ColorDef::ColorType type );
+    ColorItem( ege::PaintDef::ColorType type );
     ColorItem( unsigned int r, unsigned int g, unsigned int b,
                Glib::ustring& name );
     virtual ~ColorItem();
@@ -42,7 +42,7 @@ public:
                                     ::PreviewSize size,
                                     guint ratio);
     void buttonClicked(bool secondary = false);
-    eek::ColorDef def;
+    ege::PaintDef def;
 
 private:
     static void _dropDataIn( GtkWidget *widget,

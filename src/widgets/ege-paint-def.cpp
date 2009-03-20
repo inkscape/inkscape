@@ -1,5 +1,5 @@
 /** @file
- * @brief EEK color definition
+ * @brief EGE paint definition
  */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -54,9 +54,9 @@
 #define _(s) gettext(s)
 #endif // !defined(_)
 
-#include "eek-color-def.h"
+#include "ege-paint-def.h"
 
-namespace eek
+namespace ege
 {
 
 static std::string mimeTEXT("text/plain");
@@ -65,7 +65,7 @@ static std::string mimeOSWB_COLOR("application/x-oswb-color");
 
 static std::string doubleToStr(double d);
 
-ColorDef::ColorDef() :
+PaintDef::PaintDef() :
     descr(_("none")),
     type(NONE),
     r(0),
@@ -75,7 +75,7 @@ ColorDef::ColorDef() :
 {
 }
 
-ColorDef::ColorDef( ColorType type ) :
+PaintDef::PaintDef( ColorType type ) :
     descr(),
     type(type),
     r(0),
@@ -96,7 +96,7 @@ ColorDef::ColorDef( ColorType type ) :
     }
 }
 
-ColorDef::ColorDef( unsigned int r, unsigned int g, unsigned int b, const std::string& description ) :
+PaintDef::PaintDef( unsigned int r, unsigned int g, unsigned int b, const std::string& description ) :
     descr(description),
     type(RGB),
     r(r),
@@ -106,18 +106,18 @@ ColorDef::ColorDef( unsigned int r, unsigned int g, unsigned int b, const std::s
 {
 }
 
-ColorDef::~ColorDef()
+PaintDef::~PaintDef()
 {
 }
 
-ColorDef::ColorDef( ColorDef const &other )
+PaintDef::PaintDef( PaintDef const &other )
 {
     if ( this != &other ) {
         *this = other;
     }
 }
 
-ColorDef& ColorDef::operator=( ColorDef const &other )
+PaintDef& PaintDef::operator=( PaintDef const &other )
 {
     if ( this != & other )
     {
@@ -131,7 +131,7 @@ ColorDef& ColorDef::operator=( ColorDef const &other )
     return *this;
 }
 
-class ColorDef::HookData {
+class PaintDef::HookData {
 public:
     HookData( ColorCallback cb, void* data ) {_cb = cb; _data = data;}
     ColorCallback _cb;
@@ -139,7 +139,7 @@ public:
 };
 
 
-std::vector<std::string> ColorDef::getMIMETypes()
+std::vector<std::string> PaintDef::getMIMETypes()
 {
     std::vector<std::string> listing;
     listing.push_back(mimeOSWB_COLOR);
@@ -148,7 +148,7 @@ std::vector<std::string> ColorDef::getMIMETypes()
     return listing;
 }
 
-void ColorDef::getMIMEData(std::string const & type, char*& dest, int& len, int& format)
+void PaintDef::getMIMEData(std::string const & type, char*& dest, int& len, int& format)
 {
     if ( type == mimeTEXT ) {
         dest = new char[8];
@@ -168,12 +168,12 @@ void ColorDef::getMIMEData(std::string const & type, char*& dest, int& len, int&
     } else if ( type == mimeOSWB_COLOR ) {
         std::string tmp("<paint>");
         switch ( getType() ) {
-            case eek::ColorDef::NONE:
+            case ege::PaintDef::NONE:
             {
                 tmp += "<nocolor/>";
             }
             break;
-            case eek::ColorDef::CLEAR:
+            case ege::PaintDef::CLEAR:
             {
                 tmp += "<clear/>";
             }
@@ -204,7 +204,7 @@ void ColorDef::getMIMEData(std::string const & type, char*& dest, int& len, int&
     }
 }
 
-bool ColorDef::fromMIMEData(std::string const & type, char const * data, int len, int /*format*/)
+bool PaintDef::fromMIMEData(std::string const & type, char const * data, int len, int /*format*/)
 {
     bool worked = false;
     bool changed = false;
@@ -213,11 +213,11 @@ bool ColorDef::fromMIMEData(std::string const & type, char const * data, int len
     } else if ( type == mimeOSWB_COLOR ) {
         std::string xml(data, len);
         if ( xml.find("<nocolor/>") != std::string::npos ) {
-            if ( (this->type != eek::ColorDef::NONE)
+            if ( (this->type != ege::PaintDef::NONE)
                  || (this->r != 0)
                  || (this->g != 0)
                  || (this->b != 0) ) {
-                this->type = eek::ColorDef::NONE;
+                this->type = ege::PaintDef::NONE;
                 this->r = 0;
                 this->g = 0;
                 this->b = 0;
@@ -229,7 +229,7 @@ bool ColorDef::fromMIMEData(std::string const & type, char const * data, int len
             if ( pos != std::string::npos ) {
                 size_t endPos = xml.find(">", pos);
                 std::string srgb = xml.substr(pos, endPos);
-                this->type = eek::ColorDef::RGB;
+                this->type = ege::PaintDef::RGB;
                 size_t numPos = srgb.find("r=");
                 if (numPos != std::string::npos) {
                     char* endPtr = 0;
@@ -279,7 +279,7 @@ bool ColorDef::fromMIMEData(std::string const & type, char const * data, int len
     return worked;
 }
 
-void ColorDef::setRGB( unsigned int r, unsigned int g, unsigned int b )
+void PaintDef::setRGB( unsigned int r, unsigned int g, unsigned int b )
 {
     if ( r != this->r || g != this->g || b != this->b ) {
         this->r = r;
@@ -297,12 +297,12 @@ void ColorDef::setRGB( unsigned int r, unsigned int g, unsigned int b )
     }
 }
 
-void ColorDef::addCallback( ColorCallback cb, void* data )
+void PaintDef::addCallback( ColorCallback cb, void* data )
 {
     _listeners.push_back( new HookData(cb, data) );
 }
 
-void ColorDef::removeCallback( ColorCallback /*cb*/, void* /*data*/ )
+void PaintDef::removeCallback( ColorCallback /*cb*/, void* /*data*/ )
 {
 }
 
@@ -314,7 +314,7 @@ static std::string doubleToStr(double d)
     return out.str();
 }
 
-} // namespace eek
+} // namespace ege
 
 /*
   Local Variables:

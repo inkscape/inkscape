@@ -1,5 +1,5 @@
 /** @file
- * @brief EEK color definition
+ * @brief EGE paint definition
  */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -37,30 +37,30 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef SEEN_EEK_COLOR_DEF_H
-#define SEEN_EEK_COLOR_DEF_H
+#ifndef SEEN_EGE_PAINT_DEF_H
+#define SEEN_EGE_PAINT_DEF_H
 
 #include <string>
 #include <vector>
 
-namespace eek
+namespace ege
 {
 
 typedef void (*ColorCallback)( void* data );
 
 
-class ColorDef
+class PaintDef
 {
 public:
     enum ColorType{CLEAR, NONE, RGB};
 
-    ColorDef();
-    ColorDef(ColorType type);
-    ColorDef( unsigned int r, unsigned int g, unsigned int b, const std::string& description );
-    virtual ~ColorDef();
+    PaintDef();
+    PaintDef(ColorType type);
+    PaintDef( unsigned int r, unsigned int g, unsigned int b, const std::string& description );
+    virtual ~PaintDef();
 
-    ColorDef( ColorDef const &other );
-    virtual ColorDef& operator=( ColorDef const &other );
+    PaintDef( PaintDef const &other );
+    virtual PaintDef& operator=( PaintDef const &other );
 
     ColorType getType() const { return type; }
 
@@ -95,9 +95,9 @@ private:
 };
 
 
-} // namespace eek
+} // namespace ege
 
-#endif // SEEN_EEK_COLOR_DEF_H
+#endif // SEEN_EGE_PAINT_DEF_H
 
 /*
   Local Variables:

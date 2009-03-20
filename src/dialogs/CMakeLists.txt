@@ -1,8 +1,6 @@
 SET(dialogs_SRC
 clonetiler.cpp
 dialog-events.cpp
-eek-color-def.cpp
-eek-preview.cpp
 export.cpp
 extensions.cpp
 fill-style.cpp

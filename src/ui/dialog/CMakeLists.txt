@@ -16,6 +16,8 @@ dock-behavior.cpp
 document-metadata.cpp
 document-properties.cpp
 extension-editor.cpp
+eek-preview.cpp
+ege-paint-def.cpp
 filedialog.cpp
 filedialogimpl-gtkmm.cpp
 fill-and-stroke.cpp
