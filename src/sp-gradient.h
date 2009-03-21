@@ -60,23 +60,31 @@ typedef enum {
  * \todo fixme: Implement more here (Lauris)
  */
 struct SPGradient : public SPPaintServer {
+
 	/** Reference (href) */
 	SPGradientReference *ref;
+
 	/** State in Inkscape gradient system */
 	guint state : 2;
+
 	/** gradientUnits attribute */
 	SPGradientUnits units;
 	guint units_set : 1;
+
 	/** gradientTransform attribute */
 	Geom::Matrix gradientTransform;
 	guint gradientTransform_set : 1;
+
 	/** spreadMethod attribute */
 	SPGradientSpread spread;
 	guint spread_set : 1;
+
 	/** Gradient stops */
 	guint has_stops : 1;
+
 	/** Composed vector */
 	SPGradientVector vector;
+
 	/** Rendered color array (4 * 1024 bytes) */
 	guchar *color;
 
