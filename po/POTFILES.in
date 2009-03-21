@@ -279,7 +279,7 @@ src/vanishing-point.cpp
 src/verbs.cpp
 src/widgets/dash-selector.cpp
 src/widgets/desktop-widget.cpp
-src/widgets/eek-color-def.cpp
+src/widgets/eek-paint-def.cpp
 src/widgets/fill-style.cpp
 src/widgets/font-selector.cpp
 src/widgets/gradient-selector.cpp
