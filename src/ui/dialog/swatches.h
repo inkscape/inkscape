@@ -24,7 +24,7 @@ namespace Dialogs {
 class ColorItem;
 
 /**
- * A panel that displays color swatches.
+ * A panel that displays paint swatches.
  */
 class SwatchesPanel : public Inkscape::UI::Widget::Panel
 {

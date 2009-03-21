@@ -43,6 +43,7 @@
 #include "swatches.h"
 #include "widgets/gradient-vector.h"
 #include "widgets/eek-preview.h"
+#include "display/nr-plain-stuff.h"
 
 namespace Inkscape {
 namespace UI {
@@ -169,6 +170,8 @@ static std::vector<JustForNow*> possible;
 
 static std::vector<std::string> mimeStrings;
 static std::map<std::string, guint> mimeToInt;
+
+static std::map<ColorItem*, guchar*> previewMap;
 
 void ColorItem::_dragGetColorData( GtkWidget */*widget*/,
                                    GdkDragContext */*drag_context*/,
@@ -608,7 +611,21 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
         EekPreview * preview = EEK_PREVIEW(eekWidget);
         Gtk::Widget* newBlot = Glib::wrap(eekWidget);
 
-        eek_preview_set_color( preview, (def.getR() << 8) | def.getR(), (def.getG() << 8) | def.getG(), (def.getB() << 8) | def.getB());
+        if ( previewMap.find(this) == previewMap.end() ){
+            eek_preview_set_color( preview, (def.getR() << 8) | def.getR(),
+                                   (def.getG() << 8) | def.getG(),
+                                   (def.getB() << 8) | def.getB());
+        } else {
+            guchar* px = previewMap[this];
+            int width = 128;
+            int height = 16;
+            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( px, GDK_COLORSPACE_RGB, FALSE, 8, 
+                                                          width, height, width * 3,
+                                                          0, // add delete function
+                                                          0
+                );
+            eek_preview_set_pixbuf( preview, pixbuf );
+        }
         if ( def.getType() != ege::PaintDef::RGB ) {
             using Inkscape::IO::Resource::get_path;
             using Inkscape::IO::Resource::ICONS;
@@ -1320,15 +1337,44 @@ void SwatchesPanel::handleGradientsChange()
                     sp_gradient_ensure_vector( grad );
                     SPGradientStop first = grad->vector.stops[0];
                     SPColor color = first.color;
-                    guint32 together = color.toRGBA32(0);
+                    guint32 together = color.toRGBA32(first.opacity);
 
-                    Glib::ustring name( grad->id );
-                    unsigned int r = SP_RGBA32_R_U(together);
-                    unsigned int g = SP_RGBA32_G_U(together);
-                    unsigned int b = SP_RGBA32_B_U(together);
-                    ColorItem* item = new ColorItem( r, g, b, name );
-                    item->ptr = this;
-                    docPalette->_colors.push_back(item);
+                    // At the moment we can't trust the count of 1 vs 2 stops.
+                    SPGradientStop second = (*it)->vector.stops[1];
+                    SPColor color2 = second.color;
+                    guint32 together2 = color2.toRGBA32(second.opacity);
+
+                    if ( (grad->vector.stops.size() <= 2) && (together == together2) ) {
+                        // Treat as solid-color
+                        Glib::ustring name( grad->id );
+                        unsigned int r = SP_RGBA32_R_U(together);
+                        unsigned int g = SP_RGBA32_G_U(together);
+                        unsigned int b = SP_RGBA32_B_U(together);
+                        ColorItem* item = new ColorItem( r, g, b, name );
+                        item->ptr = this;
+                        docPalette->_colors.push_back(item);
+                    } else {
+                        // Treat as gradient
+                        Glib::ustring name( grad->id );
+                        unsigned int r = SP_RGBA32_R_U(together);
+                        unsigned int g = SP_RGBA32_G_U(together);
+                        unsigned int b = SP_RGBA32_B_U(together);
+                        ColorItem* item = new ColorItem( r, g, b, name );
+                        item->ptr = this;
+                        docPalette->_colors.push_back(item);
+
+#define VBLOCK 16
+                        gint width = 128;
+                        gint height = VBLOCK;
+                        guchar* px = g_new( guchar, 3 * height * width );
+                        nr_render_checkerboard_rgb( px, width, VBLOCK, 3 * width, 0, 0 );
+                        
+                        sp_gradient_render_vector_block_rgb( grad,
+                                                             px, width, height, 3 * width,
+                                                             0, width, TRUE );
+
+                        previewMap[item] = px;
+                    }
                 }
             }
         }
