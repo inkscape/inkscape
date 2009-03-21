@@ -36,6 +36,10 @@
 #include "xml/repr.h"
 #include "xml/repr-sorting.h"
 
+
+#define OSB_NS_URI "http://www.openswatchbook.org/uri/2009/osb"
+
+
 struct SPXMLNs {
     SPXMLNs *next;
     unsigned int uri, prefix;
@@ -149,7 +153,7 @@ static SPXMLNs *namespaces=NULL;
 static void
 sp_xml_ns_register_defaults()
 {
-    static SPXMLNs defaults[10];
+    static SPXMLNs defaults[11];
 
     defaults[0].uri = g_quark_from_static_string(SP_SODIPODI_NS_URI);
     defaults[0].prefix = g_quark_from_static_string("sodipodi");
@@ -179,28 +183,32 @@ sp_xml_ns_register_defaults()
     defaults[6].prefix = g_quark_from_static_string("dc");
     defaults[6].next = &defaults[7];
 
+    defaults[7].uri = g_quark_from_static_string(OSB_NS_URI);
+    defaults[7].prefix = g_quark_from_static_string("osb");
+    defaults[7].next = &defaults[8];
+
     // Inkscape versions prior to 0.44 would write this namespace
     // URI instead of the correct sodipodi namespace; by adding this
     // entry to the table last (where it gets used for URI -> prefix
     // lookups, but not prefix -> URI lookups), we effectively transfer
     // elements in this namespace to the correct sodipodi namespace:
 
-    defaults[7].uri = g_quark_from_static_string(SP_BROKEN_SODIPODI_NS_URI);
-    defaults[7].prefix = g_quark_from_static_string("sodipodi");
-    defaults[7].next = &defaults[8];
+    defaults[8].uri = g_quark_from_static_string(SP_BROKEN_SODIPODI_NS_URI);
+    defaults[8].prefix = g_quark_from_static_string("sodipodi");
+    defaults[8].next = &defaults[9];
 
     // "Duck prion"
     // This URL became widespread due to a bug in versions <= 0.43
 
-    defaults[8].uri = g_quark_from_static_string("http://inkscape.sourceforge.net/DTD/s odipodi-0.dtd");
-    defaults[8].prefix = g_quark_from_static_string("sodipodi");
-    defaults[8].next = &defaults[9];
+    defaults[9].uri = g_quark_from_static_string("http://inkscape.sourceforge.net/DTD/s odipodi-0.dtd");
+    defaults[9].prefix = g_quark_from_static_string("sodipodi");
+    defaults[9].next = &defaults[10];
 
     // This namespace URI is being phased out by Creative Commons
 
-    defaults[9].uri = g_quark_from_static_string(SP_OLD_CC_NS_URI);
-    defaults[9].prefix = g_quark_from_static_string("cc");
-    defaults[9].next = NULL;
+    defaults[10].uri = g_quark_from_static_string(SP_OLD_CC_NS_URI);
+    defaults[10].prefix = g_quark_from_static_string("cc");
+    defaults[10].next = NULL;
 
     namespaces = &defaults[0];
 }

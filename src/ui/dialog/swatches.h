@@ -43,6 +43,7 @@ public:
                                     guint ratio);
     void buttonClicked(bool secondary = false);
     ege::PaintDef def;
+    void* ptr;
 
 private:
     static void _dropDataIn( GtkWidget *widget,
@@ -92,10 +93,13 @@ public:
     virtual void setOrientation( Gtk::AnchorType how );
 
     virtual void setDesktop( SPDesktop* desktop );
+    virtual SPDesktop* getDesktop() {return _currentDesktop;}
+
+    virtual int getSelectedIndex() {return _currentIndex;} // temporary
+    virtual void handleGradientsChange(); // temporary
 
 protected:
     virtual void _handleAction( int setId, int itemId );
-    virtual void _handleGradientsChange();
     virtual void _setDocument( SPDocument *document );
     virtual void _rebuild();
 

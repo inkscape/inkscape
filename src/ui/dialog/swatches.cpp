@@ -26,6 +26,7 @@
 #include "desktop-handles.h"
 #include "desktop-style.h"
 #include "document.h"
+#include "document-private.h"
 #include "extension/db.h"
 #include "inkscape.h"
 #include "inkscape.h"
@@ -40,6 +41,7 @@
 #include "sp-gradient.h"
 #include "sp-gradient-vector.h"
 #include "swatches.h"
+#include "widgets/gradient-vector.h"
 #include "widgets/eek-preview.h"
 
 namespace Inkscape {
@@ -49,6 +51,7 @@ namespace Dialogs {
 
 ColorItem::ColorItem(ege::PaintDef::ColorType type) :
     def(type),
+    ptr(0),
     _isLive(false),
     _linkIsTone(false),
     _linkPercent(0),
@@ -59,6 +62,7 @@ ColorItem::ColorItem(ege::PaintDef::ColorType type) :
 
 ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustring& name ) :
     def( r, g, b, name ),
+    ptr(0),
     _isLive(false),
     _linkIsTone(false),
     _linkPercent(0),
@@ -223,6 +227,7 @@ static gboolean handleLeaveNotify( GtkWidget* /*widget*/, GdkEventCrossing* /*ev
 }
 
 static GtkWidget* popupMenu = 0;
+static std::vector<GtkWidget*> popupExtras;
 static ColorItem* bounceTarget = 0;
 
 static void redirClick( GtkMenuItem *menuitem, gpointer /*user_data*/ )
@@ -236,6 +241,67 @@ static void redirSecondaryClick( GtkMenuItem *menuitem, gpointer /*user_data*/ )
 {
     if ( bounceTarget ) {
         handleSecondaryClick( GTK_WIDGET(menuitem), 0, bounceTarget );
+    }
+}
+
+static void editGradientImpl( SPGradient* gr )
+{
+    if ( gr ) {
+        GtkWidget *dialog = sp_gradient_vector_editor_new( gr );
+        gtk_widget_show( dialog );
+    }
+}
+
+static void editGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
+{
+    if ( bounceTarget ) {
+        SwatchesPanel* swp = bounceTarget->ptr ? reinterpret_cast<SwatchesPanel*>(bounceTarget->ptr) : 0;
+        SPDesktop* desktop = swp ? swp->getDesktop() : 0;
+        SPDocument *doc = desktop ? desktop->doc() : 0;
+        if (doc) {
+            std::string targetName(bounceTarget->def.descr);
+            const GSList *gradients = sp_document_get_resource_list(doc, "gradient");
+            for (const GSList *item = gradients; item; item = item->next) {
+                SPGradient* grad = SP_GRADIENT(item->data);
+                if ( targetName == grad->id ) {
+                    editGradientImpl( grad );
+                    break;
+                }
+            }
+        }
+    }
+}
+
+static void addNewGradient( GtkMenuItem */*menuitem*/, gpointer /*user_data*/ )
+{
+    if ( bounceTarget ) {
+        SwatchesPanel* swp = bounceTarget->ptr ? reinterpret_cast<SwatchesPanel*>(bounceTarget->ptr) : 0;
+        SPDesktop* desktop = swp ? swp->getDesktop() : 0;
+        SPDocument *doc = desktop ? desktop->doc() : 0;
+        if (doc) {
+            Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
+
+            Inkscape::XML::Node *repr = xml_doc->createElement("svg:linearGradient");
+            repr->setAttribute("osb:paint", "solid");
+            Inkscape::XML::Node *stop = xml_doc->createElement("svg:stop");
+            stop->setAttribute("offset", "0");
+            stop->setAttribute("style", "stop-color:#000;stop-opacity:1;");
+            repr->appendChild(stop);
+            Inkscape::GC::release(stop);
+
+            SP_OBJECT_REPR( SP_DOCUMENT_DEFS(doc) )->addChild(repr, NULL);
+
+            SPGradient * gr = static_cast<SPGradient *>(doc->getObjectByRepr(repr));
+
+            Inkscape::GC::release(repr);
+
+
+            editGradientImpl( gr );
+            // Work-around for timing of gradient addition change. Must follow edit.
+            if ( swp ) {
+                swp->handleGradientsChange();
+            }
+        }
     }
 }
 
@@ -265,11 +331,52 @@ static gboolean handleButtonPress( GtkWidget* /*widget*/, GdkEventButton* event,
                               user_data);
             gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
 
+            child = gtk_separator_menu_item_new();
+            gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
+            popupExtras.push_back(child);
+
+            child = gtk_menu_item_new_with_label(_("Add"));
+            g_signal_connect( G_OBJECT(child),
+                              "activate",
+                              G_CALLBACK(addNewGradient),
+                              user_data );
+            gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
+            popupExtras.push_back(child);
+
+            child = gtk_menu_item_new_with_label(_("Delete"));
+            gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
+            //popupExtras.push_back(child);
+            gtk_widget_set_sensitive( child, FALSE );
+
+            child = gtk_menu_item_new_with_label(_("Edit..."));
+            gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
+            g_signal_connect( G_OBJECT(child),
+                              "activate",
+                              G_CALLBACK(editGradient),
+                              user_data );
+            gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
+            popupExtras.push_back(child);
+
+            child = gtk_separator_menu_item_new();
+            gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
+            popupExtras.push_back(child);
+
+            child = gtk_menu_item_new_with_label(_("Convert"));
+            gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
+            //popupExtras.push_back(child);
+            gtk_widget_set_sensitive( child, FALSE );
+
             gtk_widget_show_all(popupMenu);
         }
 
         ColorItem* item = reinterpret_cast<ColorItem*>(user_data);
         if ( item ) {
+            SwatchesPanel* swp = item->ptr ? reinterpret_cast<SwatchesPanel*>(item->ptr) : 0;
+            bool show = swp && (swp->getSelectedIndex() == 0);
+            for ( std::vector<GtkWidget*>::iterator it = popupExtras.begin(); it != popupExtras.end(); ++ it) {
+                gtk_widget_set_sensitive(*it, show);
+            }
+
             bounceTarget = item;
             if ( popupMenu ) {
                 gtk_menu_popup(GTK_MENU(popupMenu), NULL, NULL, NULL, NULL, event->button, event->time);
@@ -998,7 +1105,9 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
     Gtk::RadioMenuItem* hotItem = 0;
     _holder = new PreviewHolder();
     _clear = new ColorItem( ege::PaintDef::CLEAR );
+    _clear->ptr = this;
     _remove = new ColorItem( ege::PaintDef::NONE );
+    _remove->ptr = this;
     {
         JustForNow *docPalette = new JustForNow();
 
@@ -1122,14 +1231,14 @@ void SwatchesPanel::_setDocument( SPDocument *document )
         if ( _currentDocument ) {
             _resourceConnection = sp_document_resources_changed_connect(document,
                                                                         "gradient",
-                                                                        sigc::mem_fun(*this, &SwatchesPanel::_handleGradientsChange));
+                                                                        sigc::mem_fun(*this, &SwatchesPanel::handleGradientsChange));
         }
 
-        _handleGradientsChange();
+        handleGradientsChange();
     }
 }
 
-void SwatchesPanel::_handleGradientsChange()
+void SwatchesPanel::handleGradientsChange()
 {
     std::vector<SPGradient*> newList;
 
@@ -1148,25 +1257,20 @@ void SwatchesPanel::_handleGradientsChange()
         if ( !newList.empty() ) {
             for ( std::vector<SPGradient*>::iterator it = newList.begin(); it != newList.end(); ++it )
             {
-                if ( (*it)->vector.stops.size() == 2 ) {
-                    SPGradientStop first = (*it)->vector.stops[0];
-                    SPGradientStop second = (*it)->vector.stops[1];
-                    if ((first.offset <0.0001) && (static_cast<int>(second.offset * 100.0f) == 100)) {
-                        SPColor color = first.color;
-                        guint32 together = color.toRGBA32(0);
+                SPGradient* grad = *it;
+                if ( grad->repr->attribute("osb:paint") ) {
+                    sp_gradient_ensure_vector( grad );
+                    SPGradientStop first = grad->vector.stops[0];
+                    SPColor color = first.color;
+                    guint32 together = color.toRGBA32(0);
 
-                        // Pick only single-color gradients for now
-                        SPColor color2 = second.color;
-                        guint32 together2 = color2.toRGBA32(0);
-                        if ( together == together2 ) {
-                            Glib::ustring name((*it)->id);
-                            unsigned int r = SP_RGBA32_R_U(together);
-                            unsigned int g = SP_RGBA32_G_U(together);
-                            unsigned int b = SP_RGBA32_B_U(together);
-                            ColorItem* item = new ColorItem( r, g, b, name );
-                            docPalette->_colors.push_back(item);
-                        }
-                    }
+                    Glib::ustring name( grad->id );
+                    unsigned int r = SP_RGBA32_R_U(together);
+                    unsigned int g = SP_RGBA32_G_U(together);
+                    unsigned int b = SP_RGBA32_B_U(together);
+                    ColorItem* item = new ColorItem( r, g, b, name );
+                    item->ptr = this;
+                    docPalette->_colors.push_back(item);
                 }
             }
         }
