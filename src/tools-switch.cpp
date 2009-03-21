@@ -169,13 +169,13 @@ tools_switch(SPDesktop *dt, int num)
             dt->set_event_context(SP_TYPE_PENCIL_CONTEXT, tool_names[num]);
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
-            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to append to selected path. <b>Ctrl+click</b> to create single dots."));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to append to selected path."));
             break;
         case TOOLS_FREEHAND_PEN:
             dt->set_event_context(SP_TYPE_PEN_CONTEXT, tool_names[num]);
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
-            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path. <b>Ctrl+click</b> to create single dots."));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path. <b>Ctrl+click</b> to create single dots (straight line modes only)."));
             break;
         case TOOLS_CALLIGRAPHIC:
             dt->set_event_context(SP_TYPE_DYNA_DRAW_CONTEXT, tool_names[num]);
