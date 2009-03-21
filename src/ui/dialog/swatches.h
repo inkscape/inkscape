@@ -21,64 +21,7 @@ namespace Inkscape {
 namespace UI {
 namespace Dialogs {
 
-
-void _loadPaletteFile( gchar const *filename );
-
-/**
- * The color swatch you see on screen as a clickable box.
- */
-class ColorItem : public Inkscape::UI::Previewable
-{
-    friend void _loadPaletteFile( gchar const *filename );
-public:
-    ColorItem( ege::PaintDef::ColorType type );
-    ColorItem( unsigned int r, unsigned int g, unsigned int b,
-               Glib::ustring& name );
-    virtual ~ColorItem();
-    ColorItem(ColorItem const &other);
-    virtual ColorItem &operator=(ColorItem const &other);
-    virtual Gtk::Widget* getPreview(PreviewStyle style,
-                                    ViewType view,
-                                    ::PreviewSize size,
-                                    guint ratio);
-    void buttonClicked(bool secondary = false);
-    ege::PaintDef def;
-    void* ptr;
-
-private:
-    static void _dropDataIn( GtkWidget *widget,
-                             GdkDragContext *drag_context,
-                             gint x, gint y,
-                             GtkSelectionData *data,
-                             guint info,
-                             guint event_time,
-                             gpointer user_data);
-
-    static void _dragGetColorData( GtkWidget *widget,
-                                   GdkDragContext *drag_context,
-                                   GtkSelectionData *data,
-                                   guint info,
-                                   guint time,
-                                   gpointer user_data);
-
-    static void _wireMagicColors( void* p );
-    static void _colorDefChanged(void* data);
-
-    void _linkTint( ColorItem& other, int percent );
-    void _linkTone( ColorItem& other, int percent, int grayLevel );
-
-    Gtk::Tooltips tips;
-    std::vector<Gtk::Widget*> _previews;
-
-    bool _isLive;
-    bool _linkIsTone;
-    int _linkPercent;
-    int _linkGray;
-    ColorItem* _linkSrc;
-    std::vector<ColorItem*> _listeners;
-};
-	
-class RemoveColorItem;
+class ColorItem;
 
 /**
  * A panel that displays color swatches.
@@ -90,6 +33,7 @@ public:
     virtual ~SwatchesPanel();
 
     static SwatchesPanel& getInstance();
+
     virtual void setOrientation( Gtk::AnchorType how );
 
     virtual void setDesktop( SPDesktop* desktop );
@@ -106,8 +50,6 @@ protected:
 private:
     SwatchesPanel(SwatchesPanel const &); // no copy
     SwatchesPanel &operator=(SwatchesPanel const &); // no assign
-
-    static SwatchesPanel* instance;
 
     PreviewHolder* _holder;
     ColorItem* _clear;
