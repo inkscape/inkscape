@@ -105,7 +105,7 @@ private:
     ColorItem* _linkSrc;
     std::vector<ColorItem*> _listeners;
 };
-	
+
 
 
 ColorItem::ColorItem(ege::PaintDef::ColorType type) :
@@ -172,6 +172,7 @@ static std::vector<std::string> mimeStrings;
 static std::map<std::string, guint> mimeToInt;
 
 static std::map<ColorItem*, guchar*> previewMap;
+static std::map<ColorItem*, SPGradient*> gradMap; // very temporary workaround.
 
 void ColorItem::_dragGetColorData( GtkWidget */*widget*/,
                                    GdkDragContext */*drag_context*/,
@@ -618,7 +619,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
             guchar* px = previewMap[this];
             int width = 128;
             int height = 16;
-            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( px, GDK_COLORSPACE_RGB, FALSE, 8, 
+            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( px, GDK_COLORSPACE_RGB, FALSE, 8,
                                                           width, height, width * 3,
                                                           0, // add delete function
                                                           0
@@ -794,11 +795,19 @@ void ColorItem::buttonClicked(bool secondary)
                 break;
             }
             case ege::PaintDef::RGB: {
-                gchar c[64];
-                guint32 rgba = (def.getR() << 24) | (def.getG() << 16) | (def.getB() << 8) | 0xff;
-                sp_svg_write_color(c, sizeof(c), rgba);
-
-                sp_repr_css_set_property( css, attrName, c );
+                Glib::ustring colorspec;
+                if ( gradMap.find(this) == gradMap.end() ){
+                    gchar c[64];
+                    guint32 rgba = (def.getR() << 24) | (def.getG() << 16) | (def.getB() << 8) | 0xff;
+                    sp_svg_write_color(c, sizeof(c), rgba);
+                    colorspec = c;
+                } else {
+                    SPGradient* grad = gradMap[this];
+                    colorspec = "url(#";
+                    colorspec += grad->id;
+                    colorspec += ")";
+                }
+                sp_repr_css_set_property( css, attrName, colorspec.c_str() );
                 descr = secondary? _("Set stroke color from swatch") : _("Set fill color from swatch");
                 break;
             }
@@ -1352,6 +1361,7 @@ void SwatchesPanel::handleGradientsChange()
                         ColorItem* item = new ColorItem( r, g, b, name );
                         item->ptr = this;
                         docPalette->_colors.push_back(item);
+                        gradMap[item] = grad;
                     } else {
                         // Treat as gradient
                         Glib::ustring name( grad->id );
@@ -1367,12 +1377,13 @@ void SwatchesPanel::handleGradientsChange()
                         gint height = VBLOCK;
                         guchar* px = g_new( guchar, 3 * height * width );
                         nr_render_checkerboard_rgb( px, width, VBLOCK, 3 * width, 0, 0 );
-                        
+
                         sp_gradient_render_vector_block_rgb( grad,
                                                              px, width, height, 3 * width,
                                                              0, width, TRUE );
 
                         previewMap[item] = px;
+                        gradMap[item] = grad;
                     }
                 }
             }
