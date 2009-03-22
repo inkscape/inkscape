@@ -420,12 +420,20 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
     }
 
     if (SP_IS_GROUP(item) && !SP_IS_BOX3D(item)) {
+        GSList *children = NULL;
         for (SPObject *child = sp_object_first_child(SP_OBJECT(item)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             if (SP_IS_ITEM(child)) {
-                if (sp_tweak_dilate_recursive (selection, SP_ITEM(child), p, vector, mode, radius, force, fidelity, reverse))
-                    did = true;
+                children = g_slist_prepend(children, child);
             }
         }
+
+        for (GSList *i = children; i; i = i->next) {
+            SPItem *child = SP_ITEM(i->data);
+            if (sp_tweak_dilate_recursive (selection, SP_ITEM(child), p, vector, mode, radius, force, fidelity, reverse))
+                did = true;
+        }
+
+        g_slist_free(children);
 
     } else {
         if (mode == TWEAK_MODE_MOVE) {
@@ -524,6 +532,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
                             }
                             Inkscape::GC::release(copy);
                         }
+                        did = true;
                     }
                 }
             }
