@@ -375,6 +375,7 @@ static gint sp_vruler_motion_notify (GtkWidget      *widget,
 				      GdkEventMotion *event);
 static void sp_vruler_draw_ticks    (GtkRuler       *ruler);
 static void sp_vruler_draw_pos      (GtkRuler       *ruler);
+static void sp_vruler_size_request (GtkWidget *widget, GtkRequisition *requisition);
 static void sp_vruler_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 
 static GtkWidgetClass *vruler_parent_class;
@@ -421,6 +422,7 @@ sp_vruler_class_init (SPVRulerClass *klass)
 
   widget_class->motion_notify_event = sp_vruler_motion_notify;
   widget_class->size_allocate = sp_vruler_size_allocate;
+  widget_class->size_request = sp_vruler_size_request;
 
   ruler_class->draw_ticks = sp_vruler_draw_ticks;
   ruler_class->draw_pos = sp_vruler_draw_pos;
@@ -682,6 +684,13 @@ sp_vruler_draw_pos (GtkRuler *ruler)
     }
 }
 
+static void
+sp_vruler_size_request (GtkWidget *widget, GtkRequisition *requisition)
+{
+  requisition->width = widget->style->xthickness * 2 + RULER_WIDTH;
+}
+
+
 /**
  * The vruler widget's size_allocate callback.
  */
@@ -694,7 +703,7 @@ sp_vruler_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
     // First call the default gtk_widget_size_allocate() method (which is being overridden here)
     if (GTK_WIDGET_CLASS (vruler_parent_class)->size_allocate)
         (* GTK_WIDGET_CLASS (vruler_parent_class)->size_allocate) (widget, allocation);
- 
+
     // Now the size of the ruler has changed, the ruler bounds (upper & lower) need to be updated
     // For this we first need to obtain a pointer to the desktop, by walking up the tree of ancestors    
     GtkWidget *parent = gtk_widget_get_parent(widget);    
