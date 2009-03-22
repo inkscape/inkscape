@@ -410,7 +410,6 @@ static gboolean handleButtonPress( GtkWidget* /*widget*/, GdkEventButton* event,
             gtk_widget_set_sensitive( child, FALSE );
 
             child = gtk_menu_item_new_with_label(_("Edit..."));
-            gtk_menu_shell_append(GTK_MENU_SHELL(popupMenu), child);
             g_signal_connect( G_OBJECT(child),
                               "activate",
                               G_CALLBACK(editGradient),
