@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-03-14 15:16+0100\n"
-"PO-Revision-Date: 2009-03-14 16:40+0100\n"
+"POT-Creation-Date: 2009-03-21 08:39+0100\n"
+"PO-Revision-Date: 2009-03-22 22:48+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -55,7 +55,6 @@ msgstr "Gel mat"
 #: ../share/filters/filters.svg.h:54
 #: ../share/filters/filters.svg.h:57
 #: ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:70
 #: ../share/filters/filters.svg.h:72
 #: ../share/filters/filters.svg.h:74
 #: ../share/filters/filters.svg.h:92
@@ -82,7 +81,7 @@ msgstr "Gel brillant, rétro-éclairé"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Bulging, glossy jelly covering; two light sources"
-msgstr "Couche de gel brillant et bombé ; deux sources d'éclairage"
+msgstr "Couche de gel brillant et bombé ; deux sources d'éclairage"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Metal casting"
@@ -108,16 +107,16 @@ msgid "Blurs"
 msgstr "Flous"
 
 #: ../share/filters/filters.svg.h:6
-msgid "Blur as if the object flies horizontally"
-msgstr "Rendre flou comme si l'objet volait horizontalement"
+msgid "Blur as if the object flies horizontally; adjust Standard Deviation to vary force"
+msgstr "Rendre flou comme si l'objet volait horizontalement ; ajuster la variance pour en modifier la force"
 
 #: ../share/filters/filters.svg.h:7
 msgid "Motion blur, vertical"
 msgstr "Flou cinétique vertical"
 
 #: ../share/filters/filters.svg.h:7
-msgid "Blur as if the object flies vertically"
-msgstr "Rendre flou comme si l'objet volait verticalement"
+msgid "Blur as if the object flies vertically; adjust Standard Deviation to vary force"
+msgstr "Rendre flou comme si l'objet volait verticalement ; ajuster la variance pour en modifier la force"
 
 #: ../share/filters/filters.svg.h:8
 msgid "Apparition"
@@ -134,9 +133,9 @@ msgstr "Découpage"
 #: ../share/filters/filters.svg.h:9
 #: ../share/filters/filters.svg.h:41
 #: ../share/filters/filters.svg.h:88
-#: ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:130
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:141
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -161,15 +160,16 @@ msgstr "Rugosité"
 #: ../share/filters/filters.svg.h:11
 #: ../share/filters/filters.svg.h:111
 #: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:119
 #: ../share/filters/filters.svg.h:120
-#: ../share/filters/filters.svg.h:121
-#: ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:126
 msgid "ABCs"
 msgstr "ABC"
 
 #: ../share/filters/filters.svg.h:11
-msgid "Small-scale roughened edges"
+#, fuzzy
+msgid "Small-scale roughening to edges and content"
 msgstr "Bords rendus rugueux sur une petite amplitude"
 
 #: ../share/filters/filters.svg.h:12
@@ -185,9 +185,9 @@ msgstr "Tampon en caoutchouc"
 #: ../share/filters/filters.svg.h:37
 #: ../share/filters/filters.svg.h:38
 #: ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:117
 #: ../share/filters/filters.svg.h:118
-#: ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Overlays"
 msgstr "Superpositions"
 
@@ -284,28 +284,32 @@ msgstr "Fourrure de léopard"
 #: ../share/filters/filters.svg.h:62
 #: ../share/filters/filters.svg.h:63
 #: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:70
 #: ../share/filters/filters.svg.h:81
 #: ../share/filters/filters.svg.h:82
 #: ../share/filters/filters.svg.h:83
 #: ../share/filters/filters.svg.h:85
 #: ../share/filters/filters.svg.h:93
-#: ../share/filters/filters.svg.h:117
-#: ../share/filters/filters.svg.h:125
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:162
 msgid "Materials"
 msgstr "Matières"
 
 #: ../share/filters/filters.svg.h:21
-msgid "Leopard spots (loses object's natural color)"
-msgstr "Taches de léopard (l'objet perd sa couleur naturelle)"
+msgid "Leopard spots (loses object's own color)"
+msgstr "Taches de léopard (l'objet perd sa propre couleur)"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Zebra"
 msgstr "Zèbre"
 
 #: ../share/filters/filters.svg.h:22
-msgid "Irregular vertical dark stripes (loses object's natural color)"
-msgstr "Bandes verticales sombres et irrégulières (l'objet perd sa couleur naturelle)"
+msgid "Irregular vertical dark stripes (loses object's own color)"
+msgstr "Bandes verticales sombres et irrégulières (l'objet perd sa propre couleur)"
 
 #: ../share/filters/filters.svg.h:23
 msgid "Clouds"
@@ -332,21 +336,29 @@ msgstr "Netteté"
 #: ../share/filters/filters.svg.h:100
 #: ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:125
 #: ../share/filters/filters.svg.h:128
-#: ../share/filters/filters.svg.h:132
 msgid "Image effects"
 msgstr "Effets d'image"
+
+#: ../share/filters/filters.svg.h:24
+msgid "Sharpen edges and boundaries within the object, force=0.15"
+msgstr "Aiguiser les bords et frontières intérieures de l'objet, force=0,15"
 
 #: ../share/filters/filters.svg.h:25
 msgid "Sharpen more"
 msgstr "Renforcer la netteté"
+
+#: ../share/filters/filters.svg.h:25
+msgid "Sharpen edges and boundaries within the object, force=0.3"
+msgstr "Aiguiser les bords et frontières intérieures de l'objet, force=0,3"
 
 #: ../share/filters/filters.svg.h:26
 msgid "Oil painting"
 msgstr "Peinture à l'huile"
 
 #: ../share/filters/filters.svg.h:26
-msgid "Simulates oil painting style"
+msgid "Simulate oil painting style"
 msgstr "Simule une peinture à l'huile"
 
 #: ../share/filters/filters.svg.h:27
@@ -429,8 +441,8 @@ msgid "Color"
 msgstr "Couleur"
 
 #: ../share/filters/filters.svg.h:32
-msgid "Render object in black and white"
-msgstr "Colore l'objet en noir et blanc"
+msgid "Render in shades of gray by reducing saturation to zero"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:33
 #: ../src/ui/widget/selected-style.cpp:228
@@ -438,18 +450,16 @@ msgid "Invert"
 msgstr "Inverser"
 
 #: ../share/filters/filters.svg.h:33
-#: ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:103
-msgid "Invert colors of object"
-msgstr "Inverse les couleurs de l'objet"
+msgid "Invert colors"
+msgstr "Inverse les couleurs"
 
 #: ../share/filters/filters.svg.h:34
 msgid "Sepia"
 msgstr "Sépia"
 
 #: ../share/filters/filters.svg.h:34
-msgid "Render object in warm sepia tones"
-msgstr "Colore l'objet avec des tons chauds sépia"
+msgid "Render in warm sepia tones"
+msgstr "Rendu en tons sépia chauds"
 
 #: ../share/filters/filters.svg.h:35
 msgid "Age"
@@ -472,12 +482,16 @@ msgstr "Matière organique"
 #: ../share/filters/filters.svg.h:84
 #: ../share/filters/filters.svg.h:86
 #: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:132
 #: ../share/filters/filters.svg.h:134
 #: ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136
 #: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:138
 #: ../share/filters/filters.svg.h:139
-#: ../share/filters/filters.svg.h:140
 msgid "Textures"
 msgstr "Textures"
 
@@ -554,15 +568,15 @@ msgid "Pixel smear"
 msgstr "Barbouillage de pixels"
 
 #: ../share/filters/filters.svg.h:45
-msgid "Vangogh paintings effect for bitmaps"
-msgstr "Effets de peinture Vangogh, pour les images bitmap"
+msgid "Van Gogh painting effect for bitmaps"
+msgstr "Effets de peinture Van Gogh, pour les images bitmap"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Pixel smear, glossy"
 msgstr "Trainée de pixel brillante"
 
 #: ../share/filters/filters.svg.h:46
-msgid "Glossy paintings effect for bitmaps"
+msgid "Glossy painting effect for bitmaps"
 msgstr "Effet de peinture brillante pour bitmap"
 
 #: ../share/filters/filters.svg.h:47
@@ -573,33 +587,30 @@ msgstr "Embossage TSL"
 #: ../share/filters/filters.svg.h:49
 #: ../share/filters/filters.svg.h:107
 #: ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:126
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:127
 msgid "Bumps"
 msgstr "Embossage"
 
 #: ../share/filters/filters.svg.h:47
-msgid "Specular bump"
-msgstr "Embossage spéculaire"
+msgid "Highly flexible specular bump based on colors hue saturation and luminance"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:48
 msgid "Cracked glass"
 msgstr "Verre fissuré"
 
 #: ../share/filters/filters.svg.h:48
-#, fuzzy
-msgid "Under glass effect for bitmaps"
-msgstr "Convertir les effets de fondu en bitmaps"
+msgid "Under a cracked glass"
+msgstr "Sous un verre fissuré"
 
 #: ../share/filters/filters.svg.h:49
 msgid "HSL bubbles"
 msgstr "Bulles TSL"
 
 #: ../share/filters/filters.svg.h:49
-#: ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:131
-msgid "HSL-sensitive Bubbles effect for bitmaps"
-msgstr "Effet de bulles sensibles aux valeurs TSL, pour bitmaps"
+msgid "Highly flexible bubbles effect depending on color hue saturation and luminance"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:50
 msgid "Glowing bubble"
@@ -616,7 +627,7 @@ msgid "Ridges"
 msgstr "Crêtes"
 
 #: ../share/filters/filters.svg.h:50
-msgid "Bubble effect with refration and glow"
+msgid "Bubble effect with refraction and glow"
 msgstr "Effet de bulle avec réfraction et lueur"
 
 #: ../share/filters/filters.svg.h:51
@@ -632,8 +643,8 @@ msgid "Melt and glow"
 msgstr "Fondu éclatant"
 
 #: ../share/filters/filters.svg.h:52
-msgid "Melting texture with a glow"
-msgstr "Texture fondante, avec un éclat"
+msgid "Melting parts of object together, with a glossy bevel and a glow"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:53
 msgid "Badge"
@@ -648,8 +659,8 @@ msgid "Pastel Bevel"
 msgstr "Biseau pastel"
 
 #: ../share/filters/filters.svg.h:54
-msgid "Soft pastel look bevel"
-msgstr "Biseau pastel doux"
+msgid "Soft, pastel-colored, blurry bevel"
+msgstr "Biseau pastel doux et flou"
 
 #: ../share/filters/filters.svg.h:55
 msgid "Thin Membrane"
@@ -687,8 +698,8 @@ msgid "Scatter"
 msgstr "Éparpiller"
 
 #: ../share/filters/filters.svg.h:58
-msgid "Leaves on the ground in Fall or living foliage"
-msgstr "Feuilles sur le sol en automne or feuillage vivant"
+msgid "Leaves on the ground in Fall, or living foliage"
+msgstr "Feuilles sur le sol en automne, ou feuillage vivant"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Translucent"
@@ -700,7 +711,7 @@ msgstr "Effet de plastique translucide et lumineux"
 
 #: ../share/filters/filters.svg.h:60
 #, fuzzy
-msgid "Crossmooth"
+msgid "Cross-smooth"
 msgstr "doux"
 
 #: ../share/filters/filters.svg.h:60
@@ -728,7 +739,7 @@ msgid "Cracked Lava"
 msgstr "Lave fissurée"
 
 #: ../share/filters/filters.svg.h:63
-msgid "A volcanic texture somewhat leather like"
+msgid "A volcanic texture, a little like leather"
 msgstr "Une texture volcanique, ressemblant quelque peu à du cuir"
 
 #: ../share/filters/filters.svg.h:64
@@ -737,23 +748,23 @@ msgstr "Écorce"
 
 #: ../share/filters/filters.svg.h:64
 msgid "Bark texture, vertical; use with deep colors"
-msgstr "Texture d'écorce, verticale ; utiliser avec des couleurs profondes"
+msgstr "Texture d'écorce, verticale ; utiliser avec des couleurs profondes"
 
 #: ../share/filters/filters.svg.h:65
 msgid "Lizard skin"
 msgstr "Peau de lézard"
 
 #: ../share/filters/filters.svg.h:65
-msgid "Stylized reptile skin texture sensitive to color change"
-msgstr "Texture en peau de lézard stylisée, sensible aux changements de couleur"
+msgid "Stylized reptile skin texture"
+msgstr "Texture en peau de reptile stylisée"
 
 #: ../share/filters/filters.svg.h:66
 msgid "Stone wall"
 msgstr "Mur de pierres"
 
 #: ../share/filters/filters.svg.h:66
-msgid "Stone wall texture to use with colors containing some black"
-msgstr "Texture en mur de pierre à utiliser avec des couleurs contenant du noir."
+msgid "Stone wall texture to use with dark colors"
+msgstr "Texture en mur de pierre à utiliser avec des couleurs sombres"
 
 #: ../share/filters/filters.svg.h:67
 msgid "Silk carpet"
@@ -768,7 +779,7 @@ msgid "Refractive gel A"
 msgstr "Gel réfractif A"
 
 #: ../share/filters/filters.svg.h:68
-msgid "Gel effect with light refration"
+msgid "Gel effect with light refraction"
 msgstr "Effet de gel avec réfraction de lumière"
 
 #: ../share/filters/filters.svg.h:69
@@ -776,16 +787,16 @@ msgid "Refractive gel B"
 msgstr "Gel réfractif B"
 
 #: ../share/filters/filters.svg.h:69
-msgid "Gel effect with strong refration"
+msgid "Gel effect with strong refraction"
 msgstr "Effet de gel avec réfraction forte"
 
 #: ../share/filters/filters.svg.h:70
-msgid "Soft metal"
-msgstr "Métal doux"
+msgid "Metallized paint"
+msgstr "Painture métalique"
 
 #: ../share/filters/filters.svg.h:70
-msgid "Metal with a soft lighting, slightly translucent at the edges"
-msgstr "Métal avec une lumière douce, légèrement translucide sur les bords"
+msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
+msgstr "Effet métalisé, avec une lumière douce, légèrement translucide sur les bords"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Dragee"
@@ -842,7 +853,7 @@ msgstr "Enfoncement parallèle"
 #: ../share/filters/filters.svg.h:96
 #: ../share/filters/filters.svg.h:99
 #: ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:133
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Morphologie"
@@ -880,29 +891,32 @@ msgid "Cubes"
 msgstr "Cubes"
 
 #: ../share/filters/filters.svg.h:80
-msgid "Cubes for playing with the Morphology primitive"
-msgstr "Cubes pour jouer avec la primitive Morphologie"
+msgid "Scattered cubes; adjust the Morphology primitive to vary size"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:81
 msgid "Peel off"
 msgstr "Peinture écaillée"
 
 #: ../share/filters/filters.svg.h:81
-msgid "Alterated Painting on a wall easy to change with Turbulence"
-msgstr ""
+msgid "Peeling painting on a wall"
+msgstr "Peinture écaillée sur un mur"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Gold splatter"
 msgstr "Projection d'or"
 
 #: ../share/filters/filters.svg.h:82
-#: ../share/filters/filters.svg.h:83
 msgid "Splattered cast metal, with golden highlights"
 msgstr "Métal coulé éparpillé, avec des reflets dorés"
 
 #: ../share/filters/filters.svg.h:83
 msgid "Gold paste"
 msgstr "Pâte d'or"
+
+#: ../share/filters/filters.svg.h:83
+msgid "Fat pasted cast metal, with golden highlights"
+msgstr "Coulures de métal collées et grasses, avec des reflets dorés"
 
 #: ../share/filters/filters.svg.h:84
 msgid "Crumpled plastic"
@@ -925,7 +939,7 @@ msgid "Rough paper"
 msgstr "Papier brut"
 
 #: ../share/filters/filters.svg.h:86
-msgid "Aquarel paper effect which can be used for pictures as for objects"
+msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr "Effet de papier à aquarelle, utilisable autant pour les images que pour les objets"
 
 #: ../share/filters/filters.svg.h:87
@@ -949,7 +963,7 @@ msgid "Air spray"
 msgstr "Aérosol"
 
 #: ../share/filters/filters.svg.h:89
-msgid "Air Spray managed through the displacement map amount"
+msgid "Air Spray; adjust the Displacement Map amount"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:90
@@ -961,7 +975,7 @@ msgid "Blurred colorized contour, filled inside"
 msgstr "Contour flou colorisé, rempli à l'intérieur"
 
 #: ../share/filters/filters.svg.h:91
-msgid "Cool outline"
+msgid "Cool outside"
 msgstr "Contour frais"
 
 #: ../share/filters/filters.svg.h:91
@@ -973,23 +987,23 @@ msgid "Electronic microscopy"
 msgstr "Microscopie électronique"
 
 #: ../share/filters/filters.svg.h:92
-msgid "A bevel with the crude light of electronic microscopy"
-msgstr "Un biseau avec la lumière brute d'un microscope électronique"
+msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
+msgstr "Un biseau, lumière brute, décoloration et lueur comme avec un microscope électronique"
 
 #: ../share/filters/filters.svg.h:93
-msgid "Kilt"
-msgstr "Kilt"
+msgid "Tartan"
+msgstr "Écossais"
 
 #: ../share/filters/filters.svg.h:93
-msgid "Checkered kilt fabric"
-msgstr "Tissus de kilt à damiers"
+msgid "Checkered tartan pattern"
+msgstr "Motif écossais à damiers"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Invert hue"
 msgstr "Inverser la teinte"
 
 #: ../share/filters/filters.svg.h:94
-msgid "Invert hue or rotate it at your convenience"
+msgid "Invert hue, or rotate it"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:95
@@ -1013,7 +1027,7 @@ msgid "Fancy blur"
 msgstr "Flou fantaisie"
 
 #: ../share/filters/filters.svg.h:97
-msgid "Smooth colorized contour wich allows desaturation and hue rotation"
+msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:98
@@ -1045,17 +1059,25 @@ msgid "Soft bump"
 msgstr "Embossage doux"
 
 #: ../share/filters/filters.svg.h:101
-msgid "Convolution bump with a blur it can give nice embossing effects"
-msgstr "Embossage de convolution avec un flou ; peut donner un effet d'embossage sympa"
+msgid "Convolution bump; with a blur, it can give nice embossing effects"
+msgstr "Embossage de convolution ; avec un flou, peut donner un effet d'embossage sympa"
 
 #: ../share/filters/filters.svg.h:102
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "Solariser"
 
+#: ../share/filters/filters.svg.h:102
+msgid "Classical photographic solarization effect"
+msgstr ""
+
 #: ../share/filters/filters.svg.h:103
-msgid "Moonarise"
+msgid "Moonarize"
 msgstr "Lunariser"
+
+#: ../share/filters/filters.svg.h:103
+msgid "An effect between solarize and invert which often preserves sky and water lights"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:104
 msgid "Glow and draw"
@@ -1086,28 +1108,34 @@ msgid "HSL bumps, alpha"
 msgstr "Embossage TSL, avec transparence"
 
 #: ../share/filters/filters.svg.h:107
-msgid "Bump for bitmaps"
-msgstr "Embossage pour les bitmaps"
+msgid "Same than HSL bumps but with an alpha added for combination with transparency depending filters"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:108
 msgid "HSL bubbles, alpha"
 msgstr "Bulles TSL, avec transparence"
+
+#: ../share/filters/filters.svg.h:108
+msgid "Same than HSL bubbles but with an alpha added for combination with transparency depending filters"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:109
 msgid "Smooth edges"
 msgstr "Bords doux"
 
 #: ../share/filters/filters.svg.h:109
-msgid "Smooth the outside of whapes and pictures without alterating their contents"
-msgstr ""
+#, fuzzy
+msgid "Smooth the outside of shapes and pictures without altering their contents"
+msgstr "Masque flou sur les bords sans altération du contenu"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Torn edges"
 msgstr "Bords déchirés"
 
 #: ../share/filters/filters.svg.h:110
-msgid "Displace the outside of shapes and pictures without alterating their content"
-msgstr ""
+#, fuzzy
+msgid "Displace the outside of shapes and pictures without altering their content"
+msgstr "Masque flou sur les bords sans altération du contenu"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Feather"
@@ -1131,7 +1159,7 @@ msgstr "Éclairage spéculaire"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Basic specular bevel to use for building textures"
-msgstr "Biseau spéculaire de base pour les textures de construction"
+msgstr "Biseau spéculaire de base pour la construction de textures"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Roughen inside"
@@ -1158,190 +1186,399 @@ msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:117
-msgid "3D wood"
-msgstr "Bois en 3D"
-
-#: ../share/filters/filters.svg.h:117
-msgid "3D warped wood texture based on blur and displacement map"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:118
 msgid "People"
 msgstr "Foule"
 
-#: ../share/filters/filters.svg.h:118
-msgid "Colorized blotches evocating people walking on a wide place"
-msgstr "Plaques colorisées évoquant une foule marchant sur une grande place"
+#: ../share/filters/filters.svg.h:117
+msgid "Colorized blotches, like a crowd of people"
+msgstr "Plaques colorisées évoquant une foule de gens"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Scotland"
 msgstr "Écosse"
 
-#: ../share/filters/filters.svg.h:119
-msgid "Colorized mountains tops out of the fog"
+#: ../share/filters/filters.svg.h:118
+msgid "Colorized mountain tops out of the fog"
 msgstr "Sommets colorisés émergeant du brouillard"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Noise transparency"
 msgstr "Transparence bruitée"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Basic noise transparency texture"
 msgstr "Texture en  transparence bruitée de base"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "Noise fill"
 msgstr "Remplissage bruité"
 
-#: ../share/filters/filters.svg.h:121
-msgid "Basic noise fill texture"
-msgstr "Texture de remplissage de bruit de base"
+#: ../share/filters/filters.svg.h:120
+msgid "Basic noise fill texture; adjust color in Flood"
+msgstr "Texture de remplissage de bruit de base ; ajuster la couleur avec Remplissage"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Garden of Delights"
 msgstr "Jardin des délices"
 
-#: ../share/filters/filters.svg.h:122
-msgid "Fantasmagoric turbulences evocating Hieronymus Bosch Garden of Delights"
-msgstr "Turbulences fantasmagoriques évoquant  <i>Le Jardin des délices</i> de Jérôme Bosch"
+#: ../share/filters/filters.svg.h:121
+#, fuzzy
+msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
+msgstr "Turbulences fantasmagoriques évoquant <i>Le Jardin des délices</i> de Jérôme Bosch"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Diffuse light"
 msgstr "Éclairage diffus"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Basic diffuse bevel to use for building textures"
-msgstr "Biseau diffus simple pour les textures de construction"
+msgstr "Biseau diffus simple pour la construction de textures"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid "Cutout glow"
 msgstr "Découpage lumineux"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:125
-msgid "3D marble"
-msgstr "Marbre en 3D"
-
-#: ../share/filters/filters.svg.h:125
-msgid "Subtle 3D warped marble texture based on blur and displacement map"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:124
 msgid "HSL bumps diffuse"
 msgstr "Embossage TSL diffus"
 
-#: ../share/filters/filters.svg.h:126
-msgid "Diffuse light bump"
-msgstr "Embossage de lumière diffus"
+#: ../share/filters/filters.svg.h:124
+msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
+msgstr ""
 
-#: ../share/filters/filters.svg.h:127
-msgid "Mother of pearl"
-msgstr "Nacre"
-
-#: ../share/filters/filters.svg.h:127
-msgid "3D warped shell texture based on blur and displacement map"
-msgstr "Texture de coquillage tordu en 3D, basé sur les primitives flou et displacement map"
-
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:125
 msgid "Dark Emboss"
 msgstr "Embossage sombre"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:125
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "Effet d'embossage : relief 3D avec lequel le blanc est remplacé par du noir"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:126
 msgid "Simple blur"
 msgstr "Flou simple"
 
-#: ../share/filters/filters.svg.h:129
-msgid "Simple blur alternative of using Fill and outline panel blur slider"
-msgstr "Flou simple, en alternative à celui proposé par la boîte de dialogue Remplissage et contour"
+#: ../share/filters/filters.svg.h:126
+msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
+msgstr ""
 
-#: ../share/filters/filters.svg.h:130
-msgid "Dark and glow"
-msgstr "Pénombre et lumière"
-
-#: ../share/filters/filters.svg.h:130
-#: ../share/filters/filters.svg.h:133
-msgid "Enhance outline and glows inside and outside"
-msgstr "Augmente le contour et le rayonnement à l'intérieure et à l'extérieur"
-
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:127
 msgid "HSL bubbles diffuse"
 msgstr "Bulles TSL diffus"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:127
+msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:128
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "Embosser"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:128
 msgid "Emboss effect : Colors of the original images are preserved or modified by Blend"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:133
-msgid "Darken edges"
-msgstr "Bords assombris"
-
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:129
 msgid "Blotting paper"
 msgstr "Buvard"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:129
 msgid "Inkblot on blotting paper"
 msgstr "Tache d'encre sur un buvard"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:130
 msgid "Wax print"
 msgstr "Empreinte à la cire"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:130
 msgid "Wax print on tissue texture"
 msgstr "Empreinte de cire sur une texture de tissu"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:131
 msgid "Inkblot"
 msgstr "Tache d'encre"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:131
 msgid "Inkblot on tissue or rough paper"
 msgstr "Tache d'encre sur du tissu ou du papier grossier"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:132
 msgid "Burnt edges"
 msgstr "Bords brûlés"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:132
 msgid "Burnt paper edges texture"
 msgstr "Texture avec des bords de papier brûlé"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:133
 msgid "Color outline"
 msgstr "Contour coloré"
 
-#: ../share/filters/filters.svg.h:138
-msgid "A colorizable outline which can be wider and blurred"
+#: ../share/filters/filters.svg.h:133
+#, fuzzy
+msgid "A colorizable outline with adjustable width and blur"
 msgstr "Un contour colorisable pouvant être élargi et rendu flou"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:134
 msgid "Liquid"
 msgstr "Liquide"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:134
 msgid "Colorizable filling with liquid transparency"
 msgstr "Remplissage colorisable à la transparence liquide"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:135
 msgid "Watercolor"
 msgstr "Aquarelle"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:135
 msgid "Cloudy watercolor effect"
 msgstr "Effet d'aquarelle nuageuse"
+
+#: ../share/filters/filters.svg.h:136
+msgid "Felt"
+msgstr "Feutre"
+
+#: ../share/filters/filters.svg.h:136
+msgid "Felt like texture with color turbulence and slightly darker at the edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:137
+msgid "Ink paint"
+msgstr "Peinture à l'encre"
+
+#: ../share/filters/filters.svg.h:137
+msgid "Ink paint on paper with some turbulent color shift"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:138
+msgid "Tinted rainbow"
+msgstr "Arc-en-ciel teinté"
+
+#: ../share/filters/filters.svg.h:138
+msgid "Smooth rainbow colors melted along the edges and colorizable"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:139
+msgid "Melted rainbow"
+msgstr "Arc-en-ciel fondu"
+
+#: ../share/filters/filters.svg.h:139
+msgid "Smooth rainbow colors slightly melted along the edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:140
+msgid "Darken edges"
+msgstr "Bords assombris"
+
+#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:141
+msgid "Enhance outline and glows inside and outside"
+msgstr "Augmente le contour et le rayonnement à l'intérieure et à l'extérieur"
+
+#: ../share/filters/filters.svg.h:141
+msgid "Dark and glow"
+msgstr "Pénombre et lumière"
+
+#: ../share/filters/filters.svg.h:142
+#, fuzzy
+msgid "Flex metal"
+msgstr "Métal doux"
+
+#: ../share/filters/filters.svg.h:142
+msgid "Bright, polished uneven metal casting, colorizable"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:143
+msgid "Comics draft"
+msgstr "Ébauche de bande dessinée"
+
+#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:157
+msgid "Non realistic shaders"
+msgstr "Nuanceurs non réalistes"
+
+#: ../share/filters/filters.svg.h:143
+msgid "Draft painted cartoon shading with a glassy look"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:144
+msgid "Comics fading"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:144
+msgid "Cartoon paint style with some fading at the edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:145
+#, fuzzy
+msgid "Smooth shader NR"
+msgstr "Nœuds doux"
+
+#: ../share/filters/filters.svg.h:145
+msgid "Smooth shading with a graphite pencil grey"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:146
+msgid "Emboss shader NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:146
+msgid "Combination of smooth shading and embossing"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:147
+msgid "Smooth shader dark NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:147
+msgid "Dark version of non realistic smooth shading"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:148
+msgid "Comics"
+msgstr "Bandes dessinées"
+
+#: ../share/filters/filters.svg.h:148
+#, fuzzy
+msgid "Imitation of black and white cartoon shading"
+msgstr "Inverser les régions blanches et noires"
+
+#: ../share/filters/filters.svg.h:149
+#, fuzzy
+msgid "Satin NR"
+msgstr "Début"
+
+#: ../share/filters/filters.svg.h:149
+msgid "Silky close to mother of pearl shading"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:150
+#, fuzzy
+msgid "Frosted glass NR"
+msgstr "Verre fissuré"
+
+#: ../share/filters/filters.svg.h:150
+msgid "Non realistic frosted glass imitation"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:151
+msgid "Smooth shader contour NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:151
+msgid "Contouring version of smooth shader"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:152
+#, fuzzy
+msgid "Comics rounded"
+msgstr "pas d'arrondi"
+
+#: ../share/filters/filters.svg.h:152
+#, fuzzy
+msgid "Imitation of black and white cartoon shading more rounded version"
+msgstr "Inverser les régions blanches et noires"
+
+#: ../share/filters/filters.svg.h:153
+#, fuzzy
+msgid "Pewter NR"
+msgstr "Copies du motif"
+
+#: ../share/filters/filters.svg.h:153
+msgid "Mid grey satin like shader close to pewter"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:154
+msgid "Aluminium NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:154
+msgid "Brushed aluminium shader"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:155
+msgid "Comics fluid"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:155
+#, fuzzy
+msgid "Fluid brushed cartoon drawing"
+msgstr "Ajuster la page au dessin"
+
+#: ../share/filters/filters.svg.h:156
+msgid "Chrome NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:156
+msgid "Non realistic chrome shader with strong speculars"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:157
+msgid "Chrome dark NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:157
+msgid "Dark version of chrome shading with a ground reflection simulation"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:158
+msgid "Wavy tartan"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:158
+msgid "Tartan pattern with a wavy displacement and bevel around the edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:159
+msgid "Plied tartan"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:159
+msgid "Tartan pattern with folds and bevel around the edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:160
+msgid "3D marble"
+msgstr "Marbre en 3D"
+
+#: ../share/filters/filters.svg.h:160
+msgid "3D warped marble texture"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:161
+msgid "3D wood"
+msgstr "Bois en 3D"
+
+#: ../share/filters/filters.svg.h:161
+msgid "3D warped, fibered wood texture"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:162
+msgid "Mother of pearl"
+msgstr "Nacre"
+
+#: ../share/filters/filters.svg.h:162
+msgid "3D warped, iridescent pearly shell texture"
+msgstr ""
 
 #: ../src/arc-context.cpp:302
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -2778,12 +3015,12 @@ msgstr "Propriétés de %s"
 #: ../src/dialogs/spellcheck.cpp:444
 #, c-format
 msgid "<b>Finished</b>, <b>%d</b> words added to dictionary"
-msgstr "<b>Terminé</b> ; <b>%d</b> mots ont été ajoutés au dictionnaire"
+msgstr "<b>Terminé</b> ; <b>%d</b> mots ont été ajoutés au dictionnaire"
 
 #: ../src/dialogs/spellcheck.cpp:446
 #, c-format
 msgid "<b>Finished</b>, nothing suspicious found"
-msgstr "<b>Terminé</b> ; aucune faute n'a été détectée"
+msgstr "<b>Terminé</b> ; aucune faute n'a été détectée"
 
 #: ../src/dialogs/spellcheck.cpp:559
 #, c-format
@@ -2943,13 +3180,13 @@ msgstr "Nouveau nœud texte"
 
 #: ../src/dialogs/xml-tree.cpp:326
 #: ../src/dialogs/xml-tree.cpp:1409
-#: ../src/nodepath.cpp:2234
+#: ../src/nodepath.cpp:2237
 msgid "Duplicate node"
 msgstr "Dupliquer le nœud"
 
 #: ../src/dialogs/xml-tree.cpp:347
 #: ../src/dialogs/xml-tree.cpp:1426
-#: ../src/nodepath.cpp:3514
+#: ../src/nodepath.cpp:3517
 #: ../src/widgets/toolbox.cpp:1300
 msgid "Delete node"
 msgstr "Supprimer le nœud"
@@ -3637,7 +3874,7 @@ msgstr "Hauteur"
 #. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32
-#: ../src/live_effects/effect.cpp:97
+#: ../src/live_effects/effect.cpp:96
 #: ../src/live_effects/lpe-offset.cpp:30
 #: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:49
@@ -5506,135 +5743,135 @@ msgstr "ex"
 msgid "Ex squares"
 msgstr "Ex carrés"
 
-#: ../src/inkscape.cpp:322
+#: ../src/inkscape.cpp:323
 msgid "Autosaving documents..."
 msgstr "Enregistrement automatique du document..."
 
-#: ../src/inkscape.cpp:393
+#: ../src/inkscape.cpp:394
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr "Échec de l'enregistrement automatique ! Impossible de trouver l'extension inkscape pour enregistrer le document."
 
-#: ../src/inkscape.cpp:396
-#: ../src/inkscape.cpp:403
+#: ../src/inkscape.cpp:397
+#: ../src/inkscape.cpp:404
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr "Le fichier %s n'a pas pu être enregistré."
 
-#: ../src/inkscape.cpp:418
+#: ../src/inkscape.cpp:419
 msgid "Autosave complete."
 msgstr "Enregistrement automatique terminé."
 
-#: ../src/inkscape.cpp:637
+#: ../src/inkscape.cpp:650
 msgid "Untitled document"
 msgstr "Document sans titre"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:667
+#: ../src/inkscape.cpp:680
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape a subi une erreur interne et va se fermer maintenant.\n"
 
-#: ../src/inkscape.cpp:668
+#: ../src/inkscape.cpp:681
 msgid "Automatic backups of unsaved documents were done to the following locations:\n"
 msgstr "Les enregistrements automatiques des documents non enregistrés ont été effectués à cet emplacement :\n"
 
-#: ../src/inkscape.cpp:669
+#: ../src/inkscape.cpp:682
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Les enregistrements automatiques des documents suivants ont échoué :\n"
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:821
+#: ../src/interface.cpp:823
 msgid "Commands Bar"
 msgstr "Barre des commandes"
 
-#: ../src/interface.cpp:821
+#: ../src/interface.cpp:823
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Afficher ou non la barre des commandes (sous le menu)"
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:825
 msgid "Snap controls Bar"
 msgstr "Barre des contrôles du magnétisme"
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:825
 msgid "Show or hide the snapping controls"
 msgstr "Afficher ou non la barre des contrôles du magnétisme"
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:827
 msgid "Tool Controls Bar"
 msgstr "Barre des contrôles des outils"
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:827
 msgid "Show or hide the Tool Controls bar"
 msgstr "Afficher ou non la barre des contrôles des outils"
 
-#: ../src/interface.cpp:827
+#: ../src/interface.cpp:829
 msgid "_Toolbox"
 msgstr "Boîte à _outils"
 
-#: ../src/interface.cpp:827
+#: ../src/interface.cpp:829
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "Afficher ou non la boîte à outils principale (à gauche)"
 
-#: ../src/interface.cpp:833
+#: ../src/interface.cpp:835
 msgid "_Palette"
 msgstr "_Palette"
 
-#: ../src/interface.cpp:833
+#: ../src/interface.cpp:835
 msgid "Show or hide the color palette"
 msgstr "Afficher ou non la palette de couleurs"
 
-#: ../src/interface.cpp:835
+#: ../src/interface.cpp:837
 msgid "_Statusbar"
 msgstr "Barre d'_état"
 
-#: ../src/interface.cpp:835
+#: ../src/interface.cpp:837
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Afficher ou non la barre d'état (en bas de la fenêtre)"
 
-#: ../src/interface.cpp:905
+#: ../src/interface.cpp:907
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Verbe « %s » inconnu"
 
-#: ../src/interface.cpp:944
+#: ../src/interface.cpp:946
 msgid "Open _Recent"
 msgstr "Documents _récents"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1045
+#: ../src/interface.cpp:1047
 #, c-format
 msgid "Enter group #%s"
 msgstr "Entrer dans le groupe #%s"
 
-#: ../src/interface.cpp:1056
+#: ../src/interface.cpp:1058
 msgid "Go to parent"
 msgstr "Sélectionner le parent"
 
-#: ../src/interface.cpp:1147
-#: ../src/interface.cpp:1233
-#: ../src/interface.cpp:1315
+#: ../src/interface.cpp:1149
+#: ../src/interface.cpp:1235
+#: ../src/interface.cpp:1338
 #: ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr "Déposer la couleur"
 
-#: ../src/interface.cpp:1186
-#: ../src/interface.cpp:1275
+#: ../src/interface.cpp:1188
+#: ../src/interface.cpp:1298
 msgid "Drop color on gradient"
 msgstr "Déposer la couleur dans le dégradé"
 
-#: ../src/interface.cpp:1328
+#: ../src/interface.cpp:1351
 msgid "Could not parse SVG data"
 msgstr "Impossible de parcourir les données SVG"
 
-#: ../src/interface.cpp:1371
+#: ../src/interface.cpp:1394
 msgid "Drop SVG"
 msgstr "Déposer un SVG"
 
-#: ../src/interface.cpp:1427
+#: ../src/interface.cpp:1450
 msgid "Drop bitmap image"
 msgstr "Déposer une image bitmap"
 
-#: ../src/interface.cpp:1519
+#: ../src/interface.cpp:1542
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do you want to replace it?</span>\n"
@@ -5646,7 +5883,7 @@ msgstr ""
 "\n"
 "Le fichier existe déjà dans « %s ». Le remplacer écrase son contenu."
 
-#: ../src/interface.cpp:1526
+#: ../src/interface.cpp:1549
 msgid "Replace"
 msgstr "Remplacer"
 
@@ -5888,7 +6125,7 @@ msgstr "Vous ne pouvez pas ajouter d'objet d'attache (%p de type %s) dans un %s.
 #: ../src/libgdl/gdl-dock-item.c:623
 #, c-format
 msgid "Attempting to add a widget with type %s to a %s, but it can only contain one widget at a time; it already contains a widget of type %s"
-msgstr "Tentative d'ajout d'un gadget de %s à un %s, mais il ne peut contenir qu'un gadget à la fois ; il contient déjà un gadget detype %s"
+msgstr "Tentative d'ajout d'un gadget de %s à un %s, mais il ne peut contenir qu'un gadget à la fois ; il contient déjà un gadget detype %s"
 
 #: ../src/libgdl/gdl-dock-item.c:1345
 #: ../src/libgdl/gdl-dock-item.c:1390
@@ -5947,7 +6184,7 @@ msgstr "Titre par défaut pour les nouveaux points d'attache flottants"
 
 #: ../src/libgdl/gdl-dock-master.c:152
 msgid "If is set to 1, all the dock items bound to the master are locked; if it's 0, all are unlocked; -1 indicates inconsistency among the items"
-msgstr "Si la valeur est 1, tous les éléments détachables liés au maître sont verrouillés ; si la c'est 0, tous sont déverrouillés, -1 indique des états hétérogènes pour les éléments"
+msgstr "Si la valeur est 1, tous les éléments détachables liés au maître sont verrouillés ; si la c'est 0, tous sont déverrouillés, -1 indique des états hétérogènes pour les éléments"
 
 #: ../src/libgdl/gdl-dock-master.c:160
 #: ../src/libgdl/gdl-switcher.c:707
@@ -5981,7 +6218,7 @@ msgstr "Le nouveau contrôleur d'attache %p est automatique. Seuls les ojbets d'
 #: ../src/ui/dialog/align-and-distribute.cpp:914
 #: ../src/ui/dialog/document-properties.cpp:119
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1561
+#: ../src/widgets/desktop-widget.cpp:1562
 msgid "Page"
 msgstr "Page"
 
@@ -6161,99 +6398,99 @@ msgid "Dynamic stroke"
 msgstr "Contour dynamique"
 
 #: ../src/live_effects/effect.cpp:91
-msgid "Envelope Deformation"
-msgstr "Déformation de l'enveloppe"
-
-#: ../src/live_effects/effect.cpp:92
 msgid "Hatches (rough)"
 msgstr "Hachures (grossières)"
 
-#: ../src/live_effects/effect.cpp:93
+#: ../src/live_effects/effect.cpp:92
 msgid "Interpolate Sub-Paths"
 msgstr "Interpoler les sous-chemins"
 
-#: ../src/live_effects/effect.cpp:94
+#: ../src/live_effects/effect.cpp:93
 msgid "Lattice Deformation"
 msgstr "Déformation en croisillon"
 
-#: ../src/live_effects/effect.cpp:95
+#: ../src/live_effects/effect.cpp:94
 msgid "Line Segment"
 msgstr "Segment de ligne"
 
-#: ../src/live_effects/effect.cpp:96
+#: ../src/live_effects/effect.cpp:95
 msgid "Mirror symmetry"
 msgstr "Reflet miroir"
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:97
 msgid "Parallel"
 msgstr "Parallèle"
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:98
 msgid "Path length"
 msgstr "Longueur du chemin"
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:99
 msgid "Perpendicular bisector"
 msgstr "Médiatrice"
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:100
 msgid "Perspective path"
 msgstr "Chemin en perspective"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:101
 msgid "Rotate copies"
 msgstr "Tourner les copies"
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:102
 msgid "Ruler"
 msgstr "Règle"
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:103
 msgid "Sketch"
 msgstr "Croquis"
 
-#: ../src/live_effects/effect.cpp:105
+#: ../src/live_effects/effect.cpp:104
 msgid "Tangent to curve"
 msgstr "Tangente à la courbe"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:105
 msgid "Text label"
 msgstr "Étiquette du texte"
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:108
 msgid "Bend"
 msgstr "Courber"
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:109
 msgid "Gears"
 msgstr "Engrenages"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:110
 msgid "Pattern Along Path"
 msgstr "Motif suivant un chemin"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:111
 msgid "Stitch Sub-Paths"
 msgstr "Relier les sous-chemins"
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:113
 msgid "VonKoch"
 msgstr "Von Koch"
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:114
 msgid "Knot"
 msgstr "Nœud"
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:115
 msgid "Construct grid"
 msgstr "Grille de conception"
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:116
 msgid "Spiro spline"
 msgstr "Spline spirographique"
+
+#: ../src/live_effects/effect.cpp:117
+msgid "Envelope Deformation"
+msgstr "Déformation de l'enveloppe"
 
 #: ../src/live_effects/effect.cpp:267
 msgid "Is visible?"
@@ -7793,7 +8030,7 @@ msgid "Start Inkscape in interative shell mode."
 msgstr "Démarre Inkscape en mode de commande interactif."
 
 #: ../src/main.cpp:756
-#: ../src/main.cpp:993
+#: ../src/main.cpp:1043
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -7914,290 +8151,289 @@ msgstr "<b>Maj</b> : selon le contexte, sélection multiple des nœuds, désact
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b> : bloquer la longueur des poignées; <b>Ctrl+Alt</b> : déplacer le long des poignées"
 
-#: ../src/nodepath.cpp:750
+#: ../src/nodepath.cpp:753
 #: ../src/seltrans.cpp:574
 msgid "Stamp"
 msgstr "Tamponner"
 
-#: ../src/nodepath.cpp:1656
-#: ../src/nodepath.cpp:1682
+#: ../src/nodepath.cpp:1659
+#: ../src/nodepath.cpp:1685
 msgid "Move nodes vertically"
 msgstr "Déplacer les nœuds verticalement"
 
-#: ../src/nodepath.cpp:1658
-#: ../src/nodepath.cpp:1684
+#: ../src/nodepath.cpp:1661
+#: ../src/nodepath.cpp:1687
 msgid "Move nodes horizontally"
 msgstr "Déplacer les nœuds horizontalement"
 
-#: ../src/nodepath.cpp:1660
-#: ../src/nodepath.cpp:1686
-#: ../src/nodepath.cpp:1701
-#: ../src/nodepath.cpp:3612
+#: ../src/nodepath.cpp:1663
+#: ../src/nodepath.cpp:1689
+#: ../src/nodepath.cpp:1704
+#: ../src/nodepath.cpp:3615
 msgid "Move nodes"
 msgstr "Déplacer les nœuds"
 
-#: ../src/nodepath.cpp:1739
+#: ../src/nodepath.cpp:1742
 msgid "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
 msgstr "<b>Poignée de contrôle de nœud</b> : la déplacer pour modifier la courbe; <b>Ctrl</b> pour la tourner par incréments; <b>Alt</b> pour préserver sa longueur; <b>Maj</b> pour tourner les deux poignées"
 
-#: ../src/nodepath.cpp:1909
+#: ../src/nodepath.cpp:1912
 msgid "Align nodes"
 msgstr "Aligner les nœuds"
 
-#: ../src/nodepath.cpp:1971
+#: ../src/nodepath.cpp:1974
 msgid "Distribute nodes"
 msgstr "Distribuer les nœuds"
 
-#: ../src/nodepath.cpp:2009
+#: ../src/nodepath.cpp:2012
 msgid "Add nodes"
 msgstr "Ajouter des nœuds"
 
-#: ../src/nodepath.cpp:2011
-#: ../src/nodepath.cpp:2113
+#: ../src/nodepath.cpp:2014
+#: ../src/nodepath.cpp:2116
 msgid "Add node"
 msgstr "Ajouter un nœud"
 
-#: ../src/nodepath.cpp:2205
+#: ../src/nodepath.cpp:2208
 msgid "Break path"
 msgstr "Briser le chemin"
 
-#: ../src/nodepath.cpp:2261
+#: ../src/nodepath.cpp:2264
 msgid "Close subpath"
 msgstr "Fermer le sous-chemin"
 
-#: ../src/nodepath.cpp:2322
+#: ../src/nodepath.cpp:2325
 msgid "Join nodes"
 msgstr "Joindre les nœuds"
 
-#: ../src/nodepath.cpp:2349
+#: ../src/nodepath.cpp:2352
 msgid "Close subpath by segment"
 msgstr "Fermer le sous-chemin par un segment"
 
-#: ../src/nodepath.cpp:2403
+#: ../src/nodepath.cpp:2406
 msgid "Join nodes by segment"
 msgstr "Joindre les nœuds par un segment"
 
-#: ../src/nodepath.cpp:2416
-#: ../src/nodepath.cpp:2431
+#: ../src/nodepath.cpp:2419
+#: ../src/nodepath.cpp:2434
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Pour joindre, vous devez avoir sélectionné <b>deux nœuds terminaux</b>."
 
-#: ../src/nodepath.cpp:2588
-#: ../src/nodepath.cpp:2624
-#: ../src/nodepath.cpp:2628
+#: ../src/nodepath.cpp:2591
+#: ../src/nodepath.cpp:2627
+#: ../src/nodepath.cpp:2631
 msgid "Delete nodes"
 msgstr "Supprimer les nœuds"
 
-#: ../src/nodepath.cpp:2590
+#: ../src/nodepath.cpp:2593
 msgid "Delete nodes preserving shape"
 msgstr "Supprimer des nœuds en préservant la forme"
 
-#: ../src/nodepath.cpp:2647
-#: ../src/nodepath.cpp:2661
+#: ../src/nodepath.cpp:2650
+#: ../src/nodepath.cpp:2664
 msgid "Select <b>two non-endpoint nodes</b> on a path between which to delete segments."
 msgstr "Vous devez sélectionner <b>deux nœuds non-terminaux</b> d'un chemin pour supprimer un segment entre eux."
 
-#: ../src/nodepath.cpp:2757
+#: ../src/nodepath.cpp:2760
 msgid "Cannot find path between nodes."
 msgstr "Impossible de trouver un chemin entre les nœuds."
 
-#: ../src/nodepath.cpp:2789
+#: ../src/nodepath.cpp:2792
 #: ../src/widgets/toolbox.cpp:1343
 msgid "Delete segment"
 msgstr "Supprimer le segment"
 
-#: ../src/nodepath.cpp:2810
+#: ../src/nodepath.cpp:2813
 msgid "Change segment type"
 msgstr "Modifier le type de segment"
 
-#: ../src/nodepath.cpp:2827
-#: ../src/nodepath.cpp:3564
+#: ../src/nodepath.cpp:2830
+#: ../src/nodepath.cpp:3567
 msgid "Change node type"
 msgstr "Modifier le type de nœud"
 
-#: ../src/nodepath.cpp:3858
+#: ../src/nodepath.cpp:3861
 msgid "Retract handle"
 msgstr "Retracter la poignée"
 
-#: ../src/nodepath.cpp:3913
+#: ../src/nodepath.cpp:3916
 msgid "Move node handle"
 msgstr "Déplacer la poignée de nœud"
 
-#: ../src/nodepath.cpp:4098
+#: ../src/nodepath.cpp:4101
 #, c-format
 msgid "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
 msgstr "<b>Poignée de contrôle de nœud</b>: angle %0.2f&#176;, longueur %s; <b>Ctrl</b> pour tourner par incréments; <b>Alt</b> pour préserver la longueur; <b>Maj</b> pour tourner les 2 poignées simultanément"
 
-#: ../src/nodepath.cpp:4292
+#: ../src/nodepath.cpp:4295
 msgid "Rotate nodes"
 msgstr "Tourner les nœuds"
 
-#: ../src/nodepath.cpp:4407
+#: ../src/nodepath.cpp:4410
 msgid "Cannot scale nodes when all are at the same location."
 msgstr "Impossible d'ajuster des nœuds lorsqu'ils sont au même endroit."
 
-#: ../src/nodepath.cpp:4433
+#: ../src/nodepath.cpp:4436
 msgid "Scale nodes"
 msgstr "Redimensionner les nœuds"
 
-#: ../src/nodepath.cpp:4477
+#: ../src/nodepath.cpp:4480
 msgid "Flip nodes"
 msgstr "Retourner les nœuds"
 
-#: ../src/nodepath.cpp:4646
+#: ../src/nodepath.cpp:4649
 msgid "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
 msgstr "<b>Nœuds</b> : déplacer pour éditer le chemin; <b>Ctrl</b> pour aimanter à la grille horizontalement/verticalement; <b>Ctrl+Alt</b> déplacer selon la direction des poignées"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4879
+#: ../src/nodepath.cpp:4882
 msgid "end node"
 msgstr "nœud terminal"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4884
+#: ../src/nodepath.cpp:4887
 msgid "cusp"
 msgstr "dur"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4887
+#: ../src/nodepath.cpp:4890
 msgid "smooth"
 msgstr "doux"
 
-#: ../src/nodepath.cpp:4889
+#: ../src/nodepath.cpp:4892
 msgid "auto"
 msgstr "automatique"
 
-#: ../src/nodepath.cpp:4891
+#: ../src/nodepath.cpp:4894
 msgid "symmetric"
 msgstr "symétrique"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4897
+#: ../src/nodepath.cpp:4900
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "nœud terminal, poignée de contrôle rétractée (cliquer-déplacer avec <b>Maj</b> pour la faire ressortir)"
 
-#: ../src/nodepath.cpp:4899
+#: ../src/nodepath.cpp:4902
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "une poignée de contrôle rétractée (cliquer-déplacer avec <b>Maj</b> pour la faire ressortir)"
 
-#: ../src/nodepath.cpp:4902
+#: ../src/nodepath.cpp:4905
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "deux poignées de contrôle rétractées (cliquer-déplacer avec <b>Maj</b> pour les faire ressortir)"
 
-#: ../src/nodepath.cpp:4914
+#: ../src/nodepath.cpp:4917
 msgid "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; <b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to rotate"
 msgstr "<b>Déplacer</b> les nœuds ou leurs poignées; <b>Alt+déplacer</b> les nœuds pour sculpter; <b>flèche</b> pour déplacer les nœuds, <b>&lt; &gt;</b> pour redimensionner, <b>[ ]</b> pour tourner"
 
-#: ../src/nodepath.cpp:4915
+#: ../src/nodepath.cpp:4918
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr "<b>Cliquer-déplacer</b> le nœud ou ses poignées; <b>flèche</b> pour déplacer le nœud"
 
-#: ../src/nodepath.cpp:4941
-#: ../src/nodepath.cpp:4953
+#: ../src/nodepath.cpp:4944
+#: ../src/nodepath.cpp:4956
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Sélectionner un seul objet pour éditer ses nœuds ou poignées."
 
-#: ../src/nodepath.cpp:4945
+#: ../src/nodepath.cpp:4948
 #, c-format
 msgid "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select."
 msgid_plural "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select."
 msgstr[0] "<b>0</b> sur <b>%i</b> nœud sélectionné. Sélectionnez des nœuds par <b>Clic</b>, <b>Maj+Clic</b> ou <b>cliquer-déplacer</b>."
 msgstr[1] "<b>0</b> sur <b>%i</b> nœuds sélectionnés. Sélectionnez des nœuds par <b>Clic</b>, <b>Maj+Clic</b> ou <b>cliquer-déplacer</b>."
 
-#: ../src/nodepath.cpp:4951
+#: ../src/nodepath.cpp:4954
 msgid "Drag the handles of the object to modify it."
 msgstr "Déplacer les poignées d'un objet pour le modifier."
 
-#: ../src/nodepath.cpp:4959
+#: ../src/nodepath.cpp:4962
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> nœud sélectionné sur <b>%i</b>; %s. %s."
 msgstr[1] "<b>%i</b> nœuds sélectionnés sur <b>%i</b>; %s. %s."
 
-#: ../src/nodepath.cpp:4966
+#: ../src/nodepath.cpp:4969
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgstr[0] "<b>%i</b> nœud sélectionné sur <b>%i</b> dans <b>%i</b> sous-chemins sur <b>%i</b>. %s"
 msgstr[1] "<b>%i</b> nœuds sélectionnés sur <b>%i</b> dans <b>%i</b> sous-chemins sur <b>%i</b>. %s"
 
-#: ../src/nodepath.cpp:4972
+#: ../src/nodepath.cpp:4975
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
 msgstr[0] "<b>%i</b> nœud sélectionné sur <b>%i</b>. %s."
 msgstr[1] "<b>%i</b> nœuds sélectionnés sur <b>%i</b>. %s."
 
-#: ../src/object-edit.cpp:410
+#: ../src/object-edit.cpp:439
 msgid "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the vertical radius the same"
 msgstr "Ajuster le rayon <b>d'arrondi horizontal</b>; <b>Ctrl</b> que le rayon vertical soit identique"
 
-#: ../src/object-edit.cpp:414
+#: ../src/object-edit.cpp:443
 msgid "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the horizontal radius the same"
 msgstr "Ajuster le rayon <b>d'arrondi vertical</b>; <b>Ctrl</b> pour que le rayon horizontal soit identique"
 
-#: ../src/object-edit.cpp:418
-#: ../src/object-edit.cpp:422
-#, fuzzy
+#: ../src/object-edit.cpp:447
+#: ../src/object-edit.cpp:451
 msgid "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to lock ratio or stretch in one dimension only"
-msgstr "Ajuster la <b>hauteur</b> et la <b>largeur</b> du rectangle; <b>Ctrl</b> pour verrouiller le rapport des dimensions ou incliner dans une seule dimension"
+msgstr "Ajuster la <b>hauteur</b> et la <b>largeur</b> du rectangle ; <b>Ctrl</b> pour verrouiller le rapport des dimensions ou incliner dans une seule dimension"
 
-#: ../src/object-edit.cpp:656
-#: ../src/object-edit.cpp:659
-#: ../src/object-edit.cpp:662
-#: ../src/object-edit.cpp:665
+#: ../src/object-edit.cpp:685
+#: ../src/object-edit.cpp:688
+#: ../src/object-edit.cpp:691
+#: ../src/object-edit.cpp:694
 msgid "Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"
 msgstr "Redimensionner la boîte suivant les axes X/Y. Avec <b>Shift</b>, suivant l'axe Z; avec <b>Ctrl</b> pour préserver les directions des arêtes ou des diagonales."
 
-#: ../src/object-edit.cpp:668
-#: ../src/object-edit.cpp:671
-#: ../src/object-edit.cpp:674
-#: ../src/object-edit.cpp:677
+#: ../src/object-edit.cpp:697
+#: ../src/object-edit.cpp:700
+#: ../src/object-edit.cpp:703
+#: ../src/object-edit.cpp:706
 msgid "Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with <b>Ctrl</b> to constrain to the directions of edges or diagonals"
 msgstr "Redimensionner la boîte suivant l'axe Z. Avec <b>Shift</b>, suivant les axes X/Y; avec <b>Ctrl</b> pour préserver les directions des arêtes ou des diagonales."
 
-#: ../src/object-edit.cpp:680
+#: ../src/object-edit.cpp:709
 msgid "Move the box in perspective"
 msgstr "Déplacer la boîte en perspective."
 
-#: ../src/object-edit.cpp:898
+#: ../src/object-edit.cpp:927
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
 msgstr "Ajuster la <b>largeur</b> de l'ellipse; <b>Ctrl</b> pour en faire un cercle"
 
-#: ../src/object-edit.cpp:901
+#: ../src/object-edit.cpp:930
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "Ajuster la <b>hauteur</b> de l'ellipse; <b>Ctrl</b> pour en faire un cercle"
 
-#: ../src/object-edit.cpp:904
+#: ../src/object-edit.cpp:933
 msgid "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr "Positionner le <b>point de départ</b> de l'arc ou du camembert ; <b>Ctrl</b> pour tourner par incréments ; déplacer <b>vers l'intérieur</b> de l'ellipse pour un arc, <b>vers l'extérieur</b> pour un camembert"
+msgstr "Positionner le <b>point de départ</b> de l'arc ou du camembert ; <b>Ctrl</b> pour tourner par incréments ; déplacer <b>vers l'intérieur</b> de l'ellipse pour un arc, <b>vers l'extérieur</b> pour un camembert"
 
-#: ../src/object-edit.cpp:908
+#: ../src/object-edit.cpp:937
 msgid "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
 msgstr "Positionner le <b>point final</b> de l'arc ou du camembert; <b>Ctrl</b> pour tourner par incréments; déplacer <b>vers l'intérieur</b> de l'ellipse pour un arc, <b>vers l'extérieur</b> pour un camembert"
 
-#: ../src/object-edit.cpp:1047
+#: ../src/object-edit.cpp:1076
 msgid "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to round; with <b>Alt</b> to randomize"
 msgstr "Ajuster le <b>rayon des sommets</b> de l'étoile ou du polygone; <b>Maj</b> pour arrondir; <b>Alt</b> pour rendre aléatoire"
 
-#: ../src/object-edit.cpp:1054
+#: ../src/object-edit.cpp:1083
 msgid "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to randomize"
 msgstr "Ajuster le <b>rayon de base</b> de l'étoile; <b>Ctrl</b> pour garder l'étoile parfaitement radiale (pas d'inclinaison); <b>Maj</b> pour arrondir; <b>Alt</b> pour rendre aléatoire"
 
-#: ../src/object-edit.cpp:1237
+#: ../src/object-edit.cpp:1266
 msgid "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to converge/diverge"
 msgstr "Enrouler/dérouler la spirale depuis <b>l'intérieur</b>; <b>Ctrl</b> pour tourner par incréments; <b>Alt</b> pour la faire converger/diverger"
 
-#: ../src/object-edit.cpp:1240
+#: ../src/object-edit.cpp:1269
 msgid "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to scale/rotate"
 msgstr "Enrouler/dérouler la spirale depuis <b>l'extérieur</b>; <b>Ctrl</b> pour tourner par incréments; <b>Maj</b> pour redimensionner/ tourner"
 
-#: ../src/object-edit.cpp:1284
+#: ../src/object-edit.cpp:1313
 msgid "Adjust the <b>offset distance</b>"
 msgstr "Ajuster <b>la distance d'offset</b>"
 
-#: ../src/object-edit.cpp:1320
+#: ../src/object-edit.cpp:1349
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "Cliquer-déplacer pour redimensionner le <b>cadre du texte</b>"
 
@@ -8321,12 +8557,12 @@ msgstr "<b>Cliquer</b> ou <b>cliquer-déplacer</b> pour prolonger le chemin à p
 #: ../src/pen-context.cpp:1270
 #, c-format
 msgid "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr "<b>Segment de courbe</b> : angle %3.2f&#176;, distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
+msgstr "<b>Segment de courbe</b> : angle %3.2f&#176;, distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
 
 #: ../src/pen-context.cpp:1271
 #, c-format
 msgid "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr "<b>Segment de droite</b> : angle %3.2f&#176;, distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
+msgstr "<b>Segment de droite</b> : angle %3.2f&#176;, distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
 
 #: ../src/pen-context.cpp:1289
 #, c-format
@@ -8336,12 +8572,12 @@ msgstr "<b>Poignée de contrôle</b>: angle %3.2f&#176;, longueur %s; <b>Ctrl</b
 #: ../src/pen-context.cpp:1311
 #, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>Poignée de la courbe, symétrique</b> : angle %3.2f&#176;, longueur %s ; avec  <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
+msgstr "<b>Poignée de la courbe, symétrique</b> : angle %3.2f&#176;, longueur %s ; avec  <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
 
 #: ../src/pen-context.cpp:1312
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr "<b>Poignée de la courbe</b> : angle %3.2f&#176;, longueur %s ; avec <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
+msgstr "<b>Poignée de la courbe</b> : angle %3.2f&#176;, longueur %s ; avec <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
 
 #: ../src/pen-context.cpp:1359
 msgid "Drawing finished"
@@ -8596,17 +8832,17 @@ msgstr "<b>Ctrl</b> : forcer un rectangle carré ou de ratio entier, préserver
 #: ../src/rect-context.cpp:486
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
-msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint de ratio %d:%d) ; <b>Maj</b> pour dessiner autour du point de départ"
+msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint de ratio %d:%d) ; <b>Maj</b> pour dessiner autour du point de départ"
 
 #: ../src/rect-context.cpp:489
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"
-msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint au ratio du Nombre d'Or 1.618 : 1) ; <b>Maj</b> dessiner autour du point de départ"
+msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint au ratio du Nombre d'Or 1.618 : 1) ; <b>Maj</b> dessiner autour du point de départ"
 
 #: ../src/rect-context.cpp:491
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"
-msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint au ratio du Nombre d'Or 1 : 1.618) ; <b>Maj</b> pour dessiner autour du point de départ"
+msgstr "<b>Rectangle</b> : %s &#215; %s; (contraint au ratio du Nombre d'Or 1 : 1.618) ; <b>Maj</b> pour dessiner autour du point de départ"
 
 #: ../src/rect-context.cpp:495
 #, c-format
@@ -8625,27 +8861,27 @@ msgstr "Déplacement annulé."
 msgid "Selection canceled."
 msgstr "Sélection annulée."
 
-#: ../src/select-context.cpp:555
+#: ../src/select-context.cpp:557
 msgid "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to rubberband selection"
 msgstr "<b>Tracer</b> un trait passant par des objets pour les sélectionner. Lâcher la touche <b>Alt</b> pour repasser en mode sélection rectangle"
 
-#: ../src/select-context.cpp:557
+#: ../src/select-context.cpp:559
 msgid "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to touch selection"
 msgstr "<b>Entourer</b> les objets pour les sélectionner; appuyer sur <b>Alt</b> pour passer en « toucher pour sélectionner »"
 
-#: ../src/select-context.cpp:717
+#: ../src/select-context.cpp:722
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr "<b>Ctrl</b> : Cliquer pour sélectionner dans les groupes; cliquer-déplacer  pour déplacer horizontalement/verticalment"
 
-#: ../src/select-context.cpp:718
+#: ../src/select-context.cpp:723
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr "<b>Maj</b> : cliquer pour inverser l'état de sélection, cliquer-déplacer pour activer la sélection rectangle"
 
-#: ../src/select-context.cpp:719
+#: ../src/select-context.cpp:724
 msgid "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr "<b>Alt</b> : cliquer pour sélectionner sous, cliquer-déplacer pour déplacer ou passer en « toucher pour sélectionner »"
 
-#: ../src/select-context.cpp:890
+#: ../src/select-context.cpp:895
 msgid "Selected object is not a group. Cannot enter."
 msgstr "L'objet sélectionné n'est pas un groupe. Impossible d'y entrer."
 
@@ -9856,7 +10092,7 @@ msgstr "Taper ou modifier le texte encadré (%d caractères); <b>Entrée</b> pou
 #: ../src/text-context.cpp:1604
 #, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
-msgstr "Taper ou modifier le texte (%d caractères) ; <b>Entrée</b> pour commencer une nouvelle ligne."
+msgstr "Taper ou modifier le texte (%d caractères) ; <b>Entrée</b> pour commencer une nouvelle ligne."
 
 #: ../src/text-context.cpp:1612
 #: ../src/tools-switch.cpp:190
@@ -9900,12 +10136,12 @@ msgid "<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral s
 msgstr "<b>Cliquer-déplacer</b> pour créer une spirale. <b>Déplacer les poignées</b> pour modifier la forme de la spirale. <b>Cliquer</b> pour sélectionner."
 
 #: ../src/tools-switch.cpp:172
-msgid "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to append to selected path. <b>Ctrl+click</b> to create single dots."
-msgstr "<b>Cliquer-déplacer</b> pour créer une ligne à main levée. Commencer le tracé en appuyant sur <b>Maj</b> pour l'ajouter au chemin sélectionné;<b>Ctrl+clic</b> pour créer des points isolés."
+msgid "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to append to selected path."
+msgstr "<b>Cliquer-déplacer</b> pour créer une ligne à main levée. Commencer le tracé en appuyant sur <b>Maj</b> pour l'ajouter au chemin sélectionné."
 
 #: ../src/tools-switch.cpp:178
-msgid "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path. <b>Ctrl+click</b> to create single dots."
-msgstr "<b>Cliquer</b> ou <b>cliquer-déplacer</b> pour commencer un chemin; <b>Maj</b> pour ajouter au chemin sélectionné; <b>Ctrl+clic</b> pour créer des points isolés."
+msgid "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path. <b>Ctrl+click</b> to create single dots (straight line modes only)."
+msgstr "<b>Cliquer</b> ou <b>cliquer-déplacer</b> pour commencer un chemin; <b>Maj</b> pour ajouter au chemin sélectionné; <b>Ctrl+clic</b> pour créer des points isolés (avec les modes lignes droites)."
 
 #: ../src/tools-switch.cpp:184
 msgid "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
@@ -10014,12 +10250,12 @@ msgstr "%s. Cliquer-glisser ou cliquer pour <b>réduire</b>; avec Maj pour <b>ag
 #: ../src/tweak-context.cpp:224
 #, c-format
 msgid "%s. Drag or click to <b>rotate clockwise</b>; with Shift, <b>counterclockwise</b>."
-msgstr "%s. Glisser ou cliquer pour <b>pivoter dans le sens horaire</b> ; avec Maj, <b>dans le sens anti-horaire</b>."
+msgstr "%s. Glisser ou cliquer pour <b>pivoter dans le sens horaire</b> ; avec Maj, <b>dans le sens anti-horaire</b>."
 
 #: ../src/tweak-context.cpp:227
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
-msgstr "%s. Glisser ou cliquer pour <b>dupliquer</b> ; avec Maj, <b>supprime</b>."
+msgstr "%s. Glisser ou cliquer pour <b>dupliquer</b> ; avec Maj, <b>supprime</b>."
 
 #: ../src/tweak-context.cpp:230
 #, c-format
@@ -10491,13 +10727,13 @@ msgid "Smallest item"
 msgstr "Élément le plus petit"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:915
-#: ../src/widgets/desktop-widget.cpp:1565
+#: ../src/widgets/desktop-widget.cpp:1566
 msgid "Drawing"
 msgstr "Dessin"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:916
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
-#: ../src/widgets/desktop-widget.cpp:1569
+#: ../src/widgets/desktop-widget.cpp:1570
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Sélection"
@@ -10609,7 +10845,7 @@ msgstr "Aimanter les guides en déplaçant"
 
 #: ../src/ui/dialog/document-properties.cpp:103
 msgid "While dragging a guide, snap to object nodes or bounding box corners ('Snap to nodes' or 'snap to bounding box corners' must be enabled; only a small part of the guide near the cursor will snap)"
-msgstr "Quand un guide est déplacé, l'aimanter aux nœuds des objets ou aux boîtes englobantes ('Aimanter aux nœuds d'objets' ou 'Aimanter aux coins des boîtes englobantes' doit être activé ; seule une petite partie du guide proche du curseur sera aimantée)"
+msgstr "Quand un guide est déplacé, l'aimanter aux nœuds des objets ou aux boîtes englobantes ('Aimanter aux nœuds d'objets' ou 'Aimanter aux coins des boîtes englobantes' doit être activé ; seule une petite partie du guide proche du curseur sera aimantée)"
 
 #: ../src/ui/dialog/document-properties.cpp:105
 msgid "Guide co_lor:"
@@ -11951,7 +12187,7 @@ msgstr "Peindre les objets avec :"
 #: ../src/ui/dialog/inkscape-preferences.cpp:446
 #: ../src/ui/view/edit-widget.cpp:1062
 #: ../src/verbs.cpp:2526
-#: ../src/widgets/desktop-widget.cpp:482
+#: ../src/widgets/desktop-widget.cpp:481
 #: ../share/extensions/render_alphabetsoup.inx.h:5
 msgid "Zoom"
 msgstr "Zoom"
@@ -11967,7 +12203,7 @@ msgstr "Mode croquis"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:485
 msgid "If on, the sketch result will be the normal average of all sketches made, instead of averaging the old result with the new sketch."
-msgstr "Si coché, le résultat du croquis sera moyenné avec tous les autres croquis ; sinon, la moyenne sera effectuée entre l'ancien résultat et le nouveau croquis."
+msgstr "Si coché, le résultat du croquis sera moyenné avec tous les autres croquis ; sinon, la moyenne sera effectuée entre l'ancien résultat et le nouveau croquis."
 
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
@@ -12672,7 +12908,7 @@ msgstr "Distance d'indentation (en espaces) :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1021
 msgid "The number of spaces to use for indenting nested elements; set to 0 for no indentation"
-msgstr "Le nombre d'espaces utilisés pour l'indentation d'éléments imbriqués ; définir à 0 pour désactiver l'indentation"
+msgstr "Le nombre d'espaces utilisés pour l'indentation d'éléments imbriqués ; définir à 0 pour désactiver l'indentation"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1023
 msgid "Path data"
@@ -12712,7 +12948,7 @@ msgstr "Exposant minimum :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1037
 msgid "The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero."
-msgstr "La taille minimale d'un nombre écrite dans le SVG est 10 à la puissance de cet exposant ; les nombres plus petits s'écriront zéro."
+msgstr "La taille minimale d'un nombre écrite dans le SVG est 10 à la puissance de cet exposant ; les nombres plus petits s'écriront zéro."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1039
 msgid "SVG output"
@@ -13069,7 +13305,7 @@ msgstr "Nombre maximum d'enregistrements :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1115
 msgid "Maximum number of autosaved files; use this to limit the storage space used"
-msgstr "Nombre maximum d'enregistrements automatiques ; utiliser cette valeur pour limiter l'espace de stockage utilisé"
+msgstr "Nombre maximum d'enregistrements automatiques ; utiliser cette valeur pour limiter l'espace de stockage utilisé"
 
 #. When changing the interval or enabling/disabling the autosave function,
 #. * update our running configuration
@@ -13145,7 +13381,7 @@ msgstr "Deuxième langue :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1226
 msgid "Set the second spell check language; checking will only stop on words unknown in ALL chosen languages"
-msgstr "Définit la deuxième langue du correcteur orthographique ; la vérification ne s'arrêtera que sur les mots inconnus de toutes les langues sélectionnées"
+msgstr "Définit la deuxième langue du correcteur orthographique ; la vérification ne s'arrêtera que sur les mots inconnus de toutes les langues sélectionnées"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1229
 msgid "Third language:"
@@ -13153,7 +13389,7 @@ msgstr "Troisième langue :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1230
 msgid "Set the third spell check language; checking will only stop on words unknown in ALL chosen languages"
-msgstr "Définit la troisième langue du correcteur orthographique ; la vérification ne s'arrêtera que sur les mots inconnus de toutes les langues sélectionnées"
+msgstr "Définit la troisième langue du correcteur orthographique ; la vérification ne s'arrêtera que sur les mots inconnus de toutes les langues sélectionnées"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1232
 msgid "Ignore words with digits"
@@ -13679,50 +13915,50 @@ msgstr "_Crénage"
 msgid "Preview Text:"
 msgstr "Texte de l'aperçu :"
 
-#: ../src/ui/dialog/swatches.cpp:198
+#: ../src/ui/dialog/swatches.cpp:205
 #, c-format
 msgid "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
-msgstr "Couleur : <b>%s</b> ; <b>Cliquer</b> pour définir le remplissage, <b>Maj+clic</b> pour définir le contour"
+msgstr "Couleur : <b>%s</b> ; <b>Cliquer</b> pour définir le remplissage, <b>Maj+clic</b> pour définir le contour"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:245
+#: ../src/ui/dialog/swatches.cpp:252
 msgid "Set fill"
 msgstr "Définir le remplissage"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:253
+#: ../src/ui/dialog/swatches.cpp:260
 msgid "Set stroke"
 msgstr "Définir le contour"
 
-#: ../src/ui/dialog/swatches.cpp:412
+#: ../src/ui/dialog/swatches.cpp:419
 msgid "Change color definition"
 msgstr "Modifier la définition de la couleur"
 
-#: ../src/ui/dialog/swatches.cpp:599
+#: ../src/ui/dialog/swatches.cpp:607
 msgid "Remove stroke color"
 msgstr "Supprimer la couleur du contour"
 
-#: ../src/ui/dialog/swatches.cpp:599
+#: ../src/ui/dialog/swatches.cpp:607
 msgid "Remove fill color"
 msgstr "Supprimer la couleur du remplissage"
 
-#: ../src/ui/dialog/swatches.cpp:604
+#: ../src/ui/dialog/swatches.cpp:612
 msgid "Set stroke color to none"
 msgstr "Supprimer la  couleur de contour"
 
-#: ../src/ui/dialog/swatches.cpp:604
+#: ../src/ui/dialog/swatches.cpp:612
 msgid "Set fill color to none"
 msgstr "Appliquer une couleur de remplissage nulle"
 
-#: ../src/ui/dialog/swatches.cpp:613
+#: ../src/ui/dialog/swatches.cpp:621
 msgid "Set stroke color from swatch"
 msgstr "Appliquer une couleur de contour depuis la palette"
 
-#: ../src/ui/dialog/swatches.cpp:613
+#: ../src/ui/dialog/swatches.cpp:621
 msgid "Set fill color from swatch"
 msgstr "Appliquer une couleur de remplissage depuis la palette"
 
-#: ../src/ui/dialog/swatches.cpp:937
+#: ../src/ui/dialog/swatches.cpp:945
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr "Le répertoire des palettes (%s) est indisponible."
@@ -14299,12 +14535,12 @@ msgid "PLACEHOLDER, do not translate"
 msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:1051
-#: ../src/widgets/desktop-widget.cpp:379
+#: ../src/widgets/desktop-widget.cpp:378
 msgid "Zoom drawing if window size changes"
 msgstr "Zoomer le dessin si les dimensions de la fenêtre sont modifiées"
 
 #: ../src/ui/view/edit-widget.cpp:1072
-#: ../src/widgets/desktop-widget.cpp:502
+#: ../src/widgets/desktop-widget.cpp:501
 msgid "Cursor coordinates"
 msgstr "Coordonnées du curseur"
 
@@ -14313,7 +14549,7 @@ msgid "<b>Welcome to Inkscape!</b> Use shape or drawing tools to create objects;
 msgstr "<b>Bienvenue dans Inkscape !</b> Utilisez les outils de formes ou de dessin à main levée pour créer des objets; utilisez les sélecteurs (flèches) pour les déplacer ou les modifier."
 
 #: ../src/ui/view/edit-widget.cpp:1200
-#: ../src/widgets/desktop-widget.cpp:837
+#: ../src/widgets/desktop-widget.cpp:836
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
@@ -14326,13 +14562,13 @@ msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:1211
 #: ../src/ui/view/edit-widget.cpp:1258
-#: ../src/widgets/desktop-widget.cpp:844
-#: ../src/widgets/desktop-widget.cpp:900
+#: ../src/widgets/desktop-widget.cpp:843
+#: ../src/widgets/desktop-widget.cpp:899
 msgid "Close _without saving"
 msgstr "Fermer _sans enregistrer"
 
 #: ../src/ui/view/edit-widget.cpp:1246
-#: ../src/widgets/desktop-widget.cpp:892
+#: ../src/widgets/desktop-widget.cpp:891
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n"
@@ -14344,7 +14580,7 @@ msgstr ""
 "Voulez-vous enregistrer ce fichier au format Inkscape SVG ?"
 
 #: ../src/ui/view/edit-widget.cpp:1261
-#: ../src/widgets/desktop-widget.cpp:903
+#: ../src/widgets/desktop-widget.cpp:902
 msgid "_Save as SVG"
 msgstr "Enregi_strer comme SVG"
 
@@ -16792,37 +17028,37 @@ msgid "Pattern offset"
 msgstr "Décalage du motif"
 
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:550
+#: ../src/widgets/desktop-widget.cpp:549
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
 msgstr "<b>Bienvenue dans Inkscape!</b> Utilisez les formes ou l'outil de dessin à main levée pour créer des objets; utilisez les sélecteurs (flèches) pour les déplacer ou les modifier."
 
-#: ../src/widgets/desktop-widget.cpp:612
+#: ../src/widgets/desktop-widget.cpp:611
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "%s: %d (contour) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:614
+#: ../src/widgets/desktop-widget.cpp:613
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:618
+#: ../src/widgets/desktop-widget.cpp:617
 #, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "%s (contour) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:620
+#: ../src/widgets/desktop-widget.cpp:619
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
 
-#: ../src/widgets/eek-color-def.cpp:69
-#: ../src/widgets/eek-color-def.cpp:91
+#: ../src/widgets/ege-paint-def.cpp:69
+#: ../src/widgets/ege-paint-def.cpp:91
 #: ../src/widgets/gradient-selector.cpp:167
 msgid "none"
 msgstr "aucune"
 
-#: ../src/widgets/eek-color-def.cpp:88
+#: ../src/widgets/ege-paint-def.cpp:88
 msgid "remove"
 msgstr "supprimer"
 
@@ -16850,9 +17086,8 @@ msgstr "Famille de police"
 
 #. Style frame
 #: ../src/widgets/font-selector.cpp:188
-#: ../share/extensions/polyhedron_3d.inx.h:43
-msgid "Style"
-msgstr "Style"
+msgid "fontselector|Style"
+msgstr ""
 
 #: ../src/widgets/font-selector.cpp:226
 msgid "Font size:"
@@ -18349,7 +18584,7 @@ msgstr "Mode rotation"
 
 #: ../src/widgets/toolbox.cpp:4181
 msgid "Rotate objects, with Shift counterclockwise"
-msgstr "Applique une rotation dans le sens horaire ; avec Maj, le sens est inversé"
+msgstr "Applique une rotation dans le sens horaire ; avec Maj, le sens est inversé"
 
 #: ../src/widgets/toolbox.cpp:4187
 msgid "Duplicate/delete mode"
@@ -18357,7 +18592,7 @@ msgstr "Mode duplication/suppression"
 
 #: ../src/widgets/toolbox.cpp:4188
 msgid "Duplicate objects, with Shift delete"
-msgstr "Duplique les objets ; avec Maj, efface"
+msgstr "Duplique les objets ; avec Maj, efface"
 
 #: ../src/widgets/toolbox.cpp:4194
 msgid "Push mode"
@@ -18373,7 +18608,7 @@ msgstr "Mode rétrécissement/élargissement"
 
 #: ../src/widgets/toolbox.cpp:4202
 msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
-msgstr "Rétrécit les chemins (contraction) ; avec Maj, élargit (dilatation)"
+msgstr "Rétrécit les chemins (contraction) ; avec Maj, élargit (dilatation)"
 
 #: ../src/widgets/toolbox.cpp:4208
 msgid "Attract/repel mode"
@@ -18381,7 +18616,7 @@ msgstr "Mode attraction/répulsion"
 
 #: ../src/widgets/toolbox.cpp:4209
 msgid "Attract parts of paths towards cursor; with Shift from cursor"
-msgstr "Attire les chemins vers le curseur ; avec Maj, éloigne les chemins du curseur"
+msgstr "Attire les chemins vers le curseur ; avec Maj, éloigne les chemins du curseur"
 
 #: ../src/widgets/toolbox.cpp:4215
 msgid "Roughen mode"
@@ -18413,7 +18648,7 @@ msgstr "Mode flou"
 
 #: ../src/widgets/toolbox.cpp:4237
 msgid "Blur selected objects more; with Shift, blur less"
-msgstr "Ajoute du flou à la sélection ; avec Maj, retire du flou"
+msgstr "Ajoute du flou à la sélection ; avec Maj, retire du flou"
 
 #: ../src/widgets/toolbox.cpp:4264
 msgid "Channels:"
@@ -20563,6 +20798,10 @@ msgstr "Dodécaèdre adouci"
 msgid "Stroke Opacity/ %"
 msgstr "Opacité du contour (%)"
 
+#: ../share/extensions/polyhedron_3d.inx.h:43
+msgid "Style"
+msgstr "Style"
+
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
 msgstr "Tétraèdre"
@@ -21147,6 +21386,69 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Render object in black and white"
+#~ msgstr "Colore l'objet en noir et blanc"
+#~ msgid "Specular bump"
+#~ msgstr "Embossage spéculaire"
+
+#, fuzzy
+#~ msgid "Under glass effect for bitmaps"
+#~ msgstr "Convertir les effets de fondu en bitmaps"
+#~ msgid "HSL-sensitive Bubbles effect for bitmaps"
+#~ msgstr "Effet de bulles sensibles aux valeurs TSL, pour bitmaps"
+#~ msgid "Melting texture with a glow"
+#~ msgstr "Texture fondante, avec un éclat"
+#~ msgid "Soft metal"
+#~ msgstr "Métal doux"
+#~ msgid "Cubes for playing with the Morphology primitive"
+#~ msgstr "Cubes pour jouer avec la primitive Morphologie"
+#~ msgid "Kilt"
+#~ msgstr "Kilt"
+#~ msgid "Bump for bitmaps"
+#~ msgstr "Embossage pour les bitmaps"
+#~ msgid "Diffuse light bump"
+#~ msgstr "Embossage de lumière diffus"
+#~ msgid "3D warped shell texture based on blur and displacement map"
+#~ msgstr ""
+#~ "Texture de coquillage tordu en 3D, basé sur les primitives flou et "
+#~ "displacement map"
+#~ msgid "Simple blur alternative of using Fill and outline panel blur slider"
+#~ msgstr ""
+#~ "Flou simple, en alternative à celui proposé par la boîte de dialogue "
+#~ "Remplissage et contour"
+
+#, fuzzy
+#~ msgid "Bright flexible and colorizable metal material"
+#~ msgstr "Texture métalique brillante et éclatante"
+
+#, fuzzy
+#~ msgid "Smooth comics"
+#~ msgstr "Adoucir les coins"
+
+#, fuzzy
+#~ msgid "Emboss comics"
+#~ msgstr "Embosser"
+
+#, fuzzy
+#~ msgid "Smooth comics B"
+#~ msgstr "Adoucir les coins"
+
+#, fuzzy
+#~ msgid "Simple comics"
+#~ msgstr "Bruit en créneaux"
+
+#, fuzzy
+#~ msgid "Glass comics"
+#~ msgstr "Bruit gaussien"
+
+#, fuzzy
+#~ msgid "Soft comics"
+#~ msgstr "Embossage doux"
+
+#, fuzzy
+#~ msgid "Round comics"
+#~ msgstr "Raccord arrondi"
+
 #, fuzzy
 #~ msgid "Darken outline"
 #~ msgstr "Contour du chemin :"
@@ -21205,7 +21507,7 @@ msgstr "Entrée XAML"
 #~ msgid "Center on vertical axis"
 #~ msgstr "Centrer selon un axe vertical"
 #~ msgid "ca@valencia Valencian Catalan"
-#~ msgstr "ca@valencia Catalan ; valencien"
+#~ msgstr "ca@valencia Catalan ; valencien"
 #~ msgid "cs Czech"
 #~ msgstr "cs Tchèque"
 #~ msgid "el Greek"
@@ -21243,7 +21545,7 @@ msgstr "Entrée XAML"
 #~ msgid "Snap nodes"
 #~ msgstr "Aimanter aux nœuds"
 #~ msgid "Scale objects, with Shift scale up"
-#~ msgstr "Réduit la taille de l'objet ; avec Maj, l'objet est agrandi"
+#~ msgstr "Réduit la taille de l'objet ; avec Maj, l'objet est agrandi"
 #~ msgid "Paper Spessure"
 #~ msgstr "Épaisseur du papier"
 #~ msgid "Shadows"
