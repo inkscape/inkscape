@@ -2,7 +2,8 @@
 '''
 dxf_input.py - input a DXF file >= (AutoCAD Release 13 == AC1012)
 
-Copyright (C) 2008 Alvin Penner, penner@vaxxine.com
+Copyright (C) 2008, 2009 Alvin Penner, penner@vaxxine.com
+Copyright (C) 2009 Christian Mayer, inkscape@christianmayer.de
 - thanks to Aaron Spike for inkex.py and simplestyle.py
 - without which this would not have been possible
 
@@ -190,11 +191,36 @@ def export_HATCH():
             attribs = {'d': path, 'style': style}
             inkex.etree.SubElement(layer, 'path', attribs)
 
+def export_DIMENSION():
+    # mandatory group codes : (10, 11, 13, 14, 20, 21, 23, 24) (x1..4, y1..4)
+    if vals[groups['10']] and vals[groups['11']] and vals[groups['13']] and vals[groups['14']] and vals[groups['20']] and vals[groups['21']] and vals[groups['23']] and vals[groups['24']]:
+        dx = abs(vals[groups['10']][0] - vals[groups['13']][0])
+        dy = abs(vals[groups['20']][0] - vals[groups['23']][0])
+        if (vals[groups['10']][0] == vals[groups['14']][0]) and dx > 0.00001:
+            d = dx/scale
+            dy = 0
+            path = 'M %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], vals[groups['13']][0], vals[groups['20']][0])
+        elif (vals[groups['20']][0] == vals[groups['24']][0]) and dy > 0.00001:
+            d = dy/scale
+            dx = 0
+            path = 'M %f,%f %f,%f' % (vals[groups['10']][0], vals[groups['20']][0], vals[groups['10']][0], vals[groups['23']][0])
+        else:
+            return
+        attribs = {'d': path, 'style': style + '; marker-start: url(#DistanceX); marker-end: url(#DistanceX)'}
+        inkex.etree.SubElement(layer, 'path', attribs)
+        x = scale*(vals[groups['11']][0] - xmin)
+        y = - scale*(vals[groups['21']][0] - ymax)
+        size = 3                    # default fontsize in px
+        attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %dpx; fill: %s' % (size, color)}
+        if dx == 0:
+            attribs.update({'transform': 'rotate (%f %f %f)' % (-90, x, y)})
+        node = inkex.etree.SubElement(layer, 'text', attribs)
+        tspan = inkex.etree.SubElement(node , 'tspan', {inkex.addNS('role','sodipodi'): 'line'})
+        tspan.text = '%.2f' % d
+
 def generate_ellipse(xc, yc, xm, ym, w, a1, a2):
     rm = math.sqrt(xm*xm + ym*ym)
-    a = math.atan(ym/xm)
-    if xm < 0:
-        a += math.pi
+    a = math.atan2(ym, xm)
     diff = (a2 - a1 + 2*math.pi) % (2*math.pi)
     if diff:                        # open arc
         large = 0                   # large-arc-flag
@@ -226,13 +252,16 @@ def get_group(group):
 
 #   define DXF Entities and specify which Group Codes to monitor
 
-entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'ENDSEC': ''}
-groups = {'1': 0, '8': 1, '10': 2, '11': 3, '20': 4, '21': 5, '40': 6, '41': 7, '42': 8, '50': 9, '51': 10, '62': 11, '70': 12, '72': 13, '73': 14, '93': 15, '370': 16}
+entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'DIMENSION': export_DIMENSION, 'ENDSEC': ''}
+groups = {'1': 0, '8': 1, '10': 2, '11': 3, '13': 4, '14': 5, '20': 6, '21': 7, '23': 8, '24': 9, '40': 10, '41': 11, '42': 12, '50': 13, '51': 14, '62': 15, '70': 16, '72': 17, '73': 18, '93': 19, '370': 20}
 colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '#0000FF',
             6: '#FF00FF',   8: '#414141',   9: '#808080',  30: '#FF7F00',
           250: '#333333', 251: '#505050', 252: '#696969', 253: '#828282', 254: '#BEBEBE', 255: '#FFFFFF'}
 
 doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"></svg>'))
+defs = inkex.etree.SubElement(doc.getroot(), 'defs', {} )
+marker = inkex.etree.SubElement(defs, 'marker', {'id': 'DistanceX', 'orient': 'auto', 'refX': '0.0', 'refY': '0.0', 'style': 'overflow:visible'})
+inkex.etree.SubElement(marker, 'path', {'d': 'M 3,-3 L -3,3 M 0,-5 L  0,5', 'style': 'stroke:#000000; stroke-width:0.5'})
 stream = open(inkex.sys.argv[1], 'r')
 xmax = xmin = 0.0
 ymax = 297.0                                        # default A4 height in mm
@@ -248,7 +277,7 @@ while line[0] and line[1] != 'ENTITIES':
         xmax = get_group('10')
         ymax = get_group('20')
     if flag and line[0] == '2':
-        name = line[1]
+        name = unicode(line[1], "iso-8859-1")
         attribs = {inkex.addNS('groupmode','inkscape'): 'layer', inkex.addNS('label','inkscape'): '%s' % name}
         layer_nodes[name] = inkex.etree.SubElement(doc.getroot(), 'g', attribs)
     if line[0] == '2' and line[1] == 'LAYER':
@@ -275,9 +304,9 @@ while line[0] and line[1] != 'ENDSEC':
             val = unicode(val, "iso-8859-1")
         elif line[0] == '62' or line[0] == '70' or line[0] == '93':
             val = int(line[1])
-        elif line[0] == '10':                       # scaled float x value
+        elif line[0] == '10' or line[0] == '13' or line[0] == '14': # scaled float x value
             val = scale*(float(line[1]) - xmin)
-        elif line[0] == '20':                       # scaled float y value
+        elif line[0] == '20' or line[0] == '23' or line[0] == '24': # scaled float y value
             val = - scale*(float(line[1]) - ymax)
         else:                                       # unscaled float value
             val = float(line[1])
@@ -303,7 +332,7 @@ while line[0] and line[1] != 'ENDSEC':
                     style = simplestyle.formatStyle({'stroke': '%s' % color, 'fill': 'none', 'stroke-width': '%.1f' % w})
             entities[entity]()
         entity = line[1]
-        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
         seqs = []
 
 doc.write(inkex.sys.stdout)
