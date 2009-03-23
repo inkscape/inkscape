@@ -43,6 +43,7 @@ public:
     virtual void handleGradientsChange(); // temporary
 
 protected:
+    virtual void _updateFromSelection();
     virtual void _handleAction( int setId, int itemId );
     virtual void _setDocument( SPDocument *document );
     virtual void _rebuild();
@@ -61,6 +62,9 @@ private:
 
     sigc::connection _documentConnection;
     sigc::connection _resourceConnection;
+    sigc::connection _selChanged;
+    sigc::connection _setModified;
+    sigc::connection _subselChanged;
 };
 
 } //namespace Dialogs

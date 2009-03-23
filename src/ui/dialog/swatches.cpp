@@ -41,9 +41,11 @@
 #include "sp-gradient.h"
 #include "sp-gradient-vector.h"
 #include "swatches.h"
+#include "style.h"
 #include "widgets/gradient-vector.h"
 #include "widgets/eek-preview.h"
 #include "display/nr-plain-stuff.h"
+#include "sp-gradient-reference.h"
 
 namespace Inkscape {
 namespace UI {
@@ -71,6 +73,11 @@ public:
                                     ::PreviewSize size,
                                     guint ratio);
     void buttonClicked(bool secondary = false);
+
+    void setState( bool fill, bool stroke );
+    bool isFill() { return _isFill; }
+    bool isStroke() { return _isStroke; }
+
     ege::PaintDef def;
     void* ptr;
 
@@ -99,6 +106,8 @@ private:
     Gtk::Tooltips tips;
     std::vector<Gtk::Widget*> _previews;
 
+    bool _isFill;
+    bool _isStroke;
     bool _isLive;
     bool _linkIsTone;
     int _linkPercent;
@@ -112,6 +121,8 @@ private:
 ColorItem::ColorItem(ege::PaintDef::ColorType type) :
     def(type),
     ptr(0),
+    _isFill(false),
+    _isStroke(false),
     _isLive(false),
     _linkIsTone(false),
     _linkPercent(0),
@@ -123,6 +134,8 @@ ColorItem::ColorItem(ege::PaintDef::ColorType type) :
 ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustring& name ) :
     def( r, g, b, name ),
     ptr(0),
+    _isFill(false),
+    _isStroke(false),
     _isLive(false),
     _linkIsTone(false),
     _linkPercent(0),
@@ -153,6 +166,31 @@ ColorItem &ColorItem::operator=(ColorItem const &other)
         g_message("Erk!");
     }
     return *this;
+}
+
+void ColorItem::setState( bool fill, bool stroke )
+{
+    if ( (_isFill != fill) || (_isStroke != stroke) ) {
+        _isFill = fill;
+        _isStroke = stroke;
+
+        for ( std::vector<Gtk::Widget*>::iterator it = _previews.begin(); it != _previews.end(); ++it ) {
+            Gtk::Widget* widget = *it;
+            if ( IS_EEK_PREVIEW(widget->gobj()) ) {
+                EekPreview * preview = EEK_PREVIEW(widget->gobj());
+
+                int val = eek_preview_get_linked( preview );
+                val &= ~(PREVIEW_FILL | PREVIEW_STROKE);
+                if ( _isFill ) {
+                    val |= PREVIEW_FILL;
+                }
+                if ( _isStroke ) {
+                    val |= PREVIEW_STROKE;
+                }
+                eek_preview_set_linked( preview, static_cast<LinkType>(val) );
+            }
+        }
+    }
 }
 
 
@@ -1276,6 +1314,9 @@ SwatchesPanel::~SwatchesPanel()
 {
     _documentConnection.disconnect();
     _resourceConnection.disconnect();
+    _selChanged.disconnect();
+    _setModified.disconnect();
+    _subselChanged.disconnect();
 
     if ( _clear ) {
         delete _clear;
@@ -1304,15 +1345,25 @@ void SwatchesPanel::setDesktop( SPDesktop* desktop )
     if ( desktop != _currentDesktop ) {
         if ( _currentDesktop ) {
             _documentConnection.disconnect();
+            _selChanged.disconnect();
+            _setModified.disconnect();
+            _subselChanged.disconnect();
         }
 
         _currentDesktop = desktop;
 
         if ( desktop ) {
+            _currentDesktop->selection->connectChanged(
+                sigc::hide(sigc::mem_fun(*this, &SwatchesPanel::_updateFromSelection)));
+
+            _currentDesktop->selection->connectModified(
+                sigc::hide(sigc::hide(sigc::mem_fun(*this, &SwatchesPanel::_updateFromSelection))));
+
+            _currentDesktop->connectToolSubselectionChanged(
+                sigc::hide(sigc::mem_fun(*this, &SwatchesPanel::_updateFromSelection)));
+
             sigc::bound_mem_functor1<void, Inkscape::UI::Dialogs::SwatchesPanel, SPDocument*> first = sigc::mem_fun(*this, &SwatchesPanel::_setDocument);
-
             sigc::slot<void, SPDocument*> base2 = first;
-
             sigc::slot<void,SPDesktop*, SPDocument*> slot2 = sigc::hide<0>( base2 );
             _documentConnection = desktop->connectDocumentReplaced( slot2 );
 
@@ -1409,6 +1460,87 @@ void SwatchesPanel::handleGradientsChange()
         JustForNow* curr = possible[_currentIndex];
         if (curr == docPalette) {
             _rebuild();
+        }
+    }
+}
+
+void SwatchesPanel::_updateFromSelection()
+{
+    if ( _ptr ) {
+        JustForNow *docPalette = reinterpret_cast<JustForNow *>(_ptr);
+
+        Glib::ustring fillId;
+        Glib::ustring strokeId;
+
+        SPStyle *tmpStyle = sp_style_new( sp_desktop_document(_currentDesktop) );
+        int result = sp_desktop_query_style( _currentDesktop, tmpStyle, QUERY_STYLE_PROPERTY_FILL );
+        switch (result) {
+            case QUERY_STYLE_SINGLE:
+            case QUERY_STYLE_MULTIPLE_AVERAGED:
+            case QUERY_STYLE_MULTIPLE_SAME:
+            {
+                if (tmpStyle->fill.set && tmpStyle->fill.isPaintserver()) {
+                    SPPaintServer* server = tmpStyle->getFillPaintServer();
+                    if ( SP_IS_GRADIENT(server) ) {
+                        SPGradient* target = 0;
+                        SPGradient* grad = SP_GRADIENT(server);
+                        if (grad->repr->attribute("osb:paint")) {
+                            target = grad;
+                        } else if ( grad->ref ) {
+                            SPGradient *tmp = grad->ref->getObject();
+                            if ( tmp && tmp->repr->attribute("osb:paint") ) {
+                                target = tmp;
+                            }
+                        }
+                        if ( target ) {
+                            gchar const* id = target->repr->attribute("id");
+                            if ( id ) {
+                                fillId = id;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+        }
+
+        result = sp_desktop_query_style( _currentDesktop, tmpStyle, QUERY_STYLE_PROPERTY_STROKE );
+        switch (result) {
+            case QUERY_STYLE_SINGLE:
+            case QUERY_STYLE_MULTIPLE_AVERAGED:
+            case QUERY_STYLE_MULTIPLE_SAME:
+            {
+                if (tmpStyle->stroke.set && tmpStyle->stroke.isPaintserver()) {
+                    SPPaintServer* server = tmpStyle->getStrokePaintServer();
+                    if ( SP_IS_GRADIENT(server) ) {
+                        SPGradient* target = 0;
+                        SPGradient* grad = SP_GRADIENT(server);
+                        if (grad->repr->attribute("osb:paint")) {
+                            target = grad;
+                        } else if ( grad->ref ) {
+                            SPGradient *tmp = grad->ref->getObject();
+                            if ( tmp && tmp->repr->attribute("osb:paint") ) {
+                                target = tmp;
+                            }
+                        }
+                        if ( target ) {
+                            gchar const* id = target->repr->attribute("id");
+                            if ( id ) {
+                                strokeId = id;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        sp_style_unref(tmpStyle);
+
+        for ( std::vector<ColorItem*>::iterator it = docPalette->_colors.begin(); it != docPalette->_colors.end(); ++it ) {
+            ColorItem* item = *it;
+            bool isFill = (fillId == item->def.descr);
+            bool isStroke = (strokeId == item->def.descr);
+            item->setState( isFill, isStroke );
         }
     }
 }
