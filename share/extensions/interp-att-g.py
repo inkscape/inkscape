@@ -1,6 +1,6 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 '''
-Copyright (C) 2005 Aaron Spike, aaron@ekips.org
+Copyright (C) 2005 Aurelio A. Heckert, aurium (a) gmail dot com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -195,5 +195,3 @@ class InterpAttG(inkex.Effect):
 if __name__ == '__main__':
     e = InterpAttG()
     e.affect()
-
-# vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99

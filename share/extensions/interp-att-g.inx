@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
   <_name>Interpolate Attribute in a group</_name>
-  <id>org.ekips.filter.interp-att-g</id>
+  <id>org.inkscape.filter.interp-att-g</id>
   <dependency type="executable" location="extensions">interp-att-g.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <_param name="intro" type="description">This effect applays a value for any interpolable attribute for all elements inside the selected group or for all elements in a multiple selection</_param>
@@ -27,7 +27,7 @@
     <_item value="style">Style</_item>
     <_item value="transform">Transformation</_item>
   </param>
-  <_param name="val-info" type="description">••••••••••••••••••••••••••••••••••••••••••••••••</_param>
+  <_param name="sep" type="description">••••••••••••••••••••••••••••••••••••••••••••••••</_param>
   <param name="start-val" type="string" _gui-text="Start Value"></param>
   <param name="end-val" type="string" _gui-text="End Value"></param>
   <param name="unit" type="enum" _gui-text="Unit">
