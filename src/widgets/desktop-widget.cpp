@@ -374,7 +374,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     dtw->sticky_zoom = sp_button_new_from_data ( Inkscape::ICON_SIZE_DECORATION,
                                                  SP_BUTTON_TYPE_TOGGLE,
                                                  NULL,
-                                                 INKSCAPE_ICON_ZOOM,
+                                                 INKSCAPE_ICON_ZOOM_ORIGINAL,
                                                  _("Zoom drawing if window size changes"),
                                                  dtw->tt);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dtw->sticky_zoom), prefs->getBool("/options/stickyzoom/value"));
