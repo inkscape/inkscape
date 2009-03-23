@@ -350,7 +350,7 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                 }
                 gtk_paint_check( style,
                                  widget->window,
-                                 GTK_STATE_SELECTED/* (GtkStateType)widget->state*/,
+                                 (GtkStateType)widget->state,
                                  GTK_SHADOW_ETCHED_OUT,
                                  NULL,
                                  widget,
@@ -368,7 +368,7 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                 }
                 gtk_paint_diamond( style,
                                    widget->window,
-                                   GTK_STATE_SELECTED/* (GtkStateType)widget->state*/,
+                                   (GtkStateType)widget->state,
                                    GTK_SHADOW_ETCHED_OUT,
                                    NULL,
                                    widget,
