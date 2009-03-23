@@ -49,6 +49,7 @@ namespace Inkscape {
 namespace UI {
 namespace Dialogs {
 
+#define VBLOCK 16
 
 void _loadPaletteFile( gchar const *filename );
 
@@ -210,6 +211,8 @@ static void dragBegin( GtkWidget */*widget*/, GdkDragContext* dc, gpointer data 
         using Inkscape::IO::Resource::get_path;
         using Inkscape::IO::Resource::ICONS;
         using Inkscape::IO::Resource::SYSTEM;
+        int width = 32;
+        int height = 24;
 
         if (item->def.getType() != ege::PaintDef::RGB){
             GError *error = NULL;
@@ -220,18 +223,35 @@ static void dragBegin( GtkWidget */*widget*/, GdkDragContext* dc, gpointer data 
                                                  &bytesRead,
                                                  &bytesWritten,
                                                  &error);
-            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file_at_scale(localFilename, 32, 24, FALSE, &error);
+            GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file_at_scale(localFilename, width, height, FALSE, &error);
             g_free(localFilename);
             gtk_drag_set_icon_pixbuf( dc, pixbuf, 0, 0 );
-            return;
-        }
+        } else {
+            GdkPixbuf* pixbuf = 0;
+            if ( gradMap.find(item) == gradMap.end() ){
+                Glib::RefPtr<Gdk::Pixbuf> thumb = Gdk::Pixbuf::create( Gdk::COLORSPACE_RGB, false, 8, width, height );
+                guint32 fillWith = (0xff000000 & (item->def.getR() << 24))
+                    | (0x00ff0000 & (item->def.getG() << 16))
+                    | (0x0000ff00 & (item->def.getB() <<  8));
+                thumb->fill( fillWith );
+                pixbuf = thumb->gobj();
+            } else {
+                SPGradient* grad = gradMap[item];
 
-        Glib::RefPtr<Gdk::Pixbuf> thumb = Gdk::Pixbuf::create( Gdk::COLORSPACE_RGB, false, 8, 32, 24 );
-        guint32 fillWith = (0xff000000 & (item->def.getR() << 24))
-                         | (0x00ff0000 & (item->def.getG() << 16))
-                         | (0x0000ff00 & (item->def.getB() <<  8));
-        thumb->fill( fillWith );
-        gtk_drag_set_icon_pixbuf( dc, thumb->gobj(), 0, 0 );
+                guchar* px = g_new( guchar, 3 * height * width );
+                nr_render_checkerboard_rgb( px, width, height, 3 * width, 0, 0 );
+
+                sp_gradient_render_vector_block_rgb( grad,
+                                                     px, width, height, 3 * width,
+                                                     0, width, TRUE );
+
+                pixbuf = gdk_pixbuf_new_from_data( px, GDK_COLORSPACE_RGB, FALSE, 8,
+                                                   width, height, width * 3,
+                                                   0, // add delete function
+                                                   0 );
+            }
+            gtk_drag_set_icon_pixbuf( dc, pixbuf, 0, 0 );
+        }
     }
 
 }
@@ -622,8 +642,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
             GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( px, GDK_COLORSPACE_RGB, FALSE, 8,
                                                           width, height, width * 3,
                                                           0, // add delete function
-                                                          0
-                );
+                                                          0 );
             eek_preview_set_pixbuf( preview, pixbuf );
         }
         if ( def.getType() != ege::PaintDef::RGB ) {
@@ -1372,7 +1391,6 @@ void SwatchesPanel::handleGradientsChange()
                         item->ptr = this;
                         docPalette->_colors.push_back(item);
 
-#define VBLOCK 16
                         gint width = 128;
                         gint height = VBLOCK;
                         guchar* px = g_new( guchar, 3 * height * width );
