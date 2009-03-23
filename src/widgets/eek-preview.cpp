@@ -247,6 +247,26 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                             insetX, insetY,
                             widget->allocation.width - (insetX * 2), widget->allocation.height - (insetY * 2) );
 
+        if ( preview->_previewPixbuf ) {
+            GtkDrawingArea* da = &(preview->drawing);
+            GdkDrawable* drawable = (GdkDrawable*) (((GtkWidget*)da)->window);
+            gint w = 0;
+            gint h = 0;
+            gdk_drawable_get_size(drawable, &w, &h);
+            if ((w != preview->_scaledW) || (h != preview->_scaledH)) {
+                if (preview->_scaled) {
+                    g_object_unref(preview->_scaled);
+                }
+                preview->_scaled = gdk_pixbuf_scale_simple(preview->_previewPixbuf, w, h, GDK_INTERP_BILINEAR);
+                preview->_scaledW = w;
+                preview->_scaledH = h;
+            }
+
+            GdkPixbuf* pix = (preview->_scaled) ? preview->_scaled : preview->_previewPixbuf;
+            gdk_draw_pixbuf( drawable, 0, pix, 0, 0, 0, 0, w, h, GDK_RGB_DITHER_NONE, 0, 0 );
+        }
+
+
         if ( preview->_linked ) {
             /* Draw arrow */
             GdkRectangle possible = {insetX, insetY, (widget->allocation.width - (insetX * 2)), (widget->allocation.height - (insetY * 2)) };
@@ -293,7 +313,7 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                                  NULL, /* clip area.  &area, */
                                  widget, /* may be NULL */
                                  NULL, /* detail */
-                                 GTK_ARROW_UP,
+                                 GTK_ARROW_DOWN,
                                  FALSE,
                                  otherArea.x, otherArea.y,
                                  otherArea.width, otherArea.height
@@ -319,25 +339,43 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                                  otherArea.width, otherArea.height
                                  );
             }
-        }
 
-        if ( preview->_previewPixbuf ) {
-            GtkDrawingArea* da = &(preview->drawing);
-            GdkDrawable* drawable = (GdkDrawable*) (((GtkWidget*)da)->window);
-            gint w = 0;
-            gint h = 0;
-            gdk_drawable_get_size(drawable, &w, &h);
-            if ((w != preview->_scaledW) || (h != preview->_scaledH)) {
-                if (preview->_scaled) {
-                    g_object_unref(preview->_scaled);
+
+            if ( preview->_linked & PREVIEW_FILL ) {
+                GdkRectangle otherArea = {possible.x + ((possible.width / 4) - (area.width / 2)),
+                                          area.y,
+                                          area.width, area.height};
+                if ( otherArea.height < possible.height ) {
+                    otherArea.y = possible.y + (possible.height - otherArea.height) / 2;
                 }
-                preview->_scaled = gdk_pixbuf_scale_simple(preview->_previewPixbuf, w, h, GDK_INTERP_BILINEAR);
-                preview->_scaledW = w;
-                preview->_scaledH = h;
+                gtk_paint_check( style,
+                                 widget->window,
+                                 GTK_STATE_SELECTED/* (GtkStateType)widget->state*/,
+                                 GTK_SHADOW_ETCHED_OUT,
+                                 NULL,
+                                 widget,
+                                 NULL,
+                                 otherArea.x, otherArea.y,
+                                 otherArea.width, otherArea.height );
             }
 
-            GdkPixbuf* pix = (preview->_scaled) ? preview->_scaled : preview->_previewPixbuf;
-            gdk_draw_pixbuf( drawable, 0, pix, 0, 0, 0, 0, w, h, GDK_RGB_DITHER_NONE, 0, 0 );
+            if ( preview->_linked & PREVIEW_STROKE ) {
+                GdkRectangle otherArea = {possible.x + (((possible.width * 3) / 4) - (area.width / 2)),
+                                          area.y,
+                                          area.width, area.height};
+                if ( otherArea.height < possible.height ) {
+                    otherArea.y = possible.y + (possible.height - otherArea.height) / 2;
+                }
+                gtk_paint_diamond( style,
+                                   widget->window,
+                                   GTK_STATE_SELECTED/* (GtkStateType)widget->state*/,
+                                   GTK_SHADOW_ETCHED_OUT,
+                                   NULL,
+                                   widget,
+                                   NULL,
+                                   otherArea.x, otherArea.y,
+                                   otherArea.width, otherArea.height );
+            }
         }
 
 
