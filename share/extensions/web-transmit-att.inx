@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Transmit Atributes</_name>
+  <id>org.inkscape.web.transmit-att</id>
+  <dependency type="executable" location="extensions">web-transmit-att.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <_param name="intro1" type="description">This effect adds a feature visible (or usable) only on a SVG enabled web browser (like Firefox).</_param>
+  <_param name="sep1" type="description">••••••••••••••••••••••••••••••••••••••••••••••••</_param>
+  <_param name="intro2" type="description">This effect transmit one or more atributes from the first selected element to the second when a event occurs.</_param>
+  <_param name="sep2" type="description">••••••••••••••••••••••••••••••••••••••••••••••••</_param>
+  <_param name="intro2" type="description">If you want to transmit more then one attribute, you must separate this with a space, and only with a space.</_param>
+  <param name="att" type="string" _gui-text="Attribute to transmit">fill</param>
+  <param name="when" type="enum" _gui-text="When it must to transmit?">
+    <_item value="onclick">on click</_item>
+    <_item value="onfocusin">on focus</_item>
+    <_item value="onfocusout">on blur</_item>
+    <_item value="onactivate">on activate</_item>
+    <_item value="onmousedown">on mouse down</_item>
+    <_item value="onmouseup">on mouse up</_item>
+    <_item value="onmouseover">on mouse over</_item>
+    <_item value="onmousemove">on mouse move</_item>
+    <_item value="onmouseout">on mouse out</_item>
+    <_item value="onload">on element loaded</_item>
+  </param>
+  <param name="compatibility" type="enum" _gui-text="Compatibility with previews code to this event">
+    <_item value="append">Run it after</_item>
+    <_item value="prepend">Run it before</_item>
+    <_item value="replace">Replace</_item>
+  </param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Web">
+        <submenu name="Javascript"/>
+      </submenu>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">web-transmit-att.py</command>
+  </script>
+</inkscape-extension>
