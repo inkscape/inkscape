@@ -822,7 +822,7 @@ sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
     //                                       checkitem_toggled, checkitem_update, 0);
     sp_ui_menu_append_check_item_from_verb(m, view, _("Commands Bar"), _("Show or hide the Commands bar (under the menu)"), "commands",
                                            checkitem_toggled, checkitem_update, 0);
-    sp_ui_menu_append_check_item_from_verb(m, view, _("Snap controls Bar"), _("Show or hide the snapping controls"), "snaptoolbox",
+    sp_ui_menu_append_check_item_from_verb(m, view, _("Snap Controls Bar"), _("Show or hide the snapping controls"), "snaptoolbox",
                                            checkitem_toggled, checkitem_update, 0);
     sp_ui_menu_append_check_item_from_verb(m, view, _("Tool Controls Bar"), _("Show or hide the Tool Controls bar"), "toppanel",
                                            checkitem_toggled, checkitem_update, 0);
