@@ -909,8 +909,8 @@ AlignAndDistribute::AlignAndDistribute()
 
     _combo.append_text(_("Last selected"));
     _combo.append_text(_("First selected"));
-    _combo.append_text(_("Biggest item"));
-    _combo.append_text(_("Smallest item"));
+    _combo.append_text(_("Biggest object"));
+    _combo.append_text(_("Smallest object"));
     _combo.append_text(_("Page"));
     _combo.append_text(_("Drawing"));
     _combo.append_text(_("Selection"));
