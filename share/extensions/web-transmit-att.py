@@ -16,13 +16,14 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, sys, os
-#from lxml import etree
+import inkwebeffect, gettext
 
-class InterpAttG(inkex.Effect):
+_ = gettext.gettext
+
+class InkWebTransmitAtt(inkwebeffect.InkWebEffect):
 
     def __init__(self):
-        inkex.Effect.__init__(self)
+        inkwebeffect.InkWebEffect.__init__(self)
         self.OptionParser.add_option("-a", "--att",
                         action="store", type="string",
                         dest="att", default="fill",
@@ -36,19 +37,12 @@ class InterpAttG(inkex.Effect):
                         dest="compatibility", default="append",
                         help="Compatibility with previews code to this event.")
 
-    def ensureInkWebSupport(self):
-      if not self.document.xpath('//*[@id="inkwebjs"]', namespaces=inkex.NSS):
-        root = self.document.getroot()
-        scriptEl = inkex.etree.Element( "script" )
-        scriptEl.set( "id", "inkwebjs" )
-        scriptEl.set( "type", "text/javascript" )
-        js = open( os.path.join(sys.path[0], "inkweb.js"), 'r' )
-        scriptEl.text = inkex.etree.CDATA( js.read() )
-        js.close()
-        root.insert( 0, scriptEl )
-
     def effect(self):
       self.ensureInkWebSupport()
+
+      if len(self.options.ids) < 2:
+        inkwebeffect.inkex.errormsg(_("You must to select at least two elements."))
+        exit(1)
 
       elFrom = self.selected[ self.options.ids[0] ]
       idTo = self.options.ids[1]
@@ -66,5 +60,6 @@ class InterpAttG(inkex.Effect):
       elFrom.set( self.options.when, evCode )
 
 if __name__ == '__main__':
-    e = InterpAttG()
+    e = InkWebTransmitAtt()
     e.affect()
+
