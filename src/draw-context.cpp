@@ -303,7 +303,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
         SPCSSAttr *css_item = sp_css_attr_from_object (SP_OBJECT(item), SP_STYLE_FLAG_ALWAYS);
         const char *cstroke = sp_repr_css_property(css_item, "stroke", "none");
 
-#define SHAPE_LENGTH 100
+#define SHAPE_LENGTH 10
 #define SHAPE_HEIGHT 10
 
         switch (shape) {
