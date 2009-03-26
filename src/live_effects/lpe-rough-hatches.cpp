@@ -51,7 +51,8 @@ struct LevelCrossing{
 };
 struct LevelCrossingOrder {
     bool operator()(LevelCrossing a, LevelCrossing b) {
-        return a.pt[Y] < b.pt[Y];
+        return ( a.pt[Y] < b.pt[Y] );// a.pt[X] == b.pt[X] since we are supposed to be on the same level...
+        //return ( a.pt[X] < b.pt[X] || ( a.pt[X] == b.pt[X]  && a.pt[Y] < b.pt[Y] ) );
     }
 };
 struct LevelCrossingInfo{
@@ -182,7 +183,7 @@ public:
         }
         double t = (*this)[level][idx].t;
         double sign = ((*this)[level][idx].sign ? 1 : -1);
-        double next_t = t;
+        //---double next_t = t;
         //level += 1;
         direction = (direction + 1)%4;
         if (level == size()){
@@ -202,36 +203,6 @@ public:
         }
         level = next.first;
         idx = next.second;
-
-/*********************
-        //look for next time on the same level
-        for (unsigned j=0; j<(*this)[level].size(); j++){
-            double tj = (*this)[level][j].t;
-            if ( sign*(tj-t) > 0 ){
-                if( next_t == t ||  sign*(tj-next_t)<0 ){
-                    next_t = tj;
-                    idx = j;
-                }
-            }
-        }
-        if ( next_t == t ){//not found? look at max/min time in this component, as time is "periodic".
-            for (unsigned j=0; j<(*this)[level].size(); j++){
-                double tj = (*this)[level][j].t;
-                if ( -sign*(tj-next_t) > 0 ){
-                    next_t = tj;
-                    idx = j;
-                }
-            }
-        }
-        if ( next_t == t ){//still not found? houch! this should not happen.
-            level = size();
-            return;
-        }
-        if ( (*this)[level][idx].used ) {
-            level = size();
-            return;
-        }
-*************************/
         return;
     }
 };
@@ -259,7 +230,7 @@ LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
     scale_tb(_("1st side, out"), _("Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, 1=default"), "scale_bb", &wr, this, 1.),
     scale_bf(_("2nd side, in "), _("Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, 1=default"), "scale_tf", &wr, this, 1.),
     scale_bb(_("2nd side, out"), _("Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, 1=default"), "scale_tb", &wr, this, 1.),
-    top_smth_variation(_("variance: 1st side"), _("Randomness of 'bottom' halfturns smoothness"), "bottom_smth_variation", &wr, this, 0),
+    top_smth_variation(_("variance: 1st side"), _("Randomness of 'bottom' halfturns smoothness"), "top_smth_variation", &wr, this, 0),
     bot_smth_variation(_("2nd side"), _("Randomness of 'top' halfturns smoothness"), "bottom_smth_variation", &wr, this, 0),
 //
     top_edge_variation(_("Magnitude jitter: 1st side"), _("Randomly moves 'bottom' halfsturns to produce magnitude variations."), "bottom_edge_variation", &wr, this, 0),
@@ -272,7 +243,7 @@ LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
     bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, Geom::Point(-5,0)),
 //
     fat_output(_("Generate thick/thin path"), _("Simulate a stroke of varrying width"), "fat_output", &wr, this, true),
-    stroke_width_top(_("Thikness: at 1st side"), _("Width at 'bottom' half turns"), "stroke_width_bottom", &wr, this, 1.),
+    stroke_width_top(_("Thikness: at 1st side"), _("Width at 'bottom' half turns"), "stroke_width_top", &wr, this, 1.),
     stroke_width_bot(_("at 2nd side"), _("Width at 'top' halfturns"), "stroke_width_bottom", &wr, this, 1.),
     front_thickness(_("from 2nd to 1st side"), _("Width of paths from 'top' to 'bottom' halfturns"), "front_thickness", &wr, this, 1.),
     back_thickness(_("from 1st to 2nd side"), _("Width of paths from 'top' to 'bottom' halfturns"), "back_thickness", &wr, this, .25)
@@ -299,7 +270,7 @@ LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&back_thickness) );
 
     //hatch_dist.param_set_range(0.1, NR_HUGE);
-    growth.param_set_range(-0.95, NR_HUGE);
+    growth.param_set_range(0, NR_HUGE);
     dist_rdm.param_set_range(0, 99.);
     stroke_width_top.param_set_range(0,  NR_HUGE);
     stroke_width_bot.param_set_range(0,  NR_HUGE);
@@ -318,6 +289,8 @@ LPERoughHatches::~LPERoughHatches()
 Geom::Piecewise<Geom::D2<Geom::SBasis> > 
 LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in){
 
+    //std::cout<<"doEffect_pwd2:\n";
+
     Piecewise<D2<SBasis> > result;
     
     Piecewise<D2<SBasis> > transformed_pwd2_in = pwd2_in;
@@ -326,13 +299,11 @@ LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
     Matrix bend_mat;//used to bend the hatches
 
     if (do_bend.get_value()){
-        //Point bend_dir = -rot90(unit_vector(direction.getOrigin() - bender));
-        //double bend_amount = L2(direction.getOrigin() - bender);
-        Point bend_dir = -rot90(unit_vector(direction.getVector()));
-        double bend_amount = L2(direction.getVector());
+        Point bend_dir = -rot90(unit_vector(bender.getVector()));
+        double bend_amount = L2(bender.getVector());
         bend_mat = Matrix(-bend_dir[Y], bend_dir[X], bend_dir[X], bend_dir[Y],0,0);
         transformed_pwd2_in = pwd2_in * bend_mat;
-        tilter = Piecewise<SBasis>(shift(Linear(bend_amount),1));
+        tilter = Piecewise<SBasis>(shift(Linear(-bend_amount),1));
         OptRect bbox = bounds_exact( transformed_pwd2_in );
         if (not(bbox)) return pwd2_in;
         tilter.setDomain((*bbox)[Y]);
@@ -389,8 +360,8 @@ LPERoughHatches::generateLevels(Interval const &domain, double x_org){
 std::vector<std::vector<Point> > 
 LPERoughHatches::linearSnake(Piecewise<D2<SBasis> > const &f, Point const &org){
 
+    //std::cout<<"linearSnake:\n";
     std::vector<std::vector<Point> > result;
-
     Piecewise<SBasis> x = make_cuts_independent(f)[X];
     //Remark: derivative is computed twice in the 2 lines below!!
     Piecewise<SBasis> dx = derivative(x);
@@ -400,7 +371,6 @@ LPERoughHatches::linearSnake(Piecewise<D2<SBasis> > const &f, Point const &org){
     std::vector<double> levels = generateLevels(*range, org[X]);
     std::vector<std::vector<double> > times;
     times = multi_roots(x,levels);
-
 //TODO: fix multi_roots!!!*****************************************
 //remove doubles :-(
     std::vector<std::vector<double> > cleaned_times(levels.size(),std::vector<double>());
@@ -416,27 +386,24 @@ LPERoughHatches::linearSnake(Piecewise<D2<SBasis> > const &f, Point const &org){
         }
     }
     times = cleaned_times;
-//     for (unsigned i=0; i<times.size(); i++){
-//         std::cout << "roots on level "<<i<<": ";
-//         for (unsigned j=0; j<times[i].size(); j++){
-//             std::cout << times[i][j] <<" ";
-//         }
-//         std::cout <<"\n";
-//     }
 //*******************************************************************
+
     LevelsCrossings lscs(times,f,dx);
+
     unsigned i,j;
     lscs.findFirstUnused(i,j);
     
     std::vector<Point> result_component;
     int n = int((range->min()-org[X])/hatch_dist);
+    
     while ( i < lscs.size() ){ 
         int dir = 0;
-        //switch orientation of first segment according to org position.
-        if (n % 2 == 0){
-            j = lscs[i].size()-1;
+        //switch orientation of first segment according to starting point.
+        if (i % 2 == n%2 && j < lscs[i].size()-1 && !lscs[i][j].used){
+            j += 1;
             dir = 2;
         }
+
         while ( i < lscs.size() ){
             result_component.push_back(lscs[i][j].pt);
             lscs[i][j].used = true;
@@ -458,7 +425,6 @@ LPERoughHatches::smoothSnake(std::vector<std::vector<Point> > const &linearSnake
     Piecewise<D2<SBasis> > result;
     for (unsigned comp=0; comp<linearSnake.size(); comp++){
         if (linearSnake[comp].size()>=2){
-            bool is_top = true;//Inversion here; due to downward y? 
             Point last_pt = linearSnake[comp][0];
             Point last_top = linearSnake[comp][0];
             Point last_bot = linearSnake[comp][0];
@@ -469,6 +435,9 @@ LPERoughHatches::smoothSnake(std::vector<std::vector<Point> > const &linearSnake
             Geom::Path res_comp_top(last_pt);
             Geom::Path res_comp_bot(last_pt);
             unsigned i=1;
+            //bool is_top = true;//Inversion here; due to downward y? 
+            bool is_top = ( linearSnake[comp][0][Y] < linearSnake[comp][1][Y] );
+
             while( i+1<linearSnake[comp].size() ){
                 Point pt0 = linearSnake[comp][i];
                 Point pt1 = linearSnake[comp][i+1];
@@ -498,14 +467,21 @@ LPERoughHatches::smoothSnake(std::vector<std::vector<Point> > const &linearSnake
                 Point new_hdle_out = new_pt - (pt0-pt1) * (scale_out/2.);
                 
                 if ( fat_output.get_value() ){
-                    double scaled_width = double((is_top ? stroke_width_top : stroke_width_bot))/(pt1[X]-pt0[X]);
+                    //double scaled_width = double((is_top ? stroke_width_top : stroke_width_bot))/(pt1[X]-pt0[X]);
+                    double scaled_width = 1./(pt1[X]-pt0[X]);
                     Point hdle_offset = (pt1-pt0)*scaled_width;
                     Point inside = new_pt;
                     Point inside_hdle_in;
                     Point inside_hdle_out;
                     inside[Y]+= double((is_top ? -stroke_width_top : stroke_width_bot));
-                    inside_hdle_in  = inside + (new_hdle_in -new_pt) + hdle_offset * double((is_top ? front_thickness : back_thickness));
-                    inside_hdle_out = inside + (new_hdle_out-new_pt) - hdle_offset * double((is_top ? back_thickness : front_thickness));
+                    inside_hdle_in  = inside + (new_hdle_in -new_pt);// + hdle_offset * double((is_top ? front_thickness : back_thickness));
+                    inside_hdle_out = inside + (new_hdle_out-new_pt);// - hdle_offset * double((is_top ? back_thickness : front_thickness));
+
+                    inside_hdle_in  +=  (pt1-pt0)/2*( double((is_top ? front_thickness : back_thickness)) / (pt1[X]-pt0[X]) );
+                    inside_hdle_out -=  (pt1-pt0)/2*( double((is_top ? back_thickness : front_thickness)) / (pt1[X]-pt0[X]) );
+
+                    new_hdle_in  -=  (pt1-pt0)/2*( double((is_top ? front_thickness : back_thickness)) / (pt1[X]-pt0[X]) );
+                    new_hdle_out +=  (pt1-pt0)/2*( double((is_top ? back_thickness : front_thickness)) / (pt1[X]-pt0[X]) );
                     //TODO: find a good way to handle limit cases (small smthness, large stroke).
                     //if (inside_hdle_in[X]  > inside[X]) inside_hdle_in = inside;
                     //if (inside_hdle_out[X] < inside[X]) inside_hdle_out = inside;
@@ -529,13 +505,14 @@ LPERoughHatches::smoothSnake(std::vector<std::vector<Point> > const &linearSnake
                 i+=2;
                 is_top = !is_top;
             }
-            if ( i<linearSnake[comp].size() )
+            if ( i<linearSnake[comp].size() ){
                 if ( fat_output.get_value() ){
                     res_comp_top.appendNew<CubicBezier>(last_top_hdle,linearSnake[comp][i],linearSnake[comp][i]);
                     res_comp_bot.appendNew<CubicBezier>(last_bot_hdle,linearSnake[comp][i],linearSnake[comp][i]);
                 }else{
                     res_comp.appendNew<CubicBezier>(last_hdle,linearSnake[comp][i],linearSnake[comp][i]);
                 }
+            }
             if ( fat_output.get_value() ){
                 res_comp = res_comp_bot;
                 res_comp.append(res_comp_top.reverse(),Geom::Path::STITCH_DISCONTINUOUS);
@@ -575,6 +552,8 @@ LPERoughHatches::resetDefaults(SPItem * item)
         vector = Geom::Point((*bbox)[X].extent()/4, 0.);
         top_edge_variation.param_set_value( (*bbox)[Y].extent()/10, 0 );
         bot_edge_variation.param_set_value( (*bbox)[Y].extent()/10, 0 );
+        top_edge_variation.write_to_SVG();
+        bot_edge_variation.write_to_SVG();
     }
     //direction.set_and_write_new_values(origin, vector);
     //bender.param_set_and_write_new_value( origin + Geom::Point(5,0) );
