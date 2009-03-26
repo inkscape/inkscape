@@ -601,7 +601,19 @@ void sp_lpe_item_up_current_path_effect(SPLPEItem *lpeitem)
 
 bool sp_lpe_item_has_path_effect(SPLPEItem *lpeitem)
 {
-    return !lpeitem->path_effect_list->empty();
+    if (lpeitem->path_effect_list->empty())
+        return false;
+
+    // go through the list; if some are unknown or invalid, we are not an LPE item!
+    PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
+    for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
+    {
+        LivePathEffectObject *lpeobj = (*it)->lpeobject;
+        if (!lpeobj || !lpeobj->get_lpe())
+            return false;
+    }
+
+    return true;
 }
 
 bool sp_lpe_item_has_path_effect_recursive(SPLPEItem *lpeitem)
