@@ -201,7 +201,28 @@ void ClipboardManagerImpl::copy()
     if (desktop->event_context->get_drag()) {
         GrDrag *drag = desktop->event_context->get_drag();
         if (drag->hasSelection()) {
-            _setClipboardColor(drag->getColor());
+            guint32 col = drag->getColor();
+
+            // set the color as clipboard content (text in RRGGBBAA format)
+            _setClipboardColor(col);
+
+            // create a style with this color on fill and opacity in master opacity, so it can be
+            // pasted on other stops or objects
+            if (_text_style) {
+                sp_repr_css_attr_unref(_text_style);
+                _text_style = NULL;
+            }
+            _text_style = sp_repr_css_attr_new();
+            // print and set properties
+            gchar color_str[16];
+            g_snprintf(color_str, 16, "#%06x", col >> 8);
+            sp_repr_css_set_property(_text_style, "fill", color_str);
+            float opacity = SP_RGBA32_A_F(col);
+            if (opacity > 1.0) opacity = 1.0; // safeguard
+            Inkscape::CSSOStringStream opcss;
+            opcss << opacity;
+            sp_repr_css_set_property(_text_style, "opacity", opcss.str().data());
+
             _discardInternalClipboard();
             return;
         }
