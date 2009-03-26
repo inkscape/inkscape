@@ -71,7 +71,7 @@ InkWeb.transmitAtt = function (conf) {
     conf.from = document.getElementById( conf.from );
   if ( typeof(conf.to) == "string" )
     conf.to = document.getElementById( conf.to );
-  conf.att = conf.att.split( /\s+/ )
+  conf.att = conf.att.split( /\s+/ );
   for ( var i=0; i<conf.att.length; i++ ) {
     var val = this.getStyle( conf.from, conf.att[i] );
     if ( val ) {
@@ -79,6 +79,32 @@ InkWeb.transmitAtt = function (conf) {
     } else {
       val = conf.from.getAttribute(conf.att[i]);
       conf.to.setAttribute( conf.att[i], val );
+    }
+  }
+}
+
+InkWeb.setAtt = function (conf) {
+  if ( typeof(conf.el) == "string" )
+    conf.el = document.getElementById( conf.el );
+  conf.att = conf.att.split( /\s+/ );
+  conf.val = conf.val.split( /\s+/ );
+  var att;
+  for ( var i=0; att=conf.att[i]; i++ ) {
+    if (
+         att == "width"  ||
+         att == "height" ||
+         att == "x"  ||
+         att == "y"  ||
+         att == "cx" ||
+         att == "cy" ||
+         att == "r"  ||
+         att == "rx" ||
+         att == "ry" ||
+         att == "transform"
+       ) {
+      conf.el.setAttribute( att, conf.val[i] );
+    } else {
+      this.setStyle( conf.el, att, conf.val[i] );
     }
   }
 }
