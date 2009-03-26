@@ -34,17 +34,52 @@ var InkWeb = {
 
 };
 
+InkWeb.reGetStyleAttVal = function (att) {
+  return new RegExp( "(^|.*;)[ ]*"+ att +":([^;]*)(;.*|$)" )
+}
+
+InkWeb.getStyle = function (el, att) {
+  // This method is needed because el.style is only working
+  // to HTML style in the Firefox 3.0
+  if ( typeof(el) == "string" )
+    el = document.getElementById(el);
+  var style = el.getAttribute("style");
+  var match = this.reGetStyleAttVal(att).exec(style);
+  if ( match ) {
+    return match[2];
+  } else {
+    return false;
+  }
+}
+
+InkWeb.setStyle = function (el, att, val) {
+  if ( typeof(el) == "string" )
+    el = document.getElementById(el);
+  var style = el.getAttribute("style");
+  re = this.reGetStyleAttVal(att);
+  if ( re.test(style) ) {
+    style = style.replace( re, "$1"+ att +":"+ val +"$3" );
+  } else {
+    style += ";"+ att +":"+ val;
+  }
+  el.setAttribute( "style", style );
+  return val
+}
+
 InkWeb.transmitAtt = function (conf) {
   if ( typeof(conf.from) == "string" )
-    conf.from = document.getElementById(conf.from);
+    conf.from = document.getElementById( conf.from );
   if ( typeof(conf.to) == "string" )
-    conf.to = document.getElementById(conf.to);
-  var s = conf.from.getAttribute("style")
-  var re = new RegExp("(^|.*;)[ ]*"+conf.att+":([^;]*)(;.*|$)")
-  if ( re.test(s) ) {
-    var val = s.replace( re, "$2" );
-  } else {
-    var val = conf.from.getAttribute(conf.att);
+    conf.to = document.getElementById( conf.to );
+  conf.att = conf.att.split( /\s+/ )
+  for ( var i=0; i<conf.att.length; i++ ) {
+    var val = this.getStyle( conf.from, conf.att[i] );
+    if ( val ) {
+      this.setStyle( conf.to, conf.att[i], val );
+    } else {
+      val = conf.from.getAttribute(conf.att[i]);
+      conf.to.setAttribute( conf.att[i], val );
+    }
   }
-  conf.to.setAttribute( conf.att, val );
 }
+
