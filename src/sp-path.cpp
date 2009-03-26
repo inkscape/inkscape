@@ -357,8 +357,9 @@ sp_path_set_transform(SPItem *item, Geom::Matrix const &xform)
         return Geom::identity();
     }
 
-    // Transform the original-d path or the (ordinary) path
-    if (path->original_curve) {
+    // Transform the original-d path if this is a valid LPE item, other else the (ordinary) path
+    if (path->original_curve && SP_IS_LPE_ITEM(item) && 
+                                sp_lpe_item_has_path_effect(SP_LPE_ITEM(item))) {
         path->original_curve->transform(xform);
     } else {
         shape->curve->transform(xform);
@@ -390,7 +391,7 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
     SPPath * const path = (SPPath *) lpeitem;
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
 
-    if (path->original_curve) {
+    if (path->original_curve && sp_lpe_item_has_path_effect(lpeitem)) {
         SPCurve *curve = path->original_curve->copy();
         /* if a path does not have an lpeitem applied, then reset the curve to the original_curve.
          * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
@@ -467,7 +468,8 @@ sp_path_get_original_curve (SPPath *path)
 SPCurve*
 sp_path_get_curve_for_edit (SPPath *path)
 {
-    if (path->original_curve) {
+    if (path->original_curve && SP_IS_LPE_ITEM(path) && 
+                                sp_lpe_item_has_path_effect(SP_LPE_ITEM(path))) {
         return sp_path_get_original_curve(path);
     } else {
         return sp_shape_get_curve( (SPShape *) path );
@@ -481,7 +483,8 @@ sp_path_get_curve_for_edit (SPPath *path)
 const SPCurve*
 sp_path_get_curve_reference (SPPath *path)
 {
-    if (path->original_curve) {
+    if (path->original_curve && SP_IS_LPE_ITEM(path) && 
+                                sp_lpe_item_has_path_effect(SP_LPE_ITEM(path))) {
         return path->original_curve;
     } else {
         return path->curve;
