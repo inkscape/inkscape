@@ -1603,35 +1603,17 @@
 <feComposite in2="result4" result="result2" operator="arithmetic" in="result8" k1="3" k3="0" k2="0" id="feComposite3106" />
 <feComposite result="fbSourceGraphic" in="result2" operator="in" in2="result2" id="feComposite3108" />
 </filter>
-<filter id="Stretchk0" inkscape:label="Wavy tartan" inkscape:menu="Materials" inkscape:menu-tooltip="Tartan pattern with a wavy displacement and bevel around the edges" x="-0.25" width="1.5" y="-0.25" height="1.5">
-<feTurbulence id="feTurbulence4079" type="turbulence" result="result0" seed="5" numOctaves="1" baseFrequency="0 0.20000000000000001" />
-<feTurbulence id="feTurbulence4081" result="result3" type="turbulence" seed="57" numOctaves="1" baseFrequency="0.20000000000000001 0" in="SourceAlpha" />
-<feComposite id="feComposite4083" result="result1" operator="over" in2="result0" />
-<feMerge id="feMerge4085" result="result2">
-<feMergeNode id="feMergeNode4087" in="result1" />
-<feMergeNode id="feMergeNode4089" in="result0" />
-</feMerge>
-<feComposite id="feComposite4091" result="fbSourceGraphic" in="SourceGraphic" operator="out" />
-<feGaussianBlur id="feGaussianBlur4107" result="result8" stdDeviation="10" in="fbSourceGraphic" />
-<feComposite id="feComposite4109" k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" />
-<feDisplacementMap id="feDisplacementMap4111" result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="fbSourceGraphic" />
-<feComposite id="feComposite4113" k2="0" k3="0" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" />
+<filter id="Wavytart0" inkscape:label="Wavy tartan" inkscape:menu="Materials" inkscape:menu-tooltip="Tartan pattern with a wavy displacement and bevel around the edges" x="-0.25" width="1.5" y="-0.25" height="1.5">
+<feTurbulence id="feTurbulence2868" type="turbulence" result="result0" seed="20" numOctaves="1" baseFrequency="0 0.19" />
+<feTurbulence id="feTurbulence2870" result="result3" type="turbulence" seed="20" numOctaves="1" baseFrequency="0.19 0" in="SourceAlpha" />
+<feComposite id="feComposite2872" result="result1" operator="arithmetic" in2="result3" in="result0" k2="1" k3="1" k1="3" />
+<feComposite id="feComposite2880" result="fbSourceGraphic" in="SourceGraphic" operator="in" />
+<feGaussianBlur id="feGaussianBlur2882" result="result8" stdDeviation="10" in="fbSourceGraphic" />
+<feComposite id="feComposite2884" k3="0" k1="0" k2="0" in="result8" operator="xor" result="result6" in2="result8" />
+<feDisplacementMap id="feDisplacementMap2886" result="result4" scale="75" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result1" />
+<feComposite id="feComposite2888" k2="0" k3="0" k1="1" in="SourceGraphic" operator="in" result="result2" in2="result4" />
 </filter>
-<filter id="Flyingk0" inkscape:label="Plied tartan" inkscape:menu="Materials" inkscape:menu-tooltip="Tartan pattern with folds and bevel around the edges" height="1.5" y="-0.25" width="1.5" x="-0.25">
-<feTurbulence id="feTurbulence4372" type="turbulence" result="result0" seed="5" numOctaves="1" baseFrequency="0 0.18436213991769548" />
-<feTurbulence id="feTurbulence4374" result="result3" type="turbulence" seed="57" numOctaves="1" baseFrequency="0.28477366255144032 0" in="SourceAlpha" />
-<feComposite id="feComposite4376" result="result1" operator="over" in2="result0" />
-<feMerge id="feMerge4378" result="result2">
-<feMergeNode id="feMergeNode4380" in="result1" />
-<feMergeNode id="feMergeNode4382" in="result0" />
-</feMerge>
-<feComposite id="feComposite4384" result="fbSourceGraphic" in="SourceGraphic" operator="in" in2="result2" />
-<feGaussianBlur id="feGaussianBlur4388" stdDeviation="5" result="result8" in="fbSourceGraphic" />
-<feComposite id="feComposite4390" in2="result8" result="result6" operator="xor" in="result8" k2="0" k1="0" k3="0" />
-<feDisplacementMap id="feDisplacementMap4392" xChannelSelector="A" yChannelSelector="A" scale="50" result="result4" in="fbSourceGraphic" in2="result6" />
-<feComposite id="feComposite4394" in2="result8" result="result2" operator="arithmetic" k1="3" k3="0" k2="0" />
-</filter>
-<filter id="3Dmarble0" inkscape:label="3D marble" inkscape:menu="Materials" inkscape:menu-tooltip="3D warped marble texture" height="1" y="0" width="1" x="0">
+<filter id="3Dmarble0" inkscape:label="3D marble" inkscape:menu="Materials" inkscape:menu-tooltip="3D warped marble texture" height="1.5" y="-0.25" width="1.5" x="-0.25">
 <feGaussianBlur id="feGaussianBlur2974" stdDeviation="4" result="result8" />
 <feTurbulence id="feTurbulence2976" seed="50" result="result7" type="turbulence" numOctaves="7" baseFrequency="0.01 0.01" />
 <feColorMatrix id="feColorMatrix2978" result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.4 0 " />
@@ -1681,6 +1663,16 @@
 </feSpecularLighting>
 <feComposite id="feComposite3283" operator="in" result="result2" in="result1" in2="fbSourceGraphic" />
 <feComposite id="feComposite3285" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="fbSourceGraphic" />
+</filter>
+<filter id="Tigrfur0" inkscape:label="Tiger fur" inkscape:menu="Materials" inkscape:menu-tooltip="Tiger fur pattern with folds and bevel around the edges" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<feTurbulence id="feTurbulence2908" type="turbulence" result="result0" seed="57" numOctaves="2" baseFrequency="0.10000000000000001 0.014999999999999999" />
+<feComposite id="feComposite2912" result="result1" operator="over" in2="result0" in="result0" />
+<feComposite id="feComposite2914" result="fbSourceGraphic" in="SourceGraphic" operator="arithmetic" in2="result1" k1="1" />
+<feGaussianBlur id="feGaussianBlur2916" stdDeviation="10" result="result8" in="fbSourceGraphic" />
+<feComposite id="feComposite2918" in2="result8" result="result6" operator="xor" in="result8" k2="0" k1="0" k3="0" />
+<feDisplacementMap id="feDisplacementMap2920" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" in="result1" in2="result6" />
+<feComposite id="feComposite2922" in2="result4" result="result2" operator="arithmetic" k1="1" k3="0" k2="0" in="SourceGraphic" />
+<feComposite operator="out" id="feComposite2924" in="SourceGraphic" />
 </filter>
 </defs>
 </svg>
