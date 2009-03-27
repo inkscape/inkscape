@@ -277,7 +277,7 @@ LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
     front_thickness.param_set_range(0, NR_HUGE);
     back_thickness.param_set_range(0, NR_HUGE);
 
-    concatenate_before_pwd2 = true;
+    concatenate_before_pwd2 = false;
     show_orig_path = true;
 }
 
@@ -294,6 +294,13 @@ LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
     Piecewise<D2<SBasis> > result;
     
     Piecewise<D2<SBasis> > transformed_pwd2_in = pwd2_in;
+    Point start = pwd2_in.segs.front().at0();
+    Point end = pwd2_in.segs.back().at1();
+    if (end != start ){
+        transformed_pwd2_in.push_cut( transformed_pwd2_in.cuts.back() + 1 );
+        D2<SBasis> stitch( SBasis( 1, Linear(end[X],start[X]) ), SBasis( 1, Linear(end[Y],start[Y]) ) );
+        transformed_pwd2_in.push_seg( stitch );
+    }
     Point transformed_org = direction.getOrigin();
     Piecewise<SBasis> tilter;//used to bend the hatches
     Matrix bend_mat;//used to bend the hatches
@@ -302,7 +309,7 @@ LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
         Point bend_dir = -rot90(unit_vector(bender.getVector()));
         double bend_amount = L2(bender.getVector());
         bend_mat = Matrix(-bend_dir[Y], bend_dir[X], bend_dir[X], bend_dir[Y],0,0);
-        transformed_pwd2_in = pwd2_in * bend_mat;
+        transformed_pwd2_in = transformed_pwd2_in * bend_mat;
         tilter = Piecewise<SBasis>(shift(Linear(-bend_amount),1));
         OptRect bbox = bounds_exact( transformed_pwd2_in );
         if (not(bbox)) return pwd2_in;
