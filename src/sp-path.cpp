@@ -20,6 +20,11 @@
 
 #include <glibmm/i18n.h>
 
+#include "live_effects/effect.h"
+#include "live_effects/lpeobject.h"
+#include "live_effects/lpeobject-reference.h"
+#include "sp-lpe-item.h"
+
 #include <display/curve.h>
 #include <libnr/nr-matrix-fns.h>
 #include <2geom/pathvector.h>
@@ -132,9 +137,24 @@ static gchar *
 sp_path_description(SPItem * item)
 {
     int count = sp_nodes_in_path(SP_PATH(item));
-    if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(item))) {
-        return g_strdup_printf(ngettext("<b>Path</b> (%i node, path effect)",
-                                        "<b>Path</b> (%i nodes, path effect)",count), count);
+    if (SP_IS_LPE_ITEM(item) && sp_lpe_item_has_path_effect(SP_LPE_ITEM(item))) {
+
+        Glib::ustring s;
+
+        PathEffectList effect_list =  sp_lpe_item_get_effect_list(SP_LPE_ITEM(item));
+        for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
+        {
+            LivePathEffectObject *lpeobj = (*it)->lpeobject;
+            if (!lpeobj || !lpeobj->get_lpe())
+                break;
+            if (s.empty())
+                s = lpeobj->get_lpe()->getName();
+            else
+                s = s + ", " + lpeobj->get_lpe()->getName();
+        }
+
+        return g_strdup_printf(ngettext("<b>Path</b> (%i node, path effect: %s)",
+                                        "<b>Path</b> (%i nodes, path effect: %s)",count), count, s.c_str());
     } else {
         return g_strdup_printf(ngettext("<b>Path</b> (%i node)",
                                         "<b>Path</b> (%i nodes)",count), count);
