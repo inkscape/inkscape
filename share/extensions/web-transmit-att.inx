@@ -10,7 +10,7 @@
   <_param name="sep2" type="description">••••••••••••••••••••••••••••••••••••••••••••••••</_param>
   <_param name="help" type="description">If you want to transmit more then one attribute, you must separate this with a space, and only with a space.</_param>
   <param name="att" type="string" _gui-text="Attribute to transmit">fill</param>
-  <param name="when" type="enum" _gui-text="When it must to transmit?">
+  <param name="when" type="enum" _gui-text="When to transmit">
     <_item value="onclick">on click</_item>
     <_item value="onfocusin">on focus</_item>
     <_item value="onfocusout">on blur</_item>
