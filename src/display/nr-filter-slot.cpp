@@ -167,7 +167,7 @@ void FilterSlot::get_final(int slot_nr, NRPixBlock *result) {
             NR::transform_nearest(result, final_usr, trans);
         }
     } else if (fabs(trans[0] - 1) > 1e-6 || fabs(trans[3] - 1) > 1e-6) {
-        NR::scale_bicubic(result, final_usr);
+        NR::scale_bicubic(result, final_usr, trans);
     } else {
         nr_blit_pixblock_pixblock(result, final_usr);
     }
@@ -255,7 +255,7 @@ void FilterSlot::set(int slot_nr, NRPixBlock *pb)
                 g_warning("Memory allocation failed in Inkscape::Filters::FilterSlot::set (scaling)");
                 return;
             }
-            NR::scale_bicubic(trans_pb, pb);
+            NR::scale_bicubic(trans_pb, pb, trans);
             nr_pixblock_release(pb);
             delete pb;
             pb = trans_pb;

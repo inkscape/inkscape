@@ -17,10 +17,12 @@
 #include "round.h"
 using Inkscape::round;
 #endif 
+using std::floor;
 
 #include "display/nr-filter-utils.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-blit.h"
+#include <2geom/forward.h>
 
 namespace NR {
 
@@ -67,7 +69,8 @@ inline static void _check_index(NRPixBlock const * const pb, int const location,
     }
 }
 
-static void scale_bicubic_rgba(NRPixBlock *to, NRPixBlock *from)
+static void scale_bicubic_rgba(NRPixBlock *to, NRPixBlock *from,
+                               Geom::Matrix const &trans)
 {
     if (NR_PIXBLOCK_BPP(from) != 4 || NR_PIXBLOCK_BPP(to) != 4) {
         g_warning("A non-32-bpp image passed to scale_bicubic_rgba: scaling aborted.");
@@ -91,12 +94,16 @@ static void scale_bicubic_rgba(NRPixBlock *to, NRPixBlock *from)
 
     // from_step: when advancing one pixel in destination image,
     // how much we should advance in source image
-    double from_stepx = (double)from_width / (double)to_width;
-    double from_stepy = (double)from_height / (double)to_height;
+    double from_stepx = 1.0 / trans[0];
+    double from_stepy = 1.0 / trans[3];
+    double from_diffx = from_stepx * (-trans[4]);
+    double from_diffy = from_stepy * (-trans[5]);
+    from_diffx = (to->area.x0 * from_stepx + from_diffx) - from->area.x0;
+    from_diffy = (to->area.y0 * from_stepy + from_diffy) - from->area.y0;
 
     // Loop through every pixel of destination image, a line at a time
     for (int to_y = 0 ; to_y < to_height ; to_y++) {
-        double from_y = to_y * from_stepy + from_stepy / 2;
+        double from_y = (to_y + 0.5) * from_stepy + from_diffy;
         // Pre-calculate beginning of the four horizontal lines, from
         // which we should read
         int from_line[4];
@@ -116,7 +123,7 @@ static void scale_bicubic_rgba(NRPixBlock *to, NRPixBlock *from)
         // For every pixel, calculate the color of pixel with
         // bicubic interpolation and set the pixel value in destination image
         for (int to_x = 0 ; to_x < to_width ; to_x++) {
-            double from_x = to_x * from_stepx + from_stepx / 2;
+            double from_x = (to_x + 0.5) * from_stepx + from_diffx;
             RGBA line[4];
             for (int i = 0 ; i < 4 ; i++) {
                 int k = (int)round(from_x) + i - 2;
@@ -195,7 +202,8 @@ static void scale_bicubic_rgba(NRPixBlock *to, NRPixBlock *from)
 
 }
 
-void scale_bicubic_alpha(NRPixBlock *to, NRPixBlock *from)
+void scale_bicubic_alpha(NRPixBlock *to, NRPixBlock *from,
+                         Geom::Matrix const &trans)
 {
     if (NR_PIXBLOCK_BPP(from) != 1 || NR_PIXBLOCK_BPP(to) != 1) {
         g_warning("A non-8-bpp image passed to scale_bicubic_alpha: scaling aborted.");
@@ -210,12 +218,16 @@ void scale_bicubic_alpha(NRPixBlock *to, NRPixBlock *from)
 
     // from_step: when advancing one pixel in destination image,
     // how much we should advance in source image
-    double from_stepx = (double)from_width / (double)to_width;
-    double from_stepy = (double)from_height / (double)to_height;
+    double from_stepx = 1.0 / trans[0];
+    double from_stepy = 1.0 / trans[3];
+    double from_diffx = from_stepx * (-trans[4]);
+    double from_diffy = from_stepy * (-trans[5]);
+    from_diffx = (to->area.x0 * from_stepx + from_diffx) - from->area.x0;
+    from_diffy = (to->area.y0 * from_stepy + from_diffy) - from->area.y0;
 
     // Loop through every pixel of destination image, a line at a time
     for (int to_y = 0 ; to_y < to_height ; to_y++) {
-        double from_y = to_y * from_stepy + from_stepy / 2;
+        double from_y = (to_y + 0.5) * from_stepy - from_diffy;
         // Pre-calculate beginning of the four horizontal lines, from
         // which we should read
         int from_line[4];
@@ -235,7 +247,7 @@ void scale_bicubic_alpha(NRPixBlock *to, NRPixBlock *from)
         // For every pixel, calculate the color of pixel with
         // bicubic interpolation and set the pixel value in destination image
         for (int to_x = 0 ; to_x < to_width ; to_x++) {
-            double from_x = to_x * from_stepx + from_stepx / 2;
+            double from_x = (to_x + 0.5) * from_stepx - from_diffx;
             double line[4];
             for (int i = 0 ; i < 4 ; i++) {
                 int k = (int)round(from_x) + i - 2;
@@ -263,12 +275,12 @@ void scale_bicubic_alpha(NRPixBlock *to, NRPixBlock *from)
     }
 }
 
-void scale_bicubic(NRPixBlock *to, NRPixBlock *from)
+void scale_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &trans)
 {
     if (NR_PIXBLOCK_BPP(to) == 4 && NR_PIXBLOCK_BPP(from) == 4) {
-        scale_bicubic_rgba(to, from);
+        scale_bicubic_rgba(to, from, trans);
     } else if (NR_PIXBLOCK_BPP(to) == 1 && NR_PIXBLOCK_BPP(from) == 1) {
-        scale_bicubic_alpha(to, from);
+        scale_bicubic_alpha(to, from, trans);
     } else {
         g_warning("NR::scale_bicubic: unsupported bitdepths for scaling: to %d, from %d", NR_PIXBLOCK_BPP(to), NR_PIXBLOCK_BPP(from));
     }

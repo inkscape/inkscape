@@ -13,6 +13,7 @@
  */
 
 #include "libnr/nr-pixblock.h"
+#include <2geom/forward.h>
 
 namespace NR {
 
@@ -22,7 +23,7 @@ namespace NR {
  * Source pixblock is not modified in process.
  * Only works for 32-bpp images.
  */
-void scale_bicubic(NRPixBlock *to, NRPixBlock *from);
+void scale_bicubic(NRPixBlock *to, NRPixBlock *from, Geom::Matrix const &trans);
 
 } /* namespace NR */
 
