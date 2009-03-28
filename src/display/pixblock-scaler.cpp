@@ -6,7 +6,7 @@
  * Author:
  *   Niko Kiirala <niko@kiirala.com>
  *
- * Copyright (C) 2006 Niko Kiirala
+ * Copyright (C) 2006,2009 Niko Kiirala
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
