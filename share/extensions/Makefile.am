@@ -68,6 +68,7 @@ extensions = \
 	inkex.py \
 	Inkscape.pm \
 	interp.py \
+	interp-att-g.py \
 	launch_webbrowser.py \
 	lindenmayer.py \
 	lorem_ipsum.py \
@@ -116,6 +117,8 @@ extensions = \
 	triangle.py \
 	txt2svg.pl \
 	uniconv-ext.py \
+	web-set-att.py \
+	web-transmit-att.py \
 	whirl.py
 
 otherstuff = \
@@ -188,6 +191,7 @@ modules = \
 	inkscape_help_svgspec.inx \
 	inkscape_help_keys.inx \
 	interp.inx \
+	interp-att-g.py \
 	lindenmayer.inx \
 	lorem_ipsum.inx \
 	markers_strokepaint.inx \
@@ -227,6 +231,8 @@ modules = \
 	text_braille.inx \
 	triangle.inx \
 	txt2svg.inx \
+	web-set-att.py \
+	web-transmit-att.py \
 	whirl.inx \
 	wmf_input.inx \
 	xaml2svg.inx

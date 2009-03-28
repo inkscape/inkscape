@@ -6,7 +6,7 @@
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <_param name="intro" type="description">This effect adds a feature visible (or usable) only on a SVG enabled web browser (like Firefox).</_param>
   <_param name="sep1" type="description">••••••••••••••••••••••••••••••••••••••••••••••••</_param>
-  <_param name="help" type="description">This effect transmit one or more atributes from the first selected element to the second when a event occurs.</_param>
+  <_param name="help" type="description">This effect transmit one or more attributes from the first selected element to the second when a event occurs.</_param>
   <_param name="sep2" type="description">••••••••••••••••••••••••••••••••••••••••••••••••</_param>
   <_param name="help" type="description">If you want to transmit more then one attribute, you must separate this with a space, and only with a space.</_param>
   <param name="att" type="string" _gui-text="Attribute to transmit">fill</param>
@@ -31,7 +31,7 @@
     <object-type>all</object-type>
     <effects-menu>
       <submenu _name="Web">
-        <submenu name="Javascript"/>
+        <submenu name="JavaScript"/>
       </submenu>
     </effects-menu>
   </effect>

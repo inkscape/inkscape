@@ -417,6 +417,7 @@ share/extensions/svg_and_media_zip_output.py
 [type: gettext/xml] share/extensions/text_uppercase.inx
 [type: gettext/xml] share/extensions/triangle.inx
 [type: gettext/xml] share/extensions/txt2svg.inx
+[type: gettext/xml] share/extensions/web-set-att.inx
 [type: gettext/xml] share/extensions/web-transmit-att.inx
 [type: gettext/xml] share/extensions/whirl.inx
 [type: gettext/xml] share/extensions/wmf_input.inx

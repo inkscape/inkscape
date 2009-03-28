@@ -6,7 +6,7 @@
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <_param name="intro" type="description">This effect adds a feature visible (or usable) only on a SVG enabled web browser (like Firefox).</_param>
   <_param name="sep1" type="description">••••••••••••••••••••••••••••••••••••••••••••••••</_param>
-  <_param name="help" type="description">This effect sets one or more atributes in the second selected element, when a defined event occurs on the first selected element.</_param>
+  <_param name="help" type="description">This effect sets one or more attributes in the second selected element, when a defined event occurs on the first selected element.</_param>
   <_param name="sep2" type="description">••••••••••••••••••••••••••••••••••••••••••••••••</_param>
   <_param name="help" type="description">If you want to set more then one attribute, you must separate this with a space, and only with a space.</_param>
   <param name="att" type="string" _gui-text="Attribute to set">fill stroke stroke-width</param>
@@ -33,7 +33,7 @@
     <object-type>all</object-type>
     <effects-menu>
       <submenu _name="Web">
-        <submenu name="Javascript"/>
+        <submenu name="JavaScript"/>
       </submenu>
     </effects-menu>
   </effect>
