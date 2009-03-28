@@ -275,7 +275,6 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
                 object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
        case SP_ATTR_D:
-            if (!sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
                 if (value) {
                     Geom::PathVector pv = sp_svg_read_pathv(value);
                     SPCurve *curve = new SPCurve(pv);
@@ -287,7 +286,6 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
                     sp_shape_set_curve((SPShape *) path, NULL, TRUE);
                 }
                 object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-            }
             break;
         case SP_PROP_MARKER:
         case SP_PROP_MARKER_START:
