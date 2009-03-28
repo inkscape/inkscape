@@ -13,7 +13,10 @@
 
 #include <glib.h>
 #include <cmath>
-using std::floor;
+#if defined (SOLARIS) && (SOLARIS == 8)
+#include "round.h"
+using Inkscape::round;
+#endif 
 
 #include "display/nr-filter-utils.h"
 #include "libnr/nr-pixblock.h"

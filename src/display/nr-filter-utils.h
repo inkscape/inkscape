@@ -14,7 +14,6 @@
 
 #include "round.h"
 
-/* Shouldn't these be inlined? */
 namespace Inkscape {
 namespace Filters {
 
@@ -25,7 +24,12 @@ namespace Filters {
  * \return 0 if the value is smaller than 0, 255 if it is greater 255, else v
  * \param v the value to clamp
  */
-int clamp(int const val);
+__attribute__ ((const))
+inline int clamp(int const val) {
+    if (val < 0) return 0;
+    if (val > 255) return 255;
+    return val;
+}
 
 /**
  * Clamps an integer value to a value between 0 and 255^3.
@@ -33,7 +37,12 @@ int clamp(int const val);
  * \return 0 if the value is smaller than 0, 255^3 (16581375) if it is greater than 255^3, else v
  * \param v the value to clamp
  */
-int clamp3(int const val);
+__attribute__ ((const))
+inline int clamp3(int const val) {
+    if (val < 0) return 0;
+    if (val > 16581375) return 16581375;
+    return val;
+}
 
 /**
  * Macro to use the clamp function with double inputs and unsigned char output
@@ -48,7 +57,12 @@ int clamp3(int const val);
  * \param val the value to clamp
  * \param alpha the maximum value to clamp to
  */
-int clamp_alpha(int const val, int const alpha);
+__attribute__ ((const))
+inline int clamp_alpha(int const val, int const alpha) {
+    if (val < 0) return 0;
+    if (val > alpha) return alpha;
+    return val;
+}
 
 } /* namespace Filters */
 } /* namespace Inkscape */

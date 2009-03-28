@@ -3,23 +3,8 @@
 namespace Inkscape {
 namespace Filters {
 
-int clamp(int const val) {
-    if (val < 0) return 0;
-    if (val > 255) return 255;
-    return val;
-}
-
-int clamp3(int const val) {
-    if (val < 0) return 0;
-    if (val > 16581375) return 16581375;
-    return val;
-}
-
-int clamp_alpha(int const val, int const alpha) {
-    if (val < 0) return 0;
-    if (val > alpha) return alpha;
-    return val;
-}
+/* Everything moved to .h, because they were short functions that should
+ * get inlined */
 
 } /* namespace Filters */
 } /* namespace Inkscape */
