@@ -359,7 +359,7 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
             case 4:
             {
                 // take shape from clipboard; TODO: catch the case where clipboard is empty
-                Effect::createAndApply(FREEHAND_SHAPE, dc->desktop->doc(), item);
+                Effect::createAndApply(PATTERN_ALONG_PATH, dc->desktop->doc(), item);
                 Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
                 static_cast<LPEPatternAlongPath*>(lpe)->pattern.on_paste_button_click();
 
