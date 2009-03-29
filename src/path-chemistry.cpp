@@ -139,16 +139,17 @@ sp_selected_path_combine(SPDesktop *desktop)
         repr->setAttribute("style", style);
         g_free(style);
 
+        repr->setAttribute("inkscape:path-effect", path_effect);
+        g_free(path_effect);
+
         // set path data corresponding to new curve
         gchar *dstring = sp_svg_write_path(curve->get_pathvector());
         curve->unref();
-        repr->setAttribute("d", dstring);
         if (path_effect)
             repr->setAttribute("inkscape:original-d", dstring);
+        else
+            repr->setAttribute("d", dstring);
         g_free(dstring);
-
-        repr->setAttribute("inkscape:path-effect", path_effect);
-        g_free(path_effect);
 
         // add the new group to the parent of the topmost
         parent->appendChild(repr);
@@ -231,13 +232,14 @@ sp_selected_path_break_apart(SPDesktop *desktop)
             Inkscape::XML::Node *repr = parent->document()->createElement("svg:path");
             repr->setAttribute("style", style);
 
+            repr->setAttribute("inkscape:path-effect", path_effect);
+
             gchar *str = sp_svg_write_path(curve->get_pathvector());
-            repr->setAttribute("d", str);
             if (path_effect)
                 repr->setAttribute("inkscape:original-d", str);
+            else
+                repr->setAttribute("d", str);
             g_free(str);
-
-            repr->setAttribute("inkscape:path-effect", path_effect);
 
             // add the new repr to the parent
             parent->appendChild(repr);
@@ -259,7 +261,7 @@ sp_selected_path_break_apart(SPDesktop *desktop)
         g_slist_free(reprs);
         g_slist_free(list);
         g_free(style);
-
+        g_free(path_effect);
     }
 
     desktop->clearWaitingCursor();

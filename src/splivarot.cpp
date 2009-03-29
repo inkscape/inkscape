@@ -1589,6 +1589,9 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
         g_free(clip_path);
     }
 
+    // restore path effect
+    repr->setAttribute("inkscape:path-effect", patheffect);
+
     // path
     gchar *str = orig->svg_dump_path();
     if (patheffect)
@@ -1611,9 +1614,6 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
     // reapply the transform
     sp_item_write_transform(newitem, repr, transform);
 
-    // restore path effect
-    repr->setAttribute("inkscape:path-effect", patheffect);
-    
     // restore title & description
     if (title) {
     	newitem->setTitle(title);
