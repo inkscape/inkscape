@@ -63,6 +63,12 @@ NR_PIXBLOCK_PX (NRPixBlock *pb)
     return ((pb->size == NR_PIXBLOCK_SIZE_TINY) ? 
             pb->data.p : pb->data.px);
 }
+inline unsigned char const*
+NR_PIXBLOCK_PX (NRPixBlock const *pb) 
+{ 
+    return ((pb->size == NR_PIXBLOCK_SIZE_TINY) ? 
+            pb->data.p : pb->data.px);
+}
 
 void nr_pixblock_setup (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, int x1, int y1, bool clear);
 void nr_pixblock_setup_fast (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, int x1, int y1, bool clear);

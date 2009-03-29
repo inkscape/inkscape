@@ -40,7 +40,6 @@ private:
     int _input2;
     FilterDisplacementMapChannelSelector Xchannel;
     FilterDisplacementMapChannelSelector Ychannel;
-    int out_x0, out_y0, out_w, out_h;
 };
 
 } /* namespace Filters */

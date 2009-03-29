@@ -28,6 +28,102 @@ FilterPrimitive * FilterDisplacementMap::create() {
 FilterDisplacementMap::~FilterDisplacementMap()
 {}
 
+struct pixel_t {
+    unsigned char channels[4];
+    inline unsigned char operator[](int c) const { return channels[c]; }
+    inline unsigned char& operator[](int c) { return channels[c]; }
+    static inline pixel_t blank() {
+        pixel_t p;
+        for(unsigned int i=0; i<4; i++) {
+            p[i] = 0;
+        }
+        return p;
+    }
+};
+
+static inline pixel_t pixelValue(NRPixBlock const* pb, int x, int y) {
+    if ( x < pb->area.x0 || x >= pb->area.x1 || y < pb->area.y0 || y >= pb->area.y1 ) return pixel_t::blank(); // This assumes anything outside the defined range is (0,0,0,0)
+    pixel_t const* data = reinterpret_cast<pixel_t const*>(NR_PIXBLOCK_PX(pb));
+    int offset = (x-pb->area.x0) + (pb->area.x1-pb->area.x0)*(y-pb->area.y0);
+    return data[offset];
+}
+
+template<bool PREMULTIPLIED>
+static pixel_t interpolatePixels(NRPixBlock const* pb, double x, double y) {
+    unsigned int const sfl = 8u;
+    unsigned int const sf = 1u<<sfl;
+    unsigned int const sf2h = 1u<<(2u*sfl-1);
+    int xi = (int)floor(x), yi = (int)floor(y);
+    unsigned int xf = static_cast<unsigned int>(floor(sf*(x-xi)+.5)), yf = static_cast<unsigned int>(floor(sf*(y-yi)+.5));
+    pixel_t p00 = pixelValue(pb, xi+0, yi+0);
+    pixel_t p01 = pixelValue(pb, xi+1, yi+0);
+    pixel_t p10 = pixelValue(pb, xi+0, yi+1);
+    pixel_t p11 = pixelValue(pb, xi+1, yi+1);
+
+    pixel_t r;
+    if (PREMULTIPLIED) {
+        unsigned int p0[4]; // range [0,a*sf]
+        unsigned int p1[4];
+        for(size_t i=0; i<4; i++) {
+            p0[i] = sf*p00[i] + xf*((unsigned int)p01[i]-(unsigned int)p00[i]);
+            p1[i] = sf*p10[i] + xf*((unsigned int)p11[i]-(unsigned int)p10[i]);
+        }
+        for(size_t i=0; i<4; i++) {
+            unsigned int ru = sf*p0[i] + yf*(p1[i]-p0[i]); // range [0,a*sf^2]
+            r[i] = (ru + sf2h)>>(2u*sfl); // range [0,a]
+        }
+    } else {
+        // It's a good idea to interpolate premultiplied colors
+        //   Consider two pixels, one being rgb(255,0,0,0), which is fully transparent,
+        //   and the other being rgb(0,255,0,255), or green (fully opaque).
+        //   If these two colors are interpolated the expected result would be greenish pixels containing no red.
+        unsigned int p0[4];
+        unsigned int p1[4];
+        for(size_t i=0; i<3; i++) {
+            unsigned int c00 = p00[i]*p00[3], c01 = p01[i]*p01[3], c10 = p10[i]*p10[3], c11 = p11[i]*p11[3]; // range [0,255*a]
+            p0[i] = sf*c00 + xf*(c01-c00); // range [0,255*a*sf]
+            p1[i] = sf*c10 + xf*(c11-c10); // range [0,255*a*sf]
+        }
+        p0[3] = sf*p00[3] + xf*(p01[3]-p00[3]); // range [0,a*sf]
+        p1[3] = sf*p10[3] + xf*(p11[3]-p10[3]);
+        unsigned int ru = sf*p0[3] + yf*(p1[3]-p0[3]); // range [0,a*sf^2]
+        r[3] = (ru + sf2h)>>(2u*sfl); // range [0,a]
+        for(size_t i=0; i<3; i++) {
+            unsigned int ru = sf*p0[i] + yf*(p1[i]-p0[i]); // range [0,255*a*sf^2]
+            r[i] = (ru + ru/2u)/ru; // range [0,255]
+        }
+    }
+
+    return r;
+}
+
+template<bool MAP_PREMULTIPLIED, bool DATA_PREMULTIPLIED>
+static void performDisplacement(NRPixBlock const* texture, NRPixBlock const* map, int Xchannel, int Ychannel, NRPixBlock* out, double scalex, double scaley) {
+    pixel_t *out_data = reinterpret_cast<pixel_t*>(NR_PIXBLOCK_PX(out));
+
+    bool Xneedsdemul = MAP_PREMULTIPLIED && Xchannel<3;
+    bool Yneedsdemul = MAP_PREMULTIPLIED && Ychannel<3;
+    if (!Xneedsdemul) scalex /= 255.0;
+    if (!Yneedsdemul) scaley /= 255.0;
+
+    for (int xout=out->area.x0; xout < out->area.x1; xout++){
+        for (int yout=out->area.y0; yout < out->area.y1; yout++){
+            int xmap = xout;
+            int ymap = yout;
+
+            pixel_t mapValue = pixelValue(map, xmap, ymap);
+            double xtex = xout + (Xneedsdemul ?
+                (mapValue[3]==0?0:(scalex * (mapValue[Xchannel] - mapValue[3]*0.5) / mapValue[3])) :
+                scalex * (mapValue[Xchannel] - 127.5));
+            double ytex = yout + (Yneedsdemul ?
+                (mapValue[3]==0?0:(scaley * (mapValue[Ychannel] - mapValue[3]*0.5) / mapValue[3])) :
+                scaley * (mapValue[Ychannel] - 127.5));
+
+            out_data[(xout-out->area.x0) + (out->area.x1-out->area.x0)*(yout-out->area.y0)] = interpolatePixels<DATA_PREMULTIPLIED>(texture, xtex, ytex);
+        }
+    }
+}
+
 int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *texture = slot.get(_input);
     NRPixBlock *map = slot.get(_input2);
@@ -41,24 +137,23 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
     //TODO: check whether do we really need this check:
     if (map->area.x1 <= map->area.x0 || map->area.y1 <=  map->area.y0) return 0; //nothing to do!
 
+    if (texture->mode != NR_PIXBLOCK_MODE_R8G8B8A8N && texture->mode != NR_PIXBLOCK_MODE_R8G8B8A8P) {
+        g_warning("Source images without an alpha channel are not supported by feDisplacementMap at the moment.");
+        return 1;
+    }
+
     NRPixBlock *out = new NRPixBlock;
     
-    out_x0 = map->area.x0;
-    out_y0 = map->area.y0;
-    out_w  = map->area.x1 - map->area.x0;
-    out_h  = map->area.y1 - map->area.y0;
-
-    out->area.x0 = out_x0;
-    out->area.y0 = out_y0;
-    out->area.x1 = out_x0 + out_w;
-    out->area.y1 = out_y0 + out_h;
+    out->area.x0 = map->area.x0;
+    out->area.y0 = map->area.y0;
+    out->area.x1 = map->area.x1;
+    out->area.y1 = map->area.y1;
 
     nr_pixblock_setup_fast(out, texture->mode, out->area.x0, out->area.y0, out->area.x1, out->area.y1, true);
 
-    // this primitive is defined for non-premultiplied RGBA values,
-    // thus convert them to that format
+    // convert to a suitable format
     bool free_map_on_exit = false;
-    if (map->mode != NR_PIXBLOCK_MODE_R8G8B8A8N) {
+    if (map->mode != NR_PIXBLOCK_MODE_R8G8B8A8N && map->mode != NR_PIXBLOCK_MODE_R8G8B8A8P) {
         NRPixBlock *original_map = map;
         map = new NRPixBlock;
         nr_pixblock_setup_fast(map, NR_PIXBLOCK_MODE_R8G8B8A8N,
@@ -68,44 +163,21 @@ int FilterDisplacementMap::render(FilterSlot &slot, FilterUnits const &units) {
         nr_blit_pixblock_pixblock(map, original_map);
         free_map_on_exit = true;
     }
-
-    unsigned char *map_data = NR_PIXBLOCK_PX(map);
-    unsigned char *texture_data = NR_PIXBLOCK_PX(texture);
-    unsigned char *out_data = NR_PIXBLOCK_PX(out);
-    int x, y;
-    int in_w = map->area.x1 - map->area.x0;
-    int in_h = map->area.y1 - map->area.y0;
-    double coordx, coordy;
+    bool map_premultiplied = (map->mode == NR_PIXBLOCK_MODE_R8G8B8A8P);
+    bool data_premultiplied = (out->mode == NR_PIXBLOCK_MODE_R8G8B8A8P);
 
     Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
     double scalex = scale * trans.expansionX();
     double scaley = scale * trans.expansionY();
-    
-    for (x=0; x < out_w; x++){
-        for (y=0; y < out_h; y++){
-            int xmap = x+out_x0-map->area.x0;
-            int ymap = y+out_y0-map->area.y0;
-            if (xmap >= 0 &&
-                xmap < in_w &&
-                ymap >= 0 &&
-                ymap < in_h){
 
-                coordx = xmap + scalex * ( double(map_data[4*(xmap + in_w*ymap) + Xchannel]-128.)/256);
-                coordy = ymap + scaley * ( double(map_data[4*(xmap + in_w*ymap) + Ychannel]-128.)/256);
-
-                if (coordx>=0 && coordx<in_w && coordy>=0 && coordy<in_h){
-                    out_data[4*(x + out_w*y)    ] = texture_data[4*(int(coordx) + int(coordy)*in_w)    ];
-                    out_data[4*(x + out_w*y) + 1] = texture_data[4*(int(coordx) + int(coordy)*in_w) + 1];
-                    out_data[4*(x + out_w*y) + 2] = texture_data[4*(int(coordx) + int(coordy)*in_w) + 2];
-                    out_data[4*(x + out_w*y) + 3] = texture_data[4*(int(coordx) + int(coordy)*in_w) + 3];
-                } else {
-                    out_data[4*(x + out_w*y)    ] = 255;
-                    out_data[4*(x + out_w*y) + 1] = 255;
-                    out_data[4*(x + out_w*y) + 2] = 255;
-                    out_data[4*(x + out_w*y) + 3] = 0;
-                }
-            }
-        }
+    if (map_premultiplied && data_premultiplied) {
+        performDisplacement<true,true>(texture, map, Xchannel, Ychannel, out, scalex, scaley);
+    } else if (map_premultiplied && !data_premultiplied) {
+        performDisplacement<true,false>(texture, map, Xchannel, Ychannel, out, scalex, scaley);
+    } else if (data_premultiplied) {
+        performDisplacement<false,true>(texture, map, Xchannel, Ychannel, out, scalex, scaley);
+    } else {
+        performDisplacement<false,false>(texture, map, Xchannel, Ychannel, out, scalex, scaley);
     }
 
     if (free_map_on_exit) {
