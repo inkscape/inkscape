@@ -352,7 +352,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                         sp_text_context_update_cursor(tc);
                         sp_text_context_update_text_selection(tc);
                         tc->dragging = 1;
-                        sp_canvas_set_snap_delay_active(desktop->canvas, true);
+                        sp_event_context_snap_window_open(event_context);
                     }
                     ret = TRUE;
                 }
@@ -369,7 +369,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                     sp_text_context_update_cursor(tc);
                     sp_text_context_update_text_selection(tc);
                     tc->dragging = 2;
-                    sp_canvas_set_snap_delay_active(desktop->canvas, true);
+                    sp_event_context_snap_window_open(event_context);
                     ret = TRUE;
                 }
             }
@@ -381,14 +381,14 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                 sp_text_context_update_cursor(tc);
                 sp_text_context_update_text_selection(tc);
                 tc->dragging = 3;
-                sp_canvas_set_snap_delay_active(desktop->canvas, true);
+                sp_event_context_snap_window_open(event_context);
                 ret = TRUE;
             }
             break;
         case GDK_BUTTON_RELEASE:
             if (event->button.button == 1 && tc->dragging && !event_context->space_panning) {
                 tc->dragging = 0;
-                sp_canvas_set_snap_delay_active(desktop->canvas, false);
+                sp_event_context_snap_window_closed(event_context);
                 ret = TRUE;
             }
             break;
@@ -1392,7 +1392,7 @@ sp_text_get_selected_text(SPEventContext const *ec)
 
 SPCSSAttr *
 sp_text_get_style_at_cursor(SPEventContext const *ec)
-{ 
+{
     if (!SP_IS_TEXT_CONTEXT(ec))
         return NULL;
     SPTextContext const *tc = SP_TEXT_CONTEXT(ec);

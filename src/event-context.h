@@ -20,6 +20,7 @@
 #include <glib-object.h>
 #include <gdk/gdktypes.h>
 #include <gdk/gdkevents.h>
+#include "knot.h"
 
 #include "2geom/forward.h"
 #include "preferences.h"
@@ -28,6 +29,7 @@ struct GrDrag;
 struct SPDesktop;
 struct SPItem;
 class ShapeEditor;
+struct SPEventContext;
 
 namespace Inkscape {
     class MessageContext;
@@ -36,6 +38,52 @@ namespace Inkscape {
         class Node;
     }
 }
+
+gboolean sp_event_context_snap_watchdog_callback(gpointer data);
+void sp_event_context_snap_window_open(SPEventContext *ec, bool show_debug_warnings = true);
+void sp_event_context_snap_window_closed(SPEventContext *ec, bool show_debug_warnings = true);
+
+class DelayedSnapEvent
+{
+public:
+	enum DelayedSnapEventOrigin {
+		UNDEFINED_HANDLER = 0,
+		EVENTCONTEXT_ROOT_HANDLER,
+		EVENTCONTEXT_ITEM_HANDLER,
+		KNOT_HANDLER
+	};
+
+	DelayedSnapEvent(SPEventContext *event_context, SPItem* const item, SPKnot* knot, GdkEventMotion const *event, DelayedSnapEvent::DelayedSnapEventOrigin const origin)
+	: _timer_id(0), _event(NULL), _item(item), _knot(knot), _origin(origin), _event_context(event_context)
+	{
+		Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+		double value = prefs->getDoubleLimited("/options/snapdelay/value", 0, 0, 1000);
+		_timer_id = g_timeout_add(value, &sp_event_context_snap_watchdog_callback, this);
+		_event = gdk_event_copy((GdkEvent*) event);
+		((GdkEventMotion *)_event)->time = GDK_CURRENT_TIME;
+	}
+
+	~DelayedSnapEvent()	{
+		if (_timer_id > 0) g_source_remove(_timer_id); // Kill the watchdog
+		if (_event != NULL) gdk_event_free(_event); // Remove the copy of the original event
+	}
+
+	SPEventContext* getEventContext() {return _event_context;}
+	DelayedSnapEventOrigin getOrigin() {return _origin;}
+	GdkEvent* getEvent() {return _event;}
+	SPItem* getItem() {return _item;}
+	SPKnot* getKnot() {return _knot;}
+
+private:
+	guint _timer_id;
+	GdkEvent* _event;
+	SPItem* _item;
+	SPKnot* _knot;
+	DelayedSnapEventOrigin _origin;
+	SPEventContext* _event_context;
+};
+
+void sp_event_context_snap_delay_handler(SPEventContext *ec, SPItem* const item, SPKnot* const knot, GdkEventMotion *event, DelayedSnapEvent::DelayedSnapEventOrigin origin);
 
 /**
  * Base class for Event processors.
@@ -57,7 +105,7 @@ struct SPEventContext : public GObject {
     gint tolerance;
     bool within_tolerance;  ///< are we still within tolerance of origin
 
-    SPItem *item_to_select; ///< the item where mouse_press occurred, to 
+    SPItem *item_to_select; ///< the item where mouse_press occurred, to
                             ///< be selected if this is a click not drag
 
     Inkscape::MessageContext *defaultMessageContext() {
@@ -74,6 +122,9 @@ struct SPEventContext : public GObject {
     ShapeEditor* shape_editor;
 
     bool space_panning;
+
+    bool _snap_window_open;
+    DelayedSnapEvent *_delayed_snap_event;
 };
 
 /**
@@ -101,7 +152,9 @@ void sp_event_context_activate(SPEventContext *ec);
 void sp_event_context_deactivate(SPEventContext *ec);
 
 gint sp_event_context_root_handler(SPEventContext *ec, GdkEvent *event);
+gint sp_event_context_virtual_root_handler(SPEventContext *ec, GdkEvent *event);
 gint sp_event_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event);
+gint sp_event_context_virtual_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event);
 
 void sp_event_root_menu_popup(SPDesktop *desktop, SPItem *item, GdkEvent *event);
 

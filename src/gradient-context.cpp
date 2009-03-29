@@ -114,8 +114,6 @@ static void sp_gradient_context_dispose(GObject *object)
     SPGradientContext *rc = SP_GRADIENT_CONTEXT(object);
     SPEventContext *ec = SP_EVENT_CONTEXT(object);
 
-    sp_canvas_set_snap_delay_active(ec->desktop->canvas, false);
-
     ec->enableGrDrag(false);
 
     if (rc->_message_context) {
@@ -219,7 +217,7 @@ static void sp_gradient_context_setup(SPEventContext *ec)
     rc->subselcon = new sigc::connection (ec->desktop->connectToolSubselectionChanged(sigc::bind (sigc::ptr_fun(&gradient_subselection_changed), rc)));
     gradient_selection_changed(selection, rc);
 
-    sp_canvas_set_snap_delay_active(ec->desktop->canvas, true);
+    sp_event_context_snap_window_open(ec);
 }
 
 void

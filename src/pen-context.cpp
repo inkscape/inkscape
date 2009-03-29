@@ -208,8 +208,6 @@ sp_pen_context_setup(SPEventContext *ec)
 
     pc = SP_PEN_CONTEXT(ec);
 
-    sp_canvas_set_snap_delay_active(pc->desktop->canvas, true);
-
     if (((SPEventContextClass *) pen_parent_class)->setup) {
         ((SPEventContextClass *) pen_parent_class)->setup(ec);
     }
@@ -265,7 +263,7 @@ sp_pen_context_finish(SPEventContext *ec)
 {
     SPPenContext *pc = SP_PEN_CONTEXT(ec);
 
-    sp_canvas_set_snap_delay_active(pc->desktop->canvas, false);
+    sp_event_context_snap_window_closed(ec, false); //TODO: Detailed implementation of the snap window; now it's simply always open
 
     if (pc->npoints != 0) {
         pen_cancel (pc);
@@ -368,6 +366,8 @@ static gint
 sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event)
 {
     SPPenContext *const pc = SP_PEN_CONTEXT(ec);
+
+    sp_event_context_snap_window_open(ec, false); //TODO: Detailed implementation of the snap window; now it's simply always open
 
     gint ret = FALSE;
 

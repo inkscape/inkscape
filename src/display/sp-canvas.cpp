@@ -946,10 +946,6 @@ static void sp_canvas_dirty_rect(SPCanvas* canvas, int nl, int nt, int nr, int n
 static void sp_canvas_mark_rect(SPCanvas* canvas, int nl, int nt, int nr, int nb, uint8_t val);
 static int do_update (SPCanvas *canvas);
 
-static gboolean sp_canvas_snap_watchdog_callback(gpointer data);
-static void sp_canvas_snap_watchdog_set(SPCanvas *canvas, GdkEventMotion *event);
-static void sp_canvas_snap_watchdog_kill(SPCanvas *canvas);
-
 /**
  * Registers the SPCanvas class if necessary, and returns the type ID
  * associated to it.
@@ -1046,10 +1042,6 @@ sp_canvas_init (SPCanvas *canvas)
 #endif // ENABLE_LCMS
 
     canvas->is_scrolling = false;
-
-    canvas->watchdog_id = 0;
-    canvas->watchdog_event = NULL;
-    canvas->context_snap_delay_active = false;
 }
 
 /**
@@ -1288,7 +1280,7 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
         if (!(mask & canvas->grabbed_event_mask)) return FALSE;
     }
 
-    /* Convert to world coordinates -- we have two cases because of diferent
+    /* Convert to world coordinates -- we have two cases because of different
      * offsets of the fields in the event structures.
      */
 
@@ -1497,7 +1489,6 @@ static gint
 sp_canvas_button (GtkWidget *widget, GdkEventButton *event)
 {
     SPCanvas *canvas = SP_CANVAS (widget);
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
 
     int retval = FALSE;
 
@@ -1532,12 +1523,6 @@ sp_canvas_button (GtkWidget *widget, GdkEventButton *event)
     case GDK_BUTTON_PRESS:
     case GDK_2BUTTON_PRESS:
     case GDK_3BUTTON_PRESS:
-    	if (dt) {
-			// Snapping will be on hold if we're moving the mouse at high speeds. When starting
-    		// drawing a new shape we really should snap though.
-    		dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
-		}
-
     	/* Pick the current item as if the button were not pressed, and
          * then process the event.
          */
@@ -1548,9 +1533,7 @@ sp_canvas_button (GtkWidget *widget, GdkEventButton *event)
         break;
 
     case GDK_BUTTON_RELEASE:
-    	sp_canvas_snap_watchdog_callback(canvas); // If we have any pending snapping action, then invoke it now
-
-    	/* Process the event as if the button were pressed, then repick
+       	/* Process the event as if the button were pressed, then repick
          * after the button has been released
          */
         canvas->state = event->state;
@@ -1593,9 +1576,6 @@ static inline void request_motions(GdkWindow *w, GdkEventMotion *event) {
 static int
 sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
 {
-	static guint32 prev_time;
-	static boost::optional<Geom::Point> prev_pos;
-
 	int status;
     SPCanvas *canvas = SP_CANVAS (widget);
 
@@ -1607,56 +1587,6 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
     if (canvas->pixmap_gc == NULL) // canvas being deleted
         return FALSE;
 
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
-
-    // Snapping occurs when dragging with the left mouse button down, or when hovering e.g. in the pen tool with left mouse button up
-    bool const c1 = event->state & GDK_BUTTON2_MASK; // We shouldn't hold back any events when other mouse buttons have been
-    bool const c2 = event->state & GDK_BUTTON3_MASK; // pressed, e.g. when scrolling with the middle mouse button; if we do then
-												     // Inkscape will get stuck in an unresponsive state
-
-    if (canvas->context_snap_delay_active && !c1 && !c2 && dt && dt->namedview->snap_manager.snapprefs.getSnapEnabledGlobally()) {
-    	// Snap when speed drops below e.g. 0.02 px/msec, or when no motion events have occurred for some period.
-		// i.e. snap when we're at stand still. A speed threshold enforces snapping for tablets, which might never
-		// be fully at stand still and might keep spitting out motion events.
-		dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(true); // put snapping on hold
-
-    	Geom::Point event_pos(event->x, event->y);
-		guint32 event_t = gdk_event_get_time ( (GdkEvent *) event );
-
-		if (prev_pos) {
-			Geom::Coord dist = Geom::L2(event_pos - *prev_pos);
-			guint32 delta_t = event_t - prev_time;
-			gdouble speed = delta_t > 0 ? dist/delta_t : 1000;
-			if (speed > 0.02) { // Jitter threshold, might be needed for tablets
-				// We're moving fast, so postpone any snapping until the next GDK_MOTION_NOTIFY event. We
-				// will keep on postponing the snapping as long as the speed is high.
-				// We must snap at some point in time though, so set a watchdog timer at some time from
-				// now, just in case there's no future motion event that drops under the speed limit (when
-				// stopping abruptly)
-				sp_canvas_snap_watchdog_kill(canvas);
-				sp_canvas_snap_watchdog_set(canvas, event); // watchdog is reset, i.e. pushed forward in time
-				// If the watchdog expires before a new motion event is received, we will snap (as explained
-				// above). This means however that when the timer is too short, we will always snap and that the
-				// speed threshold is ineffective. In the extreme case the delay is set to zero, and snapping will
-				// be immediate, as it used to be in the old days ;-).
-			} else { // Speed is very low, so we're virtually at stand still
-				// But if we're really standing still, then we should snap now. We could use some low-pass filtering,
-				// otherwise snapping occurs for each jitter movement. For this filtering we'll leave the watchdog to expire,
-				// snap, and set a new watchdog again.
-				if (canvas->watchdog_id == 0) { // no watchdog has been set
-					// it might have already expired, so we'll set a new one; the snapping frequency will be limited by this
-					sp_canvas_snap_watchdog_set(canvas, event);
-				} // else: watchdog has been set before and we'll wait for it to expire
-			}
-		} else {
-			// This is the first GDK_MOTION_NOTIFY event, so postpone snapping and set the watchdog
-			sp_canvas_snap_watchdog_set(canvas, event);
-		}
-
-		prev_pos = event_pos;
-		prev_time = event_t;
-	}
-
     canvas->state = event->state;
 	pick_current_item (canvas, (GdkEvent *) event);
 	status = emit_event (canvas, (GdkEvent *) event);
@@ -1665,82 +1595,6 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
 	}
 
     return status;
-}
-
-gboolean sp_canvas_snap_watchdog_callback(gpointer data)
-{
-	// Snap NOW! For this the "postponed" flag will be reset and an the last motion event will be repeated
-	SPCanvas *canvas = reinterpret_cast<SPCanvas *>(data);
-	if (!canvas->watchdog_event) {
-		// This might occur when this method is called directly, i.e. not through the timer
-		return FALSE;
-	}
-
-	SPDesktop *dt = SP_ACTIVE_DESKTOP;
-	if (dt) {
-		dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
-	}
-
-	((GdkEventMotion *)canvas->watchdog_event)->time = GDK_CURRENT_TIME;
-	emit_event(canvas, canvas->watchdog_event);
-	gdk_event_free(canvas->watchdog_event);
-	canvas->watchdog_event = NULL;
-	canvas->watchdog_id = 0;
-
-	return FALSE;
-}
-
-void sp_canvas_snap_watchdog_set(SPCanvas *canvas, GdkEventMotion *event)
-{
-	Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-	double value = prefs->getDoubleLimited("/options/snapdelay/value", 0, 0, 1000);
-	g_assert(canvas->watchdog_id == 0);
-	canvas->watchdog_id = g_timeout_add(value, &sp_canvas_snap_watchdog_callback, canvas);
-	g_assert(canvas->watchdog_event == NULL);
-	canvas->watchdog_event = gdk_event_copy( (GdkEvent *) event);
-}
-
-void sp_canvas_snap_watchdog_kill(SPCanvas *canvas)
-{
-	if (canvas->watchdog_id) {
-        g_source_remove(canvas->watchdog_id); // Kill the watchdog
-        canvas->watchdog_id = 0;
-    }
-
-	if (canvas->watchdog_event) {
-		gdk_event_free(canvas->watchdog_event);
-		canvas->watchdog_event = NULL;
-	}
-}
-
-void sp_canvas_set_snap_delay_active(SPCanvas *canvas, bool snapping)
-{
-	// Only when canvas->context_snap_delay_active has been set, Inkscape will know that snapping is active
-	// and will delay any snapping events (but only when asked to through the preferences)
-
-	// When snapping is being delayed, then that will also mean that at some point the last event
-	// might be re-triggered. This should only occur when Inkscape is still in the same tool or context,
-	// and even more specifically, the tool should even be in the same state. If for example snapping is being delayed while
-	// creating a rectangle, then the rect-context will be active and it will be in the "dragging" state
-	// (see the static boolean variable "dragging" in the sp_rect_context_root_handler). The procedure is
-	// as follows: call sp_canvas_set_snap_delay_active(*, TRUE) when entering the "dragging" state, which will delay
-	// snapping from that moment on, and call sp_canvas_set_snap_delay_active(*, FALSE) when leaving the "dragging"
-	// state. This last call will also make sure that any pending snap events will be canceled.
-
-	if (!canvas) {
-		g_warning("sp_canvas_set_snap_delay_active() has been called without providing a canvas!");
-		return;
-	}
-
-	if (canvas->context_snap_delay_active == snapping) {
-		g_warning("Snapping was already allowed or disallowed! This is a bug, please report it.");
-	}
-
-	canvas->context_snap_delay_active = snapping;
-
-	if (snapping == false) {
-		sp_canvas_snap_watchdog_kill(canvas); // kill any pending snapping events
-	}
 }
 
 static void

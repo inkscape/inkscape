@@ -294,7 +294,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (!(event->button.state & GDK_SHIFT_MASK)) {
                     if (!nc->drag) {
                         if (se->has_nodepath() && selection->single() /* && item_over */) {
-                        	sp_canvas_set_snap_delay_active(desktop->canvas, true);
+                        	sp_event_context_snap_window_open(event_context);
                         	// save drag origin
                             bool over_stroke = se->is_over_stroke(Geom::Point(event->button.x, event->button.y), true);
                             //only dragging curves
@@ -425,13 +425,13 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                     }
                                     desktop->updateNow();
                                 }
-                            	sp_canvas_set_snap_delay_active(desktop->canvas, false);
+                            	sp_event_context_snap_window_closed(event_context);
                                 break;
                             case GDK_2BUTTON_PRESS:
                                 //add a node
                                 se->add_node_near_point();
                                 nc->added_node = true;
-                                sp_canvas_set_snap_delay_active(desktop->canvas, false);
+                                sp_event_context_snap_window_closed(event_context);
                                 break;
                             default:
                                 break;

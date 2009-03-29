@@ -32,6 +32,7 @@
 #include "desktop.h"
 #include "sp-guide.h"
 #include "preferences.h"
+#include "event-context.h"
 using std::vector;
 
 /**
@@ -160,12 +161,14 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapPreferences::PointTyp
                                              bool first_point,
                                              Geom::OptRect const &bbox_to_snap) const
 {
-    if (_desktop->canvas->context_snap_delay_active == false) {
-        g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
-        // When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
-    }
+	if (_desktop->event_context->_snap_window_open == false) {
+		g_warning("context_snap_window_open has not been set to true by the current context. Please report this!");
+		// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
+	}
 
-    if (!someSnapperMightSnap()) {
+	//std::cout << "SnapManager::freeSnap -> postponed: " << snapprefs.getSnapPostponedGlobally() << std::endl;
+
+	if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, source_type, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
 
@@ -293,12 +296,12 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
                                                     bool first_point,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
-    if (_desktop->canvas->context_snap_delay_active == false) {
-        g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
-        // When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
-    }
+	if (_desktop->event_context->_snap_window_open == false) {
+		g_warning("context_snap_window_open has not been set to true by the current context. Please report this!");
+		// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
+	}
 
-    if (!someSnapperMightSnap()) {
+	if (!someSnapperMightSnap()) {
         return Inkscape::SnappedPoint(p, source_type, Inkscape::SNAPTARGET_UNDEFINED, NR_HUGE, 0, false, false);
     }
 
@@ -331,10 +334,10 @@ void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) con
 {
     // This method is used to snap a guide to nodes or to other guides, while dragging the guide around. Will not snap to grids!
 
-    if (_desktop->canvas->context_snap_delay_active == false) {
-        g_warning("context_snap_delay_active has not been set to true by the current context. Please report this!");
-        // When the context goes into dragging-mode, then Inkscape should call this: sp_canvas_set_snap_delay_active(desktop->canvas, true);
-    }
+	if (_desktop->event_context->_snap_window_open == false) {
+			g_warning("context_snap_window_open has not been set to true by the current context. Please report this!");
+			// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
+	}
 
     if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally()) {
         return;

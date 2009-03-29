@@ -255,7 +255,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
                 /* Set first point of sequence */
             	SnapManager &m = desktop->namedview->snap_manager;
 				m.setup(desktop);
-				sp_canvas_set_snap_delay_active(desktop->canvas, true);
+				sp_event_context_snap_window_open(event_context);
 
                 if (anchor) {
                     p = anchor->dp;
@@ -349,7 +349,7 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
             /* We may be idle or already freehand */
             if ( mevent.state & GDK_BUTTON1_MASK && pc->is_drawing ) {
                 if (pc->state == SP_PENCIL_CONTEXT_IDLE) {
-                	sp_canvas_set_snap_delay_active(dt->canvas, false);
+                	sp_event_context_snap_window_closed(event_context);
                 }
             	pc->state = SP_PENCIL_CONTEXT_FREEHAND;
 
@@ -417,7 +417,7 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                 /* Releasing button in idle mode means single click */
                 /* We have already set up start point/anchor in button_press */
                 pc->state = SP_PENCIL_CONTEXT_ADDLINE;
-                //sp_canvas_set_snap_delay_active(dt->canvas, true);
+                //sp_event_context_snap_window_open(dt->canvas);
                 ret = TRUE;
                 break;
             case SP_PENCIL_CONTEXT_ADDLINE:
@@ -431,7 +431,7 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                 spdc_set_endpoint(pc, p);
                 spdc_finish_endpoint(pc);
                 pc->state = SP_PENCIL_CONTEXT_IDLE;
-                sp_canvas_set_snap_delay_active(dt->canvas, false);
+                sp_event_context_snap_window_closed(event_context);
                 ret = TRUE;
                 break;
             case SP_PENCIL_CONTEXT_FREEHAND:
@@ -445,7 +445,7 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                     }
 
                     pc->state = SP_PENCIL_CONTEXT_SKETCH;
-                    //sp_canvas_set_snap_delay_active(dt->canvas, true);
+                    //sp_event_context_snap_window_open(dt->canvas);
                 } else {
                     /* Finish segment now */
                     /// \todo fixme: Clean up what follows (Lauris)
@@ -465,7 +465,7 @@ pencil_handle_button_release(SPPencilContext *const pc, GdkEventButton const &re
                         pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
                     }
                     pc->state = SP_PENCIL_CONTEXT_IDLE;
-                    // sp_canvas_set_snap_delay_active(dt->canvas, false);
+                    // sp_event_context_snap_window_closed(dt->canvas);
                     // reset sketch mode too
                     pc->sketch_n = 0;
                 }
@@ -498,7 +498,7 @@ pencil_cancel (SPPencilContext *const pc)
 
     pc->is_drawing = false;
     pc->state = SP_PENCIL_CONTEXT_IDLE;
-    sp_canvas_set_snap_delay_active(pc->desktop->canvas, false);
+    sp_event_context_snap_window_closed(SP_EVENT_CONTEXT(pc));
 
     pc->red_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), NULL);
@@ -589,7 +589,7 @@ pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint c
                     pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
                 }
                 pc->state = SP_PENCIL_CONTEXT_IDLE;
-                sp_canvas_set_snap_delay_active(pc->desktop->canvas, false);
+                sp_event_context_snap_window_closed(SP_EVENT_CONTEXT(pc));
                 pc->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Finishing freehand sketch"));
                 ret = TRUE;
             }

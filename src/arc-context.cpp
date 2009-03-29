@@ -41,6 +41,7 @@
 #include "context-fns.h"
 #include "verbs.h"
 #include "shape-editor.h"
+#include "event-context.h"
 
 #include "arc-context.h"
 
@@ -221,7 +222,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
             if (event->button.button == 1 && !event_context->space_panning) {
 
                 dragging = true;
-                sp_canvas_set_snap_delay_active(desktop->canvas, true);
+                sp_event_context_snap_window_open(event_context);
                 ac->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
 
                 /* Snap center */
@@ -265,7 +266,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
             event_context->xp = event_context->yp = 0;
             if (event->button.button == 1 && !event_context->space_panning) {
                 dragging = false;
-                sp_canvas_set_snap_delay_active(desktop->canvas, false);
+                sp_event_context_snap_window_closed(event_context);
                 if (!event_context->within_tolerance) {
                     // we've been dragging, finish the arc
                     sp_arc_finish(ac);
@@ -329,7 +330,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                               event->button.time);
                         dragging = false;
-                        sp_canvas_set_snap_delay_active(desktop->canvas, false);
+                        sp_event_context_snap_window_closed(event_context);
                         if (!event_context->within_tolerance) {
                             // we've been dragging, finish the rect
                             sp_arc_finish(ac);

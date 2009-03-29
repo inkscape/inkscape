@@ -33,7 +33,7 @@ class SPKnotClass;
 
 /**
  * Desktop-bound visual control object.
- * 
+ *
  * A knot is a draggable object, with callbacks to change something by
  * dragging it, visuably represented by a canvas item (mostly square).
  */
@@ -174,6 +174,7 @@ void sp_knot_set_position(SPKnot *knot, Geom::Point const &p, guint state);
 /** Moves knot without any signal. */
 void sp_knot_moveto(SPKnot *knot, Geom::Point const &p);
 
+void sp_knot_handler_request_position(GdkEvent *event, SPKnot *knot);
 Geom::Point sp_knot_position(SPKnot const *knot);
 
 

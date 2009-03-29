@@ -29,7 +29,6 @@
 #include "message-context.h"
 #include "event-context.h"
 
-
 #define KNOT_EVENT_MASK (GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | \
 			 GDK_POINTER_MOTION_MASK | \
 			 GDK_POINTER_MOTION_HINT_MASK | \
@@ -318,8 +317,8 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             if (event->button.button == 1 && !knot->desktop->event_context->space_panning) {
                 Geom::Point const p = knot->desktop->w2d(Geom::Point(event->button.x, event->button.y));
                 sp_knot_start_dragging(knot, p, (gint) event->button.x, (gint) event->button.y, event->button.time);
-                if (knot->desktop->canvas->context_snap_delay_active == false) {
-					sp_canvas_set_snap_delay_active(knot->desktop->canvas, true);
+                if (knot->desktop->event_context->_snap_window_open == false) {
+					sp_event_context_snap_window_open(knot->desktop->event_context);
 					snap_delay_temporarily_active = true;
 				}
                 consumed = TRUE;
@@ -327,7 +326,15 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             break;
 	case GDK_BUTTON_RELEASE:
             if (event->button.button == 1 && !knot->desktop->event_context->space_panning) {
-                knot->pressure = 0;
+                if (snap_delay_temporarily_active) {
+                	if (knot->desktop->event_context->_snap_window_open == true) {
+                		sp_event_context_snap_window_closed(knot->desktop->event_context);
+                	}
+					snap_delay_temporarily_active = false;
+				}
+                sp_event_context_snap_watchdog_callback(knot->desktop->event_context->_delayed_snap_event);
+
+            	knot->pressure = 0;
                 if (transform_escaped) {
                     transform_escaped = false;
                     consumed = TRUE;
@@ -353,13 +360,6 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                     grabbed = FALSE;
                     moved = FALSE;
                     consumed = TRUE;
-
-                    if (snap_delay_temporarily_active) {
-                    	if (knot->desktop->canvas->context_snap_delay_active == true) {
-                    		sp_canvas_set_snap_delay_active(knot->desktop->canvas, false);
-                    	}
-						snap_delay_temporarily_active = false;
-					}
                 }
             }
             break;
@@ -391,14 +391,8 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                                      SP_KNOT_DRAGGING,
                                      TRUE);
                 }
-                Geom::Point const motion_w(event->motion.x, event->motion.y);
-                Geom::Point const motion_dt = knot->desktop->w2d(motion_w);
-                Geom::Point p = motion_dt - knot->grabbed_rel_pos;
-                sp_knot_request_position (knot, p, event->motion.state);
-                knot->desktop->scroll_to_point (motion_dt);
-                knot->desktop->set_coordinate_status(knot->pos); // display the coordinate of knot, not cursor - they may be different!
-                if (event->motion.state & GDK_BUTTON1_MASK)
-                    gobble_motion_events(GDK_BUTTON1_MASK);
+                sp_event_context_snap_delay_handler(knot->desktop->event_context, NULL, knot, (GdkEventMotion *)event, DelayedSnapEvent::KNOT_HANDLER);
+                sp_knot_handler_request_position(event, knot);
                 moved = TRUE;
             }
             break;
@@ -428,35 +422,35 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             break;
 	case GDK_KEY_PRESS: // keybindings for knot
             switch (get_group0_keyval(&event->key)) {
-		case GDK_Escape:
-                    sp_knot_set_flag(knot, SP_KNOT_GRABBED, FALSE);
-                    if (!nograb) {
-                        sp_canvas_item_ungrab(knot->item, event->button.time);
-                    }
-                    if (moved) {
-                        sp_knot_set_flag(knot,
-                                         SP_KNOT_DRAGGING,
-                                         FALSE);
-                        g_signal_emit(knot,
-                                      knot_signals[UNGRABBED], 0,
-                                      event->button.state);
-                        sp_document_undo(sp_desktop_document(knot->desktop));
-                        knot->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Node or handle drag canceled."));
-                        transform_escaped = true;
-                        consumed = TRUE;
-                    }
-                    grabbed = FALSE;
-                    moved = FALSE;
-                    if (snap_delay_temporarily_active) {
-						sp_canvas_set_snap_delay_active(knot->desktop->canvas, false);
-						snap_delay_temporarily_active = false;
+				case GDK_Escape:
+							sp_knot_set_flag(knot, SP_KNOT_GRABBED, FALSE);
+							if (!nograb) {
+								sp_canvas_item_ungrab(knot->item, event->button.time);
+							}
+							if (moved) {
+								sp_knot_set_flag(knot,
+												 SP_KNOT_DRAGGING,
+												 FALSE);
+								g_signal_emit(knot,
+											  knot_signals[UNGRABBED], 0,
+											  event->button.state);
+								sp_document_undo(sp_desktop_document(knot->desktop));
+								knot->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Node or handle drag canceled."));
+								transform_escaped = true;
+								consumed = TRUE;
+							}
+							grabbed = FALSE;
+							moved = FALSE;
+							if (snap_delay_temporarily_active) {
+								sp_event_context_snap_window_closed(knot->desktop->event_context);
+								snap_delay_temporarily_active = false;
+							}
+							break;
+				default:
+							consumed = FALSE;
+							break;
 					}
-                    break;
-		default:
-                    consumed = FALSE;
-                    break;
-            }
-            break;
+					break;
 	default:
             break;
     }
@@ -464,6 +458,18 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
     g_object_unref(knot);
 
     return consumed;
+}
+
+void sp_knot_handler_request_position(GdkEvent *event, SPKnot *knot)
+{
+	Geom::Point const motion_w(event->motion.x, event->motion.y);
+	Geom::Point const motion_dt = knot->desktop->w2d(motion_w);
+	Geom::Point p = motion_dt - knot->grabbed_rel_pos;
+	sp_knot_request_position (knot, p, event->motion.state);
+	knot->desktop->scroll_to_point (motion_dt);
+	knot->desktop->set_coordinate_status(knot->pos); // display the coordinate of knot, not cursor - they may be different!
+	if (event->motion.state & GDK_BUTTON1_MASK)
+		gobble_motion_events(GDK_BUTTON1_MASK);
 }
 
 /**

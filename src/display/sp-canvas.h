@@ -193,10 +193,6 @@ struct SPCanvas {
 
     Geom::Rect getViewbox() const;
     NR::IRect getViewboxIntegers() const;
-
-    guint watchdog_id;
-    GdkEvent *watchdog_event;
-    bool context_snap_delay_active;
 };
 
 GtkWidget *sp_canvas_new_aa();
@@ -217,8 +213,6 @@ void sp_canvas_world_to_window(SPCanvas const *canvas, double worldx, double wor
 
 Geom::Point sp_canvas_window_to_world(SPCanvas const *canvas, Geom::Point const win);
 Geom::Point sp_canvas_world_to_window(SPCanvas const *canvas, Geom::Point const world);
-
-void sp_canvas_set_snap_delay_active(SPCanvas *canvas, bool snapping);
 
 #endif // SEEN_SP_CANVAS_H
 

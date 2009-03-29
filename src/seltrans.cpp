@@ -368,7 +368,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     	}
     }
 
-	sp_canvas_set_snap_delay_active(_desktop->canvas, true);
+	//sp_event_context_snap_window_open(_desktop->event_context);
 
     if ((x != -1) && (y != -1)) {
         sp_canvas_item_show(_norm);
@@ -422,7 +422,7 @@ void Inkscape::SelTrans::ungrab()
     _grabbed = false;
     _show_handles = true;
 
-    sp_canvas_set_snap_delay_active(_desktop->canvas, false);
+    //sp_event_context_snap_window_closed(_desktop->event_context);
 
     _desktop->snapindicator->remove_snapsource();
 

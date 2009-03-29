@@ -43,6 +43,7 @@
 #include "shortcuts.h"
 #include "desktop.h"
 #include "desktop-handles.h"
+#include "sp-namedview.h"
 #include "selection.h"
 #include "file.h"
 #include "interface.h"
@@ -142,6 +143,7 @@ sp_event_context_init(SPEventContext *event_context)
     event_context->_grdrag = NULL;
     event_context->space_panning = false;
     event_context->shape_editor = NULL;
+    event_context->_delayed_snap_event = NULL;
 }
 
 /**
@@ -228,7 +230,7 @@ gint gobble_key_events(guint keyval, gint mask)
            && event_next->key.keyval == keyval
            && (!mask || (event_next->key.state & mask))) {
         if (event_next->type == GDK_KEY_PRESS)
-            i ++; 
+            i ++;
         // kill it
         gdk_event_free(event_next);
         // get next
@@ -464,7 +466,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     Inkscape::Rubberband::get(desktop)->move(motion_dt);
                 } else {
                     Inkscape::Rubberband::get(desktop)->start(desktop, motion_dt);
-                } 
+                }
                 if (zoom_rb == 2)
                     gobble_motion_events(GDK_BUTTON2_MASK);
             }
@@ -491,7 +493,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
 
                 // in slow complex drawings, some of the motion events are lost;
                 // to make up for this, we scroll it once again to the button-up event coordinates
-                // (i.e. canvas will always get scrolled all the way to the mouse release point, 
+                // (i.e. canvas will always get scrolled all the way to the mouse release point,
                 // even if few intermediate steps were visible)
                 Geom::Point const motion_w(event->button.x, event->button.y);
                 Geom::Point const moved_w( motion_w - button_w );
@@ -514,8 +516,8 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 // in the editing window). So we resteal them back and run our regular shortcut
                 // invoker on them.
                 unsigned int shortcut;
-                case GDK_Tab: 
-                case GDK_ISO_Left_Tab: 
+                case GDK_Tab:
+                case GDK_ISO_Left_Tab:
                 case GDK_F1:
                     shortcut = get_group0_keyval(&event->key);
                     if (event->key.state & GDK_SHIFT_MASK)
@@ -637,7 +639,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                             desktop->updateNow();
                         }
                         ret= TRUE;
-                    } 
+                    }
                     break;
                 case GDK_Q:
                 case GDK_q:
@@ -747,7 +749,7 @@ public:
         Inkscape::Preferences::Observer(path),
         _ec(ec) {}
     virtual void notify(Inkscape::Preferences::Entry const &val)
-    {   
+    {
         if (((SPEventContextClass *) G_OBJECT_GET_CLASS(_ec))->set) {
             ((SPEventContextClass *) G_OBJECT_GET_CLASS(_ec))->set(_ec,
                 const_cast<Inkscape::Preferences::Entry*>(&val));
@@ -773,10 +775,10 @@ sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path, uns
     ec->_message_context = new Inkscape::MessageContext(desktop->messageStack());
     ec->key = key;
     ec->pref_observer = NULL;
-    
+
     if (pref_path) {
         ec->pref_observer = new ToolPrefObserver(pref_path, ec);
-        
+
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->addObserver(*(ec->pref_observer));
     }
@@ -865,6 +867,12 @@ sp_event_context_activate(SPEventContext *ec)
     g_return_if_fail(ec != NULL);
     g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
 
+    // Make sure no delayed snapping events are carried over after switching contexts
+    // (this is only an additional safety measure against sloppy coding, because each
+    // context should take care of this by itself. It might be hard to get each and every
+    // context perfect though)
+    sp_event_context_snap_window_closed(ec, false);
+
     if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->activate)
         ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->activate(ec);
 }
@@ -888,13 +896,36 @@ sp_event_context_deactivate(SPEventContext *ec)
 gint
 sp_event_context_root_handler(SPEventContext * event_context, GdkEvent * event)
 {
-    gint ret;
+    //std::cout << "sp_event_context_root_handler" << std::endl;
+	switch (event->type) {
+		case GDK_MOTION_NOTIFY:
+			sp_event_context_snap_delay_handler(event_context, NULL, NULL, (GdkEventMotion *)event, DelayedSnapEvent::EVENTCONTEXT_ROOT_HANDLER);
+			break;
+		case GDK_BUTTON_RELEASE:
+			sp_event_context_snap_watchdog_callback(event_context->_delayed_snap_event); // If we have any pending snapping action, then invoke it now
+			break;
+		case GDK_BUTTON_PRESS:
+        case GDK_2BUTTON_PRESS:
+        case GDK_3BUTTON_PRESS:
+			// Snapping will be on hold if we're moving the mouse at high speeds. When starting
+			// drawing a new shape we really should snap though.
+			event_context->desktop->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
+			break;
+        default:
+        	break;
+    }
 
-    ret = ((SPEventContextClass *) G_OBJECT_GET_CLASS(event_context))->root_handler(event_context, event);
+    return sp_event_context_virtual_root_handler(event_context, event);
+}
 
-    set_event_location(event_context->desktop, event);
+gint
+sp_event_context_virtual_root_handler(SPEventContext * event_context, GdkEvent * event)
+{
+	//std::cout << "sp_event_context_virtual_root_handler -> postponed: " << event_context->desktop->namedview->snap_manager.snapprefs.getSnapPostponedGlobally() << std::endl;
 
-    return ret;
+	gint ret = ((SPEventContextClass *) G_OBJECT_GET_CLASS(event_context))->root_handler(event_context, event);
+	set_event_location(event_context->desktop, event);
+	return ret;
 }
 
 /**
@@ -903,17 +934,41 @@ sp_event_context_root_handler(SPEventContext * event_context, GdkEvent * event)
 gint
 sp_event_context_item_handler(SPEventContext * event_context, SPItem * item, GdkEvent * event)
 {
-    gint ret;
+	//std::cout << "sp_event_context_item_handler" << std::endl;
+	switch (event->type) {
+		case GDK_MOTION_NOTIFY:
+			sp_event_context_snap_delay_handler(event_context, item, NULL, (GdkEventMotion *)event, DelayedSnapEvent::EVENTCONTEXT_ITEM_HANDLER);
+			break;
+		case GDK_BUTTON_RELEASE:
+			sp_event_context_snap_watchdog_callback(event_context->_delayed_snap_event); // If we have any pending snapping action, then invoke it now
+			break;
+		/*case GDK_BUTTON_PRESS:
+		case GDK_2BUTTON_PRESS:
+		case GDK_3BUTTON_PRESS:
+			// Snapping will be on hold if we're moving the mouse at high speeds. When starting
+			// drawing a new shape we really should snap though.
+			event_context->desktop->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
+			break;
+		*/
+		default:
+			break;
+	}
 
-    ret = ((SPEventContextClass *) G_OBJECT_GET_CLASS(event_context))->item_handler(event_context, item, event);
+    return sp_event_context_virtual_item_handler(event_context, item, event);
+}
 
-    if (! ret) {
-        ret = sp_event_context_root_handler(event_context, event);
-    } else {
-        set_event_location(event_context->desktop, event);
-    }
+gint
+sp_event_context_virtual_item_handler(SPEventContext * event_context, SPItem * item, GdkEvent * event)
+{
+	gint ret = ((SPEventContextClass *) G_OBJECT_GET_CLASS(event_context))->item_handler(event_context, item, event);
 
-    return ret;
+	if (! ret) {
+		ret = sp_event_context_virtual_root_handler(event_context, event);
+	} else {
+		set_event_location(event_context->desktop, event);
+	}
+
+	return ret;
 }
 
 /**
@@ -927,7 +982,7 @@ static void set_event_location(SPDesktop *desktop, GdkEvent *event)
 
     Geom::Point const button_w(event->button.x, event->button.y);
     Geom::Point const button_dt(desktop->w2d(button_w));
-    desktop-> setPosition (button_dt);
+    desktop->setPosition(button_dt);
     desktop->set_coordinate_status(button_dt);
 }
 
@@ -1104,6 +1159,155 @@ event_context_print_event_info(GdkEvent *event, bool print_return) {
         g_print ("\n");
     }
 }
+
+void sp_event_context_snap_delay_handler(SPEventContext *ec, SPItem* const item, SPKnot* const knot, GdkEventMotion *event, DelayedSnapEvent::DelayedSnapEventOrigin origin)
+{
+	static guint32 prev_time;
+	static boost::optional<Geom::Point> prev_pos;
+
+	// Snapping occurs when dragging with the left mouse button down, or when hovering e.g. in the pen tool with left mouse button up
+    bool const c1 = event->state & GDK_BUTTON2_MASK; // We shouldn't hold back any events when other mouse buttons have been
+    bool const c2 = event->state & GDK_BUTTON3_MASK; // pressed, e.g. when scrolling with the middle mouse button; if we do then
+												     // Inkscape will get stuck in an unresponsive state
+
+    if (ec->_snap_window_open && !c1 && !c2 && ec->desktop && ec->desktop->namedview->snap_manager.snapprefs.getSnapEnabledGlobally()) {
+    	// Snap when speed drops below e.g. 0.02 px/msec, or when no motion events have occurred for some period.
+		// i.e. snap when we're at stand still. A speed threshold enforces snapping for tablets, which might never
+		// be fully at stand still and might keep spitting out motion events.
+    	ec->desktop->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(true); // put snapping on hold
+
+    	Geom::Point event_pos(event->x, event->y);
+		guint32 event_t = gdk_event_get_time ( (GdkEvent *) event );
+
+		if (prev_pos) {
+			Geom::Coord dist = Geom::L2(event_pos - *prev_pos);
+			guint32 delta_t = event_t - prev_time;
+			gdouble speed = delta_t > 0 ? dist/delta_t : 1000;
+			//std::cout << "Mouse speed = " << speed << " px/msec " << std::endl;
+			if (speed > 0.02) { // Jitter threshold, might be needed for tablets
+				// We're moving fast, so postpone any snapping until the next GDK_MOTION_NOTIFY event. We
+				// will keep on postponing the snapping as long as the speed is high.
+				// We must snap at some point in time though, so set a watchdog timer at some time from
+				// now, just in case there's no future motion event that drops under the speed limit (when
+				// stopping abruptly)
+				delete ec->_delayed_snap_event;
+				ec->_delayed_snap_event = new DelayedSnapEvent(ec, item, knot, event, origin); // watchdog is reset, i.e. pushed forward in time
+				// If the watchdog expires before a new motion event is received, we will snap (as explained
+				// above). This means however that when the timer is too short, we will always snap and that the
+				// speed threshold is ineffective. In the extreme case the delay is set to zero, and snapping will
+				// be immediate, as it used to be in the old days ;-).
+			} else { // Speed is very low, so we're virtually at stand still
+				// But if we're really standing still, then we should snap now. We could use some low-pass filtering,
+				// otherwise snapping occurs for each jitter movement. For this filtering we'll leave the watchdog to expire,
+				// snap, and set a new watchdog again.
+				if (ec->_delayed_snap_event == NULL) { // no watchdog has been set
+					// it might have already expired, so we'll set a new one; the snapping frequency will be limited by this
+					ec->_delayed_snap_event = new DelayedSnapEvent(ec, item, knot, event, origin);
+				} // else: watchdog has been set before and we'll wait for it to expire
+			}
+		} else {
+			// This is the first GDK_MOTION_NOTIFY event, so postpone snapping and set the watchdog
+			g_assert(ec->_delayed_snap_event == NULL);
+			ec->_delayed_snap_event = new DelayedSnapEvent(ec, item, knot, event, origin);
+		}
+
+		prev_pos = event_pos;
+		prev_time = event_t;
+	}
+}
+
+gboolean sp_event_context_snap_watchdog_callback(gpointer data)
+{
+	// Snap NOW! For this the "postponed" flag will be reset and the last motion event will be repeated
+	DelayedSnapEvent *dse = reinterpret_cast<DelayedSnapEvent*>(data);
+
+	if (dse == NULL) {
+		// This might occur when this method is called directly, i.e. not through the timer
+		// E.g. on GDK_BUTTON_RELEASE in sp_event_context_root_handler()
+		return FALSE;
+	}
+
+	SPEventContext *ec = dse->getEventContext();
+	if (ec == NULL || ec->desktop == NULL) {
+		return false;
+	}
+
+	SPDesktop *dt = ec->desktop;
+	dt->namedview->snap_manager.snapprefs.setSnapPostponedGlobally(false);
+
+	switch (dse->getOrigin()) {
+		case DelayedSnapEvent::EVENTCONTEXT_ROOT_HANDLER:
+			sp_event_context_virtual_root_handler(ec, dse->getEvent());
+			break;
+		case DelayedSnapEvent::EVENTCONTEXT_ITEM_HANDLER:
+			g_assert(dse->getItem() != NULL);
+			sp_event_context_virtual_item_handler(ec, dse->getItem(), dse->getEvent());
+			break;
+		case DelayedSnapEvent::KNOT_HANDLER:
+			g_assert(dse->getKnot() != NULL);
+			sp_knot_handler_request_position(dse->getEvent(), dse->getKnot());
+			break;
+		default:
+			g_warning("Origin of snap-delay event has not been defined!;");
+			break;
+	}
+
+	ec->_delayed_snap_event = NULL;
+	delete dse;
+
+	return FALSE; //Kills the timer and stops it from executing this callback over and over again.
+}
+
+void sp_event_context_snap_window_open(SPEventContext *ec, bool show_debug_warnings)
+{
+	// Only when ec->_snap_window_open has been set, Inkscape will know that snapping is active
+	// and will delay any snapping events (but only when asked to through the preferences)
+
+	// When snapping is being delayed, then that will also mean that at some point the last event
+	// might be re-triggered. This should only occur when Inkscape is still in the same tool or context,
+	// and even more specifically, the tool should even be in the same state. If for example snapping is being delayed while
+	// creating a rectangle, then the rect-context will be active and it will be in the "dragging" state
+	// (see the static boolean variable "dragging" in the sp_rect_context_root_handler). The procedure is
+	// as follows: call sp_event_context_snap_window_open(*, TRUE) when entering the "dragging" state, which will delay
+	// snapping from that moment on, and call sp_event_context_snap_window_open(*, FALSE) when leaving the "dragging"
+	// state. This last call will also make sure that any pending snap events will be canceled.
+
+	//std::cout << "sp_event_context_snap_window_open" << std::endl;
+	if (!ec) {
+		if (show_debug_warnings) {
+			g_warning("sp_event_context_snap_window_open() has been called without providing an event context!");
+		}
+		return;
+	}
+
+	if (ec->_snap_window_open == true && show_debug_warnings) {
+		g_warning("Snap window was already open! This is a bug, please report it.");
+	}
+
+	ec->_snap_window_open = true;
+}
+
+void sp_event_context_snap_window_closed(SPEventContext *ec, bool show_debug_warnings)
+{
+	//std::cout << "sp_event_context_snap_window_closed" << std::endl;
+	if (!ec) {
+		if (show_debug_warnings) {
+			g_warning("sp_event_context_snap_window_closed() has been called without providing an event context!");
+		}
+		return;
+	}
+
+	if (ec->_snap_window_open == false && show_debug_warnings) {
+		g_warning("Snap window was already closed! This is a bug, please report it.");
+	}
+
+	ec->_snap_window_open = false;
+
+	delete ec->_delayed_snap_event;
+	ec->_delayed_snap_event = NULL;
+}
+
+
 
 /*
   Local Variables:

@@ -139,7 +139,7 @@ KnotHolder::knot_moved_handler(SPKnot *knot, Geom::Point const &p, guint state)
 {
     if (this->dragging == false) {
     	this->dragging = true;
-    	//sp_canvas_set_snap_delay_active(desktop->canvas, true);
+    	//sp_event_context_snap_window_open(desktop->canvas);
     }
 
 	// this was a local change and the knotholder does not need to be recreated:
@@ -165,7 +165,7 @@ void
 KnotHolder::knot_ungrabbed_handler(SPKnot */*knot*/)
 {
 	this->dragging = false;
-	//sp_canvas_set_snap_delay_active(desktop->canvas, false);
+	//sp_event_context_snap_window_closed(desktop->canvas);
 
 	if (this->released) {
         this->released(this->item);

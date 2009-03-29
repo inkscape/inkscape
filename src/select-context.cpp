@@ -212,6 +212,7 @@ sp_select_context_abort(SPEventContext *event_context)
             seltrans->ungrab();
             sc->moved = FALSE;
             sc->dragging = FALSE;
+            sp_event_context_snap_window_closed(event_context);
             drag_escaped = 1;
 
             if (sc->item) {
@@ -323,6 +324,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                     // pass the event to root handler which will perform rubberband, shift-click, ctrl-click, ctrl-drag
                 } else {
                     sc->dragging = TRUE;
+                    sp_event_context_snap_window_open(event_context);
                     sc->moved = FALSE;
 
                     sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
@@ -427,6 +429,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
                         sp_desktop_selection(desktop)->clear();
                         sc->dragging = false;
+                        sp_event_context_snap_window_closed(event_context);
 
                         sp_canvas_end_forced_full_redraws(desktop->canvas);
                     } else { // switch tool
@@ -497,6 +500,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     // if it's not click and ctrl or alt was pressed (the latter with some selection
                     // but not with shift) we want to drag rather than rubberband
                     sc->dragging = TRUE;
+                    sp_event_context_snap_window_open(event_context);
 
                     sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
                 }
@@ -547,7 +551,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         ret = TRUE;
                     } else {
                         sc->dragging = FALSE;
-
+                        sp_event_context_snap_window_closed(event_context);
                         sp_canvas_end_forced_full_redraws(desktop->canvas);
                     }
                 } else {
@@ -596,7 +600,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         }
                     }
                     sc->dragging = FALSE;
-
+                    sp_event_context_snap_window_closed(event_context);
                     sp_canvas_end_forced_full_redraws(desktop->canvas);
 
                     if (sc->item) {
