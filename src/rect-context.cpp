@@ -306,7 +306,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         event_context->xp = event_context->yp = 0;
         if (event->button.button == 1 && !event_context->space_panning) {
             dragging = false;
-            sp_event_context_snap_window_closed(event_context);
+            sp_event_context_snap_window_closed(event_context, false); //button release will also occur on a double-click; in that case suppress warnings
 
             if (!event_context->within_tolerance) {
                 // we've been dragging, finish the rect

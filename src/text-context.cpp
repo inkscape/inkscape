@@ -388,7 +388,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
         case GDK_BUTTON_RELEASE:
             if (event->button.button == 1 && tc->dragging && !event_context->space_panning) {
                 tc->dragging = 0;
-                sp_event_context_snap_window_closed(event_context);
+                sp_event_context_snap_window_closed(event_context, false); //button release will also occur on a double-click; in that case suppress warnings
                 ret = TRUE;
             }
             break;
