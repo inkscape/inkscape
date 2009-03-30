@@ -908,6 +908,9 @@ static void addToIconSet(GdkPixbuf* pb, gchar const* name, GtkIconSize lsize, un
 
     for ( std::vector<IconCacheItem>::iterator it = iconSetCache[name].begin(); it != iconSetCache[name].end(); ++it ) {
         if ( it->_lsize == lsize ) {
+            if (dump) {
+                g_message("         erasing %s:%d   %p", name, it->_lsize, it->_pb);
+            }
             iconSetCache[name].erase(it);
             break;
         }
@@ -937,9 +940,23 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
     if (pb) {
         return false;
     } else {
-        pb = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), name, psize,
-            (GtkIconLookupFlags) 0, NULL);
+        GtkIconTheme* theme = gtk_icon_theme_get_default();
+        if ( gtk_icon_theme_has_icon(theme, name) ) {
+            gint *sizeArray = gtk_icon_theme_get_icon_sizes( theme, name );
+            for (gint* cur = sizeArray; *cur; cur++) {
+                if (static_cast<gint>(psize) == *cur) {
+                    pb = gtk_icon_theme_load_icon( theme, name, psize,
+                                                   (GtkIconLookupFlags) 0, NULL );
+                    break;
+                }
+            }
+            g_free(sizeArray);
+            sizeArray = 0;
+        }
         if (!pb) {
+            if (dump) {
+                g_message("prerender_icon  [%s] %d", name, psize);
+            }
             guchar* px = load_svg_pixels(name, lsize, psize);
             if ( !px ) {
                 // check for a fallback name
@@ -957,6 +974,9 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
             } else if (dump) {
                 g_message("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX  error!!! pixels not found for '%s'", name);
             }
+        }
+        else if (dump) {
+            g_message("prerender_icon  [%s] %d NOT!!!!!!", name, psize);
         }
 
         if (pb) {
