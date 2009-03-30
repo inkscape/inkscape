@@ -5,12 +5,11 @@
 # M. Bashir Al-Noimi<mhdbnoimi@gmail.com>,2008-02-15 07:27+0200
 # M. Bashir Al-Noimi<mhdbnoimi@g,ail.com>,2008-02-23 02:26+0200
 # M. Bashir Al-Noimi <mhdbnoimi@gmail.com>,2008-02-25 08:51+0200
-#: ../share/filters/filters.svg.h:24 ../share/filters/filters.svg.h:25
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-03-10 14:03+0100\n"
+"POT-Creation-Date: 2009-03-31 01:45+0200\n"
 "PO-Revision-Date: 2008-02-27 20:43+0200\n"
 "Last-Translator: Muhammad Bashir Al-Noimi <mhdbnoimi@gmail.com>\n"
 "Language-Team: Arabic <mbnoimi.net>\n"
@@ -46,9 +45,9 @@ msgstr "قناة حاملة"
 #: ../share/filters/filters.svg.h:51 ../share/filters/filters.svg.h:52
 #: ../share/filters/filters.svg.h:53 ../share/filters/filters.svg.h:54
 #: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:70 ../share/filters/filters.svg.h:72
-#: ../share/filters/filters.svg.h:74 ../share/filters/filters.svg.h:92
-#: ../share/filters/filters.svg.h:105 ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:72 ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:106
 #, fuzzy
 msgid "Bevels"
 msgstr "مستوى"
@@ -96,7 +95,9 @@ msgid "Blurs"
 msgstr "ضبابية"
 
 #: ../share/filters/filters.svg.h:6
-msgid "Blur as if the object flies horizontally"
+msgid ""
+"Blur as if the object flies horizontally; adjust Standard Deviation to vary "
+"force"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:7
@@ -105,7 +106,9 @@ msgid "Motion blur, vertical"
 msgstr "نقل العقد عموديا"
 
 #: ../share/filters/filters.svg.h:7
-msgid "Blur as if the object flies vertically"
+msgid ""
+"Blur as if the object flies vertically; adjust Standard Deviation to vary "
+"force"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:8
@@ -123,8 +126,8 @@ msgid "Cutout"
 msgstr "البداية"
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:88 ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:88 ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 #, fuzzy
@@ -149,14 +152,14 @@ msgid "Roughen"
 msgstr "نمط العرض التوضيحي"
 
 #: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:120
-#: ../share/filters/filters.svg.h:121 ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:126
 msgid "ABCs"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:11
-msgid "Small-scale roughened edges"
+msgid "Small-scale roughening to edges and content"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:12
@@ -168,8 +171,8 @@ msgstr "مؤمّن مطاط"
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
 #: ../share/filters/filters.svg.h:22 ../share/filters/filters.svg.h:23
 #: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
-#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:118
-#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:121
 #, fuzzy
 msgid "Overlays"
 msgstr "إنتهى"
@@ -271,16 +274,18 @@ msgstr ""
 #: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:61 ../share/filters/filters.svg.h:62
 #: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:81 ../share/filters/filters.svg.h:82
-#: ../share/filters/filters.svg.h:83 ../share/filters/filters.svg.h:85
-#: ../share/filters/filters.svg.h:93 ../share/filters/filters.svg.h:117
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:70 ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
 #, fuzzy
 msgid "Materials"
 msgstr "مصفوفة"
 
 #: ../share/filters/filters.svg.h:21
-msgid "Leopard spots (loses object's natural color)"
+msgid "Leopard spots (loses object's own color)"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:22
@@ -288,7 +293,7 @@ msgid "Zebra"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:22
-msgid "Irregular vertical dark stripes (loses object's natural color)"
+msgid "Irregular vertical dark stripes (loses object's own color)"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:23
@@ -312,15 +317,23 @@ msgstr "إشحذ"
 #: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
 #: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:100
 #: ../share/filters/filters.svg.h:101 ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:128 ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:128
 #, fuzzy
 msgid "Image effects"
 msgstr "مفعول جانبي"
+
+#: ../share/filters/filters.svg.h:24
+msgid "Sharpen edges and boundaries within the object, force=0.15"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:25
 #, fuzzy
 msgid "Sharpen more"
 msgstr "إشحذ"
+
+#: ../share/filters/filters.svg.h:25
+msgid "Sharpen edges and boundaries within the object, force=0.3"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:26
 #, fuzzy
@@ -328,7 +341,7 @@ msgid "Oil painting"
 msgstr "عائم"
 
 #: ../share/filters/filters.svg.h:26
-msgid "Simulates oil painting style"
+msgid "Simulate oil painting style"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:27
@@ -361,7 +374,7 @@ msgstr ""
 
 #. Pencil
 #: ../share/filters/filters.svg.h:30
-#: ../src/ui/dialog/inkscape-preferences.cpp:479 ../src/verbs.cpp:2497
+#: ../src/ui/dialog/inkscape-preferences.cpp:479 ../src/verbs.cpp:2516
 #, fuzzy
 msgid "Pencil"
 msgstr "قلم الرصاص"
@@ -409,21 +422,21 @@ msgstr "عدم التشبع"
 #: ../share/extensions/color_removered.inx.h:1
 #: ../share/extensions/color_replace.inx.h:2
 #: ../share/extensions/color_rgbbarrel.inx.h:1
+#: ../share/extensions/interp-att-g.inx.h:2
 msgid "Color"
 msgstr "لون"
 
 #: ../share/filters/filters.svg.h:32
-msgid "Render object in black and white"
+msgid "Render in shades of gray by reducing saturation to zero"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:33 ../src/ui/widget/selected-style.cpp:228
 msgid "Invert"
 msgstr "عكس"
 
-#: ../share/filters/filters.svg.h:33 ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:33
 #, fuzzy
-msgid "Invert colors of object"
+msgid "Invert colors"
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
 #: ../share/filters/filters.svg.h:34
@@ -433,7 +446,7 @@ msgstr "اللولب"
 
 #: ../share/filters/filters.svg.h:34
 #, fuzzy
-msgid "Render object in warm sepia tones"
+msgid "Render in warm sepia tones"
 msgstr "الداخل أولا يخرج أولا"
 
 #: ../share/filters/filters.svg.h:35
@@ -454,9 +467,12 @@ msgstr "الأصل"
 #: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:64
 #: ../share/filters/filters.svg.h:66 ../share/filters/filters.svg.h:67
 #: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:86
-#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:134
 #: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:136
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:163
 #, fuzzy
 msgid "Textures"
 msgstr "نصوص"
@@ -541,7 +557,7 @@ msgid "Pixel smear"
 msgstr "بكسل"
 
 #: ../share/filters/filters.svg.h:45
-msgid "Vangogh paintings effect for bitmaps"
+msgid "Van Gogh painting effect for bitmaps"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:46
@@ -549,7 +565,7 @@ msgid "Pixel smear, glossy"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:46
-msgid "Glossy paintings effect for bitmaps"
+msgid "Glossy painting effect for bitmaps"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:47
@@ -558,31 +574,32 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:49
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:126 ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
 #, fuzzy
 msgid "Bumps"
 msgstr "التّحيّز"
 
 #: ../share/filters/filters.svg.h:47
-#, fuzzy
-msgid "Specular bump"
-msgstr "مخيِّر ألوان"
+msgid ""
+"Highly flexible specular bump based on colors hue saturation and luminance"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:48
 msgid "Cracked glass"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:48
-msgid "Under glass effect for bitmaps"
+msgid "Under a cracked glass"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:49
 msgid "HSL bubbles"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:131
-msgid "HSL-sensitive Bubbles effect for bitmaps"
+#: ../share/filters/filters.svg.h:49
+msgid ""
+"Highly flexible bubbles effect depending on color hue saturation and "
+"luminance"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:50
@@ -598,7 +615,7 @@ msgid "Ridges"
 msgstr "حافة"
 
 #: ../share/filters/filters.svg.h:50
-msgid "Bubble effect with refration and glow"
+msgid "Bubble effect with refraction and glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:51
@@ -616,7 +633,7 @@ msgid "Melt and glow"
 msgstr "مكسورة"
 
 #: ../share/filters/filters.svg.h:52
-msgid "Melting texture with a glow"
+msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:53
@@ -634,7 +651,7 @@ msgid "Pastel Bevel"
 msgstr "حجم كلمة"
 
 #: ../share/filters/filters.svg.h:54
-msgid "Soft pastel look bevel"
+msgid "Soft, pastel-colored, blurry bevel"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:55
@@ -675,7 +692,7 @@ msgid "Scatter"
 msgstr "نموذج"
 
 #: ../share/filters/filters.svg.h:58
-msgid "Leaves on the ground in Fall or living foliage"
+msgid "Leaves on the ground in Fall, or living foliage"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:59
@@ -689,7 +706,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:60
 #, fuzzy
-msgid "Crossmooth"
+msgid "Cross-smooth"
 msgstr "ناعم"
 
 #: ../share/filters/filters.svg.h:60
@@ -718,7 +735,7 @@ msgid "Cracked Lava"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:63
-msgid "A volcanic texture somewhat leather like"
+msgid "A volcanic texture, a little like leather"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:64
@@ -735,7 +752,7 @@ msgid "Lizard skin"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:65
-msgid "Stylized reptile skin texture sensitive to color change"
+msgid "Stylized reptile skin texture"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:66
@@ -744,7 +761,7 @@ msgid "Stone wall"
 msgstr "حذف الكل"
 
 #: ../share/filters/filters.svg.h:66
-msgid "Stone wall texture to use with colors containing some black"
+msgid "Stone wall texture to use with dark colors"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:67
@@ -761,7 +778,7 @@ msgid "Refractive gel A"
 msgstr "متاجرة بين عمل وعمل"
 
 #: ../share/filters/filters.svg.h:68
-msgid "Gel effect with light refration"
+msgid "Gel effect with light refraction"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:69
@@ -770,15 +787,17 @@ msgid "Refractive gel B"
 msgstr "متاجرة بين عمل وعمل"
 
 #: ../share/filters/filters.svg.h:69
-msgid "Gel effect with strong refration"
+msgid "Gel effect with strong refraction"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:70
-msgid "Soft metal"
-msgstr ""
+#, fuzzy
+msgid "Metallized paint"
+msgstr "الرقاقة تمكّن"
 
 #: ../share/filters/filters.svg.h:70
-msgid "Metal with a soft lighting, slightly translucent at the edges"
+msgid ""
+"Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:71
@@ -836,7 +855,7 @@ msgstr "توزيع طبيعى"
 #: ../share/filters/filters.svg.h:90 ../share/filters/filters.svg.h:91
 #: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:96
 #: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:138 ../src/filter-enums.cpp:31
+#: ../share/filters/filters.svg.h:133 ../src/filter-enums.cpp:31
 #, fuzzy
 msgid "Morphology"
 msgstr "علم الصرف"
@@ -878,7 +897,7 @@ msgid "Cubes"
 msgstr "نقل العقد"
 
 #: ../share/filters/filters.svg.h:80
-msgid "Cubes for playing with the Morphology primitive"
+msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:81
@@ -887,7 +906,7 @@ msgid "Peel off"
 msgstr "توزيع طبيعى"
 
 #: ../share/filters/filters.svg.h:81
-msgid "Alterated Painting on a wall easy to change with Turbulence"
+msgid "Peeling painting on a wall"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:82
@@ -895,7 +914,7 @@ msgstr ""
 msgid "Gold splatter"
 msgstr "نقل خط الإرشاد\t"
 
-#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Splattered cast metal, with golden highlights"
 msgstr ""
 
@@ -903,6 +922,10 @@ msgstr ""
 #, fuzzy
 msgid "Gold paste"
 msgstr "نسبة الارتفاع إلى العرض"
+
+#: ../share/filters/filters.svg.h:83
+msgid "Fat pasted cast metal, with golden highlights"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:84
 msgid "Crumpled plastic"
@@ -926,7 +949,7 @@ msgid "Rough paper"
 msgstr "نمط العرض التوضيحي"
 
 #: ../share/filters/filters.svg.h:86
-msgid "Aquarel paper effect which can be used for pictures as for objects"
+msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:87
@@ -951,7 +974,7 @@ msgid "Air spray"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:89
-msgid "Air Spray managed through the displacement map amount"
+msgid "Air Spray; adjust the Displacement Map amount"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:90
@@ -964,7 +987,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:91
 #, fuzzy
-msgid "Cool outline"
+msgid "Cool outside"
 msgstr "خط تفصيلي"
 
 #: ../share/filters/filters.svg.h:91
@@ -976,16 +999,17 @@ msgid "Electronic microscopy"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:92
-msgid "A bevel with the crude light of electronic microscopy"
+msgid ""
+"Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:93
 #, fuzzy
-msgid "Kilt"
-msgstr "الميل"
+msgid "Tartan"
+msgstr "الهدف"
 
 #: ../share/filters/filters.svg.h:93
-msgid "Checkered kilt fabric"
+msgid "Checkered tartan pattern"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:94
@@ -994,7 +1018,7 @@ msgid "Invert hue"
 msgstr "عكس"
 
 #: ../share/filters/filters.svg.h:94
-msgid "Invert hue or rotate it at your convenience"
+msgid "Invert hue, or rotate it"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:95
@@ -1021,7 +1045,7 @@ msgid "Fancy blur"
 msgstr "إدارة التغيير"
 
 #: ../share/filters/filters.svg.h:97
-msgid "Smooth colorized contour wich allows desaturation and hue rotation"
+msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:98
@@ -1056,7 +1080,7 @@ msgid "Soft bump"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:101
-msgid "Convolution bump with a blur it can give nice embossing effects"
+msgid "Convolution bump; with a blur, it can give nice embossing effects"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:102
@@ -1064,8 +1088,19 @@ msgstr ""
 msgid "Solarize"
 msgstr ""
 
+#: ../share/filters/filters.svg.h:102
+msgid "Classical photographic solarization effect"
+msgstr ""
+
 #: ../share/filters/filters.svg.h:103
-msgid "Moonarise"
+#, fuzzy
+msgid "Moonarize"
+msgstr "تلوين"
+
+#: ../share/filters/filters.svg.h:103
+msgid ""
+"An effect between solarize and invert which often preserves sky and water "
+"lights"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:104
@@ -1098,12 +1133,19 @@ msgid "HSL bumps, alpha"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:107
-#, fuzzy
-msgid "Bump for bitmaps"
-msgstr "التّحيّز"
+msgid ""
+"Same than HSL bumps but with an alpha added for combination with "
+"transparency depending filters"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:108
 msgid "HSL bubbles, alpha"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:108
+msgid ""
+"Same than HSL bubbles but with an alpha added for combination with "
+"transparency depending filters"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:109
@@ -1113,7 +1155,7 @@ msgstr "النّعومة"
 
 #: ../share/filters/filters.svg.h:109
 msgid ""
-"Smooth the outside of whapes and pictures without alterating their contents"
+"Smooth the outside of shapes and pictures without altering their contents"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:110
@@ -1123,7 +1165,7 @@ msgstr "نقل العقد"
 
 #: ../share/filters/filters.svg.h:110
 msgid ""
-"Displace the outside of shapes and pictures without alterating their content"
+"Displace the outside of shapes and pictures without altering their content"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:111
@@ -1182,201 +1224,446 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:117
 #, fuzzy
-msgid "3D wood"
-msgstr "إنشاء صندوق ثلاثي الأبعاد"
-
-#: ../share/filters/filters.svg.h:117
-msgid "3D warped wood texture based on blur and displacement map"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:118
-#, fuzzy
 msgid "People"
 msgstr "إستبدال"
 
-#: ../share/filters/filters.svg.h:118
-msgid "Colorized blotches evocating people walking on a wide place"
+#: ../share/filters/filters.svg.h:117
+msgid "Colorized blotches, like a crowd of people"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 #, fuzzy
 msgid "Scotland"
 msgstr "الميل"
 
-#: ../share/filters/filters.svg.h:119
-msgid "Colorized mountains tops out of the fog"
+#: ../share/filters/filters.svg.h:118
+msgid "Colorized mountain tops out of the fog"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 #, fuzzy
 msgid "Noise transparency"
 msgstr "شفّاف"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Basic noise transparency texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 #, fuzzy
 msgid "Noise fill"
 msgstr "بدون تعبئة"
 
-#: ../share/filters/filters.svg.h:121
-msgid "Basic noise fill texture"
+#: ../share/filters/filters.svg.h:120
+msgid "Basic noise fill texture; adjust color in Flood"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Garden of Delights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:122
-msgid "Fantasmagoric turbulences evocating Hieronymus Bosch Garden of Delights"
+#: ../share/filters/filters.svg.h:121
+msgid ""
+"Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 #, fuzzy
 msgid "Diffuse light"
 msgstr "مخيِّر ألوان"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Basic diffuse bevel to use for building textures"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 #, fuzzy
 msgid "Cutout glow"
 msgstr "البداية"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:125
-msgid "3D marble"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:125
-msgid "Subtle 3D warped marble texture based on blur and displacement map"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:124
 msgid "HSL bumps diffuse"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:126
-msgid "Diffuse light bump"
+#: ../share/filters/filters.svg.h:124
+msgid ""
+"Same than HSL bumps but with a diffuse reflexion instead of a specular one"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:127
-#, fuzzy
-msgid "Mother of pearl"
-msgstr "عرض الورقة"
-
-#: ../share/filters/filters.svg.h:127
-msgid "3D warped shell texture based on blur and displacement map"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:125
 #, fuzzy
 msgid "Dark Emboss"
 msgstr "إنقش"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:125
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:126
 msgid "Simple blur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:129
-msgid "Simple blur alternative of using Fill and outline panel blur slider"
+#: ../share/filters/filters.svg.h:126
+msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:130
-msgid "Dark and glow"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:133
-msgid "Enhance outline and glows inside and outside"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:127
 msgid "HSL bubbles diffuse"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:127
+msgid ""
+"Same than HSL bubbles but with a diffuse light instead of a specular one"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:128
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 #, fuzzy
 msgid "Emboss"
 msgstr "إنقش"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:128
 msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:133
-#, fuzzy
-msgid "Darken edges"
-msgstr "ظلّم"
-
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:129
 msgid "Blotting paper"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:129
 msgid "Inkblot on blotting paper"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:130
 #, fuzzy
 msgid "Wax print"
 msgstr "ملقم طباعة"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:130
 msgid "Wax print on tissue texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:131
 msgid "Inkblot"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:131
 msgid "Inkblot on tissue or rough paper"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:132
 #, fuzzy
 msgid "Burnt edges"
 msgstr "تنظيف مربع البحث"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:132
 msgid "Burnt paper edges texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:133
 #, fuzzy
 msgid "Color outline"
 msgstr "مخيِّر ألوان"
 
-#: ../share/filters/filters.svg.h:138
-msgid "A colorizable outline which can be wider and blurred"
+#: ../share/filters/filters.svg.h:133
+msgid "A colorizable outline with adjustable width and blur"
 msgstr ""
 
-#: ../src/arc-context.cpp:302
+#: ../share/filters/filters.svg.h:134
+msgid "Liquid"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:134
+msgid "Colorizable filling with liquid transparency"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:135
+#, fuzzy
+msgid "Watercolor"
+msgstr "مخيِّر ألوان"
+
+#: ../share/filters/filters.svg.h:135
+msgid "Cloudy watercolor effect"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:136
+#, fuzzy
+msgid "Felt"
+msgstr "قدم"
+
+#: ../share/filters/filters.svg.h:136
+msgid ""
+"Felt like texture with color turbulence and slightly darker at the edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:137
+#, fuzzy
+msgid "Ink paint"
+msgstr "بدون تعداد"
+
+#: ../share/filters/filters.svg.h:137
+msgid "Ink paint on paper with some turbulent color shift"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:138
+msgid "Tinted rainbow"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:138
+msgid "Smooth rainbow colors melted along the edges and colorizable"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:139
+#, fuzzy
+msgid "Melted rainbow"
+msgstr "مكسورة"
+
+#: ../share/filters/filters.svg.h:139
+msgid "Smooth rainbow colors slightly melted along the edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:140
+#, fuzzy
+msgid "Darken edges"
+msgstr "ظلّم"
+
+#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
+msgid "Enhance outline and glows inside and outside"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:141
+msgid "Dark and glow"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:142
+msgid "Flex metal"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:142
+msgid "Bright, polished uneven metal casting, colorizable"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:143
+msgid "Comics draft"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:143 ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:145 ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:149 ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:151 ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:153 ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:165
+msgid "Non realistic shaders"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:143
+msgid "Draft painted cartoon shading with a glassy look"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:144
+msgid "Comics fading"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:144
+msgid "Cartoon paint style with some fading at the edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:145
+#, fuzzy
+msgid "Smooth shader NR"
+msgstr "النّعومة"
+
+#: ../share/filters/filters.svg.h:145
+msgid "Smooth shading with a graphite pencil grey"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:146
+msgid "Emboss shader NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:146
+msgid "Combination of smooth shading and embossing"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:147
+msgid "Smooth shader dark NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:147
+msgid "Dark version of non realistic smooth shading"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:148
+#, fuzzy
+msgid "Comics"
+msgstr "تأليف بين"
+
+#: ../share/filters/filters.svg.h:148
+msgid "Imitation of black and white cartoon shading"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:149
+#, fuzzy
+msgid "Satin NR"
+msgstr "البداية"
+
+#: ../share/filters/filters.svg.h:149
+msgid "Silky close to mother of pearl shading"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:150
+msgid "Frosted glass NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:150
+msgid "Non realistic frosted glass imitation"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:151
+msgid "Smooth shader contour NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:151
+msgid "Contouring version of smooth shader"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:152
+#, fuzzy
+msgid "Comics rounded"
+msgstr "مربع مدور"
+
+#: ../share/filters/filters.svg.h:152
+msgid "Imitation of black and white cartoon shading more rounded version"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:153
+msgid "Pewter NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:153
+msgid "Mid grey satin like shader close to pewter"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:154
+msgid "Aluminium NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:154
+msgid "Brushed aluminium shader"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:155
+msgid "Comics fluid"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:155
+msgid "Fluid brushed cartoon drawing"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:156
+msgid "Chrome NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:156
+msgid "Non realistic chrome shader with strong speculars"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:157
+msgid "Chrome dark NR"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:157
+msgid "Dark version of chrome shading with a ground reflection simulation"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:158
+msgid "Wavy tartan"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:158
+msgid "Tartan pattern with a wavy displacement and bevel around the edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:159
+msgid "3D marble"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:159
+msgid "3D warped marble texture"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:160
+#, fuzzy
+msgid "3D wood"
+msgstr "إنشاء صندوق ثلاثي الأبعاد"
+
+#: ../share/filters/filters.svg.h:160
+msgid "3D warped, fibered wood texture"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:161
+#, fuzzy
+msgid "Mother of pearl"
+msgstr "عرض الورقة"
+
+#: ../share/filters/filters.svg.h:161
+msgid "3D warped, iridescent pearly shell texture"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:162
+msgid "Tiger fur"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:162
+msgid "Tiger fur pattern with folds and bevel around the edges"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:163
+#, fuzzy
+msgid "Flow inside"
+msgstr "نمط العرض التوضيحي"
+
+#: ../share/filters/filters.svg.h:163
+msgid "Colorizable filling with flow inside like transparency"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:164
+msgid "Comics flow"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:164
+msgid "Comics shader with a flow inside transparency"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:165
+msgid "Comics cream"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:165
+msgid "Comics shader with creamy waves transparency"
+msgstr ""
+
+#: ../src/arc-context.cpp:303
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 "إنقر <b>Ctrl</b> من أجل إنشاء دائرة، أو قطع ناقص بنسبة صحيحة، أو لإلتقاط "
 "زاوية القوس أو القطعة المستقيمة"
 
-#: ../src/arc-context.cpp:303 ../src/rect-context.cpp:345
+#: ../src/arc-context.cpp:304 ../src/rect-context.cpp:345
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "إنقر<b>Shift</b> من أجل الرسم إبتداء من نقطة البداية"
 
-#: ../src/arc-context.cpp:450
+#: ../src/arc-context.cpp:451
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> "
@@ -1385,7 +1672,7 @@ msgstr ""
 "<b>قطع ناقص</b>: %s &#215; %s (المحدد بالنسبة %d:%d); مع <b>Shift</b> للرسم "
 "إنطلاقاً من نقطة البدء"
 
-#: ../src/arc-context.cpp:452
+#: ../src/arc-context.cpp:453
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
@@ -1394,7 +1681,7 @@ msgstr ""
 "<b>قطع ناقص</b>: %s &#215; %s; إستخدم <b>Ctrl</b> من أجل إنشاء مريع أو قطع "
 "ناقص بنسبة صحيحة; إستخدم <b>Shift</b> للرسم إنطلاقاً من نقطة البدء"
 
-#: ../src/arc-context.cpp:471
+#: ../src/arc-context.cpp:472
 msgid "Create ellipse"
 msgstr "إنشاء قطع ناقص"
 
@@ -1419,55 +1706,55 @@ msgstr "إنشاء صندوق ثلاثي الأبعاد"
 msgid "<b>3D Box</b>"
 msgstr "حد"
 
-#: ../src/connector-context.cpp:524
+#: ../src/connector-context.cpp:526
 msgid "Creating new connector"
 msgstr "إنشاء أداة توصيل جديدة"
 
-#: ../src/connector-context.cpp:756
+#: ../src/connector-context.cpp:777
 #, fuzzy
 msgid "Connector endpoint drag cancelled."
 msgstr "نقطة النهاية لأداة التوصيل تم إلغاؤها"
 
-#: ../src/connector-context.cpp:804
+#: ../src/connector-context.cpp:826
 msgid "Reroute connector"
 msgstr "إعادة توجيه أداة التوصيل"
 
 #. Flush pending updates
-#: ../src/connector-context.cpp:968
+#: ../src/connector-context.cpp:990
 msgid "Create connector"
 msgstr "إنشاء أداة التوصيل"
 
-#: ../src/connector-context.cpp:992
+#: ../src/connector-context.cpp:1014
 msgid "Finishing connector"
 msgstr "إنهاء أداة التوصيل"
 
-#: ../src/connector-context.cpp:1135
+#: ../src/connector-context.cpp:1157
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr "<b>نقطة التوصيل</b>: إنقر ثم إسحب من أجل إنشاء أداة توصيل جديدة"
 
-#: ../src/connector-context.cpp:1208
+#: ../src/connector-context.cpp:1230
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>نقطة النهاية لأداة التوصيل</b>: إسحب أو صل بشكل جديد من أجل إعادة توجيه "
 "أداة النوصيل"
 
-#: ../src/connector-context.cpp:1320
+#: ../src/connector-context.cpp:1342
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "حدد <b>على الأقل كائن واحد</b>."
 
-#: ../src/connector-context.cpp:1325 ../src/widgets/toolbox.cpp:6960
+#: ../src/connector-context.cpp:1347 ../src/widgets/toolbox.cpp:6960
 msgid "Make connectors avoid selected objects"
 msgstr ""
 
-#: ../src/connector-context.cpp:1326 ../src/widgets/toolbox.cpp:6970
+#: ../src/connector-context.cpp:1348 ../src/widgets/toolbox.cpp:6970
 msgid "Make connectors ignore selected objects"
 msgstr ""
 
-#: ../src/context-fns.cpp:37 ../src/context-fns.cpp:66
+#: ../src/context-fns.cpp:36 ../src/context-fns.cpp:65
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
 msgstr ""
 
-#: ../src/context-fns.cpp:43 ../src/context-fns.cpp:72
+#: ../src/context-fns.cpp:42 ../src/context-fns.cpp:71
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr ""
 
@@ -1483,15 +1770,15 @@ msgstr "لا توجد نسبة تكبير لاحقة"
 msgid "Create guide"
 msgstr "إنشاء خط الإرشاد"
 
-#: ../src/desktop-events.cpp:265 ../src/desktop-events.cpp:387
+#: ../src/desktop-events.cpp:265 ../src/desktop-events.cpp:394
 msgid "Delete guide"
 msgstr "حذف خط الإرشاد\t"
 
-#: ../src/desktop-events.cpp:380
+#: ../src/desktop-events.cpp:387
 msgid "Move guide"
 msgstr "نقل خط الإرشاد\t"
 
-#: ../src/desktop-events.cpp:403
+#: ../src/desktop-events.cpp:410
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>خط الإرشاد</b>: %s"
@@ -1529,7 +1816,7 @@ msgstr ""
 msgid "Delete tiled clones"
 msgstr ""
 
-#: ../src/dialogs/clonetiler.cpp:1097 ../src/selection-chemistry.cpp:1878
+#: ../src/dialogs/clonetiler.cpp:1097 ../src/selection-chemistry.cpp:1879
 msgid "Select an <b>object</b> to clone."
 msgstr ""
 
@@ -2019,7 +2306,7 @@ msgstr ""
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2213
-#: ../src/widgets/toolbox.cpp:4319
+#: ../src/widgets/toolbox.cpp:4319 ../share/extensions/interp-att-g.inx.h:12
 msgid "Opacity"
 msgstr "شفافية"
 
@@ -2229,15 +2516,15 @@ msgid ""
 "to zero"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2604
+#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2623
 msgid "_Page"
 msgstr "صفحة"
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2608
+#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2627
 msgid "_Drawing"
 msgstr "رسم"
 
-#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2610
+#: ../src/dialogs/export.cpp:141 ../src/verbs.cpp:2629
 msgid "_Selection"
 msgstr "تحديد"
 
@@ -2629,8 +2916,8 @@ msgid ""
 msgstr ""
 
 #. Button for setting the object's id, label, title and description.
-#: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2467
-#: ../src/verbs.cpp:2473
+#: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2486
+#: ../src/verbs.cpp:2492
 msgid "_Set"
 msgstr "المجموعة"
 
@@ -2933,7 +3220,7 @@ msgstr "الحذف"
 
 #. Text
 #: ../src/dialogs/text-edit.cpp:375 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:515 ../src/verbs.cpp:2503
+#: ../src/ui/dialog/inkscape-preferences.cpp:515 ../src/verbs.cpp:2522
 #: ../share/extensions/lorem_ipsum.inx.h:5
 #: ../share/extensions/render_alphabetsoup.inx.h:4
 #: ../share/extensions/text_braille.inx.h:2
@@ -2952,7 +3239,7 @@ msgstr "نص"
 msgid "Set as default"
 msgstr "نظرية المجموعات البديهية"
 
-#: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1494
+#: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1493
 #, fuzzy
 msgid "Set text style"
 msgstr "أسلوب تمريرِ متابعة"
@@ -2988,13 +3275,13 @@ msgid "New text node"
 msgstr "نمط إدخال النصوص"
 
 #: ../src/dialogs/xml-tree.cpp:326 ../src/dialogs/xml-tree.cpp:1409
-#: ../src/nodepath.cpp:2234
+#: ../src/nodepath.cpp:2237
 #, fuzzy
 msgid "Duplicate node"
 msgstr "عقدة حشد"
 
 #: ../src/dialogs/xml-tree.cpp:347 ../src/dialogs/xml-tree.cpp:1426
-#: ../src/nodepath.cpp:3514 ../src/widgets/toolbox.cpp:1300
+#: ../src/nodepath.cpp:3517 ../src/widgets/toolbox.cpp:1300
 #, fuzzy
 msgid "Delete node"
 msgstr "عقدة حشد"
@@ -3461,27 +3748,27 @@ msgid "Unnamed document %d"
 msgstr "مستند جديد"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/draw-context.cpp:582
+#: ../src/draw-context.cpp:581
 msgid "Path is closed."
 msgstr ""
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/draw-context.cpp:597
+#: ../src/draw-context.cpp:596
 #, fuzzy
 msgid "Closing path."
 msgstr "مسار مطلق"
 
-#: ../src/draw-context.cpp:707
+#: ../src/draw-context.cpp:706
 #, fuzzy
 msgid "Draw path"
 msgstr "مسار مطلق"
 
-#: ../src/draw-context.cpp:867
+#: ../src/draw-context.cpp:866
 #, fuzzy
 msgid "Creating single dot"
 msgstr "تسجيل دخول أحادي"
 
-#: ../src/draw-context.cpp:868
+#: ../src/draw-context.cpp:867
 #, fuzzy
 msgid "Create single dot"
 msgstr "تسجيل دخول أحادي"
@@ -3521,44 +3808,44 @@ msgstr ""
 msgid "Set picked color"
 msgstr "نظرية المجموعات البديهية"
 
-#: ../src/dyna-draw-context.cpp:616
+#: ../src/dyna-draw-context.cpp:615
 msgid ""
 "<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
 msgstr ""
 
-#: ../src/dyna-draw-context.cpp:618
+#: ../src/dyna-draw-context.cpp:617
 msgid "<b>Select a guide path</b> to track with <b>Ctrl</b>"
 msgstr ""
 
-#: ../src/dyna-draw-context.cpp:753
+#: ../src/dyna-draw-context.cpp:752
 msgid "Tracking: <b>connection to guide path lost!</b>"
 msgstr ""
 
-#: ../src/dyna-draw-context.cpp:753
+#: ../src/dyna-draw-context.cpp:752
 #, fuzzy
 msgid "<b>Tracking</b> a guide path"
 msgstr "نظام متابعة خلال"
 
-#: ../src/dyna-draw-context.cpp:756
+#: ../src/dyna-draw-context.cpp:755
 msgid "<b>Drawing</b> a calligraphic stroke"
 msgstr ""
 
-#: ../src/dyna-draw-context.cpp:1045
+#: ../src/dyna-draw-context.cpp:1044
 #, fuzzy
 msgid "Draw calligraphic stroke"
 msgstr "إنقر<b>Shift</b> من أجل الرسم إبتداء من نقطة البداية"
 
-#: ../src/eraser-context.cpp:528
+#: ../src/eraser-context.cpp:527
 #, fuzzy
 msgid "<b>Drawing</b> an eraser stroke"
 msgstr "نظام متابعة خلال"
 
-#: ../src/eraser-context.cpp:831
+#: ../src/eraser-context.cpp:830
 #, fuzzy
 msgid "Draw eraser stroke"
 msgstr "إنقر<b>Shift</b> من أجل الرسم إبتداء من نقطة البداية"
 
-#: ../src/event-context.cpp:609
+#: ../src/event-context.cpp:611
 msgid "<b>Space+mouse drag</b> to pan canvas"
 msgstr ""
 
@@ -3568,11 +3855,11 @@ msgid "[Unchanged]"
 msgstr "بدون تغيير"
 
 #. Edit
-#: ../src/event-log.cpp:264 ../src/event-log.cpp:267 ../src/verbs.cpp:2257
+#: ../src/event-log.cpp:264 ../src/event-log.cpp:267 ../src/verbs.cpp:2276
 msgid "_Undo"
 msgstr "تراجع"
 
-#: ../src/event-log.cpp:274 ../src/event-log.cpp:278 ../src/verbs.cpp:2259
+#: ../src/event-log.cpp:274 ../src/event-log.cpp:278 ../src/verbs.cpp:2278
 msgid "_Redo"
 msgstr "إعادة"
 
@@ -3734,6 +4021,7 @@ msgstr "إجابة تكيفية"
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
 #: ../src/widgets/toolbox.cpp:3088 ../src/widgets/toolbox.cpp:4117
 #: ../share/extensions/foldable-box.inx.h:9
+#: ../share/extensions/interp-att-g.inx.h:26
 msgid "Width"
 msgstr "عرض"
 
@@ -3742,12 +4030,13 @@ msgstr "عرض"
 #: ../src/extension/internal/bitmap/sample.cpp:41 ../src/libgdl/gdl-dock.c:198
 #: ../src/libgdl/gdl-dock-placeholder.c:177 ../src/widgets/toolbox.cpp:3105
 #: ../share/extensions/foldable-box.inx.h:4
+#: ../share/extensions/interp-att-g.inx.h:6
 msgid "Height"
 msgstr "إرتفاع"
 
 #. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:97
+#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:95
 #: ../src/live_effects/lpe-offset.cpp:30
 #: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:49
@@ -5067,7 +5356,7 @@ msgstr ""
 msgid "Document exported..."
 msgstr "مستند جديد"
 
-#: ../src/file.cpp:1417 ../src/verbs.cpp:2246
+#: ../src/file.cpp:1417 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr ""
 
@@ -5205,7 +5494,7 @@ msgid "Luminance to Alpha"
 msgstr "تحويل إلى التكرار"
 
 #. File
-#: ../src/filter-enums.cpp:71 ../src/verbs.cpp:2223
+#: ../src/filter-enums.cpp:71 ../src/verbs.cpp:2242
 msgid "Default"
 msgstr "افتراضي"
 
@@ -5281,7 +5570,7 @@ msgstr "لفّ"
 #: ../src/ui/dialog/inkscape-preferences.cpp:415
 #: ../src/ui/dialog/inkscape-preferences.cpp:547
 #: ../src/ui/dialog/inkscape-preferences.cpp:1137
-#: ../src/ui/dialog/inkscape-preferences.cpp:1202 ../src/verbs.cpp:2220
+#: ../src/ui/dialog/inkscape-preferences.cpp:1202 ../src/verbs.cpp:2239
 #: ../src/widgets/stroke-style.cpp:765 ../src/widgets/toolbox.cpp:3880
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
@@ -5414,48 +5703,48 @@ msgstr ""
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
 msgstr ""
 
-#: ../src/gradient-context.cpp:134 ../src/gradient-drag.cpp:75
+#: ../src/gradient-context.cpp:132 ../src/gradient-drag.cpp:75
 #, fuzzy
 msgid "Linear gradient <b>start</b>"
 msgstr "سرعة خطية ثابتة"
 
 #. POINT_LG_BEGIN
-#: ../src/gradient-context.cpp:135 ../src/gradient-drag.cpp:76
+#: ../src/gradient-context.cpp:133 ../src/gradient-drag.cpp:76
 #, fuzzy
 msgid "Linear gradient <b>end</b>"
 msgstr "معالج وسيط للاتصال"
 
-#: ../src/gradient-context.cpp:136 ../src/gradient-drag.cpp:77
+#: ../src/gradient-context.cpp:134 ../src/gradient-drag.cpp:77
 msgid "Linear gradient <b>mid stop</b>"
 msgstr ""
 
-#: ../src/gradient-context.cpp:137 ../src/gradient-drag.cpp:78
+#: ../src/gradient-context.cpp:135 ../src/gradient-drag.cpp:78
 msgid "Radial gradient <b>center</b>"
 msgstr ""
 
-#: ../src/gradient-context.cpp:138 ../src/gradient-context.cpp:139
+#: ../src/gradient-context.cpp:136 ../src/gradient-context.cpp:137
 #: ../src/gradient-drag.cpp:79 ../src/gradient-drag.cpp:80
 msgid "Radial gradient <b>radius</b>"
 msgstr ""
 
-#: ../src/gradient-context.cpp:140 ../src/gradient-drag.cpp:81
+#: ../src/gradient-context.cpp:138 ../src/gradient-drag.cpp:81
 msgid "Radial gradient <b>focus</b>"
 msgstr ""
 
 #. POINT_RG_FOCUS
-#: ../src/gradient-context.cpp:141 ../src/gradient-context.cpp:142
+#: ../src/gradient-context.cpp:139 ../src/gradient-context.cpp:140
 #: ../src/gradient-drag.cpp:82 ../src/gradient-drag.cpp:83
 msgid "Radial gradient <b>mid stop</b>"
 msgstr ""
 
 #. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
-#: ../src/gradient-context.cpp:164
+#: ../src/gradient-context.cpp:162
 #, fuzzy, c-format
 msgid "%s selected"
 msgstr "المترجم الأخير"
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
-#: ../src/gradient-context.cpp:166 ../src/gradient-context.cpp:175
+#: ../src/gradient-context.cpp:164 ../src/gradient-context.cpp:173
 #, fuzzy, c-format
 msgid " out of %d gradient handle"
 msgid_plural " out of %d gradient handles"
@@ -5467,8 +5756,8 @@ msgstr[4] "نقل العقد عموديا"
 msgstr[5] "نقل العقد عموديا"
 
 #. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
-#: ../src/gradient-context.cpp:167 ../src/gradient-context.cpp:176
-#: ../src/gradient-context.cpp:183
+#: ../src/gradient-context.cpp:165 ../src/gradient-context.cpp:174
+#: ../src/gradient-context.cpp:181
 #, fuzzy, c-format
 msgid " on %d selected object"
 msgid_plural " on %d selected objects"
@@ -5476,7 +5765,7 @@ msgstr[0] "<small>لقد تم تحديد أكثر من كائن واحد</small>
 msgstr[1] ""
 
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
-#: ../src/gradient-context.cpp:173
+#: ../src/gradient-context.cpp:171
 #, c-format
 msgid ""
 "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
@@ -5490,7 +5779,7 @@ msgstr[4] ""
 msgstr[5] ""
 
 #. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
-#: ../src/gradient-context.cpp:181
+#: ../src/gradient-context.cpp:179
 #, c-format
 msgid "<b>%d</b> gradient handle selected out of %d"
 msgid_plural "<b>%d</b> gradient handles selected out of %d"
@@ -5502,7 +5791,7 @@ msgstr[4] ""
 msgstr[5] ""
 
 #. TRANSLATORS: The plural refers to number of selected objects
-#: ../src/gradient-context.cpp:188
+#: ../src/gradient-context.cpp:186
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
 msgid_plural ""
@@ -5514,45 +5803,45 @@ msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
 
-#: ../src/gradient-context.cpp:390 ../src/gradient-context.cpp:483
+#: ../src/gradient-context.cpp:388 ../src/gradient-context.cpp:481
 #: ../src/widgets/gradient-vector.cpp:744
 #, fuzzy
 msgid "Add gradient stop"
 msgstr "إيقاف الترجمة التلقائية للنص المحدّد"
 
-#: ../src/gradient-context.cpp:458
+#: ../src/gradient-context.cpp:456
 msgid "Simplify gradient"
 msgstr ""
 
-#: ../src/gradient-context.cpp:535
+#: ../src/gradient-context.cpp:533
 #, fuzzy
 msgid "Create default gradient"
 msgstr "إنشاء صندوق ثلاثي الأبعاد"
 
-#: ../src/gradient-context.cpp:590
+#: ../src/gradient-context.cpp:588
 msgid "<b>Draw around</b> handles to select them"
 msgstr ""
 
-#: ../src/gradient-context.cpp:688
+#: ../src/gradient-context.cpp:686
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr ""
 
-#: ../src/gradient-context.cpp:689
+#: ../src/gradient-context.cpp:687
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr ""
 
-#: ../src/gradient-context.cpp:809
+#: ../src/gradient-context.cpp:807
 msgid "Invert gradient"
 msgstr ""
 
-#: ../src/gradient-context.cpp:926
+#: ../src/gradient-context.cpp:924
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-context.cpp:930
+#: ../src/gradient-context.cpp:928
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr ""
 
@@ -5623,6 +5912,7 @@ msgstr "إيقاف الترجمة التلقائية للنص المحدّد"
 
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-path_length.cpp:27
 #: ../share/extensions/foldable-box.inx.h:8
+#: ../share/extensions/interp-att-g.inx.h:24
 #: ../share/extensions/printing-marks.inx.h:20
 msgid "Unit"
 msgstr "الواحدة"
@@ -5790,141 +6080,141 @@ msgstr "سابق"
 msgid "Ex squares"
 msgstr ""
 
-#: ../src/inkscape.cpp:322
+#: ../src/inkscape.cpp:323
 #, fuzzy
 msgid "Autosaving documents..."
 msgstr "مستند جديد"
 
-#: ../src/inkscape.cpp:393
+#: ../src/inkscape.cpp:394
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr ""
 
-#: ../src/inkscape.cpp:396 ../src/inkscape.cpp:403
+#: ../src/inkscape.cpp:397 ../src/inkscape.cpp:404
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr ""
 
-#: ../src/inkscape.cpp:418
+#: ../src/inkscape.cpp:419
 msgid "Autosave complete."
 msgstr ""
 
-#: ../src/inkscape.cpp:637
+#: ../src/inkscape.cpp:650
 msgid "Untitled document"
 msgstr "مستند جديد"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:667
+#: ../src/inkscape.cpp:680
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr ""
 
-#: ../src/inkscape.cpp:668
+#: ../src/inkscape.cpp:681
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr ""
 
-#: ../src/inkscape.cpp:669
+#: ../src/inkscape.cpp:682
 msgid "Automatic backup of the following documents failed:\n"
 msgstr ""
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:821
+#: ../src/interface.cpp:823
 #, fuzzy
 msgid "Commands Bar"
 msgstr "شريط القائمة"
 
-#: ../src/interface.cpp:821
+#: ../src/interface.cpp:823
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr ""
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:825
 #, fuzzy
-msgid "Snap controls Bar"
+msgid "Snap Controls Bar"
 msgstr "عضّ خارج"
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:825
 msgid "Show or hide the snapping controls"
 msgstr ""
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:827
 msgid "Tool Controls Bar"
 msgstr ""
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:827
 msgid "Show or hide the Tool Controls bar"
 msgstr ""
 
-#: ../src/interface.cpp:827
+#: ../src/interface.cpp:829
 msgid "_Toolbox"
 msgstr "صندوق الأداوت"
 
-#: ../src/interface.cpp:827
+#: ../src/interface.cpp:829
 msgid "Show or hide the main toolbox (on the left)"
 msgstr ""
 
-#: ../src/interface.cpp:833
+#: ../src/interface.cpp:835
 msgid "_Palette"
 msgstr "لوحة الألوان"
 
-#: ../src/interface.cpp:833
+#: ../src/interface.cpp:835
 msgid "Show or hide the color palette"
 msgstr ""
 
-#: ../src/interface.cpp:835
+#: ../src/interface.cpp:837
 msgid "_Statusbar"
 msgstr "شريط الحالة"
 
-#: ../src/interface.cpp:835
+#: ../src/interface.cpp:837
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr ""
 
-#: ../src/interface.cpp:905
+#: ../src/interface.cpp:907
 #, fuzzy, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "تجميد"
 
-#: ../src/interface.cpp:944
+#: ../src/interface.cpp:946
 #, fuzzy
 msgid "Open _Recent"
 msgstr "مصدر مفتوح"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1045
+#: ../src/interface.cpp:1047
 #, fuzzy, c-format
 msgid "Enter group #%s"
 msgstr "مجموعة أخبار"
 
-#: ../src/interface.cpp:1056
+#: ../src/interface.cpp:1058
 #, fuzzy
 msgid "Go to parent"
 msgstr "تصفح موقع البرنامج"
 
-#: ../src/interface.cpp:1147 ../src/interface.cpp:1233
-#: ../src/interface.cpp:1315 ../src/ui/widget/selected-style.cpp:468
+#: ../src/interface.cpp:1149 ../src/interface.cpp:1235
+#: ../src/interface.cpp:1338 ../src/ui/widget/selected-style.cpp:468
 #, fuzzy
 msgid "Drop color"
 msgstr "مخيِّر ألوان"
 
-#: ../src/interface.cpp:1186 ../src/interface.cpp:1275
+#: ../src/interface.cpp:1188 ../src/interface.cpp:1298
 msgid "Drop color on gradient"
 msgstr ""
 
-#: ../src/interface.cpp:1328
+#: ../src/interface.cpp:1351
 msgid "Could not parse SVG data"
 msgstr ""
 
-#: ../src/interface.cpp:1371
+#: ../src/interface.cpp:1394
 #, fuzzy
 msgid "Drop SVG"
 msgstr "قائمة منسدلة"
 
-#: ../src/interface.cpp:1427
+#: ../src/interface.cpp:1450
 #, fuzzy
 msgid "Drop bitmap image"
 msgstr "<big><b>قياس الصورة</b></big>"
 
-#: ../src/interface.cpp:1519
+#: ../src/interface.cpp:1542
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -5933,7 +6223,8 @@ msgid ""
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
 
-#: ../src/interface.cpp:1526
+#: ../src/interface.cpp:1549 ../share/extensions/web-set-att.inx.h:4
+#: ../share/extensions/web-transmit-att.inx.h:4
 msgid "Replace"
 msgstr "إستبدال"
 
@@ -6026,7 +6317,7 @@ msgstr ""
 msgid "Inkboard session (%1 to %2)"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/knot.cpp:432
+#: ../src/knot.cpp:438
 msgid "Node or handle drag canceled."
 msgstr ""
 
@@ -6292,7 +6583,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:914
 #: ../src/ui/dialog/document-properties.cpp:119
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1561
+#: ../src/widgets/desktop-widget.cpp:1562
 msgid "Page"
 msgstr "صفحة"
 
@@ -6497,112 +6788,112 @@ msgstr "ضربة المفتاح"
 
 #: ../src/live_effects/effect.cpp:91
 #, fuzzy
-msgid "Envelope Deformation"
-msgstr "معلومات"
-
-#: ../src/live_effects/effect.cpp:92
-msgid "Hatches (rough)"
-msgstr ""
-
-#: ../src/live_effects/effect.cpp:93
-#, fuzzy
 msgid "Interpolate Sub-Paths"
 msgstr "حرّف"
 
-#: ../src/live_effects/effect.cpp:94
+#: ../src/live_effects/effect.cpp:92
 #, fuzzy
 msgid "Lattice Deformation"
 msgstr "نوع مُجمَل"
 
-#: ../src/live_effects/effect.cpp:95
+#: ../src/live_effects/effect.cpp:93
 #, fuzzy
 msgid "Line Segment"
 msgstr "سطر مَخبأ"
 
-#: ../src/live_effects/effect.cpp:96
+#: ../src/live_effects/effect.cpp:94
 msgid "Mirror symmetry"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:96
 #, fuzzy
 msgid "Parallel"
 msgstr "توزيع طبيعى"
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:97
 #, fuzzy
 msgid "Path length"
 msgstr "طول الموجة"
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:98
 msgid "Perpendicular bisector"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:99
 #, fuzzy
 msgid "Perspective path"
 msgstr "المنظور"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:100
 #, fuzzy
 msgid "Rotate copies"
 msgstr "نقل العقد"
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:101
 #, fuzzy
 msgid "Ruler"
 msgstr "الحكّام"
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:102
 #, fuzzy
 msgid "Sketch"
 msgstr "المجموعة"
 
-#: ../src/live_effects/effect.cpp:105
+#: ../src/live_effects/effect.cpp:103
 #, fuzzy
 msgid "Tangent to curve"
 msgstr "منحنى جرسي"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:104
 #, fuzzy
 msgid "Text label"
 msgstr "برمجة موجة للكائنات"
 
-#: ../src/live_effects/effect.cpp:107
-msgid "VonKoch"
-msgstr ""
-
 #. 0.46
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:107
 #, fuzzy
 msgid "Bend"
 msgstr "الخليط"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:108
 #, fuzzy
 msgid "Gears"
 msgstr "التروس"
 
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:109
 msgid "Pattern Along Path"
 msgstr ""
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:113
+#: ../src/live_effects/effect.cpp:110
 msgid "Stitch Sub-Paths"
 msgstr ""
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:112
+msgid "VonKoch"
+msgstr ""
+
+#: ../src/live_effects/effect.cpp:113
 msgid "Knot"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:114
 #, fuzzy
 msgid "Construct grid"
 msgstr "مساهمون"
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:115
 msgid "Spiro spline"
+msgstr ""
+
+#: ../src/live_effects/effect.cpp:116
+#, fuzzy
+msgid "Envelope Deformation"
+msgstr "معلومات"
+
+#: ../src/live_effects/effect.cpp:117
+msgid "Hatches (rough)"
 msgstr ""
 
 #: ../src/live_effects/effect.cpp:267
@@ -7136,58 +7427,58 @@ msgid ""
 msgstr ""
 
 #. initialise your parameters here:
-#: ../src/live_effects/lpe-knot.cpp:320
+#: ../src/live_effects/lpe-knot.cpp:323
 #, fuzzy
 msgid "Interruption width"
 msgstr "طريقة مجردة"
 
-#: ../src/live_effects/lpe-knot.cpp:320
+#: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:321
+#: ../src/live_effects/lpe-knot.cpp:324
 #, fuzzy
 msgid "unit of stroke width"
 msgstr "عرض ثابت"
 
-#: ../src/live_effects/lpe-knot.cpp:321
+#: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width."
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:322
+#: ../src/live_effects/lpe-knot.cpp:325
 msgid "add stroke width to interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:322
+#: ../src/live_effects/lpe-knot.cpp:325
 msgid "Add the stroke width to the interruption size."
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:326
 msgid "add other's stroke width to interruption size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:323
+#: ../src/live_effects/lpe-knot.cpp:326
 msgid "Add crossed stroke width to the interruption size."
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:327
 #, fuzzy
 msgid "Switcher size"
 msgstr "لصق نص"
 
-#: ../src/live_effects/lpe-knot.cpp:324
+#: ../src/live_effects/lpe-knot.cpp:327
 msgid "Orientation indicator/switcher size"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:325
+#: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossing Signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:325
+#: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossings signs"
 msgstr ""
 
-#: ../src/live_effects/lpe-knot.cpp:336
+#: ../src/live_effects/lpe-knot.cpp:339
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
 
@@ -7346,9 +7637,10 @@ msgid "Adjust the \"right\" end of the parallel"
 msgstr "تحرير شيفرة HTML الخاصة بالتعليق"
 
 #: ../src/live_effects/lpe-path_length.cpp:25
-#: ../src/live_effects/lpe-sketch.cpp:53 ../src/selection-chemistry.cpp:1511
+#: ../src/live_effects/lpe-sketch.cpp:53 ../src/selection-chemistry.cpp:1512
 #: ../src/seltrans.cpp:481 ../src/ui/dialog/filter-effects-dialog.cpp:2207
 #: ../src/ui/dialog/transformation.cpp:738
+#: ../share/extensions/interp-att-g.inx.h:16
 msgid "Scale"
 msgstr "مقياس"
 
@@ -7535,177 +7827,177 @@ msgstr ""
 msgid "Adjust the origin"
 msgstr "النصف يعدّل"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:254
+#: ../src/live_effects/lpe-rough-hatches.cpp:225
 msgid "Hatches width and dir"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:254
+#: ../src/live_effects/lpe-rough-hatches.cpp:225
 msgid "Defines hatches frequency and direction"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:255
+#: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:255
+#: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Variation of dist between hatches, in %."
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:256
+#: ../src/live_effects/lpe-rough-hatches.cpp:227
 #, fuzzy
 msgid "Growth"
 msgstr "جذر"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:256
+#: ../src/live_effects/lpe-rough-hatches.cpp:227
 msgid "Growth of distance between hatches."
 msgstr ""
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
-#: ../src/live_effects/lpe-rough-hatches.cpp:258
+#: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Half turns smoothness: 1st side, in"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:258
+#: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, "
 "1=default"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:259
+#: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "1st side, out"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:259
+#: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, "
 "1=default"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:260
+#: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "2nd side, in "
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:260
+#: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid ""
 "Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, "
 "1=default"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:261
+#: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "2nd side, out"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:261
+#: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid ""
 "Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, "
 "1=default"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:262
+#: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "variance: 1st side"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:262
+#: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomness of 'bottom' halfturns smoothness"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:263
-#: ../src/live_effects/lpe-rough-hatches.cpp:266
-#: ../src/live_effects/lpe-rough-hatches.cpp:268
+#: ../src/live_effects/lpe-rough-hatches.cpp:234
+#: ../src/live_effects/lpe-rough-hatches.cpp:237
+#: ../src/live_effects/lpe-rough-hatches.cpp:239
 #, fuzzy
 msgid "2nd side"
 msgstr "عقدة حشد"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:263
+#: ../src/live_effects/lpe-rough-hatches.cpp:234
 msgid "Randomness of 'top' halfturns smoothness"
 msgstr ""
 
 #.
-#: ../src/live_effects/lpe-rough-hatches.cpp:265
+#: ../src/live_effects/lpe-rough-hatches.cpp:236
 msgid "Magnitude jitter: 1st side"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:265
+#: ../src/live_effects/lpe-rough-hatches.cpp:236
 msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:266
+#: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:267
+#: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "Parallelism jitter: 1st side"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:267
+#: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid ""
 "Add direction randomness by moving 'bottom' halfsturns tangentially to the "
 "boundary."
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:268
+#: ../src/live_effects/lpe-rough-hatches.cpp:239
 msgid ""
 "Add direction randomness by randomly moving 'top' halfsturns tangentially to "
 "the boundary."
 msgstr ""
 
 #.
-#: ../src/live_effects/lpe-rough-hatches.cpp:270
+#: ../src/live_effects/lpe-rough-hatches.cpp:241
 #, fuzzy
 msgid "Bend hatches"
 msgstr "مسار مطلق"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:270
+#: ../src/live_effects/lpe-rough-hatches.cpp:241
 msgid "Add a global bend to the hatches (slower)"
 msgstr ""
 
 #. bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
-#: ../src/live_effects/lpe-rough-hatches.cpp:272
+#: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "Global bending"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:272
+#: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid ""
 "Relative position to ref point defines global bending direction and amount"
 msgstr ""
 
 #.
-#: ../src/live_effects/lpe-rough-hatches.cpp:274
+#: ../src/live_effects/lpe-rough-hatches.cpp:245
 #, fuzzy
 msgid "Generate thick/thin path"
 msgstr "إنشاء أداة توصيل جديدة"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:274
+#: ../src/live_effects/lpe-rough-hatches.cpp:245
 #, fuzzy
 msgid "Simulate a stroke of varrying width"
 msgstr "أكبر عرض للنافذة"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:275
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "Thikness: at 1st side"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:275
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "Width at 'bottom' half turns"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:276
+#: ../src/live_effects/lpe-rough-hatches.cpp:247
 msgid "at 2nd side"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:276
+#: ../src/live_effects/lpe-rough-hatches.cpp:247
 msgid "Width at 'top' halfturns"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:277
+#: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "from 2nd to 1st side"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:277
-#: ../src/live_effects/lpe-rough-hatches.cpp:278
+#: ../src/live_effects/lpe-rough-hatches.cpp:248
+#: ../src/live_effects/lpe-rough-hatches.cpp:249
 msgid "Width of paths from 'top' to 'bottom' halfturns"
 msgstr ""
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:278
+#: ../src/live_effects/lpe-rough-hatches.cpp:249
 msgid "from 1st to 2nd side"
 msgstr ""
 
@@ -8082,7 +8374,7 @@ msgstr "مراسم نقطة الى نقطة"
 msgid "Change random parameter"
 msgstr ""
 
-#: ../src/live_effects/parameter/text.cpp:100
+#: ../src/live_effects/parameter/text.cpp:101
 #, fuzzy
 msgid "Change text parameter"
 msgstr "مراسم نقطة الى نقطة"
@@ -8092,7 +8384,7 @@ msgstr "مراسم نقطة الى نقطة"
 msgid "Change unit parameter"
 msgstr "مراسم نقطة الى نقطة"
 
-#: ../src/lpe-tool-context.cpp:272
+#: ../src/lpe-tool-context.cpp:273
 msgid "Choose a construction tool from the toolbar."
 msgstr ""
 
@@ -8322,7 +8614,7 @@ msgstr "معرف التطبيق"
 msgid "Start Inkscape in interative shell mode."
 msgstr ""
 
-#: ../src/main.cpp:756 ../src/main.cpp:993
+#: ../src/main.cpp:756 ../src/main.cpp:1043
 #, fuzzy
 msgid ""
 "[OPTIONS...] [FILE...]\n"
@@ -8342,11 +8634,11 @@ msgstr "جديد"
 
 #. TODO look at some dynamic option for changing the menu tree:
 #. "       <verb verb-id=\"DialogInput2\" />\n"
-#: ../src/menus-skeleton.h:49 ../src/verbs.cpp:2469 ../src/verbs.cpp:2475
+#: ../src/menus-skeleton.h:49 ../src/verbs.cpp:2488 ../src/verbs.cpp:2494
 msgid "_Edit"
 msgstr "تحرير"
 
-#: ../src/menus-skeleton.h:59 ../src/verbs.cpp:2269
+#: ../src/menus-skeleton.h:59 ../src/verbs.cpp:2288
 msgid "Paste Si_ze"
 msgstr ""
 
@@ -8396,161 +8688,156 @@ msgstr "نموذج"
 msgid "_Path"
 msgstr "مسار"
 
-#: ../src/menus-skeleton.h:221
-#, fuzzy
-msgid "Path Effects"
-msgstr "مسار مطلق"
-
-#: ../src/menus-skeleton.h:227
+#: ../src/menus-skeleton.h:225
 msgid "_Text"
 msgstr "نص"
 
-#: ../src/menus-skeleton.h:246
+#: ../src/menus-skeleton.h:244
 #, fuzzy
 msgid "Filter_s"
 msgstr "مرشحات الفرز"
 
-#: ../src/menus-skeleton.h:252
+#: ../src/menus-skeleton.h:250
 #, fuzzy
 msgid "Exte_nsions"
 msgstr "إمتداد"
 
-#: ../src/menus-skeleton.h:259
+#: ../src/menus-skeleton.h:257
 msgid "Whiteboa_rd"
 msgstr "دردشة"
 
-#: ../src/menus-skeleton.h:263
+#: ../src/menus-skeleton.h:261
 msgid "_Help"
 msgstr "مساعدة"
 
-#: ../src/menus-skeleton.h:267
+#: ../src/menus-skeleton.h:265
 msgid "Tutorials"
 msgstr "تمرينات"
 
-#: ../src/node-context.cpp:227
+#: ../src/node-context.cpp:223
 msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
 msgstr ""
 
-#: ../src/node-context.cpp:228
+#: ../src/node-context.cpp:224
 msgid ""
 "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 
-#: ../src/node-context.cpp:229
+#: ../src/node-context.cpp:225
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 
-#: ../src/nodepath.cpp:750 ../src/seltrans.cpp:574
+#: ../src/nodepath.cpp:753 ../src/seltrans.cpp:574
 #, fuzzy
 msgid "Stamp"
 msgstr "الطابع"
 
-#: ../src/nodepath.cpp:1656 ../src/nodepath.cpp:1682
+#: ../src/nodepath.cpp:1659 ../src/nodepath.cpp:1685
 msgid "Move nodes vertically"
 msgstr "نقل العقد عموديا"
 
-#: ../src/nodepath.cpp:1658 ../src/nodepath.cpp:1684
+#: ../src/nodepath.cpp:1661 ../src/nodepath.cpp:1687
 msgid "Move nodes horizontally"
 msgstr "نقل العقد أفقيا"
 
-#: ../src/nodepath.cpp:1660 ../src/nodepath.cpp:1686 ../src/nodepath.cpp:1701
-#: ../src/nodepath.cpp:3612
+#: ../src/nodepath.cpp:1663 ../src/nodepath.cpp:1689 ../src/nodepath.cpp:1704
+#: ../src/nodepath.cpp:3615
 msgid "Move nodes"
 msgstr "نقل العقد"
 
-#: ../src/nodepath.cpp:1739
+#: ../src/nodepath.cpp:1742
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
 msgstr ""
 
-#: ../src/nodepath.cpp:1909
+#: ../src/nodepath.cpp:1912
 msgid "Align nodes"
 msgstr "محاذاة النقط"
 
-#: ../src/nodepath.cpp:1971
+#: ../src/nodepath.cpp:1974
 msgid "Distribute nodes"
 msgstr "توزيع النقط"
 
-#: ../src/nodepath.cpp:2009
+#: ../src/nodepath.cpp:2012
 msgid "Add nodes"
 msgstr "اضافة نقاط"
 
-#: ../src/nodepath.cpp:2011 ../src/nodepath.cpp:2113
+#: ../src/nodepath.cpp:2014 ../src/nodepath.cpp:2116
 msgid "Add node"
 msgstr "اضافة نقطة"
 
-#: ../src/nodepath.cpp:2205
+#: ../src/nodepath.cpp:2208
 #, fuzzy
 msgid "Break path"
 msgstr "مسار مطلق"
 
-#: ../src/nodepath.cpp:2261
+#: ../src/nodepath.cpp:2264
 msgid "Close subpath"
 msgstr "اغلاق المسار الفرعي"
 
-#: ../src/nodepath.cpp:2322
+#: ../src/nodepath.cpp:2325
 msgid "Join nodes"
 msgstr "ربط العقد"
 
-#: ../src/nodepath.cpp:2349
+#: ../src/nodepath.cpp:2352
 msgid "Close subpath by segment"
 msgstr "اغلاق المسار الفرعي بقطعة مستقيمة"
 
-#: ../src/nodepath.cpp:2403
+#: ../src/nodepath.cpp:2406
 msgid "Join nodes by segment"
 msgstr "ربط العقد بقطعة مستقيمة"
 
-#: ../src/nodepath.cpp:2416 ../src/nodepath.cpp:2431
+#: ../src/nodepath.cpp:2419 ../src/nodepath.cpp:2434
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr ""
 
-#: ../src/nodepath.cpp:2588 ../src/nodepath.cpp:2624 ../src/nodepath.cpp:2628
+#: ../src/nodepath.cpp:2591 ../src/nodepath.cpp:2627 ../src/nodepath.cpp:2631
 msgid "Delete nodes"
 msgstr "حذف العقد"
 
-#: ../src/nodepath.cpp:2590
+#: ../src/nodepath.cpp:2593
 msgid "Delete nodes preserving shape"
 msgstr ""
 
-#: ../src/nodepath.cpp:2647 ../src/nodepath.cpp:2661
+#: ../src/nodepath.cpp:2650 ../src/nodepath.cpp:2664
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
 msgstr ""
 
-#: ../src/nodepath.cpp:2757
+#: ../src/nodepath.cpp:2760
 msgid "Cannot find path between nodes."
 msgstr ""
 
-#: ../src/nodepath.cpp:2789 ../src/widgets/toolbox.cpp:1343
+#: ../src/nodepath.cpp:2792 ../src/widgets/toolbox.cpp:1343
 #, fuzzy
 msgid "Delete segment"
 msgstr "قطعة شفرة"
 
-#: ../src/nodepath.cpp:2810
+#: ../src/nodepath.cpp:2813
 #, fuzzy
 msgid "Change segment type"
 msgstr "نوع بيانات مجرد"
 
-#: ../src/nodepath.cpp:2827 ../src/nodepath.cpp:3564
+#: ../src/nodepath.cpp:2830 ../src/nodepath.cpp:3567
 #, fuzzy
 msgid "Change node type"
 msgstr "نوع بيانات مجرد"
 
-#: ../src/nodepath.cpp:3858
+#: ../src/nodepath.cpp:3861
 #, fuzzy
 msgid "Retract handle"
 msgstr "مقبض"
 
-#: ../src/nodepath.cpp:3913
+#: ../src/nodepath.cpp:3916
 #, fuzzy
 msgid "Move node handle"
 msgstr "نقل العقد عموديا"
 
-#: ../src/nodepath.cpp:4098
+#: ../src/nodepath.cpp:4101
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -8558,87 +8845,87 @@ msgid ""
 "handles"
 msgstr ""
 
-#: ../src/nodepath.cpp:4292
+#: ../src/nodepath.cpp:4295
 #, fuzzy
 msgid "Rotate nodes"
 msgstr "نقل العقد"
 
-#: ../src/nodepath.cpp:4407
+#: ../src/nodepath.cpp:4410
 msgid "Cannot scale nodes when all are at the same location."
 msgstr ""
 
-#: ../src/nodepath.cpp:4433
+#: ../src/nodepath.cpp:4436
 #, fuzzy
 msgid "Scale nodes"
 msgstr "نقل العقد"
 
-#: ../src/nodepath.cpp:4477
+#: ../src/nodepath.cpp:4480
 #, fuzzy
 msgid "Flip nodes"
 msgstr "نقل العقد"
 
-#: ../src/nodepath.cpp:4646
+#: ../src/nodepath.cpp:4649
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
 msgstr ""
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4879
+#: ../src/nodepath.cpp:4882
 #, fuzzy
 msgid "end node"
 msgstr "عقدة حشد"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4884
+#: ../src/nodepath.cpp:4887
 #, fuzzy
 msgid "cusp"
 msgstr "القمة"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4887
+#: ../src/nodepath.cpp:4890
 msgid "smooth"
 msgstr "ناعم"
 
-#: ../src/nodepath.cpp:4889
+#: ../src/nodepath.cpp:4892
 #, fuzzy
 msgid "auto"
 msgstr "محاذاة"
 
-#: ../src/nodepath.cpp:4891
+#: ../src/nodepath.cpp:4894
 #, fuzzy
 msgid "symmetric"
 msgstr "متماثل"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4897
+#: ../src/nodepath.cpp:4900
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4899
+#: ../src/nodepath.cpp:4902
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4902
+#: ../src/nodepath.cpp:4905
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4914
+#: ../src/nodepath.cpp:4917
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
 "rotate"
 msgstr ""
 
-#: ../src/nodepath.cpp:4915
+#: ../src/nodepath.cpp:4918
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 
-#: ../src/nodepath.cpp:4941 ../src/nodepath.cpp:4953
+#: ../src/nodepath.cpp:4944 ../src/nodepath.cpp:4956
 msgid "Select a single object to edit its nodes or handles."
 msgstr ""
 
-#: ../src/nodepath.cpp:4945
+#: ../src/nodepath.cpp:4948
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -8649,18 +8936,18 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/nodepath.cpp:4951
+#: ../src/nodepath.cpp:4954
 msgid "Drag the handles of the object to modify it."
 msgstr ""
 
-#: ../src/nodepath.cpp:4959
+#: ../src/nodepath.cpp:4962
 #, fuzzy, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "عقدة حشد"
 msgstr[1] ""
 
-#: ../src/nodepath.cpp:4966
+#: ../src/nodepath.cpp:4969
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -8669,101 +8956,101 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/nodepath.cpp:4972
+#: ../src/nodepath.cpp:4975
 #, fuzzy, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
 msgstr[0] "عقدة حشد"
 msgstr[1] ""
 
-#: ../src/object-edit.cpp:408
+#: ../src/object-edit.cpp:439
 msgid ""
 "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the "
 "vertical radius the same"
 msgstr ""
 
-#: ../src/object-edit.cpp:412
+#: ../src/object-edit.cpp:443
 msgid ""
 "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the "
 "horizontal radius the same"
 msgstr ""
 
-#: ../src/object-edit.cpp:416 ../src/object-edit.cpp:420
+#: ../src/object-edit.cpp:447 ../src/object-edit.cpp:451
 msgid ""
-"Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b>to lock "
-"ratio or stretch in one dimension only"
+"Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to "
+"lock ratio or stretch in one dimension only"
 msgstr ""
 
-#: ../src/object-edit.cpp:654 ../src/object-edit.cpp:657
-#: ../src/object-edit.cpp:660 ../src/object-edit.cpp:663
+#: ../src/object-edit.cpp:685 ../src/object-edit.cpp:688
+#: ../src/object-edit.cpp:691 ../src/object-edit.cpp:694
 msgid ""
 "Resize box in X/Y direction; with <b>Shift</b> along the Z axis; with "
 "<b>Ctrl</b> to constrain to the directions of edges or diagonals"
 msgstr ""
 
-#: ../src/object-edit.cpp:666 ../src/object-edit.cpp:669
-#: ../src/object-edit.cpp:672 ../src/object-edit.cpp:675
+#: ../src/object-edit.cpp:697 ../src/object-edit.cpp:700
+#: ../src/object-edit.cpp:703 ../src/object-edit.cpp:706
 msgid ""
 "Resize box along the Z axis; with <b>Shift</b> in X/Y direction; with "
 "<b>Ctrl</b> to constrain to the directions of edges or diagonals"
 msgstr ""
 
-#: ../src/object-edit.cpp:678
+#: ../src/object-edit.cpp:709
 msgid "Move the box in perspective"
 msgstr ""
 
-#: ../src/object-edit.cpp:896
+#: ../src/object-edit.cpp:927
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
 msgstr ""
 
-#: ../src/object-edit.cpp:899
+#: ../src/object-edit.cpp:930
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr ""
 
-#: ../src/object-edit.cpp:902
+#: ../src/object-edit.cpp:933
 msgid ""
 "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b>to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
 
-#: ../src/object-edit.cpp:906
+#: ../src/object-edit.cpp:937
 msgid ""
 "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
 
-#: ../src/object-edit.cpp:1045
+#: ../src/object-edit.cpp:1076
 msgid ""
 "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to "
 "round; with <b>Alt</b> to randomize"
 msgstr ""
 
-#: ../src/object-edit.cpp:1052
+#: ../src/object-edit.cpp:1083
 msgid ""
 "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star "
 "rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to "
 "randomize"
 msgstr ""
 
-#: ../src/object-edit.cpp:1235
+#: ../src/object-edit.cpp:1266
 msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
 msgstr ""
 
-#: ../src/object-edit.cpp:1238
+#: ../src/object-edit.cpp:1269
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate"
 msgstr ""
 
-#: ../src/object-edit.cpp:1282
+#: ../src/object-edit.cpp:1313
 msgid "Adjust the <b>offset distance</b>"
 msgstr ""
 
-#: ../src/object-edit.cpp:1318
+#: ../src/object-edit.cpp:1349
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr ""
 
@@ -8775,63 +9062,63 @@ msgstr ""
 msgid "Combining paths..."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:160
+#: ../src/path-chemistry.cpp:161
 #, fuzzy
 msgid "Combine"
 msgstr "تأليف بين"
 
-#: ../src/path-chemistry.cpp:167
+#: ../src/path-chemistry.cpp:168
 msgid "<b>No path(s)</b> to combine in the selection."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:179
+#: ../src/path-chemistry.cpp:180
 msgid "Select <b>path(s)</b> to break apart."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:183
+#: ../src/path-chemistry.cpp:184
 msgid "Breaking apart paths..."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:269
+#: ../src/path-chemistry.cpp:271
 #, fuzzy
 msgid "Break apart"
 msgstr "فكّك"
 
-#: ../src/path-chemistry.cpp:271
+#: ../src/path-chemistry.cpp:273
 msgid "<b>No path(s)</b> to break apart in the selection."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:283
+#: ../src/path-chemistry.cpp:285
 msgid "Select <b>object(s)</b> to convert to path."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:289
+#: ../src/path-chemistry.cpp:291
 msgid "Converting objects to paths..."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:311
+#: ../src/path-chemistry.cpp:313
 #, fuzzy
 msgid "Object to path"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/path-chemistry.cpp:313
+#: ../src/path-chemistry.cpp:315
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:550
+#: ../src/path-chemistry.cpp:552
 msgid "Select <b>path(s)</b> to reverse."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:559
+#: ../src/path-chemistry.cpp:561
 msgid "Reversing paths..."
 msgstr ""
 
-#: ../src/path-chemistry.cpp:586
+#: ../src/path-chemistry.cpp:588
 #, fuzzy
 msgid "Reverse path"
 msgstr "مسار مطلق"
 
-#: ../src/path-chemistry.cpp:588
+#: ../src/path-chemistry.cpp:590
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
@@ -8867,7 +9154,7 @@ msgstr ""
 msgid "Finishing freehand"
 msgstr "إنهاء أداة التوصيل"
 
-#: ../src/pencil-context.cpp:515 ../src/pen-context.cpp:255
+#: ../src/pencil-context.cpp:515 ../src/pen-context.cpp:253
 msgid "Drawing cancelled"
 msgstr ""
 
@@ -9232,42 +9519,42 @@ msgstr ""
 msgid "Create rectangle"
 msgstr "إنشاء قطع ناقص"
 
-#: ../src/select-context.cpp:232
+#: ../src/select-context.cpp:233
 #, fuzzy
 msgid "Move canceled."
 msgstr "نقل خط الإرشاد\t"
 
-#: ../src/select-context.cpp:240
+#: ../src/select-context.cpp:241
 #, fuzzy
 msgid "Selection canceled."
 msgstr "أختيار المجال"
 
-#: ../src/select-context.cpp:555
+#: ../src/select-context.cpp:561
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:557
+#: ../src/select-context.cpp:563
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
 msgstr ""
 
-#: ../src/select-context.cpp:717
+#: ../src/select-context.cpp:726
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
 
-#: ../src/select-context.cpp:718
+#: ../src/select-context.cpp:727
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:719
+#: ../src/select-context.cpp:728
 msgid ""
 "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
 
-#: ../src/select-context.cpp:890
+#: ../src/select-context.cpp:899
 msgid "Selected object is not a group. Cannot enter."
 msgstr ""
 
@@ -9281,8 +9568,9 @@ msgstr "نص جديد"
 msgid "<b>Nothing</b> was deleted."
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
-#: ../src/selection-chemistry.cpp:219 ../src/text-context.cpp:999
-#: ../src/widgets/toolbox.cpp:1304 ../src/widgets/toolbox.cpp:5745
+#: ../src/selection-chemistry.cpp:219 ../src/text-context.cpp:998
+#: ../src/ui/dialog/swatches.cpp:466 ../src/widgets/toolbox.cpp:1304
+#: ../src/widgets/toolbox.cpp:5745
 msgid "Delete"
 msgstr "حذف"
 
@@ -9382,272 +9670,272 @@ msgstr "لصق نص"
 msgid "Paste live path effect"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:986
+#: ../src/selection-chemistry.cpp:987
 msgid "Select <b>object(s)</b> to remove live path effects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:998
+#: ../src/selection-chemistry.cpp:999
 #, fuzzy
 msgid "Remove live path effect"
 msgstr "تخطيط سببي مسببي"
 
-#: ../src/selection-chemistry.cpp:1009
+#: ../src/selection-chemistry.cpp:1010
 msgid "Select <b>object(s)</b> to remove filters from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1019
+#: ../src/selection-chemistry.cpp:1020
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1334
 #, fuzzy
 msgid "Remove filter"
 msgstr "مرشح بريد"
 
-#: ../src/selection-chemistry.cpp:1028
+#: ../src/selection-chemistry.cpp:1029
 #, fuzzy
 msgid "Paste size"
 msgstr "حجم كلمة"
 
-#: ../src/selection-chemistry.cpp:1036
+#: ../src/selection-chemistry.cpp:1037
 #, fuzzy
 msgid "Paste size separately"
 msgstr "<big><b>قياس الصورة</b></big>"
 
-#: ../src/selection-chemistry.cpp:1045
+#: ../src/selection-chemistry.cpp:1046
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1071
+#: ../src/selection-chemistry.cpp:1072
 msgid "Raise to next layer"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1078
+#: ../src/selection-chemistry.cpp:1079
 msgid "No more layers above."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1090
+#: ../src/selection-chemistry.cpp:1091
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1116
+#: ../src/selection-chemistry.cpp:1117
 msgid "Lower to previous layer"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1123
+#: ../src/selection-chemistry.cpp:1124
 msgid "No more layers below."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1310
+#: ../src/selection-chemistry.cpp:1311
 msgid "Remove transform"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1413
+#: ../src/selection-chemistry.cpp:1414
 msgid "Rotate 90&#176; CCW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1413
+#: ../src/selection-chemistry.cpp:1414
 msgid "Rotate 90&#176; CW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1434 ../src/seltrans.cpp:484
+#: ../src/selection-chemistry.cpp:1435 ../src/seltrans.cpp:484
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "تدوير"
 
-#: ../src/selection-chemistry.cpp:1481
+#: ../src/selection-chemistry.cpp:1482
 #, fuzzy
 msgid "Rotate by pixels"
 msgstr "نداء بالاسم"
 
-#: ../src/selection-chemistry.cpp:1536
+#: ../src/selection-chemistry.cpp:1537
 msgid "Scale by whole factor"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1551
+#: ../src/selection-chemistry.cpp:1552
 #, fuzzy
 msgid "Move vertically"
 msgstr "نقل العقد عموديا"
 
-#: ../src/selection-chemistry.cpp:1554
+#: ../src/selection-chemistry.cpp:1555
 #, fuzzy
 msgid "Move horizontally"
 msgstr "نقل العقد أفقيا"
 
-#: ../src/selection-chemistry.cpp:1557 ../src/selection-chemistry.cpp:1583
+#: ../src/selection-chemistry.cpp:1558 ../src/selection-chemistry.cpp:1584
 #: ../src/seltrans.cpp:478 ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "تحريك"
 
-#: ../src/selection-chemistry.cpp:1577
+#: ../src/selection-chemistry.cpp:1578
 msgid "Move vertically by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1580
+#: ../src/selection-chemistry.cpp:1581
 msgid "Move horizontally by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1708
+#: ../src/selection-chemistry.cpp:1709
 msgid "The selection has no applied path effect."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1755
+#: ../src/selection-chemistry.cpp:1756
 msgid "The selection has no applied clip path."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1757
+#: ../src/selection-chemistry.cpp:1758
 msgid "The selection has no applied mask."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1914
+#: ../src/selection-chemistry.cpp:1915
 msgid "action|Clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1930
+#: ../src/selection-chemistry.cpp:1931
 #, fuzzy
 msgid "Select <b>clones</b> to relink."
 msgstr "حفظ لملف(Alt+E)"
 
-#: ../src/selection-chemistry.cpp:1937
+#: ../src/selection-chemistry.cpp:1938
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1961
+#: ../src/selection-chemistry.cpp:1962
 msgid "<b>No clones to relink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1964
+#: ../src/selection-chemistry.cpp:1965
 #, fuzzy
 msgid "Relink clone"
 msgstr "تحديد"
 
-#: ../src/selection-chemistry.cpp:1978
+#: ../src/selection-chemistry.cpp:1979
 msgid "Select <b>clones</b> to unlink."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2027
+#: ../src/selection-chemistry.cpp:2028
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2031
+#: ../src/selection-chemistry.cpp:2032
 msgid "Unlink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2044
+#: ../src/selection-chemistry.cpp:2045
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
 "a <b>flowed text</b> to go to its frame."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2067
+#: ../src/selection-chemistry.cpp:2068
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2073
+#: ../src/selection-chemistry.cpp:2074
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2119
+#: ../src/selection-chemistry.cpp:2120
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2187
+#: ../src/selection-chemistry.cpp:2188
 #, fuzzy
 msgid "Objects to marker"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/selection-chemistry.cpp:2215
+#: ../src/selection-chemistry.cpp:2216
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2227
+#: ../src/selection-chemistry.cpp:2228
 #, fuzzy
 msgid "Objects to guides"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/selection-chemistry.cpp:2243
+#: ../src/selection-chemistry.cpp:2244
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2331
+#: ../src/selection-chemistry.cpp:2332
 #, fuzzy
 msgid "Objects to pattern"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/selection-chemistry.cpp:2347
+#: ../src/selection-chemistry.cpp:2348
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2400
+#: ../src/selection-chemistry.cpp:2401
 msgid "<b>No pattern fills</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2403
+#: ../src/selection-chemistry.cpp:2404
 #, fuzzy
 msgid "Pattern to objects"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/selection-chemistry.cpp:2488
+#: ../src/selection-chemistry.cpp:2489
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2492
+#: ../src/selection-chemistry.cpp:2493
 msgid "Rendering bitmap..."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2664
+#: ../src/selection-chemistry.cpp:2665
 #, fuzzy
 msgid "Create bitmap"
 msgstr "خط نقطي"
 
-#: ../src/selection-chemistry.cpp:2696
+#: ../src/selection-chemistry.cpp:2697
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2699
+#: ../src/selection-chemistry.cpp:2700
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2806
+#: ../src/selection-chemistry.cpp:2807
 #, fuzzy
 msgid "Set clipping path"
 msgstr "نظرية المجموعات البديهية"
 
-#: ../src/selection-chemistry.cpp:2808
+#: ../src/selection-chemistry.cpp:2809
 #, fuzzy
 msgid "Set mask"
 msgstr "قناع البت"
 
-#: ../src/selection-chemistry.cpp:2821
+#: ../src/selection-chemistry.cpp:2822
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2894
+#: ../src/selection-chemistry.cpp:2895
 #, fuzzy
 msgid "Release clipping path"
 msgstr "إصدار مصلِح"
 
-#: ../src/selection-chemistry.cpp:2896
+#: ../src/selection-chemistry.cpp:2897
 #, fuzzy
 msgid "Release mask"
 msgstr "قناع البت"
 
-#: ../src/selection-chemistry.cpp:2912
+#: ../src/selection-chemistry.cpp:2913
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr ""
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:2932 ../src/verbs.cpp:2704
+#: ../src/selection-chemistry.cpp:2933 ../src/verbs.cpp:2723
 msgid "Fit Page to Selection"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2957 ../src/verbs.cpp:2706
+#: ../src/selection-chemistry.cpp:2958 ../src/verbs.cpp:2725
 msgid "Fit Page to Drawing"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2973 ../src/verbs.cpp:2708
+#: ../src/selection-chemistry.cpp:2974 ../src/verbs.cpp:2727
 msgid "Fit Page to Selection or Drawing"
 msgstr ""
 
@@ -9663,7 +9951,7 @@ msgstr "دائرة"
 
 #. ellipse
 #: ../src/selection-describer.cpp:47 ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:467 ../src/verbs.cpp:2491
+#: ../src/ui/dialog/inkscape-preferences.cpp:467 ../src/verbs.cpp:2510
 #: ../src/widgets/toolbox.cpp:3883
 #, fuzzy
 msgid "Ellipse"
@@ -9694,14 +9982,14 @@ msgstr "شكل متعدد الخطوط"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:63
-#: ../src/ui/dialog/inkscape-preferences.cpp:457 ../src/verbs.cpp:2487
+#: ../src/ui/dialog/inkscape-preferences.cpp:457 ../src/verbs.cpp:2506
 #, fuzzy
 msgid "Rectangle"
 msgstr "المستطيل"
 
 #. 3D box
 #: ../src/selection-describer.cpp:65
-#: ../src/ui/dialog/inkscape-preferences.cpp:462 ../src/verbs.cpp:2489
+#: ../src/ui/dialog/inkscape-preferences.cpp:462 ../src/verbs.cpp:2508
 #, fuzzy
 msgid "3D Box"
 msgstr "إنشاء صندوق ثلاثي الأبعاد"
@@ -9718,14 +10006,14 @@ msgstr "مسار مطلق"
 
 #. spiral
 #: ../src/selection-describer.cpp:77
-#: ../src/ui/dialog/inkscape-preferences.cpp:475 ../src/verbs.cpp:2495
+#: ../src/ui/dialog/inkscape-preferences.cpp:475 ../src/verbs.cpp:2514
 #, fuzzy
 msgid "Spiral"
 msgstr "اللولب"
 
 #. star
 #: ../src/selection-describer.cpp:79
-#: ../src/ui/dialog/inkscape-preferences.cpp:471 ../src/verbs.cpp:2493
+#: ../src/ui/dialog/inkscape-preferences.cpp:471 ../src/verbs.cpp:2512
 #: ../src/widgets/toolbox.cpp:2726
 msgid "Star"
 msgstr "نجمة"
@@ -9796,7 +10084,7 @@ msgid "Use <b>Shift+D</b> to look up frame"
 msgstr ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:208 ../src/tweak-context.cpp:203
+#: ../src/selection-describer.cpp:208 ../src/tweak-context.cpp:202
 #, fuzzy, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
@@ -9965,14 +10253,14 @@ msgstr "نسبة تدفّق"
 msgid "Flow excluded region"
 msgstr "تحليل تدفًق بيانات"
 
-#: ../src/sp-flowtext.cpp:377
+#: ../src/sp-flowtext.cpp:376
 #, fuzzy, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
 msgstr[0] "مخطط ترميز محارف"
 msgstr[1] ""
 
-#: ../src/sp-flowtext.cpp:379
+#: ../src/sp-flowtext.cpp:378
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
@@ -10013,22 +10301,22 @@ msgstr ""
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "صورة ثنائية الدرجات"
 
-#: ../src/spiral-context.cpp:304
+#: ../src/spiral-context.cpp:303
 #, fuzzy
 msgid "<b>Ctrl</b>: snap angle"
 msgstr "بحث ضمن الشرح (Ctrl+F)"
 
-#: ../src/spiral-context.cpp:306
+#: ../src/spiral-context.cpp:305
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr ""
 
-#: ../src/spiral-context.cpp:433
+#: ../src/spiral-context.cpp:432
 #, c-format
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/spiral-context.cpp:454
+#: ../src/spiral-context.cpp:453
 #, fuzzy
 msgid "Create spiral"
 msgstr "إنشاء قطع ناقص"
@@ -10214,14 +10502,14 @@ msgstr "إدراج"
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr ""
 
-#: ../src/sp-path.cpp:136
+#: ../src/sp-path.cpp:156
 #, fuzzy, c-format
-msgid "<b>Path</b> (%i node, path effect)"
-msgid_plural "<b>Path</b> (%i nodes, path effect)"
+msgid "<b>Path</b> (%i node, path effect: %s)"
+msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
 msgstr[0] "تخطيط سببي مسببي"
 msgstr[1] ""
 
-#: ../src/sp-path.cpp:139
+#: ../src/sp-path.cpp:159
 #, fuzzy, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
@@ -10319,22 +10607,22 @@ msgstr "مستنسخ :: استنساخ"
 msgid "<b>Orphaned clone</b>"
 msgstr ""
 
-#: ../src/star-context.cpp:316
+#: ../src/star-context.cpp:315
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr ""
 
-#: ../src/star-context.cpp:443
+#: ../src/star-context.cpp:442
 #, c-format
 msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/star-context.cpp:444
+#: ../src/star-context.cpp:443
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/star-context.cpp:467
+#: ../src/star-context.cpp:466
 #, fuzzy
 msgid "Create star"
 msgstr "شبكة على شكل نجمة"
@@ -10360,7 +10648,7 @@ msgstr ""
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
 msgstr ""
 
-#: ../src/text-chemistry.cpp:192 ../src/verbs.cpp:2345
+#: ../src/text-chemistry.cpp:192 ../src/verbs.cpp:2364
 msgid "Put text on path"
 msgstr "ضع النص على المسار"
 
@@ -10372,7 +10660,7 @@ msgstr ""
 msgid "<b>No texts-on-paths</b> in the selection."
 msgstr ""
 
-#: ../src/text-chemistry.cpp:229 ../src/verbs.cpp:2347
+#: ../src/text-chemistry.cpp:229 ../src/verbs.cpp:2366
 msgid "Remove text from path"
 msgstr "إزالة الخط من على المسار"
 
@@ -10419,158 +10707,158 @@ msgstr ""
 msgid "<b>No flowed text(s)</b> to convert in the selection."
 msgstr ""
 
-#: ../src/text-context.cpp:445
+#: ../src/text-context.cpp:444
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
 msgstr ""
 
-#: ../src/text-context.cpp:447
+#: ../src/text-context.cpp:446
 msgid ""
 "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr ""
 
-#: ../src/text-context.cpp:502
+#: ../src/text-context.cpp:501
 #, fuzzy
 msgid "Create text"
 msgstr "نص جديد"
 
-#: ../src/text-context.cpp:526
+#: ../src/text-context.cpp:525
 #, fuzzy
 msgid "Non-printable character"
 msgstr "مخطط ترميز محارف"
 
-#: ../src/text-context.cpp:541
+#: ../src/text-context.cpp:540
 #, fuzzy
 msgid "Insert Unicode character"
 msgstr "مخطط ترميز محارف"
 
-#: ../src/text-context.cpp:576
+#: ../src/text-context.cpp:575
 #, c-format
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
 msgstr ""
 
-#: ../src/text-context.cpp:578 ../src/text-context.cpp:853
+#: ../src/text-context.cpp:577 ../src/text-context.cpp:852
 msgid "Unicode (<b>Enter</b> to finish): "
 msgstr ""
 
-#: ../src/text-context.cpp:653
+#: ../src/text-context.cpp:652
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr ""
 
-#: ../src/text-context.cpp:685
+#: ../src/text-context.cpp:684
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr ""
 
-#: ../src/text-context.cpp:698
+#: ../src/text-context.cpp:697
 msgid "Flowed text is created."
 msgstr ""
 
-#: ../src/text-context.cpp:700
+#: ../src/text-context.cpp:699
 #, fuzzy
 msgid "Create flowed text"
 msgstr "نمط إدخال النصوص"
 
-#: ../src/text-context.cpp:702
+#: ../src/text-context.cpp:701
 msgid ""
 "The frame is <b>too small</b> for the current font size. Flowed text not "
 "created."
 msgstr ""
 
-#: ../src/text-context.cpp:838
+#: ../src/text-context.cpp:837
 #, fuzzy
 msgid "No-break space"
 msgstr "فضاء متري كامل"
 
-#: ../src/text-context.cpp:840
+#: ../src/text-context.cpp:839
 msgid "Insert no-break space"
 msgstr ""
 
-#: ../src/text-context.cpp:877
+#: ../src/text-context.cpp:876
 msgid "Make bold"
 msgstr "غامق"
 
-#: ../src/text-context.cpp:895
+#: ../src/text-context.cpp:894
 msgid "Make italic"
 msgstr "مائل"
 
-#: ../src/text-context.cpp:934
+#: ../src/text-context.cpp:933
 msgid "New line"
 msgstr "سطر جديد"
 
-#: ../src/text-context.cpp:968
+#: ../src/text-context.cpp:967
 #, fuzzy
 msgid "Backspace"
 msgstr "زرّ لإعادة الكتابة"
 
-#: ../src/text-context.cpp:1016
+#: ../src/text-context.cpp:1015
 #, fuzzy
 msgid "Kern to the left"
 msgstr "تغيير منطقى يسارى"
 
-#: ../src/text-context.cpp:1041
+#: ../src/text-context.cpp:1040
 #, fuzzy
 msgid "Kern to the right"
 msgstr "تغيير منطقى يمينى"
 
-#: ../src/text-context.cpp:1066
+#: ../src/text-context.cpp:1065
 #, fuzzy
 msgid "Kern up"
 msgstr "طلب هاتفي"
 
-#: ../src/text-context.cpp:1092
+#: ../src/text-context.cpp:1091
 #, fuzzy
 msgid "Kern down"
 msgstr "الانهيار"
 
-#: ../src/text-context.cpp:1169
+#: ../src/text-context.cpp:1168
 msgid "Rotate counterclockwise"
 msgstr "تدوير عكس عقارب الساعة"
 
-#: ../src/text-context.cpp:1190
+#: ../src/text-context.cpp:1189
 msgid "Rotate clockwise"
 msgstr "تدوير مع عقارب الساعة"
 
-#: ../src/text-context.cpp:1207
+#: ../src/text-context.cpp:1206
 #, fuzzy
 msgid "Contract line spacing"
 msgstr "واجهة سطر الأوامر"
 
-#: ../src/text-context.cpp:1215
+#: ../src/text-context.cpp:1214
 msgid "Contract letter spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1234
+#: ../src/text-context.cpp:1233
 #, fuzzy
 msgid "Expand line spacing"
 msgstr "واجهة سطر الأوامر"
 
-#: ../src/text-context.cpp:1242
+#: ../src/text-context.cpp:1241
 msgid "Expand letter spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1369
+#: ../src/text-context.cpp:1368
 msgid "Paste text"
 msgstr "لصق نص"
 
-#: ../src/text-context.cpp:1603
+#: ../src/text-context.cpp:1602
 #, c-format
 msgid ""
 "Type or edit flowed text (%d characters); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1605
+#: ../src/text-context.cpp:1604
 #, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
 msgstr ""
 
-#: ../src/text-context.cpp:1613 ../src/tools-switch.cpp:190
+#: ../src/text-context.cpp:1612 ../src/tools-switch.cpp:190
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
 msgstr ""
 
-#: ../src/text-context.cpp:1723
+#: ../src/text-context.cpp:1722
 msgid "Type text"
 msgstr "نوع الخط"
 
@@ -10622,13 +10910,14 @@ msgstr ""
 #: ../src/tools-switch.cpp:172
 msgid ""
 "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to "
-"append to selected path. <b>Ctrl+click</b> to create single dots."
+"append to selected path."
 msgstr ""
 
 #: ../src/tools-switch.cpp:178
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to "
-"append to selected path. <b>Ctrl+click</b> to create single dots."
+"append to selected path. <b>Ctrl+click</b> to create single dots (straight "
+"line modes only)."
 msgstr ""
 
 #: ../src/tools-switch.cpp:184
@@ -10721,184 +11010,184 @@ msgstr "خط نقطي"
 msgid "Trace: Done. %ld nodes created"
 msgstr ""
 
-#: ../src/tweak-context.cpp:205
+#: ../src/tweak-context.cpp:204
 #, fuzzy, c-format
 msgid "<b>Nothing</b> selected"
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
-#: ../src/tweak-context.cpp:211
+#: ../src/tweak-context.cpp:210
 #, c-format
 msgid "%s. Drag to <b>move</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:216
+#: ../src/tweak-context.cpp:215
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:219
+#: ../src/tweak-context.cpp:218
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:222
+#: ../src/tweak-context.cpp:221
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:225
+#: ../src/tweak-context.cpp:224
 #, c-format
 msgid ""
 "%s. Drag or click to <b>rotate clockwise</b>; with Shift, "
 "<b>counterclockwise</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:228
+#: ../src/tweak-context.cpp:227
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:231
+#: ../src/tweak-context.cpp:230
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:235
+#: ../src/tweak-context.cpp:234
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:243
+#: ../src/tweak-context.cpp:242
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:251
+#: ../src/tweak-context.cpp:250
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:255
+#: ../src/tweak-context.cpp:254
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
 msgstr ""
 
-#: ../src/tweak-context.cpp:258
+#: ../src/tweak-context.cpp:257
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:262
+#: ../src/tweak-context.cpp:261
 #, c-format
 msgid ""
 "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:1210
+#: ../src/tweak-context.cpp:1218
 msgid "<b>Nothing selected!</b> Select objects to tweak."
-msgstr ""
-
-#: ../src/tweak-context.cpp:1246
-#, fuzzy
-msgid "Move tweak"
-msgstr "نقل خط الإرشاد\t"
-
-#: ../src/tweak-context.cpp:1250
-msgid "Move in/out tweak"
 msgstr ""
 
 #: ../src/tweak-context.cpp:1254
 #, fuzzy
-msgid "Move jitter tweak"
+msgid "Move tweak"
 msgstr "نقل خط الإرشاد\t"
 
 #: ../src/tweak-context.cpp:1258
+msgid "Move in/out tweak"
+msgstr ""
+
+#: ../src/tweak-context.cpp:1262
+#, fuzzy
+msgid "Move jitter tweak"
+msgstr "نقل خط الإرشاد\t"
+
+#: ../src/tweak-context.cpp:1266
 #, fuzzy
 msgid "Scale tweak"
 msgstr "مقياس"
 
-#: ../src/tweak-context.cpp:1262
+#: ../src/tweak-context.cpp:1270
 #, fuzzy
 msgid "Rotate tweak"
 msgstr "نقل العقد"
 
-#: ../src/tweak-context.cpp:1266
+#: ../src/tweak-context.cpp:1274
 #, fuzzy
 msgid "Duplicate/delete tweak"
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
-#: ../src/tweak-context.cpp:1270
+#: ../src/tweak-context.cpp:1278
 #, fuzzy
 msgid "Push path tweak"
 msgstr "زرً ضغط"
 
-#: ../src/tweak-context.cpp:1274
+#: ../src/tweak-context.cpp:1282
 msgid "Shrink/grow path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1278
+#: ../src/tweak-context.cpp:1286
 msgid "Attract/repel path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1282
+#: ../src/tweak-context.cpp:1290
 #, fuzzy
 msgid "Roughen path tweak"
 msgstr "أعلى الصنع لـ"
 
-#: ../src/tweak-context.cpp:1286
+#: ../src/tweak-context.cpp:1294
 msgid "Color paint tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1290
+#: ../src/tweak-context.cpp:1298
 msgid "Color jitter tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1294
+#: ../src/tweak-context.cpp:1302
 #, fuzzy
 msgid "Blur tweak"
 msgstr "زرً ضغط"
 
 #. check whether something is selected
-#: ../src/ui/clipboard.cpp:234
+#: ../src/ui/clipboard.cpp:255
 #, fuzzy
 msgid "Nothing was copied."
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
-#: ../src/ui/clipboard.cpp:295 ../src/ui/clipboard.cpp:497
-#: ../src/ui/clipboard.cpp:521
+#: ../src/ui/clipboard.cpp:316 ../src/ui/clipboard.cpp:518
+#: ../src/ui/clipboard.cpp:542
 #, fuzzy
 msgid "Nothing on the clipboard."
 msgstr "على كلً الصفحات"
 
-#: ../src/ui/clipboard.cpp:351
+#: ../src/ui/clipboard.cpp:372
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr ""
 
-#: ../src/ui/clipboard.cpp:362 ../src/ui/clipboard.cpp:380
+#: ../src/ui/clipboard.cpp:383 ../src/ui/clipboard.cpp:401
 #, fuzzy
 msgid "No style on the clipboard."
 msgstr "على كلً الصفحات"
 
-#: ../src/ui/clipboard.cpp:402
+#: ../src/ui/clipboard.cpp:423
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr ""
 
-#: ../src/ui/clipboard.cpp:409
+#: ../src/ui/clipboard.cpp:430
 #, fuzzy
 msgid "No size on the clipboard."
 msgstr "على كلً الصفحات"
 
-#: ../src/ui/clipboard.cpp:460
+#: ../src/ui/clipboard.cpp:481
 msgid "Select <b>object(s)</b> to paste live path effect to."
 msgstr ""
 
 #. no_effect:
-#: ../src/ui/clipboard.cpp:484
+#: ../src/ui/clipboard.cpp:505
 #, fuzzy
 msgid "No effect on the clipboard."
 msgstr "على كلً الصفحات"
 
-#: ../src/ui/clipboard.cpp:504 ../src/ui/clipboard.cpp:531
+#: ../src/ui/clipboard.cpp:525 ../src/ui/clipboard.cpp:552
 msgid "Clipboard does not contain a path."
 msgstr ""
 
@@ -10950,7 +11239,7 @@ msgid "Create link"
 msgstr "وصلة بِعَودة"
 
 #. "Ungroup"
-#: ../src/ui/context-menu.cpp:306 ../src/verbs.cpp:2341
+#: ../src/ui/context-menu.cpp:306 ../src/verbs.cpp:2360
 #, fuzzy
 msgid "_Ungroup"
 msgstr "غير مجموعة"
@@ -11257,22 +11546,22 @@ msgstr "الزبون الأول"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:912
 #, fuzzy
-msgid "Biggest item"
-msgstr "عنصر تشكيل"
+msgid "Biggest object"
+msgstr "هدف واسم"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:913
 #, fuzzy
-msgid "Smallest item"
-msgstr "عنصر تشكيل"
+msgid "Smallest object"
+msgstr "برمجة موجة للكائنات"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:915
-#: ../src/widgets/desktop-widget.cpp:1565
+#: ../src/widgets/desktop-widget.cpp:1566
 msgid "Drawing"
 msgstr "رسم"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:916
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
-#: ../src/widgets/desktop-widget.cpp:1569
+#: ../src/widgets/desktop-widget.cpp:1570
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "تحديد"
@@ -11459,7 +11748,7 @@ msgstr "الأدلاء"
 msgid "Grids"
 msgstr "شبكة"
 
-#: ../src/ui/dialog/document-properties.cpp:122 ../src/verbs.cpp:2568
+#: ../src/ui/dialog/document-properties.cpp:122 ../src/verbs.cpp:2587
 #: ../src/widgets/toolbox.cpp:2023
 #, fuzzy
 msgid "Snap"
@@ -11604,7 +11893,7 @@ msgstr ""
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:417 ../src/verbs.cpp:2720
+#: ../src/ui/dialog/document-properties.cpp:417 ../src/verbs.cpp:2739
 msgid "Link Color Profile"
 msgstr ""
 
@@ -11637,6 +11926,7 @@ msgid "<b>External script files:</b>"
 msgstr "تحويل إلى التكرار"
 
 #: ../src/ui/dialog/document-properties.cpp:572
+#: ../src/ui/dialog/swatches.cpp:458
 #, fuzzy
 msgid "Add"
 msgstr "إضافة"
@@ -11828,6 +12118,7 @@ msgid "No file selected"
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:48
+#: ../share/extensions/interp-att-g.inx.h:4
 msgid "Fill"
 msgstr "تعبئة"
 
@@ -12462,11 +12753,11 @@ msgid ""
 "smoke and in generating complex textures like marble or granite."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2355
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2356
 msgid "Duplicate filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2408
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2409
 msgid "Set filter primitive attribute"
 msgstr ""
 
@@ -12983,7 +13274,7 @@ msgid ""
 msgstr ""
 
 #. Tweak
-#: ../src/ui/dialog/inkscape-preferences.cpp:440 ../src/verbs.cpp:2485
+#: ../src/ui/dialog/inkscape-preferences.cpp:440 ../src/verbs.cpp:2504
 #, fuzzy
 msgid "Tweak"
 msgstr "القرص"
@@ -12995,8 +13286,8 @@ msgstr "تحويل إلى التكرار"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:446
-#: ../src/ui/view/edit-widget.cpp:1062 ../src/verbs.cpp:2507
-#: ../src/widgets/desktop-widget.cpp:482
+#: ../src/ui/view/edit-widget.cpp:1062 ../src/verbs.cpp:2526
+#: ../src/widgets/desktop-widget.cpp:481
 #: ../share/extensions/render_alphabetsoup.inx.h:5
 msgid "Zoom"
 msgstr "مكبرة"
@@ -13018,12 +13309,12 @@ msgid ""
 msgstr ""
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:488 ../src/verbs.cpp:2499
+#: ../src/ui/dialog/inkscape-preferences.cpp:488 ../src/verbs.cpp:2518
 msgid "Pen"
 msgstr "قلم"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:494 ../src/verbs.cpp:2501
+#: ../src/ui/dialog/inkscape-preferences.cpp:494 ../src/verbs.cpp:2520
 #, fuzzy
 msgid "Calligraphy"
 msgstr "خط اليد"
@@ -13041,29 +13332,29 @@ msgid ""
 msgstr ""
 
 #. Paint Bucket
-#: ../src/ui/dialog/inkscape-preferences.cpp:502 ../src/verbs.cpp:2513
+#: ../src/ui/dialog/inkscape-preferences.cpp:502 ../src/verbs.cpp:2532
 msgid "Paint Bucket"
 msgstr ""
 
 #. Eraser
-#: ../src/ui/dialog/inkscape-preferences.cpp:507 ../src/verbs.cpp:2517
+#: ../src/ui/dialog/inkscape-preferences.cpp:507 ../src/verbs.cpp:2536
 #, fuzzy
 msgid "Eraser"
 msgstr "خطوط أُفقية"
 
 #. LPETool
-#: ../src/ui/dialog/inkscape-preferences.cpp:511 ../src/verbs.cpp:2519
+#: ../src/ui/dialog/inkscape-preferences.cpp:511 ../src/verbs.cpp:2538
 #, fuzzy
 msgid "LPE Tool"
 msgstr "أدوات"
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:521 ../src/verbs.cpp:2505
+#: ../src/ui/dialog/inkscape-preferences.cpp:521 ../src/verbs.cpp:2524
 msgid "Gradient"
 msgstr "تدرج"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:525 ../src/verbs.cpp:2511
+#: ../src/ui/dialog/inkscape-preferences.cpp:525 ../src/verbs.cpp:2530
 #, fuzzy
 msgid "Connector"
 msgstr "الموصّل"
@@ -13073,7 +13364,7 @@ msgid "If on, connector attachment points will not be shown for text objects"
 msgstr ""
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:530 ../src/verbs.cpp:2509
+#: ../src/ui/dialog/inkscape-preferences.cpp:530 ../src/verbs.cpp:2528
 #, fuzzy
 msgid "Dropper"
 msgstr "القطّارة"
@@ -14924,58 +15215,68 @@ msgstr "رسم"
 msgid "Preview Text:"
 msgstr "معاينة"
 
-#: ../src/ui/dialog/swatches.cpp:198
+#: ../src/ui/dialog/swatches.cpp:329
 #, c-format
 msgid ""
 "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
 msgstr ""
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:245
+#: ../src/ui/dialog/swatches.cpp:438
 #, fuzzy
 msgid "Set fill"
 msgstr "نظرية المجموعات البديهية"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
-#: ../src/ui/dialog/swatches.cpp:253
+#: ../src/ui/dialog/swatches.cpp:446
 #, fuzzy
 msgid "Set stroke"
 msgstr "ضربة المفتاح"
 
-#: ../src/ui/dialog/swatches.cpp:412
+#: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/gradient-selector.cpp:144
+#: ../src/widgets/gradient-toolbar.cpp:466
+msgid "Edit..."
+msgstr "تحرير"
+
+#: ../src/ui/dialog/swatches.cpp:483
+#, fuzzy
+msgid "Convert"
+msgstr "الغطاء"
+
+#: ../src/ui/dialog/swatches.cpp:645
 #, fuzzy
 msgid "Change color definition"
 msgstr "بحث ضمن الشرح (Ctrl+F)"
 
-#: ../src/ui/dialog/swatches.cpp:599
+#: ../src/ui/dialog/swatches.cpp:846
 #, fuzzy
 msgid "Remove stroke color"
 msgstr "ضربة المفتاح"
 
-#: ../src/ui/dialog/swatches.cpp:599
+#: ../src/ui/dialog/swatches.cpp:846
 #, fuzzy
 msgid "Remove fill color"
 msgstr "نظرية المجموعات البديهية"
 
-#: ../src/ui/dialog/swatches.cpp:604
+#: ../src/ui/dialog/swatches.cpp:851
 #, fuzzy
 msgid "Set stroke color to none"
 msgstr "نظرية المجموعات البديهية"
 
-#: ../src/ui/dialog/swatches.cpp:604
+#: ../src/ui/dialog/swatches.cpp:851
 #, fuzzy
 msgid "Set fill color to none"
 msgstr "نظرية المجموعات البديهية"
 
-#: ../src/ui/dialog/swatches.cpp:613
+#: ../src/ui/dialog/swatches.cpp:868
 msgid "Set stroke color from swatch"
 msgstr ""
 
-#: ../src/ui/dialog/swatches.cpp:613
+#: ../src/ui/dialog/swatches.cpp:868
 msgid "Set fill color from swatch"
 msgstr ""
 
-#: ../src/ui/dialog/swatches.cpp:937
+#: ../src/ui/dialog/swatches.cpp:1192
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr ""
@@ -15587,11 +15888,11 @@ msgstr ""
 msgid "PLACEHOLDER, do not translate"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1051 ../src/widgets/desktop-widget.cpp:379
+#: ../src/ui/view/edit-widget.cpp:1051 ../src/widgets/desktop-widget.cpp:378
 msgid "Zoom drawing if window size changes"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1072 ../src/widgets/desktop-widget.cpp:502
+#: ../src/ui/view/edit-widget.cpp:1072 ../src/widgets/desktop-widget.cpp:501
 #, fuzzy
 msgid "Cursor coordinates"
 msgstr "إحداثيات ديكارتية"
@@ -15602,7 +15903,7 @@ msgid ""
 "use selector (arrow) to move or transform them."
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:837
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -15612,12 +15913,12 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1258
-#: ../src/widgets/desktop-widget.cpp:844 ../src/widgets/desktop-widget.cpp:900
+#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:899
 #, fuzzy
 msgid "Close _without saving"
 msgstr "مرحبا إنتهاء الصغرى"
 
-#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:892
+#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:891
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -15626,7 +15927,7 @@ msgid ""
 "Do you want to save this file as an Inkscape SVG?"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:903
+#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:902
 msgid "_Save as SVG"
 msgstr "حفظ كملف SVG"
 
@@ -15681,7 +15982,7 @@ msgstr "طبقة مضيف-مضيف"
 msgid "Proprietary"
 msgstr "الملكية"
 
-#: ../src/ui/widget/licensor.cpp:38
+#: ../src/ui/widget/licensor.cpp:38 ../share/extensions/interp-att-g.inx.h:13
 #, fuzzy
 msgid "Other"
 msgstr "آخر"
@@ -16335,8 +16636,8 @@ msgstr ""
 msgid "Cannot go before first layer."
 msgstr ""
 
-#: ../src/verbs.cpp:1172 ../src/verbs.cpp:1249 ../src/verbs.cpp:1281
-#: ../src/verbs.cpp:1287
+#: ../src/verbs.cpp:1172 ../src/verbs.cpp:1268 ../src/verbs.cpp:1300
+#: ../src/verbs.cpp:1306
 #, fuzzy
 msgid "No current layer."
 msgstr "تم إنشاء طبقة جديدة"
@@ -16375,43 +16676,43 @@ msgstr "طبقة مضيف-مضيف"
 msgid "Cannot move layer any further."
 msgstr ""
 
-#: ../src/verbs.cpp:1232
+#: ../src/verbs.cpp:1237 ../src/verbs.cpp:1255
 #, c-format
 msgid "%s copy"
 msgstr ""
 
-#: ../src/verbs.cpp:1244
+#: ../src/verbs.cpp:1263
 #, fuzzy
 msgid "Duplicate layer"
 msgstr "مرشح بريد"
 
 #. TRANSLATORS: this means "The layer has been duplicated."
-#: ../src/verbs.cpp:1247
+#: ../src/verbs.cpp:1266
 #, fuzzy
 msgid "Duplicated layer."
 msgstr "مرشح بريد"
 
-#: ../src/verbs.cpp:1276
+#: ../src/verbs.cpp:1295
 #, fuzzy
 msgid "Delete layer"
 msgstr "طبقة مضيف-مضيف"
 
 #. TRANSLATORS: this means "The layer has been deleted."
-#: ../src/verbs.cpp:1279
+#: ../src/verbs.cpp:1298
 #, fuzzy
 msgid "Deleted layer."
 msgstr "طبقة مضيف-مضيف"
 
-#: ../src/verbs.cpp:1290
+#: ../src/verbs.cpp:1309
 msgid "Toggle layer solo"
 msgstr ""
 
-#: ../src/verbs.cpp:1370
+#: ../src/verbs.cpp:1389
 #, fuzzy
 msgid "Flip horizontally"
 msgstr "تقلّب"
 
-#: ../src/verbs.cpp:1385
+#: ../src/verbs.cpp:1404
 #, fuzzy
 msgid "Flip vertically"
 msgstr "تقلّب"
@@ -16419,1880 +16720,1880 @@ msgstr "تقلّب"
 #. TRANSLATORS: If you have translated the tutorial-basic.svg file to your language,
 #. then translate this string as "tutorial-basic.LANG.svg" (where LANG is your language
 #. code); otherwise leave as "tutorial-basic.svg".
-#: ../src/verbs.cpp:1893
+#: ../src/verbs.cpp:1912
 msgid "tutorial-basic.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1897
+#: ../src/verbs.cpp:1916
 msgid "tutorial-shapes.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1901
+#: ../src/verbs.cpp:1920
 msgid "tutorial-advanced.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1905
+#: ../src/verbs.cpp:1924
 msgid "tutorial-tracing.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1909
+#: ../src/verbs.cpp:1928
 msgid "tutorial-calligraphy.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1913
+#: ../src/verbs.cpp:1932
 msgid "tutorial-elements.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1917
+#: ../src/verbs.cpp:1936
 msgid "tutorial-tips.svg"
 msgstr ""
 
-#: ../src/verbs.cpp:2193 ../src/verbs.cpp:2712
+#: ../src/verbs.cpp:2212 ../src/verbs.cpp:2731
 msgid "Unlock all objects in the current layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2197 ../src/verbs.cpp:2714
+#: ../src/verbs.cpp:2216 ../src/verbs.cpp:2733
 msgid "Unlock all objects in all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2201 ../src/verbs.cpp:2716
+#: ../src/verbs.cpp:2220 ../src/verbs.cpp:2735
 msgid "Unhide all objects in the current layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2205 ../src/verbs.cpp:2718
+#: ../src/verbs.cpp:2224 ../src/verbs.cpp:2737
 msgid "Unhide all objects in all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2220
+#: ../src/verbs.cpp:2239
 #, fuzzy
 msgid "Does nothing"
 msgstr "عاطل"
 
-#: ../src/verbs.cpp:2223
+#: ../src/verbs.cpp:2242
 msgid "Create new document from the default template"
 msgstr ""
 
-#: ../src/verbs.cpp:2225
+#: ../src/verbs.cpp:2244
 msgid "_Open..."
 msgstr "فتح..."
 
-#: ../src/verbs.cpp:2226
+#: ../src/verbs.cpp:2245
 msgid "Open an existing document"
 msgstr "فتح مستند"
 
-#: ../src/verbs.cpp:2227
+#: ../src/verbs.cpp:2246
 #, fuzzy
 msgid "Re_vert"
 msgstr "إعادة تعدّل"
 
-#: ../src/verbs.cpp:2228
+#: ../src/verbs.cpp:2247
 msgid "Revert to the last saved version of document (changes will be lost)"
 msgstr ""
 
-#: ../src/verbs.cpp:2229
+#: ../src/verbs.cpp:2248
 msgid "_Save"
 msgstr "حفظ"
 
-#: ../src/verbs.cpp:2229
+#: ../src/verbs.cpp:2248
 msgid "Save document"
 msgstr "حفظ المستند"
 
-#: ../src/verbs.cpp:2231
+#: ../src/verbs.cpp:2250
 msgid "Save _As..."
 msgstr "حفظ باسم..."
 
-#: ../src/verbs.cpp:2232
+#: ../src/verbs.cpp:2251
 msgid "Save document under a new name"
 msgstr "حفظ المستند باسم جديد"
 
-#: ../src/verbs.cpp:2233
+#: ../src/verbs.cpp:2252
 msgid "Save a Cop_y..."
 msgstr "حفظ نسخة"
 
-#: ../src/verbs.cpp:2234
+#: ../src/verbs.cpp:2253
 msgid "Save a copy of the document under a new name"
 msgstr ""
 
-#: ../src/verbs.cpp:2235
+#: ../src/verbs.cpp:2254
 msgid "_Print..."
 msgstr "طباعة"
 
-#: ../src/verbs.cpp:2235
+#: ../src/verbs.cpp:2254
 #, fuzzy
 msgid "Print document"
 msgstr "مستند جديد"
 
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
-#: ../src/verbs.cpp:2238
+#: ../src/verbs.cpp:2257
 msgid "Vac_uum Defs"
 msgstr ""
 
-#: ../src/verbs.cpp:2238
+#: ../src/verbs.cpp:2257
 msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
 msgstr ""
 
-#: ../src/verbs.cpp:2240
+#: ../src/verbs.cpp:2259
 msgid "Print Previe_w"
 msgstr "معاينة قبل الطباعة"
 
-#: ../src/verbs.cpp:2241
+#: ../src/verbs.cpp:2260
 msgid "Preview document printout"
 msgstr "معاينة المستند قبل طباعته"
 
-#: ../src/verbs.cpp:2242
+#: ../src/verbs.cpp:2261
 msgid "_Import..."
 msgstr "استيراد..."
 
-#: ../src/verbs.cpp:2243
+#: ../src/verbs.cpp:2262
 msgid "Import a bitmap or SVG image into this document"
 msgstr "استيراد صورة أو ملف SVG ضمن هذا المستند"
 
-#: ../src/verbs.cpp:2244
+#: ../src/verbs.cpp:2263
 msgid "_Export Bitmap..."
 msgstr "تصدير صورة..."
 
-#: ../src/verbs.cpp:2245
+#: ../src/verbs.cpp:2264
 msgid "Export this document or a selection as a bitmap image"
 msgstr "تصدير هذا المستند أو التحديد كملف صورة"
 
-#: ../src/verbs.cpp:2246
+#: ../src/verbs.cpp:2265
 msgid "Import a document from Open Clip Art Library"
 msgstr ""
 
-#: ../src/verbs.cpp:2247
+#: ../src/verbs.cpp:2266
 msgid "Export To Open Clip Art Library"
 msgstr ""
 
-#: ../src/verbs.cpp:2247
+#: ../src/verbs.cpp:2266
 msgid "Export this document to Open Clip Art Library"
 msgstr ""
 
-#: ../src/verbs.cpp:2248
+#: ../src/verbs.cpp:2267
 msgid "N_ext Window"
 msgstr "النافذة التالية"
 
-#: ../src/verbs.cpp:2249
+#: ../src/verbs.cpp:2268
 msgid "Switch to the next document window"
 msgstr ""
 
-#: ../src/verbs.cpp:2250
+#: ../src/verbs.cpp:2269
 msgid "P_revious Window"
 msgstr "النافذة السابقة"
 
-#: ../src/verbs.cpp:2251
+#: ../src/verbs.cpp:2270
 msgid "Switch to the previous document window"
 msgstr ""
 
-#: ../src/verbs.cpp:2252
+#: ../src/verbs.cpp:2271
 msgid "_Close"
 msgstr "إغلاق"
 
-#: ../src/verbs.cpp:2253
+#: ../src/verbs.cpp:2272
 msgid "Close this document window"
 msgstr ""
 
-#: ../src/verbs.cpp:2254
+#: ../src/verbs.cpp:2273
 msgid "_Quit"
 msgstr "خروج"
 
-#: ../src/verbs.cpp:2254
+#: ../src/verbs.cpp:2273
 msgid "Quit Inkscape"
 msgstr "خروج من إنكسكايب"
 
-#: ../src/verbs.cpp:2257
+#: ../src/verbs.cpp:2276
 msgid "Undo last action"
 msgstr ""
 
-#: ../src/verbs.cpp:2260
+#: ../src/verbs.cpp:2279
 msgid "Do again the last undone action"
 msgstr ""
 
-#: ../src/verbs.cpp:2261
+#: ../src/verbs.cpp:2280
 msgid "Cu_t"
 msgstr "قص"
 
-#: ../src/verbs.cpp:2262
+#: ../src/verbs.cpp:2281
 msgid "Cut selection to clipboard"
 msgstr ""
 
-#: ../src/verbs.cpp:2263
+#: ../src/verbs.cpp:2282
 msgid "_Copy"
 msgstr "نسخ"
 
-#: ../src/verbs.cpp:2264
+#: ../src/verbs.cpp:2283
 msgid "Copy selection to clipboard"
 msgstr ""
 
-#: ../src/verbs.cpp:2265
+#: ../src/verbs.cpp:2284
 msgid "_Paste"
 msgstr "لصق"
 
-#: ../src/verbs.cpp:2266
+#: ../src/verbs.cpp:2285
 msgid "Paste objects from clipboard to mouse point, or paste text"
 msgstr ""
 
-#: ../src/verbs.cpp:2267
+#: ../src/verbs.cpp:2286
 #, fuzzy
 msgid "Paste _Style"
 msgstr "لصق نص"
 
-#: ../src/verbs.cpp:2268
+#: ../src/verbs.cpp:2287
 msgid "Apply the style of the copied object to selection"
 msgstr ""
 
-#: ../src/verbs.cpp:2270
+#: ../src/verbs.cpp:2289
 msgid "Scale selection to match the size of the copied object"
 msgstr ""
 
-#: ../src/verbs.cpp:2271
+#: ../src/verbs.cpp:2290
 #, fuzzy
 msgid "Paste _Width"
 msgstr "عرض ثابت"
 
-#: ../src/verbs.cpp:2272
+#: ../src/verbs.cpp:2291
 msgid "Scale selection horizontally to match the width of the copied object"
 msgstr ""
 
-#: ../src/verbs.cpp:2273
+#: ../src/verbs.cpp:2292
 #, fuzzy
 msgid "Paste _Height"
 msgstr "إرتفاع النافذة"
 
-#: ../src/verbs.cpp:2274
+#: ../src/verbs.cpp:2293
 msgid "Scale selection vertically to match the height of the copied object"
 msgstr ""
 
-#: ../src/verbs.cpp:2275
+#: ../src/verbs.cpp:2294
 #, fuzzy
 msgid "Paste Size Separately"
 msgstr "<big><b>قياس الصورة</b></big>"
 
-#: ../src/verbs.cpp:2276
+#: ../src/verbs.cpp:2295
 msgid "Scale each selected object to match the size of the copied object"
 msgstr ""
 
-#: ../src/verbs.cpp:2277
+#: ../src/verbs.cpp:2296
 #, fuzzy
 msgid "Paste Width Separately"
 msgstr "أكبر عرض للنافذة"
 
-#: ../src/verbs.cpp:2278
+#: ../src/verbs.cpp:2297
 msgid ""
 "Scale each selected object horizontally to match the width of the copied "
 "object"
 msgstr ""
 
-#: ../src/verbs.cpp:2279
+#: ../src/verbs.cpp:2298
 #, fuzzy
 msgid "Paste Height Separately"
 msgstr "أكبر إرتفاع للنافذة"
 
-#: ../src/verbs.cpp:2280
+#: ../src/verbs.cpp:2299
 msgid ""
 "Scale each selected object vertically to match the height of the copied "
 "object"
 msgstr ""
 
-#: ../src/verbs.cpp:2281
+#: ../src/verbs.cpp:2300
 #, fuzzy
 msgid "Paste _In Place"
 msgstr "الداخل أولا يخرج أولا"
 
-#: ../src/verbs.cpp:2282
+#: ../src/verbs.cpp:2301
 msgid "Paste objects from clipboard to the original location"
 msgstr ""
 
-#: ../src/verbs.cpp:2283
+#: ../src/verbs.cpp:2302
 #, fuzzy
 msgid "Paste Path _Effect"
 msgstr "تخطيط سببي مسببي"
 
-#: ../src/verbs.cpp:2284
+#: ../src/verbs.cpp:2303
 msgid "Apply the path effect of the copied object to selection"
 msgstr ""
 
-#: ../src/verbs.cpp:2285
+#: ../src/verbs.cpp:2304
 #, fuzzy
 msgid "Remove Path _Effect"
 msgstr "تخطيط سببي مسببي"
 
-#: ../src/verbs.cpp:2286
+#: ../src/verbs.cpp:2305
 #, fuzzy
 msgid "Remove any path effects from selected objects"
 msgstr "<small>لقد تم تحديد أكثر من كائن واحد</small>"
 
-#: ../src/verbs.cpp:2287
+#: ../src/verbs.cpp:2306
 #, fuzzy
 msgid "Remove Filters"
 msgstr "مرشح بريد"
 
-#: ../src/verbs.cpp:2288
+#: ../src/verbs.cpp:2307
 #, fuzzy
 msgid "Remove any filters from selected objects"
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
-#: ../src/verbs.cpp:2289
+#: ../src/verbs.cpp:2308
 msgid "_Delete"
 msgstr "حذف"
 
-#: ../src/verbs.cpp:2290
+#: ../src/verbs.cpp:2309
 #, fuzzy
 msgid "Delete selection"
 msgstr "أختيار المجال"
 
-#: ../src/verbs.cpp:2291
+#: ../src/verbs.cpp:2310
 msgid "Duplic_ate"
 msgstr "مضاعفة"
 
-#: ../src/verbs.cpp:2292
+#: ../src/verbs.cpp:2311
 #, fuzzy
 msgid "Duplicate selected objects"
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
-#: ../src/verbs.cpp:2293
+#: ../src/verbs.cpp:2312
 #, fuzzy
 msgid "Create Clo_ne"
 msgstr "إنشاء صندوق ثلاثي الأبعاد"
 
-#: ../src/verbs.cpp:2294
+#: ../src/verbs.cpp:2313
 msgid "Create a clone (a copy linked to the original) of selected object"
 msgstr ""
 
-#: ../src/verbs.cpp:2295
+#: ../src/verbs.cpp:2314
 msgid "Unlin_k Clone"
 msgstr ""
 
-#: ../src/verbs.cpp:2296
+#: ../src/verbs.cpp:2315
 msgid ""
 "Cut the selected clones' links to the originals, turning them into "
 "standalone objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2297
+#: ../src/verbs.cpp:2316
 msgid "Relink to Copied"
 msgstr ""
 
-#: ../src/verbs.cpp:2298
+#: ../src/verbs.cpp:2317
 msgid "Relink the selected clones to the object currently on the clipboard"
 msgstr ""
 
-#: ../src/verbs.cpp:2299
+#: ../src/verbs.cpp:2318
 #, fuzzy
 msgid "Select _Original"
 msgstr "رقاقة منتقاة"
 
-#: ../src/verbs.cpp:2300
+#: ../src/verbs.cpp:2319
 msgid "Select the object to which the selected clone is linked"
 msgstr ""
 
-#: ../src/verbs.cpp:2301
+#: ../src/verbs.cpp:2320
 #, fuzzy
 msgid "Objects to _Marker"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/verbs.cpp:2302
+#: ../src/verbs.cpp:2321
 msgid "Convert selection to a line marker"
 msgstr ""
 
-#: ../src/verbs.cpp:2303
+#: ../src/verbs.cpp:2322
 msgid "Objects to Gu_ides"
 msgstr ""
 
-#: ../src/verbs.cpp:2304
+#: ../src/verbs.cpp:2323
 msgid ""
 "Convert selected objects to a collection of guidelines aligned with their "
 "edges"
 msgstr ""
 
-#: ../src/verbs.cpp:2305
+#: ../src/verbs.cpp:2324
 #, fuzzy
 msgid "Objects to Patter_n"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/verbs.cpp:2306
+#: ../src/verbs.cpp:2325
 msgid "Convert selection to a rectangle with tiled pattern fill"
 msgstr ""
 
-#: ../src/verbs.cpp:2307
+#: ../src/verbs.cpp:2326
 #, fuzzy
 msgid "Pattern to _Objects"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/verbs.cpp:2308
+#: ../src/verbs.cpp:2327
 msgid "Extract objects from a tiled pattern fill"
 msgstr ""
 
-#: ../src/verbs.cpp:2309
+#: ../src/verbs.cpp:2328
 msgid "Clea_r All"
 msgstr "مسح الكل"
 
-#: ../src/verbs.cpp:2310
+#: ../src/verbs.cpp:2329
 msgid "Delete all objects from document"
 msgstr ""
 
-#: ../src/verbs.cpp:2311
+#: ../src/verbs.cpp:2330
 msgid "Select Al_l"
 msgstr "تحديد الكل"
 
-#: ../src/verbs.cpp:2312
+#: ../src/verbs.cpp:2331
 msgid "Select all objects or all nodes"
 msgstr ""
 
-#: ../src/verbs.cpp:2313
+#: ../src/verbs.cpp:2332
 msgid "Select All in All La_yers"
 msgstr ""
 
-#: ../src/verbs.cpp:2314
+#: ../src/verbs.cpp:2333
 msgid "Select all objects in all visible and unlocked layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2315
+#: ../src/verbs.cpp:2334
 #, fuzzy
 msgid "In_vert Selection"
 msgstr "إيقاف الترجمة التلقائية للنص المحدّد"
 
-#: ../src/verbs.cpp:2316
+#: ../src/verbs.cpp:2335
 msgid "Invert selection (unselect what is selected and select everything else)"
 msgstr ""
 
-#: ../src/verbs.cpp:2317
+#: ../src/verbs.cpp:2336
 msgid "Invert in All Layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2318
+#: ../src/verbs.cpp:2337
 msgid "Invert selection in all visible and unlocked layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2319
+#: ../src/verbs.cpp:2338
 #, fuzzy
 msgid "Select Next"
 msgstr "رقاقة منتقاة"
 
-#: ../src/verbs.cpp:2320
+#: ../src/verbs.cpp:2339
 msgid "Select next object or node"
 msgstr ""
 
-#: ../src/verbs.cpp:2321
+#: ../src/verbs.cpp:2340
 #, fuzzy
 msgid "Select Previous"
 msgstr "رقاقة منتقاة"
 
-#: ../src/verbs.cpp:2322
+#: ../src/verbs.cpp:2341
 msgid "Select previous object or node"
 msgstr ""
 
-#: ../src/verbs.cpp:2323
+#: ../src/verbs.cpp:2342
 #, fuzzy
 msgid "D_eselect"
 msgstr "عدم انتقاء"
 
-#: ../src/verbs.cpp:2324
+#: ../src/verbs.cpp:2343
 msgid "Deselect any selected objects or nodes"
 msgstr ""
 
-#: ../src/verbs.cpp:2325
+#: ../src/verbs.cpp:2344
 msgid "_Guides around page"
 msgstr ""
 
-#: ../src/verbs.cpp:2326
+#: ../src/verbs.cpp:2345
 msgid "Create four guides aligned with the page borders"
 msgstr ""
 
-#: ../src/verbs.cpp:2327
+#: ../src/verbs.cpp:2346
 msgid "Next Path Effect Parameter"
 msgstr ""
 
-#: ../src/verbs.cpp:2328
+#: ../src/verbs.cpp:2347
 msgid "Show next Path Effect parameter for editing"
 msgstr ""
 
 #. Selection
-#: ../src/verbs.cpp:2331
+#: ../src/verbs.cpp:2350
 #, fuzzy
 msgid "Raise to _Top"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/verbs.cpp:2332
+#: ../src/verbs.cpp:2351
 msgid "Raise selection to top"
 msgstr ""
 
-#: ../src/verbs.cpp:2333
+#: ../src/verbs.cpp:2352
 #, fuzzy
 msgid "Lower to _Bottom"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/verbs.cpp:2334
+#: ../src/verbs.cpp:2353
 msgid "Lower selection to bottom"
 msgstr ""
 
-#: ../src/verbs.cpp:2335
+#: ../src/verbs.cpp:2354
 #, fuzzy
 msgid "_Raise"
 msgstr "رفع"
 
-#: ../src/verbs.cpp:2336
+#: ../src/verbs.cpp:2355
 msgid "Raise selection one step"
 msgstr ""
 
-#: ../src/verbs.cpp:2337
+#: ../src/verbs.cpp:2356
 #, fuzzy
 msgid "_Lower"
 msgstr "أقل"
 
-#: ../src/verbs.cpp:2338
+#: ../src/verbs.cpp:2357
 msgid "Lower selection one step"
 msgstr ""
 
-#: ../src/verbs.cpp:2339
+#: ../src/verbs.cpp:2358
 #, fuzzy
 msgid "_Group"
 msgstr "مجموعة"
 
-#: ../src/verbs.cpp:2340
+#: ../src/verbs.cpp:2359
 #, fuzzy
 msgid "Group selected objects"
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
-#: ../src/verbs.cpp:2342
+#: ../src/verbs.cpp:2361
 #, fuzzy
 msgid "Ungroup selected groups"
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
-#: ../src/verbs.cpp:2344
+#: ../src/verbs.cpp:2363
 #, fuzzy
 msgid "_Put on Path"
 msgstr "على كلً الصفحات"
 
-#: ../src/verbs.cpp:2346
+#: ../src/verbs.cpp:2365
 msgid "_Remove from Path"
 msgstr ""
 
-#: ../src/verbs.cpp:2348
+#: ../src/verbs.cpp:2367
 msgid "Remove Manual _Kerns"
 msgstr ""
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
-#: ../src/verbs.cpp:2351
+#: ../src/verbs.cpp:2370
 msgid "Remove all manual kerns and glyph rotations from a text object"
 msgstr ""
 
-#: ../src/verbs.cpp:2353
+#: ../src/verbs.cpp:2372
 #, fuzzy
 msgid "_Union"
 msgstr "الإتحاد"
 
-#: ../src/verbs.cpp:2354
+#: ../src/verbs.cpp:2373
 msgid "Create union of selected paths"
 msgstr ""
 
-#: ../src/verbs.cpp:2355
+#: ../src/verbs.cpp:2374
 #, fuzzy
 msgid "_Intersection"
 msgstr "التقاطع"
 
-#: ../src/verbs.cpp:2356
+#: ../src/verbs.cpp:2375
 msgid "Create intersection of selected paths"
 msgstr ""
 
-#: ../src/verbs.cpp:2357
+#: ../src/verbs.cpp:2376
 #, fuzzy
 msgid "_Difference"
 msgstr "فرق"
 
-#: ../src/verbs.cpp:2358
+#: ../src/verbs.cpp:2377
 msgid "Create difference of selected paths (bottom minus top)"
 msgstr ""
 
-#: ../src/verbs.cpp:2359
+#: ../src/verbs.cpp:2378
 msgid "E_xclusion"
 msgstr ""
 
-#: ../src/verbs.cpp:2360
+#: ../src/verbs.cpp:2379
 msgid ""
 "Create exclusive OR of selected paths (those parts that belong to only one "
 "path)"
 msgstr ""
 
-#: ../src/verbs.cpp:2361
+#: ../src/verbs.cpp:2380
 #, fuzzy
 msgid "Di_vision"
 msgstr "بصر حاسوبي"
 
-#: ../src/verbs.cpp:2362
+#: ../src/verbs.cpp:2381
 msgid "Cut the bottom path into pieces"
 msgstr ""
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2365
+#: ../src/verbs.cpp:2384
 #, fuzzy
 msgid "Cut _Path"
 msgstr "مسار مطلق"
 
-#: ../src/verbs.cpp:2366
+#: ../src/verbs.cpp:2385
 msgid "Cut the bottom path's stroke into pieces, removing fill"
 msgstr ""
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2370
+#: ../src/verbs.cpp:2389
 msgid "Outs_et"
 msgstr ""
 
-#: ../src/verbs.cpp:2371
+#: ../src/verbs.cpp:2390
 #, fuzzy
 msgid "Outset selected paths"
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
-#: ../src/verbs.cpp:2373
+#: ../src/verbs.cpp:2392
 msgid "O_utset Path by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2374
+#: ../src/verbs.cpp:2393
 msgid "Outset selected paths by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2376
+#: ../src/verbs.cpp:2395
 msgid "O_utset Path by 10 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2377
+#: ../src/verbs.cpp:2396
 msgid "Outset selected paths by 10 px"
 msgstr ""
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2381
+#: ../src/verbs.cpp:2400
 msgid "I_nset"
 msgstr ""
 
-#: ../src/verbs.cpp:2382
+#: ../src/verbs.cpp:2401
 #, fuzzy
 msgid "Inset selected paths"
 msgstr "<small>لا يوجد شيء تم تحديده.</small>"
 
-#: ../src/verbs.cpp:2384
+#: ../src/verbs.cpp:2403
 msgid "I_nset Path by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2385
+#: ../src/verbs.cpp:2404
 msgid "Inset selected paths by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2387
+#: ../src/verbs.cpp:2406
 msgid "I_nset Path by 10 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2388
+#: ../src/verbs.cpp:2407
 msgid "Inset selected paths by 10 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2390
+#: ../src/verbs.cpp:2409
 msgid "D_ynamic Offset"
 msgstr ""
 
-#: ../src/verbs.cpp:2390
+#: ../src/verbs.cpp:2409
 msgid "Create a dynamic offset object"
 msgstr ""
 
-#: ../src/verbs.cpp:2392
+#: ../src/verbs.cpp:2411
 #, fuzzy
 msgid "_Linked Offset"
 msgstr "قائمة موصولة"
 
-#: ../src/verbs.cpp:2393
+#: ../src/verbs.cpp:2412
 msgid "Create a dynamic offset object linked to the original path"
 msgstr ""
 
-#: ../src/verbs.cpp:2395
+#: ../src/verbs.cpp:2414
 #, fuzzy
 msgid "_Stroke to Path"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/verbs.cpp:2396
+#: ../src/verbs.cpp:2415
 msgid "Convert selected object's stroke to paths"
 msgstr ""
 
-#: ../src/verbs.cpp:2397
+#: ../src/verbs.cpp:2416
 msgid "Si_mplify"
 msgstr ""
 
-#: ../src/verbs.cpp:2398
+#: ../src/verbs.cpp:2417
 msgid "Simplify selected paths (remove extra nodes)"
 msgstr ""
 
-#: ../src/verbs.cpp:2399
+#: ../src/verbs.cpp:2418
 #, fuzzy
 msgid "_Reverse"
 msgstr "معكوس"
 
-#: ../src/verbs.cpp:2400
+#: ../src/verbs.cpp:2419
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
 msgstr ""
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2402
+#: ../src/verbs.cpp:2421
 #, fuzzy
 msgid "_Trace Bitmap..."
 msgstr "خط نقطي"
 
-#: ../src/verbs.cpp:2403
+#: ../src/verbs.cpp:2422
 msgid "Create one or more paths from a bitmap by tracing it"
 msgstr ""
 
-#: ../src/verbs.cpp:2404
+#: ../src/verbs.cpp:2423
 #, fuzzy
 msgid "_Make a Bitmap Copy"
 msgstr "<big><b>قياس الصورة</b></big>"
 
-#: ../src/verbs.cpp:2405
+#: ../src/verbs.cpp:2424
 msgid "Export selection to a bitmap and insert it into document"
 msgstr ""
 
-#: ../src/verbs.cpp:2406
+#: ../src/verbs.cpp:2425
 #, fuzzy
 msgid "_Combine"
 msgstr "تأليف بين"
 
-#: ../src/verbs.cpp:2407
+#: ../src/verbs.cpp:2426
 msgid "Combine several paths into one"
 msgstr ""
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2410
+#: ../src/verbs.cpp:2429
 #, fuzzy
 msgid "Break _Apart"
 msgstr "فكّك"
 
-#: ../src/verbs.cpp:2411
-msgid "Break selected paths into subpaths"
-msgstr ""
-
-#: ../src/verbs.cpp:2412
-#, fuzzy
-msgid "Rows and Columns..."
-msgstr "المنظر و الأحساس"
-
-#: ../src/verbs.cpp:2413
-msgid "Arrange selected objects in a table"
-msgstr ""
-
-#. Layer
-#: ../src/verbs.cpp:2415
-#, fuzzy
-msgid "_Add Layer..."
-msgstr "إضافة طبقة"
-
-#: ../src/verbs.cpp:2416
-#, fuzzy
-msgid "Create a new layer"
-msgstr "تم إنشاء طبقة جديدة"
-
-#: ../src/verbs.cpp:2417
-#, fuzzy
-msgid "Re_name Layer..."
-msgstr "تم إنشاء طبقة جديدة"
-
-#: ../src/verbs.cpp:2418
-#, fuzzy
-msgid "Rename the current layer"
-msgstr "تم إنشاء طبقة جديدة"
-
-#: ../src/verbs.cpp:2419
-msgid "Switch to Layer Abov_e"
-msgstr ""
-
-#: ../src/verbs.cpp:2420
-msgid "Switch to the layer above the current"
-msgstr ""
-
-#: ../src/verbs.cpp:2421
-msgid "Switch to Layer Belo_w"
-msgstr ""
-
-#: ../src/verbs.cpp:2422
-msgid "Switch to the layer below the current"
-msgstr ""
-
-#: ../src/verbs.cpp:2423
-msgid "Move Selection to Layer Abo_ve"
-msgstr ""
-
-#: ../src/verbs.cpp:2424
-msgid "Move selection to the layer above the current"
-msgstr ""
-
-#: ../src/verbs.cpp:2425
-msgid "Move Selection to Layer Bel_ow"
-msgstr ""
-
-#: ../src/verbs.cpp:2426
-msgid "Move selection to the layer below the current"
-msgstr ""
-
-#: ../src/verbs.cpp:2427
-#, fuzzy
-msgid "Layer to _Top"
-msgstr "تحويل إلى التكرار"
-
-#: ../src/verbs.cpp:2428
-msgid "Raise the current layer to the top"
-msgstr ""
-
-#: ../src/verbs.cpp:2429
-#, fuzzy
-msgid "Layer to _Bottom"
-msgstr "تحويل إلى التكرار"
-
 #: ../src/verbs.cpp:2430
-msgid "Lower the current layer to the bottom"
+msgid "Break selected paths into subpaths"
 msgstr ""
 
 #: ../src/verbs.cpp:2431
 #, fuzzy
-msgid "_Raise Layer"
-msgstr "طبقة مضيف-مضيف"
+msgid "Rows and Columns..."
+msgstr "المنظر و الأحساس"
 
 #: ../src/verbs.cpp:2432
-#, fuzzy
-msgid "Raise the current layer"
-msgstr "تم إنشاء طبقة جديدة"
+msgid "Arrange selected objects in a table"
+msgstr ""
 
-#: ../src/verbs.cpp:2433
-#, fuzzy
-msgid "_Lower Layer"
-msgstr "طبقة مضيف-مضيف"
-
+#. Layer
 #: ../src/verbs.cpp:2434
 #, fuzzy
-msgid "Lower the current layer"
-msgstr "تم إنشاء طبقة جديدة"
+msgid "_Add Layer..."
+msgstr "إضافة طبقة"
 
 #: ../src/verbs.cpp:2435
 #, fuzzy
-msgid "Duplicate Current Layer..."
+msgid "Create a new layer"
 msgstr "تم إنشاء طبقة جديدة"
 
 #: ../src/verbs.cpp:2436
 #, fuzzy
+msgid "Re_name Layer..."
+msgstr "تم إنشاء طبقة جديدة"
+
+#: ../src/verbs.cpp:2437
+#, fuzzy
+msgid "Rename the current layer"
+msgstr "تم إنشاء طبقة جديدة"
+
+#: ../src/verbs.cpp:2438
+msgid "Switch to Layer Abov_e"
+msgstr ""
+
+#: ../src/verbs.cpp:2439
+msgid "Switch to the layer above the current"
+msgstr ""
+
+#: ../src/verbs.cpp:2440
+msgid "Switch to Layer Belo_w"
+msgstr ""
+
+#: ../src/verbs.cpp:2441
+msgid "Switch to the layer below the current"
+msgstr ""
+
+#: ../src/verbs.cpp:2442
+msgid "Move Selection to Layer Abo_ve"
+msgstr ""
+
+#: ../src/verbs.cpp:2443
+msgid "Move selection to the layer above the current"
+msgstr ""
+
+#: ../src/verbs.cpp:2444
+msgid "Move Selection to Layer Bel_ow"
+msgstr ""
+
+#: ../src/verbs.cpp:2445
+msgid "Move selection to the layer below the current"
+msgstr ""
+
+#: ../src/verbs.cpp:2446
+#, fuzzy
+msgid "Layer to _Top"
+msgstr "تحويل إلى التكرار"
+
+#: ../src/verbs.cpp:2447
+msgid "Raise the current layer to the top"
+msgstr ""
+
+#: ../src/verbs.cpp:2448
+#, fuzzy
+msgid "Layer to _Bottom"
+msgstr "تحويل إلى التكرار"
+
+#: ../src/verbs.cpp:2449
+msgid "Lower the current layer to the bottom"
+msgstr ""
+
+#: ../src/verbs.cpp:2450
+#, fuzzy
+msgid "_Raise Layer"
+msgstr "طبقة مضيف-مضيف"
+
+#: ../src/verbs.cpp:2451
+#, fuzzy
+msgid "Raise the current layer"
+msgstr "تم إنشاء طبقة جديدة"
+
+#: ../src/verbs.cpp:2452
+#, fuzzy
+msgid "_Lower Layer"
+msgstr "طبقة مضيف-مضيف"
+
+#: ../src/verbs.cpp:2453
+#, fuzzy
+msgid "Lower the current layer"
+msgstr "تم إنشاء طبقة جديدة"
+
+#: ../src/verbs.cpp:2454
+#, fuzzy
+msgid "Duplicate Current Layer..."
+msgstr "تم إنشاء طبقة جديدة"
+
+#: ../src/verbs.cpp:2455
+#, fuzzy
 msgid "Duplicate an existing layer"
 msgstr "مرشح بريد"
 
-#: ../src/verbs.cpp:2437
+#: ../src/verbs.cpp:2456
 #, fuzzy
 msgid "_Delete Current Layer"
 msgstr "تم إنشاء طبقة جديدة"
 
-#: ../src/verbs.cpp:2438
+#: ../src/verbs.cpp:2457
 #, fuzzy
 msgid "Delete the current layer"
 msgstr "تم إنشاء طبقة جديدة"
 
-#: ../src/verbs.cpp:2439
+#: ../src/verbs.cpp:2458
 #, fuzzy
 msgid "_Show/hide other layers"
 msgstr "تم إنشاء طبقة جديدة"
 
-#: ../src/verbs.cpp:2440
+#: ../src/verbs.cpp:2459
 #, fuzzy
 msgid "Solo the current layer"
 msgstr "تم إنشاء طبقة جديدة"
 
 #. Object
-#: ../src/verbs.cpp:2443
+#: ../src/verbs.cpp:2462
 msgid "Rotate _90&#176; CW"
 msgstr ""
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
-#: ../src/verbs.cpp:2446
+#: ../src/verbs.cpp:2465
 msgid "Rotate selection 90° clockwise"
 msgstr ""
 
-#: ../src/verbs.cpp:2447
+#: ../src/verbs.cpp:2466
 msgid "Rotate 9_0&#176; CCW"
 msgstr ""
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
-#: ../src/verbs.cpp:2450
+#: ../src/verbs.cpp:2469
 msgid "Rotate selection 90° counter-clockwise"
 msgstr ""
 
-#: ../src/verbs.cpp:2451
+#: ../src/verbs.cpp:2470
 msgid "Remove _Transformations"
 msgstr ""
 
-#: ../src/verbs.cpp:2452
+#: ../src/verbs.cpp:2471
 msgid "Remove transformations from object"
 msgstr ""
 
-#: ../src/verbs.cpp:2453
+#: ../src/verbs.cpp:2472
 #, fuzzy
 msgid "_Object to Path"
 msgstr "تحويل إلى التكرار"
 
-#: ../src/verbs.cpp:2454
+#: ../src/verbs.cpp:2473
 msgid "Convert selected object to path"
 msgstr ""
 
-#: ../src/verbs.cpp:2455
+#: ../src/verbs.cpp:2474
 #, fuzzy
 msgid "_Flow into Frame"
 msgstr "تحليل تدفًق بيانات"
 
-#: ../src/verbs.cpp:2456
+#: ../src/verbs.cpp:2475
 msgid ""
 "Put text into a frame (path or shape), creating a flowed text linked to the "
 "frame object"
 msgstr ""
 
-#: ../src/verbs.cpp:2457
+#: ../src/verbs.cpp:2476
 msgid "_Unflow"
 msgstr ""
 
-#: ../src/verbs.cpp:2458
+#: ../src/verbs.cpp:2477
 msgid "Remove text from frame (creates a single-line text object)"
 msgstr ""
 
-#: ../src/verbs.cpp:2459
+#: ../src/verbs.cpp:2478
 #, fuzzy
 msgid "_Convert to Text"
 msgstr "نمط إدخال النصوص"
 
-#: ../src/verbs.cpp:2460
+#: ../src/verbs.cpp:2479
 msgid "Convert flowed text to regular text object (preserves appearance)"
 msgstr ""
 
-#: ../src/verbs.cpp:2462
+#: ../src/verbs.cpp:2481
 #, fuzzy
 msgid "Flip _Horizontal"
 msgstr "تطبيق أفقى"
 
-#: ../src/verbs.cpp:2462
+#: ../src/verbs.cpp:2481
 msgid "Flip selected objects horizontally"
 msgstr ""
 
-#: ../src/verbs.cpp:2465
+#: ../src/verbs.cpp:2484
 #, fuzzy
 msgid "Flip _Vertical"
 msgstr "شريط عامودي"
 
-#: ../src/verbs.cpp:2465
+#: ../src/verbs.cpp:2484
 msgid "Flip selected objects vertically"
 msgstr ""
 
-#: ../src/verbs.cpp:2468
+#: ../src/verbs.cpp:2487
 msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr ""
 
-#: ../src/verbs.cpp:2470
+#: ../src/verbs.cpp:2489
 #, fuzzy
 msgid "Edit mask"
 msgstr "قناع البت"
 
-#: ../src/verbs.cpp:2471 ../src/verbs.cpp:2477
+#: ../src/verbs.cpp:2490 ../src/verbs.cpp:2496
 #, fuzzy
 msgid "_Release"
 msgstr "إصدار"
 
-#: ../src/verbs.cpp:2472
+#: ../src/verbs.cpp:2491
 msgid "Remove mask from selection"
 msgstr ""
 
-#: ../src/verbs.cpp:2474
+#: ../src/verbs.cpp:2493
 msgid ""
 "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
 
-#: ../src/verbs.cpp:2476 ../src/widgets/toolbox.cpp:1446
+#: ../src/verbs.cpp:2495 ../src/widgets/toolbox.cpp:1446
 #, fuzzy
 msgid "Edit clipping path"
 msgstr "نظرية المجموعات البديهية"
 
-#: ../src/verbs.cpp:2478
+#: ../src/verbs.cpp:2497
 msgid "Remove clipping path from selection"
 msgstr ""
 
 #. Tools
-#: ../src/verbs.cpp:2481
+#: ../src/verbs.cpp:2500
 msgid "Select"
 msgstr "تحديد"
 
-#: ../src/verbs.cpp:2482
+#: ../src/verbs.cpp:2501
 msgid "Select and transform objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2483
+#: ../src/verbs.cpp:2502
 #, fuzzy
 msgid "Node Edit"
 msgstr "عقدة حشد"
 
-#: ../src/verbs.cpp:2484
+#: ../src/verbs.cpp:2503
 #, fuzzy
 msgid "Edit paths by nodes"
 msgstr "ربط العقد بقطعة مستقيمة"
 
-#: ../src/verbs.cpp:2486
+#: ../src/verbs.cpp:2505
 msgid "Tweak objects by sculpting or painting"
 msgstr ""
 
-#: ../src/verbs.cpp:2488
+#: ../src/verbs.cpp:2507
 msgid "Create rectangles and squares"
 msgstr ""
 
-#: ../src/verbs.cpp:2490
+#: ../src/verbs.cpp:2509
 #, fuzzy
 msgid "Create 3D boxes"
 msgstr "إنشاء صندوق ثلاثي الأبعاد"
 
-#: ../src/verbs.cpp:2492
+#: ../src/verbs.cpp:2511
 msgid "Create circles, ellipses, and arcs"
 msgstr ""
 
-#: ../src/verbs.cpp:2494
+#: ../src/verbs.cpp:2513
 msgid "Create stars and polygons"
-msgstr ""
-
-#: ../src/verbs.cpp:2496
-#, fuzzy
-msgid "Create spirals"
-msgstr "إنشاء قطع ناقص"
-
-#: ../src/verbs.cpp:2498
-#, fuzzy
-msgid "Draw freehand lines"
-msgstr "سطور في الدقيقة"
-
-#: ../src/verbs.cpp:2500
-msgid "Draw Bezier curves and straight lines"
-msgstr ""
-
-#: ../src/verbs.cpp:2502
-msgid "Draw calligraphic or brush strokes"
-msgstr ""
-
-#: ../src/verbs.cpp:2504
-msgid "Create and edit text objects"
-msgstr ""
-
-#: ../src/verbs.cpp:2506
-msgid "Create and edit gradients"
-msgstr ""
-
-#: ../src/verbs.cpp:2508
-msgid "Zoom in or out"
-msgstr ""
-
-#: ../src/verbs.cpp:2510
-msgid "Pick colors from image"
-msgstr ""
-
-#: ../src/verbs.cpp:2512
-#, fuzzy
-msgid "Create diagram connectors"
-msgstr "مخطًط تدفق البيانات"
-
-#: ../src/verbs.cpp:2514
-msgid "Fill bounded areas"
 msgstr ""
 
 #: ../src/verbs.cpp:2515
 #, fuzzy
-msgid "LPE Edit"
-msgstr "تحرير"
+msgid "Create spirals"
+msgstr "إنشاء قطع ناقص"
 
-#: ../src/verbs.cpp:2516
+#: ../src/verbs.cpp:2517
 #, fuzzy
-msgid "Edit Path Effect parameters"
-msgstr "مفعول جانبي"
+msgid "Draw freehand lines"
+msgstr "سطور في الدقيقة"
 
-#: ../src/verbs.cpp:2518
-#, fuzzy
-msgid "Erase existing paths"
-msgstr "إصدار مصلِح"
-
-#: ../src/verbs.cpp:2520
-msgid "Do geometric constructions"
+#: ../src/verbs.cpp:2519
+msgid "Draw Bezier curves and straight lines"
 msgstr ""
 
-#. Tool prefs
-#: ../src/verbs.cpp:2522
-msgid "Selector Preferences"
+#: ../src/verbs.cpp:2521
+msgid "Draw calligraphic or brush strokes"
 msgstr ""
 
 #: ../src/verbs.cpp:2523
-msgid "Open Preferences for the Selector tool"
-msgstr ""
-
-#: ../src/verbs.cpp:2524
-msgid "Node Tool Preferences"
+msgid "Create and edit text objects"
 msgstr ""
 
 #: ../src/verbs.cpp:2525
-msgid "Open Preferences for the Node tool"
-msgstr ""
-
-#: ../src/verbs.cpp:2526
-msgid "Tweak Tool Preferences"
+msgid "Create and edit gradients"
 msgstr ""
 
 #: ../src/verbs.cpp:2527
-msgid "Open Preferences for the Tweak tool"
-msgstr ""
-
-#: ../src/verbs.cpp:2528
-msgid "Rectangle Preferences"
+msgid "Zoom in or out"
 msgstr ""
 
 #: ../src/verbs.cpp:2529
-msgid "Open Preferences for the Rectangle tool"
+msgid "Pick colors from image"
 msgstr ""
-
-#: ../src/verbs.cpp:2530
-#, fuzzy
-msgid "3D Box Preferences"
-msgstr "إنشاء صندوق ثلاثي الأبعاد"
 
 #: ../src/verbs.cpp:2531
-msgid "Open Preferences for the 3D Box tool"
-msgstr ""
-
-#: ../src/verbs.cpp:2532
 #, fuzzy
-msgid "Ellipse Preferences"
-msgstr "إنشاء قطع ناقص"
+msgid "Create diagram connectors"
+msgstr "مخطًط تدفق البيانات"
 
 #: ../src/verbs.cpp:2533
-msgid "Open Preferences for the Ellipse tool"
+msgid "Fill bounded areas"
 msgstr ""
 
 #: ../src/verbs.cpp:2534
 #, fuzzy
+msgid "LPE Edit"
+msgstr "تحرير"
+
+#: ../src/verbs.cpp:2535
+#, fuzzy
+msgid "Edit Path Effect parameters"
+msgstr "مفعول جانبي"
+
+#: ../src/verbs.cpp:2537
+#, fuzzy
+msgid "Erase existing paths"
+msgstr "إصدار مصلِح"
+
+#: ../src/verbs.cpp:2539
+msgid "Do geometric constructions"
+msgstr ""
+
+#. Tool prefs
+#: ../src/verbs.cpp:2541
+msgid "Selector Preferences"
+msgstr ""
+
+#: ../src/verbs.cpp:2542
+msgid "Open Preferences for the Selector tool"
+msgstr ""
+
+#: ../src/verbs.cpp:2543
+msgid "Node Tool Preferences"
+msgstr ""
+
+#: ../src/verbs.cpp:2544
+msgid "Open Preferences for the Node tool"
+msgstr ""
+
+#: ../src/verbs.cpp:2545
+msgid "Tweak Tool Preferences"
+msgstr ""
+
+#: ../src/verbs.cpp:2546
+msgid "Open Preferences for the Tweak tool"
+msgstr ""
+
+#: ../src/verbs.cpp:2547
+msgid "Rectangle Preferences"
+msgstr ""
+
+#: ../src/verbs.cpp:2548
+msgid "Open Preferences for the Rectangle tool"
+msgstr ""
+
+#: ../src/verbs.cpp:2549
+#, fuzzy
+msgid "3D Box Preferences"
+msgstr "إنشاء صندوق ثلاثي الأبعاد"
+
+#: ../src/verbs.cpp:2550
+msgid "Open Preferences for the 3D Box tool"
+msgstr ""
+
+#: ../src/verbs.cpp:2551
+#, fuzzy
+msgid "Ellipse Preferences"
+msgstr "إنشاء قطع ناقص"
+
+#: ../src/verbs.cpp:2552
+msgid "Open Preferences for the Ellipse tool"
+msgstr ""
+
+#: ../src/verbs.cpp:2553
+#, fuzzy
 msgid "Star Preferences"
 msgstr "شبكة على شكل نجمة"
 
-#: ../src/verbs.cpp:2535
+#: ../src/verbs.cpp:2554
 msgid "Open Preferences for the Star tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2536
+#: ../src/verbs.cpp:2555
 msgid "Spiral Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2537
+#: ../src/verbs.cpp:2556
 msgid "Open Preferences for the Spiral tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2538
+#: ../src/verbs.cpp:2557
 #, fuzzy
 msgid "Pencil Preferences"
 msgstr "قلم رصاص حبر"
 
-#: ../src/verbs.cpp:2539
+#: ../src/verbs.cpp:2558
 msgid "Open Preferences for the Pencil tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2540
+#: ../src/verbs.cpp:2559
 #, fuzzy
 msgid "Pen Preferences"
 msgstr "قلم خفيف"
 
-#: ../src/verbs.cpp:2541
+#: ../src/verbs.cpp:2560
 msgid "Open Preferences for the Pen tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2542
+#: ../src/verbs.cpp:2561
 msgid "Calligraphic Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2543
+#: ../src/verbs.cpp:2562
 msgid "Open Preferences for the Calligraphy tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2544
+#: ../src/verbs.cpp:2563
 #, fuzzy
 msgid "Text Preferences"
 msgstr "نص جديد"
 
-#: ../src/verbs.cpp:2545
+#: ../src/verbs.cpp:2564
 msgid "Open Preferences for the Text tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2546
+#: ../src/verbs.cpp:2565
 msgid "Gradient Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2547
+#: ../src/verbs.cpp:2566
 msgid "Open Preferences for the Gradient tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2548
+#: ../src/verbs.cpp:2567
 #, fuzzy
 msgid "Zoom Preferences"
 msgstr "لا توجد نسبة تكبير سابقة"
 
-#: ../src/verbs.cpp:2549
+#: ../src/verbs.cpp:2568
 msgid "Open Preferences for the Zoom tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2550
+#: ../src/verbs.cpp:2569
 msgid "Dropper Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2551
+#: ../src/verbs.cpp:2570
 msgid "Open Preferences for the Dropper tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2552
+#: ../src/verbs.cpp:2571
 #, fuzzy
 msgid "Connector Preferences"
 msgstr "إعادة توجيه أداة التوصيل"
 
-#: ../src/verbs.cpp:2553
+#: ../src/verbs.cpp:2572
 msgid "Open Preferences for the Connector tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2554
+#: ../src/verbs.cpp:2573
 msgid "Paint Bucket Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2555
+#: ../src/verbs.cpp:2574
 msgid "Open Preferences for the Paint Bucket tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2556
+#: ../src/verbs.cpp:2575
 #, fuzzy
 msgid "Eraser Preferences"
 msgstr "شبكة على شكل نجمة"
 
-#: ../src/verbs.cpp:2557
+#: ../src/verbs.cpp:2576
 msgid "Open Preferences for the Eraser tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2558
+#: ../src/verbs.cpp:2577
 #, fuzzy
 msgid "LPE Tool Preferences"
 msgstr "لا توجد نسبة تكبير سابقة"
 
-#: ../src/verbs.cpp:2559
+#: ../src/verbs.cpp:2578
 msgid "Open Preferences for the LPETool tool"
 msgstr ""
 
 #. Zoom/View
-#: ../src/verbs.cpp:2562
+#: ../src/verbs.cpp:2581
 msgid "Zoom In"
 msgstr "تكبير"
 
-#: ../src/verbs.cpp:2562
+#: ../src/verbs.cpp:2581
 msgid "Zoom in"
 msgstr "تكبير"
 
-#: ../src/verbs.cpp:2563
+#: ../src/verbs.cpp:2582
 msgid "Zoom Out"
 msgstr "تصغير"
 
-#: ../src/verbs.cpp:2563
+#: ../src/verbs.cpp:2582
 msgid "Zoom out"
 msgstr "تصغير"
 
-#: ../src/verbs.cpp:2564
+#: ../src/verbs.cpp:2583
 #, fuzzy
 msgid "_Rulers"
 msgstr "الحكّام"
 
-#: ../src/verbs.cpp:2564
+#: ../src/verbs.cpp:2583
 msgid "Show or hide the canvas rulers"
 msgstr ""
 
-#: ../src/verbs.cpp:2565
+#: ../src/verbs.cpp:2584
 #, fuzzy
 msgid "Scroll_bars"
 msgstr "سهم التمرير"
 
-#: ../src/verbs.cpp:2565
+#: ../src/verbs.cpp:2584
 msgid "Show or hide the canvas scrollbars"
 msgstr ""
 
-#: ../src/verbs.cpp:2566
+#: ../src/verbs.cpp:2585
 msgid "_Grid"
 msgstr "شبكة"
 
-#: ../src/verbs.cpp:2566
+#: ../src/verbs.cpp:2585
 msgid "Show or hide the grid"
 msgstr ""
 
-#: ../src/verbs.cpp:2567
+#: ../src/verbs.cpp:2586
 msgid "G_uides"
 msgstr ""
 
-#: ../src/verbs.cpp:2567
+#: ../src/verbs.cpp:2586
 msgid "Show or hide guides (drag from a ruler to create a guide)"
 msgstr ""
 
-#: ../src/verbs.cpp:2568
+#: ../src/verbs.cpp:2587
 msgid "Toggle snapping on or off"
 msgstr ""
 
-#: ../src/verbs.cpp:2569
+#: ../src/verbs.cpp:2588
 #, fuzzy
 msgid "Nex_t Zoom"
 msgstr "لا توجد نسبة تكبير سابقة"
 
-#: ../src/verbs.cpp:2569
+#: ../src/verbs.cpp:2588
 msgid "Next zoom (from the history of zooms)"
 msgstr ""
 
-#: ../src/verbs.cpp:2571
+#: ../src/verbs.cpp:2590
 #, fuzzy
 msgid "Pre_vious Zoom"
 msgstr "لا توجد نسبة تكبير سابقة"
 
-#: ../src/verbs.cpp:2571
+#: ../src/verbs.cpp:2590
 msgid "Previous zoom (from the history of zooms)"
 msgstr ""
 
-#: ../src/verbs.cpp:2573
+#: ../src/verbs.cpp:2592
 #, fuzzy
 msgid "Zoom 1:_1"
 msgstr "كبِّر :: تكبير"
 
-#: ../src/verbs.cpp:2573
+#: ../src/verbs.cpp:2592
 #, fuzzy
 msgid "Zoom to 1:1"
 msgstr "متاجرة بين عمل وعمل"
 
-#: ../src/verbs.cpp:2575
+#: ../src/verbs.cpp:2594
 #, fuzzy
 msgid "Zoom 1:_2"
 msgstr "كبِّر :: تكبير"
 
-#: ../src/verbs.cpp:2575
+#: ../src/verbs.cpp:2594
 #, fuzzy
 msgid "Zoom to 1:2"
 msgstr "متاجرة بين عمل وعمل"
 
-#: ../src/verbs.cpp:2577
+#: ../src/verbs.cpp:2596
 #, fuzzy
 msgid "_Zoom 2:1"
 msgstr "كبِّر :: تكبير"
 
-#: ../src/verbs.cpp:2577
+#: ../src/verbs.cpp:2596
 #, fuzzy
 msgid "Zoom to 2:1"
 msgstr "متاجرة بين عمل وعمل"
 
-#: ../src/verbs.cpp:2580
+#: ../src/verbs.cpp:2599
 msgid "_Fullscreen"
 msgstr "ملئ الشاشة"
 
-#: ../src/verbs.cpp:2580
+#: ../src/verbs.cpp:2599
 msgid "Stretch this document window to full screen"
 msgstr ""
 
-#: ../src/verbs.cpp:2583
+#: ../src/verbs.cpp:2602
 msgid "Toggle _Focus Mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2583
+#: ../src/verbs.cpp:2602
 msgid "Remove excess toolbars to focus on drawing"
 msgstr ""
 
-#: ../src/verbs.cpp:2585
+#: ../src/verbs.cpp:2604
 #, fuzzy
 msgid "Duplic_ate Window"
 msgstr "أكبر إرتفاع للنافذة"
 
-#: ../src/verbs.cpp:2585
+#: ../src/verbs.cpp:2604
 msgid "Open a new window with the same document"
 msgstr ""
 
-#: ../src/verbs.cpp:2587
+#: ../src/verbs.cpp:2606
 #, fuzzy
 msgid "_New View Preview"
 msgstr "معاينة المستند قبل طباعته"
 
-#: ../src/verbs.cpp:2588
+#: ../src/verbs.cpp:2607
 #, fuzzy
 msgid "New View Preview"
 msgstr "معاينة المستند قبل طباعته"
 
 #. "view_new_preview"
-#: ../src/verbs.cpp:2590
+#: ../src/verbs.cpp:2609
 #, fuzzy
 msgid "_Normal"
 msgstr ""
 "عادي\n"
 "طبيعي"
 
-#: ../src/verbs.cpp:2591
+#: ../src/verbs.cpp:2610
 msgid "Switch to normal display mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2592
+#: ../src/verbs.cpp:2611
 #, fuzzy
 msgid "No _Filters"
 msgstr "فرز"
 
-#: ../src/verbs.cpp:2593
+#: ../src/verbs.cpp:2612
 msgid "Switch to normal display without filters"
 msgstr ""
 
-#: ../src/verbs.cpp:2594
+#: ../src/verbs.cpp:2613
 #, fuzzy
 msgid "_Outline"
 msgstr "خُطَّة ، رسم تخطيطي"
 
-#: ../src/verbs.cpp:2595
+#: ../src/verbs.cpp:2614
 msgid "Switch to outline (wireframe) display mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2596
+#: ../src/verbs.cpp:2615
 #, fuzzy
 msgid "_Toggle"
 msgstr "بدل"
 
-#: ../src/verbs.cpp:2597
+#: ../src/verbs.cpp:2616
 msgid "Toggle between normal and outline display modes"
 msgstr ""
 
-#: ../src/verbs.cpp:2599
+#: ../src/verbs.cpp:2618
 msgid "Color-managed view"
 msgstr ""
 
-#: ../src/verbs.cpp:2600
+#: ../src/verbs.cpp:2619
 msgid "Toggle color-managed display for this document window"
 msgstr ""
 
-#: ../src/verbs.cpp:2602
+#: ../src/verbs.cpp:2621
 #, fuzzy
 msgid "Ico_n Preview..."
 msgstr "معاينة المستند قبل طباعته"
 
-#: ../src/verbs.cpp:2603
+#: ../src/verbs.cpp:2622
 msgid "Open a window to preview objects at different icon resolutions"
 msgstr ""
 
-#: ../src/verbs.cpp:2605
+#: ../src/verbs.cpp:2624
 msgid "Zoom to fit page in window"
 msgstr ""
 
-#: ../src/verbs.cpp:2606
+#: ../src/verbs.cpp:2625
 msgid "Page _Width"
 msgstr "عرض الصفحة"
 
-#: ../src/verbs.cpp:2607
+#: ../src/verbs.cpp:2626
 msgid "Zoom to fit page width in window"
 msgstr ""
 
-#: ../src/verbs.cpp:2609
+#: ../src/verbs.cpp:2628
 msgid "Zoom to fit drawing in window"
 msgstr ""
 
-#: ../src/verbs.cpp:2611
+#: ../src/verbs.cpp:2630
 msgid "Zoom to fit selection in window"
 msgstr ""
 
 #. Dialogs
-#: ../src/verbs.cpp:2614
+#: ../src/verbs.cpp:2633
 #, fuzzy
 msgid "In_kscape Preferences..."
 msgstr "الداخل أولا يخرج أولا"
 
-#: ../src/verbs.cpp:2615
+#: ../src/verbs.cpp:2634
 msgid "Edit global Inkscape preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2616
+#: ../src/verbs.cpp:2635
 #, fuzzy
 msgid "_Document Properties..."
 msgstr "مستند جديد"
 
-#: ../src/verbs.cpp:2617
+#: ../src/verbs.cpp:2636
 msgid "Edit properties of this document (to be saved with the document)"
 msgstr ""
 
-#: ../src/verbs.cpp:2618
+#: ../src/verbs.cpp:2637
 #, fuzzy
 msgid "Document _Metadata..."
 msgstr "مستند جديد"
 
-#: ../src/verbs.cpp:2619
+#: ../src/verbs.cpp:2638
 msgid "Edit document metadata (to be saved with the document)"
 msgstr ""
 
-#: ../src/verbs.cpp:2620
+#: ../src/verbs.cpp:2639
 #, fuzzy
 msgid "_Fill and Stroke..."
 msgstr "المنظر و الأحساس"
 
-#: ../src/verbs.cpp:2621
+#: ../src/verbs.cpp:2640
 msgid ""
 "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
 msgstr ""
 
 #. TRANSLATORS: "Swatches" means: color samples
-#: ../src/verbs.cpp:2623
+#: ../src/verbs.cpp:2642
 #, fuzzy
 msgid "S_watches..."
 msgstr "الساعات"
 
-#: ../src/verbs.cpp:2624
+#: ../src/verbs.cpp:2643
 msgid "Select colors from a swatches palette"
 msgstr ""
 
-#: ../src/verbs.cpp:2625
+#: ../src/verbs.cpp:2644
 msgid "Transfor_m..."
 msgstr ""
 
-#: ../src/verbs.cpp:2626
+#: ../src/verbs.cpp:2645
 msgid "Precisely control objects' transformations"
 msgstr ""
 
-#: ../src/verbs.cpp:2627
+#: ../src/verbs.cpp:2646
 #, fuzzy
 msgid "_Align and Distribute..."
 msgstr "المنظر و الأحساس"
 
-#: ../src/verbs.cpp:2628
+#: ../src/verbs.cpp:2647
 msgid "Align and distribute objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2629
+#: ../src/verbs.cpp:2648
 msgid "Undo _History..."
 msgstr ""
 
-#: ../src/verbs.cpp:2630
+#: ../src/verbs.cpp:2649
 msgid "Undo History"
 msgstr ""
 
-#: ../src/verbs.cpp:2631
+#: ../src/verbs.cpp:2650
 #, fuzzy
 msgid "_Text and Font..."
 msgstr "استعمال خط مخصّص"
 
-#: ../src/verbs.cpp:2632
+#: ../src/verbs.cpp:2651
 msgid "View and select font family, font size and other text properties"
 msgstr ""
 
-#: ../src/verbs.cpp:2633
+#: ../src/verbs.cpp:2652
 msgid "_XML Editor..."
 msgstr "محرر XML"
 
-#: ../src/verbs.cpp:2634
+#: ../src/verbs.cpp:2653
 msgid "View and edit the XML tree of the document"
 msgstr ""
 
-#: ../src/verbs.cpp:2635
+#: ../src/verbs.cpp:2654
 msgid "_Find..."
 msgstr "بحث"
 
-#: ../src/verbs.cpp:2636
+#: ../src/verbs.cpp:2655
 msgid "Find objects in document"
 msgstr ""
 
-#: ../src/verbs.cpp:2637
+#: ../src/verbs.cpp:2656
 msgid "Find and _Replace Text..."
 msgstr ""
 
-#: ../src/verbs.cpp:2638
+#: ../src/verbs.cpp:2657
 #, fuzzy
 msgid "Find and replace text in document"
 msgstr "فتح مستند"
 
-#: ../src/verbs.cpp:2639
+#: ../src/verbs.cpp:2658
 msgid "Check Spellin_g..."
 msgstr ""
 
-#: ../src/verbs.cpp:2640
+#: ../src/verbs.cpp:2659
 #, fuzzy
 msgid "Check spelling of text in document"
 msgstr "فتح مستند"
 
-#: ../src/verbs.cpp:2641
+#: ../src/verbs.cpp:2660
 msgid "_Messages..."
 msgstr "رسائل"
 
-#: ../src/verbs.cpp:2642
+#: ../src/verbs.cpp:2661
 #, fuzzy
 msgid "View debug messages"
 msgstr "تشغيل جميع رسائل التنقيح"
 
-#: ../src/verbs.cpp:2643
+#: ../src/verbs.cpp:2662
 msgid "S_cripts..."
 msgstr ""
 
-#: ../src/verbs.cpp:2644
+#: ../src/verbs.cpp:2663
 #, fuzzy
 msgid "Run scripts"
 msgstr "مستوى تشغيل"
 
-#: ../src/verbs.cpp:2645
+#: ../src/verbs.cpp:2664
 #, fuzzy
 msgid "Show/Hide D_ialogs"
 msgstr "إخفاء قائمة الكلمات"
 
-#: ../src/verbs.cpp:2646
+#: ../src/verbs.cpp:2665
 msgid "Show or hide all open dialogs"
 msgstr ""
 
-#: ../src/verbs.cpp:2647
+#: ../src/verbs.cpp:2666
 #, fuzzy
 msgid "Create Tiled Clones..."
 msgstr "إنشاء صندوق ثلاثي الأبعاد"
 
-#: ../src/verbs.cpp:2648
+#: ../src/verbs.cpp:2667
 msgid ""
 "Create multiple clones of selected object, arranging them into a pattern or "
 "scattering"
 msgstr ""
 
-#: ../src/verbs.cpp:2649
+#: ../src/verbs.cpp:2668
 #, fuzzy
 msgid "_Object Properties..."
 msgstr "هدف واسم"
 
-#: ../src/verbs.cpp:2650
+#: ../src/verbs.cpp:2669
 msgid "Edit the ID, locked and visible status, and other object properties"
 msgstr ""
 
-#: ../src/verbs.cpp:2653
+#: ../src/verbs.cpp:2672
 msgid "_Instant Messaging..."
 msgstr ""
 
-#: ../src/verbs.cpp:2653
+#: ../src/verbs.cpp:2672
 msgid "Jabber Instant Messaging Client"
 msgstr ""
 
-#: ../src/verbs.cpp:2655
+#: ../src/verbs.cpp:2674
 #, fuzzy
 msgid "_Input Devices..."
 msgstr "جهاز إدخال"
 
-#: ../src/verbs.cpp:2656 ../src/verbs.cpp:2658
+#: ../src/verbs.cpp:2675 ../src/verbs.cpp:2677
 msgid "Configure extended input devices, such as a graphics tablet"
 msgstr ""
 
-#: ../src/verbs.cpp:2657
+#: ../src/verbs.cpp:2676
 #, fuzzy
 msgid "_Input Devices (new)..."
 msgstr "جهاز إدخال"
 
-#: ../src/verbs.cpp:2659
+#: ../src/verbs.cpp:2678
 #, fuzzy
 msgid "_Extensions..."
 msgstr "الإمتدادات"
 
-#: ../src/verbs.cpp:2660
+#: ../src/verbs.cpp:2679
 msgid "Query information about extensions"
 msgstr ""
 
-#: ../src/verbs.cpp:2661
+#: ../src/verbs.cpp:2680
 msgid "Layer_s..."
 msgstr "طبقات"
 
-#: ../src/verbs.cpp:2662
+#: ../src/verbs.cpp:2681
 #, fuzzy
 msgid "View Layers"
 msgstr "عرض شجرى"
 
-#: ../src/verbs.cpp:2663
+#: ../src/verbs.cpp:2682
 #, fuzzy
 msgid "Path Effect Editor..."
 msgstr "مسار مطلق"
 
-#: ../src/verbs.cpp:2664
+#: ../src/verbs.cpp:2683
 msgid "Manage, edit, and apply path effects"
 msgstr ""
 
-#: ../src/verbs.cpp:2665
+#: ../src/verbs.cpp:2684
 #, fuzzy
 msgid "Filter Editor..."
 msgstr "مرشح بريد"
 
-#: ../src/verbs.cpp:2666
+#: ../src/verbs.cpp:2685
 msgid "Manage, edit, and apply SVG filters"
 msgstr ""
 
-#: ../src/verbs.cpp:2667
+#: ../src/verbs.cpp:2686
 #, fuzzy
 msgid "SVG Font Editor..."
 msgstr "محرر XML"
 
-#: ../src/verbs.cpp:2668
+#: ../src/verbs.cpp:2687
 msgid "Edit SVG fonts"
 msgstr ""
 
 #. Help
-#: ../src/verbs.cpp:2671
+#: ../src/verbs.cpp:2690
 #, fuzzy
 msgid "About E_xtensions"
 msgstr "الإستدارة 180 درجة :: العدول عن رأي"
 
-#: ../src/verbs.cpp:2672
+#: ../src/verbs.cpp:2691
 msgid "Information on Inkscape extensions"
 msgstr ""
 
-#: ../src/verbs.cpp:2673
+#: ../src/verbs.cpp:2692
 #, fuzzy
 msgid "About _Memory"
 msgstr "ذاكرة الوصول"
 
-#: ../src/verbs.cpp:2674
+#: ../src/verbs.cpp:2693
 #, fuzzy
 msgid "Memory usage information"
 msgstr "مساحة عنوان الذاكرة"
 
-#: ../src/verbs.cpp:2675
+#: ../src/verbs.cpp:2694
 #, fuzzy
 msgid "_About Inkscape"
 msgstr "الإستدارة 180 درجة :: العدول عن رأي"
 
-#: ../src/verbs.cpp:2676
+#: ../src/verbs.cpp:2695
 msgid "Inkscape version, authors, license"
 msgstr ""
 
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 #. Tutorials
-#: ../src/verbs.cpp:2681
+#: ../src/verbs.cpp:2700
 msgid "Inkscape: _Basic"
 msgstr ""
 
-#: ../src/verbs.cpp:2682
+#: ../src/verbs.cpp:2701
 msgid "Getting started with Inkscape"
 msgstr ""
 
 #. "tutorial_basic"
-#: ../src/verbs.cpp:2683
+#: ../src/verbs.cpp:2702
 msgid "Inkscape: _Shapes"
 msgstr ""
 
-#: ../src/verbs.cpp:2684
+#: ../src/verbs.cpp:2703
 msgid "Using shape tools to create and edit shapes"
 msgstr ""
 
-#: ../src/verbs.cpp:2685
+#: ../src/verbs.cpp:2704
 msgid "Inkscape: _Advanced"
 msgstr ""
 
-#: ../src/verbs.cpp:2686
+#: ../src/verbs.cpp:2705
 msgid "Advanced Inkscape topics"
 msgstr ""
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2688
+#: ../src/verbs.cpp:2707
 msgid "Inkscape: T_racing"
 msgstr ""
 
-#: ../src/verbs.cpp:2689
+#: ../src/verbs.cpp:2708
 #, fuzzy
 msgid "Using bitmap tracing"
 msgstr "<big><b>قياس الصورة</b></big>"
 
 #. "tutorial_tracing"
-#: ../src/verbs.cpp:2690
+#: ../src/verbs.cpp:2709
 msgid "Inkscape: _Calligraphy"
 msgstr ""
 
-#: ../src/verbs.cpp:2691
+#: ../src/verbs.cpp:2710
 msgid "Using the Calligraphy pen tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2692
+#: ../src/verbs.cpp:2711
 #, fuzzy
 msgid "_Elements of Design"
 msgstr "عناصر خلاطة"
 
-#: ../src/verbs.cpp:2693
+#: ../src/verbs.cpp:2712
 msgid "Principles of design in the tutorial form"
 msgstr ""
 
 #. "tutorial_design"
-#: ../src/verbs.cpp:2694
+#: ../src/verbs.cpp:2713
 #, fuzzy
 msgid "_Tips and Tricks"
 msgstr "المنظر و الأحساس"
 
-#: ../src/verbs.cpp:2695
+#: ../src/verbs.cpp:2714
 msgid "Miscellaneous tips and tricks"
 msgstr ""
 
 #. "tutorial_tips"
 #. Effect
-#: ../src/verbs.cpp:2698
+#: ../src/verbs.cpp:2717
 #, fuzzy
 msgid "Previous Effect"
 msgstr "مفعول جانبي"
 
-#: ../src/verbs.cpp:2699
+#: ../src/verbs.cpp:2718
 msgid "Repeat the last effect with the same settings"
 msgstr ""
 
-#: ../src/verbs.cpp:2700
+#: ../src/verbs.cpp:2719
 #, fuzzy
 msgid "Previous Effect Settings..."
 msgstr "تخطيط سببي مسببي"
 
-#: ../src/verbs.cpp:2701
+#: ../src/verbs.cpp:2720
 msgid "Repeat the last effect with new settings"
 msgstr ""
 
-#: ../src/verbs.cpp:2705
+#: ../src/verbs.cpp:2724
 msgid "Fit the page to the current selection"
 msgstr ""
 
-#: ../src/verbs.cpp:2707
+#: ../src/verbs.cpp:2726
 msgid "Fit the page to the drawing"
 msgstr ""
 
-#: ../src/verbs.cpp:2709
+#: ../src/verbs.cpp:2728
 msgid ""
 "Fit the page to the current selection or the drawing if there is no selection"
 msgstr ""
 
 #. LockAndHide
-#: ../src/verbs.cpp:2711
+#: ../src/verbs.cpp:2730
 #, fuzzy
 msgid "Unlock All"
 msgstr "متعدّد الأغراض"
 
-#: ../src/verbs.cpp:2713
+#: ../src/verbs.cpp:2732
 msgid "Unlock All in All Layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2715
+#: ../src/verbs.cpp:2734
 #, fuzzy
 msgid "Unhide All"
 msgstr "متعدّد الأغراض"
 
-#: ../src/verbs.cpp:2717
+#: ../src/verbs.cpp:2736
 msgid "Unhide All in All Layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2721
+#: ../src/verbs.cpp:2740
 msgid "Link an ICC color profile"
 msgstr ""
 
-#: ../src/verbs.cpp:2722
+#: ../src/verbs.cpp:2741
 #, fuzzy
 msgid "Remove Color Profile"
 msgstr "مرشح بريد"
 
-#: ../src/verbs.cpp:2723
+#: ../src/verbs.cpp:2742
 msgid "Remove a linked ICC color profile"
 msgstr ""
 
@@ -18307,38 +18608,38 @@ msgid "Pattern offset"
 msgstr "متسلسلة ثنائية"
 
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:550
+#: ../src/widgets/desktop-widget.cpp:549
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:612
+#: ../src/widgets/desktop-widget.cpp:611
 #, fuzzy, c-format
 msgid "%s: %d (outline) - Inkscape"
 msgstr "خط تفصيلي"
 
-#: ../src/widgets/desktop-widget.cpp:614
+#: ../src/widgets/desktop-widget.cpp:613
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:618
+#: ../src/widgets/desktop-widget.cpp:617
 #, fuzzy, c-format
 msgid "%s (outline) - Inkscape"
 msgstr "خط تفصيلي"
 
-#: ../src/widgets/desktop-widget.cpp:620
+#: ../src/widgets/desktop-widget.cpp:619
 #, c-format
 msgid "%s - Inkscape"
 msgstr ""
 
-#: ../src/widgets/eek-color-def.cpp:69 ../src/widgets/eek-color-def.cpp:91
+#: ../src/widgets/ege-paint-def.cpp:69 ../src/widgets/ege-paint-def.cpp:91
 #: ../src/widgets/gradient-selector.cpp:167
 msgid "none"
 msgstr "بدون"
 
-#: ../src/widgets/eek-color-def.cpp:88
+#: ../src/widgets/ege-paint-def.cpp:88
 #, fuzzy
 msgid "remove"
 msgstr "مسح"
@@ -18368,9 +18669,8 @@ msgstr "خط نقطي"
 
 #. Style frame
 #: ../src/widgets/font-selector.cpp:188
-#: ../share/extensions/polyhedron_3d.inx.h:43
-msgid "Style"
-msgstr "نمط"
+msgid "fontselector|Style"
+msgstr ""
 
 #: ../src/widgets/font-selector.cpp:226
 #, fuzzy
@@ -18384,11 +18684,6 @@ msgstr "حجم كلمة"
 #: ../src/widgets/font-selector.cpp:639 ../src/widgets/toolbox.cpp:6544
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr ""
-
-#: ../src/widgets/gradient-selector.cpp:144
-#: ../src/widgets/gradient-toolbar.cpp:466
-msgid "Edit..."
-msgstr "تحرير"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
 #: ../src/widgets/gradient-selector.cpp:161
@@ -20865,7 +21160,7 @@ msgstr ""
 msgid "Difficulty finding the image data."
 msgstr ""
 
-#: ../share/extensions/inkex.py:65
+#: ../share/extensions/inkex.py:66
 msgid ""
 "The fantastic lxml wrapper for libxml2 is required by inkex.py and therefore "
 "this extension. Please download and install the latest version from http://"
@@ -20873,7 +21168,7 @@ msgid ""
 "by a command like: sudo apt-get install python-lxml"
 msgstr ""
 
-#: ../share/extensions/inkex.py:212
+#: ../share/extensions/inkex.py:213
 #, python-format
 msgid "No matching node for expression: %s"
 msgstr ""
@@ -21005,6 +21300,7 @@ msgstr ""
 
 #: ../share/extensions/addnodes.inx.h:6 ../share/extensions/edge3d.inx.h:6
 #: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
+#: ../share/extensions/interp-att-g.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
 #: ../share/extensions/radiusrand.inx.h:4
@@ -22081,6 +22377,97 @@ msgstr "طريقة مجردة"
 
 #: ../share/extensions/interp.inx.h:7
 msgid "Interpolation steps"
+msgstr ""
+
+#: ../share/extensions/interp-att-g.inx.h:1
+#, fuzzy
+msgid "Attribute to Interpolate"
+msgstr "اسم متعارف عليه"
+
+#: ../share/extensions/interp-att-g.inx.h:3
+#, fuzzy
+msgid "End Value"
+msgstr "قيمة الهاك"
+
+#: ../share/extensions/interp-att-g.inx.h:5
+#, fuzzy
+msgid "Float Number"
+msgstr "مراسم نقطة الى نقطة"
+
+#: ../share/extensions/interp-att-g.inx.h:7
+msgid ""
+"If you select \"Other\", you must know the SVG attributes to identify here "
+"this \"other\":"
+msgstr ""
+
+#: ../share/extensions/interp-att-g.inx.h:8
+msgid "Integer Number"
+msgstr ""
+
+#: ../share/extensions/interp-att-g.inx.h:9
+msgid "Interpolate Attribute in a group"
+msgstr ""
+
+#: ../share/extensions/interp-att-g.inx.h:11
+#, fuzzy
+msgid "No Unit"
+msgstr "الواحدة"
+
+#: ../share/extensions/interp-att-g.inx.h:14
+#, fuzzy
+msgid "Other Attribute"
+msgstr "الصّفة"
+
+#: ../share/extensions/interp-att-g.inx.h:15
+#, fuzzy
+msgid "Other Attribute type"
+msgstr "اسم متعارف عليه"
+
+#: ../share/extensions/interp-att-g.inx.h:17
+#, fuzzy
+msgid "Start Value"
+msgstr "قيمة الهاك"
+
+#: ../share/extensions/interp-att-g.inx.h:18
+#: ../share/extensions/polyhedron_3d.inx.h:43
+msgid "Style"
+msgstr "نمط"
+
+#: ../share/extensions/interp-att-g.inx.h:19
+#, fuzzy
+msgid "Tag"
+msgstr "الهدف"
+
+#: ../share/extensions/interp-att-g.inx.h:20
+msgid ""
+"This effect applies a value for any interpolatable attribute for all "
+"elements inside the selected group or for all elements in a multiple "
+"selection"
+msgstr ""
+
+#: ../share/extensions/interp-att-g.inx.h:21
+#, fuzzy
+msgid "Transformation"
+msgstr "معلومات"
+
+#: ../share/extensions/interp-att-g.inx.h:22
+#, fuzzy
+msgid "Translate X"
+msgstr "المترجمون"
+
+#: ../share/extensions/interp-att-g.inx.h:23
+#, fuzzy
+msgid "Translate Y"
+msgstr "المترجمون"
+
+#: ../share/extensions/interp-att-g.inx.h:25
+msgid "Where to apply?"
+msgstr ""
+
+#: ../share/extensions/interp-att-g.inx.h:27
+#: ../share/extensions/web-set-att.inx.h:24
+#: ../share/extensions/web-transmit-att.inx.h:22
+msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
 msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:1
@@ -23199,6 +23586,149 @@ msgstr "ملف نصي (*.txt)"
 msgid "Text Input"
 msgstr "نمط إدخال النصوص"
 
+#: ../share/extensions/web-set-att.inx.h:1
+#, fuzzy
+msgid "Attribute to set"
+msgstr "اسم متعارف عليه"
+
+#: ../share/extensions/web-set-att.inx.h:2
+#: ../share/extensions/web-transmit-att.inx.h:2
+msgid "Compatibility with previews code to this event"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:3
+msgid ""
+"If you want to set more then one attribute, you must separate this with a "
+"space, and only with a space."
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:5
+#: ../share/extensions/web-transmit-att.inx.h:5
+msgid "Run it after"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:6
+#: ../share/extensions/web-transmit-att.inx.h:6
+msgid "Run it before"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:7
+#, fuzzy
+msgid "Set Atributes"
+msgstr "مجموعة أحرف"
+
+#: ../share/extensions/web-set-att.inx.h:8
+msgid "The list of values must have the same size of the attributes list."
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:9
+#: ../share/extensions/web-transmit-att.inx.h:7
+msgid ""
+"This effect adds a feature visible (or usable) only on a SVG enabled web "
+"browser (like Firefox)."
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:10
+msgid ""
+"This effect sets one or more attributes in the second selected element, when "
+"a defined event occurs on the first selected element."
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:11
+#, fuzzy
+msgid "Value to set"
+msgstr "قيمة"
+
+#: ../share/extensions/web-set-att.inx.h:12
+#: ../share/extensions/web-transmit-att.inx.h:10
+msgid "Web"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:13
+msgid "When the set must be done?"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:14
+#: ../share/extensions/web-transmit-att.inx.h:12
+#, fuzzy
+msgid "on activate"
+msgstr "معطّل"
+
+#: ../share/extensions/web-set-att.inx.h:15
+#: ../share/extensions/web-transmit-att.inx.h:13
+#, fuzzy
+msgid "on blur"
+msgstr "إدارة التغيير"
+
+#: ../share/extensions/web-set-att.inx.h:16
+#: ../share/extensions/web-transmit-att.inx.h:14
+msgid "on click"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:17
+#: ../share/extensions/web-transmit-att.inx.h:15
+#, fuzzy
+msgid "on element loaded"
+msgstr "إنشاء أداة توصيل جديدة"
+
+#: ../share/extensions/web-set-att.inx.h:18
+#: ../share/extensions/web-transmit-att.inx.h:16
+msgid "on focus"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:19
+#: ../share/extensions/web-transmit-att.inx.h:17
+msgid "on mouse down"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:20
+#: ../share/extensions/web-transmit-att.inx.h:18
+msgid "on mouse move"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:21
+#: ../share/extensions/web-transmit-att.inx.h:19
+#, fuzzy
+msgid "on mouse out"
+msgstr "تصغير"
+
+#: ../share/extensions/web-set-att.inx.h:22
+#: ../share/extensions/web-transmit-att.inx.h:20
+msgid "on mouse over"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:23
+#: ../share/extensions/web-transmit-att.inx.h:21
+msgid "on mouse up"
+msgstr ""
+
+#: ../share/extensions/web-transmit-att.inx.h:1
+#, fuzzy
+msgid "Attribute to transmit"
+msgstr "اسم متعارف عليه"
+
+#: ../share/extensions/web-transmit-att.inx.h:3
+msgid ""
+"If you want to transmit more then one attribute, you must separate this with "
+"a space, and only with a space."
+msgstr ""
+
+#: ../share/extensions/web-transmit-att.inx.h:8
+msgid ""
+"This effect transmit one or more attributes from the first selected element "
+"to the second when a event occurs."
+msgstr ""
+
+#: ../share/extensions/web-transmit-att.inx.h:9
+#, fuzzy
+msgid "Transmit Atributes"
+msgstr "مجموعة أحرف"
+
+#: ../share/extensions/web-transmit-att.inx.h:11
+#, fuzzy
+msgid "When to transmit"
+msgstr "تغيير منطقى يمينى"
+
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
 msgstr ""
@@ -23229,6 +23759,30 @@ msgstr "نمط إدخال النصوص"
 #, fuzzy
 msgid "XAML Input"
 msgstr "جهاز إدخال"
+
+#, fuzzy
+#~ msgid "Specular bump"
+#~ msgstr "مخيِّر ألوان"
+
+#, fuzzy
+#~ msgid "Kilt"
+#~ msgstr "الميل"
+
+#, fuzzy
+#~ msgid "Bump for bitmaps"
+#~ msgstr "التّحيّز"
+
+#, fuzzy
+#~ msgid "Path Effects"
+#~ msgstr "مسار مطلق"
+
+#, fuzzy
+#~ msgid "Biggest item"
+#~ msgstr "عنصر تشكيل"
+
+#, fuzzy
+#~ msgid "Smallest item"
+#~ msgstr "عنصر تشكيل"
 
 #~ msgid "Unit:"
 #~ msgstr "الواحدة:"
