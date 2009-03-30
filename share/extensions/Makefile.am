@@ -67,6 +67,8 @@ extensions = \
 	ill2svg.pl \
 	inkex.py \
 	Inkscape.pm \
+	inkwebeffect.py \
+	inkweb.js \
 	interp.py \
 	interp-att-g.py \
 	launch_webbrowser.py \
@@ -191,7 +193,7 @@ modules = \
 	inkscape_help_svgspec.inx \
 	inkscape_help_keys.inx \
 	interp.inx \
-	interp-att-g.py \
+	interp-att-g.inx \
 	lindenmayer.inx \
 	lorem_ipsum.inx \
 	markers_strokepaint.inx \
@@ -231,8 +233,8 @@ modules = \
 	text_braille.inx \
 	triangle.inx \
 	txt2svg.inx \
-	web-set-att.py \
-	web-transmit-att.py \
+	web-set-att.inx \
+	web-transmit-att.inx \
 	whirl.inx \
 	wmf_input.inx \
 	xaml2svg.inx

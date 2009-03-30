@@ -25,7 +25,6 @@ class InkWebEffect(inkex.Effect):
     self.reUpdateJS = '/\\*\\s* inkweb.js [^*]* InkWebEffect:AutoUpdate \\s*\\*/'
 
   def mustAddInkWebJSCode(self, scriptEl):
-    #inkex.errormsg( re.search(self.reUpdateJS, scriptEl.text) )
     if not scriptEl.text: return True
     if len(scriptEl.text) == 0: return True
     if re.search(self.reUpdateJS, scriptEl.text): return True
@@ -33,10 +32,14 @@ class InkWebEffect(inkex.Effect):
 
   def addInkWebJSCode(self, scriptEl):
     js = open( os.path.join(sys.path[0], "inkweb.js"), 'r' )
-    scriptEl.text = \
-      inkex.etree.CDATA(
-        "\n/* inkweb.js - InkWebEffect:AutoUpdate */\n" + js.read()
-      )
+    if hasattr(inkex.etree, "CDATA"):
+      scriptEl.text = \
+        inkex.etree.CDATA(
+          "\n/* inkweb.js - InkWebEffect:AutoUpdate */\n" + js.read()
+        )
+    else:
+      scriptEl.text = \
+          "\n/* inkweb.js - InkWebEffect:AutoUpdate */\n" + js.read()
     js.close()
 
   def ensureInkWebSupport(self):
