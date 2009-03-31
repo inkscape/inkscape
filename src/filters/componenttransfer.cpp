@@ -194,7 +194,6 @@ sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *valu
                 ((SPObjectClass *) feComponentTransfer_parent_class)->set(object, key, value);
             break;
     }
-
 }
 
 /**

@@ -94,24 +94,23 @@ inline std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
  */
 inline std::vector<gdouble> helperfns_read_vector(const gchar* value){
         std::vector<gdouble> v;
-        std::istringstream is(value);
-        gdouble d;
-        std::string str;
 
-        is >> str;
-        while(str.size())
+        gchar const* beg = value;
+        while(isspace(*beg)) beg++;
+        while(*beg)
         {
             char *end;
-            double ret = g_strtod(str.c_str(), &end);
-            if (*end){
-                g_warning("helper-fns::helperfns_read_vector() Unable to convert \"%s\" to number", str.c_str());
+            double ret = g_strtod(beg, &end);
+            if (end==beg){
+                g_warning("helper-fns::helperfns_read_vector() Unable to convert \"%s\" to number", beg);
                 // We could leave this out, too. If strtod can't convert
                 // anything, it will return zero.
                 ret = 0;
             }
-            v.push_back(d);
+            v.push_back(ret);
 
-            is >> str;
+            beg = end;
+            while(isspace(*beg)) beg++;
         }
         return v;
 }
