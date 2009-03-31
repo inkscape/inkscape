@@ -217,7 +217,7 @@ void sp_icon_fetch_pixbuf( SPIcon *icon )
             icon->psize = sp_icon_get_phys_size(icon->lsize);
 
             GdkPixbuf *pb;
-            
+
             pb = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon->name, icon->psize,
                 (GtkIconLookupFlags) 0, NULL);
             if (!pb) {
@@ -564,6 +564,18 @@ int sp_icon_get_phys_size(int size)
         }
         //g_object_unref(icon);
         init = true;
+    }
+
+    // Fixup workaround
+    if ((size == GTK_ICON_SIZE_MENU) || (size == GTK_ICON_SIZE_SMALL_TOOLBAR) || (size == GTK_ICON_SIZE_LARGE_TOOLBAR)) {
+        gint width = 0;
+        gint height = 0;
+        if ( gtk_icon_size_lookup( static_cast<GtkIconSize>(size), &width, &height ) ) {
+            int newSize = std::max( width, height );
+            if (newSize != vals[size]) {
+                vals[size] = newSize;
+            }
+        }
     }
 
     return vals[size];
@@ -955,7 +967,7 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
         }
         if (!pb) {
             if (dump) {
-                g_message("prerender_icon  [%s] %d", name, psize);
+                g_message("prerender_icon  [%s] %d:%d", name, lsize, psize);
             }
             guchar* px = load_svg_pixels(name, lsize, psize);
             if ( !px ) {
@@ -1014,21 +1026,23 @@ static GdkPixbuf *sp_icon_image_load_svg(gchar const *name, GtkIconSize lsize, u
 void sp_icon_overlay_pixels(guchar *px, int width, int height, int stride,
                             unsigned r, unsigned g, unsigned b)
 {
-    for ( int y = 0; y < height; y += 4 ) {
+    int bytesPerPixel = 4;
+    int spacing = 4;
+    for ( int y = 0; y < height; y += spacing ) {
         guchar *ptr = px + y * stride;
-        for ( int x = 0; x < width; x += 4 ) {
+        for ( int x = 0; x < width; x += spacing ) {
             *(ptr++) = r;
             *(ptr++) = g;
             *(ptr++) = b;
             *(ptr++) = 0xff;
 
-            ptr += 4 * 3;
+            ptr += bytesPerPixel * (spacing - 1);
         }
     }
 
     if ( width > 1 && height > 1 ) {
         // point at the last pixel
-        guchar *ptr = px + ((height-1) * stride) + ((width - 1) * 4);
+        guchar *ptr = px + ((height-1) * stride) + ((width - 1) * bytesPerPixel);
 
         if ( width > 2 ) {
             px[4] = r;
