@@ -332,7 +332,10 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
                 	}
 					snap_delay_temporarily_active = false;
 				}
-                sp_event_context_snap_watchdog_callback(knot->desktop->event_context->_delayed_snap_event);
+
+                if (knot->desktop->event_context->_delayed_snap_event) {
+                	sp_event_context_snap_watchdog_callback(knot->desktop->event_context->_delayed_snap_event);
+                }
 
             	knot->pressure = 0;
                 if (transform_escaped) {

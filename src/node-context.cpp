@@ -281,6 +281,8 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         nc->remove_flash_counter--;
     }
 
+    sp_event_context_snap_window_open(event_context, false); // Just put the snap window open, bluntly. Will be closed when we have left the context
+
     gint ret = FALSE;
     switch (event->type) {
         case GDK_BUTTON_PRESS:
@@ -294,7 +296,6 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (!(event->button.state & GDK_SHIFT_MASK)) {
                     if (!nc->drag) {
                         if (se->has_nodepath() && selection->single() /* && item_over */) {
-                        	sp_event_context_snap_window_open(event_context);
                         	// save drag origin
                             bool over_stroke = se->is_over_stroke(Geom::Point(event->button.x, event->button.y), true);
                             //only dragging curves
@@ -425,13 +426,11 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                     }
                                     desktop->updateNow();
                                 }
-                            	sp_event_context_snap_window_closed(event_context);
-                                break;
+                            	break;
                             case GDK_2BUTTON_PRESS:
                                 //add a node
                                 se->add_node_near_point();
                                 nc->added_node = true;
-                                sp_event_context_snap_window_closed(event_context);
                                 break;
                             default:
                                 break;

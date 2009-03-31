@@ -902,7 +902,10 @@ sp_event_context_root_handler(SPEventContext * event_context, GdkEvent * event)
 			sp_event_context_snap_delay_handler(event_context, NULL, NULL, (GdkEventMotion *)event, DelayedSnapEvent::EVENTCONTEXT_ROOT_HANDLER);
 			break;
 		case GDK_BUTTON_RELEASE:
-			sp_event_context_snap_watchdog_callback(event_context->_delayed_snap_event); // If we have any pending snapping action, then invoke it now
+			if (event_context->_delayed_snap_event) {
+				// If we have any pending snapping action, then invoke it now
+				sp_event_context_snap_watchdog_callback(event_context->_delayed_snap_event);
+			}
 			break;
 		case GDK_BUTTON_PRESS:
         case GDK_2BUTTON_PRESS:
@@ -940,7 +943,10 @@ sp_event_context_item_handler(SPEventContext * event_context, SPItem * item, Gdk
 			sp_event_context_snap_delay_handler(event_context, item, NULL, (GdkEventMotion *)event, DelayedSnapEvent::EVENTCONTEXT_ITEM_HANDLER);
 			break;
 		case GDK_BUTTON_RELEASE:
-			sp_event_context_snap_watchdog_callback(event_context->_delayed_snap_event); // If we have any pending snapping action, then invoke it now
+			if (event_context->_delayed_snap_event) {
+				// If we have any pending snapping action, then invoke it now
+				sp_event_context_snap_watchdog_callback(event_context->_delayed_snap_event);
+			}
 			break;
 		/*case GDK_BUTTON_PRESS:
 		case GDK_2BUTTON_PRESS:
