@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-03-31 01:45+0200\n"
-"PO-Revision-Date: 2009-03-22 22:48+0100\n"
+"POT-Creation-Date: 2009-04-01 20:04+0200\n"
+"PO-Revision-Date: 2009-03-26 21:56+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1342,7 +1342,7 @@ msgstr "Arc-en-ciel teinté"
 
 #: ../share/filters/filters.svg.h:138
 msgid "Smooth rainbow colors melted along the edges and colorizable"
-msgstr ""
+msgstr "Couleurs arc-en-ciel douces, fondues le long des bords, et colorisable"
 
 #: ../share/filters/filters.svg.h:139
 msgid "Melted rainbow"
@@ -1350,7 +1350,7 @@ msgstr "Arc-en-ciel fondu"
 
 #: ../share/filters/filters.svg.h:139
 msgid "Smooth rainbow colors slightly melted along the edges"
-msgstr ""
+msgstr "Couleurs arc-en-ciel douces, légèrement fondues le long des bords"
 
 #: ../share/filters/filters.svg.h:140
 msgid "Darken edges"
@@ -1395,11 +1395,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:144
 msgid "Comics fading"
-msgstr ""
+msgstr "Décoloration BD"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Cartoon paint style with some fading at the edges"
-msgstr ""
+msgstr "Peinture style BD avec de la décoloration sur les bords"
 
 #: ../share/filters/filters.svg.h:145
 #, fuzzy
@@ -1428,7 +1428,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:148
 msgid "Comics"
-msgstr "Bandes dessinées"
+msgstr "Bande dessinée"
 
 #: ../share/filters/filters.svg.h:148
 #, fuzzy
@@ -1490,7 +1490,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:155
 msgid "Comics fluid"
-msgstr ""
+msgstr "Fluide BD"
 
 #: ../share/filters/filters.svg.h:155
 #, fuzzy
@@ -1515,11 +1515,12 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:158
 msgid "Wavy tartan"
-msgstr ""
+msgstr "Écossais ondulé"
 
 #: ../share/filters/filters.svg.h:158
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr ""
+"Motif écossais avec des déplacements ondulés et un biseau autour des bords"
 
 #: ../share/filters/filters.svg.h:159
 msgid "3D marble"
@@ -1527,7 +1528,7 @@ msgstr "Marbre en 3D"
 
 #: ../share/filters/filters.svg.h:159
 msgid "3D warped marble texture"
-msgstr ""
+msgstr "Texture de marbre déformé en 3D"
 
 #: ../share/filters/filters.svg.h:160
 msgid "3D wood"
@@ -1535,7 +1536,7 @@ msgstr "Bois en 3D"
 
 #: ../share/filters/filters.svg.h:160
 msgid "3D warped, fibered wood texture"
-msgstr ""
+msgstr "Texture de bois fibreux et déformé, en 3D"
 
 #: ../share/filters/filters.svg.h:161
 msgid "Mother of pearl"
@@ -1543,7 +1544,7 @@ msgstr "Nacre"
 
 #: ../share/filters/filters.svg.h:161
 msgid "3D warped, iridescent pearly shell texture"
-msgstr ""
+msgstr "Texture de coquillage perleux, irisé et tordu, en 3D"
 
 #: ../share/filters/filters.svg.h:162
 #, fuzzy
@@ -1551,8 +1552,9 @@ msgid "Tiger fur"
 msgstr "Fourrure de léopard"
 
 #: ../share/filters/filters.svg.h:162
+#, fuzzy
 msgid "Tiger fur pattern with folds and bevel around the edges"
-msgstr ""
+msgstr "Motif écossais avec des plis et un biseau autour des bords"
 
 #: ../share/filters/filters.svg.h:163
 #, fuzzy
@@ -1567,7 +1569,7 @@ msgstr "Remplissage colorisable à la transparence liquide"
 #: ../share/filters/filters.svg.h:164
 #, fuzzy
 msgid "Comics flow"
-msgstr "Bandes dessinées"
+msgstr "Fluide BD"
 
 #: ../share/filters/filters.svg.h:164
 #, fuzzy
@@ -6077,7 +6079,7 @@ msgstr "Décliner l'invitation"
 msgid "Inkboard session (%1 to %2)"
 msgstr "Session Inkboard (tableau blanc) (de %1 à %2)"
 
-#: ../src/knot.cpp:438
+#: ../src/knot.cpp:441
 msgid "Node or handle drag canceled."
 msgstr "Déplacement de nœud ou de poignée annulé."
 
@@ -10325,7 +10327,7 @@ msgstr "<b>Données de caractère clonés</b>%s%s"
 
 #: ../src/sp-tref.cpp:369
 msgid " from "
-msgstr ""
+msgstr " depuis "
 
 #: ../src/sp-tref.cpp:374
 msgid "<b>Orphaned cloned character data</b>"
@@ -11323,14 +11325,12 @@ msgid "First selected"
 msgstr "Premier sélectionné"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:912
-#, fuzzy
 msgid "Biggest object"
-msgstr "Cacher l'objet"
+msgstr "Ibjet le plus grand"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:913
-#, fuzzy
 msgid "Smallest object"
-msgstr "Définir l'Id d'un objet"
+msgstr "Objet le plus petit"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:915
 #: ../src/widgets/desktop-widget.cpp:1566
@@ -21880,14 +21880,12 @@ msgid "Interpolation steps"
 msgstr "Étapes d'interpolation"
 
 #: ../share/extensions/interp-att-g.inx.h:1
-#, fuzzy
 msgid "Attribute to Interpolate"
-msgstr "Nom de l'attribut"
+msgstr "Attribut à interpoler"
 
 #: ../share/extensions/interp-att-g.inx.h:3
-#, fuzzy
 msgid "End Value"
-msgstr "Valeur X de fin"
+msgstr "Valeur finale"
 
 #: ../share/extensions/interp-att-g.inx.h:5
 #, fuzzy
@@ -21903,31 +21901,27 @@ msgstr ""
 #: ../share/extensions/interp-att-g.inx.h:8
 #, fuzzy
 msgid "Integer Number"
-msgstr "Inviter un utilisateur"
+msgstr "Nombre entier"
 
 #: ../share/extensions/interp-att-g.inx.h:9
 msgid "Interpolate Attribute in a group"
 msgstr ""
 
 #: ../share/extensions/interp-att-g.inx.h:11
-#, fuzzy
 msgid "No Unit"
-msgstr "Unité :"
+msgstr "Pas d'unité"
 
 #: ../share/extensions/interp-att-g.inx.h:14
-#, fuzzy
 msgid "Other Attribute"
-msgstr "Attribut"
+msgstr "Autre attribut"
 
 #: ../share/extensions/interp-att-g.inx.h:15
-#, fuzzy
 msgid "Other Attribute type"
-msgstr "Nom de l'attribut"
+msgstr "Autre type d'attribut"
 
 #: ../share/extensions/interp-att-g.inx.h:17
-#, fuzzy
 msgid "Start Value"
-msgstr "Valeur X de début"
+msgstr "Valeur initiale"
 
 #: ../share/extensions/interp-att-g.inx.h:18
 #: ../share/extensions/polyhedron_3d.inx.h:43
@@ -21935,9 +21929,8 @@ msgid "Style"
 msgstr "Style"
 
 #: ../share/extensions/interp-att-g.inx.h:19
-#, fuzzy
 msgid "Tag"
-msgstr "Cible"
+msgstr "Étiquette"
 
 #: ../share/extensions/interp-att-g.inx.h:20
 msgid ""
@@ -23045,59 +23038,53 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:14
 #: ../share/extensions/web-transmit-att.inx.h:12
-#, fuzzy
 msgid "on activate"
-msgstr "Désactivée"
+msgstr "on activate"
 
 #: ../share/extensions/web-set-att.inx.h:15
 #: ../share/extensions/web-transmit-att.inx.h:13
-#, fuzzy
 msgid "on blur"
-msgstr "Flou fantaisie"
+msgstr "on blur"
 
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
-#, fuzzy
 msgid "on click"
-msgstr "Raccord arrondi"
+msgstr "on click"
 
 #: ../share/extensions/web-set-att.inx.h:17
 #: ../share/extensions/web-transmit-att.inx.h:15
-#, fuzzy
 msgid "on element loaded"
-msgstr "Nouveau nœud élément"
+msgstr "on element loaded"
 
 #: ../share/extensions/web-set-att.inx.h:18
 #: ../share/extensions/web-transmit-att.inx.h:16
-#, fuzzy
 msgid "on focus"
-msgstr "Raccord arrondi"
+msgstr "on focus"
 
 #: ../share/extensions/web-set-att.inx.h:19
 #: ../share/extensions/web-transmit-att.inx.h:17
 msgid "on mouse down"
-msgstr ""
+msgstr "on mouse down"
 
 #: ../share/extensions/web-set-att.inx.h:20
 #: ../share/extensions/web-transmit-att.inx.h:18
 msgid "on mouse move"
-msgstr ""
+msgstr "on mouse move"
 
 #: ../share/extensions/web-set-att.inx.h:21
 #: ../share/extensions/web-transmit-att.inx.h:19
-#, fuzzy
 msgid "on mouse out"
-msgstr "Deuxième côté, extérieur"
+msgstr "on mouse out"
 
 #: ../share/extensions/web-set-att.inx.h:22
 #: ../share/extensions/web-transmit-att.inx.h:20
 msgid "on mouse over"
-msgstr ""
+msgstr "on mouse over"
 
 #: ../share/extensions/web-set-att.inx.h:23
 #: ../share/extensions/web-transmit-att.inx.h:21
 msgid "on mouse up"
-msgstr ""
+msgstr "on mouse up"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
 #, fuzzy
@@ -23124,7 +23111,7 @@ msgstr "Attributs en ligne"
 #: ../share/extensions/web-transmit-att.inx.h:11
 #, fuzzy
 msgid "When to transmit"
-msgstr "Créner vers la droite"
+msgstr "Nom de l'attribut"
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
@@ -23153,6 +23140,9 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Entrée XAML"
+
+#~ msgid "Plied tartan"
+#~ msgstr "Écossais assemblés"
 
 #~ msgid "Path Effects"
 #~ msgstr "Effets de chemin..."
