@@ -1100,10 +1100,10 @@ sp_gradient_ensure_colors(SPGradient *gr)
         gint o1 = (gint) floor(gr->vector.stops[i + 1].offset * (NCOLORS - 0.001));
         if (o1 > o0) {
             for (int j = o0; j < o1 + 1; j++) {
-                gr->color[4 * j + 0] = r0 + DIV_ROUND((j-o0)*(r1-r0),(o1-o0));
-                gr->color[4 * j + 1] = g0 + DIV_ROUND((j-o0)*(g1-g0),(o1-o0));
-                gr->color[4 * j + 2] = b0 + DIV_ROUND((j-o0)*(b1-b0),(o1-o0));
-                gr->color[4 * j + 3] = a0 + DIV_ROUND((j-o0)*(a1-a0),(o1-o0));
+                gr->color[4 * j + 0] = r0 + ((j-o0)*(r1-r0) + (o1-o0)/2)/(o1-o0);
+                gr->color[4 * j + 1] = g0 + ((j-o0)*(g1-g0) + (o1-o0)/2)/(o1-o0);
+                gr->color[4 * j + 2] = b0 + ((j-o0)*(b1-b0) + (o1-o0)/2)/(o1-o0);
+                gr->color[4 * j + 3] = a0 + ((j-o0)*(a1-a0) + (o1-o0)/2)/(o1-o0);
             }
         }
     }
