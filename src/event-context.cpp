@@ -173,6 +173,10 @@ sp_event_context_dispose(GObject *object)
         delete ec->pref_observer;
     }
 
+    if (ec->_delayed_snap_event) {
+    	delete ec->_delayed_snap_event;
+    }
+
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
