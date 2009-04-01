@@ -305,7 +305,6 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuideToNodes(SnappedConstraints &s
         Geom::Point p_proj = Geom::projection((*k).first, Geom::Line(p, p + Geom::rot90(guide_normal)));
         Geom::Coord dist = Geom::L2((*k).first - p_proj); // distance from node to the guide
         Geom::Coord dist2 = Geom::L2(p - p_proj); // distance from projection of node on the guide, to the mouse location
-        std::cout << "d1 = " << dist << " | d2 = " << dist2 << " | tol = " << tol << std::endl;
         if ((dist < tol && dist2 < tol) || getSnapperAlwaysSnap()) {
             s = SnappedPoint((*k).first, SNAPSOURCE_GUIDE, static_cast<Inkscape::SnapTargetType>((*k).second), dist, tol, getSnapperAlwaysSnap(), true);
             sc.points.push_back(s);
