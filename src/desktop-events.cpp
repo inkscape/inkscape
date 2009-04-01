@@ -267,7 +267,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     break;
                 }
 
-                sp_event_context_snap_window_closed(desktop->event_context);
+                sp_event_context_snap_window_open(desktop->event_context);
                 double tol = 40.0;
                 Geom::Point const event_w(event->button.x, event->button.y);
                 Geom::Point const event_dt(desktop->w2d(event_w));
