@@ -357,13 +357,17 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     		}
 		}
 
-    	// Now either _bbox_points or _snap_points has a single element, the other one has zero..... or both have zero elements
-    	g_assert((_bbox_points.size() + _snap_points.size()) < 2);
-    	if (m.snapprefs.getSnapEnabledGlobally()) {
-			if (_bbox_points.size() == 1) {
-				_desktop->snapindicator->set_new_snapsource(_bbox_points.at(0));
-			} else if (_snap_points.size() == 1){
-				_desktop->snapindicator->set_new_snapsource(_snap_points.at(0));
+
+    	// Optionally, show the snap source
+    	if (!(_state == STATE_ROTATE && x != 0.5 && y != 0.5)) { // but not when we're draging a rotation handle, because that won't snap
+			// Now either _bbox_points or _snap_points has a single element, the other one has zero..... or both have zero elements
+			g_assert((_bbox_points.size() + _snap_points.size()) < 2);
+			if (m.snapprefs.getSnapEnabledGlobally()) {
+				if (_bbox_points.size() == 1) {
+					_desktop->snapindicator->set_new_snapsource(_bbox_points.at(0));
+				} else if (_snap_points.size() == 1){
+					_desktop->snapindicator->set_new_snapsource(_snap_points.at(0));
+				}
 			}
     	}
     }

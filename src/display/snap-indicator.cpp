@@ -271,7 +271,7 @@ SnapIndicator::set_new_snapsource(std::pair<Geom::Point, int> const p)
         SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (_desktop),
                                                         SP_TYPE_CTRL,
                                                         "anchor", GTK_ANCHOR_CENTER,
-                                                        "size", 10.0,
+                                                        "size", 6.0,
                                                         "stroked", TRUE,
                                                         "stroke_color", 0xf000f0ff,
                                                         "mode", SP_KNOT_MODE_XOR,
