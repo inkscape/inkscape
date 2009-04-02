@@ -988,7 +988,9 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
             }
         }
         else if (dump) {
-            g_message("prerender_icon  [%s] %d NOT!!!!!!", name, psize);
+            gint width = gdk_pixbuf_get_width(pb);
+            gint height = gdk_pixbuf_get_height(pb);
+            g_message("prerender_icon  [%s] %d NOT!!!!!!  (%d, %d)", name, psize, width, height);
         }
 
         if (pb) {
