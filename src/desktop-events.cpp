@@ -268,7 +268,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 }
 
                 sp_event_context_snap_window_open(desktop->event_context);
-                double tol = 40.0;
+                double tol = 40.0; // Measured in screenpixels
                 Geom::Point const event_w(event->button.x, event->button.y);
                 Geom::Point const event_dt(desktop->w2d(event_w));
 
@@ -279,7 +279,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 // https://bugs.launchpad.net/inkscape/+bug/333762
                 drag_origin = Geom::projection(event_dt, Geom::Line(guide->point_on_line, guide->angle()));
 
-                if (Geom::L2(guide->point_on_line - event_dt) < tol) {
+                if (Geom::L2(guide->point_on_line - event_dt) < tol/desktop->current_zoom()) {
                     // the click was on the guide 'anchor'
                     drag_type = (event->button.state & GDK_SHIFT_MASK) ? SP_DRAG_MOVE_ORIGIN : SP_DRAG_TRANSLATE;
                 } else {
