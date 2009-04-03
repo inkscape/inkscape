@@ -894,10 +894,10 @@ AlignAndDistribute::AlignAndDistribute()
     //Node Mode buttons
     addNodeButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_NODES,
                   _("Align selected nodes horizontally"),
-                  0, Geom::X, false);
+                  0, Geom::Y, false);
     addNodeButton(INKSCAPE_ICON_ALIGN_VERTICAL_NODES,
                   _("Align selected nodes vertically"),
-                  1, Geom::Y, false);
+                  1, Geom::X, false);
     addNodeButton(INKSCAPE_ICON_DISTRIBUTE_HORIZONTAL_NODE,
                   _("Distribute selected nodes horizontally"),
                   2, Geom::X, true);
