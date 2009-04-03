@@ -22,7 +22,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, simplepath, cubicsuperpath, dxf_templates, math
+import inkex, simplepath, simplestyle, cubicsuperpath, coloreffect, dxf_templates, math
 import gettext
 _ = gettext.gettext
 
@@ -67,19 +67,20 @@ class MyEffect(inkex.Effect):
             or abs(csp[0][1] - self.poly[-1][1]) > .0001):
             self.LWPOLY_output()                            # terminate current polyline
             self.poly = [csp[0]]                            # initiallize new polyline
+            self.color_LWPOLY = self.color
         self.poly.append(csp[1])
     def LWPOLY_output(self):
         if len(self.poly) == 1:
             return
         self.handle += 1
-        self.dxf_add("  0\nLWPOLYLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbPolyline\n 90\n%d\n 70\n0\n" % (self.handle, len(self.poly)))
+        self.dxf_add("  0\nLWPOLYLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n 62\n%d\n100\nAcDbPolyline\n 90\n%d\n 70\n0\n" % (self.handle, self.color_LWPOLY, len(self.poly)))
         for i in range(len(self.poly)):
             self.dxf_add(" 10\n%f\n 20\n%f\n 30\n0.0\n" % (self.poly[i][0],self.poly[i][1]))
     def dxf_spline(self,csp):
         knots = 8
         ctrls = 4
         self.handle += 1
-        self.dxf_add("  0\nSPLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbSpline\n" % self.handle)
+        self.dxf_add("  0\nSPLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n 62\n%d\n100\nAcDbSpline\n" % (self.handle, self.color))
         self.dxf_add(" 70\n8\n 71\n3\n 72\n%d\n 73\n%d\n 74\n0\n" % (knots, ctrls))
         for i in range(2):
             for j in range(4):
@@ -95,6 +96,7 @@ class MyEffect(inkex.Effect):
             self.xfit = array([csp[0][0]], float)           # initiallize new spline
             self.yfit = array([csp[0][1]], float)
             self.d = array([0], float)
+            self.color_ROBO = self.color
         self.xfit = concatenate((self.xfit, zeros((3))))    # append to current spline
         self.yfit = concatenate((self.yfit, zeros((3))))
         self.d = concatenate((self.d, zeros((3))))
@@ -128,7 +130,7 @@ class MyEffect(inkex.Effect):
         xctrl = solve(solmatrix, self.xfit)
         yctrl = solve(solmatrix, self.yfit)
         self.handle += 1
-        self.dxf_add("  0\nSPLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n100\nAcDbSpline\n" % self.handle)
+        self.dxf_add("  0\nSPLINE\n  5\n%x\n100\nAcDbEntity\n  8\n0\n 62\n%d\n100\nAcDbSpline\n" % (self.handle, self.color_ROBO))
         self.dxf_add(" 70\n0\n 71\n3\n 72\n%d\n 73\n%d\n 74\n%d\n" % (knots, ctrls, fits))
         for i in range(knots):
             self.dxf_add(" 40\n%f\n" % self.d[i-3])
@@ -148,6 +150,13 @@ class MyEffect(inkex.Effect):
         h = inkex.unittouu(self.document.getroot().xpath('@height', namespaces=inkex.NSS)[0])
         path = '//svg:path'
         for node in self.document.getroot().xpath(path, namespaces=inkex.NSS):
+            style = node.get('style')
+            start = style.find("stroke:")
+            rgb = simplestyle.parseColor(style[(start+7):(start+14)])
+            hsl = coloreffect.ColorEffect.rgb_to_hsl(coloreffect.ColorEffect(),rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0)
+            self.color = 7                                  # default is black
+            if hsl[2]:
+                self.color = 1 + (int(6*hsl[0] + 0.5) % 6)  # use 6 hues
             d = node.get('d')
             sim = simplepath.parsePath(d)
             if len(sim):
