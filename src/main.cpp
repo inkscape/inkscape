@@ -877,6 +877,16 @@ snooper(GdkEvent *event, gpointer /*data*/) {
     gtk_main_do_event (event);
 }
 
+static std::vector<Glib::ustring> getDirectorySet(const gchar* userDir, const gchar* const * systemDirs) {
+    std::vector<Glib::ustring> listing;
+    listing.push_back(userDir);
+    for ( const char* const* cur = systemDirs; *cur; cur++ )
+    {
+        listing.push_back(*cur);
+    }
+    return listing;
+}
+
 int
 sp_main_gui(int argc, char const **argv)
 {
@@ -885,6 +895,19 @@ sp_main_gui(int argc, char const **argv)
     GSList *fl = NULL;
     int retVal = sp_common_main( argc, argv, &fl );
     g_return_val_if_fail(retVal == 0, 1);
+
+    // Add possible icon entry directories
+    std::vector<Glib::ustring> dataDirs = getDirectorySet( g_get_user_data_dir(),
+                                                           g_get_system_data_dirs() );
+    for (std::vector<Glib::ustring>::iterator it = dataDirs.begin(); it != dataDirs.end(); ++it)
+    {
+        std::vector<Glib::ustring> listing;
+        listing.push_back(*it);
+        listing.push_back("inkscape");
+        listing.push_back("icons");
+        Glib::ustring dir = Glib::build_filename(listing);
+        gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(), dir.c_str());
+    }
 
     // Add our icon directory to the search path for icon theme lookups.
     gchar *usericondir = profile_path("icons");
