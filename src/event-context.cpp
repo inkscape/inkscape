@@ -1180,6 +1180,14 @@ void sp_event_context_snap_delay_handler(SPEventContext *ec, SPItem* const item,
     bool const c2 = event->state & GDK_BUTTON3_MASK; // pressed, e.g. when scrolling with the middle mouse button; if we do then
 												     // Inkscape will get stuck in an unresponsive state
 
+    if (c1 || c2) {
+    	// Make sure that we don't send any pending snap events to a context if we know in advance
+    	// that we're not going to snap any way (e.g. while scrolling with middle mouse button)
+    	// Any motion event might affect the state of the context, leading to unexpected behavior
+    	delete ec->_delayed_snap_event;
+    	ec->_delayed_snap_event = NULL;
+    }
+
     if (ec->_snap_window_open && !c1 && !c2 && ec->desktop && ec->desktop->namedview->snap_manager.snapprefs.getSnapEnabledGlobally()) {
     	// Snap when speed drops below e.g. 0.02 px/msec, or when no motion events have occurred for some period.
 		// i.e. snap when we're at stand still. A speed threshold enforces snapping for tablets, which might never
