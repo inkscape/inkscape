@@ -7,10 +7,12 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
  * Copyright (C) 2004 David Turner
+ * Copyright (C) 2009 Jasper van de Gronde
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  *
@@ -1085,27 +1087,127 @@ sp_gradient_ensure_colors(SPGradient *gr)
         gr->color = g_new(guchar, 4 * NCOLORS);
     }
 
-    for (guint i = 0; i < gr->vector.stops.size() - 1; i++) {
-        guint32 color = gr->vector.stops[i].color.toRGBA32( gr->vector.stops[i].opacity );
-        gint r0 = (color >> 24) & 0xff;
-        gint g0 = (color >> 16) & 0xff;
-        gint b0 = (color >> 8) & 0xff;
-        gint a0 = color & 0xff;
-        color = gr->vector.stops[i + 1].color.toRGBA32( gr->vector.stops[i + 1].opacity );
-        gint r1 = (color >> 24) & 0xff;
-        gint g1 = (color >> 16) & 0xff;
-        gint b1 = (color >> 8) & 0xff;
-        gint a1 = color & 0xff;
-        gint o0 = (gint) floor(gr->vector.stops[i].offset * (NCOLORS - 0.001));
-        gint o1 = (gint) floor(gr->vector.stops[i + 1].offset * (NCOLORS - 0.001));
-        if (o1 > o0) {
-            for (int j = o0; j < o1 + 1; j++) {
-                gr->color[4 * j + 0] = r0 + ((j-o0)*(r1-r0) + (o1-o0)/2)/(o1-o0);
-                gr->color[4 * j + 1] = g0 + ((j-o0)*(g1-g0) + (o1-o0)/2)/(o1-o0);
-                gr->color[4 * j + 2] = b0 + ((j-o0)*(b1-b0) + (o1-o0)/2)/(o1-o0);
-                gr->color[4 * j + 3] = a0 + ((j-o0)*(a1-a0) + (o1-o0)/2)/(o1-o0);
+    // This assumes that gr->vector is a zero-order B-spline (box function) approximation of the "true" gradient.
+    // This means that the "true" gradient must be prefiltered using a zero order B-spline and then sampled.
+    // Furthermore, the first element corresponds to offset="0" and the last element to offset="1".
+
+    double remainder[4] = {0,0,0,0};
+    double remainder_for_end[4] = {0,0,0,0}; // Used at the end
+    switch(gr->spread) {
+    case SP_GRADIENT_SPREAD_PAD:
+        remainder[0] = 0.5*gr->vector.stops[0].color.v.c[0];
+        remainder[1] = 0.5*gr->vector.stops[0].color.v.c[1];
+        remainder[2] = 0.5*gr->vector.stops[0].color.v.c[2];
+        remainder[3] = 0.5*gr->vector.stops[0].opacity;
+        remainder_for_end[0] = 0.5*gr->vector.stops[gr->vector.stops.size() - 1].color.v.c[0];
+        remainder_for_end[1] = 0.5*gr->vector.stops[gr->vector.stops.size() - 1].color.v.c[1];
+        remainder_for_end[2] = 0.5*gr->vector.stops[gr->vector.stops.size() - 1].color.v.c[2];
+        remainder_for_end[3] = 0.5*gr->vector.stops[gr->vector.stops.size() - 1].opacity;
+        break;
+    case SP_GRADIENT_SPREAD_REFLECT:
+        break;
+    case SP_GRADIENT_SPREAD_REPEAT:
+        break;
+    default:
+        g_error("Spread type not supported!");
+    };
+    for (unsigned int i = 0; i < gr->vector.stops.size() - 1; i++) {
+        double r0 = gr->vector.stops[i].color.v.c[0];
+        double g0 = gr->vector.stops[i].color.v.c[1];
+        double b0 = gr->vector.stops[i].color.v.c[2];
+        double a0 = gr->vector.stops[i].opacity;
+        double r1 = gr->vector.stops[i+1].color.v.c[0];
+        double g1 = gr->vector.stops[i+1].color.v.c[1];
+        double b1 = gr->vector.stops[i+1].color.v.c[2];
+        double a1 = gr->vector.stops[i+1].opacity;
+        double o0 = gr->vector.stops[i].offset * (NCOLORS-1);
+        double o1 = gr->vector.stops[i + 1].offset * (NCOLORS-1);
+        unsigned int ob = (unsigned int) floor(o0+.5); // These are the first and last element that might be affected by this interval.
+        unsigned int oe = (unsigned int) floor(o1+.5); // These need to be computed the same to ensure that ob will be covered by the next interval if oe==ob
+
+        if (oe == ob) {
+            // Simple case, this interval starts and stops within one cell
+            // The contribution of this interval is:
+            //    (o1-o0)*(c(o0)+c(o1))/2
+            //  = (o1-o0)*(c0+c1)/2
+            double dt = 0.5*(o1-o0);
+            remainder[0] += dt*(r0 + r1);
+            remainder[1] += dt*(g0 + g1);
+            remainder[2] += dt*(b0 + b1);
+            remainder[3] += dt*(a0 + a1);
+        } else {
+            // First compute colors for the cells which are fully covered by the current interval.
+            // The prefiltered values are equal to the midpoint of each cell here.
+            //  f = (j-o0)/(o1-o0)
+            //    = j*(1/(o1-o0)) - o0/(o1-o0)
+            double f = (ob-o0) / (o1-o0);
+            double df = 1. / (o1-o0);
+            for (unsigned int j = ob+1; j < oe; j++) {
+                f += df;
+                gr->color[4 * j + 0] = (unsigned char) floor(255*(r0 + f*(r1-r0)) + .5);
+                gr->color[4 * j + 1] = (unsigned char) floor(255*(g0 + f*(g1-g0)) + .5);
+                gr->color[4 * j + 2] = (unsigned char) floor(255*(b0 + f*(b1-b0)) + .5);
+                gr->color[4 * j + 3] = (unsigned char) floor(255*(a0 + f*(a1-a0)) + .5);
             }
+
+            // Now handle the beginning
+            // The contribution of the last point is already in remainder.
+            // The contribution of this point is:
+            //    (ob+.5-o0)*(c(o0)+c(ob+.5))/2
+            //  = (ob+.5-o0)*c((o0+ob+.5)/2)
+            //  = (ob+.5-o0)*(c0+((o0+ob+.5)/2-o0)*df*(c1-c0))
+            //  = (ob+.5-o0)*(c0+(ob+.5-o0)*df*(c1-c0)/2)
+            double dt = ob+.5-o0;
+            f = 0.5*dt*df;
+            if (ob==0 && gr->spread==SP_GRADIENT_SPREAD_REFLECT) {
+                gr->color[4 * ob + 0] = (unsigned char) floor(2*255*(remainder[0] + dt*(r0 + f*(r1-r0))) + .5);
+                gr->color[4 * ob + 1] = (unsigned char) floor(2*255*(remainder[1] + dt*(g0 + f*(g1-g0))) + .5);
+                gr->color[4 * ob + 2] = (unsigned char) floor(2*255*(remainder[2] + dt*(b0 + f*(b1-b0))) + .5);
+                gr->color[4 * ob + 3] = (unsigned char) floor(2*255*(remainder[3] + dt*(a0 + f*(a1-a0))) + .5);
+            } else if (ob==0 && gr->spread==SP_GRADIENT_SPREAD_REPEAT) {
+                remainder_for_end[0] = remainder[0] + dt*(r0 + f*(r1-r0));
+                remainder_for_end[1] = remainder[1] + dt*(g0 + f*(g1-g0));
+                remainder_for_end[2] = remainder[2] + dt*(b0 + f*(b1-b0));
+                remainder_for_end[3] = remainder[3] + dt*(a0 + f*(a1-a0));
+            } else {
+                gr->color[4 * ob + 0] = (unsigned char) floor(255*(remainder[0] + dt*(r0 + f*(r1-r0))) + .5);
+                gr->color[4 * ob + 1] = (unsigned char) floor(255*(remainder[1] + dt*(g0 + f*(g1-g0))) + .5);
+                gr->color[4 * ob + 2] = (unsigned char) floor(255*(remainder[2] + dt*(b0 + f*(b1-b0))) + .5);
+                gr->color[4 * ob + 3] = (unsigned char) floor(255*(remainder[3] + dt*(a0 + f*(a1-a0))) + .5);
+            }
+
+            // Now handle the end, which should end up in remainder
+            // The contribution of this point is:
+            //    (o1-oe+.5)*(c(o1)+c(oe-.5))/2
+            //  = (o1-oe+.5)*c((o1+oe-.5)/2)
+            //  = (o1-oe+.5)*(c0+((o1+oe-.5)/2-o0)*df*(c1-c0))
+            dt = o1-oe+.5;
+            f = (0.5*(o1+oe-.5)-o0)*df;
+            remainder[0] = dt*(r0 + f*(r1-r0));
+            remainder[1] = dt*(g0 + f*(g1-g0));
+            remainder[2] = dt*(b0 + f*(b1-b0));
+            remainder[3] = dt*(a0 + f*(a1-a0));
         }
+    }
+    switch(gr->spread) {
+    case SP_GRADIENT_SPREAD_PAD:
+        gr->color[4 * (NCOLORS-1) + 0] = (unsigned char) floor(255*(remainder[0]+remainder_for_end[0]) + .5);
+        gr->color[4 * (NCOLORS-1) + 1] = (unsigned char) floor(255*(remainder[1]+remainder_for_end[1]) + .5);
+        gr->color[4 * (NCOLORS-1) + 2] = (unsigned char) floor(255*(remainder[2]+remainder_for_end[2]) + .5);
+        gr->color[4 * (NCOLORS-1) + 3] = (unsigned char) floor(255*(remainder[3]+remainder_for_end[3]) + .5);
+        break;
+    case SP_GRADIENT_SPREAD_REFLECT:
+        gr->color[4 * (NCOLORS-1) + 0] = (unsigned char) floor(2*255*remainder[0] + .5);
+        gr->color[4 * (NCOLORS-1) + 1] = (unsigned char) floor(2*255*remainder[1] + .5);
+        gr->color[4 * (NCOLORS-1) + 2] = (unsigned char) floor(2*255*remainder[2] + .5);
+        gr->color[4 * (NCOLORS-1) + 3] = (unsigned char) floor(2*255*remainder[3] + .5);
+        break;
+    case SP_GRADIENT_SPREAD_REPEAT:
+        gr->color[0] = gr->color[4 * (NCOLORS-1) + 0] = (unsigned char) floor(255*(remainder[0]+remainder_for_end[0]) + .5);
+        gr->color[1] = gr->color[4 * (NCOLORS-1) + 1] = (unsigned char) floor(255*(remainder[1]+remainder_for_end[1]) + .5);
+        gr->color[2] = gr->color[4 * (NCOLORS-1) + 2] = (unsigned char) floor(255*(remainder[2]+remainder_for_end[2]) + .5);
+        gr->color[3] = gr->color[4 * (NCOLORS-1) + 3] = (unsigned char) floor(255*(remainder[3]+remainder_for_end[3]) + .5);
+        break;
     }
 }
 
@@ -1358,9 +1460,9 @@ static void sp_lineargradient_class_init(SPLinearGradientClass *klass)
 static void sp_lineargradient_init(SPLinearGradient *lg)
 {
     lg->x1.unset(SVGLength::PERCENT, 0.0, 0.0);
-    lg->y1.unset(SVGLength::PERCENT, 0.5, 0.5);
+    lg->y1.unset(SVGLength::PERCENT, 0.0, 0.0);
     lg->x2.unset(SVGLength::PERCENT, 1.0, 1.0);
-    lg->y2.unset(SVGLength::PERCENT, 0.5, 0.5);
+    lg->y2.unset(SVGLength::PERCENT, 0.0, 0.0);
 }
 
 /**
@@ -1393,7 +1495,7 @@ sp_lineargradient_set(SPObject *object, unsigned key, gchar const *value)
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_Y1:
-            lg->y1.readOrUnset(value, SVGLength::PERCENT, 0.5, 0.5);
+            lg->y1.readOrUnset(value, SVGLength::PERCENT, 0.0, 0.0);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_X2:
@@ -1401,7 +1503,7 @@ sp_lineargradient_set(SPObject *object, unsigned key, gchar const *value)
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_Y2:
-            lg->y2.readOrUnset(value, SVGLength::PERCENT, 0.5, 0.5);
+            lg->y2.readOrUnset(value, SVGLength::PERCENT, 0.0, 0.0);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:

@@ -6,7 +6,9 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   MenTaLguY <mental@rydia.net>
+ *...Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *
+ * Copyright (C) 2009 Jasper van de Gronde
  * Copyright (C) 2007 MenTaLguY 
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -43,30 +45,44 @@ template <NRGradientSpread spread> struct Spread;
 
 template <>
 struct Spread<NR_GRADIENT_SPREAD_PAD> {
+static double index_at(NR::Coord r, double const unity = 1.0) {
+    return r<0.0?0.0:r>unity?unity:r;
+}
 static unsigned char const *color_at(NR::Coord r,
                                      unsigned char const *vector)
 {
-  return vector_index((int)CLAMP(r, 0, (double)(NR_GRADIENT_VECTOR_LENGTH - 1)), vector);
+    return vector_index((int)(index_at(r, NR_GRADIENT_VECTOR_LENGTH - 1)+.5), vector);
+  //return vector_index((int)CLAMP(r, 0, (double)(NR_GRADIENT_VECTOR_LENGTH - 1)), vector);
 }
 };
 
 template <>
 struct Spread<NR_GRADIENT_SPREAD_REPEAT> {
+static double index_at(NR::Coord r, double const unity = 1.0) {
+    return r<0.0?(unity+fmod(r,unity)):fmod(r,unity);
+}
 static unsigned char const *color_at(NR::Coord r,
                                      unsigned char const *vector)
 {
-  return vector_index((int)((long long)r & NRG_MASK), vector);
+    return vector_index((int)(index_at(r, NR_GRADIENT_VECTOR_LENGTH - 1)+.5), vector);
+  //return vector_index((int)((long long)r & NRG_MASK), vector);
 }
 };
 
 template <>
 struct Spread<NR_GRADIENT_SPREAD_REFLECT> {
+static double index_at(NR::Coord r, double const unity = 1.0) {
+    r = r<0.0?(2*unity+fmod(r,2*unity)):fmod(r,2*unity);
+    if (r>unity) r=2*unity-r;
+    return r;
+}
 static unsigned char const *color_at(NR::Coord r,
                                      unsigned char const *vector)
 {
-  int idx = (int) ((long long)r & NRG_2MASK);
-  if (idx > NRG_MASK) idx = NRG_2MASK - idx;
-  return vector_index(idx, vector);
+    return vector_index((int)(index_at(r, NR_GRADIENT_VECTOR_LENGTH - 1)+.5), vector);
+  //int idx = (int) ((long long)r & NRG_2MASK);
+  //if (idx > NRG_MASK) idx = NRG_2MASK - idx;
+  //return vector_index(idx, vector);
 }
 };
 
@@ -319,10 +335,10 @@ nr_lgradient_renderer_setup (NRLGradientRenderer *lgr,
 	n2px = n2gs * (*gs2px);
 	px2n = n2px.inverse();
 
-	lgr->x0 = n2px[4] - 0.5;
+	lgr->x0 = n2px[4] - 0.5; // These -0.5 offsets make sure that the gradient is sampled in the MIDDLE of each pixel.
 	lgr->y0 = n2px[5] - 0.5;
-	lgr->dx = px2n[0] * NR_GRADIENT_VECTOR_LENGTH;
-	lgr->dy = px2n[2] * NR_GRADIENT_VECTOR_LENGTH;
+	lgr->dx = px2n[0] * (NR_GRADIENT_VECTOR_LENGTH-1);
+	lgr->dy = px2n[2] * (NR_GRADIENT_VECTOR_LENGTH-1);
 
 	return (NRRenderer *) lgr;
 }
@@ -422,7 +438,7 @@ static void render(NRGradientRenderer *gr, NRPixBlock *pb)
             NR::Coord const pxgx = gx + sqrt(qgx2_4);
             /* We can safely divide by 0 here */
             /* If we are sure pxgx cannot be -0 */
-            NR::Coord const pos = gxy2 / pxgx * NR_GRADIENT_VECTOR_LENGTH;
+            NR::Coord const pos = gxy2 / pxgx * (NR_GRADIENT_VECTOR_LENGTH-1);
 
             unsigned char const *s;
             if (pos < (1U << 31)) {
@@ -430,7 +446,7 @@ static void render(NRGradientRenderer *gr, NRPixBlock *pb)
             } else {
                 s = vector_index(NR_GRADIENT_VECTOR_LENGTH - 1, rgr->vector);
             }
-            
+
             compose::compose(pb, d, &spb, s);
             d += compose::bpp;
 
@@ -466,14 +482,16 @@ nr_rgradient_renderer_setup(NRRGradientRenderer *rgr,
         rgr->render = render<SymmetricRadial>;
 
         rgr->px2gs = gs2px->inverse();
-        rgr->px2gs[0] *= (NR_GRADIENT_VECTOR_LENGTH / r);
-        rgr->px2gs[1] *= (NR_GRADIENT_VECTOR_LENGTH / r);
-        rgr->px2gs[2] *= (NR_GRADIENT_VECTOR_LENGTH / r);
-        rgr->px2gs[3] *= (NR_GRADIENT_VECTOR_LENGTH / r);
+        rgr->px2gs[0] *= (NR_GRADIENT_VECTOR_LENGTH-1) / r;
+        rgr->px2gs[1] *= (NR_GRADIENT_VECTOR_LENGTH-1) / r;
+        rgr->px2gs[2] *= (NR_GRADIENT_VECTOR_LENGTH-1) / r;
+        rgr->px2gs[3] *= (NR_GRADIENT_VECTOR_LENGTH-1) / r;
         rgr->px2gs[4] -= cx;
         rgr->px2gs[5] -= cy;
-        rgr->px2gs[4] *= (NR_GRADIENT_VECTOR_LENGTH / r);
-        rgr->px2gs[5] *= (NR_GRADIENT_VECTOR_LENGTH / r);
+        rgr->px2gs[4] *= (NR_GRADIENT_VECTOR_LENGTH-1) / r;
+        rgr->px2gs[5] *= (NR_GRADIENT_VECTOR_LENGTH-1) / r;
+        rgr->px2gs[4] += 0.5*(rgr->px2gs[0]+rgr->px2gs[2]); // These offsets make sure the gradient is sampled in the MIDDLE of each pixel
+        rgr->px2gs[5] += 0.5*(rgr->px2gs[1]+rgr->px2gs[3]);
 
         rgr->cx = 0.0;
         rgr->cy = 0.0;
@@ -500,6 +518,8 @@ nr_rgradient_renderer_setup(NRRGradientRenderer *rgr,
         NR::Matrix n2px;
         n2px = n2gs * (*gs2px);
         rgr->px2gs = n2px.inverse();
+        rgr->px2gs[4] += 0.5*(rgr->px2gs[0]+rgr->px2gs[2]); // These offsets make sure the gradient is sampled in the MIDDLE of each pixel
+        rgr->px2gs[5] += 0.5*(rgr->px2gs[1]+rgr->px2gs[3]);
 
         rgr->cx = 1.0;
         rgr->cy = 0.0;

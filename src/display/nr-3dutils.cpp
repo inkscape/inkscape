@@ -125,13 +125,14 @@ void compute_surface_normal(Fvector &N, gdouble ss, NRPixBlock *in, int i, int j
         alpha_idx_y = alpha_idx + 4*(k-1)*dy*w;
         for (l = START(x_carac); l <= FINISH(x_carac); l++) {
             alpha = (data + alpha_idx_y + 4*dx*(l-1))[3];
-            accu_x += K_X[y_carac][x_carac][k][l] * alpha / 255;
-            accu_y += K_X[x_carac][y_carac][l][k] * alpha / 255;
+            accu_x += K_X[y_carac][x_carac][k][l] * alpha;
+            accu_y += K_X[x_carac][y_carac][l][k] * alpha;
         }
     }
-    N[X_3D] = -1 * ss * FACTOR_X[y_carac][x_carac] * accu_x / dx;
-    N[Y_3D] = -1 * ss * FACTOR_X[x_carac][y_carac] * accu_y / dy;
-    N[Z_3D] = 1;
+    ss /= 255.0; // Correction for scale of pixel values
+    N[X_3D] = -ss * FACTOR_X[y_carac][x_carac] * accu_x / dx;
+    N[Y_3D] = -ss * FACTOR_X[x_carac][y_carac] * accu_y / dy;
+    N[Z_3D] = 1.0;
     normalize_vector(N);
     //std::cout << "(" << N[X_3D] << ", " << N[Y_3D] << ", " << N[Z_3D] << ")" << std::endl;
 }

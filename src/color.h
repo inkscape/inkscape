@@ -25,7 +25,7 @@
 #define SP_RGBA32_B_U(v) (((v) >> 8) & 0xff)
 #define SP_RGBA32_A_U(v) ((v) & 0xff)
 #define SP_COLOR_U_TO_F(v) ((v) / 255.0)
-#define SP_COLOR_F_TO_U(v) ((unsigned int) ((v) * 255.9999))
+#define SP_COLOR_F_TO_U(v) ((unsigned int) ((v) * 255. + .5))
 #define SP_RGBA32_R_F(v) SP_COLOR_U_TO_F (SP_RGBA32_R_U (v))
 #define SP_RGBA32_G_F(v) SP_COLOR_U_TO_F (SP_RGBA32_G_U (v))
 #define SP_RGBA32_B_F(v) SP_COLOR_U_TO_F (SP_RGBA32_B_U (v))

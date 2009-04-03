@@ -114,10 +114,10 @@ static void performDisplacement(NRPixBlock const* texture, NRPixBlock const* map
             pixel_t mapValue = pixelValue(map, xmap, ymap);
             double xtex = xout + (Xneedsdemul ?
                 (mapValue[3]==0?0:(scalex * (mapValue[Xchannel] - mapValue[3]*0.5) / mapValue[3])) :
-                scalex * (mapValue[Xchannel] - 127.5));
+                (scalex * (mapValue[Xchannel] - 127.5)));
             double ytex = yout + (Yneedsdemul ?
                 (mapValue[3]==0?0:(scaley * (mapValue[Ychannel] - mapValue[3]*0.5) / mapValue[3])) :
-                scaley * (mapValue[Ychannel] - 127.5));
+                (scaley * (mapValue[Ychannel] - 127.5)));
 
             out_data[(xout-out->area.x0) + (out->area.x1-out->area.x0)*(yout-out->area.y0)] = interpolatePixels<DATA_PREMULTIPLIED>(texture, xtex, ytex);
         }

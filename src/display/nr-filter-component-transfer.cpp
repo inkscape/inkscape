@@ -59,7 +59,6 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
         free_in_on_exit = true;
     }
     bool premultiplied = in->mode == NR_PIXBLOCK_MODE_R8G8B8A8P;
-    g_message("Premultiplied=%s", premultiplied?"yes":"no");
 
     NRPixBlock *out = new NRPixBlock;
     nr_pixblock_setup_fast(out, in->mode, x0, y0, x1, y1, true);

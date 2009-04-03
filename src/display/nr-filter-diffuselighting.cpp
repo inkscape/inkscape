@@ -43,13 +43,6 @@ FilterPrimitive * FilterDiffuseLighting::create() {
 FilterDiffuseLighting::~FilterDiffuseLighting()
 {}
 
-#define COMPUTE_INTER(inter, N, L, kd) \
-do {\
-    (inter) = (kd) * NR::scalar_product((N), (L)); \
-    if ((inter) < 0) (inter) = 0; \
-}while(0)
-
-
 int FilterDiffuseLighting::render(FilterSlot &slot, FilterUnits const &units) {
     NRPixBlock *in = slot.get(_input);
     if (!in) {
@@ -92,7 +85,7 @@ int FilterDiffuseLighting::render(FilterSlot &slot, FilterUnits const &units) {
             //finish the work
             for (i = 0, j = 0; i < w*h; i++) {
                 NR::compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
-                COMPUTE_INTER(inter, N, L, kd);
+                inter = kd * NR::scalar_product(N, L);
 
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
@@ -118,7 +111,7 @@ int FilterDiffuseLighting::render(FilterSlot &slot, FilterUnits const &units) {
                         i % w + x0,
                         i / w + y0,
                         ss * (double) data_i[4*i+3]/ 255);
-                COMPUTE_INTER(inter, N, L, kd);
+                inter = kd * NR::scalar_product(N, L);
 
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
@@ -144,7 +137,7 @@ int FilterDiffuseLighting::render(FilterSlot &slot, FilterUnits const &units) {
                     i / w + y0,
                     ss * (double) data_i[4*i+3]/ 255);
                 sl->light_components(LC, L);
-                COMPUTE_INTER(inter, N, L, kd);
+                inter = kd * NR::scalar_product(N, L);
                 
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
