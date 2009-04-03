@@ -662,7 +662,9 @@ static GtkWidget* ink_radio_action_create_tool_item( GtkAction* action )
             GtkToolButton* button = GTK_TOOL_BUTTON(item);
 
             GtkWidget* child = sp_icon_new( act->private_data->iconSize, act->private_data->iconId );
-            gtk_tool_button_set_icon_widget( button, child );
+            GtkWidget* align = gtk_alignment_new( 0.5, 0.5, 0.0, 0.0 );
+            gtk_container_add( GTK_CONTAINER(align), child );
+            gtk_tool_button_set_icon_widget( button, align );
         } else {
             // For now trigger a warning but don't do anything else
             GtkToolButton* button = GTK_TOOL_BUTTON(item);
