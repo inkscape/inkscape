@@ -112,7 +112,7 @@ static void performDisplacement(NRPixBlock const* texture, NRPixBlock const* map
             int ymap = yout;
 
             pixel_t mapValue = pixelValue(map, xmap, ymap);
-            double xtex = xout + (Xneedsdemul ?
+            double xtex = xout + (Xneedsdemul ? // Although the value of the pixel corresponds to the MIDDLE of the pixel, no +0.5 is needed because we're interpolating pixels anyway (so to get the actual pixel locations 0.5 would have to be subtracted again).
                 (mapValue[3]==0?0:(scalex * (mapValue[Xchannel] - mapValue[3]*0.5) / mapValue[3])) :
                 (scalex * (mapValue[Xchannel] - 127.5)));
             double ytex = yout + (Yneedsdemul ?

@@ -1095,18 +1095,18 @@ sp_gradient_ensure_colors(SPGradient *gr)
     double remainder_for_end[4] = {0,0,0,0}; // Used at the end
     switch(gr->spread) {
     case SP_GRADIENT_SPREAD_PAD:
-        remainder[0] = 0.5*gr->vector.stops[0].color.v.c[0];
+        remainder[0] = 0.5*gr->vector.stops[0].color.v.c[0]; // Half of the first cell uses the color of the first stop
         remainder[1] = 0.5*gr->vector.stops[0].color.v.c[1];
         remainder[2] = 0.5*gr->vector.stops[0].color.v.c[2];
         remainder[3] = 0.5*gr->vector.stops[0].opacity;
-        remainder_for_end[0] = 0.5*gr->vector.stops[gr->vector.stops.size() - 1].color.v.c[0];
+        remainder_for_end[0] = 0.5*gr->vector.stops[gr->vector.stops.size() - 1].color.v.c[0]; // Half of the first cell uses the color of the last stop
         remainder_for_end[1] = 0.5*gr->vector.stops[gr->vector.stops.size() - 1].color.v.c[1];
         remainder_for_end[2] = 0.5*gr->vector.stops[gr->vector.stops.size() - 1].color.v.c[2];
         remainder_for_end[3] = 0.5*gr->vector.stops[gr->vector.stops.size() - 1].opacity;
         break;
     case SP_GRADIENT_SPREAD_REFLECT:
-        break;
     case SP_GRADIENT_SPREAD_REPEAT:
+        // These two are handled differently, see below.
         break;
     default:
         g_error("Spread type not supported!");
@@ -1160,16 +1160,19 @@ sp_gradient_ensure_colors(SPGradient *gr)
             double dt = ob+.5-o0;
             f = 0.5*dt*df;
             if (ob==0 && gr->spread==SP_GRADIENT_SPREAD_REFLECT) {
+                // The first half of the first cell is just a mirror image of the second half, so simply multiply it by 2.
                 gr->color[4 * ob + 0] = (unsigned char) floor(2*255*(remainder[0] + dt*(r0 + f*(r1-r0))) + .5);
                 gr->color[4 * ob + 1] = (unsigned char) floor(2*255*(remainder[1] + dt*(g0 + f*(g1-g0))) + .5);
                 gr->color[4 * ob + 2] = (unsigned char) floor(2*255*(remainder[2] + dt*(b0 + f*(b1-b0))) + .5);
                 gr->color[4 * ob + 3] = (unsigned char) floor(2*255*(remainder[3] + dt*(a0 + f*(a1-a0))) + .5);
             } else if (ob==0 && gr->spread==SP_GRADIENT_SPREAD_REPEAT) {
+                // The first cell is the same as the last cell, so save whatever is in the second half here and deal with the rest later.
                 remainder_for_end[0] = remainder[0] + dt*(r0 + f*(r1-r0));
                 remainder_for_end[1] = remainder[1] + dt*(g0 + f*(g1-g0));
                 remainder_for_end[2] = remainder[2] + dt*(b0 + f*(b1-b0));
                 remainder_for_end[3] = remainder[3] + dt*(a0 + f*(a1-a0));
             } else {
+                // The first half of the cell was already in remainder.
                 gr->color[4 * ob + 0] = (unsigned char) floor(255*(remainder[0] + dt*(r0 + f*(r1-r0))) + .5);
                 gr->color[4 * ob + 1] = (unsigned char) floor(255*(remainder[1] + dt*(g0 + f*(g1-g0))) + .5);
                 gr->color[4 * ob + 2] = (unsigned char) floor(255*(remainder[2] + dt*(b0 + f*(b1-b0))) + .5);
@@ -1197,12 +1200,14 @@ sp_gradient_ensure_colors(SPGradient *gr)
         gr->color[4 * (NCOLORS-1) + 3] = (unsigned char) floor(255*(remainder[3]+remainder_for_end[3]) + .5);
         break;
     case SP_GRADIENT_SPREAD_REFLECT:
+        // The second half is the same as the first half, so multiply by 2.
         gr->color[4 * (NCOLORS-1) + 0] = (unsigned char) floor(2*255*remainder[0] + .5);
         gr->color[4 * (NCOLORS-1) + 1] = (unsigned char) floor(2*255*remainder[1] + .5);
         gr->color[4 * (NCOLORS-1) + 2] = (unsigned char) floor(2*255*remainder[2] + .5);
         gr->color[4 * (NCOLORS-1) + 3] = (unsigned char) floor(2*255*remainder[3] + .5);
         break;
     case SP_GRADIENT_SPREAD_REPEAT:
+        // The second half is the same as the second half of the first cell (which was saved in remainder_for_end).
         gr->color[0] = gr->color[4 * (NCOLORS-1) + 0] = (unsigned char) floor(255*(remainder[0]+remainder_for_end[0]) + .5);
         gr->color[1] = gr->color[4 * (NCOLORS-1) + 1] = (unsigned char) floor(255*(remainder[1]+remainder_for_end[1]) + .5);
         gr->color[2] = gr->color[4 * (NCOLORS-1) + 2] = (unsigned char) floor(255*(remainder[2]+remainder_for_end[2]) + .5);
