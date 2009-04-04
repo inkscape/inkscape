@@ -54,6 +54,22 @@ class SVGCalendar (inkex.Effect):
           action="store", type="string",
           dest="weekend", default="sat+sun",
           help='Define the weekend days. ("sat+sun" or "sat" or "sun")')
+        self.OptionParser.add_option("--auto-organize",
+          action="store", type="inkbool",
+          dest="auto_organize", default=True,
+          help='Authomaticaly set the size and positions.')
+        self.OptionParser.add_option("--months-per-line",
+          action="store", type="int",
+          dest="months_per_line", default=3,
+          help='Number of months side by side.')
+        self.OptionParser.add_option("--month-width",
+          action="store", type="string",
+          dest="month_width", default="6cm",
+          help='The width of the month days box.')
+        self.OptionParser.add_option("--month-margin",
+          action="store", type="string",
+          dest="month_margin", default="1cm",
+          help='The space between the month boxes.')
         self.OptionParser.add_option("--color-year",
           action="store", type="string",
           dest="color_year", default="#888",
@@ -120,21 +136,32 @@ class SVGCalendar (inkex.Effect):
           calendar.setfirstweekday(6)
         else:
           calendar.setfirstweekday(0)
+        # Convert string numbers with unit to user space float numbers:
+        self.options.month_width  = inkex.unittouu( self.options.month_width )
+        self.options.month_margin = inkex.unittouu( self.options.month_margin )
 
     # initial values:
     month_x_pos = 0
     month_y_pos = 0
 
     def calculate_size_and_positions(self):
+        #month_margin month_width months_per_line auto_organize
         self.doc_w = inkex.unittouu(self.document.getroot().get('width'))
         self.doc_h = inkex.unittouu(self.document.getroot().get('height'))
-        if self.doc_h > self.doc_w:
-          self.months_per_line = 3
+        if self.options.auto_organize:
+          if self.doc_h > self.doc_w:
+            self.months_per_line = 3
+          else:
+            self.months_per_line = 4
         else:
-          self.months_per_line = 4
+          self.months_per_line = self.options.months_per_line
         #self.month_w = self.doc_w / self.months_per_line
-        self.month_w = (self.doc_w * 0.8) / self.months_per_line
-        self.month_margin = self.month_w / 10
+        if self.options.auto_organize:
+          self.month_w = (self.doc_w * 0.8) / self.months_per_line
+          self.month_margin = self.month_w / 10
+        else:
+          self.month_w = self.options.month_width
+          self.month_margin = self.options.month_margin
         self.day_w = self.month_w / 7
         self.day_h = self.month_w / 9
         self.month_h = self.day_w * 7

@@ -21,6 +21,13 @@
         <_item value="sun">Sunday</_item>
       </param>
     </page>
+    <page name="tab" _gui-text="Organization">
+      <param name="auto-organize" type="boolean" _gui-text="Set authomaticaly the size and positions">true</param>
+      <_param name="organize-help" type="description">The options above has no value with the upper checked.</_param>
+      <param name="months-per-line" type="int" min="1" max="12" _gui-text="Months per line">3</param>
+      <param name="month-width" type="string" _gui-text="Month Width">6cm</param>
+      <param name="month-margin" type="string" _gui-text="Month Margin">1cm</param>
+    </page>
     <page name="tab" _gui-text="Colors">
       <param name="color-year"     type="string" _gui-text="Year color">#808080</param>
       <param name="color-month"    type="string" _gui-text="Month color">#686868</param>
