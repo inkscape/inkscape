@@ -15859,7 +15859,7 @@ msgstr "List"
 
 #: ../src/ui/widget/panel.cpp:134
 msgid "swatches|Size"
-msgstr "swatches|Size"
+msgstr "Size"
 
 #: ../src/ui/widget/panel.cpp:138
 msgid "tiny"
@@ -15872,7 +15872,7 @@ msgstr "small"
 #. TRANSLATORS: Translate only the word "medium". Indicates size of colour swatches
 #: ../src/ui/widget/panel.cpp:141
 msgid "swatchesHeight|medium"
-msgstr "swatchesHeight|medium"
+msgstr "medium"
 
 #: ../src/ui/widget/panel.cpp:142
 msgid "large"
@@ -15884,7 +15884,7 @@ msgstr "huge"
 
 #: ../src/ui/widget/panel.cpp:165
 msgid "swatches|Width"
-msgstr "swatches|Width"
+msgstr "Width"
 
 #: ../src/ui/widget/panel.cpp:169
 msgid "narrower"
@@ -15897,7 +15897,7 @@ msgstr "narrow"
 #. TRANSLATORS: Translate only the word "medium". Indicates width of colour swatches
 #: ../src/ui/widget/panel.cpp:172
 msgid "swatchesWidth|medium"
-msgstr "swatchesWidth|medium"
+msgstr "medium"
 
 #: ../src/ui/widget/panel.cpp:173
 msgid "wide"
@@ -15910,7 +15910,7 @@ msgstr "wider"
 #. TRANSLATORS: Translate only the word "Wrap". Indicates how colour swatches are displayed
 #: ../src/ui/widget/panel.cpp:205
 msgid "swatches|Wrap"
-msgstr "swatches|Wrap"
+msgstr "Wrap"
 
 #: ../src/ui/widget/preferences-widget.cpp:590
 msgid "Reset"
