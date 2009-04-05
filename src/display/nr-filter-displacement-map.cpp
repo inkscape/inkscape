@@ -60,38 +60,53 @@ static pixel_t interpolatePixels(NRPixBlock const* pb, double x, double y) {
     pixel_t p10 = pixelValue(pb, xi+0, yi+1);
     pixel_t p11 = pixelValue(pb, xi+1, yi+1);
 
+    /* It's a good idea to interpolate premultiplied colors:
+     *
+     *   Consider two pixels, one being rgba(255,0,0,0), which is fully transparent,
+     *   and the other being rgba(0,0,255,255), or blue (fully opaque).
+     *   If these two colors are interpolated the expected result would be bluish pixels
+     *   containing no red.
+     *
+     * However, if our final alpha value is zero, then the RGB values aren't really determinate.
+     * We might as well avoid premultiplication in this case, which still gives us a fully
+     * transparent result, but with interpolated RGB parts. */
+
+    /* First calculate interpolated alpha value. */
+    unsigned ra = 0;
+    if (!PREMULTIPLIED) {
+        unsigned const y0 = sf*p00[3] + xf*(p01[3]-p00[3]); // range [0,a*sf]
+        unsigned const y1 = sf*p10[3] + xf*(p11[3]-p10[3]);
+        ra = sf*y0 + yf*(y1-y0); // range [0,a*sf*sf]
+    }
+
     pixel_t r;
-    if (PREMULTIPLIED) {
-        unsigned int p0[4]; // range [0,a*sf]
-        unsigned int p1[4];
-        for(size_t i=0; i<4; i++) {
-            p0[i] = sf*p00[i] + xf*((unsigned int)p01[i]-(unsigned int)p00[i]);
-            p1[i] = sf*p10[i] + xf*((unsigned int)p11[i]-(unsigned int)p10[i]);
-        }
-        for(size_t i=0; i<4; i++) {
-            unsigned int ru = sf*p0[i] + yf*(p1[i]-p0[i]); // range [0,a*sf^2]
-            r[i] = (ru + sf2h)>>(2u*sfl); // range [0,a]
+    if (ra == 0) {
+        /* Either premultiplied or the interpolated alpha value is zero,
+         * so do simple interpolation. */
+        for (unsigned i = 0; i != 4; ++i) {
+            // y0,y1 have range [0,a*sf]
+            unsigned const y0 = sf*p00[i] + xf*((unsigned int)p01[i]-(unsigned int)p00[i]);
+            unsigned const y1 = sf*p10[i] + xf*((unsigned int)p11[i]-(unsigned int)p10[i]);
+
+            unsigned const ri = sf*y0 + yf*(y1-y0); // range [0,a*sf*sf]
+            r[i] = (ri + sf2h)>>(2*sfl); // range [0,a]
         }
     } else {
-        // It's a good idea to interpolate premultiplied colors
-        //   Consider two pixels, one being rgb(255,0,0,0), which is fully transparent,
-        //   and the other being rgb(0,255,0,255), or green (fully opaque).
-        //   If these two colors are interpolated the expected result would be greenish pixels containing no red.
-        unsigned int p0[4];
-        unsigned int p1[4];
-        for(size_t i=0; i<3; i++) {
-            unsigned int c00 = p00[i]*p00[3], c01 = p01[i]*p01[3], c10 = p10[i]*p10[3], c11 = p11[i]*p11[3]; // range [0,255*a]
-            p0[i] = sf*c00 + xf*(c01-c00); // range [0,255*a*sf]
-            p1[i] = sf*c10 + xf*(c11-c10); // range [0,255*a*sf]
+        /* Do premultiplication ourselves. */
+        for (unsigned i = 0; i != 3; ++i) {
+            // Premultiplied versions.  Range [0,255*a].
+            unsigned const c00 = p00[i]*p00[3];
+            unsigned const c01 = p01[i]*p01[3];
+            unsigned const c10 = p10[i]*p10[3];
+            unsigned const c11 = p11[i]*p11[3];
+
+            // Interpolation.
+            unsigned const y0 = sf*c00 + xf*(c01-c00); // range [0,255*a*sf]
+            unsigned const y1 = sf*c10 + xf*(c11-c10); // range [0,255*a*sf]
+            unsigned const ri = sf*y0 + yf*(y1-y0); // range [0,255*a*sf*sf]
+            r[i] = (ri + ra/2) / ra;  // range [0,255]
         }
-        p0[3] = sf*p00[3] + xf*(p01[3]-p00[3]); // range [0,a*sf]
-        p1[3] = sf*p10[3] + xf*(p11[3]-p10[3]);
-        unsigned int ru = sf*p0[3] + yf*(p1[3]-p0[3]); // range [0,a*sf^2]
-        r[3] = (ru + sf2h)>>(2u*sfl); // range [0,a]
-        for(size_t i=0; i<3; i++) {
-            unsigned int ru = sf*p0[i] + yf*(p1[i]-p0[i]); // range [0,255*a*sf^2]
-            r[i] = (ru + ru/2u)/ru; // range [0,255]
-        }
+        r[3] = (ra + sf2h)>>(2*sfl); // range [0,a]
     }
 
     return r;
