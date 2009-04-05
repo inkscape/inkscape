@@ -154,10 +154,10 @@ int FilterComposite::render(FilterSlot &slot, FilterUnits const &/*units*/) {
             pixops_mix<composite_xor>(*out, *in1, *in2);
             break;
         case COMPOSITE_ARITHMETIC:
-            arith_k1 = (int)(k1 * 255);
-            arith_k2 = (int)(k2 * 255 * 255);
-            arith_k3 = (int)(k3 * 255 * 255);
-            arith_k4 = (int)(k4 * 255 * 255 * 255);
+            arith_k1 = (int)round(k1 * 255);
+            arith_k2 = (int)round(k2 * 255 * 255);
+            arith_k3 = (int)round(k3 * 255 * 255);
+            arith_k4 = (int)round(k4 * 255 * 255 * 255);
             pixops_mix<composite_arithmetic>(*out, *in1, *in2);
             break;
         case COMPOSITE_DEFAULT:

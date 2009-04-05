@@ -64,6 +64,11 @@ inline int clamp_alpha(int const val, int const alpha) {
     return val;
 }
 
+/**
+ * Macro to use the clamp function with double inputs and unsigned char output
+ */
+#define CLAMP_D_TO_U8_ALPHA(v,a) (unsigned char) clamp_alpha((int)round((v)),(a))
+
 } /* namespace Filters */
 } /* namespace Inkscape */
 

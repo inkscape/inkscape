@@ -98,6 +98,7 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
                     if (!premultiplied || color==3) {
                         std::vector<gdouble> _tableValues(tableValues[color]);
                         // Scale by 255 and add .5 to avoid having to add it later for rounding purposes
+                        //   Note that this means that CLAMP_D_TO_U8 cannot be used here (as it includes rounding!)
                         for(i=0;i<_vsize;i++) {
                             _tableValues[i] = std::max(0.,std::min(255.,255*_tableValues[i])) + .5;
                         }
@@ -115,7 +116,7 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
                             if (in_data[i+3-color]==0) continue;
                             int k = ((_vsize-1) * in_data[i]) / in_data[i+3-color];
                             double dx = ((_vsize-1) * in_data[i]) / (double)in_data[i+3-color] - k;
-                            out_data[i] = static_cast<unsigned char>(out_data[i+3-color] * (_tableValues[k] + dx * (_tableValues[k+1] - _tableValues[k])) + .5);
+                            out_data[i] = CLAMP_D_TO_U8_ALPHA(out_data[i+3-color] * (_tableValues[k] + dx * (_tableValues[k+1] - _tableValues[k])), out_data[i+3-color]); // CLAMP includes rounding!
                         }
                     }
                 }
@@ -130,7 +131,7 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
                         std::vector<unsigned char> _tableValues(_vsize);
                         // Convert to unsigned char
                         for(i=0;i<_vsize;i++) {
-                            _tableValues[i] = static_cast<unsigned char>(std::max(0.,std::min(255.,255*tableValues[color][i])) + .5);
+                            _tableValues[i] = CLAMP_D_TO_U8(255*tableValues[color][i]);
                         }
                         for(i=color;i<size;i+=4){
                             int k = FAST_DIVIDE<255>((_vsize-1) * in_data[i]);
@@ -144,35 +145,37 @@ int FilterComponentTransfer::render(FilterSlot &slot, FilterUnits const &/*units
                         for(i=color;i<size;i+=4){
                             if (in_data[i+3-color]==0) continue;
                             int k = ((_vsize-1) * in_data[i]) / in_data[i+3-color];
-                            out_data[i] =  static_cast<unsigned char>(out_data[i+3-color] * _tableValues[k] + .5);
+                            out_data[i] = CLAMP_D_TO_U8_ALPHA(out_data[i+3-color] * _tableValues[k], out_data[i+3-color]);
                         }
                     }
                 }
                 break;
             case COMPONENTTRANSFER_TYPE_LINEAR:
                 if (!premultiplied || color==3) {
-                    _intercept = 255*_intercept + .5;
+                    _intercept = 255*_intercept;
                     for(i=color;i<size;i+=4){
-                        out_data[i] = CLAMP_D_TO_U8(_slope * in_data[i] + _intercept);
+                        out_data[i] = CLAMP_D_TO_U8(_slope * in_data[i] + _intercept); // CLAMP includes rounding!
                     }
                 } else {
                     for(i=color;i<size;i+=4){
                         if (in_data[i+3-color]==0) continue;
-                        out_data[i] = CLAMP_D_TO_U8(out_data[i+3-color] * (_slope * in_data[i] / in_data[i+3-color] + _intercept) + .5);
+                        double out = _slope * in_data[i] / in_data[i+3-color] + _intercept;
+                        out_data[i] = CLAMP_D_TO_U8_ALPHA(out_data[i+3-color] * out, out_data[i+3-color]);
                     }
                 }
                 break;
             case COMPONENTTRANSFER_TYPE_GAMMA:
                 if (!premultiplied || color==3) {
                     _amplitude *= pow(255.0, -_exponent+1); // The input should be divided by 255, then exponentiated and then multiplied by 255 again, instead the amplitude is modified accordingly.
-                    _offset = 255*_offset + .5;
+                    _offset = 255*_offset;
                     for(i=color;i<size;i+=4){
                         out_data[i] = CLAMP_D_TO_U8(_amplitude * pow((double)in_data[i], _exponent) + _offset);
                     }
                 } else {
                     for(i=color;i<size;i+=4){
                         if (in_data[i+3-color]==0) continue;
-                        out_data[i] = CLAMP_D_TO_U8(out_data[i+3-color] * (_amplitude * pow((double)in_data[i] / in_data[i+3-color], _exponent) + _offset) + .5);
+                        double out = _amplitude * pow((double)in_data[i] / in_data[i+3-color], _exponent) + _offset;
+                        out_data[i] = CLAMP_D_TO_U8_ALPHA(out_data[i+3-color] * out, out_data[i+3-color]);
                     }
                 }
                 break;

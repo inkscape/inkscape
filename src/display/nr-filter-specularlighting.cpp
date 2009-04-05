@@ -105,7 +105,7 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
                 NR::compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
                 COMPUTE_INTER(inter, N, H, ks, specularExponent);
 
-                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]); // CLAMP includes rounding!
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
                 data_o[j] = MAX(MAX(data_o[j-3], data_o[j-2]), data_o[j-1]);

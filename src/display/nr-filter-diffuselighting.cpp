@@ -87,7 +87,7 @@ int FilterDiffuseLighting::render(FilterSlot &slot, FilterUnits const &units) {
                 NR::compute_surface_normal(N, ss, in, i / w, i % w, dx, dy);
                 inter = kd * NR::scalar_product(N, L);
 
-                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]);
+                data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_RED]); // CLAMP includes rounding!
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_GREEN]);
                 data_o[j++] = CLAMP_D_TO_U8(inter * LC[LIGHT_BLUE]);
                 data_o[j++] = 255;

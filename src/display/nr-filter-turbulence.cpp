@@ -100,7 +100,7 @@ void FilterTurbulence::render_area(NRPixBlock *pix, NR::IRect &full_area, Filter
             for (int x = std::max(bbox_x0, pix->area.x0); x < std::min(bbox_x1, pix->area.x1); x++){
                 int out_pos = out_line + 4 * (x - pix->area.x0);
                 point[0] = x * unit_trans[0] + unit_trans[4];
-                pb[out_pos] = CLAMP_D_TO_U8( turbulence(0,point)*255 );
+                pb[out_pos] = CLAMP_D_TO_U8( turbulence(0,point)*255 ); // CLAMP includes rounding!
                 pb[out_pos + 1] = CLAMP_D_TO_U8( turbulence(1,point)*255 );
                 pb[out_pos + 2] = CLAMP_D_TO_U8( turbulence(2,point)*255 );
                 pb[out_pos + 3] = CLAMP_D_TO_U8( turbulence(3,point)*255 );

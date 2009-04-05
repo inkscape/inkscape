@@ -91,7 +91,7 @@ int FilterColorMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/) {
                         g = in_data[i+1];
                         b = in_data[i+2];
                         a = in_data[i+3];
-                        out_data[i] = CLAMP_D_TO_U8( r*values[0] + g*values[1] + b*values[2] + a*values[3] + a04 );
+                        out_data[i] = CLAMP_D_TO_U8( r*values[0] + g*values[1] + b*values[2] + a*values[3] + a04 ); // CLAMP includes rounding!
                         out_data[i+1] = CLAMP_D_TO_U8( r*values[5] + g*values[6] + b*values[7] + a*values[8] + a14 );
                         out_data[i+2] = CLAMP_D_TO_U8( r*values[10] + g*values[11] + b*values[12] + a*values[13] + a24 );
                         out_data[i+3] = CLAMP_D_TO_U8( r*values[15] + g*values[16] + b*values[17] + a*values[18] + a34 );

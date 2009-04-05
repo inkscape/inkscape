@@ -78,7 +78,7 @@ int FilterConvolveMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/)
                 }
             }
             unsigned int out_index = 4*( x + width*y );
-            out_data[out_index++] = CLAMP_D_TO_U8(result_R / divisor + bias);
+            out_data[out_index++] = CLAMP_D_TO_U8(result_R / divisor + bias); // CLAMP includes rounding!
             out_data[out_index++] = CLAMP_D_TO_U8(result_G / divisor + bias);
             out_data[out_index++] = CLAMP_D_TO_U8(result_B / divisor + bias);
 
