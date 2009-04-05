@@ -599,24 +599,18 @@ sp_repr_save_stream (Document *doc, FILE *fp, gchar const *default_ns, bool comp
 /* Returns TRUE if file successfully saved; FALSE if not
  */
 bool
-sp_repr_save_file (Document *doc, const gchar *filename,
+sp_repr_save_file (Document *doc, gchar const *filename,
                    gchar const *default_ns)
 {
     if (filename == NULL) {
         return FALSE;
     }
-    bool compress = false;
+
+    bool compress;
     {
-        if (strlen (filename) > 5) {
-            gchar tmp[] = {0,0,0,0,0,0};
-            strncpy( tmp, filename + strlen (filename) - 5, 6 );
-            tmp[5] = 0;
-            if ( strcasecmp(".svgz", tmp ) == 0 )
-            {
-                //g_message("TIME TO COMPRESS THE OUTPUT FOR SVGZ");
-                compress = true;
-            }
-        }
+        size_t const filename_len = strlen(filename);
+        compress = ( filename_len > 5
+                     && strcasecmp(".svgz", filename + filename_len - 5) == 0 );
     }
 
     Inkscape::IO::dump_fopen_call( filename, "B" );
