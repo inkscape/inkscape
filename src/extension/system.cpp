@@ -8,7 +8,7 @@
  *   Ted Gould <ted@gould.cx>
  *   Johan Engelen <johan@shouraizou.nl>
  *
- * Copyright (C) 2006-2007 Johan Engelen 
+ * Copyright (C) 2006-2007 Johan Engelen
  * Copyright (C) 2002-2004 Ted Gould
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -96,7 +96,7 @@ open(Extension *key, gchar const *filename)
     }
 
     if (last_chance_svg) {
-        /* We can't call sp_ui_error_dialog because we may be 
+        /* We can't call sp_ui_error_dialog because we may be
            running from the console, in which case calling sp_ui
            routines will cause a segfault.  See bug 1000350 - bryce */
         // sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
@@ -255,45 +255,47 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         saved_modified = doc->isModifiedSinceSave();
         saved_output_extension = g_strdup(repr->attribute("inkscape:output_extension"));
         saved_dataloss = g_strdup(repr->attribute("inkscape:dataloss"));
-        saved_uri = g_strdup(doc->uri);    
-    }    
-
-    // update attributes:
-    bool saved = sp_document_get_undo_sensitive(doc);
-    sp_document_set_undo_sensitive (doc, false); 
-    {
-        // save the filename for next use
-        sp_document_set_uri(doc, fileName);
-        // also save the extension for next use
-        repr->setAttribute("inkscape:output_extension", omod->get_id());
-        // set the "dataloss" attribute if the chosen extension is lossy
-        repr->setAttribute("inkscape:dataloss", NULL);
-        if ( omod->causes_dataloss() ) {
-            repr->setAttribute("inkscape:dataloss", "true");
-        }
+        saved_uri = g_strdup(doc->uri);
     }
-    sp_document_set_undo_sensitive (doc, saved);
-    doc->setModifiedSinceSave(false);
+
+    // Update attributes:
+    {
+        bool const saved = sp_document_get_undo_sensitive(doc);
+        sp_document_set_undo_sensitive(doc, false);
+        {
+            // save the filename for next use
+            sp_document_set_uri(doc, fileName);
+            // also save the extension for next use
+            repr->setAttribute("inkscape:output_extension", omod->get_id());
+            // set the "dataloss" attribute if the chosen extension is lossy
+            repr->setAttribute("inkscape:dataloss", NULL);
+            if (omod->causes_dataloss()) {
+                repr->setAttribute("inkscape:dataloss", "true");
+            }
+        }
+        sp_document_set_undo_sensitive(doc, saved);
+        doc->setModifiedSinceSave(false);
+    }
 
     omod->save(doc, fileName);
-    
-    // if it is an unofficial save, set the modified attributes back to what they were    
+
+    // If it is an unofficial save, set the modified attributes back to what they were.
     if ( !official) {
-        saved = sp_document_get_undo_sensitive(doc);
-        sp_document_set_undo_sensitive (doc, false);
+        bool const saved = sp_document_get_undo_sensitive(doc);
+        sp_document_set_undo_sensitive(doc, false);
         {
             repr->setAttribute("inkscape:output_extension", saved_output_extension);
             repr->setAttribute("inkscape:dataloss", saved_dataloss);
             sp_document_set_uri(doc, saved_uri);
         }
-        sp_document_set_undo_sensitive (doc, saved);
+        sp_document_set_undo_sensitive(doc, saved);
         doc->setModifiedSinceSave(saved_modified);
 
         g_free(saved_output_extension);
         g_free(saved_dataloss);
         g_free(saved_uri);
     }
-    
+
     g_free(fileName);
     return;
 }
