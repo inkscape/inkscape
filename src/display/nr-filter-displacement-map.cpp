@@ -9,12 +9,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <cmath>
-#if defined (SOLARIS) && (SOLARIS == 8)
-#include "round.h"
-using Inkscape::round;
-#endif 
-
 #include "display/nr-filter-displacement-map.h"
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-units.h"
@@ -56,16 +50,18 @@ static inline pixel_t pixelValue(NRPixBlock const* pb, int x, int y) {
 
 template<bool PREMULTIPLIED>
 static pixel_t interpolatePixels(NRPixBlock const* pb, double x, double y) {
+    // NOTE: The values of x and y are shifted by -0.5 (the "true" values would be x+0.5 and y+0.5).
+    //       This is done because otherwise the pixel values first have to be shifted by +0.5 and then by -0.5 again...
     unsigned int const sfl = 8u;
     unsigned int const sf = 1u<<sfl;
     unsigned int const sf2h = 1u<<(2u*sfl-1);
-    int xi = (int)round(x), yi = (int)round(y);
-    unsigned int xf = static_cast<unsigned int>(round(sf * (x - (xi - 0.5)))),
-        yf = static_cast<unsigned int>(round(sf * (y - (yi - 0.5))));
-    pixel_t p00 = pixelValue(pb, xi-1, yi-1);
-    pixel_t p01 = pixelValue(pb, xi-0, yi-1);
-    pixel_t p10 = pixelValue(pb, xi-1, yi-0);
-    pixel_t p11 = pixelValue(pb, xi-0, yi-0);
+    int xi = (int)floor(x), yi = (int)floor(y);
+    unsigned int xf = static_cast<unsigned int>(round(sf * (x - xi))),
+        yf = static_cast<unsigned int>(round(sf * (y - yi)));
+    pixel_t p00 = pixelValue(pb, xi+0, yi+0);
+    pixel_t p01 = pixelValue(pb, xi+1, yi+0);
+    pixel_t p10 = pixelValue(pb, xi+0, yi+1);
+    pixel_t p11 = pixelValue(pb, xi+1, yi+1);
 
     /* It's a good idea to interpolate premultiplied colors:
      *
