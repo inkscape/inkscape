@@ -149,7 +149,7 @@ static Piecewise<SBasis> sqrt_internal(SBasis const &f,
         sqrtf.resize(order+1, Linear(0,0));
         sqrtf[0] = Linear(std::sqrt(f[0][0]), std::sqrt(f[0][1]));
         SBasis r = f - multiply(sqrtf, sqrtf); // remainder    
-        for(unsigned i = 1; int(i) <= order and i<r.size(); i++) {
+        for(unsigned i = 1; int(i) <= order && i<r.size(); i++) {
             Linear ci(r[i][0]/(2*sqrtf[0][0]), r[i][1]/(2*sqrtf[0][1]));
             SBasis cisi = shift(ci, i);
             r -= multiply(shift((sqrtf*2 + cisi), i), SBasis(ci));

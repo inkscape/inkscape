@@ -463,7 +463,17 @@ class least_squeares_fitter<ModelT, double, true>
     typedef typename base_type::solution_type           solution_type;
 
     using base_type::m_vector_view;
-    using base_type::result;
+    //using base_type::result; // VSC legacy support
+    solution_type& result( std::vector<Point> const& old_sample_values,
+                           std::vector<Point> const& new_sample_values )
+    {
+        return base_type::result(old_sample_values, new_sample_values);
+    }
+ 
+    solution_type& result()
+    {
+        return base_type::result();
+    }
 
   public:
     least_squeares_fitter<ModelT, double, true>( model_type const& _model,
@@ -497,7 +507,18 @@ class least_squeares_fitter<ModelT, Point, true>
     typedef typename base_type::solution_type           solution_type;
 
     using base_type::m_vector_view;
-    using base_type::result;
+    //using base_type::result; // VCS legacy support
+    solution_type& result( std::vector<Point> const& old_sample_values,
+                           std::vector<Point> const& new_sample_values )
+    {
+        return base_type::result(old_sample_values, new_sample_values);
+    }
+ 
+    solution_type& result()
+    {
+        return base_type::result();
+    }
+
 
   public:
     least_squeares_fitter<ModelT, Point, true>( model_type const& _model,

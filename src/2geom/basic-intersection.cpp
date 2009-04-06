@@ -2,10 +2,10 @@
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/exception.h>
 
-
+#ifdef HAVE_GSL
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_multiroots.h>
-
+#endif
 
 using std::vector;
 namespace Geom {
@@ -135,10 +135,8 @@ find_self_intersections(std::vector<std::pair<double, double> > &xs,
     //unique(xs.begin(), xs.end());
 }
 
-
+#ifdef HAVE_GSL
 #include <gsl/gsl_multiroots.h>
- 
- 
 
 struct rparams
 {
@@ -161,6 +159,7 @@ intersect_polish_f (const gsl_vector * x, void *params,
 
     return GSL_SUCCESS;
 }
+#endif
 
 union dbl_64{
     long long i64;
@@ -178,12 +177,52 @@ static double EpsilonBy(double value, int eps)
 
 static void intersect_polish_root (D2<SBasis> const &A, double &s,
                                    D2<SBasis> const &B, double &t) {
+#ifdef HAVE_GSL
     const gsl_multiroot_fsolver_type *T;
     gsl_multiroot_fsolver *sol;
 
     int status;
     size_t iter = 0;
+#endif
+    std::vector<Point> as, bs;
+    as = A.valueAndDerivatives(s, 2);
+    bs = B.valueAndDerivatives(t, 2);
+    Point F = as[0] - bs[0];
+    double best = dot(F, F);
+    
+    for(int i = 0; i < 4; i++) {
+        
+        /**
+           we want to solve
+           J*(x1 - x0) = f(x0)
+           
+           |dA(s)[0]  -dB(t)[0]|  (X1 - X0) = A(s) - B(t)
+           |dA(s)[1]  -dB(t)[1]| 
+        **/
 
+        // We're using the standard transformation matricies, which is numerically rather poor.  Much better to solve the equation using elimination.
+
+        Matrix jack(as[1][0], as[1][1],
+                    -bs[1][0], -bs[1][1],
+                    0, 0);
+        Point soln = (F)*jack.inverse();
+        double ns = s - soln[0];
+        double nt = t - soln[1];
+        
+        as = A.valueAndDerivatives(ns, 2);
+        bs = B.valueAndDerivatives(nt, 2);
+        F = as[0] - bs[0];
+        double trial = dot(F, F);
+        if (trial > best*0.1) {// we have standards, you know
+            // At this point we could do a line search
+            break;
+        }
+        best = trial;
+        s = ns;
+        t = nt;
+    }
+    
+#ifdef HAVE_GSL
     const size_t n = 2;
     struct rparams p = {A, B};
     gsl_multiroot_function f = {&intersect_polish_f, n, &p};
@@ -216,7 +255,9 @@ static void intersect_polish_root (D2<SBasis> const &A, double &s,
 
     gsl_multiroot_fsolver_free (sol);
     gsl_vector_free (x);
+#endif
     
+    {
     // This code does a neighbourhood search for minor improvements.
     double best_v = L1(A(s) - B(t));
     //std::cout  << "------\n" <<  best_v << std::endl;
@@ -247,6 +288,7 @@ static void intersect_polish_root (D2<SBasis> const &A, double &s,
             best = trial;
             best_v = trial_v;
         }
+    }
     }
 }
 

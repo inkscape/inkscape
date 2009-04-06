@@ -66,6 +66,11 @@ Crossings curve_sweep(Path const &a, Path const &b) {
     return ret;
 }
 
+Crossings pair_intersect(Curve const & A, Interval const &Ad,
+                    Curve const & B, Interval const &Bd);
+Crossings mono_intersect(Curve const & A, Interval const &Ad,
+                    Curve const & B, Interval const &Bd);
+                    
 struct SimpleCrosser : public Crosser<Path> {
     Crossings crossings(Curve const &a, Curve const &b);
     Crossings crossings(Path const &a, Path const &b) { return curve_sweep<SimpleCrosser>(a, b); }

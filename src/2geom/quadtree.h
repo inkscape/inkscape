@@ -81,6 +81,8 @@ public:
     Quad* search(Geom::Rect const &r);
     void insert(Geom::Rect const &r, int shape);
     void erase(Quad *q, int shape);
+private:
+    bool clean_root();
 };
 
 };

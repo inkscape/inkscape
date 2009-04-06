@@ -232,11 +232,15 @@ class MatrixImpl : public BaseMatrixImpl
 		gsl_matrix_set_identity(m_matrix);
 	}
 
-	using base_type::operator();
+        using base_type::operator(); // VSC legacy support
+        const double & operator() (size_t i, size_t j) const
+        {
+            return base_type::operator ()(i, j);
+        }
 
-	double & operator() (size_t i, size_t j)
+        double & operator() (size_t i, size_t j)
 	{
-		return *gsl_matrix_ptr(m_matrix, i, j);
+            return *gsl_matrix_ptr(m_matrix, i, j);
 	}
 
 	using base_type::get_gsl_matrix;

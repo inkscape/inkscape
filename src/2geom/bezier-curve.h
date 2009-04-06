@@ -166,15 +166,8 @@ public:
     return ret;
   }
 
-  Curve *derivative() const {
-     if(order > 1)
-        return new BezierCurve<order-1>(Geom::derivative(inner[X]), Geom::derivative(inner[Y]));
-     else if (order == 1) {
-        double dx = inner[X][1] - inner[X][0], dy = inner[Y][1] - inner[Y][0];
-        return new BezierCurve<1>(Point(dx,dy),Point(dx,dy));
-     }
-  }
-
+    Curve *derivative() const;
+    
   Point pointAt(double t) const { return inner.valueAt(t); }
   std::vector<Point> pointAndDerivatives(Coord t, unsigned n) const { return inner.valueAndDerivatives(t, n); }
 
@@ -193,7 +186,7 @@ protected:
 };
 
 // BezierCurve<0> is meaningless; specialize it out
-template<> class BezierCurve<0> : public BezierCurve<1> { public: BezierCurve(); BezierCurve(Bezier x, Bezier y); };
+template<> class BezierCurve<0> : public BezierCurve<1> { public: BezierCurve();};
 
 typedef BezierCurve<1> LineSegment;
 typedef BezierCurve<2> QuadraticBezier;
@@ -227,6 +220,20 @@ double length(LineSegment const& _segment)
 {
 	return distance(_segment.initialPoint(), _segment.finalPoint());
 }
+
+template <unsigned order>
+inline
+Curve *BezierCurve<order>::derivative() const {
+    return new BezierCurve<order-1>(Geom::derivative(inner[X]), Geom::derivative(inner[Y]));
+}
+
+template <>
+inline
+Curve *BezierCurve<1>::derivative() const {
+    double dx = inner[X][1] - inner[X][0], dy = inner[Y][1] - inner[Y][0];
+    return new BezierCurve<1>(Point(dx,dy),Point(dx,dy));
+}
+
 
 } // end namespace Geom
 

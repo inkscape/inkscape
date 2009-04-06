@@ -110,10 +110,15 @@ struct NearF { bool operator()(Crossing a, Crossing b) { return are_near(a, b); 
 
 struct CrossingOrder {
     unsigned ix;
-    CrossingOrder(unsigned i) : ix(i) {}
+    bool rev;
+    CrossingOrder(unsigned i, bool r = false) : ix(i), rev(r) {}
     bool operator()(Crossing a, Crossing b) {
-        return (ix == a.a ? a.ta : a.tb) <
-               (ix == b.a ? b.ta : b.tb);
+        if(rev) 
+            return (ix == a.a ? a.ta : a.tb) <
+                   (ix == b.a ? b.ta : b.tb);
+        else
+            return (ix == a.a ? a.ta : a.tb) >
+                   (ix == a.a ? a.ta : a.tb);
     }
 };
 

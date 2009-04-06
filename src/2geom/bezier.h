@@ -44,12 +44,44 @@
 namespace Geom {
 
 inline Coord subdivideArr(Coord t, Coord const *v, Coord *left, Coord *right, unsigned order) {
+/*
+ *  Bernstein : 
+ *	Evaluate a Bernstein function at a particular parameter value
+ *      Fill in control points for resulting sub-curves.
+ * 
+ */
+
+    unsigned N = order+1;
+    std::valarray<Coord> vtemp(2*N);
+    for (unsigned i = 0; i < N; i++)
+        vtemp[i] = v[i];
+
+    // Triangle computation
+    const double omt = (1-t);
+    if(left)
+        left[0] = vtemp[0];
+    if(right)
+        right[order] = vtemp[order];
+    double *prev_row = &vtemp[0];
+    double *row = &vtemp[N];
+    for (unsigned i = 1; i < N; i++) {
+        for (unsigned j = 0; j < N - i; j++) {
+            row[j] = omt*prev_row[j] + t*prev_row[j+1];
+        }
+        if(left)
+            left[i] = row[0];
+        if(right)
+            right[order-i] = row[order-i];
+        std::swap(prev_row, row);
+    }
+    return (prev_row[0]);
+/*
     Coord vtemp[order+1][order+1];
 
-    /* Copy control points	*/
+    // Copy control points
     std::copy(v, v+order+1, vtemp[0]);
 
-    /* Triangle computation	*/
+    // Triangle computation
     for (unsigned i = 1; i <= order; i++) {
         for (unsigned j = 0; j <= order - i; j++) {
             vtemp[i][j] = lerp(t, vtemp[i-1][j], vtemp[i-1][j+1]);
@@ -62,7 +94,7 @@ inline Coord subdivideArr(Coord t, Coord const *v, Coord *left, Coord *right, un
         for (unsigned j = 0; j <= order; j++)
             right[j] = vtemp[order-j][j];
 
-    return (vtemp[order][0]);
+            return (vtemp[order][0]);*/
 }
 
 
@@ -162,7 +194,20 @@ public:
     inline Coord at1() const { return c_[order()]; }
 
     inline Coord valueAt(double t) const {
-        return subdivideArr(t, &c_[0], NULL, NULL, order());
+        int n = order();
+        double u, bc, tn, tmp;
+        int i;
+        u = 1.0 - t;
+        bc = 1;
+        tn = 1;
+        tmp = c_[0]*u;
+        for(i=1; i<n; i++){
+            tn = tn*t;
+            bc = bc*(n-i+1)/i;
+            tmp = (tmp + tn*bc*c_[i])*u;
+        }
+        return (tmp + tn*t*c_[n]);
+        //return subdivideArr(t, &c_[0], NULL, NULL, order());
     }
     inline Coord operator()(double t) const { return valueAt(t); }
 
@@ -176,7 +221,8 @@ public:
 
     //Only mutator
     inline Coord &operator[](unsigned ix) { return c_[ix]; }
-    inline Coord const &operator[](unsigned ix) const { return c_[ix]; }
+    inline Coord const &operator[](unsigned ix) const { return const_cast<std::valarray<Coord>&>(c_)[ix]; }
+    //inline Coord const &operator[](unsigned ix) const { return c_[ix]; }
     inline void setPoint(unsigned ix, double val) { c_[ix] = val; }
 
     /* This is inelegant, as it uses several extra stores.  I think there might be a way to
@@ -184,14 +230,14 @@ public:
 
     std::vector<Coord> valueAndDerivatives(Coord t, unsigned n_derivs) const {
         std::vector<Coord> val_n_der;
-        Coord d_[order()+1];
+        std::valarray<Coord> d_(order()+1);
         unsigned nn = n_derivs + 1; 	// the size of the result vector equals n_derivs+1 ...
         if(nn > order())
-            nn = order()+1; 			// .. but with a maximum of order() + 1!
+            nn = order()+1;		// .. but with a maximum of order() + 1!
         for(unsigned i = 0; i < size(); i++)
             d_[i] = c_[i];
         for(unsigned di = 0; di < nn; di++) {
-            val_n_der.push_back(subdivideArr(t, d_, NULL, NULL, order() - di));
+            val_n_der.push_back(subdivideArr(t, &d_[0], NULL, NULL, order() - di));
             for(unsigned i = 0; i < order() - di; i++) {
                 d_[i] = (order()-di)*(d_[i+1] - d_[i]);
             }
@@ -202,13 +248,13 @@ public:
 
     std::pair<Bezier, Bezier > subdivide(Coord t) const {
         Bezier a(Bezier::Order(*this)), b(Bezier::Order(*this));
-        subdivideArr(t, &c_[0], &a.c_[0], &b.c_[0], order());
+        subdivideArr(t, &const_cast<std::valarray<Coord>&>(c_)[0], &a.c_[0], &b.c_[0], order());
         return std::pair<Bezier, Bezier >(a, b);
     }
 
     std::vector<double> roots() const {
         std::vector<double> solutions;
-        find_bernstein_roots(&c_[0], order(), solutions, 0, 0.0, 1.0);
+        find_bernstein_roots(&const_cast<std::valarray<Coord>&>(c_)[0], order(), solutions, 0, 0.0, 1.0);
         return solutions;
     }
 };
@@ -263,17 +309,17 @@ inline Bezier reverse(const Bezier & a) {
 
 inline Bezier portion(const Bezier & a, double from, double to) {
     //TODO: implement better?
-    Coord res[a.order()+1];
+    std::valarray<Coord> res(a.order() + 1);
     if(from == 0) {
         if(to == 1) { return Bezier(a); }
-        subdivideArr(to, &a.c_[0], res, NULL, a.order());
-        return Bezier(res, a.order());
+        subdivideArr(to, &const_cast<Bezier&>(a).c_[0], &res[0], NULL, a.order());
+        return Bezier(&res[0], a.order());
     }
-    subdivideArr(from, &a.c_[0], NULL, res, a.order());
-    if(to == 1) return Bezier(res, a.order());
-    Coord res2[a.order()+1];
-    subdivideArr((to - from)/(1 - from), res, res2, NULL, a.order());
-    return Bezier(res2, a.order());
+    subdivideArr(from, &const_cast<Bezier&>(a).c_[0], NULL, &res[0], a.order());
+    if(to == 1) return Bezier(&res[0], a.order());
+    std::valarray<Coord> res2(a.order()+1);
+    subdivideArr((to - from)/(1 - from), &res[0], &res2[0], NULL, a.order());
+    return Bezier(&res2[0], a.order());
 }
 
 // XXX Todo: how to handle differing orders
@@ -309,7 +355,7 @@ inline Bezier integral(const Bezier & a) {
 }
 
 inline OptInterval bounds_fast(Bezier const & b) {
-    return Interval::fromArray(&b.c_[0], b.size());
+    return Interval::fromArray(&const_cast<Bezier&>(b).c_[0], b.size());
 }
 
 //TODO: better bounds exact

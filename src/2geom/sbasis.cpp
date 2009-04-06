@@ -375,7 +375,7 @@ SBasis sqrt(SBasis const &a, int k) {
     c[0] = Linear(std::sqrt(a[0][0]), std::sqrt(a[0][1]));
     SBasis r = a - multiply(c, c); // remainder
 
-    for(unsigned i = 1; i <= (unsigned)k and i<r.size(); i++) {
+    for(unsigned i = 1; i <= (unsigned)k && i<r.size(); i++) {
         Linear ci(r[i][0]/(2*c[0][0]), r[i][1]/(2*c[0][1]));
         SBasis cisi = shift(ci, i);
         r -= multiply(shift((c*2 + cisi), i), SBasis(ci));

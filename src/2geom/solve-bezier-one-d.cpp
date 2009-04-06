@@ -1,6 +1,7 @@
 #include <2geom/solver.h>
 #include <2geom/point.h>
 #include <algorithm>
+#include <valarray>
 
 /*** Find the zeros of the bernstein function.  The code subdivides until it is happy with the
  * linearity of the function.  This requires an O(degree^2) subdivision for each step, even when
@@ -134,8 +135,7 @@ Bernsteins::find_bernstein_roots(double const *w, /* The control points  */
     }
 
     /* Otherwise, solve recursively after subdividing control polygon  */
-    double Left[N],	/* New left and right  */
-           Right[N];	/* control polygons  */
+    std::valarray<double> new_controls(2*N); // New left and right control polygons
     const double t = 0.5;
 
 
@@ -150,28 +150,28 @@ Bernsteins::find_bernstein_roots(double const *w, /* The control points  */
 
     /* Triangle computation	*/
     const double omt = (1-t);
-    Left[0] = Vtemp[0];
-    Right[degree] = Vtemp[degree];
+    new_controls[0] = Vtemp[0];
+    new_controls[N+degree] = Vtemp[degree];
     double *prev_row = Vtemp;
     double *row = Vtemp + N;
     for (unsigned i = 1; i < N; i++) {
         for (unsigned j = 0; j < N - i; j++) {
             row[j] = omt*prev_row[j] + t*prev_row[j+1];
         }
-        Left[i] = row[0];
-        Right[degree-i] = row[degree-i];
+        new_controls[i] = row[0];
+        new_controls[N+degree-i] = row[degree-i];
         std::swap(prev_row, row);
     }
     
     double mid_t = left_t*(1-t) + right_t*t;
     
-    find_bernstein_roots(Left, depth+1, left_t, mid_t);
+    find_bernstein_roots(&new_controls[0], depth+1, left_t, mid_t);
             
     /* Solution is exactly on the subdivision point. */
-    if (Right[0] == 0)
+    if (new_controls[N] == 0)
         solutions.push_back(mid_t);
         
-    find_bernstein_roots(Right, depth+1, mid_t, right_t);
+    find_bernstein_roots(&new_controls[N], depth+1, mid_t, right_t);
 }
 
 /*

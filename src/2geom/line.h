@@ -79,6 +79,12 @@ class Line
     
         return Line(P, P+rot90(n));
     }
+    static Line fromPointDirection(Point o, Point v) {
+        Line l;
+        l.m_origin = o;
+        l.m_versor = v;
+        return l;
+    }
 
 	Line* duplicate() const
 	{

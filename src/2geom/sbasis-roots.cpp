@@ -352,7 +352,7 @@ std::vector<double> roots1(SBasis const & s) {
     double d = s[0][0] - s[0][1];
     if(d != 0) {
         double r = s[0][0] / d;
-        if(0 <= r and r <= 1)
+        if(0 <= r && r <= 1)
             res.push_back(r);
     }
     return res;

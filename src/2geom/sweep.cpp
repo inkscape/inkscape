@@ -8,18 +8,19 @@ namespace Geom {
  * \brief Make a list of pairs of self intersections in a list of Rects.
  * 
  * \param rs: vector of Rect.
+ * \param d: dimension to sweep along
  *
  * [(A = rs[i], B = rs[j]) for i,J in enumerate(pairs) for j in J]
  * then A.left <= B.left
  */
 
-std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> rs) {
+std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> rs, Dim2 d) {
     std::vector<Event> events; events.reserve(rs.size()*2);
     std::vector<std::vector<unsigned> > pairs(rs.size());
 
     for(unsigned i = 0; i < rs.size(); i++) {
-        events.push_back(Event(rs[i].left(), i, false));
-        events.push_back(Event(rs[i].right(), i, true));
+        events.push_back(Event(rs[i][d][0], i, false));
+        events.push_back(Event(rs[i][d][1], i, true));
     }
     std::sort(events.begin(), events.end());
 
@@ -33,7 +34,7 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> rs) {
         } else {
             for(unsigned j = 0; j < open.size(); j++) {
                 unsigned jx = open[j];
-                if(rs[jx][Y].intersects(rs[ix][Y])) {
+                if(rs[jx][1-d].intersects(rs[ix][1-d])) {
                     pairs[jx].push_back(ix);
                 }
             }
@@ -48,11 +49,12 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> rs) {
  * 
  * \param a: vector of Rect.
  * \param b: vector of Rect.
+ * \param d: dimension to scan along
  *
  * [(A = rs[i], B = rs[j]) for i,J in enumerate(pairs) for j in J]
  * then A.left <= B.left, A in a, B in b
  */
-std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> a, std::vector<Rect> b) {
+std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> a, std::vector<Rect> b, Dim2 d) {
     std::vector<std::vector<unsigned> > pairs(a.size());
     if(a.empty() || b.empty()) return pairs;
     std::vector<Event> events[2];
@@ -64,15 +66,17 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> a, std::vecto
         events[n].reserve(sz*2);
         for(unsigned i = 0; i < sz; i++) {
             Rect r = n ? b[i] : a[i];
-            events[n].push_back(Event(r.left(), i, false));
-            events[n].push_back(Event(r.right(), i, true));
+            events[n].push_back(Event(r[d][0], i, false));
+            events[n].push_back(Event(r[d][1], i, true));
         }
         std::sort(events[n].begin(), events[n].end());
     }
 
     std::vector<unsigned> open[2];
     bool n = events[1].front() < events[0].front();
-    for(unsigned i[] = {0,0}; i[n] < events[n].size();) {
+    {// As elegant as putting the initialiser in the for was, it upsets some legacy compilers (MS VS C++)
+    unsigned i[] = {0,0}; 
+    for(; i[n] < events[n].size();) {
         unsigned ix = events[n][i[n]].ix;
         bool closing = events[n][i[n]].closing;
         //std::cout << n << "[" << ix << "] - " << (closing ? "closer" : "opener") << "\n";
@@ -84,7 +88,7 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> a, std::vecto
                 //opening a B, add to all open a
                 for(unsigned j = 0; j < open[0].size(); j++) {
                     unsigned jx = open[0][j];
-                    if(a[jx][Y].intersects(b[ix][Y])) {
+                    if(a[jx][1-d].intersects(b[ix][1-d])) {
                         pairs[jx].push_back(ix);
                     }
                 }
@@ -93,7 +97,7 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> a, std::vecto
                 //opening an A, add all open b
                 for(unsigned j = 0; j < open[1].size(); j++) {
                     unsigned jx = open[1][j];
-                    if(b[jx][Y].intersects(a[ix][Y])) {
+                    if(b[jx][1-d].intersects(a[ix][1-d])) {
                         pairs[ix].push_back(jx);
                     }
                 }
@@ -103,7 +107,7 @@ std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect> a, std::vecto
         i[n]++;
 	if(i[n]>=events[n].size()) {break;}
         n = (events[!n][i[!n]] < events[n][i[n]]) ? !n : n;
-    }
+    }}
     return pairs;
 }
 

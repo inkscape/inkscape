@@ -51,10 +51,12 @@ struct Event {
         if(x > other.x) return false;
         return closing < other.closing;
     }
-
 };
-std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect>);
-std::vector<std::vector<unsigned> > sweep_bounds(std::vector<Rect>, std::vector<Rect>);
+std::vector<std::vector<unsigned> >
+sweep_bounds(std::vector<Rect>, Dim2 dim = X);
+
+std::vector<std::vector<unsigned> >
+sweep_bounds(std::vector<Rect>, std::vector<Rect>, Dim2 dim = X);
 
 std::vector<std::vector<unsigned> > fake_cull(unsigned a, unsigned b);
 

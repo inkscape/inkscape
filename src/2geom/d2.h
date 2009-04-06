@@ -397,6 +397,14 @@ D2<T> integral(D2<T> const & a) {
     return D2<T>(integral(a[X]), integral(a[Y]));
 }
 
+/** A function to print out the Point.  It just prints out the coords
+    on the given output stream */
+template <typename T>
+inline std::ostream &operator<< (std::ostream &out_file, const Geom::D2<T> &in_d2) {
+    out_file << "X: " << in_d2[X] << "  Y: " << in_d2[Y];
+    return out_file;
+}
+
 } //end namespace Geom
 
 #include <2geom/rect.h>

@@ -290,7 +290,9 @@ double Path::nearestPoint(Point const &_point, double from, double to, double *d
 }
 
 void Path::appendPortionTo(Path &ret, double from, double to) const {
-  assert(from >= 0 && to >= 0);
+  if (!(from >= 0 && to >= 0)) {
+    THROW_RANGEERROR("from and to must be >=0 in Path::appendPortionTo");
+  }
   if(to == 0) to = size()+0.999999;
   if(from == to) { return; }
   double fi, ti;
