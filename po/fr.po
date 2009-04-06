@@ -402,7 +402,7 @@ msgstr "Patron"
 
 #: ../share/filters/filters.svg.h:31
 msgid "Detect color edges and retrace them in blue"
-msgstr "Détecte les contours de couleur et les retrace en niveaux de gris"
+msgstr "Détecte les contours de couleur et les retrace en bleu"
 
 #: ../share/filters/filters.svg.h:32
 #: ../share/extensions/color_desaturate.inx.h:2
@@ -18044,7 +18044,7 @@ msgstr "Milieu de ligne"
 
 #: ../src/widgets/toolbox.cpp:2122
 msgid "Snap from and to midpoints of line segments"
-msgstr "Aimenter depuis et vers le milieur des segments"
+msgstr "Aimanter depuis et vers le milieu des segments"
 
 #: ../src/widgets/toolbox.cpp:2131
 msgid "Object Centers"
@@ -18060,7 +18060,7 @@ msgstr "Centres de rotation"
 
 #: ../src/widgets/toolbox.cpp:2140
 msgid "Snap from and to an item's rotation center"
-msgstr "Aimenter depuis et vers le centre de rotation d'un objet"
+msgstr "Aimanter depuis et vers le centre de rotation d'un objet"
 
 #: ../src/widgets/toolbox.cpp:2149
 msgid "Page border"
@@ -21931,7 +21931,7 @@ msgstr "Entrée XAML"
 #~ msgid "_Smooth nodes"
 #~ msgstr "Nœud_s doux"
 #~ msgid "Snap to smooth nodes too, instead of only snapping to cusp nodes"
-#~ msgstr "Aimenter aux nœuds doux, plutôt qu'aux nœuds durs seulement."
+#~ msgstr "Aimanter aux nœuds doux, plutôt qu'aux nœuds durs seulement."
 #~ msgid "_Midpoints"
 #~ msgstr "_Milieux de segments"
 #~ msgid "Snap midpoints of straight line segments"
