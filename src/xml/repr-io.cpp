@@ -528,7 +528,7 @@ sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_
 }
 
 
-void
+static void
 sp_repr_save_writer(Document *doc, Inkscape::IO::Writer *out,
               gchar const *default_ns)
 {
@@ -544,17 +544,17 @@ sp_repr_save_writer(Document *doc, Inkscape::IO::Writer *out,
         out->writeString( str );
     }
 
-    Node *repr = sp_repr_document_first_child(doc);
-    for ( repr = sp_repr_document_first_child(doc) ;
-          repr ; repr = sp_repr_next(repr) )
+    for (Node *repr = sp_repr_document_first_child(doc);
+         repr; repr = sp_repr_next(repr))
     {
-        if ( repr->type() == Inkscape::XML::ELEMENT_NODE ) {
+        Inkscape::XML::NodeType const node_type = repr->type();
+        if ( node_type == Inkscape::XML::ELEMENT_NODE ) {
             sp_repr_write_stream_root_element(repr, *out, TRUE, default_ns, inlineattrs, indent);
-        } else if ( repr->type() == Inkscape::XML::COMMENT_NODE ) {
-            sp_repr_write_stream(repr, *out, 0, TRUE, GQuark(0), inlineattrs, indent);
-            out->writeChar( '\n' );
         } else {
             sp_repr_write_stream(repr, *out, 0, TRUE, GQuark(0), inlineattrs, indent);
+            if ( node_type == Inkscape::XML::COMMENT_NODE ) {
+                out->writeChar('\n');
+            }
         }
     }
 }
