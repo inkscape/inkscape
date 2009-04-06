@@ -1770,14 +1770,14 @@ http://www.inkscape.org/</dc:description>
 <use transform="matrix(1,0,0,0.997921,1.24759,8.430751)" x="0" y="0" xlink:href="#text5563" id="use5955" width="1250" height="1250" />
 <use x="0" y="0" xlink:href="#text3357" id="use5961" transform="matrix(1,0,0,0.997921,-11.02206,-2.05535)" width="1250" height="1250" />
 </g>
-<g id="align-horizontal-node" inkscape:label="#node_valign" transform="translate(-205,77.992833)">
+<g id="align-vertical-node" inkscape:label="#node_valign" transform="translate(-205,77.992833)">
 <path style="fill:none;stroke:#c80000;stroke-width:1.00000036;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline" d="m 1186.5,140.5008 0,22.9992 0,0" id="path5262" />
 <path style="fill:none;stroke:#969696;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none" d="m 1175.5,140.5 c 3,3.5 18.975,1.5988 17.5,7.5 -1,4 -17,1 -17.5,8.5 -0.366,5.4878 17,2.5 23,6.5" id="path5249" sodipodi:nodetypes="cssc" />
 <rect y="141.5" x="1184.5" height="4.0071669" width="4.0662079" id="rect5251" style="color:#000000;fill:#8ab3de;fill-opacity:1;fill-rule:evenodd;stroke:#0000ff;stroke-width:0.9999997;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" />
 <use x="0" y="0" xlink:href="#rect5251" id="use5438" transform="translate(0.0188999,6.991948)" width="1250" height="1250" />
 <use x="0" y="0" xlink:href="#rect5251" id="use5440" transform="translate(-0.0473082,16.99195)" width="1250" height="1250" />
 </g>
-<g id="align-vertical-node" transform="translate(-171.0218,77.983746)" inkscape:label="#node_halign">
+<g id="align-horizontal-node" transform="translate(-171.0218,77.983746)" inkscape:label="#node_halign">
 <path style="fill:none;stroke:#c80000;stroke-width:1.00000036;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline" d="m 1175.498,152.4972 22.999,0 0,0" id="path5318" />
 <rect y="1180.4969" x="-163.9971" height="16" width="16" id="rect5320" style="color:#000000;fill:none;stroke:none;stroke-width:1;marker:none;display:inline" transform="matrix(0,-1,1,0,0,0)" />
 <path style="fill:none;stroke:#969696;stroke-width:1.00000036;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none" d="m 1175.497,163.4972 c 3.5,-3 1.599,-18.9753 7.5,-17.5 4,1 1,17 8.5,17.5 5.488,0.3658 2.5,-17 6.5,-23" id="path5322" sodipodi:nodetypes="cssc" />
