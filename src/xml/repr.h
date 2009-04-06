@@ -66,6 +66,7 @@ inline Inkscape::XML::Node *sp_repr_next(Inkscape::XML::Node *repr) {
     return ( repr ? repr->next() : NULL );
 }
 
+
 /* IO */
 
 Inkscape::XML::Document *sp_repr_read_file(gchar const *filename, gchar const *default_ns);
@@ -78,7 +79,6 @@ Glib::ustring sp_repr_save_buf(Inkscape::XML::Document *doc);
 void sp_repr_save_stream(Inkscape::XML::Document *doc, FILE *to_file, gchar const *default_ns=NULL, bool compress = false);
 bool sp_repr_save_file(Inkscape::XML::Document *doc, gchar const *filename, gchar const *default_ns=NULL);
 
-void sp_repr_print(Inkscape::XML::Node *repr);
 
 /* CSS stuff */
 

@@ -628,17 +628,6 @@ sp_repr_save_file (Document *doc, gchar const *filename,
     return TRUE;
 }
 
-void
-sp_repr_print (Node * repr)
-{
-    Inkscape::IO::StdOutputStream bout;
-    Inkscape::IO::OutputStreamWriter out(bout);
-
-    sp_repr_write_stream (repr, out, 0, TRUE, GQuark(0), 0, 2);
-
-    return;
-}
-
 /* (No doubt this function already exists elsewhere.) */
 static void
 repr_quote_write (Writer &out, const gchar * val)
