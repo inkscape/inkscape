@@ -191,12 +191,12 @@ Svg::open (Inkscape::Extension::Input */*mod*/, const gchar *uri)
     all of this code.  I just stole it.
 */
 void
-Svg::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
+Svg::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
 {
     g_return_if_fail(doc != NULL);
-    g_return_if_fail(uri != NULL);
+    g_return_if_fail(filename != NULL);
 
-    gchar *save_path = g_path_get_dirname (uri);
+    gchar *save_path = g_path_get_dirname(filename);
 
     gboolean const spns = (!mod->get_id()
       || !strcmp (mod->get_id(), SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE)
@@ -214,7 +214,7 @@ Svg::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
 
     Inkscape::IO::fixupHrefs( doc, save_path, spns );
 
-    gboolean const s = sp_repr_save_file (repr->document(), uri, SP_SVG_NS_URI);
+    gboolean const s = sp_repr_save_file(repr->document(), filename, SP_SVG_NS_URI);
     if (s == FALSE) {
         throw Inkscape::Extension::Output::save_failed();
     }

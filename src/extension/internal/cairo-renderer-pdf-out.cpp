@@ -110,14 +110,14 @@ pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int
     \brief  This function calls the output module with the filename
     \param  mod   unused
     \param  doc   Document to be saved
-    \param  uri   Filename to save to (probably will end in .pdf)
+    \param  filename   Filename to save to (probably will end in .pdf)
 
     The most interesting thing that this function does is just attach
     an '>' on the front of the filename.  This is the syntax used to
     tell the printing system to save to file.
 */
 void
-CairoRendererPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
+CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Extension * ext;
     unsigned int ret;
@@ -186,7 +186,7 @@ CairoRendererPdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc,
     }
 
     gchar * final_name;
-    final_name = g_strdup_printf("> %s", uri);
+    final_name = g_strdup_printf("> %s", filename);
     ret = pdf_render_document_to_file(doc, final_name, level,
                                       new_textToPath, new_blurToBitmap, new_bitmapResolution,
                                       new_exportId, new_exportDrawing, new_exportCanvas);

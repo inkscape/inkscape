@@ -2367,12 +2367,14 @@ OdfOutput::reset()
  * Descends into the SVG tree, mapping things to ODF when appropriate
  */
 void
-OdfOutput::save(Inkscape::Extension::Output */*mod*/, SPDocument *doc, gchar const *uri)
+OdfOutput::save(Inkscape::Extension::Output */*mod*/, SPDocument *doc, gchar const *filename)
 {
     reset();
 
-    //g_message("native file:%s\n", uri);
-    documentUri = URI(uri);
+    //g_message("native file:%s\n", filename);
+    documentUri = URI(filename);
+    /* fixme: It looks like we really are using documentUri as a URI, so we ought to call
+     * g_filename_to_uri for the URI constructor. */
 
     ZipFile zf;
     preprocess(zf, doc->rroot);
@@ -2395,7 +2397,7 @@ OdfOutput::save(Inkscape::Extension::Output */*mod*/, SPDocument *doc, gchar con
         return;
         }
 
-    if (!zf.writeFile(uri))
+    if (!zf.writeFile(filename))
         {
         return;
         }

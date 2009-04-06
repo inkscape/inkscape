@@ -47,7 +47,7 @@ LatexOutput::check (Inkscape::Extension::Extension * module)
 
 
 void
-LatexOutput::save (Inkscape::Extension::Output *mod2, SPDocument *doc, const gchar *uri)
+LatexOutput::save(Inkscape::Extension::Output *mod2, SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Print *mod;
     SPPrintContext context;
@@ -60,7 +60,7 @@ LatexOutput::save (Inkscape::Extension::Output *mod2, SPDocument *doc, const gch
     mod = Inkscape::Extension::get_print(SP_MODULE_KEY_PRINT_LATEX);
     oldconst = mod->get_param_string("destination");
     oldoutput = g_strdup(oldconst);
-    mod->set_param_string("destination", (gchar *)uri);
+    mod->set_param_string("destination", filename);
 
     /* Start */
     context.module = mod;

@@ -55,8 +55,8 @@ public:
     /**
      * API call to perform the output to a file
      */
-	virtual void save (Inkscape::Extension::Output *mod,
-	           SPDocument *doc, const gchar *uri);
+    virtual void save(Inkscape::Extension::Output *mod,
+                      SPDocument *doc, gchar const *filename);
 
     /**
      * Inkscape runtime startup call.
@@ -124,7 +124,7 @@ private:
     /**
      * Actual method to save document
      */
-	bool saveDocument(SPDocument *doc, const gchar *uri);
+	bool saveDocument(SPDocument *doc, gchar const *filename);
 
     //For statistics
     int nrNodes;

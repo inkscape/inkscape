@@ -28,7 +28,7 @@ public:
     bool check(Inkscape::Extension::Extension *module);
     void save(Inkscape::Extension::Output *mod,
               SPDocument *doc,
-              gchar const *uri);
+              gchar const *filename);
     static void init();
 };
 

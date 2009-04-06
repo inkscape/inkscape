@@ -576,7 +576,7 @@ void PovOutput::reset()
 /**
  * Saves the Shapes of an Inkscape SVG file as PovRay spline definitions
  */
-void PovOutput::saveDocument(SPDocument *doc, gchar const *uri)
+void PovOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
 {
     reset();
 
@@ -584,7 +584,7 @@ void PovOutput::saveDocument(SPDocument *doc, gchar const *uri)
     //# Lets do the curves first, to get the stats
     if (!doTree(doc))
         {
-        err("Could not output curves for %s", uri);
+        err("Could not output curves for %s", filename_utf8);
         return;
         }
         
@@ -593,7 +593,7 @@ void PovOutput::saveDocument(SPDocument *doc, gchar const *uri)
 
     if (!doHeader())
         {
-        err("Could not write header for %s", uri);
+        err("Could not write header for %s", filename_utf8);
         return;
         }
 
@@ -601,7 +601,7 @@ void PovOutput::saveDocument(SPDocument *doc, gchar const *uri)
 
     if (!doTail())
         {
-        err("Could not write footer for %s", uri);
+        err("Could not write footer for %s", filename_utf8);
         return;
         }
 
@@ -609,8 +609,8 @@ void PovOutput::saveDocument(SPDocument *doc, gchar const *uri)
 
 
     //###### WRITE TO FILE
-    Inkscape::IO::dump_fopen_call(uri, "L");
-    FILE *f = Inkscape::IO::fopen_utf8name(uri, "w");
+    Inkscape::IO::dump_fopen_call(filename_utf8, "L");
+    FILE *f = Inkscape::IO::fopen_utf8name(filename_utf8, "w");
     if (!f)
         return;
 
@@ -641,9 +641,10 @@ void PovOutput::saveDocument(SPDocument *doc, gchar const *uri)
 */
 void
 PovOutput::save(Inkscape::Extension::Output */*mod*/,
-                        SPDocument *doc, gchar const *uri)
+                        SPDocument *doc, gchar const *filename_utf8)
 {
-    saveDocument(doc, uri);
+    /* See comments in JavaFSOutput::save re the name `filename_utf8'. */
+    saveDocument(doc, filename_utf8);
 }
 
 

@@ -823,12 +823,12 @@ void JavaFXOutput::reset()
 /**
  * Saves the <paths> of an Inkscape SVG file as JavaFX spline definitions
  */
-bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *uri)
+bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
 {
     reset();
 
 
-    name = Glib::path_get_basename(uri);
+    name = Glib::path_get_basename(filename_utf8);
     int pos = name.find('.');
     if (pos > 0)
         name = name.substr(0, pos);
@@ -864,10 +864,10 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *uri)
 
 
     //###### WRITE TO FILE
-    FILE *f = Inkscape::IO::fopen_utf8name(uri, "w");
+    FILE *f = Inkscape::IO::fopen_utf8name(filename_utf8, "w");
     if (!f)
         {
-        err("Could open JavaFX file '%s' for writing", uri);
+        err("Could open JavaFX file '%s' for writing", filename_utf8);
         return false;
         }
 
@@ -899,11 +899,19 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *uri)
 */
 void
 JavaFXOutput::save(Inkscape::Extension::Output */*mod*/,
-                        SPDocument *doc, gchar const *uri)
+                        SPDocument *doc, gchar const *filename_utf8)
 {
-    if (!saveDocument(doc, uri))
+    /* N.B. The name `filename_utf8' represents the fact that we want it to be in utf8; whereas in
+     * fact we know that some callers of Extension::save pass something in the filesystem's
+     * encoding, while others do g_filename_to_utf8 before calling.
+     *
+     * In terms of safety, it's best to make all callers pass actual filenames, since in general
+     * one can't round-trip from filename to utf8 back to the same filename.  Whereas the argument
+     * for passing utf8 filenames is one of convenience: we often want to pass to g_warning or
+     * store as a string (rather than a byte stream) in XML, or the like. */
+    if (!saveDocument(doc, filename_utf8))
         {
-        g_warning("Could not save JavaFX file '%s'", uri);
+        g_warning("Could not save JavaFX file '%s'", filename_utf8);
         }
 }
 

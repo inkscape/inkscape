@@ -200,7 +200,7 @@ Output::prefs (void)
     \return  None
 	\brief   Save a document as a file
 	\param   doc  Document to save
-	\param   uri  File to save the document as
+	\param   filename  File to save the document as
 
 	This function does a little of the dirty work involved in saving
 	a document so that the implementation only has to worry about geting
@@ -212,10 +212,10 @@ Output::prefs (void)
 	could be changed, and old files will still work properly.
 */
 void
-Output::save (SPDocument * doc, const gchar * uri)
+Output::save(SPDocument *doc, gchar const *filename)
 {
         try {
-            imp->save(this, doc, uri);
+            imp->save(this, doc, filename);
         }
         catch (...) {
             g_warning("There was an error saving the file.");

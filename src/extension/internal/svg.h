@@ -26,7 +26,7 @@ class Svg : public Inkscape::Extension::Implementation::Implementation {
 public:
     virtual void        save( Inkscape::Extension::Output *mod,
                                SPDocument *doc,
-                               const gchar *uri );
+                               gchar const *filename );
     virtual SPDocument *open( Inkscape::Extension::Input *mod,
                                 const gchar *uri );
     static void         init( void );

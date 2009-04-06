@@ -28,7 +28,7 @@ public:
 
     void save(Inkscape::Extension::Output *mod, // Save the given document to the given filename
               SPDocument *doc,
-              gchar const *uri);
+              gchar const *filename);
 
     static void init(void);//Initialize the class
 };

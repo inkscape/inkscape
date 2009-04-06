@@ -273,7 +273,7 @@ public:
 
     void save  (Inkscape::Extension::Output *mod,
 	        SPDocument *doc,
-	        const gchar *uri);
+	        gchar const *filename);
 
     static void   init  (void);
 

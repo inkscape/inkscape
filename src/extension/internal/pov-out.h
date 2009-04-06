@@ -56,8 +56,8 @@ public:
     /**
      * API call to perform the output to a file
      */
-	void save (Inkscape::Extension::Output *mod,
-	           SPDocument *doc, const gchar *uri);
+    void save(Inkscape::Extension::Output *mod,
+              SPDocument *doc, gchar const *filename);
 
     /**
      * Inkscape runtime startup call.
@@ -126,7 +126,7 @@ private:
     /**
      * Actual method to save document
      */
-	void saveDocument(SPDocument *doc, const gchar *uri);
+    void saveDocument(SPDocument *doc, gchar const *filename);
 
 
     /**

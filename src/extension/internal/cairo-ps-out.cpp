@@ -121,10 +121,10 @@ ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int l
     \brief  This function calls the output module with the filename
 	\param  mod   unused
 	\param  doc   Document to be saved
-    \param  uri   Filename to save to (probably will end in .ps)
+    \param  filename   Filename to save to (probably will end in .ps)
 */
 void
-CairoPsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
+CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Extension * ext;
     unsigned int ret;
@@ -172,7 +172,7 @@ CairoPsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gc
     } catch(...) {}
 
 	gchar * final_name;
-	final_name = g_strdup_printf("> %s", uri);
+	final_name = g_strdup_printf("> %s", filename);
 	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaCanvas);
 	g_free(final_name);
 
@@ -185,10 +185,10 @@ CairoPsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gc
     \brief  This function calls the output module with the filename
 	\param  mod   unused
 	\param  doc   Document to be saved
-    \param  uri   Filename to save to (probably will end in .ps)
+    \param  filename   Filename to save to (probably will end in .ps)
 */
 void
-CairoEpsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
+CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Extension * ext;
     unsigned int ret;
@@ -236,7 +236,7 @@ CairoEpsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const g
     } catch(...) {}
 
 	gchar * final_name;
-	final_name = g_strdup_printf("> %s", uri);
+	final_name = g_strdup_printf("> %s", filename);
 	ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaCanvas, true);
 	g_free(final_name);
 
