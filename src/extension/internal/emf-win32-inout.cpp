@@ -114,7 +114,7 @@ emf_print_document_to_file(SPDocument *doc, gchar const *filename)
     mod = Inkscape::Extension::get_print(PRINT_EMF_WIN32);
     oldconst = mod->get_param_string("destination");
     oldoutput = g_strdup(oldconst);
-    mod->set_param_string("destination", (gchar *)filename);
+    mod->set_param_string("destination", filename);
 
 /* Start */
     context.module = mod;
@@ -147,7 +147,7 @@ emf_print_document_to_file(SPDocument *doc, gchar const *filename)
 
 
 void
-EmfWin32::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
+EmfWin32::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Extension * ext;
 
@@ -159,10 +159,7 @@ EmfWin32::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *
     bool new_val         = mod->get_param_bool("textToPath");
     ext->set_param_bool("textToPath", new_val);
 
-    gchar * final_name;
-    final_name = g_strdup_printf("%s", uri);
-    emf_print_document_to_file(doc, final_name);
-    g_free(final_name);
+    emf_print_document_to_file(doc, filename);
 
     ext->set_param_bool("textToPath", old_textToPath);
 
