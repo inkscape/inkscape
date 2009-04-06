@@ -196,9 +196,9 @@ int Inkscape::IO::mkdir_utf8name( char const *utf8name )
 }
 
 /* 
- * Wrapper around Glib::file_open_tmp()
- * Returns a handle to the temp file
- * name_used contains the actual name used
+ * Wrapper around Glib::file_open_tmp().
+ * Returns a handle to the temp file.
+ * name_used contains the actual name used (a raw filename, not necessarily utf8).
  * 
  * Returns:
  * A file handle (as from open()) to the file opened for reading and writing. 
