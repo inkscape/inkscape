@@ -1062,7 +1062,7 @@ void InkscapePreferences::initPageUI()
     _page_ui.add_line( false, _("Language (requires restart):"), _ui_languages, "",
                               _("Set the language for menus and number formats"), false);
 
-     Glib::ustring sizeLabels[] = {_("Normal"), _("Medium"), _("Small")};
+     Glib::ustring sizeLabels[] = {_("Large"), _("Small"), _("Smaller")};
     int sizeValues[] = {0, 1, 2};
 
     _misc_small_tools.init( "/toolbox/tools/small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
