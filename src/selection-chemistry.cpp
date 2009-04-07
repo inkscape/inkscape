@@ -2515,11 +2515,14 @@ sp_selection_create_bitmap_copy(SPDesktop *desktop)
     g_get_current_time(&cu);
     guint current = (int) (cu.tv_sec * 1000000 + cu.tv_usec) % 1024;
 
-    // Create the filename
-    gchar *filename = g_strdup_printf("%s-%s-%u.png", document->name, SP_OBJECT_REPR(items->data)->attribute("id"), current);
+    // Create the filename.
+    gchar *const basename = g_strdup_printf("%s-%s-%u.png",
+                                            document->name,
+                                            SP_OBJECT_REPR(items->data)->attribute("id"),
+                                            current);
     // Imagemagick is known not to handle spaces in filenames, so we replace anything but letters,
     // digits, and a few other chars, with "_"
-    g_strcanon(filename, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.=+~$#@^&!?", '_');
+    g_strcanon(basename, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.=+~$#@^&!?", '_');
 
     // Build the complete path by adding document base dir, if set, otherwise home dir
     gchar * directory = NULL;
@@ -2529,7 +2532,7 @@ sp_selection_create_bitmap_copy(SPDesktop *desktop)
     if (directory == NULL) {
         directory = homedir_path(NULL);
     }
-    gchar *filepath = g_build_filename(directory, filename, NULL);
+    gchar *filepath = g_build_filename(directory, basename, NULL);
 
     //g_print("%s\n", filepath);
 
@@ -2631,7 +2634,7 @@ sp_selection_create_bitmap_copy(SPDesktop *desktop)
     if (pb) {
         // Create the repr for the image
         Inkscape::XML::Node * repr = xml_doc->createElement("svg:image");
-        repr->setAttribute("xlink:href", filename);
+        repr->setAttribute("xlink:href", basename);
         repr->setAttribute("sodipodi:absref", filepath);
         if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
             sp_repr_set_svg_double(repr, "width", width);
@@ -2667,7 +2670,7 @@ sp_selection_create_bitmap_copy(SPDesktop *desktop)
 
     desktop->clearWaitingCursor();
 
-    g_free(filename);
+    g_free(basename);
     g_free(filepath);
 }
 
