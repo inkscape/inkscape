@@ -54,9 +54,15 @@ GdkpixbufInput::open(Inkscape::Extension::Input */*mod*/, char const *uri)
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
         // import as <image>
         repr = xml_doc->createElement("svg:image");
-        // both are the same, as we don't know our base dir here and cannot relativate href (importer will rebase_hrefs):
+
         repr->setAttribute("xlink:href", uri);
-        repr->setAttribute("sodipodi:absref", uri);
+        /* impl: doc->base is currently NULL, so we can use uri for href whether it's absolute
+         * or relative.  The href will get rewritten by rebase_hrefs if by chance uri is relative
+         * and doc gets saved to a different directory.
+         *
+         * We don't bother setting sodipodi:absref, as we assume it's never useful to have
+         * sodipodi:absref with the same value as xlink:href, and rebase_hrefs will provide
+         * sodipodi:absref values where necessary. */
 
         sp_repr_set_svg_double(repr, "width", width);
         sp_repr_set_svg_double(repr, "height", height);
