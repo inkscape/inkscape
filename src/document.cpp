@@ -61,6 +61,7 @@
 #include "transf_mat_3x4.h"
 #include "unit-constants.h"
 #include "xml/repr.h"
+#include "xml/rebase-hrefs.h"
 
 #define SP_DOCUMENT_UPDATE_PRIORITY (G_PRIORITY_HIGH_IDLE - 1)
 
@@ -608,52 +609,81 @@ void SPDocument::fitToRect(Geom::Rect const &rect)
     }
 }
 
-void sp_document_set_uri(SPDocument *document, gchar const *uri)
+static void
+do_change_uri(SPDocument *const document, gchar const *const filename, bool const rebase)
 {
     g_return_if_fail(document != NULL);
 
-    if (document->name) {
-        g_free(document->name);
-        document->name = NULL;
-    }
-    if (document->base) {
-        g_free(document->base);
-        document->base = NULL;
-    }
-    if (document->uri) {
-        g_free(document->uri);
-        document->uri = NULL;
-    }
-
-    if (uri) {
+    gchar *new_base;
+    gchar *new_name;
+    gchar *new_uri;
+    if (filename) {
 
 #ifndef WIN32
-        document->uri = prepend_current_dir_if_relative(uri);
+        new_uri = prepend_current_dir_if_relative(filename);
 #else
         // FIXME: it may be that prepend_current_dir_if_relative works OK on windows too, test!
-        document->uri = g_strdup(uri);
+        new_uri = g_strdup(filename);
 #endif
 
-        /* fixme: Think, what this means for images (Lauris) */
-        document->base = g_path_get_dirname(document->uri);
-        document->name = g_path_get_basename(document->uri);
-
+        new_base = g_path_get_dirname(document->uri);
+        new_name = g_path_get_basename(document->uri);
     } else {
-        document->uri = g_strdup_printf(_("Unnamed document %d"), ++doc_count);
-        document->base = NULL;
-        document->name = g_strdup(document->uri);
+        new_uri = g_strdup_printf(_("Unnamed document %d"), ++doc_count);
+        new_base = NULL;
+        new_name = g_strdup(document->uri);
     }
 
     // Update saveable repr attributes.
     Inkscape::XML::Node *repr = sp_document_repr_root(document);
-    // changing uri in the document repr must not be not undoable
-    bool saved = sp_document_get_undo_sensitive(document);
+
+    // Changing uri in the document repr must not be not undoable.
+    bool const saved = sp_document_get_undo_sensitive(document);
     sp_document_set_undo_sensitive(document, false);
+
+    if (rebase) {
+        Inkscape::XML::rebase_hrefs(document, new_base, true);
+    }
 
     repr->setAttribute("sodipodi:docname", document->name);
     sp_document_set_undo_sensitive(document, saved);
 
+
+    g_free(document->name);
+    g_free(document->base);
+    g_free(document->uri);
+    document->name = new_name;
+    document->base = new_base;
+    document->uri = new_uri;
+
     document->priv->uri_set_signal.emit(document->uri);
+}
+
+/**
+ * Sets base, name and uri members of \a document.  Doesn't update
+ * any relative hrefs in the document: thus, this is primarily for
+ * newly-created documents.
+ *
+ * \see sp_document_change_uri_and_hrefs
+ */
+void sp_document_set_uri(SPDocument *document, gchar const *filename)
+{
+    g_return_if_fail(document != NULL);
+
+    do_change_uri(document, filename, false);
+}
+    
+/**
+ * Changes the base, name and uri members of \a document, and updates any
+ * relative hrefs in the document to be relative to the new base.
+ *
+ * \see sp_document_set_uri
+ */
+void sp_document_change_uri_and_hrefs(SPDocument *document, gchar const *filename)
+{
+    g_return_if_fail(document != NULL);
+
+    do_change_uri(document, filename, true);
 }
 
 void

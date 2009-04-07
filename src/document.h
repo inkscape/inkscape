@@ -264,7 +264,9 @@ SPItem *sp_document_item_at_point  (SPDocument *document, unsigned int key, Geom
 GSList *sp_document_items_at_points(SPDocument *document, unsigned const key, std::vector<Geom::Point> points);
 SPItem *sp_document_group_at_point (SPDocument *document, unsigned int key,  Geom::Point const p);
 
-void sp_document_set_uri(SPDocument *document, const gchar *uri);
+void sp_document_set_uri(SPDocument *document, gchar const *uri);
+void sp_document_change_uri_and_hrefs(SPDocument *document, gchar const *uri);
+
 void sp_document_resized_signal_emit(SPDocument *doc, gdouble width, gdouble height);
 
 unsigned int vacuum_document(SPDocument *document);
