@@ -63,6 +63,7 @@
 #include "ui/dialog/ocaldialogs.h"
 #include "ui/view/view-widget.h"
 #include "uri.h"
+#include "xml/rebase-hrefs.h"
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs.h>
@@ -924,7 +925,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
     }
 
     if (doc != NULL) {
-        Inkscape::IO::fixupHrefs(doc, in_doc->base, true);
+        Inkscape::XML::rebase_hrefs(doc, in_doc->base, true);
         Inkscape::XML::Document *xml_in_doc = sp_document_repr_doc(in_doc);
 
         prevent_id_clashes(doc, in_doc);
@@ -1477,102 +1478,6 @@ sp_file_print_preview(gpointer /*object*/, gpointer /*data*/)
     if (doc)
         sp_print_preview_document(doc);
 
-}
-
-void Inkscape::IO::fixupHrefs( SPDocument *doc, const gchar *base, gboolean spns )
-{
-    //g_message("Inkscape::IO::fixupHrefs( , [%s], )", base );
-
-    if ( 0 ) {
-        gchar const* things[] = {
-            "data:foo,bar",
-            "http://www.google.com/image.png",
-            "ftp://ssd.com/doo",
-            "/foo/dee/bar.svg",
-            "foo.svg",
-            "file:/foo/dee/bar.svg",
-            "file:///foo/dee/bar.svg",
-            "file:foo.svg",
-            "/foo/bar\xe1\x84\x92.svg",
-            "file:///foo/bar\xe1\x84\x92.svg",
-            "file:///foo/bar%e1%84%92.svg",
-            "/foo/bar%e1%84%92.svg",
-            "bar\xe1\x84\x92.svg",
-            "bar%e1%84%92.svg",
-            NULL
-        };
-        g_message("+------");
-        for ( int i = 0; things[i]; i++ )
-        {
-            try
-            {
-                URI uri(things[i]);
-                gboolean isAbs = g_path_is_absolute( things[i] );
-                gchar *str = uri.toString();
-                g_message( "abs:%d  isRel:%d  scheme:[%s]  path:[%s][%s]   uri[%s] / [%s]", (int)isAbs,
-                           (int)uri.isRelative(),
-                           uri.getScheme(),
-                           uri.getPath(),
-                           uri.getOpaque(),
-                           things[i],
-                           str );
-                g_free(str);
-            }
-            catch ( MalformedURIException err )
-            {
-                dump_str( things[i], "MalformedURIException" );
-                xmlChar *redo = xmlURIEscape((xmlChar const *)things[i]);
-                g_message("    gone from [%s] to [%s]", things[i], redo );
-                if ( redo == NULL )
-                {
-                    URI again = URI::fromUtf8( things[i] );
-                    gboolean isAbs = g_path_is_absolute( things[i] );
-                    gchar *str = again.toString();
-                    g_message( "abs:%d  isRel:%d  scheme:[%s]  path:[%s][%s]   uri[%s] / [%s]", (int)isAbs,
-                               (int)again.isRelative(),
-                               again.getScheme(),
-                               again.getPath(),
-                               again.getOpaque(),
-                               things[i],
-                               str );
-                    g_free(str);
-                    g_message("    ----");
-                }
-            }
-        }
-        g_message("+------");
-    }
-
-    GSList const *images = sp_document_get_resource_list(doc, "image");
-    for (GSList const *l = images; l != NULL; l = l->next) {
-        Inkscape::XML::Node *ir = SP_OBJECT_REPR(l->data);
-
-        const gchar *href = ir->attribute("xlink:href");
-
-        // First try to figure out an absolute path to the asset
-        //g_message("image href [%s]", href );
-        if (spns && !g_path_is_absolute(href)) {
-            const gchar *absref = ir->attribute("sodipodi:absref");
-            const gchar *base_href = g_build_filename(base, href, NULL);
-            //g_message("      absr [%s]", absref );
-
-            if ( absref && Inkscape::IO::file_test(absref, G_FILE_TEST_EXISTS) && !Inkscape::IO::file_test(base_href, G_FILE_TEST_EXISTS))
-            {
-                // only switch over if the absref is valid while href is not
-                href = absref;
-                //g_message("     copied absref to href");
-            }
-        }
-
-        // Once we have an absolute path, convert it relative to the new location
-        if (href && g_path_is_absolute(href)) {
-            const gchar *relname = sp_relative_path_from_path(href, base);
-            //g_message("     setting to [%s]", relname );
-            ir->setAttribute("xlink:href", relname);
-        }
-// TODO next refinement is to make the first choice keeping the relative path as-is if
-//      based on the new location it gives us a valid file.
-    }
 }
 
 

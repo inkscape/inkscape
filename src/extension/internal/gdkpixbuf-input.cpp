@@ -54,7 +54,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input */*mod*/, char const *uri)
         Inkscape::XML::Document *xml_doc = sp_document_repr_doc(doc);
         // import as <image>
         repr = xml_doc->createElement("svg:image");
-        // both are the same, as we don't know our base dir here and cannot relativate href (importer will fixupHrefs):
+        // both are the same, as we don't know our base dir here and cannot relativate href (importer will rebase_hrefs):
         repr->setAttribute("xlink:href", uri);
         repr->setAttribute("sodipodi:absref", uri);
 

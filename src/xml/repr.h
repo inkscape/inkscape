@@ -71,13 +71,21 @@ inline Inkscape::XML::Node *sp_repr_next(Inkscape::XML::Node *repr) {
 
 Inkscape::XML::Document *sp_repr_read_file(gchar const *filename, gchar const *default_ns);
 Inkscape::XML::Document *sp_repr_read_mem(gchar const *buffer, int length, gchar const *default_ns);
-void sp_repr_write_stream (Inkscape::XML::Node *repr, Inkscape::IO::Writer &out,
-                 gint indent_level,  bool add_whitespace, Glib::QueryQuark elide_prefix,
-				 int inlineattrs, int indent);
+void sp_repr_write_stream(Inkscape::XML::Node *repr, Inkscape::IO::Writer &out,
+                          gint indent_level,  bool add_whitespace, Glib::QueryQuark elide_prefix,
+                          int inlineattrs, int indent,
+                          gchar const *old_href_base = NULL,
+                          gchar const *new_href_base = NULL);
 Inkscape::XML::Document *sp_repr_read_buf (const Glib::ustring &buf, const gchar *default_ns);
 Glib::ustring sp_repr_save_buf(Inkscape::XML::Document *doc);
-void sp_repr_save_stream(Inkscape::XML::Document *doc, FILE *to_file, gchar const *default_ns=NULL, bool compress = false);
+void sp_repr_save_stream(Inkscape::XML::Document *doc, FILE *to_file,
+                         gchar const *default_ns = NULL, bool compress = false,
+                         gchar const *old_href_base = NULL,
+                         gchar const *new_href_base = NULL);
 bool sp_repr_save_file(Inkscape::XML::Document *doc, gchar const *filename, gchar const *default_ns=NULL);
+bool sp_repr_save_rebased_file(Inkscape::XML::Document *doc, gchar const *filename_utf8,
+                               gchar const *default_ns,
+                               gchar const *old_base, gchar const *new_base_filename);
 
 
 /* CSS stuff */

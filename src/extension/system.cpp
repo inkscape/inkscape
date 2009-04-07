@@ -29,6 +29,7 @@
 #include "print.h"
 #include "implementation/script.h"
 #include "implementation/xslt.h"
+#include "xml/rebase-hrefs.h"
 /* #include "implementation/plugin.h" */
 
 namespace Inkscape {
@@ -250,12 +251,20 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     bool saved_modified = false;
     gchar *saved_output_extension = NULL;
     gchar *saved_dataloss = NULL;
-    gchar *saved_uri = NULL;
     if (!official) {
         saved_modified = doc->isModifiedSinceSave();
         saved_output_extension = g_strdup(repr->attribute("inkscape:output_extension"));
         saved_dataloss = g_strdup(repr->attribute("inkscape:dataloss"));
-        saved_uri = g_strdup(doc->uri);
+    } else {
+        /* The document is changing name/uri. */
+
+        /* TODO: Don't treat URIs and filenames interchangeably.
+         * So call g_filename_to_uri when passing to sp_document_set_uri,
+         * and change rebase_hrefs to accept a base URI/LEIRI instead of dir name. */
+        gchar *const new_base = g_path_get_dirname(fileName);
+        Inkscape::XML::rebase_hrefs(doc, new_base, true);
+        sp_document_set_uri(doc, fileName);
+        g_free(new_base);
     }
 
     // Update attributes:
@@ -263,8 +272,6 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         bool const saved = sp_document_get_undo_sensitive(doc);
         sp_document_set_undo_sensitive(doc, false);
         {
-            // save the filename for next use
-            sp_document_set_uri(doc, fileName);
             // also save the extension for next use
             repr->setAttribute("inkscape:output_extension", omod->get_id());
             // set the "dataloss" attribute if the chosen extension is lossy
@@ -286,14 +293,12 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         {
             repr->setAttribute("inkscape:output_extension", saved_output_extension);
             repr->setAttribute("inkscape:dataloss", saved_dataloss);
-            sp_document_set_uri(doc, saved_uri);
         }
         sp_document_set_undo_sensitive(doc, saved);
         doc->setModifiedSinceSave(saved_modified);
 
         g_free(saved_output_extension);
         g_free(saved_dataloss);
-        g_free(saved_uri);
     }
 
     g_free(fileName);

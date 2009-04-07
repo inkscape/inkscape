@@ -983,7 +983,8 @@ void sp_process_file_list(GSList *fl)
                 rdoc = sp_repr_document_new("svg:svg");
                 repr = rdoc->root();
                 repr = sp_document_root(doc)->updateRepr(rdoc, repr, SP_OBJECT_WRITE_BUILD);
-                sp_repr_save_file(repr->document(), sp_export_svg, SP_SVG_NS_URI);
+                sp_repr_save_rebased_file(repr->document(), sp_export_svg, SP_SVG_NS_URI,
+                                          doc->base, sp_export_svg);
             }
             if (sp_export_ps) {
                 do_export_ps_pdf(doc, sp_export_ps, "image/x-postscript");

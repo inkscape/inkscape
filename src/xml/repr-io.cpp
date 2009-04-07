@@ -22,6 +22,7 @@
 
 #include "xml/repr.h"
 #include "xml/attribute-record.h"
+#include "xml/rebase-hrefs.h"
 #include "xml/simple-document.h"
 
 #include "io/sys.h"
@@ -40,12 +41,24 @@ using Inkscape::XML::Document;
 using Inkscape::XML::SimpleDocument;
 using Inkscape::XML::Node;
 using Inkscape::XML::AttributeRecord;
+using Inkscape::XML::calc_abs_doc_base;
+using Inkscape::XML::rebase_href_attrs;
 
 Document *sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns);
 static Node *sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map);
 static gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar *default_ns, GHashTable *prefix_map);
-static void sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace, gchar const *default_ns, int inlineattrs, int indent);
-static void sp_repr_write_stream_element (Node *repr, Writer &out, gint indent_level, bool add_whitespace, Glib::QueryQuark elide_prefix, List<AttributeRecord const> attributes, int inlineattrs, int indent);
+static void sp_repr_write_stream_root_element(Node *repr, Writer &out,
+                                              bool add_whitespace, gchar const *default_ns,
+                                              int inlineattrs, int indent,
+                                              gchar const *old_href_abs_base,
+                                              gchar const *new_href_abs_base);
+static void sp_repr_write_stream_element(Node *repr, Writer &out,
+                                         gint indent_level, bool add_whitespace,
+                                         Glib::QueryQuark elide_prefix,
+                                         List<AttributeRecord const> attributes,
+                                         int inlineattrs, int indent,
+                                         gchar const *old_href_abs_base,
+                                         gchar const *new_href_abs_base);
 
 #ifdef HAVE_LIBWMF
 static xmlDocPtr sp_wmf_convert (const char * file_name);
@@ -530,7 +543,9 @@ sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_
 
 static void
 sp_repr_save_writer(Document *doc, Inkscape::IO::Writer *out,
-              gchar const *default_ns)
+                    gchar const *default_ns,
+                    gchar const *old_href_abs_base,
+                    gchar const *new_href_abs_base)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool inlineattrs = prefs->getBool("/options/svgoutput/inlineattrs");
@@ -549,9 +564,11 @@ sp_repr_save_writer(Document *doc, Inkscape::IO::Writer *out,
     {
         Inkscape::XML::NodeType const node_type = repr->type();
         if ( node_type == Inkscape::XML::ELEMENT_NODE ) {
-            sp_repr_write_stream_root_element(repr, *out, TRUE, default_ns, inlineattrs, indent);
+            sp_repr_write_stream_root_element(repr, *out, TRUE, default_ns, inlineattrs, indent,
+                                              old_href_abs_base, new_href_abs_base);
         } else {
-            sp_repr_write_stream(repr, *out, 0, TRUE, GQuark(0), inlineattrs, indent);
+            sp_repr_write_stream(repr, *out, 0, TRUE, GQuark(0), inlineattrs, indent,
+                                 old_href_abs_base, new_href_abs_base);
             if ( node_type == Inkscape::XML::COMMENT_NODE ) {
                 out->writeChar('\n');
             }
@@ -568,7 +585,7 @@ sp_repr_save_buf(Document *doc)
     Inkscape::IO::StringOutputStream souts;
     Inkscape::IO::OutputStreamWriter outs(souts);
 
-    sp_repr_save_writer(doc, &outs, SP_INKSCAPE_NS_URI);
+    sp_repr_save_writer(doc, &outs, SP_INKSCAPE_NS_URI, 0, 0);
 
 	outs.close();
 	Glib::ustring buf = souts.getString();
@@ -581,29 +598,37 @@ sp_repr_save_buf(Document *doc)
 
 
 void
-sp_repr_save_stream (Document *doc, FILE *fp, gchar const *default_ns, bool compress)
+sp_repr_save_stream(Document *doc, FILE *fp, gchar const *default_ns, bool compress,
+                    gchar const *const old_href_abs_base,
+                    gchar const *const new_href_abs_base)
 {
     Inkscape::URI dummy("x");
     Inkscape::IO::UriOutputStream bout(fp, dummy);
     Inkscape::IO::GzipOutputStream *gout = compress ? new Inkscape::IO::GzipOutputStream(bout) : NULL;
     Inkscape::IO::OutputStreamWriter *out  = compress ? new Inkscape::IO::OutputStreamWriter( *gout ) : new Inkscape::IO::OutputStreamWriter( bout );
 
-    sp_repr_save_writer(doc, out, default_ns);
-    
+    sp_repr_save_writer(doc, out, default_ns, old_href_abs_base, new_href_abs_base);
+
     delete out;
     delete gout;
 }
 
 
 
-/* Returns TRUE if file successfully saved; FALSE if not
+/**
+ * Returns true iff file successfully saved.
+ *
+ * \param filename The actual file to do I/O to, which might be a temp file.
+ *
+ * \param for_filename The base URI [actually filename] to assume for purposes of rewriting
+ *              xlink:href attributes.
  */
 bool
-sp_repr_save_file (Document *doc, gchar const *filename,
-                   gchar const *default_ns)
+sp_repr_save_rebased_file(Document *doc, gchar const *const filename, gchar const *default_ns,
+                          gchar const *old_base, gchar const *for_filename)
 {
-    if (filename == NULL) {
-        return FALSE;
+    if (!filename) {
+        return false;
     }
 
     bool compress;
@@ -616,17 +641,48 @@ sp_repr_save_file (Document *doc, gchar const *filename,
     Inkscape::IO::dump_fopen_call( filename, "B" );
     FILE *file = Inkscape::IO::fopen_utf8name(filename, "w");
     if (file == NULL) {
-        return FALSE;
+        return false;
     }
 
-    sp_repr_save_stream (doc, file, default_ns, compress);
+    gchar *old_href_abs_base = NULL;
+    gchar *new_href_abs_base = NULL;
+    if (for_filename) {
+        old_href_abs_base = calc_abs_doc_base(old_base);
+        if (g_path_is_absolute(for_filename)) {
+            new_href_abs_base = g_path_get_dirname(for_filename);
+        } else {
+            gchar *const cwd = g_get_current_dir();
+            gchar *const for_abs_filename = g_build_filename(cwd, for_filename, NULL);
+            g_free(cwd);
+            new_href_abs_base = g_path_get_dirname(for_abs_filename);
+            g_free(for_abs_filename);
+        }
+
+        /* effic: Once we're confident that we never need (or never want) to resort
+         * to using sodipodi:absref instead of the xlink:href value,
+         * then we should do `if streq() { free them and set both to NULL; }'. */
+    }
+    sp_repr_save_stream(doc, file, default_ns, compress, old_href_abs_base, new_href_abs_base);
+
+    g_free(old_href_abs_base);
+    g_free(new_href_abs_base);
 
     if (fclose (file) != 0) {
-        return FALSE;
+        return false;
     }
 
-    return TRUE;
+    return true;
 }
+
+/**
+ * Returns true iff file successfully saved.
+ */
+bool
+sp_repr_save_file(Document *doc, gchar const *const filename, gchar const *default_ns)
+{
+    return sp_repr_save_rebased_file(doc, filename, default_ns, NULL, NULL);
+}
+
 
 /* (No doubt this function already exists elsewhere.) */
 static void
@@ -737,11 +793,15 @@ void populate_ns_map(NSMap &ns_map, Node &repr) {
 
 }
 
-void
-sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace, gchar const *default_ns, 
-                                   int inlineattrs, int indent)
+static void
+sp_repr_write_stream_root_element(Node *repr, Writer &out,
+                                  bool add_whitespace, gchar const *default_ns,
+                                  int inlineattrs, int indent,
+                                  gchar const *const old_href_base,
+                                  gchar const *const new_href_base)
 {
     using Inkscape::Util::ptr_shared;
+
     g_assert(repr != NULL);
     Glib::QueryQuark xml_prefix=g_quark_from_static_string("xml");
 
@@ -777,11 +837,15 @@ sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace,
         }
     }
 
-    return sp_repr_write_stream_element(repr, out, 0, add_whitespace, elide_prefix, attributes, inlineattrs, indent);
+    return sp_repr_write_stream_element(repr, out, 0, add_whitespace, elide_prefix, attributes,
+                                        inlineattrs, indent, old_href_base, new_href_base);
 }
 
 void sp_repr_write_stream( Node *repr, Writer &out, gint indent_level,
-                           bool add_whitespace, Glib::QueryQuark elide_prefix, int inlineattrs, int indent)
+                           bool add_whitespace, Glib::QueryQuark elide_prefix,
+                           int inlineattrs, int indent,
+                           gchar const *const old_href_base,
+                           gchar const *const new_href_base)
 {
     switch (repr->type()) {
         case Inkscape::XML::TEXT_NODE: {
@@ -799,7 +863,9 @@ void sp_repr_write_stream( Node *repr, Writer &out, gint indent_level,
         case Inkscape::XML::ELEMENT_NODE: {
             sp_repr_write_stream_element( repr, out, indent_level,
                                           add_whitespace, elide_prefix,
-                                          repr->attributeList(), inlineattrs, indent);
+                                          repr->attributeList(),
+                                          inlineattrs, indent,
+                                          old_href_base, new_href_base);
             break;
         }
         case Inkscape::XML::DOCUMENT_NODE: {
@@ -813,12 +879,14 @@ void sp_repr_write_stream( Node *repr, Writer &out, gint indent_level,
 }
 
 
-void
+static void
 sp_repr_write_stream_element (Node * repr, Writer & out, gint indent_level,
                               bool add_whitespace,
                               Glib::QueryQuark elide_prefix,
                               List<AttributeRecord const> attributes, 
-                              int inlineattrs, int indent)
+                              int inlineattrs, int indent,
+                              gchar const *const old_href_base,
+                              gchar const *const new_href_base)
 {
     Node *child;
     bool loose;
@@ -850,10 +918,11 @@ sp_repr_write_stream_element (Node * repr, Writer & out, gint indent_level,
     // for its content and children:
     gchar const *xml_space_attr = repr->attribute("xml:space");
     if (xml_space_attr != NULL && !strcmp(xml_space_attr, "preserve")) {
-        add_whitespace = FALSE;
+        add_whitespace = false;
     }
 
-    for ( List<AttributeRecord const> iter = attributes ;
+    for ( List<AttributeRecord const> iter = rebase_href_attrs(old_href_base, new_href_base,
+                                                               attributes);
           iter ; ++iter )
     {
         if (!inlineattrs) {
@@ -884,7 +953,9 @@ sp_repr_write_stream_element (Node * repr, Writer & out, gint indent_level,
             out.writeString( "\n" );
         }
         for (child = repr->firstChild(); child != NULL; child = child->next()) {
-            sp_repr_write_stream (child, out, (loose) ? (indent_level + 1) : 0, add_whitespace, elide_prefix, inlineattrs, indent);
+            sp_repr_write_stream(child, out, ( loose ? indent_level + 1 : 0 ),
+                                 add_whitespace, elide_prefix, inlineattrs, indent,
+                                 old_href_base, new_href_base);
         }
 
         if (loose && add_whitespace && indent) {

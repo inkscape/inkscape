@@ -184,15 +184,13 @@ XSLT::open(Inkscape::Extension::Input */*module*/, gchar const *filename)
 void
 XSLT::save(Inkscape::Extension::Output */*module*/, SPDocument *doc, gchar const *filename)
 {
+    /* TODO: Should we assume filename to be in utf8 or to be a raw filename?
+     * See JavaFXOutput::save for discussion. */
     g_return_if_fail(doc != NULL);
     g_return_if_fail(filename != NULL);
 
     Inkscape::XML::Node *repr = NULL;
     repr = sp_document_repr_root (doc);
-
-    gchar *save_path = g_path_get_dirname (filename);
-    Inkscape::IO::fixupHrefs( doc, save_path, true );
-    g_free(save_path);
 
     std::string tempfilename_out;
     int tempfd_out = 0;
@@ -203,8 +201,8 @@ XSLT::save(Inkscape::Extension::Output */*module*/, SPDocument *doc, gchar const
         return;
     }
 
-    gboolean const s = sp_repr_save_file (repr->document(), tempfilename_out.c_str(), SP_SVG_NS_URI);
-    if (s == FALSE) {
+    if (!sp_repr_save_rebased_file(repr->document(), tempfilename_out.c_str(), SP_SVG_NS_URI,
+                                   doc->base, filename)) {
         throw Inkscape::Extension::Output::save_failed();
     }
 

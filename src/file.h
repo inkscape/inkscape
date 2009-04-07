@@ -196,13 +196,16 @@ void sp_file_print_preview (gpointer object, gpointer data);
 void sp_file_vacuum ();
 
 
-namespace Inkscape {
-namespace IO {
-
-void fixupHrefs( SPDocument *doc, const gchar *uri, gboolean spns );
-
-}
-}
-
-
 #endif
+
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vi: set autoindent shiftwidth=4 tabstop=8 filetype=cpp expandtab softtabstop=4 encoding=utf-8 textwidth=99 :

@@ -16,6 +16,8 @@ ink_common_sources +=	\
 	xml/node-fns.cpp	\
 	xml/node-fns.h	\
 	xml/pi-node.h	\
+	xml/rebase-hrefs.cpp	\
+	xml/rebase-hrefs.h	\
 	xml/repr-io.cpp	\
 	xml/repr-sorting.cpp    \
 	xml/repr-sorting.h      \
