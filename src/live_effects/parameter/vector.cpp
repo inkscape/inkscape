@@ -164,7 +164,7 @@ public:
     VectorParamKnotHolderEntity_Vector(VectorParam *p) : param(p) { }
     virtual ~VectorParamKnotHolderEntity_Vector() {}
 
-    virtual void knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state) {
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/) {
         Geom::Point const s = p - param->origin;
         /// @todo implement angle snapping when holding CTRL
         param->setVector(s);

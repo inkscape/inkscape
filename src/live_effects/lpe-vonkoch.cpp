@@ -44,16 +44,16 @@ VonKochRefPathParam::param_readSVGValue(const gchar * strvalue)
 
 LPEVonKoch::LPEVonKoch(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
+    nbgenerations(_("Nb of generations"), _("Depth of the recursion --- keep low!!"), "nbgenerations", &wr, this, 1),
+    generator(_("Generating path"), _("Path whose segments define the iterated transforms"), "generator", &wr, this, "M0,0 L30,0 M0,10 L10,10 M 20,10 L30,10"),
+    similar_only(_("Use uniform transforms only"), _("2 consecutive segments are used to reverse/preserve orientation only (otherwise, they define a general transform)."), "similar_only", &wr, this, false),
+    drawall(_("Draw all generations"), _("If unchecked, draw only the last generation"), "drawall", &wr, this, true),
+    //,draw_boxes(_("Display boxes"), _("Display boxes instead of paths only"), "draw_boxes", &wr, this, true)
     ref_path(_("Reference segment"), _("The reference segment. Defaults to bbox diameter."), "ref_path", &wr, this, "M0,0 L10,0"),
     //refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
     //refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
-    generator(_("Generating path"), _("Path whose segments define the iterated transforms"), "generator", &wr, this, "M0,0 L30,0 M0,10 L10,10 M 20,10 L30,10"),
-    similar_only(_("Use uniform transforms only"), _("2 consecutive segments are used to reverse/preserve orientation only (otherwise, they define a general transform)."), "similar_only", &wr, this, false),
-    nbgenerations(_("Nb of generations"), _("Depth of the recursion --- keep low!!"), "nbgenerations", &wr, this, 1),
-    drawall(_("Draw all generations"), _("If unchecked, draw only the last generation"), "drawall", &wr, this, true),
     //FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
     maxComplexity(_("Max complexity"), _("Disable effect if the output is too complex"), "maxComplexity", &wr, this, 1000)
-    //,draw_boxes(_("Display boxes"), _("Display boxes instead of paths only"), "draw_boxes", &wr, this, true)
 {
     //FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
     registerParameter( dynamic_cast<Parameter *>(&ref_path) );

@@ -32,25 +32,25 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
     // initialise your parameters here:
     //testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
     nbiter_approxstrokes(_("Strokes"), _("Draw that many approximating strokes"), "nbiter_approxstrokes", &wr, this, 5),
-    strokelength(_("Max stroke length"), 
+    strokelength(_("Max stroke length"),
                  _("Maximum length of approximating strokes"), "strokelength", &wr, this, 100.),
-    strokelength_rdm(_("Stroke length variation"), 
+    strokelength_rdm(_("Stroke length variation"),
                      _("Random variation of stroke length (relative to maximum length)"), "strokelength_rdm", &wr, this, .3),
-    strokeoverlap(_("Max. overlap"), 
+    strokeoverlap(_("Max. overlap"),
                   _("How much successive strokes should overlap (relative to maximum length)"), "strokeoverlap", &wr, this, .3),
-    strokeoverlap_rdm(_("Overlap variation"), 
+    strokeoverlap_rdm(_("Overlap variation"),
                       _("Random variation of overlap (relative to maximum overlap)"), "strokeoverlap_rdm", &wr, this, .3),
-    ends_tolerance(_("Max. end tolerance"), 
+    ends_tolerance(_("Max. end tolerance"),
                    _("Maximum distance between ends of original and approximating paths (relative to maximum length)"), "ends_tolerance", &wr, this, .1),
-    parallel_offset(_("Parallel offset"), 
+    parallel_offset(_("Parallel offset"),
                     _("Average distance from approximating path to original path"), "parallel_offset", &wr, this, 5.),
-    tremble_size(_("Max. tremble"), 
+    tremble_size(_("Max. tremble"),
                  _("Maximum tremble magnitude"), "tremble_size", &wr, this, 5.),
-    tremble_frequency(_("Tremble frequency"), 
+    tremble_frequency(_("Tremble frequency"),
                       _("Average number of tremble periods in an approximating stroke"), "tremble_frequency", &wr, this, 1.),
-    nbtangents(_("Construction lines"), 
+    nbtangents(_("Construction lines"),
                _("How many construction lines (tangents) to draw"), "nbtangents", &wr, this, 5),
-    tgtscale(_("Scale"), 
+    tgtscale(_("Scale"),
              _("Scale factor relating curvature and length of construction lines (try 5*offset)"), "tgtscale", &wr, this, 10.0),
     tgtlength(_("Max. length"), _("Maximum length of construction lines"), "tgtlength", &wr, this, 100.0),
     tgtlength_rdm(_("Length variation"), _("Random variation of the length of construction lines"), "tgtlength_rdm", &wr, this, .3)
@@ -134,11 +134,11 @@ addLinearEnds (Geom::Piecewise<Geom::D2<Geom::SBasis> > & m){
 
 
 //This returns a random perturbation. Notice the domain is [s0,s0+first multiple of period>s1]...
-Geom::Piecewise<Geom::D2<Geom::SBasis> > 
+Geom::Piecewise<Geom::D2<Geom::SBasis> >
 LPESketch::computePerturbation (double s0, double s1){
     using namespace Geom;
     Piecewise<D2<SBasis> >res;
-    
+
     //global offset for this stroke.
     double offsetX = parallel_offset-parallel_offset.get_value();
     double offsetY = parallel_offset-parallel_offset.get_value();
@@ -149,7 +149,7 @@ LPESketch::computePerturbation (double s0, double s1){
         dA[dim] = 2*tremble_size-tremble_size.get_value();
     }
     //compute howmany deg 3 sbasis to concat according to frequency.
-    unsigned count = unsigned((s1-s0)/strokelength*tremble_frequency)+1; 
+    unsigned count = unsigned((s1-s0)/strokelength*tremble_frequency)+1;
     for (unsigned i=0; i<count; i++){
         D2<SBasis> perturb = D2<SBasis>(SBasis(2, Linear()), SBasis(2, Linear()));
         for (unsigned dim=0; dim<2; dim++){
@@ -189,7 +189,7 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
 
     //----- Approximated Strokes.
     std::vector<Piecewise<D2<SBasis> > > pieces_in = split_at_discontinuities (pwd2_in);
-    
+
     //work separately on each component.
     for (unsigned pieceidx = 0; pieceidx < pieces_in.size(); pieceidx++){
 
@@ -198,22 +198,22 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
         double piece_total_length = piecelength.segs.back().at1()-piecelength.segs.front().at0();
         pathlength.concat(piecelength + total_length);
         total_length += piece_total_length;
-        
+
 
         //TODO: better check this on the Geom::Path.
-        bool closed = piece.segs.front().at0() == piece.segs.back().at1(); 
-        if (closed){ 
+        bool closed = piece.segs.front().at0() == piece.segs.back().at1();
+        if (closed){
             piece.concat(piece);
             piecelength.concat(piecelength+piece_total_length);
         }
 
         for (unsigned i = 0; i<nbiter_approxstrokes; i++){
-            //Basic steps: 
-            //- Choose a rdm seg [s0,s1], find coresponding [t0,t1], 
+            //Basic steps:
+            //- Choose a rdm seg [s0,s1], find coresponding [t0,t1],
             //- Pick a rdm perturbation delta(s), collect 'piece(t)+delta(s(t))' over [t0,t1] into output.
 
             // pick a point where to start the stroke (s0 = dist from start).
-            double s1=0.,s0 = ends_tolerance*strokelength+0.0001;//the root finder might miss 0.  
+            double s1=0.,s0 = ends_tolerance*strokelength+0.0001;//the root finder might miss 0.
             double t1, t0;
             double s0_initial = s0;
             bool done = false;// was the end of the component reached?
@@ -223,10 +223,10 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
                 if (!closed && s1>piece_total_length - ends_tolerance.get_value()*strokelength) break;
                 if ( closed && s0>piece_total_length + s0_initial) break;
 
-                std::vector<double> times;  
-                times = roots(piecelength-s0);  
+                std::vector<double> times;
+                times = roots(piecelength-s0);
                 t0 = times.at(0);//there should be one and only one solution!!
-                
+
                 // pick a new end point (s1 = s0 + strokelength).
                 s1 = s0 + strokelength*(1-strokelength_rdm);
                 // don't let it go beyond the end of the orgiginal path.
@@ -242,10 +242,10 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
                         s1 = 2*piece_total_length - strokeoverlap*(1-strokeoverlap_rdm)*strokelength-0.0001;
                     }
                 }
-                times = roots(piecelength-s1);  
+                times = roots(piecelength-s1);
                 if (times.size()==0) break;//we should not be there.
                 t1 = times[0];
-                
+
                 //pick a rdm perturbation, and collect the perturbed piece into output.
                 Piecewise<D2<SBasis> > pwperturb = computePerturbation(s0-0.01,s1+0.01);
                 pwperturb = compose(pwperturb,portion(piecelength,t0,t1));
@@ -273,11 +273,11 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
 
         // pick a point where to draw a tangent (s = dist from start along path).
         double s = total_length * ( i + tgtlength_rdm ) / (nbtangents+1.);
-        std::vector<double> times;  
+        std::vector<double> times;
         times = roots(pathlength-s);
         double t = times.at(0);//there should be one and only one solution!
         Point m_t = m(t), v_t = v(t), a_t = a(t);
-        //Compute tgt length according to curvature (not exceeding tgtlength) so that  
+        //Compute tgt length according to curvature (not exceeding tgtlength) so that
         //  dist to origninal curve ~ 4 * (parallel_offset+tremble_size).
         //TODO: put this 4 as a parameter in the UI...
         //TODO: what if with v=0?
@@ -292,12 +292,12 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
         }
         output.concat(Piecewise<D2<SBasis> >(tgt));
     }
-    
+
     return output;
 }
 
 void
-LPESketch::doBeforeEffect (SPLPEItem *lpeitem)
+LPESketch::doBeforeEffect (SPLPEItem */*lpeitem*/)
 {
     //init random parameters.
     parallel_offset.resetRandomizer();
