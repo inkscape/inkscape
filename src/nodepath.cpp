@@ -1388,7 +1388,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
         }
 
     	// Iterate through all selected nodes
-    	m.setup(nodepath->desktop, false, SP_PATH(nodepath->item), &unselected_nodes);
+    	m.setup(nodepath->desktop, false, nodepath->item, &unselected_nodes);
     	for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             if (!closest_only || n == closest_node) { //try to snap either all selected nodes or only the closest one

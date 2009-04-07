@@ -616,9 +616,10 @@ void Inkscape::ObjectSnapper::freeSnap(SnappedConstraints &sc,
              */
             SPPath *path = NULL;
             if (it != NULL) {
-                g_assert(SP_IS_PATH(*it->begin()));
-                g_assert(it->size() == 1);
-                path = SP_PATH(*it->begin());
+                if (it->size() == 1 && SP_IS_PATH(*it->begin())) {
+					path = SP_PATH(*it->begin());
+                } // else: *it->begin() might be a SPGroup, e.g. when editing a LPE of text that has been converted to a group of paths
+                // as reported in bug #356743. In that case we can just ignore it, i.e. not snap to this item
             }
             _snapPaths(sc, t, p, source_type, first_point, unselected_nodes, path);
         } else {
