@@ -275,7 +275,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     document->rroot = rroot;
 
 #ifndef WIN32
-    prepend_current_dir_if_relative(&(document->uri), uri);
+    document->uri = prepend_current_dir_if_relative(uri);
 #else
     // FIXME: it may be that prepend_current_dir_if_relative works OK on windows too, test!
     document->uri = uri? g_strdup(uri) : NULL;
@@ -628,7 +628,7 @@ void sp_document_set_uri(SPDocument *document, gchar const *uri)
     if (uri) {
 
 #ifndef WIN32
-        prepend_current_dir_if_relative(&(document->uri), uri);
+        document->uri = prepend_current_dir_if_relative(uri);
 #else
         // FIXME: it may be that prepend_current_dir_if_relative works OK on windows too, test!
         document->uri = g_strdup(uri);
