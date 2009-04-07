@@ -27,6 +27,7 @@
 #include "svg/svg.h"
 #include "desktop.h"
 #include "desktop-style.h"
+#include "dir-util.h"
 #include "selection.h"
 #include "tools-switch.h"
 #include "desktop-handles.h"
@@ -52,6 +53,7 @@
 #include <libnr/nr-matrix-ops.h>
 #include <2geom/transforms.h>
 #include "xml/repr.h"
+#include "xml/rebase-hrefs.h"
 #include "style.h"
 #include "document-private.h"
 #include "sp-gradient.h"
@@ -2634,8 +2636,12 @@ sp_selection_create_bitmap_copy(SPDesktop *desktop)
     if (pb) {
         // Create the repr for the image
         Inkscape::XML::Node * repr = xml_doc->createElement("svg:image");
-        repr->setAttribute("xlink:href", basename);
-        repr->setAttribute("sodipodi:absref", filepath);
+        {
+            repr->setAttribute("sodipodi:absref", filepath);
+            gchar *abs_base = Inkscape::XML::calc_abs_doc_base(document->base);
+            repr->setAttribute("xlink:href", sp_relative_path_from_path(filepath, abs_base));
+            g_free(abs_base);
+        }
         if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
             sp_repr_set_svg_double(repr, "width", width);
             sp_repr_set_svg_double(repr, "height", height);
