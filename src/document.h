@@ -88,9 +88,9 @@ struct SPDocument : public Inkscape::GC::Managed<>,
     SPObject *root;             ///< Our SPRoot
     CRCascade *style_cascade;
 
-    gchar *uri; ///< URI string or NULL
-    gchar *base;
-    gchar *name;
+    gchar *uri;   ///< A filename (not a URI yet), or NULL
+    gchar *base;  ///< To be used for resolving relative hrefs.
+    gchar *name;  ///< basename(uri) or other human-readable label for the document.
 
     SPDocumentPrivate *priv;
 
