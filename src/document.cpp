@@ -626,8 +626,8 @@ do_change_uri(SPDocument *const document, gchar const *const filename, bool cons
         new_uri = g_strdup(filename);
 #endif
 
-        new_base = g_path_get_dirname(document->uri);
-        new_name = g_path_get_basename(document->uri);
+        new_base = g_path_get_dirname(new_uri);
+        new_name = g_path_get_basename(new_uri);
     } else {
         new_uri = g_strdup_printf(_("Unnamed document %d"), ++doc_count);
         new_base = NULL;
