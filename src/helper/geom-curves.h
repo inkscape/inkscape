@@ -16,6 +16,7 @@
 #include <2geom/line.h>
 #include <2geom/bezier-curve.h>
 
+/// \todo un-inline this function
 inline bool is_straight_curve(Geom::Curve const & c) {
     if( dynamic_cast<Geom::LineSegment const*>(&c) ||
         dynamic_cast<Geom::HLineSegment const*>(&c) ||
