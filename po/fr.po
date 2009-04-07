@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-04-01 20:04+0200\n"
-"PO-Revision-Date: 2009-04-07 13:58+0100\n"
+"PO-Revision-Date: 2009-04-07 21:54+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -443,7 +443,7 @@ msgstr "Couleur"
 
 #: ../share/filters/filters.svg.h:32
 msgid "Render in shades of gray by reducing saturation to zero"
-msgstr ""
+msgstr "Rendu en teintes de gris par réduction de la saturation à zéro"
 
 #: ../share/filters/filters.svg.h:33
 #: ../src/ui/widget/selected-style.cpp:228
@@ -596,7 +596,7 @@ msgstr "Embossage"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Highly flexible specular bump based on colors hue saturation and luminance"
-msgstr ""
+msgstr "Embossage spéculaire extrêmement flexible basé sur la saturation de teinte et la luminance"
 
 #: ../share/filters/filters.svg.h:48
 msgid "Cracked glass"
@@ -612,7 +612,7 @@ msgstr "Bulles TSL"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Highly flexible bubbles effect depending on color hue saturation and luminance"
-msgstr ""
+msgstr "Effet de bulles extrêmement flexible basé sur la saturation de teinte et la luminance"
 
 #: ../share/filters/filters.svg.h:50
 msgid "Glowing bubble"
@@ -646,7 +646,7 @@ msgstr "Fondu éclatant"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Melting parts of object together, with a glossy bevel and a glow"
-msgstr ""
+msgstr "Fusion de parties de l'objet avec un biseau brillant et un éclat"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Badge"
@@ -712,9 +712,8 @@ msgid "Illuminated translucent plastic effect"
 msgstr "Effet de plastique translucide et lumineux"
 
 #: ../share/filters/filters.svg.h:60
-#, fuzzy
 msgid "Cross-smooth"
-msgstr "doux"
+msgstr "Adoucisseur"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Blur inner borders and intersections"
@@ -1266,7 +1265,7 @@ msgstr "Flou simple"
 
 #: ../share/filters/filters.svg.h:126
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
-msgstr ""
+msgstr "Flou gaussien simple, identique au réglage de flou dans la boite de dialogue Remplissage et contour"
 
 #: ../share/filters/filters.svg.h:127
 msgid "HSL bubbles diffuse"
@@ -1418,7 +1417,7 @@ msgstr "Ébauche de bande dessinée"
 #: ../share/filters/filters.svg.h:164
 #: ../share/filters/filters.svg.h:165
 msgid "Non realistic shaders"
-msgstr "Nuanceurs non réalistes"
+msgstr "Ombrages non réalistes"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Draft painted cartoon shading with a glassy look"
@@ -1433,9 +1432,8 @@ msgid "Cartoon paint style with some fading at the edges"
 msgstr "Peinture style BD avec de la décoloration sur les bords"
 
 #: ../share/filters/filters.svg.h:145
-#, fuzzy
 msgid "Smooth shader NR"
-msgstr "Nœuds doux"
+msgstr "Ombrage doux"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Smooth shading with a graphite pencil grey"
@@ -1443,19 +1441,20 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:146
 msgid "Emboss shader NR"
-msgstr ""
+msgstr "Ombrage embossé"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Combination of smooth shading and embossing"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:147
+#, fuzzy
 msgid "Smooth shader dark NR"
-msgstr ""
+msgstr "Ombrage doux foncé"
 
 #: ../share/filters/filters.svg.h:147
 msgid "Dark version of non realistic smooth shading"
-msgstr ""
+msgstr "Version sombre de l'ombrage doux non réaliste"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Comics"
@@ -1467,16 +1466,14 @@ msgid "Imitation of black and white cartoon shading"
 msgstr "Inverser les régions blanches et noires"
 
 #: ../share/filters/filters.svg.h:149
-#, fuzzy
 msgid "Satin NR"
-msgstr "Début"
+msgstr "Satin"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Silky close to mother of pearl shading"
-msgstr ""
+msgstr "Soyeux, proche de l'ombrage Nacre"
 
 #: ../share/filters/filters.svg.h:150
-#, fuzzy
 msgid "Frosted glass NR"
 msgstr "Verre fissuré"
 
@@ -1503,13 +1500,12 @@ msgid "Imitation of black and white cartoon shading more rounded version"
 msgstr "Inverser les régions blanches et noires"
 
 #: ../share/filters/filters.svg.h:153
-#, fuzzy
 msgid "Pewter NR"
-msgstr "Copies du motif"
+msgstr "Étain"
 
 #: ../share/filters/filters.svg.h:153
 msgid "Mid grey satin like shader close to pewter"
-msgstr ""
+msgstr "Ombrage satin gris moyen, proche d'Étain"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Aluminium NR"
@@ -1517,7 +1513,7 @@ msgstr "Aluminium NR"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Brushed aluminium shader"
-msgstr ""
+msgstr "Ombrage aluminium brossé"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Comics fluid"
@@ -1534,15 +1530,15 @@ msgstr "Chrome NR"
 
 #: ../share/filters/filters.svg.h:156
 msgid "Non realistic chrome shader with strong speculars"
-msgstr ""
+msgstr "Ombrage chrome non réaliste avec des spéculaires fortes"
 
 #: ../share/filters/filters.svg.h:157
 msgid "Chrome dark NR"
-msgstr ""
+msgstr "Nuit de chrome"
 
 #: ../share/filters/filters.svg.h:157
 msgid "Dark version of chrome shading with a ground reflection simulation"
-msgstr ""
+msgstr "Version sombre de l'ombrage chrome avec une simulation de réflexion par le sol"
 
 #: ../share/filters/filters.svg.h:158
 msgid "Wavy tartan"
@@ -20513,7 +20509,7 @@ msgstr "_Traducteurs"
 
 #: ../share/extensions/interp-att-g.inx.h:25
 msgid "Where to apply?"
-msgstr ""
+msgstr "Où appliquer ?"
 
 #: ../share/extensions/interp-att-g.inx.h:27
 #: ../share/extensions/web-set-att.inx.h:24
@@ -21491,17 +21487,17 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:3
 msgid "If you want to set more then one attribute, you must separate this with a space, and only with a space."
-msgstr ""
+msgstr "Si vous souhaitez définir plusieurs attributs, vous devez les séparer avec le caractère espace."
 
 #: ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Run it after"
-msgstr ""
+msgstr "Exécuter après"
 
 #: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6
 msgid "Run it before"
-msgstr ""
+msgstr "Exécuter avant"
 
 #: ../share/extensions/web-set-att.inx.h:7
 msgid "Set Atributes"
@@ -21509,16 +21505,16 @@ msgstr "Définir les attributs"
 
 #: ../share/extensions/web-set-att.inx.h:8
 msgid "The list of values must have the same size of the attributes list."
-msgstr ""
+msgstr "La liste des valeurs doit avoir la même taille que la liste des attributs."
 
 #: ../share/extensions/web-set-att.inx.h:9
 #: ../share/extensions/web-transmit-att.inx.h:7
 msgid "This effect adds a feature visible (or usable) only on a SVG enabled web browser (like Firefox)."
-msgstr ""
+msgstr "L'élément ajouté par cet effet sera visible (ou utilisable) seulement avec un navigateur internet supportant SVG (comme Firefox)."
 
 #: ../share/extensions/web-set-att.inx.h:10
 msgid "This effect sets one or more attributes in the second selected element, when a defined event occurs on the first selected element."
-msgstr ""
+msgstr "Cet effet définit un ou plusieurs attributs sur le deuxième élément sélectionné lorsqu'un événement intervient sur le premier."
 
 #: ../share/extensions/web-set-att.inx.h:11
 msgid "Value to set"
@@ -21527,11 +21523,11 @@ msgstr "Valeur à définir"
 #: ../share/extensions/web-set-att.inx.h:12
 #: ../share/extensions/web-transmit-att.inx.h:10
 msgid "Web"
-msgstr ""
+msgstr "Web"
 
 #: ../share/extensions/web-set-att.inx.h:13
 msgid "When the set must be done?"
-msgstr ""
+msgstr "Quand la définition doit elle s'appliquer ?"
 
 #: ../share/extensions/web-set-att.inx.h:14
 #: ../share/extensions/web-transmit-att.inx.h:12
