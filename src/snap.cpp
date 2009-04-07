@@ -161,7 +161,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapPreferences::PointTyp
                                              bool first_point,
                                              Geom::OptRect const &bbox_to_snap) const
 {
-	if (_desktop->event_context->_snap_window_open == false) {
+	if (_desktop->event_context && _desktop->event_context->_snap_window_open == false) {
 		g_warning("context_snap_window_open has not been set to true by the current context. Please report this!");
 		// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
 	}
@@ -296,7 +296,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
                                                     bool first_point,
                                                     Geom::OptRect const &bbox_to_snap) const
 {
-	if (_desktop->event_context->_snap_window_open == false) {
+	if (_desktop->event_context && _desktop->event_context->_snap_window_open == false) {
 		g_warning("context_snap_window_open has not been set to true by the current context. Please report this!");
 		// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
 	}
@@ -334,7 +334,7 @@ void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) con
 {
     // This method is used to snap a guide to nodes or to other guides, while dragging the guide around. Will not snap to grids!
 
-	if (_desktop->event_context->_snap_window_open == false) {
+	if (_desktop->event_context && _desktop->event_context->_snap_window_open == false) {
 			g_warning("context_snap_window_open has not been set to true by the current context. Please report this!");
 			// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
 	}
