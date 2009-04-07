@@ -2519,7 +2519,7 @@ sp_selection_create_bitmap_copy (SPDesktop *desktop)
     gchar *filename = g_strdup_printf ("%s-%s-%u.png", document->name, SP_OBJECT_REPR(items->data)->attribute("id"), current);
     // Imagemagick is known not to handle spaces in filenames, so we replace anything but letters,
     // digits, and a few other chars, with "_"
-    filename = g_strcanon (filename, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.=+~$#@^&!?", '_');
+    g_strcanon(filename, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.=+~$#@^&!?", '_');
 
     // Build the complete path by adding document base dir, if set, otherwise home dir
     gchar * directory = NULL;
