@@ -257,14 +257,7 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         saved_dataloss = g_strdup(repr->attribute("inkscape:dataloss"));
     } else {
         /* The document is changing name/uri. */
-
-        /* TODO: Don't treat URIs and filenames interchangeably.
-         * So call g_filename_to_uri when passing to sp_document_set_uri,
-         * and change rebase_hrefs to accept a base URI/LEIRI instead of dir name. */
-        gchar *const new_base = g_path_get_dirname(fileName);
-        Inkscape::XML::rebase_hrefs(doc, new_base, true);
-        sp_document_set_uri(doc, fileName);
-        g_free(new_base);
+        sp_document_change_uri_and_hrefs(doc, fileName);
     }
 
     // Update attributes:

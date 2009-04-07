@@ -581,7 +581,9 @@ Script::open(Inkscape::Extension::Input *module,
     } // data_read
 
     if (mydoc != NULL) {
-        sp_document_set_uri(mydoc, filenameArg);
+        g_free(mydoc->base);
+        mydoc->base = NULL;
+        sp_document_change_uri_and_hrefs(mydoc, filenameArg);
     }
 
     // make sure we don't leak file descriptors from g_file_open_tmp
