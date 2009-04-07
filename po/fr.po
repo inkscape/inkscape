@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-04-01 20:04+0200\n"
-"PO-Revision-Date: 2009-04-04 13:29+0100\n"
+"PO-Revision-Date: 2009-04-07 13:58+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1006,7 +1006,7 @@ msgstr "Inverser la teinte"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Invert hue, or rotate it"
-msgstr ""
+msgstr "Inverse ou permute la teinte"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Outline"
@@ -1030,7 +1030,7 @@ msgstr "Flou fantaisie"
 
 #: ../share/filters/filters.svg.h:97
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
-msgstr ""
+msgstr "Contour colorisé doux, qui permet la désaturation et la rotation de teinte"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Glow"
@@ -1071,7 +1071,7 @@ msgstr "Solariser"
 
 #: ../share/filters/filters.svg.h:102
 msgid "Classical photographic solarization effect"
-msgstr ""
+msgstr "Effet de solarisation photographique classique"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Moonarize"
@@ -1079,7 +1079,7 @@ msgstr "Lunariser"
 
 #: ../share/filters/filters.svg.h:103
 msgid "An effect between solarize and invert which often preserves sky and water lights"
-msgstr ""
+msgstr "Un effet à mi-chemin de solarisation et invertion, qui préserve souvent les lumières du cel et de l'eau"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Glow and draw"
@@ -1111,7 +1111,7 @@ msgstr "Embossage TSL, avec transparence"
 
 #: ../share/filters/filters.svg.h:107
 msgid "Same than HSL bumps but with an alpha added for combination with transparency depending filters"
-msgstr ""
+msgstr "Identique à Embossage TSL, mais avec ajout d'alpha pour la combinaison avec les filtres nécessitant de la transparence"
 
 #: ../share/filters/filters.svg.h:108
 msgid "HSL bubbles, alpha"
@@ -1119,7 +1119,7 @@ msgstr "Bulles TSL, avec transparence"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Same than HSL bubbles but with an alpha added for combination with transparency depending filters"
-msgstr ""
+msgstr "Identique à Bulles TSL, mais avec ajout d'alpha pour la combinaison avec les filtres nécessitant de la transparence"
 
 #: ../share/filters/filters.svg.h:109
 msgid "Smooth edges"
@@ -1250,7 +1250,7 @@ msgstr "Embossage TSL diffus"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
-msgstr ""
+msgstr "Identique à Embossage TSL, mais avec une réflection diffuse et non pas spéculaire"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Dark Emboss"
@@ -1274,7 +1274,7 @@ msgstr "Bulles TSL diffus"
 
 #: ../share/filters/filters.svg.h:127
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
-msgstr ""
+msgstr "Identique à Bulles TSL, mais avec une lumière diffuse et non pas spéculaire"
 
 #: ../share/filters/filters.svg.h:128
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -1513,7 +1513,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:154
 msgid "Aluminium NR"
-msgstr ""
+msgstr "Aluminium NR"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Brushed aluminium shader"
@@ -1530,7 +1530,7 @@ msgstr "Ajuster la page au dessin"
 
 #: ../share/filters/filters.svg.h:156
 msgid "Chrome NR"
-msgstr ""
+msgstr "Chrome NR"
 
 #: ../share/filters/filters.svg.h:156
 msgid "Non realistic chrome shader with strong speculars"
@@ -5826,7 +5826,6 @@ msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Afficher ou non la barre des commandes (sous le menu)"
 
 #: ../src/interface.cpp:825
-#, fuzzy
 msgid "Snap Controls Bar"
 msgstr "Barre des contrôles du magnétisme"
 
@@ -7002,7 +7001,7 @@ msgstr "Largeur de l'interruption"
 
 #: ../src/live_effects/lpe-knot.cpp:323
 msgid "Size of hidden region of lower string"
-msgstr ""
+msgstr "Taille de la partie masquée sur le tracé inférieur"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "unit of stroke width"
@@ -7010,24 +7009,23 @@ msgstr "Unité de la largeur du trait"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width."
-msgstr ""
+msgstr "Traiter l'épaisseur de l'interruption en fonction de l'épaisseur du trait."
 
 #: ../src/live_effects/lpe-knot.cpp:325
-#, fuzzy
 msgid "add stroke width to interruption size"
-msgstr "Épaisseur du contour"
+msgstr "Ajoute l'épaisseur du trait à la taille de l'interruption"
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "Add the stroke width to the interruption size."
-msgstr ""
+msgstr "Ajoute l'épaisseur du trait à la taille de l'interruption."
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "add other's stroke width to interruption size"
-msgstr ""
+msgstr "Ajoute l'épaisseur de l'autre trait à la taille de l'interruption"
 
 #: ../src/live_effects/lpe-knot.cpp:326
 msgid "Add crossed stroke width to the interruption size."
-msgstr ""
+msgstr "Ajoute l'épaisseur du trait croisé à la taille de l'interruption."
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Switcher size"
@@ -7039,11 +7037,11 @@ msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossing Signs"
-msgstr ""
+msgstr "Signes de croisement"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossings signs"
-msgstr ""
+msgstr "Signes de croisement"
 
 #: ../src/live_effects/lpe-knot.cpp:339
 msgid "Drag to select a crossing, click to flip it"
@@ -7379,7 +7377,7 @@ msgstr "Douceur des demi-tours : premier côté, intérieur"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Definit la douceur ou la netteté du chemin lorsqu'il atteint un demi-tour inférieur. 0=net, 1=défaut"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "1st side, out"
@@ -7387,7 +7385,7 @@ msgstr "Premier côté, extérieur"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Definit la douceur ou la netteté du chemin lorsqu'il quitte un demi-tour inférieur. 0=net, 1=défaut"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "2nd side, in "
@@ -7395,7 +7393,7 @@ msgstr "Deuxième côté, intérieur"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Definit la douceur ou la netteté du chemin lorsqu'il atteint un demi-tour supérieur. 0=net, 1=défaut"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "2nd side, out"
@@ -7403,15 +7401,15 @@ msgstr "Deuxième côté, extérieur"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, 1=default"
-msgstr ""
+msgstr "Definit la douceur ou la netteté du chemin lorsqu'il quitte un demi-tour supérieur. 0=net, 1=défaut"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "variance: 1st side"
-msgstr ""
+msgstr "Écart : premier côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomness of 'bottom' halfturns smoothness"
-msgstr ""
+msgstr "Caractère aléatoire de la douceur des demi-tours inférieurs"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
@@ -7421,32 +7419,32 @@ msgstr "Deuxième côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 msgid "Randomness of 'top' halfturns smoothness"
-msgstr ""
+msgstr "Caractère aléatoire de la douceur des demi-tours supérieurs"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 msgid "Magnitude jitter: 1st side"
-msgstr ""
+msgstr "Fluctuation de l'amplitude : premier côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
-msgstr ""
+msgstr "Déplace aléatoirement les demi-tours inférieurs pour produire des variations d'amplitude."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
-msgstr ""
+msgstr "Déplace aléatoirement les demi-tours supérieurs pour produire des variations d'amplitude."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "Parallelism jitter: 1st side"
-msgstr ""
+msgstr "Fluctuation du parallélisme : premier côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "Add direction randomness by moving 'bottom' halfsturns tangentially to the boundary."
-msgstr ""
+msgstr "Ajoute un caractère aléatoire à la direction en déplaçant les demi-tours inférieurs tangentiellement par rapport à la bordure."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:239
 msgid "Add direction randomness by randomly moving 'top' halfsturns tangentially to the boundary."
-msgstr ""
+msgstr "Ajoute un caractère aléatoire à la direction en déplaçant les demi-tours supérieurs tangentiellement par rapport à la bordure."
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
@@ -7481,7 +7479,7 @@ msgstr "Épaisseur : au premier côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "Width at 'bottom' half turns"
-msgstr ""
+msgstr "Épaisseur au demi-tours inférieurs"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:247
 msgid "at 2nd side"
@@ -7489,7 +7487,7 @@ msgstr "au deuxième côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:247
 msgid "Width at 'top' halfturns"
-msgstr ""
+msgstr "Épaisseur au demi-tours supérieurs"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "from 2nd to 1st side"
@@ -7498,7 +7496,7 @@ msgstr "du deuxième au premier côté"
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 #: ../src/live_effects/lpe-rough-hatches.cpp:249
 msgid "Width of paths from 'top' to 'bottom' halfturns"
-msgstr ""
+msgstr "Épaisseur des chemins du demi-tour supérieur au demi-tour inférieur"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:249
 msgid "from 1st to 2nd side"
@@ -12199,11 +12197,11 @@ msgstr "Faire clignoter brièvement le contour d'un chemin lors de son survol"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:434
 msgid "Suppress path outline flash when one path selected"
-msgstr ""
+msgstr "Supprime le clignotement du contour de chemin lorsqu'un chemin est sélectionné"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:435
 msgid "If a path is selected, do not continue flashing path outlines."
-msgstr ""
+msgstr "Si un chemin est sélectionné, ne pas faire clignoter les contours du chemin en continu."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:437
 msgid "Flash time"
@@ -13284,11 +13282,11 @@ msgstr "Définit la taille des icônes de la barre d'outils secondaire (nécessi
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1081
 msgid "Work-around color sliders not drawing."
-msgstr ""
+msgstr "Contourner le non affichage des barres de défilement de couleur."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1083
 msgid "When on, will attempt to work around bugs in certain GTK themes drawing color sliders."
-msgstr ""
+msgstr "Si activé, essayera de contourner un bug d'affichage des barres de défilement de couleur lié à certains thèmes GTK."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1089
 msgid "Clear list"
