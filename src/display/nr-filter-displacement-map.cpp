@@ -124,8 +124,8 @@ static void performDisplacement(NRPixBlock const* texture, NRPixBlock const* map
     if (!Xneedsdemul) scalex /= 255.0;
     if (!Yneedsdemul) scaley /= 255.0;
 
-    for (int xout=out->area.x0; xout < out->area.x1; xout++){
-        for (int yout=out->area.y0; yout < out->area.y1; yout++){
+    for (int yout=out->area.y0; yout < out->area.y1; yout++){
+        for (int xout=out->area.x0; xout < out->area.x1; xout++){
             int xmap = xout;
             int ymap = yout;
 
