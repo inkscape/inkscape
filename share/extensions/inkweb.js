@@ -19,7 +19,7 @@
 
 var InkWeb = {
 
-  version: 0.01,
+  version: 0.02,
 
   NS: {
     svg:      "http://www.w3.org/2000/svg",
