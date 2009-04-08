@@ -27,6 +27,11 @@
     <_item value="prepend">Run it before</_item>
     <_item value="replace">Replace</_item>
   </param>
+  <_param name="help" type="description">The next parameter is useful when you select more then two elements.</_param>
+  <param name="from-and-to" type="enum" _gui-text="Who transmit to Who?">
+    <_item value="g-to-one">All tramsmit to the last</_item>
+    <_item value="one-to-g">The first transmit to all</_item>
+  </param>
   <effect>
     <object-type>all</object-type>
     <effects-menu>

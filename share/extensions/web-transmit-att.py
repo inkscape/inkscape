@@ -36,6 +36,10 @@ class InkWebTransmitAtt(inkwebeffect.InkWebEffect):
                         action="store", type="string",
                         dest="compatibility", default="append",
                         help="Compatibility with previews code to this event.")
+        self.OptionParser.add_option("-t", "--from-and-to",
+                        action="store", type="string",
+                        dest="from_and_to", default="g-to-one",
+                        help='Who transmit to Who? "g-to-one" All tramsmit to the last. "one-to-g" The first transmit to all.')
 
     def effect(self):
       self.ensureInkWebSupport()
@@ -44,20 +48,31 @@ class InkWebTransmitAtt(inkwebeffect.InkWebEffect):
         inkwebeffect.inkex.errormsg(_("You must to select at least two elements."))
         exit(1)
 
-      elFrom = self.selected[ self.options.ids[0] ]
-      idTo = self.options.ids[1]
+      elFrom = []
+      idTo = []
+      if self.options.from_and_to == "g-to-one":
+        # All tramsmit to the last
+        for selId in self.options.ids[:-1]:
+          elFrom.append( self.selected[selId] )
+        idTo.append( self.options.ids[-1] )
+      else:
+        # The first transmit to all
+        elFrom.append( self.selected[ self.options.ids[0] ] )
+        for selId in self.options.ids[1:]:
+          idTo.append( selId )
 
-      prevEvCode = elFrom.get( self.options.when )
-      if prevEvCode == None: prevEvCode = ""
+      evCode = "InkWeb.transmitAtt({from:this, to:['"+ "','".join(idTo) +"'], att:'"+self.options.att+"'})"
 
-      evCode = "InkWeb.transmitAtt({from:this, to:'"+idTo+"', att:'"+self.options.att+"'})"
+      for el in elFrom:
+        prevEvCode = el.get( self.options.when )
+        if prevEvCode == None: prevEvCode = ""
 
-      if self.options.compatibility == 'append':
-        evCode = prevEvCode +";\n"+ evCode
-      if self.options.compatibility == 'prepend':
-        evCode = evCode +";\n"+ prevEvCode
+        if self.options.compatibility == 'append':
+          elEvCode = prevEvCode +";\n"+ evCode
+        if self.options.compatibility == 'prepend':
+          elEvCode = evCode +";\n"+ prevEvCode
 
-      elFrom.set( self.options.when, evCode )
+        el.set( self.options.when, elEvCode )
 
 if __name__ == '__main__':
     e = InkWebTransmitAtt()

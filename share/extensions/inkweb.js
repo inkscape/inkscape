@@ -67,18 +67,22 @@ InkWeb.setStyle = function (el, att, val) {
 }
 
 InkWeb.transmitAtt = function (conf) {
+  conf.att = conf.att.split( /\s+/ );
   if ( typeof(conf.from) == "string" )
     conf.from = document.getElementById( conf.from );
-  if ( typeof(conf.to) == "string" )
-    conf.to = document.getElementById( conf.to );
-  conf.att = conf.att.split( /\s+/ );
-  for ( var i=0; i<conf.att.length; i++ ) {
-    var val = this.getStyle( conf.from, conf.att[i] );
-    if ( val ) {
-      this.setStyle( conf.to, conf.att[i], val );
-    } else {
-      val = conf.from.getAttribute(conf.att[i]);
-      conf.to.setAttribute( conf.att[i], val );
+  if ( ! conf.to.join )
+    conf.to = [ conf.to ];
+  for ( var toEl,elN=0; toEl=conf.to[elN]; elN++ ) {
+    if ( typeof(toEl) == "string" )
+      toEl = document.getElementById( toEl );
+    for ( var i=0; i<conf.att.length; i++ ) {
+      var val = this.getStyle( conf.from, conf.att[i] );
+      if ( val ) {
+        this.setStyle( toEl, conf.att[i], val );
+      } else {
+        val = conf.from.getAttribute(conf.att[i]);
+        toEl.setAttribute( conf.att[i], val );
+      }
     }
   }
 }
