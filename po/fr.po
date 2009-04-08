@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-01 20:04+0200\n"
-"PO-Revision-Date: 2009-04-07 21:54+0100\n"
+"POT-Creation-Date: 2009-04-08 19:27+0200\n"
+"PO-Revision-Date: 2009-04-08 21:33+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -168,9 +168,8 @@ msgid "ABCs"
 msgstr "ABC"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Small-scale roughening to edges and content"
-msgstr "Bords rendus rugueux sur une petite amplitude"
+msgstr "Rend rugueux les bords et le contenu sur une petite amplitude"
 
 #: ../share/filters/filters.svg.h:12
 msgid "Rubber stamp"
@@ -1012,8 +1011,8 @@ msgid "Outline"
 msgstr "Contour"
 
 #: ../share/filters/filters.svg.h:95
-msgid "Draws a smooth hole inside"
-msgstr "Trace un trou lisse à l'intérieur"
+msgid "Draws an outline around"
+msgstr "Trace un contour"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Outline, double"
@@ -1125,18 +1124,16 @@ msgid "Smooth edges"
 msgstr "Bords doux"
 
 #: ../share/filters/filters.svg.h:109
-#, fuzzy
 msgid "Smooth the outside of shapes and pictures without altering their contents"
-msgstr "Masque flou sur les bords sans altération du contenu"
+msgstr "Adoucit l'extérieur des formes et images sans en altérer le contenu"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Torn edges"
 msgstr "Bords déchirés"
 
 #: ../share/filters/filters.svg.h:110
-#, fuzzy
 msgid "Displace the outside of shapes and pictures without altering their content"
-msgstr "Masque flou sur les bords sans altération du contenu"
+msgstr "Déplace l'extérieur des formes et images sans en altérer le contenu"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Feather"
@@ -1184,7 +1181,7 @@ msgstr "Craie et éponge"
 
 #: ../share/filters/filters.svg.h:116
 msgid "Low turbulence gives sponge look and high turbulence chalk"
-msgstr ""
+msgstr "Une agitation légère donne l'aspect d'une éponge et une agitation forte de la craie"
 
 #: ../share/filters/filters.svg.h:117
 msgid "People"
@@ -1223,9 +1220,8 @@ msgid "Garden of Delights"
 msgstr "Jardin des délices"
 
 #: ../share/filters/filters.svg.h:121
-#, fuzzy
 msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
-msgstr "Turbulences fantasmagoriques évoquant <i>Le Jardin des délices</i> de Jérôme Bosch"
+msgstr "Volutes agitées et fantasmagoriques, comme <i>Le Jardin des délices</i> de Jérôme Bosch"
 
 #: ../share/filters/filters.svg.h:122
 msgid "Diffuse light"
@@ -1282,7 +1278,7 @@ msgstr "Embosser"
 
 #: ../share/filters/filters.svg.h:128
 msgid "Emboss effect : Colors of the original images are preserved or modified by Blend"
-msgstr ""
+msgstr "Effet d'embossage : les couleurs de l'image originale sont préservées ou modifiées par Fondre"
 
 #: ../share/filters/filters.svg.h:129
 msgid "Blotting paper"
@@ -1321,9 +1317,8 @@ msgid "Color outline"
 msgstr "Contour coloré"
 
 #: ../share/filters/filters.svg.h:133
-#, fuzzy
 msgid "A colorizable outline with adjustable width and blur"
-msgstr "Un contour colorisable pouvant être élargi et rendu flou"
+msgstr "Un contour colorisable avec une épaisseur ajustable et un flou"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Liquid"
@@ -1347,7 +1342,7 @@ msgstr "Feutre"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Felt like texture with color turbulence and slightly darker at the edges"
-msgstr ""
+msgstr "Texture de feutre avec de la turbulence de couleur et légèrement plus sombre sur les bords"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Ink paint"
@@ -1387,9 +1382,8 @@ msgid "Dark and glow"
 msgstr "Pénombre et lumière"
 
 #: ../share/filters/filters.svg.h:142
-#, fuzzy
 msgid "Flex metal"
-msgstr "Métal doux"
+msgstr "Métal souple"
 
 #: ../share/filters/filters.svg.h:142
 msgid "Bright, polished uneven metal casting, colorizable"
@@ -1397,7 +1391,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:143
 msgid "Comics draft"
-msgstr "Ébauche de bande dessinée"
+msgstr "Ébauche bande dessinée"
 
 #: ../share/filters/filters.svg.h:143
 #: ../share/filters/filters.svg.h:144
@@ -1421,15 +1415,15 @@ msgstr "Ombrages non réalistes"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Draft painted cartoon shading with a glassy look"
-msgstr ""
+msgstr "Ombrage d'ébauche de bande dessinée peinte avec un aspect vitreux"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Comics fading"
-msgstr "Décoloration BD"
+msgstr "Décoloration bande dessinée"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Cartoon paint style with some fading at the edges"
-msgstr "Peinture style BD avec de la décoloration sur les bords"
+msgstr "Peinture style bande dessinée avec de la décoloration sur les bords"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Smooth shader NR"
@@ -1437,7 +1431,7 @@ msgstr "Ombrage doux"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Smooth shading with a graphite pencil grey"
-msgstr ""
+msgstr "Ombrage doux avec un crayon graphite gris"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Emboss shader NR"
@@ -1445,10 +1439,9 @@ msgstr "Ombrage embossé"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Combination of smooth shading and embossing"
-msgstr ""
+msgstr "Combinaison d'ombrage doux et d'embossage"
 
 #: ../share/filters/filters.svg.h:147
-#, fuzzy
 msgid "Smooth shader dark NR"
 msgstr "Ombrage doux foncé"
 
@@ -1461,9 +1454,8 @@ msgid "Comics"
 msgstr "Bande dessinée"
 
 #: ../share/filters/filters.svg.h:148
-#, fuzzy
 msgid "Imitation of black and white cartoon shading"
-msgstr "Inverser les régions blanches et noires"
+msgstr "Imitation d'ombrage de bande dessinée en noir et blanc"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Satin NR"
@@ -1490,14 +1482,12 @@ msgid "Contouring version of smooth shader"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:152
-#, fuzzy
 msgid "Comics rounded"
-msgstr "pas d'arrondi"
+msgstr "Arrondi bande dessinée"
 
 #: ../share/filters/filters.svg.h:152
-#, fuzzy
 msgid "Imitation of black and white cartoon shading more rounded version"
-msgstr "Inverser les régions blanches et noires"
+msgstr "Imitation d'ombrage de bande dessinée en noir et blanc, en plus arrondi"
 
 #: ../share/filters/filters.svg.h:153
 msgid "Pewter NR"
@@ -1509,7 +1499,7 @@ msgstr "Ombrage satin gris moyen, proche d'Étain"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Aluminium NR"
-msgstr "Aluminium NR"
+msgstr "Aluminium"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Brushed aluminium shader"
@@ -1517,16 +1507,15 @@ msgstr "Ombrage aluminium brossé"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Comics fluid"
-msgstr "Fluide BD"
+msgstr "Fluide bande dessinée"
 
 #: ../share/filters/filters.svg.h:155
-#, fuzzy
 msgid "Fluid brushed cartoon drawing"
-msgstr "Ajuster la page au dessin"
+msgstr "Dessin de bande dessinée au brossé fluide"
 
 #: ../share/filters/filters.svg.h:156
 msgid "Chrome NR"
-msgstr "Chrome NR"
+msgstr "Chrome"
 
 #: ../share/filters/filters.svg.h:156
 msgid "Non realistic chrome shader with strong speculars"
@@ -1581,33 +1570,28 @@ msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "Motif en fourrure de tigre avec des plis et un biseau autour des bords"
 
 #: ../share/filters/filters.svg.h:163
-#, fuzzy
 msgid "Flow inside"
-msgstr "Rugosité intérieure"
+msgstr "Écoulement intérieur"
 
 #: ../share/filters/filters.svg.h:163
-#, fuzzy
 msgid "Colorizable filling with flow inside like transparency"
-msgstr "Remplissage colorisable à la transparence liquide"
+msgstr "Remplissage colorisable avec une transparence s'écoulant à l'intérieur"
 
 #: ../share/filters/filters.svg.h:164
-#, fuzzy
 msgid "Comics flow"
-msgstr "Fluide BD"
+msgstr "Écoulement bande dessinée"
 
 #: ../share/filters/filters.svg.h:164
-#, fuzzy
 msgid "Comics shader with a flow inside transparency"
-msgstr "Remplissage colorisable à la transparence liquide"
+msgstr "Ombrage de bande dessinée avec une transparence s'écoulant à l'intérieur"
 
 #: ../share/filters/filters.svg.h:165
-#, fuzzy
 msgid "Comics cream"
-msgstr "Ébauche de bande dessinée"
+msgstr "Crème bande dessinée"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Comics shader with creamy waves transparency"
-msgstr ""
+msgstr "Ombrage de bande dessinée avec une transparence en ondulations crémeuses"
 
 #: ../src/arc-context.cpp:303
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -1767,7 +1751,7 @@ msgid "Delete tiled clones"
 msgstr "Supprimer les clones de pavage"
 
 #: ../src/dialogs/clonetiler.cpp:1097
-#: ../src/selection-chemistry.cpp:1879
+#: ../src/selection-chemistry.cpp:1881
 msgid "Select an <b>object</b> to clone."
 msgstr "Sélectionner un <b>objet</b> à cloner."
 
@@ -3625,17 +3609,17 @@ msgstr "Ligne de base de texte"
 msgid " to "
 msgstr " à "
 
-#: ../src/document.cpp:444
+#: ../src/document.cpp:445
 #, c-format
 msgid "New document %d"
 msgstr "Nouveau document %d"
 
-#: ../src/document.cpp:476
+#: ../src/document.cpp:477
 #, c-format
 msgid "Memory document %d"
 msgstr "Document d'information %d"
 
-#: ../src/document.cpp:642
+#: ../src/document.cpp:632
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Document sans nom %d"
@@ -3726,7 +3710,7 @@ msgstr "Gomme en action"
 msgid "Draw eraser stroke"
 msgstr "Donner un coup de gomme"
 
-#: ../src/event-context.cpp:611
+#: ../src/event-context.cpp:615
 msgid "<b>Space+mouse drag</b> to pan canvas"
 msgstr "<b>Espace+déplacer avec la souris</b> pour bouger la zone de travail"
 
@@ -3859,7 +3843,7 @@ msgstr "Désactivée"
 msgid "Currently there is no help available for this Extension.  Please look on the Inkscape website or ask on the mailing lists if you have questions regarding this extension."
 msgstr "Aucune aide n'est actuellement disponible pour cette extension. Veuillez vous référer au site internet d'Inkscape ou aux listes de diffusion pour toute question relative à celle-ci."
 
-#: ../src/extension/implementation/script.cpp:1056
+#: ../src/extension/implementation/script.cpp:1058
 msgid "Inkscape has received additional data from the script executed.  The script did not return an error, but this may indicate the results will not be as expected."
 msgstr "Inkscape a reçu des données additionnelles du script exécuté. Le script n'a pas retourné d'erreur, mais ceci peut indiquer que les résultats ne sont pas ceux attendus."
 
@@ -4460,7 +4444,7 @@ msgstr "Exporter uniquement le dessin"
 #: ../src/extension/internal/cairo-ps-out.cpp:284
 #: ../src/extension/internal/cairo-ps-out.cpp:321
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:218
-#: ../src/extension/internal/emf-win32-inout.cpp:2433
+#: ../src/extension/internal/emf-win32-inout.cpp:2430
 msgid "Convert texts to paths"
 msgstr "Convertir les textes en chemins"
 
@@ -4521,39 +4505,39 @@ msgstr "Exporter le dessin, pas la page"
 msgid "Export canvas"
 msgstr "Exporter le canevas"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2403
+#: ../src/extension/internal/emf-win32-inout.cpp:2400
 msgid "EMF Input"
 msgstr "Entrée EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2408
+#: ../src/extension/internal/emf-win32-inout.cpp:2405
 msgid "Enhanced Metafiles (*.emf)"
 msgstr "Métafichier amélioré (*.emf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2409
+#: ../src/extension/internal/emf-win32-inout.cpp:2406
 msgid "Enhanced Metafiles"
 msgstr "Métafichier amélioré"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2417
+#: ../src/extension/internal/emf-win32-inout.cpp:2414
 msgid "WMF Input"
 msgstr "Entrée WMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2422
+#: ../src/extension/internal/emf-win32-inout.cpp:2419
 msgid "Windows Metafiles (*.wmf)"
 msgstr "Métafichier Windows (*.wmf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2423
+#: ../src/extension/internal/emf-win32-inout.cpp:2420
 msgid "Windows Metafiles"
 msgstr "Métafichier Windows (*.wmf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2431
+#: ../src/extension/internal/emf-win32-inout.cpp:2428
 msgid "EMF Output"
 msgstr "Sortie EMF"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2437
+#: ../src/extension/internal/emf-win32-inout.cpp:2434
 msgid "Enhanced Metafile (*.emf)"
 msgstr "Métafichier amélioré (*.wmf)"
 
-#: ../src/extension/internal/emf-win32-inout.cpp:2438
+#: ../src/extension/internal/emf-win32-inout.cpp:2435
 msgid "Enhanced Metafile"
 msgstr "Métafichier amélioré"
 
@@ -4630,7 +4614,7 @@ msgstr "Dimension de dérive"
 msgid "Snow has fallen on object"
 msgstr "La neige est tombée sur l'objet"
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:113
+#: ../src/extension/internal/gdkpixbuf-input.cpp:119
 #, c-format
 msgid "%s GDK pixbuf Input"
 msgstr "Entrée %s GDK pixbuf"
@@ -4689,7 +4673,7 @@ msgstr "Décalage vertical"
 #: ../share/extensions/render_barcode.inx.h:5
 #: ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/spirograph.inx.h:6
-#: ../share/extensions/svgcalendar.inx.h:17
+#: ../share/extensions/svgcalendar.inx.h:21
 #: ../share/extensions/triangle.inx.h:10
 msgid "Render"
 msgstr "Rendu"
@@ -4698,15 +4682,15 @@ msgstr "Rendu"
 msgid "Draw a path which is a grid"
 msgstr "Tracer un chemin en forme de grille"
 
-#: ../src/extension/internal/javafx-out.cpp:937
+#: ../src/extension/internal/javafx-out.cpp:945
 msgid "JavaFX Output"
 msgstr "Sortie JavaFX"
 
-#: ../src/extension/internal/javafx-out.cpp:942
+#: ../src/extension/internal/javafx-out.cpp:950
 msgid "JavaFX (*.fx)"
 msgstr "JavaFX (*.fx)"
 
-#: ../src/extension/internal/javafx-out.cpp:943
+#: ../src/extension/internal/javafx-out.cpp:951
 msgid "JavaFX Raytracer File"
 msgstr "Fichier JavaFX Raytracer"
 
@@ -4726,15 +4710,15 @@ msgstr "LaTeX avec des macros PSTricks (*tex)"
 msgid "LaTeX PSTricks File"
 msgstr "Fichier LaTeX PSTricks"
 
-#: ../src/extension/internal/odf.cpp:2415
+#: ../src/extension/internal/odf.cpp:2417
 msgid "OpenDocument Drawing Output"
 msgstr "Sortie Dessin OpenDocument"
 
-#: ../src/extension/internal/odf.cpp:2420
+#: ../src/extension/internal/odf.cpp:2422
 msgid "OpenDocument drawing (*.odg)"
 msgstr "Dessin OpenDocument (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:2421
+#: ../src/extension/internal/odf.cpp:2423
 msgid "OpenDocument drawing file"
 msgstr "Fichier dessin OpenDocument"
 
@@ -4850,15 +4834,15 @@ msgstr "Adobe Illustrator 9.0 et supérieur (*.ai)"
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr "Ouvrir des fichiers créés avec Adobe Illustrator version 9.0 et les versions plus récentes"
 
-#: ../src/extension/internal/pov-out.cpp:676
+#: ../src/extension/internal/pov-out.cpp:677
 msgid "PovRay Output"
 msgstr "Sortie PovRay"
 
-#: ../src/extension/internal/pov-out.cpp:681
+#: ../src/extension/internal/pov-out.cpp:682
 msgid "PovRay (*.pov) (paths and shapes only)"
 msgstr "PovRay (*.pov) (chemins et formes seulement)"
 
-#: ../src/extension/internal/pov-out.cpp:682
+#: ../src/extension/internal/pov-out.cpp:683
 msgid "PovRay Raytracer File"
 msgstr "Fichier PovRay"
 
@@ -4962,7 +4946,7 @@ msgstr "Prévisualiser l'effet en direct sur le canevas ?"
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:103
+#: ../src/extension/system.cpp:104
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr "Échec de la détection automatique du format. Le fichier est ouvert en tant que SVG."
 
@@ -4970,132 +4954,132 @@ msgstr "Échec de la détection automatique du format. Le fichier est ouvert en 
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:152
+#: ../src/file.cpp:153
 msgid "default.svg"
 msgstr "default.fr.svg"
 
-#: ../src/file.cpp:244
-#: ../src/file.cpp:1030
+#: ../src/file.cpp:245
+#: ../src/file.cpp:1031
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Échec du chargement du fichier %s"
 
-#: ../src/file.cpp:269
+#: ../src/file.cpp:270
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Document non enregistré. Impossible de le recharger."
 
-#: ../src/file.cpp:275
+#: ../src/file.cpp:276
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr "Les changements seront perdus ! Êtes-vous sûr de vouloir recharger le document %s ?"
 
-#: ../src/file.cpp:304
+#: ../src/file.cpp:305
 msgid "Document reverted."
 msgstr "Document rechargé."
 
-#: ../src/file.cpp:306
+#: ../src/file.cpp:307
 msgid "Document not reverted."
 msgstr "Document non rechargé."
 
-#: ../src/file.cpp:456
+#: ../src/file.cpp:457
 msgid "Select file to open"
 msgstr "Sélectionner un fichier à ouvrir"
 
-#: ../src/file.cpp:543
+#: ../src/file.cpp:544
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Nettoyer les &lt;defs&gt;"
 
-#: ../src/file.cpp:548
+#: ../src/file.cpp:549
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Suppression de <b>%i</b> définition inutilisée dans les &lt;defs&gt;."
 msgstr[1] "Suppression de <b>%i</b> définitions inutilisées dans les &lt;defs&gt;."
 
-#: ../src/file.cpp:553
+#: ../src/file.cpp:554
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Aucune définition inutilisée dans les &lt;defs&gt;."
 
-#: ../src/file.cpp:582
+#: ../src/file.cpp:583
 #, c-format
 msgid "No Inkscape extension found to save document (%s).  This may have been caused by an unknown filename extension."
 msgstr "Aucune extension Inkscape pour enregistrer le document (%s) n'a été trouvée. Cela peut venir d'une extension de fichier inconnue."
 
-#: ../src/file.cpp:583
-#: ../src/file.cpp:591
-#: ../src/file.cpp:597
+#: ../src/file.cpp:584
+#: ../src/file.cpp:592
+#: ../src/file.cpp:598
 msgid "Document not saved."
 msgstr "Document non enregistré."
 
-#: ../src/file.cpp:590
+#: ../src/file.cpp:591
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Le fichier %s n'a pas pu être enregistré."
 
-#: ../src/file.cpp:604
+#: ../src/file.cpp:605
 msgid "Document saved."
 msgstr "Document enregistré."
 
-#: ../src/file.cpp:745
-#: ../src/file.cpp:1155
-#: ../src/file.cpp:1275
+#: ../src/file.cpp:746
+#: ../src/file.cpp:1156
+#: ../src/file.cpp:1276
 #, c-format
 msgid "drawing%s"
 msgstr "dessin%s"
 
-#: ../src/file.cpp:751
+#: ../src/file.cpp:752
 #, c-format
 msgid "drawing-%d%s"
 msgstr "dessin-%d%s"
 
-#: ../src/file.cpp:770
+#: ../src/file.cpp:771
 msgid "Select file to save a copy to"
 msgstr "Sélectionner le fichier dans lequel enregistrer une copie"
 
-#: ../src/file.cpp:772
+#: ../src/file.cpp:773
 msgid "Select file to save to"
 msgstr "Sélectionner le fichier dans lequel enregistrer"
 
-#: ../src/file.cpp:852
+#: ../src/file.cpp:853
 msgid "No changes need to be saved."
 msgstr "Aucun changement à enregistrer."
 
-#: ../src/file.cpp:869
+#: ../src/file.cpp:870
 msgid "Saving document..."
 msgstr "Enregistrement du document..."
 
-#: ../src/file.cpp:1027
+#: ../src/file.cpp:1028
 msgid "Import"
 msgstr "Importer"
 
-#: ../src/file.cpp:1057
+#: ../src/file.cpp:1058
 msgid "Select file to import"
 msgstr "Sélectionner un fichier à importer"
 
-#: ../src/file.cpp:1176
-#: ../src/file.cpp:1290
+#: ../src/file.cpp:1177
+#: ../src/file.cpp:1291
 msgid "Select file to export to"
 msgstr "Sélectionner un fichier vers lequel exporter"
 
-#: ../src/file.cpp:1322
+#: ../src/file.cpp:1323
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "La sauvegarde de la copie temporaire a échoué"
 
-#: ../src/file.cpp:1342
+#: ../src/file.cpp:1343
 msgid "Open Clip Art Login"
 msgstr "Utilisateur Open Clip Art"
 
-#: ../src/file.cpp:1368
+#: ../src/file.cpp:1369
 #, c-format
 msgid "Error exporting the document. Verify if the server name, username and password are correct, if the server has support for webdav and verify if you didn't forget to choose a license."
 msgstr "Erreur lors de l'exportation du document. Vérifiez que le nom du serveur, le nom d'utilisateur et le mot de passe soient corrects, que le serveur ait des fonctionnalités webdav et que vous n'ayez pas oublié de choisir une licence."
 
-#: ../src/file.cpp:1389
+#: ../src/file.cpp:1390
 msgid "Document exported..."
 msgstr "Document exporté..."
 
-#: ../src/file.cpp:1417
+#: ../src/file.cpp:1418
 #: ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importer depuis la bibliothèque Open Clip Art"
@@ -5270,7 +5254,7 @@ msgid "Gamma"
 msgstr "Gamma"
 
 #: ../src/filter-enums.cpp:93
-#: ../src/selection-chemistry.cpp:314
+#: ../src/selection-chemistry.cpp:316
 #: ../src/widgets/gradient-selector.cpp:139
 msgid "Duplicate"
 msgstr "Dupliquer"
@@ -5369,11 +5353,11 @@ msgid "Small"
 msgstr "Petit"
 
 #: ../src/flood-context.cpp:266
-#: ../src/ui/dialog/inkscape-preferences.cpp:1065
 msgid "Medium"
 msgstr "Moyen"
 
 #: ../src/flood-context.cpp:267
+#: ../src/ui/dialog/inkscape-preferences.cpp:1065
 msgid "Large"
 msgstr "Grand"
 
@@ -6663,7 +6647,7 @@ msgstr "Second chemin"
 
 #: ../src/live_effects/lpe-boolops.cpp:36
 msgid "Path to which the original path will be boolop'ed."
-msgstr ""
+msgstr "Chemin sur lequel le chemin original sera appliqué"
 
 #: ../src/live_effects/lpe-boolops.cpp:37
 msgid "Boolop type"
@@ -6800,11 +6784,11 @@ msgstr "Stylo elliptique"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:61
 msgid "Thick-Thin strokes (fast)"
-msgstr ""
+msgstr "Traits épais-fins (rapide)"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:62
 msgid "Thick-Thin strokes (slow)"
-msgstr ""
+msgstr "Traits épais-fins (lent)"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:67
 msgid "Sharp"
@@ -6837,7 +6821,7 @@ msgstr "Rotondité du stylo"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:77
 msgid "Min/Max width ratio"
-msgstr ""
+msgstr "Rapport entre l'épaisseur minimale et l'épaisseur maximale"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:78
 msgid "angle"
@@ -7029,7 +7013,7 @@ msgstr "Taille de l'entrecroisement"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Orientation indicator/switcher size"
-msgstr ""
+msgstr "Indicateur d'orientation/taille de l'aiguilleur"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossing Signs"
@@ -7041,7 +7025,7 @@ msgstr "Signes de croisement"
 
 #: ../src/live_effects/lpe-knot.cpp:339
 msgid "Drag to select a crossing, click to flip it"
-msgstr ""
+msgstr "Glisser pour sélectionner un croisement, cliquer pour le basculer"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-lattice.cpp:47
@@ -7178,8 +7162,8 @@ msgstr "Ajuste l'extrémité droite de la parallèle"
 
 #: ../src/live_effects/lpe-path_length.cpp:25
 #: ../src/live_effects/lpe-sketch.cpp:53
-#: ../src/selection-chemistry.cpp:1512
-#: ../src/seltrans.cpp:481
+#: ../src/selection-chemistry.cpp:1514
+#: ../src/seltrans.cpp:485
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2207
 #: ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp-att-g.inx.h:16
@@ -7342,14 +7326,6 @@ msgstr "Si vrai, place le chemin sur le côté gauche d'une boîte imaginaire, s
 msgid "Adjust the origin"
 msgstr "Ajuster l'origine"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:225
-msgid "Hatches width and dir"
-msgstr "Largeur et direction des hachures"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:225
-msgid "Defines hatches frequency and direction"
-msgstr "Définit la fréquence et la direction des hachures"
-
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
 msgstr "Caractère aléatoire de la fréquence"
@@ -7400,49 +7376,56 @@ msgid "Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, 
 msgstr "Definit la douceur ou la netteté du chemin lorsqu'il quitte un demi-tour supérieur. 0=net, 1=défaut"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "variance: 1st side"
-msgstr "Écart : premier côté"
+msgid "Magnitude jitter: 1st side"
+msgstr "Fluctuation de l'amplitude : premier côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
-msgid "Randomness of 'bottom' halfturns smoothness"
-msgstr "Caractère aléatoire de la douceur des demi-tours inférieurs"
+msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
+msgstr "Déplace aléatoirement les demi-tours inférieurs pour produire des variations d'amplitude."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
-#: ../src/live_effects/lpe-rough-hatches.cpp:237
-#: ../src/live_effects/lpe-rough-hatches.cpp:239
+#: ../src/live_effects/lpe-rough-hatches.cpp:236
+#: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "2nd side"
 msgstr "Deuxième côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
+msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
+msgstr "Déplace aléatoirement les demi-tours supérieurs pour produire des variations d'amplitude."
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:235
+msgid "Parallelism jitter: 1st side"
+msgstr "Fluctuation du parallélisme : premier côté"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:235
+msgid "Add direction randomness by moving 'bottom' halfsturns tangentially to the boundary."
+msgstr "Ajoute un caractère aléatoire à la direction en déplaçant les demi-tours inférieurs tangentiellement par rapport à la bordure."
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:236
+msgid "Add direction randomness by randomly moving 'top' halfsturns tangentially to the boundary."
+msgstr "Ajoute un caractère aléatoire à la direction en déplaçant les demi-tours supérieurs tangentiellement par rapport à la bordure."
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:237
+msgid "variance: 1st side"
+msgstr "Écart : premier côté"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:237
+msgid "Randomness of 'bottom' halfturns smoothness"
+msgstr "Caractère aléatoire de la douceur des demi-tours inférieurs"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "Randomness of 'top' halfturns smoothness"
 msgstr "Caractère aléatoire de la douceur des demi-tours supérieurs"
 
 #.
-#: ../src/live_effects/lpe-rough-hatches.cpp:236
-msgid "Magnitude jitter: 1st side"
-msgstr "Fluctuation de l'amplitude : premier côté"
+#: ../src/live_effects/lpe-rough-hatches.cpp:240
+msgid "Generate thick/thin path"
+msgstr "Générer un chemin épais ou fin"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:236
-msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
-msgstr "Déplace aléatoirement les demi-tours inférieurs pour produire des variations d'amplitude."
+#: ../src/live_effects/lpe-rough-hatches.cpp:240
+msgid "Simulate a stroke of varrying width"
+msgstr "Simuler un trait d'épaisseur variable"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
-msgstr "Déplace aléatoirement les demi-tours supérieurs pour produire des variations d'amplitude."
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "Parallelism jitter: 1st side"
-msgstr "Fluctuation du parallélisme : premier côté"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:238
-msgid "Add direction randomness by moving 'bottom' halfsturns tangentially to the boundary."
-msgstr "Ajoute un caractère aléatoire à la direction en déplaçant les demi-tours inférieurs tangentiellement par rapport à la bordure."
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:239
-msgid "Add direction randomness by randomly moving 'top' halfsturns tangentially to the boundary."
-msgstr "Ajoute un caractère aléatoire à la direction en déplaçant les demi-tours supérieurs tangentiellement par rapport à la bordure."
-
-#.
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 msgid "Bend hatches"
 msgstr "Courber les hachures"
@@ -7451,52 +7434,53 @@ msgstr "Courber les hachures"
 msgid "Add a global bend to the hatches (slower)"
 msgstr "Ajoute une flexion globale aux hachures (plus lent)"
 
-#. bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
-#: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "Global bending"
-msgstr "Flexion globale"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:243
-msgid "Relative position to ref point defines global bending direction and amount"
-msgstr "La position relative au point de référence définit la direction et la quantité de flexion globale"
-
-#.
-#: ../src/live_effects/lpe-rough-hatches.cpp:245
-msgid "Generate thick/thin path"
-msgstr "Générer un chemin épais ou fin"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:245
-msgid "Simulate a stroke of varrying width"
-msgstr "Simuler un trait d'épaisseur variable"
-
-#: ../src/live_effects/lpe-rough-hatches.cpp:246
+#: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Thikness: at 1st side"
 msgstr "Épaisseur : au premier côté"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:246
+#: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Width at 'bottom' half turns"
 msgstr "Épaisseur au demi-tours inférieurs"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:247
+#: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "at 2nd side"
 msgstr "au deuxième côté"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:247
+#: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "Width at 'top' halfturns"
 msgstr "Épaisseur au demi-tours supérieurs"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:248
+#.
+#: ../src/live_effects/lpe-rough-hatches.cpp:245
 msgid "from 2nd to 1st side"
 msgstr "du deuxième au premier côté"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:248
-#: ../src/live_effects/lpe-rough-hatches.cpp:249
+#: ../src/live_effects/lpe-rough-hatches.cpp:245
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "Width of paths from 'top' to 'bottom' halfturns"
 msgstr "Épaisseur des chemins du demi-tour supérieur au demi-tour inférieur"
 
-#: ../src/live_effects/lpe-rough-hatches.cpp:249
+#: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
 msgstr "du premier au deuxième côté"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:248
+msgid "Hatches width and dir"
+msgstr "Largeur et direction des hachures"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:248
+msgid "Defines hatches frequency and direction"
+msgstr "Définit la fréquence et la direction des hachures"
+
+#.
+#. bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
+#: ../src/live_effects/lpe-rough-hatches.cpp:251
+msgid "Global bending"
+msgstr "Flexion globale"
+
+#: ../src/live_effects/lpe-rough-hatches.cpp:251
+msgid "Relative position to ref point defines global bending direction and amount"
+msgstr "La position relative au point de référence définit la direction et la quantité de flexion globale"
 
 #: ../src/live_effects/lpe-ruler.cpp:27
 #: ../share/extensions/restack.inx.h:7
@@ -7744,53 +7728,54 @@ msgid "Text label attached to the path"
 msgstr "Étiquette texte attachée au chemin"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
+msgid "Nb of generations"
+msgstr "Nombre d'itérations"
+
+#: ../src/live_effects/lpe-vonkoch.cpp:47
+msgid "Depth of the recursion --- keep low!!"
+msgstr "Niveau de récursion (garder une valeur faible !)"
+
+#: ../src/live_effects/lpe-vonkoch.cpp:48
+msgid "Generating path"
+msgstr "Création d'un chemin"
+
+#: ../src/live_effects/lpe-vonkoch.cpp:48
+msgid "Path whose segments define the iterated transforms"
+msgstr "Chemin dont les segments définissent la fractale"
+
+#: ../src/live_effects/lpe-vonkoch.cpp:49
+msgid "Use uniform transforms only"
+msgstr "Transformations uniformes seulement"
+
+#: ../src/live_effects/lpe-vonkoch.cpp:49
+msgid "2 consecutive segments are used to reverse/preserve orientation only (otherwise, they define a general transform)."
+msgstr "Deux segments consécutifs seulement sont utilisés pour retourner ou préserver l'orientation (sinon, ils définissent une transformation générale)"
+
+#: ../src/live_effects/lpe-vonkoch.cpp:50
+msgid "Draw all generations"
+msgstr "Dessiner toutes les génération"
+
+#: ../src/live_effects/lpe-vonkoch.cpp:50
+msgid "If unchecked, draw only the last generation"
+msgstr "Si décoché, dessine seulement la dernière génération"
+
+#. ,draw_boxes(_("Display boxes"), _("Display boxes instead of paths only"), "draw_boxes", &wr, this, true)
+#: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "Reference segment"
 msgstr "Segment de référence"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:47
+#: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "The reference segment. Defaults to bbox diameter."
 msgstr "Segment de référence. Par défaut au diamètre de la boîte englobante"
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
-#: ../src/live_effects/lpe-vonkoch.cpp:50
-msgid "Generating path"
-msgstr "Création d'un chemin"
-
-#: ../src/live_effects/lpe-vonkoch.cpp:50
-msgid "Path whose segments define the iterated transforms"
-msgstr "Chemin dont les segments définissent la fractale"
-
-#: ../src/live_effects/lpe-vonkoch.cpp:51
-msgid "Use uniform transforms only"
-msgstr "Transformations uniformes seulement"
-
-#: ../src/live_effects/lpe-vonkoch.cpp:51
-msgid "2 consecutive segments are used to reverse/preserve orientation only (otherwise, they define a general transform)."
-msgstr "Deux segments consécutifs seulement sont utilisés pour retourner ou préserver l'orientation (sinon, ils définissent une transformation générale)"
-
-#: ../src/live_effects/lpe-vonkoch.cpp:52
-msgid "Nb of generations"
-msgstr "Nombre d'itérations"
-
-#: ../src/live_effects/lpe-vonkoch.cpp:52
-msgid "Depth of the recursion --- keep low!!"
-msgstr "Niveau de récursion (garder une valeur faible !)"
-
-#: ../src/live_effects/lpe-vonkoch.cpp:53
-msgid "Draw all generations"
-msgstr "Dessiner toutes les génération"
-
-#: ../src/live_effects/lpe-vonkoch.cpp:53
-msgid "If unchecked, draw only the last generation"
-msgstr "Si décoché, dessine seulement la dernière génération"
-
 #. FIXME: a path is used here instead of 2 points to work around path/point param incompatibility bug.
-#: ../src/live_effects/lpe-vonkoch.cpp:55
+#: ../src/live_effects/lpe-vonkoch.cpp:56
 msgid "Max complexity"
 msgstr "Complexité maximale"
 
-#: ../src/live_effects/lpe-vonkoch.cpp:55
+#: ../src/live_effects/lpe-vonkoch.cpp:56
 msgid "Disable effect if the output is too complex"
 msgstr "Désactive l'effet lorsque la sortie est trop complexe"
 
@@ -8065,7 +8050,7 @@ msgid "Start Inkscape in interative shell mode."
 msgstr "Démarre Inkscape en mode de commande interactif."
 
 #: ../src/main.cpp:756
-#: ../src/main.cpp:1043
+#: ../src/main.cpp:1067
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -8183,7 +8168,7 @@ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b> : bloquer la longueur des poignées; <b>Ctrl+Alt</b> : déplacer le long des poignées"
 
 #: ../src/nodepath.cpp:753
-#: ../src/seltrans.cpp:574
+#: ../src/seltrans.cpp:578
 msgid "Stamp"
 msgstr "Tamponner"
 
@@ -8916,15 +8901,15 @@ msgstr "<b>Alt</b> : cliquer pour sélectionner sous, cliquer-déplacer pour d�
 msgid "Selected object is not a group. Cannot enter."
 msgstr "L'objet sélectionné n'est pas un groupe. Impossible d'y entrer."
 
-#: ../src/selection-chemistry.cpp:193
+#: ../src/selection-chemistry.cpp:195
 msgid "Delete text"
 msgstr "Supprimer le texte"
 
-#: ../src/selection-chemistry.cpp:201
+#: ../src/selection-chemistry.cpp:203
 msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Rien</b> n'a été supprimé."
 
-#: ../src/selection-chemistry.cpp:219
+#: ../src/selection-chemistry.cpp:221
 #: ../src/text-context.cpp:998
 #: ../src/ui/dialog/swatches.cpp:466
 #: ../src/widgets/toolbox.cpp:1304
@@ -8932,342 +8917,342 @@ msgstr "<b>Rien</b> n'a été supprimé."
 msgid "Delete"
 msgstr "Supprimer"
 
-#: ../src/selection-chemistry.cpp:247
+#: ../src/selection-chemistry.cpp:249
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à dupliquer."
 
-#: ../src/selection-chemistry.cpp:339
+#: ../src/selection-chemistry.cpp:341
 msgid "Delete all"
 msgstr "Supprimer tout"
 
-#: ../src/selection-chemistry.cpp:462
+#: ../src/selection-chemistry.cpp:464
 msgid "Select <b>some objects</b> to group."
 msgstr "Sélectionner <b>des objets</b> à grouper."
 
-#: ../src/selection-chemistry.cpp:535
+#: ../src/selection-chemistry.cpp:537
 #: ../src/selection-describer.cpp:51
 msgid "Group"
 msgstr "Groupe"
 
-#: ../src/selection-chemistry.cpp:549
+#: ../src/selection-chemistry.cpp:551
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Sélectionner un <b>groupe</b> à dégrouper."
 
-#: ../src/selection-chemistry.cpp:590
+#: ../src/selection-chemistry.cpp:592
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>Aucun groupe</b> à dégrouper dans la sélection."
 
-#: ../src/selection-chemistry.cpp:596
+#: ../src/selection-chemistry.cpp:598
 #: ../src/sp-item-group.cpp:497
 msgid "Ungroup"
 msgstr "Dégrouper"
 
-#: ../src/selection-chemistry.cpp:686
+#: ../src/selection-chemistry.cpp:688
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à monter."
 
-#: ../src/selection-chemistry.cpp:692
-#: ../src/selection-chemistry.cpp:752
-#: ../src/selection-chemistry.cpp:786
-#: ../src/selection-chemistry.cpp:850
+#: ../src/selection-chemistry.cpp:694
+#: ../src/selection-chemistry.cpp:754
+#: ../src/selection-chemistry.cpp:788
+#: ../src/selection-chemistry.cpp:852
 msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr "Vous ne pouvez pas monter/descendre des objets de <b>différents groupes</b> ou <b>calques</b>."
 
 #. TRANSLATORS: Only put the word "Raise" in the translation. Means "to raise an object" in the undo history
-#: ../src/selection-chemistry.cpp:732
+#: ../src/selection-chemistry.cpp:734
 msgid "undo_action|Raise"
 msgstr "Monter"
 
-#: ../src/selection-chemistry.cpp:744
+#: ../src/selection-chemistry.cpp:746
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Sélectionner des <b>objets</b> à monter au premier plan."
 
-#: ../src/selection-chemistry.cpp:767
+#: ../src/selection-chemistry.cpp:769
 msgid "Raise to top"
 msgstr "Monter au premier plan"
 
-#: ../src/selection-chemistry.cpp:780
+#: ../src/selection-chemistry.cpp:782
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à descendre."
 
-#: ../src/selection-chemistry.cpp:830
+#: ../src/selection-chemistry.cpp:832
 msgid "Lower"
 msgstr "Descendre"
 
-#: ../src/selection-chemistry.cpp:842
+#: ../src/selection-chemistry.cpp:844
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à descendre à l'arrière-plan."
 
-#: ../src/selection-chemistry.cpp:877
+#: ../src/selection-chemistry.cpp:879
 msgid "Lower to bottom"
 msgstr "Descendre à l'arrière-plan"
 
-#: ../src/selection-chemistry.cpp:884
+#: ../src/selection-chemistry.cpp:886
 msgid "Nothing to undo."
 msgstr "Rien à défaire."
 
-#: ../src/selection-chemistry.cpp:891
+#: ../src/selection-chemistry.cpp:893
 msgid "Nothing to redo."
 msgstr "Rien à refaire."
 
-#: ../src/selection-chemistry.cpp:951
+#: ../src/selection-chemistry.cpp:953
 msgid "Paste"
 msgstr "Coller"
 
-#: ../src/selection-chemistry.cpp:958
+#: ../src/selection-chemistry.cpp:960
 msgid "Paste style"
 msgstr "Coller le style"
 
-#: ../src/selection-chemistry.cpp:967
+#: ../src/selection-chemistry.cpp:969
 msgid "Paste live path effect"
 msgstr "Coller l'effet de chemin"
 
-#: ../src/selection-chemistry.cpp:987
+#: ../src/selection-chemistry.cpp:989
 msgid "Select <b>object(s)</b> to remove live path effects from."
 msgstr "Sélectionner un ou des <b>objet(s)</b> sur lesquels supprimer des effets de chemin."
 
-#: ../src/selection-chemistry.cpp:999
+#: ../src/selection-chemistry.cpp:1001
 msgid "Remove live path effect"
 msgstr "Supprimer l'effet de chemin"
 
-#: ../src/selection-chemistry.cpp:1010
+#: ../src/selection-chemistry.cpp:1012
 msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "Sélectionner les <b>objets</b> pour en retirer les filtres."
 
-#: ../src/selection-chemistry.cpp:1020
+#: ../src/selection-chemistry.cpp:1022
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1334
 msgid "Remove filter"
 msgstr "Supprimer le filtre"
 
-#: ../src/selection-chemistry.cpp:1029
+#: ../src/selection-chemistry.cpp:1031
 msgid "Paste size"
 msgstr "Coller les dimensions"
 
-#: ../src/selection-chemistry.cpp:1037
+#: ../src/selection-chemistry.cpp:1039
 msgid "Paste size separately"
 msgstr "Coller les dimensions séparément"
 
-#: ../src/selection-chemistry.cpp:1046
+#: ../src/selection-chemistry.cpp:1048
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à déplacer au calque du dessus."
 
-#: ../src/selection-chemistry.cpp:1072
+#: ../src/selection-chemistry.cpp:1074
 msgid "Raise to next layer"
 msgstr "Monter au calque suivant"
 
-#: ../src/selection-chemistry.cpp:1079
+#: ../src/selection-chemistry.cpp:1081
 msgid "No more layers above."
 msgstr "Plus de calque au-dessus."
 
-#: ../src/selection-chemistry.cpp:1091
+#: ../src/selection-chemistry.cpp:1093
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à déplacer au calque du dessous."
 
-#: ../src/selection-chemistry.cpp:1117
+#: ../src/selection-chemistry.cpp:1119
 msgid "Lower to previous layer"
 msgstr "Descendre au calque précédent."
 
-#: ../src/selection-chemistry.cpp:1124
+#: ../src/selection-chemistry.cpp:1126
 msgid "No more layers below."
 msgstr "Plus de calque en-dessous."
 
-#: ../src/selection-chemistry.cpp:1311
+#: ../src/selection-chemistry.cpp:1313
 msgid "Remove transform"
 msgstr "Retirer les transformations"
 
-#: ../src/selection-chemistry.cpp:1414
+#: ../src/selection-chemistry.cpp:1416
 msgid "Rotate 90&#176; CCW"
 msgstr "Tourner de 90&#176; dans le sens anti-horaire"
 
-#: ../src/selection-chemistry.cpp:1414
+#: ../src/selection-chemistry.cpp:1416
 msgid "Rotate 90&#176; CW"
 msgstr "Tourner de 90&#176; dans le sens horaire"
 
-#: ../src/selection-chemistry.cpp:1435
-#: ../src/seltrans.cpp:484
+#: ../src/selection-chemistry.cpp:1437
+#: ../src/seltrans.cpp:488
 #: ../src/ui/dialog/transformation.cpp:760
 msgid "Rotate"
 msgstr "Tourner"
 
-#: ../src/selection-chemistry.cpp:1482
+#: ../src/selection-chemistry.cpp:1484
 msgid "Rotate by pixels"
 msgstr "Tourner par pixels"
 
-#: ../src/selection-chemistry.cpp:1537
+#: ../src/selection-chemistry.cpp:1539
 msgid "Scale by whole factor"
 msgstr "Redimensionner d'un facteur entier"
 
-#: ../src/selection-chemistry.cpp:1552
+#: ../src/selection-chemistry.cpp:1554
 msgid "Move vertically"
 msgstr "Déplacer verticalement"
 
-#: ../src/selection-chemistry.cpp:1555
+#: ../src/selection-chemistry.cpp:1557
 msgid "Move horizontally"
 msgstr "Déplacer horizontalement"
 
-#: ../src/selection-chemistry.cpp:1558
-#: ../src/selection-chemistry.cpp:1584
-#: ../src/seltrans.cpp:478
+#: ../src/selection-chemistry.cpp:1560
+#: ../src/selection-chemistry.cpp:1586
+#: ../src/seltrans.cpp:482
 #: ../src/ui/dialog/transformation.cpp:681
 msgid "Move"
 msgstr "Déplacer"
 
-#: ../src/selection-chemistry.cpp:1578
+#: ../src/selection-chemistry.cpp:1580
 msgid "Move vertically by pixels"
 msgstr "Déplacer verticalement par pixels"
 
-#: ../src/selection-chemistry.cpp:1581
+#: ../src/selection-chemistry.cpp:1583
 msgid "Move horizontally by pixels"
 msgstr "Déplacer horizontalement par pixels"
 
-#: ../src/selection-chemistry.cpp:1709
+#: ../src/selection-chemistry.cpp:1711
 msgid "The selection has no applied path effect."
 msgstr "Il n'y a pas d'effet de chemin appliqué sur cette sélection."
 
-#: ../src/selection-chemistry.cpp:1756
+#: ../src/selection-chemistry.cpp:1758
 msgid "The selection has no applied clip path."
 msgstr "Aucune découpe n'est appliquée à cette sélection."
 
-#: ../src/selection-chemistry.cpp:1758
+#: ../src/selection-chemistry.cpp:1760
 msgid "The selection has no applied mask."
 msgstr "Aucun masque n'est appliqué à cette sélection."
 
-#: ../src/selection-chemistry.cpp:1915
+#: ../src/selection-chemistry.cpp:1917
 msgid "action|Clone"
 msgstr "Cloner"
 
-#: ../src/selection-chemistry.cpp:1931
+#: ../src/selection-chemistry.cpp:1933
 msgid "Select <b>clones</b> to relink."
 msgstr "Sélectionner les <b>clones</b> à relier."
 
-#: ../src/selection-chemistry.cpp:1938
+#: ../src/selection-chemistry.cpp:1940
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr "Copier un <b>objet</b> dans le presse-papier pour y relier les clones."
 
-#: ../src/selection-chemistry.cpp:1962
+#: ../src/selection-chemistry.cpp:1964
 msgid "<b>No clones to relink</b> in the selection."
 msgstr "<b>Aucun clone à relier</b> dans la sélection."
 
-#: ../src/selection-chemistry.cpp:1965
+#: ../src/selection-chemistry.cpp:1967
 msgid "Relink clone"
 msgstr "Relier le clone"
 
-#: ../src/selection-chemistry.cpp:1979
+#: ../src/selection-chemistry.cpp:1981
 msgid "Select <b>clones</b> to unlink."
 msgstr "Sélectionner les <b>clones</b> à délier."
 
-#: ../src/selection-chemistry.cpp:2028
+#: ../src/selection-chemistry.cpp:2030
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "<b>Aucun clone à délier</b> dans la sélection."
 
-#: ../src/selection-chemistry.cpp:2032
+#: ../src/selection-chemistry.cpp:2034
 msgid "Unlink clone"
 msgstr "Délier le clone"
 
-#: ../src/selection-chemistry.cpp:2045
+#: ../src/selection-chemistry.cpp:2047
 msgid "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> to go to its source. Select a <b>text on path</b> to go to the path. Select a <b>flowed text</b> to go to its frame."
 msgstr "Sélectionner un <b>clone</b> pour sélectionner son original. Sélectionner un <b>offset lié</b> pour sélectionner sa source. Sélectionner un <b>texte suivant un chemin</b> pour sélectionner son chemin. Sélectionner un <b>texte encadré</b> pour sélectionner son cadre."
 
-#: ../src/selection-chemistry.cpp:2068
+#: ../src/selection-chemistry.cpp:2070
 msgid "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, flowed text?)"
 msgstr "<b>Impossible de trouver</b> l'objet à sélectionner (clone orphelin, offset, chemin de texte, texte encadré ?)"
 
-#: ../src/selection-chemistry.cpp:2074
+#: ../src/selection-chemistry.cpp:2076
 msgid "The object you're trying to select is <b>not visible</b> (it is in &lt;defs&gt;)"
 msgstr "L'objet que vous essayez de sélectionner n'est <b>pas visible</b> (il est dans &lt;defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2120
+#: ../src/selection-chemistry.cpp:2122
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à convertir en marqueur."
 
-#: ../src/selection-chemistry.cpp:2188
+#: ../src/selection-chemistry.cpp:2190
 msgid "Objects to marker"
 msgstr "Objets en marqueur"
 
-#: ../src/selection-chemistry.cpp:2216
+#: ../src/selection-chemistry.cpp:2218
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à convertir en guides."
 
-#: ../src/selection-chemistry.cpp:2228
+#: ../src/selection-chemistry.cpp:2230
 msgid "Objects to guides"
 msgstr "Objets en guides"
 
-#: ../src/selection-chemistry.cpp:2244
+#: ../src/selection-chemistry.cpp:2246
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à convertir en motif de remplissage."
 
-#: ../src/selection-chemistry.cpp:2332
+#: ../src/selection-chemistry.cpp:2334
 msgid "Objects to pattern"
 msgstr "Objets en motif"
 
-#: ../src/selection-chemistry.cpp:2348
+#: ../src/selection-chemistry.cpp:2350
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "Sélectionner un <b>objet rempli avec un motif</b> pour en extraire des objets."
 
-#: ../src/selection-chemistry.cpp:2401
+#: ../src/selection-chemistry.cpp:2403
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "<b>Aucun motif de remplissage</b> dans la sélection."
 
-#: ../src/selection-chemistry.cpp:2404
+#: ../src/selection-chemistry.cpp:2406
 msgid "Pattern to objects"
 msgstr "Motif en objets"
 
-#: ../src/selection-chemistry.cpp:2489
+#: ../src/selection-chemistry.cpp:2491
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Sélectionner un ou des <b>objet(s)</b> pour en faire une copie bitmap."
 
-#: ../src/selection-chemistry.cpp:2493
+#: ../src/selection-chemistry.cpp:2495
 msgid "Rendering bitmap..."
 msgstr "Génération du bitmap..."
 
-#: ../src/selection-chemistry.cpp:2665
+#: ../src/selection-chemistry.cpp:2674
 msgid "Create bitmap"
 msgstr "Créer un bitmap"
 
-#: ../src/selection-chemistry.cpp:2697
+#: ../src/selection-chemistry.cpp:2706
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Sélectionner un ou des <b>objet(s)</b> à partir desquels un chemin de découpe ou un masque sera créé."
 
-#: ../src/selection-chemistry.cpp:2700
+#: ../src/selection-chemistry.cpp:2709
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Sélectionner un objet masque et un ou des <b>objet(s)</b> auxquels appliquer ce chemin de découpe ou masque."
 
-#: ../src/selection-chemistry.cpp:2807
+#: ../src/selection-chemistry.cpp:2816
 msgid "Set clipping path"
 msgstr "Définir un chemin de découpe"
 
-#: ../src/selection-chemistry.cpp:2809
+#: ../src/selection-chemistry.cpp:2818
 msgid "Set mask"
 msgstr "Définir un masque"
 
-#: ../src/selection-chemistry.cpp:2822
+#: ../src/selection-chemistry.cpp:2831
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Sélectionner un ou des <b>objet(s)</b> pour en retirer le chemin de découpe ou le masque."
 
-#: ../src/selection-chemistry.cpp:2895
+#: ../src/selection-chemistry.cpp:2904
 msgid "Release clipping path"
 msgstr "Retirer le chemin de découpe"
 
-#: ../src/selection-chemistry.cpp:2897
+#: ../src/selection-chemistry.cpp:2906
 msgid "Release mask"
 msgstr "Retirer le masque"
 
-#: ../src/selection-chemistry.cpp:2913
+#: ../src/selection-chemistry.cpp:2922
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr "Sélectionner un ou des <b>objet(s)</b> pour y ajuster la taille de la zone de travail."
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:2933
+#: ../src/selection-chemistry.cpp:2942
 #: ../src/verbs.cpp:2723
 msgid "Fit Page to Selection"
 msgstr "Ajuster la page à la sélection"
 
-#: ../src/selection-chemistry.cpp:2958
+#: ../src/selection-chemistry.cpp:2967
 #: ../src/verbs.cpp:2725
 msgid "Fit Page to Drawing"
 msgstr "Ajuster la page au dessin"
 
-#: ../src/selection-chemistry.cpp:2974
+#: ../src/selection-chemistry.cpp:2983
 #: ../src/verbs.cpp:2727
 msgid "Fit Page to Selection or Drawing"
 msgstr "Ajuster la page à la sélection ou au dessin"
@@ -9458,65 +9443,65 @@ msgstr[1] "<b>%i</b> objets de <b>%i</b> types"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:487
+#: ../src/seltrans.cpp:491
 #: ../src/ui/dialog/transformation.cpp:819
 msgid "Skew"
 msgstr "Incliner"
 
-#: ../src/seltrans.cpp:499
+#: ../src/seltrans.cpp:503
 msgid "Set center"
 msgstr "Définir le centre"
 
-#: ../src/seltrans.cpp:596
+#: ../src/seltrans.cpp:600
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
 msgstr "<b>Centre</b> de rotation/inclinaison : cliquer-déplacer pour le déplacer; redimensionner avec <b>Maj</b> utilise aussi ce centre"
 
-#: ../src/seltrans.cpp:623
+#: ../src/seltrans.cpp:627
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "<b>Agrandir ou rétrécir</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément; <b>Maj</b> pour redimensionner autour du centre de rotation"
 
-#: ../src/seltrans.cpp:624
+#: ../src/seltrans.cpp:628
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
 msgstr "<b>Redimensionner</b> la sélection; <b>Ctrl</b> pour redimensionner uniformément autour du centre de rotation"
 
-#: ../src/seltrans.cpp:628
+#: ../src/seltrans.cpp:632
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
 msgstr "<b>Incliner</b> la sélection; <b>Ctrl</b> pour incliner par incréments; <b>Maj</b> pour incliner autour du coin opposé"
 
-#: ../src/seltrans.cpp:629
+#: ../src/seltrans.cpp:633
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
 msgstr "<b>Tourner</b> la sélection; <b>Ctrl</b> pour tourner par incréments; <b>Maj</b> pour tourner autour du coin opposé"
 
-#: ../src/seltrans.cpp:763
+#: ../src/seltrans.cpp:767
 msgid "Reset center"
 msgstr "Rétablir le centre"
 
-#: ../src/seltrans.cpp:1008
-#: ../src/seltrans.cpp:1107
+#: ../src/seltrans.cpp:1012
+#: ../src/seltrans.cpp:1111
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Redimensionnement</b> : %0.2f%% x %0.2f%%; <b>Ctrl</b> pour préserver le ratio"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1219
+#: ../src/seltrans.cpp:1223
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Inclinaison</b> : %0.2f&#176;; <b>Ctrl</b> pour incliner par incréments"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1279
+#: ../src/seltrans.cpp:1283
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Rotation</b> : %0.2f&#176;; <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/seltrans.cpp:1321
+#: ../src/seltrans.cpp:1325
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Déplacer le <b>centre</b> en %s, %s"
 
-#: ../src/seltrans.cpp:1485
+#: ../src/seltrans.cpp:1489
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Déplacer</b> de %s, %s; <b>Ctrl</b> restreindre à l'horizontale/verticale; <b>Maj</b> désactiver le magnétisme"
@@ -9803,11 +9788,11 @@ msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Offset dynamique</b>, %s de %f pt"
 
 #: ../src/sp-path.cpp:156
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node, path effect: %s)"
 msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
-msgstr[0] "<b>Chemin</b> (%i nœud, effet de chemin)"
-msgstr[1] "<b>Chemin</b> (%i nœuds, effet de chemin)"
+msgstr[0] "<b>Chemin</b> (%i nœud, effet de chemin %s)"
+msgstr[1] "<b>Chemin</b> (%i nœuds, effet de chemin %s)"
 
 #: ../src/sp-path.cpp:159
 #, c-format
@@ -12329,7 +12314,6 @@ msgid "Show close button on dialogs"
 msgstr "Afficher un bouton de fermeture sur les dialogues"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:548
-#: ../src/ui/dialog/inkscape-preferences.cpp:1065
 msgid "Normal"
 msgstr "Normal"
 
@@ -13251,6 +13235,10 @@ msgstr "Langue (nécessite un redémarrage)"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1063
 msgid "Set the language for menus and number formats"
 msgstr "Définit la langue pour les menus et les formats numériques"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1065
+msgid "Smaller"
+msgstr "Minuscule"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1069
 msgid "Toolbox icon size"
@@ -19539,11 +19527,11 @@ msgstr "Fichiers Corel DRAW Compressed Exchange (.ccx)"
 
 #: ../share/extensions/ccx_input.inx.h:2
 msgid "Corel DRAW Compressed Exchange files input"
-msgstr ""
+msgstr "Fichier d'entrée Corel DRAW Compressed Exchange"
 
 #: ../share/extensions/ccx_input.inx.h:3
 msgid "Open compressed exchange files saved in Corel DRAW"
-msgstr ""
+msgstr "Fichiers Open compressed exchange enregistrés avec Corel DRAW"
 
 #: ../share/extensions/cdr_input.inx.h:1
 msgid "Corel DRAW 7-X4 files (*.cdr)"
@@ -19591,7 +19579,7 @@ msgstr "Fichier d'entrée Corel DRAW Presentation Exchange"
 
 #: ../share/extensions/cmx_input.inx.h:3
 msgid "Open presentation exchange files saved in Corel DRAW"
-msgstr ""
+msgstr "Fichiers Open presentation exchange enregistrés avec Corel DRAW"
 
 #: ../share/extensions/color_brighter.inx.h:1
 msgid "Brighter"
@@ -20165,11 +20153,11 @@ msgstr ""
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Subdivision logarithmique sur l'axe X (base donnée par l'entrée précédente)"
 
 #: ../share/extensions/grid_cartesian.inx.h:6
 msgid "Logarithmic Y Subdiv. (Base given by entry above)"
-msgstr ""
+msgstr "Subdivision logarithmique sur l'axe Y (base donnée par l'entrée précédente)"
 
 #: ../share/extensions/grid_cartesian.inx.h:7
 msgid "Major X Division Spacing [px]"
@@ -20446,16 +20434,14 @@ msgid "End Value"
 msgstr "Valeur finale"
 
 #: ../share/extensions/interp-att-g.inx.h:5
-#, fuzzy
 msgid "Float Number"
-msgstr "Paramètres de l'effet"
+msgstr "Nombre réel"
 
 #: ../share/extensions/interp-att-g.inx.h:7
 msgid "If you select \"Other\", you must know the SVG attributes to identify here this \"other\":"
 msgstr ""
 
 #: ../share/extensions/interp-att-g.inx.h:8
-#, fuzzy
 msgid "Integer Number"
 msgstr "Nombre entier"
 
@@ -20493,9 +20479,8 @@ msgid "This effect applies a value for any interpolatable attribute for all elem
 msgstr ""
 
 #: ../share/extensions/interp-att-g.inx.h:21
-#, fuzzy
 msgid "Transformation"
-msgstr "Information"
+msgstr "Transformation"
 
 #: ../share/extensions/interp-att-g.inx.h:22
 #, fuzzy
@@ -21321,58 +21306,82 @@ msgid "Month (0 for all)"
 msgstr "Mois (0 pour tous)"
 
 #: ../share/extensions/svgcalendar.inx.h:14
+msgid "Month Margin"
+msgstr "Marge des mois"
+
+#: ../share/extensions/svgcalendar.inx.h:15
+msgid "Month Width"
+msgstr "Largeur des mois"
+
+#: ../share/extensions/svgcalendar.inx.h:16
 msgid "Month color"
 msgstr "Couleur des mois"
 
-#: ../share/extensions/svgcalendar.inx.h:15
+#: ../share/extensions/svgcalendar.inx.h:17
 msgid "Month names"
 msgstr "Dénomination des mois"
 
-#: ../share/extensions/svgcalendar.inx.h:16
+#: ../share/extensions/svgcalendar.inx.h:18
+msgid "Months per line"
+msgstr "Nombre de mois par ligne"
+
+#: ../share/extensions/svgcalendar.inx.h:19
 msgid "Next month day color"
 msgstr "Couleur des jours du mois suivant"
 
-#: ../share/extensions/svgcalendar.inx.h:18
+#: ../share/extensions/svgcalendar.inx.h:20
+msgid "Organization"
+msgstr "Organisation"
+
+#: ../share/extensions/svgcalendar.inx.h:22
 msgid "Saturday"
 msgstr "Samedi"
 
-#: ../share/extensions/svgcalendar.inx.h:19
+#: ../share/extensions/svgcalendar.inx.h:23
 msgid "Saturday and Sunday"
 msgstr "Samedi et dimanche"
 
-#: ../share/extensions/svgcalendar.inx.h:20
+#: ../share/extensions/svgcalendar.inx.h:24
+msgid "Set authomaticaly the size and positions"
+msgstr "Définit automatiquement la taille et la position"
+
+#: ../share/extensions/svgcalendar.inx.h:25
 msgid "Sun Mon Tue Wed Thu Fri Sat"
 msgstr "Dim Lun Mar Mer Jeu Ven Sam"
 
-#: ../share/extensions/svgcalendar.inx.h:21
+#: ../share/extensions/svgcalendar.inx.h:26
 msgid "Sunday"
 msgstr "Dimanche"
 
-#: ../share/extensions/svgcalendar.inx.h:22
+#: ../share/extensions/svgcalendar.inx.h:27
+msgid "The options above has no value with the upper checked."
+msgstr "Les options suivantes ne s'appliquent pas si la case précédente est cochée."
+
+#: ../share/extensions/svgcalendar.inx.h:28
 msgid "Week start day"
 msgstr "Premier jour de la semaine"
 
-#: ../share/extensions/svgcalendar.inx.h:23
+#: ../share/extensions/svgcalendar.inx.h:29
 msgid "Weekday name color "
 msgstr "Couleur des jours de la semaine"
 
-#: ../share/extensions/svgcalendar.inx.h:24
+#: ../share/extensions/svgcalendar.inx.h:30
 msgid "Weekend"
 msgstr "Fin de semaine"
 
-#: ../share/extensions/svgcalendar.inx.h:25
+#: ../share/extensions/svgcalendar.inx.h:31
 msgid "Weekend day color"
 msgstr "Couleur des jours de fin de semaine"
 
-#: ../share/extensions/svgcalendar.inx.h:26
+#: ../share/extensions/svgcalendar.inx.h:32
 msgid "Year (0 for current)"
 msgstr "Année (0 pour l'année en cours)"
 
-#: ../share/extensions/svgcalendar.inx.h:27
+#: ../share/extensions/svgcalendar.inx.h:33
 msgid "Year color"
 msgstr "Couleur de l'année"
 
-#: ../share/extensions/svgcalendar.inx.h:28
+#: ../share/extensions/svgcalendar.inx.h:34
 msgid "You may change the names for other languages:"
 msgstr "Ajuster les noms en fonction de votre langue :"
 
@@ -21487,7 +21496,7 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:3
 msgid "If you want to set more then one attribute, you must separate this with a space, and only with a space."
-msgstr "Si vous souhaitez définir plusieurs attributs, vous devez les séparer avec le caractère espace."
+msgstr "Si vous souhaitez définir plusieurs attributs, vous devez les séparer avec le caractère « espace »."
 
 #: ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
@@ -21585,7 +21594,7 @@ msgstr "Attribut à transmettre"
 
 #: ../share/extensions/web-transmit-att.inx.h:3
 msgid "If you want to transmit more then one attribute, you must separate this with a space, and only with a space."
-msgstr "Pour transmettre plus d'un attribut, séparez-les avec des espaces (et seulement avec des espaces !)."
+msgstr "Si vous souhaitez transmettre plusieurs attributs, vous devez les séparer avec le caractère « espace »."
 
 #: ../share/extensions/web-transmit-att.inx.h:8
 msgid "This effect transmit one or more attributes from the first selected element to the second when a event occurs."
