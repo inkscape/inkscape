@@ -83,4 +83,4 @@ Makefile_insert podem ser usadas em outro.
 Assim, considere adicionar qualquer "bla_" prefixo ao nome de qualquer variável que
 voce defina em bla/Makefile_insert (se pretender-se que seja local a este
 Makefile_insert), ou colque a definição em. Particularment, note que
-check_Programs, DISTCLEANFILES, etc, estão no src/Makefile.am.
+check_PROGRAMS, DISTCLEANFILES, etc, estão no src/Makefile.am.
