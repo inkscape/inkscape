@@ -518,8 +518,8 @@ LPEKnot::doBeforeEffect (SPLPEItem *lpeitem)
 //         }
 //     }
                         
-    std::cout<<"crossing_pts_vect: "<<crossing_points_vector.param_getSVGValue()<<".\n";
-    std::cout<<"prop_to_stroke_width: "<<prop_to_stroke_width.param_getSVGValue()<<".\n";
+    //std::cout<<"crossing_pts_vect: "<<crossing_points_vector.param_getSVGValue()<<".\n";
+    //std::cout<<"prop_to_stroke_width: "<<prop_to_stroke_width.param_getSVGValue()<<".\n";
 
     LPEKnotNS::CrossingPoints old_crdata(crossing_points_vector.data());
 
