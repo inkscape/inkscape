@@ -142,6 +142,7 @@ icons_DATA = \
 	path-tweak-roughen.svg \
 	path-tweak-shrink.svg \
 	path-union.svg \
+	randomize.svg \
 	rectangle-make-corners-sharp.svg \
 	selection-bottom.svg \
 	selection-lower.svg \
