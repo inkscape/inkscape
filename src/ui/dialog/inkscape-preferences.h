@@ -30,6 +30,8 @@
 #include "ui/widget/preferences-widget.h"
 #include <sigc++/sigc++.h>
 #include <glibmm/i18n.h>
+#include <gtkmm/textview.h>
+#include <gtkmm/scrolledwindow.h>
 
 #include "ui/widget/panel.h"
 
@@ -127,8 +129,8 @@ protected:
     PrefSpinButton _scroll_wheel, _scroll_arrow_px, _scroll_arrow_acc, _scroll_auto_speed, _scroll_auto_thres;
     PrefCheckButton _scroll_space;
     PrefCheckButton _wheel_zoom;
-    
-    Gtk::HScale		*_slider_snapping_delay;
+
+    Gtk::HScale     *_slider_snapping_delay;
     PrefCheckButton _snap_indicator, _snap_closest_only;
 
     PrefCombo       _steps_rot_snap;
@@ -147,9 +149,9 @@ protected:
     PrefRadioButton _win_ontop_none, _win_ontop_normal, _win_ontop_agressive;
     PrefRadioButton _win_save_geom_off, _win_save_geom, _win_save_geom_prefs;
     PrefCheckButton _win_hide_task, _win_zoom_resize , _win_show_close;
-	PrefSpinButton _win_trans_focus; /**< The dialog transparency setting for when the dialog is focused. */
-	PrefSpinButton _win_trans_blur;  /**< The dialog transparency setting for when the dialog is out of focus. */
-	PrefSpinButton _win_trans_time;  /**< How much time to go from one transparency setting to another */
+    PrefSpinButton _win_trans_focus; /**< The dialog transparency setting for when the dialog is focused. */
+    PrefSpinButton _win_trans_blur;  /**< The dialog transparency setting for when the dialog is out of focus. */
+    PrefSpinButton _win_trans_time;  /**< How much time to go from one transparency setting to another */
 
     PrefCheckButton _pencil_average_all_sketches;
 
@@ -179,9 +181,12 @@ protected:
     PrefCheckButton _sel_layer_deselects;
 
     PrefSpinButton  _importexport_export, _misc_simpl;
-    PrefSlider		_snap_delay, _snap_weight;
+    PrefSlider      _snap_delay, _snap_weight;
     PrefSpinButton  _misc_latency_skew;
     PrefCheckButton _misc_comment, _misc_forkvectors, _misc_scripts, _misc_namedicon_delay;
+    Gtk::TextView   _misc_info;
+    Gtk::ScrolledWindow _misc_info_scroll;
+
 
     // UI page
     PrefCombo       _ui_languages;
@@ -198,7 +203,7 @@ protected:
     PrefCombo       _spell_language3;
     PrefCheckButton _spell_ignorenumbers;
     PrefCheckButton _spell_ignoreallcaps;
-    
+
     PrefCombo       _misc_overs_bitmap;
     PrefCombo       _misc_bitmap_editor;
     PrefCheckButton _misc_bitmap_autoreload;

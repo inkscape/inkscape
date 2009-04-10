@@ -1265,6 +1265,23 @@ void InkscapePreferences::initPageMisc()
     _page_misc.add_line( false, "", _misc_namedicon_delay, "",
                            _("When on, named icons will be rendered before displaying the ui. This is for working around bugs in GTK+ named icon notification"), true);
 
+
+    {
+        Glib::ustring tmp;
+        tmp += "User config: ";
+        tmp += Glib::get_user_config_dir();
+        tmp += "\n";
+
+        tmp += "User data: ";
+        tmp += Glib::get_user_data_dir();
+        tmp += "\n";
+
+        _misc_info.get_buffer()->insert(_misc_info.get_buffer()->end(), tmp);
+    }
+    _misc_info.set_editable(false);
+    _misc_info_scroll.add(_misc_info);
+    _page_misc.add_line( false, "", _misc_info_scroll, "", _("General system information"), true);
+
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
 
