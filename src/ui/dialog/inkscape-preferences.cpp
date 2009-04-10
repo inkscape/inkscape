@@ -21,6 +21,8 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/alignment.h>
 
+#include <gtk/gtkicontheme.h>
+
 #include "preferences.h"
 #include "inkscape-preferences.h"
 #include "verbs.h"
@@ -41,6 +43,7 @@
 #include "color-profile-fns.h"
 #include "color-profile.h"
 #include "display/canvas-grid.h"
+#include "path-prefix.h"
 
 #ifdef HAVE_ASPELL
 # include <aspell.h>
@@ -1241,7 +1244,18 @@ void InkscapePreferences::initPageSpellcheck()
 #endif
 }
 
-
+static void appendList( Glib::ustring& tmp, const gchar* const*listing )
+{
+    bool first = true;
+    for (const gchar* const* ptr = listing; *ptr; ptr++) {
+        if (!first) {
+            tmp += "  ";
+        }
+        first = false;
+        tmp += *ptr;
+        tmp += "\n";
+    }
+}
 
 void InkscapePreferences::initPageMisc()
 {
@@ -1269,18 +1283,56 @@ void InkscapePreferences::initPageMisc()
     {
         Glib::ustring tmp;
         tmp += "User config: ";
-        tmp += Glib::get_user_config_dir();
+        tmp += g_get_user_config_dir();
         tmp += "\n";
 
         tmp += "User data: ";
-        tmp += Glib::get_user_data_dir();
+        tmp += g_get_user_data_dir();
         tmp += "\n";
+
+        tmp += "User cache: ";
+        tmp += g_get_user_cache_dir();
+        tmp += "\n";
+
+        tmp += "System config: ";
+        appendList( tmp, g_get_system_config_dirs() );
+
+        tmp += "System data: ";
+        appendList( tmp, g_get_system_data_dirs() );
+
+        tmp += "PIXMAP: ";
+        tmp += INKSCAPE_PIXMAPDIR;
+        tmp += "\n";
+
+        tmp += "DATA: ";
+        tmp += INKSCAPE_DATADIR;
+        tmp += "\n";
+
+        tmp += "UI: ";
+        tmp += INKSCAPE_UIDIR;
+        tmp += "\n";
+
+        {
+            gchar** paths = 0;
+            gint count = 0;
+            gtk_icon_theme_get_search_path(gtk_icon_theme_get_default(), &paths, &count);
+            if (count > 0) {
+                tmp += "Icon theme: ";
+                tmp += paths[0];
+                tmp += "\n";
+                for (int i = 1; i < count; i++) {
+                    tmp += "  ";
+                    tmp += paths[i];
+                    tmp += "\n";
+                }
+            }
+        }
 
         _misc_info.get_buffer()->insert(_misc_info.get_buffer()->end(), tmp);
     }
     _misc_info.set_editable(false);
     _misc_info_scroll.add(_misc_info);
-    _page_misc.add_line( false, "", _misc_info_scroll, "", _("General system information"), true);
+    _page_misc.add_line( false, _("System info"), _misc_info_scroll, "", _("General system information"), true);
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
