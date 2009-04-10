@@ -237,6 +237,7 @@ modules = \
 	web-transmit-att.inx \
 	whirl.inx \
 	wmf_input.inx \
+	wmf_output.inx \
 	xaml2svg.inx
 
 
