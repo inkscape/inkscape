@@ -127,7 +127,7 @@ InkscapePreferences::InkscapePreferences()
     initPageWindows();
     initPageSpellcheck();
     initPageMisc();
-    
+
     signalPresent().connect(sigc::mem_fun(*this, &InkscapePreferences::_presentPages));
 
     //calculate the size request for this dialog
@@ -210,24 +210,24 @@ void InkscapePreferences::initPageScrolling()
 
 void InkscapePreferences::initPageSnapping()
 {
-	
-	_snap_indicator.init( _("Enable snap indicator"), "/options/snapindicator/value", true);
-	_page_snapping.add_line( false, "", _snap_indicator, "",
-			_("After snapping, a symbol is drawn at the point that has snapped"));
-	    
-	_snap_delay.init("/options/snapdelay/value", 0, 1000, 50, 100, 300, 0);
-	_page_snapping.add_line( false, _("Delay (in msec):"), _snap_delay, "",
-			_("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"), true);
-	
-	_snap_closest_only.init( _("Only snap the node closest to the pointer"), "/options/snapclosestonly/value", false);
-	_page_snapping.add_line( false, "", _snap_closest_only, "",
-	_("Only try to snap the node that is initialy closest to the mouse pointer"));
-	
-	_snap_weight.init("/options/snapweight/value", 0, 1, 0.1, 0.2, 0.5, 1);
-	_page_snapping.add_line( false, _("Weight factor:"), _snap_weight, "",
-			_("When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"), true);
-	
-	this->AddPage(_page_snapping, _("Snapping"), PREFS_PAGE_SNAPPING);
+
+    _snap_indicator.init( _("Enable snap indicator"), "/options/snapindicator/value", true);
+    _page_snapping.add_line( false, "", _snap_indicator, "",
+                             _("After snapping, a symbol is drawn at the point that has snapped"));
+
+    _snap_delay.init("/options/snapdelay/value", 0, 1000, 50, 100, 300, 0);
+    _page_snapping.add_line( false, _("Delay (in msec):"), _snap_delay, "",
+                             _("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"), true);
+
+    _snap_closest_only.init( _("Only snap the node closest to the pointer"), "/options/snapclosestonly/value", false);
+    _page_snapping.add_line( false, "", _snap_closest_only, "",
+                             _("Only try to snap the node that is initialy closest to the mouse pointer"));
+
+    _snap_weight.init("/options/snapweight/value", 0, 1, 0.1, 0.2, 0.5, 1);
+    _page_snapping.add_line( false, _("Weight factor:"), _snap_weight, "",
+                             _("When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"), true);
+
+    this->AddPage(_page_snapping, _("Snapping"), PREFS_PAGE_SNAPPING);
 }
 
 void InkscapePreferences::initPageSteps()
@@ -362,7 +362,7 @@ void InkscapePreferences::AddNewObjectsStyle(DialogPage &p, Glib::ustring const 
     Gtk::Button* button = Gtk::manage( new Gtk::Button(_("Take from selection"),true));
     StyleSwatch *swatch = 0;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    
+
     SPCSSAttr *css = prefs->getStyle(prefs_path + "/style");
     swatch = new StyleSwatch(css, _("This tool's style of new objects"));
     hb->add(*swatch);
@@ -574,13 +574,13 @@ void InkscapePreferences::initPageWindows()
 #endif
 
 #if GTK_VERSION_GE(2, 12)
-	_page_windows.add_group_header( _("Dialog Transparency:"));
-	_win_trans_focus.init("/dialogs/transparency/on-focus", 0.5, 1.0, 0.01, 0.1, 1.0, false, false);
-	_page_windows.add_line( true, _("Opacity when focused:"), _win_trans_focus, "", "");
-	_win_trans_blur.init("/dialogs/transparency/on-blur", 0.0, 1.0, 0.01, 0.1, 0.5, false, false);
-	_page_windows.add_line( true, _("Opacity when unfocused:"), _win_trans_blur, "", "");
-	_win_trans_time.init("/dialogs/transparency/animate-time", 0, 1000, 10, 100, 100, true, false);
-	_page_windows.add_line( true, _("Time of opacity change animation:"), _win_trans_time, "ms", "");
+    _page_windows.add_group_header( _("Dialog Transparency:"));
+    _win_trans_focus.init("/dialogs/transparency/on-focus", 0.5, 1.0, 0.01, 0.1, 1.0, false, false);
+    _page_windows.add_line( true, _("Opacity when focused:"), _win_trans_focus, "", "");
+    _win_trans_blur.init("/dialogs/transparency/on-blur", 0.0, 1.0, 0.01, 0.1, 0.5, false, false);
+    _page_windows.add_line( true, _("Opacity when unfocused:"), _win_trans_blur, "", "");
+    _win_trans_time.init("/dialogs/transparency/animate-time", 0, 1000, 10, 100, 100, true, false);
+    _page_windows.add_line( true, _("Time of opacity change animation:"), _win_trans_time, "ms", "");
 #endif
 
     _page_windows.add_group_header( _("Miscellaneous:"));
@@ -794,7 +794,7 @@ static void proofComboChanged( Gtk::ComboBoxText* combo )
 {
     Glib::ustring active = combo->get_active_text();
     Glib::ustring path = get_path_for_profile(active);
-    
+
     if ( !path.empty() ) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setString("/options/softproof/uri", path);
@@ -1041,19 +1041,19 @@ void InkscapePreferences::initPageSVGOutput()
 
 void InkscapePreferences::initPageUI()
 {
-    Glib::ustring languages[] = {_("System default"), _("Albanian (sq)"), _("Amharic (am)"), _("Arabic (ar)"), _("Armenian (hy)"),_("Azerbaijani (az)"), _("Basque (eu)"), _("Belarusian (be)"), 
-        _("Bulgarian (bg)"), _("Bengali (bn)"), _("Breton (br)"), _("Catalan (ca)"), _("Valencian Catalan (ca@valencia)"), _("Chinese/China (zh_CN)"), 
-                                 _("Chinese/Taiwan (zh_TW)"), _("Croatian (hr)"), _("Czech (cs)"), 
-        _("Danish (da)"), _("Dutch (nl)"), _("Dzongkha (dz)"), _("German (de)"), _("Greek (el)"), _("English (en)"), _("English/Australia (en_AU)"), 
-        _("English/Canada (en_CA)"), _("English/Great Britain (en_GB)"), _("Pig Latin (en_US@piglatin)"), 
-        _("Esperanto (eo)"), _("Estonian (et)"), _("Finnish (fi)"), 
-        _("French (fr)"), _("Irish (ga)"), _("Galician (gl)"), _("Hebrew (he)"), _("Hungarian (hu)"),  
-        _("Indonesian (id)"), _("Italian (it)"), _("Japanese (ja)"), _("Khmer (km)"), _("Kinyarwanda (rw)"), _("Korean (ko)"), _("Lithuanian (lt)"), _("Macedonian (mk)"), 
+    Glib::ustring languages[] = {_("System default"), _("Albanian (sq)"), _("Amharic (am)"), _("Arabic (ar)"), _("Armenian (hy)"),_("Azerbaijani (az)"), _("Basque (eu)"), _("Belarusian (be)"),
+        _("Bulgarian (bg)"), _("Bengali (bn)"), _("Breton (br)"), _("Catalan (ca)"), _("Valencian Catalan (ca@valencia)"), _("Chinese/China (zh_CN)"),
+                                 _("Chinese/Taiwan (zh_TW)"), _("Croatian (hr)"), _("Czech (cs)"),
+        _("Danish (da)"), _("Dutch (nl)"), _("Dzongkha (dz)"), _("German (de)"), _("Greek (el)"), _("English (en)"), _("English/Australia (en_AU)"),
+        _("English/Canada (en_CA)"), _("English/Great Britain (en_GB)"), _("Pig Latin (en_US@piglatin)"),
+        _("Esperanto (eo)"), _("Estonian (et)"), _("Finnish (fi)"),
+        _("French (fr)"), _("Irish (ga)"), _("Galician (gl)"), _("Hebrew (he)"), _("Hungarian (hu)"),
+        _("Indonesian (id)"), _("Italian (it)"), _("Japanese (ja)"), _("Khmer (km)"), _("Kinyarwanda (rw)"), _("Korean (ko)"), _("Lithuanian (lt)"), _("Macedonian (mk)"),
         _("Mongolian (mn)"), _("Nepali (ne)"), _("Norwegian Bokmål (nb)"), _("Norwegian Nynorsk (nn)"), _("Panjabi (pa)"),
-        _("Polish (pl)"), _("Portuguese (pt)"), _("Portuguese/Brazil (pt_BR)"), _("Romanian (ro)"), _("Russian (ru)"), 
-        _("Serbian (sr)"), _("Serbian in Latin script (sr@latin)"), _("Slovak (sk)"), _("Slovenian (sl)"),  _("Spanish (es)"), _("Spanish/Mexico (es_MX)"),   
+        _("Polish (pl)"), _("Portuguese (pt)"), _("Portuguese/Brazil (pt_BR)"), _("Romanian (ro)"), _("Russian (ru)"),
+        _("Serbian (sr)"), _("Serbian in Latin script (sr@latin)"), _("Slovak (sk)"), _("Slovenian (sl)"),  _("Spanish (es)"), _("Spanish/Mexico (es_MX)"),
         _("Swedish (sv)"), _("Thai (th)"), _("Turkish (tr)"), _("Ukrainian (uk)"), _("Vietnamese (vi)")};
-    Glib::ustring langValues[] = {"", "sq", "am", "ar", "hy", "az", "eu", "be", "bg", "bn", "br", "ca", "ca@valencia", "zh_CN", "zh_TW", "hr", "cs", "da", "nl", 
+    Glib::ustring langValues[] = {"", "sq", "am", "ar", "hy", "az", "eu", "be", "bg", "bn", "br", "ca", "ca@valencia", "zh_CN", "zh_TW", "hr", "cs", "da", "nl",
         "dz", "de", "el", "en", "en_AU", "en_CA", "en_GB", "en_US@piglatin", "eo", "et", "fi", "fr", "ga",
         "gl", "he", "hu", "id", "it", "ja", "km", "rw", "ko", "lt", "mk", "mn", "ne", "nb", "nn", "pa",
         "pl", "pt", "pt_BR", "ro", "ru", "sr", "sr@latin", "sk", "sl", "es", "es_MX", "sv", "th", "tr", "uk", "vi" };
@@ -1104,7 +1104,7 @@ void InkscapePreferences::initPageUI()
 
 void InkscapePreferences::initPageAutosave()
 {
-    // Autosave options 
+    // Autosave options
     _autosave_autosave_enable.init( _("Enable autosave (requires restart)"), "/options/autosave/enable", false);
     _page_autosave.add_line(false, "", _autosave_autosave_enable, "", _("Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"), false);
     _autosave_autosave_interval.init("/options/autosave/interval", 1.0, 10800.0, 1.0, 10.0, 10.0, true, false);
@@ -1205,7 +1205,7 @@ void InkscapePreferences::initPageSpellcheck()
   const AspellDictInfo *entry;
   int en_index = 0;
   int i = 0;
-  while ( (entry = aspell_dict_info_enumeration_next(dels)) != 0) 
+  while ( (entry = aspell_dict_info_enumeration_next(dels)) != 0)
   {
       languages.push_back(Glib::ustring(entry->name));
       langValues.push_back(Glib::ustring(entry->name));
