@@ -2328,7 +2328,7 @@ Verb *Verb::_base_verbs[] = {
     new EditVerb(SP_VERB_EDIT_CLEAR_ALL, "EditClearAll", N_("Clea_r All"),
                  N_("Delete all objects from document"), NULL),
     new EditVerb(SP_VERB_EDIT_SELECT_ALL, "EditSelectAll", N_("Select Al_l"),
-                 N_("Select all objects or all nodes"), INKSCAPE_ICON_EDIT_SELECT_ALL),
+                 N_("Select all objects or all nodes"), GTK_STOCK_SELECT_ALL),
     new EditVerb(SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS, "EditSelectAllInAllLayers", N_("Select All in All La_yers"),
                  N_("Select all objects in all visible and unlocked layers"), INKSCAPE_ICON_EDIT_SELECT_ALL_LAYERS),
     new EditVerb(SP_VERB_EDIT_INVERT, "EditInvert", N_("In_vert Selection"),
