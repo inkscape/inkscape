@@ -215,6 +215,7 @@ modules = \
 	rtree.inx \
 	sk_input.inx \
 	sk1_input.inx \
+	sk1_output.inx \
 	spirograph.inx \
 	straightseg.inx \
 	summersnight.inx \
