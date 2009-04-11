@@ -147,7 +147,7 @@ PathParam::param_newWidget(Gtk::Tooltips * tooltips)
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pLabel, true, true);
     tooltips->set_tip(*pLabel, param_tooltip);
 
-    Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "draw_node", Inkscape::ICON_SIZE_BUTTON) );
+    Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "tool-node-editor", Inkscape::ICON_SIZE_BUTTON) );
     Gtk::Button * pButton = Gtk::manage(new Gtk::Button());
     pButton->set_relief(Gtk::RELIEF_NONE);
     pIcon->show();
@@ -177,7 +177,7 @@ PathParam::param_newWidget(Gtk::Tooltips * tooltips)
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
     tooltips->set_tip(*pButton, _("Paste path"));
 
-    pIcon = Gtk::manage( sp_icon_get_icon( "edit_clone", Inkscape::ICON_SIZE_BUTTON) );
+    pIcon = Gtk::manage( sp_icon_get_icon( "edit-clone", Inkscape::ICON_SIZE_BUTTON) );
     pButton = Gtk::manage(new Gtk::Button());
     pButton->set_relief(Gtk::RELIEF_NONE);
     pIcon->show();
