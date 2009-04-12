@@ -223,7 +223,7 @@ void sp_icon_fetch_pixbuf( SPIcon *icon )
             if (!pb) {
                 pb = sp_icon_image_load_svg( icon->name, Inkscape::getRegisteredIconSize(icon->lsize), icon->psize );
                 // if this was loaded from SVG, add it as a builtin icon
-                gtk_icon_theme_add_builtin_icon(icon->name, icon->psize, pb);
+                if (pb) gtk_icon_theme_add_builtin_icon(icon->name, icon->psize, pb);
             }
             if (!pb) {
                 pb = sp_icon_image_load_pixmap( icon->name, icon->lsize, icon->psize );
