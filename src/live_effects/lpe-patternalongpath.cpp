@@ -224,6 +224,17 @@ LPEPatternAlongPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > con
     }
 }
 
+void
+LPEPatternAlongPath::transform_multiply(Geom::Matrix const& postmul, bool set)
+{
+    // overriding the Effect class default method, disabling transform forwarding to the parameters.
+
+    // only take translations into account
+    if (postmul.isTranslation()) {
+        pattern.param_transform_multiply(postmul, set);
+    }
+}
+
 } // namespace LivePathEffect
 } /* namespace Inkscape */
 

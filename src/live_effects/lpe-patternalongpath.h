@@ -32,6 +32,8 @@ public:
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
+    virtual void transform_multiply(Geom::Matrix const& postmul, bool set);
+
     PathParam  pattern;
 private:
     EnumParam<PAPCopyType> copytype;
