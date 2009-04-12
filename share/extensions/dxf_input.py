@@ -26,22 +26,32 @@ import inkex, simplestyle, math
 from StringIO import StringIO
 
 def export_MTEXT():
-    # mandatory group codes : (1, 10, 20) (text, x, y)
-    if vals[groups['1']] and vals[groups['10']] and vals[groups['20']]:
+    # mandatory group codes : (1 or 3, 10, 20) (text, x, y)
+    if (vals[groups['1']] or vals[groups['3']]) and vals[groups['10']] and vals[groups['20']]:
         x = vals[groups['10']][0]
         y = vals[groups['20']][0]
-        # optional group codes : (40, 50) (text height mm, text angle)
+        # optional group codes : (21, 40, 50) (direction, text height mm, text angle)
         size = 12                       # default fontsize in px
         if vals[groups['40']]:
             size = scale*vals[groups['40']][0]
-        attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %dpx; fill: %s' % (size, color)}
+        attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %.1fpx; fill: %s' % (size, color)}
         angle = 0                       # default angle in degrees
         if vals[groups['50']]:
             angle = vals[groups['50']][0]
             attribs.update({'transform': 'rotate (%f %f %f)' % (-angle, x, y)})
+        elif vals[groups['21']]:
+            if vals[groups['21']][0] == 1.0:
+                attribs.update({'transform': 'rotate (%f %f %f)' % (-90, x, y)})
+            elif vals[groups['21']][0] == -1.0:
+                attribs.update({'transform': 'rotate (%f %f %f)' % (90, x, y)})
         attribs.update({inkex.addNS('linespacing','sodipodi'): '125%'})
         node = inkex.etree.SubElement(layer, 'text', attribs)
-        text = vals[groups['1']][0]
+        text = ''
+        if vals[groups['3']]:
+            for i in range (0, len(vals[groups['3']])):
+                text += vals[groups['3']][i]
+        if vals[groups['1']]:
+            text += vals[groups['1']][0]
         found = text.find('\P')         # new line
         while found > -1:
             tspan = inkex.etree.SubElement(node , 'tspan', {inkex.addNS('role','sodipodi'): 'line'})
@@ -210,13 +220,34 @@ def export_DIMENSION():
         inkex.etree.SubElement(layer, 'path', attribs)
         x = scale*(vals[groups['11']][0] - xmin)
         y = - scale*(vals[groups['21']][0] - ymax)
-        size = 3                    # default fontsize in px
-        attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %dpx; fill: %s' % (size, color)}
+        size = 12                   # default fontsize in px
+        if vals[groups['3']]:
+            if DIMTXT.has_key(vals[groups['3']][0]):
+                size = scale*DIMTXT[vals[groups['3']][0]]
+        attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %.1fpx; fill: %s' % (size, color)}
         if dx == 0:
             attribs.update({'transform': 'rotate (%f %f %f)' % (-90, x, y)})
         node = inkex.etree.SubElement(layer, 'text', attribs)
         tspan = inkex.etree.SubElement(node , 'tspan', {inkex.addNS('role','sodipodi'): 'line'})
-        tspan.text = '%.2f' % d
+        tspan.text = str(float('%.2f' % d))
+
+def export_INSERT():
+    # mandatory group codes : (2, 10, 20) (block name, x, y)
+    if vals[groups['2']] and vals[groups['10']] and vals[groups['20']]:
+        x = vals[groups['10']][0]
+        y = vals[groups['20']][0] - scale*ymax
+        attribs = {'x': '%f' % x, 'y': '%f' % y, inkex.addNS('href','xlink'): '#' + vals[groups['2']][0]}
+        inkex.etree.SubElement(layer, 'use', attribs)
+
+def export_BLOCK():
+    # mandatory group codes : (2) (block name)
+    if vals[groups['2']]:
+        global block
+        block = inkex.etree.SubElement(defs, 'symbol', {'id': vals[groups['2']][0]})
+
+def export_ENDBLK():
+    global block
+    block = defs                                    # initiallize with dummy
 
 def generate_ellipse(xc, yc, xm, ym, w, a1, a2):
     rm = math.sqrt(xm*xm + ym*ym)
@@ -252,50 +283,73 @@ def get_group(group):
 
 #   define DXF Entities and specify which Group Codes to monitor
 
-entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'DIMENSION': export_DIMENSION, 'ENDSEC': ''}
-groups = {'1': 0, '8': 1, '10': 2, '11': 3, '13': 4, '14': 5, '20': 6, '21': 7, '23': 8, '24': 9, '40': 10, '41': 11, '42': 12, '50': 13, '51': 14, '62': 15, '70': 16, '72': 17, '73': 18, '93': 19, '370': 20}
+entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'DIMENSION': export_DIMENSION, 'INSERT': export_INSERT, 'BLOCK': export_BLOCK, 'ENDBLK': export_ENDBLK, 'OBJECTS': False}
+groups = {'1': 0, '2': 1, '3': 2, '6': 3, '8': 4, '10': 5, '11': 6, '13': 7, '14': 8, '20': 9, '21': 10, '23': 11, '24': 12, '40': 13, '41': 14, '42': 15, '50': 16, '51': 17, '62': 18, '70': 19, '72': 20, '73': 21, '93': 22, '370': 23}
 colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '#0000FF',
-            6: '#FF00FF',   8: '#414141',   9: '#808080',  30: '#FF7F00',
+            6: '#FF00FF',   8: '#414141',   9: '#808080',  12: '#BD0000',  30: '#FF7F00',
           250: '#333333', 251: '#505050', 252: '#696969', 253: '#828282', 254: '#BEBEBE', 255: '#FFFFFF'}
 
 doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"></svg>'))
-defs = inkex.etree.SubElement(doc.getroot(), 'defs', {} )
+defs = inkex.etree.SubElement(doc.getroot(), 'defs', {})
 marker = inkex.etree.SubElement(defs, 'marker', {'id': 'DistanceX', 'orient': 'auto', 'refX': '0.0', 'refY': '0.0', 'style': 'overflow:visible'})
 inkex.etree.SubElement(marker, 'path', {'d': 'M 3,-3 L -3,3 M 0,-5 L  0,5', 'style': 'stroke:#000000; stroke-width:0.5'})
 stream = open(inkex.sys.argv[1], 'r')
 xmax = xmin = 0.0
 ymax = 297.0                                        # default A4 height in mm
 line = get_line()
-flag = 0
+flag = 0                                            # (0, 1, 2, 3) = (none, LAYER, LTYPE, DIMTXT)
 layer_colors = {}                                   # store colors by layer
 layer_nodes = {}                                    # store nodes by layer
-while line[0] and line[1] != 'ENTITIES':
+linetypes = {}                                      # store linetypes by name
+DIMTXT = {}                                         # store DIMENSION text sizes
+
+while line[0] and line[1] != 'BLOCKS':
     line = get_line()
     if line[1] == '$EXTMIN':
         xmin = get_group('10')
     if line[1] == '$EXTMAX':
         xmax = get_group('10')
         ymax = get_group('20')
-    if flag and line[0] == '2':
-        name = unicode(line[1], "iso-8859-1")
-        attribs = {inkex.addNS('groupmode','inkscape'): 'layer', inkex.addNS('label','inkscape'): '%s' % name}
-        layer_nodes[name] = inkex.etree.SubElement(doc.getroot(), 'g', attribs)
+    if flag == 1 and line[0] == '2':
+        layername = unicode(line[1], "iso-8859-1")
+        attribs = {inkex.addNS('groupmode','inkscape'): 'layer', inkex.addNS('label','inkscape'): '%s' % layername}
+        layer_nodes[layername] = inkex.etree.SubElement(doc.getroot(), 'g', attribs)
+    if flag == 2 and line[0] == '2':
+        linename = unicode(line[1], "iso-8859-1")
+        linetypes[linename] = []
+    if flag == 3 and line[0] == '2':
+        stylename = unicode(line[1], "iso-8859-1")
     if line[0] == '2' and line[1] == 'LAYER':
         flag = 1
-    if flag and line[0] == '62':
-        layer_colors[name] = int(line[1])
+    if line[0] == '2' and line[1] == 'LTYPE':
+        flag = 2
+    if line[0] == '2' and line[1] == 'DIMSTYLE':
+        flag = 3
+    if flag == 1 and line[0] == '62':
+        layer_colors[layername] = int(line[1])
+    if flag == 2 and line[0] == '49':
+        linetypes[linename].append(float(line[1]))
+    if flag == 3 and line[0] == '140':
+        DIMTXT[stylename] = float(line[1])
     if line[0] == '0' and line[1] == 'ENDTAB':
         flag = 0
 
 scale = 90.0/25.4                                   # default convert from mm to pixels
 if xmax > xmin:
     scale *= 210.0/(xmax - xmin)                    # scale to A4 width
+for linename in linetypes.keys():                   # scale the dashed lines
+    linetype = ''
+    for length in linetypes[linename]:
+        linetype += '%.4f,' % math.fabs(length*scale)
+    linetypes[linename] = 'stroke-dasharray:' + linetype
+
 entity = ''
-while line[0] and line[1] != 'ENDSEC':
+block = defs                                        # initiallize with dummy
+while line[0] and line[1] != 'OBJECTS':
     line = get_line()
     if entity and groups.has_key(line[0]):
         seqs.append(line[0])                        # list of group codes
-        if line[0] == '1' or line[0] == '8':        # text value
+        if line[0] == '1' or line[0] == '2' or line[0] == '3' or line[0] == '6' or line[0] == '8':  # text value
             val = line[1].replace('\~', ' ')
             val = inkex.re.sub( '\\\\A.*;', '', val)
             val = inkex.re.sub( '\\\\H.*;', '', val)
@@ -313,12 +367,14 @@ while line[0] and line[1] != 'ENDSEC':
         vals[groups[line[0]]].append(val)
     elif entities.has_key(line[1]):
         if entities.has_key(entity):
-            color = '#000000'                       # default color
-            if vals[groups['8']]:                   # Common Layer Name
+            if block != defs:                       # in a BLOCK
+                layer = block
+            else:                                   # use Common Layer Name
                 layer = layer_nodes[vals[groups['8']][0]]
-                if layer_colors.has_key(vals[groups['8']][0]):
-                    if colors.has_key(layer_colors[vals[groups['8']][0]]):
-                        color = colors[layer_colors[vals[groups['8']][0]]]
+            color = '#000000'                       # default color
+            if layer_colors.has_key(vals[groups['8']][0]):
+                if colors.has_key(layer_colors[vals[groups['8']][0]]):
+                    color = colors[layer_colors[vals[groups['8']][0]]]
             if vals[groups['62']]:                  # Common Color Number
                 if colors.has_key(vals[groups['62']][0]):
                     color = colors[vals[groups['62']][0]]
@@ -330,9 +386,12 @@ while line[0] and line[1] != 'ENDSEC':
                     if w < 0.5:
                         w = 0.5
                     style = simplestyle.formatStyle({'stroke': '%s' % color, 'fill': 'none', 'stroke-width': '%.1f' % w})
+            if vals[groups['6']]:                   # Common Linetype
+                if linetypes.has_key(vals[groups['6']][0]):
+                    style += ';' + linetypes[vals[groups['6']][0]]
             entities[entity]()
         entity = line[1]
-        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
         seqs = []
 
 doc.write(inkex.sys.stdout)
