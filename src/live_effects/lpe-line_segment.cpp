@@ -53,29 +53,29 @@ LPELineSegment::doBeforeEffect (SPLPEItem *lpeitem)
 std::vector<Geom::Path>
 LPELineSegment::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
-    using namespace Geom;
     std::vector<Geom::Path> output;
 
     A = initialPoint(path_in);
     B = finalPoint(path_in);
 
-    std::vector<Point> intersections = rect_line_intersect(bboxA, bboxB, A, B);
+    Geom::Rect dummyRect(bboxA, bboxB);
+    boost::optional<Geom::LineSegment> intersection_segment = Geom::rect_line_intersect(dummyRect, Geom::Line(A, B));
 
-    if (intersections.size() < 2) {
+    if (!intersection_segment) {
         g_print ("Possible error - no intersection with limiting bounding box.\n");
         return path_in;
     }
 
     if (end_type == END_OPEN_INITIAL || end_type == END_OPEN_BOTH) {
-        A = intersections[0];
+        A = (*intersection_segment).initialPoint();
     }
 
     if (end_type == END_OPEN_FINAL || end_type == END_OPEN_BOTH) {
-        B = intersections[1];
+        B = (*intersection_segment).finalPoint();
     }
 
     Geom::Path path(A);
-    path.appendNew<LineSegment>(B);
+    path.appendNew<Geom::LineSegment>(B);
 
     output.push_back(path);
 

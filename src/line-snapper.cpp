@@ -11,7 +11,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <2geom/geom.h>
+#include <2geom/line.h>
 #include "line-snapper.h"
 #include "snapped-line.h"
 #include <gtk/gtk.h>
@@ -75,23 +75,23 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
 
     for (LineList::const_iterator i = lines.begin(); i != lines.end(); i++) {
         if (Geom::L2(c.getDirection()) > 0) { // Can't do a constrained snap without a constraint
-            /* Normal to the line we're trying to snap along */
-            Geom::Point const n(Geom::rot90(Geom::unit_vector(c.getDirection())));
+        	Geom::Point const point_on_line = c.hasPoint() ? c.getPoint() : p;
+            Geom::Line line1(point_on_line, point_on_line + c.getDirection());
+            Geom::Line line2(i->second, i->second + Geom::rot90(i->first));
+            Geom::OptCrossing inters = Geom::OptCrossing(); // empty by default
+            try
+            {
+            	inters = Geom::intersection(line1, line2);
+            }
+            catch (Geom::InfiniteSolutions e)
+            {
+            	// We're probably dealing with parallel lines, so snapping doesn't make any sense here
+            	continue; // jump to the next iterator in the for-loop
+            }
 
-            Geom::Point const point_on_line = c.hasPoint() ? c.getPoint() : p;
-
-            /* Constant term of the line we're trying to snap along */
-            Geom::Coord const q0 = dot(n, point_on_line);
-            /* Constant term of the grid or guide line */
-            Geom::Coord const q1 = dot(i->first, i->second);
-
-            /* Try to intersect this line with the target line */
-            Geom::Point t_2geom(NR_HUGE, NR_HUGE);
-            Geom::IntersectorKind const k = Geom::line_intersection(n, q0, i->first, q1, t_2geom);
-            Geom::Point t(t_2geom);
-
-            if (k == Geom::intersects) {
-                const Geom::Coord dist = Geom::L2(t - p);
+			if (inters) {
+				Geom::Point t = line1.pointAt((*inters).ta);
+            	const Geom::Coord dist = Geom::L2(t - p);
                 if (dist < getSnapperTolerance()) {
     				// When doing a constrained snap, we're already at an intersection.
                     // This snappoint is therefore fully constrained, so there's no need

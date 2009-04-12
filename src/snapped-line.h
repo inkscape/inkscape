@@ -26,6 +26,7 @@ public:
     SnappedLineSegment(Geom::Point const &snapped_point, Geom::Coord const &snapped_distance, SnapSourceType const &source, SnapTargetType const &target, Geom::Coord const &snapped_tolerance,bool const &always_snap, Geom::Point const &start_point_of_line, Geom::Point const &end_point_of_line);
     ~SnappedLineSegment();
     Inkscape::SnappedPoint intersect(SnappedLineSegment const &line) const; //intersect with another SnappedLineSegment
+    Geom::LineSegment getLineSegment() const {return Geom::LineSegment(_start_point_of_line, _end_point_of_line);}
 
 private:
     Geom::Point _start_point_of_line;
@@ -46,6 +47,7 @@ public:
     Geom::Point getNormal() const {return _normal_to_line;}                             // n = (nx, ny)
     Geom::Point getPointOnLine() const {return _point_on_line;}                         // p = (px, py)
     Geom::Coord getConstTerm() const {return dot(_normal_to_line, _point_on_line);}     // c = n.p = nx*px + ny*py;
+    Geom::Line getLine() const {return Geom::Line(_point_on_line, _point_on_line + Geom::rot90(_normal_to_line));}
 
 private:
     Geom::Point _normal_to_line;

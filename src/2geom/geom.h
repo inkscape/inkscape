@@ -57,7 +57,7 @@ intersector_ccw(const Geom::Point& p0, const Geom::Point& p1,
 
 /* intersectors */
 
-#if 1
+#if 0
 // Use the new routines provided in line.h
 
 IntersectorKind
@@ -76,7 +76,7 @@ line_twopoint_intersect(Geom::Point const &p00, Geom::Point const &p01,
 			Geom::Point &result);
 #endif
 
-#if 1
+#if 0
 std::vector<Geom::Point>
 rect_line_intersect(Geom::Point const &E, Geom::Point const &F,
                     Geom::Point const &p0, Geom::Point const &p1);

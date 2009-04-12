@@ -20,7 +20,7 @@
 #include "sp-canvas-util.h"
 #include "canvas-axonomgrid.h"
 #include "util/mathfns.h"
-#include "2geom/geom.h"
+#include "2geom/line.h"
 #include "display-forward.h"
 #include <libnr/nr-pixops.h>
 
@@ -713,32 +713,46 @@ CanvasAxonomGridSnapper::_getSnapLines(Geom::Point const &p) const
     double y_proj_along_x_max = Inkscape::Util::round_to_upper_multiple_plus(y_proj_along_x, scaled_spacing_v, grid->origin[Geom::Y]);
     double y_proj_along_x_min = Inkscape::Util::round_to_lower_multiple_plus(y_proj_along_x, scaled_spacing_v, grid->origin[Geom::Y]);
 
-    // Calculate the normal for the angled grid lines
-    Geom::Point norm_x = Geom::rot90(Geom::Point(1, -grid->tan_angle[X]));
-    Geom::Point norm_z = Geom::rot90(Geom::Point(1, grid->tan_angle[Z]));
+    // Calculate the versor for the angled grid lines
+    Geom::Point vers_x = Geom::Point(1, -grid->tan_angle[X]);
+    Geom::Point vers_z = Geom::Point(1, grid->tan_angle[Z]);
 
-    // The four angled grid lines form a parallellogram, enclosing the point
-    // One of the two vertical grid lines divides this parallellogram in two triangles
+    // Calculate the normal for the angled grid lines
+    Geom::Point norm_x = Geom::rot90(vers_x);
+    Geom::Point norm_z = Geom::rot90(vers_z);
+
+    // The four angled grid lines form a parallelogram, enclosing the point
+    // One of the two vertical grid lines divides this parallelogram in two triangles
     // We will now try to find out in which half (i.e. triangle) our point is, and return
     // only the three grid lines defining that triangle
 
     // The vertical grid line is at the intersection of two angled grid lines.
     // Now go find that intersection!
-    Geom::Point result;
-    Geom::IntersectorKind is = Geom::line_intersection(norm_x, norm_x[Geom::Y]*y_proj_along_x_max,
-                                           norm_z, norm_z[Geom::Y]*y_proj_along_z_max,
-                                           result);
+    Geom::Point p_x(0, y_proj_along_x_max);
+    Geom::Line line_x(p_x, p_x + vers_x);
+    Geom::Point p_z(0, y_proj_along_z_max);
+	Geom::Line line_z(p_z, p_z + vers_z);
 
-    // Determine which half of the parallellogram to use
+    Geom::OptCrossing inters = Geom::OptCrossing(); // empty by default
+	try
+	{
+		inters = Geom::intersection(line_x, line_z);
+	}
+	catch (Geom::InfiniteSolutions e)
+	{
+		// We're probably dealing with parallel lines; this is useless!
+		return s;
+	}
+
+    // Determine which half of the parallelogram to use
     bool use_left_half = true;
     bool use_right_half = true;
 
-    if (is == Geom::intersects) {
-        use_left_half = (p[Geom::X] - grid->origin[Geom::X]) < result[Geom::X];
+    if (inters) {
+        Geom::Point inters_pt = line_x.pointAt((*inters).ta);
+    	use_left_half = (p[Geom::X] - grid->origin[Geom::X]) < inters_pt[Geom::X];
         use_right_half = !use_left_half;
     }
-
-    //std::cout << "intersection at " << result << " leads to use_left_half = " << use_left_half << " and use_right_half = " << use_right_half << std::endl;
 
     // Return the three grid lines which define the triangle that encloses our point
     // If we didn't find an intersection above, all 6 grid lines will be returned

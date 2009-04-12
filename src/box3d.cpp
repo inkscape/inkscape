@@ -31,7 +31,7 @@
 #include "line-geometry.h"
 #include "persp3d-reference.h"
 #include "uri.h"
-#include <2geom/geom.h>
+#include <2geom/line.h>
 #include "sp-guide.h"
 #include "sp-namedview.h"
 #include "preferences.h"
@@ -675,16 +675,31 @@ void box3d_corners_for_PLs (const SPBox3D * box, Proj::Axis axis,
 static bool
 box3d_half_line_crosses_joining_line (Geom::Point const &A, Geom::Point const &B,
                                       Geom::Point const &C, Geom::Point const &D) {
-    Geom::Point E; // the point of intersection
     Geom::Point n0 = (B - A).ccw();
     double d0 = dot(n0,A);
 
     Geom::Point n1 = (D - C).ccw();
     double d1 = dot(n1,C);
-    Geom::IntersectorKind intersects = Geom::line_intersection(n0, d0, n1, d1, E);
-    if (intersects == Geom::coincident || intersects == Geom::parallel) {
+
+    Geom::Line lineAB(A,B);
+    Geom::Line lineCD(C,D);
+
+    Geom::OptCrossing inters = Geom::OptCrossing(); // empty by default
+	try
+	{
+		inters = Geom::intersection(lineAB, lineCD);
+	}
+	catch (Geom::InfiniteSolutions e)
+	{
+		// We're probably dealing with parallel lines, so they don't really cross
+		return false;
+	}
+
+    if (!inters) {
         return false;
     }
+
+    Geom::Point E = lineAB.pointAt((*inters).ta); // the point of intersection
 
     if ((dot(C,n0) < d0) == (dot(D,n0) < d0)) {
         // C and D lie on the same side of the line AB
