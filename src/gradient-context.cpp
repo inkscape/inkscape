@@ -216,8 +216,6 @@ static void sp_gradient_context_setup(SPEventContext *ec)
     rc->selcon = new sigc::connection (selection->connectChanged( sigc::bind (sigc::ptr_fun(&gradient_selection_changed), rc)));
     rc->subselcon = new sigc::connection (ec->desktop->connectToolSubselectionChanged(sigc::bind (sigc::ptr_fun(&gradient_subselection_changed), rc)));
     gradient_selection_changed(selection, rc);
-
-    sp_event_context_snap_window_open(ec);
 }
 
 void
@@ -555,7 +553,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (!(event->button.state & GDK_CONTROL_MASK))
                     event_context->item_to_select = sp_event_context_find_item (desktop, button_w, event->button.state & GDK_MOD1_MASK, TRUE);
 
-                /* Snap center to nearest magnetic point */
+                sp_event_context_snap_window_open(event_context, false);
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop);
                 m.freeSnapReturnByRef(Inkscape::SnapPreferences::SNAPPOINT_NODE, button_dt, Inkscape::SNAPSOURCE_HANDLE);

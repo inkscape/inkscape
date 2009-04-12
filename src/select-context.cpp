@@ -499,8 +499,10 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (sc->button_press_ctrl || (sc->button_press_alt && !sc->button_press_shift && !selection->isEmpty())) {
                     // if it's not click and ctrl or alt was pressed (the latter with some selection
                     // but not with shift) we want to drag rather than rubberband
-                    sc->dragging = TRUE;
-                    sp_event_context_snap_window_open(event_context);
+                	if (sc->dragging == FALSE) {
+                		sp_event_context_snap_window_open(event_context);
+                	}
+                	sc->dragging = TRUE;
 
                     sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
                 }
