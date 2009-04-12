@@ -69,6 +69,8 @@ ink_common_sources += \
 	live_effects/lpe-offset.h	\
 	live_effects/lpe-ruler.cpp	\
 	live_effects/lpe-ruler.h	\
+	live_effects/lpe-recursiveskeleton.cpp	\
+	live_effects/lpe-recursiveskeleton.h	\
 	live_effects/lpe-text_label.cpp	\
 	live_effects/lpe-text_label.h	\
 	live_effects/lpe-path_length.cpp	\

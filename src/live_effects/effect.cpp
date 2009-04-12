@@ -73,6 +73,7 @@
 #include "live_effects/lpe-text_label.h"
 #include "live_effects/lpe-path_length.h"
 #include "live_effects/lpe-line_segment.h"
+#include "live_effects/lpe-recursiveskeleton.h"
 
 
 namespace Inkscape {
@@ -98,6 +99,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {PERP_BISECTOR,         N_("Perpendicular bisector"),  "perp_bisector"},
     {PERSPECTIVE_PATH,      N_("Perspective path"),        "perspective_path"},
     {COPY_ROTATE,           N_("Rotate copies"),           "copy_rotate"},
+    {RECURSIVE_SKELETON,    N_("Recursive skeleton"),      "recursive_skeleton"},
     {RULER,                 N_("Ruler"),                   "ruler"},
     {SKETCH,                N_("Sketch"),                  "sketch"},
     {TANGENT_TO_CURVE,      N_("Tangent to curve"),        "tangent_to_curve"},
@@ -225,6 +227,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case DYNASTROKE:
             neweffect = static_cast<Effect*> ( new LPEDynastroke(lpeobj) );
+            break;
+        case RECURSIVE_SKELETON:
+            neweffect = static_cast<Effect*> ( new LPERecursiveSkeleton(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
