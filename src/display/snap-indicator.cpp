@@ -42,7 +42,7 @@ SnapIndicator::~SnapIndicator()
 void
 SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
 {
-	remove_snaptarget();
+	remove_snaptarget(); //only display one snaptarget at a time
 
     g_assert(_desktop != NULL);
 

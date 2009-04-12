@@ -1416,25 +1416,23 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
 
             /* Snap to things, and also constrain to horizontal or vertical movement */
 
-            for (unsigned int dim = 0; dim < 2; dim++) {
-                // When doing a constrained translation, all points will move in the same direction, i.e.
-                // either horizontally or vertically. Therefore we only have to specify the direction of
-                // the constraint-line once. The constraint lines are parallel, but might not be colinear.
-                // Therefore we will have to set the point through which the constraint-line runs
-                // individually for each point to be snapped; this will be handled however by _snapTransformed()
-                s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_BBOX,
-                                                         _bbox_points,
-                                                         _point,
-                                                         Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
-                                                         dxy));
+            unsigned int dim = fabs(dxy[Geom::X]) > fabs(dxy[Geom::Y]) ? Geom::X : Geom::Y;
+			// When doing a constrained translation, all points will move in the same direction, i.e.
+			// either horizontally or vertically. Therefore we only have to specify the direction of
+			// the constraint-line once. The constraint lines are parallel, but might not be colinear.
+			// Therefore we will have to set the point through which the constraint-line runs
+			// individually for each point to be snapped; this will be handled however by _snapTransformed()
+			s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_BBOX,
+													 _bbox_points,
+													 _point,
+													 Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
+													 dxy));
 
-                s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_NODE,
-                                                         _snap_points,
-                                                         _point,
-                                                         Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
-                                                         dxy));
-            }
-
+			s.push_back(m.constrainedSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_NODE,
+													 _snap_points,
+													 _point,
+													 Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
+													 dxy));
         } else {
 
             // Let's leave this timer code here for a while. I'll probably need it in the near future (Diederik van Lierop)
@@ -1443,7 +1441,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
     		g_get_current_time(&starttime); */
 
             /* Snap to things with no constraint */
-			s.push_back(m.freeSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_BBOX, _bbox_points, _point, dxy));
+        	s.push_back(m.freeSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_BBOX, _bbox_points, _point, dxy));
         	s.push_back(m.freeSnapTranslation(Inkscape::SnapPreferences::SNAPPOINT_NODE, _snap_points, _point, dxy));
 
           	/*g_get_current_time(&endtime);

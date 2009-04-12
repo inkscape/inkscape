@@ -91,7 +91,7 @@ void Inkscape::LineSnapper::constrainedSnap(SnappedConstraints &sc,
             Geom::Point t(t_2geom);
 
             if (k == Geom::intersects) {
-                const Geom::Coord dist = L2(t - p);
+                const Geom::Coord dist = Geom::L2(t - p);
                 if (dist < getSnapperTolerance()) {
     				// When doing a constrained snap, we're already at an intersection.
                     // This snappoint is therefore fully constrained, so there's no need
