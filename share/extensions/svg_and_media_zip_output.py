@@ -54,18 +54,19 @@ class MyEffect(inkex.Effect):
         ttmp_orig = self.document.getroot()
 
         docname = ttmp_orig.get(inkex.addNS('docname',u'sodipodi'))
+        if docname is None: docname = self.args[-1]
 
-        orig_tmpfile = sys.argv[1]
+        #orig_tmpfile = sys.argv[1]
 
         #create os temp dir
         tmp_dir = tempfile.mkdtemp()
-        
+
         # create destination zip in same directory as the document
-        z = zipfile.ZipFile(tmp_dir + os.path.sep + docname + '.zip', 'w')    
+        z = zipfile.ZipFile(tmp_dir + os.path.sep + docname + '.zip', 'w')
 
         #fixme replace whatever extention
         docstripped = docname.replace('.zip', '')
-    
+
         #read tmpdoc and copy all images to temp dir
         for node in self.document.xpath('//svg:image', namespaces=inkex.NSS):
             self.collectAndZipImages(node, tmp_dir, docname, z)
@@ -73,24 +74,26 @@ class MyEffect(inkex.Effect):
         ##copy tmpdoc to tempdir
         dst_file = os.path.join(tmp_dir, docstripped)
         stream = open(dst_file,'w')
-    
+
         self.document.write(stream)
-        
+
         stream.close()
-        
+
         z.write(dst_file.encode("latin-1"),docstripped.encode("latin-1")+'.svg') 
         z.close()
 
         out = open(tmp_dir + os.path.sep + docname + '.zip','r')
         sys.stdout.write(out.read())
         out.close() 
-        
+
         shutil.rmtree(tmp_dir)
 
     def collectAndZipImages(self, node, tmp_dir, docname, z):
         xlink = node.get(inkex.addNS('href',u'xlink'))
         if (xlink[:4]!='data'):
-            absref=node.get(inkex.addNS('absref',u'sodipodi'))
+            absref = node.get(inkex.addNS('absref',u'sodipodi'))
+            if absref is None:
+              absref = node.get(inkex.addNS('href',u'xlink'))
             if (os.path.isfile(absref)):
                 shutil.copy(absref,tmp_dir)
                 z.write(absref.encode("latin-1"),os.path.basename(absref).encode("latin-1"))
@@ -104,8 +107,8 @@ class MyEffect(inkex.Effect):
             node.set(inkex.addNS('href',u'xlink'),os.path.basename(absref))
             node.set(inkex.addNS('absref',u'sodipodi'),os.path.basename(absref))
 
-            
-if __name__ == '__main__':
+
+if __name__ == '__main__':   #pragma: no cover
     e = MyEffect()
     e.affect()
 
