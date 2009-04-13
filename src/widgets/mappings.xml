@@ -48,6 +48,7 @@
   <remap id='window_next' newid='window-next'/>
   <remap id='view_icon_preview' newid='dialog-icon-preview'/>
   <remap id='view_new' newid='window-new'/>
+  <remap id='fullscreen' newid='view-fullscreen'/>
   
   <!-- layers menu -->
   <remap id='new_layer' newid='layer-new'/>
@@ -214,7 +215,29 @@
   <!-- connector toolbar -->
   <remap id='connector_avoid' newid='connector-avoid'/>
   <remap id='connector_ignore' newid='connector-ignore'/>
-    
+  
+  <!-- gradient toolbar -->
+  <remap id='controls_fill' newid='object-fill'/>
+  <remap id='controls_stroke' newid='object-stroke'/>
+  
+  <!-- snapping toolbar -->
+  <remap id='toggle_snap_global' newid='snap'/>
+  <remap id='toggle_snap_bbox' newid='snap-bounding-box'/>
+  <remap id='toggle_snap_to_bbox_path' newid='snap-bounding-box-edges'/>
+  <remap id='toggle_snap_to_bbox_node' newid='snap-bounding-box-corners'/>
+  <remap id='toggle_snap_to_bbox_edge_midpoints' newid='snap-bounding-box-midpoints'/>
+  <remap id='toggle_snap_to_bbox_midpoints' newid='snap-bounding-box-center'/>
+  <remap id='toggle_snap_nodes' newid='snap-nodes'/>
+  <remap id='toggle_snap_to_paths' newid='snap-nodes-path'/>
+  <remap id='toggle_snap_to_nodes' newid='snap-nodes-cusp'/>
+  <remap id='toggle_snap_to_smooth_nodes' newid='snap-nodes-smooth'/>
+  <remap id='toggle_snap_to_midpoints' newid='snap-nodes-midpoint'/>
+  <remap id='toggle_snap_to_path_intersections' newid='snap-nodes-intersection'/>
+  <remap id='toggle_snap_to_bbox_midpoints-3' newid='snap-nodes-center'/>
+  <remap id='toggle_snap_center' newid='snap-nodes-rotation-center'/>
+  <remap id='toggle_snap_page_border' newid='snap-page'/>
+  <remap id='toggle_snap_grid_guide_intersections' newid='snap-grid-guide-intersections'/>
+  
   <!-- DIALOGS -->
   <!-- align and distribute dialog -->
   <remap id='al_left_out' newid='align-horizontal-right-to-anchor'/>
@@ -251,8 +274,48 @@
   <remap id='node_halign' newid='align-vertical-node'/>
   <remap id='node_vdistribute' newid='distribute-vertical-node'/>
   <remap id='node_hdistribute' newid='distribute-horizontal-node'/>
+  
+  <!-- XML editor -->
+  <remap id='add_xml_element_node' newid='xml-element-new'/>
+  <remap id='add_xml_text_node' newid='xml-text-new'/>
+  <remap id='delete_xml_node' newid='xml-node-delete'/>
+  <remap id='duplicate_xml_node' newid='xml-node-duplicate'/>
+  <remap id='delete_xml_attribute' newid='xml-attribute-delete'/>
+  
+  <!-- transform dialog -->
+  <remap id='arrows_hor' newid='transform-move-horizontal'/>
+  <remap id='arrows_ver' newid='transform-move-vertical'/>
+  <remap id='transform_scale_hor' newid='transform-scale-horizontal'/>
+  <remap id='transform_scale_ver' newid='transform-scale-vertical'/>
+  <remap id='transform_scew_hor' newid='transform-skew-horizontal'/>
+  <remap id='transform_scew_ver' newid='transform-skew-vertical'/>
+  
+  <!-- fill and stroke dialog -->
+  <remap id='properties_fill' newid='object-fill'/>
+  <remap id='properties_stroke_paint' newid='object-stroke'/>
+  <remap id='properties_stroke' newid='object-stroke-style'/>
+  <remap id='fill_none' newid='paint-none'/>
+  <remap id='fill_solid' newid='paint-solid'/>
+  <remap id='fill_gradient' newid='paint-gradient-linear'/>
+  <remap id='fill_radial' newid='paint-gradient-radial'/>
+  <remap id='fill_pattern' newid='paint-pattern'/>
+  <remap id='fill_unset' newid='paint-unknown'/>
+  <remap id='fillrule_evenodd' newid='fill-rule-even-odd'/>
+  <remap id='fillrule_nonzero' newid='fill-rule-nonzero'/>
+  <remap id='join_miter' newid='stroke-join-miter'/>
+  <remap id='join_bevel' newid='stroke-join-bevel'/>
+  <remap id='join_round' newid='stroke-join-round'/>
+  <remap id='cap_butt' newid='stroke-cap-butt'/>
+  <remap id='cap_square' newid='stroke-cap-square'/>
+  <remap id='cap_round' newid='stroke-cap-round'/>
 
   <!-- MISCELLANEOUS -->
+  <remap id='guide' newid='guides'/>
   <remap id='grid_xy' newid='grid-rectangular'/>
   <remap id='grid_axonom' newid='grid-axonometric'/>
+  <remap id='visible' newid='object-visible'/>
+  <remap id='hidden' newid='object-hidden'/>
+  <remap id='lock_unlocked' newid='object-unlocked'/>
+  <remap id='width_height_lock' newid='object-locked'/>
+  <remap id='sticky_zoom' newid='zoom'/>
 </mappings>
