@@ -31,8 +31,10 @@ function run_py_test() {
   fi
 }
 
-run_py_test svgcalendar
-run_py_test foldablebox
+ls -1 *.test.py |
+while read testFile; do
+  run_py_test $( echo $testFile | sed -r 's/^([^.]+)..*$/\1/' )
+done
 
 echo ""
 if $has_py_coverage; then
