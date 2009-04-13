@@ -15,19 +15,6 @@ fi
 
 module=$( echo "$exFile" | sed -r 's/^.*\/([^\/.]+)..*$/\1/' )
 
-if grep -q '^\s*class .*[( ]inkex.Effect[ )]' $exFile; then
-  pyClass=$( grep '^\s*class .*[( ]inkex.Effect[ )]' $exFile | sed -r 's/^\s*class\s+([^ ]+)\s*\(.*$/\1/' )
-else
-  echo "
-  ERROR: Incompatible Format or Inheritance.
-    At this time this script only knows how to make unit tests
-    for Python effects based on inkex.Effect.
-  "
-  exit 1
-fi
-
-exFileRE="$( echo "$exFile" | sed -r 's/\./\\./g; s/\//\\\//g' )"
-
 num=0
 testFile="$module.test.py"
 while test -e "$testFile"; do
@@ -35,7 +22,21 @@ while test -e "$testFile"; do
   testFile="$module.test$num.py"
 done
 
+if grep -q '^\s*class .*[( ]inkex.Effect[ )]' $exFile; then
+  pyClass=$( grep '^\s*class .*[( ]inkex.Effect[ )]' $exFile | sed -r 's/^\s*class\s+([^ ]+)\s*\(.*$/\1/' )
+else
+  echo "
+  ERROR: Incompatible Format or Inheritance.
+    At this time this script only knows how to make unit tests
+    for Python effects based on inkex.Effect.
+    The $testFile will not be created.
+  "
+  exit 1
+fi
+
 echo ">> Creating $testFile"
+
+exFileRE="$( echo "$exFile" | sed -r 's/\./\\./g; s/\//\\\//g' )"
 
 sed -r "s/%MODULE%/$module/g; s/%CLASS%/$pyClass/g; s/%FILE%/$exFileRE/g" \
        test_template.py.txt > "$testFile"

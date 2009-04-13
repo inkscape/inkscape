@@ -68,7 +68,7 @@ class FoldableBox(inkex.Effect):
         tabH = boxD * tabProp
 
         box_id = self.uniqueId('box')
-        g = inkex.etree.SubElement(self.current_layer, 'g', {'id':box_id})
+        self.box = g = inkex.etree.SubElement(self.current_layer, 'g', {'id':box_id})
 
         line_style = simplestyle.formatStyle({ 'stroke': '#000000', 'fill': 'none' })
 
@@ -258,7 +258,7 @@ class FoldableBox(inkex.Effect):
 
         g.set( 'transform', 'translate(%f,%f)' % ( (docW-left_pos)/2, (docH-lower_pos)/2 ) )
 
-if __name__ == '__main__':
+if __name__ == '__main__':   #pragma: no cover
     e = FoldableBox()
     e.affect()
 

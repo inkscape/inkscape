@@ -223,9 +223,11 @@ class Guides_Creator(inkex.Effect):
 
                         drawVerticalGuides(v_division,width,height,from_edges,nv)
                         drawHorizontalGuides(h_division,width,height,from_edges,nv)
-                                
-# Create effect instance and apply it.
-effect = Guides_Creator()
-effect.affect()
+
+
+if __name__ == '__main__':   #pragma: no cover
+    # Create effect instance and apply it.
+    effect = Guides_Creator()
+    effect.affect()
 
 ## end of file guide_creator.py ##

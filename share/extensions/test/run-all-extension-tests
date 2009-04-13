@@ -6,6 +6,7 @@ cd "$(dirname "$0")"
 
 has_py_coverage=false
 py_cover_files=$( mktemp )
+failed_tests=$( mktemp )
 
 if coverage.py -e >/dev/null 2>/dev/null; then
   has_py_coverage=true
@@ -24,21 +25,39 @@ fi
 function run_py_test() {
   echo -e "\n>> Testing $1"
   if $has_py_coverage; then
-    $cover_py_cmd -x "$1.test.py"
+    if ! $cover_py_cmd -x "$1.test.py"; then
+      echo "$1" >> $failed_tests
+    fi
     echo "../$1.py" >> $py_cover_files
   else
-    python "$1.test.py"
+    if ! python "$1.test.py"; then
+      echo "$1" >> $failed_tests
+    fi
   fi
+  return 0
 }
 
-ls -1 *.test.py |
-while read testFile; do
-  run_py_test $( echo $testFile | sed -r 's/^([^.]+)..*$/\1/' )
+tot_FAILED=0
+
+for testFile in *.test.py; do
+  if ! run_py_test $( echo $testFile | sed -r 's/^([^.]+)..*$/\1/' ); then
+    let tot_FAILED++
+  fi
 done
 
-echo ""
 if $has_py_coverage; then
+  echo -e "\n>> Coverage Report:"
   cat $py_cover_files | xargs $cover_py_cmd -r
 fi
 
-rm $py_cover_files
+fail=false
+if ! test -z "$( cat $failed_tests )"; then
+  echo -e "\nFailed extension tests:"
+  cat $failed_tests | sed 's/^/  - /'
+  fail=true
+fi
+echo ""
+
+rm $py_cover_files $failed_tests
+
+$fail && exit 1

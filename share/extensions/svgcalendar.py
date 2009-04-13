@@ -333,6 +333,6 @@ class SVGCalendar (inkex.Effect):
           self.create_month(self.options.month)
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':   #pragma: no cover
     e = SVGCalendar()
     e.affect()

@@ -86,7 +86,8 @@ class Extrude(inkex.Effect):
                     ele = inkex.etree.Element('{http://www.w3.org/2000/svg}path')
                     g.append(ele)
                     ele.set('d', simplepath.formatPath(line))
-                         
 
-e = Extrude()
-e.affect()
+
+if __name__ == '__main__':   #pragma: no cover
+    e = Extrude()
+    e.affect()

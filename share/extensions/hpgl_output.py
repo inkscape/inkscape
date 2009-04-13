@@ -44,5 +44,6 @@ class MyEffect(inkex.Effect):
                         first = False
                         self.hpgl.append('%s%s,%s;' % (cmd,csp[1][0],csp[1][1]))
 
-e = MyEffect()
-e.affect()
+if __name__ == '__main__':   #pragma: no cover
+    e = MyEffect()
+    e.affect()
