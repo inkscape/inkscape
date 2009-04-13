@@ -1,9 +1,6 @@
 #!/bin/bash
 
-echo "
- #########################
-      Extension Tests
- #########################"
+echo -e "\n##### Extension Tests #####"
 
 cd "$(dirname "$0")"
 

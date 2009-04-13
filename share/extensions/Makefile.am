@@ -3,6 +3,7 @@ SUBDIRS = \
 	alphabet_soup \
 	Barcode \
 	Poly3DObjects \
+	test \
 	xaml2svg
 
 extensiondir = $(datadir)/inkscape/extensions
@@ -54,7 +55,7 @@ extensions = \
 	ffgeom.py\
 	fig2dev-ext.py \
 	flatten.py \
-        foldablebox.py \
+	foldablebox.py \
 	fractalize.py \
 	funcplot.py \
 	gears.py\
@@ -174,7 +175,7 @@ modules = \
 	extrude.inx \
 	fig_input.inx \
 	flatten.inx \
-        foldablebox.inx \
+	foldablebox.inx \
 	fractalize.inx \
 	funcplot.inx \
 	gears.inx\
