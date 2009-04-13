@@ -55,9 +55,6 @@ namespace Dialog {
 #define SPACE_SIZE_X 15
 #define SPACE_SIZE_Y 10
 
-#define INKSCAPE_ICON_GRID_XY     "grid_xy"
-#define INKSCAPE_ICON_GRID_AXONOM "grid_axonom"
-
 
 //===================================================
 
@@ -701,10 +698,10 @@ DocumentProperties::update_gridspage()
         const char *icon = NULL;
         switch (grid->getGridType()) {
             case GRID_RECTANGULAR:
-                icon = INKSCAPE_ICON_GRID_XY;
+                icon = "grid-rectangular";
                 break;
             case GRID_AXONOMETRIC:
-                icon = INKSCAPE_ICON_GRID_AXONOM;
+                icon = "grid-axonometric";
                 break;
             default:
                 break;
