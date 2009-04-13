@@ -1679,12 +1679,13 @@
 <feComposite id="feComposite2922" in2="SourceGraphic" operator="arithmetic" in="result2" k1="0" k2="0" k3="2" result="result4" />
 <feBlend blend="normal" id="feBlend2962" in="result2" mode="multiply" result="result3" />
 </filter>
-<filter id="Ghosten0" inkscape:label="Ghosten" inkscape:menu="Image effects" inkscape:menu-tooltip="Turns light or dark areas to transparency" x="0" width="1" y="0" height="1">
-<feColorMatrix in="SourceGraphic" result="result1" type="luminanceToAlpha" id="feColorMatrix3202" />
-<feComposite k2="2" k3="0" in="SourceGraphic" result="result2" operator="out" id="feComposite3204" />
-<feBlend blend="normal" id="feBlend3581" mode="normal" in="result2" />
+<filter id="Eraser0" inkscape:label="Eraser" inkscape:menu="Masking tools" inkscape:menu-tooltip="Make the lightest parts of the object progressively transparent">
+<feColorMatrix id="feColorMatrix2860" in="SourceGraphic" result="result1" type="luminanceToAlpha" />
+<feColorMatrix id="feColorMatrix2866" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " />
+<feComposite id="feComposite2862" k2="2" k3="0" in="SourceGraphic" result="result2" operator="out" />
+<feBlend id="feBlend2864" blend="normal" mode="normal" in="result2" />
 </filter>
-<filter id="Noisyblur0" inkscape:label="Noisy blur" inkscape:menu="Distort" inkscape:menu-tooltip="Small-scale roughening and blurring to edges and content">
+<filter id="Noisyblur0" inkscape:label="Noisy blur" inkscape:menu="Distort" inkscape:menu-tooltip="Small-scale roughening and blurring to edges and content" x="-0.25" width="1.5" y="-0.25" height="1.5">
 <feGaussianBlur stdDeviation="5" id="feGaussianBlur3241" result="result1" />
 <feTurbulence id="feTurbulence3219" numOctaves="1" seed="0" type="fractalNoise" in="SourceAlpha" baseFrequency="0.10000000000000001" result="result2" />
 <feDisplacementMap id="feDisplacementMap3221" numOctaves="2" scale="5" yChannelSelector="G" xChannelSelector="R" result="result3" in="result1" />
