@@ -1674,15 +1674,21 @@
 <feComposite in="result4" operator="arithmetic" result="result2" in2="SourceGraphic" id="feComposite3366" k1="1" k3="0" />
 <feComposite in2="result2" operator="out" in="SourceGraphic" result="fbSourceGraphic" id="feComposite3368" />
 </filter>
-<filter id="Blacklight0" inkscape:label="Black Light" x="0" y="0" width="1" height="1" inkscape:menu="Color" inkscape:menu-tooltip="Light areas turn to black">
+<filter id="Blacklight0" inkscape:label="Black Light" inkscape:menu="Color" inkscape:menu-tooltip="Light areas turn to black">
 <feColorMatrix id="feColorMatrix2916" type="luminanceToAlpha" result="result2" />
 <feComposite id="feComposite2922" in2="SourceGraphic" operator="arithmetic" in="result2" k1="0" k2="0" k3="2" result="result4" />
 <feBlend blend="normal" id="feBlend2962" in="result2" mode="multiply" result="result3" />
 </filter>
-<filter id="Ghosten0" inkscape:label="Ghosten" inkscape:menu="Color" inkscape:menu-tooltip="Turns light or black areas to transparency" x="0" width="1" y="0" height="1">
+<filter id="Ghosten0" inkscape:label="Ghosten" inkscape:menu="Image effects" inkscape:menu-tooltip="Turns light or dark areas to transparency" x="0" width="1" y="0" height="1">
 <feColorMatrix in="SourceGraphic" result="result1" type="luminanceToAlpha" id="feColorMatrix3202" />
 <feComposite k2="2" k3="0" in="SourceGraphic" result="result2" operator="out" id="feComposite3204" />
 <feBlend blend="normal" id="feBlend3581" mode="normal" in="result2" />
+</filter>
+<filter id="Noisyblur0" inkscape:label="Noisy blur" inkscape:menu="Distort" inkscape:menu-tooltip="Small-scale roughening and blurring to edges and content">
+<feGaussianBlur stdDeviation="5" id="feGaussianBlur3241" result="result1" />
+<feTurbulence id="feTurbulence3219" numOctaves="1" seed="0" type="fractalNoise" in="SourceAlpha" baseFrequency="0.10000000000000001" result="result2" />
+<feDisplacementMap id="feDisplacementMap3221" numOctaves="2" scale="5" yChannelSelector="G" xChannelSelector="R" result="result3" in="result1" />
+<feComposite id="feComposite2941" operator="atop" />
 </filter>
 </defs>
 </svg>
