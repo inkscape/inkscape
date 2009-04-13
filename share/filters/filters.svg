@@ -565,7 +565,7 @@
 <feComposite id="feComposite3167" operator="over" in="result9" in2="result4" />
 <feBlend id="feBlend3169" blend="normal" mode="screen" />
 </filter>
-<filter id="filter2870" inkscape:label="Glowing Metal" inkscape:menu="Bevels" inkscape:menu-tooltip="Bright and glowing metal texture" x="-0.25" y="-0.25" width="1.5" height="1.5">
+<filter id="filter2870" inkscape:label="Glowing metal" inkscape:menu="Bevels" inkscape:menu-tooltip="Bright and glowing metal texture" x="-0.25" y="-0.25" width="1.5" height="1.5">
 <feGaussianBlur id="feGaussianBlur2872" stdDeviation="0.5" result="result1" />
 <feComposite id="feComposite2874" in="result1" in2="result1" result="result4" operator="atop" />
 <feBlend id="feBlend2876" blend="normal" in="result1" mode="multiply" result="result5" />
@@ -613,7 +613,7 @@
 <feGaussianBlur id="feGaussianBlur3032" stdDeviation="3" />
 <feColorMatrix id="feColorMatrix3034" result="fbSourceGraphic" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -2.5 " />
 </filter>
-<filter id="IridBees0" inkscape:label="Iridescent Beeswax" inkscape:menu="Materials" inkscape:menu-tooltip="Waxy texture which keeps its iridescence through color fill change">
+<filter id="IridBees0" inkscape:label="Iridescent beeswax" inkscape:menu="Materials" inkscape:menu-tooltip="Waxy texture which keeps its iridescence through color fill change">
 <feGaussianBlur id="feGaussianBlur4667" result="result0" in="SourceGraphic" stdDeviation="3" />
 <feTurbulence id="feTurbulence4669" type="turbulence" baseFrequency="0.050000000000000003" seed="200" numOctaves="5" result="result1" />
 <feComposite id="feComposite4671" k4="-1" k1="1.5" k2="1" k3="0" result="result2" operator="in" in2="result1" in="result0" />
@@ -632,7 +632,7 @@
 <feComposite id="feComposite4693" in2="result2" in="result4" operator="atop" />
 <feBlend id="feBlend4695" mode="screen" blend="normal" />
 </filter>
-<filter id="Erodmet0" inkscape:label="Eroded Metal" inkscape:menu="Materials" inkscape:menu-tooltip="Eroded metal texture with ridges, grooves, holes and bumps">
+<filter id="Erodmet0" inkscape:label="Eroded metal" inkscape:menu="Materials" inkscape:menu-tooltip="Eroded metal texture with ridges, grooves, holes and bumps">
 <feGaussianBlur id="feGaussianBlur3763" result="result0" in="SourceGraphic" stdDeviation="1" />
 <feTurbulence id="feTurbulence3765" type="turbulence" baseFrequency="0.057000000000000002" seed="4" numOctaves="4" result="result1" />
 <feComposite id="feComposite3767" result="result2" operator="out" in="result0" />
@@ -1685,7 +1685,7 @@
 <feComposite id="feComposite2862" k2="2" k3="0" in="SourceGraphic" result="result2" operator="out" />
 <feBlend id="feBlend2864" blend="normal" mode="normal" in="result2" />
 </filter>
-<filter id="Noisyblur0" inkscape:label="Noisy blur" inkscape:menu="Distort" inkscape:menu-tooltip="Small-scale roughening and blurring to edges and content" x="-0.25" width="1.5" y="-0.25" height="1.5">
+<filter id="Noisyblur0" inkscape:label="Noisy blur" inkscape:menu="Blurs" inkscape:menu-tooltip="Small-scale roughening and blurring to edges and content" x="-0.25" width="1.5" y="-0.25" height="1.5">
 <feGaussianBlur stdDeviation="5" id="feGaussianBlur3241" result="result1" />
 <feTurbulence id="feTurbulence3219" numOctaves="1" seed="0" type="fractalNoise" in="SourceAlpha" baseFrequency="0.10000000000000001" result="result2" />
 <feDisplacementMap id="feDisplacementMap3221" numOctaves="2" scale="5" yChannelSelector="G" xChannelSelector="R" result="result3" in="result1" />
