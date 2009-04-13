@@ -52,7 +52,7 @@ fi
 
 fail=false
 if ! test -z "$( cat $failed_tests )"; then
-  echo -e "\nFailed extension tests:"
+  echo -e "\nFailed $( cat $failed_tests | wc -l ) of $( ls -1 *.test.py | wc -l ) extension tests:"
   cat $failed_tests | sed 's/^/  - /'
   fail=true
 fi
