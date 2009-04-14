@@ -39,7 +39,11 @@ font	 = render_alphabetsoup_config.font
 
 # Loads a super-path from a given SVG file
 def loadPath( svgPath ):
-	extensionDir = os.path.normpath(os.path.join(os.getcwd(),os.path.dirname(sys.argv[0])))
+	extensionDir = os.path.normpath(
+	                    os.path.join( os.getcwd(), os.path.dirname(__file__) )
+	                  )
+	# __file__ is better then sys.argv[0] because this file may be a module
+	# for another one.
 	tree = inkex.etree.parse( extensionDir + "/" + svgPath )
 	root = tree.getroot()
 	pathElement = root.find('{http://www.w3.org/2000/svg}path')
