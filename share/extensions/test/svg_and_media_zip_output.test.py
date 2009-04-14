@@ -12,15 +12,16 @@ sys.path.append('..') # this line allows to import the extension code
 import unittest
 from svg_and_media_zip_output import *
 
-class MyEffectBasicTest(unittest.TestCase):
+class SVG_and_Media_ZIP_Output_BasicTest(unittest.TestCase):
 
   #def setUp(self):
 
   def test_run_without_parameters(self):
     args = [ 'minimal-blank.svg' ]
-    e = MyEffect()
+    e = SVG_and_Media_ZIP_Output()
     e.affect( args, False )
     #self.assertEqual( e.something, 'some value', 'A commentary about that.' )
+    e.clear_tmp()
 
 if __name__ == '__main__':
   unittest.main()

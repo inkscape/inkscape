@@ -43,12 +43,19 @@ import tempfile
 import gettext
 _ = gettext.gettext
 
-class MyEffect(inkex.Effect):
+class SVG_and_Media_ZIP_Output(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
 
     def output(self):
-        pass
+        out = open(self.zip_file,'r')
+        sys.stdout.write(out.read())
+        out.close()
+        self.clear_tmp()
+
+    def clear_tmp(self):
+        shutil.rmtree(self.tmp_dir)
+
 
     def effect(self):
         ttmp_orig = self.document.getroot()
@@ -59,20 +66,21 @@ class MyEffect(inkex.Effect):
         #orig_tmpfile = sys.argv[1]
 
         #create os temp dir
-        tmp_dir = tempfile.mkdtemp()
+        self.tmp_dir = tempfile.mkdtemp()
 
         # create destination zip in same directory as the document
-        z = zipfile.ZipFile(tmp_dir + os.path.sep + docname + '.zip', 'w')
+        self.zip_file = self.tmp_dir + os.path.sep + docname + '.zip'
+        z = zipfile.ZipFile(self.zip_file, 'w')
 
         #fixme replace whatever extention
         docstripped = docname.replace('.zip', '')
 
         #read tmpdoc and copy all images to temp dir
         for node in self.document.xpath('//svg:image', namespaces=inkex.NSS):
-            self.collectAndZipImages(node, tmp_dir, docname, z)
+            self.collectAndZipImages(node, docname, z)
 
         ##copy tmpdoc to tempdir
-        dst_file = os.path.join(tmp_dir, docstripped)
+        dst_file = os.path.join(self.tmp_dir, docstripped)
         stream = open(dst_file,'w')
 
         self.document.write(stream)
@@ -82,25 +90,21 @@ class MyEffect(inkex.Effect):
         z.write(dst_file.encode("latin-1"),docstripped.encode("latin-1")+'.svg') 
         z.close()
 
-        out = open(tmp_dir + os.path.sep + docname + '.zip','r')
-        sys.stdout.write(out.read())
-        out.close() 
 
-        shutil.rmtree(tmp_dir)
-
-    def collectAndZipImages(self, node, tmp_dir, docname, z):
+    def collectAndZipImages(self, node, docname, z):
         xlink = node.get(inkex.addNS('href',u'xlink'))
         if (xlink[:4]!='data'):
             absref = node.get(inkex.addNS('absref',u'sodipodi'))
             if absref is None:
               absref = node.get(inkex.addNS('href',u'xlink'))
             if (os.path.isfile(absref)):
-                shutil.copy(absref,tmp_dir)
+                shutil.copy(absref, self.tmp_dir)
                 z.write(absref.encode("latin-1"),os.path.basename(absref).encode("latin-1"))
-            elif (os.path.isfile(tmp_dir + os.path.sep + absref)):
+            elif (os.path.isfile(self.tmp_dir + os.path.sep + absref)):
                 #TODO: please explain why this clause is necessary
-                shutil.copy(tmp_dir + os.path.sep + absref,tmp_dir)
-                z.write(tmp_dir + os.path.sep + absref.encode("latin-1"),os.path.basename(absref).encode("latin-1"))
+                shutil.copy(self.tmp_dir + os.path.sep + absref, self.tmp_dir)
+                z.write(self.tmp_dir + os.path.sep + absref.encode("latin-1"),
+                        os.path.basename(absref).encode("latin-1"))
             else:
                 inkex.errormsg(_('Could not locate file: %s') % absref)
 
@@ -109,7 +113,7 @@ class MyEffect(inkex.Effect):
 
 
 if __name__ == '__main__':   #pragma: no cover
-    e = MyEffect()
+    e = SVG_and_Media_ZIP_Output()
     e.affect()
 
 
