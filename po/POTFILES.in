@@ -358,7 +358,7 @@ share/extensions/svg_and_media_zip_output.py
 [type: gettext/xml] share/extensions/extrude.inx
 [type: gettext/xml] share/extensions/fig_input.inx
 [type: gettext/xml] share/extensions/flatten.inx
-[type: gettext/xml] share/extensions/foldable-box.inx
+[type: gettext/xml] share/extensions/foldablebox.inx
 [type: gettext/xml] share/extensions/fractalize.inx
 [type: gettext/xml] share/extensions/funcplot.inx
 [type: gettext/xml] share/extensions/gears.inx
@@ -421,4 +421,5 @@ share/extensions/svg_and_media_zip_output.py
 [type: gettext/xml] share/extensions/web-transmit-att.inx
 [type: gettext/xml] share/extensions/whirl.inx
 [type: gettext/xml] share/extensions/wmf_input.inx
+[type: gettext/xml] share/extensions/wmf_output.inx
 [type: gettext/xml] share/extensions/xaml2svg.inx
