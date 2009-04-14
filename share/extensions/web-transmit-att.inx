@@ -29,8 +29,8 @@
   </param>
   <_param name="help" type="description">The next parameter is useful when you select more than two elements</_param>
   <param name="from-and-to" type="enum" _gui-text="Source and destination of transmitting">
-    <_item value="g-to-one">All attributes transmit to the last one</_item>
-    <_item value="one-to-g">The first attribute transmits to all</_item>
+    <_item value="g-to-one">All selected ones transmits to the last one</_item>
+    <_item value="one-to-g">The first selected transmits to all others</_item>
   </param>
   <effect>
     <object-type>all</object-type>

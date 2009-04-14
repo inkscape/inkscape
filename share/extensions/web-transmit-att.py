@@ -61,7 +61,9 @@ class InkWebTransmitAtt(inkwebeffect.InkWebEffect):
         for selId in self.options.ids[1:]:
           idTo.append( selId )
 
-      evCode = "InkWeb.transmitAtt({from:this, to:['"+ "','".join(idTo) +"'], att:'"+self.options.att+"'})"
+      evCode = "InkWeb.transmitAtt({from:this, " + \
+                                   "to:['"+ "','".join(idTo) +"'], " + \
+                                   "att:'"+ self.options.att +"'})"
 
       for el in elFrom:
         prevEvCode = el.get( self.options.when )

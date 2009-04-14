@@ -3,23 +3,30 @@
 **
 **  Copyright (C) 2009 Aurelio A. Heckert, aurium (a) gmail dot com
 **
+**  ********* Bugs and New Fetures *************************************
+**   If you found any bug on this script or if you want to propose a
+**   new feature, please report it in the inkscape bug traker
+**   https://bugs.launchpad.net/inkscape/+filebug
+**   and assign that to Aurium.
+**  ********************************************************************
+**
 **  This program is free software: you can redistribute it and/or modify
-**  it under the terms of the GNU General Public License as published by
-**  the Free Software Foundation, either version 3 of the License, or
+**  it under the terms of the GNU Lesser General Public License as published
+**  by the Free Software Foundation, either version 3 of the License, or
 **  (at your option) any later version.
 **
 **  This program is distributed in the hope that it will be useful,
 **  but WITHOUT ANY WARRANTY; without even the implied warranty of
 **  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-**  GNU General Public License for more details.
+**  GNU Lesser General Public License for more details.
 **
-**  You should have received a copy of the GNU General Public License
+**  You should have received a copy of the GNU Lesser General Public License
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 var InkWeb = {
 
-  version: 0.02,
+  version: 0.03,
 
   NS: {
     svg:      "http://www.w3.org/2000/svg",
@@ -88,27 +95,30 @@ InkWeb.transmitAtt = function (conf) {
 }
 
 InkWeb.setAtt = function (conf) {
-  if ( typeof(conf.el) == "string" )
-    conf.el = document.getElementById( conf.el );
+  if ( ! conf.el.join )
+    conf.to = [ conf.el ];
   conf.att = conf.att.split( /\s+/ );
   conf.val = conf.val.split( /\s+/ );
-  var att;
-  for ( var i=0; att=conf.att[i]; i++ ) {
-    if (
-         att == "width"  ||
-         att == "height" ||
-         att == "x"  ||
-         att == "y"  ||
-         att == "cx" ||
-         att == "cy" ||
-         att == "r"  ||
-         att == "rx" ||
-         att == "ry" ||
-         att == "transform"
-       ) {
-      conf.el.setAttribute( att, conf.val[i] );
-    } else {
-      this.setStyle( conf.el, att, conf.val[i] );
+  for ( var el,elN=0; el=conf.el[elN]; elN++ ) {
+    if ( typeof(el) == "string" )
+      el = document.getElementById( el );
+    for ( var att,i=0; att=conf.att[i]; i++ ) {
+      if (
+           att == "width"  ||
+           att == "height" ||
+           att == "x"  ||
+           att == "y"  ||
+           att == "cx" ||
+           att == "cy" ||
+           att == "r"  ||
+           att == "rx" ||
+           att == "ry" ||
+           att == "transform"
+         ) {
+        el.setAttribute( att, conf.val[i] );
+      } else {
+        this.setStyle( el, att, conf.val[i] );
+      }
     }
   }
 }
