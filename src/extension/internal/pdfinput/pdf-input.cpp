@@ -117,6 +117,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
     _textHandlingCombo = Gtk::manage(new class Gtk::ComboBoxText());
     _textHandlingCombo->append_text(_("Import text as text"));
     _textHandlingCombo->set_active_text(_("Import text as text"));
+    _localFontsCheck = Gtk::manage(new class Gtk::CheckButton(_("Replace PDF fonts by closest-named installed fonts")));
 
     hbox5 = Gtk::manage(new class Gtk::HBox(false, 4));
     _embedImagesCheck = Gtk::manage(new class Gtk::CheckButton(_("Embed images")));
@@ -211,6 +212,10 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
     _labelText->set_selectable(false);
     hbox5->pack_start(*_labelText, Gtk::PACK_SHRINK, 0);
     hbox5->pack_start(*_textHandlingCombo, Gtk::PACK_SHRINK, 0);
+    _localFontsCheck->set_flags(Gtk::CAN_FOCUS);
+    _localFontsCheck->set_relief(Gtk::RELIEF_NORMAL);
+    _localFontsCheck->set_mode(true);
+    _localFontsCheck->set_active(true);
     _embedImagesCheck->set_flags(Gtk::CAN_FOCUS);
     _embedImagesCheck->set_relief(Gtk::RELIEF_NORMAL);
     _embedImagesCheck->set_mode(true);
@@ -219,6 +224,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
     vbox3->pack_start(*hbox6, Gtk::PACK_SHRINK, 0);
     vbox3->pack_start(*_labelPrecisionWarning, Gtk::PACK_SHRINK, 0);
     vbox3->pack_start(*hbox5, Gtk::PACK_SHRINK, 4);
+    vbox3->pack_start(*_localFontsCheck, Gtk::PACK_SHRINK, 0);
     vbox3->pack_start(*_embedImagesCheck, Gtk::PACK_SHRINK, 0);
     alignment4->add(*vbox3);
     _labelImportSettings->set_alignment(0.5,0.5);
@@ -269,6 +275,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
     _labelText->show();
     _textHandlingCombo->show();
     hbox5->show();
+    _localFontsCheck->show();
     _embedImagesCheck->show();
     vbox3->show();
     alignment4->show();
@@ -364,6 +371,11 @@ void PdfImportDialog::getImportSettings(Inkscape::XML::Node *prefs) {
     }
     sp_repr_set_svg_double(prefs, "approximationPrecision",
                            _fallbackPrecisionSlider->get_value());
+    if (_localFontsCheck->get_active()) {
+        prefs->setAttribute("localFonts", "1");
+    } else {
+        prefs->setAttribute("localFonts", "0");
+    }
     if (_embedImagesCheck->get_active()) {
         prefs->setAttribute("embedImages", "1");
     } else {

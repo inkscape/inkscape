@@ -85,6 +85,7 @@ private:
     class Gtk::Label * _labelText;
     class Gtk::ComboBoxText * _textHandlingCombo;
     class Gtk::HBox * hbox5;
+    class Gtk::CheckButton * _localFontsCheck;
     class Gtk::CheckButton * _embedImagesCheck;
     class Gtk::VBox * vbox3;
     class Gtk::Alignment * alignment4;

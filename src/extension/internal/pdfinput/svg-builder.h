@@ -196,6 +196,8 @@ private:
 
     void _flushText();    // Write buffered text into doc
 
+    std::string _BestMatchingFont(std::string PDFname);
+
     // Handling of node stack
     Inkscape::XML::Node *pushNode(const char* name);
     Inkscape::XML::Node *popNode();
@@ -215,6 +217,7 @@ private:
     bool _in_text_object;   // Whether we are inside a text object
     bool _invalidated_style;
     GfxState *_current_state;
+    std::vector<std::string> _availableFontNames; // Full names, used for matching font names (Bug LP #179589).
 
     bool _is_top_level;  // Whether this SvgBuilder is the top-level one
     SPDocument *_doc;

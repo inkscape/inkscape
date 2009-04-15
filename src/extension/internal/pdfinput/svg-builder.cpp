@@ -14,6 +14,8 @@
 # include <config.h>
 #endif
 
+#include <string> 
+
 #ifdef HAVE_POPPLER
 
 #include "svg-builder.h"
@@ -88,6 +90,7 @@ SvgBuilder::SvgBuilder(SPDocument *document, gchar *docname, XRef *xref) {
     // Set default preference settings
     _preferences = _xml_doc->createElement("svgbuilder:prefs");
     _preferences->setAttribute("embedImages", "1");
+    _preferences->setAttribute("localFonts", "1");
 }
 
 SvgBuilder::SvgBuilder(SvgBuilder *parent, Inkscape::XML::Node *root) {
@@ -111,6 +114,15 @@ void SvgBuilder::_init() {
     _font_style = NULL;
     _current_font = NULL;
     _current_state = NULL;
+
+    // Fill _availableFontNames (Bug LP #179589) (code cfr. FontLister)
+    FamilyToStylesMap familyStyleMap;
+    font_factory::Default()->GetUIFamiliesAndStyles(&familyStyleMap);
+    for (FamilyToStylesMap::iterator iter = familyStyleMap.begin();
+         iter != familyStyleMap.end();
+         iter++) {
+        _availableFontNames.push_back(iter->first.c_str());
+    }
 
     _transp_group_stack = NULL;
     SvgGraphicsState initial_state;
@@ -851,6 +863,67 @@ void SvgBuilder::updateStyle(GfxState *state) {
     }
 }
 
+/*
+    MatchingChars
+    Count for how many characters s1 matches sp taking into account 
+    that a space in sp may be removed or replaced by some other tokens
+    specified in the code. (Bug LP #179589)
+*/
+static int MatchingChars(std::string s1, std::string sp)
+{
+    unsigned int is = 0;
+    unsigned int ip = 0;
+
+    while(is < s1.length() && ip < sp.length()) {
+        if (s1[is] == sp[ip]) {
+            is++; ip++;
+        } else if (sp[ip] == ' ') {
+            ip++;
+            if (s1[is] == '_') { // Valid matches to spaces in sp.
+                is++;
+            }
+        } else {
+            break;
+        }
+    }
+    return(ip);
+}
+
+/*
+    SvgBuilder::_BestMatchingFont
+    Scan the available fonts to find the font name that best matches PDFname.
+    (Bug LP #179589)
+*/
+std::string SvgBuilder::_BestMatchingFont(std::string PDFname)
+{
+    double bestMatch = 0;
+    std::string bestFontname = "Arial";
+    
+    for (guint i = 0; i < _availableFontNames.size(); i++) {
+        std::string fontname = _availableFontNames[i];
+        
+        // At least the first word of the font name should match.
+        guint minMatch = fontname.find(" ");
+        if (minMatch == std::string::npos) {
+           minMatch = fontname.length();
+        }
+        
+        int Match = MatchingChars(PDFname, fontname);
+        if (Match >= minMatch) {
+            double relMatch = (float)Match / (fontname.length() + PDFname.length());
+            if (relMatch > bestMatch) {
+                bestMatch = relMatch;
+                bestFontname = fontname;
+            }
+        }
+    }
+
+    if (bestMatch == 0)
+        return PDFname;
+    else
+        return bestFontname;
+}
+
 /**
  * This array holds info about translating font weight names to more or less CSS equivalents
  */
@@ -917,10 +990,17 @@ void SvgBuilder::updateFont(GfxState *state) {
     }
 
     // Font family
-    if (font->getFamily()) {
+    if (font->getFamily()) { // if font family is explicitly given use it.
         sp_repr_css_set_property(_font_style, "font-family", font->getFamily()->getCString());
-    } else {
-        sp_repr_css_set_property(_font_style, "font-family", font_family);
+    } else { 
+        int attr_value = 1;
+        sp_repr_get_int(_preferences, "localFonts", &attr_value);
+        if (attr_value != 0) {
+            // Find the font that best matches the stripped down (orig)name (Bug LP #179589).
+            sp_repr_css_set_property(_font_style, "font-family", _BestMatchingFont(font_family).c_str());
+        } else {
+            sp_repr_css_set_property(_font_style, "font-family", font_family);
+        }
     }
 
     // Font style
@@ -1177,7 +1257,7 @@ void SvgBuilder::_flushText() {
                 Glib::ustring properFontSpec = font_factory::Default()->ConstructFontSpecification(descr);
                 pango_font_description_free(descr);
                 sp_repr_css_set_property(glyph.style, "-inkscape-font-specification", properFontSpec.c_str());
-                
+
                 // Set style and unref SPCSSAttr if it won't be needed anymore
                 sp_repr_css_change(tspan_node, glyph.style, "style");
                 if ( glyph.style_changed && i != _glyphs.begin() ) {    // Free previous style
@@ -1365,9 +1445,9 @@ Inkscape::XML::Node *SvgBuilder::_createImage(Stream *str, int width, int height
         return NULL;
     }
     // Decide whether we should embed this image
-    double attr_value = 1.0;
-    sp_repr_get_double(_preferences, "embedImages", &attr_value);
-    bool embed_image = ( attr_value != 0.0 );
+    int attr_value = 1;
+    sp_repr_get_int(_preferences, "embedImages", &attr_value);
+    bool embed_image = ( attr_value != 0 );
     // Set read/write functions
     Inkscape::IO::StringOutputStream base64_string;
     Inkscape::IO::Base64OutputStream base64_stream(base64_string);
