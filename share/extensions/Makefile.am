@@ -71,7 +71,7 @@ extensions = \
 	inkwebeffect.py \
 	inkweb.js \
 	interp.py \
-	interp-att-g.py \
+	interp_att_g.py \
 	launch_webbrowser.py \
 	lindenmayer.py \
 	lorem_ipsum.py \
@@ -194,7 +194,7 @@ modules = \
 	inkscape_help_svgspec.inx \
 	inkscape_help_keys.inx \
 	interp.inx \
-	interp-att-g.inx \
+	interp_att_g.inx \
 	lindenmayer.inx \
 	lorem_ipsum.inx \
 	markers_strokepaint.inx \

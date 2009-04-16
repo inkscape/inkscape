@@ -99,6 +99,9 @@ class InterpAttG(inkex.Effect):
 
     def getTotElements(self):
       self.tot_el = 0
+      self.collection = None
+      if len( self.selected ) == 0:
+        return False
       if len( self.selected ) > 1:
         # multiple selection
         self.collection = self.options.ids
@@ -148,9 +151,9 @@ class InterpAttG(inkex.Effect):
       else:
         self.getNumberValues()
 
-      #inkex.errormsg( 'R+: '+ str( self.R_inc ) )
-      #inkex.errormsg( 'G+: '+ str( self.G_inc ) )
-      #inkex.errormsg( 'B+: '+ str( self.B_inc ) )
+      if self.collection is None:
+        inkex.errormsg( 'There is no selection to interpolate' )
+        return False
 
       for node in self.collection:
         if self.inte_att_type == 'color':
@@ -192,6 +195,11 @@ class InterpAttG(inkex.Effect):
         else:
           self.val_cur += self.val_inc
 
-if __name__ == '__main__':
+      return True
+
+if __name__ == '__main__':   #pragma: no cover
     e = InterpAttG()
-    e.affect()
+    if e.affect():
+      exit(0)
+    else:
+      exit(1)

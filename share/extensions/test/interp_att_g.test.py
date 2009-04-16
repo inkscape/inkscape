@@ -10,7 +10,7 @@ import sys
 sys.path.append('..') # this line allows to import the extension code
 
 import unittest
-from interp-att-g import *
+from interp_att_g import *
 
 class InterpAttGBasicTest(unittest.TestCase):
 

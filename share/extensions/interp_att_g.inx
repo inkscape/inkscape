@@ -2,7 +2,7 @@
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
   <_name>Interpolate Attribute in a group</_name>
   <id>org.inkscape.filter.interp-att-g</id>
-  <dependency type="executable" location="extensions">interp-att-g.py</dependency>
+  <dependency type="executable" location="extensions">interp_att_g.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
   <_param name="intro" type="description">This effect applies a value for any interpolatable attribute for all elements inside the selected group or for all elements in a multiple selection</_param>
   <param name="att" type="enum" _gui-text="Attribute to Interpolate">
@@ -46,6 +46,6 @@
     </effects-menu>
   </effect>
   <script>
-    <command reldir="extensions" interpreter="python">interp-att-g.py</command>
+    <command reldir="extensions" interpreter="python">interp_att_g.py</command>
   </script>
 </inkscape-extension>
