@@ -200,9 +200,10 @@ static GtkWidget* ink_action_create_menu_item( GtkAction* action )
         if ( SP_IS_ICON(child) ) {
             SPIcon* icon = SP_ICON(child);
             sp_icon_fetch_pixbuf( icon );
-            GdkPixbuf* target = gtk_action_is_sensitive(action) ? icon->pb : icon->pb_faded;
+            GdkPixbuf* target = icon->pb;
             if ( target ) {
                 child = gtk_image_new_from_pixbuf( target );
+                gtk_widget_set_sensitive(child, gtk_action_is_sensitive(action));
                 gtk_widget_destroy( GTK_WIDGET(icon) );
             }
         }

@@ -140,7 +140,6 @@ sp_icon_init(SPIcon *icon)
     icon->psize = 0;
     icon->name = 0;
     icon->pb = 0;
-    icon->pb_faded = 0;
 }
 
 static void
@@ -165,10 +164,6 @@ static void sp_icon_clear( SPIcon *icon ) {
     if (icon->pb) {
         g_object_unref(G_OBJECT(icon->pb));
         icon->pb = NULL;
-    }
-    if (icon->pb_faded) {
-        g_object_unref(G_OBJECT(icon->pb_faded));
-        icon->pb_faded = NULL;
     }
 }
 
@@ -230,8 +225,6 @@ void sp_icon_fetch_pixbuf( SPIcon *icon )
             }
             if ( pb ) {
                 icon->pb = pb;
-                icon->pb_faded = gdk_pixbuf_copy(icon->pb);
-                gdk_pixbuf_saturate_and_pixelate(icon->pb, icon->pb_faded, 0.5, TRUE);
             } else {
                 /* TODO: We should do something more useful if we can't load the image. */
                 g_warning ("failed to load icon '%s'", icon->name);
@@ -516,34 +509,35 @@ int sp_icon_get_phys_size(int size)
 static void sp_icon_paint(SPIcon *icon, GdkRectangle const *area)
 {
     GtkWidget &widget = *GTK_WIDGET(icon);
-
-    GdkPixbuf *image = GTK_WIDGET_IS_SENSITIVE(&widget) ? icon->pb : icon->pb_faded;
+    GdkPixbuf *image = icon->pb;
+    bool unref_image = false;
+    
+    /* copied from the expose function of GtkImage */
+    if (GTK_WIDGET_STATE (icon) != GTK_STATE_NORMAL && image) {
+        GtkIconSource *source = gtk_icon_source_new();
+        gtk_icon_source_set_pixbuf(source, icon->pb);
+        gtk_icon_source_set_size(source, GTK_ICON_SIZE_SMALL_TOOLBAR); // note: this is boilerplate and not used
+        gtk_icon_source_set_size_wildcarded(source, FALSE);
+        image = gtk_style_render_icon (widget.style, source, gtk_widget_get_direction(&widget),
+            (GtkStateType) GTK_WIDGET_STATE(&widget), (GtkIconSize)-1, &widget, "gtk-image");
+        gtk_icon_source_free(source);
+        unref_image = true;
+    }
 
     if (image) {
-        int const padx = ( ( widget.allocation.width > icon->psize )
-                           ? ( widget.allocation.width - icon->psize ) / 2
-                           : 0 );
-        int const pady = ( ( widget.allocation.height > icon->psize )
-                           ? ( widget.allocation.height - icon->psize ) / 2
-                           : 0 );
-
-        int const x0 = std::max(area->x, widget.allocation.x + padx);
-        int const y0 = std::max(area->y, widget.allocation.y + pady);
-        int const x1 = std::min(area->x + area->width,  widget.allocation.x + padx + static_cast<int>(icon->psize) );
-        int const y1 = std::min(area->y + area->height, widget.allocation.y + pady + static_cast<int>(icon->psize) );
-
-        int width = x1 - x0;
-        int height = y1 - y0;
+        int x = floor(widget.allocation.x + ((widget.allocation.width - widget.requisition.width) * 0.5));
+        int y = floor(widget.allocation.y + ((widget.allocation.height - widget.requisition.height) * 0.5));
+        int width = gdk_pixbuf_get_width(image);
+        int height = gdk_pixbuf_get_height(image);
         // Limit drawing to when we actually have something. Avoids some crashes.
         if ( (width > 0) && (height > 0) ) {
-            gdk_draw_pixbuf(GDK_DRAWABLE(widget.window), NULL, image,
-                            x0 - widget.allocation.x - padx,
-                            y0 - widget.allocation.y - pady,
-                            x0, y0,
-                            width, height,
-                            GDK_RGB_DITHER_NORMAL, x0, y0);
+            gdk_draw_pixbuf(GDK_DRAWABLE(widget.window), widget.style->black_gc, image,
+                            0, 0, x, y, width, height,
+                            GDK_RGB_DITHER_NORMAL, x, y);
         }
     }
+    
+    if (unref_image) g_object_unref(G_OBJECT(image));
 }
 
 GdkPixbuf *sp_icon_image_load_pixmap(gchar const *name, unsigned /*lsize*/, unsigned psize)

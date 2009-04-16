@@ -30,7 +30,6 @@ struct SPIcon {
     gchar *name;
 
     GdkPixbuf *pb;
-    GdkPixbuf *pb_faded;
 };
 
 struct SPIconClass {
