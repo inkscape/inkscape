@@ -987,13 +987,10 @@
 <feComposite id="feComposite3545" in2="SourceAlpha" operator="in" in="result4" result="fbSourceGraphic" />
 <feDisplacementMap id="feDisplacementMap3551" numOctaves="2" scale="15" yChannelSelector="G" xChannelSelector="R" in2="result0" />
 </filter>
-<filter id="filter2573" inkscape:label="In and out" inkscape:menu="Shadows and Glows" inkscape:menu-tooltip="Inner colorized shadow, outer black shadow">
-<feGaussianBlur id="feGaussianBlur1034" result="result0" in="SourceAlpha" stdDeviation="4" />
-<feOffset dx="5" dy="5" id="feOffset3389" result="result4" />
-<feSpecularLighting id="feSpecularLighting2579" specularExponent="35" specularConstant="1.05" surfaceScale="0.75" lighting-color="rgb(255,255,255)" result="result1" in="result0">
-<fePointLight id="fePointLight2581" z="20000" y="-10000" x="-5000" />
-</feSpecularLighting>
-<feComposite id="feComposite1039" in="SourceGraphic" in2="result4" operator="xor" result="result3" />
+<filter id="Inandout0" inkscape:label="In and out" inkscape:menu="Shadows and Glows" inkscape:menu-tooltip="Inner colorized shadow, outer black shadow">
+<feGaussianBlur id="feGaussianBlur2880" result="result0" in="SourceAlpha" stdDeviation="4" />
+<feOffset id="feOffset2882" dx="5" dy="5" result="result4" />
+<feComposite id="feComposite2888" in="SourceGraphic" in2="result4" operator="xor" result="result3" />
 </filter>
 <filter id="filter3474" inkscape:label="Air spray" inkscape:menu="Scatter" inkscape:menu-tooltip="Air Spray; adjust the Displacement Map amount" width="2" height="2" y="-0.5" x="-0.5">
 <feGaussianBlur stdDeviation="0.01" id="feGaussianBlur3721" result="result1" />
@@ -1292,15 +1289,12 @@
 <feComposite id="feComposite2896" k3="0.99999999999999989" k2="0.99999999999999989" operator="arithmetic" result="result4" in="result5" in2="SourceGraphic" />
 <feComposite id="feComposite2902" operator="in" in2="SourceGraphic" />
 </filter>
-<filter x="-0.1" width="1.2" y="-0.1" height="1.2" inkscape:menu-tooltip="In and out glow with a possible offset and colorizable flood" inkscape:menu="Shadows and Glows" inkscape:label="Cutout glow" id="filter4199">
-<feOffset id="feOffset4201" dy="3" dx="3" />
-<feGaussianBlur result="result8" stdDeviation="3" id="feGaussianBlur4203" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " id="feColorMatrix4205" result="result5" />
-<feComposite in2="result8" operator="in" id="feComposite4207" in="SourceGraphic" result="result6" />
-<feFlood flood-color="rgb(0,0,0)" flood-opacity="1" id="feFlood4209" in="result6" result="result10" />
-<feComposite in2="SourceGraphic" operator="in" result="result2" id="feComposite4211" />
-<feComposite in2="SourceGraphic" operator="in" in="result2" id="feComposite4213" result="result9" />
-<feBlend mode="normal" blend="normal" id="feBlend4215" in2="result9" in="result5" />
+<filter id="Cutoutgl0" x="-0.1" width="1.2" y="-0.1" height="1.2" inkscape:menu-tooltip="In and out glow with a possible offset and colorizable flood" inkscape:menu="Shadows and Glows" inkscape:label="Cutout glow">
+<feOffset id="feOffset2842" dy="3" dx="3" />
+<feGaussianBlur id="feGaussianBlur2844" result="result8" stdDeviation="3" />
+<feFlood id="feFlood2850" flood-color="rgb(0,0,0)" flood-opacity="1" in="result8" result="result10" />
+<feComposite id="feComposite2854" in2="SourceGraphic" operator="in" in="result10" result="result9" />
+<feBlend id="feBlend2856" mode="normal" blend="normal" in2="result9" in="result8" />
 </filter>
 <filter id="filter3655" inkscape:label="HSL bumps diffuse" inkscape:menu="Bumps" inkscape:menu-tooltip="Same than HSL bumps but with a diffuse reflexion instead of a specular one">
 <feGaussianBlur id="feGaussianBlur3657" stdDeviation="0.5" in="SourceGraphic" result="result0" />
