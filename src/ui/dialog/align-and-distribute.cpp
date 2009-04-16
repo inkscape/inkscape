@@ -893,14 +893,14 @@ AlignAndDistribute::AlignAndDistribute()
 
     //Node Mode buttons
     // NOTE: "align nodes vertically" means "move nodes vertically until they align on a common
-    // _horizontal_ line". This is analogous to what the "align-vertical-center" means.
+    // _horizontal_ line". This is analogous to what the "align-vertical-center" icon means.
     // There is no doubt some ambiguity. For this reason the descriptions are different.
-    addNodeButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_NODES,
-                  _("Align selected nodes to a common vertical line"),
-                  0, Geom::Y, false);
     addNodeButton(INKSCAPE_ICON_ALIGN_VERTICAL_NODES,
                   _("Align selected nodes to a common horizontal line"),
-                  1, Geom::X, false);
+                  0, Geom::X, false);
+    addNodeButton(INKSCAPE_ICON_ALIGN_HORIZONTAL_NODES,
+                  _("Align selected nodes to a common vertical line"),
+                  1, Geom::Y, false);
     addNodeButton(INKSCAPE_ICON_DISTRIBUTE_HORIZONTAL_NODE,
                   _("Distribute selected nodes horizontally"),
                   2, Geom::X, true);
