@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-04-15 20:46+0200\n"
-"PO-Revision-Date: 2009-04-15 21:09+0100\n"
+"PO-Revision-Date: 2009-04-17 15:48+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -11193,7 +11193,7 @@ msgstr "Toutes les images bitmap"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:924
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1462
 msgid "Append filename extension automatically"
-msgstr "Ajoutert une extension automatiquement"
+msgstr "Ajouter une extension automatiquement"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1078
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1326
