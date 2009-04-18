@@ -60,13 +60,6 @@ icons_DATA = \
 	draw-ellipse-whole.png \
 	draw-eraser.png \
 	draw-freehand.png \
-	draw-geometry-angle-bisector.png \
-	draw-geometry-circle-from-radius.png \
-	draw-geometry-circle-from-three-points.png \
-	draw-geometry-line-parallel.png \
-	draw-geometry-line-perpendicular.png \
-	draw-geometry-line-segment.png \
-	draw-geometry-symmetry.png \
 	draw-path.png \
 	draw-polygon.png \
 	draw-polygon-star.png \

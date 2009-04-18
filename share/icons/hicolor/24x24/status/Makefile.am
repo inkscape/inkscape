@@ -11,6 +11,12 @@ icons_DATA = \
 	connector-avoid.png \
 	connector-ignore.png \
 	draw-eraser-delete-objects.png \
+	draw-geometry-angle-bisector.png \
+	draw-geometry-circle-from-radius.png \
+	draw-geometry-circle-from-three-points.png \
+	draw-geometry-line-parallel.png \
+	draw-geometry-line-perpendicular.png \
+	draw-geometry-line-segment.png \
 	draw-trace-background.png \
 	draw-use-pressure.png \
 	draw-use-tilt.png \
