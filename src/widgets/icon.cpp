@@ -511,7 +511,7 @@ static void sp_icon_paint(SPIcon *icon, GdkRectangle const *area)
     GtkWidget &widget = *GTK_WIDGET(icon);
     GdkPixbuf *image = icon->pb;
     bool unref_image = false;
-    
+
     /* copied from the expose function of GtkImage */
     if (GTK_WIDGET_STATE (icon) != GTK_STATE_NORMAL && image) {
         GtkIconSource *source = gtk_icon_source_new();
@@ -536,7 +536,7 @@ static void sp_icon_paint(SPIcon *icon, GdkRectangle const *area)
                             GDK_RGB_DITHER_NORMAL, x, y);
         }
     }
-    
+
     if (unref_image) g_object_unref(G_OBJECT(image));
 }
 
@@ -788,7 +788,7 @@ static guchar *load_svg_pixels(gchar const *name,
         if (!info &&
             Inkscape::IO::file_test( doc_filename, G_FILE_TEST_IS_REGULAR ) &&
             (doc = sp_document_new( doc_filename, FALSE )) ) {
-            
+
             //g_message("Loaded icon file %s", doc_filename);
             // prep the document
             sp_document_ensure_up_to_date(doc);
