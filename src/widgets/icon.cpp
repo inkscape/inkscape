@@ -72,6 +72,8 @@ static GtkIconSize iconSizeLookup[] = {
     GTK_ICON_SIZE_MENU, // for Inkscape::ICON_SIZE_DECORATION
 };
 
+static std::map<Glib::ustring, Glib::ustring> legacyNames;
+
 class IconCacheItem
 {
 public:
@@ -203,36 +205,47 @@ static int sp_icon_expose(GtkWidget *widget, GdkEventExpose *event)
     return TRUE;
 }
 
+static GdkPixbuf* renderup( gchar const* name, Inkscape::IconSize lsize, unsigned psize );
+
 // PUBLIC CALL:
 void sp_icon_fetch_pixbuf( SPIcon *icon )
 {
+    g_message("sp_icon_fetch_pixbuf(%p) [%s]", icon, icon->name);
     if ( icon ) {
         if ( !icon->pb ) {
             icon->psize = sp_icon_get_phys_size(icon->lsize);
-            GtkIconTheme *theme = gtk_icon_theme_get_default();
-
-            GdkPixbuf *pb = 0;
-            if (gtk_icon_theme_has_icon(theme, icon->name)) {
-                pb = gtk_icon_theme_load_icon(theme, icon->name, icon->psize, (GtkIconLookupFlags) 0, NULL);
-            }
-            if (!pb) {
-                pb = sp_icon_image_load_svg( icon->name, Inkscape::getRegisteredIconSize(icon->lsize), icon->psize );
-                // if this was loaded from SVG, add it as a builtin icon
-                if (pb) {
-                    gtk_icon_theme_add_builtin_icon(icon->name, icon->psize, pb);
-                }
-            }
-            if (!pb) {
-                pb = sp_icon_image_load_pixmap( icon->name, icon->lsize, icon->psize );
-            }
-            if ( pb ) {
-                icon->pb = pb;
-            } else {
-                /* TODO: We should do something more useful if we can't load the image. */
-                g_warning ("failed to load icon '%s'", icon->name);
-            }
+            icon->pb = renderup(icon->name, icon->lsize, icon->psize);
         }
     }
+}
+
+static GdkPixbuf* renderup( gchar const* name, Inkscape::IconSize lsize, unsigned psize ) {
+    GtkIconTheme *theme = gtk_icon_theme_get_default();
+
+    GdkPixbuf *pb = 0;
+    if (gtk_icon_theme_has_icon(theme, name)) {
+        pb = gtk_icon_theme_load_icon(theme, name, psize, (GtkIconLookupFlags) 0, NULL);
+    }
+    if (!pb) {
+        pb = sp_icon_image_load_svg( name, Inkscape::getRegisteredIconSize(lsize), psize );
+        if (!pb && (legacyNames.find(name) != legacyNames.end())) {
+            g_message("Checking fallback [%s]->[%s]", name, legacyNames[name].c_str());
+            pb = sp_icon_image_load_svg( legacyNames[name].c_str(), Inkscape::getRegisteredIconSize(lsize), psize );
+        }
+
+        // if this was loaded from SVG, add it as a builtin icon
+        if (pb) {
+            gtk_icon_theme_add_builtin_icon(name, psize, pb);
+        }
+    }
+    if (!pb) {
+        pb = sp_icon_image_load_pixmap( name, lsize, psize );
+    }
+    if ( !pb ) {
+        // TODO: We should do something more useful if we can't load the image.
+        g_warning ("failed to load icon '%s'", name);
+    }
+    return pb;
 }
 
 static void sp_icon_screen_changed( GtkWidget *widget, GdkScreen *previous_screen )
@@ -265,8 +278,6 @@ static void sp_icon_theme_changed( SPIcon *icon )
 static Glib::ustring icon_cache_key(gchar const *name, unsigned lsize, unsigned psize);
 static GdkPixbuf *get_cached_pixbuf(Glib::ustring const &key);
 
-std::map<Glib::ustring, Glib::ustring> legacyNames;
-
 static void setupLegacyNaming() {
     legacyNames["view-fullscreen"] = "fullscreen";
     legacyNames["edit-select-all"] = "selection_select_all";
@@ -296,8 +307,7 @@ sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
 
     if ( stockFound ) {
         img = gtk_image_new_from_stock( name, mappedSize );
-    }
-    else if ( legacyNames.find(name) != legacyNames.end() ) {
+    } else {
         img = gtk_image_new_from_icon_name( name, mappedSize );
         if ( dump ) {
             g_message("gtk_image_new_from_icon_name( '%s', %d ) = %p", name, mappedSize, img);
@@ -328,6 +338,12 @@ sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
         } else if ( type == GTK_IMAGE_ICON_NAME ) {
             widget = GTK_WIDGET(img);
             img = 0;
+
+            if (!gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), name)) {
+                // TODO temporary work-around. until background rendering is restored.
+                int psize = sp_icon_get_phys_size(lsize);
+                renderup(name, lsize, psize);
+            }
 
             // Add a hook to render if set visible before prerender is done.
             // TODO restore g_signal_connect( G_OBJECT(widget), "map", G_CALLBACK(imageMapNamedCB), GINT_TO_POINTER(0) );
