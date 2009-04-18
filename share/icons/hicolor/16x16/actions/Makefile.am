@@ -60,6 +60,13 @@ icons_DATA = \
 	draw-ellipse-whole.png \
 	draw-eraser.png \
 	draw-freehand.png \
+	draw-geometry-angle-bisector.png \
+	draw-geometry-circle-from-radius.png \
+	draw-geometry-circle-from-three-points.png \
+	draw-geometry-line-parallel.png \
+	draw-geometry-line-perpendicular.png \
+	draw-geometry-line-segment.png \
+	draw-geometry-symmetry.png \
 	draw-path.png \
 	draw-polygon.png \
 	draw-polygon-star.png \
@@ -142,6 +149,7 @@ icons_DATA = \
 	path-tweak-roughen.png \
 	path-tweak-shrink.png \
 	path-union.png \
+	randomize.png \
 	rectangle-make-corners-sharp.png \
 	selection-bottom.png \
 	selection-lower.png \
@@ -150,6 +158,7 @@ icons_DATA = \
 	selection-move-to-layer-below.png \
 	selection-raise.png \
 	selection-top.png \
+	show-bounding-box.png \
 	show-dialogs.png \
 	show-grid.png \
 	show-guides.png \

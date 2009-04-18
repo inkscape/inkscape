@@ -60,6 +60,7 @@ icons_DATA = \
 	draw-ellipse-whole.svg \
 	draw-eraser.svg \
 	draw-freehand.svg \
+	draw-geometry.svg \
 	draw-path.svg \
 	draw-polygon-star.svg \
 	draw-polygon.svg \
@@ -151,6 +152,7 @@ icons_DATA = \
 	selection-move-to-layer-below.svg \
 	selection-raise.svg \
 	selection-top.svg \
+	show-bounding-box.svg \
 	show-dialogs.svg \
 	show-grid.svg \
 	show-guides.svg \

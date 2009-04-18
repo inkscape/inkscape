@@ -5347,7 +5347,7 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
         g_object_set_data(tbl, "freeze", GINT_TO_POINTER(TRUE));
 
         gint mode = ege_select_one_action_get_active(act);
-        EffectType type = lpesubtools[mode];
+        EffectType type = lpesubtools[mode].type;
 
         SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
         bool success = lpetool_try_construction(lc, type);
@@ -5566,17 +5566,17 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         gtk_list_store_set( model, &iter,
                             0, _("All inactive"),
                             1, _("No geometric tool is active"),
-                            2, _("all_inactive"),
+                            2, _("draw-geometry-inactive"),
                             -1 );
 
         Inkscape::LivePathEffect::EffectType type;
         for (int i = 1; i < num_subtools; ++i) { // we start with i = 1 because INVALID_LPE was already added
-            type =  lpesubtools[i];
+            type =  lpesubtools[i].type;
             gtk_list_store_append( model, &iter );
             gtk_list_store_set( model, &iter,
                                 0, Inkscape::LivePathEffect::LPETypeConverter.get_label(type).c_str(),
                                 1, Inkscape::LivePathEffect::LPETypeConverter.get_label(type).c_str(),
-                                2, Inkscape::LivePathEffect::LPETypeConverter.get_key(type).c_str(),
+                                2, lpesubtools[i].icon_name,
                                 -1 );
         }
 
@@ -5600,7 +5600,7 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         InkToggleAction* act = ink_toggle_action_new( "LPEShowBBoxAction",
                                                       _("Show limiting bounding box"),
                                                       _("Show bounding box (used to cut infinite lines)"),
-                                                      "lpetool_show_bbox",
+                                                      "show-bounding-box",
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(lpetool_toggle_show_bbox), desktop );

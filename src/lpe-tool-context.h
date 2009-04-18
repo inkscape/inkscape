@@ -30,7 +30,12 @@ class SPLPEToolContextClass;
 /* This is the list of subtools from which the toolbar of the LPETool is built automatically */
 extern const int num_subtools;
 
-extern Inkscape::LivePathEffect::EffectType lpesubtools[];
+struct SubtoolEntry {
+    Inkscape::LivePathEffect::EffectType type;
+    gchar const *icon_name;
+};
+
+extern SubtoolEntry lpesubtools[];
 
 enum LPEToolState {
     LPETOOL_STATE_PEN,

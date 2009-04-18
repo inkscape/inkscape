@@ -54,15 +54,16 @@ void sp_lpetool_context_selection_changed(Inkscape::Selection *selection, gpoint
 
 const int num_subtools = 8;
 
-Inkscape::LivePathEffect::EffectType lpesubtools[] = {
-    Inkscape::LivePathEffect::INVALID_LPE, // this must be here to account for the "all inactive" action
-    Inkscape::LivePathEffect::LINE_SEGMENT,
-    Inkscape::LivePathEffect::CIRCLE_3PTS,
-    Inkscape::LivePathEffect::CIRCLE_WITH_RADIUS,
-    Inkscape::LivePathEffect::PARALLEL,
-    Inkscape::LivePathEffect::PERP_BISECTOR,
-    Inkscape::LivePathEffect::ANGLE_BISECTOR,
-    Inkscape::LivePathEffect::MIRROR_SYMMETRY,
+SubtoolEntry lpesubtools[] = {
+    // this must be here to account for the "all inactive" action
+    {Inkscape::LivePathEffect::INVALID_LPE, "draw-geometry-inactive"},
+    {Inkscape::LivePathEffect::LINE_SEGMENT, "draw-geometry-line-segment"},
+    {Inkscape::LivePathEffect::CIRCLE_3PTS, "draw-geometry-circle-from-three-points"},
+    {Inkscape::LivePathEffect::CIRCLE_WITH_RADIUS, "draw-geometry-circle-from-radius"},
+    {Inkscape::LivePathEffect::PARALLEL, "draw-geometry-line-parallel"},
+    {Inkscape::LivePathEffect::PERP_BISECTOR, "draw-geometry-line-perpendicular"},
+    {Inkscape::LivePathEffect::ANGLE_BISECTOR, "draw-geometry-angle-bisector"},
+    {Inkscape::LivePathEffect::MIRROR_SYMMETRY, "draw-geometry-mirror"}
 };
 
 static SPPenContextClass *lpetool_parent_class = 0;
@@ -285,7 +286,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                 int mode = prefs->getInt("/tools/lpetool/mode");
-                EffectType type = lpesubtools[mode];
+                EffectType type = lpesubtools[mode].type;
 
                 //bool over_stroke = lc->shape_editor->is_over_stroke(Geom::Point(event->button.x, event->button.y), true);
 
@@ -365,7 +366,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 int
 lpetool_mode_to_index(Inkscape::LivePathEffect::EffectType const type) {
     for (int i = 0; i < num_subtools; ++i) {
-        if (lpesubtools[i] == type) {
+        if (lpesubtools[i].type == type) {
             return i;
         }
     }

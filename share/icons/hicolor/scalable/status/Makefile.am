@@ -11,6 +11,14 @@ icons_DATA = \
 	connector-avoid.svg \
 	connector-ignore.svg \
 	draw-eraser-delete-objects.svg \
+	draw-geometry-angle-bisector.svg \
+	draw-geometry-circle-from-radius.svg \
+	draw-geometry-circle-from-three-points.svg \
+	draw-geometry-inactive.svg \
+	draw-geometry-line-parallel.svg \
+	draw-geometry-line-perpendicular.svg \
+	draw-geometry-line-segment.svg \
+	draw-geometry-mirror.svg \
 	draw-trace-background.svg \
 	draw-use-pressure.svg \
 	draw-use-tilt.svg \
