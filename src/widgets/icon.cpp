@@ -506,7 +506,7 @@ int sp_icon_get_phys_size(int size)
     return vals[size];
 }
 
-static void sp_icon_paint(SPIcon *icon, GdkRectangle const *area)
+static void sp_icon_paint(SPIcon *icon, GdkRectangle const */*area*/)
 {
     GtkWidget &widget = *GTK_WIDGET(icon);
     GdkPixbuf *image = icon->pb;
