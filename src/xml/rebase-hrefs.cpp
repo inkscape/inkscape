@@ -21,7 +21,7 @@ href_needs_rebasing(char const *const href)
 {
     g_return_val_if_fail(href, false);
 
-    if (!*href) {
+    if (!*href || *href == '#') {
         return false;
         /* False (no change) is the right behaviour even when the base URI differs from the
          * document URI: RFC 3986 defines empty string relative URL as referring to the containing
