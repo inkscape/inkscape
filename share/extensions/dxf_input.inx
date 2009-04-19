@@ -4,6 +4,8 @@
 	<id>org.inkscape.input.dxf</id>
 	<dependency type="executable" location="extensions">dxf_input.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="auto" type="boolean" _gui-text="Use automatic scaling to size A4">true</param>
+	<param name="scale" type="string" _gui-text="Or, use manual scale factor">1.0</param>
 	<input>
 		<extension>.dxf</extension>
 		<mimetype>image/x-svgz</mimetype>

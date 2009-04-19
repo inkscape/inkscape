@@ -283,17 +283,22 @@ def get_group(group):
 
 #   define DXF Entities and specify which Group Codes to monitor
 
-entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'DIMENSION': export_DIMENSION, 'INSERT': export_INSERT, 'BLOCK': export_BLOCK, 'ENDBLK': export_ENDBLK, 'OBJECTS': False}
+entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'DIMENSION': export_DIMENSION, 'INSERT': export_INSERT, 'BLOCK': export_BLOCK, 'ENDBLK': export_ENDBLK, 'DICTIONARY': False}
 groups = {'1': 0, '2': 1, '3': 2, '6': 3, '8': 4, '10': 5, '11': 6, '13': 7, '14': 8, '20': 9, '21': 10, '23': 11, '24': 12, '40': 13, '41': 14, '42': 15, '50': 16, '51': 17, '62': 18, '70': 19, '72': 20, '73': 21, '93': 22, '370': 23}
 colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '#0000FF',
             6: '#FF00FF',   8: '#414141',   9: '#808080',  12: '#BD0000',  30: '#FF7F00',
           250: '#333333', 251: '#505050', 252: '#696969', 253: '#828282', 254: '#BEBEBE', 255: '#FFFFFF'}
 
+parser = inkex.optparse.OptionParser(usage="usage: %prog [options] SVGfile", option_class=inkex.InkOption)
+parser.add_option("--auto", action="store", type="inkbool", dest="auto", default=True)
+parser.add_option("--scale", action="store", type="string", dest="scale", default="1.0")
+(options, args) = parser.parse_args(inkex.sys.argv[1:])
 doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"></svg>'))
+desc = inkex.etree.SubElement(doc.getroot(), 'desc', {})
 defs = inkex.etree.SubElement(doc.getroot(), 'defs', {})
 marker = inkex.etree.SubElement(defs, 'marker', {'id': 'DistanceX', 'orient': 'auto', 'refX': '0.0', 'refY': '0.0', 'style': 'overflow:visible'})
 inkex.etree.SubElement(marker, 'path', {'d': 'M 3,-3 L -3,3 M 0,-5 L  0,5', 'style': 'stroke:#000000; stroke-width:0.5'})
-stream = open(inkex.sys.argv[1], 'r')
+stream = open(args[0], 'r')
 xmax = xmin = 0.0
 ymax = 297.0                                        # default A4 height in mm
 line = get_line()
@@ -334,9 +339,15 @@ while line[0] and line[1] != 'BLOCKS':
     if line[0] == '0' and line[1] == 'ENDTAB':
         flag = 0
 
-scale = 90.0/25.4                                   # default convert from mm to pixels
-if xmax > xmin:
-    scale *= 210.0/(xmax - xmin)                    # scale to A4 width
+if options.auto:
+    scale = 1.0
+    if xmax > xmin:
+        scale = 210.0/(xmax - xmin)                 # scale to A4 width
+else:
+    scale = float(options.scale)                    # manual scale factor
+desc.text = '%s - scale = %f' % (args[0], scale)
+scale *= 90.0/25.4                                  # convert from mm to pixels
+
 for linename in linetypes.keys():                   # scale the dashed lines
     linetype = ''
     for length in linetypes[linename]:
@@ -345,7 +356,7 @@ for linename in linetypes.keys():                   # scale the dashed lines
 
 entity = ''
 block = defs                                        # initiallize with dummy
-while line[0] and line[1] != 'OBJECTS':
+while line[0] and line[1] != 'DICTIONARY':
     line = get_line()
     if entity and groups.has_key(line[0]):
         seqs.append(line[0])                        # list of group codes
@@ -369,12 +380,13 @@ while line[0] and line[1] != 'OBJECTS':
         if entities.has_key(entity):
             if block != defs:                       # in a BLOCK
                 layer = block
-            else:                                   # use Common Layer Name
+            elif vals[groups['8']]:                 # use Common Layer Name
                 layer = layer_nodes[vals[groups['8']][0]]
             color = '#000000'                       # default color
-            if layer_colors.has_key(vals[groups['8']][0]):
-                if colors.has_key(layer_colors[vals[groups['8']][0]]):
-                    color = colors[layer_colors[vals[groups['8']][0]]]
+            if vals[groups['8']]:
+                if layer_colors.has_key(vals[groups['8']][0]):
+                    if colors.has_key(layer_colors[vals[groups['8']][0]]):
+                        color = colors[layer_colors[vals[groups['8']][0]]]
             if vals[groups['62']]:                  # Common Color Number
                 if colors.has_key(vals[groups['62']][0]):
                     color = colors[vals[groups['62']][0]]
