@@ -52,8 +52,15 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
                 sp_icon_fetch_pixbuf(sp_icon);
                 _icon_pixbuf = Glib::wrap(sp_icon->pb, true);
             } else if ( GTK_IS_IMAGE(icon->gobj()) ) {
-                _icon_pixbuf = Gtk::Invisible().render_icon(Gtk::StockID(icon_name),
-                                                            Gtk::ICON_SIZE_MENU);
+                GtkStockItem stock;
+                if ( gtk_stock_lookup( icon_name.c_str(), &stock ) ) {
+                    _icon_pixbuf = Gtk::Invisible().render_icon( Gtk::StockID(icon_name),
+                                                                 Gtk::ICON_SIZE_MENU );
+                } else {
+                    // TODO re-work this properly. Anti-crasher "null" icon for the moment
+                    _icon_pixbuf = Gtk::Invisible().render_icon( Gtk::StockID(GTK_STOCK_MISSING_IMAGE),
+                                                                 Gtk::ICON_SIZE_MENU );
+                }
             }
             delete icon;
 
