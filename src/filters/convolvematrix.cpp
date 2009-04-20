@@ -210,27 +210,31 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         case SP_ATTR_TARGETX:
-            read_int = (int) helperfns_read_number(value);
-            if (read_int < 0 || read_int > feConvolveMatrix->order.getNumber()){
-                g_warning("targetX must be a value between 0 and orderX! Assuming orderX as default value.");
-                read_int = (int) feConvolveMatrix->order.getNumber();
-            }
-            feConvolveMatrix->targetXIsSet = true;
-            if (read_int != feConvolveMatrix->targetX){
-                feConvolveMatrix->targetX = read_int;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            if (value) {
+                read_int = (int) helperfns_read_number(value);
+                if (read_int < 0 || read_int > feConvolveMatrix->order.getNumber()){
+                    g_warning("targetX must be a value between 0 and orderX! Assuming floor(orderX/2) as default value.");
+                    read_int = (int) floor(feConvolveMatrix->order.getNumber()/2.0);
+                }
+                feConvolveMatrix->targetXIsSet = true;
+                if (read_int != feConvolveMatrix->targetX){
+                    feConvolveMatrix->targetX = read_int;
+                    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                }
             }
             break;
         case SP_ATTR_TARGETY:
-            read_int = (int) helperfns_read_number(value);
-            if (read_int < 0 || read_int > feConvolveMatrix->order.getOptNumber()){
-                g_warning("targetY must be a value between 0 and orderY! Assuming orderY as default value.");
-                read_int = (int) feConvolveMatrix->order.getOptNumber();
-            }
-            feConvolveMatrix->targetYIsSet = true;
-            if (read_int != feConvolveMatrix->targetY){
-                feConvolveMatrix->targetY = read_int;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            if (value) {
+                read_int = (int) helperfns_read_number(value);
+                if (read_int < 0 || read_int > feConvolveMatrix->order.getOptNumber()){
+                    g_warning("targetY must be a value between 0 and orderY! Assuming floor(orderY/2) as default value.");
+                    read_int = (int) floor(feConvolveMatrix->order.getOptNumber()/2.0);
+                }
+                feConvolveMatrix->targetYIsSet = true;
+                if (read_int != feConvolveMatrix->targetY){
+                    feConvolveMatrix->targetY = read_int;
+                    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+                }
             }
             break;
         case SP_ATTR_EDGEMODE:

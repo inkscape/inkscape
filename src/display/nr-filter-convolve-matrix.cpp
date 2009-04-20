@@ -52,29 +52,24 @@ int FilterConvolveMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/)
     unsigned char *in_data = NR_PIXBLOCK_PX(in);
     unsigned char *out_data = NR_PIXBLOCK_PX(out);
 
-    double result_R, result_G, result_B, result_A;
-    int i, j, x, y;
-    int width = in->area.x1 - in->area.x0;
-    int height = in->area.y1 - in->area.y0;
+    unsigned int const width = in->area.x1 - in->area.x0;
+    unsigned int const height = in->area.y1 - in->area.y0;
 
-    unsigned int index;
-    unsigned int kernel_index;
-    
     if (in->mode==NR_PIXBLOCK_MODE_R8G8B8A8P) {
-        for (y=targetY; y < height - (orderY - targetY); y++){
-            for (x=targetX; x < width - (orderX - targetX); x++){
-                result_R = 0;
-                result_G = 0;
-                result_B = 0;
-                result_A = 0;
-                for (i=0; i < orderY; i++){
-                    for (j=0; j < orderX; j++){
-                        index = 4*( x - targetX + j + width*(y - targetY + i) );
-                        kernel_index = orderX-j-1 + orderX*(orderY-i-1);
-                        result_R += ( (double) in_data[index++] * kernelMatrix[kernel_index] );
-                        result_G += ( (double) in_data[index++] * kernelMatrix[kernel_index] );
-                        result_B += ( (double) in_data[index++] * kernelMatrix[kernel_index] );
-                        result_A += ( (double) in_data[index] * kernelMatrix[kernel_index] );
+        for (unsigned int y=targetY; y < height - (orderY - targetY); y++){
+            for (unsigned int x=targetX; x < width - (orderX - targetX); x++){
+                double result_R = 0;
+                double result_G = 0;
+                double result_B = 0;
+                double result_A = 0;
+                for (unsigned int i=0; i < orderY; i++){
+                    for (int j=0; j < orderX; j++){
+                        unsigned int index = 4*( x - targetX + j + width*(y - targetY + i) );
+                        unsigned int kernel_index = orderX-j-1 + orderX*(orderY-i-1);
+                        result_R += ( (double) in_data[index+0] * kernelMatrix[kernel_index] );
+                        result_G += ( (double) in_data[index+1] * kernelMatrix[kernel_index] );
+                        result_B += ( (double) in_data[index+2] * kernelMatrix[kernel_index] );
+                        result_A += ( (double) in_data[index+3] * kernelMatrix[kernel_index] );
                     }
                 }
                 unsigned int out_index = 4*( x + width*y );
@@ -89,16 +84,16 @@ int FilterConvolveMatrix::render(FilterSlot &slot, FilterUnits const &/*units*/)
             }
         }
     } else {
-        for (y=targetY; y < height - (orderY - targetY); y++){
-            for (x=targetX; x < width - (orderX - targetX); x++){
-                result_R = 0;
-                result_G = 0;
-                result_B = 0;
-                result_A = 0;
-                for (i=0; i < orderY; i++){
-                    for (j=0; j < orderX; j++){
-                        index = 4*( x - targetX + j + width*(y - targetY + i) );
-                        kernel_index = orderX-j-1 + orderX*(orderY-i-1);
+        for (unsigned int y=targetY; y < height - (orderY - targetY); y++){
+            for (unsigned int x=targetX; x < width - (orderX - targetX); x++){
+                double result_R = 0;
+                double result_G = 0;
+                double result_B = 0;
+                double result_A = 0;
+                for (unsigned int i=0; i < orderY; i++){
+                    for (unsigned int j=0; j < orderX; j++){
+                        unsigned int index = 4*( x - targetX + j + width*(y - targetY + i) );
+                        unsigned int kernel_index = orderX-j-1 + orderX*(orderY-i-1);
                         result_R += ( (double) in_data[index+0] * in_data[index+3] * kernelMatrix[kernel_index] );
                         result_G += ( (double) in_data[index+1] * in_data[index+3] * kernelMatrix[kernel_index] );
                         result_B += ( (double) in_data[index+2] * in_data[index+3] * kernelMatrix[kernel_index] );
