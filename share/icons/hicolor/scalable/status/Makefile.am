@@ -19,6 +19,7 @@ icons_DATA = \
 	draw-geometry-line-perpendicular.svg \
 	draw-geometry-line-segment.svg \
 	draw-geometry-mirror.svg \
+	draw-geometry-show-measuring-info.svg \
 	draw-trace-background.svg \
 	draw-use-pressure.svg \
 	draw-use-tilt.svg \

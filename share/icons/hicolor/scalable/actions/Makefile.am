@@ -60,6 +60,7 @@ icons_DATA = \
 	draw-ellipse-whole.svg \
 	draw-eraser.svg \
 	draw-freehand.svg \
+	draw-geometry-set-bounding-box.svg \
 	draw-geometry.svg \
 	draw-path.svg \
 	draw-polygon-star.svg \

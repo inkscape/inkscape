@@ -5612,7 +5612,7 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         InkToggleAction* act = ink_toggle_action_new( "LPEBBoxFromSelectionAction",
                                                       _("Get limiting bounding box from selection"),
                                                       _("Set limiting bounding box (used to cut infinite lines) to the bounding box of current selection"),
-                                                      "lpetool_set_bbox",
+                                                      "draw-geometry-set-bounding-box",
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(lpetool_toggle_set_bbox), desktop );
@@ -5641,7 +5641,7 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         InkToggleAction* act = ink_toggle_action_new( "LPEMeasuringAction",
                                                       _("Display measuring info"),
                                                       _("Display measuring info for selected items"),
-                                                      "lpetool_measuring_info",
+                                                      "draw-geometry-show-measuring-info",
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(lpetool_toggle_show_measuring_info), holder );
@@ -5662,7 +5662,7 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
         InkToggleAction* act = ink_toggle_action_new( "LPEOpenLPEDialogAction",
                                                       _("Open LPE dialog"),
                                                       _("Open LPE dialog (to adapt parameters numerically)"),
-                                                      "lpetool_open_lpe_dialog",
+                                                      "dialog-geometry",
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(lpetool_open_lpe_dialog), desktop );

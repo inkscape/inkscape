@@ -10,6 +10,7 @@ iconsdir = $(themedir)/$(size)/$(context)
 icons_DATA = \
 	dialog-align-and-distribute.png \
 	dialog-fill-and-stroke.png \
+	dialog-geometry.png \
 	dialog-icon-preview.png \
 	dialog-input-devices.png \
 	dialog-layers.png \

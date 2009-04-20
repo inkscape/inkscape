@@ -60,6 +60,8 @@ icons_DATA = \
 	draw-ellipse-whole.png \
 	draw-eraser.png \
 	draw-freehand.png \
+	draw-geometry.png \
+	draw-geometry-set-bounding-box.png \
 	draw-path.png \
 	draw-polygon.png \
 	draw-polygon-star.png \

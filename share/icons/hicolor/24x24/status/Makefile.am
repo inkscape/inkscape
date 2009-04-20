@@ -14,9 +14,12 @@ icons_DATA = \
 	draw-geometry-angle-bisector.png \
 	draw-geometry-circle-from-radius.png \
 	draw-geometry-circle-from-three-points.png \
+	draw-geometry-inactive.png \
 	draw-geometry-line-parallel.png \
 	draw-geometry-line-perpendicular.png \
 	draw-geometry-line-segment.png \
+	draw-geometry-mirror.png \
+	draw-geometry-show-measuring-info.png \
 	draw-trace-background.png \
 	draw-use-pressure.png \
 	draw-use-tilt.png \
