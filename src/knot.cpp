@@ -325,17 +325,19 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             }
             break;
 	case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1 && !knot->desktop->event_context->space_panning) {
-                if (snap_delay_temporarily_active) {
+			if (event->button.button == 1 && !knot->desktop->event_context->space_panning) {
+				// If we have any pending snap event, then invoke it now
+				if (knot->desktop->event_context->_delayed_snap_event) {
+					sp_event_context_snap_watchdog_callback(knot->desktop->event_context->_delayed_snap_event);
+				}
+
+				// now we can safely close the snapping window
+				if (snap_delay_temporarily_active) {
                 	if (knot->desktop->event_context->_snap_window_open == true) {
                 		sp_event_context_snap_window_closed(knot->desktop->event_context);
                 	}
 					snap_delay_temporarily_active = false;
 				}
-
-                if (knot->desktop->event_context->_delayed_snap_event) {
-                	sp_event_context_snap_watchdog_callback(knot->desktop->event_context->_delayed_snap_event);
-                }
 
             	knot->pressure = 0;
                 if (transform_escaped) {
