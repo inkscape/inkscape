@@ -429,6 +429,7 @@ void AboutBox::initStrings() {
     "Hizkuntza Politikarako Sailburuordetza <hizkpol@ej-gv.es>, 2005.\n"
     "Ilia Penev <lichopicho@gmail.com>, 2006.\n"
     "Iñaki Larrañaga <dooteo@euskalgnu.org>, 2006.\n"
+    "Jin-Hwan Jeong <yongdoria@gmail.com>, 2009.\n"
     "Jörg Müller <jfm@ram-brand.de>, 2005.\n"
     "Jeroen van der Vegt <ajvdvegt (at) 123mail.org>, 2003, 2005.\n"
     "Jonathan Ernst <jernst@users.sourceforge.net>, 2006.\n"
