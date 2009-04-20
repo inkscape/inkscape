@@ -18,6 +18,8 @@
 #include "live_effects/parameter/random.h"
 #include "live_effects/parameter/point.h"
 
+//#define LPE_SKETCH_USE_CONSTRUCTION_LINES
+
 namespace Inkscape {
 namespace LivePathEffect {
 
@@ -42,11 +44,13 @@ private:
     RandomParam parallel_offset;
     RandomParam tremble_size;
     ScalarParam tremble_frequency;
+
+#ifdef LPE_SKETCH_USE_CONSTRUCTION_LINES
     ScalarParam nbtangents;
     ScalarParam tgtscale;
     ScalarParam tgtlength;
     RandomParam tgtlength_rdm;
-
+#endif
     LPESketch(const LPESketch&);
     LPESketch& operator=(const LPESketch&);
 

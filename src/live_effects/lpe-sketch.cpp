@@ -42,18 +42,20 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
                       _("Random variation of overlap (relative to maximum overlap)"), "strokeoverlap_rdm", &wr, this, .3),
     ends_tolerance(_("Max. end tolerance"),
                    _("Maximum distance between ends of original and approximating paths (relative to maximum length)"), "ends_tolerance", &wr, this, .1),
-    parallel_offset(_("Parallel offset"),
-                    _("Average distance from approximating path to original path"), "parallel_offset", &wr, this, 5.),
+    parallel_offset(_("Average offset"),
+                    _("Average distance each stroke is away from the original path"), "parallel_offset", &wr, this, 5.),
     tremble_size(_("Max. tremble"),
                  _("Maximum tremble magnitude"), "tremble_size", &wr, this, 5.),
     tremble_frequency(_("Tremble frequency"),
-                      _("Average number of tremble periods in an approximating stroke"), "tremble_frequency", &wr, this, 1.),
-    nbtangents(_("Construction lines"),
+                      _("Average number of tremble periods in a stroke"), "tremble_frequency", &wr, this, 1.)
+#ifdef LPE_SKETCH_USE_CONSTRUCTION_LINES
+    ,nbtangents(_("Construction lines"),
                _("How many construction lines (tangents) to draw"), "nbtangents", &wr, this, 5),
     tgtscale(_("Scale"),
              _("Scale factor relating curvature and length of construction lines (try 5*offset)"), "tgtscale", &wr, this, 10.0),
     tgtlength(_("Max. length"), _("Maximum length of construction lines"), "tgtlength", &wr, this, 100.0),
     tgtlength_rdm(_("Length variation"), _("Random variation of the length of construction lines"), "tgtlength_rdm", &wr, this, .3)
+#endif
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     //Add some comment in the UI:  *warning* the precise output of this effect might change in future releases!
@@ -68,11 +70,12 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&parallel_offset) );
     registerParameter( dynamic_cast<Parameter *>(&tremble_size) );
     registerParameter( dynamic_cast<Parameter *>(&tremble_frequency) );
+#ifdef LPE_SKETCH_USE_CONSTRUCTION_LINES
     registerParameter( dynamic_cast<Parameter *>(&nbtangents) );
     registerParameter( dynamic_cast<Parameter *>(&tgtscale) );
     registerParameter( dynamic_cast<Parameter *>(&tgtlength) );
     registerParameter( dynamic_cast<Parameter *>(&tgtlength_rdm) );
-
+#endif
 
     nbiter_approxstrokes.param_make_integer();
     nbiter_approxstrokes.param_set_range(0, NR_HUGE);
@@ -87,6 +90,7 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
     tremble_frequency.param_set_increments(.5, 1.5);
     strokeoverlap_rdm.param_set_range(0, 1.);
 
+#ifdef LPE_SKETCH_USE_CONSTRUCTION_LINES
     nbtangents.param_make_integer();
     nbtangents.param_set_range(0, NR_HUGE);
     tgtscale.param_set_range(0, NR_HUGE);
@@ -94,6 +98,7 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
     tgtlength.param_set_range(0, NR_HUGE);
     tgtlength.param_set_increments(1., 5.);
     tgtlength_rdm.param_set_range(0, 1.);
+#endif
 }
 
 LPESketch::~LPESketch()
@@ -140,8 +145,8 @@ LPESketch::computePerturbation (double s0, double s1){
     Piecewise<D2<SBasis> >res;
 
     //global offset for this stroke.
-    double offsetX = parallel_offset-parallel_offset.get_value();
-    double offsetY = parallel_offset-parallel_offset.get_value();
+    double offsetX = 2*parallel_offset-parallel_offset.get_value();
+    double offsetY = 2*parallel_offset-parallel_offset.get_value();
     Point A,dA,B,dB,offset = Point(offsetX,offsetY);
     //start point A
     for (unsigned dim=0; dim<2; dim++){
@@ -149,14 +154,21 @@ LPESketch::computePerturbation (double s0, double s1){
         dA[dim] = 2*tremble_size-tremble_size.get_value();
     }
     //compute howmany deg 3 sbasis to concat according to frequency.
-    unsigned count = unsigned((s1-s0)/strokelength*tremble_frequency)+1;
+
+    unsigned count = unsigned((s1-s0)/strokelength*tremble_frequency)+1; 
+    //unsigned count = unsigned((s1-s0)/tremble_frequency)+1; 
+
     for (unsigned i=0; i<count; i++){
         D2<SBasis> perturb = D2<SBasis>(SBasis(2, Linear()), SBasis(2, Linear()));
         for (unsigned dim=0; dim<2; dim++){
             B[dim] = offset[dim] + 2*tremble_size-tremble_size.get_value();
             perturb[dim][0] = Linear(A[dim],B[dim]);
             dA[dim] = dA[dim]-B[dim]+A[dim];
-            dB[dim] = -(2*tremble_size-tremble_size.get_value())-B[dim]+A[dim];
+            //avoid dividing by 0. Very short strokes will have ends parallel to the curve...
+            if ( s1-s0 > 1e-2)
+                dB[dim] = -(2*tremble_size-tremble_size.get_value())/(s0-s1)-B[dim]+A[dim];
+            else
+                dB[dim] = -(2*tremble_size-tremble_size.get_value())-B[dim]+A[dim];
             perturb[dim][1] = Linear(dA[dim],dB[dim]);
         }
         dA = B-A-dB;
@@ -165,6 +177,7 @@ LPESketch::computePerturbation (double s0, double s1){
         res.concat(Piecewise<D2<SBasis> >(perturb));
     }
     res.setDomain(Interval(s0,s0+count*strokelength/tremble_frequency));
+    //res.setDomain(Interval(s0,s0+count*tremble_frequency));
     return res;
 }
 
@@ -259,6 +272,8 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
         }
     }
 
+#ifdef LPE_SKETCH_USE_CONSTRUCTION_LINES
+
     //----- Construction lines.
     //TODO: choose places according to curvature?.
 
@@ -292,6 +307,7 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
         }
         output.concat(Piecewise<D2<SBasis> >(tgt));
     }
+#endif
 
     return output;
 }
@@ -305,7 +321,9 @@ LPESketch::doBeforeEffect (SPLPEItem */*lpeitem*/)
     strokeoverlap_rdm.resetRandomizer();
     ends_tolerance.resetRandomizer();
     tremble_size.resetRandomizer();
+#ifdef LPE_SKETCH_USE_CONSTRUCTION_LINES
     tgtlength_rdm.resetRandomizer();
+#endif
 }
 
 /* ######################## */
