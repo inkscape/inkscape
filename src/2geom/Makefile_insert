@@ -72,6 +72,7 @@
 	2geom/hvlinesegment.h	\
 	2geom/interval.h	\
 	2geom/isnan.h	\
+	2geom/line.h	\
 	2geom/linear.h	\
 	2geom/matrix.h	\
 	2geom/nearest-point.h	\
@@ -85,6 +86,7 @@
 	2geom/point.h	\
 	2geom/poly.h	\
 	2geom/quadtree.h	\
+	2geom/ray.h	\
 	2geom/rect.h	\
 	2geom/region.h	\
 	2geom/sbasis-2d.h	\
