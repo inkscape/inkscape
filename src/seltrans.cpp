@@ -1400,7 +1400,15 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
     	m.setup(_desktop, true, _items_const);
     	m.freeSnapReturnByRef(SnapPreferences::SNAPPOINT_NODE, dxy, Inkscape::SNAPSOURCE_UNDEFINED);
 
-    } else if (!shift) {
+    } else if (shift) {
+    	if (control) { // shift & control: constrained movement without snapping
+    		if (fabs(dxy[Geom::X]) > fabs(dxy[Geom::Y])) {
+				dxy[Geom::Y] = 0;
+			} else {
+				dxy[Geom::X] = 0;
+			}
+    	}
+    } else { //!shift: with snapping
 
         /* We're snapping to things, possibly with a constraint to horizontal or
         ** vertical movement.  Obtain a list of possible translations and then
@@ -1412,7 +1420,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
     	/* This will be our list of possible translations */
         std::list<Inkscape::SnappedPoint> s;
 
-        if (control) {
+        if (control) { // constrained movement with snapping
 
             /* Snap to things, and also constrain to horizontal or vertical movement */
 
@@ -1433,7 +1441,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
 													 _point,
 													 Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
 													 dxy));
-        } else {
+        } else { // !control
 
             // Let's leave this timer code here for a while. I'll probably need it in the near future (Diederik van Lierop)
             /* GTimeVal starttime;
