@@ -195,7 +195,8 @@ EXTRA_DIST =	\
 	traits/function.h	\
 	traits/list-copy.h	\
 	traits/reference.h \
-	$(jabber_whiteboard_SOURCES)
+	$(jabber_whiteboard_SOURCES) \
+	$(CXXTEST_TEMPLATE)
 
 # Extra files to remove when doing "make distclean"
 DISTCLEANFILES =	\
