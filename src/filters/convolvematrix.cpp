@@ -175,30 +175,34 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             if (value){
                 feConvolveMatrix->kernelMatrixIsSet = true;
                 feConvolveMatrix->kernelMatrix = helperfns_read_vector(value, (int) (feConvolveMatrix->order.getNumber() * feConvolveMatrix->order.getOptNumber()));
+                if (! feConvolveMatrix->divisorIsSet) {
+                    feConvolveMatrix->divisor = 0;
+                    for (unsigned int i = 0; i< feConvolveMatrix->kernelMatrix.size(); i++)
+                        feConvolveMatrix->divisor += feConvolveMatrix->kernelMatrix[i];
+                    if (feConvolveMatrix->divisor == 0) feConvolveMatrix->divisor = 1;
+                }
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             } else {
                 g_warning("For feConvolveMatrix you MUST pass a kernelMatrix parameter!");
             }
             break;
         case SP_ATTR_DIVISOR:
-            if (!value){
-                read_num = 1; 
-            } else {
+            if (value) { 
                 read_num = helperfns_read_number(value);
                 if (read_num == 0) {
-                    if (feConvolveMatrix->kernelMatrixIsSet){
-                        g_warning("You shouldn't pass a divisor value equal to 0! Assuming the sum of all values in kernelMatrix as the default value.");
-                        for (unsigned int i = 0; i< feConvolveMatrix->kernelMatrix.size(); i++)
-                            read_num += feConvolveMatrix->kernelMatrix[i];
-                    } else {
-                        g_warning("You shouldn't pass a divisor value equal to 0! Assuming 1 as the default value.");
-                        read_num = 1;
+                    // This should actually be an error, but given our UI it is more useful to simply set divisor to the default.
+                    for (unsigned int i = 0; i< feConvolveMatrix->kernelMatrix.size(); i++)
+                        read_num += feConvolveMatrix->kernelMatrix[i];
+                    if (read_num == 0) read_num = 1;
+                    if (feConvolveMatrix->divisorIsSet || feConvolveMatrix->divisor!=read_num) {
+                        feConvolveMatrix->divisorIsSet = false;
+                        feConvolveMatrix->divisor = read_num;
+                        object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
                     }
+                } else if (!feConvolveMatrix->divisorIsSet || feConvolveMatrix->divisor!=read_num) {
+                    feConvolveMatrix->divisorIsSet = true;
+                    feConvolveMatrix->divisor = read_num;
                 }
-            }
-            if (read_num != feConvolveMatrix->divisor){
-                feConvolveMatrix->divisor = read_num;
-                object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_BIAS:

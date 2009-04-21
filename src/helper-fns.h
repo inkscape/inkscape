@@ -32,7 +32,10 @@
  * is not known beforehand. For example, see sp_feColorMatrix_set in
  * sp-fecolormatrix.cpp */
 inline double helperfns_read_number(gchar const *value, bool warning = true) {
-    if (!value) return 0;
+    if (!value) {
+        g_warning("Called helperfns_read_number with value==null_ptr, this can lead to unexpected behaviour.");
+        return 0;
+    }
     char *end;
     double ret = g_strtod(value, &end);
     if (*end) {
