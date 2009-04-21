@@ -191,8 +191,10 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
                 read_num = helperfns_read_number(value);
                 if (read_num == 0) {
                     // This should actually be an error, but given our UI it is more useful to simply set divisor to the default.
-                    for (unsigned int i = 0; i< feConvolveMatrix->kernelMatrix.size(); i++)
-                        read_num += feConvolveMatrix->kernelMatrix[i];
+                    if (feConvolveMatrix->kernelMatrixIsSet) {
+                        for (unsigned int i = 0; i< feConvolveMatrix->kernelMatrix.size(); i++)
+                            read_num += feConvolveMatrix->kernelMatrix[i];
+                    }
                     if (read_num == 0) read_num = 1;
                     if (feConvolveMatrix->divisorIsSet || feConvolveMatrix->divisor!=read_num) {
                         feConvolveMatrix->divisorIsSet = false;
@@ -202,6 +204,7 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
                 } else if (!feConvolveMatrix->divisorIsSet || feConvolveMatrix->divisor!=read_num) {
                     feConvolveMatrix->divisorIsSet = true;
                     feConvolveMatrix->divisor = read_num;
+                    object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
                 }
             }
             break;
