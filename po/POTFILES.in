@@ -377,7 +377,7 @@ share/extensions/svg_and_media_zip_output.py
 [type: gettext/xml] share/extensions/inkscape_help_reportabug.inx
 [type: gettext/xml] share/extensions/inkscape_help_svgspec.inx
 [type: gettext/xml] share/extensions/interp.inx
-[type: gettext/xml] share/extensions/interp-att-g.inx
+[type: gettext/xml] share/extensions/interp_att_g.inx
 [type: gettext/xml] share/extensions/lindenmayer.inx
 [type: gettext/xml] share/extensions/lorem_ipsum.inx
 [type: gettext/xml] share/extensions/markers_strokepaint.inx
