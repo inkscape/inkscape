@@ -1447,21 +1447,9 @@ static void imageMapNamedCB(GtkWidget* widget, gpointer user_data) {
             gint iconSize = 0;
             gchar* iconName = 0;
             {
-                GIcon* gicon = 0;
-                GtkIconSet* iconSet = 0;
-                GdkImage* iii = 0;
-                GdkPixbuf* pixbuf = 0;
-                gint pixelSize = 0;
-                gchar* stock = 0;
                 g_object_get(G_OBJECT(widget),
-                             "gicon", &gicon,
-                             "icon-set", &iconSet,
                              "icon-name", &iconName,
                              "icon-size", &iconSize,
-                             "image", &iii,
-                             "pixbuf", &pixbuf,
-                             "pixel-size", &pixelSize,
-                             "stock", &stock,
                              NULL);
             }
 
