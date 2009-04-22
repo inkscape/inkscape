@@ -18,7 +18,8 @@
 #include "live_effects/parameter/random.h"
 #include "live_effects/parameter/point.h"
 
-//#define LPE_SKETCH_USE_CONSTRUCTION_LINES
+#define LPE_SKETCH_USE_CONSTRUCTION_LINES
+//#define LPE_SKETCH_USE_CURVATURE
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -50,6 +51,11 @@ private:
     ScalarParam tgtscale;
     ScalarParam tgtlength;
     RandomParam tgtlength_rdm;
+    RandomParam tgt_places_rdmness;
+#ifdef LPE_SKETCH_USE_CURVATURE
+    ScalarParam min_curvature;
+    ScalarParam max_curvature;
+#endif
 #endif
     LPESketch(const LPESketch&);
     LPESketch& operator=(const LPESketch&);

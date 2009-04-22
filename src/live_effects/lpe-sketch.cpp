@@ -16,6 +16,7 @@
 #include <2geom/path.h>
 #include <2geom/sbasis.h>
 #include <2geom/sbasis-geometric.h>
+#include <2geom/sbasis-math.h>
 #include <2geom/bezier-to-sbasis.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/d2.h>
@@ -54,7 +55,12 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
     tgtscale(_("Scale"),
              _("Scale factor relating curvature and length of construction lines (try 5*offset)"), "tgtscale", &wr, this, 10.0),
     tgtlength(_("Max. length"), _("Maximum length of construction lines"), "tgtlength", &wr, this, 100.0),
-    tgtlength_rdm(_("Length variation"), _("Random variation of the length of construction lines"), "tgtlength_rdm", &wr, this, .3)
+    tgtlength_rdm(_("Length variation"), _("Random variation of the length of construction lines"), "tgtlength_rdm", &wr, this, .3),
+    tgt_places_rdmness(_("Placement randomness"), _("0: evenly distributed construcion lines, 1: purely random placement"), "tgt_places_rdmness", &wr, this, 1.)
+#ifdef LPE_SKETCH_USE_CURVATURE
+    ,min_curvature(_("k_min"), _("min curvature"), "k_min", &wr, this, 4.0)
+    ,max_curvature(_("k_max"), _("max curvature"), "k_max", &wr, this, 1000.0)
+#endif
 #endif
 {
     // register all your parameters here, so Inkscape knows which parameters this effect has:
@@ -72,9 +78,14 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&tremble_frequency) );
 #ifdef LPE_SKETCH_USE_CONSTRUCTION_LINES
     registerParameter( dynamic_cast<Parameter *>(&nbtangents) );
+    registerParameter( dynamic_cast<Parameter *>(&tgt_places_rdmness) );
     registerParameter( dynamic_cast<Parameter *>(&tgtscale) );
     registerParameter( dynamic_cast<Parameter *>(&tgtlength) );
     registerParameter( dynamic_cast<Parameter *>(&tgtlength_rdm) );
+#ifdef LPE_SKETCH_USE_CURVATURE
+    registerParameter( dynamic_cast<Parameter *>(&min_curvature) );
+    registerParameter( dynamic_cast<Parameter *>(&max_curvature) );
+#endif
 #endif
 
     nbiter_approxstrokes.param_make_integer();
@@ -98,6 +109,10 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
     tgtlength.param_set_range(0, NR_HUGE);
     tgtlength.param_set_increments(1., 5.);
     tgtlength_rdm.param_set_range(0, 1.);
+    tgt_places_rdmness.param_set_range(0, 1.);
+    //this is not very smart, but required to avoid having lot of tangents stacked on short components.
+    //Nota: we could specify a density instead of an absolute number, but this would be scale dependant.
+    concatenate_before_pwd2 = true;
 #endif
 }
 
@@ -284,13 +299,44 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
     Piecewise<D2<SBasis> > v = derivative(pwd2_in);
     Piecewise<D2<SBasis> > a = derivative(v);
 
+#ifdef LPE_SKETCH_USE_CURVATURE
+    //---- curvature experiment...(enable
+    Piecewise<SBasis> k = curvature(pwd2_in);
+    OptInterval k_bnds = bounds_exact(abs(k));
+    double k_min = k_bnds->min() + k_bnds->extent() * min_curvature;
+    double k_max = k_bnds->min() + k_bnds->extent() * max_curvature;
+
+    Piecewise<SBasis> bump;
+    //SBasis bump_seg = SBasis( 2, Linear(0) );
+    //bump_seg[1] = Linear( 4. );
+    SBasis bump_seg = SBasis( 1, Linear(1) );
+    bump.push_cut( k_bnds->min() - 1 );
+    bump.push( Linear(0), k_min );
+    bump.push(bump_seg,k_max);
+    bump.push( Linear(0), k_bnds->max()+1 );
+        
+    Piecewise<SBasis> repartition = compose( bump, k );
+    repartition = integral(repartition);
+    //-------------------------------
+#endif
+
     for (unsigned i=0; i<nbtangents; i++){
 
         // pick a point where to draw a tangent (s = dist from start along path).
-        double s = total_length * ( i + tgtlength_rdm ) / (nbtangents+1.);
+#ifdef LPE_SKETCH_USE_CURVATURE
+        double proba = repartition.firstValue()+ (rand()%100)/100.*(repartition.lastValue()-repartition.firstValue());
+        std::vector<double> times;
+        times = roots(repartition - proba);
+        double t = times.at(0);//there should be one and only one solution!
+#else
+        //double s = total_length * ( i + tgtlength_rdm ) / (nbtangents+1.);
+        double reg_place = total_length * ( i + .5) / ( nbtangents );
+        double rdm_place = total_length * tgt_places_rdmness;
+        double s = ( 1.- tgt_places_rdmness.get_value() ) * reg_place  +  rdm_place ;
         std::vector<double> times;
         times = roots(pathlength-s);
         double t = times.at(0);//there should be one and only one solution!
+#endif
         Point m_t = m(t), v_t = v(t), a_t = a(t);
         //Compute tgt length according to curvature (not exceeding tgtlength) so that
         //  dist to origninal curve ~ 4 * (parallel_offset+tremble_size).
@@ -323,6 +369,7 @@ LPESketch::doBeforeEffect (SPLPEItem */*lpeitem*/)
     tremble_size.resetRandomizer();
 #ifdef LPE_SKETCH_USE_CONSTRUCTION_LINES
     tgtlength_rdm.resetRandomizer();
+    tgt_places_rdmness.resetRandomizer();
 #endif
 }
 
