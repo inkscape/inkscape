@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-15 20:46+0200\n"
-"PO-Revision-Date: 2009-04-17 15:48+0100\n"
+"POT-Creation-Date: 2009-04-22 19:31+0200\n"
+"PO-Revision-Date: 2009-04-22 21:53+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -338,6 +338,7 @@ msgstr "Netteté"
 #: ../share/filters/filters.svg.h:104
 #: ../share/filters/filters.svg.h:125
 #: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:169
 msgid "Image effects"
 msgstr "Effets d'image"
 
@@ -438,7 +439,7 @@ msgstr "Désaturer"
 #: ../share/extensions/color_removered.inx.h:1
 #: ../share/extensions/color_replace.inx.h:2
 #: ../share/extensions/color_rgbbarrel.inx.h:1
-#: ../share/extensions/interp-att-g.inx.h:2
+#: ../share/extensions/interp_att_g.inx.h:2
 msgid "Color"
 msgstr "Couleur"
 
@@ -583,7 +584,7 @@ msgid "Glossy painting effect for bitmaps"
 msgstr "Effet de peinture brillante pour bitmap"
 
 #: ../share/filters/filters.svg.h:47
-msgid "HSL bumps"
+msgid "HSL Bumps"
 msgstr "Embossage TSL"
 
 #: ../share/filters/filters.svg.h:47
@@ -592,12 +593,13 @@ msgstr "Embossage TSL"
 #: ../share/filters/filters.svg.h:108
 #: ../share/filters/filters.svg.h:124
 #: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:170
 msgid "Bumps"
 msgstr "Embossage"
 
 #: ../share/filters/filters.svg.h:47
-msgid "Highly flexible specular bump based on colors hue saturation and luminance"
-msgstr "Embossage spéculaire extrêmement flexible basé sur la saturation de teinte et la luminance"
+msgid "Highly flexible specular bump"
+msgstr "Embossage spéculaire hautement flexible"
 
 #: ../share/filters/filters.svg.h:48
 msgid "Cracked glass"
@@ -612,6 +614,7 @@ msgid "HSL bubbles"
 msgstr "Bulles TSL"
 
 #: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:108
 msgid "Highly flexible bubbles effect depending on color hue saturation and luminance"
 msgstr "Effet de bulles extrêmement flexible basé sur la saturation de teinte et la luminance"
 
@@ -953,7 +956,7 @@ msgid "Crumpled glossy paper effect which can be used for pictures as for object
 msgstr "Effet de papier brillant froissé, utilisable autant pour les images que pour les objets"
 
 #: ../share/filters/filters.svg.h:88
-msgid "In and out"
+msgid "In and Out"
 msgstr "Dedans et dehors"
 
 #: ../share/filters/filters.svg.h:88
@@ -1106,20 +1109,16 @@ msgid "Illuminated glass effect with light coming from beneath"
 msgstr "Effet de verre lumineux avec une lumière venant du dessous"
 
 #: ../share/filters/filters.svg.h:107
-msgid "HSL bumps, alpha"
-msgstr "Embossage TSL, avec transparence"
+msgid "HSL Bumps, alpha"
+msgstr "Embossage TSL, alpha"
 
 #: ../share/filters/filters.svg.h:107
 msgid "Same than HSL bumps but with an alpha added for combination with transparency depending filters"
 msgstr "Identique à Embossage TSL, mais avec ajout d'alpha pour la combinaison avec les filtres nécessitant de la transparence"
 
 #: ../share/filters/filters.svg.h:108
-msgid "HSL bubbles, alpha"
-msgstr "Bulles TSL, avec transparence"
-
-#: ../share/filters/filters.svg.h:108
-msgid "Same than HSL bubbles but with an alpha added for combination with transparency depending filters"
-msgstr "Identique à Bulles TSL, mais avec ajout d'alpha pour la combinaison avec les filtres nécessitant de la transparence"
+msgid "HSL Bubbles, alpha"
+msgstr "Bulles TSL, alpha"
 
 #: ../share/filters/filters.svg.h:109
 msgid "Smooth edges"
@@ -1234,7 +1233,7 @@ msgid "Basic diffuse bevel to use for building textures"
 msgstr "Biseau diffus simple pour la construction de textures"
 
 #: ../share/filters/filters.svg.h:123
-msgid "Cutout glow"
+msgid "Cutout Glow"
 msgstr "Découpage lumineux"
 
 #: ../share/filters/filters.svg.h:123
@@ -1242,8 +1241,8 @@ msgid "In and out glow with a possible offset and colorizable flood"
 msgstr "Lueur intérieure et extérieure avec possibilité de décalage et de remplissage colorisable"
 
 #: ../share/filters/filters.svg.h:124
-msgid "HSL bumps diffuse"
-msgstr "Embossage TSL diffus"
+msgid "HSL Bumps, diffuse"
+msgstr "Embossage TSL, diffus"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
@@ -1266,8 +1265,8 @@ msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr "Flou gaussien simple, identique au réglage de flou dans la boite de dialogue Remplissage et contour"
 
 #: ../share/filters/filters.svg.h:127
-msgid "HSL bubbles diffuse"
-msgstr "Bulles TSL diffus"
+msgid "HSL Bubbles, diffuse"
+msgstr "Bulles TSL, diffus"
 
 #: ../share/filters/filters.svg.h:127
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
@@ -1625,6 +1624,22 @@ msgstr "Flou bruité"
 #: ../share/filters/filters.svg.h:168
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "Rend rugueux et flous les bords et le contenu, sur une petite amplitude"
+
+#: ../share/filters/filters.svg.h:169
+msgid "Film Grain"
+msgstr "Grain photographique"
+
+#: ../share/filters/filters.svg.h:169
+msgid "Adds a film grain noise to images and objects"
+msgstr "Ajoute un bruit de type grain photographique aux images et objets"
+
+#: ../share/filters/filters.svg.h:170
+msgid "HSL Bumps, transparent"
+msgstr "Embossage TSL, transparent"
+
+#: ../share/filters/filters.svg.h:170
+msgid "Highly flexible specular bump with transparency"
+msgstr "Embossage spéculaire extrêmement flexible avec transparence"
 
 #: ../src/arc-context.cpp:303
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -2262,9 +2277,9 @@ msgstr "Capturer la couleur et l'opacité visibles"
 #: ../src/dialogs/clonetiler.cpp:2764
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2213
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
 #: ../src/widgets/toolbox.cpp:4319
-#: ../share/extensions/interp-att-g.inx.h:12
+#: ../share/extensions/interp_att_g.inx.h:12
 msgid "Opacity"
 msgstr "Opacité"
 
@@ -3905,7 +3920,7 @@ msgstr "Seuil adaptatif"
 #: ../src/widgets/toolbox.cpp:3088
 #: ../src/widgets/toolbox.cpp:4117
 #: ../share/extensions/foldablebox.inx.h:9
-#: ../share/extensions/interp-att-g.inx.h:26
+#: ../share/extensions/interp_att_g.inx.h:26
 msgid "Width"
 msgstr "Largeur"
 
@@ -3916,7 +3931,7 @@ msgstr "Largeur"
 #: ../src/libgdl/gdl-dock-placeholder.c:177
 #: ../src/widgets/toolbox.cpp:3105
 #: ../share/extensions/foldablebox.inx.h:4
-#: ../share/extensions/interp-att-g.inx.h:6
+#: ../share/extensions/interp_att_g.inx.h:6
 msgid "Height"
 msgstr "Hauteur"
 
@@ -3979,7 +3994,7 @@ msgstr "Ajouter du bruit"
 #: ../src/extension/internal/bitmap/addNoise.cpp:46
 #: ../src/rdf.cpp:238
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2166
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2244
 msgid "Type"
 msgstr "Type"
 
@@ -4023,7 +4038,7 @@ msgstr "Flou"
 #: ../src/extension/internal/bitmap/oilPaint.cpp:38
 #: ../src/extension/internal/bitmap/sharpen.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2223
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid "Radius"
 msgstr "Rayon"
 
@@ -4804,7 +4819,7 @@ msgid "<b>Note</b>: setting the precision too high may result in a large SVG fil
 msgstr "<b>Note</b> : avec une précision trop haute, vous risquez d'obtenir des fichiers SVG très gros et de ralentir le programme."
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:112
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:381
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:393
 msgid "rough"
 msgstr "grossier"
 
@@ -4818,51 +4833,55 @@ msgstr "Gestion du texte :"
 msgid "Import text as text"
 msgstr "Importer le texte en tant que texte"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:122
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:120
+msgid "Replace PDF fonts by closest-named installed fonts"
+msgstr "Remplace les polices du PDF par les polices installées dont le nom est le plus proche"
+
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
 msgstr "Incorporer les images"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:125
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:126
 msgid "Import settings"
 msgstr "Préférences pour l'importation"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:242
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:248
 msgid "PDF Import Settings"
 msgstr "Préférences pour l'importation de fichiers PDF"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:382
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:394
 msgid "pdfinput|medium"
 msgstr "moyen"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:383
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:395
 msgid "fine"
 msgstr "fin"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:384
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:396
 msgid "very fine"
 msgstr "très fin"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:739
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:751
 msgid "PDF Input"
 msgstr "Entrée PDF"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:744
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:756
 msgid "Adobe PDF (*.pdf)"
 msgstr "Adobe PDF (*.pdf)"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:745
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:757
 msgid "Adobe Portable Document Format"
 msgstr "Adobe Portable Document Format"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:752
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:764
 msgid "AI Input"
 msgstr "Entrée AI"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:757
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:769
 msgid "Adobe Illustrator 9.0 and above (*.ai)"
 msgstr "Adobe Illustrator 9.0 et supérieur (*.ai)"
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:758
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:770
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr "Ouvrir des fichiers créés avec Adobe Illustrator version 9.0 et les versions plus récentes"
 
@@ -5619,7 +5638,7 @@ msgstr "Supprimer un stop de dégradé"
 #: ../src/helper/units.cpp:37
 #: ../src/live_effects/lpe-path_length.cpp:27
 #: ../share/extensions/foldablebox.inx.h:8
-#: ../share/extensions/interp-att-g.inx.h:24
+#: ../share/extensions/interp_att_g.inx.h:24
 #: ../share/extensions/printing-marks.inx.h:20
 msgid "Unit"
 msgstr "Unité"
@@ -6030,7 +6049,7 @@ msgstr "Décliner l'invitation"
 msgid "Inkboard session (%1 to %2)"
 msgstr "Session Inkboard (tableau blanc) (de %1 à %2)"
 
-#: ../src/knot.cpp:441
+#: ../src/knot.cpp:443
 msgid "Node or handle drag canceled."
 msgstr "Déplacement de nœud ou de poignée annulé."
 
@@ -6493,59 +6512,59 @@ msgid "Ruler"
 msgstr "Règle"
 
 #: ../src/live_effects/effect.cpp:104
-msgid "Sketch"
-msgstr "Croquis"
-
-#: ../src/live_effects/effect.cpp:105
 msgid "Tangent to curve"
 msgstr "Tangente à la courbe"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:105
 msgid "Text label"
 msgstr "Étiquette du texte"
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:108
 msgid "Bend"
 msgstr "Courber"
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:109
 msgid "Gears"
 msgstr "Engrenages"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:110
 msgid "Pattern Along Path"
 msgstr "Motif suivant un chemin"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:111
 msgid "Stitch Sub-Paths"
 msgstr "Relier les sous-chemins"
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:113
 msgid "VonKoch"
 msgstr "Von Koch"
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:114
 msgid "Knot"
 msgstr "Nœud"
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:115
 msgid "Construct grid"
 msgstr "Grille de conception"
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:116
 msgid "Spiro spline"
 msgstr "Spline spirographique"
 
-#: ../src/live_effects/effect.cpp:118
+#: ../src/live_effects/effect.cpp:117
 msgid "Envelope Deformation"
 msgstr "Déformation de l'enveloppe"
 
-#: ../src/live_effects/effect.cpp:119
+#: ../src/live_effects/effect.cpp:118
 msgid "Hatches (rough)"
 msgstr "Hachures (grossières)"
+
+#: ../src/live_effects/effect.cpp:119
+msgid "Sketch"
+msgstr "Croquis"
 
 #: ../src/live_effects/effect.cpp:272
 msgid "Is visible?"
@@ -6570,7 +6589,7 @@ msgstr "Pas d'effet"
 #: ../src/live_effects/effect.cpp:341
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
-msgstr ""
+msgstr "Veuillez spécifier un chemin paramètre pour l'effet de chemin '%s' avec %d clics de souris"
 
 #: ../src/live_effects/effect.cpp:640
 #, c-format
@@ -7197,12 +7216,12 @@ msgid "Adjust the \"right\" end of the parallel"
 msgstr "Ajuste l'extrémité droite de la parallèle"
 
 #: ../src/live_effects/lpe-path_length.cpp:25
-#: ../src/live_effects/lpe-sketch.cpp:53
+#: ../src/live_effects/lpe-sketch.cpp:55
 #: ../src/selection-chemistry.cpp:1514
 #: ../src/seltrans.cpp:485
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2206
 #: ../src/ui/dialog/transformation.cpp:738
-#: ../share/extensions/interp-att-g.inx.h:16
+#: ../share/extensions/interp_att_g.inx.h:16
 msgid "Scale"
 msgstr "Redimensionner"
 
@@ -7605,105 +7624,129 @@ msgstr "Juste un nombre réel, comme 1,4 !"
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
-#: ../src/live_effects/lpe-sketch.cpp:34
+#: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Strokes"
 msgstr "Contours"
 
-#: ../src/live_effects/lpe-sketch.cpp:34
+#: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
 msgstr "Dessiner ce nombre de traits approximatifs"
 
-#: ../src/live_effects/lpe-sketch.cpp:35
+#: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max stroke length"
 msgstr "Épaisseur maximale du contour"
 
-#: ../src/live_effects/lpe-sketch.cpp:36
+#: ../src/live_effects/lpe-sketch.cpp:37
 msgid "Maximum length of approximating strokes"
 msgstr "Longueur maximale des traits approximatifs"
 
-#: ../src/live_effects/lpe-sketch.cpp:37
+#: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
 msgstr "Variation de longueur de trait"
 
-#: ../src/live_effects/lpe-sketch.cpp:38
+#: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
 msgstr "Variation aléatoire de la longueur du trait (relative à la longueur maximale)"
 
-#: ../src/live_effects/lpe-sketch.cpp:39
+#: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
 msgstr "Chevauchement maximum"
 
-#: ../src/live_effects/lpe-sketch.cpp:40
+#: ../src/live_effects/lpe-sketch.cpp:41
 msgid "How much successive strokes should overlap (relative to maximum length)"
 msgstr "Nombre de trait successifs devant se superposer (relatif à la longueur maximale)"
 
-#: ../src/live_effects/lpe-sketch.cpp:41
+#: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
 msgstr "Variation de chevauchement"
 
-#: ../src/live_effects/lpe-sketch.cpp:42
+#: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Random variation of overlap (relative to maximum overlap)"
 msgstr "Variation aléatoire de chevauchement (relatif au chevauchement maximum)"
 
-#: ../src/live_effects/lpe-sketch.cpp:43
+#: ../src/live_effects/lpe-sketch.cpp:44
 msgid "Max. end tolerance"
 msgstr "Tolérance maximale de fin"
 
-#: ../src/live_effects/lpe-sketch.cpp:44
+#: ../src/live_effects/lpe-sketch.cpp:45
 msgid "Maximum distance between ends of original and approximating paths (relative to maximum length)"
 msgstr "Distance maximale entre la fin de l'original et les chemins approximatifs (relatif à la longueur maximale)"
 
-#: ../src/live_effects/lpe-sketch.cpp:45
-msgid "Parallel offset"
-msgstr "Décalage parallèle"
-
 #: ../src/live_effects/lpe-sketch.cpp:46
-msgid "Average distance from approximating path to original path"
-msgstr "Distance moyenne entre le chemin original et le chemin approximatif"
+msgid "Average offset"
+msgstr "Décalage moyen"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
+msgid "Average distance each stroke is away from the original path"
+msgstr "Distance moyenne entre chaque trait et le chemin original"
+
+#: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
 msgstr "Tremblement maximum"
 
-#: ../src/live_effects/lpe-sketch.cpp:48
+#: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Maximum tremble magnitude"
 msgstr "Ampleur maximale du tremblement"
 
-#: ../src/live_effects/lpe-sketch.cpp:49
+#: ../src/live_effects/lpe-sketch.cpp:50
 msgid "Tremble frequency"
 msgstr "Fréquence de tremblement"
 
-#: ../src/live_effects/lpe-sketch.cpp:50
-msgid "Average number of tremble periods in an approximating stroke"
-msgstr "Nombre moyen de périodes de tremblement dans le trait approximatif"
-
 #: ../src/live_effects/lpe-sketch.cpp:51
+msgid "Average number of tremble periods in a stroke"
+msgstr "Nombre moyen de périodes de tremblement dans le trait"
+
+#: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
 msgstr "Lignes de contruction"
 
-#: ../src/live_effects/lpe-sketch.cpp:52
+#: ../src/live_effects/lpe-sketch.cpp:54
 msgid "How many construction lines (tangents) to draw"
 msgstr "Nombre de lignes de construction (tangentes) à dessiner"
 
-#: ../src/live_effects/lpe-sketch.cpp:54
+#: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Scale factor relating curvature and length of construction lines (try 5*offset)"
 msgstr "Facteur d'échelle afférent à la courbure et à la longueur des lignes de construction (essayer 5 fois la valeur de décalage)"
 
-#: ../src/live_effects/lpe-sketch.cpp:55
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Max. length"
 msgstr "Longueur maximale"
 
-#: ../src/live_effects/lpe-sketch.cpp:55
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Maximum length of construction lines"
 msgstr "Longueur maximale des lignes de contruction"
 
-#: ../src/live_effects/lpe-sketch.cpp:56
+#: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Length variation"
 msgstr "Variation de longueur"
 
-#: ../src/live_effects/lpe-sketch.cpp:56
+#: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Random variation of the length of construction lines"
 msgstr "Variation aléatoire de la longueur des lignes de construction"
+
+#: ../src/live_effects/lpe-sketch.cpp:59
+msgid "Placement randomness"
+msgstr "Caractère aléatoire du placement"
+
+#: ../src/live_effects/lpe-sketch.cpp:59
+msgid "0: evenly distributed construcion lines, 1: purely random placement"
+msgstr "0 : lignes de construction régulièrement distribuées, 1 : placement purement aléatoire"
+
+#: ../src/live_effects/lpe-sketch.cpp:61
+msgid "k_min"
+msgstr "k_min"
+
+#: ../src/live_effects/lpe-sketch.cpp:61
+msgid "min curvature"
+msgstr "courbure min."
+
+#: ../src/live_effects/lpe-sketch.cpp:62
+msgid "k_max"
+msgstr "k_max"
+
+#: ../src/live_effects/lpe-sketch.cpp:62
+msgid "max curvature"
+msgstr "courbure max."
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:56
 #: ../share/extensions/motion.inx.h:1
@@ -7867,7 +7910,7 @@ msgstr "Modifier le paramètre de texte"
 msgid "Change unit parameter"
 msgstr "Modifier le paramètre d'unité"
 
-#: ../src/lpe-tool-context.cpp:273
+#: ../src/lpe-tool-context.cpp:274
 msgid "Choose a construction tool from the toolbar."
 msgstr "Sélectionner un outil de construction dans la barre d'outils"
 
@@ -9537,7 +9580,7 @@ msgstr "<b>Rotation</b> : %0.2f&#176;; <b>Ctrl</b> pour tourner par incréments
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Déplacer le <b>centre</b> en %s, %s"
 
-#: ../src/seltrans.cpp:1487
+#: ../src/seltrans.cpp:1495
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Déplacer</b> de %s, %s; <b>Ctrl</b> restreindre à l'horizontale/verticale; <b>Maj</b> désactiver le magnétisme"
@@ -10747,12 +10790,12 @@ msgid "Nicely arrange selected connector network"
 msgstr "Dispose le réseau de connecteurs sélectionnés de façon agréable"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:899
-msgid "Align selected nodes to a common vertical line"
-msgstr "Aligner les nœuds sélectionnés selon une ligne verticale commune"
-
-#: ../src/ui/dialog/align-and-distribute.cpp:902
 msgid "Align selected nodes to a common horizontal line"
 msgstr "Aligner les nœuds sélectionnés selon une ligne horizontale commune"
+
+#: ../src/ui/dialog/align-and-distribute.cpp:902
+msgid "Align selected nodes to a common vertical line"
+msgstr "Aligner les nœuds sélectionnés selon une ligne verticale commune"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:905
 msgid "Distribute selected nodes horizontally"
@@ -11278,7 +11321,7 @@ msgid "No file selected"
 msgstr "Aucun fichier sélectionné"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:48
-#: ../share/extensions/interp-att-g.inx.h:4
+#: ../share/extensions/interp_att_g.inx.h:4
 msgid "Fill"
 msgstr "Remplissage"
 
@@ -11493,7 +11536,7 @@ msgid "Value(s)"
 msgstr "Valeur(s)"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2181
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2221
 msgid "Operator"
 msgstr "Opérateur"
 
@@ -11551,112 +11594,111 @@ msgstr "Kernel"
 msgid "This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."
 msgstr "Cette matrice décrit l'opération de convolution qui est appliquée à l'image en entrée pour calculer les valeurs des pixels en sortie. Les organisations différentes des valeurs dans cette matrice donnent divers effets visuels possibles. Une matrice identité produira un effet de flou de mouvement (parallèle à la diagonale de la matrice) alors qu'une matrice remplie d'une valeur non-nulle constante produira un effet de flou simple."
 
-#. TODO: svg spec: The default value is the sum of all values in kernelMatrix, with the exception that if the sum is zero, then the divisor is set to 1.
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 msgid "Divisor"
 msgstr "Diviseur"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2193
 msgid "After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."
 msgstr "Après l'application de la kernelMatrix à l'image en entrée pour obtenir un nombre, ce nombre est divisé par le diviseur, ce qui donne la valeur de couleur finale en sortie. Un diviseur d'une valeur égale à la somme de toutes les valeurs de la matrice aura tendance à avoir un effet lissant sur l'intensité globale de la couleur du résultat."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
 msgid "Bias"
 msgstr "Déviation"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2194
 msgid "This value is added to each component. This is useful to define a constant value as the zero response of the filter."
 msgstr "Cette valeur est ajoutée à chaque composant. Permet de définir une valeur constante comme la réponse en zéro du filtre."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "Edge Mode"
 msgstr "Mode bordure"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2195
 msgid "Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."
 msgstr "Détermine comment étendre l'image en entrée avec des valeurs de couleur si besoin, pour que les opérations matricielles puissent être appliquées quand le kernel est positionné au bord ou près du bord de l'image en entrée."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "Preserve Alpha"
 msgstr "Préserver l'opacité"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2197
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2196
 msgid "If set, the alpha channel won't be altered by this filter primitive."
 msgstr "Si coché, la composante opacité (alpha) ne sera pas modifiée par cette primitive de filtre."
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2199
 msgid "Diffuse Color"
 msgstr "Diffusion de la couleur"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2199
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2232
 msgid "Defines the color of the light source"
 msgstr "Définit la couleur de la source lumineuse"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
 msgid "Surface Scale"
 msgstr "Relief de surface"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2200
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
 msgid "This value amplifies the heights of the bump map defined by the input alpha channel"
 msgstr "Cette valeur amplifie la hauteur du relief défini par la composante opacité (alpha) en entrée"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
 msgid "Constant"
 msgstr "Constante"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2201
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2234
 msgid "This constant affects the Phong lighting model."
 msgstr "Cette constante agit sur le  modèle d'éclairage Phong."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2203
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2237
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2202
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
 msgid "Kernel Unit Length"
 msgstr "Unité de longueur du Kernel"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2206
 msgid "This defines the intensity of the displacement effect."
 msgstr "Définit l'intensité de l'effet de déplacement."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
 msgid "X displacement"
 msgstr "Déplacement en X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
 msgid "Color component that controls the displacement in the X direction"
 msgstr "Composante RGB qui contrôle le déplacement suivant l'axe X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 msgid "Y displacement"
 msgstr "Déplacement en Y"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2209
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2208
 msgid "Color component that controls the displacement in the Y direction"
 msgstr "Composante RGB qui contrôle le déplacement dans la direction Y"
 
 #. default: black
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2211
 msgid "Flood Color"
 msgstr "Couleur de remplissage"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2212
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2211
 msgid "The whole filter region will be filled with this color."
 msgstr "Toute la région affectée par le filtre sera remplie avec cette couleur."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
 msgid "Standard Deviation"
 msgstr "Variance"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2216
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2215
 msgid "The standard deviation for the blur operation."
 msgstr "La variance pour l'effet de flou."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2222
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2221
 msgid ""
 "Erode: performs \"thinning\" of input image.\n"
 "Dilate: performs \"fattenning\" of input image."
@@ -11664,133 +11706,133 @@ msgstr ""
 "Contracter : rend l'image plus « fine ».\n"
 "Dilater : rend l'image plus « épaisse »"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2226
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2225
 msgid "Source of Image"
 msgstr "Source de l'image"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2228
 msgid "Delta X"
 msgstr "Delta X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2228
 msgid "This is how far the input image gets shifted to the right"
 msgstr "Distance du décalage de l'image vers la droite"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
 msgid "Delta Y"
 msgstr "Delta Y"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2230
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2229
 msgid "This is how far the input image gets shifted downwards"
 msgstr "Distance du décalage de l'image vers le bas"
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2233
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2232
 msgid "Specular Color"
 msgstr "Couleur spéculaire"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 #: ../share/extensions/interp.inx.h:2
 msgid "Exponent"
 msgstr "Exposant"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2236
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid "Exponent for specular term, larger is more \"shiny\"."
 msgstr "Exposant pour le terme spéculaire. Plus il est grand, plus l'objet est « brillant »."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2244
 msgid "Indicates whether the filter primitive should perform a noise or turbulence function."
 msgstr "Indique si la primitive de filtre doit effectuer une fonction de bruit ou de turbulence."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2245
 msgid "Base Frequency"
 msgstr "Fréquence de base"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2247
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid "Octaves"
 msgstr "Octaves"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2248
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2247
 msgid "Seed"
 msgstr "Germe"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2248
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2247
 msgid "The starting number for the pseudo random number generator."
 msgstr "La graine pour le générateur pseudo-aléatoire."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2260
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2259
 msgid "Add filter primitive"
 msgstr "Ajouter une primitive de filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2277
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2276
 msgid "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, multiply, darken and lighten."
 msgstr "<b>feBlend</b> fournit quatre modes de fondu d'image : produit, superposition, obscurcir et éclaircir."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2281
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2280
 msgid "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to colour of each rendered pixel. This allows for effects like turning object to grayscale, modifying colour saturation and changing colour hue."
 msgstr "<b>feColorMatrix</b> applique une transformation matricielle à la couleur de chaque pixel. Cela permet des effets comme la  transformation d'objets en niveaux de gris, la modification de la saturation des couleurs et la modification de la teinte des couleurs."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2285
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2284
 msgid "The <b>feComponentTransfer</b> filter primitive manipulates the input's color components (red, green, blue, and alpha) according to particular transfer functions, allowing operations like brightness and contrast adjustment, color balance, and thresholding."
 msgstr "<b>feComponentTransfer</b> manipule les composantes de couleur de l'entrée (rouge, vert, bleu et opacité) suivant des fonctions de tranfert. Cela permet des opérations comme l'ajustement de luminosité et de contraste, la balance des couleurs, et la détection de seuil."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2289
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2288
 msgid "The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the aritmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."
 msgstr "<b>feComposite</b> fond deux images ensemble en utilisant l'un des modes de fondu Porter-Duff ou le mode arithmétique décrit dans le standard SVG. Les modes de fondu Porter-Duff sont en résumé des opérations logiques entre les valeurs de pixels respectives des images."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2293
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2292
 msgid "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on the image. Common effects created using convolution matrices are blur, sharpening, embossing and edge detection. Note that while gaussian blur can be created using this filter primitive, the special gaussian blur primitive is faster and resolution-independent."
 msgstr "<b>feConvolveMatrix</b> vous permet de spécifier une matrice de convolution à appliquer à l'image. Les effets courants créés par des matrices de convolution sont le flou, la netteté, le gauffrage et la détection de bords. Il faut noter que, bien qu'un flou gaussien puisse être créé en utilisant cette primitive de filtre, la primitive dédiée au flou gaussien est plus rapide et ne dépend pas de la résolution."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2297
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2296
 msgid "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "<b>feDiffuseLighting</b> et feSpecularLighting créent des ombrages « gauffrés ». La composante d'opacité (alpha) de l'entrée est utilisée pour founir l'information de profondeur : les zones de forte opacité sont élevées vers le point de vue et les zones de faible opacité sont reculées par rapport au point de vue."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2301
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2300
 msgid "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the first input using the second input as a displacement map, that shows from how far the pixel should come from. Classical examples are whirl and pinch effects."
 msgstr "<b>feDisplacementMap</b> déplace les pixels de la première entrée en utilisant la deuxième entrée comme displacement map, qui définit la distance d'où le pixel doit venir. Les exemples les plus classiques sont les effets de tourbillon et de contraction."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2305
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2304
 msgid "The <b>feFlood</b> filter primitive fills the region with a given color and opacity.  It is usually used as an input to other filters to apply color to a graphic."
 msgstr "<b>feFlood</b> remplit la région avec une couleur et une opacité données. Il est le plus souvent utilisé comme entrée pour d'autres filtres pour appliquer une couleur à une ressource graphique."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2309
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2308
 msgid "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is commonly used together with feOffset to create a drop shadow effect."
 msgstr "<b>feGaussianBlur</b> rend uniformément flou son entrée. Il est le plus souvent utilisé avec feOffset pour créer un effet d'ombre portée."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2313
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2312
 msgid "The <b>feImage</b> filter primitive fills the region with an external image or another part of the document."
 msgstr "<b>feImage</b> remplit la zone avec une image externe ou une autre partie du document."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2317
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2316
 msgid "The <b>feMerge</b> filter primitive composites several temporary images inside the filter primitive to a single image. It uses normal alpha compositing for this. This is equivalent to using several feBlend primitives in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr "<b>feMerge</b> compose plusieurs images temporaires à l'intérieur du filtre de primitive en une seule image. Il utilise la composition alpha normale pour ce faire. Celà équivaut à utiliser plusieurs primitives feBlend en mode 'normal' ou plusieurs primitives feComposite en mode 'over'."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2321
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2320
 msgid "The <b>feMorphology</b> filter primitive provides erode and dilate effects. For single-colour objects erode makes the object thinner and dilate makes it thicker."
 msgstr "<b>feMorphology</b> fournit des effets de contraction et de dilatation. Pour des objets de couleur uniforme la contraction rend l'objet plus fin et la dilatation le rend plus épais."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2325
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2324
 msgid "The <b>feOffset</b> filter primitive offsets the image by an user-defined amount. For example, this is useful for drop shadows, where the shadow is in a slightly different position than the actual object."
 msgstr "<b>feOffset</b> décale l'image d'une quantité définie par l'utilisateur. Par example, il est utile dans le cas des ombres portées, où les ombres sont dans une position légèrement différente de l'objet source de l'ombre."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2329
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2328
 msgid "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
 msgstr "<b>feDiffuseLighting</b> et <b>feSpecularLighting</b> créent des ombrages « gauffrés ». La composante d'opacité (alpha) de l'entrée est utilisée pour founir l'information de profondeur : les zones de forte opacité sont élevées vers le point de vue et les zones de faible opacité sont reculées par rapport au point de vue."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2333
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2332
 msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr "<b>feTile</b> pave une région avec la ressource graphique fournie en entrée."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2337
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2336
 msgid "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of noise is useful in simulating several nature phenomena like clouds, fire and smoke and in generating complex textures like marble or granite."
 msgstr "<b>feTurbulence</b> crée du bruit de Perlin. Ce genre de bruit est utile pour simuler les phénomènes naturels comme les nuages, le feu et la fumée, et pour générer des textures complexes comme le marbre ou le granit."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2356
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2355
 msgid "Duplicate filter primitive"
 msgstr "Dupliquer la primitive de filtre"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2409
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2408
 msgid "Set filter primitive attribute"
 msgstr "Définir l'attribut de la primitive de filtre"
 
@@ -14698,7 +14740,7 @@ msgid "Proprietary"
 msgstr "Propriétaire"
 
 #: ../src/ui/widget/licensor.cpp:38
-#: ../share/extensions/interp-att-g.inx.h:13
+#: ../share/extensions/interp_att_g.inx.h:13
 msgid "Other"
 msgstr "Autre"
 
@@ -19120,8 +19162,8 @@ msgid "No geometric tool is active"
 msgstr "Aucun outil géométrique n'est actif"
 
 #: ../src/widgets/toolbox.cpp:5569
-msgid "all_inactive"
-msgstr "tout_inactif"
+msgid "draw-geometry-inactive"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5601
 msgid "Show limiting bounding box"
@@ -19506,7 +19548,7 @@ msgstr "Longueur maximum de segment (px)"
 #: ../share/extensions/edge3d.inx.h:6
 #: ../share/extensions/flatten.inx.h:3
 #: ../share/extensions/fractalize.inx.h:2
-#: ../share/extensions/interp-att-g.inx.h:10
+#: ../share/extensions/interp_att_g.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
 #: ../share/extensions/radiusrand.inx.h:4
@@ -19898,6 +19940,14 @@ msgstr "Entrée DXF"
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Importer depuis le format Document Exchange d'AutaCAD"
+
+#: ../share/extensions/dxf_input.inx.h:4
+msgid "Or, use manual scale factor"
+msgstr "Ou utiliser un facteur d'échelle manuel"
+
+#: ../share/extensions/dxf_input.inx.h:5
+msgid "Use automatic scaling to size A4"
+msgstr "Utilise un redimensionnement automatique vers la taille A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid "Desktop Cutting Plotter"
@@ -20461,76 +20511,76 @@ msgstr "Méthode d'interpolation"
 msgid "Interpolation steps"
 msgstr "Étapes d'interpolation"
 
-#: ../share/extensions/interp-att-g.inx.h:1
+#: ../share/extensions/interp_att_g.inx.h:1
 msgid "Attribute to Interpolate"
 msgstr "Attribut à interpoler"
 
-#: ../share/extensions/interp-att-g.inx.h:3
+#: ../share/extensions/interp_att_g.inx.h:3
 msgid "End Value"
 msgstr "Valeur finale"
 
-#: ../share/extensions/interp-att-g.inx.h:5
+#: ../share/extensions/interp_att_g.inx.h:5
 msgid "Float Number"
 msgstr "Nombre réel"
 
-#: ../share/extensions/interp-att-g.inx.h:7
+#: ../share/extensions/interp_att_g.inx.h:7
 msgid "If you select \"Other\", you must know the SVG attributes to identify here this \"other\":"
 msgstr "Si vous sélectionnez « Autre », vous devez connaître les attributs SVG nécessaires pour identifier ici cet « autre » :"
 
-#: ../share/extensions/interp-att-g.inx.h:8
+#: ../share/extensions/interp_att_g.inx.h:8
 msgid "Integer Number"
 msgstr "Nombre entier"
 
-#: ../share/extensions/interp-att-g.inx.h:9
+#: ../share/extensions/interp_att_g.inx.h:9
 msgid "Interpolate Attribute in a group"
 msgstr "Interpoler l'attribut dans un groupe"
 
-#: ../share/extensions/interp-att-g.inx.h:11
+#: ../share/extensions/interp_att_g.inx.h:11
 msgid "No Unit"
 msgstr "Pas d'unité"
 
-#: ../share/extensions/interp-att-g.inx.h:14
+#: ../share/extensions/interp_att_g.inx.h:14
 msgid "Other Attribute"
 msgstr "Autre attribut"
 
-#: ../share/extensions/interp-att-g.inx.h:15
+#: ../share/extensions/interp_att_g.inx.h:15
 msgid "Other Attribute type"
 msgstr "Autre type d'attribut"
 
-#: ../share/extensions/interp-att-g.inx.h:17
+#: ../share/extensions/interp_att_g.inx.h:17
 msgid "Start Value"
 msgstr "Valeur initiale"
 
-#: ../share/extensions/interp-att-g.inx.h:18
+#: ../share/extensions/interp_att_g.inx.h:18
 #: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr "Style"
 
-#: ../share/extensions/interp-att-g.inx.h:19
+#: ../share/extensions/interp_att_g.inx.h:19
 msgid "Tag"
 msgstr "Étiquette"
 
-#: ../share/extensions/interp-att-g.inx.h:20
+#: ../share/extensions/interp_att_g.inx.h:20
 msgid "This effect applies a value for any interpolatable attribute for all elements inside the selected group or for all elements in a multiple selection"
 msgstr "Cet effet applique une valeur sur les attributs interpolables de l'ensemble des éléments de la sélection"
 
-#: ../share/extensions/interp-att-g.inx.h:21
+#: ../share/extensions/interp_att_g.inx.h:21
 msgid "Transformation"
 msgstr "Transformation"
 
-#: ../share/extensions/interp-att-g.inx.h:22
+#: ../share/extensions/interp_att_g.inx.h:22
 msgid "Translate X"
 msgstr "Translation en X"
 
-#: ../share/extensions/interp-att-g.inx.h:23
+#: ../share/extensions/interp_att_g.inx.h:23
 msgid "Translate Y"
 msgstr "Translation en Y"
 
-#: ../share/extensions/interp-att-g.inx.h:25
+#: ../share/extensions/interp_att_g.inx.h:25
 msgid "Where to apply?"
 msgstr "Où appliquer ?"
 
-#: ../share/extensions/interp-att-g.inx.h:27
+#: ../share/extensions/interp_att_g.inx.h:27
 #: ../share/extensions/web-set-att.inx.h:28
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
@@ -21701,6 +21751,15 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Entrée XAML"
+
+#~ msgid ""
+#~ "Same than HSL bubbles but with an alpha added for combination with "
+#~ "transparency depending filters"
+#~ msgstr ""
+#~ "Identique à Bulles TSL, mais avec ajout d'alpha pour la combinaison avec "
+#~ "les filtres nécessitant de la transparence"
+#~ msgid "all_inactive"
+#~ msgstr "tout_inactif"
 
 #, fuzzy
 #~ msgid "Ghosten"
