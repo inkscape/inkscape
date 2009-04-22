@@ -152,7 +152,12 @@ class MyEffect(inkex.Effect):
         for node in self.document.getroot().xpath(path, namespaces=inkex.NSS):
             style = node.get('style')
             start = style.find("stroke:")
-            rgb = simplestyle.parseColor(style[(start+7):(start+14)])
+            if style[start+11] == ';':
+                rgb = simplestyle.parseColor(style[(start+7):(start+11)])
+            elif style[start+14] == ';':
+                rgb = simplestyle.parseColor(style[(start+7):(start+14)])
+            else:
+                rgb = (0,0,0)
             hsl = coloreffect.ColorEffect.rgb_to_hsl(coloreffect.ColorEffect(),rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0)
             self.color = 7                                  # default is black
             if hsl[2]:
