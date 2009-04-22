@@ -43,6 +43,7 @@ extensions = \
 	dimension.py \
 	dots.py \
 	draw_from_triangle.py \
+	dxf_input.py \
 	dxf_outlines.py \
 	dxf_templates.py \
 	edge3d.py \
