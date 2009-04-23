@@ -349,6 +349,15 @@ sp_filter_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::N
         g_free(uri_string);
     }
 
+    // TODO: This is evil, correctly implement support for color-interpolation-filters!!!
+    // The color-interpolation-filters attribute is initially set to linearRGB according to the SVG standard.
+    // However, Inkscape completely ignores it and implicitly assumes that it is sRGB (like color-interpolation-filters).
+    // This results in a discrepancy between Inkscape and other renderers in how they render filters.
+    // To mitigate this problem I've (Jasper van de Gronde,th.v.d.gronde@hccnet.nl) added this to ensure that at least
+    // any filters written by Inkscape will henceforth be rendered the same in other renderers.
+    // In the future Inkscape should have proper support for the color-interpolation properties and this should be changed.
+    repr->setAttribute("color-interpolation-filters", "sRGB");
+
     if (((SPObjectClass *) filter_parent_class)->write) {
         ((SPObjectClass *) filter_parent_class)->write(object, doc, repr, flags);
     }
