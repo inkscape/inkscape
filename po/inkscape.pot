@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-13 23:41+0400\n"
+"POT-Creation-Date: 2009-04-23 18:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,6 +78,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:60
 #: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:168
 msgid "Blurs"
 msgstr ""
 
@@ -205,7 +206,6 @@ msgstr ""
 #: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:45
 #: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:110
 #: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:116
-#: ../share/filters/filters.svg.h:168
 msgid "Distort"
 msgstr ""
 
@@ -285,7 +285,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:100
 #: ../share/filters/filters.svg.h:101 ../share/filters/filters.svg.h:104
 #: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:128
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:169
 msgid "Image effects"
 msgstr ""
 
@@ -380,7 +380,7 @@ msgstr ""
 #: ../share/extensions/color_removered.inx.h:1
 #: ../share/extensions/color_replace.inx.h:2
 #: ../share/extensions/color_rgbbarrel.inx.h:1
-#: ../share/extensions/interp-att-g.inx.h:2
+#: ../share/extensions/interp_att_g.inx.h:2
 msgid "Color"
 msgstr ""
 
@@ -514,18 +514,18 @@ msgid "Glossy painting effect for bitmaps"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:47
-msgid "HSL bumps"
+msgid "HSL Bumps"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:49
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:108
 #: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:170
 msgid "Bumps"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:47
-msgid ""
-"Highly flexible specular bump based on colors hue saturation and luminance"
+msgid "Highly flexible specular bump"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:48
@@ -540,7 +540,7 @@ msgstr ""
 msgid "HSL bubbles"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:108
 msgid ""
 "Highly flexible bubbles effect depending on color hue saturation and "
 "luminance"
@@ -610,7 +610,7 @@ msgid "Soft pastel ridge"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:57
-msgid "Glowing Metal"
+msgid "Glowing metal"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:57
@@ -647,7 +647,7 @@ msgid "Blur inner borders and intersections"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:61
-msgid "Iridescent Beeswax"
+msgid "Iridescent beeswax"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:61
@@ -655,7 +655,7 @@ msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:62
-msgid "Eroded Metal"
+msgid "Eroded metal"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:62
@@ -875,7 +875,7 @@ msgid ""
 msgstr ""
 
 #: ../share/filters/filters.svg.h:88
-msgid "In and out"
+msgid "In and Out"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:88
@@ -1031,7 +1031,7 @@ msgid "Illuminated glass effect with light coming from beneath"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:107
-msgid "HSL bumps, alpha"
+msgid "HSL Bumps, alpha"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:107
@@ -1041,13 +1041,7 @@ msgid ""
 msgstr ""
 
 #: ../share/filters/filters.svg.h:108
-msgid "HSL bubbles, alpha"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:108
-msgid ""
-"Same than HSL bubbles but with an alpha added for combination with "
-"transparency depending filters"
+msgid "HSL Bubbles, alpha"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:109
@@ -1168,7 +1162,7 @@ msgid "Basic diffuse bevel to use for building textures"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:123
-msgid "Cutout glow"
+msgid "Cutout Glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:123
@@ -1176,7 +1170,7 @@ msgid "In and out glow with a possible offset and colorizable flood"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:124
-msgid "HSL bumps diffuse"
+msgid "HSL Bumps, diffuse"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:124
@@ -1201,7 +1195,7 @@ msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:127
-msgid "HSL bubbles diffuse"
+msgid "HSL Bubbles, diffuse"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:127
@@ -1533,12 +1527,18 @@ msgstr ""
 msgid "Light areas turn to black"
 msgstr ""
 
+#. Eraser
 #: ../share/filters/filters.svg.h:167
-msgid "Ghosten"
+#: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
+msgid "Eraser"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:167
-msgid "Turns light or dark areas to transparency"
+msgid "Masking tools"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:167
+msgid "Make the lightest parts of the object progressively transparent"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:168
@@ -1547,6 +1547,22 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:168
 msgid "Small-scale roughening and blurring to edges and content"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:169
+msgid "Film Grain"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:169
+msgid "Adds a film grain noise to images and objects"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:170
+msgid "HSL Bumps, transparent"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:170
+msgid "Highly flexible specular bump with transparency"
 msgstr ""
 
 #: ../src/arc-context.cpp:303
@@ -2177,7 +2193,7 @@ msgstr ""
 #: ../src/extension/internal/bitmap/opacity.cpp:37
 #: ../src/extension/internal/bitmap/opacity.cpp:39
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2213
-#: ../src/widgets/toolbox.cpp:4319 ../share/extensions/interp-att-g.inx.h:12
+#: ../src/widgets/toolbox.cpp:4319 ../share/extensions/interp_att_g.inx.h:12
 msgid "Opacity"
 msgstr ""
 
@@ -2282,7 +2298,7 @@ msgid ""
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2744
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "Size"
 msgstr ""
 
@@ -3304,176 +3320,177 @@ msgstr ""
 msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:59 ../src/display/snap-indicator.cpp:62
-#: ../src/display/snap-indicator.cpp:144 ../src/display/snap-indicator.cpp:147
+#. TRANSLATORS: undefined target for snapping
+#: ../src/display/snap-indicator.cpp:60 ../src/display/snap-indicator.cpp:63
+#: ../src/display/snap-indicator.cpp:145 ../src/display/snap-indicator.cpp:148
 msgid "UNDEFINED"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:65
+#: ../src/display/snap-indicator.cpp:66
 msgid "grid line"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:68
+#: ../src/display/snap-indicator.cpp:69
 msgid "grid intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:71
+#: ../src/display/snap-indicator.cpp:72
 msgid "guide"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:74
+#: ../src/display/snap-indicator.cpp:75
 msgid "guide intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:77
+#: ../src/display/snap-indicator.cpp:78
 msgid "grid-guide intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:80
+#: ../src/display/snap-indicator.cpp:81
 msgid "cusp node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:83
+#: ../src/display/snap-indicator.cpp:84
 msgid "smooth node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:86
+#: ../src/display/snap-indicator.cpp:87
 msgid "path"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:89
+#: ../src/display/snap-indicator.cpp:90
 msgid "path intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:92
+#: ../src/display/snap-indicator.cpp:93
 msgid "bounding box corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:95
+#: ../src/display/snap-indicator.cpp:96
 msgid "bounding box side"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:98
+#: ../src/display/snap-indicator.cpp:99
 msgid "bounding box"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:101
+#: ../src/display/snap-indicator.cpp:102
 msgid "page border"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:104
+#: ../src/display/snap-indicator.cpp:105
 msgid "line midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:107
+#: ../src/display/snap-indicator.cpp:108
 msgid "object midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:110
+#: ../src/display/snap-indicator.cpp:111
 msgid "object rotation center"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:113
+#: ../src/display/snap-indicator.cpp:114
 msgid "handle"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:116
+#: ../src/display/snap-indicator.cpp:117
 msgid "bounding box side midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:119
+#: ../src/display/snap-indicator.cpp:120
 msgid "bounding box midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:122
+#: ../src/display/snap-indicator.cpp:123
 msgid "page corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:125
+#: ../src/display/snap-indicator.cpp:126
 msgid "convex hull corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:128
+#: ../src/display/snap-indicator.cpp:129
 msgid "quadrant point"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:131
+#: ../src/display/snap-indicator.cpp:132
 msgid "center"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:134
+#: ../src/display/snap-indicator.cpp:135
 msgid "corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:137
+#: ../src/display/snap-indicator.cpp:138
 msgid "text baseline"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:150
+#: ../src/display/snap-indicator.cpp:151
 msgid "Bounding box corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:153
+#: ../src/display/snap-indicator.cpp:154
 msgid "Bounding box midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:156
+#: ../src/display/snap-indicator.cpp:157
 msgid "Bounding box side midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:159
+#: ../src/display/snap-indicator.cpp:160
 msgid "Smooth node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:162
+#: ../src/display/snap-indicator.cpp:163
 msgid "Cusp node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:165
+#: ../src/display/snap-indicator.cpp:166
 msgid "Line midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:168
+#: ../src/display/snap-indicator.cpp:169
 msgid "Object midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:171
+#: ../src/display/snap-indicator.cpp:172
 msgid "Object rotation center"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:174
+#: ../src/display/snap-indicator.cpp:175
 msgid "Handle"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:177
+#: ../src/display/snap-indicator.cpp:178
 msgid "Path intersection"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:180
+#: ../src/display/snap-indicator.cpp:181
 msgid "Guide"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:183
+#: ../src/display/snap-indicator.cpp:184
 msgid "Convex hull corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:186
+#: ../src/display/snap-indicator.cpp:187
 msgid "Quadrant point"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:189 ../src/widgets/toolbox.cpp:6695
+#: ../src/display/snap-indicator.cpp:190 ../src/widgets/toolbox.cpp:6695
 msgid "Center"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:192
+#: ../src/display/snap-indicator.cpp:193
 msgid "Corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:195
+#: ../src/display/snap-indicator.cpp:196
 msgid "Text baseline"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:234
+#: ../src/display/snap-indicator.cpp:235
 msgid " to "
 msgstr ""
 
@@ -3747,7 +3764,7 @@ msgstr ""
 #: ../src/live_effects/lpe-patternalongpath.cpp:64
 #: ../src/widgets/toolbox.cpp:3088 ../src/widgets/toolbox.cpp:4117
 #: ../share/extensions/foldablebox.inx.h:9
-#: ../share/extensions/interp-att-g.inx.h:26
+#: ../share/extensions/interp_att_g.inx.h:26
 msgid "Width"
 msgstr ""
 
@@ -3756,13 +3773,13 @@ msgstr ""
 #: ../src/extension/internal/bitmap/sample.cpp:41 ../src/libgdl/gdl-dock.c:198
 #: ../src/libgdl/gdl-dock-placeholder.c:177 ../src/widgets/toolbox.cpp:3105
 #: ../share/extensions/foldablebox.inx.h:4
-#: ../share/extensions/interp-att-g.inx.h:6
+#: ../share/extensions/interp_att_g.inx.h:6
 msgid "Height"
 msgstr ""
 
 #. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
+#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:97
 #: ../src/live_effects/lpe-offset.cpp:30
 #: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:49
@@ -3816,7 +3833,7 @@ msgstr ""
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2245
 msgid "Type"
 msgstr ""
@@ -4185,12 +4202,12 @@ msgid "Shade"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:953
+#: ../src/ui/dialog/filter-effects-dialog.cpp:954
 msgid "Azimuth"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Elevation"
 msgstr ""
 
@@ -4651,7 +4668,7 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:112
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:381
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:393
 msgid "rough"
 msgstr ""
 
@@ -4665,51 +4682,55 @@ msgstr ""
 msgid "Import text as text"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:122
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:120
+msgid "Replace PDF fonts by closest-named installed fonts"
+msgstr ""
+
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:125
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:126
 msgid "Import settings"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:242
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:248
 msgid "PDF Import Settings"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:382
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:394
 msgid "pdfinput|medium"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:383
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:395
 msgid "fine"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:384
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:396
 msgid "very fine"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:739
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:751
 msgid "PDF Input"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:744
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:756
 msgid "Adobe PDF (*.pdf)"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:745
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:757
 msgid "Adobe Portable Document Format"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:752
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:764
 msgid "AI Input"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:757
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:769
 msgid "Adobe Illustrator 9.0 and above (*.ai)"
 msgstr ""
 
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:758
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:770
 msgid "Open files saved in Adobe Illustrator 9.0 and newer versions"
 msgstr ""
 
@@ -5132,8 +5153,8 @@ msgstr ""
 
 #: ../src/filter-enums.cpp:95 ../src/flood-context.cpp:264
 #: ../src/live_effects/lpe-ruler.cpp:34
-#: ../src/ui/dialog/document-properties.cpp:328
-#: ../src/ui/dialog/filter-effects-dialog.cpp:467
+#: ../src/ui/dialog/document-properties.cpp:325
+#: ../src/ui/dialog/filter-effects-dialog.cpp:468
 #: ../src/ui/dialog/inkscape-preferences.cpp:255
 #: ../src/ui/dialog/inkscape-preferences.cpp:418
 #: ../src/ui/dialog/inkscape-preferences.cpp:550
@@ -5443,7 +5464,7 @@ msgstr ""
 
 #: ../src/helper/units.cpp:37 ../src/live_effects/lpe-path_length.cpp:27
 #: ../share/extensions/foldablebox.inx.h:8
-#: ../share/extensions/interp-att-g.inx.h:24
+#: ../share/extensions/interp_att_g.inx.h:24
 #: ../share/extensions/printing-marks.inx.h:20
 msgid "Unit"
 msgstr ""
@@ -5742,7 +5763,7 @@ msgid ""
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
 
-#: ../src/interface.cpp:1549 ../share/extensions/web-set-att.inx.h:4
+#: ../src/interface.cpp:1549 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr ""
@@ -5833,7 +5854,7 @@ msgstr ""
 msgid "Inkboard session (%1 to %2)"
 msgstr ""
 
-#: ../src/knot.cpp:441
+#: ../src/knot.cpp:443
 msgid "Node or handle drag canceled."
 msgstr ""
 
@@ -6078,8 +6099,8 @@ msgid ""
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-notebook.c:134
-#: ../src/ui/dialog/align-and-distribute.cpp:914
-#: ../src/ui/dialog/document-properties.cpp:119
+#: ../src/ui/dialog/align-and-distribute.cpp:917
+#: ../src/ui/dialog/document-properties.cpp:116
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
 #: ../src/widgets/desktop-widget.cpp:1562
 msgid "Page"
@@ -6254,68 +6275,65 @@ msgstr ""
 msgid "Angle bisector"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:88
+#. TRANSLATORS: boolean operations
+#: ../src/live_effects/effect.cpp:89
 msgid "Boolops"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:89
+#: ../src/live_effects/effect.cpp:90
 msgid "Circle (by center and radius)"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:90
+#: ../src/live_effects/effect.cpp:91
 msgid "Circle by 3 points"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:91
+#: ../src/live_effects/effect.cpp:92
 msgid "Dynamic stroke"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:92
+#: ../src/live_effects/effect.cpp:93
 msgid "Interpolate Sub-Paths"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:93
+#: ../src/live_effects/effect.cpp:94
 msgid "Lattice Deformation"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:94
+#: ../src/live_effects/effect.cpp:95
 msgid "Line Segment"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:95
+#: ../src/live_effects/effect.cpp:96
 msgid "Mirror symmetry"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:97
+#: ../src/live_effects/effect.cpp:98
 msgid "Parallel"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:99
 msgid "Path length"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:100
 msgid "Perpendicular bisector"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:101
 msgid "Perspective path"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:102
 msgid "Rotate copies"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:103
 msgid "Recursive skeleton"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:103
-msgid "Ruler"
-msgstr ""
-
 #: ../src/live_effects/effect.cpp:104
-msgid "Sketch"
+msgid "Ruler"
 msgstr ""
 
 #: ../src/live_effects/effect.cpp:105
@@ -6369,41 +6387,45 @@ msgstr ""
 msgid "Hatches (rough)"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:272
+#: ../src/live_effects/effect.cpp:120
+msgid "Sketch"
+msgstr ""
+
+#: ../src/live_effects/effect.cpp:273
 msgid "Is visible?"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:272
+#: ../src/live_effects/effect.cpp:273
 msgid ""
 "If unchecked, the effect remains applied to the object but is temporarily "
 "disabled on canvas"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:273
+#: ../src/live_effects/effect.cpp:274
 msgid "Deactivate knotholder?"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:273
+#: ../src/live_effects/effect.cpp:274
 msgid ""
 "Check this to deactivate knotholder handles (useful if they interfere with "
 "node handles during editing)"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:294
+#: ../src/live_effects/effect.cpp:295
 msgid "No effect"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:341
+#: ../src/live_effects/effect.cpp:342
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:640
+#: ../src/live_effects/effect.cpp:641
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:645
+#: ../src/live_effects/effect.cpp:646
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 
@@ -7026,10 +7048,10 @@ msgid "Adjust the \"right\" end of the parallel"
 msgstr ""
 
 #: ../src/live_effects/lpe-path_length.cpp:25
-#: ../src/live_effects/lpe-sketch.cpp:53 ../src/selection-chemistry.cpp:1514
+#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1514
 #: ../src/seltrans.cpp:485 ../src/ui/dialog/filter-effects-dialog.cpp:2207
 #: ../src/ui/dialog/transformation.cpp:738
-#: ../share/extensions/interp-att-g.inx.h:16
+#: ../share/extensions/interp_att_g.inx.h:16
 msgid "Scale"
 msgstr ""
 
@@ -7200,7 +7222,7 @@ msgid "Frequency randomness"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
-msgid "Variation of dist between hatches, in %."
+msgid "Variation of distance between hatches, in %."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
@@ -7287,7 +7309,7 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "variance: 1st side"
+msgid "Variance: 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
@@ -7316,7 +7338,7 @@ msgid "Add a global bend to the hatches (slower)"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Thikness: at 1st side"
+msgid "Thickness: at 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
@@ -7354,14 +7376,15 @@ msgid "Defines hatches frequency and direction"
 msgstr ""
 
 #.
-#. bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
+#. bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid "Global bending"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid ""
-"Relative position to ref point defines global bending direction and amount"
+"Relative position to a reference point defines global bending direction and "
+"amount"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
@@ -7447,108 +7470,132 @@ msgstr ""
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
-#: ../src/live_effects/lpe-sketch.cpp:34
+#: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Strokes"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:34
+#: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:35
+#: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max stroke length"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:36
+#: ../src/live_effects/lpe-sketch.cpp:37
 msgid "Maximum length of approximating strokes"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:37
+#: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:38
+#: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:39
+#: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:40
+#: ../src/live_effects/lpe-sketch.cpp:41
 msgid "How much successive strokes should overlap (relative to maximum length)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:41
+#: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:42
+#: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Random variation of overlap (relative to maximum overlap)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:43
+#: ../src/live_effects/lpe-sketch.cpp:44
 msgid "Max. end tolerance"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:44
+#: ../src/live_effects/lpe-sketch.cpp:45
 msgid ""
 "Maximum distance between ends of original and approximating paths (relative "
 "to maximum length)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:45
-msgid "Parallel offset"
-msgstr ""
-
 #: ../src/live_effects/lpe-sketch.cpp:46
-msgid "Average distance from approximating path to original path"
+msgid "Average offset"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:47
-msgid "Max. tremble"
+msgid "Average distance each stroke is away from the original path"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:48
-msgid "Maximum tremble magnitude"
+msgid "Max. tremble"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:49
-msgid "Tremble frequency"
+msgid "Maximum tremble magnitude"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:50
-msgid "Average number of tremble periods in an approximating stroke"
+msgid "Tremble frequency"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:51
+msgid "Average number of tremble periods in a stroke"
+msgstr ""
+
+#: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:52
+#: ../src/live_effects/lpe-sketch.cpp:54
 msgid "How many construction lines (tangents) to draw"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:54
+#: ../src/live_effects/lpe-sketch.cpp:56
 msgid ""
 "Scale factor relating curvature and length of construction lines (try "
 "5*offset)"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:55
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Max. length"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:55
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Maximum length of construction lines"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:56
+#: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Length variation"
 msgstr ""
 
-#: ../src/live_effects/lpe-sketch.cpp:56
+#: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Random variation of the length of construction lines"
+msgstr ""
+
+#: ../src/live_effects/lpe-sketch.cpp:59
+msgid "Placement randomness"
+msgstr ""
+
+#: ../src/live_effects/lpe-sketch.cpp:59
+msgid "0: evenly distributed construcion lines, 1: purely random placement"
+msgstr ""
+
+#: ../src/live_effects/lpe-sketch.cpp:61
+msgid "k_min"
+msgstr ""
+
+#: ../src/live_effects/lpe-sketch.cpp:61
+msgid "min curvature"
+msgstr ""
+
+#: ../src/live_effects/lpe-sketch.cpp:62
+msgid "k_max"
+msgstr ""
+
+#: ../src/live_effects/lpe-sketch.cpp:62
+msgid "max curvature"
 msgstr ""
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:56
@@ -7716,7 +7763,7 @@ msgstr ""
 msgid "Change unit parameter"
 msgstr ""
 
-#: ../src/lpe-tool-context.cpp:273
+#: ../src/lpe-tool-context.cpp:274
 msgid "Choose a construction tool from the toolbar."
 msgstr ""
 
@@ -8956,7 +9003,7 @@ msgid "Select <b>object(s)</b> to remove filters from."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1022
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1334
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1335
 msgid "Remove filter"
 msgstr ""
 
@@ -9439,7 +9486,7 @@ msgstr ""
 msgid "Move <b>center</b> to %s, %s"
 msgstr ""
 
-#: ../src/seltrans.cpp:1487
+#: ../src/seltrans.cpp:1495
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -10675,45 +10722,45 @@ msgstr ""
 msgid "Nicely arrange selected connector network"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:896
-msgid "Align selected nodes horizontally"
-msgstr ""
-
 #: ../src/ui/dialog/align-and-distribute.cpp:899
-msgid "Align selected nodes vertically"
+msgid "Align selected nodes to a common horizontal line"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:902
-msgid "Distribute selected nodes horizontally"
+msgid "Align selected nodes to a common vertical line"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:905
+msgid "Distribute selected nodes horizontally"
+msgstr ""
+
+#: ../src/ui/dialog/align-and-distribute.cpp:908
 msgid "Distribute selected nodes vertically"
 msgstr ""
 
 #. Rest of the widgetry
-#: ../src/ui/dialog/align-and-distribute.cpp:910
+#: ../src/ui/dialog/align-and-distribute.cpp:913
 msgid "Last selected"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:911
+#: ../src/ui/dialog/align-and-distribute.cpp:914
 msgid "First selected"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:912
+#: ../src/ui/dialog/align-and-distribute.cpp:915
 msgid "Biggest object"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:913
+#: ../src/ui/dialog/align-and-distribute.cpp:916
 msgid "Smallest object"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:915
+#: ../src/ui/dialog/align-and-distribute.cpp:918
 #: ../src/widgets/desktop-widget.cpp:1566
 msgid "Drawing"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:916
+#: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
 #: ../src/widgets/desktop-widget.cpp:1570
 #: ../share/extensions/printing-marks.inx.h:16
@@ -10757,252 +10804,252 @@ msgid "<b>License</b>"
 msgstr ""
 
 #. ---------------------------------------------------------------
-#: ../src/ui/dialog/document-properties.cpp:93
+#: ../src/ui/dialog/document-properties.cpp:90
 msgid "Show page _border"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:93
+#: ../src/ui/dialog/document-properties.cpp:90
 msgid "If set, rectangular page border is shown"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:94
+#: ../src/ui/dialog/document-properties.cpp:91
 msgid "Border on _top of drawing"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:94
+#: ../src/ui/dialog/document-properties.cpp:91
 msgid "If set, border is always on top of the drawing"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:95
+#: ../src/ui/dialog/document-properties.cpp:92
 msgid "_Show border shadow"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:95
+#: ../src/ui/dialog/document-properties.cpp:92
 msgid "If set, page border shows a shadow on its right and lower side"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:96
+#: ../src/ui/dialog/document-properties.cpp:93
 msgid "Back_ground:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:96
+#: ../src/ui/dialog/document-properties.cpp:93
 msgid "Background color"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:96
+#: ../src/ui/dialog/document-properties.cpp:93
 msgid ""
 "Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:97
+#: ../src/ui/dialog/document-properties.cpp:94
 msgid "Border _color:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:97
+#: ../src/ui/dialog/document-properties.cpp:94
 msgid "Page border color"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:97
+#: ../src/ui/dialog/document-properties.cpp:94
 msgid "Color of the page border"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:98
+#: ../src/ui/dialog/document-properties.cpp:95
 msgid "Default _units:"
 msgstr ""
 
 #. ---------------------------------------------------------------
 #. General snap options
-#: ../src/ui/dialog/document-properties.cpp:102
+#: ../src/ui/dialog/document-properties.cpp:99
 msgid "Show _guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:102
+#: ../src/ui/dialog/document-properties.cpp:99
 msgid "Show or hide guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:103
+#: ../src/ui/dialog/document-properties.cpp:100
 msgid "_Snap guides while dragging"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:103
+#: ../src/ui/dialog/document-properties.cpp:100
 msgid ""
 "While dragging a guide, snap to object nodes or bounding box corners ('Snap "
 "to nodes' or 'snap to bounding box corners' must be enabled; only a small "
 "part of the guide near the cursor will snap)"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:105
+#: ../src/ui/dialog/document-properties.cpp:102
 msgid "Guide co_lor:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:105
+#: ../src/ui/dialog/document-properties.cpp:102
 msgid "Guideline color"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:105
+#: ../src/ui/dialog/document-properties.cpp:102
 msgid "Color of guidelines"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:106
+#: ../src/ui/dialog/document-properties.cpp:103
 msgid "_Highlight color:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:106
+#: ../src/ui/dialog/document-properties.cpp:103
 msgid "Highlighted guideline color"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:106
+#: ../src/ui/dialog/document-properties.cpp:103
 msgid "Color of a guideline when it is under mouse"
 msgstr ""
 
 #. TRANSLATORS: In Grid|_New translate only the word _New. It ref to grid
-#: ../src/ui/dialog/document-properties.cpp:110
+#: ../src/ui/dialog/document-properties.cpp:107
 msgid "Grid|_New"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:110
+#: ../src/ui/dialog/document-properties.cpp:107
 msgid "Create new grid."
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:111
+#: ../src/ui/dialog/document-properties.cpp:108
 msgid "_Remove"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:111
+#: ../src/ui/dialog/document-properties.cpp:108
 msgid "Remove selected grid."
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:120
+#: ../src/ui/dialog/document-properties.cpp:117
 #: ../src/widgets/toolbox.cpp:2167
 msgid "Guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:121
+#: ../src/ui/dialog/document-properties.cpp:118
 #: ../src/ui/dialog/inkscape-preferences.cpp:1010
 #: ../src/widgets/toolbox.cpp:2158
 msgid "Grids"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:122 ../src/verbs.cpp:2587
+#: ../src/ui/dialog/document-properties.cpp:119 ../src/verbs.cpp:2587
 #: ../src/widgets/toolbox.cpp:2023
 msgid "Snap"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:123
+#: ../src/ui/dialog/document-properties.cpp:120
 msgid "Color Management"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:124
+#: ../src/ui/dialog/document-properties.cpp:121
 msgid "Scripting"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:222
+#: ../src/ui/dialog/document-properties.cpp:219
 msgid "<b>General</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:224
+#: ../src/ui/dialog/document-properties.cpp:221
 msgid "<b>Border</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:226
+#: ../src/ui/dialog/document-properties.cpp:223
 msgid "<b>Format</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:254
+#: ../src/ui/dialog/document-properties.cpp:251
 msgid "<b>Guides</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:273
+#: ../src/ui/dialog/document-properties.cpp:270
 msgid "Snap _distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:273
+#: ../src/ui/dialog/document-properties.cpp:270
 msgid "Snap only when _closer than:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:273
-#: ../src/ui/dialog/document-properties.cpp:279
-#: ../src/ui/dialog/document-properties.cpp:285
+#: ../src/ui/dialog/document-properties.cpp:270
+#: ../src/ui/dialog/document-properties.cpp:276
+#: ../src/ui/dialog/document-properties.cpp:282
 msgid "Always snap"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:274
+#: ../src/ui/dialog/document-properties.cpp:271
 msgid "Snapping distance, in screen pixels, for snapping to objects"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:274
+#: ../src/ui/dialog/document-properties.cpp:271
 msgid "Always snap to objects, regardless of their distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:275
+#: ../src/ui/dialog/document-properties.cpp:272
 msgid ""
 "If set, objects only snap to another object when it's within the range "
 "specified below"
 msgstr ""
 
 #. Options for snapping to grids
-#: ../src/ui/dialog/document-properties.cpp:279
+#: ../src/ui/dialog/document-properties.cpp:276
 msgid "Snap d_istance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:279
+#: ../src/ui/dialog/document-properties.cpp:276
 msgid "Snap only when c_loser than:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:280
+#: ../src/ui/dialog/document-properties.cpp:277
 msgid "Snapping distance, in screen pixels, for snapping to grid"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:280
+#: ../src/ui/dialog/document-properties.cpp:277
 msgid "Always snap to grids, regardless of the distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:281
+#: ../src/ui/dialog/document-properties.cpp:278
 msgid ""
 "If set, objects only snap to a grid line when it's within the range "
 "specified below"
 msgstr ""
 
 #. Options for snapping to guides
-#: ../src/ui/dialog/document-properties.cpp:285
+#: ../src/ui/dialog/document-properties.cpp:282
 msgid "Snap dist_ance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:285
+#: ../src/ui/dialog/document-properties.cpp:282
 msgid "Snap only when close_r than:"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:286
+#: ../src/ui/dialog/document-properties.cpp:283
 msgid "Snapping distance, in screen pixels, for snapping to guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:286
+#: ../src/ui/dialog/document-properties.cpp:283
 msgid "Always snap to guides, regardless of the distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:287
+#: ../src/ui/dialog/document-properties.cpp:284
 msgid ""
 "If set, objects only snap to a guide when it's within the range specified "
 "below"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:291
+#: ../src/ui/dialog/document-properties.cpp:288
 msgid "<b>Snap to objects</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:293
+#: ../src/ui/dialog/document-properties.cpp:290
 msgid "<b>Snap to grids</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:295
+#: ../src/ui/dialog/document-properties.cpp:292
 msgid "<b>Snap to guides</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:324
+#: ../src/ui/dialog/document-properties.cpp:321
 msgid "(invalid UTF-8 string)"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:350
+#: ../src/ui/dialog/document-properties.cpp:347
 #, c-format
 msgid "Color profiles directory (%s) is unavailable."
 msgstr ""
@@ -11011,61 +11058,61 @@ msgstr ""
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:417 ../src/verbs.cpp:2739
+#: ../src/ui/dialog/document-properties.cpp:414 ../src/verbs.cpp:2739
 msgid "Link Color Profile"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:490
+#: ../src/ui/dialog/document-properties.cpp:487
 msgid "Remove linked color profile"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:504
+#: ../src/ui/dialog/document-properties.cpp:501
 msgid "<b>Linked Color Profiles:</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:506
+#: ../src/ui/dialog/document-properties.cpp:503
 msgid "<b>Available Color Profiles:</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:508
+#: ../src/ui/dialog/document-properties.cpp:505
 msgid "Link Profile"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:539
+#: ../src/ui/dialog/document-properties.cpp:536
 msgid "Profile Name"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:570
+#: ../src/ui/dialog/document-properties.cpp:567
 msgid "<b>External script files:</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:572
+#: ../src/ui/dialog/document-properties.cpp:569
 #: ../src/ui/dialog/swatches.cpp:458
 msgid "Add"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:595
+#: ../src/ui/dialog/document-properties.cpp:592
 msgid "Filename"
 msgstr ""
 
 #. inform the document, so we can undo
-#: ../src/ui/dialog/document-properties.cpp:635
+#: ../src/ui/dialog/document-properties.cpp:632
 msgid "Add external script..."
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:659
+#: ../src/ui/dialog/document-properties.cpp:656
 msgid "Remove external script"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:736
+#: ../src/ui/dialog/document-properties.cpp:733
 msgid "<b>Creation</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:737
+#: ../src/ui/dialog/document-properties.cpp:734
 msgid "<b>Defined grids</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:947
+#: ../src/ui/dialog/document-properties.cpp:944
 msgid "Remove grid"
 msgstr ""
 
@@ -11212,7 +11259,7 @@ msgid "No file selected"
 msgstr ""
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:48
-#: ../share/extensions/interp-att-g.inx.h:4
+#: ../share/extensions/interp_att_g.inx.h:4
 msgid "Fill"
 msgstr ""
 
@@ -11224,7 +11271,8 @@ msgstr ""
 msgid "Stroke st_yle"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:464
+#. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
+#: ../src/ui/dialog/filter-effects-dialog.cpp:465
 msgid ""
 "This matrix determines a linear transform on colour space. Each line affects "
 "one of the color components. Each column determines how much of each color "
@@ -11232,199 +11280,199 @@ msgid ""
 "depend on input colors, so can be used to adjust a constant component value."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:574
+#: ../src/ui/dialog/filter-effects-dialog.cpp:575
 msgid "Image File"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:577
+#: ../src/ui/dialog/filter-effects-dialog.cpp:578
 msgid "Selected SVG Element"
 msgstr ""
 
 #. TODO: any image, not justy svg
-#: ../src/ui/dialog/filter-effects-dialog.cpp:647
+#: ../src/ui/dialog/filter-effects-dialog.cpp:648
 msgid "Select an image to be used as feImage input"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:739
+#: ../src/ui/dialog/filter-effects-dialog.cpp:740
 msgid "This SVG filter effect does not require any parameters."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:745
+#: ../src/ui/dialog/filter-effects-dialog.cpp:746
 msgid "This SVG filter effect is not yet implemented in Inkscape."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:936
+#: ../src/ui/dialog/filter-effects-dialog.cpp:937
 msgid "Light Source:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:953
+#: ../src/ui/dialog/filter-effects-dialog.cpp:954
 msgid "Direction angle for the light source on the XY plane, in degrees"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Direction angle for the light source on the YZ plane, in degrees"
 msgstr ""
 
 #. default x:
 #. default y:
 #. default z:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:957
-#: ../src/ui/dialog/filter-effects-dialog.cpp:960
+#: ../src/ui/dialog/filter-effects-dialog.cpp:958
+#: ../src/ui/dialog/filter-effects-dialog.cpp:961
 msgid "Location"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:957
-#: ../src/ui/dialog/filter-effects-dialog.cpp:960
-#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:958
+#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:964
 msgid "X coordinate"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:957
-#: ../src/ui/dialog/filter-effects-dialog.cpp:960
-#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:958
+#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:964
 msgid "Y coordinate"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:957
-#: ../src/ui/dialog/filter-effects-dialog.cpp:960
-#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:958
+#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:964
 msgid "Z coordinate"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:964
 msgid "Points At"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Specular Exponent"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Exponent value controlling the focus for the light source"
 msgstr ""
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
-#: ../src/ui/dialog/filter-effects-dialog.cpp:966
+#: ../src/ui/dialog/filter-effects-dialog.cpp:967
 msgid "Cone Angle"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:966
+#: ../src/ui/dialog/filter-effects-dialog.cpp:967
 msgid ""
 "This is the angle between the spot light axis (i.e. the axis between the "
 "light source and the point to which it is pointing at) and the spot light "
 "cone. No light is projected outside this cone."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1027
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1028
 msgid "New light source"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1068
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1069
 msgid "_Duplicate"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1094
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1095
 msgid "_Filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1108
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1109
 msgid "R_ename"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1211
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1212
 msgid "Rename filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1247
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1248
 msgid "Apply filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1323
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1324
 msgid "Add filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1349
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1350
 msgid "Duplicate filter"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1416
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1417
 msgid "_Effect"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1424
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1425
 msgid "Connections"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1540
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1541
 msgid "Remove filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1912
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1913
 msgid "Remove merge node"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2028
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
 msgid "Reorder filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2062
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2063
 msgid "Add Effect:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2063
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
 msgid "No effect selected"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2065
 msgid "No filter selected"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2102
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2103
 msgid "Effect parameters"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2103
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2104
 msgid "Filter General Settings"
 msgstr ""
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2159
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
 msgid "Coordinates"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2159
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
 msgid "X coordinate of the left corners of filter effects region"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2159
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
 msgid "Y coordinate of the upper corners of filter effects region"
 msgstr ""
 
 #. default width:
 #. default height:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 #: ../share/extensions/dimension.inx.h:1
 msgid "Dimensions"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "Width of filter effects region"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "Height of filter effects region"
 msgstr ""
 
 #. # end multiple scan
 #. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2163
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2164
 #: ../src/ui/dialog/tracedialog.cpp:563 ../src/widgets/toolbox.cpp:4242
 #: ../share/extensions/triangle.inx.h:9
 msgid "Mode"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
 msgid ""
 "Indicates the type of matrix operation. The keyword 'matrix' indicates that "
 "a full 5x4 matrix of values will be provided. The other keywords represent "
@@ -11432,73 +11480,73 @@ msgid ""
 "performed without specifying a complete matrix."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
 msgid "Value(s)"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2181
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid "Operator"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2183
 msgid "K1"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2183
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2186
 msgid ""
 "If the arithmetic operation is chosen, each result pixel is computed using "
 "the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel "
 "values of the first and second inputs respectively."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2183
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 msgid "K2"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2185
 msgid "K3"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2185
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2186
 msgid "K4"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "width of the convolve matrix"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "height of the convolve matrix"
 msgstr ""
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "Target"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid ""
 "X coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid ""
 "Y coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
 msgstr ""
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
 msgid "Kernel"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
 msgid ""
 "This matrix describes the convolve operation that is applied to the input "
 "image in order to calculate the pixel colors at the output. Different "
@@ -11508,7 +11556,6 @@ msgid ""
 "would lead to a common blur effect."
 msgstr ""
 
-#. TODO: svg spec: The default value is the sum of all values in kernelMatrix, with the exception that if the sum is zero, then the divisor is set to 1.
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2194
 msgid "Divisor"
 msgstr ""
@@ -12353,11 +12400,6 @@ msgstr ""
 #. Paint Bucket
 #: ../src/ui/dialog/inkscape-preferences.cpp:505 ../src/verbs.cpp:2532
 msgid "Paint Bucket"
-msgstr ""
-
-#. Eraser
-#: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
-msgid "Eraser"
 msgstr ""
 
 #. LPETool
@@ -13645,15 +13687,52 @@ msgid ""
 "working around bugs in GTK+ named icon notification"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1335
+#. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
+msgid "User config: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1290
+msgid "User data: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1294
+msgid "User cache: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1298
+msgid "System config: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1301
+msgid "System data: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1304
+msgid "PIXMAP: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1308
+msgid "DATA: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1312
+msgid "UI: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1321
+msgid "Icon theme: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1336
 msgid "System info"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1335
+#: ../src/ui/dialog/inkscape-preferences.cpp:1336
 msgid "General system information"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1337
+#: ../src/ui/dialog/inkscape-preferences.cpp:1338
 msgid "Misc"
 msgstr ""
 
@@ -13710,59 +13789,60 @@ msgstr ""
 msgid "New layer created."
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:77
+#. TRANSLATORS: this dialog is accessible via menu Path - Path Effect Editor...
+#: ../src/ui/dialog/livepatheffect-editor.cpp:78
 msgid "Apply new effect"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:78
+#: ../src/ui/dialog/livepatheffect-editor.cpp:79
 msgid "Current effect"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:79
+#: ../src/ui/dialog/livepatheffect-editor.cpp:80
 msgid "Effect list"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:268
+#: ../src/ui/dialog/livepatheffect-editor.cpp:269
 msgid "Unknown effect is applied"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:271
+#: ../src/ui/dialog/livepatheffect-editor.cpp:272
 msgid "No effect applied"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:275
+#: ../src/ui/dialog/livepatheffect-editor.cpp:276
 msgid "Item is not a path or shape"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:279
+#: ../src/ui/dialog/livepatheffect-editor.cpp:280
 msgid "Only one item can be selected"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:283
+#: ../src/ui/dialog/livepatheffect-editor.cpp:284
 msgid "Empty selection"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:373
+#: ../src/ui/dialog/livepatheffect-editor.cpp:374
 msgid "Create and apply path effect"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:390
+#: ../src/ui/dialog/livepatheffect-editor.cpp:391
 msgid "Remove path effect"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:406
+#: ../src/ui/dialog/livepatheffect-editor.cpp:407
 msgid "Move path effect up"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:422
+#: ../src/ui/dialog/livepatheffect-editor.cpp:423
 msgid "Move path effect down"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:461
+#: ../src/ui/dialog/livepatheffect-editor.cpp:462
 msgid "Activate path effect"
 msgstr ""
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:461
+#: ../src/ui/dialog/livepatheffect-editor.cpp:462
 msgid "Deactivate path effect"
 msgstr ""
 
@@ -14108,6 +14188,11 @@ msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:849
 msgid "_Kerning"
+msgstr ""
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:856
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:857
+msgid "Sample Text"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:861
@@ -14827,7 +14912,7 @@ msgstr ""
 msgid "Proprietary"
 msgstr ""
 
-#: ../src/ui/widget/licensor.cpp:38 ../share/extensions/interp-att-g.inx.h:13
+#: ../src/ui/widget/licensor.cpp:38 ../share/extensions/interp_att_g.inx.h:13
 msgid "Other"
 msgstr ""
 
@@ -19258,7 +19343,7 @@ msgid "No geometric tool is active"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5569
-msgid "all_inactive"
+msgid "draw-geometry-inactive"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5601
@@ -19626,7 +19711,7 @@ msgstr ""
 #: ../share/extensions/polyhedron_3d.py:510
 msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
-"imported as \"Face-Specifed\" under the \"Model File\" tab.\n"
+"imported as \"Face-Specified\" under the \"Model File\" tab.\n"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:512
@@ -19637,7 +19722,7 @@ msgstr ""
 msgid "The second path must be exactly four nodes long."
 msgstr ""
 
-#: ../share/extensions/svg_and_media_zip_output.py:102
+#: ../share/extensions/svg_and_media_zip_output.py:109
 #, python-format
 msgid "Could not locate file: %s"
 msgstr ""
@@ -19665,7 +19750,7 @@ msgstr ""
 
 #: ../share/extensions/addnodes.inx.h:6 ../share/extensions/edge3d.inx.h:6
 #: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
-#: ../share/extensions/interp-att-g.inx.h:10
+#: ../share/extensions/interp_att_g.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
 #: ../share/extensions/radiusrand.inx.h:4
@@ -20056,6 +20141,14 @@ msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "Import AutoCAD's Document Exchange Format"
+msgstr ""
+
+#: ../share/extensions/dxf_input.inx.h:4
+msgid "Or, use manual scale factor"
+msgstr ""
+
+#: ../share/extensions/dxf_input.inx.h:5
+msgid "Use automatic scaling to size A4"
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:1
@@ -20628,82 +20721,82 @@ msgstr ""
 msgid "Interpolation steps"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:1
+#: ../share/extensions/interp_att_g.inx.h:1
 msgid "Attribute to Interpolate"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:3
+#: ../share/extensions/interp_att_g.inx.h:3
 msgid "End Value"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:5
+#: ../share/extensions/interp_att_g.inx.h:5
 msgid "Float Number"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:7
+#: ../share/extensions/interp_att_g.inx.h:7
 msgid ""
 "If you select \"Other\", you must know the SVG attributes to identify here "
 "this \"other\":"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:8
+#: ../share/extensions/interp_att_g.inx.h:8
 msgid "Integer Number"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:9
+#: ../share/extensions/interp_att_g.inx.h:9
 msgid "Interpolate Attribute in a group"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:11
+#: ../share/extensions/interp_att_g.inx.h:11
 msgid "No Unit"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:14
+#: ../share/extensions/interp_att_g.inx.h:14
 msgid "Other Attribute"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:15
+#: ../share/extensions/interp_att_g.inx.h:15
 msgid "Other Attribute type"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:17
+#: ../share/extensions/interp_att_g.inx.h:17
 msgid "Start Value"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:18
+#: ../share/extensions/interp_att_g.inx.h:18
 #: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Style"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:19
+#: ../share/extensions/interp_att_g.inx.h:19
 msgid "Tag"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:20
+#: ../share/extensions/interp_att_g.inx.h:20
 msgid ""
 "This effect applies a value for any interpolatable attribute for all "
 "elements inside the selected group or for all elements in a multiple "
 "selection"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:21
+#: ../share/extensions/interp_att_g.inx.h:21
 msgid "Transformation"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:22
+#: ../share/extensions/interp_att_g.inx.h:22
 msgid "Translate X"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:23
+#: ../share/extensions/interp_att_g.inx.h:23
 msgid "Translate Y"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:25
+#: ../share/extensions/interp_att_g.inx.h:25
 msgid "Where to apply?"
 msgstr ""
 
-#: ../share/extensions/interp-att-g.inx.h:27
-#: ../share/extensions/web-set-att.inx.h:24
+#: ../share/extensions/interp_att_g.inx.h:27
+#: ../share/extensions/web-set-att.inx.h:28
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
 msgstr ""
@@ -21718,116 +21811,133 @@ msgid "Text Input"
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:1
-msgid "Attribute to set"
+msgid "All selected ones set an attribute in the last one"
 msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:2
+msgid "Attribute to set"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:3
 #: ../share/extensions/web-transmit-att.inx.h:3
 msgid "Compatibility with previews code to this event"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:3
+#: ../share/extensions/web-set-att.inx.h:4
 msgid ""
 "If you want to set more then one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:5
+#: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6
 msgid "Run it after"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:6
+#: ../share/extensions/web-set-att.inx.h:7
 #: ../share/extensions/web-transmit-att.inx.h:7
 msgid "Run it before"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:7
+#: ../share/extensions/web-set-att.inx.h:8
 msgid "Set Atributes"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:8
+#: ../share/extensions/web-set-att.inx.h:9
+msgid "Source and destination of setting"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:10
+msgid "The first selected set an attribute in all others"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:11
 msgid "The list of values must have the same size of the attributes list."
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:9
+#: ../share/extensions/web-set-att.inx.h:12
+#: ../share/extensions/web-transmit-att.inx.h:10
+msgid "The next parameter is useful when you select more than two elements"
+msgstr ""
+
+#: ../share/extensions/web-set-att.inx.h:13
 #: ../share/extensions/web-transmit-att.inx.h:11
 msgid ""
 "This effect adds a feature visible (or usable) only on a SVG enabled web "
 "browser (like Firefox)."
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:10
+#: ../share/extensions/web-set-att.inx.h:14
 msgid ""
 "This effect sets one or more attributes in the second selected element, when "
 "a defined event occurs on the first selected element."
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:11
+#: ../share/extensions/web-set-att.inx.h:15
 msgid "Value to set"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:12
+#: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
 msgid "Web"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:13
+#: ../share/extensions/web-set-att.inx.h:17
 msgid "When the set must be done?"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:14
+#: ../share/extensions/web-set-att.inx.h:18
 #: ../share/extensions/web-transmit-att.inx.h:16
 msgid "on activate"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:15
+#: ../share/extensions/web-set-att.inx.h:19
 #: ../share/extensions/web-transmit-att.inx.h:17
 msgid "on blur"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:16
+#: ../share/extensions/web-set-att.inx.h:20
 #: ../share/extensions/web-transmit-att.inx.h:18
 msgid "on click"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:17
+#: ../share/extensions/web-set-att.inx.h:21
 #: ../share/extensions/web-transmit-att.inx.h:19
 msgid "on element loaded"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:18
+#: ../share/extensions/web-set-att.inx.h:22
 #: ../share/extensions/web-transmit-att.inx.h:20
 msgid "on focus"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:19
+#: ../share/extensions/web-set-att.inx.h:23
 #: ../share/extensions/web-transmit-att.inx.h:21
 msgid "on mouse down"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:20
+#: ../share/extensions/web-set-att.inx.h:24
 #: ../share/extensions/web-transmit-att.inx.h:22
 msgid "on mouse move"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:21
+#: ../share/extensions/web-set-att.inx.h:25
 #: ../share/extensions/web-transmit-att.inx.h:23
 msgid "on mouse out"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:22
+#: ../share/extensions/web-set-att.inx.h:26
 #: ../share/extensions/web-transmit-att.inx.h:24
 msgid "on mouse over"
 msgstr ""
 
-#: ../share/extensions/web-set-att.inx.h:23
+#: ../share/extensions/web-set-att.inx.h:27
 #: ../share/extensions/web-transmit-att.inx.h:25
 msgid "on mouse up"
 msgstr ""
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-msgid "All attributes transmit to the last one"
+msgid "All selected ones transmits to the last one"
 msgstr ""
 
 #: ../share/extensions/web-transmit-att.inx.h:2
@@ -21845,11 +21955,7 @@ msgid "Source and destination of transmitting"
 msgstr ""
 
 #: ../share/extensions/web-transmit-att.inx.h:9
-msgid "The first attribute transmits to all"
-msgstr ""
-
-#: ../share/extensions/web-transmit-att.inx.h:10
-msgid "The next parameter is useful when you select more than two elements"
+msgid "The first selected transmits to all others"
 msgstr ""
 
 #: ../share/extensions/web-transmit-att.inx.h:12
