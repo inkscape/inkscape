@@ -56,6 +56,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
     bool value = prefs->getBool("/options/snapindicator/value", true);
 
     if (value) {
+        // TRANSLATORS: undefined target for snapping 
         gchar *target_name = _("UNDEFINED");
         switch (p.getTarget()) {
 			case SNAPTARGET_UNDEFINED:

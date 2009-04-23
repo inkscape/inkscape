@@ -85,6 +85,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
 #ifdef LPE_ENABLE_TEST_EFFECTS
     {DOEFFECTSTACK_TEST,    N_("doEffect stack test"),     "doeffectstacktest"},
     {ANGLE_BISECTOR,        N_("Angle bisector"),          "angle_bisector"},
+    // TRANSLATORS: boolean operations
     {BOOLOPS,               N_("Boolops"),                 "boolops"},
     {CIRCLE_WITH_RADIUS,    N_("Circle (by center and radius)"),   "circle_with_radius"},
     {CIRCLE_3PTS,           N_("Circle by 3 points"),      "circle_3pts"},

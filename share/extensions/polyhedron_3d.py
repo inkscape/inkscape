@@ -507,7 +507,7 @@ class Poly_3D(inkex.Effect):
                 draw_faces( z_list, transformed_pts, obj, so.shade, fill_col, st, poly)
 
             else:#we cannot generate a list of faces from the edges without a lot of computation
-                inkex.errormsg(_('Face Data Not Found. Ensure file contains face data, and check the file is imported as "Face-Specifed" under the "Model File" tab.\n'))
+                inkex.errormsg(_('Face Data Not Found. Ensure file contains face data, and check the file is imported as "Face-Specified" under the "Model File" tab.\n'))
         else:
             inkex.errormsg(_('Internal Error. No view type selected\n'))
         

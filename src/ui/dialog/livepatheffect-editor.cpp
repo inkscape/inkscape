@@ -74,6 +74,7 @@ LivePathEffectEditor::LivePathEffectEditor()
       combo_effecttype(Inkscape::LivePathEffect::LPETypeConverter),
       effectwidget(NULL),
       explain_label("", Gtk::ALIGN_CENTER),
+      // TRANSLATORS: this dialog is accessible via menu Path - Path Effect Editor...
       effectapplication_frame(_("Apply new effect")),
       effectcontrol_frame(_("Current effect")),
       effectlist_frame(_("Effect list")),

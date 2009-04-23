@@ -223,7 +223,7 @@ Piecewise<D2<SBasis> > bend(Piecewise<D2<SBasis> > const &f, Piecewise<SBasis> b
 LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
     hatch_dist(0),
-    dist_rdm(_("Frequency randomness"), _("Variation of dist between hatches, in %."), "dist_rdm", &wr, this, 75),
+    dist_rdm(_("Frequency randomness"), _("Variation of distance between hatches, in %."), "dist_rdm", &wr, this, 75),
     growth(_("Growth"), _("Growth of distance between hatches."), "growth", &wr, this, 0.),
 //FIXME: top/bottom names are inverted in the UI/svg and in the code!!
     scale_tf(_("Half turns smoothness: 1st side, in"), _("Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, 1=default"), "scale_bf", &wr, this, 1.),
@@ -234,12 +234,12 @@ LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
     bot_edge_variation(_("2nd side"), _("Randomly moves 'top' halfsturns to produce magnitude variations."), "top_edge_variation", &wr, this, 0),
     top_tgt_variation(_("Parallelism jitter: 1st side"), _("Add direction randomness by moving 'bottom' halfsturns tangentially to the boundary."), "bottom_tgt_variation", &wr, this, 0),
     bot_tgt_variation(_("2nd side"), _("Add direction randomness by randomly moving 'top' halfsturns tangentially to the boundary."), "top_tgt_variation", &wr, this, 0),
-    top_smth_variation(_("variance: 1st side"), _("Randomness of 'bottom' halfturns smoothness"), "top_smth_variation", &wr, this, 0),
+    top_smth_variation(_("Variance: 1st side"), _("Randomness of 'bottom' halfturns smoothness"), "top_smth_variation", &wr, this, 0),
     bot_smth_variation(_("2nd side"), _("Randomness of 'top' halfturns smoothness"), "bottom_smth_variation", &wr, this, 0),
 //
     fat_output(_("Generate thick/thin path"), _("Simulate a stroke of varrying width"), "fat_output", &wr, this, true),
     do_bend(_("Bend hatches"), _("Add a global bend to the hatches (slower)"), "do_bend", &wr, this, true),
-    stroke_width_top(_("Thikness: at 1st side"), _("Width at 'bottom' half turns"), "stroke_width_top", &wr, this, 1.),
+    stroke_width_top(_("Thickness: at 1st side"), _("Width at 'bottom' half turns"), "stroke_width_top", &wr, this, 1.),
     stroke_width_bot(_("at 2nd side"), _("Width at 'top' halfturns"), "stroke_width_bottom", &wr, this, 1.),
 //
     front_thickness(_("from 2nd to 1st side"), _("Width of paths from 'top' to 'bottom' halfturns"), "front_thickness", &wr, this, 1.),
@@ -247,8 +247,8 @@ LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
 
     direction(_("Hatches width and dir"), _("Defines hatches frequency and direction"), "direction", &wr, this, Geom::Point(50,0)),
 //
-    //bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
-    bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, Geom::Point(-5,0))
+    //bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
+    bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, Geom::Point(-5,0))
 {
     registerParameter( dynamic_cast<Parameter *>(&direction) );
     registerParameter( dynamic_cast<Parameter *>(&dist_rdm) );

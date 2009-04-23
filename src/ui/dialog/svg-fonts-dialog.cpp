@@ -853,8 +853,8 @@ SvgFontsDialog::SvgFontsDialog()
 //Text Preview:
     _preview_entry.signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_preview_text_changed));
     _getContents()->add((Gtk::Widget&) _font_da);
-    _preview_entry.set_text("Sample Text");
-    _font_da.set_text("Sample Text");
+    _preview_entry.set_text(_("Sample Text"));
+    _font_da.set_text(_("Sample Text"));
 
     Gtk::HBox* preview_entry_hbox = Gtk::manage(new Gtk::HBox());
     _getContents()->add(*preview_entry_hbox);

@@ -461,6 +461,7 @@ class FilterEffectsDialog::ColorMatrixValues : public Gtk::Frame, public AttrWid
 public:
     ColorMatrixValues()
         : AttrWidget(SP_ATTR_VALUES),
+          // TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
           _matrix(SP_ATTR_VALUES, _("This matrix determines a linear transform on colour space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value.")),
           _saturation(0, 0, 1, 0.1, 0.01, 2, SP_ATTR_VALUES),
           _angle(0, 0, 360, 0.1, 0.01, 1, SP_ATTR_VALUES),

@@ -1282,33 +1282,34 @@ void InkscapePreferences::initPageMisc()
 
     {
         Glib::ustring tmp;
-        tmp += "User config: ";
+        // TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
+        tmp += _("User config: ");
         tmp += g_get_user_config_dir();
         tmp += "\n";
 
-        tmp += "User data: ";
+        tmp += _("User data: ");
         tmp += g_get_user_data_dir();
         tmp += "\n";
 
-        tmp += "User cache: ";
+        tmp += _("User cache: ");
         tmp += g_get_user_cache_dir();
         tmp += "\n";
 
-        tmp += "System config: ";
+        tmp += _("System config: ");
         appendList( tmp, g_get_system_config_dirs() );
 
-        tmp += "System data: ";
+        tmp += _("System data: ");
         appendList( tmp, g_get_system_data_dirs() );
 
-        tmp += "PIXMAP: ";
+        tmp += _("PIXMAP: ");
         tmp += INKSCAPE_PIXMAPDIR;
         tmp += "\n";
 
-        tmp += "DATA: ";
+        tmp += _("DATA: ");
         tmp += INKSCAPE_DATADIR;
         tmp += "\n";
 
-        tmp += "UI: ";
+        tmp += _("UI: ");
         tmp += INKSCAPE_UIDIR;
         tmp += "\n";
 
@@ -1317,7 +1318,7 @@ void InkscapePreferences::initPageMisc()
             gint count = 0;
             gtk_icon_theme_get_search_path(gtk_icon_theme_get_default(), &paths, &count);
             if (count > 0) {
-                tmp += "Icon theme: ";
+                tmp += _("Icon theme: ");
                 tmp += paths[0];
                 tmp += "\n";
                 for (int i = 1; i < count; i++) {
