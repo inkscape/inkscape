@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-21 14:40+0200\n"
+"POT-Creation-Date: 2009-04-23 17:56+0200\n"
 "PO-Revision-Date: 2009-04-21 17:15+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -2353,7 +2353,7 @@ msgstr ""
 "bode"
 
 #: ../src/dialogs/clonetiler.cpp:2744
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "Size"
 msgstr "Veľkosť"
 
@@ -3398,176 +3398,177 @@ msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr ""
 "Ak je voľba nastavená, zobrazí bodky na body mriežky namiesto čiar mriežky"
 
-#: ../src/display/snap-indicator.cpp:59 ../src/display/snap-indicator.cpp:62
-#: ../src/display/snap-indicator.cpp:144 ../src/display/snap-indicator.cpp:147
+#. TRANSLATORS: undefined target for snapping
+#: ../src/display/snap-indicator.cpp:60 ../src/display/snap-indicator.cpp:63
+#: ../src/display/snap-indicator.cpp:145 ../src/display/snap-indicator.cpp:148
 msgid "UNDEFINED"
 msgstr "NEDEFINOVANÉ"
 
-#: ../src/display/snap-indicator.cpp:65
+#: ../src/display/snap-indicator.cpp:66
 msgid "grid line"
 msgstr "čiary mriežky"
 
-#: ../src/display/snap-indicator.cpp:68
+#: ../src/display/snap-indicator.cpp:69
 msgid "grid intersection"
 msgstr "priesečníky mriežky"
 
-#: ../src/display/snap-indicator.cpp:71
+#: ../src/display/snap-indicator.cpp:72
 msgid "guide"
 msgstr "vodidlá"
 
-#: ../src/display/snap-indicator.cpp:74
+#: ../src/display/snap-indicator.cpp:75
 msgid "guide intersection"
 msgstr "priesečníky vodidiel"
 
-#: ../src/display/snap-indicator.cpp:77
+#: ../src/display/snap-indicator.cpp:78
 msgid "grid-guide intersection"
 msgstr "priesečníky vodidiel a mriežky"
 
-#: ../src/display/snap-indicator.cpp:80
+#: ../src/display/snap-indicator.cpp:81
 msgid "cusp node"
 msgstr "uzol hrotového ovládania"
 
-#: ../src/display/snap-indicator.cpp:83
+#: ../src/display/snap-indicator.cpp:84
 msgid "smooth node"
 msgstr "hladký uzol"
 
-#: ../src/display/snap-indicator.cpp:86
+#: ../src/display/snap-indicator.cpp:87
 msgid "path"
 msgstr "cesta"
 
-#: ../src/display/snap-indicator.cpp:89
+#: ../src/display/snap-indicator.cpp:90
 msgid "path intersection"
 msgstr "priesečníky ciest"
 
-#: ../src/display/snap-indicator.cpp:92
+#: ../src/display/snap-indicator.cpp:93
 msgid "bounding box corner"
 msgstr "rohy ohraničenia"
 
-#: ../src/display/snap-indicator.cpp:95
+#: ../src/display/snap-indicator.cpp:96
 msgid "bounding box side"
 msgstr "okraje ohraničenia"
 
-#: ../src/display/snap-indicator.cpp:98
+#: ../src/display/snap-indicator.cpp:99
 msgid "bounding box"
 msgstr "ohraničenia"
 
-#: ../src/display/snap-indicator.cpp:101
+#: ../src/display/snap-indicator.cpp:102
 msgid "page border"
 msgstr "okraje stránky"
 
-#: ../src/display/snap-indicator.cpp:104
+#: ../src/display/snap-indicator.cpp:105
 msgid "line midpoint"
 msgstr "stredy úsečiek"
 
-#: ../src/display/snap-indicator.cpp:107
+#: ../src/display/snap-indicator.cpp:108
 msgid "object midpoint"
 msgstr "stredy objektov"
 
-#: ../src/display/snap-indicator.cpp:110
+#: ../src/display/snap-indicator.cpp:111
 msgid "object rotation center"
 msgstr "stredy rotácie objektov"
 
-#: ../src/display/snap-indicator.cpp:113
+#: ../src/display/snap-indicator.cpp:114
 msgid "handle"
 msgstr "úchopy"
 
-#: ../src/display/snap-indicator.cpp:116
+#: ../src/display/snap-indicator.cpp:117
 msgid "bounding box side midpoint"
 msgstr "stredy okrajov ohraničenia"
 
-#: ../src/display/snap-indicator.cpp:119
+#: ../src/display/snap-indicator.cpp:120
 msgid "bounding box midpoint"
 msgstr "stredy ohraničenia"
 
-#: ../src/display/snap-indicator.cpp:122
+#: ../src/display/snap-indicator.cpp:123
 msgid "page corner"
 msgstr "okraje stránky"
 
-#: ../src/display/snap-indicator.cpp:125
+#: ../src/display/snap-indicator.cpp:126
 msgid "convex hull corner"
 msgstr "roh konvexného plášťa"
 
-#: ../src/display/snap-indicator.cpp:128
+#: ../src/display/snap-indicator.cpp:129
 msgid "quadrant point"
 msgstr "body kvadrantov"
 
-#: ../src/display/snap-indicator.cpp:131
+#: ../src/display/snap-indicator.cpp:132
 msgid "center"
 msgstr "stredy"
 
-#: ../src/display/snap-indicator.cpp:134
+#: ../src/display/snap-indicator.cpp:135
 msgid "corner"
 msgstr "rohy"
 
-#: ../src/display/snap-indicator.cpp:137
+#: ../src/display/snap-indicator.cpp:138
 msgid "text baseline"
 msgstr "základne textu"
 
-#: ../src/display/snap-indicator.cpp:150
+#: ../src/display/snap-indicator.cpp:151
 msgid "Bounding box corner"
 msgstr "rohy ohraničenia"
 
-#: ../src/display/snap-indicator.cpp:153
+#: ../src/display/snap-indicator.cpp:154
 msgid "Bounding box midpoint"
 msgstr "stredy ohraničenia"
 
-#: ../src/display/snap-indicator.cpp:156
+#: ../src/display/snap-indicator.cpp:157
 msgid "Bounding box side midpoint"
 msgstr "stredy strán ohraničenia"
 
-#: ../src/display/snap-indicator.cpp:159
+#: ../src/display/snap-indicator.cpp:160
 msgid "Smooth node"
 msgstr "Hladké uzly"
 
-#: ../src/display/snap-indicator.cpp:162
+#: ../src/display/snap-indicator.cpp:163
 msgid "Cusp node"
 msgstr "Uzly hrotového ovládania"
 
-#: ../src/display/snap-indicator.cpp:165
+#: ../src/display/snap-indicator.cpp:166
 msgid "Line midpoint"
 msgstr "Stredy úsečiek"
 
-#: ../src/display/snap-indicator.cpp:168
+#: ../src/display/snap-indicator.cpp:169
 msgid "Object midpoint"
 msgstr "Stredy objektov"
 
-#: ../src/display/snap-indicator.cpp:171
+#: ../src/display/snap-indicator.cpp:172
 msgid "Object rotation center"
 msgstr "Stredy otáčania objektov"
 
-#: ../src/display/snap-indicator.cpp:174
+#: ../src/display/snap-indicator.cpp:175
 msgid "Handle"
 msgstr "Úchopy"
 
-#: ../src/display/snap-indicator.cpp:177
+#: ../src/display/snap-indicator.cpp:178
 msgid "Path intersection"
 msgstr "Priesečníky ciest"
 
-#: ../src/display/snap-indicator.cpp:180
+#: ../src/display/snap-indicator.cpp:181
 msgid "Guide"
 msgstr "Vodidlá"
 
-#: ../src/display/snap-indicator.cpp:183
+#: ../src/display/snap-indicator.cpp:184
 msgid "Convex hull corner"
 msgstr "roh konvexného plášťa"
 
-#: ../src/display/snap-indicator.cpp:186
+#: ../src/display/snap-indicator.cpp:187
 msgid "Quadrant point"
 msgstr "bod kvadrantu"
 
-#: ../src/display/snap-indicator.cpp:189 ../src/widgets/toolbox.cpp:6695
+#: ../src/display/snap-indicator.cpp:190 ../src/widgets/toolbox.cpp:6695
 msgid "Center"
 msgstr "Stred"
 
-#: ../src/display/snap-indicator.cpp:192
+#: ../src/display/snap-indicator.cpp:193
 msgid "Corner"
 msgstr "Rohy"
 
-#: ../src/display/snap-indicator.cpp:195
+#: ../src/display/snap-indicator.cpp:196
 msgid "Text baseline"
 msgstr "Základne textu"
 
-#: ../src/display/snap-indicator.cpp:234
+#: ../src/display/snap-indicator.cpp:235
 #, fuzzy
 msgid " to "
 msgstr " od "
@@ -3878,7 +3879,7 @@ msgstr "Výška"
 
 #. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
+#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:97
 #: ../src/live_effects/lpe-offset.cpp:30
 #: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:49
@@ -3932,7 +3933,7 @@ msgstr "Pridať šum"
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/extension/internal/bitmap/addNoise.cpp:46 ../src/rdf.cpp:238
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2245
 msgid "Type"
 msgstr "Typ"
@@ -4314,12 +4315,12 @@ msgid "Shade"
 msgstr "Tieň"
 
 #: ../src/extension/internal/bitmap/shade.cpp:41
-#: ../src/ui/dialog/filter-effects-dialog.cpp:953
+#: ../src/ui/dialog/filter-effects-dialog.cpp:954
 msgid "Azimuth"
 msgstr "Azimut"
 
 #: ../src/extension/internal/bitmap/shade.cpp:42
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Elevation"
 msgstr "Vyvýšenie"
 
@@ -5287,7 +5288,7 @@ msgstr "Zalamovanie"
 #: ../src/filter-enums.cpp:95 ../src/flood-context.cpp:264
 #: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/ui/dialog/document-properties.cpp:325
-#: ../src/ui/dialog/filter-effects-dialog.cpp:467
+#: ../src/ui/dialog/filter-effects-dialog.cpp:468
 #: ../src/ui/dialog/inkscape-preferences.cpp:255
 #: ../src/ui/dialog/inkscape-preferences.cpp:418
 #: ../src/ui/dialog/inkscape-preferences.cpp:550
@@ -6487,128 +6488,129 @@ msgstr "test zásobníka doEffect"
 msgid "Angle bisector"
 msgstr "Rozdelenie uhla"
 
-#: ../src/live_effects/effect.cpp:88
+#. TRANSLATORS: boolean operations
+#: ../src/live_effects/effect.cpp:89
 msgid "Boolops"
 msgstr "Booleovské operácie"
 
-#: ../src/live_effects/effect.cpp:89
+#: ../src/live_effects/effect.cpp:90
 msgid "Circle (by center and radius)"
 msgstr "Kružnica (podľa stredu a polomeru)"
 
-#: ../src/live_effects/effect.cpp:90
+#: ../src/live_effects/effect.cpp:91
 msgid "Circle by 3 points"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:91
+#: ../src/live_effects/effect.cpp:92
 msgid "Dynamic stroke"
 msgstr "Dynamický ťah"
 
-#: ../src/live_effects/effect.cpp:92
+#: ../src/live_effects/effect.cpp:93
 msgid "Interpolate Sub-Paths"
 msgstr "Interpolácia podciest"
 
-#: ../src/live_effects/effect.cpp:93
+#: ../src/live_effects/effect.cpp:94
 msgid "Lattice Deformation"
 msgstr "Šalátová deformácia"
 
-#: ../src/live_effects/effect.cpp:94
+#: ../src/live_effects/effect.cpp:95
 msgid "Line Segment"
 msgstr "Segment úsečky"
 
-#: ../src/live_effects/effect.cpp:95
+#: ../src/live_effects/effect.cpp:96
 msgid "Mirror symmetry"
 msgstr "Zrkadlová symetria"
 
-#: ../src/live_effects/effect.cpp:97
+#: ../src/live_effects/effect.cpp:98
 #, fuzzy
 msgid "Parallel"
 msgstr "Paralelný posun"
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:99
 #, fuzzy
 msgid "Path length"
 msgstr "Cesta pozdĺž cesty"
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:100
 msgid "Perpendicular bisector"
 msgstr "Kolmé delenie"
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:101
 msgid "Perspective path"
 msgstr "Perspektíva cesty"
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:102
 msgid "Rotate copies"
 msgstr "Otáčať kópie"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:103
 msgid "Recursive skeleton"
 msgstr "Rekurzívna kostra"
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:104
 msgid "Ruler"
 msgstr "Pravítko"
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:105
 msgid "Tangent to curve"
 msgstr "Tangenciála na krivku"
 
-#: ../src/live_effects/effect.cpp:105
+#: ../src/live_effects/effect.cpp:106
 msgid "Text label"
 msgstr "Textový štítok"
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:108
+#: ../src/live_effects/effect.cpp:109
 msgid "Bend"
 msgstr "Ohnúť"
 
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:110
 msgid "Gears"
 msgstr "Ozubenie"
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:111
 msgid "Pattern Along Path"
 msgstr "Vzorka pozdĺž cesty"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:112
 msgid "Stitch Sub-Paths"
 msgstr "Zošiť podcesty"
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:113
+#: ../src/live_effects/effect.cpp:114
 msgid "VonKoch"
 msgstr "VonKoch"
 
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:115
 msgid "Knot"
 msgstr "Uzol"
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:116
 msgid "Construct grid"
 msgstr "Zostrojiť mriežku"
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:117
 msgid "Spiro spline"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:118
 msgid "Envelope Deformation"
 msgstr "Obálková deformácia"
 
-#: ../src/live_effects/effect.cpp:118
+#: ../src/live_effects/effect.cpp:119
 msgid "Hatches (rough)"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:119
+#: ../src/live_effects/effect.cpp:120
 msgid "Sketch"
 msgstr "Skica"
 
-#: ../src/live_effects/effect.cpp:272
+#: ../src/live_effects/effect.cpp:273
 msgid "Is visible?"
 msgstr "Je viditeľné?"
 
-#: ../src/live_effects/effect.cpp:272
+#: ../src/live_effects/effect.cpp:273
 msgid ""
 "If unchecked, the effect remains applied to the object but is temporarily "
 "disabled on canvas"
@@ -6616,11 +6618,11 @@ msgstr ""
 "Ak nie je voľba nastavená, efekt zostane použitý na objekte, ale je dočasne "
 "vypnutý na plátne."
 
-#: ../src/live_effects/effect.cpp:273
+#: ../src/live_effects/effect.cpp:274
 msgid "Deactivate knotholder?"
 msgstr "Deaktivovať držiak uzlov?"
 
-#: ../src/live_effects/effect.cpp:273
+#: ../src/live_effects/effect.cpp:274
 msgid ""
 "Check this to deactivate knotholder handles (useful if they interfere with "
 "node handles during editing)"
@@ -6628,21 +6630,21 @@ msgstr ""
 "Touto voľbou deaktivujete úchopy na držanie uzlov (čo sa hodí ak prekážajú "
 "pri úprave úchopov uzlov)"
 
-#: ../src/live_effects/effect.cpp:294
+#: ../src/live_effects/effect.cpp:295
 msgid "No effect"
 msgstr "Žiadny efekt"
 
-#: ../src/live_effects/effect.cpp:341
+#: ../src/live_effects/effect.cpp:342
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr "Prosím, uveďte parameter cesty pre LPE „%s“ pomocou %d kliknutí myši"
 
-#: ../src/live_effects/effect.cpp:640
+#: ../src/live_effects/effect.cpp:641
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "Úprava parametra <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:645
+#: ../src/live_effects/effect.cpp:646
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Žiadny z použitých parametrov cesty nie je možné upravovať na plátne."
 
@@ -7293,7 +7295,7 @@ msgid "Adjust the \"right\" end of the parallel"
 msgstr "Doladiť „pravý“ koniec paralely"
 
 #: ../src/live_effects/lpe-path_length.cpp:25
-#: ../src/live_effects/lpe-sketch.cpp:54 ../src/selection-chemistry.cpp:1514
+#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1514
 #: ../src/seltrans.cpp:485 ../src/ui/dialog/filter-effects-dialog.cpp:2207
 #: ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
@@ -7474,7 +7476,7 @@ msgid "Frequency randomness"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
-msgid "Variation of dist between hatches, in %."
+msgid "Variation of distance between hatches, in %."
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
@@ -7561,7 +7563,7 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-msgid "variance: 1st side"
+msgid "Variance: 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
@@ -7593,7 +7595,7 @@ msgid "Add a global bend to the hatches (slower)"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-msgid "Thikness: at 1st side"
+msgid "Thickness: at 1st side"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
@@ -7632,14 +7634,15 @@ msgid "Defines hatches frequency and direction"
 msgstr ""
 
 #.
-#. bender(_("Global bending"), _("Relative position to ref point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
+#. bender(_("Global bending"), _("Relative position to a reference point defines global bending direction and amount"), "bender", &wr, this, NULL, Geom::Point(-5,0)),
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid "Global bending"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
 msgid ""
-"Relative position to ref point defines global bending direction and amount"
+"Relative position to a reference point defines global bending direction and "
+"amount"
 msgstr ""
 
 #: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
@@ -7737,53 +7740,53 @@ msgstr "len reálne číslo ako 1,4!"
 
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
-#: ../src/live_effects/lpe-sketch.cpp:34
+#: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Strokes"
 msgstr "Ťahy"
 
-#: ../src/live_effects/lpe-sketch.cpp:34
+#: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
 msgstr "Nakresliť toľko aproximujúcich ťahov"
 
-#: ../src/live_effects/lpe-sketch.cpp:35
+#: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max stroke length"
 msgstr "Max. dĺžka ťahu"
 
-#: ../src/live_effects/lpe-sketch.cpp:36
+#: ../src/live_effects/lpe-sketch.cpp:37
 msgid "Maximum length of approximating strokes"
 msgstr "Maximálna dĺžka aproximujúcich ťahov"
 
-#: ../src/live_effects/lpe-sketch.cpp:37
+#: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
 msgstr "Variancia dĺžky ťahu"
 
-#: ../src/live_effects/lpe-sketch.cpp:38
+#: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
 msgstr "Náhodná variancia dĺžky ťahu (relatívne k jeho max. dĺžke)"
 
-#: ../src/live_effects/lpe-sketch.cpp:39
+#: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
 msgstr "Max. prelínanie"
 
-#: ../src/live_effects/lpe-sketch.cpp:40
+#: ../src/live_effects/lpe-sketch.cpp:41
 #, fuzzy
 msgid "How much successive strokes should overlap (relative to maximum length)"
 msgstr ""
 "Koľko po sebe idúcich ťahov sa má prelínať (relatívne k maximálnej dĺžke)."
 
-#: ../src/live_effects/lpe-sketch.cpp:41
+#: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
 msgstr "Variácia prelínania"
 
-#: ../src/live_effects/lpe-sketch.cpp:42
+#: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Random variation of overlap (relative to maximum overlap)"
 msgstr "Náhodná variácia prelínania (vzhľadom k maximálnemu prelínaniu)"
 
-#: ../src/live_effects/lpe-sketch.cpp:43
+#: ../src/live_effects/lpe-sketch.cpp:44
 msgid "Max. end tolerance"
 msgstr "Max. koncová tolerancia"
 
-#: ../src/live_effects/lpe-sketch.cpp:44
+#: ../src/live_effects/lpe-sketch.cpp:45
 msgid ""
 "Maximum distance between ends of original and approximating paths (relative "
 "to maximum length)"
@@ -7791,63 +7794,90 @@ msgstr ""
 "Maximálna vzdialenosť medzi koncami pôvodnej a aproximujúcej cesty "
 "(relatívne k maximálnej dĺžke)"
 
-#: ../src/live_effects/lpe-sketch.cpp:45
+#: ../src/live_effects/lpe-sketch.cpp:46
 #, fuzzy
 msgid "Average offset"
 msgstr "Paralelný posun"
 
-#: ../src/live_effects/lpe-sketch.cpp:46
+#: ../src/live_effects/lpe-sketch.cpp:47
 #, fuzzy
 msgid "Average distance each stroke is away from the original path"
 msgstr "Priemerná vzdialenosť medzi aproximujúcou a pôvodnou cestou"
 
-#: ../src/live_effects/lpe-sketch.cpp:47
+#: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
 msgstr "Max. chvenie"
 
-#: ../src/live_effects/lpe-sketch.cpp:48
+#: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Maximum tremble magnitude"
 msgstr "Max. amplitúda chvenia"
 
-#: ../src/live_effects/lpe-sketch.cpp:49
+#: ../src/live_effects/lpe-sketch.cpp:50
 msgid "Tremble frequency"
 msgstr "Frekvencia chvenia"
 
-#: ../src/live_effects/lpe-sketch.cpp:50
+#: ../src/live_effects/lpe-sketch.cpp:51
 #, fuzzy
 msgid "Average number of tremble periods in a stroke"
 msgstr "Priemerný počet periód chvenia v aproximujúcom ťahu"
 
-#: ../src/live_effects/lpe-sketch.cpp:52
+#: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
 msgstr "Konštrukčné čiary"
 
-#: ../src/live_effects/lpe-sketch.cpp:53
+#: ../src/live_effects/lpe-sketch.cpp:54
 msgid "How many construction lines (tangents) to draw"
 msgstr "Koľko konštrukčných čiar (tangenciál) nakresliť"
 
-#: ../src/live_effects/lpe-sketch.cpp:55
+#: ../src/live_effects/lpe-sketch.cpp:56
 msgid ""
 "Scale factor relating curvature and length of construction lines (try "
 "5*offset)"
 msgstr ""
 "Mierka vzťahu zakrivenia a dĺžky konštrukčných čiar (skúste 5*posunutie)"
 
-#: ../src/live_effects/lpe-sketch.cpp:56
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Max. length"
 msgstr "Max. dĺžka"
 
-#: ../src/live_effects/lpe-sketch.cpp:56
+#: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Maximum length of construction lines"
 msgstr "Maximálna dĺžka konštrukčných čiar"
 
-#: ../src/live_effects/lpe-sketch.cpp:57
+#: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Length variation"
 msgstr "Variancia dĺžky"
 
-#: ../src/live_effects/lpe-sketch.cpp:57
+#: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Random variation of the length of construction lines"
 msgstr "Náhodná variácia dĺžky konštrukčných čiar"
+
+#: ../src/live_effects/lpe-sketch.cpp:59
+#, fuzzy
+msgid "Placement randomness"
+msgstr "Zaoblenosť pera"
+
+#: ../src/live_effects/lpe-sketch.cpp:59
+msgid "0: evenly distributed construcion lines, 1: purely random placement"
+msgstr ""
+
+#: ../src/live_effects/lpe-sketch.cpp:61
+#, fuzzy
+msgid "k_min"
+msgstr "_Kombinovať"
+
+#: ../src/live_effects/lpe-sketch.cpp:61
+msgid "min curvature"
+msgstr ""
+
+#: ../src/live_effects/lpe-sketch.cpp:62
+msgid "k_max"
+msgstr ""
+
+#: ../src/live_effects/lpe-sketch.cpp:62
+#, fuzzy
+msgid "max curvature"
+msgstr "Ťahať krivku"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:56
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
@@ -9394,7 +9424,7 @@ msgid "Select <b>object(s)</b> to remove filters from."
 msgstr "Vyberte <b>objekt(y)</b>, z ktorého sa odstránia filtre."
 
 #: ../src/selection-chemistry.cpp:1022
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1334
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1335
 msgid "Remove filter"
 msgstr "Odstrániť filter"
 
@@ -9916,7 +9946,7 @@ msgstr "<b>Otáčanie</b>: %0.2f&#176;; s <b>Ctrl</b> prichytávanie k uhlu"
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Presunúť <b>stred</b> do %s, %s"
 
-#: ../src/seltrans.cpp:1487
+#: ../src/seltrans.cpp:1495
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -11801,7 +11831,8 @@ msgstr "_Farba ťahu"
 msgid "Stroke st_yle"
 msgstr "Štýl ť_ahu"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:464
+#. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
+#: ../src/ui/dialog/filter-effects-dialog.cpp:465
 msgid ""
 "This matrix determines a linear transform on colour space. Each line affects "
 "one of the color components. Each column determines how much of each color "
@@ -11813,83 +11844,83 @@ msgstr ""
 "zložky vstupu sa odovzdá na výstup- Posledný stĺpec nezávisí na vstupných "
 "farbách, je možné ho použiť na nastavenie konštantnej hodnoty zložky."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:574
+#: ../src/ui/dialog/filter-effects-dialog.cpp:575
 msgid "Image File"
 msgstr "Súbor obrázka"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:577
+#: ../src/ui/dialog/filter-effects-dialog.cpp:578
 msgid "Selected SVG Element"
 msgstr "Vybraný SVG element"
 
 #. TODO: any image, not justy svg
-#: ../src/ui/dialog/filter-effects-dialog.cpp:647
+#: ../src/ui/dialog/filter-effects-dialog.cpp:648
 msgid "Select an image to be used as feImage input"
 msgstr "Vyberte obrázok pre použitie ako vstup feImage"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:739
+#: ../src/ui/dialog/filter-effects-dialog.cpp:740
 msgid "This SVG filter effect does not require any parameters."
 msgstr "Tento SVG filter nevyžaduje žiadne parametre."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:745
+#: ../src/ui/dialog/filter-effects-dialog.cpp:746
 msgid "This SVG filter effect is not yet implemented in Inkscape."
 msgstr "Tento SVG filter zatiaľ nie je v Inkscape implementovaný."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:936
+#: ../src/ui/dialog/filter-effects-dialog.cpp:937
 msgid "Light Source:"
 msgstr "Zdroj svetla:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:953
+#: ../src/ui/dialog/filter-effects-dialog.cpp:954
 msgid "Direction angle for the light source on the XY plane, in degrees"
 msgstr "Uhol smeru svetelného zdroja v rovine XY v stupňoch"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:954
+#: ../src/ui/dialog/filter-effects-dialog.cpp:955
 msgid "Direction angle for the light source on the YZ plane, in degrees"
 msgstr "Uhol smeru svetelného zdroja v rovine YZ v stupňoch"
 
 #. default x:
 #. default y:
 #. default z:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:957
-#: ../src/ui/dialog/filter-effects-dialog.cpp:960
+#: ../src/ui/dialog/filter-effects-dialog.cpp:958
+#: ../src/ui/dialog/filter-effects-dialog.cpp:961
 msgid "Location"
 msgstr "Umiestnenie"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:957
-#: ../src/ui/dialog/filter-effects-dialog.cpp:960
-#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:958
+#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:964
 msgid "X coordinate"
 msgstr "Súradnica X"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:957
-#: ../src/ui/dialog/filter-effects-dialog.cpp:960
-#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:958
+#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:964
 msgid "Y coordinate"
 msgstr "Súradnica Y"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:957
-#: ../src/ui/dialog/filter-effects-dialog.cpp:960
-#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:958
+#: ../src/ui/dialog/filter-effects-dialog.cpp:961
+#: ../src/ui/dialog/filter-effects-dialog.cpp:964
 msgid "Z coordinate"
 msgstr "Súradnica Z"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:963
+#: ../src/ui/dialog/filter-effects-dialog.cpp:964
 msgid "Points At"
 msgstr "Body na"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Specular Exponent"
 msgstr "Spekulárny exponent"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:964
+#: ../src/ui/dialog/filter-effects-dialog.cpp:965
 msgid "Exponent value controlling the focus for the light source"
 msgstr "Hodnota exponentu riadiaca zaostrenie svetelného zdroja"
 
 #. TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
-#: ../src/ui/dialog/filter-effects-dialog.cpp:966
+#: ../src/ui/dialog/filter-effects-dialog.cpp:967
 msgid "Cone Angle"
 msgstr "Uhol kužeľa"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:966
+#: ../src/ui/dialog/filter-effects-dialog.cpp:967
 msgid ""
 "This is the angle between the spot light axis (i.e. the axis between the "
 "light source and the point to which it is pointing at) and the spot light "
@@ -11899,116 +11930,116 @@ msgstr ""
 "zdrojom a bodom, na ktorý ukazuje) a kužeľom bodového osvetlenia. Žiadne "
 "svetlo sa nepremieta mimo tento kužeľ."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1027
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1028
 msgid "New light source"
 msgstr "Nový zdroj svetla"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1068
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1069
 msgid "_Duplicate"
 msgstr "_Duplikovať"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1094
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1095
 msgid "_Filter"
 msgstr "_Filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1108
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1109
 msgid "R_ename"
 msgstr "Pr_emenovať"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1211
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1212
 msgid "Rename filter"
 msgstr "Premenovať filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1247
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1248
 msgid "Apply filter"
 msgstr "Použiť filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1323
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1324
 msgid "Add filter"
 msgstr "Pridať filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1349
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1350
 msgid "Duplicate filter"
 msgstr "Duplikovať filter"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1416
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1417
 msgid "_Effect"
 msgstr "_Efekt"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1424
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1425
 msgid "Connections"
 msgstr "Konektory"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1540
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1541
 msgid "Remove filter primitive"
 msgstr "Odstrániť primitívu filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:1912
+#: ../src/ui/dialog/filter-effects-dialog.cpp:1913
 msgid "Remove merge node"
 msgstr "Odstrániť uzol zlúčenia"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2028
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2029
 msgid "Reorder filter primitive"
 msgstr "Zmeniť poradie primitív filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2062
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2063
 msgid "Add Effect:"
 msgstr "Pridať efekt:"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2063
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
 msgid "No effect selected"
 msgstr "Žiadny efekt nebol zvolený"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2064
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2065
 msgid "No filter selected"
 msgstr "Žiadny efekt nebol zvolený"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2102
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2103
 msgid "Effect parameters"
 msgstr "Parametre efektu"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2103
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2104
 msgid "Filter General Settings"
 msgstr "Všeobecné nastavenia filtra"
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2159
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
 msgid "Coordinates"
 msgstr "Súradnice"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2159
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
 msgid "X coordinate of the left corners of filter effects region"
 msgstr "Súradnica X ľavých rohov oblasti efektov filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2159
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
 msgid "Y coordinate of the upper corners of filter effects region"
 msgstr "Súradnica Y horných rohov oblasti efektov filtra"
 
 #. default width:
 #. default height:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 #: ../share/extensions/dimension.inx.h:1
 msgid "Dimensions"
 msgstr "Rozmery"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "Width of filter effects region"
 msgstr "Šírka oblasti efektov filtra"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2160
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2161
 msgid "Height of filter effects region"
 msgstr "Výška oblasti efektov filtra"
 
 #. # end multiple scan
 #. ## end mode page
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2163
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2164
 #: ../src/ui/dialog/tracedialog.cpp:563 ../src/widgets/toolbox.cpp:4242
 #: ../share/extensions/triangle.inx.h:9
 msgid "Mode"
 msgstr "Režim"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2166
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
 msgid ""
 "Indicates the type of matrix operation. The keyword 'matrix' indicates that "
 "a full 5x4 matrix of values will be provided. The other keywords represent "
@@ -12019,23 +12050,23 @@ msgstr ""
 "hodnôt s rozmerom 5x4. Ostatné kľúčové slová určujú pohodlné skratky pre "
 "často vykonávané operácie s farbami bez nutnosti určovať kompletnú maticu."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2167
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2168
 msgid "Value(s)"
 msgstr "Hodnoty"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2181
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2222
 msgid "Operator"
 msgstr "Operátor"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2183
 msgid "K1"
 msgstr "K1"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2182
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2183
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2185
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2186
 msgid ""
 "If the arithmetic operation is chosen, each result pixel is computed using "
 "the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel "
@@ -12045,33 +12076,33 @@ msgstr ""
 "vzorca k1*i1*i2 + k2*i1 + k3*i2 + k4, kde i1 a i2 sú hodnoty pixelov prvého "
 "resp. druhého vstupu."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2183
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
 msgid "K2"
 msgstr "&"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2184
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2185
 msgid "K3"
 msgstr "&"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2185
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2186
 msgid "K4"
 msgstr "&"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "width of the convolve matrix"
 msgstr "šírka konvolučnej matice"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2188
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
 msgid "height of the convolve matrix"
 msgstr "výška konvolučnej matice"
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid "Target"
 msgstr "Cieľ"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid ""
 "X coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
@@ -12079,7 +12110,7 @@ msgstr ""
 "Súradnica X cieľového bodu v konvolučnej matici. Konvolúcia sa použije na "
 "pixely okolo tohto bodu."
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2189
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2190
 msgid ""
 "Y coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
@@ -12088,11 +12119,11 @@ msgstr ""
 "pixely okolo tohto bodu."
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
 msgid "Kernel"
 msgstr "Jadro"
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2191
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2192
 msgid ""
 "This matrix describes the convolve operation that is applied to the input "
 "image in order to calculate the pixel colors at the output. Different "
@@ -12108,7 +12139,6 @@ msgstr ""
 "matice), kým matica vyplnená konštantnou nenulovou hodnotou by mala za "
 "následok bežný efekt rozmazania."
 
-#. TODO: svg spec: The default value is the sum of all values in kernelMatrix, with the exception that if the sum is zero, then the divisor is set to 1.
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2194
 msgid "Divisor"
 msgstr "Deliteľ"
@@ -14462,15 +14492,57 @@ msgstr ""
 "používateľského rozhrania. Toto slúži na obídenie chyby v GTK+ upozorneniach "
 "pomenovaných ikon"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1335
+#. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
+#: ../src/ui/dialog/inkscape-preferences.cpp:1286
+msgid "User config: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1290
+#, fuzzy
+msgid "User data: "
+msgstr "Číselné údaje"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1294
+#, fuzzy
+msgid "User cache: "
+msgstr "Meno používateľa:"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1298
+#, fuzzy
+msgid "System config: "
+msgstr "Informácie o systéme"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1301
+#, fuzzy
+msgid "System data: "
+msgstr "Štandardné hodnoty systému"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1304
+msgid "PIXMAP: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1308
+msgid "DATA: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1312
+#, fuzzy
+msgid "UI: "
+msgstr "_ID: "
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1321
+msgid "Icon theme: "
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1336
 msgid "System info"
 msgstr "Informácie o systéme"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1335
+#: ../src/ui/dialog/inkscape-preferences.cpp:1336
 msgid "General system information"
 msgstr "Všeobecné informácie o systéme"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1337
+#: ../src/ui/dialog/inkscape-preferences.cpp:1338
 msgid "Misc"
 msgstr "Rôzne"
 
@@ -14527,59 +14599,60 @@ msgstr "_Pridať"
 msgid "New layer created."
 msgstr "Nová vrstva bola vytvorená."
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:77
+#. TRANSLATORS: this dialog is accessible via menu Path - Path Effect Editor...
+#: ../src/ui/dialog/livepatheffect-editor.cpp:78
 msgid "Apply new effect"
 msgstr "Použiť nový efekt"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:78
+#: ../src/ui/dialog/livepatheffect-editor.cpp:79
 msgid "Current effect"
 msgstr "Aktuálny výber"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:79
+#: ../src/ui/dialog/livepatheffect-editor.cpp:80
 msgid "Effect list"
 msgstr "Zoznam efektov"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:268
+#: ../src/ui/dialog/livepatheffect-editor.cpp:269
 msgid "Unknown effect is applied"
 msgstr "Je použitý neznámy efekt"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:271
+#: ../src/ui/dialog/livepatheffect-editor.cpp:272
 msgid "No effect applied"
 msgstr "Nie je použitý žiadny efekt"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:275
+#: ../src/ui/dialog/livepatheffect-editor.cpp:276
 msgid "Item is not a path or shape"
 msgstr "Položka nie je cesta alebo tvar"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:279
+#: ../src/ui/dialog/livepatheffect-editor.cpp:280
 msgid "Only one item can be selected"
 msgstr "je možné vybrať iba jednu položku"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:283
+#: ../src/ui/dialog/livepatheffect-editor.cpp:284
 msgid "Empty selection"
 msgstr "Prázdny výber"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:373
+#: ../src/ui/dialog/livepatheffect-editor.cpp:374
 msgid "Create and apply path effect"
 msgstr "Vytvoriť a použiť efekt cesty"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:390
+#: ../src/ui/dialog/livepatheffect-editor.cpp:391
 msgid "Remove path effect"
 msgstr "Odstrániť efekt cesty"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:406
+#: ../src/ui/dialog/livepatheffect-editor.cpp:407
 msgid "Move path effect up"
 msgstr "Presunúť efekt cesty vyššie"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:422
+#: ../src/ui/dialog/livepatheffect-editor.cpp:423
 msgid "Move path effect down"
 msgstr "Presunúť efekt cesty nižšie"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:461
+#: ../src/ui/dialog/livepatheffect-editor.cpp:462
 msgid "Activate path effect"
 msgstr "Aktivovať efekt živej cesty"
 
-#: ../src/ui/dialog/livepatheffect-editor.cpp:461
+#: ../src/ui/dialog/livepatheffect-editor.cpp:462
 msgid "Deactivate path effect"
 msgstr "Deaktivovať efekt živej cesty"
 
@@ -20657,7 +20730,7 @@ msgstr ""
 #: ../share/extensions/polyhedron_3d.py:510
 msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
-"imported as \"Face-Specifed\" under the \"Model File\" tab.\n"
+"imported as \"Face-Specified\" under the \"Model File\" tab.\n"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:512
@@ -23637,9 +23710,6 @@ msgstr "Vstup XAML"
 
 #~ msgid "Path string"
 #~ msgstr "Reťazec cesty"
-
-#~ msgid "Numeric data"
-#~ msgstr "Číselné údaje"
 
 #~ msgid "The number of digits to use behind the comma."
 #~ msgstr "Počet číslic, ktoré sa majú použiť za desatinnou čiarkou."
