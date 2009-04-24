@@ -30,56 +30,6 @@
 
 
 
-#ifdef WIN32
-#include <windows.h>
-#include <commdlg.h>
-#include <cairo.h>
-#include <cairo-win32.h>
-
-
-
-static cairo_surface_t *
-_cairo_win32_printing_surface_create (HDC hdc)
-{
-    int x, y, x_dpi, y_dpi, x_off, y_off, depth;
-    XFORM xform;
-    cairo_surface_t *surface;
-
-    x = GetDeviceCaps (hdc, HORZRES);
-    y = GetDeviceCaps (hdc, VERTRES);
-
-    x_dpi = GetDeviceCaps (hdc, LOGPIXELSX);
-    y_dpi = GetDeviceCaps (hdc, LOGPIXELSY);
-
-    x_off = GetDeviceCaps (hdc, PHYSICALOFFSETX);
-    y_off = GetDeviceCaps (hdc, PHYSICALOFFSETY);
-
-    depth = GetDeviceCaps(hdc, BITSPIXEL);
-
-    SetGraphicsMode (hdc, GM_ADVANCED);
-    xform.eM11 = x_dpi/72.0;
-    xform.eM12 = 0;
-    xform.eM21 = 0;
-    xform.eM22 = y_dpi/72.0;
-    xform.eDx = -x_off;
-    xform.eDy = -y_off;
-    SetWorldTransform (hdc, &xform);
-
-    surface = cairo_win32_printing_surface_create (hdc);
-    
-    /**
-		Read fallback dpi from device capabilities. Was a workaround for a bug patched
-		in cairo 1.5.14. Without this, fallback defaults to 300dpi, which is quite acceptable.
-		Going higher can cause spool size and memory problems.
-	*/
-    // cairo_surface_set_fallback_resolution (surface, x_dpi, y_dpi);
-
-    return surface;
-}
-#endif
-
-
-
 static void
 draw_page (GtkPrintOperation */*operation*/,
            GtkPrintContext   *context,
@@ -154,19 +104,6 @@ draw_page (GtkPrintOperation */*operation*/,
 
         cairo_t *cr = gtk_print_context_get_cairo_context (context);
         cairo_surface_t *surface = cairo_get_target(cr);
-
-
-/**
-	Call cairo_win32_printing_surface directly as a workaround until GTK uses this call.
-	When GTK uses cairo_win32_printing_surface this automatically reverts.
-*/
-#ifdef WIN32
-        if (cairo_surface_get_type (surface) == CAIRO_SURFACE_TYPE_WIN32) {
-        HDC dc = cairo_win32_surface_get_dc (surface);
-        surface = _cairo_win32_printing_surface_create (dc);
-        }
-#endif
-
         cairo_matrix_t ctm;
         cairo_get_matrix(cr, &ctm);
         bool ret = ctx->setSurfaceTarget (surface, true, &ctm);
