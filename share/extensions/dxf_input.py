@@ -345,7 +345,7 @@ if options.auto:
         scale = 210.0/(xmax - xmin)                 # scale to A4 width
 else:
     scale = float(options.scale)                    # manual scale factor
-desc.text = '%s - scale = %f' % (args[0], scale)
+desc.text = '%s - scale = %f' % (unicode(args[0], "iso-8859-1"), scale)
 scale *= 90.0/25.4                                  # convert from mm to pixels
 
 for linename in linetypes.keys():                   # scale the dashed lines
