@@ -1,9 +1,18 @@
+# Translation of Inkscape to Slovak.
+# Copyright (C) 2002-2006 Free Software Foundation, Inc.
+# This file is distributed under the same license as the Inkscape package.
+# Zdenko Podobný <zdpo@mailbox.sk>, 2003, 2004.
+# Ivan Masár <helix84@centrum.sk>, 2007, 2008, 2009.
+#
+# Slovak terminology used in Inkscape:
+# http://wiki.inkscape.org/wiki/index.php/InkscapeTerminology/sk
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-04-23 18:00+0200\n"
-"PO-Revision-Date: 2009-04-23 17:52+0100\n"
+"PO-Revision-Date: 2009-04-24 12:12+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -23036,3 +23045,1046 @@ msgstr "Vstup Windows Metasúbor"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Vstup XAML"
+
+#, fuzzy
+#~ msgid "Ghosten"
+#~ msgstr "Obrys poľa"
+
+#, fuzzy
+#~ msgid "gradient level"
+#~ msgstr "Žiadny prechod nebol zvolený"
+
+#, fuzzy
+#~ msgid "Render object in black and white"
+#~ msgstr "Iba čierna a biela"
+
+#, fuzzy
+#~ msgid "Specular bump"
+#~ msgstr "Spekulárny exponent"
+
+#, fuzzy
+#~ msgid "Under glass effect for bitmaps"
+#~ msgstr "Konvertovať efekty rozostrenia na bitmapy"
+
+#, fuzzy
+#~ msgid "HSL-sensitive Bubbles effect for bitmaps"
+#~ msgstr "Konvertovať efekty rozostrenia na bitmapy"
+
+#, fuzzy
+#~ msgid "Kilt"
+#~ msgstr "Sklon"
+
+#, fuzzy
+#~ msgid "Bump for bitmaps"
+#~ msgstr "Bitmapa"
+
+#, fuzzy
+#~ msgid "Diffuse light bump"
+#~ msgstr "Difúzne osvetlenie"
+
+#~ msgid "Path Effects"
+#~ msgstr "Efekty cesty"
+
+#~ msgid "Biggest item"
+#~ msgstr "Najväčšia položka"
+
+#~ msgid "Smallest item"
+#~ msgstr "Najmenšia položka"
+
+#~ msgid "Unit:"
+#~ msgstr "Jednotka:"
+
+#~ msgid "Angle (degrees):"
+#~ msgstr "Uhol (v stupňoch):"
+
+#~ msgid "Move and/or rotate the guide relative to current settings"
+#~ msgstr "Posunúť a otočiť vodidlo vzhľadom na súčasné nastavenia"
+
+#~ msgid "Set guide properties"
+#~ msgstr "_Vlastnosti vodidla"
+
+#~ msgid "Guideline ID: %s"
+#~ msgstr "ID vodidla: %s"
+
+#~ msgid "Current: %s"
+#~ msgstr "Momentálne: %s"
+
+#~ msgid "%d x %d"
+#~ msgstr "%d x %d"
+
+#~ msgid "Selection only or whole document"
+#~ msgstr "Iba výber alebo celý dokument"
+
+#~ msgid "Refresh the icons"
+#~ msgstr "Obnoviť ikony"
+
+#~ msgid "Layers"
+#~ msgstr "Vrstvy"
+
+#~ msgid "New"
+#~ msgstr "Nový"
+
+#~ msgid "Up"
+#~ msgstr "Hore"
+
+#~ msgid "Dn"
+#~ msgstr "Dolu"
+
+#~ msgid "Bot"
+#~ msgstr "Naspodok"
+
+#~ msgid "X"
+#~ msgstr "X"
+
+#~ msgid "Enhance intensity differences in selected bitmap(s)."
+#~ msgstr "Rozšíriť rozdiely v intenzite zvolených bitmáp."
+
+#~ msgid "Median Filter"
+#~ msgstr "Mediánový filter"
+
+#~ msgid "Freehand Shape"
+#~ msgstr "Tvar voľnou rukou"
+
+#~ msgid "Effe_cts"
+#~ msgstr "_Efekty"
+
+#~ msgid "Center on vertical axis"
+#~ msgstr "Centrovať na zvislej osi"
+
+#~ msgid "ca@valencia Valencian Catalan"
+#~ msgstr "ca@valencia valencijčina"
+
+#~ msgid "cs Czech"
+#~ msgstr "cs čeština"
+
+#, fuzzy
+#~ msgid "el Greek"
+#~ msgstr "Zelená"
+
+#~ msgid "en_AU English, as spoken in Australia"
+#~ msgstr "en_AU angličtina (Austrália)"
+
+#~ msgid "en_CA English, as spoken in Canada"
+#~ msgstr "en_CA angličtina (Kanada)"
+
+#~ msgid "en_GB English, as spoken in Great Britain"
+#~ msgstr "en_GB angličtina (Spojené kráľovstvo)"
+
+#~ msgid "en_US@piglatin Pig Latin"
+#~ msgstr "en_US@piglatin Pig latin"
+
+#~ msgid "es_MX Spanish, as spoken in Mexico"
+#~ msgstr "es_MX španielčina (Mexiko)"
+
+#~ msgid "ga Irish"
+#~ msgstr "ga írčina"
+
+#~ msgid "km Khmer"
+#~ msgstr "km khmérčina"
+
+#~ msgid "ne Nepali"
+#~ msgstr "ne nepálčina"
+
+#~ msgid "nl Dutch"
+#~ msgstr "nl holandčina"
+
+#~ msgid "pt_BR Portuguese, as spoken in Brazil"
+#~ msgstr "pt_BR portugalčina (Brazília)"
+
+#~ msgid "ru Russian"
+#~ msgstr "ru ruština"
+
+#~ msgid "th Thai"
+#~ msgstr "th thajčina"
+
+#~ msgid "zh_CN Chinese, as spoken in China"
+#~ msgstr "zh_CN čínština (Čína)"
+
+#~ msgid "zh_TW Chinese, as spoken in Taiwan"
+#~ msgstr "zh_TW čínština (Taiwan)"
+
+#~ msgid "Commands bar icon size"
+#~ msgstr "Veľkosť ikon panelu príkazov"
+
+#~ msgid "Snap nodes"
+#~ msgstr "Prichytávať uzly"
+
+#~ msgid "Snap to intersections of a grid with a guide"
+#~ msgstr "Prichytávanie k priesečníkom mriežky a vodidla"
+
+#~ msgid "Embed All Images"
+#~ msgstr "Vkladať všetky vybrané obrázky"
+
+#~ msgid "Major Y Division Spacing"
+#~ msgstr "Medzery hlavného rozdelenia X"
+
+#~ msgid "Convolve"
+#~ msgstr "Konvolúcia"
+
+#, fuzzy
+#~ msgid "Kernel Array"
+#~ msgstr "Jadro"
+
+#, fuzzy
+#~ msgid "Apply Convolve Effect"
+#~ msgstr "Použiť efekt"
+
+#~ msgid "Modulate"
+#~ msgstr "Modulovať"
+
+#~ msgid "Cairo PDF Output"
+#~ msgstr "Výstup Cairo PDF"
+
+#~ msgid "PDF via Cairo (*.pdf)"
+#~ msgstr "PDF prostredníctvom Cairo (*.pdf)"
+
+#~ msgid "PDF File"
+#~ msgstr "Súbor PDF"
+
+#~ msgid "Cairo PS Output"
+#~ msgstr "Výstup Cairo PS"
+
+#~ msgid "PostScript via Cairo (*.ps)"
+#~ msgstr "PostScript prostredníctvom Cairo (*.ps)"
+
+#~ msgid "Encapsulated Postscript Output"
+#~ msgstr "Výstup Zapuzdrený Postscript"
+
+#~ msgid "Make bounding box around full page"
+#~ msgstr "Vytvoriť ohraničenie okolo celej strany"
+
+#~ msgid "Embed fonts (Type 1 only)"
+#~ msgstr "Vložiť písma (iba Typ 1)"
+
+#~ msgid "I'm not sure what this word means"
+#~ msgstr "Nie som si istý čo toto slovo znamená"
+
+#~ msgid "Not sure, nobody tell me these things"
+#~ msgstr "Nie som si istý, nikto mi tieto veci nehovorí"
+
+#~ msgid "Yes, more descriptions"
+#~ msgstr "Áno, viac popisov"
+
+#~ msgid "Crystal"
+#~ msgstr "Kryštál"
+
+#~ msgid "Artist, insert data here"
+#~ msgstr "Umelec, sem vlož údaje"
+
+#~ msgid "Artist text"
+#~ msgstr "Umelecký text"
+
+#~ msgid "Amount of Blur"
+#~ msgstr "Množstvo rozostrenia"
+
+#~ msgid "Filter"
+#~ msgstr "Filter"
+
+#~ msgid "I hate text"
+#~ msgstr "Nenávidím text"
+
+#, fuzzy
+#~ msgid "Emboss effect"
+#~ msgstr "Žiadny efekt"
+
+#~ msgid "Artist on fire"
+#~ msgstr "Horiaci umelec"
+
+#~ msgid "Artist Text"
+#~ msgstr "Umelecký text"
+
+#~ msgid "Jelly Bean"
+#~ msgstr "Kvapka želé"
+
+#~ msgid "Mmmm, yummy."
+#~ msgstr "Mmmm, mňam."
+
+#~ msgid "It's a puzzle, no hints"
+#~ msgstr "Je to hlavolam, žiadne pomôcky"
+
+#~ msgid "Purrrr, quiet the kitty is sleeping"
+#~ msgstr "Prrrr, tíško, mačiatko spí"
+
+#~ msgid "Melt effect"
+#~ msgstr "Efekt topenie"
+
+#~ msgid "Metal"
+#~ msgstr "Kov"
+
+#~ msgid "Iron Man vector objects"
+#~ msgstr "Vektorové objekty Iron Man"
+
+#~ msgid "Hmm, fast vectors"
+#~ msgstr "Hmm, rýchle vektory"
+
+#~ msgid "Ooops!  Slippery!"
+#~ msgstr "Ops, klzké!"
+
+#~ msgid "PatternedGlass"
+#~ msgstr "LeptanéSklo"
+
+#~ msgid "Doesn't work, bug"
+#~ msgstr "Nefunguje to, chyba"
+
+#~ msgid "You're 80% water"
+#~ msgstr "Ste z 80 % voda"
+
+#~ msgid "Like Brad Pitt's stubble"
+#~ msgstr "Ako strnisko Brada Pitta"
+
+#~ msgid "Use this to forge your passport"
+#~ msgstr "Týmto zostrojíte svoj pas"
+
+#~ msgid "Turn all the colors to be sepia tones"
+#~ msgstr "Premeniť všetky farby do odtieňov sépia"
+
+#~ msgid "Snow"
+#~ msgstr "Sneh"
+
+#~ msgid "When the weather outside is frightening..."
+#~ msgstr "Keď je vonku strašidelné počasie..."
+
+#~ msgid "You look cute with speckles"
+#~ msgstr "Vyzeráš pekne s pehami"
+
+#~ msgid "Zebra Stripes"
+#~ msgstr "Prúžky zebry"
+
+#~ msgid "Paint your object with zebra stripes"
+#~ msgstr "Vymaľujte svoj objekt prúžkami zebry"
+
+#~ msgid "Print Destination"
+#~ msgstr "Cieľ tlače"
+
+#~ msgid "Print properties"
+#~ msgstr "Vlastnosti tlače"
+
+#~ msgid ""
+#~ "Use PDF vector operators. The resulting image is usually smaller in file "
+#~ "size and can be arbitrarily scaled, but patterns will be lost."
+#~ msgstr ""
+#~ "Používať vektorové operátory PDF. Výsledný obrázok je zvyčajne menší a je "
+#~ "možné ľubovoľne meniť jeho veľkosť, avšak sa stratí alfa priehľadnosť, "
+#~ "značky a vzory."
+
+#~ msgid "Print as bitmap"
+#~ msgstr "Tlačiť ako bitmapu"
+
+#~ msgid ""
+#~ "Print everything as bitmap. The resulting image is usually larger in file "
+#~ "size and cannot be arbitrarily scaled without quality loss, but all "
+#~ "objects will be rendered exactly as displayed."
+#~ msgstr ""
+#~ "Tlačiť všetko ako bitmapu. Výsledný obrázok je zvyčajne väčší a nebude "
+#~ "môcť byť zmeneá veľkosť jeho zobrazenia bez straty kvality; všetky "
+#~ "objekty budú vykreslené tak, ako sú zobrazené."
+
+#~ msgid "Preferred resolution (dots per inch) of bitmap"
+#~ msgstr "Preferované rozlíšenie bitmapy (v bodoch na palec)"
+
+#~ msgid "Print destination"
+#~ msgstr "Cieľ tlače"
+
+#~ msgid ""
+#~ "Printer name (as given by lpstat -p);\n"
+#~ "leave empty to use the system default printer.\n"
+#~ "Use '> filename' to print to file.\n"
+#~ "Use '| prog arg...' to pipe to a program."
+#~ msgstr ""
+#~ "Názov tlačiarne (ako vrátil príkaz lpstat -p);\n"
+#~ "nechajte prázdne ak chcete použiť predvolenú tlačiareň systému.\n"
+#~ "Použite „> súbor“, ak chcete tlačiť do súboru.\n"
+#~ "Použite „| program argument“, ak chcete presmerovať výstup do programu."
+
+#~ msgid "PDF Print"
+#~ msgstr "Tlač PDF"
+
+#~ msgid "Print using PostScript operators"
+#~ msgstr "Tlačiť pomocou Postcript operátorov"
+
+#~ msgid ""
+#~ "Use PostScript vector operators. The resulting image is usually smaller "
+#~ "in file size and can be arbitrarily scaled, but alpha transparency and "
+#~ "patterns will be lost."
+#~ msgstr ""
+#~ "Používať vektorové operátory PostScript. Výsledný obrázok je zvyčajne "
+#~ "menší a je možné ľubovoľne meniť jeho veľkosť, stratí však informáciu o "
+#~ "priehľadnosti a vzory."
+
+#~ msgid "Postscript Print"
+#~ msgstr "Tlač Postscript"
+
+#~ msgid "Postscript Output"
+#~ msgstr "Výstup Postscript"
+
+#~ msgid ""
+#~ "Cannot create file %s.\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Nie je možné vytvoriť súbor %s.\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Cannot write file %s.\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Nie je možné zapísať súbor %s.\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Although Inkscape will run, it will use default settings,\n"
+#~ "and any changes made in preferences will not be saved."
+#~ msgstr ""
+#~ "Hoci sa Inkscape spustí, použije predvolené nastavenia,\n"
+#~ "a žiadne zmeny v nastaveniach sa neuložia."
+
+#~ msgid ""
+#~ "%s not a valid XML file, or\n"
+#~ "you don't have read permissions on it.\n"
+#~ "%s"
+#~ msgstr ""
+#~ "%s nie je platný XML súbor alebo\n"
+#~ "preň nemáte povolenie na čítanie.\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "%s is not a valid menus file.\n"
+#~ "%s"
+#~ msgstr ""
+#~ "„%s“ nie je platný súbor ponuky.\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Inkscape will run with default menus.\n"
+#~ "New menus will not be saved."
+#~ msgstr ""
+#~ "Inkscape sa spustí s predvolenými ponukami.\n"
+#~ "Nové ponuky sa neuložia."
+
+#~ msgid "Mirror reflection"
+#~ msgstr "Zrkadlový odraz"
+
+#~ msgid "Gap width"
+#~ msgstr "Šírka medzery"
+
+#~ msgid "The width of the gap in the path where it self-intersects"
+#~ msgstr "Šírka medzery v ceste, kde pretína sama seba"
+
+#~ msgid "Tadah"
+#~ msgstr "Tadá"
+
+#, fuzzy
+#~ msgid "Lala"
+#~ msgstr "_Štítok"
+
+#, fuzzy
+#~ msgid "Lolo"
+#~ msgstr "Farba"
+
+#~ msgid "Last gen. segment"
+#~ msgstr "Posledný vytvorený úsek"
+
+#~ msgid "Reference"
+#~ msgstr "Odkaz"
+
+#~ msgid ""
+#~ "Generating path segments define transforms in reference to bbox or last "
+#~ "segment"
+#~ msgstr ""
+#~ "Tvorba úsekov cesty definuje transformácie s ohľadom na bbox alebo "
+#~ "posledný úsek"
+
+#~ msgid "Change LPE point parameter"
+#~ msgstr "Zmeniť LPE parameter bodu"
+
+#~ msgid "Embed fonts on export (Type 1 only) (EPS)"
+#~ msgstr "Pri exporte priložiť písma (iba Type 1) (EPS)"
+
+#~ msgid "Export files with the bounding box set to the page size (EPS)"
+#~ msgstr "Exportovať súbory s ohraičením nastaveným na veľkosť strany (EPS)"
+
+#~ msgid "Select <b>at least two objects</b> to combine."
+#~ msgstr "Vyberte <b>najmenej dva objekty</b> pre kombináciu."
+
+#~ msgid "Fit page to selection"
+#~ msgstr "Veľkosť strany podľa výberu"
+
+#~ msgid "<b>Pushing %d</b> selected object"
+#~ msgid_plural "<b>Pushing %d</b> selected objects"
+#~ msgstr[0] "<b>Tlačí sa %d</b> vybraný objekt"
+#~ msgstr[1] "<b>Tlačia sa %d</b> vybrané objekty"
+#~ msgstr[2] "<b>Tlačí sa %d</b> vybraných objektov"
+
+#~ msgid "<b>Shrinking %d</b> selected object"
+#~ msgid_plural "<b>Shrinking %d</b> selected objects"
+#~ msgstr[0] "<b>Zmenšuje sa %d</b> vybraný objekt"
+#~ msgstr[1] "<b>Zmenšujú sa %d</b> vybrané objekty"
+#~ msgstr[2] "<b>Zmenšuje sa %d</b> vybraných objektov"
+
+#~ msgid "<b>Growing %d</b> selected object"
+#~ msgid_plural "<b>Growing %d</b> selected objects"
+#~ msgstr[0] "<b>Zväčšuje sa %d</b> vybraný objekt"
+#~ msgstr[1] "<b>Zväčšujú sa %d</b> vybrané objekty"
+#~ msgstr[2] "<b>Zväčšuje sa %d</b> vybraných objektov"
+
+#~ msgid "<b>Attracting %d</b> selected object"
+#~ msgid_plural "<b>Attracting %d</b> selected objects"
+#~ msgstr[0] "<b>Priťahuje sa %d</b> vybraný objekt"
+#~ msgstr[1] "<b>Priťahujú sa %d</b> vybrané objekty"
+#~ msgstr[2] "<b>Priťahuje sa %d</b> vybraných objektov"
+
+#~ msgid "<b>Repelling %d</b> selected object"
+#~ msgid_plural "<b>Repelling %d</b> selected objects"
+#~ msgstr[0] "<b>Odpudzuje sa %d</b> vybraný objekt"
+#~ msgstr[1] "<b>Odpudzujú sa %d</b> vybrané objekty"
+#~ msgstr[2] "<b>Odpudzuje sa %d</b> vybraných objektov"
+
+#~ msgid "<b>Roughening %d</b> selected object"
+#~ msgid_plural "<b>Roughening %d</b> selected objects"
+#~ msgstr[0] "<b>Zdrsňuje sa %d</b> vybraný objekt"
+#~ msgstr[1] "<b>Zdrsňujú sa %d</b> vybrané objekty"
+#~ msgstr[2] "<b>Zdrsňuje sa %d</b> vybraných objektov"
+
+#~ msgid "<b>Painting %d</b> selected object"
+#~ msgid_plural "<b>Painting %d</b> selected objects"
+#~ msgstr[0] "<b>Maľuje sa %d</b> vybraný objekt"
+#~ msgstr[1] "<b>Maľujú sa %d</b> vybrané objekty"
+#~ msgstr[2] "<b>Maľuje sa %d</b> vybraných objektov"
+
+#~ msgid "<b>Jittering colors in %d</b> selected object"
+#~ msgid_plural "<b>Jittering colors in %d</b> selected objects"
+#~ msgstr[0] "<b>Variabilné farby v %d</b> vybranom objekte"
+#~ msgstr[1] "<b>Variabilné farby v %d</b> vybraných objektoch"
+#~ msgstr[2] "<b>Variabilné farby v %d</b> vybraných objektoch"
+
+#~ msgid "Repel tweak"
+#~ msgstr "Doladenie odpudzovaním"
+
+#~ msgid ""
+#~ "Only available in the selector tool: snap bounding box corners to guides, "
+#~ "to grids, and to other bounding boxes (but not to nodes or paths)"
+#~ msgstr ""
+#~ "Dostupné iba pri nástroji Výber: prichytávať rohy ohraničenia k vodidlám, "
+#~ "k čiaram mriežky a ostatným ohraničeniam (ale nie k uzlom a cestám)"
+
+#~ msgid "_Nodes"
+#~ msgstr "_Uzly"
+
+#~ msgid ""
+#~ "Snap nodes (e.g. path nodes, special points in shapes, gradient handles, "
+#~ "text base points, transformation origins, etc.) to guides, to grids, to "
+#~ "paths and to other nodes"
+#~ msgstr ""
+#~ "Prichytávať uzly (napr. uzly ciest, špeciálne body v tvaroch, úchopy "
+#~ "farebných prechodov, základne textu, počiatky transformácií atď.) k "
+#~ "vodidlám, mriežkam, cestám a iným uzlom"
+
+#~ msgid "Snap nodes to object paths"
+#~ msgstr "Prichytávať uzly k _cestám objektov"
+
+#~ msgid "Snap bounding box corners and nodes to the page border"
+#~ msgstr "Prichytávať rohy ohraničenia a uzly k okraju stránky"
+
+#~ msgid "Consider the rotation center of an object when snapping"
+#~ msgstr ""
+#~ "Pri prichytávaní k uzlom alebo vodidlám brať do úvahy stred otáčania "
+#~ "objektu"
+
+#~ msgid "_Grid with guides"
+#~ msgstr "_Mriežka s vodidlami"
+
+#~ msgid ""
+#~ "Snap to intersections of line segments ('snap to paths' must be enabled, "
+#~ "see the previous tab)"
+#~ msgstr ""
+#~ "Prichytávať k priesečníkom segmentov úsečiek („Prichytávať k cestám“ musí "
+#~ "byť zapnuté)"
+
+#~ msgid "<b>Snapping</b>"
+#~ msgstr "<b>Prichytávanie</b>"
+
+#~ msgid "<b>What snaps</b>"
+#~ msgstr "<b>Čo prichytáva</b>"
+
+#~ msgid "<b>Special points to consider</b>"
+#~ msgstr "<b>Špeciálne body na zváženie</b>"
+
+#~ msgid "Export"
+#~ msgstr "Export"
+
+#~ msgid ""
+#~ "This value affects the amount of smoothing applied to freehand lines; "
+#~ "lower values produce more uneven paths with more nodes"
+#~ msgstr ""
+#~ "Táto hodnota vyjaduje hodnotu zjemnenia použitého na kreslenie čiar "
+#~ "voľnou rukou; nižšia hodnota vyprodukuje viac nerovnú čiaru s väčší "
+#~ "počtom uzlov"
+
+#~ msgid "Grid units"
+#~ msgstr "Jednotky mriežky"
+
+#~ msgid "Origin Y"
+#~ msgstr "Začiatok súradnicovej sústavy Y"
+
+#~ msgid "Spacing X"
+#~ msgstr "Rozostup X"
+
+#~ msgid "Spacing Y"
+#~ msgstr "Rozostup Y"
+
+#~ msgid "Selects the color used for major (highlighted) grid lines."
+#~ msgstr ""
+#~ "Určuje farbu, ktorá sa použije pre hlavné (zvýraznených) čiary mriežky."
+
+#~ msgid "Major grid line every"
+#~ msgstr "Hlavná čiara mriežky každých"
+
+#~ msgid "Angle X"
+#~ msgstr "Uhol X"
+
+#~ msgid "Angle Z"
+#~ msgstr "Uhol Z"
+
+#~ msgid "XML looks"
+#~ msgstr "XML vzhľad"
+
+#~ msgid "Inline the XML attributes"
+#~ msgstr "Vkladať XML atribúty inline"
+
+#~ msgid "Path string"
+#~ msgstr "Reťazec cesty"
+
+#~ msgid "The number of digits to use behind the comma."
+#~ msgstr "Počet číslic, ktoré sa majú použiť za desatinnou čiarkou."
+
+#~ msgid "Enable auto-save of document"
+#~ msgstr "Zapnúť automatické ukladanie dokumentov"
+
+#~ msgid ""
+#~ "Allows for limiting the space used by autosaves, by setting a maximum "
+#~ "number of allowed files"
+#~ msgstr ""
+#~ "Umožňuje obmedziť miesto využité automatickým ukladaním pomocou "
+#~ "obmedzenia maximálneho počtu prípustných súborov"
+
+#~ msgid "<b>Mode:</b>"
+#~ msgstr "<b>Režim:</b>"
+
+#~ msgid "Regular Bézier mode"
+#~ msgstr "Obyčajný bézierov režim"
+
+#, fuzzy
+#~ msgid "Spiro splines mode"
+#~ msgstr "Režim zmenšovania"
+
+#~ msgid "Grow (outset) parts of paths"
+#~ msgstr "Zväčšovať (smerom von) časti ciest"
+
+#~ msgid "Repel mode"
+#~ msgstr "Režim odpudzovania"
+
+#~ msgid "Repel parts of paths from cursor"
+#~ msgstr "Odpudzovať časti ciest smerom od kurzora"
+
+#~ msgid "Change calligraphic profile"
+#~ msgstr "Zmeniť kaligrafický profil"
+
+#~ msgid "Save current settings as new profile"
+#~ msgstr "Uložiť aktuálne nastavenia ako nový profil"
+
+#~ msgid ""
+#~ "dxf2svg may come with Inkscape, but is also at http://dxf-svg-convert."
+#~ "sourceforge.net/"
+#~ msgstr ""
+#~ "dxf2svg môže byť distribuovaný s Inkscape, ale nachádza sa aj na http://"
+#~ "dxf-svg-convert.sourceforge.net/"
+
+#~ msgid "Samples"
+#~ msgstr "Vzorky"
+
+#~ msgid "Generate Template"
+#~ msgstr "Vytvoriť šablónu"
+
+#~ msgid "Report Normal Vector Information"
+#~ msgstr "Informácie o normálových vektoroch"
+
+#~ msgid "Postscript"
+#~ msgstr "Postscript"
+
+#~ msgid "Postscript (*.ps)"
+#~ msgstr "Postscript (*.ps)"
+
+#~ msgid ""
+#~ "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
+#~ msgstr ""
+#~ "Nie je možné nastaviť <b>%s</b>: Iný prvok s hodnotou <b>%s</b> už "
+#~ "existuje!"
+
+#~ msgid "Bend Path"
+#~ msgstr "Ohnúť cestu"
+
+#~ msgid "Stroke path"
+#~ msgstr "Cesta ťahu"
+
+#~ msgid "Space between copies of the pattern"
+#~ msgstr "Rozostup medzi kópiami vzorky"
+
+#~ msgid "y = y + x*(slant factor)"
+#~ msgstr "y = y + x*(koeficient skosenia)"
+
+#~ msgid "The x-coord of this point is around which the slant will happen"
+#~ msgstr "Okolo súradnice X tohto bodu sa udeje skosenie"
+
+#~ msgid "This effect does not support arcs yet, try to convert to path."
+#~ msgstr ""
+#~ "Tentoi efekt zatiaľ nepodporuje oblúky, skúste konvertovať na cestu."
+
+#~ msgid "At least one of the objects is <b>not a path</b>, cannot combine."
+#~ msgstr ""
+#~ "Minimálne jeden z objektov <b>nie je cesta</b>, kombinácia nie je možná."
+
+#~ msgid ""
+#~ "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
+#~ msgstr ""
+#~ "Nemôžete skombinovať objekty z <b>rozličných skupín</b> alebo <b>vrstiev</"
+#~ "b>."
+
+#~ msgid "Nothing in the clipboard."
+#~ msgstr "V schránke nič nie je."
+
+#~ msgid "Nothing on the style clipboard."
+#~ msgstr "V schránke štýlu nič nie je."
+
+#~ msgid "Clipboard does not contain a live path effect."
+#~ msgstr "Schránka neobsahuje efekt živej cesty."
+
+#~ msgid "<b>Snapping to special nodes</b>"
+#~ msgstr "<b>Prichytávanie k špeciálnym uzlom</b>"
+
+#~ msgid "Dialogs stay on top (experimental!)"
+#~ msgstr "Dialógy zostávajú na vrchu (experimentálne!)"
+
+#~ msgid ""
+#~ "Whether dialogs should stay on top of document windows. Read the "
+#~ "ReleaseNotes on this issue! (Rightclick the taskbar button and press "
+#~ "'Restore' to bring back a minimized document window)"
+#~ msgstr ""
+#~ "Či dialógy majú ostávať nad oknami dokumentov. Prečítajte si o tomto "
+#~ "probléme v ReleaseNotes! (Minimalizované okno dokumentu obnovíte "
+#~ "kliknutím pravým tlačidlom myši na panel úloh a stlačením „Obnoviť“)"
+
+#~ msgid "Make the commands toolbar icons smaller"
+#~ msgstr "Zmenšiť ikony panela nástrojov príkazov"
+
+#~ msgid ""
+#~ "Make the commands toolbar use the 'secondary' toolbar size (requires "
+#~ "restart)"
+#~ msgstr ""
+#~ "Nech panel nástrojov príkazov používa „sekundárnu“ veľkosť panelu "
+#~ "nástrojov (vyžaduje reštart)"
+
+#~ msgid "_Apply"
+#~ msgstr "_Použiť"
+
+#~ msgid "Apply chosen effect to selection"
+#~ msgstr "Použiť zvolený efekt na výber"
+
+# TODO: check
+#~ msgid "Tall"
+#~ msgstr "Vysoký"
+
+# TODO: check
+#~ msgid "Square"
+#~ msgstr "Štvorcový"
+
+# TODO: check
+#~ msgid "Wide"
+#~ msgstr "Široký"
+
+#~ msgid "Delete Segment"
+#~ msgstr "Zmazať segment"
+
+#~ msgid "Node Break"
+#~ msgstr "Zlomená v uzle"
+
+#~ msgid "Reset all parameters to defaults"
+#~ msgstr "Nastaviť všetky hodnoty na štandardné"
+
+#~ msgid "Interpolate style (experimental)"
+#~ msgstr "Interpolácia štýlu (experimentálne)"
+
+#~ msgid "Developer Examples"
+#~ msgstr "Príklady pre vývojárov"
+
+#~ msgid "RadioButton example"
+#~ msgstr "Príklad RadioButton"
+
+#~ msgid "Select option: "
+#~ msgstr "Výberte možnosť: "
+
+#~ msgid "Select second option: "
+#~ msgstr "Vyberte druhú možnosť: "
+
+#~ msgid "Random Point"
+#~ msgstr "Náhodný bod"
+
+#~ msgid "Random Position"
+#~ msgstr "Náhodná pozícia"
+
+#~ msgid "medium"
+#~ msgstr "stredný"
+
+#~ msgid "X Channel"
+#~ msgstr "Kanál X"
+
+#~ msgid "Y Channel"
+#~ msgstr "Kanál Y"
+
+#~ msgid "Stitch Tiles"
+#~ msgstr "Zošiť dlaždice"
+
+#, fuzzy
+#~ msgid "Preferred resolution (dpi) of bitmaps"
+#~ msgstr "Preferované rozlíšenie bitmapy (v bodoch na palec)"
+
+#, fuzzy
+#~ msgid "%s selected out of %d gradient handles on %d selected object"
+#~ msgid_plural "%s selected out of %d gradient handles on %d selected objects"
+#~ msgstr[0] ""
+#~ "%s vybraných z %d páčok farebných prechodov na %d zvolených objektoch"
+#~ msgstr[1] ""
+#~ "%s vybraných z %d páčok farebných prechodov na %d zvolených objektoch"
+#~ msgstr[2] ""
+#~ "%s vybraných z %d páčok farebných prechodov na %d zvolených objektoch"
+
+#~ msgid "Search Tag"
+#~ msgstr "Vyhľadávací štítok"
+
+#~ msgid "Measure unit:"
+#~ msgstr "Jednotka merania:"
+
+#~ msgid "Degrees:"
+#~ msgstr "Stupňov:"
+
+#~ msgid "Pin Dialog"
+#~ msgstr "Pripnúť dialóg"
+
+#~ msgid ""
+#~ "Toggles whether the dialog stays for multiple executions or disappears "
+#~ "after one"
+#~ msgstr ""
+#~ "Prepína, či dialóg zostane počas viacerých vykonaní alebo sa po jdnom "
+#~ "vykonaní stratí"
+
+#~ msgid "Gri_d Arrange..."
+#~ msgstr "_Rozloženie mriežky..."
+
+#~ msgid "Start point jitter"
+#~ msgstr "Variácia počiatočného bodu"
+
+#~ msgid "End point jitter"
+#~ msgstr "Variácia koncového bodu"
+
+#~ msgid ""
+#~ "Determines whether lines cluster together or have an equal spacing "
+#~ "between each other."
+#~ msgstr ""
+#~ "Určuje, či sa čiary zhlukujú alebo majú medzi sebou rovnomerné rozostupy."
+
+#~ msgid "Slope"
+#~ msgstr "Sklon"
+
+#~ msgid "???"
+#~ msgstr "???"
+
+#~ msgid "Snap nodes to grid lines, to guides, to paths, and to other nodes"
+#~ msgstr "Prichytávať uzly k čiaram mriežky, k vodidlám a ostatným uzlom"
+
+#~ msgid "Snap at specified d_istance"
+#~ msgstr "Prichytávať na určitú _vzdialenosť"
+
+#~ msgid "Snap di_stance"
+#~ msgstr "Vzdialeno_sť prichytávania"
+
+#~ msgid "Snap at specified dis_tance"
+#~ msgstr "Prichytávať na určitú v_zdialenosť"
+
+#~ msgid "Snap at specified distan_ce"
+#~ msgstr "Prichytávať na ľubovoľnú vz_dialenosť"
+
+#~ msgid "<b>Miscellaneous</b>"
+#~ msgstr "<b>Rôzne</b>"
+
+#~ msgid "Default metadata that will be used for new documents:"
+#~ msgstr "Štandardné metadáta, ktoré sa použijú pre nové dokumenty:"
+
+#~ msgid "These values will be used as default metadata for new documents"
+#~ msgstr "Tieto hodnoty sa použijú ako štandardné metadáta pre nové dokumenty"
+
+#~ msgid "Date:"
+#~ msgstr "Dátum:"
+
+#~ msgid "Format:"
+#~ msgstr "Formát:"
+
+#~ msgid "Creator:"
+#~ msgstr "Tvorca:"
+
+#~ msgid "Publisher:"
+#~ msgstr "Vydavateľ:"
+
+#~ msgid "Identifier:"
+#~ msgstr "Identifikátor:"
+
+#~ msgid "Source:"
+#~ msgstr "Zdroj:"
+
+#~ msgid "Relation:"
+#~ msgstr "Vzťah:"
+
+#~ msgid "Subject:"
+#~ msgstr "Predmet:"
+
+#~ msgid "Coverage:"
+#~ msgstr "Pokrytie:"
+
+#~ msgid "Contributor:"
+#~ msgstr "Prispievateľ:"
+
+#~ msgid "Default Metadata"
+#~ msgstr "Štandardné metadáta"
+
+#~ msgid "Creative Commons By 3.0"
+#~ msgstr "Creative Commons By 3.0"
+
+#~ msgid "Creative Commons By Sa 3.0"
+#~ msgstr "Creative Commons By Sa 3.0"
+
+#~ msgid "Creative Commons By Nd 3.0"
+#~ msgstr "Creative Commons By Nd 3.0"
+
+#~ msgid "Creative Commons By Nc 3.0"
+#~ msgstr "Creative Commons By Nc 3.0"
+
+#~ msgid "Creative Commons By Nc Sa 3.0"
+#~ msgstr "Creative Commons By Nc Sa 3.0"
+
+#~ msgid "Creative Commons By Nc Nd 3.0"
+#~ msgstr "Creative Commons By Nc Nd 3.0"
+
+#~ msgid "Default Licensing for new documents:"
+#~ msgstr "Štandardné licencovanie pre nové dokumenty:"
+
+#~ msgid "All Rights Reserved"
+#~ msgstr "Všetky práva vyhradené"
+
+#~ msgid "Creative Commons: Attribution"
+#~ msgstr "Creative Commons: Attribution"
+
+#~ msgid "Creative Commons: Attribution-ShareAlike"
+#~ msgstr "Creative Commons: Attribution-ShareAlike"
+
+#~ msgid "Creative Commons: Attribution-NoDerivatives"
+#~ msgstr "Creative Commons: Attribution-NoDerivatives"
+
+#~ msgid "Creative Commons: Attribution-NonCommercial"
+#~ msgstr "Creative Commons: Attribution-NonCommercial"
+
+#~ msgid "Creative Commons: Attribution-NonCommercial-ShareAlike"
+#~ msgstr "Creative Commons: Attribution-NonCommercial-ShareAlike"
+
+#~ msgid "Creative Commons: Attribution-NonCommercial-NoDerivatives"
+#~ msgstr "Creative Commons: Attribution-NonCommercial-NoDerivatives"
+
+#~ msgid "Free Art License"
+#~ msgstr "Free Art License"
+
+#~ msgid "Default License"
+#~ msgstr "Štandardná licencia"
+
+#~ msgid "3D Box: Toggle VP"
+#~ msgstr "Kváder: Prepnúť spojnicu"
+
+#~ msgid "Angle of infinite vanishing point in X direction"
+#~ msgstr "Uhol bodu nekonečna na obzore v smere X"
+
+#~ msgid "Angle Y"
+#~ msgstr "Uhol Y"
+
+#~ msgid "Angle of infinite vanishing point in Y direction"
+#~ msgstr "Uhol bodu nekonečna na obzore v smere Y"
+
+#~ msgid "Angle of infinite vanishing point in Z direction"
+#~ msgstr "Uhol bodu nekonečna na obzore v smere Z"
+
+#~ msgid "%s at %s"
+#~ msgstr "%s na %s"
+
+#~ msgid "Move by:"
+#~ msgstr "Presunúť o:"
+
+#~ msgid "Move to:"
+#~ msgstr "Presunúť na:"
+
+#~ msgid "Moving %s %s"
+#~ msgstr "Presunúť %s %s"
+
+#~ msgid "Change layer opacity"
+#~ msgstr "Zmeniť krytie vrstvy"
+
+#~ msgid "Opacity, %:"
+#~ msgstr "Krytie, %:"
+
+#~ msgid "Pattern along path"
+#~ msgstr "Vzorka pozdĺž cesty"
+
+#~ msgid "unknown error"
+#~ msgstr "neznáma chyba"
+
+#~ msgid "Printer '%s' does not support PS output"
+#~ msgstr "Tlačiareň „%s“ nepodporuje PS výstup"
+
+#~ msgid "Print Preview not available"
+#~ msgstr "Ukážka pred tlačou nie je dostupná"
+
+#~ msgid "Snap details"
+#~ msgstr "Podrobnosti prichytávania"
+
+#~ msgid ""
+#~ "If set, objects snap to the nearest grid line, regardless of distance"
+#~ msgstr ""
+#~ "Ak je voľba nastavená, objekty sa prichytávajú k najbližšej čiare mriežky "
+#~ "bez ohľadu na vzdialenosť"
+
+#~ msgid "Gridtype"
+#~ msgstr "Typ mriežky"
+
+#~ msgid "Display Calibration"
+#~ msgstr "Kalibrácia displeja"
+
+#~ msgid "Enable display calibration"
+#~ msgstr "Zapnúť kalibráciu displeja"
+
+#~ msgid "Enables application of the display using an ICC profile."
+#~ msgstr "Zapnúť aplikáciu displeja pomocou ICC profilu."
+
+#~ msgid "Print _Direct"
+#~ msgstr "Tlačiť p_riamo"
+
+#~ msgid "Print directly without prompting to a file or pipe"
+#~ msgstr "Vytlačí priamo bez pýtania sa na súbor alebo rúru"
+
+#~ msgid "Gradients"
+#~ msgstr "Lineárne prechody"
+
+#~ msgid "Spacing between letters"
+#~ msgstr "Rozostupy medzi písmenami"
+
+#~ msgid "Spacing between lines"
+#~ msgstr "Rozostupy medzi riadkami"
+
+#~ msgid "Horizontal kerning"
+#~ msgstr "Horizontálny kerning"
+
+#~ msgid "Vertical kerning"
+#~ msgstr "Vertikálny kerning"
