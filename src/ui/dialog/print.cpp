@@ -167,7 +167,10 @@ draw_page (GtkPrintOperation */*operation*/,
         }
 #endif
 
-        bool ret = ctx->setSurfaceTarget (surface, true);        if (ret) {
+        cairo_matrix_t ctm;
+        cairo_get_matrix(cr, &ctm);
+        bool ret = ctx->setSurfaceTarget (surface, true, &ctm);
+        if (ret) {
             ret = renderer.setupDocument (ctx, junk->_doc, TRUE, NULL);
             if (ret) {
                 renderer.renderItem(ctx, junk->_base);

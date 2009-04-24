@@ -85,7 +85,7 @@ public:
     bool setPdfTarget(gchar const *utf8_fn);
     bool setPsTarget(gchar const *utf8_fn);
     /** Set the cairo_surface_t from an external source */
-    bool setSurfaceTarget(cairo_surface_t *surface, bool is_vector);
+    bool setSurfaceTarget(cairo_surface_t *surface, bool is_vector, cairo_matrix_t *ctm=NULL);
 
     void setPSLevel(unsigned int level);
     void setEPS(bool eps);
@@ -187,7 +187,7 @@ protected:
 
     unsigned int _showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoGlyphInfo> const &glyphtext, bool is_stroke);
 
-    bool _finishSurfaceSetup(cairo_surface_t *surface);
+    bool _finishSurfaceSetup(cairo_surface_t *surface, cairo_matrix_t *ctm = NULL);
     void _setFillStyle(SPStyle const *style, NRRect const *pbox);
     void _setStrokeStyle(SPStyle const *style, NRRect const *pbox);
 

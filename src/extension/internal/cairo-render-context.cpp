@@ -780,20 +780,20 @@ CairoRenderContext::setupSurface(double width, double height)
 }
 
 bool
-CairoRenderContext::setSurfaceTarget(cairo_surface_t *surface, bool is_vector)
+CairoRenderContext::setSurfaceTarget(cairo_surface_t *surface, bool is_vector, cairo_matrix_t *ctm)
 {
     if (_is_valid || !surface)
         return false;
 
     _vector_based_target = is_vector;
-    bool ret = _finishSurfaceSetup (surface);
+    bool ret = _finishSurfaceSetup (surface, ctm);
     if (ret)
         cairo_surface_reference (surface);
     return ret;
 }
 
 bool
-CairoRenderContext::_finishSurfaceSetup(cairo_surface_t *surface)
+CairoRenderContext::_finishSurfaceSetup(cairo_surface_t *surface, cairo_matrix_t *ctm)
 {
     if(surface == NULL) {
         return FALSE;
@@ -803,6 +803,8 @@ CairoRenderContext::_finishSurfaceSetup(cairo_surface_t *surface)
     }
 
     _cr = cairo_create(surface);
+    if (ctm)
+        cairo_set_matrix(_cr, ctm);
     _surface = surface;
 
     if (_vector_based_target) {
