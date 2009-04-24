@@ -974,7 +974,7 @@ void sp_item_snappoints(SPItem const *item, bool const target, SnapPointsWithTyp
 
     // Get the snappoints at the item's center
     if (snapprefs != NULL && snapprefs->getIncludeItemCenter()) {
-    	p.push_back(std::make_pair(item->getCenter(), target ? int(Inkscape::SNAPTARGET_OBJECT_MIDPOINT) : int(Inkscape::SNAPSOURCE_OBJECT_MIDPOINT)));
+    	p.push_back(std::make_pair(item->getCenter(), target ? int(Inkscape::SNAPTARGET_ROTATION_CENTER) : int(Inkscape::SNAPSOURCE_ROTATION_CENTER)));
     }
 
     // Get the snappoints of clipping paths and mask, if any

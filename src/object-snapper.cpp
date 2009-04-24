@@ -712,9 +712,15 @@ bool Inkscape::ObjectSnapper::ThisSnapperMightSnap() const
     return (_snap_enabled && _snapmanager->snapprefs.getSnapModeBBoxOrNodes() && snap_to_something);
 }
 
-bool Inkscape::ObjectSnapper::GuidesMightSnap() const
+bool Inkscape::ObjectSnapper::GuidesMightSnap() const // almost the same as ThisSnapperMightSnap above, but only looking at points (and not paths)
 {
-    bool snap_to_something = _snapmanager->snapprefs.getSnapToItemNode() || _snapmanager->snapprefs.getSnapToBBoxNode();
+    bool snap_to_something = _snapmanager->snapprefs.getSnapToItemNode()
+						|| _snapmanager->snapprefs.getSnapToPageBorder()
+						|| (_snapmanager->snapprefs.getSnapModeBBox() && _snapmanager->snapprefs.getSnapToBBoxNode())
+						|| (_snapmanager->snapprefs.getSnapModeBBox() && (_snapmanager->snapprefs.getSnapBBoxEdgeMidpoints() || _snapmanager->snapprefs.getSnapBBoxMidpoints()))
+						|| (_snapmanager->snapprefs.getSnapModeNode() && (_snapmanager->snapprefs.getSnapLineMidpoints() || _snapmanager->snapprefs.getSnapObjectMidpoints()))
+						|| (_snapmanager->snapprefs.getSnapModeNode() && _snapmanager->snapprefs.getIncludeItemCenter());
+
     return (_snap_enabled && _snapmanager->snapprefs.getSnapModeGuide() && snap_to_something);
 }
 
