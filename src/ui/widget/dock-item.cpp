@@ -44,7 +44,7 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
     if (!icon_name.empty()) {
         int width = 0, height = 0;
         Gtk::IconSize::lookup(Gtk::ICON_SIZE_MENU, width, height);
-        _icon_pixbuf = Gtk::IconTheme::get_default()->load_icon(icon_name, width);
+        _icon_pixbuf = Gtk::IconTheme::get_default()->load_icon(icon_name, width, (Gtk::IconLookupFlags) 0);
         _gdl_dock_item =
             gdl_dock_item_new_with_pixbuf_icon(name.c_str(), long_name.c_str(),
                                                _icon_pixbuf->gobj(), gdl_dock_behavior);
