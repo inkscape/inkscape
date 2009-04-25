@@ -324,6 +324,12 @@ CanvasGrid::newWidget()
         new Inkscape::UI::Widget::RegisteredCheckButton( _("_Enabled"),
                         _("Determines whether to snap to this grid or not. Can be 'on' for invisible grids."),
                          "enabled", _wr, false, repr, doc) );
+
+    Inkscape::UI::Widget::RegisteredCheckButton * _rcb_snap_visible_only = Gtk::manage(
+            new Inkscape::UI::Widget::RegisteredCheckButton( _("Snap to visible _grid lines only"),
+                            _("When zoomed out, not all grid lines will be displayed. Only the visible ones will be snapped to"),
+                             "snapvisiblegridlinesonly", _wr, true, repr, doc) );
+
     Inkscape::UI::Widget::RegisteredCheckButton * _rcb_visible = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredCheckButton( _("_Visible"),
                         _("Determines whether the grid is displayed or not. Objects are still snapped to invisible grids."),
@@ -331,11 +337,13 @@ CanvasGrid::newWidget()
 
     vbox->pack_start(*_rcb_enabled, true, true);
     vbox->pack_start(*_rcb_visible, true, true);
+    vbox->pack_start(*_rcb_snap_visible_only, true, true);
     Gtk::Widget * gridwdg = newSpecificWidget();
     vbox->pack_start(*gridwdg, true, true);
 
     std::list<Gtk::Widget*> slaves;
     slaves.push_back(_rcb_visible);
+    slaves.push_back(_rcb_snap_visible_only);
     slaves.push_back(gridwdg);
     _rcb_enabled->setSlaveWidgets(slaves);
 
@@ -343,6 +351,7 @@ CanvasGrid::newWidget()
     _rcb_visible->setActive(visible);
     if (snapper != NULL) {
         _rcb_enabled->setActive(snapper->getEnabled());
+        _rcb_snap_visible_only->setActive(snapper->getSnapVisibleOnly());
     }
 
     return dynamic_cast<Gtk::Widget *> (vbox);
@@ -624,6 +633,11 @@ CanvasXYGrid::readRepr()
         g_assert(snapper != NULL);
         snapper->setEnabled(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
     }
+
+    if ( (value = repr->attribute("snapvisiblegridlinesonly")) ) {
+		g_assert(snapper != NULL);
+		snapper->setSnapVisibleOnly(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
+	}
 
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
         sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
@@ -979,23 +993,30 @@ CanvasXYGridSnapper::_getSnapLines(Geom::Point const &p) const
 
     for (unsigned int i = 0; i < 2; ++i) {
 
-        /* This is to make sure we snap to only visible grid lines */
-        double scaled_spacing = grid->sw[i]; // this is spacing of visible lines in screen pixels
+    	double spacing;
 
-        // convert screen pixels to px
-        // FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
-        if (SP_ACTIVE_DESKTOP) {
-            scaled_spacing /= SP_ACTIVE_DESKTOP->current_zoom();
+    	if (getSnapVisibleOnly()) {
+        	// Only snapping to visible grid lines
+        	spacing = grid->sw[i]; // this is the spacing of the visible grid lines measured in screen pixels
+			// convert screen pixels to px
+			// FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
+			SPDesktop const *dt = _snapmanager->getDesktop();
+        	if (dt) {
+        		spacing /= dt->current_zoom();
+        	}
+        } else {
+        	// Snapping to any grid line, whether it's visible or not
+        	spacing = grid->spacing[i];
         }
 
         Geom::Coord rounded;
         Geom::Point point_on_line;
 
-        rounded = Inkscape::Util::round_to_upper_multiple_plus(p[i], scaled_spacing, grid->origin[i]);
+        rounded = Inkscape::Util::round_to_upper_multiple_plus(p[i], spacing, grid->origin[i]);
         point_on_line = i ? Geom::Point(0, rounded) : Geom::Point(rounded, 0);
         s.push_back(std::make_pair(component_vectors[i], point_on_line));
 
-        rounded = Inkscape::Util::round_to_lower_multiple_plus(p[i], scaled_spacing, grid->origin[i]);
+        rounded = Inkscape::Util::round_to_lower_multiple_plus(p[i], spacing, grid->origin[i]);
         point_on_line = i ? Geom::Point(0, rounded) : Geom::Point(rounded, 0);
         s.push_back(std::make_pair(component_vectors[i], point_on_line));
     }

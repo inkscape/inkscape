@@ -136,7 +136,7 @@ public:
 
     Geom::Point spacing; /**< Spacing between elements of the grid */
     bool scaled[2];    /**< Whether the grid is in scaled mode, which can
-                            be different in the X or Y direction, hense two
+                            be different in the X or Y direction, hence two
                             variables */
     Geom::Point ow;      /**< Transformed origin by the affine for the zoom */
     Geom::Point sw;      /**< Transformed spacing by the affine for the zoom */

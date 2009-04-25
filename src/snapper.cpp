@@ -20,7 +20,8 @@
  */
 Inkscape::Snapper::Snapper(SnapManager *sm, Geom::Coord const /*t*/) :
 	_snapmanager(sm),
-	_snap_enabled(true)
+	_snap_enabled(true),
+	_snap_visible_only(true)
 {
     g_assert(_snapmanager != NULL);
 }
@@ -32,6 +33,11 @@ Inkscape::Snapper::Snapper(SnapManager *sm, Geom::Coord const /*t*/) :
 void Inkscape::Snapper::setEnabled(bool s)
 {
     _snap_enabled = s;
+}
+
+void Inkscape::Snapper::setSnapVisibleOnly(bool s)
+{
+    _snap_visible_only = s;
 }
 
 /*

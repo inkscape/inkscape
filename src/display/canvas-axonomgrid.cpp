@@ -358,6 +358,11 @@ CanvasAxonomGrid::readRepr()
         snapper->setEnabled(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
     }
 
+    if ( (value = repr->attribute("snapvisiblegridlinesonly")) ) {
+		g_assert(snapper != NULL);
+		snapper->setSnapVisibleOnly(strcmp(value,"false") != 0 && strcmp(value, "0") != 0);
+	}
+
     for (GSList *l = canvasitems; l != NULL; l = l->next) {
         sp_canvas_item_request_update ( SP_CANVAS_ITEM(l->data) );
     }
@@ -685,16 +690,26 @@ CanvasAxonomGridSnapper::_getSnapLines(Geom::Point const &p) const
         return s;
     }
 
-    /* This is to make sure we snap to only visible grid lines */
-    double scaled_spacing_h = grid->spacing_ylines; // this is spacing of visible lines if screen pixels
-    double scaled_spacing_v = grid->lyw; // vertical
+    double spacing_h;
+    double spacing_v;
 
-    // convert screen pixels to px
-    // FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
-    if (SP_ACTIVE_DESKTOP) {
-        scaled_spacing_h /= SP_ACTIVE_DESKTOP->current_zoom();
-        scaled_spacing_v /= SP_ACTIVE_DESKTOP->current_zoom();
-    }
+    if (getSnapVisibleOnly()) {
+		// Only snapping to visible grid lines
+		spacing_h = grid->spacing_ylines; // this is the spacing of the visible grid lines measured in screen pixels
+		spacing_v = grid->lyw; // vertical
+		// convert screen pixels to px
+		// FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
+		SPDesktop const *dt = _snapmanager->getDesktop();
+		if (dt) {
+			spacing_h /= dt->current_zoom();
+			spacing_v /= dt->current_zoom();
+		}
+	} else {
+		// Snapping to any grid line, whether it's visible or not
+		spacing_h = grid->lengthy  /(grid->tan_angle[X] + grid->tan_angle[Z]);
+		spacing_v = grid->lengthy;
+
+	}
 
     // In an axonometric grid, any point will be surrounded by 6 grid lines:
     // - 2 vertical grid lines, one left and one right from the point
@@ -702,16 +717,16 @@ CanvasAxonomGridSnapper::_getSnapLines(Geom::Point const &p) const
     // - 2 angled x grid lines, one above and one below the point
 
     // Calculate the x coordinate of the vertical grid lines
-    Geom::Coord x_max = Inkscape::Util::round_to_upper_multiple_plus(p[Geom::X], scaled_spacing_h, grid->origin[Geom::X]);
-    Geom::Coord x_min = Inkscape::Util::round_to_lower_multiple_plus(p[Geom::X], scaled_spacing_h, grid->origin[Geom::X]);
+    Geom::Coord x_max = Inkscape::Util::round_to_upper_multiple_plus(p[Geom::X], spacing_h, grid->origin[Geom::X]);
+    Geom::Coord x_min = Inkscape::Util::round_to_lower_multiple_plus(p[Geom::X], spacing_h, grid->origin[Geom::X]);
 
     // Calculate the y coordinate of the intersection of the angled grid lines with the y-axis
     double y_proj_along_z = p[Geom::Y] - grid->tan_angle[Z]*(p[Geom::X] - grid->origin[Geom::X]);
     double y_proj_along_x = p[Geom::Y] + grid->tan_angle[X]*(p[Geom::X] - grid->origin[Geom::X]);
-    double y_proj_along_z_max = Inkscape::Util::round_to_upper_multiple_plus(y_proj_along_z, scaled_spacing_v, grid->origin[Geom::Y]);
-    double y_proj_along_z_min = Inkscape::Util::round_to_lower_multiple_plus(y_proj_along_z, scaled_spacing_v, grid->origin[Geom::Y]);
-    double y_proj_along_x_max = Inkscape::Util::round_to_upper_multiple_plus(y_proj_along_x, scaled_spacing_v, grid->origin[Geom::Y]);
-    double y_proj_along_x_min = Inkscape::Util::round_to_lower_multiple_plus(y_proj_along_x, scaled_spacing_v, grid->origin[Geom::Y]);
+    double y_proj_along_z_max = Inkscape::Util::round_to_upper_multiple_plus(y_proj_along_z, spacing_v, grid->origin[Geom::Y]);
+    double y_proj_along_z_min = Inkscape::Util::round_to_lower_multiple_plus(y_proj_along_z, spacing_v, grid->origin[Geom::Y]);
+    double y_proj_along_x_max = Inkscape::Util::round_to_upper_multiple_plus(y_proj_along_x, spacing_v, grid->origin[Geom::Y]);
+    double y_proj_along_x_min = Inkscape::Util::round_to_lower_multiple_plus(y_proj_along_x, spacing_v, grid->origin[Geom::Y]);
 
     // Calculate the versor for the angled grid lines
     Geom::Point vers_x = Geom::Point(1, -grid->tan_angle[X]);

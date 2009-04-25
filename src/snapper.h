@@ -51,8 +51,11 @@ public:
     */
     virtual bool ThisSnapperMightSnap() const {return _snap_enabled;} // will likely be overridden by derived classes
 
-    void setEnabled(bool s); // This is only used for grids, for which snapping can be enabled individually
+    // These four methods are only used for grids, for which snapping can be enabled individually
+    void setEnabled(bool s);
+	void setSnapVisibleOnly(bool s);
     bool getEnabled() const {return _snap_enabled;}
+    bool getSnapVisibleOnly() const {return _snap_visible_only;}
 
     virtual void freeSnap(SnappedConstraints &/*sc*/,
                           SnapPreferences::PointType const &/*t*/,
@@ -111,8 +114,9 @@ public:
 protected:
 	SnapManager *_snapmanager;
 
+	// This is only used for grids, for which snapping can be enabled individually
 	bool _snap_enabled; ///< true if this snapper is enabled, otherwise false
-						// This is only used for grids, for which snapping can be enabled individually
+	bool _snap_visible_only;
 };
 
 }
