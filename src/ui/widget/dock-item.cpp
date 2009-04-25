@@ -9,17 +9,15 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
+#include <gtk/gtk.h>
+#include <gtkmm.h>
+
 #include "dock-item.h"
 #include "desktop.h"
 #include "inkscape.h"
 #include "preferences.h"
 #include "ui/widget/dock.h"
 #include "widgets/icon.h"
-
-#include <gtk/gtk.h>
-
-#include <gtkmm/invisible.h>
-#include <gtkmm/stock.h>
 
 namespace Inkscape {
 namespace UI {
@@ -44,30 +42,12 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
             GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER);
 
     if (!icon_name.empty()) {
-        Gtk::Widget *icon = sp_icon_get_icon(icon_name, Inkscape::ICON_SIZE_MENU);
-        if (icon) {
-            // check icon type (inkscape, gtk, none)
-            if ( SP_IS_ICON(icon->gobj()) ) {
-                SPIcon* sp_icon = SP_ICON(icon->gobj());
-                sp_icon_fetch_pixbuf(sp_icon);
-                _icon_pixbuf = Glib::wrap(sp_icon->pb, true);
-            } else if ( GTK_IS_IMAGE(icon->gobj()) ) {
-                GtkStockItem stock;
-                if ( gtk_stock_lookup( icon_name.c_str(), &stock ) ) {
-                    _icon_pixbuf = Gtk::Invisible().render_icon( Gtk::StockID(icon_name),
-                                                                 Gtk::ICON_SIZE_MENU );
-                } else {
-                    // TODO re-work this properly. Anti-crasher "null" icon for the moment
-                    _icon_pixbuf = Gtk::Invisible().render_icon( Gtk::StockID(GTK_STOCK_MISSING_IMAGE),
-                                                                 Gtk::ICON_SIZE_MENU );
-                }
-            }
-            delete icon;
-
-            _gdl_dock_item =
-                gdl_dock_item_new_with_pixbuf_icon(name.c_str(), long_name.c_str(),
-                                                   _icon_pixbuf->gobj(), gdl_dock_behavior);
-        }
+        int width = 0, height = 0;
+        Gtk::IconSize::lookup(Gtk::ICON_SIZE_MENU, width, height);
+        _icon_pixbuf = Gtk::IconTheme::get_default()->load_icon(icon_name, width);
+        _gdl_dock_item =
+            gdl_dock_item_new_with_pixbuf_icon(name.c_str(), long_name.c_str(),
+                                               _icon_pixbuf->gobj(), gdl_dock_behavior);
     } else {
         _gdl_dock_item =
             gdl_dock_item_new(name.c_str(), long_name.c_str(), gdl_dock_behavior);
