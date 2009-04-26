@@ -852,7 +852,8 @@ static gint
 pen_handle_2button_press(SPPenContext *const pc, GdkEventButton const &bevent)
 {
     gint ret = FALSE;
-    if (pc->npoints != 0 && bevent.button != 2) {
+    // only end on LMB double click. Otherwise horizontal scrolling causes ending of the path
+    if (pc->npoints != 0 && bevent.button == 1) {
         spdc_pen_finish(pc, FALSE);
         ret = TRUE;
     }
