@@ -46,6 +46,7 @@
 #include <string>
 #include <cstdlib>
 #include <glib.h>
+#include <zlib.h>
 
 #include "jar.h"
 
