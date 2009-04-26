@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46+devel r21210 custom"
+   version="1.0"
+   sodipodi:docname="draw-geometry-circle-from-three-points.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="16.642443"
+     inkscape:cy="-9.2551105"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1024"
+     inkscape:window-height="737"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:snap-nodes="false"
+     inkscape:bbox-nodes="false"
+     inkscape:snap-object-midpoints="false"
+     inkscape:snap-bbox-edge-midpoints="false"
+     inkscape:object-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-global="false" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <use
+       height="2000"
+       width="2000"
+       transform="matrix(3.0000002,0,0,3.0000002,-4394.526,-560.64289)"
+       id="use20461"
+       xlink:href="#node_b"
+       y="0"
+       x="0" />
+    <use
+       height="2000"
+       width="2000"
+       transform="matrix(3.0000002,0,0,3.0000002,-4364.526,-590.64289)"
+       id="use20463"
+       xlink:href="#node_b"
+       y="0"
+       x="0" />
+    <g
+       transform="matrix(3.128748,0,0,3.128748,-4292.6423,-4335.3759)"
+       style="display:inline"
+       id="circle_3pts">
+      <path
+         id="path13452"
+         d="m 1386.8416,1394.1639 c 0,0.8038 -0.1598,1.6073 -0.4674,2.3499 -0.3076,0.7426 -0.7628,1.4238 -1.3311,1.9922 -0.5683,0.5684 -1.2494,1.0235 -1.9918,1.3311 -0.7424,0.3075 -1.5456,0.4673 -2.3489,0.4673 -0.8033,-10e-5 -1.6061,-0.1599 -2.348,-0.4676 -0.7419,-0.3076 -1.4222,-0.7628 -1.9898,-1.3312 -0.5676,-0.5683 -1.0221,-1.2495 -1.3292,-1.992 -0.3071,-0.7426 -0.4667,-1.546 -0.4667,-2.3497 0,-0.8038 0.1596,-1.6072 0.4667,-2.3497 0.3071,-0.7426 0.7616,-1.4237 1.3292,-1.9921 0.5676,-0.5684 1.2479,-1.0235 1.9898,-1.3312 0.7419,-0.3076 1.5447,-0.4675 2.348,-0.4675 0.8033,-10e-5 1.6065,0.1597 2.3489,0.4673 0.7424,0.3076 1.4235,0.7627 1.9918,1.3311 0.5683,0.5683 1.0235,1.2495 1.3311,1.9921 0.3076,0.7427 0.4674,1.5462 0.4674,2.35"
+         style="fill:none;stroke:#5a5a5a;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4.26999998;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:23.2;display:inline" />
+      <g
+         transform="translate(17,-16)"
+         id="g13597">
+        <g
+           transform="matrix(0,1,-1,0,1563,131)"
+           inkscape:label="#g14209"
+           id="g13599">
+          <path
+             id="path13601"
+             d="m 1277.5,203.49997 4,0 0,4.00003 -4,0 0,-4.00003 z"
+             style="fill:#729fcf;fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <path
+             id="path13603"
+             d="m 1278.5,204.49997 2,0 0,2.00001 -2,0 0,-2.00001 z"
+             style="fill:none;stroke:#ffffff;stroke-width:0.9999997;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1" />
+        </g>
+      </g>
+      <g
+         id="g13605"
+         transform="translate(22,-22)">
+        <g
+           id="g13607"
+           inkscape:label="#g14209"
+           transform="matrix(0,1,-1,0,1563,131)">
+          <path
+             style="fill:#729fcf;fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+             d="m 1277.5,203.49997 4,0 0,4.00003 -4,0 0,-4.00003 z"
+             id="path13609" />
+          <path
+             style="fill:none;stroke:#ffffff;stroke-width:0.9999997;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+             d="m 1278.5,204.49997 2,0 0,2.00001 -2,0 0,-2.00001 z"
+             id="path13611" />
+        </g>
+      </g>
+      <g
+         transform="translate(27,-12)"
+         id="g13613">
+        <g
+           transform="matrix(0,1,-1,0,1563,131)"
+           inkscape:label="#g14209"
+           id="g13615">
+          <path
+             id="path13617"
+             d="m 1277.5,203.49997 4,0 0,4.00003 -4,0 0,-4.00003 z"
+             style="fill:#729fcf;fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+          <path
+             id="path13620"
+             d="m 1278.5,204.49997 2,0 0,2.00001 -2,0 0,-2.00001 z"
+             style="fill:none;stroke:#ffffff;stroke-width:0.9999997;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
