@@ -26,7 +26,7 @@
 
 var InkWeb = {
 
-  version: 0.03,
+  version: 0.04,
 
   NS: {
     svg:      "http://www.w3.org/2000/svg",
@@ -120,6 +120,48 @@ InkWeb.setAtt = function (conf) {
         this.setStyle( el, att, conf.val[i] );
       }
     }
+  }
+}
+
+InkWeb.moveElTo = function (startConf) {
+  if ( typeof(startConf) == "string" ) {
+    // startConf may be only a element Id, to timeout recursive calls.
+    var el = document.getElementById( startConf );
+  } else {
+    if ( typeof(startConf.el) == "string" )
+      startConf.from = document.getElementById( startConf.el );
+    var el = startConf.el;
+  }
+  if ( ! el.inkWebMoving ) {
+    el.inkWebMoving = {
+      step: 0
+    };
+  }
+  var conf = el.inkWebMoving;
+  if ( conf.step == 0 ) {
+    conf.x = startConf.x;
+    conf.y = startConf.y;
+    // dur : duration of the animation in seconds
+    if ( startConf.dur ) { conf.dur = startConf.dur }
+    else { conf.dur = 1 }
+    // steps : animation steps in a second
+    if ( startConf.stepsBySec ) { conf.stepsBySec = startConf.stepsBySec }
+    else { conf.stepsBySec = 16 }
+    conf.sleep = Math.round( 1000 / conf.stepsBySec );
+    conf.steps = conf.dur * conf.stepsBySec;
+    var startPos = el.getBBox();
+    conf.xInc = ( conf.x - startPos.x ) / conf.steps;
+    conf.yInc = ( conf.y - startPos.y ) / conf.steps;
+    conf.transform = el.ownerSVGElement.createSVGTransform();
+    el.transform.baseVal.appendItem(conf.transform);
+  }
+  if ( conf.step < conf.steps ) {
+    conf.step++;
+    conf.transform.matrix.e += conf.xInc;
+    conf.transform.matrix.f += conf.yInc;
+    conf.timeout = setTimeout( 'InkWeb.moveElTo("'+el.id+'")', conf.sleep );
+  } else {
+    delete el.inkWebMoving;
   }
 }
 
