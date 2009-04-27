@@ -49,5 +49,8 @@ Gtk::Widget *sp_icon_get_icon( const Glib::ustring &oid, Inkscape::IconSize size
 void sp_icon_fetch_pixbuf( SPIcon *icon );
 int sp_icon_get_phys_size(int size);
 
+namespace Inkscape {
+    void queueIconPrerender( Glib::ustring const &oid, Inkscape::IconSize size = Inkscape::ICON_SIZE_BUTTON );
+}
 
 #endif // SEEN_SP_ICON_H

@@ -382,6 +382,8 @@ static GtkAction* create_action_for_verb( Inkscape::Verb* verb, Inkscape::UI::Vi
 
     g_signal_connect( G_OBJECT(inky), "activate", GTK_SIGNAL_FUNC(trigger_sp_action), targetAction );
 
+    Inkscape::queueIconPrerender( verb->get_image(), size );
+
     return act;
 }
 

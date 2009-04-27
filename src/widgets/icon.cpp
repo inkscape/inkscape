@@ -89,16 +89,11 @@ public:
     GdkPixbuf* _pb;
 };
 
-static Glib::RefPtr<Gtk::IconFactory> inkyIcons;
 static std::map<Glib::ustring, std::vector<IconCacheItem> > iconSetCache;
 
 GType
 sp_icon_get_type()
 {
-    //TODO: switch to GObject
-    // GtkType and such calls were deprecated a while back with the
-    // introduction of GObject as a separate layer, with GType instead. --JonCruz
-
     static GType type = 0;
     if (!type) {
         GTypeInfo info = {
@@ -274,7 +269,10 @@ static void sp_icon_style_set( GtkWidget *widget, GtkStyle *previous_style )
 
 static void sp_icon_theme_changed( SPIcon *icon )
 {
-    //g_message("Got a change bump for this icon");
+    bool const dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpSvg");
+    if ( dump ) {
+        g_message("Got a change bump for this icon");
+    }
     sizeDirty = true;
     sp_icon_reset(icon);
     gtk_widget_queue_draw( GTK_WIDGET(icon) );
@@ -283,9 +281,8 @@ static void sp_icon_theme_changed( SPIcon *icon )
 
 static void imageMapCB(GtkWidget* widget, gpointer user_data);
 static void imageMapNamedCB(GtkWidget* widget, gpointer user_data);
-static void populate_placeholder_icon(gchar const* name, GtkIconSize size);
 static bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize);
-static Glib::ustring icon_cache_key(gchar const *name, unsigned lsize, unsigned psize);
+static Glib::ustring icon_cache_key(gchar const *name, unsigned psize);
 static GdkPixbuf *get_cached_pixbuf(Glib::ustring const &key);
 
 static void setupLegacyNaming() {
@@ -580,7 +577,6 @@ sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
         if ( type == GTK_IMAGE_STOCK ) {
             if ( !stockFound ) {
                 // It's not showing as a stock ID, so assume it will be present internally
-                populate_placeholder_icon( name, mappedSize );
                 addPreRender( mappedSize, name );
 
                 // Add a hook to render if set visible before prerender is done.
@@ -679,8 +675,7 @@ static void injectCustomSize()
     // TODO - still need to handle the case of theme changes and resize, especially as we can't re-register a string.
     if ( !sizeMapDone )
     {
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        bool dump = prefs->getBool( "/debug/icons/dumpDefault");
+        bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpDefault");
         gint width = 0;
         gint height = 0;
         if ( gtk_icon_size_lookup(GTK_ICON_SIZE_MENU, &width, &height ) ) {
@@ -700,13 +695,6 @@ static void injectCustomSize()
             }
         }
         sizeMapDone = true;
-    }
-
-    static bool hit = false;
-    if ( !hit ) {
-        hit = true;
-        inkyIcons = Gtk::IconFactory::create();
-        inkyIcons->add_default();
     }
 }
 
@@ -765,9 +753,7 @@ int sp_icon_get_phys_size(int size)
 
     if ( !init ) {
         sizeDirty = false;
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        bool dump = prefs->getBool("/debug/icons/dumpDefault");
-
+        bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpDefault");
         if ( dump ) {
             g_message( "Default icon sizes:" );
         }
@@ -814,6 +800,11 @@ int sp_icon_get_phys_size(int size)
                           i, gtkSizes[i],
                           ( used ? ' ' : 'X' ), width, height, names[i]);
             }
+
+            // The following is needed due to this documented behavior of gtk_icon_size_lookup:
+            //   "The rendered pixbuf may not even correspond to the width/height returned by
+            //   gtk_icon_size_lookup(), because themes are free to render the pixbuf however
+            //   they like, including changing the usual size."
             gchar const *id = GTK_STOCK_OPEN;
             GdkPixbuf *pb = gtk_widget_render_icon( icon, id, gtkSizes[i], NULL);
             if (pb) {
@@ -833,15 +824,6 @@ int sp_icon_get_phys_size(int size)
         }
         //g_object_unref(icon);
         init = true;
-    }
-
-    // Fixup workaround
-    if ((size == GTK_ICON_SIZE_MENU) || (size == GTK_ICON_SIZE_SMALL_TOOLBAR) || (size == GTK_ICON_SIZE_LARGE_TOOLBAR)) {
-        gint width = 0;
-        gint height = 0;
-        if ( gtk_icon_size_lookup( static_cast<GtkIconSize>(size), &width, &height ) ) {
-            vals[size] = std::max( width, height );
-        }
     }
 
     return vals[size];
@@ -1071,12 +1053,9 @@ struct svg_doc_cache_t
 static std::map<Glib::ustring, svg_doc_cache_t *> doc_cache;
 static std::map<Glib::ustring, GdkPixbuf *> pb_cache;
 
-Glib::ustring icon_cache_key(gchar const *name,
-                             unsigned lsize, unsigned psize)
+Glib::ustring icon_cache_key(gchar const *name, unsigned psize)
 {
     Glib::ustring key=name;
-    key += ":";
-    key += lsize;
     key += ":";
     key += psize;
     return key;
@@ -1176,19 +1155,6 @@ static guchar *load_svg_pixels(gchar const *name,
     return px;
 }
 
-static void populate_placeholder_icon(gchar const* name, GtkIconSize size)
-{
-    if ( iconSetCache.find(name) == iconSetCache.end() ) {
-        // only add a placeholder if nothing is already set
-        Gtk::IconSet icnset;
-        Gtk::IconSource src;
-        src.set_icon_name( GTK_STOCK_MISSING_IMAGE );
-        src.set_size( Gtk::IconSize(size) );
-        icnset.add_source(src);
-        inkyIcons->add(Gtk::StockID(name), icnset);
-    }
-}
-
 static void addToIconSet(GdkPixbuf* pb, gchar const* name, GtkIconSize lsize, unsigned psize) {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     static bool dump = prefs->getBool("/debug/icons/dumpGtk");
@@ -1200,29 +1166,23 @@ static void addToIconSet(GdkPixbuf* pb, gchar const* name, GtkIconSize lsize, un
             g_message("    set in a builtin for %s:%d:%d", name, lsize, psize);
         }
     }
+}
 
-    for ( std::vector<IconCacheItem>::iterator it = iconSetCache[name].begin(); it != iconSetCache[name].end(); ++it ) {
-        if ( it->_lsize == lsize ) {
-            if (dump) {
-                g_message("         erasing %s:%d   %p", name, it->_lsize, it->_pb);
-            }
-            iconSetCache[name].erase(it);
-            break;
+void Inkscape::queueIconPrerender( Glib::ustring const &name, Inkscape::IconSize lsize )
+{
+    GtkStockItem stock;
+    gboolean stockFound = gtk_stock_lookup( name.c_str(), &stock );
+    if (!stockFound && !gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), name.c_str()) ) {
+        gint trySize = CLAMP( static_cast<gint>(lsize), 0, static_cast<gint>(G_N_ELEMENTS(iconSizeLookup) - 1) );
+        if ( !sizeMapDone ) {
+            injectCustomSize();
         }
-    }
-    iconSetCache[name].push_back(IconCacheItem(lsize, pb));
+        GtkIconSize mappedSize = iconSizeLookup[trySize];
 
-    Gtk::IconSet icnset;
-    for ( std::vector<IconCacheItem>::iterator it = iconSetCache[name].begin(); it != iconSetCache[name].end(); ++it ) {
-        Gtk::IconSource src;
-        g_object_ref( G_OBJECT(it->_pb) );
-        src.set_pixbuf( Glib::wrap(it->_pb) );
-        src.set_size( Gtk::IconSize(it->_lsize) );
-        src.set_size_wildcarded( (it->_lsize != 1) || (iconSetCache[name].size() == 1) );
-        src.set_state_wildcarded( true );
-        icnset.add_source(src);
+        int psize = sp_icon_get_phys_size(lsize);
+        // TODO place in a queue that is triggered by other map events
+        prerender_icon(name.c_str(), mappedSize, psize);
     }
-    inkyIcons->add(Gtk::StockID(name), icnset);
 }
 
 // returns true if icon needed preloading, false if nothing was done
@@ -1231,7 +1191,7 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     static bool dump = prefs->getBool("/debug/icons/dumpGtk");
 
-    Glib::ustring key = icon_cache_key(name, lsize, psize);
+    Glib::ustring key = icon_cache_key(name, psize);
     GdkPixbuf *pb = get_cached_pixbuf(key);
     if (pb) {
         return false;
@@ -1285,7 +1245,7 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
 
 static GdkPixbuf *sp_icon_image_load_svg(gchar const *name, GtkIconSize lsize, unsigned psize)
 {
-    Glib::ustring key = icon_cache_key(name, lsize, psize);
+    Glib::ustring key = icon_cache_key(name, psize);
 
     // did we already load this icon at this scale/size?
     GdkPixbuf* pb = get_cached_pixbuf(key);
