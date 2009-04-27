@@ -1886,6 +1886,7 @@ void toggle_snap_callback (GtkToggleAction *act, gpointer data) { //data points 
 
 	SPDesktop *dt = reinterpret_cast<SPDesktop*>(ptr);
 	SPNamedView *nv = sp_desktop_namedview(dt);
+	SPDocument *doc = SP_OBJECT_DOCUMENT(nv);
 
 	if (dt == NULL || nv == NULL) {
 		g_warning("No desktop or namedview specified (in toggle_snap_callback)!");
@@ -1898,6 +1899,9 @@ void toggle_snap_callback (GtkToggleAction *act, gpointer data) { //data points 
 		g_warning("This namedview doesn't have a xml representation attached!");
 		return;
 	}
+
+	bool saved = sp_document_get_undo_sensitive(doc);
+	sp_document_set_undo_sensitive(doc, false);
 
 	bool v = false;
 	SPAttributeEnum attr = (SPAttributeEnum) GPOINTER_TO_INT(g_object_get_data(G_OBJECT(act), "SP_ATTR_INKSCAPE"));
@@ -1980,8 +1984,9 @@ void toggle_snap_callback (GtkToggleAction *act, gpointer data) { //data points 
 	}
 
 	// The snapping preferences are stored in the document, and therefore toggling makes the document dirty
-	SPDocument *doc = SP_OBJECT_DOCUMENT(nv);
 	doc->setModifiedSinceSave();
+
+	sp_document_set_undo_sensitive(doc, saved);
 }
 
 void setup_snap_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
