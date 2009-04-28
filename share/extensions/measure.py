@@ -29,7 +29,7 @@ TODO:
     2. check direction >90 or <-90 Degrees
     3. rotate by 180 degrees around text center
 '''
-import inkex, simplestyle, simplepath,sys,cubicsuperpath, bezmisc, locale
+import inkex, simplestyle, simplepath, sys, cubicsuperpath, bezmisc, locale
 # Set current system locale
 locale.setlocale(locale.LC_ALL, '')
 
