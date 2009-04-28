@@ -90,6 +90,7 @@ public:
 };
 
 static std::map<Glib::ustring, std::vector<IconCacheItem> > iconSetCache;
+static std::set<Glib::ustring> internalNames;
 
 GType
 sp_icon_get_type()
@@ -543,8 +544,7 @@ static void setupLegacyNaming() {
 static GtkWidget *
 sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    static bool dump = prefs->getBool( "/debug/icons/dumpGtk");
+    static bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpGtk");
 
     GtkWidget *widget = 0;
     gint trySize = CLAMP( static_cast<gint>(lsize), 0, static_cast<gint>(G_N_ELEMENTS(iconSizeLookup) - 1) );
@@ -594,16 +594,10 @@ sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
             widget = GTK_WIDGET(img);
             img = 0;
 
-//             if (!gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), name)) {
-//                 // TODO temporary work-around. until background rendering is restored.
-//                 int psize = sp_icon_get_phys_size(lsize);
-//                 renderup(name, lsize, psize);
-//             }
-
             // Add a hook to render if set visible before prerender is done.
             g_signal_connect( G_OBJECT(widget), "map", G_CALLBACK(imageMapNamedCB), GINT_TO_POINTER(0) );
 
-            if ( prefs->getBool("/options/iconrender/named_nodelay") ) {
+            if ( Inkscape::Preferences::get()->getBool("/options/iconrender/named_nodelay") ) {
                 int psize = sp_icon_get_phys_size(lsize);
                 prerender_icon(name, mappedSize, psize);
             } else {
@@ -917,8 +911,7 @@ extern "C" guchar *
 sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                   gchar const *name, unsigned psize )
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool const dump = prefs->getBool("/debug/icons/dumpSvg");
+    bool const dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpSvg");
     guchar *px = NULL;
 
     if (doc) {
@@ -1031,8 +1024,7 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                                              NR_ARENA_ITEM_RENDER_NO_CACHE );
                 nr_pixblock_release(&B);
 
-                bool useOverlay = prefs->getBool("/debug/icons/overlaySvg");
-                if ( useOverlay ) {
+                if ( Inkscape::Preferences::get()->getBool("/debug/icons/overlaySvg") ) {
                     sp_icon_overlay_pixels( px, psize, psize, 4 * psize, 0x00, 0x00, 0xff );
                 }
             }
@@ -1062,11 +1054,12 @@ Glib::ustring icon_cache_key(gchar const *name, unsigned psize)
 }
 
 GdkPixbuf *get_cached_pixbuf(Glib::ustring const &key) {
+    GdkPixbuf* pb = 0;
     std::map<Glib::ustring, GdkPixbuf *>::iterator found = pb_cache.find(key);
     if ( found != pb_cache.end() ) {
-        return found->second;
+        pb = found->second;
     }
-    return NULL;
+    return pb;
 }
 
 static std::list<gchar*> &icons_svg_paths()
@@ -1156,11 +1149,10 @@ static guchar *load_svg_pixels(gchar const *name,
 }
 
 static void addToIconSet(GdkPixbuf* pb, gchar const* name, GtkIconSize lsize, unsigned psize) {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    static bool dump = prefs->getBool("/debug/icons/dumpGtk");
+    static bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpGtk");
     GtkStockItem stock;
     gboolean stockFound = gtk_stock_lookup( name, &stock );
-    if ( !stockFound ) {
+   if ( !stockFound ) {
         Gtk::IconTheme::add_builtin_icon( name, psize, Glib::wrap(pb) );
         if (dump) {
             g_message("    set in a builtin for %s:%d:%d", name, lsize, psize);
@@ -1188,28 +1180,13 @@ void Inkscape::queueIconPrerender( Glib::ustring const &name, Inkscape::IconSize
 // returns true if icon needed preloading, false if nothing was done
 bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    static bool dump = prefs->getBool("/debug/icons/dumpGtk");
+    bool loadNeeded = false;
+    static bool dump = Inkscape::Preferences::get()->getBool("/debug/icons/dumpGtk");
 
     Glib::ustring key = icon_cache_key(name, psize);
-    GdkPixbuf *pb = get_cached_pixbuf(key);
-    if (pb) {
-        return false;
-    } else {
-        GtkIconTheme* theme = gtk_icon_theme_get_default();
-        if ( gtk_icon_theme_has_icon(theme, name) ) {
-            gint *sizeArray = gtk_icon_theme_get_icon_sizes( theme, name );
-            for (gint* cur = sizeArray; *cur; cur++) {
-                if (static_cast<gint>(psize) == *cur) {
-                    pb = gtk_icon_theme_load_icon( theme, name, psize,
-                                                   (GtkIconLookupFlags) 0, NULL );
-                    break;
-                }
-            }
-            g_free(sizeArray);
-            sizeArray = 0;
-        }
-        if (!pb) {
+    if ( !get_cached_pixbuf(key) ) {
+        if ((internalNames.find(name) != internalNames.end())
+            || (!gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), name))) {
             if (dump) {
                 g_message("prerender_icon  [%s] %d:%d", name, lsize, psize);
             }
@@ -1224,9 +1201,12 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
                 }
             }
             if (px) {
-                pb = gdk_pixbuf_new_from_data(px, GDK_COLORSPACE_RGB, TRUE, 8,
-                                              psize, psize, psize * 4,
-                                              (GdkPixbufDestroyNotify)g_free, NULL);
+                GdkPixbuf* pb = gdk_pixbuf_new_from_data( px, GDK_COLORSPACE_RGB, TRUE, 8,
+                                                          psize, psize, psize * 4,
+                                                          reinterpret_cast<GdkPixbufDestroyNotify>(g_free), NULL );
+                pb_cache[key] = pb;
+                addToIconSet(pb, name, lsize, psize);
+                loadNeeded = true;
             } else if (dump) {
                 g_message("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX  error!!! pixels not found for '%s'", name);
             }
@@ -1234,13 +1214,8 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
         else if (dump) {
             g_message("prerender_icon  [%s] %d NOT!!!!!!", name, psize);
         }
-
-        if (pb) {
-            pb_cache[key] = pb;
-            addToIconSet(pb, name, lsize, psize);
-        }
-        return true;
     }
+    return loadNeeded;
 }
 
 static GdkPixbuf *sp_icon_image_load_svg(gchar const *name, GtkIconSize lsize, unsigned psize)
