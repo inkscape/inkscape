@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-04-23 18:00+0200\n"
-"PO-Revision-Date: 2009-04-24 12:12+0100\n"
+"PO-Revision-Date: 2009-04-28 11:40+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Inkscape - editor vektorovej grafiky"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Matte jelly"
-msgstr "Matte želé"
+msgstr "Matné želé"
 
 #: ../share/filters/filters.svg.h:2 ../share/filters/filters.svg.h:3
 #: ../share/filters/filters.svg.h:4 ../share/filters/filters.svg.h:5
@@ -270,7 +270,7 @@ msgstr "Zebra"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Irregular vertical dark stripes (loses object's own color)"
-msgstr "nepravidelné zvislé tmavé prúžky (stráca sa vlastná farba objektu)"
+msgstr "Nepravidelné zvislé tmavé prúžky (stráca sa vlastná farba objektu)"
 
 #: ../share/filters/filters.svg.h:23
 msgid "Clouds"
@@ -652,9 +652,8 @@ msgid "Cross-smooth"
 msgstr "hladké"
 
 #: ../share/filters/filters.svg.h:60
-#, fuzzy
 msgid "Blur inner borders and intersections"
-msgstr "priesečníky vodidiel"
+msgstr "Rozostriť vnútorné okraje a priesečníky"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Iridescent beeswax"
@@ -1523,9 +1522,8 @@ msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "Vzor tigrej kože so záhybmi a vrstvením na okrajoch"
 
 #: ../share/filters/filters.svg.h:163
-#, fuzzy
 msgid "Flow inside"
-msgstr "Zdrsnenie vovnútri"
+msgstr "Tok vovnútri"
 
 #: ../share/filters/filters.svg.h:163
 msgid "Colorizable filling with flow inside like transparency"
@@ -1574,9 +1572,8 @@ msgid "Noisy blur"
 msgstr "Šumové rozostrenie"
 
 #: ../share/filters/filters.svg.h:168
-#, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "Malé zdrsnenie okrajov a obsahu"
+msgstr "Malé zdrsnenie a rozostrenie okrajov a obsahu"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Film Grain"
@@ -2660,7 +2657,7 @@ msgstr "Hľadať všetky tvary"
 
 #: ../src/dialogs/find.cpp:548 ../src/ui/dialog/find.cpp:70
 msgid "All shapes"
-msgstr "Všetkých tvary"
+msgstr "Všetky tvary"
 
 #: ../src/dialogs/find.cpp:565 ../src/ui/dialog/find.cpp:71
 msgid "Search rectangles"
@@ -3376,7 +3373,7 @@ msgid ""
 "Determines whether the grid is displayed or not. Objects are still snapped "
 "to invisible grids."
 msgstr ""
-"Určuje, či sa mriežka zobrazuje alebo nie. Objekty sa budú richytávať aj k "
+"Určuje, či sa mriežka zobrazuje alebo nie. Objekty sa budú prichytávať aj k "
 "neviditeľným mriežkam."
 
 #: ../src/display/canvas-grid.cpp:662
@@ -3573,9 +3570,8 @@ msgid "Text baseline"
 msgstr "Základne textu"
 
 #: ../src/display/snap-indicator.cpp:235
-#, fuzzy
 msgid " to "
-msgstr " od "
+msgstr ""
 
 #: ../src/document.cpp:445
 #, c-format
@@ -4346,9 +4342,8 @@ msgstr ""
 "Solarizovať zvolené bitmapy, efekt ako preexponovanie fotografického filmu."
 
 #: ../src/extension/internal/bitmap/spread.cpp:36
-#, fuzzy
 msgid "Dither"
-msgstr "Ďalšie"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
 msgid ""
@@ -6517,9 +6512,8 @@ msgid "Mirror symmetry"
 msgstr "Zrkadlová symetria"
 
 #: ../src/live_effects/effect.cpp:98
-#, fuzzy
 msgid "Parallel"
-msgstr "Dutina paralelne s okrajom"
+msgstr ""
 
 #: ../src/live_effects/effect.cpp:99
 msgid "Path length"
@@ -7454,7 +7448,6 @@ msgid "Frequency randomness"
 msgstr "Náhodnosť frekvencie"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
-#, fuzzy
 msgid "Variation of distance between hatches, in %."
 msgstr "Variácia vzdialenosti medzi šrafovaním v %"
 
@@ -7554,9 +7547,8 @@ msgstr ""
 "hranicu."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-#, fuzzy
 msgid "Variance: 1st side"
-msgstr "variancia: 1. strana"
+msgstr "Variácia: 1. strana"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Randomness of 'bottom' halfturns smoothness"
@@ -7584,7 +7576,6 @@ msgid "Add a global bend to the hatches (slower)"
 msgstr "Pridanie globálneho ohnutia šrafovania (pomalšie)"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-#, fuzzy
 msgid "Thickness: at 1st side"
 msgstr "Hrúbka: 1. strana"
 
@@ -7629,7 +7620,6 @@ msgid "Global bending"
 msgstr "Pridá globálne ohnutie šrafovania"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
-#, fuzzy
 msgid ""
 "Relative position to a reference point defines global bending direction and "
 "amount"
@@ -7846,9 +7836,8 @@ msgid "min curvature"
 msgstr "min. zakrivenie"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
-#, fuzzy
 msgid "k_max"
-msgstr "k_min"
+msgstr "k_max"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "max curvature"
@@ -8105,7 +8094,7 @@ msgstr ""
 
 #: ../src/main.cpp:319
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
-msgstr "Šírka exportovanej bitmapy v pixeloch (prepíše export-dpi)"
+msgstr "Šírka exportovanej bitmapy v pixeloch (má prednosť pred export-dpi)"
 
 #: ../src/main.cpp:320
 msgid "WIDTH"
@@ -8851,7 +8840,7 @@ msgid ""
 "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. "
 "Release <b>Alt</b> to finalize."
 msgstr ""
-"<b>Režim skicy</b>: držaním <b>Alt</b> interpoluje medzi naskicovanými "
+"<b>Režim skice</b>: držaním <b>Alt</b> interpoluje medzi naskicovanými "
 "cestami. Uvoľnením <b>Alt</b> dokončíte."
 
 #: ../src/pencil-context.cpp:593
@@ -9084,7 +9073,7 @@ msgstr "Identifikátor"
 
 #: ../src/rdf.cpp:253
 msgid "Unique URI to reference this document."
-msgstr "Jedinečné URI odkaz na tento dokument."
+msgstr "Jedinečné URI na identifikáciu tohto dokumentu."
 
 #: ../src/rdf.cpp:255 ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1425
 msgid "Source"
@@ -9092,7 +9081,7 @@ msgstr "Zdroj"
 
 #: ../src/rdf.cpp:256
 msgid "Unique URI to reference the source of this document."
-msgstr "Jedinečné URI odkaz na zdroj tohoto dokumentu."
+msgstr "Jedinečné URI na identifikáciu zdroja tohto dokumentu."
 
 #: ../src/rdf.cpp:258
 msgid "Relation"
@@ -9499,9 +9488,8 @@ msgid "Relink clone"
 msgstr "Znovu pripojiť klon"
 
 #: ../src/selection-chemistry.cpp:1981
-#, fuzzy
 msgid "Select <b>clones</b> to unlink."
-msgstr "Vyberte <b>klony</b>, ktoré sa majú znova pripojiť."
+msgstr "Vyberte <b>klony</b>, ktoré sa majú odpojiť."
 
 #: ../src/selection-chemistry.cpp:2030
 msgid "<b>No clones to unlink</b> in the selection."
@@ -9564,7 +9552,7 @@ msgstr "Objekty do vzorky"
 #: ../src/selection-chemistry.cpp:2350
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
-"Vyberte <b>objekt s výplňou vzorkou</b>, z ktorého sa bude extrahovat objekt."
+"Vyberte <b>objekt s výplňou vzorkou</b>, z ktorého sa bude extrahovať objekt."
 
 #: ../src/selection-chemistry.cpp:2403
 msgid "<b>No pattern fills</b> in the selection."
@@ -10083,10 +10071,11 @@ msgid "Select <b>at least 1 path</b> to perform a boolean union."
 msgstr "Vyberte <b>najmenej 1 cestu</b> na vykonanie booleovského zjednotenia."
 
 #: ../src/splivarot.cpp:131
-#, fuzzy
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
-msgstr "Vyberte <b>najmenej 2 cesty</b> na vykonanie logickej operácie."
+msgstr ""
+"Vyberte <b>práve 2 cesty</b> na vykonanie rozdielu, delenia alebo orezania "
+"cesty."
 
 #: ../src/splivarot.cpp:147 ../src/splivarot.cpp:162
 msgid ""
@@ -10199,12 +10188,12 @@ msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Dynamický posun</b>, %s o %f bd"
 
 #: ../src/sp-path.cpp:156
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node, path effect: %s)"
 msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
-msgstr[0] "<b>Cesta</b> (%i uzol)"
-msgstr[1] "<b>Cesta</b> (%i uzly)"
-msgstr[2] "<b>Cesta</b> (%i uzlov)"
+msgstr[0] "<b>Cesta</b> (%i uzol, efekt cesty: %s)"
+msgstr[1] "<b>Cesta</b> (%i uzly, efekt cesty: %s)"
+msgstr[2] "<b>Cesta</b> (%i uzlov, efekt cesty: %s)"
 
 #: ../src/sp-path.cpp:159
 #, c-format
@@ -10336,7 +10325,7 @@ msgid ""
 "This text object is <b>already put on a path</b>. Remove it from the path "
 "first. Use <b>Shift+D</b> to look up its path."
 msgstr ""
-"Tento textový objekt <b>sa už nachádza na ceste</b>. Najskôr ho odstránte z "
+"Tento textový objekt <b>sa už nachádza na ceste</b>. Najskôr ho odstráňte z "
 "cesty. Použite <b>Shift+D</b> na vyhľadanie jeho cesty."
 
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
@@ -10523,7 +10512,7 @@ msgstr "Zmenšiť riadkovanie"
 
 #: ../src/text-context.cpp:1214
 msgid "Contract letter spacing"
-msgstr "Zmenšiť medzery mezi riadkami"
+msgstr "Zmenšiť medzery medzi riadkami"
 
 #: ../src/text-context.cpp:1233
 msgid "Expand line spacing"
@@ -10538,16 +10527,19 @@ msgid "Paste text"
 msgstr "Vložiť text"
 
 #: ../src/text-context.cpp:1602
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Type or edit flowed text (%d characters); <b>Enter</b> to start new "
 "paragraph."
-msgstr "Napíšte text; <b>Enter</b> začne nový riadok."
+msgstr ""
+"Napíšte alebo upravte textový tok (%d znakov); <b>Enter</b> začne nový "
+"odstavec."
 
 #: ../src/text-context.cpp:1604
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
-msgstr "Napíšte text; <b>Enter</b> začne nový riadok."
+msgstr ""
+"Napíšte alebo upravte text (%d znakov); <b>Enter</b> začne nový riadok."
 
 #: ../src/text-context.cpp:1612 ../src/tools-switch.cpp:190
 msgid ""
@@ -10572,7 +10564,7 @@ msgid ""
 "object to select."
 msgstr ""
 "Pre úpravu cesty vyberte uzly pomocou <b>kliknutia</b>, <b>Shift+kliknutia</"
-"b> alebo <b>ťahania okolo</b> uzlov, potom ťahaním za uzloy a úchopy cestu "
+"b> alebo <b>ťahania okolo</b> uzlov, potom ťahaním za uzly a úchopy cestu "
 "zmeníte. <b>Kliknutie</b> na objekt ho vyberie."
 
 #: ../src/tools-switch.cpp:136
@@ -10633,6 +10625,9 @@ msgid ""
 "append to selected path. <b>Ctrl+click</b> to create single dots (straight "
 "line modes only)."
 msgstr ""
+"<b>Kliknutím</b> alebo <b>kliknutím a ťahaním</b> začnete cestu; pomocou "
+"<b>Shift</b> pridáte k vybranej ceste. <b>Ctrl+kliknutím</b> vytvoríte "
+"jednotlivé bodky (iba režimy priamych čiar)."
 
 #: ../src/tools-switch.cpp:184
 msgid ""
@@ -11197,7 +11192,7 @@ msgstr "Znáhodniť stredy v oboch rozmeroch"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:882
 msgid "Unclump objects: try to equalize edge-to-edge distances"
-msgstr "Rozptýliť objekty: pokúsiť sa o rovnomerné vzialenosti medzi hranami"
+msgstr "Rozptýliť objekty: pokúsiť sa o rovnomerné vzdialenosti medzi hranami"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:887
 msgid ""
@@ -11270,7 +11265,7 @@ msgstr "Správy"
 
 #: ../src/ui/dialog/debug.cpp:77 ../src/ui/dialog/messages.cpp:55
 msgid "Capture log messages"
-msgstr "Zachytávať log správy"
+msgstr "Zachytávať správy záznamu"
 
 #: ../src/ui/dialog/debug.cpp:79 ../src/ui/dialog/messages.cpp:57
 msgid "Release log messages"
@@ -11501,7 +11496,7 @@ msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:277
 msgid "Always snap to grids, regardless of the distance"
-msgstr "Vždy prichytávať k mriežkam bez ohľadu na vzdialenosťvzdialenosť"
+msgstr "Vždy prichytávať k mriežkam bez ohľadu na vzdialenosť"
 
 #: ../src/ui/dialog/document-properties.cpp:278
 msgid ""
@@ -12076,9 +12071,9 @@ msgid ""
 "the matrix diagonal) while a matrix filled with a constant non-zero value "
 "would lead to a common blur effect."
 msgstr ""
-"Táto matica popisuje ioeráciu konvolúcie, ktorá sa použije na vstupný "
+"Táto matica popisuje operáciu konvolúcie, ktorá sa použije na vstupný "
 "obrázok, aby sa vypočítala farba pixelov výstupu. Rozličné rozloženie hodnôt "
-"v tejto matici má za následok rozličné môžné viditeľné efekty. Matica "
+"v tejto matici má za následok rozličné možné viditeľné efekty. Matica "
 "identity by viedla k efektu pohybového rozmazania (paralelne k diagonále "
 "matice), kým matica vyplnená konštantnou nenulovou hodnotou by mala za "
 "následok bežný efekt rozmazania."
@@ -12096,7 +12091,7 @@ msgid ""
 msgstr ""
 "Po použití matice jadra (kernelMatrix) na vstupný obrázok sa získa číslo, to "
 "číslo sa vydelí deliteľom, čím sa získa konečná hodnota cieľovej farby. "
-"Deliteľ, ktorý je súčtom všetkých hodnôt mative zvykne mať vyrovnávajúci "
+"Deliteľ, ktorý je súčtom všetkých hodnôt matice zvykne mať vyrovnávajúci "
 "efekt na celkovú výslednú intenzitu farby."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2195
@@ -12165,7 +12160,7 @@ msgstr "Konštanta"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2202
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2235
 msgid "This constant affects the Phong lighting model."
-msgstr "Táto konštanata ovplyvňuje Phongov model osvetľovania."
+msgstr "Táto konštanta ovplyvňuje Phongov model osvetľovania."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2203
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2237
@@ -12256,7 +12251,7 @@ msgid ""
 "Indicates whether the filter primitive should perform a noise or turbulence "
 "function."
 msgstr ""
-"Indikuje, či má primitáva filtra vykonávať funkciu šumu alebo turbulencie."
+"Indikuje, či má primitíva filtra vykonávať funkciu šumu alebo turbulencie."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2246
 msgid "Base Frequency"
@@ -12272,7 +12267,7 @@ msgstr "Báza"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2248
 msgid "The starting number for the pseudo random number generator."
-msgstr "Báza generátora pseudonáhodných čisel."
+msgstr "Báza generátora pseudonáhodných čísel."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2260
 msgid "Add filter primitive"
@@ -12283,7 +12278,7 @@ msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
 msgstr ""
-"Primitíva filtra <b>feBlend</b> poskytuje 4 režimy miešania obázkov: "
+"Primitíva filtra <b>feBlend</b> poskytuje 4 režimy miešania obrázkov: "
 "tienenie, násobenie, stmavenie a zosvetlenie."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2281
@@ -12294,7 +12289,7 @@ msgid ""
 msgstr ""
 "Primitíva filtra <b>feColorMatrix</b> používa maticovú transformáciu na "
 "zafarbenie každého vykresľovaného pixla. To umožňuje efekty ako prevedenie "
-"objektu na oddtiene šedej, zmena sýtosti farieb a zmena farebného odtieňa."
+"objektu na odtiene šedej, zmena sýtosti farieb a zmena farebného odtieňa."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2285
 msgid ""
@@ -12315,7 +12310,7 @@ msgid ""
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
 msgstr ""
-"Primitíva filtra <b>feComposite</b> skladá dva obrázky pomocou jednáho z "
+"Primitíva filtra <b>feComposite</b> skladá dva obrázky pomocou jedného z "
 "Porter-Duffovych miešacích modulov alebo aritmetického režimu, ktorý je "
 "popísaný v štandarde SVG. Porter-Duffove miešacie moduly sú v podstate "
 "logické operácie medzi hodnotami zodpovedajúcich pixelov obrázkov."
@@ -12355,7 +12350,7 @@ msgid ""
 msgstr ""
 "Primitíva filtra <b>feDisplacementMap</b> vyvára rozostupy medzi pixelmi "
 "prvého vstupu použitím druhého vstupu ako mapy rozostupov, ktorá hovorí ako "
-"ďaleko by mali byť pixely od seba. Klaickými príkladmi sú efekty vír a "
+"ďaleko by mali byť pixely od seba. Klasickými príkladmi sú efekty vír a "
 "prelínanie."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2305
@@ -12393,7 +12388,7 @@ msgid ""
 msgstr ""
 "Primitíva filtra <b>feMerge</b> skladá niekoľko dočasných obrázkov vnútri "
 "primitívy filtra do jedného obrázka. Na to používa bežné alfa skladanie. Je "
-"ekvivalentom použitia niekoľných primitív feBlend v „normálnom“ režime alebo "
+"ekvivalentom použitia niekoľkých primitív feBlend v „normálnom“ režime alebo "
 "niekoľkých primitív feComposite v režime „cez“."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2321
@@ -12562,7 +12557,7 @@ msgid ""
 "autoscroll off)"
 msgstr ""
 "Ako rýchlo sa bude posúvať plátno, keď budete ťahať za okraj plátna (0 vypne "
-"autmatické posúvanie)"
+"automatické posúvanie)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:204
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
@@ -12603,7 +12598,7 @@ msgid ""
 "off, it zooms with Ctrl and scrolls without Ctrl."
 msgstr ""
 "Keď je voľba zapnutá, kolieskom myši bez Ctrl meníte mierku zobrazenia a s "
-"Ctrl posúvate plátno; ak je voľba vypnutá, meníte mierku s Ctrl a posúavte "
+"Ctrl posúvate plátno; ak je voľba vypnutá, meníte mierku s Ctrl a posúvate "
 "bez Ctrl."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:217
@@ -12659,7 +12654,7 @@ msgstr "Prichytávanie"
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
 #: ../src/ui/dialog/inkscape-preferences.cpp:242
 msgid "Arrow keys move by:"
-msgstr "Šípky  (klávesy) posunú o:"
+msgstr "Šípky (klávesy) posunú o:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:243
 msgid ""
@@ -12729,7 +12724,7 @@ msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
 msgstr ""
-"Klinutie nástoja Zmena mierky, klávesy +/-, kliknutie stredným tlačítkom "
+"Kliknutie nástroja Zmena mierky, klávesy +/-, kliknutie stredným tlačidlom "
 "menia zobrazenie o takýto násobok"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:269
@@ -12773,7 +12768,7 @@ msgstr "krát aktuálna šírka ťahu"
 #: ../src/ui/dialog/inkscape-preferences.cpp:291
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
 msgstr ""
-"Ceľkosť bodov vytvorených Ctrl+kliknutím (vzhľadom na súčasnú šírku ťahu)"
+"Veľkosť bodov vytvorených Ctrl+kliknutím (vzhľadom na súčasnú šírku ťahu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:306
 msgid "<b>No objects selected</b> to take the style from."
@@ -12877,7 +12872,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:401
 msgid "Average all sketches"
-msgstr "Spriemerovať všetky skicy"
+msgstr "Spriemerovať všetky skice"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:402
 msgid "Width is in absolute units"
@@ -13011,14 +13006,14 @@ msgstr "Tvary"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:486
 msgid "Sketch mode"
-msgstr "Režim skicy"
+msgstr "Režim skice"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
 msgid ""
 "If on, the sketch result will be the normal average of all sketches made, "
 "instead of averaging the old result with the new sketch."
 msgstr ""
-"Ak je táto voľba zapnutá, výsledok skicy bude normálny priemer všetkých "
+"Ak je táto voľba zapnutá, výsledok skice bude normálny priemer všetkých "
 "urobených skíc namiesto spriemerovania starého výsledku s novou skicou."
 
 #. Pen
@@ -13301,7 +13296,7 @@ msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
-"Po použítá odstráni z kresby objekt použitý ako orezávacia cesta či maska"
+"Po použití odstráni z kresby objekt použitý ako orezávacia cesta či maska"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:645
 msgid "Clippaths and masks"
@@ -13624,7 +13619,7 @@ msgstr "Zobrazovací zámer displeja:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:861
 #: ../src/ui/dialog/inkscape-preferences.cpp:884
 msgid "The rendering intent to use to calibrate display output."
-msgstr "Vykersľovací zámer, ktorý sa má použiť na kalibráciu výstupu displeja."
+msgstr "Vykresľovací zámer, ktorý sa má použiť na kalibráciu výstupu displeja."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:863
 msgid "Proofing"
@@ -13644,7 +13639,7 @@ msgstr "Vyznačiť farby mimo gamut"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:871
 msgid "Highlights colors that are out of gamut for the target device."
-msgstr "Zvýrazí farby, ktoré sú na cieľovom zariadení mimo gamut."
+msgstr "Zvýrazní farby, ktoré sú na cieľovom zariadení mimo gamut."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:876
 msgid "Out of gamut warning color:"
@@ -13676,7 +13671,7 @@ msgstr "Zapína kompenzáciu čierneho bodu."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:890
 msgid "Preserve black"
-msgstr "Zachovaať čiernu"
+msgstr "Zachovať čiernu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "(LittleCMS 1.15 or later required)"
@@ -13707,7 +13702,7 @@ msgid ""
 "If set and zoomed out, the gridlines will be shown in normal color instead "
 "of major grid line color."
 msgstr ""
-"Ak je voľba nastavená, pri oddielení sa čiary mriežky zobrazia bežnou farbou "
+"Ak je voľba nastavená, pri oddialení sa čiary mriežky zobrazia bežnou farbou "
 "namiesto použitia farby hlavnej čiary mriežky."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:965
@@ -14247,7 +14242,7 @@ msgid ""
 "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
 "Maximálny počet automaticky uložených súborov; toto obmedzenie použite na "
-"kontrolu nad použitým úložným pristorom"
+"kontrolu nad použitým úložným priestorom"
 
 #. When changing the interval or enabling/disabling the autosave function,
 #. * update our running configuration
@@ -15831,8 +15826,8 @@ msgid ""
 "Reseed the random number generator; this creates a different sequence of "
 "random numbers."
 msgstr ""
-"Zmeniť bázu generátora náhodných čisel; tým sa vytvorí iná postupnosť "
-"náhodných čisel,"
+"Zmeniť bázu generátora náhodných čísel; tým sa vytvorí iná postupnosť "
+"náhodných čísel."
 
 #: ../src/ui/widget/rendering-options.cpp:39
 msgid "Backend"
@@ -15871,7 +15866,7 @@ msgid ""
 "will be rendered exactly as displayed."
 msgstr ""
 "Vykresľovať všetko ako bitmapu. Výsledný obrázok je zvyčajne väčší a nebude "
-"môcť byť zmeneá veľkosť jeho zobrazenia bez straty kvality; všetky objekty "
+"môcť byť zmenená veľkosť jeho zobrazenia bez straty kvality; všetky objekty "
 "budú vykreslené tak ako sú práve zobrazené."
 
 #: ../src/ui/widget/selected-style.cpp:112
@@ -15911,7 +15906,7 @@ msgstr "bez výplne"
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/style-swatch.cpp:298
 msgid "No stroke"
-msgstr "Nez ťahu"
+msgstr "Bez ťahu"
 
 #: ../src/ui/widget/selected-style.cpp:166
 #: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:189
@@ -16847,7 +16842,7 @@ msgstr "Invertuje výber (zruší súčasný výber a vyberie všetko ostatné)"
 
 #: ../src/verbs.cpp:2336
 msgid "Invert in All Layers"
-msgstr "Ivertovať vo všetkých vrstvách"
+msgstr "Invertovať vo všetkých vrstvách"
 
 #: ../src/verbs.cpp:2337
 msgid "Invert selection in all visible and unlocked layers"
@@ -17008,7 +17003,7 @@ msgstr "Orezať _cestu"
 
 #: ../src/verbs.cpp:2385
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr "Oreže ťah spodej cesty na časti, odstráni výplň"
+msgstr "Oreže ťah spodnej cesty na časti, odstráni výplň"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -17870,7 +17865,7 @@ msgstr "Z_arovnanie a umiestnenie..."
 
 #: ../src/verbs.cpp:2647
 msgid "Align and distribute objects"
-msgstr "Zarovnaná a rozmiestneni objekty"
+msgstr "Zarovná a rozmiestni objekty"
 
 #: ../src/verbs.cpp:2648
 msgid "Undo _History..."
@@ -18718,7 +18713,7 @@ msgstr "_A"
 #: ../src/widgets/sp-color-wheel-selector.cpp:144
 #: ../src/widgets/sp-color-wheel-selector.cpp:156
 msgid "Alpha (opacity)"
-msgstr "Alpha (krytie)"
+msgstr "Alfa (krytie)"
 
 #: ../src/widgets/sp-color-notebook.cpp:330
 msgid "RGBA_:"
@@ -19113,9 +19108,8 @@ msgid "Snap to bounding box corners"
 msgstr "Prichytávať k rohom ohraničenia"
 
 #: ../src/widgets/toolbox.cpp:2059
-#, fuzzy
 msgid "BBox Edge Midpoints"
-msgstr "Stredy úsečiek"
+msgstr "Stredy hrán ohraničenia"
 
 #: ../src/widgets/toolbox.cpp:2059
 msgid "Snap from and to midpoints of bounding box edges"
@@ -19243,7 +19237,7 @@ msgstr "štvorec/štvorcípa hviezda"
 
 #: ../src/widgets/toolbox.cpp:2748
 msgid "pentagon/five-pointed star"
-msgstr "pätuholník/päťcípa hviezda"
+msgstr "päťuholník/päťcípa hviezda"
 
 #: ../src/widgets/toolbox.cpp:2748
 msgid "hexagon/six-pointed star"
@@ -19267,7 +19261,7 @@ msgstr "hviezda s tenkými lúčmi"
 
 #: ../src/widgets/toolbox.cpp:2764
 msgid "pentagram"
-msgstr "pätuholník"
+msgstr "päťuholník"
 
 #: ../src/widgets/toolbox.cpp:2764
 msgid "hexagram"
@@ -19746,7 +19740,7 @@ msgstr "Režim mierky"
 
 #: ../src/widgets/toolbox.cpp:4174
 msgid "Shrink objects, with Shift enlarge"
-msgstr "Zmr35ovanie objektov, s klávesom Shift roz5ahovanie"
+msgstr "Zmršťovanie objektov, s klávesom Shift rozťahovanie"
 
 #: ../src/widgets/toolbox.cpp:4180
 msgid "Rotate mode"
@@ -20277,7 +20271,7 @@ msgstr "Vyberte typ čiarového segmentu"
 #: ../src/widgets/toolbox.cpp:5642
 #, fuzzy
 msgid "Display measuring info"
-msgstr "Zobraziť meracie informácie o vybraných položkách"
+msgstr "Zobraziť meracie informácie"
 
 #: ../src/widgets/toolbox.cpp:5643
 msgid "Display measuring info for selected items"
@@ -20574,7 +20568,7 @@ msgstr "Toto rozšírenie vyžaduje, aby boli vybrané dve cesty."
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
 msgid "Please first convert objects to paths!  (Got [%s].)"
-msgstr "Prosím, najskôr skonverujte objekty na cesty!  (Dostali sme [%s].)"
+msgstr "Prosím, najskôr skonvertujte objekty na cesty!  (Dostali sme [%s].)"
 
 #: ../share/extensions/perspective.py:29
 msgid ""
@@ -20585,7 +20579,7 @@ msgid ""
 msgstr ""
 "Nepodarilo sa importovať moduly numpy alebo numpy.linalg. Toto rozšírenie "
 "vyžaduje tieto moduly. Prosím, nainštalujte ich a skúste to znova. Na "
-"Debianovskom systéme sa to robí príkazom sudo apt-get install python-numpy."
+"systéme Debian sa to robí príkazom sudo apt-get install python-numpy."
 
 #: ../share/extensions/perspective.py:62
 #: ../share/extensions/summersnight.py:39
@@ -20637,8 +20631,8 @@ msgid ""
 "can be done with the command, sudo apt-get install python-numpy."
 msgstr ""
 "Nepodarilo sa importovať modul numpy. Toto rozšírenie vyžaduje tento modul. "
-"Prosím, nainštalujte ich a skúste to znova. Na Debianovskom systéme sa to "
-"robí príkazom sudo apt-get install python-numpy."
+"Prosím, nainštalujte ich a skúste to znova. Na systéme Debian sa to robí "
+"príkazom sudo apt-get install python-numpy."
 
 #: ../share/extensions/polyhedron_3d.py:329
 msgid "No face data found in specified file\n"
@@ -20650,7 +20644,6 @@ msgstr "V zadanom súbore neboli nájdené údaje o hranách\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:510
-#, fuzzy
 msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
@@ -20957,23 +20950,20 @@ msgid "Centroid"
 msgstr "Stred"
 
 #: ../share/extensions/draw_from_triangle.inx.h:4
-#, fuzzy
 msgid "Circumcentre"
-msgstr "Dokument"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:5
-#, fuzzy
 msgid "Circumcircle"
-msgstr "Kruh"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:6
 msgid "Common Objects"
 msgstr "Spoločné objekty"
 
 #: ../share/extensions/draw_from_triangle.inx.h:7
-#, fuzzy
 msgid "Contact Triangle"
-msgstr "Uhol rotácie"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
 msgid "Custom Point Specified By:"
@@ -21009,14 +20999,12 @@ msgid "Excentral Triangle"
 msgstr "Trojuholník"
 
 #: ../share/extensions/draw_from_triangle.inx.h:16
-#, fuzzy
 msgid "Excentres"
-msgstr "stredy"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:17
-#, fuzzy
 msgid "Excircles"
-msgstr "kruh"
+msgstr ""
 
 #: ../share/extensions/draw_from_triangle.inx.h:18
 #, fuzzy
@@ -21525,9 +21513,8 @@ msgid "Circumferential Labels"
 msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:8
-#, fuzzy
 msgid "Logarithmic Subdiv. (Base given by entry above)"
-msgstr "Logaritmické X podrozd. (základ podľa vyššie uvedeného)"
+msgstr "Logaritmické podrozd. (základ podľa vyššie uvedeného)"
 
 #: ../share/extensions/grid_polar.inx.h:9
 #, fuzzy
