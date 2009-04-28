@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-28 17:46+0200\n"
+"POT-Creation-Date: 2009-04-28 18:31+0200\n"
 "PO-Revision-Date: 2009-04-24 00:10+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -3777,36 +3777,44 @@ msgstr "此擴充功能並沒有定義實作。"
 msgid "a dependency was not met."
 msgstr "未符合某個相依性。"
 
-#: ../src/extension/extension.cpp:629
+#: ../src/extension/extension.cpp:294
+msgid "Extension \""
+msgstr "擴充功能 \""
+
+#: ../src/extension/extension.cpp:294
+msgid "\" failed to load because "
+msgstr "\" 無法載入，因為"
+
+#: ../src/extension/extension.cpp:625
 #, c-format
 msgid "Could not create extension error log file '%s'"
 msgstr "無法建立擴充功能的錯誤日誌檔案「%s」"
 
-#: ../src/extension/extension.cpp:727
+#: ../src/extension/extension.cpp:723
 msgid "Name:"
 msgstr "名稱："
 
-#: ../src/extension/extension.cpp:728
+#: ../src/extension/extension.cpp:724
 msgid "ID:"
 msgstr "ID："
 
-#: ../src/extension/extension.cpp:729
+#: ../src/extension/extension.cpp:725
 msgid "State:"
 msgstr "狀態："
 
-#: ../src/extension/extension.cpp:729
+#: ../src/extension/extension.cpp:725
 msgid "Loaded"
 msgstr "已載入"
 
-#: ../src/extension/extension.cpp:729
+#: ../src/extension/extension.cpp:725
 msgid "Unloaded"
 msgstr "已卸載"
 
-#: ../src/extension/extension.cpp:729
+#: ../src/extension/extension.cpp:725
 msgid "Deactivated"
 msgstr "未活化"
 
-#: ../src/extension/extension.cpp:760
+#: ../src/extension/extension.cpp:756
 msgid ""
 "Currently there is no help available for this Extension.  Please look on the "
 "Inkscape website or ask on the mailing lists if you have questions regarding "
@@ -22464,12 +22472,6 @@ msgstr "XAML 輸入"
 
 #~ msgid "gradient level"
 #~ msgstr "漸層階層數"
-
-#~ msgid "Extension \""
-#~ msgstr "擴充功能 \""
-
-#~ msgid "\" failed to load because "
-#~ msgstr "\" 無法載入，因為"
 
 #~ msgid "all_inactive"
 #~ msgstr "所有非使用中的(_I)"
