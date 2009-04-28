@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-04-23 18:00+0200\n"
-"PO-Revision-Date: 2009-04-28 11:40+0100\n"
+"PO-Revision-Date: 2009-04-28 11:58+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -1286,7 +1286,7 @@ msgstr "Tekutina"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Colorizable filling with liquid transparency"
-msgstr "Zafarbiteľná výplň s tekutou prisvitnosťou"
+msgstr "Zafarbiteľná výplň s tekutou priesvitnosťou"
 
 #: ../share/filters/filters.svg.h:135
 msgid "Watercolor"
@@ -2369,7 +2369,7 @@ msgid ""
 "Each clone is painted by the picked color (the original must have unset fill "
 "or stroke)"
 msgstr ""
-"Každý klon je natretý zvolenou farbou (orignál musel byť bez výplne a ťahu)"
+"Každý klon je natretý zvolenou farbou (originál musel byť bez výplne a ťahu)"
 
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
@@ -3639,7 +3639,7 @@ msgid ""
 "average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> "
 "to copy the color under mouse to clipboard"
 msgstr ""
-"<b>Kliknutie</b> nastaví farbu výplne, <b>Shift+kliknitie</b> nastaví farbu "
+"<b>Kliknutie</b> nastaví farbu výplne, <b>Shift+kliknutie</b> nastaví farbu "
 "ťahu; <b>kliknutie a ťahanie</b> vyberie priemernú farbu oblasti; s <b>Alt</"
 "b> výber inverznej farby; <b>Ctrl+C</b> skopíruje farbu pod kurzorom do "
 "schránky"
@@ -3925,7 +3925,7 @@ msgstr "Raster"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:48
 msgid "Apply adaptive thresholding to selected bitmap(s)."
-msgstr "Použíť na vybrané bitmapy adaptívny prah."
+msgstr "Použiť na vybrané bitmapy adaptívny prah."
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:44
 msgid "Add Noise"
@@ -4245,7 +4245,7 @@ msgstr "Negovať (vytvoriť negatív) zvolené bitmapy."
 
 #: ../src/extension/internal/bitmap/normalize.cpp:35
 msgid "Normalize"
-msgstr "Normálizácia"
+msgstr "Normalizácia"
 
 #: ../src/extension/internal/bitmap/normalize.cpp:42
 msgid ""
@@ -4874,7 +4874,7 @@ msgstr "Scalable Vector Graphic (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:61
 msgid "Inkscape native file format and W3C standard"
-msgstr "Natívny formát Inkscape a W3C štandard"
+msgstr "Natívny formát Inkscape a štandard W3C"
 
 #: ../src/extension/internal/svg.cpp:69
 msgid "SVG Output Inkscape"
@@ -5016,7 +5016,7 @@ msgstr[2] "Odstránených <b>%i</b> nepoužitých definícií z &lt;defs&gt;."
 
 #: ../src/file.cpp:554
 msgid "No unused definitions in &lt;defs&gt;."
-msgstr "V &lt;defs&gt; neboli nájdené napoužité definície."
+msgstr "V &lt;defs&gt; neboli nájdené nepoužité definície."
 
 #: ../src/file.cpp:583
 #, c-format
@@ -5193,7 +5193,7 @@ msgstr "Násobiť"
 
 #: ../src/filter-enums.cpp:54
 msgid "Screen"
-msgstr "Tieneniť"
+msgstr "Tieniť"
 
 #: ../src/filter-enums.cpp:55
 msgid "Darken"
@@ -5331,7 +5331,7 @@ msgstr "Fraktálový šum"
 
 #: ../src/filter-enums.cpp:124
 msgid "Distant Light"
-msgstr "Vzdialené odvetlenie"
+msgstr "Vzdialené osvetlenie"
 
 #: ../src/filter-enums.cpp:125
 msgid "Point Light"
@@ -5404,7 +5404,7 @@ msgstr ""
 
 #: ../src/flood-context.cpp:1122 ../src/flood-context.cpp:1282
 msgid "Fill bounded area"
-msgstr "Vyplňiť ohraničenú oblasť"
+msgstr "Vyplniť ohraničenú oblasť"
 
 #: ../src/flood-context.cpp:1142
 msgid "Set style on object"
@@ -5799,7 +5799,7 @@ msgstr "ex štvorce"
 
 #: ../src/inkscape.cpp:323
 msgid "Autosaving documents..."
-msgstr "Autoamticky sa ukladá dokument..."
+msgstr "Automaticky sa ukladá dokument..."
 
 #: ../src/inkscape.cpp:394
 msgid "Autosave failed! Could not find inkscape extension to save document."
@@ -5883,7 +5883,7 @@ msgstr "_Stavový riadok"
 
 #: ../src/interface.cpp:837
 msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr "Zobrazí alebo skryje stavový panel (naspodu okna)"
+msgstr "Zobrazí alebo skryje stavový panel (naspodku okna)"
 
 #: ../src/interface.cpp:907
 #, c-format
@@ -5966,7 +5966,7 @@ msgstr "Neplatný názov programu: %s"
 #: ../src/io/sys.cpp:633 ../src/io/sys.cpp:922
 #, c-format
 msgid "Invalid string in argument vector at %d: %s"
-msgstr "Neplatný reťazec vo verktore argumentov na pozícii %d: %s"
+msgstr "Neplatný reťazec vo vektore argumentov na pozícii %d: %s"
 
 #: ../src/io/sys.cpp:644 ../src/io/sys.cpp:937
 #, c-format
@@ -5981,7 +5981,7 @@ msgstr "Nepodarilo sa vytvoriť rúru na komunikáciu s detským procesom: %s"
 #: ../src/io/sys.cpp:918
 #, c-format
 msgid "Invalid working directory: %s"
-msgstr "Napltný pracovný adresár: %s"
+msgstr "Neplatný pracovný adresár: %s"
 
 #: ../src/io/sys.cpp:986
 #, c-format
@@ -6039,7 +6039,7 @@ msgstr "Zmeniť úchop"
 
 #: ../src/knotholder.cpp:215
 msgid "Move handle"
-msgstr "Posunúť pačku"
+msgstr "Posunúť úchop"
 
 #. TRANSLATORS: This refers to the pattern that's inside the object
 #: ../src/knotholder.cpp:236
@@ -6452,7 +6452,7 @@ msgstr "Pokus o ukotvenie dokovacieho objektu k neviazanému vyhradenému miestu
 #, c-format
 msgid "Got a detach signal from an object (%p) who is not our host %p"
 msgstr ""
-"Bol obdržaný signál na odpojenie od objektu (%p), ktorý nie je naším "
+"Bol prijatý signál na odpojenie od objektu (%p), ktorý nie je naším "
 "hostiteľom %p"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:643
@@ -6821,7 +6821,7 @@ msgstr "Počet ciest, ktoré sa vygenerujú."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid "Start edge variance"
-msgstr "Variancia počiatočnej hrany"
+msgstr "Variácia počiatočnej hrany"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:44
 msgid ""
@@ -6845,7 +6845,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "End edge variance"
-msgstr "Variancia koncovej hrany"
+msgstr "Variácia koncovej hrany"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid ""
@@ -7021,11 +7021,11 @@ msgstr "Ľavá cesta, pozdĺž ktorej sa má ohnúť pôvodná cesta"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable left & right paths"
-msgstr "Zapnuť ľavé a pravé cesty"
+msgstr "Zapnúť ľavé a pravé cesty"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable the left and right deformation paths"
-msgstr "Zapnuť ľavé a pravé deformačné cesty"
+msgstr "Zapnúť ľavé a pravé deformačné cesty"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
 msgid "Enable top & bottom paths"
@@ -7052,7 +7052,7 @@ msgid ""
 "Tooth pressure angle (typically 20-25 deg).  The ratio of teeth not in "
 "contact."
 msgstr ""
-"Uhol tlaku zubu (zvučajne 20-25 stupňov). Pomer zubov, ktoré nie sú v "
+"Uhol tlaku zubu (zvyčajne 20-25 stupňov). Pomer zubov, ktoré nie sú v "
 "kontakte.."
 
 #: ../src/live_effects/lpe-interpolate.cpp:30
@@ -7645,7 +7645,7 @@ msgstr "Vzdialenosť značiek"
 
 #: ../src/live_effects/lpe-ruler.cpp:43
 msgid "Distance between successive ruler marks"
-msgstr "Vzdialenosť medzi po sebe idúcimi zmačkami pravítka"
+msgstr "Vzdialenosť medzi po sebe idúcimi značkami pravítka"
 
 #: ../src/live_effects/lpe-ruler.cpp:44
 msgid "Major length"
@@ -7697,7 +7697,7 @@ msgstr "Okrajové značky"
 
 #: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Choose whether to draw marks at the beginning and end of the path"
-msgstr "Vyberte ťi kresliť značky na začiatku alebo na konci cesty"
+msgstr "Vyberte či kresliť značky na začiatku alebo na konci cesty"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-skeleton.cpp:32
@@ -7728,11 +7728,11 @@ msgstr "Maximálna dĺžka aproximujúcich ťahov"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
-msgstr "Variancia dĺžky ťahu"
+msgstr "Variácia dĺžky ťahu"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Náhodná variancia dĺžky ťahu (relatívne k jeho max. dĺžke)"
+msgstr "Náhodná variácia dĺžky ťahu (relatívne k jeho max. dĺžke)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
@@ -7812,7 +7812,7 @@ msgstr "Maximálna dĺžka konštrukčných čiar"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Length variation"
-msgstr "Variancia dĺžky"
+msgstr "Variácia dĺžky"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Random variation of the length of construction lines"
@@ -8102,7 +8102,7 @@ msgstr "ŠÍRKA"
 
 #: ../src/main.cpp:324
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
-msgstr "Výška exportovanej bitmapy v pixeloch (prepíše export-dpi)"
+msgstr "Výška exportovanej bitmapy v pixeloch (má prednosť pred export-dpi)"
 
 #: ../src/main.cpp:325
 msgid "HEIGHT"
@@ -8407,11 +8407,11 @@ msgstr "Rozmiestniť uzly"
 
 #: ../src/nodepath.cpp:2012
 msgid "Add nodes"
-msgstr "Priadať uzly"
+msgstr "Pridať uzly"
 
 #: ../src/nodepath.cpp:2014 ../src/nodepath.cpp:2116
 msgid "Add node"
-msgstr "Priadať uzol"
+msgstr "Pridať uzol"
 
 #: ../src/nodepath.cpp:2208
 msgid "Break path"
@@ -8450,12 +8450,12 @@ msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
 msgstr ""
-"Vyberte <b>dva nekoncové uzly</b> na ceste mezi ktorými chcete vymazať "
+"Vyberte <b>dva nekoncové uzly</b> na ceste medzi ktorými chcete vymazať "
 "segmenty."
 
 #: ../src/nodepath.cpp:2760
 msgid "Cannot find path between nodes."
-msgstr "Nemôžem nájsť cestu medzi uzlami."
+msgstr "Nie je možné nájsť cestu medzi uzlami."
 
 #: ../src/nodepath.cpp:2792 ../src/widgets/toolbox.cpp:1343
 msgid "Delete segment"
