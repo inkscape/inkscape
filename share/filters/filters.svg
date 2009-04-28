@@ -1672,13 +1672,13 @@
 <feBlend id="feBlend2978" in="result1" in2="SourceGraphic" result="result5" mode="screen" blend="normal" />
 <feComposite id="feComposite2980" in2="fbSourceGraphicAlpha" result="result4" operator="atop" k2="1.5" k3="0.59999999999999998" in="result5" />
 </filter>
-<filter inkscape:menu-tooltip="Give lead pencil or chromolithography or engraving or other effects" inkscape:menu="Image effects" height="1" width="1" y="0" x="0" inkscape:label="Lead pencil" id="Leadpenc0">
-<feConvolveMatrix order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="SourceGraphic" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" id="feConvolveMatrix2935" />
-<feColorMatrix type="matrix" result="result3" values="0 -2 0 0 1 0 -2 0 0 1 0 -2 0 0 1 0 0 0 1 0 " id="feColorMatrix2937" />
-<feBlend in2="result3" blend="normal" id="feBlend2939" mode="multiply" in="result3" result="result6" />
-<feComposite result="fbSourceGraphic" id="feComposite2941" in="result6" in2="result6" operator="arithmetic" k1="1" k3="0.34999999999999998" k2="0" />
-<feGaussianBlur result="result7" in="fbSourceGraphic" stdDeviation="0.5" id="feGaussianBlur2943" />
-<feBlend blend="normal" id="feBlend2947" mode="multiply" in="result7" in2="result7" />
+<filter id="Leadpenc0" inkscape:label="Lead pencil" inkscape:menu="Image effects" inkscape:menu-tooltip="Give lead pencil or chromolithography or engraving effect" height="1" width="1" y="0" x="0">
+<feGaussianBlur id="feGaussianBlur3292" stdDeviation="1" />
+<feColorMatrix id="feColorMatrix3294" result="fbSourceGraphic" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -2.5 " />
+<feConvolveMatrix id="feConvolveMatrix3296" order="3 3" kernelMatrix="1 1 1 1 -7.99 1 1 1 1 " in="fbSourceGraphic" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
+<feColorMatrix id="feColorMatrix3298" type="matrix" result="result3" values="0 -10 0 0 1 0 -10 0 0 1 0 -10 0 0 1 0 0 0 1 0 " />
+<feComposite id="feComposite3302" result="fbSourceGraphic" in="SourceGraphic" in2="result3" operator="arithmetic" k1="1.3500000000000001" k3="0" k2="0" />
+<feGaussianBlur id="feGaussianBlur3304" result="result7" in="fbSourceGraphic" stdDeviation="0.5" />
 </filter>
 </defs>
 </svg>
