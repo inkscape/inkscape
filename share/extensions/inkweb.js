@@ -41,6 +41,24 @@ var InkWeb = {
 
 };
 
+InkWeb.el = function (tag, attributes) {
+  // A helper to create SVG elements
+  var element = document.createElementNS( this.NS.svg, tag );
+  for ( var att in attributes ) {
+    switch ( att ) {
+      case "parent":
+        attributes.parent.appendChild( element );
+        break;
+      case "text":
+        element.appendChild( document.createTextNode( attributes.text ) );
+        break;
+      default:
+        element.setAttribute( att, attributes[att] );
+    }
+  }
+  return element;
+}
+
 InkWeb.reGetStyleAttVal = function (att) {
   return new RegExp( "(^|.*;)[ ]*"+ att +":([^;]*)(;.*|$)" )
 }
@@ -129,7 +147,7 @@ InkWeb.moveElTo = function (startConf) {
     var el = document.getElementById( startConf );
   } else {
     if ( typeof(startConf.el) == "string" )
-      startConf.from = document.getElementById( startConf.el );
+      startConf.el = document.getElementById( startConf.el );
     var el = startConf.el;
   }
   if ( ! el.inkWebMoving ) {
@@ -152,16 +170,23 @@ InkWeb.moveElTo = function (startConf) {
     var startPos = el.getBBox();
     conf.xInc = ( conf.x - startPos.x ) / conf.steps;
     conf.yInc = ( conf.y - startPos.y ) / conf.steps;
-    conf.transform = el.ownerSVGElement.createSVGTransform();
+    conf.transform = el.transform.baseVal.consolidate();
+    if ( ! conf.transform ) {
+      conf.transform = el.ownerSVGElement.createSVGTransform();
+    }
+    el.transform.baseVal.clear();
     el.transform.baseVal.appendItem(conf.transform);
   }
   if ( conf.step < conf.steps ) {
     conf.step++;
     conf.transform.matrix.e += conf.xInc;
     conf.transform.matrix.f += conf.yInc;
+    try{ el.ownerSVGElement.forceRedraw() }
+    catch(e){ this.log(e, "this "+el.ownerSVGElement+" has no forceRedraw().") }
     conf.timeout = setTimeout( 'InkWeb.moveElTo("'+el.id+'")', conf.sleep );
   } else {
     delete el.inkWebMoving;
   }
 }
 
+InkWeb.log = function () { /* if you need that, use the inkweb-debug.js too */ }
