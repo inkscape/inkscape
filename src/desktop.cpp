@@ -886,51 +886,53 @@ SPDesktop::zoom_quick (bool enable)
                 Inkscape::NodePath::Path * nodepath = event_context->shape_editor->get_nodepath();
                 // printf("I've got a nodepath, crazy\n");
 
-                Geom::Rect nodes;
-                bool firstnode = true;
+				if (nodepath) {
+					Geom::Rect nodes;
+					bool firstnode = true;
 
-                if (nodepath->selected) {
-                    for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
-                       Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
-                        for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
-                           Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
-                            if (node->selected) {
-                                // printf("\tSelected node\n");
-                                if (firstnode) {
-                                    nodes = Geom::Rect(node->pos, node->pos);
-                                    firstnode = false;
-                                } else {
-                                    nodes.expandTo(node->pos);
-                                }
+					if (nodepath->selected) {
+						for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
+						   Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
+							for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
+							   Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
+								if (node->selected) {
+									// printf("\tSelected node\n");
+									if (firstnode) {
+										nodes = Geom::Rect(node->pos, node->pos);
+										firstnode = false;
+									} else {
+										nodes.expandTo(node->pos);
+									}
 
-                                if (node->p.other != NULL) {
-                                    /* Include previous node pos */
-                                    nodes.expandTo(node->p.other->pos);
+									if (node->p.other != NULL) {
+										/* Include previous node pos */
+										nodes.expandTo(node->p.other->pos);
 
-                                    /* Include previous handle */
-                                    if (!sp_node_side_is_line(node, &node->p)) {
-                                        nodes.expandTo(node->p.pos);
-                                    }
-                                }
+										/* Include previous handle */
+										if (!sp_node_side_is_line(node, &node->p)) {
+											nodes.expandTo(node->p.pos);
+										}
+									}
 
-                                if (node->n.other != NULL) {
-                                    /* Include previous node pos */
-                                    nodes.expandTo(node->n.other->pos);
+									if (node->n.other != NULL) {
+										/* Include previous node pos */
+										nodes.expandTo(node->n.other->pos);
 
-                                    /* Include previous handle */
-                                    if (!sp_node_side_is_line(node, &node->n)) {
-                                        nodes.expandTo(node->n.pos);
-                                    }
-                                }
-                            }
-                        }
-                    }
+										/* Include previous handle */
+										if (!sp_node_side_is_line(node, &node->n)) {
+											nodes.expandTo(node->n.pos);
+										}
+									}
+								}
+							}
+						}
 
-                    if (!firstnode && nodes.area() * 2.0 < _quick_zoom_stored_area.area()) {
-                        set_display_area(nodes, 10);
-                        zoomed = true;
-                    }
-                }
+						if (!firstnode && nodes.area() * 2.0 < _quick_zoom_stored_area.area()) {
+							set_display_area(nodes, 10);
+							zoomed = true;
+						}
+					}
+				}
             }
         }
 
