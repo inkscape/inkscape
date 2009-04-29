@@ -89,6 +89,10 @@ void dump_ustr(Glib::ustring const &ustr);
 // what gets passed here is not actually an URI... it is an UTF-8 encoded filename (!)
 static void sp_file_add_recent(gchar const *uri)
 {
+    if(uri == NULL) {
+        g_warning("sp_file_add_recent: uri == NULL");
+        return;
+    }
     GtkRecentManager *recent = gtk_recent_manager_get_default();
     gchar *fn = g_filename_from_utf8(uri, -1, NULL, NULL, NULL);
     if (fn) {
@@ -813,7 +817,7 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, bool is_copy)
 
         success = file_save(parentWindow, doc, fileName, selectionType, TRUE, !is_copy);
 
-        if (success) {
+        if (success && SP_DOCUMENT_URI(doc)) {
             sp_file_add_recent(SP_DOCUMENT_URI(doc));
         }
 
@@ -1170,7 +1174,7 @@ sp_file_export_dialog(void *widget)
         export_path = export_path_local;
 
     //# Show the SaveAs dialog
-    Inkscape::UI::Dialog::FileExportDialog *exportDialogInstance = 
+    Inkscape::UI::Dialog::FileExportDialog *exportDialogInstance =
         Inkscape::UI::Dialog::FileExportDialog::create(
             export_path,
             Inkscape::UI::Dialog::EXPORT_TYPES,
