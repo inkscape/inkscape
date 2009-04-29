@@ -155,7 +155,7 @@ private:
     Inkscape::XML::Node *_clipnode; ///< The node that holds extra information
     Inkscape::XML::Document *_doc; ///< Reference to the clipboard's Inkscape::XML::Document
 
-    // we need a way to copy plain text AND remember its style; 
+    // we need a way to copy plain text AND remember its style;
     // the standard _clipnode is only available in an SVG tree, hence this special storage
     SPCSSAttr *_text_style; ///< Style copied along with plain text fragment
 
@@ -236,7 +236,7 @@ void ClipboardManagerImpl::copy()
     }
 
     // Special case for when the text tool is active - if some text is selected, copy plain text,
-    // not the object that holds it; also copy the style at cursor into 
+    // not the object that holds it; also copy the style at cursor into
     if (tools_isactive(desktop, TOOLS_TEXT)) {
         _discardInternalClipboard();
         Glib::ustring selected_text = sp_text_get_selected_text(desktop->event_context);
@@ -340,7 +340,7 @@ const gchar *ClipboardManagerImpl::getFirstObjectID()
         return NULL;
 
     Inkscape::XML::Node *ch = sp_repr_children(root);
-    while (ch != NULL && 
+    while (ch != NULL &&
            strcmp(ch->name(), "svg:g") &&
            strcmp(ch->name(), "svg:path") &&
            strcmp(ch->name(), "svg:use") &&
@@ -374,7 +374,7 @@ bool ClipboardManagerImpl::pasteStyle()
     }
 
     SPDocument *tempdoc = _retrieveClipboard("image/x-inkscape-svg");
-    if ( tempdoc == NULL ) { 
+    if ( tempdoc == NULL ) {
         // no document, but we can try _text_style
         if (_text_style) {
             sp_desktop_set_style(desktop, _text_style);
@@ -792,17 +792,20 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
         Inkscape::XML::Node *obj_copy = _copyNode(obj, target_xmldoc, target_parent);
         pasted_objects = g_slist_prepend(pasted_objects, (gpointer) obj_copy);
     }
-   
+
     // Change the selection to the freshly pasted objects
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     selection->setReprList(pasted_objects);
-    
+
     // invers apply parent transform
     Geom::Matrix doc2parent = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
-    sp_selection_apply_affine(selection, doc2parent);
-    
+
     // Update (among other things) all curves in paths, for bounds() to work
     sp_document_ensure_up_to_date(target_document);
+
+    // Don't exactly know what sp_document_ensure_up_to_date() does, but apparently it must be called before
+    // item->getCenter() is used in sp_selection_apply_affine(). If not, then the center will be at (0,0)
+    sp_selection_apply_affine(selection, doc2parent);
 
     // move selection either to original position (in_place) or to mouse pointer
     Geom::OptRect sel_bbox = selection->bounds();
@@ -813,15 +816,15 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
         if (clipnode) {
             Geom::Point min, max;
             sp_repr_get_point(clipnode, "min", &min);
-            sp_repr_get_point(clipnode, "max", &max);        
+            sp_repr_get_point(clipnode, "max", &max);
             pos_original = Geom::Point(min[Geom::X], max[Geom::Y]);
         }
         Geom::Point offset = pos_original - sel_bbox->corner(3);
-        
+
         if (!in_place) {
             SnapManager &m = desktop->namedview->snap_manager;
             m.setup(desktop, false); // Don't display the snapindicator
-            
+
             // get offset from mouse pointer to bbox center, snap to grid if enabled
             Geom::Point mouse_offset = desktop->point() - sel_bbox->midpoint();
             offset = m.multipleOfGridPitch(mouse_offset - offset) + offset;
@@ -829,7 +832,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
 
         sp_selection_move_relative(selection, offset);
     }
-    
+
     g_slist_free(pasted_objects);
 }
 
@@ -851,7 +854,7 @@ void ClipboardManagerImpl::_pasteDefs(SPDocument *clipdoc)
     Inkscape::XML::Document *target_xmldoc = sp_document_repr_doc(target_document);
 
     prevent_id_clashes(clipdoc, target_document);
-    
+
     for (Inkscape::XML::Node *def = defs->firstChild() ; def ; def = def->next()) {
         _copyNode(def, target_xmldoc, target_defs);
     }
@@ -1252,13 +1255,13 @@ Glib::ustring ClipboardManagerImpl::_getBestTarget()
             format = EnumClipboardFormats(format);
         }
         CloseClipboard();
-        
+
         if (format == CF_ENHMETAFILE)
             return CLIPBOARD_WIN32_EMF_TARGET;
         if (format == CF_DIB || format == CF_BITMAP)
             return CLIPBOARD_GDK_PIXBUF_TARGET;
     }
-    
+
     if (IsClipboardFormatAvailable(CF_ENHMETAFILE))
         return CLIPBOARD_WIN32_EMF_TARGET;
 #endif

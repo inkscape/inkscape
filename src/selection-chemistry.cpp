@@ -1289,7 +1289,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
 
         // if we're moving the actual object, not just updating the repr, we can transform the
         // center by the same matrix (only necessary for non-translations)
-        if (set_i2d && item->isCenterSet() && !affine.isTranslation()) {
+        if (set_i2d && item->isCenterSet() && !(affine.isTranslation() || affine.isIdentity())) {
             item->setCenter(old_center * affine);
             SP_OBJECT(item)->updateRepr();
         }
