@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-04-28 18:52+0200\n"
-"PO-Revision-Date: 2009-04-28 19:21+0100\n"
+"PO-Revision-Date: 2009-04-29 08:10+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1086,13 +1086,12 @@ msgid "An effect between solarize and invert which often preserves sky and water
 msgstr "Un effet à mi-chemin de solarisation et invertion, qui préserve souvent les lumières du cel et de l'eau"
 
 #: ../share/filters/filters.svg.h:104
-#, fuzzy
 msgid "Soft focus lens"
-msgstr "Lentille à flou artistique"
+msgstr "Objectif à portrait"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Glowing image content without blurring it"
-msgstr "Rend le contenu d'une image éclatant sans le rendre flou"
+msgstr "Donne de l'éclat au contenu d'une image sans le rendre flou"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Stained glass"
@@ -1645,7 +1644,7 @@ msgstr "Embossage spéculaire extrêmement flexible avec transparence"
 
 #: ../share/filters/filters.svg.h:171
 msgid "Lead pencil"
-msgstr "Crayon gras"
+msgstr "Dessin au crayon"
 
 #: ../share/filters/filters.svg.h:171
 msgid "Give lead pencil or chromolithography or engraving or other effects"
