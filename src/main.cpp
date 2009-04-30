@@ -1481,8 +1481,8 @@ static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime
         gdouble dpi = 90.0;
         if (sp_export_dpi) {
             dpi = atof(sp_export_dpi);
-            if ((dpi < 72) || (dpi > 2400.0)) {
-                g_warning("DPI value %s out of range [72 - 2400]. Using 90 dpi instead.", sp_export_dpi);
+            if ((dpi < 1) || (dpi > 10000.0)) {
+                g_warning("DPI value %s out of range [1 - 10000]. Using 90 dpi instead.", sp_export_dpi);
                 dpi = 90;
             }
         }
