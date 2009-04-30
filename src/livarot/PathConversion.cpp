@@ -439,7 +439,7 @@ void Path::Convert(NRRectL *area, double treshhold)
             curP = 0;
             curX[0] = curX[1] = 0;
         }
-        
+
         last_point_relation = POINT_RELATION_TO_AREA(curX, area);
         lastMoveTo = AddPoint(curX, true);
     }
@@ -464,7 +464,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                 nextX = nData->p;
                 lastMoveTo = AddPoint(nextX, true);
                 descr_cmd[curP]->associated = lastMoveTo;
-                
+
                 last_point_relation = POINT_RELATION_TO_AREA(nextX, area);
                 start_elimination = false;
 
@@ -545,7 +545,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                 } else {
                     start_elimination = false;
                 }
-                
+
                 if (!replace) {
                     RecCubicTo(curX, nData->start, nextX, nData->end, treshhold, 8);
                     descr_cmd[curP]->associated = AddPoint(nextX,false);
@@ -742,7 +742,7 @@ void Path::ConvertEvenLines(double treshhold)
                     Geom::Point nexcur;
                     nexcur = nextX - curX;
                     const double segL = Geom::L2(nexcur);
-                    if ( segL > treshhold ) {
+                    if ( (segL > treshhold) && (treshhold > 0) ) {
                         for (double i = treshhold; i < segL; i += treshhold) {
                             Geom::Point nX;
                             nX = (segL - i) * curX + i * nextX;
@@ -772,7 +772,7 @@ void Path::ConvertEvenLines(double treshhold)
                 nextX = nData->p;
                 Geom::Point nexcur = nextX - curX;
                 const double segL = L2(nexcur);
-                if ( segL > treshhold ) {
+                if ( (segL > treshhold) && (treshhold > 0)) {
                     for (double i = treshhold; i < segL; i += treshhold) {
                         Geom::Point nX = ((segL - i) * curX + i * nextX) / segL;
                         AddPoint(nX);
