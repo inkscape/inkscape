@@ -42,6 +42,8 @@
 #include "style.h"
 #include "sp-object-repr.h"
 #include "sp-root.h"
+#include "sp-style-elem.h"
+#include "sp-script.h"
 #include "streq.h"
 #include "strneq.h"
 #include "xml/repr.h"
@@ -505,6 +507,13 @@ SPObject::setLabel(gchar const *label) {
 void
 SPObject::requestOrphanCollection() {
     g_return_if_fail(document != NULL);
+
+    // do not remove style or script elements (Bug #276244)
+    if (SP_IS_STYLE_ELEM(this))
+        return;
+    if (SP_IS_SCRIPT(this))
+        return;
+
     document->queueForOrphanCollection(this);
 
     /** \todo
