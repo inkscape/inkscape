@@ -140,7 +140,9 @@ then the page color set in Inkscape in the Document Options dialog will be used 
 =item B<-d> I<DPI>, B<--export-dpi>=I<DPI>
 
 The resolution used for PNG export.
-The default is 90, which corresponds to 1 SVG user unit 
+It is also used for fallback rasterization of filtered objects
+when exporting to PS, EPS, or PDF (unless you specify --export-ignore-filters to suppress
+rasterization). The default is 90 dpi, which corresponds to 1 SVG user unit 
 (px, also called "user unit") exporting to 1 bitmap pixel.
 This value overrides the DPI hint if used with --export-use-hints.
 
@@ -271,7 +273,8 @@ Convert text objects to paths on export, where applicable (for PS, EPS, and PDF 
 
 =item B<--export-ignore-filters>
 
-Export filtered objects (e.g. those with blur) as vectors, ignoring the filters (for PS, EPS, and PDF export). By default, all filtered objects are rasterized, preserving the appearance.
+Export filtered objects (e.g. those with blur) as vectors, ignoring the filters (for PS, EPS, and PDF export). 
+By default, all filtered objects are rasterized at --export-dpi (default 90 dpi), preserving the appearance.
 
 =item B<-I>, B<--query-id>
 
