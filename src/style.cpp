@@ -994,13 +994,24 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             /* SVG */
             /* Clip/Mask */
         case SP_PROP_CLIP_PATH:
-            g_warning("Unimplemented style property SP_PROP_CLIP_PATH: value: %s", val);
+            /** \todo
+             * This is a workaround. Inkscape only supports 'clip-path' as SVG attribute, not as
+             * style property. By having both CSS and SVG attribute set, editing of clip-path
+             * will fail, since CSS always overwrites SVG attributes.
+             * Fixes Bug #324849
+             */
+            g_warning("attribute 'clip-path' given as CSS");
+            style->object->repr->setAttribute("clip-path", val);
             break;
         case SP_PROP_CLIP_RULE:
             g_warning("Unimplemented style property SP_PROP_CLIP_RULE: value: %s", val);
             break;
         case SP_PROP_MASK:
-            g_warning("Unimplemented style property SP_PROP_MASK: value: %s", val);
+            /** \todo
+             * See comment for SP_PROP_CLIP_PATH
+             */
+            g_warning("attribute 'mask' given as CSS");
+            style->object->repr->setAttribute("mask", val);
             break;
         case SP_PROP_OPACITY:
             if (!style->opacity.set) {
