@@ -434,13 +434,6 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
         return true;
     }
 
-    // export with maximum blur rendering quality
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int saved_quality = prefs->getInt("/options/blurquality/value", 0);
-    prefs->setInt("/options/blurquality/value", 2);
-    int saved_filter_quality = prefs->getInt("/options/filterquality/value", 0);
-    prefs->setInt("/options/filterquality/value", 2);
-
     sp_document_ensure_up_to_date(doc);
 
     /* Calculate translation by transforming to document coordinates (flipping Y)*/
@@ -478,6 +471,8 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
 
     /* Create new arena */
     NRArena *const arena = NRArena::create();
+    // export with maximum blur rendering quality
+    nr_arena_set_renderoffscreen(arena);
     unsigned const dkey = sp_item_display_key_new(1);
 
     /* Create ArenaItems and set transform */
@@ -511,10 +506,6 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
 
     /* Free arena */
     nr_object_unref((NRObject *) arena);
-
-    // restore saved blur and filter quality
-    prefs->setInt("/options/blurquality/value", saved_quality);
-    prefs->setInt("/options/filterquality/value", saved_filter_quality);
 
     g_free(path);
 

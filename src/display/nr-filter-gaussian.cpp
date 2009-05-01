@@ -597,7 +597,7 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
 #endif // HAVE_OPENMP
 
     // Subsampling constants
-    int const quality = prefs->getInt("/options/blurquality/value");
+    int const quality = slot.get_blurquality();
     int const x_step_l2 = _effect_subsample_step_log2(deviation_x_org, quality);
     int const y_step_l2 = _effect_subsample_step_log2(deviation_y_org, quality);
     int const x_step = 1<<x_step_l2;

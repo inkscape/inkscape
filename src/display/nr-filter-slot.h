@@ -77,6 +77,12 @@ public:
     /** Sets the filtering quality. Affects used interpolation methods */
     void set_quality(FilterQuality const q);
 
+    /** Sets the gaussian filtering quality. Affects used interpolation methods */
+    void set_blurquality(int const q);
+
+    /** Gets the gaussian filtering quality. Affects used interpolation methods */
+    int get_blurquality(void);
+
 private:
     NRPixBlock **_slot;
     int *_slot_number;
@@ -85,6 +91,8 @@ private:
     int _last_out;
 
     FilterQuality filterquality;
+
+    int blurquality;
 
     NRArenaItem const *_arena_item;
 

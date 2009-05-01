@@ -16,6 +16,7 @@
 
 #include "display/nr-arena-item.h"
 #include "display/nr-filter-types.h"
+#include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-getalpha.h"
 #include "display/nr-filter-units.h"
@@ -66,6 +67,7 @@ namespace Filters {
 FilterSlot::FilterSlot(int slots, NRArenaItem const *item)
     : _last_out(-1),
       filterquality(FILTER_QUALITY_BEST),
+      blurquality(BLUR_QUALITY_BEST),
       _arena_item(item)
 {
     _slot_count = ((slots > 0) ? slots : 2);
@@ -346,6 +348,15 @@ void FilterSlot::set_units(FilterUnits const &units) {
 
 void FilterSlot::set_quality(FilterQuality const q) {
     filterquality = q;
+}
+
+void FilterSlot::set_blurquality(int const q) {
+    g_warning("FilterSlot::set_blurquality");
+    blurquality = q;
+}
+
+int FilterSlot::get_blurquality(void) {
+    return blurquality;
 }
 
 } /* namespace Filters */

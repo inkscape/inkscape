@@ -14,7 +14,10 @@
 
 #include "nr-arena-item.h"
 #include "nr-arena.h"
+#include "nr-filter-gaussian.h"
+#include "nr-filter-types.h"
 #include <libnr/nr-blit.h>
+#include "preferences.h"
 
 static void nr_arena_class_init (NRArenaClass *klass);
 static void nr_arena_init (NRArena *arena);
@@ -52,7 +55,10 @@ static void
 nr_arena_init (NRArena *arena)
 {
     arena->delta = 0; // to be set by desktop from prefs
+    arena->renderoffscreen = false; // use render values from preferences otherwise render exact
     arena->rendermode = Inkscape::RENDERMODE_NORMAL; // default is normal render
+    arena->blurquality = BLUR_QUALITY_NORMAL;
+    arena->filterquality = Inkscape::Filters::FILTER_QUALITY_NORMAL;
     arena->outlinecolor = 0xff; // black; to be set by desktop from bg color
     arena->canvasarena = NULL;
 }
@@ -72,6 +78,16 @@ nr_arena_request_update (NRArena *arena, NRArenaItem *item)
     nr_return_if_fail (NR_IS_ARENA (arena));
     nr_return_if_fail (item != NULL);
     nr_return_if_fail (NR_IS_ARENA_ITEM (item));
+    // setup render parameter
+    if (arena->renderoffscreen == false) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        arena->blurquality = prefs->getInt("/options/blurquality/value", 0);
+        arena->filterquality = prefs->getInt("/options/filterquality/value", 0);
+    } else {
+        arena->blurquality =  BLUR_QUALITY_BEST;
+        arena->filterquality = Inkscape::Filters::FILTER_QUALITY_BEST;
+        arena->rendermode = Inkscape::RENDERMODE_NORMAL;
+    }
 
     if (aobject->callbacks) {
         for (unsigned int i = 0; i < aobject->callbacks->length; i++) {
@@ -93,6 +109,16 @@ nr_arena_request_render_rect (NRArena *arena, NRRectL *area)
     nr_return_if_fail (NR_IS_ARENA (arena));
     nr_return_if_fail (area != NULL);
 
+    // setup render parameter
+    if (arena->renderoffscreen == false) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        arena->blurquality = prefs->getInt("/options/blurquality/value", 0);
+        arena->filterquality = prefs->getInt("/options/filterquality/value", 0);
+    } else {
+        arena->blurquality =  BLUR_QUALITY_BEST;
+        arena->filterquality = Inkscape::Filters::FILTER_QUALITY_BEST;
+        arena->rendermode = Inkscape::RENDERMODE_NORMAL;
+    }
     if (aobject->callbacks && area && !nr_rect_l_test_empty_ptr(area)) {
         for (unsigned int i = 0; i < aobject->callbacks->length; i++) {
             NRObjectListener *listener = aobject->callbacks->listeners + i;
@@ -139,6 +165,21 @@ nr_arena_render_paintserver_fill (NRPixBlock *pb, NRRectL *area, SPPainter *pain
     nr_pixblock_release (&cb_opa);
 }
 
+/**
+    set arena to offscreen mode
+    rendering will be exact
+    @param arena NRArena object
+*/
+void
+nr_arena_set_renderoffscreen (NRArena *arena)
+{
+    nr_return_if_fail (arena != NULL);
+    nr_return_if_fail (NR_IS_ARENA (arena));
+
+    // the real assignment to the quality indicators is in the update function
+    arena->renderoffscreen = true;
+
+}
 
 /*
   Local Variables:

@@ -39,6 +39,7 @@
 #include "display/nr-filter-tile.h"
 #include "display/nr-filter-turbulence.h"
 
+#include "display/nr-arena.h"
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-blit.h"
@@ -132,15 +133,16 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
 {
     if (!_primitive[0]) {
         // TODO: Should clear the input buffer instead of just returning
-       return 1; 
+       return 1;
     }
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    FilterQuality const filterquality = (FilterQuality)prefs->getInt("/options/filterquality/value");
+    FilterQuality const filterquality = (FilterQuality)item->arena->filterquality;
+    int const blurquality = item->arena->blurquality;
 
     Geom::Matrix trans = item->ctm;
     FilterSlot slot(_slot_count, item);
     slot.set_quality(filterquality);
+    slot.set_blurquality(blurquality);
 
     Geom::Rect item_bbox;
     {

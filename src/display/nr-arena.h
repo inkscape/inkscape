@@ -46,7 +46,11 @@ struct NRArena : public NRActiveObject {
 	}
 
 	double delta;
+	bool renderoffscreen;  // if true then rendering must be exact
 	Inkscape::RenderMode rendermode;
+	int blurquality;    // will be updated during update from preferences
+	int filterquality;  // will be updated during update from preferences
+
 	guint32 outlinecolor;
 	SPCanvasArena *canvasarena; // may be NULL is this arena is not the screen but used for export etc.
 };
@@ -56,6 +60,7 @@ struct NRArenaClass : public NRActiveObjectClass {
 
 void nr_arena_request_update (NRArena *arena, NRArenaItem *item);
 void nr_arena_request_render_rect (NRArena *arena, NRRectL *area);
+void nr_arena_set_renderoffscreen (NRArena *arena);
 
 void nr_arena_render_paintserver_fill (NRPixBlock *pb, NRRectL *area, SPPainter *painter, float opacity, NRPixBlock *mask);
 
