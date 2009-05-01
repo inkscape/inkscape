@@ -144,8 +144,6 @@ override) the bindings in the main default.xml.
 
   <bind action="PenPrefs" />
 
-  <bind key="F6" modifiers="Shift,Ctrl" action="ToolLPETool" display="true"/>
-
   <bind key="F6" modifiers="Ctrl" action="ToolCalligraphic" display="true"/>
   <bind key="c" action="ToolCalligraphic" />
   <bind key="C" action="ToolCalligraphic" />
