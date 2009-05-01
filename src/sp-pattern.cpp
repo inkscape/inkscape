@@ -523,7 +523,7 @@ pattern_tile (GSList *reprs, Geom::Rect bounds, SPDocument *document, Geom::Matr
 			dup_transform = Geom::identity();
 		dup_transform *= move;
 
-		sp_item_write_transform(copy, SP_OBJECT_REPR(copy), dup_transform);
+		sp_item_write_transform(copy, SP_OBJECT_REPR(copy), dup_transform, NULL, false);
 	}
 
 	Inkscape::GC::release(repr);
