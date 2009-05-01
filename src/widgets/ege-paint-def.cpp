@@ -49,6 +49,7 @@
 #include <sstream>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #if !defined(_)
 #define _(s) gettext(s)
