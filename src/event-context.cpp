@@ -1258,12 +1258,21 @@ gboolean sp_event_context_snap_watchdog_callback(gpointer data)
 			sp_event_context_virtual_root_handler(ec, dse->getEvent());
 			break;
 		case DelayedSnapEvent::EVENTCONTEXT_ITEM_HANDLER:
-			g_assert(dse->getItem() != NULL);
-			sp_event_context_virtual_item_handler(ec, dse->getItem(), dse->getEvent());
+			{
+				SPItem* item = NULL;
+				item = dse->getItem();
+				if (item && SP_IS_ITEM(item)) {
+					sp_event_context_virtual_item_handler(ec, item, dse->getEvent());
+				}
+			}
 			break;
 		case DelayedSnapEvent::KNOT_HANDLER:
-			g_assert(dse->getKnot() != NULL);
-			sp_knot_handler_request_position(dse->getEvent(), dse->getKnot());
+			{
+				SPKnot* knot = dse->getKnot();
+				if (knot && SP_IS_KNOT(knot)) {
+					sp_knot_handler_request_position(dse->getEvent(), knot);
+				}
+			}
 			break;
 		default:
 			g_warning("Origin of snap-delay event has not been defined!;");
