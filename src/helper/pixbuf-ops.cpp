@@ -99,8 +99,9 @@ sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
 {
 
 
-     /* Create new arena */
+     /* Create new arena for offscreen rendering*/
      NRArena *arena = NRArena::create();
+     nr_arena_set_renderoffscreen(arena);
      unsigned dkey = sp_item_display_key_new(1);
 
      sp_document_ensure_up_to_date (doc);
