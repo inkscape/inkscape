@@ -367,6 +367,9 @@ while line[0] and line[1] != 'DICTIONARY':
             val = inkex.re.sub( '\\\\S.*;', '', val)
             val = inkex.re.sub( '\\\\W.*;', '', val)
             val = unicode(val, "iso-8859-1")
+            val = val.encode('unicode_escape')
+            val = inkex.re.sub( '\\\\\\\\U\+([0-9A-Fa-f]{4})', '\\u\\1', val)
+            val = val.decode('unicode_escape')
         elif line[0] == '62' or line[0] == '70' or line[0] == '93':
             val = int(line[1])
         elif line[0] == '10' or line[0] == '13' or line[0] == '14': # scaled float x value
