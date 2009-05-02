@@ -351,7 +351,6 @@ void FilterSlot::set_quality(FilterQuality const q) {
 }
 
 void FilterSlot::set_blurquality(int const q) {
-    g_warning("FilterSlot::set_blurquality");
     blurquality = q;
 }
 
