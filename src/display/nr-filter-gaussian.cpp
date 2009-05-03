@@ -585,13 +585,12 @@ int FilterGaussian::render(FilterSlot &slot, FilterUnits const &units)
     Geom::Matrix trans = units.get_matrix_primitiveunits2pb();
 
     // Some common constants
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int const width_org = in->area.x1-in->area.x0, height_org = in->area.y1-in->area.y0;
     double const deviation_x_org = _deviation_x * trans.expansionX();
     double const deviation_y_org = _deviation_y * trans.expansionY();
     int const PC = NR_PIXBLOCK_BPP(in);
 #if HAVE_OPENMP
-    int const NTHREADS = std::max(1,std::min(8,prefs->getInt("/options/threading/numthreads",omp_get_num_procs())));
+    int const NTHREADS = std::max(1,std::min(8, Inkscape::Preferences::get()->getInt("/options/threading/numthreads", omp_get_num_procs())));
 #else
     int const NTHREADS = 1;
 #endif // HAVE_OPENMP

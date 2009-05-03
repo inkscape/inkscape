@@ -120,8 +120,7 @@ static void
 update_pref(Glib::ustring const &pref_path,
             gchar const *pref_default) // , GSList *extension_family)
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring pref = prefs->getString(pref_path);
+    Glib::ustring pref = Inkscape::Preferences::get()->getString(pref_path);
     /*
     gboolean missing=TRUE;
     for (GSList *list = extension_family; list; list = g_slist_next(list)) {
@@ -134,7 +133,7 @@ update_pref(Glib::ustring const &pref_path,
     }
     */
     if (!Inkscape::Extension::db.get( pref.data() ) /*missing*/) {
-        prefs->setString(pref_path, pref_default);
+        Inkscape::Preferences::get()->setString(pref_path, pref_default);
     }
 }
 
@@ -148,8 +147,6 @@ update_pref(Glib::ustring const &pref_path,
 void
 init()
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    
     /* TODO: Change to Internal */
     Internal::Svg::init();
     Internal::Svgz::init();
