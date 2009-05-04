@@ -662,8 +662,8 @@ Gtk::VBox* SvgFontsDialog::glyphs_tab(){
     _GlyphsListScroller.add(_GlyphsList);
     _GlyphsListStore = Gtk::ListStore::create(_GlyphsListColumns);
     _GlyphsList.set_model(_GlyphsListStore);
-    _GlyphsList.append_column_editable(_("Glyph Name"), _GlyphsListColumns.glyph_name);
-    _GlyphsList.append_column_editable(_("Unicode"), _GlyphsListColumns.unicode);
+    _GlyphsList.append_column_editable(_("Glyph name"), _GlyphsListColumns.glyph_name);
+    _GlyphsList.append_column_editable(_("Matching string"), _GlyphsListColumns.unicode);
 
     Gtk::HBox* hb = Gtk::manage(new Gtk::HBox());
     add_glyph_button.set_label(_("Add Glyph"));
