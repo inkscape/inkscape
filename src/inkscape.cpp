@@ -787,6 +787,13 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     InkErrorHandler* handler = new InkErrorHandler(use_gui);
     prefs->setErrorHandler(handler);
+    {
+        Glib::ustring msg;
+        Glib::ustring secondary;
+        if (prefs->getLastError( msg, secondary )) {
+            handler->handleError(msg, secondary);
+        }
+    }
 
     inkscape_load_menus(inkscape);
     sp_input_load_from_preferences();

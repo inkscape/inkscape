@@ -54,7 +54,8 @@ Preferences::Preferences() :
     _prefs_filename(""),
     _prefs_doc(0),
     _errorHandler(0),
-    _writable(false)
+    _writable(false),
+    _hasError(false)
 {
     // profile_path essentailly returns the argument prefixed by the profile directory.
     gchar *path = profile_path(NULL);
@@ -224,6 +225,21 @@ void Preferences::save()
     sp_repr_save_file(_prefs_doc, utf8name.data());
 }
 
+bool Preferences::getLastError( Glib::ustring& primary, Glib::ustring& secondary )
+{
+    bool result = _hasError;
+    if ( _hasError ) {
+        primary = _lastErrPrimary;
+        secondary = _lastErrSecondary;
+        _hasError = false;
+        _lastErrPrimary.clear();
+        _lastErrSecondary.clear();
+    } else {
+        primary.clear();
+        secondary.clear();
+    }
+    return result;
+}
 
 // Now for the meat.
 
@@ -610,6 +626,9 @@ void Preferences::_keySplit(Glib::ustring const &pref_path, Glib::ustring &node_
 
 void Preferences::_reportError(Glib::ustring const &msg, Glib::ustring const &secondary)
 {
+    _hasError = true;
+    _lastErrPrimary = msg;
+    _lastErrSecondary = secondary;
     if (_errorHandler) {
         _errorHandler->handleError(msg, secondary);
     }

@@ -213,7 +213,7 @@ main (int argc, const char **argv)
     LIBXML_TEST_VERSION
 
     Inkscape::GC::init();
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Inkscape::Preferences::get(); // ensure preferences are initialized
 
     gtk_init (&argc, (char ***) &argv);
 

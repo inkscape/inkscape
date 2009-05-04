@@ -229,6 +229,20 @@ public:
     /*@}*/
 
     /**
+     * @brief Return details of the last encountered error, if any.
+     *
+     * This method will return true if an error has been encountered, and fill
+     * in the primary and secondary error strings of the last error. If an error
+     * had been encountered, this will reset it.
+     *
+     * @param string to set to the primary error message.
+     * @param string to set to the secondary error message.
+     *
+     * @return True if an error has occurred since last checking, false otherwise.
+     */
+    bool getLastError( Glib::ustring& primary, Glib::ustring& secondary );
+
+    /**
      * @name Iterate over directories and entries.
      * @{
      */
@@ -458,9 +472,12 @@ private:
     std::string _prefs_basename; ///< Basename of the prefs file
     std::string _prefs_dir; ///< Directory in which to look for the prefs file
     std::string _prefs_filename; ///< Full filename (with directory) of the prefs file
+    Glib::ustring _lastErrPrimary; ///< Last primary error message, if any.
+    Glib::ustring _lastErrSecondary; ///< Last secondary error message, if any.
     XML::Document *_prefs_doc; ///< XML document storing all the preferences
     ErrorReporter* _errorHandler; ///< Pointer to object reporting errors.
     bool _writable; ///< Will the preferences be saved at exit?
+    bool _hasError; ///< Indication that some error has occurred;
     
     /// Wrapper class for XML node observers
     class PrefNodeObserver;
