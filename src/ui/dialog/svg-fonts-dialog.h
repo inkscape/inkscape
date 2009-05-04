@@ -99,6 +99,7 @@ private:
     void populate_kerning_pairs_box();
 	void set_glyph_description_from_selected_path();
 	void missing_glyph_description_from_selected_path();
+	void reset_missing_glyph_description();
 	void add_glyph();
 	void glyph_unicode_edit(const Glib::ustring&, const Glib::ustring&);
 	void glyph_name_edit(const Glib::ustring&, const Glib::ustring&);
@@ -131,6 +132,7 @@ private:
     Gtk::Button add_glyph_button;
 	Gtk::Button glyph_from_path_button;
 	Gtk::Button missing_glyph_button;
+	Gtk::Button missing_glyph_reset_button;
 
     class Columns : public Gtk::TreeModel::ColumnRecord
         {

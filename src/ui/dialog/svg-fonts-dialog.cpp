@@ -555,6 +555,25 @@ void SvgFontsDialog::missing_glyph_description_from_selected_path(){
     update_glyphs();
 }
 
+void SvgFontsDialog::reset_missing_glyph_description(){
+    SPDesktop* desktop = this->getDesktop();
+    if (!desktop) {
+        g_warning("SvgFontsDialog: No active desktop");
+        return;
+    }
+
+    SPDocument* doc = sp_desktop_document(desktop);
+    SPObject* obj;
+    for (obj = get_selected_spfont()->children; obj; obj=obj->next){
+        if (SP_IS_MISSING_GLYPH(obj)){
+            obj->repr->setAttribute("d", (char*) "M0,0h1000v1024h-1000z");
+            sp_document_done(doc, SP_VERB_DIALOG_SVG_FONTS, _("Reset missing-glyph"));
+        }
+    }
+
+    update_glyphs();
+}
+
 void SvgFontsDialog::glyph_name_edit(const Glib::ustring&, const Glib::ustring& str){
     Gtk::TreeModel::iterator i = _GlyphsList.get_selection()->get_selected();
     if (!i) return;
@@ -629,8 +648,12 @@ Gtk::VBox* SvgFontsDialog::glyphs_tab(){
     Gtk::Label* missing_glyph_label = Gtk::manage(new Gtk::Label(_("Missing Glyph:")));
     missing_glyph_hbox->pack_start(*missing_glyph_label, false,false);
     missing_glyph_hbox->pack_start(missing_glyph_button, false,false);
+    missing_glyph_hbox->pack_start(missing_glyph_reset_button, false,false);
     missing_glyph_button.set_label(_("From selection..."));
     missing_glyph_button.signal_clicked().connect(sigc::mem_fun(*this, &SvgFontsDialog::missing_glyph_description_from_selected_path));
+    missing_glyph_reset_button.set_label(_("Reset"));
+    missing_glyph_reset_button.signal_clicked().connect(sigc::mem_fun(*this, &SvgFontsDialog::reset_missing_glyph_description));
+    
     glyphs_vbox.pack_start(*missing_glyph_hbox, false,false);
 
     glyphs_vbox.add(_GlyphsListScroller);
@@ -771,7 +794,7 @@ SPFont *new_font(SPDocument *document)
     //create a missing glyph
     Inkscape::XML::Node *mg;
     mg = xml_doc->createElement("svg:missing-glyph");
-    mg->setAttribute("d", "M0,0h1020v1024h-1020z");
+    mg->setAttribute("d", "M0,0h1000v1024h-1000z");
     repr->appendChild(mg);
 
     // get corresponding object
