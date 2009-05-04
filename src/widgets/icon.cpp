@@ -1207,6 +1207,9 @@ bool prerender_icon(gchar const *name, GtkIconSize lsize, unsigned psize)
                 pb_cache[key] = pb;
                 addToIconSet(pb, name, lsize, psize);
                 loadNeeded = true;
+                if (internalNames.find(name) == internalNames.end()) {
+                    internalNames.insert(name);
+                }
             } else if (dump) {
                 g_message("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX  error!!! pixels not found for '%s'", name);
             }
