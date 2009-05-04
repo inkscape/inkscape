@@ -214,7 +214,6 @@ main (int argc, const char **argv)
 
     Inkscape::GC::init();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->load(false, true); // keep quiet about any failures
 
     gtk_init (&argc, (char ***) &argv);
 

@@ -41,6 +41,7 @@ using Inkscape::Extension::Internal::PrintWin32;
 #include <glibmm/i18n.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmessagedialog.h>
+#include <gtkmm/messagedialog.h>
 #include <signal.h>
 #include <string>
 #include "application/application.h"
@@ -742,6 +743,28 @@ inkscape_crash_handler (int /*signum*/)
 }
 
 
+class InkErrorHandler : public Inkscape::ErrorReporter {
+public:
+    InkErrorHandler(bool useGui) : Inkscape::ErrorReporter(),
+                                   _useGui(useGui)
+    {}
+    virtual ~InkErrorHandler() {}
+
+    virtual void handleError( Glib::ustring const& primary, Glib::ustring const& secondary ) const
+    {
+        if (_useGui) {
+            Gtk::MessageDialog err(primary, false, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
+            err.set_secondary_text(secondary);
+            err.run();
+        } else {
+            g_message("%s", primary.data());
+            g_message("%s", secondary.data());
+        }
+    }
+
+private:
+    bool _useGui;
+};
 
 void
 inkscape_application_init (const gchar *argv0, gboolean use_gui)
@@ -762,7 +785,9 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
 
     /* Load the preferences and menus */
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->load(use_gui, false);
+    InkErrorHandler* handler = new InkErrorHandler(use_gui);
+    prefs->setErrorHandler(handler);
+
     inkscape_load_menus(inkscape);
     sp_input_load_from_preferences();
     

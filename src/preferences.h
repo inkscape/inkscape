@@ -3,8 +3,9 @@
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
- * Copyright (C) 2008 Authors
+ * Copyright (C) 2008,2009 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -25,8 +26,13 @@ class SPCSSAttr;
 
 namespace Inkscape {
 
+class ErrorReporter {
+public:
+    virtual void handleError(Glib::ustring const& primary, Glib::ustring const& secondary ) const = 0;
+};
+
 /**
- * @brief Preference storage class
+ * @brief Preference storage class.
  *
  * This is a singleton that allows one to access the user preferences stored in
  * the preferences.xml file. The preferences are stored in a file system-like
@@ -39,10 +45,9 @@ namespace Inkscape {
  * the path must start with a slash, and not contain a trailing slash.
  * An example of a correct path would be "/options/some_group/some_option".
  *
- * All preferences are loaded when the first singleton pointer is requested,
- * or when the static load() method is called. Before loading, the static
- * variable @c use_gui should be set accordingly. To save the preferences,
- * the method save() or the static function unload() can be used.
+ * All preferences are loaded when the first singleton pointer is requested.
+ * To save the preferences, the method save() or the static function unload()
+ * can be used.
  *
  * In future, this will be a virtual base from which specific backends
  * derive (e.g. GConf, flat XML file...)
@@ -208,26 +213,6 @@ public:
 
     // utility methods
     
-    /**
-     * @name Load stored preferences and save them to the disk.
-     * @{
-     */
-    
-    /**
-     * @brief Load the preferences from the default location.
-     *
-     * Loads the stored user preferences and enables saving them. If there's
-     * no preferences file in the expected location, it creates it. Any changes
-     * made to the preferences before loading will be overridden by the stored
-     * prefs. Not calling load() is sometimes useful, e.g. for testing.
-     *
-     * @param use_gui Whether to use dialogs to notify about errors when
-     * loading the preferences. Set to false in console mode.
-     * @param quiet Whether to output any messages about preference loading.
-     * If this is true, the use_gui parameter is ignored.
-     */
-    void load(bool use_gui=true, bool quiet=false);
-
     /**
      * @brief Save all preferences to the hard disk.
      *
@@ -428,6 +413,8 @@ public:
         return _instance;
     }
 
+    void setErrorHandler(ErrorReporter* handler);
+
     /**
      * @brief Unload all preferences
      * @param save Whether to save the preferences; defaults to true
@@ -456,9 +443,10 @@ private:
     Preferences();
     ~Preferences();
     void _loadDefaults();
+    void _load();
     void _getRawValue(Glib::ustring const &path, gchar const *&result);
     void _setRawValue(Glib::ustring const &path, gchar const *value);
-    void _errorDialog(Glib::ustring const &, Glib::ustring const &);
+    void _reportError(Glib::ustring const &, Glib::ustring const &);
     void _keySplit(Glib::ustring const &pref_path, Glib::ustring &node_key, Glib::ustring &attr_key);
     XML::Node *_getNode(Glib::ustring const &pref_path, bool create=false);
     XML::Node *_findObserverNode(Glib::ustring const &pref_path, Glib::ustring &node_key, Glib::ustring &attr_key, bool create);
@@ -471,9 +459,7 @@ private:
     std::string _prefs_dir; ///< Directory in which to look for the prefs file
     std::string _prefs_filename; ///< Full filename (with directory) of the prefs file
     XML::Document *_prefs_doc; ///< XML document storing all the preferences
-    bool _use_gui; ///< Use GUI error notifications?
-    bool _quiet; ///< Display any messages about loading?
-    bool _loaded; ///< Was a load attempt made?
+    ErrorReporter* _errorHandler; ///< Pointer to object reporting errors.
     bool _writable; ///< Will the preferences be saved at exit?
     
     /// Wrapper class for XML node observers
