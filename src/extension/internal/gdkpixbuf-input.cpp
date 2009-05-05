@@ -55,7 +55,14 @@ GdkpixbufInput::open(Inkscape::Extension::Input */*mod*/, char const *uri)
         // import as <image>
         repr = xml_doc->createElement("svg:image");
 
-        repr->setAttribute("xlink:href", uri);
+        // convert filename to uri
+        gchar* _uri = g_filename_to_uri(uri, NULL, NULL);
+        if(_uri) {
+            repr->setAttribute("xlink:href", _uri);
+            g_free(_uri);
+        } else {
+            repr->setAttribute("xlink:href", uri);
+        }
         /* impl: doc->base is currently NULL, so we can use uri for href whether it's absolute
          * or relative.  The href will get rewritten by rebase_hrefs if by chance uri is relative
          * and doc gets saved to a different directory.
