@@ -1,6 +1,6 @@
 /** @file
  * @brief Alternate stub implementations for some functions.
- * 
+ *
  * This file exists only for the benefit of the linker when building tests,
  * to avoid circular dependencies. If some test causes link errors because of a function
  * it doesn't need, feel free to add a stub here.
@@ -28,9 +28,6 @@ Preferences::Preferences() :
     _prefs_dir(""),
     _prefs_filename(""),
     _prefs_doc(NULL),
-    _use_gui(true),
-    _quiet(false),
-    _loaded(false),
     _writable(false)
 {
 }
@@ -39,7 +36,6 @@ Preferences::~Preferences()
 {
 }
 
-void Preferences::load(bool /*use_gui*/, bool /*quiet*/) {}
 void Preferences::save() {}
 
 // getter methods
