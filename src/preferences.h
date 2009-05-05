@@ -57,13 +57,13 @@ public:
     // #############################
     // ## inner class definitions ##
     // #############################
-    
+
     class Entry;
     class Observer;
-    
+
     /**
      * @brief Base class for preference observers
-     * 
+     *
      * If you want to watch for changes in the preferences, you'll have to
      * derive a class from this one and override the notify() method.
      */
@@ -98,13 +98,13 @@ public:
          *                 the modified preference
          */
         virtual void notify(Preferences::Entry const &new_val) = 0;
-        
+
         Glib::ustring const observed_path; ///< Path which the observer watches
     private:
         void *_data; ///< additional data used by the implementation while the observer is active
     };
-    
-    
+
+
     /**
      * @brief Data type representing a typeless value of a preference
      *
@@ -125,7 +125,7 @@ public:
          * @return If false, the default value will be returned by the getters.
          */
         bool isValid() const { return _value != NULL; }
-        
+
         /**
          * @brief Interpret the preference as a Boolean value.
          * @param def Default value if the preference is not set
@@ -192,7 +192,7 @@ public:
          * @return Inherited CSS style that has to be unrefed after use. Never NULL.
          */
         inline SPCSSAttr *getInheritedStyle() const;
-        
+
         /**
          * @brief Get the full path of the preference described by this Entry.
          */
@@ -206,13 +206,13 @@ public:
         Glib::ustring getEntryName() const;
     private:
         Entry(Glib::ustring const &path, void const *v) : _pref_path(path), _value(v) {}
-        
+
         Glib::ustring _pref_path;
         void const *_value;
     };
 
     // utility methods
-    
+
     /**
      * @brief Save all preferences to the hard disk.
      *
@@ -263,7 +263,7 @@ public:
      */
     std::vector<Glib::ustring> getAllDirs(Glib::ustring const &path);
     /*@}*/
-    
+
     /**
      * @name Retrieve data from the preference storage.
      * @{
@@ -356,7 +356,7 @@ public:
      */
     Entry const getEntry(Glib::ustring const &pref_path);
     /*@}*/
-    
+
     /**
      * @name Update preference values.
      * @{
@@ -418,12 +418,14 @@ public:
      * @name Access and manipulate the Preferences object.
      * @{
      */
-     
+
     /**
      * @brief Access the singleton Preferences object.
      */
     static Preferences *get() {
-        if (!_instance) _instance = new Preferences();
+        if (!_instance) {
+            _instance = new Preferences();
+        }
         return _instance;
     }
 
@@ -439,7 +441,7 @@ public:
      */
     static void unload(bool save=true);
     /*@}*/
-    
+
 protected:
     /* helper methods used by Entry
      * This will enable using the same Entry class with different backends.
@@ -452,7 +454,7 @@ protected:
     Glib::ustring _extractString(Entry const &v);
     SPCSSAttr *_extractStyle(Entry const &v);
     SPCSSAttr *_extractInheritedStyle(Entry const &v);
-    
+
 private:
     Preferences();
     ~Preferences();
@@ -464,11 +466,11 @@ private:
     void _keySplit(Glib::ustring const &pref_path, Glib::ustring &node_key, Glib::ustring &attr_key);
     XML::Node *_getNode(Glib::ustring const &pref_path, bool create=false);
     XML::Node *_findObserverNode(Glib::ustring const &pref_path, Glib::ustring &node_key, Glib::ustring &attr_key, bool create);
-    
+
     // disable copying
     Preferences(Preferences const &);
     Preferences operator=(Preferences const &);
-    
+
     std::string _prefs_basename; ///< Basename of the prefs file
     std::string _prefs_dir; ///< Directory in which to look for the prefs file
     std::string _prefs_filename; ///< Full filename (with directory) of the prefs file
@@ -478,20 +480,20 @@ private:
     ErrorReporter* _errorHandler; ///< Pointer to object reporting errors.
     bool _writable; ///< Will the preferences be saved at exit?
     bool _hasError; ///< Indication that some error has occurred;
-    
+
     /// Wrapper class for XML node observers
     class PrefNodeObserver;
-    
+
     typedef std::map<Observer *, PrefNodeObserver *> _ObsMap;
     /// Map that keeps track of wrappers assigned to PrefObservers
     _ObsMap _observer_map;
-    
+
     // privilege escalation methods for PrefNodeObserver
     static Entry const _create_pref_value(Glib::ustring const &, void const *ptr);
     static void *_get_pref_observer_data(Observer &o) { return o._data; }
-    
+
     static Preferences *_instance;
-    
+
 friend class PrefNodeObserver;
 friend class Entry;
 };
@@ -504,52 +506,76 @@ friend class Entry;
 
 inline bool Preferences::Entry::getBool(bool def) const
 {
-    if (!this->isValid()) return def;
-    return Inkscape::Preferences::get()->_extractBool(*this);
+    if (!this->isValid()) {
+        return def;
+    } else {
+        return Inkscape::Preferences::get()->_extractBool(*this);
+    }
 }
 
 inline int Preferences::Entry::getInt(int def) const
 {
-    if (!this->isValid()) return def;
-    return Inkscape::Preferences::get()->_extractInt(*this);
+    if (!this->isValid()) {
+        return def;
+    } else {
+        return Inkscape::Preferences::get()->_extractInt(*this);
+    }
 }
 
 inline int Preferences::Entry::getIntLimited(int def, int min, int max) const
 {
-    if (!this->isValid()) return def;
-    int val = Inkscape::Preferences::get()->_extractInt(*this);
-    return ( val >= min && val <= max ? val : def );
+    if (!this->isValid()) {
+        return def;
+    } else {
+        int val = Inkscape::Preferences::get()->_extractInt(*this);
+        return ( val >= min && val <= max ? val : def );
+    }
 }
 
 inline double Preferences::Entry::getDouble(double def) const
 {
-    if (!this->isValid()) return def;
-    return Inkscape::Preferences::get()->_extractDouble(*this);
+    if (!this->isValid()) {
+        return def;
+    } else {
+        return Inkscape::Preferences::get()->_extractDouble(*this);
+    }
 }
 
 inline double Preferences::Entry::getDoubleLimited(double def, double min, double max) const
 {
-    if (!this->isValid()) return def;
-    double val = Inkscape::Preferences::get()->_extractDouble(*this);
-    return ( val >= min && val <= max ? val : def );
+    if (!this->isValid()) {
+        return def;
+    } else {
+        double val = Inkscape::Preferences::get()->_extractDouble(*this);
+        return ( val >= min && val <= max ? val : def );
+    }
 }
 
 inline Glib::ustring Preferences::Entry::getString() const
 {
-    if (!this->isValid()) return "";
-    return Inkscape::Preferences::get()->_extractString(*this);
+    if (!this->isValid()) {
+        return "";
+    } else {
+        return Inkscape::Preferences::get()->_extractString(*this);
+    }
 }
 
 inline SPCSSAttr *Preferences::Entry::getStyle() const
 {
-    if (!this->isValid()) return sp_repr_css_attr_new();
-    return Inkscape::Preferences::get()->_extractStyle(*this);
+    if (!this->isValid()) {
+        return sp_repr_css_attr_new();
+    } else {
+        return Inkscape::Preferences::get()->_extractStyle(*this);
+    }
 }
 
 inline SPCSSAttr *Preferences::Entry::getInheritedStyle() const
 {
-    if (!this->isValid()) return sp_repr_css_attr_new();
-    return Inkscape::Preferences::get()->_extractInheritedStyle(*this);
+    if (!this->isValid()) {
+        return sp_repr_css_attr_new();
+    } else {
+        return Inkscape::Preferences::get()->_extractInheritedStyle(*this);
+    }
 }
 
 inline Glib::ustring Preferences::Entry::getEntryName() const

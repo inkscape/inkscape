@@ -61,17 +61,17 @@ Preferences::Preferences() :
     gchar *path = profile_path(NULL);
     _prefs_dir = path;
     g_free(path);
-    
+
     path = profile_path(_prefs_basename.data());
     _prefs_filename = path;
     g_free(path);
-    
+
     _loadDefaults();
     _load();
 }
 
 Preferences::~Preferences()
-{   
+{
     // delete all PrefNodeObservers
     for (_ObsMap::iterator i = _observer_map.begin(); i != _observer_map.end(); ) {
         delete (*i++).second; // avoids reference to a deleted key
@@ -97,12 +97,12 @@ void Preferences::_loadDefaults()
  * Tries to load the user's preferences.xml file. If there is none, creates it.
  */
 void Preferences::_load()
-{   
+{
     Glib::ustring const not_saved = _("Inkscape will run with default settings, "
                                       "and new settings will not be saved. ");
 
     // NOTE: After we upgrade to Glib 2.16, use Glib::ustring::compose
-    
+
     // 1. Does the file exist?
     if (!g_file_test(_prefs_filename.data(), G_FILE_TEST_EXISTS)) {
         // No - we need to create one.
@@ -121,12 +121,12 @@ void Preferences::_load()
             }
             // create some subdirectories for user stuff
             char const *user_dirs[] = {"keys", "templates", "icons", "extensions", "palettes", NULL};
-            for(int i=0; user_dirs[i]; ++i) {
+            for (int i=0; user_dirs[i]; ++i) {
                 char *dir = profile_path(user_dirs[i]);
                 g_mkdir(dir, 0755);
                 g_free(dir);
             }
-            
+
         } else if (!g_file_test(_prefs_dir.data(), G_FILE_TEST_IS_DIR)) {
             // The profile dir is not actually a directory
             //_reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
@@ -148,13 +148,13 @@ void Preferences::_load()
             g_free(msg);
             return;
         }
-        
+
         // The prefs file was just created.
         // We can return now and skip the rest of the load process.
         _writable = true;
         return;
     }
-    
+
     // Yes, the pref file exists.
     // 2. Is it a regular file?
     if (!g_file_test(_prefs_filename.data(), G_FILE_TEST_IS_REGULAR)) {
@@ -166,7 +166,7 @@ void Preferences::_load()
         g_free(msg);
         return;
     }
-    
+
     // 3. Is the file readable?
     gchar *prefs_xml = NULL; gsize len = 0;
     if (!g_file_get_contents(_prefs_filename.data(), &prefs_xml, &len, NULL)) {
@@ -178,6 +178,7 @@ void Preferences::_load()
         g_free(msg);
         return;
     }
+
     // 4. Is it valid XML?
     Inkscape::XML::Document *prefs_read = sp_repr_read_mem(prefs_xml, len, NULL);
     g_free(prefs_xml);
@@ -190,6 +191,7 @@ void Preferences::_load()
         g_free(msg);
         return;
     }
+
     // 5. Basic sanity check: does the root element have a correct name?
     if (strcmp(prefs_read->root()->name(), "inkscape")) {
         //_reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
@@ -201,7 +203,7 @@ void Preferences::_load()
         Inkscape::GC::release(prefs_read);
         return;
     }
-    
+
     // Merge the loaded prefs with defaults.
     _prefs_doc->root()->mergeFrom(prefs_read->root(), "id");
     Inkscape::GC::release(prefs_read);
@@ -213,16 +215,25 @@ void Preferences::_load()
  */
 void Preferences::save()
 {
-    if (!_writable) return; // no-op if the prefs file is not writable
-    
-    // sp_repr_save_file uses utf-8 instead of the glib filename encoding.
-    // I don't know why filenames are kept in utf-8 in Inkscape and then
-    // converted to filename encoding when necessary through special functions
-    // - wouldn't it be easier to keep things in the encoding they are supposed
-    // to be in?
-    Glib::ustring utf8name = Glib::filename_to_utf8(_prefs_filename);
-    if (utf8name.empty()) return;
-    sp_repr_save_file(_prefs_doc, utf8name.data());
+    // no-op if the prefs file is not writable
+    if (_writable) {
+        // sp_repr_save_file uses utf-8 instead of the glib filename encoding.
+        // I don't know why filenames are kept in utf-8 in Inkscape and then
+        // converted to filename encoding when necessary through special functions
+        // - wouldn't it be easier to keep things in the encoding they are supposed
+        // to be in?
+
+        // No, it would not. There are many reasons, one key reason being that the
+        // rest of GTK+ is explicitly UTF-8. From an engineering standpoint, keeping
+        // the filesystem encoding would change things from a one-to-many problem to
+        // instead be a many-to-many problem. Also filesystem encoding can change
+        // from one run of the program to the next, so can not be stored.
+        // There are many other factors, so ask if you would like to learn them. - JAC
+        Glib::ustring utf8name = Glib::filename_to_utf8(_prefs_filename);
+        if (!utf8name.empty()) {
+            sp_repr_save_file(_prefs_doc, utf8name.data());
+        }
+    }
 }
 
 bool Preferences::getLastError( Glib::ustring& primary, Glib::ustring& secondary )
@@ -252,12 +263,13 @@ std::vector<Preferences::Entry> Preferences::getAllEntries(Glib::ustring const &
 {
     std::vector<Entry> temp;
     Inkscape::XML::Node *node = _getNode(path, false);
-    if (!node) return temp;
-    
-    // argh - purge this Util::List nonsense from XML classes fast
-    Inkscape::Util::List<Inkscape::XML::AttributeRecord const> alist = node->attributeList();
-    for (; alist; ++alist)
-        temp.push_back( Entry(path + '/' + g_quark_to_string(alist->key), static_cast<void const*>(alist->value.pointer())) );
+    if (node) {
+        // argh - purge this Util::List nonsense from XML classes fast
+        Inkscape::Util::List<Inkscape::XML::AttributeRecord const> alist = node->attributeList();
+        for (; alist; ++alist) {
+            temp.push_back( Entry(path + '/' + g_quark_to_string(alist->key), static_cast<void const*>(alist->value.pointer())) );
+        }
+    }
     return temp;
 }
 
@@ -270,10 +282,10 @@ std::vector<Glib::ustring> Preferences::getAllDirs(Glib::ustring const &path)
 {
     std::vector<Glib::ustring> temp;
     Inkscape::XML::Node *node = _getNode(path, false);
-    if (!node) return temp;
-    
-    for (Inkscape::XML::NodeSiblingIterator i = node->firstChild(); i; ++i) {
-        temp.push_back(path + '/' + i->attribute("id"));
+    if (node) {
+        for (Inkscape::XML::NodeSiblingIterator i = node->firstChild(); i; ++i) {
+            temp.push_back(path + '/' + i->attribute("id"));
+        }
     }
     return temp;
 }
@@ -383,33 +395,34 @@ void Preferences::PrefNodeObserver::notifyAttributeChanged(XML::Node &node, GQua
 {
     // filter out attributes we don't watch
     gchar const *attr_name = g_quark_to_string(name);
-    if ( !_filter.empty() && _filter != attr_name ) return;
-    
-    _ObserverData *d = static_cast<_ObserverData*>(Preferences::_get_pref_observer_data(_observer));
-    Glib::ustring notify_path = _observer.observed_path;
-    
-    if (!d->_is_attr) {
-        std::vector<gchar const *> path_fragments;
-        notify_path.reserve(256); // this will make appending operations faster
-        
-        // walk the XML tree, saving each of the id attributes in a vector
-        // we terminate when we hit the observer's attachment node, because the path to this node
-        // is already stored in notify_path
-        for (XML::NodeParentIterator n = &node; static_cast<XML::Node*>(n) != d->_node; ++n)
-            path_fragments.push_back(n->attribute("id"));
-        // assemble the elements into a path
-        for (std::vector<gchar const *>::reverse_iterator i = path_fragments.rbegin(); i != path_fragments.rend(); ++i) {
+    if ( _filter.empty() || (_filter == attr_name) ) {
+        _ObserverData *d = static_cast<_ObserverData*>(Preferences::_get_pref_observer_data(_observer));
+        Glib::ustring notify_path = _observer.observed_path;
+
+        if (!d->_is_attr) {
+            std::vector<gchar const *> path_fragments;
+            notify_path.reserve(256); // this will make appending operations faster
+
+            // walk the XML tree, saving each of the id attributes in a vector
+            // we terminate when we hit the observer's attachment node, because the path to this node
+            // is already stored in notify_path
+            for (XML::NodeParentIterator n = &node; static_cast<XML::Node*>(n) != d->_node; ++n) {
+                path_fragments.push_back(n->attribute("id"));
+            }
+            // assemble the elements into a path
+            for (std::vector<gchar const *>::reverse_iterator i = path_fragments.rbegin(); i != path_fragments.rend(); ++i) {
+                notify_path.push_back('/');
+                notify_path.append(*i);
+            }
+
+            // append attribute name
             notify_path.push_back('/');
-            notify_path.append(*i);
+            notify_path.append(attr_name);
         }
 
-        // append attribute name
-        notify_path.push_back('/');
-        notify_path.append(attr_name);
+        Entry const val = Preferences::_create_pref_value(notify_path, static_cast<void const*>(new_value.pointer()));
+        _observer.notify(val);
     }
-    
-    Entry const val = Preferences::_create_pref_value(notify_path, static_cast<void const*>(new_value.pointer()));
-    _observer.notify(val);
 }
 
 /**
@@ -419,7 +432,7 @@ XML::Node *Preferences::_findObserverNode(Glib::ustring const &pref_path, Glib::
 {
     // first assume that the last path element is an entry.
     _keySplit(pref_path, node_key, attr_key);
-    
+
     // find the node corresponding to the "directory".
     Inkscape::XML::Node *node = _getNode(node_key, create), *child;
     for (child = node->firstChild(); child; child = child->next()) {
@@ -439,45 +452,47 @@ XML::Node *Preferences::_findObserverNode(Glib::ustring const &pref_path, Glib::
 void Preferences::addObserver(Observer &o)
 {
     // prevent adding the same observer twice
-    if ( _observer_map.find(&o) != _observer_map.end() ) return;
-    
-    Glib::ustring node_key, attr_key;
-    Inkscape::XML::Node *node;
-    node = _findObserverNode(o.observed_path, node_key, attr_key, false);
-    if (!node) return;
-    
-    // set additional data
-    _ObserverData *priv_data = new _ObserverData;
-    priv_data->_node = node;
-    priv_data->_is_attr = !attr_key.empty();
-    o._data = static_cast<void*>(priv_data);
-    
-    _observer_map[&o] = new PrefNodeObserver(o, attr_key);
-    
-    // if we watch a single pref, we want to receive notifications only for a single node
-    if (priv_data->_is_attr) {
-        node->addObserver( *(_observer_map[&o]) );
-    } else {
-        node->addSubtreeObserver( *(_observer_map[&o]) );
+    if ( _observer_map.find(&o) == _observer_map.end() ) {
+        Glib::ustring node_key, attr_key;
+        Inkscape::XML::Node *node;
+        node = _findObserverNode(o.observed_path, node_key, attr_key, false);
+        if (node) {
+            // set additional data
+            _ObserverData *priv_data = new _ObserverData;
+            priv_data->_node = node;
+            priv_data->_is_attr = !attr_key.empty();
+            o._data = static_cast<void*>(priv_data);
+
+            _observer_map[&o] = new PrefNodeObserver(o, attr_key);
+
+            // if we watch a single pref, we want to receive notifications only for a single node
+            if (priv_data->_is_attr) {
+                node->addObserver( *(_observer_map[&o]) );
+            } else {
+                node->addSubtreeObserver( *(_observer_map[&o]) );
+            }
+        }
     }
 }
 
 void Preferences::removeObserver(Observer &o)
 {
     // prevent removing an observer which was not added
-    if ( _observer_map.find(&o) == _observer_map.end() ) return;
-    Inkscape::XML::Node *node = static_cast<_ObserverData*>(o._data)->_node;
-    _ObserverData *priv_data = static_cast<_ObserverData*>(o._data);
-    o._data = NULL;
-    
-    if (priv_data->_is_attr)
-        node->removeObserver( *(_observer_map[&o]) );
-    else
-        node->removeSubtreeObserver( *(_observer_map[&o]) );
+    if ( _observer_map.find(&o) != _observer_map.end() ) {
+        Inkscape::XML::Node *node = static_cast<_ObserverData*>(o._data)->_node;
+        _ObserverData *priv_data = static_cast<_ObserverData*>(o._data);
+        o._data = NULL;
 
-    delete priv_data;
-    delete _observer_map[&o];
-    _observer_map.erase(&o);
+        if (priv_data->_is_attr) {
+            node->removeObserver( *(_observer_map[&o]) );
+        } else {
+            node->removeSubtreeObserver( *(_observer_map[&o]) );
+        }
+
+        delete priv_data;
+        delete _observer_map[&o];
+        _observer_map.erase(&o);
+    }
 }
 
 
@@ -498,41 +513,47 @@ Inkscape::XML::Node *Preferences::_getNode(Glib::ustring const &pref_key, bool c
     // No longer necessary, can cause problems with input devices which have a dot in the name
     // g_assert( pref_key.find('.') == Glib::ustring::npos );
 
-    Inkscape::XML::Node *node = _prefs_doc->root(), *child = NULL;
+    Inkscape::XML::Node *node = _prefs_doc->root();
+    Inkscape::XML::Node *child = NULL;
     gchar **splits = g_strsplit(pref_key.data(), "/", 0);
-    
-    if ( splits == NULL ) return node;
-    
-    for (int part_i = 0; splits[part_i]; ++part_i) {
-        // skip empty path segments
-        if (!splits[part_i][0]) continue;
-        
-        for (child = node->firstChild(); child; child = child->next())
-            if (!strcmp(splits[part_i], child->attribute("id"))) break;
-        
-        // If the previous loop found a matching key, child now contains the node
-        // matching the processed key part. If no node was found then it is NULL.
-        if (!child) {
-            if (create) {
-                // create the rest of the key
-                while(splits[part_i]) {
-                    child = node->document()->createElement("group");
-                    child->setAttribute("id", splits[part_i]);
-                    node->appendChild(child);
-                    
-                    ++part_i;
-                    node = child;
-                }
-                g_strfreev(splits);
-                return node;
-            } else {
-                return NULL;
-            }
-        }
 
-        node = child;
+    if ( splits ) {
+        for (int part_i = 0; splits[part_i]; ++part_i) {
+            // skip empty path segments
+            if (!splits[part_i][0]) {
+                continue;
+            }
+
+            for (child = node->firstChild(); child; child = child->next()) {
+                if (!strcmp(splits[part_i], child->attribute("id"))) {
+                    break;
+                }
+            }
+
+            // If the previous loop found a matching key, child now contains the node
+            // matching the processed key part. If no node was found then it is NULL.
+            if (!child) {
+                if (create) {
+                    // create the rest of the key
+                    while(splits[part_i]) {
+                        child = node->document()->createElement("group");
+                        child->setAttribute("id", splits[part_i]);
+                        node->appendChild(child);
+
+                        ++part_i;
+                        node = child;
+                    }
+                    g_strfreev(splits);
+                    return node;
+                } else {
+                    return NULL;
+                }
+            }
+
+            node = child;
+        }
+        g_strfreev(splits);
     }
-    g_strfreev(splits);
     return node;
 }
 
@@ -541,7 +562,7 @@ void Preferences::_getRawValue(Glib::ustring const &path, gchar const *&result)
     // create node and attribute keys
     Glib::ustring node_key, attr_key;
     _keySplit(path, node_key, attr_key);
-    
+
     // retrieve the attribute
     Inkscape::XML::Node *node = _getNode(node_key, false);
     if ( node == NULL ) {
@@ -561,7 +582,7 @@ void Preferences::_setRawValue(Glib::ustring const &path, gchar const *value)
     // create node and attribute keys
     Glib::ustring node_key, attr_key;
     _keySplit(path, node_key, attr_key);
-    
+
     // set the attribute
     Inkscape::XML::Node *node = _getNode(node_key, true);
     node->setAttribute(attr_key.data(), value);
@@ -573,16 +594,23 @@ void Preferences::_setRawValue(Glib::ustring const &path, gchar const *value)
 bool Preferences::_extractBool(Entry const &v)
 {
     gchar const *s = static_cast<gchar const *>(v._value);
-    if ( !s[0] || !strcmp(s, "0") || !strcmp(s, "false") ) return false;
-    return true;
+    if ( !s[0] || !strcmp(s, "0") || !strcmp(s, "false") ) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 int Preferences::_extractInt(Entry const &v)
 {
     gchar const *s = static_cast<gchar const *>(v._value);
-    if ( !strcmp(s, "true") ) return true;
-    if ( !strcmp(s, "false") ) return false;
-    return atoi(s);
+    if ( !strcmp(s, "true") ) {
+        return true;
+    } else if ( !strcmp(s, "false") ) {
+        return false;
+    } else {
+        return atoi(s);
+    }
 }
 
 double Preferences::_extractDouble(Entry const &v)
@@ -610,7 +638,7 @@ SPCSSAttr *Preferences::_extractInheritedStyle(Entry const &v)
     // we'll have to walk up the tree and call sp_repr_css_attr_add_from_string
     Glib::ustring node_key, attr_key;
     _keySplit(v._pref_path, node_key, attr_key);
-    
+
     Inkscape::XML::Node *node = _getNode(node_key, false);
     return sp_repr_css_attr_inherited(node, attr_key.data());
 }
@@ -646,9 +674,11 @@ void Preferences::setErrorHandler(ErrorReporter* handler)
 
 void Preferences::unload(bool save)
 {
-    if(_instance)
+    if (_instance)
     {
-        if (save) _instance->save();
+        if (save) {
+            _instance->save();
+        }
         delete _instance;
         _instance = NULL;
     }
@@ -658,7 +688,7 @@ Preferences *Preferences::_instance = NULL;
 
 
 } // namespace Inkscape
- 
+
 /*
   Local Variables:
   mode:c++
