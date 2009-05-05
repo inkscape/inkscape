@@ -1121,7 +1121,7 @@
 <feComposite id="feComposite2948" operator="atop" in="result5" />
 <feBlend id="feBlend2950" blend="normal" mode="multiply" />
 </filter>
-<filter id="Hslbumpal0" inkscape:menu-tooltip="Same than HSL bumps but with an alpha added for combination with transparency depending filters" inkscape:menu="Bumps" inkscape:label="HSL Bumps, alpha">
+<filter id="Hslbumpal0" inkscape:menu-tooltip="Same than HSL bumps but with an alpha added for combination with transparency depending filters" inkscape:menu="Masking tools" inkscape:label="HSL Bumps, alpha">
 <feGaussianBlur id="feGaussianBlur2932" result="result0" in="SourceGraphic" stdDeviation="0.5" />
 <feColorMatrix id="feColorMatrix2934" type="matrix" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 4.4 -2.9 " in="result0" result="fbSourceGraphicAlpha" />
 <feGaussianBlur id="feGaussianBlur2936" stdDeviation="0.69999999999999996" in="fbSourceGraphicAlpha" result="result0" />
@@ -1130,7 +1130,7 @@
 </feSpecularLighting>
 <feComposite id="feComposite2942" result="result4" operator="in" k2="1.5" k3="0.59999999999999998" in="SourceGraphic" in2="result1" />
 </filter>
-<filter inkscape:menu-tooltip="Highly flexible bubbles effect depending on color hue saturation and luminance" inkscape:menu="Bumps" inkscape:label="HSL Bubbles, alpha" id="Hslbubblal0">
+<filter inkscape:menu-tooltip="Highly flexible bubbles effect depending on color hue saturation and luminance" inkscape:menu="Masking tools" inkscape:label="HSL Bubbles, alpha" id="Hslbubblal0">
 <feGaussianBlur stdDeviation="0.69999999999999996" in="SourceGraphic" result="result0" id="feGaussianBlur3067" />
 <feTurbulence type="fractalNoise" result="result1" numOctaves="10" seed="300" baseFrequency="0.20000000000000001" id="feTurbulence3069" />
 <feComposite in="result0" in2="result1" operator="in" result="result2" id="feComposite3071" />
@@ -1647,19 +1647,21 @@
 <feBlend id="feBlend3032" blend="normal" mode="darken" in="result7" result="result6" />
 </filter>
 <filter id="Alpheng0" inkscape:label="Alpha engraving" inkscape:menu="Masking tools" inkscape:menu-tooltip="Gives a transparent engraving effect to bitmaps and materials" height="1" width="1" y="0" x="0">
-<feGaussianBlur id="feGaussianBlur3522" result="result8" stdDeviation="0.5" />
-<feConvolveMatrix id="feConvolveMatrix3524" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
-<feColorMatrix values="1" id="feColorMatrix3530" in="result0" result="result1" type="luminanceToAlpha" />
-<feComposite id="feComposite3534" k2="10" k3="0" in="result1" result="result2" operator="arithmetic" in2="result1" k1="0" />
-<feGaussianBlur id="feGaussianBlur3536" result="result7" in="result2" stdDeviation="0.5" />
+<feGaussianBlur id="feGaussianBlur2932" result="result8" stdDeviation="0.40000000000000002" />
+<feConvolveMatrix id="feConvolveMatrix2934" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
+<feColorMatrix id="feColorMatrix2936" values="1" in="result0" result="result1" type="luminanceToAlpha" />
+<feComposite id="feComposite2938" k2="10" k3="0" in="result1" result="result2" operator="arithmetic" in2="result1" k1="0" />
+<feGaussianBlur id="feGaussianBlur2940" result="result7" in="result2" stdDeviation="0.40000000000000002" />
+<feColorMatrix id="feColorMatrix2942" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -0.5 " />
 </filter>
-<filter x="0" y="0" width="1" height="1" inkscape:menu-tooltip="Gives a transparent color engraving effect to bitmaps and materials" inkscape:menu="Masking tools" inkscape:label="Alpha engraving, color" id="AlphengC0">
-<feGaussianBlur stdDeviation="0.5" result="result8" id="feGaussianBlur2890" />
-<feConvolveMatrix bias="0" result="result0" preserveAlpha="true" targetY="1" targetX="1" divisor="1" in="result8" kernelMatrix="1 1 1 1 -8 1 1 1 1 " order="3 3" id="feConvolveMatrix2892" />
-<feColorMatrix values="0 -100 0 0 1 0 -100 0 0 1 0 -100 0 0 1 0 0 0 1 0 " result="result3" type="matrix" id="feColorMatrix2894" in="result0" />
-<feColorMatrix type="luminanceToAlpha" result="result1" in="result3" id="feColorMatrix2898" values="1" />
-<feComposite operator="in" result="result2" in="SourceGraphic" k3="0" k2="2" id="feComposite2902" in2="result1" />
-<feGaussianBlur stdDeviation="0.5" in="result2" result="result7" id="feGaussianBlur2904" />
+<filter id="AlphengC0" x="0" y="0" width="1" height="1" inkscape:menu-tooltip="Gives a transparent color engraving effect to bitmaps and materials" inkscape:menu="Masking tools" inkscape:label="Alpha engraving, color">
+<feGaussianBlur id="feGaussianBlur2946" stdDeviation="0.5" result="result8" />
+<feConvolveMatrix id="feConvolveMatrix2948" bias="0" result="result0" preserveAlpha="true" targetY="1" targetX="1" divisor="1" in="result8" kernelMatrix="1 1 1 1 -8 1 1 1 1 " order="3 3" />
+<feColorMatrix id="feColorMatrix2950" values="0 -100 0 0 1 0 -100 0 0 1 0 -100 0 0 1 0 0 0 1 0 " result="result3" type="matrix" in="result0" />
+<feColorMatrix id="feColorMatrix2952" type="luminanceToAlpha" result="result1" in="result3" values="1" />
+<feComposite id="feComposite2954" operator="in" result="result2" in="SourceGraphic" k3="0" k2="2" in2="result1" />
+<feGaussianBlur id="feGaussianBlur2956" stdDeviation="0.5" in="result2" result="result7" />
+<feColorMatrix id="feColorMatrix2958" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -2 " />
 </filter>
 </defs>
 </svg>
