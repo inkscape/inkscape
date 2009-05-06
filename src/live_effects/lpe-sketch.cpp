@@ -56,7 +56,7 @@ LPESketch::LPESketch(LivePathEffectObject *lpeobject) :
              _("Scale factor relating curvature and length of construction lines (try 5*offset)"), "tgtscale", &wr, this, 10.0),
     tgtlength(_("Max. length"), _("Maximum length of construction lines"), "tgtlength", &wr, this, 100.0),
     tgtlength_rdm(_("Length variation"), _("Random variation of the length of construction lines"), "tgtlength_rdm", &wr, this, .3),
-    tgt_places_rdmness(_("Placement randomness"), _("0: evenly distributed construcion lines, 1: purely random placement"), "tgt_places_rdmness", &wr, this, 1.)
+    tgt_places_rdmness(_("Placement randomness"), _("0: evenly distributed construction lines, 1: purely random placement"), "tgt_places_rdmness", &wr, this, 1.)
 #ifdef LPE_SKETCH_USE_CURVATURE
     ,min_curvature(_("k_min"), _("min curvature"), "k_min", &wr, this, 4.0)
     ,max_curvature(_("k_max"), _("max curvature"), "k_max", &wr, this, 1000.0)

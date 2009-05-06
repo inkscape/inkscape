@@ -43,7 +43,7 @@ Emboss::init(void)
 				"<effects-menu>\n"
 					"<submenu name=\"" N_("Raster") "\" />\n"
 				"</effects-menu>\n"
-				"<menu-tip>" N_("Emboss selected bitmap(s) -- hilight edges with 3D effect.") "</menu-tip>\n"
+				"<menu-tip>" N_("Emboss selected bitmap(s) -- highlight edges with 3D effect.") "</menu-tip>\n"
 			"</effect>\n"
 		"</inkscape-extension>\n", new Emboss());
 }

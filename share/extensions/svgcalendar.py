@@ -57,7 +57,7 @@ class SVGCalendar (inkex.Effect):
         self.OptionParser.add_option("--auto-organize",
           action="store", type="inkbool",
           dest="auto_organize", default=True,
-          help='Authomaticaly set the size and positions.')
+          help='Automatically set the size and positions.')
         self.OptionParser.add_option("--months-per-line",
           action="store", type="int",
           dest="months_per_line", default=3,

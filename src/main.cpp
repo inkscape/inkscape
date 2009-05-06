@@ -450,7 +450,7 @@ struct poptOption options[] = {
 
     {"shell", 0,
      POPT_ARG_NONE, &sp_shell, SP_ARG_SHELL,
-     N_("Start Inkscape in interative shell mode."),
+     N_("Start Inkscape in interactive shell mode."),
      NULL},
 
     POPT_AUTOHELP POPT_TABLEEND

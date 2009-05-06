@@ -57,7 +57,7 @@ find_corners (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &m){
 //TODO: allow fancy ends.
 
 static const Util::EnumData<DynastrokeMethod> DynastrokeMethodData[DSM_END] = {
-    {DSM_ELLIPTIC_PEN,     N_("Ellipitic Pen"),        "elliptic_pen"},
+    {DSM_ELLIPTIC_PEN,     N_("Elliptic Pen"),        "elliptic_pen"},
     {DSM_THICKTHIN_FAST, N_("Thick-Thin strokes (fast)"),    "thickthin_fast"},
     {DSM_THICKTHIN_SLOW, N_("Thick-Thin strokes (slow)"),    "thickthin_slow"}
 };

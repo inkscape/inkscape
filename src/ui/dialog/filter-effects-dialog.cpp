@@ -644,7 +644,7 @@ private:
                   Inkscape::UI::Dialog::FileOpenDialog::create(
                      *_desktop->getToplevel(),
                      open_path,
-                     Inkscape::UI::Dialog::SVG_TYPES,/*TODO: any image, not justy svg*/
+                     Inkscape::UI::Dialog::SVG_TYPES,/*TODO: any image, not just svg*/
                      (char const *)_("Select an image to be used as feImage input"));
         }
 
@@ -2286,7 +2286,7 @@ void FilterEffectsDialog::update_primitive_infobox()
             break;
         case(NR_FILTER_COMPOSITE):
             _infobox_icon.set_from_icon_name("feComposite-icon", Gtk::ICON_SIZE_DIALOG);
-            _infobox_desc.set_markup(_("The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the aritmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."));
+            _infobox_desc.set_markup(_("The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the arithmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."));
             break;
         case(NR_FILTER_CONVOLVEMATRIX):
             _infobox_icon.set_from_icon_name("feConvolveMatrix-icon", Gtk::ICON_SIZE_DIALOG);
