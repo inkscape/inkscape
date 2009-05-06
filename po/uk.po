@@ -1,4 +1,3 @@
-# translation of uk.po to Ukrainian
 # Ukrainian translation of Inkscape.
 # This file is distributed under the same license as the Inkscape package.
 # Copyright (C) 2001, 2007, 2008, 2009 Free Software Foundation, Inc.
@@ -11,15 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-28 18:31+0200\n"
-"PO-Revision-Date: 2009-04-11 16:33+0300\n"
+"POT-Creation-Date: 2009-05-06 18:03+0200\n"
+"PO-Revision-Date: 2009-05-06 20:05+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 0.3\n"
 
 #: ../inkscape.desktop.in.h:1
@@ -38,12 +36,12 @@ msgstr "Матове покриття"
 #: ../share/filters/filters.svg.h:4 ../share/filters/filters.svg.h:5
 #: ../share/filters/filters.svg.h:10 ../share/filters/filters.svg.h:15
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:40
-#: ../share/filters/filters.svg.h:51 ../share/filters/filters.svg.h:52
-#: ../share/filters/filters.svg.h:53 ../share/filters/filters.svg.h:54
-#: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:72 ../share/filters/filters.svg.h:74
-#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:105
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:52 ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:71 ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:105
 msgid "Bevels"
 msgstr "Фаски"
 
@@ -80,10 +78,10 @@ msgid "Motion blur, horizontal"
 msgstr "Розмиття руху, горизонтально"
 
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
-#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:60
-#: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:164
 msgid "Blurs"
 msgstr "Розмиття"
 
@@ -120,8 +118,8 @@ msgid "Cutout"
 msgstr "Вирізка"
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:88 ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -143,10 +141,10 @@ msgstr "Низька, гостра фаска"
 msgid "Roughen"
 msgstr "Грубішання"
 
-#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:125
 msgid "ABCs"
 msgstr "Абетки"
 
@@ -162,8 +160,8 @@ msgstr "Резиновий штамп"
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
 #: ../share/filters/filters.svg.h:22 ../share/filters/filters.svg.h:23
 #: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
-#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:117
-#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:120
 msgid "Overlays"
 msgstr "Накладки"
 
@@ -212,9 +210,9 @@ msgstr "Гребінчаста межа з внутрішньою фаскою"
 msgid "Ripple"
 msgstr "Пульсація"
 
-#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:45
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:115
 msgid "Distort"
 msgstr "Спотворення"
 
@@ -250,15 +248,15 @@ msgstr "Схожі на сніжинки білі плями"
 msgid "Leopard fur"
 msgstr "Хутро леопарда"
 
-#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:60
 #: ../share/filters/filters.svg.h:61 ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:70 ../share/filters/filters.svg.h:81
-#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:93
-#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:158
-#: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:159
 msgid "Materials"
 msgstr "Матеріали"
 
@@ -291,10 +289,11 @@ msgstr "Підвищити різкість"
 #: ../share/filters/filters.svg.h:26 ../share/filters/filters.svg.h:27
 #: ../share/filters/filters.svg.h:28 ../share/filters/filters.svg.h:29
 #: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
-#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:100
-#: ../share/filters/filters.svg.h:101 ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:128
-#: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:165 ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:168
 msgid "Image effects"
 msgstr "Ефекти зображень"
 
@@ -366,9 +365,9 @@ msgid "Desaturate"
 msgstr "Знебарвлення"
 
 #: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:33
-#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:75
-#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:93 ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:162
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -425,22 +424,22 @@ msgstr "Імітація старої фотографії"
 msgid "Organic"
 msgstr "Органіка"
 
-#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:44
-#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:64
-#: ../share/filters/filters.svg.h:66 ../share/filters/filters.svg.h:67
-#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:86
-#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:129
-#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:131
-#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:134
-#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:136
-#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
-#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:65 ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:83 ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:160
 msgid "Textures"
 msgstr "Текстури"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Bulging, knotty, slick 3D surface"
-msgstr "Вигнута, перекручена гладка поверхня "
+msgstr "Вигнута, перекручена гладка поверхня"
 
 #: ../share/filters/filters.svg.h:37
 msgid "Barbed wire"
@@ -491,66 +490,56 @@ msgid "Random paint streaks downwards"
 msgstr "Випадкові смужки фарби, що стікають вниз"
 
 #: ../share/filters/filters.svg.h:43
-msgid "Rainbow melt"
-msgstr "Веселкове танення"
-
-#: ../share/filters/filters.svg.h:43
-msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
-msgstr "Вертикальні веселкові смуги, на краях плями з просторовим рельєфом"
-
-#: ../share/filters/filters.svg.h:44
 msgid "Jam spread"
 msgstr "Розтікання варення"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Glossy clumpy jam spread"
 msgstr "Глянцеве розтікання маси варення"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "Pixel smear"
 msgstr "Змазування пікселів"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "Van Gogh painting effect for bitmaps"
 msgstr "Ефект малювання ван Гога для растрових зображень"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Pixel smear, glossy"
 msgstr "Піксельне розмазування, глянцеве"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Glossy painting effect for bitmaps"
 msgstr "Глянцевий ефект малювання для растрових зображень"
 
-#: ../share/filters/filters.svg.h:47
-#, fuzzy
+#: ../share/filters/filters.svg.h:46
 msgid "HSL Bumps"
-msgstr "Витискання відтінку-насиченості-освітленості"
+msgstr "Витискання ВНО"
 
-#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:49
-#: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:166
 msgid "Bumps"
 msgstr "Горби"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
-msgstr ""
+msgstr "Створення дуже гнучкого дзеркального витискання"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Cracked glass"
 msgstr "Тріснуте скло"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Under a cracked glass"
 msgstr "Під тріснутим склом"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "HSL bubbles"
-msgstr "Бульбашки відтінку-насиченості-освітленості"
+msgstr "Бульбашки ВНО"
 
-#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:107
 msgid ""
 "Highly flexible bubbles effect depending on color hue saturation and "
 "luminance"
@@ -558,482 +547,472 @@ msgstr ""
 "Дуже гнучкі дзеркальні бульбашки за відтінком, насиченістю і освітленістю "
 "кольору"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Glowing bubble"
 msgstr "Бульбашка з німбом"
 
-#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:55
-#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:68
-#: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:68 ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:72
 msgid "Ridges"
 msgstr "Краї"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Bubble effect with refraction and glow"
 msgstr "Ефект бульбашки з рефракцією і німбом"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Neon"
 msgstr "Неон"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Neon light effect with glow"
 msgstr "Ефект неонового світла з німбом"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Melt and glow"
 msgstr "Плавлення і сяйво"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr "Сплавлення частин об’єкту у одне ціле з глянсуватою фаскою і німбом"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Badge"
 msgstr "Жетон"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Metal or plastic badge bevel"
 msgstr "Фаска металічного або пластикового жетона"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Pastel Bevel"
 msgstr "Пастельна фаска"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "М’яка розмита фаска у пастельних кольорах"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
 msgstr "Тонка оболонка"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin like a soap membrane"
 msgstr "Тонка оболонка, схожа на мильну бульбашку"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Soft ridge"
 msgstr "Плавний виступ"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Soft pastel ridge"
 msgstr "Гладкий пастельний край"
 
-#: ../share/filters/filters.svg.h:57
-#, fuzzy
+#: ../share/filters/filters.svg.h:56
 msgid "Glowing metal"
 msgstr "Сяючий метал"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Bright and glowing metal texture"
 msgstr "Яскрава сяюча металічна текстура"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Leaves"
 msgstr "Листя"
 
-#: ../share/filters/filters.svg.h:58 ../share/filters/filters.svg.h:80
-#: ../share/filters/filters.svg.h:89 ../share/extensions/pathscatter.inx.h:10
+#: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:88 ../share/extensions/pathscatter.inx.h:10
 msgid "Scatter"
 msgstr "Розкидати"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Leaves on the ground in Fall, or living foliage"
 msgstr "Опале листя восени або щось вкрите живим листям"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Translucent"
 msgstr "Прозорість"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Illuminated translucent plastic effect"
 msgstr "Ефекти підсвіченого прозорого пластику"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Cross-smooth"
 msgstr "Перехресне згладжування"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Blur inner borders and intersections"
 msgstr "Розмивання внутрішніх меж і перетинів"
 
-#: ../share/filters/filters.svg.h:61
-#, fuzzy
+#: ../share/filters/filters.svg.h:60
 msgid "Iridescent beeswax"
 msgstr "Веселковий віск"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr "Воскова текстура, на якій кольори змінюються у порядку веселки"
 
-#: ../share/filters/filters.svg.h:62
-#, fuzzy
+#: ../share/filters/filters.svg.h:61
 msgid "Eroded metal"
 msgstr "Метал, вражений корозією"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
-msgstr ""
-"Текстура враженого корозією металу з опуклостями, ямками, дірками і рельєфом"
+msgstr "Текстура враженого корозією металу з опуклостями, ямками, дірками і рельєфом"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Cracked Lava"
 msgstr "Розтріскана лава"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "A volcanic texture, a little like leather"
 msgstr "Вулканічна текстура, яка трохи нагадує шкіру"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Bark"
 msgstr "Кора"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Bark texture, vertical; use with deep colors"
 msgstr "Текстура кори, вертикальна, слід використовувати для глибоких кольорів"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Lizard skin"
 msgstr "Шкіра ящірки"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Stylized reptile skin texture"
 msgstr "Стилізована текстура шкіри рептилії"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Stone wall"
 msgstr "Кам’яна стіна"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Stone wall texture to use with dark colors"
 msgstr "Текстура кам’яної стіни, для використання з темними кольорами"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet"
 msgstr "Шовковий килим"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet texture, horizontal stripes"
 msgstr "Текстура шовкового килима, горизонтальні смужки"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Refractive gel A"
 msgstr "Гель A"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Gel effect with light refraction"
 msgstr "Ефект накладання гелю з заломленням світла"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Refractive gel B"
 msgstr "Гель B"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Gel effect with strong refraction"
 msgstr "Ефект накладання гелю з сильним заломленням світла"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Metallized paint"
 msgstr "Металізована фарба"
 
-#: ../share/filters/filters.svg.h:70
-msgid ""
-"Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr ""
-"Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
+#: ../share/filters/filters.svg.h:69
+msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
+msgstr "Ефект металізації з м’яким підсвічуванням з ефектом прозорості на краях"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Dragee"
 msgstr "Драже"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge with a pearlescent look"
 msgstr "Гелевий гребінь, що виглядає як купка перлів"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Raised border"
 msgstr "Піднятий край"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Strongly raised border around a flat surface"
 msgstr "Дуже піднятий край над плоскою поверхнею"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Metallized ridge"
 msgstr "Металізований гребінь"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Gel Ridge metallized at its top"
 msgstr "Гелевий гребінь, металізований поблизу вершини"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Fat oil"
 msgstr "Насичене мастило"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Fat oil with some adjustable turbulence"
 msgstr "Насичене мастило з певним ефектом турбулентності"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
 msgstr "Зробити кольоровим"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Gives the flood color to the dark parts of the image"
 msgstr "Заливає кольором темні частини зображення"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Parallel hollow"
 msgstr "Паралельні заглибини"
 
-#: ../share/filters/filters.svg.h:76 ../share/filters/filters.svg.h:77
-#: ../share/filters/filters.svg.h:78 ../share/filters/filters.svg.h:79
-#: ../share/filters/filters.svg.h:90 ../share/filters/filters.svg.h:91
-#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:133 ../src/filter-enums.cpp:31
+#: ../share/filters/filters.svg.h:75 ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:77 ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:132 ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Морфологія"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "A blurry hollow going parallel to the edge on the inside"
 msgstr "Розмита дірка, паралельна до краю зовнішньої частини форми"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Hole"
 msgstr "Дірка"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Opens a smooth hole inside the shape"
 msgstr "Відкрита гладка дірка у формі"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Black hole"
 msgstr "Чорна діра"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Creates a black light inside and outside"
 msgstr "Створює поглинання світла всередині і ззовні"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Smooth outline"
 msgstr "Гладкий контур"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Outlining the lines and smoothing their crossings"
 msgstr "Створення контурів ліній і згладжування їх перетинів"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Cubes"
 msgstr "Кубики"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
-msgstr ""
-"Розкидані кубики: змініть примітив Морфологія, щоб змінити розмір кубика"
+msgstr "Розкидані кубики: змініть примітив Морфологія, щоб змінити розмір кубика"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Peel off"
 msgstr "Здирання"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Peeling painting on a wall"
 msgstr "Здирання малюнка зі стіни"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Gold splatter"
 msgstr "Розхлюпане золото"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Splattered cast metal, with golden highlights"
 msgstr "Розкидані шматочки металу з золотим відблиском"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Gold paste"
 msgstr "Золота паста"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Fat pasted cast metal, with golden highlights"
 msgstr "Товсте металічне литво з золотими відблисками"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled plastic"
 msgstr "Зіжмаканий пластик"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled matte plastic, with melted edge"
 msgstr "Зіжмаканий матовий пластик з розплавненим краєм"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Enamel jewelry"
 msgstr "Емальовані коштовності"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Slightly cracked enameled texture"
 msgstr "Трохи потріскана текстура емалі"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Rough paper"
 msgstr "Грубий папір"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr ""
 "Ефект акварельного паперу паперу, який можна використовувати для зображень "
 "як об’єктів"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Rough and glossy"
 msgstr "Зіжмаканий глянець"
 
-#: ../share/filters/filters.svg.h:87
-msgid ""
-"Crumpled glossy paper effect which can be used for pictures as for objects"
+#: ../share/filters/filters.svg.h:86
+msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr ""
 "Ефекти зіжмаканного глянсуватого паперу, який можна використовувати для "
 "зображень як об’єктів"
 
-#: ../share/filters/filters.svg.h:88
-#, fuzzy
+#: ../share/filters/filters.svg.h:87
 msgid "In and Out"
 msgstr "Всередині і ззовні"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Inner colorized shadow, outer black shadow"
 msgstr "Внутрішня кольорова тінь, зовнішня темна тінь"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Air spray"
 msgstr "Аерограф"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Air Spray; adjust the Displacement Map amount"
 msgstr "Аерограф, налаштовується значенням Карти зміщення"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Warm inside"
 msgstr "Тепло всередині"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, filled inside"
 msgstr "Розмитий кольоровий контур, заповнений всередині"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Cool outside"
 msgstr "Зовнішній холод"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Blurred colorized contour, empty inside"
 msgstr "Розмитий кольоровий контур, не заповнений всередині"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Electronic microscopy"
 msgstr "Електронна мікроскопія"
 
-#: ../share/filters/filters.svg.h:92
-msgid ""
-"Bevel, crude light, discoloration and glow like in electronic microscopy"
+#: ../share/filters/filters.svg.h:91
+msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 "Навскісне, грубе освітлення, знебарвлення і сяйво схоже на фотографії, "
 "зроблені за допомогою електронного мікроскопа."
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Tartan"
 msgstr "Шотландка"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Checkered tartan pattern"
 msgstr "Картатий візерунок"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Invert hue"
 msgstr "Інверсія відтінку"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Invert hue, or rotate it"
 msgstr "Обернути відтінок, або повернути його"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Outline"
 msgstr "Контур"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Draws an outline around"
 msgstr "Малює навколо контур"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Outline, double"
 msgstr "Контру, подвійний"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr ""
 "Малює гладку лінію, розфарбовану зсередини кольором, на який вона "
 "накладається"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Fancy blur"
 msgstr "Вигадливе розмивання"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr ""
 "Гладкий розфарбований контур з можливістю усування насиченості і повороту "
 "відтінку."
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Glow"
 msgstr "Сяйво"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Glow of object's own color at the edges"
 msgstr "Німб, розфарбований у кольори об’єкта на краях"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Ghost outline"
 msgstr "Примарний контур"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Adds a glowing blur and removes the shape"
 msgstr "Додає німбоподібне розмивання і вилучає форму"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Color emboss"
 msgstr "Кольоровий рельєф"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr ""
 "Класичний або розфарбований ефекти барельєфа: просторовий рельєф у відтінках "
 "сірого або кольорах"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Soft bump"
 msgstr "М’яке витискання"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Convolution bump; with a blur, it can give nice embossing effects"
 msgstr ""
 "Витискання зі згортанням; з розмиванням подібний ефект може дати чудові "
 "рельєфні зображення"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "Сонячне світло"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Classical photographic solarization effect"
 msgstr "Класичний фотографічний ефект вигорання"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Moonarize"
 msgstr "Місяцезація"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
@@ -1041,37 +1020,41 @@ msgstr ""
 "Ефекти проміжний між вигоранням та інверсією, за використання якого часто "
 "залишаються незмінними кольори неба і води"
 
-#: ../share/filters/filters.svg.h:104
-#, fuzzy
+#: ../share/filters/filters.svg.h:103
 msgid "Soft focus lens"
-msgstr "при фокусуванні"
+msgstr "Лінза м’якого фокусування"
+
+#: ../share/filters/filters.svg.h:103
+msgid "Glowing image content without blurring it"
+msgstr "Сяйво навколо вмісту зображення без розмивання"
 
 #: ../share/filters/filters.svg.h:104
-msgid "Glowing image content without blurring it"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:105
 msgid "Stained glass"
 msgstr "Кольорове скло"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Illuminated stained glass effect"
 msgstr "Ефект підсвіченого кольорового скла"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Dark glass"
 msgstr "Темне скло"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr "Ефекти підсвіченого знизу скла"
 
-#: ../share/filters/filters.svg.h:107
-#, fuzzy
+#: ../share/filters/filters.svg.h:106
 msgid "HSL Bumps, alpha"
-msgstr "Витискання відтінку-насиченості-освітленості, альфа"
+msgstr "Витискання ВНО, альфа"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:170
+msgid "Masking tools"
+msgstr "Інструменти маскування"
+
+#: ../share/filters/filters.svg.h:106
 msgid ""
 "Same than HSL bumps but with an alpha added for combination with "
 "transparency depending filters"
@@ -1080,69 +1063,65 @@ msgstr ""
 "час обробки буде додано канал прозорості для комбінування з фільтрами, "
 "робота яких залежить від прозорості"
 
-#: ../share/filters/filters.svg.h:108
-#, fuzzy
+#: ../share/filters/filters.svg.h:107
 msgid "HSL Bubbles, alpha"
-msgstr "Бульбашки відтінку-насиченості-освітленості, альфа"
+msgstr "Бульбашки ВНО, альфа"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Smooth edges"
 msgstr "Гладкі краї"
 
-#: ../share/filters/filters.svg.h:109
-msgid ""
-"Smooth the outside of shapes and pictures without altering their contents"
+#: ../share/filters/filters.svg.h:108
+msgid "Smooth the outside of shapes and pictures without altering their contents"
 msgstr ""
 "Згладжування зовнішньої частини форм і зображень без зміни внутрішньої "
 "частини"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Torn edges"
 msgstr "Обірвані краї"
 
-#: ../share/filters/filters.svg.h:110
-msgid ""
-"Displace the outside of shapes and pictures without altering their content"
-msgstr ""
-"Зсування зовнішньої частини форм і зображень без зміни внутрішньої частини"
+#: ../share/filters/filters.svg.h:109
+msgid "Displace the outside of shapes and pictures without altering their content"
+msgstr "Зсування зовнішньої частини форм і зображень без зміни внутрішньої частини"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Feather"
 msgstr "Перо"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
 msgstr "Маска розмивання на краях без зміни вмісту"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Blur content"
 msgstr "Розмивання вмісту"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
 msgstr "Розмивання внутрішньої частини об’єктів зі збереженням контурів"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Specular light"
 msgstr "Дзеркальне світло"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Basic specular bevel to use for building textures"
 msgstr "Базове дзеркальне загострення для створення текстур"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Roughen inside"
 msgstr "Грубішання всередині"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Roughen all inside shapes"
 msgstr "Збільшення різкості всіх внутрішніх форм"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Evanescent"
 msgstr "Миготіння"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
@@ -1150,126 +1129,118 @@ msgstr ""
 "Розмивання внутрішньої частини об’єктів зі збереженням контурів з додаванням "
 "прогресивної прозорості на краях"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Chalk and sponge"
 msgstr "Крейда і губка"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr "Невеличке розсіювання надає ефекту губки дуже розсіяному шару крейди"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "People"
 msgstr "Люди"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Colorized blotches, like a crowd of people"
 msgstr "Кольорові дефекти, схожі на натовп людей, знятий здалеку"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Scotland"
 msgstr "Шотландія"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Colorized mountain tops out of the fog"
 msgstr "Розфарбовані вершини гір, що піднімаються з туману"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Noise transparency"
 msgstr "Шумна прозорість"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Basic noise transparency texture"
 msgstr "Базова текстура прозорості з шумом"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Noise fill"
 msgstr "Заливання шумом"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr ""
 "Базова текстура заливання з шумом; налаштуйте колір за допомогою параметра "
 "«Заливання»"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "Garden of Delights"
 msgstr "Сад земних насолод"
 
-#: ../share/filters/filters.svg.h:121
-msgid ""
-"Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
+#: ../share/filters/filters.svg.h:120
+msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr ""
 "Фантасмагорійні закручені вихори, схожі на картину Ієроніма Босха «Сад земних "
 "насолод»"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Diffuse light"
 msgstr "Розсіяне світло"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Basic diffuse bevel to use for building textures"
 msgstr "Базова розмита фаска для побудови текстур"
 
-#: ../share/filters/filters.svg.h:123
-#, fuzzy
+#: ../share/filters/filters.svg.h:122
 msgid "Cutout Glow"
 msgstr "Контурне сяйво"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "In and out glow with a possible offset and colorizable flood"
-msgstr ""
-"Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
+msgstr "Внутрішнє і зовнішнє сяйво з можливим відступом і кольоровим заливанням"
 
-#: ../share/filters/filters.svg.h:124
-#, fuzzy
+#: ../share/filters/filters.svg.h:123
 msgid "HSL Bumps, diffuse"
-msgstr "Розсіяне витискання відтінку-насиченості-освітленості"
+msgstr "Розсіяне витискання ВНО"
 
-#: ../share/filters/filters.svg.h:124
-msgid ""
-"Same than HSL bumps but with a diffuse reflexion instead of a specular one"
+#: ../share/filters/filters.svg.h:123
+msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
 msgstr ""
 "Те саме, що витискання за відтінком-насиченістю-освітленістю, але з "
 "розсіяним підсвічуванням замість дзеркального"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Dark Emboss"
 msgstr "Темний барельєф"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
-msgstr ""
-"Ефект барельєфа: просторовий рельєф, де білий колір буде замінено на чорний"
+msgstr "Ефект барельєфа: просторовий рельєф, де білий колір буде замінено на чорний"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
 msgstr "Просте розмивання"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 "Просте гаусове розмивання, результати подібні до використання повзунка "
 "розмивання у діалоговому вікні «Заливання і штрих»"
 
-#: ../share/filters/filters.svg.h:127
-#, fuzzy
+#: ../share/filters/filters.svg.h:126
 msgid "HSL Bubbles, diffuse"
-msgstr "Розсіяні бульбашки відтінку-насиченості-освітленості"
+msgstr "Розсіяні бульбашки ВНО"
 
-#: ../share/filters/filters.svg.h:127
-msgid ""
-"Same than HSL bubbles but with a diffuse light instead of a specular one"
+#: ../share/filters/filters.svg.h:126
+msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
 msgstr ""
 "Те саме, що бульбашки за відтінком-насиченістю-освітленістю, але з розсіяним "
 "підсвічуванням замість дзеркального"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "Рельєф"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
@@ -1277,379 +1248,364 @@ msgstr ""
 "Ефект барельєфа. Кольори початкового зображення можна залишити незмінними "
 "або змінити за допомогою параметра «Змішування»"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Blotting paper"
 msgstr "Бюварний папір"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Inkblot on blotting paper"
 msgstr "Клякса на бюварному папері"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Wax print"
 msgstr "Восковий відбиток"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Wax print on tissue texture"
 msgstr "Восковий відбиток з текстури шкіри"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot"
 msgstr "Клякса"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot on tissue or rough paper"
 msgstr "Клякса на пергаменті або грубому папері"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Burnt edges"
 msgstr "Випалені краї"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Burnt paper edges texture"
 msgstr "Текстура країв спаленого паперу"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "Color outline"
 msgstr "Кольоровий ескіз"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "A colorizable outline with adjustable width and blur"
-msgstr ""
-"Придатний для розфарбовування контур з обраною вами шириною і розмиванням"
+msgstr "Придатний для розфарбовування контур з обраною вами шириною і розмиванням"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Liquid"
 msgstr "Рідина"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Colorizable filling with liquid transparency"
 msgstr "Придатне для розфарбовування заливання рідкою прозорою фарбою"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Watercolor"
 msgstr "Акварель"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Cloudy watercolor effect"
 msgstr "Розмитий ефект акварелі"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Felt"
 msgstr "Фетр"
 
-#: ../share/filters/filters.svg.h:136
-msgid ""
-"Felt like texture with color turbulence and slightly darker at the edges"
+#: ../share/filters/filters.svg.h:135
+msgid "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Текстура, схожа на фетр з кольоровим шумом, трохи темніша на краях"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Ink paint"
 msgstr "Малювання чорнилом"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr "Малювання чорнилом на папері з певним розсіяним зсувом кольорів"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Tinted rainbow"
 msgstr "Підфарбована райдуга"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr "Гладкі кольори веселки розмиті на краях і придатні для розфарбовування"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Melted rainbow"
 msgstr "Розтоплена веселка"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "Гладкі кольори веселки трохи розмиті на краях"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:139
 msgid "Darken edges"
 msgstr "Темні краї"
 
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 msgid "Enhance outline and glows inside and outside"
 msgstr "Насичити контур та створити навколо нього внутрішнє та зовнішнє сяйво"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Dark and glow"
 msgstr "Темнота і сяйво"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Flex metal"
 msgstr "Вигнутий метал"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr ""
-"Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
+msgstr "Яскраве, поліроване нерівне металічне литво, з можливістю розфарбування"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Comics draft"
 msgstr "Чернетка коміксу"
 
-#: ../share/filters/filters.svg.h:143 ../share/filters/filters.svg.h:144
-#: ../share/filters/filters.svg.h:145 ../share/filters/filters.svg.h:146
-#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:148
-#: ../share/filters/filters.svg.h:149 ../share/filters/filters.svg.h:150
-#: ../share/filters/filters.svg.h:151 ../share/filters/filters.svg.h:152
-#: ../share/filters/filters.svg.h:153 ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:164
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:146 ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:148 ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:150 ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:161
 msgid "Non realistic shaders"
 msgstr "Мультиплікаційні півтони"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr "Півтони у стилі ескіза коміксу з глянсуватим виглядом"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Comics fading"
 msgstr "Затемнення, як у коміксі"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Cartoon paint style with some fading at the edges"
 msgstr "Зображення у стилі коміксу з певним затемненням на краях"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shader NR"
 msgstr "Мультиплікаційне гладке тонування"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "Гладке штрихування, схоже на півтони, створені графітовим олівцем"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Emboss shader NR"
 msgstr "Мультиплікаційне рельєфне тонування"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Combination of smooth shading and embossing"
 msgstr "Комбінація гладкого тонування і створення барельєфа"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Smooth shader dark NR"
 msgstr "Мультиплікаційне темне гладке тонування"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Dark version of non realistic smooth shading"
 msgstr "Темна версія Мультиплікаційного гладкого тонування"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Comics"
 msgstr "Комікс"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Imitation of black and white cartoon shading"
 msgstr "Імітація чорно-білого тонування коміксу"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 msgid "Satin NR"
 msgstr "Мультиплікаційний глянець"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
 msgstr "Шовковистість, близька до тонування «Матері перлин»"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Frosted glass NR"
 msgstr "Мультиплікаційна паморозь"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
 msgstr "Мультиплікаційна імітація паморозі на склі"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Smooth shader contour NR"
 msgstr "Мультиплікаційне контурне гладке тонування"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Contouring version of smooth shader"
 msgstr "Контурна версія гладкого тонування"
 
-#: ../share/filters/filters.svg.h:152
-msgid "Comics rounded"
-msgstr "Комікс з округленням"
-
-#: ../share/filters/filters.svg.h:152
-msgid "Imitation of black and white cartoon shading more rounded version"
-msgstr "Імітація чорно-білого тонування коміксу з округленням кутів"
-
-#: ../share/filters/filters.svg.h:153
-msgid "Pewter NR"
-msgstr "Мультиплікаційна цина"
-
-#: ../share/filters/filters.svg.h:153
-msgid "Mid grey satin like shader close to pewter"
-msgstr "Сірувате глянсувате тонування близьке до цини"
-
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Aluminium NR"
 msgstr "Мультиплікаційний алюміній"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Brushed aluminium shader"
 msgstr "Тонування алюмінієвою пудрою"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 msgid "Comics fluid"
 msgstr "Акварельний комікс"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 msgid "Fluid brushed cartoon drawing"
 msgstr "Розфарбований ескіз коміксу"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 msgid "Chrome NR"
 msgstr "Мультиплікаційне хромування"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "Мультиплікаційне тонування хромом з сильним відблиском"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Chrome dark NR"
 msgstr "Темне мультиплікаційне хромування"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr "Темна версія тонування хромом з імітацією відбиття поверхні"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Wavy tartan"
 msgstr "Хвиляста шотландка"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr "Картатий візерунок з хвилястим зсувом і фаскою на краях"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D marble"
 msgstr "Мармур 3D"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D warped marble texture"
 msgstr "Просторовий муар, як у текстурі мармуру"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 msgid "3D wood"
 msgstr "Просторовий ліс"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 msgid "3D warped, fibered wood texture"
 msgstr "Просторовий муар, схожий не текстуру деревини"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 msgid "Mother of pearl"
 msgstr "Мати перлів"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "Просторовий муар, схожий на текстуру перлини"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 msgid "Tiger fur"
 msgstr "Хутро тигра"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "Хутро тигра з переходами і фасками навколо країв смуг"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 msgid "Flow inside"
 msgstr "Потік всередині"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 msgid "Colorizable filling with flow inside like transparency"
 msgstr "Придатне для розфарбовування вливанням фарби"
 
-#: ../share/filters/filters.svg.h:164
-msgid "Comics flow"
-msgstr "Потік, як у коміксі"
-
-#: ../share/filters/filters.svg.h:164
-msgid "Comics shader with a flow inside transparency"
-msgstr "Мультиплікаційне тонування з потоком прозорості всередину"
-
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics cream"
 msgstr "Мультиплікаційні вершки"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics shader with creamy waves transparency"
 msgstr ""
 "Мультиплікаційне тонування за допомогою прозорості, розташованої за вигином, "
 "схожим на вершки"
 
-#: ../share/filters/filters.svg.h:166
-#, fuzzy
+#: ../share/filters/filters.svg.h:162
 msgid "Black Light"
-msgstr "Чорна точка"
+msgstr "Чорне світло"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 msgid "Light areas turn to black"
-msgstr ""
+msgstr "Перетворення світлих ділянок на чорні"
 
 #. Eraser
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 #: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
 msgid "Eraser"
 msgstr "Гумка"
 
-#: ../share/filters/filters.svg.h:167
-msgid "Masking tools"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 msgid "Make the lightest parts of the object progressively transparent"
-msgstr ""
+msgstr "Найсвітліші частини об’єкта буде зроблено поступально прозорими"
 
-#: ../share/filters/filters.svg.h:168
-#, fuzzy
+#: ../share/filters/filters.svg.h:164
 msgid "Noisy blur"
-msgstr "при розмиванні"
+msgstr "Шумне розмивання"
 
-#: ../share/filters/filters.svg.h:168
-#, fuzzy
+#: ../share/filters/filters.svg.h:164
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "Невеличке згрубішання країв і внутрішніх контурів"
+msgstr "Невеличке згрубішання і розмивання країв та внутрішніх контурів"
 
-#: ../share/filters/filters.svg.h:169
-#, fuzzy
+#: ../share/filters/filters.svg.h:165
 msgid "Film Grain"
-msgstr "Колір заливки"
+msgstr "Зернистість плівки"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:165
 msgid "Adds a film grain noise to images and objects"
-msgstr ""
+msgstr "Додає шум у вигляді ефекту зернистості плівки до зображень і об’єктів"
 
-#: ../share/filters/filters.svg.h:170
-#, fuzzy
+#: ../share/filters/filters.svg.h:166
 msgid "HSL Bumps, transparent"
-msgstr "Витискання відтінку-насиченості-освітленості, альфа"
+msgstr "Витискання ВНО, прозорість"
 
-#: ../share/filters/filters.svg.h:170
-#, fuzzy
+#: ../share/filters/filters.svg.h:166
 msgid "Highly flexible specular bump with transparency"
-msgstr ""
-"Дуже гнучкі дзеркальні горби за відтінком, насиченістю і освітленістю кольору"
+msgstr "Дуже гнучкі дзеркальні горби з прозорістю"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:167
 msgid "Lead pencil"
-msgstr ""
+msgstr "Свинцевий олівець"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:167
 msgid "Give lead pencil or chromolithography or engraving or other effects"
 msgstr ""
+"Надає зображенню ефектів малювання свинцевим олівцем, хромолітографії або "
+"гравіювання"
+
+#: ../share/filters/filters.svg.h:168
+msgid "Velvet bump"
+msgstr "Оксамитове витискання"
+
+#: ../share/filters/filters.svg.h:168
+msgid "Gives a smooth bump velvet like"
+msgstr "Створює ефект гладкого витискання, подібного до оксамиту"
+
+#: ../share/filters/filters.svg.h:169
+msgid "Alpha engraving"
+msgstr "Альфа-гравірування"
+
+#: ../share/filters/filters.svg.h:169
+msgid "Gives a transparent engraving effect to bitmaps and materials"
+msgstr "Надає ефекту прозорого гравірування растровим зображенням і матеріалам"
+
+#: ../share/filters/filters.svg.h:170
+msgid "Alpha engraving, color"
+msgstr "Альфа-гравірування, кольорове"
+
+#: ../share/filters/filters.svg.h:170
+msgid "Gives a transparent color engraving effect to bitmaps and materials"
+msgstr "Надає ефекту гравірування прозорим кольором растровим зображенням і матеріалам"
 
 #: ../src/arc-context.cpp:303
-msgid ""
-"<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
+msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 "<b>Ctrl</b>: робить коло або еліпс з цілим відношенням сторін, обмежує кут "
 "дуги/сегмента"
@@ -2054,8 +2010,7 @@ msgstr "Горизонтальний масштаб на кожен стовпч
 
 #: ../src/dialogs/clonetiler.cpp:2136
 msgid "Randomize the horizontal scale by this percentage"
-msgstr ""
-"Випадково змінити горизонтальний масштаб не більше ніж на даний відсоток"
+msgstr "Випадково змінити горизонтальний масштаб не більше ніж на даний відсоток"
 
 #: ../src/dialogs/clonetiler.cpp:2144
 msgid "<b>Scale Y:</b>"
@@ -2092,8 +2047,7 @@ msgid "<b>Base:</b>"
 msgstr "<b>Базис:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2204 ../src/dialogs/clonetiler.cpp:2211
-msgid ""
-"Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
+msgid "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
 msgstr ""
 "Базис логарифмічної спіралі: не використовується (0), зближення (<1) чи "
 "розходження (>1)"
@@ -2210,7 +2164,7 @@ msgstr "_Колір"
 
 #: ../src/dialogs/clonetiler.cpp:2445
 msgid "Initial color: "
-msgstr "Початковий колір:"
+msgstr "Початковий колір: "
 
 #: ../src/dialogs/clonetiler.cpp:2449
 msgid "Initial color of tiled clones"
@@ -2292,8 +2246,7 @@ msgstr "Векторизувати область за плитками"
 msgid ""
 "For each clone, pick a value from the drawing in that clone's location and "
 "apply it to the clone"
-msgstr ""
-"Для кожного клону, вибрати значення під клоном та застосувати його до клону"
+msgstr "Для кожного клону, вибрати значення під клоном та застосувати його до клону"
 
 #: ../src/dialogs/clonetiler.cpp:2596
 msgid "1. Pick from the drawing:"
@@ -2409,8 +2362,7 @@ msgstr "Наявність"
 msgid ""
 "Each clone is created with the probability determined by the picked value in "
 "that point"
-msgstr ""
-"Ймовірність появи кожного клону визначається значенням, взятим у даній точці"
+msgstr "Ймовірність появи кожного клону визначається значенням, взятим у даній точці"
 
 #: ../src/dialogs/clonetiler.cpp:2744
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2189
@@ -2431,8 +2383,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2767
 msgid "Each clone's opacity is determined by the picked value in that point"
-msgstr ""
-"Прозорість кожного кольору визначається значенням, взятим у даній точці"
+msgstr "Прозорість кожного кольору визначається значенням, взятим у даній точці"
 
 #: ../src/dialogs/clonetiler.cpp:2794
 msgid "How many rows in the tiling"
@@ -2493,12 +2444,11 @@ msgstr "Створити мозаїку з клонів виділеної ді�
 #. So unclumping is the process of spreading a number of objects out more evenly.
 #: ../src/dialogs/clonetiler.cpp:2955
 msgid " _Unclump "
-msgstr "_Розгрупувати"
+msgstr "_Розгрупувати "
 
 #: ../src/dialogs/clonetiler.cpp:2956
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
-msgstr ""
-"Розповсюдити клони для послаблення групування; може бути застосовано повторно"
+msgstr "Розповсюдити клони для послаблення групування; може бути застосовано повторно"
 
 #: ../src/dialogs/clonetiler.cpp:2962
 msgid " Re_move "
@@ -2624,8 +2574,7 @@ msgstr "Сховати все за винятком виділених"
 
 #: ../src/dialogs/export.cpp:631
 msgid "In the exported image, hide all objects except those that are selected"
-msgstr ""
-"В експортованому зображенні приховувати всі об'єкти, за винятком виділених"
+msgstr "В експортованому зображенні приховувати всі об'єкти, за винятком виділених"
 
 #: ../src/dialogs/export.cpp:648
 msgid "_Export"
@@ -2812,8 +2761,7 @@ msgstr "_Текст:"
 
 #: ../src/dialogs/find.cpp:685 ../src/ui/dialog/find.cpp:60
 msgid "Find objects by their text content (exact or partial match)"
-msgstr ""
-"Шукати об'єкти за їх текстовим вмістом (повна або часткова відповідність)"
+msgstr "Шукати об'єкти за їх текстовим вмістом (повна або часткова відповідність)"
 
 #: ../src/dialogs/find.cpp:686 ../src/ui/dialog/find.cpp:61
 msgid "_ID: "
@@ -2821,18 +2769,15 @@ msgstr "_ID: "
 
 #: ../src/dialogs/find.cpp:686 ../src/ui/dialog/find.cpp:61
 msgid "Find objects by the value of the id attribute (exact or partial match)"
-msgstr ""
-"Шукати об'єкти за значенням атрибуту id (повна або часткова відповідність)"
+msgstr "Шукати об'єкти за значенням атрибуту id (повна або часткова відповідність)"
 
 #: ../src/dialogs/find.cpp:687 ../src/ui/dialog/find.cpp:62
 msgid "_Style: "
 msgstr "_Стиль: "
 
 #: ../src/dialogs/find.cpp:687 ../src/ui/dialog/find.cpp:62
-msgid ""
-"Find objects by the value of the style attribute (exact or partial match)"
-msgstr ""
-"Шукати об'єкти за значенням атрибуту style (повна або часткова відповідність)"
+msgid "Find objects by the value of the style attribute (exact or partial match)"
+msgstr "Шукати об'єкти за значенням атрибуту style (повна або часткова відповідність)"
 
 #: ../src/dialogs/find.cpp:688 ../src/ui/dialog/find.cpp:63
 msgid "_Attribute: "
@@ -2902,10 +2847,8 @@ msgid "_Id"
 msgstr "_Id"
 
 #: ../src/dialogs/item-properties.cpp:129
-msgid ""
-"The id= attribute (only letters, digits, and the characters .-_: allowed)"
-msgstr ""
-"Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
+msgid "The id= attribute (only letters, digits, and the characters .-_: allowed)"
+msgstr "Атрибут id= (дозволяються лише латинські літери, цифри та символи .-_:)"
 
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2486
@@ -3431,13 +3374,15 @@ msgstr ""
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
-msgstr ""
+msgstr "Прилипати лише до в_идимиг ліній сітки"
 
 #: ../src/display/canvas-grid.cpp:330
 msgid ""
 "When zoomed out, not all grid lines will be displayed. Only the visible ones "
 "will be snapped to"
 msgstr ""
+"Під час зменшення масштабу програма зменшуватиме кількість показаних ліній "
+"сітки. Прилипання відбуватиметься лише до видимих ліній."
 
 #: ../src/display/canvas-grid.cpp:334
 msgid "_Visible"
@@ -3524,9 +3469,8 @@ msgid "bounding box side"
 msgstr "бічна сторона рамки-обгортки"
 
 #: ../src/display/snap-indicator.cpp:99
-#, fuzzy
 msgid "bounding box"
-msgstr "Рамка-обгортка"
+msgstr "рамка-обгортка"
 
 #: ../src/display/snap-indicator.cpp:102
 msgid "page border"
@@ -3724,8 +3668,7 @@ msgid "Set picked color"
 msgstr "Встановити знятий піпеткою колір"
 
 #: ../src/dyna-draw-context.cpp:615
-msgid ""
-"<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
+msgid "<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
 msgstr ""
 "<b>Виділено напрямний контур</b>; початок креслення вздовж напрямної "
 "<b>Ctrl</b>"
@@ -3813,8 +3756,7 @@ msgstr ""
 "більше додатків.</span>\n"
 "\n"
 "Додатки, які викликали помилки було пропущено. Inkscape продовжить звичайний "
-"запуск, але ці додатки будуть недоступні.  Подробиці щодо цієї проблеми "
-"дивіться у файлі журналу помилок:"
+"запуск, але ці додатки будуть недоступні. Подробиці щодо цієї проблеми можна знайти у файлі журналу помилок: "
 
 #: ../src/extension/error-file.cpp:63
 msgid "Show dialog on startup"
@@ -3913,13 +3855,13 @@ msgstr ""
 "повернув код помилки, проте це може означати, що результат не такий як "
 "очікувався."
 
-#: ../src/extension/init.cpp:277
+#: ../src/extension/init.cpp:274
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr ""
 "Порожнє поле назви каталогу зовнішнього модуля. Модулі не будуть "
 "завантажуватись."
 
-#: ../src/extension/init.cpp:291
+#: ../src/extension/init.cpp:288
 #: ../src/extension/internal/filter/filter-file.cpp:56
 #, c-format
 msgid ""
@@ -4187,11 +4129,11 @@ msgid "Edge"
 msgstr "Виділити краї"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-msgid "Hilight edges of selected bitmap(s)."
+msgid "Highlight edges of selected bitmap(s)."
 msgstr "Виділити краї об'єктів на обраних растрових картинках."
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-msgid "Emboss selected bitmap(s) -- hilight edges with 3D effect."
+msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
 msgstr ""
 "Показати рельєф на обраних растрових картинках – виділити краї з ефектом "
 "третього виміру."
@@ -4316,8 +4258,7 @@ msgid "Brightness"
 msgstr "Яскравість"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
-msgid ""
-"Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
+msgid "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
 msgstr ""
 "Підібрати потрібне значення у відсотках для яскравості, насиченості та "
 "відтінку обраних растрових зображень."
@@ -4348,8 +4289,7 @@ msgstr "Малювання маслом"
 
 #: ../src/extension/internal/bitmap/oilPaint.cpp:44
 msgid "Stylize selected bitmap(s) so that they appear to be painted with oils."
-msgstr ""
-"Стилізувати обрані растрові зображення так, неначе їх намальовано маслом."
+msgstr "Стилізувати обрані растрові зображення так, неначе їх намальовано маслом."
 
 #: ../src/extension/internal/bitmap/opacity.cpp:45
 msgid "Modify opacity channel(s) of selected bitmap(s)."
@@ -4381,8 +4321,7 @@ msgid "Order"
 msgstr "Порядок"
 
 #: ../src/extension/internal/bitmap/reduceNoise.cpp:47
-msgid ""
-"Reduce noise in selected bitmap(s) using a noise peak elimination filter."
+msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter."
 msgstr ""
 "Зменшити шум на виділених картинках з використанням фільтра вилучення піків "
 "шуму."
@@ -4392,8 +4331,7 @@ msgid "Resample"
 msgstr "Змінити роздільність"
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
-msgid ""
-"Alter the resolution of selected image by resizing it to the given pixel size"
+msgid "Alter the resolution of selected image by resizing it to the given pixel size"
 msgstr ""
 "Змінити роздільну здатність обраного зображення, змінивши його до заданих "
 "розмірів у пікселях."
@@ -4439,7 +4377,7 @@ msgid ""
 "Randomly scatter pixels in selected bitmap(s), within the given radius of "
 "the original position"
 msgstr ""
-"Випадково розподілити точки на виділених картинках в середині кола з "
+"Випадково розподілити точки на виділених картинках всередині кола з "
 "вказаним радіусом"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
@@ -4474,8 +4412,7 @@ msgstr "Нерізка маска"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:51
 msgid "Sharpen selected bitmap(s) using unsharp mask algorithms."
-msgstr ""
-"Підвищити різкість виділених картинок за допомогою алгоритмів нерізкої маски."
+msgstr "Підвищити різкість виділених картинок за допомогою алгоритмів нерізкої маски."
 
 #: ../src/extension/internal/bitmap/wave.cpp:37
 msgid "Wave"
@@ -4549,26 +4486,26 @@ msgstr "Ділянкою експорту є малюнок"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:284
 #: ../src/extension/internal/cairo-ps-out.cpp:321
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:218
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
 #: ../src/extension/internal/emf-win32-inout.cpp:2430
 msgid "Convert texts to paths"
 msgstr "Перетворити текст на контури"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
 msgid "Rasterize filter effects"
 msgstr "Растеризувати ефекти фільтрування"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
-msgid "Preferred resolution (DPI) of bitmaps"
-msgstr "Основна роздільна здатність картинок (у т./дюйм)"
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
+msgid "Resolution for rasterization (dpi)"
+msgstr "Роздільна здатність для растеризації (точок на дюйм)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:224
 msgid "Limit export to the object with ID"
 msgstr "Обмежити експорт об’єктом з вказаним ідентифікатором"
 
@@ -4595,19 +4532,19 @@ msgstr "Інкапсульований PostScript (*.eps)"
 msgid "Encapsulated PostScript File"
 msgstr "Інкапсульований файл PostScript"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:215
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
 msgid "Restrict to PDF version"
 msgstr "Обмежувати версію PDF"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:217
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
 msgid "Export drawing, not page"
 msgstr "Експортувати малюнок, а не сторінку"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
 msgid "Export canvas"
 msgstr "Експортувати полотно"
 
@@ -4721,7 +4658,7 @@ msgstr "Розмір зсуву"
 msgid "Snow has fallen on object"
 msgstr "Сніг падав на об’єкт"
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:119
+#: ../src/extension/internal/gdkpixbuf-input.cpp:126
 #, c-format
 msgid "%s GDK pixbuf Input"
 msgstr "Імпорт %s через GDK pixbuf"
@@ -4896,7 +4833,7 @@ msgstr "Імпортувати текст як текст"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:120
 msgid "Replace PDF fonts by closest-named installed fonts"
-msgstr ""
+msgstr "Замінити шрифти у PDF найближчими аналогами серед встановлених"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
@@ -5064,43 +5001,41 @@ msgstr "Не вдається визначити формат файлу. Фай
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:153
+#: ../src/file.cpp:157
 msgid "default.svg"
 msgstr "типовий.svg"
 
-#: ../src/file.cpp:245 ../src/file.cpp:1031
+#: ../src/file.cpp:249 ../src/file.cpp:1035
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Не вдається завантажити потрібний файл %s"
 
-#: ../src/file.cpp:270
+#: ../src/file.cpp:274
 msgid "Document not saved yet.  Cannot revert."
-msgstr ""
-"Документ ще не був збережений. Неможливо повернутись до попереднього стану."
+msgstr "Документ ще не був збережений. Неможливо повернутись до попереднього стану."
 
-#: ../src/file.cpp:276
+#: ../src/file.cpp:280
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
-msgstr ""
-"Зміни будуть втрачені! Ви впевнені, що бажаєте завантажити документ %s знову?"
+msgstr "Зміни будуть втрачені! Ви впевнені, що бажаєте завантажити документ %s знову?"
 
-#: ../src/file.cpp:305
+#: ../src/file.cpp:309
 msgid "Document reverted."
 msgstr "Документ повернутий до попереднього стану."
 
-#: ../src/file.cpp:307
+#: ../src/file.cpp:311
 msgid "Document not reverted."
 msgstr "Документ не повернутий до попереднього стану."
 
-#: ../src/file.cpp:457
+#: ../src/file.cpp:461
 msgid "Select file to open"
 msgstr "Виберіть файл"
 
-#: ../src/file.cpp:544
+#: ../src/file.cpp:548
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Очистити &lt;defs&gt;"
 
-#: ../src/file.cpp:549
+#: ../src/file.cpp:553
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
@@ -5108,11 +5043,11 @@ msgstr[0] "Вилучено <b>%i</b> непотрібний елемент у &
 msgstr[1] "Вилучено <b>%i</b> непотрібні елементи у &lt;defs&gt;."
 msgstr[2] "Вилучено <b>%i</b> непотрібних елементів у &lt;defs&gt;."
 
-#: ../src/file.cpp:554
+#: ../src/file.cpp:558
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Немає непотрібних елементів у &lt;defs&gt;."
 
-#: ../src/file.cpp:583
+#: ../src/file.cpp:587
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -5121,67 +5056,67 @@ msgstr ""
 "Не знайдено модуль збереження документа (%s). Можливо, невідоме розширення "
 "файлу."
 
-#: ../src/file.cpp:584 ../src/file.cpp:592 ../src/file.cpp:598
+#: ../src/file.cpp:588 ../src/file.cpp:596 ../src/file.cpp:602
 msgid "Document not saved."
 msgstr "Документ не збережено."
 
-#: ../src/file.cpp:591
+#: ../src/file.cpp:595
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Файл %s неможливо зберегти."
 
-#: ../src/file.cpp:605
+#: ../src/file.cpp:609
 msgid "Document saved."
 msgstr "Документ збережено."
 
-#: ../src/file.cpp:746 ../src/file.cpp:1156 ../src/file.cpp:1276
+#: ../src/file.cpp:750 ../src/file.cpp:1160 ../src/file.cpp:1280
 #, c-format
 msgid "drawing%s"
 msgstr "рисунок%s"
 
-#: ../src/file.cpp:752
+#: ../src/file.cpp:756
 #, c-format
 msgid "drawing-%d%s"
 msgstr "рисунок-%d%s"
 
-#: ../src/file.cpp:771
+#: ../src/file.cpp:775
 msgid "Select file to save a copy to"
 msgstr "Оберіть файл для збереження копії"
 
-#: ../src/file.cpp:773
+#: ../src/file.cpp:777
 msgid "Select file to save to"
 msgstr "Виберіть файл для збереження"
 
-#: ../src/file.cpp:853
+#: ../src/file.cpp:857
 msgid "No changes need to be saved."
 msgstr "Файл не було змінено. Збереження непотрібне."
 
-#: ../src/file.cpp:870
+#: ../src/file.cpp:874
 msgid "Saving document..."
 msgstr "Збереження документа..."
 
-#: ../src/file.cpp:1028
+#: ../src/file.cpp:1032
 msgid "Import"
 msgstr "Імпорт"
 
-#: ../src/file.cpp:1058
+#: ../src/file.cpp:1062
 msgid "Select file to import"
 msgstr "Виберіть файл для імпорту"
 
-#: ../src/file.cpp:1177 ../src/file.cpp:1291
+#: ../src/file.cpp:1181 ../src/file.cpp:1295
 msgid "Select file to export to"
 msgstr "Оберіть файл для експорту"
 
-#: ../src/file.cpp:1323
+#: ../src/file.cpp:1327
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Помилка під час збереження тимчасової копії"
 
-#: ../src/file.cpp:1343
+#: ../src/file.cpp:1347
 msgid "Open Clip Art Login"
 msgstr "Вхід до Open Clip Art"
 
-#: ../src/file.cpp:1369
+#: ../src/file.cpp:1373
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5192,11 +5127,11 @@ msgstr ""
 "сервера, ім’я користувача та пароль, чи є у сервера підтримка webdav, і чи "
 "не забули ви вказати також і ліцензію."
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1394
 msgid "Document exported..."
 msgstr "Документ експортовано..."
 
-#: ../src/file.cpp:1418 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1422 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Імпортувати з Open Clip Art Library"
 
@@ -5464,10 +5399,8 @@ msgstr "<b>Надто багато втягувань</b>, результат п
 
 #: ../src/flood-context.cpp:509
 #, c-format
-msgid ""
-"Area filled, path with <b>%d</b> node created and unioned with selection."
-msgid_plural ""
-"Area filled, path with <b>%d</b> nodes created and unioned with selection."
+msgid "Area filled, path with <b>%d</b> node created and unioned with selection."
+msgid_plural "Area filled, path with <b>%d</b> nodes created and unioned with selection."
 msgstr[0] ""
 "Область заповнено, контур з <b>%d</b> вузом створено і поєднано з виділеною "
 "областю."
@@ -5573,10 +5506,8 @@ msgstr[2] " у %d виділених об’єктах"
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
 #: ../src/gradient-context.cpp:171
 #, c-format
-msgid ""
-"One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
-msgid_plural ""
-"One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
+msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
+msgid_plural "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
 msgstr[0] ""
 "Вибрано один важіль, що містить %d опорну точку (перетягніть з клавішею "
 "<b>Shift</b>, щоб роз’єднати)"
@@ -5600,8 +5531,7 @@ msgstr[2] "Вибрано <b>%d</b> важелів градієнта з %d"
 #: ../src/gradient-context.cpp:186
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
-msgid_plural ""
-"<b>No</b> gradient handles selected out of %d on %d selected objects"
+msgid_plural "<b>No</b> gradient handles selected out of %d on %d selected objects"
 msgstr[0] "<b>Жодного</b> важеля градієнта з %d в %d обраному об’єкті"
 msgstr[1] "<b>Жодного</b> важеля градієнта з %d в %d обраних об’єктах"
 msgstr[2] "<b>Жодного</b> важеля градієнта з %d в %d обраних об’єктах"
@@ -5886,43 +5816,41 @@ msgstr "ex"
 msgid "Ex squares"
 msgstr "Ex квадрати"
 
-#: ../src/inkscape.cpp:323
+#: ../src/inkscape.cpp:324
 msgid "Autosaving documents..."
 msgstr "Автозбереження документів..."
 
-#: ../src/inkscape.cpp:394
+#: ../src/inkscape.cpp:395
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr ""
 "Спроба автоматичного збереження зазнала невдачі! Не вдалося знайти додаток "
 "inkscape для зберігання документа."
 
-#: ../src/inkscape.cpp:397 ../src/inkscape.cpp:404
+#: ../src/inkscape.cpp:398 ../src/inkscape.cpp:405
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
-msgstr ""
-"Спроба автоматичного зберігання зазнала невдачі! Файл %s неможливо зберегти."
+msgstr "Спроба автоматичного зберігання зазнала невдачі! Файл %s неможливо зберегти."
 
-#: ../src/inkscape.cpp:419
+#: ../src/inkscape.cpp:420
 msgid "Autosave complete."
 msgstr "Автоматичне збереження завершено."
 
-#: ../src/inkscape.cpp:650
+#: ../src/inkscape.cpp:651
 msgid "Untitled document"
 msgstr "Без назви"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:680
+#: ../src/inkscape.cpp:681
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Внутрішня помилка. Inkscape зараз буде закритий.\n"
 
-#: ../src/inkscape.cpp:681
+#: ../src/inkscape.cpp:682
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
-msgstr ""
-"Виконано автоматичне збереження резервних копій не збережених документів:\n"
+msgstr "Виконано автоматичне збереження резервних копій не збережених документів:\n"
 
-#: ../src/inkscape.cpp:682
+#: ../src/inkscape.cpp:683
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Не вдається створити резервну копію такого документа:\n"
 
@@ -6221,8 +6149,7 @@ msgstr "Зі зміною розміру"
 
 #: ../src/libgdl/gdl-dock-item.c:304
 msgid "If set, the dock item can be resized when docked in a panel"
-msgstr ""
-"Якщо встановлено, розмір елемента панелі можна змінювати під час вбудовування"
+msgstr "Якщо встановлено, розмір елемента панелі можна змінювати під час вбудовування"
 
 #: ../src/libgdl/gdl-dock-item.c:311
 msgid "Item behavior"
@@ -6241,10 +6168,8 @@ msgid "Locked"
 msgstr "Замкнута"
 
 #: ../src/libgdl/gdl-dock-item.c:321
-msgid ""
-"If set, the dock item cannot be dragged around and it doesn't show a grip"
-msgstr ""
-"Якщо встановлено, елемент панелі не можна пересувати, він не показує ґратки"
+msgid "If set, the dock item cannot be dragged around and it doesn't show a grip"
+msgstr "Якщо встановлено, елемент панелі не можна пересувати, він не показує ґратки"
 
 #: ../src/libgdl/gdl-dock-item.c:329
 msgid "Preferred width"
@@ -6454,13 +6379,11 @@ msgstr ""
 #: ../src/libgdl/gdl-dock-object.c:570
 #, c-format
 msgid "Cannot dock %p to %p because they belong to different masters"
-msgstr ""
-"Не вдалося прив’язати %p до %p, оскільки вони належать різним господарям"
+msgstr "Не вдалося прив’язати %p до %p, оскільки вони належать різним господарям"
 
 #: ../src/libgdl/gdl-dock-object.c:612
 #, c-format
-msgid ""
-"Attempt to bind to %p an already bound dock object %p (current master: %p)"
+msgid "Attempt to bind to %p an already bound dock object %p (current master: %p)"
 msgstr ""
 "Спроба прив’язування до %p вже прив’язаного об’єкта %p (поточний господар: %"
 "p)"
@@ -6627,9 +6550,8 @@ msgid "Rotate copies"
 msgstr "Обертання копій"
 
 #: ../src/live_effects/effect.cpp:103
-#, fuzzy
 msgid "Recursive skeleton"
-msgstr "Створити криві з вибраного..."
+msgstr "Рекурсивний каркас"
 
 #: ../src/live_effects/effect.cpp:104
 msgid "Ruler"
@@ -6986,7 +6908,7 @@ msgstr ""
 "довжини"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
-msgid "Ellipitic Pen"
+msgid "Elliptic Pen"
 msgstr "Еліптичне перо"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:61
@@ -7336,8 +7258,7 @@ msgstr "Відкинути початковий контур?"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:30
 msgid "Check this to only keep the mirrored part of the path"
-msgstr ""
-"Позначте цей пункт, щоб програма зберегла лише віддзеркалену частину контуру"
+msgstr "Позначте цей пункт, щоб програма зберегла лише віддзеркалену частину контуру"
 
 #: ../src/live_effects/lpe-mirror_symmetry.cpp:31
 msgid "Reflection line"
@@ -7488,8 +7409,7 @@ msgstr "Об’єднувати ближні кінці"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr ""
-"Об’єднувати кінці, ближчі за вказане значення. 0 означає «не об’єднувати»."
+msgstr "Об’єднувати кінці, ближчі за вказане значення. 0 означає «не об’єднувати»."
 
 #: ../src/live_effects/lpe-perp_bisector.cpp:113
 msgid "Adjust the bisector's \"left\" end"
@@ -7553,7 +7473,6 @@ msgid "Frequency randomness"
 msgstr "Випадковість частоти"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
-#, fuzzy
 msgid "Variation of distance between hatches, in %."
 msgstr "Варіація відстаней у штрихуванні, у %."
 
@@ -7620,8 +7539,7 @@ msgstr "Варіація амплітуди: перша сторона"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
-msgstr ""
-"Випадково пересуває «нижні» напіввигини для створення варіації амплітуди."
+msgstr "Випадково пересуває «нижні» напіввигини для створення варіації амплітуди."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
@@ -7631,8 +7549,7 @@ msgstr "Друга сторона"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
-msgstr ""
-"Випадково пересуває «верхні» напіввигини для створення варіації амплітуди."
+msgstr "Випадково пересуває «верхні» напіввигини для створення варіації амплітуди."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Parallelism jitter: 1st side"
@@ -7655,9 +7572,8 @@ msgstr ""
 "паралельно до границі."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-#, fuzzy
 msgid "Variance: 1st side"
-msgstr "Розсіяння: перша сторона"
+msgstr "Варіація: перша сторона"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Randomness of 'bottom' halfturns smoothness"
@@ -7685,7 +7601,6 @@ msgid "Add a global bend to the hatches (slower)"
 msgstr "Додати загальний вигин до штрихування (повільно)"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-#, fuzzy
 msgid "Thickness: at 1st side"
 msgstr "Товщина: на першій стороні"
 
@@ -7730,12 +7645,10 @@ msgid "Global bending"
 msgstr "Загальне згинання"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
-#, fuzzy
 msgid ""
 "Relative position to a reference point defines global bending direction and "
 "amount"
-msgstr ""
-"Відносна позиція еталонної точки визначає напрям і величину загального вигину"
+msgstr "Відносна позиція еталонної точки визначає напрям і величину загального вигину"
 
 #: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
@@ -7875,31 +7788,28 @@ msgstr ""
 "(відносно максимальної довжини)"
 
 #: ../src/live_effects/lpe-sketch.cpp:46
-#, fuzzy
 msgid "Average offset"
-msgstr "Відступ паралельної"
+msgstr "Середній відступ"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
-#, fuzzy
 msgid "Average distance each stroke is away from the original path"
-msgstr "Середня відстань від контуру наближення до початкового контуру"
+msgstr "Середня відстань від штрихів до початкового контуру"
 
 #: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
-msgstr "Макс. тремтіння"
+msgstr "Макс. коливання"
 
 #: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Maximum tremble magnitude"
-msgstr "Максимальна амплітуда тремтіння"
+msgstr "Максимальна амплітуда коливання"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
 msgid "Tremble frequency"
-msgstr "Частота тремтіння"
+msgstr "Частота коливання"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
-#, fuzzy
 msgid "Average number of tremble periods in a stroke"
-msgstr "Середня кількість тремтінь у характерному штриху"
+msgstr "Середня кількість коливань у характерному штриху"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
@@ -7934,31 +7844,28 @@ msgid "Random variation of the length of construction lines"
 msgstr "Випадкова варіація довжини ліній побудови"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-#, fuzzy
 msgid "Placement randomness"
-msgstr "Випадковість частоти"
+msgstr "Випадковість розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-msgid "0: evenly distributed construcion lines, 1: purely random placement"
-msgstr ""
+msgid "0: evenly distributed construction lines, 1: purely random placement"
+msgstr "0: регулярно розподілені ліній побудови, 1: суто випадкове розташування"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
-#, fuzzy
 msgid "k_min"
-msgstr "Об'_єднати"
+msgstr "k_min"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "min curvature"
-msgstr ""
+msgstr "мінімальна кривина"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "k_max"
-msgstr ""
+msgstr "k_max"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
-#, fuzzy
 msgid "max curvature"
-msgstr "Потягти криву"
+msgstr "максимальна кривина"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:56
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
@@ -8180,8 +8087,10 @@ msgid "Export document to a PNG file"
 msgstr "Експортувати документ у файл формату PNG"
 
 #: ../src/main.cpp:294
-msgid "The resolution used for exporting SVG into bitmap (default 90)"
-msgstr "Роздільна здатність для експортування SVG у растр (типово 90)"
+msgid ""
+"Resolution for exporting to bitmap and for rasterization of filters in PS/"
+"EPS/PDF (default 90)"
+msgstr "Роздільна здатність для експортування у растр і для растеризації фільтрів у PS/EPS/PDF (типове значення 90)"
 
 #: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
@@ -8242,8 +8151,7 @@ msgstr "Ідентифікатор"
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
 #: ../src/main.cpp:336
-msgid ""
-"Export just the object with export-id, hide all others (only with export-id)"
+msgid "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "Експортувати лише об'єкт з заданим ідентифікатором, усі інші приховати (лише "
 "з export-id)"
@@ -8372,7 +8280,7 @@ msgid "OBJECT-ID"
 msgstr "ІД-ОБ'ЄКТА"
 
 #: ../src/main.cpp:453
-msgid "Start Inkscape in interative shell mode."
+msgid "Start Inkscape in interactive shell mode."
 msgstr "Запустити Inkscape у режимі інтерактивної оболонки."
 
 #: ../src/main.cpp:756 ../src/main.cpp:1067
@@ -8484,8 +8392,7 @@ msgstr ""
 "<b>Ctrl+Alt</b>: переміщувати вздовж вуса чи прямого фрагменту"
 
 #: ../src/node-context.cpp:224
-msgid ""
-"<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
+msgid "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 "<b>Shift</b>: виділити/зняти виділення вузла, вимкнути прилипання, обертати "
 "обидва вуса"
@@ -8726,10 +8633,8 @@ msgstr[2] "Виділено <b>%i</b> з <b>%i</b> вузлів; %s. %s."
 
 #: ../src/nodepath.cpp:4969
 #, c-format
-msgid ""
-"<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgid_plural ""
-"<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
+msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
+msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgstr[0] ""
 "Виділено <b>%i</b> з <b>%i</b> вузла на <b>%i</b> з <b>%i</b> підконтурів. %"
 "s."
@@ -8975,10 +8880,8 @@ msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr "<b>Клацання</b> або <b>перетягування</b> закривають цей контур."
 
 #: ../src/pen-context.cpp:677
-msgid ""
-"<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr ""
-"<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
+msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
+msgstr "<b>Клацання</b> або <b>перетягування</b> продовжує контур з цієї точки."
 
 #: ../src/pen-context.cpp:1271
 #, c-format
@@ -9003,8 +8906,7 @@ msgstr ""
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
-msgstr ""
-"<b>Вус вузла кривої</b>: кут %3.2f&#176;, довжина %s; <b>Ctrl</b> обмежує кут"
+msgstr "<b>Вус вузла кривої</b>: кут %3.2f&#176;, довжина %s; <b>Ctrl</b> обмежує кут"
 
 #: ../src/pen-context.cpp:1312
 #, c-format
@@ -9036,61 +8938,60 @@ msgstr "Перемикання точки сходу"
 msgid "Toggle multiple vanishing points"
 msgstr "Перемикання декількох точок сходу"
 
-#: ../src/preferences.cpp:104
-msgid ""
-"Inkscape will run with default settings, and new settings will not be saved. "
+#: ../src/preferences.cpp:101
+msgid "Inkscape will run with default settings, and new settings will not be saved. "
 msgstr ""
 "Inkscape буде запущено з типовими параметрами, нові параметри збережено не "
 "буде. "
 
 #. the creation failed
-#. _errorDialog(Glib::ustring::compose(_("Cannot create profile directory %1."),
+#. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:122
+#: ../src/preferences.cpp:116
 #, c-format
 msgid "Cannot create profile directory %s."
 msgstr "Не вдається створити каталог профілю %s."
 
 #. The profile dir is not actually a directory
-#. _errorDialog(Glib::ustring::compose(_("%1 is not a valid directory."),
+#. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:140
+#: ../src/preferences.cpp:134
 #, c-format
 msgid "%s is not a valid directory."
 msgstr "%s не є коректним каталогом."
 
 #. The write failed.
-#. _errorDialog(Glib::ustring::compose(_("Failed to create the preferences file %1."),
+#. _reportError(Glib::ustring::compose(_("Failed to create the preferences file %1."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:151
+#: ../src/preferences.cpp:145
 #, c-format
 msgid "Failed to create the preferences file %s."
 msgstr "На вдалося створити файл налаштувань %s."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:169
+#: ../src/preferences.cpp:163
 #, c-format
 msgid "The preferences file %s is not a regular file."
 msgstr "Файл налаштувань %s не є звичайним файлом."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 could not be read."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 could not be read."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:181
+#: ../src/preferences.cpp:175
 #, c-format
 msgid "The preferences file %s could not be read."
 msgstr "Файл налаштувань %s неможливо прочитати."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:193
+#: ../src/preferences.cpp:188
 #, c-format
 msgid "The preferences file %s is not a valid XML document."
 msgstr "Файл налаштувань %s не є коректним документом XML."
 
-#. _errorDialog(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
+#. _reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:203
+#: ../src/preferences.cpp:199
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "Файл %s не є коректним файлом налаштувань Inkscape."
@@ -9164,18 +9065,15 @@ msgid "Creator"
 msgstr "Автор"
 
 #: ../src/rdf.cpp:243
-msgid ""
-"Name of entity primarily responsible for making the content of this document."
-msgstr ""
-"Назва суб'єкта, головним чином відповідального за створення цього документа."
+msgid "Name of entity primarily responsible for making the content of this document."
+msgstr "Назва суб'єкта, головним чином відповідального за створення цього документа."
 
 #: ../src/rdf.cpp:245
 msgid "Rights"
 msgstr "Права"
 
 #: ../src/rdf.cpp:246
-msgid ""
-"Name of entity with rights to the Intellectual Property of this document."
+msgid "Name of entity with rights to the Intellectual Property of this document."
 msgstr "Назва суб'єкта, чиєю інтелектуальною власністю є цей документ."
 
 #: ../src/rdf.cpp:248
@@ -9257,7 +9155,7 @@ msgstr "Співавтори"
 msgid ""
 "Names of entities responsible for making contributions to the content of "
 "this document."
-msgstr "Назви суб'єктів, що зробили внесок у створення цього документа. "
+msgstr "Назви суб'єктів, що зробили внесок у створення цього документа."
 
 #. TRANSLATORS: URL to a page that defines the license for the document
 #: ../src/rdf.cpp:283
@@ -9363,8 +9261,7 @@ msgstr ""
 "ниткою"
 
 #: ../src/select-context.cpp:730
-msgid ""
-"<b>Alt</b>: click to select under; drag to move selected or select by touch"
+msgid "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
 "<b>Alt</b>: клацніть для виділення; перетягування для переміщення виділеної "
 "області чи вибір торканням"
@@ -9421,10 +9318,8 @@ msgstr "Оберіть <b>об'єкт(и)</b> для підняття."
 
 #: ../src/selection-chemistry.cpp:694 ../src/selection-chemistry.cpp:754
 #: ../src/selection-chemistry.cpp:788 ../src/selection-chemistry.cpp:852
-msgid ""
-"You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
-msgstr ""
-"Не можна піднімати/опускати об'єкти з <b>різних груп</b> чи <b>шарів</b>."
+msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
+msgstr "Не можна піднімати/опускати об'єкти з <b>різних груп</b> чи <b>шарів</b>."
 
 #. TRANSLATORS: Only put the word "Raise" in the translation. Means "to raise an object" in the undo history
 #: ../src/selection-chemistry.cpp:734
@@ -9592,8 +9487,7 @@ msgstr "Виділіть <b>клон</b> для перез'єднання."
 
 #: ../src/selection-chemistry.cpp:1940
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
-msgstr ""
-"Копіювати <b>об’єкт</b> до буфера обміну інформації для перез’єднання клонів."
+msgstr "Копіювати <b>об’єкт</b> до буфера обміну інформації для перез’єднання клонів."
 
 #: ../src/selection-chemistry.cpp:1964
 msgid "<b>No clones to relink</b> in the selection."
@@ -9693,8 +9587,7 @@ msgstr "Створення растрового зображення"
 
 #: ../src/selection-chemistry.cpp:2706
 msgid "Select <b>object(s)</b> to create clippath or mask from."
-msgstr ""
-"Оберіть <b>об'єкт(и)</b> для створення з них контуру вирізання або маски."
+msgstr "Оберіть <b>об'єкт(и)</b> для створення з них контуру вирізання або маски."
 
 #: ../src/selection-chemistry.cpp:2709
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
@@ -9712,8 +9605,7 @@ msgstr "Задати маску"
 
 #: ../src/selection-chemistry.cpp:2831
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr ""
-"Оберіть <b>об'єкт(и)</b> для вилучення контуру вирізання або маскування."
+msgstr "Оберіть <b>об'єкт(и)</b> для вилучення контуру вирізання або маскування."
 
 #: ../src/selection-chemistry.cpp:2904
 msgid "Release clipping path"
@@ -9815,8 +9707,7 @@ msgstr "Клацання на об'єкті перемикає стрілки з
 
 #. no items
 #: ../src/selection-describer.cpp:127
-msgid ""
-"No objects selected. Click, Shift+click, or drag around objects to select."
+msgid "No objects selected. Click, Shift+click, or drag around objects to select."
 msgstr ""
 "Немає виділених об'єктів. Використовуйте клацання, Shift+клацання, або "
 "обведіть навколо об'єктів, які треба виділити."
@@ -9983,8 +9874,7 @@ msgstr "Повернення до початкового центру"
 #: ../src/seltrans.cpp:1012 ../src/seltrans.cpp:1111
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr ""
-"<b>Зміна розміру</b>: %0.2f%% x %0.2f%%; з <b>Ctrl</b> - зберігаючи пропорцію"
+msgstr "<b>Зміна розміру</b>: %0.2f%% x %0.2f%%; з <b>Ctrl</b> - зберігаючи пропорцію"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
@@ -10117,8 +10007,7 @@ msgstr "<b>Alt</b>: зафіксувати радіус спіралі"
 
 #: ../src/spiral-context.cpp:432
 #, c-format
-msgid ""
-"<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
+msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Спіраль</b>: радіус %s, кут %5g&#176;; з <b>Ctrl</b> - обмежує кут"
 
 #: ../src/spiral-context.cpp:453
@@ -10186,8 +10075,7 @@ msgid "Select <b>at least 1 path</b> to perform a boolean union."
 msgstr "Оберіть <b>хоча б 1 контур</b> для виконання об'єднання."
 
 #: ../src/splivarot.cpp:131
-msgid ""
-"Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
+msgid "Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
 msgstr ""
 "Для операції виключного АБО, ділення та розрізання контуру виберіть <b>точно "
 "2 контури</b>."
@@ -10202,8 +10090,7 @@ msgstr ""
 "контуру."
 
 #: ../src/splivarot.cpp:192
-msgid ""
-"One of the objects is <b>not a path</b>, cannot perform boolean operation."
+msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Один з об'єктів <b>не є контуром</b>, логічна операція неможлива."
 
 #: ../src/splivarot.cpp:633
@@ -10221,8 +10108,7 @@ msgstr "У виділеному <b>немає контурів зі штрихі
 
 #: ../src/splivarot.cpp:1040
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
-msgstr ""
-"Виділений об'єкт <b>не є контуром</b>, втягування/розтягування неможливі."
+msgstr "Виділений об'єкт <b>не є контуром</b>, втягування/розтягування неможливі."
 
 #: ../src/splivarot.cpp:1159 ../src/splivarot.cpp:1228
 msgid "Create linked offset"
@@ -10414,10 +10300,8 @@ msgstr "<b>Ctrl</b>: обмежити кут; промені за радіусо
 
 #: ../src/star-context.cpp:442
 #, c-format
-msgid ""
-"<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"<b>Багатокутник</b>: радіус %s, кут %5g&#176;; з <b>Ctrl</b> - обмежує кут"
+msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
+msgstr "<b>Багатокутник</b>: радіус %s, кут %5g&#176;; з <b>Ctrl</b> - обмежує кут"
 
 #: ../src/star-context.cpp:443
 #, c-format
@@ -10522,8 +10406,7 @@ msgstr ""
 "частину тексту."
 
 #: ../src/text-context.cpp:446
-msgid ""
-"<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
+msgid "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr ""
 "<b>Клацніть</b>, щоб редагувати текст у рамці, <b>перетягуванням</b> можна "
 "виділити частину тексту."
@@ -10654,8 +10537,7 @@ msgstr ""
 #: ../src/text-context.cpp:1604
 #, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
-msgstr ""
-"Введіть або змініть текст (%d символів); <b>Enter</b> — початок нового рядка."
+msgstr "Введіть або змініть текст (%d символів); <b>Enter</b> — початок нового рядка."
 
 #: ../src/text-context.cpp:1612 ../src/tools-switch.cpp:190
 msgid ""
@@ -10685,8 +10567,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:136
 msgid "To tweak a path by pushing, select it and drag over it."
-msgstr ""
-"Щоб коригувати контур штовханням, виділіть його і проведіть по ньому мишею"
+msgstr "Щоб коригувати контур штовханням, виділіть його і проведіть по ньому мишею"
 
 #: ../src/tools-switch.cpp:142
 msgid ""
@@ -10774,8 +10655,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:214
 msgid "<b>Click and drag</b> between shapes to create a connector."
-msgstr ""
-"<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
+msgstr "<b>Клацання + перетягування</b> між фігурами створюють лінію з'єднання."
 
 #: ../src/tools-switch.cpp:220
 msgid ""
@@ -10857,8 +10737,7 @@ msgstr "%s. Перетягніть, щоб <b>пересунути</b>."
 #: ../src/tweak-context.cpp:215
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
-msgstr ""
-"%s. Перетягніть або клацніть, щоб <b>всунути</b>; з Shift — <b>висунути</b>."
+msgstr "%s. Перетягніть або клацніть, щоб <b>всунути</b>; з Shift — <b>висунути</b>."
 
 #: ../src/tweak-context.cpp:218
 #, c-format
@@ -10924,8 +10803,7 @@ msgstr "%s. Перетягніть або клацніть для <b>рандо�
 
 #: ../src/tweak-context.cpp:261
 #, c-format
-msgid ""
-"%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
+msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr ""
 "%s. Перетягніть або клацніть для <b>збільшення розмивання</b>; з Shift — для "
 "<b>зменшення</b>."
@@ -11212,7 +11090,7 @@ msgstr "Вузли"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:795
 msgid "Relative to: "
-msgstr "Відносно:"
+msgstr "Відносно: "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:796
 msgid "Treat selection as group: "
@@ -11312,8 +11190,7 @@ msgstr "Випадково розташувати центри у обох на�
 
 #: ../src/ui/dialog/align-and-distribute.cpp:882
 msgid "Unclump objects: try to equalize edge-to-edge distances"
-msgstr ""
-"Розгрупувати об'єкт: спробувати встановити рівну відстань між межами об'єктів"
+msgstr "Розгрупувати об'єкт: спробувати встановити рівну відстань між межами об'єктів"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:887
 msgid ""
@@ -11327,14 +11204,12 @@ msgid "Nicely arrange selected connector network"
 msgstr "Гармонійно розташувати обране з'єднання об'єктів"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:899
-#, fuzzy
 msgid "Align selected nodes to a common horizontal line"
-msgstr "Вирівняти вибрані вузли по горизонталі"
+msgstr "Вирівняти вибрані вузли до спільної горизонталі"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:902
-#, fuzzy
 msgid "Align selected nodes to a common vertical line"
-msgstr "Вирівняти вибрані вузли по вертикалі"
+msgstr "Вирівняти вибрані вузли до спільної вертикалі"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:905
 msgid "Distribute selected nodes horizontally"
@@ -11445,10 +11320,8 @@ msgid "Background color"
 msgstr "Колір тла"
 
 #: ../src/ui/dialog/document-properties.cpp:93
-msgid ""
-"Color and transparency of the page background (also used for bitmap export)"
-msgstr ""
-"Колір та прозорість тла сторінки (враховується при експортуванні у растр)"
+msgid "Color and transparency of the page background (also used for bitmap export)"
+msgstr "Колір та прозорість тла сторінки (враховується при експортуванні у растр)"
 
 #: ../src/ui/dialog/document-properties.cpp:94
 msgid "Border _color:"
@@ -11725,7 +11598,7 @@ msgstr "Вилучити зовнішній скрипт"
 
 #: ../src/ui/dialog/document-properties.cpp:733
 msgid "<b>Creation</b>"
-msgstr "<b>Створення</b> "
+msgstr "<b>Створення</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:734
 msgid "<b>Defined grids</b>"
@@ -11912,7 +11785,7 @@ msgstr "Файл зображення"
 msgid "Selected SVG Element"
 msgstr "Вибраний елемент SVG"
 
-#. TODO: any image, not justy svg
+#. TODO: any image, not just svg
 #: ../src/ui/dialog/filter-effects-dialog.cpp:648
 msgid "Select an image to be used as feImage input"
 msgstr "Оберіть зображення, що буде використано як вхідні дані feImage"
@@ -12431,7 +12304,7 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2289
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
-"the Porter-Duff blending modes or the aritmetic mode described in SVG "
+"the Porter-Duff blending modes or the arithmetic mode described in SVG "
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
 msgstr ""
@@ -12552,8 +12425,7 @@ msgstr ""
 "до глядача, а прозоріші — віддаляються."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2333
-msgid ""
-"The <b>feTile</b> filter primitive tiles a region with its input graphic"
+msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 "Примітив фільтра <b>feTile</b> заповнює область мозаїкою у вигляді вхідного "
 "графічного зображення"
@@ -12605,8 +12477,7 @@ msgid "Click/drag threshold:"
 msgstr "Вважати клацанням перетягування на:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:175
-msgid ""
-"Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
+msgid "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
 msgstr ""
 "Максимальна кількість точок, перетягування на яку сприймається як клацання, "
 "а не перетягування"
@@ -12632,10 +12503,8 @@ msgid "Switch tool based on tablet device (requires restart)"
 msgstr "Перемикати інструмент за пристроєм планшета (потребує перезапуску):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:183
-msgid ""
-"Change tool as different devices are used on the tablet (pen, eraser, mouse)"
-msgstr ""
-"Змінювати інструмент зі зміною пристроїв на планшеті (перо, гумка, мишка)"
+msgid "Change tool as different devices are used on the tablet (pen, eraser, mouse)"
+msgstr "Змінювати інструмент зі зміною пристроїв на планшеті (перо, гумка, мишка)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:188
 msgid "Scrolling"
@@ -12663,8 +12532,7 @@ msgstr "Крок прокрутки:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
-msgstr ""
-"На цю відстань у точках зсувається зображення при натисканні Ctrl+стрілки"
+msgstr "На цю відстань у точках зсувається зображення при натисканні Ctrl+стрілки"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:197
 msgid "Acceleration:"
@@ -12803,8 +12671,7 @@ msgid "> and < scale by:"
 msgstr "Крок зміни масштабу при > та <:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:247
-msgid ""
-"Pressing > or < scales selection up or down by this increment (in px units)"
+msgid "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr ""
 "На цю величину (у точках) змінюється розмір виділеного при натисканні "
 "клавіш  > чи <"
@@ -12814,8 +12681,7 @@ msgid "Inset/Outset by:"
 msgstr "Втягнути/розтягнути на:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:250
-msgid ""
-"Inset and Outset commands displace the path by this distance (in px units)"
+msgid "Inset and Outset commands displace the path by this distance (in px units)"
 msgstr ""
 "На цю відстань (у точках) переміщують контур команди втягування та "
 "розтягування"
@@ -12868,8 +12734,7 @@ msgid "Show selection cue"
 msgstr "Показувати позначку виділення"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:270
-msgid ""
-"Whether selected objects display a selection cue (the same as in selector)"
+msgid "Whether selected objects display a selection cue (the same as in selector)"
 msgstr "Чи відображатиметься позначка виділення (як і у селекторі)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:276
@@ -12953,8 +12818,7 @@ msgstr "Стиль цього інструменту нових об'єктів"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:377
 msgid "Remember the style of the (first) selected object as this tool's style"
-msgstr ""
-"Запам'ятати стиль (першого) виділеного об'єкту як стиль даного інструменту"
+msgstr "Запам'ятати стиль (першого) виділеного об'єкту як стиль даного інструменту"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:382
 msgid "Tools"
@@ -13045,8 +12909,7 @@ msgstr "Рамку"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:416
 msgid "Show only a box outline of the objects when moving or transforming"
-msgstr ""
-"Показувати лише прямокутну рамку об'єктів при переміщенні чи трансформації"
+msgstr "Показувати лише прямокутну рамку об'єктів при переміщенні чи трансформації"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:417
 msgid "Per-object selection cue:"
@@ -13062,8 +12925,7 @@ msgstr "Позначка"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:423
 msgid "Each selected object has a diamond mark in the top left corner"
-msgstr ""
-"Кожен виділений об'єкт має позначку у вигляді ромба у лівому верхньому куті"
+msgstr "Кожен виділений об'єкт має позначку у вигляді ромба у лівому верхньому куті"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:424
 msgid "Box"
@@ -13204,8 +13066,7 @@ msgstr "Лінія з'єднання"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "If on, connector attachment points will not be shown for text objects"
-msgstr ""
-"У разі обрання кінці лінії з'єднання не буде показано для текстових об'єктів"
+msgstr "У разі обрання кінці лінії з'єднання не буде показано для текстових об'єктів"
 
 #. Dropper
 #: ../src/ui/dialog/inkscape-preferences.cpp:533 ../src/verbs.cpp:2528
@@ -13214,8 +13075,7 @@ msgstr "Піпетка"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:540
 msgid "Save and restore window geometry for each document"
-msgstr ""
-"Запам’ятовувати і використовувати геометрію вікна для кожного документа"
+msgstr "Запам’ятовувати і використовувати геометрію вікна для кожного документа"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:541
 msgid "Remember and use last window's geometry"
@@ -13421,8 +13281,7 @@ msgstr ""
 "вирізання або маску"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:641
-msgid ""
-"Uncheck this to use the bottom selected object as the clipping path or mask"
+msgid "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "Зніміть позначку щоб використовувати нижній виділений об'єкт як контур "
 "вирізання або маску"
@@ -13471,8 +13330,7 @@ msgstr "Без оптимізації"
 #: ../src/ui/dialog/inkscape-preferences.cpp:658
 #: ../src/widgets/select-toolbar.cpp:545
 msgid "When scaling objects, scale the stroke width by the same proportion"
-msgstr ""
-"При зміні розміру об'єктів змінювати ширину штриха у відповідній пропорції"
+msgstr "При зміні розміру об'єктів змінювати ширину штриха у відповідній пропорції"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:660
 #: ../src/widgets/select-toolbar.cpp:556
@@ -13713,8 +13571,7 @@ msgstr "Абсолютна колориметрична"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:830
 msgid "(Note: Color management has been disabled in this build)"
-msgstr ""
-"(Зауваження: під час збирання цієї програми керування кольором було вимкнено)"
+msgstr "(Зауваження: під час збирання цієї програми керування кольором було вимкнено)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:834
 msgid "Display adjustment"
@@ -13953,8 +13810,7 @@ msgstr "Дозволити відносні координати"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1029
 msgid "If set, relative coordinates may be used in path data"
-msgstr ""
-"Якщо позначено, у даних контурів можна використовувати відносні координати"
+msgstr "Якщо позначено, у даних контурів можна використовувати відносні координати"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1031
 msgid "Force repeat commands"
@@ -13982,7 +13838,7 @@ msgstr "Кількість цифр, які програма записує пі
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1040
 msgid "Minimum exponent:"
-msgstr "Мінімальний показник"
+msgstr "Мінімальний показник:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1040
 msgid ""
@@ -14261,9 +14117,8 @@ msgid "Set the language for menus and number formats"
 msgstr "Встановити мову для пунктів меню і формату чисел"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1068
-#, fuzzy
 msgid "Smaller"
-msgstr "Мала"
+msgstr "Менший"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1072
 msgid "Toolbox icon size"
@@ -14278,8 +14133,7 @@ msgid "Control bar icon size"
 msgstr "Розмір піктограм панелі керування"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1077
-msgid ""
-"Set the size for the icons in tools' control bars to use (requires restart)"
+msgid "Set the size for the icons in tools' control bars to use (requires restart)"
 msgstr "Вказати розмір піктограм панелі керування (потрібен перезапуск)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1080
@@ -14287,8 +14141,7 @@ msgid "Secondary toolbar icon size"
 msgstr "Розмір піктограм вторинної панелі інструментів"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1081
-msgid ""
-"Set the size for the icons in secondary toolbars to use (requires restart)"
+msgid "Set the size for the icons in secondary toolbars to use (requires restart)"
 msgstr "Вказати розмір вторинної панелі інструментів (потрібен перезапуск)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1084
@@ -14371,8 +14224,7 @@ msgid "Maximum number of autosaves:"
 msgstr "Максимальна кількість копій автозбереження:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1118
-msgid ""
-"Maximum number of autosaved files; use this to limit the storage space used"
+msgid "Maximum number of autosaved files; use this to limit the storage space used"
 msgstr ""
 "Максимальна кількість файлів автоматичного збереження, скористайтеся, щоб "
 "зекономити простір на диску"
@@ -14419,8 +14271,7 @@ msgstr "Автоматично перезавантажувати растр"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1149
 msgid "Automatically reload linked images when file is changed on disk"
-msgstr ""
-"Автоматично перезавантажувати пов’язані зображення після зміни файла на диску"
+msgstr "Автоматично перезавантажувати пов’язані зображення після зміни файла на диску"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1163
 msgid "Bitmap editor:"
@@ -14432,8 +14283,7 @@ msgstr "Роздільна здатність для створення раст
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1170
 msgid "Resolution used by the Create Bitmap Copy command"
-msgstr ""
-"Роздільна здатність, яку буде використано у команді створення растрової копії"
+msgstr "Роздільна здатність, яку буде використано у команді створення растрової копії"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1172
 msgid "Bitmaps"
@@ -14565,53 +14415,47 @@ msgstr ""
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
 #: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "User config: "
-msgstr ""
+msgstr "Налаштування користувача: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1290
-#, fuzzy
 msgid "User data: "
-msgstr "Ім’я користувача:"
+msgstr "Дані користувача: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1294
-#, fuzzy
 msgid "User cache: "
-msgstr "Ім’я користувача:"
+msgstr "Кеш користувача: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1298
 msgid "System config: "
-msgstr ""
+msgstr "Системні налаштування: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1301
-#, fuzzy
 msgid "System data: "
-msgstr "Типова системна"
+msgstr "Системна дата: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1304
 msgid "PIXMAP: "
-msgstr ""
+msgstr "PIXMAP: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1308
 msgid "DATA: "
-msgstr ""
+msgstr "DATA: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1312
-#, fuzzy
 msgid "UI: "
-msgstr "_ID: "
+msgstr "UI: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1321
 msgid "Icon theme: "
-msgstr ""
+msgstr "Тема піктограм: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1336
-#, fuzzy
 msgid "System info"
-msgstr "Системний"
+msgstr "Відомості щодо системи"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1336
-#, fuzzy
 msgid "General system information"
-msgstr "Інформація повідомлення"
+msgstr "Загальні відомості щодо системи"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1338
 msgid "Misc"
@@ -14971,126 +14815,133 @@ msgstr "У діалоговому вікні SVGFonts не обрано гліф
 msgid "Set glyph curves"
 msgstr "Визначити криві гліфу"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:566
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:570
+msgid "Reset missing-glyph"
+msgstr "Скинути стан відсутності гліфів"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:585
 msgid "Edit glyph name"
 msgstr "Змінити назву гліфу"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:579
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:598
 msgid "Set glyph unicode"
 msgstr "Встановити unicode-кодування гліфу"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:589
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:608
 msgid "Remove font"
 msgstr "Вилучити шрифт"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:604
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:623
 msgid "Remove glyph"
 msgstr "Вилучити гліф"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:619
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:638
 msgid "Remove kerning pair"
 msgstr "Вилучити апрош пари"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:629
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 msgid "Missing Glyph:"
 msgstr "Відсутній гліф:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:632
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:652
 msgid "From selection..."
 msgstr "З виділеного..."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:642
-msgid "Glyph Name"
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:654
+#: ../src/ui/widget/preferences-widget.cpp:590
+msgid "Reset"
+msgstr "Скинути"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:665
+msgid "Glyph name"
 msgstr "Назва гліфу"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:643
-msgid "Unicode"
-msgstr "Unicode"
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:666
+msgid "Matching string"
+msgstr "Рядок пошуку"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:646
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:669
 msgid "Add Glyph"
 msgstr "Додати гліф"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:653
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:676
 msgid "Get curves from selection..."
 msgstr "Створити криві з вибраного..."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:703
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
 msgstr "Додавання апрошу пари"
 
 #. Kerning Setup:
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:711
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:734
 msgid "Kerning Setup:"
 msgstr "Налаштування апрошів:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:713
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
 msgstr "Перший гліф:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:715
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
 msgid "2nd Glyph:"
 msgstr "Другий гліф:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:718
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:741
 msgid "Add pair"
 msgstr "Додати пару"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:730
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:753
 msgid "First Unicode range"
 msgstr "Перший діапазон Unicode"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:731
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:754
 msgid "Second Unicode range"
 msgstr "Другий діапазон Unicode"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:761
 msgid "Kerning value:"
 msgstr "Значення апрошу:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:796
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 msgid "Set font family"
 msgstr "Вказати гарнітуру шрифту"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:805
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:828
 msgid "font"
 msgstr "шрифт"
 
 #. select_font(font);
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:842
 msgid "Add font"
 msgstr "Додати шрифт"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:839
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:862
 msgid "_Font"
 msgstr "_Шрифт"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:847
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:870
 msgid "_Global Settings"
 msgstr "_Загальні параметри"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:848
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:871
 msgid "_Glyphs"
 msgstr "_Гліфи"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:849
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:872
 msgid "_Kerning"
 msgstr "_Апроші"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:856
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:857
-#, fuzzy
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:879
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:880
 msgid "Sample Text"
-msgstr "Масштаб за x"
+msgstr "Текст зразка"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:861
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:884
 msgid "Preview Text:"
 msgstr "Перегляд тексту:"
 
 #: ../src/ui/dialog/swatches.cpp:329
 #, c-format
-msgid ""
-"Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
+msgid "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
 msgstr ""
 "Колір: <b>%s</b>; <b>Клацання</b> встановить колір заповнення, <b>Shift"
 "+Клацання</b> встановить колір штриха"
@@ -15249,8 +15100,7 @@ msgstr "Визначення меж"
 
 #: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
-msgstr ""
-"Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
+msgstr "Векторизація з визначенням найкращого вибору меж за алгоритмом J. Canny"
 
 #: ../src/ui/dialog/tracedialog.cpp:451
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
@@ -15340,7 +15190,7 @@ msgid ""
 "gaps)"
 msgstr ""
 "Складати у стос проходи вертикально (без проміжків) замість складання "
-"мозаїкою (зазвичай з проміжками) "
+"мозаїкою (зазвичай з проміжками)"
 
 #: ../src/ui/dialog/tracedialog.cpp:545
 msgid "Remove background"
@@ -15689,8 +15539,7 @@ msgstr "З’єднано з сервером Jabber <b>%1</b> як <b>%2</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:265
 msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-"Спроба реєстрації на сервері Jabber була невдалою <b>%1</b> для <b>%2</b>"
+msgstr "Спроба реєстрації на сервері Jabber була невдалою <b>%1</b> для <b>%2</b>"
 
 #. Construct labels
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
@@ -15971,10 +15820,6 @@ msgstr "ширше"
 #: ../src/ui/widget/panel.cpp:205
 msgid "swatches|Wrap"
 msgstr "Огорнути"
-
-#: ../src/ui/widget/preferences-widget.cpp:590
-msgid "Reset"
-msgstr "Скинути"
 
 #: ../src/ui/widget/random.cpp:123
 msgid ""
@@ -16359,8 +16204,7 @@ msgstr "Скоригувати товщину штриха"
 #: ../src/ui/widget/selected-style.cpp:1401
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
-msgstr ""
-"Корекція <b>товщини штриха</b>: була %.3g, зараз <b>%.3g</b> (різниця %.3g)"
+msgstr "Корекція <b>товщини штриха</b>: була %.3g, зараз <b>%.3g</b> (різниця %.3g)"
 
 #. TRANSLATORS: Only translate the word "Link" - means to _link_ two sliders together
 #: ../src/ui/widget/spin-slider.cpp:118
@@ -16441,8 +16285,7 @@ msgstr[2] "<b>Нескінченна</b> точка сходу, спільна �
 
 #: ../src/vanishing-point.cpp:320
 #, c-format
-msgid ""
-"shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
+msgid "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
 msgid_plural ""
 "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box"
 "(es)"
@@ -17040,7 +16883,7 @@ msgstr "Наступний параметр ефекту контуру"
 
 #: ../src/verbs.cpp:2347
 msgid "Show next Path Effect parameter for editing"
-msgstr "Показати наступний ефект контуру для редагування"
+msgstr "Показати наступний параметр ефекту контуру для редагування"
 
 #. Selection
 #: ../src/verbs.cpp:2350
@@ -17103,8 +16946,7 @@ msgstr "Вилучити ручний _міжлітерний інтервал"
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2370
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr ""
-"Вилучити з текстового об'єкта усі додані вручну повороти кернів та гліфів"
+msgstr "Вилучити з текстового об'єкта усі додані вручну повороти кернів та гліфів"
 
 #: ../src/verbs.cpp:2372
 msgid "_Union"
@@ -17158,8 +17000,7 @@ msgstr "Розрізати _контур"
 
 #: ../src/verbs.cpp:2385
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr ""
-"Розрізати штрих нижнього контуру верхнім на частини, з вилученням заповнення"
+msgstr "Розрізати штрих нижнього контуру верхнім на частини, з вилученням заповнення"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -17221,8 +17062,7 @@ msgstr "Д_инамічне втягування"
 
 #: ../src/verbs.cpp:2409
 msgid "Create a dynamic offset object"
-msgstr ""
-"Створити об'єкт, втягування/розтягування якого можна змінювати динамічно"
+msgstr "Створити об'єкт, втягування/розтягування якого можна змінювати динамічно"
 
 #: ../src/verbs.cpp:2411
 msgid "_Linked Offset"
@@ -17230,8 +17070,7 @@ msgstr "Зв'_язане втягування"
 
 #: ../src/verbs.cpp:2412
 msgid "Create a dynamic offset object linked to the original path"
-msgstr ""
-"Створити втягування/розтягування, динамічно пов'язане з початковим контуром"
+msgstr "Створити втягування/розтягування, динамічно пов'язане з початковим контуром"
 
 #: ../src/verbs.cpp:2414
 msgid "_Stroke to Path"
@@ -17266,8 +17105,7 @@ msgstr "_Векторизувати растр"
 
 #: ../src/verbs.cpp:2422
 msgid "Create one or more paths from a bitmap by tracing it"
-msgstr ""
-"Створення одного або більше контурів з растрового файла шляхом трасування"
+msgstr "Створення одного або більше контурів з растрового файла шляхом трасування"
 
 #: ../src/verbs.cpp:2423
 msgid "_Make a Bitmap Copy"
@@ -17508,8 +17346,7 @@ msgid "Remove mask from selection"
 msgstr "Вилучити маску з виділеного"
 
 #: ../src/verbs.cpp:2493
-msgid ""
-"Apply clipping path to selection (using the topmost object as clipping path)"
+msgid "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
 "Застосувати контур-обгортку до виділених об'єктів (використовуючи найвищий "
 "об'єкт як контур-обгортку)"
@@ -17654,8 +17491,7 @@ msgstr "Параметри просторового об’єкта"
 
 #: ../src/verbs.cpp:2550
 msgid "Open Preferences for the 3D Box tool"
-msgstr ""
-"Відкрити вікно параметрів Inkscape для інструмента \"Просторовий об’єкт\""
+msgstr "Відкрити вікно параметрів Inkscape для інструмента \"Просторовий об’єкт\""
 
 #: ../src/verbs.cpp:2551
 msgid "Ellipse Preferences"
@@ -17703,8 +17539,7 @@ msgstr "Параметри каліграфічного пера"
 
 #: ../src/verbs.cpp:2562
 msgid "Open Preferences for the Calligraphy tool"
-msgstr ""
-"Відкрити вікно параметрів Inkscape для інструмента \"Каліграфічне перо\""
+msgstr "Відкрити вікно параметрів Inkscape для інструмента \"Каліграфічне перо\""
 
 #: ../src/verbs.cpp:2563
 msgid "Text Preferences"
@@ -17817,8 +17652,7 @@ msgstr "Нап_рямні"
 
 #: ../src/verbs.cpp:2586
 msgid "Show or hide guides (drag from a ruler to create a guide)"
-msgstr ""
-"Показати чи сховати напрямні (потягніть від лінійки для створення напрямної)"
+msgstr "Показати чи сховати напрямні (потягніть від лінійки для створення напрямної)"
 
 #: ../src/verbs.cpp:2587
 msgid "Toggle snapping on or off"
@@ -17935,8 +17769,7 @@ msgstr "Перегляд керування кольором"
 
 #: ../src/verbs.cpp:2619
 msgid "Toggle color-managed display for this document window"
-msgstr ""
-"Перемикач узгодження відображення кольорів дисплеєм для цього вікна документа"
+msgstr "Перемикач узгодження відображення кольорів дисплеєм для цього вікна документа"
 
 #: ../src/verbs.cpp:2621
 msgid "Ico_n Preview..."
@@ -17998,8 +17831,7 @@ msgid "_Fill and Stroke..."
 msgstr "_Заповнення та штрих"
 
 #: ../src/verbs.cpp:2640
-msgid ""
-"Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
+msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
 msgstr ""
 "Редагування кольорів об'єкту, градієнтів, ширина пунктиру, стрілки, шаблони "
 "рисок..."
@@ -18043,8 +17875,7 @@ msgstr "_Текст та шрифт..."
 
 #: ../src/verbs.cpp:2651
 msgid "View and select font family, font size and other text properties"
-msgstr ""
-"Перегляд та вибір назви шрифту, його розміру та інших властивостей тексту"
+msgstr "Перегляд та вибір назви шрифту, його розміру та інших властивостей тексту"
 
 #: ../src/verbs.cpp:2652
 msgid "_XML Editor..."
@@ -18300,8 +18131,7 @@ msgid "Fit the page to the drawing"
 msgstr "Підганяє полотно під вже намальоване"
 
 #: ../src/verbs.cpp:2728
-msgid ""
-"Fit the page to the current selection or the drawing if there is no selection"
+msgid "Fit the page to the current selection or the drawing if there is no selection"
 msgstr ""
 "Підігнати область видимості під поточну виділену область або під область "
 "креслення, якщо нічого не виділено"
@@ -18373,12 +18203,12 @@ msgstr "%s (каркас) - Inkscape"
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
 
-#: ../src/widgets/ege-paint-def.cpp:69 ../src/widgets/ege-paint-def.cpp:91
+#: ../src/widgets/ege-paint-def.cpp:70 ../src/widgets/ege-paint-def.cpp:92
 #: ../src/widgets/gradient-selector.cpp:167
 msgid "none"
 msgstr "немає"
 
-#: ../src/widgets/ege-paint-def.cpp:88
+#: ../src/widgets/ege-paint-def.cpp:89
 msgid "remove"
 msgstr "вилучити"
 
@@ -18596,8 +18426,7 @@ msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:214
-msgid ""
-"Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
+msgid "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 "Заповнення має дірку, лише якщо внутрішній підконтур напрямлений у "
 "протилежному напрямку відносно зовнішнього (fill-rule: nonzero)"
@@ -19618,8 +19447,7 @@ msgstr "Прибрати округлення кутів"
 #. TODO: use the correct axis here, too
 #: ../src/widgets/toolbox.cpp:3350
 msgid "3D Box: Change perspective (angle of infinite axis)"
-msgstr ""
-"Просторовий об’єкт: Зміна перспективи (кута сходження на нескінченності)"
+msgstr "Просторовий об’єкт: Зміна перспективи (кута сходження на нескінченності)"
 
 #: ../src/widgets/toolbox.cpp:3420
 msgid "Angle in X direction"
@@ -20067,8 +19895,7 @@ msgstr "Тиск"
 
 #: ../src/widgets/toolbox.cpp:4361
 msgid "Use the pressure of the input device to alter the force of tweak action"
-msgstr ""
-"Використовувати силу натиску пристрою введення для зміни сили дії корекції"
+msgstr "Використовувати силу натиску пристрою введення для зміни сили дії корекції"
 
 #: ../src/widgets/toolbox.cpp:4541
 msgid "No preset"
@@ -20250,7 +20077,7 @@ msgstr "Дрижання:"
 
 #: ../src/widgets/toolbox.cpp:4798
 msgid "Increase to make strokes rugged and trembling"
-msgstr "Збільшіть, щоб штрихи стали грубими та тремтячими"
+msgstr "Збільшіть, щоб штрихи стали грубими та звивистими"
 
 #. Wiggle
 #: ../src/widgets/toolbox.cpp:4812
@@ -20304,8 +20131,7 @@ msgstr "Маса:"
 
 #: ../src/widgets/toolbox.cpp:4833
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
-msgstr ""
-"Збільшення веде до відставання пензля так, неначе його сповільнює інерція"
+msgstr "Збільшення веде до відставання пензля так, неначе його сповільнює інерція"
 
 #: ../src/widgets/toolbox.cpp:4848
 msgid "Trace Background"
@@ -20408,10 +20234,8 @@ msgid "Assign opacity"
 msgstr "Призначити непрозорість"
 
 #: ../src/widgets/toolbox.cpp:5318
-msgid ""
-"If alpha was picked, assign it to selection as fill or stroke transparency"
-msgstr ""
-"Якщо підібрано альфу, призначити її заповненню чи штриху у виділеній області"
+msgid "If alpha was picked, assign it to selection as fill or stroke transparency"
+msgstr "Якщо підібрано альфу, призначити її заповненню чи штриху у виділеній області"
 
 #: ../src/widgets/toolbox.cpp:5321
 msgid "Assign"
@@ -20427,7 +20251,7 @@ msgstr "Жоден з геометричних інструментів не з�
 
 #: ../src/widgets/toolbox.cpp:5574
 msgid "draw-geometry-inactive"
-msgstr ""
+msgstr "draw-geometry-inactive"
 
 #: ../src/widgets/toolbox.cpp:5606
 msgid "Show limiting bounding box"
@@ -20435,8 +20259,7 @@ msgstr "Показати контур-обгортку"
 
 #: ../src/widgets/toolbox.cpp:5607
 msgid "Show bounding box (used to cut infinite lines)"
-msgstr ""
-"Показувати рамку-обгортку (використовується для вирізання нескінченних ліній)"
+msgstr "Показувати рамку-обгортку (використовується для вирізання нескінченних ліній)"
 
 #: ../src/widgets/toolbox.cpp:5618
 msgid "Get limiting bounding box from selection"
@@ -20574,8 +20397,7 @@ msgstr "Довжина:"
 
 #: ../src/widgets/toolbox.cpp:7009
 msgid "Ideal length for connectors when layout is applied"
-msgstr ""
-"Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
+msgstr "Зразкова довжина ліній з'єднання після застосування зовнішнього вигляду"
 
 #: ../src/widgets/toolbox.cpp:7021
 msgid "Downwards"
@@ -20618,8 +20440,7 @@ msgid "Grow/shrink by:"
 msgstr "Збільшити/зменшити на:"
 
 #: ../src/widgets/toolbox.cpp:7180
-msgid ""
-"The amount to grow (positive) or shrink (negative) the created fill path"
+msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 "Величина збільшення (додатне число) або зменшення (від'ємне) створеного "
 "контуру заповнення"
@@ -20642,8 +20463,7 @@ msgstr ""
 
 #: ../share/extensions/dimension.py:99
 msgid "Unable to process this object.  Try changing it into a path first."
-msgstr ""
-"Неможливо обробити цей об’єкт. Спробуйте спочатку перетворити його на контур."
+msgstr "Неможливо обробити цей об’єкт. Спробуйте спочатку перетворити його на контур."
 
 #. report to the Inkscape console using errormsg
 #: ../share/extensions/draw_from_triangle.py:175
@@ -20784,8 +20604,7 @@ msgstr ""
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:46
-msgid ""
-"This extension requires that the second selected path be four nodes long."
+msgid "This extension requires that the second selected path be four nodes long."
 msgstr ""
 "Для роботи цього додатка потрібно, щоб другий вибраний контур складався "
 "принаймні з чотирьох вузлів."
@@ -20838,7 +20657,6 @@ msgstr "У вказаному файлі не знайдено даних про
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:510
-#, fuzzy
 msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
@@ -21281,11 +21099,11 @@ msgstr "Імпорт у форматі обміну документами AutoC
 
 #: ../share/extensions/dxf_input.inx.h:4
 msgid "Or, use manual scale factor"
-msgstr ""
+msgstr "Або масштаб, заданий вручну"
 
 #: ../share/extensions/dxf_input.inx.h:5
 msgid "Use automatic scaling to size A4"
-msgstr ""
+msgstr "Використовувати автоматичне масштабування до A4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid "Desktop Cutting Plotter"
@@ -21355,7 +21173,7 @@ msgstr "Імпорт з EPS"
 
 #: ../share/extensions/epsi_output.inx.h:1
 msgid "EPSI Output"
-msgstr "Експорт до EPSI          "
+msgstr "Експорт до EPSI"
 
 #: ../share/extensions/epsi_output.inx.h:2
 msgid "Encapsulated Postscript Interchange (*.epsi)"
@@ -21439,7 +21257,7 @@ msgstr "Товщина паперу"
 
 #: ../share/extensions/foldablebox.inx.h:7
 msgid "Tab Proportion"
-msgstr "Співвідношення відступів"
+msgstr "Ширина вкладок"
 
 #: ../share/extensions/fractalize.inx.h:1
 msgid "Fractalize"
@@ -21594,13 +21412,11 @@ msgstr "Декартова сітка"
 
 #: ../share/extensions/grid_cartesian.inx.h:3
 msgid "Halve X Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
-"Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr "Половина частоти X Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:4
 msgid "Halve Y Subsubdiv. Frequency after 'n' Subdivs. (log only)"
-msgstr ""
-"Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
+msgstr "Половина частоти Y Subsubdiv. після 'n' підрозділів. (лише для журналу)"
 
 #: ../share/extensions/grid_cartesian.inx.h:5
 msgid "Logarithmic X Subdiv. (Base given by entry above)"
@@ -22049,7 +21865,7 @@ msgstr "Розмір шрифту [px]"
 #. <param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>
 #: ../share/extensions/measure.inx.h:4
 msgid "Length Unit: "
-msgstr "Одиниця довжини:"
+msgstr "Одиниця довжини: "
 
 #: ../share/extensions/measure.inx.h:5
 msgid "Measure"
@@ -22659,7 +22475,7 @@ msgstr "Гумове розтягування"
 #: ../share/extensions/rubberstretch.inx.h:6
 #, no-c-format
 msgid "Strength (%):"
-msgstr "Сила (px)"
+msgstr "Сила (%):"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -22818,14 +22634,12 @@ msgid "Month (0 for all)"
 msgstr "Місяць (0 — всі)"
 
 #: ../share/extensions/svgcalendar.inx.h:14
-#, fuzzy
 msgid "Month Margin"
-msgstr "Колір місяців"
+msgstr "Поле місяців"
 
 #: ../share/extensions/svgcalendar.inx.h:15
-#, fuzzy
 msgid "Month Width"
-msgstr "Ширина пера"
+msgstr "Ширина смуги місяців"
 
 #: ../share/extensions/svgcalendar.inx.h:16
 msgid "Month color"
@@ -22836,18 +22650,16 @@ msgid "Month names"
 msgstr "Назви місяців"
 
 #: ../share/extensions/svgcalendar.inx.h:18
-#, fuzzy
 msgid "Months per line"
-msgstr "Центрувати рядки"
+msgstr "К-ть місяців у рядку"
 
 #: ../share/extensions/svgcalendar.inx.h:19
 msgid "Next month day color"
 msgstr "Колір днів наступного місяця"
 
 #: ../share/extensions/svgcalendar.inx.h:20
-#, fuzzy
 msgid "Organization"
-msgstr "Орієнтація"
+msgstr "Установа"
 
 #: ../share/extensions/svgcalendar.inx.h:22
 msgid "Saturday"
@@ -22859,7 +22671,7 @@ msgstr "Субота і неділя"
 
 #: ../share/extensions/svgcalendar.inx.h:24
 msgid "Set authomaticaly the size and positions"
-msgstr ""
+msgstr "Автоматично встановлювати розмір і розташування"
 
 #: ../share/extensions/svgcalendar.inx.h:25
 msgid "Sun Mon Tue Wed Thu Fri Sat"
@@ -22872,6 +22684,8 @@ msgstr "Неділя"
 #: ../share/extensions/svgcalendar.inx.h:27
 msgid "The options above has no value with the upper checked."
 msgstr ""
+"Наведені вище пункти не матимуть значень, якщо буде позначено верхній "
+"варіант."
 
 #: ../share/extensions/svgcalendar.inx.h:28
 msgid "Week start day"
@@ -23002,10 +22816,8 @@ msgid "Text Input"
 msgstr "Імпорт тексту"
 
 #: ../share/extensions/web-set-att.inx.h:1
-#, fuzzy
 msgid "All selected ones set an attribute in the last one"
-msgstr ""
-"Кожен виділений об'єкт має позначку у вигляді ромба у лівому верхньому куті"
+msgstr "Всі вибрані встановлюють атрибут у останньому"
 
 #: ../share/extensions/web-set-att.inx.h:2
 msgid "Attribute to set"
@@ -23035,16 +22847,16 @@ msgid "Run it before"
 msgstr "Запустити до"
 
 #: ../share/extensions/web-set-att.inx.h:8
-msgid "Set Atributes"
+msgid "Set Attributes"
 msgstr "Встановити атрибути"
 
 #: ../share/extensions/web-set-att.inx.h:9
 msgid "Source and destination of setting"
-msgstr ""
+msgstr "Джерело і призначення встановлення"
 
 #: ../share/extensions/web-set-att.inx.h:10
 msgid "The first selected set an attribute in all others"
-msgstr ""
+msgstr "Перший обраний встановлює атрибути для інших"
 
 #: ../share/extensions/web-set-att.inx.h:11
 msgid "The list of values must have the same size of the attributes list."
@@ -23055,7 +22867,7 @@ msgstr ""
 #: ../share/extensions/web-set-att.inx.h:12
 #: ../share/extensions/web-transmit-att.inx.h:10
 msgid "The next parameter is useful when you select more than two elements"
-msgstr ""
+msgstr "Наступний параметр буде корисним, якщо обрано більше двох елементів"
 
 #: ../share/extensions/web-set-att.inx.h:13
 #: ../share/extensions/web-transmit-att.inx.h:11
@@ -23139,16 +22951,14 @@ msgid "on mouse up"
 msgstr "при відпусканні кнопки миші"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-#, fuzzy
 msgid "All selected ones transmits to the last one"
-msgstr "Множина виділених об'єктів має однакові штрихи"
+msgstr "Всі вибрані передають останньому"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
 msgid "Attribute to transmit"
 msgstr "Атрибут для передавання"
 
 #: ../share/extensions/web-transmit-att.inx.h:4
-#, fuzzy
 msgid ""
 "If you want to transmit more than one attribute, you should separate this "
 "with a space, and only with a space."
@@ -23158,14 +22968,13 @@ msgstr ""
 
 #: ../share/extensions/web-transmit-att.inx.h:8
 msgid "Source and destination of transmitting"
-msgstr ""
+msgstr "Джерело і призначення передавання"
 
 #: ../share/extensions/web-transmit-att.inx.h:9
 msgid "The first selected transmits to all others"
-msgstr ""
+msgstr "Перший обраний передає всім іншим"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
-#, fuzzy
 msgid ""
 "This effect transmits one or more attributes from the first selected element "
 "to the second when a event occurs."
@@ -23175,9 +22984,8 @@ msgstr ""
 "елементів."
 
 #: ../share/extensions/web-transmit-att.inx.h:13
-#, fuzzy
 msgid "Transmit Attributes"
-msgstr "Перетворити атрибути"
+msgstr "Передати атрибути"
 
 #: ../share/extensions/web-transmit-att.inx.h:15
 msgid "When to transmit"
@@ -23214,186 +23022,4 @@ msgstr "Імпорт метафайла Windows"
 msgid "XAML Input"
 msgstr "Імпорт з XAML"
 
-#~ msgid "Glow and draw"
-#~ msgstr "Сяйво і креслення"
 
-#~ msgid "Glowing content, posterized edges"
-#~ msgstr "Сяючий вміст, чіткі краї"
-
-#~ msgid ""
-#~ "Same than HSL bubbles but with an alpha added for combination with "
-#~ "transparency depending filters"
-#~ msgstr ""
-#~ "Ефект, подібний до бульбашок за відтінком-насиченістю-освітленістю, але "
-#~ "під час обробки буде додано канал прозорості для комбінування з "
-#~ "фільтрами, робота яких залежить від прозорості"
-
-#~ msgid "gradient level"
-#~ msgstr "рівень градієнта"
-
-#~ msgid "all_inactive"
-#~ msgstr "всі_незадіяні"
-
-#, fuzzy
-#~ msgid "Render object in black and white"
-#~ msgstr "Лише чорний та білий"
-
-#, fuzzy
-#~ msgid "Specular bump"
-#~ msgstr "Степінь відбиття"
-
-#, fuzzy
-#~ msgid "Kilt"
-#~ msgstr "Нахил"
-
-#, fuzzy
-#~ msgid "Bump for bitmaps"
-#~ msgstr "Растрові зображення"
-
-#, fuzzy
-#~ msgid "Diffuse light bump"
-#~ msgstr "Розсіяне світло"
-
-#~ msgid "Path Effects"
-#~ msgstr "Ефекти контурів"
-
-#~ msgid "Biggest item"
-#~ msgstr "Найбільший об'єкт"
-
-#~ msgid "Smallest item"
-#~ msgstr "Найменший об'єкт"
-
-#~ msgid "Unit:"
-#~ msgstr "Одиниця:"
-
-#~ msgid "Angle (degrees):"
-#~ msgstr "Кут (у градусах):"
-
-#~ msgid "Move and/or rotate the guide relative to current settings"
-#~ msgstr "Перемістити та/або обертати напрямну відносно поточної позиції"
-
-#~ msgid "Set guide properties"
-#~ msgstr "Встановлення властивостей напрямних"
-
-#~ msgid "Guideline ID: %s"
-#~ msgstr "Ідентифікатор напрямної: %s"
-
-#~ msgid "Current: %s"
-#~ msgstr "Поточний: %s"
-
-#~ msgid "%d x %d"
-#~ msgstr "%d x %d"
-
-#~ msgid "Selection only or whole document"
-#~ msgstr "Або лише виділене, або весь документ"
-
-#~ msgid "Refresh the icons"
-#~ msgstr "Оновити значки"
-
-#~ msgid "Layers"
-#~ msgstr "Шари"
-
-#~ msgid "New"
-#~ msgstr "Створити"
-
-#~ msgid "Up"
-#~ msgstr "Догори"
-
-#~ msgid "Dn"
-#~ msgstr "Вниз"
-
-#~ msgid "Bot"
-#~ msgstr "Низ"
-
-#~ msgid "X"
-#~ msgstr "X"
-
-#~ msgid "Enhance intensity differences in selected bitmap(s)."
-#~ msgstr "Збільшити різниці у інтенсивності на обраних картинках."
-
-#~ msgid "Median Filter"
-#~ msgstr "Медіанний фільтр"
-
-#~ msgid "Freehand Shape"
-#~ msgstr "Довільна форма"
-
-#~ msgid "Effe_cts"
-#~ msgstr "_Ефекти"
-
-#~ msgid "Center on vertical axis"
-#~ msgstr "Центрувати на вертикальній осі"
-
-#~ msgid "ca@valencia Valencian Catalan"
-#~ msgstr "ca@valencia Валенсійська каталанська"
-
-#~ msgid "cs Czech"
-#~ msgstr "cs Чеська"
-
-#~ msgid "el Greek"
-#~ msgstr "el Грецька"
-
-#~ msgid "en_AU English, as spoken in Australia"
-#~ msgstr "en_AU Англійська, якою розмовляють у Австралії"
-
-#~ msgid "en_CA English, as spoken in Canada"
-#~ msgstr "en_CA Англійська, якою розмовляють у Канаді"
-
-#~ msgid "en_GB English, as spoken in Great Britain"
-#~ msgstr "en_GB Англійська, якою розмовляють у Великобританії"
-
-#~ msgid "en_US@piglatin Pig Latin"
-#~ msgstr "en_US@piglatin Свиняча латина"
-
-#~ msgid "es_MX Spanish, as spoken in Mexico"
-#~ msgstr "es_MX Іспанська, якою розмовляють у Мексиці"
-
-#~ msgid "ga Irish"
-#~ msgstr "ga Ірландська"
-
-#~ msgid "km Khmer"
-#~ msgstr "km Кхмерська"
-
-#~ msgid "ne Nepali"
-#~ msgstr "ne Непальська"
-
-#~ msgid "nl Dutch"
-#~ msgstr "nl Голландська"
-
-#~ msgid "pt_BR Portuguese, as spoken in Brazil"
-#~ msgstr "pt_BR Португальська, якою розмовляють у Бразилії"
-
-#~ msgid "ru Russian"
-#~ msgstr "ru Російська"
-
-#~ msgid "th Thai"
-#~ msgstr "th Тайська"
-
-#~ msgid "zh_CN Chinese, as spoken in China"
-#~ msgstr "zh_CN Китайська, якою розмовляють у Китаї"
-
-#~ msgid "zh_TW Chinese, as spoken in Taiwan"
-#~ msgstr "zh_TW Китайська, якою розмовляють у Тайвані"
-
-#~ msgid "Commands bar icon size"
-#~ msgstr "Розмір піктограм панелі команд"
-
-#~ msgid "BBox Midpoints"
-#~ msgstr "Середні точки рамки-обгортки"
-
-#~ msgid "Snap nodes"
-#~ msgstr "Прилипання до вузлів"
-
-#~ msgid "Snap to intersections of a grid with a guide"
-#~ msgstr "Прилипання до перетинів сітки з напрямною"
-
-#~ msgid "Scale objects, with Shift scale up"
-#~ msgstr "Зміна масштабу об’єктів, з Shift — збільшення"
-
-#~ msgid "Embed All Images"
-#~ msgstr "Вбудувати всі картинки"
-
-#~ msgid "Major Y Division Spacing"
-#~ msgstr "Основні інтервали за віссю Y"
-
-#~ msgid "Subsubdivs. per X Subdiv."
-#~ msgstr "Підпідрозділів на підрозділ X"
