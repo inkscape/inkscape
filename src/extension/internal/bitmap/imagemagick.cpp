@@ -114,7 +114,7 @@ ImageMagickDocCache::readImage(const char *xlink, Magick::Image *image)
 	char *search = (char *) g_strndup(xlink, 30);
 	if (strstr(search, "base64") != (char*)NULL) {
 		// 7 = strlen("base64") + strlen(",")
-		char* pureBase64 = strstr(xlink, "base64") + 7;		
+		const char* pureBase64 = strstr(xlink, "base64") + 7;		
 		Magick::Blob blob;
 		blob.base64(pureBase64);
 		image->read(blob);

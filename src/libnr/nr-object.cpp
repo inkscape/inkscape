@@ -198,8 +198,8 @@ NRObject *NRObject::alloc(NRType type)
     );
     memset(object, 0xf0, c->isize);
 
-    object->klass = c;
     c->cpp_ctor(object);
+    object->klass = c;
     nr_class_tree_object_invoke_init (c, object);
 
     return object;
