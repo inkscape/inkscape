@@ -271,7 +271,6 @@ Effect::createAndApply(EffectType type, SPDocument *doc, SPItem *item)
 Effect::Effect(LivePathEffectObject *lpeobject)
     : oncanvasedit_it(0),
       is_visible(_("Is visible?"), _("If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"), "is_visible", &wr, this, true),
-      deactivate_knotholder(_("Deactivate knotholder?"), _("Check this to deactivate knotholder handles (useful if they interfere with node handles during editing)"), "deactivate_knotholder", &wr, this, false),
       show_orig_path(false),
       lpeobj(lpeobject),
       concatenate_before_pwd2(false),
@@ -279,7 +278,6 @@ Effect::Effect(LivePathEffectObject *lpeobject)
       is_ready(false) // is automatically set to false if providesOwnFlashPaths() is not overridden
 {
     registerParameter( dynamic_cast<Parameter *>(&is_visible) );
-    registerParameter( dynamic_cast<Parameter *>(&deactivate_knotholder) );
 }
 
 Effect::~Effect()
@@ -469,9 +467,6 @@ Effect::registerKnotHolderHandle(KnotHolderEntity* entity, const char* descr)
 void
 Effect::addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
     using namespace Inkscape::LivePathEffect;
-
-    if (deactivate_knotholder)
-        return;
 
     // add handles provided by the effect itself
     addKnotHolderEntities(knotholder, desktop, item);
