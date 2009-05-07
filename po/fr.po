@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-28 18:52+0200\n"
-"PO-Revision-Date: 2009-04-29 08:10+0100\n"
+"POT-Creation-Date: 2009-05-07 20:37+0200\n"
+"PO-Revision-Date: 2009-05-07 22:13+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -49,17 +49,17 @@ msgstr "Gel mat"
 #: ../share/filters/filters.svg.h:15
 #: ../share/filters/filters.svg.h:16
 #: ../share/filters/filters.svg.h:40
+#: ../share/filters/filters.svg.h:50
 #: ../share/filters/filters.svg.h:51
 #: ../share/filters/filters.svg.h:52
 #: ../share/filters/filters.svg.h:53
-#: ../share/filters/filters.svg.h:54
-#: ../share/filters/filters.svg.h:57
-#: ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:72
-#: ../share/filters/filters.svg.h:74
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:104
 #: ../share/filters/filters.svg.h:105
-#: ../share/filters/filters.svg.h:106
 msgid "Bevels"
 msgstr "Biseaux"
 
@@ -98,12 +98,12 @@ msgstr "Flou cinétique horizontal"
 #: ../share/filters/filters.svg.h:6
 #: ../share/filters/filters.svg.h:7
 #: ../share/filters/filters.svg.h:8
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:96
 #: ../share/filters/filters.svg.h:97
-#: ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:112
-#: ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:164
 msgid "Blurs"
 msgstr "Flous"
 
@@ -133,10 +133,10 @@ msgstr "Découpage"
 
 #: ../share/filters/filters.svg.h:9
 #: ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:88
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:139
 #: ../share/filters/filters.svg.h:140
-#: ../share/filters/filters.svg.h:141
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -159,12 +159,12 @@ msgid "Roughen"
 msgstr "Rugosité"
 
 #: ../share/filters/filters.svg.h:11
-#: ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:118
 #: ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:120
-#: ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:125
 msgid "ABCs"
 msgstr "ABC"
 
@@ -185,9 +185,9 @@ msgstr "Tampon en caoutchouc"
 #: ../share/filters/filters.svg.h:37
 #: ../share/filters/filters.svg.h:38
 #: ../share/filters/filters.svg.h:39
+#: ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:117
-#: ../share/filters/filters.svg.h:118
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "Overlays"
 msgstr "Superpositions"
 
@@ -238,11 +238,11 @@ msgid "Ripple"
 msgstr "Ondulation"
 
 #: ../share/filters/filters.svg.h:17
+#: ../share/filters/filters.svg.h:44
 #: ../share/filters/filters.svg.h:45
-#: ../share/filters/filters.svg.h:46
-#: ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:114
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:115
 msgid "Distort"
 msgstr "Déformation"
 
@@ -279,23 +279,22 @@ msgid "Leopard fur"
 msgstr "Fourrure de léopard"
 
 #: ../share/filters/filters.svg.h:21
-#: ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:60
 #: ../share/filters/filters.svg.h:61
 #: ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:63
-#: ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:80
 #: ../share/filters/filters.svg.h:81
 #: ../share/filters/filters.svg.h:82
-#: ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:85
-#: ../share/filters/filters.svg.h:93
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:157
 #: ../share/filters/filters.svg.h:158
 #: ../share/filters/filters.svg.h:159
-#: ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:161
-#: ../share/filters/filters.svg.h:162
 msgid "Materials"
 msgstr "Matières"
 
@@ -333,13 +332,14 @@ msgstr "Netteté"
 #: ../share/filters/filters.svg.h:30
 #: ../share/filters/filters.svg.h:31
 #: ../share/filters/filters.svg.h:35
+#: ../share/filters/filters.svg.h:99
 #: ../share/filters/filters.svg.h:100
-#: ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:125
-#: ../share/filters/filters.svg.h:128
-#: ../share/filters/filters.svg.h:169
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:168
 msgid "Image effects"
 msgstr "Effets d'image"
 
@@ -414,11 +414,11 @@ msgstr "Désaturer"
 #: ../share/filters/filters.svg.h:32
 #: ../share/filters/filters.svg.h:33
 #: ../share/filters/filters.svg.h:34
-#: ../share/filters/filters.svg.h:75
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:101
 #: ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:103
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 #: ../src/dialogs/clonetiler.cpp:2607
 #: ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
@@ -478,25 +478,25 @@ msgid "Organic"
 msgstr "Matière organique"
 
 #: ../share/filters/filters.svg.h:36
-#: ../share/filters/filters.svg.h:44
-#: ../share/filters/filters.svg.h:48
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:65
 #: ../share/filters/filters.svg.h:66
-#: ../share/filters/filters.svg.h:67
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:85
 #: ../share/filters/filters.svg.h:86
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:128
 #: ../share/filters/filters.svg.h:129
 #: ../share/filters/filters.svg.h:130
 #: ../share/filters/filters.svg.h:131
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134
 #: ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136
 #: ../share/filters/filters.svg.h:137
 #: ../share/filters/filters.svg.h:138
-#: ../share/filters/filters.svg.h:139
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 msgid "Textures"
 msgstr "Textures"
 
@@ -553,848 +553,847 @@ msgid "Random paint streaks downwards"
 msgstr "Traînées de peintures aléatoires vers le bas"
 
 #: ../share/filters/filters.svg.h:43
-msgid "Rainbow melt"
-msgstr "Coulée d'arc-en-ciel"
-
-#: ../share/filters/filters.svg.h:43
-msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
-msgstr "Bandes d'arc-en-ciel verticales, séparées par des taches en relief"
-
-#: ../share/filters/filters.svg.h:44
 msgid "Jam spread"
 msgstr "Confiture étalée"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Glossy clumpy jam spread"
 msgstr "Étalage de confiture compact et brillant"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "Pixel smear"
 msgstr "Barbouillage de pixels"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "Van Gogh painting effect for bitmaps"
 msgstr "Effets de peinture Van Gogh, pour les images bitmap"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Pixel smear, glossy"
 msgstr "Trainée de pixel brillante"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Glossy painting effect for bitmaps"
 msgstr "Effet de peinture brillante pour bitmap"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "HSL Bumps"
 msgstr "Embossage TSL"
 
-#: ../share/filters/filters.svg.h:47
-#: ../share/filters/filters.svg.h:49
-#: ../share/filters/filters.svg.h:107
-#: ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:124
-#: ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:166
 msgid "Bumps"
 msgstr "Embossage"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
 msgstr "Embossage spéculaire hautement flexible"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Cracked glass"
 msgstr "Verre fissuré"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Under a cracked glass"
 msgstr "Sous un verre fissuré"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "HSL bubbles"
 msgstr "Bulles TSL"
 
-#: ../share/filters/filters.svg.h:49
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:107
 msgid "Highly flexible bubbles effect depending on color hue saturation and luminance"
 msgstr "Effet de bulles extrêmement flexible basé sur la saturation de teinte et la luminance"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Glowing bubble"
 msgstr "Bulle brillante"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:54
 #: ../share/filters/filters.svg.h:55
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:67
 #: ../share/filters/filters.svg.h:68
-#: ../share/filters/filters.svg.h:69
-#: ../share/filters/filters.svg.h:71
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:72
 msgid "Ridges"
 msgstr "Crêtes"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Bubble effect with refraction and glow"
 msgstr "Effet de bulle avec réfraction et lueur"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Neon"
 msgstr "Néon"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Neon light effect with glow"
 msgstr "Effet de lumière néon avec lueur"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Melt and glow"
 msgstr "Fondu éclatant"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr "Fusion de parties de l'objet avec un biseau brillant et un éclat"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Badge"
 msgstr "Badge"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Metal or plastic badge bevel"
 msgstr "Biseau de type badge en métal ou en plastique"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Pastel Bevel"
 msgstr "Biseau pastel"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "Biseau pastel doux et flou"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
 msgstr "Membrane fine"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin like a soap membrane"
 msgstr "Fin comme une couche de savon"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Soft ridge"
 msgstr "Arête douce"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Soft pastel ridge"
 msgstr "Arête pastel douce"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Glowing metal"
 msgstr "Métal luisant"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Bright and glowing metal texture"
 msgstr "Texture métalique brillante et éclatante"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Leaves"
 msgstr "Feuillage"
 
-#: ../share/filters/filters.svg.h:58
-#: ../share/filters/filters.svg.h:80
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:88
 #: ../share/extensions/pathscatter.inx.h:10
 msgid "Scatter"
 msgstr "Éparpiller"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Leaves on the ground in Fall, or living foliage"
 msgstr "Feuilles sur le sol en automne, ou feuillage vivant"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Translucent"
 msgstr "Translucide"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Illuminated translucent plastic effect"
 msgstr "Effet de plastique translucide et lumineux"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Cross-smooth"
 msgstr "Adoucisseur"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Blur inner borders and intersections"
 msgstr "Rend flou les bordures intérieures et les intersections"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Iridescent beeswax"
 msgstr "Cire d'abeille irisée"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr "Texture cireuse conservant ses reflets irisés au travers de variations de couleur de remplissage"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Eroded metal"
 msgstr "Métal érodé"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
 msgstr "Texture de métal érodé, avec des arêtes, des sillons, des trous et des bosses"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Cracked Lava"
 msgstr "Lave fissurée"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "A volcanic texture, a little like leather"
 msgstr "Une texture volcanique, ressemblant quelque peu à du cuir"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Bark"
 msgstr "Écorce"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Bark texture, vertical; use with deep colors"
 msgstr "Texture d'écorce, verticale ; utiliser avec des couleurs profondes"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Lizard skin"
 msgstr "Peau de lézard"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Stylized reptile skin texture"
 msgstr "Texture en peau de reptile stylisée"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Stone wall"
 msgstr "Mur de pierres"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Stone wall texture to use with dark colors"
 msgstr "Texture en mur de pierre à utiliser avec des couleurs sombres"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet"
 msgstr "Tapis de soie"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet texture, horizontal stripes"
 msgstr "Texture en tapis de soie, bandes horizontales"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Refractive gel A"
 msgstr "Gel réfractif A"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Gel effect with light refraction"
 msgstr "Effet de gel avec réfraction de lumière"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Refractive gel B"
 msgstr "Gel réfractif B"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Gel effect with strong refraction"
 msgstr "Effet de gel avec réfraction forte"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Metallized paint"
 msgstr "Painture métalique"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr "Effet métalisé, avec une lumière douce, légèrement translucide sur les bords"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Dragee"
 msgstr "Dragée"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge with a pearlescent look"
 msgstr "Arête de gel d'aspect perlé"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Raised border"
 msgstr "Bords surélevés"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Strongly raised border around a flat surface"
 msgstr "Bordures fortement relevées sur une surface plate"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Metallized ridge"
 msgstr "Arête métalique"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Gel Ridge metallized at its top"
 msgstr "Arête de gel métalisé sur le dessus"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Fat oil"
 msgstr "Huile grasse"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Fat oil with some adjustable turbulence"
 msgstr "Huile grasse avec quelques turbulences ajustables"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
 msgstr "Coloriser"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Gives the flood color to the dark parts of the image"
 msgstr "Applique un remplissage aux zones sombres de l'image"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Parallel hollow"
 msgstr "Enfoncement parallèle"
 
+#: ../share/filters/filters.svg.h:75
 #: ../share/filters/filters.svg.h:76
 #: ../share/filters/filters.svg.h:77
 #: ../share/filters/filters.svg.h:78
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:89
 #: ../share/filters/filters.svg.h:90
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:94
 #: ../share/filters/filters.svg.h:95
-#: ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:99
-#: ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:132
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Morphologie"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "A blurry hollow going parallel to the edge on the inside"
 msgstr "Sillon flou parallèle au bord à l'intérieur de l'objet"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Hole"
 msgstr "Trou"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Opens a smooth hole inside the shape"
 msgstr "Ouvre un trou lisse à l'intérieur de la forme"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Black hole"
 msgstr "Trou noir"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Creates a black light inside and outside"
 msgstr "Crée une lumière noire à l'intérieure et à l'extérieur"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Smooth outline"
 msgstr "Contour doux"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Outlining the lines and smoothing their crossings"
 msgstr "Trace les contours et adoucit leurs croisements"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Cubes"
 msgstr "Cubes"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr "Cubes éparpillés ; pour changer la taille des cubes, ajuster la primitive Morphologie"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Peel off"
 msgstr "Peinture écaillée"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Peeling painting on a wall"
 msgstr "Peinture écaillée sur un mur"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Gold splatter"
 msgstr "Projection d'or"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Splattered cast metal, with golden highlights"
 msgstr "Métal coulé éparpillé, avec des reflets dorés"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Gold paste"
 msgstr "Pâte d'or"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Fat pasted cast metal, with golden highlights"
 msgstr "Coulures de métal collées et grasses, avec des reflets dorés"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled plastic"
 msgstr "Plastique écrasé"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled matte plastic, with melted edge"
 msgstr "Plastic mat froissé, avec des bords fondus"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Enamel jewelry"
 msgstr "Bijou en émail"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Slightly cracked enameled texture"
 msgstr "Texture émaillée légèrement fissurée"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Rough paper"
 msgstr "Papier brut"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr "Effet de papier à aquarelle, utilisable autant pour les images que pour les objets"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Rough and glossy"
 msgstr "Rèche et luisant"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr "Effet de papier brillant froissé, utilisable autant pour les images que pour les objets"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "In and Out"
 msgstr "Dedans et dehors"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Inner colorized shadow, outer black shadow"
 msgstr "Ombre colorisée à l'intérieur, noire à l'extérieur"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Air spray"
 msgstr "Aérosol"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Air Spray; adjust the Displacement Map amount"
 msgstr "Vaporisateur ; ajuster avec la primitive Displacement Map"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Warm inside"
 msgstr "Chaud dedans"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, filled inside"
 msgstr "Contour flou colorisé, rempli à l'intérieur"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Cool outside"
 msgstr "Contour frais"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Blurred colorized contour, empty inside"
 msgstr "Contour flou colorisé, vide à l'intérieur"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Electronic microscopy"
 msgstr "Microscopie électronique"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr "Un biseau, lumière brute, décoloration et lueur comme avec un microscope électronique"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Tartan"
 msgstr "Écossais"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Checkered tartan pattern"
 msgstr "Motif écossais à damiers"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Invert hue"
 msgstr "Inverser la teinte"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Invert hue, or rotate it"
 msgstr "Inverse ou permute la teinte"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Outline"
 msgstr "Contour"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Draws an outline around"
 msgstr "Trace un contour"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Outline, double"
 msgstr "Contour double"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr "Dessine une ligne intérieure douce colorisée avec la couleur qu'elle superpose"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Fancy blur"
 msgstr "Flou fantaisie"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr "Contour colorisé doux, qui permet la désaturation et la rotation de teinte"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Glow"
 msgstr "Lueur"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Glow of object's own color at the edges"
 msgstr "Rayonnement de la couleur de l'objet sur ses bords"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Ghost outline"
 msgstr "Contour fantômatique"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Adds a glowing blur and removes the shape"
 msgstr "Ajoute un flou lumineux et supprime la forme"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Color emboss"
 msgstr "Embossage de couleur"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr "Effet d'embossage classique ou colorisé: niveaux de gris, couleur et relief en 3D"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Soft bump"
 msgstr "Embossage doux"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Convolution bump; with a blur, it can give nice embossing effects"
 msgstr "Embossage de convolution ; avec un flou, peut donner un effet d'embossage sympa"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "Solariser"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Classical photographic solarization effect"
 msgstr "Effet de solarisation photographique classique"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Moonarize"
 msgstr "Lunariser"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "An effect between solarize and invert which often preserves sky and water lights"
 msgstr "Un effet à mi-chemin de solarisation et invertion, qui préserve souvent les lumières du cel et de l'eau"
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "Soft focus lens"
 msgstr "Objectif à portrait"
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "Glowing image content without blurring it"
 msgstr "Donne de l'éclat au contenu d'une image sans le rendre flou"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Stained glass"
 msgstr "Vitraux"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Illuminated stained glass effect"
 msgstr "Effet de vitraux lumineux"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Dark glass"
 msgstr "Verre sombre"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr "Effet de verre lumineux avec une lumière venant du dessous"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106
 msgid "HSL Bumps, alpha"
 msgstr "Embossage TSL, alpha"
 
+#: ../share/filters/filters.svg.h:106
 #: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:170
+msgid "Masking tools"
+msgstr "Outils de masquage"
+
+#: ../share/filters/filters.svg.h:106
 msgid "Same than HSL bumps but with an alpha added for combination with transparency depending filters"
 msgstr "Identique à Embossage TSL, mais avec ajout d'alpha pour la combinaison avec les filtres nécessitant de la transparence"
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 msgid "HSL Bubbles, alpha"
 msgstr "Bulles TSL, alpha"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Smooth edges"
 msgstr "Bords doux"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Smooth the outside of shapes and pictures without altering their contents"
 msgstr "Adoucit l'extérieur des formes et images sans en altérer le contenu"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Torn edges"
 msgstr "Bords déchirés"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Displace the outside of shapes and pictures without altering their content"
 msgstr "Déplace l'extérieur des formes et images sans en altérer le contenu"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Feather"
 msgstr "Plume"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
 msgstr "Masque flou sur les bords sans altération du contenu"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Blur content"
 msgstr "Contenu flou"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
 msgstr "Rend flou le contenu des objets, mais préserve le contour"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Specular light"
 msgstr "Éclairage spéculaire"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Basic specular bevel to use for building textures"
 msgstr "Biseau spéculaire de base pour la construction de textures"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Roughen inside"
 msgstr "Rugosité intérieure"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Roughen all inside shapes"
 msgstr "Rend rugueuse toutes les formes intérieures"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Evanescent"
 msgstr "Évanescent"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Blur the contents of objects, preserving the outline and adding progressive transparency at edges"
 msgstr "Rend flou le contenu des objets, mais préserve le contour et ajoute une transparence progressive aux bords"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Chalk and sponge"
 msgstr "Craie et éponge"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr "Une agitation légère donne l'aspect d'une éponge et une agitation forte de la craie"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "People"
 msgstr "Foule"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Colorized blotches, like a crowd of people"
 msgstr "Plaques colorisées évoquant une foule de gens"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Scotland"
 msgstr "Écosse"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Colorized mountain tops out of the fog"
 msgstr "Sommets colorisés émergeant du brouillard"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Noise transparency"
 msgstr "Transparence bruitée"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Basic noise transparency texture"
 msgstr "Texture en  transparence bruitée de base"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Noise fill"
 msgstr "Remplissage bruité"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr "Texture de remplissage de bruit de base ; ajuster la couleur avec Remplissage"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "Garden of Delights"
 msgstr "Jardin des délices"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr "Volutes agitées et fantasmagoriques, comme <i>Le Jardin des délices</i> de Jérôme Bosch"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Diffuse light"
 msgstr "Éclairage diffus"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Basic diffuse bevel to use for building textures"
 msgstr "Biseau diffus simple pour la construction de textures"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Cutout Glow"
 msgstr "Découpage lumineux"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr "Lueur intérieure et extérieure avec possibilité de décalage et de remplissage colorisable"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid "HSL Bumps, diffuse"
 msgstr "Embossage TSL, diffus"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
 msgstr "Identique à Embossage TSL, mais avec une réflection diffuse et non pas spéculaire"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Dark Emboss"
 msgstr "Embossage sombre"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "Effet d'embossage : relief 3D avec lequel le blanc est remplacé par du noir"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
 msgstr "Flou simple"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr "Flou gaussien simple, identique au réglage de flou dans la boite de dialogue Remplissage et contour"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid "HSL Bubbles, diffuse"
 msgstr "Bulles TSL, diffus"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
 msgstr "Identique à Bulles TSL, mais avec une lumière diffuse et non pas spéculaire"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "Embosser"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid "Emboss effect : Colors of the original images are preserved or modified by Blend"
 msgstr "Effet d'embossage : les couleurs de l'image originale sont préservées ou modifiées par Fondre"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Blotting paper"
 msgstr "Buvard"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Inkblot on blotting paper"
 msgstr "Tache d'encre sur un buvard"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Wax print"
 msgstr "Empreinte à la cire"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Wax print on tissue texture"
 msgstr "Empreinte de cire sur une texture de tissu"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot"
 msgstr "Tache d'encre"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot on tissue or rough paper"
 msgstr "Tache d'encre sur du tissu ou du papier grossier"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Burnt edges"
 msgstr "Bords brûlés"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Burnt paper edges texture"
 msgstr "Texture avec des bords de papier brûlé"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "Color outline"
 msgstr "Contour coloré"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "A colorizable outline with adjustable width and blur"
 msgstr "Un contour colorisable avec une épaisseur ajustable et un flou"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Liquid"
 msgstr "Liquide"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Colorizable filling with liquid transparency"
 msgstr "Remplissage colorisable à la transparence liquide"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Watercolor"
 msgstr "Aquarelle"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Cloudy watercolor effect"
 msgstr "Effet d'aquarelle nuageuse"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Felt"
 msgstr "Feutre"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr "Texture de feutre avec de la turbulence de couleur et légèrement plus sombre sur les bords"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Ink paint"
 msgstr "Peinture à l'encre"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr "Peinture à l'encre sur papier avec un déplacement de couleur agité"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Tinted rainbow"
 msgstr "Arc-en-ciel teinté"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr "Couleurs arc-en-ciel douces, fondues le long des bords, et colorisable"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Melted rainbow"
 msgstr "Arc-en-ciel fondu"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "Couleurs arc-en-ciel douces, légèrement fondues le long des bords"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:139
 msgid "Darken edges"
 msgstr "Bords assombris"
 
+#: ../share/filters/filters.svg.h:139
 #: ../share/filters/filters.svg.h:140
-#: ../share/filters/filters.svg.h:141
 msgid "Enhance outline and glows inside and outside"
 msgstr "Augmente le contour et le rayonnement à l'intérieure et à l'extérieur"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Dark and glow"
 msgstr "Pénombre et lumière"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Flex metal"
 msgstr "Métal souple"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr "Moulage de métal irrégulier, poli et brillant, colorisable"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Comics draft"
 msgstr "Ébauche bande dessinée"
 
+#: ../share/filters/filters.svg.h:142
 #: ../share/filters/filters.svg.h:143
 #: ../share/filters/filters.svg.h:144
 #: ../share/filters/filters.svg.h:145
@@ -1407,248 +1406,240 @@ msgstr "Ébauche bande dessinée"
 #: ../share/filters/filters.svg.h:152
 #: ../share/filters/filters.svg.h:153
 #: ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155
-#: ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:157
-#: ../share/filters/filters.svg.h:164
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Non realistic shaders"
 msgstr "Ombrages non réalistes"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr "Ombrage d'ébauche de bande dessinée peinte avec un aspect vitreux"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Comics fading"
 msgstr "Décoloration bande dessinée"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Cartoon paint style with some fading at the edges"
 msgstr "Peinture style bande dessinée avec de la décoloration sur les bords"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shader NR"
 msgstr "Ombrage doux"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "Ombrage doux avec un crayon graphite gris"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Emboss shader NR"
 msgstr "Ombrage embossé"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Combination of smooth shading and embossing"
 msgstr "Combinaison d'ombrage doux et d'embossage"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Smooth shader dark NR"
 msgstr "Ombrage doux foncé"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Dark version of non realistic smooth shading"
 msgstr "Version sombre de l'ombrage doux non réaliste"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Comics"
 msgstr "Bande dessinée"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Imitation of black and white cartoon shading"
 msgstr "Imitation d'ombrage de bande dessinée en noir et blanc"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 msgid "Satin NR"
 msgstr "Satin"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
 msgstr "Soyeux, proche de l'ombrage Nacre"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Frosted glass NR"
 msgstr "Verre fissuré"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
 msgstr "Imitation non réaliste de verre dépoli"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Smooth shader contour NR"
 msgstr "Ombrage doux du contour"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Contouring version of smooth shader"
 msgstr "Version de l'ombrage doux appliqué au contour"
 
-#: ../share/filters/filters.svg.h:152
-msgid "Comics rounded"
-msgstr "Arrondi bande dessinée"
-
-#: ../share/filters/filters.svg.h:152
-msgid "Imitation of black and white cartoon shading more rounded version"
-msgstr "Imitation d'ombrage de bande dessinée en noir et blanc, en plus arrondi"
-
-#: ../share/filters/filters.svg.h:153
-msgid "Pewter NR"
-msgstr "Étain"
-
-#: ../share/filters/filters.svg.h:153
-msgid "Mid grey satin like shader close to pewter"
-msgstr "Ombrage satin gris moyen, proche d'Étain"
-
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Aluminium NR"
 msgstr "Aluminium"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Brushed aluminium shader"
 msgstr "Ombrage aluminium brossé"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 msgid "Comics fluid"
 msgstr "Fluide bande dessinée"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 msgid "Fluid brushed cartoon drawing"
 msgstr "Dessin de bande dessinée au brossé fluide"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 msgid "Chrome NR"
 msgstr "Chrome"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "Ombrage chrome non réaliste avec des spéculaires fortes"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Chrome dark NR"
 msgstr "Nuit de chrome"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr "Version sombre de l'ombrage chrome avec une simulation de réflexion par le sol"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Wavy tartan"
 msgstr "Écossais ondulé"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr "Motif écossais avec des déplacements ondulés et un biseau autour des bords"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D marble"
 msgstr "Marbre en 3D"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D warped marble texture"
 msgstr "Texture de marbre déformé en 3D"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 msgid "3D wood"
 msgstr "Bois en 3D"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 msgid "3D warped, fibered wood texture"
 msgstr "Texture de bois fibreux et déformé, en 3D"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 msgid "Mother of pearl"
 msgstr "Nacre"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "Texture de coquillage perleux, irisé et tordu, en 3D"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 msgid "Tiger fur"
 msgstr "Fourrure de tigre"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "Motif en fourrure de tigre avec des plis et un biseau autour des bords"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 msgid "Flow inside"
 msgstr "Écoulement intérieur"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 msgid "Colorizable filling with flow inside like transparency"
 msgstr "Remplissage colorisable avec une transparence s'écoulant à l'intérieur"
 
-#: ../share/filters/filters.svg.h:164
-msgid "Comics flow"
-msgstr "Écoulement bande dessinée"
-
-#: ../share/filters/filters.svg.h:164
-msgid "Comics shader with a flow inside transparency"
-msgstr "Ombrage de bande dessinée avec une transparence s'écoulant à l'intérieur"
-
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics cream"
 msgstr "Crème bande dessinée"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics shader with creamy waves transparency"
 msgstr "Ombrage de bande dessinée avec une transparence en ondulations crémeuses"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 msgid "Black Light"
 msgstr "Lumière noire"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 msgid "Light areas turn to black"
 msgstr "Les zones claires sont transformées en noir"
 
 #. Eraser
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 #: ../src/ui/dialog/inkscape-preferences.cpp:510
 #: ../src/verbs.cpp:2536
 msgid "Eraser"
 msgstr "Gomme"
 
-#: ../share/filters/filters.svg.h:167
-msgid "Masking tools"
-msgstr "Outils de masquage"
-
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr "Rend les parties les plus brillantes de l'objet progressivement transparentes"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:164
 msgid "Noisy blur"
 msgstr "Flou bruité"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:164
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "Rend rugueux et flous les bords et le contenu, sur une petite amplitude"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:165
 msgid "Film Grain"
 msgstr "Grain photographique"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:165
 msgid "Adds a film grain noise to images and objects"
 msgstr "Ajoute un bruit de type grain photographique aux images et objets"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:166
 msgid "HSL Bumps, transparent"
 msgstr "Embossage TSL, transparent"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:166
 msgid "Highly flexible specular bump with transparency"
 msgstr "Embossage spéculaire extrêmement flexible avec transparence"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:167
 msgid "Lead pencil"
 msgstr "Dessin au crayon"
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:167
 msgid "Give lead pencil or chromolithography or engraving or other effects"
 msgstr "Donne un effet crayon gras, chromolithographie ou gravure"
+
+#: ../share/filters/filters.svg.h:168
+msgid "Velvet bump"
+msgstr "Embossage velouté"
+
+#: ../share/filters/filters.svg.h:168
+msgid "Gives a smooth bump velvet like"
+msgstr "Donne un embossage doux semblable à du velour"
+
+#: ../share/filters/filters.svg.h:169
+msgid "Alpha engraving"
+msgstr "Gravure alpha"
+
+#: ../share/filters/filters.svg.h:169
+msgid "Gives a transparent engraving effect to bitmaps and materials"
+msgstr "Donne un effet de gravure transparente aux bitmaps et matières"
+
+#: ../share/filters/filters.svg.h:170
+msgid "Alpha engraving, color"
+msgstr "Gravure alpha, colorée"
+
+#: ../share/filters/filters.svg.h:170
+msgid "Gives a transparent color engraving effect to bitmaps and materials"
+msgstr "Donne un effet de gravure transparente et colorée aux bitmaps et matières"
 
 #: ../src/arc-context.cpp:303
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -3913,11 +3904,11 @@ msgstr "Aucune aide n'est actuellement disponible pour cette extension. Veuillez
 msgid "Inkscape has received additional data from the script executed.  The script did not return an error, but this may indicate the results will not be as expected."
 msgstr "Inkscape a reçu des données additionnelles du script exécuté. Le script n'a pas retourné d'erreur, mais ceci peut indiquer que les résultats ne sont pas ceux attendus."
 
-#: ../src/extension/init.cpp:277
+#: ../src/extension/init.cpp:274
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr "Le répertoire des modules externes est « Null ». Les modules ne seront pas chargés."
 
-#: ../src/extension/init.cpp:291
+#: ../src/extension/init.cpp:288
 #: ../src/extension/internal/filter/filter-file.cpp:56
 #, c-format
 msgid "Modules directory (%s) is unavailable.  External modules in that directory will not be loaded."
@@ -4185,12 +4176,12 @@ msgid "Edge"
 msgstr "Contours"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-msgid "Hilight edges of selected bitmap(s)."
+msgid "Highlight edges of selected bitmap(s)."
 msgstr "Surligner les contours des bitmaps sélectionnés."
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-msgid "Emboss selected bitmap(s) -- hilight edges with 3D effect."
-msgstr "Gauffrer les bitmaps sélectionnés -- réhausser les contours avec un effet 3D."
+msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
+msgstr "Gaufrer les bitmaps sélectionnés -- surligne les contours avec un effet 3D."
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
 msgid "Enhance"
@@ -4509,26 +4500,26 @@ msgstr "Exporter uniquement le dessin"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:284
 #: ../src/extension/internal/cairo-ps-out.cpp:321
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:218
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
 #: ../src/extension/internal/emf-win32-inout.cpp:2430
 msgid "Convert texts to paths"
 msgstr "Convertir les textes en chemins"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
 msgid "Rasterize filter effects"
 msgstr "Rastériser les effets de filtre"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
-msgid "Preferred resolution (DPI) of bitmaps"
-msgstr "Résolution préférée (Point Par Pouce) du bitmap"
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
+msgid "Resolution for rasterization (dpi)"
+msgstr "Résolution pour la rastérisation (ppp)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:224
 msgid "Limit export to the object with ID"
 msgstr "Limiter l'exportation à l'objet ayant l'identifiant"
 
@@ -4555,19 +4546,19 @@ msgstr "PostScript encapsulé (*.eps)"
 msgid "Encapsulated PostScript File"
 msgstr "Fichier PostScript Encapsulé"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:215
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
 msgid "Restrict to PDF version"
 msgstr "Restreindre à la version de PDF"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:217
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
 msgid "Export drawing, not page"
 msgstr "Exporter le dessin, pas la page"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
 msgid "Export canvas"
 msgstr "Exporter le canevas"
 
@@ -4679,7 +4670,7 @@ msgstr "Dimension de dérive"
 msgid "Snow has fallen on object"
 msgstr "La neige est tombée sur l'objet"
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:119
+#: ../src/extension/internal/gdkpixbuf-input.cpp:126
 #, c-format
 msgid "%s GDK pixbuf Input"
 msgstr "Entrée %s GDK pixbuf"
@@ -5023,132 +5014,132 @@ msgstr "Échec de la détection automatique du format. Le fichier est ouvert en 
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:153
+#: ../src/file.cpp:157
 msgid "default.svg"
 msgstr "default.fr.svg"
 
-#: ../src/file.cpp:245
-#: ../src/file.cpp:1031
+#: ../src/file.cpp:249
+#: ../src/file.cpp:1035
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Échec du chargement du fichier %s"
 
-#: ../src/file.cpp:270
+#: ../src/file.cpp:274
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Document non enregistré. Impossible de le recharger."
 
-#: ../src/file.cpp:276
+#: ../src/file.cpp:280
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr "Les changements seront perdus ! Êtes-vous sûr de vouloir recharger le document %s ?"
 
-#: ../src/file.cpp:305
+#: ../src/file.cpp:309
 msgid "Document reverted."
 msgstr "Document rechargé."
 
-#: ../src/file.cpp:307
+#: ../src/file.cpp:311
 msgid "Document not reverted."
 msgstr "Document non rechargé."
 
-#: ../src/file.cpp:457
+#: ../src/file.cpp:461
 msgid "Select file to open"
 msgstr "Sélectionner un fichier à ouvrir"
 
-#: ../src/file.cpp:544
+#: ../src/file.cpp:548
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Nettoyer les &lt;defs&gt;"
 
-#: ../src/file.cpp:549
+#: ../src/file.cpp:553
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Suppression de <b>%i</b> définition inutilisée dans les &lt;defs&gt;."
 msgstr[1] "Suppression de <b>%i</b> définitions inutilisées dans les &lt;defs&gt;."
 
-#: ../src/file.cpp:554
+#: ../src/file.cpp:558
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Aucune définition inutilisée dans les &lt;defs&gt;."
 
-#: ../src/file.cpp:583
+#: ../src/file.cpp:587
 #, c-format
 msgid "No Inkscape extension found to save document (%s).  This may have been caused by an unknown filename extension."
 msgstr "Aucune extension Inkscape pour enregistrer le document (%s) n'a été trouvée. Cela peut venir d'une extension de fichier inconnue."
 
-#: ../src/file.cpp:584
-#: ../src/file.cpp:592
-#: ../src/file.cpp:598
+#: ../src/file.cpp:588
+#: ../src/file.cpp:596
+#: ../src/file.cpp:602
 msgid "Document not saved."
 msgstr "Document non enregistré."
 
-#: ../src/file.cpp:591
+#: ../src/file.cpp:595
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Le fichier %s n'a pas pu être enregistré."
 
-#: ../src/file.cpp:605
+#: ../src/file.cpp:609
 msgid "Document saved."
 msgstr "Document enregistré."
 
-#: ../src/file.cpp:746
-#: ../src/file.cpp:1156
-#: ../src/file.cpp:1276
+#: ../src/file.cpp:750
+#: ../src/file.cpp:1160
+#: ../src/file.cpp:1280
 #, c-format
 msgid "drawing%s"
 msgstr "dessin%s"
 
-#: ../src/file.cpp:752
+#: ../src/file.cpp:756
 #, c-format
 msgid "drawing-%d%s"
 msgstr "dessin-%d%s"
 
-#: ../src/file.cpp:771
+#: ../src/file.cpp:775
 msgid "Select file to save a copy to"
 msgstr "Sélectionner le fichier dans lequel enregistrer une copie"
 
-#: ../src/file.cpp:773
+#: ../src/file.cpp:777
 msgid "Select file to save to"
 msgstr "Sélectionner le fichier dans lequel enregistrer"
 
-#: ../src/file.cpp:853
+#: ../src/file.cpp:857
 msgid "No changes need to be saved."
 msgstr "Aucun changement à enregistrer."
 
-#: ../src/file.cpp:870
+#: ../src/file.cpp:874
 msgid "Saving document..."
 msgstr "Enregistrement du document..."
 
-#: ../src/file.cpp:1028
+#: ../src/file.cpp:1032
 msgid "Import"
 msgstr "Importer"
 
-#: ../src/file.cpp:1058
+#: ../src/file.cpp:1062
 msgid "Select file to import"
 msgstr "Sélectionner un fichier à importer"
 
-#: ../src/file.cpp:1177
-#: ../src/file.cpp:1291
+#: ../src/file.cpp:1181
+#: ../src/file.cpp:1295
 msgid "Select file to export to"
 msgstr "Sélectionner un fichier vers lequel exporter"
 
-#: ../src/file.cpp:1323
+#: ../src/file.cpp:1327
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "La sauvegarde de la copie temporaire a échoué"
 
-#: ../src/file.cpp:1343
+#: ../src/file.cpp:1347
 msgid "Open Clip Art Login"
 msgstr "Utilisateur Open Clip Art"
 
-#: ../src/file.cpp:1369
+#: ../src/file.cpp:1373
 #, c-format
 msgid "Error exporting the document. Verify if the server name, username and password are correct, if the server has support for webdav and verify if you didn't forget to choose a license."
 msgstr "Erreur lors de l'exportation du document. Vérifiez que le nom du serveur, le nom d'utilisateur et le mot de passe soient corrects, que le serveur ait des fonctionnalités webdav et que vous n'ayez pas oublié de choisir une licence."
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1394
 msgid "Document exported..."
 msgstr "Document exporté..."
 
-#: ../src/file.cpp:1418
+#: ../src/file.cpp:1422
 #: ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importer depuis la bibliothèque Open Clip Art"
@@ -5825,38 +5816,38 @@ msgstr "ex"
 msgid "Ex squares"
 msgstr "Ex carrés"
 
-#: ../src/inkscape.cpp:323
+#: ../src/inkscape.cpp:324
 msgid "Autosaving documents..."
 msgstr "Enregistrement automatique du document..."
 
-#: ../src/inkscape.cpp:394
+#: ../src/inkscape.cpp:395
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr "Échec de l'enregistrement automatique ! Impossible de trouver l'extension inkscape pour enregistrer le document."
 
-#: ../src/inkscape.cpp:397
-#: ../src/inkscape.cpp:404
+#: ../src/inkscape.cpp:398
+#: ../src/inkscape.cpp:405
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr "Le fichier %s n'a pas pu être enregistré."
 
-#: ../src/inkscape.cpp:419
+#: ../src/inkscape.cpp:420
 msgid "Autosave complete."
 msgstr "Enregistrement automatique terminé."
 
-#: ../src/inkscape.cpp:650
+#: ../src/inkscape.cpp:651
 msgid "Untitled document"
 msgstr "Document sans titre"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:680
+#: ../src/inkscape.cpp:681
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape a subi une erreur interne et va se fermer maintenant.\n"
 
-#: ../src/inkscape.cpp:681
+#: ../src/inkscape.cpp:682
 msgid "Automatic backups of unsaved documents were done to the following locations:\n"
 msgstr "Les enregistrements automatiques des documents non enregistrés ont été effectués à cet emplacement :\n"
 
-#: ../src/inkscape.cpp:682
+#: ../src/inkscape.cpp:683
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Les enregistrements automatiques des documents suivants ont échoué :\n"
 
@@ -5997,9 +5988,9 @@ msgstr "Nom de programme erroné : %s"
 
 #: ../src/io/sys.cpp:633
 #: ../src/io/sys.cpp:922
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid string in argument vector at %d: %s"
-msgstr "Chaîne invalide dans le vecteur argument dans %d: %s"
+msgstr "Chaîne invalide dans le vecteur d'argument dans %d: %s"
 
 #: ../src/io/sys.cpp:644
 #: ../src/io/sys.cpp:937
@@ -6589,29 +6580,21 @@ msgstr "Visible ?"
 msgid "If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"
 msgstr "Si décochée, l'effet est appliqué à l'objet mais est temporairement désactivé sur le canevas"
 
-#: ../src/live_effects/effect.cpp:274
-msgid "Deactivate knotholder?"
-msgstr "Désactiver le « knotholder » ?"
-
-#: ../src/live_effects/effect.cpp:274
-msgid "Check this to deactivate knotholder handles (useful if they interfere with node handles during editing)"
-msgstr "Sélectionner pour désactiver les poignées de « knotholder » (utile lorsqu'elles interfèrent avec les poignées de nœud lors de l'édition)"
-
-#: ../src/live_effects/effect.cpp:295
+#: ../src/live_effects/effect.cpp:293
 msgid "No effect"
 msgstr "Pas d'effet"
 
-#: ../src/live_effects/effect.cpp:342
+#: ../src/live_effects/effect.cpp:340
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr "Veuillez spécifier un chemin paramètre pour l'effet de chemin '%s' avec %d clics de souris"
 
-#: ../src/live_effects/effect.cpp:641
+#: ../src/live_effects/effect.cpp:636
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "Édition du paramètre <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:646
+#: ../src/live_effects/effect.cpp:641
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Aucun des paramètres d'effet de chemin ne peuvent être modifiés sur la zone de travail."
 
@@ -6848,7 +6831,7 @@ msgid "Scale the width of the stitch path relative to its length"
 msgstr "Redimensionner l'épaisseur du chemin de contour proportionnellement à sa longueur"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
-msgid "Ellipitic Pen"
+msgid "Elliptic Pen"
 msgstr "Stylo elliptique"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:61
@@ -6922,7 +6905,6 @@ msgid "Choose end capping type"
 msgstr "Choisir le type de terminaison finale"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:82
-#, fuzzy
 msgid "Grow for"
 msgstr "Augmenter de"
 
@@ -6931,7 +6913,6 @@ msgid "Make the stroke thiner near it's start"
 msgstr "Rend le contour plus étroit au début du chemin"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:83
-#, fuzzy
 msgid "Fade for"
 msgstr "Diminuer de"
 
@@ -7430,7 +7411,7 @@ msgid "Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=shar
 msgstr "Definit la douceur ou la netteté du chemin lorsqu'il quitte un demi-tour inférieur. 0=net, 1=défaut"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-msgid "2nd side, in "
+msgid "2nd side, in"
 msgstr "deuxième côté, intérieur"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
@@ -7629,9 +7610,8 @@ msgstr "Choisir si les graduations doivent être dessinées au début ou à la f
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-skeleton.cpp:32
-#, fuzzy
 msgid "Float parameter"
-msgstr "Paramètres de l'effet"
+msgstr "Paramètres flottant"
 
 #: ../src/live_effects/lpe-skeleton.cpp:32
 msgid "just a real number like 1.4!"
@@ -7744,7 +7724,7 @@ msgid "Placement randomness"
 msgstr "Caractère aléatoire du placement"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-msgid "0: evenly distributed construcion lines, 1: purely random placement"
+msgid "0: evenly distributed construction lines, 1: purely random placement"
 msgstr "0 : lignes de construction régulièrement distribuées, 1 : placement purement aléatoire"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
@@ -7975,8 +7955,8 @@ msgid "Export document to a PNG file"
 msgstr "Exporter le document vers un fichier PNG"
 
 #: ../src/main.cpp:294
-msgid "The resolution used for exporting SVG into bitmap (default 90)"
-msgstr "La résolution utilisée pour exporter un SVG en bitmap (défaut 90)"
+msgid "Resolution for exporting to bitmap and for rasterization of filters in PS/EPS/PDF (default 90)"
+msgstr "Résolution pour l'exportation de bitmap et la rastérisation des filtres en PS/EPS/PDS (90 par défaut)"
 
 #: ../src/main.cpp:295
 #: ../src/ui/widget/rendering-options.cpp:43
@@ -8140,8 +8120,8 @@ msgid "OBJECT-ID"
 msgstr "OBJECT-ID"
 
 #: ../src/main.cpp:453
-msgid "Start Inkscape in interative shell mode."
-msgstr "Démarre Inkscape en mode de commande interactif."
+msgid "Start Inkscape in interactive shell mode."
+msgstr "Démarrer Inkscape en mode de commande interactif."
 
 #: ../src/main.cpp:756
 #: ../src/main.cpp:1067
@@ -8701,60 +8681,60 @@ msgstr "Alterner les points de fuite"
 msgid "Toggle multiple vanishing points"
 msgstr "Alterner entre des points de fuite multiples"
 
-#: ../src/preferences.cpp:104
+#: ../src/preferences.cpp:101
 msgid "Inkscape will run with default settings, and new settings will not be saved. "
 msgstr ""
 "Inkscape va démarrer avec les préférences par défaut.\n"
 "Les nouvelles préférences ne seront pas enregistrées."
 
 #. the creation failed
-#. _errorDialog(Glib::ustring::compose(_("Cannot create profile directory %1."),
+#. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:122
+#: ../src/preferences.cpp:116
 #, c-format
 msgid "Cannot create profile directory %s."
 msgstr "Impossible de créer le répertoire de profil %s."
 
 #. The profile dir is not actually a directory
-#. _errorDialog(Glib::ustring::compose(_("%1 is not a valid directory."),
+#. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:140
+#: ../src/preferences.cpp:134
 #, c-format
 msgid "%s is not a valid directory."
 msgstr "%s n'est pas un répertoire valide."
 
 #. The write failed.
-#. _errorDialog(Glib::ustring::compose(_("Failed to create the preferences file %1."),
+#. _reportError(Glib::ustring::compose(_("Failed to create the preferences file %1."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:151
+#: ../src/preferences.cpp:145
 #, c-format
 msgid "Failed to create the preferences file %s."
 msgstr "Échec lors de la création du fichier du fichier de préférences %s."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:169
+#: ../src/preferences.cpp:163
 #, c-format
 msgid "The preferences file %s is not a regular file."
 msgstr "%s n'est pas un fichier de préférences normal."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 could not be read."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 could not be read."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:181
+#: ../src/preferences.cpp:175
 #, c-format
 msgid "The preferences file %s could not be read."
 msgstr "Le fichier de préférences %s n'a pas pu être lu."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:193
+#: ../src/preferences.cpp:188
 #, c-format
 msgid "The preferences file %s is not a valid XML document."
 msgstr "Le fichier de préférences %s n'est pas un document XML valide."
 
-#. _errorDialog(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
+#. _reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:203
+#: ../src/preferences.cpp:199
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "%s n'est pas un fichier de préférences valide."
@@ -11361,7 +11341,7 @@ msgstr "Fichier image"
 msgid "Selected SVG Element"
 msgstr "Élément SVG sélectionné"
 
-#. TODO: any image, not justy svg
+#. TODO: any image, not just svg
 #: ../src/ui/dialog/filter-effects-dialog.cpp:648
 msgid "Select an image to be used as feImage input"
 msgstr "Sélectionner une image pour l'utiliser comme entrée feImage"
@@ -11793,8 +11773,8 @@ msgid "The <b>feComponentTransfer</b> filter primitive manipulates the input's c
 msgstr "<b>feComponentTransfer</b> manipule les composantes de couleur de l'entrée (rouge, vert, bleu et opacité) suivant des fonctions de tranfert. Cela permet des opérations comme l'ajustement de luminosité et de contraste, la balance des couleurs, et la détection de seuil."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2289
-msgid "The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the aritmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."
-msgstr "<b>feComposite</b> fond deux images ensemble en utilisant l'un des modes de fondu Porter-Duff ou le mode arithmétique décrit dans le standard SVG. Les modes de fondu Porter-Duff sont en résumé des opérations logiques entre les valeurs de pixels respectives des images."
+msgid "The <b>feComposite</b> filter primitive composites two images using one of the Porter-Duff blending modes or the arithmetic mode described in SVG standard. Porter-Duff blending modes are essentially logical operations between the corresponding pixel values of the images."
+msgstr "La primitive <b>feComposite</b> fond deux images ensemble en utilisant un des modes de fondu Porter-Duff ou le mode arithmétique décrit dans le standard SVG. Les modes de fondu Porter-Duff sont en résumé des opérations logiques entre les valeurs de pixels respectives des images."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2293
 msgid "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on the image. Common effects created using convolution matrices are blur, sharpening, embossing and edge detection. Note that while gaussian blur can be created using this filter primitive, the special gaussian blur primitive is faster and resolution-independent."
@@ -13960,118 +13940,127 @@ msgstr "Aucun glyphe n'est sélectionné dans la boîte de dialogue Fontes SVG."
 msgid "Set glyph curves"
 msgstr "Définir les courbes du glyphe"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:566
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:570
+msgid "Reset missing-glyph"
+msgstr "Réinitialiser le glyphe manquant"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:585
 msgid "Edit glyph name"
 msgstr "Modifier le nom du glyphe"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:579
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:598
 msgid "Set glyph unicode"
 msgstr "Définir l'unicode du glyphe"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:589
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:608
 msgid "Remove font"
 msgstr "Supprimer la fonte"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:604
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:623
 msgid "Remove glyph"
 msgstr "Supprimer le glyphe"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:619
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:638
 msgid "Remove kerning pair"
 msgstr "Supprimer la paire de crénage"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:629
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 msgid "Missing Glyph:"
 msgstr "Glyphe manquant :"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:632
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:652
 msgid "From selection..."
 msgstr "À partir de la sélection..."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:642
-msgid "Glyph Name"
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:654
+#: ../src/ui/widget/preferences-widget.cpp:590
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:665
+msgid "Glyph name"
 msgstr "Nom du glyphe"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:643
-msgid "Unicode"
-msgstr "Unicode"
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:666
+msgid "Matching string"
+msgstr "Chaîne correspondante"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:646
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:669
 msgid "Add Glyph"
 msgstr "Ajouter un glyphe"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:653
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:676
 msgid "Get curves from selection..."
 msgstr "Obtenir les courbes à partir de la sélection..."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:703
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
 msgstr "Ajouter une paire de crénage"
 
 #. Kerning Setup:
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:711
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:734
 msgid "Kerning Setup:"
 msgstr "Paramétrage du crénage :"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:713
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
 msgstr "Premier glyphe :"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:715
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
 msgid "2nd Glyph:"
 msgstr "Deuxième glyphe :"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:718
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:741
 msgid "Add pair"
 msgstr "Ajouter la paire"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:730
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:753
 msgid "First Unicode range"
 msgstr "Première plage Unicode"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:731
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:754
 msgid "Second Unicode range"
 msgstr "Deuxième plage Unicode"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:761
 msgid "Kerning value:"
 msgstr "Valeur de crénage :"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:796
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 msgid "Set font family"
 msgstr "Définir la famille de la fonte"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:805
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:828
 msgid "font"
 msgstr "fonte"
 
 #. select_font(font);
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:842
 msgid "Add font"
 msgstr "Ajouter une fonte"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:839
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:862
 msgid "_Font"
 msgstr "_Fonte"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:847
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:870
 msgid "_Global Settings"
 msgstr "Paramètres généraux"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:848
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:871
 msgid "_Glyphs"
 msgstr "_Glyphes"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:849
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:872
 msgid "_Kerning"
 msgstr "_Crénage"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:856
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:857
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:879
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:880
 msgid "Sample Text"
 msgstr "Texte exemple"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:861
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:884
 msgid "Preview Text:"
 msgstr "Texte de l'aperçu :"
 
@@ -14916,10 +14905,6 @@ msgstr "Très large"
 #: ../src/ui/widget/panel.cpp:205
 msgid "swatches|Wrap"
 msgstr "Retour à la ligne"
-
-#: ../src/ui/widget/preferences-widget.cpp:590
-msgid "Reset"
-msgstr "Réinitialiser"
 
 #: ../src/ui/widget/random.cpp:123
 msgid "Reseed the random number generator; this creates a different sequence of random numbers."
@@ -17223,13 +17208,13 @@ msgstr "%s (contour) - Inkscape"
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
 
-#: ../src/widgets/ege-paint-def.cpp:69
-#: ../src/widgets/ege-paint-def.cpp:91
+#: ../src/widgets/ege-paint-def.cpp:70
+#: ../src/widgets/ege-paint-def.cpp:92
 #: ../src/widgets/gradient-selector.cpp:167
 msgid "none"
 msgstr "aucune"
 
-#: ../src/widgets/ege-paint-def.cpp:88
+#: ../src/widgets/ege-paint-def.cpp:89
 msgid "remove"
 msgstr "supprimer"
 
@@ -17565,7 +17550,7 @@ msgstr "Hauteur"
 
 #: ../src/widgets/select-toolbar.cpp:497
 msgid "select_toolbar|H"
-msgstr "H"
+msgstr "select_toolbar|H"
 
 #: ../src/widgets/select-toolbar.cpp:499
 msgid "Height of selection"
@@ -17927,7 +17912,7 @@ msgstr "Style des nouveaux tracés calligraphiques"
 #: ../src/widgets/toolbox.cpp:203
 #: ../src/widgets/toolbox.cpp:205
 msgid "TBD"
-msgstr ""
+msgstr "À définir"
 
 #: ../src/widgets/toolbox.cpp:215
 msgid "Style of Paint Bucket fill objects"
@@ -18827,7 +18812,7 @@ msgstr "En mode couleur, agit sur la teinte des objets"
 #. TRANSLATORS:  "H" here stands for hue
 #: ../src/widgets/toolbox.cpp:4284
 msgid "H"
-msgstr "H"
+msgstr "T"
 
 #: ../src/widgets/toolbox.cpp:4295
 msgid "In color mode, act on objects' saturation"
@@ -19222,7 +19207,7 @@ msgstr "Aucun outil géométrique n'est actif"
 
 #: ../src/widgets/toolbox.cpp:5574
 msgid "draw-geometry-inactive"
-msgstr ""
+msgstr "dessin-géométrie-inactif"
 
 #: ../src/widgets/toolbox.cpp:5606
 msgid "Show limiting bounding box"
@@ -21656,7 +21641,7 @@ msgid "Run it before"
 msgstr "Exécuter avant"
 
 #: ../share/extensions/web-set-att.inx.h:8
-msgid "Set Atributes"
+msgid "Set Attributes"
 msgstr "Définir les attributs"
 
 #: ../share/extensions/web-set-att.inx.h:9
@@ -21811,6 +21796,38 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Rainbow melt"
+#~ msgstr "Coulée d'arc-en-ciel"
+#~ msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
+#~ msgstr "Bandes d'arc-en-ciel verticales, séparées par des taches en relief"
+#~ msgid "Comics rounded"
+#~ msgstr "Arrondi bande dessinée"
+#~ msgid "Imitation of black and white cartoon shading more rounded version"
+#~ msgstr ""
+#~ "Imitation d'ombrage de bande dessinée en noir et blanc, en plus arrondi"
+#~ msgid "Pewter NR"
+#~ msgstr "Étain"
+#~ msgid "Mid grey satin like shader close to pewter"
+#~ msgstr "Ombrage satin gris moyen, proche d'Étain"
+#~ msgid "Comics flow"
+#~ msgstr "Écoulement bande dessinée"
+#~ msgid "Comics shader with a flow inside transparency"
+#~ msgstr ""
+#~ "Ombrage de bande dessinée avec une transparence s'écoulant à l'intérieur"
+#~ msgid "Preferred resolution (DPI) of bitmaps"
+#~ msgstr "Résolution préférée (Point Par Pouce) du bitmap"
+#~ msgid "Deactivate knotholder?"
+#~ msgstr "Désactiver le « knotholder » ?"
+#~ msgid ""
+#~ "Check this to deactivate knotholder handles (useful if they interfere "
+#~ "with node handles during editing)"
+#~ msgstr ""
+#~ "Sélectionner pour désactiver les poignées de « knotholder » (utile "
+#~ "lorsqu'elles interfèrent avec les poignées de nœud lors de l'édition)"
+#~ msgid "The resolution used for exporting SVG into bitmap (default 90)"
+#~ msgstr "La résolution utilisée pour exporter un SVG en bitmap (défaut 90)"
+#~ msgid "Unicode"
+#~ msgstr "Unicode"
 #~ msgid "Glow and draw"
 #~ msgstr "Lueur et tracé"
 #~ msgid "Glowing content, posterized edges"
@@ -22453,10 +22470,6 @@ msgstr "Entrée XAML"
 #~ msgstr "Angle Z"
 #~ msgid "Inline the XML attributes"
 #~ msgstr "Place les attributs XML en ligne"
-
-#, fuzzy
-#~ msgid "Path string"
-#~ msgstr "  chaîne : "
 #~ msgid "The number of digits to use behind the comma."
 #~ msgstr "Le nombre de décimales derrière la virgule."
 #~ msgid "Enable auto-save of document"
