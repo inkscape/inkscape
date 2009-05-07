@@ -310,11 +310,12 @@ DIMTXT = {}                                         # store DIMENSION text sizes
 
 while line[0] and line[1] != 'BLOCKS':
     line = get_line()
-    if line[1] == '$EXTMIN':
-        xmin = get_group('10')
-    if line[1] == '$EXTMAX':
-        xmax = get_group('10')
-        ymax = get_group('20')
+    if options.auto:
+        if line[1] == '$EXTMIN':
+            xmin = get_group('10')
+        if line[1] == '$EXTMAX':
+            xmax = get_group('10')
+            ymax = get_group('20')
     if flag == 1 and line[0] == '2':
         layername = unicode(line[1], "iso-8859-1")
         attribs = {inkex.addNS('groupmode','inkscape'): 'layer', inkex.addNS('label','inkscape'): '%s' % layername}
@@ -347,6 +348,11 @@ else:
     scale = float(options.scale)                    # manual scale factor
 desc.text = '%s - scale = %f' % (unicode(args[0], "iso-8859-1"), scale)
 scale *= 90.0/25.4                                  # convert from mm to pixels
+
+if not layer_nodes:
+    attribs = {inkex.addNS('groupmode','inkscape'): 'layer', inkex.addNS('label','inkscape'): '0'}
+    layer_nodes['0'] = inkex.etree.SubElement(doc.getroot(), 'g', attribs)
+    layer_colors['0'] = 7
 
 for linename in linetypes.keys():                   # scale the dashed lines
     linetype = ''
