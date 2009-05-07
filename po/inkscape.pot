@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-06 18:03+0200\n"
+"POT-Creation-Date: 2009-05-07 20:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6411,31 +6411,21 @@ msgid ""
 "disabled on canvas"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:274
-msgid "Deactivate knotholder?"
-msgstr ""
-
-#: ../src/live_effects/effect.cpp:274
-msgid ""
-"Check this to deactivate knotholder handles (useful if they interfere with "
-"node handles during editing)"
-msgstr ""
-
-#: ../src/live_effects/effect.cpp:295
+#: ../src/live_effects/effect.cpp:293
 msgid "No effect"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:342
+#: ../src/live_effects/effect.cpp:340
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:641
+#: ../src/live_effects/effect.cpp:636
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:646
+#: ../src/live_effects/effect.cpp:641
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 
@@ -7265,7 +7255,7 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-msgid "2nd side, in "
+msgid "2nd side, in"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
