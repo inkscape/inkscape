@@ -243,35 +243,35 @@ sp_fefuncnode_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         case SP_ATTR_SLOPE:
-            read_num = helperfns_read_number(value);
+            read_num = value ? helperfns_read_number(value) : 1;
             if (read_num != feFuncNode->slope) {
                 feFuncNode->slope = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_INTERCEPT:
-            read_num = helperfns_read_number(value);
+            read_num = value ? helperfns_read_number(value) : 0;
             if (read_num != feFuncNode->intercept) {
                 feFuncNode->intercept = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_AMPLITUDE:
-            read_num = helperfns_read_number(value);
+            read_num = value ? helperfns_read_number(value) : 1;
             if (read_num != feFuncNode->amplitude) {
                 feFuncNode->amplitude = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_EXPONENT:
-            read_num = helperfns_read_number(value);
+            read_num = value ? helperfns_read_number(value) : 1;
             if (read_num != feFuncNode->exponent) {
                 feFuncNode->exponent = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_OFFSET:
-            read_num = helperfns_read_number(value);
+            read_num = value ? helperfns_read_number(value) : 0;
             if (read_num != feFuncNode->offset) {
                 feFuncNode->offset = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);

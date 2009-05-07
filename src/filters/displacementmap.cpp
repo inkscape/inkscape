@@ -165,7 +165,7 @@ sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         case SP_ATTR_SCALE:
-            read_num = helperfns_read_number(value);
+            read_num = value ? helperfns_read_number(value) : 0;
             if (read_num != feDisplacementMap->scale) {
                 feDisplacementMap->scale = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);

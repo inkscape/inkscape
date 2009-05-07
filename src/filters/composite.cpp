@@ -157,7 +157,7 @@ sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
             break;
 
         case SP_ATTR_K1:
-            k_n = helperfns_read_number(value);
+            k_n = value ? helperfns_read_number(value) : 0;
             if (k_n != feComposite->k1) {
                 feComposite->k1 = k_n;
                 if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)
@@ -166,7 +166,7 @@ sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
             break;
 
         case SP_ATTR_K2:
-            k_n = helperfns_read_number(value);
+            k_n = value ? helperfns_read_number(value) : 0;
             if (k_n != feComposite->k2) {
                 feComposite->k2 = k_n;
                 if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)
@@ -175,7 +175,7 @@ sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
             break;
 
         case SP_ATTR_K3:
-            k_n = helperfns_read_number(value);
+            k_n = value ? helperfns_read_number(value) : 0;
             if (k_n != feComposite->k3) {
                 feComposite->k3 = k_n;
                 if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)
@@ -184,7 +184,7 @@ sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
             break;
 
         case SP_ATTR_K4:
-            k_n = helperfns_read_number(value);
+            k_n = value ? helperfns_read_number(value) : 0;
             if (k_n != feComposite->k4) {
                 feComposite->k4 = k_n;
                 if (feComposite->composite_operator == COMPOSITE_ARITHMETIC)

@@ -121,14 +121,14 @@ sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value)
     double read_num;
     switch(key) {
         case SP_ATTR_DX:
-            read_num = helperfns_read_number(value);
+            read_num = value ? helperfns_read_number(value) : 0;
             if (read_num != feOffset->dx) {
                 feOffset->dx = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         case SP_ATTR_DY:
-            read_num = helperfns_read_number(value);
+            read_num = value ? helperfns_read_number(value) : 0;
             if (read_num != feOffset->dy) {
                 feOffset->dy = read_num;
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);

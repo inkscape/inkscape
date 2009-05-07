@@ -169,7 +169,7 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         case SP_ATTR_NUMOCTAVES:
-            read_int = (int) helperfns_read_number(value);
+            read_int = value ? (int)floor(helperfns_read_number(value)) : 1;
             if (read_int != feTurbulence->numOctaves){
                 feTurbulence->numOctaves = read_int;
                 feTurbulence->updated = false;
@@ -177,7 +177,7 @@ sp_feTurbulence_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         case SP_ATTR_SEED:
-            read_num = helperfns_read_number(value);
+            read_num = value ? helperfns_read_number(value) : 0;
             if (read_num != feTurbulence->seed){
                 feTurbulence->seed = read_num;
                 feTurbulence->updated = false;
