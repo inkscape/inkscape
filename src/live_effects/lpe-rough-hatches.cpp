@@ -228,7 +228,7 @@ LPERoughHatches::LPERoughHatches(LivePathEffectObject *lpeobject) :
 //FIXME: top/bottom names are inverted in the UI/svg and in the code!!
     scale_tf(_("Half turns smoothness: 1st side, in"), _("Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, 1=default"), "scale_bf", &wr, this, 1.),
     scale_tb(_("1st side, out"), _("Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, 1=default"), "scale_bb", &wr, this, 1.),
-    scale_bf(_("2nd side, in "), _("Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, 1=default"), "scale_tf", &wr, this, 1.),
+    scale_bf(_("2nd side, in"), _("Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, 1=default"), "scale_tf", &wr, this, 1.),
     scale_bb(_("2nd side, out"), _("Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, 1=default"), "scale_tb", &wr, this, 1.),
     top_edge_variation(_("Magnitude jitter: 1st side"), _("Randomly moves 'bottom' halfsturns to produce magnitude variations."), "bottom_edge_variation", &wr, this, 0),
     bot_edge_variation(_("2nd side"), _("Randomly moves 'top' halfsturns to produce magnitude variations."), "top_edge_variation", &wr, this, 0),
