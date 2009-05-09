@@ -19,16 +19,16 @@ un outil de dessin totalement conforme aux spécifications XML, SVG et CSS2 du
 W3C. De plus les tâches planifiées incluent la conversion du code de C/Gtk en
 C++/Gtkmm, la mise en valeur d'un noyau léger avec des fonctionnalités ajoutées
 par un mécanisme d'extension, et l'établissement d'un processus de
-développement amical, ouvert et tourné vers la communeauté.
+développement amical, ouvert et tourné vers la communauté.
 
-Inkscape se compile et s'installe selon la procédure standard : 
+Inkscape se compile et s'installe selon la procédure standard :
 
   ./configure
   make
   make install
 
 Si le fichier "./configure" n'est pas présent, vous pouvez le créer en
-exécutant la commande  "./autogen.sh", qui appelle alternativement d'autres
+exécutant la commande "./autogen.sh", qui appelle alternativement d'autres
 programmes tels que automake et autoconf. Consultez le fichier INSTALL pour de
 plus amples détails.
 
@@ -45,16 +45,16 @@ vous devriez avoir à installer :
 
 Veuillez consulter http://wiki.inkscape.org/wiki/index.php/CompilingInkscape
 pour les dépendances les plus courantes, cette page comportant aussi des liens
-les fichiers sources (au format .tar.gz)
+vers les fichiers sources (au format .tar.gz).
 
 
 Dépendances pour les extensions
 ===============================
 Inkscape comporte aussi un certain nombre d'extensions apportant diverses
 fonctionnalités (comme le support de formats de fichiers autres que le SVG...).
-En théorie toutes les extensions sont optionnelles; cependant, en pratique,
+En théorie toutes les extensions sont optionnelles ; cependant, en pratique,
 vous voudrez sans doute les installer et faire fonctionner. Malheureusement,
-leur bon fonctionnement peut beaucoup varier. Voici quelques recommandations :
+leur bon fonctionnement peut beaucoup varier. Voici quelques recommandations.
 
 D'abord, vérifiez que Python et Perl sont bien installés. Sous Windows,
 installez aussi Cygwin.
