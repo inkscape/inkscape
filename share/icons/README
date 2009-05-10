@@ -1,10 +1,58 @@
+========================
+= INKSCAPE ICON THEMES =
+========================
+
+Starting with 0.47, Inkscape supports icon theming using the XDG Icon Theme
+Specification [1]. It is implemented according to the Themable App Specific
+Icons document [2]. Everything that's needed to replace Inkscape's icons
+is to put appropriately named icons in your desktop environment's icon theme.
+A list of the names is available at [3].
+
+The monolithic icons.svg file is deprecated and should not be used to add new
+icons. Support for it will probably be removed in the next release (0.48).
+
+== User notes ==
+
+To get back the old icons on Linux, do the following:
+1. Create the directory ~/.icons/OldInkscape
+2. Copy the contents of the hicolor directory there
+3. Edit the index.theme file; Replace "Name=hicolor" with "Name=OldInkscape",
+   and in a new line add "Inherits=YourTheme" where YourTheme is the
+   icon theme you're currently using, e.g. Human, gnome, etc.
+4. Choose the OldInkscape theme from your desktop's appearance preferences.
+
+To use the Tango icons on Windows, go to INKDIR/share/icons, where INKDIR is
+Inkscape's installation directory. Rename "hicolor" to "old", and then rename
+"tango" to "hicolor".
+
+== Developer notes ==
+
+The enabling bit of theming on Windows, which isn't mentioned in GTK docs,
+is the index.theme file. Without it, gtk_icon_theme_load_icon fails with the
+GTK_ICON_THEME_ERROR_FAILED error.
+
+Note that what dir the icon is in (actions, status, places) under the size
+directory doesn't matter at all when icons are looked up; the lookup function
+looks in all directories.
+
+== How to add an icon ==
+
+To add a new icon, you have to do the following:
+1. Draw the icon on a 48x48px canvas; for new icons, try to follow the Tango
+   guidelines [4].
+2. Name the icon according to the icon naming guidelines outlines in the
+   theme specification and using existing icons as a reference.
+2. Place it in the appropriate directory under scalable in both hicolor
+   and tango. Choose the best suitable context ("places" for dialogs,
+   "actions" for actions, and "status" for status indicators and toggles).
+3. Run the script render-icons.sh and then update-makefiles.sh in both
+   directories.
+
+References:
+[1] http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html
+[2] http://live.gnome.org/ThemableAppSpecificIcons
+[3] http://wiki.inkscape.org/wiki/index.php/Themable_icons
+[4] http://tango.freedesktop.org/Tango_Icon_Theme_Guidelines
+
 Jan 18, 2008
-ticotico.jpg is (C)2008 Dario Sanches licensed under Creative Commons by-sa 3.0
-
-Wed Jan 19, 2005
-
-All XPM and PNG icons have been replaced by SVG icons in icons.svg
-
-The only graphics that will be kept as XPMs will be the cursor
-icons. (REJON: I"m actually in favor of trying to convert these to SVGs
-as well.)  These files are located in src/pixmaps.
+ticotico.jpg is (C) 2008 Dario Sanches, licensed under Creative Commons by-sa 3.0
