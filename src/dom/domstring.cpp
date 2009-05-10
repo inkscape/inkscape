@@ -65,7 +65,7 @@ DOMString::DOMString(const char *str)
 DOMString::~DOMString()
 {
     if (cstring)
-        delete cstring;
+        delete[] cstring;
 }
 
 
@@ -263,7 +263,7 @@ void DOMString::clear()
     chars.clear();
     if (cstring)
         {
-        delete cstring;
+        delete[] cstring;
         cstring = NULL;
         }
 }
@@ -293,7 +293,7 @@ DOMString DOMString::substr(unsigned long start, unsigned long end) const
 const char *DOMString::c_str()
 {
     if (cstring)
-        delete cstring;
+        delete[] cstring;
 
     int length = chars.size();
 
