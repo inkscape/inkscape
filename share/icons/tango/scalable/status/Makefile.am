@@ -8,6 +8,8 @@ iconsdir = $(themedir)/$(size)/$(context)
 # Re-run the script to update.
 
 icons_DATA = \
+	connector-avoid.svg \
+	connector-ignore.svg \
 	draw-ellipse-arc.svg \
 	draw-ellipse-segment.svg \
 	draw-ellipse-whole.svg \
@@ -50,6 +52,7 @@ icons_DATA = \
 	path-mode-polyline-paraxial.svg \
 	path-mode-polyline.svg \
 	path-mode-spiro.svg \
+	perspective-parallel.svg \
 	snap-bounding-box-center.svg \
 	snap-bounding-box-corners.svg \
 	snap-bounding-box-edges.svg \

@@ -8,6 +8,8 @@ iconsdir = $(themedir)/$(size)/$(context)
 # Re-run the script to update.
 
 icons_DATA = \
+	connector-avoid.png \
+	connector-ignore.png \
 	draw-ellipse-arc.png \
 	draw-ellipse-segment.png \
 	draw-ellipse-whole.png \
@@ -50,6 +52,7 @@ icons_DATA = \
 	path-mode-polyline-paraxial.png \
 	path-mode-polyline.png \
 	path-mode-spiro.png \
+	perspective-parallel.png \
 	snap-bounding-box-center.png \
 	snap-bounding-box-corners.png \
 	snap-bounding-box-edges.png \
