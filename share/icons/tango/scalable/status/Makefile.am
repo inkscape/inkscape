@@ -31,7 +31,7 @@ icons_DATA = \
 	fill-rule-nonzero.svg \
 	node-segment-curve.svg \
 	node-segment-line.svg \
-	node-type-auto.svg \
+	node-type-auto-smooth.svg \
 	node-type-cusp.svg \
 	node-type-smooth.svg \
 	node-type-symmetric.svg \

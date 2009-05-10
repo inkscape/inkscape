@@ -31,7 +31,7 @@ icons_DATA = \
 	fill-rule-nonzero.png \
 	node-segment-curve.png \
 	node-segment-line.png \
-	node-type-auto.png \
+	node-type-auto-smooth.png \
 	node-type-cusp.png \
 	node-type-smooth.png \
 	node-type-symmetric.png \
