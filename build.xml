@@ -333,7 +333,6 @@
             <exclude name="svg/ftos.cpp"/>
             <!--<exclude name="svg/test-svg.cpp"/>-->
             <exclude name="svg/test-svg-main.cpp"/>
-            <exclude name="svg/test-stubs.cpp"/>
             <exclude name="util/list-container-test.cpp"/>
             <exclude name="widgets/test-widgets.cpp"/>
             <exclude name="xml/quote-test.cpp"/>
@@ -693,6 +692,8 @@
     <copy todir="${dist}">
         <fileset dir="share">
           <exclude name=".*\.am"/>
+          <exclude name=".*\.in"/>
+          <exclude name=".*\.sh"/>
         </fileset>
     </copy>
     <copy todir="${dist}/share"> <fileset dir="${devlibs}/share/locale"/> </copy>
