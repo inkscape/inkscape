@@ -40,14 +40,11 @@ icons_DATA = \
 	inkscape.svg \
 	\
 	icons.svg \
-	legacy_icons.svg \
 	tango_icons.svg \
 	\
 	inkscape.file.svg \
 	inkscape.file.png \
-	\
-	README.icon_themes \
-	README.legacy_icons 
+	README
 	
 EXTRA_DIST = $(icons_DATA)
 
