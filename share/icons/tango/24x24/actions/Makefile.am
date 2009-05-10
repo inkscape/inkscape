@@ -76,10 +76,10 @@ icons_DATA = \
 	format-text-direction-vertical.png \
 	help-contents.png \
 	help-keyboard-shortcuts.png \
-	layer-add.png \
 	layer-bottom.png \
 	layer-delete.png \
 	layer-lower.png \
+	layer-new.png \
 	layer-next.png \
 	layer-previous.png \
 	layer-raise.png \

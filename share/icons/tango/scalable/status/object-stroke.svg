@@ -16,7 +16,7 @@
    sodipodi:version="0.32"
    inkscape:version="0.46+devel r21315"
    version="1.0"
-   sodipodi:docname="object-fill.svg"
+   sodipodi:docname="object-stroke.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs4">
@@ -90,16 +90,6 @@
        x2="1258.2748"
        y2="1192.2783"
        gradientTransform="matrix(1.8644051,0,0,1.8004141,-2302.7985,-2129.973)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient11528"
-       id="linearGradient993"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(2.2000043,0,0,1.9999896,-147.60023,-465.49722)"
-       x1="85.895683"
-       y1="250.0228"
-       x2="67.177094"
-       y2="232.10251" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -108,16 +98,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="23.625838"
-     inkscape:cy="31.292162"
+     inkscape:zoom="2.8"
+     inkscape:cx="14.611304"
+     inkscape:cy="27.688295"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="806"
-     inkscape:window-height="591"
-     inkscape:window-x="204"
-     inkscape:window-y="116"
+     inkscape:window-width="1024"
+     inkscape:window-height="737"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
      inkscape:snap-bbox="true"
      inkscape:snap-nodes="true">
     <inkscape:grid

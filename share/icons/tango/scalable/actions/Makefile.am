@@ -76,10 +76,10 @@ icons_DATA = \
 	format-text-direction-vertical.svg \
 	help-contents.svg \
 	help-keyboard-shortcuts.svg \
-	layer-add.svg \
 	layer-bottom.svg \
 	layer-delete.svg \
 	layer-lower.svg \
+	layer-new.svg \
 	layer-next.svg \
 	layer-previous.svg \
 	layer-raise.svg \
