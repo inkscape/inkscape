@@ -410,11 +410,6 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000); // in px
-    gdouble const offset = prefs->getDoubleLimited("/options/defaultscale/value", 2, 0, 1000);
-    tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
-    int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
-
     // make sure we still have valid objects to move around
     if (sc->item && SP_OBJECT_DOCUMENT( SP_OBJECT(sc->item))==NULL) {
         sp_select_context_abort(event_context);
@@ -482,7 +477,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             break;
 
         case GDK_MOTION_NOTIFY:
-            if (event->motion.state & GDK_BUTTON1_MASK && !event_context->space_panning) {
+        	tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+        	if (event->motion.state & GDK_BUTTON1_MASK && !event_context->space_panning) {
                 Geom::Point const motion_pt(event->motion.x, event->motion.y);
                 Geom::Point const p(desktop->w2d(motion_pt));
 
@@ -702,8 +698,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_KEY_PRESS: // keybindings for select context
 
-            {
-            guint keyval = get_group0_keyval(&event->key);
+			{
+			{
+        	guint keyval = get_group0_keyval(&event->key);
             bool alt = ( MOD__ALT
                                     || (keyval == GDK_Alt_L)
                                     || (keyval == GDK_Alt_R)
@@ -737,9 +734,13 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     //*/
                     break;
             }
-            }
+			}
 
-            switch (get_group0_keyval (&event->key)) {
+            gdouble const nudge = prefs->getDoubleLimited("/options/nudgedistance/value", 2, 0, 1000); // in px
+			gdouble const offset = prefs->getDoubleLimited("/options/defaultscale/value", 2, 0, 1000);
+			int const snaps = prefs->getInt("/options/rotationsnapsperpi/value", 12);
+
+			switch (get_group0_keyval (&event->key)) {
                 case GDK_Left: // move selection left
                 case GDK_KP_Left:
                 case GDK_KP_4:
@@ -930,7 +931,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
             }
             break;
-
+			}
         case GDK_KEY_RELEASE:
             {
             guint keyval = get_group0_keyval(&event->key);

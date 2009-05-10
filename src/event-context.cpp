@@ -348,14 +348,6 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
     /// @todo REmove redundant /value in preference keys
     tolerance = prefs->getIntLimited(
             "/options/dragtolerance/value", 0, 0, 100);
-    double const zoom_inc = prefs->getDoubleLimited(
-            "/options/zoomincrement/value", M_SQRT2, 1.01, 10);
-    double const acceleration = prefs->getDoubleLimited(
-            "/options/scrollingacceleration/value", 0, 0, 6);
-    int const key_scroll = prefs->getIntLimited(
-            "/options/keyscroll/value", 10, 0, 1000);
-    int const wheel_scroll = prefs->getIntLimited(
-            "/options/wheelscroll/value", 40, 0, 1000);
 
     gint ret = FALSE;
 
@@ -486,6 +478,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 }
                 Geom::Point const event_w(event->button.x, event->button.y);
                 Geom::Point const event_dt(desktop->w2d(event_w));
+                double const zoom_inc = prefs->getDoubleLimited("/options/zoomincrement/value", M_SQRT2, 1.01, 10);
                 desktop->zoom_relative_keep_point(event_dt,
                           (event->button.state & GDK_SHIFT_MASK) ? 1/zoom_inc : zoom_inc);
                 desktop->updateNow();
@@ -515,7 +508,11 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             }
             break;
         case GDK_KEY_PRESS:
-            switch (get_group0_keyval(&event->key)) {
+        	{
+        	double const acceleration = prefs->getDoubleLimited("/options/scrollingacceleration/value", 0, 0, 6);
+        	int const key_scroll = prefs->getIntLimited("/options/keyscroll/value", 10, 0, 1000);
+
+        	switch (get_group0_keyval(&event->key)) {
                 // GDK insists on stealing these keys (F1 for no idea what, tab for cycling widgets
                 // in the editing window). So we resteal them back and run our regular shortcut
                 // invoker on them.
@@ -629,6 +626,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 default:
                     break;
             }
+        	}
             break;
         case GDK_KEY_RELEASE:
             switch (get_group0_keyval(&event->key)) {
@@ -660,6 +658,8 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
         {
             bool ctrl = (event->scroll.state & GDK_CONTROL_MASK);
             bool wheelzooms = prefs->getBool("/options/wheelzooms/value");
+            int const wheel_scroll = prefs->getIntLimited("/options/wheelscroll/value", 40, 0, 1000);
+
             /* shift + wheel, pan left--right */
             if (event->scroll.state & GDK_SHIFT_MASK) {
                 switch (event->scroll.direction) {
@@ -676,6 +676,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 /* ctrl + wheel, zoom in--out */
             } else if ((ctrl && !wheelzooms) || (!ctrl && wheelzooms)) {
                 double rel_zoom;
+                double const zoom_inc = prefs->getDoubleLimited("/options/zoomincrement/value", M_SQRT2, 1.01, 10);
                 switch (event->scroll.direction) {
                     case GDK_SCROLL_UP:
                         rel_zoom = zoom_inc;
