@@ -14,7 +14,7 @@
    height="48"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.46+devel r21307 custom"
+   inkscape:version="0.46+devel r21307"
    version="1.0"
    sodipodi:docname="draw-cuboid.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
@@ -130,16 +130,22 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="-27.138445"
-     inkscape:cy="-4.7570621"
+     inkscape:zoom="5.6"
+     inkscape:cx="19.462065"
+     inkscape:cy="15.892484"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="806"
      inkscape:window-height="591"
      inkscape:window-x="204"
-     inkscape:window-y="116" />
+     inkscape:window-y="116"
+     inkscape:snap-bbox="true"
+     inkscape:snap-nodes="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid43" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -148,7 +154,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -157,7 +163,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       transform="matrix(1.8776667,0,0,1.8776667,-2341.8197,-2087.9233)"
+       transform="matrix(2,0,0,2,-2495.9571,-2225.9556)"
        style="display:inline"
        id="draw_3dbox">
       <g
