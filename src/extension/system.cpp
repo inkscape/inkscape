@@ -93,7 +93,7 @@ open(Extension *key, gchar const *filename)
 
     SPDocument *doc = imod->open(filename);
     if (!doc) {
-        return NULL;
+        throw Input::open_failed();
     }
 
     if (last_chance_svg) {

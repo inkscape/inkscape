@@ -19,10 +19,11 @@ namespace Internal {
 SPDocument *
 GdkpixbufInput::open(Inkscape::Extension::Input */*mod*/, char const *uri)
 {
-    SPDocument *doc = sp_document_new(NULL, TRUE, TRUE);
+    SPDocument *doc = NULL;
     GdkPixbuf *pb = Inkscape::IO::pixbuf_new_from_file( uri, NULL );
 
     if (pb) {         /* We are readable */
+        doc = sp_document_new(NULL, TRUE, TRUE);
         bool saved = sp_document_get_undo_sensitive(doc);
         sp_document_set_undo_sensitive(doc, false); // no need to undo in this temporary document
 
