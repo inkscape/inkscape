@@ -1,4 +1,4 @@
-SUBDIRS = hicolor
+SUBDIRS = tango
 
 iconsdir = $(datadir)/inkscape/icons
 
