@@ -133,6 +133,7 @@ sp_png_write_rgba_striped(SPDocument *doc,
     png_uint_32 r;
 
     g_return_val_if_fail(filename != NULL, false);
+    g_return_val_if_fail(data != NULL, false);
 
     /* open the file */
 
@@ -496,7 +497,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
         nr_pixelstore_64K_free(ebp.px);
     } else {
         ebp.sheight = 64;
-        ebp.px = g_new(guchar, 4 * ebp.sheight * width);
+        ebp.px = g_try_new(guchar, 4 * ebp.sheight * width);
         write_status = sp_png_write_rgba_striped(doc, path, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         g_free(ebp.px);
     }

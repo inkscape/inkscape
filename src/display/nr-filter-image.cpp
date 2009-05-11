@@ -75,24 +75,30 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         has_alpha = true;
 
         if (image_pixbuf) g_free(image_pixbuf);
-        image_pixbuf = g_new(unsigned char, 4 * width * height);
-        memset(image_pixbuf, 0x00, 4 * width * height);
+        image_pixbuf = g_try_new(unsigned char, 4L * width * height);
+        if(image_pixbuf != NULL)
+        {
+            memset(image_pixbuf, 0x00, 4 * width * height);
 
-        NRGC gc(NULL);
-        /* Update to renderable state */
-        double sf = 1.0;
-        Geom::Matrix t(Geom::Scale(sf, sf));
-        nr_arena_item_set_transform(ai, &t);
-        gc.transform.setIdentity();
-        nr_arena_item_invoke_update( ai, NULL, &gc,
-                                             NR_ARENA_ITEM_STATE_ALL,
-                                             NR_ARENA_ITEM_STATE_NONE );
-        nr_pixblock_setup_extern(pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
-                              (int)rect.x0, (int)rect.y0, (int)rect.x1, (int)rect.y1,
-                              image_pixbuf, 4 * width, FALSE, FALSE );
+            NRGC gc(NULL);
+            /* Update to renderable state */
+            double sf = 1.0;
+            Geom::Matrix t(Geom::Scale(sf, sf));
+            nr_arena_item_set_transform(ai, &t);
+            gc.transform.setIdentity();
+            nr_arena_item_invoke_update( ai, NULL, &gc,
+                                                 NR_ARENA_ITEM_STATE_ALL,
+                                                 NR_ARENA_ITEM_STATE_NONE );
+            nr_pixblock_setup_extern(pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
+                                  (int)rect.x0, (int)rect.y0, (int)rect.x1, (int)rect.y1,
+                                  image_pixbuf, 4 * width, FALSE, FALSE );
 
-        nr_arena_item_invoke_render(NULL, ai, &rect, pb, NR_ARENA_ITEM_RENDER_NO_CACHE);
-
+            nr_arena_item_invoke_render(NULL, ai, &rect, pb, NR_ARENA_ITEM_RENDER_NO_CACHE);
+        }
+        else
+        {
+            g_warning("FilterImage::render: not enough memory to create pixel buffer. Need %ld.", 4L * width * height);
+        }
         nr_arena_item_unref(ai);
         nr_object_unref((NRObject *) arena);
     }
