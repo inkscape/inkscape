@@ -799,13 +799,10 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
 
     // invers apply parent transform
     Geom::Matrix doc2parent = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
+    sp_selection_apply_affine(selection, doc2parent);
 
     // Update (among other things) all curves in paths, for bounds() to work
     sp_document_ensure_up_to_date(target_document);
-
-    // Don't exactly know what sp_document_ensure_up_to_date() does, but apparently it must be called before
-    // item->getCenter() is used in sp_selection_apply_affine(). If not, then the center will be at (0,0)
-    sp_selection_apply_affine(selection, doc2parent);
 
     // move selection either to original position (in_place) or to mouse pointer
     Geom::OptRect sel_bbox = selection->bounds();

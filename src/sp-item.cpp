@@ -293,6 +293,9 @@ SPItem::setExplicitlyHidden(bool const val) {
  */
 void
 SPItem::setCenter(Geom::Point object_centre) {
+    // for getBounds() to work
+    sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(this));
+
     Geom::OptRect bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
         transform_center_x = object_centre[Geom::X] - bbox->midpoint()[Geom::X];
@@ -315,6 +318,9 @@ bool SPItem::isCenterSet() {
 }
 
 Geom::Point SPItem::getCenter() const {
+    // for getBounds() to work
+    sp_document_ensure_up_to_date(SP_OBJECT_DOCUMENT(this));
+
     Geom::OptRect bbox = getBounds(sp_item_i2d_affine(this));
     if (bbox) {
         return to_2geom(bbox->midpoint()) + Geom::Point (this->transform_center_x, this->transform_center_y);
