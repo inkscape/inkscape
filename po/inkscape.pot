@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-07 20:37+0200\n"
+"POT-Creation-Date: 2009-05-11 20:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1538,7 +1538,9 @@ msgid "Lead pencil"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:167
-msgid "Give lead pencil or chromolithography or engraving or other effects"
+msgid ""
+"Give lead pencil or chromolithography or engraving or other effects to "
+"images and material filled objects"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:168
@@ -1550,19 +1552,19 @@ msgid "Gives a smooth bump velvet like"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:169
-msgid "Alpha engraving"
+msgid "Alpha draw"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:169
-msgid "Gives a transparent engraving effect to bitmaps and materials"
+msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:170
-msgid "Alpha engraving, color"
+msgid "Alpha fill"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:170
-msgid "Gives a transparent color engraving effect to bitmaps and materials"
+msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr ""
 
 #: ../src/arc-context.cpp:303
@@ -2450,7 +2452,7 @@ msgstr ""
 msgid "<big><b>Bitmap size</b></big>"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:209
+#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:210
 msgid "_Width:"
 msgstr ""
 
@@ -2462,7 +2464,7 @@ msgstr ""
 msgid "dp_i"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:210
+#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:211
 msgid "_Height:"
 msgstr ""
 
@@ -3608,7 +3610,7 @@ msgstr ""
 msgid "Draw eraser stroke"
 msgstr ""
 
-#: ../src/event-context.cpp:615
+#: ../src/event-context.cpp:612
 msgid "<b>Space+mouse drag</b> to pan canvas"
 msgstr ""
 
@@ -4521,7 +4523,7 @@ msgstr ""
 msgid "Snow has fallen on object"
 msgstr ""
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:126
+#: ../src/extension/internal/gdkpixbuf-input.cpp:127
 #, c-format
 msgid "%s GDK pixbuf Input"
 msgstr ""
@@ -6120,7 +6122,7 @@ msgstr ""
 msgid "The index of the current page"
 msgstr ""
 
-#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:216
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:217
 msgid "Name"
 msgstr ""
 
@@ -8778,7 +8780,7 @@ msgstr ""
 msgid "Extent or scope of this document."
 msgstr ""
 
-#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:218
+#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:219
 msgid "Description"
 msgstr ""
 
@@ -8862,32 +8864,32 @@ msgstr ""
 msgid "Selection canceled."
 msgstr ""
 
-#: ../src/select-context.cpp:563
+#: ../src/select-context.cpp:559
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:565
+#: ../src/select-context.cpp:561
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
 msgstr ""
 
-#: ../src/select-context.cpp:728
+#: ../src/select-context.cpp:725
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
 
-#: ../src/select-context.cpp:729
+#: ../src/select-context.cpp:726
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:730
+#: ../src/select-context.cpp:727
 msgid ""
 "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
 
-#: ../src/select-context.cpp:901
+#: ../src/select-context.cpp:902
 msgid "Selected object is not a group. Cannot enter."
 msgstr ""
 
@@ -9604,26 +9606,26 @@ msgstr ""
 msgid "Create spiral"
 msgstr ""
 
-#: ../src/sp-item.cpp:1029
+#: ../src/sp-item.cpp:1035
 msgid "Object"
 msgstr ""
 
-#: ../src/sp-item.cpp:1046
+#: ../src/sp-item.cpp:1052
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:1051
+#: ../src/sp-item.cpp:1057
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:1059
+#: ../src/sp-item.cpp:1065
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:1061
+#: ../src/sp-item.cpp:1067
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr ""
@@ -14937,50 +14939,50 @@ msgstr ""
 msgid "Change opacity"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:208
+#: ../src/ui/widget/page-sizer.cpp:209
 msgid "U_nits:"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:209
+#: ../src/ui/widget/page-sizer.cpp:210
 msgid "Width of paper"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:210
+#: ../src/ui/widget/page-sizer.cpp:211
 msgid "Height of paper"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:256
+#: ../src/ui/widget/page-sizer.cpp:257
 msgid "P_age size:"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:264
+#: ../src/ui/widget/page-sizer.cpp:265
 msgid "Page orientation:"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:267
+#: ../src/ui/widget/page-sizer.cpp:268
 msgid "_Landscape"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:272
+#: ../src/ui/widget/page-sizer.cpp:273
 msgid "_Portrait"
 msgstr ""
 
 #. ## Set up custom size frame
-#: ../src/ui/widget/page-sizer.cpp:279
+#: ../src/ui/widget/page-sizer.cpp:280
 msgid "Custom size"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:292
+#: ../src/ui/widget/page-sizer.cpp:293
 msgid "_Fit page to selection"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:293
+#: ../src/ui/widget/page-sizer.cpp:294
 msgid ""
 "Resize the page to fit the current selection, or the entire drawing if there "
 "is no selection"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:351
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr ""
 
