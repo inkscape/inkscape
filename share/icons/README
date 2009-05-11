@@ -13,13 +13,9 @@ icons. Support for it will probably be removed in the next release (0.48).
 
 == User notes ==
 
-To get back the old icons on Linux, do the following:
-1. Create the directory ~/.icons/OldInkscape
-2. Copy the contents of the hicolor directory there
-3. Edit the index.theme file; Replace "Name=hicolor" with "Name=OldInkscape",
-   and in a new line add "Inherits=YourTheme" where YourTheme is the
-   icon theme you're currently using, e.g. Human, gnome, etc.
-4. Choose the OldInkscape theme from your desktop's appearance preferences.
+To get back the old icons on Linux, copy the share/icons/hicolor directory
+from the source tree to ~/.config/Inkscape/icons, and remove the index.theme
+file.
 
 To use the Tango icons on Windows, go to INKDIR/share/icons, where INKDIR is
 Inkscape's installation directory. Rename "hicolor" to "old", and then rename
