@@ -80,6 +80,7 @@ extensions = \
 	measure.py \
 	motion.py \
 	outline2svg.pl	\
+	param_curves.py \
 	pathalongpath.py\
 	pathscatter.py\
 	pathmodifier.py\
@@ -202,6 +203,7 @@ modules = \
 	measure.inx \
 	motion.inx \
 	outline2svg.inx \
+	param_curves.inx \
 	pathalongpath.inx\
 	pathscatter.inx\
 	perfectboundcover.inx \
