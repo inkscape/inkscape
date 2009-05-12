@@ -1125,22 +1125,27 @@ sp_stroke_style_line_widget_new(void)
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
     tt->set_tip(*tb, _("Miter join"));
+    spw->set_data("miter join", tb);
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_ICON_STROKE_JOIN_ROUND,
                                 hb, spw, "join", "round");
+
 
     // TRANSLATORS: Round join: joining lines with a rounded corner.
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
     tt->set_tip(*tb, _("Round join"));
+    spw->set_data("round join", tb);
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_ICON_STROKE_JOIN_BEVEL,
                                 hb, spw, "join", "bevel");
+
 
     // TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
     tt->set_tip(*tb, _("Bevel join"));
+    spw->set_data("bevel join", tb);
 
     i++;
 
@@ -1179,6 +1184,7 @@ sp_stroke_style_line_widget_new(void)
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_ICON_STROKE_CAP_BUTT,
                                 hb, spw, "cap", "butt");
+    spw->set_data("cap butt", tb);
 
     // TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
     //  of the line; the ends of the line are square
@@ -1186,6 +1192,7 @@ sp_stroke_style_line_widget_new(void)
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_ICON_STROKE_CAP_ROUND,
                                 hb, spw, "cap", "round");
+    spw->set_data("cap round", tb);
 
     // TRANSLATORS: Round cap: the line shape extends beyond the end point of the
     //  line; the ends of the line are rounded
@@ -1193,6 +1200,7 @@ sp_stroke_style_line_widget_new(void)
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_ICON_STROKE_CAP_SQUARE,
                                 hb, spw, "cap", "square");
+    spw->set_data("cap square", tb);
 
     // TRANSLATORS: Square cap: the line shape extends beyond the end point of the
     //  line; the ends of the line are square
@@ -1393,11 +1401,12 @@ sp_stroke_style_line_update(Gtk::Container *spw, Inkscape::Selection *sel)
     int result_cap = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKECAP);
     int result_join = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_STROKEJOIN);
 
-    if (result_sw == QUERY_STYLE_NOTHING) {
-        /* No objects stroked, set insensitive */
-        sset->set_sensitive(false);
+    if (!sel || sel->isEmpty()) {
+        // Nothing selected, grey-out all controls in the stroke-style dialog
+    	sset->set_sensitive(false);
 
         spw->set_data("update", GINT_TO_POINTER(FALSE));
+
         return;
     } else {
         sset->set_sensitive(true);
@@ -1421,6 +1430,31 @@ sp_stroke_style_line_update(Gtk::Container *spw, Inkscape::Selection *sel)
         } else {
             width->set_value(100);
         }
+
+        // if none of the selected objects has a stroke, than quite some controls should be disabled
+        // The markers might still be shown though, so these will not be disabled
+        bool enabled = (result_sw != QUERY_STYLE_NOTHING) && !query->stroke.isNoneSet();
+        /* No objects stroked, set insensitive */
+        Gtk::RadioButton *tb = NULL;
+        tb = static_cast<Gtk::RadioButton *>(spw->get_data("miter join"));
+        tb->set_sensitive(enabled);
+        tb = static_cast<Gtk::RadioButton *>(spw->get_data("round join"));
+        tb->set_sensitive(enabled);
+        tb = static_cast<Gtk::RadioButton *>(spw->get_data("bevel join"));
+        tb->set_sensitive(enabled);
+
+        Gtk::SpinButton* sb = NULL;
+        sb = static_cast<Gtk::SpinButton *>(spw->get_data("miterlimit_sb"));
+        sb->set_sensitive(enabled);
+
+        tb = static_cast<Gtk::RadioButton *>(spw->get_data("cap butt"));
+		tb->set_sensitive(enabled);
+		tb = static_cast<Gtk::RadioButton *>(spw->get_data("cap round"));
+		tb->set_sensitive(enabled);
+		tb = static_cast<Gtk::RadioButton *>(spw->get_data("cap square"));
+		tb->set_sensitive(enabled);
+
+        dsel->set_sensitive(enabled);
     }
 
     if (result_ml != QUERY_STYLE_NOTHING)

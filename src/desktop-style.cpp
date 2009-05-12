@@ -168,7 +168,7 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
         sp_repr_css_merge(css_write, css);
         sp_css_attr_unset_uris(css_write);
         prefs->mergeStyle("/desktop/style", css_write);
-        
+
         for (const GSList *i = desktop->selection->itemList(); i != NULL; i = i->next) {
             /* last used styles for 3D box faces are stored separately */
             if (SP_IS_BOX3D_SIDE (i->data)) {
@@ -255,10 +255,10 @@ sp_desktop_get_master_opacity_tool(SPDesktop *desktop, Glib::ustring const &tool
     } else {
         css = prefs->getStyle(tool + "/style");
     }
-   
+
     if (css) {
         gchar const *property = css ? sp_repr_css_property(css, "opacity", "1.000") : 0;
-           
+
         if (desktop->current && property) { // if there is style and the property in it,
             if ( !sp_svg_number_read_f(property, &value) ) {
                 value = 1.0; // things failed. set back to the default
@@ -281,13 +281,13 @@ sp_desktop_get_opacity_tool(SPDesktop *desktop, Glib::ustring const &tool, bool 
     gfloat value = 1.0; // default if nothing else found
     if (prefs->getBool(tool + "/usecurrent")) {
         css = sp_desktop_get_style(desktop, true);
-    } else { 
+    } else {
         css = prefs->getStyle(tool + "/style");
     }
-   
+
     if (css) {
         gchar const *property = css ? sp_repr_css_property(css, is_fill ? "fill-opacity": "stroke-opacity", "1.000") : 0;
-           
+
         if (desktop->current && property) { // if there is style and the property in it,
             if ( !sp_svg_number_read_f(property, &value) ) {
                 value = 1.0; // things failed. set back to the default
@@ -302,7 +302,7 @@ sp_desktop_get_opacity_tool(SPDesktop *desktop, Glib::ustring const &tool, bool 
 
 guint32
 sp_desktop_get_color_tool(SPDesktop *desktop, Glib::ustring const &tool, bool is_fill, bool *has_color)
-{   
+{
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     SPCSSAttr *css = NULL;
     guint32 r = 0; // if there's no color, return black
@@ -313,10 +313,10 @@ sp_desktop_get_color_tool(SPDesktop *desktop, Glib::ustring const &tool, bool is
     } else {
         css = prefs->getStyle(tool + "/style");
     }
-   
+
     if (css) {
         gchar const *property = sp_repr_css_property(css, is_fill ? "fill" : "stroke", "#000");
-           
+
         if (desktop->current && property) { // if there is style and the property in it,
             if (strncmp(property, "url", 3) && strncmp(property, "none", 4)) { // and if it's not url or none,
                 // read it
@@ -340,7 +340,7 @@ sp_desktop_apply_style_tool(SPDesktop *desktop, Inkscape::XML::Node *repr, Glib:
 {
     SPCSSAttr *css_current = sp_desktop_get_style(desktop, with_text);
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    
+
     if (prefs->getBool(tool_path + "/usecurrent") && css_current) {
         sp_repr_css_set(repr, css_current, "style");
     } else {
@@ -647,6 +647,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
 
     gdouble prev_sw = -1;
     bool same_sw = true;
+    bool noneSet = true; // is stroke set to none?
 
     int n_stroked = 0;
 
@@ -656,11 +657,18 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
         SPStyle *style = SP_OBJECT_STYLE (obj);
         if (!style) continue;
 
-        if ( style->stroke.isNone() ) {
+        if ( style->stroke.isNone() && !(
+				style->marker[SP_MARKER_LOC].set || // stroke width affects markers, so if there's no stroke but only markers then we should
+				style->marker[SP_MARKER_LOC_START].set || // still calculate the stroke width
+				style->marker[SP_MARKER_LOC_MID].set ||
+				style->marker[SP_MARKER_LOC_END].set))
+		{
             continue;
         }
 
         n_stroked ++;
+
+        noneSet &= style->stroke.isNone();
 
         Geom::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
         double sw = style->stroke_width.computed * i2d.descrim();
@@ -677,6 +685,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
 
     style_res->stroke_width.computed = avgwidth;
     style_res->stroke_width.set = true;
+    style_res->stroke.noneSet = noneSet; // Will only be true if none of the selected objects has it's stroke set.
 
     if (n_stroked == 0) {
         return QUERY_STYLE_NOTHING;
@@ -1080,19 +1089,19 @@ objects_query_fontspecification (GSList *objects, SPStyle *style_res)
 
         texts ++;
 
-        if (style_res->text->font_specification.value && style_res->text->font_specification.set &&   
+        if (style_res->text->font_specification.value && style_res->text->font_specification.set &&
             style->text->font_specification.value && style->text->font_specification.set &&
             strcmp (style_res->text->font_specification.value, style->text->font_specification.value)) {
             different = true;  // different fonts
         }
-        
+
         if (style->text->font_specification.set) {
 
             if (style_res->text->font_specification.value) {
                 g_free(style_res->text->font_specification.value);
                 style_res->text->font_specification.value = NULL;
             }
-    
+
             style_res->text->font_specification.set = TRUE;
             style_res->text->font_specification.value = g_strdup(style->text->font_specification.value);
         }
@@ -1121,7 +1130,7 @@ objects_query_blend (GSList *objects, SPStyle *style_res)
     float blend_prev = empty_prev;
     bool same_blend = true;
     guint items = 0;
-    
+
     for (GSList const *i = objects; i != NULL; i = i->next) {
         SPObject *obj = SP_OBJECT (i->data);
         SPStyle *style = SP_OBJECT_STYLE (obj);
@@ -1206,7 +1215,7 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
     bool same_blur = true;
     guint blur_items = 0;
     guint items = 0;
-    
+
     for (GSList const *i = objects; i != NULL; i = i->next) {
         SPObject *obj = SP_OBJECT (i->data);
         SPStyle *style = SP_OBJECT_STYLE (obj);
@@ -1224,7 +1233,7 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
             while (primitive_obj) {
                 if (SP_IS_FILTER_PRIMITIVE(primitive_obj)) {
                     SPFilterPrimitive *primitive = SP_FILTER_PRIMITIVE(primitive_obj);
-                    
+
                     //if primitive is gaussianblur
                     if(SP_IS_GAUSSIANBLUR(primitive)) {
                         SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
@@ -1283,7 +1292,7 @@ sp_desktop_query_style_from_list (GSList *list, SPStyle *style, int property)
 
     } else if (property == QUERY_STYLE_PROPERTY_MASTEROPACITY) {
         return objects_query_opacity (list, style);
-        
+
     } else if (property == QUERY_STYLE_PROPERTY_FONT_SPECIFICATION) {
         return objects_query_fontspecification (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_FONTFAMILY) {
@@ -1319,7 +1328,7 @@ sp_desktop_query_style(SPDesktop *desktop, SPStyle *style, int property)
 }
 
 /**
- * Do the same as sp_desktop_query_style for all (defined) style properties, return true if at 
+ * Do the same as sp_desktop_query_style for all (defined) style properties, return true if at
  * least one of the properties did not return QUERY_STYLE_NOTHING.
  */
 bool
@@ -1336,14 +1345,14 @@ sp_desktop_query_style_all (SPDesktop *desktop, SPStyle *query)
         int result_strokejoin = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_STROKEJOIN);
         int result_opacity = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
         int result_blur = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_BLUR);
-        
-        return (result_family != QUERY_STYLE_NOTHING || 
-                result_fstyle != QUERY_STYLE_NOTHING || 
-                result_fnumbers != QUERY_STYLE_NOTHING || 
-                result_fill != QUERY_STYLE_NOTHING || 
-                result_stroke != QUERY_STYLE_NOTHING || 
-                result_opacity != QUERY_STYLE_NOTHING || 
-                result_strokewidth != QUERY_STYLE_NOTHING || 
+
+        return (result_family != QUERY_STYLE_NOTHING ||
+                result_fstyle != QUERY_STYLE_NOTHING ||
+                result_fnumbers != QUERY_STYLE_NOTHING ||
+                result_fill != QUERY_STYLE_NOTHING ||
+                result_stroke != QUERY_STYLE_NOTHING ||
+                result_opacity != QUERY_STYLE_NOTHING ||
+                result_strokewidth != QUERY_STYLE_NOTHING ||
                 result_strokemiterlimit != QUERY_STYLE_NOTHING ||
                 result_strokecap != QUERY_STYLE_NOTHING ||
                 result_strokejoin != QUERY_STYLE_NOTHING ||
