@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-04-28 18:31+0200\n"
-"PO-Revision-Date: 2009-03-09 17:17+0100\n"
+"PO-Revision-Date: 2009-05-12 20:46+0200\n"
 "Last-Translator: Lucas Vieites <lucas@codexion.com>\n"
 "Language-Team: Español <inkscape-translator@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -31,9 +31,8 @@ msgid "Inkscape Vector Graphics Editor"
 msgstr "Editor de gráficos vectoriales Inkscape"
 
 #: ../share/filters/filters.svg.h:2
-#, fuzzy
 msgid "Matte jelly"
-msgstr "Canal mate"
+msgstr "Gelatina mate"
 
 #: ../share/filters/filters.svg.h:2 ../share/filters/filters.svg.h:3
 #: ../share/filters/filters.svg.h:4 ../share/filters/filters.svg.h:5
@@ -45,128 +44,119 @@ msgstr "Canal mate"
 #: ../share/filters/filters.svg.h:72 ../share/filters/filters.svg.h:74
 #: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:105
 #: ../share/filters/filters.svg.h:106
-#, fuzzy
 msgid "Bevels"
-msgstr "Nivel"
+msgstr "Biseles"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
-msgstr ""
+msgstr "Cobertura de gelatina mate abultada"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Glossy jelly"
-msgstr ""
+msgstr "Gelatina brillante"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Bulging, glossy jelly covering"
-msgstr ""
+msgstr "Cobertura de gelatina brillante abultada"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Glossy jelly, backlit"
-msgstr ""
+msgstr "Gelatina brillante retro-iluminada"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Bulging, glossy jelly covering; two light sources"
-msgstr ""
+msgstr "Cobertura de gelatina brillante abultada, dos fuentes de luz"
 
 #: ../share/filters/filters.svg.h:5
-#, fuzzy
 msgid "Metal casting"
-msgstr "tope izquierdo"
+msgstr "Metal fundido"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Smooth drop-like bevel with metallic finish"
-msgstr ""
+msgstr "Bisel suave con acabado metálico"
 
 #: ../share/filters/filters.svg.h:6
-#, fuzzy
 msgid "Motion blur, horizontal"
-msgstr "Mover horizontalmente"
+msgstr "Desenfoque de movimiento horizontal"
 
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:60
 #: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:98
 #: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:115
 #: ../share/filters/filters.svg.h:168
-#, fuzzy
 msgid "Blurs"
-msgstr "Desenfoque"
+msgstr "Desenfoques"
 
 #: ../share/filters/filters.svg.h:6
-#, fuzzy
 msgid ""
 "Blur as if the object flies horizontally; adjust Standard Deviation to vary "
 "force"
-msgstr "Reflejar los objetos seleccionados horizontalmente"
+msgstr ""
+"Desenfocar como si el objeto volara horizontalmente, ajuste «Desviación "
+"estándar» para variar la fuerza"
 
 #: ../share/filters/filters.svg.h:7
-#, fuzzy
 msgid "Motion blur, vertical"
-msgstr "Mover verticalmente"
+msgstr "Desenfoque de movimiento vertical"
 
 #: ../share/filters/filters.svg.h:7
-#, fuzzy
 msgid ""
 "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 "force"
-msgstr "Reflejar los objetos seleccionados verticalmente"
+msgstr ""
+"Desenfocar como si el objeto volara verticalmente, ajuste «Desviación "
+"estándar» para variar la fuerza"
 
 #: ../share/filters/filters.svg.h:8
-#, fuzzy
 msgid "Apparition"
-msgstr "Saturación"
+msgstr "Aparición"
 
 #: ../share/filters/filters.svg.h:8
 msgid "Edges are partly feathered out"
-msgstr ""
+msgstr "Los bordes son parcialmente difuminados"
 
 #: ../share/filters/filters.svg.h:9
-#, fuzzy
 msgid "Cutout"
-msgstr "Personalizado"
+msgstr "Recortable"
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
 #: ../share/filters/filters.svg.h:88 ../share/filters/filters.svg.h:123
 #: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
-#, fuzzy
 msgid "Shadows and Glows"
-msgstr "Mostrar tiradores"
+msgstr "Sombras y brillos"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Drop shadow under the cut-out of the shape"
-msgstr ""
+msgstr "Sombra paralela debajo del corte de la forma"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Jigsaw piece"
-msgstr ""
+msgstr "Pieza de puzle"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Low, sharp bevel"
-msgstr ""
+msgstr "Bisel bajo, agudo"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Roughen"
-msgstr "Modo áspero"
+msgstr "Áspero"
 
 #: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:111
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:119
 #: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:122
 #: ../share/filters/filters.svg.h:126
 msgid "ABCs"
-msgstr ""
+msgstr "ABCs"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Small-scale roughening to edges and content"
-msgstr "Escalar los ángulos redondeados"
+msgstr "Poner más ásperos los bordes y el contenido"
 
 #: ../share/filters/filters.svg.h:12
-#, fuzzy
 msgid "Rubber stamp"
-msgstr "Número de muestras"
+msgstr "Sello de goma"
 
 #: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:18
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
@@ -174,102 +164,91 @@ msgstr "Número de muestras"
 #: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
 #: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:117
 #: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:121
-#, fuzzy
 msgid "Overlays"
-msgstr "Por encima"
+msgstr "Revestimientos"
 
 #: ../share/filters/filters.svg.h:12
-#, fuzzy
 msgid "Random whiteouts inside"
-msgstr "Aleatorizar posiciones"
+msgstr "Parches de nieve aleatorios"
 
 #: ../share/filters/filters.svg.h:13
 msgid "Ink bleed"
-msgstr ""
+msgstr "Exceso de tinta"
 
 #: ../share/filters/filters.svg.h:13 ../share/filters/filters.svg.h:14
 #: ../share/filters/filters.svg.h:42
-#, fuzzy
 msgid "Protrusions"
-msgstr "Posición"
+msgstr "Protuberancias"
 
 #: ../share/filters/filters.svg.h:13
 msgid "Inky splotches underneath the object"
-msgstr ""
+msgstr "Manchones de tinta bajo el objeto"
 
 #: ../share/filters/filters.svg.h:14
-#, fuzzy
 msgid "Fire"
-msgstr "Archivo"
+msgstr "Fuego"
 
 #: ../share/filters/filters.svg.h:14
 msgid "Edges of object are on fire"
-msgstr ""
+msgstr "Los bordes del objeto están en llamas"
 
 #: ../share/filters/filters.svg.h:15
-#, fuzzy
 msgid "Bloom"
-msgstr "Inferior"
+msgstr "Florecer"
 
 #: ../share/filters/filters.svg.h:15
 msgid "Soft, cushion-like bevel with matte highlights"
-msgstr ""
+msgstr "Bisel suave, como un cojín, con realces mates"
 
 #: ../share/filters/filters.svg.h:16
-#, fuzzy
 msgid "Ridged border"
-msgstr "Borde del papel"
+msgstr "Borde rugoso"
 
 #: ../share/filters/filters.svg.h:16
 msgid "Ridged border with inner bevel"
-msgstr ""
+msgstr "Borde rugoso con bisel interior"
 
 #: ../share/filters/filters.svg.h:17
-#, fuzzy
 msgid "Ripple"
-msgstr "Reemplazar"
+msgstr "Ondulación"
 
 #: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:45
 #: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:110
 #: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:116
-#, fuzzy
 msgid "Distort"
-msgstr "Divisor"
+msgstr "Distorsionar"
 
 #: ../share/filters/filters.svg.h:17
-#, fuzzy
 msgid "Horizontal rippling of edges"
-msgstr "Radio horizontal de las esquinas redondeadas"
+msgstr "Ondulación horizontal de los bordes"
 
 #: ../share/filters/filters.svg.h:18
-#, fuzzy
 msgid "Speckle"
-msgstr "Destramar"
+msgstr "Mota"
 
 #: ../share/filters/filters.svg.h:18
 msgid "Fill object with sparse translucent specks"
-msgstr ""
+msgstr "Rellenar el objeto con motas traslúcidas diseminadas"
 
 #: ../share/filters/filters.svg.h:19
 msgid "Oil slick"
-msgstr ""
+msgstr "Marea negra"
 
 #: ../share/filters/filters.svg.h:19
 msgid "Rainbow-colored semitransparent oily splotches"
-msgstr ""
+msgstr "Manchones de petróleo irisados, semitransparentes"
 
 #: ../share/filters/filters.svg.h:20
-#, fuzzy
 msgid "Frost"
-msgstr "Tipografía"
+msgstr "Escarcha"
 
 #: ../share/filters/filters.svg.h:20
 msgid "Flake-like white splotches"
-msgstr ""
+msgstr "Manchones blancos como copos de nieve"
 
 #: ../share/filters/filters.svg.h:21
 msgid "Leopard fur"
-msgstr ""
+msgstr "Piel de leopardo"
 
 #: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:43
 #: ../share/filters/filters.svg.h:61 ../share/filters/filters.svg.h:62
@@ -280,30 +259,29 @@ msgstr ""
 #: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:158
 #: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:160
 #: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
-#, fuzzy
 msgid "Materials"
-msgstr "Matriz"
+msgstr "Materiales"
 
 #: ../share/filters/filters.svg.h:21
 msgid "Leopard spots (loses object's own color)"
-msgstr ""
+msgstr "Manchas de leopardo (pierde el color del propio objeto)"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Zebra"
-msgstr ""
+msgstr "Cebra"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Irregular vertical dark stripes (loses object's own color)"
 msgstr ""
+"Rayas verticales irregulares y oscuras (pierde el color del propio objeto)"
 
 #: ../share/filters/filters.svg.h:23
-#, fuzzy
 msgid "Clouds"
-msgstr "Cerrar"
+msgstr "Nubes"
 
 #: ../share/filters/filters.svg.h:23
 msgid "Airy, fluffy, sparse white clouds"
-msgstr ""
+msgstr "Nubes esponjosas diseminadas"
 
 #: ../share/filters/filters.svg.h:24
 #: ../src/extension/internal/bitmap/sharpen.cpp:37
@@ -318,60 +296,52 @@ msgstr "Enfocar"
 #: ../share/filters/filters.svg.h:101 ../share/filters/filters.svg.h:104
 #: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:128
 #: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:171
-#, fuzzy
 msgid "Image effects"
-msgstr "Gestionar efectos de trazado"
+msgstr "Efectos de imagen"
 
 #: ../share/filters/filters.svg.h:24
 msgid "Sharpen edges and boundaries within the object, force=0.15"
-msgstr ""
+msgstr "Agudizar los bordes y límites dentro del objeto, fuerza=0.15"
 
 #: ../share/filters/filters.svg.h:25
-#, fuzzy
 msgid "Sharpen more"
-msgstr "Enfocar"
+msgstr "Agudizar más"
 
 #: ../share/filters/filters.svg.h:25
 msgid "Sharpen edges and boundaries within the object, force=0.3"
-msgstr ""
+msgstr "Agudizar los bordes y límites dentro del objeto, fuerza=0.3"
 
 #: ../share/filters/filters.svg.h:26
-#, fuzzy
 msgid "Oil painting"
 msgstr "Pintura al óleo"
 
 #: ../share/filters/filters.svg.h:26
-#, fuzzy
 msgid "Simulate oil painting style"
-msgstr "Simular salida en pantalla"
+msgstr "Simular el estilo de la pintura al óleo"
 
 #: ../share/filters/filters.svg.h:27
-#, fuzzy
 msgid "Edge detect"
 msgstr "Detección de bordes"
 
 #: ../share/filters/filters.svg.h:27
 msgid "Detect color edges in object"
-msgstr ""
+msgstr "Detectar bordes de color en el objeto"
 
 #: ../share/filters/filters.svg.h:28
-#, fuzzy
 msgid "Horizontal edge detect"
-msgstr "Texto horizontal"
+msgstr "Detección de bordes horizontal"
 
 #: ../share/filters/filters.svg.h:28
-#, fuzzy
 msgid "Detect horizontal color edges in object"
-msgstr "Coordenada horizontal de la selección"
+msgstr "Detectar bordes de color horizontales en el objeto"
 
 #: ../share/filters/filters.svg.h:29
-#, fuzzy
 msgid "Vertical edge detect"
-msgstr "Texto vertical"
+msgstr "Detección de bordes vertical"
 
 #: ../share/filters/filters.svg.h:29
 msgid "Detect vertical color edges in object"
-msgstr ""
+msgstr "Detectar bordes de color verticales en el objeto"
 
 #. Pencil
 #: ../share/filters/filters.svg.h:30
@@ -381,16 +351,15 @@ msgstr "Lápiz"
 
 #: ../share/filters/filters.svg.h:30
 msgid "Detect color edges and retrace them in grayscale"
-msgstr ""
+msgstr "Detectar bordes de color y retrazarlos en escala de grises"
 
 #: ../share/filters/filters.svg.h:31
-#, fuzzy
 msgid "Blueprint"
-msgstr "Anchura de desenfoque"
+msgstr "Copia de plano (blueprint)"
 
 #: ../share/filters/filters.svg.h:31
 msgid "Detect color edges and retrace them in blue"
-msgstr ""
+msgstr "Detectar bordes de color y retrazarlos en azul"
 
 #: ../share/filters/filters.svg.h:32
 #: ../share/extensions/color_desaturate.inx.h:2
@@ -427,40 +396,35 @@ msgstr "Color"
 
 #: ../share/filters/filters.svg.h:32
 msgid "Render in shades of gray by reducing saturation to zero"
-msgstr ""
+msgstr "Generar en tonos de gris reduciendo la saturación a cero"
 
 #: ../share/filters/filters.svg.h:33 ../src/ui/widget/selected-style.cpp:228
 msgid "Invert"
 msgstr "Invertir"
 
 #: ../share/filters/filters.svg.h:33
-#, fuzzy
 msgid "Invert colors"
-msgstr "Variar los colores de los objetos seleccionados"
+msgstr "Invertir colores"
 
 #: ../share/filters/filters.svg.h:34
-#, fuzzy
 msgid "Sepia"
-msgstr "Espiral"
+msgstr "Sepia"
 
 #: ../share/filters/filters.svg.h:34
-#, fuzzy
 msgid "Render in warm sepia tones"
-msgstr "Mueva objetos en direcciones al azar"
+msgstr "Generar en cálidos tonos sepia"
 
 #: ../share/filters/filters.svg.h:35
-#, fuzzy
 msgid "Age"
-msgstr "Ángulo"
+msgstr "Edad"
 
 #: ../share/filters/filters.svg.h:35
 msgid "Imitate aged photograph"
-msgstr ""
+msgstr "Imitar una foto antigua"
 
 #: ../share/filters/filters.svg.h:36
-#, fuzzy
 msgid "Organic"
-msgstr "Origen"
+msgstr "Orgánico"
 
 #: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:44
 #: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:64
@@ -472,218 +436,202 @@ msgstr "Origen"
 #: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:136
 #: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
 #: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:163
-#, fuzzy
 msgid "Textures"
-msgstr "Textos"
+msgstr "Texturas"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Bulging, knotty, slick 3D surface"
-msgstr ""
+msgstr "Superficie 3D abultada, nudosa, resbaladiza"
 
 #: ../share/filters/filters.svg.h:37
 msgid "Barbed wire"
-msgstr ""
+msgstr "Alambre de espinas"
 
 #: ../share/filters/filters.svg.h:37
 msgid "Gray bevelled wires with drop shadows"
-msgstr ""
+msgstr "Cables grises biselados con sombras paralelas"
 
 #: ../share/filters/filters.svg.h:38
-#, fuzzy
 msgid "Swiss cheese"
-msgstr "Tamaño del intercambiador"
+msgstr "Queso suizo"
 
 #: ../share/filters/filters.svg.h:38
 msgid "Random inner-bevel holes"
-msgstr ""
+msgstr "Agujeros aleatorios con bisel interior"
 
 #: ../share/filters/filters.svg.h:39
-#, fuzzy
 msgid "Blue cheese"
-msgstr "Canal azul"
+msgstr "Queso azul"
 
 #: ../share/filters/filters.svg.h:39
 msgid "Marble-like bluish speckles"
-msgstr ""
+msgstr "Motas marmoleadas azules"
 
 #: ../share/filters/filters.svg.h:40
-#, fuzzy
 msgid "Button"
-msgstr "Inferior"
+msgstr "Botón"
 
 #: ../share/filters/filters.svg.h:40
 msgid "Soft bevel, slightly depressed middle"
-msgstr ""
+msgstr "Centro biselado suave, levemente deprimido"
 
 #: ../share/filters/filters.svg.h:41
-#, fuzzy
 msgid "Inset"
-msgstr "Re_ducir"
+msgstr "Reducir"
 
 #: ../share/filters/filters.svg.h:41
 msgid "Shadowy outer bevel"
-msgstr ""
+msgstr "Bisel exterior sombreado"
 
 #: ../share/filters/filters.svg.h:42
-#, fuzzy
 msgid "Dripping"
-msgstr "Scripting"
+msgstr "Goteo"
 
 #: ../share/filters/filters.svg.h:42
 msgid "Random paint streaks downwards"
-msgstr ""
+msgstr "Trazos aleatorios de pintura hacia abajo"
 
 #: ../share/filters/filters.svg.h:43
 msgid "Rainbow melt"
-msgstr ""
+msgstr "Arco iris derretido"
 
 #: ../share/filters/filters.svg.h:43
 msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
-msgstr ""
+msgstr "Rayas verticales irisadas, bordeadas con manchones en relieve 3D"
 
 #: ../share/filters/filters.svg.h:44
-#, fuzzy
 msgid "Jam spread"
-msgstr "Extender"
+msgstr "Mermelada extendida"
 
 #: ../share/filters/filters.svg.h:44
 msgid "Glossy clumpy jam spread"
-msgstr ""
+msgstr "Mermelada brillante con tropezones extendida"
 
 #: ../share/filters/filters.svg.h:45
-#, fuzzy
 msgid "Pixel smear"
-msgstr "Píxeles"
+msgstr "Emborronado de píxeles"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Van Gogh painting effect for bitmaps"
-msgstr ""
+msgstr "Efecto de pintura de Van Gogh para mapas de bits"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Pixel smear, glossy"
-msgstr ""
+msgstr "Emborronado de píxeles, brillante"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Glossy painting effect for bitmaps"
-msgstr ""
+msgstr "Efecto de pintura brillante para mapas de bits"
 
 #: ../share/filters/filters.svg.h:47
-#, fuzzy
 msgid "HSL Bumps"
-msgstr "Mapas de bits"
+msgstr "Bultos HSL"
 
 #: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:49
 #: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:108
 #: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
 msgid "Bumps"
-msgstr "Mapas de bits"
+msgstr "Bultos"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Highly flexible specular bump"
-msgstr ""
+msgstr "Bulto especular altamente flexible"
 
 #: ../share/filters/filters.svg.h:48
 msgid "Cracked glass"
-msgstr ""
+msgstr "Vidrio roto"
 
 #: ../share/filters/filters.svg.h:48
 msgid "Under a cracked glass"
-msgstr ""
+msgstr "Bajo un vidrio roto"
 
 #: ../share/filters/filters.svg.h:49
 msgid "HSL bubbles"
-msgstr ""
+msgstr "Burbujas HSL"
 
 #: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:108
 msgid ""
 "Highly flexible bubbles effect depending on color hue saturation and "
 "luminance"
 msgstr ""
+"Efecto de burbujas altamente flexible que depende de la saturación del tono "
+"del color y la luminosidad"
 
 #: ../share/filters/filters.svg.h:50
 msgid "Glowing bubble"
-msgstr ""
+msgstr "Burbuja radiante"
 
 #: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:55
 #: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:68
 #: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
 #: ../share/filters/filters.svg.h:73
-#, fuzzy
 msgid "Ridges"
-msgstr "Bordes"
+msgstr "Crestas"
 
 #: ../share/filters/filters.svg.h:50
 msgid "Bubble effect with refraction and glow"
-msgstr ""
+msgstr "Efecto de burbuja con refracción y brillo"
 
 #: ../share/filters/filters.svg.h:51
-#, fuzzy
 msgid "Neon"
-msgstr "Ninguno"
+msgstr "Neón"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Neon light effect with glow"
-msgstr ""
+msgstr "Efecto de luz de neón con brillo"
 
 #: ../share/filters/filters.svg.h:52
-#, fuzzy
 msgid "Melt and glow"
-msgstr "Ángulo izquierdo"
+msgstr "Derretir y brillar"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Melting parts of object together, with a glossy bevel and a glow"
-msgstr ""
+msgstr "Fusionar partes de un objeto, con un bisel brillante"
 
 #: ../share/filters/filters.svg.h:53
-#, fuzzy
 msgid "Badge"
-msgstr "Borde"
+msgstr "Chapa"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Metal or plastic badge bevel"
-msgstr ""
+msgstr "Bisel de chapa de metal o plástico"
 
 #: ../share/filters/filters.svg.h:54
-#, fuzzy
 msgid "Pastel Bevel"
-msgstr "Pegar tamaño"
+msgstr "Bisel de pastel"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr ""
+msgstr "Bisel suave de colores pastel"
 
 #: ../share/filters/filters.svg.h:55
 msgid "Thin Membrane"
-msgstr ""
+msgstr "Membrana delgada"
 
 #: ../share/filters/filters.svg.h:55
 msgid "Thin like a soap membrane"
-msgstr ""
+msgstr "Membrana delgado como de jabón"
 
 #: ../share/filters/filters.svg.h:56
-#, fuzzy
 msgid "Soft ridge"
-msgstr "Luz de foco"
+msgstr "Cresta suave"
 
 #: ../share/filters/filters.svg.h:56
-#, fuzzy
 msgid "Soft pastel ridge"
-msgstr "Fijar tamaño del papel"
+msgstr "Cresta suave pastel"
 
 #: ../share/filters/filters.svg.h:57
 msgid "Glowing metal"
-msgstr ""
+msgstr "Metal radiante"
 
 #: ../share/filters/filters.svg.h:57
 msgid "Bright and glowing metal texture"
-msgstr ""
+msgstr "Textura brillante de metal radiante"
 
 #: ../share/filters/filters.svg.h:58
-#, fuzzy
 msgid "Leaves"
-msgstr "Nivel"
+msgstr "Hojas"
 
 #: ../share/filters/filters.svg.h:58 ../share/filters/filters.svg.h:80
 #: ../share/filters/filters.svg.h:89 ../share/extensions/pathscatter.inx.h:10
@@ -692,148 +640,139 @@ msgstr "Esparcir"
 
 #: ../share/filters/filters.svg.h:58
 msgid "Leaves on the ground in Fall, or living foliage"
-msgstr ""
+msgstr "Hojas en el suelo otoñal o follaje viviente"
 
 #: ../share/filters/filters.svg.h:59
-#, fuzzy
 msgid "Translucent"
-msgstr "Triángulo dentro"
+msgstr "Traslúcido"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Illuminated translucent plastic effect"
+msgstr "Efecto de plástico iluminado traslúcido"
+
+#: ../share/filters/filters.svg.h:60
+msgid "Cross-smooth"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:60
-#, fuzzy
-msgid "Cross-smooth"
-msgstr "suave"
-
-#: ../share/filters/filters.svg.h:60
-#, fuzzy
 msgid "Blur inner borders and intersections"
-msgstr "Ajustar a las intersecciones de trayectos"
+msgstr "Desenfocar los bordes interiores e intersecciones"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Iridescent beeswax"
-msgstr ""
+msgstr "Cera de abejas iridescente"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr ""
+"Textura de cera que mantiene su iridescencia aún cambiando el color de "
+"relleno"
 
 #: ../share/filters/filters.svg.h:62
-#, fuzzy
 msgid "Eroded metal"
-msgstr "Metaarchivo realzado"
+msgstr "Metal erosionado"
 
 #: ../share/filters/filters.svg.h:62
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
-msgstr ""
+msgstr "Textura de metal erosionado con bordes, surcos, agujeros y bultos"
 
 #: ../share/filters/filters.svg.h:63
 msgid "Cracked Lava"
-msgstr ""
+msgstr "Lava rota"
 
 #: ../share/filters/filters.svg.h:63
 msgid "A volcanic texture, a little like leather"
-msgstr ""
+msgstr "Textura volcánica, parecido al cuero"
 
 #: ../share/filters/filters.svg.h:64
-#, fuzzy
 msgid "Bark"
-msgstr "Marca"
+msgstr "Corteza"
 
 #: ../share/filters/filters.svg.h:64
 msgid "Bark texture, vertical; use with deep colors"
-msgstr ""
+msgstr "Textura de corteza, vertical; usar con colores profundos"
 
 #: ../share/filters/filters.svg.h:65
 msgid "Lizard skin"
-msgstr ""
+msgstr "Piel de lagarto"
 
 #: ../share/filters/filters.svg.h:65
 msgid "Stylized reptile skin texture"
-msgstr ""
+msgstr "Textura de reptil estilizada"
 
 #: ../share/filters/filters.svg.h:66
-#, fuzzy
 msgid "Stone wall"
-msgstr "Borrar todo"
+msgstr "Pared de piedra"
 
 #: ../share/filters/filters.svg.h:66
 msgid "Stone wall texture to use with dark colors"
-msgstr ""
+msgstr "Textura de pared de piedra para usar con colores oscuros"
 
 #: ../share/filters/filters.svg.h:67
 msgid "Silk carpet"
-msgstr ""
+msgstr "Alfombra de seda"
 
 #: ../share/filters/filters.svg.h:67
 msgid "Silk carpet texture, horizontal stripes"
-msgstr ""
+msgstr "Textura de alfombra de seda, rayas horizontales"
 
 #: ../share/filters/filters.svg.h:68
-#, fuzzy
 msgid "Refractive gel A"
-msgstr "Cambio rela_tivo"
+msgstr "Gel refractivo A"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Gel effect with light refraction"
-msgstr ""
+msgstr "Efecto de gel con una ligera refracción"
 
 #: ../share/filters/filters.svg.h:69
-#, fuzzy
 msgid "Refractive gel B"
-msgstr "Cambio rela_tivo"
+msgstr "Gel refractivo B"
 
 #: ../share/filters/filters.svg.h:69
 msgid "Gel effect with strong refraction"
-msgstr ""
+msgstr "Efecto de gel con una fuerte refracción"
 
 #: ../share/filters/filters.svg.h:70
-#, fuzzy
 msgid "Metallized paint"
-msgstr "tope izquierdo"
+msgstr "Pintura metalizada"
 
 #: ../share/filters/filters.svg.h:70
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr ""
+"Efecto metalizado con una luz suave, ligeramente traslúcida en los bordes"
 
 #: ../share/filters/filters.svg.h:71
-#, fuzzy
 msgid "Dragee"
-msgstr "Arrastrar curva"
+msgstr "Gragea"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Gel Ridge with a pearlescent look"
-msgstr ""
+msgstr "Cresta de gel con aspecto nacarado"
 
 #: ../share/filters/filters.svg.h:72
-#, fuzzy
 msgid "Raised border"
-msgstr "Elevar nodo"
+msgstr "Borde elevado"
 
 #: ../share/filters/filters.svg.h:72
 msgid "Strongly raised border around a flat surface"
-msgstr ""
+msgstr "Borde fuertemente elevado alrededor de una superficie plana"
 
 #: ../share/filters/filters.svg.h:73
 msgid "Metallized ridge"
-msgstr ""
+msgstr "Cresta metalizada"
 
 #: ../share/filters/filters.svg.h:73
 msgid "Gel Ridge metallized at its top"
-msgstr ""
+msgstr "Cresta de gel, metalizada en la cumbre"
 
 #: ../share/filters/filters.svg.h:74
-#, fuzzy
 msgid "Fat oil"
-msgstr "Color uniforme"
+msgstr "Aceite denso"
 
 #: ../share/filters/filters.svg.h:74
 msgid "Fat oil with some adjustable turbulence"
-msgstr ""
+msgstr "Aceite denso con turbulencia ajustable"
 
 #: ../share/filters/filters.svg.h:75
 #: ../src/extension/internal/bitmap/colorize.cpp:49
@@ -842,12 +781,11 @@ msgstr "Colorizar"
 
 #: ../share/filters/filters.svg.h:75
 msgid "Gives the flood color to the dark parts of the image"
-msgstr ""
+msgstr "Proporciona el color de relleno a las pares oscuras de la imagen"
 
 #: ../share/filters/filters.svg.h:76
-#, fuzzy
 msgid "Parallel hollow"
-msgstr "Paralelo"
+msgstr "Hueco paralelo"
 
 #: ../share/filters/filters.svg.h:76 ../share/filters/filters.svg.h:77
 #: ../share/filters/filters.svg.h:78 ../share/filters/filters.svg.h:79
@@ -860,66 +798,59 @@ msgstr "Morfología"
 
 #: ../share/filters/filters.svg.h:76
 msgid "A blurry hollow going parallel to the edge on the inside"
-msgstr ""
+msgstr "Un hueco difuso paralelo al borde interior"
 
 #: ../share/filters/filters.svg.h:77
-#, fuzzy
 msgid "Hole"
-msgstr "Role:"
+msgstr "Agujero"
 
 #: ../share/filters/filters.svg.h:77
 msgid "Opens a smooth hole inside the shape"
-msgstr ""
+msgstr "Abre un agujero suave dentro de la forma"
 
 #: ../share/filters/filters.svg.h:78
-#, fuzzy
 msgid "Black hole"
-msgstr "Trazo negro"
+msgstr "Agujero negro"
 
 #: ../share/filters/filters.svg.h:78
 msgid "Creates a black light inside and outside"
-msgstr ""
+msgstr "Crea una luz negra dentro y fuera"
 
 #: ../share/filters/filters.svg.h:79
-#, fuzzy
 msgid "Smooth outline"
-msgstr "Contorno del trayecto:"
+msgstr "Contorno suave"
 
 #: ../share/filters/filters.svg.h:79
 msgid "Outlining the lines and smoothing their crossings"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:80
-#, fuzzy
 msgid "Cubes"
-msgstr "Cubo"
+msgstr "Cubos"
 
 #: ../share/filters/filters.svg.h:80
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:81
-#, fuzzy
 msgid "Peel off"
-msgstr "Desvío paralelo"
+msgstr "Pelar"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Peeling painting on a wall"
-msgstr ""
+msgstr "Pintura pelada en una pared"
 
 #: ../share/filters/filters.svg.h:82
-#, fuzzy
 msgid "Gold splatter"
-msgstr "Mover patrones"
+msgstr "Salpicadura dorada"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Splattered cast metal, with golden highlights"
-msgstr ""
+msgstr "Salpicaduras de metal con brillos dorados"
 
 #: ../share/filters/filters.svg.h:83
-#, fuzzy
 msgid "Gold paste"
-msgstr "Proporción áurea"
+msgstr "Pasta dorada"
 
 #: ../share/filters/filters.svg.h:83
 msgid "Fat pasted cast metal, with golden highlights"
@@ -1022,9 +953,8 @@ msgid "Invert hue, or rotate it"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:95
-#, fuzzy
 msgid "Outline"
-msgstr "_Contorno"
+msgstr "Contorno"
 
 #: ../share/filters/filters.svg.h:95
 #, fuzzy
@@ -1032,9 +962,8 @@ msgid "Draws an outline around"
 msgstr "Dibujar un trayecto que es una rejilla"
 
 #: ../share/filters/filters.svg.h:96
-#, fuzzy
 msgid "Outline, double"
-msgstr "_Contorno"
+msgstr "Contorno doble"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Draws a smooth line inside colorized with the color it overlays"
@@ -1050,9 +979,8 @@ msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:98
-#, fuzzy
 msgid "Glow"
-msgstr "Brillo paralelo"
+msgstr "Brillo"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Glow of object's own color at the edges"
@@ -1273,7 +1201,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:123
 #, fuzzy
 msgid "Cutout Glow"
-msgstr "Personalizado"
+msgstr "Brillo paralelo"
 
 #: ../share/filters/filters.svg.h:123
 msgid "In and out glow with a possible offset and colorizable flood"
@@ -1678,7 +1606,7 @@ msgstr "Cambiar desenfoque"
 #: ../share/filters/filters.svg.h:168
 #, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "Escalar los ángulos redondeados"
+msgstr "Poner más ásperos los bordes y el contenido"
 
 #: ../share/filters/filters.svg.h:169
 #, fuzzy
@@ -2710,9 +2638,8 @@ msgstr ""
 "de exportación, si existen (¡Atención, sobrescribe sin preguntar!)"
 
 #: ../src/dialogs/export.cpp:627
-#, fuzzy
 msgid "Hide all except selected"
-msgstr "Ocultar _todos excepto los seleccionados"
+msgstr "Ocultar todos excepto los seleccionados"
 
 #: ../src/dialogs/export.cpp:631
 msgid "In the exported image, hide all objects except those that are selected"
@@ -3167,81 +3094,77 @@ msgstr "Propiedades de %s"
 #: ../src/dialogs/spellcheck.cpp:444
 #, c-format
 msgid "<b>Finished</b>, <b>%d</b> words added to dictionary"
-msgstr ""
+msgstr "<b>Terminado</b>, <b>%d</b> palabras añadidas al diccionario"
 
 #: ../src/dialogs/spellcheck.cpp:446
 #, c-format
 msgid "<b>Finished</b>, nothing suspicious found"
-msgstr ""
+msgstr "<b>Terminado</b>, no se ha encontrada nada sospechoso"
 
 #: ../src/dialogs/spellcheck.cpp:559
 #, c-format
 msgid "Not in dictionary (%s): <b>%s</b>"
-msgstr ""
+msgstr "No está en el diccionario (%s): <b>%s</b>"
 
 #: ../src/dialogs/spellcheck.cpp:711
 msgid "<i>Checking...</i>"
-msgstr ""
+msgstr "<i>Comprobando...</i>"
 
 #: ../src/dialogs/spellcheck.cpp:781
 msgid "Fix spelling"
-msgstr ""
+msgstr "Corregir ortografía"
 
 #: ../src/dialogs/spellcheck.cpp:956
 msgid "Suggestions:"
-msgstr ""
+msgstr "Sugerencias:"
 
 #: ../src/dialogs/spellcheck.cpp:968
 msgid "_Accept"
-msgstr ""
+msgstr "_Aceptar"
 
 #: ../src/dialogs/spellcheck.cpp:968
 msgid "Accept the chosen suggestion"
-msgstr ""
+msgstr "Aceptar la sugerencia elegida"
 
 #: ../src/dialogs/spellcheck.cpp:970
-#, fuzzy
 msgid "_Ignore once"
-msgstr "Ignorar"
+msgstr "_Ignorar una vez"
 
 #: ../src/dialogs/spellcheck.cpp:970
 msgid "Ignore this word only once"
-msgstr ""
+msgstr "Ignorar esta palabra una sola vez"
 
 #: ../src/dialogs/spellcheck.cpp:972
-#, fuzzy
 msgid "_Ignore"
-msgstr "Ignorar"
+msgstr "_Ignorar"
 
 #: ../src/dialogs/spellcheck.cpp:972
 msgid "Ignore this word in this session"
-msgstr ""
+msgstr "Ignorar esta palabra en esta sesión"
 
 #: ../src/dialogs/spellcheck.cpp:979
 msgid "A_dd to dictionary:"
-msgstr ""
+msgstr "Aña_dir al diccionario:"
 
 #: ../src/dialogs/spellcheck.cpp:979
 msgid "Add this word to the chosen dictionary"
-msgstr ""
+msgstr "Añadir esta palabra al diccionario elegido"
 
 #: ../src/dialogs/spellcheck.cpp:1012
-#, fuzzy
 msgid "_Stop"
-msgstr "_Aplicar"
+msgstr "_Parar"
 
 #: ../src/dialogs/spellcheck.cpp:1012
 msgid "Stop the check"
-msgstr ""
+msgstr "Detener la comprobación"
 
 #: ../src/dialogs/spellcheck.cpp:1014
-#, fuzzy
 msgid "_Start"
-msgstr "Inicio"
+msgstr "_Iniciar"
 
 #: ../src/dialogs/spellcheck.cpp:1014
 msgid "Start the check"
-msgstr ""
+msgstr "Iniciar la comprobación"
 
 #: ../src/dialogs/text-edit.cpp:198
 msgid "Font"
@@ -3528,13 +3451,15 @@ msgstr ""
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
-msgstr ""
+msgstr "Ajustar solamente a líneas de re_jlla visibles"
 
 #: ../src/display/canvas-grid.cpp:330
 msgid ""
 "When zoomed out, not all grid lines will be displayed. Only the visible ones "
 "will be snapped to"
 msgstr ""
+"Al alejarse no se muestran todas las líneas de rejilla. Solamente se "
+"ajustará a las visibles."
 
 #: ../src/display/canvas-grid.cpp:334
 msgid "_Visible"
@@ -3574,214 +3499,176 @@ msgstr "Muestra puntos en lugar de líneas en el diseño de la rejilla"
 #: ../src/display/snap-indicator.cpp:60 ../src/display/snap-indicator.cpp:63
 #: ../src/display/snap-indicator.cpp:145 ../src/display/snap-indicator.cpp:148
 msgid "UNDEFINED"
-msgstr ""
+msgstr "UNDEFINED"
 
 #  create dialog
 #: ../src/display/snap-indicator.cpp:66
-#, fuzzy
 msgid "grid line"
-msgstr "Línea guía"
+msgstr "línea de rejilla"
 
 #: ../src/display/snap-indicator.cpp:69
-#, fuzzy
 msgid "grid intersection"
-msgstr "Intersecciones de rejillas y guías"
+msgstr "intersección de rejilla"
 
 #: ../src/display/snap-indicator.cpp:72
-#, fuzzy
 msgid "guide"
-msgstr "Guías"
+msgstr "guía"
 
 #: ../src/display/snap-indicator.cpp:75
-#, fuzzy
 msgid "guide intersection"
-msgstr "Intersecciones de rejillas y guías"
+msgstr "intersección de guías"
 
 #: ../src/display/snap-indicator.cpp:78
-#, fuzzy
 msgid "grid-guide intersection"
-msgstr "Intersecciones de rejillas y guías"
+msgstr "intersección de rejillas y guías"
 
 #: ../src/display/snap-indicator.cpp:81
-#, fuzzy
 msgid "cusp node"
-msgstr "Ajustar a nodos vértice"
+msgstr "nodo vértice"
 
 #: ../src/display/snap-indicator.cpp:84
-#, fuzzy
 msgid "smooth node"
-msgstr "Nodos suaves"
+msgstr "nodo suave"
 
 #: ../src/display/snap-indicator.cpp:87
-#, fuzzy
 msgid "path"
-msgstr "Trayecto"
+msgstr "trayecto"
 
 #: ../src/display/snap-indicator.cpp:90
-#, fuzzy
 msgid "path intersection"
-msgstr "Intersecciones de trayectos"
+msgstr "intersección de trayectos"
 
 #: ../src/display/snap-indicator.cpp:93
-#, fuzzy
 msgid "bounding box corner"
-msgstr "Esquinas de cajas de contorno"
+msgstr "esquina de cajas de contorno"
 
 #: ../src/display/snap-indicator.cpp:96
-#, fuzzy
 msgid "bounding box side"
-msgstr "Bordes de cajas de contorno"
+msgstr "lado de cajas de contorno"
 
 #: ../src/display/snap-indicator.cpp:99
-#, fuzzy
 msgid "bounding box"
-msgstr "Caja de contorno"
+msgstr "caja de contorno"
 
 #: ../src/display/snap-indicator.cpp:102
-#, fuzzy
 msgid "page border"
-msgstr "Borde del papel"
+msgstr "borde del papel"
 
 #: ../src/display/snap-indicator.cpp:105
-#, fuzzy
 msgid "line midpoint"
-msgstr "Puntos medios de línea"
+msgstr "punto medio de línea"
 
 #: ../src/display/snap-indicator.cpp:108
-#, fuzzy
 msgid "object midpoint"
-msgstr "Puntos medios de objetos"
+msgstr "punto medio de objetos"
 
 #: ../src/display/snap-indicator.cpp:111
-#, fuzzy
 msgid "object rotation center"
-msgstr "Buscar objetos en el documento"
+msgstr "centro de rotación del objeto"
 
 #: ../src/display/snap-indicator.cpp:114
-#, fuzzy
 msgid "handle"
-msgstr "Sombra"
+msgstr "tirador"
 
 #: ../src/display/snap-indicator.cpp:117
-#, fuzzy
 msgid "bounding box side midpoint"
-msgstr "Bordes de cajas de contorno"
+msgstr "centro del lado de caja de contorno"
 
 #: ../src/display/snap-indicator.cpp:120
-#, fuzzy
 msgid "bounding box midpoint"
-msgstr "Esquinas de cajas de contorno"
+msgstr "centro de caja de contorno"
 
 #: ../src/display/snap-indicator.cpp:123
-#, fuzzy
 msgid "page corner"
-msgstr "Borde del papel"
+msgstr "esquina del papel"
 
 #: ../src/display/snap-indicator.cpp:126
 msgid "convex hull corner"
-msgstr ""
+msgstr "esquina de envoltura convexa"
 
 #: ../src/display/snap-indicator.cpp:129
-#, fuzzy
 msgid "quadrant point"
-msgstr "Espaciado equidistante"
+msgstr "punto de cuadrante"
 
 #: ../src/display/snap-indicator.cpp:132
-#, fuzzy
 msgid "center"
-msgstr "Centro"
+msgstr "centro"
 
 #: ../src/display/snap-indicator.cpp:135
-#, fuzzy
 msgid "corner"
-msgstr "Esquinas:"
+msgstr "esquina"
 
 #: ../src/display/snap-indicator.cpp:138
-#, fuzzy
 msgid "text baseline"
-msgstr "Alinear líneas base de textos "
+msgstr "línea base de texto"
 
 #: ../src/display/snap-indicator.cpp:151
-#, fuzzy
 msgid "Bounding box corner"
-msgstr "Esquinas de cajas de contorno"
+msgstr "Esquina de caja de contorno"
 
 #: ../src/display/snap-indicator.cpp:154
-#, fuzzy
 msgid "Bounding box midpoint"
-msgstr "Esquinas de cajas de contorno"
+msgstr "Centro de caja de contorno"
 
 #: ../src/display/snap-indicator.cpp:157
-#, fuzzy
 msgid "Bounding box side midpoint"
-msgstr "Bordes de cajas de contorno"
+msgstr "Centro del lado de caja de contorno"
 
 #: ../src/display/snap-indicator.cpp:160
-#, fuzzy
 msgid "Smooth node"
-msgstr "Nodos suaves"
+msgstr "Nodo suave"
 
 #: ../src/display/snap-indicator.cpp:163
-#, fuzzy
 msgid "Cusp node"
-msgstr "Modo empujar"
+msgstr "Nodo vértice"
 
 #: ../src/display/snap-indicator.cpp:166
-#, fuzzy
 msgid "Line midpoint"
-msgstr "Puntos medios de línea"
+msgstr "Punto medio de línea"
 
 #: ../src/display/snap-indicator.cpp:169
-#, fuzzy
 msgid "Object midpoint"
-msgstr "Puntos medios de objetos"
+msgstr "Punto medio de objetos"
 
 #: ../src/display/snap-indicator.cpp:172
-#, fuzzy
 msgid "Object rotation center"
-msgstr "Objetos a patrón"
+msgstr "Centro de rotación del objeto"
 
 #: ../src/display/snap-indicator.cpp:175
-#, fuzzy
 msgid "Handle"
-msgstr "ángulo"
+msgstr "Tirador"
 
 #: ../src/display/snap-indicator.cpp:178
-#, fuzzy
 msgid "Path intersection"
-msgstr "Intersecciones de trayectos"
+msgstr "Intersección de trayectos"
 
 #: ../src/display/snap-indicator.cpp:181
-#, fuzzy
 msgid "Guide"
-msgstr "Guías"
+msgstr "Guía"
 
 #: ../src/display/snap-indicator.cpp:184
 msgid "Convex hull corner"
-msgstr ""
+msgstr "Esquina de envoltura convexa"
 
 #: ../src/display/snap-indicator.cpp:187
 msgid "Quadrant point"
-msgstr ""
+msgstr "Punto de cuadrante"
 
 #: ../src/display/snap-indicator.cpp:190 ../src/widgets/toolbox.cpp:6700
 msgid "Center"
 msgstr "Centro"
 
 #: ../src/display/snap-indicator.cpp:193
-#, fuzzy
 msgid "Corner"
-msgstr "Esquinas:"
+msgstr "Esquina"
 
 #: ../src/display/snap-indicator.cpp:196
-#, fuzzy
 msgid "Text baseline"
-msgstr "Alinear líneas base de textos "
+msgstr "Línea base de texto"
 
 #: ../src/display/snap-indicator.cpp:235
-#, fuzzy
 msgid " to "
-msgstr " de "
+msgstr " a "
 
 #: ../src/document.cpp:445
 #, c-format
@@ -4290,13 +4177,12 @@ msgid "Contrast"
 msgstr "Contraste"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:41
-#, fuzzy
 msgid "Adjust"
-msgstr "Ajuste HSB (TSC)"
+msgstr "Ajustar"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:47
 msgid "Increase or decrease contrast in bitmap(s)"
-msgstr ""
+msgstr "Aumentar o disminuir contraste en mapas de bits"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
@@ -4414,18 +4300,16 @@ msgstr ""
 "entre los rangos dados y el rango de color completo."
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
-#, fuzzy
 msgid "Median"
-msgstr "Medio"
+msgstr "Mediana"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
-#, fuzzy
 msgid ""
 "Replace each pixel component with the median color in a circular "
 "neighborhood."
 msgstr ""
-"Filtrar los mapas de bits seleccionados reemplazando cada componente de "
-"pixel con el color medio de su proximidad."
+"Reemplazar cada componente del píxel con el color medio de su círculo de "
+"proximidad."
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
 msgid "HSB Adjust"
@@ -4573,18 +4457,16 @@ msgstr ""
 "fotográfica."
 
 #: ../src/extension/internal/bitmap/spread.cpp:36
-#, fuzzy
 msgid "Dither"
-msgstr "Otro"
+msgstr "Diseminar"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
-#, fuzzy
 msgid ""
 "Randomly scatter pixels in selected bitmap(s), within the given radius of "
 "the original position"
 msgstr ""
 "Diseminar píxeles aleatoriamente en los mapas de bits seleccionados, dentro "
-"del radio «cantidad»."
+"del radio dado de la posición original"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
 msgid "Swirl"
@@ -5040,7 +4922,7 @@ msgstr "Importar texto como texto"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:120
 msgid "Replace PDF fonts by closest-named installed fonts"
-msgstr ""
+msgstr "Reemplazar tipografías PDF con las de nombre similar instaladas"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
@@ -5096,9 +4978,8 @@ msgid "PovRay Output"
 msgstr "Salida PovRay"
 
 #: ../src/extension/internal/pov-out.cpp:682
-#, fuzzy
 msgid "PovRay (*.pov) (paths and shapes only)"
-msgstr "PovRay (*.pov) (exportar splines)"
+msgstr "PovRay (*.pov) (solo trayectos y formas)"
 
 #: ../src/extension/internal/pov-out.cpp:683
 msgid "PovRay Raytracer File"
@@ -6075,7 +5956,6 @@ msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Mostrar u ocultar la barra de comandos (bajo el menú)"
 
 #: ../src/interface.cpp:825
-#, fuzzy
 msgid "Snap Controls Bar"
 msgstr "Ajustar barra de controles"
 
@@ -6769,9 +6649,8 @@ msgid "Rotate copies"
 msgstr "Rotar copias"
 
 #: ../src/live_effects/effect.cpp:103
-#, fuzzy
 msgid "Recursive skeleton"
-msgstr "Obtener curvas de la selección..."
+msgstr "Esqueleto recursivo"
 
 #: ../src/live_effects/effect.cpp:104
 msgid "Ruler"
@@ -8624,14 +8503,12 @@ msgid "_Text"
 msgstr "_Texto"
 
 #: ../src/menus-skeleton.h:244
-#, fuzzy
 msgid "Filter_s"
-msgstr "Filtros"
+msgstr "Filtro_s"
 
 #: ../src/menus-skeleton.h:250
-#, fuzzy
 msgid "Exte_nsions"
-msgstr "La extensión «"
+msgstr "Exte_nsiones"
 
 #: ../src/menus-skeleton.h:257
 msgid "Whiteboa_rd"
@@ -8928,7 +8805,6 @@ msgstr ""
 "con el radio horizontal"
 
 #: ../src/object-edit.cpp:447 ../src/object-edit.cpp:451
-#, fuzzy
 msgid ""
 "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to "
 "lock ratio or stretch in one dimension only"
@@ -10385,11 +10261,10 @@ msgstr ""
 "booleana."
 
 #: ../src/splivarot.cpp:131
-#, fuzzy
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
 msgstr ""
-"Seleccione <b>exactamente dos trayectos</b> para realizar diferencia, XOR, "
+"Seleccione <b>exactamente dos trayectos</b> para realizar diferencia, "
 "división o corte de trayecto."
 
 #: ../src/splivarot.cpp:147 ../src/splivarot.cpp:162
@@ -10506,11 +10381,11 @@ msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Desvío dinámico</b>, %s por %f pt"
 
 #: ../src/sp-path.cpp:156
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node, path effect: %s)"
 msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
-msgstr[0] "<b>Trazo</b> (%i nodo, efecto de trayecto)"
-msgstr[1] "<b>Trazo</b> (%i nodos, efecto de trayecto)"
+msgstr[0] "<b>Trazo</b> (%i nodo, efecto de trayecto %s)"
+msgstr[1] "<b>Trazo</b> (%i nodos, efecto de trayecto %s)"
 
 #: ../src/sp-path.cpp:159
 #, c-format
@@ -10854,17 +10729,20 @@ msgid "Paste text"
 msgstr "Pegar texto"
 
 #: ../src/text-context.cpp:1602
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Type or edit flowed text (%d characters); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
-"Escriba un texto fluido; pulse <b>Enter</b> para iniciar un párrafo nuevo."
+"Escriba o edite un texto fluido (%d caracteres); pulse <b>Enter</b> para "
+"iniciar un párrafo nuevo."
 
 #: ../src/text-context.cpp:1604
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
-msgstr "Escriba un texto; pulse <b>Enter</b> para saltar de línea."
+msgstr ""
+"Escriba o edite un texto (%d caracteres); pulse <b>Enter</b> para saltar de "
+"línea."
 
 #: ../src/text-context.cpp:1612 ../src/tools-switch.cpp:190
 msgid ""
@@ -10939,17 +10817,14 @@ msgstr ""
 "editar la forma de la espiral. <b>Haga clic</b> para seleccionar."
 
 #: ../src/tools-switch.cpp:172
-#, fuzzy
 msgid ""
 "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to "
 "append to selected path."
 msgstr ""
 "<b>Arrastre</b> para crear una línea a mano alzada. Comience a dibujar con "
-"<b>Mayús</b> pulsado para añadir al trayecto seleccionado. Use <b>Ctrl+clic</"
-"b> para crear puntos simples."
+"<b>Mayús</b> pulsado para añadir al trayecto seleccionado."
 
 #: ../src/tools-switch.cpp:178
-#, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to "
 "append to selected path. <b>Ctrl+click</b> to create single dots (straight "
@@ -10957,7 +10832,7 @@ msgid ""
 msgstr ""
 "<b>Pulse</b> o <b>pulse y arrastre</b> para iniciar un trayecto, con "
 "<b>Mayús</b> pulsado para añadir al trayecto seleccionado. Use <b>Ctrl+clic</"
-"b> para crear puntos simples."
+"b> para crear puntos simples (solo en modo de línea recta)."
 
 #: ../src/tools-switch.cpp:184
 msgid ""
@@ -11430,36 +11305,30 @@ msgid "Treat selection as group: "
 msgstr "Tratar a la selección como grupo: "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:802
-#, fuzzy
 msgid "Align right edges of objects to the left edge of the anchor"
-msgstr "Alinear el lado derecho de los objetos a la izquierda del ancla"
+msgstr "Alinear el lado derecho de los objetos al borde izquierdo del ancla"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:805
-#, fuzzy
 msgid "Align left edges"
-msgstr "Alinear lados derechos"
+msgstr "Alinear lados izquierdos"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:808
-#, fuzzy
 msgid "Center objects horizontally"
-msgstr "Reflejar los objetos seleccionados horizontalmente"
+msgstr "Centrar los objetos horizontalmente"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:811
 msgid "Align right sides"
 msgstr "Alinear lados izquierdos"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:814
-#, fuzzy
 msgid "Align left edges of objects to the right edge of the anchor"
-msgstr "Alinear el lado izquierdo de los objetos a la derecha del ancla"
+msgstr "Alinear el lado izquierdo de los objetos al borde derecho del ancla"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:817
-#, fuzzy
 msgid "Align bottom edges of objects to the top edge of the anchor"
-msgstr "Alinear el lado inferior de los objetos por encima del ancla"
+msgstr "Alinear el lado inferior de los objetos al borde superior del ancla"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:820
-#, fuzzy
 msgid "Align top edges"
 msgstr "Alinear los bordes superiores"
 
@@ -11468,30 +11337,26 @@ msgid "Center on horizontal axis"
 msgstr "Centrar en el eje horizontal"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:826
-#, fuzzy
 msgid "Align bottom edges"
 msgstr "Alinear los bordes inferiores"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:829
-#, fuzzy
 msgid "Align top edges of objects to the bottom edge of the anchor"
-msgstr "Alinear el lado superior de los objetos al fondo del ancla"
+msgstr "Alinear el lado superior de los objetos al borde inferior del ancla"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:834
 msgid "Align baseline anchors of texts horizontally"
 msgstr "Alinear las anclas de la línea base de los textos horizontalmente"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:837
-#, fuzzy
 msgid "Align baselines of texts"
-msgstr "Alinear las anclas de la línea base de los textos verticalmente"
+msgstr "Alinear las líneas base de los textos"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:842
 msgid "Make horizontal gaps between objects equal"
 msgstr "Igualar los huecos horizontales entre los objetos"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:846
-#, fuzzy
 msgid "Distribute left edges equidistantly"
 msgstr "Distribuir los lados izquierdos a distancias iguales"
 
@@ -11500,7 +11365,6 @@ msgid "Distribute centers equidistantly horizontally"
 msgstr "Distribuir los centros horizontalmente a distancias iguales"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:852
-#, fuzzy
 msgid "Distribute right edges equidistantly"
 msgstr "Distribuir los lados derechos a distancias iguales"
 
@@ -11509,7 +11373,6 @@ msgid "Make vertical gaps between objects equal"
 msgstr "Igualar los huecos verticales entre los objetos"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:860
-#, fuzzy
 msgid "Distribute top edges equidistantly"
 msgstr "Distribuir los bordes superiores a distancias iguales"
 
@@ -11518,7 +11381,6 @@ msgid "Distribute centers equidistantly vertically"
 msgstr "Distribuir los centros verticalmente a distancias iguales"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:866
-#, fuzzy
 msgid "Distribute bottom edges equidistantly"
 msgstr "Distribuir los lados inferiores a distancias iguales"
 
@@ -11527,9 +11389,8 @@ msgid "Distribute baseline anchors of texts horizontally"
 msgstr "Distribuir las anclas de la línea base de los textos horizontalmente"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:874
-#, fuzzy
 msgid "Distribute baselines of texts vertically"
-msgstr "Distribuir las anclas de la línea base de los textos verticalmente"
+msgstr "Distribuir las líneas base de los textos verticalmente"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:879
 msgid "Randomize centers in both dimensions"
@@ -11580,14 +11441,12 @@ msgid "First selected"
 msgstr "Primero seleccionado"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:915
-#, fuzzy
 msgid "Biggest object"
-msgstr "Ocultar objeto"
+msgstr "Objeto mayor"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:916
-#, fuzzy
 msgid "Smallest object"
-msgstr "Fijar ID del objeto"
+msgstr "Objeto menor"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:918
 #: ../src/widgets/desktop-widget.cpp:1566
@@ -11709,7 +11568,6 @@ msgid "_Snap guides while dragging"
 msgstr "Aju_star guías al arrastrar"
 
 #: ../src/ui/dialog/document-properties.cpp:100
-#, fuzzy
 msgid ""
 "While dragging a guide, snap to object nodes or bounding box corners ('Snap "
 "to nodes' or 'snap to bounding box corners' must be enabled; only a small "
@@ -12013,15 +11871,13 @@ msgstr "Todas las imágenes"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:727
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:728
-#, fuzzy
 msgid "All Vectors"
-msgstr "Vector"
+msgstr "Todos los vectores"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:732
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:733
-#, fuzzy
 msgid "All Bitmaps"
-msgstr "Mapas de bits"
+msgstr "Todos los mapas de bits"
 
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
