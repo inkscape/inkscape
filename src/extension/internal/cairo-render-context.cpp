@@ -1459,10 +1459,16 @@ CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoG
         i++;
     }
 
-    if (is_stroke || _is_texttopath)
+    if (is_stroke) {
         cairo_glyph_path(cr, glyphs, num_glyphs - num_invalid_glyphs);
-    else
-        cairo_show_glyphs(cr, glyphs, num_glyphs - num_invalid_glyphs);
+    } else {
+        if (_is_texttopath) {
+            cairo_glyph_path(cr, glyphs, num_glyphs - num_invalid_glyphs);
+            cairo_fill_preserve(cr);
+        } else {
+            cairo_show_glyphs(cr, glyphs, num_glyphs - num_invalid_glyphs);
+        }
+    }
 
     if (num_glyphs > GLYPH_ARRAY_SIZE)
         g_free(glyphs);
