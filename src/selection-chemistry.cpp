@@ -1176,7 +1176,7 @@ value of set_i2d==false is only used by seltrans when it's dragging objects live
 that case, items are already in the new position, but the repr is in the old, and this function
 then simply updates the repr from item->transform.
  */
-void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix const &affine, bool set_i2d)
+void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix const &affine, bool set_i2d, bool compensate)
 {
     if (selection->isEmpty())
         return;
@@ -1240,7 +1240,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
                     continue;
                 for (SPObject *use = region->firstChild() ; use ; use = SP_OBJECT_NEXT(use)) {
                     if (!SP_IS_USE(use)) continue;
-                    sp_item_write_transform(SP_USE(use), SP_OBJECT_REPR(use), item->transform.inverse(), NULL);
+                    sp_item_write_transform(SP_USE(use), SP_OBJECT_REPR(use), item->transform.inverse(), NULL, compensate);
                 }
             }
         } else if (transform_clone_with_original) {
@@ -1266,25 +1266,25 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix cons
 
                 if (prefs_parallel) {
                     Geom::Matrix move = result * clone_move * t_inv;
-                    sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &move);
+                    sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &move, compensate);
 
                 } else if (prefs_unmoved) {
                     //if (SP_IS_USE(sp_use_get_original(SP_USE(item))))
                     //    clone_move = Geom::identity();
                     Geom::Matrix move = result * clone_move;
-                    sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &t);
+                    sp_item_write_transform(item, SP_OBJECT_REPR(item), move, &t, compensate);
                 }
 
             } else {
                 // just apply the result
-                sp_item_write_transform(item, SP_OBJECT_REPR(item), result, &t);
+                sp_item_write_transform(item, SP_OBJECT_REPR(item), result, &t, compensate);
             }
 
         } else {
             if (set_i2d) {
                 sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * (Geom::Matrix)affine);
             }
-            sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform, NULL);
+            sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform, NULL, compensate);
         }
 
         // if we're moving the actual object, not just updating the repr, we can transform the
@@ -1384,9 +1384,9 @@ sp_selection_skew_relative(Inkscape::Selection *selection, Geom::Point const &al
     sp_selection_apply_affine(selection, final);
 }
 
-void sp_selection_move_relative(Inkscape::Selection *selection, Geom::Point const &move)
+void sp_selection_move_relative(Inkscape::Selection *selection, Geom::Point const &move, bool compensate)
 {
-    sp_selection_apply_affine(selection, Geom::Matrix(Geom::Translate(move)));
+    sp_selection_apply_affine(selection, Geom::Matrix(Geom::Translate(move)), true, compensate);
 }
 
 void sp_selection_move_relative(Inkscape::Selection *selection, double dx, double dy)

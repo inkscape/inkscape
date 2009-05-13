@@ -75,13 +75,13 @@ void sp_selection_paste_size_separately(SPDesktop *desktop, bool apply_x, bool a
 void sp_selection_to_next_layer( SPDesktop *desktop, bool suppressDone = false );
 void sp_selection_to_prev_layer( SPDesktop *desktop, bool suppressDone = false );
 
-void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix const &affine, bool set_i2d = true);
+void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Matrix const &affine, bool set_i2d = true, bool compensate = true);
 void sp_selection_remove_transform (SPDesktop *desktop);
 void sp_selection_scale_absolute (Inkscape::Selection *selection, double x0, double x1, double y0, double y1);
 void sp_selection_scale_relative(Inkscape::Selection *selection, Geom::Point const &align, Geom::Scale const &scale);
 void sp_selection_rotate_relative (Inkscape::Selection *selection, Geom::Point const &center, gdouble angle);
 void sp_selection_skew_relative (Inkscape::Selection *selection, Geom::Point const &align, double dx, double dy);
-void sp_selection_move_relative (Inkscape::Selection *selection, Geom::Point const &move);
+void sp_selection_move_relative (Inkscape::Selection *selection, Geom::Point const &move, bool compensate = true);
 void sp_selection_move_relative (Inkscape::Selection *selection, double dx, double dy);
 
 void sp_selection_rotate_90 (SPDesktop *desktop, bool ccw);
