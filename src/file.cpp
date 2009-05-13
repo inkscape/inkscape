@@ -1011,6 +1011,12 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
             Inkscape::Selection *selection = sp_desktop_selection(desktop);
             selection->set(SP_ITEM(new_obj));
 
+            // preserve parent and viewBox transformations
+            // c2p is identity matrix at this point unless sp_document_ensure_up_to_date is called
+            sp_document_ensure_up_to_date(doc);
+            Geom::Matrix affine = SP_ROOT(SP_DOCUMENT_ROOT(doc))->c2p * sp_item_i2doc_affine(SP_ITEM(place_to_insert)).inverse();
+            sp_selection_apply_affine(selection, desktop->dt2doc() * affine * desktop->doc2dt(), true, false);
+
             // To move the imported object, we must temporarily set the "transform pattern with
             // object" option.
             {

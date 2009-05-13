@@ -799,7 +799,7 @@ void ClipboardManagerImpl::_pasteDocument(SPDocument *clipdoc, bool in_place)
 
     // invers apply parent transform
     Geom::Matrix doc2parent = sp_item_i2doc_affine(SP_ITEM(desktop->currentLayer())).inverse();
-    sp_selection_apply_affine(selection, doc2parent);
+    sp_selection_apply_affine(selection, desktop->dt2doc() * doc2parent * desktop->doc2dt(), true, false);
 
     // Update (among other things) all curves in paths, for bounds() to work
     sp_document_ensure_up_to_date(target_document);
