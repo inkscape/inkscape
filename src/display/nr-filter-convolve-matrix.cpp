@@ -252,8 +252,8 @@ void FilterConvolveMatrix::area_enlarge(NRRectL &area, Geom::Matrix const &/*tra
     // some spurious pixels may still appear at the borders when low zooming or rotating. Needs a better fix.
     area.x0 -= targetX;
     area.y0 -= targetY;
-    area.x1 += orderX - targetX;
-    area.y1 += orderY - targetY;
+    area.x1 += orderX - targetX - 1; // This makes sure the last row/column in the original image corresponds to the last row/column in the new image that can be convolved without adjusting the boundary conditions).
+    area.y1 += orderY - targetY - 1;
 }
 
 FilterTraits FilterConvolveMatrix::get_input_traits() {
