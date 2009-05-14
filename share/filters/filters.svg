@@ -1661,7 +1661,7 @@
 <feConvolveMatrix id="feConvolveMatrix3043" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
 <feColorMatrix id="feColorMatrix3045" in="result0" type="matrix" result="result3" values="0 -20 0 0 1 0 -20 0 0 1 0 -20 0 0 1 0 0 0 1 0 " />
 <feColorMatrix id="feColorMatrix3047" values="1" in="result3" result="result1" type="luminanceToAlpha" />
-<feComposite id="feComposite3049" in2="result1" k2="2" k3="0" in="SourceGraphic" result="result2" operator="out" />
+<feComposite id="feComposite3049" in2="result1" k2="2" k3="0" in="SourceGraphic" result="result2" operator="in" />
 <feGaussianBlur id="feGaussianBlur3051" result="result7" in="result2" stdDeviation="0.55" />
 <feColorMatrix id="feColorMatrix3053" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -1.7 " type="matrix" result="result9" />
 <feComposite id="feComposite3055" operator="arithmetic" k2="1.25" />
