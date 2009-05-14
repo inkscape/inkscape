@@ -409,7 +409,7 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
     SPPath * const path = (SPPath *) lpeitem;
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(shape);
 
-    if (path->original_curve) {
+    if (path->original_curve && sp_lpe_item_has_path_effect_recursive(lpeitem)) {
         SPCurve *curve = path->original_curve->copy();
         /* if a path does not have an lpeitem applied, then reset the curve to the original_curve.
          * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
