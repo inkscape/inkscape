@@ -90,7 +90,6 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {CIRCLE_WITH_RADIUS,    N_("Circle (by center and radius)"),   "circle_with_radius"},
     {CIRCLE_3PTS,           N_("Circle by 3 points"),      "circle_3pts"},
     {DYNASTROKE,            N_("Dynamic stroke"),          "dynastroke"},
-    {INTERPOLATE,           N_("Interpolate Sub-Paths"),   "interpolate"},
     {LATTICE,               N_("Lattice Deformation"),     "lattice"},
     {LINE_SEGMENT,          N_("Line Segment"),            "line_segment"},
     {MIRROR_SYMMETRY,       N_("Mirror symmetry"),         "mirror_symmetry"},
@@ -116,6 +115,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {CONSTRUCT_GRID,        N_("Construct grid"),          "construct_grid"},
     {SPIRO,                 N_("Spiro spline"),            "spiro"},
     {ENVELOPE,              N_("Envelope Deformation"),    "envelope"},
+    {INTERPOLATE,           N_("Interpolate Sub-Paths"),   "interpolate"},
     {ROUGH_HATCHES,         N_("Hatches (rough)"),         "rough_hatches"},
     {SKETCH,                N_("Sketch"),                  "sketch"},
 };
