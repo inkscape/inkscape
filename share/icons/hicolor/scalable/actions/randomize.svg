@@ -30,7 +30,7 @@
        gradientUnits="userSpaceOnUse"
        id="radialGradient8472"
        inkscape:collect="always"
-       xlink:href="/home/tweenk/#linearGradient5724" />
+       xlink:href="#linearGradient5724" />
     <linearGradient
        id="linearGradient5724">
       <stop
@@ -54,7 +54,7 @@
        x1="763"
        id="linearGradient5637"
        inkscape:collect="always"
-       xlink:href="/home/tweenk/#linearGradient8482" />
+       xlink:href="#linearGradient8482" />
     <linearGradient
        id="linearGradient8482"
        inkscape:collect="always">
@@ -77,7 +77,7 @@
        gradientUnits="userSpaceOnUse"
        id="radialGradient8474"
        inkscape:collect="always"
-       xlink:href="/home/tweenk/#linearGradient5724" />
+       xlink:href="#linearGradient5724" />
     <linearGradient
        gradientUnits="userSpaceOnUse"
        y2="214.25"
@@ -86,7 +86,7 @@
        x1="770.5"
        id="linearGradient5633"
        inkscape:collect="always"
-       xlink:href="/home/tweenk/#linearGradient8482" />
+       xlink:href="#linearGradient8482" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient5602">

@@ -65,13 +65,15 @@
          numOctaves="1"
          baseFrequency="0.039"
          type="fractalNoise"
-         id="feTurbulence2389" />
+         id="feTurbulence2389"
+         out="outTurbulence" />
       <feDisplacementMap
          in="SourceGraphic"
-         scale="72.072072072072075"
+         scale="72"
          xChannelSelector="R"
          yChannelSelector="G"
-         id="feDisplacementMap2391" />
+         id="feDisplacementMap2391"
+         in2="outTurbulence" />
     </filter>
     <filter
        inkscape:label="filter1"

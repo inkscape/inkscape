@@ -13,7 +13,7 @@
    height="48px"
    id="svg5668"
    sodipodi:version="0.32"
-   inkscape:version="0.46+devel r20659"
+   inkscape:version="0.46+devel r21345 custom"
    sodipodi:docname="dialog-tile-clones.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
@@ -180,18 +180,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.4748737"
-     inkscape:cx="31.062147"
-     inkscape:cy="23.73048"
-     inkscape:current-layer="layer1"
-     showgrid="false"
+     inkscape:zoom="3.5"
+     inkscape:cx="-27.67133"
+     inkscape:cy="8.0854436"
+     inkscape:current-layer="edit_create_tiled_clones"
+     showgrid="true"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
      gridtolerance="1"
-     inkscape:window-width="681"
-     inkscape:window-height="575"
-     inkscape:window-x="362"
-     inkscape:window-y="83">
+     inkscape:window-width="971"
+     inkscape:window-height="934"
+     inkscape:window-x="126"
+     inkscape:window-y="0">
     <inkscape:grid
        type="xygrid"
        id="grid7154"
@@ -283,14 +283,6 @@
            style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
            d="m 63.0113,291 c 0,1 0,1 0,1"
            id="path5717" />
-        <use
-           x="0"
-           y="0"
-           xlink:href="#path6162"
-           id="use5721"
-           transform="translate(-293.8567,32.29639)"
-           width="1250"
-           height="1250" />
         <path
            style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
            d="m 64.0113,290 2,0"
@@ -299,6 +291,10 @@
            style="fill:none;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
            d="m 63,295.9816 0,-2 4,0"
            id="path5725" />
+        <path
+           id="path9329"
+           d="m 66.999362,291 c 0,1 0,1 0,1"
+           style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1" />
       </g>
     </g>
   </g>

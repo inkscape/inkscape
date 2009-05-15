@@ -73,7 +73,7 @@
        id="use5756-0-3"
        style="color:#000000;fill:#ff2100;fill-opacity:0.39215692;fill-rule:evenodd;stroke:#d40000;stroke-width:1.93322301;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" />
     <use
-       xlink:href="/home/tweenk/#use5756-0-3"
+       xlink:href="#use5756-0-3"
        height="1250"
        width="1250"
        transform="translate(18.121284,-18.334476)"

@@ -72,7 +72,7 @@
        y1="116.86476"
        x2="906.64484"
        y2="132.82727"
-       xlink:href="/home/tweenk/#linearGradient1887" />
+       xlink:href="#linearGradient1887" />
     <linearGradient
        id="linearGradient1887">
       <stop
@@ -92,7 +92,7 @@
        y1="343.25803"
        x2="130.35223"
        y2="350.16364"
-       xlink:href="/home/tweenk/#linearGradient1887" />
+       xlink:href="#linearGradient1887" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient2878"
@@ -102,7 +102,7 @@
        y1="46.338985"
        x2="414.26022"
        y2="46.339005"
-       xlink:href="/home/tweenk/#linearGradient5740" />
+       xlink:href="#linearGradient5740" />
     <linearGradient
        id="linearGradient5740">
       <stop
@@ -123,7 +123,7 @@
        y1="213.19025"
        x2="594.86096"
        y2="216.79137"
-       xlink:href="/home/tweenk/#linearGradient2888" />
+       xlink:href="#linearGradient2888" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient2882"
@@ -133,7 +133,7 @@
        y1="186.63638"
        x2="597.30682"
        y2="188.54939"
-       xlink:href="/home/tweenk/#linearGradient800" />
+       xlink:href="#linearGradient800" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient2884"
@@ -143,7 +143,7 @@
        y1="222.34782"
        x2="582.49353"
        y2="220.8004"
-       xlink:href="/home/tweenk/#linearGradient700" />
+       xlink:href="#linearGradient700" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient2886"
@@ -153,7 +153,7 @@
        y1="195.51875"
        x2="599.23779"
        y2="204.91603"
-       xlink:href="/home/tweenk/#linearGradient800" />
+       xlink:href="#linearGradient800" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient2889"
@@ -163,7 +163,7 @@
        y1="220.36362"
        x2="602.06982"
        y2="221.20036"
-       xlink:href="/home/tweenk/#linearGradient700" />
+       xlink:href="#linearGradient700" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient2891"
@@ -172,7 +172,7 @@
        y1="215.40201"
        x2="612.25781"
        y2="216.40329"
-       xlink:href="/home/tweenk/#linearGradient800" />
+       xlink:href="#linearGradient800" />
     <linearGradient
        inkscape:collect="always"
        id="linearGradient2893"
@@ -181,7 +181,7 @@
        y1="198.57608"
        x2="592.8656"
        y2="198.57608"
-       xlink:href="/home/tweenk/#linearGradient3480" />
+       xlink:href="#linearGradient3480" />
     <linearGradient
        xlink:href="#linearGradient3480"
        y2="198.57608"

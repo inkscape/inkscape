@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -13,7 +14,7 @@
    height="48px"
    id="svg5668"
    sodipodi:version="0.32"
-   inkscape:version="0.46+devel r20659"
+   inkscape:version="0.46+devel r21345 custom"
    sodipodi:docname="edit-select-original.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
@@ -75,7 +76,7 @@
        xlink:href="#linearGradient800-6"
        id="linearGradient6122"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.02198,0,0,1,-307.3063,52.7964)"
+       gradientTransform="matrix(1.02198,0,0,1,-307.35392,52.754733)"
        x1="361.70941"
        y1="261.24731"
        x2="366.09814"
@@ -96,7 +97,7 @@
        xlink:href="#linearGradient3480-5"
        id="linearGradient6125"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0,1,-1.02198,0,-159.1115,272.7932)"
+       gradientTransform="matrix(0,1,-1.02198,0,-159.15912,272.75153)"
        x1="-37.330727"
        y1="187.86301"
        x2="-33.694717"
@@ -150,24 +151,25 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.4748737"
-     inkscape:cx="31.062147"
-     inkscape:cy="23.73048"
+     inkscape:zoom="8"
+     inkscape:cx="24"
+     inkscape:cy="24"
      inkscape:current-layer="layer1"
-     showgrid="false"
+     showgrid="true"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
-     gridtolerance="1"
-     inkscape:window-width="681"
-     inkscape:window-height="575"
-     inkscape:window-x="362"
-     inkscape:window-y="83">
+     gridtolerance="20"
+     inkscape:window-width="990"
+     inkscape:window-height="960"
+     inkscape:window-x="24"
+     inkscape:window-y="0">
     <inkscape:grid
        type="xygrid"
        id="grid7154"
        empspacing="5"
        visible="true"
-       enabled="true" />
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
   </sodipodi:namedview>
   <metadata
      id="metadata5673">
@@ -186,63 +188,68 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <g
-       transform="matrix(3,0,0,3,-165,-917.99977)"
+       transform="matrix(3,0,0,3,-165,-918)"
        id="edit_select_original">
       <rect
          style="color:#000000;fill:none;stroke:url(#linearGradient6151);stroke-width:0.9999994;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline"
          id="rect5972"
-         width="11.99355"
-         height="11.99031"
-         x="58.517712"
-         y="309.50961" />
+         width="12"
+         height="12"
+         x="58.5"
+         y="309.5" />
       <rect
          style="color:#000000;fill:url(#linearGradient6146);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient6148);stroke-width:1.00000036;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline"
          id="rect5974"
-         width="9.9823189"
-         height="9.9715872"
-         x="59.517712"
-         y="310.50989" />
+         width="10"
+         height="10"
+         x="59.5"
+         y="310.5" />
       <rect
-         style="color:#000000;fill:url(#linearGradient6122);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient6125);stroke-width:1.00000048;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline"
          id="rect5976"
-         width="5.9790282"
-         height="4.0014329"
-         x="61.552299"
-         y="314.5437" />
-      <path
-         id="path5978"
-         d="m 62.5113,312.5 c 0,1 0,1 0,1"
-         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1" />
-      <use
-         height="1250"
-         width="1250"
-         transform="translate(-294.3567,53.7964)"
-         id="use5981"
-         xlink:href="#path6162"
-         y="0"
-         x="0" />
-      <path
-         id="path5983"
-         d="m 63.5113,311.5 2,0"
-         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1" />
+         width="6"
+         height="4"
+         x="61.5"
+         y="314.5"
+         style="color:#000000;fill:url(#linearGradient6122);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient6125);stroke-width:1.00000048;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" />
       <path
          id="path5985"
-         d="m 62.5,317.4816 0,-2 4,0"
+         d="m 62.5,317.5 0,-2 4,0"
          style="fill:none;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none"
+         id="rect8742"
+         width="1"
+         height="2"
+         x="62"
+         y="312" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none"
+         id="rect8774"
+         width="3"
+         height="1"
+         x="63"
+         y="311" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none"
+         id="rect8759"
+         width="1"
+         height="2"
+         x="66"
+         y="312" />
       <g
          id="g6161">
         <rect
-           y="306.48151"
+           y="306.5"
            x="55.5"
-           height="7.9962969"
-           width="8.9968081"
+           height="8"
+           width="9"
            id="rect5968"
            style="color:#000000;fill:none;stroke:url(#linearGradient6159);stroke-width:0.99999958;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" />
         <rect
-           y="307.48141"
-           x="56.500031"
-           height="5.9933238"
-           width="6.9948139"
+           y="307.5"
+           x="56.5"
+           height="6"
+           width="7"
            id="rect5970"
            style="color:#000000;fill:url(#linearGradient6154);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient6156);stroke-width:1.0000006;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" />
       </g>
