@@ -37,6 +37,7 @@ extensions = \
 	color_removered.py\
 	color_rgbbarrel.py\
 	color_replace.py\
+	convert2dashes.py\
 	cspsubdiv.py \
 	cubicsuperpath.py \
 	dia2svg.sh \
@@ -160,6 +161,7 @@ modules = \
 	color_removered.inx\
 	color_rgbbarrel.inx\
 	color_replace.inx\
+	convert2dashes.inx\
 	dia.inx \
 	dimension.inx \
 	dots.inx \

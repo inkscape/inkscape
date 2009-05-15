@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>Convert to Dashes</_name>
+	<id>com.vaxxine.filter.dashes</id>
+	<dependency type="executable" location="extensions">convert2dashes.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<effect>
+		<object-type>path</object-type>
+		<effects-menu>
+			<submenu _name="Modify Path"/>
+		</effects-menu>
+	</effect>
+	<script>
+		<command reldir="extensions" interpreter="python">convert2dashes.py</command>
+	</script>
+</inkscape-extension>
