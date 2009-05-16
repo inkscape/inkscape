@@ -656,12 +656,10 @@ sp_desktop_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
         }
 
         if (SP_BUTTON_IS_DOWN(dtw->sticky_zoom)) {
-            /* Calculate zoom per pixel */
-            double const zpsp = zoom / hypot (area.dimensions()[Geom::X], area.dimensions()[Geom::Y]);
             /* Find new visible area */
             Geom::Rect newarea = dtw->desktop->get_display_area();
             /* Calculate adjusted zoom */
-            zoom = zpsp * hypot(newarea.dimensions()[Geom::X], newarea.dimensions()[Geom::Y]);
+            zoom *= sqrt(newarea.area() / area.area());
         }
         dtw->desktop->zoom_absolute(area.midpoint()[Geom::X], area.midpoint()[Geom::Y], zoom);
 
