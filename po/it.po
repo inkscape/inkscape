@@ -15211,7 +15211,7 @@ msgstr "Personalizzata"
 
 #: ../src/ui/widget/page-sizer.cpp:292
 msgid "_Fit page to selection"
-msgstr "Adat_ta la pagina della selezione"
+msgstr "Adat_ta la pagina alla selezione"
 
 #: ../src/ui/widget/page-sizer.cpp:293
 msgid "Resize the page to fit the current selection, or the entire drawing if there is no selection"
