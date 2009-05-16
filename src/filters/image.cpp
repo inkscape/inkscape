@@ -150,6 +150,7 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
             if (!feImage->href) return;
             try{
                 Inkscape::URI SVGElem_uri(feImage->href);
+                delete feImage->SVGElemRef;
                 feImage->SVGElemRef = new Inkscape::URIReference(feImage->document);
                 feImage->from_element = true;
                 feImage->SVGElemRef->attach(SVGElem_uri);

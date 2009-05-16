@@ -23,12 +23,12 @@
 namespace Inkscape {
 namespace Filters {
 
-FilterImage::FilterImage()
-{
-    feImageHref=NULL;
-    image_pixbuf=NULL;
-    document=NULL;
-}
+FilterImage::FilterImage() :
+    SVGElem(0),
+    document(0),
+    feImageHref(0),
+    image_pixbuf(0)
+{ }
 
 FilterPrimitive * FilterImage::create() {
     return new FilterImage();
@@ -37,6 +37,7 @@ FilterPrimitive * FilterImage::create() {
 FilterImage::~FilterImage()
 {
         if (feImageHref) g_free(feImageHref);
+        if (image_pixbuf) g_free(image_pixbuf);
 }
 
 int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
@@ -55,7 +56,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         NRArenaItem* ai = sp_item_invoke_show(SVGElem, arena, key, SP_ITEM_SHOW_DISPLAY);
         if (!ai) {
             g_warning("feImage renderer: error creating NRArenaItem for SVG Element");
-            g_free(arena);
+            nr_object_unref((NRObject *) arena);
             return 0;
         }
         pb = new NRPixBlock;
@@ -99,7 +100,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
         {
             g_warning("FilterImage::render: not enough memory to create pixel buffer. Need %ld.", 4L * width * height);
         }
-        nr_arena_item_unref(ai);
+        sp_item_invoke_hide(SVGElem, key);
         nr_object_unref((NRObject *) arena);
     }
 
@@ -202,7 +203,10 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
             }
         }
     }
-    if (free_pb_on_exit) nr_pixblock_release(pb);
+    if (free_pb_on_exit) {
+        nr_pixblock_release(pb);
+        delete pb;
+    }
 
     out->empty = FALSE;
     slot.set(_output, out);
