@@ -662,10 +662,8 @@ sp_desktop_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
             Geom::Rect newarea = dtw->desktop->get_display_area();
             /* Calculate adjusted zoom */
             zoom = zpsp * hypot(newarea.dimensions()[Geom::X], newarea.dimensions()[Geom::Y]);
-            dtw->desktop->zoom_absolute(newarea.midpoint()[Geom::X], newarea.midpoint()[Geom::Y], zoom);
-        } else {
-            dtw->desktop->zoom_absolute(area.midpoint()[Geom::X], area.midpoint()[Geom::Y], zoom);
         }
+        dtw->desktop->zoom_absolute(area.midpoint()[Geom::X], area.midpoint()[Geom::Y], zoom);
 
     } else {
         if (GTK_WIDGET_CLASS (dtw_parent_class)->size_allocate) {
