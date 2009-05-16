@@ -119,7 +119,8 @@ static void
 sp_feImage_release(SPObject *object)
 {
     SPFeImage *feImage = SP_FEIMAGE(object);
-    feImage->_modified_connection.disconnect();
+    feImage->_image_modified_connection.disconnect();
+    feImage->_href_modified_connection.disconnect();
     if (feImage->SVGElemRef) delete feImage->SVGElemRef;
 
     if (((SPObjectClass *) feImage_parent_class)->release)
@@ -129,6 +130,21 @@ sp_feImage_release(SPObject *object)
 static void
 sp_feImage_elem_modified(SPObject* /*href*/, guint /*flags*/, SPObject* obj)
 {
+    obj->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
+}
+
+static void
+sp_feImage_href_modified(SPObject* old_elem, SPObject* new_elem, SPObject* obj)
+{
+    SPFeImage *feImage = SP_FEIMAGE(obj);
+    feImage->_image_modified_connection.disconnect();
+    if (new_elem) {
+        feImage->SVGElem = SP_ITEM(new_elem);
+        feImage->_image_modified_connection = ((SPObject*) feImage->SVGElem)->connectModified(sigc::bind(sigc::ptr_fun(&sp_feImage_elem_modified), obj));
+    } else {
+        feImage->SVGElem = 0;
+    }
+
     obj->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -148,16 +164,20 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
             }
             feImage->href = (value) ? g_strdup (value) : NULL;
             if (!feImage->href) return;
+            delete feImage->SVGElemRef;
+            feImage->SVGElemRef = 0;
+            feImage->SVGElem = 0;
+            feImage->_image_modified_connection.disconnect();
+            feImage->_href_modified_connection.disconnect();
             try{
                 Inkscape::URI SVGElem_uri(feImage->href);
-                delete feImage->SVGElemRef;
                 feImage->SVGElemRef = new Inkscape::URIReference(feImage->document);
-                feImage->from_element = true;
                 feImage->SVGElemRef->attach(SVGElem_uri);
+                feImage->from_element = true;
+                feImage->_href_modified_connection = feImage->SVGElemRef->changedSignal().connect(sigc::bind(sigc::ptr_fun(&sp_feImage_href_modified), object));
                 if (SPObject *elemref = feImage->SVGElemRef->getObject()) {
                     feImage->SVGElem = SP_ITEM(elemref);
-
-                    feImage->_modified_connection = ((SPObject*) feImage->SVGElem)->connectModified(sigc::bind(sigc::ptr_fun(&sp_feImage_elem_modified), object));
+                    feImage->_image_modified_connection = ((SPObject*) feImage->SVGElem)->connectModified(sigc::bind(sigc::ptr_fun(&sp_feImage_elem_modified), object));
                     object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                     break;
                 } else {
@@ -167,10 +187,11 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
             catch(const Inkscape::UnsupportedURIException & e)
             {
                 feImage->from_element = false;
-                g_warning("caught Inkscape::UnsupportedURIException in sp_feImage_set");
+                /* This occurs when using external image as the source */
+                //g_warning("caught Inkscape::UnsupportedURIException in sp_feImage_set");
                 break;
             }
-
+            break;
 
         case SP_ATTR_X:
             feImage->x.readOrUnset(value);

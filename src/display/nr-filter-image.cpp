@@ -37,7 +37,6 @@ FilterPrimitive * FilterImage::create() {
 FilterImage::~FilterImage()
 {
         if (feImageHref) g_free(feImageHref);
-        if (image_pixbuf) g_free(image_pixbuf);
 }
 
 int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
@@ -59,6 +58,7 @@ int FilterImage::render(FilterSlot &slot, FilterUnits const &units) {
             nr_object_unref((NRObject *) arena);
             return 0;
         }
+
         pb = new NRPixBlock;
         free_pb_on_exit = true;
 

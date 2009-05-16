@@ -31,7 +31,8 @@ struct SPFeImage : public SPFilterPrimitive {
     bool from_element;
     SPItem* SVGElem;
     Inkscape::URIReference* SVGElemRef;
-    sigc::connection _modified_connection;
+    sigc::connection _image_modified_connection;
+    sigc::connection _href_modified_connection;
 };
 
 struct SPFeImageClass {
