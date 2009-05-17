@@ -175,6 +175,7 @@ pkgbin="$package/Contents/Resources/bin"
 pkglib="$package/Contents/Resources/lib"
 pkglocale="$package/Contents/Resources/locale"
 pkgpython="$package/Contents/Resources/python/site-packages/"
+pkgresources="$package/Contents/Resources"
 
 mkdir -p "$pkgexec"
 mkdir -p "$pkgbin"
@@ -182,6 +183,15 @@ mkdir -p "$pkglib"
 mkdir -p "$pkglocale"
 mkdir -p "$pkgpython"
 
+mkdir -p "$pkgresources/Dutch.lprj"
+mkdir -p "$pkgresources/English.lprj"
+mkdir -p "$pkgresources/French.lprj"
+mkdir -p "$pkgresources/German.lprj"
+mkdir -p "$pkgresources/Italian.lprj"
+mkdir -p "$pkgresources/Spanish.lprj"
+mkdir -p "$pkgresources/fi.lprj"
+mkdir -p "$pkgresources/no.lprj"
+mkdir -p "$pkgresources/sv.lprj"
 
 # Build and add the launcher
 #----------------------------------------------------------
