@@ -292,6 +292,7 @@ colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '
 parser = inkex.optparse.OptionParser(usage="usage: %prog [options] SVGfile", option_class=inkex.InkOption)
 parser.add_option("--auto", action="store", type="inkbool", dest="auto", default=True)
 parser.add_option("--scale", action="store", type="string", dest="scale", default="1.0")
+parser.add_option("--encoding", action="store", type="string", dest="input_encode", default="latin_1")
 (options, args) = parser.parse_args(inkex.sys.argv[1:])
 doc = inkex.etree.parse(StringIO('<svg xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"></svg>'))
 desc = inkex.etree.SubElement(doc.getroot(), 'desc', {})
@@ -317,14 +318,14 @@ while line[0] and line[1] != 'BLOCKS':
             xmax = get_group('10')
             ymax = get_group('20')
     if flag == 1 and line[0] == '2':
-        layername = unicode(line[1], "iso-8859-1")
+        layername = unicode(line[1], options.input_encode)
         attribs = {inkex.addNS('groupmode','inkscape'): 'layer', inkex.addNS('label','inkscape'): '%s' % layername}
         layer_nodes[layername] = inkex.etree.SubElement(doc.getroot(), 'g', attribs)
     if flag == 2 and line[0] == '2':
-        linename = unicode(line[1], "iso-8859-1")
+        linename = unicode(line[1], options.input_encode)
         linetypes[linename] = []
     if flag == 3 and line[0] == '2':
-        stylename = unicode(line[1], "iso-8859-1")
+        stylename = unicode(line[1], options.input_encode)
     if line[0] == '2' and line[1] == 'LAYER':
         flag = 1
     if line[0] == '2' and line[1] == 'LTYPE':
@@ -346,7 +347,7 @@ if options.auto:
         scale = 210.0/(xmax - xmin)                 # scale to A4 width
 else:
     scale = float(options.scale)                    # manual scale factor
-desc.text = '%s - scale = %f' % (unicode(args[0], "iso-8859-1"), scale)
+desc.text = '%s - scale = %f' % (unicode(args[0], options.input_encode), scale)
 scale *= 90.0/25.4                                  # convert from mm to pixels
 
 if not layer_nodes:
@@ -370,9 +371,11 @@ while line[0] and line[1] != 'DICTIONARY':
             val = line[1].replace('\~', ' ')
             val = inkex.re.sub( '\\\\A.*;', '', val)
             val = inkex.re.sub( '\\\\H.*;', '', val)
+            val = inkex.re.sub( '\\^I', '', val)
+            val = inkex.re.sub( '\\\\L', '', val)
             val = inkex.re.sub( '\\\\S.*;', '', val)
             val = inkex.re.sub( '\\\\W.*;', '', val)
-            val = unicode(val, "iso-8859-1")
+            val = unicode(val, options.input_encode)
             val = val.encode('unicode_escape')
             val = inkex.re.sub( '\\\\\\\\U\+([0-9A-Fa-f]{4})', '\\u\\1', val)
             val = val.decode('unicode_escape')
