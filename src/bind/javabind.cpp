@@ -927,8 +927,14 @@ bool JavaBinderyImpl::loadJVM()
     int versionMinor = (vers    ) & 0xffff;
     msg("Loaded JVM version %d.%d", versionMajor, versionMinor);
 
-    if (!setupGateway())
+    if (!setupGateway()) {
+        // set jvm = NULL, otherwise, this method will return true when called for the second time while the gateway might not have been created!
+        jvm->DestroyJavaVM();
+        jvm = NULL;
+        env = NULL;
+        err("Java bindings: setupGateway() failed");
         return false;
+    }
 
     return true;
 }
