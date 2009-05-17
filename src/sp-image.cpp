@@ -73,6 +73,7 @@ static void sp_image_build (SPObject * object, SPDocument * document, Inkscape::
 static void sp_image_release (SPObject * object);
 static void sp_image_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags);
+static void sp_image_modified (SPObject *object, unsigned int flags);
 static Inkscape::XML::Node *sp_image_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void sp_image_bbox(SPItem const *item, NRRect *bbox, Geom::Matrix const &transform, unsigned const flags);
@@ -584,6 +585,7 @@ sp_image_class_init (SPImageClass * klass)
     sp_object_class->release = sp_image_release;
     sp_object_class->set = sp_image_set;
     sp_object_class->update = sp_image_update;
+    sp_object_class->modified = sp_image_modified;
     sp_object_class->write = sp_image_write;
 
     item_class->bbox = sp_image_bbox;
@@ -1007,6 +1009,22 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
         }
     }
     sp_image_update_canvas_image ((SPImage *) object);
+}
+
+static void
+sp_image_modified (SPObject *object, unsigned int flags)
+{
+    SPImage *image = SP_IMAGE (object);
+
+    if (((SPObjectClass *) (parent_class))->modified) {
+      (* ((SPObjectClass *) (parent_class))->modified) (object, flags);
+    }
+
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+        for (SPItemView *v = SP_ITEM (image)->display; v != NULL; v = v->next) {
+            nr_arena_image_set_style (NR_ARENA_IMAGE (v->arenaitem), object->style);
+        }
+    }
 }
 
 static Inkscape::XML::Node *

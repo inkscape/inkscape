@@ -380,6 +380,8 @@ void nr_arena_image_set_style (NRArenaImage *image, SPStyle *style)
         && style->enable_background.value == SP_CSS_BACKGROUND_NEW) {
         image->background_new = true;
     }
+
+    nr_arena_item_request_update(image, NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
 
