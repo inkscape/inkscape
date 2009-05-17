@@ -500,7 +500,7 @@ widget_class "*.GtkFrame.GtkLabel" style "clearlooks-frame-title"
 widget_class "*.GtkNotebook.*.GtkEventBox" style "clearlooks-notebook"
 widget_class "*.GtkNotebook.*.GtkViewport" style "clearlooks-notebook"
 
-gtk-font-name="Lucida Grande 12"
+gtk-font-name="Lucida Grande 11"
 gtk-icon-theme-name = "gnome"
 gtk-icon-sizes = "gtk-menu=16,16:gtk-dialog=48,48:gtk-dnd=32,32:gtk-button=20,20:gtk-large-toolbar=24,24:gtk-small-toolbar=16,16:inkscape-decoration=12,12"
 
