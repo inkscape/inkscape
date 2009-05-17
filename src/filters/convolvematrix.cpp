@@ -297,15 +297,12 @@ sp_feConvolveMatrix_update(SPObject *object, SPCtx *ctx, guint flags)
 static Inkscape::XML::Node *
 sp_feConvolveMatrix_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
-    // Inkscape-only object, not copied during an "plain SVG" dump:
-    if (flags & SP_OBJECT_WRITE_EXT) {
-        if (repr) {
-            // is this sane?
-            //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
-        } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(doc);
-        }
+    /* TODO: Don't just clone, but create a new repr node and write all
+     * relevant values into it */
+    if (!repr) {
+        repr = SP_OBJECT_REPR(object)->duplicate(doc);
     }
+
 
     if (((SPObjectClass *) feConvolveMatrix_parent_class)->write) {
         ((SPObjectClass *) feConvolveMatrix_parent_class)->write(object, doc, repr, flags);

@@ -101,6 +101,17 @@ sp_feDisplacementMap_build(SPObject *object, SPDocument *document, Inkscape::XML
     sp_object_read_attr(object, "in2");
     sp_object_read_attr(object, "xChannelSelector");
     sp_object_read_attr(object, "yChannelSelector");
+
+    /* Unlike normal in, in2 is required attribute. Make sure, we can call
+     * it by some name. */
+    SPFeDisplacementMap *disp = SP_FEDISPLACEMENTMAP(object);
+    if (disp->in2 == Inkscape::Filters::NR_FILTER_SLOT_NOT_SET ||
+        disp->in2 == Inkscape::Filters::NR_FILTER_UNNAMED_SLOT)
+    {
+        SPFilter *parent = SP_FILTER(object->parent);
+        disp->in2 = sp_filter_primitive_name_previous_out(disp);
+        repr->setAttribute("in2", sp_filter_name_for_image(parent, disp->in2));
+    }
 }
 
 /**
@@ -199,8 +210,34 @@ sp_feDisplacementMap_update(SPObject *object, SPCtx *ctx, guint flags)
 
     }
 
+    /* Unlike normal in, in2 is required attribute. Make sure, we can call
+     * it by some name. */
+    SPFeDisplacementMap *disp = SP_FEDISPLACEMENTMAP(object);
+    if (disp->in2 == Inkscape::Filters::NR_FILTER_SLOT_NOT_SET ||
+        disp->in2 == Inkscape::Filters::NR_FILTER_UNNAMED_SLOT)
+    {
+        SPFilter *parent = SP_FILTER(object->parent);
+        disp->in2 = sp_filter_primitive_name_previous_out(disp);
+        object->repr->setAttribute("in2", sp_filter_name_for_image(parent, disp->in2));
+    }
+
     if (((SPObjectClass *) feDisplacementMap_parent_class)->update) {
         ((SPObjectClass *) feDisplacementMap_parent_class)->update(object, ctx, flags);
+    }
+}
+
+static char const * get_channelselector_name(FilterDisplacementMapChannelSelector selector) {
+    switch(selector) {
+        case DISPLACEMENTMAP_CHANNEL_RED:
+            return "R";
+        case DISPLACEMENTMAP_CHANNEL_GREEN:
+            return "G";
+        case DISPLACEMENTMAP_CHANNEL_BLUE:
+            return "B";
+        case DISPLACEMENTMAP_CHANNEL_ALPHA:
+            return "A";
+        default:
+            return 0;
     }
 }
 
@@ -210,15 +247,32 @@ sp_feDisplacementMap_update(SPObject *object, SPCtx *ctx, guint flags)
 static Inkscape::XML::Node *
 sp_feDisplacementMap_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
-    // Inkscape-only object, not copied during an "plain SVG" dump:
-    if (flags & SP_OBJECT_WRITE_EXT) {
-        if (repr) {
-            // is this sane?
-            //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
-        } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(doc);
+    SPFeDisplacementMap *disp = SP_FEDISPLACEMENTMAP(object);
+    SPFilter *parent = SP_FILTER(object->parent);
+
+    if (!repr) {
+        repr = doc->createElement("svg:feDisplacementMap");
+    }
+
+    gchar const *out_name = sp_filter_name_for_image(parent, disp->in2);
+    if (out_name) {
+        repr->setAttribute("in2", out_name);
+    } else {
+        SPObject *i = parent->children;
+        while (i && i->next != object) i = i->next;
+        SPFilterPrimitive *i_prim = SP_FILTER_PRIMITIVE(i);
+        out_name = sp_filter_name_for_image(parent, i_prim->image_out);
+        repr->setAttribute("in2", out_name);
+        if (!out_name) {
+            g_warning("Unable to set in2 for feDisplacementMap");
         }
     }
+
+    sp_repr_set_svg_double(repr, "scale", disp->scale);
+    repr->setAttribute("xChannelSelector",
+                       get_channelselector_name(disp->xChannelSelector));
+    repr->setAttribute("yChannelSelector",
+                       get_channelselector_name(disp->yChannelSelector));
 
     if (((SPObjectClass *) feDisplacementMap_parent_class)->write) {
         ((SPObjectClass *) feDisplacementMap_parent_class)->write(object, doc, repr, flags);

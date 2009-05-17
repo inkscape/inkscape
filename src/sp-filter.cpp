@@ -284,9 +284,29 @@ static Inkscape::XML::Node *
 sp_filter_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPFilter *filter = SP_FILTER(object);
+    SPObject *child;
+    Inkscape::XML::Node *crepr;
 
-    if (!repr) {
-        repr = SP_OBJECT_REPR(object)->duplicate(doc);
+    /* Original from sp-item-group.cpp */
+    if (flags & SP_OBJECT_WRITE_BUILD) {
+        GSList *l;
+        if (!repr) {
+            repr = doc->createElement("svg:filter");
+        }
+        l = NULL;
+        for (child = sp_object_first_child(object); child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            crepr = child->updateRepr(doc, NULL, flags);
+            if (crepr) l = g_slist_prepend (l, crepr);
+        }
+        while (l) {
+            repr->addChild((Inkscape::XML::Node *) l->data, NULL);
+            Inkscape::GC::release((Inkscape::XML::Node *) l->data);
+            l = g_slist_remove (l, l->data);
+        }
+    } else {
+        for (child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            child->updateRepr(flags);
+        }
     }
 
     if ((flags & SP_OBJECT_WRITE_ALL) || filter->filterUnits_set) {
@@ -486,6 +506,42 @@ int sp_filter_set_image_name(SPFilter *filter, gchar const *name) {
         return (*ret.first).second;
     }
     return value;
+}
+
+gchar const *sp_filter_name_for_image(SPFilter const *filter, int const image) {
+    switch (image) {
+        case Inkscape::Filters::NR_FILTER_SOURCEGRAPHIC:
+            return "SourceGraphic";
+            break;
+        case Inkscape::Filters::NR_FILTER_SOURCEALPHA:
+            return "SourceAlpha";
+            break;
+        case Inkscape::Filters::NR_FILTER_BACKGROUNDIMAGE:
+            return "BackgroundImage";
+            break;
+        case Inkscape::Filters::NR_FILTER_BACKGROUNDALPHA:
+            return "BackgroundAlpha";
+            break;
+        case Inkscape::Filters::NR_FILTER_STROKEPAINT:
+            return "StrokePaint";
+            break;
+        case Inkscape::Filters::NR_FILTER_FILLPAINT:
+            return "FillPaint";
+            break;
+        case Inkscape::Filters::NR_FILTER_SLOT_NOT_SET:
+        case Inkscape::Filters::NR_FILTER_UNNAMED_SLOT:
+            return 0;
+            break;
+        default:
+            for (map<gchar *, int, ltstr>::const_iterator i
+                     = filter->_image_name->begin() ;
+                 i != filter->_image_name->end() ; i++) {
+                if (i->second == image) {
+                    return i->first;
+                }
+            }
+    }
+    return 0;
 }
 
 Glib::ustring sp_filter_get_new_result_name(SPFilter *filter) {

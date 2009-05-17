@@ -99,16 +99,26 @@ sp_feComposite_build(SPObject *object, SPDocument *document, Inkscape::XML::Node
         ((SPObjectClass *) feComposite_parent_class)->build(object, document, repr);
     }
 
-    SPFeComposite *composite = SP_FECOMPOSITE(object);
+    SPFeComposite *comp = SP_FECOMPOSITE(object);
 
     sp_object_read_attr(object, "operator");
-    if (composite->composite_operator == COMPOSITE_ARITHMETIC) {
+    if (comp->composite_operator == COMPOSITE_ARITHMETIC) {
         sp_object_read_attr(object, "k1");
         sp_object_read_attr(object, "k2");
         sp_object_read_attr(object, "k3");
         sp_object_read_attr(object, "k4");
     }
     sp_object_read_attr(object, "in2");
+
+    /* Unlike normal in, in2 is required attribute. Make sure, we can call
+     * it by some name. */
+    if (comp->in2 == Inkscape::Filters::NR_FILTER_SLOT_NOT_SET ||
+        comp->in2 == Inkscape::Filters::NR_FILTER_UNNAMED_SLOT)
+    {
+        SPFilter *parent = SP_FILTER(object->parent);
+        comp->in2 = sp_filter_primitive_name_previous_out(comp);
+        repr->setAttribute("in2", sp_filter_name_for_image(parent, comp->in2));
+    }
 }
 
 /**
@@ -214,11 +224,23 @@ sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_feComposite_update(SPObject *object, SPCtx *ctx, guint flags)
 {
+    SPFeComposite *comp = SP_FECOMPOSITE(object);
+
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
         /* do something to trigger redisplay, updates? */
 
+    }
+
+    /* Unlike normal in, in2 is required attribute. Make sure, we can call
+     * it by some name. */
+    if (comp->in2 == Inkscape::Filters::NR_FILTER_SLOT_NOT_SET ||
+        comp->in2 == Inkscape::Filters::NR_FILTER_UNNAMED_SLOT)
+    {
+        SPFilter *parent = SP_FILTER(object->parent);
+        comp->in2 = sp_filter_primitive_name_previous_out(comp);
+        object->repr->setAttribute("in2", sp_filter_name_for_image(parent, comp->in2));
     }
 
     if (((SPObjectClass *) feComposite_parent_class)->update) {
@@ -232,14 +254,56 @@ sp_feComposite_update(SPObject *object, SPCtx *ctx, guint flags)
 static Inkscape::XML::Node *
 sp_feComposite_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
-    // Inkscape-only object, not copied during an "plain SVG" dump:
-    if (flags & SP_OBJECT_WRITE_EXT) {
-        if (repr) {
-            // is this sane?
-            //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
-        } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(doc);
+    SPFeComposite *comp = SP_FECOMPOSITE(object);
+    SPFilter *parent = SP_FILTER(object->parent);
+
+    if (!repr) {
+        repr = doc->createElement("svg:feComposite");
+    }
+
+    gchar const *out_name = sp_filter_name_for_image(parent, comp->in2);
+    if (out_name) {
+        repr->setAttribute("in2", out_name);
+    } else {
+        SPObject *i = parent->children;
+        while (i && i->next != object) i = i->next;
+        SPFilterPrimitive *i_prim = SP_FILTER_PRIMITIVE(i);
+        out_name = sp_filter_name_for_image(parent, i_prim->image_out);
+        repr->setAttribute("in2", out_name);
+        if (!out_name) {
+            g_warning("Unable to set in2 for feComposite");
         }
+    }
+
+    char const *comp_op;
+    switch (comp->composite_operator) {
+        case COMPOSITE_OVER:
+            comp_op = "over"; break;
+        case COMPOSITE_IN:
+            comp_op = "in"; break;
+        case COMPOSITE_OUT:
+            comp_op = "out"; break;
+        case COMPOSITE_ATOP:
+            comp_op = "atop"; break;
+        case COMPOSITE_XOR:
+            comp_op = "xor"; break;
+        case COMPOSITE_ARITHMETIC:
+            comp_op = "arithmetic"; break;
+        default:
+            comp_op = 0;
+    }
+    repr->setAttribute("operator", comp_op);
+
+    if (comp->composite_operator == COMPOSITE_ARITHMETIC) {
+        sp_repr_set_svg_double(repr, "k1", comp->k1);
+        sp_repr_set_svg_double(repr, "k2", comp->k2);
+        sp_repr_set_svg_double(repr, "k3", comp->k3);
+        sp_repr_set_svg_double(repr, "k4", comp->k4);
+    } else {
+        repr->setAttribute("k1", 0);
+        repr->setAttribute("k2", 0);
+        repr->setAttribute("k3", 0);
+        repr->setAttribute("k4", 0);
     }
 
     if (((SPObjectClass *) feComposite_parent_class)->write) {

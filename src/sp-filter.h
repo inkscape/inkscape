@@ -81,8 +81,19 @@ void sp_filter_build_renderer(SPFilter *sp_filter, Inkscape::Filters::Filter *nr
  */
 int sp_filter_primitive_count(SPFilter *filter);
 
+/**
+ * Returns a slot number for given image name, or -1 for unknown name.
+ */
 int sp_filter_get_image_name(SPFilter *filter, gchar const *name);
+/**
+ * Returns slot number for given image name, even if it's unknown.
+ */
 int sp_filter_set_image_name(SPFilter *filter, gchar const *name);
+/**
+ * Finds image name based on it's slot number. Returns 0 for unknown slot
+ * numbers.
+ */
+gchar const *sp_filter_name_for_image(SPFilter const *filter, int const image);
 
 /*
  * Returns a result image name that is not in use inside this filter.

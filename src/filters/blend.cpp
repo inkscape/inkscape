@@ -96,6 +96,8 @@ sp_feBlend_init(SPFeBlend *feBlend)
 static void
 sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
+    SPFeBlend *blend = SP_FEBLEND(object);
+
     if (((SPObjectClass *) feBlend_parent_class)->build) {
         ((SPObjectClass *) feBlend_parent_class)->build(object, document, repr);
     }
@@ -103,6 +105,16 @@ sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
     /*LOAD ATTRIBUTES FROM REPR HERE*/
     sp_object_read_attr(object, "mode");
     sp_object_read_attr(object, "in2");
+
+    /* Unlike normal in, in2 is required attribute. Make sure, we can call
+     * it by some name. */
+    if (blend->in2 == Inkscape::Filters::NR_FILTER_SLOT_NOT_SET ||
+        blend->in2 == Inkscape::Filters::NR_FILTER_UNNAMED_SLOT)
+    {
+        SPFilter *parent = SP_FILTER(object->parent);
+        blend->in2 = sp_filter_primitive_name_previous_out(blend);
+        repr->setAttribute("in2", sp_filter_name_for_image(parent, blend->in2));
+    }
 }
 
 /**
@@ -187,9 +199,21 @@ sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags)
 {
+    SPFeBlend *blend = SP_FEBLEND(object);
+
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         sp_object_read_attr(object, "mode");
         sp_object_read_attr(object, "in2");
+    }
+
+    /* Unlike normal in, in2 is required attribute. Make sure, we can call
+     * it by some name. */
+    if (blend->in2 == Inkscape::Filters::NR_FILTER_SLOT_NOT_SET ||
+        blend->in2 == Inkscape::Filters::NR_FILTER_UNNAMED_SLOT)
+    {
+        SPFilter *parent = SP_FILTER(object->parent);
+        blend->in2 = sp_filter_primitive_name_previous_out(blend);
+        object->repr->setAttribute("in2", sp_filter_name_for_image(parent, blend->in2));
     }
 
     if (((SPObjectClass *) feBlend_parent_class)->update) {
@@ -203,15 +227,43 @@ sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags)
 static Inkscape::XML::Node *
 sp_feBlend_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
-    // Inkscape-only object, not copied during an "plain SVG" dump:
-    if (flags & SP_OBJECT_WRITE_EXT) {
-        if (repr) {
-            // is this sane?
-            // repr->mergeFrom(SP_OBJECT_REPR(object), "id");
-        } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(doc);
+    SPFeBlend *blend = SP_FEBLEND(object);
+    SPFilter *parent = SP_FILTER(object->parent);
+
+    if (!repr) {
+        repr = doc->createElement("svg:feBlend");
+    }
+
+    gchar const *out_name = sp_filter_name_for_image(parent, blend->in2);
+    if (out_name) {
+        repr->setAttribute("in2", out_name);
+    } else {
+        SPObject *i = parent->children;
+        while (i && i->next != object) i = i->next;
+        SPFilterPrimitive *i_prim = SP_FILTER_PRIMITIVE(i);
+        out_name = sp_filter_name_for_image(parent, i_prim->image_out);
+        repr->setAttribute("in2", out_name);
+        if (!out_name) {
+            g_warning("Unable to set in2 for feBlend");
         }
     }
+
+    char const *mode;
+    switch(blend->blend_mode) {
+        case Inkscape::Filters::BLEND_NORMAL:
+            mode = "normal"; break;
+        case Inkscape::Filters::BLEND_MULTIPLY:
+            mode = "multiply"; break;
+        case Inkscape::Filters::BLEND_SCREEN:
+            mode = "screen"; break;
+        case Inkscape::Filters::BLEND_DARKEN:
+            mode = "darken"; break;
+        case Inkscape::Filters::BLEND_LIGHTEN:
+            mode = "lighten"; break;
+        default:
+            mode = 0;
+    }
+    repr->setAttribute("mode", mode);
 
     if (((SPObjectClass *) feBlend_parent_class)->write) {
         ((SPObjectClass *) feBlend_parent_class)->write(object, doc, repr, flags);

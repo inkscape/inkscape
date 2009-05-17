@@ -243,14 +243,11 @@ sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inksc
 {
     SPFeDiffuseLighting *fediffuselighting = SP_FEDIFFUSELIGHTING(object);
     
-    // Inkscape-only object, not copied during an "plain SVG" dump:
-    if (flags & SP_OBJECT_WRITE_EXT) {
-        if (repr) {
-            // is this sane?
-            //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
-        } else {
-            repr = SP_OBJECT_REPR(object)->duplicate(doc);
-        }
+    /* TODO: Don't just clone, but create a new repr node and write all
+     * relevant values _and children_ into it */
+    if (!repr) {
+        repr = SP_OBJECT_REPR(object)->duplicate(doc);
+        //repr = doc->createElement("svg:feDiffuseLighting");
     }
     
     if (fediffuselighting->surfaceScale_set)

@@ -179,17 +179,18 @@ sp_filter_primitive_update(SPObject *object, SPCtx *ctx, guint flags)
 static Inkscape::XML::Node *
 sp_filter_primitive_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
-    //SPFilterPrimitive *filterPrimitive = SP_FILTER_PRIMITIVE(object);
+    SPFilterPrimitive *prim = SP_FILTER_PRIMITIVE(object);
+    SPFilter *parent = SP_FILTER(object->parent);
 
-    // Inkscape-only object, not copied during an "plain SVG" dump:
-    if (flags & SP_OBJECT_WRITE_EXT) {
-        if (repr) {
-            // is this sane?
-            //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
-        } else {
-             repr = SP_OBJECT_REPR(object)->duplicate(doc);
-        }
+    if (!repr) {
+        repr = SP_OBJECT_REPR(object)->duplicate(doc);
     }
+
+    gchar const *in_name = sp_filter_name_for_image(parent, prim->image_in);
+    repr->setAttribute("in", in_name);
+
+    gchar const *out_name = sp_filter_name_for_image(parent, prim->image_out);
+    repr->setAttribute("result", out_name);
 
     if (((SPObjectClass *) filter_primitive_parent_class)->write) {
         ((SPObjectClass *) filter_primitive_parent_class)->write(object, doc, repr, flags);
@@ -240,6 +241,31 @@ int sp_filter_primitive_read_result(SPFilterPrimitive *prim, gchar const *name)
     if (ret >= 0) return ret;
 
     return Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
+}
+
+/**
+ * Gives name for output of previous filter. Makes things clearer when prim
+ * is a filter with two or more inputs. Returns the slot number of result
+ * of previous primitive, or NR_FILTER_SOURCEGRAPHIC if this is the first
+ * primitive.
+ */
+int sp_filter_primitive_name_previous_out(SPFilterPrimitive *prim) {
+    SPFilter *parent = SP_FILTER(prim->parent);
+    SPObject *i = parent->children;
+    while (i && i->next != prim) i = i->next;
+    if (i) {
+        SPFilterPrimitive *i_prim = SP_FILTER_PRIMITIVE(i);
+        if (i_prim->image_out < 0) {
+            Glib::ustring name = sp_filter_get_new_result_name(parent);
+            int slot = sp_filter_set_image_name(parent, name.c_str());
+            i_prim->image_out = slot;
+            i_prim->repr->setAttribute("result", name.c_str());
+            return slot;
+        } else {
+            return i_prim->image_out;
+        }
+    }
+    return Inkscape::Filters::NR_FILTER_SOURCEGRAPHIC;
 }
 
 /* Common initialization for filter primitives */
