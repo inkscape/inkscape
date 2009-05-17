@@ -504,3 +504,5 @@ gtk-font-name="Lucida Grande 12"
 gtk-icon-theme-name = "gnome"
 gtk-icon-sizes = "gtk-menu=16,16:gtk-dialog=48,48:gtk-dnd=32,32:gtk-button=20,20:gtk-large-toolbar=24,24:gtk-small-toolbar=16,16:inkscape-decoration=12,12"
 
+# use OS X default pdf-viewer for print preview
+gtk-print-preview-command="/usr/bin/open %f"
