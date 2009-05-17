@@ -1374,19 +1374,15 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
             Inkscape::Selection *selection = sp_desktop_selection(desktop);
             selection->set(SP_ITEM(new_obj));
-            // To move the imported object, we must temporarily set the "transform pattern with
-            // object" option.
+
+            // move to mouse pointer
             {
-                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-                bool const saved_pref = prefs->getBool("/options/transform/pattern", true);
-                prefs->setBool("/options/transform/pattern", true);
                 sp_document_ensure_up_to_date(sp_desktop_document(desktop));
                 Geom::OptRect sel_bbox = selection->bounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );
-                    sp_selection_move_relative(selection, m);
+                    sp_selection_move_relative(selection, m, false);
                 }
-                prefs->setBool("/options/transform/pattern", saved_pref);
             }
 
             Inkscape::GC::release(newgroup);

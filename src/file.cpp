@@ -1017,19 +1017,14 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
             Geom::Matrix affine = SP_ROOT(SP_DOCUMENT_ROOT(doc))->c2p * sp_item_i2doc_affine(SP_ITEM(place_to_insert)).inverse();
             sp_selection_apply_affine(selection, desktop->dt2doc() * affine * desktop->doc2dt(), true, false);
 
-            // To move the imported object, we must temporarily set the "transform pattern with
-            // object" option.
+            // move to mouse pointer
             {
-                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-                bool const saved_pref = prefs->getBool("/options/transform/pattern", true);
-                prefs->setBool("/options/transform/pattern", true);
                 sp_document_ensure_up_to_date(sp_desktop_document(desktop));
                 Geom::OptRect sel_bbox = selection->bounds();
                 if (sel_bbox) {
                     Geom::Point m( desktop->point() - sel_bbox->midpoint() );
-                    sp_selection_move_relative(selection, m);
+                    sp_selection_move_relative(selection, m, false);
                 }
-                prefs->setBool("/options/transform/pattern", saved_pref);
             }
         }
 
