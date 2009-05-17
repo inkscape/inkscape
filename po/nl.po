@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-28 18:31+0200\n"
-"PO-Revision-Date: 2009-04-18 10:12+0100\n"
+"POT-Creation-Date: 2009-05-17 13:28+0200\n"
+"PO-Revision-Date: 2009-05-17 16:32+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -70,12 +70,12 @@ msgstr "Matte gelei"
 #: ../share/filters/filters.svg.h:4 ../share/filters/filters.svg.h:5
 #: ../share/filters/filters.svg.h:10 ../share/filters/filters.svg.h:15
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:40
-#: ../share/filters/filters.svg.h:51 ../share/filters/filters.svg.h:52
-#: ../share/filters/filters.svg.h:53 ../share/filters/filters.svg.h:54
-#: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:72 ../share/filters/filters.svg.h:74
-#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:105
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:52 ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:71 ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:105
 msgid "Bevels"
 msgstr "Verhogingen"
 
@@ -112,10 +112,10 @@ msgid "Motion blur, horizontal"
 msgstr "Bewegingsonscherpte, horizontaal"
 
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
-#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:60
-#: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:164
 msgid "Blurs"
 msgstr "Vervagen"
 
@@ -152,8 +152,8 @@ msgid "Cutout"
 msgstr "Uitsnijding"
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:88 ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -176,10 +176,10 @@ msgid "Roughen"
 msgstr "Verruwen"
 
 # Basis genoemd omdat dit blijkbaar allemaal basisfilters zijn
-#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:125
 msgid "ABCs"
 msgstr "Basis"
 
@@ -195,8 +195,8 @@ msgstr "Stempel"
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
 #: ../share/filters/filters.svg.h:22 ../share/filters/filters.svg.h:23
 #: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
-#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:117
-#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:120
 msgid "Overlays"
 msgstr "Bedekking"
 
@@ -245,9 +245,9 @@ msgstr "Spitse rand met afschuinin naar binnen"
 msgid "Ripple"
 msgstr "Rimpels"
 
-#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:45
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:115
 msgid "Distort"
 msgstr "Vervormen"
 
@@ -283,15 +283,15 @@ msgstr "Vlokachtige witte vlekken"
 msgid "Leopard fur"
 msgstr "Luipaardvacht"
 
-#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:60
 #: ../share/filters/filters.svg.h:61 ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:70 ../share/filters/filters.svg.h:81
-#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:93
-#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:158
-#: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:159
 msgid "Materials"
 msgstr "Materialen"
 
@@ -324,10 +324,11 @@ msgstr "Verscherpen"
 #: ../share/filters/filters.svg.h:26 ../share/filters/filters.svg.h:27
 #: ../share/filters/filters.svg.h:28 ../share/filters/filters.svg.h:29
 #: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
-#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:100
-#: ../share/filters/filters.svg.h:101 ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:128
-#: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:165 ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:168
 msgid "Image effects"
 msgstr "Afbeeldingseffecten"
 
@@ -399,9 +400,9 @@ msgid "Desaturate"
 msgstr "Onverzadigd maken"
 
 #: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:33
-#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:75
-#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:93 ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:162
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -458,16 +459,16 @@ msgstr "Verouderde foto imiteren"
 msgid "Organic"
 msgstr "Organisch"
 
-#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:44
-#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:64
-#: ../share/filters/filters.svg.h:66 ../share/filters/filters.svg.h:67
-#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:86
-#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:129
-#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:131
-#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:134
-#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:136
-#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
-#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:65 ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:83 ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:160
 msgid "Textures"
 msgstr "Texturen"
 
@@ -524,67 +525,57 @@ msgid "Random paint streaks downwards"
 msgstr "Randen verfstreken naar beneden"
 
 #: ../share/filters/filters.svg.h:43
-msgid "Rainbow melt"
-msgstr "Regenboogsmelt"
-
-#: ../share/filters/filters.svg.h:43
-msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
-msgstr "Verticale regenboogstrepen, omzoomd door vlekken met 3D reliëf"
-
-#: ../share/filters/filters.svg.h:44
 msgid "Jam spread"
 msgstr "Uitgesmeerde confituur"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Glossy clumpy jam spread"
 msgstr "Uitgesmeerde glanzende confituur met klonters"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "Pixel smear"
 msgstr "Pixel vegen"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "Van Gogh painting effect for bitmaps"
 msgstr "Van Gogh-verfeffect voor bitmaps"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Pixel smear, glossy"
 msgstr "Pixel vegen, glanzend"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Glossy painting effect for bitmaps"
 msgstr "Glanzend verfeffect voor bitmaps"
 
-#: ../share/filters/filters.svg.h:47
-#, fuzzy
+#: ../share/filters/filters.svg.h:46
 msgid "HSL Bumps"
-msgstr "TVH-reliëf"
+msgstr "TVL-reliëf"
 
 # het blijkt hier ook om embossering te gaan: in Inkscape consistent als reliëf aangeduid
-#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:49
-#: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:166
 msgid "Bumps"
 msgstr "Reliëf"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
-msgstr ""
+msgstr "Zeer flexibel spiegelend reliëf"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Cracked glass"
 msgstr "Gebarsten glas"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Under a cracked glass"
 msgstr "Onder gebarsten glas"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "HSL bubbles"
-msgstr "TVH bellen"
+msgstr "TVL-bellen"
 
-#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:107
 msgid ""
 "Highly flexible bubbles effect depending on color hue saturation and "
 "luminance"
@@ -592,478 +583,474 @@ msgstr ""
 "Zeer flexibel belleneffect dat afhangt van de tint, verzadiging en luminatie "
 "van de kleuren"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Glowing bubble"
 msgstr "Bel met gloed"
 
-#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:55
-#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:68
-#: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:68 ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:72
 msgid "Ridges"
 msgstr "Randen"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Bubble effect with refraction and glow"
 msgstr "Beleffect met lichtbreking en gloed"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Neon"
 msgstr "Neon"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Neon light effect with glow"
 msgstr "Neonlicht met gloed"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Melt and glow"
 msgstr "Lichtgevende smelt"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr "Delen van objecten aaneensmelten, mat en met een gloed"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Badge"
 msgstr "Badge"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Metal or plastic badge bevel"
 msgstr "Imitatie van een metalen of plastieken badge"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Pastel Bevel"
 msgstr "Pastelrand"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "Afgeronde, pastelkleurigee, vage rand"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
 msgstr "Dun membraan"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin like a soap membrane"
 msgstr "Dun op zeep gelijkend membraan"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Soft ridge"
 msgstr "Zachte rand"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Soft pastel ridge"
 msgstr "Zachte pastelrand"
 
-#: ../share/filters/filters.svg.h:57
-#, fuzzy
+#: ../share/filters/filters.svg.h:56
 msgid "Glowing metal"
 msgstr "Gloeiend metaal"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Bright and glowing metal texture"
 msgstr "Textuur van helder schijnend metaal"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Leaves"
 msgstr "Bladeren"
 
-#: ../share/filters/filters.svg.h:58 ../share/filters/filters.svg.h:80
-#: ../share/filters/filters.svg.h:89 ../share/extensions/pathscatter.inx.h:10
+#: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:88 ../share/extensions/pathscatter.inx.h:10
 msgid "Scatter"
 msgstr "Verspreiden"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Leaves on the ground in Fall, or living foliage"
 msgstr "Bladeren op de grond in de herfst of een levend bladerdek"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Translucent"
 msgstr "Doorzichtig"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Illuminated translucent plastic effect"
 msgstr "Belicht doorzichtig plastiek effect"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Cross-smooth"
 msgstr "Randen vervagen naar binnen"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Blur inner borders and intersections"
 msgstr "Randen en kruispunten langs de binnenzijde vervagen"
 
-#: ../share/filters/filters.svg.h:61
-#, fuzzy
+#: ../share/filters/filters.svg.h:60
 msgid "Iridescent beeswax"
 msgstr "Iriserende bijenwas"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr ""
 "Wasachtige textuur die zijn iriserende eigenschappen behoudt door "
 "verandering van de vulkleur"
 
-#: ../share/filters/filters.svg.h:62
-#, fuzzy
+#: ../share/filters/filters.svg.h:61
 msgid "Eroded metal"
 msgstr "Geërodeerd metaal"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
 msgstr "Textuur van geërodeerd metaal met ribbels, groeven, gaten en reliëf"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Cracked Lava"
 msgstr "Gebarsten lava"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "A volcanic texture, a little like leather"
 msgstr "Een vulkanische lederachtige textuur"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Bark"
 msgstr "Schors"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Bark texture, vertical; use with deep colors"
 msgstr "Verticale schorstextuur; met felle kleuren gebruiken"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Lizard skin"
 msgstr "Hagedishuid"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Stylized reptile skin texture"
 msgstr "Textuur van gestileerde hagedishuid"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Stone wall"
 msgstr "Stenen muur"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Stone wall texture to use with dark colors"
 msgstr "Textuur van een stenen muur, om te gebruiken samen met zwarte tinten"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet"
 msgstr "Zijden tapijt"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet texture, horizontal stripes"
 msgstr "Textuur van een zijden tapijt, horizontale strepen"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Refractive gel A"
 msgstr "Lichtbrekende gel A"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Gel effect with light refraction"
 msgstr "Geleffect met weinig lichtbreking"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Refractive gel B"
 msgstr "Lichtbrekende gel B"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Gel effect with strong refraction"
 msgstr "Geleffect met sterke lichtbreking"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Metallized paint"
 msgstr "Gemetalliseerde verf"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr "Metaaleffect met gedimde verlichting, licht transparant aan de randen"
 
 # al blijkt dit veelgebruikt, toch is het misschien verfranst
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Dragee"
 msgstr "Dragee"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge with a pearlescent look"
 msgstr "Gelachtige rand met doorschijnend uiterlijk"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Raised border"
 msgstr "Verhoogde rand"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Strongly raised border around a flat surface"
 msgstr "Sterk verhoogde rand rondom een vlak oppervlak"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Metallized ridge"
 msgstr "Gemetalliseerde rand"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Gel Ridge metallized at its top"
 msgstr "Gelrand gemetalliseerd aan de bovenzijde"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Fat oil"
 msgstr "Vet/olie"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Fat oil with some adjustable turbulence"
 msgstr "Vet/olie met aanpasbare turbulentie"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
 msgstr "Verkleuren"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Gives the flood color to the dark parts of the image"
 msgstr "Kleur geven aan de donkere delen van de afbeelding"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Parallel hollow"
 msgstr "Parallelle holte"
 
-#: ../share/filters/filters.svg.h:76 ../share/filters/filters.svg.h:77
-#: ../share/filters/filters.svg.h:78 ../share/filters/filters.svg.h:79
-#: ../share/filters/filters.svg.h:90 ../share/filters/filters.svg.h:91
-#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:133 ../src/filter-enums.cpp:31
+#: ../share/filters/filters.svg.h:75 ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:77 ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:132 ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Morfologie"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "A blurry hollow going parallel to the edge on the inside"
 msgstr "Een wazige holte parallel aan de binnenrand"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Hole"
 msgstr "Gat"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Opens a smooth hole inside the shape"
 msgstr "Een afgerond gat openen binnenin de vorm"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Black hole"
 msgstr "Zwart gat"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Creates a black light inside and outside"
 msgstr "Zwart licht creëren binnenin en langs de buitenzijde"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Smooth outline"
 msgstr "Gladde rand"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Outlining the lines and smoothing their crossings"
 msgstr "Randen van lijnen overhouden en de knooppunten glad maken"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Cubes"
 msgstr "Kubussen"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr ""
 "Verspreidde kubussen; pas het morfologie-filtereffect aan om de grootte aan "
 "te passen"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Peel off"
 msgstr "Afpellen"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Peeling painting on a wall"
 msgstr "Afpellende verf op een muur"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Gold splatter"
 msgstr "Goud, gesputterd"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Splattered cast metal, with golden highlights"
 msgstr "Gesputterd metaal met gouden versiersels"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Gold paste"
 msgstr "Goudpasta"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Fat pasted cast metal, with golden highlights"
 msgstr "Gesputterd metaal met gouden versiersels"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled plastic"
 msgstr "Verduurde plastiek"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled matte plastic, with melted edge"
 msgstr "Matte, verduurde plastiek met gesmolten rand"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Enamel jewelry"
 msgstr "Emaille sierraden"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Slightly cracked enameled texture"
 msgstr "Textuur van licht gebarsten email"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Rough paper"
 msgstr "Ruw papier"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr ""
 "Effect van aquarelpapier dat voor afbeeldingen en objecten gebruikt kan "
 "worden"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Rough and glossy"
 msgstr "Ruw en glanzend"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid ""
 "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr ""
 "Effect van glanzend verfrommeld papier dat voor afbeeldingen en objecten "
 "gebruikt kan worden"
 
-#: ../share/filters/filters.svg.h:88
-#, fuzzy
+#: ../share/filters/filters.svg.h:87
 msgid "In and Out"
-msgstr "Binnen- en buitenzijde"
+msgstr "Binnen- en buitenrand"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Inner colorized shadow, outer black shadow"
 msgstr "Gekleurde schaduw langs binnen, zwarte schaduw langs buiten"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Air spray"
 msgstr "Aerosol"
 
 # zie ook menu "Filters" > "Filter editor" > "Effect toevoegen" > "Verplaatsingskaart"
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Air Spray; adjust the Displacement Map amount"
 msgstr "Luchtverspreiding; pas de verplaatsingskaart aan"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Warm inside"
 msgstr "Warm binnenin"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, filled inside"
 msgstr "Vage gekleurde rand, binnenin gevuld"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Cool outside"
 msgstr "Koel vanbuiten"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Blurred colorized contour, empty inside"
 msgstr "Vage gekleurde rand, leeg van binnen"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Electronic microscopy"
 msgstr "Elektronenmicroscopie"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid ""
 "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 "Verhoging, ruw licht, ontkleuring en een gloed zoals bij een "
 "elektronenmicroscoop"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Tartan"
 msgstr "Kilt"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Checkered tartan pattern"
 msgstr "Geruite kilt-patroon"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Invert hue"
 msgstr "Tint inverteren"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Invert hue, or rotate it"
 msgstr "Tint inverteren of verdraaien"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Outline"
 msgstr "Rand"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Draws an outline around"
 msgstr "Een omhullende tekenen"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Outline, double"
 msgstr "Rand, dubbel"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr ""
 "Een afgeronde lijn, in de kleur die overtrokken wordt, tekenen binnenin"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Fancy blur"
 msgstr "Fantasie-vervagen"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr "Zachte, gekleurde contouren voor desaturatie en tintrotatie"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Glow"
 msgstr "Gloed"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Glow of object's own color at the edges"
 msgstr "De kleur van het object uitstralen aan de randen"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Ghost outline"
 msgstr "Spookachtige rand"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Adds a glowing blur and removes the shape"
 msgstr "Een vage gloed toevoegen en de vorm verwijderen"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Color emboss"
 msgstr "Kleurreliëf"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr "Klassiek of gekleurd reliëf-effect: grijswaarden, kleur en 3D-reliëf"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Soft bump"
 msgstr "Zacht reliëf"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Convolution bump; with a blur, it can give nice embossing effects"
 msgstr "Convolutie-reliëf met vervaging; dit kan mooie reliëfeffecten geven"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "Solariseren"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Classical photographic solarization effect"
 msgstr "Klassiek fotografisch solarisatie-effect"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Moonarize"
 msgstr "Lunariseren"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
@@ -1071,108 +1058,111 @@ msgstr ""
 "Een effect tussen solarisatie en kleurinvertie dat meestal de lucht en water "
 "behoudt"
 
-#: ../share/filters/filters.svg.h:104
-#, fuzzy
+#: ../share/filters/filters.svg.h:103
 msgid "Soft focus lens"
-msgstr "bij focus"
+msgstr "Lens met lichte focus"
+
+#: ../share/filters/filters.svg.h:103
+msgid "Glowing image content without blurring it"
+msgstr "Helder schijnende tekening zonder deze te vervagen"
 
 #: ../share/filters/filters.svg.h:104
-msgid "Glowing image content without blurring it"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:105
 msgid "Stained glass"
 msgstr "Glasraam"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Illuminated stained glass effect"
 msgstr "Verlicht glasraameffect"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Dark glass"
 msgstr "Donker glas"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr "Verlicht glaseffect met licht van onderuit"
 
-#: ../share/filters/filters.svg.h:107
-#, fuzzy
+#: ../share/filters/filters.svg.h:106
 msgid "HSL Bumps, alpha"
-msgstr "TVH-reliëf, alfa"
+msgstr "TVL-reliëf, alfa"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:170
+msgid "Masking tools"
+msgstr "Maskeren"
+
+#: ../share/filters/filters.svg.h:106
 msgid ""
 "Same than HSL bumps but with an alpha added for combination with "
 "transparency depending filters"
 msgstr ""
-"Gelijk aan TVH-reliëf, maar met een alfa voor combinatie met "
+"Gelijk aan TVL-reliëf, maar met een alfa voor combinatie met "
 "transparantieafhankelijke filters"
 
-#: ../share/filters/filters.svg.h:108
-#, fuzzy
+#: ../share/filters/filters.svg.h:107
 msgid "HSL Bubbles, alpha"
-msgstr "TVH-bellen, alfa"
+msgstr "TVL-bellen, alfa"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Smooth edges"
 msgstr "Randen glad maken"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid ""
 "Smooth the outside of shapes and pictures without altering their contents"
 msgstr ""
 "De randen van vormen en afbeeldingen gladstrijken zonder de inhoud te "
 "wijzigen"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Torn edges"
 msgstr "Randen afscheuren"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
 msgstr ""
 "De buitenkant van vormen en afbeeldingen verplaatsen zonder de inhoud aan te "
 "passen"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Feather"
 msgstr "Veer"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
 msgstr "Masker dat aan de randen vervaagt zonder de inhoud aan te passen"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Blur content"
 msgstr "Inhoud vervagen"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
 msgstr "De inhoud van objecten vervagen met behoud van de randen"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Specular light"
 msgstr "Spiegelende belichting"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Basic specular bevel to use for building textures"
 msgstr "Basis spiegelende belichting voor het maken van texturen"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Roughen inside"
 msgstr "Binnenrand verruwen"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Roughen all inside shapes"
 msgstr "Alle binnenranden verruwen"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Evanescent"
 msgstr "Verwijnend"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
@@ -1180,122 +1170,119 @@ msgstr ""
 "De inhoud van objecten vervaging met behoud van de rand en toevoeging van "
 "toenemende transparantie aan de randen"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Chalk and sponge"
 msgstr "Krijt en spons"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr "Een lage turbulentie imiteert een spons en een hoge turbulentie krijt"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "People"
 msgstr "Mensen"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Colorized blotches, like a crowd of people"
 msgstr "Gekleurde vlekken, zoals een menigte mensen"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Scotland"
 msgstr "Schotland"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Colorized mountain tops out of the fog"
 msgstr "Gekleurde bergen uitstekend over de mist"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Noise transparency"
 msgstr "Ruis-transparantie"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Basic noise transparency texture"
 msgstr "Basistextuur voor uit ruis bestaande transparantie"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Noise fill"
 msgstr "Ruis-opvulling"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr "Basistextuur voor opvulling met ruis; pas de kleur aan in Vullen"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "Garden of Delights"
 msgstr "Tuin der Lusten"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid ""
 "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr ""
 "Fantastische Turbulenties zoals bij Hieronymus Bosch' werk Tuin der Lusten"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Diffuse light"
 msgstr "Diffuse belichting"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Basic diffuse bevel to use for building textures"
 msgstr "Basis diffuse belichting te gebruiken voor het maken van texturen"
 
-#: ../share/filters/filters.svg.h:123
-#, fuzzy
+#: ../share/filters/filters.svg.h:122
 msgid "Cutout Glow"
 msgstr "Uitgesneden gloed"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr ""
 "Gloed naar binnen en buiten met een mogelijke offset en gekleurde vulling"
 
-#: ../share/filters/filters.svg.h:124
-#, fuzzy
+#: ../share/filters/filters.svg.h:123
 msgid "HSL Bumps, diffuse"
-msgstr "TVH-reliëf, diffuus"
+msgstr "TVL-reliëf, diffuus"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid ""
 "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
 msgstr ""
-"Gelijk aan TVH-reliëf, maar met een diffuse reflectie in plaats van een "
+"Gelijk aan TVL-reliëf, maar met een diffuse reflectie in plaats van een "
 "spiegelende"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Dark Emboss"
 msgstr "Donker reliëf"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "Reliëf: 3D-reliëf waarbij wit vervangen is door zwart"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
 msgstr "Eenvoudige vervaging"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 "Eenvoudige gaussiaanse vervaging, identiek aan de schuifbalk vervaging in "
 "het venster Opvulling en lijnen"
 
-#: ../share/filters/filters.svg.h:127
-#, fuzzy
+#: ../share/filters/filters.svg.h:126
 msgid "HSL Bubbles, diffuse"
-msgstr "TVH-bellen, diffuus"
+msgstr "TVL-bellen, diffuus"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid ""
 "Same than HSL bubbles but with a diffuse light instead of a specular one"
 msgstr ""
-"Gelijk aan TVH-bellen, maar met een diffuse reflectie in plaats van een "
+"Gelijk aan TVL-bellen, maar met een diffuse reflectie in plaats van een "
 "spiegelende"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "Reliëf"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
@@ -1303,371 +1290,365 @@ msgstr ""
 "Reliëf: kleuren van de originele afbeeldingen worden behouden of aangepast "
 "door vervaging"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Blotting paper"
 msgstr "Vloeipapier"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Inkblot on blotting paper"
 msgstr "Inktvlek op vloeipapier"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Wax print"
 msgstr "Afdruk met was"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Wax print on tissue texture"
 msgstr "Textuur van afdruk met was op weefsel"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot"
 msgstr "Inktvlek"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot on tissue or rough paper"
 msgstr "Inktvlek op weefsel of ruw papier"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Burnt edges"
 msgstr "Verbrande randen"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Burnt paper edges texture"
 msgstr "Textuur van verbrande papierranden"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "Color outline"
 msgstr "Gekleurde rand"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "A colorizable outline with adjustable width and blur"
 msgstr "Een gekleurde rand met aanpasbare breedte en vervaging"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Liquid"
 msgstr "Vloeistof"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Colorizable filling with liquid transparency"
 msgstr "Gekleurde vulling met de transparantie van vloeistof"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Watercolor"
 msgstr "Aquarel"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Cloudy watercolor effect"
 msgstr "Bewolkt aquareleffect"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Felt"
 msgstr "Vilt"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid ""
 "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr ""
 "Viltachtige textuur met turbulente kleuren en een beetje donkerder aan de "
 "randen"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Ink paint"
 msgstr "Inkt"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr "Inkt op papier met turbulente kleurveranderingen"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Tinted rainbow"
 msgstr "Verkleurde regenboog"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr "Fijne regenboogkleuren vervagend aan de randen en verkleurbaar"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Melted rainbow"
 msgstr "Vage regenboog"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "Fijne regenboogkleuren licht vervaagd aan de randen"
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:139
 msgid "Darken edges"
 msgstr "Randen donkerder maken"
 
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 msgid "Enhance outline and glows inside and outside"
 msgstr "Rand en halo verbeteren lands binnen- en buitenzijde"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Dark and glow"
 msgstr "Donker en gloeiend"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Flex metal"
 msgstr "Geplooid metaal"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr "Heldere, gepolijste, niet-uniforme metalen coating, verkleurbaar"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Comics draft"
 msgstr "Cartoon ontwerp"
 
-#: ../share/filters/filters.svg.h:143 ../share/filters/filters.svg.h:144
-#: ../share/filters/filters.svg.h:145 ../share/filters/filters.svg.h:146
-#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:148
-#: ../share/filters/filters.svg.h:149 ../share/filters/filters.svg.h:150
-#: ../share/filters/filters.svg.h:151 ../share/filters/filters.svg.h:152
-#: ../share/filters/filters.svg.h:153 ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:164
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:146 ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:148 ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:150 ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:161
 msgid "Non realistic shaders"
 msgstr "Niet realistische shader"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr "Cartoonontwerp shader met een glazig uitzicht"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Comics fading"
 msgstr "Cartoon vervagen"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Cartoon paint style with some fading at the edges"
 msgstr "Cartoon tekenstijl met enige vervaging aan de randen"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shader NR"
 msgstr "Vage shader NR"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "Vage shader zoals van een grijs grafietpotlood"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Emboss shader NR"
 msgstr "Reliëf shader NR"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Combination of smooth shading and embossing"
 msgstr "Combinatie van vage shader en reliëf"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Smooth shader dark NR"
 msgstr "Vage donkere shader NR"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Dark version of non realistic smooth shading"
 msgstr "Donkere versie van niet realistische vage shader"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Comics"
 msgstr "Cartoon"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Imitation of black and white cartoon shading"
 msgstr "Imitatie van zwartwitte cartoon"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 msgid "Satin NR"
 msgstr "Satijn NR"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
 msgstr "Zijdeachtige, op parelmoer gelijkende shader"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Frosted glass NR"
 msgstr "Berijpt glas NR"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
 msgstr "Niet realistische imitatie berijpt glas"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Smooth shader contour NR"
 msgstr "Vage contour shader NR"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Contouring version of smooth shader"
 msgstr "Contour versie van vage shader"
 
-#: ../share/filters/filters.svg.h:152
-msgid "Comics rounded"
-msgstr "Cartoon afgerond"
-
-#: ../share/filters/filters.svg.h:152
-msgid "Imitation of black and white cartoon shading more rounded version"
-msgstr "Imitatie van zwartwitte cartoon shader, meer afgeronde versie"
-
-#: ../share/filters/filters.svg.h:153
-msgid "Pewter NR"
-msgstr "Tin NR"
-
-#: ../share/filters/filters.svg.h:153
-msgid "Mid grey satin like shader close to pewter"
-msgstr "Halfgrijze satijnachtige shader gelijkend op tin"
-
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Aluminium NR"
 msgstr "Aluminium NR"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Brushed aluminium shader"
 msgstr "Gebrostelde aluminium shader"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 msgid "Comics fluid"
 msgstr "Cartoon vochtig"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 msgid "Fluid brushed cartoon drawing"
 msgstr "Nat gepoetste cartoontekening"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 msgid "Chrome NR"
 msgstr "Chroom NR"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "Niet realistische chroom shader met sterke spiegeling"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Chrome dark NR"
 msgstr "Chroom NR, donker"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr "Donkere versie van chroom shader met een simulatie van bodemspiegeling"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Wavy tartan"
 msgstr "Golvende kilt"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr "Kiltpatroon met golvende verplaatsing en een verhoging langs de randen"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D marble"
 msgstr "3D marmer"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D warped marble texture"
 msgstr "3D marmertextuur"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 msgid "3D wood"
 msgstr "3D hout"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 msgid "3D warped, fibered wood texture"
 msgstr "3D vezelachtige houttextuur"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 msgid "Mother of pearl"
 msgstr "Parelmoer"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "Textuur van een 3D iriserende parelwitte schelp"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 msgid "Tiger fur"
 msgstr "Tijgervacht"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "Tijgervachtpatroon dat vouwt langs de randen"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 msgid "Flow inside"
 msgstr "Stroming vanbinnen"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 msgid "Colorizable filling with flow inside like transparency"
 msgstr "Gekleurde vulling met continuiteit in de transparantie"
 
-#: ../share/filters/filters.svg.h:164
-msgid "Comics flow"
-msgstr "Cartoon stroming"
-
-#: ../share/filters/filters.svg.h:164
-msgid "Comics shader with a flow inside transparency"
-msgstr "Cartoon shaders met een stroming in de transparantie"
-
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics cream"
 msgstr "Cartoon room"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics shader with creamy waves transparency"
 msgstr "Cartoon shader met roomachtige golvende transparantie"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 msgid "Black Light"
 msgstr "Zwart licht"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 msgid "Light areas turn to black"
 msgstr "Lichte zones worden zwart"
 
 #. Eraser
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 #: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
 msgid "Eraser"
 msgstr "Gom"
 
-#: ../share/filters/filters.svg.h:167
-msgid "Masking tools"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 msgid "Make the lightest parts of the object progressively transparent"
-msgstr ""
+msgstr "De lichtste delen van het object progressief transparant maken"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:164
 msgid "Noisy blur"
 msgstr "Ruizig vervagen"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:164
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "Kleinschalige verruwing en vervaging randen en inhoud"
 
-#: ../share/filters/filters.svg.h:169
-#, fuzzy
+#: ../share/filters/filters.svg.h:165
 msgid "Film Grain"
-msgstr "Vulkleur"
+msgstr "Filmkorrel"
+
+#: ../share/filters/filters.svg.h:165
+msgid "Adds a film grain noise to images and objects"
+msgstr "Korrelruis toevoegen aan afbeeldingen en objecten"
+
+#: ../share/filters/filters.svg.h:166
+msgid "HSL Bumps, transparent"
+msgstr "TVL-reliëf, transparant"
+
+#: ../share/filters/filters.svg.h:166
+msgid "Highly flexible specular bump with transparency"
+msgstr "Zeer flexibel belicht reliëf met transparantie"
+
+#: ../share/filters/filters.svg.h:167
+msgid "Lead pencil"
+msgstr "Vulpotlood"
+
+#: ../share/filters/filters.svg.h:167
+msgid ""
+"Give lead pencil or chromolithography or engraving or other effects to "
+"images and material filled objects"
+msgstr ""
+"Vulpotlood, kleurenlithografie, gravering of andere effecten bij tekeningen "
+"en materiaalgevulde objecten genereren"
+
+#: ../share/filters/filters.svg.h:168
+msgid "Velvet bump"
+msgstr "Fluwelen reliëf"
+
+#: ../share/filters/filters.svg.h:168
+msgid "Gives a smooth bump velvet like"
+msgstr "Een afgerond fluweelachtig reliëf genereren"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Adds a film grain noise to images and objects"
-msgstr ""
+msgid "Alpha draw"
+msgstr "Alfa-tekening"
+
+#: ../share/filters/filters.svg.h:169
+msgid "Gives a transparent drawing effect to bitmaps and materials"
+msgstr "Een transparant afbeeldingseffect bij bitmaps en materialen genereren"
 
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
-msgid "HSL Bumps, transparent"
-msgstr "TVH-reliëf, alfa"
+msgid "Alpha paint"
+msgstr "Alfa-verf"
 
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
-msgid "Highly flexible specular bump with transparency"
+msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr ""
-"Zeer flexibel belicht reliëf gebaseerd op de tint, verzadiging en luminantie "
-"van de kleuren"
-
-#: ../share/filters/filters.svg.h:171
-msgid "Lead pencil"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:171
-msgid "Give lead pencil or chromolithography or engraving or other effects"
-msgstr ""
+"Een transparant kleuropvullingseffect bij bitmaps en materialen genereren"
 
 #: ../src/arc-context.cpp:303
 msgid ""
@@ -1789,6 +1770,7 @@ msgid "Create guide"
 msgstr "Hulplijn maken"
 
 #: ../src/desktop-events.cpp:265 ../src/desktop-events.cpp:394
+#: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "Hulplijn verwijderen"
 
@@ -2601,7 +2583,7 @@ msgstr "_Hoogte:"
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Bitmap-grootte</b></big>"
 
-#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:209
+#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:210
 msgid "_Width:"
 msgstr "Bree_dte:"
 
@@ -2613,7 +2595,7 @@ msgstr "beeldpunten, met"
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:210
+#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:211
 msgid "_Height:"
 msgstr "_Hoogte:"
 
@@ -3079,12 +3061,14 @@ msgid "URL:"
 msgstr "URL:"
 
 #: ../src/dialogs/object-attributes.cpp:51
-#: ../src/dialogs/object-attributes.cpp:59 ../src/widgets/toolbox.cpp:1472
+#: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:43
+#: ../src/widgets/toolbox.cpp:1472
 msgid "X:"
 msgstr "X:"
 
 #: ../src/dialogs/object-attributes.cpp:52
-#: ../src/dialogs/object-attributes.cpp:60 ../src/widgets/toolbox.cpp:1490
+#: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:44
+#: ../src/widgets/toolbox.cpp:1490
 msgid "Y:"
 msgstr "Y:"
 
@@ -3464,13 +3448,15 @@ msgstr ""
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
-msgstr ""
+msgstr "Alleen aan zichtbare _rasterlijnen kleven"
 
 #: ../src/display/canvas-grid.cpp:330
 msgid ""
 "When zoomed out, not all grid lines will be displayed. Only the visible ones "
 "will be snapped to"
 msgstr ""
+"Bij uitzoomen worden niet alle rasterlijnen getoond. Er wordt alleen "
+"gekleefd aan de zichtbare rasterlijnen"
 
 #: ../src/display/canvas-grid.cpp:334
 msgid "_Visible"
@@ -3791,7 +3777,7 @@ msgstr "<b>Wissen</b> met de gom"
 msgid "Draw eraser stroke"
 msgstr "Wissen met de gom"
 
-#: ../src/event-context.cpp:615
+#: ../src/event-context.cpp:612
 msgid "<b>Space+mouse drag</b> to pan canvas"
 msgstr "<b>Spatie indrukken + muis slepen</b> om het canvas te verschuiven"
 
@@ -3948,13 +3934,13 @@ msgstr ""
 "aangeroepen. Het script gaf geen foutmelding, maar dit zou kunnen betekenen "
 "dat de resultaten anders zijn dan verwacht."
 
-#: ../src/extension/init.cpp:277
+#: ../src/extension/init.cpp:274
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr ""
 "Geen mapnaam gevonden voor de uitbreidingen. De uitbreidingen worden niet "
 "geladen."
 
-#: ../src/extension/init.cpp:291
+#: ../src/extension/init.cpp:288
 #: ../src/extension/internal/filter/filter-file.cpp:56
 #, c-format
 msgid ""
@@ -3992,7 +3978,7 @@ msgstr "Hoogte"
 
 #. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:97
+#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
 #: ../src/live_effects/lpe-offset.cpp:30
 #: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:49
@@ -4225,12 +4211,13 @@ msgid "Edge"
 msgstr "Hoek"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-msgid "Hilight edges of selected bitmap(s)."
-msgstr "Randen in geselecteerde bitmap(s) accentueren."
+msgid "Highlight edges of selected bitmap(s)."
+msgstr "Randen van geselecteerde bitmap(s) accentueren."
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-msgid "Emboss selected bitmap(s) -- hilight edges with 3D effect."
-msgstr "Randen in geselecteerde bitmap(s) accentueren met een 3D-effect."
+msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
+msgstr ""
+"Geselecteerde bitmap(s) verhogen -- randen accentueren met een 3D-effect."
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
 msgid "Enhance"
@@ -4581,26 +4568,26 @@ msgstr "Het geëxporteerde gebied is de volledige tekening"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:284
 #: ../src/extension/internal/cairo-ps-out.cpp:321
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:218
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
 #: ../src/extension/internal/emf-win32-inout.cpp:2430
 msgid "Convert texts to paths"
 msgstr "Converteer tekst naar paden"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
 msgid "Rasterize filter effects"
 msgstr "SVG-filtereffecten rasteriseren"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
-msgid "Preferred resolution (DPI) of bitmaps"
-msgstr "Gewenste resolutie (DPI) van bitmaps"
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
+msgid "Resolution for rasterization (dpi)"
+msgstr "Resolutie voor rasteriseren (dpi):"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:224
 msgid "Limit export to the object with ID"
 msgstr "Exporteren limiteren tot het object met ID"
 
@@ -4627,19 +4614,19 @@ msgstr "Encapsulated Postscript (*.eps)"
 msgid "Encapsulated PostScript File"
 msgstr "Encapsulated Postscript File"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:215
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
 msgid "Restrict to PDF version"
 msgstr "Beperken tot PDF-versie"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:217
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
 msgid "Export drawing, not page"
 msgstr "Afbeelding exporteren, niet de pagina"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
 msgid "Export canvas"
 msgstr "Canvas exporteren"
 
@@ -4752,7 +4739,7 @@ msgstr "Dikte laag"
 msgid "Snow has fallen on object"
 msgstr "Gevallen sneeuw op object"
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:119
+#: ../src/extension/internal/gdkpixbuf-input.cpp:127
 #, c-format
 msgid "%s GDK pixbuf Input"
 msgstr "%s GDK pixbuf-invoer"
@@ -4802,6 +4789,7 @@ msgstr "Verticale inspringing"
 #: ../share/extensions/grid_polar.inx.h:18
 #: ../share/extensions/guides_creator.inx.h:17
 #: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
 #: ../share/extensions/polyhedron_3d.inx.h:32
 #: ../share/extensions/printing-marks.inx.h:14
@@ -4930,6 +4918,8 @@ msgstr "Tekst als tekst importeren"
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:120
 msgid "Replace PDF fonts by closest-named installed fonts"
 msgstr ""
+"PDF-lettertypen vervangen door het geïnstalleerde lettertype met de meest "
+"gelijkaardige naam"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
@@ -5100,54 +5090,54 @@ msgstr ""
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:153
+#: ../src/file.cpp:157
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:245 ../src/file.cpp:1031
+#: ../src/file.cpp:249 ../src/file.cpp:1041
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Het laden van het gevraagde bestand %s is mislukt"
 
-#: ../src/file.cpp:270
+#: ../src/file.cpp:274
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Het bestand is nog niet opgeslagen.  Kan het niet terugdraaien."
 
-#: ../src/file.cpp:276
+#: ../src/file.cpp:280
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "Wijzigingen zullen verloren gaan!  Weet u zeker dat u bestand %s opnieuw "
 "wilt laden?"
 
-#: ../src/file.cpp:305
+#: ../src/file.cpp:309
 msgid "Document reverted."
 msgstr "Het bestand is teruggezet."
 
-#: ../src/file.cpp:307
+#: ../src/file.cpp:311
 msgid "Document not reverted."
 msgstr "Het bestand is niet teruggezet."
 
-#: ../src/file.cpp:457
+#: ../src/file.cpp:461
 msgid "Select file to open"
 msgstr "Selecteer een bestand om te openen"
 
-#: ../src/file.cpp:544
+#: ../src/file.cpp:548
 msgid "Vacuum &lt;defs&gt;"
 msgstr "&lt;Defs&gt; opruimen"
 
-#: ../src/file.cpp:549
+#: ../src/file.cpp:553
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "In &lt;defs&gt; is <b>%i</b> ongebruikte definitie verwijderd."
 msgstr[1] "In &lt;defs&gt; zijn <b>%i</b> ongebruikte definities verwijderd."
 
-#: ../src/file.cpp:554
+#: ../src/file.cpp:558
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Er zijn geen ongebruikte definities in &lt;defs&gt;."
 
-#: ../src/file.cpp:583
+#: ../src/file.cpp:587
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -5156,67 +5146,67 @@ msgstr ""
 "Er werd geen Inkscape-uitbreiding aangetroffen om het bestand (%s) op te "
 "slaan.  Dit kan komen door een onbekende bestandsextensie."
 
-#: ../src/file.cpp:584 ../src/file.cpp:592 ../src/file.cpp:598
+#: ../src/file.cpp:588 ../src/file.cpp:596 ../src/file.cpp:602
 msgid "Document not saved."
 msgstr "Document is niet opgeslagen."
 
-#: ../src/file.cpp:591
+#: ../src/file.cpp:595
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Bestand %s kon niet worden opgeslagen."
 
-#: ../src/file.cpp:605
+#: ../src/file.cpp:609
 msgid "Document saved."
 msgstr "Document is opgeslagen."
 
-#: ../src/file.cpp:746 ../src/file.cpp:1156 ../src/file.cpp:1276
+#: ../src/file.cpp:750 ../src/file.cpp:1166 ../src/file.cpp:1286
 #, c-format
 msgid "drawing%s"
 msgstr "Tekening%s"
 
-#: ../src/file.cpp:752
+#: ../src/file.cpp:756
 #, c-format
 msgid "drawing-%d%s"
 msgstr "Tekening-%d%s"
 
-#: ../src/file.cpp:771
+#: ../src/file.cpp:775
 msgid "Select file to save a copy to"
 msgstr "Selecteer een bestand om een kopie naar op te slaan"
 
-#: ../src/file.cpp:773
+#: ../src/file.cpp:777
 msgid "Select file to save to"
 msgstr "Selecteer een bestand om in op te slaan"
 
-#: ../src/file.cpp:853
+#: ../src/file.cpp:857
 msgid "No changes need to be saved."
 msgstr "Er zijn geen wijzigingen die opgeslagen hoeven te worden."
 
-#: ../src/file.cpp:870
+#: ../src/file.cpp:874
 msgid "Saving document..."
 msgstr "Opslaan van document..."
 
-#: ../src/file.cpp:1028
+#: ../src/file.cpp:1038
 msgid "Import"
 msgstr "Importeren"
 
-#: ../src/file.cpp:1058
+#: ../src/file.cpp:1068
 msgid "Select file to import"
 msgstr "Selecteer een bestand om te importeren"
 
-#: ../src/file.cpp:1177 ../src/file.cpp:1291
+#: ../src/file.cpp:1187 ../src/file.cpp:1301
 msgid "Select file to export to"
 msgstr "Selecteer een bestand om naar te exporteren"
 
-#: ../src/file.cpp:1323
+#: ../src/file.cpp:1333
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Fout tijdens opslaan van een tijdelijke kopie"
 
-#: ../src/file.cpp:1343
+#: ../src/file.cpp:1353
 msgid "Open Clip Art Login"
 msgstr "'Open Clip Art'-login"
 
-#: ../src/file.cpp:1369
+#: ../src/file.cpp:1379
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5227,11 +5217,11 @@ msgstr ""
 "gebruikersnaam en wachtwoord juist zijn, of de server webdav ondersteunt en "
 "dat u niet vergeten bent om een licentie te kiezen."
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1400
 msgid "Document exported..."
 msgstr "Document is geëxporteerd..."
 
-#: ../src/file.cpp:1418 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1428 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Uit 'Open Clip Art'-mediatheek importeren"
 
@@ -5913,37 +5903,37 @@ msgstr "x-hoogte"
 msgid "Ex squares"
 msgstr "x-vierkantjes"
 
-#: ../src/inkscape.cpp:323
+#: ../src/inkscape.cpp:324
 msgid "Autosaving documents..."
 msgstr "Auto-opslaan van document..."
 
-#: ../src/inkscape.cpp:394
+#: ../src/inkscape.cpp:395
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr ""
 "Auto-opslaan mislukt! Kon inkscpae extensie om document te bewaren niet "
 "vinden "
 
-#: ../src/inkscape.cpp:397 ../src/inkscape.cpp:404
+#: ../src/inkscape.cpp:398 ../src/inkscape.cpp:405
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr "Auto-opslaan mislukt! Bestand %s kon niet bewaard worden"
 
-#: ../src/inkscape.cpp:419
+#: ../src/inkscape.cpp:420
 msgid "Autosave complete."
 msgstr "Auto-opslaan afgelopen."
 
-#: ../src/inkscape.cpp:650
+#: ../src/inkscape.cpp:651
 msgid "Untitled document"
 msgstr "Naamloos document"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:680
+#: ../src/inkscape.cpp:681
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr ""
 "Er is een interne fout opgetreden in Inkscape.  Het programma wordt "
 "afgesloten.\n"
 
-#: ../src/inkscape.cpp:681
+#: ../src/inkscape.cpp:682
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
@@ -5951,7 +5941,7 @@ msgstr ""
 "Automatische reservekopieën van niet-opgeslagen documenten werden gemaakt op "
 "de volgende locaties:\n"
 
-#: ../src/inkscape.cpp:682
+#: ../src/inkscape.cpp:683
 msgid "Automatic backup of the following documents failed:\n"
 msgstr ""
 "Het automatisch maken van een reservekopie is mislukt voor de volgende "
@@ -6423,7 +6413,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:917
 #: ../src/ui/dialog/document-properties.cpp:116
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1562
+#: ../src/widgets/desktop-widget.cpp:1558
 msgid "Page"
 msgstr "Pagina"
 
@@ -6431,7 +6421,7 @@ msgstr "Pagina"
 msgid "The index of the current page"
 msgstr "De index van de huidige pagina"
 
-#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:216
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:217
 msgid "Name"
 msgstr "Naam"
 
@@ -6630,98 +6620,98 @@ msgid "Dynamic stroke"
 msgstr "Dynamische lijn"
 
 #: ../src/live_effects/effect.cpp:93
-msgid "Interpolate Sub-Paths"
-msgstr "Subpaden interpoleren"
-
-#: ../src/live_effects/effect.cpp:94
 msgid "Lattice Deformation"
 msgstr "Roostervervorming"
 
-#: ../src/live_effects/effect.cpp:95
+#: ../src/live_effects/effect.cpp:94
 msgid "Line Segment"
 msgstr "Lijnsegment"
 
-#: ../src/live_effects/effect.cpp:96
+#: ../src/live_effects/effect.cpp:95
 msgid "Mirror symmetry"
 msgstr "Spiegelsymmetrie"
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:97
 msgid "Parallel"
 msgstr "Parallelle"
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:98
 msgid "Path length"
 msgstr "Padlengte"
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:99
 msgid "Perpendicular bisector"
 msgstr "Loodrechte deellijn"
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:100
 msgid "Perspective path"
 msgstr "Perspectief"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:101
 msgid "Rotate copies"
 msgstr "Kopieën draaien"
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:102
 msgid "Recursive skeleton"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:103
 msgid "Ruler"
 msgstr "Liniaal"
 
-#: ../src/live_effects/effect.cpp:105
+#: ../src/live_effects/effect.cpp:104
 msgid "Tangent to curve"
 msgstr "Raaklijn aan curve"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:105
 msgid "Text label"
 msgstr "Label"
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:108
 msgid "Bend"
 msgstr "Buigen langs pad"
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:109
 msgid "Gears"
 msgstr "Tandwielen"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:110
 msgid "Pattern Along Path"
 msgstr "Patroon langs pad"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:111
 msgid "Stitch Sub-Paths"
 msgstr "Subpaden aan elkaar naaien"
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:113
 msgid "VonKoch"
 msgstr "VonKoch"
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:114
 msgid "Knot"
 msgstr "Knoop"
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:115
 msgid "Construct grid"
 msgstr "Axonometrisch raster"
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:116
 msgid "Spiro spline"
 msgstr "Spirografische spline"
 
 # Vertaling is hier min of meer letterlijk.
 # Het gaat hier om een vervorming van een object door een verplaatsing van de 4 paden van het kader van de omhullende
 # Alternatieven: "Vervorming kader", "Vervorming omhullende"
-#: ../src/live_effects/effect.cpp:118
+#: ../src/live_effects/effect.cpp:117
 msgid "Envelope Deformation"
 msgstr "Omslagvervorming"
+
+#: ../src/live_effects/effect.cpp:118
+msgid "Interpolate Sub-Paths"
+msgstr "Subpaden interpoleren"
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Hatches (rough)"
@@ -6743,34 +6733,22 @@ msgstr ""
 "Indien uitgevinkt, blijft het effect op het object toegepast, maar is het "
 "tijdelijk niet zichtbaar op het canvas"
 
-#: ../src/live_effects/effect.cpp:274
-msgid "Deactivate knotholder?"
-msgstr "Knoophouder deactiveren?"
-
-#: ../src/live_effects/effect.cpp:274
-msgid ""
-"Check this to deactivate knotholder handles (useful if they interfere with "
-"node handles during editing)"
-msgstr ""
-"Vink dit aan om de handvaten van de knopen te deactiveren (handig indien "
-"deze interfereren met de handvaten van knooppuntten tijdens het bewerken)"
-
-#: ../src/live_effects/effect.cpp:295
+#: ../src/live_effects/effect.cpp:293
 msgid "No effect"
 msgstr "Geen effect"
 
-#: ../src/live_effects/effect.cpp:342
+#: ../src/live_effects/effect.cpp:340
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr ""
 "Geef aub een parameterpad op voor het padeffect '%s' met %d muisklikken"
 
-#: ../src/live_effects/effect.cpp:641
+#: ../src/live_effects/effect.cpp:636
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "Parameter <b>%s</b> bewerken."
 
-#: ../src/live_effects/effect.cpp:646
+#: ../src/live_effects/effect.cpp:641
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 "Geen van de toegepaste padeffectparameters kunnen op het canvas bewerkt "
@@ -7025,7 +7003,7 @@ msgstr ""
 "Schaal de breedte van het naaipad relatief ten opzichte van zijn lengte"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
-msgid "Ellipitic Pen"
+msgid "Elliptic Pen"
 msgstr "Elliptische pen"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:61
@@ -7085,7 +7063,7 @@ msgstr "Begin"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:80
 msgid "Choose start capping type"
-msgstr ""
+msgstr "Kies het type afronding bij het begin"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:81
 #: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5179
@@ -7094,23 +7072,23 @@ msgstr "Einde"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:81
 msgid "Choose end capping type"
-msgstr ""
+msgstr "Kies het type afronding bij het einde"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:82
 msgid "Grow for"
-msgstr ""
+msgstr "Toenemen gedurende"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:82
 msgid "Make the stroke thiner near it's start"
-msgstr ""
+msgstr "De lijn dunner maken aan het begin"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:83
 msgid "Fade for"
-msgstr ""
+msgstr "Verdwijnen gedurende"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:83
 msgid "Make the stroke thiner near it's end"
-msgstr ""
+msgstr "De lijn dunner maken aan het einde"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:84
 msgid "Round ends"
@@ -7118,15 +7096,15 @@ msgstr "Uiteinden afronden"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:84
 msgid "Strokes end with a round end"
-msgstr ""
+msgstr "Lijnen eindigen afgerond"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:85
 msgid "Capping"
-msgstr ""
+msgstr "Afronding"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:85
 msgid "left capping"
-msgstr ""
+msgstr "afronding links"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top bend path"
@@ -7587,12 +7565,19 @@ msgstr ""
 msgid "Adjust the origin"
 msgstr "De oorsprong aanpassen"
 
+#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
+msgid "Iterations"
+msgstr "Iteraties"
+
+#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
+msgid "recursivity"
+msgstr "recursiviteit"
+
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
 msgstr "Willekeurigheid frequentie"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
-#, fuzzy
 msgid "Variation of distance between hatches, in %."
 msgstr "Variatie afstand tussen krabbels, in %."
 
@@ -7630,7 +7615,7 @@ msgstr ""
 "onderzijde. 0=scherp, 1=standaard"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-msgid "2nd side, in "
+msgid "2nd side, in"
 msgstr "2de zijde, in"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
@@ -7694,9 +7679,8 @@ msgstr ""
 "bochten langs de 'bovenzijde' naar de randen."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
-#, fuzzy
 msgid "Variance: 1st side"
-msgstr "willekeurigheid: 1ste zijde"
+msgstr "Willekeurigheid: 1ste zijde"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Randomness of 'bottom' halfturns smoothness"
@@ -7724,7 +7708,6 @@ msgid "Add a global bend to the hatches (slower)"
 msgstr "Een globale buiging toevoegen aan de krabbels (trager)"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
-#, fuzzy
 msgid "Thickness: at 1st side"
 msgstr "Dikte: bij 1ste zijde"
 
@@ -7769,13 +7752,12 @@ msgid "Global bending"
 msgstr "Globaal buigen"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:251
-#, fuzzy
 msgid ""
 "Relative position to a reference point defines global bending direction and "
 "amount"
 msgstr ""
-"Relatieve positie ten opzichte van referentiepunt bepaalt globale "
-"buigingsrichting en hoeveelheid"
+"Relatieve positie ten opzichte van referentiepunt bepaalt globale richting "
+"en grootte van de buiging"
 
 #: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
 msgid "Left"
@@ -7920,14 +7902,12 @@ msgstr ""
 "(relatief ten opzichte van maximum lengte)"
 
 #: ../src/live_effects/lpe-sketch.cpp:46
-#, fuzzy
 msgid "Average offset"
-msgstr "Afstand parallelle"
+msgstr "Gemiddelde afstand"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
-#, fuzzy
 msgid "Average distance each stroke is away from the original path"
-msgstr "Gemiddelde afstand van benaderend pad met origineel pad"
+msgstr "Gemiddelde afstand van elke lijn met het origineel pad"
 
 #: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
@@ -7942,9 +7922,8 @@ msgid "Tremble frequency"
 msgstr "Frequentie beving"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
-#, fuzzy
 msgid "Average number of tremble periods in a stroke"
-msgstr "Gemiddelde aantal bevingsperioden in een benaderende lijn"
+msgstr "Gemiddelde aantal bevingsperioden in een lijn"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
@@ -7979,31 +7958,28 @@ msgid "Random variation of the length of construction lines"
 msgstr "Random variatie van de lengte van constructielijnen"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-#, fuzzy
 msgid "Placement randomness"
-msgstr "Willekeurigheid frequentie"
+msgstr "Willekeurigheid plaatsing"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-msgid "0: evenly distributed construcion lines, 1: purely random placement"
-msgstr ""
+msgid "0: evenly distributed construction lines, 1: purely random placement"
+msgstr "0: gelijke verspreiding contructielijnen, 1: volledig random geplaatst"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
-#, fuzzy
 msgid "k_min"
-msgstr "_Combineren"
+msgstr "k_min"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
 msgid "min curvature"
-msgstr ""
+msgstr "min kromming"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "k_max"
-msgstr ""
+msgstr "k_min"
 
 #: ../src/live_effects/lpe-sketch.cpp:62
-#, fuzzy
 msgid "max curvature"
-msgstr "Kromme verslepen"
+msgstr "max kromming"
 
 #: ../src/live_effects/lpe-tangent_to_curve.cpp:56
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
@@ -8222,10 +8198,12 @@ msgid "Export document to a PNG file"
 msgstr "Document exporteren naar PNG-bestand"
 
 #: ../src/main.cpp:294
-msgid "The resolution used for exporting SVG into bitmap (default 90)"
+msgid ""
+"Resolution for exporting to bitmap and for rasterization of filters in PS/"
+"EPS/PDF (default 90)"
 msgstr ""
-"De resolutie die gebruikt wordt om SVG naar bitmap te exporteren (standaard "
-"90)"
+"Resolutie voor het exporteren van de bitmap en voor rasterisatie van filters "
+"in PS/EPS/PDF (standaard 90)"
 
 #: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
@@ -8427,7 +8405,7 @@ msgid "OBJECT-ID"
 msgstr "OBJECT-ID"
 
 #: ../src/main.cpp:453
-msgid "Start Inkscape in interative shell mode."
+msgid "Start Inkscape in interactive shell mode."
 msgstr "Inkscape in interactieve commandomodus starten."
 
 #: ../src/main.cpp:756 ../src/main.cpp:1067
@@ -9098,7 +9076,7 @@ msgstr "Verdwijnpunt omschakelen"
 msgid "Toggle multiple vanishing points"
 msgstr "Meerdere verdwijnpunten omschakelen"
 
-#: ../src/preferences.cpp:104
+#: ../src/preferences.cpp:101
 msgid ""
 "Inkscape will run with default settings, and new settings will not be saved. "
 msgstr ""
@@ -9106,53 +9084,53 @@ msgstr ""
 "worden niet bewaard."
 
 #. the creation failed
-#. _errorDialog(Glib::ustring::compose(_("Cannot create profile directory %1."),
+#. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:122
+#: ../src/preferences.cpp:116
 #, c-format
 msgid "Cannot create profile directory %s."
 msgstr "Kan profieldirectory %s niet aanmaken."
 
 #. The profile dir is not actually a directory
-#. _errorDialog(Glib::ustring::compose(_("%1 is not a valid directory."),
+#. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:140
+#: ../src/preferences.cpp:134
 #, c-format
 msgid "%s is not a valid directory."
 msgstr "%s is geen geldige directory"
 
 #. The write failed.
-#. _errorDialog(Glib::ustring::compose(_("Failed to create the preferences file %1."),
+#. _reportError(Glib::ustring::compose(_("Failed to create the preferences file %1."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:151
+#: ../src/preferences.cpp:145
 #, c-format
 msgid "Failed to create the preferences file %s."
 msgstr "Aanmaken van het voorkeurenbestand %s is mislukt."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:169
+#: ../src/preferences.cpp:163
 #, c-format
 msgid "The preferences file %s is not a regular file."
 msgstr "Het voorkeurenbestand %s is geen regulier bestand."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 could not be read."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 could not be read."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:181
+#: ../src/preferences.cpp:175
 #, c-format
 msgid "The preferences file %s could not be read."
 msgstr "Het voorkeurenbestand %s kon niet worden gelezen."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:193
+#: ../src/preferences.cpp:188
 #, c-format
 msgid "The preferences file %s is not a valid XML document."
 msgstr "Het voorkeurenbestand %s is geen geldig XML-document."
 
-#. _errorDialog(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
+#. _reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:203
+#: ../src/preferences.cpp:199
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "Het bestand %s is geen geldig Inkscape voorkeurenbestand."
@@ -9308,7 +9286,7 @@ msgstr "Dekking"
 msgid "Extent or scope of this document."
 msgstr "Dekking of lading van dit document."
 
-#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:218
+#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:219
 msgid "Description"
 msgstr "Beschrijving"
 
@@ -9404,7 +9382,7 @@ msgstr "Het verplaatsen is geannuleeerd."
 msgid "Selection canceled."
 msgstr "Het selecteren is geannuleeerd."
 
-#: ../src/select-context.cpp:563
+#: ../src/select-context.cpp:559
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
@@ -9412,7 +9390,7 @@ msgstr ""
 "<b>Sleep rondom</b> objecten om ze te selecteren; laat <b>Alt</b> los om "
 "over te schakelen naar elastiekselectie"
 
-#: ../src/select-context.cpp:565
+#: ../src/select-context.cpp:561
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
@@ -9420,26 +9398,26 @@ msgstr ""
 "<b>Sleep rondom</b> objecten om ze te selecteren; gebruik <b>Alt</b> in om "
 "over te schakelen naar aanraakselectie"
 
-#: ../src/select-context.cpp:728
+#: ../src/select-context.cpp:725
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
 "<b>Ctrl</b>: klik om in groepen te selecteren; sleep om horizontaal/"
 "verticaal te verplaatsen"
 
-#: ../src/select-context.cpp:729
+#: ../src/select-context.cpp:726
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
 "<b>Shift</b>: klik voor aan-/uitschakelen van selectie; sleep voor "
 "elastiekselectie"
 
-#: ../src/select-context.cpp:730
+#: ../src/select-context.cpp:727
 msgid ""
 "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
 "<b>Alt</b>: klik voor onderselectie; sleep om het geselecteerde te "
 "verplaatsen of om te selecteren door aanraking"
 
-#: ../src/select-context.cpp:901
+#: ../src/select-context.cpp:902
 msgid "Selected object is not a group. Cannot enter."
 msgstr "Het geselecteerde object is geen groep. Kan er niet in gaan."
 
@@ -10162,16 +10140,16 @@ msgstr "horizontaal, op %s"
 msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
 msgstr "op %d graden, door (%s,%s); <b>Ctrl</b>+klik verwijdert het"
 
-#: ../src/sp-image.cpp:1110
+#: ../src/sp-image.cpp:1128
 msgid "embedded"
 msgstr "ingevoegd"
 
-#: ../src/sp-image.cpp:1118
+#: ../src/sp-image.cpp:1136
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "<b>Afbeelding met ongeldige referentie</b>: %s"
 
-#: ../src/sp-image.cpp:1119
+#: ../src/sp-image.cpp:1137
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Afbeelding</b> %d &#215; %d: %s"
@@ -10196,26 +10174,26 @@ msgstr ""
 msgid "Create spiral"
 msgstr "Spiraal maken"
 
-#: ../src/sp-item.cpp:1029
+#: ../src/sp-item.cpp:1035
 msgid "Object"
 msgstr "Object"
 
-#: ../src/sp-item.cpp:1046
+#: ../src/sp-item.cpp:1052
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr "%s; <i>afgesneden</i>"
 
-#: ../src/sp-item.cpp:1051
+#: ../src/sp-item.cpp:1057
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr "%s; <i>gemaskeerd</i>"
 
-#: ../src/sp-item.cpp:1059
+#: ../src/sp-item.cpp:1065
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr "%s; <i>gefilterd (%s)</i>"
 
-#: ../src/sp-item.cpp:1061
+#: ../src/sp-item.cpp:1067
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>gefilterd</i>"
@@ -11415,14 +11393,14 @@ msgid "Nicely arrange selected connector network"
 msgstr "Het geselecteerde verbindingennetwerk netjes schikken"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:899
-#, fuzzy
 msgid "Align selected nodes to a common horizontal line"
-msgstr "De geselecteerde knopen horizontaal uitlijnen"
+msgstr ""
+"De geselecteerde knopen uitlijnen op een gemeenschappelijke horizontale lijn"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:902
-#, fuzzy
 msgid "Align selected nodes to a common vertical line"
-msgstr "De geselecteerde knopen verticaal uitlijnen"
+msgstr ""
+"De geselecteerde knopen uitlijnen op een gemeenschappelijke verticale lijn"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:905
 msgid "Distribute selected nodes horizontally"
@@ -11450,13 +11428,14 @@ msgid "Smallest object"
 msgstr "Kleinste object"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:918
-#: ../src/widgets/desktop-widget.cpp:1566
+#: ../src/widgets/desktop-widget.cpp:1562
 msgid "Drawing"
 msgstr "Tekening"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
-#: ../src/widgets/desktop-widget.cpp:1570
+#: ../src/ui/dialog/icon-preview.cpp:178
+#: ../src/widgets/desktop-widget.cpp:1566
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Selectie"
@@ -12000,7 +11979,7 @@ msgstr "Afbeeldingsbestand"
 msgid "Selected SVG Element"
 msgstr "Geselecteerd SVG element"
 
-#. TODO: any image, not justy svg
+#. TODO: any image, not just svg
 #: ../src/ui/dialog/filter-effects-dialog.cpp:648
 msgid "Select an image to be used as feImage input"
 msgstr "Selecteer een afbeelding om als feImage-invoer te gebruiken"
@@ -12517,14 +12496,14 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2289
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
-"the Porter-Duff blending modes or the aritmetic mode described in SVG "
+"the Porter-Duff blending modes or the arithmetic mode described in SVG "
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
 msgstr ""
 "Het <b>feComposite</b>-filtereffect verenigt twee afbeeldingen met één van "
 "de Porter-Duff-mengmodi of de rekenkundige modus beschreven in de SVG-"
-"standaard.  Porter-Duff-mengmodi zijn in essentie logische bewerkingen "
-"tussen de overeenkomende pixelwaarden van de afbeeldingen."
+"standaard. Porter-Duff-mengmodi zijn in essentie logische bewerkingen tussen "
+"de overeenkomende pixelwaarden van de afbeeldingen."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2293
 msgid ""
@@ -12660,6 +12639,55 @@ msgstr "Filtereffect dupliceren"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2409
 msgid "Set filter primitive attribute"
 msgstr "Eigenschap van filtereffect instellen"
+
+#: ../src/ui/dialog/guides.cpp:42
+msgid "Unit:"
+msgstr "Eenheid:"
+
+#: ../src/ui/dialog/guides.cpp:45
+msgid "Angle (degrees):"
+msgstr "Hoek (graden):"
+
+#: ../src/ui/dialog/guides.cpp:46
+msgid "Rela_tive change"
+msgstr "Rela_tieve verplaatsing"
+
+#: ../src/ui/dialog/guides.cpp:46
+msgid "Move and/or rotate the guide relative to current settings"
+msgstr ""
+"Hulplijn verplaatsen en/of verdraaiien relatief ten opzichte van de huidige "
+"instellingen"
+
+#: ../src/ui/dialog/guides.cpp:112
+msgid "Set guide properties"
+msgstr "Hulplijneigenschappen instellen"
+
+#: ../src/ui/dialog/guides.cpp:151
+msgid "Guideline"
+msgstr "Hulplijn"
+
+#: ../src/ui/dialog/guides.cpp:239
+#, c-format
+msgid "Guideline ID: %s"
+msgstr "Hulplijn ID: %s"
+
+#: ../src/ui/dialog/guides.cpp:245
+#, c-format
+msgid "Current: %s"
+msgstr "Huidig: %s"
+
+#: ../src/ui/dialog/icon-preview.cpp:130
+#, c-format
+msgid "%d x %d"
+msgstr "%d x %d"
+
+#: ../src/ui/dialog/icon-preview.cpp:180
+msgid "Selection only or whole document"
+msgstr ""
+
+#: ../src/ui/dialog/icon-preview.cpp:188
+msgid "Refresh the icons"
+msgstr "Pictogrammen verversen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:169
 msgid "Mouse"
@@ -14670,44 +14698,39 @@ msgstr ""
 #. TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
 #: ../src/ui/dialog/inkscape-preferences.cpp:1286
 msgid "User config: "
-msgstr ""
+msgstr "Instellingen gebruiker: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1290
-#, fuzzy
 msgid "User data: "
-msgstr "Gebruikersnaam:"
+msgstr "Data gebruiker:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1294
-#, fuzzy
 msgid "User cache: "
-msgstr "Gebruikersnaam:"
+msgstr "Cache gebruiker:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1298
-#, fuzzy
 msgid "System config: "
-msgstr "Systeeminfo"
+msgstr "Systeeminstellingen: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1301
-#, fuzzy
 msgid "System data: "
-msgstr "Systeemstandaard"
+msgstr "Systeemdata: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1304
 msgid "PIXMAP: "
-msgstr ""
+msgstr "PIXMAP: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1308
 msgid "DATA: "
-msgstr ""
+msgstr "DATA: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1312
-#, fuzzy
 msgid "UI: "
-msgstr "_ID: "
+msgstr "UI: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1321
 msgid "Icon theme: "
-msgstr ""
+msgstr "Pictogramthema: "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1336
 msgid "System info"
@@ -14773,6 +14796,50 @@ msgstr "_Toevoegen"
 #: ../src/ui/dialog/layer-properties.cpp:225
 msgid "New layer created."
 msgstr "De nieuwe laag is gemaakt."
+
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+msgid "Unhide layer"
+msgstr "Laag weergeven"
+
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+msgid "Hide layer"
+msgstr "Laag verbergen"
+
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+msgid "Lock layer"
+msgstr "Laag vergrendelen"
+
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+msgid "Unlock layer"
+msgstr "Laag ontgrendelen"
+
+#: ../src/ui/dialog/layers.cpp:645
+msgid "Layers"
+msgstr "Lagen"
+
+#: ../src/ui/dialog/layers.cpp:654
+msgid "New"
+msgstr "Nieuw"
+
+#: ../src/ui/dialog/layers.cpp:659 ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "Bov"
+
+#: ../src/ui/dialog/layers.cpp:665
+msgid "Up"
+msgstr "Ho"
+
+#: ../src/ui/dialog/layers.cpp:671
+msgid "Dn"
+msgstr "La"
+
+#: ../src/ui/dialog/layers.cpp:677
+msgid "Bot"
+msgstr "Ond"
+
+#: ../src/ui/dialog/layers.cpp:687
+msgid "X"
+msgstr "X"
 
 #. TRANSLATORS: this dialog is accessible via menu Path - Path Effect Editor...
 #: ../src/ui/dialog/livepatheffect-editor.cpp:78
@@ -15073,121 +15140,129 @@ msgstr "Geen letterteken geselecteerd in het venster SVG-lettertypen."
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:509
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:551
 msgid "Set glyph curves"
-msgstr "Curves Letterteken instellen"
+msgstr "Lettertekencurves instellen"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:566
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:570
+msgid "Reset missing-glyph"
+msgstr "Ontbrekend letterteken herinstellen"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:585
 msgid "Edit glyph name"
 msgstr "Lettertekennaam wijzigen"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:579
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:598
 msgid "Set glyph unicode"
 msgstr "Lettertekennaam instellen"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:589
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:608
 msgid "Remove font"
 msgstr "Lettertype verwijderen"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:604
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:623
 msgid "Remove glyph"
 msgstr "Letterteken verwijderen"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:619
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:638
 msgid "Remove kerning pair"
 msgstr "Overhangpaar verwijderen"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:629
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 msgid "Missing Glyph:"
 msgstr "Ontbrekend letterteken:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:632
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:652
 msgid "From selection..."
 msgstr "Van selectie..."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:642
-msgid "Glyph Name"
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:654
+#: ../src/ui/widget/preferences-widget.cpp:590
+msgid "Reset"
+msgstr "Beginwaarde"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:665
+msgid "Glyph name"
 msgstr "Naam letterteken"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:643
-msgid "Unicode"
-msgstr "Unicode"
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:666
+msgid "Matching string"
+msgstr "Overeenkomende string"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:646
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:669
 msgid "Add Glyph"
 msgstr "Letterteken toevoegen"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:653
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:676
 msgid "Get curves from selection..."
 msgstr "Curves van selectie overnemen..."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:703
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
 msgstr "Overhangpaar toevoegen"
 
 #. Kerning Setup:
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:711
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:734
 msgid "Kerning Setup:"
 msgstr "Instelling overhang"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:713
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
 msgstr "1ste letterteken:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:715
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
 msgid "2nd Glyph:"
 msgstr "2de letterteken:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:718
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:741
 msgid "Add pair"
 msgstr "Paar toevoegen"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:730
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:753
 msgid "First Unicode range"
 msgstr "Eerste Unicode range"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:731
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:754
 msgid "Second Unicode range"
 msgstr "Tweede Unicode range"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:761
 msgid "Kerning value:"
 msgstr "Overhangwaarde:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:796
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 msgid "Set font family"
 msgstr "Lettertypefamilie instellen"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:805
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:828
 msgid "font"
 msgstr "lettertype"
 
 #. select_font(font);
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:842
 msgid "Add font"
 msgstr "Lettertype toevoegen"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:839
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:862
 msgid "_Font"
 msgstr "_Lettertype"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:847
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:870
 msgid "_Global Settings"
 msgstr "_Globale instellingen"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:848
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:871
 msgid "_Glyphs"
 msgstr "_Lettertekens"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:849
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:872
 msgid "_Kerning"
 msgstr "_Overhang"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:856
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:857
-#, fuzzy
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:879
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:880
 msgid "Sample Text"
-msgstr "X-schaal"
+msgstr "Voorbeeldtekst"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:861
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:884
 msgid "Preview Text:"
 msgstr "Voorbeeldtekst:"
 
@@ -15869,7 +15944,7 @@ msgstr ""
 "te maken; gebruik aanwijsgereedschap (pijl) om ze te verplaatsen of te "
 "vervormen."
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:832
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -15883,11 +15958,11 @@ msgstr ""
 "Als u afsluit zonder opslaan, gaan de wijzigingen verloren."
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1258
-#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:899
+#: ../src/widgets/desktop-widget.cpp:839 ../src/widgets/desktop-widget.cpp:895
 msgid "Close _without saving"
 msgstr "Sluiten _zonder opslaan"
 
-#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:891
+#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:887
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -15900,7 +15975,7 @@ msgstr ""
 "\n"
 "Wilt u dit bestand opslaan in een Inkscape SVG-formaat?"
 
-#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:902
+#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:898
 msgid "_Save as SVG"
 msgstr "Op_slaan als SVG"
 
@@ -15928,22 +16003,6 @@ msgstr "Huidige laag"
 msgid "(root)"
 msgstr "(basis)"
 
-#: ../src/ui/widget/layer-selector.cpp:587
-msgid "Lock layer"
-msgstr "Laag vergrendelen"
-
-#: ../src/ui/widget/layer-selector.cpp:587
-msgid "Unlock layer"
-msgstr "Laag ontgrendelen"
-
-#: ../src/ui/widget/layer-selector.cpp:595
-msgid "Hide layer"
-msgstr "Laag verbergen"
-
-#: ../src/ui/widget/layer-selector.cpp:595
-msgid "Unhide layer"
-msgstr "Laag weergeven"
-
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
 msgstr "Niet-vrij"
@@ -15962,45 +16021,45 @@ msgstr "Vervaging wijzigen"
 msgid "Change opacity"
 msgstr "Ondoorzichtigheid wijzigen"
 
-#: ../src/ui/widget/page-sizer.cpp:208
+#: ../src/ui/widget/page-sizer.cpp:209
 msgid "U_nits:"
 msgstr "Ee_nheden:"
 
-#: ../src/ui/widget/page-sizer.cpp:209
+#: ../src/ui/widget/page-sizer.cpp:210
 msgid "Width of paper"
 msgstr "Breedte van het papier"
 
-#: ../src/ui/widget/page-sizer.cpp:210
+#: ../src/ui/widget/page-sizer.cpp:211
 msgid "Height of paper"
 msgstr "Hoogte van het papier"
 
 # Is iets mooier met een spatie.
-#: ../src/ui/widget/page-sizer.cpp:256
+#: ../src/ui/widget/page-sizer.cpp:257
 msgid "P_age size:"
 msgstr "P_aginagrootte: "
 
-#: ../src/ui/widget/page-sizer.cpp:264
+#: ../src/ui/widget/page-sizer.cpp:265
 msgid "Page orientation:"
 msgstr "Paginaoriëntatie:"
 
-#: ../src/ui/widget/page-sizer.cpp:267
+#: ../src/ui/widget/page-sizer.cpp:268
 msgid "_Landscape"
 msgstr "_Liggend"
 
-#: ../src/ui/widget/page-sizer.cpp:272
+#: ../src/ui/widget/page-sizer.cpp:273
 msgid "_Portrait"
 msgstr "_Staand"
 
 #. ## Set up custom size frame
-#: ../src/ui/widget/page-sizer.cpp:279
+#: ../src/ui/widget/page-sizer.cpp:280
 msgid "Custom size"
 msgstr "Aangepaste grootte"
 
-#: ../src/ui/widget/page-sizer.cpp:292
+#: ../src/ui/widget/page-sizer.cpp:293
 msgid "_Fit page to selection"
 msgstr "Pagina_formaat aanpassen aan selectie"
 
-#: ../src/ui/widget/page-sizer.cpp:293
+#: ../src/ui/widget/page-sizer.cpp:294
 msgid ""
 "Resize the page to fit the current selection, or the entire drawing if there "
 "is no selection"
@@ -16009,7 +16068,7 @@ msgstr ""
 "precies op past, of de gehele tekening als er niets geselecteerd is"
 
 # XXX Waar wordt dit gebruikt?
-#: ../src/ui/widget/page-sizer.cpp:351
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "Paginagrootte:"
 
@@ -16071,10 +16130,6 @@ msgstr "breder"
 #: ../src/ui/widget/panel.cpp:205
 msgid "swatches|Wrap"
 msgstr "Terugloop"
-
-#: ../src/ui/widget/preferences-widget.cpp:590
-msgid "Reset"
-msgstr "Beginwaarde"
 
 #: ../src/ui/widget/random.cpp:123
 msgid ""
@@ -18462,12 +18517,12 @@ msgstr "%s (silhouet) - Inkscape"
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
 
-#: ../src/widgets/ege-paint-def.cpp:69 ../src/widgets/ege-paint-def.cpp:91
+#: ../src/widgets/ege-paint-def.cpp:70 ../src/widgets/ege-paint-def.cpp:92
 #: ../src/widgets/gradient-selector.cpp:167
 msgid "none"
 msgstr "geen"
 
-#: ../src/widgets/ege-paint-def.cpp:88
+#: ../src/widgets/ege-paint-def.cpp:89
 msgid "remove"
 msgstr "verwijderen"
 
@@ -18988,10 +19043,10 @@ msgstr "Hexadecimale RGBA-waarde van de kleur"
 msgid "RGB"
 msgstr "RGB"
 
-# Tint-Verzadiging-Helderheid.
+# Tint-Verzadiging-Licht.
 #: ../src/widgets/sp-color-scales.cpp:79
 msgid "HSL"
-msgstr "TVH"
+msgstr "TVL"
 
 #: ../src/widgets/sp-color-scales.cpp:79
 msgid "CMYK"
@@ -19061,14 +19116,14 @@ msgstr "Scherpe hoek"
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1135
+#: ../src/widgets/stroke-style.cpp:1137
 msgid "Round join"
 msgstr "Afgeronde hoek"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1143
+#: ../src/widgets/stroke-style.cpp:1147
 msgid "Bevel join"
 msgstr "Platte hoek"
 
@@ -19079,11 +19134,11 @@ msgstr "Platte hoek"
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/widgets/stroke-style.cpp:1154
+#: ../src/widgets/stroke-style.cpp:1159
 msgid "Miter limit:"
 msgstr "Hoeklimiet:"
 
-#: ../src/widgets/stroke-style.cpp:1162
+#: ../src/widgets/stroke-style.cpp:1167
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 "Maximale lengte (in lijnbreedtes) van de punt die kan ontstaan bij scherpe "
@@ -19091,49 +19146,49 @@ msgstr ""
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/widgets/stroke-style.cpp:1174
+#: ../src/widgets/stroke-style.cpp:1179
 msgid "Cap:"
 msgstr "Uiteinde:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1185
+#: ../src/widgets/stroke-style.cpp:1191
 msgid "Butt cap"
 msgstr "Afgekapt einde"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:1192
+#: ../src/widgets/stroke-style.cpp:1199
 msgid "Round cap"
 msgstr "Rond einde"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1199
+#: ../src/widgets/stroke-style.cpp:1207
 msgid "Square cap"
 msgstr "Vierkant einde"
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:1205
+#: ../src/widgets/stroke-style.cpp:1213
 msgid "Dashes:"
 msgstr "Streepjes:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/widgets/stroke-style.cpp:1222
+#: ../src/widgets/stroke-style.cpp:1230
 msgid "Start Markers:"
 msgstr "Beginmarkering:"
 
-#: ../src/widgets/stroke-style.cpp:1224
+#: ../src/widgets/stroke-style.cpp:1232
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr ""
 "Beginmarkeringen worden getekend bij het eerste knooppunt van een pad of vorm"
 
-#: ../src/widgets/stroke-style.cpp:1233
+#: ../src/widgets/stroke-style.cpp:1241
 msgid "Mid Markers:"
 msgstr "Middenmarkering:"
 
-#: ../src/widgets/stroke-style.cpp:1235
+#: ../src/widgets/stroke-style.cpp:1243
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
@@ -19141,16 +19196,16 @@ msgstr ""
 "Middennmarkeringen worden getekend bij elk knooppunt van een pad of vorm "
 "behalve het eerste en laatste knooppunt"
 
-#: ../src/widgets/stroke-style.cpp:1244
+#: ../src/widgets/stroke-style.cpp:1252
 msgid "End Markers:"
 msgstr "Eindmarkering:"
 
-#: ../src/widgets/stroke-style.cpp:1246
+#: ../src/widgets/stroke-style.cpp:1254
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr ""
 "Eindmarkeringen worden getekend bij het laatste knooppunt van een pad of vorm"
 
-#: ../src/widgets/stroke-style.cpp:1569 ../src/widgets/stroke-style.cpp:1665
+#: ../src/widgets/stroke-style.cpp:1603 ../src/widgets/stroke-style.cpp:1699
 msgid "Set stroke style"
 msgstr "Lijnstijl instellen"
 
@@ -19192,7 +19247,7 @@ msgstr "Stijl van nieuwe kalligrafische lijnen"
 
 #: ../src/widgets/toolbox.cpp:203 ../src/widgets/toolbox.cpp:205
 msgid "TBD"
-msgstr ""
+msgstr "Te bepalen"
 
 #: ../src/widgets/toolbox.cpp:215
 msgid "Style of Paint Bucket fill objects"
@@ -20942,12 +20997,11 @@ msgstr "Geen data voor randen gevonden in het opgegeven bestand\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:510
-#, fuzzy
 msgid ""
 "Face Data Not Found. Ensure file contains face data, and check the file is "
 "imported as \"Face-Specified\" under the \"Model File\" tab.\n"
 msgstr ""
-"Geen data voor zijden gevonden. Zorg ervoor dat het bestand deze data bevat "
+"Geen data over zijden gevonden. Zorg ervoor dat het bestand deze data bevat "
 "en dat het bestand wordt geïmporteerd als \"Door zijde bepaald\" bij het "
 "tabblad \"Modelbestand\".\n"
 
@@ -20964,7 +21018,12 @@ msgstr "Het tweede pad moet exact vier knooppunten lang zijn."
 msgid "Could not locate file: %s"
 msgstr "Kon bestand niet vinden: %s"
 
-#. vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
+#: ../share/extensions/web-set-att.py:52
+#: ../share/extensions/web-transmit-att.py:48
+#, fuzzy
+msgid "You must select at least two elements."
+msgstr "Je moet tenminste twee elementen selecteren."
+
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
 msgstr "Knooppunten toevoegen"
@@ -21388,11 +21447,11 @@ msgstr "AutoCAD's Document Exchange Format importeren"
 
 #: ../share/extensions/dxf_input.inx.h:4
 msgid "Or, use manual scale factor"
-msgstr ""
+msgstr "Of manuele schalingsfactor gebruiken"
 
 #: ../share/extensions/dxf_input.inx.h:5
 msgid "Use automatic scaling to size A4"
-msgstr ""
+msgstr "Automatisch schalen tot A4-grootte toepassen"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
 msgid "Desktop Cutting Plotter"
@@ -21565,6 +21624,7 @@ msgid "Calculate first derivative numerically"
 msgstr "De eerste afgeleide numeriek berekenen"
 
 #: ../share/extensions/funcplot.inx.h:2
+#: ../share/extensions/param_curves.inx.h:1
 msgid "Draw Axes"
 msgstr "Assen trekken"
 
@@ -21585,6 +21645,7 @@ msgid "Function Plotter"
 msgstr "Functieplotter"
 
 #: ../share/extensions/funcplot.inx.h:7
+#: ../share/extensions/param_curves.inx.h:3
 msgid "Functions"
 msgstr "Functies"
 
@@ -21607,6 +21668,7 @@ msgid "Range and sampling"
 msgstr "Bereik en bemonstering"
 
 #: ../share/extensions/funcplot.inx.h:12
+#: ../share/extensions/param_curves.inx.h:8
 msgid "Remove rectangle"
 msgstr "Rechthoek verwijderen"
 
@@ -21626,6 +21688,7 @@ msgstr ""
 "numeriek berekend."
 
 #: ../share/extensions/funcplot.inx.h:15
+#: ../share/extensions/param_curves.inx.h:12
 msgid ""
 "Standard Python math functions are available: ceil(x); fabs(x); floor(x); "
 "fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); "
@@ -21644,6 +21707,7 @@ msgid "Start X value"
 msgstr "X-beginwaarde"
 
 #: ../share/extensions/funcplot.inx.h:17
+#: ../share/extensions/param_curves.inx.h:14
 msgid "Use"
 msgstr "Gebruik"
 
@@ -21961,26 +22025,6 @@ msgstr "_Meld een programmafout"
 msgid "SVG 1.1 Specification"
 msgstr "SVG 1.1-specificatie"
 
-#: ../share/extensions/interp.inx.h:1
-msgid "Duplicate endpaths"
-msgstr "Eindpaden dupliceren"
-
-#: ../share/extensions/interp.inx.h:4
-msgid "Interpolate"
-msgstr "Interpoleren"
-
-#: ../share/extensions/interp.inx.h:5
-msgid "Interpolate style"
-msgstr "Stijl interpoleren"
-
-#: ../share/extensions/interp.inx.h:6
-msgid "Interpolation method"
-msgstr "Interpolatiemethode"
-
-#: ../share/extensions/interp.inx.h:7
-msgid "Interpolation steps"
-msgstr "Interpolatiestappen"
-
 #: ../share/extensions/interp_att_g.inx.h:1
 msgid "Attribute to Interpolate"
 msgstr "Te interpoleren attribuut"
@@ -22065,6 +22109,26 @@ msgstr "Waarop toe te passen?"
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
 msgstr "••••••••••••••••••••••••••••••••••••••••••••••••"
+
+#: ../share/extensions/interp.inx.h:1
+msgid "Duplicate endpaths"
+msgstr "Eindpaden dupliceren"
+
+#: ../share/extensions/interp.inx.h:4
+msgid "Interpolate"
+msgstr "Interpoleren"
+
+#: ../share/extensions/interp.inx.h:5
+msgid "Interpolate style"
+msgstr "Stijl interpoleren"
+
+#: ../share/extensions/interp.inx.h:6
+msgid "Interpolation method"
+msgstr "Interpolatiemethode"
+
+#: ../share/extensions/interp.inx.h:7
+msgid "Interpolation steps"
+msgstr "Interpolatiestappen"
 
 #: ../share/extensions/lindenmayer.inx.h:1
 msgid "Axiom"
@@ -22214,6 +22278,68 @@ msgstr "Text Outline-bestand (*.outline)"
 #: ../share/extensions/outline2svg.inx.h:3
 msgid "Text Outline Input"
 msgstr "Text Outline-invoer"
+
+#: ../share/extensions/param_curves.inx.h:2
+msgid "End t-value"
+msgstr "T-eindwaarde"
+
+#: ../share/extensions/param_curves.inx.h:4
+msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
+msgstr ""
+"Isotropische schaling (gebruikt kleinste: breedte/x-interval of hoogte/y-"
+"interval)"
+
+#: ../share/extensions/param_curves.inx.h:5
+msgid "Multiply t-range by 2*pi"
+msgstr "T-interval vermenigvuldigen met 2*pi"
+
+#: ../share/extensions/param_curves.inx.h:6
+msgid "Parametric Curves"
+msgstr "Parametrische curves"
+
+#: ../share/extensions/param_curves.inx.h:7
+msgid "Range and Sampling"
+msgstr "Bereik en bemonstering"
+
+#: ../share/extensions/param_curves.inx.h:10
+msgid "Samples"
+msgstr "Punten"
+
+#: ../share/extensions/param_curves.inx.h:11
+msgid ""
+"Select a rectangle before calling the extension; it will determine X and Y "
+"scales. First derivatives are always determined numerically."
+msgstr ""
+"Selecteer een rechthoek voorlaeer deze extensie te gebruiken; dit bepaalt de "
+"X- en en Y-schaal. Eerste afgeleiden worden altijd numeriek bepaald."
+
+#: ../share/extensions/param_curves.inx.h:13
+msgid "Start t-value"
+msgstr "T-beginwaarde"
+
+#: ../share/extensions/param_curves.inx.h:15
+msgid "x-Function"
+msgstr "x-Functie"
+
+#: ../share/extensions/param_curves.inx.h:16
+msgid "x-value of rectangle's left"
+msgstr "x-waarde van linkerzijde rechthoek"
+
+#: ../share/extensions/param_curves.inx.h:17
+msgid "x-value of rectangle's right"
+msgstr "x-waarde van rechterzijde rechthoek"
+
+#: ../share/extensions/param_curves.inx.h:18
+msgid "y-Function"
+msgstr "y-Functie"
+
+#: ../share/extensions/param_curves.inx.h:19
+msgid "y-value of rectangle's bottom"
+msgstr "y-waarde van onderzijde rechthoek"
+
+#: ../share/extensions/param_curves.inx.h:20
+msgid "y-value of rectangle's top"
+msgstr "y-waarde van bovenzijde rechthoek"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Copies of the pattern:"
@@ -22731,10 +22857,6 @@ msgstr "Richting herstapelen"
 msgid "Right to Left (180)"
 msgstr "Rechts naar links (180)"
 
-#: ../share/extensions/restack.inx.h:16
-msgid "Top"
-msgstr "Bovenzijde"
-
 #: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
 msgstr "Boven naar onder (270)"
@@ -22774,12 +22896,21 @@ msgid "Open files saved in sK1 vector graphics editor"
 msgstr "Open bestanden opgeslagen met sK1 vector graphics editor"
 
 #: ../share/extensions/sk1_input.inx.h:2
+#: ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (.sk1)"
 msgstr "sK1 vector graphics bestanden (.sk1)"
 
 #: ../share/extensions/sk1_input.inx.h:3
 msgid "sK1 vector graphics files input"
 msgstr "sK1 vector graphics invoer"
+
+#: ../share/extensions/sk1_output.inx.h:1
+msgid "File format for use in sK1 vector graphics editor"
+msgstr "Bestandsformaat voor gebruik in de sK1 vector graphics editor"
+
+#: ../share/extensions/sk1_output.inx.h:3
+msgid "sK1 vector graphics files output"
+msgstr "sK1 vector graphics uitvoer"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
@@ -23107,9 +23238,8 @@ msgid "Text Input"
 msgstr "Tekstinvoer"
 
 #: ../share/extensions/web-set-att.inx.h:1
-#, fuzzy
 msgid "All selected ones set an attribute in the last one"
-msgstr "Alle attributen kopiëren naar de laatste"
+msgstr "Alle geselecteerde items stellen een attribuut in bij het laatste"
 
 #: ../share/extensions/web-set-att.inx.h:2
 msgid "Attribute to set"
@@ -23139,17 +23269,16 @@ msgid "Run it before"
 msgstr "Uitvoeren voor"
 
 #: ../share/extensions/web-set-att.inx.h:8
-msgid "Set Atributes"
-msgstr "Attributen veranderen"
+msgid "Set Attributes"
+msgstr "Attributen instellen"
 
 #: ../share/extensions/web-set-att.inx.h:9
-#, fuzzy
 msgid "Source and destination of setting"
-msgstr "Bron en bestemming van kopiëren"
+msgstr "Bron en bestemming van instelling"
 
 #: ../share/extensions/web-set-att.inx.h:10
 msgid "The first selected set an attribute in all others"
-msgstr ""
+msgstr "Het eerste geselecteerde stelt een attribuut in bij alle andere"
 
 #: ../share/extensions/web-set-att.inx.h:11
 msgid "The list of values must have the same size of the attributes list."
@@ -23245,9 +23374,8 @@ msgid "on mouse up"
 msgstr "bij muisknop loslaten"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-#, fuzzy
 msgid "All selected ones transmits to the last one"
-msgstr "Alle attributen kopiëren naar de laatste"
+msgstr "Alle geselecteerde kopiëren naar de laatste"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
 msgid "Attribute to transmit"
@@ -23266,9 +23394,8 @@ msgid "Source and destination of transmitting"
 msgstr "Bron en bestemming van kopiëren"
 
 #: ../share/extensions/web-transmit-att.inx.h:9
-#, fuzzy
 msgid "The first selected transmits to all others"
-msgstr "Het eerste attribuut naar alle andere kopiëren"
+msgstr "Het eerste geselecteerd naar alle andere kopiëren"
 
 #: ../share/extensions/web-transmit-att.inx.h:12
 msgid ""
@@ -23317,24 +23444,47 @@ msgstr "Windows Metafile-invoer"
 msgid "XAML Input"
 msgstr "XAML-invoer"
 
-#~ msgid "Glow and draw"
-#~ msgstr "Belichten en tekenen"
+#~ msgid "Rainbow melt"
+#~ msgstr "Regenboogsmelt"
 
-#~ msgid "Glowing content, posterized edges"
-#~ msgstr "Heldere inhoud, geposteriseerde randen"
+#~ msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
+#~ msgstr "Verticale regenboogstrepen, omzoomd door vlekken met 3D reliëf"
+
+#~ msgid "Comics rounded"
+#~ msgstr "Cartoon afgerond"
+
+#~ msgid "Imitation of black and white cartoon shading more rounded version"
+#~ msgstr "Imitatie van zwartwitte cartoon shader, meer afgeronde versie"
+
+#~ msgid "Pewter NR"
+#~ msgstr "Tin NR"
+
+#~ msgid "Mid grey satin like shader close to pewter"
+#~ msgstr "Halfgrijze satijnachtige shader gelijkend op tin"
+
+#~ msgid "Comics flow"
+#~ msgstr "Cartoon stroming"
+
+#~ msgid "Comics shader with a flow inside transparency"
+#~ msgstr "Cartoon shaders met een stroming in de transparantie"
+
+#~ msgid "Preferred resolution (DPI) of bitmaps"
+#~ msgstr "Gewenste resolutie (DPI) van bitmaps"
+
+#~ msgid "Deactivate knotholder?"
+#~ msgstr "Knoophouder deactiveren?"
 
 #~ msgid ""
-#~ "Same than HSL bubbles but with an alpha added for combination with "
-#~ "transparency depending filters"
+#~ "Check this to deactivate knotholder handles (useful if they interfere "
+#~ "with node handles during editing)"
 #~ msgstr ""
-#~ "Gelijk aan TVH-bellen, maar met een alfa voor combinatie met "
-#~ "transparantieafhankelijke filters"
+#~ "Vink dit aan om de handvaten van de knopen te deactiveren (handig indien "
+#~ "deze interfereren met de handvaten van knooppuntten tijdens het bewerken)"
 
-#~ msgid "Ghosten"
-#~ msgstr "Spookbeeld"
+#~ msgid "The resolution used for exporting SVG into bitmap (default 90)"
+#~ msgstr ""
+#~ "De resolutie die gebruikt wordt om SVG naar bitmap te exporteren "
+#~ "(standaard 90)"
 
-#~ msgid "Turns light or dark areas to transparency"
-#~ msgstr "Lichte of donkere delen transparant maken"
-
-#~ msgid "all_inactive"
-#~ msgstr "allemaal _inactief"
+#~ msgid "Unicode"
+#~ msgstr "Unicode"
