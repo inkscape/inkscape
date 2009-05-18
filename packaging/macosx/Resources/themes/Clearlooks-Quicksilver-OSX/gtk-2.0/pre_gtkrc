@@ -500,9 +500,23 @@ widget_class "*.GtkFrame.GtkLabel" style "clearlooks-frame-title"
 widget_class "*.GtkNotebook.*.GtkEventBox" style "clearlooks-notebook"
 widget_class "*.GtkNotebook.*.GtkViewport" style "clearlooks-notebook"
 
-gtk-font-name="Lucida Grande 11"
-gtk-icon-theme-name = "gnome"
-gtk-icon-sizes = "gtk-menu=16,16:gtk-dialog=48,48:gtk-dnd=32,32:gtk-button=20,20:gtk-large-toolbar=24,24:gtk-small-toolbar=16,16:inkscape-decoration=12,12"
+# Not specifying the font size chooses 10
+# OS X uses 11 but due to differences in font smoothing, 10 actually integrates better
+gtk-font-name="Lucida Grande"
+
+# icon sizes: 48, 32, 24 (tango=22), 16
+#
+# gtk-dialog		main icon in a dialog box: e.g. alert when file is not saved
+# gtk-dnd			icon showed while dragging and dropping (not used on OS X)
+# gtk-button		buttons: OK/Cancel dialogs, usually 22 but 16 is more OS X-ish
+# gtk-large-toolbar	large toolbar: toolbox
+# gtk-small-toolbar	small toolbar: command bar, tools control, snap control
+# gtk-menu			menus in applications: File, Edit
+# panel-menu		general Application/Places menu (not used on OS X)
+#
+# insckape-decoration	layers lock, "affect" icons, etc.
+#
+gtk-icon-sizes = "gtk-dialog=48,48:gtk-button=16,16:gtk-large-toolbar=22,22:gtk-small-toolbar=16,16:gtk-menu=16,16:inkscape-decoration=16,16"
 
 # use OS X default pdf-viewer for print preview
 gtk-print-preview-command="/usr/bin/open %f"
