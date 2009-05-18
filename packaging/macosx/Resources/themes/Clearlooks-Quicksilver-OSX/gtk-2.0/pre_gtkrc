@@ -500,9 +500,8 @@ widget_class "*.GtkFrame.GtkLabel" style "clearlooks-frame-title"
 widget_class "*.GtkNotebook.*.GtkEventBox" style "clearlooks-notebook"
 widget_class "*.GtkNotebook.*.GtkViewport" style "clearlooks-notebook"
 
-# Not specifying the font size chooses 10
 # OS X uses 11 but due to differences in font smoothing, 10 actually integrates better
-gtk-font-name="Lucida Grande"
+gtk-font-name="Lucida Grande 10"
 
 # icon sizes: 48, 32, 24 (tango=22), 16
 #
