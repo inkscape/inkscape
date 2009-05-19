@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-28 18:31+0200\n"
+"POT-Creation-Date: 2009-05-19 11:58+0200\n"
 "PO-Revision-Date: 2008-09-13 11:23+0700\n"
 "Last-Translator: Nguyễn Đình Trung <nguyendinhtrung141@gmail.com>\n"
 "Language-Team: Vietnamese <vi-bugs@googlegroups.com>\n"
@@ -34,12 +34,12 @@ msgstr "Kênh xỉn"
 #: ../share/filters/filters.svg.h:4 ../share/filters/filters.svg.h:5
 #: ../share/filters/filters.svg.h:10 ../share/filters/filters.svg.h:15
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:40
-#: ../share/filters/filters.svg.h:51 ../share/filters/filters.svg.h:52
-#: ../share/filters/filters.svg.h:53 ../share/filters/filters.svg.h:54
-#: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:72 ../share/filters/filters.svg.h:74
-#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:105
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:52 ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:71 ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:105
 #, fuzzy
 msgid "Bevels"
 msgstr "Chỉnh mức"
@@ -79,10 +79,10 @@ msgid "Motion blur, horizontal"
 msgstr "Di chuyển theo chiều ngang"
 
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
-#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:60
-#: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:164
 #, fuzzy
 msgid "Blurs"
 msgstr "Làm mờ"
@@ -121,8 +121,8 @@ msgid "Cutout"
 msgstr "dời ra"
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:88 ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 #, fuzzy
@@ -147,10 +147,10 @@ msgstr ""
 msgid "Roughen"
 msgstr "Chế độ làm cho gồ ghề"
 
-#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:125
 msgid "ABCs"
 msgstr ""
 
@@ -168,8 +168,8 @@ msgstr "Số răng"
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
 #: ../share/filters/filters.svg.h:22 ../share/filters/filters.svg.h:23
 #: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
-#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:117
-#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:120
 #, fuzzy
 msgid "Overlays"
 msgstr "Trên"
@@ -223,9 +223,9 @@ msgstr ""
 msgid "Ripple"
 msgstr "Gợn sóng"
 
-#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:45
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:115
 #, fuzzy
 msgid "Distort"
 msgstr "Ước số"
@@ -266,15 +266,15 @@ msgstr ""
 msgid "Leopard fur"
 msgstr "Lông báo"
 
-#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:60
 #: ../share/filters/filters.svg.h:61 ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:70 ../share/filters/filters.svg.h:81
-#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:93
-#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:158
-#: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:159
 #, fuzzy
 msgid "Materials"
 msgstr "Ma trận"
@@ -308,10 +308,11 @@ msgstr "Mài sắc"
 #: ../share/filters/filters.svg.h:26 ../share/filters/filters.svg.h:27
 #: ../share/filters/filters.svg.h:28 ../share/filters/filters.svg.h:29
 #: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
-#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:100
-#: ../share/filters/filters.svg.h:101 ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:128
-#: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:165 ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:168
 #, fuzzy
 msgid "Image effects"
 msgstr "Quản lý các hiệu ứng đường nét"
@@ -392,9 +393,9 @@ msgid "Desaturate"
 msgstr "Giảm bão hoà"
 
 #: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:33
-#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:75
-#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:93 ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:162
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -455,16 +456,16 @@ msgstr ""
 msgid "Organic"
 msgstr "Gốc X"
 
-#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:44
-#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:64
-#: ../share/filters/filters.svg.h:66 ../share/filters/filters.svg.h:67
-#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:86
-#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:129
-#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:131
-#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:134
-#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:136
-#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
-#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:65 ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:83 ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:160
 #, fuzzy
 msgid "Textures"
 msgstr "Văn bản"
@@ -527,1186 +528,1176 @@ msgid "Random paint streaks downwards"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:43
-msgid "Rainbow melt"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:43
-msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:44
 #, fuzzy
 msgid "Jam spread"
 msgstr "Trải"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Glossy clumpy jam spread"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 #, fuzzy
 msgid "Pixel smear"
 msgstr "Điểm ảnh"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 #, fuzzy
 msgid "Van Gogh painting effect for bitmaps"
 msgstr "Chuyển đổi hiệu ứng làm mờ sang mảng "
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Pixel smear, glossy"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 #, fuzzy
 msgid "Glossy painting effect for bitmaps"
 msgstr "Chuyển đổi hiệu ứng làm mờ sang mảng "
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 #, fuzzy
 msgid "HSL Bumps"
 msgstr "Ảnh Bitmap"
 
-#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:49
-#: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:166
 #, fuzzy
 msgid "Bumps"
 msgstr "Ảnh Bitmap"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 #, fuzzy
 msgid "Cracked glass"
 msgstr "ô thuỷ tinh"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 #, fuzzy
 msgid "Under a cracked glass"
 msgstr "ô thuỷ tinh"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "HSL bubbles"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:107
 msgid ""
 "Highly flexible bubbles effect depending on color hue saturation and "
 "luminance"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Glowing bubble"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:55
-#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:68
-#: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:68 ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:72
 #, fuzzy
 msgid "Ridges"
 msgstr "Cạnh"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Bubble effect with refraction and glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 #, fuzzy
 msgid "Neon"
 msgstr "Không có"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Neon light effect with glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 #, fuzzy
 msgid "Melt and glow"
 msgstr "Góc bên trái"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 #, fuzzy
 msgid "Badge"
 msgstr "Cạnh"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Metal or plastic badge bevel"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 #, fuzzy
 msgid "Pastel Bevel"
 msgstr "Dán kích cỡ"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin like a soap membrane"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 #, fuzzy
 msgid "Soft ridge"
 msgstr "Ánh sáng chấm"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 #, fuzzy
 msgid "Soft pastel ridge"
 msgstr "Đặt kích cỡ trang"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Glowing metal"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Bright and glowing metal texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 #, fuzzy
 msgid "Leaves"
 msgstr "Chỉnh mức"
 
-#: ../share/filters/filters.svg.h:58 ../share/filters/filters.svg.h:80
-#: ../share/filters/filters.svg.h:89 ../share/extensions/pathscatter.inx.h:10
+#: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:88 ../share/extensions/pathscatter.inx.h:10
 #, fuzzy
 msgid "Scatter"
 msgstr "Rải"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Leaves on the ground in Fall, or living foliage"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 #, fuzzy
 msgid "Translucent"
 msgstr "Tam giác"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Illuminated translucent plastic effect"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 #, fuzzy
 msgid "Cross-smooth"
 msgstr "mịn"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 #, fuzzy
 msgid "Blur inner borders and intersections"
 msgstr "Giao khi đính lưới/nết dẫn"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Iridescent beeswax"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 #, fuzzy
 msgid "Eroded metal"
 msgstr "Siêu tập tin đã tăng cường"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Cracked Lava"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "A volcanic texture, a little like leather"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 #, fuzzy
 msgid "Bark"
 msgstr "Dấu"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Bark texture, vertical; use with deep colors"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Lizard skin"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Stylized reptile skin texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 #, fuzzy
 msgid "Stone wall"
 msgstr "Xóa tất cả"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Stone wall texture to use with dark colors"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet texture, horizontal stripes"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 #, fuzzy
 msgid "Refractive gel A"
 msgstr "_Thay đổi tương đối"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Gel effect with light refraction"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 #, fuzzy
 msgid "Refractive gel B"
 msgstr "_Thay đổi tương đối"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Gel effect with strong refraction"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 #, fuzzy
 msgid "Metallized paint"
 msgstr "Bật bộ đo"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 #, fuzzy
 msgid "Dragee"
 msgstr "Kéo đường cong"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge with a pearlescent look"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 #, fuzzy
 msgid "Raised border"
 msgstr "Nâng nút lên"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Strongly raised border around a flat surface"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Metallized ridge"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Gel Ridge metallized at its top"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 #, fuzzy
 msgid "Fat oil"
 msgstr "Màu phẳng"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Fat oil with some adjustable turbulence"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
 msgstr "Tô màu"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Gives the flood color to the dark parts of the image"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 #, fuzzy
 msgid "Parallel hollow"
 msgstr "Offset bắt đầu:"
 
-#: ../share/filters/filters.svg.h:76 ../share/filters/filters.svg.h:77
-#: ../share/filters/filters.svg.h:78 ../share/filters/filters.svg.h:79
-#: ../share/filters/filters.svg.h:90 ../share/filters/filters.svg.h:91
-#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:133 ../src/filter-enums.cpp:31
+#: ../share/filters/filters.svg.h:75 ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:77 ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:132 ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Hình thái học"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "A blurry hollow going parallel to the edge on the inside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 #, fuzzy
 msgid "Hole"
 msgstr "Role:"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Opens a smooth hole inside the shape"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 #, fuzzy
 msgid "Black hole"
 msgstr "Nét đen"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Creates a black light inside and outside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 #, fuzzy
 msgid "Smooth outline"
 msgstr "%s (nét ngoài) - Inkscape"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Outlining the lines and smoothing their crossings"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 #, fuzzy
 msgid "Cubes"
 msgstr "Lập phương"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 #, fuzzy
 msgid "Peel off"
 msgstr "Offset bắt đầu:"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Peeling painting on a wall"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 #, fuzzy
 msgid "Gold splatter"
 msgstr "Di chuyển mẫu"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Splattered cast metal, with golden highlights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 #, fuzzy
 msgid "Gold paste"
 msgstr "Tỷ lệ nan hoa"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Fat pasted cast metal, with golden highlights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled plastic"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled matte plastic, with melted edge"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Enamel jewelry"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Slightly cracked enameled texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 #, fuzzy
 msgid "Rough paper"
 msgstr "Chế độ làm cho gồ ghề"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Rough and glossy"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid ""
 "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 #, fuzzy
 msgid "In and Out"
 msgstr "Không có sơn"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Inner colorized shadow, outer black shadow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Air spray"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Air Spray; adjust the Displacement Map amount"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Warm inside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, filled inside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 #, fuzzy
 msgid "Cool outside"
 msgstr "Nét ngoài hộp"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Blurred colorized contour, empty inside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Electronic microscopy"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid ""
 "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 #, fuzzy
 msgid "Tartan"
 msgstr "Đích"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Checkered tartan pattern"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 #, fuzzy
 msgid "Invert hue"
 msgstr "Đảo"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Invert hue, or rotate it"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 #, fuzzy
 msgid "Outline"
 msgstr "Nét ng_oài"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 #, fuzzy
 msgid "Draws an outline around"
 msgstr "Vẽ đường nét là lưới"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 #, fuzzy
 msgid "Outline, double"
 msgstr "Nét ng_oài"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 #, fuzzy
 msgid "Fancy blur"
 msgstr "Đổi mờ"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 #, fuzzy
 msgid "Glow"
 msgstr "Thả màu"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Glow of object's own color at the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 #, fuzzy
 msgid "Ghost outline"
 msgstr "Nét ngoài hộp"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Adds a glowing blur and removes the shape"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 #, fuzzy
 msgid "Color emboss"
 msgstr "Màu sắc"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Soft bump"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Convolution bump; with a blur, it can give nice embossing effects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "Làm hỏng vì phơi quá"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Classical photographic solarization effect"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 #, fuzzy
 msgid "Moonarize"
 msgstr "Tô màu"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "Soft focus lens"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "Glowing image content without blurring it"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 #, fuzzy
 msgid "Stained glass"
 msgstr "ô thuỷ tinh"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 #, fuzzy
 msgid "Illuminated stained glass effect"
 msgstr "Góc chiếu sáng"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Dark glass"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106
 msgid "HSL Bumps, alpha"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:170
+msgid "Masking tools"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:106
 msgid ""
 "Same than HSL bumps but with an alpha added for combination with "
 "transparency depending filters"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 msgid "HSL Bubbles, alpha"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 #, fuzzy
 msgid "Smooth edges"
 msgstr "Độ mịn"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid ""
 "Smooth the outside of shapes and pictures without altering their contents"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 #, fuzzy
 msgid "Torn edges"
 msgstr "Di chuyển các nút"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 #, fuzzy
 msgid "Feather"
 msgstr "Mét"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 #, fuzzy
 msgid "Blur content"
 msgstr "Chế độ _pha màu :"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 #, fuzzy
 msgid "Specular light"
 msgstr "Ánh sáng long lanh"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Basic specular bevel to use for building textures"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 #, fuzzy
 msgid "Roughen inside"
 msgstr "Chế độ làm cho gồ ghề"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Roughen all inside shapes"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Evanescent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Chalk and sponge"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 #, fuzzy
 msgid "People"
 msgstr "Thay thế"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Colorized blotches, like a crowd of people"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 #, fuzzy
 msgid "Scotland"
 msgstr "Xiên"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Colorized mountain tops out of the fog"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 #, fuzzy
 msgid "Noise transparency"
 msgstr "0 (trong suốt)"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Basic noise transparency texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 #, fuzzy
 msgid "Noise fill"
 msgstr "Không tô"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "Garden of Delights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid ""
 "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 #, fuzzy
 msgid "Diffuse light"
 msgstr "Ánh sáng khuếch tán"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Basic diffuse bevel to use for building textures"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 #, fuzzy
 msgid "Cutout Glow"
 msgstr "dời ra"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid "HSL Bumps, diffuse"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid ""
 "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 #, fuzzy
 msgid "Dark Emboss"
 msgstr "Chạm nổi"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid "HSL Bubbles, diffuse"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid ""
 "Same than HSL bubbles but with a diffuse light instead of a specular one"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "Chạm nổi"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Blotting paper"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Inkblot on blotting paper"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 #, fuzzy
 msgid "Wax print"
 msgstr "In LaTeX"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Wax print on tissue texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot on tissue or rough paper"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 #, fuzzy
 msgid "Burnt edges"
 msgstr "Hộp biên"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Burnt paper edges texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 #, fuzzy
 msgid "Color outline"
 msgstr "Màu của các đường gióng"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "A colorizable outline with adjustable width and blur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Liquid"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Colorizable filling with liquid transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 #, fuzzy
 msgid "Watercolor"
 msgstr "Dán màu"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Cloudy watercolor effect"
 msgstr ""
 
 # Name: don't translate / Tên: đừng dịch
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 #, fuzzy
 msgid "Felt"
 msgstr "Chân nổi"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid ""
 "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 #, fuzzy
 msgid "Ink paint"
 msgstr "Không có sơn"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Tinted rainbow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 #, fuzzy
 msgid "Melted rainbow"
 msgstr "Góc bên trái"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:139
 #, fuzzy
 msgid "Darken edges"
 msgstr "Tối hơn"
 
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 msgid "Enhance outline and glows inside and outside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Dark and glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Flex metal"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Comics draft"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:143 ../share/filters/filters.svg.h:144
-#: ../share/filters/filters.svg.h:145 ../share/filters/filters.svg.h:146
-#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:148
-#: ../share/filters/filters.svg.h:149 ../share/filters/filters.svg.h:150
-#: ../share/filters/filters.svg.h:151 ../share/filters/filters.svg.h:152
-#: ../share/filters/filters.svg.h:153 ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:164
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:146 ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:148 ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:150 ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:161
 msgid "Non realistic shaders"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Comics fading"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Cartoon paint style with some fading at the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 #, fuzzy
 msgid "Smooth shader NR"
 msgstr "Độ mịn"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shading with a graphite pencil grey"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Emboss shader NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Combination of smooth shading and embossing"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Smooth shader dark NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Dark version of non realistic smooth shading"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 #, fuzzy
 msgid "Comics"
 msgstr "Kết hợp"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 #, fuzzy
 msgid "Imitation of black and white cartoon shading"
 msgstr "Đảo ngược vùng màu đen và màu trắng"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 #, fuzzy
 msgid "Satin NR"
 msgstr "Đầu"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 #, fuzzy
 msgid "Frosted glass NR"
 msgstr "ô thuỷ tinh"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Smooth shader contour NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Contouring version of smooth shader"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:152
-#, fuzzy
-msgid "Comics rounded"
-msgstr "không tròn"
-
-#: ../share/filters/filters.svg.h:152
-msgid "Imitation of black and white cartoon shading more rounded version"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:153
-msgid "Pewter NR"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:153
-msgid "Mid grey satin like shader close to pewter"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Aluminium NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Brushed aluminium shader"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 msgid "Comics fluid"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 #, fuzzy
 msgid "Fluid brushed cartoon drawing"
 msgstr "Vừa trang khít bản vẽ"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 msgid "Chrome NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 msgid "Non realistic chrome shader with strong speculars"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Chrome dark NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Wavy tartan"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D marble"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D warped marble texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 #, fuzzy
 msgid "3D wood"
 msgstr "Hộp 3D"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 msgid "3D warped, fibered wood texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 #, fuzzy
 msgid "Mother of pearl"
 msgstr "Chiều rộng của trang"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 msgid "3D warped, iridescent pearly shell texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 #, fuzzy
 msgid "Tiger fur"
 msgstr "Lông báo"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 #, fuzzy
 msgid "Flow inside"
 msgstr "Chế độ làm cho gồ ghề"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 msgid "Colorizable filling with flow inside like transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:164
-msgid "Comics flow"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:164
-msgid "Comics shader with a flow inside transparency"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics cream"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics shader with creamy waves transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 #, fuzzy
 msgid "Black Light"
 msgstr "Điểm đen"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 msgid "Light areas turn to black"
 msgstr ""
 
 #. Eraser
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 #: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
 #, fuzzy
 msgid "Eraser"
 msgstr "Xóa"
 
-#: ../share/filters/filters.svg.h:167
-msgid "Masking tools"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:164
 #, fuzzy
 msgid "Noisy blur"
 msgstr "Đổi mờ"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:164
 #, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "Co giãn góc tròn"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:165
 #, fuzzy
 msgid "Film Grain"
 msgstr "Sơn tô"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:165
 msgid "Adds a film grain noise to images and objects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:166
 #, fuzzy
 msgid "HSL Bumps, transparent"
 msgstr "0 (trong suốt)"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:166
 msgid "Highly flexible specular bump with transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:167
 msgid "Lead pencil"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:167
 msgid "Give lead pencil or chromolithography or engraving or other effects"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:168
+msgid "Velvet bump"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:168
+msgid "Gives a smooth bump velvet like"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:169
+msgid "Alpha engraving"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:169
+msgid "Gives a transparent engraving effect to bitmaps and materials"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:170
+msgid "Alpha engraving, color"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:170
+msgid "Gives a transparent color engraving effect to bitmaps and materials"
 msgstr ""
 
 #: ../src/arc-context.cpp:303
@@ -1824,6 +1815,7 @@ msgid "Create guide"
 msgstr "Tạo đường gióng"
 
 #: ../src/desktop-events.cpp:265 ../src/desktop-events.cpp:394
+#: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "Xoá đường gióng"
 
@@ -2624,7 +2616,7 @@ msgstr "Cao :"
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Kích cỡ ảnh bitmap</b></big>"
 
-#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:209
+#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:210
 msgid "_Width:"
 msgstr "_Rộng:"
 
@@ -2636,7 +2628,7 @@ msgstr "điểm ảnh theo"
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:210
+#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:211
 msgid "_Height:"
 msgstr "_Cao :"
 
@@ -3092,12 +3084,14 @@ msgid "URL:"
 msgstr "URL:"
 
 #: ../src/dialogs/object-attributes.cpp:51
-#: ../src/dialogs/object-attributes.cpp:59 ../src/widgets/toolbox.cpp:1472
+#: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:43
+#: ../src/widgets/toolbox.cpp:1472
 msgid "X:"
 msgstr "X:"
 
 #: ../src/dialogs/object-attributes.cpp:52
-#: ../src/dialogs/object-attributes.cpp:60 ../src/widgets/toolbox.cpp:1490
+#: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:44
+#: ../src/widgets/toolbox.cpp:1490
 msgid "Y:"
 msgstr "Y:"
 
@@ -3846,7 +3840,7 @@ msgstr "<b>Đang vẽ</b> một nét thư pháp"
 msgid "Draw eraser stroke"
 msgstr "Vẽ nét thư pháp"
 
-#: ../src/event-context.cpp:615
+#: ../src/event-context.cpp:612
 msgid "<b>Space+mouse drag</b> to pan canvas"
 msgstr "<b>Phím cách và kéo chuột</b> di chuyển trong vùng vẽ"
 
@@ -3999,11 +3993,11 @@ msgstr ""
 "Trình Inkscape đã nhận dữ liệu thêm từ văn lệnh được thực hiện. Văn lệnh "
 "không trả lại lỗi, nhưng trường hợp này có thể gây ra kết quả bất thường."
 
-#: ../src/extension/init.cpp:277
+#: ../src/extension/init.cpp:274
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr "Gặp tên thư mục mô-đun bên ngoài vô giá trị nên không nạp các mô-đun."
 
-#: ../src/extension/init.cpp:291
+#: ../src/extension/init.cpp:288
 #: ../src/extension/internal/filter/filter-file.cpp:56
 #, c-format
 msgid ""
@@ -4041,7 +4035,7 @@ msgstr "Cao"
 
 #. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:97
+#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
 #: ../src/live_effects/lpe-offset.cpp:30
 #: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:49
@@ -4273,11 +4267,13 @@ msgid "Edge"
 msgstr "Cạnh"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-msgid "Hilight edges of selected bitmap(s)."
+#, fuzzy
+msgid "Highlight edges of selected bitmap(s)."
 msgstr "Tô sáng các cạnh của (các) ảnh bitmap đã chọn."
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-msgid "Emboss selected bitmap(s) -- hilight edges with 3D effect."
+#, fuzzy
+msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
 msgstr ""
 "Chạm nổi của (các) ảnh bitmap đã chọn — tô sáng cạnh bằng hiệu ứng ba chiều."
 
@@ -4639,28 +4635,28 @@ msgstr "Vùng được xuất là toàn vùng vẽ"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:284
 #: ../src/extension/internal/cairo-ps-out.cpp:321
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:218
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
 #: ../src/extension/internal/emf-win32-inout.cpp:2430
 msgid "Convert texts to paths"
 msgstr "Chuyển đổi văn bản sang đường nét"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
 #, fuzzy
 msgid "Rasterize filter effects"
 msgstr "Quản lý các hiệu ứng lọc SVG"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
 #, fuzzy
-msgid "Preferred resolution (DPI) of bitmaps"
-msgstr "Độ phân giải đã thích (điểm trên mỗi insơ) của ảnh bitmap"
+msgid "Resolution for rasterization (dpi)"
+msgstr "Độ phân giải màn hình (điểm trên mỗi insơ)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:224
 msgid "Limit export to the object with ID"
 msgstr "Giới hạn các đối tượng cần xuất theo ID"
 
@@ -4690,20 +4686,20 @@ msgstr "PostScript bao bọc (*.eps)"
 msgid "Encapsulated PostScript File"
 msgstr "Tập tin PostScript bao bọc"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:215
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
 msgid "Restrict to PDF version"
 msgstr "Hạn chế thành phiên bản PDF"
 
 # Name: don't translate/Tên: đừng dịch
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:217
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
 msgid "Export drawing, not page"
 msgstr "Xuất nội dung bản vẽ, không quan tâm tới kích thước trang giấy"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
 msgid "Export canvas"
 msgstr "Xuất vùng vẽ"
 
@@ -4826,7 +4822,7 @@ msgstr "Kích thước"
 msgid "Snow has fallen on object"
 msgstr "Đặt kiểu dáng cho đối tượng"
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:119
+#: ../src/extension/internal/gdkpixbuf-input.cpp:127
 #, c-format
 msgid "%s GDK pixbuf Input"
 msgstr "Dữ liệu nhập đệm điểm ảnh %s GDK"
@@ -4876,6 +4872,7 @@ msgstr "Độ dịch dọc"
 #: ../share/extensions/grid_polar.inx.h:18
 #: ../share/extensions/guides_creator.inx.h:17
 #: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
 #: ../share/extensions/polyhedron_3d.inx.h:32
 #: ../share/extensions/printing-marks.inx.h:14
@@ -5182,51 +5179,51 @@ msgstr "Lỗi tự động phát hiện định dạng nên đang mở tập tin
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:153
+#: ../src/file.cpp:157
 msgid "default.svg"
 msgstr "hình.svg"
 
-#: ../src/file.cpp:245 ../src/file.cpp:1031
+#: ../src/file.cpp:249 ../src/file.cpp:1036
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Lỗi nạp tập tin đã yêu cầu %s"
 
-#: ../src/file.cpp:270
+#: ../src/file.cpp:274
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Chưa lưu tài liệu nên không thể hoàn nguyên."
 
-#: ../src/file.cpp:276
+#: ../src/file.cpp:280
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr "Các thay đổi sẽ bị mất ! Bạn có chắc muốn nạp lại tài liệu %s không?"
 
-#: ../src/file.cpp:305
+#: ../src/file.cpp:309
 msgid "Document reverted."
 msgstr "Tài liệu đã được hoàn nguyên."
 
-#: ../src/file.cpp:307
+#: ../src/file.cpp:311
 msgid "Document not reverted."
 msgstr "Chưa hoàn nguyên tài liệu."
 
-#: ../src/file.cpp:457
+#: ../src/file.cpp:461
 msgid "Select file to open"
 msgstr "Chọn tập tin cần mở"
 
-#: ../src/file.cpp:544
+#: ../src/file.cpp:548
 msgid "Vacuum &lt;defs&gt;"
 msgstr "Làm sạch &lt;defs&gt;"
 
-#: ../src/file.cpp:549
+#: ../src/file.cpp:553
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Mới gỡ bỏ <b>%i</b> lời xác định không dùng khỏi &lt;defs&gt;."
 
-#: ../src/file.cpp:554
+#: ../src/file.cpp:558
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Không có lời xác định không dùng trong &lt;defs&gt;."
 
-#: ../src/file.cpp:583
+#: ../src/file.cpp:587
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -5235,67 +5232,67 @@ msgstr ""
 "Không tìm thấy phần mở rộng Inkscape để lưu tài liệu (%s). Có thể vì một "
 "phần mở rộng tên tập tin không rõ."
 
-#: ../src/file.cpp:584 ../src/file.cpp:592 ../src/file.cpp:598
+#: ../src/file.cpp:588 ../src/file.cpp:596 ../src/file.cpp:602
 msgid "Document not saved."
 msgstr "Chưa lưu tài liệu."
 
-#: ../src/file.cpp:591
+#: ../src/file.cpp:595
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Không thể lưu tập tin %s."
 
-#: ../src/file.cpp:605
+#: ../src/file.cpp:609
 msgid "Document saved."
 msgstr "Tài liệu đã được lưu."
 
-#: ../src/file.cpp:746 ../src/file.cpp:1156 ../src/file.cpp:1276
+#: ../src/file.cpp:750 ../src/file.cpp:1161 ../src/file.cpp:1281
 #, c-format
 msgid "drawing%s"
 msgstr "hình%s"
 
-#: ../src/file.cpp:752
+#: ../src/file.cpp:756
 #, c-format
 msgid "drawing-%d%s"
 msgstr "hình-%d%s"
 
-#: ../src/file.cpp:771
+#: ../src/file.cpp:775
 msgid "Select file to save a copy to"
 msgstr "Chọn tập tin vào đó cần lưu bản sao"
 
-#: ../src/file.cpp:773
+#: ../src/file.cpp:777
 msgid "Select file to save to"
 msgstr "Chọn tập tin vào đó cần lưu"
 
-#: ../src/file.cpp:853
+#: ../src/file.cpp:857
 msgid "No changes need to be saved."
 msgstr "Không có thay đổi cần lưu."
 
-#: ../src/file.cpp:870
+#: ../src/file.cpp:874
 msgid "Saving document..."
 msgstr "Đang lưu tài liệu..."
 
-#: ../src/file.cpp:1028
+#: ../src/file.cpp:1033
 msgid "Import"
 msgstr "Nhập"
 
-#: ../src/file.cpp:1058
+#: ../src/file.cpp:1063
 msgid "Select file to import"
 msgstr "Chọn tập tin cần nhập khẩu"
 
-#: ../src/file.cpp:1177 ../src/file.cpp:1291
+#: ../src/file.cpp:1182 ../src/file.cpp:1296
 msgid "Select file to export to"
 msgstr "Chọn tập tin vào đó cần xuất"
 
-#: ../src/file.cpp:1323
+#: ../src/file.cpp:1328
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Gặp lỗi khi lưu một bản sao tạm thời"
 
-#: ../src/file.cpp:1343
+#: ../src/file.cpp:1348
 msgid "Open Clip Art Login"
 msgstr "Đăng nhập Open Clip Art"
 
-#: ../src/file.cpp:1369
+#: ../src/file.cpp:1374
 #, fuzzy, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5306,11 +5303,11 @@ msgstr ""
 "dùng và mật khẩu đều là đúng. Nếu máy phục vụ hỗ trợ WebDAV, cũng kiểm tra "
 "bạn đã chọn giấy phép."
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1395
 msgid "Document exported..."
 msgstr "Tài liệu đã được xuất..."
 
-#: ../src/file.cpp:1418 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1423 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Nhập từ Open Clip Art Library"
 
@@ -5977,35 +5974,35 @@ msgstr "ex"
 msgid "Ex squares"
 msgstr "Vuông Ex"
 
-#: ../src/inkscape.cpp:323
+#: ../src/inkscape.cpp:324
 #, fuzzy
 msgid "Autosaving documents..."
 msgstr "tài liệu ghép"
 
-#: ../src/inkscape.cpp:394
+#: ../src/inkscape.cpp:395
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr "Lỗi lưu tập tin! Không tìm thấy phần mở rộng phù hợp để lưu tài liệu."
 
-#: ../src/inkscape.cpp:397 ../src/inkscape.cpp:404
+#: ../src/inkscape.cpp:398 ../src/inkscape.cpp:405
 #, fuzzy, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr "Không thể lưu tập tin này thành '%s'."
 
-#: ../src/inkscape.cpp:419
+#: ../src/inkscape.cpp:420
 #, fuzzy
 msgid "Autosave complete."
 msgstr "Tự động chấp nhận hoàn tất"
 
-#: ../src/inkscape.cpp:650
+#: ../src/inkscape.cpp:651
 msgid "Untitled document"
 msgstr "Tài liệu không tên"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:680
+#: ../src/inkscape.cpp:681
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Trình Inkscape đã gặp lỗi nội bộ nên sẽ đóng ngay bây giờ.\n"
 
-#: ../src/inkscape.cpp:681
+#: ../src/inkscape.cpp:682
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
@@ -6013,7 +6010,7 @@ msgstr ""
 "Bản sao lưu tự động của các tài liệu chưa lưu đã được làm vào những vị trí "
 "này:\n"
 
-#: ../src/inkscape.cpp:682
+#: ../src/inkscape.cpp:683
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Việc sao lưu tự động những tài liệu theo sau bị lỗi:\n"
 
@@ -6101,15 +6098,15 @@ msgstr "Thả màu trên chuyển sắc"
 msgid "Could not parse SVG data"
 msgstr "Không thể phân tích dữ liệu SVG."
 
-#: ../src/interface.cpp:1394
+#: ../src/interface.cpp:1390
 msgid "Drop SVG"
 msgstr "Thả SVG"
 
-#: ../src/interface.cpp:1450
+#: ../src/interface.cpp:1446
 msgid "Drop bitmap image"
 msgstr "Thả ảnh bitmap"
 
-#: ../src/interface.cpp:1542
+#: ../src/interface.cpp:1538
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -6123,7 +6120,7 @@ msgstr ""
 "Tập tin này đã tồn tại trong « %s ». Việc thay thế nó sẽ ghi đè lên nội dung "
 "của nó."
 
-#: ../src/interface.cpp:1549 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1545 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr "Thay thế"
@@ -6510,7 +6507,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:917
 #: ../src/ui/dialog/document-properties.cpp:116
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1562
+#: ../src/widgets/desktop-widget.cpp:1558
 msgid "Page"
 msgstr "Trang"
 
@@ -6518,7 +6515,7 @@ msgstr "Trang"
 msgid "The index of the current page"
 msgstr "Chỉ mục của trang hiện thời"
 
-#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:216
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:217
 msgid "Name"
 msgstr "Tên"
 
@@ -6737,110 +6734,110 @@ msgstr "Nét đen"
 
 #: ../src/live_effects/effect.cpp:93
 #, fuzzy
-msgid "Interpolate Sub-Paths"
-msgstr "Nội suy"
-
-#: ../src/live_effects/effect.cpp:94
-#, fuzzy
 msgid "Lattice Deformation"
 msgstr "Cách làm biến dạng:"
 
-#: ../src/live_effects/effect.cpp:95
+#: ../src/live_effects/effect.cpp:94
 #, fuzzy
 msgid "Line Segment"
 msgstr "Đ_oạn đường"
 
-#: ../src/live_effects/effect.cpp:96
+#: ../src/live_effects/effect.cpp:95
 msgid "Mirror symmetry"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:97
 #, fuzzy
 msgid "Parallel"
 msgstr "Offset bắt đầu:"
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:98
 #, fuzzy
 msgid "Path length"
 msgstr "Độ dài dòng tối đa"
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:99
 #, fuzzy
 msgid "Perpendicular bisector"
 msgstr "(vuông góc với nét, « chổi »)"
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:100
 #, fuzzy
 msgid "Perspective path"
 msgstr "đường dẫn trùng %s"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:101
 #, fuzzy
 msgid "Rotate copies"
 msgstr "Xoay các nút"
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:102
 #, fuzzy
 msgid "Recursive skeleton"
 msgstr "Gỡ bỏ mặt nạ khỏi vùng chọn"
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:103
 #, fuzzy
 msgid "Ruler"
 msgstr "T_hước"
 
-#: ../src/live_effects/effect.cpp:105
+#: ../src/live_effects/effect.cpp:104
 #, fuzzy
 msgid "Tangent to curve"
 msgstr "Lưu các điểm đường cong vào tập tin"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:105
 #, fuzzy
 msgid "Text label"
 msgstr "Đặt nhãn đối tượng"
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:108
 #, fuzzy
 msgid "Bend"
 msgstr "Uốn đường nét"
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:109
 msgid "Gears"
 msgstr "Bánh răng"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:110
 msgid "Pattern Along Path"
 msgstr "Mẫu theo đường nét"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:111
 msgid "Stitch Sub-Paths"
 msgstr "Khâu vết các đường nét thành phần"
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:113
 msgid "VonKoch"
 msgstr "VonKoch"
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:114
 msgid "Knot"
 msgstr "Núm"
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:115
 #, fuzzy
 msgid "Construct grid"
 msgstr "Hiện lưới"
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:116
 #, fuzzy
 msgid "Spiro spline"
 msgstr "Không biết kiểu phụ chốt trục: %d\n"
 
-#: ../src/live_effects/effect.cpp:118
+#: ../src/live_effects/effect.cpp:117
 #, fuzzy
 msgid "Envelope Deformation"
 msgstr "Cách làm biến dạng:"
+
+#: ../src/live_effects/effect.cpp:118
+#, fuzzy
+msgid "Interpolate Sub-Paths"
+msgstr "Nội suy"
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Hatches (rough)"
@@ -6864,32 +6861,21 @@ msgstr ""
 "Nếu không chọn, hiệu ứng sẽ vẫn được áp dụng lên đối tượng, nhưng không hiển "
 "thị ngay lập tức trong vùng vẽ"
 
-#: ../src/live_effects/effect.cpp:274
-#, fuzzy
-msgid "Deactivate knotholder?"
-msgstr "Đã tắt"
-
-#: ../src/live_effects/effect.cpp:274
-msgid ""
-"Check this to deactivate knotholder handles (useful if they interfere with "
-"node handles during editing)"
-msgstr ""
-
-#: ../src/live_effects/effect.cpp:295
+#: ../src/live_effects/effect.cpp:293
 msgid "No effect"
 msgstr "Không có hiệu ứng"
 
-#: ../src/live_effects/effect.cpp:342
+#: ../src/live_effects/effect.cpp:340
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr "Xin đặt tham số đường nét cho LPE '%s' với %d lần bấm chuột"
 
-#: ../src/live_effects/effect.cpp:641
+#: ../src/live_effects/effect.cpp:636
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "Đang sửa tham số <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:646
+#: ../src/live_effects/effect.cpp:641
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Hiệu ứng đường nét đã áp dụng không có tham số có thể sửa tại chỗ."
 
@@ -7169,7 +7155,7 @@ msgstr "Co giãn chiều rộng của đường nét nét tương đối so vớ
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
 #, fuzzy
-msgid "Ellipitic Pen"
+msgid "Elliptic Pen"
 msgstr "Elip"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:61
@@ -7785,6 +7771,15 @@ msgstr ""
 msgid "Adjust the origin"
 msgstr "Chỉnh sắc màu"
 
+#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
+#, fuzzy
+msgid "Iterations"
+msgstr "Giao"
+
+#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
+msgid "recursivity"
+msgstr ""
+
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
 msgstr ""
@@ -7824,8 +7819,9 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-msgid "2nd side, in "
-msgstr ""
+#, fuzzy
+msgid "2nd side, in"
+msgstr "nút cuối"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid ""
@@ -8182,7 +8178,7 @@ msgid "Placement randomness"
 msgstr "không tròn"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-msgid "0: evenly distributed construcion lines, 1: purely random placement"
+msgid "0: evenly distributed construction lines, 1: purely random placement"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:61
@@ -8432,8 +8428,10 @@ msgid "Export document to a PNG file"
 msgstr "Xuất khẩu tài liệu vào tập tin PNG"
 
 #: ../src/main.cpp:294
-msgid "The resolution used for exporting SVG into bitmap (default 90)"
-msgstr "Độ phân giải được dùng để xuất SVG sang ảnh bitmap (mặc định 90)"
+msgid ""
+"Resolution for exporting to bitmap and for rasterization of filters in PS/"
+"EPS/PDF (default 90)"
+msgstr ""
 
 #: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
@@ -8634,7 +8632,7 @@ msgid "OBJECT-ID"
 msgstr "ID_ĐỐI_TƯỢNG"
 
 #: ../src/main.cpp:453
-msgid "Start Inkscape in interative shell mode."
+msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
 #: ../src/main.cpp:756 ../src/main.cpp:1067
@@ -9282,7 +9280,7 @@ msgstr "Đặt điểm chọn"
 msgid "Toggle multiple vanishing points"
 msgstr "Đang tạo điểm đơn"
 
-#: ../src/preferences.cpp:104
+#: ../src/preferences.cpp:101
 #, fuzzy
 msgid ""
 "Inkscape will run with default settings, and new settings will not be saved. "
@@ -9291,9 +9289,9 @@ msgstr ""
 "Thiết lập mới sẽ không được lưu."
 
 #. the creation failed
-#. _errorDialog(Glib::ustring::compose(_("Cannot create profile directory %1."),
+#. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:122
+#: ../src/preferences.cpp:116
 #, fuzzy, c-format
 msgid "Cannot create profile directory %s."
 msgstr ""
@@ -9301,9 +9299,9 @@ msgstr ""
 "%s"
 
 #. The profile dir is not actually a directory
-#. _errorDialog(Glib::ustring::compose(_("%1 is not a valid directory."),
+#. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:140
+#: ../src/preferences.cpp:134
 #, fuzzy, c-format
 msgid "%s is not a valid directory."
 msgstr ""
@@ -9311,39 +9309,39 @@ msgstr ""
 "%s"
 
 #. The write failed.
-#. _errorDialog(Glib::ustring::compose(_("Failed to create the preferences file %1."),
+#. _reportError(Glib::ustring::compose(_("Failed to create the preferences file %1."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:151
+#: ../src/preferences.cpp:145
 #, fuzzy, c-format
 msgid "Failed to create the preferences file %s."
 msgstr "Lỗi nạp tập tin đã yêu cầu %s"
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:169
+#: ../src/preferences.cpp:163
 #, fuzzy, c-format
 msgid "The preferences file %s is not a regular file."
 msgstr ""
 "%s không phải là tập tin chuẩn.\n"
 "%s"
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 could not be read."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 could not be read."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:181
+#: ../src/preferences.cpp:175
 #, fuzzy, c-format
 msgid "The preferences file %s could not be read."
 msgstr "Không thể lưu tập tin %s."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:193
+#: ../src/preferences.cpp:188
 #, c-format
 msgid "The preferences file %s is not a valid XML document."
 msgstr ""
 
-#. _errorDialog(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
+#. _reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:203
+#: ../src/preferences.cpp:199
 #, fuzzy, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr ""
@@ -9503,7 +9501,7 @@ msgstr "Phạm vi"
 msgid "Extent or scope of this document."
 msgstr "Phạm vi của tài liệu này."
 
-#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:218
+#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:219
 msgid "Description"
 msgstr "Mô tả"
 
@@ -9597,7 +9595,7 @@ msgstr "Hành động di chuyển bị thôi."
 msgid "Selection canceled."
 msgstr "Hành động lựa chọn bị thôi."
 
-#: ../src/select-context.cpp:563
+#: ../src/select-context.cpp:559
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
@@ -9605,7 +9603,7 @@ msgstr ""
 "<b>Vẽ qua</b> đối tượng để chọn; buông ra phím <b>Alt</b> chuyển đổi sang "
 "chức năng chọn bằng dây chun."
 
-#: ../src/select-context.cpp:565
+#: ../src/select-context.cpp:561
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
@@ -9613,26 +9611,26 @@ msgstr ""
 "<b>Kéo vòng quanh</b> đối tượng để chọn; nhấn <b>Alt</b> chuyển đổi sang "
 "chức năng chọn kiểu sờ."
 
-#: ../src/select-context.cpp:728
+#: ../src/select-context.cpp:725
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
 "Phím <b>Ctrl</b>: nhấn chuột để chọn theo nhóm; kéo để di chuyển theo chiều "
 "ngang/dọc"
 
-#: ../src/select-context.cpp:729
+#: ../src/select-context.cpp:726
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
 "Phím <b>Shift</b>: nhấn chuột để chọn hay bỏ chọn đối tượng; kéo để chọn "
 "bằng dây chun"
 
-#: ../src/select-context.cpp:730
+#: ../src/select-context.cpp:727
 msgid ""
 "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
 "Phím <b>Alt</b>: nhấn chuột để chọn ở dưới; kéo để chuyển đồ đã chọn hay "
 "chọn theo sờ"
 
-#: ../src/select-context.cpp:901
+#: ../src/select-context.cpp:902
 msgid "Selected object is not a group. Cannot enter."
 msgstr "Đối tượng được chọn không phải là nhóm nên không thể vào."
 
@@ -10338,16 +10336,16 @@ msgstr "nằm ngang, tại %s"
 msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
 msgstr ""
 
-#: ../src/sp-image.cpp:1110
+#: ../src/sp-image.cpp:1128
 msgid "embedded"
 msgstr "nhúng"
 
-#: ../src/sp-image.cpp:1118
+#: ../src/sp-image.cpp:1136
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "<b>Ảnh có tham chiếu sai</b>: %s"
 
-#: ../src/sp-image.cpp:1119
+#: ../src/sp-image.cpp:1137
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Ảnh</b> %d &#215; %d: %s"
@@ -10371,26 +10369,26 @@ msgstr ""
 msgid "Create spiral"
 msgstr "Tạo xoắn ốc"
 
-#: ../src/sp-item.cpp:1029
+#: ../src/sp-item.cpp:1035
 msgid "Object"
 msgstr "Đối tượng"
 
-#: ../src/sp-item.cpp:1046
+#: ../src/sp-item.cpp:1052
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr "%s; <i>bị xén</i>"
 
-#: ../src/sp-item.cpp:1051
+#: ../src/sp-item.cpp:1057
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr "%s; <i>có mặt nạ</i>"
 
-#: ../src/sp-item.cpp:1059
+#: ../src/sp-item.cpp:1065
 #, fuzzy, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr "%s; <i>đã lọc</i>"
 
-#: ../src/sp-item.cpp:1061
+#: ../src/sp-item.cpp:1067
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>đã lọc</i>"
@@ -11613,13 +11611,14 @@ msgid "Smallest object"
 msgstr "Đặt ID đối tượng"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:918
-#: ../src/widgets/desktop-widget.cpp:1566
+#: ../src/widgets/desktop-widget.cpp:1562
 msgid "Drawing"
 msgstr "Bản vẽ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
-#: ../src/widgets/desktop-widget.cpp:1570
+#: ../src/ui/dialog/icon-preview.cpp:178
+#: ../src/widgets/desktop-widget.cpp:1566
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Vùng chọn"
@@ -12186,7 +12185,7 @@ msgstr "Tập tin ảnh"
 msgid "Selected SVG Element"
 msgstr "Phần tử SVG đã chọn"
 
-#. TODO: any image, not justy svg
+#. TODO: any image, not just svg
 #: ../src/ui/dialog/filter-effects-dialog.cpp:648
 #, fuzzy
 msgid "Select an image to be used as feImage input"
@@ -12667,7 +12666,7 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2289
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
-"the Porter-Duff blending modes or the aritmetic mode described in SVG "
+"the Porter-Duff blending modes or the arithmetic mode described in SVG "
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
 msgstr ""
@@ -12765,6 +12764,60 @@ msgstr "Nhân đôi bộ lọc có sẵn"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2409
 msgid "Set filter primitive attribute"
 msgstr "Đặt thuộc tính về bộ lọc có sẵn"
+
+#: ../src/ui/dialog/guides.cpp:42
+#, fuzzy
+msgid "Unit:"
+msgstr "Đơn vị:"
+
+#: ../src/ui/dialog/guides.cpp:45
+#, fuzzy
+msgid "Angle (degrees):"
+msgstr "Dùng ánh sáng (độ)"
+
+#: ../src/ui/dialog/guides.cpp:46
+#, fuzzy
+msgid "Rela_tive change"
+msgstr "Di chuyển _tương đối"
+
+#: ../src/ui/dialog/guides.cpp:46
+#, fuzzy
+msgid "Move and/or rotate the guide relative to current settings"
+msgstr "Di chuyển và xoay đường gióng tương đối so với thiết lập hiện thời"
+
+#: ../src/ui/dialog/guides.cpp:112
+msgid "Set guide properties"
+msgstr "Đặt thuộc tính đường gióng"
+
+#: ../src/ui/dialog/guides.cpp:151
+#, fuzzy
+msgid "Guideline"
+msgstr "Màu đường gióng"
+
+#: ../src/ui/dialog/guides.cpp:239
+#, fuzzy, c-format
+msgid "Guideline ID: %s"
+msgstr "ID không hợp lệ"
+
+#: ../src/ui/dialog/guides.cpp:245
+#, fuzzy, c-format
+msgid "Current: %s"
+msgstr "Hiện có"
+
+# eg: 75 %
+# Variable: don't translate / Biến: đừng dịch
+#: ../src/ui/dialog/icon-preview.cpp:130
+#, c-format
+msgid "%d x %d"
+msgstr "%d × %d"
+
+#: ../src/ui/dialog/icon-preview.cpp:180
+msgid "Selection only or whole document"
+msgstr "Chỉ vùng chọn hay toàn tài liệu"
+
+#: ../src/ui/dialog/icon-preview.cpp:188
+msgid "Refresh the icons"
+msgstr "Cập nhật các biểu tượng"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:169
 msgid "Mouse"
@@ -14897,6 +14950,51 @@ msgstr "Thê_m"
 msgid "New layer created."
 msgstr "Lớp mới đã được tạo."
 
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+msgid "Unhide layer"
+msgstr "Hiện lớp"
+
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+msgid "Hide layer"
+msgstr "Ẩn lớp"
+
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+msgid "Lock layer"
+msgstr "Khoá lớp"
+
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+msgid "Unlock layer"
+msgstr "Gỡ khoá lớp"
+
+#: ../src/ui/dialog/layers.cpp:645
+#, fuzzy
+msgid "Layers"
+msgstr "Lớp"
+
+#: ../src/ui/dialog/layers.cpp:654
+msgid "New"
+msgstr "Mới"
+
+#: ../src/ui/dialog/layers.cpp:659 ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "Đỉnh"
+
+#: ../src/ui/dialog/layers.cpp:665
+msgid "Up"
+msgstr "Lên"
+
+#: ../src/ui/dialog/layers.cpp:671
+msgid "Dn"
+msgstr "Xuống"
+
+#: ../src/ui/dialog/layers.cpp:677
+msgid "Bot"
+msgstr "Đáy"
+
+#: ../src/ui/dialog/layers.cpp:687
+msgid "X"
+msgstr "X"
+
 #. TRANSLATORS: this dialog is accessible via menu Path - Path Effect Editor...
 #: ../src/ui/dialog/livepatheffect-editor.cpp:78
 msgid "Apply new effect"
@@ -15218,136 +15316,146 @@ msgstr ""
 msgid "Set glyph curves"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:566
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:570
+msgid "Reset missing-glyph"
+msgstr ""
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:585
 msgid "Edit glyph name"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:579
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:598
 msgid "Set glyph unicode"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:589
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:608
 #, fuzzy
 msgid "Remove font"
 msgstr "Bỏ bộ lọc"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:604
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:623
 #, fuzzy
 msgid "Remove glyph"
 msgstr "Xoá màu tô"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:619
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:638
 #, fuzzy
 msgid "Remove kerning pair"
 msgstr "Bỏ các đường gióng đã có"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:629
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 msgid "Missing Glyph:"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:632
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:652
 #, fuzzy
 msgid "From selection..."
 msgstr "Bắt từ vùng chọn"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:642
-msgid "Glyph Name"
-msgstr ""
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:654
+#: ../src/ui/widget/preferences-widget.cpp:590
+msgid "Reset"
+msgstr "Đặt lại"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:643
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:665
 #, fuzzy
-msgid "Unicode"
-msgstr "Đã gỡ"
+msgid "Glyph name"
+msgstr "Tên lớp:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:646
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:666
+#, fuzzy
+msgid "Matching string"
+msgstr "Chuỗi đa dòng"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:669
 #, fuzzy
 msgid "Add Glyph"
 msgstr "Thêm lớp"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:653
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:676
 #, fuzzy
 msgid "Get curves from selection..."
 msgstr "Gỡ bỏ mặt nạ khỏi vùng chọn"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:703
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
 msgstr ""
 
 #. Kerning Setup:
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:711
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:734
 #, fuzzy
 msgid "Kerning Setup:"
 msgstr "Định chỗ bên trên"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:713
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:715
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
 msgid "2nd Glyph:"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:718
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:741
 #, fuzzy
 msgid "Add pair"
 msgstr "Thêm lớp"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:730
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:753
 #, fuzzy
 msgid "First Unicode range"
 msgstr "Chèn ký tự Unicode"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:731
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:754
 msgid "Second Unicode range"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:761
 #, fuzzy
 msgid "Kerning value:"
 msgstr "Xoá giá trị"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:796
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 #, fuzzy
 msgid "Set font family"
 msgstr "Nhóm phông"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:805
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:828
 #, fuzzy
 msgid "font"
 msgstr "Phông"
 
 #. select_font(font);
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:842
 #, fuzzy
 msgid "Add font"
 msgstr "Thêm bộ lọc"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:839
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:862
 #, fuzzy
 msgid "_Font"
 msgstr "Phông"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:847
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:870
 #, fuzzy
 msgid "_Global Settings"
 msgstr "Thiết lập trang"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:848
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:871
 msgid "_Glyphs"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:849
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:872
 #, fuzzy
 msgid "_Kerning"
 msgstr "Bức _vẽ"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:856
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:857
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:879
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:880
 #, fuzzy
 msgid "Sample Text"
 msgstr "Co giãn x"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:861
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:884
 #, fuzzy
 msgid "Preview Text:"
 msgstr "Xem thử"
@@ -16026,7 +16134,7 @@ msgstr ""
 "hình hay dạng tự do để táo đối tượng; dùng bộ chọn (mũi tên) để di chuyển "
 "hay chuyển dạng mục."
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:832
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -16040,11 +16148,11 @@ msgstr ""
 "Nếu bạn đóng mà không lưu, các thay đổi sẽ bị hủy."
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1258
-#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:899
+#: ../src/widgets/desktop-widget.cpp:839 ../src/widgets/desktop-widget.cpp:895
 msgid "Close _without saving"
 msgstr "Đóng mà _không lưu"
 
-#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:891
+#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:887
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -16057,7 +16165,7 @@ msgstr ""
 "\n"
 "Bạn có muốn lưu tập tin này theo định dạng SVG Inkscape không?"
 
-#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:902
+#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:898
 msgid "_Save as SVG"
 msgstr "Lưu dạng _SVG"
 
@@ -16085,22 +16193,6 @@ msgstr "Lớp hiện tại"
 msgid "(root)"
 msgstr "(gốc)"
 
-#: ../src/ui/widget/layer-selector.cpp:587
-msgid "Lock layer"
-msgstr "Khoá lớp"
-
-#: ../src/ui/widget/layer-selector.cpp:587
-msgid "Unlock layer"
-msgstr "Gỡ khoá lớp"
-
-#: ../src/ui/widget/layer-selector.cpp:595
-msgid "Hide layer"
-msgstr "Ẩn lớp"
-
-#: ../src/ui/widget/layer-selector.cpp:595
-msgid "Unhide layer"
-msgstr "Hiện lớp"
-
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
 msgstr "Sở hữu"
@@ -16120,44 +16212,44 @@ msgstr "Đổi mờ"
 msgid "Change opacity"
 msgstr "Đổi độ đục"
 
-#: ../src/ui/widget/page-sizer.cpp:208
+#: ../src/ui/widget/page-sizer.cpp:209
 msgid "U_nits:"
 msgstr "Đơ_n vị:"
 
-#: ../src/ui/widget/page-sizer.cpp:209
+#: ../src/ui/widget/page-sizer.cpp:210
 msgid "Width of paper"
 msgstr "Chiều rộng của trang"
 
-#: ../src/ui/widget/page-sizer.cpp:210
+#: ../src/ui/widget/page-sizer.cpp:211
 msgid "Height of paper"
 msgstr "Chiều cao của trang"
 
-#: ../src/ui/widget/page-sizer.cpp:256
+#: ../src/ui/widget/page-sizer.cpp:257
 msgid "P_age size:"
 msgstr "Kích cỡ tr_ang:"
 
-#: ../src/ui/widget/page-sizer.cpp:264
+#: ../src/ui/widget/page-sizer.cpp:265
 msgid "Page orientation:"
 msgstr "Hướng trang:"
 
-#: ../src/ui/widget/page-sizer.cpp:267
+#: ../src/ui/widget/page-sizer.cpp:268
 msgid "_Landscape"
 msgstr "Nằm _ngang"
 
-#: ../src/ui/widget/page-sizer.cpp:272
+#: ../src/ui/widget/page-sizer.cpp:273
 msgid "_Portrait"
 msgstr "_Thẳng đứng"
 
 #. ## Set up custom size frame
-#: ../src/ui/widget/page-sizer.cpp:279
+#: ../src/ui/widget/page-sizer.cpp:280
 msgid "Custom size"
 msgstr "Kích cỡ tự chọn"
 
-#: ../src/ui/widget/page-sizer.cpp:292
+#: ../src/ui/widget/page-sizer.cpp:293
 msgid "_Fit page to selection"
 msgstr "_Vừa trang khít vùng chọn"
 
-#: ../src/ui/widget/page-sizer.cpp:293
+#: ../src/ui/widget/page-sizer.cpp:294
 msgid ""
 "Resize the page to fit the current selection, or the entire drawing if there "
 "is no selection"
@@ -16165,7 +16257,7 @@ msgstr ""
 "Thay đổi kích cỡ của trang để vừa khít vùng chọn hiện thời, hay khít toàn "
 "bản vẽ nếu không có vùng chọn riêng."
 
-#: ../src/ui/widget/page-sizer.cpp:351
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "Đặt kích cỡ trang"
 
@@ -16228,10 +16320,6 @@ msgstr "rộng hơn"
 #, fuzzy
 msgid "swatches|Wrap"
 msgstr "Cuộn text"
-
-#: ../src/ui/widget/preferences-widget.cpp:590
-msgid "Reset"
-msgstr "Đặt lại"
 
 #: ../src/ui/widget/random.cpp:123
 msgid ""
@@ -18636,12 +18724,12 @@ msgstr "%s (nét ngoài) - Inkscape"
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
 
-#: ../src/widgets/ege-paint-def.cpp:69 ../src/widgets/ege-paint-def.cpp:91
+#: ../src/widgets/ege-paint-def.cpp:70 ../src/widgets/ege-paint-def.cpp:92
 #: ../src/widgets/gradient-selector.cpp:167
 msgid "none"
 msgstr "không có"
 
-#: ../src/widgets/ege-paint-def.cpp:88
+#: ../src/widgets/ege-paint-def.cpp:89
 #, fuzzy
 msgid "remove"
 msgstr "Bỏ"
@@ -19239,14 +19327,14 @@ msgstr "Nối góc nhọn"
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1135
+#: ../src/widgets/stroke-style.cpp:1137
 msgid "Round join"
 msgstr "Nối tròn"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1143
+#: ../src/widgets/stroke-style.cpp:1147
 msgid "Bevel join"
 msgstr "Nối góc tù"
 
@@ -19257,72 +19345,72 @@ msgstr "Nối góc tù"
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/widgets/stroke-style.cpp:1154
+#: ../src/widgets/stroke-style.cpp:1159
 msgid "Miter limit:"
 msgstr "Giới hạn góc nhọn:"
 
-#: ../src/widgets/stroke-style.cpp:1162
+#: ../src/widgets/stroke-style.cpp:1167
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "Chiều dài góc nhọn tối đa (theo đơn vị chiều rộng nét vẽ)"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/widgets/stroke-style.cpp:1174
+#: ../src/widgets/stroke-style.cpp:1179
 msgid "Cap:"
 msgstr "Đầu:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1185
+#: ../src/widgets/stroke-style.cpp:1191
 msgid "Butt cap"
 msgstr "Đầu góc"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:1192
+#: ../src/widgets/stroke-style.cpp:1199
 msgid "Round cap"
 msgstr "Đầu tròn"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1199
+#: ../src/widgets/stroke-style.cpp:1207
 msgid "Square cap"
 msgstr "Đầu vuông"
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:1205
+#: ../src/widgets/stroke-style.cpp:1213
 msgid "Dashes:"
 msgstr "Gạch gạch:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/widgets/stroke-style.cpp:1222
+#: ../src/widgets/stroke-style.cpp:1230
 msgid "Start Markers:"
 msgstr "Hình nút đầu :"
 
-#: ../src/widgets/stroke-style.cpp:1224
+#: ../src/widgets/stroke-style.cpp:1232
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1233
+#: ../src/widgets/stroke-style.cpp:1241
 msgid "Mid Markers:"
 msgstr "Hình nút giữa:"
 
-#: ../src/widgets/stroke-style.cpp:1235
+#: ../src/widgets/stroke-style.cpp:1243
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1244
+#: ../src/widgets/stroke-style.cpp:1252
 msgid "End Markers:"
 msgstr "Hình nút cuối:"
 
-#: ../src/widgets/stroke-style.cpp:1246
+#: ../src/widgets/stroke-style.cpp:1254
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1569 ../src/widgets/stroke-style.cpp:1665
+#: ../src/widgets/stroke-style.cpp:1603 ../src/widgets/stroke-style.cpp:1699
 msgid "Set stroke style"
 msgstr "Đặt kiểu nét"
 
@@ -21194,7 +21282,11 @@ msgstr "Đường nét thứ hai được chọn phải gồm ít nhất 4 nút.
 msgid "Could not locate file: %s"
 msgstr "Không mở được tập tin:"
 
-#. vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
+#: ../share/extensions/web-set-att.py:52
+#: ../share/extensions/web-transmit-att.py:48
+msgid "You must select at least two elements."
+msgstr ""
+
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
 msgstr "Thêm nút"
@@ -21219,8 +21311,10 @@ msgstr "Phương pháp âm thanh"
 msgid "Maximum segment length (px)"
 msgstr "Độ dài trường chữ tối đa"
 
-#: ../share/extensions/addnodes.inx.h:6 ../share/extensions/edge3d.inx.h:6
-#: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
+#: ../share/extensions/addnodes.inx.h:6
+#: ../share/extensions/convert2dashes.inx.h:2
+#: ../share/extensions/edge3d.inx.h:6 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/fractalize.inx.h:2
 #: ../share/extensions/interp_att_g.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
@@ -21426,6 +21520,11 @@ msgstr "Thay thế màu (thập lục RRGGBB):"
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
 msgstr "Thùng tròn RGB"
+
+#: ../share/extensions/convert2dashes.inx.h:1
+#, fuzzy
+msgid "Convert to Dashes"
+msgstr "Chuyển đổi thành chữ Braille"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -21650,18 +21749,23 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:2
+#, fuzzy
+msgid "Character Encoding"
+msgstr "Làm tròn nắp"
+
+#: ../share/extensions/dxf_input.inx.h:3
 msgid "DXF Input"
 msgstr "Dữ liệu nhập DXF"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:4
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Nhập khẩu định dạng trao đổi tài liệu của AutoCAD"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:5
 msgid "Or, use manual scale factor"
 msgstr ""
 
-#: ../share/extensions/dxf_input.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "Use automatic scaling to size A4"
 msgstr ""
 
@@ -21844,6 +21948,7 @@ msgid "Calculate first derivative numerically"
 msgstr "Tính thuộc số đạo hàm thứ nhất"
 
 #: ../share/extensions/funcplot.inx.h:2
+#: ../share/extensions/param_curves.inx.h:1
 msgid "Draw Axes"
 msgstr "Vẽ trục"
 
@@ -21864,6 +21969,7 @@ msgid "Function Plotter"
 msgstr "Bộ vẽ đồ thị hàm"
 
 #: ../share/extensions/funcplot.inx.h:7
+#: ../share/extensions/param_curves.inx.h:3
 msgid "Functions"
 msgstr "Hàm"
 
@@ -21888,6 +21994,7 @@ msgid "Range and sampling"
 msgstr "Giới hạn lấy mẩu"
 
 #: ../share/extensions/funcplot.inx.h:12
+#: ../share/extensions/param_curves.inx.h:8
 msgid "Remove rectangle"
 msgstr "Bỏ chữ nhật"
 
@@ -21906,6 +22013,7 @@ msgstr ""
 "luôn luôn phải là giá trị số."
 
 #: ../share/extensions/funcplot.inx.h:15
+#: ../share/extensions/param_curves.inx.h:12
 msgid ""
 "Standard Python math functions are available: ceil(x); fabs(x); floor(x); "
 "fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); "
@@ -21924,6 +22032,7 @@ msgid "Start X value"
 msgstr "Giá trị X đầu"
 
 #: ../share/extensions/funcplot.inx.h:17
+#: ../share/extensions/param_curves.inx.h:14
 msgid "Use"
 msgstr "Dùng"
 
@@ -22275,27 +22384,6 @@ msgstr "Thông báo lỗi"
 msgid "SVG 1.1 Specification"
 msgstr "Đặc tả SVG 1.1"
 
-#: ../share/extensions/interp.inx.h:1
-msgid "Duplicate endpaths"
-msgstr "Nhân đôi đường nét cuối"
-
-#: ../share/extensions/interp.inx.h:4
-msgid "Interpolate"
-msgstr "Nội suy"
-
-#: ../share/extensions/interp.inx.h:5
-#, fuzzy
-msgid "Interpolate style"
-msgstr "Nội suy kiểu dáng"
-
-#: ../share/extensions/interp.inx.h:6
-msgid "Interpolation method"
-msgstr "Phương pháp nội suy"
-
-#: ../share/extensions/interp.inx.h:7
-msgid "Interpolation steps"
-msgstr "Bước nội suy"
-
 #: ../share/extensions/interp_att_g.inx.h:1
 #, fuzzy
 msgid "Attribute to Interpolate"
@@ -22387,6 +22475,27 @@ msgstr ""
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
 msgstr ""
+
+#: ../share/extensions/interp.inx.h:1
+msgid "Duplicate endpaths"
+msgstr "Nhân đôi đường nét cuối"
+
+#: ../share/extensions/interp.inx.h:4
+msgid "Interpolate"
+msgstr "Nội suy"
+
+#: ../share/extensions/interp.inx.h:5
+#, fuzzy
+msgid "Interpolate style"
+msgstr "Nội suy kiểu dáng"
+
+#: ../share/extensions/interp.inx.h:6
+msgid "Interpolation method"
+msgstr "Phương pháp nội suy"
+
+#: ../share/extensions/interp.inx.h:7
+msgid "Interpolation steps"
+msgstr "Bước nội suy"
 
 #: ../share/extensions/lindenmayer.inx.h:1
 msgid "Axiom"
@@ -22525,6 +22634,78 @@ msgstr "Tập tin phác thảo văn bản (*.outline)"
 #: ../share/extensions/outline2svg.inx.h:3
 msgid "Text Outline Input"
 msgstr "Nhập dữ liệu phác thảo văn bản"
+
+#: ../share/extensions/param_curves.inx.h:2
+#, fuzzy
+msgid "End t-value"
+msgstr "Giá trị X cuối"
+
+#: ../share/extensions/param_curves.inx.h:4
+#, fuzzy
+msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
+msgstr ""
+"Tỷ lệ đẳng hướng (dùng giá trị nhỏ nhất: chiều rộng/phạm vi x hay chiều cao/"
+"phạm vi y)"
+
+#: ../share/extensions/param_curves.inx.h:5
+#, fuzzy
+msgid "Multiply t-range by 2*pi"
+msgstr "Nhân khoảng X với 2*π"
+
+#: ../share/extensions/param_curves.inx.h:6
+#, fuzzy
+msgid "Parametric Curves"
+msgstr "Tham số"
+
+#: ../share/extensions/param_curves.inx.h:7
+#, fuzzy
+msgid "Range and Sampling"
+msgstr "Giới hạn lấy mẩu"
+
+#: ../share/extensions/param_curves.inx.h:10
+msgid "Samples"
+msgstr "Mẫu"
+
+#: ../share/extensions/param_curves.inx.h:11
+msgid ""
+"Select a rectangle before calling the extension; it will determine X and Y "
+"scales. First derivatives are always determined numerically."
+msgstr ""
+
+#: ../share/extensions/param_curves.inx.h:13
+#, fuzzy
+msgid "Start t-value"
+msgstr "Giá trị X đầu"
+
+#: ../share/extensions/param_curves.inx.h:15
+#, fuzzy
+msgid "x-Function"
+msgstr "Hàm"
+
+#: ../share/extensions/param_curves.inx.h:16
+#, fuzzy
+msgid "x-value of rectangle's left"
+msgstr "Giá trị y của cạnh bên trên hình chữ nhật"
+
+#: ../share/extensions/param_curves.inx.h:17
+#, fuzzy
+msgid "x-value of rectangle's right"
+msgstr "Giá trị y của cạnh bên trên hình chữ nhật"
+
+#: ../share/extensions/param_curves.inx.h:18
+#, fuzzy
+msgid "y-Function"
+msgstr "Hàm"
+
+#: ../share/extensions/param_curves.inx.h:19
+#, fuzzy
+msgid "y-value of rectangle's bottom"
+msgstr "Giá trị y của cạnh bên dưới hình chữ nhật"
+
+#: ../share/extensions/param_curves.inx.h:20
+#, fuzzy
+msgid "y-value of rectangle's top"
+msgstr "Giá trị y của cạnh bên trên hình chữ nhật"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Copies of the pattern:"
@@ -23087,10 +23268,6 @@ msgstr "<Hướng không rõ>"
 msgid "Right to Left (180)"
 msgstr "Địa vị cao hơn t_rái qua phải"
 
-#: ../share/extensions/restack.inx.h:16
-msgid "Top"
-msgstr "Đỉnh"
-
 #: ../share/extensions/restack.inx.h:17
 #, fuzzy
 msgid "Top to Bottom (270)"
@@ -23133,12 +23310,23 @@ msgid "Open files saved in sK1 vector graphics editor"
 msgstr "Mở các tập tin được tạo bởi trình xử lý ảnh vector sK1"
 
 #: ../share/extensions/sk1_input.inx.h:2
+#: ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (.sk1)"
 msgstr "Ảnh vector sK1 (.sk1)"
 
 #: ../share/extensions/sk1_input.inx.h:3
 msgid "sK1 vector graphics files input"
 msgstr ""
+
+#: ../share/extensions/sk1_output.inx.h:1
+#, fuzzy
+msgid "File format for use in sK1 vector graphics editor"
+msgstr "Mở các tập tin được tạo bởi trình xử lý ảnh vector sK1"
+
+#: ../share/extensions/sk1_output.inx.h:3
+#, fuzzy
+msgid "sK1 vector graphics files output"
+msgstr "Ảnh vector sK1 (.sk1)"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
@@ -23515,7 +23703,7 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:8
 #, fuzzy
-msgid "Set Atributes"
+msgid "Set Attributes"
 msgstr "Đặt thuộc tính"
 
 #: ../share/extensions/web-set-att.inx.h:9
@@ -23688,6 +23876,25 @@ msgid "XAML Input"
 msgstr "Nhập XAML"
 
 #, fuzzy
+#~ msgid "Comics rounded"
+#~ msgstr "không tròn"
+
+#, fuzzy
+#~ msgid "Preferred resolution (DPI) of bitmaps"
+#~ msgstr "Độ phân giải đã thích (điểm trên mỗi insơ) của ảnh bitmap"
+
+#, fuzzy
+#~ msgid "Deactivate knotholder?"
+#~ msgstr "Đã tắt"
+
+#~ msgid "The resolution used for exporting SVG into bitmap (default 90)"
+#~ msgstr "Độ phân giải được dùng để xuất SVG sang ảnh bitmap (mặc định 90)"
+
+#, fuzzy
+#~ msgid "Unicode"
+#~ msgstr "Đã gỡ"
+
+#, fuzzy
 #~ msgid "gradient level"
 #~ msgstr "Chưa chọn chuyển sắc"
 
@@ -23727,59 +23934,6 @@ msgstr "Nhập XAML"
 
 #~ msgid "Smallest item"
 #~ msgstr "Mục nhỏ nhất"
-
-#, fuzzy
-#~ msgid "Unit:"
-#~ msgstr "Đơn vị:"
-
-#, fuzzy
-#~ msgid "Angle (degrees):"
-#~ msgstr "Dùng ánh sáng (độ)"
-
-#, fuzzy
-#~ msgid "Move and/or rotate the guide relative to current settings"
-#~ msgstr "Di chuyển và xoay đường gióng tương đối so với thiết lập hiện thời"
-
-#~ msgid "Set guide properties"
-#~ msgstr "Đặt thuộc tính đường gióng"
-
-#, fuzzy
-#~ msgid "Guideline ID: %s"
-#~ msgstr "ID không hợp lệ"
-
-#, fuzzy
-#~ msgid "Current: %s"
-#~ msgstr "Hiện có"
-
-# eg: 75 %
-# Variable: don't translate / Biến: đừng dịch
-#~ msgid "%d x %d"
-#~ msgstr "%d × %d"
-
-#~ msgid "Selection only or whole document"
-#~ msgstr "Chỉ vùng chọn hay toàn tài liệu"
-
-#~ msgid "Refresh the icons"
-#~ msgstr "Cập nhật các biểu tượng"
-
-#, fuzzy
-#~ msgid "Layers"
-#~ msgstr "Lớp"
-
-#~ msgid "New"
-#~ msgstr "Mới"
-
-#~ msgid "Up"
-#~ msgstr "Lên"
-
-#~ msgid "Dn"
-#~ msgstr "Xuống"
-
-#~ msgid "Bot"
-#~ msgstr "Đáy"
-
-#~ msgid "X"
-#~ msgstr "X"
 
 #~ msgid "Enhance intensity differences in selected bitmap(s)."
 #~ msgstr "Tăng cường hiệu số cường độ trong (các) ảnh bitmap đã chọn."
@@ -24221,10 +24375,6 @@ msgstr "Nhập XAML"
 #~ msgstr "Sửa đổi thuộc tính sổ làm việc"
 
 #, fuzzy
-#~ msgid "Path string"
-#~ msgstr "Chuỗi đa dòng"
-
-#, fuzzy
 #~ msgid "Enable auto-save of document"
 #~ msgstr "Lưu một bản sao của tài liệu hiện có"
 
@@ -24263,9 +24413,6 @@ msgstr "Nhập XAML"
 #~ msgstr ""
 #~ "« dxf2svg » có thể có sẵn với trình Inkscape, cũng công bố tại « http://dxf-"
 #~ "svg-convert.sourceforge.net/ »."
-
-#~ msgid "Samples"
-#~ msgstr "Mẫu"
 
 #~ msgid "Generate Template"
 #~ msgstr "Tạo ra mẫu tài liệu"

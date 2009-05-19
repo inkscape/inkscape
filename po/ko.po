@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-28 18:31+0200\n"
+"POT-Creation-Date: 2009-05-19 11:58+0200\n"
 "PO-Revision-Date: 2009-04-18 09:25+0900\n"
 "Last-Translator: Jin-Hwan Jeong <yongdoriaa@gmail.com>\n"
 "Language-Team:  <Dokdo@korea.land>\n"
@@ -32,12 +32,12 @@ msgstr "마테 젤리"
 #: ../share/filters/filters.svg.h:4 ../share/filters/filters.svg.h:5
 #: ../share/filters/filters.svg.h:10 ../share/filters/filters.svg.h:15
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:40
-#: ../share/filters/filters.svg.h:51 ../share/filters/filters.svg.h:52
-#: ../share/filters/filters.svg.h:53 ../share/filters/filters.svg.h:54
-#: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:72 ../share/filters/filters.svg.h:74
-#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:105
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:52 ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:71 ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:105
 msgid "Bevels"
 msgstr "경사"
 
@@ -74,10 +74,10 @@ msgid "Motion blur, horizontal"
 msgstr "모션 블러, 수평"
 
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
-#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:60
-#: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:164
 msgid "Blurs"
 msgstr "흐림"
 
@@ -112,8 +112,8 @@ msgid "Cutout"
 msgstr "도려내기"
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:88 ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -135,10 +135,10 @@ msgstr "낮고 날카로운 경사"
 msgid "Roughen"
 msgstr "거침"
 
-#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:125
 msgid "ABCs"
 msgstr "ABCs"
 
@@ -155,8 +155,8 @@ msgstr "고무 도장"
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
 #: ../share/filters/filters.svg.h:22 ../share/filters/filters.svg.h:23
 #: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
-#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:117
-#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:120
 msgid "Overlays"
 msgstr "중첩"
 
@@ -205,9 +205,9 @@ msgstr "안쪽 경사의 날카로운 경계"
 msgid "Ripple"
 msgstr "잔물결"
 
-#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:45
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:115
 msgid "Distort"
 msgstr "왜곡"
 
@@ -243,15 +243,15 @@ msgstr "앏은 조각같은 흰 얼룩"
 msgid "Leopard fur"
 msgstr "표범 표피"
 
-#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:60
 #: ../share/filters/filters.svg.h:61 ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:70 ../share/filters/filters.svg.h:81
-#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:93
-#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:158
-#: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:159
 msgid "Materials"
 msgstr "재질"
 
@@ -286,10 +286,11 @@ msgstr "날카롭게"
 #: ../share/filters/filters.svg.h:26 ../share/filters/filters.svg.h:27
 #: ../share/filters/filters.svg.h:28 ../share/filters/filters.svg.h:29
 #: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
-#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:100
-#: ../share/filters/filters.svg.h:101 ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:128
-#: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:165 ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:168
 msgid "Image effects"
 msgstr "이미지 효과"
 
@@ -362,9 +363,9 @@ msgid "Desaturate"
 msgstr "무채색"
 
 #: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:33
-#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:75
-#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:93 ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:162
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -423,16 +424,16 @@ msgstr "바랜 사진으로 모방"
 msgid "Organic"
 msgstr "유기 조직"
 
-#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:44
-#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:64
-#: ../share/filters/filters.svg.h:66 ../share/filters/filters.svg.h:67
-#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:86
-#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:129
-#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:131
-#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:134
-#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:136
-#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
-#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:65 ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:83 ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:160
 msgid "Textures"
 msgstr "조직"
 
@@ -489,1133 +490,1125 @@ msgid "Random paint streaks downwards"
 msgstr "아래방향의 무작위 페인트 줄무늬"
 
 #: ../share/filters/filters.svg.h:43
-msgid "Rainbow melt"
-msgstr "무지개색 혼합"
-
-#: ../share/filters/filters.svg.h:43
-msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
-msgstr "3D 기복을 가진 얼룩의 수직 무지개 줄무늬"
-
-#: ../share/filters/filters.svg.h:44
 msgid "Jam spread"
 msgstr "엉킴 확장"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Glossy clumpy jam spread"
 msgstr "발광하는 덩어리 잼 확산 "
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 msgid "Pixel smear"
 msgstr "흘림무늬"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 #, fuzzy
 msgid "Van Gogh painting effect for bitmaps"
 msgstr "비트맵의 반고호 칠하기 효과"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Pixel smear, glossy"
 msgstr "흘림무늬, 광택"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 #, fuzzy
 msgid "Glossy painting effect for bitmaps"
 msgstr "비트맵 발광 칠하기 효과"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 #, fuzzy
 msgid "HSL Bumps"
 msgstr "HSL 융기"
 
-#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:49
-#: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:166
 msgid "Bumps"
 msgstr "융기"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Cracked glass"
 msgstr "깨진 유리"
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 #, fuzzy
 msgid "Under a cracked glass"
 msgstr "깨진 유리"
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "HSL bubbles"
 msgstr "HSL 거품"
 
-#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:107
 msgid ""
 "Highly flexible bubbles effect depending on color hue saturation and "
 "luminance"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Glowing bubble"
 msgstr "작열 거품"
 
-#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:55
-#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:68
-#: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:68 ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:72
 msgid "Ridges"
 msgstr "가장자리"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 #, fuzzy
 msgid "Bubble effect with refraction and glow"
 msgstr "굴절 및 발광 거품 효과"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Neon"
 msgstr "네온"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Neon light effect with glow"
 msgstr "발광 네온 빛 효과"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Melt and glow"
 msgstr "용해 및 백열"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Badge"
 msgstr "휘장"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Metal or plastic badge bevel"
 msgstr "금속 또는 플라스틱 취장 경사"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Pastel Bevel"
 msgstr "파스텔 경사"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 #, fuzzy
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr "부드러운 바스텔 모양 경사"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
 msgstr "얇은 막"
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin like a soap membrane"
 msgstr "비누막 같은 얇은 막"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Soft ridge"
 msgstr "부드러운 융기"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 msgid "Soft pastel ridge"
 msgstr "부드러운 파스텔 융기"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Glowing metal"
 msgstr "발광 금속"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Bright and glowing metal texture"
 msgstr "밝고 작열하는 금속 조직"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Leaves"
 msgstr "이파리"
 
-#: ../share/filters/filters.svg.h:58 ../share/filters/filters.svg.h:80
-#: ../share/filters/filters.svg.h:89 ../share/extensions/pathscatter.inx.h:10
+#: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:88 ../share/extensions/pathscatter.inx.h:10
 msgid "Scatter"
 msgstr "흩뿌리기"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 #, fuzzy
 msgid "Leaves on the ground in Fall, or living foliage"
 msgstr "가을에 지면에 있는 이파리"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Translucent"
 msgstr "반투명"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Illuminated translucent plastic effect"
 msgstr "반투명 플라스틱 효과 나타내기"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Cross-smooth"
 msgstr "크로스-부드럽게"
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Blur inner borders and intersections"
 msgstr "안쪽 경계와 교차첨 흐리게"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Iridescent beeswax"
 msgstr "무지개색 밀랍"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr "색상 채움 변경을 통한 무지개빛의 밀랍조직"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Eroded metal"
 msgstr "부식 금속"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
 msgstr "융기, 홈을 가진 부식된 금속 조직"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Cracked Lava"
 msgstr "균열있는 용암"
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 #, fuzzy
 msgid "A volcanic texture, a little like leather"
 msgstr "약간 가죽 같은 폭발성 조직"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Bark"
 msgstr "나무껍질"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Bark texture, vertical; use with deep colors"
 msgstr "수직 방향의 나무껍질; 짙은 색상 사용"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Lizard skin"
 msgstr "도마뱀 피부"
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 #, fuzzy
 msgid "Stylized reptile skin texture"
 msgstr "색상 변화에 민감한 정형화된 도마뱀 피부조직"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Stone wall"
 msgstr "돌담"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 #, fuzzy
 msgid "Stone wall texture to use with dark colors"
 msgstr "검은 색을 포함하는 색상을 사용하는 위한 암벽 조직"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet"
 msgstr "실크 카펫"
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet texture, horizontal stripes"
 msgstr "실크 카펫 조직, 수평 줄무늬"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Refractive gel A"
 msgstr "굴절 겔 A"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 #, fuzzy
 msgid "Gel effect with light refraction"
 msgstr "빛 굴절에 의한 겔 효과"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Refractive gel B"
 msgstr "굴절 겔 B"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 #, fuzzy
 msgid "Gel effect with strong refraction"
 msgstr "강한 굴절 겔 효과"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid "Metallized paint"
 msgstr "금속칠"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 #, fuzzy
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr "부드러운 빛의 금속, 가장자리에서 약간 반투명"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Dragee"
 msgstr "작은 알갱이"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge with a pearlescent look"
 msgstr "진주광택의 겔 등성이"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Raised border"
 msgstr "융기된 경계"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Strongly raised border around a flat surface"
 msgstr "평면주위에 크게 융기한 경계"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Metallized ridge"
 msgstr "금속 융기"
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Gel Ridge metallized at its top"
 msgstr "위쪽에 금속화된 겔 등성이"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Fat oil"
 msgstr "지방 기름"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Fat oil with some adjustable turbulence"
 msgstr "조정가능한 혼잡한 지방 기름"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 msgid "Colorize"
 msgstr "색상화"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Gives the flood color to the dark parts of the image"
 msgstr "찬란한 색상을 이미지의 어두운 부분에 둠"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "Parallel hollow"
 msgstr "평행 동공"
 
-#: ../share/filters/filters.svg.h:76 ../share/filters/filters.svg.h:77
-#: ../share/filters/filters.svg.h:78 ../share/filters/filters.svg.h:79
-#: ../share/filters/filters.svg.h:90 ../share/filters/filters.svg.h:91
-#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:133 ../src/filter-enums.cpp:31
+#: ../share/filters/filters.svg.h:75 ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:77 ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:132 ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "형태"
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "A blurry hollow going parallel to the edge on the inside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Hole"
 msgstr "구멍"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Opens a smooth hole inside the shape"
 msgstr "모양 안쪽 부드러운 구멍 열기"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Black hole"
 msgstr "검은 구멍"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Creates a black light inside and outside"
 msgstr "검음을 빛 안과 밖에 생성"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Smooth outline"
 msgstr "부드러운 윤곽선"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Outlining the lines and smoothing their crossings"
 msgstr "선의 윤곽선화 및 교차를 부드럽게"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Cubes"
 msgstr "6면체"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Peel off"
 msgstr "나무 껍질"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Peeling painting on a wall"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Gold splatter"
 msgstr "금빛 흩뿌리기"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Splattered cast metal, with golden highlights"
 msgstr "황금빛의 흩뿌린 캐스트 금속"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Gold paste"
 msgstr "황금 붙이기"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 #, fuzzy
 msgid "Fat pasted cast metal, with golden highlights"
 msgstr "황금빛의 흩뿌린 캐스트 금속"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled plastic"
 msgstr "구겨진 조직"
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled matte plastic, with melted edge"
 msgstr "녹은 경계를 가진 구겨진 마테 플라스틱"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Enamel jewelry"
 msgstr "에나멜 젤리"
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Slightly cracked enameled texture"
 msgstr "약간 균열이 있는 에나멜 조직"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Rough paper"
 msgstr "거친 종이"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 #, fuzzy
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr "객체에 대하여 이미지로 사용될 수 있는 수채화 종이 효과"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Rough and glossy"
 msgstr "거침과 광택"
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid ""
 "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr "객체에 대하여 이미지에 사용할 수 있는 구김 광택 종이 효과"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "In and Out"
 msgstr "안과 밖"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Inner colorized shadow, outer black shadow"
 msgstr "내부 색상 음영, 외부 검은 음영"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Air spray"
 msgstr "에어스프레이"
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 #, fuzzy
 msgid "Air Spray; adjust the Displacement Map amount"
 msgstr "치환 지도값을 통하여 조정되는 에어 스프레이"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Warm inside"
 msgstr "부드러운 안쪽"
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, filled inside"
 msgstr "흐림 색상 윤곽, 안으로 채워짐"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Cool outside"
 msgstr "쿨 바깥면"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Blurred colorized contour, empty inside"
 msgstr "흐린 색상 윤곽, 안으로 빔"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Electronic microscopy"
 msgstr "전자 현미경"
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 #, fuzzy
 msgid ""
 "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr "전자 현미경의 조잡한 빛을 가진 경사"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Tartan"
 msgstr "격자"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 #, fuzzy
 msgid "Checkered tartan pattern"
 msgstr "체커 킬트 직물"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Invert hue"
 msgstr "색조 거꾸로"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 #, fuzzy
 msgid "Invert hue, or rotate it"
 msgstr "색조 또는 회전을 반전"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Outline"
 msgstr "윤곽선"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 #, fuzzy
 msgid "Draws an outline around"
 msgstr "부드러운 구멍을 안쪽으로 그리기"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Outline, double"
 msgstr "윤곽선, 이중"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr "중첩된 색상을 가진 색상화된 부드러운 선 안쪽  그리기"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Fancy blur"
 msgstr "팬시 흐림"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 #, fuzzy
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr "무채색과 색조 회전을 허용하는 부드러운 색상 윤곽"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Glow"
 msgstr "백열"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Glow of object's own color at the edges"
 msgstr "모서리에 객체 자신 색상의 발광"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Ghost outline"
 msgstr "고스트 윤곽선"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Adds a glowing blur and removes the shape"
 msgstr "발광 흐림을 더하고 모양을 제거"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Color emboss"
 msgstr "색상 돋을새김"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr "고전 또는 색상 돋을새김 효과: 회색톤, 색상 및 3D 기복"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Soft bump"
 msgstr "부드러운 융기"
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 #, fuzzy
 msgid "Convolution bump; with a blur, it can give nice embossing effects"
 msgstr "흐림을 가진 둘둘말린 융기, 좋은 돋을새김 효과를 낼 수 있다"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
 msgstr "노출"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Classical photographic solarization effect"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid "Moonarize"
 msgstr "달떠오름"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "Soft focus lens"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "Glowing image content without blurring it"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Stained glass"
 msgstr "스테인글라스"
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Illuminated stained glass effect"
 msgstr "스테인 글라스 효과 나타내기"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Dark glass"
 msgstr "어두운 유리"
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr "아래에서 방출되는 빛의 유리 효과 보이기"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106
 #, fuzzy
 msgid "HSL Bumps, alpha"
 msgstr "HSL 융기, 알파효과"
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:170
+msgid "Masking tools"
+msgstr "마스크 도구"
+
+#: ../share/filters/filters.svg.h:106
 msgid ""
 "Same than HSL bumps but with an alpha added for combination with "
 "transparency depending filters"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 #, fuzzy
 msgid "HSL Bubbles, alpha"
 msgstr "HSL 거품, 알파효과"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid "Smooth edges"
 msgstr "부드러운 가장자리"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 #, fuzzy
 msgid ""
 "Smooth the outside of shapes and pictures without altering their contents"
 msgstr "내용 변경없이 모양과 이미지의 바깥면을 부드럽게"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid "Torn edges"
 msgstr "찢긴 가장자리"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 #, fuzzy
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
 msgstr "내용 변경없이 모양이나 이미지의 바깥면을 치환"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Feather"
 msgstr "부드럽게"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
 msgstr "내용 변경없이 경계에 대하여 흐림 마스크"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Blur content"
 msgstr "흐림 내용"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
 msgstr "윤곽선이 보존되고 객체 내용 흐리게"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Specular light"
 msgstr "특수 광"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Basic specular bevel to use for building textures"
 msgstr "건물 조직에 사용하는 기본 특수 경사"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Roughen inside"
 msgstr "거침 안쪽"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Roughen all inside shapes"
 msgstr "거친 전체 안쪽 모양"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Evanescent"
 msgstr "소실"
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Chalk and sponge"
 msgstr "분필과 스폰지"
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr "낮은 혼탁도는 스폰지처럼보이고 높은 혼탁도는 분필처럼 보임"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "People"
 msgstr "사람"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 #, fuzzy
 msgid "Colorized blotches, like a crowd of people"
 msgstr "넓은 장소에서 사람 걸음을 연상하는 색상 반점"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Scotland"
 msgstr "스코틀랜드"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 #, fuzzy
 msgid "Colorized mountain tops out of the fog"
 msgstr "색상화처리된 안개낀 산 정상"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Noise transparency"
 msgstr "잡음 투명"
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Basic noise transparency texture"
 msgstr "기본 잡음 투명 조직"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Noise fill"
 msgstr "잡음 채움"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 #, fuzzy
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr "기본 잡음 채움 조직"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "Garden of Delights"
 msgstr "기쁨의 정원"
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid ""
 "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Diffuse light"
 msgstr "확산 광"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Basic diffuse bevel to use for building textures"
 msgstr "건물 조직에서 사용되는 기본 확산 경사"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "Cutout Glow"
 msgstr "도려내기 발광"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr "가능한 옵셋과 색상화 처리가 가능한 안과 밖 발광"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 #, fuzzy
 msgid "HSL Bumps, diffuse"
 msgstr "HSL 융기 확산"
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid ""
 "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Dark Emboss"
 msgstr "어두운 돋을새김"
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr "돋을새김 효과 : 흰색이 검은색으로 치환되는 3D 기복"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
 msgstr "단순 흐림"
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 #, fuzzy
 msgid "HSL Bubbles, diffuse"
 msgstr "HSL 거품 확산"
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid ""
 "Same than HSL bubbles but with a diffuse light instead of a specular one"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr "돋을새김"
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
 msgstr "돋을새김 효과: 원래 이미지 색상을 유지 또는 혼합에 의한 수정"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Blotting paper"
 msgstr "압지"
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Inkblot on blotting paper"
 msgstr "압지의 잉크얼룩"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Wax print"
 msgstr "왁스 출력"
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Wax print on tissue texture"
 msgstr "티슈 조직의 왁스 출력"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot"
 msgstr "잉크얼룩"
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot on tissue or rough paper"
 msgstr "티슈 또는 거친 종이의 잉크얼룩"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Burnt edges"
 msgstr "탄 모서리"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Burnt paper edges texture"
 msgstr "탄 종이 모서리 조직"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "Color outline"
 msgstr "색상 윤곽선"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 #, fuzzy
 msgid "A colorizable outline with adjustable width and blur"
 msgstr "넓고 흐린 생상 윤곽선"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Liquid"
 msgstr "액체"
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Colorizable filling with liquid transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Watercolor"
 msgstr "물색"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Cloudy watercolor effect"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid "Felt"
 msgstr "펠트"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid ""
 "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Ink paint"
 msgstr "잉크칠"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Tinted rainbow"
 msgstr "음영 무지개"
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Melted rainbow"
 msgstr "엷은 무지개"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:139
 msgid "Darken edges"
 msgstr "어두운 몯서리"
 
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 msgid "Enhance outline and glows inside and outside"
 msgstr "윤곽선 강조 및 안과 밖의 면 발광"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Dark and glow"
 msgstr "어둠과 작열"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Flex metal"
 msgstr "굽은 금속"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Comics draft"
 msgstr "코믹 드래프트"
 
-#: ../share/filters/filters.svg.h:143 ../share/filters/filters.svg.h:144
-#: ../share/filters/filters.svg.h:145 ../share/filters/filters.svg.h:146
-#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:148
-#: ../share/filters/filters.svg.h:149 ../share/filters/filters.svg.h:150
-#: ../share/filters/filters.svg.h:151 ../share/filters/filters.svg.h:152
-#: ../share/filters/filters.svg.h:153 ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:164
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:146 ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:148 ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:150 ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:161
 msgid "Non realistic shaders"
 msgstr "비 현실 음영"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Comics fading"
 msgstr "코믹 페이딩"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Cartoon paint style with some fading at the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shader NR"
 msgstr "부드러운 음영 NR"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shading with a graphite pencil grey"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Emboss shader NR"
 msgstr "돋을새김 음영 NR"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Combination of smooth shading and embossing"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Smooth shader dark NR"
 msgstr "부드러운 음영 어두운 NR"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Dark version of non realistic smooth shading"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Comics"
 msgstr "코믹"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 #, fuzzy
 msgid "Imitation of black and white cartoon shading"
 msgstr "검은색과 흰색 구간 역으로"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 msgid "Satin NR"
 msgstr "사틴 NR"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Frosted glass NR"
 msgstr "서리 유리 NR"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Smooth shader contour NR"
 msgstr "부드러운 음영 윤곽 NR"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Contouring version of smooth shader"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:152
-msgid "Comics rounded"
-msgstr "코믹 라운드"
-
-#: ../share/filters/filters.svg.h:152
-msgid "Imitation of black and white cartoon shading more rounded version"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:153
-msgid "Pewter NR"
-msgstr "페유터 NR"
-
-#: ../share/filters/filters.svg.h:153
-msgid "Mid grey satin like shader close to pewter"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Aluminium NR"
 msgstr "알루미늄 NR"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Brushed aluminium shader"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 msgid "Comics fluid"
 msgstr "코믹 플루이드"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 #, fuzzy
 msgid "Fluid brushed cartoon drawing"
 msgstr "페이지를 그림으로 조정"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 msgid "Chrome NR"
 msgstr "크롬 NR"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 #, fuzzy
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "비 현실 음영"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Chrome dark NR"
 msgstr "크롬 어두운 NR"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Wavy tartan"
 msgstr "파동형 격자"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D marble"
 msgstr "3D 대리석"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D warped marble texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 msgid "3D wood"
 msgstr "3D 나무"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 msgid "3D warped, fibered wood texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 msgid "Mother of pearl"
 msgstr "진주모"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 msgid "3D warped, iridescent pearly shell texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 msgid "Tiger fur"
 msgstr "호랑이 무늬"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 msgid "Flow inside"
 msgstr "흐름 안쪽"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 msgid "Colorizable filling with flow inside like transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:164
-msgid "Comics flow"
-msgstr "코믹 흐름"
-
-#: ../share/filters/filters.svg.h:164
-msgid "Comics shader with a flow inside transparency"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics cream"
 msgstr "코믹 크림"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics shader with creamy waves transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 msgid "Black Light"
 msgstr "검은 빛"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 msgid "Light areas turn to black"
 msgstr ""
 
 #. Eraser
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 #: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
 msgid "Eraser"
 msgstr "지우개"
 
-#: ../share/filters/filters.svg.h:167
-msgid "Masking tools"
-msgstr "마스크 도구"
-
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:164
 msgid "Noisy blur"
 msgstr "잡음성 흐림"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:164
 #, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "작은 규모의 거친 모서리"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:165
 #, fuzzy
 msgid "Film Grain"
 msgstr "채움 칠하기"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:165
 msgid "Adds a film grain noise to images and objects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:166
 #, fuzzy
 msgid "HSL Bumps, transparent"
 msgstr "HSL 융기, 알파효과"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:166
 msgid "Highly flexible specular bump with transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:167
 msgid "Lead pencil"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:167
 msgid "Give lead pencil or chromolithography or engraving or other effects"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:168
+#, fuzzy
+msgid "Velvet bump"
+msgstr "부드러운 융기"
+
+#: ../share/filters/filters.svg.h:168
+msgid "Gives a smooth bump velvet like"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:169
+msgid "Alpha engraving"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:169
+msgid "Gives a transparent engraving effect to bitmaps and materials"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:170
+msgid "Alpha engraving, color"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:170
+msgid "Gives a transparent color engraving effect to bitmaps and materials"
 msgstr ""
 
 #: ../src/arc-context.cpp:303
@@ -1729,6 +1722,7 @@ msgid "Create guide"
 msgstr "안내선 생성"
 
 #: ../src/desktop-events.cpp:265 ../src/desktop-events.cpp:394
+#: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "안내선 삭제"
 
@@ -2513,7 +2507,7 @@ msgstr "높이(_G):"
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>비트맵 크기</b></big>"
 
-#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:209
+#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:210
 msgid "_Width:"
 msgstr "너비(_W):"
 
@@ -2525,7 +2519,7 @@ msgstr "화소"
 msgid "dp_i"
 msgstr "DPI(_I)"
 
-#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:210
+#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:211
 msgid "_Height:"
 msgstr "높이(_H):"
 
@@ -2976,12 +2970,14 @@ msgid "URL:"
 msgstr "URL:"
 
 #: ../src/dialogs/object-attributes.cpp:51
-#: ../src/dialogs/object-attributes.cpp:59 ../src/widgets/toolbox.cpp:1472
+#: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:43
+#: ../src/widgets/toolbox.cpp:1472
 msgid "X:"
 msgstr "X 위치:"
 
 #: ../src/dialogs/object-attributes.cpp:52
-#: ../src/dialogs/object-attributes.cpp:60 ../src/widgets/toolbox.cpp:1490
+#: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:44
+#: ../src/widgets/toolbox.cpp:1490
 msgid "Y:"
 msgstr "Y 위치:"
 
@@ -3678,7 +3674,7 @@ msgstr "지우개 윤곽선 <b>그리기</b>"
 msgid "Draw eraser stroke"
 msgstr "지우개 윤곽선 그리기"
 
-#: ../src/event-context.cpp:615
+#: ../src/event-context.cpp:612
 msgid "<b>Space+mouse drag</b> to pan canvas"
 msgstr "<b>Space+끌기</b>는 캔버스 이동"
 
@@ -3823,11 +3819,11 @@ msgstr ""
 "실행된 스크립트에서 부가 자료를 받았습니다. 오류가 발생한 것은 아니지만, 그 "
 "결과치는 예상했던 결과가 아닐 수 있습니다."
 
-#: ../src/extension/init.cpp:277
+#: ../src/extension/init.cpp:274
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr "Null 외부 모듈 폴더 이름. 모듈이 읽혀지지 않음."
 
-#: ../src/extension/init.cpp:291
+#: ../src/extension/init.cpp:288
 #: ../src/extension/internal/filter/filter-file.cpp:56
 #, c-format
 msgid ""
@@ -3865,7 +3861,7 @@ msgstr "높이"
 
 #. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:97
+#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
 #: ../src/live_effects/lpe-offset.cpp:30
 #: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:49
@@ -4093,11 +4089,13 @@ msgid "Edge"
 msgstr "모서리"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-msgid "Hilight edges of selected bitmap(s)."
+#, fuzzy
+msgid "Highlight edges of selected bitmap(s)."
 msgstr "선택 비트맵의 강조 모서리"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-msgid "Emboss selected bitmap(s) -- hilight edges with 3D effect."
+#, fuzzy
+msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
 msgstr "선택 비트맵을 돋을새김으로 하다 -- 3D 효과의 강조 모서리"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
@@ -4431,26 +4429,27 @@ msgstr "내보내기 구간 그리기영역임"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:284
 #: ../src/extension/internal/cairo-ps-out.cpp:321
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:218
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
 #: ../src/extension/internal/emf-win32-inout.cpp:2430
 msgid "Convert texts to paths"
 msgstr "문자열을 경로로 변환"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
 msgid "Rasterize filter effects"
 msgstr "필터 효과 래스터라이즈"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
-msgid "Preferred resolution (DPI) of bitmaps"
-msgstr "비트맵 기본 해상도(DPI)"
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
+#, fuzzy
+msgid "Resolution for rasterization (dpi)"
+msgstr "비트맵 사본 생성 해상도:"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:224
 msgid "Limit export to the object with ID"
 msgstr "ID 객체 내보내기로 제한"
 
@@ -4477,19 +4476,19 @@ msgstr "Encapsulated 포스트스크립트 (*.eps)"
 msgid "Encapsulated PostScript File"
 msgstr "Encapsulated 포스크스크립트 파일"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:215
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
 msgid "Restrict to PDF version"
 msgstr "PDF 버전으로 제한"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:217
 msgid "PDF 1.4"
 msgstr "PDF 1.4"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
 msgid "Export drawing, not page"
 msgstr "그림 내보내기, 페이지 아님"
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
 msgid "Export canvas"
 msgstr "캔버스 내보내기"
 
@@ -4601,7 +4600,7 @@ msgstr "크기 이동"
 msgid "Snow has fallen on object"
 msgstr "눈이 객체에 내림"
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:119
+#: ../src/extension/internal/gdkpixbuf-input.cpp:127
 #, c-format
 msgid "%s GDK pixbuf Input"
 msgstr "%s GDK pixbuf 입력"
@@ -4651,6 +4650,7 @@ msgstr "수직 옵셋"
 #: ../share/extensions/grid_polar.inx.h:18
 #: ../share/extensions/guides_creator.inx.h:17
 #: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
 #: ../share/extensions/polyhedron_3d.inx.h:32
 #: ../share/extensions/printing-marks.inx.h:14
@@ -4942,119 +4942,119 @@ msgstr "파일 형식 자동인식 실패, SVG형식으로 파일을 읽습니�
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:153
+#: ../src/file.cpp:157
 msgid "default.svg"
 msgstr "기본.svg"
 
-#: ../src/file.cpp:245 ../src/file.cpp:1031
+#: ../src/file.cpp:249 ../src/file.cpp:1036
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "요청한파일  %s를 읽어오는데 실패"
 
-#: ../src/file.cpp:270
+#: ../src/file.cpp:274
 msgid "Document not saved yet.  Cannot revert."
 msgstr "문서가 아직 저장되지 않음. 되돌릴 수 없음."
 
-#: ../src/file.cpp:276
+#: ../src/file.cpp:280
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr "변경된 내용을 잃습니다.! 정말 문서 %s 를 불러올까요?"
 
-#: ../src/file.cpp:305
+#: ../src/file.cpp:309
 msgid "Document reverted."
 msgstr "문서 되돌려짐."
 
-#: ../src/file.cpp:307
+#: ../src/file.cpp:311
 msgid "Document not reverted."
 msgstr "문서를 되돌리지 못함."
 
-#: ../src/file.cpp:457
+#: ../src/file.cpp:461
 msgid "Select file to open"
 msgstr "열기 화일 선택"
 
-#: ../src/file.cpp:544
+#: ../src/file.cpp:548
 msgid "Vacuum &lt;defs&gt;"
 msgstr "&lt;정의&gt; 삭제"
 
-#: ../src/file.cpp:549
+#: ../src/file.cpp:553
 #, fuzzy, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "&lt;정의&gt;에서 미사용된 정의 <b>%i</b> 제거"
 msgstr[1] "&lt;정의&gt;에서 미사용된 정의 <b>%i</b> 제거"
 
-#: ../src/file.cpp:554
+#: ../src/file.cpp:558
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "&lt;정의&gt;에서 미사용 정의 없음."
 
-#: ../src/file.cpp:583
+#: ../src/file.cpp:587
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
 msgstr "문서 (%s)를 저장하기 위한 Inkscape 확장자가 없음."
 
-#: ../src/file.cpp:584 ../src/file.cpp:592 ../src/file.cpp:598
+#: ../src/file.cpp:588 ../src/file.cpp:596 ../src/file.cpp:602
 msgid "Document not saved."
 msgstr "문서가 저장되지 않음."
 
-#: ../src/file.cpp:591
+#: ../src/file.cpp:595
 #, c-format
 msgid "File %s could not be saved."
 msgstr "파일 %s가 저장되지 않을 수 있습니다."
 
-#: ../src/file.cpp:605
+#: ../src/file.cpp:609
 msgid "Document saved."
 msgstr "문서 저장됨."
 
-#: ../src/file.cpp:746 ../src/file.cpp:1156 ../src/file.cpp:1276
+#: ../src/file.cpp:750 ../src/file.cpp:1161 ../src/file.cpp:1281
 #, c-format
 msgid "drawing%s"
 msgstr "그림 %s"
 
-#: ../src/file.cpp:752
+#: ../src/file.cpp:756
 #, c-format
 msgid "drawing-%d%s"
 msgstr "그림-%d%s"
 
-#: ../src/file.cpp:771
+#: ../src/file.cpp:775
 msgid "Select file to save a copy to"
 msgstr "복사본을 저장하기 위하여 파일 선택"
 
-#: ../src/file.cpp:773
+#: ../src/file.cpp:777
 msgid "Select file to save to"
 msgstr "저장 파일 선택"
 
-#: ../src/file.cpp:853
+#: ../src/file.cpp:857
 msgid "No changes need to be saved."
 msgstr "저장된 변화가 없음."
 
-#: ../src/file.cpp:870
+#: ../src/file.cpp:874
 msgid "Saving document..."
 msgstr "문서 저장..."
 
-#: ../src/file.cpp:1028
+#: ../src/file.cpp:1033
 msgid "Import"
 msgstr "불러오기"
 
-#: ../src/file.cpp:1058
+#: ../src/file.cpp:1063
 msgid "Select file to import"
 msgstr "읽어올 파일 선택"
 
-#: ../src/file.cpp:1177 ../src/file.cpp:1291
+#: ../src/file.cpp:1182 ../src/file.cpp:1296
 msgid "Select file to export to"
 msgstr "내보내기 위한 파일 선택"
 
-#: ../src/file.cpp:1323
+#: ../src/file.cpp:1328
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "임시파일 저장 중 오류"
 
-#: ../src/file.cpp:1343
+#: ../src/file.cpp:1348
 msgid "Open Clip Art Login"
 msgstr "Open Clip Art 로그인"
 
-#: ../src/file.cpp:1369
+#: ../src/file.cpp:1374
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5062,11 +5062,11 @@ msgid ""
 "didn't forget to choose a license."
 msgstr "문서 내보내기 오류."
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1395
 msgid "Document exported..."
 msgstr "문서 내보내기..."
 
-#: ../src/file.cpp:1418 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1423 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Open Clip Art에서 읽어오기"
 
@@ -5724,39 +5724,39 @@ msgstr "ex"
 msgid "Ex squares"
 msgstr "평방 Ex"
 
-#: ../src/inkscape.cpp:323
+#: ../src/inkscape.cpp:324
 msgid "Autosaving documents..."
 msgstr "문서 자동 저장 중..."
 
-#: ../src/inkscape.cpp:394
+#: ../src/inkscape.cpp:395
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr "자동 저장 실패! 문서 저장하기 위하여 Inkscape 확장자 찾을 수 없습니다."
 
-#: ../src/inkscape.cpp:397 ../src/inkscape.cpp:404
+#: ../src/inkscape.cpp:398 ../src/inkscape.cpp:405
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr "자동 저장 실패! 파일 %s를 저장할 수 없습니다."
 
-#: ../src/inkscape.cpp:419
+#: ../src/inkscape.cpp:420
 msgid "Autosave complete."
 msgstr "자동 저장 완료."
 
-#: ../src/inkscape.cpp:650
+#: ../src/inkscape.cpp:651
 msgid "Untitled document"
 msgstr "제목없는 문서"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:680
+#: ../src/inkscape.cpp:681
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape 실행 중 내부 오류가 발생하여, 지금 종료합니다.\n"
 
-#: ../src/inkscape.cpp:681
+#: ../src/inkscape.cpp:682
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr "저장안된 문서의 자동 백업이 다음 위치에서 저장됩니다:\n"
 
-#: ../src/inkscape.cpp:682
+#: ../src/inkscape.cpp:683
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "다음 문서들의 자동 백업 실패:\n"
 
@@ -5842,15 +5842,15 @@ msgstr "그라디언트상 색상 추출"
 msgid "Could not parse SVG data"
 msgstr "SVG 분석을 할 수 없음"
 
-#: ../src/interface.cpp:1394
+#: ../src/interface.cpp:1390
 msgid "Drop SVG"
 msgstr "DVG 추출"
 
-#: ../src/interface.cpp:1450
+#: ../src/interface.cpp:1446
 msgid "Drop bitmap image"
 msgstr "비트맵 이미지 추출"
 
-#: ../src/interface.cpp:1542
+#: ../src/interface.cpp:1538
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -5863,7 +5863,7 @@ msgstr ""
 "\n"
 "\"%s\"에 파일이 이미 있습니다.\". 치환은 내용을 덮어쓸 것입니다."
 
-#: ../src/interface.cpp:1549 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1545 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr "치환"
@@ -6206,7 +6206,7 @@ msgstr "새 도크 제어자 %p가 자동임."
 #: ../src/ui/dialog/align-and-distribute.cpp:917
 #: ../src/ui/dialog/document-properties.cpp:116
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1562
+#: ../src/widgets/desktop-widget.cpp:1558
 msgid "Page"
 msgstr "페이지"
 
@@ -6214,7 +6214,7 @@ msgstr "페이지"
 msgid "The index of the current page"
 msgstr "현재 페이지의 인덱스"
 
-#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:216
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:217
 msgid "Name"
 msgstr "이름"
 
@@ -6399,96 +6399,96 @@ msgid "Dynamic stroke"
 msgstr "동적 윤곽선"
 
 #: ../src/live_effects/effect.cpp:93
-msgid "Interpolate Sub-Paths"
-msgstr "하위 경로 삽입"
-
-#: ../src/live_effects/effect.cpp:94
 msgid "Lattice Deformation"
 msgstr "격자 변형"
 
-#: ../src/live_effects/effect.cpp:95
+#: ../src/live_effects/effect.cpp:94
 msgid "Line Segment"
 msgstr "선 세그먼트"
 
-#: ../src/live_effects/effect.cpp:96
+#: ../src/live_effects/effect.cpp:95
 msgid "Mirror symmetry"
 msgstr "미러 대칭"
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:97
 msgid "Parallel"
 msgstr "평행"
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:98
 msgid "Path length"
 msgstr "경로 길이"
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:99
 msgid "Perpendicular bisector"
 msgstr "수직 이등분선"
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:100
 msgid "Perspective path"
 msgstr "원근 경로"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:101
 msgid "Rotate copies"
 msgstr "복사 회전"
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:102
 #, fuzzy
 msgid "Recursive skeleton"
 msgstr "선택에서 곡선 얻기..."
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:103
 msgid "Ruler"
 msgstr "눈금자"
 
-#: ../src/live_effects/effect.cpp:105
+#: ../src/live_effects/effect.cpp:104
 msgid "Tangent to curve"
 msgstr "탄젠트(접선)를 곡선으로"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:105
 msgid "Text label"
 msgstr "문자열 라벨"
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:108
 msgid "Bend"
 msgstr "구부러짐"
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:109
 msgid "Gears"
 msgstr "톱니"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:110
 msgid "Pattern Along Path"
 msgstr "경로 따르는 패턴"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:111
 msgid "Stitch Sub-Paths"
 msgstr "하위 경로 스티치"
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:113
 msgid "VonKoch"
 msgstr "반고호"
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:114
 msgid "Knot"
 msgstr "매듭"
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:115
 msgid "Construct grid"
 msgstr "컨스트럭트 격자"
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:116
 msgid "Spiro spline"
 msgstr "나선 스프라인"
 
-#: ../src/live_effects/effect.cpp:118
+#: ../src/live_effects/effect.cpp:117
 msgid "Envelope Deformation"
 msgstr "감싸기 변형"
+
+#: ../src/live_effects/effect.cpp:118
+msgid "Interpolate Sub-Paths"
+msgstr "하위 경로 삽입"
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Hatches (rough)"
@@ -6509,33 +6509,21 @@ msgid ""
 msgstr ""
 "체크가 안될 경우, 효과가 객체에 적용 그러나 일시적으로 캔버스상에서 불가능."
 
-#: ../src/live_effects/effect.cpp:274
-msgid "Deactivate knotholder?"
-msgstr "노트홀더의 비활성화"
-
-#: ../src/live_effects/effect.cpp:274
-msgid ""
-"Check this to deactivate knotholder handles (useful if they interfere with "
-"node handles during editing)"
-msgstr ""
-"노트홀더 핸들을 비활성화하기 위하여 이것을 체크 ( 편집시 그들이 노드 핸들과 "
-"충돌시 유용)"
-
-#: ../src/live_effects/effect.cpp:295
+#: ../src/live_effects/effect.cpp:293
 msgid "No effect"
 msgstr "효과 없음"
 
-#: ../src/live_effects/effect.cpp:342
+#: ../src/live_effects/effect.cpp:340
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr "LPE '%s'(%d 마우스 클릭)를 위한 인자 경로를 지정하여 주시오."
 
-#: ../src/live_effects/effect.cpp:641
+#: ../src/live_effects/effect.cpp:636
 #, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "인자 편집 중 <b>%s</b>."
 
-#: ../src/live_effects/effect.cpp:646
+#: ../src/live_effects/effect.cpp:641
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "캔버스상에서 적용 경로 효과 인자를 편집할 수 없습니다."
 
@@ -6778,7 +6766,8 @@ msgid "Scale the width of the stitch path relative to its length"
 msgstr "길이에 상대적인 스티치 경로의 너비 변경"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
-msgid "Ellipitic Pen"
+#, fuzzy
+msgid "Elliptic Pen"
 msgstr "타원 펜"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:61
@@ -7330,6 +7319,15 @@ msgstr ""
 msgid "Adjust the origin"
 msgstr "원본 조정"
 
+#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
+#, fuzzy
+msgid "Iterations"
+msgstr "교차"
+
+#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
+msgid "recursivity"
+msgstr ""
+
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
 msgstr "주파수 무작위"
@@ -7370,7 +7368,8 @@ msgstr ""
 "최하단 180도 회전을 떠날 때 경로의 부드러움/날카로움 설정. 0=날카롭게, 1=기본"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-msgid "2nd side, in "
+#, fuzzy
+msgid "2nd side, in"
 msgstr "2번째 면, 안"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
@@ -7700,7 +7699,7 @@ msgid "Placement randomness"
 msgstr "주파수 무작위"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-msgid "0: evenly distributed construcion lines, 1: purely random placement"
+msgid "0: evenly distributed construction lines, 1: purely random placement"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:61
@@ -7931,8 +7930,10 @@ msgid "Export document to a PNG file"
 msgstr "문서를 PNG로 내보내기"
 
 #: ../src/main.cpp:294
-msgid "The resolution used for exporting SVG into bitmap (default 90)"
-msgstr "SVG를 비트맵으로 내보내는 해상도(기본값은 90)"
+msgid ""
+"Resolution for exporting to bitmap and for rasterization of filters in PS/"
+"EPS/PDF (default 90)"
+msgstr ""
 
 #: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
@@ -8111,7 +8112,7 @@ msgid "OBJECT-ID"
 msgstr "객체-ID"
 
 #: ../src/main.cpp:453
-msgid "Start Inkscape in interative shell mode."
+msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
 #: ../src/main.cpp:756 ../src/main.cpp:1067
@@ -8751,59 +8752,59 @@ msgstr "소멸 점 토글"
 msgid "Toggle multiple vanishing points"
 msgstr "다수 소멸 점 토글"
 
-#: ../src/preferences.cpp:104
+#: ../src/preferences.cpp:101
 msgid ""
 "Inkscape will run with default settings, and new settings will not be saved. "
 msgstr "Inkscape은 기본설정으로 실행됩니다, 새 설정은 저장되지 않습니다."
 
 #. the creation failed
-#. _errorDialog(Glib::ustring::compose(_("Cannot create profile directory %1."),
+#. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:122
+#: ../src/preferences.cpp:116
 #, c-format
 msgid "Cannot create profile directory %s."
 msgstr "프로파일 폴더를 생성할 수 없습니다 %s."
 
 #. The profile dir is not actually a directory
-#. _errorDialog(Glib::ustring::compose(_("%1 is not a valid directory."),
+#. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:140
+#: ../src/preferences.cpp:134
 #, c-format
 msgid "%s is not a valid directory."
 msgstr "%s 는 유효한 폴더가 아닙니다."
 
 #. The write failed.
-#. _errorDialog(Glib::ustring::compose(_("Failed to create the preferences file %1."),
+#. _reportError(Glib::ustring::compose(_("Failed to create the preferences file %1."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:151
+#: ../src/preferences.cpp:145
 #, c-format
 msgid "Failed to create the preferences file %s."
 msgstr "기본설정 파일  %s을 생성하는데 실패"
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:169
+#: ../src/preferences.cpp:163
 #, c-format
 msgid "The preferences file %s is not a regular file."
 msgstr "기본설정 파일 %s 는 정규 파일이 아닙니다."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 could not be read."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 could not be read."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:181
+#: ../src/preferences.cpp:175
 #, c-format
 msgid "The preferences file %s could not be read."
 msgstr "기본설정 파일 %s을 읽을 수 없습니다."
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:193
+#: ../src/preferences.cpp:188
 #, c-format
 msgid "The preferences file %s is not a valid XML document."
 msgstr "기본설정 파일 %s 는 유효한 XML 문서가 아닙니다."
 
-#. _errorDialog(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
+#. _reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:203
+#: ../src/preferences.cpp:199
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr "%s 파일은 적합한 Inkscape 기본설정이 아님."
@@ -8952,7 +8953,7 @@ msgstr "범위"
 msgid "Extent or scope of this document."
 msgstr "이 문서의 확장 또는 범위"
 
-#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:218
+#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:219
 msgid "Description"
 msgstr "설명"
 
@@ -9045,35 +9046,35 @@ msgstr "이동 취소."
 msgid "Selection canceled."
 msgstr "선택 취소."
 
-#: ../src/select-context.cpp:563
+#: ../src/select-context.cpp:559
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
 msgstr ""
 "선택하기 위하여 객체 <b>위에 그리기</b>; <b>Alt</b> 해제:  고무줄 선택을 변경"
 
-#: ../src/select-context.cpp:565
+#: ../src/select-context.cpp:561
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
 msgstr ""
 "객체를 선택하기 위하여 객체<b> 주위 끌기</b>; <b>Alt</b>: 터치 선택 변경하기"
 
-#: ../src/select-context.cpp:728
+#: ../src/select-context.cpp:725
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
 "<b>Ctrl</b>:그룹에서 선택하기 위하여 클릭; 수평/수직 이동하기 위하여 끌기"
 
-#: ../src/select-context.cpp:729
+#: ../src/select-context.cpp:726
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr "<b>Shift</b>: 선택 토글하기 위하여 클릭"
 
-#: ../src/select-context.cpp:730
+#: ../src/select-context.cpp:727
 msgid ""
 "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr "<b>Alt</b>: 선택하기 위하여 클릭"
 
-#: ../src/select-context.cpp:901
+#: ../src/select-context.cpp:902
 msgid "Selected object is not a group. Cannot enter."
 msgstr "선택된 객체가 그룹이 아님. 입력할 수 없음."
 
@@ -9775,16 +9776,16 @@ msgstr "%s 수평"
 msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
 msgstr "%d 도 (%s,%s) 통한 ; <b>Ctrl</b>+클릭: 삭제"
 
-#: ../src/sp-image.cpp:1110
+#: ../src/sp-image.cpp:1128
 msgid "embedded"
 msgstr "내장"
 
-#: ../src/sp-image.cpp:1118
+#: ../src/sp-image.cpp:1136
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "<b>잘못된 참조를 가진 이미지</b>: %s"
 
-#: ../src/sp-image.cpp:1119
+#: ../src/sp-image.cpp:1137
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>이미지</b> %d·&#215;·%d:·%s"
@@ -9807,26 +9808,26 @@ msgstr "<b>나선</b>: 반경 %s, 각도 %5g&#176;; <b>Ctrl</b>: 각도 붙이�
 msgid "Create spiral"
 msgstr "나선 생성"
 
-#: ../src/sp-item.cpp:1029
+#: ../src/sp-item.cpp:1035
 msgid "Object"
 msgstr "객체"
 
-#: ../src/sp-item.cpp:1046
+#: ../src/sp-item.cpp:1052
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr "%s; <i>잘라내기</i>"
 
-#: ../src/sp-item.cpp:1051
+#: ../src/sp-item.cpp:1057
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr "%s; <i>마스크됨</i>"
 
-#: ../src/sp-item.cpp:1059
+#: ../src/sp-item.cpp:1065
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr "%s; <i>필터됨 (%s)</i>"
 
-#: ../src/sp-item.cpp:1061
+#: ../src/sp-item.cpp:1067
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>필터됨</i>"
@@ -11014,13 +11015,14 @@ msgid "Smallest object"
 msgstr "가장 작은 객체"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:918
-#: ../src/widgets/desktop-widget.cpp:1566
+#: ../src/widgets/desktop-widget.cpp:1562
 msgid "Drawing"
 msgstr "그림"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
-#: ../src/widgets/desktop-widget.cpp:1570
+#: ../src/ui/dialog/icon-preview.cpp:178
+#: ../src/widgets/desktop-widget.cpp:1566
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "선택"
@@ -11549,7 +11551,7 @@ msgstr "이미지 파일"
 msgid "Selected SVG Element"
 msgstr "선택된 SVG 요소"
 
-#. TODO: any image, not justy svg
+#. TODO: any image, not just svg
 #: ../src/ui/dialog/filter-effects-dialog.cpp:648
 msgid "Select an image to be used as feImage input"
 msgstr "feImage 입력으로 사용되는 이미지 선택"
@@ -12030,9 +12032,10 @@ msgstr ""
 "같은 기능을 허용"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2289
+#, fuzzy
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
-"the Porter-Duff blending modes or the aritmetic mode described in SVG "
+"the Porter-Duff blending modes or the arithmetic mode described in SVG "
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
 msgstr ""
@@ -12164,6 +12167,59 @@ msgstr "필터 원형 복제"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2409
 msgid "Set filter primitive attribute"
 msgstr "필터 원형 속성 설정"
+
+#: ../src/ui/dialog/guides.cpp:42
+#, fuzzy
+msgid "Unit:"
+msgstr "단위:"
+
+#: ../src/ui/dialog/guides.cpp:45
+#, fuzzy
+msgid "Angle (degrees):"
+msgstr "각도 a / 각"
+
+#: ../src/ui/dialog/guides.cpp:46
+#, fuzzy
+msgid "Rela_tive change"
+msgstr "상대적 이동(_T)"
+
+#: ../src/ui/dialog/guides.cpp:46
+msgid "Move and/or rotate the guide relative to current settings"
+msgstr ""
+
+#: ../src/ui/dialog/guides.cpp:112
+#, fuzzy
+msgid "Set guide properties"
+msgstr "이미지 속성(_P)"
+
+#: ../src/ui/dialog/guides.cpp:151
+#, fuzzy
+msgid "Guideline"
+msgstr "안내선 색상"
+
+#: ../src/ui/dialog/guides.cpp:239
+#, fuzzy, c-format
+msgid "Guideline ID: %s"
+msgstr "<b>안내선</b>: %s"
+
+#: ../src/ui/dialog/guides.cpp:245
+#, fuzzy, c-format
+msgid "Current: %s"
+msgstr "현재 레이어"
+
+#: ../src/ui/dialog/icon-preview.cpp:130
+#, c-format
+msgid "%d x %d"
+msgstr ""
+
+#: ../src/ui/dialog/icon-preview.cpp:180
+#, fuzzy
+msgid "Selection only or whole document"
+msgstr "현재 레이어에서만 선택"
+
+#: ../src/ui/dialog/icon-preview.cpp:188
+msgid "Refresh the icons"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:169
 msgid "Mouse"
@@ -14126,6 +14182,53 @@ msgstr "추가(_A)"
 msgid "New layer created."
 msgstr "새 레이어 생성."
 
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+msgid "Unhide layer"
+msgstr "레이어 보이기"
+
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+msgid "Hide layer"
+msgstr "레이어 숨기기"
+
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+msgid "Lock layer"
+msgstr "레이어 잠그기"
+
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+msgid "Unlock layer"
+msgstr "레이어 잠금 해제"
+
+#: ../src/ui/dialog/layers.cpp:645
+msgid "Layers"
+msgstr "레이어"
+
+#: ../src/ui/dialog/layers.cpp:654
+#, fuzzy
+msgid "New"
+msgstr "새 파일(_N)"
+
+#: ../src/ui/dialog/layers.cpp:659 ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "최상단"
+
+#: ../src/ui/dialog/layers.cpp:665
+msgid "Up"
+msgstr ""
+
+#: ../src/ui/dialog/layers.cpp:671
+msgid "Dn"
+msgstr ""
+
+#: ../src/ui/dialog/layers.cpp:677
+#, fuzzy
+msgid "Bot"
+msgstr "양쪽"
+
+#: ../src/ui/dialog/layers.cpp:687
+#, fuzzy
+msgid "X"
+msgstr "X 위치:"
+
 #. TRANSLATORS: this dialog is accessible via menu Path - Path Effect Editor...
 #: ../src/ui/dialog/livepatheffect-editor.cpp:78
 msgid "Apply new effect"
@@ -14423,119 +14526,130 @@ msgstr "SVG 글꼴 대화창에서 선택된 그림글자 없음"
 msgid "Set glyph curves"
 msgstr "그림글자 곡선 설정"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:566
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:570
+#, fuzzy
+msgid "Reset missing-glyph"
+msgstr "없는 그림글자:"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:585
 msgid "Edit glyph name"
 msgstr "그림글자 이름 편집"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:579
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:598
 msgid "Set glyph unicode"
 msgstr "그림글자 유니코드 설정"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:589
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:608
 msgid "Remove font"
 msgstr "글꼴 제거"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:604
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:623
 msgid "Remove glyph"
 msgstr "그림글자 제거"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:619
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:638
 msgid "Remove kerning pair"
 msgstr "글자 장식꼬리쌍 제거"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:629
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 msgid "Missing Glyph:"
 msgstr "없는 그림글자:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:632
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:652
 msgid "From selection..."
 msgstr "선택에서 취하기"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:642
-msgid "Glyph Name"
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:654
+#: ../src/ui/widget/preferences-widget.cpp:590
+msgid "Reset"
+msgstr "초기화"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:665
+#, fuzzy
+msgid "Glyph name"
 msgstr "그림글자 이름"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:643
-msgid "Unicode"
-msgstr "유니코드"
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:666
+msgid "Matching string"
+msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:646
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:669
 msgid "Add Glyph"
 msgstr "그림글자 더하기"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:653
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:676
 msgid "Get curves from selection..."
 msgstr "선택에서 곡선 얻기..."
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:703
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
 msgstr "글자 장식꼬리쌍 더하기"
 
 #. Kerning Setup:
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:711
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:734
 msgid "Kerning Setup:"
 msgstr "글자 장식꼬리 설정"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:713
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
 msgstr "첫째 그림글자:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:715
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
 msgid "2nd Glyph:"
 msgstr "둘째 그림글자:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:718
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:741
 msgid "Add pair"
 msgstr "쌍 더하기"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:730
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:753
 msgid "First Unicode range"
 msgstr "첫째 유니코드 범위"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:731
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:754
 msgid "Second Unicode range"
 msgstr "둘째 유니코드 범위"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:761
 msgid "Kerning value:"
 msgstr "글자 장식꼬리 값:"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:796
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 msgid "Set font family"
 msgstr "글꼴 모음 설정"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:805
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:828
 msgid "font"
 msgstr "글꼴"
 
 #. select_font(font);
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:842
 msgid "Add font"
 msgstr "글꼴 더하기"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:839
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:862
 msgid "_Font"
 msgstr "글꼴(_F)"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:847
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:870
 msgid "_Global Settings"
 msgstr "글로벌 설정(_G)"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:848
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:871
 msgid "_Glyphs"
 msgstr "그림문자(_G)"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:849
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:872
 msgid "_Kerning"
 msgstr "글자 장식꼬리(_K)"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:856
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:857
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:879
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:880
 #, fuzzy
 msgid "Sample Text"
 msgstr "비율 X"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:861
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:884
 msgid "Preview Text:"
 msgstr "문자열 미리보기:"
 
@@ -15195,7 +15309,7 @@ msgstr ""
 "<b>Inkscape에 어서 오세요!</b> 객체를 생성하기 위하여 모양이나 그리기 도구를 "
 "사용하세요; 이들을 이동이나 변형하기 위하여 선택자(화살표)를 사용하세요."
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:832
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -15209,11 +15323,11 @@ msgstr ""
 "저장 없이 닫기를 하면, 변경된 내용이 무시됩니다."
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1258
-#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:899
+#: ../src/widgets/desktop-widget.cpp:839 ../src/widgets/desktop-widget.cpp:895
 msgid "Close _without saving"
 msgstr "저장하지 않고 닫기(_W)"
 
-#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:891
+#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:887
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -15222,7 +15336,7 @@ msgid ""
 "Do you want to save this file as an Inkscape SVG?"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:902
+#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:898
 msgid "_Save as SVG"
 msgstr "SVG 저장(_S)"
 
@@ -15250,22 +15364,6 @@ msgstr "현재 레이어"
 msgid "(root)"
 msgstr "(루트)"
 
-#: ../src/ui/widget/layer-selector.cpp:587
-msgid "Lock layer"
-msgstr "레이어 잠그기"
-
-#: ../src/ui/widget/layer-selector.cpp:587
-msgid "Unlock layer"
-msgstr "레이어 잠금 해제"
-
-#: ../src/ui/widget/layer-selector.cpp:595
-msgid "Hide layer"
-msgstr "레이어 숨기기"
-
-#: ../src/ui/widget/layer-selector.cpp:595
-msgid "Unhide layer"
-msgstr "레이어 보이기"
-
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
 msgstr "독점 소유"
@@ -15284,50 +15382,50 @@ msgstr "흐림 변경"
 msgid "Change opacity"
 msgstr "불투명도 변경"
 
-#: ../src/ui/widget/page-sizer.cpp:208
+#: ../src/ui/widget/page-sizer.cpp:209
 msgid "U_nits:"
 msgstr "단위(_N):"
 
-#: ../src/ui/widget/page-sizer.cpp:209
+#: ../src/ui/widget/page-sizer.cpp:210
 msgid "Width of paper"
 msgstr "종이 너비"
 
-#: ../src/ui/widget/page-sizer.cpp:210
+#: ../src/ui/widget/page-sizer.cpp:211
 msgid "Height of paper"
 msgstr "종이 높이"
 
-#: ../src/ui/widget/page-sizer.cpp:256
+#: ../src/ui/widget/page-sizer.cpp:257
 msgid "P_age size:"
 msgstr "페이지 크기(_A):"
 
-#: ../src/ui/widget/page-sizer.cpp:264
+#: ../src/ui/widget/page-sizer.cpp:265
 msgid "Page orientation:"
 msgstr "페이지 방향:"
 
-#: ../src/ui/widget/page-sizer.cpp:267
+#: ../src/ui/widget/page-sizer.cpp:268
 msgid "_Landscape"
 msgstr "가로방향(_L)"
 
-#: ../src/ui/widget/page-sizer.cpp:272
+#: ../src/ui/widget/page-sizer.cpp:273
 msgid "_Portrait"
 msgstr "세로방향(_P)"
 
 #. ## Set up custom size frame
-#: ../src/ui/widget/page-sizer.cpp:279
+#: ../src/ui/widget/page-sizer.cpp:280
 msgid "Custom size"
 msgstr "사용자 크기"
 
-#: ../src/ui/widget/page-sizer.cpp:292
+#: ../src/ui/widget/page-sizer.cpp:293
 msgid "_Fit page to selection"
 msgstr "페이지를 선택 크기로 조정(_F)"
 
-#: ../src/ui/widget/page-sizer.cpp:293
+#: ../src/ui/widget/page-sizer.cpp:294
 msgid ""
 "Resize the page to fit the current selection, or the entire drawing if there "
 "is no selection"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:351
+#: ../src/ui/widget/page-sizer.cpp:357
 msgid "Set page size"
 msgstr "페이지 크기 설정"
 
@@ -15389,10 +15487,6 @@ msgstr "아주 넓게"
 #: ../src/ui/widget/panel.cpp:205
 msgid "swatches|Wrap"
 msgstr "색상 막대| 고정"
-
-#: ../src/ui/widget/preferences-widget.cpp:590
-msgid "Reset"
-msgstr "초기화"
 
 #: ../src/ui/widget/random.cpp:123
 msgid ""
@@ -17723,12 +17817,12 @@ msgstr "%s (윤곽선) - Inkscape"
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
 
-#: ../src/widgets/ege-paint-def.cpp:69 ../src/widgets/ege-paint-def.cpp:91
+#: ../src/widgets/ege-paint-def.cpp:70 ../src/widgets/ege-paint-def.cpp:92
 #: ../src/widgets/gradient-selector.cpp:167
 msgid "none"
 msgstr "없음"
 
-#: ../src/widgets/ege-paint-def.cpp:88
+#: ../src/widgets/ege-paint-def.cpp:89
 msgid "remove"
 msgstr "제거"
 
@@ -18307,14 +18401,14 @@ msgstr "이음 결합"
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1135
+#: ../src/widgets/stroke-style.cpp:1137
 msgid "Round join"
 msgstr "둥근 결합"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1143
+#: ../src/widgets/stroke-style.cpp:1147
 msgid "Bevel join"
 msgstr "경사 결합"
 
@@ -18325,58 +18419,58 @@ msgstr "경사 결합"
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/widgets/stroke-style.cpp:1154
+#: ../src/widgets/stroke-style.cpp:1159
 msgid "Miter limit:"
 msgstr "이음 한계:"
 
-#: ../src/widgets/stroke-style.cpp:1162
+#: ../src/widgets/stroke-style.cpp:1167
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "이음의 최대 길이"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/widgets/stroke-style.cpp:1174
+#: ../src/widgets/stroke-style.cpp:1179
 msgid "Cap:"
 msgstr "정점 처리:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1185
+#: ../src/widgets/stroke-style.cpp:1191
 msgid "Butt cap"
 msgstr "버튼"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:1192
+#: ../src/widgets/stroke-style.cpp:1199
 msgid "Round cap"
 msgstr "둥금"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1199
+#: ../src/widgets/stroke-style.cpp:1207
 msgid "Square cap"
 msgstr "사각"
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:1205
+#: ../src/widgets/stroke-style.cpp:1213
 msgid "Dashes:"
 msgstr "실선:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/widgets/stroke-style.cpp:1222
+#: ../src/widgets/stroke-style.cpp:1230
 msgid "Start Markers:"
 msgstr "시작 표시:"
 
-#: ../src/widgets/stroke-style.cpp:1224
+#: ../src/widgets/stroke-style.cpp:1232
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr "시작 표시는 경로 또는 모양의 처음 노드상에서 보여지는 것임."
 
-#: ../src/widgets/stroke-style.cpp:1233
+#: ../src/widgets/stroke-style.cpp:1241
 msgid "Mid Markers:"
 msgstr "중간 표시:"
 
-#: ../src/widgets/stroke-style.cpp:1235
+#: ../src/widgets/stroke-style.cpp:1243
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
@@ -18384,15 +18478,15 @@ msgstr ""
 "중간 표시는 처음 또는 마지막 노드를 제외하고 경로나 모양의 모든 노드에서 보여"
 "지는 것임"
 
-#: ../src/widgets/stroke-style.cpp:1244
+#: ../src/widgets/stroke-style.cpp:1252
 msgid "End Markers:"
 msgstr "끝 표시:"
 
-#: ../src/widgets/stroke-style.cpp:1246
+#: ../src/widgets/stroke-style.cpp:1254
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr "끝 표시는 경로 또는 모양의 처음 노드상에서 보여지는 것임."
 
-#: ../src/widgets/stroke-style.cpp:1569 ../src/widgets/stroke-style.cpp:1665
+#: ../src/widgets/stroke-style.cpp:1603 ../src/widgets/stroke-style.cpp:1699
 msgid "Set stroke style"
 msgstr "윤곽선 스타일 설정"
 
@@ -20130,7 +20224,11 @@ msgstr "두번째 경로는 정확히 4 노드 길이이어야 합니다."
 msgid "Could not locate file: %s"
 msgstr "파일을 위치시킬 수 없습니다: %s"
 
-#. vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
+#: ../share/extensions/web-set-att.py:52
+#: ../share/extensions/web-transmit-att.py:48
+msgid "You must select at least two elements."
+msgstr ""
+
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
 msgstr "노드 더하기"
@@ -20151,8 +20249,10 @@ msgstr "나누기 방법"
 msgid "Maximum segment length (px)"
 msgstr "최대 세그먼트 길이 (화소)"
 
-#: ../share/extensions/addnodes.inx.h:6 ../share/extensions/edge3d.inx.h:6
-#: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
+#: ../share/extensions/addnodes.inx.h:6
+#: ../share/extensions/convert2dashes.inx.h:2
+#: ../share/extensions/edge3d.inx.h:6 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/fractalize.inx.h:2
 #: ../share/extensions/interp_att_g.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
@@ -20346,6 +20446,11 @@ msgstr "색상 치환 (RRGGBB 16진수):"
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
 msgstr "RGB 바렐"
+
+#: ../share/extensions/convert2dashes.inx.h:1
+#, fuzzy
+msgid "Convert to Dashes"
+msgstr "점자(브라유)로 반전"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -20541,18 +20646,23 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr "오토캐드 DXF (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:2
+#, fuzzy
+msgid "Character Encoding"
+msgstr "문자 엔코딩"
+
+#: ../share/extensions/dxf_input.inx.h:3
 msgid "DXF Input"
 msgstr "DXF 입력"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:4
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "DXF 불러오기"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:5
 msgid "Or, use manual scale factor"
 msgstr ""
 
-#: ../share/extensions/dxf_input.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "Use automatic scaling to size A4"
 msgstr ""
 
@@ -20725,6 +20835,7 @@ msgid "Calculate first derivative numerically"
 msgstr "수치상 첫 유도함수 계산 "
 
 #: ../share/extensions/funcplot.inx.h:2
+#: ../share/extensions/param_curves.inx.h:1
 msgid "Draw Axes"
 msgstr "축 그리기"
 
@@ -20745,6 +20856,7 @@ msgid "Function Plotter"
 msgstr "기능 플로터"
 
 #: ../share/extensions/funcplot.inx.h:7
+#: ../share/extensions/param_curves.inx.h:3
 msgid "Functions"
 msgstr "기능"
 
@@ -20765,6 +20877,7 @@ msgid "Range and sampling"
 msgstr "범위 및 샘플링"
 
 #: ../share/extensions/funcplot.inx.h:12
+#: ../share/extensions/param_curves.inx.h:8
 msgid "Remove rectangle"
 msgstr "사각형 제거"
 
@@ -20778,6 +20891,7 @@ msgid ""
 msgstr "확장을 호출하기 전 직사각형 선택, 이것은 X,Y 비율을 결정한다"
 
 #: ../share/extensions/funcplot.inx.h:15
+#: ../share/extensions/param_curves.inx.h:12
 msgid ""
 "Standard Python math functions are available: ceil(x); fabs(x); floor(x); "
 "fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); "
@@ -20796,6 +20910,7 @@ msgid "Start X value"
 msgstr "시작 X 값"
 
 #: ../share/extensions/funcplot.inx.h:17
+#: ../share/extensions/param_curves.inx.h:14
 msgid "Use"
 msgstr "사용"
 
@@ -21111,26 +21226,6 @@ msgstr "버그 보고"
 msgid "SVG 1.1 Specification"
 msgstr "SVG 1.1 설명"
 
-#: ../share/extensions/interp.inx.h:1
-msgid "Duplicate endpaths"
-msgstr "끝 경로 복제"
-
-#: ../share/extensions/interp.inx.h:4
-msgid "Interpolate"
-msgstr "삽입"
-
-#: ../share/extensions/interp.inx.h:5
-msgid "Interpolate style"
-msgstr "삽입 형태"
-
-#: ../share/extensions/interp.inx.h:6
-msgid "Interpolation method"
-msgstr "삽입 방법"
-
-#: ../share/extensions/interp.inx.h:7
-msgid "Interpolation steps"
-msgstr "삽입 단계"
-
 #: ../share/extensions/interp_att_g.inx.h:1
 #, fuzzy
 msgid "Attribute to Interpolate"
@@ -21223,6 +21318,26 @@ msgstr ""
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
 msgstr ""
+
+#: ../share/extensions/interp.inx.h:1
+msgid "Duplicate endpaths"
+msgstr "끝 경로 복제"
+
+#: ../share/extensions/interp.inx.h:4
+msgid "Interpolate"
+msgstr "삽입"
+
+#: ../share/extensions/interp.inx.h:5
+msgid "Interpolate style"
+msgstr "삽입 형태"
+
+#: ../share/extensions/interp.inx.h:6
+msgid "Interpolation method"
+msgstr "삽입 방법"
+
+#: ../share/extensions/interp.inx.h:7
+msgid "Interpolation steps"
+msgstr "삽입 단계"
 
 #: ../share/extensions/lindenmayer.inx.h:1
 msgid "Axiom"
@@ -21356,6 +21471,77 @@ msgstr "문자열 윤곽선 파일 (*.outline)"
 #: ../share/extensions/outline2svg.inx.h:3
 msgid "Text Outline Input"
 msgstr "문자열 윤곽선 입력"
+
+#: ../share/extensions/param_curves.inx.h:2
+#, fuzzy
+msgid "End t-value"
+msgstr "끝 X 값"
+
+#: ../share/extensions/param_curves.inx.h:4
+#, fuzzy
+msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
+msgstr "동일 비율 (가장 작은 값 사용: 너비/X 범위 또는 높이/Y 범위)"
+
+#: ../share/extensions/param_curves.inx.h:5
+#, fuzzy
+msgid "Multiply t-range by 2*pi"
+msgstr "2*pi 와 X 범위 곱하기"
+
+#: ../share/extensions/param_curves.inx.h:6
+#, fuzzy
+msgid "Parametric Curves"
+msgstr "인자"
+
+#: ../share/extensions/param_curves.inx.h:7
+#, fuzzy
+msgid "Range and Sampling"
+msgstr "범위 및 샘플링"
+
+#: ../share/extensions/param_curves.inx.h:10
+#, fuzzy
+msgid "Samples"
+msgstr "모양"
+
+#: ../share/extensions/param_curves.inx.h:11
+msgid ""
+"Select a rectangle before calling the extension; it will determine X and Y "
+"scales. First derivatives are always determined numerically."
+msgstr ""
+
+#: ../share/extensions/param_curves.inx.h:13
+#, fuzzy
+msgid "Start t-value"
+msgstr "시작 X 값"
+
+#: ../share/extensions/param_curves.inx.h:15
+#, fuzzy
+msgid "x-Function"
+msgstr "기능"
+
+#: ../share/extensions/param_curves.inx.h:16
+#, fuzzy
+msgid "x-value of rectangle's left"
+msgstr "사각형 최상단 Y 값"
+
+#: ../share/extensions/param_curves.inx.h:17
+#, fuzzy
+msgid "x-value of rectangle's right"
+msgstr "사각형 최상단 Y 값"
+
+#: ../share/extensions/param_curves.inx.h:18
+#, fuzzy
+msgid "y-Function"
+msgstr "기능"
+
+#: ../share/extensions/param_curves.inx.h:19
+#, fuzzy
+msgid "y-value of rectangle's bottom"
+msgstr "사각형 최하단 Y 값"
+
+#: ../share/extensions/param_curves.inx.h:20
+#, fuzzy
+msgid "y-value of rectangle's top"
+msgstr "사각형 최상단 Y 값"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Copies of the pattern:"
@@ -21865,10 +22051,6 @@ msgstr "다시쌓기 방향:"
 msgid "Right to Left (180)"
 msgstr "오른쪽에서 왼쪽 (180)"
 
-#: ../share/extensions/restack.inx.h:16
-msgid "Top"
-msgstr "최상단"
-
 #: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
 msgstr "최상단에서 최하단으로 (270)"
@@ -21908,11 +22090,22 @@ msgid "Open files saved in sK1 vector graphics editor"
 msgstr "sK1 벡터 그래픽 파일 열기"
 
 #: ../share/extensions/sk1_input.inx.h:2
+#: ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (.sk1)"
 msgstr "sK1 벡터 그래픽 파일 (.sk1)"
 
 #: ../share/extensions/sk1_input.inx.h:3
 msgid "sK1 vector graphics files input"
+msgstr "sK1벡터 그래픽 파일 입력"
+
+#: ../share/extensions/sk1_output.inx.h:1
+#, fuzzy
+msgid "File format for use in sK1 vector graphics editor"
+msgstr "sK1 벡터 그래픽 파일 열기"
+
+#: ../share/extensions/sk1_output.inx.h:3
+#, fuzzy
+msgid "sK1 vector graphics files output"
 msgstr "sK1벡터 그래픽 파일 입력"
 
 #: ../share/extensions/sk_input.inx.h:1
@@ -22272,7 +22465,7 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:8
 #, fuzzy
-msgid "Set Atributes"
+msgid "Set Attributes"
 msgstr "속성 설정..."
 
 #: ../share/extensions/web-set-att.inx.h:9
@@ -22444,6 +22637,40 @@ msgstr "윈도우즈 메타파일 입력"
 msgid "XAML Input"
 msgstr "XAML 입력"
 
+#~ msgid "Rainbow melt"
+#~ msgstr "무지개색 혼합"
+
+#~ msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
+#~ msgstr "3D 기복을 가진 얼룩의 수직 무지개 줄무늬"
+
+#~ msgid "Comics rounded"
+#~ msgstr "코믹 라운드"
+
+#~ msgid "Pewter NR"
+#~ msgstr "페유터 NR"
+
+#~ msgid "Comics flow"
+#~ msgstr "코믹 흐름"
+
+#~ msgid "Preferred resolution (DPI) of bitmaps"
+#~ msgstr "비트맵 기본 해상도(DPI)"
+
+#~ msgid "Deactivate knotholder?"
+#~ msgstr "노트홀더의 비활성화"
+
+#~ msgid ""
+#~ "Check this to deactivate knotholder handles (useful if they interfere "
+#~ "with node handles during editing)"
+#~ msgstr ""
+#~ "노트홀더 핸들을 비활성화하기 위하여 이것을 체크 ( 편집시 그들이 노드 핸들"
+#~ "과 충돌시 유용)"
+
+#~ msgid "The resolution used for exporting SVG into bitmap (default 90)"
+#~ msgstr "SVG를 비트맵으로 내보내는 해상도(기본값은 90)"
+
+#~ msgid "Unicode"
+#~ msgstr "유니코드"
+
 #~ msgid "Render object in black and white"
 #~ msgstr "검은색과 흰색으로 객체 렌더"
 
@@ -22530,9 +22757,6 @@ msgstr "XAML 입력"
 
 #~ msgid "all_inactive"
 #~ msgstr "전체 불활성화(_I)"
-
-#~ msgid "Layers"
-#~ msgstr "레이어"
 
 #~ msgid "Plied tartan"
 #~ msgstr "굽은 격자"

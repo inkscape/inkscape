@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-18 07:21+0200\n"
+"POT-Creation-Date: 2009-05-19 11:58+0200\n"
 "PO-Revision-Date: 2009-05-18 00:51+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
@@ -1593,9 +1593,7 @@ msgid "Lead pencil"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:167
-msgid ""
-"Give lead pencil or chromolithography or engraving or other effects to "
-"images and material filled objects"
+msgid "Give lead pencil or chromolithography or engraving or other effects"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:168
@@ -1607,19 +1605,20 @@ msgid "Gives a smooth bump velvet like"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:169
-msgid "Alpha draw"
-msgstr "Alfa-risanje"
+#, fuzzy
+msgid "Alpha engraving"
+msgstr "Alfa-barvanje"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Gives a transparent drawing effect to bitmaps and materials"
+msgid "Gives a transparent engraving effect to bitmaps and materials"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:170
-msgid "Alpha paint"
-msgstr "Alfa-barvanje"
+msgid "Alpha engraving, color"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:170
-msgid "Gives a transparent color fill effect to bitmaps and materials"
+msgid "Gives a transparent color engraving effect to bitmaps and materials"
 msgstr ""
 
 #: ../src/arc-context.cpp:303
@@ -20819,8 +20818,10 @@ msgstr "Metoda deljenja"
 msgid "Maximum segment length (px)"
 msgstr "Največja dolžina odseka (v slik. točkah)"
 
-#: ../share/extensions/addnodes.inx.h:6 ../share/extensions/edge3d.inx.h:6
-#: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
+#: ../share/extensions/addnodes.inx.h:6
+#: ../share/extensions/convert2dashes.inx.h:2
+#: ../share/extensions/edge3d.inx.h:6 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/fractalize.inx.h:2
 #: ../share/extensions/interp_att_g.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
@@ -21015,6 +21016,11 @@ msgstr "Zamenjaj barvo (RRGGBB šestnajstiško):"
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
 msgstr "Kolešček RGB"
+
+#: ../share/extensions/convert2dashes.inx.h:1
+#, fuzzy
+msgid "Convert to Dashes"
+msgstr "Pretvori v brajlico"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -23218,6 +23224,9 @@ msgstr "Uvoz Metadatoteke Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Uvoz XAML"
+
+#~ msgid "Alpha draw"
+#~ msgstr "Alfa-risanje"
 
 #~ msgid "Render object in black and white"
 #~ msgstr "Upodobi predmet v črni in beli"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-04-28 18:31+0200\n"
+"POT-Creation-Date: 2009-05-19 11:58+0200\n"
 "PO-Revision-Date: 2006-11-05 18:09+0100\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -37,12 +37,12 @@ msgstr "Ishusho"
 #: ../share/filters/filters.svg.h:4 ../share/filters/filters.svg.h:5
 #: ../share/filters/filters.svg.h:10 ../share/filters/filters.svg.h:15
 #: ../share/filters/filters.svg.h:16 ../share/filters/filters.svg.h:40
-#: ../share/filters/filters.svg.h:51 ../share/filters/filters.svg.h:52
-#: ../share/filters/filters.svg.h:53 ../share/filters/filters.svg.h:54
-#: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:59
-#: ../share/filters/filters.svg.h:72 ../share/filters/filters.svg.h:74
-#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:105
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:52 ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:71 ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:105
 #, fuzzy
 msgid "Bevels"
 msgstr "Icyatsi kibisi:"
@@ -83,10 +83,10 @@ msgstr "Mu buryo Butambitse"
 
 # sw/source\ui\utlui\attrdesc.src:STR_CHANNELB.text
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
-#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:60
-#: ../share/filters/filters.svg.h:97 ../share/filters/filters.svg.h:98
-#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:164
 #, fuzzy
 msgid "Blurs"
 msgstr "Ubururu"
@@ -127,8 +127,8 @@ msgid "Cutout"
 msgstr "Ubuturo"
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
-#: ../share/filters/filters.svg.h:88 ../share/filters/filters.svg.h:123
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 #, fuzzy
@@ -153,10 +153,10 @@ msgstr ""
 msgid "Roughen"
 msgstr "Umutuku:"
 
-#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:111
-#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:119
-#: ../share/filters/filters.svg.h:120 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:125
 msgid "ABCs"
 msgstr ""
 
@@ -187,8 +187,8 @@ msgstr "star"
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
 #: ../share/filters/filters.svg.h:22 ../share/filters/filters.svg.h:23
 #: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
-#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:117
-#: ../share/filters/filters.svg.h:118 ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:120
 #, fuzzy
 msgid "Overlays"
 msgstr "Metero"
@@ -276,9 +276,9 @@ msgid "Ripple"
 msgstr "Ihindurakerekezo"
 
 # svx/sdi\svxslots.src:SID_DISTRIBUTE_DLG.text
-#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:45
-#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:110
-#: ../share/filters/filters.svg.h:114 ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:115
 #, fuzzy
 msgid "Distort"
 msgstr "Gukwirakwiza"
@@ -345,15 +345,15 @@ msgstr ""
 msgid "Leopard fur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:60
 #: ../share/filters/filters.svg.h:61 ../share/filters/filters.svg.h:62
-#: ../share/filters/filters.svg.h:63 ../share/filters/filters.svg.h:65
-#: ../share/filters/filters.svg.h:70 ../share/filters/filters.svg.h:81
-#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:83
-#: ../share/filters/filters.svg.h:85 ../share/filters/filters.svg.h:93
-#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:158
-#: ../share/filters/filters.svg.h:159 ../share/filters/filters.svg.h:160
-#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:159
 #, fuzzy
 msgid "Materials"
 msgstr "Mugenga"
@@ -397,10 +397,11 @@ msgstr "Imisusire"
 #: ../share/filters/filters.svg.h:26 ../share/filters/filters.svg.h:27
 #: ../share/filters/filters.svg.h:28 ../share/filters/filters.svg.h:29
 #: ../share/filters/filters.svg.h:30 ../share/filters/filters.svg.h:31
-#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:100
-#: ../share/filters/filters.svg.h:101 ../share/filters/filters.svg.h:104
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:128
-#: ../share/filters/filters.svg.h:169 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:165 ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:168
 #, fuzzy
 msgid "Image effects"
 msgstr "Nka Akugara"
@@ -506,9 +507,9 @@ msgstr "Gukwirakwiza"
 # #-#-#-#-#  basctl.pot (PACKAGE VERSION)  #-#-#-#-#
 # basctl/source\basicide\moduldlg.src:RID_TP_LIBS.RID_PB_CLOSE.text
 #: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:33
-#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:75
-#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:102
-#: ../share/filters/filters.svg.h:103 ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:93 ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:162
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -570,16 +571,16 @@ msgstr ""
 msgid "Organic"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:44
-#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:64
-#: ../share/filters/filters.svg.h:66 ../share/filters/filters.svg.h:67
-#: ../share/filters/filters.svg.h:84 ../share/filters/filters.svg.h:86
-#: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:129
-#: ../share/filters/filters.svg.h:130 ../share/filters/filters.svg.h:131
-#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:134
-#: ../share/filters/filters.svg.h:135 ../share/filters/filters.svg.h:136
-#: ../share/filters/filters.svg.h:137 ../share/filters/filters.svg.h:138
-#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:36 ../share/filters/filters.svg.h:43
+#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:65 ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:83 ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:86 ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:129 ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:160
 #, fuzzy
 msgid "Textures"
 msgstr "Umwandiko"
@@ -686,78 +687,69 @@ msgid "Random paint streaks downwards"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:43
-msgid "Rainbow melt"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:43
-msgid "Vertical rainbow stripes, edged by splotches with 3D relief"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:44
 #, fuzzy
 msgid "Jam spread"
 msgstr "Nyamwihinahine"
 
-#: ../share/filters/filters.svg.h:44
+#: ../share/filters/filters.svg.h:43
 msgid "Glossy clumpy jam spread"
 msgstr ""
 
 # offmgr/source\offapp\dialog\optgdlg.src:OFA_TP_VIEW.FT_POINTLIMIT_UNIT.text
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 #, fuzzy
 msgid "Pixel smear"
 msgstr "Pigiseli"
 
-#: ../share/filters/filters.svg.h:45
+#: ../share/filters/filters.svg.h:44
 #, fuzzy
 msgid "Van Gogh painting effect for bitmaps"
 msgstr "Byahiswemo Igikoresho Kuri Inzira"
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 msgid "Pixel smear, glossy"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:46
+#: ../share/filters/filters.svg.h:45
 #, fuzzy
 msgid "Glossy painting effect for bitmaps"
 msgstr "Byahiswemo Igikoresho Kuri Inzira"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 #, fuzzy
 msgid "HSL Bumps"
 msgstr "Kohereza Inyuma"
 
-#: ../share/filters/filters.svg.h:47 ../share/filters/filters.svg.h:49
-#: ../share/filters/filters.svg.h:107 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:166
 #, fuzzy
 msgid "Bumps"
 msgstr "Kohereza Inyuma"
 
-#: ../share/filters/filters.svg.h:47
+#: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Cracked glass"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:48
+#: ../share/filters/filters.svg.h:47
 msgid "Under a cracked glass"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:49
+#: ../share/filters/filters.svg.h:48
 msgid "HSL bubbles"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:107
 msgid ""
 "Highly flexible bubbles effect depending on color hue saturation and "
 "luminance"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Glowing bubble"
 msgstr ""
 
@@ -769,79 +761,79 @@ msgstr ""
 # goodies/source\filter.vcl\epict\dlgepct.src:DLG_EXPORT_EPCT.GRP_MODE.text
 # #-#-#-#-#  goodies.pot (PACKAGE VERSION)  #-#-#-#-#
 # goodies/source\filter.vcl\epng\dlgepng.src:DLG_EXPORT_EPNG.GRP_COMPRESSION.text
-#: ../share/filters/filters.svg.h:50 ../share/filters/filters.svg.h:55
-#: ../share/filters/filters.svg.h:56 ../share/filters/filters.svg.h:68
-#: ../share/filters/filters.svg.h:69 ../share/filters/filters.svg.h:71
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:68 ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:72
 #, fuzzy
 msgid "Ridges"
 msgstr "Ubwoko"
 
-#: ../share/filters/filters.svg.h:50
+#: ../share/filters/filters.svg.h:49
 msgid "Bubble effect with refraction and glow"
 msgstr ""
 
 # goodies/source\filter.vcl\eps\dlgeps.src:DLG_EXPORT_EPS.RB_COMPRESSION_NONE.text
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 #, fuzzy
 msgid "Neon"
 msgstr "Nta na kimwe"
 
-#: ../share/filters/filters.svg.h:51
+#: ../share/filters/filters.svg.h:50
 msgid "Neon light effect with glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 #, fuzzy
 msgid "Melt and glow"
 msgstr "Urukiramende"
 
-#: ../share/filters/filters.svg.h:52
+#: ../share/filters/filters.svg.h:51
 msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr ""
 
 # basctl/source\basicide\basidesh.src:RID_STR_PAGE.text
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 #, fuzzy
 msgid "Badge"
 msgstr "Ipaji"
 
-#: ../share/filters/filters.svg.h:53
+#: ../share/filters/filters.svg.h:52
 msgid "Metal or plastic badge bevel"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 #, fuzzy
 msgid "Pastel Bevel"
 msgstr "Ingano y'urupapuro:"
 
-#: ../share/filters/filters.svg.h:54
+#: ../share/filters/filters.svg.h:53
 msgid "Soft, pastel-colored, blurry bevel"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:55
+#: ../share/filters/filters.svg.h:54
 msgid "Thin like a soap membrane"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 #, fuzzy
 msgid "Soft ridge"
 msgstr "Ubuhagarike"
 
-#: ../share/filters/filters.svg.h:56
+#: ../share/filters/filters.svg.h:55
 #, fuzzy
 msgid "Soft pastel ridge"
 msgstr "Ingano y'urupapuro:"
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Glowing metal"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:57
+#: ../share/filters/filters.svg.h:56
 msgid "Bright and glowing metal texture"
 msgstr ""
 
@@ -851,80 +843,80 @@ msgstr ""
 # officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Or.ooInetCaseMatch..2.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Exact.ooInetCaseMatch..2.text
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 #, fuzzy
 msgid "Leaves"
 msgstr "Ntoya"
 
 # sc/source\ui\src\autofmt.src:RID_SCDLG_AUTOFORMAT.BTN_PATTERN.text
-#: ../share/filters/filters.svg.h:58 ../share/filters/filters.svg.h:80
-#: ../share/filters/filters.svg.h:89 ../share/extensions/pathscatter.inx.h:10
+#: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:88 ../share/extensions/pathscatter.inx.h:10
 #, fuzzy
 msgid "Scatter"
 msgstr "Ishusho"
 
-#: ../share/filters/filters.svg.h:58
+#: ../share/filters/filters.svg.h:57
 msgid "Leaves on the ground in Fall, or living foliage"
 msgstr ""
 
 # officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.Color.RotationAngle.text
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 #, fuzzy
 msgid "Translucent"
 msgstr "Imfuruka"
 
-#: ../share/filters/filters.svg.h:59
+#: ../share/filters/filters.svg.h:58
 msgid "Illuminated translucent plastic effect"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 msgid "Cross-smooth"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:60
+#: ../share/filters/filters.svg.h:59
 #, fuzzy
 msgid "Blur inner borders and intersections"
 msgstr "Na Guhindura Umwandiko Ibintu"
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Iridescent beeswax"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:61
+#: ../share/filters/filters.svg.h:60
 msgid "Waxy texture which keeps its iridescence through color fill change"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 #, fuzzy
 msgid "Eroded metal"
 msgstr "Urukiramende"
 
-#: ../share/filters/filters.svg.h:62
+#: ../share/filters/filters.svg.h:61
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "Cracked Lava"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:63
+#: ../share/filters/filters.svg.h:62
 msgid "A volcanic texture, a little like leather"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 #, fuzzy
 msgid "Bark"
 msgstr "Mugenga"
 
-#: ../share/filters/filters.svg.h:64
+#: ../share/filters/filters.svg.h:63
 msgid "Bark texture, vertical; use with deep colors"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Lizard skin"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:65
+#: ../share/filters/filters.svg.h:64
 msgid "Stylized reptile skin texture"
 msgstr ""
 
@@ -932,47 +924,47 @@ msgstr ""
 # basctl/source\basicide\basidesh.src:RID_POPUP_TABBAR.SID_BASICIDE_DELETECURRENT.text
 # #-#-#-#-#  basctl.pot (PACKAGE VERSION)  #-#-#-#-#
 # basctl/source\basicide\brkdlg.src:RID_BASICIDE_BREAKPOINTDLG.RID_PB_DEL.text
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 #, fuzzy
 msgid "Stone wall"
 msgstr "Gusiba"
 
-#: ../share/filters/filters.svg.h:66
+#: ../share/filters/filters.svg.h:65
 msgid "Stone wall texture to use with dark colors"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:67
+#: ../share/filters/filters.svg.h:66
 msgid "Silk carpet texture, horizontal stripes"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 #, fuzzy
 msgid "Refractive gel A"
 msgstr "Urukiramende"
 
-#: ../share/filters/filters.svg.h:68
+#: ../share/filters/filters.svg.h:67
 msgid "Gel effect with light refraction"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 #, fuzzy
 msgid "Refractive gel B"
 msgstr "Urukiramende"
 
-#: ../share/filters/filters.svg.h:69
+#: ../share/filters/filters.svg.h:68
 msgid "Gel effect with strong refraction"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 #, fuzzy
 msgid "Metallized paint"
 msgstr "Urukiramende"
 
-#: ../share/filters/filters.svg.h:70
+#: ../share/filters/filters.svg.h:69
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
 msgstr ""
@@ -981,12 +973,12 @@ msgstr ""
 # officecfg/registry\schema\org\openoffice\Office\WriterWeb.xcs:....Layout.Zoom.Type..0.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Layout.Zoom.Type..0.text
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 #, fuzzy
 msgid "Dragee"
 msgstr "Ku ijana"
 
-#: ../share/filters/filters.svg.h:71
+#: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge with a pearlescent look"
 msgstr ""
 
@@ -998,29 +990,29 @@ msgstr ""
 # goodies/source\filter.vcl\epict\dlgepct.src:DLG_EXPORT_EPCT.GRP_MODE.text
 # #-#-#-#-#  goodies.pot (PACKAGE VERSION)  #-#-#-#-#
 # goodies/source\filter.vcl\epng\dlgepng.src:DLG_EXPORT_EPNG.GRP_COMPRESSION.text
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 #, fuzzy
 msgid "Raised border"
 msgstr "Ubwoko"
 
-#: ../share/filters/filters.svg.h:72
+#: ../share/filters/filters.svg.h:71
 msgid "Strongly raised border around a flat surface"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Metallized ridge"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:73
+#: ../share/filters/filters.svg.h:72
 msgid "Gel Ridge metallized at its top"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 #, fuzzy
 msgid "Fat oil"
 msgstr "Gutangira Ibara"
 
-#: ../share/filters/filters.svg.h:74
+#: ../share/filters/filters.svg.h:73
 msgid "Fat oil with some adjustable turbulence"
 msgstr ""
 
@@ -1032,242 +1024,242 @@ msgstr ""
 # basctl/source\basicide\moduldlg.src:RID_TP_MODULS.RID_PB_CLOSE.text
 # #-#-#-#-#  basctl.pot (PACKAGE VERSION)  #-#-#-#-#
 # basctl/source\basicide\moduldlg.src:RID_TP_LIBS.RID_PB_CLOSE.text
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 #: ../src/extension/internal/bitmap/colorize.cpp:49
 #, fuzzy
 msgid "Colorize"
 msgstr "Gufunga"
 
-#: ../share/filters/filters.svg.h:75
+#: ../share/filters/filters.svg.h:74
 msgid "Gives the flood color to the dark parts of the image"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 #, fuzzy
 msgid "Parallel hollow"
 msgstr "Imirongo Itambitse"
 
-#: ../share/filters/filters.svg.h:76 ../share/filters/filters.svg.h:77
-#: ../share/filters/filters.svg.h:78 ../share/filters/filters.svg.h:79
-#: ../share/filters/filters.svg.h:90 ../share/filters/filters.svg.h:91
-#: ../share/filters/filters.svg.h:95 ../share/filters/filters.svg.h:96
-#: ../share/filters/filters.svg.h:99 ../share/filters/filters.svg.h:109
-#: ../share/filters/filters.svg.h:133 ../src/filter-enums.cpp:31
+#: ../share/filters/filters.svg.h:75 ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:77 ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:132 ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:76
+#: ../share/filters/filters.svg.h:75
 msgid "A blurry hollow going parallel to the edge on the inside"
 msgstr ""
 
 # VCARD_LDAP_ROLE
 # # @name VCARD_LDAP_ROLE
 # # @loc None
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 #, fuzzy
 msgid "Hole"
 msgstr "Inshingano"
 
-#: ../share/filters/filters.svg.h:77
+#: ../share/filters/filters.svg.h:76
 msgid "Opens a smooth hole inside the shape"
 msgstr ""
 
 # sc/source\ui\src\autofmt.src:RID_SCDLG_AUTOFORMAT.BTN_PATTERN.text
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 #, fuzzy
 msgid "Black hole"
 msgstr "Ishusho"
 
-#: ../share/filters/filters.svg.h:78
+#: ../share/filters/filters.svg.h:77
 msgid "Creates a black light inside and outside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 #, fuzzy
 msgid "Smooth outline"
 msgstr "Imbata"
 
-#: ../share/filters/filters.svg.h:79
+#: ../share/filters/filters.svg.h:78
 msgid "Outlining the lines and smoothing their crossings"
 msgstr ""
 
 # scp/source\draw\module_draw.lng:STR_NAME_MODULE_PRG_DRAW_LOCALLY_CACHED.text
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 #, fuzzy
 msgid "Cubes"
 msgstr "Gushushanya"
 
-#: ../share/filters/filters.svg.h:80
+#: ../share/filters/filters.svg.h:79
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 #, fuzzy
 msgid "Peel off"
 msgstr "Imirongo Itambitse"
 
-#: ../share/filters/filters.svg.h:81
+#: ../share/filters/filters.svg.h:80
 msgid "Peeling painting on a wall"
 msgstr ""
 
 # sc/source\ui\src\autofmt.src:RID_SCDLG_AUTOFORMAT.BTN_PATTERN.text
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 #, fuzzy
 msgid "Gold splatter"
 msgstr "Ishusho"
 
-#: ../share/filters/filters.svg.h:82
+#: ../share/filters/filters.svg.h:81
 msgid "Splattered cast metal, with golden highlights"
 msgstr ""
 
 # svtools/source\dialogs\colrdlg.src:DLG_COLOR.FT_SATURATION.text
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 #, fuzzy
 msgid "Gold paste"
 msgstr "Ubwuzurane"
 
-#: ../share/filters/filters.svg.h:83
+#: ../share/filters/filters.svg.h:82
 msgid "Fat pasted cast metal, with golden highlights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled plastic"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:84
+#: ../share/filters/filters.svg.h:83
 msgid "Crumpled matte plastic, with melted edge"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Enamel jewelry"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:85
+#: ../share/filters/filters.svg.h:84
 msgid "Slightly cracked enameled texture"
 msgstr ""
 
 # sw/source\ui\utlui\attrdesc.src:STR_CHANNELR.text
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 #, fuzzy
 msgid "Rough paper"
 msgstr "Umutuku:"
 
-#: ../share/filters/filters.svg.h:86
+#: ../share/filters/filters.svg.h:85
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid "Rough and glossy"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:87
+#: ../share/filters/filters.svg.h:86
 msgid ""
 "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 #, fuzzy
 msgid "In and Out"
 msgstr "Amagenamiterere"
 
-#: ../share/filters/filters.svg.h:88
+#: ../share/filters/filters.svg.h:87
 msgid "Inner colorized shadow, outer black shadow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Air spray"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:89
+#: ../share/filters/filters.svg.h:88
 msgid "Air Spray; adjust the Displacement Map amount"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Warm inside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:90
+#: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, filled inside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 #, fuzzy
 msgid "Cool outside"
 msgstr "Imbata"
 
-#: ../share/filters/filters.svg.h:91
+#: ../share/filters/filters.svg.h:90
 msgid "Blurred colorized contour, empty inside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid "Electronic microscopy"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:92
+#: ../share/filters/filters.svg.h:91
 msgid ""
 "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 #, fuzzy
 msgid "Tartan"
 msgstr "Intego:"
 
-#: ../share/filters/filters.svg.h:93
+#: ../share/filters/filters.svg.h:92
 msgid "Checkered tartan pattern"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 #, fuzzy
 msgid "Invert hue"
 msgstr "Ihuza"
 
-#: ../share/filters/filters.svg.h:94
+#: ../share/filters/filters.svg.h:93
 msgid "Invert hue, or rotate it"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 #, fuzzy
 msgid "Outline"
 msgstr "Imbata"
 
-#: ../share/filters/filters.svg.h:95
+#: ../share/filters/filters.svg.h:94
 msgid "Draws an outline around"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 #, fuzzy
 msgid "Outline, double"
 msgstr "Imbata"
 
-#: ../share/filters/filters.svg.h:96
+#: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 #, fuzzy
 msgid "Fancy blur"
 msgstr "Ikiranga"
 
-#: ../share/filters/filters.svg.h:97
+#: ../share/filters/filters.svg.h:96
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 #, fuzzy
 msgid "Glow"
 msgstr "Impera Ibara"
 
-#: ../share/filters/filters.svg.h:98
+#: ../share/filters/filters.svg.h:97
 msgid "Glow of object's own color at the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 #, fuzzy
 msgid "Ghost outline"
 msgstr "Imbata"
 
-#: ../share/filters/filters.svg.h:99
+#: ../share/filters/filters.svg.h:98
 msgid "Adds a glowing blur and removes the shape"
 msgstr ""
 
@@ -1279,30 +1271,30 @@ msgstr ""
 # basctl/source\basicide\moduldlg.src:RID_TP_MODULS.RID_PB_CLOSE.text
 # #-#-#-#-#  basctl.pot (PACKAGE VERSION)  #-#-#-#-#
 # basctl/source\basicide\moduldlg.src:RID_TP_LIBS.RID_PB_CLOSE.text
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 #, fuzzy
 msgid "Color emboss"
 msgstr "Gufunga"
 
-#: ../share/filters/filters.svg.h:100
+#: ../share/filters/filters.svg.h:99
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Soft bump"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:101
+#: ../share/filters/filters.svg.h:100
 msgid "Convolution bump; with a blur, it can give nice embossing effects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 #, fuzzy
 msgid "Solarize"
 msgstr "Intego:"
 
-#: ../share/filters/filters.svg.h:102
+#: ../share/filters/filters.svg.h:101
 msgid "Classical photographic solarization effect"
 msgstr ""
 
@@ -1314,71 +1306,77 @@ msgstr ""
 # basctl/source\basicide\moduldlg.src:RID_TP_MODULS.RID_PB_CLOSE.text
 # #-#-#-#-#  basctl.pot (PACKAGE VERSION)  #-#-#-#-#
 # basctl/source\basicide\moduldlg.src:RID_TP_LIBS.RID_PB_CLOSE.text
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 #, fuzzy
 msgid "Moonarize"
 msgstr "Gufunga"
 
-#: ../share/filters/filters.svg.h:103
+#: ../share/filters/filters.svg.h:102
 msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "Soft focus lens"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:104
+#: ../share/filters/filters.svg.h:103
 msgid "Glowing image content without blurring it"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Stained glass"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:105
+#: ../share/filters/filters.svg.h:104
 msgid "Illuminated stained glass effect"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Dark glass"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:106
+#: ../share/filters/filters.svg.h:105
 msgid "Illuminated glass effect with light coming from beneath"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106
 msgid "HSL Bumps, alpha"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
+#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:170
+msgid "Masking tools"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:106
 msgid ""
 "Same than HSL bumps but with an alpha added for combination with "
 "transparency depending filters"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:108
+#: ../share/filters/filters.svg.h:107
 msgid "HSL Bubbles, alpha"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 #, fuzzy
 msgid "Smooth edges"
 msgstr "Ibintu"
 
-#: ../share/filters/filters.svg.h:109
+#: ../share/filters/filters.svg.h:108
 msgid ""
 "Smooth the outside of shapes and pictures without altering their contents"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 #, fuzzy
 msgid "Torn edges"
 msgstr "Dogere"
 
-#: ../share/filters/filters.svg.h:110
+#: ../share/filters/filters.svg.h:109
 msgid ""
 "Displace the outside of shapes and pictures without altering their content"
 msgstr ""
@@ -1395,85 +1393,85 @@ msgstr ""
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Layout.Window.VerticalRulerUnit..3.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Layout.Other.MeasureUnit..3.text
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 #, fuzzy
 msgid "Feather"
 msgstr "Metero"
 
-#: ../share/filters/filters.svg.h:111
+#: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 #, fuzzy
 msgid "Blur content"
 msgstr "Ihuza"
 
-#: ../share/filters/filters.svg.h:112
+#: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 #, fuzzy
 msgid "Specular light"
 msgstr "Gutangira Ibara"
 
-#: ../share/filters/filters.svg.h:113
+#: ../share/filters/filters.svg.h:112
 msgid "Basic specular bevel to use for building textures"
 msgstr ""
 
 # sw/source\ui\utlui\attrdesc.src:STR_CHANNELR.text
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 #, fuzzy
 msgid "Roughen inside"
 msgstr "Umutuku:"
 
-#: ../share/filters/filters.svg.h:114
+#: ../share/filters/filters.svg.h:113
 msgid "Roughen all inside shapes"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid "Evanescent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:114
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Chalk and sponge"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:116
+#: ../share/filters/filters.svg.h:115
 msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 #, fuzzy
 msgid "People"
 msgstr "Ihindurakerekezo"
 
-#: ../share/filters/filters.svg.h:117
+#: ../share/filters/filters.svg.h:116
 msgid "Colorized blotches, like a crowd of people"
 msgstr ""
 
 # officecfg/registry\schema\org\openoffice\Office\Math.xcs:....FontFormat.Weight..10.text
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 #, fuzzy
 msgid "Scotland"
 msgstr "umukara"
 
-#: ../share/filters/filters.svg.h:118
+#: ../share/filters/filters.svg.h:117
 msgid "Colorized mountain tops out of the fog"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Noise transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:119
+#: ../share/filters/filters.svg.h:118
 msgid "Basic noise transparency texture"
 msgstr ""
 
@@ -1485,472 +1483,464 @@ msgstr ""
 # basctl/source\basicide\moduldlg.src:RID_TP_MODULS.RID_PB_CLOSE.text
 # #-#-#-#-#  basctl.pot (PACKAGE VERSION)  #-#-#-#-#
 # basctl/source\basicide\moduldlg.src:RID_TP_LIBS.RID_PB_CLOSE.text
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 #, fuzzy
 msgid "Noise fill"
 msgstr "Gufunga"
 
-#: ../share/filters/filters.svg.h:120
+#: ../share/filters/filters.svg.h:119
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid "Garden of Delights"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:121
+#: ../share/filters/filters.svg.h:120
 msgid ""
 "Phantasmagorical turbulent wisps, like Hieronymus Bosch's Garden of Delights"
 msgstr ""
 
 # 6488
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 #, fuzzy
 msgid "Diffuse light"
 msgstr "kigaragara"
 
-#: ../share/filters/filters.svg.h:122
+#: ../share/filters/filters.svg.h:121
 msgid "Basic diffuse bevel to use for building textures"
 msgstr ""
 
 # svx/source\options\optinet2.src:RID_SVXPAGE_INET_SCRIPTING.LB_NETACCESS.3.text
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 #, fuzzy
 msgid "Cutout Glow"
 msgstr "Ubuturo"
 
-#: ../share/filters/filters.svg.h:123
+#: ../share/filters/filters.svg.h:122
 msgid "In and out glow with a possible offset and colorizable flood"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid "HSL Bumps, diffuse"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:124
+#: ../share/filters/filters.svg.h:123
 msgid ""
 "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Dark Emboss"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:126
+#: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid "HSL Bubbles, diffuse"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:127
+#: ../share/filters/filters.svg.h:126
 msgid ""
 "Same than HSL bubbles but with a diffuse light instead of a specular one"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:128
+#: ../share/filters/filters.svg.h:127
 msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Blotting paper"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:129
+#: ../share/filters/filters.svg.h:128
 msgid "Inkblot on blotting paper"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Wax print"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:130
+#: ../share/filters/filters.svg.h:129
 msgid "Wax print on tissue texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:131
+#: ../share/filters/filters.svg.h:130
 msgid "Inkblot on tissue or rough paper"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 #, fuzzy
 msgid "Burnt edges"
 msgstr "Icika ku biyobora"
 
-#: ../share/filters/filters.svg.h:132
+#: ../share/filters/filters.svg.h:131
 msgid "Burnt paper edges texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 #, fuzzy
 msgid "Color outline"
 msgstr "Imbata"
 
-#: ../share/filters/filters.svg.h:133
+#: ../share/filters/filters.svg.h:132
 msgid "A colorizable outline with adjustable width and blur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Liquid"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:134
+#: ../share/filters/filters.svg.h:133
 msgid "Colorizable filling with liquid transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 #, fuzzy
 msgid "Watercolor"
 msgstr "Ibara"
 
-#: ../share/filters/filters.svg.h:135
+#: ../share/filters/filters.svg.h:134
 msgid "Cloudy watercolor effect"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 #, fuzzy
 msgid "Felt"
 msgstr "Umwandiko"
 
-#: ../share/filters/filters.svg.h:136
+#: ../share/filters/filters.svg.h:135
 msgid ""
 "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 #, fuzzy
 msgid "Ink paint"
 msgstr "Amagenamiterere"
 
-#: ../share/filters/filters.svg.h:137
+#: ../share/filters/filters.svg.h:136
 msgid "Ink paint on paper with some turbulent color shift"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Tinted rainbow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:138
+#: ../share/filters/filters.svg.h:137
 msgid "Smooth rainbow colors melted along the edges and colorizable"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 #, fuzzy
 msgid "Melted rainbow"
 msgstr "Urukiramende"
 
-#: ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:138
 msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr ""
 
 # dbaccess/source/ui/inc/toolbox.hrc:MID_SBA_QRY_PASTE.text
-#: ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:139
 #, fuzzy
 msgid "Darken edges"
 msgstr "Komeka"
 
-#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 msgid "Enhance outline and glows inside and outside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:140
 msgid "Dark and glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Flex metal"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:141
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Comics draft"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:143 ../share/filters/filters.svg.h:144
-#: ../share/filters/filters.svg.h:145 ../share/filters/filters.svg.h:146
-#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:148
-#: ../share/filters/filters.svg.h:149 ../share/filters/filters.svg.h:150
-#: ../share/filters/filters.svg.h:151 ../share/filters/filters.svg.h:152
-#: ../share/filters/filters.svg.h:153 ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:164
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:146 ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:148 ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:150 ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:161
 msgid "Non realistic shaders"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:142
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Comics fading"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:143
 msgid "Cartoon paint style with some fading at the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 #, fuzzy
 msgid "Smooth shader NR"
 msgstr "Ibintu"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shading with a graphite pencil grey"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Emboss shader NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:145
 msgid "Combination of smooth shading and embossing"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Smooth shader dark NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:146
 msgid "Dark version of non realistic smooth shading"
 msgstr ""
 
 # offmgr/source\offapp\dialog\autocdlg.src:RID_OFADLG_PRCNT_SET.text
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 #, fuzzy
 msgid "Comics"
 msgstr "Kuvanga"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:147
 msgid "Imitation of black and white cartoon shading"
 msgstr ""
 
 # officecfg/registry\schema\org\openoffice\Office\DataAccess.xcs:....DataSettings.CharacterEmphasis.text
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 #, fuzzy
 msgid "Satin NR"
 msgstr "star"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Frosted glass NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Smooth shader contour NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:150
 msgid "Contouring version of smooth shader"
 msgstr ""
 
-# sw/source\ui\utlui\attrdesc.src:STR_CHANNELR.text
-#: ../share/filters/filters.svg.h:152
-#, fuzzy
-msgid "Comics rounded"
-msgstr "Umutuku:"
-
-#: ../share/filters/filters.svg.h:152
-msgid "Imitation of black and white cartoon shading more rounded version"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:153
-msgid "Pewter NR"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:153
-msgid "Mid grey satin like shader close to pewter"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Aluminium NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:151
 msgid "Brushed aluminium shader"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 msgid "Comics fluid"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:152
 #, fuzzy
 msgid "Fluid brushed cartoon drawing"
 msgstr "i Ipaji Idirishya"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 msgid "Chrome NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:153
 msgid "Non realistic chrome shader with strong speculars"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Chrome dark NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:154
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Wavy tartan"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:155
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D marble"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:156
 msgid "3D warped marble texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 msgid "3D wood"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:157
 msgid "3D warped, fibered wood texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 #, fuzzy
 msgid "Mother of pearl"
 msgstr "Kugena urupapuro"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:158
 msgid "3D warped, iridescent pearly shell texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 msgid "Tiger fur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:159
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr ""
 
 # sw/source\ui\utlui\attrdesc.src:STR_CHANNELR.text
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 #, fuzzy
 msgid "Flow inside"
 msgstr "Umutuku:"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:160
 msgid "Colorizable filling with flow inside like transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:164
-msgid "Comics flow"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:164
-msgid "Comics shader with a flow inside transparency"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics cream"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:161
 msgid "Comics shader with creamy waves transparency"
 msgstr ""
 
 # officecfg/registry\schema\org\openoffice\Office\Math.xcs:....FontFormat.Weight..10.text
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 #, fuzzy
 msgid "Black Light"
 msgstr "umukara"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:162
 msgid "Light areas turn to black"
 msgstr ""
 
 # dbaccess/source/ui/inc/toolbox.hrc:MID_SBA_QRY_PASTE.text
 #. Eraser
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 #: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
 #, fuzzy
 msgid "Eraser"
 msgstr "Komeka"
 
-#: ../share/filters/filters.svg.h:167
-msgid "Masking tools"
-msgstr ""
-
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:163
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:164
 #, fuzzy
 msgid "Noisy blur"
 msgstr "Ikiranga"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:164
 #, fuzzy
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "Urukiramende Na kare Na: Bitari ngombwa Biburungushuye"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:165
 #, fuzzy
 msgid "Film Grain"
 msgstr "Na"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:165
 msgid "Adds a film grain noise to images and objects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:166
 msgid "HSL Bumps, transparent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:166
 msgid "Highly flexible specular bump with transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:167
 msgid "Lead pencil"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:167
 msgid "Give lead pencil or chromolithography or engraving or other effects"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:168
+msgid "Velvet bump"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:168
+msgid "Gives a smooth bump velvet like"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:169
+msgid "Alpha engraving"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:169
+msgid "Gives a transparent engraving effect to bitmaps and materials"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:170
+msgid "Alpha engraving, color"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:170
+msgid "Gives a transparent color engraving effect to bitmaps and materials"
 msgstr ""
 
 #: ../src/arc-context.cpp:303
@@ -2072,6 +2062,7 @@ msgid "Create guide"
 msgstr "kurema ibihuza"
 
 #: ../src/desktop-events.cpp:265 ../src/desktop-events.cpp:394
+#: ../src/ui/dialog/guides.cpp:125
 #, fuzzy
 msgid "Delete guide"
 msgstr "Byahiswemo"
@@ -2900,7 +2891,7 @@ msgid "<big><b>Bitmap size</b></big>"
 msgstr ""
 
 # sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_TIP_WIDTH.text
-#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:209
+#: ../src/dialogs/export.cpp:479 ../src/ui/widget/page-sizer.cpp:210
 #, fuzzy
 msgid "_Width:"
 msgstr "Ubugari:"
@@ -2915,7 +2906,7 @@ msgid "dp_i"
 msgstr ""
 
 # sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_TIP_HEIGHT.text
-#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:210
+#: ../src/dialogs/export.cpp:493 ../src/ui/widget/page-sizer.cpp:211
 #, fuzzy
 msgid "_Height:"
 msgstr "Ubuhagarike:"
@@ -3509,14 +3500,16 @@ msgstr "URL:"
 
 # officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Font.Strikeout..6.text
 #: ../src/dialogs/object-attributes.cpp:51
-#: ../src/dialogs/object-attributes.cpp:59 ../src/widgets/toolbox.cpp:1472
+#: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:43
+#: ../src/widgets/toolbox.cpp:1472
 #, fuzzy
 msgid "X:"
 msgstr "X"
 
 # svx/source\engine3d\float3d.src:RID_SVXFLOAT3D_FIX_Y.text
 #: ../src/dialogs/object-attributes.cpp:52
-#: ../src/dialogs/object-attributes.cpp:60 ../src/widgets/toolbox.cpp:1490
+#: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:44
+#: ../src/widgets/toolbox.cpp:1490
 #, fuzzy
 msgid "Y:"
 msgstr "Y"
@@ -4389,7 +4382,7 @@ msgstr "Imirongo"
 msgid "Draw eraser stroke"
 msgstr "Imirongo"
 
-#: ../src/event-context.cpp:615
+#: ../src/event-context.cpp:612
 msgid "<b>Space+mouse drag</b> to pan canvas"
 msgstr ""
 
@@ -4556,11 +4549,11 @@ msgid ""
 "expected."
 msgstr ""
 
-#: ../src/extension/init.cpp:277
+#: ../src/extension/init.cpp:274
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr ""
 
-#: ../src/extension/init.cpp:291
+#: ../src/extension/init.cpp:288
 #: ../src/extension/internal/filter/filter-file.cpp:56
 #, c-format
 msgid ""
@@ -4600,7 +4593,7 @@ msgstr "Ubuhagarike:"
 
 #. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:97
+#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
 #: ../src/live_effects/lpe-offset.cpp:30
 #: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:49
@@ -4895,11 +4888,12 @@ msgid "Edge"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-msgid "Hilight edges of selected bitmap(s)."
-msgstr ""
+#, fuzzy
+msgid "Highlight edges of selected bitmap(s)."
+msgstr "Byahiswemo"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-msgid "Emboss selected bitmap(s) -- hilight edges with 3D effect."
+msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
 msgstr ""
 
 # crashrep/source\all\crashrep.lng:%CANCEL_BUTTON%.text
@@ -5284,7 +5278,7 @@ msgstr "i Ipaji Idirishya"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:284
 #: ../src/extension/internal/cairo-ps-out.cpp:321
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:218
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
 #: ../src/extension/internal/emf-win32-inout.cpp:2430
 #, fuzzy
 msgid "Convert texts to paths"
@@ -5292,20 +5286,20 @@ msgstr "Byahiswemo Igikoresho Kuri Inzira"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:285
 #: ../src/extension/internal/cairo-ps-out.cpp:322
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:219
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
 msgid "Rasterize filter effects"
 msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:220
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
 #, fuzzy
-msgid "Preferred resolution (DPI) of bitmaps"
+msgid "Resolution for rasterization (dpi)"
 msgstr "Imikemurire Utudomo Inci Bya Bitimapu"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:224
 msgid "Limit export to the object with ID"
 msgstr ""
 
@@ -5332,22 +5326,22 @@ msgstr ""
 msgid "Encapsulated PostScript File"
 msgstr ""
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:215
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
 msgid "Restrict to PDF version"
 msgstr ""
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:217
 msgid "PDF 1.4"
 msgstr ""
 
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
 #, fuzzy
 msgid "Export drawing, not page"
 msgstr "in Aho bigeze"
 
 # filter/source\pdf\impdialog.src:RID_PDF_EXPORT_DLG.BT_OK.text
 # filter/source\xsltdialog\xmlfiltertestdialog.src:DLG_XML_FILTER_TEST_DIALOG.FL_EXPORT.text
-#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:222
+#: ../src/extension/internal/cairo-renderer-pdf-out.cpp:223
 #, fuzzy
 msgid "Export canvas"
 msgstr "Kohereza"
@@ -5482,7 +5476,7 @@ msgstr "Ingano y'Imyandikire"
 msgid "Snow has fallen on object"
 msgstr "Igikoresho"
 
-#: ../src/extension/internal/gdkpixbuf-input.cpp:119
+#: ../src/extension/internal/gdkpixbuf-input.cpp:127
 #, c-format
 msgid "%s GDK pixbuf Input"
 msgstr ""
@@ -5548,6 +5542,7 @@ msgstr "Imirongo Ihagaze"
 #: ../share/extensions/grid_polar.inx.h:18
 #: ../share/extensions/guides_creator.inx.h:17
 #: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
 #: ../share/extensions/polyhedron_3d.inx.h:32
 #: ../share/extensions/printing-marks.inx.h:14
@@ -5879,73 +5874,73 @@ msgstr ""
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:153
+#: ../src/file.cpp:157
 msgid "default.svg"
 msgstr ""
 
-#: ../src/file.cpp:245 ../src/file.cpp:1031
+#: ../src/file.cpp:249 ../src/file.cpp:1036
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr ""
 
-#: ../src/file.cpp:270
+#: ../src/file.cpp:274
 msgid "Document not saved yet.  Cannot revert."
 msgstr ""
 
-#: ../src/file.cpp:276
+#: ../src/file.cpp:280
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 
-#: ../src/file.cpp:305
+#: ../src/file.cpp:309
 #, fuzzy
 msgid "Document reverted."
 msgstr "Inyandiko Byahiswemo"
 
-#: ../src/file.cpp:307
+#: ../src/file.cpp:311
 #, fuzzy
 msgid "Document not reverted."
 msgstr "Inyandiko Byahiswemo"
 
-#: ../src/file.cpp:457
+#: ../src/file.cpp:461
 #, fuzzy
 msgid "Select file to open"
 msgstr "IDOSIYE Kuri Gufungura"
 
-#: ../src/file.cpp:544
+#: ../src/file.cpp:548
 msgid "Vacuum &lt;defs&gt;"
 msgstr ""
 
-#: ../src/file.cpp:549
+#: ../src/file.cpp:553
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/file.cpp:554
+#: ../src/file.cpp:558
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr ""
 
-#: ../src/file.cpp:583
+#: ../src/file.cpp:587
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
 msgstr ""
 
-#: ../src/file.cpp:584 ../src/file.cpp:592 ../src/file.cpp:598
+#: ../src/file.cpp:588 ../src/file.cpp:596 ../src/file.cpp:602
 #, fuzzy
 msgid "Document not saved."
 msgstr "Amagenamiterere"
 
-#: ../src/file.cpp:591
+#: ../src/file.cpp:595
 #, c-format
 msgid "File %s could not be saved."
 msgstr ""
 
 # basctl/source\basicide\basidesh.src:RID_STR_DOC.text
-#: ../src/file.cpp:605
+#: ../src/file.cpp:609
 #, fuzzy
 msgid "Document saved."
 msgstr "Inyandiko"
@@ -5954,7 +5949,7 @@ msgstr "Inyandiko"
 # officecfg/registry\schema\org\openoffice\Office\Draw.xcs:....Print.Content.Drawing.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Enable.text
-#: ../src/file.cpp:746 ../src/file.cpp:1156 ../src/file.cpp:1276
+#: ../src/file.cpp:750 ../src/file.cpp:1161 ../src/file.cpp:1281
 #, fuzzy, c-format
 msgid "drawing%s"
 msgstr "Igishushanyo"
@@ -5963,57 +5958,57 @@ msgstr "Igishushanyo"
 # officecfg/registry\schema\org\openoffice\Office\Draw.xcs:....Print.Content.Drawing.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Enable.text
-#: ../src/file.cpp:752
+#: ../src/file.cpp:756
 #, fuzzy, c-format
 msgid "drawing-%d%s"
 msgstr "Igishushanyo"
 
-#: ../src/file.cpp:771
+#: ../src/file.cpp:775
 #, fuzzy
 msgid "Select file to save a copy to"
 msgstr "IDOSIYE Kuri Gufungura"
 
-#: ../src/file.cpp:773
+#: ../src/file.cpp:777
 #, fuzzy
 msgid "Select file to save to"
 msgstr "IDOSIYE Kuri Gufungura"
 
-#: ../src/file.cpp:853
+#: ../src/file.cpp:857
 msgid "No changes need to be saved."
 msgstr ""
 
 # sch/source\ui\app\strings.src:STR_SAVE_DOCUMENT.text
-#: ../src/file.cpp:870
+#: ../src/file.cpp:874
 #, fuzzy
 msgid "Saving document..."
 msgstr "Kubika inyandiko"
 
 # filter/source\xsltdialog\xmlfiltertestdialog.src:DLG_XML_FILTER_TEST_DIALOG.FL_IMPORT.text
-#: ../src/file.cpp:1028
+#: ../src/file.cpp:1033
 #, fuzzy
 msgid "Import"
 msgstr "Kuzana"
 
-#: ../src/file.cpp:1058
+#: ../src/file.cpp:1063
 #, fuzzy
 msgid "Select file to import"
 msgstr "IDOSIYE Kuri Kuzana"
 
-#: ../src/file.cpp:1177 ../src/file.cpp:1291
+#: ../src/file.cpp:1182 ../src/file.cpp:1296
 #, fuzzy
 msgid "Select file to export to"
 msgstr "IDOSIYE Kuri Kuzana"
 
-#: ../src/file.cpp:1323
+#: ../src/file.cpp:1328
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr ""
 
-#: ../src/file.cpp:1343
+#: ../src/file.cpp:1348
 msgid "Open Clip Art Login"
 msgstr ""
 
-#: ../src/file.cpp:1369
+#: ../src/file.cpp:1374
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -6021,12 +6016,12 @@ msgid ""
 "didn't forget to choose a license."
 msgstr ""
 
-#: ../src/file.cpp:1390
+#: ../src/file.cpp:1395
 #, fuzzy
 msgid "Document exported..."
 msgstr "Inyandiko Byahiswemo"
 
-#: ../src/file.cpp:1418 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1423 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr ""
 
@@ -6983,43 +6978,43 @@ msgid "Ex squares"
 msgstr "kare"
 
 # sch/source\ui\app\strings.src:STR_SAVE_DOCUMENT.text
-#: ../src/inkscape.cpp:323
+#: ../src/inkscape.cpp:324
 #, fuzzy
 msgid "Autosaving documents..."
 msgstr "Kubika inyandiko"
 
-#: ../src/inkscape.cpp:394
+#: ../src/inkscape.cpp:395
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr ""
 
-#: ../src/inkscape.cpp:397 ../src/inkscape.cpp:404
+#: ../src/inkscape.cpp:398 ../src/inkscape.cpp:405
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr ""
 
-#: ../src/inkscape.cpp:419
+#: ../src/inkscape.cpp:420
 msgid "Autosave complete."
 msgstr ""
 
-#: ../src/inkscape.cpp:650
+#: ../src/inkscape.cpp:651
 #, fuzzy
 msgid "Untitled document"
 msgstr "Inyandiko"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:680
+#: ../src/inkscape.cpp:681
 #, fuzzy
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "By'imbere Ikosa Na Gufunga NONEAHA"
 
-#: ../src/inkscape.cpp:681
+#: ../src/inkscape.cpp:682
 #, fuzzy
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr "Ibyashyinguwe Bya Inyandiko Byakozwe Kuri"
 
-#: ../src/inkscape.cpp:682
+#: ../src/inkscape.cpp:683
 #, fuzzy
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Inyibutsa Bya Inyandiko Byanze"
@@ -7113,16 +7108,16 @@ msgstr "Ikizamuko"
 msgid "Could not parse SVG data"
 msgstr ""
 
-#: ../src/interface.cpp:1394
+#: ../src/interface.cpp:1390
 msgid "Drop SVG"
 msgstr ""
 
-#: ../src/interface.cpp:1450
+#: ../src/interface.cpp:1446
 #, fuzzy
 msgid "Drop bitmap image"
 msgstr "Bitimapu Cyangwa Ishusho Inyandiko"
 
-#: ../src/interface.cpp:1542
+#: ../src/interface.cpp:1538
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -7131,7 +7126,7 @@ msgid ""
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
 
-#: ../src/interface.cpp:1549 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1545 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 #, fuzzy
 msgid "Replace"
@@ -7513,7 +7508,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:917
 #: ../src/ui/dialog/document-properties.cpp:116
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1562
+#: ../src/widgets/desktop-widget.cpp:1558
 msgid "Page"
 msgstr "Ipaji"
 
@@ -7522,7 +7517,7 @@ msgstr "Ipaji"
 msgid "The index of the current page"
 msgstr "Umubarendanga Bya i KIGEZWEHO Ipaji"
 
-#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:216
+#: ../src/libgdl/gdl-dock-object.c:120 ../src/ui/widget/page-sizer.cpp:217
 #, fuzzy
 msgid "Name"
 msgstr "Izina"
@@ -7761,49 +7756,44 @@ msgstr "Ishusho"
 
 #: ../src/live_effects/effect.cpp:93
 #, fuzzy
-msgid "Interpolate Sub-Paths"
-msgstr "IMISUSIRE"
-
-#: ../src/live_effects/effect.cpp:94
-#, fuzzy
 msgid "Lattice Deformation"
 msgstr "Iheruka Igikorwa"
 
-#: ../src/live_effects/effect.cpp:95
+#: ../src/live_effects/effect.cpp:94
 #, fuzzy
 msgid "Line Segment"
 msgstr "Byahiswemo"
 
-#: ../src/live_effects/effect.cpp:96
+#: ../src/live_effects/effect.cpp:95
 msgid "Mirror symmetry"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:97
 #, fuzzy
 msgid "Parallel"
 msgstr "Imirongo Itambitse"
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:98
 #, fuzzy
 msgid "Path length"
 msgstr "IMISUSIRE"
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:99
 msgid "Perpendicular bisector"
 msgstr ""
 
 # starmath/source\smres.src:RID_TOOLBOXWINDOW.3.RID_XINTERSECTIONY.text
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:100
 #, fuzzy
 msgid "Perspective path"
 msgstr "Ihuriro"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:101
 #, fuzzy
 msgid "Rotate copies"
 msgstr "Dogere"
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:102
 #, fuzzy
 msgid "Recursive skeleton"
 msgstr "Ihitamo"
@@ -7812,66 +7802,71 @@ msgstr "Ihitamo"
 # basctl/source\basicide\basidesh.src:RID_BASICIDE_OBJECTBAR.SID_BASICIDE_MODULEDLG.text
 # #-#-#-#-#  basctl.pot (PACKAGE VERSION)  #-#-#-#-#
 # basctl/source\basicide\moduldlg.src:RID_TD_ORGANIZE.RID_TC_ORGANIZE.RID_TP_MOD.text
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:103
 #, fuzzy
 msgid "Ruler"
 msgstr "Modire"
 
-#: ../src/live_effects/effect.cpp:105
+#: ../src/live_effects/effect.cpp:104
 #, fuzzy
 msgid "Tangent to curve"
 msgstr "Imirongo Ihagaze"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:105
 #, fuzzy
 msgid "Text label"
 msgstr "IMISUSIRE"
 
 # sw/source\ui\utlui\attrdesc.src:STR_CHANNELB.text
 #. 0.46
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:108
 #, fuzzy
 msgid "Bend"
 msgstr "Ubururu"
 
 # officecfg/registry\schema\org\openoffice\Office\DataAccess.xcs:....DataSettings.CharacterEmphasis.text
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:109
 #, fuzzy
 msgid "Gears"
 msgstr "star"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:110
 #, fuzzy
 msgid "Pattern Along Path"
 msgstr "Igikoresho"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:111
 msgid "Stitch Sub-Paths"
 msgstr ""
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:113
 msgid "VonKoch"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:114
 msgid "Knot"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:115
 #, fuzzy
 msgid "Construct grid"
 msgstr "Santimetero"
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:116
 msgid "Spiro spline"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:118
+#: ../src/live_effects/effect.cpp:117
 #, fuzzy
 msgid "Envelope Deformation"
 msgstr "Ihindurwa"
+
+#: ../src/live_effects/effect.cpp:118
+#, fuzzy
+msgid "Interpolate Sub-Paths"
+msgstr "IMISUSIRE"
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Hatches (rough)"
@@ -7895,32 +7890,22 @@ msgid ""
 "disabled on canvas"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:274
-msgid "Deactivate knotholder?"
-msgstr ""
-
-#: ../src/live_effects/effect.cpp:274
-msgid ""
-"Check this to deactivate knotholder handles (useful if they interfere with "
-"node handles during editing)"
-msgstr ""
-
-#: ../src/live_effects/effect.cpp:295
+#: ../src/live_effects/effect.cpp:293
 #, fuzzy
 msgid "No effect"
 msgstr "Imirongo Itambitse"
 
-#: ../src/live_effects/effect.cpp:342
+#: ../src/live_effects/effect.cpp:340
 #, c-format
 msgid "Please specify a parameter path for the LPE '%s' with %d mouse clicks"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:641
+#: ../src/live_effects/effect.cpp:636
 #, fuzzy, c-format
 msgid "Editing parameter <b>%s</b>."
 msgstr "Urukiramende"
 
-#: ../src/live_effects/effect.cpp:646
+#: ../src/live_effects/effect.cpp:641
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr ""
 
@@ -8250,7 +8235,7 @@ msgstr "Umubarendanga Bya i KIGEZWEHO Ipaji"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
 #, fuzzy
-msgid "Ellipitic Pen"
+msgid "Elliptic Pen"
 msgstr "Ishushogi"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:61
@@ -8923,6 +8908,16 @@ msgstr ""
 msgid "Adjust the origin"
 msgstr "Ubwuzurane"
 
+# starmath/source\smres.src:RID_TOOLBOXWINDOW.3.RID_XINTERSECTIONY.text
+#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
+#, fuzzy
+msgid "Iterations"
+msgstr "Ihuriro"
+
+#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
+msgid "recursivity"
+msgstr ""
+
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
 msgstr ""
@@ -8961,7 +8956,7 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-msgid "2nd side, in "
+msgid "2nd side, in"
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
@@ -9310,7 +9305,7 @@ msgid "Placement randomness"
 msgstr "Umutuku:"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-msgid "0: evenly distributed construcion lines, 1: purely random placement"
+msgid "0: evenly distributed construction lines, 1: purely random placement"
 msgstr ""
 
 # offmgr/source\offapp\dialog\autocdlg.src:RID_OFADLG_PRCNT_SET.text
@@ -9573,9 +9568,10 @@ msgid "Export document to a PNG file"
 msgstr "Inyandiko Kuri png IDOSIYE"
 
 #: ../src/main.cpp:294
-#, fuzzy
-msgid "The resolution used for exporting SVG into bitmap (default 90)"
-msgstr "Imikemurire kugirango Guhindura.... Bitimapu Mburabuzi 0"
+msgid ""
+"Resolution for exporting to bitmap and for rasterization of filters in PS/"
+"EPS/PDF (default 90)"
+msgstr ""
 
 #: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
@@ -9769,7 +9765,7 @@ msgid "OBJECT-ID"
 msgstr ""
 
 #: ../src/main.cpp:453
-msgid "Start Inkscape in interative shell mode."
+msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
 #: ../src/main.cpp:756 ../src/main.cpp:1067
@@ -10433,59 +10429,59 @@ msgstr ""
 msgid "Toggle multiple vanishing points"
 msgstr ""
 
-#: ../src/preferences.cpp:104
+#: ../src/preferences.cpp:101
 msgid ""
 "Inkscape will run with default settings, and new settings will not be saved. "
 msgstr ""
 
 #. the creation failed
-#. _errorDialog(Glib::ustring::compose(_("Cannot create profile directory %1."),
+#. _reportError(Glib::ustring::compose(_("Cannot create profile directory %1."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:122
+#: ../src/preferences.cpp:116
 #, c-format
 msgid "Cannot create profile directory %s."
 msgstr ""
 
 #. The profile dir is not actually a directory
-#. _errorDialog(Glib::ustring::compose(_("%1 is not a valid directory."),
+#. _reportError(Glib::ustring::compose(_("%1 is not a valid directory."),
 #. Glib::filename_to_utf8(_prefs_dir)), not_saved);
-#: ../src/preferences.cpp:140
+#: ../src/preferences.cpp:134
 #, c-format
 msgid "%s is not a valid directory."
 msgstr ""
 
 #. The write failed.
-#. _errorDialog(Glib::ustring::compose(_("Failed to create the preferences file %1."),
+#. _reportError(Glib::ustring::compose(_("Failed to create the preferences file %1."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:151
+#: ../src/preferences.cpp:145
 #, c-format
 msgid "Failed to create the preferences file %s."
 msgstr ""
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a regular file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:169
+#: ../src/preferences.cpp:163
 #, c-format
 msgid "The preferences file %s is not a regular file."
 msgstr ""
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 could not be read."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 could not be read."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:181
+#: ../src/preferences.cpp:175
 #, c-format
 msgid "The preferences file %s could not be read."
 msgstr ""
 
-#. _errorDialog(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
+#. _reportError(Glib::ustring::compose(_("The preferences file %1 is not a valid XML document."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:193
+#: ../src/preferences.cpp:188
 #, c-format
 msgid "The preferences file %s is not a valid XML document."
 msgstr ""
 
-#. _errorDialog(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
+#. _reportError(Glib::ustring::compose(_("The file %1 is not a valid Inkscape preferences file."),
 #. Glib::filename_to_utf8(_prefs_filename)), not_saved);
-#: ../src/preferences.cpp:203
+#: ../src/preferences.cpp:199
 #, c-format
 msgid "The file %s is not a valid Inkscape preferences file."
 msgstr ""
@@ -10690,7 +10686,7 @@ msgstr ""
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.OLEMisc.Settings.Position.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....BusinessCard.BusinessAddress.Position.text
-#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:218
+#: ../src/rdf.cpp:273 ../src/ui/widget/page-sizer.cpp:219
 #, fuzzy
 msgid "Description"
 msgstr "Ibirindiro"
@@ -10795,32 +10791,32 @@ msgstr ""
 msgid "Selection canceled."
 msgstr "Ihitamo"
 
-#: ../src/select-context.cpp:563
+#: ../src/select-context.cpp:559
 msgid ""
 "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to "
 "rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:565
+#: ../src/select-context.cpp:561
 msgid ""
 "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to "
 "touch selection"
 msgstr ""
 
-#: ../src/select-context.cpp:728
+#: ../src/select-context.cpp:725
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr ""
 
-#: ../src/select-context.cpp:729
+#: ../src/select-context.cpp:726
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:730
+#: ../src/select-context.cpp:727
 msgid ""
 "<b>Alt</b>: click to select under; drag to move selected or select by touch"
 msgstr ""
 
-#: ../src/select-context.cpp:901
+#: ../src/select-context.cpp:902
 msgid "Selected object is not a group. Cannot enter."
 msgstr ""
 
@@ -11642,16 +11638,16 @@ msgstr "Imirongo Itambitse"
 msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
 msgstr ""
 
-#: ../src/sp-image.cpp:1110
+#: ../src/sp-image.cpp:1128
 msgid "embedded"
 msgstr ""
 
-#: ../src/sp-image.cpp:1118
+#: ../src/sp-image.cpp:1136
 #, fuzzy, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "Na: Indango"
 
-#: ../src/sp-image.cpp:1119
+#: ../src/sp-image.cpp:1137
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr ""
@@ -11675,26 +11671,26 @@ msgstr ""
 msgid "Create spiral"
 msgstr "Bitimapu"
 
-#: ../src/sp-item.cpp:1029
+#: ../src/sp-item.cpp:1035
 msgid "Object"
 msgstr "Igikoresho"
 
-#: ../src/sp-item.cpp:1046
+#: ../src/sp-item.cpp:1052
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:1051
+#: ../src/sp-item.cpp:1057
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:1059
+#: ../src/sp-item.cpp:1065
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:1061
+#: ../src/sp-item.cpp:1067
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr ""
@@ -12978,7 +12974,7 @@ msgstr "Ibintu"
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Enable.text
 #: ../src/ui/dialog/align-and-distribute.cpp:918
-#: ../src/widgets/desktop-widget.cpp:1566
+#: ../src/widgets/desktop-widget.cpp:1562
 msgid "Drawing"
 msgstr "Igishushanyo"
 
@@ -13000,7 +12996,8 @@ msgstr "Igishushanyo"
 # sc/source\ui\src\miscdlgs.src:RID_SCDLG_INSCONT.FL_FRAME.text
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
-#: ../src/widgets/desktop-widget.cpp:1570
+#: ../src/ui/dialog/icon-preview.cpp:178
+#: ../src/widgets/desktop-widget.cpp:1566
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Ihitamo"
@@ -13702,7 +13699,7 @@ msgstr "Ishusho"
 msgid "Selected SVG Element"
 msgstr "Byahiswemo"
 
-#. TODO: any image, not justy svg
+#. TODO: any image, not just svg
 #: ../src/ui/dialog/filter-effects-dialog.cpp:648
 msgid "Select an image to be used as feImage input"
 msgstr ""
@@ -14253,7 +14250,7 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2289
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
-"the Porter-Duff blending modes or the aritmetic mode described in SVG "
+"the Porter-Duff blending modes or the arithmetic mode described in SVG "
 "standard. Porter-Duff blending modes are essentially logical operations "
 "between the corresponding pixel values of the images."
 msgstr ""
@@ -14352,6 +14349,60 @@ msgstr ""
 #, fuzzy
 msgid "Set filter primitive attribute"
 msgstr "Gusiba Ikiranga"
+
+#: ../src/ui/dialog/guides.cpp:42
+#, fuzzy
+msgid "Unit:"
+msgstr "Igice:"
+
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.Color.RotationAngle.text
+#: ../src/ui/dialog/guides.cpp:45
+#, fuzzy
+msgid "Angle (degrees):"
+msgstr "Imfuruka"
+
+#: ../src/ui/dialog/guides.cpp:46
+#, fuzzy
+msgid "Rela_tive change"
+msgstr "Urukiramende"
+
+#: ../src/ui/dialog/guides.cpp:46
+msgid "Move and/or rotate the guide relative to current settings"
+msgstr ""
+
+#: ../src/ui/dialog/guides.cpp:112
+#, fuzzy
+msgid "Set guide properties"
+msgstr "Indangakintu..."
+
+#: ../src/ui/dialog/guides.cpp:151
+#, fuzzy
+msgid "Guideline"
+msgstr "Ibara"
+
+#: ../src/ui/dialog/guides.cpp:239
+#, fuzzy, c-format
+msgid "Guideline ID: %s"
+msgstr "Ibara"
+
+#: ../src/ui/dialog/guides.cpp:245
+#, fuzzy, c-format
+msgid "Current: %s"
+msgstr "Amagenamiterere"
+
+#: ../src/ui/dialog/icon-preview.cpp:130
+#, c-format
+msgid "%d x %d"
+msgstr ""
+
+#: ../src/ui/dialog/icon-preview.cpp:180
+#, fuzzy
+msgid "Selection only or whole document"
+msgstr "Byose Ibintu in Inyandiko"
+
+#: ../src/ui/dialog/icon-preview.cpp:188
+msgid "Refresh the icons"
+msgstr ""
 
 # #-#-#-#-#  basctl.pot (PACKAGE VERSION)  #-#-#-#-#
 # basctl/source\basicide\basidesh.src:RID_BASICIDE_OBJECTBAR.SID_BASICIDE_MODULEDLG.text
@@ -16577,6 +16628,77 @@ msgstr "Kongera"
 msgid "New layer created."
 msgstr ""
 
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#, fuzzy
+msgid "Unhide layer"
+msgstr "Nka Akugara"
+
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+#, fuzzy
+msgid "Hide layer"
+msgstr "Nka Akugara"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.And.ooInetCaseMatch..2.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Or.ooInetCaseMatch..2.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Exact.ooInetCaseMatch..2.text
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#, fuzzy
+msgid "Lock layer"
+msgstr "Ntoya"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.And.ooInetCaseMatch..2.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Or.ooInetCaseMatch..2.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Exact.ooInetCaseMatch..2.text
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+#, fuzzy
+msgid "Unlock layer"
+msgstr "Ntoya"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.And.ooInetCaseMatch..2.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Or.ooInetCaseMatch..2.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Exact.ooInetCaseMatch..2.text
+#: ../src/ui/dialog/layers.cpp:645
+#, fuzzy
+msgid "Layers"
+msgstr "Ntoya"
+
+# basctl/source\basicide\brkdlg.src:RID_BASICIDE_BREAKPOINTDLG.RID_PB_NEW.text
+#: ../src/ui/dialog/layers.cpp:654
+msgid "New"
+msgstr "Gishya"
+
+#: ../src/ui/dialog/layers.cpp:659 ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr ""
+
+#: ../src/ui/dialog/layers.cpp:665
+msgid "Up"
+msgstr ""
+
+#: ../src/ui/dialog/layers.cpp:671
+msgid "Dn"
+msgstr ""
+
+#: ../src/ui/dialog/layers.cpp:677
+#, fuzzy
+msgid "Bot"
+msgstr "Ihindurangano"
+
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Font.Strikeout..6.text
+#: ../src/ui/dialog/layers.cpp:687
+#, fuzzy
+msgid "X"
+msgstr "X"
+
 #. TRANSLATORS: this dialog is accessible via menu Path - Path Effect Editor...
 #: ../src/ui/dialog/livepatheffect-editor.cpp:78
 msgid "Apply new effect"
@@ -16959,94 +17081,104 @@ msgstr ""
 msgid "Set glyph curves"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:566
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:570
+msgid "Reset missing-glyph"
+msgstr ""
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:585
 msgid "Edit glyph name"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:579
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:598
 msgid "Set glyph unicode"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:589
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:608
 #, fuzzy
 msgid "Remove font"
 msgstr "Ihuza"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:604
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:623
 #, fuzzy
 msgid "Remove glyph"
 msgstr "Ihuza"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:619
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:638
 #, fuzzy
 msgid "Remove kerning pair"
 msgstr "Urukiramende"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:629
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:648
 msgid "Missing Glyph:"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:632
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:652
 #, fuzzy
 msgid "From selection..."
 msgstr "Ihitamo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:642
-msgid "Glyph Name"
-msgstr ""
-
-# filter/source\xsltdialog\xmlfilterdialogstrings.src:STR_DEFAULT_UI_NAME.text
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:643
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:654
+#: ../src/ui/widget/preferences-widget.cpp:590
 #, fuzzy
-msgid "Unicode"
-msgstr "Nta mutwe"
+msgid "Reset"
+msgstr "Umwandiko"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:646
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:665
+#, fuzzy
+msgid "Glyph name"
+msgstr "Izina:"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:666
+#, fuzzy
+msgid "Matching string"
+msgstr "Amagenamiterere"
+
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:669
 #, fuzzy
 msgid "Add Glyph"
 msgstr "Nka Akugara"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:653
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:676
 #, fuzzy
 msgid "Get curves from selection..."
 msgstr "Ihitamo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:703
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:726
 msgid "Add kerning pair"
 msgstr ""
 
 #. Kerning Setup:
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:711
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:734
 msgid "Kerning Setup:"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:713
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:736
 msgid "1st Glyph:"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:715
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
 msgid "2nd Glyph:"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:718
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:741
 #, fuzzy
 msgid "Add pair"
 msgstr "Nka Akugara"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:730
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:753
 #, fuzzy
 msgid "First Unicode range"
 msgstr "Byahiswemo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:731
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:754
 msgid "Second Unicode range"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:738
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:761
 msgid "Kerning value:"
 msgstr ""
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:796
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
 #, fuzzy
 msgid "Set font family"
 msgstr "Na Intego- nyuguti"
@@ -17075,13 +17207,13 @@ msgstr "Na Intego- nyuguti"
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Layout.Window.VerticalRulerUnit..6.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Layout.Other.MeasureUnit..6.text
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:805
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:828
 #, fuzzy
 msgid "font"
 msgstr "Akadomo"
 
 #. select_font(font);
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:819
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:842
 #, fuzzy
 msgid "Add font"
 msgstr "Nka Akugara"
@@ -17110,17 +17242,17 @@ msgstr "Nka Akugara"
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Layout.Window.VerticalRulerUnit..6.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Layout.Other.MeasureUnit..6.text
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:839
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:862
 #, fuzzy
 msgid "_Font"
 msgstr "Akadomo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:847
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:870
 #, fuzzy
 msgid "_Global Settings"
 msgstr "Amagenamiterere"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:848
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:871
 msgid "_Glyphs"
 msgstr ""
 
@@ -17128,19 +17260,19 @@ msgstr ""
 # officecfg/registry\schema\org\openoffice\Office\Draw.xcs:....Print.Content.Drawing.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Enable.text
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:849
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:872
 #, fuzzy
 msgid "_Kerning"
 msgstr "Igishushanyo"
 
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:856
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:857
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:879
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:880
 #, fuzzy
 msgid "Sample Text"
 msgstr "Gupima"
 
 # sc/source\ui\src\scstring.src:SCSTR_PREVIEWSHELL.text
-#: ../src/ui/dialog/svg-fonts-dialog.cpp:861
+#: ../src/ui/dialog/svg-fonts-dialog.cpp:884
 #, fuzzy
 msgid "Preview Text:"
 msgstr "Igaragazambere ryo Gucapa"
@@ -17912,7 +18044,7 @@ msgid ""
 "use selector (arrow) to move or transform them."
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:832
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -17922,11 +18054,11 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1258
-#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:899
+#: ../src/widgets/desktop-widget.cpp:839 ../src/widgets/desktop-widget.cpp:895
 msgid "Close _without saving"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:891
+#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:887
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -17935,7 +18067,7 @@ msgid ""
 "Do you want to save this file as an Inkscape SVG?"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:902
+#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:898
 msgid "_Save as SVG"
 msgstr ""
 
@@ -17965,38 +18097,6 @@ msgstr "Nka Akugara"
 #: ../src/ui/widget/layer-selector.cpp:566
 msgid "(root)"
 msgstr ""
-
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.And.ooInetCaseMatch..2.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Or.ooInetCaseMatch..2.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Exact.ooInetCaseMatch..2.text
-#: ../src/ui/widget/layer-selector.cpp:587
-#, fuzzy
-msgid "Lock layer"
-msgstr "Ntoya"
-
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.And.ooInetCaseMatch..2.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Or.ooInetCaseMatch..2.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Inet.xcs:....SearchEngine.Exact.ooInetCaseMatch..2.text
-#: ../src/ui/widget/layer-selector.cpp:587
-#, fuzzy
-msgid "Unlock layer"
-msgstr "Ntoya"
-
-#: ../src/ui/widget/layer-selector.cpp:595
-#, fuzzy
-msgid "Hide layer"
-msgstr "Nka Akugara"
-
-#: ../src/ui/widget/layer-selector.cpp:595
-#, fuzzy
-msgid "Unhide layer"
-msgstr "Nka Akugara"
 
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
@@ -18031,55 +18131,55 @@ msgstr "Ikiranga"
 msgid "Change opacity"
 msgstr "Mugenga"
 
-#: ../src/ui/widget/page-sizer.cpp:208
+#: ../src/ui/widget/page-sizer.cpp:209
 #, fuzzy
 msgid "U_nits:"
 msgstr "Igice:"
 
-#: ../src/ui/widget/page-sizer.cpp:209
+#: ../src/ui/widget/page-sizer.cpp:210
 #, fuzzy
 msgid "Width of paper"
 msgstr "Kugena urupapuro"
 
-#: ../src/ui/widget/page-sizer.cpp:210
+#: ../src/ui/widget/page-sizer.cpp:211
 msgid "Height of paper"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:256
+#: ../src/ui/widget/page-sizer.cpp:257
 #, fuzzy
 msgid "P_age size:"
 msgstr "Ingano y'urupapuro:"
 
-#: ../src/ui/widget/page-sizer.cpp:264
+#: ../src/ui/widget/page-sizer.cpp:265
 #, fuzzy
 msgid "Page orientation:"
 msgstr "Icyerekezo:"
 
-#: ../src/ui/widget/page-sizer.cpp:267
+#: ../src/ui/widget/page-sizer.cpp:268
 msgid "_Landscape"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:272
+#: ../src/ui/widget/page-sizer.cpp:273
 msgid "_Portrait"
 msgstr ""
 
 #. ## Set up custom size frame
-#: ../src/ui/widget/page-sizer.cpp:279
+#: ../src/ui/widget/page-sizer.cpp:280
 #, fuzzy
 msgid "Custom size"
 msgstr "Guhanga"
 
-#: ../src/ui/widget/page-sizer.cpp:292
+#: ../src/ui/widget/page-sizer.cpp:293
 msgid "_Fit page to selection"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:293
+#: ../src/ui/widget/page-sizer.cpp:294
 msgid ""
 "Resize the page to fit the current selection, or the entire drawing if there "
 "is no selection"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:351
+#: ../src/ui/widget/page-sizer.cpp:357
 #, fuzzy
 msgid "Set page size"
 msgstr "Ingano y'urupapuro:"
@@ -18157,11 +18257,6 @@ msgstr "Gushisha"
 #: ../src/ui/widget/panel.cpp:205
 msgid "swatches|Wrap"
 msgstr ""
-
-#: ../src/ui/widget/preferences-widget.cpp:590
-#, fuzzy
-msgid "Reset"
-msgstr "Umwandiko"
 
 #: ../src/ui/widget/random.cpp:123
 msgid ""
@@ -20917,13 +21012,13 @@ msgid "%s - Inkscape"
 msgstr ""
 
 # goodies/source\filter.vcl\eps\dlgeps.src:DLG_EXPORT_EPS.RB_COMPRESSION_NONE.text
-#: ../src/widgets/ege-paint-def.cpp:69 ../src/widgets/ege-paint-def.cpp:91
+#: ../src/widgets/ege-paint-def.cpp:70 ../src/widgets/ege-paint-def.cpp:92
 #: ../src/widgets/gradient-selector.cpp:167
 #, fuzzy
 msgid "none"
 msgstr "Nta na kimwe"
 
-#: ../src/widgets/ege-paint-def.cpp:88
+#: ../src/widgets/ege-paint-def.cpp:89
 #, fuzzy
 msgid "remove"
 msgstr "Ihuza"
@@ -21555,14 +21650,14 @@ msgstr ""
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1135
+#: ../src/widgets/stroke-style.cpp:1137
 msgid "Round join"
 msgstr ""
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1143
+#: ../src/widgets/stroke-style.cpp:1147
 msgid "Bevel join"
 msgstr ""
 
@@ -21573,72 +21668,72 @@ msgstr ""
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/widgets/stroke-style.cpp:1154
+#: ../src/widgets/stroke-style.cpp:1159
 msgid "Miter limit:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1162
+#: ../src/widgets/stroke-style.cpp:1167
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/widgets/stroke-style.cpp:1174
+#: ../src/widgets/stroke-style.cpp:1179
 msgid "Cap:"
 msgstr ""
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1185
+#: ../src/widgets/stroke-style.cpp:1191
 msgid "Butt cap"
 msgstr ""
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:1192
+#: ../src/widgets/stroke-style.cpp:1199
 msgid "Round cap"
 msgstr ""
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1199
+#: ../src/widgets/stroke-style.cpp:1207
 msgid "Square cap"
 msgstr ""
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:1205
+#: ../src/widgets/stroke-style.cpp:1213
 msgid "Dashes:"
 msgstr ""
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/widgets/stroke-style.cpp:1222
+#: ../src/widgets/stroke-style.cpp:1230
 msgid "Start Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1224
+#: ../src/widgets/stroke-style.cpp:1232
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1233
+#: ../src/widgets/stroke-style.cpp:1241
 msgid "Mid Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1235
+#: ../src/widgets/stroke-style.cpp:1243
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1244
+#: ../src/widgets/stroke-style.cpp:1252
 msgid "End Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1246
+#: ../src/widgets/stroke-style.cpp:1254
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1569 ../src/widgets/stroke-style.cpp:1665
+#: ../src/widgets/stroke-style.cpp:1603 ../src/widgets/stroke-style.cpp:1699
 #, fuzzy
 msgid "Set stroke style"
 msgstr "IMISUSIRE"
@@ -23811,7 +23906,11 @@ msgstr ""
 msgid "Could not locate file: %s"
 msgstr "OYA Ibirimo Imigaragarire Ukoresha: IDOSIYE"
 
-#. vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
+#: ../share/extensions/web-set-att.py:52
+#: ../share/extensions/web-transmit-att.py:48
+msgid "You must select at least two elements."
+msgstr ""
+
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
 msgstr ""
@@ -23834,8 +23933,10 @@ msgstr ""
 msgid "Maximum segment length (px)"
 msgstr ""
 
-#: ../share/extensions/addnodes.inx.h:6 ../share/extensions/edge3d.inx.h:6
-#: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
+#: ../share/extensions/addnodes.inx.h:6
+#: ../share/extensions/convert2dashes.inx.h:2
+#: ../share/extensions/edge3d.inx.h:6 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/fractalize.inx.h:2
 #: ../share/extensions/interp_att_g.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
@@ -24057,6 +24158,12 @@ msgstr ""
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
 msgstr ""
+
+# svx/source\svdraw\svdstr.src:STR_EditConvToCurves.text
+#: ../share/extensions/convert2dashes.inx.h:1
+#, fuzzy
+msgid "Convert to Dashes"
+msgstr "Guhindura ku mirongo ihese"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -24319,21 +24426,26 @@ msgstr "kugirango a Bihindagurika"
 msgid "AutoCAD DXF (*.dxf)"
 msgstr ""
 
-# sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_UNDO_ENTERDATA.text
 #: ../share/extensions/dxf_input.inx.h:2
+#, fuzzy
+msgid "Character Encoding"
+msgstr "itandukanya:"
+
+# sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_UNDO_ENTERDATA.text
+#: ../share/extensions/dxf_input.inx.h:3
 #, fuzzy
 msgid "DXF Input"
 msgstr "Iyinjiza"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:4
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr ""
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:5
 msgid "Or, use manual scale factor"
 msgstr ""
 
-#: ../share/extensions/dxf_input.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "Use automatic scaling to size A4"
 msgstr ""
 
@@ -24535,6 +24647,7 @@ msgid "Calculate first derivative numerically"
 msgstr ""
 
 #: ../share/extensions/funcplot.inx.h:2
+#: ../share/extensions/param_curves.inx.h:1
 msgid "Draw Axes"
 msgstr ""
 
@@ -24560,6 +24673,7 @@ msgstr "Amagenamiterere"
 
 # starmath/source\smres.src:RID_TOOLBOXWINDOW.1.RID_XMINUSY.text
 #: ../share/extensions/funcplot.inx.h:7
+#: ../share/extensions/param_curves.inx.h:3
 #, fuzzy
 msgid "Functions"
 msgstr "Gukuramo"
@@ -24583,6 +24697,7 @@ msgid "Range and sampling"
 msgstr ""
 
 #: ../share/extensions/funcplot.inx.h:12
+#: ../share/extensions/param_curves.inx.h:8
 #, fuzzy
 msgid "Remove rectangle"
 msgstr "Urukiramende"
@@ -24597,6 +24712,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/funcplot.inx.h:15
+#: ../share/extensions/param_curves.inx.h:12
 msgid ""
 "Standard Python math functions are available: ceil(x); fabs(x); floor(x); "
 "fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); "
@@ -24617,6 +24733,7 @@ msgstr "Agaciro"
 # #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
 # svx/source\dialog\page.src:RID_SVXSTRARY_PAPERSIZE_DRAW.16.text
 #: ../share/extensions/funcplot.inx.h:17
+#: ../share/extensions/param_curves.inx.h:14
 #, fuzzy
 msgid "Use"
 msgstr "Ukoresha"
@@ -24963,28 +25080,6 @@ msgstr ""
 msgid "SVG 1.1 Specification"
 msgstr ""
 
-#: ../share/extensions/interp.inx.h:1
-#, fuzzy
-msgid "Duplicate endpaths"
-msgstr "Gusubiramo"
-
-#: ../share/extensions/interp.inx.h:4
-msgid "Interpolate"
-msgstr ""
-
-#: ../share/extensions/interp.inx.h:5
-#, fuzzy
-msgid "Interpolate style"
-msgstr "IMISUSIRE"
-
-#: ../share/extensions/interp.inx.h:6
-msgid "Interpolation method"
-msgstr ""
-
-#: ../share/extensions/interp.inx.h:7
-msgid "Interpolation steps"
-msgstr ""
-
 #: ../share/extensions/interp_att_g.inx.h:1
 #, fuzzy
 msgid "Attribute to Interpolate"
@@ -25075,6 +25170,28 @@ msgstr ""
 #: ../share/extensions/web-set-att.inx.h:28
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
+msgstr ""
+
+#: ../share/extensions/interp.inx.h:1
+#, fuzzy
+msgid "Duplicate endpaths"
+msgstr "Gusubiramo"
+
+#: ../share/extensions/interp.inx.h:4
+msgid "Interpolate"
+msgstr ""
+
+#: ../share/extensions/interp.inx.h:5
+#, fuzzy
+msgid "Interpolate style"
+msgstr "IMISUSIRE"
+
+#: ../share/extensions/interp.inx.h:6
+msgid "Interpolation method"
+msgstr ""
+
+#: ../share/extensions/interp.inx.h:7
+msgid "Interpolation steps"
 msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:1
@@ -25265,6 +25382,75 @@ msgstr ""
 #, fuzzy
 msgid "Text Outline Input"
 msgstr "Iyinjiza"
+
+#: ../share/extensions/param_curves.inx.h:2
+#, fuzzy
+msgid "End t-value"
+msgstr "Agaciro"
+
+#: ../share/extensions/param_curves.inx.h:4
+msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
+msgstr ""
+
+#: ../share/extensions/param_curves.inx.h:5
+msgid "Multiply t-range by 2*pi"
+msgstr ""
+
+#: ../share/extensions/param_curves.inx.h:6
+msgid "Parametric Curves"
+msgstr ""
+
+#: ../share/extensions/param_curves.inx.h:7
+msgid "Range and Sampling"
+msgstr ""
+
+#: ../share/extensions/param_curves.inx.h:10
+#, fuzzy
+msgid "Samples"
+msgstr "Imisusire"
+
+#: ../share/extensions/param_curves.inx.h:11
+msgid ""
+"Select a rectangle before calling the extension; it will determine X and Y "
+"scales. First derivatives are always determined numerically."
+msgstr ""
+
+#: ../share/extensions/param_curves.inx.h:13
+#, fuzzy
+msgid "Start t-value"
+msgstr "Agaciro"
+
+# starmath/source\smres.src:RID_TOOLBOXWINDOW.1.RID_XMINUSY.text
+#: ../share/extensions/param_curves.inx.h:15
+#, fuzzy
+msgid "x-Function"
+msgstr "Gukuramo"
+
+#: ../share/extensions/param_curves.inx.h:16
+#, fuzzy
+msgid "x-value of rectangle's left"
+msgstr "Urukiramende"
+
+#: ../share/extensions/param_curves.inx.h:17
+#, fuzzy
+msgid "x-value of rectangle's right"
+msgstr "Urukiramende"
+
+# starmath/source\smres.src:RID_TOOLBOXWINDOW.1.RID_XMINUSY.text
+#: ../share/extensions/param_curves.inx.h:18
+#, fuzzy
+msgid "y-Function"
+msgstr "Gukuramo"
+
+#: ../share/extensions/param_curves.inx.h:19
+#, fuzzy
+msgid "y-value of rectangle's bottom"
+msgstr "Urukiramende"
+
+#: ../share/extensions/param_curves.inx.h:20
+#, fuzzy
+msgid "y-value of rectangle's top"
+msgstr "Urukiramende"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 #, fuzzy
@@ -26014,10 +26200,6 @@ msgstr "Ibirindiro"
 msgid "Right to Left (180)"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:16
-msgid "Top"
-msgstr ""
-
 #: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
 msgstr ""
@@ -26061,11 +26243,21 @@ msgid "Open files saved in sK1 vector graphics editor"
 msgstr "Imiterere"
 
 #: ../share/extensions/sk1_input.inx.h:2
+#: ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (.sk1)"
 msgstr ""
 
 #: ../share/extensions/sk1_input.inx.h:3
 msgid "sK1 vector graphics files input"
+msgstr ""
+
+#: ../share/extensions/sk1_output.inx.h:1
+#, fuzzy
+msgid "File format for use in sK1 vector graphics editor"
+msgstr "Imiterere"
+
+#: ../share/extensions/sk1_output.inx.h:3
+msgid "sK1 vector graphics files output"
 msgstr ""
 
 #: ../share/extensions/sk_input.inx.h:1
@@ -26483,7 +26675,7 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:8
 #, fuzzy
-msgid "Set Atributes"
+msgid "Set Attributes"
 msgstr "Ikiranga"
 
 #: ../share/extensions/web-set-att.inx.h:9
@@ -26656,6 +26848,24 @@ msgstr ""
 msgid "XAML Input"
 msgstr "Iyinjiza"
 
+# sw/source\ui\utlui\attrdesc.src:STR_CHANNELR.text
+#, fuzzy
+#~ msgid "Comics rounded"
+#~ msgstr "Umutuku:"
+
+#, fuzzy
+#~ msgid "Preferred resolution (DPI) of bitmaps"
+#~ msgstr "Imikemurire Utudomo Inci Bya Bitimapu"
+
+#, fuzzy
+#~ msgid "The resolution used for exporting SVG into bitmap (default 90)"
+#~ msgstr "Imikemurire kugirango Guhindura.... Bitimapu Mburabuzi 0"
+
+# filter/source\xsltdialog\xmlfilterdialogstrings.src:STR_DEFAULT_UI_NAME.text
+#, fuzzy
+#~ msgid "Unicode"
+#~ msgstr "Nta mutwe"
+
 #, fuzzy
 #~ msgid "gradient level"
 #~ msgstr "Ikizamuko Byahiswemo"
@@ -26694,35 +26904,6 @@ msgstr "Iyinjiza"
 #, fuzzy
 #~ msgid "Smallest item"
 #~ msgstr "Ikintu"
-
-#, fuzzy
-#~ msgid "Unit:"
-#~ msgstr "Igice:"
-
-#, fuzzy
-#~ msgid "Set guide properties"
-#~ msgstr "Indangakintu..."
-
-#, fuzzy
-#~ msgid "Guideline ID: %s"
-#~ msgstr "Ibara"
-
-#, fuzzy
-#~ msgid "Current: %s"
-#~ msgstr "Amagenamiterere"
-
-#, fuzzy
-#~ msgid "Selection only or whole document"
-#~ msgstr "Byose Ibintu in Inyandiko"
-
-# basctl/source\basicide\brkdlg.src:RID_BASICIDE_BREAKPOINTDLG.RID_PB_NEW.text
-#~ msgid "New"
-#~ msgstr "Gishya"
-
-# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Font.Strikeout..6.text
-#, fuzzy
-#~ msgid "X"
-#~ msgstr "X"
 
 #, fuzzy
 #~ msgid "Center on vertical axis"
@@ -27098,10 +27279,6 @@ msgstr "Iyinjiza"
 #~ msgid "Inline the XML attributes"
 #~ msgstr "Gusiba Ikiranga"
 
-#, fuzzy
-#~ msgid "Path string"
-#~ msgstr "Amagenamiterere"
-
 # officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.Color.RotationAngle.text
 #, fuzzy
 #~ msgid "<b>Mode:</b>"
@@ -27118,10 +27295,6 @@ msgstr "Iyinjiza"
 #, fuzzy
 #~ msgid "Save current settings as new profile"
 #~ msgstr "Kubika Inyandiko Gishya Izina:"
-
-#, fuzzy
-#~ msgid "Samples"
-#~ msgstr "Imisusire"
 
 #, fuzzy
 #~ msgid "Report Normal Vector Information"

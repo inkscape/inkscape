@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-18 07:21+0200\n"
+"POT-Creation-Date: 2009-05-19 11:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1538,9 +1538,7 @@ msgid "Lead pencil"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:167
-msgid ""
-"Give lead pencil or chromolithography or engraving or other effects to "
-"images and material filled objects"
+msgid "Give lead pencil or chromolithography or engraving or other effects"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:168
@@ -1552,19 +1550,19 @@ msgid "Gives a smooth bump velvet like"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:169
-msgid "Alpha draw"
+msgid "Alpha engraving"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:169
-msgid "Gives a transparent drawing effect to bitmaps and materials"
+msgid "Gives a transparent engraving effect to bitmaps and materials"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:170
-msgid "Alpha paint"
+msgid "Alpha engraving, color"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:170
-msgid "Gives a transparent color fill effect to bitmaps and materials"
+msgid "Gives a transparent color engraving effect to bitmaps and materials"
 msgstr ""
 
 #: ../src/arc-context.cpp:303
@@ -19849,8 +19847,10 @@ msgstr ""
 msgid "Maximum segment length (px)"
 msgstr ""
 
-#: ../share/extensions/addnodes.inx.h:6 ../share/extensions/edge3d.inx.h:6
-#: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
+#: ../share/extensions/addnodes.inx.h:6
+#: ../share/extensions/convert2dashes.inx.h:2
+#: ../share/extensions/edge3d.inx.h:6 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/fractalize.inx.h:2
 #: ../share/extensions/interp_att_g.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
@@ -20043,6 +20043,10 @@ msgstr ""
 
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
+msgstr ""
+
+#: ../share/extensions/convert2dashes.inx.h:1
+msgid "Convert to Dashes"
 msgstr ""
 
 #: ../share/extensions/dia.inx.h:1

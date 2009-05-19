@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-11 20:58+0200\n"
+"POT-Creation-Date: 2009-05-19 11:58+0200\n"
 "PO-Revision-Date: 2008-09-14 15:21+0100\n"
 "Last-Translator: McBen <viertelvor12@gmx.net>\n"
 "Language-Team:  <de@li.org>\n"
@@ -1666,9 +1666,7 @@ msgid "Lead pencil"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:167
-msgid ""
-"Give lead pencil or chromolithography or engraving or other effects to "
-"images and material filled objects"
+msgid "Give lead pencil or chromolithography or engraving or other effects"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:168
@@ -1681,20 +1679,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:169
 #, fuzzy
-msgid "Alpha draw"
+msgid "Alpha engraving"
 msgstr "Alpha"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Gives a transparent drawing effect to bitmaps and materials"
+msgid "Gives a transparent engraving effect to bitmaps and materials"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
-msgid "Alpha fill"
-msgstr "Schwarze Füllung"
+msgid "Alpha engraving, color"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:170
-msgid "Gives a transparent color fill effect to bitmaps and materials"
+msgid "Gives a transparent color engraving effect to bitmaps and materials"
 msgstr ""
 
 #: ../src/arc-context.cpp:303
@@ -1825,6 +1822,7 @@ msgid "Create guide"
 msgstr "Führungslinie erzeugen"
 
 #: ../src/desktop-events.cpp:265 ../src/desktop-events.cpp:394
+#: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "Führungslinie löschen"
 
@@ -3141,12 +3139,14 @@ msgid "URL:"
 msgstr "URL:"
 
 #: ../src/dialogs/object-attributes.cpp:51
-#: ../src/dialogs/object-attributes.cpp:59 ../src/widgets/toolbox.cpp:1472
+#: ../src/dialogs/object-attributes.cpp:59 ../src/ui/dialog/guides.cpp:43
+#: ../src/widgets/toolbox.cpp:1472
 msgid "X:"
 msgstr "X:"
 
 #: ../src/dialogs/object-attributes.cpp:52
-#: ../src/dialogs/object-attributes.cpp:60 ../src/widgets/toolbox.cpp:1490
+#: ../src/dialogs/object-attributes.cpp:60 ../src/ui/dialog/guides.cpp:44
+#: ../src/widgets/toolbox.cpp:1490
 msgid "Y:"
 msgstr "Y:"
 
@@ -4098,7 +4098,7 @@ msgstr "Höhe"
 
 #. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:97
+#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
 #: ../src/live_effects/lpe-offset.cpp:30
 #: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:49
@@ -4940,6 +4940,7 @@ msgstr "Vertikaler Versatz"
 #: ../share/extensions/grid_polar.inx.h:18
 #: ../share/extensions/guides_creator.inx.h:17
 #: ../share/extensions/lindenmayer.inx.h:11
+#: ../share/extensions/param_curves.inx.h:9
 #: ../share/extensions/perfectboundcover.inx.h:17
 #: ../share/extensions/polyhedron_3d.inx.h:32
 #: ../share/extensions/printing-marks.inx.h:14
@@ -5247,7 +5248,7 @@ msgstr ""
 msgid "default.svg"
 msgstr "default.de.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1035
+#: ../src/file.cpp:249 ../src/file.cpp:1036
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Laden der gewünschten Datei %s fehlgeschlagen"
@@ -5312,7 +5313,7 @@ msgstr "Datei %s konnte nicht gespeichert werden."
 msgid "Document saved."
 msgstr "Dokument wurde gespeichert."
 
-#: ../src/file.cpp:750 ../src/file.cpp:1160 ../src/file.cpp:1280
+#: ../src/file.cpp:750 ../src/file.cpp:1161 ../src/file.cpp:1281
 #, c-format
 msgid "drawing%s"
 msgstr "Zeichnung%s"
@@ -5338,28 +5339,28 @@ msgstr "Es müssen keine Änderungen gespeichert werden."
 msgid "Saving document..."
 msgstr "Dokument wird gespeichert…"
 
-#: ../src/file.cpp:1032
+#: ../src/file.cpp:1033
 msgid "Import"
 msgstr "Importieren"
 
-#: ../src/file.cpp:1062
+#: ../src/file.cpp:1063
 msgid "Select file to import"
 msgstr "Wählen Sie die zu importierende Datei"
 
-#: ../src/file.cpp:1181 ../src/file.cpp:1295
+#: ../src/file.cpp:1182 ../src/file.cpp:1296
 msgid "Select file to export to"
 msgstr "Wählen Sie die Datei, in die exportiert werden soll"
 
-#: ../src/file.cpp:1327
+#: ../src/file.cpp:1328
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Fehler beim Speichern der Zwischenkopie"
 
-#: ../src/file.cpp:1347
+#: ../src/file.cpp:1348
 msgid "Open Clip Art Login"
 msgstr "Login bei Open Clip Art"
 
-#: ../src/file.cpp:1373
+#: ../src/file.cpp:1374
 #, fuzzy, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5370,11 +5371,11 @@ msgstr ""
 "Servername, Benutzername und Passwort korrekt sind. Zudem muß der Server "
 "WEBDAV unterstützen und eine gültige Lizenz muß ausgewählt worden sein."
 
-#: ../src/file.cpp:1394
+#: ../src/file.cpp:1395
 msgid "Document exported..."
 msgstr "Dokument exportiert..."
 
-#: ../src/file.cpp:1422 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1423 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Import aus der Open Clip Art Library"
 
@@ -6198,15 +6199,15 @@ msgstr "Keine Zwischenfarben im Farbverlauf"
 msgid "Could not parse SVG data"
 msgstr "SVG-Daten konnten nicht analysiert werden"
 
-#: ../src/interface.cpp:1394
+#: ../src/interface.cpp:1390
 msgid "Drop SVG"
 msgstr "SVG ablegen"
 
-#: ../src/interface.cpp:1450
+#: ../src/interface.cpp:1446
 msgid "Drop bitmap image"
 msgstr "Bitmap-Bild ablegen"
 
-#: ../src/interface.cpp:1542
+#: ../src/interface.cpp:1538
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -6220,7 +6221,7 @@ msgstr ""
 "Die Datei existiert bereits in »%s«. Sie zu ersetzen wird ihren Inhalt "
 "überschreiben."
 
-#: ../src/interface.cpp:1549 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1545 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr "Ersetzen"
@@ -6589,7 +6590,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:917
 #: ../src/ui/dialog/document-properties.cpp:116
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1562
+#: ../src/widgets/desktop-widget.cpp:1558
 msgid "Page"
 msgstr "Seite"
 
@@ -6802,110 +6803,110 @@ msgstr "Schwarze Kontur"
 
 #: ../src/live_effects/effect.cpp:93
 #, fuzzy
-msgid "Interpolate Sub-Paths"
-msgstr "Interpolieren"
-
-#: ../src/live_effects/effect.cpp:94
-#, fuzzy
 msgid "Lattice Deformation"
 msgstr "Buchstabendrehung"
 
-#: ../src/live_effects/effect.cpp:95
+#: ../src/live_effects/effect.cpp:94
 #, fuzzy
 msgid "Line Segment"
 msgstr "Segment verbinden"
 
-#: ../src/live_effects/effect.cpp:96
+#: ../src/live_effects/effect.cpp:95
 msgid "Mirror symmetry"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:97
 #, fuzzy
 msgid "Parallel"
 msgstr "Normaler Versatz"
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:98
 #, fuzzy
 msgid "Path length"
 msgstr "Wellenlänge"
 
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:99
 #, fuzzy
 msgid "Perpendicular bisector"
 msgstr "(senkrecht zum Strich, \"Pinsel\")"
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:100
 #, fuzzy
 msgid "Perspective path"
 msgstr "Perspektive"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:101
 #, fuzzy
 msgid "Rotate copies"
 msgstr "Knoten rotieren"
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:102
 msgid "Recursive skeleton"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:103
 #, fuzzy
 msgid "Ruler"
 msgstr "_Lineale"
 
-#: ../src/live_effects/effect.cpp:105
+#: ../src/live_effects/effect.cpp:104
 #, fuzzy
 msgid "Tangent to curve"
 msgstr "Kurve ziehen"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:105
 #, fuzzy
 msgid "Text label"
 msgstr "Objektbezeichner setzen"
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:108
 #, fuzzy
 msgid "Bend"
 msgstr "Mischen"
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:109
 msgid "Gears"
 msgstr "Zahnräder"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:110
 msgid "Pattern Along Path"
 msgstr "Muster entlang Pfad"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:111
 #, fuzzy
 msgid "Stitch Sub-Paths"
 msgstr "Kacheln zusammenfügen"
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:113
 msgid "VonKoch"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:114
 #, fuzzy
 msgid "Knot"
 msgstr "Knoten"
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:115
 #, fuzzy
 msgid "Construct grid"
 msgstr "Axonometrisches Gitter"
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:116
 msgid "Spiro spline"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:118
+#: ../src/live_effects/effect.cpp:117
 #, fuzzy
 msgid "Envelope Deformation"
 msgstr "Information"
+
+#: ../src/live_effects/effect.cpp:118
+#, fuzzy
+msgid "Interpolate Sub-Paths"
+msgstr "Interpolieren"
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Hatches (rough)"
@@ -7870,6 +7871,15 @@ msgstr ""
 #, fuzzy
 msgid "Adjust the origin"
 msgstr "Farbton anpassen"
+
+#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
+#, fuzzy
+msgid "Iterations"
+msgstr "Überschneidung"
+
+#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
+msgid "recursivity"
+msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
@@ -10511,16 +10521,16 @@ msgstr "Horizontale Führungslinie bei %s"
 msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
 msgstr ""
 
-#: ../src/sp-image.cpp:1110
+#: ../src/sp-image.cpp:1128
 msgid "embedded"
 msgstr "eingebettet"
 
-#: ../src/sp-image.cpp:1118
+#: ../src/sp-image.cpp:1136
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "<b>Bild-Objekt mit fehlerhaftem Bezug</b>: %s"
 
-#: ../src/sp-image.cpp:1119
+#: ../src/sp-image.cpp:1137
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Farbbild</b> %d &#215; %d: %s"
@@ -11836,13 +11846,14 @@ msgstr "Objektkennung setzen"
 
 # not sure here -cm-
 #: ../src/ui/dialog/align-and-distribute.cpp:918
-#: ../src/widgets/desktop-widget.cpp:1566
+#: ../src/widgets/desktop-widget.cpp:1562
 msgid "Drawing"
 msgstr "Zeichnung"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
-#: ../src/widgets/desktop-widget.cpp:1570
+#: ../src/ui/dialog/icon-preview.cpp:178
+#: ../src/widgets/desktop-widget.cpp:1566
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Auswahl"
@@ -13024,6 +13035,57 @@ msgstr "Filterprimitiv duplizieren"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2409
 msgid "Set filter primitive attribute"
 msgstr "Attribut für Filterprimitiv setzen"
+
+#: ../src/ui/dialog/guides.cpp:42
+msgid "Unit:"
+msgstr "Einheit:"
+
+#: ../src/ui/dialog/guides.cpp:45
+msgid "Angle (degrees):"
+msgstr "Grad:"
+
+#: ../src/ui/dialog/guides.cpp:46
+#, fuzzy
+msgid "Rela_tive change"
+msgstr "_Relative Bewegung"
+
+#: ../src/ui/dialog/guides.cpp:46
+#, fuzzy
+msgid "Move and/or rotate the guide relative to current settings"
+msgstr "Führungslinie relativ zur aktuellen Position verschieben"
+
+#: ../src/ui/dialog/guides.cpp:112
+#, fuzzy
+msgid "Set guide properties"
+msgstr "Druckeigenschaften"
+
+#: ../src/ui/dialog/guides.cpp:151
+#, fuzzy
+msgid "Guideline"
+msgstr "Farbe der Führungslinien"
+
+#: ../src/ui/dialog/guides.cpp:239
+#, fuzzy, c-format
+msgid "Guideline ID: %s"
+msgstr "Führungslinie"
+
+#: ../src/ui/dialog/guides.cpp:245
+#, fuzzy, c-format
+msgid "Current: %s"
+msgstr "Ausrichtung der Zeichenfläche:"
+
+#: ../src/ui/dialog/icon-preview.cpp:130
+#, c-format
+msgid "%d x %d"
+msgstr "%d × %d"
+
+#: ../src/ui/dialog/icon-preview.cpp:180
+msgid "Selection only or whole document"
+msgstr "Nur Auswahl oder ganzes Dokument"
+
+#: ../src/ui/dialog/icon-preview.cpp:188
+msgid "Refresh the icons"
+msgstr "Icons aktualisieren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:169
 msgid "Mouse"
@@ -15149,6 +15211,51 @@ msgstr "_Hinzufügen"
 msgid "New layer created."
 msgstr "Neue Ebene angelegt."
 
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+msgid "Unhide layer"
+msgstr "Ebene einblenden"
+
+#: ../src/ui/dialog/layers.cpp:491 ../src/ui/widget/layer-selector.cpp:595
+msgid "Hide layer"
+msgstr "Ebene ausblenden"
+
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+msgid "Lock layer"
+msgstr "Ebene sperren"
+
+#: ../src/ui/dialog/layers.cpp:502 ../src/ui/widget/layer-selector.cpp:587
+msgid "Unlock layer"
+msgstr "Ebene entsperren"
+
+#: ../src/ui/dialog/layers.cpp:645
+#, fuzzy
+msgid "Layers"
+msgstr "Ebene"
+
+#: ../src/ui/dialog/layers.cpp:654
+msgid "New"
+msgstr "Neu"
+
+#: ../src/ui/dialog/layers.cpp:659 ../share/extensions/restack.inx.h:16
+msgid "Top"
+msgstr "Oben"
+
+#: ../src/ui/dialog/layers.cpp:665
+msgid "Up"
+msgstr "Hoch"
+
+#: ../src/ui/dialog/layers.cpp:671
+msgid "Dn"
+msgstr "Runter"
+
+#: ../src/ui/dialog/layers.cpp:677
+msgid "Bot"
+msgstr "Unten"
+
+#: ../src/ui/dialog/layers.cpp:687
+msgid "X"
+msgstr "X"
+
 #. TRANSLATORS: this dialog is accessible via menu Path - Path Effect Editor...
 #: ../src/ui/dialog/livepatheffect-editor.cpp:78
 msgid "Apply new effect"
@@ -16315,7 +16422,7 @@ msgstr ""
 "<b>Willkommen zu Inkscape!</b> Formen- und Freihandwerkzeuge erstellen "
 "Objekte; das Auswahlwerkzeug (Pfeil) verschiebt und bearbeitet."
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:832
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -16329,11 +16436,11 @@ msgstr ""
 "Wenn Sie schließen, ohne zu speichern, dann gehen Ihre Änderungen verloren."
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1258
-#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:899
+#: ../src/widgets/desktop-widget.cpp:839 ../src/widgets/desktop-widget.cpp:895
 msgid "Close _without saving"
 msgstr "Schließen, _ohne zu speichern"
 
-#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:891
+#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:887
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -16346,7 +16453,7 @@ msgstr ""
 "\n"
 "Möchten Sie das Dokument als ein Inkscape SVG speichern?"
 
-#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:902
+#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:898
 msgid "_Save as SVG"
 msgstr "Als _SVG speichern"
 
@@ -16373,22 +16480,6 @@ msgstr "Aktuelle Ebene"
 #: ../src/ui/widget/layer-selector.cpp:566
 msgid "(root)"
 msgstr "(Wurzel)"
-
-#: ../src/ui/widget/layer-selector.cpp:587
-msgid "Lock layer"
-msgstr "Ebene sperren"
-
-#: ../src/ui/widget/layer-selector.cpp:587
-msgid "Unlock layer"
-msgstr "Ebene entsperren"
-
-#: ../src/ui/widget/layer-selector.cpp:595
-msgid "Hide layer"
-msgstr "Ebene ausblenden"
-
-#: ../src/ui/widget/layer-selector.cpp:595
-msgid "Unhide layer"
-msgstr "Ebene einblenden"
 
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
@@ -19553,14 +19644,14 @@ msgstr "Spitze Verbindung"
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1135
+#: ../src/widgets/stroke-style.cpp:1137
 msgid "Round join"
 msgstr "Abgerundete Verbindung"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:1143
+#: ../src/widgets/stroke-style.cpp:1147
 msgid "Bevel join"
 msgstr "Abgeschrägte Verbindung"
 
@@ -19571,72 +19662,72 @@ msgstr "Abgeschrägte Verbindung"
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/widgets/stroke-style.cpp:1154
+#: ../src/widgets/stroke-style.cpp:1159
 msgid "Miter limit:"
 msgstr "Maximale Länge der Spitze:"
 
-#: ../src/widgets/stroke-style.cpp:1162
+#: ../src/widgets/stroke-style.cpp:1167
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "Maximale Länge der Spitze (in Vielfachen der Konturlinienbreite)"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/widgets/stroke-style.cpp:1174
+#: ../src/widgets/stroke-style.cpp:1179
 msgid "Cap:"
 msgstr "Linienende:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1185
+#: ../src/widgets/stroke-style.cpp:1191
 msgid "Butt cap"
 msgstr "Nicht überstehendes Ende"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:1192
+#: ../src/widgets/stroke-style.cpp:1199
 msgid "Round cap"
 msgstr "Abgerundetes Ende"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:1199
+#: ../src/widgets/stroke-style.cpp:1207
 msgid "Square cap"
 msgstr "Quadratisches Ende"
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:1205
+#: ../src/widgets/stroke-style.cpp:1213
 msgid "Dashes:"
 msgstr "Strichlinien:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/widgets/stroke-style.cpp:1222
+#: ../src/widgets/stroke-style.cpp:1230
 msgid "Start Markers:"
 msgstr "Anfangsmarkierung:"
 
-#: ../src/widgets/stroke-style.cpp:1224
+#: ../src/widgets/stroke-style.cpp:1232
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1233
+#: ../src/widgets/stroke-style.cpp:1241
 msgid "Mid Markers:"
 msgstr "Markierungen dazwischen:"
 
-#: ../src/widgets/stroke-style.cpp:1235
+#: ../src/widgets/stroke-style.cpp:1243
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1244
+#: ../src/widgets/stroke-style.cpp:1252
 msgid "End Markers:"
 msgstr "Endmarkierungen:"
 
-#: ../src/widgets/stroke-style.cpp:1246
+#: ../src/widgets/stroke-style.cpp:1254
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1569 ../src/widgets/stroke-style.cpp:1665
+#: ../src/widgets/stroke-style.cpp:1603 ../src/widgets/stroke-style.cpp:1699
 msgid "Set stroke style"
 msgstr "Stil der Kontur setzen"
 
@@ -21520,7 +21611,11 @@ msgstr ""
 msgid "Could not locate file: %s"
 msgstr "Konnte nicht als Datei %s exportieren.\n"
 
-#. vim: expandtab shiftwidth=4 tabstop=8 softtabstop=4 encoding=utf-8 textwidth=99
+#: ../share/extensions/web-set-att.py:52
+#: ../share/extensions/web-transmit-att.py:48
+msgid "You must select at least two elements."
+msgstr ""
+
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
 msgstr "Knoten hinzufügen"
@@ -21545,8 +21640,10 @@ msgstr "Division"
 msgid "Maximum segment length (px)"
 msgstr "Maximale Segmentlänge"
 
-#: ../share/extensions/addnodes.inx.h:6 ../share/extensions/edge3d.inx.h:6
-#: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
+#: ../share/extensions/addnodes.inx.h:6
+#: ../share/extensions/convert2dashes.inx.h:2
+#: ../share/extensions/edge3d.inx.h:6 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/fractalize.inx.h:2
 #: ../share/extensions/interp_att_g.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
@@ -21745,6 +21842,11 @@ msgstr "Ersetze Farbe (RRGGBB hex):"
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
 msgstr "RGB-Tonne"
+
+#: ../share/extensions/convert2dashes.inx.h:1
+#, fuzzy
+msgid "Convert to Dashes"
+msgstr "Umwandeln in Blindenschrift"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -21971,18 +22073,23 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:2
+#, fuzzy
+msgid "Character Encoding"
+msgstr "Spitzen abrunden"
+
+#: ../share/extensions/dxf_input.inx.h:3
 msgid "DXF Input"
 msgstr "DXF einlesen"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:4
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "AutoCADs »Document Exchange Format« importieren"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:5
 msgid "Or, use manual scale factor"
 msgstr ""
 
-#: ../share/extensions/dxf_input.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "Use automatic scaling to size A4"
 msgstr ""
 
@@ -22170,6 +22277,7 @@ msgid "Calculate first derivative numerically"
 msgstr "Erste Ableitung numerisch berechnen"
 
 #: ../share/extensions/funcplot.inx.h:2
+#: ../share/extensions/param_curves.inx.h:1
 msgid "Draw Axes"
 msgstr "Achsen zeichnen"
 
@@ -22191,6 +22299,7 @@ msgid "Function Plotter"
 msgstr "Funktionsplotter"
 
 #: ../share/extensions/funcplot.inx.h:7
+#: ../share/extensions/param_curves.inx.h:3
 msgid "Functions"
 msgstr "Funktionen"
 
@@ -22217,6 +22326,7 @@ msgid "Range and sampling"
 msgstr "Bereich und Sampling"
 
 #: ../share/extensions/funcplot.inx.h:12
+#: ../share/extensions/param_curves.inx.h:8
 msgid "Remove rectangle"
 msgstr "Rechteck entfernen"
 
@@ -22230,6 +22340,7 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/funcplot.inx.h:15
+#: ../share/extensions/param_curves.inx.h:12
 #, fuzzy
 msgid ""
 "Standard Python math functions are available: ceil(x); fabs(x); floor(x); "
@@ -22250,6 +22361,7 @@ msgid "Start X value"
 msgstr "Beginn X-Achse"
 
 #: ../share/extensions/funcplot.inx.h:17
+#: ../share/extensions/param_curves.inx.h:14
 msgid "Use"
 msgstr "Verwenden"
 
@@ -22592,27 +22704,6 @@ msgstr "Einen Fehler melden"
 msgid "SVG 1.1 Specification"
 msgstr "SVG-1.1-Spezifikation"
 
-#: ../share/extensions/interp.inx.h:1
-msgid "Duplicate endpaths"
-msgstr "Endpfade duplizieren"
-
-#: ../share/extensions/interp.inx.h:4
-msgid "Interpolate"
-msgstr "Interpolieren"
-
-#: ../share/extensions/interp.inx.h:5
-#, fuzzy
-msgid "Interpolate style"
-msgstr "Interpolieren"
-
-#: ../share/extensions/interp.inx.h:6
-msgid "Interpolation method"
-msgstr "Interpolationsmethode"
-
-#: ../share/extensions/interp.inx.h:7
-msgid "Interpolation steps"
-msgstr "Interpolationsschritte"
-
 #: ../share/extensions/interp_att_g.inx.h:1
 #, fuzzy
 msgid "Attribute to Interpolate"
@@ -22703,6 +22794,27 @@ msgstr ""
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid "••••••••••••••••••••••••••••••••••••••••••••••••"
 msgstr ""
+
+#: ../share/extensions/interp.inx.h:1
+msgid "Duplicate endpaths"
+msgstr "Endpfade duplizieren"
+
+#: ../share/extensions/interp.inx.h:4
+msgid "Interpolate"
+msgstr "Interpolieren"
+
+#: ../share/extensions/interp.inx.h:5
+#, fuzzy
+msgid "Interpolate style"
+msgstr "Interpolieren"
+
+#: ../share/extensions/interp.inx.h:6
+msgid "Interpolation method"
+msgstr "Interpolationsmethode"
+
+#: ../share/extensions/interp.inx.h:7
+msgid "Interpolation steps"
+msgstr "Interpolationsschritte"
 
 #: ../share/extensions/lindenmayer.inx.h:1
 msgid "Axiom"
@@ -22841,6 +22953,78 @@ msgstr "Datei für Textumriss (*.outline)"
 #: ../share/extensions/outline2svg.inx.h:3
 msgid "Text Outline Input"
 msgstr "Textumriss einlesen"
+
+#: ../share/extensions/param_curves.inx.h:2
+#, fuzzy
+msgid "End t-value"
+msgstr "Ende x-Achse"
+
+#: ../share/extensions/param_curves.inx.h:4
+#, fuzzy
+msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
+msgstr ""
+"Isotropische Skalierung (benutzt Kleinstes: Breite/x-Bereich oder Höhe/y-"
+"Bereich)"
+
+#: ../share/extensions/param_curves.inx.h:5
+#, fuzzy
+msgid "Multiply t-range by 2*pi"
+msgstr "x-Bereich mit 2×π multiplizieren"
+
+#: ../share/extensions/param_curves.inx.h:6
+#, fuzzy
+msgid "Parametric Curves"
+msgstr "Parameter"
+
+#: ../share/extensions/param_curves.inx.h:7
+#, fuzzy
+msgid "Range and Sampling"
+msgstr "Bereich und Sampling"
+
+#: ../share/extensions/param_curves.inx.h:10
+msgid "Samples"
+msgstr "Beispiele"
+
+#: ../share/extensions/param_curves.inx.h:11
+msgid ""
+"Select a rectangle before calling the extension; it will determine X and Y "
+"scales. First derivatives are always determined numerically."
+msgstr ""
+
+#: ../share/extensions/param_curves.inx.h:13
+#, fuzzy
+msgid "Start t-value"
+msgstr "Beginn X-Achse"
+
+#: ../share/extensions/param_curves.inx.h:15
+#, fuzzy
+msgid "x-Function"
+msgstr "Funktion"
+
+#: ../share/extensions/param_curves.inx.h:16
+#, fuzzy
+msgid "x-value of rectangle's left"
+msgstr "y-Wert der oberen Kante des Rechtecks"
+
+#: ../share/extensions/param_curves.inx.h:17
+#, fuzzy
+msgid "x-value of rectangle's right"
+msgstr "y-Wert der oberen Kante des Rechtecks"
+
+#: ../share/extensions/param_curves.inx.h:18
+#, fuzzy
+msgid "y-Function"
+msgstr "Funktion"
+
+#: ../share/extensions/param_curves.inx.h:19
+#, fuzzy
+msgid "y-value of rectangle's bottom"
+msgstr "y-Wert der unteren Kante des Rechtecks"
+
+#: ../share/extensions/param_curves.inx.h:20
+#, fuzzy
+msgid "y-value of rectangle's top"
+msgstr "y-Wert der oberen Kante des Rechtecks"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Copies of the pattern:"
@@ -23415,10 +23599,6 @@ msgstr "Richtung"
 msgid "Right to Left (180)"
 msgstr "Rechts nach Links (180)"
 
-#: ../share/extensions/restack.inx.h:16
-msgid "Top"
-msgstr "Oben"
-
 #: ../share/extensions/restack.inx.h:17
 msgid "Top to Bottom (270)"
 msgstr "Oben nach Unten (270)"
@@ -23459,11 +23639,21 @@ msgid "Open files saved in sK1 vector graphics editor"
 msgstr "Inkscape SVG-Vektorgrafik-Editor"
 
 #: ../share/extensions/sk1_input.inx.h:2
+#: ../share/extensions/sk1_output.inx.h:2
 msgid "sK1 vector graphics files (.sk1)"
 msgstr ""
 
 #: ../share/extensions/sk1_input.inx.h:3
 msgid "sK1 vector graphics files input"
+msgstr ""
+
+#: ../share/extensions/sk1_output.inx.h:1
+#, fuzzy
+msgid "File format for use in sK1 vector graphics editor"
+msgstr "Inkscape SVG-Vektorgrafik-Editor"
+
+#: ../share/extensions/sk1_output.inx.h:3
+msgid "sK1 vector graphics files output"
 msgstr ""
 
 #: ../share/extensions/sk_input.inx.h:1
@@ -24033,51 +24223,9 @@ msgstr "Windows-Metafile einlesen"
 msgid "XAML Input"
 msgstr "EMF einlesen"
 
-#~ msgid "Unit:"
-#~ msgstr "Einheit:"
-
-#~ msgid "Angle (degrees):"
-#~ msgstr "Grad:"
-
 #, fuzzy
-#~ msgid "Move and/or rotate the guide relative to current settings"
-#~ msgstr "Führungslinie relativ zur aktuellen Position verschieben"
-
-#, fuzzy
-#~ msgid "Guideline ID: %s"
-#~ msgstr "Führungslinie"
-
-#, fuzzy
-#~ msgid "Current: %s"
-#~ msgstr "Ausrichtung der Zeichenfläche:"
-
-#~ msgid "%d x %d"
-#~ msgstr "%d × %d"
-
-#~ msgid "Selection only or whole document"
-#~ msgstr "Nur Auswahl oder ganzes Dokument"
-
-#~ msgid "Refresh the icons"
-#~ msgstr "Icons aktualisieren"
-
-#, fuzzy
-#~ msgid "Layers"
-#~ msgstr "Ebene"
-
-#~ msgid "New"
-#~ msgstr "Neu"
-
-#~ msgid "Up"
-#~ msgstr "Hoch"
-
-#~ msgid "Dn"
-#~ msgstr "Runter"
-
-#~ msgid "Bot"
-#~ msgstr "Unten"
-
-#~ msgid "X"
-#~ msgstr "X"
+#~ msgid "Alpha fill"
+#~ msgstr "Schwarze Füllung"
 
 #~ msgid "Enhance intensity differences in selected bitmap(s)."
 #~ msgstr "Verbessert Intensitätsunterschiede in ausgewählten Bitmaps."
@@ -24182,9 +24330,6 @@ msgstr "EMF einlesen"
 
 #~ msgid "Print Destination"
 #~ msgstr "Druckziel"
-
-#~ msgid "Print properties"
-#~ msgstr "Druckeigenschaften"
 
 #~ msgid ""
 #~ "Use PDF vector operators. The resulting image is usually smaller in file "
@@ -24454,9 +24599,6 @@ msgstr "EMF einlesen"
 
 #~ msgid "Embed All Images"
 #~ msgstr "Alle Bilder einbetten"
-
-#~ msgid "Samples"
-#~ msgstr "Beispiele"
 
 #, fuzzy
 #~ msgid "Major Y Division Spacing"

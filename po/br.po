@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-17 13:28+0200\n"
+"POT-Creation-Date: 2009-05-19 11:58+0200\n"
 "PO-Revision-Date: 2009-05-14 00:51+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
 "Language-Team: An Drouizig - www.drouizig.org <alan.monfort@free.fr>\n"
@@ -1586,9 +1586,8 @@ msgid "Lead pencil"
 msgstr "Kreion plom"
 
 #: ../share/filters/filters.svg.h:167
-msgid ""
-"Give lead pencil or chromolithography or engraving or other effects to "
-"images and material filled objects"
+#, fuzzy
+msgid "Give lead pencil or chromolithography or engraving or other effects"
 msgstr ""
 "Reiñ efed ar c'hreion plom pe ar maendresañ pe engravañ pe efedoù all da "
 "skeudennoù ha d'an ergorennoù dafar leuniet"
@@ -1602,19 +1601,21 @@ msgid "Gives a smooth bump velvet like"
 msgstr "Reiñ a ra bosoù kuñv heñvel ouzh ar voulouz"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Alpha draw"
-msgstr "Tres dre alfa"
+msgid "Alpha engraving"
+msgstr "Engravadur mod alfa"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Gives a transparent drawing effect to bitmaps and materials"
+#, fuzzy
+msgid "Gives a transparent engraving effect to bitmaps and materials"
 msgstr "Reiñ a ra efed un tres treuzwelus d'ar bitmapoù ha d'an dafarioù"
 
 #: ../share/filters/filters.svg.h:170
-msgid "Alpha paint"
-msgstr "Pent alfa"
+msgid "Alpha engraving, color"
+msgstr "Engravadur mod alfa, livet"
 
 #: ../share/filters/filters.svg.h:170
-msgid "Gives a transparent color fill effect to bitmaps and materials"
+#, fuzzy
+msgid "Gives a transparent color engraving effect to bitmaps and materials"
 msgstr ""
 "Reiñ a ra efed ul leuniadur liv treuzwelus d'ar bitmapoù ha d'an dafarioù"
 
@@ -5040,7 +5041,7 @@ msgstr ""
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1041
+#: ../src/file.cpp:249 ../src/file.cpp:1036
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "C'hwitadenn war bellgargañ ar restr goullennet %s"
@@ -5104,7 +5105,7 @@ msgstr "Ne oa ket bet tu enrollañ ar restr %s."
 msgid "Document saved."
 msgstr "Teul bet enrollet."
 
-#: ../src/file.cpp:750 ../src/file.cpp:1166 ../src/file.cpp:1286
+#: ../src/file.cpp:750 ../src/file.cpp:1161 ../src/file.cpp:1281
 #, c-format
 msgid "drawing%s"
 msgstr "tresadenn%s"
@@ -5130,28 +5131,28 @@ msgstr "Kemm ebet da enrollañ"
 msgid "Saving document..."
 msgstr "Oc'h enrollañ an teul..."
 
-#: ../src/file.cpp:1038
+#: ../src/file.cpp:1033
 msgid "Import"
 msgstr "Enporzhiañ"
 
-#: ../src/file.cpp:1068
+#: ../src/file.cpp:1063
 msgid "Select file to import"
 msgstr "Diuzañ ar restr da enporzhiañ"
 
-#: ../src/file.cpp:1187 ../src/file.cpp:1301
+#: ../src/file.cpp:1182 ../src/file.cpp:1296
 msgid "Select file to export to"
 msgstr "Diuzañ ar restr da ezporzhiañ betek"
 
-#: ../src/file.cpp:1333
+#: ../src/file.cpp:1328
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Fazi e-pad ma oa oc'h enrollañ un eilad padennek"
 
-#: ../src/file.cpp:1353
+#: ../src/file.cpp:1348
 msgid "Open Clip Art Login"
 msgstr "Anv tremen Open Clip Art"
 
-#: ../src/file.cpp:1379
+#: ../src/file.cpp:1374
 #, c-format
 msgid ""
 "Error exporting the document. Verify if the server name, username and "
@@ -5162,11 +5163,11 @@ msgstr ""
 "dafariad, an arveriad hag ar ger tremen, mard eo skoret webdav gant an "
 "dafariad ha gwiriañ ma n'eo ket bet ankouaet ganeoc'h da zibab ul lañvaz."
 
-#: ../src/file.cpp:1400
+#: ../src/file.cpp:1395
 msgid "Document exported..."
 msgstr "Teul bet ezporzhiet..."
 
-#: ../src/file.cpp:1428 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1423 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Enprzhiañ diouzh al levraoueg Open Clip Art"
 
@@ -5972,15 +5973,15 @@ msgstr "Lakaat al liv war an ilrezenn"
 msgid "Could not parse SVG data"
 msgstr "N'haller ket dezrannañ ar roadennoù SVG"
 
-#: ../src/interface.cpp:1394
+#: ../src/interface.cpp:1390
 msgid "Drop SVG"
 msgstr "Lakaat un SVG"
 
-#: ../src/interface.cpp:1450
+#: ../src/interface.cpp:1446
 msgid "Drop bitmap image"
 msgstr "Lakaat ur skeudenn mod btmap"
 
-#: ../src/interface.cpp:1542
+#: ../src/interface.cpp:1538
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -5994,7 +5995,7 @@ msgstr ""
 "Ar restr zo anezhi e \"%s\". Mar bez amsavet e vo skrivet war hec'h "
 "endalc'had."
 
-#: ../src/interface.cpp:1549 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1545 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr "Amsaviñ"
@@ -20930,8 +20931,10 @@ msgstr "Hentenn rannañ"
 msgid "Maximum segment length (px)"
 msgstr "Hirder uc'hek ar regenn (piks.)"
 
-#: ../share/extensions/addnodes.inx.h:6 ../share/extensions/edge3d.inx.h:6
-#: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
+#: ../share/extensions/addnodes.inx.h:6
+#: ../share/extensions/convert2dashes.inx.h:2
+#: ../share/extensions/edge3d.inx.h:6 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/fractalize.inx.h:2
 #: ../share/extensions/interp_att_g.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
@@ -21126,6 +21129,11 @@ msgstr "Amsaviñ al liv (RRGGGG c'hw) :"
 #: ../share/extensions/color_rgbbarrel.inx.h:2
 msgid "RGB Barrel"
 msgstr "Tonell RGG"
+
+#: ../share/extensions/convert2dashes.inx.h:1
+#, fuzzy
+msgid "Convert to Dashes"
+msgstr "Amdreiñ da destenn mod Braille"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -21323,18 +21331,23 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:2
+#, fuzzy
+msgid "Character Encoding"
+msgstr "Bonegadur an arouezennoù"
+
+#: ../share/extensions/dxf_input.inx.h:3
 msgid "DXF Input"
 msgstr "Enankad DXF"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:4
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Enporzhiañ un teul e ventrezh eskemm AutoCAD"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:5
 msgid "Or, use manual scale factor"
 msgstr "Pe, arverañ ar periad skeulaat dre zorn"
 
-#: ../share/extensions/dxf_input.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:6
 msgid "Use automatic scaling to size A4"
 msgstr "Arverañ ar skeulaat emgefreek betek ar vent A4"
 
@@ -23322,6 +23335,12 @@ msgstr "Enankad Windows Metafile"
 msgid "XAML Input"
 msgstr "Enankad XAML"
 
+#~ msgid "Alpha draw"
+#~ msgstr "Tres dre alfa"
+
+#~ msgid "Alpha paint"
+#~ msgstr "Pent alfa"
+
 #~ msgid "Rainbow melt"
 #~ msgstr "Kanevedenn arweuzet"
 
@@ -23417,12 +23436,6 @@ msgstr "Enankad XAML"
 
 #~ msgid "Alpha fill"
 #~ msgstr "Leuniadur dre alfa"
-
-#~ msgid "Alpha engraving"
-#~ msgstr "Engravadur mod alfa"
-
-#~ msgid "Alpha engraving, color"
-#~ msgstr "Engravadur mod alfa, livet"
 
 #~ msgid "Deactivate knotholder?"
 #~ msgstr "Diweredekaat an dalc'her-klomoù ?"
