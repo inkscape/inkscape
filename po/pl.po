@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-13 20:31+0200\n"
-"PO-Revision-Date: 2009-05-13 23:30+0100\n"
+"POT-Creation-Date: 2009-05-19 11:32+0200\n"
+"PO-Revision-Date: 2009-05-16 02:03+0100\n"
 "Last-Translator: Leszek(teo)Życzkowski <leszekz@gmail.com>\n"
 "Language-Team: Polish <inkscapeplteam@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -87,22 +87,18 @@ msgstr "Smuga pozioma"
 #: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:97
 #: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:114
 #: ../share/filters/filters.svg.h:164
-#, fuzzy
 msgid "Blurs"
 msgstr "Rozmycia"
 
 #: ../share/filters/filters.svg.h:6
-#, fuzzy
 msgid "Blur as if the object flies horizontally; adjust Standard Deviation to vary force"
 msgstr "Smuga w płaszczyźnie poziomej; dostosuj parametr Odchylenie standardowe, aby zmienić nasilenie"
 
 #: ../share/filters/filters.svg.h:7
-#, fuzzy
 msgid "Motion blur, vertical"
 msgstr "Smuga pionowa"
 
 #: ../share/filters/filters.svg.h:7
-#, fuzzy
 msgid "Blur as if the object flies vertically; adjust Standard Deviation to vary force"
 msgstr "Smuga w płaszczyźnie pionowej; dostosuj parametr Odchylenie standardowe, aby zmienić nasilenie"
 
@@ -146,13 +142,13 @@ msgstr "Chropowate"
 #: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:118
 #: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:121
 #: ../share/filters/filters.svg.h:125
+#, fuzzy
 msgid "ABCs"
-msgstr "ABC…"
+msgstr "ABCs"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Small-scale roughening to edges and content"
-msgstr "Niewielka chropowatość krawędzi"
+msgstr "Niewielka chropowatość krawędzi i wnętrza"
 
 #: ../share/filters/filters.svg.h:12
 msgid "Rubber stamp"
@@ -263,7 +259,6 @@ msgid "Materials"
 msgstr "Materiały"
 
 #: ../share/filters/filters.svg.h:21
-#, fuzzy
 msgid "Leopard spots (loses object's own color)"
 msgstr "Skóra leoparda (kolory obiektu zostaną utracone)"
 
@@ -406,7 +401,7 @@ msgstr "Negatyw"
 #: ../share/filters/filters.svg.h:33
 #, fuzzy
 msgid "Invert colors"
-msgstr "Odwróć kolory obiektu"
+msgstr "Odwraca kolory obiektu"
 
 #: ../share/filters/filters.svg.h:34
 msgid "Sepia"
@@ -519,7 +514,7 @@ msgstr "Lśniący efekt malarski dla bitmap"
 
 #: ../share/filters/filters.svg.h:46
 msgid "HSL Bumps"
-msgstr "Uwypuklenia BNL"
+msgstr "Uwypuklenia HSL"
 
 #: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
@@ -541,7 +536,7 @@ msgstr "Pod potłuczonym szkłem"
 
 #: ../share/filters/filters.svg.h:48
 msgid "HSL bubbles"
-msgstr "Bąbelki BNL"
+msgstr "Bąbelki HSL"
 
 #: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:107
 msgid "Highly flexible bubbles effect depending on color hue saturation and luminance"
@@ -729,9 +724,8 @@ msgid "Metallized effect with a soft lighting, slightly translucent at the edges
 msgstr "Metaliczny efekt z łagodnym światłem, delikatnie prześwitujący na krawędziach"
 
 #: ../share/filters/filters.svg.h:70
-#, fuzzy
 msgid "Dragee"
-msgstr "Przeciągnij krzywą"
+msgstr "Drażetka"
 
 #: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge with a pearlescent look"
@@ -1040,7 +1034,7 @@ msgstr "Efekt podświetlonego szkła ze światłem od spodu"
 
 #: ../share/filters/filters.svg.h:106
 msgid "HSL Bumps, alpha"
-msgstr "Przezroczyste uwypuklenia BNL"
+msgstr "Przezroczyste uwypuklenia HSL"
 
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
 #: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:169
@@ -1050,12 +1044,12 @@ msgstr "Narzędzia maskowania"
 
 #: ../share/filters/filters.svg.h:106
 msgid "Same than HSL bumps but with an alpha added for combination with transparency depending filters"
-msgstr "To samo, co uwypuklenia BNL, ale z kanałem alfa w celu kombinacji z filtrami odpowiedzialnymi za przezroczystość"
+msgstr "To samo, co uwypuklenia HSL, ale z kanałem alfa w celu kombinacji z filtrami odpowiedzialnymi za przezroczystość"
 
 #: ../share/filters/filters.svg.h:107
 #, fuzzy
 msgid "HSL Bubbles, alpha"
-msgstr "Bąbelki BNL z kanałem alfa"
+msgstr "Bąbelki HSL z kanałem alfa"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Smooth edges"
@@ -1087,7 +1081,7 @@ msgstr "Rozmyte wnętrze"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
-msgstr "Rozmywa wnętrze obietków pozostawiając zarys nienaruszony"
+msgstr "Rozmywa wnętrze obiektów pozostawiając zarys nienaruszony"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Specular light"
@@ -1179,11 +1173,11 @@ msgstr "Poświata na zewnątrz i wewnątrz z możliwością odsunięcia i koloro
 
 #: ../share/filters/filters.svg.h:123
 msgid "HSL Bumps, diffuse"
-msgstr "Rozmyte uwypuklenia BNL"
+msgstr "Rozmyte uwypuklenia HSL"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
-msgstr "To samo, co uwypuklenia BNL, ale z rozproszonym odbiciem wewnętrznym zamiast odbicia lustrzanego"
+msgstr "To samo, co uwypuklenia HSL, ale z rozproszonym odbiciem wewnętrznym zamiast odbicia lustrzanego"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Dark Emboss"
@@ -1207,7 +1201,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:126
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
-msgstr "To samo, co bąbelki BNL, ale z rozproszonym światłem zamiast odbicia lustrzanego"
+msgstr "To samo, co bąbelki HSL, ale z rozproszonym światłem zamiast odbicia lustrzanego"
 
 #: ../share/filters/filters.svg.h:127
 #: ../src/extension/internal/bitmap/emboss.cpp:37
@@ -1244,14 +1238,12 @@ msgid "Inkblot on tissue or rough paper"
 msgstr "Kleks na cienkim lub pomarszczonym papierze"
 
 #: ../share/filters/filters.svg.h:131
-#, fuzzy
 msgid "Burnt edges"
 msgstr "Spalone krawędzie"
 
 #: ../share/filters/filters.svg.h:131
-#, fuzzy
 msgid "Burnt paper edges texture"
-msgstr "Tekstura krawędzi spalonego papieru"
+msgstr "Tekstura papieru ze spalonymi krawędziami"
 
 #: ../share/filters/filters.svg.h:132
 #, fuzzy
@@ -1572,7 +1564,7 @@ msgstr "Ołówek grafitowy"
 
 #: ../share/filters/filters.svg.h:167
 #, fuzzy
-msgid "Give lead pencil or chromolithography or engraving or other effects to images and material filled objects"
+msgid "Give lead pencil or chromolithography or engraving or other effects"
 msgstr "Tworzy efekt grafitowego ołówka, chromolitograficzny, grawerski lub inne efekty do obrazków i wypełnień obiektów"
 
 #: ../share/filters/filters.svg.h:168
@@ -1584,20 +1576,22 @@ msgid "Gives a smooth bump velvet like"
 msgstr "Tworzy głądką, jak aksamit wypukłość"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Alpha draw"
-msgstr "Przezroczysty rysunek"
+#, fuzzy
+msgid "Alpha engraving"
+msgstr "Krycie (przezroczystość)"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Gives a transparent drawing effect to bitmaps and materials"
+#, fuzzy
+msgid "Gives a transparent engraving effect to bitmaps and materials"
 msgstr "Tworzy efekt przezroczystego rysunku na mapach bitowych i tworzywach"
 
 #: ../share/filters/filters.svg.h:170
-#, fuzzy
-msgid "Alpha paint"
-msgstr "Krycie (przezroczystość)"
+msgid "Alpha engraving, color"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:170
-msgid "Gives a transparent color fill effect to bitmaps and materials"
+#, fuzzy
+msgid "Gives a transparent color engraving effect to bitmaps and materials"
 msgstr "Tworzy efekt przezroczystego koloru na mapach bitowych i tworzywach"
 
 #: ../src/arc-context.cpp:303
@@ -3786,7 +3780,7 @@ msgstr "Wysokość"
 
 #. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
-#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:97
+#: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
 #: ../src/live_effects/lpe-offset.cpp:30
 #: ../src/live_effects/lpe-parallel.cpp:46
 #: ../src/live_effects/lpe-ruler.cpp:49
@@ -4852,7 +4846,7 @@ msgstr "Nie udało się automatycznie rozpoznać formatu. Plik jest otwierany ja
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:249 ../src/file.cpp:1041
+#: ../src/file.cpp:249 ../src/file.cpp:1036
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Nie udało się wczytać żądanego pliku %s"
@@ -4912,7 +4906,7 @@ msgstr "Plik %s nie mógł zostać zapisany"
 msgid "Document saved."
 msgstr "Dokument został zapisany"
 
-#: ../src/file.cpp:750 ../src/file.cpp:1166 ../src/file.cpp:1286
+#: ../src/file.cpp:750 ../src/file.cpp:1161 ../src/file.cpp:1281
 #, c-format
 msgid "drawing%s"
 msgstr "Rysunek%s"
@@ -4938,37 +4932,37 @@ msgstr "Brak zmian do zapisania"
 msgid "Saving document..."
 msgstr "Zapisywanie dokumentu…"
 
-#: ../src/file.cpp:1038
+#: ../src/file.cpp:1033
 msgid "Import"
 msgstr "Importuj"
 
-#: ../src/file.cpp:1068
+#: ../src/file.cpp:1063
 msgid "Select file to import"
 msgstr "Wybierz plik do importu"
 
-#: ../src/file.cpp:1187 ../src/file.cpp:1301
+#: ../src/file.cpp:1182 ../src/file.cpp:1296
 msgid "Select file to export to"
 msgstr "Wybierz plik do wyeksportowania"
 
-#: ../src/file.cpp:1333
+#: ../src/file.cpp:1328
 #, c-format
 msgid "Error saving a temporary copy"
 msgstr "Błąd podczas zapisu kopi tymczasowej"
 
-#: ../src/file.cpp:1353
+#: ../src/file.cpp:1348
 msgid "Open Clip Art Login"
 msgstr "Login do galerii klipartów"
 
-#: ../src/file.cpp:1379
+#: ../src/file.cpp:1374
 #, c-format
 msgid "Error exporting the document. Verify if the server name, username and password are correct, if the server has support for webdav and verify if you didn't forget to choose a license."
 msgstr "Błąd podczas eksportowania dokumentu. Proszę sprawdzić poprawność nazwy serwera, nazwy użytkownika i hasła. Jeśli serwer obsługuje protokół WebDAV proszę sprawdzić czy wybrano licencję."
 
-#: ../src/file.cpp:1400
+#: ../src/file.cpp:1395
 msgid "Document exported..."
 msgstr "Dokument wyeksportowano…"
 
-#: ../src/file.cpp:1428 ../src/verbs.cpp:2265
+#: ../src/file.cpp:1423 ../src/verbs.cpp:2265
 msgid "Import From Open Clip Art Library"
 msgstr "Importuj z galerii klipartów"
 
@@ -5728,15 +5722,15 @@ msgstr "Przeciągnij kolor na gradient"
 msgid "Could not parse SVG data"
 msgstr "Nie można odczytać danych SVG"
 
-#: ../src/interface.cpp:1394
+#: ../src/interface.cpp:1390
 msgid "Drop SVG"
 msgstr "Upuść grafikę SVG"
 
-#: ../src/interface.cpp:1450
+#: ../src/interface.cpp:1446
 msgid "Drop bitmap image"
 msgstr "Upuść bitmapę"
 
-#: ../src/interface.cpp:1542
+#: ../src/interface.cpp:1538
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do you want to replace it?</span>\n"
@@ -5747,7 +5741,7 @@ msgstr ""
 "\n"
 "W \"%s\" istnieje już plik o takiej nazwie. Zamiana spowoduje nadpisane jego zawartości."
 
-#: ../src/interface.cpp:1549 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1545 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr "Zamień"
@@ -6071,7 +6065,7 @@ msgstr "Nowy sterownik dokowania %p jest automatyczny. Tylko ręcznie dokowane o
 #: ../src/ui/dialog/align-and-distribute.cpp:917
 #: ../src/ui/dialog/document-properties.cpp:116
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1562
+#: ../src/widgets/desktop-widget.cpp:1558
 msgid "Page"
 msgstr "Strona"
 
@@ -6251,97 +6245,98 @@ msgid "Dynamic stroke"
 msgstr "Dynamiczny kontur"
 
 #: ../src/live_effects/effect.cpp:93
-msgid "Interpolate Sub-Paths"
-msgstr "Interpolacja subścieżki"
-
-#: ../src/live_effects/effect.cpp:94
 msgid "Lattice Deformation"
 msgstr "Deformacja segmentowa"
 
-#: ../src/live_effects/effect.cpp:95
+#: ../src/live_effects/effect.cpp:94
 msgid "Line Segment"
 msgstr "Odcinek"
 
-#: ../src/live_effects/effect.cpp:96
+#: ../src/live_effects/effect.cpp:95
 msgid "Mirror symmetry"
 msgstr "Symetria lustrzana"
 
-#: ../src/live_effects/effect.cpp:98
+#: ../src/live_effects/effect.cpp:97
 msgid "Parallel"
 msgstr "Równoległa"
 
-#: ../src/live_effects/effect.cpp:99
+#: ../src/live_effects/effect.cpp:98
 msgid "Path length"
 msgstr "Długość ścieżki"
 
 # A może symetralna?
-#: ../src/live_effects/effect.cpp:100
+#: ../src/live_effects/effect.cpp:99
 #, fuzzy
 msgid "Perpendicular bisector"
 msgstr "Dwusieczna prostopadła"
 
-#: ../src/live_effects/effect.cpp:101
+#: ../src/live_effects/effect.cpp:100
 msgid "Perspective path"
 msgstr "Ścieżka perspektywy"
 
-#: ../src/live_effects/effect.cpp:102
+#: ../src/live_effects/effect.cpp:101
 msgid "Rotate copies"
 msgstr "Obróć kopie"
 
-#: ../src/live_effects/effect.cpp:103
+#: ../src/live_effects/effect.cpp:102
+#, fuzzy
 msgid "Recursive skeleton"
-msgstr ""
+msgstr "Rekurencyjny szkielet"
 
-#: ../src/live_effects/effect.cpp:104
+#: ../src/live_effects/effect.cpp:103
 msgid "Ruler"
 msgstr "Linijka"
 
-#: ../src/live_effects/effect.cpp:105
+#: ../src/live_effects/effect.cpp:104
 msgid "Tangent to curve"
 msgstr "Styczna w krzywą"
 
-#: ../src/live_effects/effect.cpp:106
+#: ../src/live_effects/effect.cpp:105
 msgid "Text label"
 msgstr "Etykieta"
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:108
 msgid "Bend"
 msgstr "Zagięcie"
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:109
 msgid "Gears"
 msgstr "Koła zębate"
 
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:110
 msgid "Pattern Along Path"
 msgstr "Deseń wzdłuż ścieżki"
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:112
+#: ../src/live_effects/effect.cpp:111
 msgid "Stitch Sub-Paths"
 msgstr "Zszywanie ścieżek podrzędnych"
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:113
 msgid "VonKoch"
 msgstr "Fraktal VonKoch"
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:114
 msgid "Knot"
 msgstr "Supeł"
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:115
 msgid "Construct grid"
 msgstr "Utwórz siatkę"
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:116
 msgid "Spiro spline"
 msgstr "Krzywa Spiro"
 
-#: ../src/live_effects/effect.cpp:118
+#: ../src/live_effects/effect.cpp:117
 msgid "Envelope Deformation"
 msgstr "Deformacja obwiedni"
+
+#: ../src/live_effects/effect.cpp:118
+msgid "Interpolate Sub-Paths"
+msgstr "Interpolacja subścieżki"
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Hatches (rough)"
@@ -7173,8 +7168,9 @@ msgid "Iterations"
 msgstr "Część wspólna"
 
 #: ../src/live_effects/lpe-recursiveskeleton.cpp:30
+#, fuzzy
 msgid "recursivity"
-msgstr ""
+msgstr "rekurencyjność"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 #, fuzzy
@@ -7520,8 +7516,9 @@ msgid "Random variation of the length of construction lines"
 msgstr "Losowa zmiana długości linii konstrukcyjnych"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
+#, fuzzy
 msgid "Placement randomness"
-msgstr ""
+msgstr "Stopień losowaości umiejscowienia"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "0: evenly distributed construction lines, 1: purely random placement"
@@ -9412,16 +9409,16 @@ msgstr "pozioma, na %s"
 msgid "at %d degrees, through (%s,%s); <b>Ctrl</b>+click to delete"
 msgstr "o %d stopni, przez (%s,%s). Użyj <b>Ctrl</b> + kliknięcie, aby usunąć"
 
-#: ../src/sp-image.cpp:1110
+#: ../src/sp-image.cpp:1128
 msgid "embedded"
 msgstr "osadzony"
 
-#: ../src/sp-image.cpp:1118
+#: ../src/sp-image.cpp:1136
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "<b>Obrazek z niepoprawnym odwołaniem</b>: %s"
 
-#: ../src/sp-image.cpp:1119
+#: ../src/sp-image.cpp:1137
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Obrazek</b> %d &#215; %d: %s"
@@ -10558,14 +10555,14 @@ msgid "Smallest object"
 msgstr "Najmniejszy obiekt"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:918
-#: ../src/widgets/desktop-widget.cpp:1566
+#: ../src/widgets/desktop-widget.cpp:1562
 msgid "Drawing"
 msgstr "Rysunek"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1570
+#: ../src/widgets/desktop-widget.cpp:1566
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Zaznaczenie"
@@ -11581,36 +11578,35 @@ msgstr "Kąt a (stopnie)"
 #: ../src/ui/dialog/guides.cpp:46
 #, fuzzy
 msgid "Rela_tive change"
-msgstr "Przesunięcie względne"
+msgstr "Przesunięcie _względne"
 
 #: ../src/ui/dialog/guides.cpp:46
 msgid "Move and/or rotate the guide relative to current settings"
-msgstr ""
+msgstr "Przesuwa i/lub obraca prowadnicę relatywnie do aktualnych ustawień"
 
 #: ../src/ui/dialog/guides.cpp:112
 #, fuzzy
 msgid "Set guide properties"
-msgstr "Wł_aściwości obrazka"
+msgstr "Określ właściwości prowadnicy"
 
 #: ../src/ui/dialog/guides.cpp:151
-#, fuzzy
 msgid "Guideline"
-msgstr "Kolor prowadnic"
+msgstr "Prowadnica"
 
 #: ../src/ui/dialog/guides.cpp:239
-#, fuzzy, c-format
+#, c-format
 msgid "Guideline ID: %s"
-msgstr "<b>Prowadnica</b>: %s"
+msgstr "ID prowadnicy: %s"
 
 #: ../src/ui/dialog/guides.cpp:245
-#, fuzzy, c-format
+#, c-format
 msgid "Current: %s"
-msgstr "Aktywna warstwa"
+msgstr ""
 
 #: ../src/ui/dialog/icon-preview.cpp:130
 #, c-format
 msgid "%d x %d"
-msgstr ""
+msgstr "%d x %d"
 
 #: ../src/ui/dialog/icon-preview.cpp:180
 #, fuzzy
@@ -11619,7 +11615,7 @@ msgstr "Zaznaczaj jedynie w obrębie aktywnej warstwy"
 
 #: ../src/ui/dialog/icon-preview.cpp:188
 msgid "Refresh the icons"
-msgstr ""
+msgstr "Odśwież ikony"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:169
 msgid "Mouse"
@@ -13450,7 +13446,7 @@ msgstr "Warstwa"
 #: ../src/ui/dialog/layers.cpp:654
 #, fuzzy
 msgid "New"
-msgstr "_Nowy"
+msgstr "Nowy"
 
 #: ../src/ui/dialog/layers.cpp:659 ../share/extensions/restack.inx.h:16
 msgid "Top"
@@ -13768,7 +13764,7 @@ msgstr "Określ krzywe glifu"
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:570
 #, fuzzy
 msgid "Reset missing-glyph"
-msgstr "Brakujący glif:"
+msgstr "Resetuj brakujący glif"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:585
 msgid "Edit glyph name"
@@ -14518,7 +14514,7 @@ msgstr "Współrzędne kursora"
 msgid "<b>Welcome to Inkscape!</b> Use shape or drawing tools to create objects; use selector (arrow) to move or transform them."
 msgstr "<b>Witaj w programie Inkscape!</b> Wybierz z przybornika narzędzie do rysowania lub użyj wskaźnika (strzałki), aby przesuwać lub przekształcać obiekty."
 
-#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:836
+#: ../src/ui/view/edit-widget.cpp:1200 ../src/widgets/desktop-widget.cpp:832
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
@@ -14530,11 +14526,11 @@ msgstr ""
 "Zamknięcie bez zapisywania spowoduje utratę wprowadzonych zmian."
 
 #: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1258
-#: ../src/widgets/desktop-widget.cpp:843 ../src/widgets/desktop-widget.cpp:899
+#: ../src/widgets/desktop-widget.cpp:839 ../src/widgets/desktop-widget.cpp:895
 msgid "Close _without saving"
 msgstr "_Nie zapisuj"
 
-#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:891
+#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:887
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n"
@@ -14545,7 +14541,7 @@ msgstr ""
 "\n"
 "Czy chcesz zapisać ten plik w formacie SVG Inkscape'a?"
 
-#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:902
+#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:898
 msgid "_Save as SVG"
 msgstr "Zapisz jako S_VG"
 
@@ -19292,8 +19288,9 @@ msgstr "Nie można zlokalizować pliku: %s"
 
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
-msgid "You must to select at least two elements."
-msgstr ""
+#, fuzzy
+msgid "You must select at least two elements."
+msgstr "Musisz zaznaczyć przynajmniej dwa elementy."
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
@@ -19315,8 +19312,10 @@ msgstr "Metoda podziału"
 msgid "Maximum segment length (px)"
 msgstr "Maksymalna długość odcinka (px)"
 
-#: ../share/extensions/addnodes.inx.h:6 ../share/extensions/edge3d.inx.h:6
-#: ../share/extensions/flatten.inx.h:3 ../share/extensions/fractalize.inx.h:2
+#: ../share/extensions/addnodes.inx.h:6
+#: ../share/extensions/convert2dashes.inx.h:2
+#: ../share/extensions/edge3d.inx.h:6 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/fractalize.inx.h:2
 #: ../share/extensions/interp_att_g.inx.h:10
 #: ../share/extensions/markers_strokepaint.inx.h:2
 #: ../share/extensions/perspective.inx.h:1
@@ -19511,6 +19510,11 @@ msgstr "Zamień kolor (RRGGBB hex):"
 msgid "RGB Barrel"
 msgstr "Rotacja kanałów RGB"
 
+#: ../share/extensions/convert2dashes.inx.h:1
+#, fuzzy
+msgid "Convert to Dashes"
+msgstr "Konwertuj na alfabet Braille'a"
+
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
 msgstr "Diagram utworzony za pomocą programu Dia"
@@ -19698,19 +19702,24 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:2
+#, fuzzy
+msgid "Character Encoding"
+msgstr "Kodowanie znaków"
+
+#: ../share/extensions/dxf_input.inx.h:3
 msgid "DXF Input"
 msgstr "Źródło DXF"
 
-#: ../share/extensions/dxf_input.inx.h:3
+#: ../share/extensions/dxf_input.inx.h:4
 msgid "Import AutoCAD's Document Exchange Format"
 msgstr "Import formatu Document Exchange programu AutoCAD"
 
-#: ../share/extensions/dxf_input.inx.h:4
+#: ../share/extensions/dxf_input.inx.h:5
 #, fuzzy
 msgid "Or, use manual scale factor"
 msgstr "Lub użyj ręcznego ustawienia wskaźnika skalowania"
 
-#: ../share/extensions/dxf_input.inx.h:5
+#: ../share/extensions/dxf_input.inx.h:6
 #, fuzzy
 msgid "Use automatic scaling to size A4"
 msgstr "Zastosuj automatyczne skalowanie do rozmiaru A4"
@@ -19852,8 +19861,9 @@ msgid "Add Guide Lines"
 msgstr "Dodaj prowadnice"
 
 #: ../share/extensions/foldablebox.inx.h:2
+#, fuzzy
 msgid "Depth"
-msgstr ""
+msgstr "Głębia"
 
 #: ../share/extensions/foldablebox.inx.h:3
 msgid "Foldable Box"
@@ -21628,6 +21638,9 @@ msgstr "Źródło Metaplik Windows"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Źródło XAML"
+
+#~ msgid "Alpha draw"
+#~ msgstr "Przezroczysty rysunek"
 
 #~ msgid "Alpha fill"
 #~ msgstr "Przezroczyste wypełnienie"
