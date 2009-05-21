@@ -52,6 +52,17 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 		if (item_box) {
 			Geom::Point min(item_box->min() - .5*gap);
 			Geom::Point max(item_box->max() + .5*gap);
+			// A negative gap is allowed, but will lead to problems when the gap is larger than
+			// the bounding box (in either X or Y direction, or both); min will have become max
+			// now, which cannot be handled by Rectangle() which is called below. And how will
+			// removeRectangleOverlap handle such a case?
+			// That's why we will enforce some boundaries on min and max here:
+			if (max[X] < min[X]) {
+				min[X] = max[X] = (min[X] + max[X])/2;
+			}
+			if (max[Y] < min[Y]) {
+				min[Y] = max[Y] = (min[Y] + max[Y])/2;
+			}
 			Rectangle *vspc_rect = new Rectangle(min[X], max[X], min[Y], max[Y]);
 			records.push_back(Record(*it, item_box->midpoint(), vspc_rect));
 			rs.push_back(vspc_rect);
