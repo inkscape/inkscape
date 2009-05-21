@@ -280,6 +280,7 @@ void AboutBox::initStrings() {
         "Michael Grosberg\n"
         "Bryce Harrington\n"
         "Dale Harvey\n"
+        "Aurélio Heckert\n"
         "Carl Hetherington\n"
         "Jos Hirth\n"
         "Thomas Holder\n"
