@@ -838,15 +838,6 @@ if test "$GXX" = "yes"; then
   # Add even more stuff
   CXXFLAGS="-Wpointer-arith -Wcast-align -Wsign-compare -Woverloaded-virtual -Wswitch $CXXFLAGS"
 
-  dnl Test for arch-specific situations.
-  case "$host_cpu" in
-    mips|mipsel)
-      dnl Symbol tables can get too large: this uses alternate tables
-      dnl See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=283476
-      CXXFLAGS="$CXXFLAGS -Wa,-xgot"
-      CFLAGS="$CFLAGS -Wa,-xgot"
-      ;;
-  esac
 fi
 
 dnl ******************************
