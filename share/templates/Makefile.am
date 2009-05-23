@@ -3,7 +3,6 @@ templatesdir = $(datadir)/inkscape/templates
 
 templates_DATA = \
 	README \
-	default.svg \
 	A4_landscape.svg \
 	A4.svg \
 	black_opaque.svg \
