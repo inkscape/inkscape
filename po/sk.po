@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-04-28 11:58+0100\n"
+"POT-Creation-Date: 2009-05-23 02:41+0200\n"
+"PO-Revision-Date: 2009-05-23 02:54+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -111,7 +111,7 @@ msgstr "Prízrak"
 
 #: ../share/filters/filters.svg.h:8
 msgid "Edges are partly feathered out"
-msgstr ""
+msgstr "Okraje sú čiastočne rozmazané"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Cutout"
@@ -439,7 +439,7 @@ msgstr "Textúry"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Bulging, knotty, slick 3D surface"
-msgstr ""
+msgstr "Vydutý, hrčovitý, hladký 3D povrch"
 
 #: ../share/filters/filters.svg.h:37
 msgid "Barbed wire"
@@ -474,9 +474,8 @@ msgid "Soft bevel, slightly depressed middle"
 msgstr "Jemné vrstvenie, dnu mierne preliačené"
 
 #: ../share/filters/filters.svg.h:41
-#, fuzzy
 msgid "Inset"
-msgstr "Posu_núť dnu"
+msgstr "Posunúť dnu"
 
 #: ../share/filters/filters.svg.h:41
 msgid "Shadowy outer bevel"
@@ -526,7 +525,7 @@ msgstr "Hrče"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
-msgstr ""
+msgstr "Vysoko flexibilná hrča"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Cracked glass"
@@ -833,7 +832,7 @@ msgstr "Zlatý špliechanec"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Splattered cast metal, with golden highlights"
-msgstr ""
+msgstr "Kovové špliechance so zlatým zvýraznením"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Gold paste"
@@ -841,7 +840,7 @@ msgstr "Zlatá pasta"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Fat pasted cast metal, with golden highlights"
-msgstr ""
+msgstr "Tučne prilepený kov so zlatým zvýraznením"
 
 #: ../share/filters/filters.svg.h:83
 msgid "Crumpled plastic"
@@ -1015,13 +1014,12 @@ msgstr ""
 "vody"
 
 #: ../share/filters/filters.svg.h:103
-#, fuzzy
 msgid "Soft focus lens"
-msgstr "po zameraní"
+msgstr "Šošovka mäkkého zaostrenia"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Glowing image content without blurring it"
-msgstr ""
+msgstr "Žiarenie obsahu obrázka bez toho, aby bol rozmazaný"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Stained glass"
@@ -1558,40 +1556,43 @@ msgstr "HSL hrče, priesvitnosť"
 
 #: ../share/filters/filters.svg.h:166
 msgid "Highly flexible specular bump with transparency"
-msgstr ""
+msgstr "Vysoko flexibilná hrča s prisevitnosťou"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Lead pencil"
-msgstr ""
+msgstr "Olovená ceruzka"
 
 #: ../share/filters/filters.svg.h:167
-msgid "Give lead pencil or chromolithography or engraving or other effects"
+msgid ""
+"Give lead pencil or chromolithography or engraving or other effects to "
+"images and material filled objects"
 msgstr ""
+"Dáva obrázkom a objektom vyplneným materiálom efekt olovenej ceruzky, "
+"chromolitografie, rytiny alebo iné"
 
 #: ../share/filters/filters.svg.h:168
-#, fuzzy
 msgid "Velvet bump"
-msgstr "Jemné hrče"
+msgstr "Zamatové hrče"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Gives a smooth bump velvet like"
-msgstr ""
+msgstr "Dáva jemné akoby zamatové hrče"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Alpha engraving"
-msgstr ""
+msgid "Alpha draw"
+msgstr "Alfa kreslenie"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Gives a transparent engraving effect to bitmaps and materials"
-msgstr ""
+msgid "Gives a transparent drawing effect to bitmaps and materials"
+msgstr "Dáva bitmapám a materiálom efekt priesvitnej kresby"
 
 #: ../share/filters/filters.svg.h:170
-msgid "Alpha engraving, color"
-msgstr ""
+msgid "Alpha paint"
+msgstr "Alfa maľovanie"
 
 #: ../share/filters/filters.svg.h:170
-msgid "Gives a transparent color engraving effect to bitmaps and materials"
-msgstr ""
+msgid "Gives a transparent color fill effect to bitmaps and materials"
+msgstr "Dáva bitmapám a materiálom efekt priesvitnej farebnej výplne"
 
 #: ../src/arc-context.cpp:303
 msgid ""
@@ -3371,13 +3372,15 @@ msgstr ""
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
-msgstr ""
+msgstr "Prichytávať iba k viditeľným _vodidlám"
 
 #: ../src/display/canvas-grid.cpp:330
 msgid ""
 "When zoomed out, not all grid lines will be displayed. Only the visible ones "
 "will be snapped to"
 msgstr ""
+"Pri oddialení nebudú zobrazené všetky čiary mriežky. Prichytávať sa bude iba "
+"k viditeľným."
 
 #: ../src/display/canvas-grid.cpp:334
 msgid "_Visible"
@@ -3892,12 +3895,8 @@ msgstr "Šírka"
 msgid "Height"
 msgstr "Výška"
 
-#. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
-#: ../src/live_effects/lpe-offset.cpp:30
-#: ../src/live_effects/lpe-parallel.cpp:46
-#: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Offset"
 msgstr "Posun"
 
@@ -4123,14 +4122,12 @@ msgid "Edge"
 msgstr "Hrany"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-#, fuzzy
 msgid "Highlight edges of selected bitmap(s)."
 msgstr "Zvýrazniť hrany vybraných bitmáp."
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-#, fuzzy
 msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
-msgstr "Reliéf vybraných bitmáp -- zvýrazniť hrany trojrozmerným efektom."
+msgstr "Reliéf vybraných bitmáp -- zvýrazniť hrany 3D efektom."
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
 msgid "Enhance"
@@ -4488,9 +4485,8 @@ msgstr "Rasterizovať efekty filtra"
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
-#, fuzzy
 msgid "Resolution for rasterization (dpi)"
-msgstr "Rozlíšenie pre Vytvoriť bitmapovú kópiu:"
+msgstr "Rozlíšenie pre rasterizáciu (dpi)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
@@ -5297,7 +5293,6 @@ msgid "Wrap"
 msgstr "Zalamovanie"
 
 #: ../src/filter-enums.cpp:95 ../src/flood-context.cpp:264
-#: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/ui/dialog/document-properties.cpp:325
 #: ../src/ui/dialog/filter-effects-dialog.cpp:468
 #: ../src/ui/dialog/inkscape-preferences.cpp:255
@@ -5650,8 +5645,7 @@ msgstr "Posunúť priehradku farebného prechodu"
 msgid "Delete gradient stop(s)"
 msgstr "Zmazať priehradku farebného prechodu"
 
-#: ../src/helper/units.cpp:37 ../src/live_effects/lpe-path_length.cpp:27
-#: ../share/extensions/foldablebox.inx.h:8
+#: ../src/helper/units.cpp:37 ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
 #: ../share/extensions/printing-marks.inx.h:20
 msgid "Unit"
@@ -6643,38 +6637,6 @@ msgstr "Úprava parametra <b>%s</b>."
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "Žiadny z použitých parametrov cesty nie je možné upravovať na plátne."
 
-#: ../src/live_effects/lpe-angle_bisector.cpp:51
-#: ../src/live_effects/lpe-parallel.cpp:47
-#: ../src/live_effects/lpe-perp_bisector.cpp:103
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-msgid "Length left"
-msgstr "Dĺžka vľavo"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:51
-#: ../src/live_effects/lpe-perp_bisector.cpp:103
-msgid "Specifies the left end of the bisector"
-msgstr "Definuje ľavý koniec sečníka"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:52
-#: ../src/live_effects/lpe-parallel.cpp:48
-#: ../src/live_effects/lpe-perp_bisector.cpp:104
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-msgid "Length right"
-msgstr "Dĺžka vpravo"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:52
-#: ../src/live_effects/lpe-perp_bisector.cpp:104
-msgid "Specifies the right end of the bisector"
-msgstr "Definuje pravý koniec sečníka"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:59
-msgid "Adjust the \"left\" end of the bisector"
-msgstr "Doladiť „ľavý“ koniec rozdelenia"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:60
-msgid "Adjust the \"right\" of the bisector"
-msgstr "Doladiť „pravý“ koniec rozdelenia"
-
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Bend path"
 msgstr "Ohnúť cestu"
@@ -6704,56 +6666,6 @@ msgstr "Pôvodná cesta je zvisle"
 msgid "Rotates the original 90 degrees, before bending it along the bend path"
 msgstr "Otáča originál o 90 stupňov predtým, než ho ohne pozdĺž cesty"
 
-#: ../src/live_effects/lpe-boolops.cpp:23
-msgid "Null"
-msgstr "Null"
-
-#: ../src/live_effects/lpe-boolops.cpp:24
-msgid "Intersect"
-msgstr "Priesečník"
-
-#: ../src/live_effects/lpe-boolops.cpp:25
-msgid "Subtract A-B"
-msgstr "Odčítať A-B"
-
-#: ../src/live_effects/lpe-boolops.cpp:26
-msgid "Identity A"
-msgstr "Identita A"
-
-#: ../src/live_effects/lpe-boolops.cpp:27
-msgid "Subtract B-A"
-msgstr "Odčítať B-A"
-
-#: ../src/live_effects/lpe-boolops.cpp:28
-msgid "Identity B"
-msgstr "Identita B"
-
-#: ../src/live_effects/lpe-boolops.cpp:29 ../src/splivarot.cpp:96
-msgid "Exclusion"
-msgstr "Vylúčenie"
-
-#: ../src/live_effects/lpe-boolops.cpp:30 ../src/splivarot.cpp:66
-#: ../src/splivarot.cpp:72
-msgid "Union"
-msgstr "Zjednotenie"
-
-#: ../src/live_effects/lpe-boolops.cpp:36
-msgid "2nd path"
-msgstr "2. cesta"
-
-#: ../src/live_effects/lpe-boolops.cpp:36
-msgid "Path to which the original path will be boolop'ed."
-msgstr ""
-"Cesta, pozdĺž ktorej sa má vykonať booleovská operácia s pôvodnou cestou"
-
-#: ../src/live_effects/lpe-boolops.cpp:37
-msgid "Boolop type"
-msgstr "Typ booleovskej operácie"
-
-#: ../src/live_effects/lpe-boolops.cpp:37
-msgid "Determines which kind of boolop will be performed."
-msgstr "Určuje akú druh booleovskej operácie sa vykoná."
-
 #: ../src/live_effects/lpe-constructgrid.cpp:28
 msgid "Size X"
 msgstr "Veľkosť X"
@@ -6769,46 +6681,6 @@ msgstr "Veľkosť Y"
 #: ../src/live_effects/lpe-constructgrid.cpp:29
 msgid "The size of the grid in Y direction."
 msgstr "Veľkosť mriežky v smere Y."
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:47
-msgid "Starting"
-msgstr "Počiatočný"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:47
-msgid "Angle of the first copy"
-msgstr "Uhol prvej kópie"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:48
-msgid "Rotation angle"
-msgstr "Uhol rotácie"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:48
-msgid "Angle between two successive copies"
-msgstr "Uhol dvoch po sebe idúcich kópií"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:49
-msgid "Number of copies"
-msgstr "Počet kópií"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:49
-msgid "Number of copies of the original path"
-msgstr "Počet kópií pôvodnej cesty"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:50
-msgid "Origin"
-msgstr "Počiatok"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:50
-msgid "Origin of the rotation"
-msgstr "Počiatok rotácie"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:61
-msgid "Adjust the starting angle"
-msgstr "Doladiť počiatočný uhol"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:62
-msgid "Adjust the rotation angle"
-msgstr "Doladiť uhol rotácie"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
@@ -6889,111 +6761,6 @@ msgstr "Zmena mierky relatívne k dĺžke"
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale the width of the stitch path relative to its length"
 msgstr "Zmena mierky šírky zošitej cesty relatívne k jej dĺžke"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:60
-#, fuzzy
-msgid "Elliptic Pen"
-msgstr "Eliptické pero"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:61
-msgid "Thick-Thin strokes (fast)"
-msgstr "Hrubé-tenké ťahy (rýchle)"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:62
-msgid "Thick-Thin strokes (slow)"
-msgstr "Hrubé-tenké ťahy (pomalé)"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:67
-msgid "Sharp"
-msgstr "Ostré"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:68
-msgid "Round"
-msgstr "Oblé"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-dynastroke.cpp:75
-msgid "Method"
-msgstr "Metóda"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:75
-msgid "Choose pen type"
-msgstr "Vyberte typ pera"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:76
-msgid "Pen width"
-msgstr "Šírka pera"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:76
-msgid "Maximal stroke width"
-msgstr "Maximálna šírka ťahu"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:77
-msgid "Pen roundness"
-msgstr "Zaoblenosť pera"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:77
-msgid "Min/Max width ratio"
-msgstr "Pomer min/max šírky"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:78
-msgid "angle"
-msgstr "uhol"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:78
-msgid "direction of thickest strokes (opposite = thinest)"
-msgstr "smer najhrubších ťahov (oproti = najtenšie)"
-
-#. modulo_pi(_("modulo pi"), _("Give forward and backward moves in one direction the same thickness "), "modulo_pi", &wr, this, false),
-#: ../src/live_effects/lpe-dynastroke.cpp:80
-#: ../src/live_effects/lpe-ruler.cpp:35 ../src/widgets/toolbox.cpp:5166
-msgid "Start"
-msgstr "Začiatok"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:80
-msgid "Choose start capping type"
-msgstr "Zvoľte typ zaoblenia ľavého zakončenia"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:81
-#: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5179
-msgid "End"
-msgstr "Koniec"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:81
-msgid "Choose end capping type"
-msgstr "Zvoľte typ zaoblenia pravého zakončenia"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:82
-msgid "Grow for"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:82
-msgid "Make the stroke thiner near it's start"
-msgstr "Ťah je zo začiatku užší"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:83
-msgid "Fade for"
-msgstr ""
-
-#: ../src/live_effects/lpe-dynastroke.cpp:83
-msgid "Make the stroke thiner near it's end"
-msgstr "Ťah je ku koncu užší"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:84
-msgid "Round ends"
-msgstr "Zaoblené konce"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:84
-msgid "Strokes end with a round end"
-msgstr "Ťahy majú zaoblený koniec"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:85
-msgid "Capping"
-msgstr "Zaoblenie zakončenia"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:85
-msgid "left capping"
-msgstr "Zaoblenie ľavého zakončenia"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top bend path"
@@ -7147,155 +6914,6 @@ msgstr "Značky pretínania"
 msgid "Drag to select a crossing, click to flip it"
 msgstr "Ťahaním vyberte pretnutie, kliknutím ho obrátite"
 
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-lattice.cpp:47
-msgid "Control handle 0"
-msgstr "Riadiaci úchop 0"
-
-#: ../src/live_effects/lpe-lattice.cpp:48
-msgid "Control handle 1"
-msgstr "Riadiaci úchop 1"
-
-#: ../src/live_effects/lpe-lattice.cpp:49
-msgid "Control handle 2"
-msgstr "Riadiaci úchop 2"
-
-#: ../src/live_effects/lpe-lattice.cpp:50
-msgid "Control handle 3"
-msgstr "Riadiaci úchop 3"
-
-#: ../src/live_effects/lpe-lattice.cpp:51
-msgid "Control handle 4"
-msgstr "Riadiaci úchop 4"
-
-#: ../src/live_effects/lpe-lattice.cpp:52
-msgid "Control handle 5"
-msgstr "Riadiaci úchop 5"
-
-#: ../src/live_effects/lpe-lattice.cpp:53
-msgid "Control handle 6"
-msgstr "Riadiaci úchop 6"
-
-#: ../src/live_effects/lpe-lattice.cpp:54
-msgid "Control handle 7"
-msgstr "Riadiaci úchop 7"
-
-#: ../src/live_effects/lpe-lattice.cpp:55
-msgid "Control handle 8"
-msgstr "Riadiaci úchop 8"
-
-#: ../src/live_effects/lpe-lattice.cpp:56
-msgid "Control handle 9"
-msgstr "Riadiaci úchop 9"
-
-#: ../src/live_effects/lpe-lattice.cpp:57
-msgid "Control handle 10"
-msgstr "Riadiaci úchop 10"
-
-#: ../src/live_effects/lpe-lattice.cpp:58
-msgid "Control handle 11"
-msgstr "Riadiaci úchop 11"
-
-#: ../src/live_effects/lpe-lattice.cpp:59
-msgid "Control handle 12"
-msgstr "Riadiaci úchop 12"
-
-#: ../src/live_effects/lpe-lattice.cpp:60
-msgid "Control handle 13"
-msgstr "Riadiaci úchop 13"
-
-#: ../src/live_effects/lpe-lattice.cpp:61
-msgid "Control handle 14"
-msgstr "Riadiaci úchop 14"
-
-#: ../src/live_effects/lpe-lattice.cpp:62
-msgid "Control handle 15"
-msgstr "Riadiaci úchop 15"
-
-#: ../src/live_effects/lpe-line_segment.cpp:27 ../src/widgets/toolbox.cpp:5507
-msgid "Closed"
-msgstr "Zatvorená"
-
-#: ../src/live_effects/lpe-line_segment.cpp:28 ../src/widgets/toolbox.cpp:5509
-msgid "Open start"
-msgstr "Otvorený začiatok"
-
-#: ../src/live_effects/lpe-line_segment.cpp:29 ../src/widgets/toolbox.cpp:5511
-msgid "Open end"
-msgstr "Otvorený koniec"
-
-#: ../src/live_effects/lpe-line_segment.cpp:30 ../src/widgets/toolbox.cpp:5513
-msgid "Open both"
-msgstr "Otvoriť obe"
-
-#: ../src/live_effects/lpe-line_segment.cpp:36
-msgid "End type"
-msgstr "Typ konca:"
-
-#: ../src/live_effects/lpe-line_segment.cpp:36
-msgid "Determines on which side the line or line segment is infinite."
-msgstr "Určuje na ktorej strane je čiara alebo úsek čiary nekonečný."
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Discard original path?"
-msgstr "Zahodiť pôvodnú cestu?"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Check this to only keep the mirrored part of the path"
-msgstr "Ak vyberiete túto voľbu zachová sa iba zrkadlená časť cesty"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-msgid "Reflection line"
-msgstr "Čiara odrazu"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-msgid "Line which serves as 'mirror' for the reflection"
-msgstr "Čiara, ktorá slúži ako „zrkadlo“ odrazu"
-
-#: ../src/live_effects/lpe-offset.cpp:30
-msgid "Handle to control the distance of the offset from the curve"
-msgstr "Úchop na ovládanie vzdialenosti posunu od krivky"
-
-#: ../src/live_effects/lpe-parallel.cpp:46
-msgid "Adjust the offset"
-msgstr "Prispôsobiť posun"
-
-#: ../src/live_effects/lpe-parallel.cpp:47
-msgid "Specifies the left end of the parallel"
-msgstr "Určuje ľavý koniec paralely"
-
-#: ../src/live_effects/lpe-parallel.cpp:48
-msgid "Specifies the right end of the parallel"
-msgstr "Určuje pravý koniec paralely"
-
-#: ../src/live_effects/lpe-parallel.cpp:56
-msgid "Adjust the \"left\" end of the parallel"
-msgstr "Doladiť „ľavý“ koniec paralely"
-
-#: ../src/live_effects/lpe-parallel.cpp:57
-msgid "Adjust the \"right\" end of the parallel"
-msgstr "Doladiť „pravý“ koniec paralely"
-
-#: ../src/live_effects/lpe-path_length.cpp:25
-#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1514
-#: ../src/seltrans.cpp:485 ../src/ui/dialog/filter-effects-dialog.cpp:2207
-#: ../src/ui/dialog/transformation.cpp:738
-#: ../share/extensions/interp_att_g.inx.h:16
-msgid "Scale"
-msgstr "Zmena mierky"
-
-#: ../src/live_effects/lpe-path_length.cpp:25
-msgid "Scaling factor"
-msgstr "Koeficient zväčšenia"
-
-#: ../src/live_effects/lpe-path_length.cpp:28
-msgid "Display unit"
-msgstr "Zobrazovacia jednotka"
-
-#: ../src/live_effects/lpe-path_length.cpp:28
-msgid "Print unit after path length"
-msgstr "Vypísať za dĺžkou cesty jednotku"
-
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
 msgid "Single"
@@ -7395,71 +7013,6 @@ msgstr "Spojiť blízke konce"
 msgid "Fuse ends closer than this number. 0 means don't fuse."
 msgstr "Spojiť konce, ktoré sú bližšie ako táto hodnota. 0 znamená nespájať."
 
-#: ../src/live_effects/lpe-perp_bisector.cpp:113
-msgid "Adjust the bisector's \"left\" end"
-msgstr "Doladiť „ľavý“ koniec rozdelenia"
-
-#: ../src/live_effects/lpe-perp_bisector.cpp:114
-msgid "Adjust the bisector's \"right\" end"
-msgstr "Doladiť „pravý“ koniec rozdelenia"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-perspective_path.cpp:41
-msgid "Scale x"
-msgstr "Mierka X"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:41
-msgid "Scale factor in x direction"
-msgstr "Mierka v smere X"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:42
-msgid "Scale y"
-msgstr "Mierka Y"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:42
-msgid "Scale factor in y direction"
-msgstr "Mierka v smere Y"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:43
-msgid "Offset x"
-msgstr "Posunutie X"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:43
-msgid "Offset in x direction"
-msgstr "Posunutie v smere X"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:44
-msgid "Offset y"
-msgstr "Posunutie Y"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:44
-msgid "Offset in y direction"
-msgstr "Posunutie v smere Y"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:45
-msgid "Uses XY plane?"
-msgstr "Používa rovinu XY?"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:45
-msgid ""
-"If true, put the path on the left side of an imaginary box, otherwise on the "
-"right side"
-msgstr ""
-"Ak áno, dať cestu na ľavú stranu imaginárneho obdĺžnika, inak na pravú stranu"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:54
-msgid "Adjust the origin"
-msgstr "Doladiť počiatok"
-
-#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-#, fuzzy
-msgid "Iterations"
-msgstr "Prienik"
-
-#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-msgid "recursivity"
-msgstr ""
-
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
 msgstr "Náhodnosť frekvencie"
@@ -7502,7 +7055,6 @@ msgstr ""
 "1=štandardná"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-#, fuzzy
 msgid "2nd side, in"
 msgstr "2. strana, dnu"
 
@@ -7645,78 +7197,6 @@ msgstr ""
 "Relatívna poloha k referenčnému bodu definuje smer a množstvo globálneho "
 "ohnutia"
 
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
-msgid "Left"
-msgstr "Ľavá"
-
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
-msgid "Right"
-msgstr "Pravá"
-
-#: ../src/live_effects/lpe-ruler.cpp:29 ../src/live_effects/lpe-ruler.cpp:37
-msgid "Both"
-msgstr "Obe"
-
-#: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Mark distance"
-msgstr "Vzdialenosť značiek"
-
-#: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Distance between successive ruler marks"
-msgstr "Vzdialenosť medzi po sebe idúcimi značkami pravítka"
-
-#: ../src/live_effects/lpe-ruler.cpp:44
-msgid "Major length"
-msgstr "Dĺžka hlavných"
-
-#: ../src/live_effects/lpe-ruler.cpp:44
-msgid "Length of major ruler marks"
-msgstr "Dĺžka hlavných značiek pravítka"
-
-#: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Minor length"
-msgstr "Dĺžka vedľajších"
-
-#: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Length of minor ruler marks"
-msgstr "Dĺžka vedľajších značiek pravítka"
-
-#: ../src/live_effects/lpe-ruler.cpp:46
-msgid "Major steps"
-msgstr "Hlavné kroky"
-
-#: ../src/live_effects/lpe-ruler.cpp:46
-msgid "Draw a major mark every ... steps"
-msgstr "Nakresliť hlavnú značku každých ... krokov"
-
-#: ../src/live_effects/lpe-ruler.cpp:47
-msgid "Shift marks by"
-msgstr "Posunúť značky o"
-
-#: ../src/live_effects/lpe-ruler.cpp:47
-msgid "Shift marks by this many steps"
-msgstr "Posunúť značky o toľkoto krokov"
-
-#: ../src/live_effects/lpe-ruler.cpp:48
-msgid "Mark direction"
-msgstr "Smer značky"
-
-#: ../src/live_effects/lpe-ruler.cpp:48
-msgid "Direction of marks (when viewing along the path from start to end)"
-msgstr "Smer značiek (pri pohľade pozdĺž cesty od začiatku po koniec)"
-
-#: ../src/live_effects/lpe-ruler.cpp:49
-msgid "Offset of first mark"
-msgstr "Posunutie prvej značky"
-
-#: ../src/live_effects/lpe-ruler.cpp:50
-msgid "Border marks"
-msgstr "Okrajové značky"
-
-#: ../src/live_effects/lpe-ruler.cpp:50
-msgid "Choose whether to draw marks at the beginning and end of the path"
-msgstr "Vyberte či kresliť značky na začiatku alebo na konci cesty"
-
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-skeleton.cpp:32
 msgid "Float parameter"
@@ -7813,6 +7293,13 @@ msgstr "Konštrukčné čiary"
 msgid "How many construction lines (tangents) to draw"
 msgstr "Koľko konštrukčných čiar (dotyčníc) nakresliť"
 
+#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1514
+#: ../src/seltrans.cpp:485 ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/transformation.cpp:738
+#: ../share/extensions/interp_att_g.inx.h:16
+msgid "Scale"
+msgstr "Zmena mierky"
+
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid ""
 "Scale factor relating curvature and length of construction lines (try "
@@ -7841,7 +7328,6 @@ msgid "Placement randomness"
 msgstr "Náhodnosť umiestnenia"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
-#, fuzzy
 msgid "0: evenly distributed construction lines, 1: purely random placement"
 msgstr ""
 "0: rovnomerne rozdelené konštrukčné čiary, 1: čisto náhodné umiestnenie"
@@ -7861,66 +7347,6 @@ msgstr "k_max"
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "max curvature"
 msgstr "max. zakrivenie"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:56
-#: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
-msgid "Angle"
-msgstr "Uhol"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:56
-msgid "Additional angle between tangent and curve"
-msgstr "Ďalší uhol medzi dotyčnicou a krivkou"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:57
-msgid "Location along curve"
-msgstr "Umiestnenie pozdĺž krivky"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:57
-msgid ""
-"Location of the point of attachment along the curve (between 0.0 and number-"
-"of-segments)"
-msgstr ""
-"Umiestnenie bodu pripojenia pozdĺž krivky (medzi 0,0 a počet-segmentov)"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-msgid "Specifies the left end of the tangent"
-msgstr "Určuje ľavý koniec dotyčnice"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-msgid "Specifies the right end of the tangent"
-msgstr "Určuje pravý koniec dotyčnice"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:68
-msgid "Adjust the point of attachment of the tangent"
-msgstr "Doladiť bod pripojenia pripojenia dotyčnice"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:69
-msgid "Adjust the \"left\" end of the tangent"
-msgstr "Nastaviť „ľavý“ koniec dotyčnice"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:70
-msgid "Adjust the \"right\" end of the tangent"
-msgstr "Doladiť „pravý“ koniec dotyčnice"
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:22
-msgid "Stack step"
-msgstr "Veľkosť kroku pri skladaní"
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:23
-msgid "point param"
-msgstr "bod. param."
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:24
-msgid "path param"
-msgstr "param. cesty"
-
-#: ../src/live_effects/lpe-text_label.cpp:22
-msgid "Label"
-msgstr "Blok textu"
-
-#: ../src/live_effects/lpe-text_label.cpp:22
-msgid "Text label attached to the path"
-msgstr "Pole s textom pripojené k ceste"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Nb of generations"
@@ -8030,10 +7456,6 @@ msgstr "Zmeniť parameter text"
 msgid "Change unit parameter"
 msgstr "Zmeniť parameter jednotka"
 
-#: ../src/lpe-tool-context.cpp:274
-msgid "Choose a construction tool from the toolbar."
-msgstr "Vyberte z panelu nástrojov konštrukčný nástroj."
-
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
 msgid "Unable to find verb ID '%s' specified on the command line.\n"
@@ -8080,6 +7502,8 @@ msgid ""
 "Resolution for exporting to bitmap and for rasterization of filters in PS/"
 "EPS/PDF (default 90)"
 msgstr ""
+"Rozlíšenie na export do bitmapy a na rasterizáciu filtrov v PS/EPS/PDF "
+"(predvolená hodnota 90)"
 
 #: ../src/main.cpp:295 ../src/ui/widget/rendering-options.cpp:43
 msgid "DPI"
@@ -8270,7 +7694,6 @@ msgid "OBJECT-ID"
 msgstr "OBJECT-ID"
 
 #: ../src/main.cpp:453
-#, fuzzy
 msgid "Start Inkscape in interactive shell mode."
 msgstr "Spustiť Inkscape v režime interaktívneho shellu."
 
@@ -10068,6 +9491,10 @@ msgstr[2] "<b>Zoskupenie</b> <b>%d</b> objektov"
 msgid "<b>Line</b>"
 msgstr "<b>Úsečka</b>"
 
+#: ../src/splivarot.cpp:66 ../src/splivarot.cpp:72
+msgid "Union"
+msgstr "Zjednotenie"
+
 #: ../src/splivarot.cpp:78
 msgid "Intersection"
 msgstr "Prienik"
@@ -10075,6 +9502,10 @@ msgstr "Prienik"
 #: ../src/splivarot.cpp:84 ../src/splivarot.cpp:90
 msgid "Difference"
 msgstr "Rozdiel"
+
+#: ../src/splivarot.cpp:96
+msgid "Exclusion"
+msgstr "Vylúčenie"
 
 #: ../src/splivarot.cpp:101
 msgid "Division"
@@ -10635,11 +10066,12 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:172
 msgid ""
-"<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to "
-"append to selected path."
+"<b>Drag</b> to create a freehand line. <b>Shift</b> appends to selected "
+"path, <b>Alt</b> activates sketch mode."
 msgstr ""
 "<b>Ťahaním</b> vytvoríte čiaru voľnou rukou. Začnite kresliť so stlačeným "
-"<b>Shift</b> pre pokračovanie vo vybranej ceste."
+"<b>Shift</b> pre pokračovanie vo vybranej ceste, <b>Alt</b> aktivuje režim "
+"skicy."
 
 #: ../src/tools-switch.cpp:178
 msgid ""
@@ -11042,7 +10474,7 @@ msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
-#: ../src/ui/dialog/aboutbox.cpp:370
+#: ../src/ui/dialog/aboutbox.cpp:371
 msgid "translator-credits"
 msgstr ""
 "Ivan Masár (helix84@centrum.sk)\n"
@@ -12327,7 +11759,6 @@ msgstr ""
 "prahu."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2289
-#, fuzzy
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
 "the Porter-Duff blending modes or the arithmetic mode described in SVG "
@@ -12337,7 +11768,7 @@ msgstr ""
 "Primitíva filtra <b>feComposite</b> skladá dva obrázky pomocou jedného z "
 "Porter-Duffovych miešacích modulov alebo aritmetického režimu, ktorý je "
 "popísaný v štandarde SVG. Porter-Duffove miešacie moduly sú v podstate "
-"logické operácie medzi hodnotami zodpovedajúcich pixelov obrázkov."
+"logické operácie medzi hodnotami zodpovedajúcich pixlov obrázkov."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2293
 msgid ""
@@ -12478,9 +11909,8 @@ msgid "Angle (degrees):"
 msgstr "Uhol (v stupňoch):"
 
 #: ../src/ui/dialog/guides.cpp:46
-#, fuzzy
 msgid "Rela_tive change"
-msgstr "Rela_tívny posun"
+msgstr "Rela_tívna zmena"
 
 #: ../src/ui/dialog/guides.cpp:46
 msgid "Move and/or rotate the guide relative to current settings"
@@ -12491,9 +11921,8 @@ msgid "Set guide properties"
 msgstr "_Vlastnosti vodidla"
 
 #: ../src/ui/dialog/guides.cpp:151
-#, fuzzy
 msgid "Guideline"
-msgstr "Farba vodidiel"
+msgstr "Vodidlo"
 
 #: ../src/ui/dialog/guides.cpp:239
 #, c-format
@@ -14947,9 +14376,8 @@ msgid "Set glyph curves"
 msgstr "Nastaviť krivky grafémy"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:570
-#, fuzzy
 msgid "Reset missing-glyph"
-msgstr "Chýbajúca graféma:"
+msgstr "Obnoviť chýbajúcu grafému"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:585
 msgid "Edit glyph name"
@@ -14985,14 +14413,12 @@ msgid "Reset"
 msgstr "Obnoviť "
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:665
-#, fuzzy
 msgid "Glyph name"
 msgstr "Názov grafémy"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:666
-#, fuzzy
 msgid "Matching string"
-msgstr "Reťazec cesty"
+msgstr "Zodpovedajúci reťazec"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:669
 msgid "Add Glyph"
@@ -16480,7 +15906,7 @@ msgstr "Vrstvu nie je možné posunúť ďalej."
 #: ../src/verbs.cpp:1237 ../src/verbs.cpp:1255
 #, c-format
 msgid "%s copy"
-msgstr ""
+msgstr "kópia %s"
 
 #: ../src/verbs.cpp:1263
 msgid "Duplicate layer"
@@ -16501,9 +15927,8 @@ msgid "Deleted layer."
 msgstr "Vrstva odstránená."
 
 #: ../src/verbs.cpp:1309
-#, fuzzy
 msgid "Toggle layer solo"
-msgstr "Prepnutie viditeľnosti aktuálnej vrstvy"
+msgstr "Zobraziť/skryť ostatné vrstvy"
 
 #: ../src/verbs.cpp:1389
 msgid "Flip horizontally"
@@ -16523,27 +15948,27 @@ msgstr "tutorial-basic.sk.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1916
 msgid "tutorial-shapes.svg"
-msgstr "tutorial-shapes.svg"
+msgstr "tutorial-shapes.sk.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1920
 msgid "tutorial-advanced.svg"
-msgstr "tutorial-advanced.svg"
+msgstr "tutorial-advanced.sk.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1924
 msgid "tutorial-tracing.svg"
-msgstr "tutorial-tracing.svg"
+msgstr "tutorial-tracing.sk.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1928
 msgid "tutorial-calligraphy.svg"
-msgstr "tutorial-calligraphy.svg"
+msgstr "tutorial-calligraphy.sk.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1932
 msgid "tutorial-elements.svg"
-msgstr "tutorial-elements.svg"
+msgstr "tutorial-elements.sk.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1936
@@ -17354,9 +16779,8 @@ msgid "_Show/hide other layers"
 msgstr "_Zobraziť/skryť iné vrstvy"
 
 #: ../src/verbs.cpp:2459
-#, fuzzy
 msgid "Solo the current layer"
-msgstr "Presunie aktuálnu vrstvu o úroveň nižšie"
+msgstr "Prepne viditeľnosť iba na aktuálnu vrstvu alebo na všetky vrstvy"
 
 #. Object
 #: ../src/verbs.cpp:2462
@@ -20268,12 +19692,20 @@ msgid "Arc: Change open/closed"
 msgstr "Oblúk: Zmeniť otvorený/zatvorený"
 
 #: ../src/widgets/toolbox.cpp:5166
+msgid "Start"
+msgstr "Začiatok"
+
+#: ../src/widgets/toolbox.cpp:5166
 msgid "Start:"
 msgstr "Začiatok:"
 
 #: ../src/widgets/toolbox.cpp:5167
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr "Uhol (v stupňoch) z vodorovného počiatočného bodu oblúka"
+
+#: ../src/widgets/toolbox.cpp:5179
+msgid "End"
+msgstr "Koniec"
 
 #: ../src/widgets/toolbox.cpp:5179
 msgid "End:"
@@ -20341,6 +19773,22 @@ msgstr ""
 msgid "Assign"
 msgstr "Priradiť"
 
+#: ../src/widgets/toolbox.cpp:5507
+msgid "Closed"
+msgstr "Zatvorená"
+
+#: ../src/widgets/toolbox.cpp:5509
+msgid "Open start"
+msgstr "Otvorený začiatok"
+
+#: ../src/widgets/toolbox.cpp:5511
+msgid "Open end"
+msgstr "Otvorený koniec"
+
+#: ../src/widgets/toolbox.cpp:5513
+msgid "Open both"
+msgstr "Otvoriť obe"
+
 #: ../src/widgets/toolbox.cpp:5572
 msgid "All inactive"
 msgstr "Všetky neaktívne"
@@ -20378,7 +19826,6 @@ msgid "Choose a line segment type"
 msgstr "Vyberte typ čiarového segmentu"
 
 #: ../src/widgets/toolbox.cpp:5647
-#, fuzzy
 msgid "Display measuring info"
 msgstr "Zobraziť meracie informácie"
 
@@ -20777,7 +20224,7 @@ msgstr "Nebolo možné nájsť súbor: %s"
 #: ../share/extensions/web-set-att.py:52
 #: ../share/extensions/web-transmit-att.py:48
 msgid "You must select at least two elements."
-msgstr ""
+msgstr "Musíte vybrať aspoň dva prvky."
 
 #: ../share/extensions/addnodes.inx.h:1
 msgid "Add Nodes"
@@ -20998,9 +20445,8 @@ msgid "RGB Barrel"
 msgstr "RGB valec"
 
 #: ../share/extensions/convert2dashes.inx.h:1
-#, fuzzy
 msgid "Convert to Dashes"
-msgstr "Konvertovať na Brailleovo"
+msgstr "Konvertovať na pomlčky"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -21170,9 +20616,8 @@ msgid "Orthocentre"
 msgstr "Ďalšie"
 
 #: ../share/extensions/draw_from_triangle.inx.h:28
-#, fuzzy
 msgid "Point At"
-msgstr "Body na"
+msgstr "Nasmerovať na"
 
 #: ../share/extensions/draw_from_triangle.inx.h:29
 msgid "Radius / px"
@@ -21180,7 +20625,7 @@ msgstr "Polomer [px]"
 
 #: ../share/extensions/draw_from_triangle.inx.h:31
 msgid "Report this triangle's properties"
-msgstr ""
+msgstr "Oznámiť vlastnosti tohto trojuholníka"
 
 #: ../share/extensions/draw_from_triangle.inx.h:32
 #, fuzzy
@@ -21211,7 +20656,6 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:2
-#, fuzzy
 msgid "Character Encoding"
 msgstr "Kódovanie znakov"
 
@@ -21382,9 +20826,8 @@ msgid "Paper Thickness"
 msgstr "Hrúbka papiera"
 
 #: ../share/extensions/foldablebox.inx.h:7
-#, fuzzy
 msgid "Tab Proportion"
-msgstr "Zmena mierky so zachovaním pomeru"
+msgstr "Veľkosť záložiek"
 
 #: ../share/extensions/fractalize.inx.h:1
 msgid "Fractalize"
@@ -21590,41 +21033,36 @@ msgid "Minor Y Division Thickness [px]"
 msgstr "Hlavné rozdelenie Y [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:16
-#, fuzzy
 msgid "Subdivisions per Major X Division"
-msgstr "Hlavné rozdelenie X"
+msgstr "Podrozdelení na hlavné rozdelenie X"
 
 #: ../share/extensions/grid_cartesian.inx.h:17
-#, fuzzy
 msgid "Subdivisions per Major Y Division"
-msgstr "Hlavné rozdelenie Y"
+msgstr "Podrozdelení na hlavné rozdelenie Y"
 
 #: ../share/extensions/grid_cartesian.inx.h:18
-#, fuzzy
 msgid "Subminor X Division Thickness [px]"
-msgstr "Hlavné rozdelenie X [px]"
+msgstr "Hrúbka podvedľajšieho rozdelenia X [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:19
-#, fuzzy
 msgid "Subminor Y Division Thickness [px]"
-msgstr "Hlavné rozdelenie Y [px]"
+msgstr "Hrúbka podvedľajšieho rozdelenia Y [px]"
 
 #: ../share/extensions/grid_cartesian.inx.h:20
 msgid "Subsubdivs. per X Subdivision"
-msgstr ""
+msgstr "Podpodrozdelení na podrozdelenie X"
 
 #: ../share/extensions/grid_cartesian.inx.h:21
 msgid "Subsubdivs. per Y Subdivision"
-msgstr ""
+msgstr "Podrozdelení na podrozdelenie Y"
 
 #: ../share/extensions/grid_polar.inx.h:1
 msgid "Angle Divisions"
 msgstr "Rozdelenia uhla"
 
 #: ../share/extensions/grid_polar.inx.h:2
-#, fuzzy
 msgid "Angle Divisions at Centre"
-msgstr "Rozdelenia uhla"
+msgstr "Rozdelenia uhla v strede"
 
 #: ../share/extensions/grid_polar.inx.h:3
 msgid "Centre Dot Diameter [px]"
@@ -21632,52 +21070,47 @@ msgstr ""
 
 #: ../share/extensions/grid_polar.inx.h:4
 msgid "Circumferential Label Outset [px]"
-msgstr ""
+msgstr "Odsadenie okružného označenia [px]"
 
 #: ../share/extensions/grid_polar.inx.h:5
 msgid "Circumferential Label Size [px]"
-msgstr ""
+msgstr "Veľkosť okružného označenia [px]"
 
 #: ../share/extensions/grid_polar.inx.h:6
 msgid "Circumferential Labels"
-msgstr ""
+msgstr "Okružné označenia"
 
 #: ../share/extensions/grid_polar.inx.h:8
 msgid "Logarithmic Subdiv. (Base given by entry above)"
 msgstr "Logaritmické podrozd. (základ podľa vyššie uvedeného)"
 
 #: ../share/extensions/grid_polar.inx.h:9
-#, fuzzy
 msgid "Major Angular Division Thickness [px]"
-msgstr "Hlavné rozdelenie X [px]"
+msgstr "Hrúbka hlavného uhlového delenia [px]"
 
 #: ../share/extensions/grid_polar.inx.h:10
 msgid "Major Circular Division Spacing [px]"
 msgstr "Medzery hlavného rozdelenia X [px]"
 
 #: ../share/extensions/grid_polar.inx.h:11
-#, fuzzy
 msgid "Major Circular Division Thickness [px]"
-msgstr "Hlavné rozdelenie X [px]"
+msgstr "Hrúbka hlavného kruhového delenia [px]"
 
 #: ../share/extensions/grid_polar.inx.h:12
-#, fuzzy
 msgid "Major Circular Divisions"
-msgstr "Hlavné rozdelenie X"
+msgstr "Hlavné kruhové delenia"
 
 #: ../share/extensions/grid_polar.inx.h:13
 msgid "Minor Angle Division End 'n' Divs. Before Centre"
-msgstr ""
+msgstr "Koniec rozdelenia a vedľajšie rozdelenia uhla pred stredom"
 
 #: ../share/extensions/grid_polar.inx.h:14
-#, fuzzy
 msgid "Minor Angular Division Thickness [px]"
-msgstr "Hlavné rozdelenie X [px]"
+msgstr "Hrúbka vedľajšieho uhlového delenia [px]"
 
 #: ../share/extensions/grid_polar.inx.h:15
-#, fuzzy
 msgid "Minor Circular Division Thickness [px]"
-msgstr "Hlavné rozdelenie X [px]"
+msgstr "Hrúbka vedľajšieho kruhového delenia [px]"
 
 #: ../share/extensions/grid_polar.inx.h:17
 msgid "Polar Grid"
@@ -21685,12 +21118,11 @@ msgstr "Polárna mriežka"
 
 #: ../share/extensions/grid_polar.inx.h:19
 msgid "Subdivisions per Major Angular Division"
-msgstr ""
+msgstr "Podrozdelení hlavného uhlového delenia"
 
 #: ../share/extensions/grid_polar.inx.h:20
-#, fuzzy
 msgid "Subdivisions per Major Circular Division"
-msgstr "Medzery hlavného rozdelenia X [px]"
+msgstr "Podrozdelení kruhového delenia"
 
 #: ../share/extensions/guides_creator.inx.h:1
 msgid "1/10"
@@ -22042,6 +21474,10 @@ msgstr ""
 "možné použiť na meranie v kresbách so zmenenou mierkou. Napríklad ak 1 cm na "
 "kresbe zodpovedá 2,5 m v skutočnosti, Mierku treba nastaviť na 250."
 
+#: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
+msgid "Angle"
+msgstr "Uhol"
+
 #: ../share/extensions/motion.inx.h:3
 msgid "Magnitude"
 msgstr "Magnitúda"
@@ -22063,29 +21499,24 @@ msgid "Text Outline Input"
 msgstr "Vstup Text Outline"
 
 #: ../share/extensions/param_curves.inx.h:2
-#, fuzzy
 msgid "End t-value"
-msgstr "Koncová hodnota X"
+msgstr "Koncová hodnota t"
 
 #: ../share/extensions/param_curves.inx.h:4
-#, fuzzy
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
 msgstr ""
-"Izotropická zmena mierky (používa minimum z pomeru šírka/rozsah x alebo "
-"výška/rozsah y)"
+"Izotropická zmena mierky (používa minimum z: šírka/rozsah-x alebo výška/"
+"rozsah-y)"
 
 #: ../share/extensions/param_curves.inx.h:5
-#, fuzzy
 msgid "Multiply t-range by 2*pi"
-msgstr "Násobiť rozsah X hodnotou 2*pi"
+msgstr "Násobiť rozsah t hodnotou 2*pi"
 
 #: ../share/extensions/param_curves.inx.h:6
-#, fuzzy
 msgid "Parametric Curves"
-msgstr "Parametre"
+msgstr "Parametrické krivky"
 
 #: ../share/extensions/param_curves.inx.h:7
-#, fuzzy
 msgid "Range and Sampling"
 msgstr "Rozsah a vzorkovanie"
 
@@ -22098,41 +21529,36 @@ msgid ""
 "Select a rectangle before calling the extension; it will determine X and Y "
 "scales. First derivatives are always determined numerically."
 msgstr ""
+"Pred zavolaním rozšírenia vyberte pravouholník; určí mierky X a Y. Prvé "
+"derivácie sa vždy určujú numericky."
 
 #: ../share/extensions/param_curves.inx.h:13
-#, fuzzy
 msgid "Start t-value"
-msgstr "Počiatočná hodnota X"
+msgstr "Počiatočná hodnota t"
 
 #: ../share/extensions/param_curves.inx.h:15
-#, fuzzy
 msgid "x-Function"
-msgstr "Funkcia"
+msgstr "Funkcia t"
 
 #: ../share/extensions/param_curves.inx.h:16
-#, fuzzy
 msgid "x-value of rectangle's left"
-msgstr "hodnota Y vrchu obdĺžnika"
+msgstr "hodnota t ľavej strany obdĺžnika"
 
 #: ../share/extensions/param_curves.inx.h:17
-#, fuzzy
 msgid "x-value of rectangle's right"
-msgstr "hodnota Y vrchu obdĺžnika"
+msgstr "hodnota t pravej strany obdĺžnika"
 
 #: ../share/extensions/param_curves.inx.h:18
-#, fuzzy
 msgid "y-Function"
-msgstr "Funkcia"
+msgstr "Funkcia y"
 
 #: ../share/extensions/param_curves.inx.h:19
-#, fuzzy
 msgid "y-value of rectangle's bottom"
-msgstr "hodnota Y spodku obdĺžnika"
+msgstr "hodnota y spodku obdĺžnika"
 
 #: ../share/extensions/param_curves.inx.h:20
-#, fuzzy
 msgid "y-value of rectangle's top"
-msgstr "hodnota Y vrchu obdĺžnika"
+msgstr "hodnota y vrchu obdĺžnika"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Copies of the pattern:"
@@ -22509,9 +21935,8 @@ msgid "Colour Bars"
 msgstr "Panely farieb"
 
 #: ../share/extensions/printing-marks.inx.h:6
-#, fuzzy
 msgid "Crop Marks"
-msgstr "Značky"
+msgstr "Značky orezania"
 
 #: ../share/extensions/printing-marks.inx.h:7
 msgid "Left:"
@@ -22534,9 +21959,8 @@ msgid "Printing Marks"
 msgstr "Značky pre tlač"
 
 #: ../share/extensions/printing-marks.inx.h:13
-#, fuzzy
 msgid "Registration Marks"
-msgstr "Značky pre tlač"
+msgstr "Značky zarovnania farieb"
 
 #: ../share/extensions/printing-marks.inx.h:15
 msgid "Right:"
@@ -22630,6 +22054,10 @@ msgstr "Odspodu navrch (90)"
 msgid "Horizontal Point:"
 msgstr "Vodorovný bod:"
 
+#: ../share/extensions/restack.inx.h:7
+msgid "Left"
+msgstr "Ľavá"
+
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr "Zľava doprava (0)"
@@ -22653,6 +22081,10 @@ msgstr "Znova naskladať"
 #: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
 msgstr "Smer naskladania:"
+
+#: ../share/extensions/restack.inx.h:14
+msgid "Right"
+msgstr "Pravá"
 
 #: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
@@ -22706,14 +22138,12 @@ msgid "sK1 vector graphics files input"
 msgstr "Vstup vektorové grafické súbory sK1"
 
 #: ../share/extensions/sk1_output.inx.h:1
-#, fuzzy
 msgid "File format for use in sK1 vector graphics editor"
-msgstr "Otvoriť súbory uložené vo vektorovom grafickom editore sK1"
+msgstr "Formát súboru na použitie vo vektorovom grafickom editore sK1"
 
 #: ../share/extensions/sk1_output.inx.h:3
-#, fuzzy
 msgid "sK1 vector graphics files output"
-msgstr "Vstup vektorové grafické súbory sK1"
+msgstr "Výstup vektorové grafické súbory sK1"
 
 #: ../share/extensions/sk_input.inx.h:1
 msgid "A diagram created with the program Sketch"
@@ -22909,7 +22339,7 @@ msgstr "nedeľa"
 
 #: ../share/extensions/svgcalendar.inx.h:27
 msgid "The options above has no value with the upper checked."
-msgstr ""
+msgstr "Hore uvedená voľba nemá hodnotu ak je vyššie zaškrtnuté."
 
 #: ../share/extensions/svgcalendar.inx.h:28
 msgid "Week start day"
@@ -23050,7 +22480,7 @@ msgstr "Nastaviť atribúty"
 #: ../share/extensions/web-set-att.inx.h:3
 #: ../share/extensions/web-transmit-att.inx.h:3
 msgid "Compatibility with previews code to this event"
-msgstr ""
+msgstr "Kompatibilita s kódom náhľadu tejto udalosti"
 
 #: ../share/extensions/web-set-att.inx.h:4
 msgid ""
@@ -23071,7 +22501,6 @@ msgid "Run it before"
 msgstr "Spustiť pred"
 
 #: ../share/extensions/web-set-att.inx.h:8
-#, fuzzy
 msgid "Set Attributes"
 msgstr "Nastaviť atribúty"
 
@@ -23242,6 +22671,389 @@ msgstr "Vstup Windows Metasúbor"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Vstup XAML"
+
+#~ msgid "Alpha engraving"
+#~ msgstr "Alfa rytina"
+
+#~ msgid "Alpha engraving, color"
+#~ msgstr "Alfa rytina, farba"
+
+#~ msgid "Length left"
+#~ msgstr "Dĺžka vľavo"
+
+#~ msgid "Specifies the left end of the bisector"
+#~ msgstr "Definuje ľavý koniec sečníka"
+
+#~ msgid "Length right"
+#~ msgstr "Dĺžka vpravo"
+
+#~ msgid "Specifies the right end of the bisector"
+#~ msgstr "Definuje pravý koniec sečníka"
+
+#~ msgid "Adjust the \"left\" end of the bisector"
+#~ msgstr "Doladiť „ľavý“ koniec rozdelenia"
+
+#~ msgid "Adjust the \"right\" of the bisector"
+#~ msgstr "Doladiť „pravý“ koniec rozdelenia"
+
+#~ msgid "Null"
+#~ msgstr "Null"
+
+#~ msgid "Intersect"
+#~ msgstr "Priesečník"
+
+#~ msgid "Subtract A-B"
+#~ msgstr "Odčítať A-B"
+
+#~ msgid "Identity A"
+#~ msgstr "Identita A"
+
+#~ msgid "Subtract B-A"
+#~ msgstr "Odčítať B-A"
+
+#~ msgid "Identity B"
+#~ msgstr "Identita B"
+
+#~ msgid "2nd path"
+#~ msgstr "2. cesta"
+
+#~ msgid "Path to which the original path will be boolop'ed."
+#~ msgstr ""
+#~ "Cesta, pozdĺž ktorej sa má vykonať booleovská operácia s pôvodnou cestou"
+
+#~ msgid "Boolop type"
+#~ msgstr "Typ booleovskej operácie"
+
+#~ msgid "Determines which kind of boolop will be performed."
+#~ msgstr "Určuje akú druh booleovskej operácie sa vykoná."
+
+#~ msgid "Starting"
+#~ msgstr "Počiatočný"
+
+#~ msgid "Angle of the first copy"
+#~ msgstr "Uhol prvej kópie"
+
+#~ msgid "Rotation angle"
+#~ msgstr "Uhol rotácie"
+
+#~ msgid "Angle between two successive copies"
+#~ msgstr "Uhol dvoch po sebe idúcich kópií"
+
+#~ msgid "Number of copies"
+#~ msgstr "Počet kópií"
+
+#~ msgid "Number of copies of the original path"
+#~ msgstr "Počet kópií pôvodnej cesty"
+
+#~ msgid "Origin"
+#~ msgstr "Počiatok"
+
+#~ msgid "Origin of the rotation"
+#~ msgstr "Počiatok rotácie"
+
+#~ msgid "Adjust the starting angle"
+#~ msgstr "Doladiť počiatočný uhol"
+
+#~ msgid "Adjust the rotation angle"
+#~ msgstr "Doladiť uhol rotácie"
+
+#~ msgid "Elliptic Pen"
+#~ msgstr "Eliptické pero"
+
+#~ msgid "Thick-Thin strokes (fast)"
+#~ msgstr "Hrubé-tenké ťahy (rýchle)"
+
+#~ msgid "Thick-Thin strokes (slow)"
+#~ msgstr "Hrubé-tenké ťahy (pomalé)"
+
+#~ msgid "Sharp"
+#~ msgstr "Ostré"
+
+#~ msgid "Round"
+#~ msgstr "Oblé"
+
+#~ msgid "Method"
+#~ msgstr "Metóda"
+
+#~ msgid "Choose pen type"
+#~ msgstr "Vyberte typ pera"
+
+#~ msgid "Pen width"
+#~ msgstr "Šírka pera"
+
+#~ msgid "Maximal stroke width"
+#~ msgstr "Maximálna šírka ťahu"
+
+#~ msgid "Pen roundness"
+#~ msgstr "Zaoblenosť pera"
+
+#~ msgid "Min/Max width ratio"
+#~ msgstr "Pomer min/max šírky"
+
+#~ msgid "angle"
+#~ msgstr "uhol"
+
+#~ msgid "direction of thickest strokes (opposite = thinest)"
+#~ msgstr "smer najhrubších ťahov (oproti = najtenšie)"
+
+#~ msgid "Choose start capping type"
+#~ msgstr "Zvoľte typ zaoblenia ľavého zakončenia"
+
+#~ msgid "Choose end capping type"
+#~ msgstr "Zvoľte typ zaoblenia pravého zakončenia"
+
+#~ msgid "Make the stroke thiner near it's start"
+#~ msgstr "Ťah je zo začiatku užší"
+
+#~ msgid "Make the stroke thiner near it's end"
+#~ msgstr "Ťah je ku koncu užší"
+
+#~ msgid "Round ends"
+#~ msgstr "Zaoblené konce"
+
+#~ msgid "Strokes end with a round end"
+#~ msgstr "Ťahy majú zaoblený koniec"
+
+#~ msgid "Capping"
+#~ msgstr "Zaoblenie zakončenia"
+
+#~ msgid "left capping"
+#~ msgstr "Zaoblenie ľavého zakončenia"
+
+#~ msgid "Control handle 0"
+#~ msgstr "Riadiaci úchop 0"
+
+#~ msgid "Control handle 1"
+#~ msgstr "Riadiaci úchop 1"
+
+#~ msgid "Control handle 2"
+#~ msgstr "Riadiaci úchop 2"
+
+#~ msgid "Control handle 3"
+#~ msgstr "Riadiaci úchop 3"
+
+#~ msgid "Control handle 4"
+#~ msgstr "Riadiaci úchop 4"
+
+#~ msgid "Control handle 5"
+#~ msgstr "Riadiaci úchop 5"
+
+#~ msgid "Control handle 6"
+#~ msgstr "Riadiaci úchop 6"
+
+#~ msgid "Control handle 7"
+#~ msgstr "Riadiaci úchop 7"
+
+#~ msgid "Control handle 8"
+#~ msgstr "Riadiaci úchop 8"
+
+#~ msgid "Control handle 9"
+#~ msgstr "Riadiaci úchop 9"
+
+#~ msgid "Control handle 10"
+#~ msgstr "Riadiaci úchop 10"
+
+#~ msgid "Control handle 11"
+#~ msgstr "Riadiaci úchop 11"
+
+#~ msgid "Control handle 12"
+#~ msgstr "Riadiaci úchop 12"
+
+#~ msgid "Control handle 13"
+#~ msgstr "Riadiaci úchop 13"
+
+#~ msgid "Control handle 14"
+#~ msgstr "Riadiaci úchop 14"
+
+#~ msgid "Control handle 15"
+#~ msgstr "Riadiaci úchop 15"
+
+#~ msgid "End type"
+#~ msgstr "Typ konca:"
+
+#~ msgid "Determines on which side the line or line segment is infinite."
+#~ msgstr "Určuje na ktorej strane je čiara alebo úsek čiary nekonečný."
+
+#~ msgid "Discard original path?"
+#~ msgstr "Zahodiť pôvodnú cestu?"
+
+#~ msgid "Check this to only keep the mirrored part of the path"
+#~ msgstr "Ak vyberiete túto voľbu zachová sa iba zrkadlená časť cesty"
+
+#~ msgid "Reflection line"
+#~ msgstr "Čiara odrazu"
+
+#~ msgid "Line which serves as 'mirror' for the reflection"
+#~ msgstr "Čiara, ktorá slúži ako „zrkadlo“ odrazu"
+
+#~ msgid "Handle to control the distance of the offset from the curve"
+#~ msgstr "Úchop na ovládanie vzdialenosti posunu od krivky"
+
+#~ msgid "Adjust the offset"
+#~ msgstr "Prispôsobiť posun"
+
+#~ msgid "Specifies the left end of the parallel"
+#~ msgstr "Určuje ľavý koniec paralely"
+
+#~ msgid "Specifies the right end of the parallel"
+#~ msgstr "Určuje pravý koniec paralely"
+
+#~ msgid "Adjust the \"left\" end of the parallel"
+#~ msgstr "Doladiť „ľavý“ koniec paralely"
+
+#~ msgid "Adjust the \"right\" end of the parallel"
+#~ msgstr "Doladiť „pravý“ koniec paralely"
+
+#~ msgid "Scaling factor"
+#~ msgstr "Koeficient zväčšenia"
+
+#~ msgid "Display unit"
+#~ msgstr "Zobrazovacia jednotka"
+
+#~ msgid "Print unit after path length"
+#~ msgstr "Vypísať za dĺžkou cesty jednotku"
+
+#~ msgid "Adjust the bisector's \"left\" end"
+#~ msgstr "Doladiť „ľavý“ koniec rozdelenia"
+
+#~ msgid "Adjust the bisector's \"right\" end"
+#~ msgstr "Doladiť „pravý“ koniec rozdelenia"
+
+#~ msgid "Scale x"
+#~ msgstr "Mierka X"
+
+#~ msgid "Scale factor in x direction"
+#~ msgstr "Mierka v smere X"
+
+#~ msgid "Scale y"
+#~ msgstr "Mierka Y"
+
+#~ msgid "Scale factor in y direction"
+#~ msgstr "Mierka v smere Y"
+
+#~ msgid "Offset x"
+#~ msgstr "Posunutie X"
+
+#~ msgid "Offset in x direction"
+#~ msgstr "Posunutie v smere X"
+
+#~ msgid "Offset y"
+#~ msgstr "Posunutie Y"
+
+#~ msgid "Offset in y direction"
+#~ msgstr "Posunutie v smere Y"
+
+#~ msgid "Uses XY plane?"
+#~ msgstr "Používa rovinu XY?"
+
+#~ msgid ""
+#~ "If true, put the path on the left side of an imaginary box, otherwise on "
+#~ "the right side"
+#~ msgstr ""
+#~ "Ak áno, dať cestu na ľavú stranu imaginárneho obdĺžnika, inak na pravú "
+#~ "stranu"
+
+#~ msgid "Adjust the origin"
+#~ msgstr "Doladiť počiatok"
+
+#~ msgid "Iterations"
+#~ msgstr "Iterácie"
+
+#~ msgid "recursivity"
+#~ msgstr "rekurzia"
+
+#~ msgid "Both"
+#~ msgstr "Obe"
+
+#~ msgid "Mark distance"
+#~ msgstr "Vzdialenosť značiek"
+
+#~ msgid "Distance between successive ruler marks"
+#~ msgstr "Vzdialenosť medzi po sebe idúcimi značkami pravítka"
+
+#~ msgid "Major length"
+#~ msgstr "Dĺžka hlavných"
+
+#~ msgid "Length of major ruler marks"
+#~ msgstr "Dĺžka hlavných značiek pravítka"
+
+#~ msgid "Minor length"
+#~ msgstr "Dĺžka vedľajších"
+
+#~ msgid "Length of minor ruler marks"
+#~ msgstr "Dĺžka vedľajších značiek pravítka"
+
+#~ msgid "Major steps"
+#~ msgstr "Hlavné kroky"
+
+#~ msgid "Draw a major mark every ... steps"
+#~ msgstr "Nakresliť hlavnú značku každých ... krokov"
+
+#~ msgid "Shift marks by"
+#~ msgstr "Posunúť značky o"
+
+#~ msgid "Shift marks by this many steps"
+#~ msgstr "Posunúť značky o toľkoto krokov"
+
+#~ msgid "Mark direction"
+#~ msgstr "Smer značky"
+
+#~ msgid "Direction of marks (when viewing along the path from start to end)"
+#~ msgstr "Smer značiek (pri pohľade pozdĺž cesty od začiatku po koniec)"
+
+#~ msgid "Offset of first mark"
+#~ msgstr "Posunutie prvej značky"
+
+#~ msgid "Border marks"
+#~ msgstr "Okrajové značky"
+
+#~ msgid "Choose whether to draw marks at the beginning and end of the path"
+#~ msgstr "Vyberte či kresliť značky na začiatku alebo na konci cesty"
+
+#~ msgid "Additional angle between tangent and curve"
+#~ msgstr "Ďalší uhol medzi dotyčnicou a krivkou"
+
+#~ msgid "Location along curve"
+#~ msgstr "Umiestnenie pozdĺž krivky"
+
+#~ msgid ""
+#~ "Location of the point of attachment along the curve (between 0.0 and "
+#~ "number-of-segments)"
+#~ msgstr ""
+#~ "Umiestnenie bodu pripojenia pozdĺž krivky (medzi 0,0 a počet-segmentov)"
+
+#~ msgid "Specifies the left end of the tangent"
+#~ msgstr "Určuje ľavý koniec dotyčnice"
+
+#~ msgid "Specifies the right end of the tangent"
+#~ msgstr "Určuje pravý koniec dotyčnice"
+
+#~ msgid "Adjust the point of attachment of the tangent"
+#~ msgstr "Doladiť bod pripojenia pripojenia dotyčnice"
+
+#~ msgid "Adjust the \"left\" end of the tangent"
+#~ msgstr "Nastaviť „ľavý“ koniec dotyčnice"
+
+#~ msgid "Adjust the \"right\" end of the tangent"
+#~ msgstr "Doladiť „pravý“ koniec dotyčnice"
+
+#~ msgid "Stack step"
+#~ msgstr "Veľkosť kroku pri skladaní"
+
+#~ msgid "point param"
+#~ msgstr "bod. param."
+
+#~ msgid "path param"
+#~ msgstr "param. cesty"
+
+#~ msgid "Label"
+#~ msgstr "Blok textu"
+
+#~ msgid "Text label attached to the path"
+#~ msgstr "Pole s textom pripojené k ceste"
+
+#~ msgid "Choose a construction tool from the toolbar."
+#~ msgstr "Vyberte z panelu nástrojov konštrukčný nástroj."
 
 #~ msgid "Rainbow melt"
 #~ msgstr "Roztopenie dúhy"
