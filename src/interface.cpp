@@ -182,7 +182,7 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
                 gint h = MIN(gdk_screen_height(), ph);
                 gint x = MIN(gdk_screen_width() - MIN_ONSCREEN_DISTANCE, px);
                 gint y = MIN(gdk_screen_height() - MIN_ONSCREEN_DISTANCE, py);
-                if (w>0 && h>0 && x>0 && y>0) {
+                if (w>0 && h>0) {
                     x = MIN(gdk_screen_width() - w, x);
                     y = MIN(gdk_screen_height() - h, y);
                 }
@@ -196,11 +196,9 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
 
                 // Empirically it seems that active_desktop==this desktop only the first time a
                 // desktop is created.
-                if (x>0 && y>0) {
-                    SPDesktop *active_desktop = SP_ACTIVE_DESKTOP;
-                    if (active_desktop == desktop || active_desktop==NULL) {
-                        desktop->setWindowPosition(Geom::Point(x, y));
-                    }
+                SPDesktop *active_desktop = SP_ACTIVE_DESKTOP;
+                if (active_desktop == desktop || active_desktop==NULL) {
+                    desktop->setWindowPosition(Geom::Point(x, y));
                 }
             }
             if (maxed) {

@@ -435,11 +435,11 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_WINDOW_X:
-            nv->window_x = value ? atoi(value) : -1; // -1 means not set
+            nv->window_x = value ? atoi(value) : 0;
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_WINDOW_Y:
-            nv->window_y = value ? atoi(value) : -1; // -1 means not set
+            nv->window_y = value ? atoi(value) : 0;
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_GLOBAL:
@@ -750,14 +750,10 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
         gint h = MIN(gdk_screen_height(), nv->window_height);
         gint x = MIN(gdk_screen_width() - MIN_ONSCREEN_DISTANCE, nv->window_x);
         gint y = MIN(gdk_screen_height() - MIN_ONSCREEN_DISTANCE, nv->window_y);
-        if (w>0 && h>0 && x>0 && y>0) {
-            x = MIN(gdk_screen_width() - w, x);
-            y = MIN(gdk_screen_height() - h, y);
-        }
         if (w>0 && h>0) {
             desktop->setWindowSize(w, h);
-        }
-        if (x>0 && y>0) {
+            x = MIN(gdk_screen_width() - w, x);
+            y = MIN(gdk_screen_height() - h, y);
             desktop->setWindowPosition(Geom::Point(x, y));
         }
     }
