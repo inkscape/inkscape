@@ -822,15 +822,13 @@
 <feComposite id="feComposite2868" in="SourceGraphic" operator="out" in2="result2" />
 <feBlend id="feBlend2870" blend="normal" mode="darken" />
 </filter>
-<filter id="Blackhol0" inkscape:label="Black hole" inkscape:menu="Morphology" inkscape:menu-tooltip="Creates a black light inside and outside" height="1.5" width="1.5" y="-0.25" x="-0.25">
-<feGaussianBlur id="feGaussianBlur3174" stdDeviation="5" in="SourceAlpha" result="result1" />
-<feComposite id="feComposite3176" operator="arithmetic" k2="3.2000000000000002" k3="0" k1="-1" k4="-2" result="result3" />
-<feColorMatrix id="feColorMatrix3178" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 0 " result="result2" />
-<feComposite id="feComposite3180" result="fbSourceGraphic" in="SourceGraphic" operator="out" />
-<feGaussianBlur id="feGaussianBlur3182" in="fbSourceGraphic" stdDeviation="0.01" result="result4" />
-<feComposite id="feComposite3184" operator="out" in="fbSourceGraphic" />
-<feBlend id="feBlend3186" blend="normal" mode="multiply" in="result1" />
-<feBlend id="feBlend3188" blend="normal" mode="screen" in="result4" />
+<filter id="BlackHol0" inkscape:label="Black hole" inkscape:menu="Morphology" inkscape:menu-tooltip="Creates a black light inside and outside" height="1.5" width="1.5" y="-0.25" x="-0.25">
+<feGaussianBlur id="feGaussianBlur2860" stdDeviation="5" in="SourceAlpha" result="result1" />
+<feComposite id="feComposite2862" operator="arithmetic" k2="3.2000000000000002" k3="0" k1="-1" k4="-2" result="result3" />
+<feColorMatrix id="feColorMatrix2864" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 0 " result="result2" />
+<feComposite id="feComposite2866" result="fbSourceGraphic" in="SourceGraphic" operator="out" />
+<feBlend id="feBlend2872" blend="normal" mode="multiply" in="result1" in2="fbSourceGraphic" />
+<feBlend id="feBlend2874" blend="normal" mode="screen" in="fbSourceGraphic" />
 </filter>
 <filter id="Smoutlin0" inkscape:label="Smooth outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Outlining the lines and smoothing their crossings">
 <feGaussianBlur id="feGaussianBlur3142" stdDeviation="4" />
@@ -1021,15 +1019,12 @@
 <filter id="filter3068b" inkscape:label="Invert hue" inkscape:menu="Color" inkscape:menu-tooltip="Invert hue, or rotate it" y="0" x="0" height="1" width="1">
 <feColorMatrix id="feColorMatrix1093" type="hueRotate" values="180" />
 </filter>
-<filter id="Outline0" inkscape:label="Outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Draws an outline around">
-<feGaussianBlur id="feGaussianBlur3019" result="result1" in="SourceAlpha" stdDeviation="1.5" />
-<feComposite id="feComposite3021" result="result3" k4="-2" k1="-1" k3="0" k2="3.2000000000000002" operator="arithmetic" />
-<feColorMatrix id="feColorMatrix3023" result="result2" values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 0 " type="matrix" />
-<feComposite id="feComposite3025" operator="out" in="SourceGraphic" result="fbSourceGraphic" />
-<feGaussianBlur id="feGaussianBlur3027" result="result4" stdDeviation="0.29999999999999999" in="fbSourceGraphic" />
-<feComposite id="feComposite3029" result="result5" in="result4" operator="xor" k2="0" k1="0" k3="0" />
-<feBlend id="feBlend3031" in="result5" mode="darken" blend="normal" result="result6" />
-<feBlend id="feBlend3033" blend="normal" mode="darken" in2="result6" in="result4" />
+<filter id="Outlin0" inkscape:label="Outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Draws an outline around">
+<feGaussianBlur id="feGaussianBlur2915" result="result1" in="SourceAlpha" stdDeviation="3" />
+<feComposite id="feComposite2917" result="result3" k4="-2" k1="-1" k3="0" k2="3.2000000000000002" operator="arithmetic" />
+<feColorMatrix id="feColorMatrix2919" result="result2" values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 0 " type="matrix" />
+<feComposite id="feComposite2921" operator="out" in="SourceGraphic" result="fbSourceGraphic" />
+<feBlend id="feBlend2929" blend="normal" mode="darken" in2="fbSourceGraphic" in="fbSourceGraphic" />
 </filter>
 <filter id="OutlinDoub0" inkscape:label="Outline, double" inkscape:menu="Morphology" inkscape:menu-tooltip="Draws a smooth line inside colorized with the color it overlays">
 <feGaussianBlur id="feGaussianBlur3226" stdDeviation="3" in="SourceAlpha" result="result1" />
@@ -1338,15 +1333,13 @@
 <feComposite id="feComposite4835" operator="in" in2="result3" result="result6" />
 <feBlend id="feBlend4837" blend="normal" mode="multiply" in="result6" in2="result6" />
 </filter>
-<filter id="colout0" inkscape:label="Color outline" inkscape:menu="Morphology" inkscape:menu-tooltip="A colorizable outline with adjustable width and blur" height="1.2" y="-0.1" width="1.2" x="-0.1">
-<feOffset id="feOffset2908" result="result11" dx="0" dy="0" />
-<feGaussianBlur id="feGaussianBlur2910" stdDeviation="2" result="result8" />
-<feColorMatrix id="feColorMatrix2912" result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8.5 -7.5 " />
-<feComposite id="feComposite2914" result="result6" in="SourceGraphic" operator="atop" in2="result5" />
-<feFlood id="feFlood2916" result="result10" in="result6" flood-opacity="1" flood-color="rgb(203,134,255)" />
-<feComposite id="feComposite2918" result="result2" operator="in" in2="SourceGraphic" />
-<feComposite id="feComposite2920" result="result9" operator="in" in="result2" in2="result2" />
-<feBlend id="feBlend2922" blend="normal" mode="normal" in="result6" in2="result9" />
+<filter id="ColorOutl0" inkscape:label="Color outline" inkscape:menu="Morphology" inkscape:menu-tooltip="A colorizable outline with adjustable width and blur" height="1.2" y="-0.1" width="1.2" x="-0.1">
+<feGaussianBlur id="feGaussianBlur2883" stdDeviation="4" result="result8" />
+<feColorMatrix id="feColorMatrix2885" result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -9 " />
+<feComposite id="feComposite2887" result="result6" in="SourceGraphic" operator="in" in2="result5" />
+<feFlood id="feFlood2889" result="result10" in="result6" flood-opacity="1" flood-color="rgb(203,134,255)" />
+<feComposite id="feComposite2891" result="result2" operator="in" in2="SourceGraphic" />
+<feBlend id="feBlend2895" blend="normal" mode="normal" in="result6" in2="result2" />
 </filter>
 <filter id="Liquid0" inkscape:label="Liquid" inkscape:menu="Textures" inkscape:menu-tooltip="Colorizable filling with liquid transparency" height="2" y="-0.5" width="1.5" x="-0.25">
 <feGaussianBlur id="feGaussianBlur4751" stdDeviation="5" result="result8" />
@@ -1665,6 +1658,14 @@
 <feGaussianBlur id="feGaussianBlur3051" result="result7" in="result2" stdDeviation="0.55" />
 <feColorMatrix id="feColorMatrix3053" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -1.7 " type="matrix" result="result9" />
 <feComposite id="feComposite3055" operator="arithmetic" k2="1.25" />
+</filter>
+<filter id="Crosblo0" x="-0.25" y="-0.25" width="1.5" height="1.5" inkscape:menu-tooltip="Creates colourizable blotches which smoothly flow over the edges of the lines at their crossings" inkscape:menu="Protrusions" inkscape:label="Cross blotches">
+<feFlood id="feFlood2842" result="result4" flood-color="rgb(176,133,195)" flood-opacity="1" />
+<feGaussianBlur id="feGaussianBlur2844" result="result1" in="SourceAlpha" stdDeviation="12" />
+<feComposite id="feComposite2846" in2="result4" in="result1" result="result3" k4="-2" k1="0" k3="0" k2="4" operator="arithmetic" />
+<feColorMatrix id="feColorMatrix2848" result="result2" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -2 " />
+<feComposite id="feComposite2850" operator="in" in="result4" result="fbSourceGraphic" />
+<feBlend id="feBlend2852" in2="SourceGraphic" in="fbSourceGraphic" mode="normal" blend="normal" result="result5" />
 </filter>
 </defs>
 </svg>
