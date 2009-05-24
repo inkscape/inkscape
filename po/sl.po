@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.47\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-05-18 00:51+0100\n"
+"POT-Creation-Date: 2009-05-24 22:51+0200\n"
+"PO-Revision-Date: 2009-05-24 18:01+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -44,9 +44,8 @@ msgstr "Ne bleščeči žele"
 #: ../share/filters/filters.svg.h:71 ../share/filters/filters.svg.h:73
 #: ../share/filters/filters.svg.h:91 ../share/filters/filters.svg.h:104
 #: ../share/filters/filters.svg.h:105
-#, fuzzy
 msgid "Bevels"
-msgstr "Raven"
+msgstr "Izbokline"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
@@ -73,9 +72,8 @@ msgid "Metal casting"
 msgstr "Kovinski odlitek"
 
 #: ../share/filters/filters.svg.h:5
-#, fuzzy
 msgid "Smooth drop-like bevel with metallic finish"
-msgstr "Gladek kaplji podoben bevel s kovinsko finish"
+msgstr "Gladka, kaplji podobna izbočenost s kovinsko površino"
 
 #: ../share/filters/filters.svg.h:6
 msgid "Motion blur, horizontal"
@@ -118,9 +116,8 @@ msgid "Edges are partly feathered out"
 msgstr "Robovi so delno operjeni"
 
 #: ../share/filters/filters.svg.h:9
-#, fuzzy
 msgid "Cutout"
-msgstr "Izrez-profil"
+msgstr "Izrezek"
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
 #: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:122
@@ -131,7 +128,6 @@ msgid "Shadows and Glows"
 msgstr "Sence in žarenje"
 
 #: ../share/filters/filters.svg.h:9
-#, fuzzy
 msgid "Drop shadow under the cut-out of the shape"
 msgstr "Vrzi senco pod izrezek oblike"
 
@@ -140,7 +136,6 @@ msgid "Jigsaw piece"
 msgstr "Kos zlaganke"
 
 #: ../share/filters/filters.svg.h:10
-#, fuzzy
 msgid "Low, sharp bevel"
 msgstr "Nizka, ostra izboklina"
 
@@ -156,7 +151,6 @@ msgid "ABCs"
 msgstr "ABC-ji"
 
 #: ../share/filters/filters.svg.h:11
-#, fuzzy
 msgid "Small-scale roughening to edges and content"
 msgstr "Manjša grobost robov in vsebine"
 
@@ -170,21 +164,19 @@ msgstr "Gumijasti žig"
 #: ../share/filters/filters.svg.h:37 ../share/filters/filters.svg.h:38
 #: ../share/filters/filters.svg.h:39 ../share/filters/filters.svg.h:116
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:120
-#, fuzzy
 msgid "Overlays"
-msgstr "Prek"
+msgstr "Prekrivala"
 
 #: ../share/filters/filters.svg.h:12
-#, fuzzy
 msgid "Random whiteouts inside"
-msgstr "Naključno razpostavi"
+msgstr "Naključne notranje beline"
 
 #: ../share/filters/filters.svg.h:13
 msgid "Ink bleed"
 msgstr "Razlitje črnila"
 
 #: ../share/filters/filters.svg.h:13 ../share/filters/filters.svg.h:14
-#: ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:42 ../share/filters/filters.svg.h:171
 msgid "Protrusions"
 msgstr "Štrline"
 
@@ -214,7 +206,7 @@ msgstr "Slemenast rob"
 
 #: ../share/filters/filters.svg.h:16
 msgid "Ridged border with inner bevel"
-msgstr ""
+msgstr "Brazdan rob z notranjim nagibom"
 
 #: ../share/filters/filters.svg.h:17
 msgid "Ripple"
@@ -362,7 +354,6 @@ msgid "Detect color edges and retrace them in grayscale"
 msgstr "Razpoznaj barvne robove in jim sledi v sivinah"
 
 #: ../share/filters/filters.svg.h:31
-#, fuzzy
 msgid "Blueprint"
 msgstr "Modri obris"
 
@@ -450,7 +441,7 @@ msgstr "Teksture"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Bulging, knotty, slick 3D surface"
-msgstr ""
+msgstr "Izbočena, grčava, polzka 3D-ploskev "
 
 #: ../share/filters/filters.svg.h:37
 msgid "Barbed wire"
@@ -458,7 +449,7 @@ msgstr "Bodeča žica"
 
 #: ../share/filters/filters.svg.h:37
 msgid "Gray bevelled wires with drop shadows"
-msgstr ""
+msgstr "Sive ubočene žice s spuščenimi sencami"
 
 #: ../share/filters/filters.svg.h:38
 msgid "Swiss cheese"
@@ -466,7 +457,7 @@ msgstr "Švicarski sir"
 
 #: ../share/filters/filters.svg.h:38
 msgid "Random inner-bevel holes"
-msgstr ""
+msgstr "Naključne vbočene luknje"
 
 #: ../share/filters/filters.svg.h:39
 msgid "Blue cheese"
@@ -482,14 +473,13 @@ msgstr "Gumb"
 
 #: ../share/filters/filters.svg.h:40
 msgid "Soft bevel, slightly depressed middle"
-msgstr ""
+msgstr "Mehka izbočenost, rahlo upadla sredina"
 
 #: ../share/filters/filters.svg.h:41
 msgid "Inset"
 msgstr "Vstavek"
 
 #: ../share/filters/filters.svg.h:41
-#, fuzzy
 msgid "Shadowy outer bevel"
 msgstr "Senčna zunanja izbočenost"
 
@@ -498,7 +488,6 @@ msgid "Dripping"
 msgstr "Premočeno"
 
 #: ../share/filters/filters.svg.h:42
-#, fuzzy
 msgid "Random paint streaks downwards"
 msgstr "Naključne proge barve navzdol"
 
@@ -557,6 +546,8 @@ msgid ""
 "Highly flexible bubbles effect depending on color hue saturation and "
 "luminance"
 msgstr ""
+"Visoko prilagodljiv učinek mehurčkov glede na barvo, obarvanost, nasičenost "
+"in osveljenost"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Glowing bubble"
@@ -566,9 +557,8 @@ msgstr "Žareči mehurček"
 #: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:67
 #: ../share/filters/filters.svg.h:68 ../share/filters/filters.svg.h:70
 #: ../share/filters/filters.svg.h:72
-#, fuzzy
 msgid "Ridges"
-msgstr "Robovi"
+msgstr "Brazde"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Bubble effect with refraction and glow"
@@ -583,31 +573,28 @@ msgid "Neon light effect with glow"
 msgstr "Svetlobni učinek neona z žarenjem"
 
 #: ../share/filters/filters.svg.h:51
-#, fuzzy
 msgid "Melt and glow"
-msgstr "Levi kot"
+msgstr "Taljeno in žareče"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Melting parts of object together, with a glossy bevel and a glow"
-msgstr ""
+msgstr "Stali dele predmeta skupaj, z bleščečo izbočenostjo in žarenjem"
 
 #: ../share/filters/filters.svg.h:52
-#, fuzzy
 msgid "Badge"
-msgstr "Obrobi"
+msgstr "Priponka"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Metal or plastic badge bevel"
-msgstr ""
+msgstr "Izbočenost kovinske ali plastične priponke"
 
 #: ../share/filters/filters.svg.h:53
-#, fuzzy
 msgid "Pastel Bevel"
-msgstr "Velikost lepljenja"
+msgstr "Pastelna izbočenost"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr ""
+msgstr "Nežna, pastelno obarvana, nejasna izbočenost"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
@@ -618,14 +605,12 @@ msgid "Thin like a soap membrane"
 msgstr "Tanka membrana kot pri milnem mehurčku"
 
 #: ../share/filters/filters.svg.h:55
-#, fuzzy
 msgid "Soft ridge"
-msgstr "Usmerjena svetloba"
+msgstr "Nežna brazda"
 
 #: ../share/filters/filters.svg.h:55
-#, fuzzy
 msgid "Soft pastel ridge"
-msgstr "Nastavi velikost strani"
+msgstr "Nežna pastelna brazda"
 
 #: ../share/filters/filters.svg.h:56
 msgid "Glowing metal"
@@ -645,9 +630,8 @@ msgid "Scatter"
 msgstr "Razprši"
 
 #: ../share/filters/filters.svg.h:57
-#, fuzzy
 msgid "Leaves on the ground in Fall, or living foliage"
-msgstr "Listje na tleh jeseni, ali živo listje"
+msgstr "Jesensko listje na tleh ali živo listje"
 
 #: ../share/filters/filters.svg.h:58
 msgid "Translucent"
@@ -658,9 +642,8 @@ msgid "Illuminated translucent plastic effect"
 msgstr "Osvetljen, prosojen, mlečen plastični učinek"
 
 #: ../share/filters/filters.svg.h:59
-#, fuzzy
 msgid "Cross-smooth"
-msgstr "gladka"
+msgstr "Navzkrižno glajenje"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Blur inner borders and intersections"
@@ -682,7 +665,7 @@ msgstr "Razjedena kovina"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
-msgstr ""
+msgstr "Razžrta kovinska tekstura z brazdami, utori, luknjami in izboklinami"
 
 #: ../share/filters/filters.svg.h:62
 msgid "Cracked Lava"
@@ -747,7 +730,7 @@ msgstr "Kovinska barva"
 #: ../share/filters/filters.svg.h:69
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr ""
+msgstr "Kovinski učinek z mehko svetlobo, rahlo prosojen na robovih"
 
 #: ../share/filters/filters.svg.h:70
 msgid "Dragee"
@@ -755,7 +738,7 @@ msgstr "Draže"
 
 #: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge with a pearlescent look"
-msgstr ""
+msgstr "Želatinasta brazda z bisernim videzom"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Raised border"
@@ -763,22 +746,21 @@ msgstr "Dvignjen rob"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Strongly raised border around a flat surface"
-msgstr ""
+msgstr "Močno dvignjen rob okoli ravne ploskve"
 
 #: ../share/filters/filters.svg.h:72
 msgid "Metallized ridge"
-msgstr ""
+msgstr "Kovinska brazda"
 
 #: ../share/filters/filters.svg.h:72
 msgid "Gel Ridge metallized at its top"
-msgstr ""
+msgstr "Želatinasta brazda, ki je na vrhu kovinska"
 
 #: ../share/filters/filters.svg.h:73
 msgid "Fat oil"
 msgstr "Mastno olje"
 
 #: ../share/filters/filters.svg.h:73
-#, fuzzy
 msgid "Fat oil with some adjustable turbulence"
 msgstr "Mastno olje z nekaj prilagodljive turbulence"
 
@@ -788,8 +770,9 @@ msgid "Colorize"
 msgstr "Obarvaj"
 
 #: ../share/filters/filters.svg.h:74
+#, fuzzy
 msgid "Gives the flood color to the dark parts of the image"
-msgstr ""
+msgstr "Poda barvo poplave temnim delom slike"
 
 #: ../share/filters/filters.svg.h:75
 msgid "Parallel hollow"
@@ -806,7 +789,7 @@ msgstr "Oblikoslovje"
 
 #: ../share/filters/filters.svg.h:75
 msgid "A blurry hollow going parallel to the edge on the inside"
-msgstr ""
+msgstr "Nerazločna votlina, ki poteka vzdolž roba notranjosti"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Hole"
@@ -814,7 +797,7 @@ msgstr "Luknja"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Opens a smooth hole inside the shape"
-msgstr ""
+msgstr "Odpre gladko luknjo v liku"
 
 #: ../share/filters/filters.svg.h:77
 msgid "Black hole"
@@ -822,7 +805,7 @@ msgstr "Črna luknja"
 
 #: ../share/filters/filters.svg.h:77
 msgid "Creates a black light inside and outside"
-msgstr ""
+msgstr "Ustvari črno svetlobo znotraj in zunaj"
 
 #: ../share/filters/filters.svg.h:78
 msgid "Smooth outline"
@@ -839,6 +822,8 @@ msgstr "Kocke"
 #: ../share/filters/filters.svg.h:79
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr ""
+"Raztresene kocke; prilagodite morfološki primitiv, če želite spremeniti "
+"velikost"
 
 #: ../share/filters/filters.svg.h:80
 msgid "Peel off"
@@ -846,7 +831,7 @@ msgstr "Olušči"
 
 #: ../share/filters/filters.svg.h:80
 msgid "Peeling painting on a wall"
-msgstr ""
+msgstr "Stenska slika, ki se lupi"
 
 #: ../share/filters/filters.svg.h:81
 msgid "Gold splatter"
@@ -870,7 +855,7 @@ msgstr "Nagubana plastika"
 
 #: ../share/filters/filters.svg.h:83
 msgid "Crumpled matte plastic, with melted edge"
-msgstr ""
+msgstr "Nagubana matirana plastika, s staljenim robom"
 
 #: ../share/filters/filters.svg.h:84
 msgid "Enamel jewelry"
@@ -887,6 +872,7 @@ msgstr "Hrapav papir"
 #: ../share/filters/filters.svg.h:85
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
 msgstr ""
+"Učinek akvarelnega papirja, ki ga lahko uporabljate za slike in predmete"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Rough and glossy"
@@ -896,6 +882,8 @@ msgstr "Hrapavo in bleščeče"
 msgid ""
 "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr ""
+"Učinek nagubanega bleščečega papirja, ki ga lahko uporabite za slike ali "
+"predmete"
 
 #: ../share/filters/filters.svg.h:87
 msgid "In and Out"
@@ -926,12 +914,10 @@ msgid "Cool outside"
 msgstr "Hladno navzven"
 
 #: ../share/filters/filters.svg.h:90
-#, fuzzy
 msgid "Blurred colorized contour, empty inside"
 msgstr "Zabrisana obarvana kontura, znotraj prazna"
 
 #: ../share/filters/filters.svg.h:91
-#, fuzzy
 msgid "Electronic microscopy"
 msgstr "Elektronska mikroskopija"
 
@@ -939,6 +925,8 @@ msgstr "Elektronska mikroskopija"
 msgid ""
 "Bevel, crude light, discoloration and glow like in electronic microscopy"
 msgstr ""
+"Izbočenost, surova svetloba, razbarvanost in žarenje, kot pri elektronski "
+"mikroskopiji"
 
 #: ../share/filters/filters.svg.h:92
 msgid "Tartan"
@@ -954,7 +942,7 @@ msgstr "Preobrni obarvanost"
 
 #: ../share/filters/filters.svg.h:93
 msgid "Invert hue, or rotate it"
-msgstr ""
+msgstr "Preobrni obarvanost ali jo zasukaj"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Outline"
@@ -970,15 +958,17 @@ msgstr "Oris, dvojni"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
-msgstr ""
+msgstr "Nariše gladko notranjo črto, obarvano z barvo, ki jo prekriva"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Fancy blur"
 msgstr "Modna zabrisanost"
 
 #: ../share/filters/filters.svg.h:96
+#, fuzzy
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr ""
+"Gladka obarvana kontura, ki omogoča raznasičenje in sukanje obarvanosti"
 
 #: ../share/filters/filters.svg.h:97
 msgid "Glow"
@@ -989,31 +979,31 @@ msgid "Glow of object's own color at the edges"
 msgstr "Žarenje barve predmeta na robovih"
 
 #: ../share/filters/filters.svg.h:98
-#, fuzzy
 msgid "Ghost outline"
-msgstr "Zgolj obroba"
+msgstr "Prikazen orisa"
 
 #: ../share/filters/filters.svg.h:98
-#, fuzzy
 msgid "Adds a glowing blur and removes the shape"
 msgstr "Doda žarečo zabrisanost in odstrani obliko"
 
 #: ../share/filters/filters.svg.h:99
-#, fuzzy
 msgid "Color emboss"
-msgstr "Barve"
+msgstr "Barvni relief"
 
 #: ../share/filters/filters.svg.h:99
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
 msgstr ""
+"Klasični ali obarvani učinek reliefnega okraševanja: sivinski, barvni in "
+"tridimenzionalni relief"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Soft bump"
-msgstr ""
+msgstr "Nežna izboklina"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Convolution bump; with a blur, it can give nice embossing effects"
 msgstr ""
+"Konvolucijska izboklina; z zabrisanostjo lahko dosežete lepe učinke reliefa"
 
 #: ../share/filters/filters.svg.h:101
 #: ../src/extension/internal/bitmap/solarize.cpp:36
@@ -1062,7 +1052,7 @@ msgstr "Učinek osvetljenega stekla s svetlobo od spodaj"
 
 #: ../share/filters/filters.svg.h:106
 msgid "HSL Bumps, alpha"
-msgstr ""
+msgstr "Izbokline HSL, alfa"
 
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
 #: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:169
@@ -1075,6 +1065,8 @@ msgid ""
 "Same than HSL bumps but with an alpha added for combination with "
 "transparency depending filters"
 msgstr ""
+"Enako kot izbokline HSL, vendar z dodano alfo, namenjeno kombinaciji s "
+"filtri, ki so odvisni od prosojnosti"
 
 #: ../share/filters/filters.svg.h:107
 msgid "HSL Bubbles, alpha"
@@ -1104,7 +1096,7 @@ msgstr "Operjeno"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
-msgstr ""
+msgstr "Zabrisana maska na robu brez spreminjanja vsebine"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Blur content"
@@ -1112,7 +1104,7 @@ msgstr "Zabriši vsebino"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
-msgstr ""
+msgstr "Zabriši vsebino predmetov, ohrani obris"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Specular light"
@@ -1128,7 +1120,7 @@ msgstr "Ogrobi znotraj"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Roughen all inside shapes"
-msgstr ""
+msgstr "Ohrapavi vse notranje like"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Evanescent"
@@ -1149,15 +1141,16 @@ msgstr "Kreda in spužva"
 #: ../share/filters/filters.svg.h:115
 #, fuzzy
 msgid "Low turbulence gives sponge look and high turbulence chalk"
-msgstr "Nizka turbulenca daje videz spužve in visoko turbulenčni pastel"
+msgstr "Nizka turbulenca daje spužvast videz in visoko turbulenčni pastel"
 
 #: ../share/filters/filters.svg.h:116
 msgid "People"
 msgstr "Ljudje"
 
 #: ../share/filters/filters.svg.h:116
+#, fuzzy
 msgid "Colorized blotches, like a crowd of people"
-msgstr ""
+msgstr "Obarvane packe, kot množica ljudi"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Scotland"
@@ -1173,15 +1166,16 @@ msgstr "Prosojnost šuma"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Basic noise transparency texture"
-msgstr ""
+msgstr "Tekstura osnovnega prosojnega šuma"
 
 #: ../share/filters/filters.svg.h:119
 msgid "Noise fill"
 msgstr "Polnilo šuma"
 
 #: ../share/filters/filters.svg.h:119
+#, fuzzy
 msgid "Basic noise fill texture; adjust color in Flood"
-msgstr ""
+msgstr "Osnovna tekstura polnila šuma; prilagodite barvo v Flood"
 
 #: ../share/filters/filters.svg.h:120
 msgid "Garden of Delights"
@@ -1197,11 +1191,11 @@ msgid "Diffuse light"
 msgstr "Razpršena svetloba"
 
 #: ../share/filters/filters.svg.h:121
+#, fuzzy
 msgid "Basic diffuse bevel to use for building textures"
-msgstr ""
+msgstr "Osnovna razpršena izboklina, uporabna za gradbene teksture"
 
 #: ../share/filters/filters.svg.h:122
-#, fuzzy
 msgid "Cutout Glow"
 msgstr "Žarenje izrezka"
 
@@ -1211,17 +1205,16 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:123
 msgid "HSL Bumps, diffuse"
-msgstr ""
+msgstr "Izbokline HSL, razpršene"
 
 #: ../share/filters/filters.svg.h:123
 msgid ""
 "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
-msgstr ""
+msgstr "Enake kot izbokline HSL, vendar z razpršenim odsevom namesto zrcalnega"
 
 #: ../share/filters/filters.svg.h:124
-#, fuzzy
 msgid "Dark Emboss"
-msgstr "Reliefno okrasi"
+msgstr "Temni relief"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
@@ -1232,8 +1225,11 @@ msgid "Simple blur"
 msgstr "Enostavna zabrisanost"
 
 #: ../share/filters/filters.svg.h:125
+#, fuzzy
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
 msgstr ""
+"Enostavna Gaussova zabrisanost, enako kot drsnik zabrisanosti v pogovornem "
+"oknu Polnilo in poteza"
 
 #: ../share/filters/filters.svg.h:126
 msgid "HSL Bubbles, diffuse"
@@ -1293,7 +1289,7 @@ msgstr "Barvna obroba"
 
 #: ../share/filters/filters.svg.h:132
 msgid "A colorizable outline with adjustable width and blur"
-msgstr ""
+msgstr "Obarvljiv oris s prilagodljivo širino in zabrisanostjo"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Liquid"
@@ -1312,27 +1308,27 @@ msgid "Cloudy watercolor effect"
 msgstr "Nejasen učinek akvarela"
 
 #: ../share/filters/filters.svg.h:135
-#, fuzzy
 msgid "Felt"
-msgstr "čevljev"
+msgstr "Klobučevina"
 
 #: ../share/filters/filters.svg.h:135
 msgid ""
 "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr ""
+"Klobučevini podobna tekstura z barvno turbulenco, ki je rahlo temnejša na "
+"robovih"
 
 #: ../share/filters/filters.svg.h:136
-#, fuzzy
 msgid "Ink paint"
-msgstr "Ni barve"
+msgstr "Črnilo"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Ink paint on paper with some turbulent color shift"
-msgstr ""
+msgstr "Črnilo na papirju z nekaj turbulentnega barvnega zamika"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Tinted rainbow"
-msgstr ""
+msgstr "Rahlo obarvana mavrica"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Smooth rainbow colors melted along the edges and colorizable"
@@ -1355,17 +1351,16 @@ msgid "Enhance outline and glows inside and outside"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:140
-#, fuzzy
 msgid "Dark and glow"
 msgstr "Temno in žareče"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Flex metal"
-msgstr ""
+msgstr "Upognjena kovina"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr ""
+msgstr "Svetel, poliran neenakomeren kovinski odlitek, obarvljiv"
 
 #: ../share/filters/filters.svg.h:142
 msgid "Comics draft"
@@ -1394,29 +1389,28 @@ msgid "Cartoon paint style with some fading at the edges"
 msgstr "Striparski slog slikanja z nekaj bledenja na robovih"
 
 #: ../share/filters/filters.svg.h:144
-#, fuzzy
 msgid "Smooth shader NR"
-msgstr "Zgladi vozlišča"
+msgstr "Gladki senčilnik (NR)"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Smooth shading with a graphite pencil grey"
-msgstr ""
+msgstr "Gladko senčenje s sivo barvo grafitnega svinčnika"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Emboss shader NR"
-msgstr ""
+msgstr "Reliefni senčilnik (NR)"
 
 #: ../share/filters/filters.svg.h:145
 msgid "Combination of smooth shading and embossing"
-msgstr ""
+msgstr "Kombinacija gladkega senčenja in reliefnega bočenja"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Smooth shader dark NR"
-msgstr ""
+msgstr "Temni gladki senčilnik (NR)"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Dark version of non realistic smooth shading"
-msgstr ""
+msgstr "Temna različica nerealističnega gladkega senčenja"
 
 #: ../share/filters/filters.svg.h:147
 msgid "Comics"
@@ -1427,72 +1421,70 @@ msgid "Imitation of black and white cartoon shading"
 msgstr "Oponašanje črno belega striparskega senčenja"
 
 #: ../share/filters/filters.svg.h:148
-#, fuzzy
 msgid "Satin NR"
-msgstr "Začetenjanje"
+msgstr "Saten (NR)"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
-msgstr ""
+msgstr "Svilnato senčenje, podobno bisernemu"
 
 #: ../share/filters/filters.svg.h:149
-#, fuzzy
 msgid "Frosted glass NR"
-msgstr "Razbito steklo"
+msgstr "Mlečno steklo (NR)"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
-msgstr ""
+msgstr "Nerealistična imitacija mlečnega stekla"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Smooth shader contour NR"
-msgstr ""
+msgstr "Orisni gladki senčilnik (NR)"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Contouring version of smooth shader"
-msgstr ""
+msgstr "Orisna različica gladkega senčilnika"
 
 #: ../share/filters/filters.svg.h:151
 msgid "Aluminium NR"
-msgstr ""
+msgstr "Aluminij (NR)"
 
 #: ../share/filters/filters.svg.h:151
 msgid "Brushed aluminium shader"
-msgstr ""
+msgstr "Senčilnik brušenega aluminija"
 
 #: ../share/filters/filters.svg.h:152
-#, fuzzy
 msgid "Comics fluid"
 msgstr "Strip, tekoče"
 
 #: ../share/filters/filters.svg.h:152
-#, fuzzy
 msgid "Fluid brushed cartoon drawing"
 msgstr "Striparska risba, z mokrim čopičem"
 
 #: ../share/filters/filters.svg.h:153
 msgid "Chrome NR"
-msgstr ""
+msgstr "Krom (NR)"
 
 #: ../share/filters/filters.svg.h:153
 msgid "Non realistic chrome shader with strong speculars"
-msgstr ""
+msgstr "Nerealistični kromast senčilnik z močnimi odsevi"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Chrome dark NR"
-msgstr ""
+msgstr "Temni krom (NR)"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Dark version of chrome shading with a ground reflection simulation"
-msgstr ""
+msgstr "Temna različica kormastega senčenja s simulacijo odseva s tal"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Wavy tartan"
-msgstr ""
+msgstr "Valujoči škotski karo"
 
 #: ../share/filters/filters.svg.h:155
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr ""
+"Vzorec tartana (škotskega kara) z valujočimi razmestitvami in izbočenostjo "
+"ob robovih"
 
 #: ../share/filters/filters.svg.h:156
 msgid "3D marble"
@@ -1500,7 +1492,7 @@ msgstr "3D-mramor"
 
 #: ../share/filters/filters.svg.h:156
 msgid "3D warped marble texture"
-msgstr ""
+msgstr "3D-ukrivljena tekstura marmorja"
 
 #: ../share/filters/filters.svg.h:157
 msgid "3D wood"
@@ -1508,16 +1500,15 @@ msgstr "3D-les"
 
 #: ../share/filters/filters.svg.h:157
 msgid "3D warped, fibered wood texture"
-msgstr ""
+msgstr "3D-ukrivljena, vlaknasta tekstura lesa"
 
 #: ../share/filters/filters.svg.h:158
-#, fuzzy
 msgid "Mother of pearl"
-msgstr "Širina papirja"
+msgstr "Biserovina"
 
 #: ../share/filters/filters.svg.h:158
 msgid "3D warped, iridescent pearly shell texture"
-msgstr ""
+msgstr "3D-ukrivljena, barve spreminjajoča tekstura biserovine"
 
 #: ../share/filters/filters.svg.h:159
 msgid "Tiger fur"
@@ -1525,12 +1516,11 @@ msgstr "Tigrova koža"
 
 #: ../share/filters/filters.svg.h:159
 msgid "Tiger fur pattern with folds and bevel around the edges"
-msgstr ""
+msgstr "Vzorec tigraste kože z gubami in izbočenostjo okoli robov"
 
 #: ../share/filters/filters.svg.h:160
-#, fuzzy
 msgid "Flow inside"
-msgstr "Hrapavi način"
+msgstr "Potek znotraj"
 
 #: ../share/filters/filters.svg.h:160
 msgid "Colorizable filling with flow inside like transparency"
@@ -1580,45 +1570,58 @@ msgid "Adds a film grain noise to images and objects"
 msgstr "Podobam in predmetom doda šum filmskega zrna"
 
 #: ../share/filters/filters.svg.h:166
-#, fuzzy
 msgid "HSL Bumps, transparent"
-msgstr "0 (prosojno)"
+msgstr "Izbokline HSL, prosojne"
 
 #: ../share/filters/filters.svg.h:166
 msgid "Highly flexible specular bump with transparency"
-msgstr ""
+msgstr "Visoko prilagodljiva odsevna izboklina s prosojnostjo"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Lead pencil"
-msgstr ""
+msgstr "Svinčen svinčnik"
 
 #: ../share/filters/filters.svg.h:167
-msgid "Give lead pencil or chromolithography or engraving or other effects"
+msgid ""
+"Give lead pencil or chromolithography or engraving or other effects to "
+"images and material filled objects"
 msgstr ""
+"Dodaj učinek svinčenega svičnika ali kromolitografije ali graviranja ali "
+"druge učinke slikam in z materiali zapolnjenim predmetov"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Velvet bump"
-msgstr ""
+msgstr "Žametna izboklina"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Gives a smooth bump velvet like"
-msgstr ""
+msgstr "Naredi gladko izboklino, podobno žametu"
 
 #: ../share/filters/filters.svg.h:169
-#, fuzzy
-msgid "Alpha engraving"
+msgid "Alpha draw"
+msgstr "Alfa-risanje"
+
+#: ../share/filters/filters.svg.h:169
+msgid "Gives a transparent drawing effect to bitmaps and materials"
+msgstr "Učinek prosojne risbe za bitne slike in materiale"
+
+#: ../share/filters/filters.svg.h:170
+msgid "Alpha paint"
 msgstr "Alfa-barvanje"
 
-#: ../share/filters/filters.svg.h:169
-msgid "Gives a transparent engraving effect to bitmaps and materials"
-msgstr ""
-
 #: ../share/filters/filters.svg.h:170
-msgid "Alpha engraving, color"
-msgstr ""
+msgid "Gives a transparent color fill effect to bitmaps and materials"
+msgstr "Učinek prosojnega barvnega polnila za bitne slike in materiale"
 
-#: ../share/filters/filters.svg.h:170
-msgid "Gives a transparent color engraving effect to bitmaps and materials"
+#: ../share/filters/filters.svg.h:171
+#, fuzzy
+msgid "Cross blotches"
+msgstr "Navzkrižno glajenje"
+
+#: ../share/filters/filters.svg.h:171
+msgid ""
+"Creates colourizable blotches which smoothly flow over the edges of the "
+"lines at their crossings"
 msgstr ""
 
 #: ../src/arc-context.cpp:303
@@ -3468,9 +3471,8 @@ msgid "grid-guide intersection"
 msgstr "Presečišče mreže in vodil"
 
 #: ../src/display/snap-indicator.cpp:81
-#, fuzzy
 msgid "cusp node"
-msgstr "Pripni na vozlišča"
+msgstr "Vozlišče konca krivulje"
 
 #: ../src/display/snap-indicator.cpp:84
 msgid "smooth node"
@@ -3533,9 +3535,8 @@ msgid "convex hull corner"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:129
-#, fuzzy
 msgid "quadrant point"
-msgstr "Ekvidistanten razmik"
+msgstr "Kvadrantna točka"
 
 #: ../src/display/snap-indicator.cpp:132
 msgid "center"
@@ -3566,9 +3567,8 @@ msgid "Smooth node"
 msgstr "Gladilni način"
 
 #: ../src/display/snap-indicator.cpp:163
-#, fuzzy
 msgid "Cusp node"
-msgstr "Odrivni način"
+msgstr "Vozlišče konca krivulje"
 
 #: ../src/display/snap-indicator.cpp:166
 msgid "Line midpoint"
@@ -3600,7 +3600,7 @@ msgstr ""
 
 #: ../src/display/snap-indicator.cpp:187
 msgid "Quadrant point"
-msgstr ""
+msgstr "Kvadrantna točka"
 
 #: ../src/display/snap-indicator.cpp:190 ../src/widgets/toolbox.cpp:6700
 msgid "Center"
@@ -3921,12 +3921,8 @@ msgstr "Širina"
 msgid "Height"
 msgstr "Višina"
 
-#. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
-#: ../src/live_effects/lpe-offset.cpp:30
-#: ../src/live_effects/lpe-parallel.cpp:46
-#: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Offset"
 msgstr "Zamik"
 
@@ -4124,7 +4120,7 @@ msgstr "Prilagodi"
 
 #: ../src/extension/internal/bitmap/contrast.cpp:47
 msgid "Increase or decrease contrast in bitmap(s)"
-msgstr ""
+msgstr "Povečaj ali pomanjšaj kontrast bitnih slik"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
 msgid "Cycle Colormap"
@@ -4153,12 +4149,10 @@ msgid "Edge"
 msgstr "Obrobi"
 
 #: ../src/extension/internal/bitmap/edge.cpp:44
-#, fuzzy
 msgid "Highlight edges of selected bitmap(s)."
 msgstr "Posvetli robove izbranih bitnih slik."
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
-#, fuzzy
 msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
 msgstr "Reliefno okrasi izbrane bitne slike -- osvetli robove s 3D-učinkom."
 
@@ -4241,18 +4235,15 @@ msgstr ""
 "obsegi polnega barvnega obsega."
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
-#, fuzzy
 msgid "Median"
-msgstr "Srednja vrednost"
+msgstr "Median"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:44
-#, fuzzy
 msgid ""
 "Replace each pixel component with the median color in a circular "
 "neighborhood."
 msgstr ""
-"Filtriraj izbrane bitne slike z zamenjevanjem komponente vsake slikovne "
-"točke z mediano barve v krožni okolici."
+"Zamenjaj komponente vsake slikovne točke z mediano barve v krožni okolici."
 
 #: ../src/extension/internal/bitmap/modulate.cpp:39
 msgid "HSB Adjust"
@@ -4401,13 +4392,12 @@ msgid "Dither"
 msgstr "Drugo"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
-#, fuzzy
 msgid ""
 "Randomly scatter pixels in selected bitmap(s), within the given radius of "
 "the original position"
 msgstr ""
-"Naključno razširi slikovne točke v izbranih bitnih slikah, v mejah radija "
-"'količine'."
+"Naključno razprši slikovne točke v izbranih bitnih slikah, v mejah podanega "
+"radija z izvornega položaja"
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
 msgid "Swirl"
@@ -4527,9 +4517,8 @@ msgstr "Rasteriziraj učinke filtrov"
 #: ../src/extension/internal/cairo-ps-out.cpp:286
 #: ../src/extension/internal/cairo-ps-out.cpp:323
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:221
-#, fuzzy
 msgid "Resolution for rasterization (dpi)"
-msgstr "Ločljivost ustvarjanja kopije bitne slike:"
+msgstr "Ločljivost rasterizacije (dpi)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:287
 #: ../src/extension/internal/cairo-ps-out.cpp:324
@@ -4653,12 +4642,10 @@ msgid "Black, blurred drop shadow"
 msgstr "Črna, zabrisana padajoča senca"
 
 #: ../src/extension/internal/filter/drop-shadow.h:90
-#, fuzzy
 msgid "Drop Glow"
-msgstr "Spusti žar"
+msgstr "Spusti žarenje"
 
 #: ../src/extension/internal/filter/drop-shadow.h:103
-#, fuzzy
 msgid "White, blurred drop glow"
 msgstr "Belo, zabrisano padajoče žarenje"
 
@@ -4863,6 +4850,7 @@ msgstr "Uvozi besedilo kot besedilo"
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:120
 msgid "Replace PDF fonts by closest-named installed fonts"
 msgstr ""
+"Zamenjaj pisave v PDF z najbolj podobno imenovanimi nameščenimi pisavami"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Embed images"
@@ -5340,7 +5328,6 @@ msgid "Wrap"
 msgstr "Prelom vrstice"
 
 #: ../src/filter-enums.cpp:95 ../src/flood-context.cpp:264
-#: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/ui/dialog/document-properties.cpp:325
 #: ../src/ui/dialog/filter-effects-dialog.cpp:468
 #: ../src/ui/dialog/inkscape-preferences.cpp:255
@@ -5703,8 +5690,7 @@ msgstr "Premakni srednje točke preliva"
 msgid "Delete gradient stop(s)"
 msgstr "Izbriši konce preliva"
 
-#: ../src/helper/units.cpp:37 ../src/live_effects/lpe-path_length.cpp:27
-#: ../share/extensions/foldablebox.inx.h:8
+#: ../src/helper/units.cpp:37 ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
 #: ../share/extensions/printing-marks.inx.h:20
 msgid "Unit"
@@ -5911,95 +5897,95 @@ msgstr "Samodejno shranjevanje sledečih dokumentov ni uspelo:\n"
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:821
 msgid "Commands Bar"
 msgstr "Vrstica ukazov"
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:821
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Pokaži ali skrij vrstico ukazov (pod meniji)"
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:823
 msgid "Snap Controls Bar"
 msgstr "Vrstica Kontrolniki pripenjanja"
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:823
 msgid "Show or hide the snapping controls"
 msgstr "Pokaži ali skrij kontrolnike pripenjanja"
 
-#: ../src/interface.cpp:827
+#: ../src/interface.cpp:825
 msgid "Tool Controls Bar"
 msgstr "Vrstica nadzora orodij"
 
-#: ../src/interface.cpp:827
+#: ../src/interface.cpp:825
 msgid "Show or hide the Tool Controls bar"
 msgstr "Pokaži ali skrij vrstico nadzora orodij"
 
-#: ../src/interface.cpp:829
+#: ../src/interface.cpp:827
 msgid "_Toolbox"
 msgstr "_Orodjarna"
 
-#: ../src/interface.cpp:829
+#: ../src/interface.cpp:827
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "Pokaži ali skrij glavno orodno vrstico (na levi)"
 
-#: ../src/interface.cpp:835
+#: ../src/interface.cpp:833
 msgid "_Palette"
 msgstr "_Paleta"
 
-#: ../src/interface.cpp:835
+#: ../src/interface.cpp:833
 msgid "Show or hide the color palette"
 msgstr "Pokaži ali skrij barvno paleto"
 
-#: ../src/interface.cpp:837
+#: ../src/interface.cpp:835
 msgid "_Statusbar"
 msgstr "Vrstica _stanja"
 
-#: ../src/interface.cpp:837
+#: ../src/interface.cpp:835
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Pokaži ali skrij vrstico stanja (na dnu okna)"
 
-#: ../src/interface.cpp:907
+#: ../src/interface.cpp:905
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Glagol \"%s\" ni znan"
 
-#: ../src/interface.cpp:946
+#: ../src/interface.cpp:944
 msgid "Open _Recent"
 msgstr "Odpri _nedavne"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1047
+#: ../src/interface.cpp:1045
 #, c-format
 msgid "Enter group #%s"
 msgstr "Vnesi skupino #%s"
 
-#: ../src/interface.cpp:1058
+#: ../src/interface.cpp:1056
 msgid "Go to parent"
 msgstr "Pojdi do starša"
 
-#: ../src/interface.cpp:1149 ../src/interface.cpp:1235
-#: ../src/interface.cpp:1338 ../src/ui/widget/selected-style.cpp:468
+#: ../src/interface.cpp:1147 ../src/interface.cpp:1233
+#: ../src/interface.cpp:1336 ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr "Spusti barvo"
 
-#: ../src/interface.cpp:1188 ../src/interface.cpp:1298
+#: ../src/interface.cpp:1186 ../src/interface.cpp:1296
 msgid "Drop color on gradient"
 msgstr "Spusti barvo na preliv"
 
-#: ../src/interface.cpp:1351
+#: ../src/interface.cpp:1349
 msgid "Could not parse SVG data"
 msgstr "Podatkov SVG ni mogoče uvoziti"
 
-#: ../src/interface.cpp:1390
+#: ../src/interface.cpp:1388
 msgid "Drop SVG"
 msgstr "Spusti SVG"
 
-#: ../src/interface.cpp:1446
+#: ../src/interface.cpp:1444
 msgid "Drop bitmap image"
 msgstr "Spusti bitno sliko"
 
-#: ../src/interface.cpp:1538
+#: ../src/interface.cpp:1536
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -6013,7 +5999,7 @@ msgstr ""
 "Datoteka že obstaja v \"%s\". Z njeno zamenjavo boste prepisali njeno "
 "dosedanjo vsebino."
 
-#: ../src/interface.cpp:1545 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1543 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr "Zamenjaj"
@@ -6703,38 +6689,6 @@ msgstr ""
 "Nobenega izmed parametrov uporabljenega učinka poti ni mogoče neposredno "
 "urejati na platnu."
 
-#: ../src/live_effects/lpe-angle_bisector.cpp:51
-#: ../src/live_effects/lpe-parallel.cpp:47
-#: ../src/live_effects/lpe-perp_bisector.cpp:103
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-msgid "Length left"
-msgstr "Dolžina levo"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:51
-#: ../src/live_effects/lpe-perp_bisector.cpp:103
-msgid "Specifies the left end of the bisector"
-msgstr "Določa levi konec bisektorja"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:52
-#: ../src/live_effects/lpe-parallel.cpp:48
-#: ../src/live_effects/lpe-perp_bisector.cpp:104
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-msgid "Length right"
-msgstr "Dolžina desno"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:52
-#: ../src/live_effects/lpe-perp_bisector.cpp:104
-msgid "Specifies the right end of the bisector"
-msgstr "Določa desni konec bisektorja"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:59
-msgid "Adjust the \"left\" end of the bisector"
-msgstr "Prilagodi \"levi\" konec bisektorja"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:60
-msgid "Adjust the \"right\" of the bisector"
-msgstr "Prilagodi \"desni\" konec bisektorja"
-
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Bend path"
 msgstr "Ukrivi pot"
@@ -6766,55 +6720,6 @@ msgstr ""
 "Zasuka izvirnik pod kotom 90 stopinj, preden ga ukrivi vzdolž poti "
 "ukrivljanja"
 
-#: ../src/live_effects/lpe-boolops.cpp:23
-msgid "Null"
-msgstr "Nič"
-
-#: ../src/live_effects/lpe-boolops.cpp:24
-msgid "Intersect"
-msgstr "Presekaj"
-
-#: ../src/live_effects/lpe-boolops.cpp:25
-msgid "Subtract A-B"
-msgstr "Odštej A-B"
-
-#: ../src/live_effects/lpe-boolops.cpp:26
-msgid "Identity A"
-msgstr "Identiteta A"
-
-#: ../src/live_effects/lpe-boolops.cpp:27
-msgid "Subtract B-A"
-msgstr "Odštej B-A"
-
-#: ../src/live_effects/lpe-boolops.cpp:28
-msgid "Identity B"
-msgstr "Identiteta B"
-
-#: ../src/live_effects/lpe-boolops.cpp:29 ../src/splivarot.cpp:96
-msgid "Exclusion"
-msgstr "Odvzem"
-
-#: ../src/live_effects/lpe-boolops.cpp:30 ../src/splivarot.cpp:66
-#: ../src/splivarot.cpp:72
-msgid "Union"
-msgstr "Združi"
-
-#: ../src/live_effects/lpe-boolops.cpp:36
-msgid "2nd path"
-msgstr "Druga pot"
-
-#: ../src/live_effects/lpe-boolops.cpp:36
-msgid "Path to which the original path will be boolop'ed."
-msgstr "Pot, vzdolž katere naj bo z logično operacijo spremenjena izvorna pot."
-
-#: ../src/live_effects/lpe-boolops.cpp:37
-msgid "Boolop type"
-msgstr "Vrsta logične operacije"
-
-#: ../src/live_effects/lpe-boolops.cpp:37
-msgid "Determines which kind of boolop will be performed."
-msgstr "Določa, kakšna vrsta logične operacije bo izvršena."
-
 #: ../src/live_effects/lpe-constructgrid.cpp:28
 msgid "Size X"
 msgstr "Velikost X"
@@ -6830,46 +6735,6 @@ msgstr "Velikost Y"
 #: ../src/live_effects/lpe-constructgrid.cpp:29
 msgid "The size of the grid in Y direction."
 msgstr "Velikost mreže v smeri Y."
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:47
-msgid "Starting"
-msgstr "Začetenjanje"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:47
-msgid "Angle of the first copy"
-msgstr "Kot prve kopije"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:48
-msgid "Rotation angle"
-msgstr "Kot sukanja"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:48
-msgid "Angle between two successive copies"
-msgstr "Kot med zaporednima kopijama"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:49
-msgid "Number of copies"
-msgstr "Število kopij"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:49
-msgid "Number of copies of the original path"
-msgstr "Število kopij izvorne poti"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:50
-msgid "Origin"
-msgstr "Izhodišče"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:50
-msgid "Origin of the rotation"
-msgstr "Izhodišče sukanja"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:61
-msgid "Adjust the starting angle"
-msgstr "Prilagodi začetni kot"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:62
-msgid "Adjust the rotation angle"
-msgstr "Prilagodi kot sukanja"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
@@ -6951,114 +6816,6 @@ msgstr "Spremeni merilo širine glede na dolžino"
 msgid "Scale the width of the stitch path relative to its length"
 msgstr "Spremeni merilo širine poti poteze relativno glede na njeno dolžino"
 
-#: ../src/live_effects/lpe-dynastroke.cpp:60
-msgid "Elliptic Pen"
-msgstr "Eliptično pero"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:61
-msgid "Thick-Thin strokes (fast)"
-msgstr "Debelo-tanke poteze (hitro)"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:62
-msgid "Thick-Thin strokes (slow)"
-msgstr "Debelo-tanke poteze (počasno)"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:67
-msgid "Sharp"
-msgstr "Ostro"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:68
-msgid "Round"
-msgstr "Zaobljeno"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-dynastroke.cpp:75
-msgid "Method"
-msgstr "Metoda"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:75
-msgid "Choose pen type"
-msgstr "Izberite vrsto peresa"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:76
-msgid "Pen width"
-msgstr "Širina peresa"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:76
-msgid "Maximal stroke width"
-msgstr "Največja debelina poteze"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:77
-msgid "Pen roundness"
-msgstr "Zaobljenost peresa"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:77
-msgid "Min/Max width ratio"
-msgstr "Razmerje največje/najmanjše širine"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:78
-msgid "angle"
-msgstr "kot"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:78
-msgid "direction of thickest strokes (opposite = thinest)"
-msgstr "smer najdebelejših potez (nasprotno = najtanjše)"
-
-#. modulo_pi(_("modulo pi"), _("Give forward and backward moves in one direction the same thickness "), "modulo_pi", &wr, this, false),
-#: ../src/live_effects/lpe-dynastroke.cpp:80
-#: ../src/live_effects/lpe-ruler.cpp:35 ../src/widgets/toolbox.cpp:5166
-msgid "Start"
-msgstr "Začetek"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:80
-#, fuzzy
-msgid "Choose start capping type"
-msgstr "Izberite vrsto odseka črte"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:81
-#: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5179
-msgid "End"
-msgstr "Konec"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:81
-#, fuzzy
-msgid "Choose end capping type"
-msgstr "Izberite vrsto odseka črte"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:82
-#, fuzzy
-msgid "Grow for"
-msgstr "Naraščaj za"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:82
-msgid "Make the stroke thiner near it's start"
-msgstr "Naredi potezo tanjšo na njenem začetku"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:83
-#, fuzzy
-msgid "Fade for"
-msgstr "Prelij za"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:83
-msgid "Make the stroke thiner near it's end"
-msgstr "Naredi potezo tanjšo proti njenemu koncu"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:84
-msgid "Round ends"
-msgstr "Zaobljeni konci"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:84
-msgid "Strokes end with a round end"
-msgstr "Poteze se zaključijo z zaobljenim koncem"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:85
-msgid "Capping"
-msgstr "Zaobljenost"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:85
-msgid "left capping"
-msgstr "Levo zaobljanje"
-
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top bend path"
 msgstr "Ukrivi pot zgoraj"
@@ -7138,7 +6895,7 @@ msgstr "Pot, vzdolž katere naj bodo ustvarjeni vmesni koraki"
 #: ../src/live_effects/lpe-interpolate.cpp:31
 #: ../src/ui/dialog/inkscape-preferences.cpp:238
 msgid "Steps"
-msgstr "Korakov"
+msgstr "Koraki"
 
 #: ../src/live_effects/lpe-interpolate.cpp:31
 msgid "Determines the number of steps from start to end path."
@@ -7177,190 +6934,43 @@ msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "add stroke width to interruption size"
-msgstr ""
+msgstr "Velikosti prekinitve dodaj širino poteze"
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "Add the stroke width to the interruption size."
-msgstr ""
+msgstr "Velikosti prekinitve dodaj širino poteze."
 
 #: ../src/live_effects/lpe-knot.cpp:326
+#, fuzzy
 msgid "add other's stroke width to interruption size"
-msgstr ""
+msgstr "Velikosti prekinitve dodaj širino poteze drugih"
 
 #: ../src/live_effects/lpe-knot.cpp:326
+#, fuzzy
 msgid "Add crossed stroke width to the interruption size."
-msgstr ""
+msgstr "Velikosti prekinitve dodaj širino prečkane poteze."
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Switcher size"
 msgstr "Velikost preklopnika"
 
 #: ../src/live_effects/lpe-knot.cpp:327
+#, fuzzy
 msgid "Orientation indicator/switcher size"
-msgstr ""
+msgstr "Pokazatelj postavitve/velikost preklopnika"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossing Signs"
-msgstr ""
+msgstr "Znaki križišča"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossings signs"
-msgstr ""
+msgstr "Znaki križišča"
 
 #: ../src/live_effects/lpe-knot.cpp:339
-#, fuzzy
 msgid "Drag to select a crossing, click to flip it"
 msgstr ""
 "Povlecite, če želite izbrati križišče, kliknite nanj, da ga prezrcalite"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-lattice.cpp:47
-msgid "Control handle 0"
-msgstr "Nadzorna ročica 0"
-
-#: ../src/live_effects/lpe-lattice.cpp:48
-msgid "Control handle 1"
-msgstr "Nadzorna ročica 1"
-
-#: ../src/live_effects/lpe-lattice.cpp:49
-msgid "Control handle 2"
-msgstr "Nadzorna ročica 2"
-
-#: ../src/live_effects/lpe-lattice.cpp:50
-msgid "Control handle 3"
-msgstr "Nadzorna ročica 3"
-
-#: ../src/live_effects/lpe-lattice.cpp:51
-msgid "Control handle 4"
-msgstr "Nadzorna ročica 4"
-
-#: ../src/live_effects/lpe-lattice.cpp:52
-msgid "Control handle 5"
-msgstr "Nadzorna ročica 5"
-
-#: ../src/live_effects/lpe-lattice.cpp:53
-msgid "Control handle 6"
-msgstr "Nadzorna ročica 6"
-
-#: ../src/live_effects/lpe-lattice.cpp:54
-msgid "Control handle 7"
-msgstr "Nadzorna ročica 7"
-
-#: ../src/live_effects/lpe-lattice.cpp:55
-msgid "Control handle 8"
-msgstr "Nadzorna ročica 8"
-
-#: ../src/live_effects/lpe-lattice.cpp:56
-msgid "Control handle 9"
-msgstr "Nadzorna ročica 9"
-
-#: ../src/live_effects/lpe-lattice.cpp:57
-msgid "Control handle 10"
-msgstr "Nadzorna ročica 10"
-
-#: ../src/live_effects/lpe-lattice.cpp:58
-msgid "Control handle 11"
-msgstr "Nadzorna ročica 11"
-
-#: ../src/live_effects/lpe-lattice.cpp:59
-msgid "Control handle 12"
-msgstr "Nadzorna ročica 12"
-
-#: ../src/live_effects/lpe-lattice.cpp:60
-msgid "Control handle 13"
-msgstr "Nadzorna ročica 13"
-
-#: ../src/live_effects/lpe-lattice.cpp:61
-msgid "Control handle 14"
-msgstr "Nadzorna ročica 14"
-
-#: ../src/live_effects/lpe-lattice.cpp:62
-msgid "Control handle 15"
-msgstr "Nadzorna ročica 15"
-
-#: ../src/live_effects/lpe-line_segment.cpp:27 ../src/widgets/toolbox.cpp:5507
-msgid "Closed"
-msgstr "Zaprta"
-
-#: ../src/live_effects/lpe-line_segment.cpp:28 ../src/widgets/toolbox.cpp:5509
-msgid "Open start"
-msgstr "Odpri začetno"
-
-#: ../src/live_effects/lpe-line_segment.cpp:29 ../src/widgets/toolbox.cpp:5511
-msgid "Open end"
-msgstr "Odpri končno"
-
-#: ../src/live_effects/lpe-line_segment.cpp:30 ../src/widgets/toolbox.cpp:5513
-msgid "Open both"
-msgstr "Odpri obe"
-
-#: ../src/live_effects/lpe-line_segment.cpp:36
-msgid "End type"
-msgstr "Vrsta konca"
-
-#: ../src/live_effects/lpe-line_segment.cpp:36
-msgid "Determines on which side the line or line segment is infinite."
-msgstr "Določa, na kateri strani je črta ali odsek črte končen."
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Discard original path?"
-msgstr "Želite opustiti izvorno pot?"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Check this to only keep the mirrored part of the path"
-msgstr "Potrdite to polje, da obdržite le zrcaljeni del poti"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-msgid "Reflection line"
-msgstr "Črta odseva"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-msgid "Line which serves as 'mirror' for the reflection"
-msgstr "Črta, ki služi kot 'zrcalo' za odsev"
-
-#: ../src/live_effects/lpe-offset.cpp:30
-msgid "Handle to control the distance of the offset from the curve"
-msgstr "Ročica za nadzor odmika od krivulje"
-
-#: ../src/live_effects/lpe-parallel.cpp:46
-msgid "Adjust the offset"
-msgstr "Prilagodi zamik"
-
-#: ../src/live_effects/lpe-parallel.cpp:47
-msgid "Specifies the left end of the parallel"
-msgstr "Določa levi konec vzporednice"
-
-#: ../src/live_effects/lpe-parallel.cpp:48
-msgid "Specifies the right end of the parallel"
-msgstr "Določa desni konec vzporednice"
-
-#: ../src/live_effects/lpe-parallel.cpp:56
-msgid "Adjust the \"left\" end of the parallel"
-msgstr "Prilagodi \"levi\" konec vzporednice"
-
-#: ../src/live_effects/lpe-parallel.cpp:57
-msgid "Adjust the \"right\" end of the parallel"
-msgstr "Prilagodi \"desni\" konec vzporednice"
-
-#: ../src/live_effects/lpe-path_length.cpp:25
-#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1514
-#: ../src/seltrans.cpp:485 ../src/ui/dialog/filter-effects-dialog.cpp:2207
-#: ../src/ui/dialog/transformation.cpp:738
-#: ../share/extensions/interp_att_g.inx.h:16
-msgid "Scale"
-msgstr "Spremeni velikost"
-
-#: ../src/live_effects/lpe-path_length.cpp:25
-msgid "Scaling factor"
-msgstr "Faktor sprem. merila"
-
-#: ../src/live_effects/lpe-path_length.cpp:28
-msgid "Display unit"
-msgstr "Prikaži enoto"
-
-#: ../src/live_effects/lpe-path_length.cpp:28
-msgid "Print unit after path length"
-msgstr "Natisni enoto po dolžini poti"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -7454,76 +7064,11 @@ msgstr "Pred uveljavitvijo zasukaj vzorec za 90 stopinj"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse nearby ends"
-msgstr ""
+msgstr "Zlij proti koncu"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr ""
-
-#: ../src/live_effects/lpe-perp_bisector.cpp:113
-msgid "Adjust the bisector's \"left\" end"
-msgstr "Prilagodi \"levi\" konec bisektorja"
-
-#: ../src/live_effects/lpe-perp_bisector.cpp:114
-msgid "Adjust the bisector's \"right\" end"
-msgstr "Prilagodi \"desni\" konec bisektorja"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-perspective_path.cpp:41
-msgid "Scale x"
-msgstr "Spremeni velikost X"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:41
-msgid "Scale factor in x direction"
-msgstr "Faktor spremembe velikosti v smeri X"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:42
-msgid "Scale y"
-msgstr "Spremeni velikost Y"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:42
-msgid "Scale factor in y direction"
-msgstr "Faktor spremembe velikosti v smeri Y"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:43
-msgid "Offset x"
-msgstr "Zamik X"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:43
-msgid "Offset in x direction"
-msgstr "Zamik v smeri X"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:44
-msgid "Offset y"
-msgstr "Zamik Y"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:44
-msgid "Offset in y direction"
-msgstr "Zamik v smeri Y"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:45
-msgid "Uses XY plane?"
-msgstr "Uporablja ravnino XY?"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:45
-msgid ""
-"If true, put the path on the left side of an imaginary box, otherwise on the "
-"right side"
-msgstr ""
-"Če je resnično, postavi pot na levo stran navideznega okvira, sicer na desno "
-"stran"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:54
-msgid "Adjust the origin"
-msgstr "Prilagodi izvor"
-
-#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-msgid "Iterations"
-msgstr "Iteracije"
-
-#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-msgid "recursivity"
-msgstr "Rekurzivnost"
+msgstr "Zlij konce bližje kot pri tej vrednosti. 0 pomeni, da zlivanja ni."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
@@ -7554,7 +7099,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "1st side, out"
-msgstr ""
+msgstr "Prva stran, navzven"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid ""
@@ -7563,9 +7108,8 @@ msgid ""
 msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
-#, fuzzy
 msgid "2nd side, in"
-msgstr "Druga stran"
+msgstr "Druga stran, navznoter"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid ""
@@ -7575,7 +7119,7 @@ msgstr ""
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "2nd side, out"
-msgstr ""
+msgstr "Druga stran, navzven"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid ""
@@ -7695,78 +7239,8 @@ msgid ""
 "Relative position to a reference point defines global bending direction and "
 "amount"
 msgstr ""
-
-#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
-msgid "Left"
-msgstr "Levo"
-
-#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
-msgid "Right"
-msgstr "Desno"
-
-#: ../src/live_effects/lpe-ruler.cpp:29 ../src/live_effects/lpe-ruler.cpp:37
-msgid "Both"
-msgstr "Oba"
-
-#: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Mark distance"
-msgstr "Razdalja med oznakami"
-
-#: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Distance between successive ruler marks"
-msgstr "Razmik med soslednimi oznakami na merilu"
-
-#: ../src/live_effects/lpe-ruler.cpp:44
-msgid "Major length"
-msgstr "Dolžina glavnih"
-
-#: ../src/live_effects/lpe-ruler.cpp:44
-msgid "Length of major ruler marks"
-msgstr "Dolžina glavnih oznak na merilu"
-
-#: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Minor length"
-msgstr "Dolžina pomožnih"
-
-#: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Length of minor ruler marks"
-msgstr "Dolžina pomožnih oznak na merilu"
-
-#: ../src/live_effects/lpe-ruler.cpp:46
-msgid "Major steps"
-msgstr "Glavni koraki"
-
-#: ../src/live_effects/lpe-ruler.cpp:46
-msgid "Draw a major mark every ... steps"
-msgstr "Nariši glavno oznako vsakih ... korakov"
-
-#: ../src/live_effects/lpe-ruler.cpp:47
-msgid "Shift marks by"
-msgstr "Zamakni oznake za"
-
-#: ../src/live_effects/lpe-ruler.cpp:47
-msgid "Shift marks by this many steps"
-msgstr "Zamakni oznake za takšno število korakov"
-
-#: ../src/live_effects/lpe-ruler.cpp:48
-msgid "Mark direction"
-msgstr "Označi smer"
-
-#: ../src/live_effects/lpe-ruler.cpp:48
-msgid "Direction of marks (when viewing along the path from start to end)"
-msgstr "Smer oznak (pri gledanju vzdolž poti od začetka proti koncu)"
-
-#: ../src/live_effects/lpe-ruler.cpp:49
-msgid "Offset of first mark"
-msgstr "Zamik prve oznake"
-
-#: ../src/live_effects/lpe-ruler.cpp:50
-msgid "Border marks"
-msgstr "Oznake robu"
-
-#: ../src/live_effects/lpe-ruler.cpp:50
-msgid "Choose whether to draw marks at the beginning and end of the path"
-msgstr ""
+"Relativen položaj glede na referenčno točko določa splošno smer in količino "
+"ukrivljanja"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-skeleton.cpp:32
@@ -7865,6 +7339,13 @@ msgstr "Konstrukcijske črte"
 msgid "How many construction lines (tangents) to draw"
 msgstr "Koliko konstrukcijskih črt (tangent) naj bo narisanih"
 
+#: ../src/live_effects/lpe-sketch.cpp:55 ../src/selection-chemistry.cpp:1514
+#: ../src/seltrans.cpp:485 ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/transformation.cpp:738
+#: ../share/extensions/interp_att_g.inx.h:16
+msgid "Scale"
+msgstr "Spremeni velikost"
+
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid ""
 "Scale factor relating curvature and length of construction lines (try "
@@ -7900,10 +7381,9 @@ msgstr ""
 #: ../src/live_effects/lpe-sketch.cpp:61
 #, fuzzy
 msgid "k_min"
-msgstr "_Sestavi"
+msgstr "k_min"
 
 #: ../src/live_effects/lpe-sketch.cpp:61
-#, fuzzy
 msgid "min curvature"
 msgstr "Najmanjša ukrivljenost"
 
@@ -7914,66 +7394,6 @@ msgstr ""
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "max curvature"
 msgstr "Največja ukrivuljenost"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:56
-#: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
-msgid "Angle"
-msgstr "Kot"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:56
-msgid "Additional angle between tangent and curve"
-msgstr "Dodaten kot med tangento in krivuljo"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:57
-msgid "Location along curve"
-msgstr "Položaj vzdolž krivulje"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:57
-msgid ""
-"Location of the point of attachment along the curve (between 0.0 and number-"
-"of-segments)"
-msgstr ""
-"Položaj točke pripenjanja vzdolž krivulje (med 0,0 in številom-odsekov)"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-msgid "Specifies the left end of the tangent"
-msgstr "Določa levi konec tangente"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-msgid "Specifies the right end of the tangent"
-msgstr "Določa desni konec tangente"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:68
-msgid "Adjust the point of attachment of the tangent"
-msgstr "Prilagodi točko pripenjanja tangente"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:69
-msgid "Adjust the \"left\" end of the tangent"
-msgstr "Prilagodi \"levi\" konec tangente"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:70
-msgid "Adjust the \"right\" end of the tangent"
-msgstr "Prilagodi \"desni\" konec tangente"
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:22
-msgid "Stack step"
-msgstr "Korak skladanja"
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:23
-msgid "point param"
-msgstr "Točkovni parameter"
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:24
-msgid "path param"
-msgstr "Parameter poti"
-
-#: ../src/live_effects/lpe-text_label.cpp:22
-msgid "Label"
-msgstr "Oznaka"
-
-#: ../src/live_effects/lpe-text_label.cpp:22
-msgid "Text label attached to the path"
-msgstr "Besedilna oznaka, pripeta na pot"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Nb of generations"
@@ -8015,9 +7435,8 @@ msgid "Reference segment"
 msgstr "Referenčni odsek"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
-#, fuzzy
 msgid "The reference segment. Defaults to bbox diameter."
-msgstr "Referenčni odsek. Privzeto na premer okvira."
+msgstr "Referenčni odsek. Privzet je premer okvira."
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
@@ -8081,10 +7500,6 @@ msgstr "Spremeni parameter besedila"
 #: ../src/live_effects/parameter/unit.cpp:77
 msgid "Change unit parameter"
 msgstr "Spremeni parameter enote"
-
-#: ../src/lpe-tool-context.cpp:274
-msgid "Choose a construction tool from the toolbar."
-msgstr "Izberite konstrukcijsko orodje v orodni vrstici."
 
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
@@ -8404,7 +7819,7 @@ msgstr "Vzor_či"
 
 #: ../src/menus-skeleton.h:198
 msgid "_Path"
-msgstr "Po_t"
+msgstr "P_ot"
 
 #: ../src/menus-skeleton.h:225
 msgid "_Text"
@@ -8412,7 +7827,7 @@ msgstr "_Besedilo"
 
 #: ../src/menus-skeleton.h:244
 msgid "Filter_s"
-msgstr "Fil_tri"
+msgstr "_Filtri"
 
 #: ../src/menus-skeleton.h:250
 msgid "Exte_nsions"
@@ -10014,7 +9429,7 @@ msgstr "<b>Lok</b>"
 #: ../src/sp-flowregion.cpp:270
 #, c-format
 msgid "Flow region"
-msgstr "Tekoče območje"
+msgstr "Območje poteka"
 
 #. TRANSLATORS: A region "cut out of" a flow region; text is not allowed to flow inside the
 #. * flow excluded region.  flowRegionExclude in SVG 1.2: see
@@ -10023,7 +9438,7 @@ msgstr "Tekoče območje"
 #: ../src/sp-flowregion.cpp:487
 #, c-format
 msgid "Flow excluded region"
-msgstr "Izključi tekoči odsek"
+msgstr "Potek po izključenem območju"
 
 #: ../src/sp-flowtext.cpp:376
 #, c-format
@@ -10132,6 +9547,10 @@ msgstr[3] "<b>Skupina %d</b> predmetov"
 msgid "<b>Line</b>"
 msgstr "<b>Črta</b>"
 
+#: ../src/splivarot.cpp:66 ../src/splivarot.cpp:72
+msgid "Union"
+msgstr "Združi"
+
 #: ../src/splivarot.cpp:78
 msgid "Intersection"
 msgstr "Presek"
@@ -10139,6 +9558,10 @@ msgstr "Presek"
 #: ../src/splivarot.cpp:84 ../src/splivarot.cpp:90
 msgid "Difference"
 msgstr "Razlika"
+
+#: ../src/splivarot.cpp:96
+msgid "Exclusion"
+msgstr "Odvzem"
 
 #: ../src/splivarot.cpp:101
 msgid "Division"
@@ -10337,7 +9760,7 @@ msgstr[3] "<b>Pogojna skupina %d</b> predmetov"
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:419
 msgid "&lt;no name found&gt;"
-msgstr "&lt;ne najdem imena&gt;"
+msgstr "&lt;imena ni mogoče najti&gt;"
 
 #: ../src/sp-text.cpp:425
 #, c-format
@@ -10702,9 +10125,10 @@ msgstr ""
 "spremenite obliko. <b>Pritisk miške</b> za izbiro."
 
 #: ../src/tools-switch.cpp:172
+#, fuzzy
 msgid ""
-"<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to "
-"append to selected path."
+"<b>Drag</b> to create a freehand line. <b>Shift</b> appends to selected "
+"path, <b>Alt</b> activates sketch mode."
 msgstr ""
 "<b>Povlecite</b> in narišite prostoročno črto. Začnite risati s <b>Shift</"
 "b>, če želite dodati k izbrani poti."
@@ -10823,12 +10247,14 @@ msgstr "<b>Nič</b> ni izbrano"
 #: ../src/tweak-context.cpp:210
 #, c-format
 msgid "%s. Drag to <b>move</b>."
-msgstr ""
+msgstr "%s. Povlecite, če želite <b>premakniti</b>."
 
 #: ../src/tweak-context.cpp:215
-#, c-format
+#, fuzzy, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr ""
+"%s. Povlecite ali kliknite, če želite <b>vstopiti</b>; s Shiftom "
+"<b>izstopite</b>."
 
 #: ../src/tweak-context.cpp:218
 #, c-format
@@ -11099,7 +10525,7 @@ msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
-#: ../src/ui/dialog/aboutbox.cpp:370
+#: ../src/ui/dialog/aboutbox.cpp:371
 msgid "translator-credits"
 msgstr "Martin Srebotnjak"
 
@@ -13090,7 +12516,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid "If a path is selected, do not continue flashing path outlines."
-msgstr ""
+msgstr "Če je izbrana pot, ne utripaj orisa poti."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Flash time"
@@ -14983,7 +14409,7 @@ msgstr "Uredi ime reliefne brazde"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:598
 msgid "Set glyph unicode"
-msgstr ""
+msgstr "Določi kodo unicode reliefne brazde"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:608
 msgid "Remove font"
@@ -18164,7 +17590,7 @@ msgstr "Podatki o uporabi spomina"
 
 #: ../src/verbs.cpp:2694
 msgid "_About Inkscape"
-msgstr "_O Inkscape-u"
+msgstr "_O programu Inkscape"
 
 #: ../src/verbs.cpp:2695
 msgid "Inkscape version, authors, license"
@@ -18365,7 +17791,7 @@ msgstr "Družina pisav"
 #. Style frame
 #: ../src/widgets/font-selector.cpp:188
 msgid "fontselector|Style"
-msgstr ""
+msgstr "fontselector|Slog"
 
 #: ../src/widgets/font-selector.cpp:226
 msgid "Font size:"
@@ -20302,12 +19728,20 @@ msgid "Arc: Change open/closed"
 msgstr "Lok: Spremeni zaprt/odprt"
 
 #: ../src/widgets/toolbox.cpp:5166
+msgid "Start"
+msgstr "Začetek"
+
+#: ../src/widgets/toolbox.cpp:5166
 msgid "Start:"
 msgstr "Začetek:"
 
 #: ../src/widgets/toolbox.cpp:5167
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr "Kot med vodoravnico in začetno točko loka."
+
+#: ../src/widgets/toolbox.cpp:5179
+msgid "End"
+msgstr "Konec"
 
 #: ../src/widgets/toolbox.cpp:5179
 msgid "End:"
@@ -20374,6 +19808,22 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:5321
 msgid "Assign"
 msgstr "Dodeli"
+
+#: ../src/widgets/toolbox.cpp:5507
+msgid "Closed"
+msgstr "Zaprta"
+
+#: ../src/widgets/toolbox.cpp:5509
+msgid "Open start"
+msgstr "Odpri začetno"
+
+#: ../src/widgets/toolbox.cpp:5511
+msgid "Open end"
+msgstr "Odpri končno"
+
+#: ../src/widgets/toolbox.cpp:5513
+msgid "Open both"
+msgstr "Odpri obe"
 
 #: ../src/widgets/toolbox.cpp:5572
 msgid "All inactive"
@@ -20727,6 +20177,8 @@ msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"Prvi izbrani predmet je vrste '%s'.\n"
+"Poskusite uporabiti proceduro Pot | Predmet v pot."
 
 #: ../share/extensions/perspective.py:68
 #: ../share/extensions/summersnight.py:46
@@ -20740,6 +20192,8 @@ msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object | Ungroup."
 msgstr ""
+"Drugi izbrani predmet je skupina, ne pot.\n"
+"Poskusite uporabiti proceduro Predmet | Razdruži."
 
 #: ../share/extensions/perspective.py:89
 #: ../share/extensions/summersnight.py:74
@@ -20747,6 +20201,8 @@ msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"Drugi izbrani predmet ni pot.\n"
+"Poskusite uporabiti proceduro Pot | Predmet v pot."
 
 #: ../share/extensions/perspective.py:92
 #: ../share/extensions/summersnight.py:77
@@ -20754,6 +20210,8 @@ msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"Prvi izbrani predmet ni pot.\n"
+"Poskusite uporabiti proceduro Pot | Predmet v pot."
 
 #: ../share/extensions/polyhedron_3d.py:58
 msgid ""
@@ -21217,7 +20675,7 @@ msgstr "Trikotnik"
 #: ../share/extensions/draw_from_triangle.inx.h:33
 #, fuzzy
 msgid "Symmedian Point"
-msgstr "Navpična točka:"
+msgstr "Navpična točka"
 
 #: ../share/extensions/draw_from_triangle.inx.h:34
 msgid "Symmedians"
@@ -21226,7 +20684,7 @@ msgstr ""
 #: ../share/extensions/draw_from_triangle.inx.h:35
 #, fuzzy
 msgid "Triangle Function"
-msgstr "Notranji trikotnik"
+msgstr "Funkcija trikotnika"
 
 #: ../share/extensions/draw_from_triangle.inx.h:36
 #, fuzzy
@@ -21239,9 +20697,8 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:2
-#, fuzzy
 msgid "Character Encoding"
-msgstr "Kodna tabela"
+msgstr "Kodna tabela znakov"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "DXF Input"
@@ -21401,7 +20858,6 @@ msgid "Depth"
 msgstr "Globina"
 
 #: ../share/extensions/foldablebox.inx.h:3
-#, fuzzy
 msgid "Foldable Box"
 msgstr "Prepogljiva škatla"
 
@@ -21410,9 +20866,8 @@ msgid "Paper Thickness"
 msgstr "Debelina papirja"
 
 #: ../share/extensions/foldablebox.inx.h:7
-#, fuzzy
 msgid "Tab Proportion"
-msgstr "Mera zavihka/tabulatorja"
+msgstr "Mera zavihka"
 
 #: ../share/extensions/fractalize.inx.h:1
 msgid "Fractalize"
@@ -21853,7 +21308,7 @@ msgstr "Celo število"
 
 #: ../share/extensions/interp_att_g.inx.h:9
 msgid "Interpolate Attribute in a group"
-msgstr "Interopoliraj vrednost v skupini"
+msgstr "Interpoliraj vrednost v skupini"
 
 #: ../share/extensions/interp_att_g.inx.h:11
 msgid "No Unit"
@@ -22052,6 +21507,10 @@ msgstr ""
 "spremenjeno. Če je npr. 1 cm v risbi enak 2,5 m v resničnem svetu, mora biti "
 "faktor nastavljen na 250."
 
+#: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
+msgid "Angle"
+msgstr "Kot"
+
 #: ../share/extensions/motion.inx.h:3
 msgid "Magnitude"
 msgstr "Magnituda"
@@ -22077,7 +21536,6 @@ msgid "End t-value"
 msgstr "Končna t-vrednost"
 
 #: ../share/extensions/param_curves.inx.h:4
-#, fuzzy
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
 msgstr ""
 "Izotropno spreminjanje velikosti (uporabi najmanjše: širina/x-obseg ali "
@@ -22088,9 +21546,8 @@ msgid "Multiply t-range by 2*pi"
 msgstr "Pomnoži t-obseg z 2*pi"
 
 #: ../share/extensions/param_curves.inx.h:6
-#, fuzzy
 msgid "Parametric Curves"
-msgstr "Parametri"
+msgstr "Parametrične krivulje"
 
 #: ../share/extensions/param_curves.inx.h:7
 msgid "Range and Sampling"
@@ -22101,13 +21558,12 @@ msgid "Samples"
 msgstr "Vzorci"
 
 #: ../share/extensions/param_curves.inx.h:11
-#, fuzzy
 msgid ""
 "Select a rectangle before calling the extension; it will determine X and Y "
 "scales. First derivatives are always determined numerically."
 msgstr ""
-"Izberite pravokotnik, preden pokličete razširitev; določila bo merili X in "
-"Y. Prvi derivati so vedno določeni numerično."
+"Izberite pravokotnik, preden pokličete razširitev; določil bo merili X in Y. "
+"Prvi derivati so vedno določeni numerično."
 
 #: ../share/extensions/param_curves.inx.h:13
 msgid "Start t-value"
@@ -22623,6 +22079,10 @@ msgstr "Z dna na vrh (90)"
 msgid "Horizontal Point:"
 msgstr "Vodoravna točka:"
 
+#: ../share/extensions/restack.inx.h:7
+msgid "Left"
+msgstr "Levo"
+
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr "Z leve na desno (0)"
@@ -22646,6 +22106,10 @@ msgstr "Ponovno naloži na sklad"
 #: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
 msgstr "Smer ponovnega skladanja:"
+
+#: ../share/extensions/restack.inx.h:14
+msgid "Right"
+msgstr "Desno"
 
 #: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
@@ -22899,9 +22363,8 @@ msgid "Sunday"
 msgstr "Nedelja"
 
 #: ../share/extensions/svgcalendar.inx.h:27
-#, fuzzy
 msgid "The options above has no value with the upper checked."
-msgstr "Zgornja možnost nima vrednosti z zgoraj izbranim."
+msgstr "Zgornje možnosti nimajo vrednosti z zgoraj potrjenim."
 
 #: ../share/extensions/svgcalendar.inx.h:28
 msgid "Week start day"
@@ -23049,6 +22512,8 @@ msgid ""
 "If you want to set more then one attribute, you must separate this with a "
 "space, and only with a space."
 msgstr ""
+"Če želite nastaviti več kot eno lastnost, jih morate med seboj ločiti "
+"izključno s presledkom."
 
 #: ../share/extensions/web-set-att.inx.h:6
 #: ../share/extensions/web-transmit-att.inx.h:6
@@ -23100,7 +22565,6 @@ msgstr "Vrednost, ki bo nastavljena"
 
 #: ../share/extensions/web-set-att.inx.h:16
 #: ../share/extensions/web-transmit-att.inx.h:14
-#, fuzzy
 msgid "Web"
 msgstr "Splet"
 
@@ -23225,8 +22689,389 @@ msgstr "Uvoz Metadatoteke Windows"
 msgid "XAML Input"
 msgstr "Uvoz XAML"
 
-#~ msgid "Alpha draw"
-#~ msgstr "Alfa-risanje"
+#~ msgid "Length left"
+#~ msgstr "Dolžina levo"
+
+#~ msgid "Specifies the left end of the bisector"
+#~ msgstr "Določa levi konec bisektorja"
+
+#~ msgid "Length right"
+#~ msgstr "Dolžina desno"
+
+#~ msgid "Specifies the right end of the bisector"
+#~ msgstr "Določa desni konec bisektorja"
+
+#~ msgid "Adjust the \"left\" end of the bisector"
+#~ msgstr "Prilagodi \"levi\" konec bisektorja"
+
+#~ msgid "Adjust the \"right\" of the bisector"
+#~ msgstr "Prilagodi \"desni\" konec bisektorja"
+
+#~ msgid "Null"
+#~ msgstr "Nič"
+
+#~ msgid "Intersect"
+#~ msgstr "Presekaj"
+
+#~ msgid "Subtract A-B"
+#~ msgstr "Odštej A-B"
+
+#~ msgid "Identity A"
+#~ msgstr "Identiteta A"
+
+#~ msgid "Subtract B-A"
+#~ msgstr "Odštej B-A"
+
+#~ msgid "Identity B"
+#~ msgstr "Identiteta B"
+
+#~ msgid "2nd path"
+#~ msgstr "Druga pot"
+
+#~ msgid "Path to which the original path will be boolop'ed."
+#~ msgstr ""
+#~ "Pot, vzdolž katere naj bo z logično operacijo spremenjena izvorna pot."
+
+#~ msgid "Boolop type"
+#~ msgstr "Vrsta logične operacije"
+
+#~ msgid "Determines which kind of boolop will be performed."
+#~ msgstr "Določa, kakšna vrsta logične operacije bo izvršena."
+
+#~ msgid "Starting"
+#~ msgstr "Začetenjanje"
+
+#~ msgid "Angle of the first copy"
+#~ msgstr "Kot prve kopije"
+
+#~ msgid "Rotation angle"
+#~ msgstr "Kot sukanja"
+
+#~ msgid "Angle between two successive copies"
+#~ msgstr "Kot med zaporednima kopijama"
+
+#~ msgid "Number of copies"
+#~ msgstr "Število kopij"
+
+#~ msgid "Number of copies of the original path"
+#~ msgstr "Število kopij izvorne poti"
+
+#~ msgid "Origin"
+#~ msgstr "Izhodišče"
+
+#~ msgid "Origin of the rotation"
+#~ msgstr "Izhodišče sukanja"
+
+#~ msgid "Adjust the starting angle"
+#~ msgstr "Prilagodi začetni kot"
+
+#~ msgid "Adjust the rotation angle"
+#~ msgstr "Prilagodi kot sukanja"
+
+#~ msgid "Elliptic Pen"
+#~ msgstr "Eliptično pero"
+
+#~ msgid "Thick-Thin strokes (fast)"
+#~ msgstr "Debelo-tanke poteze (hitro)"
+
+#~ msgid "Thick-Thin strokes (slow)"
+#~ msgstr "Debelo-tanke poteze (počasno)"
+
+#~ msgid "Sharp"
+#~ msgstr "Ostro"
+
+#~ msgid "Round"
+#~ msgstr "Zaobljeno"
+
+#~ msgid "Method"
+#~ msgstr "Metoda"
+
+#~ msgid "Choose pen type"
+#~ msgstr "Izberite vrsto peresa"
+
+#~ msgid "Pen width"
+#~ msgstr "Širina peresa"
+
+#~ msgid "Maximal stroke width"
+#~ msgstr "Največja debelina poteze"
+
+#~ msgid "Pen roundness"
+#~ msgstr "Zaobljenost peresa"
+
+#~ msgid "Min/Max width ratio"
+#~ msgstr "Razmerje največje/najmanjše širine"
+
+#~ msgid "angle"
+#~ msgstr "kot"
+
+#~ msgid "direction of thickest strokes (opposite = thinest)"
+#~ msgstr "smer najdebelejših potez (nasprotno = najtanjše)"
+
+#, fuzzy
+#~ msgid "Choose start capping type"
+#~ msgstr "Izberite vrsto odseka črte"
+
+#, fuzzy
+#~ msgid "Choose end capping type"
+#~ msgstr "Izberite vrsto odseka črte"
+
+#, fuzzy
+#~ msgid "Grow for"
+#~ msgstr "Naraščaj za"
+
+#~ msgid "Make the stroke thiner near it's start"
+#~ msgstr "Naredi potezo tanjšo na njenem začetku"
+
+#, fuzzy
+#~ msgid "Fade for"
+#~ msgstr "Prelij za"
+
+#~ msgid "Make the stroke thiner near it's end"
+#~ msgstr "Naredi potezo tanjšo proti njenemu koncu"
+
+#~ msgid "Round ends"
+#~ msgstr "Zaobljeni konci"
+
+#~ msgid "Strokes end with a round end"
+#~ msgstr "Poteze se zaključijo z zaobljenim koncem"
+
+#~ msgid "Capping"
+#~ msgstr "Zaobljenost"
+
+#~ msgid "left capping"
+#~ msgstr "Levo zaobljanje"
+
+#~ msgid "Control handle 0"
+#~ msgstr "Nadzorna ročica 0"
+
+#~ msgid "Control handle 1"
+#~ msgstr "Nadzorna ročica 1"
+
+#~ msgid "Control handle 2"
+#~ msgstr "Nadzorna ročica 2"
+
+#~ msgid "Control handle 3"
+#~ msgstr "Nadzorna ročica 3"
+
+#~ msgid "Control handle 4"
+#~ msgstr "Nadzorna ročica 4"
+
+#~ msgid "Control handle 5"
+#~ msgstr "Nadzorna ročica 5"
+
+#~ msgid "Control handle 6"
+#~ msgstr "Nadzorna ročica 6"
+
+#~ msgid "Control handle 7"
+#~ msgstr "Nadzorna ročica 7"
+
+#~ msgid "Control handle 8"
+#~ msgstr "Nadzorna ročica 8"
+
+#~ msgid "Control handle 9"
+#~ msgstr "Nadzorna ročica 9"
+
+#~ msgid "Control handle 10"
+#~ msgstr "Nadzorna ročica 10"
+
+#~ msgid "Control handle 11"
+#~ msgstr "Nadzorna ročica 11"
+
+#~ msgid "Control handle 12"
+#~ msgstr "Nadzorna ročica 12"
+
+#~ msgid "Control handle 13"
+#~ msgstr "Nadzorna ročica 13"
+
+#~ msgid "Control handle 14"
+#~ msgstr "Nadzorna ročica 14"
+
+#~ msgid "Control handle 15"
+#~ msgstr "Nadzorna ročica 15"
+
+#~ msgid "End type"
+#~ msgstr "Vrsta konca"
+
+#~ msgid "Determines on which side the line or line segment is infinite."
+#~ msgstr "Določa, na kateri strani je črta ali odsek črte končen."
+
+#~ msgid "Discard original path?"
+#~ msgstr "Želite opustiti izvorno pot?"
+
+#~ msgid "Check this to only keep the mirrored part of the path"
+#~ msgstr "Potrdite to polje, da obdržite le zrcaljeni del poti"
+
+#~ msgid "Reflection line"
+#~ msgstr "Črta odseva"
+
+#~ msgid "Line which serves as 'mirror' for the reflection"
+#~ msgstr "Črta, ki služi kot 'zrcalo' za odsev"
+
+#~ msgid "Handle to control the distance of the offset from the curve"
+#~ msgstr "Ročica za nadzor odmika od krivulje"
+
+#~ msgid "Adjust the offset"
+#~ msgstr "Prilagodi zamik"
+
+#~ msgid "Specifies the left end of the parallel"
+#~ msgstr "Določa levi konec vzporednice"
+
+#~ msgid "Specifies the right end of the parallel"
+#~ msgstr "Določa desni konec vzporednice"
+
+#~ msgid "Adjust the \"left\" end of the parallel"
+#~ msgstr "Prilagodi \"levi\" konec vzporednice"
+
+#~ msgid "Adjust the \"right\" end of the parallel"
+#~ msgstr "Prilagodi \"desni\" konec vzporednice"
+
+#~ msgid "Scaling factor"
+#~ msgstr "Faktor sprem. merila"
+
+#~ msgid "Display unit"
+#~ msgstr "Prikaži enoto"
+
+#~ msgid "Print unit after path length"
+#~ msgstr "Natisni enoto po dolžini poti"
+
+#~ msgid "Adjust the bisector's \"left\" end"
+#~ msgstr "Prilagodi \"levi\" konec bisektorja"
+
+#~ msgid "Adjust the bisector's \"right\" end"
+#~ msgstr "Prilagodi \"desni\" konec bisektorja"
+
+#~ msgid "Scale x"
+#~ msgstr "Spremeni velikost X"
+
+#~ msgid "Scale factor in x direction"
+#~ msgstr "Faktor spremembe velikosti v smeri X"
+
+#~ msgid "Scale y"
+#~ msgstr "Spremeni velikost Y"
+
+#~ msgid "Scale factor in y direction"
+#~ msgstr "Faktor spremembe velikosti v smeri Y"
+
+#~ msgid "Offset x"
+#~ msgstr "Zamik X"
+
+#~ msgid "Offset in x direction"
+#~ msgstr "Zamik v smeri X"
+
+#~ msgid "Offset y"
+#~ msgstr "Zamik Y"
+
+#~ msgid "Offset in y direction"
+#~ msgstr "Zamik v smeri Y"
+
+#~ msgid "Uses XY plane?"
+#~ msgstr "Uporablja ravnino XY?"
+
+#~ msgid ""
+#~ "If true, put the path on the left side of an imaginary box, otherwise on "
+#~ "the right side"
+#~ msgstr ""
+#~ "Če je resnično, postavi pot na levo stran navideznega okvira, sicer na "
+#~ "desno stran"
+
+#~ msgid "Adjust the origin"
+#~ msgstr "Prilagodi izvor"
+
+#~ msgid "Iterations"
+#~ msgstr "Iteracije"
+
+#~ msgid "recursivity"
+#~ msgstr "Rekurzivnost"
+
+#~ msgid "Both"
+#~ msgstr "Oba"
+
+#~ msgid "Mark distance"
+#~ msgstr "Razdalja med oznakami"
+
+#~ msgid "Distance between successive ruler marks"
+#~ msgstr "Razmik med soslednimi oznakami na merilu"
+
+#~ msgid "Major length"
+#~ msgstr "Dolžina glavnih"
+
+#~ msgid "Length of major ruler marks"
+#~ msgstr "Dolžina glavnih oznak na merilu"
+
+#~ msgid "Minor length"
+#~ msgstr "Dolžina pomožnih"
+
+#~ msgid "Length of minor ruler marks"
+#~ msgstr "Dolžina pomožnih oznak na merilu"
+
+#~ msgid "Major steps"
+#~ msgstr "Glavni koraki"
+
+#~ msgid "Draw a major mark every ... steps"
+#~ msgstr "Nariši glavno oznako vsakih ... korakov"
+
+#~ msgid "Shift marks by"
+#~ msgstr "Zamakni oznake za"
+
+#~ msgid "Shift marks by this many steps"
+#~ msgstr "Zamakni oznake za takšno število korakov"
+
+#~ msgid "Mark direction"
+#~ msgstr "Označi smer"
+
+#~ msgid "Direction of marks (when viewing along the path from start to end)"
+#~ msgstr "Smer oznak (pri gledanju vzdolž poti od začetka proti koncu)"
+
+#~ msgid "Offset of first mark"
+#~ msgstr "Zamik prve oznake"
+
+#~ msgid "Border marks"
+#~ msgstr "Oznake robu"
+
+#~ msgid "Additional angle between tangent and curve"
+#~ msgstr "Dodaten kot med tangento in krivuljo"
+
+#~ msgid "Location along curve"
+#~ msgstr "Položaj vzdolž krivulje"
+
+#~ msgid ""
+#~ "Location of the point of attachment along the curve (between 0.0 and "
+#~ "number-of-segments)"
+#~ msgstr ""
+#~ "Položaj točke pripenjanja vzdolž krivulje (med 0,0 in številom-odsekov)"
+
+#~ msgid "Specifies the left end of the tangent"
+#~ msgstr "Določa levi konec tangente"
+
+#~ msgid "Specifies the right end of the tangent"
+#~ msgstr "Določa desni konec tangente"
+
+#~ msgid "Adjust the point of attachment of the tangent"
+#~ msgstr "Prilagodi točko pripenjanja tangente"
+
+#~ msgid "Adjust the \"left\" end of the tangent"
+#~ msgstr "Prilagodi \"levi\" konec tangente"
+
+#~ msgid "Adjust the \"right\" end of the tangent"
+#~ msgstr "Prilagodi \"desni\" konec tangente"
+
+#~ msgid "Stack step"
+#~ msgstr "Korak skladanja"
+
+#~ msgid "point param"
+#~ msgstr "Točkovni parameter"
+
+#~ msgid "path param"
+#~ msgstr "Parameter poti"
+
+#~ msgid "Label"
+#~ msgstr "Oznaka"
+
+#~ msgid "Text label attached to the path"
+#~ msgstr "Besedilna oznaka, pripeta na pot"
+
+#~ msgid "Choose a construction tool from the toolbar."
+#~ msgstr "Izberite konstrukcijsko orodje v orodni vrstici."
 
 #~ msgid "Render object in black and white"
 #~ msgstr "Upodobi predmet v črni in beli"
