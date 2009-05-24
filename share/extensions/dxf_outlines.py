@@ -150,14 +150,13 @@ class MyEffect(inkex.Effect):
         h = inkex.unittouu(self.document.getroot().xpath('@height', namespaces=inkex.NSS)[0])
         path = '//svg:path'
         for node in self.document.getroot().xpath(path, namespaces=inkex.NSS):
+            rgb = (0,0,0)
             style = node.get('style')
-            start = style.find("stroke:")
-            if style[start+11] == ';':
-                rgb = simplestyle.parseColor(style[(start+7):(start+11)])
-            elif style[start+14] == ';':
-                rgb = simplestyle.parseColor(style[(start+7):(start+14)])
-            else:
-                rgb = (0,0,0)
+            if style:
+                style = simplestyle.parseStyle(style)
+                if style.has_key('stroke'):
+                    if style['stroke'] and style['stroke'] != 'none':
+                        rgb = simplestyle.parseColor(style['stroke'])
             hsl = coloreffect.ColorEffect.rgb_to_hsl(coloreffect.ColorEffect(),rgb[0]/255.0,rgb[1]/255.0,rgb[2]/255.0)
             self.color = 7                                  # default is black
             if hsl[2]:
