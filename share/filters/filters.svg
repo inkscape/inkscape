@@ -1333,8 +1333,8 @@
 <feComposite id="feComposite4835" operator="in" in2="result3" result="result6" />
 <feBlend id="feBlend4837" blend="normal" mode="multiply" in="result6" in2="result6" />
 </filter>
-<filter id="ColorOutl0" inkscape:label="Color outline" inkscape:menu="Morphology" inkscape:menu-tooltip="A colorizable outline with adjustable width and blur" height="1.2" y="-0.1" width="1.2" x="-0.1">
-<feGaussianBlur id="feGaussianBlur2883" stdDeviation="4" result="result8" />
+<filter id="ColorInl0" inkscape:label="Color inline" inkscape:menu="Morphology" inkscape:menu-tooltip="A colorizable inline with adjustable width and blur" height="1.2" y="-0.1" width="1.2" x="-0.1">
+<feGaussianBlur id="feGaussianBlur2883" stdDeviation="2" result="result8" />
 <feColorMatrix id="feColorMatrix2885" result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -9 " />
 <feComposite id="feComposite2887" result="result6" in="SourceGraphic" operator="in" in2="result5" />
 <feFlood id="feFlood2889" result="result10" in="result6" flood-opacity="1" flood-color="rgb(203,134,255)" />
@@ -1666,6 +1666,18 @@
 <feColorMatrix id="feColorMatrix2848" result="result2" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -2 " />
 <feComposite id="feComposite2850" operator="in" in="result4" result="fbSourceGraphic" />
 <feBlend id="feBlend2852" in2="SourceGraphic" in="fbSourceGraphic" mode="normal" blend="normal" result="result5" />
+</filter>
+<filter inkscape:menu-tooltip="Draws a black outline around" inkscape:menu="ABCs" inkscape:label="Black outline" id="BlackOutl0">
+<feGaussianBlur stdDeviation="2" in="SourceAlpha" result="result0" id="feGaussianBlur3908" />
+<feComposite result="result3" operator="arithmetic" in2="result0" in="SourceGraphic" id="feComposite3910" k2="1" k1="0" k3="10" />
+<feComposite k1="0" k3="0" k2="1" operator="in" id="feComposite3912" in="result3" result="result4" />
+</filter>
+<filter id="ColOutl0" inkscape:label="Color outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Draws a coloured outline around" width="1.5" height="1.5" x="-0.25" y="-0.25">
+<feGaussianBlur id="feGaussianBlur2927" in="SourceAlpha" stdDeviation="3" result="blur" />
+<feColorMatrix id="feColorMatrix2956" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -1 " type="matrix" result="result4" />
+<feFlood result="result1" flood-color="rgb(154,27,74)" id="feFlood2929" in="blur" />
+<feComposite result="result2" in2="result4" in="result1" operator="atop" id="feComposite2931" />
+<feComposite in="SourceGraphic" in2="result2" k1="0" result="result3" k3="1" k2="0" operator="atop" id="feComposite2933" />
 </filter>
 </defs>
 </svg>
