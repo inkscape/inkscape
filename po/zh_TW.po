@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-05-19 19:42+0800\n"
+"POT-Creation-Date: 2009-05-23 02:41+0200\n"
+"PO-Revision-Date: 2009-05-24 07:05+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -1605,8 +1605,8 @@ msgid "Lead pencil"
 msgstr "鉛筆"
 
 #: ../share/filters/filters.svg.h:167
-msgid "Give lead pencil or chromolithography or engraving or other effects"
-msgstr "產生鉛筆、彩色平版印刷、版畫或其他效果"
+msgid "Give lead pencil or chromolithography or engraving or other effects to images and material filled objects"
+msgstr "使圖像和材料填充物件產生鉛筆、彩色平版印刷、版畫或其他效果"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Velvet bump"
@@ -1617,20 +1617,20 @@ msgid "Gives a smooth bump velvet like"
 msgstr "產生像天鵝絨般柔軟的平滑凹凸"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Alpha engraving"
-msgstr "透明版畫"
+msgid "Alpha draw"
+msgstr "透明繪製"
 
 #: ../share/filters/filters.svg.h:169
-msgid "Gives a transparent engraving effect to bitmaps and materials"
-msgstr "使點陣圖和材料產生透明版畫效果"
+msgid "Gives a transparent drawing effect to bitmaps and materials"
+msgstr "使點陣圖和材料產生透明繪畫效果"
 
 #: ../share/filters/filters.svg.h:170
-msgid "Alpha engraving, color"
-msgstr "透明版畫, 彩色"
+msgid "Alpha paint"
+msgstr "透明塗抹"
 
 #: ../share/filters/filters.svg.h:170
-msgid "Gives a transparent color engraving effect to bitmaps and materials"
-msgstr "使點陣圖和材料產生透明色彩版畫效果"
+msgid "Gives a transparent color fill effect to bitmaps and materials"
+msgstr "使點陣圖和材料產生透明色彩填塗效果"
 
 #: ../src/arc-context.cpp:303
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -3931,13 +3931,9 @@ msgstr "寬度"
 msgid "Height"
 msgstr "高度"
 
-#. initialise your parameters here:
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32
 #: ../src/live_effects/effect.cpp:96
-#: ../src/live_effects/lpe-offset.cpp:30
-#: ../src/live_effects/lpe-parallel.cpp:46
-#: ../src/live_effects/lpe-ruler.cpp:49
 msgid "Offset"
 msgstr "偏移"
 
@@ -5309,7 +5305,6 @@ msgstr "盤繞"
 
 #: ../src/filter-enums.cpp:95
 #: ../src/flood-context.cpp:264
-#: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/ui/dialog/document-properties.cpp:325
 #: ../src/ui/dialog/filter-effects-dialog.cpp:468
 #: ../src/ui/dialog/inkscape-preferences.cpp:255
@@ -5629,7 +5624,6 @@ msgid "Delete gradient stop(s)"
 msgstr "刪除漸層停止點"
 
 #: ../src/helper/units.cpp:37
-#: ../src/live_effects/lpe-path_length.cpp:27
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
 #: ../share/extensions/printing-marks.inx.h:20
@@ -5958,7 +5952,7 @@ msgstr "無法從管道讀取 (%s)"
 #: ../src/io/sys.cpp:444
 #, c-format
 msgid "Failed to change to directory '%s' (%s)"
-msgstr "無法改變到資料夾 '%s' (%s)"
+msgstr "無法改變到資料夾「%s」(%s)"
 
 #: ../src/io/sys.cpp:450
 #: ../src/io/sys.cpp:676
@@ -6527,7 +6521,7 @@ msgstr "縫合子路徑"
 #. 0.47
 #: ../src/live_effects/effect.cpp:113
 msgid "VonKoch"
-msgstr "科赫曲線"
+msgstr "科赫雪花"
 
 #: ../src/live_effects/effect.cpp:114
 msgid "Knot"
@@ -6555,7 +6549,7 @@ msgstr "手繪影線 (粗糙)"
 
 #: ../src/live_effects/effect.cpp:120
 msgid "Sketch"
-msgstr "素描"
+msgstr "草圖"
 
 #: ../src/live_effects/effect.cpp:273
 msgid "Is visible?"
@@ -6563,7 +6557,7 @@ msgstr "是否可見？"
 
 #: ../src/live_effects/effect.cpp:273
 msgid "If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"
-msgstr "如果取消勾選，此特效仍套用到物件但在畫布上暫時無作用"
+msgstr "如果取消勾選，此特效仍套用到物件但在畫布上暫時停用"
 
 #: ../src/live_effects/effect.cpp:293
 msgid "No effect"
@@ -6582,38 +6576,6 @@ msgstr "正在編輯參數 <b>%s</b>."
 #: ../src/live_effects/effect.cpp:641
 msgid "None of the applied path effect's parameters can be edited on-canvas."
 msgstr "沒有已套用路徑特效的參數可在畫布上編輯。"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:51
-#: ../src/live_effects/lpe-parallel.cpp:47
-#: ../src/live_effects/lpe-perp_bisector.cpp:103
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-msgid "Length left"
-msgstr "左邊長度"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:51
-#: ../src/live_effects/lpe-perp_bisector.cpp:103
-msgid "Specifies the left end of the bisector"
-msgstr "指定此平分線的左邊終點"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:52
-#: ../src/live_effects/lpe-parallel.cpp:48
-#: ../src/live_effects/lpe-perp_bisector.cpp:104
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-msgid "Length right"
-msgstr "右邊長度"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:52
-#: ../src/live_effects/lpe-perp_bisector.cpp:104
-msgid "Specifies the right end of the bisector"
-msgstr "指定此平分線的右邊終點"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:59
-msgid "Adjust the \"left\" end of the bisector"
-msgstr "調整此平分線的\"左邊\"終點"
-
-#: ../src/live_effects/lpe-angle_bisector.cpp:60
-msgid "Adjust the \"right\" of the bisector"
-msgstr "調整此平分線的\"右側\""
 
 #: ../src/live_effects/lpe-bendpath.cpp:55
 msgid "Bend path"
@@ -6644,57 +6606,6 @@ msgstr "原路徑為垂直"
 msgid "Rotates the original 90 degrees, before bending it along the bend path"
 msgstr "在沿著彎曲路徑彎曲之前，旋轉原來的 90 度"
 
-#: ../src/live_effects/lpe-boolops.cpp:23
-msgid "Null"
-msgstr "空"
-
-#: ../src/live_effects/lpe-boolops.cpp:24
-msgid "Intersect"
-msgstr "交集"
-
-#: ../src/live_effects/lpe-boolops.cpp:25
-msgid "Subtract A-B"
-msgstr "差集 A-B"
-
-#: ../src/live_effects/lpe-boolops.cpp:26
-msgid "Identity A"
-msgstr "相同 A"
-
-#: ../src/live_effects/lpe-boolops.cpp:27
-msgid "Subtract B-A"
-msgstr "差集 B-A"
-
-#: ../src/live_effects/lpe-boolops.cpp:28
-msgid "Identity B"
-msgstr "相同 B"
-
-#: ../src/live_effects/lpe-boolops.cpp:29
-#: ../src/splivarot.cpp:96
-msgid "Exclusion"
-msgstr "排除"
-
-#: ../src/live_effects/lpe-boolops.cpp:30
-#: ../src/splivarot.cpp:66
-#: ../src/splivarot.cpp:72
-msgid "Union"
-msgstr "聯集"
-
-#: ../src/live_effects/lpe-boolops.cpp:36
-msgid "2nd path"
-msgstr "第二個路徑"
-
-#: ../src/live_effects/lpe-boolops.cpp:36
-msgid "Path to which the original path will be boolop'ed."
-msgstr "路徑將對原本路徑作布林運算。"
-
-#: ../src/live_effects/lpe-boolops.cpp:37
-msgid "Boolop type"
-msgstr "布林運算類型"
-
-#: ../src/live_effects/lpe-boolops.cpp:37
-msgid "Determines which kind of boolop will be performed."
-msgstr "決定何種布林運算將被執行。"
-
 #: ../src/live_effects/lpe-constructgrid.cpp:28
 msgid "Size X"
 msgstr "尺寸 X"
@@ -6710,46 +6621,6 @@ msgstr "尺寸 Y"
 #: ../src/live_effects/lpe-constructgrid.cpp:29
 msgid "The size of the grid in Y direction."
 msgstr "Y 方向網格的大小。"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:47
-msgid "Starting"
-msgstr "開始"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:47
-msgid "Angle of the first copy"
-msgstr "第一次複製的角度"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:48
-msgid "Rotation angle"
-msgstr "旋轉角度"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:48
-msgid "Angle between two successive copies"
-msgstr "兩個連續複本之間的角度"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:49
-msgid "Number of copies"
-msgstr "複本數目"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:49
-msgid "Number of copies of the original path"
-msgstr "原始路徑複本的數目"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:50
-msgid "Origin"
-msgstr "原點"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:50
-msgid "Origin of the rotation"
-msgstr "旋轉的原點"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:61
-msgid "Adjust the starting angle"
-msgstr "調整開始的角度"
-
-#: ../src/live_effects/lpe-copy_rotate.cpp:62
-msgid "Adjust the rotation angle"
-msgstr "調整旋轉的角度"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
@@ -6814,112 +6685,6 @@ msgstr "相對長度縮放寬度"
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale the width of the stitch path relative to its length"
 msgstr "相對於縫合路徑的長度來縮放寬度"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:60
-msgid "Elliptic Pen"
-msgstr "橢圓筆尖"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:61
-msgid "Thick-Thin strokes (fast)"
-msgstr "粗-細邊框 (快)"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:62
-msgid "Thick-Thin strokes (slow)"
-msgstr "粗-細邊框 (慢)"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:67
-msgid "Sharp"
-msgstr "尖銳"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:68
-msgid "Round"
-msgstr "圓滑"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-dynastroke.cpp:75
-msgid "Method"
-msgstr "方式"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:75
-msgid "Choose pen type"
-msgstr "選擇筆的類型"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:76
-msgid "Pen width"
-msgstr "筆寬"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:76
-msgid "Maximal stroke width"
-msgstr "畫筆最大寬度"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:77
-msgid "Pen roundness"
-msgstr "圓滑筆尖"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:77
-msgid "Min/Max width ratio"
-msgstr "最小/最大寬度比值"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:78
-msgid "angle"
-msgstr "角度"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:78
-msgid "direction of thickest strokes (opposite = thinest)"
-msgstr "最粗畫筆的方向 (相對的 = 最細)"
-
-#. modulo_pi(_("modulo pi"), _("Give forward and backward moves in one direction the same thickness "), "modulo_pi", &wr, this, false),
-#: ../src/live_effects/lpe-dynastroke.cpp:80
-#: ../src/live_effects/lpe-ruler.cpp:35
-#: ../src/widgets/toolbox.cpp:5166
-msgid "Start"
-msgstr "開始"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:80
-msgid "Choose start capping type"
-msgstr "選擇起點帽緣類型"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:81
-#: ../src/live_effects/lpe-ruler.cpp:36
-#: ../src/widgets/toolbox.cpp:5179
-msgid "End"
-msgstr "結束"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:81
-msgid "Choose end capping type"
-msgstr "選擇終點帽緣類型"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:82
-msgid "Grow for"
-msgstr "逐漸擴張"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:82
-msgid "Make the stroke thiner near it's start"
-msgstr "使畫筆細於它的起點附近"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:83
-msgid "Fade for"
-msgstr "逐漸消失"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:83
-msgid "Make the stroke thiner near it's end"
-msgstr "使畫筆細於它的終點附近"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:84
-msgid "Round ends"
-msgstr "圓端點"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:84
-msgid "Strokes end with a round end"
-msgstr "畫筆尖端為圓端點"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:85
-msgid "Capping"
-msgstr "帽緣"
-
-#: ../src/live_effects/lpe-dynastroke.cpp:85
-msgid "left capping"
-msgstr "左帽緣"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top bend path"
@@ -7025,7 +6790,7 @@ msgstr "邊框寬度的單位"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width."
-msgstr "判斷 '間斷寬度' 作為邊框寬度的比值。"
+msgstr "判斷「間斷寬度」作為邊框寬度的比值。"
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "add stroke width to interruption size"
@@ -7062,161 +6827,6 @@ msgstr "交叉點符號"
 #: ../src/live_effects/lpe-knot.cpp:339
 msgid "Drag to select a crossing, click to flip it"
 msgstr "拖曳以選擇一個交叉點，點擊來翻轉它"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-lattice.cpp:47
-msgid "Control handle 0"
-msgstr "控制柄 0"
-
-#: ../src/live_effects/lpe-lattice.cpp:48
-msgid "Control handle 1"
-msgstr "控制柄 1"
-
-#: ../src/live_effects/lpe-lattice.cpp:49
-msgid "Control handle 2"
-msgstr "控制柄 2"
-
-#: ../src/live_effects/lpe-lattice.cpp:50
-msgid "Control handle 3"
-msgstr "控制柄 3"
-
-#: ../src/live_effects/lpe-lattice.cpp:51
-msgid "Control handle 4"
-msgstr "控制柄 4"
-
-#: ../src/live_effects/lpe-lattice.cpp:52
-msgid "Control handle 5"
-msgstr "控制柄 5"
-
-#: ../src/live_effects/lpe-lattice.cpp:53
-msgid "Control handle 6"
-msgstr "控制柄 6"
-
-#: ../src/live_effects/lpe-lattice.cpp:54
-msgid "Control handle 7"
-msgstr "控制柄 7"
-
-#: ../src/live_effects/lpe-lattice.cpp:55
-msgid "Control handle 8"
-msgstr "控制柄 8"
-
-#: ../src/live_effects/lpe-lattice.cpp:56
-msgid "Control handle 9"
-msgstr "控制柄 9"
-
-#: ../src/live_effects/lpe-lattice.cpp:57
-msgid "Control handle 10"
-msgstr "控制柄 10"
-
-#: ../src/live_effects/lpe-lattice.cpp:58
-msgid "Control handle 11"
-msgstr "控制柄 11"
-
-#: ../src/live_effects/lpe-lattice.cpp:59
-msgid "Control handle 12"
-msgstr "控制柄 12"
-
-#: ../src/live_effects/lpe-lattice.cpp:60
-msgid "Control handle 13"
-msgstr "控制柄 13"
-
-#: ../src/live_effects/lpe-lattice.cpp:61
-msgid "Control handle 14"
-msgstr "控制柄 14"
-
-#: ../src/live_effects/lpe-lattice.cpp:62
-msgid "Control handle 15"
-msgstr "控制柄 15"
-
-#: ../src/live_effects/lpe-line_segment.cpp:27
-#: ../src/widgets/toolbox.cpp:5507
-msgid "Closed"
-msgstr "封閉的"
-
-#: ../src/live_effects/lpe-line_segment.cpp:28
-#: ../src/widgets/toolbox.cpp:5509
-msgid "Open start"
-msgstr "打開起點"
-
-#: ../src/live_effects/lpe-line_segment.cpp:29
-#: ../src/widgets/toolbox.cpp:5511
-msgid "Open end"
-msgstr "打開終點"
-
-#: ../src/live_effects/lpe-line_segment.cpp:30
-#: ../src/widgets/toolbox.cpp:5513
-msgid "Open both"
-msgstr "打開兩端"
-
-#: ../src/live_effects/lpe-line_segment.cpp:36
-msgid "End type"
-msgstr "終點類型"
-
-#: ../src/live_effects/lpe-line_segment.cpp:36
-msgid "Determines on which side the line or line segment is infinite."
-msgstr "決定直線或直線線段的哪一側邊為無限長。"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Discard original path?"
-msgstr "放棄原始路徑？"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:30
-msgid "Check this to only keep the mirrored part of the path"
-msgstr "勾選這個以只保留此路徑鏡像的部份"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-msgid "Reflection line"
-msgstr "反射線"
-
-#: ../src/live_effects/lpe-mirror_symmetry.cpp:31
-msgid "Line which serves as 'mirror' for the reflection"
-msgstr "直線可作為反射的「鏡像」使用"
-
-#: ../src/live_effects/lpe-offset.cpp:30
-msgid "Handle to control the distance of the offset from the curve"
-msgstr "從曲線來操作控制偏移的距離"
-
-#: ../src/live_effects/lpe-parallel.cpp:46
-msgid "Adjust the offset"
-msgstr "調整偏移距離"
-
-#: ../src/live_effects/lpe-parallel.cpp:47
-msgid "Specifies the left end of the parallel"
-msgstr "指定平行線的左邊終點"
-
-#: ../src/live_effects/lpe-parallel.cpp:48
-msgid "Specifies the right end of the parallel"
-msgstr "指定平行線的右邊終點"
-
-#: ../src/live_effects/lpe-parallel.cpp:56
-msgid "Adjust the \"left\" end of the parallel"
-msgstr "調整平行線的\"左邊\"終點"
-
-#: ../src/live_effects/lpe-parallel.cpp:57
-msgid "Adjust the \"right\" end of the parallel"
-msgstr "調整平行線的\"右邊\"終點"
-
-#: ../src/live_effects/lpe-path_length.cpp:25
-#: ../src/live_effects/lpe-sketch.cpp:55
-#: ../src/selection-chemistry.cpp:1514
-#: ../src/seltrans.cpp:485
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
-#: ../src/ui/dialog/transformation.cpp:738
-#: ../share/extensions/interp_att_g.inx.h:16
-msgid "Scale"
-msgstr "伸縮"
-
-#: ../src/live_effects/lpe-path_length.cpp:25
-msgid "Scaling factor"
-msgstr "縮放因子"
-
-#: ../src/live_effects/lpe-path_length.cpp:28
-msgid "Display unit"
-msgstr "顯示單位"
-
-#: ../src/live_effects/lpe-path_length.cpp:28
-msgid "Print unit after path length"
-msgstr "以路徑長度為列印單位"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:52
 #: ../share/extensions/pathalongpath.inx.h:11
@@ -7308,67 +6918,6 @@ msgstr "融化終點附近"
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
 msgstr "融化終點更近於這個數。0 表示不融化。"
-
-#: ../src/live_effects/lpe-perp_bisector.cpp:113
-msgid "Adjust the bisector's \"left\" end"
-msgstr "調整此平分線的\"左邊\"終點"
-
-#: ../src/live_effects/lpe-perp_bisector.cpp:114
-msgid "Adjust the bisector's \"right\" end"
-msgstr "調整此平分線的\"右邊\"終點"
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-perspective_path.cpp:41
-msgid "Scale x"
-msgstr "縮放 x"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:41
-msgid "Scale factor in x direction"
-msgstr "x 方向的縮放"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:42
-msgid "Scale y"
-msgstr "縮放 y"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:42
-msgid "Scale factor in y direction"
-msgstr "y 方向的縮放"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:43
-msgid "Offset x"
-msgstr "偏移 x"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:43
-msgid "Offset in x direction"
-msgstr "x 方向的偏移"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:44
-msgid "Offset y"
-msgstr "偏移 y"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:44
-msgid "Offset in y direction"
-msgstr "y 方向的偏移"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:45
-msgid "Uses XY plane?"
-msgstr "使用 XY 平面？"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:45
-msgid "If true, put the path on the left side of an imaginary box, otherwise on the right side"
-msgstr "如果是，放置此路徑於想像框的左邊，否則在右邊"
-
-#: ../src/live_effects/lpe-perspective_path.cpp:54
-msgid "Adjust the origin"
-msgstr "調整此原點"
-
-#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-msgid "Iterations"
-msgstr "疊代"
-
-#: ../src/live_effects/lpe-recursiveskeleton.cpp:30
-msgid "recursivity"
-msgstr "遞迴性"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
@@ -7526,81 +7075,6 @@ msgstr "整體彎曲"
 msgid "Relative position to a reference point defines global bending direction and amount"
 msgstr "以一個參考點定義整體彎曲量和方向的相對位置"
 
-#: ../src/live_effects/lpe-ruler.cpp:27
-#: ../share/extensions/restack.inx.h:7
-msgid "Left"
-msgstr "左"
-
-#: ../src/live_effects/lpe-ruler.cpp:28
-#: ../share/extensions/restack.inx.h:14
-msgid "Right"
-msgstr "右"
-
-#: ../src/live_effects/lpe-ruler.cpp:29
-#: ../src/live_effects/lpe-ruler.cpp:37
-msgid "Both"
-msgstr "兩邊"
-
-#: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Mark distance"
-msgstr "刻度間距"
-
-#: ../src/live_effects/lpe-ruler.cpp:43
-msgid "Distance between successive ruler marks"
-msgstr "連續尺標刻度之間的距離"
-
-#: ../src/live_effects/lpe-ruler.cpp:44
-msgid "Major length"
-msgstr "主要長度"
-
-#: ../src/live_effects/lpe-ruler.cpp:44
-msgid "Length of major ruler marks"
-msgstr "主要尺標刻度的長度"
-
-#: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Minor length"
-msgstr "次要長度"
-
-#: ../src/live_effects/lpe-ruler.cpp:45
-msgid "Length of minor ruler marks"
-msgstr "次要尺標刻度的長度"
-
-#: ../src/live_effects/lpe-ruler.cpp:46
-msgid "Major steps"
-msgstr "主要間距"
-
-#: ../src/live_effects/lpe-ruler.cpp:46
-msgid "Draw a major mark every ... steps"
-msgstr "每隔多少間距繪製一個刻度"
-
-#: ../src/live_effects/lpe-ruler.cpp:47
-msgid "Shift marks by"
-msgstr "刻度位移"
-
-#: ../src/live_effects/lpe-ruler.cpp:47
-msgid "Shift marks by this many steps"
-msgstr "刻度以這個間距來位移"
-
-#: ../src/live_effects/lpe-ruler.cpp:48
-msgid "Mark direction"
-msgstr "刻度方向"
-
-#: ../src/live_effects/lpe-ruler.cpp:48
-msgid "Direction of marks (when viewing along the path from start to end)"
-msgstr "刻度方向 (沿著路徑的起點到終點檢視時)"
-
-#: ../src/live_effects/lpe-ruler.cpp:49
-msgid "Offset of first mark"
-msgstr "第一個刻度的偏移量"
-
-#: ../src/live_effects/lpe-ruler.cpp:50
-msgid "Border marks"
-msgstr "邊界刻度"
-
-#: ../src/live_effects/lpe-ruler.cpp:50
-msgid "Choose whether to draw marks at the beginning and end of the path"
-msgstr "選擇是否在路徑的起點和終點上繪製刻度"
-
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-skeleton.cpp:32
 msgid "Float parameter"
@@ -7692,6 +7166,15 @@ msgstr "結構線"
 msgid "How many construction lines (tangents) to draw"
 msgstr "繪製多少條結構線(切線)"
 
+#: ../src/live_effects/lpe-sketch.cpp:55
+#: ../src/selection-chemistry.cpp:1514
+#: ../src/seltrans.cpp:485
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2207
+#: ../src/ui/dialog/transformation.cpp:738
+#: ../share/extensions/interp_att_g.inx.h:16
+msgid "Scale"
+msgstr "伸縮"
+
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Scale factor relating curvature and length of construction lines (try 5*offset)"
 msgstr "縮放因數關係到曲率和結構線長度 (嘗試 5*偏移量)"
@@ -7735,64 +7218,6 @@ msgstr "k 最大值(_M)"
 #: ../src/live_effects/lpe-sketch.cpp:62
 msgid "max curvature"
 msgstr "最大曲率"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:56
-#: ../share/extensions/motion.inx.h:1
-#: ../share/extensions/restack.inx.h:1
-msgid "Angle"
-msgstr "角度"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:56
-msgid "Additional angle between tangent and curve"
-msgstr "切線和曲線之間的額外角度"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:57
-msgid "Location along curve"
-msgstr "沿著曲線的位置"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:57
-msgid "Location of the point of attachment along the curve (between 0.0 and number-of-segments)"
-msgstr "沿著曲線附著點的位置 (0.0 和線段數目之間)"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:58
-msgid "Specifies the left end of the tangent"
-msgstr "指定切線的左邊終點"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:59
-msgid "Specifies the right end of the tangent"
-msgstr "指定切線的右邊終點"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:68
-msgid "Adjust the point of attachment of the tangent"
-msgstr "調整切線的附著點"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:69
-msgid "Adjust the \"left\" end of the tangent"
-msgstr "調整切線的\"左邊\"終點"
-
-#: ../src/live_effects/lpe-tangent_to_curve.cpp:70
-msgid "Adjust the \"right\" end of the tangent"
-msgstr "調整切線的\"右邊\"終點"
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:22
-msgid "Stack step"
-msgstr "堆疊掃描"
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:23
-msgid "point param"
-msgstr "點參數"
-
-#: ../src/live_effects/lpe-test-doEffect-stack.cpp:24
-msgid "path param"
-msgstr "路徑參數"
-
-#: ../src/live_effects/lpe-text_label.cpp:22
-msgid "Label"
-msgstr "標籤"
-
-#: ../src/live_effects/lpe-text_label.cpp:22
-msgid "Text label attached to the path"
-msgstr "文字標籤黏附到此路徑"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:47
 msgid "Nb of generations"
@@ -7844,7 +7269,7 @@ msgstr "複雜性最大值"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:56
 msgid "Disable effect if the output is too complex"
-msgstr "如果輸出太複雜則關閉特效"
+msgstr "如果輸出太複雜則停用特效"
 
 #: ../src/live_effects/parameter/bool.cpp:69
 msgid "Change bool parameter"
@@ -7897,10 +7322,6 @@ msgstr "變更文字參數"
 #: ../src/live_effects/parameter/unit.cpp:77
 msgid "Change unit parameter"
 msgstr "變更單位參數"
-
-#: ../src/lpe-tool-context.cpp:274
-msgid "Choose a construction tool from the toolbar."
-msgstr "從工具列選擇一個構造工具。"
 
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
@@ -8518,7 +7939,7 @@ msgstr "調整<b>偏移距離</b>"
 
 #: ../src/object-edit.cpp:1349
 msgid "Drag to resize the <b>flowed text frame</b>"
-msgstr "拖曳以改變<b>流動文字訊框</b>的大小"
+msgstr "拖曳以改變<b>流動文字框</b>的大小"
 
 #: ../src/path-chemistry.cpp:49
 msgid "Select <b>object(s)</b> to combine."
@@ -8623,11 +8044,11 @@ msgstr "繪製取消"
 
 #: ../src/pencil-context.cpp:565
 msgid "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. Release <b>Alt</b> to finalize."
-msgstr "<b>素描模式</b>：按住 <b>Alt</b> 來插入已描繪路徑之間。放開 <b>Alt</b> 來結束定稿。"
+msgstr "<b>草圖模式</b>：按住 <b>Alt</b> 以插入已描繪路徑之間。放開 <b>Alt</b> 以結束定稿。"
 
 #: ../src/pencil-context.cpp:593
 msgid "Finishing freehand sketch"
-msgstr "完成手繪素描"
+msgstr "完成手繪草圖"
 
 #: ../src/pen-context.cpp:667
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
@@ -9216,7 +8637,7 @@ msgstr "取消仿製物件連結"
 
 #: ../src/selection-chemistry.cpp:2047
 msgid "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> to go to its source. Select a <b>text on path</b> to go to the path. Select a <b>flowed text</b> to go to its frame."
-msgstr "選擇一個<b>仿製物件</b>以前往它的原物件。選擇一個<b>連結偏移</b>以前往它的來源。選擇一段<b>路徑上的文字</b>以前往該路徑。選擇一段<b>流動的文字</b>以前往它的訊框。"
+msgstr "選擇一個<b>仿製物件</b>以前往它的原物件。選擇一個<b>連結偏移</b>以前往它的來源。選擇一段<b>路徑上的文字</b>以前往該路徑。選擇一段<b>流動文字</b>以前往它的框架。"
 
 #: ../src/selection-chemistry.cpp:2070
 msgid "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, flowed text?)"
@@ -9342,7 +8763,7 @@ msgstr "橢圓"
 
 #: ../src/selection-describer.cpp:49
 msgid "Flowed text"
-msgstr "浮動文字"
+msgstr "流動文字"
 
 #: ../src/selection-describer.cpp:55
 msgid "Line"
@@ -9620,15 +9041,15 @@ msgstr "流動排除區域"
 #, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
-msgstr[0] "<b>浮動文字</b> (%d 個字元)"
-msgstr[1] "<b>浮動文字</b> (%d 個字元)"
+msgstr[0] "<b>流動文字</b> (%d 個字元)"
+msgstr[1] "<b>流動文字</b> (%d 個字元)"
 
 #: ../src/sp-flowtext.cpp:378
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
-msgstr[0] "<b>連結的浮動文字</b>(%d 個字元)"
-msgstr[1] "<b>連結的浮動文字</b>(%d 個字元)"
+msgstr[0] "<b>連結的流動文字</b>(%d 個字元)"
+msgstr[1] "<b>連結的流動文字</b>(%d 個字元)"
 
 #: ../src/sp-guide.cpp:287
 msgid "Guides around page"
@@ -9715,6 +9136,11 @@ msgstr[1] "<b>%d</b> 項物件的<b>群組</b>"
 msgid "<b>Line</b>"
 msgstr "<b>線條</b>"
 
+#: ../src/splivarot.cpp:66
+#: ../src/splivarot.cpp:72
+msgid "Union"
+msgstr "聯集"
+
 #: ../src/splivarot.cpp:78
 msgid "Intersection"
 msgstr "交集"
@@ -9723,6 +9149,10 @@ msgstr "交集"
 #: ../src/splivarot.cpp:90
 msgid "Difference"
 msgstr "差集"
+
+#: ../src/splivarot.cpp:96
+msgid "Exclusion"
+msgstr "排除"
 
 #: ../src/splivarot.cpp:101
 msgid "Division"
@@ -9986,7 +9416,7 @@ msgstr "無法在這個版本中將文字放在矩形之上。請先將矩形轉
 
 #: ../src/text-chemistry.cpp:125
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
-msgstr "流動的文字必須是<b>可見的</b>以便置放於路徑。"
+msgstr "流動文字必須是<b>可見的</b>以便置放於路徑。"
 
 #: ../src/text-chemistry.cpp:192
 #: ../src/verbs.cpp:2364
@@ -10017,7 +9447,7 @@ msgstr "移除手動字距"
 
 #: ../src/text-chemistry.cpp:313
 msgid "Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text into frame."
-msgstr "選取<b>一段文字</b>與一或多條<b>路徑或形狀</b>來讓文字在圖框中流動。"
+msgstr "選取<b>一段文字</b>與一或多條<b>路徑或形狀</b>來使文字置入到框架中。"
 
 #: ../src/text-chemistry.cpp:381
 msgid "Flow text into shape"
@@ -10029,7 +9459,7 @@ msgstr "選擇<b>流動文字</b>以停止其流動。"
 
 #: ../src/text-chemistry.cpp:477
 msgid "Unflow flowed text"
-msgstr "取消流動的文字"
+msgstr "取消流動文字"
 
 #: ../src/text-chemistry.cpp:489
 msgid "Select <b>flowed text(s)</b> to convert."
@@ -10041,7 +9471,7 @@ msgstr "流動文字必須是<b>可見的</b>以便轉換。"
 
 #: ../src/text-chemistry.cpp:535
 msgid "Convert flowed text to text"
-msgstr "轉換流動文字為文字"
+msgstr "流動文字轉換為文字"
 
 #: ../src/text-chemistry.cpp:540
 msgid "<b>No flowed text(s)</b> to convert in the selection."
@@ -10080,7 +9510,7 @@ msgstr "萬國碼 (<b>Enter</b>表示完成)："
 #: ../src/text-context.cpp:652
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
-msgstr "<b>流動的文字訊框</b>：%s &#215; %s"
+msgstr "<b>流動文字框</b>：%s &#215; %s"
 
 #: ../src/text-context.cpp:684
 msgid "Type text; <b>Enter</b> to start new line."
@@ -10096,7 +9526,7 @@ msgstr "建立流動文字"
 
 #: ../src/text-context.cpp:701
 msgid "The frame is <b>too small</b> for the current font size. Flowed text not created."
-msgstr "訊框對於目前字型大小來說<b>太小</b>。並未建立流動文字。"
+msgstr "框架對於目前字型大小來說<b>太小</b>。並未建立流動文字。"
 
 #: ../src/text-context.cpp:837
 msgid "No-break space"
@@ -10218,8 +9648,8 @@ msgid "<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral s
 msgstr "<b>拖曳</b>以建立螺旋形。<b>拖曳控柄</b>可編輯螺旋的形狀。<b>點一下</b>以選擇。"
 
 #: ../src/tools-switch.cpp:172
-msgid "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to append to selected path."
-msgstr "<b>拖曳</b>以建立手繪線條。按著 <b>Shift</b> 以開始繪製並添加至所選取的路徑。"
+msgid "<b>Drag</b> to create a freehand line. <b>Shift</b> appends to selected path, <b>Alt</b> activates sketch mode."
+msgstr "<b>拖曳</b>以建立手繪線條。按 <b>Shift</b> 以添加至選取的路徑，<b>Alt</b> 啟動草圖模式。"
 
 #: ../src/tools-switch.cpp:178
 msgid "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path. <b>Ctrl+click</b> to create single dots (straight line modes only)."
@@ -10586,7 +10016,7 @@ msgstr "about.svg"
 
 #. TRANSLATORS: Put here your name (and other national contributors')
 #. one per line in the form of: name surname (email). Use \n for newline.
-#: ../src/ui/dialog/aboutbox.cpp:370
+#: ../src/ui/dialog/aboutbox.cpp:371
 msgid "translator-credits"
 msgstr ""
 "趙惟倫 (william.chao@ossii.com.tw)\n"
@@ -12194,7 +11624,7 @@ msgstr "在轉換成參考線期間將群組視為一個單一物件比轉換每
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:401
 msgid "Average all sketches"
-msgstr "均分全部素描"
+msgstr "均分全部草圖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:402
 msgid "Width is in absolute units"
@@ -12325,11 +11755,11 @@ msgstr "形狀"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:486
 msgid "Sketch mode"
-msgstr "素描模式"
+msgstr "草圖模式"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
 msgid "If on, the sketch result will be the normal average of all sketches made, instead of averaging the old result with the new sketch."
-msgstr "如果開啟，此素描結果將會是全部素描製作的一般平均值，而非用新素描平均之前的結果。"
+msgstr "如果開啟，此草圖結果將會是全部草圖製作的一般平均值，而非用新草圖平均之前的結果。"
 
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:491
@@ -12816,7 +12246,7 @@ msgstr "絕對色度"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:830
 msgid "(Note: Color management has been disabled in this build)"
-msgstr "(注意：顏色管理在這次建立已被關閉)"
+msgstr "(注意：顏色管理在這次建立已被停用)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:834
 msgid "Display adjustment"
@@ -13047,7 +12477,7 @@ msgstr "強制重複命令"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1032
 msgid "Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead of 'L 1,2 3,4')"
-msgstr "相同路徑的強制重複命令 (舉例，'L 1,2 L 3,4' 代替 'L 1,2 3,4')"
+msgstr "相同路徑的強制重複命令 (舉例，「L 1,2 L 3,4」代替「L 1,2 3,4」)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1034
 msgid "Numbers"
@@ -13283,7 +12713,7 @@ msgstr "羅馬尼亞語 (ro)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Russian (ru)"
-msgstr "俄語 (ru)"
+msgstr "俄文 (ru)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Serbian (sr)"
@@ -16369,11 +15799,11 @@ msgstr "把已選物件轉化成路徑"
 
 #: ../src/verbs.cpp:2474
 msgid "_Flow into Frame"
-msgstr "流動轉為訊框(_F)"
+msgstr "置入框架(_F)"
 
 #: ../src/verbs.cpp:2475
 msgid "Put text into a frame (path or shape), creating a flowed text linked to the frame object"
-msgstr "把文字放到框架(路徑或形狀)裡，建立與框架物件連結的浮動文字"
+msgstr "把文字放到框架(路徑或形狀)裡，建立與框架物件連結的流動文字"
 
 #: ../src/verbs.cpp:2476
 msgid "_Unflow"
@@ -16389,7 +15819,7 @@ msgstr "轉換成文字(_C)"
 
 #: ../src/verbs.cpp:2479
 msgid "Convert flowed text to regular text object (preserves appearance)"
-msgstr "把浮動文字轉化成一般文字物件(保持外觀)"
+msgstr "把流動文字轉化成一般文字物件(保持外觀)"
 
 #: ../src/verbs.cpp:2481
 msgid "Flip _Horizontal"
@@ -19170,12 +18600,20 @@ msgid "Arc: Change open/closed"
 msgstr "弧：變更開啟/關閉"
 
 #: ../src/widgets/toolbox.cpp:5166
+msgid "Start"
+msgstr "開始"
+
+#: ../src/widgets/toolbox.cpp:5166
 msgid "Start:"
 msgstr "開始:"
 
 #: ../src/widgets/toolbox.cpp:5167
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr "從水平線到圓弧起點的角度 (以角度為單位)"
+
+#: ../src/widgets/toolbox.cpp:5179
+msgid "End"
+msgstr "結束"
 
 #: ../src/widgets/toolbox.cpp:5179
 msgid "End:"
@@ -19236,6 +18674,22 @@ msgstr "如果 alpha 已被點取，就指派它到選取區作為填色或邊�
 #: ../src/widgets/toolbox.cpp:5321
 msgid "Assign"
 msgstr "指派"
+
+#: ../src/widgets/toolbox.cpp:5507
+msgid "Closed"
+msgstr "封閉的"
+
+#: ../src/widgets/toolbox.cpp:5509
+msgid "Open start"
+msgstr "打開起點"
+
+#: ../src/widgets/toolbox.cpp:5511
+msgid "Open end"
+msgstr "打開終點"
+
+#: ../src/widgets/toolbox.cpp:5513
+msgid "Open both"
+msgstr "打開兩端"
 
 #: ../src/widgets/toolbox.cpp:5572
 msgid "All inactive"
@@ -19542,7 +18996,7 @@ msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
-"第一個選取的物件為 '%s' 類型。\n"
+"第一個選取的物件為「%s」類型。\n"
 "試著實行「路徑 | 物件轉成路徑」的手續。"
 
 #: ../share/extensions/perspective.py:68
@@ -20261,7 +19715,7 @@ msgstr "移除矩形"
 
 #: ../share/extensions/funcplot.inx.h:14
 msgid "Select a rectangle before calling the extension, it will determine X and Y scales. With polar coordinates: Start and end X values define the angle range in radians. X scale is set so that left and right edges of rectangle are at +/-1. Isotropic scaling is disabled. First derivative is always determined numerically."
-msgstr "呼叫特效之前先選擇一個矩型。矩型決定 x 和 y 的比例。關於極坐標：起始和結束的 x 值定義弧度的範圍。x 比例是不變的，所以矩型的 左/右 邊緣表示 +/-1。等方比例是失效的。第一次導數總是用數字表示被決定的。"
+msgstr "呼叫特效之前先選擇一個矩型。矩型決定 x 和 y 的比例。關於極坐標：起始和結束的 x 值定義弧度的範圍。x 比例是不變的，所以矩型的 左/右 邊緣表示 +/-1。等向縮放比例是被停用的。第一次導數總是用數字表示被決定的。"
 
 #: ../share/extensions/funcplot.inx.h:15
 #: ../share/extensions/param_curves.inx.h:12
@@ -20744,7 +20198,7 @@ msgstr "每段落句數"
 
 #: ../share/extensions/lorem_ipsum.inx.h:6
 msgid "This effect creates the standard \"Lorem Ipsum\" pseudolatin placeholder text. If a flowed text is selected, Lorem Ipsum is added to it; otherwise a new flowed text object, the size of the page, is created in a new layer."
-msgstr "這個特效可以製作標準的 \"Lorem Ipsum\" 偽拉丁文佔位符號文稿。如果一個流動文本被選擇，Lorem Ipsum 會被新增到裡面；否則一個新的流動文本物件(頁面大小)會被建立在新圖層。"
+msgstr "這個特效可以製作標準的 \"Lorem Ipsum\" 偽拉丁文佔位符號文稿。如果選取一個流動文字，Lorem Ipsum 會被新增到裡面；否則一個新的流動文字物件(頁面大小)會被建立在新圖層。"
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
@@ -20783,6 +20237,11 @@ msgstr "尺度因數 (繪製中：真實長度)=1："
 msgid "This effect measures the length of the selected path and adds it as a text-on-path object with the selected unit. The number of significant digits can be controlled by the Precision field. The Offset field controls the distance from the text to the path. The Scale factor can be used to make measurements in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the real world, Scale must be set to 250."
 msgstr "這個特效用所選的單位來測量所選路徑的長度並且作為一個文字沿置路徑物件來新增。可以用精密字段來控制有效數字的數目。偏移量字段控制從文字到路徑的間隔。比例因子可以被使用在比例圖中製作尺寸。舉例來說，如果圖中的 1 公分等於真實中的 2.5 公尺，比例應該設為 250。"
 
+#: ../share/extensions/motion.inx.h:1
+#: ../share/extensions/restack.inx.h:1
+msgid "Angle"
+msgstr "角度"
+
 #: ../share/extensions/motion.inx.h:3
 msgid "Magnitude"
 msgstr "數量"
@@ -20809,7 +20268,7 @@ msgstr "結束 t 值"
 
 #: ../share/extensions/param_curves.inx.h:4
 msgid "Isotropic scaling (uses smallest: width/xrange or height/yrange)"
-msgstr "等向縮放 (使用最小的：寬度/x 範圍或高度/y 範圍)"
+msgstr "等向縮放比例 (使用最小的：寬度/x 範圍或高度/y 範圍)"
 
 #: ../share/extensions/param_curves.inx.h:5
 msgid "Multiply t-range by 2*pi"
@@ -21331,6 +20790,10 @@ msgstr "底部到頂部 (90)"
 msgid "Horizontal Point:"
 msgstr "水平點："
 
+#: ../share/extensions/restack.inx.h:7
+msgid "Left"
+msgstr "左"
+
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr "左側到右側 (0)"
@@ -21354,6 +20817,10 @@ msgstr "重新堆疊"
 #: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
 msgstr "重新堆疊方向："
+
+#: ../share/extensions/restack.inx.h:14
+msgid "Right"
+msgstr "右"
 
 #: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
@@ -21911,10 +21378,264 @@ msgstr "Windows 後設檔案輸入"
 msgid "XAML Input"
 msgstr "XAML 輸入"
 
-#~ msgid "Alpha draw"
-#~ msgstr "透明繪製"
-#~ msgid "Alpha paint"
-#~ msgstr "透明塗抹"
+#~ msgid "Alpha engraving"
+#~ msgstr "透明版畫"
+#~ msgid "Alpha engraving, color"
+#~ msgstr "透明版畫, 彩色"
+#~ msgid "Length left"
+#~ msgstr "左邊長度"
+#~ msgid "Specifies the left end of the bisector"
+#~ msgstr "指定此平分線的左邊終點"
+#~ msgid "Length right"
+#~ msgstr "右邊長度"
+#~ msgid "Specifies the right end of the bisector"
+#~ msgstr "指定此平分線的右邊終點"
+#~ msgid "Adjust the \"left\" end of the bisector"
+#~ msgstr "調整此平分線的\"左邊\"終點"
+#~ msgid "Adjust the \"right\" of the bisector"
+#~ msgstr "調整此平分線的\"右側\""
+#~ msgid "Null"
+#~ msgstr "空"
+#~ msgid "Intersect"
+#~ msgstr "交集"
+#~ msgid "Subtract A-B"
+#~ msgstr "差集 A-B"
+#~ msgid "Identity A"
+#~ msgstr "相同 A"
+#~ msgid "Subtract B-A"
+#~ msgstr "差集 B-A"
+#~ msgid "Identity B"
+#~ msgstr "相同 B"
+#~ msgid "2nd path"
+#~ msgstr "第二個路徑"
+#~ msgid "Path to which the original path will be boolop'ed."
+#~ msgstr "路徑將對原本路徑作布林運算。"
+#~ msgid "Boolop type"
+#~ msgstr "布林運算類型"
+#~ msgid "Determines which kind of boolop will be performed."
+#~ msgstr "決定何種布林運算將被執行。"
+#~ msgid "Starting"
+#~ msgstr "開始"
+#~ msgid "Angle of the first copy"
+#~ msgstr "第一次複製的角度"
+#~ msgid "Rotation angle"
+#~ msgstr "旋轉角度"
+#~ msgid "Angle between two successive copies"
+#~ msgstr "兩個連續複本之間的角度"
+#~ msgid "Number of copies"
+#~ msgstr "複本數目"
+#~ msgid "Number of copies of the original path"
+#~ msgstr "原始路徑複本的數目"
+#~ msgid "Origin"
+#~ msgstr "原點"
+#~ msgid "Origin of the rotation"
+#~ msgstr "旋轉的原點"
+#~ msgid "Adjust the starting angle"
+#~ msgstr "調整開始的角度"
+#~ msgid "Adjust the rotation angle"
+#~ msgstr "調整旋轉的角度"
+#~ msgid "Elliptic Pen"
+#~ msgstr "橢圓筆尖"
+#~ msgid "Thick-Thin strokes (fast)"
+#~ msgstr "粗-細邊框 (快)"
+#~ msgid "Thick-Thin strokes (slow)"
+#~ msgstr "粗-細邊框 (慢)"
+#~ msgid "Sharp"
+#~ msgstr "尖銳"
+#~ msgid "Round"
+#~ msgstr "圓滑"
+#~ msgid "Method"
+#~ msgstr "方式"
+#~ msgid "Choose pen type"
+#~ msgstr "選擇筆的類型"
+#~ msgid "Pen width"
+#~ msgstr "筆寬"
+#~ msgid "Maximal stroke width"
+#~ msgstr "畫筆最大寬度"
+#~ msgid "Pen roundness"
+#~ msgstr "圓滑筆尖"
+#~ msgid "Min/Max width ratio"
+#~ msgstr "最小/最大寬度比值"
+#~ msgid "angle"
+#~ msgstr "角度"
+#~ msgid "direction of thickest strokes (opposite = thinest)"
+#~ msgstr "最粗畫筆的方向 (相對的 = 最細)"
+#~ msgid "Choose start capping type"
+#~ msgstr "選擇起點帽緣類型"
+#~ msgid "Choose end capping type"
+#~ msgstr "選擇終點帽緣類型"
+#~ msgid "Grow for"
+#~ msgstr "逐漸擴張"
+#~ msgid "Make the stroke thiner near it's start"
+#~ msgstr "使畫筆細於它的起點附近"
+#~ msgid "Fade for"
+#~ msgstr "逐漸消失"
+#~ msgid "Make the stroke thiner near it's end"
+#~ msgstr "使畫筆細於它的終點附近"
+#~ msgid "Round ends"
+#~ msgstr "圓端點"
+#~ msgid "Strokes end with a round end"
+#~ msgstr "畫筆尖端為圓端點"
+#~ msgid "Capping"
+#~ msgstr "帽緣"
+#~ msgid "left capping"
+#~ msgstr "左帽緣"
+#~ msgid "Control handle 0"
+#~ msgstr "控制柄 0"
+#~ msgid "Control handle 1"
+#~ msgstr "控制柄 1"
+#~ msgid "Control handle 2"
+#~ msgstr "控制柄 2"
+#~ msgid "Control handle 3"
+#~ msgstr "控制柄 3"
+#~ msgid "Control handle 4"
+#~ msgstr "控制柄 4"
+#~ msgid "Control handle 5"
+#~ msgstr "控制柄 5"
+#~ msgid "Control handle 6"
+#~ msgstr "控制柄 6"
+#~ msgid "Control handle 7"
+#~ msgstr "控制柄 7"
+#~ msgid "Control handle 8"
+#~ msgstr "控制柄 8"
+#~ msgid "Control handle 9"
+#~ msgstr "控制柄 9"
+#~ msgid "Control handle 10"
+#~ msgstr "控制柄 10"
+#~ msgid "Control handle 11"
+#~ msgstr "控制柄 11"
+#~ msgid "Control handle 12"
+#~ msgstr "控制柄 12"
+#~ msgid "Control handle 13"
+#~ msgstr "控制柄 13"
+#~ msgid "Control handle 14"
+#~ msgstr "控制柄 14"
+#~ msgid "Control handle 15"
+#~ msgstr "控制柄 15"
+#~ msgid "End type"
+#~ msgstr "終點類型"
+#~ msgid "Determines on which side the line or line segment is infinite."
+#~ msgstr "決定直線或直線線段的哪一側邊為無限長。"
+#~ msgid "Discard original path?"
+#~ msgstr "放棄原始路徑？"
+#~ msgid "Check this to only keep the mirrored part of the path"
+#~ msgstr "勾選這個以只保留此路徑鏡像的部份"
+#~ msgid "Reflection line"
+#~ msgstr "反射線"
+#~ msgid "Line which serves as 'mirror' for the reflection"
+#~ msgstr "直線可作為反射的「鏡像」使用"
+#~ msgid "Handle to control the distance of the offset from the curve"
+#~ msgstr "從曲線來操作控制偏移的距離"
+#~ msgid "Adjust the offset"
+#~ msgstr "調整偏移距離"
+#~ msgid "Specifies the left end of the parallel"
+#~ msgstr "指定平行線的左邊終點"
+#~ msgid "Specifies the right end of the parallel"
+#~ msgstr "指定平行線的右邊終點"
+#~ msgid "Adjust the \"left\" end of the parallel"
+#~ msgstr "調整平行線的\"左邊\"終點"
+#~ msgid "Adjust the \"right\" end of the parallel"
+#~ msgstr "調整平行線的\"右邊\"終點"
+#~ msgid "Scaling factor"
+#~ msgstr "縮放因子"
+#~ msgid "Display unit"
+#~ msgstr "顯示單位"
+#~ msgid "Print unit after path length"
+#~ msgstr "以路徑長度為列印單位"
+#~ msgid "Adjust the bisector's \"left\" end"
+#~ msgstr "調整此平分線的\"左邊\"終點"
+#~ msgid "Adjust the bisector's \"right\" end"
+#~ msgstr "調整此平分線的\"右邊\"終點"
+#~ msgid "Scale x"
+#~ msgstr "縮放 x"
+#~ msgid "Scale factor in x direction"
+#~ msgstr "x 方向的縮放"
+#~ msgid "Scale y"
+#~ msgstr "縮放 y"
+#~ msgid "Scale factor in y direction"
+#~ msgstr "y 方向的縮放"
+#~ msgid "Offset x"
+#~ msgstr "偏移 x"
+#~ msgid "Offset in x direction"
+#~ msgstr "x 方向的偏移"
+#~ msgid "Offset y"
+#~ msgstr "偏移 y"
+#~ msgid "Offset in y direction"
+#~ msgstr "y 方向的偏移"
+#~ msgid "Uses XY plane?"
+#~ msgstr "使用 XY 平面？"
+#~ msgid ""
+#~ "If true, put the path on the left side of an imaginary box, otherwise on "
+#~ "the right side"
+#~ msgstr "如果是，放置此路徑於想像框的左邊，否則在右邊"
+#~ msgid "Adjust the origin"
+#~ msgstr "調整此原點"
+#~ msgid "Iterations"
+#~ msgstr "疊代"
+#~ msgid "recursivity"
+#~ msgstr "遞迴性"
+#~ msgid "Both"
+#~ msgstr "兩邊"
+#~ msgid "Mark distance"
+#~ msgstr "刻度間距"
+#~ msgid "Distance between successive ruler marks"
+#~ msgstr "連續尺標刻度之間的距離"
+#~ msgid "Major length"
+#~ msgstr "主要長度"
+#~ msgid "Length of major ruler marks"
+#~ msgstr "主要尺標刻度的長度"
+#~ msgid "Minor length"
+#~ msgstr "次要長度"
+#~ msgid "Length of minor ruler marks"
+#~ msgstr "次要尺標刻度的長度"
+#~ msgid "Major steps"
+#~ msgstr "主要間距"
+#~ msgid "Draw a major mark every ... steps"
+#~ msgstr "每隔多少間距繪製一個刻度"
+#~ msgid "Shift marks by"
+#~ msgstr "刻度位移"
+#~ msgid "Shift marks by this many steps"
+#~ msgstr "刻度以這個間距來位移"
+#~ msgid "Mark direction"
+#~ msgstr "刻度方向"
+#~ msgid "Direction of marks (when viewing along the path from start to end)"
+#~ msgstr "刻度方向 (沿著路徑的起點到終點檢視時)"
+#~ msgid "Offset of first mark"
+#~ msgstr "第一個刻度的偏移量"
+#~ msgid "Border marks"
+#~ msgstr "邊界刻度"
+#~ msgid "Choose whether to draw marks at the beginning and end of the path"
+#~ msgstr "選擇是否在路徑的起點和終點上繪製刻度"
+#~ msgid "Additional angle between tangent and curve"
+#~ msgstr "切線和曲線之間的額外角度"
+#~ msgid "Location along curve"
+#~ msgstr "沿著曲線的位置"
+#~ msgid ""
+#~ "Location of the point of attachment along the curve (between 0.0 and "
+#~ "number-of-segments)"
+#~ msgstr "沿著曲線附著點的位置 (0.0 和線段數目之間)"
+#~ msgid "Specifies the left end of the tangent"
+#~ msgstr "指定切線的左邊終點"
+#~ msgid "Specifies the right end of the tangent"
+#~ msgstr "指定切線的右邊終點"
+#~ msgid "Adjust the point of attachment of the tangent"
+#~ msgstr "調整切線的附著點"
+#~ msgid "Adjust the \"left\" end of the tangent"
+#~ msgstr "調整切線的\"左邊\"終點"
+#~ msgid "Adjust the \"right\" end of the tangent"
+#~ msgstr "調整切線的\"右邊\"終點"
+#~ msgid "Stack step"
+#~ msgstr "堆疊掃描"
+#~ msgid "point param"
+#~ msgstr "點參數"
+#~ msgid "path param"
+#~ msgstr "路徑參數"
+#~ msgid "Label"
+#~ msgstr "標籤"
+#~ msgid "Text label attached to the path"
+#~ msgstr "文字標籤黏附到此路徑"
+#~ msgid "Choose a construction tool from the toolbar."
+#~ msgstr "從工具列選擇一個構造工具。"
 #~ msgid "Alpha fill"
 #~ msgstr "透明填充"
 #~ msgid "Deactivate knotholder?"
