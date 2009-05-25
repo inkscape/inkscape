@@ -541,7 +541,6 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 /*text_grouping_policy*/)
 }
 
 
-// FIXME: THIS DOES NOT REVERSE THE NODETYPES ORDER!
 void
 sp_selected_path_reverse(SPDesktop *desktop)
 {
@@ -579,6 +578,13 @@ sp_selected_path_reverse(SPDesktop *desktop)
         g_free(str);
 
         rcurve->unref();
+
+        // reverse nodetypes order (Bug #179866)
+        gchar *nodetypes = g_strdup(SP_OBJECT_REPR(path)->attribute("sodipodi:nodetypes"));
+        if ( nodetypes ) {
+            SP_OBJECT_REPR(path)->setAttribute("sodipodi:nodetypes", g_strreverse(nodetypes));
+            g_free(nodetypes);
+        }
     }
 
     desktop->clearWaitingCursor();
