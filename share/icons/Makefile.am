@@ -1,5 +1,3 @@
-SUBDIRS = tango
-
 iconsdir = $(datadir)/inkscape/icons
 
 pixmaps = \
