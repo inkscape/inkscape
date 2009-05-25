@@ -185,8 +185,6 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
                 if (w>0 && h>0) {
                     x = MIN(gdk_screen_width() - w, x);
                     y = MIN(gdk_screen_height() - h, y);
-                }
-                if (w>0 && h>0) {
                     desktop->setWindowSize(w, h);
                 }
 

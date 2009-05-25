@@ -1220,6 +1220,7 @@ EditWidget::shutdown()
         {
             case Gtk::RESPONSE_YES:
                 sp_document_ref(doc);
+                sp_namedview_document_from_window(_desktop);
                 if (sp_file_save_document(*this, doc)) {
                     sp_document_unref(doc);
                 } else { // save dialog cancelled or save failed
@@ -1307,7 +1308,7 @@ EditWidget::requestCanvasUpdateAndWait()
 {
     requestCanvasUpdate();
 
-    while (gtk_events_pending()) 
+    while (gtk_events_pending())
       gtk_main_iteration_do(FALSE);
 }
 
@@ -1315,9 +1316,9 @@ void
 EditWidget::enableInteraction()
 {
   g_return_if_fail(_interaction_disabled_counter > 0);
-  
+
   _interaction_disabled_counter--;
-  
+
   if (_interaction_disabled_counter == 0) {
     this->set_sensitive(true);
   }
@@ -1329,7 +1330,7 @@ EditWidget::disableInteraction()
   if (_interaction_disabled_counter == 0) {
     this->set_sensitive(false);
   }
-  
+
   _interaction_disabled_counter++;
 }
 
@@ -1348,9 +1349,9 @@ EditWidget::deactivateDesktop()
 void
 EditWidget::viewSetPosition (Geom::Point p)
 {
-    // p -= _namedview->gridorigin;    
+    // p -= _namedview->gridorigin;
     /// \todo Why was the origin corrected for the grid origin? (johan)
-    
+
     double lo, up, pos, max;
     _top_ruler.get_range (lo, up, pos, max);
     _top_ruler.set_range (lo, up, p[Geom::X], max);
@@ -1363,7 +1364,7 @@ EditWidget::updateRulers()
 {
     //Geom::Point gridorigin = _namedview->gridorigin;
     /// \todo Why was the origin corrected for the grid origin? (johan)
-    
+
     Geom::Rect const viewbox = _svg_canvas.spobj()->getViewbox();
     double lo, up, pos, max;
     double const scale = _desktop->current_zoom();

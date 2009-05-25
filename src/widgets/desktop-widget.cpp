@@ -854,6 +854,7 @@ SPDesktopWidget::shutdown()
                 Gtk::Window *window = (Gtk::Window*)gtk_object_get_data (GTK_OBJECT(this), "window");
 
                 sp_document_ref(doc);
+                sp_namedview_document_from_window(desktop);
                 if (sp_file_save_document(*window, doc)) {
                     sp_document_unref(doc);
                 } else { // save dialog cancelled or save failed
