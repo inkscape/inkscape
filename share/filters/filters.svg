@@ -1679,5 +1679,13 @@
 <feComposite result="result2" in2="result4" in="result1" operator="atop" id="feComposite2931" />
 <feComposite in="SourceGraphic" in2="result2" k1="0" result="result3" k3="1" k2="0" operator="atop" id="feComposite2933" />
 </filter>
+<filter id="InnerShad0" inkscape:label="Inner shadow" inkscape:menu="Shadows and Glows" inkscape:menu-tooltip="Adds a colorizable drop shadow inside" height="1.2" y="-0.1" width="1.2" x="-0.1">
+<feGaussianBlur id="feGaussianBlur2866" stdDeviation="4" result="result8" />
+<feOffset dx="4" dy="4" id="feOffset2878" result="result11" />
+<feComposite id="feComposite2870" result="result6" in="SourceGraphic" operator="in" in2="result11" />
+<feFlood id="feFlood2872" result="result10" in="result6" flood-opacity="1" flood-color="rgb(0,0,0)" />
+<feBlend id="feBlend2876" blend="normal" mode="normal" in="result6" />
+<feComposite id="feComposite2874" result="result2" operator="in" in2="SourceGraphic" />
+</filter>
 </defs>
 </svg>
