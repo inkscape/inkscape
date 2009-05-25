@@ -107,6 +107,7 @@ ShowUninstDetails hide
 !include "slovak.nsh" 
 !include "slovenian.nsh" 
 !include "spanish.nsh" 
+!include "tradchinese.nsh"
 
 ReserveFile "inkscape.nsi.uninstall"
 ReserveFile "${NSISDIR}\Plugins\UserInfo.dll"

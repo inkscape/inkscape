@@ -11,211 +11,211 @@
 !insertmacro MUI_LANGUAGE "TradChinese"
 
 ; Product name
-LangString lng_Caption   ${LANG_TRADCHINESE} "${PRODUCT_NAME} -- ?}?????l?X?V?qÃ¸?Ï³n??"
+LangString lng_Caption   ${LANG_TRADCHINESE} "${PRODUCT_NAME} -- ¶}©ñ­ì©l½X¦V¶qÃ¸¹Ï³nÅé"
 
 ; Button text "Next >" for the license page
-LangString lng_LICENSE_BUTTON   ${LANG_TRADCHINESE} "?U?@?B >"
+LangString lng_LICENSE_BUTTON   ${LANG_TRADCHINESE} "¤U¤@¨B >"
 
 ; Bottom text for the license page
-LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_TRADCHINESE} "$(^Name) ?O?H GNU ?q?Î¤??@?\?i?? (GPL) ?o???C ?o?Ì´??Ñª??\?i?Ò¶È¬??Ñ¦Ò°T???C $_CLICK"
+LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_TRADCHINESE} "$(^Name) ¬O¥H GNU ³q¥Î¤½¦@³\¥iÃÒ (GPL) µo¦æ¡C ³o¸Ì´£¨Ñªº³\¥iÃÒ¶È¬°°Ñ¦Ò°T®§¡C $_CLICK"
 
 ;has been installed by different user
-LangString lng_DIFFERENT_USER ${LANG_TRADCHINESE} "?Ï¥Îª? $0 ?w?g?w?? Inkscape?C$\r$\n?p?G?~???A?i???L?k???\?????I$\r$\n?Ð¥H $0 ?????n?J???A?Õ¤@???C"
+LangString lng_DIFFERENT_USER ${LANG_TRADCHINESE} "¨Ï¥ÎªÌ $0 ¤w¸g¦w¸Ë Inkscape¡C$\r$\n¦pªGÄ~Äò§A¥i¯àµLªk¦¨¥\§¹¦¨¡I$\r$\n½Ð¥H $0 ¨­¥÷µn¤J«á¦A¸Õ¤@¦¸¡C"
 
 ; want to uninstall before install
-LangString lng_WANT_UNINSTALL_BEFORE ${LANG_TRADCHINESE} "$R1 ?w?g?w?Ë¡C $\n?A?n?b?w?? $(^Name) ???e?????W?@?Óª????H"
+LangString lng_WANT_UNINSTALL_BEFORE ${LANG_TRADCHINESE} "$R1 ¤w¸g¦w¸Ë¡C $\n§A­n¦b¦w¸Ë $(^Name) ¤§«e²¾°£¤W¤@­Óª©¥»¡H"
 
 ; press OK to continue press Cancel to abort
-LangString lng_OK_CANCEL_DESC ${LANG_TRADCHINESE} "$\n$\n???u?T?w?v?~???ÎªÌ«??u?????v?????C"
+LangString lng_OK_CANCEL_DESC ${LANG_TRADCHINESE} "$\n$\n«ö¡u½T©w¡vÄ~Äò©ÎªÌ«ö¡u¨ú®ø¡v¤¤¤î¡C"
 
 ;you have no admin rigths
-LangString lng_NO_ADMIN ${LANG_TRADCHINESE} "?A?S???t?ÎºÞ²z???v???C$\r$\n?w?? Inkscape ???Ò¦??Ï¥ÎªÌ¥i???L?k???\?????C$\r$\n?????Ä¿??u?w?Ëµ??Ò¦??Ï¥ÎªÌ¡v?ï¶µ."
+LangString lng_NO_ADMIN ${LANG_TRADCHINESE} "§A¨S¦³¨t²ÎºÞ²z­ûÅv­­¡C$\r$\n¦w¸Ë Inkscape ¨ì©Ò¦³¨Ï¥ÎªÌ¥i¯àµLªk¦¨¥\§¹¦¨¡C$\r$\n¨ú®ø¤Ä¿ï¡u¦w¸Ëµ¹©Ò¦³¨Ï¥ÎªÌ¡v¿ï¶µ."
 
 ;win9x is not supported
-LangString lng_NOT_SUPPORTED ${LANG_TRADCHINESE} "Inkscape ?L?k?? Windows 95/98/ME ?U?B??!$\r$\n?Ð¬d?Ý©x???ô¯¸ª??Ô²Ó«H???C"
+LangString lng_NOT_SUPPORTED ${LANG_TRADCHINESE} "Inkscape µLªk©ó Windows 95/98/ME ¤U¹B¦æ!$\r$\n½Ð¬d¬Ý©x¤èºô¯¸ªº¸Ô²Ó«H®§¡C"
 
 ; Full install type
-LangString lng_Full $(LANG_TRADCHINESE) "????"
+LangString lng_Full $(LANG_TRADCHINESE) "§¹¾ã"
 
 ; Optimal install type
-LangString lng_Optimal $(LANG_TRADCHINESE) "?z?Q"
+LangString lng_Optimal $(LANG_TRADCHINESE) "²z·Q"
 
 ; Minimal install type
-LangString lng_Minimal $(LANG_TRADCHINESE) "?Ì¤p"
+LangString lng_Minimal $(LANG_TRADCHINESE) "³Ì¤p"
 
 ; Core install section
-LangString lng_Core $(LANG_TRADCHINESE) "${PRODUCT_NAME} SVG ?s???{??(????)"
+LangString lng_Core $(LANG_TRADCHINESE) "${PRODUCT_NAME} SVG ½s¿èµ{¦¡(¥²¶·)"
 
 ; Core install section description
-LangString lng_CoreDesc $(LANG_TRADCHINESE) "${PRODUCT_NAME} ?Ö¤??É®×©M DLL ??"
+LangString lng_CoreDesc $(LANG_TRADCHINESE) "${PRODUCT_NAME} ®Ö¤ßÀÉ®×©M DLL ÀÉ"
 
 ; GTK+ install section
-LangString lng_GTKFiles $(LANG_TRADCHINESE) "GTK+ ????????(????)"
+LangString lng_GTKFiles $(LANG_TRADCHINESE) "GTK+ °õ¦æÀô¹Ò(¥²¶·)"
 
 ; GTK+ install section description
-LangString lng_GTKFilesDesc $(LANG_TRADCHINESE) "${PRODUCT_NAME} ?Ï¥Îª??ó¥­¥x GUI ?u????"
+LangString lng_GTKFilesDesc $(LANG_TRADCHINESE) "${PRODUCT_NAME} ¨Ï¥Îªº¸ó¥­¥x GUI ¤u¨ã²Õ"
 
 ; shortcuts install section
-LangString lng_Shortcuts $(LANG_TRADCHINESE) "???|"
+LangString lng_Shortcuts $(LANG_TRADCHINESE) "±¶®|"
 
 ; shortcuts install section description
-LangString lng_ShortcutsDesc $(LANG_TRADCHINESE) "?Ò°? ${PRODUCT_NAME} ?????|"
+LangString lng_ShortcutsDesc $(LANG_TRADCHINESE) "±Ò°Ê ${PRODUCT_NAME} ªº±¶®|"
 
 ; All user install section
-LangString lng_Alluser $(LANG_TRADCHINESE) "?w?Ëµ??Ò¦??Ï¥Îª?"
+LangString lng_Alluser $(LANG_TRADCHINESE) "¦w¸Ëµ¹©Ò¦³¨Ï¥ÎªÌ"
 
 ; All user install section description
-LangString lng_AlluserDesc $(LANG_TRADCHINESE) "?w?Ë³o??À³?Îµ{?????????Ï¥Î³o?x?q?????H(?Ò¦??Ï¥Îª?)"
+LangString lng_AlluserDesc $(LANG_TRADCHINESE) "¦w¸Ë³o­ÓÀ³¥Îµ{¦¡µ¹¥ô¦ó¨Ï¥Î³o¥x¹q¸£ªº¤H(©Ò¦³¨Ï¥ÎªÌ)"
 
 ; Desktop section
-LangString lng_Desktop $(LANG_TRADCHINESE) "?à­±"
+LangString lng_Desktop $(LANG_TRADCHINESE) "®à­±"
 
 ; Desktop section description
-LangString lng_DesktopDesc $(LANG_TRADCHINESE) "???à­±?W?Ø¥? ${PRODUCT_NAME} ???|"
+LangString lng_DesktopDesc $(LANG_TRADCHINESE) "©ó®à­±¤W«Ø¥ß ${PRODUCT_NAME} ±¶®|"
 
 ; Start Menu  section
-LangString lng_Startmenu $(LANG_TRADCHINESE) "?}?l?\????"
+LangString lng_Startmenu $(LANG_TRADCHINESE) "¶}©l¥\¯àªí"
 
 ; Start Menu section description
-LangString lng_StartmenuDesc $(LANG_TRADCHINESE) "???}?l?\?????Ø¥? ${PRODUCT_NAME} ????"
+LangString lng_StartmenuDesc $(LANG_TRADCHINESE) "©ó¶}©l¥\¯àªí«Ø¥ß ${PRODUCT_NAME} ¶µ¥Ø"
 
 ; Quick launch section
-LangString lng_Quicklaunch $(LANG_TRADCHINESE) "?Ö³t?Ò°?"
+LangString lng_Quicklaunch $(LANG_TRADCHINESE) "§Ö³t±Ò°Ê"
 
 ; Quick launch section description
-LangString lng_QuicklaunchDesc $(LANG_TRADCHINESE) "???Ö³t?Ò°Ê¦C?Ø¥? ${PRODUCT_NAME} ???|"
+LangString lng_QuicklaunchDesc $(LANG_TRADCHINESE) "©ó§Ö³t±Ò°Ê¦C«Ø¥ß ${PRODUCT_NAME} ±¶®|"
 
 ; File type association for editing
-LangString lng_SVGWriter ${LANG_TRADCHINESE} "?? ${PRODUCT_NAME} ?}?? SVG ??"
+LangString lng_SVGWriter ${LANG_TRADCHINESE} "¥Î ${PRODUCT_NAME} ¶}±Ò SVG ÀÉ"
 
 ; File type association for editing description
-LangString lng_SVGWriterDesc ${LANG_TRADCHINESE} "???? ${PRODUCT_NAME} ?@?? SVG ?Éª??w?]?s???{??"
+LangString lng_SVGWriterDesc ${LANG_TRADCHINESE} "¿ï¾Ü ${PRODUCT_NAME} §@¬° SVG ÀÉªº¹w³]½s¿èµ{¦¡"
 
 ; Context Menu
-LangString lng_ContextMenu ${LANG_TRADCHINESE} "?k???\????"
+LangString lng_ContextMenu ${LANG_TRADCHINESE} "¥kÁä¥\¯àªí"
 
 ; Context Menu description
-LangString lng_ContextMenuDesc ${LANG_TRADCHINESE} "?s?W ${PRODUCT_NAME} ?? SVG ?Éª??k???\????"
+LangString lng_ContextMenuDesc ${LANG_TRADCHINESE} "·s¼W ${PRODUCT_NAME} ¨ì SVG ÀÉªº¥kÁä¥\¯àªí"
 
 ; remove personal preferences
-LangString lng_DeletePrefs ${LANG_TRADCHINESE} "?R???Ó¤H???n?]?w"
+LangString lng_DeletePrefs ${LANG_TRADCHINESE} "§R°£­Ó¤H°¾¦n³]©w"
 
 ; remove personal preferences description
-LangString lng_DeletePrefsDesc ${LANG_TRADCHINESE} "?R???W?@???w?Ë¿??d???Ó¤H???n?]?w"
+LangString lng_DeletePrefsDesc ${LANG_TRADCHINESE} "§R°£¤W¤@¦¸¦w¸Ë¿ò¯dªº­Ó¤H°¾¦n³]©w"
 
 
 ; Additional files section
-LangString lng_Addfiles $(LANG_TRADCHINESE) "???L?É®?"
+LangString lng_Addfiles $(LANG_TRADCHINESE) "¨ä¥LÀÉ®×"
 
 ; Additional files section description
-LangString lng_AddfilesDesc $(LANG_TRADCHINESE) "???L?É®?"
+LangString lng_AddfilesDesc $(LANG_TRADCHINESE) "¨ä¥LÀÉ®×"
 
 ; Examples section
-LangString lng_Examples $(LANG_TRADCHINESE) "?d??"
+LangString lng_Examples $(LANG_TRADCHINESE) "½d¨Ò"
 
 ; Examples section description
-LangString lng_ExamplesDesc $(LANG_TRADCHINESE) "${PRODUCT_NAME} ?Ï¥Î½d??"
+LangString lng_ExamplesDesc $(LANG_TRADCHINESE) "${PRODUCT_NAME} ¨Ï¥Î½d¨Ò"
 
 ; Tutorials section
-LangString lng_Tutorials $(LANG_TRADCHINESE) "???É¤??U"
+LangString lng_Tutorials $(LANG_TRADCHINESE) "«ü¾É¤â¥U"
 
 ; Tutorials section description
-LangString lng_TutorialsDesc $(LANG_TRADCHINESE) "${PRODUCT_NAME} ?Ï¥Î±Ð¾?"
+LangString lng_TutorialsDesc $(LANG_TRADCHINESE) "${PRODUCT_NAME} ¨Ï¥Î±Ð¾Ç"
 
 
 ; Languages section
-LangString lng_Languages $(LANG_TRADCHINESE) "?y??"
+LangString lng_Languages $(LANG_TRADCHINESE) "»y¨¥"
 
 ; Languages section dscription
-LangString lng_LanguagesDesc $(LANG_TRADCHINESE) "?w?? ${PRODUCT_NAME} ?U?Ø»y??Â½Ä¶"
+LangString lng_LanguagesDesc $(LANG_TRADCHINESE) "¦w¸Ë ${PRODUCT_NAME} ¦UºØ»y¨¥Â½Ä¶"
 
-LangString lng_am $(LANG_TRADCHINESE) "am  ?????è¥§?È»y"
-LangString lng_ar $(LANG_TRADCHINESE) "ar  ???Ô§B?y"
-LangString lng_az $(LANG_TRADCHINESE) "az  ?È¶????M?y"
-LangString lng_be $(LANG_TRADCHINESE) "be  ?Õ«XÃ¹???y"
-LangString lng_bg $(LANG_TRADCHINESE) "bg  ?O?[?Q?È»y"
-LangString lng_bn $(LANG_TRADCHINESE) "bn  ?s?[?Ô»y"
-LangString lng_br $(LANG_TRADCHINESE) "br  ???C?ð¥§»y"
-LangString lng_ca $(LANG_TRADCHINESE) "ca  ?[?õ¶©»y"
-LangString lng_ca@valencia $(LANG_TRADCHINESE) "ca@valencia ?Ë­Û¦??È»y ?[??Ã¹???È»y"
-LangString lng_cs $(LANG_TRADCHINESE) "cs  ???J?y"
-LangString lng_da $(LANG_TRADCHINESE) "da  ???Á»y"
-LangString lng_de $(LANG_TRADCHINESE) "de  ?w?y"
-LangString lng_dz $(LANG_TRADCHINESE) "dz  ?v?d?y"
-LangString lng_el $(LANG_TRADCHINESE) "el  ??Ã¾?y"
-LangString lng_en $(LANG_TRADCHINESE) "en  ?^?y"
-LangString lng_en_AU $(LANG_TRADCHINESE) "en_AU ?^?y(?D?j?Q??)"
-LangString lng_en_CA $(LANG_TRADCHINESE) "en_CA ?^?y(?[???j)"
-LangString lng_en_GB $(LANG_TRADCHINESE) "en_GB ?^?y(???C?A)"
-LangString lng_en_US@piglatin $(LANG_TRADCHINESE) "en_US@piglatin ?Þ©Ô¤B?y"
-LangString lng_eo $(LANG_TRADCHINESE) "eo  ?@?É»y"
-LangString lng_es $(LANG_TRADCHINESE) "es  ???Z????"
-LangString lng_es_MX $(LANG_TRADCHINESE) "es_MX ???Z???y(??????)"
-LangString lng_et $(LANG_TRADCHINESE) "et  ?R?F???È»y"
-LangString lng_eu $(LANG_TRADCHINESE) "eu  ?Ú´??J?y"
-LangString lng_fi $(LANG_TRADCHINESE) "fi  ?????y"
-LangString lng_fr $(LANG_TRADCHINESE) "fr  ?k??"
-LangString lng_ga $(LANG_TRADCHINESE) "ga  ?R?????y"
-LangString lng_gl $(LANG_TRADCHINESE) "gl  ?[?????È»y"
-LangString lng_he $(LANG_TRADCHINESE) "he  ?Æ§B?Ó»y"
-LangString lng_hr $(LANG_TRADCHINESE) "hr  ?JÃ¹?J???È»y"
-LangString lng_hu $(LANG_TRADCHINESE) "hu  ?I???Q?y"
-LangString lng_id $(LANG_TRADCHINESE) "id  ?L???y"
-LangString lng_it $(LANG_TRADCHINESE) "it  ?q?j?Q??"
-LangString lng_ja $(LANG_TRADCHINESE) "ja  ????"
-LangString lng_km $(LANG_TRADCHINESE) "km  ???Ö»y"
-LangString lng_ko $(LANG_TRADCHINESE) "ko  ????"
-LangString lng_lt $(LANG_TRADCHINESE) "lt  ?ß³??{?y"
-LangString lng_mk $(LANG_TRADCHINESE) "mk  ?????y?y"
-LangString lng_mn $(LANG_TRADCHINESE) "mn  ?X?j?y"
-LangString lng_ne $(LANG_TRADCHINESE) "ne  ???y???y"
-LangString lng_nb $(LANG_TRADCHINESE) "nb  ???? Bokmal ?y"
-LangString lng_nl $(LANG_TRADCHINESE) "nl  ?????y"
-LangString lng_nn $(LANG_TRADCHINESE) "nn  ???? Nynorsk ?y"
-LangString lng_pa $(LANG_TRADCHINESE) "pa  ?Ç¾B???y"
-LangString lng_pl $(LANG_TRADCHINESE) "po  ?i???y"
-LangString lng_pt $(LANG_TRADCHINESE) "pt  ????????"
-LangString lng_pt_BR $(LANG_TRADCHINESE) "pt_BR ????????(?Ú¦?)"
-LangString lng_ro $(LANG_TRADCHINESE) "ro  Ã¹?????È»y"
-LangString lng_ru $(LANG_TRADCHINESE) "ru  ?X??"
-LangString lng_rw $(LANG_TRADCHINESE) "rw  ???È¿c?w?F?y"
-LangString lng_sk $(LANG_TRADCHINESE) "sk  ?????k?J?y"
-LangString lng_sl $(LANG_TRADCHINESE) "sl  ?????Z???È»y"
-LangString lng_sq $(LANG_TRADCHINESE) "sq  ?????Ú¥??È»y"
-LangString lng_sr $(LANG_TRADCHINESE) "sr  ?Éº????È»y"
-LangString lng_sr@latin $(LANG_TRADCHINESE) "sr@latin ?ëº¸???È¤?-?Ô¤B"
-LangString lng_sv $(LANG_TRADCHINESE) "sv  ?????y"
-LangString lng_th $(LANG_TRADCHINESE) "th  ???y"
-LangString lng_tr $(LANG_TRADCHINESE) "tr  ?g?Õ¨??y"
-LangString lng_uk $(LANG_TRADCHINESE) "uk  ?Q?J???y"
-LangString lng_vi $(LANG_TRADCHINESE) "vi  ?V?n??"
-LangString lng_zh_CN $(LANG_TRADCHINESE) "zh_CH  Â²?é¤¤??"
-LangString lng_zh_TW $(LANG_TRADCHINESE) "zh_TW  ?c?é¤¤??"
+LangString lng_am $(LANG_TRADCHINESE) "am  ªü¤ñ¦è¥§¨È»y"
+LangString lng_ar $(LANG_TRADCHINESE) "ar  ªü©Ô§B»y"
+LangString lng_az $(LANG_TRADCHINESE) "az  ¨È¶ë«ôµM»y"
+LangString lng_be $(LANG_TRADCHINESE) "be  ¥Õ«XÃ¹´µ»y"
+LangString lng_bg $(LANG_TRADCHINESE) "bg  «O¥[§Q¨È»y"
+LangString lng_bn $(LANG_TRADCHINESE) "bn  ©s¥[©Ô»y"
+LangString lng_br $(LANG_TRADCHINESE) "br  ¤£¦C¶ð¥§»y"
+LangString lng_ca $(LANG_TRADCHINESE) "ca  ¥[®õ¶©»y"
+LangString lng_ca@valencia $(LANG_TRADCHINESE) "ca@valencia ¥Ë­Û¦è¨È»y ¥[®õÃ¹¥§¨È»y"
+LangString lng_cs $(LANG_TRADCHINESE) "cs  ±¶§J»y"
+LangString lng_da $(LANG_TRADCHINESE) "da  ¤¦³Á»y"
+LangString lng_de $(LANG_TRADCHINESE) "de  ¼w»y"
+LangString lng_dz $(LANG_TRADCHINESE) "dz  ©v¥d»y"
+LangString lng_el $(LANG_TRADCHINESE) "el  §ÆÃ¾»y"
+LangString lng_en $(LANG_TRADCHINESE) "en  ­^»y"
+LangString lng_en_AU $(LANG_TRADCHINESE) "en_AU ­^»y(¿D¤j§Q¨È)"
+LangString lng_en_CA $(LANG_TRADCHINESE) "en_CA ­^»y(¥[®³¤j)"
+LangString lng_en_GB $(LANG_TRADCHINESE) "en_GB ­^»y(¤£¦CÄA)"
+LangString lng_en_US@piglatin $(LANG_TRADCHINESE) "en_US@piglatin ½Þ©Ô¤B»y"
+LangString lng_eo $(LANG_TRADCHINESE) "eo  ¥@¬É»y"
+LangString lng_es $(LANG_TRADCHINESE) "es  ¦è¯Z¤ú¤å"
+LangString lng_es_MX $(LANG_TRADCHINESE) "es_MX ¦è¯Z¤ú»y(¾¥¦è­ô)"
+LangString lng_et $(LANG_TRADCHINESE) "et  ·R¨F¥§¨È»y"
+LangString lng_eu $(LANG_TRADCHINESE) "eu  ¤Ú´µ§J»y"
+LangString lng_fi $(LANG_TRADCHINESE) "fi  ªâÄõ»y"
+LangString lng_fr $(LANG_TRADCHINESE) "fr  ªk¤å"
+LangString lng_ga $(LANG_TRADCHINESE) "ga  ·Rº¸Äõ»y"
+LangString lng_gl $(LANG_TRADCHINESE) "gl  ¥[¨½¦è¨È»y"
+LangString lng_he $(LANG_TRADCHINESE) "he  §Æ§B¨Ó»y"
+LangString lng_hr $(LANG_TRADCHINESE) "hr  §JÃ¹®J¦è¨È»y"
+LangString lng_hu $(LANG_TRADCHINESE) "hu  ¦I¤ú§Q»y"
+LangString lng_id $(LANG_TRADCHINESE) "id  ¦L¥§»y"
+LangString lng_it $(LANG_TRADCHINESE) "it  ¸q¤j§Q¤å"
+LangString lng_ja $(LANG_TRADCHINESE) "ja  ¤é¤å"
+LangString lng_km $(LANG_TRADCHINESE) "km  °ª´Ö»y"
+LangString lng_ko $(LANG_TRADCHINESE) "ko  Áú¤å"
+LangString lng_lt $(LANG_TRADCHINESE) "lt  ¥ß³³©{»y"
+LangString lng_mk $(LANG_TRADCHINESE) "mk  °¨¨ä¹y»y"
+LangString lng_mn $(LANG_TRADCHINESE) "mn  »X¥j»y"
+LangString lng_ne $(LANG_TRADCHINESE) "ne  ¥§ªyº¸»y"
+LangString lng_nb $(LANG_TRADCHINESE) "nb  ®¿«Â Bokmal »y"
+LangString lng_nl $(LANG_TRADCHINESE) "nl  ²üÄõ»y"
+LangString lng_nn $(LANG_TRADCHINESE) "nn  ®¿«Â Nynorsk »y"
+LangString lng_pa $(LANG_TRADCHINESE) "pa  ®Ç¾B´¶»y"
+LangString lng_pl $(LANG_TRADCHINESE) "po  ªiÄõ»y"
+LangString lng_pt $(LANG_TRADCHINESE) "pt  ¸²µå¤ú¤å"
+LangString lng_pt_BR $(LANG_TRADCHINESE) "pt_BR ¸²µå¤ú¤å(¤Ú¦è)"
+LangString lng_ro $(LANG_TRADCHINESE) "ro  Ã¹°¨¥§¨È»y"
+LangString lng_ru $(LANG_TRADCHINESE) "ru  «X¤å"
+LangString lng_rw $(LANG_TRADCHINESE) "rw  ª÷¨È¿c¦w¹F»y"
+LangString lng_sk $(LANG_TRADCHINESE) "sk  ´µ¬¥ªk§J»y"
+LangString lng_sl $(LANG_TRADCHINESE) "sl  ´µ¬¥¤Z¥§¨È»y"
+LangString lng_sq $(LANG_TRADCHINESE) "sq  ªüº¸¤Ú¥§¨È»y"
+LangString lng_sr $(LANG_TRADCHINESE) "sr  ÁÉº¸ºû¨È»y"
+LangString lng_sr@latin $(LANG_TRADCHINESE) "sr@latin ¶ëº¸ºû¨È¤å-©Ô¤B"
+LangString lng_sv $(LANG_TRADCHINESE) "sv  ·ç¨å»y"
+LangString lng_th $(LANG_TRADCHINESE) "th  ®õ»y"
+LangString lng_tr $(LANG_TRADCHINESE) "tr  ¤g¦Õ¨ä»y"
+LangString lng_uk $(LANG_TRADCHINESE) "uk  ¯Q§JÄõ»y"
+LangString lng_vi $(LANG_TRADCHINESE) "vi  ¶V«n¸Ü"
+LangString lng_zh_CN $(LANG_TRADCHINESE) "zh_CH  Â²Åé¤¤¤å"
+LangString lng_zh_TW $(LANG_TRADCHINESE) "zh_TW  ÁcÅé¤¤¤å"
 
 
 
 
 ; uninstallation options
-LangString lng_UInstOpt   ${LANG_TRADCHINESE} "?Ï¦w?Ë¿ï¶µ"
+LangString lng_UInstOpt   ${LANG_TRADCHINESE} "¤Ï¦w¸Ë¿ï¶µ"
 
 ; uninstallation options subtitle
-LangString lng_UInstOpt1  ${LANG_TRADCHINESE} "?Ð¿??Ü¨??L?ï¶µ"
+LangString lng_UInstOpt1  ${LANG_TRADCHINESE} "½Ð¿ï¾Ü¨ä¥L¿ï¶µ"
 
 ; Ask to purge the personal preferences
-LangString lng_PurgePrefs ${LANG_TRADCHINESE} "?O?d?Ó¤H???n?]?w"
+LangString lng_PurgePrefs ${LANG_TRADCHINESE} "«O¯d­Ó¤H°¾¦n³]©w"
 
-LangString lng_RETRY_CANCEL_DESC ${LANG_TRADCHINESE} "$\n$\n???u???Õ¡v?~???ÎªÌ«??u?????v?????C"
+LangString lng_RETRY_CANCEL_DESC ${LANG_TRADCHINESE} "$\n$\n«ö¡u­«¸Õ¡vÄ~Äò©ÎªÌ«ö¡u¨ú®ø¡v¤¤¤î¡C"
 
-LangString lng_ClearDirectoryBefore ${LANG_TRADCHINESE} "${PRODUCT_NAME} ???w?Ë©??@?ÓªÅª????Æ§??C $INSTDIR ???O?Åª??C ?Ð¥??M?Å³o?Ó¸??Æ§??I$(lng_RETRY_CANCEL_DESC)"
+LangString lng_ClearDirectoryBefore ${LANG_TRADCHINESE} "${PRODUCT_NAME} ¥²¦w¸Ë©ó¤@­ÓªÅªº¸ê®Æ§¨¡C $INSTDIR ¤£¬OªÅªº¡C ½Ð¥ý²MªÅ³o­Ó¸ê®Æ§¨¡I$(lng_RETRY_CANCEL_DESC)"
 
-LangString lng_UninstallLogNotFound ${LANG_TRADCHINESE} "?S?????? $INSTDIR\uninstall.log ?I$\r$\n?Ð¦Û¦??M?? $INSTDIR ???Æ§??Ó¤Ï¦w?Ë¡I"
+LangString lng_UninstallLogNotFound ${LANG_TRADCHINESE} "¨S¦³§ä¨ì $INSTDIR\uninstall.log ¡I$\r$\n½Ð¦Û¦æ²M°£ $INSTDIR ¸ê®Æ§¨¨Ó¤Ï¦w¸Ë¡I"
 
-LangString lng_FileChanged ${LANG_TRADCHINESE} "?w?Ë«? $filename ?É®×¤w?Ü§??C$\r$\n?A?O?_???M?n?R???????É®×¡H"
+LangString lng_FileChanged ${LANG_TRADCHINESE} "¦w¸Ë«á $filename ÀÉ®×¤wÅÜ§ó¡C$\r$\n§A¬O§_¤´µM­n§R°£¨º­ÓÀÉ®×¡H"
 
-LangString lng_Yes ${LANG_TRADCHINESE} "?O"
+LangString lng_Yes ${LANG_TRADCHINESE} "¬O"
 
-LangString lng_AlwaysYes ${LANG_TRADCHINESE} "?????Ò¬O"
+LangString lng_AlwaysYes ${LANG_TRADCHINESE} "¥þ³¡¬Ò¬O"
 
-LangString lng_No ${LANG_TRADCHINESE} "?_"
+LangString lng_No ${LANG_TRADCHINESE} "§_"
 
-LangString lng_AlwaysNo ${LANG_TRADCHINESE} "?????Ò§_"
+LangString lng_AlwaysNo ${LANG_TRADCHINESE} "¥þ³¡¬Ò§_"
