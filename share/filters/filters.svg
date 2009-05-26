@@ -935,15 +935,16 @@
 <feComposite id="feComposite3757" in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.5" k3="2" />
 <feBlend id="feBlend3759" mode="multiply" blend="normal" />
 </filter>
-<filter id="filter2988b" inkscape:label="Rough paper" inkscape:menu="Textures" inkscape:menu-tooltip="Aquarelle paper effect which can be used for pictures as for objects">
-<feTurbulence result="result4" seed="20" numOctaves="10" baseFrequency="0.040000000000000001" type="fractalNoise" id="feTurbulence2990" />
-<feDisplacementMap result="result3" scale="10" xChannelSelector="R" yChannelSelector="G" id="feDisplacementMap2992" in2="result4" in="SourceGraphic" />
-<feDiffuseLighting in="result4" result="result1" id="feDiffuseLighting2994" surfaceScale="5" diffuseConstant="1" lighting-color="rgb(255,255,255)">
-<feDistantLight elevation="60" azimuth="235" id="feDistantLight2996" />
+<filter y="-0.15000001" height="1.3" x="-0.15000001" width="1.3" inkscape:menu-tooltip="Aquarelle paper effect which can be used for pictures as for objects" inkscape:menu="Textures" inkscape:label="Rough paper" id="RoughPap0">
+<feTurbulence type="fractalNoise" baseFrequency="0.035000000000000003" numOctaves="5" seed="0" result="result4" id="feTurbulence3019" />
+<feDisplacementMap in="SourceGraphic" in2="result4" yChannelSelector="G" xChannelSelector="R" scale="15" result="result3" id="feDisplacementMap3021" />
+<feGaussianBlur result="result6" id="feGaussianBlur3029" stdDeviation="0.69999999999999996" />
+<feDiffuseLighting lighting-color="rgb(255,255,255)" diffuseConstant="1" surfaceScale="2" result="result1" in="result4" id="feDiffuseLighting3023">
+<feDistantLight azimuth="235" elevation="35" id="feDistantLight3025" />
 </feDiffuseLighting>
-<feComposite result="result2" in2="result1" in="result3" operator="in" id="feComposite1014" />
-<feComposite k1="1" in="result1" k3="0" k2="0" operator="arithmetic" id="feComposite1016" />
-<feBlend mode="screen" id="feBlend3002" blend="normal" />
+<feComposite operator="in" in="result6" in2="result1" result="result2" id="feComposite3027" />
+<feComposite in2="result1" result="result5" operator="arithmetic" k2="0" k3="0" k1="1.7" id="feComposite3031" />
+<feBlend in="result5" in2="result6" blend="normal" mode="normal" id="feBlend3033" />
 </filter>
 <filter id="filter3527" inkscape:label="Rough and glossy" inkscape:menu="Textures" inkscape:menu-tooltip="Crumpled glossy paper effect which can be used for pictures as for objects">
 <feTurbulence id="feTurbulence3529" type="fractalNoise" numOctaves="7" baseFrequency="0.014999999999999999" seed="55" result="result0" />
@@ -1323,15 +1324,12 @@
 <feGaussianBlur id="feGaussianBlur3060" result="result4" in="SourceGraphic" stdDeviation="3" />
 <feComposite id="feComposite3062" in="result4" in2="result2" operator="arithmetic" k2="-0.25" k3="0.5" k1="1.5" result="result5" />
 </filter>
-<filter id="BurntEdg0" inkscape:label="Burnt edges" inkscape:menu="Textures" inkscape:menu-tooltip="Burnt paper edges texture">
-<feGaussianBlur id="feGaussianBlur4823" stdDeviation="1.5" in="SourceGraphic" result="result1" />
-<feTurbulence id="feTurbulence4825" type="fractalNoise" baseFrequency="0.050000000000000003" numOctaves="3" result="result0" />
-<feDisplacementMap id="feDisplacementMap4827" in2="result0" in="result1" xChannelSelector="R" yChannelSelector="G" scale="15" result="result2" />
-<feColorMatrix id="feColorMatrix4829" result="result3" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -2 " />
-<feGaussianBlur id="feGaussianBlur4831" stdDeviation="4" in="result2" result="result4" />
-<feComposite id="feComposite4833" operator="arithmetic" in2="result3" in="result4" k2="0.42" k3="0.5" k1="1" result="result5" />
-<feComposite id="feComposite4835" operator="in" in2="result3" result="result6" />
-<feBlend id="feBlend4837" blend="normal" mode="multiply" in="result6" in2="result6" />
+<filter x="-0.2" width="1.4" y="-0.2" height="1.4" inkscape:menu-tooltip="Torn edges with a dark inner blur" inkscape:menu="Textures" inkscape:label="Burnt edges" id="BurntEdg0">
+<feTurbulence type="fractalNoise" numOctaves="3" baseFrequency="0.050000000000000003" id="feTurbulence2858" seed="25" />
+<feDisplacementMap in="SourceGraphic" xChannelSelector="R" result="result5" scale="25" id="feDisplacementMap2860" />
+<feColorMatrix id="feColorMatrix2864" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0 " in="result5" result="fbSourceGraphicAlpha" />
+<feGaussianBlur in="result5" stdDeviation="5" result="result6" id="feGaussianBlur2866" />
+<feComposite result="result9" operator="atop" in2="fbSourceGraphicAlpha" in="result6" id="feComposite2870" />
 </filter>
 <filter id="ColorInl0" inkscape:label="Color inline" inkscape:menu="Morphology" inkscape:menu-tooltip="A colorizable inline with adjustable width and blur" height="1.2" y="-0.1" width="1.2" x="-0.1">
 <feGaussianBlur id="feGaussianBlur2883" stdDeviation="2" result="result8" />
@@ -1688,6 +1686,13 @@
 <feGaussianBlur id="feGaussianBlur2854" result="result6" stdDeviation="1.5" />
 <feComposite id="feComposite2856" in2="result6" operator="atop" in="SourceGraphic" result="result8" />
 <feComposite id="feComposite2873" in="result8" in2="SourceAlpha" operator="atop" result="result9" />
+</filter>
+<filter id="WarpRainb0" x="-0.34999999" width="1.7" y="-0.34999999" height="1.7" inkscape:menu-tooltip="Smooth rainbow colors warped along the edges and colorizable" inkscape:menu="Textures" inkscape:label="Warped rainbow">
+<feGaussianBlur id="feGaussianBlur2911" result="result8" stdDeviation="5" />
+<feTurbulence id="feTurbulence2913" baseFrequency="0.014999999999999999" numOctaves="2" type="fractalNoise" result="result7" seed="20" />
+<feDisplacementMap yChannelSelector="A" xChannelSelector="A" id="feDisplacementMap2915" scale="100" result="result10" in="result7" in2="result8" />
+<feComposite id="feComposite2917" in="result10" operator="atop" result="result2" in2="result8" k2="0" k1="0" k3="3" />
+<feComposite id="feComposite2919" in2="result2" operator="arithmetic" in="result10" result="fbSourceGraphic" k1="2.5" k3="0.5" />
 </filter>
 </defs>
 </svg>
