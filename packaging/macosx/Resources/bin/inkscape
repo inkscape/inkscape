@@ -46,7 +46,7 @@ export INKSCAPE_PLUGINDIR="$TOP/lib/inkscape"
 export INKSCAPE_LOCALEDIR="$TOP/locale"
 
 # Set GTK theme (only if there is no .gtkrc-2.0 in the user's home)
-if [[ ! -e $HOME/.gtkrc-2.0 ]]; then
+if [[ ! -e "$HOME/.gtkrc-2.0" ]]; then
 	# prepare the theme depending on OS X appearance settings
 	(
 		cd "$INKSCAPE_SHAREDIR/themes/Clearlooks-Quicksilver-OSX/gtk-2.0/"
@@ -66,14 +66,14 @@ export LANG="`grep \"\`defaults read .GlobalPreferences AppleCollationOrder \
 # This '#' needs to be escaped in pango.modules for Pango to work properly.
 ESCAPEDTOP=`echo $TOP | sed 's/#/\\\\\\\\#/'`
 
-mkdir -p ${HOME}/.inkscape-etc
-sed 's|${HOME}|'"$HOME|g" "$TOP/etc/pango/pangorc" > ${HOME}/.inkscape-etc/pangorc
+mkdir -p "${HOME}/.inkscape-etc"
+sed 's|${HOME}|'"$HOME|g" "$TOP/etc/pango/pangorc" > "${HOME}/.inkscape-etc/pangorc"
 sed 's|${CWD}|'"$ESCAPEDTOP|g" "$TOP/etc/pango/pango.modules" \
-    > ${HOME}/.inkscape-etc/pango.modules
-cp -f "$TOP/etc/pango/pangox.aliases" ${HOME}/.inkscape-etc/
+    > "${HOME}/.inkscape-etc/pango.modules"
+cp -f "$TOP/etc/pango/pangox.aliases" "${HOME}/.inkscape-etc/"
 sed 's|${CWD}|'"$TOP|g" "$TOP/etc/gtk-2.0/gtk.immodules" \
-    > ${HOME}/.inkscape-etc/gtk.immodules
+    > "${HOME}/.inkscape-etc/gtk.immodules"
 sed 's|${CWD}|'"$TOP|g" "$TOP/etc/gtk-2.0/gdk-pixbuf.loaders" \
-    > ${HOME}/.inkscape-etc/gdk-pixbuf.loaders
+    > "${HOME}/.inkscape-etc/gdk-pixbuf.loaders"
 
 exec "$CWD/inkscape-bin" "$@"
