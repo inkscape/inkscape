@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-26 13:32+0200\n"
-"PO-Revision-Date: 2009-05-26 13:58+0100\n"
+"POT-Creation-Date: 2009-05-26 16:30+0200\n"
+"PO-Revision-Date: 2009-05-26 16:35+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -1634,6 +1634,170 @@ msgstr "Stmaviť okraje"
 msgid "Darken the edges with an inner blur"
 msgstr "Stmaviť okraj s vnútorným rozostrením"
 
+#: ../share/patterns/patterns.svg.h:2
+msgid "Stripes 1:1"
+msgstr "Prúžky 1:1"
+
+#: ../share/patterns/patterns.svg.h:3
+msgid "Stripes 1:1 white"
+msgstr "Prúžky 1:1 biele"
+
+#: ../share/patterns/patterns.svg.h:4
+msgid "Stripes 1:1.5"
+msgstr "Prúžky 1:1.5"
+
+#: ../share/patterns/patterns.svg.h:5
+msgid "Stripes 1:1.5 white"
+msgstr "Prúžky 1:1.5 biele"
+
+#: ../share/patterns/patterns.svg.h:6
+msgid "Stripes 1:2"
+msgstr "Prúžky 1:2"
+
+#: ../share/patterns/patterns.svg.h:7
+msgid "Stripes 1:2 white"
+msgstr "Prúžky 1:2 biele"
+
+#: ../share/patterns/patterns.svg.h:8
+msgid "Stripes 1:3"
+msgstr "Prúžky 1:3"
+
+#: ../share/patterns/patterns.svg.h:9
+msgid "Stripes 1:3 white"
+msgstr "Prúžky 1:3 biele"
+
+#: ../share/patterns/patterns.svg.h:10
+msgid "Stripes 1:4"
+msgstr "Prúžky 1:4"
+
+#: ../share/patterns/patterns.svg.h:11
+msgid "Stripes 1:4 white"
+msgstr "Prúžky 1:4 biele"
+
+#: ../share/patterns/patterns.svg.h:12
+msgid "Stripes 1:5"
+msgstr "Prúžky 1:5"
+
+#: ../share/patterns/patterns.svg.h:13
+msgid "Stripes 1:5 white"
+msgstr "Prúžky 1:5 biele"
+
+#: ../share/patterns/patterns.svg.h:14
+msgid "Stripes 1:8"
+msgstr "Prúžky 1:8"
+
+#: ../share/patterns/patterns.svg.h:15
+msgid "Stripes 1:8 white"
+msgstr "Prúžky 1:8 biele"
+
+#: ../share/patterns/patterns.svg.h:16
+msgid "Stripes 1:10"
+msgstr "Prúžky 1:10"
+
+#: ../share/patterns/patterns.svg.h:17
+msgid "Stripes 1:10 white"
+msgstr "Prúžky 1:10 biele"
+
+#: ../share/patterns/patterns.svg.h:18
+msgid "Stripes 1:16"
+msgstr "Prúžky 1:16"
+
+#: ../share/patterns/patterns.svg.h:19
+msgid "Stripes 1:16 white"
+msgstr "Prúžky 1:16 biele"
+
+#: ../share/patterns/patterns.svg.h:20
+msgid "Stripes 1:32"
+msgstr "Prúžky 1:32"
+
+#: ../share/patterns/patterns.svg.h:21
+msgid "Stripes 1:32 white"
+msgstr "Prúžky 1:32 biele"
+
+#: ../share/patterns/patterns.svg.h:22
+msgid "Stripes 1:64"
+msgstr "Prúžky 1:64"
+
+#: ../share/patterns/patterns.svg.h:23
+msgid "Stripes 2:1"
+msgstr "Prúžky 2:1"
+
+#: ../share/patterns/patterns.svg.h:24
+msgid "Stripes 2:1 white"
+msgstr "Prúžky 2:1 biele"
+
+#: ../share/patterns/patterns.svg.h:25
+msgid "Stripes 4:1"
+msgstr "Prúžky 4:1"
+
+#: ../share/patterns/patterns.svg.h:26
+msgid "Stripes 4:1 white"
+msgstr "Prúžky 4:1 bielewhite"
+
+#: ../share/patterns/patterns.svg.h:27
+msgid "Checkerboard"
+msgstr "Šachovnica"
+
+#: ../share/patterns/patterns.svg.h:28
+msgid "Checkerboard white"
+msgstr "Šachovnica biela"
+
+#: ../share/patterns/patterns.svg.h:29
+msgid "Packed circles"
+msgstr "Výplň kružnicami"
+
+#: ../share/patterns/patterns.svg.h:30
+msgid "Polka dots, small"
+msgstr "Polka, malé bodky"
+
+#: ../share/patterns/patterns.svg.h:31
+msgid "Polka dots, small white"
+msgstr "Polka, malé biele bodky"
+
+#: ../share/patterns/patterns.svg.h:32
+msgid "Polka dots, medium"
+msgstr "Polka, stredné bodky"
+
+#: ../share/patterns/patterns.svg.h:33
+msgid "Polka dots, medium white"
+msgstr "Polka, stredné biele bodky"
+
+#: ../share/patterns/patterns.svg.h:34
+msgid "Polka dots, large"
+msgstr "Polka, veľké bodky"
+
+#: ../share/patterns/patterns.svg.h:35
+msgid "Polka dots, large white"
+msgstr "Polka, veľké biele bodky"
+
+#: ../share/patterns/patterns.svg.h:36
+msgid "Wavy"
+msgstr "Vlnité"
+
+#: ../share/patterns/patterns.svg.h:37
+msgid "Wavy white"
+msgstr "Vlnité biele"
+
+#: ../share/patterns/patterns.svg.h:38
+msgid "Camouflage"
+msgstr "Kamufláž"
+
+#: ../share/patterns/patterns.svg.h:39
+msgid "Ermine"
+msgstr "Hermelín"
+
+#: ../share/patterns/patterns.svg.h:40
+msgid "Sand (bitmap)"
+msgstr "Piesok (bitmapa)"
+
+#: ../share/patterns/patterns.svg.h:41
+msgid "Cloth (bitmap)"
+msgstr "Látka (bitmapa)"
+
+#: ../share/patterns/patterns.svg.h:42
+msgid "Old paint (bitmap)"
+msgstr "Stará farba (bitmapa)"
+
 #: ../src/arc-context.cpp:303
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
@@ -2901,7 +3065,7 @@ msgstr "_Štítok"
 
 #: ../src/dialogs/item-properties.cpp:161
 msgid "A freeform label for the object"
-msgstr "Voľný štítok objektu"
+msgstr "Označenie objektu bez predpísaného tvaru"
 
 #. Create the label for the object title
 #: ../src/dialogs/item-properties.cpp:173
@@ -15471,7 +15635,7 @@ msgstr "Nič nebolo vybrané"
 #: ../src/ui/widget/selected-style.cpp:161
 #: ../src/ui/widget/style-swatch.cpp:296
 msgid "<i>None</i>"
-msgstr "<i>Žiadne</i>"
+msgstr "<i>žiadna</i>"
 
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/style-swatch.cpp:298
@@ -15481,7 +15645,7 @@ msgstr "bez výplne"
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/style-swatch.cpp:298
 msgid "No stroke"
-msgstr "Bez ťahu"
+msgstr "bez ťahu"
 
 #: ../src/ui/widget/selected-style.cpp:166
 #: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:189
@@ -17526,7 +17690,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2668
 msgid "_Object Properties..."
-msgstr "Nastavenia objektu..."
+msgstr "Vlastnosti objektu..."
 
 #: ../src/verbs.cpp:2669
 msgid "Edit the ID, locked and visible status, and other object properties"
@@ -23420,9 +23584,6 @@ msgstr "Vstup XAML"
 #~ "Používať vektorové operátory PDF. Výsledný obrázok je zvyčajne menší a je "
 #~ "možné ľubovoľne meniť jeho veľkosť, avšak sa stratí alfa priehľadnosť, "
 #~ "značky a vzory."
-
-#~ msgid "Print as bitmap"
-#~ msgstr "Tlačiť ako bitmapu"
 
 #~ msgid ""
 #~ "Print everything as bitmap. The resulting image is usually larger in file "

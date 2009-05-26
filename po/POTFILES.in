@@ -4,6 +4,7 @@
 [encoding: UTF-8]
 inkscape.desktop.in
 share/filters/filters.svg.h
+share/patterns/patterns.svg.h
 src/arc-context.cpp
 src/box3d-context.cpp
 src/box3d.cpp
