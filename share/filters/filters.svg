@@ -1393,16 +1393,6 @@
 <feComposite id="feComposite2910" in2="result6" operator="in" in="result2" result="fbSourceGraphic" />
 <feComposite id="feComposite2914" in2="fbSourceGraphic" in="fbSourceGraphic" k3="0" k1="0" k2="2.5" operator="arithmetic" />
 </filter>
-<filter id="Darkedg0" inkscape:label="Darken edges" inkscape:menu="Shadows and Glows" inkscape:menu-tooltip="Enhance outline and glows inside and outside">
-<feGaussianBlur id="feGaussianBlur3028" stdDeviation="2" result="result1" />
-<feComposite id="feComposite3030" in="SourceGraphic" operator="arithmetic" result="result2" k1="1" k3="0.5" k2="0" />
-<feComposite id="feComposite3032" in2="SourceGraphic" operator="in" result="result3" />
-<feBlend id="feBlend3034" blend="normal" mode="darken" in="result3" in2="result3" />
-</filter>
-<filter id="Darkglo0" inkscape:label="Dark and glow" inkscape:menu="Shadows and Glows" inkscape:menu-tooltip="Enhance outline and glows inside and outside">
-<feGaussianBlur id="feGaussianBlur3022" stdDeviation="5" result="result1" />
-<feComposite id="feComposite3024" in="SourceGraphic" operator="arithmetic" result="result2" k1="0.40000000000000002" k3="0.80000000000000004" k2="0" />
-</filter>
 <filter id="Flexmet0" inkscape:label="Flex metal" inkscape:menu="Materials" inkscape:menu-tooltip="Bright, polished uneven metal casting, colorizable" height="1.5" y="-0.25" width="1.5" x="-0.25">
 <feGaussianBlur id="feGaussianBlur3245" stdDeviation="5" result="result8" />
 <feTurbulence id="feTurbulence3247" seed="25" result="result7" type="turbulence" numOctaves="2" baseFrequency="0.029999999999999999" />
@@ -1686,6 +1676,18 @@
 <feFlood id="feFlood2872" result="result10" in="result6" flood-opacity="1" flood-color="rgb(0,0,0)" />
 <feBlend id="feBlend2876" blend="normal" mode="normal" in="result6" />
 <feComposite id="feComposite2874" result="result2" operator="in" in2="SourceGraphic" />
+</filter>
+<filter y="-0.25" height="1.5" inkscape:menu-tooltip="Darken the edge with and inner blur and adds a flexible glow" inkscape:menu="Shadows and Glows" inkscape:label="Dark and glow" id="DarkGlow0">
+<feGaussianBlur stdDeviation="5" result="result6" id="feGaussianBlur2933" />
+<feComposite result="result8" in="SourceGraphic" operator="atop" in2="result6" id="feComposite2935" />
+<feComposite result="result9" operator="over" in2="SourceAlpha" in="result8" id="feComposite2937" />
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result10" id="feColorMatrix2939" />
+<feBlend in="result10" mode="normal" id="feBlend2941" blend="normal" in2="result6" />
+</filter>
+<filter id="DarkEdg0" inkscape:label="Darken edges" inkscape:menu="Shadows and Glows" inkscape:menu-tooltip="Darken the edges with an inner blur">
+<feGaussianBlur id="feGaussianBlur2854" result="result6" stdDeviation="1.5" />
+<feComposite id="feComposite2856" in2="result6" operator="atop" in="SourceGraphic" result="result8" />
+<feComposite id="feComposite2873" in="result8" in2="SourceAlpha" operator="atop" result="result9" />
 </filter>
 </defs>
 </svg>
