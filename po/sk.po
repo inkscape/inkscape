@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-23 02:41+0200\n"
-"PO-Revision-Date: 2009-05-26 10:57+0100\n"
+"POT-Creation-Date: 2009-05-26 13:32+0200\n"
+"PO-Revision-Date: 2009-05-26 13:58+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgstr "Rozmazaný pohyb, vodorovný"
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:59
 #: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:97
 #: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:114
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:162
 msgid "Blurs"
 msgstr "Rozostrenia"
 
@@ -119,7 +119,8 @@ msgstr "Výrez"
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
 #: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
+#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:174
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -144,7 +145,7 @@ msgstr "Zdrsniť"
 #: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:110
 #: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:118
 #: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:121
-#: ../share/filters/filters.svg.h:125
+#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:170
 msgid "ABCs"
 msgstr "ABC"
 
@@ -174,7 +175,7 @@ msgid "Ink bleed"
 msgstr "Krvavý atrament"
 
 #: ../share/filters/filters.svg.h:13 ../share/filters/filters.svg.h:14
-#: ../share/filters/filters.svg.h:42
+#: ../share/filters/filters.svg.h:42 ../share/filters/filters.svg.h:169
 msgid "Protrusions"
 msgstr "Výčnelky"
 
@@ -253,10 +254,10 @@ msgstr "Leopardia koža"
 #: ../share/filters/filters.svg.h:64 ../share/filters/filters.svg.h:69
 #: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:81
 #: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
-#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:139
+#: ../share/filters/filters.svg.h:153 ../share/filters/filters.svg.h:154
 #: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:158
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:157
 msgid "Materials"
 msgstr "Materiály"
 
@@ -292,8 +293,8 @@ msgstr "Zaostriť"
 #: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:99
 #: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:103
 #: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:165 ../share/filters/filters.svg.h:167
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:166
 msgid "Image effects"
 msgstr "Obrazové efekty"
 
@@ -367,7 +368,7 @@ msgstr "Odsýtiť"
 #: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:33
 #: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:74
 #: ../share/filters/filters.svg.h:93 ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:160
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -433,7 +434,7 @@ msgstr "Organické"
 #: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:137
-#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:158
 msgid "Textures"
 msgstr "Textúry"
 
@@ -519,7 +520,7 @@ msgstr "HSL hrče"
 
 #: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:164
 msgid "Bumps"
 msgstr "Hrče"
 
@@ -638,9 +639,8 @@ msgid "Illuminated translucent plastic effect"
 msgstr "Osvetlený priesvitný plastový efekt"
 
 #: ../share/filters/filters.svg.h:59
-#, fuzzy
 msgid "Cross-smooth"
-msgstr "hladké"
+msgstr "Hladké priesečníky"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Blur inner borders and intersections"
@@ -777,7 +777,8 @@ msgstr "Dutina paralelne s okrajom"
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:90
 #: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:95
 #: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:132 ../src/filter-enums.cpp:31
+#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:171
+#: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr "Morfológia"
 
@@ -1042,8 +1043,8 @@ msgid "HSL Bumps, alpha"
 msgstr "HSL hrče, priesvitnosť"
 
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
-#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:169
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:168
 msgid "Masking tools"
 msgstr "Maskovacie nástroje"
 
@@ -1181,9 +1182,8 @@ msgid "Basic diffuse bevel to use for building textures"
 msgstr "Základné difúzne vrstvenie použiteľné na zostavovanie textúr"
 
 #: ../share/filters/filters.svg.h:122
-#, fuzzy
 msgid "Cutout Glow"
-msgstr "Výrez"
+msgstr "Žiara výrezu"
 
 #: ../share/filters/filters.svg.h:122
 msgid "In and out glow with a possible offset and colorizable flood"
@@ -1270,11 +1270,11 @@ msgid "Burnt paper edges texture"
 msgstr "Textúra ohorených okrajov"
 
 #: ../share/filters/filters.svg.h:132
-msgid "Color outline"
+msgid "Color inline"
 msgstr "Farebný obrys"
 
 #: ../share/filters/filters.svg.h:132
-msgid "A colorizable outline with adjustable width and blur"
+msgid "A colorizable inline with adjustable width and blur"
 msgstr "Farbiteľný obrys s prispôsobiteľnou šírkou a rozostrením"
 
 #: ../share/filters/filters.svg.h:133
@@ -1327,242 +1327,230 @@ msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "Jemné dúhové farby mierne sa prelínajúce na okrajoch"
 
 #: ../share/filters/filters.svg.h:139
-msgid "Darken edges"
-msgstr "Stmaviť okraje"
-
-#: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
-msgid "Enhance outline and glows inside and outside"
-msgstr "Zväčšiť obrys a žiary vonku a dnu"
-
-#: ../share/filters/filters.svg.h:140
-msgid "Dark and glow"
-msgstr "Tma a žiara"
-
-#: ../share/filters/filters.svg.h:141
 msgid "Flex metal"
 msgstr "Roztavený kov"
 
-#: ../share/filters/filters.svg.h:141
+#: ../share/filters/filters.svg.h:139
 msgid "Bright, polished uneven metal casting, colorizable"
 msgstr "Jasný vyleštený nerovnomerný kovový odliatok, sfarbiteľný"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:140
 msgid "Comics draft"
 msgstr "Komiksový náčrt"
 
+#: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
 #: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:143
 #: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
 #: ../share/filters/filters.svg.h:146 ../share/filters/filters.svg.h:147
 #: ../share/filters/filters.svg.h:148 ../share/filters/filters.svg.h:149
 #: ../share/filters/filters.svg.h:150 ../share/filters/filters.svg.h:151
-#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:153
-#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:159
 msgid "Non realistic shaders"
 msgstr "Nerealistické tieňovanie"
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:140
 msgid "Draft painted cartoon shading with a glassy look"
 msgstr "Náčrt maľovaného komiksového tieňovania so skleneným vzhľadom"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:141
 msgid "Comics fading"
 msgstr "Komiksové slabnutie"
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:141
 msgid "Cartoon paint style with some fading at the edges"
 msgstr "Komiksový štýl maľby na okrajoch do stratena"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:142
 msgid "Smooth shader NR"
 msgstr "Hladké tieňovanie NR"
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:142
 msgid "Smooth shading with a graphite pencil grey"
 msgstr "Jemné tieňovanie šedou grafitovou ceruzkou"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:143
 msgid "Emboss shader NR"
 msgstr "Reliéfne tieňovanie NR"
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:143
 msgid "Combination of smooth shading and embossing"
 msgstr "Kombinácia hladkého tieňovania a reliéfu"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:144
 msgid "Smooth shader dark NR"
 msgstr "Hladné tieňovanie tmavé NR"
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:144
 msgid "Dark version of non realistic smooth shading"
 msgstr "Tmavá verzia nerealistického hladkého tieňovania"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:145
 msgid "Comics"
 msgstr "Komiks"
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:145
 msgid "Imitation of black and white cartoon shading"
 msgstr "Imitácia čiernobieleho komiksového tieňovania"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:146
 msgid "Satin NR"
 msgstr "Satén NR"
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:146
 msgid "Silky close to mother of pearl shading"
 msgstr "Hodvábne tieňovanie blízke perleti"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:147
 msgid "Frosted glass NR"
 msgstr "Zamrznuté sklo NR"
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:147
 msgid "Non realistic frosted glass imitation"
 msgstr "Nerealistická imitácia zamrznutého skla"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:148
 msgid "Smooth shader contour NR"
 msgstr "Hladké tieňovanie kontúr NR"
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:148
 msgid "Contouring version of smooth shader"
 msgstr "Kontúrujúca verzia hladkého tieňovania"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:149
 msgid "Aluminium NR"
 msgstr "Hliník NR"
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:149
 msgid "Brushed aluminium shader"
 msgstr "Tieňovanie vylešteného hliníka"
 
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:150
 msgid "Comics fluid"
 msgstr "Komiks kvapalinový"
 
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:150
 msgid "Fluid brushed cartoon drawing"
 msgstr "Tekuté komiksové tieňovanie štetcom"
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:151
 msgid "Chrome NR"
 msgstr "Chróm NR"
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:151
 msgid "Non realistic chrome shader with strong speculars"
 msgstr "Nerealistické chrómové tieňovanie so silným zrkadlením"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:152
 msgid "Chrome dark NR"
 msgstr "Tmavý chróm NR"
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:152
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr "Tmavá verzia chrómového tieňovania so simuláciou odrazu podkladu"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:153
 msgid "Wavy tartan"
 msgstr "Vlnitý tartan"
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:153
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr "Vzor tartan s vlnitým posunutím a vrstvením na okrajoch"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:154
 msgid "3D marble"
 msgstr "3D mramor"
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:154
 msgid "3D warped marble texture"
 msgstr "3D deformovaná textúra mramoru"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:155
 msgid "3D wood"
 msgstr "3D drevo"
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:155
 msgid "3D warped, fibered wood texture"
 msgstr "3D deformovaná textúra vláknitého dreva"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:156
 msgid "Mother of pearl"
 msgstr "Perleť"
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:156
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "3D deformovaná perleťová textúra lastúry"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:157
 msgid "Tiger fur"
 msgstr "Tigria koža"
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:157
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr "Vzor tigrej kože so záhybmi a vrstvením na okrajoch"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:158
 msgid "Flow inside"
 msgstr "Tok vovnútri"
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:158
 msgid "Colorizable filling with flow inside like transparency"
 msgstr "Zafarbiteľná výplň s priesvitným tokom dnu"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:159
 msgid "Comics cream"
 msgstr "Komiksový krém"
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:159
 msgid "Comics shader with creamy waves transparency"
 msgstr "Komiksové tieňovanie s priesvitnosťou krémových vĺn"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:160
 msgid "Black Light"
 msgstr "Čierne svetlo"
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:160
 msgid "Light areas turn to black"
 msgstr "Svetlé oblasti zmenené na čierne"
 
 #. Eraser
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:161
 #: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
 msgid "Eraser"
 msgstr "Guma"
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:161
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr "Najľahšie časti objektu postupne spriehľadniť"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:162
 msgid "Noisy blur"
 msgstr "Šumové rozostrenie"
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:162
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr "Malé zdrsnenie a rozostrenie okrajov a obsahu"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:163
 msgid "Film Grain"
 msgstr "Filmové zrno"
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:163
 msgid "Adds a film grain noise to images and objects"
 msgstr "Pridá obrázkom a objektom filmové zrno"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:164
 msgid "HSL Bumps, transparent"
 msgstr "HSL hrče, priesvitnosť"
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:164
 msgid "Highly flexible specular bump with transparency"
 msgstr "Vysoko flexibilná hrča s prisevitnosťou"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:165
 msgid "Lead pencil"
 msgstr "Olovená ceruzka"
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:165
 msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
@@ -1570,29 +1558,81 @@ msgstr ""
 "Dáva obrázkom a objektom vyplneným materiálom efekt olovenej ceruzky, "
 "chromolitografie, rytiny alebo iné"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:166
 msgid "Velvet bump"
 msgstr "Zamatové hrče"
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:166
 msgid "Gives a smooth bump velvet like"
 msgstr "Dáva jemné akoby zamatové hrče"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:167
 msgid "Alpha draw"
 msgstr "Alfa kreslenie"
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:167
 msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr "Dáva bitmapám a materiálom efekt priesvitnej kresby"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:168
 msgid "Alpha paint"
 msgstr "Alfa maľovanie"
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:168
 msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr "Dáva bitmapám a materiálom efekt priesvitnej farebnej výplne"
+
+#: ../share/filters/filters.svg.h:169
+msgid "Cross blotches"
+msgstr "Škvrny na kríženiach"
+
+#: ../share/filters/filters.svg.h:169
+msgid ""
+"Creates colourizable blotches which smoothly flow over the edges of the "
+"lines at their crossings"
+msgstr ""
+"Vytvorí vyfarbiteľné škvrny, ktoré hladko pretekajú cez okraj čiar na ich "
+"priesečníkoch"
+
+#: ../share/filters/filters.svg.h:170
+msgid "Black outline"
+msgstr "Čierne obtiahnutie"
+
+#: ../share/filters/filters.svg.h:170
+msgid "Draws a black outline around"
+msgstr "Nakreslí okolo čierne obtiahnutie"
+
+#: ../share/filters/filters.svg.h:171
+msgid "Color outline"
+msgstr "Farebný obrys"
+
+#: ../share/filters/filters.svg.h:171
+msgid "Draws a coloured outline around"
+msgstr "Nakreslí okolo vyfarbené obtiahnutie"
+
+#: ../share/filters/filters.svg.h:172
+msgid "Inner shadow"
+msgstr "Vnútorný tieň"
+
+#: ../share/filters/filters.svg.h:172
+msgid "Adds a colorizable drop shadow inside"
+msgstr "Pridáva dovnútra vyfarbiteľný vrhaný tieň"
+
+#: ../share/filters/filters.svg.h:173
+msgid "Dark and glow"
+msgstr "Tma a žiara"
+
+#: ../share/filters/filters.svg.h:173
+msgid "Darkens the edge with an inner blur and adds a flexible glow"
+msgstr "Stmaví okraj s vnútorným rozostrením a pridá flexibilnú žiaru"
+
+#: ../share/filters/filters.svg.h:174
+msgid "Darken edges"
+msgstr "Stmaviť okraje"
+
+#: ../share/filters/filters.svg.h:174
+msgid "Darken the edges with an inner blur"
+msgstr "Stmaviť okraj s vnútorným rozostrením"
 
 #: ../src/arc-context.cpp:303
 msgid ""
@@ -3589,7 +3629,7 @@ msgstr "Základne textu"
 
 #: ../src/display/snap-indicator.cpp:235
 msgid " to "
-msgstr ""
+msgstr " na "
 
 #: ../src/document.cpp:445
 #, c-format
@@ -5311,7 +5351,7 @@ msgstr "Žiadny"
 #: ../src/widgets/sp-color-scales.cpp:400
 #: ../src/widgets/sp-color-scales.cpp:401
 msgid "Red"
-msgstr "_Červená"
+msgstr "Červená"
 
 #: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:248
 #: ../src/widgets/sp-color-icc-selector.cpp:234
@@ -5850,95 +5890,95 @@ msgstr "Nepodarilo sa automaticky zálohovať nasledujúce dokumenty:\n"
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:819
 msgid "Commands Bar"
 msgstr "Panel príkazov"
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:819
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Zobrazí alebo skryje Panel príkazov (pod ponukou)"
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:821
 msgid "Snap Controls Bar"
 msgstr "Panel Ovládacích prvkov prichytávania"
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:821
 msgid "Show or hide the snapping controls"
 msgstr "Zobrazí alebo skryje ovládanie prichytávania"
 
-#: ../src/interface.cpp:827
+#: ../src/interface.cpp:823
 msgid "Tool Controls Bar"
 msgstr "Panel Ovládanie nástrojov"
 
-#: ../src/interface.cpp:827
+#: ../src/interface.cpp:823
 msgid "Show or hide the Tool Controls bar"
 msgstr "Zobrazí alebo skryje panel pre ovládanie nástrojov"
 
-#: ../src/interface.cpp:829
+#: ../src/interface.cpp:825
 msgid "_Toolbox"
 msgstr "_Panel nástrojov"
 
-#: ../src/interface.cpp:829
+#: ../src/interface.cpp:825
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "Zobrazí alebo skryje hlavný panel nástrojov (vľavo)"
 
-#: ../src/interface.cpp:835
+#: ../src/interface.cpp:831
 msgid "_Palette"
 msgstr "_Paleta"
 
-#: ../src/interface.cpp:835
+#: ../src/interface.cpp:831
 msgid "Show or hide the color palette"
 msgstr "Zobrazí alebo skryje paletu farieb"
 
-#: ../src/interface.cpp:837
+#: ../src/interface.cpp:833
 msgid "_Statusbar"
 msgstr "_Stavový riadok"
 
-#: ../src/interface.cpp:837
+#: ../src/interface.cpp:833
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Zobrazí alebo skryje stavový panel (naspodku okna)"
 
-#: ../src/interface.cpp:907
+#: ../src/interface.cpp:903
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Sloveso „%s“ neznáme"
 
-#: ../src/interface.cpp:946
+#: ../src/interface.cpp:942
 msgid "Open _Recent"
 msgstr "Otvoriť ne_dávne"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1047
+#: ../src/interface.cpp:1043
 #, c-format
 msgid "Enter group #%s"
 msgstr "Zadajte skupinu #%s"
 
-#: ../src/interface.cpp:1058
+#: ../src/interface.cpp:1054
 msgid "Go to parent"
 msgstr "O stupeň vyššie"
 
-#: ../src/interface.cpp:1149 ../src/interface.cpp:1235
-#: ../src/interface.cpp:1338 ../src/ui/widget/selected-style.cpp:468
+#: ../src/interface.cpp:1145 ../src/interface.cpp:1231
+#: ../src/interface.cpp:1334 ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr "Vynechať farbu"
 
-#: ../src/interface.cpp:1188 ../src/interface.cpp:1298
+#: ../src/interface.cpp:1184 ../src/interface.cpp:1294
 msgid "Drop color on gradient"
 msgstr "Pustiť farbu na farebný prechod"
 
-#: ../src/interface.cpp:1351
+#: ../src/interface.cpp:1347
 msgid "Could not parse SVG data"
 msgstr "Nie je možné analyzovať SVG dáta"
 
-#: ../src/interface.cpp:1390
+#: ../src/interface.cpp:1386
 msgid "Drop SVG"
 msgstr "Vypustiť SVG"
 
-#: ../src/interface.cpp:1446
+#: ../src/interface.cpp:1442
 msgid "Drop bitmap image"
 msgstr "Vynechať bitmapový obrázok"
 
-#: ../src/interface.cpp:1538
+#: ../src/interface.cpp:1534
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -5951,7 +5991,7 @@ msgstr ""
 "\n"
 "Súbor už existuje v „%s“. Jeho nahradením prepíšete jeho súčasný obsah."
 
-#: ../src/interface.cpp:1545 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1541 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr "Nahradiť"
@@ -6307,7 +6347,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:917
 #: ../src/ui/dialog/document-properties.cpp:116
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1397
-#: ../src/widgets/desktop-widget.cpp:1558
+#: ../src/widgets/desktop-widget.cpp:1559
 msgid "Page"
 msgstr "Stránka"
 
@@ -8231,19 +8271,19 @@ msgstr "Objekt na cestu"
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr "Vo výbere <b>nie sú objekty</b>, ktoré je možné konvertovať na cesty."
 
-#: ../src/path-chemistry.cpp:552
+#: ../src/path-chemistry.cpp:551
 msgid "Select <b>path(s)</b> to reverse."
 msgstr "Vyberte <b>cestu</b>, ktorej smer sa má obrátiť."
 
-#: ../src/path-chemistry.cpp:561
+#: ../src/path-chemistry.cpp:560
 msgid "Reversing paths..."
 msgstr "Obrátenie smeru ciest..."
 
-#: ../src/path-chemistry.cpp:588
+#: ../src/path-chemistry.cpp:594
 msgid "Reverse path"
 msgstr "Obrátiť smer cesty"
 
-#: ../src/path-chemistry.cpp:590
+#: ../src/path-chemistry.cpp:596
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "Výber <b>neobsahuje cesty</b>, ktorých smer možno obrátiť."
 
@@ -10694,14 +10734,14 @@ msgid "Smallest object"
 msgstr "Najmenší objekt"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:918
-#: ../src/widgets/desktop-widget.cpp:1562
+#: ../src/widgets/desktop-widget.cpp:1563
 msgid "Drawing"
 msgstr "Kresba"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:919
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1401
 #: ../src/ui/dialog/icon-preview.cpp:178
-#: ../src/widgets/desktop-widget.cpp:1566
+#: ../src/widgets/desktop-widget.cpp:1567
 #: ../share/extensions/printing-marks.inx.h:16
 msgid "Selection"
 msgstr "Výber"
@@ -15184,12 +15224,12 @@ msgstr ""
 "\n"
 "Ak skončíte bez uloženia, vaše zmeny sa nezachovajú."
 
-#: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1258
-#: ../src/widgets/desktop-widget.cpp:839 ../src/widgets/desktop-widget.cpp:895
+#: ../src/ui/view/edit-widget.cpp:1211 ../src/ui/view/edit-widget.cpp:1259
+#: ../src/widgets/desktop-widget.cpp:839 ../src/widgets/desktop-widget.cpp:896
 msgid "Close _without saving"
 msgstr "Zatvoriť _bez uloženia"
 
-#: ../src/ui/view/edit-widget.cpp:1246 ../src/widgets/desktop-widget.cpp:887
+#: ../src/ui/view/edit-widget.cpp:1247 ../src/widgets/desktop-widget.cpp:888
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -15202,7 +15242,7 @@ msgstr ""
 "\n"
 "Chcete uložiť tento súbor ako Inkscape SVG?"
 
-#: ../src/ui/view/edit-widget.cpp:1261 ../src/widgets/desktop-widget.cpp:898
+#: ../src/ui/view/edit-widget.cpp:1262 ../src/widgets/desktop-widget.cpp:899
 msgid "_Save as SVG"
 msgstr "_Uložiť ako SVG"
 
@@ -19158,6 +19198,10 @@ msgstr "Vytvoriť postupnosť paraxiálnych úsečiek"
 msgid "Mode:"
 msgstr "Režim:"
 
+#: ../src/widgets/toolbox.cpp:3857
+msgid "Mode of new lines drawn by this tool"
+msgstr "Režim nových čiar nakreslených týmto nástrojom"
+
 #: ../src/widgets/toolbox.cpp:3886
 msgid "Triangle in"
 msgstr "Trojuholník dnu"
@@ -19173,6 +19217,10 @@ msgstr "Zo schránky"
 #: ../src/widgets/toolbox.cpp:3914 ../src/widgets/toolbox.cpp:3915
 msgid "Shape:"
 msgstr "Tvar:"
+
+#: ../src/widgets/toolbox.cpp:3914
+msgid "Shape of new paths drawn by this tool"
+msgstr "Tvar nových čiar nakreslených týmto nástrojom"
 
 #: ../src/widgets/toolbox.cpp:3999
 msgid "(many nodes, rough)"
@@ -22661,6 +22709,9 @@ msgstr "Vstup Windows Metasúbor"
 #: ../share/extensions/xaml2svg.inx.h:3
 msgid "XAML Input"
 msgstr "Vstup XAML"
+
+#~ msgid "Enhance outline and glows inside and outside"
+#~ msgstr "Zväčšiť obrys a žiary vonku a dnu"
 
 #~ msgid "Alpha engraving"
 #~ msgstr "Alfa rytina"

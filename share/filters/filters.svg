@@ -1677,7 +1677,7 @@
 <feBlend id="feBlend2876" blend="normal" mode="normal" in="result6" />
 <feComposite id="feComposite2874" result="result2" operator="in" in2="SourceGraphic" />
 </filter>
-<filter y="-0.25" height="1.5" inkscape:menu-tooltip="Darken the edge with and inner blur and adds a flexible glow" inkscape:menu="Shadows and Glows" inkscape:label="Dark and glow" id="DarkGlow0">
+<filter y="-0.25" height="1.5" inkscape:menu-tooltip="Darkens the edge with an inner blur and adds a flexible glow" inkscape:menu="Shadows and Glows" inkscape:label="Dark and glow" id="DarkGlow0">
 <feGaussianBlur stdDeviation="5" result="result6" id="feGaussianBlur2933" />
 <feComposite result="result8" in="SourceGraphic" operator="atop" in2="result6" id="feComposite2935" />
 <feComposite result="result9" operator="over" in2="SourceAlpha" in="result8" id="feComposite2937" />

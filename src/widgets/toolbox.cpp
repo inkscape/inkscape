@@ -3854,7 +3854,7 @@ static void sp_add_freehand_mode_toggle(GtkActionGroup* mainActions, GObject* ho
             EgeSelectOneAction* act = ege_select_one_action_new(tool_is_pencil ?
                                                                 "FreehandModeActionPencil" :
                                                                 "FreehandModeActionPen",
-                                                                (_("Mode:")), ("Mode"), NULL, GTK_TREE_MODEL(model) );
+                                                                (_("Mode:")), (_("Mode of new lines drawn by this tool")), NULL, GTK_TREE_MODEL(model) );
             gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
 
             ege_select_one_action_set_appearance( act, "full" );
@@ -3911,7 +3911,7 @@ freehand_add_advanced_shape_options(GtkActionGroup* mainActions, GObject* holder
         items = 0;
         EgeSelectOneAction* act1 = ege_select_one_action_new(
             tool_is_pencil ? "SetPencilShapeAction" : "SetPenShapeAction",
-            _("Shape:"), ("Shape"), NULL, GTK_TREE_MODEL(model));
+            _("Shape:"), (_("Shape of new paths drawn by this tool")), NULL, GTK_TREE_MODEL(model));
         g_object_set( act1, "short_label", _("Shape:"), NULL );
         ege_select_one_action_set_appearance( act1, "compact" );
         ege_select_one_action_set_active( act1, prefs->getInt(( tool_is_pencil ? "/tools/freehand/pencil/shape" : "/tools/freehand/pen/shape" ), 0) );
