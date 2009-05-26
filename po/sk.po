@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-23 02:41+0200\n"
-"PO-Revision-Date: 2009-05-23 02:54+0100\n"
+"PO-Revision-Date: 2009-05-26 10:57+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -2286,7 +2286,7 @@ msgstr "Zvoľte Modrú farebnú zložku"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2649
 msgid "clonetiler|H"
-msgstr "clonetiler|H"
+msgstr "H"
 
 #: ../src/dialogs/clonetiler.cpp:2650
 msgid "Pick the hue of the color"
@@ -2296,7 +2296,7 @@ msgstr "Vybrať odtieň farby"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2659
 msgid "clonetiler|S"
-msgstr "clonetiler|S"
+msgstr "S"
 
 #: ../src/dialogs/clonetiler.cpp:2660
 msgid "Pick the saturation of the color"
@@ -2306,7 +2306,7 @@ msgstr "Zvoľte sýtosť farby"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2669
 msgid "clonetiler|L"
-msgstr "clonetiler|L"
+msgstr "L"
 
 #: ../src/dialogs/clonetiler.cpp:2670
 msgid "Pick the lightness of the color"
@@ -2729,7 +2729,7 @@ msgstr "Hľadať klony"
 #. TRANSLATORS: Translate the word "Clones" only. A noun indicating type of object to find
 #: ../src/dialogs/find.cpp:610 ../src/ui/dialog/find.cpp:80
 msgid "find|Clones"
-msgstr "find|Klony"
+msgstr "Klony"
 
 #: ../src/dialogs/find.cpp:615 ../src/ui/dialog/find.cpp:81
 msgid "Search images"
@@ -4833,7 +4833,7 @@ msgstr "Nastavenia importu PDF"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:394
 msgid "pdfinput|medium"
-msgstr "pdfinput|stredný"
+msgstr "stredný"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:395
 msgid "fine"
@@ -5200,7 +5200,7 @@ msgstr "Farba ťahu"
 #. TRANSLATORS: This is a context string, only put the word "Normal" in your translation
 #: ../src/filter-enums.cpp:52
 msgid "filterBlendMode|Normal"
-msgstr "filterBlendMode|Normálny"
+msgstr "Normálny"
 
 #: ../src/filter-enums.cpp:53
 msgid "Multiply"
@@ -5304,7 +5304,7 @@ msgstr "Zalamovanie"
 #: ../share/extensions/grid_polar.inx.h:16
 #: ../share/extensions/guides_creator.inx.h:15
 msgid "None"
-msgstr "Žiadna"
+msgstr "Žiadny"
 
 #: ../src/filter-enums.cpp:101 ../src/flood-context.cpp:247
 #: ../src/widgets/sp-color-icc-selector.cpp:234
@@ -6522,7 +6522,7 @@ msgstr "Zrkadlová symetria"
 
 #: ../src/live_effects/effect.cpp:97
 msgid "Parallel"
-msgstr ""
+msgstr "Rovnobežne"
 
 #: ../src/live_effects/effect.cpp:98
 msgid "Path length"
@@ -8757,7 +8757,7 @@ msgstr ""
 #. TRANSLATORS: Only put the word "Raise" in the translation. Means "to raise an object" in the undo history
 #: ../src/selection-chemistry.cpp:734
 msgid "undo_action|Raise"
-msgstr "undo_action|Presunúť vyššie"
+msgstr "Presunúť vyššie"
 
 #: ../src/selection-chemistry.cpp:746
 msgid "Select <b>object(s)</b> to raise to top."
@@ -8912,7 +8912,7 @@ msgstr "Na výber nie je použitá žiadna maska."
 
 #: ../src/selection-chemistry.cpp:1917
 msgid "action|Clone"
-msgstr "action|Klonovať"
+msgstr "Klonovať"
 
 #: ../src/selection-chemistry.cpp:1933
 msgid "Select <b>clones</b> to relink."
@@ -9072,7 +9072,7 @@ msgstr "Veľkosť strany podľa výberu alebo kresby"
 #. TRANSLATORS: only translate and put "Link" in the translation. It means internet link (anchor)
 #: ../src/selection-describer.cpp:43
 msgid "web|Link"
-msgstr "web|Odkaz"
+msgstr "Odkaz"
 
 #: ../src/selection-describer.cpp:45
 msgid "Circle"
@@ -9119,7 +9119,7 @@ msgstr "Kváder"
 
 #: ../src/selection-describer.cpp:71
 msgid "object|Clone"
-msgstr "object|Klon"
+msgstr "Klon"
 
 #: ../src/selection-describer.cpp:75
 msgid "Offset path"
@@ -10497,7 +10497,7 @@ msgstr "Najmenšie vodorovné rozostupy (v px) medzi ohraničeniami"
 #. TRANSLATORS: Horizontal gap. Only put "H:" equivalent in the translation
 #: ../src/ui/dialog/align-and-distribute.cpp:468
 msgid "gap|H:"
-msgstr "gap|H:"
+msgstr "H:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:476
 msgid "Minimum vertical gap (in px units) between bounding boxes"
@@ -10850,7 +10850,7 @@ msgstr "Farba vodidla, keď sa nad ním nachádza myš"
 #. TRANSLATORS: In Grid|_New translate only the word _New. It ref to grid
 #: ../src/ui/dialog/document-properties.cpp:107
 msgid "Grid|_New"
-msgstr "Grid|_Nová"
+msgstr "_Nová"
 
 #: ../src/ui/dialog/document-properties.cpp:107
 msgid "Create new grid."
@@ -15303,7 +15303,7 @@ msgstr "Zoznam"
 
 #: ../src/ui/widget/panel.cpp:134
 msgid "swatches|Size"
-msgstr "swatches|Veľkosť"
+msgstr "Veľkosť"
 
 #: ../src/ui/widget/panel.cpp:138
 msgid "tiny"
@@ -15316,7 +15316,7 @@ msgstr "malý"
 #. TRANSLATORS: Translate only the word "medium". Indicates size of colour swatches
 #: ../src/ui/widget/panel.cpp:141
 msgid "swatchesHeight|medium"
-msgstr "swatches|stredný"
+msgstr "stredný"
 
 #: ../src/ui/widget/panel.cpp:142
 msgid "large"
@@ -15328,7 +15328,7 @@ msgstr "obrovský"
 
 #: ../src/ui/widget/panel.cpp:165
 msgid "swatches|Width"
-msgstr "swatches|Šírka"
+msgstr "Šírka"
 
 #: ../src/ui/widget/panel.cpp:169
 msgid "narrower"
@@ -15341,7 +15341,7 @@ msgstr "úzky"
 #. TRANSLATORS: Translate only the word "medium". Indicates width of colour swatches
 #: ../src/ui/widget/panel.cpp:172
 msgid "swatchesWidth|medium"
-msgstr "swatches|stredný"
+msgstr "stredný"
 
 #: ../src/ui/widget/panel.cpp:173
 msgid "wide"
@@ -15354,7 +15354,7 @@ msgstr "širší"
 #. TRANSLATORS: Translate only the word "Wrap". Indicates how colour swatches are displayed
 #: ../src/ui/widget/panel.cpp:205
 msgid "swatches|Wrap"
-msgstr "swatches|Zalamovať"
+msgstr "Zalamovať"
 
 #: ../src/ui/widget/random.cpp:123
 msgid ""
@@ -15742,7 +15742,7 @@ msgstr ""
 #. TRANSLATORS: Only translate the word "Link" - means to _link_ two sliders together
 #: ../src/ui/widget/spin-slider.cpp:118
 msgid "sliders|Link"
-msgstr "sliders|Prepojiť"
+msgstr "Prepojiť"
 
 #: ../src/ui/widget/style-swatch.cpp:269
 msgid "L Gradient"
@@ -17772,7 +17772,7 @@ msgstr "Rodina písma"
 #. Style frame
 #: ../src/widgets/font-selector.cpp:188
 msgid "fontselector|Style"
-msgstr "fontselector|Štýl"
+msgstr "Štýl"
 
 #: ../src/widgets/font-selector.cpp:226
 msgid "Font size:"
@@ -17932,7 +17932,7 @@ msgstr "Zmeniť farbu priehradky farebného prechodu"
 
 #: ../src/widgets/paint-selector.cpp:181 ../src/widgets/paint-selector.cpp:564
 msgid "No paint"
-msgstr "Bez maľovania"
+msgstr "Bez farby"
 
 #: ../src/widgets/paint-selector.cpp:183 ../src/widgets/paint-selector.cpp:636
 msgid "Flat color"
@@ -18053,11 +18053,11 @@ msgstr ""
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:460
 msgid "select_toolbar|X position"
-msgstr "select_toolbar|Poloha X"
+msgstr "Poloha X"
 
 #: ../src/widgets/select-toolbar.cpp:460
 msgid "select_toolbar|X"
-msgstr "select_toolbar|X"
+msgstr "X"
 
 #: ../src/widgets/select-toolbar.cpp:462
 msgid "Horizontal coordinate of selection"
@@ -18067,11 +18067,11 @@ msgstr "Vodorovné súradnice výberu"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:468
 msgid "select_toolbar|Y position"
-msgstr "select_toolbar|Poloha Y"
+msgstr "Poloha Y"
 
 #: ../src/widgets/select-toolbar.cpp:468
 msgid "select_toolbar|Y"
-msgstr "select_toolbar|Y"
+msgstr "Y"
 
 #: ../src/widgets/select-toolbar.cpp:470
 msgid "Vertical coordinate of selection"
@@ -18081,11 +18081,11 @@ msgstr "Zvislé súradnice výberu"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:476
 msgid "select_toolbar|Width"
-msgstr "select_toolbar|Šírka"
+msgstr "Šírka"
 
 #: ../src/widgets/select-toolbar.cpp:476
 msgid "select_toolbar|W"
-msgstr "select_toolbar|W"
+msgstr "W"
 
 #: ../src/widgets/select-toolbar.cpp:478
 msgid "Width of selection"
@@ -18103,11 +18103,11 @@ msgstr "V zamknutom stave meniť šírku a výšku v rovnakom pomere"
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:497
 msgid "select_toolbar|Height"
-msgstr "select_toolbar|Výška"
+msgstr "Výška"
 
 #: ../src/widgets/select-toolbar.cpp:497
 msgid "select_toolbar|H"
-msgstr "select_toolbar|H"
+msgstr "H"
 
 #: ../src/widgets/select-toolbar.cpp:499
 msgid "Height of selection"
@@ -18308,7 +18308,7 @@ msgstr "Nastaviť zakončenia čiar"
 #. Stroke width
 #: ../src/widgets/stroke-style.cpp:1077
 msgid "StrokeWidth|Width:"
-msgstr "StrokeWidth|Šírka:"
+msgstr "Šírka:"
 
 #: ../src/widgets/stroke-style.cpp:1091 ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
@@ -20511,25 +20511,25 @@ msgid "Angle Bisectors"
 msgstr "Rozdelenia uhla"
 
 #: ../share/extensions/draw_from_triangle.inx.h:3
-#, fuzzy
 msgid "Centroid"
-msgstr "Stred"
+msgstr "Ťažisko"
 
 #: ../share/extensions/draw_from_triangle.inx.h:4
 msgid "Circumcentre"
-msgstr ""
+msgstr "Stred opísanej kružnice"
 
 #: ../share/extensions/draw_from_triangle.inx.h:5
 msgid "Circumcircle"
-msgstr ""
+msgstr "Opísaná kružnica"
 
 #: ../share/extensions/draw_from_triangle.inx.h:6
 msgid "Common Objects"
 msgstr "Spoločné objekty"
 
+# http://en.wikipedia.org/wiki/Incircle_and_excircles_of_a_triangle
 #: ../share/extensions/draw_from_triangle.inx.h:7
 msgid "Contact Triangle"
-msgstr ""
+msgstr "Gergonov trojuholník"
 
 #: ../share/extensions/draw_from_triangle.inx.h:8
 msgid "Custom Point Specified By:"
@@ -20560,17 +20560,16 @@ msgid "Draw Marker At This Point"
 msgstr "V tomto bode nakresliť zakončenie čiary"
 
 #: ../share/extensions/draw_from_triangle.inx.h:15
-#, fuzzy
 msgid "Excentral Triangle"
-msgstr "Trojuholník"
+msgstr "Gergonov trojuholník"
 
 #: ../share/extensions/draw_from_triangle.inx.h:16
 msgid "Excentres"
-msgstr ""
+msgstr "Stredy pripísaných kružníc"
 
 #: ../share/extensions/draw_from_triangle.inx.h:17
 msgid "Excircles"
-msgstr ""
+msgstr "Pripísané kružnice"
 
 #: ../share/extensions/draw_from_triangle.inx.h:18
 #, fuzzy
@@ -20578,42 +20577,40 @@ msgid "Extouch Triangle"
 msgstr "Trojuholník"
 
 #: ../share/extensions/draw_from_triangle.inx.h:19
-#, fuzzy
 msgid "Gergonne Point"
-msgstr "Farba ťahu"
+msgstr "Gergonov bod"
 
 #: ../share/extensions/draw_from_triangle.inx.h:21
-#, fuzzy
 msgid "Incentre"
-msgstr "stredy"
+msgstr "Stred vpísanej kružnice"
 
 #: ../share/extensions/draw_from_triangle.inx.h:22
-#, fuzzy
 msgid "Incircle"
-msgstr "kruh"
+msgstr "Vpísaná kružnica"
 
 #: ../share/extensions/draw_from_triangle.inx.h:23
-#, fuzzy
 msgid "Nagel Point"
-msgstr "Čierny bod"
+msgstr "Nagelov bod"
 
 #: ../share/extensions/draw_from_triangle.inx.h:24
 msgid "Nine-Point Centre"
-msgstr ""
+msgstr "Stred deviatich bodov"
 
+# http://cs.wikipedia.org/wiki/Kružnice_devíti_bodů
 #: ../share/extensions/draw_from_triangle.inx.h:25
 msgid "Nine-Point Circle"
-msgstr ""
+msgstr "Kružnica deviatich bodov"
 
+# Ortický trojuholník tvoria päty výšok trojuholníka ABC a extangenciálny trojuholník tvoria priamky, ktoré sa zvonka dotýkajú kruž-
+# níc pripísaných trojuholníku ABC [http://mathworld.wolfram.com/ClawsonPoint.html]
 #: ../share/extensions/draw_from_triangle.inx.h:26
-#, fuzzy
 msgid "Orthic Triangle"
-msgstr "Trojuholník"
+msgstr "Ortický trojuholník"
 
+# priesečník výšok
 #: ../share/extensions/draw_from_triangle.inx.h:27
-#, fuzzy
 msgid "Orthocentre"
-msgstr "Ďalšie"
+msgstr "Ortocentrum"
 
 #: ../share/extensions/draw_from_triangle.inx.h:28
 msgid "Point At"
@@ -20628,19 +20625,16 @@ msgid "Report this triangle's properties"
 msgstr "Oznámiť vlastnosti tohto trojuholníka"
 
 #: ../share/extensions/draw_from_triangle.inx.h:32
-#, fuzzy
 msgid "Symmedial Triangle"
-msgstr "Trojuholník"
+msgstr "Trojuholník lemoinovych bodov"
 
 #: ../share/extensions/draw_from_triangle.inx.h:33
-#, fuzzy
 msgid "Symmedian Point"
-msgstr "Zvislý bod:"
+msgstr "Lemoinov bod"
 
 #: ../share/extensions/draw_from_triangle.inx.h:34
-#, fuzzy
 msgid "Symmedians"
-msgstr "Medián"
+msgstr "Lemoinove body"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
 msgid "Triangle Function"
@@ -21066,7 +21060,7 @@ msgstr "Rozdelenia uhla v strede"
 
 #: ../share/extensions/grid_polar.inx.h:3
 msgid "Centre Dot Diameter [px]"
-msgstr ""
+msgstr "Priemer stredného bodu [px]"
 
 #: ../share/extensions/grid_polar.inx.h:4
 msgid "Circumferential Label Outset [px]"
@@ -21720,9 +21714,8 @@ msgid "Cuboctohedron"
 msgstr "Oktahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:5
-#, fuzzy
 msgid "Dodecahedron"
-msgstr "Oktahedrón"
+msgstr "Dodekahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:6
 msgid "Draw Back-Facing Polygons"
@@ -21774,9 +21767,8 @@ msgid "Great Stellated Dodecahedron"
 msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:19
-#, fuzzy
 msgid "Icosahedron"
-msgstr "Oktahedrón"
+msgstr "Ikosahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:20
 msgid "Light x-Position"
@@ -21849,7 +21841,7 @@ msgstr ""
 #: ../share/extensions/polyhedron_3d.inx.h:39
 #, fuzzy
 msgid "Snub Cube"
-msgstr "Kocka"
+msgstr "Zošikmený hexaéder"
 
 #: ../share/extensions/polyhedron_3d.inx.h:40
 msgid "Snub Dodecahedron"
@@ -21861,9 +21853,8 @@ msgid "Stroke Opacity/ %"
 msgstr "Krytie ťahu/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
-#, fuzzy
 msgid "Tetrahedron"
-msgstr "Oktahedrón"
+msgstr "Tetrahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:45
 msgid "Then Rotate Around:"
@@ -21871,24 +21862,23 @@ msgstr "Potom otáčať okolo:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:46
 msgid "Truncated Cube"
-msgstr ""
+msgstr "Zrezaná kocka"
 
 #: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Truncated Dodecahedron"
-msgstr ""
+msgstr "Zrezaný dodekahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:48
 msgid "Truncated Icosahedron"
-msgstr ""
+msgstr "Zrezaný ikosahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:49
-#, fuzzy
 msgid "Truncated Octahedron"
-msgstr "Oktahedrón"
+msgstr "Zrezaný oktahedrón"
 
 #: ../share/extensions/polyhedron_3d.inx.h:50
 msgid "Truncated Tetrahedron"
-msgstr ""
+msgstr "Zrezaný ihlan"
 
 #: ../share/extensions/polyhedron_3d.inx.h:51
 msgid "Vertices"
