@@ -20,7 +20,7 @@
 		            <string>SVG</string>
 		        </array>
 		        <key>CFBundleTypeIconFile</key>
-		        <string>inkscape_svg.icns</string>
+		        <string>image-svg+xml.icns</string>
 		        <key>CFBundleTypeMIMETypes</key>
 		        <array>
 		            <string>svg</string>
@@ -40,59 +40,42 @@
                 <string>SVGZ</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>inkscape_svgz.icns</string>
+            <string>image-svg+xml-compressed.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
                 <string>svgz</string>
             </array>
             <key>CFBundleTypeName</key>
-            <string>Compressed SVG</string>
+            <string>Compressed Scalable Vector Graphics Image</string>
             <key>CFBundleTypeOSTypes</key>
             <array>
                 <string>SVGZ</string>
             </array>
             <key>CFBundleTypeRole</key>
-            <string>Viewer</string>
+            <string>Editor</string>
         </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
                 <string>EPS</string>
-            </array>
-            <key>CFBundleTypeIconFile</key>
-            <string>inkscape_eps.icns</string>
-            <key>CFBundleTypeMIMETypes</key>
-            <array>
-                <string>eps</string>
-            </array>
-            <key>CFBundleTypeName</key>
-            <string>PostScript Document</string>
-            <key>CFBundleTypeOSTypes</key>
-            <array>
-                <string>EPS </string>
-            </array>
-            <key>CFBundleTypeRole</key>
-            <string>Viewer</string>
-        </dict>
-        <dict>
-            <key>CFBundleTypeExtensions</key>
-            <array>
                 <string>EPSI</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>inkscape_epsi.icns</string>
+            <string>image-x-eps.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
+                <string>eps</string>
                 <string>epsi</string>
             </array>
             <key>CFBundleTypeName</key>
             <string>PostScript Document</string>
             <key>CFBundleTypeOSTypes</key>
             <array>
+                <string>EPS </string>
                 <string>EPSI</string>
             </array>
             <key>CFBundleTypeRole</key>
-            <string>Viewer</string>
+            <string>Editor</string>
         </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
@@ -100,7 +83,7 @@
                 <string>PS</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>inkscape_ps.icns</string>
+            <string>image-x-ps.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
                 <string>ps</string>
@@ -112,7 +95,7 @@
                 <string>PS  </string>
             </array>
             <key>CFBundleTypeRole</key>
-            <string>Viewer</string>
+            <string>Editor</string>
         </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
@@ -120,7 +103,7 @@
                 <string>AI</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>inkscape_ai.icns</string>
+            <string>application-illustrator.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
                 <string>ai</string>
@@ -132,7 +115,27 @@
                 <string>AI  </string>
             </array>
             <key>CFBundleTypeRole</key>
-            <string>Viewer</string>
+            <string>Editor</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>AISVG</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>application-illustrator-svg.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>ai.svg</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Adobe Illustrator SVG Document</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>AISVG</string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
         </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
@@ -140,7 +143,7 @@
                 <string>WMF</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>inkscape_wmf.icns</string>
+            <string>image-vnd.windows-metafile.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
                 <string>wmf</string>
@@ -152,7 +155,7 @@
                 <string>WMF </string>
             </array>
             <key>CFBundleTypeRole</key>
-            <string>Viewer</string>
+            <string>Editor</string>
         </dict>
         <dict>
             <key>CFBundleTypeExtensions</key>
@@ -160,16 +163,156 @@
                 <string>PDF</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>inkscape_pdf.icns</string>
+            <string>application-pdf.icns</string>
             <key>CFBundleTypeMIMETypes</key>
             <array>
                 <string>pdf</string>
             </array>
             <key>CFBundleTypeName</key>
-            <string>PDF Document</string>
+            <string>Portable Document Format (PDF)</string>
             <key>CFBundleTypeOSTypes</key>
             <array>
                 <string>PDF </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+        </dict>    
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>GGR</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>application-gimp-gradient.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>ggr</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Gimp Gradient</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>GGR </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+        </dict>    
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>CCX</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>application-vnd.corel-draw-compressed.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>ccx</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Corel Draw Compressed Document</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>CCX </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+        </dict>    
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>CDT</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>application-vnd.corel-draw-template.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>cdt</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Corel Draw Template</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>CDT </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+        </dict>    
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>CDR</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>application-vnd.corel-draw.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>cdr</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Corel Draw Compressed Document</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>CDR </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+        </dict>    
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>XAML</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>application-vnd.ms.xaml.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>xaml</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Extensible Application Markup Language (XAML)</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>XAML</string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+        </dict>    
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>DXF</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>image-vnd.dxf.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>dxf</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>AutoCAD Document</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>DXF </string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+        </dict>    
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>SK1</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>image-vnd.sk1.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>sk1</string>
+            </array>
+            <key>CFBundleTypeName</key>
+            <string>Sketch Document</string>
+            <key>CFBundleTypeOSTypes</key>
+            <array>
+                <string>SK1 </string>
             </array>
             <key>CFBundleTypeRole</key>
             <string>Viewer</string>
