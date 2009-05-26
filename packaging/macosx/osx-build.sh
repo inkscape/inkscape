@@ -21,7 +21,7 @@
 # User modifiable parameters
 #----------------------------------------------------------
 # Configure flags
-CONFFLAGS="--disable-static --enable-shared --enable-osxapp"
+CONFFLAGS="--enable-osxapp"
 # Libraries prefix (Warning: NO trailing slash)
 LIBPREFIX="/opt/local"
 # User name on Modevia
