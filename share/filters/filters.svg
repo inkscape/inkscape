@@ -1324,12 +1324,14 @@
 <feGaussianBlur id="feGaussianBlur3060" result="result4" in="SourceGraphic" stdDeviation="3" />
 <feComposite id="feComposite3062" in="result4" in2="result2" operator="arithmetic" k2="-0.25" k3="0.5" k1="1.5" result="result5" />
 </filter>
-<filter x="-0.2" width="1.4" y="-0.2" height="1.4" inkscape:menu-tooltip="Torn edges with a dark inner blur" inkscape:menu="Textures" inkscape:label="Burnt edges" id="BurntEdg0">
-<feTurbulence type="fractalNoise" numOctaves="3" baseFrequency="0.050000000000000003" id="feTurbulence2858" seed="25" />
-<feDisplacementMap in="SourceGraphic" xChannelSelector="R" result="result5" scale="25" id="feDisplacementMap2860" />
-<feColorMatrix id="feColorMatrix2864" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0 " in="result5" result="fbSourceGraphicAlpha" />
-<feGaussianBlur in="result5" stdDeviation="5" result="result6" id="feGaussianBlur2866" />
-<feComposite result="result9" operator="atop" in2="fbSourceGraphicAlpha" in="result6" id="feComposite2870" />
+<filter id="BurntEdg0" inkscape:label="Burnt edges" inkscape:menu="Textures" inkscape:menu-tooltip="Torn edges with a dark inner blur" height="1.4" y="-0.2" width="1.4" x="-0.2">
+<feTurbulence id="feTurbulence3082" baseFrequency="0.050000000000000003" numOctaves="3" type="fractalNoise" />
+<feDisplacementMap id="feDisplacementMap3084" scale="35" result="result5" xChannelSelector="R" in="SourceGraphic" yChannelSelector="G" />
+<feComposite id="feComposite3086" in="SourceGraphic" operator="in" result="fbSourceGraphic" />
+<feColorMatrix result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0" id="feColorMatrix3088" />
+<feGaussianBlur id="feGaussianBlur3090" result="result6" stdDeviation="8" in="fbSourceGraphic" />
+<feComposite id="feComposite3092" in2="result6" operator="atop" in="fbSourceGraphic" result="result8" />
+<feComposite id="feComposite3094" in="result8" in2="fbSourceGraphicAlpha" operator="atop" result="result9" />
 </filter>
 <filter id="ColorInl0" inkscape:label="Color inline" inkscape:menu="Morphology" inkscape:menu-tooltip="A colorizable inline with adjustable width and blur" height="1.2" y="-0.1" width="1.2" x="-0.1">
 <feGaussianBlur id="feGaussianBlur2883" stdDeviation="2" result="result8" />
