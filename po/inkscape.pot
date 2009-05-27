@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-26 16:30+0200\n"
+"POT-Creation-Date: 2009-05-27 06:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -428,6 +428,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:137
 #: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:175
 msgid "Textures"
 msgstr ""
 
@@ -1243,7 +1244,7 @@ msgid "Burnt edges"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:131
-msgid "Burnt paper edges texture"
+msgid "Torn edges with a dark inner blur"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:132
@@ -1605,6 +1606,14 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:174
 msgid "Darken the edges with an inner blur"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:175
+msgid "Warped rainbow"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:175
+msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
