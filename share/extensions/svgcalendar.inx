@@ -41,88 +41,88 @@
       <_param name="month-names"  type="string" _gui-text="Month names">January February March April May June July August September October November December</_param>
       <_param name="day-names"  type="string" _gui-text="Day names">Sun Mon Tue Wed Thu Fri Sat</_param>
       <_param name="day-names-help" type="description">(The day names list must start from Sunday)</_param>
-      <param name="encoding" type="enum" _gui-text="Char Encoding">
-        <item>arabic</item>
-        <item>big5-tw</item>
-        <item>big5-hkscs</item>
-        <item>chinese</item>
-        <item>cp737</item>
-        <item>cp856</item>
-        <item>cp874</item>
-        <item>cp875</item>
-        <item>cp1006</item>
-        <item>cyrillic</item>
-        <item>cyrillic-asian</item>
-        <item>eucjis2004</item>
-        <item>eucjisx0213</item>
-        <item>gbk</item>
-        <item>gb18030-2000</item>
-        <item>greek</item>
-        <item>hebrew</item>
-        <item>hz-gb</item>
-        <item>IBM037</item>
-        <item>IBM424</item>
-        <item>IBM437</item>
-        <item>IBM500</item>
-        <item>IBM775</item>
-        <item>IBM850</item>
-        <item>IBM852</item>
-        <item>IBM855</item>
-        <item>IBM857</item>
-        <item>IBM860</item>
-        <item>IBM861</item>
-        <item>IBM862</item>
-        <item>IBM863</item>
-        <item>IBM864</item>
-        <item>IBM865</item>
-        <item>IBM866</item>
-        <item>IBM869</item>
-        <item>IBM1026</item>
-        <item>IBM1140</item>
-        <item>iso-2022-jp</item>
-        <item>iso-2022-jp-1</item>
-        <item>iso-2022-jp-2</item>
-        <item>iso-2022-jp-2004</item>
-        <item>iso-2022-jp-3</item>
-        <item>iso-2022-jp-ext</item>
-        <item>iso-2022-kr</item>
-        <item>johab</item>
-        <item>korean</item>
-        <item>koi8_r</item>
-        <item>koi8_u</item>
-        <item>latin1</item>
-        <item>latin2</item>
-        <item>latin3</item>
-        <item>latin4</item>
-        <item>latin5</item>
-        <item>latin6</item>
-        <item>latin8</item>
-        <item value="iso-8859-15">Latin - iso-8859-15 - Western Europe</item>
-        <item>macgreek</item>
-        <item>maciceland</item>
-        <item>maccentraleurope</item>
-        <item>macroman</item>
-        <item>macturkish</item>
-        <item>ms932</item>
-        <item>ms949</item>
-        <item>ms950</item>
-        <item>sjis</item>
-        <item>sjis2004</item>
-        <item>sjisx0213</item>
-        <item>u-jis</item>
-        <item>us-ascii</item>
-        <item value="windows-1250">Windows - Central and Eastern Europe</item>
-        <item value="windows-1251">Windows - Russian and more</item>
-        <item value="windows-1252">Windows - Western Europe</item>
-        <item value="windows-1253">Windows - Greek</item>
-        <item value="windows-1254">Windows - Turkish</item>
-        <item value="windows-1255">Windows - Hebrew</item>
-        <item value="windows-1256">Windows - Arabic</item>
-        <item value="windows-1257">Windows - Baltic languages</item>
-        <item value="windows-1258">Windows - Vietnamese</item>
-        <item value="utf_32">UTF-32 - All languages</item>
-        <item value="utf_16">UTF-16 - All languages</item>
-        <item value="utf_8">UTF-8 - All languages</item>
+      <param name="encoding" _gui-text="Char Encoding" type="optiongroup" appearance="minimal">
+	  	<option value="arabic">arabic</option>
+		<option value="big5-tw">big5-tw</option>
+		<option value="big5-hkscs">big5-hkscs</option>
+		<option value="chinese">chinese</option>
+		<option value="cp737">cp737</option>
+		<option value="cp856">cp856</option>
+		<option value="cp874">cp874</option>
+		<option value="cp875">cp875</option>
+		<option value="cp1006">cp1006</option>
+		<option value="cyrillic">cyrillic</option>
+		<option value="cyrillic-asian">cyrillic-asian</option>
+		<option value="eucjis2004">eucjis2004</option>
+		<option value="eucjisx0213">eucjisx0213</option>
+		<option value="gbk">gbk</option>
+		<option value="gb18030-2000">gb18030-2000</option>
+		<option value="greek">greek</option>
+		<option value="hebrew">hebrew</option>
+		<option value="hz-gb">hz-gb</option>
+		<option value="IBM037">IBM037</option>
+		<option value="IBM424">IBM424</option>
+		<option value="IBM437">IBM437</option>
+		<option value="IBM500">IBM500</option>
+		<option value="IBM775">IBM775</option>
+		<option value="IBM850">IBM850</option>
+		<option value="IBM852">IBM852</option>
+		<option value="IBM855">IBM855</option>
+		<option value="IBM857">IBM857</option>
+		<option value="IBM860">IBM860</option>
+		<option value="IBM861">IBM861</option>
+		<option value="IBM862">IBM862</option>
+		<option value="IBM863">IBM863</option>
+		<option value="IBM864">IBM864</option>
+		<option value="IBM865">IBM865</option>
+		<option value="IBM866">IBM866</option>
+		<option value="IBM869">IBM869</option>
+		<option value="IBM1026">IBM1026</option>
+		<option value="IBM1140">IBM1140</option>
+		<option value="iso-2022-jp">iso-2022-jp</option>
+		<option value="iso-2022-jp-1">iso-2022-jp-1</option>
+		<option value="iso-2022-jp-2">iso-2022-jp-2</option>
+		<option value="iso-2022-jp-2004">iso-2022-jp-2004</option>
+		<option value="iso-2022-jp-3">iso-2022-jp-3</option>
+		<option value="iso-2022-jp-ext">iso-2022-jp-ext</option>
+		<option value="iso-2022-kr">iso-2022-kr</option>
+		<option value="johab">johab</option>
+		<option value="korean">korean</option>
+		<option value="koi8_r">koi8_r</option>
+		<option value="koi8_u">koi8_u</option>
+		<option value="latin1">latin1</option>
+		<option value="latin2">latin2</option>
+		<option value="latin3">latin3</option>
+		<option value="latin4">latin4</option>
+		<option value="latin5">latin5</option>
+		<option value="latin6">latin6</option>
+		<option value="latin8">latin8</option>
+		<option value="iso-8859-15">Latin - iso-8859-15 - Western Europe</option>
+		<option value="macgreek">macgreek</option>
+		<option value="maciceland">maciceland</option>
+		<option value="maccentraleurope">maccentraleurope</option>
+		<option value="macroman">macroman</option>
+		<option value="macturkish">macturkish</option>
+		<option value="ms932">ms932</option>
+		<option value="ms949">ms949</option>
+		<option value="ms950">ms950</option>
+		<option value="sjis">sjis</option>
+		<option value="sjis2004">sjis2004</option>
+		<option value="sjisx0213">sjisx0213</option>
+		<option value="u-jis">u-jis</option>
+		<option value="us-ascii">us-ascii</option>
+		<option value="windows-1250">Windows - Central and Eastern Europe</option>
+		<option value="windows-1251">Windows - Russian and more</option>
+		<option value="windows-1252">Windows - Western Europe</option>
+		<option value="windows-1253">Windows - Greek</option>
+		<option value="windows-1254">Windows - Turkish</option>
+		<option value="windows-1255">Windows - Hebrew</option>
+		<option value="windows-1256">Windows - Arabic</option>
+		<option value="windows-1257">Windows - Baltic languages</option>
+		<option value="windows-1258">Windows - Vietnamese</option>
+		<option value="utf_32">UTF-32 - All languages</option>
+		<option value="utf_16">UTF-16 - All languages</option>
+		<option value="utf_8">UTF-8 - All languages</option>
       </param>
       <_param name="encoding-help" type="description">(Select your system encoding. More information at http://docs.python.org/library/codecs.html#standard-encodings)</_param>
     </page>

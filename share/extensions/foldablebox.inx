@@ -9,12 +9,12 @@
   <param name="depth"  type="float" min="0.1" max="1000.0" _gui-text="Depth">3.0</param>
   <param name="paper-thickness" type="float" min="0.0" max="100.0" _gui-text="Paper Thickness">0.01</param>
   <param name="tab-proportion" type="float" min="0.1" max="1.0" _gui-text="Tab Proportion">0.6</param>
-  <param name="unit"   type="enum" _gui-text="Unit">
-    <item>px</item>
-    <item>pt</item>
-    <item>in</item>
-    <item>cm</item>
-    <item>mm</item>
+  <param name="unit" _gui-text="Unit" type="optiongroup" appearance="minimal">
+	<option value="px">px</option>
+	<option value="pt">pt</option>
+	<option value="in">in</option>
+	<option value="cm">cm</option>
+	<option value="mm">mm</option>
   </param>
   <param name="guide-line" type="boolean" _gui-text="Add Guide Lines">true</param>
   <effect>
