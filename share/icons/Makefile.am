@@ -43,6 +43,6 @@ icons_DATA = \
 	inkscape.file.svg \
 	inkscape.file.png \
 	README
-	
+
 EXTRA_DIST = $(icons_DATA)
 
