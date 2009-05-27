@@ -15,6 +15,7 @@
 # include "config.h"
 #endif
 
+#include <errno.h>
 
 #include <map>
 #include "debug/simple-event.h"
@@ -142,7 +143,8 @@ static void (* fpe_handler)  (int) = SIG_DFL;
 static void (* ill_handler)  (int) = SIG_DFL;
 static void (* bus_handler)  (int) = SIG_DFL;
 
-#define INKSCAPE_PROFILE_DIR "Inkscape"
+#define INKSCAPE_PROFILE_DIR "inkscape"
+#define INKSCAPE_PROFILE_DIR_047DEV "Inkscape"
 #define INKSCAPE_LEGACY_PROFILE_DIR ".inkscape"
 #define MENUS_FILE "menus.xml"
 
@@ -854,18 +856,21 @@ gboolean inkscape_app_use_gui( Inkscape::Application const * app )
  */
 bool inkscape_load_menus (Inkscape::Application */*inkscape*/)
 {
+    // TODO fix that fn is being leaked
     gchar *fn = profile_path(MENUS_FILE);
-    gchar *menus_xml = NULL; gsize len = 0;
+    gchar *menus_xml = NULL;
+    gsize len = 0;
 
     if (g_file_get_contents(fn, &menus_xml, &len, NULL)) {
         // load the menus_xml file
         INKSCAPE->menus = sp_repr_read_mem(menus_xml, len, NULL);
         g_free(menus_xml);
-        if (INKSCAPE->menus) return true;
+        if (INKSCAPE->menus) {
+            return true;
+        }
     }
     INKSCAPE->menus = sp_repr_read_mem(menus_skeleton, MENUS_SKELETON_SIZE, NULL);
-    if (INKSCAPE->menus) return true;
-    return false;
+    return (INKSCAPE->menus != 0);
 }
 
 
@@ -1428,14 +1433,27 @@ profile_path(const char *filename)
         if (!prefdir) {
             prefdir = g_build_filename(g_get_user_config_dir(), INKSCAPE_PROFILE_DIR, NULL);
             gchar * legacyDir = homedir_path(INKSCAPE_LEGACY_PROFILE_DIR);
+            gchar * dev47Dir = g_build_filename(g_get_user_config_dir(), INKSCAPE_PROFILE_DIR_047DEV, NULL);
 
-            // TODO here is a point to hook in preference migration
+            bool needsMigration = ( !Inkscape::IO::file_test( prefdir, G_FILE_TEST_EXISTS ) && Inkscape::IO::file_test( legacyDir, G_FILE_TEST_EXISTS ) );
+            if (needsMigration) {
+                // TODO here is a point to hook in preference migration
+                g_warning("Preferences need to be migrated from 0.46 or older %s to %s", legacyDir, prefdir);
+            }
 
-            if ( !Inkscape::IO::file_test( prefdir, G_FILE_TEST_EXISTS ) && Inkscape::IO::file_test( legacyDir, G_FILE_TEST_EXISTS ) ) {
-                prefdir = legacyDir;
-            } else {
-                g_free(legacyDir);
-                legacyDir = 0;
+            bool needsRenameWarning = ( !Inkscape::IO::file_test( prefdir, G_FILE_TEST_EXISTS ) && Inkscape::IO::file_test( dev47Dir, G_FILE_TEST_EXISTS ) );
+            if (needsRenameWarning) {
+                g_warning("Preferences need to be copied from  %s to %s", legacyDir, prefdir);
+            }
+
+            g_free(legacyDir);
+            legacyDir = 0;
+            g_free(dev47Dir);
+            dev47Dir = 0;
+            // In case the XDG user config dir of the moment does not yet exist...
+            if ( g_mkdir_with_parents(prefdir, S_IRWXU | S_IRGRP | S_IXGRP | S_IXOTH) == -1 ) {
+                int problem = errno;
+                g_warning("Unable to create profile directory (%s) (%d)", g_strerror(problem), problem);
             }
         }
     }
