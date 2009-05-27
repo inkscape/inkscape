@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-26 16:30+0200\n"
-"PO-Revision-Date: 2009-05-26 23:38+0100\n"
+"POT-Creation-Date: 2009-05-27 06:46+0200\n"
+"PO-Revision-Date: 2009-05-27 06:54+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -500,6 +500,7 @@ msgstr "Matière organique"
 #: ../share/filters/filters.svg.h:137
 #: ../share/filters/filters.svg.h:138
 #: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:175
 msgid "Textures"
 msgstr "Textures"
 
@@ -1313,8 +1314,8 @@ msgid "Burnt edges"
 msgstr "Bords brûlés"
 
 #: ../share/filters/filters.svg.h:131
-msgid "Burnt paper edges texture"
-msgstr "Texture avec des bords de papier brûlé"
+msgid "Torn edges with a dark inner blur"
+msgstr "Bords déchirés avec un flou intérieur"
 
 #: ../share/filters/filters.svg.h:132
 msgid "Color inline"
@@ -1679,6 +1680,14 @@ msgstr "Bords assombris"
 #: ../share/filters/filters.svg.h:174
 msgid "Darken the edges with an inner blur"
 msgstr "Assombrit les bords avec un flou intérieur"
+
+#: ../share/filters/filters.svg.h:175
+msgid "Warped rainbow"
+msgstr "Arc-en-ciel déformé"
+
+#: ../share/filters/filters.svg.h:175
+msgid "Smooth rainbow colors warped along the edges and colorizable"
+msgstr "Couleurs arc-en-ciel douces déformées le long des bords et colorisable"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
@@ -21647,6 +21656,8 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Burnt paper edges texture"
+#~ msgstr "Texture avec des bords de papier brûlé"
 #~ msgid "Enhance outline and glows inside and outside"
 #~ msgstr ""
 #~ "Augmente le contour et le rayonnement à l'intérieur et à l'extérieur"
