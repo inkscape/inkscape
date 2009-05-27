@@ -2,7 +2,7 @@
  * @brief  Singleton class to access the preferences file in a convenient way.
  */
 /* Authors:
- *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Krzysztof Kosi_ski <tweenk.pl@gmail.com>
  *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2008,2009 Authors
@@ -28,6 +28,7 @@ namespace Inkscape {
 
 class ErrorReporter {
 public:
+    virtual ~ErrorReporter() {}
     virtual void handleError(Glib::ustring const& primary, Glib::ustring const& secondary ) const = 0;
 };
 
