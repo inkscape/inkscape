@@ -16,15 +16,15 @@
     </page>
     <page name="tab" _gui-text="Positioning">
       <param name="where" type="enum" _gui-text="Set crop marks to">
+	    <_item value="canvas">Canvas</_item>
         <_item value="selection">Selection</_item>
-        <_item value="canvas">Canvas</_item>
       </param>
-      <param name="unit" type="enum" _gui-text="Unit">
-        <item>px</item>
-        <item>pt</item>
-        <item>in</item>
-        <item>cm</item>
-        <item>mm</item>
+      <param name="unit" _gui-text="Unit" type="optiongroup" appearance="minimal">
+	    <option value="px">px</option>
+		<option value="pt">pt</option>
+		<option value="in">in</option>
+		<option value="cm">cm</option>
+		<option value="mm">mm</option>
       </param>
       <param name="crop_offset"     type="float"  min="0.0"  max="9999.0"  _gui-text="Offset:">5</param>
       <_param name="bleed_settings" type="description">Bleed Margin</_param>
