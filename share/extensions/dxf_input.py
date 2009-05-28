@@ -151,9 +151,9 @@ def export_LWPOLYLINE():
             inkex.etree.SubElement(layer, 'path', attribs)
 
 def export_HATCH():
-    # mandatory group codes : (10, 20, 72, 93) (x, y, Edge Type, Number of edges)
-    if vals[groups['10']] and vals[groups['20']] and vals[groups['72']] and vals[groups['93']]:
-        if len(vals[groups['10']]) > 1 and len(vals[groups['20']]) == len(vals[groups['10']]):
+    # mandatory group codes : (10, 20, 70, 72, 92, 93) (x, y, fill, Edge Type, Path Type, Number of edges)
+    if vals[groups['10']] and vals[groups['20']] and vals[groups['70']] and vals[groups['72']] and vals[groups['92']] and vals[groups['93']]:
+        if vals[groups['70']][0] and len(vals[groups['10']]) > 1 and len(vals[groups['20']]) == len(vals[groups['10']]):
             # optional group codes : (11, 21, 40, 50, 51, 73) (x, y, r, angle1, angle2, CCW)
             i10 = 1    # count start points
             i11 = 0    # count line end points
@@ -171,7 +171,12 @@ def export_HATCH():
                     a1 = 0
                     path += 'M %f,%f ' % (xc, yc)
                 for j in range(0, vals[groups['93']][i]):
-                    if vals[groups['72']][i72] == 2:        # arc
+                    if vals[groups['92']][i] & 2:           # polyline
+                        if j > 0:
+                            path += 'L %f,%f ' % (vals[groups['10']][i10], vals[groups['20']][i10])
+                        if j == vals[groups['93']][i] - 1:
+                            i72 += 1
+                    elif vals[groups['72']][i72] == 2:      # arc
                         xc = vals[groups['10']][i10]
                         yc = vals[groups['20']][i10]
                         rm = scale*vals[groups['40']][i40]
@@ -190,11 +195,6 @@ def export_HATCH():
                         path += 'L %f,%f ' % (scale*(vals[groups['11']][i11] - xmin), -scale*(vals[groups['21']][i11] - ymax))
                         i11 += 1
                         i72 += 1
-                    elif vals[groups['72']][i72] == 0:      # polyline
-                        if j > 0:
-                            path += 'L %f,%f ' % (vals[groups['10']][i10], vals[groups['20']][i10])
-                        if j == vals[groups['93']][i] - 1:
-                            i72 += 1
                     i10 += 1
                 path += "z "
             style = simplestyle.formatStyle({'fill': '%s' % color})
@@ -253,7 +253,7 @@ def generate_ellipse(xc, yc, xm, ym, w, a1, a2):
     rm = math.sqrt(xm*xm + ym*ym)
     a = math.atan2(ym, xm)
     diff = (a2 - a1 + 2*math.pi) % (2*math.pi)
-    if diff:                        # open arc
+    if abs(diff) > 0.0000001 and abs(diff - 2*math.pi) > 0.0000001: # open arc
         large = 0                   # large-arc-flag
         if diff > math.pi:
             large = 1
@@ -284,7 +284,7 @@ def get_group(group):
 #   define DXF Entities and specify which Group Codes to monitor
 
 entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'DIMENSION': export_DIMENSION, 'INSERT': export_INSERT, 'BLOCK': export_BLOCK, 'ENDBLK': export_ENDBLK, 'DICTIONARY': False}
-groups = {'1': 0, '2': 1, '3': 2, '6': 3, '8': 4, '10': 5, '11': 6, '13': 7, '14': 8, '20': 9, '21': 10, '23': 11, '24': 12, '40': 13, '41': 14, '42': 15, '50': 16, '51': 17, '62': 18, '70': 19, '72': 20, '73': 21, '93': 22, '370': 23}
+groups = {'1': 0, '2': 1, '3': 2, '6': 3, '8': 4, '10': 5, '11': 6, '13': 7, '14': 8, '20': 9, '21': 10, '23': 11, '24': 12, '40': 13, '41': 14, '42': 15, '50': 16, '51': 17, '62': 18, '70': 19, '72': 20, '73': 21, '92': 22, '93': 23, '370': 24}
 colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '#0000FF',
             6: '#FF00FF',   8: '#414141',   9: '#808080',  12: '#BD0000',  30: '#FF7F00',
           250: '#333333', 251: '#505050', 252: '#696969', 253: '#828282', 254: '#BEBEBE', 255: '#FFFFFF'}
@@ -379,7 +379,7 @@ while line[0] and line[1] != 'DICTIONARY':
             val = val.encode('unicode_escape')
             val = inkex.re.sub( '\\\\\\\\U\+([0-9A-Fa-f]{4})', '\\u\\1', val)
             val = val.decode('unicode_escape')
-        elif line[0] == '62' or line[0] == '70' or line[0] == '93':
+        elif line[0] == '62' or line[0] == '70' or line[0] == '92' or line[0] == '93':
             val = int(line[1])
         elif line[0] == '10' or line[0] == '13' or line[0] == '14': # scaled float x value
             val = scale*(float(line[1]) - xmin)
@@ -415,7 +415,7 @@ while line[0] and line[1] != 'DICTIONARY':
                     style += ';' + linetypes[vals[groups['6']][0]]
             entities[entity]()
         entity = line[1]
-        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+        vals = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
         seqs = []
 
 doc.write(inkex.sys.stdout)
