@@ -2451,7 +2451,7 @@ Verb *Verb::_base_verbs[] = {
                   N_("Raise the current layer"), INKSCAPE_ICON_LAYER_RAISE),
     new LayerVerb(SP_VERB_LAYER_LOWER, "LayerLower", N_("_Lower Layer"),
                   N_("Lower the current layer"), INKSCAPE_ICON_LAYER_LOWER),
-    new LayerVerb(SP_VERB_LAYER_DUPLICATE, "LayerDuplicate", N_("Duplicate Current Layer..."),
+    new LayerVerb(SP_VERB_LAYER_DUPLICATE, "LayerDuplicate", N_("Duplicate Current Layer"),
                   N_("Duplicate an existing layer"), NULL),
     new LayerVerb(SP_VERB_LAYER_DELETE, "LayerDelete", N_("_Delete Current Layer"),
                   N_("Delete the current layer"), INKSCAPE_ICON_LAYER_DELETE),
