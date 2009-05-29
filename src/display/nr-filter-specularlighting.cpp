@@ -188,6 +188,19 @@ int FilterSpecularLighting::render(FilterSlot &slot, FilterUnits const &units) {
     return 0;
 }
 
+void FilterSpecularLighting::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
+{
+    // TODO: support kernelUnitLength
+    double scalex = std::fabs(trans[0]) + std::fabs(trans[1]);
+    double scaley = std::fabs(trans[2]) + std::fabs(trans[3]);
+
+    //FIXME: no +2 should be there!... (noticable only for big scales at big zoom factor)
+    area.x0 -= (int)(scalex) + 2;
+    area.x1 += (int)(scalex) + 2;
+    area.y0 -= (int)(scaley) + 2;
+    area.y1 += (int)(scaley) + 2;
+}
+
 FilterTraits FilterSpecularLighting::get_input_traits() {
     return TRAIT_PARALLER;
 }

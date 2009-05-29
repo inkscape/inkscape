@@ -42,6 +42,7 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterDiffuseLighting();
     virtual int render(FilterSlot &slot, FilterUnits const &units);
+    virtual void area_enlarge(NRRectL &area, Geom::Matrix const &trans);
     virtual FilterTraits get_input_traits();
 
 private:

@@ -9,6 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <cmath>
 #include "display/nr-filter-morphology.h"
 #include "display/nr-filter-units.h"
 #include "libnr/nr-blit.h"
@@ -113,8 +114,8 @@ int FilterMorphology::render(FilterSlot &slot, FilterUnits const &units) {
 
 void FilterMorphology::area_enlarge(NRRectL &area, Geom::Matrix const &trans)
 {
-    int const enlarge_x = (int)round(this->xradius * trans.expansionX());
-    int const enlarge_y = (int)round(this->yradius * trans.expansionY());
+    int const enlarge_x = (int)std::ceil(this->xradius * (std::fabs(trans[0]) + std::fabs(trans[1])));
+    int const enlarge_y = (int)std::ceil(this->yradius * (std::fabs(trans[2]) + std::fabs(trans[3])));
 
     area.x0 -= enlarge_x;
     area.x1 += enlarge_x;
