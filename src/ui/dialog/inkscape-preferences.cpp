@@ -219,7 +219,7 @@ void InkscapePreferences::initPageSnapping()
                              _("After snapping, a symbol is drawn at the point that has snapped"));
 
     _snap_delay.init("/options/snapdelay/value", 0, 1000, 50, 100, 300, 0);
-    _page_snapping.add_line( false, _("Delay (in msec):"), _snap_delay, "",
+    _page_snapping.add_line( false, _("Delay (in ms):"), _snap_delay, "",
                              _("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"), true);
 
     _snap_closest_only.init( _("Only snap the node closest to the pointer"), "/options/snapclosestonly/value", false);
@@ -1113,7 +1113,7 @@ void InkscapePreferences::initPageAutosave()
     _autosave_autosave_interval.init("/options/autosave/interval", 1.0, 10800.0, 1.0, 10.0, 10.0, true, false);
     _page_autosave.add_line(true, _("Interval (in minutes):"), _autosave_autosave_interval, "", _("Interval (in minutes) at which document will be autosaved"), false);
     _autosave_autosave_path.init("/options/autosave/path", true);
-    _page_autosave.add_line(true, _("Path:"), _autosave_autosave_path, "", _("The directory where autosaves will be written"), false);
+    _page_autosave.add_line(true, Q_("filesystem|Path:"), _autosave_autosave_path, "", _("The directory where autosaves will be written"), false);
     _autosave_autosave_max.init("/options/autosave/max", 1.0, 100.0, 1.0, 10.0, 10.0, true, false);
     _page_autosave.add_line(true, _("Maximum number of autosaves:"), _autosave_autosave_max, "", _("Maximum number of autosaved files; use this to limit the storage space used"), false);
 
