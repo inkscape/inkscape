@@ -141,7 +141,9 @@ static void (* segv_handler) (int) = SIG_DFL;
 static void (* abrt_handler) (int) = SIG_DFL;
 static void (* fpe_handler)  (int) = SIG_DFL;
 static void (* ill_handler)  (int) = SIG_DFL;
+#ifndef WIN32
 static void (* bus_handler)  (int) = SIG_DFL;
+#endif
 
 #define INKSCAPE_PROFILE_DIR "inkscape"
 #define INKSCAPE_PROFILE_DIR_047DEV "Inkscape"
@@ -799,7 +801,7 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
 
     inkscape_load_menus(inkscape);
     sp_input_load_from_preferences();
-    
+
     /* set language for user interface according setting in preferences */
     Glib::ustring ui_language = prefs->getString("/ui/language");
     if(!ui_language.empty())
@@ -1451,7 +1453,17 @@ profile_path(const char *filename)
             g_free(dev47Dir);
             dev47Dir = 0;
             // In case the XDG user config dir of the moment does not yet exist...
-            if ( g_mkdir_with_parents(prefdir, S_IRWXU | S_IRGRP | S_IXGRP | S_IXOTH) == -1 ) {
+            int mode = S_IRWXU;
+#ifdef S_IRGRP
+            mode |= S_IRGRP;
+#endif
+#ifdef S_IXGRP
+            mode |= S_IXGRP;
+#endif
+#ifdef S_IXOTH
+            mode |= S_IXOTH;
+#endif
+            if ( g_mkdir_with_parents(prefdir, mode) == -1 ) {
                 int problem = errno;
                 g_warning("Unable to create profile directory (%s) (%d)", g_strerror(problem), problem);
             }
