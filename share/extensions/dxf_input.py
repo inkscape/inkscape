@@ -224,6 +224,8 @@ def export_DIMENSION():
         if vals[groups['3']]:
             if DIMTXT.has_key(vals[groups['3']][0]):
                 size = scale*DIMTXT[vals[groups['3']][0]]
+                if size < 2:
+                    size = 2
         attribs = {'x': '%f' % x, 'y': '%f' % y, 'style': 'font-size: %.1fpx; fill: %s' % (size, color)}
         if dx == 0:
             attribs.update({'transform': 'rotate (%f %f %f)' % (-90, x, y)})
@@ -248,6 +250,12 @@ def export_BLOCK():
 def export_ENDBLK():
     global block
     block = defs                                    # initiallize with dummy
+
+def export_ATTDEF():
+    # mandatory group codes : (1, 2) (default, tag)
+    if vals[groups['1']] and vals[groups['2']]:
+        vals[groups['1']][0] = vals[groups['2']][0]
+        export_MTEXT()
 
 def generate_ellipse(xc, yc, xm, ym, w, a1, a2):
     rm = math.sqrt(xm*xm + ym*ym)
@@ -283,7 +291,7 @@ def get_group(group):
 
 #   define DXF Entities and specify which Group Codes to monitor
 
-entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'DIMENSION': export_DIMENSION, 'INSERT': export_INSERT, 'BLOCK': export_BLOCK, 'ENDBLK': export_ENDBLK, 'DICTIONARY': False}
+entities = {'MTEXT': export_MTEXT, 'TEXT': export_MTEXT, 'POINT': export_POINT, 'LINE': export_LINE, 'SPLINE': export_SPLINE, 'CIRCLE': export_CIRCLE, 'ARC': export_ARC, 'ELLIPSE': export_ELLIPSE, 'LEADER': export_LEADER, 'LWPOLYLINE': export_LWPOLYLINE, 'HATCH': export_HATCH, 'DIMENSION': export_DIMENSION, 'INSERT': export_INSERT, 'BLOCK': export_BLOCK, 'ENDBLK': export_ENDBLK, 'ATTDEF': export_ATTDEF, 'DICTIONARY': False}
 groups = {'1': 0, '2': 1, '3': 2, '6': 3, '8': 4, '10': 5, '11': 6, '13': 7, '14': 8, '20': 9, '21': 10, '23': 11, '24': 12, '40': 13, '41': 14, '42': 15, '50': 16, '51': 17, '62': 18, '70': 19, '72': 20, '73': 21, '92': 22, '93': 23, '370': 24}
 colors = {  1: '#FF0000',   2: '#FFFF00',   3: '#00FF00',   4: '#00FFFF',   5: '#0000FF',
             6: '#FF00FF',   8: '#414141',   9: '#808080',  12: '#BD0000',  30: '#FF7F00',
@@ -372,7 +380,8 @@ while line[0] and line[1] != 'DICTIONARY':
             val = inkex.re.sub( '\\\\A.*;', '', val)
             val = inkex.re.sub( '\\\\H.*;', '', val)
             val = inkex.re.sub( '\\^I', '', val)
-            val = inkex.re.sub( '\\\\L', '', val)
+            val = inkex.re.sub( '{\\\\L', '', val)
+            val = inkex.re.sub( '}', '', val)
             val = inkex.re.sub( '\\\\S.*;', '', val)
             val = inkex.re.sub( '\\\\W.*;', '', val)
             val = unicode(val, options.input_encode)
