@@ -1178,11 +1178,10 @@
 <feDisplacementMap id="feDisplacementMap3873" numOctaves="2" scale="20" yChannelSelector="G" xChannelSelector="R" in="SourceGraphic" result="result1" />
 <feComposite id="feComposite3875" in="result1" in2="SourceGraphic" operator="atop" />
 </filter>
-<filter id="filter2846b" inkscape:label="Evanescent" inkscape:menu="Blurs" inkscape:menu-tooltip="Blur the contents of objects, preserving the outline and adding progressive transparency at edges">
-<feGaussianBlur id="feGaussianBlur2850" result="result6" stdDeviation="3" in="SourceGraphic" />
-<feColorMatrix id="feColorMatrix2848" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result7" in="SourceGraphic" />
-<feComposite id="feComposite2852" in2="result7" operator="atop" in="result7" />
-<feComposite id="feComposite2854" operator="in" in="result6" />
+<filter id="Evanesc0" inkscape:label="Evanescent" inkscape:menu="Blurs" inkscape:menu-tooltip="Blur the contents of objects, preserving the outline and adding progressive transparency at edges">
+<feGaussianBlur id="feGaussianBlur2860" result="result6" stdDeviation="3" in="SourceGraphic" />
+<feColorMatrix id="feColorMatrix2862" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result7" in="SourceGraphic" />
+<feComposite id="feComposite2866" operator="in" in="result6" in2="result7" />
 </filter>
 <filter id="filter4323" inkscape:label="Chalk and sponge" inkscape:menu="Distort" inkscape:menu-tooltip="Low turbulence gives sponge look and high turbulence chalk" width="1.6" height="2" y="-0.5" x="-0.30000001">
 <feBlend id="feBlend4327" blend="normal" result="fbSourceGraphic" mode="normal" />
@@ -1695,6 +1694,13 @@
 <feDisplacementMap yChannelSelector="A" xChannelSelector="A" id="feDisplacementMap2915" scale="100" result="result10" in="result7" in2="result8" />
 <feComposite id="feComposite2917" in="result10" operator="atop" result="result2" in2="result8" k2="0" k1="0" k3="3" />
 <feComposite id="feComposite2919" in2="result2" operator="arithmetic" in="result10" result="fbSourceGraphic" k1="2.5" k3="0.5" />
+</filter>
+<filter y="-0.2" height="1.4" id="RoughCont0" inkscape:label="Rough contour" inkscape:menu="Distort" inkscape:menu-tooltip="Create a turbulent contour around">
+<feMorphology id="feMorphology4135" radius="7" operator="dilate" result="result8" in="SourceGraphic" />
+<feComposite id="feComposite4137" in2="result8" result="result10" in="SourceGraphic" operator="arithmetic" k1="0.5" k2="0" k3="0.5" />
+<feTurbulence result="result11" type="fractalNoise" numOctaves="3" baseFrequency="0.070000000000000007" id="feTurbulence4139" />
+<feDisplacementMap result="result12" in2="result11" in="result10" xChannelSelector="R" scale="10" id="feDisplacementMap4141" />
+<feComposite operator="arithmetic" result="result13" in="SourceGraphic" id="feComposite4143" in2="result12" k1="0.25" k2="0.25" k3="0.75" />
 </filter>
 </defs>
 </svg>
