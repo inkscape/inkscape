@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-27 06:46+0200\n"
+"POT-Creation-Date: 2009-05-31 08:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5851,39 +5851,39 @@ msgstr ""
 msgid "Ex squares"
 msgstr ""
 
-#: ../src/inkscape.cpp:324
+#: ../src/inkscape.cpp:328
 msgid "Autosaving documents..."
 msgstr ""
 
-#: ../src/inkscape.cpp:395
+#: ../src/inkscape.cpp:399
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr ""
 
-#: ../src/inkscape.cpp:398 ../src/inkscape.cpp:405
+#: ../src/inkscape.cpp:402 ../src/inkscape.cpp:409
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr ""
 
-#: ../src/inkscape.cpp:420
+#: ../src/inkscape.cpp:424
 msgid "Autosave complete."
 msgstr ""
 
-#: ../src/inkscape.cpp:651
+#: ../src/inkscape.cpp:655
 msgid "Untitled document"
 msgstr ""
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:681
+#: ../src/inkscape.cpp:685
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr ""
 
-#: ../src/inkscape.cpp:682
+#: ../src/inkscape.cpp:686
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr ""
 
-#: ../src/inkscape.cpp:683
+#: ../src/inkscape.cpp:687
 msgid "Automatic backup of the following documents failed:\n"
 msgstr ""
 
@@ -11717,7 +11717,7 @@ msgid "After snapping, a symbol is drawn at the point that has snapped"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:222
-msgid "Delay (in msec):"
+msgid "Delay (in ms):"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
@@ -13221,7 +13221,7 @@ msgid "Interval (in minutes) at which document will be autosaved"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
-msgid "Path:"
+msgid "filesystem|Path:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
@@ -16136,7 +16136,7 @@ msgid "Lower the current layer"
 msgstr ""
 
 #: ../src/verbs.cpp:2454
-msgid "Duplicate Current Layer..."
+msgid "Duplicate Current Layer"
 msgstr ""
 
 #: ../src/verbs.cpp:2455
@@ -17454,6 +17454,12 @@ msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:536
 msgid "Affect:"
+msgstr ""
+
+#: ../src/widgets/select-toolbar.cpp:536
+msgid ""
+"Control whether or not to scale stroke widths, scale rectangle corners, "
+"transform gradient fills, and transform pattern fills with the object"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:555
