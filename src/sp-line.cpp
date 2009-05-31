@@ -17,11 +17,13 @@
 #include "attributes.h"
 #include "style.h"
 #include "sp-line.h"
+#include "sp-guide.h"
 #include "display/curve.h"
 #include <glibmm/i18n.h>
 #include <libnr/nr-matrix-fns.h>
 #include <xml/repr.h>
 #include "document.h"
+#include "inkscape.h"
 
 static void sp_line_class_init (SPLineClass *klass);
 static void sp_line_init (SPLine *line);
@@ -35,6 +37,7 @@ static Geom::Matrix sp_line_set_transform(SPItem *item, Geom::Matrix const &xfor
 
 static void sp_line_update (SPObject *object, SPCtx *ctx, guint flags);
 static void sp_line_set_shape (SPShape *shape);
+static void sp_line_convert_to_guides(SPItem *item);
 
 static SPShapeClass *parent_class;
 
@@ -74,6 +77,7 @@ sp_line_class_init (SPLineClass *klass)
 	SPItemClass *item_class = (SPItemClass *) klass;
 	item_class->description = sp_line_description;
 	item_class->set_transform = sp_line_set_transform;
+	item_class->convert_to_guides = sp_line_convert_to_guides;
 
 	sp_object_class->update = sp_line_update;
 
@@ -188,6 +192,20 @@ static gchar *
 sp_line_description(SPItem */*item*/)
 {
     return g_strdup(_("<b>Line</b>"));
+}
+
+static void
+sp_line_convert_to_guides(SPItem *item)
+{
+	SPLine *line = SP_LINE(item);
+	Geom::Point points[2];
+
+	Geom::Matrix const i2d (sp_item_i2d_affine(item));
+
+	points[0] = Geom::Point(line->x1.computed, line->y1.computed)*i2d;
+	points[1] = Geom::Point(line->x2.computed, line->y2.computed)*i2d;
+
+	sp_guide_create(inkscape_active_desktop(), points[0], points[1]);
 }
 
 static Geom::Matrix
