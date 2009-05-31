@@ -19,6 +19,7 @@
 #include <string>
 
 #include "display/canvas-grid.h"
+#include "display/guideline.h"
 #include "helper/units.h"
 #include "svg/svg-color.h"
 #include "xml/repr.h"
@@ -53,6 +54,7 @@ static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *chi
 static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static void sp_namedview_setup_guides(SPNamedView * nv);
+static void sp_namedview_show_single_guide(SPGuide* guide, bool show);
 
 static gboolean sp_str_to_bool(const gchar *str);
 static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color);
@@ -644,15 +646,7 @@ static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *chil
                         sp_guide_sensitize(g,
                                            sp_desktop_canvas(static_cast<SPDesktop*> (l->data)),
                                            TRUE);
-                    if (nv->showguides) {
-                        for (GSList *v = SP_GUIDE(g)->views; v != NULL; v = v->next) {
-                            sp_canvas_item_show(SP_CANVAS_ITEM(v->data));
-                        }
-                    } else {
-                        for (GSList *v = SP_GUIDE(g)->views; v != NULL; v = v->next) {
-                            sp_canvas_item_hide(SP_CANVAS_ITEM(v->data));
-                        }
-                    }
+                    sp_namedview_show_single_guide(SP_GUIDE(g), nv->showguides);
                 }
             }
         }
@@ -712,15 +706,7 @@ void SPNamedView::show(SPDesktop *desktop)
         if (desktop->guides_active) {
             sp_guide_sensitize(SP_GUIDE(l->data), sp_desktop_canvas(desktop), TRUE);
         }
-        if (showguides) {
-            for (GSList *v = SP_GUIDE(l->data)->views; v != NULL; v = v->next) {
-                sp_canvas_item_show(SP_CANVAS_ITEM(v->data));
-            }
-        } else {
-            for (GSList *v = SP_GUIDE(l->data)->views; v != NULL; v = v->next) {
-                sp_canvas_item_hide(SP_CANVAS_ITEM(v->data));
-            }
-        }
+        sp_namedview_show_single_guide(SP_GUIDE(l->data), showguides);
     }
 
     views = g_slist_prepend(views, desktop);
@@ -873,16 +859,21 @@ void SPNamedView::activateGuides(gpointer desktop, gboolean active)
 static void sp_namedview_setup_guides(SPNamedView *nv)
 {
     for (GSList *l = nv->guides; l != NULL; l = l->next) {
-        if (nv->showguides) {
-            for (GSList *v = SP_GUIDE(l->data)->views; v != NULL; v = v->next) {
-                sp_canvas_item_show(SP_CANVAS_ITEM(v->data));
-            }
-        } else {
-            for (GSList *v = SP_GUIDE(l->data)->views; v != NULL; v = v->next) {
-                sp_canvas_item_hide(SP_CANVAS_ITEM(v->data));
-            }
-        }
+    	sp_namedview_show_single_guide(SP_GUIDE(l->data), nv->showguides);
     }
+}
+
+static void sp_namedview_show_single_guide(SPGuide* guide, bool show)
+{
+	for (GSList *v = guide->views; v != NULL; v = v->next) {
+		if (show) {
+			sp_canvas_item_show(SP_CANVAS_ITEM(v->data));
+			sp_canvas_item_show(SP_CANVAS_ITEM(SP_GUIDELINE(v->data)->origin));
+		} else {
+			sp_canvas_item_hide(SP_CANVAS_ITEM(v->data));
+			sp_canvas_item_hide(SP_CANVAS_ITEM(SP_GUIDELINE(v->data)->origin));
+		}
+	}
 }
 
 void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
