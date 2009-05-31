@@ -372,6 +372,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:window-height", true},
     {"inkscape:window-x", true},
     {"inkscape:window-y", true},
+    {"inkscape:window-maximized", true},
     {"inkscape:current-layer", true},
     {"inkscape:connector-type", true},
     {"inkscape:connection-start", true},

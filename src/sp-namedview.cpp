@@ -241,6 +241,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:window-height");
     sp_object_read_attr(object, "inkscape:window-x");
     sp_object_read_attr(object, "inkscape:window-y");
+    sp_object_read_attr(object, "inkscape:window-maximized");
     sp_object_read_attr(object, "inkscape:snap-global");
     sp_object_read_attr(object, "inkscape:snap-bbox");
     sp_object_read_attr(object, "inkscape:snap-nodes");
@@ -442,7 +443,11 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->window_y = value ? atoi(value) : 0;
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-    case SP_ATTR_INKSCAPE_SNAP_GLOBAL:
+    case SP_ATTR_INKSCAPE_WINDOW_MAXIMIZED:
+			nv->window_maximized = value ? atoi(value) : 0;
+			object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+			break;
+	case SP_ATTR_INKSCAPE_SNAP_GLOBAL:
             nv->snap_manager.snapprefs.setSnapEnabledGlobally(value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
@@ -746,16 +751,23 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
 
     // restore window size and position stored with the document
     if (geometry_from_file) {
-        gint w = MIN(gdk_screen_width(), nv->window_width);
-        gint h = MIN(gdk_screen_height(), nv->window_height);
-        gint x = MIN(gdk_screen_width() - MIN_ONSCREEN_DISTANCE, nv->window_x);
-        gint y = MIN(gdk_screen_height() - MIN_ONSCREEN_DISTANCE, nv->window_y);
-        if (w>0 && h>0) {
-            desktop->setWindowSize(w, h);
-            x = MIN(gdk_screen_width() - w, x);
-            y = MIN(gdk_screen_height() - h, y);
-            desktop->setWindowPosition(Geom::Point(x, y));
-        }
+    	if (nv->window_maximized) {
+    		Gtk::Window *win = desktop->getToplevel();
+    		if (win){
+    			win->maximize();
+    		}
+    	} else {
+    		gint w = MIN(gdk_screen_width(), nv->window_width);
+			gint h = MIN(gdk_screen_height(), nv->window_height);
+			gint x = MIN(gdk_screen_width() - MIN_ONSCREEN_DISTANCE, nv->window_x);
+			gint y = MIN(gdk_screen_height() - MIN_ONSCREEN_DISTANCE, nv->window_y);
+			if (w>0 && h>0) {
+				desktop->setWindowSize(w, h);
+				x = MIN(gdk_screen_width() - w, x);
+				y = MIN(gdk_screen_height() - h, y);
+				desktop->setWindowPosition(Geom::Point(x, y));
+			}
+    	}
     }
 
     // restore zoom and view
@@ -819,12 +831,13 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     sp_repr_set_svg_double(view, "inkscape:cy", r.midpoint()[Geom::Y]);
 
     if (save_geometry_in_file) {
-        gint w, h, x, y;
+    	gint w, h, x, y;
         desktop->getWindowGeometry(x, y, w, h);
         sp_repr_set_int(view, "inkscape:window-width", w);
         sp_repr_set_int(view, "inkscape:window-height", h);
         sp_repr_set_int(view, "inkscape:window-x", x);
         sp_repr_set_int(view, "inkscape:window-y", y);
+        sp_repr_set_int(view, "inkscape:window-maximized", desktop->is_maximized());
     }
 
     view->setAttribute("inkscape:current-layer", SP_OBJECT_ID(desktop->currentLayer()));

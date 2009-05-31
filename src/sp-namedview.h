@@ -47,6 +47,7 @@ struct SPNamedView : public SPObjectGroup {
     gint window_height;
     gint window_x;
     gint window_y;
+    gint window_maximized;
 
     SnapManager snap_manager;
     GSList * grids;
