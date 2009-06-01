@@ -114,12 +114,6 @@ src/helper/units-test.h
 src/inkscape.cpp
 src/interface.cpp
 src/io/sys.cpp
-src/jabber_whiteboard/invitation-confirm-dialog.cpp
-src/jabber_whiteboard/message-queue.cpp
-src/jabber_whiteboard/message-utilities.cpp
-src/jabber_whiteboard/pedrogui.cpp
-src/jabber_whiteboard/session-file-selector.cpp
-src/jabber_whiteboard/session-manager.cpp
 src/knot.cpp
 src/knotholder.cpp
 src/libgdl/gdl-dock-bar.c
@@ -240,9 +234,6 @@ src/ui/dialog/swatches.cpp
 src/ui/dialog/tile.cpp
 src/ui/dialog/tracedialog.cpp
 src/ui/dialog/transformation.cpp
-src/ui/dialog/whiteboard-connect.cpp
-src/ui/dialog/whiteboard-sharewithchat.cpp
-src/ui/dialog/whiteboard-sharewithuser.cpp
 src/ui/view/edit-widget.cpp
 src/ui/widget/combo-enums.h
 src/ui/widget/entity-entry.cpp
