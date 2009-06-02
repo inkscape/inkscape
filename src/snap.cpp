@@ -330,7 +330,8 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapPreferences::P
     return findBestSnap(p, source_type, sc, true);
 }
 
-void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) const
+// guideFreeSnap is used when dragging or rotating the guide
+void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal) const
 {
     // This method is used to snap a guide to nodes or to other guides, while dragging the guide around. Will not snap to grids!
 
@@ -350,7 +351,7 @@ void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) con
     // Snap to nodes
     SnappedConstraints sc;
     if (object.GuidesMightSnap()) {
-        object.guideSnap(sc, p, guide_normal);
+        object.guideFreeSnap(sc, p, guide_normal);
     }
 
     // Snap to guides
@@ -364,6 +365,41 @@ void SnapManager::guideSnap(Geom::Point &p, Geom::Point const &guide_normal) con
     s.getPoint(p);
 }
 
+// guideConstrainedSnap is used when dragging the origin of the guide along the guide itself
+void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline) const
+{
+    // This method is used to snap a guide to paths or to other guides, while dragging the origin of the guide around. Will not snap to grids!
+
+	if (_desktop->event_context && _desktop->event_context->_snap_window_open == false) {
+			g_warning("The current tool tries to snap, but it hasn't yet opened the snap window. Please report this!");
+			// When the context goes into dragging-mode, then Inkscape should call this: sp_event_context_snap_window_open(event_context);
+	}
+
+    if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally()) {
+        return;
+    }
+
+    if (!(object.ThisSnapperMightSnap() || snapprefs.getSnapToGuides())) {
+        return;
+    }
+
+    // Snap to nodes or paths
+    SnappedConstraints sc;
+    Inkscape::Snapper::ConstraintLine cl(guideline.point_on_line, Geom::rot90(guideline.normal_to_line));
+    if (object.ThisSnapperMightSnap()) {
+        object.constrainedSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, Inkscape::SNAPSOURCE_GUIDE_ORIGIN, true, Geom::OptRect(), cl, NULL);
+    }
+
+    // Snap to guides
+    if (snapprefs.getSnapToGuides()) {
+        guide.constrainedSnap(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, Inkscape::SNAPSOURCE_GUIDE_ORIGIN, true, Geom::OptRect(), cl, NULL);
+    }
+
+    // We won't snap to grids, what's the use?
+
+    Inkscape::SnappedPoint const s = findBestSnap(p, Inkscape::SNAPSOURCE_GUIDE, sc, false);
+    s.getPoint(p);
+}
 
 /**
  *  Main internal snapping method, which is called by the other, friendlier, public

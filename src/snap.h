@@ -23,6 +23,7 @@
 #include "guide-snapper.h"
 #include "object-snapper.h"
 #include "snap-preferences.h"
+//#include "sp-guide.h"
 
 class SPNamedView;
 
@@ -98,7 +99,8 @@ public:
                                            bool first_point = true,
                                            Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
-    void guideSnap(Geom::Point &p, Geom::Point const &guide_normal) const;
+    void guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal) const;
+    void guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline) const;
 
     Inkscape::SnappedPoint freeSnapTranslation(Inkscape::SnapPreferences::PointType point_type,
                                                std::vector<std::pair<Geom::Point, int> > const &p,

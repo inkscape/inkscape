@@ -53,12 +53,16 @@ public:
 		GUIDE_TRANSL_SNAP_X, // For snapping a vertical guide (normal in the X-direction) to objects,
 		GUIDE_TRANSL_SNAP_Y, // For snapping a horizontal guide (normal in the Y-direction) to objects
 		ANGLED_GUIDE_TRANSL_SNAP, // For snapping an angled guide, while translating it accross the desktop
-		ANGLED_GUIDE_ROT_SNAP, // For snapping an angled guide, while rotating it around some pivot point
 		TRANSL_SNAP_XY}; // All other cases; for snapping to objects, other than guides
 
-	void guideSnap(SnappedConstraints &sc,
+	void guideFreeSnap(SnappedConstraints &sc,
 				   Geom::Point const &p,
 				   Geom::Point const &guide_normal) const;
+
+	void guideConstrainedSnap(SnappedConstraints &sc,
+					   Geom::Point const &p,
+					   Geom::Point const &guide_normal,
+					   ConstraintLine const &c) const;
 
 	bool ThisSnapperMightSnap() const;
 	bool GuidesMightSnap() const;

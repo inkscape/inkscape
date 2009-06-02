@@ -56,7 +56,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
     bool value = prefs->getBool("/options/snapindicator/value", true);
 
     if (value) {
-        // TRANSLATORS: undefined target for snapping 
+        // TRANSLATORS: undefined target for snapping
         gchar *target_name = _("UNDEFINED");
         switch (p.getTarget()) {
 			case SNAPTARGET_UNDEFINED:
@@ -179,6 +179,9 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const p)
 				break;
 			case SNAPSOURCE_GUIDE:
 				source_name = _("Guide");
+				break;
+			case SNAPSOURCE_GUIDE_ORIGIN:
+				source_name = _("Guide origin");
 				break;
 			case SNAPSOURCE_CONVEX_HULL_CORNER:
 				source_name = _("Convex hull corner");

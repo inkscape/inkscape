@@ -161,7 +161,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 m.setup(desktop);
                 // We only have a temporary guide which is not stored in our document yet. Because the guide snapper only looks
                 // in the document for guides to snap to, we don't have to worry about a guide snapping to itself here
-                m.guideSnap(event_dt, normal);
+                m.guideFreeSnap(event_dt, normal);
 
                 sp_guideline_set_position(SP_GUIDELINE(guide), from_2geom(event_dt));
                 desktop->set_coordinate_status(to_2geom(event_dt));
@@ -178,7 +178,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 m.setup(desktop);
                 // We only have a temporary guide which is not stored in our document yet. Because the guide snapper only looks
 				// in the document for guides to snap to, we don't have to worry about a guide snapping to itself here
-                m.guideSnap(event_dt, normal);
+                m.guideFreeSnap(event_dt, normal);
 
                 dragging = false;
 
@@ -226,17 +226,15 @@ int sp_dt_vruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw)
 }
 
 /* Guides */
-
-static Geom::Point drag_origin;
-
 enum SPGuideDragType {
     SP_DRAG_TRANSLATE,
-    SP_DRAG_TRANSLATE_CONSTRAINED,
+    SP_DRAG_TRANSLATE_CONSTRAINED, // Is not being used currently!
     SP_DRAG_ROTATE,
     SP_DRAG_MOVE_ORIGIN,
     SP_DRAG_NONE
 };
 
+static Geom::Point drag_origin;
 static SPGuideDragType drag_type = SP_DRAG_NONE;
 
 gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
@@ -304,7 +302,17 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 // which are dragged off the ruler, are being snapped in sp_dt_ruler_event
                 SnapManager &m = desktop->namedview->snap_manager;
                 m.setup(desktop, true, NULL, NULL, guide);
-                m.guideSnap(motion_dt, to_2geom(guide->normal_to_line));
+                if (drag_type == SP_DRAG_MOVE_ORIGIN) {
+                	// If we snap in guideConstrainedSnap() below, then motion_dt will be forced to be on the guide
+					// If we don't snap however, then it the origin should still be constrained to the guide
+					// So let's do that explicitly first:
+                	Geom::Line line(guide->point_on_line, guide->angle());
+					Geom::Coord t = line.nearestPoint(motion_dt);
+					motion_dt = line.pointAt(t);
+                	m.guideConstrainedSnap(motion_dt, *guide);
+                } else {
+					m.guideFreeSnap(motion_dt, guide->normal_to_line);
+                }
 
                 switch (drag_type) {
                     case SP_DRAG_TRANSLATE:
@@ -312,7 +320,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         sp_guide_moveto(*guide, guide->point_on_line + motion_dt - drag_origin, false);
                         break;
                     }
-                    case SP_DRAG_TRANSLATE_CONSTRAINED:
+                    case SP_DRAG_TRANSLATE_CONSTRAINED: // Is not being used currently!
                     {
                         Geom::Point pt_constr = Geom::constrain_angle(guide->point_on_line, motion_dt);
                         sp_guide_moveto(*guide, pt_constr, false);
@@ -326,10 +334,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     }
                     case SP_DRAG_MOVE_ORIGIN:
                     {
-                        Geom::Line line(guide->point_on_line, guide->angle());
-                        Geom::Coord t = line.nearestPoint(motion_dt);
-                        sp_guide_moveto(*guide, line.pointAt(t), false);
-                        break;
+                        sp_guide_moveto(*guide, motion_dt, false);
+                    	break;
                     }
                     case SP_DRAG_NONE:
                         g_assert_not_reached();
@@ -351,7 +357,17 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
 
                     SnapManager &m = desktop->namedview->snap_manager;
                     m.setup(desktop, true, NULL, NULL, guide);
-					m.guideSnap(event_dt, guide->normal_to_line);
+                    if (drag_type == SP_DRAG_MOVE_ORIGIN) {
+                    	// If we snap in guideConstrainedSnap() below, then motion_dt will be forced to be on the guide
+                    	// If we don't snap however, then it the origin should still be constrained to the guide
+                    	// So let's do that explicitly first:
+                    	Geom::Line line(guide->point_on_line, guide->angle());
+						Geom::Coord t = line.nearestPoint(event_dt);
+						event_dt = line.pointAt(t);
+                    	m.guideConstrainedSnap(event_dt, *guide);
+					} else {
+						m.guideFreeSnap(event_dt, guide->normal_to_line);
+					}
 
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
                         switch (drag_type) {
@@ -360,7 +376,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                                 sp_guide_moveto(*guide, guide->point_on_line + event_dt - drag_origin, true);
                                 break;
                             }
-                            case SP_DRAG_TRANSLATE_CONSTRAINED:
+                            case SP_DRAG_TRANSLATE_CONSTRAINED: // Is not being used currently!
                             {
                                 Geom::Point pt_constr = Geom::constrain_angle(guide->point_on_line, event_dt);
                                 sp_guide_moveto(*guide, pt_constr, true);
@@ -374,10 +390,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                             }
                             case SP_DRAG_MOVE_ORIGIN:
                             {
-                                Geom::Line line(guide->point_on_line, guide->angle());
-                                Geom::Coord t = line.nearestPoint(event_dt);
-                                sp_guide_moveto(*guide, line.pointAt(t), true);
-                                break;
+                            	sp_guide_moveto(*guide, event_dt, true);
+                            	break;
                             }
                             case SP_DRAG_NONE:
                                 g_assert_not_reached();

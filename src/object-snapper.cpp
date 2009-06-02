@@ -330,6 +330,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
         SPItem::BBoxType bbox_type = SPItem::GEOMETRIC_BBOX;
 
         bool p_is_a_node = t & Inkscape::SnapPreferences::SNAPPOINT_NODE;
+        bool p_is_a_guide = t & Inkscape::SnapPreferences::SNAPPOINT_GUIDE;
 
         if (_snapmanager->snapprefs.getSnapToBBoxPath()) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -365,7 +366,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
 
             //Add the item's path to snap to
             if (_snapmanager->snapprefs.getSnapToItemPath()) {
-                if (!(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_node)) {
+                if (p_is_a_guide || !(_snapmanager->snapprefs.getStrictSnapping() && !p_is_a_node)) {
                     // Snapping to the path of characters is very cool, but for a large
                     // chunk of text this will take ages! So limit snapping to text paths
                     // containing max. 240 characters. Snapping the bbox will not be affected
@@ -399,7 +400,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Inkscape::SnapPreferences::PointType
 
             //Add the item's bounding box to snap to
             if (_snapmanager->snapprefs.getSnapToBBoxPath()) {
-                if (!(_snapmanager->snapprefs.getStrictSnapping() && p_is_a_node)) {
+                if (p_is_a_guide || !(_snapmanager->snapprefs.getStrictSnapping() && p_is_a_node)) {
                     // Discard the bbox of a clipped path / mask, because we don't want to snap to both the bbox
                     // of the item AND the bbox of the clipping path at the same time
                     if (!(*i).clip_or_mask) {
@@ -663,7 +664,7 @@ void Inkscape::ObjectSnapper::constrainedSnap( SnappedConstraints &sc,
 
 
 // This method is used to snap a guide to nodes, while dragging the guide around
-void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
+void Inkscape::ObjectSnapper::guideFreeSnap(SnappedConstraints &sc,
                                         Geom::Point const &p,
                                         Geom::Point const &guide_normal) const
 {
@@ -680,15 +681,29 @@ void Inkscape::ObjectSnapper::guideSnap(SnappedConstraints &sc,
         snap_dim = ANGLED_GUIDE_TRANSL_SNAP;
     }
 
-    // We don't support ANGLED_GUIDE_ROT_SNAP yet.
+    _findCandidates(sp_document_root(_snapmanager->getDocument()), &it, true, Geom::Rect(p, p), snap_dim, false, Geom::identity());
+    _snapTranslatingGuideToNodes(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, guide_normal);
+    // _snapRotatingGuideToNodes has not been implemented yet.
+}
 
-    // It would be cool to allow the user to rotate a guide by dragging it, instead of
-    // only translating it. (For example when CTRL is pressed). We will need an UI part
-    // for that first; and some important usability choices need to be made:
-    // E.g. which point should be used for pivoting? A previously snapped point,
-    // or a transformation center (which can be moved after clicking for the
-    // second time on an object; but should this point then be constrained to the
-    // line, or can it be located anywhere?)
+// This method is used to snap the origin of a guide to nodes/paths, while dragging the origin along the guide
+void Inkscape::ObjectSnapper::guideConstrainedSnap(SnappedConstraints &sc,
+                                        Geom::Point const &p,
+                                        Geom::Point const &guide_normal,
+                                        ConstraintLine const &c) const
+{
+    /* Get a list of all the SPItems that we will try to snap to */
+    std::vector<SPItem*> cand;
+    std::vector<SPItem const *> const it; //just an empty list
+
+    DimensionToSnap snap_dim;
+    if (guide_normal == to_2geom(component_vectors[Geom::Y])) {
+        snap_dim = GUIDE_TRANSL_SNAP_Y;
+    } else if (guide_normal == to_2geom(component_vectors[Geom::X])) {
+        snap_dim = GUIDE_TRANSL_SNAP_X;
+    } else {
+        snap_dim = ANGLED_GUIDE_TRANSL_SNAP;
+    }
 
     _findCandidates(sp_document_root(_snapmanager->getDocument()), &it, true, Geom::Rect(p, p), snap_dim, false, Geom::identity());
     _snapTranslatingGuideToNodes(sc, Inkscape::SnapPreferences::SNAPPOINT_GUIDE, p, guide_normal);
