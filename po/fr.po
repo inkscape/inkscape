@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-27 06:46+0200\n"
-"PO-Revision-Date: 2009-05-27 06:54+0100\n"
+"POT-Creation-Date: 2009-06-02 20:43+0200\n"
+"PO-Revision-Date: 2009-06-02 22:43+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -77,7 +77,7 @@ msgstr "Couche de gel brillant et bombé"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Glossy jelly, backlit"
-msgstr "Gel brillant, rétro-éclairé"
+msgstr "Gel brillant profond"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Bulging, glossy jelly covering; two light sources"
@@ -85,11 +85,11 @@ msgstr "Couche de gel brillant et bombé ; deux sources d'éclairage"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Metal casting"
-msgstr "Moulage de métal"
+msgstr "Métal moulé"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Smooth drop-like bevel with metallic finish"
-msgstr "Biseau doux en forme de goutte avec une finition métallique"
+msgstr "Biseau doux en forme de goutte avec une finition métallisée"
 
 #: ../share/filters/filters.svg.h:6
 msgid "Motion blur, horizontal"
@@ -129,7 +129,7 @@ msgstr "Les bords sont partiellement diffusés vers l'extérieur"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Cutout"
-msgstr "Découpage"
+msgstr "Découpe"
 
 #: ../share/filters/filters.svg.h:9
 #: ../share/filters/filters.svg.h:41
@@ -145,7 +145,7 @@ msgstr "Ombres et lueurs"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Drop shadow under the cut-out of the shape"
-msgstr "Ombre portée sous le découpage de la forme"
+msgstr "Ombre portée sous la découpe de la forme"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Jigsaw piece"
@@ -157,7 +157,7 @@ msgstr "Biseau bas et net"
 
 #: ../share/filters/filters.svg.h:11
 msgid "Roughen"
-msgstr "Rugosité"
+msgstr "Agitation"
 
 #: ../share/filters/filters.svg.h:11
 #: ../share/filters/filters.svg.h:110
@@ -172,7 +172,7 @@ msgstr "ABC"
 
 #: ../share/filters/filters.svg.h:11
 msgid "Small-scale roughening to edges and content"
-msgstr "Rend rugueux les bords et le contenu sur une petite amplitude"
+msgstr "Agite les bords et le contenu sur une petite amplitude"
 
 #: ../share/filters/filters.svg.h:12
 msgid "Rubber stamp"
@@ -230,11 +230,11 @@ msgstr "Biseau coussineux doux avec des reflets mats"
 
 #: ../share/filters/filters.svg.h:16
 msgid "Ridged border"
-msgstr "Bords en arête"
+msgstr "Contour en arête"
 
 #: ../share/filters/filters.svg.h:16
 msgid "Ridged border with inner bevel"
-msgstr "Bords en arête, avec un biseau intérieur"
+msgstr "Contour en arête, avec un biseau intérieur"
 
 #: ../share/filters/filters.svg.h:17
 msgid "Ripple"
@@ -246,6 +246,7 @@ msgstr "Ondulation"
 #: ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:113
 #: ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:176
 msgid "Distort"
 msgstr "Déformation"
 
@@ -271,7 +272,7 @@ msgstr "Taches grasses semi-transparentes couleur arc-en-ciel"
 
 #: ../share/filters/filters.svg.h:20
 msgid "Frost"
-msgstr "Gel"
+msgstr "Givre"
 
 #: ../share/filters/filters.svg.h:20
 msgid "Flake-like white splotches"
@@ -352,7 +353,7 @@ msgstr "Renforcer les bords et frontières intérieures de l'objet, force=0,15"
 
 #: ../share/filters/filters.svg.h:25
 msgid "Sharpen more"
-msgstr "Renforcer la netteté"
+msgstr "Netteté renforcée"
 
 #: ../share/filters/filters.svg.h:25
 msgid "Sharpen edges and boundaries within the object, force=0.3"
@@ -368,27 +369,27 @@ msgstr "Simule une peinture à l'huile"
 
 #: ../share/filters/filters.svg.h:27
 msgid "Edge detect"
-msgstr "Détection de contour"
+msgstr "Détection des bords"
 
 #: ../share/filters/filters.svg.h:27
 msgid "Detect color edges in object"
-msgstr "Détecte les contours de couleur dans les objets"
+msgstr "Détecte les bords de couleur dans les objets"
 
 #: ../share/filters/filters.svg.h:28
 msgid "Horizontal edge detect"
-msgstr "Détection de contour horizontale"
+msgstr "Détection des bords horizontale"
 
 #: ../share/filters/filters.svg.h:28
 msgid "Detect horizontal color edges in object"
-msgstr "Détecte les contours de couleur horizontaux dans les objets"
+msgstr "Détecte les bords de couleur horizontaux dans les objets"
 
 #: ../share/filters/filters.svg.h:29
 msgid "Vertical edge detect"
-msgstr "Détection de contour verticale"
+msgstr "Détection des bords verticale"
 
 #: ../share/filters/filters.svg.h:29
 msgid "Detect vertical color edges in object"
-msgstr "Détecte les contours de couleur verticaux dans les objets"
+msgstr "Détecte les bords de couleur verticaux dans les objets"
 
 #. Pencil
 #: ../share/filters/filters.svg.h:30
@@ -470,7 +471,7 @@ msgstr "Rendu en tons sépia chauds"
 
 #: ../share/filters/filters.svg.h:35
 msgid "Age"
-msgstr "Vieillir"
+msgstr "Vieillissement"
 
 #: ../share/filters/filters.svg.h:35
 msgid "Imitate aged photograph"
@@ -478,7 +479,7 @@ msgstr "Imite une photographie ancienne"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Organic"
-msgstr "Matière organique"
+msgstr "Relief organique"
 
 #: ../share/filters/filters.svg.h:36
 #: ../share/filters/filters.svg.h:43
@@ -558,7 +559,7 @@ msgstr "Traînées de peintures aléatoires vers le bas"
 
 #: ../share/filters/filters.svg.h:43
 msgid "Jam spread"
-msgstr "Confiture étalée"
+msgstr "Confiture"
 
 #: ../share/filters/filters.svg.h:43
 msgid "Glossy clumpy jam spread"
@@ -574,7 +575,7 @@ msgstr "Effets de peinture Van Gogh, pour les images bitmap"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Pixel smear, glossy"
-msgstr "Barbouillage de pixel brillant"
+msgstr "Barbouillage de pixels, brillant"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Glossy painting effect for bitmaps"
@@ -582,7 +583,7 @@ msgstr "Effet de peinture brillante pour bitmap"
 
 #: ../share/filters/filters.svg.h:46
 msgid "HSL Bumps"
-msgstr "Embossage TSL"
+msgstr "Bosselage TSL"
 
 #: ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:48
@@ -590,15 +591,15 @@ msgstr "Embossage TSL"
 #: ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:164
 msgid "Bumps"
-msgstr "Embossage"
+msgstr "Bosselage"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
-msgstr "Embossage spéculaire hautement flexible"
+msgstr "Bosselage spéculaire hautement flexible"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Cracked glass"
-msgstr "Verre fissuré"
+msgstr "Verre martelé"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Under a cracked glass"
@@ -641,7 +642,7 @@ msgstr "Effet de lumière néon avec lueur"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Melt and glow"
-msgstr "Fondu lumineux"
+msgstr "Métal fondu"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Melting parts of object together, with a glossy bevel and a glow"
@@ -649,7 +650,7 @@ msgstr "Fusion de parties de l'objet avec un biseau brillant et une lueur"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Badge"
-msgstr "Badge"
+msgstr "Tôle emboutie"
 
 #: ../share/filters/filters.svg.h:52
 msgid "Metal or plastic badge bevel"
@@ -657,11 +658,11 @@ msgstr "Biseau de type badge en métal ou en plastique"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Pastel Bevel"
-msgstr "Biseau pastel"
+msgstr "Biseau mat"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr "Biseau pastel doux et flou"
+msgstr "Biseau mat doux et flou"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
@@ -673,7 +674,7 @@ msgstr "Fin comme une couche de savon"
 
 #: ../share/filters/filters.svg.h:55
 msgid "Soft ridge"
-msgstr "Arête douce"
+msgstr "Arête mate"
 
 #: ../share/filters/filters.svg.h:55
 msgid "Soft pastel ridge"
@@ -681,15 +682,15 @@ msgstr "Arête pastel douce"
 
 #: ../share/filters/filters.svg.h:56
 msgid "Glowing metal"
-msgstr "Métal luisant"
+msgstr "Métal brillant"
 
 #: ../share/filters/filters.svg.h:56
 msgid "Bright and glowing metal texture"
-msgstr "Texture métalique brillante et lumineuse"
+msgstr "Texture métallisée brillante et lumineuse"
 
 #: ../share/filters/filters.svg.h:57
 msgid "Leaves"
-msgstr "Feuillage"
+msgstr "Feuilles"
 
 #: ../share/filters/filters.svg.h:57
 #: ../share/filters/filters.svg.h:79
@@ -704,7 +705,7 @@ msgstr "Feuilles sur le sol en automne, ou feuillage vivant"
 
 #: ../share/filters/filters.svg.h:58
 msgid "Translucent"
-msgstr "Translucide"
+msgstr "Verre translucide"
 
 #: ../share/filters/filters.svg.h:58
 msgid "Illuminated translucent plastic effect"
@@ -712,7 +713,7 @@ msgstr "Effet de plastique translucide et lumineux"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Cross-smooth"
-msgstr "Adoucisseur"
+msgstr "Adoucissement"
 
 #: ../share/filters/filters.svg.h:59
 msgid "Blur inner borders and intersections"
@@ -776,23 +777,23 @@ msgstr "Texture en tapis de soie, bandes horizontales"
 
 #: ../share/filters/filters.svg.h:67
 msgid "Refractive gel A"
-msgstr "Gel réfractif A"
+msgstr "Gel réfringent A"
 
 #: ../share/filters/filters.svg.h:67
 msgid "Gel effect with light refraction"
-msgstr "Effet de gel avec réfraction de lumière"
+msgstr "Effet de gel avec réfringence légère"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Refractive gel B"
-msgstr "Gel réfractif B"
+msgstr "Gel réfringent B"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Gel effect with strong refraction"
-msgstr "Effet de gel avec réfraction forte"
+msgstr "Effet de gel avec réfringence forte"
 
 #: ../share/filters/filters.svg.h:69
 msgid "Metallized paint"
-msgstr "Peinture métalique"
+msgstr "Peinture métallisée"
 
 #: ../share/filters/filters.svg.h:69
 msgid "Metallized effect with a soft lighting, slightly translucent at the edges"
@@ -808,15 +809,15 @@ msgstr "Arête de gel d'aspect perlé"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Raised border"
-msgstr "Bords surélevés"
+msgstr "Contour surélevé"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Strongly raised border around a flat surface"
-msgstr "Bordures fortement surélevées sur une surface plate"
+msgstr "Contour fortement surélevé sur une surface plate"
 
 #: ../share/filters/filters.svg.h:72
 msgid "Metallized ridge"
-msgstr "Arête métalique"
+msgstr "Arête métalisée"
 
 #: ../share/filters/filters.svg.h:72
 msgid "Gel Ridge metallized at its top"
@@ -841,7 +842,7 @@ msgstr "Applique un remplissage aux zones sombres de l'image"
 
 #: ../share/filters/filters.svg.h:75
 msgid "Parallel hollow"
-msgstr "Enfoncement parallèle"
+msgstr "Évidement parallèle"
 
 #: ../share/filters/filters.svg.h:75
 #: ../share/filters/filters.svg.h:76
@@ -865,7 +866,7 @@ msgstr "Sillon flou parallèle au bord à l'intérieur de l'objet"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Hole"
-msgstr "Trou"
+msgstr "Évidement"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Opens a smooth hole inside the shape"
@@ -881,7 +882,7 @@ msgstr "Crée une lumière noire à l'intérieure et à l'extérieur"
 
 #: ../share/filters/filters.svg.h:78
 msgid "Smooth outline"
-msgstr "Contour lissé"
+msgstr "Contour, lissé"
 
 #: ../share/filters/filters.svg.h:78
 msgid "Outlining the lines and smoothing their crossings"
@@ -945,7 +946,7 @@ msgstr "Effet de papier à aquarelle, utilisable autant pour les images que pour
 
 #: ../share/filters/filters.svg.h:86
 msgid "Rough and glossy"
-msgstr "Rèche et brillant"
+msgstr "Plastique chiffonné"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
@@ -969,7 +970,7 @@ msgstr "Vaporisateur ; ajuster avec la primitive Displacement Map"
 
 #: ../share/filters/filters.svg.h:89
 msgid "Warm inside"
-msgstr "Intérieur chaleureux"
+msgstr "Chaud dedans"
 
 #: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, filled inside"
@@ -977,7 +978,7 @@ msgstr "Contour flou colorisé, rempli à l'intérieur"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Cool outside"
-msgstr "Extérieur frais"
+msgstr "Froid dehors"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Blurred colorized contour, empty inside"
@@ -985,7 +986,7 @@ msgstr "Contour flou colorisé, vide à l'intérieur"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Electronic microscopy"
-msgstr "Microscopie électronique"
+msgstr "Microscope électronique"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
@@ -1009,7 +1010,7 @@ msgstr "Inverse ou permute la teinte"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Outline"
-msgstr "Contour"
+msgstr "Contour, interne"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Draws an outline around"
@@ -1017,7 +1018,7 @@ msgstr "Trace un contour"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Outline, double"
-msgstr "Contour double"
+msgstr "Contour, double"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
@@ -1041,7 +1042,7 @@ msgstr "Rayonnement de la couleur de l'objet sur ses bords"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Ghost outline"
-msgstr "Contour fantômatique"
+msgstr "Contour, externe"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Adds a glowing blur and removes the shape"
@@ -1049,19 +1050,19 @@ msgstr "Ajoute un flou lumineux et supprime la forme"
 
 #: ../share/filters/filters.svg.h:99
 msgid "Color emboss"
-msgstr "Embossage de couleur"
+msgstr "Bosselage de couleur"
 
 #: ../share/filters/filters.svg.h:99
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
-msgstr "Effet d'embossage classique ou colorisé: niveaux de gris, couleur et relief en 3D"
+msgstr "Effet de bosselage classique ou colorisé: niveaux de gris, couleur et relief en 3D"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Soft bump"
-msgstr "Embossage doux"
+msgstr "Bosselage doux"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Convolution bump; with a blur, it can give nice embossing effects"
-msgstr "Embossage de convolution ; avec un flou, peut donner un effet d'embossage sympa"
+msgstr "Bosselage de convolution ; avec un flou, peut donner un effet de bosselage sympa"
 
 #: ../share/filters/filters.svg.h:101
 #: ../src/extension/internal/bitmap/solarize.cpp:36
@@ -1082,7 +1083,7 @@ msgstr "Un effet à mi-chemin de solarisation et invertion, qui préserve souven
 
 #: ../share/filters/filters.svg.h:103
 msgid "Soft focus lens"
-msgstr "Objectif à portrait"
+msgstr "Lentille à portrait"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Glowing image content without blurring it"
@@ -1090,15 +1091,15 @@ msgstr "Donne de l'éclat au contenu d'une image sans le rendre flou"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Stained glass"
-msgstr "Vitraux"
+msgstr "Vitrail"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Illuminated stained glass effect"
-msgstr "Effet de vitraux lumineux"
+msgstr "Effet de vitrail lumineux"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Dark glass"
-msgstr "Verre sombre"
+msgstr "Verre solaire"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Illuminated glass effect with light coming from beneath"
@@ -1106,7 +1107,7 @@ msgstr "Effet de verre lumineux avec une lumière venant du dessous"
 
 #: ../share/filters/filters.svg.h:106
 msgid "HSL Bumps, alpha"
-msgstr "Embossage TSL, alpha"
+msgstr "Masque de bosselage TSL"
 
 #: ../share/filters/filters.svg.h:106
 #: ../share/filters/filters.svg.h:107
@@ -1114,19 +1115,19 @@ msgstr "Embossage TSL, alpha"
 #: ../share/filters/filters.svg.h:167
 #: ../share/filters/filters.svg.h:168
 msgid "Masking tools"
-msgstr "Outils de masquage"
+msgstr "Masques et transparences"
 
 #: ../share/filters/filters.svg.h:106
 msgid "Same than HSL bumps but with an alpha added for combination with transparency depending filters"
-msgstr "Identique à Embossage TSL, mais avec ajout d'alpha pour la combinaison avec les filtres nécessitant de la transparence"
+msgstr "Identique à Bosselage TSL, mais avec ajout d'alpha pour la combinaison avec les filtres nécessitant de la transparence"
 
 #: ../share/filters/filters.svg.h:107
 msgid "HSL Bubbles, alpha"
-msgstr "Bulles TSL, alpha"
+msgstr "Masque de bulles TSL"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Smooth edges"
-msgstr "Bords lissés"
+msgstr "Lissage du pourtour"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Smooth the outside of shapes and pictures without altering their contents"
@@ -1134,7 +1135,7 @@ msgstr "Lisse l'extérieur des formes et images sans en altérer le contenu"
 
 #: ../share/filters/filters.svg.h:109
 msgid "Torn edges"
-msgstr "Bords déchirés"
+msgstr "Pourtour déchiré"
 
 #: ../share/filters/filters.svg.h:109
 msgid "Displace the outside of shapes and pictures without altering their content"
@@ -1142,7 +1143,7 @@ msgstr "Déplace l'extérieur des formes et images sans en altérer le contenu"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Feather"
-msgstr "Plume"
+msgstr "Estompage du pourtour"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
@@ -1150,7 +1151,7 @@ msgstr "Masque flou sur les bords sans altération du contenu"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Blur content"
-msgstr "Contenu flou"
+msgstr "Flou interne"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
@@ -1166,15 +1167,15 @@ msgstr "Biseau spéculaire de base pour la construction de textures"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Roughen inside"
-msgstr "Rugosité intérieure"
+msgstr "Agitation interne"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Roughen all inside shapes"
-msgstr "Rend rugueuse toutes les formes intérieures"
+msgstr "Agite toutes les formes intérieures"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Evanescent"
-msgstr "Évanescent"
+msgstr "Évanescence"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Blur the contents of objects, preserving the outline and adding progressive transparency at edges"
@@ -1182,7 +1183,7 @@ msgstr "Rend flou le contenu des objets, mais préserve le contour et ajoute une
 
 #: ../share/filters/filters.svg.h:115
 msgid "Chalk and sponge"
-msgstr "Craie et éponge"
+msgstr "Éponge et craie"
 
 #: ../share/filters/filters.svg.h:115
 msgid "Low turbulence gives sponge look and high turbulence chalk"
@@ -1198,7 +1199,7 @@ msgstr "Plaques colorisées évoquant une foule de gens"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Scotland"
-msgstr "Écosse"
+msgstr "Montagnes d'Écosse"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Colorized mountain tops out of the fog"
@@ -1206,19 +1207,19 @@ msgstr "Sommets colorisés émergeant du brouillard"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Noise transparency"
-msgstr "Transparence bruitée"
+msgstr "Transparence agitée"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Basic noise transparency texture"
-msgstr "Texture en  transparence bruitée de base"
+msgstr "Texture en  transparence agitée de base"
 
 #: ../share/filters/filters.svg.h:119
 msgid "Noise fill"
-msgstr "Remplissage bruité"
+msgstr "Remplissage agité"
 
 #: ../share/filters/filters.svg.h:119
 msgid "Basic noise fill texture; adjust color in Flood"
-msgstr "Texture de remplissage de bruit de base ; ajuster la couleur avec Remplissage"
+msgstr "Texture de remplissage agité de base ; ajuster la couleur avec Remplissage"
 
 #: ../share/filters/filters.svg.h:120
 msgid "Garden of Delights"
@@ -1238,7 +1239,7 @@ msgstr "Biseau diffus simple pour la construction de textures"
 
 #: ../share/filters/filters.svg.h:122
 msgid "Cutout Glow"
-msgstr "Découpage lumineux"
+msgstr "Découpe et flou"
 
 #: ../share/filters/filters.svg.h:122
 msgid "In and out glow with a possible offset and colorizable flood"
@@ -1246,15 +1247,15 @@ msgstr "Lueur intérieure et extérieure avec possibilité de décaler et colori
 
 #: ../share/filters/filters.svg.h:123
 msgid "HSL Bumps, diffuse"
-msgstr "Embossage TSL, diffus"
+msgstr "Bosselage TSL mat"
 
 #: ../share/filters/filters.svg.h:123
 msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular one"
-msgstr "Identique à Embossage TSL, mais avec une réflection diffuse et non pas spéculaire"
+msgstr "Identique à Bosselage TSL, mais avec une réflection diffuse et non pas spéculaire"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Dark Emboss"
-msgstr "Embossage sombre"
+msgstr "Bosselage sombre"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
@@ -1262,7 +1263,7 @@ msgstr "Effet d'embossage : relief 3D avec lequel le blanc est remplacé par du
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
-msgstr "Flou simple"
+msgstr "Flou"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
@@ -1270,7 +1271,7 @@ msgstr "Flou gaussien simple, identique au réglage de flou dans la boite de dia
 
 #: ../share/filters/filters.svg.h:126
 msgid "HSL Bubbles, diffuse"
-msgstr "Bulles TSL, diffus"
+msgstr "Bulles TSL mates"
 
 #: ../share/filters/filters.svg.h:126
 msgid "Same than HSL bubbles but with a diffuse light instead of a specular one"
@@ -1295,7 +1296,7 @@ msgstr "Tache d'encre sur un buvard"
 
 #: ../share/filters/filters.svg.h:129
 msgid "Wax print"
-msgstr "Empreinte à la cire"
+msgstr "Impression à la cire"
 
 #: ../share/filters/filters.svg.h:129
 msgid "Wax print on tissue texture"
@@ -1307,19 +1308,19 @@ msgstr "Tache d'encre"
 
 #: ../share/filters/filters.svg.h:130
 msgid "Inkblot on tissue or rough paper"
-msgstr "Tache d'encre sur du tissu ou du papier grossier"
+msgstr "Tache d'encre sur du tissu ou du papier à grain"
 
 #: ../share/filters/filters.svg.h:131
 msgid "Burnt edges"
-msgstr "Bords brûlés"
+msgstr "Pourtour brûlé"
 
 #: ../share/filters/filters.svg.h:131
 msgid "Torn edges with a dark inner blur"
-msgstr "Bords déchirés avec un flou intérieur"
+msgstr "Pourtour déchiré avec un flou intérieur foncé"
 
 #: ../share/filters/filters.svg.h:132
 msgid "Color inline"
-msgstr "Encadré en couleur"
+msgstr "Soulignement du contour, interne"
 
 #: ../share/filters/filters.svg.h:132
 msgid "A colorizable inline with adjustable width and blur"
@@ -1383,7 +1384,7 @@ msgstr "Moulage de métal irrégulier, poli et brillant, colorisable"
 
 #: ../share/filters/filters.svg.h:140
 msgid "Comics draft"
-msgstr "Ébauche de bande dessinée"
+msgstr "Ébauche BD"
 
 #: ../share/filters/filters.svg.h:140
 #: ../share/filters/filters.svg.h:141
@@ -1408,7 +1409,7 @@ msgstr "Ombrage d'ébauche de bande dessinée peinte avec un aspect vitrage"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Comics fading"
-msgstr "Décoloration bande dessinée"
+msgstr "Décoloration BD"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Cartoon paint style with some fading at the edges"
@@ -1424,15 +1425,15 @@ msgstr "Ombrage doux avec un crayon graphite gris"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Emboss shader NR"
-msgstr "Ombrage embossé"
+msgstr "Bosselage ombré"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Combination of smooth shading and embossing"
-msgstr "Combinaison d'ombrage doux et d'embossage"
+msgstr "Combinaison d'ombrage doux et de bosselage"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Smooth shader dark NR"
-msgstr "Ombrage doux foncé"
+msgstr "Ombrage doux, profond"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Dark version of non realistic smooth shading"
@@ -1456,7 +1457,7 @@ msgstr "Soyeux, proche d'un rendu nacré"
 
 #: ../share/filters/filters.svg.h:147
 msgid "Frosted glass NR"
-msgstr "Verre gelé"
+msgstr "Opaline"
 
 #: ../share/filters/filters.svg.h:147
 msgid "Non realistic frosted glass imitation"
@@ -1480,7 +1481,7 @@ msgstr "Ombrage aluminium brossé"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Comics fluid"
-msgstr "Fluide bande dessinée"
+msgstr "Contour fluide BD"
 
 #: ../share/filters/filters.svg.h:150
 msgid "Fluid brushed cartoon drawing"
@@ -1496,7 +1497,7 @@ msgstr "Ombrage chrome non réaliste avec des spéculaires fortes"
 
 #: ../share/filters/filters.svg.h:152
 msgid "Chrome dark NR"
-msgstr "Chrome sombre"
+msgstr "Chrome profond"
 
 #: ../share/filters/filters.svg.h:152
 msgid "Dark version of chrome shading with a ground reflection simulation"
@@ -1504,7 +1505,7 @@ msgstr "Version sombre de l'ombrage chrome avec une simulation de réflexion par
 
 #: ../share/filters/filters.svg.h:153
 msgid "Wavy tartan"
-msgstr "Écossais ondulé"
+msgstr "Écossais ondoyant"
 
 #: ../share/filters/filters.svg.h:153
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
@@ -1528,7 +1529,7 @@ msgstr "Texture de bois fibreux et déformé, en 3D"
 
 #: ../share/filters/filters.svg.h:156
 msgid "Mother of pearl"
-msgstr "Nacre"
+msgstr "Nacre en 3D"
 
 #: ../share/filters/filters.svg.h:156
 msgid "3D warped, iridescent pearly shell texture"
@@ -1544,7 +1545,7 @@ msgstr "Fourrure de tigre avec des plis et un biseau autour des bords"
 
 #: ../share/filters/filters.svg.h:158
 msgid "Flow inside"
-msgstr "Écoulement intérieur"
+msgstr "Liquide agité"
 
 #: ../share/filters/filters.svg.h:158
 msgid "Colorizable filling with flow inside like transparency"
@@ -1552,7 +1553,7 @@ msgstr "Remplissage colorisable avec une transparence s'écoulant à l'intérieu
 
 #: ../share/filters/filters.svg.h:159
 msgid "Comics cream"
-msgstr "Crème bande dessinée"
+msgstr "Crème agitée BD"
 
 #: ../share/filters/filters.svg.h:159
 msgid "Comics shader with creamy waves transparency"
@@ -1579,15 +1580,15 @@ msgstr "Rend les parties les plus claires de l'objet progressivement transparent
 
 #: ../share/filters/filters.svg.h:162
 msgid "Noisy blur"
-msgstr "Flou bruité"
+msgstr "Flou agité"
 
 #: ../share/filters/filters.svg.h:162
 msgid "Small-scale roughening and blurring to edges and content"
-msgstr "Rend rugueux et flous les bords et le contenu, sur une petite amplitude"
+msgstr "Agite et rend flous les bords et le contenu, sur une petite amplitude"
 
 #: ../share/filters/filters.svg.h:163
 msgid "Film Grain"
-msgstr "Grain photographique"
+msgstr "Grain photo"
 
 #: ../share/filters/filters.svg.h:163
 msgid "Adds a film grain noise to images and objects"
@@ -1595,11 +1596,11 @@ msgstr "Ajoute un bruit de type grain photographique aux images et objets"
 
 #: ../share/filters/filters.svg.h:164
 msgid "HSL Bumps, transparent"
-msgstr "Embossage TSL, transparent"
+msgstr "Bosselage TSL transparent"
 
 #: ../share/filters/filters.svg.h:164
 msgid "Highly flexible specular bump with transparency"
-msgstr "Embossage spéculaire extrêmement flexible avec transparence"
+msgstr "Bosselage spéculaire extrêmement flexible avec transparence"
 
 #: ../share/filters/filters.svg.h:165
 msgid "Lead pencil"
@@ -1611,15 +1612,15 @@ msgstr "Donne un effet crayon gras, chromolithographie, gravure ou d'autres effe
 
 #: ../share/filters/filters.svg.h:166
 msgid "Velvet bump"
-msgstr "Embossage velouté"
+msgstr "Bosselage velouté"
 
 #: ../share/filters/filters.svg.h:166
 msgid "Gives a smooth bump velvet like"
-msgstr "Donne un embossage doux semblable à du velours"
+msgstr "Donne un bosselage doux semblable à du velours"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Alpha draw"
-msgstr "Dessin alpha"
+msgstr "Dessin transparent"
 
 #: ../share/filters/filters.svg.h:167
 msgid "Gives a transparent drawing effect to bitmaps and materials"
@@ -1627,7 +1628,7 @@ msgstr "Donne un effet de dessin transparent aux bitmaps et matières"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Alpha paint"
-msgstr "Peinture alpha"
+msgstr "Dessin en couleurs transparent"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Gives a transparent color fill effect to bitmaps and materials"
@@ -1635,7 +1636,7 @@ msgstr "Donne un effet de remplissage transparent et coloré aux bitmaps et mati
 
 #: ../share/filters/filters.svg.h:169
 msgid "Cross blotches"
-msgstr "Taches aux croisements"
+msgstr "Chewing-gum"
 
 #: ../share/filters/filters.svg.h:169
 msgid "Creates colourizable blotches which smoothly flow over the edges of the lines at their crossings"
@@ -1651,7 +1652,7 @@ msgstr "Trace un contour noir"
 
 #: ../share/filters/filters.svg.h:171
 msgid "Color outline"
-msgstr "Contour coloré"
+msgstr "Soulignement du contour, coloré"
 
 #: ../share/filters/filters.svg.h:171
 msgid "Draws a coloured outline around"
@@ -1659,7 +1660,7 @@ msgstr "Trace un contour coloré"
 
 #: ../share/filters/filters.svg.h:172
 msgid "Inner shadow"
-msgstr "Ombre intérieure"
+msgstr "Ombre interne"
 
 #: ../share/filters/filters.svg.h:172
 msgid "Adds a colorizable drop shadow inside"
@@ -1667,7 +1668,7 @@ msgstr "Ajoute une ombre portée colorisable à l'intérieur"
 
 #: ../share/filters/filters.svg.h:173
 msgid "Dark and glow"
-msgstr "Pénombre et lueur"
+msgstr "Ombre et lumière"
 
 #: ../share/filters/filters.svg.h:173
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
@@ -1675,7 +1676,7 @@ msgstr "Assombrit les bords avec un flou intérieur et ajoute une lueur flexible
 
 #: ../share/filters/filters.svg.h:174
 msgid "Darken edges"
-msgstr "Bords assombris"
+msgstr "Pourtour assombri"
 
 #: ../share/filters/filters.svg.h:174
 msgid "Darken the edges with an inner blur"
@@ -1689,105 +1690,113 @@ msgstr "Arc-en-ciel déformé"
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "Couleurs arc-en-ciel douces déformées le long des bords et colorisable"
 
+#: ../share/filters/filters.svg.h:176
+msgid "Rough contour"
+msgstr "Agitation dilatée"
+
+#: ../share/filters/filters.svg.h:176
+msgid "Create a turbulent contour around"
+msgstr "Crée un contour agité"
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
-msgstr "Bandes 1:1"
+msgstr "Rayures 1:1"
 
 #: ../share/patterns/patterns.svg.h:3
 msgid "Stripes 1:1 white"
-msgstr "Bandes 1:1 blanches"
+msgstr "Rayures 1:1 blanches"
 
 #: ../share/patterns/patterns.svg.h:4
 msgid "Stripes 1:1.5"
-msgstr "Bandes 1:1.5"
+msgstr "Rayures 1:1.5"
 
 #: ../share/patterns/patterns.svg.h:5
 msgid "Stripes 1:1.5 white"
-msgstr "Bandes 1:1.5 blanches"
+msgstr "Rayures 1:1.5 blanches"
 
 #: ../share/patterns/patterns.svg.h:6
 msgid "Stripes 1:2"
-msgstr "Bandes 1:2"
+msgstr "Rayures 1:2"
 
 #: ../share/patterns/patterns.svg.h:7
 msgid "Stripes 1:2 white"
-msgstr "Bandes 1:2 blanches"
+msgstr "Rayures 1:2 blanches"
 
 #: ../share/patterns/patterns.svg.h:8
 msgid "Stripes 1:3"
-msgstr "Bandes 1:3"
+msgstr "Rayures 1:3"
 
 #: ../share/patterns/patterns.svg.h:9
 msgid "Stripes 1:3 white"
-msgstr "Bandes 1:3 blanches"
+msgstr "Rayures 1:3 blanches"
 
 #: ../share/patterns/patterns.svg.h:10
 msgid "Stripes 1:4"
-msgstr "Bandes 1:4"
+msgstr "Rayures 1:4"
 
 #: ../share/patterns/patterns.svg.h:11
 msgid "Stripes 1:4 white"
-msgstr "Bandes 1:4 blanches"
+msgstr "Rayures 1:4 blanches"
 
 #: ../share/patterns/patterns.svg.h:12
 msgid "Stripes 1:5"
-msgstr "Bandes 1:5"
+msgstr "Rayures 1:5"
 
 #: ../share/patterns/patterns.svg.h:13
 msgid "Stripes 1:5 white"
-msgstr "Bandes 1:5 blanches"
+msgstr "Rayures 1:5 blanches"
 
 #: ../share/patterns/patterns.svg.h:14
 msgid "Stripes 1:8"
-msgstr "Bandes 1:8"
+msgstr "Rayures 1:8"
 
 #: ../share/patterns/patterns.svg.h:15
 msgid "Stripes 1:8 white"
-msgstr "Bandes 1:8 blanches"
+msgstr "Rayures 1:8 blanches"
 
 #: ../share/patterns/patterns.svg.h:16
 msgid "Stripes 1:10"
-msgstr "Bandes 1:10"
+msgstr "Rayures 1:10"
 
 #: ../share/patterns/patterns.svg.h:17
 msgid "Stripes 1:10 white"
-msgstr "Bandes 1:10 blanches"
+msgstr "Rayures 1:10 blanches"
 
 #: ../share/patterns/patterns.svg.h:18
 msgid "Stripes 1:16"
-msgstr "Bandes 1:16"
+msgstr "Rayures 1:16"
 
 #: ../share/patterns/patterns.svg.h:19
 msgid "Stripes 1:16 white"
-msgstr "Bandes 1:16 blanches"
+msgstr "Rayures 1:16 blanches"
 
 #: ../share/patterns/patterns.svg.h:20
 msgid "Stripes 1:32"
-msgstr "Bandes 1:32"
+msgstr "Rayures 1:32"
 
 #: ../share/patterns/patterns.svg.h:21
 msgid "Stripes 1:32 white"
-msgstr "Bandes 1:32 blanches"
+msgstr "Rayures 1:32 blanches"
 
 #: ../share/patterns/patterns.svg.h:22
 msgid "Stripes 1:64"
-msgstr "Bandes 1:64"
+msgstr "Rayures 1:64"
 
 #: ../share/patterns/patterns.svg.h:23
 msgid "Stripes 2:1"
-msgstr "Bandes 2:1"
+msgstr "Rayures 2:1"
 
 #: ../share/patterns/patterns.svg.h:24
 msgid "Stripes 2:1 white"
-msgstr "Bandes 2:1 blanches"
+msgstr "Rayures 2:1 blanches"
 
 #: ../share/patterns/patterns.svg.h:25
 msgid "Stripes 4:1"
-msgstr "Bandes 4:1"
+msgstr "Rayures 4:1"
 
 #: ../share/patterns/patterns.svg.h:26
 msgid "Stripes 4:1 white"
-msgstr "Bandes 4:1 blanches"
+msgstr "Rayures 4:1 blanches"
 
 #: ../share/patterns/patterns.svg.h:27
 msgid "Checkerboard"
@@ -1963,17 +1972,17 @@ msgstr "Plus de zoom suivant."
 msgid "Create guide"
 msgstr "Créer un guide"
 
-#: ../src/desktop-events.cpp:265
-#: ../src/desktop-events.cpp:394
+#: ../src/desktop-events.cpp:263
+#: ../src/desktop-events.cpp:408
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr "Supprimer le guide"
 
-#: ../src/desktop-events.cpp:387
+#: ../src/desktop-events.cpp:401
 msgid "Move guide"
 msgstr "Déplacer le guide"
 
-#: ../src/desktop-events.cpp:410
+#: ../src/desktop-events.cpp:424
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Ligne de guide</b> : %s"
@@ -3524,8 +3533,6 @@ msgid "New element node..."
 msgstr "Nouveau nœud élément..."
 
 #: ../src/dialogs/xml-tree.cpp:1333
-#: ../src/ui/dialog/whiteboard-connect.cpp:119
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:104
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -3857,27 +3864,31 @@ msgid "Guide"
 msgstr "Guide"
 
 #: ../src/display/snap-indicator.cpp:184
+msgid "Guide origin"
+msgstr "Origine du guide"
+
+#: ../src/display/snap-indicator.cpp:187
 msgid "Convex hull corner"
 msgstr "Coin de l'enveloppe convexe"
 
-#: ../src/display/snap-indicator.cpp:187
+#: ../src/display/snap-indicator.cpp:190
 msgid "Quadrant point"
 msgstr "Point de quadrant"
 
-#: ../src/display/snap-indicator.cpp:190
+#: ../src/display/snap-indicator.cpp:193
 #: ../src/widgets/toolbox.cpp:6700
 msgid "Center"
 msgstr "Centre"
 
-#: ../src/display/snap-indicator.cpp:193
+#: ../src/display/snap-indicator.cpp:196
 msgid "Corner"
 msgstr "Coin"
 
-#: ../src/display/snap-indicator.cpp:196
+#: ../src/display/snap-indicator.cpp:199
 msgid "Text baseline"
 msgstr "Ligne de base de texte"
 
-#: ../src/display/snap-indicator.cpp:235
+#: ../src/display/snap-indicator.cpp:238
 msgid " to "
 msgstr " à "
 
@@ -3968,7 +3979,7 @@ msgstr "<b>Suivi</b> d'un chemin guide"
 
 #: ../src/dyna-draw-context.cpp:755
 msgid "<b>Drawing</b> a calligraphic stroke"
-msgstr "Création d' un tracé calligraphique"
+msgstr "<b>Tracé calligraphique</b> en cours"
 
 #: ../src/dyna-draw-context.cpp:1044
 msgid "Draw calligraphic stroke"
@@ -3976,7 +3987,7 @@ msgstr "Créer un tracé calligraphique"
 
 #: ../src/eraser-context.cpp:527
 msgid "<b>Drawing</b> an eraser stroke"
-msgstr "Gomme en action"
+msgstr "<b>Coup de gomme</b> en cours"
 
 #: ../src/eraser-context.cpp:830
 msgid "Draw eraser stroke"
@@ -4036,7 +4047,7 @@ msgid ""
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">Le chargement d'une ou plusieurs extensions a échoué</span>\n"
 "\n"
-"Les extensions défectueuses ont été sautées. Inkscape va continuer à fonctionner normalement, mais ces extensions seront indisponibles. Pour plus de détails concernant ce problème, référez-vous à l'historique (log) des messages d'erreur : "
+"Les extensions défectueuses ont été ignorées. Inkscape va continuer à fonctionner normalement, mais ces extensions seront indisponibles. Pour plus de détails concernant ce problème, référez-vous à l'historique (log) des messages d'erreur : "
 
 #: ../src/extension/error-file.cpp:63
 msgid "Show dialog on startup"
@@ -4121,7 +4132,7 @@ msgstr "Inkscape a reçu des données additionnelles du script exécuté. Le scr
 
 #: ../src/extension/init.cpp:274
 msgid "Null external module directory name.  Modules will not be loaded."
-msgstr "Le répertoire des modules externes est « Null ». Les modules ne seront pas chargés."
+msgstr "Le nom de répertoire des modules externes est vide. Les modules ne seront pas chargés."
 
 #: ../src/extension/init.cpp:288
 #: ../src/extension/internal/filter/filter-file.cpp:56
@@ -4505,7 +4516,7 @@ msgstr "Luminosité"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:49
 msgid "Adjust the amount of hue, saturation, and brightness in selected bitmap(s)"
-msgstr "Moduler la teinte, la saturation et la valeur des bitmaps sélectionnés."
+msgstr "Moduler la teinte, la saturation et la luminosité des bitmaps sélectionnés."
 
 #: ../src/extension/internal/bitmap/negate.cpp:35
 msgid "Negate"
@@ -4600,7 +4611,7 @@ msgstr "Solariser les bitmaps sélectionnés, donne un effet de pellicule surexp
 
 #: ../src/extension/internal/bitmap/spread.cpp:36
 msgid "Dither"
-msgstr "Agitation"
+msgstr "Dispersion"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
 msgid "Randomly scatter pixels in selected bitmap(s), within the given radius of the original position"
@@ -4732,7 +4743,7 @@ msgstr "Résolution pour la rastérisation (ppp)"
 #: ../src/extension/internal/cairo-ps-out.cpp:324
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:224
 msgid "Limit export to the object with ID"
-msgstr "Limiter l'exportation à l'objet ayant l'identifiant"
+msgstr "Limiter l'exportation à l'objet ayant l'Id"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:291
 #: ../share/extensions/ps_input.inx.h:2
@@ -4851,7 +4862,7 @@ msgstr "Ombre portée, noire et diffuse"
 
 #: ../src/extension/internal/filter/drop-shadow.h:90
 msgid "Drop Glow"
-msgstr "Lueur portée"
+msgstr "Lueur projetée"
 
 #: ../src/extension/internal/filter/drop-shadow.h:103
 msgid "White, blurred drop glow"
@@ -4867,7 +4878,7 @@ msgstr "Personnel"
 
 #: ../src/extension/internal/filter/filter-file.cpp:44
 msgid "Null external module directory name.  Filters will not be loaded."
-msgstr "Le nom de répertoire des modules externes est « Null ». Les filtres ne seront pas chargés."
+msgstr "Le nom de répertoire des modules externes est vide. Les filtres ne seront pas chargés."
 
 #: ../src/extension/internal/filter/snow.h:32
 msgid "Snow crest"
@@ -6026,38 +6037,38 @@ msgstr "ex"
 msgid "Ex squares"
 msgstr "Ex carrés"
 
-#: ../src/inkscape.cpp:324
+#: ../src/inkscape.cpp:328
 msgid "Autosaving documents..."
 msgstr "Enregistrement automatique du document..."
 
-#: ../src/inkscape.cpp:395
+#: ../src/inkscape.cpp:399
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr "Échec de l'enregistrement automatique ! Impossible de trouver l'extension inkscape pour enregistrer le document."
 
-#: ../src/inkscape.cpp:398
-#: ../src/inkscape.cpp:405
+#: ../src/inkscape.cpp:402
+#: ../src/inkscape.cpp:409
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
-msgstr "Le fichier %s n'a pas pu être enregistré."
+msgstr "Échec de l'enregistrement automatique ! Le fichier %s n'a pas pu être enregistré."
 
-#: ../src/inkscape.cpp:420
+#: ../src/inkscape.cpp:424
 msgid "Autosave complete."
 msgstr "Enregistrement automatique terminé."
 
-#: ../src/inkscape.cpp:651
+#: ../src/inkscape.cpp:655
 msgid "Untitled document"
 msgstr "Document sans titre"
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:681
+#: ../src/inkscape.cpp:685
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Inkscape a subi une erreur interne et va se fermer maintenant.\n"
 
-#: ../src/inkscape.cpp:682
+#: ../src/inkscape.cpp:686
 msgid "Automatic backups of unsaved documents were done to the following locations:\n"
 msgstr "Les enregistrements automatiques des documents non enregistrés ont été effectués à cet emplacement :\n"
 
-#: ../src/inkscape.cpp:683
+#: ../src/inkscape.cpp:687
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Les enregistrements automatiques des documents suivants ont échoué :\n"
 
@@ -6222,47 +6233,6 @@ msgstr "%s n'est pas un répertoire valide."
 #, c-format
 msgid "Failed to execute helper program (%s)"
 msgstr "Échec de l'exécution du programme auxiliaire (%s)"
-
-#: ../src/jabber_whiteboard/invitation-confirm-dialog.cpp:26
-#: ../src/jabber_whiteboard/session-file-selector.cpp:24
-msgid "_Write session file:"
-msgstr "_Enregistrer le fichier de session :"
-
-#: ../src/jabber_whiteboard/pedrogui.cpp:2630
-msgid "Shared SVG whiteboard tool."
-msgstr "Tableau partagé SVG."
-
-#: ../src/jabber_whiteboard/pedrogui.cpp:2631
-msgid "Based on the Pedro XMPP client"
-msgstr "Basé sur le client XMPP Pedro"
-
-#: ../src/jabber_whiteboard/session-file-selector.cpp:60
-msgid "Select a location and filename"
-msgstr "Sélectionner un emplacement et un nom de fichier"
-
-#: ../src/jabber_whiteboard/session-file-selector.cpp:62
-msgid "Set filename"
-msgstr "Définir un nom de fichier"
-
-#: ../src/jabber_whiteboard/session-manager.cpp:308
-msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b>%1</b> vous a invité à une session de tableau blanc."
-
-#: ../src/jabber_whiteboard/session-manager.cpp:310
-msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "Voulez-vous accepter l'invitation de <b>%1</b> à une session de tableau blanc ?"
-
-#: ../src/jabber_whiteboard/session-manager.cpp:314
-msgid "Accept invitation"
-msgstr "Accepter l'invitation"
-
-#: ../src/jabber_whiteboard/session-manager.cpp:315
-msgid "Decline invitation"
-msgstr "Décliner l'invitation"
-
-#: ../src/jabber_whiteboard/session-manager.cpp:370
-msgid "Inkboard session (%1 to %2)"
-msgstr "Session Inkboard (tableau blanc) (de %1 à %2)"
 
 #: ../src/knot.cpp:443
 msgid "Node or handle drag canceled."
@@ -6457,7 +6427,7 @@ msgstr "Fermer ce point d'attache"
 #: ../src/libgdl/gdl-dock-item-grip.c:706
 #: ../src/libgdl/gdl-dock-tablabel.c:128
 msgid "Controlling dock item"
-msgstr "Élément d'attache de contrôle"
+msgstr "Élément détachable de contrôle"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:707
 msgid "Dockitem which 'owns' this grip"
@@ -6487,7 +6457,7 @@ msgstr "Direction d'expansion"
 
 #: ../src/libgdl/gdl-dock-master.c:169
 msgid "Allow the master's dock items to expand their container dock objects in the given direction"
-msgstr "Permet aux éléments du point d'attache maître d'élargir les objets qu'ils contiennent dans la direction donnée"
+msgstr "Permet aux éléments détachables du maître d'élargir les objets d'attache qu'ils contiennent dans la direction donnée"
 
 #: ../src/libgdl/gdl-dock-master.c:796
 #, c-format
@@ -6618,7 +6588,7 @@ msgstr "Niveau supérieur flottant"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:185
 msgid "Whether the placeholder is standing in for a floating toplevel dock"
-msgstr "Détermine si l' réserve la place pour un point d'attache flottant de niveau supérieur"
+msgstr "Détermine si l'élément substituable réserve la place pour un point d'attache flottant de niveau supérieur"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:191
 msgid "X-Coordinate"
@@ -6638,7 +6608,7 @@ msgstr "Coordonnée Y du point d'attache quand il est flottant"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:494
 msgid "Attempt to dock a dock object to an unbound placeholder"
-msgstr "Tentative d'attachement d'un objet d'attache sur un paramètre fictif non lié"
+msgstr "Tentative d'attachement d'un objet d'attache sur un élément substituable non lié"
 
 #: ../src/libgdl/gdl-dock-placeholder.c:618
 #, c-format
@@ -6669,7 +6639,7 @@ msgstr "Bissectrice"
 #. TRANSLATORS: boolean operations
 #: ../src/live_effects/effect.cpp:89
 msgid "Boolops"
-msgstr "Boolops"
+msgstr "Opérations booléennes"
 
 #: ../src/live_effects/effect.cpp:90
 msgid "Circle (by center and radius)"
@@ -6685,7 +6655,7 @@ msgstr "Contour dynamique"
 
 #: ../src/live_effects/effect.cpp:93
 msgid "Lattice Deformation"
-msgstr "Déformation en croisillon"
+msgstr "Déformation par grille"
 
 #: ../src/live_effects/effect.cpp:94
 msgid "Line Segment"
@@ -6709,7 +6679,7 @@ msgstr "Médiatrice"
 
 #: ../src/live_effects/effect.cpp:100
 msgid "Perspective path"
-msgstr "Chemin en perspective"
+msgstr "Perspective"
 
 #: ../src/live_effects/effect.cpp:101
 msgid "Rotate copies"
@@ -6729,7 +6699,7 @@ msgstr "Tangente à la courbe"
 
 #: ../src/live_effects/effect.cpp:105
 msgid "Text label"
-msgstr "Étiquette du texte"
+msgstr "Étiquette de texte"
 
 #. 0.46
 #: ../src/live_effects/effect.cpp:108
@@ -6768,7 +6738,7 @@ msgstr "Spline spirographique"
 
 #: ../src/live_effects/effect.cpp:117
 msgid "Envelope Deformation"
-msgstr "Déformation de l'enveloppe"
+msgstr "Déformation par enveloppe"
 
 #: ../src/live_effects/effect.cpp:118
 msgid "Interpolate Sub-Paths"
@@ -6818,16 +6788,16 @@ msgstr "Chemin le long duquel le chemin original sera courbé"
 
 #: ../src/live_effects/lpe-bendpath.cpp:56
 msgid "Width of the path"
-msgstr "Épaisseur du chemin"
+msgstr "Largeur du chemin"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 #: ../src/live_effects/lpe-patternalongpath.cpp:65
 msgid "Width in units of length"
-msgstr "Épaisseur en unités de longueur"
+msgstr "Largeur en unités de longueur"
 
 #: ../src/live_effects/lpe-bendpath.cpp:57
 msgid "Scale the width of the path in units of its length"
-msgstr "Redimensionner l'épaisseur du chemin selon son unité de longueur"
+msgstr "Rendre la largeur proportionnelle à la longueur du chemin de courbure"
 
 #: ../src/live_effects/lpe-bendpath.cpp:58
 msgid "Original path is vertical"
@@ -6855,11 +6825,11 @@ msgstr "La dimension de la grille dans la direction Y."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
-msgstr "Relier les sous-chemins"
+msgstr "Chemin de liaison"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
-msgstr "Le chemin qui sera utilis�=A9 comme fil pour relier."
+msgstr "Le chemin qui sera utilisé comme fil pour relier."
 
 #: ../src/live_effects/lpe-curvestitch.cpp:43
 msgid "Number of paths"
@@ -6883,7 +6853,7 @@ msgstr "Variance de l'espacement de départ"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:45
 msgid "The amount of random shifting to move the start points of the stitches back & forth along the guide path"
-msgstr "La quantité de perturbation aléatoire dans la position des extrémités de chaque point de départ, le long du guide"
+msgstr "La quantité de perturbation aléatoire dans la position des extrémités de chaque point de départ des liaisons, le long du guide"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "End edge variance"
@@ -6891,7 +6861,7 @@ msgstr "Variance du bord de fin"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:46
 msgid "The amount of randomness that moves the end points of the stitches inside & outside the guide path"
-msgstr "La quantité de perturbation aléatoire dans la position des extrémités de chaque point de fin, à l'intérieur et à l'extérieur du guide"
+msgstr "La quantité de perturbation aléatoire dans la position des extrémités de chaque point de fin des liaisons, à l'intérieur et à l'extérieur du guide"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "End spacing variance"
@@ -6899,7 +6869,7 @@ msgstr "Variance de l'espacement de fin"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:47
 msgid "The amount of random shifting to move the end points of the stitches back & forth along the guide path"
-msgstr "La quantité de perturbation aléatoire dans la position des extrémités de chaque point de fin, le long du guide"
+msgstr "La quantité de perturbation aléatoire dans la position des extrémités de chaque point de fin des liaisons, le long du guide"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:48
 msgid "Scale width"
@@ -6915,55 +6885,55 @@ msgstr "Redimensionner l'épaisseur en fonction de la longueur"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale the width of the stitch path relative to its length"
-msgstr "Redimensionner l'épaisseur du chemin de contour proportionnellement à sa longueur"
+msgstr "Redimensionner l'épaisseur du chemin de liaison proportionnellement à sa longueur"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top bend path"
-msgstr "Chemin de courbure haut"
+msgstr "Bord haut de l'enveloppe"
 
 #: ../src/live_effects/lpe-envelope.cpp:33
 msgid "Top path along which to bend the original path"
-msgstr "Chemin du haut le long duquel le chemin original sera courbé"
+msgstr "Bord haut de l'enveloppe le long duquel le chemin original sera courbé"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
 msgid "Right bend path"
-msgstr "Chemin de courbure du côté droit"
+msgstr "Bord droit de l'enveloppe"
 
 #: ../src/live_effects/lpe-envelope.cpp:34
 msgid "Right path along which to bend the original path"
-msgstr "Chemin du côté droit le long duquel le chemin original sera courbé"
+msgstr "Bord droit de l'enveloppe le long duquel le chemin original sera courbé"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
 msgid "Bottom bend path"
-msgstr "Chemin de courbure du bas"
+msgstr "Bord bas de l'enveloppe"
 
 #: ../src/live_effects/lpe-envelope.cpp:35
 msgid "Bottom path along which to bend the original path"
-msgstr "Chemin du bas le long duquel le chemin original sera courbé"
+msgstr "Bord bas de l'enveloppe le long duquel le chemin original sera courbé"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
 msgid "Left bend path"
-msgstr "Chemin de courbure du côté gauche"
+msgstr "Bord gauche de l'enveloppe"
 
 #: ../src/live_effects/lpe-envelope.cpp:36
 msgid "Left path along which to bend the original path"
-msgstr "Chemin du côté gauche le long duquel le chemin original sera courbé"
+msgstr "Bord gauche de l'enveloppe le long duquel le chemin original sera courbé"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable left & right paths"
-msgstr "Activer les chemins gauche et droit"
+msgstr "Utiliser les bords gauche et droit"
 
 #: ../src/live_effects/lpe-envelope.cpp:37
 msgid "Enable the left and right deformation paths"
-msgstr "Activer les chemins de déformation gauche et droit"
+msgstr "Utiliser les bords gauche et droit de l'enveloppe"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
 msgid "Enable top & bottom paths"
-msgstr "Activer les chemins haut et bas"
+msgstr "Utiliser les bords haut et bas"
 
 #: ../src/live_effects/lpe-envelope.cpp:38
 msgid "Enable the top and bottom deformation paths"
-msgstr "Activer les chemins de déformation haut et bas"
+msgstr "Utiliser les bords haut et bas de l'enveloppe"
 
 #: ../src/live_effects/lpe-gears.cpp:212
 msgid "Teeth"
@@ -7021,7 +6991,7 @@ msgstr "Unité de la largeur du trait"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width."
-msgstr "Traiter l'épaisseur de l'interruption en fonction de l'épaisseur du trait."
+msgstr "La largeur de l'interruption est exprimée en proportion de l'épaisseur du trait."
 
 #: ../src/live_effects/lpe-knot.cpp:325
 msgid "add stroke width to interruption size"
@@ -7041,11 +7011,11 @@ msgstr "Ajoute l'épaisseur du trait croisé à la taille de l'interruption."
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Switcher size"
-msgstr "Taille de l'entrecroisement"
+msgstr "Taille du sélecteur"
 
 #: ../src/live_effects/lpe-knot.cpp:327
 msgid "Orientation indicator/switcher size"
-msgstr "Indicateur d'orientation/taille de l'aiguilleur"
+msgstr "Le sélecteur précise l'orientation des croisements et permet de la changer (clic). Changer la sélection par cliquer-déplacer"
 
 #: ../src/live_effects/lpe-knot.cpp:328
 msgid "Crossing Signs"
@@ -7101,7 +7071,7 @@ msgstr "Largeur du motif"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:66
 msgid "Scale the width of the pattern in units of its length"
-msgstr "Redimensionne la largeur du motif selon son unité de longueur"
+msgstr "Redimensionner la largeur du motif proportionnellement à sa longueur"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:68
 msgid "Spacing"
@@ -7130,7 +7100,7 @@ msgstr "Décalages en unité de taille de motif"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:75
 msgid "Spacing, tangential and normal offset are expressed as a ratio of width/height"
-msgstr "L'espacement, le décalage normal et le décalage tangentiel sont exprimés en rapport de la largeur sur la hauteur "
+msgstr "L'espacement et le décalage tangentiel sont exprimés en proportion de la longueur du motif, le décalage normal en proportion de sa largeur"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:77
 #: ../share/extensions/pathalongpath.inx.h:7
@@ -7148,7 +7118,7 @@ msgstr "Fusionner les extrémités proches"
 
 #: ../src/live_effects/lpe-patternalongpath.cpp:79
 msgid "Fuse ends closer than this number. 0 means don't fuse."
-msgstr "Fusionne les extrémité plus proches que ce nombre. 0 indique de ne pas fusionner"
+msgstr "Fusionne les extrémités plus proches que ce nombre. 0 indique de ne pas fusionner."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Frequency randomness"
@@ -7156,7 +7126,7 @@ msgstr "Caractère aléatoire de la fréquence"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:226
 msgid "Variation of distance between hatches, in %."
-msgstr "Variation de distance entre hachures, en %."
+msgstr "Variation de la distance entre hachures, en %."
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 msgid "Growth"
@@ -7164,44 +7134,44 @@ msgstr "Croissance"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:227
 msgid "Growth of distance between hatches."
-msgstr "Augmentation de distance entre hachures"
+msgstr "Augmentation de la distance entre hachures"
 
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Half turns smoothness: 1st side, in"
-msgstr "Douceur des demi-tours : premier côté, intérieur"
+msgstr "Lissage des demi-tours : 1er côté, arrivée"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:229
 msgid "Set smoothness/sharpness of path when reaching a 'bottom' halfturn. 0=sharp, 1=default"
-msgstr "Definit la douceur ou la netteté du chemin lorsqu'il atteint un demi-tour inférieur. 0=net, 1=défaut"
+msgstr "Definit le lissage du chemin lorsqu'il atteint un demi-tour inférieur. 0=net, 1=défaut"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "1st side, out"
-msgstr "premier côté, extérieur"
+msgstr "1er côté, départ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:230
 msgid "Set smoothness/sharpness of path when leaving a 'bottom' halfturn. 0=sharp, 1=default"
-msgstr "Definit la douceur ou la netteté du chemin lorsqu'il quitte un demi-tour inférieur. 0=net, 1=défaut"
+msgstr "Definit le lissage du chemin lorsqu'il quitte un demi-tour inférieur. 0=net, 1=défaut"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "2nd side, in"
-msgstr "deuxième côté, intérieur"
+msgstr "2e côté, arrivée"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:231
 msgid "Set smoothness/sharpness of path when reaching a 'top' halfturn. 0=sharp, 1=default"
-msgstr "Definit la douceur ou la netteté du chemin lorsqu'il atteint un demi-tour supérieur. 0=net, 1=défaut"
+msgstr "Definit le lissage du chemin lorsqu'il atteint un demi-tour supérieur. 0=net, 1=défaut"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "2nd side, out"
-msgstr "deuxième côté, extérieur"
+msgstr "2e côté, départ"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:232
 msgid "Set smoothness/sharpness of path when leaving a 'top' halfturn. 0=sharp, 1=default"
-msgstr "Definit la douceur ou la netteté du chemin lorsqu'il quitte un demi-tour supérieur. 0=net, 1=défaut"
+msgstr "Definit le lissage du chemin lorsqu'il quitte un demi-tour supérieur. 0=net, 1=défaut"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Magnitude jitter: 1st side"
-msgstr "Fluctuation de l'amplitude : premier côté"
+msgstr "Aléa d'amplitude : 1er côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:233
 msgid "Randomly moves 'bottom' halfsturns to produce magnitude variations."
@@ -7211,7 +7181,7 @@ msgstr "Déplace aléatoirement les demi-tours inférieurs pour produire des var
 #: ../src/live_effects/lpe-rough-hatches.cpp:236
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "2nd side"
-msgstr "deuxième côté"
+msgstr "2e côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:234
 msgid "Randomly moves 'top' halfsturns to produce magnitude variations."
@@ -7219,7 +7189,7 @@ msgstr "Déplace aléatoirement les demi-tours supérieurs pour produire des var
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Parallelism jitter: 1st side"
-msgstr "Fluctuation du parallélisme : premier côté"
+msgstr "Aléa de parallélisme : 1er côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:235
 msgid "Add direction randomness by moving 'bottom' halfsturns tangentially to the boundary."
@@ -7231,20 +7201,20 @@ msgstr "Ajoute un caractère aléatoire à la direction en déplaçant les demi-
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Variance: 1st side"
-msgstr "Écart : premier côté"
+msgstr "Variance : 1er côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:237
 msgid "Randomness of 'bottom' halfturns smoothness"
-msgstr "Caractère aléatoire de la douceur des demi-tours inférieurs"
+msgstr "Caractère aléatoire du lissage des demi-tours inférieurs"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:238
 msgid "Randomness of 'top' halfturns smoothness"
-msgstr "Caractère aléatoire de la douceur des demi-tours supérieurs"
+msgstr "Caractère aléatoire du lissage des demi-tours supérieurs"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 msgid "Generate thick/thin path"
-msgstr "Générer un chemin épais ou fin"
+msgstr "Générer un chemin d'épaisseur variable"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 msgid "Simulate a stroke of varrying width"
@@ -7260,33 +7230,33 @@ msgstr "Ajoute une flexion globale aux hachures (plus lent)"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Thickness: at 1st side"
-msgstr "Épaisseur : au premier côté"
+msgstr "Épaisseur : au 1er côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Width at 'bottom' half turns"
-msgstr "Épaisseur au demi-tours inférieurs"
+msgstr "Épaisseur des demi-tours inférieurs"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "at 2nd side"
-msgstr "au deuxième côté"
+msgstr "au 2e côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:243
 msgid "Width at 'top' halfturns"
-msgstr "Épaisseur au demi-tours supérieurs"
+msgstr "Épaisseur des demi-tours supérieurs"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
 msgid "from 2nd to 1st side"
-msgstr "du deuxième au premier côté"
+msgstr "du 2e au 1er côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:245
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "Width of paths from 'top' to 'bottom' halfturns"
-msgstr "Épaisseur des chemins du demi-tour supérieur au demi-tour inférieur"
+msgstr "Épaisseur en allant du 1er côté au 2e côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:246
 msgid "from 1st to 2nd side"
-msgstr "du premier au deuxième côté"
+msgstr "du 1er au 2e côté"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:248
 msgid "Hatches width and dir"
@@ -7323,31 +7293,31 @@ msgstr "Contours"
 
 #: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
-msgstr "Dessiner ce nombre de traits approximatifs"
+msgstr "Dessiner ce nombre de contours approximatifs"
 
 #: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max stroke length"
-msgstr "Épaisseur maximale du contour"
+msgstr "Longueur maximale des traits"
 
 #: ../src/live_effects/lpe-sketch.cpp:37
 msgid "Maximum length of approximating strokes"
-msgstr "Longueur maximale des traits approximatifs"
+msgstr "Longueur maximale des contours approximatifs"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
-msgstr "Variation de longueur de trait"
+msgstr "Variation de longueur des traits"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Variation aléatoire de la longueur du trait (relative à la longueur maximale)"
+msgstr "Variation aléatoire de la longueur des traits (relative à la longueur maximale)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
-msgstr "Chevauchement maximum"
+msgstr "Chevauchement"
 
 #: ../src/live_effects/lpe-sketch.cpp:41
 msgid "How much successive strokes should overlap (relative to maximum length)"
-msgstr "Nombre de trait successifs devant se superposer (relatif à la longueur maximale)"
+msgstr "Taux de recouvrement des traits (relatif à la longueur maximale)"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
@@ -7375,11 +7345,11 @@ msgstr "Distance moyenne entre chaque trait et le chemin original"
 
 #: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Max. tremble"
-msgstr "Tremblement maximum"
+msgstr "Tremblement"
 
 #: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Maximum tremble magnitude"
-msgstr "Ampleur maximale du tremblement"
+msgstr "Amplitude maximale du tremblement"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
 msgid "Tremble frequency"
@@ -7404,11 +7374,11 @@ msgstr "Nombre de lignes de construction (tangentes) à dessiner"
 #: ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
 msgid "Scale"
-msgstr "Redimensionner"
+msgstr "Longueur/Courbure"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Scale factor relating curvature and length of construction lines (try 5*offset)"
-msgstr "Facteur d'échelle afférent à la courbure et à la longueur des lignes de construction (essayer 5 fois la valeur de décalage)"
+msgstr "Coefficient de proportionnalité entre longueur des lignes de construction et rayon de courbure du chemin (essayer 5 fois la valeur de décalage)"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Max. length"
@@ -7416,7 +7386,7 @@ msgstr "Longueur maximale"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Maximum length of construction lines"
-msgstr "Longueur maximale des lignes de contruction"
+msgstr "Limiter la longueur des lignes de construction à cette valeur"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Length variation"
@@ -7460,19 +7430,19 @@ msgstr "Niveau de récursion (garder une valeur faible !)"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid "Generating path"
-msgstr "Création d'un chemin"
+msgstr "Chemin générateur"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:48
 msgid "Path whose segments define the iterated transforms"
-msgstr "Chemin dont les segments définissent la fractale"
+msgstr "La fractale est obtenue en itérant les transformations qui envoient le chemin de référence sur chaque segment de celui-ci (un segment isolé définit une transformation préservant les proportions, deux segments attachés définissent une transformation générale)"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "Use uniform transforms only"
-msgstr "Transformations uniformes seulement"
+msgstr "Utiliser uniquement les transformations uniformes"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:49
 msgid "2 consecutive segments are used to reverse/preserve orientation only (otherwise, they define a general transform)."
-msgstr "Deux segments consécutifs seulement sont utilisés pour retourner ou préserver l'orientation (sinon, ils définissent une transformation générale)"
+msgstr "N'utiliser que des transformations qui préservent les proportions (rotations, symétries, redimensionnements)."
 
 #: ../src/live_effects/lpe-vonkoch.cpp:50
 msgid "Draw all generations"
@@ -7489,7 +7459,7 @@ msgstr "Segment de référence"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:52
 msgid "The reference segment. Defaults to bbox diameter."
-msgstr "Segment de référence. Par défaut au diamètre de la boîte englobante"
+msgstr "Segment de référence. Par défaut le diamètre de la boîte englobante"
 
 #. refA(_("Ref Start"), _("Left side middle of the reference box"), "refA", &wr, this),
 #. refB(_("Ref End"), _("Right side middle of the reference box"), "refB", &wr, this),
@@ -7500,7 +7470,7 @@ msgstr "Complexité maximale"
 
 #: ../src/live_effects/lpe-vonkoch.cpp:56
 msgid "Disable effect if the output is too complex"
-msgstr "Désactive l'effet lorsque la sortie est trop complexe"
+msgstr "Désactive l'effet lorsque le résultat est trop complexe"
 
 #: ../src/live_effects/parameter/bool.cpp:69
 msgid "Change bool parameter"
@@ -7540,7 +7510,7 @@ msgstr "Lier les paramètres de chemin au chemin"
 
 #: ../src/live_effects/parameter/point.cpp:90
 msgid "Change point parameter"
-msgstr "Modifier le point paramètre"
+msgstr "Modifier paramètre de point"
 
 #: ../src/live_effects/parameter/random.cpp:137
 msgid "Change random parameter"
@@ -7738,7 +7708,7 @@ msgstr "L'Id de l'objet dont les dimensions sont demandées"
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
 #: ../src/main.cpp:428
 msgid "Print out the extension directory and exit"
-msgstr "Lister le chemin du répertoire d'extensions, puis sortir"
+msgstr "Lister le répertoire d'extensions, puis sortir"
 
 #: ../src/main.cpp:433
 msgid "Remove unused definitions from the defs section(s) of the document"
@@ -9365,7 +9335,7 @@ msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "<b>Groupe</b> de <b>%d</b> objet"
 msgstr[1] "<b>Groupe</b> de <b>%d</b> objets"
 
-#: ../src/sp-line.cpp:190
+#: ../src/sp-line.cpp:194
 msgid "<b>Line</b>"
 msgstr "<b>Ligne</b>"
 
@@ -11659,8 +11629,8 @@ msgid "After snapping, a symbol is drawn at the point that has snapped"
 msgstr "Un symbole est dessiné sur le point d'accrochage après l'opération"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:222
-msgid "Delay (in msec):"
-msgstr "Délai (millisecondes) :"
+msgid "Delay (in ms):"
+msgstr "Délai (en millisecondes) :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
 msgid "Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate"
@@ -13084,7 +13054,7 @@ msgid "Interval (in minutes) at which document will be autosaved"
 msgstr "Définit l'intervalle (en minutes) auquel l'espace de travail sera enregistré automatiquement"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
-msgid "Path:"
+msgid "filesystem|Path:"
 msgstr "Chemin :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
@@ -14312,116 +14282,6 @@ msgstr "Appliquer la transformation à la sélection"
 #: ../src/ui/dialog/transformation.cpp:846
 msgid "Edit transformation matrix"
 msgstr "Éditer la matrice de transformation"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:47
-msgid "_Use SSL"
-msgstr "_Utiliser SSL"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:47
-msgid "_Register"
-msgstr "Insc_ription"
-
-#. Construct dialog interface
-#: ../src/ui/dialog/whiteboard-connect.cpp:78
-msgid "_Server:"
-msgstr "_Serveur :"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:79
-msgid "_Username:"
-msgstr "Nom d'_utilisateur :"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:80
-msgid "_Password:"
-msgstr "Mot de _passe :"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:81
-msgid "P_ort:"
-msgstr "P_ort :"
-
-#. Buttons
-#: ../src/ui/dialog/whiteboard-connect.cpp:118
-msgid "Connect"
-msgstr "Connection"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:149
-msgid "Establishing connection to Jabber server <b>%1</b>"
-msgstr "Établissement de la connexion sur le serveur Jabber <b>%1</b>"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:176
-#: ../src/ui/dialog/whiteboard-connect.cpp:222
-#: ../src/ui/dialog/whiteboard-connect.cpp:260
-msgid "Failed to establish connection to Jabber server <b>%1</b>"
-msgstr "Échec lors de l'établissement de la connexion sur le serveur Jabber <b>%1</b>"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:215
-msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
-msgstr "Établissement de la connexion de <b>%2</b> sur le serveur Jabber <b>%1</b>"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:227
-msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr "Échec de l'authentification de <b>%2</b> sur le serveur Jabber <b>%1</b>"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:232
-#: ../src/ui/dialog/whiteboard-connect.cpp:270
-msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
-msgstr "Échec de l'initialisation SSL lors de la connexion au serveur Jabber <b>%1</b>"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:238
-#: ../src/ui/dialog/whiteboard-connect.cpp:276
-msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
-msgstr "Connecté au serveur Jabber <b>%1</b> en tant que <b>%2</b>"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:265
-msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr "Échec de l'enregistrement de <b>%2</b> sur le serveur Jabber <b>%1</b>"
-
-#. Construct labels
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
-msgid "Chatroom _name:"
-msgstr "Nom du salon  :"
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:77
-msgid "Chatroom _server:"
-msgstr "_Serveur du salon :"
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:78
-msgid "Chatroom _password:"
-msgstr "Mot de _passe du salon :"
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:79
-msgid "Chatroom _handle:"
-msgstr "Pseudonyme :"
-
-#. Button setup and callback registration
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
-msgid "Connect to chatroom"
-msgstr "Connexion au salon"
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:138
-msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
-msgstr "Synchronisation avec le salon <b>%1@%2</b>, pseudonyme <b>%3</b>"
-
-#. Construct dialog interface
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:76
-msgid "_User's Jabber ID:"
-msgstr "Identifiant Jabber de l'_utilisateur"
-
-#. Buttons
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:80
-msgid "_Invite user"
-msgstr "Inviter un utilisateur"
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:81
-msgid "_Cancel"
-msgstr "Annuler"
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:92
-msgid "Buddy List"
-msgstr "Liste de contacts"
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:181
-msgid "Sending whiteboard invitation to <b>%1</b>"
-msgstr "Envoi d'une invitation à <b>%1</b>"
 
 #: ../src/ui/view/edit-widget.cpp:330
 #: ../src/ui/view/edit-widget.cpp:335
@@ -15984,8 +15844,8 @@ msgid "Lower the current layer"
 msgstr "Descendre le calque courant"
 
 #: ../src/verbs.cpp:2454
-msgid "Duplicate Current Layer..."
-msgstr "Dupliquer le calque courant..."
+msgid "Duplicate Current Layer"
+msgstr "Dupliquer le calque courant"
 
 #: ../src/verbs.cpp:2455
 msgid "Duplicate an existing layer"
@@ -19592,11 +19452,11 @@ msgstr "Visualisation de chemin"
 
 #: ../share/extensions/dimension.inx.h:3
 msgid "X Offset"
-msgstr "Offset X"
+msgstr "Décalage sur l'axe X"
 
 #: ../share/extensions/dimension.inx.h:4
 msgid "Y Offset"
-msgstr "Offset Y"
+msgstr "Décalage sur l'axe Y"
 
 #: ../share/extensions/dots.inx.h:1
 msgid "Dot size"
@@ -20500,7 +20360,7 @@ msgstr "Mesurer un chemin"
 
 #: ../share/extensions/measure.inx.h:7
 msgid "Offset [px]"
-msgstr "Offset [px]"
+msgstr "Décalage [px]"
 
 #: ../share/extensions/measure.inx.h:8
 msgid "Precision"
@@ -20512,7 +20372,7 @@ msgstr "Facteur d'échelle (Dessin:Longueur rééelle) = 1"
 
 #: ../share/extensions/measure.inx.h:10
 msgid "This effect measures the length of the selected path and adds it as a text-on-path object with the selected unit. The number of significant digits can be controlled by the Precision field. The Offset field controls the distance from the text to the path. The Scale factor can be used to make measurements in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the real world, Scale must be set to 250."
-msgstr "Cet effet mesure la longueur du chemin sélectionné et l'ajoute comme un objet « texte le long du chemin » avec l'unité sélectionnée. Le nombre de chiffres affichés peut être contrôlé par le champ « Précision ». Le champ Offset contrôle la distance entre le texte et le chemin. Le facteur d'échelle peut être utilisé pour réaliser des mesures dans des dessins à l'échelle. Par exemple, si 1 cm dans le dessin est égal à 2,5 m en réalité, le facteur d'échelle doit être réglé à 250."
+msgstr "Cet effet mesure la longueur du chemin sélectionné et l'ajoute comme un objet « texte le long du chemin » avec l'unité sélectionnée. Le nombre de chiffres affichés peut être contrôlé par le champ « Précision ». Le champ Décalage contrôle la distance entre le texte et le chemin. Le facteur d'échelle peut être utilisé pour réaliser des mesures dans des dessins à l'échelle. Par exemple, si 1 cm dans le dessin est égal à 2,5 m en réalité, le facteur d'échelle doit être réglé à 250."
 
 #: ../share/extensions/motion.inx.h:1
 #: ../share/extensions/restack.inx.h:1
@@ -21656,6 +21516,87 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "_Write session file:"
+#~ msgstr "_Enregistrer le fichier de session :"
+#~ msgid "Shared SVG whiteboard tool."
+#~ msgstr "Tableau partagé SVG."
+#~ msgid "Based on the Pedro XMPP client"
+#~ msgstr "Basé sur le client XMPP Pedro"
+#~ msgid "Select a location and filename"
+#~ msgstr "Sélectionner un emplacement et un nom de fichier"
+#~ msgid "Set filename"
+#~ msgstr "Définir un nom de fichier"
+#~ msgid "<b>%1</b> has invited you to a whiteboard session."
+#~ msgstr "<b>%1</b> vous a invité à une session de tableau blanc."
+#~ msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
+#~ msgstr ""
+#~ "Voulez-vous accepter l'invitation de <b>%1</b> à une session de tableau "
+#~ "blanc ?"
+#~ msgid "Accept invitation"
+#~ msgstr "Accepter l'invitation"
+#~ msgid "Decline invitation"
+#~ msgstr "Décliner l'invitation"
+#~ msgid "Inkboard session (%1 to %2)"
+#~ msgstr "Session Inkboard (tableau blanc) (de %1 à %2)"
+#~ msgid "Path:"
+#~ msgstr "Chemin :"
+#~ msgid "_Use SSL"
+#~ msgstr "_Utiliser SSL"
+#~ msgid "_Register"
+#~ msgstr "Insc_ription"
+#~ msgid "_Server:"
+#~ msgstr "_Serveur :"
+#~ msgid "_Username:"
+#~ msgstr "Nom d'_utilisateur :"
+#~ msgid "_Password:"
+#~ msgstr "Mot de _passe :"
+#~ msgid "P_ort:"
+#~ msgstr "P_ort :"
+#~ msgid "Connect"
+#~ msgstr "Connection"
+#~ msgid "Establishing connection to Jabber server <b>%1</b>"
+#~ msgstr "Établissement de la connexion sur le serveur Jabber <b>%1</b>"
+#~ msgid "Failed to establish connection to Jabber server <b>%1</b>"
+#~ msgstr ""
+#~ "Échec lors de l'établissement de la connexion sur le serveur Jabber <b>%"
+#~ "1</b>"
+#~ msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
+#~ msgstr ""
+#~ "Établissement de la connexion de <b>%2</b> sur le serveur Jabber <b>%1</b>"
+#~ msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
+#~ msgstr ""
+#~ "Échec de l'authentification de <b>%2</b> sur le serveur Jabber <b>%1</b>"
+#~ msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
+#~ msgstr ""
+#~ "Échec de l'initialisation SSL lors de la connexion au serveur Jabber <b>%"
+#~ "1</b>"
+#~ msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
+#~ msgstr "Connecté au serveur Jabber <b>%1</b> en tant que <b>%2</b>"
+#~ msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
+#~ msgstr ""
+#~ "Échec de l'enregistrement de <b>%2</b> sur le serveur Jabber <b>%1</b>"
+#~ msgid "Chatroom _name:"
+#~ msgstr "Nom du salon  :"
+#~ msgid "Chatroom _server:"
+#~ msgstr "_Serveur du salon :"
+#~ msgid "Chatroom _password:"
+#~ msgstr "Mot de _passe du salon :"
+#~ msgid "Chatroom _handle:"
+#~ msgstr "Pseudonyme :"
+#~ msgid "Connect to chatroom"
+#~ msgstr "Connexion au salon"
+#~ msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
+#~ msgstr "Synchronisation avec le salon <b>%1@%2</b>, pseudonyme <b>%3</b>"
+#~ msgid "_User's Jabber ID:"
+#~ msgstr "Identifiant Jabber de l'_utilisateur"
+#~ msgid "_Invite user"
+#~ msgstr "Inviter un utilisateur"
+#~ msgid "_Cancel"
+#~ msgstr "Annuler"
+#~ msgid "Buddy List"
+#~ msgstr "Liste de contacts"
+#~ msgid "Sending whiteboard invitation to <b>%1</b>"
+#~ msgstr "Envoi d'une invitation à <b>%1</b>"
 #~ msgid "Burnt paper edges texture"
 #~ msgstr "Texture avec des bords de papier brûlé"
 #~ msgid "Enhance outline and glows inside and outside"
