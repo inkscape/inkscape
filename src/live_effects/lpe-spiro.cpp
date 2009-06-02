@@ -118,6 +118,7 @@ LPESpiro::~LPESpiro()
 void
 LPESpiro::setup_nodepath(Inkscape::NodePath::Path *np)
 {
+    Effect::setup_nodepath(np);
     sp_nodepath_show_handles(np, false);
 //    sp_nodepath_show_helperpath(np, false);
 }
