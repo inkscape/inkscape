@@ -461,7 +461,7 @@
 <feComposite id="feComposite3195" operator="over" in="result9" in2="result4" />
 <feBlend id="feBlend3197" blend="normal" mode="screen" />
 </filter>
-<filter id="Meltglow0" inkscape:label="Melt and glow" inkscape:menu="Bevels" inkscape:menu-tooltip="Melting parts of object together, with a glossy bevel and a glow">
+<filter id="MoltMet0" inkscape:label="Molten metal" inkscape:menu="Bevels" inkscape:menu-tooltip="Melting parts of object together, with a glossy bevel and a glow">
 <feGaussianBlur id="feGaussianBlur3131" stdDeviation="5" result="result1" />
 <feComposite id="feComposite3135" in="result1" in2="result1" result="result4" operator="in" />
 <feComposite id="feComposite3143" operator="atop" in="result4" in2="result4" result="result8" />
@@ -475,7 +475,7 @@
 <feComposite id="feComposite3159" operator="in" in="result9" in2="result4" />
 <feBlend id="feBlend3161" blend="normal" mode="multiply" />
 </filter>
-<filter inkscape:menu-tooltip="Metal or plastic badge bevel" inkscape:menu="Bevels" inkscape:label="Badge" id="Badge0">
+<filter inkscape:menu-tooltip="Pressed metal with a rolled edge" inkscape:menu="Bevels" inkscape:label="Pressed steel" id="PressSteel0">
 <feGaussianBlur result="result1" stdDeviation="3" id="feGaussianBlur2874" />
 <feBlend in2="result1" result="result5" mode="multiply" in="result1" blend="normal" id="feBlend2876" />
 <feGaussianBlur in="result5" result="result6" stdDeviation="1" id="feGaussianBlur2878" />
@@ -489,7 +489,7 @@
 <feComposite in2="result4" in="result9" operator="in" id="feComposite2894" />
 <feBlend mode="darken" blend="normal" id="feBlend2896" />
 </filter>
-<filter id="Pastbev0" inkscape:label="Pastel Bevel" inkscape:menu="Bevels" inkscape:menu-tooltip="Soft, pastel-colored, blurry bevel" x="-0.25" y="-0.25" width="1.5" height="1.5">
+<filter id="MattBev0" inkscape:label="Matte Bevel" inkscape:menu="Bevels" inkscape:menu-tooltip="Soft, pastel-colored, blurry bevel" x="-0.25" y="-0.25" width="1.5" height="1.5">
 <feGaussianBlur id="feGaussianBlur3201" stdDeviation="1" result="result6" />
 <feComposite id="feComposite3205" operator="in" in="result6" in2="result6" />
 <feBlend id="feBlend3207" blend="normal" mode="multiply" in="result6" result="result2" />
@@ -566,7 +566,7 @@
 <feBlend id="feBlend555" blend="normal" mode="darken" />
 <feConvolveMatrix id="feConvolveMatrix2904" order="3 3" kernelMatrix="2 0 0 0 1 0 0 0 -1" targetX="1" targetY="1" divisor="2" edgeMode="duplicate" />
 </filter>
-<filter id="Transluc0" inkscape:label="Translucent" inkscape:menu="Bevels" inkscape:menu-tooltip="Illuminated translucent plastic effect" x="-0.25" y="-0.25" width="1.5" height="1.5">
+<filter id="Transluc0" inkscape:label="Translucent" inkscape:menu="Bevels" inkscape:menu-tooltip="Illuminated translucent plastic or glass effect" x="-0.25" y="-0.25" width="1.5" height="1.5">
 <feBlend id="feBlend3301" blend="normal" mode="screen" result="result1" />
 <feGaussianBlur id="feGaussianBlur3303" stdDeviation="8" result="result6" />
 <feComposite id="feComposite3307" operator="xor" in="result6" in2="SourceGraphic" />
@@ -951,7 +951,7 @@
 <feDiffuseLighting id="feDiffuseLighting3012" surfaceScale="4" diffuseConstant="1" kernelUnitLength="1" result="result1" in="result0">
 <feDistantLight id="feDistantLight3014" azimuth="235" elevation="60" />
 </feDiffuseLighting>
-<feSpecularLighting id="feSpecularLighting3016" in="result0" surfaceScale="3" specularConstant="0.69999999999999996" specularExponent="25" kernelUnitLength="1" result="result3">
+<feSpecularLighting id="feSpecularLighting3016" in="result0" surfaceScale="3" specularConstant="1" specularExponent="25" kernelUnitLength="1" result="result3">
 <feDistantLight id="feDistantLight3018" azimuth="235" elevation="55" />
 </feSpecularLighting>
 <feComposite id="feComposite3020" in="result1" in2="SourceGraphic" operator="arithmetic" k1="1" k2="0" k3="0" result="result2" />
@@ -1020,7 +1020,7 @@
 <filter id="filter3068b" inkscape:label="Invert hue" inkscape:menu="Color" inkscape:menu-tooltip="Invert hue, or rotate it" y="0" x="0" height="1" width="1">
 <feColorMatrix id="feColorMatrix1093" type="hueRotate" values="180" />
 </filter>
-<filter id="Outlin0" inkscape:label="Outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Draws an outline around">
+<filter id="InnerOutlin0" inkscape:label="Inner outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Draws an outline around">
 <feGaussianBlur id="feGaussianBlur2915" result="result1" in="SourceAlpha" stdDeviation="3" />
 <feComposite id="feComposite2917" result="result3" k4="-2" k1="-1" k3="0" k2="3.2000000000000002" operator="arithmetic" />
 <feColorMatrix id="feColorMatrix2919" result="result2" values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 0 " type="matrix" />
@@ -1045,9 +1045,10 @@
 <feGaussianBlur stdDeviation="5" id="feGaussianBlur3958" />
 <feComposite in="SourceGraphic" operator="over" id="feComposite3960" />
 </filter>
-<filter id="filter3942" inkscape:label="Ghost outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Adds a glowing blur and removes the shape">
-<feGaussianBlur stdDeviation="5" id="feGaussianBlur3944" />
-<feComposite id="feComposite3946" operator="arithmetic" in="SourceGraphic" k2="-1" k1="0" k3="1" k4="0" />
+<filter id="OutLine0" inkscape:label="Outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Adds a glowing blur and removes the shape">
+<feGaussianBlur id="feGaussianBlur2848" stdDeviation="5" result="result2" />
+<feColorMatrix id="feColorMatrix2852" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -2 " result="result1" />
+<feComposite id="feComposite2850" operator="arithmetic" in="SourceGraphic" k2="-1" k1="0" k3="1" k4="0" in2="result1" />
 </filter>
 <filter id="filter3018b" inkscape:label="Color emboss" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Classic or colorized emboss effect: grayscale, color and 3D relief">
 <feColorMatrix id="feColorMatrix3020" type="luminanceToAlpha" result="result2" />
@@ -1117,7 +1118,7 @@
 <feComposite id="feComposite2948" operator="atop" in="result5" />
 <feBlend id="feBlend2950" blend="normal" mode="multiply" />
 </filter>
-<filter id="Hslbumpal0" inkscape:menu-tooltip="Same than HSL bumps but with an alpha added for combination with transparency depending filters" inkscape:menu="Masking tools" inkscape:label="HSL Bumps, alpha">
+<filter id="Hslbumpal0" inkscape:menu-tooltip="Same than HSL bumps but with an alpha added for combination with transparency depending filters" inkscape:menu="Mask and transparency effects" inkscape:label="HSL Bumps, alpha">
 <feGaussianBlur id="feGaussianBlur2932" result="result0" in="SourceGraphic" stdDeviation="0.5" />
 <feColorMatrix id="feColorMatrix2934" type="matrix" values="1 0 0 -1 0 1 0 1 -1 0 1 0 0 -1 0 -0.8 -1 0 4.4 -2.9 " in="result0" result="fbSourceGraphicAlpha" />
 <feGaussianBlur id="feGaussianBlur2936" stdDeviation="0.69999999999999996" in="fbSourceGraphicAlpha" result="result0" />
@@ -1126,7 +1127,7 @@
 </feSpecularLighting>
 <feComposite id="feComposite2942" result="result4" operator="in" k2="1.5" k3="0.59999999999999998" in="SourceGraphic" in2="result1" />
 </filter>
-<filter inkscape:menu-tooltip="Highly flexible bubbles effect depending on color hue saturation and luminance" inkscape:menu="Masking tools" inkscape:label="HSL Bubbles, alpha" id="Hslbubblal0">
+<filter inkscape:menu-tooltip="Highly flexible bubbles effect depending on color hue saturation and luminance" inkscape:menu="Mask and transparency effects" inkscape:label="HSL Bubbles, alpha" id="Hslbubblal0">
 <feGaussianBlur stdDeviation="0.69999999999999996" in="SourceGraphic" result="result0" id="feGaussianBlur3067" />
 <feTurbulence type="fractalNoise" result="result1" numOctaves="10" seed="300" baseFrequency="0.20000000000000001" id="feTurbulence3069" />
 <feComposite in="result0" in2="result1" operator="in" result="result2" id="feComposite3071" />
@@ -1332,7 +1333,7 @@
 <feComposite id="feComposite3092" in2="result6" operator="atop" in="fbSourceGraphic" result="result8" />
 <feComposite id="feComposite3094" in="result8" in2="fbSourceGraphicAlpha" operator="atop" result="result9" />
 </filter>
-<filter id="ColorInl0" inkscape:label="Color inline" inkscape:menu="Morphology" inkscape:menu-tooltip="A colorizable inline with adjustable width and blur" height="1.2" y="-0.1" width="1.2" x="-0.1">
+<filter id="ColorInl0" inkscape:label="Color outline, in" inkscape:menu="Morphology" inkscape:menu-tooltip="A colorizable inner outline with adjustable width and blur" height="1.2" y="-0.1" width="1.2" x="-0.1">
 <feGaussianBlur id="feGaussianBlur2883" stdDeviation="2" result="result8" />
 <feColorMatrix id="feColorMatrix2885" result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -9 " />
 <feComposite id="feComposite2887" result="result6" in="SourceGraphic" operator="in" in2="result5" />
@@ -1535,7 +1536,7 @@
 <feConvolveMatrix id="feConvolveMatrix4927" order="3 3" kernelMatrix="2 0 0 0 2 0 0 0 -2 " targetX="2" targetY="2" result="result10" />
 <feBlend id="feBlend4929" blend="normal" mode="multiply" in="result10" />
 </filter>
-<filter id="Mothofprl0" inkscape:menu-tooltip="3D warped, iridescent pearly shell texture" inkscape:menu="Materials" inkscape:label="Mother of pearl" width="1.5" x="-0.25" height="1.5" y="-0.25">
+<filter id="Mothofprl0" inkscape:menu-tooltip="3D warped, iridescent pearly shell texture" inkscape:menu="Materials" inkscape:label="3D mother of pearl" width="1.5" x="-0.25" height="1.5" y="-0.25">
 <feGaussianBlur id="feGaussianBlur3257" result="result8" stdDeviation="3" />
 <feTurbulence id="feTurbulence3259" baseFrequency="0.029999999999999999 0.029999999999999999" numOctaves="8" type="fractalNoise" result="result7" seed="77" />
 <feColorMatrix id="feColorMatrix3261" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.6 -0.6 " result="result5" />
@@ -1561,7 +1562,7 @@
 <feComposite id="feComposite2922" in2="result4" result="result2" operator="arithmetic" k1="1" k3="0" k2="0" in="SourceGraphic" />
 <feComposite operator="out" id="feComposite2924" in="SourceGraphic" />
 </filter>
-<filter id="Flowin0" x="-0.25" width="1.5" y="-0.5" height="2" inkscape:menu-tooltip="Colorizable filling with flow inside like transparency" inkscape:menu="Textures" inkscape:label="Flow inside">
+<filter id="ShakenLiq0" x="-0.25" width="1.5" y="-0.5" height="2" inkscape:menu-tooltip="Colorizable filling with flow inside like transparency" inkscape:menu="Textures" inkscape:label="Shaken liquid">
 <feGaussianBlur id="feGaussianBlur4731" result="result8" stdDeviation="4" />
 <feTurbulence id="feTurbulence4733" baseFrequency="0.050000000000000003" numOctaves="2" type="fractalNoise" result="result7" seed="0" />
 <feColorMatrix id="feColorMatrix4735" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 2 -0.75 " result="result5" />
@@ -1583,7 +1584,7 @@
 <feComposite id="feComposite2922" in2="SourceGraphic" operator="arithmetic" in="result2" k1="0" k2="0" k3="2" result="result4" />
 <feBlend blend="normal" id="feBlend2962" in="result2" mode="multiply" result="result3" />
 </filter>
-<filter id="Eraser0" inkscape:label="Eraser" inkscape:menu="Masking tools" inkscape:menu-tooltip="Make the lightest parts of the object progressively transparent">
+<filter id="Eraser0" inkscape:label="Eraser" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Make the lightest parts of the object progressively transparent">
 <feColorMatrix id="feColorMatrix2860" in="SourceGraphic" result="result1" type="luminanceToAlpha" />
 <feColorMatrix id="feColorMatrix2866" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " />
 <feComposite id="feComposite2862" k2="2" k3="0" in="SourceGraphic" result="result2" operator="out" />
@@ -1613,7 +1614,7 @@
 <feBlend id="feBlend2978" in="result1" in2="SourceGraphic" result="result5" mode="screen" blend="normal" />
 <feComposite id="feComposite2980" in2="fbSourceGraphicAlpha" result="result4" operator="atop" k2="1.5" k3="0.59999999999999998" in="result5" />
 </filter>
-<filter id="LeadPenc0" x="0" y="0" width="1" height="1" inkscape:menu-tooltip="Give lead pencil or chromolithography or engraving or other effects to images and material filled objects" inkscape:menu="Image effects" inkscape:label="Lead pencil">
+<filter id="Drawing0" x="0" y="0" width="1" height="1" inkscape:menu-tooltip="Give lead pencil or chromolithography or engraving or other effects to images and material filled objects" inkscape:menu="Image effects" inkscape:label="Drawing">
 <feGaussianBlur id="feGaussianBlur2935" stdDeviation="0.5" result="result8" />
 <feConvolveMatrix id="feConvolveMatrix2937" bias="0" result="result0" preserveAlpha="true" targetY="1" targetX="1" divisor="1" in="result8" kernelMatrix="1 1 1 1 -8 1 1 1 1 " order="3 3" />
 <feColorMatrix id="feColorMatrix2939" values="0 -6 0 0 1 0 -6 0 0 1 0 -6 0 0 1 0 0 0 1 0 " result="result3" type="matrix" />
@@ -1628,7 +1629,7 @@
 <feConvolveMatrix order="3 3" kernelMatrix="-2 0 0 -1 1 1 0 0 2 " id="feConvolveMatrix3030" targetX="1" targetY="1" result="result8" />
 <feBlend id="feBlend3032" blend="normal" mode="darken" in="result7" result="result6" />
 </filter>
-<filter inkscape:label="Alpha draw" inkscape:menu="Masking tools" inkscape:menu-tooltip="Gives a transparent drawing effect to bitmaps and materials" height="1" width="1" y="0" x="0" id="AlphaDraw0">
+<filter inkscape:label="Alpha draw" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Gives a transparent drawing effect to bitmaps and materials" height="1" width="1" y="0" x="0" id="AlphaDraw0">
 <feGaussianBlur result="result8" stdDeviation="0.55" id="feGaussianBlur3023" />
 <feConvolveMatrix order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" id="feConvolveMatrix3025" />
 <feColorMatrix values="1" in="result0" result="result1" type="luminanceToAlpha" id="feColorMatrix3027" />
@@ -1638,7 +1639,7 @@
 <feFlood flood-opacity="1" result="result10" flood-color="rgb(0,0,0)" id="feFlood3035" />
 <feComposite in2="result9" in="result10" operator="in" id="feComposite3037" />
 </filter>
-<filter id="AlphaPaint0" inkscape:label="Alpha paint" inkscape:menu="Masking tools" inkscape:menu-tooltip="Gives a transparent color fill effect to bitmaps and materials" height="1" width="1" y="0" x="0">
+<filter id="AlphaPaint0" inkscape:label="Alpha paint" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Gives a transparent color fill effect to bitmaps and materials" height="1" width="1" y="0" x="0">
 <feGaussianBlur id="feGaussianBlur3041" result="result8" stdDeviation="0.55" />
 <feConvolveMatrix id="feConvolveMatrix3043" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
 <feColorMatrix id="feColorMatrix3045" in="result0" type="matrix" result="result3" values="0 -20 0 0 1 0 -20 0 0 1 0 -20 0 0 1 0 0 0 1 0 " />
@@ -1648,11 +1649,11 @@
 <feColorMatrix id="feColorMatrix3053" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -1.7 " type="matrix" result="result9" />
 <feComposite id="feComposite3055" operator="arithmetic" k2="1.25" />
 </filter>
-<filter id="Crosblo0" x="-0.25" y="-0.25" width="1.5" height="1.5" inkscape:menu-tooltip="Creates colourizable blotches which smoothly flow over the edges of the lines at their crossings" inkscape:menu="Protrusions" inkscape:label="Cross blotches">
-<feFlood id="feFlood2842" result="result4" flood-color="rgb(176,133,195)" flood-opacity="1" />
-<feGaussianBlur id="feGaussianBlur2844" result="result1" in="SourceAlpha" stdDeviation="12" />
+<filter id="ChewGum0" x="-0.25" y="-0.25" width="1.5" height="1.5" inkscape:menu-tooltip="Creates colourizable blotches which smoothly flow over the edges of the lines at their crossings" inkscape:menu="Protrusions" inkscape:label="Chewing gum">
+<feFlood id="feFlood2842" result="result4" flood-color="rgb(253,112,174)" flood-opacity="1" />
+<feGaussianBlur id="feGaussianBlur2844" result="result1" in="SourceAlpha" stdDeviation="15" />
 <feComposite id="feComposite2846" in2="result4" in="result1" result="result3" k4="-2" k1="0" k3="0" k2="4" operator="arithmetic" />
-<feColorMatrix id="feColorMatrix2848" result="result2" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -2 " />
+<feColorMatrix id="feColorMatrix2848" result="result2" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 -3" />
 <feComposite id="feComposite2850" operator="in" in="result4" result="fbSourceGraphic" />
 <feBlend id="feBlend2852" in2="SourceGraphic" in="fbSourceGraphic" mode="normal" blend="normal" result="result5" />
 </filter>
@@ -1695,7 +1696,7 @@
 <feComposite id="feComposite2917" in="result10" operator="atop" result="result2" in2="result8" k2="0" k1="0" k3="3" />
 <feComposite id="feComposite2919" in2="result2" operator="arithmetic" in="result10" result="fbSourceGraphic" k1="2.5" k3="0.5" />
 </filter>
-<filter y="-0.2" height="1.4" id="RoughCont0" inkscape:label="Rough contour" inkscape:menu="Distort" inkscape:menu-tooltip="Create a turbulent contour around">
+<filter y="-0.2" height="1.4" id="RoughDil0" inkscape:label="Rough and dilate" inkscape:menu="Distort" inkscape:menu-tooltip="Create a turbulent contour around">
 <feMorphology id="feMorphology4135" radius="7" operator="dilate" result="result8" in="SourceGraphic" />
 <feComposite id="feComposite4137" in2="result8" result="result10" in="SourceGraphic" operator="arithmetic" k1="0.5" k2="0" k3="0.5" />
 <feTurbulence result="result11" type="fractalNoise" numOctaves="3" baseFrequency="0.070000000000000007" id="feTurbulence4139" />
