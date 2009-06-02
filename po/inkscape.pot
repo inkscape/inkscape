@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-31 08:33+0200\n"
+"POT-Creation-Date: 2009-06-02 20:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -207,6 +207,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
 #: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:115
+#: ../share/filters/filters.svg.h:176
 msgid "Distort"
 msgstr ""
 
@@ -1616,6 +1617,14 @@ msgstr ""
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr ""
 
+#: ../share/filters/filters.svg.h:176
+msgid "Rough contour"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:176
+msgid "Create a turbulent contour around"
+msgstr ""
+
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
 msgstr ""
@@ -1887,16 +1896,16 @@ msgstr ""
 msgid "Create guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:265 ../src/desktop-events.cpp:394
+#: ../src/desktop-events.cpp:263 ../src/desktop-events.cpp:408
 #: ../src/ui/dialog/guides.cpp:125
 msgid "Delete guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:387
+#: ../src/desktop-events.cpp:401
 msgid "Move guide"
 msgstr ""
 
-#: ../src/desktop-events.cpp:410
+#: ../src/desktop-events.cpp:424
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr ""
@@ -3376,8 +3385,6 @@ msgid "New element node..."
 msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:1333
-#: ../src/ui/dialog/whiteboard-connect.cpp:119
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:104
 msgid "Cancel"
 msgstr ""
 
@@ -3699,26 +3706,30 @@ msgid "Guide"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:184
-msgid "Convex hull corner"
+msgid "Guide origin"
 msgstr ""
 
 #: ../src/display/snap-indicator.cpp:187
+msgid "Convex hull corner"
+msgstr ""
+
+#: ../src/display/snap-indicator.cpp:190
 msgid "Quadrant point"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:190 ../src/widgets/toolbox.cpp:6700
+#: ../src/display/snap-indicator.cpp:193 ../src/widgets/toolbox.cpp:6700
 msgid "Center"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:193
+#: ../src/display/snap-indicator.cpp:196
 msgid "Corner"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:196
+#: ../src/display/snap-indicator.cpp:199
 msgid "Text baseline"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:235
+#: ../src/display/snap-indicator.cpp:238
 msgid " to "
 msgstr ""
 
@@ -6034,47 +6045,6 @@ msgstr ""
 #: ../src/io/sys.cpp:986
 #, c-format
 msgid "Failed to execute helper program (%s)"
-msgstr ""
-
-#: ../src/jabber_whiteboard/invitation-confirm-dialog.cpp:26
-#: ../src/jabber_whiteboard/session-file-selector.cpp:24
-msgid "_Write session file:"
-msgstr ""
-
-#: ../src/jabber_whiteboard/pedrogui.cpp:2630
-msgid "Shared SVG whiteboard tool."
-msgstr ""
-
-#: ../src/jabber_whiteboard/pedrogui.cpp:2631
-msgid "Based on the Pedro XMPP client"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-file-selector.cpp:60
-msgid "Select a location and filename"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-file-selector.cpp:62
-msgid "Set filename"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:308
-msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:310
-msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:314
-msgid "Accept invitation"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:315
-msgid "Decline invitation"
-msgstr ""
-
-#: ../src/jabber_whiteboard/session-manager.cpp:370
-msgid "Inkboard session (%1 to %2)"
 msgstr ""
 
 #: ../src/knot.cpp:443
@@ -9291,7 +9261,7 @@ msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/sp-line.cpp:190
+#: ../src/sp-line.cpp:194
 msgid "<b>Line</b>"
 msgstr ""
 
@@ -14472,116 +14442,6 @@ msgstr ""
 msgid "Edit transformation matrix"
 msgstr ""
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:47
-msgid "_Use SSL"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:47
-msgid "_Register"
-msgstr ""
-
-#. Construct dialog interface
-#: ../src/ui/dialog/whiteboard-connect.cpp:78
-msgid "_Server:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:79
-msgid "_Username:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:80
-msgid "_Password:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:81
-msgid "P_ort:"
-msgstr ""
-
-#. Buttons
-#: ../src/ui/dialog/whiteboard-connect.cpp:118
-msgid "Connect"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:149
-msgid "Establishing connection to Jabber server <b>%1</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:176
-#: ../src/ui/dialog/whiteboard-connect.cpp:222
-#: ../src/ui/dialog/whiteboard-connect.cpp:260
-msgid "Failed to establish connection to Jabber server <b>%1</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:215
-msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:227
-msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:232
-#: ../src/ui/dialog/whiteboard-connect.cpp:270
-msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:238
-#: ../src/ui/dialog/whiteboard-connect.cpp:276
-msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:265
-msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-
-#. Construct labels
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
-msgid "Chatroom _name:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:77
-msgid "Chatroom _server:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:78
-msgid "Chatroom _password:"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:79
-msgid "Chatroom _handle:"
-msgstr ""
-
-#. Button setup and callback registration
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
-msgid "Connect to chatroom"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:138
-msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
-msgstr ""
-
-#. Construct dialog interface
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:76
-msgid "_User's Jabber ID:"
-msgstr ""
-
-#. Buttons
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:80
-msgid "_Invite user"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:81
-msgid "_Cancel"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:92
-msgid "Buddy List"
-msgstr ""
-
-#: ../src/ui/dialog/whiteboard-sharewithuser.cpp:181
-msgid "Sending whiteboard invitation to <b>%1</b>"
-msgstr ""
-
 #: ../src/ui/view/edit-widget.cpp:330 ../src/ui/view/edit-widget.cpp:335
 #: ../src/ui/view/edit-widget.cpp:343 ../src/ui/view/edit-widget.cpp:348
 #: ../src/ui/view/edit-widget.cpp:353 ../src/ui/view/edit-widget.cpp:368
@@ -17454,12 +17314,6 @@ msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:536
 msgid "Affect:"
-msgstr ""
-
-#: ../src/widgets/select-toolbar.cpp:536
-msgid ""
-"Control whether or not to scale stroke widths, scale rectangle corners, "
-"transform gradient fills, and transform pattern fills with the object"
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:555
