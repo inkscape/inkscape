@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-02 22:15+0100\n"
+"POT-Creation-Date: 2009-06-03 06:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -565,7 +565,7 @@ msgid "Neon light effect with glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:51
-msgid "Melt and glow"
+msgid "Molten metal"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:51
@@ -573,15 +573,15 @@ msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:52
-msgid "Badge"
+msgid "Pressed steel"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:52
-msgid "Metal or plastic badge bevel"
+msgid "Pressed metal with a rolled edge"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:53
-msgid "Pastel Bevel"
+msgid "Matte Bevel"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:53
@@ -630,7 +630,7 @@ msgid "Translucent"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:58
-msgid "Illuminated translucent plastic effect"
+msgid "Illuminated translucent plastic or glass effect"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:59
@@ -928,7 +928,7 @@ msgid "Invert hue, or rotate it"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:94
-msgid "Outline"
+msgid "Inner outline"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:94
@@ -960,7 +960,7 @@ msgid "Glow of object's own color at the edges"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:98
-msgid "Ghost outline"
+msgid "Outline"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:98
@@ -1033,7 +1033,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
 #: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:167
 #: ../share/filters/filters.svg.h:168
-msgid "Masking tools"
+msgid "Mask and transparency effects"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:106
@@ -1249,11 +1249,11 @@ msgid "Torn edges with a dark inner blur"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:132
-msgid "Color inline"
+msgid "Color outline, in"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:132
-msgid "A colorizable inline with adjustable width and blur"
+msgid "A colorizable inner outline with adjustable width and blur"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:133
@@ -1452,7 +1452,7 @@ msgid "3D warped, fibered wood texture"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:156
-msgid "Mother of pearl"
+msgid "3D mother of pearl"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:156
@@ -1468,7 +1468,7 @@ msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:158
-msgid "Flow inside"
+msgid "Shaken liquid"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:158
@@ -1526,7 +1526,9 @@ msgid "Highly flexible specular bump with transparency"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:165
-msgid "Lead pencil"
+#: ../src/ui/dialog/align-and-distribute.cpp:918
+#: ../src/widgets/desktop-widget.cpp:1563
+msgid "Drawing"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:165
@@ -1560,7 +1562,7 @@ msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:169
-msgid "Cross blotches"
+msgid "Chewing gum"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:169
@@ -1618,7 +1620,7 @@ msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:176
-msgid "Rough contour"
+msgid "Rough and dilate"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:176
@@ -10831,11 +10833,6 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:916
 msgid "Smallest object"
-msgstr ""
-
-#: ../src/ui/dialog/align-and-distribute.cpp:918
-#: ../src/widgets/desktop-widget.cpp:1563
-msgid "Drawing"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:919
