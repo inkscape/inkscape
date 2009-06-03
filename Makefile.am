@@ -98,16 +98,23 @@ EXTRA_DIST = \
 	packaging/macosx/Resources/MenuBar.nib/classes.nib	\
 	packaging/macosx/Resources/MenuBar.nib/info.nib	\
 	packaging/macosx/Resources/MenuBar.nib/objects.xib	\
-	packaging/macosx/Resources/inkscape_ai.icns	\
-	packaging/macosx/Resources/inkscape_document.icns	\
-	packaging/macosx/Resources/inkscape_eps.icns	\
-	packaging/macosx/Resources/inkscape_epsi.icns	\
-	packaging/macosx/Resources/inkscape_pdf.icns	\
-	packaging/macosx/Resources/inkscape_ps.icns	\
-	packaging/macosx/Resources/inkscape_svg.icns	\
-	packaging/macosx/Resources/inkscape_svgz.icns	\
-	packaging/macosx/Resources/inkscape_wmf.icns	\
-	packaging/macosx/Resources/Inkscape.icns	\
+	packaging/macosx/Resources/application-gimp-gradient.icns \
+	packaging/macosx/Resources/application-vnd.ms.xaml.icns \
+	packaging/macosx/Resources/image-vnd.sk1.icns \
+	packaging/macosx/Resources/application-illustrator.icns \
+	packaging/macosx/Resources/application-vnd.corel-draw.icns \
+	packaging/macosx/Resources/image-x-eps.icns \
+	packaging/macosx/Resources/Inkscape.icns \
+	packaging/macosx/Resources/image-vnd.dxf.icns \
+	packaging/macosx/Resources/image-svg+xml-compressed.icns \
+	packaging/macosx/Resources/application-pdf.icns \
+	packaging/macosx/Resources/application-vnd.corel-draw-template.icns \
+	packaging/macosx/Resources/application-vnd.corel-draw-compressed.icns \
+	packaging/macosx/Resources/image-svg+xml.icns \
+	packaging/macosx/Resources/image-vnd.windows-metafile.icns \
+	packaging/macosx/Resources/image-x-ps.icns \
+	packaging/macosx/Resources/application-vnd.wordperfect-graphic.icns \
+	packaging/macosx/Resources/application-illustrator-svg.icns \
 	packaging/macosx/Resources/openDoc	\
 	packaging/macosx/Resources/script	\
 	packaging/macosx/Resources/ProgressWindow.nib/classes.nib	\
