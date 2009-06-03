@@ -1073,6 +1073,8 @@ sp_stroke_style_line_widget_new(void)
 
     gint i = 0;
 
+    //TRANSLATORS: only translate "string" in "context|string".
+    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
     /* Stroke width */
     spw_label(t, Q_("StrokeWidth|Width:"), 0, i);
 

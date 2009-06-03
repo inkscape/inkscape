@@ -730,7 +730,9 @@ sp_selection_raise(SPDesktop *desktop)
     }
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_RAISE,
-                     //TRANSLATORS: Only put the word "Raise" in the translation. Means "to raise an object" in the undo history
+                     //TRANSLATORS: only translate "string" in "context|string".
+                     // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+                     // "Raise" means "to raise an object" in the undo history
                      Q_("undo_action|Raise"));
 }
 

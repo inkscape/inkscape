@@ -464,7 +464,9 @@ public:
         removeOverlapXGap.set_value(0);
         dialog.tooltips().set_tip(removeOverlapXGap,
                                   _("Minimum horizontal gap (in px units) between bounding boxes"));
-        /* TRANSLATORS: Horizontal gap. Only put "H:" equivalent in the translation */
+        //TRANSLATORS: only translate "string" in "context|string".
+        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+        // "H:" stands for horizontal gap
         removeOverlapXGapLabel.set_label(Q_("gap|H:"));
 
         removeOverlapYGap.set_digits(1);

@@ -131,13 +131,17 @@ void Panel::_init()
     }
 
     {
+        //TRANSLATORS: only translate "string" in "context|string".
+        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
     	Glib::ustring heightItemLabel(Q_("swatches|Size"));
 
     	//TRANSLATORS: Indicates size of colour swatches
         const gchar *heightLabels[] = {
             N_("tiny"),
             N_("small"),
-            //TRANSLATORS: Translate only the word "medium". Indicates size of colour swatches
+            //TRANSLATORS: only translate "string" in "context|string".
+            // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+            // "medium" indicates size of colour swatches
             N_("swatchesHeight|medium"),
             N_("large"),
             N_("huge")
@@ -162,13 +166,17 @@ void Panel::_init()
     }
 
     {
+        //TRANSLATORS: only translate "string" in "context|string".
+        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
         Glib::ustring widthItemLabel(Q_("swatches|Width"));
 
         //TRANSLATORS: Indicates width of colour swatches
         const gchar *widthLabels[] = {
             N_("narrower"),
             N_("narrow"),
-            //TRANSLATORS: Translate only the word "medium". Indicates width of colour swatches
+            //TRANSLATORS: only translate "string" in "context|string".
+            // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+            // "medium" indicates width of colour swatches
             N_("swatchesWidth|medium"),
             N_("wide"),
             N_("wider")
@@ -201,7 +209,9 @@ void Panel::_init()
     }
 
     {
-        //TRANSLATORS: Translate only the word "Wrap". Indicates how colour swatches are displayed
+        //TRANSLATORS: only translate "string" in "context|string".
+        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+        // "Wrap" indicates how colour swatches are displayed
     	Glib::ustring wrap_label(Q_("swatches|Wrap"));
         Gtk::CheckMenuItem *check = manage(new Gtk::CheckMenuItem(wrap_label));
         check->set_active(panel_wrap);

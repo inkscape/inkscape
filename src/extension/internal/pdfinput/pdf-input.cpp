@@ -391,6 +391,8 @@ void PdfImportDialog::_onPrecisionChanged() {
 
     static Glib::ustring precision_comments[] = {
         Glib::ustring(_("rough")),
+        //TRANSLATORS: only translate "string" in "context|string".
+        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
         Glib::ustring(Q_("pdfinput|medium")),
         Glib::ustring(_("fine")),
         Glib::ustring(_("very fine"))

@@ -39,7 +39,9 @@ const gchar *
 type2term(GType type)
 {
     if (type == SP_TYPE_ANCHOR)
-	// TRANSLATORS: only translate and put "Link" in the translation. It means internet link (anchor)
+        //TRANSLATORS: only translate "string" in "context|string".
+        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+	// "Link" means internet link (anchor)
         { return Q_("web|Link"); }
     if (type == SP_TYPE_CIRCLE)
         { return _("Circle"); }
@@ -65,9 +67,10 @@ type2term(GType type)
         { return _("3D Box"); }
     if (type == SP_TYPE_TEXT)
         { return _("Text"); }
-    // TRANSLATORS: only translate "string" in "context|string".
-    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
     if (type == SP_TYPE_USE)
+        // TRANSLATORS: only translate "string" in "context|string".
+        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+        // "Clone" is a noun, type of object
         { return Q_("object|Clone"); }
     if (type == SP_TYPE_ARC)
         { return _("Ellipse"); }

@@ -48,7 +48,8 @@ const EnumDataConverter<FilterPrimitiveInput> FPInputConverter(FPInputData, FPIN
 
 // feBlend
 const EnumData<Inkscape::Filters::FilterBlendMode> BlendModeData[Inkscape::Filters::BLEND_ENDMODE] = {
-    //TRANSLATORS: This is a context string, only put the word "Normal" in your translation
+    //TRANSLATORS: only translate "string" in "context|string".
+    // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
     {Inkscape::Filters::BLEND_NORMAL,   Q_("filterBlendMode|Normal"),   "normal"},
     {Inkscape::Filters::BLEND_MULTIPLY, _("Multiply"), "multiply"},
     {Inkscape::Filters::BLEND_SCREEN,   _("Screen"),   "screen"},

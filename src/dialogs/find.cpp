@@ -606,7 +606,9 @@ sp_find_types ()
 
         {
             GtkWidget *c = sp_find_types_checkbox_indented (vb, "clones", TRUE, tt, _("Search clones"),
-            		//TRANSLATORS: Translate the word "Clones" only. A noun indicating type of object to find
+                        //TRANSLATORS: only translate "string" in "context|string".
+                        // For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
+                        // "Clones" is a noun indicating type of object to find
             		Q_("find|Clones"), NULL, 10);
             gtk_box_pack_start (GTK_BOX (vb_all), c, FALSE, FALSE, 0);
         }
