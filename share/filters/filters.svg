@@ -787,18 +787,18 @@
 <feComposite id="feComposite3419" operator="atop" in="result9" in2="result4" />
 <feBlend id="feBlend3421" blend="normal" mode="multiply" />
 </filter>
-<filter id="Fatoil0" inkscape:label="Fat oil" inkscape:menu="Bevels" inkscape:menu-tooltip="Fat oil with some adjustable turbulence" height="1.4" width="1.4" y="-0.2" x="-0.2">
-<feTurbulence id="feTurbulence3019" numOctaves="2" seed="55" type="fractalNoise" in="SourceAlpha" baseFrequency="0.02" />
-<feDisplacementMap id="feDisplacementMap3021" numOctaves="2" scale="15" yChannelSelector="A" xChannelSelector="G" in="SourceGraphic" />
-<feGaussianBlur id="feGaussianBlur3023" stdDeviation="2" />
-<feComposite id="feComposite3025" result="fbSourceGraphic" k4="-0.5" k1="0" k3="2" k2="4" operator="arithmetic" />
-<feGaussianBlur id="feGaussianBlur3029" stdDeviation="4" in="fbSourceGraphic" result="result0" />
-<feSpecularLighting id="feSpecularLighting3031" in="result0" result="result1" lighting-color="rgb(255,255,255)" surfaceScale="3" specularConstant="1.1000000000000001" specularExponent="45">
-<feDistantLight id="feDistantLight3033" azimuth="235" elevation="65" />
+<filter id="FatOil0" inkscape:label="Fat oil" inkscape:menu="Bevels" inkscape:menu-tooltip="Fat oil with some adjustable turbulence" height="1.4" width="1.4" y="-0.2" x="-0.2">
+<feTurbulence id="feTurbulence3641" numOctaves="2" seed="55" type="fractalNoise" in="SourceAlpha" baseFrequency="0.02" />
+<feDisplacementMap id="feDisplacementMap3643" numOctaves="2" scale="15" yChannelSelector="A" xChannelSelector="A" in="SourceGraphic" />
+<feGaussianBlur id="feGaussianBlur3645" stdDeviation="1.5" />
+<feComposite id="feComposite3647" result="fbSourceGraphic" k4="-0.29999999999999999" k1="0" k3="1" k2="1" operator="arithmetic" />
+<feGaussianBlur id="feGaussianBlur3649" stdDeviation="3.5" in="fbSourceGraphic" result="result0" />
+<feSpecularLighting id="feSpecularLighting3651" in="result0" result="result1" lighting-color="rgb(255,255,255)" surfaceScale="3" specularConstant="1" specularExponent="55">
+<feDistantLight id="feDistantLight3653" azimuth="235" elevation="65" />
 </feSpecularLighting>
-<feComposite id="feComposite3035" in2="fbSourceGraphic" in="result1" result="result2" operator="in" />
-<feComposite id="feComposite3037" in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.40000000000000002" k3="1.5" />
-<feBlend id="feBlend3039" blend="normal" result="fbSourceGraphic" mode="darken" />
+<feComposite id="feComposite3655" in2="fbSourceGraphic" in="result1" result="result2" operator="in" />
+<feComposite id="feComposite3657" in="fbSourceGraphic" result="result4" operator="arithmetic" k2="0.40000000000000002" k3="1.7" />
+<feBlend id="feBlend3659" blend="normal" result="fbSourceGraphic" mode="normal" in2="result2" />
 </filter>
 <filter id="filter3790" inkscape:label="Colorize" inkscape:menu="Color" inkscape:menu-tooltip="Gives the flood color to the dark parts of the image" x="0" y="0" width="1" height="1">
 <feColorMatrix id="feColorMatrix864" values="1" in="SourceGraphic" type="saturate" result="result2" />
