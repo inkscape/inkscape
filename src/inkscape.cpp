@@ -1381,7 +1381,15 @@ gchar *
 profile_path(const char *filename)
 {
     static const gchar *prefdir = NULL;
+
+
     if (!prefdir) {
+        // First check for a custom environment variable for a "portable app"
+        gchar const *val = g_getenv("INKSCAPE_PORTABLE_PROFILE_DIR");
+        if (val) {
+            prefdir = g_strdup(val);
+        }
+
 #ifdef HAS_SHGetSpecialFolderLocation
         // prefer c:\Documents and Settings\UserName\Application Data\ to
         // c:\Documents and Settings\userName\;
