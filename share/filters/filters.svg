@@ -554,17 +554,17 @@
 <feComposite id="feComposite2894" operator="in" in="result9" in2="result4" />
 <feBlend id="feBlend2896" blend="normal" mode="multiply" />
 </filter>
-<filter id="filter2882" inkscape:label="Leaves" inkscape:menu="Scatter" inkscape:menu-tooltip="Leaves on the ground in Fall, or living foliage" height="1.5" width="1.5" y="-0.25" x="-0.25">
-<feTurbulence id="feTurbulence2884" baseFrequency="0.13" numOctaves="7" type="fractalNoise" />
-<feColorMatrix id="feColorMatrix545" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -2.9 " result="result5" />
-<feComposite id="feComposite2888" in2="result5" operator="in" in="SourceGraphic" />
-<feMorphology id="feMorphology2890" result="result3" radius="3" operator="dilate" />
-<feTurbulence id="feTurbulence2892" baseFrequency="0.10000000000000001" numOctaves="3" />
-<feDisplacementMap id="feDisplacementMap2894" result="result4" scale="10.5" yChannelSelector="A" xChannelSelector="R" in="result3" />
-<feComposite id="feComposite551" in2="result4" operator="arithmetic" result="result2" k1="1" k3="1" />
-<feComposite id="feComposite553" in2="SourceAlpha" operator="arithmetic" in="result2" k2="2" k1="0" />
-<feBlend id="feBlend555" blend="normal" mode="darken" />
-<feConvolveMatrix id="feConvolveMatrix2904" order="3 3" kernelMatrix="2 0 0 0 1 0 0 0 -1" targetX="1" targetY="1" divisor="2" edgeMode="duplicate" />
+<filter id="Leaves0" inkscape:label="Leaves" inkscape:menu="Scatter" inkscape:menu-tooltip="Leaves on the ground in Fall, or living foliage" height="1.5" width="1.5" y="-0.25" x="-0.25">
+<feTurbulence id="feTurbulence6838" baseFrequency="0.089999999999999997" numOctaves="5" type="fractalNoise" />
+<feColorMatrix id="feColorMatrix6840" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 4.9 -2.9 " result="result5" />
+<feComposite id="feComposite6842" in2="result5" operator="in" in="SourceGraphic" />
+<feMorphology id="feMorphology6844" result="result3" radius="6" operator="dilate" />
+<feTurbulence id="feTurbulence6846" baseFrequency="0.20000000000000001" numOctaves="1" type="fractalNoise" />
+<feDisplacementMap id="feDisplacementMap6848" result="result4" scale="15" yChannelSelector="G" xChannelSelector="R" in="result3" />
+<feComposite id="feComposite6850" in2="result4" operator="arithmetic" result="result2" k1="0.5" k3="1" />
+<feComposite id="feComposite6852" in2="result2" operator="arithmetic" in="result2" k2="1" k1="0" result="result6" />
+<feBlend id="feBlend6854" blend="normal" mode="normal" in2="result2" />
+<feConvolveMatrix id="feConvolveMatrix6856" order="3 3" kernelMatrix="1 0 0 0 2 0 0 0 -1 " targetX="0" targetY="0" divisor="1.5" edgeMode="duplicate" />
 </filter>
 <filter id="Transluc0" inkscape:label="Translucent" inkscape:menu="Bevels" inkscape:menu-tooltip="Illuminated translucent plastic or glass effect" x="-0.25" y="-0.25" width="1.5" height="1.5">
 <feBlend id="feBlend3301" blend="normal" mode="screen" result="result1" />
@@ -1274,7 +1274,7 @@
 <feComposite id="feComposite2942" in2="SourceGraphic" in="result4" operator="in" />
 </filter>
 <filter id="filter2838a" inkscape:label="Simple blur" inkscape:menu="ABCs" inkscape:menu-tooltip="Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog">
-<feGaussianBlur stdDeviation="1" id="feGaussianBlur2840" />
+<feGaussianBlur stdDeviation="3" id="feGaussianBlur2840" />
 </filter>
 <filter id="Hslbubdif0" inkscape:label="HSL Bubbles, diffuse" inkscape:menu="Bumps" inkscape:menu-tooltip="Same than HSL bubbles but with a diffuse light instead of a specular one">
 <feGaussianBlur id="feGaussianBlur3007" result="result0" in="SourceGraphic" stdDeviation="0.5" />
