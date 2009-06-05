@@ -29,8 +29,8 @@ RFE</a>).</p>
 <keys><key><keyf f="F4"/></key><key>r</key>	 <action>Rectangle tool</action></keys>
 <keys><key><shift/><keyf f="F4"/></key><key>x</key>	 <action>3D box tool</action></keys>
 <keys><key><keyf f="F5"/></key><key>e</key>	 <action>Ellipse/arc tool</action></keys>
-<keys><key><keyf f="F6"/></key><key>p</key>	 <action>Freehand (Pencil) tool</action></keys>
-<keys><key><shift/><keyf f="F6"/></key><key>b</key>	 <action>Bezier (Pen) tool</action></keys>
+<keys><key><keyf f="F6"/></key><key>p</key>	 <action>Pencil (Freehand) tool</action></keys>
+<keys><key><shift/><keyf f="F6"/></key><key>b</key>	 <action>Pen (Bezier) tool</action></keys>
 <keys><key><ctrl/><keyf f="F6"/></key><key>c</key>	 <action>Calligraphy tool</action></keys>
 <keys><key><shift/><keyf f="E"/></key><key>c</key>	 <action>Eraser tool</action></keys>
 <keys><key><shift/><keyf f="F7"/></key><key>u</key>	 <action>Paint Bucket tool</action></keys>
@@ -129,7 +129,7 @@ RFE</a>).</p>
 <note>When the "Mouse wheel zooms by default" option is on in Preferences, Ctrl+wheel scrolls instead of zooming. To zoom, use wheel without Ctrl.</note>
 <mouse><key><shift/><mid-drag/></key> <action>zoom into the area</action></mouse>
 <keys><key><alt/>Z</key> <action>activate zoom field</action></keys>
-<note>The zoom field in the lower left corner of the window allows you to specify zoom level precisely.</note>
+<note>The zoom field in the lower right corner of the window allows you to specify zoom level precisely.</note>
 </group>
 
 <group>
@@ -207,9 +207,9 @@ RFE</a>).</p>
 
 <group>
 <keys><key><ctrl/>N</key>	 <action>create new document</action></keys>
-<keys><key><ctrl/>O</key>	 <action>open an SVG document</action></keys>
+<keys><key><ctrl/>O</key>	 <action>open a document</action></keys>
 <keys><key><shift/><ctrl/>E</key>	 <action>export to PNG</action></keys>
-<keys><key><ctrl/>I</key>	 <action>import bitmap or SVG</action></keys>
+<keys><key><ctrl/>I</key>	 <action>import bitmap or vector</action></keys>
 <keys><key><ctrl/>P</key>	 <action>print document</action></keys>
 <keys><key><ctrl/>S</key>	 <action>save document</action></keys>
 <keys><key><shift/><ctrl/>S</key>	 <action>save under a new name</action></keys>
@@ -274,14 +274,12 @@ RFE</a>).</p>
 <group>
 <title>Clipboard</title>
 <keys><key><ctrl/>C</key>	 <action>copy selection</action></keys>
-<note>This places a copy of the selection to the Inkscape clipboard. Text from text objects is also placed onto the system clipboard.</note>
 <keys><key><ctrl/>X</key>	 <action>cut selection</action></keys>
-<note>This works the same as "copy selection" followed by deleting the selection.</note>
 <keys><key><ctrl/>V</key>	 <action>paste clipboard</action></keys>
 <note>This places the clipboard objects at the mouse cursor, or at the center of the window if mouse is outside the canvas.</note>
-<note>When editing text with the text tool, this pastes the text from the system clipboard into the current text object.</note>
+<note>When editing text with the text tool, this pastes the text from the clipboard into the current text object.</note>
 <keys><key><ctrl/><alt/>V</key>	 <action>paste in place</action></keys>
-<note>This places the clipboard objects to the original location from which they were copied.</note>
+<note>This places the clipboard objects into the original location from which they were copied.</note>
 <keys><key><shift/><ctrl/>V</key>  <action>paste style</action></keys> 
 <note>This applies the style of the (first of the) copied object(s) to the current selection.</note>
 <note>If a gradient handle (in Gradient tool) or a text span (in Text tool) are selected, they get the style instead of the entire object.</note>
@@ -420,8 +418,8 @@ RFE</a>).</p>
 <note>Shift+click adds an object to the current selection if it was not selected, or deselects it otherwise.</note>
 <mouse><key><left-click/><left-click/></key> <action>edit the object</action></mouse>
 <note>For paths, double clicking switches to Node tool; for shapes, to corresponding shape tool; for text, to Text tool.</note>
-<note>For groups, double clicking performs the "Enter group" command (the group becomes temporary layer).</note>
-<note>Double clicking in empty space swithes to the parent layer in the hierarchy, if any.</note>
+<note>For groups, double clicking performs the "Enter group" command (the group becomes a temporary layer).</note>
+<note>Double clicking in empty space switches to the parent layer in the hierarchy, if any.</note>
 </group>
 
 <group>
@@ -768,7 +766,8 @@ groups) with the same effect as Alt+click.)</note>
 with the segment; another Shift+S will expand a second handle</note>
 <keys><key><shift/>Y</key>  <action>make symmetric</action></keys>
 <note>When making smooth or symmetric, you can lock the position of one of the handles by hovering mouse over it.</note>
-<mouse><key><ctrl/><left-click/></key> <action>toggle smooth/cusp/symmetric</action></mouse>
+<keys><key><shift/>A</key>  <action>make auto</action></keys>
+<mouse><key><ctrl/><left-click/></key> <action>toggle smooth/cusp/symmetric/auto</action></mouse>
 </group>
 
 <group>
@@ -870,6 +869,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <keys><key><shift/>r</key><key><shift/>9</key> <action>roughen mode</action></keys>
 <keys><key><shift/>c</key> <action>color paint mode</action></keys>
 <keys><key><shift/>j</key> <action>color jitter mode</action></keys>
+<keys><key><shift/>b</key> <action>blur mode</action></keys>
 </group>
 
 <group>
@@ -939,9 +939,9 @@ with the segment; another Shift+S will expand a second handle</note>
 
 <group>
 <title>Edit by handles</title>
-<note>All editing operations occur "in perspective", i.e., either along PLs or within planes spanned by these.</note>
+<note>All editing operations occur "in perspective", i.e., either along perspective lines or within planes spanned by these.</note>
 <mouse><key><left-drag/></key> <action>resize/move box</action></mouse>
-<note>The four front handles and the center normally move withing the XY-plane, the four rear handles along the Z-axis.</note>
+<note>The four front handles and the center normally move within the XY plane, the four rear handles along the Z axis.</note>
 <mouse><key><shift/><left-drag/></key> <action>resize/move (with handle behaviour swapped)</action></mouse>
 <mouse><key><ctrl/><left-drag/></key> <action>resize/move (handles snap to axes or diagonals)</action></mouse>
 </group>
@@ -959,11 +959,13 @@ with the segment; another Shift+S will expand a second handle</note>
 <keys><key><alt/>{</key> <key><alt/>}</key> <action>rotate Z-PLs (if parallel) by 1 pixel</action></keys> 
 </group>
 
+<!--
 <group>
 <title>Visual appearance</title>
 <keys><key>L</key> <action>toggle visibility of PLs</action></keys>
 <keys><key>A</key> <action>toggle PLs to all corners/only front corners</action></keys>
 </group>
+-->
 
 </section>
 
@@ -1092,14 +1094,6 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><shift/><left-drag/></key> <action>temporarily disable snapping</action></mouse>
 <note>Shift also temporaily disables snapping to grid or guides when you are drawing with grid or guides on.</note>
 </group>
-
-<group>
-<title>Create dots</title>
-<mouse><key><ctrl/><left-click/></key> <action>create a dot</action></mouse>
-<note>This creates a small circle. Its size (relative to the current stroke width) can be set in Preferences.</note> 
-<mouse><key><shift/><ctrl/><left-click/></key> <action>create a double-sized dot</action></mouse>
-<mouse><key><alt/><ctrl/><left-click/></key> <action>create a random-sized dot</action></mouse>
-</group>
 </section>
 
 *<section title="Pen (Bezier) tool" color="e7f5d7">
@@ -1110,7 +1104,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <note>If no path is being created, this starts a new path.</note>
 <mouse><key><shift/><left-click/></key> <action>add to selected path</action></mouse>
 <note>If a path is selected, Shift+clicking anywhere starts a new subpath instead of a new independent path.</note>
-<mouse><key><left-drag/></key> <action>create a bezier node with two handles</action></mouse>
+<mouse><key><left-drag/></key> <action>create a Bezier node with two handles</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>move only one handle</action></mouse>
 <!-- FIXME: also disables snapping! another conflict -->
 <note>This moves only one handle (instead of both) while creating a node, making it cusp.</note> 
@@ -1166,6 +1160,8 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><left-drag/></key> <action>draw a calligraphic line</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>add to selected path</action></mouse>
 <note>Drawing with Shift unions the newly created stroke with the previous selection</note>
+<mouse><key><alt/><left-drag/></key> <action>subtract from selected path</action></mouse>
+<note>Drawing with Alt subtracts the newly created stroke from the previous selection</note>
 <mouse><key><ctrl/><left-drag/></key> <action>track a guide path</action></mouse>
 <note>Drawing with Ctrl tracks a selected guide path at the constant distance</note>
 <mouse><key><left-arrow/></key> <key><right-arrow/></key> <action>adjust pen width by 1</action></mouse>
@@ -1279,7 +1275,7 @@ with the segment; another Shift+S will expand a second handle</note>
 <mouse><key><alt/><left-click/></key> <key><alt/><left-drag/></key> <key><ctrl/><alt/><left-click/></key> <key><ctrl/><alt/><left-drag/></key> <action>pick inverse color</action></mouse>
 <note>If Alt is pressed, picking color (with or without Shift, by click or by drag) picks the inverse of the color.</note>
 <keys><key><ctrl/>C</key> <action>copy color</action></keys>
-<note>This copies the color under cursor to the system clipboard, as text in RRGGBBAA format (8 hex digits).</note>
+<note>This copies the color under cursor to the clipboard, as text in RRGGBBAA format (8 hex digits).</note>
 </group>
 </section>
 
