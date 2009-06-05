@@ -190,15 +190,17 @@ void FileOpenDialogImplWin32::createFilterMenu()
     Inkscape::Extension::DB::InputList extension_list;
     Inkscape::Extension::db.get_input_list(extension_list);
 
-    ustring all_inkscape_files_filter, all_image_files_filter;
-    Filter all_files, all_inkscape_files, all_image_files;
+    ustring all_inkscape_files_filter, all_image_files_filter, all_vectors_filter, all_bitmaps_filter;
+    Filter all_files, all_inkscape_files, all_image_files, all_vectors, all_bitmaps;
 
     const gchar *all_files_filter_name = N_("All Files");
     const gchar *all_inkscape_files_filter_name = N_("All Inkscape Files");
-    const gchar *all_image_files_filter_name = N_("All Image Files");
+    const gchar *all_image_files_filter_name = N_("All Images");
+    const gchar *all_vectors_filter_name = N_("All Vectors");
+    const gchar *all_bitmaps_filter_name = N_("All Bitmaps");
 
     // Calculate the amount of memory required
-    int filter_count = 3;       // 3 - one for All Files, All Images and All Inkscape Files
+    int filter_count = 5;       // 5 - one for each filter type
     int filter_length = 1;
 
     for (Inkscape::Extension::DB::InputList::iterator current_item = extension_list.begin();
@@ -236,11 +238,53 @@ void FileOpenDialogImplWin32::createFilterMenu()
             all_image_files_filter += file_extension_name;
         }
 
+        // I don't know of any other way to define "bitmap" formats other than by listing them
+        // if you change it here, do the same change in filedialogimpl-gtkmm
+        if ( 
+            strncmp("image/png", imod->get_mimetype(), 9)==0 ||
+            strncmp("image/jpeg", imod->get_mimetype(), 10)==0 ||
+            strncmp("image/gif", imod->get_mimetype(), 9)==0 ||
+            strncmp("image/x-icon", imod->get_mimetype(), 12)==0 ||
+            strncmp("image/x-navi-animation", imod->get_mimetype(), 22)==0 ||
+            strncmp("image/x-cmu-raster", imod->get_mimetype(), 18)==0 ||
+            strncmp("image/x-xpixmap", imod->get_mimetype(), 15)==0 ||
+            strncmp("image/bmp", imod->get_mimetype(), 9)==0 ||
+            strncmp("image/vnd.wap.wbmp", imod->get_mimetype(), 18)==0 ||
+            strncmp("image/tiff", imod->get_mimetype(), 10)==0 ||
+            strncmp("image/x-xbitmap", imod->get_mimetype(), 15)==0 ||
+            strncmp("image/x-tga", imod->get_mimetype(), 11)==0 ||
+            strncmp("image/x-pcx", imod->get_mimetype(), 11)==0 
+            ) {
+            if(all_bitmaps_filter.length() > 0)
+                all_bitmaps_filter += ";*";
+            all_bitmaps_filter += file_extension_name;
+        } else {
+            if(all_vectors_filter.length() > 0)
+                all_vectors_filter += ";*";
+            all_vectors_filter += file_extension_name;
+        }
+
         filter_count++;
     }
 
     int extension_index = 0;
     _extension_map = new Inkscape::Extension::Extension*[filter_count];
+
+    // Filter bitmap files
+    all_bitmaps.name = g_utf8_to_utf16(all_bitmaps_filter_name,
+        -1, NULL, &all_bitmaps.name_length, NULL);
+    all_bitmaps.filter = g_utf8_to_utf16(all_bitmaps_filter.data(),
+            -1, NULL, &all_bitmaps.filter_length, NULL);
+  	all_bitmaps.mod = NULL;
+    filter_list.push_front(all_bitmaps);
+
+    // Filter vector files
+    all_vectors.name = g_utf8_to_utf16(all_vectors_filter_name,
+        -1, NULL, &all_vectors.name_length, NULL);
+    all_vectors.filter = g_utf8_to_utf16(all_vectors_filter.data(),
+            -1, NULL, &all_vectors.filter_length, NULL);
+  	all_vectors.mod = NULL;
+    filter_list.push_front(all_vectors);
 
     // Filter Image Files
     all_image_files.name = g_utf8_to_utf16(all_image_files_filter_name,
@@ -270,7 +314,12 @@ void FileOpenDialogImplWin32::createFilterMenu()
                     all_inkscape_files.filter_length +
                     all_inkscape_files.name_length + 3 +
                     all_image_files.filter_length +
-                    all_image_files.name_length + 3 + 1;
+                    all_image_files.name_length + 3 +
+                    all_vectors.filter_length +
+                    all_vectors.name_length + 3 +
+                    all_bitmaps.filter_length +
+                    all_bitmaps.name_length + 3 +
+                                                  1;
      // Add 3 for 2*2 \0s and a *, and 1 for a trailing \0
 
 	_filter = new wchar_t[filter_length];
