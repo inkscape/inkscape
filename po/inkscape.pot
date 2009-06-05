@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-05 14:49+0200\n"
+"POT-Creation-Date: 2009-06-05 23:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3253,7 +3253,7 @@ msgstr ""
 msgid "Font"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:221
+#: ../src/dialogs/text-edit.cpp:221 ../share/extensions/svgcalendar.inx.h:12
 msgid "Layout"
 msgstr ""
 
@@ -4030,6 +4030,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:96
+#: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Offset"
 msgstr ""
 
@@ -4815,7 +4816,7 @@ msgstr ""
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 #: ../share/extensions/render_barcode.inx.h:5
 #: ../share/extensions/rtree.inx.h:4 ../share/extensions/spirograph.inx.h:6
-#: ../share/extensions/svgcalendar.inx.h:21
+#: ../share/extensions/svgcalendar.inx.h:22
 #: ../share/extensions/triangle.inx.h:10
 msgid "Render"
 msgstr ""
@@ -5403,6 +5404,7 @@ msgid "Wrap"
 msgstr ""
 
 #: ../src/filter-enums.cpp:96 ../src/flood-context.cpp:264
+#: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/ui/dialog/document-properties.cpp:327
 #: ../src/ui/dialog/filter-effects-dialog.cpp:468
 #: ../src/ui/dialog/inkscape-preferences.cpp:255
@@ -5712,7 +5714,8 @@ msgstr ""
 msgid "Delete gradient stop(s)"
 msgstr ""
 
-#: ../src/helper/units.cpp:37 ../share/extensions/foldablebox.inx.h:8
+#: ../src/helper/units.cpp:37 ../src/live_effects/lpe-ruler.cpp:43
+#: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
 #: ../share/extensions/printing-marks.inx.h:20
 msgid "Unit"
@@ -7154,6 +7157,86 @@ msgstr ""
 msgid ""
 "Relative position to a reference point defines global bending direction and "
 "amount"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:27 ../share/extensions/restack.inx.h:7
+msgid "Left"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:28 ../share/extensions/restack.inx.h:14
+msgid "Right"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:29 ../src/live_effects/lpe-ruler.cpp:37
+msgid "Both"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:35 ../src/widgets/toolbox.cpp:5166
+msgid "Start"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5179
+msgid "End"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:44
+msgid "Mark distance"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:44
+msgid "Distance between successive ruler marks"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:45
+msgid "Major length"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:45
+msgid "Length of major ruler marks"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:46
+msgid "Minor length"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:46
+msgid "Length of minor ruler marks"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:47
+msgid "Major steps"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:47
+msgid "Draw a major mark every ... steps"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:48
+msgid "Shift marks by"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:48
+msgid "Shift marks by this many steps"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:49
+msgid "Mark direction"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:49
+msgid "Direction of marks (when viewing along the path from start to end)"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:50
+msgid "Offset of first mark"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:51
+msgid "Border marks"
+msgstr ""
+
+#: ../src/live_effects/lpe-ruler.cpp:51
+msgid "Choose whether to draw marks at the beginning and end of the path"
 msgstr ""
 
 #. initialise your parameters here:
@@ -14099,7 +14182,7 @@ msgid "The desired number of scans"
 msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:515
-#: ../share/extensions/svgcalendar.inx.h:5
+#: ../share/extensions/svgcalendar.inx.h:6
 msgid "Colors"
 msgstr ""
 
@@ -18848,19 +18931,11 @@ msgid "Arc: Change open/closed"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5166
-msgid "Start"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5166
 msgid "Start:"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5167
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5179
-msgid "End"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:5179
@@ -21103,10 +21178,6 @@ msgstr ""
 msgid "Horizontal Point:"
 msgstr ""
 
-#: ../share/extensions/restack.inx.h:7
-msgid "Left"
-msgstr ""
-
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr ""
@@ -21129,10 +21200,6 @@ msgstr ""
 
 #: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
-msgstr ""
-
-#: ../share/extensions/restack.inx.h:14
-msgid "Right"
 msgstr ""
 
 #: ../share/extensions/restack.inx.h:15
@@ -21291,85 +21358,81 @@ msgid "(The day names list must start from Sunday)"
 msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:3
-msgid "Calendar"
+msgid "Automatically set size and position"
 msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:4
+msgid "Calendar"
+msgstr ""
+
+#: ../share/extensions/svgcalendar.inx.h:5
 msgid "Char Encoding"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:6
+#: ../share/extensions/svgcalendar.inx.h:7
 msgid "Configuration"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:7
+#: ../share/extensions/svgcalendar.inx.h:8
 msgid "Day color"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:8
+#: ../share/extensions/svgcalendar.inx.h:9
 msgid "Day names"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:9
+#: ../share/extensions/svgcalendar.inx.h:10
 msgid "Fill empty day boxes with next month's days"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:10
+#: ../share/extensions/svgcalendar.inx.h:11
 msgid ""
 "January February March April May June July August September October November "
 "December"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:11
+#: ../share/extensions/svgcalendar.inx.h:13
 msgid "Localization"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:12
+#: ../share/extensions/svgcalendar.inx.h:14
 msgid "Monday"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:13
+#: ../share/extensions/svgcalendar.inx.h:15
 msgid "Month (0 for all)"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:14
+#: ../share/extensions/svgcalendar.inx.h:16
 msgid "Month Margin"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:15
+#: ../share/extensions/svgcalendar.inx.h:17
 msgid "Month Width"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:16
+#: ../share/extensions/svgcalendar.inx.h:18
 msgid "Month color"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:17
+#: ../share/extensions/svgcalendar.inx.h:19
 msgid "Month names"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:18
+#: ../share/extensions/svgcalendar.inx.h:20
 msgid "Months per line"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:19
+#: ../share/extensions/svgcalendar.inx.h:21
 msgid "Next month day color"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:20
-msgid "Organization"
-msgstr ""
-
-#: ../share/extensions/svgcalendar.inx.h:22
+#: ../share/extensions/svgcalendar.inx.h:23
 msgid "Saturday"
 msgstr ""
 
-#: ../share/extensions/svgcalendar.inx.h:23
-msgid "Saturday and Sunday"
-msgstr ""
-
 #: ../share/extensions/svgcalendar.inx.h:24
-msgid "Set authomaticaly the size and positions"
+msgid "Saturday and Sunday"
 msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:25
@@ -21381,7 +21444,7 @@ msgid "Sunday"
 msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:27
-msgid "The options above has no value with the upper checked."
+msgid "The options below have no influence when the above is checked."
 msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:28
