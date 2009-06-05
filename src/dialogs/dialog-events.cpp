@@ -198,7 +198,7 @@ sp_transientize_callback ( Inkscape::Application * /*inkscape*/,
     gint transient_policy = prefs->getIntLimited( "/options/transientpolicy/value", 1, 0, 2);
 
 #ifdef WIN32 // Win32 special code to enable transient dialogs
-    transient_policy = 2;
+    transient_policy = 1;
 #endif
 
     if (!transient_policy)
