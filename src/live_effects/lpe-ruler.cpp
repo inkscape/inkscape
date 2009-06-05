@@ -40,6 +40,7 @@ static const Util::EnumDataConverter<BorderMarkType> BorderMarkTypeConverter(Bor
 
 LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
+    unit(_("Unit"), _("Unit"), "unit", &wr, this),
     mark_distance(_("Mark distance"), _("Distance between successive ruler marks"), "mark_distance", &wr, this, 20.0),
     mark_length(_("Major length"), _("Length of major ruler marks"), "mark_length", &wr, this, 14.0),
     minor_mark_length(_("Minor length"), _("Length of minor ruler marks"), "minor_mark_length", &wr, this, 7.0),
@@ -49,6 +50,7 @@ LPERuler::LPERuler(LivePathEffectObject *lpeobject) :
     offset(_("Offset"), _("Offset of first mark"), "offset", &wr, this, 0.0),
     border_marks(_("Border marks"), _("Choose whether to draw marks at the beginning and end of the path"), "border_marks", BorderMarkTypeConverter, &wr, this, BORDERMARK_BOTH)
 {
+    registerParameter(dynamic_cast<Parameter *>(&unit));
     registerParameter(dynamic_cast<Parameter *>(&mark_distance));
     registerParameter(dynamic_cast<Parameter *>(&mark_length));
     registerParameter(dynamic_cast<Parameter *>(&minor_mark_length));
@@ -80,8 +82,14 @@ LPERuler::ruler_mark(Geom::Point const &A, Geom::Point const &n, MarkType const 
 {
     using namespace Geom;
 
-    n_major = mark_length * n;
-    n_minor = minor_mark_length * n;
+    gboolean success;
+    double real_mark_length = mark_length;
+    success = sp_convert_distance(&real_mark_length, unit, &sp_unit_get_by_id(SP_UNIT_PX));
+    double real_minor_mark_length = minor_mark_length;
+    success = sp_convert_distance(&real_minor_mark_length, unit, &sp_unit_get_by_id(SP_UNIT_PX));
+
+    n_major = real_mark_length * n;
+    n_minor = real_minor_mark_length * n;
 
     Point C, D;
     switch (marktype) {
@@ -122,12 +130,17 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
     
     //find at which times to draw a mark:
     std::vector<double> s_cuts;
-    for (double s = offset; s<totlength; s+=mark_distance){
+
+    double real_mark_distance = mark_distance;
+    gboolean success = sp_convert_distance(&real_mark_distance, unit, &sp_unit_get_by_id(SP_UNIT_PX));
+
+    double real_offset = offset;
+    success = sp_convert_distance(&real_offset, unit, &sp_unit_get_by_id(SP_UNIT_PX));
+    for (double s = real_offset; s<totlength; s+=real_mark_distance){
         s_cuts.push_back(s);
     }
     std::vector<std::vector<double> > roots = multi_roots(arclength, s_cuts);
     std::vector<double> t_cuts;
-    g_warning("times:");
     for (unsigned v=0; v<roots.size();v++){
         //FIXME: 2geom multi_roots solver seem to sometimes "repeat" solutions.
         //Here, we are supposed to have one and only one solution for each s.
@@ -154,6 +167,17 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
     if (border_marks == BORDERMARK_END || border_marks == BORDERMARK_BOTH){
         Point A = pwd2_in.lastValue();
         Point n = rot90(unit_vector(speed.lastValue()))*sign;
+        //speed.lastValue() is somtimes wrong when the path is closed: a tiny line seg might added at the end to fix rounding errors...
+        //TODO: Find a better fix!! (How do we know if the path was closed?)
+        if ( A == pwd2_in.firstValue() &&
+             speed.segs.size() > 1 &&
+             speed.segs.back()[X].size() <= 1 &&
+             speed.segs.back()[Y].size() <= 1 &&
+             speed.segs.back()[X].tailError(0) <= 1e-10 &&
+             speed.segs.back()[Y].tailError(0) <= 1e-10 
+            ){
+            n = rot90(unit_vector(speed.segs[speed.segs.size()-2].at1()))*sign;
+        }
         output.concat (ruler_mark(A, n, MARK_MAJOR));
     }
 

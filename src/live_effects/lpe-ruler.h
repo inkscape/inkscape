@@ -19,6 +19,7 @@
 #include "live_effects/parameter/text.h"
 #include "live_effects/parameter/enum.h"
 #include "live_effects/parameter/bool.h"
+#include "live_effects/parameter/unit.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -52,6 +53,7 @@ private:
     Geom::Piecewise<Geom::D2<Geom::SBasis> > ruler_mark(Geom::Point const &A, Geom::Point const &n, MarkType const &marktype);
 
     ScalarParam mark_distance;
+    UnitParam unit;
     ScalarParam mark_length;
     ScalarParam minor_mark_length;
     ScalarParam major_mark_steps;
