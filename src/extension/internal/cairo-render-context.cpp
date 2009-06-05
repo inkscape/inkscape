@@ -1191,7 +1191,8 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
 void
 CairoRenderContext::_setFillStyle(SPStyle const *const style, NRRect const *pbox)
 {
-    g_return_if_fail( style->fill.isColor()
+    g_return_if_fail( !style->fill.set
+                      || style->fill.isColor()
                       || style->fill.isPaintserver() );
 
     float alpha = SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
@@ -1205,6 +1206,10 @@ CairoRenderContext::_setFillStyle(SPStyle const *const style, NRRect const *pbox
         sp_color_get_rgb_floatv(&style->fill.value.color, rgb);
 
         cairo_set_source_rgba(_cr, rgb[0], rgb[1], rgb[2], alpha);
+
+    } else if (!style->fill.set) { // unset fill is black
+        cairo_set_source_rgba(_cr, 0, 0, 0, alpha);
+
     } else {
         g_assert( style->fill.isPaintserver()
                   || SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style))
