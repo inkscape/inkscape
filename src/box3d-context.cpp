@@ -449,6 +449,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             ret = true;
             break;
 
+        /* TODO: what is this???
         case GDK_O:
             if (MOD__CTRL && MOD__SHIFT) {
                 Box3D::create_canvas_point(persp3d_get_VP(inkscape_active_document()->current_persp3d, Proj::W).affine(),
@@ -456,6 +457,7 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
             }
             ret = true;
             break;
+        */
 
         case GDK_g:
         case GDK_G:

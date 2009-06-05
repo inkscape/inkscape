@@ -1042,6 +1042,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
             }
             break;
 
+/* TODO: this is not yet enabled?? looks like some traces of the Geometry tool
         case GDK_P:
         case GDK_p:
             if (MOD__SHIFT_ONLY) {
@@ -1073,6 +1074,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                 ret = TRUE;
             }
             break;
+*/
 
         case GDK_U:
         case GDK_u:
