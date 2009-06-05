@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-03 16:28+0200\n"
+"POT-Creation-Date: 2009-06-05 14:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -429,7 +429,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:137
 #: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:158
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:175 ../share/filters/filters.svg.h:177
 msgid "Textures"
 msgstr ""
 
@@ -1625,6 +1625,14 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:176
 msgid "Create a turbulent contour around"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:177
+msgid "Gelatine"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:177
+msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -6529,66 +6537,66 @@ msgid "Recursive skeleton"
 msgstr ""
 
 #: ../src/live_effects/effect.cpp:103
-msgid "Ruler"
-msgstr ""
-
-#: ../src/live_effects/effect.cpp:104
 msgid "Tangent to curve"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:105
+#: ../src/live_effects/effect.cpp:104
 msgid "Text label"
 msgstr ""
 
 #. 0.46
-#: ../src/live_effects/effect.cpp:108
+#: ../src/live_effects/effect.cpp:107
 msgid "Bend"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:109
+#: ../src/live_effects/effect.cpp:108
 msgid "Gears"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:110
+#: ../src/live_effects/effect.cpp:109
 msgid "Pattern Along Path"
 msgstr ""
 
 #. for historic reasons, this effect is called skeletal(strokes) in Inkscape:SVG
-#: ../src/live_effects/effect.cpp:111
+#: ../src/live_effects/effect.cpp:110
 msgid "Stitch Sub-Paths"
 msgstr ""
 
 #. 0.47
-#: ../src/live_effects/effect.cpp:113
+#: ../src/live_effects/effect.cpp:112
 msgid "VonKoch"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:114
+#: ../src/live_effects/effect.cpp:113
 msgid "Knot"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:115
+#: ../src/live_effects/effect.cpp:114
 msgid "Construct grid"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:116
+#: ../src/live_effects/effect.cpp:115
 msgid "Spiro spline"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:117
+#: ../src/live_effects/effect.cpp:116
 msgid "Envelope Deformation"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:118
+#: ../src/live_effects/effect.cpp:117
 msgid "Interpolate Sub-Paths"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:119
+#: ../src/live_effects/effect.cpp:118
 msgid "Hatches (rough)"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:120
+#: ../src/live_effects/effect.cpp:119
 msgid "Sketch"
+msgstr ""
+
+#: ../src/live_effects/effect.cpp:120
+msgid "Ruler"
 msgstr ""
 
 #: ../src/live_effects/effect.cpp:273
@@ -7146,15 +7154,6 @@ msgstr ""
 msgid ""
 "Relative position to a reference point defines global bending direction and "
 "amount"
-msgstr ""
-
-#. initialise your parameters here:
-#: ../src/live_effects/lpe-skeleton.cpp:32
-msgid "Float parameter"
-msgstr ""
-
-#: ../src/live_effects/lpe-skeleton.cpp:32
-msgid "just a real number like 1.4!"
 msgstr ""
 
 #. initialise your parameters here:
@@ -13720,67 +13719,6 @@ msgstr ""
 
 #: ../src/ui/dialog/scriptdialog.cpp:244
 msgid "Errors"
-msgstr ""
-
-#. Dialog organization
-#: ../src/ui/dialog/session-player.cpp:70
-msgid "Session file"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:71
-msgid "Playback controls"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:72
-msgid "Message information"
-msgstr ""
-
-#. Active session file display
-#. fixme: Does this mean the active file for the session, or the file for the active session?
-#. Please indicate which with a TRANSLATORS comment.
-#: ../src/ui/dialog/session-player.cpp:82
-msgid "Active session file:"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:83
-msgid "Delay (milliseconds):"
-msgstr ""
-
-#. Unload/load buttons
-#: ../src/ui/dialog/session-player.cpp:91
-msgid "Close file"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:92
-msgid "Open new file"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:93
-msgid "Set delay"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:127
-msgid "Rewind"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:128
-msgid "Go back one change"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:129
-msgid "Pause"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:130
-msgid "Go forward one change"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:131
-msgid "Play"
-msgstr ""
-
-#: ../src/ui/dialog/session-player.cpp:166
-msgid "Open session file"
 msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:121
