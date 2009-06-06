@@ -308,13 +308,19 @@ sp_ui_new_view_preview()
 void
 sp_ui_close_view(GtkWidget */*widget*/)
 {
-    if (SP_ACTIVE_DESKTOP == NULL) {
+	SPDesktop *dt = SP_ACTIVE_DESKTOP;
+
+	if (dt == NULL) {
         return;
     }
-    if ((SP_ACTIVE_DESKTOP)->shutdown()) {
-        return;
+
+    if (dt->shutdown()) {
+        return; // Shutdown operation has been canceled, so do nothing
     }
-    SP_ACTIVE_DESKTOP->destroyWidget();
+
+    // Shutdown can proceed; use the stored reference to the desktop here instead of the current SP_ACTIVE_DESKTOP,
+    // because the user might have changed the focus in the meantime (see bug #381357 on Launchpad)
+    dt->destroyWidget();
 }
 
 
@@ -335,11 +341,14 @@ sp_ui_close_all(void)
     /* Iterate through all the windows, destroying each in the order they
        become active */
     while (SP_ACTIVE_DESKTOP) {
-        if ((SP_ACTIVE_DESKTOP)->shutdown()) {
-            /* The user cancelled the operation, so end doing the close */
+    	SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    	if (dt->shutdown()) {
+            /* The user canceled the operation, so end doing the close */
             return FALSE;
         }
-        SP_ACTIVE_DESKTOP->destroyWidget();
+    	// Shutdown can proceed; use the stored reference to the desktop here instead of the current SP_ACTIVE_DESKTOP,
+    	// because the user might have changed the focus in the meantime (see bug #381357 on Launchpad)
+    	dt->destroyWidget();
     }
 
     return TRUE;
