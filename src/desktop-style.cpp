@@ -1324,7 +1324,11 @@ sp_desktop_query_style(SPDesktop *desktop, SPStyle *style, int property)
         return ret; // subselection returned a style, pass it on
 
     // otherwise, do querying and averaging over selection
-    return sp_desktop_query_style_from_list ((GSList *) desktop->selection->itemList(), style, property);
+    if (desktop->selection != NULL) {
+    	return sp_desktop_query_style_from_list ((GSList *) desktop->selection->itemList(), style, property);
+    }
+
+    return QUERY_STYLE_NOTHING;
 }
 
 /**

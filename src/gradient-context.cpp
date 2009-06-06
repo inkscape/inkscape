@@ -147,6 +147,9 @@ gradient_selection_changed (Inkscape::Selection *, gpointer data)
 
     GrDrag *drag = rc->_grdrag;
     Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(rc)->desktop);
+    if (selection == NULL) {
+    	return;
+    }
     guint n_obj = g_slist_length((GSList *) selection->itemList());
 
     if (!drag->isNonEmpty() || selection->isEmpty())
