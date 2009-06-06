@@ -1704,13 +1704,13 @@
 <feDisplacementMap result="result12" in2="result11" in="result10" xChannelSelector="R" scale="10" id="feDisplacementMap4141" />
 <feComposite operator="arithmetic" result="result13" in="SourceGraphic" id="feComposite4143" in2="result12" k1="0.25" k2="0.25" k3="0.75" />
 </filter>
-<filter id="Gelatin0" inkscape:label="Gelatine" inkscape:menu="Textures" inkscape:menu-tooltip="Colorizable filling with gelatin like turbulence and transparency" height="1.7" y="-0.34999999999999998" width="1.5" x="-0.25">
-<feGaussianBlur id="feGaussianBlur2917" stdDeviation="10" result="result8" />
-<feTurbulence id="feTurbulence2919" seed="50" result="result7" type="fractalNoise" numOctaves="3" baseFrequency="0.035000000000000003" />
-<feColorMatrix id="feColorMatrix2921" result="result5" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0.5 0.5 0 0.5 0 " />
-<feComposite id="feComposite2923" in2="result8" result="result6" operator="in" in="result5" />
-<feDisplacementMap id="feDisplacementMap2925" in="result6" in2="result6" xChannelSelector="A" yChannelSelector="A" scale="300" result="result4" />
-<feComposite k3="0" k1="2" id="feComposite2927" in2="result4" result="result2" operator="arithmetic" in="result8" />
+<filter x="-0.25" width="1.5" y="-0.34999999" height="1.7" inkscape:menu-tooltip="Colorizable filling with gelatin like turbulence and transparency" inkscape:menu="Textures" inkscape:label="Gelatine" id="Gelatin0">
+<feGaussianBlur result="result8" stdDeviation="7" id="feGaussianBlur4518" />
+<feTurbulence baseFrequency="0.050000000000000003" numOctaves="3" type="fractalNoise" result="result7" seed="20" id="feTurbulence4520" />
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0.5 0.5 0 0.5 0 " result="result5" id="feColorMatrix4522" />
+<feComposite in="result5" operator="in" result="result6" in2="result8" id="feComposite4524" k1="1" k2="0" k3="0" />
+<feDisplacementMap result="result4" scale="300" yChannelSelector="A" xChannelSelector="A" in2="result6" in="result6" id="feDisplacementMap4526" />
+<feComposite in="result8" operator="arithmetic" result="result2" in2="result4" k1="3.5" k3="0" id="feComposite4528" k2="0" />
 </filter>
 </defs>
 </svg>
