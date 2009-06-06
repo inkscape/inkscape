@@ -1279,6 +1279,9 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
                         }
                         Inkscape::Rubberband::get(desktop)->stop();
                     }
+                } else if ((group0_keyval == GDK_x || group0_keyval == GDK_X) && MOD__ALT_ONLY) {
+                    desktop->setToolboxFocusTo ("altx-text");
+                    return TRUE;
                 }
             }
             break;
