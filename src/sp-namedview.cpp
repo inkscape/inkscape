@@ -745,12 +745,14 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
     	} else {
     		gint w = MIN(gdk_screen_width(), nv->window_width);
 			gint h = MIN(gdk_screen_height(), nv->window_height);
+			// prevent the window from moving off the screen to the right or to the bottom
 			gint x = MIN(gdk_screen_width() - MIN_ONSCREEN_DISTANCE, nv->window_x);
 			gint y = MIN(gdk_screen_height() - MIN_ONSCREEN_DISTANCE, nv->window_y);
+			// prevent the window from moving off the screen to the left or to the top
+			x = MAX(MIN_ONSCREEN_DISTANCE - nv->window_width, x);
+			y = MAX(MIN_ONSCREEN_DISTANCE - nv->window_height, y);
 			if (w>0 && h>0) {
 				desktop->setWindowSize(w, h);
-				x = MIN(gdk_screen_width() - w, x);
-				y = MIN(gdk_screen_height() - h, y);
 				desktop->setWindowPosition(Geom::Point(x, y));
 			}
     	}
