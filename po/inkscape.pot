@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-05 23:12+0100\n"
+"POT-Creation-Date: 2009-06-07 08:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1833,11 +1833,11 @@ msgid "Change perspective (angle of PLs)"
 msgstr ""
 
 #. status text
-#: ../src/box3d-context.cpp:604
+#: ../src/box3d-context.cpp:606
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr ""
 
-#: ../src/box3d-context.cpp:628
+#: ../src/box3d-context.cpp:630
 msgid "Create 3D box"
 msgstr ""
 
@@ -3306,7 +3306,7 @@ msgstr ""
 msgid "Set as default"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1493
+#: ../src/dialogs/text-edit.cpp:665 ../src/text-context.cpp:1496
 msgid "Set text style"
 msgstr ""
 
@@ -5565,13 +5565,13 @@ msgid "Radial gradient <b>mid stop</b>"
 msgstr ""
 
 #. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
-#: ../src/gradient-context.cpp:162
+#: ../src/gradient-context.cpp:165
 #, c-format
 msgid "%s selected"
 msgstr ""
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
-#: ../src/gradient-context.cpp:164 ../src/gradient-context.cpp:173
+#: ../src/gradient-context.cpp:167 ../src/gradient-context.cpp:176
 #, c-format
 msgid " out of %d gradient handle"
 msgid_plural " out of %d gradient handles"
@@ -5579,8 +5579,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
-#: ../src/gradient-context.cpp:165 ../src/gradient-context.cpp:174
-#: ../src/gradient-context.cpp:181
+#: ../src/gradient-context.cpp:168 ../src/gradient-context.cpp:177
+#: ../src/gradient-context.cpp:184
 #, c-format
 msgid " on %d selected object"
 msgid_plural " on %d selected objects"
@@ -5588,7 +5588,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
-#: ../src/gradient-context.cpp:171
+#: ../src/gradient-context.cpp:174
 #, c-format
 msgid ""
 "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
@@ -5598,7 +5598,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
-#: ../src/gradient-context.cpp:179
+#: ../src/gradient-context.cpp:182
 #, c-format
 msgid "<b>%d</b> gradient handle selected out of %d"
 msgid_plural "<b>%d</b> gradient handles selected out of %d"
@@ -5606,7 +5606,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. TRANSLATORS: The plural refers to number of selected objects
-#: ../src/gradient-context.cpp:186
+#: ../src/gradient-context.cpp:189
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
 msgid_plural ""
@@ -5614,43 +5614,43 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-context.cpp:386 ../src/gradient-context.cpp:479
+#: ../src/gradient-context.cpp:389 ../src/gradient-context.cpp:482
 #: ../src/widgets/gradient-vector.cpp:744
 msgid "Add gradient stop"
 msgstr ""
 
-#: ../src/gradient-context.cpp:454
+#: ../src/gradient-context.cpp:457
 msgid "Simplify gradient"
 msgstr ""
 
-#: ../src/gradient-context.cpp:531
+#: ../src/gradient-context.cpp:534
 msgid "Create default gradient"
 msgstr ""
 
-#: ../src/gradient-context.cpp:586
+#: ../src/gradient-context.cpp:589
 msgid "<b>Draw around</b> handles to select them"
 msgstr ""
 
-#: ../src/gradient-context.cpp:684
+#: ../src/gradient-context.cpp:687
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr ""
 
-#: ../src/gradient-context.cpp:685
+#: ../src/gradient-context.cpp:688
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr ""
 
-#: ../src/gradient-context.cpp:805
+#: ../src/gradient-context.cpp:808
 msgid "Invert gradient"
 msgstr ""
 
-#: ../src/gradient-context.cpp:922
+#: ../src/gradient-context.cpp:925
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-context.cpp:926
+#: ../src/gradient-context.cpp:929
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr ""
 
@@ -5918,95 +5918,95 @@ msgstr ""
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:819
+#: ../src/interface.cpp:828
 msgid "Commands Bar"
 msgstr ""
 
-#: ../src/interface.cpp:819
+#: ../src/interface.cpp:828
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr ""
 
-#: ../src/interface.cpp:821
+#: ../src/interface.cpp:830
 msgid "Snap Controls Bar"
 msgstr ""
 
-#: ../src/interface.cpp:821
+#: ../src/interface.cpp:830
 msgid "Show or hide the snapping controls"
 msgstr ""
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:832
 msgid "Tool Controls Bar"
 msgstr ""
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:832
 msgid "Show or hide the Tool Controls bar"
 msgstr ""
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:834
 msgid "_Toolbox"
 msgstr ""
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:834
 msgid "Show or hide the main toolbox (on the left)"
 msgstr ""
 
-#: ../src/interface.cpp:831
+#: ../src/interface.cpp:840
 msgid "_Palette"
 msgstr ""
 
-#: ../src/interface.cpp:831
+#: ../src/interface.cpp:840
 msgid "Show or hide the color palette"
 msgstr ""
 
-#: ../src/interface.cpp:833
+#: ../src/interface.cpp:842
 msgid "_Statusbar"
 msgstr ""
 
-#: ../src/interface.cpp:833
+#: ../src/interface.cpp:842
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr ""
 
-#: ../src/interface.cpp:903
+#: ../src/interface.cpp:912
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr ""
 
-#: ../src/interface.cpp:942
+#: ../src/interface.cpp:951
 msgid "Open _Recent"
 msgstr ""
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1043
+#: ../src/interface.cpp:1052
 #, c-format
 msgid "Enter group #%s"
 msgstr ""
 
-#: ../src/interface.cpp:1054
+#: ../src/interface.cpp:1063
 msgid "Go to parent"
 msgstr ""
 
-#: ../src/interface.cpp:1145 ../src/interface.cpp:1231
-#: ../src/interface.cpp:1334 ../src/ui/widget/selected-style.cpp:468
+#: ../src/interface.cpp:1154 ../src/interface.cpp:1240
+#: ../src/interface.cpp:1343 ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr ""
 
-#: ../src/interface.cpp:1184 ../src/interface.cpp:1294
+#: ../src/interface.cpp:1193 ../src/interface.cpp:1303
 msgid "Drop color on gradient"
 msgstr ""
 
-#: ../src/interface.cpp:1347
+#: ../src/interface.cpp:1356
 msgid "Could not parse SVG data"
 msgstr ""
 
-#: ../src/interface.cpp:1386
+#: ../src/interface.cpp:1395
 msgid "Drop SVG"
 msgstr ""
 
-#: ../src/interface.cpp:1442
+#: ../src/interface.cpp:1451
 msgid "Drop bitmap image"
 msgstr ""
 
-#: ../src/interface.cpp:1534
+#: ../src/interface.cpp:1543
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do "
@@ -6015,7 +6015,7 @@ msgid ""
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
 
-#: ../src/interface.cpp:1541 ../share/extensions/web-set-att.inx.h:5
+#: ../src/interface.cpp:1550 ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
 msgstr ""
@@ -8245,42 +8245,42 @@ msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 
-#: ../src/pen-context.cpp:1271
+#: ../src/pen-context.cpp:1273
 #, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 
-#: ../src/pen-context.cpp:1272
+#: ../src/pen-context.cpp:1274
 #, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 
-#: ../src/pen-context.cpp:1290
+#: ../src/pen-context.cpp:1292
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
 msgstr ""
 
-#: ../src/pen-context.cpp:1312
+#: ../src/pen-context.cpp:1314
 #, c-format
 msgid ""
 "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</"
 "b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr ""
 
-#: ../src/pen-context.cpp:1313
+#: ../src/pen-context.cpp:1315
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle, with <b>Shift</b> to move this handle only"
 msgstr ""
 
-#: ../src/pen-context.cpp:1360
+#: ../src/pen-context.cpp:1362
 msgid "Drawing finished"
 msgstr ""
 
@@ -9820,29 +9820,29 @@ msgstr ""
 msgid "Expand letter spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1368
+#: ../src/text-context.cpp:1371
 msgid "Paste text"
 msgstr ""
 
-#: ../src/text-context.cpp:1602
+#: ../src/text-context.cpp:1605
 #, c-format
 msgid ""
 "Type or edit flowed text (%d characters); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1604
+#: ../src/text-context.cpp:1607
 #, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
 msgstr ""
 
-#: ../src/text-context.cpp:1612 ../src/tools-switch.cpp:190
+#: ../src/text-context.cpp:1615 ../src/tools-switch.cpp:190
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
 msgstr ""
 
-#: ../src/text-context.cpp:1722
+#: ../src/text-context.cpp:1725
 msgid "Type text"
 msgstr ""
 
@@ -10888,16 +10888,19 @@ msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:722
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:723
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:198
 msgid "All Images"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:727
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:728
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:199
 msgid "All Vectors"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:732
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:733
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:200
 msgid "All Bitmaps"
 msgstr ""
 
@@ -10978,15 +10981,11 @@ msgstr ""
 msgid "Destination"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:198
-msgid "All Image Files"
-msgstr ""
-
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:427
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:476
 msgid "Show Preview"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:563
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:612
 msgid "No file selected"
 msgstr ""
 
