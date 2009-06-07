@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-05 14:49+0200\n"
-"PO-Revision-Date: 2009-06-05 14:58+0100\n"
+"POT-Creation-Date: 2009-06-07 08:52+0200\n"
+"PO-Revision-Date: 2009-06-07 13:26+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1906,11 +1906,11 @@ msgid "Change perspective (angle of PLs)"
 msgstr "Changer la perspective (angle des LP)"
 
 #. status text
-#: ../src/box3d-context.cpp:604
+#: ../src/box3d-context.cpp:606
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>Boîte 3D</b>. Utiliser <b>Maj</b> pour extruder suivant Z"
 
-#: ../src/box3d-context.cpp:628
+#: ../src/box3d-context.cpp:630
 msgid "Create 3D box"
 msgstr "Créer une boîte 3D"
 
@@ -3391,6 +3391,7 @@ msgid "Font"
 msgstr "Police"
 
 #: ../src/dialogs/text-edit.cpp:221
+#: ../share/extensions/svgcalendar.inx.h:12
 msgid "Layout"
 msgstr "Disposition"
 
@@ -3448,7 +3449,7 @@ msgid "Set as default"
 msgstr "Enregistrer comme valeur par défaut"
 
 #: ../src/dialogs/text-edit.cpp:665
-#: ../src/text-context.cpp:1493
+#: ../src/text-context.cpp:1496
 msgid "Set text style"
 msgstr "Appliquer un style à un texte"
 
@@ -4186,6 +4187,7 @@ msgstr "Hauteur"
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:42
 #: ../src/filter-enums.cpp:32
 #: ../src/live_effects/effect.cpp:96
+#: ../src/live_effects/lpe-ruler.cpp:50
 msgid "Offset"
 msgstr "Offset"
 
@@ -4965,7 +4967,7 @@ msgstr "Décalage vertical"
 #: ../share/extensions/render_barcode.inx.h:5
 #: ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/spirograph.inx.h:6
-#: ../share/extensions/svgcalendar.inx.h:21
+#: ../share/extensions/svgcalendar.inx.h:22
 #: ../share/extensions/triangle.inx.h:10
 msgid "Render"
 msgstr "Rendu"
@@ -5560,6 +5562,7 @@ msgstr "Retour à la ligne"
 
 #: ../src/filter-enums.cpp:96
 #: ../src/flood-context.cpp:264
+#: ../src/live_effects/lpe-ruler.cpp:34
 #: ../src/ui/dialog/document-properties.cpp:327
 #: ../src/ui/dialog/filter-effects-dialog.cpp:468
 #: ../src/ui/dialog/inkscape-preferences.cpp:255
@@ -5737,14 +5740,14 @@ msgid "Radial gradient <b>mid stop</b>"
 msgstr "<b>Stop médian</b> de dégradé radial"
 
 #. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
-#: ../src/gradient-context.cpp:162
+#: ../src/gradient-context.cpp:165
 #, c-format
 msgid "%s selected"
 msgstr "%s sélectionné"
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
-#: ../src/gradient-context.cpp:164
-#: ../src/gradient-context.cpp:173
+#: ../src/gradient-context.cpp:167
+#: ../src/gradient-context.cpp:176
 #, c-format
 msgid " out of %d gradient handle"
 msgid_plural " out of %d gradient handles"
@@ -5752,9 +5755,9 @@ msgstr[0] " sur %d poignée de dégradé"
 msgstr[1] " sur %d poignées de dégradé"
 
 #. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
-#: ../src/gradient-context.cpp:165
-#: ../src/gradient-context.cpp:174
-#: ../src/gradient-context.cpp:181
+#: ../src/gradient-context.cpp:168
+#: ../src/gradient-context.cpp:177
+#: ../src/gradient-context.cpp:184
 #, c-format
 msgid " on %d selected object"
 msgid_plural " on %d selected objects"
@@ -5762,7 +5765,7 @@ msgstr[0] " dans %d objet sélectionné"
 msgstr[1] " dans %d objets sélectionnés"
 
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
-#: ../src/gradient-context.cpp:171
+#: ../src/gradient-context.cpp:174
 #, c-format
 msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
 msgid_plural "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
@@ -5770,7 +5773,7 @@ msgstr[0] "Une poignée de dégradé rassemblant %d stops (cliquer-glissser avec
 msgstr[1] "Une poignée de dégradé rassemblant %d stops (cliquer-glissser avec <b>Maj</b> pour les séparer) sélectionnée"
 
 #. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
-#: ../src/gradient-context.cpp:179
+#: ../src/gradient-context.cpp:182
 #, c-format
 msgid "<b>%d</b> gradient handle selected out of %d"
 msgid_plural "<b>%d</b> gradient handles selected out of %d"
@@ -5778,51 +5781,51 @@ msgstr[0] "<b>%d</b> poignée de dégradé sélectionnée sur %d"
 msgstr[1] "<b>%d</b> poignées de dégradé sélectionnées sur %d"
 
 #. TRANSLATORS: The plural refers to number of selected objects
-#: ../src/gradient-context.cpp:186
+#: ../src/gradient-context.cpp:189
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
 msgid_plural "<b>No</b> gradient handles selected out of %d on %d selected objects"
 msgstr[0] "<b>Aucune</b> poignée sélectionnée sur %d dans %d objet sélectionné"
 msgstr[1] "<b>Aucune</b> poignée sélectionnée sur %d dans %d objets sélectionnés"
 
-#: ../src/gradient-context.cpp:386
-#: ../src/gradient-context.cpp:479
+#: ../src/gradient-context.cpp:389
+#: ../src/gradient-context.cpp:482
 #: ../src/widgets/gradient-vector.cpp:744
 msgid "Add gradient stop"
 msgstr "Ajouter un stop au dégradé"
 
-#: ../src/gradient-context.cpp:454
+#: ../src/gradient-context.cpp:457
 msgid "Simplify gradient"
 msgstr "Simplifier le dégradé"
 
-#: ../src/gradient-context.cpp:531
+#: ../src/gradient-context.cpp:534
 msgid "Create default gradient"
 msgstr "Créer un dégradé par défaut"
 
-#: ../src/gradient-context.cpp:586
+#: ../src/gradient-context.cpp:589
 msgid "<b>Draw around</b> handles to select them"
 msgstr "<b>Dessiner autour</b> des poignées pour les sélectionner"
 
-#: ../src/gradient-context.cpp:684
+#: ../src/gradient-context.cpp:687
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr "<b>Ctrl</b> : pour forcer la modification de l'inclinaison du dégradé par incréments"
 
-#: ../src/gradient-context.cpp:685
+#: ../src/gradient-context.cpp:688
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Maj</b> : pour dessiner le dégradé autour du point de départ"
 
-#: ../src/gradient-context.cpp:805
+#: ../src/gradient-context.cpp:808
 msgid "Invert gradient"
 msgstr "Inverser le dégradé"
 
-#: ../src/gradient-context.cpp:922
+#: ../src/gradient-context.cpp:925
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] "<b>Dégradé</b> appliqué à %d objet; déplacer avec <b>Ctrl</b> pour forcer la modification de l'inclinaison par incréments"
 msgstr[1] "<b>Dégradé</b> appliqué à %d objets; déplacer avec <b>Ctrl</b> pour forcer la modification de l'inclinaison par incréments"
 
-#: ../src/gradient-context.cpp:926
+#: ../src/gradient-context.cpp:929
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Sélectionner des <b>objets</b> auxquels appliquer un dégradé."
 
@@ -5879,6 +5882,7 @@ msgid "Delete gradient stop(s)"
 msgstr "Supprimer un stop de dégradé"
 
 #: ../src/helper/units.cpp:37
+#: ../src/live_effects/lpe-ruler.cpp:43
 #: ../share/extensions/foldablebox.inx.h:8
 #: ../share/extensions/interp_att_g.inx.h:24
 #: ../share/extensions/printing-marks.inx.h:20
@@ -6090,98 +6094,98 @@ msgstr "Les enregistrements automatiques des documents suivants ont échoué :\
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:819
+#: ../src/interface.cpp:828
 msgid "Commands Bar"
 msgstr "Barre des commandes"
 
-#: ../src/interface.cpp:819
+#: ../src/interface.cpp:828
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Afficher ou non la barre des commandes (sous le menu)"
 
-#: ../src/interface.cpp:821
+#: ../src/interface.cpp:830
 msgid "Snap Controls Bar"
 msgstr "Barre des contrôles du magnétisme"
 
-#: ../src/interface.cpp:821
+#: ../src/interface.cpp:830
 msgid "Show or hide the snapping controls"
 msgstr "Afficher ou non la barre des contrôles du magnétisme"
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:832
 msgid "Tool Controls Bar"
 msgstr "Barre des contrôles des outils"
 
-#: ../src/interface.cpp:823
+#: ../src/interface.cpp:832
 msgid "Show or hide the Tool Controls bar"
 msgstr "Afficher ou non la barre des contrôles des outils"
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:834
 msgid "_Toolbox"
 msgstr "Boîte à _outils"
 
-#: ../src/interface.cpp:825
+#: ../src/interface.cpp:834
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "Afficher ou non la boîte à outils principale (à gauche)"
 
-#: ../src/interface.cpp:831
+#: ../src/interface.cpp:840
 msgid "_Palette"
 msgstr "_Palette"
 
-#: ../src/interface.cpp:831
+#: ../src/interface.cpp:840
 msgid "Show or hide the color palette"
 msgstr "Afficher ou non la palette de couleurs"
 
-#: ../src/interface.cpp:833
+#: ../src/interface.cpp:842
 msgid "_Statusbar"
 msgstr "Barre d'_état"
 
-#: ../src/interface.cpp:833
+#: ../src/interface.cpp:842
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Afficher ou non la barre d'état (en bas de la fenêtre)"
 
-#: ../src/interface.cpp:903
+#: ../src/interface.cpp:912
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Verbe « %s » inconnu"
 
-#: ../src/interface.cpp:942
+#: ../src/interface.cpp:951
 msgid "Open _Recent"
 msgstr "Documents _récents"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:1043
+#: ../src/interface.cpp:1052
 #, c-format
 msgid "Enter group #%s"
 msgstr "Entrer dans le groupe #%s"
 
-#: ../src/interface.cpp:1054
+#: ../src/interface.cpp:1063
 msgid "Go to parent"
 msgstr "Sélectionner le parent"
 
-#: ../src/interface.cpp:1145
-#: ../src/interface.cpp:1231
-#: ../src/interface.cpp:1334
+#: ../src/interface.cpp:1154
+#: ../src/interface.cpp:1240
+#: ../src/interface.cpp:1343
 #: ../src/ui/widget/selected-style.cpp:468
 msgid "Drop color"
 msgstr "Déposer la couleur"
 
-#: ../src/interface.cpp:1184
-#: ../src/interface.cpp:1294
+#: ../src/interface.cpp:1193
+#: ../src/interface.cpp:1303
 msgid "Drop color on gradient"
 msgstr "Déposer la couleur dans le dégradé"
 
-#: ../src/interface.cpp:1347
+#: ../src/interface.cpp:1356
 msgid "Could not parse SVG data"
 msgstr "Impossible de parcourir les données SVG"
 
-#: ../src/interface.cpp:1386
+#: ../src/interface.cpp:1395
 msgid "Drop SVG"
 msgstr "Déposer un SVG"
 
-#: ../src/interface.cpp:1442
+#: ../src/interface.cpp:1451
 msgid "Drop bitmap image"
 msgstr "Déposer une image bitmap"
 
-#: ../src/interface.cpp:1534
+#: ../src/interface.cpp:1543
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">A file named \"%s\" already exists. Do you want to replace it?</span>\n"
@@ -6193,7 +6197,7 @@ msgstr ""
 "\n"
 "Le fichier existe déjà dans « %s ». Le remplacer écrase son contenu."
 
-#: ../src/interface.cpp:1541
+#: ../src/interface.cpp:1550
 #: ../share/extensions/web-set-att.inx.h:5
 #: ../share/extensions/web-transmit-att.inx.h:5
 msgid "Replace"
@@ -7292,6 +7296,91 @@ msgstr "Flexion globale"
 msgid "Relative position to a reference point defines global bending direction and amount"
 msgstr "La position relative à un point de référence définit globalement la direction de la flexion et sa quantité"
 
+#: ../src/live_effects/lpe-ruler.cpp:27
+#: ../share/extensions/restack.inx.h:7
+msgid "Left"
+msgstr "Gauche"
+
+#: ../src/live_effects/lpe-ruler.cpp:28
+#: ../share/extensions/restack.inx.h:14
+msgid "Right"
+msgstr "Droite"
+
+#: ../src/live_effects/lpe-ruler.cpp:29
+#: ../src/live_effects/lpe-ruler.cpp:37
+msgid "Both"
+msgstr "Les deux"
+
+#: ../src/live_effects/lpe-ruler.cpp:35
+#: ../src/widgets/toolbox.cpp:5166
+msgid "Start"
+msgstr "Début"
+
+#: ../src/live_effects/lpe-ruler.cpp:36
+#: ../src/widgets/toolbox.cpp:5179
+msgid "End"
+msgstr "Fin"
+
+#: ../src/live_effects/lpe-ruler.cpp:44
+msgid "Mark distance"
+msgstr "Distance entre graduations"
+
+#: ../src/live_effects/lpe-ruler.cpp:44
+msgid "Distance between successive ruler marks"
+msgstr "Distance entre deux graduations successives"
+
+#: ../src/live_effects/lpe-ruler.cpp:45
+msgid "Major length"
+msgstr "Longueur principale"
+
+#: ../src/live_effects/lpe-ruler.cpp:45
+msgid "Length of major ruler marks"
+msgstr "Longueur des graduations principales"
+
+#: ../src/live_effects/lpe-ruler.cpp:46
+msgid "Minor length"
+msgstr "Longueur secondaire"
+
+#: ../src/live_effects/lpe-ruler.cpp:46
+msgid "Length of minor ruler marks"
+msgstr "Longueur des graduations secondaires"
+
+#: ../src/live_effects/lpe-ruler.cpp:47
+msgid "Major steps"
+msgstr "Graduations principales"
+
+#: ../src/live_effects/lpe-ruler.cpp:47
+msgid "Draw a major mark every ... steps"
+msgstr "Dessine une graduation principale en fonction de ce nombre de graduations"
+
+#: ../src/live_effects/lpe-ruler.cpp:48
+msgid "Shift marks by"
+msgstr "Décaler la règle de"
+
+#: ../src/live_effects/lpe-ruler.cpp:48
+msgid "Shift marks by this many steps"
+msgstr "Décaler la règle de ce nombre de graduations"
+
+#: ../src/live_effects/lpe-ruler.cpp:49
+msgid "Mark direction"
+msgstr "Positionnement de la règle"
+
+#: ../src/live_effects/lpe-ruler.cpp:49
+msgid "Direction of marks (when viewing along the path from start to end)"
+msgstr "Positionnement de la règle, en regardant le long du chemin du début vers la fin"
+
+#: ../src/live_effects/lpe-ruler.cpp:50
+msgid "Offset of first mark"
+msgstr "Décalage de la première graduation"
+
+#: ../src/live_effects/lpe-ruler.cpp:51
+msgid "Border marks"
+msgstr "Graduation à l'extrémité"
+
+#: ../src/live_effects/lpe-ruler.cpp:51
+msgid "Choose whether to draw marks at the beginning and end of the path"
+msgstr "Choisir si les graduations doivent être dessinées au début ou à la fin du chemin"
+
 #. initialise your parameters here:
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
 #: ../src/live_effects/lpe-sketch.cpp:35
@@ -8266,32 +8355,32 @@ msgstr "<b>Cliquer</b> ou <b>cliquer-déplacer</b> pour fermer et terminer le ch
 msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr "<b>Cliquer</b> ou <b>cliquer-déplacer</b> pour prolonger le chemin à partir de ce point."
 
-#: ../src/pen-context.cpp:1271
+#: ../src/pen-context.cpp:1273
 #, c-format
 msgid "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
 msgstr "<b>Segment de courbe</b> : angle %3.2f&#176;, distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
 
-#: ../src/pen-context.cpp:1272
+#: ../src/pen-context.cpp:1274
 #, c-format
 msgid "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
 msgstr "<b>Segment de droite</b> : angle %3.2f&#176;, distance %s ; <b>Ctrl</b> pour tourner par incréments ; <b>Entrée</b> pour terminer le chemin"
 
-#: ../src/pen-context.cpp:1290
+#: ../src/pen-context.cpp:1292
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Poignée de contrôle</b>: angle %3.2f&#176;, longueur %s; <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/pen-context.cpp:1312
+#: ../src/pen-context.cpp:1314
 #, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr "<b>Poignée de la courbe, symétrique</b> : angle %3.2f&#176;, longueur %s ; avec  <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
 
-#: ../src/pen-context.cpp:1313
+#: ../src/pen-context.cpp:1315
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr "<b>Poignée de la courbe</b> : angle %3.2f&#176;, longueur %s ; avec <b>Ctrl</b> pour tourner par incréments ; <b>Maj</b> pour ne déplacer que cette poignée"
 
-#: ../src/pen-context.cpp:1360
+#: ../src/pen-context.cpp:1362
 msgid "Drawing finished"
 msgstr "Tracé terminé"
 
@@ -9809,26 +9898,26 @@ msgstr "Augmenter l'espacement entre les lignes"
 msgid "Expand letter spacing"
 msgstr "Augmenter l'espacement des lettres"
 
-#: ../src/text-context.cpp:1368
+#: ../src/text-context.cpp:1371
 msgid "Paste text"
 msgstr "Coller le texte"
 
-#: ../src/text-context.cpp:1602
+#: ../src/text-context.cpp:1605
 #, c-format
 msgid "Type or edit flowed text (%d characters); <b>Enter</b> to start new paragraph."
 msgstr "Taper ou modifier le texte encadré (%d caractères); <b>Entrée</b> pour commencer un nouveau paragraphe."
 
-#: ../src/text-context.cpp:1604
+#: ../src/text-context.cpp:1607
 #, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
 msgstr "Taper ou modifier le texte (%d caractères) ; <b>Entrée</b> pour commencer une nouvelle ligne."
 
-#: ../src/text-context.cpp:1612
+#: ../src/text-context.cpp:1615
 #: ../src/tools-switch.cpp:190
 msgid "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; then type."
 msgstr "<b>Cliquer</b> pour sélectionner ou créer un texte, <b>cliquer-déplacer</b> pour créer un texte encadré; puis taper le texte."
 
-#: ../src/text-context.cpp:1722
+#: ../src/text-context.cpp:1725
 msgid "Type text"
 msgstr "Taper du texte"
 
@@ -10851,16 +10940,19 @@ msgstr "Tous les fichiers"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:722
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:723
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:198
 msgid "All Images"
 msgstr "Incorporer toutes les images"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:727
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:728
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:199
 msgid "All Vectors"
 msgstr "Tous les vecteurs"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:732
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:733
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:200
 msgid "All Bitmaps"
 msgstr "Toutes les images bitmap"
 
@@ -10941,15 +11033,11 @@ msgstr "Fond"
 msgid "Destination"
 msgstr "Destination"
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:198
-msgid "All Image Files"
-msgstr "Tous les formats d'image"
-
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:427
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:476
 msgid "Show Preview"
 msgstr "Aperçu"
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:563
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:612
 msgid "No file selected"
 msgstr "Aucun fichier sélectionné"
 
@@ -13951,7 +14039,7 @@ msgid "The desired number of scans"
 msgstr "Nombre de passes désiré"
 
 #: ../src/ui/dialog/tracedialog.cpp:515
-#: ../share/extensions/svgcalendar.inx.h:5
+#: ../share/extensions/svgcalendar.inx.h:6
 msgid "Colors"
 msgstr "Couleurs"
 
@@ -18703,20 +18791,12 @@ msgid "Arc: Change open/closed"
 msgstr "Arc : modifier ouvert/fermé"
 
 #: ../src/widgets/toolbox.cpp:5166
-msgid "Start"
-msgstr "Début"
-
-#: ../src/widgets/toolbox.cpp:5166
 msgid "Start:"
 msgstr "Début :"
 
 #: ../src/widgets/toolbox.cpp:5167
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr "Angle (en degrés) entre l'horizontale et le début de l'arc"
-
-#: ../src/widgets/toolbox.cpp:5179
-msgid "End"
-msgstr "Fin"
 
 #: ../src/widgets/toolbox.cpp:5179
 msgid "End:"
@@ -20898,10 +20978,6 @@ msgstr "De bas en haut (90)"
 msgid "Horizontal Point:"
 msgstr "Point horizontal :"
 
-#: ../share/extensions/restack.inx.h:7
-msgid "Left"
-msgstr "Gauche"
-
 #: ../share/extensions/restack.inx.h:8
 msgid "Left to Right (0)"
 msgstr "De gauche à droite (0)"
@@ -20925,10 +21001,6 @@ msgstr "Renumérotation"
 #: ../share/extensions/restack.inx.h:13
 msgid "Restack Direction:"
 msgstr "Sens de la renumérotation :"
-
-#: ../share/extensions/restack.inx.h:14
-msgid "Right"
-msgstr "Droite"
 
 #: ../share/extensions/restack.inx.h:15
 msgid "Right to Left (180)"
@@ -21084,84 +21156,80 @@ msgid "(The day names list must start from Sunday)"
 msgstr "(La liste des jours doit commencer par dimanche)"
 
 #: ../share/extensions/svgcalendar.inx.h:3
+msgid "Automatically set size and position"
+msgstr "Définit automatiquement la taille et la position"
+
+#: ../share/extensions/svgcalendar.inx.h:4
 msgid "Calendar"
 msgstr "Calendrier"
 
-#: ../share/extensions/svgcalendar.inx.h:4
+#: ../share/extensions/svgcalendar.inx.h:5
 msgid "Char Encoding"
 msgstr "Encodage des caractères"
 
-#: ../share/extensions/svgcalendar.inx.h:6
+#: ../share/extensions/svgcalendar.inx.h:7
 msgid "Configuration"
 msgstr "Configuration"
 
-#: ../share/extensions/svgcalendar.inx.h:7
+#: ../share/extensions/svgcalendar.inx.h:8
 msgid "Day color"
 msgstr "Couleur des jours"
 
-#: ../share/extensions/svgcalendar.inx.h:8
+#: ../share/extensions/svgcalendar.inx.h:9
 msgid "Day names"
 msgstr "Dénomination des jours"
 
-#: ../share/extensions/svgcalendar.inx.h:9
+#: ../share/extensions/svgcalendar.inx.h:10
 msgid "Fill empty day boxes with next month's days"
 msgstr "Remplir les cases vides avec les jours du mois suivant"
 
-#: ../share/extensions/svgcalendar.inx.h:10
+#: ../share/extensions/svgcalendar.inx.h:11
 msgid "January February March April May June July August September October November December"
 msgstr "Janvier Février Mars Avril Mai Juin Juillet Août Septembre Octobre Novembre Décembre"
 
-#: ../share/extensions/svgcalendar.inx.h:11
+#: ../share/extensions/svgcalendar.inx.h:13
 msgid "Localization"
 msgstr "Localisation"
 
-#: ../share/extensions/svgcalendar.inx.h:12
+#: ../share/extensions/svgcalendar.inx.h:14
 msgid "Monday"
 msgstr "Lundi"
 
-#: ../share/extensions/svgcalendar.inx.h:13
+#: ../share/extensions/svgcalendar.inx.h:15
 msgid "Month (0 for all)"
 msgstr "Mois (0 pour tous)"
 
-#: ../share/extensions/svgcalendar.inx.h:14
+#: ../share/extensions/svgcalendar.inx.h:16
 msgid "Month Margin"
 msgstr "Marge des mois"
 
-#: ../share/extensions/svgcalendar.inx.h:15
+#: ../share/extensions/svgcalendar.inx.h:17
 msgid "Month Width"
 msgstr "Largeur des mois"
 
-#: ../share/extensions/svgcalendar.inx.h:16
+#: ../share/extensions/svgcalendar.inx.h:18
 msgid "Month color"
 msgstr "Couleur des mois"
 
-#: ../share/extensions/svgcalendar.inx.h:17
+#: ../share/extensions/svgcalendar.inx.h:19
 msgid "Month names"
 msgstr "Dénomination des mois"
 
-#: ../share/extensions/svgcalendar.inx.h:18
+#: ../share/extensions/svgcalendar.inx.h:20
 msgid "Months per line"
 msgstr "Nombre de mois par ligne"
 
-#: ../share/extensions/svgcalendar.inx.h:19
+#: ../share/extensions/svgcalendar.inx.h:21
 msgid "Next month day color"
 msgstr "Couleur des jours du mois suivant"
 
-#: ../share/extensions/svgcalendar.inx.h:20
-msgid "Organization"
-msgstr "Organisation"
-
-#: ../share/extensions/svgcalendar.inx.h:22
+#: ../share/extensions/svgcalendar.inx.h:23
 msgid "Saturday"
 msgstr "Samedi"
 
-#: ../share/extensions/svgcalendar.inx.h:23
+#: ../share/extensions/svgcalendar.inx.h:24
 msgid "Saturday and Sunday"
 msgstr "Samedi et dimanche"
-
-#: ../share/extensions/svgcalendar.inx.h:24
-msgid "Set authomaticaly the size and positions"
-msgstr "Définit automatiquement la taille et la position"
 
 #: ../share/extensions/svgcalendar.inx.h:25
 msgid "Sun Mon Tue Wed Thu Fri Sat"
@@ -21172,7 +21240,7 @@ msgid "Sunday"
 msgstr "Dimanche"
 
 #: ../share/extensions/svgcalendar.inx.h:27
-msgid "The options above has no value with the upper checked."
+msgid "The options below have no influence when the above is checked."
 msgstr "Les options suivantes ne s'appliquent pas si la case précédente est cochée."
 
 #: ../share/extensions/svgcalendar.inx.h:28
@@ -21486,6 +21554,10 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "All Image Files"
+#~ msgstr "Tous les formats d'image"
+#~ msgid "Organization"
+#~ msgstr "Organisation"
 #~ msgid "_Write session file:"
 #~ msgstr "_Enregistrer le fichier de session :"
 #~ msgid "Shared SVG whiteboard tool."
@@ -21704,42 +21776,6 @@ msgstr "Entrée XAML"
 #~ msgstr "Itérations"
 #~ msgid "recursivity"
 #~ msgstr "Récursivité"
-#~ msgid "Both"
-#~ msgstr "Les deux"
-#~ msgid "Mark distance"
-#~ msgstr "Distance de graduation"
-#~ msgid "Distance between successive ruler marks"
-#~ msgstr "Distance entre deux graduations successives"
-#~ msgid "Major length"
-#~ msgstr "Longueur principale"
-#~ msgid "Length of major ruler marks"
-#~ msgstr "Longueur des graduations majeures"
-#~ msgid "Minor length"
-#~ msgstr "Longueur secondaire"
-#~ msgid "Length of minor ruler marks"
-#~ msgstr "Longueur des graduations mineures"
-#~ msgid "Major steps"
-#~ msgstr "Graduations principales"
-#~ msgid "Draw a major mark every ... steps"
-#~ msgstr "Dessine une graduation principale toutes les  ... graduations"
-#~ msgid "Shift marks by"
-#~ msgstr "Décaler les graduations de"
-#~ msgid "Shift marks by this many steps"
-#~ msgstr "Décaler les graduations par ce nombre de pas"
-#~ msgid "Mark direction"
-#~ msgstr "Direction de graduation"
-#~ msgid "Direction of marks (when viewing along the path from start to end)"
-#~ msgstr ""
-#~ "Direction des graduations (en regardant le long du chemin du début vers "
-#~ "la fin)"
-#~ msgid "Offset of first mark"
-#~ msgstr "Décalage de la première graduation"
-#~ msgid "Border marks"
-#~ msgstr "Graduation à l'extrémité"
-#~ msgid "Choose whether to draw marks at the beginning and end of the path"
-#~ msgstr ""
-#~ "Choisir si les graduations doivent être dessinées au début ou à la fin du "
-#~ "chemin"
 #~ msgid "Float parameter"
 #~ msgstr "Paramètres flottant"
 #~ msgid "just a real number like 1.4!"
