@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-07 08:52+0200\n"
-"PO-Revision-Date: 2009-06-07 13:26+0100\n"
+"POT-Creation-Date: 2009-06-08 06:41+0200\n"
+"PO-Revision-Date: 2009-06-08 06:43+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -591,6 +591,7 @@ msgstr "Bosselage TSL"
 #: ../share/filters/filters.svg.h:123
 #: ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:178
 msgid "Bumps"
 msgstr "Bosselage"
 
@@ -1708,6 +1709,14 @@ msgstr "Gélatine"
 #: ../share/filters/filters.svg.h:177
 msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr "Remplissage qu'il est possible de colorer,  avec de la turbulence semblable à de la gélatine et de la transparence"
+
+#: ../share/filters/filters.svg.h:178
+msgid "HSL Bubbles, transparent"
+msgstr "Bulles TSL transparentes"
+
+#: ../share/filters/filters.svg.h:178
+msgid "Highly flexible specular bubbles with transparency"
+msgstr "Bulles spéculaire extrêmement flexible avec transparence"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
