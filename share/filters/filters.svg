@@ -1724,5 +1724,11 @@
 <feBlend id="feBlend3245" in="result1" in2="SourceGraphic" result="result5" mode="screen" blend="normal" />
 <feComposite id="feComposite3247" in2="fbSourceGraphicAlpha" result="result4" operator="in" k2="1" k3="1.5" />
 </filter>
+<filter id="OldPostcard" inkscape:label="Old postcard" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Slightly posterize and draw edges like on old printed postcards">
+<feConvolveMatrix id="feConvolveMatrix2895" targetY="1" targetX="1" in="SourceGraphic" divisor="1" kernelMatrix="0 -0.4 0 -0.4 2.6 -0.4 0 -0.4 0 " order="3 3" result="result1" />
+<feGaussianBlur stdDeviation="1" id="feGaussianBlur2897" result="result2" />
+<feMorphology id="feMorphology2905" operator="dilate" radius="10" result="result4" />
+<feBlend blend="normal" id="feBlend2899" in="result4" in2="result1" mode="darken" result="result3" />
+</filter>
 </defs>
 </svg>
