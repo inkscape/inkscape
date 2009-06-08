@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-07 08:52+0200\n"
+"POT-Creation-Date: 2009-06-08 06:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -515,7 +515,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:178
 msgid "Bumps"
 msgstr ""
 
@@ -1633,6 +1633,14 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:177
 msgid "Colorizable filling with gelatin like turbulence and transparency"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:178
+msgid "HSL Bubbles, transparent"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:178
+msgid "Highly flexible specular bubbles with transparency"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
