@@ -344,7 +344,7 @@ void sp_xml_tree_dialog()
         gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
         button = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-                NULL, _("Delete node"), NULL,
+                NULL, Q_("nodeAsInXMLdialogTooltip|Delete node"), NULL,
                 sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
                              INKSCAPE_ICON_XML_NODE_DELETE ),
                                            G_CALLBACK(cmd_delete_node), NULL );
@@ -1423,7 +1423,7 @@ void cmd_delete_node(GtkObject */*object*/, gpointer /*data*/)
     sp_repr_unparent(selected_repr);
 
     sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
-                     _("Delete node"));
+                     Q_("nodeAsInXMLinHistoryDialog|Delete node"));
 }
 
 
