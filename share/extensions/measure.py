@@ -126,21 +126,21 @@ class Length(inkex.Effect):
                 slengths, stotal = csplength(p)
                 ''' Wio: Umrechnung in unit '''
                 if self.options.unit=="mm":
-                    factor=0.2822219  # px->mm
+                    factor=25.4/90.0        # px->mm
                 elif self.options.unit=="pt":
-                    factor=0.80       # px->pt
+                    factor=0.80             # px->pt
                 elif self.options.unit=="cm":
-                    factor=0.02822219 # px->cm
+                    factor=25.4/900.0       # px->cm
                 elif self.options.unit=="m":
-                    factor=0.0002822219 # px->m
+                    factor=25.4/90000.0     # px->m
                 elif self.options.unit=="km":
-                    factor=0.0000002822219 # px->km
+                    factor=25.4/90000000.0  # px->km
                 elif self.options.unit=="in":
-                    factor=0.2822219/25.4 # px->in
+                    factor=1.0/90.0         # px->in
                 elif self.options.unit=="ft":
-                    factor=0.2822219/(25.4*12) # px->ft
+                    factor=1.0/90.0/12.0    # px->ft
                 elif self.options.unit=="yd":
-                    factor=0.2822219/(25.4*36) # px->yd
+                    factor=1.0/90.0/36.0    # px->yd
                 else :
                     ''' Default unit is px'''
                     factor=1
