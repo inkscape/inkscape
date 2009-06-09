@@ -2341,7 +2341,7 @@ Verb *Verb::_base_verbs[] = {
                  N_("Select previous object or node"), NULL),
     new EditVerb(SP_VERB_EDIT_DESELECT, "EditDeselect", N_("D_eselect"),
                  N_("Deselect any selected objects or nodes"), INKSCAPE_ICON_EDIT_SELECT_NONE),
-    new EditVerb(SP_VERB_EDIT_GUIDES_AROUND_PAGE, "EditGuidesAroundPage", N_("_Guides around page"),
+    new EditVerb(SP_VERB_EDIT_GUIDES_AROUND_PAGE, "EditGuidesAroundPage", N_("_Guides Around Page"),
                  N_("Create four guides aligned with the page borders"), NULL),
     new EditVerb(SP_VERB_EDIT_NEXT_PATHEFFECT_PARAMETER, "EditNextPathEffectParameter", N_("Next Path Effect Parameter"),
                  N_("Show next Path Effect parameter for editing"), INKSCAPE_ICON_PATH_EFFECT_PARAMETER_NEXT),
@@ -2713,11 +2713,11 @@ Verb *Verb::_base_verbs[] = {
     new TutorialVerb(SP_VERB_TUTORIAL_TIPS, "TutorialsTips", N_("_Tips and Tricks"),
                      N_("Miscellaneous tips and tricks"), NULL/*"tutorial_tips"*/),
 
-    /* Effect */
-    new EffectLastVerb(SP_VERB_EFFECT_LAST, "EffectLast", N_("Previous Effect"),
-                       N_("Repeat the last effect with the same settings"), NULL),
-    new EffectLastVerb(SP_VERB_EFFECT_LAST_PREF, "EffectLastPref", N_("Previous Effect Settings..."),
-                       N_("Repeat the last effect with new settings"), NULL),
+    /* Effect -- renamed Extension */
+    new EffectLastVerb(SP_VERB_EFFECT_LAST, "EffectLast", N_("Previous Extension"),
+                       N_("Repeat the last extension with the same settings"), NULL),
+    new EffectLastVerb(SP_VERB_EFFECT_LAST_PREF, "EffectLastPref", N_("Previous Extension Settings..."),
+                       N_("Repeat the last extension with new settings"), NULL),
 
     /* Fit Page */
     new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION, "FitCanvasToSelection", N_("Fit Page to Selection"),
