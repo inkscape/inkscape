@@ -150,6 +150,11 @@ sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
         root->original.sodipodi.major = 0;
         root->original.sodipodi.minor = 1;
     }
+
+    if ( !object->repr->attribute("version") ) {
+         repr->setAttribute("version", SVG_VERSION);
+     }
+
     sp_object_read_attr(object, "version");
     sp_object_read_attr(object, "sodipodi:version");
     sp_object_read_attr(object, "inkscape:version");
@@ -592,7 +597,9 @@ sp_root_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
         repr->setAttribute("inkscape:version", Inkscape::version_string);
     }
 
-    repr->setAttribute("version", SVG_VERSION);
+    if ( !repr->attribute("version") ) {
+        repr->setAttribute("version", sp_version_to_string(root->version.svg));
+    }
 
     if (fabs(root->x.computed) > 1e-9)
         sp_repr_set_svg_double(repr, "x", root->x.computed);

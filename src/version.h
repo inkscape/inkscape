@@ -12,7 +12,7 @@
 
 #include <glib/gtypes.h>
 
-#define SVG_VERSION "1.0"
+#define SVG_VERSION "1.1"
 #define SODIPODI_VERSION "0.32"
 
 namespace Inkscape {
