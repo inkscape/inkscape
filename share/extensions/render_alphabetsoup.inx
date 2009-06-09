@@ -6,7 +6,7 @@
     <dependency type="executable" location="extensions">render_alphabetsoup_config.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name="text" type="string" _gui-text="Text">Inkscape</param>
-	<param name="zoom" type="float" min="0.0" max="1000.0" _gui-text="Zoom">8.0</param>
+	<param name="zoom" type="float" min="0.0" max="1000.0" _gui-text="Scale">8.0</param>
 	<param name="seed" type="int" min="0" max="65535" _gui-text="Random Seed">0</param>
     <effect>
         <object-type>all</object-type>
