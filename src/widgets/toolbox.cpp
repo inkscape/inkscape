@@ -5814,16 +5814,18 @@ sp_text_letter_rotation_changed(GtkAdjustment *adj, GtkWidget *tbl)
 
 namespace {
 
-bool popdown_visible = false;
-bool popdown_hasfocus = false;
-
 void
 sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *tbl)
 {
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
-
-//    int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
     int result_family =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
@@ -5845,6 +5847,7 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
 	    if (g_object_get_data(tbl, "text_style_from_prefs")) {
             // do not reset the toolbar style from prefs if we already did it last time
             sp_style_unref(query);
+            g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
             return;
         }
         g_object_set_data(tbl, "text_style_from_prefs", GINT_TO_POINTER(TRUE));
@@ -5860,7 +5863,8 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
 
         } else if (query->text->font_specification.value || query->text->font_family.value) {
 
-            GtkWidget *entry = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "family-entry"));
+            Gtk::ComboBoxEntry *combo = (Gtk::ComboBoxEntry *) (g_object_get_data (G_OBJECT (tbl), "family-entry-combo"));
+            GtkEntry *entry = GTK_ENTRY (g_object_get_data (G_OBJECT (tbl), "family-entry"));
 
             // Get the font that corresponds
             Glib::ustring familyName;
@@ -5874,33 +5878,26 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
 
             gtk_entry_set_text (GTK_ENTRY (entry), familyName.c_str());
 
-            Gtk::TreePath path;
+            Gtk::TreeIter iter;
             try {
-                path = Inkscape::FontLister::get_instance()->get_row_for_font (familyName);
+                Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (familyName);
+                Glib::RefPtr<Gtk::TreeModel> model = combo->get_model();
+                iter = model->get_iter(path);
             } catch (...) {
                 g_warning("Family name %s does not have an entry in the font lister.", familyName.c_str());
                 sp_style_unref(query);
+                g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
                 return;
             }
 
-            GtkTreeSelection *tselection = GTK_TREE_SELECTION (g_object_get_data (G_OBJECT(tbl), "family-tree-selection"));
-            GtkTreeView *treeview = GTK_TREE_VIEW (g_object_get_data (G_OBJECT(tbl), "family-tree-view"));
-
-            g_object_set_data (G_OBJECT (tselection), "block", gpointer(1));
-
-            gtk_tree_selection_select_path (tselection, path.gobj());
-            gtk_tree_view_scroll_to_cell (treeview, path.gobj(), NULL, TRUE, 0.5, 0.0);
-
-            g_object_set_data (G_OBJECT (tselection), "block", gpointer(0));
+            combo->set_active (iter);
         }
 
         //Size
         {
             GtkWidget *cbox = GTK_WIDGET(g_object_get_data(G_OBJECT(tbl), "combo-box-size"));
             gchar *const str = g_strdup_printf("%.5g", query->font_size.computed);
-            g_object_set_data(tbl, "size-block", gpointer(1));
             gtk_entry_set_text(GTK_ENTRY(GTK_BIN(cbox)->child), str);
-            g_object_set_data(tbl, "size-block", gpointer(0));
             g_free(str);
         }
 
@@ -5987,6 +5984,8 @@ sp_text_toolbox_selection_changed (Inkscape::Selection */*selection*/, GObject *
     }
 
     sp_style_unref(query);
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
 void
@@ -6002,31 +6001,21 @@ sp_text_toolbox_subselection_changed (gpointer /*dragger*/, GObject *tbl)
 }
 
 void
-sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
+sp_text_toolbox_family_changed (GtkComboBoxEntry    *,
                                 GObject             *tbl)
 {
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
     SPDesktop    *desktop = SP_ACTIVE_DESKTOP;
-    GtkTreeModel *model = 0;
     GtkWidget    *entry = GTK_WIDGET (g_object_get_data (tbl, "family-entry"));
-    GtkTreeIter   iter;
-    char         *family = 0;
+    const gchar* family = gtk_entry_get_text (GTK_ENTRY (entry));
 
-    gdk_pointer_ungrab (GDK_CURRENT_TIME);
-    gdk_keyboard_ungrab (GDK_CURRENT_TIME);
-
-    if ( !gtk_tree_selection_get_selected( selection, &model, &iter ) ) {
-        return;
-    }
-
-    gtk_tree_model_get (model, &iter, 0, &family, -1);
-
-    if (g_object_get_data (G_OBJECT (selection), "block"))
-    {
-        gtk_entry_set_text (GTK_ENTRY (entry), family);
-        return;
-    }
-
-    gtk_entry_set_text (GTK_ENTRY (entry), family);
+    //g_print ("family changed to: %s\n", family);
 
     SPStyle *query =
         sp_style_new (SP_ACTIVE_DOCUMENT);
@@ -6034,10 +6023,7 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     int result_fontspec =
         sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
-    //font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
-
     SPCSSAttr *css = sp_repr_css_attr_new ();
-
 
     // First try to get the font spec from the stored value
     Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
@@ -6098,35 +6084,16 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                                    _("Text: Change font family"));
     sp_repr_css_attr_unref (css);
-    g_free(family);
+
     gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));
 
+    // unfreeze
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+
+    // focus to canvas
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
 }
 
-/* This is where execution comes when the contents of the font family box have been completed
-   by the press of the return key */
-void
-sp_text_toolbox_family_entry_activate (GtkEntry     *entry,
-                                       GObject      *tbl)
-{
-    const char *family = gtk_entry_get_text (entry);   // Fetch the requested font family
-
-// Try to match that to a known font. If not, then leave current font alone and remain focused on text box
-    try {
-        Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (family);
-        GtkTreeSelection *selection = GTK_TREE_SELECTION (g_object_get_data (G_OBJECT(tbl), "family-tree-selection"));
-        GtkTreeView *treeview = GTK_TREE_VIEW (g_object_get_data (G_OBJECT(tbl), "family-tree-view"));
-        gtk_tree_selection_select_path (selection, path.gobj());
-        gtk_tree_view_scroll_to_cell (treeview, path.gobj(), NULL, TRUE, 0.5, 0.0);
-        gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));
-    } catch (...) {
-        if (family && strlen (family))
-        {
-            gtk_widget_show_all (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));
-        }
-    }
-}
 
 void
 sp_text_toolbox_anchoring_toggled (GtkRadioButton   *button,
@@ -6275,7 +6242,6 @@ sp_text_toolbox_orientation_toggled (GtkRadioButton  *button,
                                      gpointer         data)
 {
     if (g_object_get_data (G_OBJECT (button), "block")) {
-        g_object_set_data (G_OBJECT (button), "block", gpointer(0));
         return;
     }
 
@@ -6325,9 +6291,16 @@ sp_text_toolbox_family_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject *
     if (!desktop) return FALSE;
 
     switch (get_group0_keyval (event)) {
-        case GDK_Escape: // defocus
+        case GDK_KP_Enter: // chosen
+        case GDK_Return:
+            // unfreeze and update, which will defocus
+            g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+            sp_text_toolbox_family_changed (NULL, tbl); 
+            return TRUE; // I consumed the event
+            break;
+        case GDK_Escape: 
+            // defocus
             gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-            sp_text_toolbox_selection_changed (NULL, tbl); // update
             return TRUE; // I consumed the event
             break;
     }
@@ -6344,16 +6317,12 @@ sp_text_toolbox_family_list_keypress (GtkWidget *w, GdkEventKey *event, GObject 
         case GDK_KP_Enter:
         case GDK_Return:
         case GDK_Escape: // defocus
-            gtk_widget_hide (w);
-            popdown_visible = false;
             gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
             return TRUE; // I consumed the event
             break;
         case GDK_w:
         case GDK_W:
             if (event->state & GDK_CONTROL_MASK) {
-                gtk_widget_hide (w);
-                popdown_visible = false;
                 gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
                 return TRUE; // I consumed the event
             }
@@ -6367,16 +6336,23 @@ void
 sp_text_toolbox_size_changed  (GtkComboBox *cbox,
                                GObject     *tbl)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+     // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
 
-    if (g_object_get_data (tbl, "size-block")) return;
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+
+   SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     // If this is not from selecting a size in the list (in which case get_active will give the
     // index of the selected item, otherwise -1) and not from user pressing Enter/Return, do not
     // process this event. This fixes GTK's stupid insistence on sending an activate change every
     // time any character gets typed or deleted, which made this control nearly unusable in 0.45.
-    if (gtk_combo_box_get_active (cbox) < 0 && !g_object_get_data (tbl, "enter-pressed"))
+   if (gtk_combo_box_get_active (cbox) < 0 && !g_object_get_data (tbl, "enter-pressed")) {
+        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
         return;
+   }
 
     gdouble value = -1;
     {
@@ -6391,6 +6367,7 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
         }
     }
     if (value <= 0) {
+        g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
         return; // could not parse value
     }
 
@@ -6419,6 +6396,8 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
     sp_repr_css_attr_unref (css);
 
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 }
 
 gboolean
@@ -6463,80 +6442,30 @@ sp_text_toolbox_size_keypress (GtkWidget */*w*/, GdkEventKey *event, GObject *tb
     return FALSE;
 }
 
-void
-sp_text_toolbox_text_popdown_clicked    (GtkButton          */*button*/,
-                                         GObject            *tbl)
-{
-    GtkWidget *popdown = GTK_WIDGET (g_object_get_data (tbl, "family-popdown-window"));
-    GtkWidget *widget = GTK_WIDGET (g_object_get_data (tbl, "family-entry"));
-    int x, y;
-
-    if (!popdown_visible)
-    {
-        gdk_window_get_origin (widget->window, &x, &y);
-        gtk_window_move (GTK_WINDOW (popdown), x, y + widget->allocation.height + 2); //2px of grace space
-        gtk_widget_show_all (popdown);
-        //sp_transientize (popdown);
-
-        gdk_pointer_grab (widget->window, TRUE,
-                          GdkEventMask (GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-                                        GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK |
-                                        GDK_POINTER_MOTION_MASK),
-                          NULL, NULL, GDK_CURRENT_TIME);
-
-        gdk_keyboard_grab (widget->window, TRUE, GDK_CURRENT_TIME);
-
-        popdown_visible = true;
-    }
-    else
-    {
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-        gdk_pointer_ungrab (GDK_CURRENT_TIME);
-        gdk_keyboard_ungrab (GDK_CURRENT_TIME);
-        gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-        gtk_widget_hide (popdown);
-        popdown_visible = false;
-    }
-}
-
+// While editing font name in the entry, disable family_changed by freezing, otherwise completion
+// does not work!
 gboolean
 sp_text_toolbox_entry_focus_in  (GtkWidget        *entry,
                                  GdkEventFocus    */*event*/,
-                                 GObject          */*tbl*/)
+                                 GObject          *tbl)
 {
-    gtk_entry_select_region (GTK_ENTRY (entry), 0, -1);
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+    gtk_entry_select_region (GTK_ENTRY (entry), 0, -1); // select all
     return FALSE;
 }
 
 gboolean
-sp_text_toolbox_popdown_focus_out (GtkWidget        *popdown,
-                                   GdkEventFocus    */*event*/,
-                                   GObject          */*tbl*/)
+sp_text_toolbox_entry_focus_out  (GtkWidget        *entry,
+                                 GdkEventFocus    */*event*/,
+                                 GObject          *tbl)
 {
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
-    if (popdown_hasfocus) {
-        gtk_widget_hide (popdown);
-        popdown_hasfocus = false;
-        popdown_visible = false;
-        gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
-        return TRUE;
-    }
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+    gtk_entry_select_region (GTK_ENTRY (entry), 0, 0); // deselect
     return FALSE;
 }
-
-gboolean
-sp_text_toolbox_popdown_focus_in (GtkWidget        */*popdown*/,
-                                   GdkEventFocus    */*event*/,
-                                   GObject          */*tbl*/)
-{
-    popdown_hasfocus = true;
-    return TRUE;
-}
-
 
 void
-cell_data_func  (GtkTreeViewColumn */*column*/,
+cell_data_func  (GtkCellLayout */*cell_layout*/,
                  GtkCellRenderer   *cell,
                  GtkTreeModel      *tree_model,
                  GtkTreeIter       *iter,
@@ -6559,12 +6488,97 @@ cell_data_func  (GtkTreeViewColumn */*column*/,
     g_free(sample_escaped);
 }
 
-static void delete_completion(GObject */*obj*/, GtkWidget *entry) {
-    GObject *completion = (GObject *) gtk_object_get_data(GTK_OBJECT(entry), "completion");
-    if (completion) {
-        gtk_entry_set_completion (GTK_ENTRY(entry), NULL);
-        g_object_unref (completion);
-    }
+gboolean            text_toolbox_completion_match_selected    (GtkEntryCompletion *widget,
+                                                        GtkTreeModel       *model,
+                                                        GtkTreeIter        *iter,
+                                                        GObject *tbl) 
+{
+    // We intercept this signal so as to fire family_changed at once (without it, you'd have to
+    // press Enter again after choosing a completion)
+    gchar *family;
+    gtk_tree_model_get(model, iter, 0, &family, -1);
+
+    GtkEntry *entry = GTK_ENTRY (g_object_get_data (G_OBJECT (tbl), "family-entry"));
+    gtk_entry_set_text (GTK_ENTRY (entry), family);
+
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+    sp_text_toolbox_family_changed (NULL, tbl);
+    return TRUE;
+}
+
+
+static void
+cbe_add_completion (GtkComboBoxEntry *cbe, GObject *tbl){
+    GtkEntry *entry;
+    GtkEntryCompletion *completion;
+    GtkTreeModel *model;
+
+    entry = GTK_ENTRY(gtk_bin_get_child(GTK_BIN(cbe)));
+    completion = gtk_entry_completion_new();
+    model = gtk_combo_box_get_model(GTK_COMBO_BOX(cbe));
+    gtk_entry_completion_set_model(completion, model);
+    gtk_entry_completion_set_text_column(completion, 0);
+    gtk_entry_completion_set_inline_completion(completion, FALSE);
+    gtk_entry_completion_set_inline_selection(completion, FALSE);
+    gtk_entry_completion_set_popup_completion(completion, TRUE);
+    gtk_entry_set_completion(entry, completion);
+
+    g_signal_connect (G_OBJECT (completion),  "match-selected", G_CALLBACK (text_toolbox_completion_match_selected), tbl);
+
+    g_object_unref(completion);
+}
+
+void        sp_text_toolbox_family_popnotify          (GtkComboBox *widget,
+                                                       void *property,
+                                                        GObject *tbl)
+{
+  // while the drop-down is open, we disable font family changing, reenabling it only when it closes
+
+  gboolean shown;
+  g_object_get (G_OBJECT(widget), "popup-shown", &shown, NULL);
+  if (shown) {
+         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+         //g_print("POP: notify: SHOWN\n");
+  } else {
+         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
+
+         // stupid GTK doesn't let us attach to events in the drop-down window, so we peek here to
+         // find out if the drop down was closed by Enter and if so, manually update (only
+         // necessary on Windows, on Linux it updates itself - what a mess, but we'll manage)
+         GdkEvent *ev = gtk_get_current_event();
+         if (ev) {
+             //g_print ("ev type: %d\n", ev->type);
+             if (ev->type == GDK_KEY_PRESS) {
+                 switch (get_group0_keyval ((GdkEventKey *) ev)) {
+                     case GDK_KP_Enter: // chosen
+                     case GDK_Return:
+                     {
+                         // make sure the chosen one is inserted into the entry
+                         GtkComboBox  *combo = GTK_COMBO_BOX (((Gtk::ComboBox *) (g_object_get_data (tbl, "family-entry-combo")))->gobj());
+                         GtkTreeModel *model = gtk_combo_box_get_model(combo);
+                         GtkTreeIter iter;
+                         gboolean has_active = gtk_combo_box_get_active_iter (combo, &iter);
+                         if (has_active) {
+                             gchar *family;
+                             gtk_tree_model_get(model, &iter, 0, &family, -1);
+                             GtkEntry *entry = GTK_ENTRY (g_object_get_data (G_OBJECT (tbl), "family-entry"));
+                             gtk_entry_set_text (GTK_ENTRY (entry), family);
+                         }
+
+                         // update
+                         sp_text_toolbox_family_changed (NULL, tbl); 
+                         break;
+                     }
+                 } 
+             }
+         }
+
+         // regardless of whether we updated, defocus the widget
+         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+         if (desktop)
+             gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
+         //g_print("POP: notify: HIDDEN\n");
+  }
 }
 
 GtkWidget*
@@ -6577,72 +6591,39 @@ sp_text_toolbox_new (SPDesktop *desktop)
     gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
 
     GtkTooltips *tt = gtk_tooltips_new();
-    Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
 
     ////////////Family
-    //Window
-    GtkWidget   *window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_decorated (GTK_WINDOW (window), FALSE);
+    Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
+    Gtk::ComboBoxEntry *font_sel = Gtk::manage(new Gtk::ComboBoxEntry(store));
+    g_signal_connect (G_OBJECT (font_sel->gobj()), "key-press-event", G_CALLBACK(sp_text_toolbox_family_list_keypress), tbl);
 
-    //Entry
-    GtkWidget           *entry = gtk_entry_new ();
+    cbe_add_completion(font_sel->gobj(), G_OBJECT(tbl));
+    
+    gtk_toolbar_append_widget( tbl, (GtkWidget*) font_sel->gobj(), "", "");
+    g_object_set_data (G_OBJECT (tbl), "family-entry-combo", font_sel);
+
+    // expand the field a bit so as to view more of the previews in the drop-down
+    GtkRequisition req;
+    gtk_widget_size_request (GTK_WIDGET (font_sel->gobj()), &req);
+    gtk_widget_set_size_request  (GTK_WIDGET (font_sel->gobj()), req.width + 40, -1);
+
+    GtkWidget* entry = (GtkWidget*) font_sel->get_entry()->gobj();
+    g_signal_connect (G_OBJECT (entry), "activate", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
+
+    g_signal_connect (G_OBJECT (font_sel->gobj()), "changed", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
+    g_signal_connect (G_OBJECT (font_sel->gobj()), "notify::popup-shown", 
+             G_CALLBACK (sp_text_toolbox_family_popnotify), tbl);
+    g_signal_connect (G_OBJECT (entry), "key-press-event", G_CALLBACK(sp_text_toolbox_family_keypress), tbl);
+    g_signal_connect (G_OBJECT (entry),  "focus-in-event", G_CALLBACK (sp_text_toolbox_entry_focus_in), tbl);
+    g_signal_connect (G_OBJECT (entry),  "focus-out-event", G_CALLBACK (sp_text_toolbox_entry_focus_out), tbl);
+
     gtk_object_set_data(GTK_OBJECT(entry), "altx-text", entry);
-    GtkEntryCompletion  *completion = gtk_entry_completion_new ();
-    gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (Glib::unwrap(store)));
-    gtk_entry_completion_set_text_column (completion, 0);
-    gtk_entry_completion_set_minimum_key_length (completion, 1);
-    g_object_set (G_OBJECT(completion), "inline-completion", TRUE, "popup-completion", TRUE, NULL);
-    gtk_entry_set_completion (GTK_ENTRY(entry), completion);
-    gtk_object_set_data(GTK_OBJECT(entry), "completion", completion);
-    gtk_toolbar_append_widget( tbl, entry, "", "" );
-    g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_completion), entry);
-
-    //Button
-    GtkWidget   *button = gtk_button_new ();
-    gtk_container_add       (GTK_CONTAINER (button), gtk_arrow_new (GTK_ARROW_DOWN, GTK_SHADOW_NONE));
-    gtk_toolbar_append_widget( tbl, button, "", "");
-
-    //Popdown
-    GtkWidget           *sw = gtk_scrolled_window_new (NULL, NULL);
-    GtkWidget           *treeview = gtk_tree_view_new ();
+    g_object_set_data (G_OBJECT (tbl), "family-entry", entry);
 
     GtkCellRenderer     *cell = gtk_cell_renderer_text_new ();
-    GtkTreeViewColumn   *column = gtk_tree_view_column_new ();
-    gtk_tree_view_column_pack_start (column, cell, FALSE);
-    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
-    gtk_tree_view_column_set_cell_data_func (column, cell, GtkTreeCellDataFunc (cell_data_func), NULL, NULL);
-    gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-
-    gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), GTK_TREE_MODEL (Glib::unwrap(store)));
-    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
-    gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW (treeview), TRUE);
-
-    //gtk_tree_view_set_enable_search (GTK_TREE_VIEW (treeview), TRUE);
-
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-    gtk_container_add (GTK_CONTAINER (sw), treeview);
-
-    gtk_container_add (GTK_CONTAINER (window), sw);
-    gtk_widget_set_size_request (window, 300, 450);
-
-    g_signal_connect (G_OBJECT (entry),  "activate", G_CALLBACK (sp_text_toolbox_family_entry_activate), tbl);
-    g_signal_connect (G_OBJECT (entry),  "focus-in-event", G_CALLBACK (sp_text_toolbox_entry_focus_in), tbl);
-    g_signal_connect (G_OBJECT (entry), "key-press-event", G_CALLBACK(sp_text_toolbox_family_keypress), tbl);
-
-    g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (sp_text_toolbox_text_popdown_clicked), tbl);
-
-    g_signal_connect (G_OBJECT (window), "focus-out-event", G_CALLBACK (sp_text_toolbox_popdown_focus_out), tbl);
-    g_signal_connect (G_OBJECT (window), "focus-in-event", G_CALLBACK (sp_text_toolbox_popdown_focus_in), tbl);
-    g_signal_connect (G_OBJECT (window), "key-press-event", G_CALLBACK(sp_text_toolbox_family_list_keypress), tbl);
-
-    GtkTreeSelection *tselection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
-    g_signal_connect (G_OBJECT (tselection), "changed", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
-
-    g_object_set_data (G_OBJECT (tbl), "family-entry", entry);
-    g_object_set_data (G_OBJECT (tbl), "family-popdown-button", button);
-    g_object_set_data (G_OBJECT (tbl), "family-popdown-window", window);
-    g_object_set_data (G_OBJECT (tbl), "family-tree-selection", tselection);
-    g_object_set_data (G_OBJECT (tbl), "family-tree-view", treeview);
+    gtk_cell_layout_clear( GTK_CELL_LAYOUT(font_sel->gobj()) );
+    gtk_cell_layout_pack_start( GTK_CELL_LAYOUT(font_sel->gobj()) , cell , TRUE );
+    gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT(font_sel->gobj()), cell, GtkCellLayoutDataFunc (cell_data_func), NULL, NULL);
 
     GtkWidget *image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, secondarySize);
     GtkWidget *box = gtk_event_box_new ();
