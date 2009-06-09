@@ -263,7 +263,6 @@ sp_document_create(Inkscape::XML::Document *rdoc,
 {
     SPDocument *document;
     Inkscape::XML::Node *rroot;
-    Inkscape::Version sodipodi_version;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     rroot = rdoc->root();
@@ -293,10 +292,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
 
     document->root = sp_object_repr_build_tree(document, rroot);
 
-    sodipodi_version = SP_ROOT(document->root)->version.sodipodi;
-
     /* fixme: Not sure about this, but lets assume ::build updates */
-    rroot->setAttribute("sodipodi:version", SODIPODI_VERSION);
     rroot->setAttribute("inkscape:version", Inkscape::version_string);
     /* fixme: Again, I moved these here to allow version determining in ::build (Lauris) */
 
@@ -313,7 +309,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
 
     /* Eliminate obsolete sodipodi:docbase, for privacy reasons */
     rroot->setAttribute("sodipodi:docbase", NULL);
-    
+
     /* Eliminate any claim to adhere to a profile, as we don't try to */
     rroot->setAttribute("baseProfile", NULL);
 
@@ -321,7 +317,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
     if (!sp_item_group_get_child_by_name((SPGroup *) document->root, NULL, "sodipodi:namedview")) {
         // if there's none in the document already,
         Inkscape::XML::Node *rnew = NULL;
-        
+
         rnew = rdoc->createElement("sodipodi:namedview");
         //rnew->setAttribute("id", "base");
 
@@ -351,7 +347,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
             prefs->getInt("/template/base/inkscape:window-width", 640));
         sp_repr_set_int(rnew, "inkscape:window-height",
             prefs->getInt("/template/base/inkscape:window-height", 480));
-        
+
         // insert into the document
         rroot->addChild(rnew, NULL);
         // clean up
@@ -672,7 +668,7 @@ void sp_document_set_uri(SPDocument *document, gchar const *filename)
 
     do_change_uri(document, filename, false);
 }
-    
+
 /**
  * Changes the base, name and uri members of \a document, and updates any
  * relative hrefs in the document to be relative to the new base.

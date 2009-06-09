@@ -554,8 +554,6 @@ void sp_object_removeAttribute(SPObject *object, gchar const *key, SPException *
 gchar const *sp_object_get_style_property(SPObject const *object,
                                           gchar const *key, gchar const *def);
 
-Inkscape::Version sp_object_get_sodipodi_version(SPObject *object);
-
 int sp_object_compare_position(SPObject const *first, SPObject const *second);
 
 SPObject *sp_object_prev(SPObject *child);

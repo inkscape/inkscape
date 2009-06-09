@@ -1554,24 +1554,6 @@ SPObject::_requireSVGVersion(Inkscape::Version version) {
 }
 
 /**
- * Return sodipodi version of first root ancestor or (0,0).
- */
-Inkscape::Version
-sp_object_get_sodipodi_version(SPObject *object)
-{
-    static Inkscape::Version const zero_version(0, 0);
-
-    while (object) {
-        if (SP_IS_ROOT(object)) {
-            return SP_ROOT(object)->version.sodipodi;
-        }
-        object = SP_OBJECT_PARENT(object);
-    }
-
-    return zero_version;
-}
-
-/**
  * Returns previous object in sibling list or NULL.
  */
 SPObject *

@@ -694,8 +694,6 @@ sp_arc_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
     if (((SPObjectClass *) arc_parent_class)->build)
         (* ((SPObjectClass *) arc_parent_class)->build) (object, document, repr);
 
-    Inkscape::Version version = sp_object_get_sodipodi_version(object);
-
     sp_object_read_attr(object, "sodipodi:cx");
     sp_object_read_attr(object, "sodipodi:cy");
     sp_object_read_attr(object, "sodipodi:rx");

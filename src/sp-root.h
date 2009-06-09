@@ -29,7 +29,6 @@
 struct SPRoot : public SPGroup {
     struct {
         Inkscape::Version svg;
-        Inkscape::Version sodipodi;
         Inkscape::Version inkscape;
     } version, original;
 

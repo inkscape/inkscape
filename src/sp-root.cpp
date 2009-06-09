@@ -117,9 +117,10 @@ sp_root_init(SPRoot *root)
     static Inkscape::Version const zero_version(0, 0);
 
     sp_version_from_string(SVG_VERSION, &root->original.svg);
-    root->version.svg = root->original.svg;
-    root->version.inkscape = root->original.inkscape =
-        root->version.sodipodi = root->original.sodipodi = zero_version;
+    root->version.svg = zero_version;
+    root->original.svg = zero_version;
+    root->version.inkscape = zero_version;
+    root->original.inkscape = zero_version;
 
     root->x.unset();
     root->y.unset();
@@ -145,18 +146,11 @@ sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
     SPGroup *group = (SPGroup *) object;
     SPRoot *root = (SPRoot *) object;
 
-    if (repr->attribute("sodipodi:docname") || repr->attribute("SP-DOCNAME")) {
-        /* so we have a nonzero initial version */
-        root->original.sodipodi.major = 0;
-        root->original.sodipodi.minor = 1;
+    if ( !object->repr->attribute("version") ) {
+        repr->setAttribute("version", SVG_VERSION);
     }
 
-    if ( !object->repr->attribute("version") ) {
-         repr->setAttribute("version", SVG_VERSION);
-     }
-
     sp_object_read_attr(object, "version");
-    sp_object_read_attr(object, "sodipodi:version");
     sp_object_read_attr(object, "inkscape:version");
     /* It is important to parse these here, so objects will have viewport build-time */
     sp_object_read_attr(object, "x");
@@ -210,10 +204,6 @@ sp_root_set(SPObject *object, unsigned int key, gchar const *value)
                 root->version.svg = root->original.svg;
             }
             break;
-        case SP_ATTR_SODIPODI_VERSION:
-            if (!sp_version_from_string(value, &root->version.sodipodi)) {
-                root->version.sodipodi = root->original.sodipodi;
-            }
         case SP_ATTR_INKSCAPE_VERSION:
             if (!sp_version_from_string(value, &root->version.inkscape)) {
                 root->version.inkscape = root->original.inkscape;
@@ -593,7 +583,6 @@ sp_root_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
     }
 
     if (flags & SP_OBJECT_WRITE_EXT) {
-        repr->setAttribute("sodipodi:version", SODIPODI_VERSION);
         repr->setAttribute("inkscape:version", Inkscape::version_string);
     }
 
