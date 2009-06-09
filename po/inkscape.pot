@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-08 06:41+0200\n"
+"POT-Creation-Date: 2009-06-09 06:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -288,7 +288,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:103
 #: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
 #: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:165
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:166 ../share/filters/filters.svg.h:179
 msgid "Image effects"
 msgstr ""
 
@@ -1641,6 +1641,14 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:178
 msgid "Highly flexible specular bubbles with transparency"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:179
+msgid "Old postcard"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:179
+msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
