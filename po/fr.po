@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-08 06:41+0200\n"
-"PO-Revision-Date: 2009-06-08 06:43+0100\n"
+"POT-Creation-Date: 2009-06-09 06:49+0200\n"
+"PO-Revision-Date: 2009-06-09 06:53+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -344,6 +344,7 @@ msgstr "Netteté"
 #: ../share/filters/filters.svg.h:163
 #: ../share/filters/filters.svg.h:165
 #: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:179
 msgid "Image effects"
 msgstr "Effets d'image"
 
@@ -1717,6 +1718,14 @@ msgstr "Bulles TSL transparentes"
 #: ../share/filters/filters.svg.h:178
 msgid "Highly flexible specular bubbles with transparency"
 msgstr "Bulles spéculaire extrêmement flexible avec transparence"
+
+#: ../share/filters/filters.svg.h:179
+msgid "Old postcard"
+msgstr "Vieille carte postale"
+
+#: ../share/filters/filters.svg.h:179
+msgid "Slightly posterize and draw edges like on old printed postcards"
+msgstr "Légère postérisation et contours dessinés, comme sur une vieille carte postale imprimée"
 
 #: ../share/patterns/patterns.svg.h:2
 msgid "Stripes 1:1"
