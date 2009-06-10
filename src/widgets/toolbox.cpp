@@ -6036,34 +6036,51 @@ sp_text_toolbox_family_changed (GtkComboBoxEntry    *,
     }
 
     if (!fontSpec.empty()) {
+
         Glib::ustring newFontSpec = font_factory::Default()->ReplaceFontSpecificationFamily(fontSpec, family);
-        if (!newFontSpec.empty() && fontSpec != newFontSpec) {
-            font_instance *font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
-            if (font) {
-                sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
 
-                // Set all the these just in case they were altered when finding the best
-                // match for the new family and old style...
+        if (!newFontSpec.empty()) {
 
-                gchar c[256];
+            if (fontSpec != newFontSpec) {
 
-                font->Family(c, 256);
-                sp_repr_css_set_property (css, "font-family", c);
+                font_instance *font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
 
-                font->Attribute( "weight", c, 256);
-                sp_repr_css_set_property (css, "font-weight", c);
+                if (font) {
+                    sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
 
-                font->Attribute("style", c, 256);
-                sp_repr_css_set_property (css, "font-style", c);
+                    // Set all the these just in case they were altered when finding the best
+                    // match for the new family and old style...
 
-                font->Attribute("stretch", c, 256);
-                sp_repr_css_set_property (css, "font-stretch", c);
+                    gchar c[256];
 
-                font->Attribute("variant", c, 256);
-                sp_repr_css_set_property (css, "font-variant", c);
+                    font->Family(c, 256);
 
-                font->Unref();
+                    sp_repr_css_set_property (css, "font-family", c);
+
+                    font->Attribute( "weight", c, 256);
+                    sp_repr_css_set_property (css, "font-weight", c);
+
+                    font->Attribute("style", c, 256);
+                    sp_repr_css_set_property (css, "font-style", c);
+
+                    font->Attribute("stretch", c, 256);
+                    sp_repr_css_set_property (css, "font-stretch", c);
+
+                    font->Attribute("variant", c, 256);
+                    sp_repr_css_set_property (css, "font-variant", c);
+
+                    font->Unref();
+                }
             }
+
+        } else {
+            // If the old font on selection (or default) was not existing on the system,
+            // ReplaceFontSpecificationFamily does not work. In that case we fall back to blindly
+            // setting the family reported by the family chooser.
+
+            //g_print ("fallback setting family: %s\n", family);
+            sp_repr_css_set_property (css, "-inkscape-font-specification", family);
+            sp_repr_css_set_property (css, "font-family", family);
         }
     }
 
