@@ -6414,7 +6414,7 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
 
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
 
-    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
 gboolean
