@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-09 06:49+0200\n"
-"PO-Revision-Date: 2009-06-09 06:53+0100\n"
+"POT-Creation-Date: 2009-06-10 19:39+0200\n"
+"PO-Revision-Date: 2009-06-10 20:11+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1970,12 +1970,12 @@ msgid "Select <b>at least one non-connector object</b>."
 msgstr "Sélectionner <b>au moins un objet non connecteur</b>."
 
 #: ../src/connector-context.cpp:1347
-#: ../src/widgets/toolbox.cpp:6965
+#: ../src/widgets/toolbox.cpp:6963
 msgid "Make connectors avoid selected objects"
 msgstr "Faire que les connecteurs évitent les objets sélectionnés"
 
 #: ../src/connector-context.cpp:1348
-#: ../src/widgets/toolbox.cpp:6975
+#: ../src/widgets/toolbox.cpp:6973
 msgid "Make connectors ignore selected objects"
 msgstr "Faire que les connecteurs ignorent les objets sélectionnés"
 
@@ -3431,12 +3431,12 @@ msgid "Justify lines"
 msgstr "Justifier les lignes"
 
 #: ../src/dialogs/text-edit.cpp:300
-#: ../src/widgets/toolbox.cpp:6770
+#: ../src/widgets/toolbox.cpp:6768
 msgid "Horizontal text"
 msgstr "Texte horizontal"
 
 #: ../src/dialogs/text-edit.cpp:314
-#: ../src/widgets/toolbox.cpp:6782
+#: ../src/widgets/toolbox.cpp:6780
 msgid "Vertical text"
 msgstr "Texte vertical"
 
@@ -3450,7 +3450,7 @@ msgstr "Espacement entre les lignes :"
 #: ../src/ui/dialog/inkscape-preferences.cpp:518
 #: ../src/verbs.cpp:2522
 #: ../share/extensions/lorem_ipsum.inx.h:5
-#: ../share/extensions/render_alphabetsoup.inx.h:4
+#: ../share/extensions/render_alphabetsoup.inx.h:5
 #: ../share/extensions/text_braille.inx.h:2
 #: ../share/extensions/text_flipcase.inx.h:1
 #: ../share/extensions/text_lowercase.inx.h:1
@@ -3503,10 +3503,7 @@ msgid "Duplicate node"
 msgstr "Dupliquer le nœud"
 
 #: ../src/dialogs/xml-tree.cpp:347
-#: ../src/dialogs/xml-tree.cpp:1426
-#: ../src/nodepath.cpp:3517
-#: ../src/widgets/toolbox.cpp:1300
-msgid "Delete node"
+msgid "nodeAsInXMLdialogTooltip|Delete node"
 msgstr "Supprimer le nœud"
 
 #: ../src/dialogs/xml-tree.cpp:363
@@ -3579,6 +3576,10 @@ msgstr "Créer un nouveau nœud élément"
 #: ../src/dialogs/xml-tree.cpp:1391
 msgid "Create new text node"
 msgstr "Créer un nouveau nœud texte"
+
+#: ../src/dialogs/xml-tree.cpp:1426
+msgid "nodeAsInXMLinHistoryDialog|Delete node"
+msgstr "Supprimer le nœud"
 
 #: ../src/dialogs/xml-tree.cpp:1473
 msgid "Change attribute"
@@ -3908,7 +3909,7 @@ msgid "Quadrant point"
 msgstr "Point de quadrant"
 
 #: ../src/display/snap-indicator.cpp:193
-#: ../src/widgets/toolbox.cpp:6700
+#: ../src/widgets/toolbox.cpp:6698
 msgid "Center"
 msgstr "Centre"
 
@@ -3924,17 +3925,17 @@ msgstr "Ligne de base de texte"
 msgid " to "
 msgstr " à "
 
-#: ../src/document.cpp:445
+#: ../src/document.cpp:441
 #, c-format
 msgid "New document %d"
 msgstr "Nouveau document %d"
 
-#: ../src/document.cpp:477
+#: ../src/document.cpp:473
 #, c-format
 msgid "Memory document %d"
 msgstr "Document d'information %d"
 
-#: ../src/document.cpp:632
+#: ../src/document.cpp:628
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Document sans nom %d"
@@ -5913,7 +5914,7 @@ msgstr "Unité"
 #: ../src/widgets/toolbox.cpp:1504
 #: ../src/widgets/toolbox.cpp:3154
 #: ../src/widgets/toolbox.cpp:5658
-#: ../src/widgets/toolbox.cpp:7171
+#: ../src/widgets/toolbox.cpp:7169
 msgid "Units"
 msgstr "Unités"
 
@@ -7487,6 +7488,7 @@ msgstr "Nombre de lignes de construction (tangentes) à dessiner"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2207
 #: ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
+#: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
 msgstr "Longueur/Courbure"
 
@@ -8070,6 +8072,11 @@ msgstr "Modifier le type de segment"
 #: ../src/nodepath.cpp:3567
 msgid "Change node type"
 msgstr "Modifier le type de nœud"
+
+#: ../src/nodepath.cpp:3517
+#: ../src/widgets/toolbox.cpp:1300
+msgid "Delete node"
+msgstr "Supprimer le nœud"
 
 #: ../src/nodepath.cpp:3861
 msgid "Retract handle"
@@ -9330,7 +9337,7 @@ msgid "<b>Link</b> without URI"
 msgstr "<b>Lien</b> sans URI"
 
 #: ../src/sp-ellipse.cpp:489
-#: ../src/sp-ellipse.cpp:868
+#: ../src/sp-ellipse.cpp:866
 msgid "<b>Ellipse</b>"
 msgstr "<b>Ellipse</b>"
 
@@ -9338,11 +9345,11 @@ msgstr "<b>Ellipse</b>"
 msgid "<b>Circle</b>"
 msgstr "<b>Cercle</b>"
 
-#: ../src/sp-ellipse.cpp:863
+#: ../src/sp-ellipse.cpp:861
 msgid "<b>Segment</b>"
 msgstr "<b>Camembert</b>"
 
-#: ../src/sp-ellipse.cpp:865
+#: ../src/sp-ellipse.cpp:863
 msgid "<b>Arc</b>"
 msgstr "<b>Arc</b>"
 
@@ -9376,7 +9383,7 @@ msgstr[0] "<b>Texte encadré lié</b> (%d caractère)"
 msgstr[1] "<b>Texte encadré lié</b> (%d caractères)"
 
 #: ../src/sp-guide.cpp:287
-msgid "Guides around page"
+msgid "Guides Around Page"
 msgstr "Guides autour de la page"
 
 #: ../src/sp-guide.cpp:420
@@ -10384,12 +10391,12 @@ msgstr "V :"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#: ../src/widgets/toolbox.cpp:7036
+#: ../src/widgets/toolbox.cpp:7034
 msgid "Remove overlaps"
 msgstr "Supprimer les chevauchements"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:540
-#: ../src/widgets/toolbox.cpp:6901
+#: ../src/widgets/toolbox.cpp:6899
 msgid "Arrange connector network"
 msgstr "Arranger le réseau de connecteurs"
 
@@ -10527,7 +10534,7 @@ msgid "Move objects as little as possible so that their bounding boxes do not ov
 msgstr "Déplacer les objets aussi peu que possible afin que leurs boîtes englobantes ne se chevauchent pas"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:893
-#: ../src/widgets/toolbox.cpp:6999
+#: ../src/widgets/toolbox.cpp:6997
 msgid "Nicely arrange selected connector network"
 msgstr "Dispose le réseau de connecteurs sélectionnés de façon agréable"
 
@@ -11715,7 +11722,7 @@ msgstr "Vitesse du défilement automatique de la zone de travail lors que l'on t
 #: ../src/ui/dialog/tracedialog.cpp:420
 #: ../src/ui/dialog/tracedialog.cpp:453
 #: ../src/ui/dialog/tracedialog.cpp:596
-#: ../src/widgets/toolbox.cpp:7153
+#: ../src/widgets/toolbox.cpp:7151
 msgid "Threshold:"
 msgstr "Seuil :"
 
@@ -12072,7 +12079,6 @@ msgstr "Peindre les objets avec :"
 #: ../src/ui/view/edit-widget.cpp:1062
 #: ../src/verbs.cpp:2526
 #: ../src/widgets/desktop-widget.cpp:481
-#: ../share/extensions/render_alphabetsoup.inx.h:5
 msgid "Zoom"
 msgstr "Zoom"
 
@@ -15569,7 +15575,7 @@ msgid "Deselect any selected objects or nodes"
 msgstr "Désélectionner tous les objets ou nœuds"
 
 #: ../src/verbs.cpp:2344
-msgid "_Guides around page"
+msgid "_Guides Around Page"
 msgstr "_Guides autour de la page"
 
 #: ../src/verbs.cpp:2345
@@ -16784,22 +16790,22 @@ msgid "Miscellaneous tips and tricks"
 msgstr "Divers trucs et astuces"
 
 #. "tutorial_tips"
-#. Effect
+#. Effect -- renamed Extension
 #: ../src/verbs.cpp:2717
-msgid "Previous Effect"
-msgstr "Effet précédent"
+msgid "Previous Extension"
+msgstr "Extension précédente"
 
 #: ../src/verbs.cpp:2718
-msgid "Repeat the last effect with the same settings"
-msgstr "Répéter le dernier effet avec les mêmes paramètres"
+msgid "Repeat the last extension with the same settings"
+msgstr "Répéter la dernière extension avec les mêmes paramètres"
 
 #: ../src/verbs.cpp:2719
-msgid "Previous Effect Settings..."
-msgstr "Paramètres de l'effet précédent..."
+msgid "Previous Extension Settings..."
+msgstr "Paramètres de l'extension précédente..."
 
 #: ../src/verbs.cpp:2720
-msgid "Repeat the last effect with new settings"
-msgstr "Répéter le dernier effet avec les nouveaux paramètres"
+msgid "Repeat the last extension with new settings"
+msgstr "Répéter la dernière extension avec les nouveaux paramètres"
 
 #: ../src/verbs.cpp:2724
 msgid "Fit the page to the current selection"
@@ -16925,7 +16931,7 @@ msgstr "Taille de police :"
 #. * some representative characters that users of your locale will be
 #. * interested in.
 #: ../src/widgets/font-selector.cpp:641
-#: ../src/widgets/toolbox.cpp:6549
+#: ../src/widgets/toolbox.cpp:6495
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -18031,7 +18037,7 @@ msgstr "Disperser aléatoirement les sommets et les angles"
 #: ../src/widgets/toolbox.cpp:2826
 #: ../src/widgets/toolbox.cpp:3765
 #: ../src/widgets/toolbox.cpp:4025
-#: ../src/widgets/toolbox.cpp:7217
+#: ../src/widgets/toolbox.cpp:7215
 msgid "Defaults"
 msgstr "R-à-z"
 
@@ -18956,139 +18962,139 @@ msgstr "Couper"
 msgid "Cut out from objects"
 msgstr "Effacer une partie d'objet"
 
-#: ../src/widgets/toolbox.cpp:6099
+#: ../src/widgets/toolbox.cpp:6102
 msgid "Text: Change font family"
 msgstr "Texte : modifier la police"
 
-#: ../src/widgets/toolbox.cpp:6188
+#: ../src/widgets/toolbox.cpp:6172
 msgid "Text: Change alignment"
 msgstr "Texte : modifier l'alignement"
 
-#: ../src/widgets/toolbox.cpp:6267
+#: ../src/widgets/toolbox.cpp:6251
 msgid "Text: Change font style"
 msgstr "Texte : modifier le style de la police"
 
-#: ../src/widgets/toolbox.cpp:6315
+#: ../src/widgets/toolbox.cpp:6298
 msgid "Text: Change orientation"
 msgstr "Texte : modifier l'orientation"
 
-#: ../src/widgets/toolbox.cpp:6418
+#: ../src/widgets/toolbox.cpp:6412
 msgid "Text: Change font size"
 msgstr "Texte : modifier la taille de police"
 
-#: ../src/widgets/toolbox.cpp:6653
+#: ../src/widgets/toolbox.cpp:6651
 msgid "This font is currently not installed on your system. Inkscape will use the default font instead."
 msgstr "Cette police n'est pas installée sur votre système. Inkscape utilisera la police par défaut à la place"
 
-#: ../src/widgets/toolbox.cpp:6689
+#: ../src/widgets/toolbox.cpp:6687
 msgid "Align left"
 msgstr "Aligné à gauche"
 
-#: ../src/widgets/toolbox.cpp:6711
+#: ../src/widgets/toolbox.cpp:6709
 msgid "Align right"
 msgstr "Aligné à droite"
 
-#: ../src/widgets/toolbox.cpp:6722
+#: ../src/widgets/toolbox.cpp:6720
 msgid "Justify"
 msgstr "Justifiié"
 
-#: ../src/widgets/toolbox.cpp:6737
+#: ../src/widgets/toolbox.cpp:6735
 msgid "Bold"
 msgstr "Gras"
 
-#: ../src/widgets/toolbox.cpp:6748
+#: ../src/widgets/toolbox.cpp:6746
 msgid "Italic"
 msgstr "Italique"
 
-#: ../src/widgets/toolbox.cpp:6881
+#: ../src/widgets/toolbox.cpp:6879
 msgid "Change connector spacing"
 msgstr "Modifier la marge des connecteurs"
 
-#: ../src/widgets/toolbox.cpp:6964
+#: ../src/widgets/toolbox.cpp:6962
 msgid "Avoid"
 msgstr "Éviter"
 
-#: ../src/widgets/toolbox.cpp:6974
+#: ../src/widgets/toolbox.cpp:6972
 msgid "Ignore"
 msgstr "Ignorer"
 
-#: ../src/widgets/toolbox.cpp:6986
+#: ../src/widgets/toolbox.cpp:6984
 msgid "Connector Spacing"
 msgstr "Espacement des connecteurs"
 
-#: ../src/widgets/toolbox.cpp:6986
+#: ../src/widgets/toolbox.cpp:6984
 msgid "Spacing:"
 msgstr "Espacement :"
 
-#: ../src/widgets/toolbox.cpp:6987
+#: ../src/widgets/toolbox.cpp:6985
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Espace laissé autour des objets par les connecteurs routés automatiquement"
 
-#: ../src/widgets/toolbox.cpp:6998
+#: ../src/widgets/toolbox.cpp:6996
 msgid "Graph"
 msgstr "Graphe"
 
-#: ../src/widgets/toolbox.cpp:7008
+#: ../src/widgets/toolbox.cpp:7006
 msgid "Connector Length"
 msgstr "Longueur des connecteurs"
 
-#: ../src/widgets/toolbox.cpp:7008
+#: ../src/widgets/toolbox.cpp:7006
 msgid "Length:"
 msgstr "Longueur :"
 
-#: ../src/widgets/toolbox.cpp:7009
+#: ../src/widgets/toolbox.cpp:7007
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Longueur idéale pour les connecteurs après routage"
 
-#: ../src/widgets/toolbox.cpp:7021
+#: ../src/widgets/toolbox.cpp:7019
 msgid "Downwards"
 msgstr "Vers le bas"
 
-#: ../src/widgets/toolbox.cpp:7022
+#: ../src/widgets/toolbox.cpp:7020
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Faire que les connecteurs avec des marqueurs de fin (des flèches) pointent vers le bas"
 
-#: ../src/widgets/toolbox.cpp:7037
+#: ../src/widgets/toolbox.cpp:7035
 msgid "Do not allow overlapping shapes"
 msgstr "Ne pas permettre que deux formes se chevauchent"
 
-#: ../src/widgets/toolbox.cpp:7140
+#: ../src/widgets/toolbox.cpp:7138
 msgid "Fill by"
 msgstr "Type de remplissage"
 
-#: ../src/widgets/toolbox.cpp:7141
+#: ../src/widgets/toolbox.cpp:7139
 msgid "Fill by:"
 msgstr "Type de remplissage :"
 
-#: ../src/widgets/toolbox.cpp:7153
+#: ../src/widgets/toolbox.cpp:7151
 msgid "Fill Threshold"
 msgstr "Seuil de remplissage :"
 
-#: ../src/widgets/toolbox.cpp:7154
+#: ../src/widgets/toolbox.cpp:7152
 msgid "The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"
 msgstr "La différence maximale entre le pixel du clic et les pixels voisins pour qu'ils soient ajoutés dans le remplissage"
 
-#: ../src/widgets/toolbox.cpp:7179
+#: ../src/widgets/toolbox.cpp:7177
 msgid "Grow/shrink by"
 msgstr "Agrandir/rétrécir de"
 
-#: ../src/widgets/toolbox.cpp:7179
+#: ../src/widgets/toolbox.cpp:7177
 msgid "Grow/shrink by:"
 msgstr "Agrandir/rétrécir de :"
 
-#: ../src/widgets/toolbox.cpp:7180
+#: ../src/widgets/toolbox.cpp:7178
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr "Agrandit (si positif) ou rétrécit (si négatif) de cette quantité le chemin créé par remplissage."
 
-#: ../src/widgets/toolbox.cpp:7205
+#: ../src/widgets/toolbox.cpp:7203
 msgid "Close gaps"
 msgstr "Combler les vides"
 
-#: ../src/widgets/toolbox.cpp:7206
+#: ../src/widgets/toolbox.cpp:7204
 msgid "Close gaps:"
 msgstr "Combler les vides :"
 
-#: ../src/widgets/toolbox.cpp:7218
+#: ../src/widgets/toolbox.cpp:7216
 msgid "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
 msgstr "Restaurer les préférences par défaut de l'outil de remplissage au seau (changez les valeurs par défaut dans Inkscape Préférences > Outils)"
 
@@ -20654,6 +20660,27 @@ msgstr "Spécifier la largeur"
 msgid "Perspective"
 msgstr "Perspective"
 
+#: ../share/extensions/plt_input.inx.h:1
+msgid "AutoCAD Plot Input"
+msgstr "Entrée AutoCAD Plot"
+
+#: ../share/extensions/plt_input.inx.h:2
+#: ../share/extensions/plt_output.inx.h:2
+msgid "AutoCAD Plot drawing files (*.plt)"
+msgstr "Fichier dessin AutoCAD Plot (*.plt)"
+
+#: ../share/extensions/plt_input.inx.h:3
+msgid "Open files saved for plotters"
+msgstr "Ouvrir des fichiers enregistrés pour tables traçantes"
+
+#: ../share/extensions/plt_output.inx.h:1
+msgid "AutoCAD Plot Output"
+msgstr "Sortie AutoCAD Plot"
+
+#: ../share/extensions/plt_output.inx.h:3
+msgid "Save a file for plotters"
+msgstr "Enregistrer un fichier pour tables traçantes"
+
 #: ../share/extensions/polyhedron_3d.inx.h:1
 msgid "3D Polyhedron"
 msgstr "Polyèdre 3D"
@@ -21572,6 +21599,8 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Previous Effect"
+#~ msgstr "Effet précédent"
 #~ msgid "All Image Files"
 #~ msgstr "Tous les formats d'image"
 #~ msgid "Organization"
