@@ -367,6 +367,8 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/pathscatter.inx
 [type: gettext/xml] share/extensions/perfectboundcover.inx
 [type: gettext/xml] share/extensions/perspective.inx
+[type: gettext/xml] share/extensions/plt_input.inx
+[type: gettext/xml] share/extensions/plt_output.inx
 [type: gettext/xml] share/extensions/polyhedron_3d.inx
 [type: gettext/xml] share/extensions/printing-marks.inx
 [type: gettext/xml] share/extensions/ps_input.inx
