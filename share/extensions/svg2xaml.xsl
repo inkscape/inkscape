@@ -1065,12 +1065,12 @@ exclude-result-prefixes="rdf xlink msxsl">
       </xsl:choose>  
     </xsl:variable>
     <xsl:if test="@rx">
-      <xsl:attribute name="Canvas.Left"><xsl:value-of select="$cx - @rx" /></xsl:attribute>
-      <xsl:attribute name="Width"><xsl:value-of select="2 * @rx" /></xsl:attribute>
+      <xsl:attribute name="Canvas.Left"><xsl:value-of select='format-number($cx - @rx, "#.#")' /></xsl:attribute>
+      <xsl:attribute name="Width"><xsl:value-of select='format-number(2 * @rx, "#.#")' /></xsl:attribute>
     </xsl:if>
     <xsl:if test="@ry">
-      <xsl:attribute name="Canvas.Top"><xsl:value-of select="$cy - @ry" /></xsl:attribute>
-      <xsl:attribute name="Height"><xsl:value-of select="2 * @ry" /></xsl:attribute>
+      <xsl:attribute name="Canvas.Top"><xsl:value-of select='format-number($cy - @ry, "#.#")' /></xsl:attribute>
+      <xsl:attribute name="Height"><xsl:value-of select='format-number(2 * @ry, "#.#")' /></xsl:attribute>
     </xsl:if>
     <xsl:apply-templates mode="id" select="." />
     <xsl:apply-templates mode="template_fill" select="." />
@@ -1107,10 +1107,10 @@ exclude-result-prefixes="rdf xlink msxsl">
       </xsl:choose>  
     </xsl:variable>
     <xsl:if test="@r">
-      <xsl:attribute name="Canvas.Left"><xsl:value-of select="$cx - @r" /></xsl:attribute>
-      <xsl:attribute name="Canvas.Top"><xsl:value-of select="$cy - @r" /></xsl:attribute>
-      <xsl:attribute name="Width"><xsl:value-of select="2 * @r" /></xsl:attribute>
-      <xsl:attribute name="Height"><xsl:value-of select="2 * @r" /></xsl:attribute>      
+       <xsl:attribute name="Canvas.Left"><xsl:value-of select='format-number($cx - @r, "#.#")' /></xsl:attribute>
+       <xsl:attribute name="Canvas.Top"><xsl:value-of select='format-number($cy - @r, "#.#")' /></xsl:attribute>
+       <xsl:attribute name="Width"><xsl:value-of select='format-number(2 * @r, "#.#")' /></xsl:attribute>
+       <xsl:attribute name="Height"><xsl:value-of select='format-number(2 * @r, "#.#")' /></xsl:attribute>       
     </xsl:if>
     <xsl:apply-templates mode="id" select="." />
     <xsl:apply-templates mode="template_fill" select="." />
