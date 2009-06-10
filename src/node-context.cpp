@@ -230,27 +230,46 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
 {
     gint ret = FALSE;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    SPDesktop *desktop = event_context->desktop;
 
-    if (prefs->getBool("/tools/nodes/pathflash_enabled")) {
-        if (prefs->getBool("/tools/nodes/pathflash_unselected")) {
-            SPDesktop *desktop = event_context->desktop;
-            ShapeEditor* se = event_context->shape_editor;
-            Inkscape::Selection *selection = sp_desktop_selection (desktop);
-            if (se->has_nodepath() && selection->singleItem()) {
-                return ret;
+    switch (event->type) {
+        case GDK_MOTION_NOTIFY:
+        {
+            // find out actual item we're over, disregarding groups
+            SPItem *actual_item = sp_event_context_find_item (desktop,
+                                                              Geom::Point(event->button.x, event->button.y), FALSE, TRUE);
+            if (!actual_item)
+                break;
+
+
+            if (prefs->getBool("/tools/nodes/pathflash_enabled")) {
+                if (prefs->getBool("/tools/nodes/pathflash_unselected")) {
+                    // do not flash if we have some path selected and a single item in selection (i.e. it
+                    // is the same path that we're editing)
+                    SPDesktop *desktop = event_context->desktop;
+                    ShapeEditor* se = event_context->shape_editor;
+                    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+                    if (se->has_nodepath() && selection->singleItem()) {
+                        break;
+                    }
+                }
+                if (SP_IS_LPE_ITEM(actual_item)) {
+                    Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(actual_item));
+                    if (lpe && (lpe->providesOwnFlashPaths() ||
+                                lpe->pathFlashType() == Inkscape::LivePathEffect::SUPPRESS_FLASH)) {
+                        // path should be suppressed or permanent; this is handled in
+                        // sp_node_context_selection_changed()
+                        break;
+                    }
+                }
+                guint timeout = prefs->getInt("/tools/nodes/pathflash_timeout", 500);
+                sp_node_context_flash_path(event_context, actual_item, timeout);
             }
         }
-        if (SP_IS_LPE_ITEM(item)) {
-            Inkscape::LivePathEffect::Effect *lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
-            if (lpe && (lpe->providesOwnFlashPaths() ||
-                        lpe->pathFlashType() == Inkscape::LivePathEffect::SUPPRESS_FLASH)) {
-                // path should be suppressed or permanent; this is handled in
-                // sp_node_context_selection_changed()
-                return ret;
-            }
-        }
-        guint timeout = prefs->getInt("/tools/nodes/pathflash_timeout", 500);
-        sp_node_context_flash_path(event_context, item, timeout);
+        break;
+
+        default:
+            break;
     }
 
     if (((SPEventContextClass *) parent_class)->item_handler)

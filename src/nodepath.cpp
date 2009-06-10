@@ -5067,7 +5067,9 @@ sp_nodepath_generate_helperpath(SPDesktop *desktop, SPItem *item) {
     } else if ( SP_IS_SHAPE(item) && SP_SHAPE(item)->curve ) {
         curve = sp_shape_get_curve (SP_SHAPE(item));
     } else if ( SP_IS_TEXT(item) ) {
-        curve = SP_TEXT(item)->getNormalizedBpath();
+        // do not display helperpath for text - we cannot do anything with it in Node tool anyway
+        // curve = SP_TEXT(item)->getNormalizedBpath();
+        return NULL;
     } else {
         g_warning ("-----> sp_nodepath_generate_helperpath(SPDesktop *desktop, SPItem *item): TODO: generate the helper path for this item type!\n");
         return NULL;
