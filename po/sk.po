@@ -4613,7 +4613,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/spread.cpp:36
 msgid "Dither"
-msgstr ""
+msgstr "Rozptýliť pixle"
 
 #: ../src/extension/internal/bitmap/spread.cpp:44
 msgid ""
