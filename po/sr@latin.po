@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-10 06:41+0200\n"
-"PO-Revision-Date: 2009-06-11 17:12+0100\n"
+"PO-Revision-Date: 2009-06-11 21:03+0100\n"
 "Last-Translator: Aleksandar Urošević <urke@users.sourceforge.net>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
@@ -3097,7 +3097,7 @@ msgstr "_ID: "
 #: ../src/dialogs/find.cpp:688
 #: ../src/ui/dialog/find.cpp:61
 msgid "Find objects by the value of the id attribute (exact or partial match)"
-msgstr "Traži objekte po sadržaju osobine ,,ID'' (apsolutno ili delimično poklapanje)"
+msgstr "Traži objekte po sadržaju osobine „ID“ (apsolutno ili delimično poklapanje)"
 
 #: ../src/dialogs/find.cpp:689
 #: ../src/ui/dialog/find.cpp:62
@@ -3107,7 +3107,7 @@ msgstr "_Stil: "
 #: ../src/dialogs/find.cpp:689
 #: ../src/ui/dialog/find.cpp:62
 msgid "Find objects by the value of the style attribute (exact or partial match)"
-msgstr "Traži objekte po sadržaju osobine ,,stil'' (apsolutno ili delimično poklapanje)"
+msgstr "Traži objekte po sadržaju osobine „stil“ (apsolutno ili delimično poklapanje)"
 
 #: ../src/dialogs/find.cpp:690
 #: ../src/ui/dialog/find.cpp:63
@@ -3739,7 +3739,7 @@ msgstr "_Omogućeno"
 
 #: ../src/display/canvas-grid.cpp:325
 msgid "Determines whether to snap to this grid or not. Can be 'on' for invisible grids."
-msgstr "Određuje da li je omogućeno prijanjanje uz ovu mrežu. Može biti ,,omogućeno'' za nevidljivu mrežu."
+msgstr "Određuje da li je omogućeno prijanjanje uz ovu mrežu. Može biti „omogućeno“ za nevidljivu mrežu."
 
 #: ../src/display/canvas-grid.cpp:329
 msgid "Snap to visible _grid lines only"
@@ -4125,7 +4125,7 @@ msgstr "Prikaži ovu poruku pri svakom pokretanju programa"
 #: ../src/extension/execution-env.cpp:134
 #, c-format
 msgid "'%s' working, please wait..."
-msgstr ",,%s'' radi, budite strpljivi..."
+msgstr "„%s“ radi, budite strpljivi..."
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
@@ -4156,16 +4156,16 @@ msgstr "zavisnost nije pronađena."
 
 #: ../src/extension/extension.cpp:294
 msgid "Extension \""
-msgstr "Proširenje ,,"
+msgstr "Proširenje „"
 
 #: ../src/extension/extension.cpp:294
 msgid "\" failed to load because "
-msgstr "'' ne može da se učita zato što "
+msgstr "“ ne može da se učita zato što "
 
 #: ../src/extension/extension.cpp:625
 #, c-format
 msgid "Could not create extension error log file '%s'"
-msgstr "Ne mogu da napravim dnevnik grešaka proširenja ,,%s''"
+msgstr "Ne mogu da napravim dnevnik grešaka proširenja „%s“"
 
 #: ../src/extension/extension.cpp:723
 msgid "Name:"
@@ -4693,7 +4693,7 @@ msgstr "Međuton"
 #: ../src/extension/internal/bitmap/spread.cpp:44
 #, fuzzy
 msgid "Randomly scatter pixels in selected bitmap(s), within the given radius of the original position"
-msgstr "Nasumično rasipanje piksela na izabranoj bitmapi, u okviru zadate ,,vrednosti'' poluprečnika."
+msgstr "Nasumično rasipanje piksela na izabranoj bitmapi, u okviru zadate „vrednosti“ poluprečnika."
 
 #: ../src/extension/internal/bitmap/swirl.cpp:36
 msgid "Swirl"
@@ -4745,7 +4745,7 @@ msgstr "Rastezanje izabrane bitmape duž sinusnih talasa."
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Inset/Outset Halo"
-msgstr "Unutrašnja/spoljašna magla (,,halo'' efekat)"
+msgstr "Unutrašnja/spoljašna magla („halo“ efekat)"
 
 #: ../src/extension/internal/bluredge.cpp:136
 msgid "Width in px of the halo"
@@ -6227,7 +6227,7 @@ msgstr "Prikazuje/sakriva statusnu liniju (na dnu prozora)"
 #: ../src/interface.cpp:912
 #, c-format
 msgid "Verb \"%s\" Unknown"
-msgstr "Naredba ,,%s''nije poznata"
+msgstr "Naredba „%s“nije poznata"
 
 #: ../src/interface.cpp:951
 msgid "Open _Recent"
@@ -6274,9 +6274,9 @@ msgid ""
 "\n"
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Datoteka sa nazivom ,,%s'' već postoji. Da li želite da bude zamenjena?</span>\n"
+"<span weight=\"bold\" size=\"larger\">Datoteka sa nazivom „%s“ već postoji. Da li želite da bude zamenjena?</span>\n"
 "\n"
-"Datoteka već postoji u ,,%s''. Prepisivanjem će biti zamenjen njen sadržaj."
+"Datoteka već postoji u „%s“. Prepisivanjem će biti zamenjen njen sadržaj."
 
 #: ../src/interface.cpp:1550
 #: ../share/extensions/web-set-att.inx.h:5
@@ -6293,7 +6293,7 @@ msgstr ""
 #: ../src/io/sys.cpp:444
 #, c-format
 msgid "Failed to change to directory '%s' (%s)"
-msgstr "Nije moguće promeniti direktorijum u ,,%s'' (%s)"
+msgstr "Nije moguće promeniti direktorijum u „%s“ (%s)"
 
 #: ../src/io/sys.cpp:450
 #: ../src/io/sys.cpp:676
@@ -6788,7 +6788,7 @@ msgstr "Dužina linije"
 #: ../src/live_effects/effect.cpp:99
 #, fuzzy
 msgid "Perpendicular bisector"
-msgstr "Okomit na liniju, ,,četkica'')"
+msgstr "Okomit na liniju, „četkica“)"
 
 #: ../src/live_effects/effect.cpp:100
 msgid "Perspective path"
@@ -7577,11 +7577,11 @@ msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
-msgstr ""
+msgstr "Kote"
 
 #: ../src/live_effects/lpe-sketch.cpp:54
 msgid "How many construction lines (tangents) to draw"
-msgstr ""
+msgstr "Koliko kota (tangenta) treba nacrtati"
 
 #: ../src/live_effects/lpe-sketch.cpp:55
 #: ../src/selection-chemistry.cpp:1516
@@ -7594,7 +7594,7 @@ msgstr "Skaliranje"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Scale factor relating curvature and length of construction lines (try 5*offset)"
-msgstr ""
+msgstr "Faktor veličine odnosi se na zakrivljenost i dužinu kota (probajte 5*pomeranje)"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Max. length"
@@ -7602,7 +7602,7 @@ msgstr "Maksimalna dužina"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Maximum length of construction lines"
-msgstr ""
+msgstr "Maksimalna dužina kota"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Length variation"
@@ -7610,7 +7610,7 @@ msgstr "Promenljiva dužina"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Random variation of the length of construction lines"
-msgstr ""
+msgstr "Nasumična dužina kota"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "Placement randomness"
@@ -7746,12 +7746,12 @@ msgstr "Promena parametara tačke"
 #: ../src/main-cmdlineact.cpp:49
 #, c-format
 msgid "Unable to find verb ID '%s' specified on the command line.\n"
-msgstr "Ne mogu da pronađem internu komandu sa ID-om ,,%s'' koja je zadata u komandnoj liniji.\n"
+msgstr "Ne mogu da pronađem internu komandu sa ID-om „%s“ koja je zadata u komandnoj liniji.\n"
 
 #: ../src/main-cmdlineact.cpp:61
 #, c-format
 msgid "Unable to find node ID: '%s'\n"
-msgstr "Ne mogu da pronađem čvor sa ID-om: ,,%s''\n"
+msgstr "Ne mogu da pronađem čvor sa ID-om: „%s“\n"
 
 #: ../src/main.cpp:264
 msgid "Print the Inkscape version number"
@@ -7782,7 +7782,7 @@ msgstr "NAZIV DATOTEKE"
 
 #: ../src/main.cpp:284
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
-msgstr "Štampaj dokumente u navedenu izlaznu datoteku (koristite ,,| program'' za cevku)"
+msgstr "Štampaj dokumente u navedenu izlaznu datoteku (koristite „| program“ za cevku)"
 
 #: ../src/main.cpp:289
 msgid "Export document to a PNG file"
@@ -7827,7 +7827,7 @@ msgstr "ŠIRINA"
 
 #: ../src/main.cpp:324
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
-msgstr "Visina obrazovane bitmape u tačkama (zanemaruje atribut ,,export-dpi'')"
+msgstr "Visina obrazovane bitmape u tačkama (zanemaruje atribut „export-dpi“)"
 
 #: ../src/main.cpp:325
 msgid "HEIGHT"
@@ -7846,11 +7846,11 @@ msgstr "ID"
 #. See "man inkscape" for details.
 #: ../src/main.cpp:336
 msgid "Export just the object with export-id, hide all others (only with export-id)"
-msgstr "Izvozi samo objekat sa atributom ,,export-id'', sakriva sve druge (samo sa atributom ,,export-id'')"
+msgstr "Izvozi samo objekat sa atributom „export-id“, sakriva sve druge (samo sa atributom „export-id“)"
 
 #: ../src/main.cpp:341
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
-msgstr "Koristi sačuvani naziv datoteke i TPI rezoluciju pri izvozu (samo sa atributom ,,export-id'')"
+msgstr "Koristi sačuvani naziv datoteke i TPI rezoluciju pri izvozu (samo sa atributom „export-id“)"
 
 #: ../src/main.cpp:346
 msgid "Background color of exported bitmap (any SVG-supported color string)"
@@ -7870,7 +7870,7 @@ msgstr "VREDNOST"
 
 #: ../src/main.cpp:356
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
-msgstr "Izvezi dokument u običnu SVG datoteku (bez atributa ,,sodipodi'' ili ,,inkscape'')"
+msgstr "Izvezi dokument u običnu SVG datoteku (bez atributa „sodipodi“ ili „inkscape“)"
 
 #: ../src/main.cpp:361
 msgid "Export document to a PS file"
@@ -8701,7 +8701,7 @@ msgstr "Jezik"
 
 #: ../src/rdf.cpp:262
 msgid "Two-letter language tag with optional subtags for the language of this document.  (e.g. 'en-GB')"
-msgstr "Dvoslovni jezički tag sa opcionim podtagovima za jezike dokumenta (npr. ,,sr-RS'')"
+msgstr "Dvoslovni jezički tag sa opcionim podtagovima za jezike dokumenta (npr. „sr-RS“)"
 
 #: ../src/rdf.cpp:264
 msgid "Keywords"
@@ -10811,7 +10811,7 @@ msgstr "Vođice _prijanjaju pri pomeranju"
 #: ../src/ui/dialog/document-properties.cpp:100
 #, fuzzy
 msgid "While dragging a guide, snap to object nodes or bounding box corners ('Snap to nodes' or 'snap to bounding box corners' must be enabled; only a small part of the guide near the cursor will snap)"
-msgstr "Kada se vođica pomera, prijanja uz čvorove objekta ili uz uglove kontejnera (,,Prijanjanje uz čvorove'' ili ,,Prijanjanje uz uglove kontejnera'' moraju da budu omogućeni na kartici ,,Prijanjanje''; samo mali delovi vođice oko kursora će prijanjati)"
+msgstr "Kada se vođica pomera, prijanja uz čvorove objekta ili uz uglove kontejnera („Prijanjanje uz čvorove“ ili „Prijanjanje uz uglove kontejnera“ moraju da budu omogućeni na kartici „Prijanjanje“; samo mali delovi vođice oko kursora će prijanjati)"
 
 #: ../src/ui/dialog/document-properties.cpp:102
 msgid "Guide co_lor:"
@@ -11662,7 +11662,7 @@ msgstr "Osnovni filter <b>feConvolveMatrix</b> dozvoljava određivanje Uvijanja 
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2297
 msgid "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
-msgstr "Osnovni filteri <b>feDiffuseLighting</b> i feSpecularLighting prave ,,izdignute'' senke. Ulazni alfa kanal koristi se za omogući informaciju o dubini: površine koje su više providne su bliže posmatraču, dok su manje providne površine udaljenije od posmatrača."
+msgstr "Osnovni filteri <b>feDiffuseLighting</b> i feSpecularLighting prave „izdignute“ senke. Ulazni alfa kanal koristi se za omogući informaciju o dubini: površine koje su više providne su bliže posmatraču, dok su manje providne površine udaljenije od posmatrača."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2301
 msgid "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the first input using the second input as a displacement map, that shows from how far the pixel should come from. Classical examples are whirl and pinch effects."
@@ -11682,7 +11682,7 @@ msgstr "Osnovni filter <b>feImage</b> popunjava površinu spoljnom slikom ili dr
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2317
 msgid "The <b>feMerge</b> filter primitive composites several temporary images inside the filter primitive to a single image. It uses normal alpha compositing for this. This is equivalent to using several feBlend primitives in 'normal' mode or several feComposite primitives in 'over' mode."
-msgstr "Osnovni filter <b>feMerge</b> kombinuje više provremenih slika unutar osnovnog filtera u jednu sliku. a ovo koristi obično kombinovanje providnošću. Ovo je identično upotrebi više feBlend osnovnih filtera u režimu ,,normalno'', ili više feComposite osnovnih fitlera u režimu ,,preko''."
+msgstr "Osnovni filter <b>feMerge</b> kombinuje više provremenih slika unutar osnovnog filtera u jednu sliku. a ovo koristi obično kombinovanje providnošću. Ovo je identično upotrebi više feBlend osnovnih filtera u režimu „normalno“, ili više feComposite osnovnih fitlera u režimu „preko“."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2321
 msgid "The <b>feMorphology</b> filter primitive provides erode and dilate effects. For single-colour objects erode makes the object thinner and dilate makes it thicker."
@@ -11694,7 +11694,7 @@ msgstr "Osnovni fitler <b>feOffset</b> pomera sliku za korisnički određenu vre
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2329
 msgid "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
-msgstr "Osnovni filteri feDiffuseLighting i <b>feSpecularLighting</b> prave ,,izdignute'' senke. Ulazni alfa kanal koristi se za omogući informaciju o dubini: površine koje su više providne su bliže posmatraču, dok su manje providne površine udaljenije od posmatrača."
+msgstr "Osnovni filteri feDiffuseLighting i <b>feSpecularLighting</b> prave „izdignute“ senke. Ulazni alfa kanal koristi se za omogući informaciju o dubini: površine koje su više providne su bliže posmatraču, dok su manje providne površine udaljenije od posmatrača."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2333
 msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
@@ -11925,11 +11925,11 @@ msgstr "Pritiskanje strelica pomera izabrani objekat ili čvor za ovu razdaljinu
 #. defaultscale is limited to 1000 in select-context.cpp: use the same limit here
 #: ../src/ui/dialog/inkscape-preferences.cpp:246
 msgid "> and < scale by:"
-msgstr ",,>'' i ,,<'' menjaju veličinu za:"
+msgstr "„>“ i „<“ menjaju veličinu za:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:247
 msgid "Pressing > or < scales selection up or down by this increment (in px units)"
-msgstr "Pritiskanjem ,,>'' ili ,,<'' menja se veličina izbora za ovaj korak (u tačkama)"
+msgstr "Pritiskanjem „>“ ili „<“ menja se veličina izbora za ovaj korak (u tačkama)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:249
 msgid "Inset/Outset by:"
@@ -11937,7 +11937,7 @@ msgstr "Skupljanje/širenje za:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:250
 msgid "Inset and Outset commands displace the path by this distance (in px units)"
-msgstr ",,Skupljanje'' i ,,širenje'' pomeraju liniju za ovu razdaljinu (u tačkama)"
+msgstr "„Skupljanje“ i „širenje“ pomeraju liniju za ovu razdaljinu (u tačkama)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:251
 msgid "Compass-like display of angles"
@@ -11957,7 +11957,7 @@ msgstr "stepeni"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:260
 msgid "Rotating with Ctrl pressed snaps every that much degrees; also, pressing [ or ] rotates by this amount"
-msgstr "Rotacija sa pritisnutim Ctrl prijanja na ovoliko stepeni; pritiskanjem ,,['' ili ,,]'' rotira se objekat za ovu vrednost"
+msgstr "Rotacija sa pritisnutim Ctrl prijanja na ovoliko stepeni; pritiskanjem „[“ ili „]“ rotira se objekat za ovu vrednost"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:262
 msgid "Zoom in/out by:"
@@ -12903,7 +12903,7 @@ msgstr "Koristi nazive boja"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1016
 msgid "If set, write the CSS name of the color when available (e.g. 'red' or 'magenta') instead of the numeric value"
-msgstr "Kada je aktivirano, piše se naziv CSS boje kada je dostupan (npr. ,,red'' ili ,,magenta'') umesto numeričke vrednosti"
+msgstr "Kada je aktivirano, piše se naziv CSS boje kada je dostupan (npr. „red“ ili „magenta“) umesto numeričke vrednosti"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1018
 msgid "XML formatting"
@@ -13282,7 +13282,7 @@ msgstr "Maksimalan broj dokumenata u Nedavno otvoreno:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1098
 msgid "Set the maximum length of the Open Recent list in the File menu, or clear the list"
-msgstr "Određuje maksimalan broj stavki u spisku Nedavno otvoreno unutar menija ,,Datoteka'' (0 prazni spisak)"
+msgstr "Određuje maksimalan broj stavki u spisku Nedavno otvoreno unutar menija „Datoteka“ (0 prazni spisak)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Zoom correction factor (in %):"
@@ -13421,7 +13421,7 @@ msgstr "Ignoriši reči sa brojevima"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1239
 msgid "Ignore words containing digits, such as \"R2D2\""
-msgstr "Ignoriše reči koje sadrže brojeve, poput ,,R2D2''"
+msgstr "Ignoriše reči koje sadrže brojeve, poput „R2D2“"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1241
 msgid "Ignore words in ALL CAPITALS"
@@ -13429,7 +13429,7 @@ msgstr "Ignoriši reči ispisane VELIKIM SLOVIMA"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1243
 msgid "Ignore words in all capitals, such as \"IUPAC\""
-msgstr "Ignoriše reči koje su napisane svim velikim slovima, poput ,,IUPAC''"
+msgstr "Ignoriše reči koje su napisane svim velikim slovima, poput „IUPAC“"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1245
 msgid "Spellcheck"
@@ -13726,7 +13726,7 @@ msgstr "Spreman."
 
 #: ../src/ui/dialog/messages.cpp:74
 msgid "Enable log display by setting dialogs.debug 'redirect' attribute to 1 in preferences.xml"
-msgstr "Omogućite prikaz dnevnika rada ručnim postavljanjem atributa ,,redirect'' za ,,dialogs.debug'' na vrednost ,,1'' u preferences.xml"
+msgstr "Omogućite prikaz dnevnika rada ručnim postavljanjem atributa „redirect“ za „dialogs.debug“ na vrednost „1“ u preferences.xml"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:78
 msgid "File"
@@ -13747,7 +13747,7 @@ msgstr ""
 #: ../src/ui/dialog/ocaldialogs.cpp:443
 #, fuzzy
 msgid "Failed to receive the Open Clip Art Library RSS feed. Verify if the server name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
-msgstr "Nisam uspeo da preuzmem RSS tok Slobodne galerije. Proverite da li je ispravan naziv servera u ,,Postavke programa'' -> ,,Uvoz/Izvoz'' (npr. openclipart.org)"
+msgstr "Nisam uspeo da preuzmem RSS tok Slobodne galerije. Proverite da li je ispravan naziv servera u „Postavke programa“ -> „Uvoz/Izvoz“ (npr. openclipart.org)"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:457
 msgid "Server supplied malformed Clip Art feed"
@@ -14400,27 +14400,27 @@ msgstr "Ugao vertikalnog krivljenja (pozitivan = u obrnutom smeru od kazaljke na
 
 #: ../src/ui/dialog/transformation.cpp:97
 msgid "Transformation matrix element A"
-msgstr "Element ,,A” transformacione matrice"
+msgstr "Element „A” transformacione matrice"
 
 #: ../src/ui/dialog/transformation.cpp:98
 msgid "Transformation matrix element B"
-msgstr "Element ,,B” transformacione matrice"
+msgstr "Element „B” transformacione matrice"
 
 #: ../src/ui/dialog/transformation.cpp:99
 msgid "Transformation matrix element C"
-msgstr "Element ,,C” transformacione matrice"
+msgstr "Element „C” transformacione matrice"
 
 #: ../src/ui/dialog/transformation.cpp:100
 msgid "Transformation matrix element D"
-msgstr "Element ,,D” transformacione matrice"
+msgstr "Element „D” transformacione matrice"
 
 #: ../src/ui/dialog/transformation.cpp:101
 msgid "Transformation matrix element E"
-msgstr "Element ,,E” transformacione matrice"
+msgstr "Element „E” transformacione matrice"
 
 #: ../src/ui/dialog/transformation.cpp:102
 msgid "Transformation matrix element F"
-msgstr "Element ,,F” transformacione matrice"
+msgstr "Element „F” transformacione matrice"
 
 #: ../src/ui/dialog/transformation.cpp:104
 msgid "Rela_tive move"
@@ -14529,7 +14529,7 @@ msgid ""
 "\n"
 "If you close without saving, your changes will be discarded."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Želite li da sačuvate izmene u dokumentu ,,%s'' pre zatvaranja?</span>\n"
+"<span weight=\"bold\" size=\"larger\">Želite li da sačuvate izmene u dokumentu „%s“ pre zatvaranja?</span>\n"
 "\n"
 "Ako zatvorite bez čuvanja, izmene koje ste načinili biće zanemarene."
 
@@ -14548,7 +14548,7 @@ msgid ""
 "\n"
 "Do you want to save this file as an Inkscape SVG?"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Datoteka ,,%s'' je sačuvana u formatu (%s) koji može prouzrokovati gubitak podataka!</span>\n"
+"<span weight=\"bold\" size=\"larger\">Datoteka „%s“ je sačuvana u formatu (%s) koji može prouzrokovati gubitak podataka!</span>\n"
 "\n"
 "Da li želite da sačuvate ovu datoteku kao Inkscape SVG?"
 
@@ -16209,43 +16209,43 @@ msgstr "Oblikovanje objekata vajanjem ili farbanjem"
 
 #: ../src/verbs.cpp:2507
 msgid "Create rectangles and squares"
-msgstr "Pravi pravougaonike i kvadrate"
+msgstr "Pravljenje pravougaonika i kvadrata"
 
 #: ../src/verbs.cpp:2509
 msgid "Create 3D boxes"
-msgstr "Pravi 3D kutije"
+msgstr "Pravljenje 3D kutija"
 
 #: ../src/verbs.cpp:2511
 msgid "Create circles, ellipses, and arcs"
-msgstr "Pravi kružnice, elipse i lukove"
+msgstr "Pravljenje kružnica, elipsi i lukova"
 
 #: ../src/verbs.cpp:2513
 msgid "Create stars and polygons"
-msgstr "Pravi zvezde i poligone"
+msgstr "Pravljenje zvezda i poligona"
 
 #: ../src/verbs.cpp:2515
 msgid "Create spirals"
-msgstr "Pravi spirale"
+msgstr "Pravljenje spirala"
 
 #: ../src/verbs.cpp:2517
 msgid "Draw freehand lines"
-msgstr "Crtanje liniju slobodnom rukom"
+msgstr "Crtanje linija slobodnom rukom"
 
 #: ../src/verbs.cpp:2519
 msgid "Draw Bezier curves and straight lines"
-msgstr "Crtanje Bezierovih krivih i pravih linija"
+msgstr "Crtanje Bezierovih i pravih linija"
 
 #: ../src/verbs.cpp:2521
 msgid "Draw calligraphic or brush strokes"
-msgstr "Crtanje kaligrafskih i poteza četkicama"
+msgstr "Crtanje kaligrafskih i poteza četkicom"
 
 #: ../src/verbs.cpp:2523
 msgid "Create and edit text objects"
-msgstr "Pravi i uređuje tekst"
+msgstr "Pravljenje i uređivanje teksta"
 
 #: ../src/verbs.cpp:2525
 msgid "Create and edit gradients"
-msgstr "Pravi i uređuje prelive"
+msgstr "Pravljenje i uređivanje preliva"
 
 #: ../src/verbs.cpp:2527
 msgid "Zoom in or out"
@@ -16253,7 +16253,7 @@ msgstr "Uveličavanje i umanjenje"
 
 #: ../src/verbs.cpp:2529
 msgid "Pick colors from image"
-msgstr "Uzima boju sa slike"
+msgstr "Uzimanje boje sa slike"
 
 #: ../src/verbs.cpp:2531
 msgid "Create diagram connectors"
@@ -16657,20 +16657,20 @@ msgstr "Uređivanje META informacija o dokumentu (biće sačuvane sa dokumentom)
 
 #: ../src/verbs.cpp:2639
 msgid "_Fill and Stroke..."
-msgstr "_Popune i linije..."
+msgstr "_Popuna i linija..."
 
 #: ../src/verbs.cpp:2640
 msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
-msgstr "Uređivanje boje, preliva, debljine, oblika krajeva i šara linija objekta..."
+msgstr "Uređivanje boja, preliva, debljine poteza, oblika krajeva i šara..."
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2642
 msgid "S_watches..."
-msgstr "Paleta _boja..."
+msgstr "Pa_lete..."
 
 #: ../src/verbs.cpp:2643
 msgid "Select colors from a swatches palette"
-msgstr "Prikazuje prozirčić sa paletom boja"
+msgstr "Izbor boja sa palete"
 
 #: ../src/verbs.cpp:2644
 msgid "Transfor_m..."
@@ -16678,11 +16678,11 @@ msgstr "_Transformacija..."
 
 #: ../src/verbs.cpp:2645
 msgid "Precisely control objects' transformations"
-msgstr "Precizno određivanje transformacije objekata"
+msgstr "Precizna kontrola transformacija objekata"
 
 #: ../src/verbs.cpp:2646
 msgid "_Align and Distribute..."
-msgstr "Por_avnavanje i raspoređivanje"
+msgstr "Por_avnavanje i raspoređivanje..."
 
 #: ../src/verbs.cpp:2647
 msgid "Align and distribute objects"
@@ -16706,7 +16706,7 @@ msgstr "Pregled i izbor familije i veličine fonta i drugih osobina teksta"
 
 #: ../src/verbs.cpp:2652
 msgid "_XML Editor..."
-msgstr "XML uređiva_č"
+msgstr "XML uređiva_č..."
 
 #: ../src/verbs.cpp:2653
 msgid "View and edit the XML tree of the document"
@@ -16718,7 +16718,7 @@ msgstr "_Traži..."
 
 #: ../src/verbs.cpp:2655
 msgid "Find objects in document"
-msgstr "Traženje objekta u dokumentu"
+msgstr "Traženje objekata u dokumentu"
 
 #: ../src/verbs.cpp:2656
 msgid "Find and _Replace Text..."
@@ -16726,7 +16726,7 @@ msgstr "Pronađi i _zameni tekst..."
 
 #: ../src/verbs.cpp:2657
 msgid "Find and replace text in document"
-msgstr "Traži i zameni tekst u dokumentu"
+msgstr "Traženje i zamena teksta u dokumentu"
 
 #: ../src/verbs.cpp:2658
 msgid "Check Spellin_g..."
@@ -16734,7 +16734,7 @@ msgstr "Provera _pravopisa..."
 
 #: ../src/verbs.cpp:2659
 msgid "Check spelling of text in document"
-msgstr "Proveri pravopis teksta u dokumentu"
+msgstr "Proveravanje pravopisa teksta u dokumentu"
 
 #: ../src/verbs.cpp:2660
 msgid "_Messages..."
@@ -16758,15 +16758,15 @@ msgstr "Prikaz _prozorčića"
 
 #: ../src/verbs.cpp:2665
 msgid "Show or hide all open dialogs"
-msgstr "Prikazuje/sakriva sve otvorene prozorčiće"
+msgstr "Prikazuje ili sakriva sve otvorene prozorčiće"
 
 #: ../src/verbs.cpp:2666
 msgid "Create Tiled Clones..."
-msgstr "Slaganje klonova..."
+msgstr "Popločavanje klonovima..."
 
 #: ../src/verbs.cpp:2667
 msgid "Create multiple clones of selected object, arranging them into a pattern or scattering"
-msgstr "Pravi višestruke klonove izabranog objekta, slažući ih u šaru ili ih razbacuje"
+msgstr "Pravljenje višestrukih klonova izabranog objekta, slažući ih ili šireći u šaru"
 
 # bug: rect -> rectangle
 #: ../src/verbs.cpp:2668
@@ -16800,11 +16800,11 @@ msgstr "_Ulazni uređaji (novo)..."
 
 #: ../src/verbs.cpp:2678
 msgid "_Extensions..."
-msgstr "_Ekstenzije..."
+msgstr "_Proširenja..."
 
 #: ../src/verbs.cpp:2679
 msgid "Query information about extensions"
-msgstr "Prikupljanje informacija o ekstenzijama"
+msgstr "Prikupljanje informacija o proširenjima"
 
 #: ../src/verbs.cpp:2680
 msgid "Layer_s..."
@@ -16841,11 +16841,11 @@ msgstr "Uređivanje SVG fontova"
 #. Help
 #: ../src/verbs.cpp:2690
 msgid "About E_xtensions"
-msgstr "O _ekstenzijama"
+msgstr "O _proširenjima"
 
 #: ../src/verbs.cpp:2691
 msgid "Information on Inkscape extensions"
-msgstr "Informacije o Inkscape ekstenzijama"
+msgstr "Informacije o Inkscape proširenjima"
 
 #: ../src/verbs.cpp:2692
 msgid "About _Memory"
@@ -16861,7 +16861,7 @@ msgstr "O _programu"
 
 #: ../src/verbs.cpp:2695
 msgid "Inkscape version, authors, license"
-msgstr "Inkscape verzija, autori, licenca"
+msgstr "Verzija programa Inkscape, autori, licenca"
 
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
@@ -16872,7 +16872,7 @@ msgstr "Inkscape: _Osnove"
 
 #: ../src/verbs.cpp:2701
 msgid "Getting started with Inkscape"
-msgstr "Osnove programa"
+msgstr "Počnite da koristite Inkscape"
 
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2702
@@ -16889,13 +16889,13 @@ msgstr "Inkscape: _Napredno"
 
 #: ../src/verbs.cpp:2705
 msgid "Advanced Inkscape topics"
-msgstr "Napredne vežbe"
+msgstr "Napredne teme"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2707
 msgid "Inkscape: T_racing"
-msgstr "Inkscape: _Trasiranje"
+msgstr "Inkscape: _Precrtavanje"
 
 #: ../src/verbs.cpp:2708
 msgid "Using bitmap tracing"
@@ -16908,11 +16908,11 @@ msgstr "Inkscape: _Kaligrafija"
 
 #: ../src/verbs.cpp:2710
 msgid "Using the Calligraphy pen tool"
-msgstr "Upotreba alatke za kaligrafiju"
+msgstr "Upotreba kaligrafskog pera"
 
 #: ../src/verbs.cpp:2711
 msgid "_Elements of Design"
-msgstr "_Delovi za dizajn"
+msgstr "_Elementi dizajna"
 
 #: ../src/verbs.cpp:2712
 msgid "Principles of design in the tutorial form"
@@ -16925,7 +16925,7 @@ msgstr "_Saveti i trikovi"
 
 #: ../src/verbs.cpp:2714
 msgid "Miscellaneous tips and tricks"
-msgstr "Razni saveti i trikovi za upotrebu programa"
+msgstr "Razni saveti i trikovi"
 
 #. "tutorial_tips"
 #. Effect
@@ -16935,7 +16935,7 @@ msgstr "Prethodni efekat"
 
 #: ../src/verbs.cpp:2718
 msgid "Repeat the last effect with the same settings"
-msgstr "Ponavlja poslednji efekat sa istim podešavanjima"
+msgstr "Ponavljanje poslednjeg efekta sa istim podešavanjima"
 
 #: ../src/verbs.cpp:2719
 msgid "Previous Effect Settings..."
@@ -16943,19 +16943,19 @@ msgstr "Podešavanje prethodnog efekta..."
 
 #: ../src/verbs.cpp:2720
 msgid "Repeat the last effect with new settings"
-msgstr "Ponavlja poslednji efekat sa novim podešavanjima"
+msgstr "Ponavljanje poslednjeg efekta sa novim podešavanjima"
 
 #: ../src/verbs.cpp:2724
 msgid "Fit the page to the current selection"
-msgstr "Prilagođava veličinu strane trenutno izabranim objektima"
+msgstr "Prilagođavanje veličine strane trenutno izabranim objektima"
 
 #: ../src/verbs.cpp:2726
 msgid "Fit the page to the drawing"
-msgstr "Prilagođava veličinu strane crtežu"
+msgstr "Prilagođavanje veličine strane crtežu"
 
 #: ../src/verbs.cpp:2728
 msgid "Fit the page to the current selection or the drawing if there is no selection"
-msgstr "Prilagođava veličinu strane trenutnom izboru ili crtežu ako ništa nije izabrano"
+msgstr "Prilagođavanje veličine strane trenutnom izboru ili crtežu ako ništa nije izabrano"
 
 #. LockAndHide
 #: ../src/verbs.cpp:2730
@@ -16976,7 +16976,7 @@ msgstr "Prikaži sve u svim slojevima"
 
 #: ../src/verbs.cpp:2740
 msgid "Link an ICC color profile"
-msgstr "Povezuje ICC profil boja"
+msgstr "Povezivanje ICC profila boja"
 
 #: ../src/verbs.cpp:2741
 msgid "Remove Color Profile"
@@ -16984,7 +16984,7 @@ msgstr "Ukloni profil boja"
 
 #: ../src/verbs.cpp:2742
 msgid "Remove a linked ICC color profile"
-msgstr "Uklanja povezani ICC profil boja"
+msgstr "Uklanjanje povezanog ICC profila boja"
 
 #: ../src/widgets/dash-selector.cpp:62
 msgid "Dash pattern"
@@ -16997,12 +16997,12 @@ msgstr "Razmak šare"
 #. display the initial welcome message in the statusbar
 #: ../src/widgets/desktop-widget.cpp:549
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
-msgstr "<b>Dobro došli u Inkscape!</b> Koristite oblike ili alatku za crtanje slobodnom rukom za crtanje objekata; koristite izbornik (strelicu) za njihovo pomeranje i tansformacije."
+msgstr "<b>Dobro došli u Inkscape!</b> Koristite oblike ili alatke za crtanje za crtanje objekata; koristite izbornik (strelicu) za njihovo pomeranje i tansformisanje."
 
 #: ../src/widgets/desktop-widget.cpp:611
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
-msgstr "%s: %d (spoljna linija) - Inkscape"
+msgstr "%s: %d (kontura) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:613
 #, c-format
@@ -17012,7 +17012,7 @@ msgstr "%s: %d - Inkscape"
 #: ../src/widgets/desktop-widget.cpp:617
 #, c-format
 msgid "%s (outline) - Inkscape"
-msgstr "%s (spoljna linija) - Inkscape"
+msgstr "%s (kontura) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:619
 #, c-format
@@ -17056,7 +17056,7 @@ msgstr "Porodica fonta"
 #. Style frame
 #: ../src/widgets/font-selector.cpp:190
 msgid "fontselector|Style"
-msgstr " Stil"
+msgstr "Stil"
 
 #: ../src/widgets/font-selector.cpp:228
 msgid "Font size:"
@@ -17620,30 +17620,30 @@ msgstr "Maksimalna dužina oštrih spojeva (u jedinicama širine linije)"
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
 #: ../src/widgets/stroke-style.cpp:1181
 msgid "Cap:"
-msgstr "Završetak:"
+msgstr "Vrh:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
 #: ../src/widgets/stroke-style.cpp:1193
 msgid "Butt cap"
-msgstr "Ravan završetak"
+msgstr "Ravan vrh"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
 #: ../src/widgets/stroke-style.cpp:1201
 msgid "Round cap"
-msgstr "Zaobljeni završetak"
+msgstr "Zaobljeni vrh"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
 #: ../src/widgets/stroke-style.cpp:1209
 msgid "Square cap"
-msgstr "Kvadratni završetak"
+msgstr "Kvadratni vrh"
 
 #. Dash
 #: ../src/widgets/stroke-style.cpp:1215
 msgid "Dashes:"
-msgstr "Linija:"
+msgstr "Linije:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
@@ -17781,7 +17781,7 @@ msgstr "Pravljenje linije nazubljene na izabranim čvorovima"
 msgid "Node Smooth"
 msgstr "Meki čvor"
 
-# glatka kriva se precizno matematički definiše, i upravo deluje kao ,,glatka''
+# glatka kriva se precizno matematički definiše, i upravo deluje kao „glatka“
 #: ../src/widgets/toolbox.cpp:1364
 msgid "Make selected nodes smooth"
 msgstr "Pravljenje linije oble na izabranim čvorovima"
@@ -17799,7 +17799,7 @@ msgstr "Pravljenje simetrično glatkih linija na izabranim čvorovima"
 msgid "Node Auto"
 msgstr "Uređivanje čvorova"
 
-# glatka kriva se precizno matematički definiše, i upravo deluje kao ,,glatka''
+# glatka kriva se precizno matematički definiše, i upravo deluje kao „glatka“
 #: ../src/widgets/toolbox.cpp:1384
 msgid "Make selected nodes auto-smooth"
 msgstr "Učini izabrane čvorove automatski zaobljenim"
@@ -17834,7 +17834,7 @@ msgstr "Prikaži konture"
 
 #: ../src/widgets/toolbox.cpp:1425
 msgid "Show the outline of the path"
-msgstr "Prikaži konturu linije"
+msgstr "Prikaz konture linije"
 
 #: ../src/widgets/toolbox.cpp:1435
 msgid "Next path effect parameter"
@@ -18175,7 +18175,7 @@ msgstr "Podrazumevano"
 #: ../src/widgets/toolbox.cpp:2827
 #: ../src/widgets/toolbox.cpp:3766
 msgid "Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
-msgstr "Vraćanje parametara oblika na podrazumevane vrednosti (koristite ,,Inkscape Podešavanja'' > ,,Alatke'' za promenu podrazumevanih vrednosti)"
+msgstr "Vraćanje parametara oblika na podrazumevane vrednosti (koristite „Inkscape Podešavanja“ > „Alatke“ za promenu podrazumevanih vrednosti)"
 
 #: ../src/widgets/toolbox.cpp:2900
 msgid "Change rectangle"
@@ -18255,7 +18255,7 @@ msgstr "Pozicija nestajuće tačke u X pravcu"
 
 #: ../src/widgets/toolbox.cpp:3445
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Menja status nestajuće tačke u X pravcu između ,,beskonačno'' i ,,ograničeno'' (=paralelno)"
+msgstr "Menja status nestajuće tačke u X pravcu između „beskonačno“ i „ograničeno“ (=paralelno)"
 
 #: ../src/widgets/toolbox.cpp:3460
 msgid "Angle in Y direction"
@@ -18277,7 +18277,7 @@ msgstr "Pozicija nestajuće tačke u Y pravcu"
 
 #: ../src/widgets/toolbox.cpp:3484
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Menja status nestajuće tačke u Y pravcu između ,,beskonačno'' i ,,ograničeno'' (=paralelno)"
+msgstr "Menja status nestajuće tačke u Y pravcu između „beskonačno“ i „ograničeno“ (=paralelno)"
 
 #: ../src/widgets/toolbox.cpp:3499
 msgid "Angle in Z direction"
@@ -18295,7 +18295,7 @@ msgstr "Pozicija nestajuće tačke u Z pravcu"
 
 #: ../src/widgets/toolbox.cpp:3523
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
-msgstr "Menja status nestajuće tačke u Z pravcu između ,,beskonačno'' i ,,ograničeno'' (=paralelno)"
+msgstr "Menja status nestajuće tačke u Z pravcu između „beskonačno“ i „ograničeno“ (=paralelno)"
 
 #: ../src/widgets/toolbox.cpp:3581
 msgid "Change spiral"
@@ -18460,7 +18460,7 @@ msgstr "(dosta čvorova, grubo)"
 msgid "(default)"
 msgstr "(podrazumevano)"
 
-# glatka kriva se precizno matematički definiše, i upravo deluje kao ,,glatka''
+# glatka kriva se precizno matematički definiše, i upravo deluje kao „glatka“
 #: ../src/widgets/toolbox.cpp:3999
 msgid "(few nodes, smooth)"
 msgstr "(nekoliko čvorova, glatko)"
@@ -18783,7 +18783,7 @@ msgstr "Ugao ravnog vrha olovke (u stepenima; 0 je vodoravno, nema efekta ako je
 #. Fixation
 #: ../src/widgets/toolbox.cpp:4761
 msgid "(perpendicular to stroke, \"brush\")"
-msgstr "Okomit na liniju, ,,četkica'')"
+msgstr "Okomit na liniju, „četkica“)"
 
 #: ../src/widgets/toolbox.cpp:4761
 msgid "(almost fixed, default)"
@@ -18791,7 +18791,7 @@ msgstr "(skoro uspravan, podrazumevano)"
 
 #: ../src/widgets/toolbox.cpp:4761
 msgid "(fixed by Angle, \"pen\")"
-msgstr "(određuje ugao vrh, ,,olovka'')"
+msgstr "(određuje ugao vrh, „olovka“)"
 
 #: ../src/widgets/toolbox.cpp:4764
 msgid "Fixation"
@@ -19236,7 +19236,7 @@ msgstr "Zatvori razmake:"
 
 #: ../src/widgets/toolbox.cpp:7199
 msgid "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
-msgstr "Vraćanje parametara kantice sa bojom na podrazumevane vrednosti (koristite ,,Postavke programa'' > ,,Alatke'' za promenu podrazumevanih vrednosti)"
+msgstr "Vraćanje parametara kantice sa bojom na podrazumevane vrednosti (koristite „Postavke programa“ > „Alatke“ za promenu podrazumevanih vrednosti)"
 
 #: ../share/extensions/dimension.py:99
 msgid "Unable to process this object.  Try changing it into a path first."
@@ -20097,7 +20097,7 @@ msgstr "Izaberite pravougaonik pre pozivanja efekta. Pravougaonik određuje X i 
 #: ../share/extensions/param_curves.inx.h:12
 #, fuzzy
 msgid "Standard Python math functions are available: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). The constants pi and e are also available."
-msgstr "Dostupne su standardne funkcije Python-a: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Takođe su dostupne i promenljive ,,pi'' i ,,e''."
+msgstr "Dostupne su standardne funkcije Python-a: ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); cos(x); sin(x); tan(x); degrees(x); radians(x); cosh(x); sinh(x); tanh(x). Takođe su dostupne i promenljive „pi“ i „e“."
 
 #: ../share/extensions/funcplot.inx.h:16
 #, fuzzy
@@ -20595,7 +20595,7 @@ msgstr "Broj rečenica po paragrafu."
 
 #: ../share/extensions/lorem_ipsum.inx.h:6
 msgid "This effect creates the standard \"Lorem Ipsum\" pseudolatin placeholder text. If a flowed text is selected, Lorem Ipsum is added to it; otherwise a new flowed text object, the size of the page, is created in a new layer."
-msgstr "Ovaj efekat pravi standardni ,,Lorem Ipsum'' pseudo-latinski uzorak teksta. Ako je izabran uklopljeni tekst, Lorem Ipsum će biti dodat na njega; u suprotnom biće napravljen novi uklopljeni tekst veličine strane u novom sloju."
+msgstr "Ovaj efekat pravi standardni „Lorem Ipsum“ pseudo-latinski uzorak teksta. Ako je izabran uklopljeni tekst, Lorem Ipsum će biti dodat na njega; u suprotnom biće napravljen novi uklopljeni tekst veličine strane u novom sloju."
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
@@ -20828,7 +20828,7 @@ msgstr "Unutrašnje strane"
 
 #: ../share/extensions/perfectboundcover.inx.h:10
 msgid "Note: Bond Weight # calculations are a best-guess estimate."
-msgstr "Napomena: ,,Debljina listova'' daje najprecizniji proračun."
+msgstr "Napomena: „Debljina listova“ daje najprecizniji proračun."
 
 #: ../share/extensions/perfectboundcover.inx.h:11
 msgid "Number of Pages"
@@ -22327,8 +22327,8 @@ msgstr "XAML ulaz"
 #~ msgstr ""
 #~ "Naziv štampače (kako je dato sa lpstat -p);\n"
 #~ "ostavite prazno za upotrebu podrazumevanog sistemskog štampača.\n"
-#~ "Koristite ,,> datoteka'' za štampanje u datoteku.\n"
-#~ "Koristite ,,| program argument...'' za prosleđivanje programu."
+#~ "Koristite „> datoteka“ za štampanje u datoteku.\n"
+#~ "Koristite „| program argument...“ za prosleđivanje programu."
 #~ msgid "PDF Print"
 #~ msgstr "PDF štampač"
 #~ msgid "Print using PostScript operators"
@@ -22492,8 +22492,8 @@ msgstr "XAML ulaz"
 #~ "Snap to intersections of line segments ('snap to paths' must be enabled, "
 #~ "see the previous tab)"
 #~ msgstr ""
-#~ "Prijanjanje uz preseke segmenata linije (mora biti omogućeno ,,Prijanjanje uz "
-#~ "krive'', pogledajte karticu ,,Prijanjanje'')"
+#~ "Prijanjanje uz preseke segmenata linije (mora biti omogućeno „Prijanjanje uz "
+#~ "krive“, pogledajte karticu „Prijanjanje“)"
 #~ msgid "<b>Snapping</b>"
 #~ msgstr "<b>Prijanjanje</b>"
 #~ msgid "<b>What snaps</b>"
@@ -22608,8 +22608,8 @@ msgstr "XAML ulaz"
 #~ "'Restore' to bring back a minimized document window)"
 #~ msgstr ""
 #~ "Kada želite da prozorčići ostaju iznad prozora dokumenta. Pročitajte "
-#~ "nedostatke o ovoj opciji u ,,Objavi izdanja''! (Kliknite desnim tasterom "
-#~ "miša na dugme u liniji poslova i izaberite ,,Obnovi'' da bi se ponovo video "
+#~ "nedostatke o ovoj opciji u „Objavi izdanja“! (Kliknite desnim tasterom "
+#~ "miša na dugme u liniji poslova i izaberite „Obnovi“ da bi se ponovo video "
 #~ "minimizovani prozor dokumenta)"
 #~ msgid "Make the commands toolbar icons smaller"
 #~ msgstr "Male ikonice trake naredbi"
@@ -22617,7 +22617,7 @@ msgstr "XAML ulaz"
 #~ "Make the commands toolbar use the 'secondary' toolbar size (requires "
 #~ "restart)"
 #~ msgstr ""
-#~ "Čini da traka sa naredbama koristi ,,sekundardnu'' veličinu trake (zahteva "
+#~ "Čini da traka sa naredbama koristi „sekundardnu“ veličinu trake (zahteva "
 #~ "restartovanje programa)"
 #~ msgid "_Apply"
 #~ msgstr "_Primeni"

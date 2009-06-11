@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-06-10 06:41+0200\n"
-"PO-Revision-Date: 2009-06-11 17:12+0100\n"
+"PO-Revision-Date: 2009-06-11 21:03+0100\n"
 "Last-Translator: Aleksandar Urošević <urke@users.sourceforge.net>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
@@ -7577,11 +7577,11 @@ msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
-msgstr ""
+msgstr "Коте"
 
 #: ../src/live_effects/lpe-sketch.cpp:54
 msgid "How many construction lines (tangents) to draw"
-msgstr ""
+msgstr "Колико кота (тангента) треба нацртати"
 
 #: ../src/live_effects/lpe-sketch.cpp:55
 #: ../src/selection-chemistry.cpp:1516
@@ -7594,7 +7594,7 @@ msgstr "Скалирање"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Scale factor relating curvature and length of construction lines (try 5*offset)"
-msgstr ""
+msgstr "Фактор величине односи се на закривљеност и дужину кота (пробајте 5*померање)"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Max. length"
@@ -7602,7 +7602,7 @@ msgstr "Максимална дужина"
 
 #: ../src/live_effects/lpe-sketch.cpp:57
 msgid "Maximum length of construction lines"
-msgstr ""
+msgstr "Максимална дужина кота"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Length variation"
@@ -7610,7 +7610,7 @@ msgstr "Променљива дужина"
 
 #: ../src/live_effects/lpe-sketch.cpp:58
 msgid "Random variation of the length of construction lines"
-msgstr ""
+msgstr "Насумична дужина кота"
 
 #: ../src/live_effects/lpe-sketch.cpp:59
 msgid "Placement randomness"
@@ -16209,43 +16209,43 @@ msgstr "Обликовање објеката вајањем или фарбањ
 
 #: ../src/verbs.cpp:2507
 msgid "Create rectangles and squares"
-msgstr "Прави правоугаонике и квадрате"
+msgstr "Прављење правоугаоника и квадрата"
 
 #: ../src/verbs.cpp:2509
 msgid "Create 3D boxes"
-msgstr "Прави 3Д кутије"
+msgstr "Прављење 3Д кутија"
 
 #: ../src/verbs.cpp:2511
 msgid "Create circles, ellipses, and arcs"
-msgstr "Прави кружнице, елипсе и лукове"
+msgstr "Прављење кружница, елипси и лукова"
 
 #: ../src/verbs.cpp:2513
 msgid "Create stars and polygons"
-msgstr "Прави звезде и полигоне"
+msgstr "Прављење звезда и полигона"
 
 #: ../src/verbs.cpp:2515
 msgid "Create spirals"
-msgstr "Прави спирале"
+msgstr "Прављење спирала"
 
 #: ../src/verbs.cpp:2517
 msgid "Draw freehand lines"
-msgstr "Цртање линију слободном руком"
+msgstr "Цртање линија слободном руком"
 
 #: ../src/verbs.cpp:2519
 msgid "Draw Bezier curves and straight lines"
-msgstr "Цртање Безиерових кривих и правих линија"
+msgstr "Цртање Безиерових и правих линија"
 
 #: ../src/verbs.cpp:2521
 msgid "Draw calligraphic or brush strokes"
-msgstr "Цртање калиграфских и потеза четкицама"
+msgstr "Цртање калиграфских и потеза четкицом"
 
 #: ../src/verbs.cpp:2523
 msgid "Create and edit text objects"
-msgstr "Прави и уређује текст"
+msgstr "Прављење и уређивање текста"
 
 #: ../src/verbs.cpp:2525
 msgid "Create and edit gradients"
-msgstr "Прави и уређује преливе"
+msgstr "Прављење и уређивање прелива"
 
 #: ../src/verbs.cpp:2527
 msgid "Zoom in or out"
@@ -16253,7 +16253,7 @@ msgstr "Увеличавање и умањење"
 
 #: ../src/verbs.cpp:2529
 msgid "Pick colors from image"
-msgstr "Узима боју са слике"
+msgstr "Узимање боје са слике"
 
 #: ../src/verbs.cpp:2531
 msgid "Create diagram connectors"
@@ -16657,20 +16657,20 @@ msgstr "Уређивање МЕТА информација о документу
 
 #: ../src/verbs.cpp:2639
 msgid "_Fill and Stroke..."
-msgstr "_Попуне и линије..."
+msgstr "_Попуна и линија..."
 
 #: ../src/verbs.cpp:2640
 msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
-msgstr "Уређивање боје, прелива, дебљине, облика крајева и шара линија објекта..."
+msgstr "Уређивање боја, прелива, дебљине потеза, облика крајева и шара..."
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2642
 msgid "S_watches..."
-msgstr "Палета _боја..."
+msgstr "Па_лете..."
 
 #: ../src/verbs.cpp:2643
 msgid "Select colors from a swatches palette"
-msgstr "Приказује прозирчић са палетом боја"
+msgstr "Избор боја са палете"
 
 #: ../src/verbs.cpp:2644
 msgid "Transfor_m..."
@@ -16678,11 +16678,11 @@ msgstr "_Трансформација..."
 
 #: ../src/verbs.cpp:2645
 msgid "Precisely control objects' transformations"
-msgstr "Прецизно одређивање трансформације објеката"
+msgstr "Прецизна контрола трансформација објеката"
 
 #: ../src/verbs.cpp:2646
 msgid "_Align and Distribute..."
-msgstr "Пор_авнавање и распоређивање"
+msgstr "Пор_авнавање и распоређивање..."
 
 #: ../src/verbs.cpp:2647
 msgid "Align and distribute objects"
@@ -16706,7 +16706,7 @@ msgstr "Преглед и избор фамилије и величине фон
 
 #: ../src/verbs.cpp:2652
 msgid "_XML Editor..."
-msgstr "XML уређива_ч"
+msgstr "XML уређива_ч..."
 
 #: ../src/verbs.cpp:2653
 msgid "View and edit the XML tree of the document"
@@ -16718,7 +16718,7 @@ msgstr "_Тражи..."
 
 #: ../src/verbs.cpp:2655
 msgid "Find objects in document"
-msgstr "Тражење објекта у документу"
+msgstr "Тражење објеката у документу"
 
 #: ../src/verbs.cpp:2656
 msgid "Find and _Replace Text..."
@@ -16726,7 +16726,7 @@ msgstr "Пронађи и _замени текст..."
 
 #: ../src/verbs.cpp:2657
 msgid "Find and replace text in document"
-msgstr "Тражи и замени текст у документу"
+msgstr "Тражење и замена текста у документу"
 
 #: ../src/verbs.cpp:2658
 msgid "Check Spellin_g..."
@@ -16734,7 +16734,7 @@ msgstr "Провера _правописа..."
 
 #: ../src/verbs.cpp:2659
 msgid "Check spelling of text in document"
-msgstr "Провери правопис текста у документу"
+msgstr "Проверавање правописа текста у документу"
 
 #: ../src/verbs.cpp:2660
 msgid "_Messages..."
@@ -16758,15 +16758,15 @@ msgstr "Приказ _прозорчића"
 
 #: ../src/verbs.cpp:2665
 msgid "Show or hide all open dialogs"
-msgstr "Приказује/сакрива све отворене прозорчиће"
+msgstr "Приказује или сакрива све отворене прозорчиће"
 
 #: ../src/verbs.cpp:2666
 msgid "Create Tiled Clones..."
-msgstr "Слагање клонова..."
+msgstr "Поплочавање клоновима..."
 
 #: ../src/verbs.cpp:2667
 msgid "Create multiple clones of selected object, arranging them into a pattern or scattering"
-msgstr "Прави вишеструке клонове изабраног објекта, слажући их у шару или их разбацује"
+msgstr "Прављење вишеструких клонова изабраног објекта, слажући их или ширећи у шару"
 
 # bug: rect -> rectangle
 #: ../src/verbs.cpp:2668
@@ -16800,11 +16800,11 @@ msgstr "_Улазни уређаји (ново)..."
 
 #: ../src/verbs.cpp:2678
 msgid "_Extensions..."
-msgstr "_Екстензије..."
+msgstr "_Проширења..."
 
 #: ../src/verbs.cpp:2679
 msgid "Query information about extensions"
-msgstr "Прикупљање информација о екстензијама"
+msgstr "Прикупљање информација о проширењима"
 
 #: ../src/verbs.cpp:2680
 msgid "Layer_s..."
@@ -16841,11 +16841,11 @@ msgstr "Уређивање СВГ фонтова"
 #. Help
 #: ../src/verbs.cpp:2690
 msgid "About E_xtensions"
-msgstr "О _екстензијама"
+msgstr "О _проширењима"
 
 #: ../src/verbs.cpp:2691
 msgid "Information on Inkscape extensions"
-msgstr "Информације о Inkscape екстензијама"
+msgstr "Информације о Inkscape проширењима"
 
 #: ../src/verbs.cpp:2692
 msgid "About _Memory"
@@ -16861,7 +16861,7 @@ msgstr "О _програму"
 
 #: ../src/verbs.cpp:2695
 msgid "Inkscape version, authors, license"
-msgstr "Inkscape верзија, аутори, лиценца"
+msgstr "Верзија програма Inkscape, аутори, лиценца"
 
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
@@ -16872,7 +16872,7 @@ msgstr "Inkscape: _Основе"
 
 #: ../src/verbs.cpp:2701
 msgid "Getting started with Inkscape"
-msgstr "Основе програма"
+msgstr "Почните да користите Inkscape"
 
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2702
@@ -16889,13 +16889,13 @@ msgstr "Inkscape: _Напредно"
 
 #: ../src/verbs.cpp:2705
 msgid "Advanced Inkscape topics"
-msgstr "Напредне вежбе"
+msgstr "Напредне теме"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2707
 msgid "Inkscape: T_racing"
-msgstr "Inkscape: _Трасирање"
+msgstr "Inkscape: _Прецртавање"
 
 #: ../src/verbs.cpp:2708
 msgid "Using bitmap tracing"
@@ -16908,11 +16908,11 @@ msgstr "Inkscape: _Калиграфија"
 
 #: ../src/verbs.cpp:2710
 msgid "Using the Calligraphy pen tool"
-msgstr "Употреба алатке за калиграфију"
+msgstr "Употреба калиграфског пера"
 
 #: ../src/verbs.cpp:2711
 msgid "_Elements of Design"
-msgstr "_Делови за дизајн"
+msgstr "_Елементи дизајна"
 
 #: ../src/verbs.cpp:2712
 msgid "Principles of design in the tutorial form"
@@ -16925,7 +16925,7 @@ msgstr "_Савети и трикови"
 
 #: ../src/verbs.cpp:2714
 msgid "Miscellaneous tips and tricks"
-msgstr "Разни савети и трикови за употребу програма"
+msgstr "Разни савети и трикови"
 
 #. "tutorial_tips"
 #. Effect
@@ -16935,7 +16935,7 @@ msgstr "Претходни ефекат"
 
 #: ../src/verbs.cpp:2718
 msgid "Repeat the last effect with the same settings"
-msgstr "Понавља последњи ефекат са истим подешавањима"
+msgstr "Понављање последњег ефекта са истим подешавањима"
 
 #: ../src/verbs.cpp:2719
 msgid "Previous Effect Settings..."
@@ -16943,19 +16943,19 @@ msgstr "Подешавање претходног ефекта..."
 
 #: ../src/verbs.cpp:2720
 msgid "Repeat the last effect with new settings"
-msgstr "Понавља последњи ефекат са новим подешавањима"
+msgstr "Понављање последњег ефекта са новим подешавањима"
 
 #: ../src/verbs.cpp:2724
 msgid "Fit the page to the current selection"
-msgstr "Прилагођава величину стране тренутно изабраним објектима"
+msgstr "Прилагођавање величине стране тренутно изабраним објектима"
 
 #: ../src/verbs.cpp:2726
 msgid "Fit the page to the drawing"
-msgstr "Прилагођава величину стране цртежу"
+msgstr "Прилагођавање величине стране цртежу"
 
 #: ../src/verbs.cpp:2728
 msgid "Fit the page to the current selection or the drawing if there is no selection"
-msgstr "Прилагођава величину стране тренутном избору или цртежу ако ништа није изабрано"
+msgstr "Прилагођавање величине стране тренутном избору или цртежу ако ништа није изабрано"
 
 #. LockAndHide
 #: ../src/verbs.cpp:2730
@@ -16976,7 +16976,7 @@ msgstr "Прикажи све у свим слојевима"
 
 #: ../src/verbs.cpp:2740
 msgid "Link an ICC color profile"
-msgstr "Повезује ICC профил боја"
+msgstr "Повезивање ICC профила боја"
 
 #: ../src/verbs.cpp:2741
 msgid "Remove Color Profile"
@@ -16984,7 +16984,7 @@ msgstr "Уклони профил боја"
 
 #: ../src/verbs.cpp:2742
 msgid "Remove a linked ICC color profile"
-msgstr "Уклања повезани ICC профил боја"
+msgstr "Уклањање повезаног ICC профила боја"
 
 #: ../src/widgets/dash-selector.cpp:62
 msgid "Dash pattern"
@@ -16997,12 +16997,12 @@ msgstr "Размак шаре"
 #. display the initial welcome message in the statusbar
 #: ../src/widgets/desktop-widget.cpp:549
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
-msgstr "<b>Добро дошли у Inkscape!</b> Користите облике или алатку за цртање слободном руком за цртање објеката; користите изборник (стрелицу) за њихово померање и тансформације."
+msgstr "<b>Добро дошли у Inkscape!</b> Користите облике или алатке за цртање за цртање објеката; користите изборник (стрелицу) за њихово померање и тансформисање."
 
 #: ../src/widgets/desktop-widget.cpp:611
 #, c-format
 msgid "%s: %d (outline) - Inkscape"
-msgstr "%s: %d (спољна линија) - Inkscape"
+msgstr "%s: %d (контура) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:613
 #, c-format
@@ -17012,7 +17012,7 @@ msgstr "%s: %d - Inkscape"
 #: ../src/widgets/desktop-widget.cpp:617
 #, c-format
 msgid "%s (outline) - Inkscape"
-msgstr "%s (спољна линија) - Inkscape"
+msgstr "%s (контура) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:619
 #, c-format
@@ -17056,7 +17056,7 @@ msgstr "Породица фонта"
 #. Style frame
 #: ../src/widgets/font-selector.cpp:190
 msgid "fontselector|Style"
-msgstr " Стил"
+msgstr "Стил"
 
 #: ../src/widgets/font-selector.cpp:228
 msgid "Font size:"
@@ -17620,30 +17620,30 @@ msgstr "Максимална дужина оштрих спојева (у јед
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
 #: ../src/widgets/stroke-style.cpp:1181
 msgid "Cap:"
-msgstr "Завршетак:"
+msgstr "Врх:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
 #: ../src/widgets/stroke-style.cpp:1193
 msgid "Butt cap"
-msgstr "Раван завршетак"
+msgstr "Раван врх"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
 #: ../src/widgets/stroke-style.cpp:1201
 msgid "Round cap"
-msgstr "Заобљени завршетак"
+msgstr "Заобљени врх"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
 #: ../src/widgets/stroke-style.cpp:1209
 msgid "Square cap"
-msgstr "Квадратни завршетак"
+msgstr "Квадратни врх"
 
 #. Dash
 #: ../src/widgets/stroke-style.cpp:1215
 msgid "Dashes:"
-msgstr "Линија:"
+msgstr "Линије:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
@@ -17834,7 +17834,7 @@ msgstr "Прикажи контуре"
 
 #: ../src/widgets/toolbox.cpp:1425
 msgid "Show the outline of the path"
-msgstr "Прикажи контуру линије"
+msgstr "Приказ контуре линије"
 
 #: ../src/widgets/toolbox.cpp:1435
 msgid "Next path effect parameter"
