@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-10 19:39+0200\n"
-"PO-Revision-Date: 2009-06-10 20:11+0100\n"
+"POT-Creation-Date: 2009-06-12 14:51+0200\n"
+"PO-Revision-Date: 2009-06-12 14:57+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1632,8 +1632,8 @@ msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr "Donne un effet de dessin transparent aux bitmaps et matières"
 
 #: ../share/filters/filters.svg.h:168
-msgid "Alpha paint"
-msgstr "Dessin en couleurs transparent"
+msgid "Alpha draw, color"
+msgstr "Dessin transparent, coloré"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Gives a transparent color fill effect to bitmaps and materials"
@@ -1970,12 +1970,12 @@ msgid "Select <b>at least one non-connector object</b>."
 msgstr "Sélectionner <b>au moins un objet non connecteur</b>."
 
 #: ../src/connector-context.cpp:1347
-#: ../src/widgets/toolbox.cpp:6963
+#: ../src/widgets/toolbox.cpp:6970
 msgid "Make connectors avoid selected objects"
 msgstr "Faire que les connecteurs évitent les objets sélectionnés"
 
 #: ../src/connector-context.cpp:1348
-#: ../src/widgets/toolbox.cpp:6973
+#: ../src/widgets/toolbox.cpp:6980
 msgid "Make connectors ignore selected objects"
 msgstr "Faire que les connecteurs ignorent les objets sélectionnés"
 
@@ -3431,12 +3431,12 @@ msgid "Justify lines"
 msgstr "Justifier les lignes"
 
 #: ../src/dialogs/text-edit.cpp:300
-#: ../src/widgets/toolbox.cpp:6768
+#: ../src/widgets/toolbox.cpp:6777
 msgid "Horizontal text"
 msgstr "Texte horizontal"
 
 #: ../src/dialogs/text-edit.cpp:314
-#: ../src/widgets/toolbox.cpp:6780
+#: ../src/widgets/toolbox.cpp:6789
 msgid "Vertical text"
 msgstr "Texte vertical"
 
@@ -3909,7 +3909,7 @@ msgid "Quadrant point"
 msgstr "Point de quadrant"
 
 #: ../src/display/snap-indicator.cpp:193
-#: ../src/widgets/toolbox.cpp:6698
+#: ../src/widgets/toolbox.cpp:6707
 msgid "Center"
 msgstr "Centre"
 
@@ -5914,7 +5914,7 @@ msgstr "Unité"
 #: ../src/widgets/toolbox.cpp:1504
 #: ../src/widgets/toolbox.cpp:3154
 #: ../src/widgets/toolbox.cpp:5658
-#: ../src/widgets/toolbox.cpp:7169
+#: ../src/widgets/toolbox.cpp:7176
 msgid "Units"
 msgstr "Unités"
 
@@ -7854,8 +7854,8 @@ msgstr "OBJECT-ID"
 msgid "Start Inkscape in interactive shell mode."
 msgstr "Démarrer Inkscape en mode de commande interactif."
 
-#: ../src/main.cpp:756
-#: ../src/main.cpp:1067
+#: ../src/main.cpp:761
+#: ../src/main.cpp:1072
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -10391,12 +10391,12 @@ msgstr "V :"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#: ../src/widgets/toolbox.cpp:7034
+#: ../src/widgets/toolbox.cpp:7041
 msgid "Remove overlaps"
 msgstr "Supprimer les chevauchements"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:540
-#: ../src/widgets/toolbox.cpp:6899
+#: ../src/widgets/toolbox.cpp:6904
 msgid "Arrange connector network"
 msgstr "Arranger le réseau de connecteurs"
 
@@ -10534,7 +10534,7 @@ msgid "Move objects as little as possible so that their bounding boxes do not ov
 msgstr "Déplacer les objets aussi peu que possible afin que leurs boîtes englobantes ne se chevauchent pas"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:893
-#: ../src/widgets/toolbox.cpp:6997
+#: ../src/widgets/toolbox.cpp:7004
 msgid "Nicely arrange selected connector network"
 msgstr "Dispose le réseau de connecteurs sélectionnés de façon agréable"
 
@@ -11722,7 +11722,7 @@ msgstr "Vitesse du défilement automatique de la zone de travail lors que l'on t
 #: ../src/ui/dialog/tracedialog.cpp:420
 #: ../src/ui/dialog/tracedialog.cpp:453
 #: ../src/ui/dialog/tracedialog.cpp:596
-#: ../src/widgets/toolbox.cpp:7151
+#: ../src/widgets/toolbox.cpp:7158
 msgid "Threshold:"
 msgstr "Seuil :"
 
@@ -18037,7 +18037,7 @@ msgstr "Disperser aléatoirement les sommets et les angles"
 #: ../src/widgets/toolbox.cpp:2826
 #: ../src/widgets/toolbox.cpp:3765
 #: ../src/widgets/toolbox.cpp:4025
-#: ../src/widgets/toolbox.cpp:7215
+#: ../src/widgets/toolbox.cpp:7222
 msgid "Defaults"
 msgstr "R-à-z"
 
@@ -18982,119 +18982,123 @@ msgstr "Texte : modifier l'orientation"
 msgid "Text: Change font size"
 msgstr "Texte : modifier la taille de police"
 
-#: ../src/widgets/toolbox.cpp:6651
+#: ../src/widgets/toolbox.cpp:6623
+msgid "Select font family (Alt+X to access)"
+msgstr "Sélectionner une famille de police (Alt+X)"
+
+#: ../src/widgets/toolbox.cpp:6660
 msgid "This font is currently not installed on your system. Inkscape will use the default font instead."
 msgstr "Cette police n'est pas installée sur votre système. Inkscape utilisera la police par défaut à la place"
 
-#: ../src/widgets/toolbox.cpp:6687
+#: ../src/widgets/toolbox.cpp:6696
 msgid "Align left"
 msgstr "Aligné à gauche"
 
-#: ../src/widgets/toolbox.cpp:6709
+#: ../src/widgets/toolbox.cpp:6718
 msgid "Align right"
 msgstr "Aligné à droite"
 
-#: ../src/widgets/toolbox.cpp:6720
+#: ../src/widgets/toolbox.cpp:6729
 msgid "Justify"
 msgstr "Justifiié"
 
-#: ../src/widgets/toolbox.cpp:6735
+#: ../src/widgets/toolbox.cpp:6744
 msgid "Bold"
 msgstr "Gras"
 
-#: ../src/widgets/toolbox.cpp:6746
+#: ../src/widgets/toolbox.cpp:6755
 msgid "Italic"
 msgstr "Italique"
 
-#: ../src/widgets/toolbox.cpp:6879
+#: ../src/widgets/toolbox.cpp:6886
 msgid "Change connector spacing"
 msgstr "Modifier la marge des connecteurs"
 
-#: ../src/widgets/toolbox.cpp:6962
+#: ../src/widgets/toolbox.cpp:6969
 msgid "Avoid"
 msgstr "Éviter"
 
-#: ../src/widgets/toolbox.cpp:6972
+#: ../src/widgets/toolbox.cpp:6979
 msgid "Ignore"
 msgstr "Ignorer"
 
-#: ../src/widgets/toolbox.cpp:6984
+#: ../src/widgets/toolbox.cpp:6991
 msgid "Connector Spacing"
 msgstr "Espacement des connecteurs"
 
-#: ../src/widgets/toolbox.cpp:6984
+#: ../src/widgets/toolbox.cpp:6991
 msgid "Spacing:"
 msgstr "Espacement :"
 
-#: ../src/widgets/toolbox.cpp:6985
+#: ../src/widgets/toolbox.cpp:6992
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Espace laissé autour des objets par les connecteurs routés automatiquement"
 
-#: ../src/widgets/toolbox.cpp:6996
+#: ../src/widgets/toolbox.cpp:7003
 msgid "Graph"
 msgstr "Graphe"
 
-#: ../src/widgets/toolbox.cpp:7006
+#: ../src/widgets/toolbox.cpp:7013
 msgid "Connector Length"
 msgstr "Longueur des connecteurs"
 
-#: ../src/widgets/toolbox.cpp:7006
+#: ../src/widgets/toolbox.cpp:7013
 msgid "Length:"
 msgstr "Longueur :"
 
-#: ../src/widgets/toolbox.cpp:7007
+#: ../src/widgets/toolbox.cpp:7014
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Longueur idéale pour les connecteurs après routage"
 
-#: ../src/widgets/toolbox.cpp:7019
+#: ../src/widgets/toolbox.cpp:7026
 msgid "Downwards"
 msgstr "Vers le bas"
 
-#: ../src/widgets/toolbox.cpp:7020
+#: ../src/widgets/toolbox.cpp:7027
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Faire que les connecteurs avec des marqueurs de fin (des flèches) pointent vers le bas"
 
-#: ../src/widgets/toolbox.cpp:7035
+#: ../src/widgets/toolbox.cpp:7042
 msgid "Do not allow overlapping shapes"
 msgstr "Ne pas permettre que deux formes se chevauchent"
 
-#: ../src/widgets/toolbox.cpp:7138
+#: ../src/widgets/toolbox.cpp:7145
 msgid "Fill by"
 msgstr "Type de remplissage"
 
-#: ../src/widgets/toolbox.cpp:7139
+#: ../src/widgets/toolbox.cpp:7146
 msgid "Fill by:"
 msgstr "Type de remplissage :"
 
-#: ../src/widgets/toolbox.cpp:7151
+#: ../src/widgets/toolbox.cpp:7158
 msgid "Fill Threshold"
 msgstr "Seuil de remplissage :"
 
-#: ../src/widgets/toolbox.cpp:7152
+#: ../src/widgets/toolbox.cpp:7159
 msgid "The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"
 msgstr "La différence maximale entre le pixel du clic et les pixels voisins pour qu'ils soient ajoutés dans le remplissage"
 
-#: ../src/widgets/toolbox.cpp:7177
+#: ../src/widgets/toolbox.cpp:7184
 msgid "Grow/shrink by"
 msgstr "Agrandir/rétrécir de"
 
-#: ../src/widgets/toolbox.cpp:7177
+#: ../src/widgets/toolbox.cpp:7184
 msgid "Grow/shrink by:"
 msgstr "Agrandir/rétrécir de :"
 
-#: ../src/widgets/toolbox.cpp:7178
+#: ../src/widgets/toolbox.cpp:7185
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr "Agrandit (si positif) ou rétrécit (si négatif) de cette quantité le chemin créé par remplissage."
 
-#: ../src/widgets/toolbox.cpp:7203
+#: ../src/widgets/toolbox.cpp:7210
 msgid "Close gaps"
 msgstr "Combler les vides"
 
-#: ../src/widgets/toolbox.cpp:7204
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Close gaps:"
 msgstr "Combler les vides :"
 
-#: ../src/widgets/toolbox.cpp:7216
+#: ../src/widgets/toolbox.cpp:7223
 msgid "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
 msgstr "Restaurer les préférences par défaut de l'outil de remplissage au seau (changez les valeurs par défaut dans Inkscape Préférences > Outils)"
 
@@ -19139,16 +19143,16 @@ msgstr "Aire (px²) :"
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again."
 msgstr "Échec lors de l'import des modules numpy.linalg. Ces modules sont nécessaires à cette extension. Veuillez les installer et réessayer."
 
-#: ../share/extensions/embedimage.py:74
+#: ../share/extensions/embedimage.py:72
 msgid "No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image."
 msgstr "Les attributs xlink:href et sodipodi:absref n'ont pas été trouvés, ou n'indiquent pas un fichier existant ! Impossible d'incorporer l'image."
 
-#: ../share/extensions/embedimage.py:76
+#: ../share/extensions/embedimage.py:74
 #, python-format
 msgid "Sorry we could not locate %s"
 msgstr "Désolé, nous ne pouvons pas localiser %s"
 
-#: ../share/extensions/embedimage.py:101
+#: ../share/extensions/embedimage.py:99
 #, python-format
 msgid "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, or image/x-icon"
 msgstr "%s n'est pas du type image/png, image/jpeg, image/bmp, image/gif, image/tiff, ou image/x-icon"
@@ -21599,6 +21603,8 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Alpha paint"
+#~ msgstr "Dessin en couleurs transparent"
 #~ msgid "Previous Effect"
 #~ msgstr "Effet précédent"
 #~ msgid "All Image Files"
@@ -22027,8 +22033,6 @@ msgstr "Entrée XAML"
 #~ msgstr "Écossais assemblés"
 #~ msgid "Alpha engraving"
 #~ msgstr "Gravure alpha"
-#~ msgid "Alpha engraving, color"
-#~ msgstr "Gravure alpha, colorée"
 #~ msgid "Comics rounded"
 #~ msgstr "Arrondi bande dessinée"
 #~ msgid "Imitation of black and white cartoon shading more rounded version"
