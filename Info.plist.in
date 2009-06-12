@@ -7,7 +7,7 @@
     <key>CFBundleExecutable</key>
     <string>Inkscape</string>
     <key>CFBundleGetInfoString</key>
-    <string>@VERSION@, Copyright 2003-2008 Inkscape Developers</string>
+    <string>@VERSION@, Copyright 2003-2009 Inkscape Developers</string>
     <key>CFBundleIconFile</key>
     <string>Inkscape.icns</string>
     <key>CFBundleIdentifier</key>
@@ -329,7 +329,7 @@
     <key>CFBundleVersion</key>
     <string>@VERSION@</string>
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright 2008 Inkscape Developers, GNU General Public License.</string>
+    <string>Copyright 2009 Inkscape Developers, GNU General Public License.</string>
     <key>LSMinimumSystemVersion</key>
     <string>10.3</string>
 </dict>
