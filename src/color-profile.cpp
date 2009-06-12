@@ -12,6 +12,10 @@
 
 #include <cstring>
 #include <string>
+// #ifdef WIN32
+// #include <windows.h>
+// #include <Icm.h>
+// #endif
 #include "xml/repr.h"
 #include "color-profile.h"
 #include "color-profile-fns.h"
@@ -22,6 +26,7 @@
 
 #include "dom/uri.h"
 #include "dom/util/digest.h"
+
 
 using Inkscape::ColorProfile;
 using Inkscape::ColorProfileClass;
@@ -578,12 +583,42 @@ std::list<Glib::ustring> ColorProfile::getProfileDirs() {
 
     // first try user's local dir
     sources.push_back( g_build_filename(g_get_user_data_dir(), "color", "icc", NULL) );
-    sources.push_back( g_build_filename(base, ".color", "icc", NULL) ); // OpenICC recommends to deprecate this
+
 
     const gchar* const * dataDirs = g_get_system_data_dirs();
     for ( int i = 0; dataDirs[i]; i++ ) {
-        sources.push_back(g_build_filename(dataDirs[i], "color", "icc", NULL));
+        gchar* path = g_build_filename(dataDirs[i], "color", "icc", NULL);
+        sources.push_back(path);
+        g_free(path);
     }
+
+    // On OS X:
+    if ( g_file_test("/Library/ColorSync/Profiles", G_FILE_TEST_EXISTS)  && g_file_test("/Library/ColorSync/Profiles", G_FILE_TEST_IS_DIR) ) {
+        sources.push_back("/Library/ColorSync/Profiles");
+
+        gchar* path = g_build_filename(g_get_home_dir(), "Library", "ColorSync", "Profiles", NULL);
+        if ( g_file_test(path, G_FILE_TEST_EXISTS)  && g_file_test(path, G_FILE_TEST_IS_DIR) ) {
+            sources.push_back(path);
+        }
+        g_free(path);
+    }
+
+
+// #ifdef WIN32
+//     wchar_t pathBuf[MAX_PATH + 1];
+//     pathBuf[0] = 0;
+//     DWORD pathSize = sizeof(pathBuf);
+//     g_assert(sizeof(wchar_t) == sizeof(gunichar2));
+//     if ( GetColorDirectoryW( NULL, &pathBuf, &pathSize ) ) {
+//         gchar * utf8Path = g_utf16_to_utf8( (gunichar2*)(&pathBuf[0]), -1, NULL, NULL, NULL );
+//         if ( !g_utf8_validate(utf8Path, -1, NULL) ) {
+//             g_warning( "GetColorDirectoryW() resulted in invalid UTF-8" );
+//         } else {
+//             sources.pushback(utf8Path);
+//         }
+//         g_free( utf8Path );
+//     }
+// #endif // WIN32
 
     return sources;
 }
