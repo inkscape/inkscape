@@ -126,7 +126,7 @@ export area for EPS. For PNG, it can be used in combination wtih --export-use-hi
 =item B<--export-area-snap>
 
 For PNG export, snap the export area outwards to the nearest integer SVG user unit (px) values. If you are using the 
-default export resolution of 90dpi and your graphics are pixel-snapped to minimize antialiasing, this switch 
+default export resolution of 90 dpi and your graphics are pixel-snapped to minimize antialiasing, this switch 
 allows you to preserve this alignment even if you are exporting some object's bounding 
 box (with --export-id or --export-area-drawing) which is itself not pixel-aligned.
 
@@ -283,19 +283,19 @@ return the dimensions of the drawing (i.e. all document objects), not the page o
 
 =item B<-X>, B<--query-x>
 
-Query the X coordinate of of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Query the X coordinate of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
 
 =item B<-Y>, B<--query-y>
 
-Query the Y coordinate of of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Query the Y coordinate of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
 
 =item B<-W>, B<--query-width>
 
-Query the width of of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Query the width of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
 
 =item B<-H>, B<--query-height>
 
-Query the height of of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Query the height of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
 
 =item B<-S>, B<--query-all>
 
@@ -360,7 +360,7 @@ or crashes, it is useful to look at this output for clues.
 =head1 EXAMPLES
 
 While obviously B<Inkscape> is primarily intended as a GUI application,
-it can be used for doing SVG processing on the commandline as well.
+it can be used for doing SVG processing on the command line as well.
 
 Open an SVG file in the GUI:
 
@@ -533,7 +533,7 @@ SVG compliance, interface look-and-feel, and a desire to open
 development opportunities to more participants.  The project progressed
 rapidly, gaining a number of very active contributors and features.
 
-Much work in the early days of the project focused on code stablization
+Much work in the early days of the project focused on code stabilization
 and internationalization.  The original renderer inherited from Sodipodi
 was laced with a number of mathematical corner cases which led to
 unexpected crashes when the program was pushed beyond routine uses; this

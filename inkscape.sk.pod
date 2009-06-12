@@ -34,10 +34,11 @@ voľby:
     -A, --export-pdf=NÁZOVSÚBORU
 
     -T, --export-text-to-path
-    -B, --export-bbox-page 
-    -F, --export-embed-fonts
+        --export-bbox-page 
 
     -l, --export-plain-svg=NÁZOVSÚBORU             
+
+    -p, --print=PRINTER
 
     -I, --query-id=ID     
     -X, --query-x
@@ -52,7 +53,7 @@ voľby:
         --verb=VERB-ID
         --select=OBJECT-ID
 
-    -p, --print=TLAČIAREŇ
+        --shell
 
     -g, --with-gui                    
     -z, --without-gui                 
@@ -65,15 +66,15 @@ voľby:
 
 B<Inkscape> je editor súborov vektorovej grafiky vo formáte
 B<Scalable Vector Graphics (SVG)> s grafickým rozhraním, ktorého
-schopnosti sú podobné B<Adobe Illustrator>, B<CorelDraw>, B<Visio>,
+schopnosti sú podobné B<Adobe Illustrator>, B<CorelDraw>, B<Xara Xtreme>,
 atď. Medzi vlastnosti Inkscape patria všestranné tvary, bézierove krivky,
 kreslenie voľbou rukou, viacriadkový text, text na ceste, alpha blending,
 ľubovoľné afínne transformácie, farebné prechody a výplň vzorkou,
-úprava uzlov, export SVG do PNG, zoskupovanie, vrstvy, živé klony
-a veľa iného. Rozhranie je navrhnuté pre komfortné a efektívne ovládanie
-pre skúseného používateľa, pričom dodržiava štandardy B<GNOME>, takže
-používateľ oboznámený s inými aplikáciami GNOME si môže ovládanie rozhrania
-rýchlo osvojiť.
+úprava uzlov, mnohé formáty na export a import vrátane PNG a PDF,
+zoskupovanie, vrstvy, živé klony a veľa iného. Rozhranie je navrhnuté pre
+komfortné a efektívne ovládanie pre skúseného používateľa, pričom dodržiava
+štandardy B<GNOME>, takže používateľ oboznámený s inými aplikáciami GNOME
+si môže ovládanie rozhrania rýchlo osvojiť.
 
 B<SVG> je štandardný W3C XML formát pre dvojrozmernú vektorovú grafiku.
 Umožňuje definíciu objektov kresby pomocou bodov, ciest a primitívnych
@@ -107,41 +108,43 @@ exportuje celé kresliace plátno dokumentu. Bod (0,0) je spodný dolný roh.
 
 =item B<-C>, B<--export-area-canvas>
 
-Pri exporte PNG, exportovaná oblasť je celé kresliace plátno dokumentu
-(stránka). Toto je zvyčajne šandardné nastavenie, takže ju nemusíte uvádzať,
-ak nepoužívate --export-id pre export konkrétneho objektu.
+Pri exporte NG, PDF, PS a EPS je exportovaná oblasť celé kresliace plátno dokumentu
+(stránka). Toto je šandardné nastavenie pre PNG, PDF a PS, takže ju nemusíte uvádzať
+ak nepoužívate --export-id na exportovanie konkrétneho objektu. Pri exporte EPS to
+však nie je šandardné nastavenie. Naviac pri EPS neumožňuje špecifikácia formátu aby
+bolo ohraničenie väčšie ako obsah dokumentu. To znamená, že ak pri exporte EPS použijete
+--export-area-canvas, ohraničenie plátna sa oreže dnu na ohraničenie objektu ak je menšie.
 
 =item B<-D>, B<--export-area-drawing>
 
-Pri exporte PNG, exportovaná oblasť je celá kresba (nie plátno), t.j.
-ohraničenie všetkých objektov dokumentu. S touto voľbou budú na exporovanom
-obrázku iba viditeľné objekty dokumentu bez okrajov alebo orezania. Je možné
-použiť túto voľbu v kombinácii s --export-use-hints.
+Pri exporte PNG, PDF, PS a EPS je exportovaná oblasť celá kresba (nie plátno), t.j. ohraničenie
+všetkých objektov dokumentu (alebo exportovaného objektu ak je použité --export-id). 
+S touto voľbou budú na exportovanom obrázku iba viditeľné objekty dokumentu bez
+okrajov alebo orezania. Toto je štandardná exportná oblasť pre EPS. Pri PNG
+je možné použiť túto voľbu v kombinácii s --export-use-hints.
 
 =item B<--export-area-snap>
 
-Prichytí oblasť exportu smerom von na najbližšiu celočíselnú používateľskú
-jednotku SVG (px). Ak používate štandardné rozlíšenie pre export 90 dpi a vaša
-grafika je zarovnaná na pixely aby sa minimalizoval antialiasing, tento prepínač
-vám umožní zachovať toto zarovnanie aj ako exportujete ohraničenie nejakého
-objektu (pmocou --export-id alebo --export-area-drawing), ktoré samotné nie je
-zarovnané na pixely.
+Pri exporte png prichytí oblasť exportu smerom von na najbližšiu celočíselnú používateľskú jednotku SVG (px).
+Ak používate štandardné rozlíšenie na export 90 dpi a vaša grafika je zarovnaná na pixely aby sa minimalizoval
+antialiasing, tento prepínač vám umožní zachovať toto zarovnanie aj ak exportujete ohraničenie nejakého
+objektu (pmocou --export-id alebo --export-area-drawing), ktoré samotné nie je zarovnané na pixely.
 
 =item B<-b> I<FARBA>, B<--export-background>=I<FARBA>
 
 Farba pozadia exportovaného PNG.
-Toto môže byť akýkoľvek režazec špecifikujúci farbu, ktorý SVG podporuje, napr.
+Toto môže byť akýkoľvek reťazec špecifikujúci farbu, ktorý SVG podporuje, napr.
 „#ff007f“ alebo „rgb(255, 0, 128)“.
-Ak nie je nastavená, použije sa farba nastavená v Inkscape v dialógu Možnosti
-dokumentu (uložená v atribúte pagecolor= v sodipodi:namedview).
+Ak nie je nastavená, použije sa farba nastavená v Inkscape v dialógu Možnosti dokumentu (uložená v atribúte pagecolor= v sodipodi:namedview).
 
 =item B<-d> I<DPI>, B<--export-dpi>=I<DPI>
 
-Použité rozlíšenie pre export bitmapy.
+Použité rozlíšenie na export PNG.
+Tiež sa používa pri rasterizácii filtrovaných objektov pri exporte do PS, EPS a PDF (ak neuvediete
+--export-ignore-filters na potlačenie rasterizácie).
 Štandardne 90, čo zodpovedá 1 používateľskej jednotke SVG.
 (px, tiež nazývaná „používateľská jednotka“) exportovanej na 1 pixel bitmapy.
-Táto hodnota má precedenciu pred odporúčaným DPI pri použití s prepínačom
---export-use-hints.
+Táto hodnota má precedenciu pred odporúčaným DPI pri použití s prepínačom --export-use-hints.
 
 =item B<-e> I<NÁZOVSÚBORU>, B<--export-png>=I<NÁZOVSÚBORU>
 
@@ -155,147 +158,160 @@ Je možné vynechať reťazec voľby, t.j. možete uviesť zoznam súborov bez -
 
 =item B<-g>, B<--with-gui>
 
-Pokúsiť sa použiť GUI (na unixových systémoch, použiť X server aj keď nie je
-nastavená premenná $DISPLAY).
+Pokúsiť sa použiť GUI (na unixových systémoch, použiť X server aj keď nie je nastavená premenná $DISPLAY).
 
 =item B<-h> I<VÝŠKA>, B<--export-height>=I<VÝŠKA>
 
-Výška generovaných bitmáp v pixeloch.
-Táto hodnota má precedenciu pred nastavením --export-dpi (alebo odporúčaním DPI
-pri použití s prepínačom --export-use-hints). 
+Výška generovaných bitmáp v pixeloch. Táto hodnota má precedenciu pred
+nastavením --export-dpi (alebo odporúčaním DPI pri použití s prepínačom --export-use-hints). 
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-The id attribute value of the object that you want to export from the document.  By
-default the exported area is the bounding box of the object; you can override this using
---export-area, --export-area-canvas, or --export-area-drawing.
+Pri exporte PNG, PS, EPS a PDF hodnota atrihútu id objektu, ktorý chcete
+exportovať z dokumentu. Žiadne iné objekty sa neexportujú. Štandardne sa
+exportuje ohraničenie objektu. To môžete zmeniť použitím voľby
+--export-area (iba pri PNG) alebo --export-area-canvas.
 
 =item B<-j>, B<--export-id-only>
 
-Only export the object whose id is given in --export-id. All other objects are hidden and won't 
-show in export even if they overlay the exported object. Without --export-id, this option is ignored.
+Exportovať do PNG iba objekt s id zadaným v --export-id. Všetky ostatné objekty sa skryjú a
+nezobrazia sa v exporte ani keď prekrúvajú exportovaný objekt. Ak nie je uvedené --export-id,
+táto voľba sa ignoruje. Pri exporte PDF je toto štandardná voľba, takže jej uvedenie nemá žiadny vplyv.
 
 =item B<-l>, B<--export-plain-svg>=I<NÁZOVSÚBORU>
 
-Export document(s) to plain SVG format, without sodipodi: or inkscape: namespaces and without RDF metadata.
+Exportovať dokumenty do formátu čisté SVG, bez menných priestorov sodipodi: alebo inkscape: namespaces a bez metadát RDF.
 
 =item B<-x>, B<--extension-directory>
 
-Lists the current extension directory that Inkscape is configured to use and
-then exits.  This is used for external extension to use the same configuration
-as the original Inkscape installation.
+Vypíše aktuálny adresár rozšírení, ktorý bol nastavený pre inkscape a potom
+skončí. Využívajú to externé rozšírenia aby použili rovnakú konfiguráciu ako
+pôvodná inštalácia Inkscape.
 
 =item B<--verb-list>
 
-Lists all the verbs that are available in Inkscape by ID.  This ID can be
-used in defining keymaps or menus.  It can also be used with the --verb
-command line option.
+Vypíše všetky slovesá dostupné v Inkscape podľa ID. Tieto ID možno použiť
+pri definovaní klávesových máp alebo menu. Tiež ich možno použiť na
+príkazovom riadku s voľbou --verb.
 
 =item B<--verb>=I<VERB-ID>, B<--select>=I<OBJECT-ID>
 
-These two options work together to provide some basic scripting for
-Inkscape from the command line.  They both can occur as many times as
-needed on the command line and are executed in order on every document that
-is specified.
+Tieto dve voľby spolu poskytujú základné možnosti skriptovania v Inkscape
+z príkazového riadka. Obe sa môžu na príkazovom riadku vyskytovať
+ľubovoľný počet krát a vykonajú sa v tomto poradí na každom určenom
+dokumente.
 
-The --verb command will execute a specific verb as if it
-was called from a menu or button.  Dialogs will appear if that is part
-of the verb.  To get a list of the verb IDs available, use the --verb-list
-command line option.
+Príkaz --verb vykoná uvedené sloveso ako keby bolo zavolané z menu alebo
+klávesovou skratkou. Dialógy sa objavia ak sú súčasťou slovesa. Ak chcete
+vypísať zoznam dostupných ID, použite voľby príkazového riadka
+--verb-list.
 
-The --select command will cause objects that have the ID
-specified to be selected.  This allows various verbs to act upon them.  To
-remove all the selections use --verb=EditDeselect.  The object IDs
-available are dependent on the document specified to load.
+Príkaz --select spôsobí výber objektov s uvedeným ID.
+To umožňuje vykonávanie slovies na nich.
+Ak chcete zrušiť všetky výbery, použite --verb=EditDeselect. ID objektov
+sú dostupné v závislosti na dokumente, ktorý sa má načítať.
 
 =item B<-p> I<TLAČIAREŇ>, B<--print>=I<TLAČIAREŇ>
 
-Print document(s) to the specified printer using `lpr -P TLAČIAREŇ'.
-Alternatively, use `| COMMAND' to specify a different command to pipe to,
-or use `> NÁZOVSÚBORU' to write the PostScript output to a file instead of printing.
-Remember to do appropriate quoting for your shell, e.g.
+Vytlačí dokumenty na určenej tlačiarni pomocou „lpr -P TLAČIAREŇ“.
+Ak chcete výstup poslať rúrou inému príkazu, môžete použiť „| PRÍKAZ“
+alebo „> NÁZOVSÚBORU“ ak chcete namiesto tlačenia zapísať výstup v PostScripte do súboru.
+Pamätajte na to, že musíte použiť vhodné úvodzovky pre váš shell, napr.
 
 inkscape --print='| ps2pdf - mydoc.pdf' mydoc.svg
 
 =item B<-t>, B<--export-use-hints>
 
-Use export filename and DPI hints stored in the exported object (only with --export-id).
-These hints are set automatically when you export selection from within Inkscape.
-So, for example, if you export a shape with id="path231" as /home/me/shape.png at 300 dpi from document.svg using Inkscape GUI, and save the document,
-then later you will be able to reexport that shape to the same file with the same resolution simply with 
+Použiť názov exportovaného súboru a atribút DPI uložené v exportovanom objekte (iba s voľbou --export-id).
+Tieto údaje sa nastavujú automaticky keď exportujete výber z grafického rozhrania Inkscape.
+Takže napr. ak exportujete útvar s id="path231" ako /home/me/shape.png pri 300 dpi z dokument.svg z grafického rozhrania Inkscape a uložíte dokument, neskôr budete môcť exportovať útvar
+do rovnakého súboru s rovnakým rozlíšením jednoducho spustením
 
 inkscape -i path231 -t document.svg
 
-If you use --export-dpi, --export-width, or --export-height with this option,
-then the DPI hint will be ignored and the value from the command line will be used.
-If you use --export-png with this option,
-then the filename hint will be ignored and the filename from the command line will be used. 
+Ak spolu s touto voľbou použijete --export-dpi, --export-width alebo --export-height
+bude sa atribút DPI ignorovať a použije sa hodnota zadaná na príkazovom riadku.
+Ak spolu s touto voľbou použijete --export-png, 
+bude sa atribút názvov súboru ignorovať a použije sa hodnota zadaná na príkazovom riadku.
 
 =item B<-w> I<ŠÍRKA>, B<--export-width>=I<ŠÍRKA>
 
-Výška generovaných bitmáp v pixeloch.
-Táto hodnota má precedenciu pred nastavením --export-dpi (alebo odporúčaním DPI
-pri použití s prepínačom --export-use-hints). 
+Výška generovaných bitmáp v pixeloch. Táto hodnota má precedenciu pred nastavením --export-dpi
+(alebo odporúčaním DPI pri použití s prepínačom --export-use-hints). 
 
 =item B<-y> I<HODNOTA>, B<--export-background-opacity>=I<HODNOTA>
 
-Opacity of the background of exported PNG.
-This may be a value either between 0.0 and 1.0 (0.0 meaning full transparency, 1.0 full opacity)
-or greater than 1 up to 255 (255 meaning full opacity).
-If not set and the -b option is not used,
-then the page opacity set in Inkscape in the Document Options dialog will be used (stored in the inkscape:pageopacity= attribute of sodipodi:namedview).
-If not set but the -b option is used,
-then the value of 255 (full opacity) will be used. 
+Krytie pozadia exportovaných súborov PNG.
+Toto môže byť hodnota buď medzi 0.0 a 1.0 (kde 0.0 znamená celkom priehľadné a 1.0 plné krytie)
+alebo väčšia ako 1 do 255 (kde 255 znamená plné krytie).
+Ak nie je hodnota nastavená a nepoužije sa voľba -b,
+použije sa krytie stránky nastavené v Inkscape v dialógu Vlastnosti dokumentu (uložené v atribúte inkscape:pageopacity=  sodipodi:namedview).
+Ak nie je hodnota nastavená a použije sa voľba -b
+použije sa hodnota 255 (plné krytie).
 
 =item B<-P> I<NÁZOVSÚBORU>, B<--export-ps>=I<NÁZOVSÚBORU>
 
-Export document(s) to PostScript format. Note that PostScript does not support transparency, so any transparency in the original SVG will be lost. This option can be used together with --export-bbox-page and --export-text-to-path.
+Exportovať dokumenty do formátu PostScript. Pamätajte, že PostScript nepodporuje priesvitnosť, takže akékoľvek priesvitné objekty v pôvodnom SVG sa automaticky rasterizujú. Priložia sa použité písma alebo podmnožina použitých znakov. Štandardná oblasť exportu je plátno a môžete ju nastaviť na kresbu pomocou --export-area-drawing.
+Ak chcete exportovať jediný objekt, môžete použiť --export-id (všetky ostatné sa skryjú); v tom prípade
+bude oblasťou exportu ohraničenie uvedeného objektu, ale možno ho nastaviť na plátno voľbou --export-area-canvas.
 
 =item B<-E> I<NÁZOVSÚBORU>, B<--export-eps>=I<NÁZOVSÚBORU>
 
-Export document(s) to Encapsulated PostScript format. Note that PostScript does not support transparency, so any transparency in the original SVG will be lost. This option can be used together with --export-bbox-page and --export-text-to-path.
+Exportovať dokumenty do formátu Encapsulated PostScript. Pamätajte, že PostScript nepodporuje priesvitnosť, takže akékoľvek priesvitné objekty v pôvodnom SVG sa automaticky rasterizujú. Priložia sa použité písma alebo podmnožina použitých znakov. Štandardná oblasť exportu je kresba a môžete ju však nastaviť na plátno, pozrite si však obmedzenia v popise voľby --export-area-drawing. Ak chcete exportovať jediný objekt, môžete použiť --export-id (všetky ostatné sa skryjú).
 
 =item B<-A> I<NÁZOVSÚBORU>, B<--export-pdf>=I<NÁZOVSÚBORU>
 
-Export document(s) to PDF 1.4 format. This format preserves the transparency in the original SVG (though not all PDF viewers can display it yet). This option can be used together with --export-text-to-path (currently this is required, because exporting text as text is not yet supported).
+Exportovať dokumenty do formátu PDF format. Tento formát zachováva priesvitnosť z pôvodného SVG.
+Priložia sa použité písma alebo podmnožina použitých znakov.
+Štandardná oblasť exportu je plátno a môžete ju nastaviť na kresbu pomocou --export-area-drawing.
+Ak chcete exportovať jediný objekt, môžete použiť --export-id (všetky ostatné sa skryjú); v tom prípade
+bude oblasťou exportu ohraničenie uvedeného objektu, ale možno ho nastaviť na plátno voľbou --export-area-canvas.
 
 =item B<-T>, B<--export-text-to-path>
 
-Convert text objects to paths on export, where applicable (currently works for PS, EPS, and PDF export).
+Konvertovať pri exporte textové objekty na cesty kde sa dá (pri exporte PS, EPS a PDF).
 
-=item B<-B>, B<--export-bbox-page>
+=item B<--export-ignore-filters>
 
-Export files with the bounding box set to the page size, where applicable (currently works for PS and EPS export).
-
-=item B<-F>, B<--export-embed-fonts>
-
-Embed fonts used in the document into exported PS/EPS file. Note: only Type 1 fonts can be embedded, not TrueType.
+Exportovať objekty s filtrami (napr. tie s rozostrenám) ako vektorovú grafiku a ignorovať filtre (pri exporte PS, EPS a PDF). 
+Štandardne sa všetky objekty s filtrami rasterizujú s rozlíšením --export-dpi (štandardne 90 dpi) čím sa zachová ich vzhľad.
 
 =item B<-I>, B<--query-id>
 
-Set the ID of the object whose dimensions are queried. If not set, query options will 
-return the dimensions of the drawing (i.e. all document objects), not the page or viewbox
+Nastaviť ID objektu, ktoré rozmery zisťujeme. Ak nie je nastavené, voľby požiadavky
+vrátia rozmer kresby (t.j. všetkých objektov dokumentu), nie stránky či zobrazenia.
 
 =item B<-X>, B<--query-x>
 
-Query the X coordinate of of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Zistiť súradnicu X kresby alebo, ak je určený, objektu s --query-id. Vrátená hodnota je v px (používateľské jednotky SVG). 
 
 =item B<-Y>, B<--query-y>
 
-Query the Y coordinate of of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Zistiť súradnicu Y kresby alebo, ak je určený, objektu s --query-id. Vrátená hodnota je v px (používateľské jednotky SVG). 
 
 =item B<-W>, B<--query-width>
 
-Query the width of of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Zistiť šírku kresby alebo, ak je určený, objektu s --query-id. Vrátená hodnota je v px (používateľské jednotky SVG). 
 
 =item B<-H>, B<--query-height>
 
-Query the height of of the drawing or, if specified, of the object with --query-id. The returned value is in px (SVG user units). 
+Zistiť výšku kresby alebo, ak je určený, objektu s --query-id. Vrátená hodnota je v px (používateľské jednotky SVG). 
 
 =item B<-S>, B<--query-all>
 
-Prints a comma delimited listing of all objects in the SVG document with
-IDs defined, along with their x, y, width, and height values.
+Vypíše zoznam všetkých objektov v dokumente SVG s definovaným id spolu s ich
+súradnicou x,y, šírkou a výškou vo formáte s hodnotami oddelenom čiarkami.
+
+=item B<--shell>
+
+With this parameter, Inkscape will enter an interactive command line shell mode. In this
+mode, you type in commands at the prompt and Inkscape executes them, without you having
+to run a new copy of Inkscape for each command. This feature is mostly useful for
+scripting and server uses: it adds no new capabilities but allows you to improve the
+speed and memory requirements of any script that repeatedly calls Inkscape to perform
+command line tasks (such as export or conversions). Each command in shell mode must be a
+complete valid Inkscape command line but without the Inkscape program name, for example
+"file.svg --export-pdf=file.pdf".
 
 =item B<--vacuum-defs>
 
@@ -310,9 +326,8 @@ This is assumed for -p, -e, -l, and --vacuum-defs options.
 
 =item B<--g-fatal-warnings>
 
-Part of the standard GTK option that are recognized.  This forces any GTK
-warnings to cause Inkscape to abort.  This option is listed because it gets
-used for debugging.
+This standard GTK option forces any warnings, usually harmless, to cause Inkscape to
+abort (useful for debugging).
 
 =item B<--usage>
 
@@ -322,57 +337,17 @@ Display a brief usage message.
 
 =head1 KONFIGURÁCIA
 
-The preferences.xml configuration file located in ~/.inkscape/ is used
-to customize the application settings for the user.  
+The main configuration file is located in ~/.config/Inkscape/preferences.xml; it stores
+a variety of customization settings that you can change in Inkscape (mostly in the
+Inkscape Preferences dialog).  Also in the subdirectories there, you can place your own:
 
-=over 8
+B<$HOME>/.config/Inkscape/extensions/ - extension effects.
 
-=item B<interface> 
+B<$HOME>/.config/Inkscape/icons/ - icons.
 
-The B<interface> element(s) of the config file is used to set parameters
-related to the GUI interface, such as the open/closed status of various
-GUI elements, etc. 
+B<$HOME>/.config/Inkscape/keys/ - keyboard maps.
 
-=item B<group id="documents">
-
-The documents group is used for containing the recent files list.  Each
-document is listed with its uri (path) and name indicated.
-
-=item B<group id="template">
-
-The template group is used for storing parameters related to blank
-documents. 
-
-=item B<group id="tools">
-
-The tools group is used for storing the user style preferences for
-different event contexts (i.e., shapes, freehand or calligraphic stroke
-properties, etc.).
-
-=item B<group id="palette">
-
-The palette group allows setting of dash styles.  This allows you to
-define the stroke lengths for different kinds of dashes.
-
-=item B<group id="dialogs">
-
-The dialogs group allows persisting the position and width of each of
-the dialogs in the application, so that they'll start up in the last
-place the user had them at the next time the app is run.
-
-=item B<group id="printing">
-
-The printing group is for storing different printer settings.  Each
-setting is identified with an id.  Properties include I<bitmap>
-(true/false), I<resolution>, and I<destination>.
-
-=item B<group id="options">
-
-The options group allows persisting various user selected options
-including I<nudgedistance>, I<rotationstep>, I<cursortolerance>, and
-I<dragtolerance>. 
-
-=back
+B<$HOME>/.config/Inkscape/templates/ - new file templates.
 
 =head1 DIAGNOSTIKA
 
@@ -456,17 +431,6 @@ the matching icon name.  (For example, to load the "fill_none" icon from
 a file, the bounding box seen for SVG id "fill_none" is rendered as the
 icon, whether it comes from I<fill_none.svg> or I<icons.svg>.)
 
-=head1 SÚBORY
-
-B<$HOME>/.inkscape/preferences.xml - The user's preference settings. 
-
-B<$HOME>/.inkscape/extensions/ - Directory with user's extension effects.
-
-B<$HOME>/.inkscape/icons/ - Directory with user's icons.
-
-B<$HOME>/.inkscape/keys/ - Directory with user's keyboard maps.
-
-B<$HOME>/.inkscape/templates/ - Directory with user's new file templates.
 
 
 =head1 ĎALŠIE INFORMÁCIE
@@ -507,7 +471,7 @@ L<http://www.w3.org/TR/DOM-Level-2-Core/>
 To learn Inkscape's GUI operation, read the tutorials in Help > Tutorials.
 
 Apart from SVG, Inkscape can import (File > Import) most bitmap formats 
-(PNG, BMP, JPG, XPM, GIF, etc.), plain text (requires Perl), PDF, 
+(PNG, BMP, JPG, XPM, GIF, etc.), plain text (requires Perl), PS and EPS (requires Ghostscript), PDF 
 and AI format (AI version 9.0 or newer). 
 
 Inkscape exports 32-bit PNG images (File > Export) as well as AI, PS, EPS, PDF, DXF, 
@@ -592,11 +556,11 @@ making Open Source more visually stimulating to larger audiences.
 
 =head1 AUTORSKÉ PRÁVA A LICENCIA
 
-B<Copyright (C)> 1999-2007 by Authors.  
+B<Copyright (C)> 1999-2008 by Authors.  
 
 B<Inkscape> is free software; you can redistribute it and/or modify it
 under the terms of the GPL.  
 
 
 =for comment
-$Date$
+$Date: 2009-04-30 23:09:18 +0200 (Thu, 30 Apr 2009) $
