@@ -210,6 +210,8 @@ modules = \
 	pathscatter.inx\
 	perfectboundcover.inx \
 	perspective.inx	\
+	plt_input.inx \
+	plt_output.inx \
 	polyhedron_3d.inx	\
 	printing-marks.inx \
 	ps_input.inx \
