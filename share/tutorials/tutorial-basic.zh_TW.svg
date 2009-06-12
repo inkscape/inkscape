@@ -20,8 +20,8 @@
   <sodipodi:namedview
      id="base"
      inkscape:zoom="2"
-     inkscape:cx="130.12937"
-     inkscape:cy="717.90479"
+     inkscape:cx="147.66191"
+     inkscape:cy="3866.6565"
      inkscape:window-width="1024"
      inkscape:window-height="710"
      inkscape:window-x="-5"
@@ -30,7 +30,7 @@
      showguides="true"
      snaptoguides="true"
      showgrid="false"
-     inkscape:current-layer="g1074"
+     inkscape:current-layer="svg1"
      inkscape:guide-bbox="true">
     <inkscape:grid
        type="xygrid"
@@ -1022,11 +1022,11 @@
        xml:space="preserve"
        id="flowDiv278">按 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
-   id="flowSpan3095">Ctrl+Z</flowSpan> 可回復你上一個動作。(或者，如果你改變主意，可以用 <flowSpan
+   id="flowSpan3095">Ctrl+Z</flowSpan> 可復原你上一個動作。(或者，如果你改變主意，可以用 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
    id="flowSpan3097">Shift+Ctrl+Z </flowSpan><flowSpan
    style="font-style:normal;-inkscape-font-specification:Bitstream Vera Serif"
-   id="flowSpan3091">重做</flowSpan>回復的動作。)</flowDiv>  </flowRoot>
+   id="flowSpan3091">重做復原</flowSpan>的動作。)</flowDiv>  </flowRoot>
   <text
      style="font-size:8.5px;font-style:normal;font-weight:normal;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
      x="10"

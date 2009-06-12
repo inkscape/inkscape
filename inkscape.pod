@@ -121,7 +121,7 @@ In PNG, PDF, PS, and EPS export, exported area is the drawing (not canvas), i.e.
 of all objects of the document (or of the exported object if --export-id is used). 
 With this option, the exported image will
 display all the visible objects of the document without margins or cropping. This is the default
-export area for EPS. For PNG, it can be used in combination wtih --export-use-hints.
+export area for EPS. For PNG, it can be used in combination with --export-use-hints.
 
 =item B<--export-area-snap>
 
@@ -387,7 +387,7 @@ the resolution that were used for that object last time when it was exported fro
 
     inkscape filename.svg --export-id=text1555 --export-use-hints
 
-Same, but use the default 90dpi resolution, specify the filename, 
+Same, but use the default 90 dpi resolution, specify the filename, 
 and snap the exported area outwards to the nearest whole SVG user unit values 
 (to preserve pixel-alignment of objects and thus minimize antialiasing):
 
@@ -500,7 +500,7 @@ your version (file `NEWS').
 
 =head1 AUTHORS
 
-This codebase owes its existance to a large number of contributors
+This codebase owes its existence to a large number of contributors
 throughout its various incarnations.  The following list is certainly
 incomplete, but serves to recognize the many shoulders on which this
 application sits:

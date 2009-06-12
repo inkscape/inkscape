@@ -19,8 +19,8 @@
    inkscape:output_extension="org.inkscape.output.svg.inkscape"><sodipodi:namedview
    id="base"
    inkscape:zoom="2"
-   inkscape:cx="119.26732"
-   inkscape:cy="3904.9643"
+   inkscape:cx="147.26732"
+   inkscape:cy="3861.2366"
    inkscape:window-width="1024"
    inkscape:window-height="710"
    inkscape:window-x="-5"
@@ -308,6 +308,7 @@
 
 
 
+
 bulia byak, buliabyak@users.sf.net and josh andler, scislac@users.sf.net
 
 
@@ -591,7 +592,7 @@ bulia byak, buliabyak@users.sf.net and josh andler, scislac@users.sf.net
   </flowRegion>
   <flowDiv
      xml:space="preserve"
-     id="flowDiv151">我們有一個以前繕寫員所沒有的極大優勢，那就是回復指令：如果你寫錯了，不必毀去整張紙。Inkscape 的書法工具也能夠實現一些傳統筆墨無法做到的技巧。</flowDiv></flowRoot>
+     id="flowDiv151">我們有一個以前繕寫員所沒有的極大優勢，那就是復原指令：如果你寫錯了，不必毀去整張紙。Inkscape 的書法工具也能夠實現一些傳統筆墨無法做到的技巧。</flowDiv></flowRoot>
 <text
    style="font-size:8.5px;font-style:normal;font-weight:bold;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
    x="10"
@@ -3081,7 +3082,7 @@ bulia byak, buliabyak@users.sf.net and josh andler, scislac@users.sf.net
      xml:space="preserve"
      id="flowDiv784">如果你最後一道筆畫很糟，直接按 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
-   id="flowSpan3399">Ctrl+Z</flowSpan> 回復。不過，假如字的形狀很棒但位置或大小有輕微偏離，最好暫時切換到選取工具 (空白鍵) 並依需求調整/縮放/旋轉 (使用滑鼠或鍵盤)，然後再按一次空白鍵回到輸法工具。</flowDiv></flowRoot>
+   id="flowSpan3399">Ctrl+Z</flowSpan> 復原。不過，假如字的形狀很棒但位置或大小有輕微偏離，最好暫時切換到選取工具 (空白鍵) 並依需求調整/縮放/旋轉 (使用滑鼠或鍵盤)，然後再按一次空白鍵回到輸法工具。</flowDiv></flowRoot>
 <circle
    cx="0"
    cy="0"
