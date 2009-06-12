@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
-import inkex, os, base64
+import inkex, os, base64, urlparse
 import gettext
 _ = gettext.gettext
 
@@ -55,17 +55,15 @@ class Embedder(inkex.Effect):
         xlink = node.get(inkex.addNS('href','xlink'))
         if xlink is None or xlink[:5] != 'data:':
             absref=node.get(inkex.addNS('absref','sodipodi'))
-            href=xlink
+            url=urlparse.urlparse(xlink)
+            href=url.path
             path=''
             #path selection strategy:
             # 1. href if absolute
             # 2. realpath-ified href
             # 3. absref, only if the above does not point to a file
             if (href != None):
-                if (os.path.isabs(href)):
-                    path=os.path.realpath(href)
-                else:
-                    path=os.path.realpath(href)
+                path=os.path.realpath(href)
             if (not os.path.isfile(path)):
                 if (absref != None):
                     path=absref
