@@ -360,7 +360,7 @@
        x="10"
        y="112.97023"
        id="tspan63"
-       style="font-weight:normal;-inkscape-font-specification:Bitstream Vera Sans">漫遊畫布</tspan>
+       style="font-weight:normal;-inkscape-font-specification:Bitstream Vera Sans">平移畫布</tspan>
   </text>
   <rect
      id="d0e27"
@@ -385,7 +385,7 @@
     </flowRegion>
     <flowDiv
        xml:space="preserve"
-       id="flowDiv72">有許多方式來漫遊 (捲動) 文件畫布。試著用鍵盤上的 <flowSpan
+       id="flowDiv72">有許多方式來平移 (捲動) 文件畫布。試著用鍵盤上的 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
    id="flowSpan13477">Crtl+</flowSpan>方向鍵 來捲動。(立刻嘗試這個方法向下捲動這個文件。) 你也可以用滑鼠中鍵拖動畫布。或者，使用捲軸 (按下 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
@@ -432,19 +432,21 @@
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
    id="flowSpan13481">+</flowSpan> (或 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
-   id="flowSpan13483">=</flowSpan>) 鍵進行縮放是最簡單的方法。你也可以用 <flowSpan
+   id="flowSpan13483">=</flowSpan>) 按鍵進行縮放是最簡單的方法。你也可以用 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
-   id="flowSpan13485">Ctrl+</flowSpan>點擊滑鼠中鍵 或者 <flowSpan
+   id="flowSpan13485">Ctrl+點擊</flowSpan>滑鼠中鍵 或者 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
-   id="flowSpan13487">Ctrl+</flowSpan>點擊滑鼠右鍵 來放大、<flowSpan
+   id="flowSpan13487">Ctrl+<flowSpan
+   style="font-weight:normal;-inkscape-font-specification:Bitstream Vera Serif"
+   id="flowSpan3042">點擊</flowSpan></flowSpan>滑鼠右鍵 來放大畫面、<flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
-   id="flowSpan13489">Shift+</flowSpan>點擊滑鼠中鍵 或 <flowSpan
+   id="flowSpan13489">Shift+點擊</flowSpan>滑鼠中鍵 或 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
-   id="flowSpan13491">Shift+</flowSpan>點擊滑鼠右鍵 來縮小，或按著 <flowSpan
+   id="flowSpan13491">Shift+點擊</flowSpan>滑鼠右鍵 來縮小畫面，或按著 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
-   id="flowSpan13493">Ctrl</flowSpan> 滾動滑鼠滾輪。或者，你可以在縮放輸入區中點擊一下 (在文件視窗的左下角)，輸入一個縮放的精確值 (單位為 %)，並按一下 <flowSpan
+   id="flowSpan13493">Ctrl</flowSpan> 滾動滑鼠滾輪。或者，你可以在縮放輸入區中點擊一下 (在文件視窗的左下角)，輸入一個縮放畫面的精確值 (單位為 %)，並按一下 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
-   id="flowSpan13495">Enter</flowSpan> 鍵。我們也有縮放工具 (在左側的工具列中) 讓你通過拖動周圍放大到一個區域。</flowDiv>  </flowRoot>
+   id="flowSpan13495">Enter</flowSpan> 鍵。我們也有縮放工具 (在左側的工具列中) 讓你經由拖動周圍放大到一個區域。</flowDiv>  </flowRoot>
   <rect
      id="d0e75"
      width="288"
@@ -566,13 +568,13 @@
     </flowRegion>
     <flowDiv
        xml:space="preserve"
-       id="flowDiv163">可使用 檔案 &gt; 新增 或按下 <flowSpan
+       id="flowDiv163">可使用 檔案 &gt; 新增 或按 <flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
    id="flowSpan3077">Ctrl+N</flowSpan> 建立一個新的空白文件。使用 檔案 &gt; 開啟 (<flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
    id="flowSpan3079">Ctrl+O</flowSpan>) 開啟一個現有的 SVG 文件。使用 檔案 &gt; 儲存 (<flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
-   id="flowSpan3081">Ctrl+S</flowSpan>) 進行儲存，或用 另存 (<flowSpan
+   id="flowSpan3081">Ctrl+S</flowSpan>) 進行儲存，或用 另存為 (<flowSpan
    style="font-weight:bold;-inkscape-font-specification:Bitstream Vera Serif Bold"
    id="flowSpan3083">Shift+Ctrl+S</flowSpan>) 根據新的檔名來儲存。(Inkscape 仍可能不穩定，所以記得時常儲存！)</flowDiv>  </flowRoot>
   <rect
