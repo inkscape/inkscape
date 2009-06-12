@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-10 19:39+0200\n"
+"POT-Creation-Date: 2009-06-12 14:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1554,7 +1554,7 @@ msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:168
-msgid "Alpha paint"
+msgid "Alpha draw, color"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:168
@@ -1894,11 +1894,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr ""
 
-#: ../src/connector-context.cpp:1347 ../src/widgets/toolbox.cpp:6963
+#: ../src/connector-context.cpp:1347 ../src/widgets/toolbox.cpp:6970
 msgid "Make connectors avoid selected objects"
 msgstr ""
 
-#: ../src/connector-context.cpp:1348 ../src/widgets/toolbox.cpp:6973
+#: ../src/connector-context.cpp:1348 ../src/widgets/toolbox.cpp:6980
 msgid "Make connectors ignore selected objects"
 msgstr ""
 
@@ -3290,11 +3290,11 @@ msgstr ""
 msgid "Justify lines"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6768
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:6777
 msgid "Horizontal text"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6780
+#: ../src/dialogs/text-edit.cpp:314 ../src/widgets/toolbox.cpp:6789
 msgid "Vertical text"
 msgstr ""
 
@@ -3748,7 +3748,7 @@ msgstr ""
 msgid "Quadrant point"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:193 ../src/widgets/toolbox.cpp:6698
+#: ../src/display/snap-indicator.cpp:193 ../src/widgets/toolbox.cpp:6707
 msgid "Center"
 msgstr ""
 
@@ -5743,7 +5743,7 @@ msgstr ""
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:504
 #: ../src/widgets/toolbox.cpp:1504 ../src/widgets/toolbox.cpp:3154
-#: ../src/widgets/toolbox.cpp:5658 ../src/widgets/toolbox.cpp:7169
+#: ../src/widgets/toolbox.cpp:5658 ../src/widgets/toolbox.cpp:7176
 msgid "Units"
 msgstr ""
 
@@ -7726,7 +7726,7 @@ msgstr ""
 msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
-#: ../src/main.cpp:756 ../src/main.cpp:1067
+#: ../src/main.cpp:761 ../src/main.cpp:1072
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -10331,12 +10331,12 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#: ../src/widgets/toolbox.cpp:7034
+#: ../src/widgets/toolbox.cpp:7041
 msgid "Remove overlaps"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:540
-#: ../src/widgets/toolbox.cpp:6899
+#: ../src/widgets/toolbox.cpp:6904
 msgid "Arrange connector network"
 msgstr ""
 
@@ -10476,7 +10476,7 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:893
-#: ../src/widgets/toolbox.cpp:6997
+#: ../src/widgets/toolbox.cpp:7004
 msgid "Nicely arrange selected connector network"
 msgstr ""
 
@@ -11765,7 +11765,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:204
 #: ../src/ui/dialog/tracedialog.cpp:420 ../src/ui/dialog/tracedialog.cpp:453
-#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7151
+#: ../src/ui/dialog/tracedialog.cpp:596 ../src/widgets/toolbox.cpp:7158
 msgid "Threshold:"
 msgstr ""
 
@@ -18174,7 +18174,7 @@ msgid "Scatter randomly the corners and angles"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2826 ../src/widgets/toolbox.cpp:3765
-#: ../src/widgets/toolbox.cpp:4025 ../src/widgets/toolbox.cpp:7215
+#: ../src/widgets/toolbox.cpp:4025 ../src/widgets/toolbox.cpp:7222
 msgid "Defaults"
 msgstr ""
 
@@ -19125,124 +19125,128 @@ msgstr ""
 msgid "Text: Change font size"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6651
+#: ../src/widgets/toolbox.cpp:6623
+msgid "Select font family (Alt+X to access)"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:6660
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6687
+#: ../src/widgets/toolbox.cpp:6696
 msgid "Align left"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6709
+#: ../src/widgets/toolbox.cpp:6718
 msgid "Align right"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6720
+#: ../src/widgets/toolbox.cpp:6729
 msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6735
+#: ../src/widgets/toolbox.cpp:6744
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6746
+#: ../src/widgets/toolbox.cpp:6755
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6879
+#: ../src/widgets/toolbox.cpp:6886
 msgid "Change connector spacing"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6962
+#: ../src/widgets/toolbox.cpp:6969
 msgid "Avoid"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6972
+#: ../src/widgets/toolbox.cpp:6979
 msgid "Ignore"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6984
+#: ../src/widgets/toolbox.cpp:6991
 msgid "Connector Spacing"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6984
+#: ../src/widgets/toolbox.cpp:6991
 msgid "Spacing:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6985
+#: ../src/widgets/toolbox.cpp:6992
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:6996
+#: ../src/widgets/toolbox.cpp:7003
 msgid "Graph"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7006
+#: ../src/widgets/toolbox.cpp:7013
 msgid "Connector Length"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7006
+#: ../src/widgets/toolbox.cpp:7013
 msgid "Length:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7007
+#: ../src/widgets/toolbox.cpp:7014
 msgid "Ideal length for connectors when layout is applied"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7019
+#: ../src/widgets/toolbox.cpp:7026
 msgid "Downwards"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7020
+#: ../src/widgets/toolbox.cpp:7027
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7035
+#: ../src/widgets/toolbox.cpp:7042
 msgid "Do not allow overlapping shapes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7138
+#: ../src/widgets/toolbox.cpp:7145
 msgid "Fill by"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7139
+#: ../src/widgets/toolbox.cpp:7146
 msgid "Fill by:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7151
+#: ../src/widgets/toolbox.cpp:7158
 msgid "Fill Threshold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7152
+#: ../src/widgets/toolbox.cpp:7159
 msgid ""
 "The maximum allowed difference between the clicked pixel and the neighboring "
 "pixels to be counted in the fill"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7177
+#: ../src/widgets/toolbox.cpp:7184
 msgid "Grow/shrink by"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7177
+#: ../src/widgets/toolbox.cpp:7184
 msgid "Grow/shrink by:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7178
+#: ../src/widgets/toolbox.cpp:7185
 msgid ""
 "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7203
+#: ../src/widgets/toolbox.cpp:7210
 msgid "Close gaps"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7204
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Close gaps:"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:7216
+#: ../src/widgets/toolbox.cpp:7223
 msgid ""
 "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
 "to change defaults)"
@@ -19291,18 +19295,18 @@ msgid ""
 "required by this extension. Please install them and try again."
 msgstr ""
 
-#: ../share/extensions/embedimage.py:74
+#: ../share/extensions/embedimage.py:72
 msgid ""
 "No xlink:href or sodipodi:absref attributes found, or they do not point to "
 "an existing file! Unable to embed image."
 msgstr ""
 
-#: ../share/extensions/embedimage.py:76
+#: ../share/extensions/embedimage.py:74
 #, python-format
 msgid "Sorry we could not locate %s"
 msgstr ""
 
-#: ../share/extensions/embedimage.py:101
+#: ../share/extensions/embedimage.py:99
 #, python-format
 msgid ""
 "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, "
