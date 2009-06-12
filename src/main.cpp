@@ -469,10 +469,12 @@ gchar * blankParam = g_strdup("");
 static Glib::ustring _win32_getExePath()
 {
     char exeName[MAX_PATH+1];
+    // TODO these should use xxxW() calls explicitly and convert UTF-16 <--> UTF-8
     GetModuleFileName(NULL, exeName, MAX_PATH);
     char *slashPos = strrchr(exeName, '\\');
-    if (slashPos)
+    if (slashPos) {
         *slashPos = '\0';
+    }
     Glib::ustring s = exeName;
     return s;
 }
@@ -483,6 +485,7 @@ static Glib::ustring _win32_getExePath()
  */
 static int _win32_set_inkscape_env(const Glib::ustring &exePath)
 {
+    // TODO use g_getenv() and g_setenv() that use filename encoding, which is UTF-8 on Windows
 
     char *oldenv = getenv("PATH");
     Glib::ustring tmp = "PATH=";
@@ -531,7 +534,7 @@ static int set_extensions_env()
         tmp += oldenv;
     }
     g_setenv("PYTHONPATH", tmp.c_str(), TRUE);
-    
+
     return 0;
 }
 
@@ -559,6 +562,7 @@ main(int argc, char **argv)
       HKCR\svgfile\shell\open\command is a good example
     */
     Glib::ustring homedir = _win32_getExePath();
+    // TODO these should use xxxW() calls explicitly and convert UTF-16 <--> UTF-8
     SetCurrentDirectory(homedir.c_str());
     _win32_set_inkscape_env(homedir);
     RegistryTool rt;
@@ -610,6 +614,7 @@ main(int argc, char **argv)
     gboolean use_gui;
 
 #ifndef WIN32
+    // TODO use g_getenv() and g_setenv() that use filename encoding, which is UTF-8 on Windows
     use_gui = (getenv("DISPLAY") != NULL);
 #else
     use_gui = TRUE;
@@ -1452,19 +1457,19 @@ static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime
     if (sp_export_area_canvas) {
         if (sp_export_eps) {
             g_warning ("EPS cannot have its bounding box extend beyond its content, so if your drawing is smaller than the canvas, --export-area-canvas will clip it to drawing.");
-        } 
+        }
         (*i)->set_param_bool ("areaCanvas", TRUE);
     } else {
         (*i)->set_param_bool ("areaCanvas", FALSE);
     }
 
-    if (!sp_export_area_drawing && !sp_export_area_canvas && !sp_export_id) { 
+    if (!sp_export_area_drawing && !sp_export_area_canvas && !sp_export_id) {
         // neither is set, set canvas as default for ps/pdf and drawing for eps
         if (sp_export_eps) {
             try {
                (*i)->set_param_bool("areaDrawing", TRUE);
             } catch (...) {}
-        } 
+        }
     }
 
     if (sp_export_text_to_path) {
