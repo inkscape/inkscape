@@ -6612,6 +6612,16 @@ sp_text_toolbox_new (SPDesktop *desktop)
     ////////////Family
     Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
     Gtk::ComboBoxEntry *font_sel = Gtk::manage(new Gtk::ComboBoxEntry(store));
+
+    gtk_rc_parse_string (
+       "style \"dropdown-as-list-style\"\n"
+       "{\n"
+       "    GtkComboBox::appears-as-list = 1\n"
+       "}\n"
+       "widget \"*.toolbox-fontfamily-list\" style \"dropdown-as-list-style\"");
+    gtk_widget_set_name(GTK_WIDGET (font_sel->gobj()), "toolbox-fontfamily-list");
+    gtk_tooltips_set_tip (tt, GTK_WIDGET (font_sel->gobj()), _("Select font family (Alt+X to access)"), "");
+
     g_signal_connect (G_OBJECT (font_sel->gobj()), "key-press-event", G_CALLBACK(sp_text_toolbox_family_list_keypress), tbl);
 
     cbe_add_completion(font_sel->gobj(), G_OBJECT(tbl));
@@ -6647,8 +6657,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     gtk_container_add (GTK_CONTAINER (box), image);
     gtk_toolbar_append_widget( tbl, box, "", "");
     g_object_set_data (G_OBJECT (tbl), "warning-image", box);
-    GtkTooltips *tooltips = gtk_tooltips_new ();
-    gtk_tooltips_set_tip (tooltips, box, _("This font is currently not installed on your system. Inkscape will use the default font instead."), "");
+    gtk_tooltips_set_tip (tt, box, _("This font is currently not installed on your system. Inkscape will use the default font instead."), "");
     gtk_widget_hide (GTK_WIDGET (box));
     g_signal_connect_swapped (G_OBJECT (tbl), "show", G_CALLBACK (gtk_widget_hide), box);
 
