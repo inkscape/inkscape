@@ -6842,11 +6842,6 @@ static void sp_connector_path_set_ignore(void)
 
 static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
 {
-    // quit if run by the _changed callbacks
-    if (g_object_get_data( tbl, "freeze" )) {
-        return;
-    }
-
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
     SPDocument *doc = sp_desktop_document(desktop);
 
@@ -6857,18 +6852,21 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
 
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
 
-    if ( repr->attribute("inkscape:connector-spacing") ) {
-        gdouble priorValue = gtk_adjustment_get_value(adj);
-        sp_repr_get_double( repr, "inkscape:connector-spacing", &priorValue );
-        if ( priorValue == gtk_adjustment_get_value(adj) ) {
-            return;
-        }
-    } else if ( adj->value == defaultConnSpacing ) {
+    if ( !repr->attribute("inkscape:connector-spacing") &&
+            ( adj->value == defaultConnSpacing )) {
+        // Don't need to update the repr if the attribute doesn't 
+        // exist and it is being set to the default value -- as will
+        // happen at startup.
         return;
     }
 
-    // in turn, prevent callbacks from responding
-    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
+    // quit if run by the attr_changed listener
+    if (g_object_get_data( tbl, "freeze" )) {
+        return;
+    }
+
+    // in turn, prevent listener from responding
+    g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
 
     sp_repr_set_css_double(repr, "inkscape:connector-spacing", adj->value);
     SP_OBJECT(desktop->namedview)->updateRepr();
@@ -6888,8 +6886,6 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
             _("Change connector spacing"));
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-
-    spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
 static void sp_connector_graph_layout(void)
@@ -6927,7 +6923,6 @@ static void connector_length_changed(GtkAdjustment *adj, GObject* tbl)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble("/tools/connector/length", adj->value);
-    spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
 static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
@@ -6949,6 +6944,9 @@ static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
     sp_repr_get_double(repr, "inkscape:connector-spacing", &spacing);
 
     gtk_adjustment_set_value(adj, spacing);
+    gtk_adjustment_value_changed(adj);
+    
+    spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
 
