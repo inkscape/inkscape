@@ -1629,17 +1629,17 @@
 <feBlend id="feBlend3332" blend="normal" mode="darken" in="result7" result="result6" />
 </filter>
 <filter id="Alphadraw0" inkscape:label="Alpha draw" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Gives a transparent drawing effect to bitmaps and materials" height="1" width="1" y="0" x="0">
-<feGaussianBlur id="feGaussianBlur3670" result="result8" stdDeviation="0.69999999999999996" />
+<feGaussianBlur id="feGaussianBlur3670" result="result8" stdDeviation="0.6" />
 <feConvolveMatrix id="feConvolveMatrix3672" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
 <feColorMatrix id="feColorMatrix3674" values="1" in="result0" result="result1" type="luminanceToAlpha" />
 <feComposite id="feComposite3676" k2="10" k3="0" in="result1" result="result2" operator="arithmetic" in2="result1" k1="0" />
 <feGaussianBlur id="feGaussianBlur3678" result="result7" in="result2" stdDeviation="0.01" />
 <feColorMatrix id="feColorMatrix3680" result="result9" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -1.7 " />
-<feFlood id="feFlood3682" flood-opacity="1" result="result10" flood-color="rgb(0,0,128)" />
+<feFlood id="feFlood3682" flood-opacity="1" result="result10" flood-color="rgb(0,0,0)" />
 <feComposite id="feComposite3684" in2="result9" in="result10" operator="in" />
 </filter>
-<filter id="Alphapaint0" inkscape:label="Alpha paint" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Gives a transparent color fill effect to bitmaps and materials" height="1" width="1" y="0" x="0">
-<feGaussianBlur id="feGaussianBlur3724" result="result8" stdDeviation="0.59999999999999998" />
+<filter id="AlphaDrawCol0" inkscape:label="Alpha draw, color" inkscape:menu="Mask and transparency effects" inkscape:menu-tooltip="Gives a transparent color fill effect to bitmaps and materials" height="1" width="1" y="0" x="0">
+<feGaussianBlur id="feGaussianBlur3724" result="result8" stdDeviation="0.6" />
 <feConvolveMatrix id="feConvolveMatrix3726" order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0" />
 <feColorMatrix id="feColorMatrix3728" in="result0" type="matrix" result="result3" values="0 -20 0 0 1 0 -20 0 0 1 0 -20 0 0 1 0 0 0 1 0 " />
 <feColorMatrix id="feColorMatrix3730" values="1" in="result3" result="result1" type="luminanceToAlpha" />
