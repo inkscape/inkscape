@@ -199,7 +199,7 @@ static Avoid::Polygn avoid_item_poly(SPItem const *item)
 
     // Add a little buffer around the edge of each object.
     Geom::Rect rExpandedHull = *rHull;
-    rExpandedHull.expandBy(-spacing); 
+    rExpandedHull.expandBy(spacing); 
     poly = Avoid::newPoly(4);
 
     for (unsigned n = 0; n < 4; ++n) {
