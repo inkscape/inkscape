@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-12 11:36+0700\n"
+"PO-Revision-Date: 2009-06-12 16:01+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -10054,17 +10054,14 @@ msgid "Select <b>at least 1 path</b> to perform a boolean union."
 msgstr "ជ្រើស <b>យ៉ាង​ហោចណាស់​ផ្លូវ ១</b> ដើម្បីអនុវត្ត​សហភាព​ប៊ូលីន ។"
 
 #: ../src/splivarot.cpp:131
-#, fuzzy
 msgid "Select <b>exactly 2 paths</b> to perform difference, division, or path cut."
-msgstr "ជ្រើស<b>ផ្លូវ​ជាក់លាក់ ២</b> ដើម្បី​អនុវត្ត​ភាព​ផ្សេង​គ្នា XOR, ការ​ចែក ឬ​ការ​កាត់ផ្លូវ ។"
+msgstr "ជ្រើស<b>ផ្លូវ​ជាក់លាក់ ២</b> ដើម្បី​អនុវត្ត​ភាព​ផ្សេង​គ្នា ការ​ចែក ឬ​ការ​កាត់ផ្លូវ ។"
 
 #: ../src/splivarot.cpp:147 ../src/splivarot.cpp:162
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
-msgstr ""
-"មិន​អាច​កំណត់​ <b>តាម​លំដាប់ z</b> នៃ​វត្ថុ​ដែល​បានជ្រើស​សម្រាប់​ភាព​ខុសគ្នា​ ការ​បែងចែក​ ឬ កាត់​ផ្លូវ​របស់​ "
-"XOR ឡើយ​​ ។"
+msgstr "មិន​អាច​កំណត់​ <b>តាម​លំដាប់ z</b> នៃ​វត្ថុ​ដែល​បានជ្រើស​សម្រាប់​ភាព​ខុសគ្នា​ ការ​បែងចែក​ ឬ​កាត់​ផ្លូវ​របស់​ XOR ឡើយ​​ ។"
 
 #: ../src/splivarot.cpp:192
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
@@ -10166,10 +10163,10 @@ msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>អុហ្វសិត​ឋាមវន្ត</b> %s ដោយ %f pt"
 
 #: ../src/sp-path.cpp:156
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node, path effect: %s)"
 msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
-msgstr[0] "<b>ផ្លូវ</b> (ថ្នាំង %i បែបផែន​ផ្លូវ)"
+msgstr[0] "<b>ផ្លូវ</b> (%i ថ្នាំង, បែបផែន​ផ្លូវ ៖ %s)"
 
 #: ../src/sp-path.cpp:159
 #, c-format
@@ -10481,16 +10478,16 @@ msgid "Paste text"
 msgstr "បិទភ្ជាប់​អត្ថបទ"
 
 #: ../src/text-context.cpp:1602
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Type or edit flowed text (%d characters); <b>Enter</b> to start new "
 "paragraph."
-msgstr "វាយ​អត្ថបទ​លំហូរ <b>បញ្ចូល (Enter)</b> ដើម្បី​ចាប់ផ្ដើម​កថាខណ្ឌ​ថ្មី ។"
+msgstr "វាយ ឬ​កែសម្រួល​អត្ថបទ​លំហូរ (%d តួអក្សរ); <b>បញ្ចូល</b> ដើម្បី​ចាប់ផ្ដើម​កថាខណ្ឌ​ថ្មី ។"
 
 #: ../src/text-context.cpp:1604
-#, fuzzy, c-format
+#, c-format
 msgid "Type or edit text (%d characters); <b>Enter</b> to start new line."
-msgstr "វាយ​អត្ថបទ <b>បញ្ចូល(Enter)</b> ដើម្បី​ចាប់ផ្ដើម​បន្ទាត់​ថ្មី ។"
+msgstr "វាយ​បញ្ចូល ឬ​កែសម្រួល​អត្ថបទ (%d តួអក្សរ) ។ <b>បញ្ចូល (Enter)</b> ដើម្បី​ចាប់ផ្ដើម​បន្ទាត់​ថ្មី ។"
 
 #: ../src/text-context.cpp:1612 ../src/tools-switch.cpp:190
 msgid ""
@@ -10511,9 +10508,7 @@ msgid ""
 "To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> "
 "nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on an "
 "object to select."
-msgstr ""
-"ដើម្បី​កែសម្រួល​ផ្លូវ <b>ចុចុ</b> <b>ប្ដូរ(Shift)+ចុច</b> ឬ<b>អូស​ជុំវិញ</b> ថ្នាំង​ដើម្បីជ្រើស​ពួកវា "
-"បន្ទាប់​មក​<b>អូស</b> ថ្នាំង និង​ចំណុចទាញ ។ <b>ចុច</b> នៅ​លើ​វត្ថុ​ដើម្បី​ជ្រើស ។"
+msgstr "ដើម្បី​កែសម្រួល​ផ្លូវ <b>ចុចុ</b> <b>ប្ដូរ(Shift)+ចុច</b> ឬ<b>អូស​ជុំវិញ</b> ថ្នាំង​ដើម្បីជ្រើស​ពួកវា បន្ទាប់​មក​<b>អូស</b> ថ្នាំង និង​ចំណុចទាញ ។ <b>ចុច</b> នៅ​លើ​វត្ថុ​ដើម្បី​ជ្រើស ។"
 
 #: ../src/tools-switch.cpp:136
 msgid "To tweak a path by pushing, select it and drag over it."
@@ -10523,79 +10518,56 @@ msgstr "ដើម្បី​លៃតម្រូវ​ផ្លូវ​ដោ
 msgid ""
 "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and "
 "resize. <b>Click</b> to select."
-msgstr ""
-"<b>អូស</b> ដើម្បី​បង្កើត​ចតុកោណកែង ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​ធ្វើ​ឲ្យ​ជ្រុង​មូល និង​ផ្លាស់ប្ដូរ​ទំហំ ។ "
-"<b>ចុច</b> ដើម្បី​ជ្រើស ។"
+msgstr "<b>អូស</b> ដើម្បី​បង្កើត​ចតុកោណកែង ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​ធ្វើ​ឲ្យ​ជ្រុង​មូល និង​ផ្លាស់ប្ដូរ​ទំហំ ។ <b>ចុច</b> ដើម្បី​ជ្រើស ។"
 
 #: ../src/tools-switch.cpp:148
 msgid ""
 "<b>Drag</b> to create a 3D box. <b>Drag controls</b> to resize in "
 "perspective. <b>Click</b> to select (with <b>Ctrl+Alt</b> for single faces)."
-msgstr ""
-"<b>អូស</b> ដើម្បី​បង្កើត​ប្រអប់​ត្រីមាត្រ ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​ផ្លាស់ប្ដូរ​ទំហំ​​ដើម្បី​ផ្លាស់ប្ដូរ​ទំហំ​"
-"យថាទស្សន៍ ។ <b>ចុច</b> ដើម្បី​ជ្រើស (ដោយ​ប្រើ <b>បញ្ជា(Ctrl)+ជំនួស(Alt)</b> សម្រាប់​មុខ​តែ​"
-"មួយ) ។"
+msgstr "<b>អូស</b> ដើម្បី​បង្កើត​ប្រអប់​ត្រីមាត្រ ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​ផ្លាស់ប្ដូរ​ទំហំ​​ដើម្បី​ផ្លាស់ប្ដូរ​ទំហំ​យថាទស្សន៍ ។ <b>ចុច</b> ដើម្បី​ជ្រើស (ដោយ​ប្រើ <b>បញ្ជា(Ctrl)+ជំនួស(Alt)</b> សម្រាប់​មុខ​តែ​មួយ) ។"
 
 #: ../src/tools-switch.cpp:154
 msgid ""
 "<b>Drag</b> to create an ellipse. <b>Drag controls</b> to make an arc or "
 "segment. <b>Click</b> to select."
-msgstr ""
-"<b>អូស</b> ដើម្បី​បង្កើត​រាងពងក្រពើ ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​បង្កើត​ធ្នូ ឬ​ចម្រៀក ។ <b>ចុច</"
-"b> ដើម្បី​ជ្រើស ។"
+msgstr "<b>អូស</b> ដើម្បី​បង្កើត​រាងពងក្រពើ ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​បង្កើត​ធ្នូ ឬ​ចម្រៀក ។ <b>ចុច</b> ដើម្បី​ជ្រើស ។"
 
 #: ../src/tools-switch.cpp:160
 msgid ""
 "<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. "
 "<b>Click</b> to select."
-msgstr ""
-"<b>អូស</b> ដើម្បី​បង្កើត​ផ្កាយ ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​កែសម្រួលរាង​​ផ្កាយ ។ <b>ចុច</b> ដើម្បី​"
-"ជ្រើស ។"
+msgstr "<b>អូស</b> ដើម្បី​បង្កើត​ផ្កាយ ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​កែសម្រួលរាង​​ផ្កាយ ។ <b>ចុច</b> ដើម្បី​ជ្រើស ។"
 
 #: ../src/tools-switch.cpp:166
 msgid ""
 "<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral "
 "shape. <b>Click</b> to select."
-msgstr ""
-"<b>អូស</b> ដើម្បី​បង្កើត​រាង​គួច ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​កែសម្រួល​រាង​គួច ។ <b>ចុច</b> ដើម្បី​"
-"ជ្រើស ។"
+msgstr "<b>អូស</b> ដើម្បី​បង្កើត​រាង​គួច ។ <b>អូស​វត្ថុ​បញ្ជា</b> ដើម្បី​កែសម្រួល​រាង​គួច ។ <b>ចុច</b> ដើម្បី​ជ្រើស ។"
 
 #: ../src/tools-switch.cpp:172
-#, fuzzy
 msgid ""
 "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to "
 "append to selected path."
-msgstr ""
-"<b>អូស</b> ដើម្បី​បង្កើត​បន្ទាត់គូស​ដោយ​សេរី ។ ចាប់ផ្ដើម​គូរ​ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​"
-"បន្ថែម​​ទៅ​ខាង​ចុង​ផ្លូវ​ដែល​បាន​ជ្រើស ។ <b>បញ្ជា (Ctrl)+ចុច</b> ដើម្បី​បង្កើត​ចំណុច​តែ​មួយ ។"
+msgstr "<b>អូស</b> ដើម្បី​គូស​បន្ទាត់​ដោយ​សេរី ។ ចាប់ផ្ដើម​គូរ​ដោយ​ចុច <b>ប្ដូរ (Shift)</b> ដើម្បី​បន្ថែម​ទៅផ្លូវ​ដែល​បាន​ជ្រើស ។"
 
 #: ../src/tools-switch.cpp:178
-#, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to "
 "append to selected path. <b>Ctrl+click</b> to create single dots (straight "
 "line modes only)."
-msgstr ""
-"<b>ចុច</b> ឬ <b>ចុច និង​អូស</b> ដើម្បី​ចាប់ផ្ដើម​ផ្លូវ​ ដោយ​ប្រើ <b>ប្ដូរ(Shift)</b> ដើម្បី​បន្ថែម​"
-"ទៅ​ខាង​ចុង​ផ្លូវ​ដែល​បាន​ជ្រើស ។ <b>បញ្ជា(Ctrl)+ចុច</b> ដើម្បី​បង្កើត​ចំណុច​តែ​មួយ ។"
+msgstr "​<b>ចុច</b> ឬ​<b>ចុច ហើយ​អូស</b> ដើម្បីចាប់ផ្ដើម​គូស ។ ប្រើ <b>ប្ដូរ (Shift)</b> ដើម្បី​បន្ថែម​ទៅកាន់​ផ្លូវ​ដែល​បាន​ជ្រើស ។ <b>បញ្ជា (Ctrl)+ចុច</b> ដើម្បី​បង្កើត​ចំណុច​ទោល (វិធីនេះ​ប្រើ​បាន​តែ​ការ​គូស​បន្ទាត់​ត្រង់​ប៉ុណ្ណោះ) ។"
 
 #: ../src/tools-switch.cpp:184
-#, fuzzy
 msgid ""
 "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide "
 "path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
 msgstr ""
-"<b>អូស</b> ដើម្បី​គូរ​ខ្វាច់វិចិត្រ ដោយ​ប្រើ <b>បញ្ជា(Ctrl)</b> ដើម្បី​តាមដាន​មគ្គុទ្ទេសក៏ ដោយ​ប្រើ "
-"<b>ជំនួស(Alt)</b> ដើម្បីធ្វើ​ឲ្យ​ស្ដើង/ក្រាស់ ។ <b>គ្រាប់​ចុច​ព្រួញ</b> លៃតម្រូវ​ទទឹង (ឆ្វេង/ស្ដាម) "
-"និង​មុំ (ឡើង​លើ/ចុះក្រោម) ។"
 
 #: ../src/tools-switch.cpp:196
 msgid ""
 "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, "
 "<b>drag handles</b> to adjust gradients."
-msgstr ""
-"<b>អូស</b> ឬ <b>ចុច​ទ្វេដង</b> ដើម្បី​បង្កើត​ជម្រាល​នៅលើ​វត្ថុ​ដែល​បាន​ជ្រើស <b>អូស​ចំណុច​ទាញ</b> "
-"ដើម្បី​លៃតម្រូវ​ជម្រាល ។"
+msgstr "<b>អូស</b> ឬ <b>ចុច​ទ្វេដង</b> ដើម្បី​បង្កើត​ជម្រាល​នៅលើ​វត្ថុ​ដែល​បាន​ជ្រើស <b>អូស​ចំណុច​ទាញ</b> ដើម្បី​លៃតម្រូវ​ជម្រាល ។"
 
 #: ../src/tools-switch.cpp:202
 msgid ""
@@ -10614,8 +10586,7 @@ msgid ""
 "object's fill and stroke to the current setting."
 msgstr ""
 "<b>ចុច</b> ដើម្បី​គូរផ្ទៃ​ព្រំដែន <b>ប្ដូរ(Shift)+ចុច</b> ដើម្បី​ភ្ជាប់​ការ​បំពេញ​ថ្មី​ដោយ​ជម្រើស​"
-"បច្ចុប្បន្ន <b>បញ្ជា(Ctrl)+ចុច</b> ដើម្បី​ផ្លាស់ប្ដូរ​ការ​បំពេញ​របស់វត្ថុ​ដែល​បាន​ចុចុ និងខ្វាច់​ទៅការ​កំណត់​"
-"បច្ចុប្បន្ន ។"
+"បច្ចុប្បន្ន <b>បញ្ជា(Ctrl)+ចុច</b> ដើម្បី​ផ្លាស់ប្ដូរ​ការ​បំពេញ​របស់វត្ថុ​ដែល​បាន​ចុចុ និងខ្វាច់​ទៅការ​កំណត់​បច្ចុប្បន្ន ។"
 
 #: ../src/tools-switch.cpp:226
 msgid "<b>Drag</b> to erase."
@@ -10623,7 +10594,7 @@ msgstr "<b>អូស</b> ដើម្បី​លុប ។"
 
 #: ../src/tools-switch.cpp:232
 msgid "Choose a subtool from the toolbar"
-msgstr ""
+msgstr "ជ្រើស​ឧបករណ៍រង​ពី​របារ​ឧបករណ៍"
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:524
 #: ../src/trace/potrace/inkscape-potrace.cpp:598
@@ -10675,76 +10646,76 @@ msgid "Trace: Done. %ld nodes created"
 msgstr "ដាន ៖ បានធ្វើរួច ។ បាន​បង្កើត​ថ្នាំង %ld"
 
 #: ../src/tweak-context.cpp:204
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Nothing</b> selected"
-msgstr "<b>គ្មាន​អ្វី</b> ត្រូវ​បានលុប ។"
+msgstr "<b>គ្មាន​អ្វី</b> ត្រូវ​បានជ្រើស​ទេ ។"
 
 #: ../src/tweak-context.cpp:210
 #, c-format
 msgid "%s. Drag to <b>move</b>."
-msgstr ""
+msgstr "%s. អូស​ដើម្បី<b>​ផ្លាស់ទី</b> ។"
 
 #: ../src/tweak-context.cpp:215
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
-msgstr ""
+msgstr "%s. អូស ឬ​ចុច​ដើម្បី​<b>ផ្លាស់ទី​ចូល​ក្នុង</b> ។ ប្រើ​ប្ដូរ (Shift) ដើម្បី​<b>ផ្លាស់ទី​ចេញ​ក្រៅ</b> ។"
 
 #: ../src/tweak-context.cpp:218
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
-msgstr ""
+msgstr "%s. អូស ឬ​ចុច ដើម្បី​<b>​ផ្លាស់ទី​ដោយ​ចៃដន្យ</b> ។"
 
 #: ../src/tweak-context.cpp:221
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
-msgstr ""
+msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>ធ្វើ​មាត្រដ្ឋាន​ចុះក្រោម</b> ។ ប្រើ ប្ដូរ (Shift) ដើម្បី​​<b>ធ្វើមាត្រដ្ឋាន​ឡើងលើ</b> ។"
 
 #: ../src/tweak-context.cpp:224
 #, c-format
 msgid ""
 "%s. Drag or click to <b>rotate clockwise</b>; with Shift, "
 "<b>counterclockwise</b>."
-msgstr ""
+msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>បង្វិល​ស្រប​ទ្រនិច​នាឡិកា</b> ។ ប្រើ ប្ដូរ (Shift) ដើម្បី​<b>បង្វិល​ច្រាស​ទ្រនិច​នាឡិកា</b> ។"
 
 #: ../src/tweak-context.cpp:227
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
-msgstr ""
+msgstr "%s. អូស ឬ​ចុច​ដើម្បី​<b>ចម្លង</b> ។ ប្រើ ប្ដូរ (Shift) ដើម្បី​<b>លុប</b> ។"
 
 #: ../src/tweak-context.cpp:230
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
-msgstr ""
+msgstr "%s. អូស​ដើម្បី​<b>​ជម្រុញ​ផ្លូវ</b> ។"
 
 #: ../src/tweak-context.cpp:234
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
-msgstr ""
+msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>បញ្ចូល​ផ្លូវ</b> ។ ប្រើ ប្ដូរ​(Shift) ដើម្បី​<b>​ធ្វើ​ពី​ដំបូង</b> ។"
 
 #: ../src/tweak-context.cpp:242
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
-msgstr ""
+msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>​ទាញយក​ផ្លូវ</b> ។ ប្រើ ប្ដូរ (Shift) ដើម្បី​<b>ច្រាន​ចេញ</b> ។"
 
 #: ../src/tweak-context.cpp:250
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
-msgstr ""
+msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>​គូសផ្លូវ​មិន​ឲ្យ​ស្មើ</b> ។"
 
 #: ../src/tweak-context.cpp:254
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
-msgstr ""
+msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>គូរ​ដាក់​ពណ៌​លើ​វត្ថុ</b> ។"
 
 #: ../src/tweak-context.cpp:257
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
-msgstr ""
+msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>ដាក់​ពណ៌​ដោយ​ចៃដន្យ</b> ។"
 
 #: ../src/tweak-context.cpp:261
 #, c-format
 msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
-msgstr ""
+msgstr "%s. អូស ឬ​ចុច​ដើម្បី<b>បង្កើន​ភាព​ព្រឹល</b> ។ ប្រើ​ប្ដូរ(Shift) ដើម្បី​<b>បន្ថយ</b> ។"
 
 #: ../src/tweak-context.cpp:1218
 msgid "<b>Nothing selected!</b> Select objects to tweak."
