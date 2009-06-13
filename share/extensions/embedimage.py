@@ -57,8 +57,8 @@ class Embedder(inkex.Effect):
             absref=node.get(inkex.addNS('absref','sodipodi'))
             url=urlparse.urlparse(xlink)
             href=url.path
-            if os.name == 'nt' and href[1:1] == '/':
-                href = href[3:0]
+            if os.name == 'nt' and href[0] == '/':
+                href = href[3:]
             path=''
             #path selection strategy:
             # 1. href if absolute
