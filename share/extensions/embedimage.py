@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
-import inkex, os, base64, urlparse
+import inkex, os, base64, urlparse, urllib
 import gettext
 _ = gettext.gettext
 
@@ -56,9 +56,9 @@ class Embedder(inkex.Effect):
         if xlink is None or xlink[:5] != 'data:':
             absref=node.get(inkex.addNS('absref','sodipodi'))
             url=urlparse.urlparse(xlink)
-            href=url.path
+            href=urllib.unquote(url.path)
             if os.name == 'nt' and href[0] == '/':
-                href = href[3:]
+                href = href[1:]
             path=''
             #path selection strategy:
             # 1. href if absolute
