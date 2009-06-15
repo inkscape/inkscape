@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-12 14:51+0200\n"
-"PO-Revision-Date: 2009-06-12 14:57+0100\n"
+"POT-Creation-Date: 2009-06-15 19:19+0200\n"
+"PO-Revision-Date: 2009-06-15 19:48+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -584,17 +584,13 @@ msgid "Glossy painting effect for bitmaps"
 msgstr "Effet de peinture brillante pour bitmap"
 
 #: ../share/filters/filters.svg.h:46
-msgid "HSL Bumps"
-msgstr "Bosselage TSL"
-
-#: ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:48
 #: ../share/filters/filters.svg.h:123
 #: ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:164
 #: ../share/filters/filters.svg.h:178
-msgid "Bumps"
-msgstr "Bosselage"
+msgid "HSL Bumps"
+msgstr "Bosselage TSL"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
@@ -1403,8 +1399,8 @@ msgstr "Ébauche BD"
 #: ../share/filters/filters.svg.h:151
 #: ../share/filters/filters.svg.h:152
 #: ../share/filters/filters.svg.h:159
-msgid "Non realistic shaders"
-msgstr "Ombrages non réalistes"
+msgid "Non realistic 3D shaders"
+msgstr "Ombrages 3D non réalistes"
 
 #: ../share/filters/filters.svg.h:140
 msgid "Draft painted cartoon shading with a glassy look"
@@ -19143,16 +19139,16 @@ msgstr "Aire (px²) :"
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again."
 msgstr "Échec lors de l'import des modules numpy.linalg. Ces modules sont nécessaires à cette extension. Veuillez les installer et réessayer."
 
-#: ../share/extensions/embedimage.py:72
+#: ../share/extensions/embedimage.py:74
 msgid "No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image."
 msgstr "Les attributs xlink:href et sodipodi:absref n'ont pas été trouvés, ou n'indiquent pas un fichier existant ! Impossible d'incorporer l'image."
 
-#: ../share/extensions/embedimage.py:74
+#: ../share/extensions/embedimage.py:76
 #, python-format
 msgid "Sorry we could not locate %s"
 msgstr "Désolé, nous ne pouvons pas localiser %s"
 
-#: ../share/extensions/embedimage.py:99
+#: ../share/extensions/embedimage.py:101
 #, python-format
 msgid "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, or image/x-icon"
 msgstr "%s n'est pas du type image/png, image/jpeg, image/bmp, image/gif, image/tiff, ou image/x-icon"
@@ -21603,6 +21599,8 @@ msgstr "Entrée métafichier Windows (*.wmf)"
 msgid "XAML Input"
 msgstr "Entrée XAML"
 
+#~ msgid "Bumps"
+#~ msgstr "Bosselage"
 #~ msgid "Alpha paint"
 #~ msgstr "Dessin en couleurs transparent"
 #~ msgid "Previous Effect"
