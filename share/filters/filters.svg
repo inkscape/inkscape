@@ -1017,8 +1017,9 @@
 </feMerge>
 <feComposite result="result4" in="SourceGraphic" operator="in" in2="result2" id="feComposite2438" />
 </filter>
-<filter id="filter3068b" inkscape:label="Invert hue" inkscape:menu="Color" inkscape:menu-tooltip="Invert hue, or rotate it" y="0" x="0" height="1" width="1">
-<feColorMatrix id="feColorMatrix1093" type="hueRotate" values="180" />
+<filter id="InvertHue0" inkscape:label="Invert hue" inkscape:menu="Color" inkscape:menu-tooltip="Invert hue, or rotate it" y="0" x="0" height="1" width="1">
+<feColorMatrix id="feColorMatrix2867" type="hueRotate" values="180" />
+<feBlend blend="normal" id="feBlend2869" mode="normal" in2="SourceGraphic" />
 </filter>
 <filter id="InnerOutlin0" inkscape:label="Inner outline" inkscape:menu="Morphology" inkscape:menu-tooltip="Draws an outline around">
 <feGaussianBlur id="feGaussianBlur2915" result="result1" in="SourceAlpha" stdDeviation="3" />
@@ -1578,7 +1579,7 @@
 <feComposite in="result4" operator="arithmetic" result="result2" in2="SourceGraphic" id="feComposite3366" k1="1" k3="0" />
 <feComposite in2="result2" operator="out" in="SourceGraphic" result="fbSourceGraphic" id="feComposite3368" />
 </filter>
-<filter id="Blacklight0" inkscape:label="Black Light" inkscape:menu="Color" inkscape:menu-tooltip="Light areas turn to black">
+<filter id="Blacklight0" inkscape:label="Black Light" inkscape:menu="Color" inkscape:menu-tooltip="Light areas turn to black" x="0" width="1" y="0" height="1">
 <feColorMatrix id="feColorMatrix2916" type="luminanceToAlpha" result="result2" />
 <feComposite id="feComposite2922" in2="SourceGraphic" operator="arithmetic" in="result2" k1="0" k2="0" k3="2" result="result4" />
 <feBlend blend="normal" id="feBlend2962" in="result2" mode="multiply" result="result3" />
