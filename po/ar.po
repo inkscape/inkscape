@@ -5,28 +5,29 @@
 # M. Bashir Al-Noimi<mhdbnoimi@gmail.com>,2008-02-15 07:27+0200
 # M. Bashir Al-Noimi<mhdbnoimi@g,ail.com>,2008-02-23 02:26+0200
 # M. Bashir Al-Noimi <mhdbnoimi@gmail.com>,2008-02-25 08:51+0200
+# Banzoo <banxoo+launchpad@gmail.com>,2008-02-25 08:51+0200
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2008-02-27 20:43+0200\n"
-"Last-Translator: Muhammad Bashir Al-Noimi <mhdbnoimi@gmail.com>\n"
-"Language-Team: Arabic <mbnoimi.net>\n"
+"POT-Creation-Date: 2009-02-27 11:58+0200\n"
+"PO-Revision-Date: 2008-06-15 20:43+0200\n"
+"Last-Translator: Banzoo <banxoo+launchpad@gmail.com>\n"
+"Language-Team: Arabic"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n>=3 && "
 "n<=10 ? 3 : n>=11 && n<=99 ? 4 : 5;\n"
 "X-Generator: WordForge 0.2\n"
-"X-Poedit-Country: SYRIAN ARAB REPUBLIC\n"
+"X-Poedit-Country: LEBANON\n"
 "X-Poedit-Language: Arabic\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: ../inkscape.desktop.in.h:1
 #, fuzzy
 msgid "Create and edit Scalable Vector Graphics images"
-msgstr "إنشاء و تحرير الرسومات الشعاعية القابلة للتكبير و التصغير"
+msgstr "إنشاء و تحرير الرسومات الشعاعية"
 
 #: ../inkscape.desktop.in.h:2
 #, fuzzy
@@ -36,7 +37,7 @@ msgstr "إنكسكايب محرر الرسومات الشعاعية"
 #: ../share/filters/filters.svg.h:2
 #, fuzzy
 msgid "Matte jelly"
-msgstr "قناة حاملة"
+msgstr "هلامي باهت"
 
 #: ../share/filters/filters.svg.h:2 ../share/filters/filters.svg.h:3
 #: ../share/filters/filters.svg.h:4 ../share/filters/filters.svg.h:5
@@ -50,32 +51,32 @@ msgstr "قناة حاملة"
 #: ../share/filters/filters.svg.h:105
 #, fuzzy
 msgid "Bevels"
-msgstr "مستوى"
+msgstr "زوايا"
 
 #: ../share/filters/filters.svg.h:2
 msgid "Bulging, matte jelly covering"
-msgstr ""
+msgstr "نفخ، غطاﺀ هلامي باهت"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Glossy jelly"
-msgstr ""
+msgstr "هلامي لامع"
 
 #: ../share/filters/filters.svg.h:3
 msgid "Bulging, glossy jelly covering"
-msgstr ""
+msgstr "نفخ، غطاﺀ هلامي لامع"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Glossy jelly, backlit"
-msgstr ""
+msgstr "هلامي لامع مضاﺀ من الخلف"
 
 #: ../share/filters/filters.svg.h:4
 msgid "Bulging, glossy jelly covering; two light sources"
-msgstr ""
+msgstr "نفخ، غطاﺀ هلامي لامع مع ضوﺀين"
 
 #: ../share/filters/filters.svg.h:5
 #, fuzzy
 msgid "Metal casting"
-msgstr "الرقاقة تمكّن"
+msgstr "صبّ معدني"
 
 #: ../share/filters/filters.svg.h:5
 msgid "Smooth drop-like bevel with metallic finish"
@@ -84,7 +85,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:6
 #, fuzzy
 msgid "Motion blur, horizontal"
-msgstr "نقل العقد أفقيا"
+msgstr "غشاوة الحركة الأفقية"
 
 #: ../share/filters/filters.svg.h:6 ../share/filters/filters.svg.h:7
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:59
@@ -93,38 +94,38 @@ msgstr "نقل العقد أفقيا"
 #: ../share/filters/filters.svg.h:164
 #, fuzzy
 msgid "Blurs"
-msgstr "ضبابية"
+msgstr "غشاوة"
 
 #: ../share/filters/filters.svg.h:6
 msgid ""
 "Blur as if the object flies horizontally; adjust Standard Deviation to vary "
 "force"
-msgstr ""
+msgstr "غشاوة كما لو كانت ناتجة عن جسم يطير أفقيا؛ عدّل الإنحراف المعياري لتغيير القوّة"
 
 #: ../share/filters/filters.svg.h:7
 #, fuzzy
 msgid "Motion blur, vertical"
-msgstr "نقل العقد عموديا"
+msgstr "غشاوة الحركة العامودية"
 
 #: ../share/filters/filters.svg.h:7
 msgid ""
 "Blur as if the object flies vertically; adjust Standard Deviation to vary "
 "force"
-msgstr ""
+msgstr "غشاوة كما لو كانت ناتجة عن جسم يطير عاموديا؛ عدّل الإنحراف المعياري لتغيير القوّة"
 
 #: ../share/filters/filters.svg.h:8
 #, fuzzy
 msgid "Apparition"
-msgstr "الإشباع"
+msgstr "ظهور"
 
 #: ../share/filters/filters.svg.h:8
 msgid "Edges are partly feathered out"
-msgstr ""
+msgstr "الحدود مغبشة جزئيا"
 
 #: ../share/filters/filters.svg.h:9
 #, fuzzy
 msgid "Cutout"
-msgstr "البداية"
+msgstr "انقطاع"
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
 #: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:122
@@ -133,19 +134,19 @@ msgstr "البداية"
 #: ../src/extension/internal/filter/drop-shadow.h:100
 #, fuzzy
 msgid "Shadows and Glows"
-msgstr "عرض المعلومات"
+msgstr "ظلال وتوهّج"
 
 #: ../share/filters/filters.svg.h:9
 msgid "Drop shadow under the cut-out of the shape"
-msgstr ""
+msgstr "إسقاط الظل تحت مقطع الشكل"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Jigsaw piece"
-msgstr ""
+msgstr "أحجية الصور المقطوعة"
 
 #: ../share/filters/filters.svg.h:10
 msgid "Low, sharp bevel"
-msgstr ""
+msgstr "زاوية حادة، خفيفة"
 
 #: ../share/filters/filters.svg.h:11
 #, fuzzy
@@ -157,7 +158,7 @@ msgstr "نمط العرض التوضيحي"
 #: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:121
 #: ../share/filters/filters.svg.h:125
 msgid "ABCs"
-msgstr ""
+msgstr "ٱبجد"
 
 #: ../share/filters/filters.svg.h:11
 msgid "Small-scale roughening to edges and content"
@@ -166,7 +167,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:12
 #, fuzzy
 msgid "Rubber stamp"
-msgstr "مؤمّن مطاط"
+msgstr "طابع مطاطي"
 
 #: ../share/filters/filters.svg.h:12 ../share/filters/filters.svg.h:18
 #: ../share/filters/filters.svg.h:19 ../share/filters/filters.svg.h:20
@@ -176,16 +177,16 @@ msgstr "مؤمّن مطاط"
 #: ../share/filters/filters.svg.h:117 ../share/filters/filters.svg.h:120
 #, fuzzy
 msgid "Overlays"
-msgstr "إنتهى"
+msgstr "طبقات"
 
 #: ../share/filters/filters.svg.h:12
 msgid "Random whiteouts inside"
-msgstr ""
+msgstr "تبييض عشوائي بالداخل"
 
 #: ../share/filters/filters.svg.h:13
 #, fuzzy
 msgid "Ink bleed"
-msgstr "الخليط"
+msgstr "خليط الحبر"
 
 #: ../share/filters/filters.svg.h:13 ../share/filters/filters.svg.h:14
 #: ../share/filters/filters.svg.h:42
@@ -195,21 +196,21 @@ msgstr "الموقع:"
 
 #: ../share/filters/filters.svg.h:13
 msgid "Inky splotches underneath the object"
-msgstr ""
+msgstr "بقع حبرية تحت الجسم"
 
 #: ../share/filters/filters.svg.h:14
 #, fuzzy
 msgid "Fire"
-msgstr "ملف"
+msgstr "نار"
 
 #: ../share/filters/filters.svg.h:14
 msgid "Edges of object are on fire"
-msgstr ""
+msgstr "حدود الجسم نارية"
 
 #: ../share/filters/filters.svg.h:15
 #, fuzzy
 msgid "Bloom"
-msgstr "مكبرة"
+msgstr "تفتح"
 
 #: ../share/filters/filters.svg.h:15
 msgid "Soft, cushion-like bevel with matte highlights"
@@ -218,28 +219,28 @@ msgstr ""
 #: ../share/filters/filters.svg.h:16
 #, fuzzy
 msgid "Ridged border"
-msgstr "نمط العرض التوضيحي"
+msgstr "حدود مهضّبة"
 
 #: ../share/filters/filters.svg.h:16
 msgid "Ridged border with inner bevel"
-msgstr ""
+msgstr "حدود مهضّبة مع مستويات داخلية"
 
 #: ../share/filters/filters.svg.h:17
 #, fuzzy
 msgid "Ripple"
-msgstr "إستبدال"
+msgstr "تموّجات"
 
 #: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
 #: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:115
 #, fuzzy
 msgid "Distort"
-msgstr "المقسوم"
+msgstr "تشويه"
 
 #: ../share/filters/filters.svg.h:17
 #, fuzzy
 msgid "Horizontal rippling of edges"
-msgstr "الحذف"
+msgstr "تموّج أفقي للأطراف"
 
 #: ../share/filters/filters.svg.h:18
 #, fuzzy
@@ -253,16 +254,16 @@ msgstr ""
 #: ../share/filters/filters.svg.h:19
 #, fuzzy
 msgid "Oil slick"
-msgstr "فترة الهدوء"
+msgstr "بقعة زيت"
 
 #: ../share/filters/filters.svg.h:19
 msgid "Rainbow-colored semitransparent oily splotches"
-msgstr ""
+msgstr "بقع زيت نصف شفافة متعددة الألوان"
 
 #: ../share/filters/filters.svg.h:20
 #, fuzzy
 msgid "Frost"
-msgstr "خطّ"
+msgstr "جليد"
 
 #: ../share/filters/filters.svg.h:20
 msgid "Flake-like white splotches"
@@ -270,7 +271,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:21
 msgid "Leopard fur"
-msgstr ""
+msgstr "فرو الفهد"
 
 #: ../share/filters/filters.svg.h:21 ../share/filters/filters.svg.h:60
 #: ../share/filters/filters.svg.h:61 ../share/filters/filters.svg.h:62
@@ -283,28 +284,28 @@ msgstr ""
 #: ../share/filters/filters.svg.h:159
 #, fuzzy
 msgid "Materials"
-msgstr "مصفوفة"
+msgstr "مواد"
 
 #: ../share/filters/filters.svg.h:21
 msgid "Leopard spots (loses object's own color)"
-msgstr ""
+msgstr "فهد مرقط (إضاعة لون الجسم الأصلي)"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Zebra"
-msgstr ""
+msgstr "حمار وحشي"
 
 #: ../share/filters/filters.svg.h:22
 msgid "Irregular vertical dark stripes (loses object's own color)"
-msgstr ""
+msgstr "شرائط عامودية غير متوازنة (إضاعة لون الجسم الأصلي)"
 
 #: ../share/filters/filters.svg.h:23
 #, fuzzy
 msgid "Clouds"
-msgstr "النسخ"
+msgstr "غيوم"
 
 #: ../share/filters/filters.svg.h:23
 msgid "Airy, fluffy, sparse white clouds"
-msgstr ""
+msgstr "هوائي، نثر الغيوم البيضاﺀ"
 
 #: ../share/filters/filters.svg.h:24
 #: ../src/extension/internal/bitmap/sharpen.cpp:37
@@ -323,57 +324,57 @@ msgstr "إشحذ"
 #: ../share/filters/filters.svg.h:168
 #, fuzzy
 msgid "Image effects"
-msgstr "مفعول جانبي"
+msgstr "مؤثرات الصور"
 
 #: ../share/filters/filters.svg.h:24
 msgid "Sharpen edges and boundaries within the object, force=0.15"
-msgstr ""
+msgstr "زيادة حدّة الأطراف والحدود ضمن الجسم، قوة=٠،١٥"
 
 #: ../share/filters/filters.svg.h:25
 #, fuzzy
 msgid "Sharpen more"
-msgstr "إشحذ"
+msgstr "إشحذ أكثر"
 
 #: ../share/filters/filters.svg.h:25
 msgid "Sharpen edges and boundaries within the object, force=0.3"
-msgstr ""
+msgstr "زيادة حدّة الأطراف والحدود ضمن الجسم، قوة=٠،٣"
 
 #: ../share/filters/filters.svg.h:26
 #, fuzzy
 msgid "Oil painting"
-msgstr "عائم"
+msgstr "لوحة زيتية"
 
 #: ../share/filters/filters.svg.h:26
 msgid "Simulate oil painting style"
-msgstr ""
+msgstr "محاكاة نمط اللوحات الزيتية"
 
 #: ../share/filters/filters.svg.h:27
 #, fuzzy
 msgid "Edge detect"
-msgstr "كشف تصادمات"
+msgstr "كشف الأطراف"
 
 #: ../share/filters/filters.svg.h:27
 msgid "Detect color edges in object"
-msgstr ""
+msgstr "كشف الأطراف الملوّنة في الجسم"
 
 #: ../share/filters/filters.svg.h:28
 #, fuzzy
 msgid "Horizontal edge detect"
-msgstr "نص جديد"
+msgstr "كشف الأطراف الأفقية"
 
 #: ../share/filters/filters.svg.h:28
 #, fuzzy
 msgid "Detect horizontal color edges in object"
-msgstr "إيقاف الترجمة التلقائية للنص المحدّد"
+msgstr "كشف الأطراف الأفقية الملوّنة في الجسم"
 
 #: ../share/filters/filters.svg.h:29
 #, fuzzy
 msgid "Vertical edge detect"
-msgstr "نص جديد"
+msgstr "كشف الأطراف العامودية"
 
 #: ../share/filters/filters.svg.h:29
 msgid "Detect vertical color edges in object"
-msgstr ""
+msgstr "كشف الأطراف العامودية الملوّنة في الجسم"
 
 #. Pencil
 #: ../share/filters/filters.svg.h:30
@@ -384,22 +385,22 @@ msgstr "قلم الرصاص"
 
 #: ../share/filters/filters.svg.h:30
 msgid "Detect color edges and retrace them in grayscale"
-msgstr ""
+msgstr "كشف الأطراف الملوّنة ورسمها بالأبيض والأسود"
 
 #: ../share/filters/filters.svg.h:31
 #, fuzzy
 msgid "Blueprint"
-msgstr "عرض ثابت"
+msgstr "مخطط"
 
 #: ../share/filters/filters.svg.h:31
 msgid "Detect color edges and retrace them in blue"
-msgstr ""
+msgstr "كشف الأطراف الملوّنة ورسمها بالأزرق"
 
 #: ../share/filters/filters.svg.h:32
 #: ../share/extensions/color_desaturate.inx.h:2
 #, fuzzy
 msgid "Desaturate"
-msgstr "عدم التشبع"
+msgstr "من دون ألوان"
 
 #: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:33
 #: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:74
@@ -431,35 +432,35 @@ msgstr "لون"
 
 #: ../share/filters/filters.svg.h:32
 msgid "Render in shades of gray by reducing saturation to zero"
-msgstr ""
+msgstr "تصيير بدرجات اللون الرمادي لإلغاﺀ الألوان من الصورة"
 
 #: ../share/filters/filters.svg.h:33 ../src/ui/widget/selected-style.cpp:228
 msgid "Invert"
-msgstr "عكس"
+msgstr "صورة سلبية"
 
 #: ../share/filters/filters.svg.h:33
 #, fuzzy
 msgid "Invert colors"
-msgstr "<small>لا يوجد شيء تم تحديده.</small>"
+msgstr "إبدال الألوان بعكسها"
 
 #: ../share/filters/filters.svg.h:34
 #, fuzzy
 msgid "Sepia"
-msgstr "اللولب"
+msgstr "لون الصور القديمة"
 
 #: ../share/filters/filters.svg.h:34
 #, fuzzy
 msgid "Render in warm sepia tones"
-msgstr "الداخل أولا يخرج أولا"
+msgstr "تصيير بلون الصور القديمة الدافئة"
 
 #: ../share/filters/filters.svg.h:35
 #, fuzzy
 msgid "Age"
-msgstr "زاوية"
+msgstr "عمر"
 
 #: ../share/filters/filters.svg.h:35
 msgid "Imitate aged photograph"
-msgstr ""
+msgstr "محاكاة الصور القديمة"
 
 #: ../share/filters/filters.svg.h:36
 #, fuzzy
@@ -478,7 +479,7 @@ msgstr "الأصل"
 #: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:160
 #, fuzzy
 msgid "Textures"
-msgstr "نصوص"
+msgstr "كساﺀات"
 
 #: ../share/filters/filters.svg.h:36
 msgid "Bulging, knotty, slick 3D surface"
@@ -486,25 +487,25 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:37
 msgid "Barbed wire"
-msgstr ""
+msgstr "شريط شائك"
 
 #: ../share/filters/filters.svg.h:37
 msgid "Gray bevelled wires with drop shadows"
-msgstr ""
+msgstr "أشرطة رمادية مائلة مع إسقاط الظلال"
 
 #: ../share/filters/filters.svg.h:38
 #, fuzzy
 msgid "Swiss cheese"
-msgstr "لصق نص"
+msgstr "جبنة سويسرية"
 
 #: ../share/filters/filters.svg.h:38
 msgid "Random inner-bevel holes"
-msgstr ""
+msgstr "حفر عشوائية مائلة"
 
 #: ../share/filters/filters.svg.h:39
 #, fuzzy
 msgid "Blue cheese"
-msgstr "قناة حاملة"
+msgstr "جبنة زرقاﺀ"
 
 #: ../share/filters/filters.svg.h:39
 msgid "Marble-like bluish speckles"
@@ -513,29 +514,29 @@ msgstr ""
 #: ../share/filters/filters.svg.h:40
 #, fuzzy
 msgid "Button"
-msgstr "مكبرة"
+msgstr "زر"
 
 #: ../share/filters/filters.svg.h:40
 msgid "Soft bevel, slightly depressed middle"
-msgstr ""
+msgstr "زاوية خفيفة، مع انحناﺀة طفيفة في الوسط"
 
 #: ../share/filters/filters.svg.h:41
 #, fuzzy
 msgid "Inset"
-msgstr "الملحق، ادخل، يدخل"
+msgstr "المجموعة الداخلية"
 
 #: ../share/filters/filters.svg.h:41
 msgid "Shadowy outer bevel"
-msgstr ""
+msgstr "زاوية خارجية مظللة"
 
 #: ../share/filters/filters.svg.h:42
 #, fuzzy
 msgid "Dripping"
-msgstr "برنامج نصي"
+msgstr "تنقيط"
 
 #: ../share/filters/filters.svg.h:42
 msgid "Random paint streaks downwards"
-msgstr ""
+msgstr "دهان عشوائي بإتجاه سفلي"
 
 #: ../share/filters/filters.svg.h:43
 #, fuzzy
@@ -549,57 +550,57 @@ msgstr ""
 #: ../share/filters/filters.svg.h:44
 #, fuzzy
 msgid "Pixel smear"
-msgstr "بكسل"
+msgstr "تمشيح البكسل"
 
 #: ../share/filters/filters.svg.h:44
 msgid "Van Gogh painting effect for bitmaps"
-msgstr ""
+msgstr "تلوين على نمط لوحات فان غوغ للصور النقطية"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Pixel smear, glossy"
-msgstr ""
+msgstr "تمشيح البكسل، لامع"
 
 #: ../share/filters/filters.svg.h:45
 msgid "Glossy painting effect for bitmaps"
-msgstr ""
+msgstr "تلوين لامع للصور النقطية"
 
 #: ../share/filters/filters.svg.h:46
 #, fuzzy
 msgid "HSL Bumps"
-msgstr "التّحيّز"
+msgstr "نتوﺀات"
 
 #: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:166
 #, fuzzy
 msgid "Bumps"
-msgstr "التّحيّز"
+msgstr "نتوﺀات"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
-msgstr ""
+msgstr "نتوﺀ لامع عالي الليونة"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Cracked glass"
-msgstr ""
+msgstr "زجاج مصدّع"
 
 #: ../share/filters/filters.svg.h:47
 msgid "Under a cracked glass"
-msgstr ""
+msgstr "تحت زجاج مصدّع"
 
 #: ../share/filters/filters.svg.h:48
 msgid "HSL bubbles"
-msgstr ""
+msgstr "فقاعات"
 
 #: ../share/filters/filters.svg.h:48 ../share/filters/filters.svg.h:107
 msgid ""
 "Highly flexible bubbles effect depending on color hue saturation and "
 "luminance"
-msgstr ""
+msgstr "فقاعات عالية الليونة متعلقة بقوة اللون والإضاﺀة"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Glowing bubble"
-msgstr ""
+msgstr "فقاعة متوّهجة"
 
 #: ../share/filters/filters.svg.h:49 ../share/filters/filters.svg.h:54
 #: ../share/filters/filters.svg.h:55 ../share/filters/filters.svg.h:67
@@ -611,25 +612,25 @@ msgstr "حافة"
 
 #: ../share/filters/filters.svg.h:49
 msgid "Bubble effect with refraction and glow"
-msgstr ""
+msgstr "فقاعة مع وهج وانكسار الضوﺀ"
 
 #: ../share/filters/filters.svg.h:50
 #, fuzzy
 msgid "Neon"
-msgstr "بدون"
+msgstr "نيون"
 
 #: ../share/filters/filters.svg.h:50
 msgid "Neon light effect with glow"
-msgstr ""
+msgstr "ضوﺀ النيون مع توّهج"
 
 #: ../share/filters/filters.svg.h:51
 #, fuzzy
 msgid "Melt and glow"
-msgstr "مكسورة"
+msgstr "تذويب وتوّهج"
 
 #: ../share/filters/filters.svg.h:51
 msgid "Melting parts of object together, with a glossy bevel and a glow"
-msgstr ""
+msgstr "قطع ذائبة للجسم، مع لمعان وتوّهج"
 
 #: ../share/filters/filters.svg.h:52
 #, fuzzy
@@ -651,16 +652,16 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:54
 msgid "Thin Membrane"
-msgstr ""
+msgstr "قشرة رقيقة"
 
 #: ../share/filters/filters.svg.h:54
 msgid "Thin like a soap membrane"
-msgstr ""
+msgstr "رقيقة كسطح الفقاعة"
 
 #: ../share/filters/filters.svg.h:55
 #, fuzzy
 msgid "Soft ridge"
-msgstr "عميل خفيف"
+msgstr "هضبة خفيفة"
 
 #: ../share/filters/filters.svg.h:55
 #, fuzzy
@@ -669,35 +670,35 @@ msgstr "<big><b>قياس الصورة</b></big>"
 
 #: ../share/filters/filters.svg.h:56
 msgid "Glowing metal"
-msgstr ""
+msgstr "معدن متوّهج"
 
 #: ../share/filters/filters.svg.h:56
 msgid "Bright and glowing metal texture"
-msgstr ""
+msgstr "سطوع وتوّهج كساﺀ المعدن"
 
 #: ../share/filters/filters.svg.h:57
 #, fuzzy
 msgid "Leaves"
-msgstr "مستوى"
+msgstr "أوراق"
 
 #: ../share/filters/filters.svg.h:57 ../share/filters/filters.svg.h:79
 #: ../share/filters/filters.svg.h:88 ../share/extensions/pathscatter.inx.h:10
 #, fuzzy
 msgid "Scatter"
-msgstr "نموذج"
+msgstr "وزّع"
 
 #: ../share/filters/filters.svg.h:57
 msgid "Leaves on the ground in Fall, or living foliage"
-msgstr ""
+msgstr "أوراق الشجر على الأرض في الخريف"
 
 #: ../share/filters/filters.svg.h:58
 #, fuzzy
 msgid "Translucent"
-msgstr "فريد"
+msgstr "هلامي"
 
 #: ../share/filters/filters.svg.h:58
 msgid "Illuminated translucent plastic effect"
-msgstr ""
+msgstr "بلاستيك هلامي مضاﺀ"
 
 #: ../share/filters/filters.svg.h:59
 #, fuzzy
@@ -707,7 +708,7 @@ msgstr "ناعم"
 #: ../share/filters/filters.svg.h:59
 #, fuzzy
 msgid "Blur inner borders and intersections"
-msgstr "تحويل إلى التكرار"
+msgstr "تغبيش الحدود الداخلية والتقاطع"
 
 #: ../share/filters/filters.svg.h:60
 msgid "Iridescent beeswax"
@@ -719,11 +720,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:61
 msgid "Eroded metal"
-msgstr ""
+msgstr "معدن مهترئ"
 
 #: ../share/filters/filters.svg.h:61
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
-msgstr ""
+msgstr "كساﺀ معدن مهترئ مع نتوﺀ وثقوب"
 
 #: ../share/filters/filters.svg.h:62
 msgid "Cracked Lava"
@@ -731,12 +732,12 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:62
 msgid "A volcanic texture, a little like leather"
-msgstr ""
+msgstr "كساﺀ بركاني، يشبه الجلد قليلا"
 
 #: ../share/filters/filters.svg.h:63
 #, fuzzy
 msgid "Bark"
-msgstr "مارك"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:63
 msgid "Bark texture, vertical; use with deep colors"
@@ -744,56 +745,56 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:64
 msgid "Lizard skin"
-msgstr ""
+msgstr "جلد السحلية"
 
 #: ../share/filters/filters.svg.h:64
 msgid "Stylized reptile skin texture"
-msgstr ""
+msgstr "نمط كساﺀ جلد الزواحف"
 
 #: ../share/filters/filters.svg.h:65
 #, fuzzy
 msgid "Stone wall"
-msgstr "حذف الكل"
+msgstr "جدار حجري"
 
 #: ../share/filters/filters.svg.h:65
 msgid "Stone wall texture to use with dark colors"
-msgstr ""
+msgstr "كساﺀ الجدار الحجري مع استعمال الألوان القاتمة"
 
 #: ../share/filters/filters.svg.h:66
 msgid "Silk carpet"
-msgstr ""
+msgstr "سجّاد حريري"
 
 #: ../share/filters/filters.svg.h:66
 msgid "Silk carpet texture, horizontal stripes"
-msgstr ""
+msgstr "كساﺀ سجّاد حريري مع خطوط أفقية"
 
 #: ../share/filters/filters.svg.h:67
 #, fuzzy
 msgid "Refractive gel A"
-msgstr "متاجرة بين عمل وعمل"
+msgstr "هلام أ مع انكسار ضوئي"
 
 #: ../share/filters/filters.svg.h:67
 msgid "Gel effect with light refraction"
-msgstr ""
+msgstr "هلام مع انكسار ضوئي خفيف"
 
 #: ../share/filters/filters.svg.h:68
 #, fuzzy
 msgid "Refractive gel B"
-msgstr "متاجرة بين عمل وعمل"
+msgstr "هلام ب مع انكسار ضوئي"
 
 #: ../share/filters/filters.svg.h:68
 msgid "Gel effect with strong refraction"
-msgstr ""
+msgstr "هلام مع انكسار ضوئي قوي"
 
 #: ../share/filters/filters.svg.h:69
 #, fuzzy
 msgid "Metallized paint"
-msgstr "الرقاقة تمكّن"
+msgstr "دهان معدني"
 
 #: ../share/filters/filters.svg.h:69
 msgid ""
 "Metallized effect with a soft lighting, slightly translucent at the edges"
-msgstr ""
+msgstr "دهان معدني مع إضاﺀة خفيفة، هلامي قليلا عند الأطراف"
 
 #: ../share/filters/filters.svg.h:70
 #, fuzzy
@@ -802,16 +803,16 @@ msgstr "منحنى جرسي"
 
 #: ../share/filters/filters.svg.h:70
 msgid "Gel Ridge with a pearlescent look"
-msgstr ""
+msgstr "هلام مع لون لؤلؤي"
 
 #: ../share/filters/filters.svg.h:71
 #, fuzzy
 msgid "Raised border"
-msgstr "عقدة حشد"
+msgstr "حدود مرفوعة"
 
 #: ../share/filters/filters.svg.h:71
 msgid "Strongly raised border around a flat surface"
-msgstr ""
+msgstr "حدود مرفوعة كثيرا حول الأسطح المسطحة"
 
 #: ../share/filters/filters.svg.h:72
 msgid "Metallized ridge"
@@ -824,11 +825,11 @@ msgstr ""
 #: ../share/filters/filters.svg.h:73
 #, fuzzy
 msgid "Fat oil"
-msgstr "مخيِّر ألوان"
+msgstr "زيت سميك"
 
 #: ../share/filters/filters.svg.h:73
 msgid "Fat oil with some adjustable turbulence"
-msgstr ""
+msgstr "زيت سميك مع عشوائية يمكن تعديلها"
 
 #: ../share/filters/filters.svg.h:74
 #: ../src/extension/internal/bitmap/colorize.cpp:49
@@ -843,7 +844,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:75
 #, fuzzy
 msgid "Parallel hollow"
-msgstr "توزيع طبيعى"
+msgstr "فراغ متوازي"
 
 #: ../share/filters/filters.svg.h:75 ../share/filters/filters.svg.h:76
 #: ../share/filters/filters.svg.h:77 ../share/filters/filters.svg.h:78
@@ -853,61 +854,61 @@ msgstr "توزيع طبيعى"
 #: ../share/filters/filters.svg.h:132 ../src/filter-enums.cpp:31
 #, fuzzy
 msgid "Morphology"
-msgstr "علم الصرف"
+msgstr "تحويل"
 
 #: ../share/filters/filters.svg.h:75
 msgid "A blurry hollow going parallel to the edge on the inside"
-msgstr ""
+msgstr "فراغ مغبش باتجاه متوازي مع الطرف الداخلي"
 
 #: ../share/filters/filters.svg.h:76
 #, fuzzy
 msgid "Hole"
-msgstr "الدور"
+msgstr "ثقب"
 
 #: ../share/filters/filters.svg.h:76
 msgid "Opens a smooth hole inside the shape"
-msgstr ""
+msgstr "ثقب ناعم داخل الشكل"
 
 #: ../share/filters/filters.svg.h:77
 #, fuzzy
 msgid "Black hole"
-msgstr "ضربة المفتاح"
+msgstr "ثقب أسود"
 
 #: ../share/filters/filters.svg.h:77
 msgid "Creates a black light inside and outside"
-msgstr ""
+msgstr "إنشاﺀ ضوﺀ اسود في الداخل والخارج"
 
 #: ../share/filters/filters.svg.h:78
 #, fuzzy
 msgid "Smooth outline"
-msgstr "خط تفصيلي"
+msgstr "مخطط ناعم"
 
 #: ../share/filters/filters.svg.h:78
 msgid "Outlining the lines and smoothing their crossings"
-msgstr ""
+msgstr "ترسيم الخطوط وتنعيم تقاطعها"
 
 #: ../share/filters/filters.svg.h:79
 #, fuzzy
 msgid "Cubes"
-msgstr "نقل العقد"
+msgstr "مكعبات"
 
 #: ../share/filters/filters.svg.h:79
 msgid "Scattered cubes; adjust the Morphology primitive to vary size"
-msgstr ""
+msgstr "مكعبات متفرقة؛ تغيير الشكل الرجعي للتحكم في الحجم"
 
 #: ../share/filters/filters.svg.h:80
 #, fuzzy
 msgid "Peel off"
-msgstr "توزيع طبيعى"
+msgstr "تقشير"
 
 #: ../share/filters/filters.svg.h:80
 msgid "Peeling painting on a wall"
-msgstr ""
+msgstr "تقشير الدهان عن الجدار"
 
 #: ../share/filters/filters.svg.h:81
 #, fuzzy
 msgid "Gold splatter"
-msgstr "نقل خط الإرشاد\t"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:81
 msgid "Splattered cast metal, with golden highlights"
@@ -916,66 +917,66 @@ msgstr ""
 #: ../share/filters/filters.svg.h:82
 #, fuzzy
 msgid "Gold paste"
-msgstr "نسبة الارتفاع إلى العرض"
+msgstr "معجون مذهّب"
 
 #: ../share/filters/filters.svg.h:82
 msgid "Fat pasted cast metal, with golden highlights"
-msgstr ""
+msgstr "معجون معدني سميك، مع لمعة ذهبية"
 
 #: ../share/filters/filters.svg.h:83
 msgid "Crumpled plastic"
-msgstr ""
+msgstr "بلاستيك مجّعد"
 
 #: ../share/filters/filters.svg.h:83
 msgid "Crumpled matte plastic, with melted edge"
-msgstr ""
+msgstr "بلاستيك مجّعد باهت، مع أطراف ذائبة"
 
 #: ../share/filters/filters.svg.h:84
 msgid "Enamel jewelry"
-msgstr ""
+msgstr "مجوهرات مزخرفة"
 
 #: ../share/filters/filters.svg.h:84
 msgid "Slightly cracked enameled texture"
-msgstr ""
+msgstr "كساﺀ مزخرف مشقق قليلا"
 
 #: ../share/filters/filters.svg.h:85
 #, fuzzy
 msgid "Rough paper"
-msgstr "نمط العرض التوضيحي"
+msgstr "ورق سميك"
 
 #: ../share/filters/filters.svg.h:85
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
-msgstr ""
+msgstr "تلوين مائي يمكن استعماله على الأجسام والصور"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Rough and glossy"
-msgstr ""
+msgstr "سميك ولامع"
 
 #: ../share/filters/filters.svg.h:86
 msgid ""
 "Crumpled glossy paper effect which can be used for pictures as for objects"
-msgstr ""
+msgstr "ورق لامع مجّعد يمكن استعماله للأجسام والصور"
 
 #: ../share/filters/filters.svg.h:87
 #, fuzzy
 msgid "In and Out"
-msgstr "بدون تعداد"
+msgstr "داخل وخارج"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Inner colorized shadow, outer black shadow"
-msgstr ""
+msgstr "ظلّ داخلي ملوّن، وخارجي أسود"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Air spray"
-msgstr ""
+msgstr "تلوين بالرذاذ"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Air Spray; adjust the Displacement Map amount"
-msgstr ""
+msgstr "تلوين بالرذاذ؛ يمكين تعديل مقدار خريطة النتوﺀ"
 
 #: ../share/filters/filters.svg.h:89
 msgid "Warm inside"
-msgstr ""
+msgstr "داخل دافئ"
 
 #: ../share/filters/filters.svg.h:89
 msgid "Blurred colorized contour, filled inside"
@@ -988,11 +989,11 @@ msgstr "خط تفصيلي"
 
 #: ../share/filters/filters.svg.h:90
 msgid "Blurred colorized contour, empty inside"
-msgstr ""
+msgstr "مخطط مغبّش ملوّن، فارغ من الداخل"
 
 #: ../share/filters/filters.svg.h:91
 msgid "Electronic microscopy"
-msgstr ""
+msgstr "مجهر الكتروني"
 
 #: ../share/filters/filters.svg.h:91
 msgid ""
@@ -1002,11 +1003,11 @@ msgstr ""
 #: ../share/filters/filters.svg.h:92
 #, fuzzy
 msgid "Tartan"
-msgstr "الهدف"
+msgstr "قماص صوفي"
 
 #: ../share/filters/filters.svg.h:92
 msgid "Checkered tartan pattern"
-msgstr ""
+msgstr "نمط لوح الشطرنج"
 
 #: ../share/filters/filters.svg.h:93
 #, fuzzy
@@ -1020,11 +1021,11 @@ msgstr ""
 #: ../share/filters/filters.svg.h:94
 #, fuzzy
 msgid "Outline"
-msgstr "خُطَّة ، رسم تخطيطي"
+msgstr "مخطط"
 
 #: ../share/filters/filters.svg.h:94
 msgid "Draws an outline around"
-msgstr ""
+msgstr "رسم مخطط حول الجسم"
 
 #: ../share/filters/filters.svg.h:95
 #, fuzzy
@@ -1033,47 +1034,47 @@ msgstr "خُطَّة ، رسم تخطيطي"
 
 #: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
-msgstr ""
+msgstr "رسم خط ناعم داخل التلوين"
 
 #: ../share/filters/filters.svg.h:96
 #, fuzzy
 msgid "Fancy blur"
-msgstr "إدارة التغيير"
+msgstr "غشاوة مميزة"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
-msgstr ""
+msgstr "مخطط ناعم ملوّن يسمح بتعديل قوّة اللون"
 
 #: ../share/filters/filters.svg.h:97
 #, fuzzy
 msgid "Glow"
-msgstr "مخيِّر ألوان"
+msgstr "توّهج"
 
 #: ../share/filters/filters.svg.h:97
 msgid "Glow of object's own color at the edges"
-msgstr ""
+msgstr "توّهج بلون الجسم الذاتي عند الأطراف"
 
 #: ../share/filters/filters.svg.h:98
 #, fuzzy
 msgid "Ghost outline"
-msgstr "خط تفصيلي"
+msgstr "مخطط شبحي"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Adds a glowing blur and removes the shape"
-msgstr ""
+msgstr "إضافة غشاوة وإزالة الشكل"
 
 #: ../share/filters/filters.svg.h:99
 #, fuzzy
 msgid "Color emboss"
-msgstr "ألوان"
+msgstr "نتوﺀ ملوّن"
 
 #: ../share/filters/filters.svg.h:99
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
-msgstr ""
+msgstr "تأثير النتوﺀ الطبيعي أو الملون مع قيمة للبعد الثلاثي"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Soft bump"
-msgstr ""
+msgstr "نتوﺀ ناعم"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Convolution bump; with a blur, it can give nice embossing effects"
@@ -1082,57 +1083,57 @@ msgstr ""
 #: ../share/filters/filters.svg.h:101
 #: ../src/extension/internal/bitmap/solarize.cpp:36
 msgid "Solarize"
-msgstr ""
+msgstr "تشميس"
 
 #: ../share/filters/filters.svg.h:101
 msgid "Classical photographic solarization effect"
-msgstr ""
+msgstr "تشميس كلاسيكي للصورة"
 
 #: ../share/filters/filters.svg.h:102
 #, fuzzy
 msgid "Moonarize"
-msgstr "تلوين"
+msgstr "تقمير"
 
 #: ../share/filters/filters.svg.h:102
 msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
-msgstr ""
+msgstr "تأثير بين عكس الألوان والتشميس يحافظ عادة على ضوﺀ السماﺀ والماﺀ"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Soft focus lens"
-msgstr ""
+msgstr "تركيز العدسة الناعم"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Glowing image content without blurring it"
-msgstr ""
+msgstr "توّهج محتوى الصورة دون تغبيشها"
 
 #: ../share/filters/filters.svg.h:104
 msgid "Stained glass"
-msgstr ""
+msgstr "زجاج ملوّن"
 
 #: ../share/filters/filters.svg.h:104
 #, fuzzy
 msgid "Illuminated stained glass effect"
-msgstr "مكسورة"
+msgstr "إضاﺀة الزجاج الملوّن"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Dark glass"
-msgstr ""
+msgstr "زجاج قاتم"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Illuminated glass effect with light coming from beneath"
-msgstr ""
+msgstr "زجاج مع الضوﺀ القادم عبره"
 
 #: ../share/filters/filters.svg.h:106
 msgid "HSL Bumps, alpha"
-msgstr ""
+msgstr "نتوﺀ مع شفافية"
 
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
 #: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:169
 #: ../share/filters/filters.svg.h:170
 msgid "Masking tools"
-msgstr ""
+msgstr "أدوات الأقنعة"
 
 #: ../share/filters/filters.svg.h:106
 msgid ""
@@ -1167,7 +1168,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:110
 #, fuzzy
 msgid "Feather"
-msgstr "متر"
+msgstr "تغبيش الأطراف"
 
 #: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
@@ -1176,20 +1177,20 @@ msgstr ""
 #: ../share/filters/filters.svg.h:111
 #, fuzzy
 msgid "Blur content"
-msgstr "نمط العرض التوضيحي"
+msgstr "محتوى مغبّش"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
-msgstr ""
+msgstr "غشاوة محتوِى الأجسام، مع المحافظة على الإطار الحدودي"
 
 #: ../share/filters/filters.svg.h:112
 #, fuzzy
 msgid "Specular light"
-msgstr "مخيِّر ألوان"
+msgstr "لمعان الضوﺀ"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Basic specular bevel to use for building textures"
-msgstr ""
+msgstr "زاوية اللمعان للإستعمال عند بناﺀ الكساﺀ"
 
 #: ../share/filters/filters.svg.h:113
 #, fuzzy
@@ -1198,7 +1199,7 @@ msgstr "نمط العرض التوضيحي"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Roughen all inside shapes"
-msgstr ""
+msgstr "تقوية كل الأشكال الداخلية"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Evanescent"
@@ -1208,55 +1209,55 @@ msgstr ""
 msgid ""
 "Blur the contents of objects, preserving the outline and adding progressive "
 "transparency at edges"
-msgstr ""
+msgstr "غشاوة محتوى الأجسام مع المحافظة على الإطار العام وإضافة شفافية متدرجة عند الأطراف"
 
 #: ../share/filters/filters.svg.h:115
 msgid "Chalk and sponge"
-msgstr ""
+msgstr "طبشور وإسفنج"
 
 #: ../share/filters/filters.svg.h:115
 msgid "Low turbulence gives sponge look and high turbulence chalk"
-msgstr ""
+msgstr "إضطراب خفيف يوحي بمظهر اسفنجي، الإضطراب العالي يوحي بالطبشور"
 
 #: ../share/filters/filters.svg.h:116
 #, fuzzy
 msgid "People"
-msgstr "إستبدال"
+msgstr "أفراد"
 
 #: ../share/filters/filters.svg.h:116
 msgid "Colorized blotches, like a crowd of people"
-msgstr ""
+msgstr "لطخات ملونة، كحشد أشخاص "
 
 #: ../share/filters/filters.svg.h:117
 #, fuzzy
 msgid "Scotland"
-msgstr "الميل"
+msgstr "سكوتلاندا"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Colorized mountain tops out of the fog"
-msgstr ""
+msgstr "قمم جبال ملوّنة فوق الضباب"
 
 #: ../share/filters/filters.svg.h:118
 #, fuzzy
 msgid "Noise transparency"
-msgstr "شفّاف"
+msgstr "شفّافية مع ضجيج"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Basic noise transparency texture"
-msgstr ""
+msgstr "ضجيج عادي لكساﺀ الشفافية"
 
 #: ../share/filters/filters.svg.h:119
 #, fuzzy
 msgid "Noise fill"
-msgstr "بدون تعبئة"
+msgstr "تعبئة الضجيج"
 
 #: ../share/filters/filters.svg.h:119
 msgid "Basic noise fill texture; adjust color in Flood"
-msgstr ""
+msgstr "كساﺀ "
 
 #: ../share/filters/filters.svg.h:120
 msgid "Garden of Delights"
-msgstr ""
+msgstr "جنان البهجة"
 
 #: ../share/filters/filters.svg.h:120
 msgid ""
@@ -1266,11 +1267,11 @@ msgstr ""
 #: ../share/filters/filters.svg.h:121
 #, fuzzy
 msgid "Diffuse light"
-msgstr "مخيِّر ألوان"
+msgstr "نشر الضوﺀ"
 
 #: ../share/filters/filters.svg.h:121
 msgid "Basic diffuse bevel to use for building textures"
-msgstr ""
+msgstr "نشر أساسي للضوﺀ لبناﺀ الكساﺀ"
 
 #: ../share/filters/filters.svg.h:122
 #, fuzzy
@@ -1293,19 +1294,19 @@ msgstr ""
 #: ../share/filters/filters.svg.h:124
 #, fuzzy
 msgid "Dark Emboss"
-msgstr "إنقش"
+msgstr "نتوﺀ قاتم"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
-msgstr ""
+msgstr "تأثير النتوﺀ: إيحاﺀ ثالثي الأبعاد حيث يبدل الأبيض بالأسود"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
-msgstr ""
+msgstr "تغبيش بسيط"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
-msgstr ""
+msgstr "غشاوة بسيطة، تماما كتلك الموجودة في قسم الملﺀ والريشة"
 
 #: ../share/filters/filters.svg.h:126
 msgid "HSL Bubbles, diffuse"
@@ -1320,13 +1321,13 @@ msgstr ""
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 #, fuzzy
 msgid "Emboss"
-msgstr "إنقش"
+msgstr "نتوﺀ"
 
 #: ../share/filters/filters.svg.h:127
 msgid ""
 "Emboss effect : Colors of the original images are preserved or modified by "
 "Blend"
-msgstr ""
+msgstr "تأثير النتوﺀ: ألوان الصورة الأصلية يُحافظ عليها أو تُعدّل بالخلط"
 
 #: ../share/filters/filters.svg.h:128
 msgid "Blotting paper"
@@ -1339,11 +1340,11 @@ msgstr ""
 #: ../share/filters/filters.svg.h:129
 #, fuzzy
 msgid "Wax print"
-msgstr "ملقم طباعة"
+msgstr "مطبوعة شمعية"
 
 #: ../share/filters/filters.svg.h:129
 msgid "Wax print on tissue texture"
-msgstr ""
+msgstr "مطبوعة شمعية على كساﺀ قماش"
 
 #: ../share/filters/filters.svg.h:130
 msgid "Inkblot"
@@ -1356,16 +1357,16 @@ msgstr ""
 #: ../share/filters/filters.svg.h:131
 #, fuzzy
 msgid "Burnt edges"
-msgstr "تنظيف مربع البحث"
+msgstr "أطراف محروقة"
 
 #: ../share/filters/filters.svg.h:131
 msgid "Burnt paper edges texture"
-msgstr ""
+msgstr "كساﺀ ورق ذو أطراف محروقة"
 
 #: ../share/filters/filters.svg.h:132
 #, fuzzy
 msgid "Color outline"
-msgstr "مخيِّر ألوان"
+msgstr "مخطط ألوان"
 
 #: ../share/filters/filters.svg.h:132
 msgid "A colorizable outline with adjustable width and blur"
@@ -1373,7 +1374,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:133
 msgid "Liquid"
-msgstr ""
+msgstr "سائل"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Colorizable filling with liquid transparency"
@@ -1382,11 +1383,11 @@ msgstr ""
 #: ../share/filters/filters.svg.h:134
 #, fuzzy
 msgid "Watercolor"
-msgstr "مخيِّر ألوان"
+msgstr "ألوان مائية"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Cloudy watercolor effect"
-msgstr ""
+msgstr "تأثير غيوم مع ألوان مائية"
 
 #: ../share/filters/filters.svg.h:135
 #, fuzzy
@@ -1401,11 +1402,11 @@ msgstr ""
 #: ../share/filters/filters.svg.h:136
 #, fuzzy
 msgid "Ink paint"
-msgstr "بدون تعداد"
+msgstr "تلوين حبر"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Ink paint on paper with some turbulent color shift"
-msgstr ""
+msgstr "تلوين حبر على ورق مع بعض الإضطراب في الألوان"
 
 #: ../share/filters/filters.svg.h:137
 msgid "Tinted rainbow"
@@ -1418,36 +1419,36 @@ msgstr ""
 #: ../share/filters/filters.svg.h:138
 #, fuzzy
 msgid "Melted rainbow"
-msgstr "مكسورة"
+msgstr "قوس قزح ذائب"
 
 #: ../share/filters/filters.svg.h:138
 msgid "Smooth rainbow colors slightly melted along the edges"
-msgstr ""
+msgstr "ألوان قوس القزح مع ذوبان بسيط عند الأطراف"
 
 #: ../share/filters/filters.svg.h:139
 #, fuzzy
 msgid "Darken edges"
-msgstr "ظلّم"
+msgstr "أطراف قاتمة"
 
 #: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 msgid "Enhance outline and glows inside and outside"
-msgstr ""
+msgstr "تحسين المخطط وتوهّج في الداخل والخارج"
 
 #: ../share/filters/filters.svg.h:140
 msgid "Dark and glow"
-msgstr ""
+msgstr "قاتم ومتوّهج"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Flex metal"
-msgstr ""
+msgstr "معدن ليّن"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Bright, polished uneven metal casting, colorizable"
-msgstr ""
+msgstr "معدن مصقول وفاتح، ملوّن"
 
 #: ../share/filters/filters.svg.h:142
 msgid "Comics draft"
-msgstr ""
+msgstr "خرطوش المجلّات المصوّرة"
 
 #: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:143
 #: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
@@ -1457,24 +1458,24 @@ msgstr ""
 #: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:153
 #: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:161
 msgid "Non realistic shaders"
-msgstr ""
+msgstr "مؤثرات غير واقعية"
 
 #: ../share/filters/filters.svg.h:142
 msgid "Draft painted cartoon shading with a glassy look"
-msgstr ""
+msgstr "خرطوش تلوين الرسوم الكرتونية مع شكل لامع"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Comics fading"
-msgstr ""
+msgstr "مجلّات مصوّرة متلاشية"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Cartoon paint style with some fading at the edges"
-msgstr ""
+msgstr "نمط تلوين الرسم الكرتوني مع بعض التلاشي عند الأطراف"
 
 #: ../share/filters/filters.svg.h:144
 #, fuzzy
 msgid "Smooth shader NR"
-msgstr "النّعومة"
+msgstr "مؤثر التنعيم"
 
 #: ../share/filters/filters.svg.h:144
 msgid "Smooth shading with a graphite pencil grey"
@@ -2899,37 +2900,37 @@ msgstr ""
 #: ../src/dialogs/find.cpp:702 ../src/ui/dialog/find.cpp:64
 #, fuzzy
 msgid "Search in s_election"
-msgstr "بحث ضمن الشرح (Ctrl+F)"
+msgstr "بحث ضمن الإختيار (Ctrl+F)"
 
 #: ../src/dialogs/find.cpp:706 ../src/ui/dialog/find.cpp:64
 msgid "Limit search to the current selection"
-msgstr ""
+msgstr "البحث ضمن المجموعة المختارة حاليا"
 
 #: ../src/dialogs/find.cpp:711 ../src/ui/dialog/find.cpp:65
 #, fuzzy
 msgid "Search in current _layer"
-msgstr "بحث ضمن الشرح (Ctrl+F)"
+msgstr "بحث ضمن الطبقة الحالية (Ctrl+F)"
 
 #: ../src/dialogs/find.cpp:715 ../src/ui/dialog/find.cpp:65
 msgid "Limit search to the current layer"
-msgstr ""
+msgstr "البحث ضمن الطبقة الحالية"
 
 #: ../src/dialogs/find.cpp:720 ../src/ui/dialog/find.cpp:66
 #, fuzzy
 msgid "Include _hidden"
-msgstr "ملف مخفى"
+msgstr "الأخذ بالأجسام المخفية"
 
 #: ../src/dialogs/find.cpp:724 ../src/ui/dialog/find.cpp:66
 msgid "Include hidden objects in search"
-msgstr ""
+msgstr "إحتساب الأجسام المخفية عند البحث"
 
 #: ../src/dialogs/find.cpp:729 ../src/ui/dialog/find.cpp:67
 msgid "Include l_ocked"
-msgstr ""
+msgstr "الأخذ بالأجسام المقفلة"
 
 #: ../src/dialogs/find.cpp:733 ../src/ui/dialog/find.cpp:67
 msgid "Include locked objects in search"
-msgstr ""
+msgstr "إحتساب الأجسام المقفلة عند البحث"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/find.cpp:744 ../src/ui/dialog/debug.cpp:75
@@ -2957,12 +2958,12 @@ msgstr ""
 #: ../src/dialogs/item-properties.cpp:443
 #: ../src/dialogs/item-properties.cpp:450
 msgid "_Id"
-msgstr "الرقم المعرف"
+msgstr "الهوية"
 
 #: ../src/dialogs/item-properties.cpp:129
 msgid ""
 "The id= attribute (only letters, digits, and the characters .-_: allowed)"
-msgstr ""
+msgstr "الهوية= صفة (أحرف فقط وأرقام والأحرف .-_: مقبولة"
 
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:143 ../src/verbs.cpp:2486
@@ -2998,78 +2999,78 @@ msgstr "إخفاء"
 
 #: ../src/dialogs/item-properties.cpp:223
 msgid "Check to make the object invisible"
-msgstr ""
+msgstr "إختيار لإخفاﺀ الجسم"
 
 #. Lock
 #. TRANSLATORS: "Lock" is a verb here
 #: ../src/dialogs/item-properties.cpp:232
 msgid "L_ock"
-msgstr "إقفال"
+msgstr "قفل"
 
 #: ../src/dialogs/item-properties.cpp:233
 msgid "Check to make the object insensitive (not selectable by mouse)"
-msgstr ""
+msgstr "إختيار لجعل الجسم غير حسّاس (لا يمكن اختياره بالفأرة)"
 
 #. Create the frame for interactivity options
 #: ../src/dialogs/item-properties.cpp:243
 #, fuzzy
 msgid "_Interactivity"
-msgstr "التقاطع"
+msgstr "التفاعل"
 
 #: ../src/dialogs/item-properties.cpp:317
 #: ../src/dialogs/item-properties.cpp:324
 msgid "Ref"
-msgstr ""
+msgstr "مرجع"
 
 #: ../src/dialogs/item-properties.cpp:402
 #, fuzzy
 msgid "Lock object"
-msgstr "هدف واسم"
+msgstr "إقفال الجسم"
 
 #: ../src/dialogs/item-properties.cpp:402
 #, fuzzy
 msgid "Unlock object"
-msgstr "هدف واسم"
+msgstr "فتح قفل الجسم"
 
 #: ../src/dialogs/item-properties.cpp:421
 #, fuzzy
 msgid "Hide object"
-msgstr "هدف واسم"
+msgstr "إخفاﺀ الجسم"
 
 #: ../src/dialogs/item-properties.cpp:421
 #, fuzzy
 msgid "Unhide object"
-msgstr "هدف واسم"
+msgstr "إظهار الجسم"
 
 #: ../src/dialogs/item-properties.cpp:445
 #, fuzzy
 msgid "Id invalid! "
-msgstr "معرف التطبيق"
+msgstr "الهوية غير مقبولة"
 
 #: ../src/dialogs/item-properties.cpp:447
 #, fuzzy
 msgid "Id exists! "
-msgstr "معرف التطبيق"
+msgstr "الهوية موجودة"
 
 #: ../src/dialogs/item-properties.cpp:454
 #, fuzzy
 msgid "Set object ID"
-msgstr "برمجة موجة للكائنات"
+msgstr "تحديد هوية الجسم"
 
 #: ../src/dialogs/item-properties.cpp:469
 #, fuzzy
 msgid "Set object label"
-msgstr "برمجة موجة للكائنات"
+msgstr "تحديد ملصق الجسم"
 
 #: ../src/dialogs/item-properties.cpp:477
 #, fuzzy
 msgid "Set object title"
-msgstr "برمجة موجة للكائنات"
+msgstr "تحديد عنوان الجسم"
 
 #: ../src/dialogs/item-properties.cpp:487
 #, fuzzy
 msgid "Set object description"
-msgstr "برمجة موجة للكائنات"
+msgstr "تحديد وصف الجسم"
 
 #: ../src/dialogs/object-attributes.cpp:32
 msgid "Href:"
@@ -3104,7 +3105,7 @@ msgstr "العنوان:"
 #: ../src/dialogs/object-attributes.cpp:43
 #: ../share/extensions/polyhedron_3d.inx.h:37
 msgid "Show:"
-msgstr "العرض:"
+msgstr "عرض:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
 #: ../src/dialogs/object-attributes.cpp:45
@@ -3148,38 +3149,38 @@ msgstr "خصائص ، مواصفات"
 #: ../src/dialogs/spellcheck.cpp:444
 #, c-format
 msgid "<b>Finished</b>, <b>%d</b> words added to dictionary"
-msgstr ""
+msgstr "<b>انتهاﺀ</b>, مع <b>%d</b> كلمة مضافة إلى القاموس"
 
 #: ../src/dialogs/spellcheck.cpp:446
 #, c-format
 msgid "<b>Finished</b>, nothing suspicious found"
-msgstr ""
+msgstr "<b>إنتهاﺀ</b>, من دون شيﺀ يذكر"
 
 #: ../src/dialogs/spellcheck.cpp:559
 #, c-format
 msgid "Not in dictionary (%s): <b>%s</b>"
-msgstr ""
+msgstr "غير موجود في القاموس (%s): <b>%s</b>"
 
 #: ../src/dialogs/spellcheck.cpp:711
 msgid "<i>Checking...</i>"
-msgstr ""
+msgstr "<i>فحص...</i>"
 
 #: ../src/dialogs/spellcheck.cpp:781
 msgid "Fix spelling"
-msgstr ""
+msgstr "تصحيح الإملاﺀ"
 
 #: ../src/dialogs/spellcheck.cpp:956
 #, fuzzy
 msgid "Suggestions:"
-msgstr "الدقة:"
+msgstr "إقتراحات"
 
 #: ../src/dialogs/spellcheck.cpp:968
 msgid "_Accept"
-msgstr ""
+msgstr "قبول"
 
 #: ../src/dialogs/spellcheck.cpp:968
 msgid "Accept the chosen suggestion"
-msgstr ""
+msgstr "قبول الإقتراح المختار"
 
 #: ../src/dialogs/spellcheck.cpp:970
 #, fuzzy
