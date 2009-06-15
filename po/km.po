@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-12 16:01+0700\n"
+"PO-Revision-Date: 2009-06-15 16:44+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -853,25 +853,22 @@ msgid "Opens a smooth hole inside the shape"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:77
-#, fuzzy
 msgid "Black hole"
-msgstr "ខ្វាច់​ពណ៌​ខ្មៅ​"
+msgstr "រន្ធ​ពណ៌​ខ្មៅ​"
 
 #: ../share/filters/filters.svg.h:77
 msgid "Creates a black light inside and outside"
-msgstr ""
+msgstr "បង្កើត​ពន្លឺ​ពណ៌​ខ្មៅ​នៅ​ខាង​ក្នុង និង​ខាងក្រៅ"
 
 #: ../share/filters/filters.svg.h:78
-#, fuzzy
 msgid "Smooth outline"
-msgstr "គ្រោង​ផ្លូវ ៖"
+msgstr "គ្រោង​រលូន"
 
 #: ../share/filters/filters.svg.h:78
 msgid "Outlining the lines and smoothing their crossings"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:79
-#, fuzzy
 msgid "Cubes"
 msgstr "គូប"
 
@@ -923,9 +920,8 @@ msgid "Slightly cracked enameled texture"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:85
-#, fuzzy
 msgid "Rough paper"
-msgstr "ធ្វើ​ឲ្យ​គ្រើម"
+msgstr "ក្រដាស​គ្រើម"
 
 #: ../share/filters/filters.svg.h:85
 msgid "Aquarelle paper effect which can be used for pictures as for objects"
@@ -933,20 +929,19 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:86
 msgid "Rough and glossy"
-msgstr ""
+msgstr "គ្រើម និង​រលោង"
 
 #: ../share/filters/filters.svg.h:86
 msgid "Crumpled glossy paper effect which can be used for pictures as for objects"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:87
-#, fuzzy
 msgid "In and Out"
-msgstr "គ្មាន​គំនូរ​"
+msgstr "ក្នុង និង​ក្រៅ"
 
 #: ../share/filters/filters.svg.h:87
 msgid "Inner colorized shadow, outer black shadow"
-msgstr ""
+msgstr "ស្រមោល​ពណ៌​ខាង​ក្នុង និង​ស្រមោល​ខ្មៅ​ខាងក្រៅ"
 
 #: ../share/filters/filters.svg.h:88
 msgid "Air spray"
@@ -991,72 +986,64 @@ msgid "Checkered tartan pattern"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:93
-#, fuzzy
 msgid "Invert hue"
-msgstr "ដាក់​បញ្ច្រាស"
+msgstr "ដាក់​ពណ៌​លាំៗ​បញ្ច្រាស"
 
 #: ../share/filters/filters.svg.h:93
 msgid "Invert hue, or rotate it"
-msgstr ""
+msgstr "ដាក់​ពណ៌​លាំៗ​បញ្ច្រាស ឬ​បង្វិល​វា"
 
 #: ../share/filters/filters.svg.h:94
-#, fuzzy
 msgid "Outline"
 msgstr "គ្រោង​"
 
 #: ../share/filters/filters.svg.h:94
-#, fuzzy
 msgid "Draws an outline around"
-msgstr "គូរ​ផ្លូវ​ជា​ក្រឡា​ចក្រត្រង្គ"
+msgstr "គូរ​គ្រោង"
 
 #: ../share/filters/filters.svg.h:95
-#, fuzzy
 msgid "Outline, double"
-msgstr "គ្រោង​"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:95
 msgid "Draws a smooth line inside colorized with the color it overlays"
-msgstr ""
+msgstr "គូស​បន្ទាត់​រលោង​មួយ​ដោយ​ដាក់​ពណ៌​ដូច​នឹង​ពណ៌​ដែល​វា​ត្រួត​ពី​លើ"
 
 #: ../share/filters/filters.svg.h:96
-#, fuzzy
 msgid "Fancy blur"
-msgstr "ផ្លាស់ប្ដូរ​ពណ៌​ព្រិលៗ"
+msgstr "ព្រឹល​ស្អាត"
 
 #: ../share/filters/filters.svg.h:96
 msgid "Smooth colorized contour which allows desaturation and hue rotation"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:97
-#, fuzzy
 msgid "Glow"
-msgstr "ទម្លាក់​ពណ៌​"
+msgstr "បញ្ចេញ​ពន្លឺ​"
 
 #: ../share/filters/filters.svg.h:97
 msgid "Glow of object's own color at the edges"
-msgstr ""
+msgstr "បញ្ចេញ​ពន្លឺ​ពណ៌​របស់​វត្ថុ​នៅ​គែម"
 
 #: ../share/filters/filters.svg.h:98
-#, fuzzy
 msgid "Ghost outline"
-msgstr "គ្រោង​ប្រអប់​"
+msgstr "គ្រោង Ghost"
 
 #: ../share/filters/filters.svg.h:98
 msgid "Adds a glowing blur and removes the shape"
-msgstr ""
+msgstr "បន្ថែម​ភាព​ព្រឹល​មាន​ពន្លឺ និង​យក​រូបរាង​ចេញ"
 
 #: ../share/filters/filters.svg.h:99
-#, fuzzy
 msgid "Color emboss"
-msgstr "​ពណ៌"
+msgstr "ពណ៌​ផុស"
 
 #: ../share/filters/filters.svg.h:99
 msgid "Classic or colorized emboss effect: grayscale, color and 3D relief"
-msgstr ""
+msgstr "បែបផែន​ផុស​ក្លាស៊ីក ឬ​ដាក់​ពណ៌ ៖ មាត្រដ្ឋាន​ប្រផេះ ពណ៌ និង​វត្ថុ​ត្រីមាត្រ​អណ្ដែត"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Soft bump"
-msgstr ""
+msgstr "ពកៗ​ស្រទន់"
 
 #: ../share/filters/filters.svg.h:100
 msgid "Convolution bump; with a blur, it can give nice embossing effects"
@@ -1069,31 +1056,29 @@ msgstr "ធ្វើដូច​ពន្លឺ​ព្រះអាទិត្
 
 #: ../share/filters/filters.svg.h:101
 msgid "Classical photographic solarization effect"
-msgstr ""
+msgstr "បែបផែន​ពន្លឺ​ព្រះ​អាទិត្យ​រូបថត​ក្លាស៊ិក"
 
 #: ../share/filters/filters.svg.h:102
-#, fuzzy
 msgid "Moonarize"
-msgstr "ដាក់​ពណ៌"
+msgstr "ពន្លឺ​ព្រះ​ច័ន្ទ"
 
 #: ../share/filters/filters.svg.h:102
 msgid ""
 "An effect between solarize and invert which often preserves sky and water "
 "lights"
-msgstr ""
+msgstr "បែបផែន​រវាង​ពន្លឺ​ព្រះ​អាទិត្យ និង​បញ្ច្រាស ដែល​​រក្សានូវ​ពន្លឺ​មេឃ និង​ទឹក"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Soft focus lens"
-msgstr ""
+msgstr "កញ្ចក់​កែវ​ផ្ដោត​ទន់"
 
 #: ../share/filters/filters.svg.h:103
 msgid "Glowing image content without blurring it"
-msgstr ""
+msgstr "មាតិកា​រូបភាព​ភ្លឺ​ដោយ​មិន​ធ្វើ​ឲ្យ​វា​ព្រឹល"
 
 #: ../share/filters/filters.svg.h:104
-#, fuzzy
 msgid "Stained glass"
-msgstr "កែវ​មាន​គែម"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:104
 #, fuzzy
@@ -1102,7 +1087,7 @@ msgstr "មុំ​បំភ្លឺ"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Dark glass"
-msgstr ""
+msgstr "កែវ​ខ្មៅ"
 
 #: ../share/filters/filters.svg.h:105
 msgid "Illuminated glass effect with light coming from beneath"
@@ -1116,7 +1101,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:169
 #: ../share/filters/filters.svg.h:170
 msgid "Masking tools"
-msgstr ""
+msgstr "ឧបករណ៍​របាំង"
 
 #: ../share/filters/filters.svg.h:106
 msgid ""
@@ -1126,12 +1111,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:107
 msgid "HSL Bubbles, alpha"
-msgstr ""
+msgstr "ពពុះ HSL អាល់ហ្វា"
 
 #: ../share/filters/filters.svg.h:108
-#, fuzzy
 msgid "Smooth edges"
-msgstr "ភាព​រលោង"
+msgstr "គែម​​រលោង"
 
 #: ../share/filters/filters.svg.h:108
 msgid "Smooth the outside of shapes and pictures without altering their contents"
@@ -1147,40 +1131,36 @@ msgid "Displace the outside of shapes and pictures without altering their conten
 msgstr ""
 
 #: ../share/filters/filters.svg.h:110
-#, fuzzy
 msgid "Feather"
-msgstr "ម៉ែត្រ"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:110
 msgid "Blurred mask on the edge without altering the contents"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:111
-#, fuzzy
 msgid "Blur content"
-msgstr "របៀប​លាយ​"
+msgstr "ធ្វើ​ឲ្យ​មាតិកា​ព្រឹល"
 
 #: ../share/filters/filters.svg.h:111
 msgid "Blur the contents of objects, preserving the outline"
-msgstr ""
+msgstr "ធ្វើ​ឲ្យ​មាតិកា​របស់​វត្ថុ​ព្រឹល ដែល​រក្សាទុក​នូវ​គ្រោង"
 
 #: ../share/filters/filters.svg.h:112
-#, fuzzy
 msgid "Specular light"
-msgstr "ឆ្លុះពន្លឺ"
+msgstr "ស្ទង់​ពន្លឺ"
 
 #: ../share/filters/filters.svg.h:112
 msgid "Basic specular bevel to use for building textures"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:113
-#, fuzzy
 msgid "Roughen inside"
-msgstr "របៀប​រដិបរដុប​"
+msgstr "ធ្វើ​ឲ្យ​គ្រើម​នៅ​ខាង​ក្នុង"
 
 #: ../share/filters/filters.svg.h:113
 msgid "Roughen all inside shapes"
-msgstr ""
+msgstr "ធ្វើ​ឥ្យ​រូបរាង​ខាង​ក្នុង​ទាំងអស់​គ្រើម"
 
 #: ../share/filters/filters.svg.h:114
 msgid "Evanescent"
@@ -1201,9 +1181,8 @@ msgid "Low turbulence gives sponge look and high turbulence chalk"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:116
-#, fuzzy
 msgid "People"
-msgstr "ជំនួស"
+msgstr "មនុស្ស"
 
 #: ../share/filters/filters.svg.h:116
 msgid "Colorized blotches, like a crowd of people"
@@ -1211,25 +1190,23 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:117
 msgid "Scotland"
-msgstr ""
+msgstr "ស្កុតលែន"
 
 #: ../share/filters/filters.svg.h:117
 msgid "Colorized mountain tops out of the fog"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:118
-#, fuzzy
 msgid "Noise transparency"
-msgstr "0 (ថ្លា)"
+msgstr "ភាព​ថ្លា​មិន​ច្បាស់"
 
 #: ../share/filters/filters.svg.h:118
 msgid "Basic noise transparency texture"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:119
-#, fuzzy
 msgid "Noise fill"
-msgstr "មិន​បំពេញ​"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:119
 msgid "Basic noise fill texture; adjust color in Flood"
@@ -1270,17 +1247,16 @@ msgid "Same than HSL bumps but with a diffuse reflexion instead of a specular on
 msgstr ""
 
 #: ../share/filters/filters.svg.h:124
-#, fuzzy
 msgid "Dark Emboss"
-msgstr "ក្រឡោត"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
-msgstr ""
+msgstr "បែបផែន​ផុស ៖ ត្រីមាត្រ​អណ្ដែត គឺ​ត្រូវបាន​ជំនួស​ដោយ​ពណ៌​ខ្មៅ"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
-msgstr ""
+msgstr "ព្រឹល​គំរូ"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple Gaussian blur, same as the blur slider in Fill and Stroke dialog"
@@ -1297,7 +1273,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:127
 #: ../src/extension/internal/bitmap/emboss.cpp:37
 msgid "Emboss"
-msgstr "ក្រឡោត"
+msgstr "ផុស"
 
 #: ../share/filters/filters.svg.h:127
 msgid ""
@@ -1331,39 +1307,36 @@ msgid "Inkblot on tissue or rough paper"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:131
-#, fuzzy
 msgid "Burnt edges"
-msgstr "ព្រំ​ដែន​ប្រអប់"
+msgstr "ឆេះ​គែម"
 
 #: ../share/filters/filters.svg.h:131
 msgid "Burnt paper edges texture"
-msgstr ""
+msgstr "វាយនភាព​គែម​ក្រដាស​ឆេះ"
 
 #: ../share/filters/filters.svg.h:132
-#, fuzzy
 msgid "Color outline"
-msgstr "ពណ៌​របស់​បន្ទាត់​នាំផ្លូវ​"
+msgstr "គ្រោង​ពណ៌"
 
 #: ../share/filters/filters.svg.h:132
 msgid "A colorizable outline with adjustable width and blur"
-msgstr ""
+msgstr "គ្រោង​ដែល​ដាក់​ពណ៌​បាន ដែល​មាន​ទទឹង និង​ភាព​ព្រឹល​ដែល​អាច​លៃតម្រូវបាន"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Liquid"
-msgstr ""
+msgstr "វត្ថុ​រាវ"
 
 #: ../share/filters/filters.svg.h:133
 msgid "Colorizable filling with liquid transparency"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:134
-#, fuzzy
 msgid "Watercolor"
-msgstr "បិទភ្ជាប់​ពណ៌​"
+msgstr "ថ្នាំ​ពណ៌​ទឹក"
 
 #: ../share/filters/filters.svg.h:134
 msgid "Cloudy watercolor effect"
-msgstr ""
+msgstr "បែបផែន​ពពក​ថ្នាំ​ពណ៌​ទឹក"
 
 #: ../share/filters/filters.svg.h:135
 #, fuzzy
@@ -1375,9 +1348,8 @@ msgid "Felt like texture with color turbulence and slightly darker at the edges"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:136
-#, fuzzy
 msgid "Ink paint"
-msgstr "គ្មាន​គំនូរ​"
+msgstr "គំនូរ​ទឹក​ថ្នាំ​ពណ៌​ខ្មៅ"
 
 #: ../share/filters/filters.svg.h:136
 msgid "Ink paint on paper with some turbulent color shift"
@@ -1389,33 +1361,31 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:137
 msgid "Smooth rainbow colors melted along the edges and colorizable"
-msgstr ""
+msgstr "ពណ៌​ឥន្ធនូ​រលោង​ដែល​រលាយ​ចូល​តាម​គែម និង​អាច​ដាក់​ពណ៌​បាន"
 
 #: ../share/filters/filters.svg.h:138
-#, fuzzy
 msgid "Melted rainbow"
-msgstr "មុំ​ខាង​ឆ្វេង​"
+msgstr "ឥន្ធនូ​រលាយ"
 
 #: ../share/filters/filters.svg.h:138
 msgid "Smooth rainbow colors slightly melted along the edges"
-msgstr ""
+msgstr "ឥន្ធនូ​រលោង​ដាក់ពណ៌​យ៉ាង​ស្រាល ដែល​រលាយ​តាម​គែម"
 
 #: ../share/filters/filters.svg.h:139
-#, fuzzy
 msgid "Darken edges"
-msgstr "ធ្វើ​ឲ្យ​ងងឹត"
+msgstr "ធ្វើ​ឲ្យ​គែម​ងងឹត"
 
 #: ../share/filters/filters.svg.h:139 ../share/filters/filters.svg.h:140
 msgid "Enhance outline and glows inside and outside"
-msgstr ""
+msgstr "គ្រោង និង​ពន្លឺ​បន្ថែម​នៅ​ខាងក្នុង និង​ខាងក្រៅ"
 
 #: ../share/filters/filters.svg.h:140
 msgid "Dark and glow"
-msgstr ""
+msgstr "ងងឹត និង​ភ្លឺ"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Flex metal"
-msgstr ""
+msgstr "លោហៈ​បត់បែន"
 
 #: ../share/filters/filters.svg.h:141
 msgid "Bright, polished uneven metal casting, colorizable"
@@ -1437,7 +1407,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:142
 msgid "Draft painted cartoon shading with a glassy look"
-msgstr ""
+msgstr "តុក្កតា​​ដាក់ពណ៌​ព្រាង ដែល​មាន​ស្រមោល​ភ្លឺៗ​ដូច​កែវ"
 
 #: ../share/filters/filters.svg.h:143
 msgid "Comics fading"
@@ -1462,7 +1432,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:145
 msgid "Combination of smooth shading and embossing"
-msgstr ""
+msgstr "ការ​បញ្ចូល​គ្នា​រវាង​ការ​ទម្លាក់​ស្រមោល និង​ផុស"
 
 #: ../share/filters/filters.svg.h:146
 msgid "Smooth shader dark NR"
@@ -1473,9 +1443,8 @@ msgid "Dark version of non realistic smooth shading"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:147
-#, fuzzy
 msgid "Comics"
-msgstr "ផ្សំ"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:147
 #, fuzzy
@@ -1483,18 +1452,16 @@ msgid "Imitation of black and white cartoon shading"
 msgstr "ដាក់​បញ្ច្រាស​តំបន់​ពណ៌​ខ្មៅ និង​ស"
 
 #: ../share/filters/filters.svg.h:148
-#, fuzzy
 msgid "Satin NR"
-msgstr "ចាប់ផ្ដើម"
+msgstr "សាតាំង NR"
 
 #: ../share/filters/filters.svg.h:148
 msgid "Silky close to mother of pearl shading"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:149
-#, fuzzy
 msgid "Frosted glass NR"
-msgstr "កែវ​មាន​គែម"
+msgstr "កែវ​មាន​កំណក NR"
 
 #: ../share/filters/filters.svg.h:149
 msgid "Non realistic frosted glass imitation"
@@ -1510,11 +1477,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:151
 msgid "Aluminium NR"
-msgstr ""
+msgstr "អាលុយមីញ៉ូម NR"
 
 #: ../share/filters/filters.svg.h:151
 msgid "Brushed aluminium shader"
-msgstr ""
+msgstr "ស្រមោល​ទម្លាក់​អាលុយមីញ៉ូម​ដែល​បាន​គូស"
 
 #: ../share/filters/filters.svg.h:152
 msgid "Comics fluid"
@@ -1527,7 +1494,7 @@ msgstr "ធ្វើ​ឲ្យ​ទំព័រ​សម​នឹង​គំ
 
 #: ../share/filters/filters.svg.h:153
 msgid "Chrome NR"
-msgstr ""
+msgstr "ក្រូម NR"
 
 #: ../share/filters/filters.svg.h:153
 msgid "Non realistic chrome shader with strong speculars"
@@ -1535,7 +1502,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:154
 msgid "Chrome dark NR"
-msgstr ""
+msgstr "ក្រូម​ងងឹត NR"
 
 #: ../share/filters/filters.svg.h:154
 msgid "Dark version of chrome shading with a ground reflection simulation"
@@ -1551,32 +1518,29 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:156
 msgid "3D marble"
-msgstr ""
+msgstr "ថ្មម៉ាប​ត្រីមាត្រ"
 
 #: ../share/filters/filters.svg.h:156
 msgid "3D warped marble texture"
-msgstr ""
+msgstr "វាយនភាព​ថ្មម៉ាប​ដែល​ប៉ោង ត្រីមាត្រ"
 
 #: ../share/filters/filters.svg.h:157
-#, fuzzy
 msgid "3D wood"
-msgstr "ប្រអប់​ត្រីមាត្រ​"
+msgstr "ឈើ​ត្រីមាត្រ"
 
 #: ../share/filters/filters.svg.h:157
 msgid "3D warped, fibered wood texture"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:158
-#, fuzzy
 msgid "Mother of pearl"
-msgstr "ទទឹង​ក្រដាស​"
+msgstr "មេ​គុជ​​ខ្យង"
 
 #: ../share/filters/filters.svg.h:158
 msgid "3D warped, iridescent pearly shell texture"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:159
-#, fuzzy
 msgid "Tiger fur"
 msgstr "រោម​ខ្លា​ដំបង"
 
@@ -4512,9 +4476,8 @@ msgstr "បង្កើត​ពី​ផ្លូវ​"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:274
 #: ../share/extensions/ps_input.inx.h:1
-#, fuzzy
 msgid "PostScript"
-msgstr "Postscript"
+msgstr "PostScript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:276
 #: ../src/extension/internal/cairo-ps-out.cpp:313
@@ -4533,15 +4496,13 @@ msgstr "PostScript កម្រិត ២"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:282
 #: ../src/extension/internal/cairo-ps-out.cpp:319
-#, fuzzy
 msgid "Export area is whole canvas"
-msgstr "តំបន់​ដែល​បាន​នាំចេញគឺ​ជា​ផ្ទាំង​ក្រណាត់​ទាំងមូល"
+msgstr "នាំចេញ​ផ្ទៃ គឺ​ផ្ទាំង​កំណាត់​ទាំងមូល"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:283
 #: ../src/extension/internal/cairo-ps-out.cpp:320
-#, fuzzy
 msgid "Export area is the drawing"
-msgstr "តំបន់​ដែល​បាន​នាំចេញគឺ​ជា​ផ្ទាំង​ក្រណាត់​ទាំងមូល"
+msgstr "នាំចេញ​ផ្ទៃ គឺ​ជា​ការ​គូរ"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:284
 #: ../src/extension/internal/cairo-ps-out.cpp:321
@@ -4581,20 +4542,17 @@ msgstr "ឯកសារ PostScript"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:311
 #: ../share/extensions/eps_input.inx.h:2
-#, fuzzy
 msgid "Encapsulated PostScript"
-msgstr "Postscript ​​​ដែល​​បានស្រោប​ខាង​ចុង​"
+msgstr "Postscript ​​​ដែល​មិនបាន​ស្រោប​"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:328
 #: ../share/extensions/eps_input.inx.h:3
-#, fuzzy
 msgid "Encapsulated PostScript (*.eps)"
-msgstr "Postscript ដែល​បាន​ស្រោប(*.eps)"
+msgstr "PostScript ដែល​មិន​បាន​ស្រោប(*.eps)"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:329
-#, fuzzy
 msgid "Encapsulated PostScript File"
-msgstr "ឯកសារ​ Postscript ត្រូវបានស្រោប"
+msgstr "ឯកសារ​ PostScript មិន​ត្រូវបានស្រោប"
 
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:216
 msgid "Restrict to PDF version"
@@ -6515,9 +6473,8 @@ msgid "Boolops"
 msgstr "ឧបករណ៍"
 
 #: ../src/live_effects/effect.cpp:90
-#, fuzzy
 msgid "Circle (by center and radius)"
-msgstr "រង្វង់ (ផ្ចិត + កាំ)"
+msgstr "រង្វង់ (តាម​ផ្ចិត និង​កាំ)"
 
 #: ../src/live_effects/effect.cpp:91
 msgid "Circle by 3 points"
@@ -6533,23 +6490,20 @@ msgid "Lattice Deformation"
 msgstr "ការ​បង្ខូច​ទ្រង់ទ្រាយ​បន្ទះ​ឈើ"
 
 #: ../src/live_effects/effect.cpp:94
-#, fuzzy
 msgid "Line Segment"
 msgstr "ចម្រៀក​បន្ទាត់"
 
 #: ../src/live_effects/effect.cpp:95
 msgid "Mirror symmetry"
-msgstr ""
+msgstr "ស៊ីមេទ្រី​ឆ្លុះ"
 
 #: ../src/live_effects/effect.cpp:97
-#, fuzzy
 msgid "Parallel"
-msgstr "អុហ្វសិត​​ប៉ារ៉ាឡែល​"
+msgstr "ប៉ារ៉ាឡែល​"
 
 #: ../src/live_effects/effect.cpp:98
-#, fuzzy
 msgid "Path length"
-msgstr "ប្រវែង​អតិបរមា"
+msgstr "ប្រវែង​ផ្លូវ"
 
 #: ../src/live_effects/effect.cpp:99
 msgid "Perpendicular bisector"
@@ -6560,9 +6514,8 @@ msgid "Perspective path"
 msgstr "ផ្លូវ​យថាទស្សន៍"
 
 #: ../src/live_effects/effect.cpp:101
-#, fuzzy
 msgid "Rotate copies"
-msgstr "បង្វិល​ថ្នាំង​"
+msgstr "បង្វិល​ច្បាប់​ចម្លង​"
 
 #: ../src/live_effects/effect.cpp:102
 #, fuzzy
@@ -6570,7 +6523,6 @@ msgid "Recursive skeleton"
 msgstr "យក​របាំង​ចេញ​ពី​ជម្រើស"
 
 #: ../src/live_effects/effect.cpp:103
-#, fuzzy
 msgid "Ruler"
 msgstr "បន្ទាត់​"
 
@@ -6579,9 +6531,8 @@ msgid "Tangent to curve"
 msgstr "ប៉ះ​ខ្សែ​កោង"
 
 #: ../src/live_effects/effect.cpp:105
-#, fuzzy
 msgid "Text label"
-msgstr "កំណត់​ស្លាក​វត្ថុ"
+msgstr "ស្លាក​អត្ថបទ"
 
 #. 0.46
 #: ../src/live_effects/effect.cpp:108
@@ -6623,9 +6574,8 @@ msgid "Envelope Deformation"
 msgstr "ការ​បង្ខូច​ទ្រង់ទ្រាយ​ស្រោម​សំបុត្រ"
 
 #: ../src/live_effects/effect.cpp:118
-#, fuzzy
 msgid "Interpolate Sub-Paths"
-msgstr "កែខៃ"
+msgstr "កែខៃ​ផ្លូវ​រង"
 
 #: ../src/live_effects/effect.cpp:119
 msgid "Hatches (rough)"
@@ -6731,27 +6681,24 @@ msgid "Null"
 msgstr ""
 
 #: ../src/live_effects/lpe-boolops.cpp:24
-#, fuzzy
 msgid "Intersect"
 msgstr "ប្រសព្វ"
 
 #: ../src/live_effects/lpe-boolops.cpp:25
 msgid "Subtract A-B"
-msgstr ""
+msgstr "ដក A-B"
 
 #: ../src/live_effects/lpe-boolops.cpp:26
-#, fuzzy
 msgid "Identity A"
-msgstr "អត្តសញ្ញាណ"
+msgstr "អត្តសញ្ញាណ A"
 
 #: ../src/live_effects/lpe-boolops.cpp:27
 msgid "Subtract B-A"
-msgstr ""
+msgstr "ដក B-A"
 
 #: ../src/live_effects/lpe-boolops.cpp:28
-#, fuzzy
 msgid "Identity B"
-msgstr "អត្តសញ្ញាណ"
+msgstr "អត្តសញ្ញាណ B"
 
 #: ../src/live_effects/lpe-boolops.cpp:29 ../src/splivarot.cpp:96
 msgid "Exclusion"
@@ -6763,9 +6710,8 @@ msgid "Union"
 msgstr "សហភាព"
 
 #: ../src/live_effects/lpe-boolops.cpp:36
-#, fuzzy
 msgid "2nd path"
-msgstr "ផ្លូវ​កោង​"
+msgstr "ផ្លូវ​ទី ២"
 
 #: ../src/live_effects/lpe-boolops.cpp:36
 #, fuzzy
@@ -6773,9 +6719,8 @@ msgid "Path to which the original path will be boolop'ed."
 msgstr "ផ្លូវ​ដែល​កោង​ទៅនឹង​ផ្លូវ​ដើម"
 
 #: ../src/live_effects/lpe-boolops.cpp:37
-#, fuzzy
 msgid "Boolop type"
-msgstr "គ្រប់​ប្រភេទ"
+msgstr ""
 
 #: ../src/live_effects/lpe-boolops.cpp:37
 msgid "Determines which kind of boolop will be performed."
@@ -6798,52 +6743,44 @@ msgid "The size of the grid in Y direction."
 msgstr "ទំហំ​របស់​ក្រឡា​ចត្រង្គ​ក្នុង​ទិស Y ។"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:47
-#, fuzzy
 msgid "Starting"
 msgstr "ចាប់ផ្ដើម"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:47
 msgid "Angle of the first copy"
-msgstr ""
+msgstr "មុំ​ច្បាប់​ចម្លង​ដំបូង"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:48
-#, fuzzy
 msgid "Rotation angle"
-msgstr "បង្វិល​កណ្ដាល"
+msgstr "មុំ​បង្វិល"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:48
 msgid "Angle between two successive copies"
 msgstr ""
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:49
-#, fuzzy
 msgid "Number of copies"
-msgstr "ចំនួ​ន​​ជួរ​​ដេក​"
+msgstr "ចំនួន​ច្បាប់​ចម្លង​"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:49
-#, fuzzy
 msgid "Number of copies of the original path"
-msgstr "ចំនួន​ជ្រុង​របស់​ពហុកោណ ឬ​ផ្កាយ"
+msgstr "ចំនួន​ច្បាប់​ចម្លង​របស់​ផ្លូវ​ដើម"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:50
-#, fuzzy
 msgid "Origin"
-msgstr " X ដើម"
+msgstr "ដើម"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:50
-#, fuzzy
 msgid "Origin of the rotation"
-msgstr "ទិស"
+msgstr ""
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:61
-#, fuzzy
 msgid "Adjust the starting angle"
-msgstr "លៃ​តម្រូវ​តិត្ថិភាព"
+msgstr "លៃ​តម្រូវ​មុំ​ចាប់ផ្ដើម"
 
 #: ../src/live_effects/lpe-copy_rotate.cpp:62
-#, fuzzy
 msgid "Adjust the rotation angle"
-msgstr "លៃ​តម្រូវ​តិត្ថិភាព"
+msgstr "លៃ​តម្រូវ​មុំ​បង្វិល"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "Stitch path"
@@ -6918,48 +6855,41 @@ msgid "Scale the width of the stitch path relative to its length"
 msgstr "ធ្វើ​មាត្រដ្ឋាន​នៃ​ផ្លូវ​ខ្វាច់​ទាក់ទង​ទៅ​នឹង​ប្រវែង​របស់​វា"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:60
-#, fuzzy
 msgid "Elliptic Pen"
-msgstr "រាង​ពង​ក្រពើ"
+msgstr "ប៊ិក​រាង​ពង​ក្រពើ"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:61
 msgid "Thick-Thin strokes (fast)"
-msgstr ""
+msgstr "ស្នាម​គូស​ក្រាស់-ស្ដើង (លឿន)"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:62
 msgid "Thick-Thin strokes (slow)"
-msgstr ""
+msgstr "ស្នាម​គូស​ក្រាស់-ស្ដើង (យឺត)"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:67
-#, fuzzy
 msgid "Sharp"
-msgstr "ធ្វើ​ឲ្យ​ច្បាស់"
+msgstr "ច្បាស់"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:68
-#, fuzzy
 msgid "Round"
-msgstr "បាន​ធ្វើ​ឲ្យ​មូល"
+msgstr "មូល"
 
 #. initialise your parameters here:
 #: ../src/live_effects/lpe-dynastroke.cpp:75
-#, fuzzy
 msgid "Method"
-msgstr "រលាយ"
+msgstr "វិធីសាស្ដ្រ"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:75
-#, fuzzy
 msgid "Choose pen type"
-msgstr "ផ្លាស់ប្តូរ​ប្រភេទ​ចម្រៀក​"
+msgstr "ជ្រើស​ប្រភេទ​ប៊ិក"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:76
-#, fuzzy
 msgid "Pen width"
 msgstr "ទទឹង​ប៊ិក"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:76
-#, fuzzy
 msgid "Maximal stroke width"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ទទឹង​ខ្វាច់​"
+msgstr "ទទឹង​ស្នាម​គូស​ធំបំផុត"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:77
 #, fuzzy
@@ -7023,7 +6953,7 @@ msgstr "បាន​ធ្វើ​ឲ្យ​មូល"
 #: ../src/live_effects/lpe-dynastroke.cpp:84
 #, fuzzy
 msgid "Strokes end with a round end"
-msgstr "បម្រែបម្រួល​ប្រវែង​ខ្វាច់"
+msgstr "បម្រែបម្រួល​ប្រវែង​ស្នាម​គូស"
 
 #: ../src/live_effects/lpe-dynastroke.cpp:85
 #, fuzzy
@@ -7145,7 +7075,7 @@ msgstr ""
 #: ../src/live_effects/lpe-knot.cpp:324
 #, fuzzy
 msgid "unit of stroke width"
-msgstr "លៃ​តម្រូវ​ទទឹង​ខ្វាច់"
+msgstr "លៃ​តម្រូវ​ទទឹង​ស្នាម​គូស"
 
 #: ../src/live_effects/lpe-knot.cpp:324
 msgid "Consider 'Interruption width' as a ratio of stroke width."
@@ -7626,7 +7556,7 @@ msgstr "បង្កើត​ផ្លូវ"
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 #, fuzzy
 msgid "Simulate a stroke of varrying width"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ទទឹង​ខ្វាច់​"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​ទទឹង​ស្នាម​គូស​"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 #, fuzzy
@@ -7781,27 +7711,27 @@ msgstr "ជា​ចំនួន​ពិត​ដូច​ជា 1.4!"
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
 #: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Strokes"
-msgstr "ខ្វាច់"
+msgstr "ស្នាម​គូស"
 
 #: ../src/live_effects/lpe-sketch.cpp:35
 msgid "Draw that many approximating strokes"
-msgstr "គូស​ខ្វាច់​ប៉ានស្មាន​ច្រើន"
+msgstr "គូស​ស្នាម​គូស​ប៉ានស្មាន​ច្រើន"
 
 #: ../src/live_effects/lpe-sketch.cpp:36
 msgid "Max stroke length"
-msgstr "ប្រវែង​ខ្វាច់​អតិបរមា"
+msgstr "ប្រវែង​ស្នាម​គូស​អតិបរមា"
 
 #: ../src/live_effects/lpe-sketch.cpp:37
 msgid "Maximum length of approximating strokes"
-msgstr "ប្រវែង​អតិបរមា​នៃ​ខ្វាច់​ប៉ានស្មាន"
+msgstr "ប្រវែង​អតិបរមា​នៃ​ស្នាម​គូស​ប៉ានស្មាន"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Stroke length variation"
-msgstr "បម្រែបម្រួល​ប្រវែង​ខ្វាច់"
+msgstr "បម្រែបម្រួល​ប្រវែង​ស្នាម​គូស"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "បម្រែបម្រួល​​ចៃដន្យ​នៃ​ប្រវែង​ខ្វាច់ (ទំនាក់ទំនង​ទៅ​ប្រវែង​អតិបរមា)"
+msgstr "បម្រែបម្រួល​​ចៃដន្យ​នៃ​ប្រវែង​ស្នាម​គូស (ទំនាក់ទំនង​ទៅ​ប្រវែង​អតិបរមា)"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Max. overlap"
@@ -7810,7 +7740,7 @@ msgstr "តម្រួត​លើ​គ្នា​អតិ."
 #: ../src/live_effects/lpe-sketch.cpp:41
 #, fuzzy
 msgid "How much successive strokes should overlap (relative to maximum length)"
-msgstr "ចំនួន​ខ្វាច់​ដែល​បន្ត​គ្នា​ប៉ុន្មាន​ដែល​គួរ​ត្រួត​លើ​គ្នា (ទាក់ទង​ទៅ​និង​ប្រវែង​អតិបរមា) ។"
+msgstr "ចំនួន​ស្នាម​គូស​ដែល​បន្ត​គ្នា​ប៉ុន្មាន​ដែល​គួរ​ត្រួត​លើ​គ្នា (ទាក់ទង​ទៅ​និង​ប្រវែង​អតិបរមា) ។"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Overlap variation"
@@ -7855,7 +7785,7 @@ msgstr "ប្រេកង់​ញ័រ"
 #: ../src/live_effects/lpe-sketch.cpp:51
 #, fuzzy
 msgid "Average number of tremble periods in a stroke"
-msgstr "ចំនួន​មធ្យម​នៃ​កំឡុង​ពេល​ញ័រ​ក្នុង​ខ្វាច់​ប៉ានស្មាន"
+msgstr "ចំនួន​មធ្យម​នៃ​កំឡុង​ពេល​ញ័រ​ក្នុង​ស្នាម​គូស​ប៉ានស្មាន"
 
 #: ../src/live_effects/lpe-sketch.cpp:53
 msgid "Construction lines"
@@ -10069,16 +9999,16 @@ msgstr "វត្ថុ​មួយ​ក្នុ​ង​ចំណោម​វ
 
 #: ../src/splivarot.cpp:633
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
-msgstr "ជ្រើស <b>ផ្លូវ​ខ្វាច់</b> ដើម្បី​បម្លែង​ខ្វាច់​ទៅ​ជា​ផ្លូវ ។"
+msgstr "ជ្រើស <b>ផ្លូវ​ស្នាម​គូស</b> ដើម្បី​បម្លែង​ស្នាម​គូស​ទៅ​ជា​ផ្លូវ ។"
 
 #: ../src/splivarot.cpp:954
 msgid "Convert stroke to path"
-msgstr "បម្លែង​ខ្វាច់​ទៅ​ជា​ផ្លូវ​"
+msgstr "បម្លែង​ស្នាម​គូស​ទៅ​ជា​ផ្លូវ​"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:957
 msgid "<b>No stroked paths</b> in the selection."
-msgstr "<b>គ្មាន​ផ្លូវ​ខ្វាច់</b> នៅ​ក្នុង​ជម្រើស ។"
+msgstr "<b>គ្មាន​ផ្លូវ​ស្នាម​គូស</b> នៅ​ក្នុង​ជម្រើស ។"
 
 #: ../src/splivarot.cpp:1040
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
@@ -10586,7 +10516,7 @@ msgid ""
 "object's fill and stroke to the current setting."
 msgstr ""
 "<b>ចុច</b> ដើម្បី​គូរផ្ទៃ​ព្រំដែន <b>ប្ដូរ(Shift)+ចុច</b> ដើម្បី​ភ្ជាប់​ការ​បំពេញ​ថ្មី​ដោយ​ជម្រើស​"
-"បច្ចុប្បន្ន <b>បញ្ជា(Ctrl)+ចុច</b> ដើម្បី​ផ្លាស់ប្ដូរ​ការ​បំពេញ​របស់វត្ថុ​ដែល​បាន​ចុចុ និងខ្វាច់​ទៅការ​កំណត់​បច្ចុប្បន្ន ។"
+"បច្ចុប្បន្ន <b>បញ្ជា(Ctrl)+ចុច</b> ដើម្បី​ផ្លាស់ប្ដូរ​ការ​បំពេញ​របស់វត្ថុ​ដែល​បាន​ចុចុ និងស្នាម​គូស​ទៅការ​កំណត់​បច្ចុប្បន្ន ។"
 
 #: ../src/tools-switch.cpp:226
 msgid "<b>Drag</b> to erase."
@@ -10898,7 +10828,7 @@ msgstr "កែ​សម្រួល​ខាង​ក្រៅ..."
 #. Item dialog
 #: ../src/ui/context-menu.cpp:504
 msgid "_Fill and Stroke"
-msgstr "បំពេញ និង​ខ្វាច់​"
+msgstr "បំពេញ និង​ស្នាម​គូស​"
 
 #. *
 #. * Constructor
@@ -11706,11 +11636,11 @@ msgstr "បំពេញ"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:49
 msgid "Stroke _paint"
-msgstr "ការ​គូរ​ខ្វាច់​"
+msgstr "ការ​គូរ​ស្នាម​គូស​"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:50
 msgid "Stroke st_yle"
-msgstr "រចនាប័ទ្ម​ខ្វាច់​"
+msgstr "រចនាប័ទ្ម​ស្នាម​គូស​"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:465
@@ -12697,11 +12627,11 @@ msgstr "បញ្ជា(Ctrl)+ចុច​ទំហំ​ចំណុច ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:290
 msgid "times current stroke width"
-msgstr "ពេលវេលា​ទទឹង​ខ្វាច់​បច្ចុប្បន្ន​"
+msgstr "ពេលវេលា​ទទឹង​ស្នាម​គូស​បច្ចុប្បន្ន​"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:291
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
-msgstr "ទំហំ​ចំណុច​ដែលបានបង្កើត​ដោយ​ប្រើ បញ្ជា(Ctrl)+ចុច (ទាក់ទង​ទៅ​នឹង​ទទឹង​ខ្វាច់​បច្ចុប្បន្ន)"
+msgstr "ទំហំ​ចំណុច​ដែលបានបង្កើត​ដោយ​ប្រើ បញ្ជា(Ctrl)+ចុច (ទាក់ទង​ទៅ​នឹង​ទទឹង​ស្នាម​គូស​បច្ចុប្បន្ន)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:306
 msgid "<b>No objects selected</b> to take the style from."
@@ -12764,7 +12694,7 @@ msgstr "ប្រអប់ព្រំដែន​ដែល​មើលឃើញ
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:388
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
-msgstr "ប្រអប់​​ព្រំដែន​នេះ​រួម​មាន​ទទឹង​ខ្វាច់ សញ្ញា​សម្គាល់ រឹម​តម្រង ។ល។"
+msgstr "ប្រអប់​​ព្រំដែន​នេះ​រួម​មាន​ទទឹង​ស្នាម​គូស សញ្ញា​សម្គាល់ រឹម​តម្រង ។ល។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:389
 msgid "Geometric bounding box"
@@ -13218,7 +13148,7 @@ msgstr "ផ្លូវ​រូបភាព និង​របាំង​"
 #: ../src/ui/dialog/inkscape-preferences.cpp:650
 #: ../src/widgets/select-toolbar.cpp:544
 msgid "Scale stroke width"
-msgstr "ធ្វើ​មាត្រដ្ឋាន​ទទឹង​ខ្វាច់​"
+msgstr "ធ្វើ​មាត្រដ្ឋាន​ទទឹង​ស្នាម​គូស​"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:651
 msgid "Scale rounded corners in rectangles"
@@ -13243,7 +13173,7 @@ msgstr "បាន​ការពារ"
 #: ../src/ui/dialog/inkscape-preferences.cpp:658
 #: ../src/widgets/select-toolbar.cpp:545
 msgid "When scaling objects, scale the stroke width by the same proportion"
-msgstr "នៅ​ពេល​ធ្វើ​មាត្រដ្ឋាន​វត្ថុ ធ្វើ​មាត្រដ្ឋាន​ទទឹង​ខ្វាច់​ដោយ​សមាមាត្រ​ដូច​គ្នា"
+msgstr "នៅ​ពេល​ធ្វើ​មាត្រដ្ឋាន​វត្ថុ ធ្វើ​មាត្រដ្ឋាន​ទទឹង​ស្នាម​គូស​ដោយ​សមាមាត្រ​ដូច​គ្នា"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:660
 #: ../src/widgets/select-toolbar.cpp:556
@@ -13258,7 +13188,7 @@ msgstr "ផ្លាស់ទី​ជម្រាល (នៅ​ក្នុង�
 #: ../src/ui/dialog/inkscape-preferences.cpp:664
 #: ../src/widgets/select-toolbar.cpp:578
 msgid "Move patterns (in fill or stroke) along with the objects"
-msgstr "ផ្លាស់ទី​លំនាំ (នៅ​ក្នុង​ការ​បំពេញ ឬ​ខ្វាច់) រួម​ជា​មួយ​វត្ថុ"
+msgstr "ផ្លាស់ទី​លំនាំ (នៅ​ក្នុង​ការ​បំពេញ ឬ​ស្នាម​គូស) រួម​ជា​មួយ​វត្ថុ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:665
 msgid "Store transformation:"
@@ -14942,7 +14872,7 @@ msgstr "មើល​ជា​មុន"
 #: ../src/ui/dialog/swatches.cpp:329
 #, c-format
 msgid "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
-msgstr "ពណ៌ ៖ <b>%s</b>; <b>ចុច</b> ដើម្បី​កំណត់ បំពេញ <b>ប្ដូរ (Shift) + ចុច</b> ដើម្បី​កំណត់​ខ្វាច់"
+msgstr "ពណ៌ ៖ <b>%s</b>; <b>ចុច</b> ដើម្បី​កំណត់ បំពេញ <b>ប្ដូរ (Shift) + ចុច</b> ដើម្បី​កំណត់​ស្នាម​គូស"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:438
@@ -14952,7 +14882,7 @@ msgstr "កំណត់​ការ​បំពេញ"
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:446
 msgid "Set stroke"
-msgstr "កំណត់​ខ្វាច់"
+msgstr "កំណត់​ស្នាម​គូស"
 
 #: ../src/ui/dialog/swatches.cpp:471 ../src/widgets/gradient-selector.cpp:144
 #: ../src/widgets/gradient-toolbar.cpp:466
@@ -14971,7 +14901,7 @@ msgstr "ផ្លាស់ប្ដូរ​ការ​កំណត់​ពណ
 #: ../src/ui/dialog/swatches.cpp:846
 #, fuzzy
 msgid "Remove stroke color"
-msgstr "យក​ខ្វាច់​ចេញ "
+msgstr "យក​ស្នាម​គូស​ចេញ "
 
 #: ../src/ui/dialog/swatches.cpp:846
 #, fuzzy
@@ -14981,7 +14911,7 @@ msgstr "យក​ការ​បំពេញ​ចេញ​ទាំង​អស
 #: ../src/ui/dialog/swatches.cpp:851
 #, fuzzy
 msgid "Set stroke color to none"
-msgstr "កំណត់​ពណ៌​ខ្វាច់"
+msgstr "កំណត់​ពណ៌​ស្នាម​គូស"
 
 #: ../src/ui/dialog/swatches.cpp:851
 #, fuzzy
@@ -14990,7 +14920,7 @@ msgstr "កំណត់​ពណ៌​បំពេញ"
 
 #: ../src/ui/dialog/swatches.cpp:868
 msgid "Set stroke color from swatch"
-msgstr "កំណត់​ពណ៌​ខ្វាច់​ពី​គំរូ"
+msgstr "កំណត់​ពណ៌​ស្នាម​គូស​ពី​គំរូ"
 
 #: ../src/ui/dialog/swatches.cpp:868
 msgid "Set fill color from swatch"
@@ -15827,7 +15757,7 @@ msgstr "បំពេញ ៖"
 #: ../src/ui/widget/selected-style.cpp:113
 #: ../src/ui/widget/style-swatch.cpp:118
 msgid "Stroke:"
-msgstr "ខ្វាច់ ៖​"
+msgstr "ស្នាម​គូស ៖​"
 
 #: ../src/ui/widget/selected-style.cpp:114
 msgid "O:"
@@ -15856,7 +15786,7 @@ msgstr "មិន​បំពេញ​"
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/style-swatch.cpp:298
 msgid "No stroke"
-msgstr "គ្មាន​ខ្វាច់​"
+msgstr "គ្មាន​ស្នាម​គូស​"
 
 #: ../src/ui/widget/selected-style.cpp:166
 #: ../src/ui/widget/style-swatch.cpp:277 ../src/widgets/paint-selector.cpp:189
@@ -15871,7 +15801,7 @@ msgstr "លំនាំ​បំពេញ"
 #: ../src/ui/widget/selected-style.cpp:169
 #: ../src/ui/widget/style-swatch.cpp:279
 msgid "Pattern stroke"
-msgstr "ខ្វាច់​លំនាំ​វាច់"
+msgstr "ស្នាម​គូស​គំរូ"
 
 #: ../src/ui/widget/selected-style.cpp:171
 msgid "<b>L</b>"
@@ -15885,7 +15815,7 @@ msgstr "បំពេញ​ជម្រាល​លីនេអ៊ែរ"
 #: ../src/ui/widget/selected-style.cpp:174
 #: ../src/ui/widget/style-swatch.cpp:271
 msgid "Linear gradient stroke"
-msgstr "ខ្វាច់​ជម្រាល​លីនេអ៊ែរ​"
+msgstr "ស្នាម​គូស​ជម្រាល​លីនេអ៊ែរ​"
 
 #: ../src/ui/widget/selected-style.cpp:181
 msgid "<b>R</b>"
@@ -15899,7 +15829,7 @@ msgstr "បំពេញ​ជម្រាល​មូល"
 #: ../src/ui/widget/selected-style.cpp:184
 #: ../src/ui/widget/style-swatch.cpp:275
 msgid "Radial gradient stroke"
-msgstr "ខ្វាច់​ជម្រាល​មូល​"
+msgstr "ស្នាម​គូស​ជម្រាល​មូល​"
 
 #: ../src/ui/widget/selected-style.cpp:191
 msgid "Different"
@@ -15911,7 +15841,7 @@ msgstr "បំពេញ​ផ្សេង​គ្នា​"
 
 #: ../src/ui/widget/selected-style.cpp:194
 msgid "Different strokes"
-msgstr "ខ្វាច់​ផ្សេង​គ្នា​"
+msgstr "ស្នាម​គូស​ផ្សេង​គ្នា​"
 
 #: ../src/ui/widget/selected-style.cpp:196
 #: ../src/ui/widget/style-swatch.cpp:301
@@ -15931,7 +15861,7 @@ msgstr "មិន​​កំណត់​ការ​បំពេញ "
 #: ../src/ui/widget/selected-style.cpp:515
 #: ../src/ui/widget/style-swatch.cpp:303 ../src/widgets/stroke-style.cpp:462
 msgid "Unset stroke"
-msgstr "មិន​កំណត់​ខ្វាច់"
+msgstr "មិន​កំណត់​ស្នាម​គូស"
 
 #: ../src/ui/widget/selected-style.cpp:202
 msgid "Flat color fill"
@@ -15939,7 +15869,7 @@ msgstr "បំពេញ​ពណ៌​រាបស្មើ"
 
 #: ../src/ui/widget/selected-style.cpp:202
 msgid "Flat color stroke"
-msgstr "ខ្វាច់​ពណ៌​រាបស្មើ"
+msgstr "ស្នាម​គូស​ពណ៌​រាបស្មើ"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:205
@@ -15952,7 +15882,7 @@ msgstr "បំពេញ​ត្រូវ​បានកំណត់​មធ្
 
 #: ../src/ui/widget/selected-style.cpp:208
 msgid "Stroke is averaged over selected objects"
-msgstr "ខ្វាច់​ត្រូវ​បាន​កំណត់​មធ្យម​លើ​វត្ថុ​ដែល​បានជ្រើស"
+msgstr "ស្នាម​គូស​ត្រូវ​បាន​កំណត់​មធ្យម​លើ​វត្ថុ​ដែល​បានជ្រើស"
 
 #. TRANSLATOR COMMENT: M means "Multiple"
 #: ../src/ui/widget/selected-style.cpp:211
@@ -15965,7 +15895,7 @@ msgstr "បំពេញ​វត្ថុដែល​បាន​ជ្រើស
 
 #: ../src/ui/widget/selected-style.cpp:214
 msgid "Multiple selected objects have the same stroke"
-msgstr "ខ្វាច់​វត្ថុ​ដែល​បាន​ជ្រើស​ជា​ច្រើន​ដូច​គ្នា"
+msgstr "ស្នាម​គូស​វត្ថុ​ដែល​បាន​ជ្រើស​ជា​ច្រើន​ដូច​គ្នា"
 
 #: ../src/ui/widget/selected-style.cpp:216
 msgid "Edit fill..."
@@ -15973,7 +15903,7 @@ msgstr "កែ​សម្រួល​បំពេញ..."
 
 #: ../src/ui/widget/selected-style.cpp:216
 msgid "Edit stroke..."
-msgstr "កែ​សម្រួល​ខ្វាច់..."
+msgstr "កែ​សម្រួល​ស្នាម​គូស..."
 
 #: ../src/ui/widget/selected-style.cpp:220
 msgid "Last set color"
@@ -16005,7 +15935,7 @@ msgstr "បិទភ្ជាប់​ពណ៌​"
 #: ../src/ui/widget/selected-style.cpp:248
 #: ../src/ui/widget/selected-style.cpp:782
 msgid "Swap fill and stroke"
-msgstr "ដូរ​ការ​បំពេញ​ និង​ខ្វាច់​"
+msgstr "ដូរ​ការ​បំពេញ​ និង​ស្នាម​គូស​"
 
 #: ../src/ui/widget/selected-style.cpp:252
 #: ../src/ui/widget/selected-style.cpp:524
@@ -16015,7 +15945,7 @@ msgstr "បំពេញ​ភាព​ស្រអាប់​"
 
 #: ../src/ui/widget/selected-style.cpp:252
 msgid "Make stroke opaque"
-msgstr "ខ្វាច់​ភាព​ស្រអាប់​"
+msgstr "ស្នាម​គូស​ភាព​ស្រអាប់​"
 
 #: ../src/ui/widget/selected-style.cpp:261
 #: ../src/ui/widget/selected-style.cpp:481 ../src/widgets/fill-style.cpp:385
@@ -16025,7 +15955,7 @@ msgstr "យក​ការ​បំពេញ​ចេញ​ទាំង​អស
 #: ../src/ui/widget/selected-style.cpp:261
 #: ../src/ui/widget/selected-style.cpp:490 ../src/widgets/stroke-style.cpp:336
 msgid "Remove stroke"
-msgstr "យក​ខ្វាច់​ចេញ "
+msgstr "យក​ស្នាម​គូស​ចេញ "
 
 #: ../src/ui/widget/selected-style.cpp:314
 msgid "Remove"
@@ -16037,7 +15967,7 @@ msgstr "អនុវត្ត​ការ​កំណត់​ពណ៌​ចុ
 
 #: ../src/ui/widget/selected-style.cpp:557
 msgid "Apply last set color to stroke"
-msgstr "អនុវត្ត​ការ​កំណត់​ពណ៌​ចុង​ក្រោយ​ដើម្បី​ខ្វាច់​"
+msgstr "អនុវត្ត​ការ​កំណត់​ពណ៌​ចុង​ក្រោយ​ដើម្បី​គូស​ស្នាម​គូស​"
 
 #: ../src/ui/widget/selected-style.cpp:568
 msgid "Apply last selected color to fill"
@@ -16045,7 +15975,7 @@ msgstr "អនុវត្ត​ពណ៌​ដែល​បាន​​ជ្រ
 
 #: ../src/ui/widget/selected-style.cpp:579
 msgid "Apply last selected color to stroke"
-msgstr "អនុវត្ត​ពណ៌​ដែល​បាន​​ជ្រើស​ចុង​ក្រោយ​ដើម្បី​ខ្វាច់​"
+msgstr "អនុវត្ត​ពណ៌​ដែល​បាន​​ជ្រើស​ចុង​ក្រោយ​ដើម្បី​គូស​ស្នាម​គូស​"
 
 #: ../src/ui/widget/selected-style.cpp:599
 msgid "Invert fill"
@@ -16053,7 +15983,7 @@ msgstr "ដាក់​បញ្ច្រាស​ការ​បំពេញ"
 
 #: ../src/ui/widget/selected-style.cpp:619
 msgid "Invert stroke"
-msgstr "ដាក់​បញ្ច្រាស​ខ្វាច់"
+msgstr "ដាក់​បញ្ច្រាស​ស្នាម​គូស"
 
 #: ../src/ui/widget/selected-style.cpp:631
 msgid "White fill"
@@ -16061,7 +15991,7 @@ msgstr "បំពេញ​ពណ៌​ស"
 
 #: ../src/ui/widget/selected-style.cpp:643
 msgid "White stroke"
-msgstr "ខ្វាច់​ពណ៌​ស"
+msgstr "ស្នាម​គូស​ពណ៌​ស"
 
 #: ../src/ui/widget/selected-style.cpp:655
 msgid "Black fill"
@@ -16069,7 +15999,7 @@ msgstr "បំពេញ​ពណ៌​ខ្មៅ"
 
 #: ../src/ui/widget/selected-style.cpp:667
 msgid "Black stroke"
-msgstr "ខ្វាច់​ពណ៌​ខ្មៅ​"
+msgstr "ស្នាម​គូស​ពណ៌​ខ្មៅ​"
 
 #: ../src/ui/widget/selected-style.cpp:710
 msgid "Paste fill"
@@ -16077,11 +16007,11 @@ msgstr "បិទភ្ជាប់​ការ​បំពេញ"
 
 #: ../src/ui/widget/selected-style.cpp:728
 msgid "Paste stroke"
-msgstr "បិទភ្ជាប់​ខ្វាច់"
+msgstr "បិទភ្ជាប់​ស្នាម​គូស"
 
 #: ../src/ui/widget/selected-style.cpp:892
 msgid "Change stroke width"
-msgstr "ផ្លាស់ប្ដូរ​ទទឹង​ខ្វាច់​"
+msgstr "ផ្លាស់ប្ដូរ​ទទឹង​ស្នាម​គូស​"
 
 #: ../src/ui/widget/selected-style.cpp:987
 msgid ", drag to adjust"
@@ -16090,7 +16020,7 @@ msgstr " អូស​ដើម្បី​លៃ​តម្រូវ"
 #: ../src/ui/widget/selected-style.cpp:1068
 #, c-format
 msgid "Stroke width: %.5g%s%s"
-msgstr "ទទឹង​ខ្វាច់ ៖ %.5g%s%s"
+msgstr "ទទឹង​ស្នាម​គូស ៖ %.5g%s%s"
 
 #: ../src/ui/widget/selected-style.cpp:1072
 msgid " (averaged)"
@@ -16146,12 +16076,12 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:1400
 #: ../src/ui/widget/selected-style.cpp:1414
 msgid "Adjust stroke width"
-msgstr "លៃ​តម្រូវ​ទទឹង​ខ្វាច់"
+msgstr "លៃ​តម្រូវ​ទទឹង​ស្នាម​គូស"
 
 #: ../src/ui/widget/selected-style.cpp:1401
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
-msgstr "លៃ​តម្រូវ <b>ទទឹង​ខ្វាច់</b> ៖ ពី​មុន %.3g ឥឡូវ <b>%.3g</b> (diff %.3g)"
+msgstr "លៃ​តម្រូវ <b>ទទឹង​ស្នាម​គូស</b> ៖ ពី​មុន %.3g ឥឡូវ <b>%.3g</b> (diff %.3g)"
 
 #. TRANSLATORS: Only translate the word "Link" - means to _link_ two sliders together
 #: ../src/ui/widget/spin-slider.cpp:118
@@ -16174,12 +16104,12 @@ msgstr "បំពេញ ៖ %06x/%.3g"
 #: ../src/ui/widget/style-swatch.cpp:291
 #, c-format
 msgid "Stroke: %06x/%.3g"
-msgstr "ខ្វាច់ ៖ %06x/%.3g"
+msgstr "ស្នាម​គូស ៖ %06x/%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:323
 #, c-format
 msgid "Stroke width: %.5g%s"
-msgstr "ទទឹង​ខ្វាច់ ៖ %.5g%s"
+msgstr "ទទឹង​ស្នាម​គូស ៖ %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:339
 #, c-format
@@ -16918,7 +16848,7 @@ msgstr "កាត់​ផ្លូវ​"
 
 #: ../src/verbs.cpp:2385
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr "កាត់​បាត​ខ្វាច់​របស់​ផ្លូវ​ទៅ​ជា​ចម្រៀក យក​ការ​បំពេញ​ចេញ"
+msgstr "កាត់​បាត​ស្នាម​គូស​របស់​ផ្លូវ​ទៅ​ជា​ចម្រៀក យក​ការ​បំពេញ​ចេញ"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -16996,7 +16926,7 @@ msgstr "ខ្វាប់​ទៅ​ផ្លូវ"
 
 #: ../src/verbs.cpp:2415
 msgid "Convert selected object's stroke to paths"
-msgstr "បម្លែង​ខ្វាច់​របស់​វត្ថុ​ដែល​បាន​ជ្រើស​ទៅ​ផ្លូវ"
+msgstr "បម្លែង​ស្នាម​គូស​របស់​វត្ថុ​ដែល​បាន​ជ្រើស​ទៅ​ផ្លូវ"
 
 #: ../src/verbs.cpp:2416
 msgid "Si_mplify"
@@ -17175,7 +17105,7 @@ msgstr "បង្វិល _90&#176; CW"
 #. must use UTF-8, not HTML entities for special characters.
 #: ../src/verbs.cpp:2465
 msgid "Rotate selection 90° clockwise"
-msgstr "បង្វិល​ជម្រើស ៩០ អង្សា​ស្រប​ទិស​ទ្រនិច​នាឡិកា"
+msgstr "បង្វិល​ជម្រើស ៩០ ដឺក្រេ​ស្រប​ទិស​ទ្រនិច​នាឡិកា"
 
 #: ../src/verbs.cpp:2466
 msgid "Rotate 9_0&#176; CCW"
@@ -17185,7 +17115,7 @@ msgstr "បង្វិល 9_0&#176; CCW"
 #. must use UTF-8, not HTML entities for special characters.
 #: ../src/verbs.cpp:2469
 msgid "Rotate selection 90° counter-clockwise"
-msgstr "បង្វិល​ជម្រើស ៩០ អង្សា ច្រាស​ទិស​ទ្រនិច​នាឡិកា"
+msgstr "បង្វិល​ជម្រើស ៩០ ដឺក្រេ ច្រាស​ទិស​ទ្រនិច​នាឡិកា"
 
 #: ../src/verbs.cpp:2470
 msgid "Remove _Transformations"
@@ -17324,7 +17254,7 @@ msgstr "គូរ​ខ្សែកោង Bezier និង​បន្ទាត�
 
 #: ../src/verbs.cpp:2521
 msgid "Draw calligraphic or brush strokes"
-msgstr "គូរ​អក្សរ​វិចិត្រសាស្ត្រ ឬ​ខ្វាច់​ជក់"
+msgstr "គូរ​អក្សរ​វិចិត្រសាស្ត្រ ឬ​ស្នាម​គូស​ជក់"
 
 #: ../src/verbs.cpp:2523
 msgid "Create and edit text objects"
@@ -17743,11 +17673,11 @@ msgstr "កែសម្រួល​ទិន្នន័យ​មេតា​​
 
 #: ../src/verbs.cpp:2639
 msgid "_Fill and Stroke..."
-msgstr "បំពេញ និង​ខ្វាច់..."
+msgstr "បំពេញ និង​ស្នាម​គូស..."
 
 #: ../src/verbs.cpp:2640
 msgid "Edit objects' colors, gradients, stroke width, arrowheads, dash patterns..."
-msgstr "កែសម្រួល​ពណ៌​របស់វត្ថុ ជម្រាល ទទឹង​ខ្វាច់ ក្បាលព្រួញ លំនាំ​ដាច់ៗ..."
+msgstr "កែសម្រួល​ពណ៌​របស់វត្ថុ ជម្រាល ទទឹង​ស្នាម​គូស ក្បាលព្រួញ លំនាំ​ដាច់ៗ..."
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2642
@@ -18241,7 +18171,7 @@ msgstr "បង្កើត​ជម្រាល​នៅ​ក្នុង​ក
 
 #: ../src/widgets/gradient-toolbar.cpp:596
 msgid "Create gradient in the stroke"
-msgstr "បង្កើត​ជម្រាល​នៅ​ក្នុង​ខ្វាច់"
+msgstr "បង្កើត​ជម្រាល​នៅ​ក្នុង​ស្នាម​គូស"
 
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
@@ -18368,11 +18298,11 @@ msgstr "ប្លែង​ដោយ​របារ​ឧបករណ៍"
 
 #: ../src/widgets/select-toolbar.cpp:304
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
-msgstr "ឥឡូវ <b>ទទឹង​ខ្វាច់</b> ត្រូវ​បាន<b>ធ្វើ​មាត្រដ្ឋាន</b> នៅ​ពេល​វត្ថុ​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន ។"
+msgstr "ឥឡូវ <b>ទទឹង​ស្នាម​គូស</b> ត្រូវ​បាន<b>ធ្វើ​មាត្រដ្ឋាន</b> នៅ​ពេល​វត្ថុ​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន ។"
 
 #: ../src/widgets/select-toolbar.cpp:306
 msgid "Now <b>stroke width</b> is <b>not scaled</b> when objects are scaled."
-msgstr "ឥឡូវ <b>ទទឹង​ខ្វាច់</b> មិន​ត្រូវ <b>ធ្វើ​មាត្រដ្ឋាន</b> នៅ​ពេល​វត្ថុ​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន ។"
+msgstr "ឥឡូវ <b>ទទឹង​ស្នាម​គូស</b> មិន​ត្រូវ <b>ធ្វើ​មាត្រដ្ឋាន</b> នៅ​ពេល​វត្ថុ​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន ។"
 
 #: ../src/widgets/select-toolbar.cpp:317
 msgid ""
@@ -18665,15 +18595,15 @@ msgstr "វាយ​អត្ថបទ​ក្នុង​ថ្នាំង​
 
 #: ../src/widgets/stroke-style.cpp:286 ../src/widgets/stroke-style.cpp:345
 msgid "Set stroke color"
-msgstr "កំណត់​ពណ៌​ខ្វាច់"
+msgstr "កំណត់​ពណ៌​ស្នាម​គូស"
 
 #: ../src/widgets/stroke-style.cpp:397
 msgid "Set gradient on stroke"
-msgstr "កំណត់​ជម្រាល​លើ​ខ្វាច់"
+msgstr "កំណត់​ជម្រាល​លើ​ស្នាម​គូស"
 
 #: ../src/widgets/stroke-style.cpp:441
 msgid "Set pattern on stroke"
-msgstr "កំណត់​លំនាំ​លើ​ខ្វាច់"
+msgstr "កំណត់​លំនាំ​លើ​ស្នាម​គូស"
 
 #: ../src/widgets/stroke-style.cpp:904
 msgid "Set markers"
@@ -18683,11 +18613,11 @@ msgstr "កំណត់​ឧបករណ៍​សម្គាល់"
 #: ../src/widgets/stroke-style.cpp:1077
 #, fuzzy
 msgid "StrokeWidth|Width:"
-msgstr "ទទឹង​ខ្វាច់"
+msgstr "ទទឹង​ស្នាម​គូស"
 
 #: ../src/widgets/stroke-style.cpp:1091 ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width"
-msgstr "ទទឹង​ខ្វាច់"
+msgstr "ទទឹង​ស្នាម​គូស"
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
@@ -18730,7 +18660,7 @@ msgstr "ព្រំដែន​​ជ្រុង​កែង ​​៖"
 
 #: ../src/widgets/stroke-style.cpp:1167
 msgid "Maximum length of the miter (in units of stroke width)"
-msgstr "ប្រវែង​​អតិបរមា​​​របស់​ជ្រុង​កែង​ (ក្នុង​ក្រុម​ទទឹង​ខ្វាច់​)"
+msgstr "ប្រវែង​​អតិបរមា​​​របស់​ជ្រុង​កែង​ (ក្នុង​ក្រុម​ទទឹង​ស្នាម​គូស​)"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
@@ -18791,7 +18721,7 @@ msgstr ""
 
 #: ../src/widgets/stroke-style.cpp:1603 ../src/widgets/stroke-style.cpp:1699
 msgid "Set stroke style"
-msgstr "កំណត់​រចនាប័ទ្ម​​ខ្វាច់​"
+msgstr "កំណត់​រចនាប័ទ្ម​​ស្នាម​គូស​"
 
 #: ../src/widgets/toolbox.cpp:183
 msgid "Color/opacity used for color tweaking"
@@ -19698,7 +19628,7 @@ msgstr "បង្វិល​ថ្នាំង​"
 #: ../src/widgets/toolbox.cpp:4186
 #, fuzzy
 msgid "Rotate objects, with Shift counterclockwise"
-msgstr "បង្វិល​ជម្រើស ៩០ អង្សា ច្រាស​ទិស​ទ្រនិច​នាឡិកា"
+msgstr "បង្វិល​ជម្រើស ៩០ ដឺក្រេ ច្រាស​ទិស​ទ្រនិច​នាឡិកា"
 
 #: ../src/widgets/toolbox.cpp:4192
 #, fuzzy
@@ -19858,7 +19788,7 @@ msgstr "(បន្ទាត់​រួញ)"
 
 #: ../src/widgets/toolbox.cpp:4710 ../src/widgets/toolbox.cpp:5729
 msgid "(broad stroke)"
-msgstr "(ខ្វាច់​ទូលាយ)"
+msgstr "(ស្នាម​គូស​ទូលាយ)"
 
 #: ../src/widgets/toolbox.cpp:4713 ../src/widgets/toolbox.cpp:5732
 msgid "Pen Width"
@@ -19871,7 +19801,7 @@ msgstr "ទទឹង​របស់​ប៊ិក​អក្ស​រផ្ច
 #. Thinning
 #: ../src/widgets/toolbox.cpp:4727
 msgid "(speed blows up stroke)"
-msgstr "(ល្បឿន​បំផ្ទុះខ្វាច់)"
+msgstr "(ល្បឿន​បំផ្ទុះស្នាម​គូស)"
 
 #: ../src/widgets/toolbox.cpp:4727
 msgid "(slight widening)"
@@ -19887,11 +19817,11 @@ msgstr "(ស្ដើង​បន្តិច លំនាំ​ដើម)"
 
 #: ../src/widgets/toolbox.cpp:4727
 msgid "(speed deflates stroke)"
-msgstr "(ល្បឿន​បន្ធូរ​ខ្វាច់)"
+msgstr "(ល្បឿន​បន្ធូរ​ស្នាម​គូស)"
 
 #: ../src/widgets/toolbox.cpp:4730
 msgid "Stroke Thinning"
-msgstr "កា​រធ្វើ​ឲ្យ​ខ្វាច់​ស្ដើង​"
+msgstr "កា​រធ្វើ​ឲ្យ​ស្នាម​គូស​ស្ដើង​"
 
 #: ../src/widgets/toolbox.cpp:4730
 msgid "Thinning:"
@@ -19902,7 +19832,7 @@ msgid ""
 "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 "
 "makes them broader, 0 makes width independent of velocity)"
 msgstr ""
-"តើ​ភាព​ស្ដើង​រហ័ស​ត្រូវ​ខ្វាច់ (> 0 ធ្វើ​ឲ្យ​ខ្វាច់​លឿន​ហើយ​ស្ដើង​ជាង < 0 ធ្វើ​ឲ្យ​ពួក​វា​មាន​ស៊ុម 0 ធ្វើ​ឲ្យ​មាន​"
+"តើ​ភាព​ស្ដើង​រហ័ស​ត្រូវ​ស្នាម​គូស (> 0 ធ្វើ​ឲ្យ​ស្នាម​គូស​លឿន​ហើយ​ស្ដើង​ជាង < 0 ធ្វើ​ឲ្យ​ពួក​វា​មាន​ស៊ុម 0 ធ្វើ​ឲ្យ​មាន​"
 "ទទឹង​ឯករាជ្យ​នៃ​ភាព​លឿន)"
 
 #. Angle
@@ -19930,12 +19860,12 @@ msgstr "មុំ ៖"
 msgid ""
 "The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if "
 "fixation = 0)"
-msgstr "មុំ​របស់​ចុង​ប៊ិក (គិត​ជា​អង្សា 0 = ផ្ដេក គ្មាន​បែបផែន ប្រសិន​បើ​ភ្ជាប់ = 0)"
+msgstr "មុំ​របស់​ចុង​ប៊ិក (គិត​ជា​ដឺក្រេ 0 = ផ្ដេក គ្មាន​បែបផែន ប្រសិន​បើ​ភ្ជាប់ = 0)"
 
 #. Fixation
 #: ../src/widgets/toolbox.cpp:4761
 msgid "(perpendicular to stroke, \"brush\")"
-msgstr "(បញ្ឈរ​ទៅ​ខ្វាច់ \"ជក់\")"
+msgstr "(បញ្ឈរ​ទៅ​ស្នាម​គូស \"ជក់\")"
 
 #: ../src/widgets/toolbox.cpp:4761
 msgid "(almost fixed, default)"
@@ -19989,7 +19919,7 @@ msgstr "គម្រប ៖"
 msgid ""
 "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = "
 "round caps)"
-msgstr "បង្កើន​ដើម្បីបង្កើត​គម្រប​នៅ​ខាង​ចុងរបស់​ខ្វាច់​លយ​ចេញ​ថែម​ទៀត (០ = គ្មានគម្រប ១ = គម្រប​មូល)"
+msgstr "បង្កើន​ដើម្បីបង្កើត​គម្រប​នៅ​ខាង​ចុងរបស់​ស្នាម​គូស​លយ​ចេញ​ថែម​ទៀត (០ = គ្មានគម្រប ១ = គម្រប​មូល)"
 
 #. Tremor
 #: ../src/widgets/toolbox.cpp:4794
@@ -20010,7 +19940,7 @@ msgstr "(ញ័រ​អតិបរមា)"
 
 #: ../src/widgets/toolbox.cpp:4797
 msgid "Stroke Tremor"
-msgstr "ខ្វាច់ញ័រ"
+msgstr "ស្នាម​គូសញ័រ"
 
 #: ../src/widgets/toolbox.cpp:4797
 msgid "Tremor:"
@@ -20018,7 +19948,7 @@ msgstr "រ​ញ័ ​ ៖"
 
 #: ../src/widgets/toolbox.cpp:4798
 msgid "Increase to make strokes rugged and trembling"
-msgstr "បង្កើន​ដើម្បី​បង្កើត​ខ្វាច់​កម្រាល​ព្រំ និង​ញ័រ"
+msgstr "បង្កើន​ដើម្បី​បង្កើត​ស្នាម​គូស​កម្រាល​ព្រំ និង​ញ័រ"
 
 #. Wiggle
 #: ../src/widgets/toolbox.cpp:4812
@@ -20097,9 +20027,8 @@ msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr "ប្រើ​ក្រឡា​ក្បឿង​របស់​ឧបករណ៍​បញ្ចូល​ដើម្បី​ផ្លាស់ប្ដូរ​មុំ​របស់​ចុង​ប៊ិក"
 
 #: ../src/widgets/toolbox.cpp:4888
-#, fuzzy
 msgid "Choose a preset"
-msgstr "គ្មាន​ការ​កំណត់​ជា​មុន"
+msgstr "ជ្រើស​ការ​កំណត់​ជាមុន"
 
 #: ../src/widgets/toolbox.cpp:4976
 msgid "Arc: Change start/end"
@@ -20175,7 +20104,7 @@ msgstr "ផ្ដល់​ភាព​ស្រអាប់"
 
 #: ../src/widgets/toolbox.cpp:5318
 msgid "If alpha was picked, assign it to selection as fill or stroke transparency"
-msgstr "ប្រសិន​បើ​បាន​​ជ្រើស​​យក​អាល់ហ្វា ផ្ដល់​វា​ទៅ​ជម្រើស​ដើម្បី​បំពេញ ឬ​ខ្វាច់​ភាព​ថ្លា"
+msgstr "ប្រសិន​បើ​បាន​​ជ្រើស​​យក​អាល់ហ្វា ផ្ដល់​វា​ទៅ​ជម្រើស​ដើម្បី​បំពេញ ឬ​ស្នាម​គូស​ភាព​ថ្លា"
 
 #: ../src/widgets/toolbox.cpp:5321
 msgid "Assign"
@@ -20183,7 +20112,7 @@ msgstr "ផ្ដល់​តម្លៃ"
 
 #: ../src/widgets/toolbox.cpp:5572
 msgid "All inactive"
-msgstr ""
+msgstr "អាសកម្ម​ទាំងអស់"
 
 #: ../src/widgets/toolbox.cpp:5573
 msgid "No geometric tool is active"
@@ -21104,7 +21033,7 @@ msgstr "កម្ពស់​ព្រិលៗ"
 
 #: ../share/extensions/edge3d.inx.h:2
 msgid "Blur stdDeviation"
-msgstr "stdDeviation ព្រិល"
+msgstr "គម្លាត​គំរូ​ព្រិល"
 
 #: ../share/extensions/edge3d.inx.h:3
 msgid "Blur width"
@@ -21841,7 +21770,7 @@ msgstr ""
 
 #: ../share/extensions/markers_strokepaint.inx.h:1
 msgid "Color Markers to Match Stroke"
-msgstr "ឧបករណ៍​សម្គាល់​ពណ៌​ទៅ​ខ្វាច់​ផ្គូផ្គង"
+msgstr "ឧបករណ៍​សម្គាល់​ពណ៌​ទៅ​ស្នាម​គូស​ផ្គូផ្គង"
 
 #: ../share/extensions/measure.inx.h:1
 msgid "Font size [px]"
@@ -22083,7 +22012,7 @@ msgstr "ចំនួន​ទំព័រ​"
 
 #: ../share/extensions/perfectboundcover.inx.h:12
 msgid "Pages Per Inch (PPI)"
-msgstr "ទំព័រ​ក្នុង​មួយ​អ៊ិន្ឈ៍ (PPI)"
+msgstr "ចំនួន​ទំព័រ​ក្នុង​មួយ​អ៊ិន្ឈ៍ (PPI)"
 
 #: ../share/extensions/perfectboundcover.inx.h:13
 msgid "Paper Thickness Measurement"
@@ -22258,7 +22187,7 @@ msgstr "ទ្វា​ទសត័ល​ខ្លី"
 #: ../share/extensions/polyhedron_3d.inx.h:42
 #, no-c-format
 msgid "Stroke Opacity/ %"
-msgstr "ភាព​ស្រអាប់​ខ្វាច់/ %"
+msgstr "ភាព​ស្រអាប់​ស្នាម​គូស/ %"
 
 #: ../share/extensions/polyhedron_3d.inx.h:44
 msgid "Tetrahedron"
