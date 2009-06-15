@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-12 14:51+0200\n"
+"POT-Creation-Date: 2009-06-15 19:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -509,14 +509,10 @@ msgstr ""
 msgid "Glossy painting effect for bitmaps"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:46
-msgid "HSL Bumps"
-msgstr ""
-
 #: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:178
-msgid "Bumps"
+msgid "HSL Bumps"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:46
@@ -1324,7 +1320,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:148 ../share/filters/filters.svg.h:149
 #: ../share/filters/filters.svg.h:150 ../share/filters/filters.svg.h:151
 #: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:159
-msgid "Non realistic shaders"
+msgid "Non realistic 3D shaders"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:140
@@ -19295,18 +19291,18 @@ msgid ""
 "required by this extension. Please install them and try again."
 msgstr ""
 
-#: ../share/extensions/embedimage.py:72
+#: ../share/extensions/embedimage.py:74
 msgid ""
 "No xlink:href or sodipodi:absref attributes found, or they do not point to "
 "an existing file! Unable to embed image."
 msgstr ""
 
-#: ../share/extensions/embedimage.py:74
+#: ../share/extensions/embedimage.py:76
 #, python-format
 msgid "Sorry we could not locate %s"
 msgstr ""
 
-#: ../share/extensions/embedimage.py:99
+#: ../share/extensions/embedimage.py:101
 #, python-format
 msgid ""
 "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, "
