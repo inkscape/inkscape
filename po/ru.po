@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-08 06:41+0200\n"
-"PO-Revision-Date: 2009-06-08 21:13+0300\n"
+"POT-Creation-Date: 2009-06-16 01:12+0400\n"
+"PO-Revision-Date: 2009-06-16 05:19+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -344,6 +344,7 @@ msgstr "Повысить резкость"
 #: ../share/filters/filters.svg.h:163
 #: ../share/filters/filters.svg.h:165
 #: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:179
 msgid "Image effects"
 msgstr "Эффекты для растра"
 
@@ -583,17 +584,13 @@ msgid "Glossy painting effect for bitmaps"
 msgstr "Глянцевый эффект раскрашивания для растра"
 
 #: ../share/filters/filters.svg.h:46
-#, fuzzy
-msgid "HSL Bumps"
-msgstr "Выпуклости"
-
-#: ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:48
 #: ../share/filters/filters.svg.h:123
 #: ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:164
 #: ../share/filters/filters.svg.h:178
-msgid "Bumps"
+#, fuzzy
+msgid "HSL Bumps"
 msgstr "Выпуклости"
 
 #: ../share/filters/filters.svg.h:46
@@ -660,9 +657,8 @@ msgid "Pressed metal with a rolled edge"
 msgstr "Штампованная сталь с вальцованным краем"
 
 #: ../share/filters/filters.svg.h:53
-#, fuzzy
 msgid "Matte Bevel"
-msgstr "Пастельная фаска"
+msgstr "Матовая фаска"
 
 #: ../share/filters/filters.svg.h:53
 msgid "Soft, pastel-colored, blurry bevel"
@@ -1080,12 +1076,11 @@ msgstr "Солнечный свет"
 
 #: ../share/filters/filters.svg.h:101
 msgid "Classical photographic solarization effect"
-msgstr ""
+msgstr "Классический фотоэффект соляризации"
 
 #: ../share/filters/filters.svg.h:102
-#, fuzzy
 msgid "Moonarize"
-msgstr "Восход Луны"
+msgstr ""
 
 #: ../share/filters/filters.svg.h:102
 msgid "An effect between solarize and invert which often preserves sky and water lights"
@@ -1199,7 +1194,7 @@ msgstr "Мел и губка"
 
 #: ../share/filters/filters.svg.h:115
 msgid "Low turbulence gives sponge look and high turbulence chalk"
-msgstr ""
+msgstr "Низкая турбулентность создает эффект губки, а высокая — мела"
 
 #: ../share/filters/filters.svg.h:116
 msgid "People"
@@ -1215,7 +1210,6 @@ msgid "Scotland"
 msgstr "Шотландия"
 
 #: ../share/filters/filters.svg.h:117
-#, fuzzy
 msgid "Colorized mountain tops out of the fog"
 msgstr "Раскрашенные верхушки гор, выглядывающие из тумана"
 
@@ -1417,7 +1411,8 @@ msgstr "Черновик комикса"
 #: ../share/filters/filters.svg.h:151
 #: ../share/filters/filters.svg.h:152
 #: ../share/filters/filters.svg.h:159
-msgid "Non realistic shaders"
+#, fuzzy
+msgid "Non realistic 3D shaders"
 msgstr "Нереалистичные шейдеры"
 
 #: ../share/filters/filters.svg.h:140
@@ -1654,8 +1649,8 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:168
 #, fuzzy
-msgid "Alpha paint"
-msgstr "Альфа-канал (непрозрачность)"
+msgid "Alpha draw, color"
+msgstr "Альфа-канал"
 
 #: ../share/filters/filters.svg.h:168
 msgid "Gives a transparent color fill effect to bitmaps and materials"
@@ -1741,6 +1736,14 @@ msgstr "0 (прозрачно)"
 
 #: ../share/filters/filters.svg.h:178
 msgid "Highly flexible specular bubbles with transparency"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:179
+msgid "Old postcard"
+msgstr ""
+
+#: ../share/filters/filters.svg.h:179
+msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr ""
 
 #: ../share/patterns/patterns.svg.h:2
@@ -1986,12 +1989,12 @@ msgid "Select <b>at least one non-connector object</b>."
 msgstr "Выделите <b>как минимум один объект (не соединительную линию)</b>."
 
 #: ../src/connector-context.cpp:1347
-#: ../src/widgets/toolbox.cpp:6965
+#: ../src/widgets/toolbox.cpp:6970
 msgid "Make connectors avoid selected objects"
 msgstr "Линии обходят выделенные объекты"
 
 #: ../src/connector-context.cpp:1348
-#: ../src/widgets/toolbox.cpp:6975
+#: ../src/widgets/toolbox.cpp:6980
 msgid "Make connectors ignore selected objects"
 msgstr "Линии игнорируют выделенные объекты"
 
@@ -3494,12 +3497,12 @@ msgid "Justify lines"
 msgstr "Выключить строки по ширине"
 
 #: ../src/dialogs/text-edit.cpp:300
-#: ../src/widgets/toolbox.cpp:6770
+#: ../src/widgets/toolbox.cpp:6777
 msgid "Horizontal text"
 msgstr "Горизонтальный текст"
 
 #: ../src/dialogs/text-edit.cpp:314
-#: ../src/widgets/toolbox.cpp:6782
+#: ../src/widgets/toolbox.cpp:6789
 msgid "Vertical text"
 msgstr "Вертикальный текст"
 
@@ -3513,7 +3516,7 @@ msgstr "Интерлиньяж:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:518
 #: ../src/verbs.cpp:2522
 #: ../share/extensions/lorem_ipsum.inx.h:5
-#: ../share/extensions/render_alphabetsoup.inx.h:4
+#: ../share/extensions/render_alphabetsoup.inx.h:5
 #: ../share/extensions/text_braille.inx.h:2
 #: ../share/extensions/text_flipcase.inx.h:1
 #: ../share/extensions/text_lowercase.inx.h:1
@@ -3566,11 +3569,8 @@ msgid "Duplicate node"
 msgstr "Дублирование ветви"
 
 #: ../src/dialogs/xml-tree.cpp:347
-#: ../src/dialogs/xml-tree.cpp:1426
-#: ../src/nodepath.cpp:3517
-#: ../src/widgets/toolbox.cpp:1300
-msgid "Delete node"
-msgstr "Удаление ветви"
+msgid "nodeAsInXMLdialogTooltip|Delete node"
+msgstr "Удалить элемент дерева XML"
 
 #: ../src/dialogs/xml-tree.cpp:363
 #: ../src/dialogs/xml-tree.cpp:1571
@@ -3642,6 +3642,10 @@ msgstr "Создание ветви элемента"
 #: ../src/dialogs/xml-tree.cpp:1391
 msgid "Create new text node"
 msgstr "Создание текстовой ветви"
+
+#: ../src/dialogs/xml-tree.cpp:1426
+msgid "nodeAsInXMLinHistoryDialog|Delete node"
+msgstr "Удаление элемента XML"
 
 #: ../src/dialogs/xml-tree.cpp:1473
 msgid "Change attribute"
@@ -3895,9 +3899,8 @@ msgid "page corner"
 msgstr "углу страницы"
 
 #: ../src/display/snap-indicator.cpp:126
-#, fuzzy
 msgid "convex hull corner"
-msgstr "Опустить текущий слой"
+msgstr "выпуклому внешнему углу"
 
 #: ../src/display/snap-indicator.cpp:129
 msgid "quadrant point"
@@ -3965,16 +3968,15 @@ msgid "Guide origin"
 msgstr "Направляющая"
 
 #: ../src/display/snap-indicator.cpp:187
-#, fuzzy
 msgid "Convex hull corner"
-msgstr "Опустить текущий слой"
+msgstr "Выпуклый внешний угол"
 
 #: ../src/display/snap-indicator.cpp:190
 msgid "Quadrant point"
 msgstr "Точка квадранта"
 
 #: ../src/display/snap-indicator.cpp:193
-#: ../src/widgets/toolbox.cpp:6700
+#: ../src/widgets/toolbox.cpp:6707
 msgid "Center"
 msgstr "Выключка по центру"
 
@@ -3990,17 +3992,17 @@ msgstr "Линия шрифта текста"
 msgid " to "
 msgstr " к "
 
-#: ../src/document.cpp:445
+#: ../src/document.cpp:441
 #, c-format
 msgid "New document %d"
 msgstr "Новый документ %d"
 
-#: ../src/document.cpp:477
+#: ../src/document.cpp:473
 #, c-format
 msgid "Memory document %d"
 msgstr "Документ в памяти %d"
 
-#: ../src/document.cpp:632
+#: ../src/document.cpp:628
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Безымянный документ %d"
@@ -4674,9 +4676,8 @@ msgid "Reduce noise in selected bitmap(s) using a noise peak elimination filter.
 msgstr "Удалить шум из выбранных изображений применением фильтра удаления пика шума."
 
 #: ../src/extension/internal/bitmap/sample.cpp:38
-#, fuzzy
 msgid "Resample"
-msgstr "Размер изображения"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/sample.cpp:47
 #, fuzzy
@@ -4975,9 +4976,8 @@ msgid "White, blurred drop glow"
 msgstr "Отбрасываемая размытая тень"
 
 #: ../src/extension/internal/filter/filter-file.cpp:32
-#, fuzzy
 msgid "Bundled"
-msgstr "Закругление"
+msgstr "Из поставки"
 
 #: ../src/extension/internal/filter/filter-file.cpp:33
 msgid "Personal"
@@ -5380,7 +5380,7 @@ msgstr "Выберите файл"
 
 #: ../src/file.cpp:548
 msgid "Vacuum &lt;defs&gt;"
-msgstr "О_чистить &lt;defs&gt;"
+msgstr "Очистка <defs>"
 
 #: ../src/file.cpp:553
 #, c-format
@@ -5998,7 +5998,7 @@ msgstr "Единица измерения:"
 #: ../src/widgets/toolbox.cpp:1504
 #: ../src/widgets/toolbox.cpp:3154
 #: ../src/widgets/toolbox.cpp:5658
-#: ../src/widgets/toolbox.cpp:7171
+#: ../src/widgets/toolbox.cpp:7176
 msgid "Units"
 msgstr "Единицы"
 
@@ -7571,6 +7571,7 @@ msgstr "Как много касательных линий рисовать"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2207
 #: ../src/ui/dialog/transformation.cpp:738
 #: ../share/extensions/interp_att_g.inx.h:16
+#: ../share/extensions/render_alphabetsoup.inx.h:4
 msgid "Scale"
 msgstr "Масштабирование"
 
@@ -7938,8 +7939,8 @@ msgstr "ОБЪЕКТ-ID"
 msgid "Start Inkscape in interactive shell mode."
 msgstr "Запустить Inkscape в интерактивном командном режиме"
 
-#: ../src/main.cpp:756
-#: ../src/main.cpp:1067
+#: ../src/main.cpp:761
+#: ../src/main.cpp:1072
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -8156,6 +8157,11 @@ msgstr "Смена типа сегмента"
 #: ../src/nodepath.cpp:3567
 msgid "Change node type"
 msgstr "Смена типа узла"
+
+#: ../src/nodepath.cpp:3517
+#: ../src/widgets/toolbox.cpp:1300
+msgid "Delete node"
+msgstr "Удалить узел"
 
 #: ../src/nodepath.cpp:3861
 msgid "Retract handle"
@@ -9427,7 +9433,7 @@ msgid "<b>Link</b> without URI"
 msgstr "<b>Ссылка</b> без URI"
 
 #: ../src/sp-ellipse.cpp:489
-#: ../src/sp-ellipse.cpp:868
+#: ../src/sp-ellipse.cpp:866
 msgid "<b>Ellipse</b>"
 msgstr "<b>Эллипс</b>"
 
@@ -9435,11 +9441,11 @@ msgstr "<b>Эллипс</b>"
 msgid "<b>Circle</b>"
 msgstr "<b>Окружность</b>"
 
-#: ../src/sp-ellipse.cpp:863
+#: ../src/sp-ellipse.cpp:861
 msgid "<b>Segment</b>"
 msgstr "<b>Сегмент</b>"
 
-#: ../src/sp-ellipse.cpp:865
+#: ../src/sp-ellipse.cpp:863
 msgid "<b>Arc</b>"
 msgstr "<b>Дуга</b>"
 
@@ -9475,7 +9481,7 @@ msgstr[1] "<b>Связанный заверстанный текст</b> (%d с�
 msgstr[2] "<b>Связанный заверстанный текст</b> (%d символов)"
 
 #: ../src/sp-guide.cpp:287
-msgid "Guides around page"
+msgid "Guides Around Page"
 msgstr "Направляющие вокруг страницы"
 
 #: ../src/sp-guide.cpp:420
@@ -10486,12 +10492,12 @@ msgstr "В:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:509
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#: ../src/widgets/toolbox.cpp:7036
+#: ../src/widgets/toolbox.cpp:7041
 msgid "Remove overlaps"
 msgstr "Убрать перекрытия"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:540
-#: ../src/widgets/toolbox.cpp:6901
+#: ../src/widgets/toolbox.cpp:6904
 msgid "Arrange connector network"
 msgstr "Гармоничная расстановка связанных объектов"
 
@@ -10630,7 +10636,7 @@ msgid "Move objects as little as possible so that their bounding boxes do not ov
 msgstr "Переместить объекты так, чтобы их рамки едва-едва не пересекались"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:893
-#: ../src/widgets/toolbox.cpp:6999
+#: ../src/widgets/toolbox.cpp:7004
 msgid "Nicely arrange selected connector network"
 msgstr "Гармонично расставить связанные коннектором объекты"
 
@@ -11827,7 +11833,7 @@ msgstr "С какой скоростью будет происходить пр�
 #: ../src/ui/dialog/tracedialog.cpp:420
 #: ../src/ui/dialog/tracedialog.cpp:453
 #: ../src/ui/dialog/tracedialog.cpp:596
-#: ../src/widgets/toolbox.cpp:7153
+#: ../src/widgets/toolbox.cpp:7158
 msgid "Threshold:"
 msgstr "Порог:"
 
@@ -12193,7 +12199,6 @@ msgstr "Раскрашивать объекты:"
 #: ../src/ui/view/edit-widget.cpp:1062
 #: ../src/verbs.cpp:2526
 #: ../src/widgets/desktop-widget.cpp:481
-#: ../share/extensions/render_alphabetsoup.inx.h:5
 msgid "Zoom"
 msgstr "Лупа"
 
@@ -13246,11 +13251,11 @@ msgstr "Изменить размер значков в панели парам�
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1084
 msgid "Work-around color sliders not drawing."
-msgstr ""
+msgstr "Попытаться исправить ползунок альфа-канала"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1086
 msgid "When on, will attempt to work around bugs in certain GTK themes drawing color sliders."
-msgstr ""
+msgstr "В некоторых темах GTK+ ползунок альфа-канал замирает на отметке 244. Inkscape может попытаться исправить это."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1092
 msgid "Clear list"
@@ -13270,7 +13275,7 @@ msgstr "Масштаб видимой страницы (%):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1102
 msgid "Adjust the slider until the length of the ruler on your screen matches its real length. This information is used when zooming to 1:1, 1:2, etc., to display objects in their true sizes"
-msgstr ""
+msgstr "Приложите к экрану линейку и перетащите ползунок до позиции, при которой деления на линейке и на экране совпадают. После этого масштаб отображения документа 1:1 будет соответствовать реальному."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1104
 msgid "Interface"
@@ -13377,7 +13382,7 @@ msgstr "Язык:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1227
 msgid "Set the main spell check language"
-msgstr ""
+msgstr "Первый по важности язык для проверки орфографии"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1230
 msgid "Second language:"
@@ -13385,7 +13390,7 @@ msgstr "Второй язык:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid "Set the second spell check language; checking will only stop on words unknown in ALL chosen languages"
-msgstr ""
+msgstr "Второй по важности язык для проверки орфографии; проверка завершится лишь в случае ненахождения слов во ВСЕХ выбранных языках."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1234
 msgid "Third language:"
@@ -13393,7 +13398,7 @@ msgstr "Третий язык:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Set the third spell check language; checking will only stop on words unknown in ALL chosen languages"
-msgstr ""
+msgstr "Третий по важности язык для проверки орфографии; проверка завершится лишь в случае ненахождения слов во ВСЕХ выбранных языках."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1237
 msgid "Ignore words with digits"
@@ -14091,8 +14096,7 @@ msgstr "Горизонтальный интервал между столбца�
 
 #. ## The OK button
 #: ../src/ui/dialog/tile.cpp:863
-#: ../share/extensions/restack.inx.h:3
-msgid "Arrange"
+msgid "tileClonesDialog|Arrange"
 msgstr "Расставить"
 
 #: ../src/ui/dialog/tile.cpp:864
@@ -15580,11 +15584,11 @@ msgstr "Убрать ссылки клонов на их оригиналы, п�
 
 #: ../src/verbs.cpp:2316
 msgid "Relink to Copied"
-msgstr ""
+msgstr "Связать с объектом в буфере обмена"
 
 #: ../src/verbs.cpp:2317
 msgid "Relink the selected clones to the object currently on the clipboard"
-msgstr ""
+msgstr "Заново связать выбранные клоны с объектом в буфере обмена"
 
 #: ../src/verbs.cpp:2318
 msgid "Select _Original"
@@ -15691,7 +15695,7 @@ msgid "Deselect any selected objects or nodes"
 msgstr "Снять выделение со всех объектов или узлов"
 
 #: ../src/verbs.cpp:2344
-msgid "_Guides around page"
+msgid "_Guides Around Page"
 msgstr "На_правляющие вокруг страницы"
 
 #: ../src/verbs.cpp:2345
@@ -16905,22 +16909,22 @@ msgid "Miscellaneous tips and tricks"
 msgstr "Различные советы по использованию программы"
 
 #. "tutorial_tips"
-#. Effect
+#. Effect -- renamed Extension
 #: ../src/verbs.cpp:2717
-msgid "Previous Effect"
-msgstr "Повторить последний"
+msgid "Previous Extension"
+msgstr "Повторить выполнение"
 
 #: ../src/verbs.cpp:2718
-msgid "Repeat the last effect with the same settings"
-msgstr "Повторить последний эффект с теми же настройками"
+msgid "Repeat the last extension with the same settings"
+msgstr "Повторно выполнить последнее расширение с теми же параметрами"
 
 #: ../src/verbs.cpp:2719
-msgid "Previous Effect Settings..."
+msgid "Previous Extension Settings..."
 msgstr "Повторить с изменениями..."
 
 #: ../src/verbs.cpp:2720
-msgid "Repeat the last effect with new settings"
-msgstr "Повторить последний эффект с новыми настройками"
+msgid "Repeat the last extension with new settings"
+msgstr "Повторно выполнить последнее расширение с новыми параметрами"
 
 #: ../src/verbs.cpp:2724
 msgid "Fit the page to the current selection"
@@ -17003,7 +17007,6 @@ msgid "none"
 msgstr "нет"
 
 #: ../src/widgets/ege-paint-def.cpp:89
-#, fuzzy
 msgid "remove"
 msgstr "Удалить"
 
@@ -17045,7 +17048,7 @@ msgstr "Кегль шрифта:"
 #. * some representative characters that users of your locale will be
 #. * interested in.
 #: ../src/widgets/font-selector.cpp:641
-#: ../src/widgets/toolbox.cpp:6549
+#: ../src/widgets/toolbox.cpp:6495
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "АаБбВвГгЁёФфЩщЯя$€¢?.;/()"
 
@@ -18140,7 +18143,7 @@ msgstr "Случайным образом смещать вершины и вр�
 #: ../src/widgets/toolbox.cpp:2826
 #: ../src/widgets/toolbox.cpp:3765
 #: ../src/widgets/toolbox.cpp:4025
-#: ../src/widgets/toolbox.cpp:7217
+#: ../src/widgets/toolbox.cpp:7222
 msgid "Defaults"
 msgstr "По умолчанию"
 
@@ -19061,139 +19064,143 @@ msgstr "Вырезать"
 msgid "Cut out from objects"
 msgstr "Вырезать из объектов"
 
-#: ../src/widgets/toolbox.cpp:6099
+#: ../src/widgets/toolbox.cpp:6102
 msgid "Text: Change font family"
 msgstr "Текст: сменить гарнитуру"
 
-#: ../src/widgets/toolbox.cpp:6188
+#: ../src/widgets/toolbox.cpp:6172
 msgid "Text: Change alignment"
 msgstr "Текст: сменить выключку"
 
-#: ../src/widgets/toolbox.cpp:6267
+#: ../src/widgets/toolbox.cpp:6251
 msgid "Text: Change font style"
 msgstr "Текст: сменить начертание"
 
-#: ../src/widgets/toolbox.cpp:6315
+#: ../src/widgets/toolbox.cpp:6298
 msgid "Text: Change orientation"
 msgstr "Текст: сменить ориентацию"
 
-#: ../src/widgets/toolbox.cpp:6418
+#: ../src/widgets/toolbox.cpp:6412
 msgid "Text: Change font size"
 msgstr "Текст: сменить кегль"
 
-#: ../src/widgets/toolbox.cpp:6653
+#: ../src/widgets/toolbox.cpp:6623
+msgid "Select font family (Alt+X to access)"
+msgstr "Выбрать гарнитуру (также доступно по Alt+X)"
+
+#: ../src/widgets/toolbox.cpp:6660
 msgid "This font is currently not installed on your system. Inkscape will use the default font instead."
 msgstr "Этот шрифт сейчас отсутствует в системе. Вместо него Inkscape использует шрифт по умолчанию."
 
-#: ../src/widgets/toolbox.cpp:6689
+#: ../src/widgets/toolbox.cpp:6696
 msgid "Align left"
 msgstr "Выключка влево"
 
-#: ../src/widgets/toolbox.cpp:6711
+#: ../src/widgets/toolbox.cpp:6718
 msgid "Align right"
 msgstr "Выключка вправо"
 
-#: ../src/widgets/toolbox.cpp:6722
+#: ../src/widgets/toolbox.cpp:6729
 msgid "Justify"
 msgstr "Выключка по ширине"
 
-#: ../src/widgets/toolbox.cpp:6737
+#: ../src/widgets/toolbox.cpp:6744
 msgid "Bold"
 msgstr "Полужирное"
 
-#: ../src/widgets/toolbox.cpp:6748
+#: ../src/widgets/toolbox.cpp:6755
 msgid "Italic"
 msgstr "Наклонное"
 
-#: ../src/widgets/toolbox.cpp:6881
+#: ../src/widgets/toolbox.cpp:6886
 msgid "Change connector spacing"
 msgstr "Смена интервала соед. линии"
 
-#: ../src/widgets/toolbox.cpp:6964
+#: ../src/widgets/toolbox.cpp:6969
 msgid "Avoid"
 msgstr "Избегать"
 
-#: ../src/widgets/toolbox.cpp:6974
+#: ../src/widgets/toolbox.cpp:6979
 msgid "Ignore"
 msgstr "Игнорировать"
 
-#: ../src/widgets/toolbox.cpp:6986
+#: ../src/widgets/toolbox.cpp:6991
 msgid "Connector Spacing"
 msgstr "Интервал линии соединения"
 
-#: ../src/widgets/toolbox.cpp:6986
+#: ../src/widgets/toolbox.cpp:6991
 msgid "Spacing:"
 msgstr "Интервал:"
 
-#: ../src/widgets/toolbox.cpp:6987
+#: ../src/widgets/toolbox.cpp:6992
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Оставшееся пространство вокруг объектов при автосоединении"
 
-#: ../src/widgets/toolbox.cpp:6998
+#: ../src/widgets/toolbox.cpp:7003
 msgid "Graph"
 msgstr "Граф"
 
-#: ../src/widgets/toolbox.cpp:7008
+#: ../src/widgets/toolbox.cpp:7013
 msgid "Connector Length"
 msgstr "Длина линии соединения"
 
-#: ../src/widgets/toolbox.cpp:7008
+#: ../src/widgets/toolbox.cpp:7013
 msgid "Length:"
 msgstr "Длина:"
 
-#: ../src/widgets/toolbox.cpp:7009
+#: ../src/widgets/toolbox.cpp:7014
 msgid "Ideal length for connectors when layout is applied"
 msgstr "Идеальная длина при использовании оптимизации внешнего вида линий соединения"
 
-#: ../src/widgets/toolbox.cpp:7021
+#: ../src/widgets/toolbox.cpp:7026
 msgid "Downwards"
 msgstr "Вниз"
 
-#: ../src/widgets/toolbox.cpp:7022
+#: ../src/widgets/toolbox.cpp:7027
 msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Линии соединения со стрелками указывают вниз"
 
-#: ../src/widgets/toolbox.cpp:7037
+#: ../src/widgets/toolbox.cpp:7042
 msgid "Do not allow overlapping shapes"
 msgstr "Не допускать перекрытия фигур"
 
-#: ../src/widgets/toolbox.cpp:7140
+#: ../src/widgets/toolbox.cpp:7145
 msgid "Fill by"
 msgstr "Чем залить"
 
-#: ../src/widgets/toolbox.cpp:7141
+#: ../src/widgets/toolbox.cpp:7146
 msgid "Fill by:"
 msgstr "Чем залить:"
 
-#: ../src/widgets/toolbox.cpp:7153
+#: ../src/widgets/toolbox.cpp:7158
 msgid "Fill Threshold"
 msgstr "Порог заливки"
 
-#: ../src/widgets/toolbox.cpp:7154
+#: ../src/widgets/toolbox.cpp:7159
 msgid "The maximum allowed difference between the clicked pixel and the neighboring pixels to be counted in the fill"
 msgstr "Максимально допустимая разница между щелкнутым пикселом и соседними пикселами, попадающими в заливку"
 
-#: ../src/widgets/toolbox.cpp:7179
+#: ../src/widgets/toolbox.cpp:7184
 msgid "Grow/shrink by"
 msgstr "Увеличить/уменьшить на"
 
-#: ../src/widgets/toolbox.cpp:7179
+#: ../src/widgets/toolbox.cpp:7184
 msgid "Grow/shrink by:"
 msgstr "Увеличить/уменьшить на:"
 
-#: ../src/widgets/toolbox.cpp:7180
+#: ../src/widgets/toolbox.cpp:7185
 msgid "The amount to grow (positive) or shrink (negative) the created fill path"
 msgstr "Насколько увеличить (положительное число) или уменьшить (отрицательное число) создаваемый контур с заливкой"
 
-#: ../src/widgets/toolbox.cpp:7205
+#: ../src/widgets/toolbox.cpp:7210
 msgid "Close gaps"
 msgstr "Закрыть интервалы"
 
-#: ../src/widgets/toolbox.cpp:7206
+#: ../src/widgets/toolbox.cpp:7211
 msgid "Close gaps:"
 msgstr "Закрыть интервалы:"
 
-#: ../src/widgets/toolbox.cpp:7218
+#: ../src/widgets/toolbox.cpp:7223
 msgid "Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
 msgstr "Сбросить параметры заливки к значениям по умолчанию (параметры по умолчанию можно изменить через диалог настройки Inkscape)"
 
@@ -19294,7 +19301,7 @@ msgstr "Сначала преобразуйте объекты в контуры
 
 #: ../share/extensions/perspective.py:29
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
-msgstr ""
+msgstr "Не удалось импортировать модуль numpy или numpy.linalg. Эти модули необходимо для работы вызванного расширения. Установите их и попробуйте снова. На системах вроде Debian это делается командой sudo apt-get install python-numpy."
 
 #: ../share/extensions/perspective.py:62
 #: ../share/extensions/summersnight.py:39
@@ -19315,6 +19322,8 @@ msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object | Ungroup."
 msgstr ""
+"Второй выделенный объект является группой, а не контуром.\n"
+"Попробуйте выполнить команду »Объект → Разгруппировать»."
 
 #: ../share/extensions/perspective.py:89
 #: ../share/extensions/summersnight.py:74
@@ -19322,6 +19331,8 @@ msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"Второй выделенный объект не является контуром.\n"
+"Попробуйте выполнить команду »Контур → Оконтурить объект»."
 
 #: ../share/extensions/perspective.py:92
 #: ../share/extensions/summersnight.py:77
@@ -19329,6 +19340,8 @@ msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path | Object to Path."
 msgstr ""
+"Первый выделенный объект не является контуром.\n"
+"Попробуйте выполнить команду »Контур → Оконтурить объект»."
 
 #: ../share/extensions/polyhedron_3d.py:58
 msgid "Failed to import the numpy module. This module is required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
@@ -19349,7 +19362,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.py:512
 msgid "Internal Error. No view type selected\n"
-msgstr ""
+msgstr "Внутренняя ошибка: не выбран тип вида\n"
 
 #: ../share/extensions/summersnight.py:32
 msgid "The second path must be exactly four nodes long."
@@ -19779,7 +19792,7 @@ msgstr "AutoCAD DXF (*.dxf)"
 
 #: ../share/extensions/dxf_input.inx.h:2
 msgid "Character Encoding"
-msgstr "Кодировка символов"
+msgstr "Кодировка символов:"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "DXF Input"
@@ -19791,7 +19804,7 @@ msgstr "Импорт файлов формата AutoCAD's Document Exchange For
 
 #: ../share/extensions/dxf_input.inx.h:5
 msgid "Or, use manual scale factor"
-msgstr ""
+msgstr "Свой коэфф. масштабирования:"
 
 #: ../share/extensions/dxf_input.inx.h:6
 msgid "Use automatic scaling to size A4"
@@ -20363,9 +20376,8 @@ msgid "If you select \"Other\", you must know the SVG attributes to identify her
 msgstr ""
 
 #: ../share/extensions/interp_att_g.inx.h:8
-#, fuzzy
 msgid "Integer Number"
-msgstr "_Пригласить пользователя"
+msgstr "Переменная"
 
 #: ../share/extensions/interp_att_g.inx.h:9
 msgid "Interpolate Attribute in a group"
@@ -20757,6 +20769,27 @@ msgstr "Укажите ширину:"
 msgid "Perspective"
 msgstr "Перспектива"
 
+#: ../share/extensions/plt_input.inx.h:1
+msgid "AutoCAD Plot Input"
+msgstr "Импорт файлов AutoCAD Plot (PLT)"
+
+#: ../share/extensions/plt_input.inx.h:2
+#: ../share/extensions/plt_output.inx.h:2
+msgid "AutoCAD Plot drawing files (*.plt)"
+msgstr "Файлы AutoCAD Plot (*.plt)"
+
+#: ../share/extensions/plt_input.inx.h:3
+msgid "Open files saved for plotters"
+msgstr "Открыть файлы, сохранённые для плоттеров"
+
+#: ../share/extensions/plt_output.inx.h:1
+msgid "AutoCAD Plot Output"
+msgstr "Экспорт файлов AutoCAD Plot (PLT)"
+
+#: ../share/extensions/plt_output.inx.h:3
+msgid "Save a file for plotters"
+msgstr "Сохранить файл для плоттеров"
+
 #: ../share/extensions/polyhedron_3d.inx.h:1
 msgid "3D Polyhedron"
 msgstr "Трехмерный многогранник"
@@ -20784,7 +20817,7 @@ msgstr ""
 
 #: ../share/extensions/polyhedron_3d.inx.h:7
 msgid "Edge-Specified"
-msgstr ""
+msgstr "Определенный ребрами"
 
 #: ../share/extensions/polyhedron_3d.inx.h:8
 msgid "Edges"
@@ -20792,7 +20825,7 @@ msgstr "Грани"
 
 #: ../share/extensions/polyhedron_3d.inx.h:9
 msgid "Face-Specified"
-msgstr ""
+msgstr "Определенный гранями"
 
 #: ../share/extensions/polyhedron_3d.inx.h:10
 msgid "Faces"
@@ -20856,9 +20889,8 @@ msgid "Maximum"
 msgstr "Максимум"
 
 #: ../share/extensions/polyhedron_3d.inx.h:26
-#, fuzzy
 msgid "Mean"
-msgstr "Металл"
+msgstr "Средняя величина"
 
 #: ../share/extensions/polyhedron_3d.inx.h:27
 msgid "Minimum"
@@ -20893,9 +20925,8 @@ msgid "Scaling Factor"
 msgstr "Коэффициент масштаба:"
 
 #: ../share/extensions/polyhedron_3d.inx.h:36
-#, fuzzy
 msgid "Shading"
-msgstr "Интервал"
+msgstr "Затенение"
 
 #: ../share/extensions/polyhedron_3d.inx.h:38
 msgid "Small Triambic Icosahedron"
@@ -20964,7 +20995,7 @@ msgstr "Ось Z"
 
 #: ../share/extensions/polyhedron_3d.inx.h:56
 msgid "Z-Sort Faces By:"
-msgstr ""
+msgstr "Критерий сортировки грани на оси Z:"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -21091,6 +21122,10 @@ msgstr "Тип штрих-кода:"
 msgid "Arbitrary Angle:"
 msgstr "Произвольный угол:"
 
+#: ../share/extensions/restack.inx.h:3
+msgid "Arrange"
+msgstr "Расстановка"
+
 #: ../share/extensions/restack.inx.h:4
 msgid "Bottom"
 msgstr "Внизу"
@@ -21112,14 +21147,12 @@ msgid "Middle"
 msgstr "Посередине"
 
 #: ../share/extensions/restack.inx.h:10
-#, fuzzy
 msgid "Radial Inward"
-msgstr "Радиальный градиент"
+msgstr "Радиально вовнутрь"
 
 #: ../share/extensions/restack.inx.h:11
-#, fuzzy
 msgid "Radial Outward"
-msgstr "Радиальный градиент"
+msgstr "Радиально наружу"
 
 #: ../share/extensions/restack.inx.h:12
 msgid "Restack"
@@ -21499,9 +21532,8 @@ msgid "Text Input"
 msgstr "Импорт текстовых файлов"
 
 #: ../share/extensions/web-set-att.inx.h:1
-#, fuzzy
 msgid "All selected ones set an attribute in the last one"
-msgstr "Каждый выделенный объект имеет метку в виде ромбика в левом верхнем углу"
+msgstr "Все выбранные устанавливают атрибут последнему"
 
 #: ../share/extensions/web-set-att.inx.h:2
 msgid "Attribute to set"
@@ -21620,9 +21652,8 @@ msgid "on mouse up"
 msgstr "при отпускании клавиши мыши"
 
 #: ../share/extensions/web-transmit-att.inx.h:1
-#, fuzzy
 msgid "All selected ones transmits to the last one"
-msgstr "У нескольких выбранных объектов одинаковая обводка"
+msgstr "Все выбранные передают последнему"
 
 #: ../share/extensions/web-transmit-att.inx.h:2
 msgid "Attribute to transmit"
@@ -21683,6 +21714,14 @@ msgstr "Импорт файлов Windows Metafile"
 msgid "XAML Input"
 msgstr "Импорт XAML"
 
+#~ msgid "Bumps"
+#~ msgstr "Выпуклости"
+
+#, fuzzy
+#~ msgid "Alpha paint"
+#~ msgstr "Альфа-канал (непрозрачность)"
+#~ msgid "Previous Effect"
+#~ msgstr "Повторить последний"
 #~ msgid "All Image Files"
 #~ msgstr "Все файлы изображений"
 #~ msgid "Organization"
