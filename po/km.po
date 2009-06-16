@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: km\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-05-19 11:58+0200\n"
-"PO-Revision-Date: 2009-06-15 16:44+0700\n"
+"PO-Revision-Date: 2009-06-16 10:10+0700\n"
 "Last-Translator: Auk Piseth <piseth_dv@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
@@ -13688,59 +13688,56 @@ msgid ""
 msgstr "ទំហំ​អប្បបរមា​នៃ​ចំនួន (10 ទៅ​ស្វ័យគុណ​នៃ​និទស្សន្ត​នេះ) ចំនួន​តូច​ជាង​នឹង​ត្រូវ​បាន​សរសេរ​ជា សូន្យ ។"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1042
-#, fuzzy
 msgid "SVG output"
 msgstr "លទ្ធផល SVG"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#, fuzzy
 msgid "System default"
-msgstr "កំណត់​​ជា​​លំនាំដើម​"
+msgstr "លំនាំដើម​របស់​ប្រព័ន្ធ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
 msgid "Albanian (sq)"
-msgstr ""
+msgstr "អាល់បានី (sq)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
 msgid "Amharic (am)"
-msgstr ""
+msgstr "អាមហារីក (am)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
 msgid "Arabic (ar)"
-msgstr ""
+msgstr "អារ៉ាប់ (ar)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
 msgid "Armenian (hy)"
-msgstr ""
+msgstr "អារមេនី (hy)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
 msgid "Azerbaijani (az)"
-msgstr ""
+msgstr "អាហ្ស៊ែរបែហ្សង់ (az)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
-#, fuzzy
 msgid "Basque (eu)"
-msgstr "រង្វាស់​"
+msgstr "បាស្កេ (eu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1047
 msgid "Belarusian (be)"
-msgstr ""
+msgstr "បេឡារុស្ស (be)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
 msgid "Bulgarian (bg)"
-msgstr ""
+msgstr "ប៊ុលហ្ការី (bg)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
 msgid "Bengali (bn)"
-msgstr ""
+msgstr "បេន្កាលី (bn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
 msgid "Breton (br)"
-msgstr ""
+msgstr "ប្រេតុង (br)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
 msgid "Catalan (ca)"
-msgstr ""
+msgstr "កាតាឡាន (ca)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
 msgid "Valencian Catalan (ca@valencia)"
@@ -13748,257 +13745,243 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1048
 msgid "Chinese/China (zh_CN)"
-msgstr ""
+msgstr "ចិន (zh_CN)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1049
 msgid "Chinese/Taiwan (zh_TW)"
-msgstr ""
+msgstr "ចិន/តៃវ៉ាន់ (zh_TW)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1049
 msgid "Croatian (hr)"
-msgstr ""
+msgstr "ក្រូអាត (hr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1049
 msgid "Czech (cs)"
-msgstr ""
+msgstr "ឆេក (cs)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
 msgid "Danish (da)"
-msgstr ""
+msgstr "ដាណឺម៉ាក (da)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
 msgid "Dutch (nl)"
-msgstr ""
+msgstr "ហុល្លង់ (nl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
 msgid "Dzongkha (dz)"
-msgstr ""
+msgstr "ដុងហ្កា (dz)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
 msgid "German (de)"
-msgstr ""
+msgstr "អាឡឺម៉ង់ (de)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
-#, fuzzy
 msgid "Greek (el)"
-msgstr "ឆានែល​ពណ៌​បៃតង"
+msgstr "ក្រិក (el)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
-#, fuzzy
 msgid "English (en)"
-msgstr "មុំ​ប៊ិក"
+msgstr "អង់គ្លេស (en)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1050
 msgid "English/Australia (en_AU)"
-msgstr ""
+msgstr "អង់គ្លេស/អូស្ដ្រាលី (en_AU)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "English/Canada (en_CA)"
-msgstr ""
+msgstr "អង់គ្លេស/កាណាដា (en_CA)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "English/Great Britain (en_GB)"
-msgstr ""
+msgstr "អង់គ្លេស/ចក្រភព​អង់គ្លេស (en_GB)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
 msgid "Pig Latin (en_US@piglatin)"
-msgstr ""
+msgstr "Pig Latin (en_US@piglatin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
-#, fuzzy
 msgid "Esperanto (eo)"
-msgstr "ការី"
+msgstr "អេស្ពេរ៉ាន់តូ (eo)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Estonian (et)"
-msgstr ""
+msgstr "អេស្តូនី (et)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1052
 msgid "Finnish (fi)"
-msgstr ""
+msgstr "ហ្វាំងឡង់ (fi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "French (fr)"
-msgstr ""
+msgstr "បារាំង (fr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Irish (ga)"
-msgstr ""
+msgstr "អៀរឡង់ (ga)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Galician (gl)"
-msgstr ""
+msgstr "ហ្គាលីស៊ី (gl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Hebrew (he)"
-msgstr ""
+msgstr "ហេប្រ៊ូ (he)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1053
 msgid "Hungarian (hu)"
-msgstr ""
+msgstr "ហុងគ្រី (hu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Indonesian (id)"
-msgstr ""
+msgstr "ឥណ្ឌូនេស៊ី (id)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
-#, fuzzy
 msgid "Italian (it)"
-msgstr "ទ្រេត"
+msgstr "អ៊ីតាលី (it)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Japanese (ja)"
-msgstr ""
+msgstr "ជប៉ុន (ja)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Khmer (km)"
-msgstr ""
+msgstr "ខ្មែរ (km)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Kinyarwanda (rw)"
-msgstr ""
+msgstr "គីនយ៉ាវ៉ាន់ដា (rw)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Korean (ko)"
-msgstr ""
+msgstr "កូរ៉េ (ko)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Lithuanian (lt)"
-msgstr ""
+msgstr "លីទុយអានី (lt)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1054
 msgid "Macedonian (mk)"
-msgstr ""
+msgstr "ម៉ាសេដូនី (mk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Mongolian (mn)"
-msgstr ""
+msgstr "ម៉ុងហ្គោលី (mn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
-#, fuzzy
 msgid "Nepali (ne)"
-msgstr "បន្ទាត់​ថ្មី"
+msgstr "នេប៉ាល់ (ne)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Norwegian Bokmål (nb)"
-msgstr ""
+msgstr "ន័រវែស​បុកម៉ាល់ (nb)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Norwegian Nynorsk (nn)"
-msgstr ""
+msgstr "ន័រវេសនីណ័រស្ក៍ (nn)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1055
 msgid "Panjabi (pa)"
-msgstr ""
+msgstr "ប៉ាន់ចាប៊ី (pa)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Polish (pl)"
-msgstr ""
+msgstr "ប៉ូឡូញ (pl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Portuguese (pt)"
-msgstr ""
+msgstr "ព័រទុយហ្គាល់ (pt)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Portuguese/Brazil (pt_BR)"
-msgstr ""
+msgstr "ព័រទុយហ្គាល់/ប្រេស៊ីល (pt_BR)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
 msgid "Romanian (ro)"
-msgstr ""
+msgstr "រ៉ូម៉ានី (ro)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1056
-#, fuzzy
 msgid "Russian (ru)"
-msgstr "ធ្វើ​ឲ្យ​ហ្គោសៀន​ព្រិលៗ"
+msgstr "រុស្ស៊ី (ru)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Serbian (sr)"
-msgstr ""
+msgstr "ស៊ែប៊ី (sr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Serbian in Latin script (sr@latin)"
-msgstr ""
+msgstr "ស៊ែប៊ី ជា​ស្គ្រីប​ឡាតាំង (sr@latin)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Slovak (sk)"
-msgstr ""
+msgstr "ស្លូវ៉ាគី (sk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Slovenian (sl)"
-msgstr ""
+msgstr "ស្លូវ៉ានី (sl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Spanish (es)"
-msgstr ""
+msgstr "អេស្ប៉ាញ (es)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1057
 msgid "Spanish/Mexico (es_MX)"
-msgstr ""
+msgstr "អេស្ប៉ាញ/មិចស៊ិក (es_MX)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Swedish (sv)"
-msgstr ""
+msgstr "ស៊ុយអែដ (sv)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Thai (th)"
-msgstr ""
+msgstr "ថៃ (th)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Turkish (tr)"
-msgstr ""
+msgstr "ទួរគី (tr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Ukrainian (uk)"
-msgstr ""
+msgstr "អ៊ុយក្រែន (uk)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1058
 msgid "Vietnamese (vi)"
-msgstr ""
+msgstr "វៀតណាម (vi)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1065
-#, fuzzy
 msgid "Language (requires restart):"
-msgstr "ឥរិយាបថ​ប្រអប់ (តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​កុំព្យូទ័រ​ឡើង​វិញ) ៖"
+msgstr "ភាសា (តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​ឡើងវិញ) ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1066
 msgid "Set the language for menus and number formats"
-msgstr ""
+msgstr "កំណត់​ភាសា​សម្រាប់​ម៉ឺនុយ និង​ទ្រង់ទ្រាយ​លេខ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1068
-#, fuzzy
 msgid "Smaller"
-msgstr "តូច​"
+msgstr "តូច​ជាង"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1072
-#, fuzzy
 msgid "Toolbox icon size"
-msgstr "ទំហំ​រូប​តំណាង​របារ​ឧបករណ៍​មេ"
+msgstr "ទំហំ​រូបតំណាង​របស់​ប្រអប់​ឧបករណ៍"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1073
-#, fuzzy
 msgid "Set the size for the tool icons (requires restart)"
-msgstr "កំណត់​ទំហំ​សម្រាប់​ឧបករណ៍​មេ​ដើម្បី​ប្រើ (ទាមទារ​ឲ្យ​ចាប់ផ្ដើម​ឡើង​វិញ)"
+msgstr "កំណត់​ទំហំ​សម្រាប់​រូបតំណាង​ឧបករណ៍ (តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​ឡើងវិញ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1076
-#, fuzzy
 msgid "Control bar icon size"
-msgstr "ទំហំ​រូប​តំណាង​របារ​វត្ថុ​បញ្ជា​ឧបករណ៍"
+msgstr "គ្រប់គ្រង​ទំហំ​រូបតំណាង​របារ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1077
-#, fuzzy
 msgid "Set the size for the icons in tools' control bars to use (requires restart)"
-msgstr "កំណត់​ទំហំ​សម្រាប់​របារ​ឧបករណ៍​ពាក្យ​បញ្ជា​ដើម្បី​ប្រើ (ទាមទារ​ឲ្យ​ចាប់ផ្ដើម​ឡើង​វិញ)"
+msgstr "កំណត់​ទំហំ​សម្រាប់​រូបតំណាង​នៅ​ក្នុង​របារ​គ្រប់គ្រង​របស់​ឧបករណ៍​ដែល​ត្រូវ​ប្រើ (តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​ឡើងវិញ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1080
-#, fuzzy
 msgid "Secondary toolbar icon size"
-msgstr "ទំហំ​រូប​តំណាង​របារ​ឧបករណ៍​មេ"
+msgstr "ទំហំ​រូបតំណាង​របារ​ឧបករណ៍​ទីពីរ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1081
-#, fuzzy
 msgid "Set the size for the icons in secondary toolbars to use (requires restart)"
-msgstr "កំណត់​ទំហំ​សម្រាប់​របារ​ឧបករណ៍​រង​ដើម្បី​ប្រើ (ទាមទារ​ឲ្យ​ចាប់ផ្ដើម​ឡើង​វិញ)"
+msgstr "កំណត់​ទំហំ​សម្រាប់រូបតំណាង​នៅ​ក្នុង​របារ​ឧបករណ៍​​បន្ទាប់​បន្សំ​ដែល​ត្រូវ​ប្រើ (តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​ឡើងវិញ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1084
 msgid "Work-around color sliders not drawing."
@@ -14011,25 +13994,22 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1092
-#, fuzzy
 msgid "Clear list"
-msgstr "ជម្រះ​តម្លៃ​"
+msgstr "ជម្រះ​បញ្ជី"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1097
-#, fuzzy
 msgid "Maximum documents in Open Recent:"
-msgstr "ចំនួន​ឯកសារ​បច្ចុប្បន្ន​អតិបរមា ៖"
+msgstr "ចំនួន​ឯកសារ​អតិបរមា​នៅ​ក្នុង អ្វី​បាន​បើក​ថ្មីៗ ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1098
-#, fuzzy
 msgid ""
 "Set the maximum length of the Open Recent list in the File menu, or clear "
 "the list"
-msgstr "ចំនួន​អតិបរមា​នៃ​បញ្ជី​បើក​ថ្មីៗ​ក្នុង​ម៉ីនុយ​ឯកសារ​"
+msgstr "កំណត់​ប្រវែង​បញ្ជី អ្វី​បាន​បើក​ថ្មីៗ អតិបរមា នៅ​ក្នុង​ម៉ឺនុយ​ឯកសារ ឬ​ជម្រះ​បញ្ជី​នោះ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Zoom correction factor (in %):"
-msgstr ""
+msgstr "កត្តា​កែតម្រូវ​ការ​ពង្រីក (គិតជា %) ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1102
 msgid ""
@@ -14039,31 +14019,27 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1104
-#, fuzzy
 msgid "Interface"
-msgstr "កែខៃ"
+msgstr "ចំណុច​ប្រទាក់"
 
 #. Autosave options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1111
-#, fuzzy
 msgid "Enable autosave (requires restart)"
-msgstr "ឥរិយាបថ​ប្រអប់ (តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​កុំព្យូទ័រ​ឡើង​វិញ) ៖"
+msgstr "បើក​ការ​រក្សាទុក​ដោយ​ស្វ័យប្រវត្តិ (តម្រូវ​ឲ្យ​ចាប់ផ្ដើម​ឡើងវិញ)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1112
-#, fuzzy
 msgid ""
 "Automatically save the current document(s) at a given interval, thus "
 "minimizing loss in case of a crash"
-msgstr "រក្សា​ទុក​ឯកសារ​បច្ចុប្បន្ន​ទៅ​ថា​នៅ​ចន្លោះ​ពេល​ដែល​ផ្ដល់​ឲ្យ ផ្ទុយ​ទៅ​វិញ​អាច​បាត់បង់​នៅ​ពេល​គាំង"
+msgstr "រក្សាទុក​​ឯកសារ​បច្ចុប្បន្ន​ដោយ​ស្វ័យប្រវត្តិ នៅ​ចន្លោះ​ពេល​ដែល​បាន​ផ្ដល់ ដូច្នេះមាន​ការ​បាត់បង់​តិចតួច​បំផុត​នៅ​ក្នុង​ករណី​ដែល​គាំង"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
 msgid "Interval (in minutes):"
 msgstr "ចន្លោះ​ពេល (គិត​ជា​នាទី) ៖"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1114
-#, fuzzy
 msgid "Interval (in minutes) at which document will be autosaved"
-msgstr "កំណត់​ចន្លោះ​ពេល (គិត​ជា​នាទី) ដែល​ទំហំ​ការងារ​នឹង​ត្រូវ​បាន​រក្សា​ទុក​ទៅ​ថាស"
+msgstr "ចន្លោះ​ពេល​ដែល​ត្រូវ​រក្សាទុក​ឯកសារ​ដោយ​ស្វ័យប្រវត្តិ (គិត​ជា​នាទី)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1116
 msgid "Path:"
