@@ -860,7 +860,7 @@ TileDialog::TileDialog()
     SizesHBox.set_sensitive (ManualSpacing);
 
     //## The OK button
-    TileOkButton = addResponseButton(_("Arrange"), GTK_RESPONSE_APPLY);
+    TileOkButton = addResponseButton(Q_("tileClonesDialog|Arrange"), GTK_RESPONSE_APPLY);
     tips.set_tip((*TileOkButton), _("Arrange selected objects"));
 
     show_all_children();
