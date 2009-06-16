@@ -204,11 +204,12 @@
 <feComposite operator="in" in2="result0" id="feComposite2695" />
 <feComposite operator="atop" in2="SourceGraphic" id="feComposite2697" />
 </filter>
-<filter id="filter2665" inkscape:label="Sharpen" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Sharpen edges and boundaries within the object, force=0.15">
+<filter id="Sharpen0" inkscape:label="Sharpen" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Sharpen edges and boundaries within the object, force=0.15">
 <feConvolveMatrix order="3 3" kernelMatrix="0 -0.15 0 -0.15 1.6 -0.15 0 -0.15 0" id="feConvolveMatrix2667" divisor="1" in="SourceGraphic" targetX="1" targetY="1" />
 </filter>
-<filter inkscape:label="Sharpen more" id="filter2679" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Sharpen edges and boundaries within the object, force=0.3">
-<feConvolveMatrix targetY="1" targetX="1" in="SourceGraphic" divisor="1" id="feConvolveMatrix2681" kernelMatrix="0 -0.3 0 -0.3 2.2 -0.3 0 -0.3 0" order="3 3" />
+<filter id="SharpenMore0" inkscape:label="Sharpen more" x="0" y="0" width="1" height="1" inkscape:menu="Image effects" inkscape:menu-tooltip="Sharpen edges and boundaries within the object, force=0.3">
+<feConvolveMatrix id="feConvolveMatrix2859" targetY="1" targetX="1" in="SourceGraphic" divisor="1" kernelMatrix="0 -0.3 0 -0.3 2.2 -0.3 0 -0.3 0" order="3 3" result="result1" />
+<feBlend blend="normal" id="feBlend2861" in2="SourceGraphic" mode="normal" result="result2" />
 </filter>
 <filter id="filter2701" inkscape:label="Oil painting" inkscape:menu="Image effects" inkscape:menu-tooltip="Simulate oil painting style">
 <feMorphology id="feMorphology2703" radius="2" in="SourceGraphic" result="result0" />
