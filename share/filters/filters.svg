@@ -965,14 +965,13 @@
 <feOffset id="feOffset2882" dx="5" dy="5" result="result4" />
 <feComposite id="feComposite2888" in="SourceGraphic" in2="result4" operator="xor" result="result3" />
 </filter>
-<filter id="filter3474" inkscape:label="Air spray" inkscape:menu="Scatter" inkscape:menu-tooltip="Air Spray; adjust the Displacement Map amount" width="2" height="2" y="-0.5" x="-0.5">
-<feGaussianBlur stdDeviation="0.01" id="feGaussianBlur3721" result="result1" />
-<feBlend blend="normal" id="feBlend3723" in2="result1" result="fbSourceGraphic" />
-<feColorMatrix result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="1" id="feColorMatrix3725" type="saturate" />
-<feTurbulence id="feTurbulence3727" baseFrequency="0.40000000000000002" in="fbSourceGraphicAlpha" type="fractalNoise" seed="0" numOctaves="10" />
-<feDisplacementMap id="feDisplacementMap3729" in="fbSourceGraphic" xChannelSelector="R" yChannelSelector="G" scale="50" numOctaves="2" />
-<feMorphology id="feMorphology3731" radius="1" operator="dilate" />
-<feBlend blend="normal" id="feBlend3733" mode="normal" />
+<filter id="AirSpray0" inkscape:label="Air spray" inkscape:menu="Scatter" inkscape:menu-tooltip="Air Spray; adjust the Displacement Map amount" width="2" height="2" y="-0.5" x="-0.5">
+<feGaussianBlur id="feGaussianBlur3002" stdDeviation="0.01" result="result1" />
+<feBlend id="feBlend3004" blend="normal" in2="result1" result="fbSourceGraphic" mode="multiply" />
+<feTurbulence id="feTurbulence3008" baseFrequency="0.8" in="fbSourceGraphic" type="fractalNoise" seed="0" numOctaves="3" result="result3" />
+<feDisplacementMap id="feDisplacementMap3010" in="fbSourceGraphic" xChannelSelector="R" yChannelSelector="G" scale="50" numOctaves="2" result="result2" />
+<feMorphology id="feMorphology3012" radius="1" operator="dilate" result="result4" />
+<feBlend id="feBlend3014" blend="normal" mode="screen" in2="result2" />
 </filter>
 <filter id="Warmins0" inkscape:label="Warm inside" inkscape:menu="Morphology" inkscape:menu-tooltip="Blurred colorized contour, filled inside">
 <feColorMatrix id="feColorMatrix2962" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="fbSourceGraphic" type="matrix" />
