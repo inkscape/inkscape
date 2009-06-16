@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-12 14:51+0200\n"
-"PO-Revision-Date: 2009-06-12 21:57+0800\n"
+"POT-Creation-Date: 2009-06-15 19:19+0200\n"
+"PO-Revision-Date: 2009-06-16 03:53+0800\n"
 "Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -201,7 +201,7 @@ msgstr "突出"
 
 #: ../share/filters/filters.svg.h:13
 msgid "Inky splotches underneath the object"
-msgstr "墨水的汙點在物件底下"
+msgstr "物件底下有墨水的汙點"
 
 #: ../share/filters/filters.svg.h:14
 msgid "Fire"
@@ -575,17 +575,13 @@ msgid "Glossy painting effect for bitmaps"
 msgstr "點陣圖的光滑筆觸效果"
 
 #: ../share/filters/filters.svg.h:46
-msgid "HSL Bumps"
-msgstr "HSL 凹凸"
-
-#: ../share/filters/filters.svg.h:46
 #: ../share/filters/filters.svg.h:48
 #: ../share/filters/filters.svg.h:123
 #: ../share/filters/filters.svg.h:126
 #: ../share/filters/filters.svg.h:164
 #: ../share/filters/filters.svg.h:178
-msgid "Bumps"
-msgstr "凹凸"
+msgid "HSL Bumps"
+msgstr "HSL 凹凸"
 
 #: ../share/filters/filters.svg.h:46
 msgid "Highly flexible specular bump"
@@ -1253,7 +1249,7 @@ msgstr "暗色浮雕"
 
 #: ../share/filters/filters.svg.h:124
 msgid "Emboss effect : 3D relief where white is replaced by black"
-msgstr "浮雕效果：3D 浮雕，黑色取代白色"
+msgstr "浮雕效果：立體浮雕，黑色取代白色"
 
 #: ../share/filters/filters.svg.h:125
 msgid "Simple blur"
@@ -1394,8 +1390,8 @@ msgstr "漫畫式草圖"
 #: ../share/filters/filters.svg.h:151
 #: ../share/filters/filters.svg.h:152
 #: ../share/filters/filters.svg.h:159
-msgid "Non realistic shaders"
-msgstr "非逼真材質"
+msgid "Non realistic 3D shaders"
+msgstr "非逼真立體材質"
 
 #: ../share/filters/filters.svg.h:140
 msgid "Draft painted cartoon shading with a glassy look"
@@ -1507,7 +1503,7 @@ msgstr "邊緣周圍產生波浪狀位移的格紋圖樣和斜角"
 
 #: ../share/filters/filters.svg.h:154
 msgid "3D marble"
-msgstr "3D 大理石"
+msgstr "立體大理石"
 
 #: ../share/filters/filters.svg.h:154
 msgid "3D warped marble texture"
@@ -1515,7 +1511,7 @@ msgstr "立體、彎曲的大理石紋理"
 
 #: ../share/filters/filters.svg.h:155
 msgid "3D wood"
-msgstr "3D 木頭"
+msgstr "立體木頭"
 
 #: ../share/filters/filters.svg.h:155
 msgid "3D warped, fibered wood texture"
@@ -4421,7 +4417,7 @@ msgstr "加亮點陣圖的邊緣。"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
 msgid "Emboss selected bitmap(s) -- highlight edges with 3D effect."
-msgstr "點陣圖浮雕化 -- 以 3D 特效來加亮邊緣。"
+msgstr "點陣圖浮雕化 -- 以立體特效來加亮邊緣。"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
 msgid "Enhance"
@@ -19090,16 +19086,16 @@ msgstr "範圍 /px^2："
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again."
 msgstr "無法匯入 numpy 或 numpy.linalg 模組。這個擴充功能需要這些模組。請安裝這些模組後再試一次。"
 
-#: ../share/extensions/embedimage.py:72
+#: ../share/extensions/embedimage.py:74
 msgid "No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image."
 msgstr "沒有找到 xlink:href 或 sodipodi:absref 屬性，或者是它們沒指向一個存在的檔案！無法嵌入圖像。"
 
-#: ../share/extensions/embedimage.py:74
+#: ../share/extensions/embedimage.py:76
 #, python-format
 msgid "Sorry we could not locate %s"
 msgstr "抱歉我們無法找出 %s 的位置"
 
-#: ../share/extensions/embedimage.py:99
+#: ../share/extensions/embedimage.py:101
 #, python-format
 msgid "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, or image/x-icon"
 msgstr "%s 不是 png、jpeg、bmp、gif、tiff 或 x-icon 圖像類型"
@@ -21545,6 +21541,8 @@ msgstr "Windows 後設檔案輸入"
 msgid "XAML Input"
 msgstr "XAML 輸入"
 
+#~ msgid "Bumps"
+#~ msgstr "凹凸"
 #~ msgid "Alpha paint"
 #~ msgstr "透明塗抹"
 #~ msgid "Previous Effect"
