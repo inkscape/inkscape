@@ -13,7 +13,11 @@ for filter in filters:
 	label = filter.getAttribute('inkscape:label')
 	menu = filter.getAttribute('inkscape:menu')
 	desc = filter.getAttribute('inkscape:menu-tooltip')
+	comment = ""
 
-	print "N_(\"" + label + "\"), N_(\"" + menu + "\"), N_(\"" + desc + "\"),"
+	if "NR" in label:
+		comment = '/* TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders */\n'
+	
+	print comment + "N_(\"" + label + "\"), N_(\"" + menu + "\"), N_(\"" + desc + "\"),"
 
 print "];"

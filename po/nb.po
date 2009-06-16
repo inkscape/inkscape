@@ -4041,7 +4041,7 @@ msgstr "Vis dialog ved oppstart"
 #: ../src/extension/execution-env.cpp:134
 #, c-format
 msgid "'%s' working, please wait..."
-msgstr "'%' arbeider, vennligst vent ..."
+msgstr "'%s' arbeider, vennligst vent ..."
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;

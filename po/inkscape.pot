@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-06-15 19:19+0200\n"
+"POT-Creation-Date: 2009-06-16 16:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,7 +78,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:8 ../share/filters/filters.svg.h:59
 #: ../share/filters/filters.svg.h:96 ../share/filters/filters.svg.h:97
 #: ../share/filters/filters.svg.h:111 ../share/filters/filters.svg.h:114
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:171
 msgid "Blurs"
 msgstr ""
 
@@ -112,8 +112,8 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:9 ../share/filters/filters.svg.h:41
 #: ../share/filters/filters.svg.h:87 ../share/filters/filters.svg.h:122
-#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:173
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:181 ../share/filters/filters.svg.h:182
+#: ../share/filters/filters.svg.h:183
 #: ../src/extension/internal/filter/drop-shadow.h:45
 #: ../src/extension/internal/filter/drop-shadow.h:100
 msgid "Shadows and Glows"
@@ -138,7 +138,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:11 ../share/filters/filters.svg.h:110
 #: ../share/filters/filters.svg.h:112 ../share/filters/filters.svg.h:118
 #: ../share/filters/filters.svg.h:119 ../share/filters/filters.svg.h:121
-#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:125 ../share/filters/filters.svg.h:179
 msgid "ABCs"
 msgstr ""
 
@@ -168,7 +168,7 @@ msgid "Ink bleed"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:13 ../share/filters/filters.svg.h:14
-#: ../share/filters/filters.svg.h:42 ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:42 ../share/filters/filters.svg.h:178
 msgid "Protrusions"
 msgstr ""
 
@@ -207,7 +207,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:17 ../share/filters/filters.svg.h:44
 #: ../share/filters/filters.svg.h:45 ../share/filters/filters.svg.h:109
 #: ../share/filters/filters.svg.h:113 ../share/filters/filters.svg.h:115
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:185
 msgid "Distort"
 msgstr ""
 
@@ -249,9 +249,9 @@ msgstr ""
 #: ../share/filters/filters.svg.h:80 ../share/filters/filters.svg.h:81
 #: ../share/filters/filters.svg.h:82 ../share/filters/filters.svg.h:84
 #: ../share/filters/filters.svg.h:92 ../share/filters/filters.svg.h:139
-#: ../share/filters/filters.svg.h:153 ../share/filters/filters.svg.h:154
-#: ../share/filters/filters.svg.h:155 ../share/filters/filters.svg.h:156
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:162 ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:166
 msgid "Materials"
 msgstr ""
 
@@ -287,8 +287,8 @@ msgstr ""
 #: ../share/filters/filters.svg.h:35 ../share/filters/filters.svg.h:99
 #: ../share/filters/filters.svg.h:100 ../share/filters/filters.svg.h:103
 #: ../share/filters/filters.svg.h:124 ../share/filters/filters.svg.h:127
-#: ../share/filters/filters.svg.h:163 ../share/filters/filters.svg.h:165
-#: ../share/filters/filters.svg.h:166 ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:172 ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:175 ../share/filters/filters.svg.h:188
 msgid "Image effects"
 msgstr ""
 
@@ -362,7 +362,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:32 ../share/filters/filters.svg.h:33
 #: ../share/filters/filters.svg.h:34 ../share/filters/filters.svg.h:74
 #: ../share/filters/filters.svg.h:93 ../share/filters/filters.svg.h:101
-#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:102 ../share/filters/filters.svg.h:169
 #: ../src/dialogs/clonetiler.cpp:2607 ../src/dialogs/clonetiler.cpp:2754
 #: ../src/extension/internal/bitmap/colorize.cpp:51
 #: ../share/extensions/color_brighter.inx.h:2
@@ -428,8 +428,8 @@ msgstr ""
 #: ../share/filters/filters.svg.h:131 ../share/filters/filters.svg.h:133
 #: ../share/filters/filters.svg.h:134 ../share/filters/filters.svg.h:135
 #: ../share/filters/filters.svg.h:136 ../share/filters/filters.svg.h:137
-#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:158
-#: ../share/filters/filters.svg.h:175 ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:138 ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:184 ../share/filters/filters.svg.h:186
 msgid "Textures"
 msgstr ""
 
@@ -511,7 +511,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:46 ../share/filters/filters.svg.h:48
 #: ../share/filters/filters.svg.h:123 ../share/filters/filters.svg.h:126
-#: ../share/filters/filters.svg.h:164 ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:173 ../share/filters/filters.svg.h:187
 msgid "HSL Bumps"
 msgstr ""
 
@@ -768,7 +768,7 @@ msgstr ""
 #: ../share/filters/filters.svg.h:89 ../share/filters/filters.svg.h:90
 #: ../share/filters/filters.svg.h:94 ../share/filters/filters.svg.h:95
 #: ../share/filters/filters.svg.h:98 ../share/filters/filters.svg.h:108
-#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:132 ../share/filters/filters.svg.h:180
 #: ../src/filter-enums.cpp:31
 msgid "Morphology"
 msgstr ""
@@ -1027,8 +1027,8 @@ msgid "HSL Bumps, alpha"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:106 ../share/filters/filters.svg.h:107
-#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:167
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:170 ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:177
 msgid "Mask and transparency effects"
 msgstr ""
 
@@ -1314,12 +1314,12 @@ msgid "Comics draft"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:140 ../share/filters/filters.svg.h:141
-#: ../share/filters/filters.svg.h:142 ../share/filters/filters.svg.h:143
-#: ../share/filters/filters.svg.h:144 ../share/filters/filters.svg.h:145
-#: ../share/filters/filters.svg.h:146 ../share/filters/filters.svg.h:147
-#: ../share/filters/filters.svg.h:148 ../share/filters/filters.svg.h:149
-#: ../share/filters/filters.svg.h:150 ../share/filters/filters.svg.h:151
-#: ../share/filters/filters.svg.h:152 ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:143 ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:147 ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:150 ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:154 ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:157 ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:161 ../share/filters/filters.svg.h:168
 msgid "Non realistic 3D shaders"
 msgstr ""
 
@@ -1335,315 +1335,324 @@ msgstr ""
 msgid "Cartoon paint style with some fading at the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:142
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:143
 msgid "Smooth shader NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:142
+#: ../share/filters/filters.svg.h:143
 msgid "Smooth shading with a graphite pencil grey"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:143
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:145
 msgid "Emboss shader NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:143
+#: ../share/filters/filters.svg.h:145
 msgid "Combination of smooth shading and embossing"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:144
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:147
 msgid "Smooth shader dark NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:144
+#: ../share/filters/filters.svg.h:147
 msgid "Dark version of non realistic smooth shading"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:148
 msgid "Comics"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:145
+#: ../share/filters/filters.svg.h:148
 msgid "Imitation of black and white cartoon shading"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:146
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:150
 msgid "Satin NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:146
+#: ../share/filters/filters.svg.h:150
 msgid "Silky close to mother of pearl shading"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:147
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:152
 msgid "Frosted glass NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:147
+#: ../share/filters/filters.svg.h:152
 msgid "Non realistic frosted glass imitation"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:148
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:154
 msgid "Smooth shader contour NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:148
+#: ../share/filters/filters.svg.h:154
 msgid "Contouring version of smooth shader"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:149
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:156
 msgid "Aluminium NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:149
+#: ../share/filters/filters.svg.h:156
 msgid "Brushed aluminium shader"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:157
 msgid "Comics fluid"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:150
+#: ../share/filters/filters.svg.h:157
 msgid "Fluid brushed cartoon drawing"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:151
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:159
 msgid "Chrome NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:151
+#: ../share/filters/filters.svg.h:159
 msgid "Non realistic chrome shader with strong speculars"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:152
+#. TRANSLATORS: NR means non-realistic. See menu Filters > Non realistic shaders
+#: ../share/filters/filters.svg.h:161
 msgid "Chrome dark NR"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:152
+#: ../share/filters/filters.svg.h:161
 msgid "Dark version of chrome shading with a ground reflection simulation"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:162
 msgid "Wavy tartan"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:153
+#: ../share/filters/filters.svg.h:162
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:163
 msgid "3D marble"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:154
+#: ../share/filters/filters.svg.h:163
 msgid "3D warped marble texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:164
 msgid "3D wood"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:155
+#: ../share/filters/filters.svg.h:164
 msgid "3D warped, fibered wood texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:165
 msgid "3D mother of pearl"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:156
+#: ../share/filters/filters.svg.h:165
 msgid "3D warped, iridescent pearly shell texture"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:166
 msgid "Tiger fur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:157
+#: ../share/filters/filters.svg.h:166
 msgid "Tiger fur pattern with folds and bevel around the edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:167
 msgid "Shaken liquid"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:158
+#: ../share/filters/filters.svg.h:167
 msgid "Colorizable filling with flow inside like transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:168
 msgid "Comics cream"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:159
+#: ../share/filters/filters.svg.h:168
 msgid "Comics shader with creamy waves transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:169
 msgid "Black Light"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:160
+#: ../share/filters/filters.svg.h:169
 msgid "Light areas turn to black"
 msgstr ""
 
 #. Eraser
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:170
 #: ../src/ui/dialog/inkscape-preferences.cpp:510 ../src/verbs.cpp:2536
 msgid "Eraser"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:161
+#: ../share/filters/filters.svg.h:170
 msgid "Make the lightest parts of the object progressively transparent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:171
 msgid "Noisy blur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:162
+#: ../share/filters/filters.svg.h:171
 msgid "Small-scale roughening and blurring to edges and content"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:172
 msgid "Film Grain"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:163
+#: ../share/filters/filters.svg.h:172
 msgid "Adds a film grain noise to images and objects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:173
 msgid "HSL Bumps, transparent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:164
+#: ../share/filters/filters.svg.h:173
 msgid "Highly flexible specular bump with transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:174
 #: ../src/ui/dialog/align-and-distribute.cpp:920
 #: ../src/widgets/desktop-widget.cpp:1563
 msgid "Drawing"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:165
+#: ../share/filters/filters.svg.h:174
 msgid ""
 "Give lead pencil or chromolithography or engraving or other effects to "
 "images and material filled objects"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:175
 msgid "Velvet bump"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:166
+#: ../share/filters/filters.svg.h:175
 msgid "Gives a smooth bump velvet like"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:176
 msgid "Alpha draw"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:167
+#: ../share/filters/filters.svg.h:176
 msgid "Gives a transparent drawing effect to bitmaps and materials"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:177
 msgid "Alpha draw, color"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:168
+#: ../share/filters/filters.svg.h:177
 msgid "Gives a transparent color fill effect to bitmaps and materials"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:178
 msgid "Chewing gum"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:169
+#: ../share/filters/filters.svg.h:178
 msgid ""
 "Creates colourizable blotches which smoothly flow over the edges of the "
 "lines at their crossings"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:179
 msgid "Black outline"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:170
+#: ../share/filters/filters.svg.h:179
 msgid "Draws a black outline around"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:180
 msgid "Color outline"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:171
+#: ../share/filters/filters.svg.h:180
 msgid "Draws a coloured outline around"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:181
 msgid "Inner shadow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:172
+#: ../share/filters/filters.svg.h:181
 msgid "Adds a colorizable drop shadow inside"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:182
 msgid "Dark and glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:173
+#: ../share/filters/filters.svg.h:182
 msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:183
 msgid "Darken edges"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:174
+#: ../share/filters/filters.svg.h:183
 msgid "Darken the edges with an inner blur"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:184
 msgid "Warped rainbow"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:175
+#: ../share/filters/filters.svg.h:184
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:185
 msgid "Rough and dilate"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:176
+#: ../share/filters/filters.svg.h:185
 msgid "Create a turbulent contour around"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:186
 msgid "Gelatine"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:177
+#: ../share/filters/filters.svg.h:186
 msgid "Colorizable filling with gelatin like turbulence and transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:187
 msgid "HSL Bubbles, transparent"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:178
+#: ../share/filters/filters.svg.h:187
 msgid "Highly flexible specular bubbles with transparency"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:188
 msgid "Old postcard"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:179
+#: ../share/filters/filters.svg.h:188
 msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr ""
 
