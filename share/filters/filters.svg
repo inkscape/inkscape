@@ -1063,15 +1063,7 @@
 <feComposite in2="SourceGraphic" operator="in" id="feComposite3079" />
 <feComposite in2="SourceGraphic" operator="in" id="feComposite3081" />
 </filter>
-<filter id="Softbump0" inkscape:label="Soft bump" inkscape:menu="Image effects" inkscape:menu-tooltip="Convolution bump; with a blur, it can give nice embossing effects" height="1" width="1" y="0" x="0">
-<feGaussianBlur id="feGaussianBlur3300" stdDeviation="4" result="result3" />
-<feComposite id="feComposite3302" in2="result3" operator="in" in="result3" k2="-1" k1="0" k3="1" k4="0" result="result1" />
-<feBlend id="feBlend3304" in2="result1" result="fbSourceGraphic" blend="normal" mode="darken" in="SourceGraphic" />
-<feColorMatrix id="feColorMatrix3306" result="fbSourceGraphicAlpha" in="fbSourceGraphic" values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0" />
-<feConvolveMatrix id="feConvolveMatrix3308" bias="0" preserveAlpha="false" order="3 3" kernelMatrix="-2 0 0 -1 1 1 0 0 2 " divisor="1" targetX="1" targetY="1" result="result2" in="fbSourceGraphic" />
-<feGaussianBlur id="feGaussianBlur3310" result="result1" stdDeviation="0.5" />
-</filter>
-<filter id="filter2910t" inkscape:label="Solarize" inkscape:menu="Color" inkscape:menu-tooltip="Classical photographic solarization effect" y="0" x="0" height="1" width="1">
+<filter id="Solarize0" inkscape:label="Solarize" inkscape:menu="Color" inkscape:menu-tooltip="Classical photographic solarization effect" y="0" x="0" height="1" width="1">
 <feColorMatrix id="feColorMatrix3492" type="hueRotate" values="0" result="fbSourceGraphic" />
 <feColorMatrix id="feColorMatrix3494" in="fbSourceGraphic" values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 " />
 <feBlend id="feBlend3496" blend="normal" mode="darken" in="fbSourceGraphic" />
